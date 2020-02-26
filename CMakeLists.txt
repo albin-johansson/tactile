@@ -30,7 +30,7 @@ else ()
     message("Qt5 path: $ENV{Qt5_PATH}\ ")
 endif ()
 
-find_package(Qt5 COMPONENTS Core Widgets REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
