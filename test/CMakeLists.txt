@@ -15,7 +15,7 @@ target_include_directories(Catch2 INTERFACE ${TACTILE_LIB_DIR}/catch2)
 target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src)
 target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src/core)
 target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src/core/util)
-target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src/core/tilemap)
+target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src/core/tile)
 
 target_link_libraries(TactileTests
         PUBLIC TactileLib
