@@ -71,3 +71,24 @@ TEST_CASE("MapPosition::col", "[MapPosition]")
 
   CHECK(position.col() == col);
 }
+
+TEST_CASE("MapPosition equality operator", "[MapPosition]")
+{
+  const MapPosition pos{45, 23};
+  CHECK(pos == pos);
+
+  const MapPosition copy{pos};
+
+  CHECK(pos == copy);
+  CHECK(copy == pos);
+}
+
+TEST_CASE("MapPosition inequality operator", "[MapPosition]")
+{
+  const MapPosition pos{45, 23};
+  CHECK(!(pos != pos));
+
+  const MapPosition other{839, 54};
+  CHECK(pos != other);
+  CHECK(other != pos);
+}

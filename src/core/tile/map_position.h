@@ -76,6 +76,29 @@ class MapPosition final {
   int m_col;
 };
 
+/**
+ * Indicates whether or not two map positions are the same.
+ *
+ * @param lhs the left-hand side map position.
+ * @param rhs the right-hand side map position.
+ * @return true if the map positions have the same coordinates; false otherwise.
+ * @since 0.1.0
+ */
+[[nodiscard]] bool operator==(const MapPosition& lhs,
+                              const MapPosition& rhs) noexcept;
+
+/**
+ * Indicates whether or not two map positions aren't the same.
+ *
+ * @param lhs the left-hand side map position.
+ * @param rhs the right-hand side map position.
+ * @return true if the map positions don't have the same coordinates; false
+ * otherwise.
+ * @since 0.1.0
+ */
+[[nodiscard]] bool operator!=(const MapPosition& lhs,
+                              const MapPosition& rhs) noexcept;
+
 static_assert(std::is_nothrow_default_constructible_v<MapPosition>);
 
 static_assert(std::is_nothrow_copy_constructible_v<MapPosition>);

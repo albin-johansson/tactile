@@ -27,4 +27,14 @@ void MapPosition::set_col(int col) noexcept
   m_col = clamp_component(col);
 }
 
+bool operator==(const MapPosition& lhs, const MapPosition& rhs) noexcept
+{
+  return lhs.row() == rhs.row() && lhs.col() == rhs.col();
+}
+
+bool operator!=(const MapPosition& lhs, const MapPosition& rhs) noexcept
+{
+  return !(lhs == rhs);
+}
+
 }  // namespace tactile
