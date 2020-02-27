@@ -9,9 +9,17 @@ set(TACTILE_SOURCE_FILES
         core/tile.h
         core/tile.cpp
         core/tile_layer.cpp
-        core/tile_layer.h)
+        core/tile_layer.h
+        core/map_position.cpp
+        core/map_position.h
+        core/util/maybe.h
+        core/util/smart_pointers.h)
 
-add_library(TactileLib ${TACTILE_SOURCE_FILES} core/map_position.cpp core/map_position.h)
+add_library(TactileLib ${TACTILE_SOURCE_FILES})
+
+target_include_directories(TactileLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(TactileLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/core)
+target_include_directories(TactileLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/core/util)
 
 target_link_libraries(TactileLib
         PUBLIC Qt5::Core
