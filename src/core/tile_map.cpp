@@ -12,49 +12,49 @@ namespace {
 
 }  // namespace
 
-TileMap::TileMap(int nRows_, int nCols_)
-    : nRows{clamp_map_dimension(nRows_)}, nCols{clamp_map_dimension(nCols_)}
+TileMap::TileMap(int nRows, int nCols)
+    : m_nRows{clamp_map_dimension(nRows)}, m_nCols{clamp_map_dimension(nCols)}
 {
-  layers.emplace_back(nRows, nCols);
+  m_layers.emplace_back(nRows, nCols);
 }
 
 void TileMap::add_row(TileID id) noexcept
 {
-  for (auto& layer : layers) {
+  for (auto& layer : m_layers) {
     layer.add_row(id);
   }
 }
 
 void TileMap::add_col(TileID id) noexcept
 {
-  for (auto& layer : layers) {
+  for (auto& layer : m_layers) {
     layer.add_col(id);
   }
 }
 
-void TileMap::set_rows(int nRows_) noexcept
+void TileMap::set_rows(int nRows) noexcept
 {
-  nRows = clamp_map_dimension(nRows_);
+  m_nRows = clamp_map_dimension(nRows);
 }
 
-void TileMap::set_cols(int nCols_) noexcept
+void TileMap::set_cols(int nCols) noexcept
 {
-  nCols = clamp_map_dimension(nCols_);
+  m_nCols = clamp_map_dimension(nCols);
 }
 
 int TileMap::rows() const noexcept
 {
-  return nRows;
+  return m_nRows;
 }
 
 int TileMap::cols() const noexcept
 {
-  return nCols;
+  return m_nCols;
 }
 
 int TileMap::get_layer_amount() const noexcept
 {
-  return static_cast<int>(layers.size());
+  return static_cast<int>(m_layers.size());
 }
 
 }  // namespace tactile

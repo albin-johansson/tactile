@@ -85,9 +85,9 @@ class TileMap final {
   [[nodiscard]] int get_layer_amount() const noexcept;
 
  private:
-  int nRows;
-  int nCols;
-  std::vector<TileLayer> layers;
+  int m_nRows;
+  int m_nCols;
+  std::vector<TileLayer> m_layers;
 };
 
 }  // namespace tactile
