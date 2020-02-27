@@ -23,6 +23,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(CMAKE_PREFIX_PATH $ENV{Qt5_PATH})
 
 set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(TACTILE_LIB_DIR ${TACTILE_ROOT_DIR}/lib)
 
 if (NOT DEFINED ENV{Qt5_PATH})
     message(WARNING "Qt5_PATH is not a defined environment variable!")
@@ -37,3 +38,6 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 add_subdirectory(src)
+
+enable_testing()
+add_subdirectory(test)
