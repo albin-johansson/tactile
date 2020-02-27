@@ -21,7 +21,7 @@ TileMap::TileMap(int nRows_, int nCols_)
 void TileMap::add_row(TileID id) noexcept
 {
   for (auto& layer : layers) {
-    layer.add_row(id, nCols);
+    layer.add_row(id);
   }
 }
 
