@@ -20,10 +20,12 @@ int main(int argc, char** argv)
 
   QApplication app{argc, argv};
 
-  TactileWindow window;
-  window.setSurfaceType(QSurface::SurfaceType::OpenGLSurface);
+  QApplication::setApplicationVersion("0.1.0");
+  QApplication::setApplicationName("Tactile 2");
 
+  TactileWindow window;
   app.setParent(&window);
+
   window.show();
 
   return QGuiApplication::exec();

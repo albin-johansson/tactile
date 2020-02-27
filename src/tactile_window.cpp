@@ -4,7 +4,9 @@
 
 namespace tactile {
 
-TactileWindow::TactileWindow() = default;
+TactileWindow::TactileWindow() {
+  setSurfaceType(SurfaceType::OpenGLSurface);
+}
 
 void TactileWindow::initializeGL()
 {
