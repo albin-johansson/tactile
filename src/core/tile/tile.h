@@ -3,14 +3,15 @@
 namespace tactile {
 
 using TileID = int;
-
-constexpr TileID empty = 0;
+inline constexpr TileID empty = 0;
 
 class Tile final {
  public:
 
  private:
   TileID id;
+
+  // TODO associated tile sheet
 
   // TODO properties
 

@@ -4,14 +4,14 @@ project(Tactile2-src)
 set(TACTILE_SOURCE_FILES
         tactile_window.h
         tactile_window.cpp
-        core/tile_map.h
-        core/tile_map.cpp
-        core/tile.h
-        core/tile.cpp
-        core/tile_layer.cpp
-        core/tile_layer.h
-        core/map_position.cpp
-        core/map_position.h
+        core/tile/tile_map.h
+        core/tile/tile_map.cpp
+        core/tile/tile.h
+        core/tile/tile.cpp
+        core/tile/tile_layer.cpp
+        core/tile/tile_layer.h
+        core/tile/map_position.cpp
+        core/tile/map_position.h
         core/util/maybe.h
         core/util/smart_pointers.h
         )
