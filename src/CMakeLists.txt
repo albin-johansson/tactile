@@ -13,13 +13,14 @@ set(TACTILE_SOURCE_FILES
         core/map_position.cpp
         core/map_position.h
         core/util/maybe.h
-        core/util/smart_pointers.h)
+        core/util/smart_pointers.h
+        )
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 
 target_include_directories(TactileLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_include_directories(TactileLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/core)
-target_include_directories(TactileLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/core/util)
+target_include_directories(TactileLib PUBLIC core)
+target_include_directories(TactileLib PUBLIC core/util)
 
 target_link_libraries(TactileLib
         PUBLIC Qt5::Core
@@ -29,6 +30,10 @@ target_link_libraries(TactileLib
 add_executable(TactileRun
         ${TACTILE_SOURCE_FILES}
         main.cpp)
+
+target_include_directories(TactileRun PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(TactileRun PUBLIC core)
+target_include_directories(TactileRun PUBLIC core/util)
 
 target_link_libraries(TactileRun
         PUBLIC Qt5::Core
