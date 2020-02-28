@@ -27,6 +27,26 @@ void MapPosition::set_col(int col) noexcept
   m_col = clamp_component(col);
 }
 
+MapPosition MapPosition::north() const noexcept
+{
+  return {m_row - 1, m_col};
+}
+
+MapPosition MapPosition::east() const noexcept
+{
+  return {m_row, m_col + 1};
+}
+
+MapPosition MapPosition::south() const noexcept
+{
+  return {m_row + 1, m_col};
+}
+
+MapPosition MapPosition::west() const noexcept
+{
+  return {m_row, m_col - 1};
+}
+
 bool operator==(const MapPosition& lhs, const MapPosition& rhs) noexcept
 {
   return lhs.row() == rhs.row() && lhs.col() == rhs.col();

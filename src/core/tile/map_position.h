@@ -48,6 +48,38 @@ class MapPosition final {
   void set_col(int col) noexcept;
 
   /**
+   * Returns a map position that is one step north of this map position.
+   *
+   * @return a map position that is one step north of this map position.
+   * @since 0.1.0
+   */
+  [[nodiscard]] MapPosition north() const noexcept;
+
+  /**
+   * Returns a map position that is one step to the east of this map position.
+   *
+   * @return a map position that is one step to the east of this map position.
+   * @since 0.1.0
+   */
+  [[nodiscard]] MapPosition east() const noexcept;
+
+  /**
+   * Returns a map position that is one step south of this map position.
+   *
+   * @return a map position that is one step south of this map position.
+   * @since 0.1.0
+   */
+  [[nodiscard]] MapPosition south() const noexcept;
+
+  /**
+   * Returns a map position that is one step to the west of this map position.
+   *
+   * @return a map position that is one step to the west of this map position.
+   * @since 0.1.0
+   */
+  [[nodiscard]] MapPosition west() const noexcept;
+
+  /**
    * Returns the row value of the map position. The returned value is never
    * negative.
    *
