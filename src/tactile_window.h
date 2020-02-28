@@ -1,5 +1,13 @@
 #pragma once
+
+#include <QMainWindow>
+#include <QOpenGLWidget>
 #include <QOpenGLWindow>
+#include <QWidget>
+
+namespace Ui {
+class MainWindow;
+}
 
 namespace tactile {
 
@@ -11,28 +19,34 @@ namespace tactile {
  * @see QOpenGLWindow
  * @since 0.1.0
  */
-class TactileWindow final : public QOpenGLWindow {
+class TactileWindow final : public QMainWindow {
+  Q_OBJECT
+
  public:
   /**
    * @since 0.1.0
    */
-  TactileWindow();
+  explicit TactileWindow(QWidget* parent = nullptr);
+
+  ~TactileWindow() override;
+
+ public slots:
+  void render() noexcept;
 
  protected:
-  void initializeGL() override;
-
-  void resizeGL(int w, int h) override;
-
-  void paintGL() override;
+  void paintEvent(QPaintEvent* event) override;
 
  private:
+  Ui::MainWindow* m_ui;
+  QOpenGLWidget* m_renderSurface;
+
   /**
    * Returns the bounds of the window.
    *
    * @return the bounds of the window.
    * @since 0.1.0
    */
-  [[nodiscard]] QRect get_bounds() const noexcept;
+  [[nodiscard]] QRect get_render_surface_bounds() const noexcept;
 };
 
 }  // namespace tactile
