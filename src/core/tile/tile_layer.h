@@ -30,6 +30,15 @@ class TileLayer final {
    */
   TileLayer(int nRows, int nCols) noexcept;
 
+  /**
+   * Runs a flood fill in the tile layer. This method has no effect if the
+   * flood fill cannot be performed.
+   *
+   * @param position the starting position of the flood fill.
+   * @param target the tile type that will be replaced.
+   * @param replacement the tile type that will replace the target type.
+   * @since 0.1.0
+   */
   void flood(const MapPosition& position,
              TileID target,
              TileID replacement) noexcept;
