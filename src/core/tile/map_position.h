@@ -131,6 +131,8 @@ class MapPosition final {
 [[nodiscard]] bool operator!=(const MapPosition& lhs,
                               const MapPosition& rhs) noexcept;
 
+static_assert(std::is_final_v<MapPosition>);
+
 static_assert(std::is_nothrow_default_constructible_v<MapPosition>);
 
 static_assert(std::is_nothrow_copy_constructible_v<MapPosition>);
