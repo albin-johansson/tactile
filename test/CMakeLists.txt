@@ -5,7 +5,8 @@ set(TACTILE_TEST_FILES
         test_main.cpp
         tile_layer_test.cpp
         map_position_test.cpp
-        tile_map_test.cpp)
+        tile_map_test.cpp
+        flood_fill_test.cpp)
 
 add_executable(TactileTests ${TACTILE_TEST_FILES})
 
