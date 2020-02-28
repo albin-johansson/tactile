@@ -1,6 +1,6 @@
 #include "tile_layer.h"
 
-#include "map_position.h"
+#include "flood_fill.h"
 
 namespace tactile {
 
@@ -25,7 +25,7 @@ void TileLayer::flood(const MapPosition& position,
                       TileID target,
                       TileID replacement) noexcept
 {
-  // TODO implement flood fill algorithm
+  flood_fill(*this, position, target, replacement);
 }
 
 void TileLayer::add_row(TileID id) noexcept

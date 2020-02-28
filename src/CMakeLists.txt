@@ -14,13 +14,15 @@ set(TACTILE_SOURCE_FILES
         core/tile/map_position.h
         core/util/maybe.h
         core/util/smart_pointers.h
-        )
+        core/flood_fill.h
+        core/flood_fill.cpp)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 
-target_include_directories(TactileLib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(TactileLib PUBLIC ${TACTILE_ROOT_DIR}/src)
 target_include_directories(TactileLib PUBLIC core)
 target_include_directories(TactileLib PUBLIC core/util)
+target_include_directories(TactileLib PUBLIC core/tile)
 
 target_link_libraries(TactileLib
         PUBLIC Qt5::Core
@@ -31,9 +33,10 @@ add_executable(TactileRun
         ${TACTILE_SOURCE_FILES}
         main.cpp)
 
-target_include_directories(TactileRun PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(TactileLib PUBLIC ${TACTILE_ROOT_DIR}/src)
 target_include_directories(TactileRun PUBLIC core)
 target_include_directories(TactileRun PUBLIC core/util)
+target_include_directories(TactileRun PUBLIC core/tile)
 
 target_link_libraries(TactileRun
         PUBLIC Qt5::Core
