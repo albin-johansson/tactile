@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "maybe.h"
-#include "tile.h"
+#include "tile_id.h"
 
 namespace tactile {
 

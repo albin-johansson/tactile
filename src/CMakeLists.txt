@@ -6,8 +6,7 @@ set(TACTILE_SOURCE_FILES
         tactile_window.cpp
         core/tile/tile_map.h
         core/tile/tile_map.cpp
-        core/tile/tile.h
-        core/tile/tile.cpp
+        core/tile/tile_id.h
         core/tile/tile_layer.cpp
         core/tile/tile_layer.h
         core/tile/map_position.cpp
