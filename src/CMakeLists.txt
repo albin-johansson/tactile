@@ -14,7 +14,9 @@ set(TACTILE_SOURCE_FILES
         core/util/maybe.h
         core/util/smart_pointers.h
         core/flood_fill.h
-        core/flood_fill.cpp)
+        core/flood_fill.cpp
+        editor_pane.cpp
+        editor_pane.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

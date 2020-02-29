@@ -11,6 +11,8 @@ class MainWindow;
 
 namespace tactile {
 
+class EditorPane;
+
 /**
  * The <code>TactileWindow</code> class is a subclass of
  * <code>QOpenGLWindow</code> that represents the window used in the Tactile
@@ -30,23 +32,9 @@ class TactileWindow final : public QMainWindow {
 
   ~TactileWindow() override;
 
- public slots:
-  void render() noexcept;
-
- protected:
-  void paintEvent(QPaintEvent* event) override;
-
  private:
   Ui::MainWindow* m_ui;
-  QOpenGLWidget* m_renderSurface;
-
-  /**
-   * Returns the bounds of the window.
-   *
-   * @return the bounds of the window.
-   * @since 0.1.0
-   */
-  [[nodiscard]] QRect get_render_surface_bounds() const noexcept;
+  EditorPane* m_editorPane;
 };
 
 }  // namespace tactile
