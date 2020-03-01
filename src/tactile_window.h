@@ -6,12 +6,14 @@
 #include <QWidget>
 
 namespace Ui {
+
 class MainWindow;
+
 }
 
 namespace tactile {
 
-class EditorPane;
+// class EditorPane;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -34,7 +36,7 @@ class TactileWindow final : public QMainWindow {
 
  private:
   Ui::MainWindow* m_ui;
-//  EditorPane* m_editorPane;
+  //  EditorPane* m_editorPane;
 };
 
 }  // namespace tactile
