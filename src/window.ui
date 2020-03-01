@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>883</width>
+    <width>897</width>
     <height>600</height>
    </rect>
   </property>
@@ -23,33 +23,121 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
+   <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>881</width>
-      <height>541</height>
+      <width>891</width>
+      <height>521</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="1">
-      <spacer name="verticalSpacer">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="leftMargin">
+        <number>6</number>
        </property>
-       <property name="sizeType">
-        <enum>QSizePolicy::Expanding</enum>
+       <property name="topMargin">
+        <number>6</number>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
+       <property name="rightMargin">
+        <number>6</number>
        </property>
-      </spacer>
+       <property name="bottomMargin">
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QPushButton" name="stampButton">
+         <property name="toolTip">
+          <string>Stamp tool</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="tactile2.qrc">
+           <normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bucketButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Bucket tool</string>
+         </property>
+         <property name="text">
+          <string notr="true"/>
+         </property>
+         <property name="icon">
+          <iconset resource="tactile2.qrc">
+           <normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="eraserButton">
+         <property name="toolTip">
+          <string>Eraser tool</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="tactile2.qrc">
+           <normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+         <attribute name="buttonGroup">
+          <string notr="true">buttonGroup</string>
+         </attribute>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
-     <item row="0" column="0">
+     <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -70,7 +158,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>883</width>
+     <width>897</width>
      <height>21</height>
     </rect>
    </property>
@@ -120,15 +208,16 @@
     <addaction name="actionPan_left"/>
     <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="menuAbout">
+   <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>About</string>
+     <string>Help</string>
     </property>
+    <addaction name="actionAbout_Tactile"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
    <addaction name="menuView"/>
-   <addaction name="menuAbout"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -141,25 +230,58 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew_map"/>
+   <addaction name="separator"/>
+   <addaction name="actionOpen_map"/>
+   <addaction name="separator"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="separator"/>
   </widget>
   <action name="actionNew_map">
+   <property name="icon">
+    <iconset resource="tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-file-32.png</normaloff>:/res/icons/icons8/dark/icons8-file-32.png</iconset>
+   </property>
    <property name="text">
     <string>New map</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="actionOpen_map">
+   <property name="icon">
+    <iconset resource="tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-opened-folder-32.png</normaloff>:/res/icons/icons8/dark/icons8-opened-folder-32.png</iconset>
+   </property>
    <property name="text">
     <string>Open map</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset resource="tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-save-32.png</normaloff>:/res/icons/icons8/dark/icons8-save-32.png</iconset>
+   </property>
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
   <action name="actionSave_as">
    <property name="text">
     <string>Save as...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
    </property>
   </action>
   <action name="actionRename">
@@ -171,6 +293,9 @@
    <property name="text">
     <string>Settings...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
+   </property>
   </action>
   <action name="actionExit">
    <property name="text">
@@ -178,11 +303,19 @@
    </property>
   </action>
   <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-undo-32.png</normaloff>:/res/icons/icons8/dark/icons8-undo-32.png</iconset>
+   </property>
    <property name="text">
     <string>Undo</string>
    </property>
   </action>
   <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-redo-32.png</normaloff>:/res/icons/icons8/dark/icons8-redo-32.png</iconset>
+   </property>
    <property name="text">
     <string>Redo</string>
    </property>
@@ -257,7 +390,17 @@
     <string>Pan down</string>
    </property>
   </action>
+  <action name="actionAbout_Tactile">
+   <property name="text">
+    <string>About Tactile</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="tactile2.qrc"/>
+ </resources>
  <connections/>
+ <buttongroups>
+  <buttongroup name="buttonGroup"/>
+ </buttongroups>
 </ui>

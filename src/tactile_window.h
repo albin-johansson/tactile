@@ -34,7 +34,7 @@ class TactileWindow final : public QMainWindow {
 
  private:
   Ui::MainWindow* m_ui;
-  EditorPane* m_editorPane;
+//  EditorPane* m_editorPane;
 };
 
 }  // namespace tactile

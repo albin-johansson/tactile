@@ -4,5 +4,10 @@
     <file>res/icons/icons8/dark/icons8-save-32.png</file>
     <file>res/icons/icons8/dark/icons8-save-as-32.png</file>
     <file>res/icons/icons8/dark/icons8-opened-folder-32.png</file>
+    <file>res/icons/icons8/dark/icons8-undo-32.png</file>
+    <file>res/icons/icons8/dark/icons8-redo-32.png</file>
+    <file>res/icons/icons8/dark/icons8-erase-32.png</file>
+    <file>res/icons/icons8/dark/icons8-fill-color-32.png</file>
+    <file>res/icons/icons8/dark/rubber_stamp_32px.png</file>
 </qresource>
 </RCC>

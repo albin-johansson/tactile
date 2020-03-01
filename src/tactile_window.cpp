@@ -14,15 +14,15 @@ TactileWindow::TactileWindow(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  m_editorPane = new EditorPane{this};
-
-  m_ui->gridLayout->addWidget(m_editorPane);
+//  m_editorPane = new EditorPane{};
+//  m_ui->gridLayout->addWidget(m_editorPane);setCe
+//  setCentralWidget(m_editorPane);
 }
 
 TactileWindow::~TactileWindow()
 {
-  delete m_editorPane;
   delete m_ui;
+//  delete m_editorPane;
 }
 
 }  // namespace tactile

@@ -1,23 +1,14 @@
 #pragma once
 
-#include <QOpenGLWidget>
+#include <QWidget>
 #include <QRect>
 
 namespace tactile {
 
-class EditorPane final : public QOpenGLWidget {
+class EditorPane final : public QWidget {
  public:
   explicit EditorPane(QWidget* parent = nullptr) noexcept;
 
- protected:
-  void initializeGL() override;
-
-  void resizeGL(int w, int h) override;
-
-  void paintGL() override;
-
- private:
-  [[nodiscard]] QRect get_bounds() const noexcept;
 };
 
 }  // namespace tactile
