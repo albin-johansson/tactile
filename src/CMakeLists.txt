@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.12)
 project(Tactile2-src)
 
 set(TACTILE_SOURCE_FILES
-        tactile_window.h
-        tactile_window.cpp
+        tactile2.qrc
+        ui/tactile_window.h
+        ui/tactile_window.cpp
         core/tile/tile_map.h
         core/tile/tile_map.cpp
         core/tile/tile_id.h
@@ -19,7 +20,10 @@ set(TACTILE_SOURCE_FILES
         core/flood_fill.cpp
         editor_pane.cpp
         editor_pane.h
-        tactile2.qrc tactile_application.cpp tactile_application.h)
+        tactile_application.cpp
+        tactile_application.h
+        ui/about_dialog.cpp
+        ui/about_dialog.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 
@@ -27,6 +31,8 @@ target_include_directories(TactileLib PUBLIC ${TACTILE_ROOT_DIR}/src)
 target_include_directories(TactileLib PUBLIC core)
 target_include_directories(TactileLib PUBLIC core/util)
 target_include_directories(TactileLib PUBLIC core/tile)
+target_include_directories(TactileLib PUBLIC ui)
+
 
 target_link_libraries(TactileLib
         PUBLIC Qt5::Core
@@ -37,10 +43,11 @@ add_executable(TactileRun
         ${TACTILE_SOURCE_FILES}
         main.cpp)
 
-target_include_directories(TactileLib PUBLIC ${TACTILE_ROOT_DIR}/src)
+target_include_directories(TactileRun PUBLIC ${TACTILE_ROOT_DIR}/src)
 target_include_directories(TactileRun PUBLIC core)
 target_include_directories(TactileRun PUBLIC core/util)
 target_include_directories(TactileRun PUBLIC core/tile)
+target_include_directories(TactileRun PUBLIC ui)
 
 target_link_libraries(TactileRun
         PUBLIC Qt5::Core
