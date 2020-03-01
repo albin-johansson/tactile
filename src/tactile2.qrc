@@ -1,0 +1,8 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>res/icons/icons8/dark/icons8-file-32.png</file>
+    <file>res/icons/icons8/dark/icons8-save-32.png</file>
+    <file>res/icons/icons8/dark/icons8-save-as-32.png</file>
+    <file>res/icons/icons8/dark/icons8-opened-folder-32.png</file>
+</qresource>
+</RCC>

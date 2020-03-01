@@ -18,7 +18,8 @@ set(TACTILE_SOURCE_FILES
         core/flood_fill.h
         core/flood_fill.cpp
         editor_pane.cpp
-        editor_pane.h)
+        editor_pane.h
+        tactile2.qrc)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 
