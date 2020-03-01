@@ -16,6 +16,12 @@
     <height>100</height>
    </size>
   </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
   <property name="windowTitle">
    <string>Tactile</string>
   </property>
@@ -62,7 +68,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="tactile2.qrc">
+          <iconset resource="../tactile2.qrc">
            <normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</iconset>
          </property>
          <property name="iconSize">
@@ -88,7 +94,7 @@
           <string notr="true"/>
          </property>
          <property name="icon">
-          <iconset resource="tactile2.qrc">
+          <iconset resource="../tactile2.qrc">
            <normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</iconset>
          </property>
          <property name="iconSize">
@@ -111,7 +117,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="tactile2.qrc">
+          <iconset resource="../tactile2.qrc">
            <normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</iconset>
          </property>
          <property name="iconSize">
@@ -162,8 +168,13 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>26</height>
+     <height>29</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -245,11 +256,17 @@
   </widget>
   <action name="actionNew_map">
    <property name="icon">
-    <iconset resource="tactile2.qrc">
+    <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/dark/icons8-file-32.png</normaloff>:/res/icons/icons8/dark/icons8-file-32.png</iconset>
    </property>
    <property name="text">
     <string>New map</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
@@ -257,11 +274,17 @@
   </action>
   <action name="actionOpen_map">
    <property name="icon">
-    <iconset resource="tactile2.qrc">
+    <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/dark/icons8-opened-folder-32.png</normaloff>:/res/icons/icons8/dark/icons8-opened-folder-32.png</iconset>
    </property>
    <property name="text">
-    <string>Open map</string>
+    <string>Open map...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -269,11 +292,17 @@
   </action>
   <action name="actionSave">
    <property name="icon">
-    <iconset resource="tactile2.qrc">
+    <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/dark/icons8-save-32.png</normaloff>:/res/icons/icons8/dark/icons8-save-32.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
@@ -283,6 +312,12 @@
    <property name="text">
     <string>Save as...</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="shortcut">
     <string>Ctrl+Shift+S</string>
    </property>
@@ -291,10 +326,22 @@
    <property name="text">
     <string>Rename...</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionSettings">
    <property name="text">
     <string>Settings...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="shortcut">
     <string>Ctrl+Alt+S</string>
@@ -304,63 +351,129 @@
    <property name="text">
     <string>Exit</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionUndo">
    <property name="icon">
-    <iconset resource="tactile2.qrc">
+    <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/dark/icons8-undo-32.png</normaloff>:/res/icons/icons8/dark/icons8-undo-32.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionRedo">
    <property name="icon">
-    <iconset resource="tactile2.qrc">
+    <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/dark/icons8-redo-32.png</normaloff>:/res/icons/icons8/dark/icons8-redo-32.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionAdd_row">
    <property name="text">
     <string>Add row</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionAdd_column">
    <property name="text">
     <string>Add column</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionRemove_row">
    <property name="text">
     <string>Remove row</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionRemove_column">
    <property name="text">
     <string>Remove column</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionCenter_camera">
    <property name="text">
     <string>Center camera</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionToggle_grid">
    <property name="text">
     <string>Toggle grid</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionZoom_in">
    <property name="text">
     <string>Zoom in</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionZoom_out">
    <property name="text">
     <string>Zoom out</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionPan_right">
@@ -377,30 +490,60 @@
    <property name="text">
     <string>Pan up</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionPan_right_3">
    <property name="text">
     <string>Pan right</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionPan_left">
    <property name="text">
     <string>Pan left</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionPan_down">
    <property name="text">
     <string>Pan down</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
   </action>
   <action name="actionAbout_Tactile">
    <property name="text">
-    <string>About Tactile</string>
+    <string>About Tactile...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
  </widget>
  <resources>
-  <include location="tactile2.qrc"/>
+  <include location="../tactile2.qrc"/>
  </resources>
  <connections/>
  <buttongroups>
