@@ -134,6 +134,7 @@ class MapPosition final {
 static_assert(std::is_final_v<MapPosition>);
 
 static_assert(std::is_nothrow_default_constructible_v<MapPosition>);
+static_assert(std::is_nothrow_destructible_v<MapPosition>);
 
 static_assert(std::is_nothrow_copy_constructible_v<MapPosition>);
 static_assert(std::is_nothrow_move_constructible_v<MapPosition>);
