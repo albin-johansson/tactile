@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "tile.h"
+#include "tile_id.h"
 #include "tile_layer.h"
 
 namespace tactile {

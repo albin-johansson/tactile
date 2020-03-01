@@ -6,8 +6,7 @@ set(TACTILE_SOURCE_FILES
         tactile_window.cpp
         core/tile/tile_map.h
         core/tile/tile_map.cpp
-        core/tile/tile.h
-        core/tile/tile.cpp
+        core/tile/tile_id.h
         core/tile/tile_layer.cpp
         core/tile/tile_layer.h
         core/tile/map_position.cpp
@@ -17,7 +16,9 @@ set(TACTILE_SOURCE_FILES
         core/tile/tile_set.cpp
         core/tile/tile_set.h
         core/flood_fill.h
-        core/flood_fill.cpp)
+        core/flood_fill.cpp
+        editor_pane.cpp
+        editor_pane.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

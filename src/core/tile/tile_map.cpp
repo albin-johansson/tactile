@@ -1,6 +1,6 @@
 #include "tile_map.h"
 
-#include "tile.h"
+#include "tile_id.h"
 
 namespace tactile {
 namespace {

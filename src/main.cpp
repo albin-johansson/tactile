@@ -24,7 +24,7 @@ int main(int argc, char** argv)
   QApplication::setApplicationName("Tactile 2");
 
   TactileWindow window;
-  window.show();
+  window.showMaximized();
 
   return QGuiApplication::exec();
 }

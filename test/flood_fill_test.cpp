@@ -75,3 +75,11 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
     CHECK(*layer.tile_at({3, 4}) == empty);
   }
 }
+
+TEST_CASE("Out-of-bounds position", "[FloodFill]")
+{
+  TileLayer layer{5, 5};
+  CHECK_NOTHROW(layer.flood({5, 5}, 0, 0));
+  CHECK_NOTHROW(layer.flood({6, 6}, 0, 0));
+  CHECK_NOTHROW(flood_fill(layer, {6, 6}, 0, 0));
+}
