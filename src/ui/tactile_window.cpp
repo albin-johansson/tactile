@@ -13,7 +13,6 @@ TactileWindow::TactileWindow(QWidget* parent)
     : QMainWindow{parent}, m_ui{new Ui::MainWindow{}}
 {
   m_ui->setupUi(this);
-
   m_editorPane = new EditorPane{};
 
   connect(m_ui->actionAbout_Tactile,
