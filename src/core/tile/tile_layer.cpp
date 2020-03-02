@@ -30,9 +30,11 @@ void TileLayer::flood(const MapPosition& position,
 
 void TileLayer::add_row(TileID id) noexcept
 {
-  std::vector<TileID> row;
-  row.reserve(cols());
-  for (int i = 0; i < cols(); ++i) {
+  const auto nCols = cols();
+
+  TileRow row;
+  row.reserve(nCols);
+  for (int i = 0; i < nCols; ++i) {
     row.push_back(id);
   }
   m_tiles.push_back(row);
