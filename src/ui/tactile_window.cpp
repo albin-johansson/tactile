@@ -3,8 +3,8 @@
 #include <QOpenGLFunctions>
 #include <QPainter>
 
-#include "editor_pane.h"
 #include "about_dialog.h"
+#include "editor_pane.h"
 #include "ui_window.h"
 
 namespace tactile {
