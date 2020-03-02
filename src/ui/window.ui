@@ -204,6 +204,10 @@
     <addaction name="actionAdd_column"/>
     <addaction name="actionRemove_row"/>
     <addaction name="actionRemove_column"/>
+    <addaction name="separator"/>
+    <addaction name="actionStamp_tool"/>
+    <addaction name="actionBucket_tool"/>
+    <addaction name="actionEraser_tool"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -309,6 +313,10 @@
    </property>
   </action>
   <action name="actionSave_as">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-save-as-32.png</normaloff>:/res/icons/icons8/dark/icons8-save-as-32.png</iconset>
+   </property>
    <property name="text">
     <string>Save as...</string>
    </property>
@@ -323,6 +331,10 @@
    </property>
   </action>
   <action name="actionRename">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/rename_32px.png</normaloff>:/res/icons/icons8/dark/rename_32px.png</iconset>
+   </property>
    <property name="text">
     <string>Rename...</string>
    </property>
@@ -334,6 +346,10 @@
    </property>
   </action>
   <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-settings-32.png</normaloff>:/res/icons/icons8/dark/icons8-settings-32.png</iconset>
+   </property>
    <property name="text">
     <string>Settings...</string>
    </property>
@@ -348,6 +364,10 @@
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-exit-32.png</normaloff>:/res/icons/icons8/dark/icons8-exit-32.png</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
    </property>
@@ -389,6 +409,10 @@
    </property>
   </action>
   <action name="actionAdd_row">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-add-row-32.png</normaloff>:/res/icons/icons8/dark/icons8-add-row-32.png</iconset>
+   </property>
    <property name="text">
     <string>Add row</string>
    </property>
@@ -400,6 +424,10 @@
    </property>
   </action>
   <action name="actionAdd_column">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-add-column-32.png</normaloff>:/res/icons/icons8/dark/icons8-add-column-32.png</iconset>
+   </property>
    <property name="text">
     <string>Add column</string>
    </property>
@@ -411,6 +439,10 @@
    </property>
   </action>
   <action name="actionRemove_row">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-delete-row-32.png</normaloff>:/res/icons/icons8/dark/icons8-delete-row-32.png</iconset>
+   </property>
    <property name="text">
     <string>Remove row</string>
    </property>
@@ -422,6 +454,10 @@
    </property>
   </action>
   <action name="actionRemove_column">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-delete-column-32.png</normaloff>:/res/icons/icons8/dark/icons8-delete-column-32.png</iconset>
+   </property>
    <property name="text">
     <string>Remove column</string>
    </property>
@@ -433,6 +469,10 @@
    </property>
   </action>
   <action name="actionCenter_camera">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/camera_32px.png</normaloff>:/res/icons/icons8/dark/camera_32px.png</iconset>
+   </property>
    <property name="text">
     <string>Center camera</string>
    </property>
@@ -444,6 +484,10 @@
    </property>
   </action>
   <action name="actionToggle_grid">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-grid-32.png</normaloff>:/res/icons/icons8/dark/icons8-grid-32.png</iconset>
+   </property>
    <property name="text">
     <string>Toggle grid</string>
    </property>
@@ -455,6 +499,10 @@
    </property>
   </action>
   <action name="actionZoom_in">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-zoom-in-32.png</normaloff>:/res/icons/icons8/dark/icons8-zoom-in-32.png</iconset>
+   </property>
    <property name="text">
     <string>Zoom in</string>
    </property>
@@ -466,6 +514,10 @@
    </property>
   </action>
   <action name="actionZoom_out">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-zoom-out-32.png</normaloff>:/res/icons/icons8/dark/icons8-zoom-out-32.png</iconset>
+   </property>
    <property name="text">
     <string>Zoom out</string>
    </property>
@@ -487,6 +539,10 @@
    </property>
   </action>
   <action name="actionPan_up">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-up-32.png</normaloff>:/res/icons/icons8/dark/icons8-up-32.png</iconset>
+   </property>
    <property name="text">
     <string>Pan up</string>
    </property>
@@ -498,6 +554,10 @@
    </property>
   </action>
   <action name="actionPan_right_3">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-right-32.png</normaloff>:/res/icons/icons8/dark/icons8-right-32.png</iconset>
+   </property>
    <property name="text">
     <string>Pan right</string>
    </property>
@@ -509,6 +569,10 @@
    </property>
   </action>
   <action name="actionPan_left">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-left-32.png</normaloff>:/res/icons/icons8/dark/icons8-left-32.png</iconset>
+   </property>
    <property name="text">
     <string>Pan left</string>
    </property>
@@ -520,6 +584,10 @@
    </property>
   </action>
   <action name="actionPan_down">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-arrow-pointing-down-32.png</normaloff>:/res/icons/icons8/dark/icons8-arrow-pointing-down-32.png</iconset>
+   </property>
    <property name="text">
     <string>Pan down</string>
    </property>
@@ -539,6 +607,42 @@
      <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
+   </property>
+  </action>
+  <action name="actionStamp_tool">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stamp tool</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
+  </action>
+  <action name="actionBucket_tool">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bucket tool</string>
+   </property>
+   <property name="shortcut">
+    <string>B</string>
+   </property>
+  </action>
+  <action name="actionEraser_tool">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</iconset>
+   </property>
+   <property name="text">
+    <string>Eraser tool</string>
+   </property>
+   <property name="shortcut">
+    <string>E</string>
    </property>
   </action>
  </widget>
