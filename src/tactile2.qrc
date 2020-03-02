@@ -8,6 +8,44 @@
     <file>res/icons/icons8/dark/icons8-redo-32.png</file>
     <file>res/icons/icons8/dark/icons8-erase-32.png</file>
     <file>res/icons/icons8/dark/icons8-fill-color-32.png</file>
+    <file>res/icons/icons8/dark/icons8-add-column-32.png</file>
+    <file>res/icons/icons8/dark/icons8-add-row-32.png</file>
+    <file>res/icons/icons8/dark/icons8-arrow-pointing-down-32.png</file>
+    <file>res/icons/icons8/dark/icons8-bookmark-32.png</file>
+    <file>res/icons/icons8/dark/icons8-copy-32.png</file>
+    <file>res/icons/icons8/dark/icons8-create-32.png</file>
+    <file>res/icons/icons8/dark/icons8-cursor-32.png</file>
+    <file>res/icons/icons8/dark/icons8-delete-32.png</file>
+    <file>res/icons/icons8/dark/icons8-delete-row-32.png</file>
+    <file>res/icons/icons8/dark/icons8-delete-column-32.png</file>
+    <file>res/icons/icons8/dark/icons8-document-32.png</file>
+    <file>res/icons/icons8/dark/icons8-edit-32.png</file>
+    <file>res/icons/icons8/dark/icons8-error-32.png</file>
+    <file>res/icons/icons8/dark/icons8-exit-32.png</file>
+    <file>res/icons/icons8/dark/icons8-fill-color-32.png</file>
+    <file>res/icons/icons8/dark/icons8-filled-bookmark-ribbon-32.png</file>
+    <file>res/icons/icons8/dark/icons8-grid-32.png</file>
+    <file>res/icons/icons8/dark/icons8-group-objects-32.png</file>
+    <file>res/icons/icons8/dark/icons8-hand-rock-32.png</file>
+    <file>res/icons/icons8/dark/icons8-left-32.png</file>
+    <file>res/icons/icons8/dark/icons8-move-32.png</file>
+    <file>res/icons/icons8/dark/icons8-paste-32.png</file>
+    <file>res/icons/icons8/dark/icons8-picture-32.png</file>
+    <file>res/icons/icons8/dark/icons8-cursor-32.png</file>
+    <file>res/icons/icons8/dark/icons8-plus-32.png</file>
+    <file>res/icons/icons8/dark/icons8-right-32.png</file>
+    <file>res/icons/icons8/dark/icons8-settings-32.png</file>
+    <file>res/icons/icons8/dark/icons8-trash-32.png</file>
+    <file>res/icons/icons8/dark/icons8-up-32.png</file>
+    <file>res/icons/icons8/dark/icons8-zoom-in-32.png</file>
+    <file>res/icons/icons8/dark/icons8-zoom-out-32.png</file>
+    <file>res/icons/icons8/dark/invisible_32px.png</file>
+    <file>res/icons/icons8/dark/visible_32px.png</file>
+    <file>res/icons/icons8/dark/rename_32px.png</file>
     <file>res/icons/icons8/dark/rubber_stamp_32px.png</file>
+    <file>res/icons/icons8/dark/camera_32px.png</file>
+    <file>res/icons/icons8/dark/circle_32px.png</file>
+    <file>res/icons/icons8/dark/filled_circle_32px.png</file>
+    <file>res/icons/icons8/dark/define_location_32px.png</file>
 </qresource>
 </RCC>
