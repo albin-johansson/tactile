@@ -35,26 +35,28 @@ class TactileWindow final : public QMainWindow {
 
   ~TactileWindow() noexcept override;
 
+  void paintEvent(QPaintEvent* event) override;
+
  public slots:
   /**
    * Displays the about dialog.
-   * 
-   * @since 0.1.0 
+   *
+   * @since 0.1.0
    */
   void display_about_dialog() noexcept;
 
   /**
    * Displays the settings dialog.
-   * 
-   * @since 0.1.0 
+   *
+   * @since 0.1.0
    */
   void display_settings_dialog() noexcept;
 
  private slots:
   /**
    * Exits the Tactile application.
-   * 
-   * @since 0.1.0 
+   *
+   * @since 0.1.0
    */
   void exit() noexcept;
 

@@ -2,6 +2,7 @@
 
 #include <QOpenGLFunctions>
 #include <QPainter>
+#include <QSpacerItem>
 
 #include "about_dialog.h"
 #include "editor_pane.h"
@@ -15,6 +16,16 @@ TactileWindow::TactileWindow(QWidget* parent)
 {
   m_ui->setupUi(this);
   m_editorPane = new EditorPane{};
+
+  {
+    auto* layout = m_ui->mainLayout;
+    layout->addWidget(m_editorPane);
+//    layout->addWidget(new QSpacerItem());
+
+
+    layout->update();
+  }
+
   init_connections();
 }
 
@@ -37,6 +48,11 @@ void TactileWindow::init_connections() noexcept
           SIGNAL(triggered()),
           this,
           SLOT(display_settings_dialog()));
+}
+
+void TactileWindow::paintEvent(QPaintEvent* event)
+{
+  m_editorPane->update();
 }
 
 void TactileWindow::display_about_dialog() noexcept
