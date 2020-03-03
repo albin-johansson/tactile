@@ -5,6 +5,7 @@
 
 #include "about_dialog.h"
 #include "editor_pane.h"
+#include "settings_dialog.h"
 #include "ui_window.h"
 
 namespace tactile {
@@ -14,23 +15,45 @@ TactileWindow::TactileWindow(QWidget* parent)
 {
   m_ui->setupUi(this);
   m_editorPane = new EditorPane{};
+  init_connections();
+}
 
+TactileWindow::~TactileWindow() noexcept
+{
+  delete m_ui;
+  delete m_editorPane;
+}
+
+void TactileWindow::init_connections() noexcept
+{
   connect(m_ui->actionAbout_Tactile,
           SIGNAL(triggered()),
           this,
           SLOT(display_about_dialog()));
-}
 
-TactileWindow::~TactileWindow()
-{
-  delete m_ui;
-  delete m_editorPane;
+  connect(m_ui->actionExit, SIGNAL(triggered()), this, SLOT(exit()));
+
+  connect(m_ui->actionSettings,
+          SIGNAL(triggered()),
+          this,
+          SLOT(display_settings_dialog()));
 }
 
 void TactileWindow::display_about_dialog() noexcept
 {
   AboutDialog about;
   about.exec();
+}
+
+void TactileWindow::display_settings_dialog() noexcept
+{
+  SettingsDialog settings;
+  settings.exec();
+}
+
+void TactileWindow::exit() noexcept
+{
+  QApplication::exit();
 }
 
 }  // namespace tactile
