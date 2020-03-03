@@ -23,7 +23,9 @@ set(TACTILE_SOURCE_FILES
         tactile_application.cpp
         tactile_application.h
         ui/about_dialog.cpp
-        ui/about_dialog.h)
+        ui/about_dialog.h
+        ui/settings_dialog.h
+        ui/settings_dialog.cpp)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 
