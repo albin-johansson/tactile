@@ -20,11 +20,6 @@ void EditorPane::paintEvent(QPaintEvent* event)
   paint(event);
 }
 
-//void EditorPane::resizeEvent(QResizeEvent* event)
-//{
-//  QWidget::resizeEvent(event);
-//}
-
 void EditorPane::paint(QPaintEvent* event) noexcept
 {
   if (!event) {
@@ -34,7 +29,6 @@ void EditorPane::paint(QPaintEvent* event) noexcept
   QPainter painter{this};
   const auto bounds = QRect{0, 0, width(), height()};
   painter.fillRect(bounds, Qt::black);
-
 }
 
 }  // namespace tactile

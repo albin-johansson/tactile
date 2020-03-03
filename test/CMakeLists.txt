@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(Tactile2-test)
+project(Tactile-test)
 
 set(TACTILE_TEST_FILES
         test_main.cpp

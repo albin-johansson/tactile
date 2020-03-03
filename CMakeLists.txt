@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(Tactile2)
+project(Tactile)
 
 # NOTE: If the build fails with MinGW, try setting the QT_QPA_PLATFORM_PLUGIN_PATH
 # environment variable to the path of the "plugins/platforms" directory in the

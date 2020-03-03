@@ -20,9 +20,6 @@ TactileWindow::TactileWindow(QWidget* parent)
   {
     auto* layout = m_ui->mainLayout;
     layout->addWidget(m_editorPane);
-//    layout->addWidget(new QSpacerItem());
-
-
     layout->update();
   }
 
@@ -50,7 +47,7 @@ void TactileWindow::init_connections() noexcept
           SLOT(display_settings_dialog()));
 }
 
-void TactileWindow::paintEvent(QPaintEvent* event)
+void TactileWindow::paintEvent(QPaintEvent*)
 {
   m_editorPane->update();
 }

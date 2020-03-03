@@ -14,8 +14,6 @@ class EditorPane final : public QWidget {
 
  public:
   void paintEvent(QPaintEvent* event) override;
-
-//  void resizeEvent(QResizeEvent* event) override;
 };
 
 }  // namespace tactile
