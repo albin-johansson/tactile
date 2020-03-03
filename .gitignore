@@ -33,6 +33,7 @@
 
 compile_commands.json
 
+.vs
 .vscode
 .idea
 build
