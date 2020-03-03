@@ -45,6 +45,8 @@ void TactileWindow::init_connections() noexcept
           SIGNAL(triggered()),
           this,
           SLOT(display_settings_dialog()));
+
+  
 }
 
 void TactileWindow::paintEvent(QPaintEvent*)
