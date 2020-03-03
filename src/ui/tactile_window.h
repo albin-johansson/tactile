@@ -17,10 +17,10 @@ class EditorPane;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
- * <code>QOpenGLWindow</code> that represents the window used in the Tactile
+ * <code>QMainWindow</code> that represents the window used in the Tactile
  * application.
  *
- * @see QOpenGLWindow
+ * @see QMainWindow
  * @since 0.1.0
  */
 class TactileWindow final : public QMainWindow {
