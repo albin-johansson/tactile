@@ -6,6 +6,7 @@
 
 #include "about_dialog.h"
 #include "editor_pane.h"
+#include "mouse_tool_widget.h"
 #include "settings_dialog.h"
 #include "ui_window.h"
 
@@ -15,10 +16,13 @@ TactileWindow::TactileWindow(QWidget* parent)
     : QMainWindow{parent}, m_ui{new Ui::MainWindow{}}
 {
   m_ui->setupUi(this);
-  m_editorPane = new EditorPane{};
+
+  m_editorPane = new EditorPane{this};
+  m_mouseToolWidget = new MouseToolWidget{this};
 
   {
     auto* layout = m_ui->mainLayout;
+    layout->addWidget(m_mouseToolWidget);
     layout->addWidget(m_editorPane);
     layout->update();
   }
@@ -30,6 +34,7 @@ TactileWindow::~TactileWindow() noexcept
 {
   delete m_ui;
   delete m_editorPane;
+  delete m_mouseToolWidget;
 }
 
 void TactileWindow::init_connections() noexcept
@@ -45,8 +50,6 @@ void TactileWindow::init_connections() noexcept
           SIGNAL(triggered()),
           this,
           SLOT(display_settings_dialog()));
-
-  
 }
 
 void TactileWindow::paintEvent(QPaintEvent*)

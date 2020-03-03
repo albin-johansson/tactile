@@ -3,8 +3,6 @@ project(Tactile-src)
 
 set(TACTILE_SOURCE_FILES
         tactile2.qrc
-        ui/tactile_window.h
-        ui/tactile_window.cpp
         core/tile/tile_map.h
         core/tile/tile_map.cpp
         core/tile/tile_id.h
@@ -18,14 +16,18 @@ set(TACTILE_SOURCE_FILES
         core/tile/tile_set.h
         core/flood_fill.h
         core/flood_fill.cpp
-        editor_pane.cpp
-        editor_pane.h
-        tactile_application.cpp
-        tactile_application.h
+        ui/editor_pane.cpp
+        ui/editor_pane.h
         ui/about_dialog.cpp
         ui/about_dialog.h
         ui/settings_dialog.h
-        ui/settings_dialog.cpp)
+        ui/settings_dialog.cpp 
+        ui/mouse_tool_widget.cpp
+        ui/mouse_tool_widget.h
+        ui/tactile_window.h
+        ui/tactile_window.cpp
+        tactile_application.cpp
+        tactile_application.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

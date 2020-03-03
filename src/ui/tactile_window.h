@@ -14,6 +14,7 @@ class MainWindow;
 namespace tactile {
 
 class EditorPane;
+class MouseToolWidget;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -62,7 +63,9 @@ class TactileWindow final : public QMainWindow {
 
  private:
   Ui::MainWindow* m_ui;
+
   EditorPane* m_editorPane;
+  MouseToolWidget* m_mouseToolWidget;
 
   void init_connections() noexcept;
 };
