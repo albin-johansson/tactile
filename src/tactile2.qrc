@@ -47,5 +47,6 @@
     <file>res/icons/icons8/dark/circle_32px.png</file>
     <file>res/icons/icons8/dark/filled_circle_32px.png</file>
     <file>res/icons/icons8/dark/define_location_32px.png</file>
+    <file>res/icons/icons8/dark/github_32px.png</file>
 </qresource>
 </RCC>
