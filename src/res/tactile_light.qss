@@ -3,6 +3,22 @@ QWidget {
   background: white;
 }
 
+QMenuBar::item:selected {
+  background-color: lightgray;
+}
+
+QMenuBar::item:pressed {
+  background-color: darkgray;
+}
+
+QMenu::item:selected {
+  background-color: lightgray;
+}
+
+QMenu::item:pressed {
+  background-color: darkgray;
+}
+
 QToolTip {
   background: white;
 }
