@@ -1,0 +1,13 @@
+
+QWidget {
+  background-color: #202020;
+  color: #FFFFFF;
+}
+
+QPushButton:hover {
+  background-color: #d9ecd7;
+}
+
+QAction {
+  font-size: 12pt;
+}

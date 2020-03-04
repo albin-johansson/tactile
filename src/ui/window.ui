@@ -45,7 +45,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>29</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="font">
@@ -116,6 +116,11 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
    <property name="windowTitle">
     <string>toolBar</string>
    </property>
@@ -138,7 +143,7 @@
   <action name="actionNew_map">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-file-32.png</normaloff>:/res/icons/icons8/dark/icons8-file-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/file_32px.png</normaloff>:/res/icons/icons8/dark/file_32px.png</iconset>
    </property>
    <property name="text">
     <string>New map</string>
@@ -156,7 +161,7 @@
   <action name="actionOpen_map">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-opened-folder-32.png</normaloff>:/res/icons/icons8/dark/icons8-opened-folder-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/opened-folder_32px.png</normaloff>:/res/icons/icons8/dark/opened-folder_32px.png</iconset>
    </property>
    <property name="text">
     <string>Open map...</string>
@@ -174,7 +179,7 @@
   <action name="actionSave">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-save-32.png</normaloff>:/res/icons/icons8/dark/icons8-save-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/save_32px.png</normaloff>:/res/icons/icons8/dark/save_32px.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -192,7 +197,7 @@
   <action name="actionSave_as">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-save-as-32.png</normaloff>:/res/icons/icons8/dark/icons8-save-as-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/save-as_32px.png</normaloff>:/res/icons/icons8/dark/save-as_32px.png</iconset>
    </property>
    <property name="text">
     <string>Save as...</string>
@@ -225,7 +230,7 @@
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-settings-32.png</normaloff>:/res/icons/icons8/dark/icons8-settings-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/settings_32px.png</normaloff>:/res/icons/icons8/dark/settings_32px.png</iconset>
    </property>
    <property name="text">
     <string>Settings...</string>
@@ -243,7 +248,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-exit-32.png</normaloff>:/res/icons/icons8/dark/icons8-exit-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/exit_32px.png</normaloff>:/res/icons/icons8/dark/exit_32px.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -258,7 +263,7 @@
   <action name="actionUndo">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-undo-32.png</normaloff>:/res/icons/icons8/dark/icons8-undo-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/undo_32px.png</normaloff>:/res/icons/icons8/dark/undo_32px.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -273,7 +278,7 @@
   <action name="actionRedo">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-redo-32.png</normaloff>:/res/icons/icons8/dark/icons8-redo-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/redo_32px.png</normaloff>:/res/icons/icons8/dark/redo_32px.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -288,7 +293,7 @@
   <action name="actionAdd_row">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-add-row-32.png</normaloff>:/res/icons/icons8/dark/icons8-add-row-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/add-row_32px.png</normaloff>:/res/icons/icons8/dark/add-row_32px.png</iconset>
    </property>
    <property name="text">
     <string>Add row</string>
@@ -303,7 +308,7 @@
   <action name="actionAdd_column">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-add-column-32.png</normaloff>:/res/icons/icons8/dark/icons8-add-column-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/add-column_32px.png</normaloff>:/res/icons/icons8/dark/add-column_32px.png</iconset>
    </property>
    <property name="text">
     <string>Add column</string>
@@ -318,7 +323,7 @@
   <action name="actionRemove_row">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-delete-row-32.png</normaloff>:/res/icons/icons8/dark/icons8-delete-row-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/delete-row_32px.png</normaloff>:/res/icons/icons8/dark/delete-row_32px.png</iconset>
    </property>
    <property name="text">
     <string>Remove row</string>
@@ -333,7 +338,7 @@
   <action name="actionRemove_column">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-delete-column-32.png</normaloff>:/res/icons/icons8/dark/icons8-delete-column-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/delete-column_32px.png</normaloff>:/res/icons/icons8/dark/delete-column_32px.png</iconset>
    </property>
    <property name="text">
     <string>Remove column</string>
@@ -363,7 +368,7 @@
   <action name="actionToggle_grid">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-grid-32.png</normaloff>:/res/icons/icons8/dark/icons8-grid-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/grid_32px.png</normaloff>:/res/icons/icons8/dark/grid_32px.png</iconset>
    </property>
    <property name="text">
     <string>Toggle grid</string>
@@ -378,7 +383,7 @@
   <action name="actionZoom_in">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-zoom-in-32.png</normaloff>:/res/icons/icons8/dark/icons8-zoom-in-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/zoom-in_32px.png</normaloff>:/res/icons/icons8/dark/zoom-in_32px.png</iconset>
    </property>
    <property name="text">
     <string>Zoom in</string>
@@ -393,7 +398,7 @@
   <action name="actionZoom_out">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-zoom-out-32.png</normaloff>:/res/icons/icons8/dark/icons8-zoom-out-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/zoom-out_32px.png</normaloff>:/res/icons/icons8/dark/zoom-out_32px.png</iconset>
    </property>
    <property name="text">
     <string>Zoom out</string>
@@ -418,7 +423,7 @@
   <action name="actionPan_up">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-up-32.png</normaloff>:/res/icons/icons8/dark/icons8-up-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/up_32px.png</normaloff>:/res/icons/icons8/dark/up_32px.png</iconset>
    </property>
    <property name="text">
     <string>Pan up</string>
@@ -433,7 +438,7 @@
   <action name="actionPan_right_3">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-right-32.png</normaloff>:/res/icons/icons8/dark/icons8-right-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/right_32px.png</normaloff>:/res/icons/icons8/dark/right_32px.png</iconset>
    </property>
    <property name="text">
     <string>Pan right</string>
@@ -448,7 +453,7 @@
   <action name="actionPan_left">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-left-32.png</normaloff>:/res/icons/icons8/dark/icons8-left-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/left_32px.png</normaloff>:/res/icons/icons8/dark/left_32px.png</iconset>
    </property>
    <property name="text">
     <string>Pan left</string>
@@ -463,7 +468,7 @@
   <action name="actionPan_down">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-arrow-pointing-down-32.png</normaloff>:/res/icons/icons8/dark/icons8-arrow-pointing-down-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/arrow-pointing-down_32px.png</normaloff>:/res/icons/icons8/dark/arrow-pointing-down_32px.png</iconset>
    </property>
    <property name="text">
     <string>Pan down</string>
@@ -505,7 +510,7 @@
   <action name="actionBucket_tool">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/fill-color_32px.png</normaloff>:/res/icons/icons8/dark/fill-color_32px.png</iconset>
    </property>
    <property name="text">
     <string>Bucket tool</string>
@@ -517,7 +522,7 @@
   <action name="actionEraser_tool">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</iconset>
+     <normaloff>:/res/icons/icons8/dark/erase_32px.png</normaloff>:/res/icons/icons8/dark/erase_32px.png</iconset>
    </property>
    <property name="text">
     <string>Eraser tool</string>

@@ -58,7 +58,7 @@
        </property>
        <property name="icon">
         <iconset resource="../tactile2.qrc">
-         <normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</normaloff>:/res/icons/icons8/dark/icons8-fill-color-32.png</iconset>
+         <normaloff>:/res/icons/icons8/dark/fill-color_32px.png</normaloff>:/res/icons/icons8/dark/fill-color_32px.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -84,7 +84,7 @@
        </property>
        <property name="icon">
         <iconset resource="../tactile2.qrc">
-         <normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</normaloff>:/res/icons/icons8/dark/icons8-erase-32.png</iconset>
+         <normaloff>:/res/icons/icons8/dark/erase_32px.png</normaloff>:/res/icons/icons8/dark/erase_32px.png</iconset>
        </property>
        <property name="iconSize">
         <size>
