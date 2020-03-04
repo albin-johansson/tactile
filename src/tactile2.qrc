@@ -50,5 +50,8 @@
     <file>res/icons/icons8/dark/github_32px.png</file>
     <file>res/icons/icons8/dark/icons8_32px.png</file>
     <file>res/icons/icons8/dark/about_32px.png</file>
+    <file>res/icons/tactile_icon.png</file>
+    <file>res/icons/tactile2_icon.png</file>
+    <file>res/icons/tactile2_icon2.png</file>
 </qresource>
 </RCC>

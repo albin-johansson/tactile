@@ -5,6 +5,7 @@
 
 namespace tactile {
 
+class TactileWindow;
 class TactileEditor;
 
 class TactileApplication final : public QApplication {
@@ -14,6 +15,7 @@ class TactileApplication final : public QApplication {
   ~TactileApplication() noexcept override;
 
  private:
+  UniquePtr<TactileWindow> m_window;
   UniquePtr<TactileEditor> m_editor;
 };
 

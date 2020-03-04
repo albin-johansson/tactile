@@ -4,7 +4,6 @@
 #include <QtWidgets>
 
 #include "tactile_application.h"
-#include "tactile_window.h"
 
 int main(int argc, char** argv)
 {
@@ -18,9 +17,6 @@ int main(int argc, char** argv)
   format.setVersion(3, 2);
   format.setProfile(QSurfaceFormat::CoreProfile);
   QSurfaceFormat::setDefaultFormat(format);
-
-  TactileWindow window;
-  window.showMaximized();
 
   return QGuiApplication::exec();
 }

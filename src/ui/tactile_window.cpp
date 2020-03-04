@@ -55,6 +55,8 @@ void TactileWindow::init_connections() noexcept
 void TactileWindow::paintEvent(QPaintEvent*)
 {
   m_editorPane->update();
+
+  // TODO notify editor 
 }
 
 void TactileWindow::display_about_dialog() noexcept
