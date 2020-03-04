@@ -136,7 +136,8 @@ class TileLayer final {
   [[nodiscard]] bool in_bounds(const MapPosition& position) const noexcept;
 
   /**
-   * Indicates whether or not the tile layer is visible.
+   * Indicates whether or not the tile layer is visible. Tile layers are visible
+   * by default.
    *
    * @return true if the tile layer is visible; false otherwise.
    * @since 0.1.0
