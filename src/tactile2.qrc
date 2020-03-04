@@ -59,5 +59,40 @@
         <file>res/icons/icons8/dark/website_32px.png</file>
         <file>res/icons/icons8/dark/zoom-in_32px.png</file>
         <file>res/icons/icons8/dark/zoom-out_32px.png</file>
+        <file>res/icons/icons8/cute/64/bucket.png</file>
+        <file>res/icons/icons8/cute/64/eraser.png</file>
+        <file>res/icons/icons8/cute/64/file.png</file>
+        <file>res/icons/icons8/cute/64/opened-folder.png</file>
+        <file>res/icons/icons8/cute/64/stamp.png</file>
+        <file>res/icons/icons8/color/64/bucket.png</file>
+        <file>res/icons/icons8/color/64/eraser.png</file>
+        <file>res/icons/icons8/color/64/about.png</file>
+        <file>res/icons/icons8/color/64/add-column.png</file>
+        <file>res/icons/icons8/color/64/add-row.png</file>
+        <file>res/icons/icons8/color/64/arrow-down.png</file>
+        <file>res/icons/icons8/color/64/arrow-left.png</file>
+        <file>res/icons/icons8/color/64/arrow-right.png</file>
+        <file>res/icons/icons8/color/64/arrow-up.png</file>
+        <file>res/icons/icons8/color/64/brush.png</file>
+        <file>res/icons/icons8/color/64/center-camera.png</file>
+        <file>res/icons/icons8/color/64/exit.png</file>
+        <file>res/icons/icons8/color/64/file.png</file>
+        <file>res/icons/icons8/color/64/github.png</file>
+        <file>res/icons/icons8/color/64/grid.png</file>
+        <file>res/icons/icons8/color/64/icons8.png</file>
+        <file>res/icons/icons8/color/64/opened-folder.png</file>
+        <file>res/icons/icons8/color/64/redo.png</file>
+        <file>res/icons/icons8/color/64/remove-column.png</file>
+        <file>res/icons/icons8/color/64/remove-row.png</file>
+        <file>res/icons/icons8/color/64/rename.png</file>
+        <file>res/icons/icons8/color/64/save.png</file>
+        <file>res/icons/icons8/color/64/save-as.png</file>
+        <file>res/icons/icons8/color/64/settings.png</file>
+        <file>res/icons/icons8/color/64/source-code.png</file>
+        <file>res/icons/icons8/color/64/undo.png</file>
+        <file>res/icons/icons8/color/64/zoom-in.png</file>
+        <file>res/icons/icons8/color/64/zoom-out.png</file>
+        <file>res/icons/icons8/color/64/rectangle.png</file>
+        <file>res/icons/icons8/color/64/search.png</file>
     </qresource>
 </RCC>

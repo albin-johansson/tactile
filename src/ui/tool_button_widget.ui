@@ -14,6 +14,18 @@
    <string>Form</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="sizeConstraint">
@@ -21,6 +33,18 @@
      </property>
      <item>
       <widget class="QPushButton" name="stampButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
        <property name="toolTip">
         <string>Stamp tool</string>
        </property>
@@ -32,7 +56,7 @@
        </property>
        <property name="icon">
         <iconset resource="../tactile2.qrc">
-         <normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</iconset>
+         <normaloff>:/res/icons/icons8/color/64/brush.png</normaloff>:/res/icons/icons8/color/64/brush.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -45,10 +69,16 @@
      <item>
       <widget class="QPushButton" name="bucketButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
        <property name="toolTip">
         <string>Bucket tool</string>
@@ -58,7 +88,7 @@
        </property>
        <property name="icon">
         <iconset resource="../tactile2.qrc">
-         <normaloff>:/res/icons/icons8/dark/fill-color_32px.png</normaloff>:/res/icons/icons8/dark/fill-color_32px.png</iconset>
+         <normaloff>:/res/icons/icons8/color/64/bucket.png</normaloff>:/res/icons/icons8/color/64/bucket.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -71,10 +101,16 @@
      <item>
       <widget class="QPushButton" name="eraserButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
        </property>
        <property name="toolTip">
         <string>Eraser tool</string>
@@ -84,13 +120,65 @@
        </property>
        <property name="icon">
         <iconset resource="../tactile2.qrc">
-         <normaloff>:/res/icons/icons8/dark/erase_32px.png</normaloff>:/res/icons/icons8/dark/erase_32px.png</iconset>
+         <normaloff>:/res/icons/icons8/color/64/eraser.png</normaloff>:/res/icons/icons8/color/64/eraser.png</iconset>
        </property>
        <property name="iconSize">
         <size>
          <width>24</width>
          <height>24</height>
         </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="rectangleButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Rectangle selection tool</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../tactile2.qrc">
+         <normaloff>:/res/icons/icons8/color/64/rectangle.png</normaloff>:/res/icons/icons8/color/64/rectangle.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="findSameButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>32</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="toolTip">
+        <string>Find same tool</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../tactile2.qrc">
+         <normaloff>:/res/icons/icons8/color/64/search.png</normaloff>:/res/icons/icons8/color/64/search.png</iconset>
        </property>
       </widget>
      </item>

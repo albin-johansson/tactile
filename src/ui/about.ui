@@ -181,7 +181,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../tactile2.qrc">:/res/icons/icons8/dark/icons8_32px.png</pixmap>
+         <pixmap resource="../tactile2.qrc">:/res/icons/icons8/color/64/icons8.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -243,7 +243,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../tactile2.qrc">:/res/icons/icons8/dark/github_32px.png</pixmap>
+         <pixmap resource="../tactile2.qrc">:/res/icons/icons8/color/64/github.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

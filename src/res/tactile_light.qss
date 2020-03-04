@@ -1,1 +1,12 @@
 
+QWidget {
+  background: white;
+}
+
+QToolTip {
+  background: white;
+}
+
+QPushButton {
+  background: white;
+}

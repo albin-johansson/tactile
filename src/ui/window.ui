@@ -35,7 +35,11 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <layout class="QHBoxLayout" name="mainLayout"/>
+     <layout class="QHBoxLayout" name="mainLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -143,7 +147,7 @@
   <action name="actionNew_map">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/file_32px.png</normaloff>:/res/icons/icons8/dark/file_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/file.png</normaloff>:/res/icons/icons8/color/64/file.png</iconset>
    </property>
    <property name="text">
     <string>New map</string>
@@ -161,7 +165,7 @@
   <action name="actionOpen_map">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/opened-folder_32px.png</normaloff>:/res/icons/icons8/dark/opened-folder_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/opened-folder.png</normaloff>:/res/icons/icons8/color/64/opened-folder.png</iconset>
    </property>
    <property name="text">
     <string>Open map...</string>
@@ -179,7 +183,7 @@
   <action name="actionSave">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/save_32px.png</normaloff>:/res/icons/icons8/dark/save_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/save.png</normaloff>:/res/icons/icons8/color/64/save.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -197,7 +201,7 @@
   <action name="actionSave_as">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/save-as_32px.png</normaloff>:/res/icons/icons8/dark/save-as_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/save-as.png</normaloff>:/res/icons/icons8/color/64/save-as.png</iconset>
    </property>
    <property name="text">
     <string>Save as...</string>
@@ -215,7 +219,7 @@
   <action name="actionRename">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/rename_32px.png</normaloff>:/res/icons/icons8/dark/rename_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/rename.png</normaloff>:/res/icons/icons8/color/64/rename.png</iconset>
    </property>
    <property name="text">
     <string>Rename...</string>
@@ -230,7 +234,7 @@
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/settings_32px.png</normaloff>:/res/icons/icons8/dark/settings_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/settings.png</normaloff>:/res/icons/icons8/color/64/settings.png</iconset>
    </property>
    <property name="text">
     <string>Settings...</string>
@@ -248,7 +252,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/exit_32px.png</normaloff>:/res/icons/icons8/dark/exit_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/exit.png</normaloff>:/res/icons/icons8/color/64/exit.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -263,7 +267,7 @@
   <action name="actionUndo">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/undo_32px.png</normaloff>:/res/icons/icons8/dark/undo_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/undo.png</normaloff>:/res/icons/icons8/color/64/undo.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -274,11 +278,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
   </action>
   <action name="actionRedo">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/redo_32px.png</normaloff>:/res/icons/icons8/dark/redo_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/redo.png</normaloff>:/res/icons/icons8/color/64/redo.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -289,11 +296,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
   </action>
   <action name="actionAdd_row">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/add-row_32px.png</normaloff>:/res/icons/icons8/dark/add-row_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/add-row.png</normaloff>:/res/icons/icons8/color/64/add-row.png</iconset>
    </property>
    <property name="text">
     <string>Add row</string>
@@ -308,7 +318,7 @@
   <action name="actionAdd_column">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/add-column_32px.png</normaloff>:/res/icons/icons8/dark/add-column_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/add-column.png</normaloff>:/res/icons/icons8/color/64/add-column.png</iconset>
    </property>
    <property name="text">
     <string>Add column</string>
@@ -323,7 +333,7 @@
   <action name="actionRemove_row">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/delete-row_32px.png</normaloff>:/res/icons/icons8/dark/delete-row_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/remove-row.png</normaloff>:/res/icons/icons8/color/64/remove-row.png</iconset>
    </property>
    <property name="text">
     <string>Remove row</string>
@@ -338,7 +348,7 @@
   <action name="actionRemove_column">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/delete-column_32px.png</normaloff>:/res/icons/icons8/dark/delete-column_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/remove-column.png</normaloff>:/res/icons/icons8/color/64/remove-column.png</iconset>
    </property>
    <property name="text">
     <string>Remove column</string>
@@ -353,7 +363,7 @@
   <action name="actionCenter_camera">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/camera_32px.png</normaloff>:/res/icons/icons8/dark/camera_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/center-camera.png</normaloff>:/res/icons/icons8/color/64/center-camera.png</iconset>
    </property>
    <property name="text">
     <string>Center camera</string>
@@ -368,7 +378,7 @@
   <action name="actionToggle_grid">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/grid_32px.png</normaloff>:/res/icons/icons8/dark/grid_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/grid.png</normaloff>:/res/icons/icons8/color/64/grid.png</iconset>
    </property>
    <property name="text">
     <string>Toggle grid</string>
@@ -379,11 +389,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
   </action>
   <action name="actionZoom_in">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/zoom-in_32px.png</normaloff>:/res/icons/icons8/dark/zoom-in_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/zoom-in.png</normaloff>:/res/icons/icons8/color/64/zoom-in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom in</string>
@@ -394,11 +407,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
   </action>
   <action name="actionZoom_out">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/zoom-out_32px.png</normaloff>:/res/icons/icons8/dark/zoom-out_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/zoom-out.png</normaloff>:/res/icons/icons8/color/64/zoom-out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom out</string>
@@ -408,6 +424,9 @@
      <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
    </property>
   </action>
   <action name="actionPan_right">
@@ -423,7 +442,7 @@
   <action name="actionPan_up">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/up_32px.png</normaloff>:/res/icons/icons8/dark/up_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/arrow-up.png</normaloff>:/res/icons/icons8/color/64/arrow-up.png</iconset>
    </property>
    <property name="text">
     <string>Pan up</string>
@@ -434,11 +453,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Up</string>
+   </property>
   </action>
   <action name="actionPan_right_3">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/right_32px.png</normaloff>:/res/icons/icons8/dark/right_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/arrow-right.png</normaloff>:/res/icons/icons8/color/64/arrow-right.png</iconset>
    </property>
    <property name="text">
     <string>Pan right</string>
@@ -449,11 +471,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Right</string>
+   </property>
   </action>
   <action name="actionPan_left">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/left_32px.png</normaloff>:/res/icons/icons8/dark/left_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/arrow-left.png</normaloff>:/res/icons/icons8/color/64/arrow-left.png</iconset>
    </property>
    <property name="text">
     <string>Pan left</string>
@@ -464,11 +489,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Left</string>
+   </property>
   </action>
   <action name="actionPan_down">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/arrow-pointing-down_32px.png</normaloff>:/res/icons/icons8/dark/arrow-pointing-down_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/arrow-down.png</normaloff>:/res/icons/icons8/color/64/arrow-down.png</iconset>
    </property>
    <property name="text">
     <string>Pan down</string>
@@ -479,11 +507,14 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Down</string>
+   </property>
   </action>
   <action name="actionAbout_Tactile">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/about_32px.png</normaloff>:/res/icons/icons8/dark/about_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/about.png</normaloff>:/res/icons/icons8/color/64/about.png</iconset>
    </property>
    <property name="text">
     <string>About Tactile...</string>
@@ -498,7 +529,7 @@
   <action name="actionStamp_tool">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</normaloff>:/res/icons/icons8/dark/rubber_stamp_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/brush.png</normaloff>:/res/icons/icons8/color/64/brush.png</iconset>
    </property>
    <property name="text">
     <string>Stamp tool</string>
@@ -510,7 +541,7 @@
   <action name="actionBucket_tool">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/fill-color_32px.png</normaloff>:/res/icons/icons8/dark/fill-color_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/bucket.png</normaloff>:/res/icons/icons8/color/64/bucket.png</iconset>
    </property>
    <property name="text">
     <string>Bucket tool</string>
@@ -522,7 +553,7 @@
   <action name="actionEraser_tool">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/dark/erase_32px.png</normaloff>:/res/icons/icons8/dark/erase_32px.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/eraser.png</normaloff>:/res/icons/icons8/color/64/eraser.png</iconset>
    </property>
    <property name="text">
     <string>Eraser tool</string>
