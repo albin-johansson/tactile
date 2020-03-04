@@ -12,6 +12,7 @@ set(TACTILE_SOURCE_FILES
         core/tile/map_position.h
         core/util/maybe.h
         core/util/smart_pointers.h
+        core/util/algorithm_utils.h
         core/tile/tile_set.cpp
         core/tile/tile_set.h
         core/flood_fill.h
