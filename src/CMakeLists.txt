@@ -17,6 +17,8 @@ set(TACTILE_SOURCE_FILES
         core/tile/tile_set.h
         core/flood_fill.h
         core/flood_fill.cpp
+        core/tactile_editor.h
+        core/tactile_editor.cpp
         ui/editor_pane.cpp
         ui/editor_pane.h
         ui/about_dialog.cpp

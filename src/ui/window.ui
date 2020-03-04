@@ -472,6 +472,10 @@
    </property>
   </action>
   <action name="actionAbout_Tactile">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/dark/about_32px.png</normaloff>:/res/icons/icons8/dark/about_32px.png</iconset>
+   </property>
    <property name="text">
     <string>About Tactile...</string>
    </property>

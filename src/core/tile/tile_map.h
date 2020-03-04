@@ -29,6 +29,8 @@ class TileMap final {
    */
   TileMap(int nRows, int nCols);
 
+  ~TileMap() noexcept;
+
   void draw(QPainter& painter /*, const "Viewport&" */) const noexcept;
 
   /**

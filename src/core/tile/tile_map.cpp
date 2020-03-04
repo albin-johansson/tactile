@@ -23,6 +23,8 @@ TileMap::TileMap(int nRows, int nCols)
   m_layers.emplace_back(nRows, nCols);
 }
 
+TileMap::~TileMap() noexcept = default;
+
 void TileMap::draw(QPainter& painter) const noexcept
 {
   QPen pen;
