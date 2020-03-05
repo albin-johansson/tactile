@@ -5,8 +5,6 @@
 
 #include "tile_map.h"
 
-#include <iostream>
-
 namespace tactile {
 
 TactileEditor::TactileEditor() : m_map{std::make_unique<TileMap>(5, 5)}
