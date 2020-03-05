@@ -62,7 +62,6 @@
      <string>File</string>
     </property>
     <addaction name="actionNew_map"/>
-    <addaction name="separator"/>
     <addaction name="actionOpen_map"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
@@ -135,7 +134,6 @@
     <bool>false</bool>
    </attribute>
    <addaction name="actionNew_map"/>
-   <addaction name="separator"/>
    <addaction name="actionOpen_map"/>
    <addaction name="separator"/>
    <addaction name="actionSave"/>
