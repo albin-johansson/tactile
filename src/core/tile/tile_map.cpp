@@ -69,6 +69,30 @@ void TileMap::add_col(TileID id) noexcept
   ++m_nCols;
 }
 
+void TileMap::remove_row() noexcept
+{
+  if (m_nRows == 1) {
+    return;
+  }
+
+  for (auto& layer : m_layers) {
+    layer.remove_row();
+  }
+  --m_nRows;
+}
+
+void TileMap::remove_col() noexcept
+{
+  if (m_nCols == 1) {
+    return;
+  }
+
+  for (auto& layer : m_layers) {
+    layer.remove_col();
+  }
+  --m_nCols;
+}
+
 void TileMap::set_rows(int nRows) noexcept
 {
   nRows = clamp_map_dimension(nRows);

@@ -40,22 +40,23 @@ TactileWindow::~TactileWindow() noexcept
 
 void TactileWindow::init_connections() noexcept
 {
-  connect(m_ui->actionAbout_Tactile,
-          SIGNAL(triggered()),
-          this,
-          SLOT(display_about_dialog()));
+  using TW = TactileWindow;
+  using EP = EditorPane;
 
-  connect(m_ui->actionExit, SIGNAL(triggered()), this, SLOT(exit()));
+  const auto on_triggered = [this](QAction* action, auto fun) noexcept {
+    connect(action, &QAction::triggered, this, fun);
+  };
 
-  connect(m_ui->actionSettings,
-          SIGNAL(triggered()),
-          this,
-          SLOT(display_settings_dialog()));
+  on_triggered(m_ui->actionAbout_Tactile, &TW::display_about_dialog);
+  on_triggered(m_ui->actionExit, &TW::exit);
+  on_triggered(m_ui->actionSettings, &TW::display_settings_dialog);
 
-  connect(m_editorPane,
-          SIGNAL(received_paint_event()),
-          this,
-          SLOT(redraw()));
+  on_triggered(m_ui->actionAdd_row, [this] { emit add_row(); });
+  on_triggered(m_ui->actionAdd_column, [this] { emit add_col(); });
+  on_triggered(m_ui->actionRemove_row, [this] { emit remove_row(); });
+  on_triggered(m_ui->actionRemove_column, [this] { emit remove_col(); });
+
+  connect(m_editorPane, &EP::received_paint_event, this, &TW::redraw);
 }
 
 void TactileWindow::display_about_dialog() noexcept
@@ -80,6 +81,11 @@ void TactileWindow::redraw()
   QPainter painter{m_editorPane};
   painter.fillRect(0, 0, width(), height(), Qt::black);
   emit render(painter);
+}
+
+void TactileWindow::trigger_redraw()
+{
+  m_editorPane->update();
 }
 
 }  // namespace tactile

@@ -66,10 +66,18 @@ class TactileEditor final : public QObject {
    *
    * @since 0.1.0
    */
-  void updated(); // TODO actually emit this signal when map is edited
+  void updated();
 
  public slots:
   void draw(QPainter& painter) const noexcept;
+
+  void add_row() noexcept;
+
+  void add_col() noexcept;
+
+  void remove_row() noexcept;
+
+  void remove_col() noexcept;
 
  private:
   UniquePtr<TileMap> m_map;

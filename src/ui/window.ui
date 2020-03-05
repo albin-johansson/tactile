@@ -312,6 +312,9 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Alt+R</string>
+   </property>
   </action>
   <action name="actionAdd_column">
    <property name="icon">
@@ -326,6 +329,9 @@
      <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
    </property>
   </action>
   <action name="actionRemove_row">
@@ -342,6 +348,9 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Alt+Shift+R</string>
+   </property>
   </action>
   <action name="actionRemove_column">
    <property name="icon">
@@ -356,6 +365,9 @@
      <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+C</string>
    </property>
   </action>
   <action name="actionCenter_camera">

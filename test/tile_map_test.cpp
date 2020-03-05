@@ -2,6 +2,8 @@
 
 #include <catch.hpp>
 
+#include "algorithm_utils.h"
+
 using namespace tactile;
 
 TEST_CASE("TileMap(int, int)", "[TileMap]")
@@ -52,6 +54,32 @@ TEST_CASE("TileMap::add_col", "[TileMap]")
   map.add_col();
 
   CHECK(map.cols() == start + 1);
+}
+
+TEST_CASE("TileMap::remove_row", "[TileMap]")
+{
+  const auto initialRows = 4;
+  TileMap map{initialRows, 10};
+
+  map.remove_row();
+  CHECK(map.rows() == (initialRows - 1));
+
+  repeat(20, [&map] { map.remove_row(); });
+
+  CHECK(map.rows() == 1);
+}
+
+TEST_CASE("TileMap::remove_col", "[TileMap]")
+{
+  const auto initialCols = 9;
+  TileMap map{7, initialCols};
+
+  map.remove_col();
+  CHECK(map.cols() == (initialCols - 1));
+
+  repeat(20, [&map] { map.remove_col(); });
+
+  CHECK(map.cols() == 1);
 }
 
 TEST_CASE("TileMap::set_rows", "[TileMap]")

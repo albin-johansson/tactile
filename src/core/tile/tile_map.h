@@ -66,6 +66,22 @@ class TileMap final {
   void add_col(TileID id = empty) noexcept;
 
   /**
+   * Removes a row from the tile map. This method has no effect if the tile
+   * map only contains one row.
+   *
+   * @since 0.1.0
+   */
+  void remove_row() noexcept;
+
+  /**
+   * Removes a column from the tile map. This method has no effect if the tile
+   * map only contains one column.
+   *
+   * @since 0.1.0
+   */
+  void remove_col() noexcept;
+
+  /**
    * Sets the total number of rows in the tile map.
    *
    * @param nRows the new number of rows in the tile map. Clamped to be at

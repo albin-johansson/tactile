@@ -44,16 +44,9 @@ TactileApplication::TactileApplication(int argc, char** argv)
   setWindowIcon(icon);
 
   load_style_sheet(":/res/tactile_light.qss");
+  init_connections();
 
   m_window->showMaximized();
-
-  connect(m_window.get(),
-          SIGNAL(render(QPainter&)),
-          m_editor.get(),
-          SLOT(draw(QPainter&)));
-
-  // TODO connect editor updates to trigger editor pane update
-
 }
 
 TactileApplication::~TactileApplication() noexcept = default;
@@ -68,6 +61,24 @@ void TactileApplication::load_style_sheet(const char* styleSheet)
   file.open(QFile::ReadOnly);
   QString StyleSheet = QLatin1String(file.readAll());
   setStyleSheet(StyleSheet);
+}
+
+void TactileApplication::init_connections() noexcept
+{
+  using TW = TactileWindow;
+  using TE = TactileEditor;
+
+  auto* window = m_window.get();
+  auto* editor = m_editor.get();
+
+  connect(window, &TW::add_row, editor, &TE::add_row);
+  connect(window, &TW::add_col, editor, &TE::add_col);
+  connect(window, &TW::remove_row, editor, &TE::remove_row);
+  connect(window, &TW::remove_col, editor, &TE::remove_col);
+
+  connect(window, &TW::render, editor, &TE::draw);
+
+  connect(editor, &TE::updated, window, &TW::trigger_redraw);
 }
 
 }  // namespace tactile

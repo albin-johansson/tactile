@@ -39,6 +39,8 @@ class TactileApplication final : public QApplication {
  private:
   UniquePtr<TactileWindow> m_window;
   UniquePtr<TactileEditor> m_editor;
+
+  void init_connections() noexcept;
 };
 
 }  // namespace tactile

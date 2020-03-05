@@ -61,6 +61,24 @@ class TactileWindow final : public QMainWindow {
    */
   void render(QPainter& painter);
 
+  void add_row();
+
+  void add_col();
+
+  void remove_row();
+
+  void remove_col();
+
+ public slots:
+  /**
+   * Clears the editor pane and emits a render signal.
+   *
+   * @since 0.1.0
+   */
+  void redraw();
+
+  void trigger_redraw();
+
  private slots:
   /**
    * Exits the Tactile application.
@@ -68,13 +86,6 @@ class TactileWindow final : public QMainWindow {
    * @since 0.1.0
    */
   void exit() noexcept;
-
-  /**
-   * Clears the editor pane and emits a render signal.
-   *
-   * @since 0.1.0
-   */
-  void redraw();
 
  private:
   Ui::MainWindow* m_ui;
