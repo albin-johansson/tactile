@@ -11,7 +11,7 @@ TileLayer::TileLayer(int nRows, int nCols) noexcept : m_visible{true}
 
   for (auto r = 0; r < nRows; ++r) {
     TileRow row;
-    row.reserve(nCols);
+    row.reserve(static_cast<std::size_t>(nCols));
 
     for (auto c = 0; c < nCols; ++c) {
       row.push_back(empty);
@@ -33,7 +33,7 @@ void TileLayer::add_row(TileID id) noexcept
   const auto nCols = cols();
 
   TileRow row;
-  row.reserve(nCols);
+  row.reserve(static_cast<std::size_t>(nCols));
   for (int i = 0; i < nCols; ++i) {
     row.push_back(id);
   }
@@ -66,7 +66,9 @@ void TileLayer::remove_col() noexcept
 void TileLayer::set_tile(const MapPosition& position, TileID id) noexcept
 {
   if (in_bounds(position)) {
-    m_tiles.at(position.row()).at(position.col()) = id;
+    const auto row = static_cast<std::size_t>(position.row());
+    const auto col = static_cast<std::size_t>(position.col());
+    m_tiles.at(row).at(col) = id;
   }
 }
 
@@ -88,7 +90,9 @@ int TileLayer::cols() const noexcept
 Maybe<TileID> TileLayer::tile_at(const MapPosition& position) const noexcept
 {
   if (in_bounds(position)) {
-    return m_tiles.at(position.row()).at(position.col());
+    const auto row = static_cast<std::size_t>(position.row());
+    const auto col = static_cast<std::size_t>(position.col());
+    return m_tiles.at(row).at(col);
   } else {
     return nothing;
   }
@@ -96,8 +100,9 @@ Maybe<TileID> TileLayer::tile_at(const MapPosition& position) const noexcept
 
 bool TileLayer::in_bounds(const MapPosition& position) const noexcept
 {
-  return position.row() < static_cast<int>(m_tiles.size()) &&
-         position.col() < static_cast<int>(m_tiles.at(position.row()).size());
+  const auto row = static_cast<std::size_t>(position.row());
+  const auto col = static_cast<std::size_t>(position.col());
+  return row < m_tiles.size() && col < m_tiles.at(row).size();
 }
 
 }  // namespace tactile
