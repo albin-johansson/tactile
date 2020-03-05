@@ -11,6 +11,8 @@ class MainWindow;
 
 }
 
+class QPainter;
+
 namespace tactile {
 
 class EditorPane;
@@ -36,8 +38,6 @@ class TactileWindow final : public QMainWindow {
 
   ~TactileWindow() noexcept override;
 
-  void paintEvent(QPaintEvent* event) override;
-
  public slots:
   /**
    * Displays the about dialog.
@@ -53,6 +53,14 @@ class TactileWindow final : public QMainWindow {
    */
   void display_settings_dialog() noexcept;
 
+ signals:
+  /**
+   * A signal method that is emitted when the editor pane should be redrawn.
+   *
+   * @since 0.1.0
+   */
+  void render(QPainter& painter);
+
  private slots:
   /**
    * Exits the Tactile application.
@@ -61,12 +69,25 @@ class TactileWindow final : public QMainWindow {
    */
   void exit() noexcept;
 
+  /**
+   * Clears the editor pane and emits a render signal.
+   *
+   * @since 0.1.0
+   */
+  void redraw();
+
  private:
   Ui::MainWindow* m_ui;
 
   EditorPane* m_editorPane;
   MouseToolWidget* m_mouseToolWidget;
 
+  /**
+   * Initializes all of the connections related to the internal components of
+   * the window.
+   *
+   * @since 0.1.0
+   */
   void init_connections() noexcept;
 };
 

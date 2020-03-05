@@ -1,8 +1,47 @@
 cmake_minimum_required(VERSION 3.12)
 project(Tactile-src)
 
+function(tactile_include_dirs [target])
+    target_include_directories(${ARGV0} PUBLIC ${TACTILE_ROOT_DIR}/src)
+    target_include_directories(${ARGV0} PUBLIC core)
+    target_include_directories(${ARGV0} PUBLIC core/util)
+    target_include_directories(${ARGV0} PUBLIC core/tile)
+    target_include_directories(${ARGV0} PUBLIC ui)
+endfunction()
+
+function(tactile_append_gcc_compiler_flags [target])
+    target_compile_options(${ARGV0} PRIVATE
+            -Wall
+            -Wextra
+            -Wpedantic
+            -Wdouble-promotion
+            -Wswitch-default
+            -Wswitch-enum
+            -Wunused
+            -Wuninitialized
+            -Wsuggest-final-types
+            -Wsuggest-final-methods
+            -Wsuggest-override
+            -Wduplicated-cond
+            -Wconversion
+            -Wc++14-compat
+            -Wc++17-compat)
+endfunction()
+
+function(tactile_link_libraries [target])
+    target_link_libraries(${ARGV0}
+            PUBLIC Qt5::Core
+            PUBLIC Qt5::Widgets
+            PUBLIC Qt5::Gui)
+endfunction()
+
 set(TACTILE_SOURCE_FILES
         tactile2.qrc
+
+        core/util/maybe.h
+        core/util/smart_pointers.h
+        core/util/algorithm_utils.h
+
         core/tile/tile_map.h
         core/tile/tile_map.cpp
         core/tile/tile_id.h
@@ -10,56 +49,44 @@ set(TACTILE_SOURCE_FILES
         core/tile/tile_layer.h
         core/tile/map_position.cpp
         core/tile/map_position.h
-        core/util/maybe.h
-        core/util/smart_pointers.h
-        core/util/algorithm_utils.h
         core/tile/tile_set.cpp
         core/tile/tile_set.h
+
         core/flood_fill.h
         core/flood_fill.cpp
         core/tactile_editor.h
         core/tactile_editor.cpp
+
         ui/editor_pane.cpp
         ui/editor_pane.h
         ui/about_dialog.cpp
         ui/about_dialog.h
         ui/settings_dialog.h
-        ui/settings_dialog.cpp 
+        ui/settings_dialog.cpp
         ui/mouse_tool_widget.cpp
         ui/mouse_tool_widget.h
         ui/tactile_window.h
         ui/tactile_window.cpp
+
         tactile_application.cpp
         tactile_application.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 
-target_include_directories(TactileLib PUBLIC ${TACTILE_ROOT_DIR}/src)
-target_include_directories(TactileLib PUBLIC core)
-target_include_directories(TactileLib PUBLIC core/util)
-target_include_directories(TactileLib PUBLIC core/tile)
-target_include_directories(TactileLib PUBLIC ui)
-
-
-target_link_libraries(TactileLib
-        PUBLIC Qt5::Core
-        PUBLIC Qt5::Widgets
-        PUBLIC Qt5::Gui)
+tactile_include_dirs(TactileLib)
+tactile_link_libraries(TactileLib)
 
 add_executable(TactileRun
         ${TACTILE_SOURCE_FILES}
         main.cpp)
 
-target_include_directories(TactileRun PUBLIC ${TACTILE_ROOT_DIR}/src)
-target_include_directories(TactileRun PUBLIC core)
-target_include_directories(TactileRun PUBLIC core/util)
-target_include_directories(TactileRun PUBLIC core/tile)
-target_include_directories(TactileRun PUBLIC ui)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    tactile_append_gcc_compiler_flags(TactileLib)
+    tactile_append_gcc_compiler_flags(TactileRun)
+endif ()
 
-target_link_libraries(TactileRun
-        PUBLIC Qt5::Core
-        PUBLIC Qt5::Widgets
-        PUBLIC Qt5::Gui)
+tactile_include_dirs(TactileRun)
+tactile_link_libraries(TactileRun)
 
 copy_directory_post_build(TactileRun
         ${TACTILE_ROOT_DIR}/bin

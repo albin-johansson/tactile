@@ -3,6 +3,8 @@
 
 #include "smart_pointers.h"
 
+class QPaintEvent;
+
 namespace tactile {
 
 class TactileWindow;

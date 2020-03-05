@@ -96,8 +96,8 @@ Maybe<TileID> TileLayer::tile_at(const MapPosition& position) const noexcept
 
 bool TileLayer::in_bounds(const MapPosition& position) const noexcept
 {
-  return position.row() < m_tiles.size() &&
-         position.col() < m_tiles.at(position.row()).size();
+  return position.row() < static_cast<int>(m_tiles.size()) &&
+         position.col() < static_cast<int>(m_tiles.at(position.row()).size());
 }
 
 }  // namespace tactile

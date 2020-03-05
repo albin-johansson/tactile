@@ -1,5 +1,6 @@
 #include "tactile_window.h"
 
+#include <QApplication>
 #include <QOpenGLFunctions>
 #include <QPainter>
 #include <QSpacerItem>
@@ -32,9 +33,9 @@ TactileWindow::TactileWindow(QWidget* parent)
 
 TactileWindow::~TactileWindow() noexcept
 {
-  delete m_ui;
-  delete m_editorPane;
   delete m_mouseToolWidget;
+  delete m_editorPane;
+  delete m_ui;
 }
 
 void TactileWindow::init_connections() noexcept
@@ -50,13 +51,11 @@ void TactileWindow::init_connections() noexcept
           SIGNAL(triggered()),
           this,
           SLOT(display_settings_dialog()));
-}
 
-void TactileWindow::paintEvent(QPaintEvent*)
-{
-  m_editorPane->update();
-
-  // TODO notify editor 
+  connect(m_editorPane,
+          SIGNAL(received_paint_event()),
+          this,
+          SLOT(redraw()));
 }
 
 void TactileWindow::display_about_dialog() noexcept
@@ -74,6 +73,13 @@ void TactileWindow::display_settings_dialog() noexcept
 void TactileWindow::exit() noexcept
 {
   QApplication::exit();
+}
+
+void TactileWindow::redraw()
+{
+  QPainter painter{m_editorPane};
+  painter.fillRect(0, 0, width(), height(), Qt::black);
+  emit render(painter);
 }
 
 }  // namespace tactile

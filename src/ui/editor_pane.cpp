@@ -17,18 +17,7 @@ EditorPane::EditorPane(QWidget* parent) noexcept : QWidget{parent}
 void EditorPane::paintEvent(QPaintEvent* event)
 {
   QWidget::paintEvent(event);
-  paint(event);
-}
-
-void EditorPane::paint(QPaintEvent* event) noexcept
-{
-  if (!event) {
-    return;
-  }
-
-  QPainter painter{this};
-  const auto bounds = QRect{0, 0, width(), height()};
-  painter.fillRect(bounds, Qt::black);
+  emit received_paint_event();
 }
 
 }  // namespace tactile

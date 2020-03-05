@@ -2,6 +2,7 @@
 
 #include <QFile>
 #include <QIcon>
+#include <QPainter>
 #include <QStyleFactory>
 #include <QSurfaceFormat>
 
@@ -46,7 +47,13 @@ TactileApplication::TactileApplication(int argc, char** argv)
 
   m_window->showMaximized();
 
-  // TODO connect window paint events to editor paint
+  connect(m_window.get(),
+          SIGNAL(render(QPainter&)),
+          m_editor.get(),
+          SLOT(draw(QPainter&)));
+
+  // TODO connect editor updates to trigger editor pane update
+
 }
 
 TactileApplication::~TactileApplication() noexcept = default;
