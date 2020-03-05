@@ -50,7 +50,6 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionAbout_Tactile, &TW::display_about_dialog);
   on_triggered(m_ui->actionExit, &TW::exit);
   on_triggered(m_ui->actionSettings, &TW::display_settings_dialog);
-
   on_triggered(m_ui->actionAdd_row, [this] { emit add_row(); });
   on_triggered(m_ui->actionAdd_column, [this] { emit add_col(); });
   on_triggered(m_ui->actionRemove_row, [this] { emit remove_row(); });
