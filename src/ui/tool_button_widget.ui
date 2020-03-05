@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>239</width>
-    <height>177</height>
+    <height>192</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,7 +46,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Stamp tool</string>
+        <string>Brush</string>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
@@ -81,7 +81,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Bucket tool</string>
+        <string>Bucket</string>
        </property>
        <property name="text">
         <string notr="true"/>
@@ -113,7 +113,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Eraser tool</string>
+        <string>Eraser</string>
        </property>
        <property name="text">
         <string/>
@@ -145,7 +145,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Rectangle selection tool</string>
+        <string>Rectangle selection</string>
        </property>
        <property name="text">
         <string/>
@@ -171,7 +171,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Find same tool</string>
+        <string>Find same</string>
        </property>
        <property name="text">
         <string/>
