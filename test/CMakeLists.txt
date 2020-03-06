@@ -6,7 +6,8 @@ set(TACTILE_TEST_FILES
         tile_layer_test.cpp
         map_position_test.cpp
         tile_map_test.cpp
-        flood_fill_test.cpp)
+        flood_fill_test.cpp
+        tile_sheet_test.cpp)
 
 add_executable(TactileTests ${TACTILE_TEST_FILES})
 
@@ -27,4 +28,8 @@ target_link_libraries(TactileTests
 
 copy_directory_post_build(TactileTests
         ${TACTILE_ROOT_DIR}/bin
+        ${CMAKE_CURRENT_BINARY_DIR})
+
+copy_directory_post_build(TactileTests
+        ${CMAKE_CURRENT_SOURCE_DIR}/res
         ${CMAKE_CURRENT_BINARY_DIR})
