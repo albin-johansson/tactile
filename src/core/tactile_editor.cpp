@@ -23,6 +23,16 @@ void TactileEditor::open_map(const char*)
 void TactileEditor::save_as(const char*) const
 {}
 
+int TactileEditor::rows() const noexcept
+{
+  return m_map->rows();
+}
+
+int TactileEditor::cols() const noexcept
+{
+  return m_map->cols();
+}
+
 void TactileEditor::select_layer(int index) noexcept
 {
   m_map->select(index);

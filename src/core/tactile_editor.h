@@ -60,6 +60,22 @@ class TactileEditor final : public QObject {
    */
   void select_layer(int index) noexcept;
 
+  /**
+   * Returns the amount of rows in the active tile map.
+   *
+   * @return the amount of rows in the active tile map.
+   * @since 0.1.0
+   */
+  [[nodiscard]] int rows() const noexcept;
+
+  /**
+   * Returns the amount of columns in the active tile map.
+   *
+   * @return the amount of columns in the active tile map.
+   * @since 0.1.0
+   */
+  [[nodiscard]] int cols() const noexcept;
+
  signals:
   /**
    * A signal that is emitted when the state of the editor has changed.
