@@ -65,20 +65,25 @@ void TactileApplication::load_style_sheet(const char* styleSheet)
 
 void TactileApplication::init_connections() noexcept
 {
-  using TW = TactileWindow;
-  using TE = TactileEditor;
+  using W = TactileWindow;
+  using E = TactileEditor;
 
   auto* window = m_window.get();
   auto* editor = m_editor.get();
 
-  connect(window, &TW::add_row, editor, &TE::add_row);
-  connect(window, &TW::add_col, editor, &TE::add_col);
-  connect(window, &TW::remove_row, editor, &TE::remove_row);
-  connect(window, &TW::remove_col, editor, &TE::remove_col);
+  connect(window, &W::req_add_row, editor, &E::add_row);
+  connect(window, &W::req_add_col, editor, &E::add_col);
+  connect(window, &W::req_remove_row, editor, &E::remove_row);
+  connect(window, &W::req_remove_col, editor, &E::remove_col);
+  connect(window, &W::req_center_camera, this, [this] {
+    const auto width = m_editor->cols() * 50;  // FIXME add tile size
+    const auto height = m_editor->rows() * 50;
+    m_window->center_camera(width, height);
+  });
 
-  connect(window, &TW::render, editor, &TE::draw);
+  connect(window, &W::req_render, editor, &E::draw);
 
-  connect(editor, &TE::updated, window, &TW::trigger_redraw);
+  connect(editor, &E::updated, window, &W::trigger_redraw);
 }
 
 }  // namespace tactile

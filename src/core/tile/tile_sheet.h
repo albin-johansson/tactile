@@ -10,7 +10,7 @@ namespace tactile {
 /**
  * The <code>TileSheet</code> class represents an image that contains a set
  * of tiles that are used to build tile maps. All tile sheets store their
- * first valid tile ID.
+ * first and last valid tile ID.
  *
  * @since 0.1.0
  */
@@ -37,6 +37,15 @@ class TileSheet final {
    * @since 0.1.0
    */
   void set_first_id(TileID firstID) noexcept;
+
+  /**
+   * Indicates whether or not the tile sheet contains the specified tile ID.
+   *
+   * @param id the tile ID that will be checked.
+   * @return true if the tile sheet contains the tile ID; false otherwise.
+   * @since 0.1.0
+   */
+  [[nodiscard]] bool contains(TileID id) const noexcept;
 
   /**
    * Returns the width of the tile sheet image.
@@ -85,7 +94,7 @@ class TileSheet final {
    */
   [[nodiscard]] TileID last_id() const noexcept
   {
-    return first_id() + (tiles() - 1);
+    return first_id() + tiles();
   }
 
  private:

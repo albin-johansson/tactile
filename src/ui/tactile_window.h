@@ -53,23 +53,6 @@ class TactileWindow final : public QMainWindow {
    */
   void display_settings_dialog() noexcept;
 
- signals:
-  /**
-   * A signal method that is emitted when the editor pane should be redrawn.
-   *
-   * @since 0.1.0
-   */
-  void render(QPainter& painter);
-
-  void add_row();
-
-  void add_col();
-
-  void remove_row();
-
-  void remove_col();
-
- public slots:
   /**
    * Clears the editor pane and emits a render signal.
    *
@@ -77,7 +60,66 @@ class TactileWindow final : public QMainWindow {
    */
   void redraw();
 
+  /**
+   * Centers the camera over the tile map.
+   *
+   * @param mapWidth the current width of the tile map.
+   * @param mapHeight the current height of the tile map.
+   * @since 0.1.0
+   */
+  void center_camera(int mapWidth, int mapHeight);
+
   void trigger_redraw();
+
+ signals:
+  /**
+   * A signal that is emitted when the editor pane should be redrawn.
+   *
+   * @since 0.1.0
+   */
+  void req_render(QPainter& painter);
+
+  /**
+   * A signal that is emitted when the user wants to add a row to the tile map.
+   *
+   * @since 0.1.0
+   */
+  void req_add_row();
+
+  /**
+   * A signal that is emitted when the user wants to add a column to the tile
+   * map.
+   *
+   * @since 0.1.0
+   */
+  void req_add_col();
+
+  /**
+   * A signal that is emitted when the user wants to remove a row from the tile
+   * map.
+   *
+   * @since 0.1.0
+   */
+  void req_remove_row();
+
+  /**
+   * A signal that is emitted when the user wants to remove a column from the
+   * tile map.
+   *
+   * @since 0.1.0
+   */
+  void req_remove_col();
+
+  /**
+   * A signal that is emitted when the user wants to center the camera over the
+   * tile map.
+   *
+   * @since 0.1.0
+   */
+  void req_center_camera();
+
+ protected:
+  void paintEvent(QPaintEvent* event) override;
 
  private slots:
   /**

@@ -23,18 +23,51 @@ class EditorPane final : public QWidget {
    */
   explicit EditorPane(QWidget* parent = nullptr) noexcept;
 
- protected:
-  void paintEvent(QPaintEvent* event) override;
+  /**
+   * Moves the viewport by the specified amount.
+   *
+   * @param dx the offset that will be applied in the x-axis, may be negative.
+   * @param dy the offset that will be applied in the y-axis, may be negative.
+   * @since 0.1.0
+   */
+  void move_viewport(int dx, int dy) noexcept;
 
- public:
+  /**
+   * Sets the position of the viewport.
+   *
+   * @param x the new x-coordinate of the viewport.
+   * @param y the new y-coordinate of the viewport.
+   * @since 0.1.0
+   */
+  void set_viewport_pos(int x, int y) noexcept;
+
+  /**
+   * Returns the viewport of the editor pane.
+   *
+   * @return the viewport of the editor pane.
+   * @since 0.1.0
+   */
+  [[nodiscard]] const QRect& viewport() const noexcept
+  {
+    return m_viewport;
+  }
+
  signals:
   /**
    * A signal method that is emitted every time that the editor pane receives
-   * a paint event.
+   * a paint event and wants the tile map to be redrawn.
    *
    * @since 0.1.0
    */
-  void received_paint_event();
+  void req_redraw();
+
+ protected:
+  void paintEvent(QPaintEvent* event) override;
+
+  void resizeEvent(QResizeEvent* event) override;
+
+ private:
+  QRect m_viewport;
 };
 
 }  // namespace tactile

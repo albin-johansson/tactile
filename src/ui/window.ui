@@ -61,11 +61,11 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew_map"/>
-    <addaction name="actionOpen_map"/>
+    <addaction name="actionNewMap"/>
+    <addaction name="actionOpenMap"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
-    <addaction name="actionSave_as"/>
+    <addaction name="actionSaveAs"/>
     <addaction name="separator"/>
     <addaction name="actionRename"/>
     <addaction name="separator"/>
@@ -80,37 +80,37 @@
     <addaction name="actionUndo"/>
     <addaction name="actionRedo"/>
     <addaction name="separator"/>
-    <addaction name="actionAdd_row"/>
-    <addaction name="actionAdd_column"/>
-    <addaction name="actionRemove_row"/>
-    <addaction name="actionRemove_column"/>
+    <addaction name="actionAddRow"/>
+    <addaction name="actionAddColumn"/>
+    <addaction name="actionRemoveRow"/>
+    <addaction name="actionRemoveColumn"/>
     <addaction name="separator"/>
-    <addaction name="actionStamp_tool"/>
-    <addaction name="actionBucket_tool"/>
-    <addaction name="actionEraser_tool"/>
+    <addaction name="actionStampTool"/>
+    <addaction name="actionBucketTool"/>
+    <addaction name="actionEraserTool"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
      <string>View</string>
     </property>
-    <addaction name="actionCenter_camera"/>
+    <addaction name="actionCenterCamera"/>
     <addaction name="separator"/>
-    <addaction name="actionToggle_grid"/>
+    <addaction name="actionToggleGrid"/>
     <addaction name="separator"/>
-    <addaction name="actionZoom_in"/>
-    <addaction name="actionZoom_out"/>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
     <addaction name="separator"/>
-    <addaction name="actionPan_up"/>
-    <addaction name="actionPan_down"/>
-    <addaction name="actionPan_right_3"/>
-    <addaction name="actionPan_left"/>
+    <addaction name="actionPanUp"/>
+    <addaction name="actionPanDown"/>
+    <addaction name="actionPanRight"/>
+    <addaction name="actionPanLeft"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionAbout_Tactile"/>
+    <addaction name="actionAboutTactile"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -133,8 +133,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionNew_map"/>
-   <addaction name="actionOpen_map"/>
+   <addaction name="actionNewMap"/>
+   <addaction name="actionOpenMap"/>
    <addaction name="separator"/>
    <addaction name="actionSave"/>
    <addaction name="separator"/>
@@ -142,7 +142,7 @@
    <addaction name="actionRedo"/>
    <addaction name="separator"/>
   </widget>
-  <action name="actionNew_map">
+  <action name="actionNewMap">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/file.png</normaloff>:/res/icons/icons8/color/64/file.png</iconset>
@@ -160,7 +160,7 @@
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="actionOpen_map">
+  <action name="actionOpenMap">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/opened-folder.png</normaloff>:/res/icons/icons8/color/64/opened-folder.png</iconset>
@@ -196,7 +196,7 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="actionSave_as">
+  <action name="actionSaveAs">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/save-as.png</normaloff>:/res/icons/icons8/color/64/save-as.png</iconset>
@@ -298,7 +298,7 @@
     <string>Ctrl+Y</string>
    </property>
   </action>
-  <action name="actionAdd_row">
+  <action name="actionAddRow">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/add-row.png</normaloff>:/res/icons/icons8/color/64/add-row.png</iconset>
@@ -316,7 +316,7 @@
     <string>Alt+R</string>
    </property>
   </action>
-  <action name="actionAdd_column">
+  <action name="actionAddColumn">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/add-column.png</normaloff>:/res/icons/icons8/color/64/add-column.png</iconset>
@@ -334,7 +334,7 @@
     <string>Alt+C</string>
    </property>
   </action>
-  <action name="actionRemove_row">
+  <action name="actionRemoveRow">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/remove-row.png</normaloff>:/res/icons/icons8/color/64/remove-row.png</iconset>
@@ -352,7 +352,7 @@
     <string>Alt+Shift+R</string>
    </property>
   </action>
-  <action name="actionRemove_column">
+  <action name="actionRemoveColumn">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/remove-column.png</normaloff>:/res/icons/icons8/color/64/remove-column.png</iconset>
@@ -370,7 +370,7 @@
     <string>Alt+Shift+C</string>
    </property>
   </action>
-  <action name="actionCenter_camera">
+  <action name="actionCenterCamera">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/center-camera.png</normaloff>:/res/icons/icons8/color/64/center-camera.png</iconset>
@@ -384,8 +384,11 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Space</string>
+   </property>
   </action>
-  <action name="actionToggle_grid">
+  <action name="actionToggleGrid">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/grid.png</normaloff>:/res/icons/icons8/color/64/grid.png</iconset>
@@ -403,7 +406,7 @@
     <string>Ctrl+G</string>
    </property>
   </action>
-  <action name="actionZoom_in">
+  <action name="actionZoomIn">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/zoom-in.png</normaloff>:/res/icons/icons8/color/64/zoom-in.png</iconset>
@@ -421,7 +424,7 @@
     <string>Ctrl++</string>
    </property>
   </action>
-  <action name="actionZoom_out">
+  <action name="actionZoomOut">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/zoom-out.png</normaloff>:/res/icons/icons8/color/64/zoom-out.png</iconset>
@@ -449,7 +452,7 @@
     <string>l</string>
    </property>
   </action>
-  <action name="actionPan_up">
+  <action name="actionPanUp">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/arrow-up.png</normaloff>:/res/icons/icons8/color/64/arrow-up.png</iconset>
@@ -467,7 +470,7 @@
     <string>Ctrl+Up</string>
    </property>
   </action>
-  <action name="actionPan_right_3">
+  <action name="actionPanRight">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/arrow-right.png</normaloff>:/res/icons/icons8/color/64/arrow-right.png</iconset>
@@ -485,7 +488,7 @@
     <string>Ctrl+Right</string>
    </property>
   </action>
-  <action name="actionPan_left">
+  <action name="actionPanLeft">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/arrow-left.png</normaloff>:/res/icons/icons8/color/64/arrow-left.png</iconset>
@@ -503,7 +506,7 @@
     <string>Ctrl+Left</string>
    </property>
   </action>
-  <action name="actionPan_down">
+  <action name="actionPanDown">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/arrow-down.png</normaloff>:/res/icons/icons8/color/64/arrow-down.png</iconset>
@@ -521,7 +524,7 @@
     <string>Ctrl+Down</string>
    </property>
   </action>
-  <action name="actionAbout_Tactile">
+  <action name="actionAboutTactile">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/about.png</normaloff>:/res/icons/icons8/color/64/about.png</iconset>
@@ -536,37 +539,37 @@
     </font>
    </property>
   </action>
-  <action name="actionStamp_tool">
+  <action name="actionStampTool">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
-     <normaloff>:/res/icons/icons8/color/64/brush.png</normaloff>:/res/icons/icons8/color/64/brush.png</iconset>
+     <normaloff>:/res/icons/icons8/color/64/stamp.png</normaloff>:/res/icons/icons8/color/64/stamp.png</iconset>
    </property>
    <property name="text">
-    <string>Stamp tool</string>
+    <string>Stamp</string>
    </property>
    <property name="shortcut">
     <string>S</string>
    </property>
   </action>
-  <action name="actionBucket_tool">
+  <action name="actionBucketTool">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/bucket.png</normaloff>:/res/icons/icons8/color/64/bucket.png</iconset>
    </property>
    <property name="text">
-    <string>Bucket tool</string>
+    <string>Bucket</string>
    </property>
    <property name="shortcut">
     <string>B</string>
    </property>
   </action>
-  <action name="actionEraser_tool">
+  <action name="actionEraserTool">
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/eraser.png</normaloff>:/res/icons/icons8/color/64/eraser.png</iconset>
    </property>
    <property name="text">
-    <string>Eraser tool</string>
+    <string>Eraser</string>
    </property>
    <property name="shortcut">
     <string>E</string>
