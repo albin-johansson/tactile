@@ -11,6 +11,10 @@ QMenuBar::item:pressed {
   background-color: darkgray;
 }
 
+QMenu {
+  border: 1px solid #CCCCCC;
+}
+
 QMenu::item:selected {
   background-color: lightgray;
   color: black;

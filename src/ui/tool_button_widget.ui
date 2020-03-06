@@ -46,7 +46,7 @@
         </size>
        </property>
        <property name="toolTip">
-        <string>Brush</string>
+        <string>Stamp</string>
        </property>
        <property name="styleSheet">
         <string notr="true"/>
@@ -56,7 +56,7 @@
        </property>
        <property name="icon">
         <iconset resource="../tactile2.qrc">
-         <normaloff>:/res/icons/icons8/color/64/brush.png</normaloff>:/res/icons/icons8/color/64/brush.png</iconset>
+         <normaloff>:/res/icons/icons8/color/64/stamp.png</normaloff>:/res/icons/icons8/color/64/stamp.png</iconset>
        </property>
        <property name="iconSize">
         <size>

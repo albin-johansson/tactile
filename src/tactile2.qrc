@@ -95,5 +95,11 @@
         <file>res/icons/icons8/color/64/zoom-out.png</file>
         <file>res/icons/icons8/color/64/rectangle.png</file>
         <file>res/icons/icons8/color/64/search.png</file>
+        <file>res/icons/icons8/color/64/stamp.png</file>
+        <file>res/icons/icons8/color/64/git.png</file>
+        <file>res/icons/icons8/color/64/rotate_left.png</file>
+        <file>res/icons/icons8/color/64/rotate_right.png</file>
+        <file>res/icons/icons8/color/64/save_all.png</file>
+        <file>res/icons/icons8/color/64/warning.png</file>
     </qresource>
 </RCC>
