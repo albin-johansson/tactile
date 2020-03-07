@@ -7,6 +7,7 @@ function(tactile_include_dirs [target])
     target_include_directories(${ARGV0} PUBLIC core/util)
     target_include_directories(${ARGV0} PUBLIC core/tile)
     target_include_directories(${ARGV0} PUBLIC ui)
+    target_include_directories(${ARGV0} PUBLIC ui/toolbar)
 endfunction()
 
 function(tactile_append_gcc_compiler_flags [target])
@@ -69,6 +70,12 @@ set(TACTILE_SOURCE_FILES
         ui/mouse_tool_widget.h
         ui/tactile_window.h
         ui/tactile_window.cpp
+        ui/tile_sheet_file_dialog.cpp
+        ui/tile_sheet_file_dialog.h
+        ui/toolbar/dynamic_tool_bar_widget.cpp
+        ui/toolbar/dynamic_tool_bar_widget.h
+        ui/toolbar/stamp_toolbar.cpp
+        ui/toolbar/stamp_toolbar.h
 
         tactile_application.cpp
         tactile_application.h)

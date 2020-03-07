@@ -5,9 +5,11 @@
 #include <QPainter>
 #include <QStyleFactory>
 #include <QSurfaceFormat>
+#include <iostream>
 
 #include "tactile_editor.h"
 #include "tactile_window.h"
+#include "tile_sheet_file_dialog.h"
 
 namespace tactile {
 namespace {
@@ -73,12 +75,21 @@ void TactileApplication::init_connections() noexcept
 
   connect(window, &W::req_add_row, editor, &E::add_row);
   connect(window, &W::req_add_col, editor, &E::add_col);
+
   connect(window, &W::req_remove_row, editor, &E::remove_row);
   connect(window, &W::req_remove_col, editor, &E::remove_col);
-  connect(window, &W::req_center_camera, this, [this] {
-    const auto width = m_editor->cols() * 50;  // FIXME add tile size
-    const auto height = m_editor->rows() * 50;
-    m_window->center_camera(width, height);
+
+  connect(window, &W::req_center_camera, this, [window, editor] {
+    const auto width = editor->cols() * 50;  // FIXME add tile size
+    const auto height = editor->rows() * 50;
+    window->center_camera(width, height);
+  });
+
+  connect(window, &W::req_new_tile_sheet, this, [window, editor] {
+    const auto result = open_tile_sheet_image(window);
+    if (result) {
+      editor->add_tile_sheet(result->toStdString().c_str());
+    }
   });
 
   connect(window, &W::req_render, editor, &E::draw);

@@ -1,11 +1,15 @@
 #include "tactile_window.h"
 
 #include <QApplication>
+#include <QFile>
+#include <QFileDialog>
 #include <QOpenGLFunctions>
 #include <QPainter>
 #include <QSpacerItem>
+#include <QStandardPaths>
 
 #include "about_dialog.h"
+#include "dynamic_tool_bar_widget.h"
 #include "editor_pane.h"
 #include "mouse_tool_widget.h"
 #include "settings_dialog.h"
@@ -20,19 +24,21 @@ TactileWindow::TactileWindow(QWidget* parent)
 
   m_editorPane = new EditorPane{this};
   m_mouseToolWidget = new MouseToolWidget{this};
+  m_dynamicToolBar = new DynamicToolBarWidget{};
 
-  {
-    auto* layout = m_ui->mainLayout;
-    layout->addWidget(m_mouseToolWidget);
-    layout->addWidget(m_editorPane);
-    layout->update();
-  }
+  //    m_ui->toolBar->addWidget(m_dynamicToolBar);
+  m_ui->toolBar->update();
+
+  m_ui->mainLayout->addWidget(m_mouseToolWidget);
+  m_ui->mainLayout->addWidget(m_editorPane);
+  m_ui->mainLayout->update();
 
   init_connections();
 }
 
 TactileWindow::~TactileWindow() noexcept
 {
+  delete m_dynamicToolBar;
   delete m_mouseToolWidget;
   delete m_editorPane;
   delete m_ui;
@@ -47,9 +53,12 @@ void TactileWindow::init_connections() noexcept
     connect(action, &QAction::triggered, this, fun);
   };
 
+  on_triggered(m_ui->actionExit, [] { QApplication::exit(); });
+
   on_triggered(m_ui->actionAboutTactile, &W::display_about_dialog);
-  on_triggered(m_ui->actionExit, &W::exit);
   on_triggered(m_ui->actionSettings, &W::display_settings_dialog);
+
+  on_triggered(m_ui->actionAddTileSheet, [this] { emit req_new_tile_sheet(); });
   on_triggered(m_ui->actionAddRow, [this] { emit req_add_row(); });
   on_triggered(m_ui->actionAddColumn, [this] { emit req_add_col(); });
   on_triggered(m_ui->actionRemoveRow, [this] { emit req_remove_row(); });
@@ -92,11 +101,6 @@ void TactileWindow::display_settings_dialog() noexcept
   settings.exec();
 }
 
-void TactileWindow::exit() noexcept
-{
-  QApplication::exit();
-}
-
 void TactileWindow::redraw()
 {
   QPainter painter{m_editorPane};
@@ -126,8 +130,8 @@ void TactileWindow::paintEvent(QPaintEvent* event)
 
   static bool first = true;
   if (first) {
-    emit req_center_camera();
     first = false;
+    emit req_center_camera();
   }
 }
 

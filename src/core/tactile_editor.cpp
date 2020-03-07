@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QRect>
+#include <iostream>
 
 #include "tile_map.h"
 
@@ -22,6 +23,15 @@ void TactileEditor::open_map(const char*)
 
 void TactileEditor::save_as(const char*) const
 {}
+
+void TactileEditor::add_tile_sheet(const char* fileName) noexcept
+{
+  if (!fileName) {
+    return;
+  }
+
+  std::cout << "Adding tile sheet: " << fileName << "\n";
+}
 
 int TactileEditor::rows() const noexcept
 {

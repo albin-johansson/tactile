@@ -66,8 +66,19 @@ class EditorPane final : public QWidget {
 
   void resizeEvent(QResizeEvent* event) override;
 
+  void mousePressEvent(QMouseEvent* event) override;
+
+  void mouseReleaseEvent(QMouseEvent* event) override;
+
+  void mouseMoveEvent(QMouseEvent* event) override;
+
+  // TODO add support for touch pads by overriding wheelEvent stuff
+
  private:
   QRect m_viewport;
+
+  int m_lastMouseX;
+  int m_lastMouseY;
 };
 
 }  // namespace tactile

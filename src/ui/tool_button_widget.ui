@@ -10,6 +10,9 @@
     <height>192</height>
    </rect>
   </property>
+  <property name="acceptDrops">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>

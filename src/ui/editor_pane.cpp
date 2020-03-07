@@ -1,5 +1,6 @@
 #include "editor_pane.h"
 
+#include <QApplication>
 #include <QOpenGLFunctions>
 #include <QPainter>
 #include <QResizeEvent>
@@ -41,6 +42,36 @@ void EditorPane::resizeEvent(QResizeEvent* event)
 
   m_viewport.setWidth(event->size().width());
   m_viewport.setHeight(event->size().height());
+}
+
+void EditorPane::mousePressEvent(QMouseEvent* event)
+{
+  QWidget::mousePressEvent(event);
+
+  if (event->buttons() & Qt::MouseButton::MidButton) {
+    m_lastMouseX = event->x();
+    m_lastMouseY = event->y();
+    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+  }
+}
+
+void EditorPane::mouseReleaseEvent(QMouseEvent* event)
+{
+  QWidget::mouseReleaseEvent(event);
+
+  QApplication::restoreOverrideCursor();
+}
+
+void EditorPane::mouseMoveEvent(QMouseEvent* event)
+{
+  QWidget::mouseMoveEvent(event);
+
+  if (event->buttons() & Qt::MouseButton::MidButton) {
+    m_viewport.translate(event->x() - m_lastMouseX, event->y() - m_lastMouseY);
+    m_lastMouseX = event->x();
+    m_lastMouseY = event->y();
+    update();
+  }
 }
 
 }  // namespace tactile

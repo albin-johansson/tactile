@@ -51,6 +51,8 @@ class TactileEditor final : public QObject {
 
   void save_as(const char* fileName) const;
 
+  void add_tile_sheet(const char* fileName) noexcept;
+
   /**
    * Selects the tile layer associated with the specified index. This method
    * has no effect if the supplied index isn't associated with a tile layer.

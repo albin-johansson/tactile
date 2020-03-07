@@ -17,6 +17,7 @@ namespace tactile {
 
 class EditorPane;
 class MouseToolWidget;
+class DynamicToolBarWidget;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -69,6 +70,11 @@ class TactileWindow final : public QMainWindow {
    */
   void center_camera(int mapWidth, int mapHeight);
 
+  /**
+   * Triggers a redraw of the editor pane.
+   *
+   * @since 0.1.0
+   */
   void trigger_redraw();
 
  signals:
@@ -118,22 +124,17 @@ class TactileWindow final : public QMainWindow {
    */
   void req_center_camera();
 
+  void req_new_tile_sheet();
+
  protected:
   void paintEvent(QPaintEvent* event) override;
-
- private slots:
-  /**
-   * Exits the Tactile application.
-   *
-   * @since 0.1.0
-   */
-  void exit() noexcept;
 
  private:
   Ui::MainWindow* m_ui;
 
   EditorPane* m_editorPane;
   MouseToolWidget* m_mouseToolWidget;
+  DynamicToolBarWidget* m_dynamicToolBar;
 
   /**
    * Initializes all of the connections related to the internal components of

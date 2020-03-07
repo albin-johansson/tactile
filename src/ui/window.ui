@@ -49,7 +49,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>29</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="font">
@@ -88,6 +88,10 @@
     <addaction name="actionStampTool"/>
     <addaction name="actionBucketTool"/>
     <addaction name="actionEraserTool"/>
+    <addaction name="actionRectangleSelection"/>
+    <addaction name="actionFindSame"/>
+    <addaction name="separator"/>
+    <addaction name="actionAddTileSheet"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -573,6 +577,42 @@
    </property>
    <property name="shortcut">
     <string>E</string>
+   </property>
+  </action>
+  <action name="actionRectangleSelection">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/color/64/rectangle.png</normaloff>:/res/icons/icons8/color/64/rectangle.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rectangle selection</string>
+   </property>
+   <property name="shortcut">
+    <string>R</string>
+   </property>
+  </action>
+  <action name="actionFindSame">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/color/64/search.png</normaloff>:/res/icons/icons8/color/64/search.png</iconset>
+   </property>
+   <property name="text">
+    <string>Find same</string>
+   </property>
+   <property name="shortcut">
+    <string>F</string>
+   </property>
+  </action>
+  <action name="actionAddTileSheet">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/color/64/image.png</normaloff>:/res/icons/icons8/color/64/image.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add tile sheet...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
    </property>
   </action>
  </widget>
