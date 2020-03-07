@@ -1,5 +1,7 @@
 #pragma once
 
+#include <set>
+
 #include "smart_pointers.h"
 #include "tile_id.h"
 
@@ -39,6 +41,24 @@ class TileSheet final {
   void set_first_id(TileID firstID) noexcept;
 
   /**
+   * Selects the tile at the specified coordinates. Multiple tiles can be
+   * selected simultaneously. This method has no effect if the supplied
+   * position is out-of-bounds.
+   *
+   * @param x the x-coordinate of the selection.
+   * @param y the y-coordinate of the selection.
+   * @since 0.1.0
+   */
+  void select(int x, int y) noexcept;
+
+  /**
+   * Clears any previously selected tiles.
+   *
+   * @since 0.1.0
+   */
+  void clear_selection() noexcept;
+
+  /**
    * Indicates whether or not the tile sheet contains the specified tile ID.
    *
    * @param id the tile ID that will be checked.
@@ -46,6 +66,17 @@ class TileSheet final {
    * @since 0.1.0
    */
   [[nodiscard]] bool contains(TileID id) const noexcept;
+
+  /**
+   * Returns the tile ID of the tile at the specified coordinates.
+   *
+   * @param x the x-coordinate to check.
+   * @param y the y-coordinate to check.
+   * @return the tile ID of the tile at the specified position;
+   * <code>empty</code> if no tile was found.
+   * @since 0.1.0
+   */
+  [[nodiscard]] TileID tile_at(int x, int y) const noexcept;
 
   /**
    * Returns the width of the tile sheet image.
@@ -62,6 +93,28 @@ class TileSheet final {
    * @since 0.1.0
    */
   [[nodiscard]] int height() const noexcept;
+
+  /**
+   * Returns the total number of rows of tiles in the tile sheet.
+   *
+   * @return the total number of rows in the tile sheet.
+   * @since 0.1.0
+   */
+  [[nodiscard]] int rows() const noexcept
+  {
+    return m_rows;
+  }
+
+  /**
+   * Returns the total number of columns of tiles in the tile sheet.
+   *
+   * @return the total number of columns in the tile sheet.
+   * @since 0.1.0
+   */
+  [[nodiscard]] int cols() const noexcept
+  {
+    return m_cols;
+  }
 
   /**
    * Returns the total number of tiles contained in the tile sheet.
@@ -97,10 +150,40 @@ class TileSheet final {
     return first_id() + tiles();
   }
 
+  /**
+   * Returns the size of the tile sprites in the tile sheet. Will always be
+   * at least 1.
+   *
+   * @return the size of the tile sprites in the tile sheet.
+   * @since 0.1.0
+   */
+  [[nodiscard]] int tile_size() const noexcept
+  {
+    return m_size;
+  }
+
+  /**
+   * Returns the currently selected tile IDs.
+   *
+   * @return the currently selected tile IDs.
+   * @since 0.1.0
+   */
+  [[nodiscard]] const auto& selection()
+  {
+    return m_selection;
+  }
+
  private:
   SharedPtr<QImage> m_sheet;
+
+  int m_size;
   int m_nTiles;
+  int m_rows;
+  int m_cols;
+
   TileID m_firstID;
+
+  std::set<TileID> m_selection;
 };
 
 }  // namespace tactile

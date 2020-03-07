@@ -4,15 +4,6 @@
 #include <stdexcept>
 
 namespace tactile {
-namespace {
-
-[[nodiscard]] int calc_tile_amount(int width, int height, int size) noexcept
-{
-  size = (size < 1) ? 1 : size;
-  return (height / size) * (width / size);
-}
-
-}  // namespace
 
 TileSheet::TileSheet(const SharedPtr<QImage>& image, int size)
     : m_sheet{image}, m_firstID{1}
@@ -20,7 +11,13 @@ TileSheet::TileSheet(const SharedPtr<QImage>& image, int size)
   if (!image) {
     throw std::invalid_argument{"Cannot create tile sheet from null image!"};
   }
-  m_nTiles = calc_tile_amount(image->width(), image->height(), size);
+
+  m_size = (size < 1) ? 1 : size;
+  m_nTiles = (image->height() / m_size) * (image->width() / m_size);
+  m_rows = height() / m_size;
+  m_cols = width() / m_size;
+
+  clear_selection();
 }
 
 void TileSheet::set_first_id(TileID firstID) noexcept
@@ -30,9 +27,34 @@ void TileSheet::set_first_id(TileID firstID) noexcept
   }
 }
 
+void TileSheet::select(int x, int y) noexcept
+{
+  const auto tile = tile_at(x, y);
+  if (tile != empty) {
+    m_selection.emplace(tile);
+  }
+}
+
+void TileSheet::clear_selection() noexcept
+{
+  m_selection.clear();
+}
+
 bool TileSheet::contains(TileID id) const noexcept
 {
   return id >= first_id() && id <= last_id();
+}
+
+TileID TileSheet::tile_at(int x, int y) const noexcept
+{
+  if (x < 0 || y < 0 || x > width() || y > height()) {
+    return empty;
+  } else {
+    const auto row = (y / m_size);
+    const auto col = (x / m_size);
+    const auto index = row * cols() + col;
+    return m_firstID + index;
+  }
 }
 
 int TileSheet::width() const noexcept

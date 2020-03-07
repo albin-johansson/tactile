@@ -13,7 +13,6 @@ namespace tactile {
  */
 class TileSet final {
  public:
-  class Cell;
 
   /**
    * Selects the tile at the specified coordinates.
@@ -43,31 +42,6 @@ class TileSet final {
 
  private:
 
-};
-
-class TileSet::Cell final {
- public:
-  Cell(int x, int y, int index) noexcept;
-
-  [[nodiscard]] int x() const noexcept
-  {
-    return m_x;
-  }
-
-  [[nodiscard]] int y() const noexcept
-  {
-    return m_y;
-  }
-
-  [[nodiscard]] int index() const noexcept
-  {
-    return m_index;
-  }
-
- private:
-  int m_x;
-  int m_y;
-  int m_index;
 };
 
 }  // namespace tactile
