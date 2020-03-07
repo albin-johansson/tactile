@@ -101,5 +101,6 @@
         <file>res/icons/icons8/color/64/rotate_right.png</file>
         <file>res/icons/icons8/color/64/save_all.png</file>
         <file>res/icons/icons8/color/64/warning.png</file>
+        <file>res/icons/icons8/color/64/image.png</file>
     </qresource>
 </RCC>
