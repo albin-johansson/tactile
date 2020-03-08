@@ -72,11 +72,10 @@ class EditorPane final : public QWidget {
 
   void mouseMoveEvent(QMouseEvent* event) override;
 
-  // TODO add support for touch pads by overriding wheelEvent stuff
+  // TODO support track-pad for laptop usage
 
  private:
   QRect m_viewport;
-
   int m_lastMouseX;
   int m_lastMouseY;
 };
