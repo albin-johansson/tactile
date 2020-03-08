@@ -2,7 +2,6 @@
 
 #include <QMainWindow>
 #include <QOpenGLWidget>
-#include <QOpenGLWindow>
 #include <QWidget>
 
 namespace Ui {
