@@ -9,12 +9,17 @@
 namespace tactile {
 
 EditorPane::EditorPane(QWidget* parent) noexcept
-    : QWidget{parent}, m_viewport{0, 0, width(), height()}
+    : QWidget{parent},
+      m_viewport{0, 0, width(), height()},
+      m_lastMouseX{0},
+      m_lastMouseY{0}
 {
   QSizePolicy policy;
   policy.setHorizontalPolicy(QSizePolicy::Policy::Expanding);
   policy.setVerticalPolicy(QSizePolicy::Policy::Expanding);
   setSizePolicy(policy);
+
+//  setAttribute(Qt::WA_AcceptTouchEvents);
 }
 
 void EditorPane::move_viewport(int dx, int dy) noexcept
@@ -40,8 +45,9 @@ void EditorPane::resizeEvent(QResizeEvent* event)
 {
   QWidget::resizeEvent(event);
 
-  m_viewport.setWidth(event->size().width());
-  m_viewport.setHeight(event->size().height());
+  const auto& size = event->size();
+  m_viewport.setWidth(size.width());
+  m_viewport.setHeight(size.height());
 }
 
 void EditorPane::mousePressEvent(QMouseEvent* event)
