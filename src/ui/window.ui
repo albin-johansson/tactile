@@ -114,6 +114,7 @@
     <addaction name="separator"/>
     <addaction name="actionZoomIn"/>
     <addaction name="actionZoomOut"/>
+    <addaction name="actionResetZoom"/>
     <addaction name="separator"/>
     <addaction name="actionPanUp"/>
     <addaction name="actionPanDown"/>
@@ -663,6 +664,21 @@
    </property>
    <property name="text">
     <string>Resize map...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionResetZoom">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/color/64/reset_zoom.png</normaloff>:/res/icons/icons8/color/64/reset_zoom.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset zoom</string>
    </property>
    <property name="font">
     <font>

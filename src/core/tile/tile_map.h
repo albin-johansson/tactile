@@ -3,12 +3,15 @@
 #include <vector>
 
 #include "maybe.h"
+#include "smart_pointers.h"
 #include "tile_id.h"
 #include "tile_layer.h"
 
 class QPainter;
 
 namespace tactile {
+
+class TileMapRenderer;
 
 /**
  * The <code>TileMap</code> class represents the main tile maps in the
@@ -19,6 +22,8 @@ namespace tactile {
  */
 class TileMap final {
  public:
+  friend class TileMapRenderer;
+
   /**
    * Creates a tile map instance with one layer. The amount of rows or
    * columns in the tile map is always at least 1.
@@ -31,7 +36,13 @@ class TileMap final {
 
   ~TileMap() noexcept;
 
-  void draw(QPainter& painter /*, const "Viewport&" */) const noexcept;
+  /**
+   * Renders the tile map.
+   *
+   * @param painter the painter that will be used.
+   * @since 0.1.0
+   */
+  void draw(QPainter& painter) const noexcept;
 
   /**
    * Selects the tile layer associated with the specified index. This method has
@@ -155,8 +166,9 @@ class TileMap final {
  private:
   int m_nRows;
   int m_nCols;
-  std::vector<TileLayer> m_layers;
   int m_activeLayer;
+  std::vector<TileLayer> m_layers;
+  UniquePtr<TileMapRenderer> m_renderer;
 
   /**
    * Indicates whether or not the specified layer index is associated with a

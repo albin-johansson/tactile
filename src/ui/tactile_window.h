@@ -66,13 +66,6 @@ class TactileWindow final : public QMainWindow {
   void display_settings_dialog() noexcept;
 
   /**
-   * Clears the editor pane and emits a render signal.
-   *
-   * @since 0.1.0
-   */
-  void redraw();
-
-  /**
    * Centers the camera over the tile map.
    *
    * @param mapWidth the current width of the tile map.
@@ -142,8 +135,18 @@ class TactileWindow final : public QMainWindow {
    */
   void req_new_tile_sheet();
 
+  void req_resize_map();
+
  protected:
   void paintEvent(QPaintEvent* event) override;
+
+ private slots:
+  /**
+   * Clears the editor pane and emits a render signal.
+   *
+   * @since 0.1.0
+   */
+  void redraw();
 
  private:
   Ui::MainWindow* m_ui;

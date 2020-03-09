@@ -51,7 +51,32 @@ class TactileEditor final : public QObject {
 
   void save_as(const char* fileName) const;
 
+  /**
+   * Adds a tile sheet based on the supplied file name. This method has no
+   * effect if the supplied pointer is null.
+   *
+   * @param fileName the file path of the tile sheet image.
+   * @since 0.1.0
+   */
   void add_tile_sheet(const char* fileName) noexcept;
+
+  /**
+   * Sets the number of rows in the tile map. The amount of rows will always
+   * be at least 1.
+   *
+   * @param nRows the new amount of rows in the tile map.
+   * @since 0.1.0
+   */
+  void set_rows(int nRows) noexcept;
+
+  /**
+   * Sets the number of columns in the tile map. The amount of columns will
+   * always be at least 1.
+   *
+   * @param nCols the new amount of columns in the tile map.
+   * @since 0.1.0
+   */
+  void set_cols(int nCols) noexcept;
 
   /**
    * Selects the tile layer associated with the specified index. This method

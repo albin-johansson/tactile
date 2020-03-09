@@ -4,7 +4,7 @@
 
 #include "algorithm_utils.h"
 #include "tile_id.h"
-#include "tile_size.h"
+#include "tile_map_renderer.h"
 
 namespace tactile {
 namespace {
@@ -19,7 +19,8 @@ namespace {
 TileMap::TileMap(int nRows, int nCols)
     : m_nRows{clamp_map_dimension(nRows)},
       m_nCols{clamp_map_dimension(nCols)},
-      m_activeLayer{0}
+      m_activeLayer{0},
+      m_renderer{std::make_unique<TileMapRenderer>()}
 {
   m_layers.emplace_back(nRows, nCols);
 }
@@ -28,20 +29,7 @@ TileMap::~TileMap() noexcept = default;
 
 void TileMap::draw(QPainter& painter) const noexcept
 {
-  QPen pen;
-  pen.setColor(Qt::black);
-  pen.setWidth(1);
-
-  painter.setPen(pen);
-  const auto tileSize = TileSize::get().size();
-
-  for (int r = 0; r < m_nRows; ++r) {
-    for (int c = 0; c < m_nCols; ++c) {
-      painter.fillRect(
-          c * tileSize, r * tileSize, tileSize, tileSize, Qt::green);
-      painter.drawRect(c * tileSize, r * tileSize, tileSize, tileSize);
-    }
-  }
+  m_renderer->render(painter, *this);
 }
 
 void TileMap::select(int layer) noexcept

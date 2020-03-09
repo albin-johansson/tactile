@@ -17,6 +17,8 @@ class MapPosition;
  */
 class TileLayer final {
  public:
+  friend class TileMapRenderer;
+
   /**
    * Creates a tile layer with the specified dimensions. All of the tiles in
    * the created layer are initialized with the value of the

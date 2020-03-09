@@ -5,8 +5,8 @@
 #include <QPainter>
 #include <QStyleFactory>
 #include <QSurfaceFormat>
-#include <iostream>
 
+#include "resize_dialog.h"
 #include "tactile_editor.h"
 #include "tactile_window.h"
 #include "tile_sheet_file_dialog.h"
@@ -92,6 +92,15 @@ void TactileApplication::init_connections() noexcept
     if (result) {
       editor->add_tile_sheet(result->toStdString().c_str());
       window->enable_editor_view();
+    }
+  });
+
+  connect(window, &W::req_resize_map, this, [window, editor] {
+    ResizeDialog dialog;
+    if (dialog.exec()) {
+      editor->set_rows(*dialog.chosen_height());
+      editor->set_cols(*dialog.chosen_width());
+      window->trigger_redraw();
     }
   });
 

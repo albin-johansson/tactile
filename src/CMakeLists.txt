@@ -78,6 +78,8 @@ set(TACTILE_SOURCE_FILES
         ui/startup_widget.h
         ui/main_editor_widget.cpp 
         ui/main_editor_widget.h
+        ui/resize_dialog.h
+        ui/resize_dialog.cpp
 
         ui/toolbar/dynamic_tool_bar_widget.cpp
         ui/toolbar/dynamic_tool_bar_widget.h
@@ -85,7 +87,7 @@ set(TACTILE_SOURCE_FILES
         ui/toolbar/stamp_toolbar.h
         
         tactile_application.cpp
-        tactile_application.h)
+        tactile_application.h core/tile/tile_map_renderer.cpp core/tile/tile_map_renderer.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

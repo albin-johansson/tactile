@@ -103,5 +103,6 @@
         <file>res/icons/icons8/color/64/warning.png</file>
         <file>res/icons/icons8/color/64/image.png</file>
         <file>res/icons/icons8/color/64/resize.png</file>
+        <file>res/icons/icons8/color/64/reset_zoom.png</file>
     </qresource>
 </RCC>

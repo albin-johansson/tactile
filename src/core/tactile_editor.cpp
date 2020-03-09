@@ -1,7 +1,6 @@
 #include "tactile_editor.h"
 
 #include <QPainter>
-#include <QRect>
 #include <iostream>
 
 #include "tile_map.h"
@@ -31,6 +30,16 @@ void TactileEditor::add_tile_sheet(const char* fileName) noexcept
   }
 
   std::cout << "Adding tile sheet: " << fileName << "\n";
+}
+
+void TactileEditor::set_rows(int nRows) noexcept
+{
+  m_map->set_rows(nRows);
+}
+
+void TactileEditor::set_cols(int nCols) noexcept
+{
+  m_map->set_cols(nCols);
 }
 
 int TactileEditor::rows() const noexcept

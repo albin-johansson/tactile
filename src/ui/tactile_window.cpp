@@ -7,7 +7,6 @@
 #include <QPainter>
 #include <QSpacerItem>
 #include <QStandardPaths>
-
 #include <iostream>
 
 #include "about_dialog.h"
@@ -90,7 +89,7 @@ void TactileWindow::paintEvent(QPaintEvent* event)
   QWidget::paintEvent(event);
 
   static bool first = true;
-  if (first) { // FIXME doesn't work correctly with stacked widgets
+  if (first) {  // FIXME doesn't work correctly with stacked widgets
     first = false;
     emit req_center_camera();
   }
@@ -149,30 +148,37 @@ void TactileWindow::init_connections() noexcept
     }
   });
 
-  on_triggered(m_ui->actionPanUp, [this] {
+  on_triggered(m_ui->actionResetZoom, [this] {
     if (in_editor_mode()) {
-      m_editorWidget->editor()->move_viewport(0, -TileSize::get().size());
+      TileSize::get().reset();
       trigger_redraw();
     }
   });
 
-  on_triggered(m_ui->actionPanDown, [this] {
+  on_triggered(m_ui->actionPanUp, [this] {
     if (in_editor_mode()) {
       m_editorWidget->editor()->move_viewport(0, TileSize::get().size());
       trigger_redraw();
     }
   });
 
+  on_triggered(m_ui->actionPanDown, [this] {
+    if (in_editor_mode()) {
+      m_editorWidget->editor()->move_viewport(0, -TileSize::get().size());
+      trigger_redraw();
+    }
+  });
+
   on_triggered(m_ui->actionPanRight, [this] {
     if (in_editor_mode()) {
-      m_editorWidget->editor()->move_viewport(TileSize::get().size(), 0);
+      m_editorWidget->editor()->move_viewport(-TileSize::get().size(), 0);
       trigger_redraw();
     }
   });
 
   on_triggered(m_ui->actionPanLeft, [this] {
     if (in_editor_mode()) {
-      m_editorWidget->editor()->move_viewport(-TileSize::get().size(), 0);
+      m_editorWidget->editor()->move_viewport(TileSize::get().size(), 0);
       trigger_redraw();
     }
   });
@@ -180,6 +186,12 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionCenterCamera, [this] {
     if (in_editor_mode()) {
       emit req_center_camera();
+    }
+  });
+
+  on_triggered(m_ui->actionResizeMap, [this] {
+    if (in_editor_mode()) {
+      emit req_resize_map();
     }
   });
 
