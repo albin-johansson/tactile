@@ -123,6 +123,11 @@ class TactileWindow final : public QMainWindow {
    */
   void req_center_camera();
 
+  /**
+   * A signal that is emitted when the user wants to add a tile sheet.
+   *
+   * @since 0.1.0
+   */
   void req_new_tile_sheet();
 
  protected:

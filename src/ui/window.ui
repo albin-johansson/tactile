@@ -49,7 +49,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>23</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="font">
@@ -84,6 +84,7 @@
     <addaction name="actionAddColumn"/>
     <addaction name="actionRemoveRow"/>
     <addaction name="actionRemoveColumn"/>
+    <addaction name="actionResizeMap"/>
     <addaction name="separator"/>
     <addaction name="actionStampTool"/>
     <addaction name="actionBucketTool"/>
@@ -551,6 +552,12 @@
    <property name="text">
     <string>Stamp</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="shortcut">
     <string>S</string>
    </property>
@@ -562,6 +569,12 @@
    </property>
    <property name="text">
     <string>Bucket</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="shortcut">
     <string>B</string>
@@ -575,6 +588,12 @@
    <property name="text">
     <string>Eraser</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="shortcut">
     <string>E</string>
    </property>
@@ -586,6 +605,12 @@
    </property>
    <property name="text">
     <string>Rectangle selection</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="shortcut">
     <string>R</string>
@@ -611,8 +636,29 @@
    <property name="text">
     <string>Add tile sheet...</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="shortcut">
     <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionResizeMap">
+   <property name="icon">
+    <iconset resource="../tactile2.qrc">
+     <normaloff>:/res/icons/icons8/color/64/resize.png</normaloff>:/res/icons/icons8/color/64/resize.png</iconset>
+   </property>
+   <property name="text">
+    <string>Resize map...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
  </widget>
