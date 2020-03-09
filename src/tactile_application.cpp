@@ -10,6 +10,7 @@
 #include "tactile_editor.h"
 #include "tactile_window.h"
 #include "tile_sheet_file_dialog.h"
+#include "tile_size.h"
 
 namespace tactile {
 namespace {
@@ -80,8 +81,9 @@ void TactileApplication::init_connections() noexcept
   connect(window, &W::req_remove_col, editor, &E::remove_col);
 
   connect(window, &W::req_center_camera, this, [window, editor] {
-    const auto width = editor->cols() * 50;  // FIXME add tile size
-    const auto height = editor->rows() * 50;
+    const auto tileSize = TileSize::get().size();
+    const auto width = editor->cols() * tileSize;
+    const auto height = editor->rows() * tileSize;
     window->center_camera(width, height);
   });
 
@@ -89,6 +91,7 @@ void TactileApplication::init_connections() noexcept
     const auto result = open_tile_sheet_image(window);
     if (result) {
       editor->add_tile_sheet(result->toStdString().c_str());
+      window->enable_editor_view();
     }
   });
 

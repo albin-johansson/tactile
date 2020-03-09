@@ -14,9 +14,7 @@ class QPainter;
 
 namespace tactile {
 
-class EditorPane;
-class MouseToolWidget;
-class DynamicToolBarWidget;
+class MainEditorWidget;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -37,6 +35,20 @@ class TactileWindow final : public QMainWindow {
   explicit TactileWindow(QWidget* parent = nullptr);
 
   ~TactileWindow() noexcept override;
+
+  /**
+   * Enables the startup view.
+   *
+   * @since 0.1.0
+   */
+  void enable_startup_view() noexcept;
+
+  /**
+   * Enables the main editor view.
+   *
+   * @since 0.1.0
+   */
+  void enable_editor_view() noexcept;
 
  public slots:
   /**
@@ -135,10 +147,9 @@ class TactileWindow final : public QMainWindow {
 
  private:
   Ui::MainWindow* m_ui;
-
-  EditorPane* m_editorPane;
-  MouseToolWidget* m_mouseToolWidget;
-  DynamicToolBarWidget* m_dynamicToolBar;
+  MainEditorWidget* m_editorWidget;
+  int m_editorViewIndex;
+  int m_startupViewIndex;
 
   /**
    * Initializes all of the connections related to the internal components of
@@ -147,6 +158,14 @@ class TactileWindow final : public QMainWindow {
    * @since 0.1.0
    */
   void init_connections() noexcept;
+
+  /**
+   * Indicates whether or not the editor view is enabled.
+   *
+   * @return true if the editor view is enabled; false otherwise.
+   * @since 0.1.0
+   */
+  [[nodiscard]] bool in_editor_mode() const noexcept;
 };
 
 }  // namespace tactile

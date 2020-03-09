@@ -54,6 +54,8 @@ set(TACTILE_SOURCE_FILES
         core/tile/tile_set.h
         core/tile/tile_sheet.cpp
         core/tile/tile_sheet.h
+        core/tile/tile_size.h
+        core/tile/tile_size.cpp
 
         core/flood_fill.h
         core/flood_fill.cpp
@@ -72,16 +74,16 @@ set(TACTILE_SOURCE_FILES
         ui/tactile_window.cpp
         ui/tile_sheet_file_dialog.cpp
         ui/tile_sheet_file_dialog.h
+        ui/startup_widget.cpp
+        ui/startup_widget.h
+
         ui/toolbar/dynamic_tool_bar_widget.cpp
         ui/toolbar/dynamic_tool_bar_widget.h
         ui/toolbar/stamp_toolbar.cpp
         ui/toolbar/stamp_toolbar.h
 
         tactile_application.cpp
-        tactile_application.h
-
-        ui/startup_widget.cpp
-        ui/startup_widget.h)
+        tactile_application.h ui/main_editor_widget.cpp ui/main_editor_widget.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

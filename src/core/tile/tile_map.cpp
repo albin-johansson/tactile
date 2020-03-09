@@ -4,6 +4,7 @@
 
 #include "algorithm_utils.h"
 #include "tile_id.h"
+#include "tile_size.h"
 
 namespace tactile {
 namespace {
@@ -32,11 +33,13 @@ void TileMap::draw(QPainter& painter) const noexcept
   pen.setWidth(1);
 
   painter.setPen(pen);
+  const auto tileSize = TileSize::get().size();
 
   for (int r = 0; r < m_nRows; ++r) {
     for (int c = 0; c < m_nCols; ++c) {
-      painter.fillRect(c * 50, r * 50, 50, 50, Qt::green);
-      painter.drawRect(c * 50, r * 50, 50, 50);
+      painter.fillRect(
+          c * tileSize, r * tileSize, tileSize, tileSize, Qt::green);
+      painter.drawRect(c * tileSize, r * tileSize, tileSize, tileSize);
     }
   }
 }

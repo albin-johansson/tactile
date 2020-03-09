@@ -81,8 +81,6 @@ TEST_CASE("TileSheet::width", "[TileSheet]")
 
 TEST_CASE("TileSheet::height", "[TileSheet]")
 {
-  QImage i{""};
-
   auto image = std::make_shared<QImage>("outside.png");
   TileSheet sheet{image, 32};
 
@@ -189,4 +187,6 @@ TEST_CASE("TileSheet::tile_size", "[TileSheet]")
 }
 
 TEST_CASE("TileSheet::selection", "[TileSheet]")
-{}
+{
+  // TODO
+}
