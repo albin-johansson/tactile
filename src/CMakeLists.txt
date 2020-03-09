@@ -78,7 +78,10 @@ set(TACTILE_SOURCE_FILES
         ui/toolbar/stamp_toolbar.h
 
         tactile_application.cpp
-        tactile_application.h)
+        tactile_application.h
+
+        ui/startup_widget.cpp
+        ui/startup_widget.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 
