@@ -36,6 +36,7 @@ compile_commands.json
 .vs
 .vscode
 .idea
+doc
 build
 cmake-build-debug
 cmake-build-release
