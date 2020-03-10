@@ -73,6 +73,7 @@
     </property>
     <addaction name="actionNewMap"/>
     <addaction name="actionOpenMap"/>
+    <addaction name="actionCloseMap"/>
     <addaction name="separator"/>
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
@@ -679,6 +680,17 @@
    </property>
    <property name="text">
     <string>Reset zoom</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionCloseMap">
+   <property name="text">
+    <string>Close map</string>
    </property>
    <property name="font">
     <font>
