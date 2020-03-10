@@ -1,5 +1,6 @@
 #include "tile_map_renderer.h"
 
+#include <QColor>
 #include <QPainter>
 
 #include "tile_map.h"
@@ -27,8 +28,10 @@ void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
   QPen pen;
   pen.setColor(Qt::black);
   pen.setWidth(1);
-  pen.setDashOffset(1);
-  pen.setDashPattern({2, 3});
+  pen.setDashOffset(0);
+  pen.setDashPattern({3, 4});
+
+  const QColor emptyGray{0x55, 0x55, 0x55};
 
   painter.setPen(pen);
 
@@ -39,7 +42,7 @@ void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
       for (auto col = minCol; col < maxCol; ++col) {
         const auto x = col * tileSize;
         const auto y = row * tileSize;
-        painter.fillRect(x, y, tileSize, tileSize, Qt::darkGray);
+        painter.fillRect(x, y, tileSize, tileSize, emptyGray);
         painter.drawRect(x, y, tileSize, tileSize);
       }
     }

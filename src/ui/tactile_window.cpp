@@ -105,6 +105,16 @@ void TactileWindow::init_connections() noexcept
 
   on_triggered(m_ui->actionExit, [] { QApplication::exit(); });
 
+  on_triggered(m_ui->actionNewMap, [this] {
+    if (!in_editor_mode()) {
+      enable_editor_view();
+      emit req_center_camera();
+    }
+
+    // TODO...
+
+  });
+
   on_triggered(m_ui->actionAboutTactile, &W::display_about_dialog);
   on_triggered(m_ui->actionSettings, &W::display_settings_dialog);
 
