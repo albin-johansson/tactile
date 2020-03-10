@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QIcon>
 #include <QPainter>
+#include <QSettings>
 #include <QStyleFactory>
 #include <QSurfaceFormat>
 
@@ -30,6 +31,25 @@ void init_surface_format() noexcept
   QSurfaceFormat::setDefaultFormat(format);
 }
 
+/**
+ * Initializes the settings to their default values, if they are absent.
+ *
+ * @since 0.1.0
+ */
+void validate_settings() noexcept
+{
+  QSettings settings;
+
+  const auto set_if_absent = [&settings](const QString& key,
+                                         const auto value) noexcept {
+    if (!settings.contains(key)) {
+      settings.setValue(key, value);
+    }
+  };
+
+  set_if_absent("visuals-grid", true);
+}
+
 }  // namespace
 
 TactileApplication::TactileApplication(int argc, char** argv)
@@ -41,13 +61,17 @@ TactileApplication::TactileApplication(int argc, char** argv)
 
   setStyle(QStyleFactory::create("Fusion"));
   setApplicationVersion("0.1.0");
+  setOrganizationName("albinjohansson");
   setApplicationName("Tactile");
+  //  setOrganizationDomain("https://github.com/albin-johansson/Tactile");
 
   QIcon icon{":/res/icons/tactile2_icon2.png"};
   setWindowIcon(icon);
 
   load_style_sheet(":/res/tactile_light.qss");
+
   init_connections();
+  validate_settings();
 
   m_window->showMaximized();
 }

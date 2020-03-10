@@ -5,6 +5,7 @@
 #include <QFileDialog>
 #include <QOpenGLFunctions>
 #include <QPainter>
+#include <QSettings>
 #include <QSpacerItem>
 #include <QStandardPaths>
 #include <iostream>
@@ -148,6 +149,15 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionRemoveColumn, [this] {
     if (in_editor_mode()) {
       emit req_remove_col();
+    }
+  });
+
+  on_triggered(m_ui->actionToggleGrid, [this] {
+    if (in_editor_mode()) {
+      QSettings settings;
+      const auto prev = settings.value("visuals-grid").toBool();
+      settings.setValue("visuals-grid", !prev);
+      trigger_redraw();
     }
   });
 

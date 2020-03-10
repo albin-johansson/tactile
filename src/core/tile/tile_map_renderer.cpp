@@ -2,6 +2,7 @@
 
 #include <QColor>
 #include <QPainter>
+#include <QSettings>
 
 #include "tile_map.h"
 #include "tile_size.h"
@@ -25,15 +26,19 @@ void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
   const auto maxCol = (calcMaxCol > nCols) ? nCols : calcMaxCol;
   const auto maxRow = (calcMaxRow > nRows) ? nRows : calcMaxRow;
 
-  QPen pen;
-  pen.setColor(Qt::black);
-  pen.setWidth(1);
-  pen.setDashOffset(0);
-  pen.setDashPattern({3, 4});
+  QSettings settings;
+  const auto renderGrid = settings.value("visuals-grid", true).toBool();
+
+  if (renderGrid) {
+    QPen pen;
+    pen.setColor(Qt::black);
+    pen.setWidth(1);
+    pen.setDashOffset(0);
+    pen.setDashPattern({3, 4});
+    painter.setPen(pen);
+  }
 
   const QColor emptyGray{0x55, 0x55, 0x55};
-
-  painter.setPen(pen);
 
   for (auto& layer : map.m_layers) {
     // TODO...
@@ -43,7 +48,9 @@ void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
         const auto x = col * tileSize;
         const auto y = row * tileSize;
         painter.fillRect(x, y, tileSize, tileSize, emptyGray);
-        painter.drawRect(x, y, tileSize, tileSize);
+        if (renderGrid) {
+          painter.drawRect(x, y, tileSize, tileSize);
+        }
       }
     }
   }
