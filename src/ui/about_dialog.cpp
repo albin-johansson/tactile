@@ -4,15 +4,6 @@
 
 namespace tactile {
 
-AboutDialog::AboutDialog(QWidget* parent)
-    : QDialog{parent}, m_ui{new Ui::AboutUI{}}
-{
-  m_ui->setupUi(this);
-}
-
-AboutDialog::~AboutDialog() noexcept
-{
-  delete m_ui;
-}
+TACTILE_BASIC_WIDGET_DEF(AboutDialog, QDialog, Ui::AboutUI)
 
 }  // namespace tactile
