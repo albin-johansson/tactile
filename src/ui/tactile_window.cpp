@@ -112,7 +112,14 @@ void TactileWindow::init_connections() noexcept
     }
 
     // TODO...
+  });
 
+  on_triggered(m_ui->actionCloseMap, [this] {
+    if (in_editor_mode()) {
+      // TODO save current state of open map
+
+      enable_startup_view();
+    }
   });
 
   on_triggered(m_ui->actionAboutTactile, &W::display_about_dialog);
