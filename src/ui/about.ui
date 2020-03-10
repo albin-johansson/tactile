@@ -302,7 +302,7 @@
          </font>
         </property>
         <property name="text">
-         <string>&lt;a href=&quot;https://github.com/albin-johansson/Tactile2&quot;&gt;Source code&lt;/a&gt;</string>
+         <string>&lt;a href=&quot;https://github.com/albin-johansson/Tactile&quot;&gt;Source code&lt;/a&gt;</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
