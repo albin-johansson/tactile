@@ -10,10 +10,10 @@
 #include <QStandardPaths>
 #include <iostream>
 
-#include "central_widget.h"
+#include "about_dialog.h"
+#include "central_editor_widget.h"
+#include "settings_dialog.h"
 #include "tile_size.h"
-#include "ui/modal/about_dialog.h"
-#include "ui/modal/settings_dialog.h"
 #include "ui_window.h"
 
 namespace tactile {
@@ -25,7 +25,7 @@ TactileWindow::TactileWindow(QWidget* parent)
 
   // TODO add mouse tool and tile sheet widgets here
 
-  m_centralWidget = new CentralWidget{};
+  m_centralWidget = new CentralEditorWidget{};
   setCentralWidget(m_centralWidget);
 
   init_connections();
@@ -175,34 +175,34 @@ void TactileWindow::init_connections() noexcept
       trigger_redraw();
     }
   });
-//
-//  on_triggered(m_ui->actionPanUp, [this] {
-//    if (in_editor_mode()) {
-//      m_editorWidget->editor()->move_viewport(0, TileSize::get().size());
-//      trigger_redraw();
-//    }
-//  });
-//
-//  on_triggered(m_ui->actionPanDown, [this] {
-//    if (in_editor_mode()) {
-//      m_editorWidget->editor()->move_viewport(0, -TileSize::get().size());
-//      trigger_redraw();
-//    }
-//  });
-//
-//  on_triggered(m_ui->actionPanRight, [this] {
-//    if (in_editor_mode()) {
-//      m_editorWidget->editor()->move_viewport(-TileSize::get().size(), 0);
-//      trigger_redraw();
-//    }
-//  });
-//
-//  on_triggered(m_ui->actionPanLeft, [this] {
-//    if (in_editor_mode()) {
-//      m_editorWidget->editor()->move_viewport(TileSize::get().size(), 0);
-//      trigger_redraw();
-//    }
-//  });
+
+  //  on_triggered(m_ui->actionPanUp, [this] {
+  //    if (in_editor_mode()) {
+  //      m_editorWidget->editor()->move_viewport(0, TileSize::get().size());
+  //      trigger_redraw();
+  //    }
+  //  });
+
+  //  on_triggered(m_ui->actionPanDown, [this] {
+  //    if (in_editor_mode()) {
+  //      m_editorWidget->editor()->move_viewport(0, -TileSize::get().size());
+  //      trigger_redraw();
+  //    }
+  //  });
+  //
+  //  on_triggered(m_ui->actionPanRight, [this] {
+  //    if (in_editor_mode()) {
+  //      m_editorWidget->editor()->move_viewport(-TileSize::get().size(), 0);
+  //      trigger_redraw();
+  //    }
+  //  });
+  //
+  //  on_triggered(m_ui->actionPanLeft, [this] {
+  //    if (in_editor_mode()) {
+  //      m_editorWidget->editor()->move_viewport(TileSize::get().size(), 0);
+  //      trigger_redraw();
+  //    }
+  //  });
 
   on_triggered(m_ui->actionCenterCamera, [this] {
     if (in_editor_mode()) {
@@ -216,7 +216,8 @@ void TactileWindow::init_connections() noexcept
     }
   });
 
-  connect(m_centralWidget, &CentralWidget::req_redraw, this, &W::req_render);
+  connect(
+      m_centralWidget, &CentralEditorWidget::req_redraw, this, &W::req_render);
 }
 
 bool TactileWindow::in_editor_mode() const noexcept

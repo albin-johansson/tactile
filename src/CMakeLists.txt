@@ -94,8 +94,8 @@ set(TACTILE_SOURCE_FILES
         ui/editor/render_pane.h
         ui/widget_size_policy.h
         ui/widget_size_policy.cpp
-        ui/editor/central_widget.cpp
-        ui/editor/central_widget.h)
+        ui/editor/central_editor_widget.cpp
+        ui/editor/central_editor_widget.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

@@ -14,7 +14,7 @@ class QPainter;
 
 namespace tactile {
 
-class CentralWidget;
+class CentralEditorWidget;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -150,7 +150,7 @@ class TactileWindow final : public QMainWindow {
 
  private:
   Ui::MainWindow* m_ui;
-  CentralWidget* m_centralWidget;
+  CentralEditorWidget* m_centralWidget;
 
   /**
    * Initializes all of the connections related to the internal components of

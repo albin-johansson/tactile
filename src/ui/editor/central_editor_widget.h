@@ -12,18 +12,18 @@ namespace tactile {
 class RenderPane;
 
 /**
- * The <code>CentralWidget</code> class represents the center stage of the
+ * The <code>CentralEditorWidget</code> class represents the center stage of the
  * editor and contains the main tile map editor pane.
  *
  * @since 0.1.0
  */
-class CentralWidget final : public QWidget {
+class CentralEditorWidget final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit CentralWidget(QWidget* parent = nullptr);
+  explicit CentralEditorWidget(QWidget* parent = nullptr);
 
-  ~CentralWidget() noexcept override;
+  ~CentralEditorWidget() noexcept override;
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 
@@ -45,7 +45,7 @@ class CentralWidget final : public QWidget {
 
   [[nodiscard]] bool in_editor_mode() const noexcept;
 
-//  [[nodiscard, deprecated]] QWidget* render_widget() noexcept;
+  //  [[nodiscard, deprecated]] QWidget* render_widget() noexcept;
 
  public slots:
   void trigger_redraw() noexcept;

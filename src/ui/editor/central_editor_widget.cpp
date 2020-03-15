@@ -1,4 +1,4 @@
-#include "central_widget.h"
+#include "central_editor_widget.h"
 
 #include "render_pane.h"
 #include "startup_widget.h"
@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-CentralWidget::CentralWidget(QWidget* parent)
+CentralEditorWidget::CentralEditorWidget(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::CentralWidgetUI{}}
 {
   m_ui->setupUi(this);
@@ -18,42 +18,42 @@ CentralWidget::CentralWidget(QWidget* parent)
 
   {
     using RP = RenderPane;
-    using CW = CentralWidget;
+    using CW = CentralEditorWidget;
     connect(m_renderPane, &RP::rp_req_redraw, this, &CW::req_redraw);
   }
 }
 
-CentralWidget::~CentralWidget() noexcept
+CentralEditorWidget::~CentralEditorWidget() noexcept
 {
   delete m_ui;
 }
 
-void CentralWidget::center_viewport(int mapWidth, int mapHeight) noexcept
+void CentralEditorWidget::center_viewport(int mapWidth, int mapHeight) noexcept
 {
   m_renderPane->center_viewport(mapWidth, mapHeight);
 }
 
-void CentralWidget::trigger_redraw() noexcept
+void CentralEditorWidget::trigger_redraw() noexcept
 {
   m_renderPane->update();
 }
 
-void CentralWidget::enable_startup_view() noexcept
+void CentralEditorWidget::enable_startup_view() noexcept
 {
   m_ui->stackedWidget->setCurrentIndex(m_startupViewIndex);
 }
 
-void CentralWidget::enable_editor_view() noexcept
+void CentralEditorWidget::enable_editor_view() noexcept
 {
   m_ui->stackedWidget->setCurrentIndex(m_editorViewIndex);
 }
 
-bool CentralWidget::in_editor_mode() const noexcept
+bool CentralEditorWidget::in_editor_mode() const noexcept
 {
   return m_ui->stackedWidget->currentIndex() == m_editorViewIndex;
 }
 
-const QRect& CentralWidget::current_viewport() const noexcept
+const QRect& CentralEditorWidget::current_viewport() const noexcept
 {
   return m_renderPane->viewport();
 }
