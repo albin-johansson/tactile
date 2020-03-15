@@ -65,8 +65,6 @@ set(TACTILE_SOURCE_FILES
         core/tactile_editor.h
         core/tactile_editor.cpp
 
-        ui/editor_pane.cpp
-        ui/editor_pane.h
         ui/about_dialog.cpp
         ui/about_dialog.h
         ui/settings_dialog.h
@@ -79,8 +77,6 @@ set(TACTILE_SOURCE_FILES
         ui/tile_sheet_file_dialog.h
         ui/startup_widget.cpp
         ui/startup_widget.h
-        ui/main_editor_widget.cpp 
-        ui/main_editor_widget.h
         ui/resize_dialog.h
         ui/resize_dialog.cpp
         ui/basic_widget_macro.h
@@ -91,7 +87,12 @@ set(TACTILE_SOURCE_FILES
         ui/toolbar/stamp_toolbar.h
 
         tactile_application.cpp
-        tactile_application.h)
+        tactile_application.h
+
+        ui/editor/render_pane.cpp
+        ui/editor/render_pane.h
+        ui/widget_size_policy.h
+        ui/widget_size_policy.cpp ui/editor/central_widget.cpp ui/editor/central_widget.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

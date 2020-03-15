@@ -14,7 +14,7 @@ class QPainter;
 
 namespace tactile {
 
-class MainEditorWidget;
+class CentralWidget;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -140,19 +140,17 @@ class TactileWindow final : public QMainWindow {
  protected:
   void paintEvent(QPaintEvent* event) override;
 
- private slots:
-  /**
-   * Clears the editor pane and emits a render signal.
-   *
-   * @since 0.1.0
-   */
-  void redraw();
+// private slots:
+//  /**
+//   * Clears the editor pane and emits a render signal.
+//   *
+//   * @since 0.1.0
+//   */
+//  void redraw();
 
  private:
   Ui::MainWindow* m_ui;
-  MainEditorWidget* m_editorWidget;
-  int m_editorViewIndex;
-  int m_startupViewIndex;
+  CentralWidget* m_centralWidget;
 
   /**
    * Initializes all of the connections related to the internal components of

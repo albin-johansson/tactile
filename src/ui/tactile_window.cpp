@@ -11,10 +11,8 @@
 #include <iostream>
 
 #include "about_dialog.h"
-#include "editor_pane.h"
-#include "main_editor_widget.h"
+#include "central_widget.h"
 #include "settings_dialog.h"
-#include "startup_widget.h"
 #include "tile_size.h"
 #include "ui_window.h"
 
@@ -25,10 +23,10 @@ TactileWindow::TactileWindow(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  m_editorWidget = new MainEditorWidget{};
+  // TODO add mouse tool and tile sheet widgets here
 
-  m_startupViewIndex = m_ui->stackedWidget->addWidget(new StartupWidget{});
-  m_editorViewIndex = m_ui->stackedWidget->addWidget(m_editorWidget);
+  m_centralWidget = new CentralWidget{};
+  setCentralWidget(m_centralWidget);
 
   init_connections();
 
@@ -42,12 +40,12 @@ TactileWindow::~TactileWindow() noexcept
 
 void TactileWindow::enable_startup_view() noexcept
 {
-  m_ui->stackedWidget->setCurrentIndex(m_startupViewIndex);
+  m_centralWidget->enable_startup_view();
 }
 
 void TactileWindow::enable_editor_view() noexcept
 {
-  m_ui->stackedWidget->setCurrentIndex(m_editorViewIndex);
+  m_centralWidget->enable_editor_view();
 }
 
 void TactileWindow::display_about_dialog() noexcept
@@ -62,27 +60,23 @@ void TactileWindow::display_settings_dialog() noexcept
   settings.exec();
 }
 
-void TactileWindow::redraw()
-{
-  QPainter painter{m_editorWidget->editor()};
-  painter.fillRect(0, 0, width(), height(), Qt::black);
-  painter.setViewport(m_editorWidget->editor()->viewport());
-  emit req_render(painter);
-}
+// void TactileWindow::redraw()
+//{
+//  QPainter painter{m_centralWidget->render_widget()};
+//  painter.fillRect(0, 0, width(), height(), Qt::black);
+//  painter.setViewport(m_centralWidget->current_viewport());
+//  emit req_render(painter);
+//}
 
 void TactileWindow::center_camera(int mapWidth, int mapHeight)
 {
-  const auto& viewport = m_editorWidget->editor()->viewport();
-  const auto x = (viewport.width() - mapWidth) / 2;
-  const auto y = (viewport.height() - mapHeight) / 2;
-
-  m_editorWidget->editor()->set_viewport_pos(x, y);
+  m_centralWidget->center_viewport(mapWidth, mapHeight);
   trigger_redraw();
 }
 
 void TactileWindow::trigger_redraw()
 {
-  m_editorWidget->update();
+  m_centralWidget->trigger_redraw();
 }
 
 void TactileWindow::paintEvent(QPaintEvent* event)
@@ -181,34 +175,34 @@ void TactileWindow::init_connections() noexcept
       trigger_redraw();
     }
   });
-
-  on_triggered(m_ui->actionPanUp, [this] {
-    if (in_editor_mode()) {
-      m_editorWidget->editor()->move_viewport(0, TileSize::get().size());
-      trigger_redraw();
-    }
-  });
-
-  on_triggered(m_ui->actionPanDown, [this] {
-    if (in_editor_mode()) {
-      m_editorWidget->editor()->move_viewport(0, -TileSize::get().size());
-      trigger_redraw();
-    }
-  });
-
-  on_triggered(m_ui->actionPanRight, [this] {
-    if (in_editor_mode()) {
-      m_editorWidget->editor()->move_viewport(-TileSize::get().size(), 0);
-      trigger_redraw();
-    }
-  });
-
-  on_triggered(m_ui->actionPanLeft, [this] {
-    if (in_editor_mode()) {
-      m_editorWidget->editor()->move_viewport(TileSize::get().size(), 0);
-      trigger_redraw();
-    }
-  });
+//
+//  on_triggered(m_ui->actionPanUp, [this] {
+//    if (in_editor_mode()) {
+//      m_editorWidget->editor()->move_viewport(0, TileSize::get().size());
+//      trigger_redraw();
+//    }
+//  });
+//
+//  on_triggered(m_ui->actionPanDown, [this] {
+//    if (in_editor_mode()) {
+//      m_editorWidget->editor()->move_viewport(0, -TileSize::get().size());
+//      trigger_redraw();
+//    }
+//  });
+//
+//  on_triggered(m_ui->actionPanRight, [this] {
+//    if (in_editor_mode()) {
+//      m_editorWidget->editor()->move_viewport(-TileSize::get().size(), 0);
+//      trigger_redraw();
+//    }
+//  });
+//
+//  on_triggered(m_ui->actionPanLeft, [this] {
+//    if (in_editor_mode()) {
+//      m_editorWidget->editor()->move_viewport(TileSize::get().size(), 0);
+//      trigger_redraw();
+//    }
+//  });
 
   on_triggered(m_ui->actionCenterCamera, [this] {
     if (in_editor_mode()) {
@@ -222,12 +216,12 @@ void TactileWindow::init_connections() noexcept
     }
   });
 
-  connect(m_editorWidget->editor(), &EditorPane::req_redraw, this, &W::redraw);
+  connect(m_centralWidget, &CentralWidget::req_redraw, this, &W::req_render);
 }
 
 bool TactileWindow::in_editor_mode() const noexcept
 {
-  return m_ui->stackedWidget->currentIndex() == m_editorViewIndex;
+  return m_centralWidget->in_editor_mode();
 }
 
 }  // namespace tactile

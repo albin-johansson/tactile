@@ -22,6 +22,9 @@
     <pointsize>12</pointsize>
    </font>
   </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string>Tactile</string>
   </property>
