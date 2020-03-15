@@ -6,11 +6,11 @@ class QPainter;
 
 namespace tactile {
 
-class RenderPane final : public QWidget { // TODO rename to TilemapWidget...
+class EditorTab final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit RenderPane(QWidget* parent = nullptr);
+  explicit EditorTab(QWidget* parent = nullptr);
 
   void center_viewport(int mapWidth, int mapHeight);
 

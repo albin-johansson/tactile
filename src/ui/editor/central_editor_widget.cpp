@@ -1,7 +1,10 @@
 #include "central_editor_widget.h"
 
-#include "render_pane.h"
+#include <QTabWidget>
+
+#include "editor_tab.h"
 #include "startup_widget.h"
+#include "tile_map_tab_widget.h"
 #include "ui_central_widget.h"
 
 namespace tactile {
@@ -11,16 +14,17 @@ CentralEditorWidget::CentralEditorWidget(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  m_renderPane = new RenderPane{};
+  m_mapTabWidget = new TileMapTabWidget{};
 
   m_startupViewIndex = m_ui->stackedWidget->addWidget(new StartupWidget{});
-  m_editorViewIndex = m_ui->stackedWidget->addWidget(m_renderPane);
+  m_editorViewIndex = m_ui->stackedWidget->addWidget(m_mapTabWidget);
 
-  {
-    using RP = RenderPane;
-    using CW = CentralEditorWidget;
-    connect(m_renderPane, &RP::rp_req_redraw, this, &CW::req_redraw);
-  }
+  using TMTW = TileMapTabWidget;
+  using CEW = CentralEditorWidget;
+  connect(m_mapTabWidget, &TMTW::tmtw_req_redraw, this, &CEW::req_redraw);
+
+  m_mapTabWidget->add_tile_map_tab("foo");
+  m_mapTabWidget->add_tile_map_tab("bar");
 }
 
 CentralEditorWidget::~CentralEditorWidget() noexcept
@@ -30,12 +34,12 @@ CentralEditorWidget::~CentralEditorWidget() noexcept
 
 void CentralEditorWidget::center_viewport(int mapWidth, int mapHeight) noexcept
 {
-  m_renderPane->center_viewport(mapWidth, mapHeight);
+  m_mapTabWidget->center_viewport(mapWidth, mapHeight);
 }
 
 void CentralEditorWidget::trigger_redraw() noexcept
 {
-  m_renderPane->update();
+  m_mapTabWidget->update(); // TODO check that this works
 }
 
 void CentralEditorWidget::enable_startup_view() noexcept
@@ -52,15 +56,5 @@ bool CentralEditorWidget::in_editor_mode() const noexcept
 {
   return m_ui->stackedWidget->currentIndex() == m_editorViewIndex;
 }
-
-const QRect& CentralEditorWidget::current_viewport() const noexcept
-{
-  return m_renderPane->viewport();
-}
-
-// QWidget* CentralWidget::render_widget() noexcept
-//{
-//  return m_renderPane;
-//}
 
 }  // namespace tactile

@@ -1,14 +1,14 @@
-#include "render_pane.h"
+#include "editor_tab.h"
 
 #include <QApplication>
-#include <QResizeEvent>
 #include <QPainter>
+#include <QResizeEvent>
 
 #include "widget_size_policy.h"
 
 namespace tactile {
 
-RenderPane::RenderPane(QWidget* parent)
+EditorTab::EditorTab(QWidget* parent)
     : QWidget{parent},
       m_viewport{0, 0, width(), height()},
       m_lastMouseX{0},
@@ -17,7 +17,7 @@ RenderPane::RenderPane(QWidget* parent)
   set_size_policy(this, QSizePolicy::Policy::Expanding);
 }
 
-void RenderPane::center_viewport(int mapWidth, int mapHeight)
+void EditorTab::center_viewport(int mapWidth, int mapHeight)
 {
   const auto x = (m_viewport.width() - mapWidth) / 2;
   const auto y = (m_viewport.height() - mapHeight) / 2;
@@ -25,7 +25,7 @@ void RenderPane::center_viewport(int mapWidth, int mapHeight)
   m_viewport.moveTo(x, y);
 }
 
-void RenderPane::paintEvent(QPaintEvent* event)
+void EditorTab::paintEvent(QPaintEvent* event)
 {
   QWidget::paintEvent(event);
 
@@ -36,7 +36,7 @@ void RenderPane::paintEvent(QPaintEvent* event)
   emit rp_req_redraw(painter);
 }
 
-void RenderPane::resizeEvent(QResizeEvent* event)
+void EditorTab::resizeEvent(QResizeEvent* event)
 {
   QWidget::resizeEvent(event);
 
@@ -50,7 +50,7 @@ void RenderPane::resizeEvent(QResizeEvent* event)
   update();
 }
 
-void RenderPane::mousePressEvent(QMouseEvent* event)
+void EditorTab::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
   if (event->buttons() & Qt::MouseButton::MidButton) {
@@ -60,13 +60,13 @@ void RenderPane::mousePressEvent(QMouseEvent* event)
   }
 }
 
-void RenderPane::mouseReleaseEvent(QMouseEvent* event)
+void EditorTab::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
   QApplication::restoreOverrideCursor();
 }
 
-void RenderPane::mouseMoveEvent(QMouseEvent* event)
+void EditorTab::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
   if (event->buttons() & Qt::MouseButton::MidButton) {

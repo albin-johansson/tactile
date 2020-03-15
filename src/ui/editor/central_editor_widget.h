@@ -1,6 +1,8 @@
 #pragma once
 #include <QWidget>
 
+class QTabWidget;
+
 namespace Ui {
 
 class CentralWidgetUI;
@@ -9,7 +11,7 @@ class CentralWidgetUI;
 
 namespace tactile {
 
-class RenderPane;
+class TileMapTabWidget;
 
 /**
  * The <code>CentralEditorWidget</code> class represents the center stage of the
@@ -41,11 +43,7 @@ class CentralEditorWidget final : public QWidget {
    */
   void enable_editor_view() noexcept;
 
-  [[nodiscard]] const QRect& current_viewport() const noexcept;
-
   [[nodiscard]] bool in_editor_mode() const noexcept;
-
-  //  [[nodiscard, deprecated]] QWidget* render_widget() noexcept;
 
  public slots:
   void trigger_redraw() noexcept;
@@ -55,7 +53,8 @@ class CentralEditorWidget final : public QWidget {
 
  private:
   Ui::CentralWidgetUI* m_ui;
-  RenderPane* m_renderPane;
+  TileMapTabWidget* m_mapTabWidget;
+
   int m_editorViewIndex;
   int m_startupViewIndex;
 };
