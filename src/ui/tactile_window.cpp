@@ -10,10 +10,10 @@
 #include <QStandardPaths>
 #include <iostream>
 
-#include "about_dialog.h"
 #include "central_widget.h"
-#include "settings_dialog.h"
 #include "tile_size.h"
+#include "ui/modal/about_dialog.h"
+#include "ui/modal/settings_dialog.h"
 #include "ui_window.h"
 
 namespace tactile {

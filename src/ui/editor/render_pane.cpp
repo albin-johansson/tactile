@@ -2,7 +2,6 @@
 
 #include <QApplication>
 #include <QResizeEvent>
-#include <QSize>
 #include <QPainter>
 
 #include "widget_size_policy.h"
