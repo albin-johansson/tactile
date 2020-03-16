@@ -73,7 +73,7 @@ TactileApplication::TactileApplication(int argc, char** argv)
   init_connections();
   validate_settings();
 
-  m_window->showMaximized();
+  m_window->showMaximized(); // TODO remember last size?
 }
 
 TactileApplication::~TactileApplication() noexcept = default;
@@ -132,7 +132,6 @@ void TactileApplication::init_connections() noexcept
   });
 
   connect(window, &W::req_render, editor, &E::draw);
-
   connect(editor, &E::updated, window, &W::trigger_redraw);
 }
 
