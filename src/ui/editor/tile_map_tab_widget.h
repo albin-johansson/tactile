@@ -1,5 +1,8 @@
 #pragma once
 #include <QTabWidget>
+#include <unordered_map>
+
+#include "maybe.h"
 
 namespace tactile {
 
@@ -13,12 +16,20 @@ class TileMapTabWidget final : public QTabWidget {
 
   ~TileMapTabWidget() noexcept override;
 
-  void add_tile_map_tab(const QString& title) noexcept;
+  [[nodiscard]] int add_tile_map_tab(const QString& title) noexcept;
+
+  void remove_tile_map_tab(int id) noexcept;
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 
+  void move_viewport(int dx, int dy) noexcept;
+
+  [[nodiscard]] Maybe<int> active_tab_id() const noexcept;
+
  signals:
   void tmtw_req_redraw(QPainter& painter);
+
+  void tmtw_req_remove_tab(int id);
 
  private:
   [[nodiscard]] EditorTab* get_pane(int index) const noexcept;

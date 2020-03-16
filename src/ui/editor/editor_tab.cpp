@@ -8,21 +8,32 @@
 
 namespace tactile {
 
-EditorTab::EditorTab(QWidget* parent)
+EditorTab::EditorTab(int id, QWidget* parent)
     : QWidget{parent},
       m_viewport{0, 0, width(), height()},
+      m_id{id},
       m_lastMouseX{0},
       m_lastMouseY{0}
 {
   set_size_policy(this, QSizePolicy::Policy::Expanding);
 }
 
-void EditorTab::center_viewport(int mapWidth, int mapHeight)
+void EditorTab::center_viewport(int mapWidth, int mapHeight) noexcept
 {
   const auto x = (m_viewport.width() - mapWidth) / 2;
   const auto y = (m_viewport.height() - mapHeight) / 2;
 
   m_viewport.moveTo(x, y);
+}
+
+void EditorTab::move_viewport(int dx, int dy) noexcept
+{
+  const auto width = m_viewport.width();
+  const auto height = m_viewport.height();
+
+  m_viewport.translate(dx, dy);
+  m_viewport.setWidth(width);
+  m_viewport.setHeight(height);
 }
 
 void EditorTab::paintEvent(QPaintEvent* event)

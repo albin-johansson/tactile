@@ -1,13 +1,12 @@
 #pragma once
 #include <QWidget>
 
+#include "declare_ui_macro.h"
+#include "maybe.h"
+
+TACTILE_DECL_UI(CentralWidgetUI)
+
 class QTabWidget;
-
-namespace Ui {
-
-class CentralWidgetUI;
-
-}
 
 namespace tactile {
 
@@ -27,7 +26,13 @@ class CentralEditorWidget final : public QWidget {
 
   ~CentralEditorWidget() noexcept override;
 
+  int add_new_map_tab(const QString& title) noexcept;
+
+  void close_tab(int id) noexcept;
+
   void center_viewport(int mapWidth, int mapHeight) noexcept;
+
+  void move_viewport(int dx, int dy) noexcept;
 
   /**
    * Enables the startup view.
@@ -45,11 +50,17 @@ class CentralEditorWidget final : public QWidget {
 
   [[nodiscard]] bool in_editor_mode() const noexcept;
 
+  [[nodiscard]] Maybe<int> active_tab_id() const noexcept;
+
+  [[nodiscard]] int open_tabs() const noexcept;
+
  public slots:
   void trigger_redraw() noexcept;
 
  signals:
   void req_redraw(QPainter& painter);
+
+  void ce_removed_tab(int id);
 
  private:
   Ui::CentralWidgetUI* m_ui;

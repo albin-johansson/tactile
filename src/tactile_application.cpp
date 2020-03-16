@@ -104,6 +104,9 @@ void TactileApplication::init_connections() noexcept
   connect(window, &W::req_remove_row, editor, &E::remove_row);
   connect(window, &W::req_remove_col, editor, &E::remove_col);
 
+  connect(window, &W::req_new_map, editor, &E::new_map);
+  connect(window, &W::req_close_map, editor, &E::close_map);
+
   connect(window, &W::req_center_camera, this, [window, editor] {
     const auto tileSize = TileSize::get().size();
     const auto width = editor->cols() * tileSize;

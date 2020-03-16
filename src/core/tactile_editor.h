@@ -1,7 +1,9 @@
 #pragma once
 
 #include <QObject>
+#include <unordered_map>
 
+#include "maybe.h"
 #include "smart_pointers.h"
 
 class QPainter;
@@ -14,14 +16,15 @@ class TileMap;
  * The <code>TactileEditor</code> class represents the main interface for the
  * core model of the Tactile application.
  *
+ * <p> All tile map mutating methods of the <code>TactileEditor</code> class
+ * have no effect if there is no active tile map.
+ *
  * @since 0.1.0
  */
 class TactileEditor final : public QObject {
   Q_OBJECT
 
  public:
-  // TODO implement
-
   /**
    * Creates an instance of the Tactile editor class. There should only be one
    * instance of this class for every run of the application.
@@ -32,13 +35,7 @@ class TactileEditor final : public QObject {
 
   ~TactileEditor() noexcept override;
 
-  /**
-   * Starts working on a new tile map. Any previous unsaved work on another tile
-   * map is automatically saved before being closed.
-   *
-   * @since 0.1.0
-   */
-  void new_map() noexcept;
+  Q_DISABLE_COPY(TactileEditor)
 
   /**
    * Opens a tile map from the specified location.
@@ -90,7 +87,8 @@ class TactileEditor final : public QObject {
   /**
    * Returns the amount of rows in the active tile map.
    *
-   * @return the amount of rows in the active tile map.
+   * @return the amount of rows in the active tile map; 0 if there is no
+   * active tile map.
    * @since 0.1.0
    */
   [[nodiscard]] int rows() const noexcept;
@@ -98,7 +96,8 @@ class TactileEditor final : public QObject {
   /**
    * Returns the amount of columns in the active tile map.
    *
-   * @return the amount of columns in the active tile map.
+   * @return the amount of columns in the active tile map; 0 if there is no
+   * active tile map.
    * @since 0.1.0
    */
   [[nodiscard]] int cols() const noexcept;
@@ -109,10 +108,28 @@ class TactileEditor final : public QObject {
    *
    * @since 0.1.0
    */
-  void updated();
+  void updated();  // TODO doc: this is used when the active map is updated
 
  public slots:
   void draw(QPainter& painter) const noexcept;
+
+  /**
+   * Starts working on a new tile map. Any previous unsaved work on another tile
+   * map is automatically saved before being closed.
+   *
+   * @param id the integer that will be associated with the tile map, must be
+   * unique.
+   * @since 0.1.0
+   */
+  void new_map(int id) noexcept;  // TODO change doc
+
+  /**
+   * Closes the map associated with the specified ID.
+   *
+   * @param id the ID of the tile map that will be closed.
+   * @since 0.1.0
+   */
+  void close_map(int id) noexcept;
 
   void add_row() noexcept;
 
@@ -123,7 +140,26 @@ class TactileEditor final : public QObject {
   void remove_col() noexcept;
 
  private:
-  UniquePtr<TileMap> m_map;
+  std::unordered_map<int, UniquePtr<TileMap>> m_maps;
+  Maybe<int> m_activeMapIndex;
+
+  /**
+   * Returns a pointer to the currently active map. You should check that the
+   * returned pointer isn't null before using the returned pointer.
+   *
+   * @return a pointer to the currently active tile map; null if there is none.
+   * @since 0.1.0
+   */
+  [[nodiscard]] TileMap* active_map() noexcept;
+
+  /**
+   * Returns a pointer to the currently active map. You should check that the
+   * returned pointer isn't null before using the returned pointer.
+   *
+   * @return a pointer to the currently active tile map; null if there is none.
+   * @since 0.1.0
+   */
+  [[nodiscard]] const TileMap* active_map() const noexcept;
 };
 
 }  // namespace tactile

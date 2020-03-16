@@ -8,7 +8,6 @@
 #include <QSettings>
 #include <QSpacerItem>
 #include <QStandardPaths>
-#include <iostream>
 
 #include "about_dialog.h"
 #include "central_editor_widget.h"
@@ -98,9 +97,26 @@ void TactileWindow::init_connections() noexcept
     connect(action, &QAction::triggered, this, fun);
   };
 
+  connect(m_centralWidget,
+          &CentralEditorWidget::ce_removed_tab,
+          this,
+          [this](int id) noexcept {
+            emit req_close_map(id);
+
+            // FIXME borderline hack, the tab isn't actually removed yet so 1
+            //  is the same as checking if there are not open tabs.
+            if (m_centralWidget->open_tabs() == 1) {
+              enable_startup_view();
+            }
+          });
+
   on_triggered(m_ui->actionExit, [] { QApplication::exit(); });
 
   on_triggered(m_ui->actionNewMap, [this] {
+    const auto id = m_centralWidget->add_new_map_tab("map");
+
+    emit req_new_map(id);
+
     if (!in_editor_mode()) {
       enable_editor_view();
       emit req_center_camera();
@@ -113,7 +129,17 @@ void TactileWindow::init_connections() noexcept
     if (in_editor_mode()) {
       // TODO save current state of open map
 
-      enable_startup_view();
+      const auto id = m_centralWidget->active_tab_id();
+      if (id) {
+        m_centralWidget->close_tab(*id);
+        emit req_close_map(*id);
+
+        if (m_centralWidget->open_tabs() == 0) {
+          enable_startup_view();
+        }
+      } else {
+        qWarning("Failed to close map, no active tab ID!");
+      }
     }
   });
 
@@ -176,33 +202,33 @@ void TactileWindow::init_connections() noexcept
     }
   });
 
-  //  on_triggered(m_ui->actionPanUp, [this] {
-  //    if (in_editor_mode()) {
-  //      m_editorWidget->editor()->move_viewport(0, TileSize::get().size());
-  //      trigger_redraw();
-  //    }
-  //  });
+  on_triggered(m_ui->actionPanUp, [this] {
+    if (in_editor_mode()) {
+      m_centralWidget->move_viewport(0, TileSize::get().size());
+      trigger_redraw();
+    }
+  });
 
-  //  on_triggered(m_ui->actionPanDown, [this] {
-  //    if (in_editor_mode()) {
-  //      m_editorWidget->editor()->move_viewport(0, -TileSize::get().size());
-  //      trigger_redraw();
-  //    }
-  //  });
-  //
-  //  on_triggered(m_ui->actionPanRight, [this] {
-  //    if (in_editor_mode()) {
-  //      m_editorWidget->editor()->move_viewport(-TileSize::get().size(), 0);
-  //      trigger_redraw();
-  //    }
-  //  });
-  //
-  //  on_triggered(m_ui->actionPanLeft, [this] {
-  //    if (in_editor_mode()) {
-  //      m_editorWidget->editor()->move_viewport(TileSize::get().size(), 0);
-  //      trigger_redraw();
-  //    }
-  //  });
+  on_triggered(m_ui->actionPanDown, [this] {
+    if (in_editor_mode()) {
+      m_centralWidget->move_viewport(0, -TileSize::get().size());
+      trigger_redraw();
+    }
+  });
+
+  on_triggered(m_ui->actionPanRight, [this] {
+    if (in_editor_mode()) {
+      m_centralWidget->move_viewport(-TileSize::get().size(), 0);
+      trigger_redraw();
+    }
+  });
+
+  on_triggered(m_ui->actionPanLeft, [this] {
+    if (in_editor_mode()) {
+      m_centralWidget->move_viewport(TileSize::get().size(), 0);
+      trigger_redraw();
+    }
+  });
 
   on_triggered(m_ui->actionCenterCamera, [this] {
     if (in_editor_mode()) {

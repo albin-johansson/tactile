@@ -10,14 +10,15 @@ class EditorTab final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit EditorTab(QWidget* parent = nullptr);
+  explicit EditorTab(int id, QWidget* parent = nullptr);
 
-  void center_viewport(int mapWidth, int mapHeight);
+  void center_viewport(int mapWidth, int mapHeight) noexcept;
 
-  [[nodiscard]] const QRect& viewport() const noexcept
-  {
-    return m_viewport;
-  }
+  void move_viewport(int dx, int dy) noexcept;
+
+  [[nodiscard]] const QRect& viewport() const noexcept { return m_viewport; }
+
+  [[nodiscard]] int id() const noexcept { return m_id; }
 
  signals:
   void rp_req_redraw(QPainter& painter);
@@ -35,6 +36,7 @@ class EditorTab final : public QWidget {
 
  private:
   QRect m_viewport;
+  int m_id;
   int m_lastMouseX;
   int m_lastMouseY;
 };

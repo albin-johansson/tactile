@@ -89,6 +89,10 @@ class TactileWindow final : public QMainWindow {
    */
   void req_render(QPainter& painter);
 
+  void req_new_map(int id);
+
+  void req_close_map(int id);
+
   /**
    * A signal that is emitted when the user wants to add a row to the tile map.
    *
