@@ -11,9 +11,11 @@
 
 #include "about_dialog.h"
 #include "central_editor_widget.h"
+#include "mouse_tool_widget.h"
 #include "settings_dialog.h"
 #include "tile_size.h"
 #include "ui_window.h"
+#include "widget_size_policy.h"
 
 namespace tactile {
 
@@ -27,8 +29,14 @@ TactileWindow::TactileWindow(QWidget* parent)
   m_centralWidget = new CentralEditorWidget{};
   setCentralWidget(m_centralWidget);
 
-  init_connections();
+  {
+    auto* dock = new QDockWidget{};
+    set_size_policy(dock, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    dock->setWidget(new MouseToolWidget{});
+    addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dock);
+  }
 
+  init_connections();
   enable_startup_view();  // TODO option to reopen last tile map
 }
 

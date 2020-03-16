@@ -6,6 +6,7 @@
 #include "startup_widget.h"
 #include "tile_map_tab_widget.h"
 #include "ui_central_widget.h"
+#include "widget_size_policy.h"
 
 namespace tactile {
 
@@ -25,6 +26,8 @@ CentralEditorWidget::CentralEditorWidget(QWidget* parent)
 
   connect(
       m_mapTabWidget, &TMTW::tmtw_req_remove_tab, this, &CEW::ce_removed_tab);
+
+  set_size_policy(this, QSizePolicy::Expanding);
 }
 
 CentralEditorWidget::~CentralEditorWidget() noexcept

@@ -1,5 +1,5 @@
 #pragma once
-#include <QWidget>
+#include <QDockWidget>
 
 namespace Ui {
 

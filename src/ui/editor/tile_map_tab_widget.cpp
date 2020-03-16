@@ -27,9 +27,9 @@ int TileMapTabWidget::add_tile_map_tab(const QString& title) noexcept
   auto* pane = new EditorTab{id++};
   addTab(pane, newTitle);
 
-  using RP = EditorTab;
+  using ET = EditorTab;
   using TMTW = TileMapTabWidget;
-  connect(pane, &RP::rp_req_redraw, this, &TMTW::tmtw_req_redraw);
+  connect(pane, &ET::rp_req_redraw, this, &TMTW::tmtw_req_redraw);
 
   return pane->id();
 }
