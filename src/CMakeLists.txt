@@ -27,8 +27,9 @@ function(tactile_append_gcc_compiler_flags [target])
             -Wsuggest-override
             -Wduplicated-cond
             -Wconversion
-            -Wc++14-compat
-            -Wc++17-compat)
+#            -Wc++14-compat
+#            -Wc++17-compat
+            )
 endfunction()
 
 function(tactile_link_libraries [target])
