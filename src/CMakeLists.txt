@@ -78,7 +78,6 @@ set(TACTILE_SOURCE_FILES
         ui/startup_widget.cpp
         ui/startup_widget.h
         ui/basic_widget_macro.h
-        ui/declare_ui_macro.h
         ui/widget_size_policy.h
         ui/widget_size_policy.cpp
 

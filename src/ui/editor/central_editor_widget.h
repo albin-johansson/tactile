@@ -1,10 +1,11 @@
 #pragma once
 #include <QWidget>
 
-#include "declare_ui_macro.h"
 #include "maybe.h"
 
-TACTILE_DECL_UI(CentralWidgetUI)
+namespace Ui {
+class CentralWidgetUI;
+}
 
 class QTabWidget;
 
