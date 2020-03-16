@@ -8,7 +8,7 @@ namespace tactile {
  *
  * @since 0.1.0
  */
-template<typename T>
+template <typename T>
 using Maybe = std::optional<T>;
 
 /**
@@ -18,4 +18,4 @@ using Maybe = std::optional<T>;
  */
 inline constexpr auto nothing = std::nullopt;
 
-}
+}  // namespace tactile

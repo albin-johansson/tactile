@@ -144,10 +144,7 @@ class TileLayer final {
    * @return true if the tile layer is visible; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] bool visible() const noexcept
-  {
-    return m_visible;
-  }
+  [[nodiscard]] bool visible() const noexcept { return m_visible; }
 
  private:
   using TileRow = std::vector<TileID>;

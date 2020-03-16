@@ -20,10 +20,11 @@ inline void for_all(Iterable iterable, Functor functor)
 
 /**
  * Invokes the supplied callable for the specified amount of times.
- * 
+ *
  * @param nIterations the amount of times the callable should be invoked.
- * @param callable the callable that will be invoked, must overload the ()-operator.
- * @since 0.1.0 
+ * @param callable the callable that will be invoked, must overload the
+ * ()-operator.
+ * @since 0.1.0
  */
 template <typename Callable>
 inline void repeat(int nIterations, Callable callable)

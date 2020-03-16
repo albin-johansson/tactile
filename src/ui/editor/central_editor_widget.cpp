@@ -23,10 +23,8 @@ CentralEditorWidget::CentralEditorWidget(QWidget* parent)
   using CEW = CentralEditorWidget;
   connect(m_mapTabWidget, &TMTW::tmtw_req_redraw, this, &CEW::req_redraw);
 
-  connect(m_mapTabWidget,
-          &TMTW::tmtw_req_remove_tab,
-          this,
-          &CEW::ce_removed_tab);
+  connect(
+      m_mapTabWidget, &TMTW::tmtw_req_remove_tab, this, &CEW::ce_removed_tab);
 }
 
 CentralEditorWidget::~CentralEditorWidget() noexcept

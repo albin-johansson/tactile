@@ -13,7 +13,6 @@ namespace tactile {
  */
 class TileSet final {
  public:
-
   /**
    * Selects the tile at the specified coordinates.
    *
@@ -36,12 +35,11 @@ class TileSet final {
 
   [[nodiscard]] int height() const noexcept;
 
- // [[nodiscard]] TileID first_id
+  // [[nodiscard]] TileID first_id
 
-//  [[nodiscard]] const Image& sheet() const noexcept;
+  //  [[nodiscard]] const Image& sheet() const noexcept;
 
  private:
-
 };
 
 }  // namespace tactile

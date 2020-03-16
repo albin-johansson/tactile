@@ -69,10 +69,7 @@ class TileSize final {
    * <code>minimumSize</code>.
    * @since 0.1.0
    */
-  [[nodiscard]] int size() const noexcept
-  {
-    return m_size;
-  }
+  [[nodiscard]] int size() const noexcept { return m_size; }
 
   /**
    * Returns the only instance of the <code>TileSize</code> class.

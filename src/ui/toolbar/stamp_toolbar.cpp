@@ -6,9 +6,7 @@ namespace tactile {
 
 StampToolbar::StampToolbar(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::StampToolbarUI{}}
-{
-
-}
+{}
 
 StampToolbar::~StampToolbar() noexcept
 {

@@ -86,10 +86,7 @@ class MapPosition final {
    * @return the row value of the map position.
    * @since 0.1.0
    */
-  [[nodiscard]] int row() const noexcept
-  {
-    return m_row;
-  }
+  [[nodiscard]] int row() const noexcept { return m_row; }
 
   /**
    * Returns the column value of the map position. The returned value is never
@@ -98,10 +95,7 @@ class MapPosition final {
    * @return the column value of the map position.
    * @since 0.1.0
    */
-  [[nodiscard]] int col() const noexcept
-  {
-    return m_col;
-  }
+  [[nodiscard]] int col() const noexcept { return m_col; }
 
  private:
   int m_row;

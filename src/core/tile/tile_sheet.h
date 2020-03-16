@@ -100,10 +100,7 @@ class TileSheet final {
    * @return the total number of rows in the tile sheet.
    * @since 0.1.0
    */
-  [[nodiscard]] int rows() const noexcept
-  {
-    return m_rows;
-  }
+  [[nodiscard]] int rows() const noexcept { return m_rows; }
 
   /**
    * Returns the total number of columns of tiles in the tile sheet.
@@ -111,10 +108,7 @@ class TileSheet final {
    * @return the total number of columns in the tile sheet.
    * @since 0.1.0
    */
-  [[nodiscard]] int cols() const noexcept
-  {
-    return m_cols;
-  }
+  [[nodiscard]] int cols() const noexcept { return m_cols; }
 
   /**
    * Returns the total number of tiles contained in the tile sheet.
@@ -122,10 +116,7 @@ class TileSheet final {
    * @return the total number of tiles contained in the tile sheet.
    * @since 0.1.0
    */
-  [[nodiscard]] int tiles() const noexcept
-  {
-    return m_nTiles;
-  }
+  [[nodiscard]] int tiles() const noexcept { return m_nTiles; }
 
   /**
    * Returns the tile ID of the first tile in the tile sheet. The default
@@ -134,10 +125,7 @@ class TileSheet final {
    * @return the tile ID of the first tile in the tile sheet.
    * @since 0.1.0
    */
-  [[nodiscard]] TileID first_id() const noexcept
-  {
-    return m_firstID;
-  }
+  [[nodiscard]] TileID first_id() const noexcept { return m_firstID; }
 
   /**
    * Returns the last valid tile ID associated with the tile sheet.
@@ -145,10 +133,7 @@ class TileSheet final {
    * @return the last valid tile ID associated with the tile sheet.
    * @since 0.1.0
    */
-  [[nodiscard]] TileID last_id() const noexcept
-  {
-    return first_id() + tiles();
-  }
+  [[nodiscard]] TileID last_id() const noexcept { return first_id() + tiles(); }
 
   /**
    * Returns the size of the tile sprites in the tile sheet. Will always be
@@ -157,10 +142,7 @@ class TileSheet final {
    * @return the size of the tile sprites in the tile sheet.
    * @since 0.1.0
    */
-  [[nodiscard]] int tile_size() const noexcept
-  {
-    return m_size;
-  }
+  [[nodiscard]] int tile_size() const noexcept { return m_size; }
 
   /**
    * Returns the currently selected tile IDs.
@@ -168,10 +150,7 @@ class TileSheet final {
    * @return the currently selected tile IDs.
    * @since 0.1.0
    */
-  [[nodiscard]] const auto& selection()
-  {
-    return m_selection;
-  }
+  [[nodiscard]] const auto& selection() { return m_selection; }
 
  private:
   SharedPtr<QImage> m_sheet;

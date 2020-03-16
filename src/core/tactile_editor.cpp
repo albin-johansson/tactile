@@ -34,7 +34,8 @@ void TactileEditor::close_map(int id) noexcept
     m_maps.erase(id);
 
     if (!m_maps.empty()) {
-      auto first = m_maps.begin(); // FIXME a bit clumsy (use std::map instead?)
+      auto first =
+          m_maps.begin();  // FIXME a bit clumsy (use std::map instead?)
       m_activeMapIndex = first->first;
       qInfo("Tile map %i is now active!", *m_activeMapIndex);
     }

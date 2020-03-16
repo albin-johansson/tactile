@@ -147,10 +147,7 @@ class TileMap final {
    * @return the amount of rows in the tile map.
    * @since 0.1.0
    */
-  [[nodiscard]] int rows() const noexcept
-  {
-    return m_nRows;
-  }
+  [[nodiscard]] int rows() const noexcept { return m_nRows; }
 
   /**
    * Returns the total number of columns in the tile map.
@@ -158,10 +155,7 @@ class TileMap final {
    * @return the amount of columns in the tile map.
    * @since 0.1.0
    */
-  [[nodiscard]] int cols() const noexcept
-  {
-    return m_nCols;
-  }
+  [[nodiscard]] int cols() const noexcept { return m_nCols; }
 
  private:
   int m_nRows;

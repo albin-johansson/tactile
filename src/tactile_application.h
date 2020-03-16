@@ -22,7 +22,7 @@ class TactileApplication final : public QApplication {
   /**
    * @param argc the amount of command-line arguments.
    * @param argv the array of command-line arguments.
-   * @since 0.1.0 
+   * @since 0.1.0
    */
   TactileApplication(int argc, char** argv);
 
