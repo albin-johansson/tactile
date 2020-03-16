@@ -1,7 +1,6 @@
 #include "tactile_editor.h"
 
 #include <QMessageLogger>
-#include <QPainter>
 
 #include "tile_map.h"
 
@@ -19,7 +18,6 @@ void TactileEditor::new_map(int id) noexcept
   } else {
     m_maps.insert({id, std::make_unique<TileMap>(5, 5)});
     m_activeMapIndex = id;
-    qInfo("Added tile map with ID: %i!", id);
   }
 }
 
@@ -28,19 +26,14 @@ void TactileEditor::new_map(int id) noexcept
 void TactileEditor::close_map(int id) noexcept
 {
   if (m_maps.count(id)) {
-    if (m_activeMapIndex == id) {
-      m_activeMapIndex = nothing;
-    }
     m_maps.erase(id);
 
-    if (!m_maps.empty()) {
-      auto first =
-          m_maps.begin();  // FIXME a bit clumsy (use std::map instead?)
-      m_activeMapIndex = first->first;
-      qInfo("Tile map %i is now active!", *m_activeMapIndex);
+    if (m_activeMapIndex == id) {
+      m_activeMapIndex = nothing;
+    } else if (!m_maps.empty()) {
+      const auto begin = m_maps.begin();
+      m_activeMapIndex = begin->first;
     }
-
-    qInfo("Removed tile map with ID: %i!", id);
   } else {
     qWarning("Attempted to remove tile map that doesn't exist: %i!", id);
   }
