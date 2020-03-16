@@ -85,7 +85,7 @@ void TactileWindow::paintEvent(QPaintEvent* event)
   static bool first = true;
   if (first) {  // FIXME doesn't work correctly with stacked widgets
     first = false;
-    emit req_center_camera();
+    emit tw_center_camera();
   }
 }
 
@@ -101,7 +101,7 @@ void TactileWindow::init_connections() noexcept
           &CentralEditorWidget::ce_removed_tab,
           this,
           [this](int id) noexcept {
-            emit req_close_map(id);
+            emit tw_close_map(id);
 
             // FIXME borderline hack, the tab isn't actually removed yet so 1
             //  is the same as checking if there are not open tabs.
@@ -115,11 +115,11 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionNewMap, [this]() noexcept {
     const auto id = m_centralWidget->add_new_map_tab("map");
 
-    emit req_new_map(id);
+    emit tw_new_map(id);
 
     if (!in_editor_mode()) {
       enable_editor_view();
-      emit req_center_camera();
+      emit tw_center_camera();
     }
 
     // TODO...
@@ -132,7 +132,7 @@ void TactileWindow::init_connections() noexcept
       const auto id = m_centralWidget->active_tab_id();
       if (id) {
         m_centralWidget->close_tab(*id);
-        emit req_close_map(*id);
+        emit tw_close_map(*id);
 
         if (m_centralWidget->open_tabs() == 0) {
           enable_startup_view();
@@ -147,29 +147,29 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionSettings, &W::display_settings_dialog);
 
   on_triggered(m_ui->actionAddTileSheet,
-               [this]() noexcept { emit req_new_tile_sheet(); });
+               [this]() noexcept { emit tw_new_tile_sheet(); });
 
   on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
-      emit req_add_row();
+      emit tw_added_row();
     }
   });
 
   on_triggered(m_ui->actionAddColumn, [this]() noexcept {
     if (in_editor_mode()) {
-      emit req_add_col();
+      emit tw_added_col();
     }
   });
 
   on_triggered(m_ui->actionRemoveRow, [this]() noexcept {
     if (in_editor_mode()) {
-      emit req_remove_row();
+      emit tw_removed_row();
     }
   });
 
   on_triggered(m_ui->actionRemoveColumn, [this]() noexcept {
     if (in_editor_mode()) {
-      emit req_remove_col();
+      emit tw_removed_col();
     }
   });
 
@@ -233,18 +233,18 @@ void TactileWindow::init_connections() noexcept
 
   on_triggered(m_ui->actionCenterCamera, [this] {
     if (in_editor_mode()) {
-      emit req_center_camera();
+      emit tw_center_camera();
     }
   });
 
   on_triggered(m_ui->actionResizeMap, [this] {
     if (in_editor_mode()) {
-      emit req_resize_map();
+      emit tw_resize_map();
     }
   });
 
   connect(
-      m_centralWidget, &CentralEditorWidget::req_redraw, this, &W::req_render);
+      m_centralWidget, &CentralEditorWidget::req_redraw, this, &W::tw_render);
 }
 
 bool TactileWindow::in_editor_mode() const noexcept

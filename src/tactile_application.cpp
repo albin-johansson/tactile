@@ -73,7 +73,7 @@ TactileApplication::TactileApplication(int argc, char** argv)
   init_connections();
   validate_settings();
 
-  m_window->showMaximized(); // TODO remember last size?
+  m_window->showMaximized();  // TODO remember last size?
 }
 
 TactileApplication::~TactileApplication() noexcept = default;
@@ -98,23 +98,23 @@ void TactileApplication::init_connections() noexcept
   auto* window = m_window.get();
   auto* editor = m_editor.get();
 
-  connect(window, &W::req_add_row, editor, &E::add_row);
-  connect(window, &W::req_add_col, editor, &E::add_col);
+  connect(editor, &E::te_updated, window, &W::trigger_redraw);
+  connect(window, &W::tw_added_row, editor, &E::add_row);
+  connect(window, &W::tw_added_col, editor, &E::add_col);
+  connect(window, &W::tw_removed_row, editor, &E::remove_row);
+  connect(window, &W::tw_removed_col, editor, &E::remove_col);
+  connect(window, &W::tw_new_map, editor, &E::new_map);
+  connect(window, &W::tw_close_map, editor, &E::close_map);
+  connect(window, &W::tw_render, editor, &E::draw);
 
-  connect(window, &W::req_remove_row, editor, &E::remove_row);
-  connect(window, &W::req_remove_col, editor, &E::remove_col);
-
-  connect(window, &W::req_new_map, editor, &E::new_map);
-  connect(window, &W::req_close_map, editor, &E::close_map);
-
-  connect(window, &W::req_center_camera, this, [window, editor] {
+  connect(window, &W::tw_center_camera, this, [window, editor] {
     const auto tileSize = TileSize::get().size();
     const auto width = editor->cols() * tileSize;
     const auto height = editor->rows() * tileSize;
     window->center_camera(width, height);
   });
 
-  connect(window, &W::req_new_tile_sheet, this, [window, editor] {
+  connect(window, &W::tw_new_tile_sheet, this, [window, editor] {
     const auto result = open_tile_sheet_image(window);
     if (result) {
       editor->add_tile_sheet(result->toStdString().c_str());
@@ -122,7 +122,7 @@ void TactileApplication::init_connections() noexcept
     }
   });
 
-  connect(window, &W::req_resize_map, this, [window, editor] {
+  connect(window, &W::tw_resize_map, this, [window, editor] {
     ResizeDialog dialog;
     if (dialog.exec()) {
       editor->set_rows(*dialog.chosen_height());
@@ -130,9 +130,6 @@ void TactileApplication::init_connections() noexcept
       window->trigger_redraw();
     }
   });
-
-  connect(window, &W::req_render, editor, &E::draw);
-  connect(editor, &E::updated, window, &W::trigger_redraw);
 }
 
 }  // namespace tactile

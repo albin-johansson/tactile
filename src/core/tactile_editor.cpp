@@ -106,7 +106,7 @@ void TactileEditor::select_layer(int index) noexcept
   auto* map = active_map();
   if (map) {
     map->select(index);
-    emit updated();
+    emit te_updated();
   }
 }
 
@@ -123,7 +123,7 @@ void TactileEditor::add_row() noexcept
   auto* map = active_map();
   if (map) {
     map->add_row();
-    emit updated();
+    emit te_updated();
   }
 }
 
@@ -132,7 +132,7 @@ void TactileEditor::add_col() noexcept
   auto* map = active_map();
   if (map) {
     map->add_col();
-    emit updated();
+    emit te_updated();
   }
 }
 
@@ -141,7 +141,7 @@ void TactileEditor::remove_row() noexcept
   auto* map = active_map();
   if (map) {
     map->remove_row();
-    emit updated();
+    emit te_updated();
   }
 }
 
@@ -150,7 +150,7 @@ void TactileEditor::remove_col() noexcept
   auto* map = active_map();
   if (map) {
     map->remove_col();
-    emit updated();
+    emit te_updated();
   }
 }
 

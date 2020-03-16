@@ -87,18 +87,18 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void req_render(QPainter& painter);
+  void tw_render(QPainter& painter);
 
-  void req_new_map(int id);
+  void tw_new_map(int id);
 
-  void req_close_map(int id);
+  void tw_close_map(int id);
 
   /**
    * A signal that is emitted when the user wants to add a row to the tile map.
    *
    * @since 0.1.0
    */
-  void req_add_row();
+  void tw_added_row();
 
   /**
    * A signal that is emitted when the user wants to add a column to the tile
@@ -106,7 +106,7 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void req_add_col();
+  void tw_added_col();
 
   /**
    * A signal that is emitted when the user wants to remove a row from the tile
@@ -114,7 +114,7 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void req_remove_row();
+  void tw_removed_row();
 
   /**
    * A signal that is emitted when the user wants to remove a column from the
@@ -122,7 +122,7 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void req_remove_col();
+  void tw_removed_col();
 
   /**
    * A signal that is emitted when the user wants to center the camera over the
@@ -130,16 +130,16 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void req_center_camera();
+  void tw_center_camera();
 
   /**
    * A signal that is emitted when the user wants to add a tile sheet.
    *
    * @since 0.1.0
    */
-  void req_new_tile_sheet();
+  void tw_new_tile_sheet();
 
-  void req_resize_map();
+  void tw_resize_map();
 
  protected:
   void paintEvent(QPaintEvent* event) override;

@@ -104,11 +104,12 @@ class TactileEditor final : public QObject {
 
  signals:
   /**
-   * A signal that is emitted when the state of the editor has changed.
+   * A signal that is emitted when the state of the active tile map has
+   * changed.
    *
    * @since 0.1.0
    */
-  void updated();  // TODO doc: this is used when the active map is updated
+  void te_updated();
 
  public slots:
   void draw(QPainter& painter) const noexcept;
