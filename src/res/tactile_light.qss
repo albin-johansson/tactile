@@ -31,3 +31,7 @@ QToolTip {
 QPushButton {
   background: white;
 }
+
+QTabBar::tab {
+  max-height: 2em;
+}
