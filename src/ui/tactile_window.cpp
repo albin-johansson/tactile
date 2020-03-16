@@ -112,7 +112,7 @@ void TactileWindow::init_connections() noexcept
 
   on_triggered(m_ui->actionExit, [] { QApplication::exit(); });
 
-  on_triggered(m_ui->actionNewMap, [this] {
+  on_triggered(m_ui->actionNewMap, [this]() noexcept {
     const auto id = m_centralWidget->add_new_map_tab("map");
 
     emit req_new_map(id);
@@ -125,7 +125,7 @@ void TactileWindow::init_connections() noexcept
     // TODO...
   });
 
-  on_triggered(m_ui->actionCloseMap, [this] {
+  on_triggered(m_ui->actionCloseMap, [this]() noexcept {
     if (in_editor_mode()) {
       // TODO save current state of open map
 
@@ -146,27 +146,28 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionAboutTactile, &W::display_about_dialog);
   on_triggered(m_ui->actionSettings, &W::display_settings_dialog);
 
-  on_triggered(m_ui->actionAddTileSheet, [this] { emit req_new_tile_sheet(); });
+  on_triggered(m_ui->actionAddTileSheet,
+               [this]() noexcept { emit req_new_tile_sheet(); });
 
-  on_triggered(m_ui->actionAddRow, [this] {
+  on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
       emit req_add_row();
     }
   });
 
-  on_triggered(m_ui->actionAddColumn, [this] {
+  on_triggered(m_ui->actionAddColumn, [this]() noexcept {
     if (in_editor_mode()) {
       emit req_add_col();
     }
   });
 
-  on_triggered(m_ui->actionRemoveRow, [this] {
+  on_triggered(m_ui->actionRemoveRow, [this]() noexcept {
     if (in_editor_mode()) {
       emit req_remove_row();
     }
   });
 
-  on_triggered(m_ui->actionRemoveColumn, [this] {
+  on_triggered(m_ui->actionRemoveColumn, [this]() noexcept {
     if (in_editor_mode()) {
       emit req_remove_col();
     }
