@@ -14,6 +14,8 @@ TEST_CASE("set_size_policy1", "[set_size_policy]")
 
   CHECK(widget.sizePolicy().horizontalPolicy() == policy);
   CHECK(widget.sizePolicy().verticalPolicy() == policy);
+
+  CHECK_NOTHROW(set_size_policy(nullptr, QSizePolicy::Maximum));
 }
 
 TEST_CASE("set_size_policy2", "[set_size_policy]")
@@ -27,4 +29,7 @@ TEST_CASE("set_size_policy2", "[set_size_policy]")
 
   CHECK(widget.sizePolicy().horizontalPolicy() == horizontalPolicy);
   CHECK(widget.sizePolicy().verticalPolicy() == verticalPolicy);
+
+  CHECK_NOTHROW(
+      set_size_policy(nullptr, QSizePolicy::Maximum, QSizePolicy::Minimum));
 }
