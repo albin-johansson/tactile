@@ -67,14 +67,6 @@ void TactileWindow::display_settings_dialog() noexcept
   settings.exec();
 }
 
-// void TactileWindow::redraw()
-//{
-//  QPainter painter{m_centralWidget->render_widget()};
-//  painter.fillRect(0, 0, width(), height(), Qt::black);
-//  painter.setViewport(m_centralWidget->current_viewport());
-//  emit req_render(painter);
-//}
-
 void TactileWindow::center_camera(int mapWidth, int mapHeight)
 {
   m_centralWidget->center_viewport(mapWidth, mapHeight);
