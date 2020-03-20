@@ -141,17 +141,6 @@ class TactileWindow final : public QMainWindow {
 
   void tw_resize_map();
 
- protected:
-  void paintEvent(QPaintEvent* event) override;
-
-  // private slots:
-  //  /**
-  //   * Clears the editor pane and emits a render signal.
-  //   *
-  //   * @since 0.1.0
-  //   */
-  //  void redraw();
-
  private:
   Ui::MainWindow* m_ui;
   CentralEditorWidget* m_centralWidget;

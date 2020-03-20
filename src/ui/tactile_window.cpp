@@ -78,17 +78,6 @@ void TactileWindow::trigger_redraw()
   m_centralWidget->trigger_redraw();
 }
 
-void TactileWindow::paintEvent(QPaintEvent* event)
-{
-  QWidget::paintEvent(event);
-
-  static bool first = true;
-  if (first) {  // FIXME doesn't work correctly with stacked widgets
-    first = false;
-    emit tw_center_camera();
-  }
-}
-
 void TactileWindow::init_connections() noexcept
 {
   using W = TactileWindow;
