@@ -148,7 +148,7 @@ class TileLayer final {
 
  private:
   using TileRow = std::vector<TileID>;
-  using TileMatrix = std::vector<std::vector<TileID>>;
+  using TileMatrix = std::vector<TileRow>;
 
   TileMatrix m_tiles;
   bool m_visible;
