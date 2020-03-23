@@ -3,15 +3,13 @@
 #include <vector>
 
 #include "maybe.h"
-#include "smart_pointers.h"
 #include "tile_id.h"
 #include "tile_layer.h"
+#include "tile_map_renderer.h"
 
 class QPainter;
 
 namespace tactile {
-
-class TileMapRenderer;
 
 /**
  * The <code>TileMap</code> class represents the main tile maps in the
@@ -162,7 +160,7 @@ class TileMap final {
   int m_nCols;
   int m_activeLayer;
   std::vector<TileLayer> m_layers;
-  UniquePtr<TileMapRenderer> m_renderer;
+  TileMapRenderer m_renderer;
 
   /**
    * Indicates whether or not the specified layer index is associated with a

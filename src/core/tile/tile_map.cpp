@@ -4,7 +4,6 @@
 
 #include "algorithm_utils.h"
 #include "tile_id.h"
-#include "tile_map_renderer.h"
 
 namespace tactile {
 namespace {
@@ -19,8 +18,7 @@ namespace {
 TileMap::TileMap(int nRows, int nCols)
     : m_nRows{clamp_map_dimension(nRows)},
       m_nCols{clamp_map_dimension(nCols)},
-      m_activeLayer{0},
-      m_renderer{std::make_unique<TileMapRenderer>()}
+      m_activeLayer{0}
 {
   m_layers.emplace_back(nRows, nCols);
 }
@@ -29,7 +27,7 @@ TileMap::~TileMap() noexcept = default;
 
 void TileMap::draw(QPainter& painter) const noexcept
 {
-  m_renderer->render(painter, *this);
+  m_renderer.render(painter, *this);
 }
 
 void TileMap::select(int layer) noexcept
@@ -125,13 +123,15 @@ void TileMap::set_cols(int nCols) noexcept
 void TileMap::set_visibility(int layer, bool visibility) noexcept
 {
   if (has_layer(layer)) {
-    m_layers.at(layer).set_visible(visibility);
+    const auto index = static_cast<std::size_t>(layer);
+    m_layers.at(index).set_visible(visibility);
   }
 }
 
 bool TileMap::is_visible(int layer) const noexcept
 {
-  return has_layer(layer) && m_layers.at(layer).visible();
+  const auto index = static_cast<std::size_t>(layer);
+  return has_layer(layer) && m_layers.at(index).visible();
 }
 
 int TileMap::get_layer_amount() const noexcept
