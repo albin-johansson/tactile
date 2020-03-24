@@ -26,10 +26,7 @@ function(tactile_append_gcc_compiler_flags [target])
             -Wsuggest-final-methods
             -Wsuggest-override
             -Wduplicated-cond
-            -Wconversion
-#            -Wc++14-compat
-#            -Wc++17-compat
-            )
+            -Wconversion)
 endfunction()
 
 function(tactile_link_libraries [target])
@@ -44,6 +41,8 @@ set(TACTILE_SOURCE_FILES
 
         tactile_application.cpp
         tactile_application.h
+        settings_utils.h
+        settings_utils.cpp
 
         core/flood_fill.h
         core/flood_fill.cpp
