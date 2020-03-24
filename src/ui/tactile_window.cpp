@@ -1,5 +1,6 @@
 #include "tactile_window.h"
 
+#include <QActionGroup>
 #include <QApplication>
 #include <QFile>
 #include <QFileDialog>
@@ -13,30 +14,57 @@
 #include "central_editor_widget.h"
 #include "mouse_tool_widget.h"
 #include "settings_dialog.h"
+#include "settings_utils.h"
 #include "tile_size.h"
 #include "ui_window.h"
 #include "widget_size_policy.h"
 
 namespace tactile {
+namespace {
+
+[[nodiscard]] QDockWidget* create_mouse_tool_dock(
+    QWidget* mouseToolWidget) noexcept
+{
+  auto* dock = new QDockWidget{};
+  dock->setObjectName("mouseToolDock");
+  dock->setVisible(false);
+  set_size_policy(dock, QSizePolicy::Minimum, QSizePolicy::Expanding);
+  dock->setWidget(mouseToolWidget);
+  return dock;
+}
+
+}  // namespace
 
 TactileWindow::TactileWindow(QWidget* parent)
     : QMainWindow{parent}, m_ui{new Ui::MainWindow{}}
 {
   m_ui->setupUi(this);
 
-  // TODO add mouse tool and tile sheet widgets here
+  // TODO add mini-map and tile sheet widgets
 
   m_centralWidget = new CentralEditorWidget{};
+  m_mouseToolWidget = new MouseToolWidget{};
+
   setCentralWidget(m_centralWidget);
 
-  {
-    auto* dock = new QDockWidget{};
-    set_size_policy(dock, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    dock->setWidget(new MouseToolWidget{});
-    addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dock);
-  }
+  m_mouseToolDock = create_mouse_tool_dock(m_mouseToolWidget);
+  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
 
   init_connections();
+
+  const auto loadPrevious = settings_bool("load-previous-layout-on-startup");
+  if (loadPrevious && loadPrevious.value()) {
+    const auto state = settings_byte_array("last-open-layout-state");
+    if (state) {
+      restoreState(*state);
+    }
+
+    const auto geometry = settings_byte_array("last-open-layout-geometry");
+    if (geometry) {
+      restoreGeometry(*geometry);
+    }
+  }
+
   enable_startup_view();  // TODO option to reopen last tile map
 }
 
@@ -48,6 +76,7 @@ TactileWindow::~TactileWindow() noexcept
 void TactileWindow::enable_startup_view() noexcept
 {
   m_centralWidget->enable_startup_view();
+  hide_all_docks();
 }
 
 void TactileWindow::enable_editor_view() noexcept
@@ -76,6 +105,15 @@ void TactileWindow::center_camera(int mapWidth, int mapHeight)
 void TactileWindow::trigger_redraw()
 {
   m_centralWidget->trigger_redraw();
+}
+
+void TactileWindow::closeEvent(QCloseEvent* event)
+{
+  QWidget::closeEvent(event);
+
+  QSettings settings;
+  settings.setValue("last-open-layout-state", saveState());
+  settings.setValue("last-open-layout-geometry", saveGeometry());
 }
 
 void TactileWindow::init_connections() noexcept
@@ -108,6 +146,7 @@ void TactileWindow::init_connections() noexcept
 
     if (!in_editor_mode()) {
       enable_editor_view();
+      show_all_docks();  // TODO just reopen docks that were visible
       emit tw_center_camera();
     }
 
@@ -232,8 +271,47 @@ void TactileWindow::init_connections() noexcept
     }
   });
 
+  on_triggered(m_ui->actionMouseTools, [this] {
+    m_mouseToolDock->setVisible(m_ui->actionMouseTools->isChecked());
+  });
+
+  on_triggered(m_ui->actionResetLayout, [this] { reset_dock_layout(); });
+
+  {
+    auto* group = new QActionGroup{this};
+    group->addAction(m_ui->actionStampTool);
+    group->addAction(m_ui->actionBucketTool);
+    group->addAction(m_ui->actionFindSame);
+    group->addAction(m_ui->actionEraserTool);
+    group->addAction(m_ui->actionRectangleSelection);
+  }
+
+  connect(m_mouseToolDock,
+          &QDockWidget::visibilityChanged,
+          m_ui->actionMouseTools,
+          &QAction::setChecked);
+
   connect(
       m_centralWidget, &CentralEditorWidget::req_redraw, this, &W::tw_render);
+}
+
+void TactileWindow::reset_dock_layout() noexcept
+{
+  removeDockWidget(m_mouseToolDock);
+
+  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
+  m_mouseToolDock->setVisible(true);
+}
+
+void TactileWindow::hide_all_docks() noexcept
+{
+  m_mouseToolDock->close();
+}
+
+void TactileWindow::show_all_docks() noexcept
+{
+  m_mouseToolDock->show();
+//  m_mouseToolDock->setVisible(true);
 }
 
 bool TactileWindow::in_editor_mode() const noexcept

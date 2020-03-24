@@ -6,19 +6,25 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>112</width>
-    <height>192</height>
+    <width>94</width>
+    <height>251</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
+  </property>
   <property name="maximumSize">
    <size>
-    <width>112</width>
+    <width>100</width>
     <height>16777215</height>
    </size>
   </property>
@@ -28,20 +34,26 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QFormLayout" name="formLayout">
+   <property name="labelAlignment">
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+   <property name="formAlignment">
+    <set>Qt::AlignCenter</set>
+   </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>2</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>2</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>2</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>2</number>
    </property>
-   <item>
+   <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="sizeConstraint">
       <enum>QLayout::SetFixedSize</enum>
@@ -49,15 +61,15 @@
      <item>
       <widget class="QPushButton" name="stampButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>40</width>
+         <height>35</height>
         </size>
        </property>
        <property name="toolTip">
@@ -84,19 +96,22 @@
      <item>
       <widget class="QPushButton" name="bucketButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>40</width>
+         <height>35</height>
         </size>
        </property>
        <property name="toolTip">
         <string>Bucket</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
        </property>
        <property name="text">
         <string notr="true"/>
@@ -116,15 +131,15 @@
      <item>
       <widget class="QPushButton" name="eraserButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>40</width>
+         <height>35</height>
         </size>
        </property>
        <property name="toolTip">
@@ -148,15 +163,15 @@
      <item>
       <widget class="QPushButton" name="rectangleButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>40</width>
+         <height>35</height>
         </size>
        </property>
        <property name="toolTip">
@@ -174,15 +189,15 @@
      <item>
       <widget class="QPushButton" name="findSameButton">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
        <property name="minimumSize">
         <size>
-         <width>32</width>
-         <height>32</height>
+         <width>40</width>
+         <height>35</height>
         </size>
        </property>
        <property name="toolTip">
@@ -202,9 +217,12 @@
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
+         <width>0</width>
          <height>40</height>
         </size>
        </property>

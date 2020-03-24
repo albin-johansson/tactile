@@ -15,6 +15,7 @@ class QPainter;
 namespace tactile {
 
 class CentralEditorWidget;
+class MouseToolWidget;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -141,9 +142,16 @@ class TactileWindow final : public QMainWindow {
 
   void tw_resize_map();
 
+ protected:
+  void closeEvent(QCloseEvent* event) override;
+
  private:
   Ui::MainWindow* m_ui;
+
   CentralEditorWidget* m_centralWidget;
+  MouseToolWidget* m_mouseToolWidget;
+
+  QDockWidget* m_mouseToolDock;
 
   /**
    * Initializes all of the connections related to the internal components of
@@ -152,6 +160,12 @@ class TactileWindow final : public QMainWindow {
    * @since 0.1.0
    */
   void init_connections() noexcept;
+
+  void reset_dock_layout() noexcept;
+
+  void hide_all_docks() noexcept;
+
+  void show_all_docks() noexcept;
 
   /**
    * Indicates whether or not the editor view is enabled.

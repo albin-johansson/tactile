@@ -8,6 +8,7 @@
 #include <QSurfaceFormat>
 
 #include "resize_dialog.h"
+#include "settings_utils.h"
 #include "tactile_editor.h"
 #include "tactile_window.h"
 #include "tile_sheet_file_dialog.h"
@@ -38,24 +39,17 @@ void init_surface_format() noexcept
  */
 void validate_settings() noexcept
 {
-  QSettings settings;
-
-  const auto set_if_absent = [&settings](const QString& key,
-                                         const auto value) noexcept {
-    if (!settings.contains(key)) {
-      settings.setValue(key, value);
-    }
-  };
-
   set_if_absent("visuals-grid", true);
+  set_if_absent("load-previous-layout-on-startup", true);
+
+  QSettings settings;
+  settings.setValue("load-previous-layout-on-startup", true);
 }
 
 }  // namespace
 
 TactileApplication::TactileApplication(int argc, char** argv)
-    : QApplication{argc, argv},
-      m_window{std::make_unique<TactileWindow>()},
-      m_editor{std::make_unique<TactileEditor>()}
+    : QApplication{argc, argv}
 {
   init_surface_format();
 
@@ -68,10 +62,13 @@ TactileApplication::TactileApplication(int argc, char** argv)
   QIcon icon{":/res/icons/tactile2_icon2.png"};
   setWindowIcon(icon);
 
-  load_style_sheet(":/res/tactile_light.qss");
+  validate_settings();
+
+  m_window = std::make_unique<TactileWindow>();
+  m_editor = std::make_unique<TactileEditor>();
 
   init_connections();
-  validate_settings();
+  load_style_sheet(":/res/tactile_light.qss");
 
   m_window->showMaximized();  // TODO remember last size?
 }

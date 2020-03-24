@@ -62,7 +62,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>29</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="font">
@@ -112,6 +112,22 @@
     <property name="title">
      <string>View</string>
     </property>
+    <widget class="QMenu" name="menuAppearance">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="title">
+      <string>Appearance</string>
+     </property>
+     <addaction name="actionResetLayout"/>
+     <addaction name="separator"/>
+     <addaction name="actionMouseTools"/>
+     <addaction name="actionTileSheets"/>
+    </widget>
+    <addaction name="menuAppearance"/>
+    <addaction name="separator"/>
     <addaction name="actionCenterCamera"/>
     <addaction name="separator"/>
     <addaction name="actionToggleGrid"/>
@@ -560,6 +576,9 @@
    </property>
   </action>
   <action name="actionStampTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/stamp.png</normaloff>:/res/icons/icons8/color/64/stamp.png</iconset>
@@ -578,6 +597,9 @@
    </property>
   </action>
   <action name="actionBucketTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/bucket.png</normaloff>:/res/icons/icons8/color/64/bucket.png</iconset>
@@ -596,6 +618,9 @@
    </property>
   </action>
   <action name="actionEraserTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/eraser.png</normaloff>:/res/icons/icons8/color/64/eraser.png</iconset>
@@ -614,6 +639,9 @@
    </property>
   </action>
   <action name="actionRectangleSelection">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/rectangle.png</normaloff>:/res/icons/icons8/color/64/rectangle.png</iconset>
@@ -632,6 +660,9 @@
    </property>
   </action>
   <action name="actionFindSame">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/search.png</normaloff>:/res/icons/icons8/color/64/search.png</iconset>
@@ -694,6 +725,60 @@
   <action name="actionCloseMap">
    <property name="text">
     <string>Close map</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionMouseTools">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <selectedoff>:/res/icons/icons8/color/64/unchecked.png</selectedoff>
+     <selectedon>:/res/icons/icons8/color/64/checked.png</selectedon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Mouse tools</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionTileSheets">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <selectedoff>:/res/icons/icons8/color/64/unchecked.png</selectedoff>
+     <selectedon>:/res/icons/icons8/color/64/checked.png</selectedon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Tile sheets</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionResetLayout">
+   <property name="text">
+    <string>Reset layout</string>
    </property>
    <property name="font">
     <font>
