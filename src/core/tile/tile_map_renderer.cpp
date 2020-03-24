@@ -4,20 +4,25 @@
 #include <QPainter>
 #include <QSettings>
 
+#include "settings_utils.h"
 #include "tile_map.h"
 #include "tile_size.h"
 
 namespace tactile {
+namespace {
 
-void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
-    noexcept
+struct RenderBounds final {
+  int minRow = 0;
+  int minCol = 0;
+  int maxRow = 0;
+  int maxCol = 0;
+};
+
+[[nodiscard]] RenderBounds calc_render_data(const QRect& viewport,
+                                            int nRows,
+                                            int nCols,
+                                            int tileSize) noexcept
 {
-  const auto& viewport = painter.viewport();
-  const auto tileSize = TileSize::get().size();
-
-  const auto nRows = map.m_nRows;
-  const auto nCols = map.m_nCols;
-
   const auto minCol = (viewport.x() > 0) ? 0 : (-viewport.x() / tileSize);
   const auto minRow = (viewport.y() > 0) ? 0 : (-viewport.y() / tileSize);
 
@@ -26,16 +31,32 @@ void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
   const auto maxCol = (calcMaxCol > nCols) ? nCols : calcMaxCol;
   const auto maxRow = (calcMaxRow > nRows) ? nRows : calcMaxRow;
 
-  QSettings settings;
-  const auto renderGrid = settings.value("visuals-grid", true).toBool();
+  return {minRow, minCol, maxRow, maxCol};
+}
+
+[[nodiscard]] QPen create_pen() noexcept
+{
+  QPen pen;
+  pen.setColor(Qt::black);
+  pen.setWidth(1);
+  pen.setDashOffset(0);
+  pen.setDashPattern({3, 4});
+  return pen;
+}
+
+}  // namespace
+
+void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
+    noexcept
+{
+  const auto tileSize = TileSize::get().size();
+  const auto bounds =
+      calc_render_data(painter.viewport(), map.rows(), map.cols(), tileSize);
+
+  const auto renderGrid = settings_bool("visuals-grid").value_or(true);
 
   if (renderGrid) {
-    QPen pen;
-    pen.setColor(Qt::black);
-    pen.setWidth(1);
-    pen.setDashOffset(0);
-    pen.setDashPattern({3, 4});
-    painter.setPen(pen);
+    painter.setPen(create_pen());
   }
 
   const QColor emptyGray{0x55, 0x55, 0x55};
@@ -43,8 +64,8 @@ void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
   for (auto& layer : map.m_layers) {
     // TODO...
 
-    for (auto row = minRow; row < maxRow; ++row) {
-      for (auto col = minCol; col < maxCol; ++col) {
+    for (auto row = bounds.minRow; row < bounds.maxRow; ++row) {
+      for (auto col = bounds.minCol; col < bounds.maxCol; ++col) {
         const auto x = col * tileSize;
         const auto y = row * tileSize;
         painter.fillRect(x, y, tileSize, tileSize, emptyGray);
