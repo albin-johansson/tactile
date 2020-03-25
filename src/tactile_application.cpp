@@ -41,9 +41,6 @@ void validate_settings() noexcept
 {
   set_if_absent("visuals-grid", true);
   set_if_absent("load-previous-layout-on-startup", true);
-
-  QSettings settings;
-  settings.setValue("load-previous-layout-on-startup", true);
 }
 
 }  // namespace
