@@ -286,7 +286,6 @@ void TactileWindow::init_layout() noexcept
 {
   const auto loadPrevious = settings_bool("load-previous-layout-on-startup");
   if (loadPrevious && loadPrevious.value()) {
-    qInfo("Loading previous layout...");
     const auto state = settings_byte_array("last-open-layout-state");
     if (state) {
       restoreState(*state);
@@ -315,7 +314,6 @@ void TactileWindow::hide_all_docks() noexcept
 void TactileWindow::show_all_docks() noexcept
 {
   m_mouseToolDock->show();
-  //  m_mouseToolDock->setVisible(true);
 }
 
 bool TactileWindow::in_editor_mode() const noexcept
