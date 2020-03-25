@@ -51,20 +51,7 @@ TactileWindow::TactileWindow(QWidget* parent)
   addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
 
   init_connections();
-
-  const auto loadPrevious = settings_bool("load-previous-layout-on-startup");
-  if (loadPrevious && loadPrevious.value()) {
-    const auto state = settings_byte_array("last-open-layout-state");
-    if (state) {
-      restoreState(*state);
-    }
-
-    const auto geometry = settings_byte_array("last-open-layout-geometry");
-    if (geometry) {
-      restoreGeometry(*geometry);
-    }
-  }
-
+  init_layout();
   enable_startup_view();  // TODO option to reopen last tile map
 }
 
@@ -295,6 +282,23 @@ void TactileWindow::init_connections() noexcept
       m_centralWidget, &CentralEditorWidget::req_redraw, this, &W::tw_render);
 }
 
+void TactileWindow::init_layout() noexcept
+{
+  const auto loadPrevious = settings_bool("load-previous-layout-on-startup");
+  if (loadPrevious && loadPrevious.value()) {
+    qInfo("Loading previous layout...");
+    const auto state = settings_byte_array("last-open-layout-state");
+    if (state) {
+      restoreState(*state);
+    }
+
+    const auto geometry = settings_byte_array("last-open-layout-geometry");
+    if (geometry) {
+      restoreGeometry(*geometry);
+    }
+  }
+}
+
 void TactileWindow::reset_dock_layout() noexcept
 {
   removeDockWidget(m_mouseToolDock);
@@ -311,7 +315,7 @@ void TactileWindow::hide_all_docks() noexcept
 void TactileWindow::show_all_docks() noexcept
 {
   m_mouseToolDock->show();
-//  m_mouseToolDock->setVisible(true);
+  //  m_mouseToolDock->setVisible(true);
 }
 
 bool TactileWindow::in_editor_mode() const noexcept

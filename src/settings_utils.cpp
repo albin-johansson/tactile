@@ -1,8 +1,6 @@
 #include "settings_utils.h"
 
 #include <QSettings>
-#include <QString>
-#include <QVariant>
 
 namespace tactile {
 namespace {
@@ -36,7 +34,7 @@ void set_if_absent(const char* setting, const QVariant& value) noexcept
 Maybe<QByteArray> settings_byte_array(const char* setting) noexcept
 {
   const auto value = get_value(setting);
-  if (value && value->type() == QVariant::ByteArray) {
+  if (value && value->canConvert(QVariant::ByteArray)) {
     return value->toByteArray();
   } else {
     return nothing;
@@ -46,7 +44,7 @@ Maybe<QByteArray> settings_byte_array(const char* setting) noexcept
 Maybe<bool> settings_bool(const char* setting) noexcept
 {
   const auto value = get_value(setting);
-  if (value && value->type() == QVariant::Bool) {
+  if (value && value->canConvert<bool>()) {
     return value->toBool();
   } else {
     return nothing;

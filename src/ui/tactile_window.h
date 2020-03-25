@@ -161,6 +161,8 @@ class TactileWindow final : public QMainWindow {
    */
   void init_connections() noexcept;
 
+  void init_layout() noexcept;
+
   void reset_dock_layout() noexcept;
 
   void hide_all_docks() noexcept;
