@@ -30,10 +30,13 @@ void TactileEditor::close_map(int id) noexcept
 
     if (m_activeMapIndex == id) {
       m_activeMapIndex = nothing;
-    } else if (!m_maps.empty()) {
+    }
+
+    if (!m_maps.empty()) {
       const auto begin = m_maps.begin();
       m_activeMapIndex = begin->first;
     }
+
   } else {
     qWarning("Attempted to remove tile map that doesn't exist: %i!", id);
   }
