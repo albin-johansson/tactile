@@ -60,8 +60,6 @@ set(TACTILE_SOURCE_FILES
         core/tile/tile_layer.h
         core/tile/map_position.cpp
         core/tile/map_position.h
-        core/tile/tile_set.cpp
-        core/tile/tile_set.h
         core/tile/tile_sheet.cpp
         core/tile/tile_sheet.h
         core/tile/tile_size.h
