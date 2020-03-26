@@ -20,6 +20,10 @@ QMenu::item:selected {
   color: black;
 }
 
+QMenu::item:checked {
+  background-color: lightblue;
+}
+
 QMenu::item:pressed {
   background-color: darkgray;
 }
@@ -30,6 +34,10 @@ QToolTip {
 
 QPushButton {
   background: white;
+}
+
+QPushButton:checked {
+  background: lightblue;
 }
 
 QTabBar::tab {

@@ -91,6 +91,12 @@
          <height>24</height>
         </size>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -126,6 +132,9 @@
          <height>24</height>
         </size>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -158,6 +167,9 @@
          <height>24</height>
         </size>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -184,6 +196,12 @@
         <iconset resource="../tactile2.qrc">
          <normaloff>:/res/icons/icons8/color/64/rectangle.png</normaloff>:/res/icons/icons8/color/64/rectangle.png</iconset>
        </property>
+       <property name="checkable">
+        <bool>true</bool>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -209,6 +227,9 @@
        <property name="icon">
         <iconset resource="../tactile2.qrc">
          <normaloff>:/res/icons/icons8/color/64/search.png</normaloff>:/res/icons/icons8/color/64/search.png</iconset>
+       </property>
+       <property name="checkable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

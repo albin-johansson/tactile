@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>664</width>
-    <height>438</height>
+    <width>523</width>
+    <height>386</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -29,7 +29,7 @@
    <string>About Tactile</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../tactile2.qrc">
+   <iconset resource="../../tactile2.qrc">
     <normaloff>:/res/icons/tactile2_icon2.png</normaloff>:/res/icons/tactile2_icon2.png</iconset>
   </property>
   <property name="windowOpacity">
@@ -40,8 +40,8 @@
     <rect>
      <x>30</x>
      <y>30</y>
-     <width>617</width>
-     <height>381</height>
+     <width>471</width>
+     <height>331</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -69,7 +69,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../tactile2.qrc">:/res/icons/tactile2_icon2.png</pixmap>
+         <pixmap resource="../../tactile2.qrc">:/res/icons/tactile2_icon2.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -158,7 +158,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../tactile2.qrc">:/res/icons/icons8/dark/qt.png</pixmap>
+         <pixmap resource="../../tactile2.qrc">:/res/icons/icons8/dark/qt.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -224,7 +224,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../tactile2.qrc">:/res/icons/icons8/color/64/icons8.png</pixmap>
+         <pixmap resource="../../tactile2.qrc">:/res/icons/icons8/color/64/icons8.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -286,7 +286,7 @@
          <string/>
         </property>
         <property name="pixmap">
-         <pixmap resource="../tactile2.qrc">:/res/icons/icons8/color/64/git.png</pixmap>
+         <pixmap resource="../../tactile2.qrc">:/res/icons/icons8/color/64/git.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -377,6 +377,7 @@
   </widget>
  </widget>
  <resources>
+  <include location="../../tactile2.qrc"/>
   <include location="../tactile2.qrc"/>
  </resources>
  <connections/>

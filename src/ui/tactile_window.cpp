@@ -63,12 +63,14 @@ TactileWindow::~TactileWindow() noexcept
 void TactileWindow::enable_startup_view() noexcept
 {
   m_centralWidget->enable_startup_view();
+  m_mouseToolWidget->disable_tools();
   hide_all_docks();
 }
 
 void TactileWindow::enable_editor_view() noexcept
 {
   m_centralWidget->enable_editor_view();
+  m_mouseToolWidget->enable_tools();  // FIXME only enable relevant tools
 }
 
 void TactileWindow::display_about_dialog() noexcept
@@ -266,11 +268,49 @@ void TactileWindow::init_connections() noexcept
 
   {
     auto* group = new QActionGroup{this};
+    group->setExclusive(true);
     group->addAction(m_ui->actionStampTool);
     group->addAction(m_ui->actionBucketTool);
-    group->addAction(m_ui->actionFindSame);
+    group->addAction(m_ui->actionFindSameTool);
     group->addAction(m_ui->actionEraserTool);
-    group->addAction(m_ui->actionRectangleSelection);
+    group->addAction(m_ui->actionRectangleTool);
+
+    connect(m_mouseToolWidget, &MouseToolWidget::stamp_enabled, this, [this] {
+      m_ui->actionStampTool->setChecked(true);
+    });
+
+    connect(m_mouseToolWidget, &MouseToolWidget::bucket_enabled, this, [this] {
+      m_ui->actionBucketTool->setChecked(true);
+    });
+
+    connect(m_mouseToolWidget, &MouseToolWidget::eraser_enabled, this, [this] {
+      m_ui->actionEraserTool->setChecked(true);
+    });
+
+    connect(
+        m_mouseToolWidget, &MouseToolWidget::rectangle_enabled, this, [this] {
+          m_ui->actionRectangleTool->setChecked(true);
+        });
+
+    connect(
+        m_mouseToolWidget, &MouseToolWidget::find_same_enabled, this, [this] {
+          m_ui->actionFindSameTool->setChecked(true);
+        });
+
+    on_triggered(m_ui->actionStampTool,
+                 [this] { m_mouseToolWidget->enable_stamp(); });
+
+    on_triggered(m_ui->actionBucketTool,
+                 [this] { m_mouseToolWidget->enable_bucket(); });
+
+    on_triggered(m_ui->actionEraserTool,
+                 [this] { m_mouseToolWidget->enable_eraser(); });
+
+    on_triggered(m_ui->actionRectangleTool,
+                 [this] { m_mouseToolWidget->enable_rectangle(); });
+
+    on_triggered(m_ui->actionFindSameTool,
+                 [this] { m_mouseToolWidget->enable_find_same(); });
   }
 
   connect(m_mouseToolDock,
