@@ -10,6 +10,7 @@ function(tactile_include_dirs [target])
     target_include_directories(${ARGV0} PUBLIC ui/toolbar)
     target_include_directories(${ARGV0} PUBLIC ui/editor)
     target_include_directories(${ARGV0} PUBLIC ui/modal)
+    target_include_directories(${ARGV0} PUBLIC ui/tilesheet)
 endfunction()
 
 function(tactile_append_gcc_compiler_flags [target])
@@ -66,6 +67,8 @@ set(TACTILE_SOURCE_FILES
         core/tile/tile_size.cpp
         core/tile/tile_map_renderer.cpp
         core/tile/tile_map_renderer.h
+        core/tile/tile_sheet_manager.cpp
+        core/tile/tile_sheet_manager.h
 
         ui/mouse_tool_widget.cpp
         ui/mouse_tool_widget.h
@@ -78,6 +81,13 @@ set(TACTILE_SOURCE_FILES
         ui/basic_widget_macro.h
         ui/widget_size_policy.h
         ui/widget_size_policy.cpp
+        ui/startup_widget.ui
+        ui/tool_button_widget.ui
+        ui/window.ui
+
+        ui/tilesheet/tile_sheet_widget.cpp
+        ui/tilesheet/tile_sheet_widget.h
+        ui/tilesheet/tile_sheet_widget.ui
 
         ui/modal/about_dialog.cpp
         ui/modal/about_dialog.h
@@ -85,18 +95,24 @@ set(TACTILE_SOURCE_FILES
         ui/modal/settings_dialog.cpp
         ui/modal/resize_dialog.h
         ui/modal/resize_dialog.cpp
+        ui/modal/about.ui
+        ui/modal/resize_dialog.ui
+        ui/modal/settings.ui
 
         ui/toolbar/dynamic_tool_bar_widget.cpp
         ui/toolbar/dynamic_tool_bar_widget.h
         ui/toolbar/stamp_toolbar.cpp
         ui/toolbar/stamp_toolbar.h
+        ui/toolbar/toolbar_stamp.ui
 
         ui/editor/editor_tab.cpp
         ui/editor/editor_tab.h
         ui/editor/central_editor_widget.cpp
         ui/editor/central_editor_widget.h
         ui/editor/tile_map_tab_widget.cpp
-        ui/editor/tile_map_tab_widget.h)
+        ui/editor/tile_map_tab_widget.h
+        ui/editor/central_widget.ui
+        ui/editor/editor_pane.ui)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

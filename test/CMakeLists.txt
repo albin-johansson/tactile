@@ -9,7 +9,7 @@ set(TACTILE_TEST_FILES
         flood_fill_test.cpp
         tile_sheet_test.cpp
         tile_size_test.cpp
-        widget_size_policy_test.cpp)
+        widget_size_policy_test.cpp tile_sheet_manager_test.cpp)
 
 add_executable(TactileTests ${TACTILE_TEST_FILES})
 

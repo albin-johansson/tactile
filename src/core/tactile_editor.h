@@ -11,6 +11,7 @@ class QPainter;
 namespace tactile {
 
 class TileMap;
+class TileSheetManager;
 
 /**
  * The <code>TactileEditor</code> class represents the main interface for the
@@ -141,8 +142,9 @@ class TactileEditor final : public QObject {
   void remove_col() noexcept;
 
  private:
-  std::unordered_map<int, UniquePtr<TileMap>> m_maps;
   Maybe<int> m_activeMapIndex;
+  std::unordered_map<int, UniquePtr<TileMap>> m_maps;
+  UniquePtr<TileSheetManager> m_sheetManager;
 
   /**
    * Returns a pointer to the currently active map. You should check that the

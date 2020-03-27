@@ -1,12 +1,15 @@
 #include "tactile_editor.h"
 
-#include <QMessageLogger>
+#include <QImage>
 
 #include "tile_map.h"
+#include "tile_sheet_manager.h"
 
 namespace tactile {
 
-TactileEditor::TactileEditor() : m_activeMapIndex{nothing}
+TactileEditor::TactileEditor()
+    : m_activeMapIndex{nothing},
+      m_sheetManager{std::make_unique<TileSheetManager>()}
 {}
 
 TactileEditor::~TactileEditor() noexcept = default;
@@ -36,7 +39,6 @@ void TactileEditor::close_map(int id) noexcept
       const auto begin = m_maps.begin();
       m_activeMapIndex = begin->first;
     }
-
   } else {
     qWarning("Attempted to remove tile map that doesn't exist: %i!", id);
   }
@@ -57,6 +59,11 @@ void TactileEditor::add_tile_sheet(const char* fileName) noexcept
   }
 
   qInfo("Adding tile sheet: %s", fileName);
+
+  auto image = std::make_shared<QImage>(fileName);
+  if (!image->isNull()) {
+
+  }
 }
 
 void TactileEditor::set_rows(int nRows) noexcept

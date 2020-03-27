@@ -20,6 +20,8 @@ TileSheet::TileSheet(const SharedPtr<QImage>& image, int size)
   clear_selection();
 }
 
+TileSheet::~TileSheet() noexcept = default;
+
 void TileSheet::set_first_id(TileID firstID) noexcept
 {
   if (firstID > 0) {
