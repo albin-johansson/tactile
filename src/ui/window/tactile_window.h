@@ -4,6 +4,8 @@
 #include <QOpenGLWidget>
 #include <QWidget>
 
+#include "smart_pointers.h"
+
 namespace Ui {
 
 class MainWindow;
@@ -11,11 +13,13 @@ class MainWindow;
 }
 
 class QPainter;
+class QActionGroup;
 
 namespace tactile {
 
 class CentralEditorWidget;
 class MouseToolWidget;
+class TileSheetWidget;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -150,8 +154,12 @@ class TactileWindow final : public QMainWindow {
 
   CentralEditorWidget* m_centralWidget;
   MouseToolWidget* m_mouseToolWidget;
+  TileSheetWidget* m_tileSheetWidget;
 
-  QDockWidget* m_mouseToolDock;
+  UniquePtr<QDockWidget> m_mouseToolDock;
+  UniquePtr<QDockWidget> m_tileSheetDock;
+
+  UniquePtr<QActionGroup> m_mouseToolGroup;
 
   /**
    * Initializes all of the connections related to the internal components of

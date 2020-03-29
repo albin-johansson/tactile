@@ -15,6 +15,7 @@
 #include "mouse_tool_widget.h"
 #include "settings_dialog.h"
 #include "settings_utils.h"
+#include "tile_sheet_widget.h"
 #include "tile_size.h"
 #include "ui_window.h"
 #include "widget_size_policy.h"
@@ -22,14 +23,25 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] QDockWidget* create_mouse_tool_dock(
-    QWidget* mouseToolWidget) noexcept
+[[nodiscard]] UniquePtr<QDockWidget> create_mouse_tool_dock(
+    QWidget* widget) noexcept
 {
-  auto* dock = new QDockWidget{};
+  auto dock = std::make_unique<QDockWidget>();
   dock->setObjectName("mouseToolDock");
   dock->setVisible(false);
-  set_size_policy(dock, QSizePolicy::Minimum, QSizePolicy::Expanding);
-  dock->setWidget(mouseToolWidget);
+  set_size_policy(dock.get(), QSizePolicy::Minimum, QSizePolicy::Expanding);
+  dock->setWidget(widget);
+  return dock;
+}
+
+[[nodiscard]] UniquePtr<QDockWidget> create_tile_sheet_dock(
+    QWidget* widget) noexcept
+{
+  auto dock = std::make_unique<QDockWidget>();
+  dock->setObjectName("tileSheetDock");
+  dock->setVisible(false);
+  set_size_policy(dock.get(), QSizePolicy::Expanding);
+  dock->setWidget(widget);
   return dock;
 }
 
@@ -44,11 +56,15 @@ TactileWindow::TactileWindow(QWidget* parent)
 
   m_centralWidget = new CentralEditorWidget{};
   m_mouseToolWidget = new MouseToolWidget{};
+  m_tileSheetWidget = new TileSheetWidget{};
 
   setCentralWidget(m_centralWidget);
 
   m_mouseToolDock = create_mouse_tool_dock(m_mouseToolWidget);
-  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
+  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock.get());
+
+  m_tileSheetDock = create_tile_sheet_dock(m_tileSheetWidget);
+  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tileSheetDock.get());
 
   init_connections();
   init_layout();
@@ -267,13 +283,13 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionResetLayout, [this] { reset_dock_layout(); });
 
   {
-    auto* group = new QActionGroup{this};
-    group->setExclusive(true);
-    group->addAction(m_ui->actionStampTool);
-    group->addAction(m_ui->actionBucketTool);
-    group->addAction(m_ui->actionFindSameTool);
-    group->addAction(m_ui->actionEraserTool);
-    group->addAction(m_ui->actionRectangleTool);
+    m_mouseToolGroup = std::make_unique<QActionGroup>(this);
+    m_mouseToolGroup->setExclusive(true);
+    m_mouseToolGroup->addAction(m_ui->actionStampTool);
+    m_mouseToolGroup->addAction(m_ui->actionBucketTool);
+    m_mouseToolGroup->addAction(m_ui->actionFindSameTool);
+    m_mouseToolGroup->addAction(m_ui->actionEraserTool);
+    m_mouseToolGroup->addAction(m_ui->actionRectangleTool);
 
     connect(m_mouseToolWidget, &MouseToolWidget::stamp_enabled, this, [this] {
       m_ui->actionStampTool->setChecked(true);
@@ -313,7 +329,7 @@ void TactileWindow::init_connections() noexcept
                  [this] { m_mouseToolWidget->enable_find_same(); });
   }
 
-  connect(m_mouseToolDock,
+  connect(m_mouseToolDock.get(),
           &QDockWidget::visibilityChanged,
           m_ui->actionMouseTools,
           &QAction::setChecked);
@@ -340,20 +356,26 @@ void TactileWindow::init_layout() noexcept
 
 void TactileWindow::reset_dock_layout() noexcept
 {
-  removeDockWidget(m_mouseToolDock);
+  removeDockWidget(m_mouseToolDock.get());
+  removeDockWidget(m_tileSheetDock.get());
 
-  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
-  m_mouseToolDock->setVisible(true);
+  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock.get());
+  m_mouseToolDock->show();
+
+  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tileSheetDock.get());
+  m_tileSheetDock->show();
 }
 
 void TactileWindow::hide_all_docks() noexcept
 {
   m_mouseToolDock->close();
+  m_tileSheetDock->close();
 }
 
 void TactileWindow::show_all_docks() noexcept
 {
   m_mouseToolDock->show();
+  m_tileSheetDock->show();
 }
 
 bool TactileWindow::in_editor_mode() const noexcept
