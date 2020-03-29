@@ -11,6 +11,8 @@ function(tactile_include_dirs [target])
     target_include_directories(${ARGV0} PUBLIC ui/editor)
     target_include_directories(${ARGV0} PUBLIC ui/modal)
     target_include_directories(${ARGV0} PUBLIC ui/tilesheet)
+    target_include_directories(${ARGV0} PUBLIC ui/window)
+    target_include_directories(${ARGV0} PUBLIC ui/util)
 endfunction()
 
 function(tactile_append_gcc_compiler_flags [target])
@@ -72,18 +74,18 @@ set(TACTILE_SOURCE_FILES
 
         ui/mouse_tool_widget.cpp
         ui/mouse_tool_widget.h
-        ui/tactile_window.h
-        ui/tactile_window.cpp
-        ui/tile_sheet_file_dialog.cpp
-        ui/tile_sheet_file_dialog.h
+        ui/window/tactile_window.h
+        ui/window/tactile_window.cpp
+        ui/modal/tile_sheet_file_dialog.cpp
+        ui/modal/tile_sheet_file_dialog.h
         ui/startup_widget.cpp
         ui/startup_widget.h
-        ui/basic_widget_macro.h
-        ui/widget_size_policy.h
-        ui/widget_size_policy.cpp
+        ui/util/basic_widget_macro.h
+        ui/util/widget_size_policy.h
+        ui/util/widget_size_policy.cpp
         ui/startup_widget.ui
         ui/tool_button_widget.ui
-        ui/window.ui
+        ui/window/window.ui
 
         ui/tilesheet/tile_sheet_widget.cpp
         ui/tilesheet/tile_sheet_widget.h
