@@ -48,10 +48,13 @@ void TactileEditor::close_map(int id) noexcept
 void TactileEditor::open_map(const char*)
 {
   // TODO parse Tactile or TMX formats
+  qWarning("\"Open map\" isn't implemented!");
 }
 
 void TactileEditor::save_as(const char*) const
-{}
+{
+  qWarning("\"Save as\" isn't implemented!");
+}
 
 Maybe<int> TactileEditor::add_tile_sheet(const SharedPtr<QImage>& image,
                                          int tileWidth,
@@ -82,7 +85,7 @@ void TactileEditor::set_cols(int nCols) noexcept
   }
 }
 
-int TactileEditor::rows() const noexcept
+int TactileEditor::rows() const noexcept // TODO change to return maybe
 {
   auto* map = active_map();
   if (map) {
