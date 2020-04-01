@@ -25,6 +25,16 @@ TileMap::TileMap(int nRows, int nCols)
 
 TileMap::~TileMap() noexcept = default;
 
+UniquePtr<TileMap> TileMap::unique(int nRows, int nCols)
+{
+  return std::make_unique<TileMap>(nRows, nCols);
+}
+
+SharedPtr<TileMap> TileMap::shared(int nRows, int nCols)
+{
+  return std::make_shared<TileMap>(nRows, nCols);
+}
+
 void TileMap::draw(QPainter& painter) const noexcept
 {
   m_renderer.render(painter, *this);

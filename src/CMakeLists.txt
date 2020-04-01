@@ -74,23 +74,28 @@ set(TACTILE_SOURCE_FILES
 
         ui/mouse_tool_widget.cpp
         ui/mouse_tool_widget.h
-        ui/window/tactile_window.h
-        ui/window/tactile_window.cpp
-        ui/modal/tile_sheet_file_dialog.cpp
-        ui/modal/tile_sheet_file_dialog.h
         ui/startup_widget.cpp
         ui/startup_widget.h
+        ui/startup_widget.ui
+        ui/tool_button_widget.ui
+
         ui/util/basic_widget_macro.h
         ui/util/widget_size_policy.h
         ui/util/widget_size_policy.cpp
-        ui/startup_widget.ui
-        ui/tool_button_widget.ui
+
+        ui/window/tactile_window.h
+        ui/window/tactile_window.cpp
         ui/window/window.ui
 
         ui/tilesheet/tile_sheet_widget.cpp
         ui/tilesheet/tile_sheet_widget.h
         ui/tilesheet/tile_sheet_widget.ui
+        ui/tilesheet/tile_sheet_dialog.cpp
+        ui/tilesheet/tile_sheet_dialog.h
+        ui/tilesheet/tile_sheet_dialog.ui
 
+        ui/modal/tile_sheet_file_dialog.cpp
+        ui/modal/tile_sheet_file_dialog.h
         ui/modal/about_dialog.cpp
         ui/modal/about_dialog.h
         ui/modal/settings_dialog.h

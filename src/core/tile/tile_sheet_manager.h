@@ -22,14 +22,15 @@ class TileSheetManager final {
   ~TileSheetManager() noexcept;
 
   /**
-   * Adds a tile sheet to the manager. This method has no effect if the
-   * specified ID is already occupied OR if the supplied tile sheet is null.
+   * Adds a tile sheet to the manager. This method has no effect if the supplied
+   * tile sheet is null.
    *
    * @param id the key that will be associated with the tile sheet.
    * @param sheet the tile sheet that will be added.
+   * @return the ID of the added tile sheet; nothing if no tile sheet was added.
    * @since 0.1.0
    */
-  void add(int id, UniquePtr<TileSheet>&& sheet) noexcept;
+  [[nodiscard]] Maybe<int> add(UniquePtr<TileSheet>&& sheet) noexcept;
 
   /**
    * Removes a tile sheet from the manager. This method has no effect if the
@@ -81,6 +82,7 @@ class TileSheetManager final {
  private:
   Maybe<int> m_activeSheet;
   std::map<int, UniquePtr<TileSheet>> m_sheets;
+  int m_nextSheetKey;
 };
 
 }  // namespace tactile

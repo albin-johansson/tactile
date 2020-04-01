@@ -10,20 +10,60 @@
     <height>300</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="currentIndex">
-      <number>0</number>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Tile sheets</string>
      </property>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>Tab 1</string>
-      </attribute>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="QStackedWidget" name="stackedWidget">
+          <widget class="QWidget" name="noTileSheetsPage">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <widget class="QLabel" name="label">
+            <property name="geometry">
+             <rect>
+              <x>130</x>
+              <y>110</y>
+              <width>111</width>
+              <height>16</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>NO TILE SHEETS</string>
+            </property>
+           </widget>
+          </widget>
+          <widget class="QWidget" name="page_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

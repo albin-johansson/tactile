@@ -9,7 +9,7 @@ using namespace tactile;
 
 namespace {
 
-UniquePtr<TileSheet> create_tile_sheet()
+[[nodiscard]] UniquePtr<TileSheet> create_tile_sheet() noexcept
 {
   auto image = std::make_shared<QImage>("terrain.png");
   return std::make_unique<TileSheet>(image, 32);
@@ -21,14 +21,18 @@ TEST_CASE("TileSheetManager::add", "[TileSheetManager]")
 {
   TileSheetManager manager;
 
-  CHECK_NOTHROW(manager.add(0, nullptr));
+  CHECK(!manager.add(nullptr).has_value());
   CHECK(manager.sheets() == 0);
   CHECK(!manager.has_active_tile_sheet());
 
-  manager.add(7, create_tile_sheet());
-  CHECK_NOTHROW(manager.add(7, create_tile_sheet()));
+  const auto first = manager.add(create_tile_sheet());
+  const auto second = manager.add(create_tile_sheet());
+  CHECK(first.has_value());
+  CHECK(second.has_value());
 
-  CHECK(manager.sheets() == 1);
+  CHECK(second > first);
+
+  CHECK(manager.sheets() == 2);
 }
 
 TEST_CASE("TileSheetManager::remove", "[TileSheetManager]")
@@ -36,13 +40,14 @@ TEST_CASE("TileSheetManager::remove", "[TileSheetManager]")
   TileSheetManager manager;
   CHECK_NOTHROW(manager.remove(0));
 
-  manager.add(5, create_tile_sheet());
+  const auto id = manager.add(create_tile_sheet());
+  CHECK(id.has_value());
   CHECK(manager.sheets() == 1);
 
-  manager.remove(4);
+  manager.remove(*id + 5);
   CHECK(manager.sheets() == 1);
 
-  manager.remove(5);
+  manager.remove(*id);
   CHECK(manager.sheets() == 0);
 }
 
@@ -51,8 +56,8 @@ TEST_CASE("TileSheetManager::remove_all", "[TileSheetManager]")
   TileSheetManager manager;
   CHECK_NOTHROW(manager.remove_all());
 
-  manager.add(3, create_tile_sheet());
-  manager.add(6, create_tile_sheet());
+  manager.add(create_tile_sheet());  // NOLINT
+  manager.add(create_tile_sheet());  // NOLINT
 
   CHECK(manager.sheets() == 2);
 
@@ -67,10 +72,10 @@ TEST_CASE("TileSheetManager::select", "[TileSheetManager]")
   CHECK_NOTHROW(manager.select(9));
   CHECK(!manager.has_active_tile_sheet());
 
-  manager.add(3, create_tile_sheet());
-  manager.add(8, create_tile_sheet());
+  const auto id = manager.add(create_tile_sheet());
+  manager.add(create_tile_sheet());  // NOLINT
 
-  manager.select(3);
+  manager.select(id);
   CHECK(manager.has_active_tile_sheet());
 
   manager.select(nothing);

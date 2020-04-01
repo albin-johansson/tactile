@@ -11,24 +11,23 @@ MouseToolWidget::MouseToolWidget(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  const auto on_pressed = [this](auto sender, auto handler) noexcept {
+  const auto on_pressed = [this](auto* sender, auto handler) noexcept {
     connect(sender, &QPushButton::pressed, this, handler);
   };
 
-  using MTW = MouseToolWidget;
-  on_pressed(m_ui->stampButton, &MTW::stamp_enabled);
-  on_pressed(m_ui->bucketButton, &MTW::bucket_enabled);
-  on_pressed(m_ui->eraserButton, &MTW::eraser_enabled);
-  on_pressed(m_ui->rectangleButton, &MTW::rectangle_enabled);
-  on_pressed(m_ui->findSameButton, &MTW::find_same_enabled);
+  on_pressed(m_ui->stampButton, &MouseToolWidget::stamp_enabled);
+  on_pressed(m_ui->bucketButton, &MouseToolWidget::bucket_enabled);
+  on_pressed(m_ui->eraserButton, &MouseToolWidget::eraser_enabled);
+  on_pressed(m_ui->rectangleButton, &MouseToolWidget::rectangle_enabled);
+  on_pressed(m_ui->findSameButton, &MouseToolWidget::find_same_enabled);
 
-  auto* group = new QButtonGroup{};
-  group->setExclusive(true);
-  group->addButton(m_ui->stampButton);
-  group->addButton(m_ui->bucketButton);
-  group->addButton(m_ui->eraserButton);
-  group->addButton(m_ui->rectangleButton);
-  group->addButton(m_ui->findSameButton);
+  m_group = std::make_unique<QButtonGroup>();
+  m_group->setExclusive(true);
+  m_group->addButton(m_ui->stampButton);
+  m_group->addButton(m_ui->bucketButton);
+  m_group->addButton(m_ui->eraserButton);
+  m_group->addButton(m_ui->rectangleButton);
+  m_group->addButton(m_ui->findSameButton);
 }
 
 MouseToolWidget::~MouseToolWidget() noexcept
@@ -53,7 +52,6 @@ void MouseToolWidget::enable_stamp() noexcept
 
 void MouseToolWidget::enable_bucket() noexcept
 {
-
   m_ui->bucketButton->setChecked(true);
 }
 

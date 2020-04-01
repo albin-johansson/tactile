@@ -31,6 +31,12 @@ class TileSheet final {
 
   ~TileSheet() noexcept;
 
+  [[nodiscard]] static UniquePtr<TileSheet> unique(
+      const SharedPtr<QImage>& image, int size);
+
+  [[nodiscard]] static SharedPtr<TileSheet> shared(
+      const SharedPtr<QImage>& image, int size);
+
   /**
    * Sets the first tile ID property of the tile sheet. Note that this method
    * doesn't check if the supplied tile ID isn't already taken by another

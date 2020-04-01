@@ -22,6 +22,16 @@ TileSheet::TileSheet(const SharedPtr<QImage>& image, int size)
 
 TileSheet::~TileSheet() noexcept = default;
 
+UniquePtr<TileSheet> TileSheet::unique(const SharedPtr<QImage>& image, int size)
+{
+  return std::make_unique<TileSheet>(image, size);
+}
+
+SharedPtr<TileSheet> TileSheet::shared(const SharedPtr<QImage>& image, int size)
+{
+  return std::make_shared<TileSheet>(image, size);
+}
+
 void TileSheet::set_first_id(TileID firstID) noexcept
 {
   if (firstID > 0) {

@@ -3,6 +3,7 @@
 #include <QImage>
 
 #include "tile_map.h"
+#include "tile_sheet.h"
 #include "tile_sheet_manager.h"
 
 namespace tactile {
@@ -19,7 +20,7 @@ void TactileEditor::new_map(int id) noexcept
   if (m_maps.count(id)) {
     qWarning("Editor core already had tile map associated with %i!", id);
   } else {
-    m_maps.insert({id, std::make_unique<TileMap>(5, 5)});
+    m_maps.insert({id, TileMap::unique(5, 5)});
     m_activeMapIndex = id;
   }
 }
@@ -52,18 +53,17 @@ void TactileEditor::open_map(const char*)
 void TactileEditor::save_as(const char*) const
 {}
 
-void TactileEditor::add_tile_sheet(const char* fileName) noexcept
+Maybe<int> TactileEditor::add_tile_sheet(const SharedPtr<QImage>& image,
+                                         int tileWidth,
+                                         int tileHeight) noexcept
 {
-  if (!fileName) {
-    return;
-  }
-
-  qInfo("Adding tile sheet: %s", fileName);
-
-  auto image = std::make_shared<QImage>(fileName);
+  //  auto image = std::make_shared<QImage>(fileName);
   if (!image->isNull()) {
-
+    // TODO add tile width and tile height to tile sheet
+    return m_sheetManager->add(TileSheet::unique(image, tileWidth));
   }
+
+  return nothing;
 }
 
 void TactileEditor::set_rows(int nRows) noexcept

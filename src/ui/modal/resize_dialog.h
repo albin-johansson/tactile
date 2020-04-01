@@ -3,6 +3,7 @@
 #include <QValidator>
 
 #include "maybe.h"
+#include "smart_pointers.h"
 
 namespace Ui {
 
@@ -58,7 +59,7 @@ class ResizeDialog final : public QDialog {
 
  private:
   Ui::ResizeDialogUI* m_ui;
-  QIntValidator* m_validator;
+  UniquePtr<QIntValidator> m_validator;
   Maybe<int> m_chosenWidth;
   Maybe<int> m_chosenHeight;
 

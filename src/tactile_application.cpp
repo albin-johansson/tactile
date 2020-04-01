@@ -3,7 +3,6 @@
 #include <QFile>
 #include <QIcon>
 #include <QPainter>
-#include <QSettings>
 #include <QStyleFactory>
 #include <QSurfaceFormat>
 
@@ -11,6 +10,7 @@
 #include "settings_utils.h"
 #include "tactile_editor.h"
 #include "tactile_window.h"
+#include "tile_sheet_dialog.h"
 #include "tile_sheet_file_dialog.h"
 #include "tile_size.h"
 
@@ -67,7 +67,7 @@ TactileApplication::TactileApplication(int argc, char** argv)
   init_connections();
   load_style_sheet(":/res/tactile_light.qss");
 
-  m_window->showMaximized();  // TODO remember last size?
+  m_window->show();
 }
 
 TactileApplication::~TactileApplication() noexcept = default;
@@ -80,8 +80,9 @@ void TactileApplication::load_style_sheet(const char* styleSheet)
 
   QFile file{styleSheet};
   file.open(QFile::ReadOnly);
-  QString StyleSheet = QLatin1String(file.readAll());
-  setStyleSheet(StyleSheet);
+
+  auto style = QLatin1String{file.readAll()};
+  setStyleSheet(style);
 }
 
 void TactileApplication::init_connections() noexcept
@@ -109,10 +110,17 @@ void TactileApplication::init_connections() noexcept
   });
 
   connect(window, &W::tw_new_tile_sheet, this, [window, editor] {
-    const auto result = open_tile_sheet_image(window);
-    if (result) {
-      editor->add_tile_sheet(result->toStdString().c_str());
-      window->enable_editor_view();
+    TileSheetDialog dialog;
+    if (dialog.exec()) {
+      const auto image = dialog.chosen_image();
+      const auto tileWidth = dialog.chosen_width();
+      const auto tileHeight = dialog.chosen_height();
+      if (image && tileWidth && tileHeight) {
+        const auto id = editor->add_tile_sheet(image, *tileWidth, *tileHeight);
+        if (id) {
+          window->add_tile_sheet(*id);
+        }
+      }
     }
   });
 

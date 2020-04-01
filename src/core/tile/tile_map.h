@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "maybe.h"
+#include "smart_pointers.h"
 #include "tile_id.h"
 #include "tile_layer.h"
 #include "tile_map_renderer.h"
@@ -33,6 +34,10 @@ class TileMap final {
   TileMap(int nRows, int nCols);
 
   ~TileMap() noexcept;
+
+  [[nodiscard]] static UniquePtr<TileMap> unique(int nRows, int nCols);
+
+  [[nodiscard]] static SharedPtr<TileMap> shared(int nRows, int nCols);
 
   /**
    * Renders the tile map.
@@ -161,6 +166,9 @@ class TileMap final {
   int m_activeLayer;
   std::vector<TileLayer> m_layers;
   TileMapRenderer m_renderer;
+  //TileSize m_tileSize;
+
+  // TODO include tile size
 
   /**
    * Indicates whether or not the specified layer index is associated with a

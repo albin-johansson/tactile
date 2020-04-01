@@ -56,6 +56,8 @@ class TactileWindow final : public QMainWindow {
   void enable_editor_view() noexcept;
 
  public slots:
+  void add_tile_sheet(int id) noexcept;
+
   /**
    * Displays the about dialog.
    *

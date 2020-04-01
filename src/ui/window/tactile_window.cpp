@@ -29,6 +29,9 @@ namespace {
   auto dock = std::make_unique<QDockWidget>();
   dock->setObjectName("mouseToolDock");
   dock->setVisible(false);
+  dock->setContentsMargins(0, 0, 0, 0);
+  dock->setAllowedAreas({Qt::DockWidgetArea::LeftDockWidgetArea,
+                         Qt::DockWidgetArea::RightDockWidgetArea});
   set_size_policy(dock.get(), QSizePolicy::Minimum, QSizePolicy::Expanding);
   dock->setWidget(widget);
   return dock;
@@ -40,6 +43,7 @@ namespace {
   auto dock = std::make_unique<QDockWidget>();
   dock->setObjectName("tileSheetDock");
   dock->setVisible(false);
+  dock->setContentsMargins(0, 0, 0, 0);
   set_size_policy(dock.get(), QSizePolicy::Expanding);
   dock->setWidget(widget);
   return dock;
@@ -74,6 +78,11 @@ TactileWindow::TactileWindow(QWidget* parent)
 TactileWindow::~TactileWindow() noexcept
 {
   delete m_ui;
+}
+
+void TactileWindow::add_tile_sheet(int id) noexcept
+{
+  // TODO ...
 }
 
 void TactileWindow::enable_startup_view() noexcept
@@ -280,6 +289,10 @@ void TactileWindow::init_connections() noexcept
     m_mouseToolDock->setVisible(m_ui->actionMouseTools->isChecked());
   });
 
+  on_triggered(m_ui->actionTileSheets, [this] {
+    m_tileSheetDock->setVisible(m_ui->actionTileSheets->isChecked());
+  });
+
   on_triggered(m_ui->actionResetLayout, [this] { reset_dock_layout(); });
 
   {
@@ -291,27 +304,27 @@ void TactileWindow::init_connections() noexcept
     m_mouseToolGroup->addAction(m_ui->actionEraserTool);
     m_mouseToolGroup->addAction(m_ui->actionRectangleTool);
 
-    connect(m_mouseToolWidget, &MouseToolWidget::stamp_enabled, this, [this] {
+    using MTW = MouseToolWidget;
+
+    connect(m_mouseToolWidget, &MTW::stamp_enabled, this, [this] {
       m_ui->actionStampTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MouseToolWidget::bucket_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::bucket_enabled, this, [this] {
       m_ui->actionBucketTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MouseToolWidget::eraser_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::eraser_enabled, this, [this] {
       m_ui->actionEraserTool->setChecked(true);
     });
 
-    connect(
-        m_mouseToolWidget, &MouseToolWidget::rectangle_enabled, this, [this] {
-          m_ui->actionRectangleTool->setChecked(true);
-        });
+    connect(m_mouseToolWidget, &MTW::rectangle_enabled, this, [this] {
+      m_ui->actionRectangleTool->setChecked(true);
+    });
 
-    connect(
-        m_mouseToolWidget, &MouseToolWidget::find_same_enabled, this, [this] {
-          m_ui->actionFindSameTool->setChecked(true);
-        });
+    connect(m_mouseToolWidget, &MTW::find_same_enabled, this, [this] {
+      m_ui->actionFindSameTool->setChecked(true);
+    });
 
     on_triggered(m_ui->actionStampTool,
                  [this] { m_mouseToolWidget->enable_stamp(); });
@@ -332,6 +345,11 @@ void TactileWindow::init_connections() noexcept
   connect(m_mouseToolDock.get(),
           &QDockWidget::visibilityChanged,
           m_ui->actionMouseTools,
+          &QAction::setChecked);
+
+  connect(m_tileSheetDock.get(),
+          &QDockWidget::visibilityChanged,
+          m_ui->actionTileSheets,
           &QAction::setChecked);
 
   connect(

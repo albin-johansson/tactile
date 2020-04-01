@@ -4,15 +4,20 @@
 
 namespace tactile {
 
-TileSheetManager::TileSheetManager() noexcept : m_activeSheet{nothing}
+TileSheetManager::TileSheetManager() noexcept
+    : m_activeSheet{nothing}, m_nextSheetKey{1}
 {}
 
 TileSheetManager::~TileSheetManager() noexcept = default;
 
-void TileSheetManager::add(int id, UniquePtr<TileSheet>&& sheet) noexcept
+Maybe<int> TileSheetManager::add(UniquePtr<TileSheet>&& sheet) noexcept
 {
   if (sheet) {
+    const auto id = m_nextSheetKey++;
     m_sheets.emplace(id, std::move(sheet));
+    return id;
+  } else {
+    return nothing;
   }
 }
 
