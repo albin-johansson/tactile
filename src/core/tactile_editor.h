@@ -131,7 +131,7 @@ class TactileEditor final : public QObject {
    *
    * @since 0.1.0
    */
-  void te_updated();
+  void updated();
 
  public slots:
   void draw(QPainter& painter) const noexcept;
