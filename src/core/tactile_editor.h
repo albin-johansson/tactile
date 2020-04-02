@@ -92,22 +92,37 @@ class TactileEditor final : public QObject {
   void select_layer(int index) noexcept;
 
   /**
+   * Selects the tile map associated with the specified id. This method has
+   * no effect if the supplied key isn't associated with a tile map.
+   *
+   * @param id the key of the tile map that will be selected.
+   * @since 0.1.0
+   */
+  void select_map(int id) noexcept;
+
+  /**
    * Returns the amount of rows in the active tile map.
    *
-   * @return the amount of rows in the active tile map; 0 if there is no
+   * @return the amount of rows in the active tile map; nothing if there is no
    * active tile map.
    * @since 0.1.0
    */
-  [[nodiscard]] int rows() const noexcept;
+  [[nodiscard]] Maybe<int> rows() const noexcept;
 
   /**
    * Returns the amount of columns in the active tile map.
    *
-   * @return the amount of columns in the active tile map; 0 if there is no
-   * active tile map.
+   * @return the amount of columns in the active tile map; nothing if there
+   * is no active tile map.
    * @since 0.1.0
    */
-  [[nodiscard]] int cols() const noexcept;
+  [[nodiscard]] Maybe<int> cols() const noexcept;
+
+  [[nodiscard]] Maybe<int> map_width() const noexcept;
+
+  [[nodiscard]] Maybe<int> map_height() const noexcept;
+
+  [[nodiscard]] Maybe<int> tile_size() const noexcept;
 
  signals:
   /**
@@ -147,6 +162,12 @@ class TactileEditor final : public QObject {
 
   void remove_col() noexcept;
 
+  void increase_tile_size() noexcept;
+
+  void decrease_tile_size() noexcept;
+
+  void reset_tile_size() noexcept;
+
  private:
   Maybe<int> m_activeMapIndex;
   std::unordered_map<int, UniquePtr<TileMap>> m_maps;
@@ -169,6 +190,27 @@ class TactileEditor final : public QObject {
    * @since 0.1.0
    */
   [[nodiscard]] const TileMap* active_map() const noexcept;
+
+  /**
+   * A templated helper method for queries that returns something of the
+   * <code>Maybe</code> type from the active tile map.
+   *
+   * @tparam ReturnType the type of the return value.
+   * @tparam Functor the type of the function object.
+   * @param fun the function object that performs the query, has to take
+   * a reference to a <code>TileMap</code> as a parameter.
+   * @return either a value of the return type, or <code>nothing</code>.
+   * @since 0.1.0
+   */
+  template <typename ReturnType, typename Functor>
+  [[nodiscard]] Maybe<ReturnType> maybe_get(Functor fun) const
+  {
+    if (auto* map = active_map(); map) {
+      return fun(*map);
+    } else {
+      return nothing;
+    }
+  }
 };
 
 }  // namespace tactile

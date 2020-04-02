@@ -4,6 +4,9 @@
 
 namespace tactile {
 
+TileSize::TileSize() noexcept : m_size{defaultSize}
+{}
+
 void TileSize::reset() noexcept
 {
   m_size = defaultSize;

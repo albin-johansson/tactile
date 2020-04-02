@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QAction>
 #include <QMainWindow>
 #include <QOpenGLWidget>
 #include <QWidget>
@@ -88,6 +89,8 @@ class TactileWindow final : public QMainWindow {
    */
   void trigger_redraw();
 
+  void move_camera(int dx, int dy);
+
  signals:
   /**
    * A signal that is emitted when the editor pane should be redrawn.
@@ -148,6 +151,22 @@ class TactileWindow final : public QMainWindow {
 
   void tw_resize_map();
 
+  void tw_increase_tile_size();
+
+  void tw_decrease_tile_size();
+
+  void tw_reset_tile_size();
+
+  void tw_pan_right();
+
+  void tw_pan_down();
+
+  void tw_pan_left();
+
+  void tw_pan_up();
+
+  void tw_select_map(int id);
+
  protected:
   void closeEvent(QCloseEvent* event) override;
 
@@ -171,6 +190,8 @@ class TactileWindow final : public QMainWindow {
    */
   void init_connections() noexcept;
 
+
+
   void init_layout() noexcept;
 
   void reset_dock_layout() noexcept;
@@ -186,6 +207,12 @@ class TactileWindow final : public QMainWindow {
    * @since 0.1.0
    */
   [[nodiscard]] bool in_editor_mode() const noexcept;
+
+  template <typename Functor>
+  void on_triggered(QAction* action, Functor fun) noexcept
+  {
+    connect(action, &QAction::triggered, this, fun);
+  }
 };
 
 }  // namespace tactile

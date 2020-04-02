@@ -7,6 +7,7 @@
 #include "tile_id.h"
 #include "tile_layer.h"
 #include "tile_map_renderer.h"
+#include "tile_size.h"
 
 class QPainter;
 
@@ -160,15 +161,30 @@ class TileMap final {
    */
   [[nodiscard]] int cols() const noexcept { return m_nCols; }
 
+  [[nodiscard]] int width() const noexcept
+  {
+    return m_nCols * m_tileSize.size();
+  }
+
+  [[nodiscard]] int height() const noexcept
+  {
+    return m_nRows * m_tileSize.size();
+  }
+
+  [[nodiscard]] TileSize& tile_size() noexcept { return m_tileSize; }
+
+  [[nodiscard]] const TileSize& tile_size() const noexcept
+  {
+    return m_tileSize;
+  }
+
  private:
   int m_nRows;
   int m_nCols;
   int m_activeLayer;
   std::vector<TileLayer> m_layers;
   TileMapRenderer m_renderer;
-  //TileSize m_tileSize;
-
-  // TODO include tile size
+  TileSize m_tileSize;
 
   /**
    * Indicates whether or not the specified layer index is associated with a

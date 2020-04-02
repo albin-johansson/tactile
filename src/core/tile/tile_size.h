@@ -4,12 +4,14 @@ namespace tactile {
 
 /**
  * The <code>TileSize</code> class represents the size of the visual
- * representation of tiles in tile sheets.
+ * representation of tiles from tile sheets.
  *
  * @since 0.1.0
  */
 class TileSize final {
  public:
+  TileSize() noexcept;
+
   /**
    * The default size of the tiles.
    *
@@ -71,22 +73,8 @@ class TileSize final {
    */
   [[nodiscard]] int size() const noexcept { return m_size; }
 
-  /**
-   * Returns the only instance of the <code>TileSize</code> class.
-   *
-   * @return the only instance of the <code>TileSize</code> class.
-   * @since 0.1.0
-   */
-  [[nodiscard]] static TileSize& get() noexcept
-  {
-    static TileSize size;
-    return size;
-  }
-
  private:
-  TileSize() noexcept = default;
-
-  int m_size = defaultSize;
+  int m_size;
 };
 
 }  // namespace tactile

@@ -10,7 +10,7 @@ TileMapTabWidget::TileMapTabWidget(QWidget* parent) : QTabWidget{parent}
 {
   setTabsClosable(true);
   connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
-    emit tmtw_req_remove_tab(get_pane(index)->id());
+    emit remove_tab(get_pane(index)->id());
     removeTab(index);
   });
 }
@@ -29,7 +29,7 @@ int TileMapTabWidget::add_tile_map_tab(const QString& title) noexcept
 
   using ET = EditorTab;
   using TMTW = TileMapTabWidget;
-  connect(pane, &ET::rp_req_redraw, this, &TMTW::tmtw_req_redraw);
+  connect(pane, &ET::rp_req_redraw, this, &TMTW::redraw);
 
   return pane->id();
 }
@@ -38,8 +38,7 @@ void TileMapTabWidget::remove_tile_map_tab(int id) noexcept
 {
   const auto amount = count();
   for (int i = 0; i < amount; ++i) {
-    auto* pane = get_pane(i);
-    if (pane && pane->id() == id) {
+    if (auto* pane = get_pane(i); pane && pane->id() == id) {
       removeTab(i);
     }
   }
@@ -48,8 +47,7 @@ void TileMapTabWidget::remove_tile_map_tab(int id) noexcept
 void TileMapTabWidget::center_viewport(int mapWidth, int mapHeight) noexcept
 {
   if (count() > 0) {
-    auto* pane = get_pane(currentIndex());
-    if (pane) {
+    if (auto* pane = get_pane(currentIndex()); pane) {
       pane->center_viewport(mapWidth, mapHeight);
     }
   }
@@ -58,8 +56,7 @@ void TileMapTabWidget::center_viewport(int mapWidth, int mapHeight) noexcept
 void TileMapTabWidget::move_viewport(int dx, int dy) noexcept
 {
   if (count() > 0) {
-    auto* pane = get_pane(currentIndex());
-    if (pane) {
+    if (auto* pane = get_pane(currentIndex()); pane) {
       pane->move_viewport(dx, dy);
     }
   }
@@ -72,8 +69,12 @@ EditorTab* TileMapTabWidget::get_pane(int index) const noexcept
 
 Maybe<int> TileMapTabWidget::active_tab_id() const noexcept
 {
-  auto* pane = get_pane(currentIndex());
-  if (pane) {
+  return tab_id(currentIndex());
+}
+
+Maybe<int> TileMapTabWidget::tab_id(int index) const noexcept
+{
+  if (auto* pane = get_pane(index); pane) {
     return pane->id();
   } else {
     return nothing;

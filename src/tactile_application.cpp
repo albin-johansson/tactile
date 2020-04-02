@@ -94,19 +94,60 @@ void TactileApplication::init_connections() noexcept
   auto* editor = m_editor.get();
 
   connect(editor, &E::te_updated, window, &W::trigger_redraw);
+
   connect(window, &W::tw_added_row, editor, &E::add_row);
   connect(window, &W::tw_added_col, editor, &E::add_col);
   connect(window, &W::tw_removed_row, editor, &E::remove_row);
   connect(window, &W::tw_removed_col, editor, &E::remove_col);
-  connect(window, &W::tw_new_map, editor, &E::new_map);
+
+  connect(window, &W::tw_new_map, editor, [window, editor](int id) {
+    editor->new_map(id);
+    // TODO
+  });
+
   connect(window, &W::tw_close_map, editor, &E::close_map);
+  connect(window, &W::tw_select_map, editor, &E::select_map);
+
   connect(window, &W::tw_render, editor, &E::draw);
 
+  connect(window, &W::tw_increase_tile_size, editor, &E::increase_tile_size);
+  connect(window, &W::tw_decrease_tile_size, editor, &E::decrease_tile_size);
+  connect(window, &W::tw_reset_tile_size, editor, &E::reset_tile_size);
+
+  connect(window, &W::tw_pan_up, editor, [window, editor] {
+    const auto tileSize = editor->tile_size();
+    if (tileSize) {
+      window->move_camera(0, -(*tileSize));
+    }
+  });
+
+  connect(window, &W::tw_pan_right, editor, [window, editor] {
+    const auto tileSize = editor->tile_size();
+    if (tileSize) {
+      window->move_camera(*tileSize, 0);
+    }
+  });
+
+  connect(window, &W::tw_pan_down, editor, [window, editor] {
+    const auto tileSize = editor->tile_size();
+    if (tileSize) {
+      window->move_camera(0, *tileSize);
+    }
+  });
+
+  connect(window, &W::tw_pan_left, editor, [window, editor] {
+    const auto tileSize = editor->tile_size();
+    if (tileSize) {
+      window->move_camera(-(*tileSize), 0);
+    }
+  });
+
   connect(window, &W::tw_center_camera, this, [window, editor] {
-    const auto tileSize = TileSize::get().size();
-    const auto width = editor->cols() * tileSize;
-    const auto height = editor->rows() * tileSize;
-    window->center_camera(width, height);
+    const auto width = editor->map_width();
+    const auto height = editor->map_height();
+    if (width && height) {
+      window->center_camera(*width, *height);
+    }
   });
 
   connect(window, &W::tw_new_tile_sheet, this, [window, editor] {

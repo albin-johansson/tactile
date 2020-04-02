@@ -16,7 +16,6 @@
 #include "settings_dialog.h"
 #include "settings_utils.h"
 #include "tile_sheet_widget.h"
-#include "tile_size.h"
 #include "ui_window.h"
 #include "widget_size_policy.h"
 
@@ -116,6 +115,12 @@ void TactileWindow::center_camera(int mapWidth, int mapHeight)
   trigger_redraw();
 }
 
+void TactileWindow::move_camera(int dx, int dy)
+{
+  m_centralWidget->move_viewport(dx, dy);
+  trigger_redraw();
+}
+
 void TactileWindow::trigger_redraw()
 {
   m_centralWidget->trigger_redraw();
@@ -132,14 +137,8 @@ void TactileWindow::closeEvent(QCloseEvent* event)
 
 void TactileWindow::init_connections() noexcept
 {
-  using W = TactileWindow;
-
-  const auto on_triggered = [this](QAction* action, auto fun) noexcept {
-    connect(action, &QAction::triggered, this, fun);
-  };
-
   connect(m_centralWidget,
-          &CentralEditorWidget::ce_removed_tab,
+          &CentralEditorWidget::removed_tab,
           this,
           [this](int id) noexcept {
             emit tw_close_map(id);
@@ -185,8 +184,13 @@ void TactileWindow::init_connections() noexcept
     }
   });
 
+  using W = TactileWindow;
+
   on_triggered(m_ui->actionAboutTactile, &W::display_about_dialog);
   on_triggered(m_ui->actionSettings, &W::display_settings_dialog);
+
+  // TODO look into making listeners of signals check if window is in editor
+  //  mode?
 
   on_triggered(m_ui->actionAddTileSheet,
                [this]() noexcept { emit tw_new_tile_sheet(); });
@@ -226,50 +230,43 @@ void TactileWindow::init_connections() noexcept
 
   on_triggered(m_ui->actionZoomIn, [this] {
     if (in_editor_mode()) {
-      TileSize::get().increase();
-      trigger_redraw();
+      emit tw_increase_tile_size();
     }
   });
 
   on_triggered(m_ui->actionZoomOut, [this] {
     if (in_editor_mode()) {
-      TileSize::get().decrease();
-      trigger_redraw();
+      emit tw_decrease_tile_size();
     }
   });
 
   on_triggered(m_ui->actionResetZoom, [this] {
     if (in_editor_mode()) {
-      TileSize::get().reset();
-      trigger_redraw();
+      emit tw_reset_tile_size();
     }
   });
 
   on_triggered(m_ui->actionPanUp, [this] {
     if (in_editor_mode()) {
-      m_centralWidget->move_viewport(0, TileSize::get().size());
-      trigger_redraw();
+      emit tw_pan_up();
     }
   });
 
   on_triggered(m_ui->actionPanDown, [this] {
     if (in_editor_mode()) {
-      m_centralWidget->move_viewport(0, -TileSize::get().size());
-      trigger_redraw();
+      emit tw_pan_down();
     }
   });
 
   on_triggered(m_ui->actionPanRight, [this] {
     if (in_editor_mode()) {
-      m_centralWidget->move_viewport(-TileSize::get().size(), 0);
-      trigger_redraw();
+      emit tw_pan_right();
     }
   });
 
   on_triggered(m_ui->actionPanLeft, [this] {
     if (in_editor_mode()) {
-      m_centralWidget->move_viewport(TileSize::get().size(), 0);
-      trigger_redraw();
+      emit tw_pan_left();
     }
   });
 
@@ -352,8 +349,11 @@ void TactileWindow::init_connections() noexcept
           m_ui->actionTileSheets,
           &QAction::setChecked);
 
-  connect(
-      m_centralWidget, &CentralEditorWidget::req_redraw, this, &W::tw_render);
+  {
+    using CEW = CentralEditorWidget;
+    connect(m_centralWidget, &CEW::redraw, this, &W::tw_render);
+    connect(m_centralWidget, &CEW::selected_tab, this, &W::tw_select_map);
+  }
 }
 
 void TactileWindow::init_layout() noexcept

@@ -26,10 +26,12 @@ class TileMapTabWidget final : public QTabWidget {
 
   [[nodiscard]] Maybe<int> active_tab_id() const noexcept;
 
- signals:
-  void tmtw_req_redraw(QPainter& painter);
+  [[nodiscard]] Maybe<int> tab_id(int index) const noexcept;
 
-  void tmtw_req_remove_tab(int id);
+ signals:
+  void redraw(QPainter& painter);
+
+  void remove_tab(int id);
 
  private:
   [[nodiscard]] EditorTab* get_pane(int index) const noexcept;
