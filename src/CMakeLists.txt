@@ -49,8 +49,8 @@ set(TACTILE_SOURCE_FILES
 
         core/flood_fill.h
         core/flood_fill.cpp
-        core/tactile_editor.h
-        core/tactile_editor.cpp
+        core/tactile_core.h
+        core/tactile_core.cpp
 
         core/util/maybe.h
         core/util/smart_pointers.h

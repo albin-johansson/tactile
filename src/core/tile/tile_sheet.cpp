@@ -5,7 +5,7 @@
 
 namespace tactile {
 
-TileSheet::TileSheet(const SharedPtr<QImage>& image, int size)
+TileSheet::TileSheet(const Shared<QImage>& image, int size)
     : m_sheet{image}, m_firstID{1}
 {
   if (!image) {
@@ -22,12 +22,12 @@ TileSheet::TileSheet(const SharedPtr<QImage>& image, int size)
 
 TileSheet::~TileSheet() noexcept = default;
 
-UniquePtr<TileSheet> TileSheet::unique(const SharedPtr<QImage>& image, int size)
+Unique<TileSheet> TileSheet::unique(const Shared<QImage>& image, int size)
 {
   return std::make_unique<TileSheet>(image, size);
 }
 
-SharedPtr<TileSheet> TileSheet::shared(const SharedPtr<QImage>& image, int size)
+Shared<TileSheet> TileSheet::shared(const Shared<QImage>& image, int size)
 {
   return std::make_shared<TileSheet>(image, size);
 }

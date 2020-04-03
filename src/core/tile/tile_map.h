@@ -36,9 +36,9 @@ class TileMap final {
 
   ~TileMap() noexcept;
 
-  [[nodiscard]] static UniquePtr<TileMap> unique(int nRows, int nCols);
+  [[nodiscard]] static Unique<TileMap> unique(int nRows, int nCols);
 
-  [[nodiscard]] static SharedPtr<TileMap> shared(int nRows, int nCols);
+  [[nodiscard]] static Shared<TileMap> shared(int nRows, int nCols);
 
   /**
    * Renders the tile map.

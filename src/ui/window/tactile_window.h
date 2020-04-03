@@ -97,18 +97,18 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void tw_render(QPainter& painter);
+  void redraw(QPainter& painter);
 
-  void tw_new_map(int id);
+  void new_map(int id);
 
-  void tw_close_map(int id);
+  void close_map(int id);
 
   /**
    * A signal that is emitted when the user wants to add a row to the tile map.
    *
    * @since 0.1.0
    */
-  void tw_added_row();
+  void added_row();
 
   /**
    * A signal that is emitted when the user wants to add a column to the tile
@@ -116,7 +116,7 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void tw_added_col();
+  void added_col();
 
   /**
    * A signal that is emitted when the user wants to remove a row from the tile
@@ -124,7 +124,7 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void tw_removed_row();
+  void removed_row();
 
   /**
    * A signal that is emitted when the user wants to remove a column from the
@@ -132,7 +132,7 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void tw_removed_col();
+  void removed_col();
 
   /**
    * A signal that is emitted when the user wants to center the camera over the
@@ -140,32 +140,32 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void tw_center_camera();
+  void req_center_camera();
 
   /**
    * A signal that is emitted when the user wants to add a tile sheet.
    *
    * @since 0.1.0
    */
-  void tw_new_tile_sheet();
+  void new_tile_sheet();
 
-  void tw_resize_map();
+  void resize_map();
 
-  void tw_increase_tile_size();
+  void increase_tile_size();
 
-  void tw_decrease_tile_size();
+  void decrease_tile_size();
 
-  void tw_reset_tile_size();
+  void reset_tile_size();
 
-  void tw_pan_right();
+  void pan_right();
 
-  void tw_pan_down();
+  void pan_down();
 
-  void tw_pan_left();
+  void pan_left();
 
-  void tw_pan_up();
+  void pan_up();
 
-  void tw_select_map(int id);
+  void select_map(int id);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
@@ -177,10 +177,10 @@ class TactileWindow final : public QMainWindow {
   MouseToolWidget* m_mouseToolWidget;
   TileSheetWidget* m_tileSheetWidget;
 
-  UniquePtr<QDockWidget> m_mouseToolDock;
-  UniquePtr<QDockWidget> m_tileSheetDock;
+  Unique<QDockWidget> m_mouseToolDock;
+  Unique<QDockWidget> m_tileSheetDock;
 
-  UniquePtr<QActionGroup> m_mouseToolGroup;
+  Unique<QActionGroup> m_mouseToolGroup;
 
   /**
    * Initializes all of the connections related to the internal components of

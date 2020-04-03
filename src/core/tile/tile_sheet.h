@@ -27,15 +27,15 @@ class TileSheet final {
    * @throws invalid_argument if the supplied image is null.
    * @since 0.1.0
    */
-  TileSheet(const SharedPtr<QImage>& image, int size);
+  TileSheet(const Shared<QImage>& image, int size);
 
   ~TileSheet() noexcept;
 
-  [[nodiscard]] static UniquePtr<TileSheet> unique(
-      const SharedPtr<QImage>& image, int size);
+  [[nodiscard]] static Unique<TileSheet> unique(
+      const Shared<QImage>& image, int size);
 
-  [[nodiscard]] static SharedPtr<TileSheet> shared(
-      const SharedPtr<QImage>& image, int size);
+  [[nodiscard]] static Shared<TileSheet> shared(
+      const Shared<QImage>& image, int size);
 
   /**
    * Sets the first tile ID property of the tile sheet. Note that this method
@@ -161,7 +161,7 @@ class TileSheet final {
   [[nodiscard]] const auto& selection() { return m_selection; }
 
  private:
-  SharedPtr<QImage> m_sheet;
+  Shared<QImage> m_sheet;
 
   int m_size;
   int m_nTiles;

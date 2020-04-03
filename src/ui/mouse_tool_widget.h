@@ -49,7 +49,7 @@ class MouseToolWidget final : public QWidget {
 
  private:
   Ui::ToolButtonBarUI* m_ui;
-  UniquePtr<QButtonGroup> m_group;
+  Unique<QButtonGroup> m_group;
 
   void set_tools_disabled(bool disabled) noexcept;
 };

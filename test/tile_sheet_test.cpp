@@ -11,7 +11,7 @@ TEST_CASE("TileSheet(const SharedPtr<QImage>&, int)", "[TileSheet]")
 {
   SECTION("Null image")
   {
-    SharedPtr<QImage> image = nullptr;
+    Shared<QImage> image = nullptr;
     CHECK_THROWS_AS(TileSheet(nullptr, 10), std::invalid_argument);
   }
 

@@ -19,7 +19,7 @@ class TileSheetDialog final : public QDialog {
 
   ~TileSheetDialog() noexcept override;
 
-  [[nodiscard]] SharedPtr<QImage> chosen_image() const noexcept
+  [[nodiscard]] Shared<QImage> chosen_image() const noexcept
   {
     return m_image;
   }
@@ -30,10 +30,10 @@ class TileSheetDialog final : public QDialog {
 
  private:
   Ui::TileSheetDialogUI* m_ui;
-  SharedPtr<QImage> m_image;
+  Shared<QImage> m_image;
   Maybe<int> m_width;
   Maybe<int> m_height;
-  UniquePtr<QIntValidator> m_validator;
+  Unique<QIntValidator> m_validator;
   QPixmap m_defaultImageIcon;
 
   void validate_input() noexcept;

@@ -8,7 +8,7 @@ class QPaintEvent;
 namespace tactile {
 
 class TactileWindow;
-class TactileEditor;
+class TactileCore;
 
 /**
  * The <code>TactileApplication</code> class is a subclass of
@@ -37,8 +37,8 @@ class TactileApplication final : public QApplication {
   void load_style_sheet(const char* styleSheet);  // TODO doc: does it throw?
 
  private:
-  UniquePtr<TactileWindow> m_window;
-  UniquePtr<TactileEditor> m_editor;
+  Unique<TactileWindow> m_window;
+  Unique<TactileCore> m_editor;
 
   void init_connections() noexcept;
 };

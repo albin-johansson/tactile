@@ -14,15 +14,15 @@ class TileMap;
 class TileSheetManager;
 
 /**
- * The <code>TactileEditor</code> class represents the main interface for the
+ * The <code>TactileCore</code> class represents the main interface for the
  * core model of the Tactile application.
  *
- * <p> All tile map mutating methods of the <code>TactileEditor</code> class
+ * <p> All tile map mutating methods of the <code>TactileCore</code> class
  * have no effect if there is no active tile map.
  *
  * @since 0.1.0
  */
-class TactileEditor final : public QObject {
+class TactileCore final : public QObject {
   Q_OBJECT
 
  public:
@@ -32,11 +32,11 @@ class TactileEditor final : public QObject {
    *
    * @since 0.1.0
    */
-  TactileEditor();
+  TactileCore();
 
-  ~TactileEditor() noexcept override;
+  ~TactileCore() noexcept override;
 
-  Q_DISABLE_COPY(TactileEditor)
+  Q_DISABLE_COPY(TactileCore)
 
   /**
    * Opens a tile map from the specified location.
@@ -60,7 +60,7 @@ class TactileEditor final : public QObject {
    * sheet was added.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> add_tile_sheet(const SharedPtr<QImage>& image,
+  [[nodiscard]] Maybe<int> add_tile_sheet(const Shared<QImage>& image,
                                           int tileWidth,
                                           int tileHeight) noexcept;
 
@@ -170,8 +170,8 @@ class TactileEditor final : public QObject {
 
  private:
   Maybe<int> m_activeMapIndex;
-  std::unordered_map<int, UniquePtr<TileMap>> m_maps;
-  UniquePtr<TileSheetManager> m_sheetManager;
+  std::unordered_map<int, Unique<TileMap>> m_maps;
+  Unique<TileSheetManager> m_sheetManager;
 
   /**
    * Returns a pointer to the currently active map. You should check that the

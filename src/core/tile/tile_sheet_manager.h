@@ -30,7 +30,7 @@ class TileSheetManager final {
    * @return the ID of the added tile sheet; nothing if no tile sheet was added.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> add(UniquePtr<TileSheet>&& sheet) noexcept;
+  [[nodiscard]] Maybe<int> add(Unique<TileSheet>&& sheet) noexcept;
 
   /**
    * Removes a tile sheet from the manager. This method has no effect if the
@@ -81,7 +81,7 @@ class TileSheetManager final {
 
  private:
   Maybe<int> m_activeSheet;
-  std::map<int, UniquePtr<TileSheet>> m_sheets;
+  std::map<int, Unique<TileSheet>> m_sheets;
   int m_nextSheetKey;
 };
 

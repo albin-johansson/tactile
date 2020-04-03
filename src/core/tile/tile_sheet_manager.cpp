@@ -10,7 +10,7 @@ TileSheetManager::TileSheetManager() noexcept
 
 TileSheetManager::~TileSheetManager() noexcept = default;
 
-Maybe<int> TileSheetManager::add(UniquePtr<TileSheet>&& sheet) noexcept
+Maybe<int> TileSheetManager::add(Unique<TileSheet>&& sheet) noexcept
 {
   if (sheet) {
     const auto id = m_nextSheetKey++;

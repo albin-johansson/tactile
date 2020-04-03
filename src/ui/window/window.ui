@@ -641,7 +641,7 @@
     </font>
    </property>
    <property name="shortcut">
-    <string>E</string>
+    <string>Core</string>
    </property>
   </action>
   <action name="actionRectangleTool">

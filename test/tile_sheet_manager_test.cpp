@@ -9,7 +9,7 @@ using namespace tactile;
 
 namespace {
 
-[[nodiscard]] UniquePtr<TileSheet> create_tile_sheet() noexcept
+[[nodiscard]] Unique<TileSheet> create_tile_sheet() noexcept
 {
   auto image = std::make_shared<QImage>("terrain.png");
   return std::make_unique<TileSheet>(image, 32);

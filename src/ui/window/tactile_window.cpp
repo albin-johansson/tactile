@@ -22,7 +22,7 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] UniquePtr<QDockWidget> create_mouse_tool_dock(
+[[nodiscard]] Unique<QDockWidget> create_mouse_tool_dock(
     QWidget* widget) noexcept
 {
   auto dock = std::make_unique<QDockWidget>();
@@ -36,7 +36,7 @@ namespace {
   return dock;
 }
 
-[[nodiscard]] UniquePtr<QDockWidget> create_tile_sheet_dock(
+[[nodiscard]] Unique<QDockWidget> create_tile_sheet_dock(
     QWidget* widget) noexcept
 {
   auto dock = std::make_unique<QDockWidget>();
@@ -141,7 +141,7 @@ void TactileWindow::init_connections() noexcept
           &CentralEditorWidget::removed_tab,
           this,
           [this](int id) noexcept {
-            emit tw_close_map(id);
+            emit close_map(id);
 
             // FIXME borderline hack, the tab isn't actually removed yet so 1
             //  is the same as checking if there are not open tabs.
@@ -155,12 +155,12 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionNewMap, [this]() noexcept {
     const auto id = m_centralWidget->add_new_map_tab("map");
 
-    emit tw_new_map(id);
+    emit new_map(id);
 
     if (!in_editor_mode()) {
       enable_editor_view();
       show_all_docks();  // TODO just reopen docks that were visible
-      emit tw_center_camera();
+      emit req_center_camera();
     }
 
     // TODO...
@@ -173,7 +173,7 @@ void TactileWindow::init_connections() noexcept
       const auto id = m_centralWidget->active_tab_id();
       if (id) {
         m_centralWidget->close_tab(*id);
-        emit tw_close_map(*id);
+        emit close_map(*id);
 
         if (m_centralWidget->open_tabs() == 0) {
           enable_startup_view();
@@ -193,29 +193,29 @@ void TactileWindow::init_connections() noexcept
   //  mode?
 
   on_triggered(m_ui->actionAddTileSheet,
-               [this]() noexcept { emit tw_new_tile_sheet(); });
+               [this]() noexcept { emit new_tile_sheet(); });
 
   on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
-      emit tw_added_row();
+      emit added_row();
     }
   });
 
   on_triggered(m_ui->actionAddColumn, [this]() noexcept {
     if (in_editor_mode()) {
-      emit tw_added_col();
+      emit added_col();
     }
   });
 
   on_triggered(m_ui->actionRemoveRow, [this]() noexcept {
     if (in_editor_mode()) {
-      emit tw_removed_row();
+      emit removed_row();
     }
   });
 
   on_triggered(m_ui->actionRemoveColumn, [this]() noexcept {
     if (in_editor_mode()) {
-      emit tw_removed_col();
+      emit removed_col();
     }
   });
 
@@ -230,55 +230,55 @@ void TactileWindow::init_connections() noexcept
 
   on_triggered(m_ui->actionZoomIn, [this] {
     if (in_editor_mode()) {
-      emit tw_increase_tile_size();
+      emit increase_tile_size();
     }
   });
 
   on_triggered(m_ui->actionZoomOut, [this] {
     if (in_editor_mode()) {
-      emit tw_decrease_tile_size();
+      emit decrease_tile_size();
     }
   });
 
   on_triggered(m_ui->actionResetZoom, [this] {
     if (in_editor_mode()) {
-      emit tw_reset_tile_size();
+      emit reset_tile_size();
     }
   });
 
   on_triggered(m_ui->actionPanUp, [this] {
     if (in_editor_mode()) {
-      emit tw_pan_up();
+      emit pan_up();
     }
   });
 
   on_triggered(m_ui->actionPanDown, [this] {
     if (in_editor_mode()) {
-      emit tw_pan_down();
+      emit pan_down();
     }
   });
 
   on_triggered(m_ui->actionPanRight, [this] {
     if (in_editor_mode()) {
-      emit tw_pan_right();
+      emit pan_right();
     }
   });
 
   on_triggered(m_ui->actionPanLeft, [this] {
     if (in_editor_mode()) {
-      emit tw_pan_left();
+      emit pan_left();
     }
   });
 
   on_triggered(m_ui->actionCenterCamera, [this] {
     if (in_editor_mode()) {
-      emit tw_center_camera();
+      emit req_center_camera();
     }
   });
 
   on_triggered(m_ui->actionResizeMap, [this] {
     if (in_editor_mode()) {
-      emit tw_resize_map();
+      emit resize_map();
     }
   });
 
@@ -351,8 +351,8 @@ void TactileWindow::init_connections() noexcept
 
   {
     using CEW = CentralEditorWidget;
-    connect(m_centralWidget, &CEW::redraw, this, &W::tw_render);
-    connect(m_centralWidget, &CEW::selected_tab, this, &W::tw_select_map);
+    connect(m_centralWidget, &CEW::redraw, this, &W::redraw);
+    connect(m_centralWidget, &CEW::selected_tab, this, &W::select_map);
   }
 }
 
