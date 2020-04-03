@@ -28,6 +28,12 @@ class TactileApplication final : public QApplication {
 
   ~TactileApplication() noexcept override;
 
+ private:
+  Unique<TactileWindow> m_window;
+  Unique<TactileCore> m_editor;
+
+  void init_connections() noexcept;
+
   /**
    * Loads and applies the specified style sheet.
    *
@@ -35,12 +41,6 @@ class TactileApplication final : public QApplication {
    * @since 0.1.0
    */
   void load_style_sheet(const char* styleSheet);  // TODO doc: does it throw?
-
- private:
-  Unique<TactileWindow> m_window;
-  Unique<TactileCore> m_editor;
-
-  void init_connections() noexcept;
 };
 
 }  // namespace tactile

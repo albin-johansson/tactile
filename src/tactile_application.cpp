@@ -93,53 +93,53 @@ void TactileApplication::init_connections() noexcept
 
   connect(editor, &Core::updated, window, &W::trigger_redraw);
 
-  connect(window, &W::added_row, editor, &Core::add_row);
-  connect(window, &W::added_col, editor, &Core::add_col);
-  connect(window, &W::removed_row, editor, &Core::remove_row);
-  connect(window, &W::removed_col, editor, &Core::remove_col);
+  connect(window, &W::s_added_row, editor, &Core::add_row);
+  connect(window, &W::s_added_col, editor, &Core::add_col);
+  connect(window, &W::s_removed_row, editor, &Core::remove_row);
+  connect(window, &W::s_removed_col, editor, &Core::remove_col);
 
-  connect(window, &W::new_map, editor, [editor](int id) noexcept {
+  connect(window, &W::s_new_map, editor, [editor](int id) noexcept {
     editor->new_map(id);
   });
 
-  connect(window, &W::close_map, editor, &Core::close_map);
-  connect(window, &W::select_map, editor, &Core::select_map);
+  connect(window, &W::s_close_map, editor, &Core::close_map);
+  connect(window, &W::s_select_map, editor, &Core::select_map);
 
-  connect(window, &W::redraw, editor, &Core::draw);
+  connect(window, &W::s_redraw, editor, &Core::draw);
 
-  connect(window, &W::increase_tile_size, editor, &Core::increase_tile_size);
-  connect(window, &W::decrease_tile_size, editor, &Core::decrease_tile_size);
-  connect(window, &W::reset_tile_size, editor, &Core::reset_tile_size);
+  connect(window, &W::s_increase_tile_size, editor, &Core::increase_tile_size);
+  connect(window, &W::s_decrease_tile_size, editor, &Core::decrease_tile_size);
+  connect(window, &W::s_reset_tile_size, editor, &Core::reset_tile_size);
 
-  connect(window, &W::pan_up, editor, [window, editor] {
+  connect(window, &W::s_pan_up, editor, [window, editor] {
     const auto tileSize = editor->tile_size();
     if (tileSize) {
       window->move_camera(0, -(*tileSize));
     }
   });
 
-  connect(window, &W::pan_right, editor, [window, editor] {
+  connect(window, &W::s_pan_right, editor, [window, editor] {
     const auto tileSize = editor->tile_size();
     if (tileSize) {
       window->move_camera(*tileSize, 0);
     }
   });
 
-  connect(window, &W::pan_down, editor, [window, editor] {
+  connect(window, &W::s_pan_down, editor, [window, editor] {
     const auto tileSize = editor->tile_size();
     if (tileSize) {
       window->move_camera(0, *tileSize);
     }
   });
 
-  connect(window, &W::pan_left, editor, [window, editor] {
+  connect(window, &W::s_pan_left, editor, [window, editor] {
     const auto tileSize = editor->tile_size();
     if (tileSize) {
       window->move_camera(-(*tileSize), 0);
     }
   });
 
-  connect(window, &W::req_center_camera, this, [window, editor] {
+  connect(window, &W::s_center_camera, this, [window, editor] {
     const auto width = editor->map_width();
     const auto height = editor->map_height();
     if (width && height) {
@@ -147,7 +147,7 @@ void TactileApplication::init_connections() noexcept
     }
   });
 
-  connect(window, &W::new_tile_sheet, this, [window, editor] {
+  connect(window, &W::s_new_tile_sheet, this, [window, editor] {
     TileSheetDialog dialog;
     if (dialog.exec()) {
       const auto image = dialog.chosen_image();
@@ -162,7 +162,7 @@ void TactileApplication::init_connections() noexcept
     }
   });
 
-  connect(window, &W::resize_map, this, [window, editor] {
+  connect(window, &W::s_resize_map, this, [window, editor] {
     ResizeDialog dialog;
     if (dialog.exec()) {
       editor->set_rows(*dialog.chosen_height());

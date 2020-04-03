@@ -44,7 +44,7 @@ void EditorTab::paintEvent(QPaintEvent* event)
   painter.fillRect(0, 0, width(), height(), Qt::black);
   painter.setViewport(m_viewport);
 
-  emit rp_req_redraw(painter);
+  emit s_redraw(painter);
 }
 
 void EditorTab::resizeEvent(QResizeEvent* event)

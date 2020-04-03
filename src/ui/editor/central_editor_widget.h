@@ -59,11 +59,11 @@ class CentralEditorWidget final : public QWidget {
   void trigger_redraw() noexcept;
 
  signals:
-  void redraw(QPainter& painter);
+  void s_redraw(QPainter& painter);
 
-  void removed_tab(int id);
+  void s_removed_tab(int id);
 
-  void selected_tab(int id);
+  void s_selected_tab(int id);
 
  private:
   Ui::CentralWidgetUI* m_ui;

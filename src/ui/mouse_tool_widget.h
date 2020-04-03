@@ -26,15 +26,15 @@ class MouseToolWidget final : public QWidget {
   void disable_tools() noexcept;
 
  signals:
-  void stamp_enabled();
+  void s_stamp_enabled();
 
-  void bucket_enabled();
+  void s_bucket_enabled();
 
-  void eraser_enabled();
+  void s_eraser_enabled();
 
-  void rectangle_enabled();
+  void s_rectangle_enabled();
 
-  void find_same_enabled();
+  void s_find_same_enabled();
 
  public slots:
   void enable_stamp() noexcept;

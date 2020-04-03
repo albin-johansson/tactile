@@ -17,11 +17,11 @@ class DynamicToolBarWidget final : public QWidget {
   ~DynamicToolBarWidget() noexcept override;
 
  signals:
-  void req_stamp_tool();
+  void s_stamp_tool();
 
-  void req_bucket_tool();
+  void s_bucket_tool();
 
-  void req_eraser_tool();
+  void s_eraser_tool();
 
  private:
   QLayout* m_layout;

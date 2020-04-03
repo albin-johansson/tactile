@@ -56,6 +56,82 @@ class TactileWindow final : public QMainWindow {
    */
   void enable_editor_view() noexcept;
 
+ signals:
+  /**
+   * A signal that is emitted when the editor pane should be redrawn.
+   *
+   * @since 0.1.0
+   */
+  void s_redraw(QPainter& painter);
+
+  void s_new_map(int id);
+
+  void s_close_map(int id);
+
+  /**
+   * A signal that is emitted when the user wants to add a row to the tile map.
+   *
+   * @since 0.1.0
+   */
+  void s_added_row();
+
+  /**
+   * A signal that is emitted when the user wants to add a column to the tile
+   * map.
+   *
+   * @since 0.1.0
+   */
+  void s_added_col();
+
+  /**
+   * A signal that is emitted when the user wants to remove a row from the tile
+   * map.
+   *
+   * @since 0.1.0
+   */
+  void s_removed_row();
+
+  /**
+   * A signal that is emitted when the user wants to remove a column from the
+   * tile map.
+   *
+   * @since 0.1.0
+   */
+  void s_removed_col();
+
+  /**
+   * A signal that is emitted when the user wants to center the camera over the
+   * tile map.
+   *
+   * @since 0.1.0
+   */
+  void s_center_camera();
+
+  /**
+   * A signal that is emitted when the user wants to add a tile sheet.
+   *
+   * @since 0.1.0
+   */
+  void s_new_tile_sheet();
+
+  void s_resize_map();
+
+  void s_increase_tile_size();
+
+  void s_decrease_tile_size();
+
+  void s_reset_tile_size();
+
+  void s_pan_right();
+
+  void s_pan_down();
+
+  void s_pan_left();
+
+  void s_pan_up();
+
+  void s_select_map(int id);
+
  public slots:
   void add_tile_sheet(int id, Shared<QImage> image) noexcept;
 
@@ -83,89 +159,13 @@ class TactileWindow final : public QMainWindow {
   void center_camera(int mapWidth, int mapHeight);
 
   /**
-   * Triggers a redraw of the editor pane.
+   * Triggers a s_redraw of the editor pane.
    *
    * @since 0.1.0
    */
   void trigger_redraw();
 
   void move_camera(int dx, int dy);
-
- signals:
-  /**
-   * A signal that is emitted when the editor pane should be redrawn.
-   *
-   * @since 0.1.0
-   */
-  void redraw(QPainter& painter);
-
-  void new_map(int id);
-
-  void close_map(int id);
-
-  /**
-   * A signal that is emitted when the user wants to add a row to the tile map.
-   *
-   * @since 0.1.0
-   */
-  void added_row();
-
-  /**
-   * A signal that is emitted when the user wants to add a column to the tile
-   * map.
-   *
-   * @since 0.1.0
-   */
-  void added_col();
-
-  /**
-   * A signal that is emitted when the user wants to remove a row from the tile
-   * map.
-   *
-   * @since 0.1.0
-   */
-  void removed_row();
-
-  /**
-   * A signal that is emitted when the user wants to remove a column from the
-   * tile map.
-   *
-   * @since 0.1.0
-   */
-  void removed_col();
-
-  /**
-   * A signal that is emitted when the user wants to center the camera over the
-   * tile map.
-   *
-   * @since 0.1.0
-   */
-  void req_center_camera();
-
-  /**
-   * A signal that is emitted when the user wants to add a tile sheet.
-   *
-   * @since 0.1.0
-   */
-  void new_tile_sheet();
-
-  void resize_map();
-
-  void increase_tile_size();
-
-  void decrease_tile_size();
-
-  void reset_tile_size();
-
-  void pan_right();
-
-  void pan_down();
-
-  void pan_left();
-
-  void pan_up();
-
-  void select_map(int id);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
@@ -189,8 +189,6 @@ class TactileWindow final : public QMainWindow {
    * @since 0.1.0
    */
   void init_connections() noexcept;
-
-
 
   void init_layout() noexcept;
 

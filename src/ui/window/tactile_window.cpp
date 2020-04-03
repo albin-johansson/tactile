@@ -138,10 +138,10 @@ void TactileWindow::closeEvent(QCloseEvent* event)
 void TactileWindow::init_connections() noexcept
 {
   connect(m_centralWidget,
-          &CentralEditorWidget::removed_tab,
+          &CentralEditorWidget::s_removed_tab,
           this,
           [this](int id) noexcept {
-            emit close_map(id);
+            emit s_close_map(id);
 
             // FIXME borderline hack, the tab isn't actually removed yet so 1
             //  is the same as checking if there are not open tabs.
@@ -155,12 +155,12 @@ void TactileWindow::init_connections() noexcept
   on_triggered(m_ui->actionNewMap, [this]() noexcept {
     const auto id = m_centralWidget->add_new_map_tab("map");
 
-    emit new_map(id);
+    emit s_new_map(id);
 
     if (!in_editor_mode()) {
       enable_editor_view();
       show_all_docks();  // TODO just reopen docks that were visible
-      emit req_center_camera();
+      emit s_center_camera();
     }
 
     // TODO...
@@ -173,7 +173,7 @@ void TactileWindow::init_connections() noexcept
       const auto id = m_centralWidget->active_tab_id();
       if (id) {
         m_centralWidget->close_tab(*id);
-        emit close_map(*id);
+        emit s_close_map(*id);
 
         if (m_centralWidget->open_tabs() == 0) {
           enable_startup_view();
@@ -193,29 +193,29 @@ void TactileWindow::init_connections() noexcept
   //  mode?
 
   on_triggered(m_ui->actionAddTileSheet,
-               [this]() noexcept { emit new_tile_sheet(); });
+               [this]() noexcept { emit s_new_tile_sheet(); });
 
   on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
-      emit added_row();
+      emit s_added_row();
     }
   });
 
   on_triggered(m_ui->actionAddColumn, [this]() noexcept {
     if (in_editor_mode()) {
-      emit added_col();
+      emit s_added_col();
     }
   });
 
   on_triggered(m_ui->actionRemoveRow, [this]() noexcept {
     if (in_editor_mode()) {
-      emit removed_row();
+      emit s_removed_row();
     }
   });
 
   on_triggered(m_ui->actionRemoveColumn, [this]() noexcept {
     if (in_editor_mode()) {
-      emit removed_col();
+      emit s_removed_col();
     }
   });
 
@@ -230,55 +230,55 @@ void TactileWindow::init_connections() noexcept
 
   on_triggered(m_ui->actionZoomIn, [this] {
     if (in_editor_mode()) {
-      emit increase_tile_size();
+      emit s_increase_tile_size();
     }
   });
 
   on_triggered(m_ui->actionZoomOut, [this] {
     if (in_editor_mode()) {
-      emit decrease_tile_size();
+      emit s_decrease_tile_size();
     }
   });
 
   on_triggered(m_ui->actionResetZoom, [this] {
     if (in_editor_mode()) {
-      emit reset_tile_size();
+      emit s_reset_tile_size();
     }
   });
 
   on_triggered(m_ui->actionPanUp, [this] {
     if (in_editor_mode()) {
-      emit pan_up();
+      emit s_pan_up();
     }
   });
 
   on_triggered(m_ui->actionPanDown, [this] {
     if (in_editor_mode()) {
-      emit pan_down();
+      emit s_pan_down();
     }
   });
 
   on_triggered(m_ui->actionPanRight, [this] {
     if (in_editor_mode()) {
-      emit pan_right();
+      emit s_pan_right();
     }
   });
 
   on_triggered(m_ui->actionPanLeft, [this] {
     if (in_editor_mode()) {
-      emit pan_left();
+      emit s_pan_left();
     }
   });
 
   on_triggered(m_ui->actionCenterCamera, [this] {
     if (in_editor_mode()) {
-      emit req_center_camera();
+      emit s_center_camera();
     }
   });
 
   on_triggered(m_ui->actionResizeMap, [this] {
     if (in_editor_mode()) {
-      emit resize_map();
+      emit s_resize_map();
     }
   });
 
@@ -303,23 +303,23 @@ void TactileWindow::init_connections() noexcept
 
     using MTW = MouseToolWidget;
 
-    connect(m_mouseToolWidget, &MTW::stamp_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::s_stamp_enabled, this, [this] {
       m_ui->actionStampTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::bucket_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::s_bucket_enabled, this, [this] {
       m_ui->actionBucketTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::eraser_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::s_eraser_enabled, this, [this] {
       m_ui->actionEraserTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::rectangle_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::s_rectangle_enabled, this, [this] {
       m_ui->actionRectangleTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::find_same_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::s_find_same_enabled, this, [this] {
       m_ui->actionFindSameTool->setChecked(true);
     });
 
@@ -351,8 +351,8 @@ void TactileWindow::init_connections() noexcept
 
   {
     using CEW = CentralEditorWidget;
-    connect(m_centralWidget, &CEW::redraw, this, &W::redraw);
-    connect(m_centralWidget, &CEW::selected_tab, this, &W::select_map);
+    connect(m_centralWidget, &CEW::s_redraw, this, &W::s_redraw);
+    connect(m_centralWidget, &CEW::s_selected_tab, this, &W::s_select_map);
   }
 }
 

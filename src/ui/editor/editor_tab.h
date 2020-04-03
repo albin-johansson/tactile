@@ -16,12 +16,10 @@ class EditorTab final : public QWidget {
 
   void move_viewport(int dx, int dy) noexcept;
 
-  [[nodiscard]] const QRect& viewport() const noexcept { return m_viewport; }
-
   [[nodiscard]] int id() const noexcept { return m_id; }
 
  signals:
-  void rp_req_redraw(QPainter& painter);
+  void s_redraw(QPainter& painter);
 
  protected:
   void paintEvent(QPaintEvent* event) override;

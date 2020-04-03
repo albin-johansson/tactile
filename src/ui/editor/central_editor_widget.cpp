@@ -22,11 +22,11 @@ CentralEditorWidget::CentralEditorWidget(QWidget* parent)
 
   using TMTW = TileMapTabWidget;
   using CEW = CentralEditorWidget;
-  connect(m_mapTabWidget, &TMTW::redraw, this, &CEW::redraw);
-  connect(m_mapTabWidget, &TMTW::remove_tab, this, &CEW::removed_tab);
+  connect(m_mapTabWidget, &TMTW::s_redraw, this, &CEW::s_redraw);
+  connect(m_mapTabWidget, &TMTW::s_remove_tab, this, &CEW::s_removed_tab);
   connect(m_mapTabWidget, &TMTW::currentChanged, this, [this](int index) {
     if (const auto id = m_mapTabWidget->tab_id(index); id) {
-      emit selected_tab(*id);
+      emit s_selected_tab(*id);
     }
   });
 
