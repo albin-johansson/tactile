@@ -31,11 +31,11 @@ class TileSheet final {
 
   ~TileSheet() noexcept;
 
-  [[nodiscard]] static Unique<TileSheet> unique(
-      const Shared<QImage>& image, int size);
+  [[nodiscard]] static Unique<TileSheet> unique(const Shared<QImage>& image,
+                                                int size);
 
-  [[nodiscard]] static Shared<TileSheet> shared(
-      const Shared<QImage>& image, int size);
+  [[nodiscard]] static Shared<TileSheet> shared(const Shared<QImage>& image,
+                                                int size);
 
   /**
    * Sets the first tile ID property of the tile sheet. Note that this method

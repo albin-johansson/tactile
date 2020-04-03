@@ -156,7 +156,7 @@ void TactileApplication::init_connections() noexcept
       if (image && tileWidth && tileHeight) {
         const auto id = editor->add_tile_sheet(image, *tileWidth, *tileHeight);
         if (id) {
-          window->add_tile_sheet(*id);
+          window->add_tile_sheet(*id, image);
         }
       }
     }

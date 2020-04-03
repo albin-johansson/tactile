@@ -57,8 +57,8 @@ void TactileCore::save_as(const char*) const
 }
 
 Maybe<int> TactileCore::add_tile_sheet(const Shared<QImage>& image,
-                                         int tileWidth,
-                                         int tileHeight) noexcept
+                                       int tileWidth,
+                                       int tileHeight) noexcept
 {
   if (!image->isNull()) {
     // TODO add tile width and tile height to tile sheet
