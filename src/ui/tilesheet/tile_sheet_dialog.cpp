@@ -36,13 +36,18 @@ TileSheetDialog::TileSheetDialog(QWidget* parent)
     const auto path = open_tile_sheet_image(this);
     if (path) {
       m_image->load(*path);
+
       if (m_image->isNull()) {
         // TODO indicate that something went wrong
         m_ui->imageLabel->setPixmap(m_defaultImageIcon);
-      } else {
-        m_ui->imageLabel->setPixmap(load_pixmap(*path));
-        ok_button()->setEnabled(is_valid());
       }
+
+      const auto valid = is_valid();
+      if (valid) {
+        m_ui->imageLabel->setPixmap(load_pixmap(*path));
+      }
+
+      ok_button()->setEnabled(valid);
     }
   });
 }
@@ -75,7 +80,7 @@ void TileSheetDialog::validate_input() noexcept
   }
 }
 
-QPushButton* TileSheetDialog::ok_button() const noexcept
+QPushButton* TileSheetDialog::ok_button() noexcept
 {
   return m_ui->buttonBox->button(QDialogButtonBox::Ok);
 }

@@ -19,10 +19,7 @@ class TileSheetDialog final : public QDialog {
 
   ~TileSheetDialog() noexcept override;
 
-  [[nodiscard]] Shared<QImage> chosen_image() const noexcept
-  {
-    return m_image;
-  }
+  [[nodiscard]] Shared<QImage> chosen_image() const noexcept { return m_image; }
 
   [[nodiscard]] Maybe<int> chosen_width() const noexcept { return m_width; }
 
@@ -48,7 +45,7 @@ class TileSheetDialog final : public QDialog {
    * @return a pointer to the "OK" button.
    * @since 0.1.0
    */
-  [[nodiscard]] QPushButton* ok_button() const noexcept;
+  [[nodiscard]] QPushButton* ok_button() noexcept;
 
   /**
    * Indicates whether or not the supplied line edit widget has valid input.
