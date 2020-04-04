@@ -25,8 +25,6 @@ void TactileCore::new_map(int id) noexcept
   }
 }
 
-// TODO tile maps need to store their current tile size
-
 void TactileCore::close_map(int id) noexcept
 {
   if (m_maps.count(id)) {
