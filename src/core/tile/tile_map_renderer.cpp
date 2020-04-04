@@ -62,7 +62,9 @@ void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
   const QColor emptyGray{0x55, 0x55, 0x55};
 
   for (auto& layer : map.m_layers) {
-    // TODO...
+    if (!layer.visible()) {
+      continue;
+    }
 
     for (auto row = bounds.minRow; row < bounds.maxRow; ++row) {
       for (auto col = bounds.minCol; col < bounds.maxCol; ++col) {
