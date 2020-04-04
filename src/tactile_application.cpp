@@ -91,7 +91,7 @@ void TactileApplication::init_connections() noexcept
   auto* window = m_window.get();
   auto* editor = m_editor.get();
 
-  connect(editor, &Core::updated, window, &W::trigger_redraw);
+  connect(editor, &Core::s_updated, window, &W::trigger_redraw);
 
   connect(window, &W::s_added_row, editor, &Core::add_row);
   connect(window, &W::s_added_col, editor, &Core::add_col);

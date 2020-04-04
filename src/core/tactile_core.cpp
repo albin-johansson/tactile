@@ -114,7 +114,7 @@ void TactileCore::select_layer(int index) noexcept
 {
   if (auto* map = active_map(); map) {
     map->select(index);
-    emit updated();
+    emit s_updated();
   }
 }
 
@@ -129,7 +129,7 @@ void TactileCore::increase_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->tile_size().increase();
-    emit updated();
+    emit s_updated();
   }
 }
 
@@ -137,7 +137,7 @@ void TactileCore::decrease_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->tile_size().decrease();
-    emit updated();
+    emit s_updated();
   }
 }
 
@@ -145,7 +145,7 @@ void TactileCore::reset_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->tile_size().reset();
-    emit updated();
+    emit s_updated();
   }
 }
 
@@ -160,7 +160,7 @@ void TactileCore::add_row() noexcept
 {
   if (auto* map = active_map(); map) {
     map->add_row();
-    emit updated();
+    emit s_updated();
   }
 }
 
@@ -168,7 +168,7 @@ void TactileCore::add_col() noexcept
 {
   if (auto* map = active_map(); map) {
     map->add_col();
-    emit updated();
+    emit s_updated();
   }
 }
 
@@ -176,7 +176,7 @@ void TactileCore::remove_row() noexcept
 {
   if (auto* map = active_map(); map) {
     map->remove_row();
-    emit updated();
+    emit s_updated();
   }
 }
 
@@ -184,7 +184,7 @@ void TactileCore::remove_col() noexcept
 {
   if (auto* map = active_map(); map) {
     map->remove_col();
-    emit updated();
+    emit s_updated();
   }
 }
 

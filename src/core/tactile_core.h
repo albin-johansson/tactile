@@ -131,7 +131,7 @@ class TactileCore final : public QObject {
    *
    * @since 0.1.0
    */
-  void updated();
+  void s_updated();
 
  public slots:
   void draw(QPainter& painter) const noexcept;
