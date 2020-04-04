@@ -137,14 +137,15 @@ class TactileCore final : public QObject {
   void draw(QPainter& painter) const noexcept;
 
   /**
-   * Starts working on a new tile map. Any previous unsaved work on another tile
-   * map is automatically saved before being closed.
+   * Starts working on a new tile map. The new tile map will be made active.
+   * This method has no effect if the supplied ID is already associated with
+   * a tile map.
    *
    * @param id the integer that will be associated with the tile map, must be
    * unique.
    * @since 0.1.0
    */
-  void new_map(int id) noexcept;  // TODO change doc
+  void new_map(int id) noexcept;
 
   /**
    * Closes the map associated with the specified ID.
