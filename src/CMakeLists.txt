@@ -95,8 +95,8 @@ set(TACTILE_SOURCE_FILES
         ui/tilesheet/tile_sheet_dialog.ui
         ui/tilesheet/tile_sheet_content_page.ui
 
-        ui/tilesheet/tile_sheet_file_dialog.cpp
-        ui/tilesheet/tile_sheet_file_dialog.h
+        ui/tilesheet/open_tile_sheet_image.cpp
+        ui/tilesheet/open_tile_sheet_image.h
         ui/modal/about_dialog.cpp
         ui/modal/about_dialog.h
         ui/modal/settings_dialog.h

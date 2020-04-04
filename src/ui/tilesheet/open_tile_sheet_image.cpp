@@ -1,4 +1,4 @@
-#include "tile_sheet_file_dialog.h"
+#include "open_tile_sheet_image.h"
 
 #include <QFileDialog>
 #include <QStandardPaths>

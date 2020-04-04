@@ -2,7 +2,7 @@
 
 #include <QLineEdit>
 
-#include "tile_sheet_file_dialog.h"
+#include "open_tile_sheet_image.h"
 #include "ui_tile_sheet_dialog.h"
 
 namespace tactile {
