@@ -12,7 +12,7 @@ namespace {
 [[nodiscard]] Unique<TileSheet> create_tile_sheet() noexcept
 {
   auto image = std::make_shared<QImage>("terrain.png");
-  return std::make_unique<TileSheet>(image, 32);
+  return TileSheet::unique(image, 32, 32);
 }
 
 }  // namespace

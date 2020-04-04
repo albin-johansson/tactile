@@ -1,6 +1,7 @@
 #pragma once
 
 #include <set>
+#include <type_traits>
 
 #include "smart_pointers.h"
 #include "tile_id.h"
@@ -12,30 +13,61 @@ namespace tactile {
 /**
  * The <code>TileSheet</code> class represents an image that contains a set
  * of tiles that are used to build tile maps. All tile sheets store their
- * first and last valid tile ID.
+ * first and last valid tile ID. Tile sheets should be created from images
+ * that store their sprites aligned in a grid. Tiles in a tile sheet don't
+ * need to be square.
  *
  * @since 0.1.0
  */
 class TileSheet final {
  public:
   /**
-   * Creates a tile sheet with the initial first ID set to 1.
+   * Creates a tile sheet with the initial first ID set to 1. Both the
+   * supplied width and height will be adjusted to be at least 1.
    *
-   * @param image the image that contains the tile sprites, cannot be null.
-   * @param size the size (width and height) of all of the tiles in the tile
-   * sheet image. Must be greater than zero. Will be adjusted to be at least 1.
+   * @param image the image that contains the tile sprites, mustn't be null.
+   * @param tileWidth the width of the tiles in the tile sheet.
+   * @param tileHeight the height of the tiles in the tile sheet.
    * @throws invalid_argument if the supplied image is null.
    * @since 0.1.0
    */
-  TileSheet(const Shared<QImage>& image, int size);
+  TileSheet(const Shared<QImage>& image, int tileWidth, int tileHeight);
+
+  TileSheet(const TileSheet& other) noexcept;
+
+  TileSheet(TileSheet&& other) noexcept;
 
   ~TileSheet() noexcept;
 
+  /**
+   * Creates and returns a unique pointer to a tile sheet instance. Both the
+   * supplied width and height will be adjusted to be at least 1.
+   *
+   * @param image the image that contains the tile sprites, mustn't be null.
+   * @param tileWidth the width of the tiles in the tile sheet.
+   * @param tileHeight the height of the tiles in the tile sheet.
+   * @throws invalid_argument if the supplied image is null.
+   * @return a unique pointer to a tile sheet.
+   * @since 0.1.0
+   */
   [[nodiscard]] static Unique<TileSheet> unique(const Shared<QImage>& image,
-                                                int size);
+                                                int tileWidth,
+                                                int tileHeight);
 
+  /**
+   * Creates and returns a shared pointer to a tile sheet instance. Both the
+   * supplied width and height will be adjusted to be at least 1.
+   *
+   * @param image the image that contains the tile sprites, mustn't be null.
+   * @param tileWidth the width of the tiles in the tile sheet.
+   * @param tileHeight the height of the tiles in the tile sheet.
+   * @throws invalid_argument if the supplied image is null.
+   * @return a shared pointer to a tile sheet.
+   * @since 0.1.0
+   */
   [[nodiscard]] static Shared<TileSheet> shared(const Shared<QImage>& image,
-                                                int size);
+                                                int tileWidth,
+                                                int tileHeight);
 
   /**
    * Sets the first tile ID property of the tile sheet. Note that this method
@@ -144,13 +176,22 @@ class TileSheet final {
   [[nodiscard]] TileID last_id() const noexcept { return first_id() + tiles(); }
 
   /**
-   * Returns the size of the tile sprites in the tile sheet. Will always be
+   * Returns the width of the tile sprites in the tile sheet. Will always be
    * at least 1.
    *
-   * @return the size of the tile sprites in the tile sheet.
+   * @return the width of the tile sprites in the tile sheet.
    * @since 0.1.0
    */
-  [[nodiscard]] int tile_size() const noexcept { return m_size; }
+  [[nodiscard]] int tile_width() const noexcept { return m_tileWidth; }
+
+  /**
+   * Returns the height of the tile sprites in the tile sheet. Will always be
+   * at least 1.
+   *
+   * @return the height of the tile sprites in the tile sheet.
+   * @since 0.1.0
+   */
+  [[nodiscard]] int tile_height() const noexcept { return m_tileHeight; }
 
   /**
    * Returns the currently selected tile IDs.
@@ -163,7 +204,9 @@ class TileSheet final {
  private:
   Shared<QImage> m_sheet;
 
-  int m_size;
+  int m_tileWidth;
+  int m_tileHeight;
+
   int m_nTiles;
   int m_rows;
   int m_cols;
@@ -172,5 +215,10 @@ class TileSheet final {
 
   std::set<TileID> m_selection;
 };
+
+static_assert(std::is_final_v<TileSheet>);
+
+static_assert(std::is_nothrow_move_constructible_v<TileSheet>);
+static_assert(std::is_nothrow_copy_constructible_v<TileSheet>);
 
 }  // namespace tactile

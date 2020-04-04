@@ -61,8 +61,7 @@ Maybe<int> TactileCore::add_tile_sheet(const Shared<QImage>& image,
                                        int tileHeight) noexcept
 {
   if (!image->isNull()) {
-    // TODO add tile width and tile height to tile sheet
-    return m_sheetManager->add(TileSheet::unique(image, tileWidth));
+    return m_sheetManager->add(TileSheet::unique(image, tileWidth, tileHeight));
   } else {
     return nothing;
   }
