@@ -40,7 +40,7 @@ class TactileApplication final : public QApplication {
    * @param styleSheet the file path of the QSS style-sheet.
    * @since 0.1.0
    */
-  void load_style_sheet(const char* styleSheet);  // TODO doc: does it throw?
+  void load_style_sheet(const char* styleSheet);
 };
 
 }  // namespace tactile
