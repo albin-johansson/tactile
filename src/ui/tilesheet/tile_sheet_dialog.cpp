@@ -40,14 +40,11 @@ TileSheetDialog::TileSheetDialog(QWidget* parent)
       if (m_image->isNull()) {
         // TODO indicate that something went wrong
         m_ui->imageLabel->setPixmap(m_defaultImageIcon);
-      }
-
-      const auto valid = is_valid();
-      if (valid) {
+      } else  {
         m_ui->imageLabel->setPixmap(load_pixmap(*path));
       }
 
-      ok_button()->setEnabled(valid);
+      ok_button()->setEnabled(is_valid());
     }
   });
 }
