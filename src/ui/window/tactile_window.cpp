@@ -68,7 +68,7 @@ TactileWindow::TactileWindow(QWidget* parent)
 
   m_tileSheetDock = create_tile_sheet_dock(m_tileSheetWidget);
   addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tileSheetDock.get());
-
+  
   init_connections();
   init_layout();
   enable_startup_view();  // TODO option to reopen last tile map

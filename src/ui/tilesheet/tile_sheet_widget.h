@@ -15,6 +15,7 @@ class TileSheetWidget final : public QWidget {
 
  private:
   Ui::TileSheetWidgetUI* m_ui;
+  int m_emptySheetIndex;
 };
 
 }  // namespace tactile

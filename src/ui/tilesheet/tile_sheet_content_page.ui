@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TileSheetContentUI</class>
- <widget class="QWidget" name="TileSheetContentUI">
+ <class>TileSheetContentPageUI</class>
+ <widget class="QWidget" name="TileSheetContentPageUI">
   <property name="geometry">
    <rect>
     <x>0</x>
