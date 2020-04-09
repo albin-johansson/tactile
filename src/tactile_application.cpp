@@ -112,29 +112,25 @@ void TactileApplication::init_connections() noexcept
   connect(window, &W::s_reset_tile_size, editor, &Core::reset_tile_size);
 
   connect(window, &W::s_pan_up, editor, [window, editor] {
-    const auto tileSize = editor->tile_size();
-    if (tileSize) {
+    if (const auto tileSize = editor->tile_size(); tileSize) {
       window->move_camera(0, -(*tileSize));
     }
   });
 
   connect(window, &W::s_pan_right, editor, [window, editor] {
-    const auto tileSize = editor->tile_size();
-    if (tileSize) {
+    if (const auto tileSize = editor->tile_size(); tileSize) {
       window->move_camera(*tileSize, 0);
     }
   });
 
   connect(window, &W::s_pan_down, editor, [window, editor] {
-    const auto tileSize = editor->tile_size();
-    if (tileSize) {
+    if (const auto tileSize = editor->tile_size(); tileSize) {
       window->move_camera(0, *tileSize);
     }
   });
 
   connect(window, &W::s_pan_left, editor, [window, editor] {
-    const auto tileSize = editor->tile_size();
-    if (tileSize) {
+    if (const auto tileSize = editor->tile_size(); tileSize) {
       window->move_camera(-(*tileSize), 0);
     }
   });
