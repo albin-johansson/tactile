@@ -60,7 +60,7 @@ void CentralEditorWidget::move_viewport(int dx, int dy) noexcept
 
 void CentralEditorWidget::trigger_redraw() noexcept
 {
-  m_mapTabWidget->update();  // TODO check that this works
+  m_mapTabWidget->update();
 }
 
 void CentralEditorWidget::enable_startup_view() noexcept
