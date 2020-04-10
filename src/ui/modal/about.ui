@@ -378,7 +378,7 @@
  </widget>
  <resources>
   <include location="../../tactile2.qrc"/>
-  <include location="../tactile2.qrc"/>
+  <include location="../../tactile2.qrc"/>
  </resources>
  <connections/>
 </ui>

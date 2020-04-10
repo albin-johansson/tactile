@@ -128,7 +128,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../tactile2.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

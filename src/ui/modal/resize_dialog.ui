@@ -238,7 +238,7 @@ values in the range [1, 20'000].</string>
   </layout>
  </widget>
  <resources>
-  <include location="../tactile2.qrc"/>
+  <include location="../../tactile2.qrc"/>
  </resources>
  <connections>
   <connection>
