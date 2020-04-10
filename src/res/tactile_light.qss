@@ -43,8 +43,3 @@ QPushButton:checked {
 QTabBar::tab {
   max-height: 2em;
 }
-
-QMainWindow::separator {
-  background-color: darkgray;
-  width: 2px;
-}

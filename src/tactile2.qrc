@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>res/tactile_dark.qss</file>
         <file>res/tactile_light.qss</file>
         <file>res/icons/icons8/dark/invisible_32px.png</file>
         <file>res/icons/icons8/dark/visible_32px.png</file>
