@@ -68,9 +68,10 @@ class CentralEditorWidget final : public QWidget {
  private:
   Ui::CentralWidgetUI* m_ui;
   TileMapTabWidget* m_mapTabWidget;
-
   int m_editorViewIndex;
   int m_startupViewIndex;
+
+  void init_connections() noexcept;
 };
 
 }  // namespace tactile

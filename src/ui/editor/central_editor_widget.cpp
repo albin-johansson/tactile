@@ -20,6 +20,17 @@ CentralEditorWidget::CentralEditorWidget(QWidget* parent)
   m_startupViewIndex = m_ui->stackedWidget->addWidget(new StartupWidget{});
   m_editorViewIndex = m_ui->stackedWidget->addWidget(m_mapTabWidget);
 
+  init_connections();
+  set_size_policy(this, QSizePolicy::Expanding);
+}
+
+CentralEditorWidget::~CentralEditorWidget() noexcept
+{
+  delete m_ui;
+}
+
+void CentralEditorWidget::init_connections() noexcept
+{
   using TMTW = TileMapTabWidget;
   using CEW = CentralEditorWidget;
   connect(m_mapTabWidget, &TMTW::s_redraw, this, &CEW::s_redraw);
@@ -29,13 +40,6 @@ CentralEditorWidget::CentralEditorWidget(QWidget* parent)
       emit s_selected_tab(*id);
     }
   });
-
-  set_size_policy(this, QSizePolicy::Expanding);
-}
-
-CentralEditorWidget::~CentralEditorWidget() noexcept
-{
-  delete m_ui;
 }
 
 int CentralEditorWidget::add_new_map_tab(const QString& title) noexcept
