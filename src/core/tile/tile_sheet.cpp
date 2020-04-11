@@ -2,7 +2,8 @@
 #include "tile_sheet.h"
 
 #include <QImage>
-#include <stdexcept>
+
+#include "tactile_types.h"
 
 namespace tactile {
 
@@ -13,7 +14,7 @@ TileSheet::TileSheet(const Shared<QImage>& image, int tileWidth, int tileHeight)
       m_firstID{1}
 {
   if (!image) {
-    throw std::invalid_argument{"Cannot create tile sheet from null image!"};
+    throw BadArg{"Cannot create tile sheet from null image!"};
   }
 
   m_rows = height() / m_tileHeight;

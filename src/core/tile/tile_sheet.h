@@ -28,7 +28,7 @@ class TileSheet final {
    * @param image the image that contains the tile sprites, mustn't be null.
    * @param tileWidth the width of the tiles in the tile sheet.
    * @param tileHeight the height of the tiles in the tile sheet.
-   * @throws invalid_argument if the supplied image is null.
+   * @throws BadArg if the supplied image is null.
    * @since 0.1.0
    */
   TileSheet(const Shared<QImage>& image, int tileWidth, int tileHeight);

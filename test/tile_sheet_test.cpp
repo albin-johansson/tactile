@@ -3,7 +3,8 @@
 #include <QImage>
 #include <catch.hpp>
 #include <memory>
-#include <stdexcept>
+
+#include "tactile_types.h"
 
 using namespace tactile;
 
@@ -12,7 +13,7 @@ TEST_CASE("TileSheet(const SharedPtr<QImage>&, int, int)", "[TileSheet]")
   SECTION("Null image")
   {
     Shared<QImage> image = nullptr;
-    CHECK_THROWS_AS(TileSheet(nullptr, 10, 10), std::invalid_argument);
+    CHECK_THROWS_AS(TileSheet(nullptr, 10, 10), BadArg);
   }
 
   SECTION("Zero size")
@@ -30,7 +31,7 @@ TEST_CASE("TileSheet(const SharedPtr<QImage>&, int, int)", "[TileSheet]")
 
 TEST_CASE("TileSheet::unique", "[TileSheet]")
 {
-  CHECK_THROWS_AS(TileSheet::unique(nullptr, 32, 32), std::invalid_argument);
+  CHECK_THROWS_AS(TileSheet::unique(nullptr, 32, 32), BadArg);
 
   auto image = std::make_shared<QImage>("terrain.png");
   CHECK(TileSheet::unique(image, 32, 32));
@@ -38,7 +39,7 @@ TEST_CASE("TileSheet::unique", "[TileSheet]")
 
 TEST_CASE("TileSheet::shared", "[TileSheet]")
 {
-  CHECK_THROWS_AS(TileSheet::shared(nullptr, 32, 32), std::invalid_argument);
+  CHECK_THROWS_AS(TileSheet::shared(nullptr, 32, 32), BadArg);
 
   auto image = std::make_shared<QImage>("terrain.png");
   CHECK(TileSheet::shared(image, 32, 32));

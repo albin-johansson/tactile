@@ -125,7 +125,7 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tile_map_tab_widget.cpp
         ui/editor/tile_map_tab_widget.h
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui ui/tilesheet/tile_sheet_tab.cpp ui/tilesheet/tile_sheet_tab.h)
+        ui/editor/editor_pane.ui ui/tilesheet/tile_sheet_tab.cpp ui/tilesheet/tile_sheet_tab.h core/util/tactile_types.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

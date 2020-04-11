@@ -1,6 +1,5 @@
 #include "tactile_window.h"
 
-#include <QActionGroup>
 #include <QApplication>
 #include <QFile>
 #include <QFileDialog>
@@ -22,29 +21,20 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] Unique<QDockWidget> create_mouse_tool_dock(
-    QWidget* widget) noexcept
+[[nodiscard]] Unique<QDockWidget> create_dock_widget(
+    QWidget* widget,
+    const char* name,
+    const QMargins& margins = {0,0,0,0},
+    QFlags<Qt::DockWidgetArea> areas = {
+        Qt::DockWidgetArea::LeftDockWidgetArea,
+        Qt::DockWidgetArea::RightDockWidgetArea})
 {
   auto dock = std::make_unique<QDockWidget>();
-  dock->setObjectName("mouseToolDock");
+  dock->setObjectName(name);
   dock->setVisible(false);
-  dock->setContentsMargins(0, 0, 0, 0);
-  dock->setAllowedAreas({Qt::DockWidgetArea::LeftDockWidgetArea,
-                         Qt::DockWidgetArea::RightDockWidgetArea});
-  set_size_policy(dock.get(), QSizePolicy::Minimum, QSizePolicy::Expanding);
+  dock->setAllowedAreas(areas);
   dock->setWidget(widget);
-  return dock;
-}
-
-[[nodiscard]] Unique<QDockWidget> create_tile_sheet_dock(
-    QWidget* widget) noexcept
-{
-  auto dock = std::make_unique<QDockWidget>();
-  dock->setObjectName("tileSheetDock");
-  dock->setVisible(false);
-  dock->setContentsMargins(0, 0, 0, 0);
-  set_size_policy(dock.get(), QSizePolicy::Expanding);
-  dock->setWidget(widget);
+  dock->widget()->layout()->setContentsMargins(margins);
   return dock;
 }
 
@@ -62,13 +52,19 @@ TactileWindow::TactileWindow(QWidget* parent)
   m_tileSheetWidget = new TileSheetWidget{};
 
   setCentralWidget(m_centralWidget);
+  centralWidget()->layout()->setContentsMargins(0, 2, 0, 0);
 
-  m_mouseToolDock = create_mouse_tool_dock(m_mouseToolWidget);
+  m_mouseToolDock = create_dock_widget(m_mouseToolWidget, "mouseToolDock");
+  set_size_policy(
+      m_mouseToolDock.get(), QSizePolicy::Minimum, QSizePolicy::Expanding);
   addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock.get());
 
-  m_tileSheetDock = create_tile_sheet_dock(m_tileSheetWidget);
+  m_tileSheetDock = create_dock_widget(m_tileSheetWidget, "tileSheetDock");
+  m_tileSheetDock->setWindowTitle("Tile sheets");
+
+  set_size_policy(m_tileSheetDock.get(), QSizePolicy::Expanding);
   addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tileSheetDock.get());
-  
+
   init_connections();
   init_layout();
   enable_startup_view();  // TODO option to reopen last tile map

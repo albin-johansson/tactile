@@ -5,6 +5,7 @@
 
 #include "maybe.h"
 #include "smart_pointers.h"
+#include "tactile_types.h"
 
 class QPainter;
 
@@ -171,7 +172,7 @@ class TactileCore final : public QObject {
 
  private:
   Maybe<int> m_activeMapIndex;
-  std::unordered_map<int, Unique<TileMap>> m_maps;
+  HashMap<int, Unique<TileMap>> m_maps;
   Unique<TileSheetManager> m_sheetManager;
 
   /**
