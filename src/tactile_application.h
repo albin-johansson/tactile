@@ -41,6 +41,37 @@ class TactileApplication final : public QApplication {
    * @since 0.1.0
    */
   void load_style_sheet(const char* styleSheet);
+
+  /**
+   * A helper method for establishing a connection from the window to the core.
+   *
+   * @tparam Sender the type of the sender functor.
+   * @tparam Receiver the type of the receiver functor.
+   * @param s the function pointer to the signal.
+   * @param r the function pointer/object that handles the signal.
+   * @since 0.1.0
+   */
+  template <typename Sender, typename Receiver>
+  void window_to_core(Sender s, Receiver r)
+  {
+    connect(m_window.get(), s, m_editor.get(), r);
+  }
+
+  /**
+   * A helper method for establishing a connection from the window to this
+   * application instance.
+   *
+   * @tparam Sender the type of the sender functor.
+   * @tparam Handler the type of the handler functor.
+   * @param s the function pointer to the signal.
+   * @param r the function pointer/object that handles the signal.
+   * @since 0.1.0
+   */
+  template <typename Sender, typename Handler>
+  void window_to_this(Sender s, Handler h)
+  {
+    connect(m_window.get(), s, this, h);
+  }
 };
 
 }  // namespace tactile
