@@ -133,7 +133,9 @@ class TactileWindow final : public QMainWindow {
   void s_select_map(int id);
 
  public slots:
-  void add_tile_sheet(int id, Shared<QImage> image) noexcept;
+  void add_tile_sheet(int id, const Shared<QImage>& image) noexcept;
+
+  void remove_tile_sheet(int id) noexcept;
 
   /**
    * Displays the about dialog.

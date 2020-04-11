@@ -79,9 +79,14 @@ TactileWindow::~TactileWindow() noexcept
   delete m_ui;
 }
 
-void TactileWindow::add_tile_sheet(int id, Shared<QImage> image) noexcept
+void TactileWindow::add_tile_sheet(int id, const Shared<QImage>& image) noexcept
 {
-  // TODO ...
+  m_tileSheetWidget->add_tile_sheet(id, image);
+}
+
+void TactileWindow::remove_tile_sheet(int id) noexcept
+{
+  m_tileSheetWidget->remove_tile_sheet(id);
 }
 
 void TactileWindow::enable_startup_view() noexcept
