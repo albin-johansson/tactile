@@ -1,6 +1,6 @@
 # Tactile [![version](https://img.shields.io/badge/version-alpha-red.svg)](https://semver.org)
 
-A tile map editor that is currently in development, using C++17 and the Qt framework. Tactile aims to be
+A tilemap editor that is currently in development, using C++17 and the Qt framework. Tactile aims to be
 compatible with the [Tiled](https://www.mapeditor.org/) map editor (by supporting its TMX map format).
 
 In its current state, Tactile shouldn't be used by anyone.
