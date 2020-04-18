@@ -112,7 +112,7 @@ class TactileWindow final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void s_new_tile_sheet();
+  void s_new_tileset();
 
   void s_resize_map();
 
@@ -133,9 +133,9 @@ class TactileWindow final : public QMainWindow {
   void s_select_map(int id);
 
  public slots:
-  void add_tile_sheet(int id, const Shared<QImage>& image) noexcept;
+  void add_tileset(int id, const Shared<QImage>& image) noexcept;
 
-  void remove_tile_sheet(int id) noexcept;
+  void remove_tileset(int id) noexcept;
 
   /**
    * Displays the about dialog.

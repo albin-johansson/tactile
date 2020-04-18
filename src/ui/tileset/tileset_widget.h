@@ -20,12 +20,12 @@ class TilesetWidget final : public QWidget {
 
   ~TilesetWidget() noexcept override;
 
-  void add_tile_sheet(int id, const Shared<QImage>& image) noexcept;
+  void add_tileset(int id, const Shared<QImage>& image) noexcept;
 
-  void remove_tile_sheet(int id) noexcept;
+  void remove_tileset(int id) noexcept;
 
  signals:
-  void s_requested_tile_sheet();
+  void s_requested_tileset();
 
  private:
   Ui::TilesetWidgetUI* m_ui;

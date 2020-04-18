@@ -21,20 +21,20 @@ class TilesetContentPage final : public QWidget {
 
   ~TilesetContentPage() noexcept override;
 
-  void add_tile_sheet(int id, const Shared<QImage>& image) noexcept;
+  void add_tileset(int id, const Shared<QImage>& image) noexcept;
 
-  void remove_tile_sheet(int id) noexcept;
+  void remove_tileset(int id) noexcept;
 
   [[nodiscard]] bool empty() const noexcept;
 
  signals:
-  void s_requested_tile_sheet();
+  void s_requested_tileset();
 
  private:
   Ui::TilesetContentPageUI* m_ui;
   HashMap<int, Shared<TilesetTab>> m_tabs;
 
-  //  [[nodiscard]] bool contains_tile_sheet(int id) const noexcept;
+  //  [[nodiscard]] bool contains_tileset(int id) const noexcept;
 };
 
 }  // namespace tactile

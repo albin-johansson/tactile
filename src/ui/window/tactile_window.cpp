@@ -55,14 +55,14 @@ TactileWindow::~TactileWindow() noexcept
   delete m_ui;
 }
 
-void TactileWindow::add_tile_sheet(int id, const Shared<QImage>& image) noexcept
+void TactileWindow::add_tileset(int id, const Shared<QImage>& image) noexcept
 {
-  m_tilesetWidget->add_tile_sheet(id, image);
+  m_tilesetWidget->add_tileset(id, image);
 }
 
-void TactileWindow::remove_tile_sheet(int id) noexcept
+void TactileWindow::remove_tileset(int id) noexcept
 {
-  m_tilesetWidget->remove_tile_sheet(id);
+  m_tilesetWidget->remove_tileset(id);
 }
 
 void TactileWindow::enable_startup_view() noexcept
@@ -173,7 +173,7 @@ void TactileWindow::init_connections() noexcept
   // TODO look into making listeners of signals check if window is in editor
   //  mode?
 
-  on_triggered(m_ui->actionAddTileset, &W::s_new_tile_sheet);
+  on_triggered(m_ui->actionAddTileset, &W::s_new_tileset);
 
   on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
@@ -336,9 +336,9 @@ void TactileWindow::init_connections() noexcept
   }
 
   connect(m_tilesetWidget,
-          &TilesetWidget::s_requested_tile_sheet,
+          &TilesetWidget::s_requested_tileset,
           this,
-          &W::s_new_tile_sheet);
+          &W::s_new_tileset);
 }
 
 void TactileWindow::init_layout() noexcept

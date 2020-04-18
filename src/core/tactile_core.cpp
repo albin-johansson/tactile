@@ -54,7 +54,7 @@ void TactileCore::save_as(const char*) const
   qWarning("\"Save as\" isn't implemented!");
 }
 
-Maybe<int> TactileCore::add_tile_sheet(const Shared<QImage>& image,
+Maybe<int> TactileCore::add_tileset(const Shared<QImage>& image,
                                        int tileWidth,
                                        int tileHeight) noexcept
 {

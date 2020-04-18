@@ -61,7 +61,7 @@ class TactileCore final : public QObject {
    * sheet was added.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> add_tile_sheet(const Shared<QImage>& image,
+  [[nodiscard]] Maybe<int> add_tileset(const Shared<QImage>& image,
                                           int tileWidth,
                                           int tileHeight) noexcept;
 

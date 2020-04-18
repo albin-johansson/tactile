@@ -12,9 +12,9 @@ class TilesetScrollArea final : public QScrollArea {
   ~TilesetScrollArea() noexcept override;
 
  signals:
-  void s_clicked_tile_sheet_cell(int x, int y);
+  void s_clicked_tileset_cell(int x, int y);
 
-  void s_updated_tile_sheet_cell_selection(int x, int y);
+  void s_updated_tileset_cell_selection(int x, int y);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;

@@ -15,13 +15,13 @@ TilesetScrollArea::~TilesetScrollArea() noexcept = default;
 void TilesetScrollArea::mousePressEvent(QMouseEvent* event)
 {
   QScrollArea::mousePressEvent(event);
-  emit s_clicked_tile_sheet_cell(event->x(), event->y());
+  emit s_clicked_tileset_cell(event->x(), event->y());
 }
 
 void TilesetScrollArea::mouseMoveEvent(QMouseEvent* event)
 {
   QScrollArea::mouseMoveEvent(event);
-  emit s_updated_tile_sheet_cell_selection(event->x(), event->y());
+  emit s_updated_tileset_cell_selection(event->x(), event->y());
 }
 
 }  // namespace tactile

@@ -16,7 +16,7 @@ class TilesetEmptyPage final : public QWidget {
   ~TilesetEmptyPage() noexcept override;
 
  signals:
-  void s_requested_tile_sheet();
+  void s_requested_tileset();
 
  private:
   Ui::TilesetEmptyPageUI* m_ui;

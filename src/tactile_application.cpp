@@ -143,16 +143,16 @@ void TactileApplication::init_connections() noexcept
     }
   });
 
-  window_to_this(&Window::s_new_tile_sheet, [window, core] {
+  window_to_this(&Window::s_new_tileset, [window, core] {
     TilesetDialog dialog;
     if (dialog.exec()) {
       const auto image = dialog.chosen_image();
       const auto tileWidth = dialog.chosen_width();
       const auto tileHeight = dialog.chosen_height();
       if (image && tileWidth && tileHeight) {
-        const auto id = core->add_tile_sheet(image, *tileWidth, *tileHeight);
+        const auto id = core->add_tileset(image, *tileWidth, *tileHeight);
         if (id) {
-          window->add_tile_sheet(*id, image);
+          window->add_tileset(*id, image);
         }
       }
     }

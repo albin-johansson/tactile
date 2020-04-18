@@ -21,14 +21,14 @@ TilesetWidget::TilesetWidget(QWidget* parent)
   m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
 
   connect(m_contentPage,
-          &TilesetContentPage::s_requested_tile_sheet,
+          &TilesetContentPage::s_requested_tileset,
           this,
-          &TilesetWidget::s_requested_tile_sheet);
+          &TilesetWidget::s_requested_tileset);
 
   connect(m_emptyPage,
-          &TilesetEmptyPage::s_requested_tile_sheet,
+          &TilesetEmptyPage::s_requested_tileset,
           this,
-          &TilesetWidget::s_requested_tile_sheet);
+          &TilesetWidget::s_requested_tileset);
 }
 
 TilesetWidget::~TilesetWidget() noexcept
@@ -36,7 +36,7 @@ TilesetWidget::~TilesetWidget() noexcept
   delete m_ui;
 }
 
-void TilesetWidget::add_tile_sheet(int id, const Shared<QImage>& image) noexcept
+void TilesetWidget::add_tileset(int id, const Shared<QImage>& image) noexcept
 {
   if (image->isNull()) {
     return;
@@ -44,16 +44,16 @@ void TilesetWidget::add_tile_sheet(int id, const Shared<QImage>& image) noexcept
 
   const auto wasEmpty = m_contentPage->empty();
 
-  m_contentPage->add_tile_sheet(id, image);
+  m_contentPage->add_tileset(id, image);
 
   if (wasEmpty) {
     m_ui->stackedWidget->setCurrentIndex(m_contentIndex);
   }
 }
 
-void TilesetWidget::remove_tile_sheet(int id) noexcept
+void TilesetWidget::remove_tileset(int id) noexcept
 {
-  m_contentPage->remove_tile_sheet(id);
+  m_contentPage->remove_tileset(id);
 }
 
 }  // namespace tactile

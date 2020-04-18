@@ -14,7 +14,7 @@ TilesetContentPage::TilesetContentPage(QWidget* parent)
   connect(m_ui->newButton,
           &QPushButton::clicked,
           this,
-          &TilesetContentPage::s_requested_tile_sheet);
+          &TilesetContentPage::s_requested_tileset);
 }
 
 TilesetContentPage::~TilesetContentPage() noexcept
@@ -22,7 +22,7 @@ TilesetContentPage::~TilesetContentPage() noexcept
   delete m_ui;
 }
 
-void TilesetContentPage::add_tile_sheet(int id,
+void TilesetContentPage::add_tileset(int id,
                                         const Shared<QImage>& image) noexcept
 {
   if (m_tabs.count(id)) {
@@ -37,7 +37,7 @@ void TilesetContentPage::add_tile_sheet(int id,
   }
 }
 
-void TilesetContentPage::remove_tile_sheet(int id) noexcept
+void TilesetContentPage::remove_tileset(int id) noexcept
 {
   if (m_tabs.count(id)) {
     m_tabs.erase(id);

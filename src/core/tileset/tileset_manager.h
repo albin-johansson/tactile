@@ -74,7 +74,7 @@ class TilesetManager final {
    * @return true if there is an active tileset; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] bool has_active_tile_sheet() const noexcept
+  [[nodiscard]] bool has_active_tileset() const noexcept
   {
     return m_activeSheet.has_value();
   }

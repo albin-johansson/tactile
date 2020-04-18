@@ -12,7 +12,7 @@ TilesetEmptyPage::TilesetEmptyPage(QWidget* parent)
   connect(m_ui->addSheetButton,
           &QPushButton::clicked,
           this,
-          &TilesetEmptyPage::s_requested_tile_sheet);
+          &TilesetEmptyPage::s_requested_tileset);
 }
 
 TilesetEmptyPage::~TilesetEmptyPage() noexcept
