@@ -20,7 +20,7 @@ namespace tactile {
  * @see TileLayer
  * @since 0.1.0
  */
-class TileMap final {
+class TileMap final { // TODO rename to Tilemap
  public:
   friend class TileMapRenderer;
 
