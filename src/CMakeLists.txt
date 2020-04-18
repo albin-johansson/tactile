@@ -6,6 +6,7 @@ function(tactile_include_dirs [target])
     target_include_directories(${ARGV0} PUBLIC core)
     target_include_directories(${ARGV0} PUBLIC core/util)
     target_include_directories(${ARGV0} PUBLIC core/tile)
+    target_include_directories(${ARGV0} PUBLIC core/tilemap)
     target_include_directories(${ARGV0} PUBLIC ui)
     target_include_directories(${ARGV0} PUBLIC ui/toolbar)
     target_include_directories(${ARGV0} PUBLIC ui/editor)
@@ -57,21 +58,22 @@ set(TACTILE_SOURCE_FILES
         core/util/algorithm_utils.h
         core/util/tactile_types.h
 
-        core/tile/tilemap.h
-        core/tile/tilemap.cpp
         core/tile/tile_id.h
-        core/tile/tile_layer.cpp
-        core/tile/tile_layer.h
-        core/tile/map_position.cpp
-        core/tile/map_position.h
         core/tile/tile_sheet.cpp
         core/tile/tile_sheet.h
         core/tile/tile_size.h
         core/tile/tile_size.cpp
-        core/tile/tilemap_renderer.cpp
-        core/tile/tilemap_renderer.h
         core/tile/tile_sheet_manager.cpp
         core/tile/tile_sheet_manager.h
+
+        core/tilemap/tilemap.h
+        core/tilemap/tilemap.cpp
+        core/tilemap/tile_layer.cpp
+        core/tilemap/tile_layer.h
+        core/tilemap/map_position.cpp
+        core/tilemap/map_position.h
+        core/tilemap/tilemap_renderer.cpp
+        core/tilemap/tilemap_renderer.h
 
         ui/mouse_tool_widget.cpp
         ui/mouse_tool_widget.h
