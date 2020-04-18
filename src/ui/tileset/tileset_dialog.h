@@ -8,16 +8,16 @@
 class QLineEdit;
 
 namespace Ui {
-class TileSheetDialogUI;
+class TilesetDialogUI;
 }
 
 namespace tactile {
 
-class TileSheetDialog final : public QDialog {
+class TilesetDialog final : public QDialog {
  public:
-  explicit TileSheetDialog(QWidget* parent = nullptr);
+  explicit TilesetDialog(QWidget* parent = nullptr);
 
-  ~TileSheetDialog() noexcept override;
+  ~TilesetDialog() noexcept override;
 
   [[nodiscard]] Shared<QImage> chosen_image() const noexcept { return m_image; }
 
@@ -26,7 +26,7 @@ class TileSheetDialog final : public QDialog {
   [[nodiscard]] Maybe<int> chosen_height() const noexcept { return m_height; }
 
  private:
-  Ui::TileSheetDialogUI* m_ui;
+  Ui::TilesetDialogUI* m_ui;
   Shared<QImage> m_image;
   Maybe<int> m_width;
   Maybe<int> m_height;

@@ -14,7 +14,7 @@
 #include "mouse_tool_widget.h"
 #include "settings_dialog.h"
 #include "settings_utils.h"
-#include "tile_sheet_widget.h"
+#include "tileset_widget.h"
 #include "ui_window.h"
 #include "widget_size_policy.h"
 
@@ -45,11 +45,11 @@ TactileWindow::TactileWindow(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  // TODO add mini-map and tile sheet widgets
+  // TODO add mini-map and tileset widgets
 
   m_centralWidget = new CentralEditorWidget{};
   m_mouseToolWidget = new MouseToolWidget{};
-  m_tileSheetWidget = new TileSheetWidget{};
+  m_tilesetWidget = new TilesetWidget{};
 
   setCentralWidget(m_centralWidget);
   centralWidget()->layout()->setContentsMargins(0, 2, 0, 0);
@@ -59,11 +59,11 @@ TactileWindow::TactileWindow(QWidget* parent)
       m_mouseToolDock.get(), QSizePolicy::Minimum, QSizePolicy::Expanding);
   addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock.get());
 
-  m_tileSheetDock = create_dock_widget(m_tileSheetWidget, "tileSheetDock");
-  m_tileSheetDock->setWindowTitle("Tile sheets");
+  m_tilesetDock = create_dock_widget(m_tilesetWidget, "tilesetDock");
+  m_tilesetDock->setWindowTitle("Tilesets");
 
-  set_size_policy(m_tileSheetDock.get(), QSizePolicy::Expanding);
-  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tileSheetDock.get());
+  set_size_policy(m_tilesetDock.get(), QSizePolicy::Expanding);
+  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock.get());
 
   init_connections();
   init_layout();
@@ -77,12 +77,12 @@ TactileWindow::~TactileWindow() noexcept
 
 void TactileWindow::add_tile_sheet(int id, const Shared<QImage>& image) noexcept
 {
-  m_tileSheetWidget->add_tile_sheet(id, image);
+  m_tilesetWidget->add_tile_sheet(id, image);
 }
 
 void TactileWindow::remove_tile_sheet(int id) noexcept
 {
-  m_tileSheetWidget->remove_tile_sheet(id);
+  m_tilesetWidget->remove_tile_sheet(id);
 }
 
 void TactileWindow::enable_startup_view() noexcept
@@ -193,7 +193,7 @@ void TactileWindow::init_connections() noexcept
   // TODO look into making listeners of signals check if window is in editor
   //  mode?
 
-  on_triggered(m_ui->actionAddTileSheet, &W::s_new_tile_sheet);
+  on_triggered(m_ui->actionAddTileset, &W::s_new_tile_sheet);
 
   on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
@@ -286,8 +286,8 @@ void TactileWindow::init_connections() noexcept
     m_mouseToolDock->setVisible(m_ui->actionMouseTools->isChecked());
   });
 
-  on_triggered(m_ui->actionTileSheets, [this] {
-    m_tileSheetDock->setVisible(m_ui->actionTileSheets->isChecked());
+  on_triggered(m_ui->actionTilesets, [this] {
+    m_tilesetDock->setVisible(m_ui->actionTilesets->isChecked());
   });
 
   on_triggered(m_ui->actionResetLayout, [this] { reset_dock_layout(); });
@@ -344,9 +344,9 @@ void TactileWindow::init_connections() noexcept
           m_ui->actionMouseTools,
           &QAction::setChecked);
 
-  connect(m_tileSheetDock.get(),
+  connect(m_tilesetDock.get(),
           &QDockWidget::visibilityChanged,
-          m_ui->actionTileSheets,
+          m_ui->actionTilesets,
           &QAction::setChecked);
 
   {
@@ -355,8 +355,8 @@ void TactileWindow::init_connections() noexcept
     connect(m_centralWidget, &CEW::s_selected_tab, this, &W::s_select_map);
   }
 
-  connect(m_tileSheetWidget,
-          &TileSheetWidget::s_requested_tile_sheet,
+  connect(m_tilesetWidget,
+          &TilesetWidget::s_requested_tile_sheet,
           this,
           &W::s_new_tile_sheet);
 }
@@ -380,25 +380,25 @@ void TactileWindow::init_layout() noexcept
 void TactileWindow::reset_dock_layout() noexcept
 {
   removeDockWidget(m_mouseToolDock.get());
-  removeDockWidget(m_tileSheetDock.get());
+  removeDockWidget(m_tilesetDock.get());
 
   addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock.get());
   m_mouseToolDock->show();
 
-  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tileSheetDock.get());
-  m_tileSheetDock->show();
+  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock.get());
+  m_tilesetDock->show();
 }
 
 void TactileWindow::hide_all_docks() noexcept
 {
   m_mouseToolDock->close();
-  m_tileSheetDock->close();
+  m_tilesetDock->close();
 }
 
 void TactileWindow::show_all_docks() noexcept
 {
   m_mouseToolDock->show();
-  m_tileSheetDock->show();
+  m_tilesetDock->show();
 }
 
 bool TactileWindow::in_editor_mode() const noexcept

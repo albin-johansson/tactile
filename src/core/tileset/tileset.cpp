@@ -1,5 +1,5 @@
 
-#include "tile_sheet.h"
+#include "tileset.h"
 
 #include <QImage>
 
@@ -7,14 +7,14 @@
 
 namespace tactile {
 
-TileSheet::TileSheet(const Shared<QImage>& image, int tileWidth, int tileHeight)
+Tileset::Tileset(const Shared<QImage>& image, int tileWidth, int tileHeight)
     : m_sheet{image},
       m_tileWidth{(tileWidth < 1) ? 1 : tileWidth},
       m_tileHeight{(tileHeight < 1) ? 1 : tileHeight},
       m_firstID{1}
 {
   if (!image) {
-    throw BadArg{"Cannot create tile sheet from null image!"};
+    throw BadArg{"Cannot create tileset from null image!"};
   }
 
   m_rows = height() / m_tileHeight;
@@ -22,7 +22,7 @@ TileSheet::TileSheet(const Shared<QImage>& image, int tileWidth, int tileHeight)
   m_nTiles = m_rows * m_cols;
 }
 
-TileSheet::TileSheet(const TileSheet& other) noexcept  // NOLINT
+Tileset::Tileset(const Tileset& other) noexcept  // NOLINT
     : m_sheet{other.m_sheet},
       m_tileWidth{other.m_tileWidth},
       m_tileHeight{other.m_tileHeight},
@@ -33,7 +33,7 @@ TileSheet::TileSheet(const TileSheet& other) noexcept  // NOLINT
       m_selection{other.m_selection}
 {}
 
-TileSheet::TileSheet(TileSheet&& other) noexcept
+Tileset::Tileset(Tileset&& other) noexcept
     : m_sheet{std::move(other.m_sheet)},
       m_tileWidth{other.m_tileWidth},
       m_tileHeight{other.m_tileHeight},
@@ -44,30 +44,30 @@ TileSheet::TileSheet(TileSheet&& other) noexcept
       m_selection{std::move(other.m_selection)}
 {}
 
-TileSheet::~TileSheet() noexcept = default;
+Tileset::~Tileset() noexcept = default;
 
-Unique<TileSheet> TileSheet::unique(const Shared<QImage>& image,
+Unique<Tileset> Tileset::unique(const Shared<QImage>& image,
                                     int tileWidth,
                                     int tileHeight)
 {
-  return std::make_unique<TileSheet>(image, tileWidth, tileHeight);
+  return std::make_unique<Tileset>(image, tileWidth, tileHeight);
 }
 
-Shared<TileSheet> TileSheet::shared(const Shared<QImage>& image,
+Shared<Tileset> Tileset::shared(const Shared<QImage>& image,
                                     int tileWidth,
                                     int tileHeight)
 {
-  return std::make_shared<TileSheet>(image, tileWidth, tileHeight);
+  return std::make_shared<Tileset>(image, tileWidth, tileHeight);
 }
 
-void TileSheet::set_first_id(TileID firstID) noexcept
+void Tileset::set_first_id(TileID firstID) noexcept
 {
   if (firstID > 0) {
     m_firstID = firstID;
   }
 }
 
-void TileSheet::select(int x, int y) noexcept
+void Tileset::select(int x, int y) noexcept
 {
   const auto tile = tile_at(x, y);
   if (tile != empty) {
@@ -75,17 +75,17 @@ void TileSheet::select(int x, int y) noexcept
   }
 }
 
-void TileSheet::clear_selection() noexcept
+void Tileset::clear_selection() noexcept
 {
   m_selection.clear();
 }
 
-bool TileSheet::contains(TileID id) const noexcept
+bool Tileset::contains(TileID id) const noexcept
 {
   return id >= first_id() && id <= last_id();
 }
 
-TileID TileSheet::tile_at(int x, int y) const noexcept
+TileID Tileset::tile_at(int x, int y) const noexcept
 {
   if (x < 0 || y < 0 || x > width() || y > height()) {
     return empty;
@@ -97,12 +97,12 @@ TileID TileSheet::tile_at(int x, int y) const noexcept
   }
 }
 
-int TileSheet::width() const noexcept
+int Tileset::width() const noexcept
 {
   return m_sheet->width();
 }
 
-int TileSheet::height() const noexcept
+int Tileset::height() const noexcept
 {
   return m_sheet->height();
 }

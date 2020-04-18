@@ -4,21 +4,21 @@
 #include "smart_pointers.h"
 
 namespace Ui {
-class TileSheetWidgetUI;
+class TilesetWidgetUI;
 }
 
 namespace tactile {
 
-class TileSheetContentPage;
-class TileSheetEmptyPage;
+class TilesetContentPage;
+class TilesetEmptyPage;
 
-class TileSheetWidget final : public QWidget {
+class TilesetWidget final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit TileSheetWidget(QWidget* parent = nullptr);
+  explicit TilesetWidget(QWidget* parent = nullptr);
 
-  ~TileSheetWidget() noexcept override;
+  ~TilesetWidget() noexcept override;
 
   void add_tile_sheet(int id, const Shared<QImage>& image) noexcept;
 
@@ -28,9 +28,9 @@ class TileSheetWidget final : public QWidget {
   void s_requested_tile_sheet();
 
  private:
-  Ui::TileSheetWidgetUI* m_ui;
-  TileSheetContentPage* m_contentPage;
-  TileSheetEmptyPage* m_emptyPage;
+  Ui::TilesetWidgetUI* m_ui;
+  TilesetContentPage* m_contentPage;
+  TilesetEmptyPage* m_emptyPage;
   int m_emptyIndex;
   int m_contentIndex;
 };

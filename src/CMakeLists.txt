@@ -7,11 +7,12 @@ function(tactile_include_dirs [target])
     target_include_directories(${ARGV0} PUBLIC core/util)
     target_include_directories(${ARGV0} PUBLIC core/tile)
     target_include_directories(${ARGV0} PUBLIC core/tilemap)
+    target_include_directories(${ARGV0} PUBLIC core/tileset)
     target_include_directories(${ARGV0} PUBLIC ui)
     target_include_directories(${ARGV0} PUBLIC ui/toolbar)
     target_include_directories(${ARGV0} PUBLIC ui/editor)
     target_include_directories(${ARGV0} PUBLIC ui/modal)
-    target_include_directories(${ARGV0} PUBLIC ui/tilesheet)
+    target_include_directories(${ARGV0} PUBLIC ui/tileset)
     target_include_directories(${ARGV0} PUBLIC ui/window)
     target_include_directories(${ARGV0} PUBLIC ui/util)
 endfunction()
@@ -59,12 +60,13 @@ set(TACTILE_SOURCE_FILES
         core/util/tactile_types.h
 
         core/tile/tile_id.h
-        core/tile/tile_sheet.cpp
-        core/tile/tile_sheet.h
         core/tile/tile_size.h
         core/tile/tile_size.cpp
-        core/tile/tile_sheet_manager.cpp
-        core/tile/tile_sheet_manager.h
+
+        core/tileset/tileset.cpp
+        core/tileset/tileset.h
+        core/tileset/tileset_manager.cpp
+        core/tileset/tileset_manager.h
 
         core/tilemap/tilemap.h
         core/tilemap/tilemap.cpp
@@ -90,26 +92,26 @@ set(TACTILE_SOURCE_FILES
         ui/window/tactile_window.cpp
         ui/window/window.ui
 
-        ui/tilesheet/tile_sheet_widget.cpp
-        ui/tilesheet/tile_sheet_widget.h
-        ui/tilesheet/tile_sheet_widget.ui
-        ui/tilesheet/tile_sheet_dialog.cpp
-        ui/tilesheet/tile_sheet_dialog.h
-        ui/tilesheet/tile_sheet_dialog.ui
-        ui/tilesheet/tile_sheet_content_page.ui
-        ui/tilesheet/tile_sheet_empty_page.ui
-        ui/tilesheet/open_tile_sheet_image.cpp
-        ui/tilesheet/open_tile_sheet_image.h
-        ui/tilesheet/tile_sheet_empty_page.cpp
-        ui/tilesheet/tile_sheet_empty_page.h
-        ui/tilesheet/tile_sheet_content_page.cpp
-        ui/tilesheet/tile_sheet_content_page.h
-        ui/tilesheet/tile_sheet_scroll_area.cpp
-        ui/tilesheet/tile_sheet_scroll_area.h
-        ui/tilesheet/tile_sheet_image_widget.cpp
-        ui/tilesheet/tile_sheet_image_widget.h
-        ui/tilesheet/tile_sheet_tab.cpp
-        ui/tilesheet/tile_sheet_tab.h
+        ui/tileset/tileset_widget.cpp
+        ui/tileset/tileset_widget.h
+        ui/tileset/tileset_widget.ui
+        ui/tileset/tileset_dialog.cpp
+        ui/tileset/tileset_dialog.h
+        ui/tileset/tileset_dialog.ui
+        ui/tileset/tileset_content_page.ui
+        ui/tileset/tileset_empty_page.ui
+        ui/tileset/open_tileset_image.cpp
+        ui/tileset/open_tileset_image.h
+        ui/tileset/tileset_empty_page.cpp
+        ui/tileset/tileset_empty_page.h
+        ui/tileset/tileset_content_page.cpp
+        ui/tileset/tileset_content_page.h
+        ui/tileset/tileset_scroll_area.cpp
+        ui/tileset/tileset_scroll_area.h
+        ui/tileset/tileset_image_widget.cpp
+        ui/tileset/tileset_image_widget.h
+        ui/tileset/tileset_tab.cpp
+        ui/tileset/tileset_tab.h
 
         ui/modal/about_dialog.cpp
         ui/modal/about_dialog.h

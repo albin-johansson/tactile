@@ -20,7 +20,7 @@ namespace tactile {
 
 class CentralEditorWidget;
 class MouseToolWidget;
-class TileSheetWidget;
+class TilesetWidget;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -108,7 +108,7 @@ class TactileWindow final : public QMainWindow {
   void s_center_camera();
 
   /**
-   * A signal that is emitted when the user wants to add a tile sheet.
+   * A signal that is emitted when the user wants to add a tileset.
    *
    * @since 0.1.0
    */
@@ -177,10 +177,10 @@ class TactileWindow final : public QMainWindow {
 
   CentralEditorWidget* m_centralWidget;
   MouseToolWidget* m_mouseToolWidget;
-  TileSheetWidget* m_tileSheetWidget;
+  TilesetWidget* m_tilesetWidget;
 
   Unique<QDockWidget> m_mouseToolDock;
-  Unique<QDockWidget> m_tileSheetDock;
+  Unique<QDockWidget> m_tilesetDock;
 
   Unique<QActionGroup> m_mouseToolGroup;
 

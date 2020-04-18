@@ -106,7 +106,7 @@
     <addaction name="actionRectangleTool"/>
     <addaction name="actionFindSameTool"/>
     <addaction name="separator"/>
-    <addaction name="actionAddTileSheet"/>
+    <addaction name="actionAddTileset"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -124,7 +124,7 @@
      <addaction name="actionResetLayout"/>
      <addaction name="separator"/>
      <addaction name="actionMouseTools"/>
-     <addaction name="actionTileSheets"/>
+     <addaction name="actionTilesets"/>
     </widget>
     <addaction name="menuAppearance"/>
     <addaction name="separator"/>
@@ -686,13 +686,13 @@
     <string>F</string>
    </property>
   </action>
-  <action name="actionAddTileSheet">
+  <action name="actionAddTileset">
    <property name="icon">
     <iconset resource="../../tactile2.qrc">
      <normaloff>:/res/icons/icons8/color/64/image.png</normaloff>:/res/icons/icons8/color/64/image.png</iconset>
    </property>
    <property name="text">
-    <string>Add tile sheet...</string>
+    <string>Add tileset...</string>
    </property>
    <property name="font">
     <font>
@@ -768,7 +768,7 @@
     </font>
    </property>
   </action>
-  <action name="actionTileSheets">
+  <action name="actionTilesets">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -779,7 +779,7 @@
     </iconset>
    </property>
    <property name="text">
-    <string>Tile sheets</string>
+    <string>Tilesets</string>
    </property>
    <property name="font">
     <font>

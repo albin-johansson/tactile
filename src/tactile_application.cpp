@@ -10,7 +10,7 @@
 #include "settings_utils.h"
 #include "tactile_core.h"
 #include "tactile_window.h"
-#include "tile_sheet_dialog.h"
+#include "tileset_dialog.h"
 
 namespace tactile {
 namespace {
@@ -144,7 +144,7 @@ void TactileApplication::init_connections() noexcept
   });
 
   window_to_this(&Window::s_new_tile_sheet, [window, core] {
-    TileSheetDialog dialog;
+    TilesetDialog dialog;
     if (dialog.exec()) {
       const auto image = dialog.chosen_image();
       const auto tileWidth = dialog.chosen_width();

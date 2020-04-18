@@ -2,15 +2,15 @@
 
 #include <QImage>
 
-#include "tile_sheet.h"
-#include "tile_sheet_manager.h"
+#include "core/tileset/tileset.h"
+#include "core/tileset/tileset_manager.h"
 #include "tilemap.h"
 
 namespace tactile {
 
 TactileCore::TactileCore()
     : m_activeMapIndex{nothing},
-      m_sheetManager{std::make_unique<TileSheetManager>()}
+      m_sheetManager{std::make_unique<TilesetManager>()}
 {}
 
 TactileCore::~TactileCore() noexcept = default;
@@ -59,7 +59,7 @@ Maybe<int> TactileCore::add_tile_sheet(const Shared<QImage>& image,
                                        int tileHeight) noexcept
 {
   if (!image->isNull()) {
-    return m_sheetManager->add(TileSheet::unique(image, tileWidth, tileHeight));
+    return m_sheetManager->add(Tileset::unique(image, tileWidth, tileHeight));
   } else {
     return nothing;
   }

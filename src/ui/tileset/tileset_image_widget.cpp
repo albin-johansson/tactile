@@ -1,4 +1,4 @@
-#include "tile_sheet_image_widget.h"
+#include "tileset_image_widget.h"
 
 #include <QGridLayout>
 #include <QLabel>
@@ -16,7 +16,7 @@ class ImageLabel final : public QLabel {
       : QLabel{parent}
   {
     if (image.isNull()) {
-      throw BadArg{"Can't create tile sheet image widget from null image!"};
+      throw BadArg{"Can't create tileset image widget from null image!"};
     }
     setPixmap(QPixmap::fromImage(image));
   }
@@ -55,11 +55,11 @@ class ImageLabel final : public QLabel {
   }
 };
 
-TileSheetImageWidget::TileSheetImageWidget(const QImage& image, QWidget* parent)
+TilesetImageWidget::TilesetImageWidget(const QImage& image, QWidget* parent)
     : QWidget{parent}
 {
   if (image.isNull()) {
-    throw BadArg{"Can't create tile sheet image widget from null image!"};
+    throw BadArg{"Can't create tileset image widget from null image!"};
   }
 
   m_imageLabel = std::make_unique<ImageLabel>(image);
@@ -73,9 +73,9 @@ TileSheetImageWidget::TileSheetImageWidget(const QImage& image, QWidget* parent)
       std::make_unique<QRubberBand>(QRubberBand::Rectangle, m_imageLabel.get());
 }
 
-TileSheetImageWidget::~TileSheetImageWidget() noexcept = default;
+TilesetImageWidget::~TilesetImageWidget() noexcept = default;
 
-void TileSheetImageWidget::mousePressEvent(QMouseEvent* event)
+void TilesetImageWidget::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
 
@@ -88,7 +88,7 @@ void TileSheetImageWidget::mousePressEvent(QMouseEvent* event)
   }
 }
 
-void TileSheetImageWidget::mouseMoveEvent(QMouseEvent* event)
+void TilesetImageWidget::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
 
@@ -97,7 +97,7 @@ void TileSheetImageWidget::mouseMoveEvent(QMouseEvent* event)
   }
 }
 
-void TileSheetImageWidget::mouseReleaseEvent(QMouseEvent* event)
+void TilesetImageWidget::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
 

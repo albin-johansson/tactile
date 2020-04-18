@@ -10,13 +10,13 @@ class QRubberBand;
 
 namespace tactile {
 
-class TileSheetImageWidget final : public QWidget {
+class TilesetImageWidget final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit TileSheetImageWidget(const QImage& image, QWidget* parent = nullptr);
+  explicit TilesetImageWidget(const QImage& image, QWidget* parent = nullptr);
 
-  ~TileSheetImageWidget() noexcept override;
+  ~TilesetImageWidget() noexcept override;
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;

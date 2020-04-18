@@ -6,20 +6,20 @@
 #include "tactile_types.h"
 
 namespace Ui {
-class TileSheetContentPageUI;
+class TilesetContentPageUI;
 }
 
 namespace tactile {
 
-class TileSheetTab;
+class TilesetTab;
 
-class TileSheetContentPage final : public QWidget {
+class TilesetContentPage final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit TileSheetContentPage(QWidget* parent = nullptr);
+  explicit TilesetContentPage(QWidget* parent = nullptr);
 
-  ~TileSheetContentPage() noexcept override;
+  ~TilesetContentPage() noexcept override;
 
   void add_tile_sheet(int id, const Shared<QImage>& image) noexcept;
 
@@ -31,8 +31,8 @@ class TileSheetContentPage final : public QWidget {
   void s_requested_tile_sheet();
 
  private:
-  Ui::TileSheetContentPageUI* m_ui;
-  HashMap<int, Shared<TileSheetTab>> m_tabs;
+  Ui::TilesetContentPageUI* m_ui;
+  HashMap<int, Shared<TilesetTab>> m_tabs;
 
   //  [[nodiscard]] bool contains_tile_sheet(int id) const noexcept;
 };

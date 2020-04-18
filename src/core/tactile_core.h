@@ -12,7 +12,7 @@ class QPainter;
 namespace tactile {
 
 class Tilemap;
-class TileSheetManager;
+class TilesetManager;
 
 /**
  * The <code>TactileCore</code> class represents the main interface for the
@@ -51,13 +51,13 @@ class TactileCore final : public QObject {
   void save_as(const char* fileName) const;
 
   /**
-   * Adds a tile sheet based on the supplied image. This method has no effect
-   * if the tile sheet cannot be added.
+   * Adds a tileset based on the supplied image. This method has no effect
+   * if the tileset cannot be added.
    *
    * @param fileName the image that contains the tile images.
-   * @param tileWidth the width of the tiles in the tile sheet.
-   * @param tileHeight the height of the tiles in the tile sheet.
-   * @return the ID of the tile sheet that was added; nothing if no tile
+   * @param tileWidth the width of the tiles in the tileset.
+   * @param tileHeight the height of the tiles in the tileset.
+   * @return the ID of the tileset that was added; nothing if no tile
    * sheet was added.
    * @since 0.1.0
    */
@@ -173,7 +173,7 @@ class TactileCore final : public QObject {
  private:
   Maybe<int> m_activeMapIndex;
   HashMap<int, Unique<Tilemap>> m_maps;
-  Unique<TileSheetManager> m_sheetManager;
+  Unique<TilesetManager> m_sheetManager;
 
   /**
    * Returns a pointer to the currently active map. You should check that the

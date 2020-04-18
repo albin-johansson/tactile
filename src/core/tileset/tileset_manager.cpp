@@ -1,16 +1,16 @@
-#include "tile_sheet_manager.h"
+#include "tileset_manager.h"
 
-#include "tile_sheet.h"
+#include "tileset.h"
 
 namespace tactile {
 
-TileSheetManager::TileSheetManager() noexcept
+TilesetManager::TilesetManager() noexcept
     : m_activeSheet{nothing}, m_nextSheetKey{1}
 {}
 
-TileSheetManager::~TileSheetManager() noexcept = default;
+TilesetManager::~TilesetManager() noexcept = default;
 
-Maybe<int> TileSheetManager::add(Unique<TileSheet>&& sheet) noexcept
+Maybe<int> TilesetManager::add(Unique<Tileset>&& sheet) noexcept
 {
   if (sheet) {
     const auto id = m_nextSheetKey++;
@@ -21,17 +21,17 @@ Maybe<int> TileSheetManager::add(Unique<TileSheet>&& sheet) noexcept
   }
 }
 
-void TileSheetManager::remove(int id) noexcept
+void TilesetManager::remove(int id) noexcept
 {
   m_sheets.erase(id);
 }
 
-void TileSheetManager::remove_all() noexcept
+void TilesetManager::remove_all() noexcept
 {
   m_sheets.clear();
 }
 
-void TileSheetManager::select(Maybe<int> id) noexcept
+void TilesetManager::select(Maybe<int> id) noexcept
 {
   if (!id) {
     m_activeSheet = nothing;

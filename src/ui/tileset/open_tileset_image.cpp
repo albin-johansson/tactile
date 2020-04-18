@@ -1,4 +1,4 @@
-#include "open_tile_sheet_image.h"
+#include "open_tileset_image.h"
 
 #include <QFileDialog>
 #include <QStandardPaths>
@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-Maybe<QString> open_tile_sheet_image(QWidget* parent) noexcept
+Maybe<QString> open_tileset_image(QWidget* parent) noexcept
 {
   static QString cachedDirPath{""};
 
@@ -14,7 +14,7 @@ Maybe<QString> open_tile_sheet_image(QWidget* parent) noexcept
   dialog.setFileMode(QFileDialog::ExistingFile);
   dialog.setViewMode(QFileDialog::Detail);
   dialog.setNameFilter(QTranslator::tr("Images (*.png *.jpg)"));
-  dialog.setWindowTitle("Open tile sheet");
+  dialog.setWindowTitle("Open tileset");
 
   if (cachedDirPath.isEmpty()) {
     using Paths = QStandardPaths;

@@ -98,7 +98,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Load tile sheet</string>
+          <string>Load tileset</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -185,7 +185,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Start without tile sheet</string>
+        <string>Start without tileset</string>
        </property>
       </widget>
      </item>

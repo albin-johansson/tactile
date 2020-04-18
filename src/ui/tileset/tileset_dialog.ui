@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TileSheetDialogUI</class>
- <widget class="QDialog" name="TileSheetDialogUI">
+ <class>TilesetDialogUI</class>
+ <widget class="QDialog" name="TilesetDialogUI">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -58,7 +58,7 @@
         <property name="text">
          <string>Select an image
  which contains the
- tile images, aligned 
+ tile images, aligned
 in a grid.</string>
         </property>
         <property name="alignment">
@@ -215,7 +215,7 @@ in a grid.</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>TileSheetDialogUI</receiver>
+   <receiver>TilesetDialogUI</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -231,7 +231,7 @@ in a grid.</string>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>TileSheetDialogUI</receiver>
+   <receiver>TilesetDialogUI</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

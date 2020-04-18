@@ -1,25 +1,24 @@
-#include "tile_sheet_manager.h"
-
 #include <QImage>
 #include <catch.hpp>
 
-#include "tile_sheet.h"
+#include "tileset.h"
+#include "tileset_manager.h"
 
 using namespace tactile;
 
 namespace {
 
-[[nodiscard]] Unique<TileSheet> create_tile_sheet() noexcept
+[[nodiscard]] Unique<Tileset> create_tile_sheet() noexcept
 {
   auto image = std::make_shared<QImage>("terrain.png");
-  return TileSheet::unique(image, 32, 32);
+  return Tileset::unique(image, 32, 32);
 }
 
 }  // namespace
 
-TEST_CASE("TileSheetManager::add", "[TileSheetManager]")
+TEST_CASE("TilesetManager::add", "[TilesetManager]")
 {
-  TileSheetManager manager;
+  TilesetManager manager;
 
   CHECK(!manager.add(nullptr).has_value());
   CHECK(manager.sheets() == 0);
@@ -35,9 +34,9 @@ TEST_CASE("TileSheetManager::add", "[TileSheetManager]")
   CHECK(manager.sheets() == 2);
 }
 
-TEST_CASE("TileSheetManager::remove", "[TileSheetManager]")
+TEST_CASE("TilesetManager::remove", "[TilesetManager]")
 {
-  TileSheetManager manager;
+  TilesetManager manager;
   CHECK_NOTHROW(manager.remove(0));
 
   const auto id = manager.add(create_tile_sheet());
@@ -51,9 +50,9 @@ TEST_CASE("TileSheetManager::remove", "[TileSheetManager]")
   CHECK(manager.sheets() == 0);
 }
 
-TEST_CASE("TileSheetManager::remove_all", "[TileSheetManager]")
+TEST_CASE("TilesetManager::remove_all", "[TilesetManager]")
 {
-  TileSheetManager manager;
+  TilesetManager manager;
   CHECK_NOTHROW(manager.remove_all());
 
   manager.add(create_tile_sheet());  // NOLINT
@@ -65,9 +64,9 @@ TEST_CASE("TileSheetManager::remove_all", "[TileSheetManager]")
   CHECK(manager.sheets() == 0);
 }
 
-TEST_CASE("TileSheetManager::select", "[TileSheetManager]")
+TEST_CASE("TilesetManager::select", "[TilesetManager]")
 {
-  TileSheetManager manager;
+  TilesetManager manager;
 
   CHECK_NOTHROW(manager.select(9));
   CHECK(!manager.has_active_tile_sheet());

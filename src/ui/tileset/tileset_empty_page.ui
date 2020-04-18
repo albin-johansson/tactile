@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TileSheetEmptyPageUI</class>
- <widget class="QWidget" name="TileSheetEmptyPageUI">
+ <class>TilesetEmptyPageUI</class>
+ <widget class="QWidget" name="TilesetEmptyPageUI">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -33,7 +33,7 @@
           </font>
          </property>
          <property name="text">
-          <string>You have no tile sheets available!</string>
+          <string>You have no tilesets available!</string>
          </property>
          <property name="scaledContents">
           <bool>false</bool>
@@ -63,7 +63,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Add tile sheet...</string>
+          <string>Add tileset...</string>
          </property>
          <property name="icon">
           <iconset resource="../../tactile2.qrc">

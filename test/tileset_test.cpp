@@ -1,56 +1,55 @@
-#include "tile_sheet.h"
-
 #include <QImage>
 #include <catch.hpp>
 #include <memory>
 
+#include "core/tileset/tileset.h"
 #include "tactile_types.h"
 
 using namespace tactile;
 
-TEST_CASE("TileSheet(const SharedPtr<QImage>&, int, int)", "[TileSheet]")
+TEST_CASE("Tileset(const SharedPtr<QImage>&, int, int)", "[Tileset]")
 {
   SECTION("Null image")
   {
     Shared<QImage> image = nullptr;
-    CHECK_THROWS_AS(TileSheet(nullptr, 10, 10), BadArg);
+    CHECK_THROWS_AS(Tileset(nullptr, 10, 10), BadArg);
   }
 
   SECTION("Zero size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    CHECK_NOTHROW(TileSheet{image, 0, 0});
+    CHECK_NOTHROW(Tileset{image, 0, 0});
   }
 
   SECTION("Good args")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    CHECK_NOTHROW(TileSheet{image, 32, 32});
+    CHECK_NOTHROW(Tileset{image, 32, 32});
   }
 }
 
-TEST_CASE("TileSheet::unique", "[TileSheet]")
+TEST_CASE("Tileset::unique", "[Tileset]")
 {
-  CHECK_THROWS_AS(TileSheet::unique(nullptr, 32, 32), BadArg);
+  CHECK_THROWS_AS(Tileset::unique(nullptr, 32, 32), BadArg);
 
   auto image = std::make_shared<QImage>("terrain.png");
-  CHECK(TileSheet::unique(image, 32, 32));
+  CHECK(Tileset::unique(image, 32, 32));
 }
 
-TEST_CASE("TileSheet::shared", "[TileSheet]")
+TEST_CASE("Tileset::shared", "[Tileset]")
 {
-  CHECK_THROWS_AS(TileSheet::shared(nullptr, 32, 32), BadArg);
+  CHECK_THROWS_AS(Tileset::shared(nullptr, 32, 32), BadArg);
 
   auto image = std::make_shared<QImage>("terrain.png");
-  CHECK(TileSheet::shared(image, 32, 32));
+  CHECK(Tileset::shared(image, 32, 32));
 }
 
-TEST_CASE("TileSheet::select", "[TileSheet]")
+TEST_CASE("Tileset::select", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("terrain.png");
   const auto tileWidth = 32;
   const auto tileHeight = 32;
-  TileSheet sheet{image, tileWidth, tileHeight};
+  Tileset sheet{image, tileWidth, tileHeight};
 
   sheet.select(0, 0);
   CHECK(sheet.selection().size() == 1);
@@ -68,10 +67,10 @@ TEST_CASE("TileSheet::select", "[TileSheet]")
   CHECK(sheet.selection().empty());
 }
 
-TEST_CASE("TileSheet::set_first_id", "[TileSheet]")
+TEST_CASE("Tileset::set_first_id", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("terrain.png");
-  TileSheet sheet{image, 32, 32};
+  Tileset sheet{image, 32, 32};
 
   CHECK(sheet.first_id() == 1);
 
@@ -87,34 +86,34 @@ TEST_CASE("TileSheet::set_first_id", "[TileSheet]")
   CHECK(sheet.first_id() == id);
 }
 
-TEST_CASE("TileSheet::width", "[TileSheet]")
+TEST_CASE("Tileset::width", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("terrain.png");
-  TileSheet sheet{image, 32, 32};
+  Tileset sheet{image, 32, 32};
 
   CHECK(sheet.width() == image->width());
 }
 
-TEST_CASE("TileSheet::height", "[TileSheet]")
+TEST_CASE("Tileset::height", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("outside.png");
-  TileSheet sheet{image, 32, 32};
+  Tileset sheet{image, 32, 32};
 
   CHECK(sheet.height() == image->height());
 }
 
-TEST_CASE("TileSheet::tiles", "[TileSheet]")
+TEST_CASE("Tileset::tiles", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("outside.png");
-  TileSheet sheet{image, 32, 32};
+  Tileset sheet{image, 32, 32};
 
   CHECK(sheet.tiles() == 1024);
 }
 
-TEST_CASE("TileSheet::last_id", "[TileSheet]")
+TEST_CASE("Tileset::last_id", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("outside.png");
-  TileSheet sheet{image, 32, 32};
+  Tileset sheet{image, 32, 32};
 
   CHECK(sheet.last_id() == 1025);
   CHECK(sheet.last_id() - sheet.first_id() == sheet.tiles());
@@ -123,10 +122,10 @@ TEST_CASE("TileSheet::last_id", "[TileSheet]")
   CHECK(sheet.last_id() - sheet.first_id() == sheet.tiles());
 }
 
-TEST_CASE("TileSheet::contains", "[TileSheet]")
+TEST_CASE("Tileset::contains", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("terrain.png");
-  TileSheet sheet{image, 32, 32};
+  Tileset sheet{image, 32, 32};
 
   CHECK(sheet.contains(sheet.first_id()));
   CHECK(sheet.contains(sheet.last_id()));
@@ -140,12 +139,12 @@ TEST_CASE("TileSheet::contains", "[TileSheet]")
   CHECK(sheet.contains(sheet.last_id()));
 }
 
-TEST_CASE("TileSheet::tile_at", "[TileSheet]")
+TEST_CASE("Tileset::tile_at", "[Tileset]")
 {
   SECTION("Outside of the tile sheet area")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    TileSheet sheet{image, 32, 32};
+    Tileset sheet{image, 32, 32};
 
     CHECK(sheet.tile_at(-1, -1) == empty);
     CHECK(sheet.tile_at(sheet.width() + 1, 0) == empty);
@@ -156,7 +155,7 @@ TEST_CASE("TileSheet::tile_at", "[TileSheet]")
   SECTION("Without changed first ID")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    TileSheet sheet{image, 32, 32};
+    Tileset sheet{image, 32, 32};
 
     const auto row = 7;
     const auto col = 5;
@@ -170,7 +169,7 @@ TEST_CASE("TileSheet::tile_at", "[TileSheet]")
   SECTION("With changed first ID")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    TileSheet sheet{image, 32, 32};
+    Tileset sheet{image, 32, 32};
 
     const auto first = 38;
     sheet.set_first_id(first);
@@ -185,41 +184,41 @@ TEST_CASE("TileSheet::tile_at", "[TileSheet]")
   }
 }
 
-TEST_CASE("TileSheet::tile_width", "[TileSheet]")
+TEST_CASE("Tileset::tile_width", "[Tileset]")
 {
   SECTION("Good size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    TileSheet sheet{image, 32, 15};
+    Tileset sheet{image, 32, 15};
     CHECK(sheet.tile_width() == 32);
   }
 
   SECTION("Clamping bad size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    TileSheet sheet{image, 0, 15};
+    Tileset sheet{image, 0, 15};
     CHECK(sheet.tile_width() == 1);
   }
 }
 
-TEST_CASE("TileSheet::tile_height", "[TileSheet]")
+TEST_CASE("Tileset::tile_height", "[Tileset]")
 {
   SECTION("Good size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    TileSheet sheet{image, 15, 32};
+    Tileset sheet{image, 15, 32};
     CHECK(sheet.tile_height() == 32);
   }
 
   SECTION("Clamping bad size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    TileSheet sheet{image, 32, 0};
+    Tileset sheet{image, 32, 0};
     CHECK(sheet.tile_height() == 1);
   }
 }
 
-TEST_CASE("TileSheet::selection", "[TileSheet]")
+TEST_CASE("Tileset::selection", "[Tileset]")
 {
   // TODO
 }

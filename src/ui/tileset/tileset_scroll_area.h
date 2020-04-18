@@ -3,13 +3,13 @@
 
 namespace tactile {
 
-class TileSheetScrollArea final : public QScrollArea {
+class TilesetScrollArea final : public QScrollArea {
   Q_OBJECT
 
  public:
-  explicit TileSheetScrollArea(QWidget* parent = nullptr);
+  explicit TilesetScrollArea(QWidget* parent = nullptr);
 
-  ~TileSheetScrollArea() noexcept override;
+  ~TilesetScrollArea() noexcept override;
 
  signals:
   void s_clicked_tile_sheet_cell(int x, int y);

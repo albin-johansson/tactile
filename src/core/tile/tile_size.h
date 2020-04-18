@@ -4,7 +4,7 @@ namespace tactile {
 
 /**
  * The <code>TileSize</code> class represents the size of the visual
- * representation of tiles from tile sheets.
+ * representation of tiles from tilesets.
  *
  * @since 0.1.0
  */
