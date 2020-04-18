@@ -78,24 +78,33 @@ TileSheetImageWidget::~TileSheetImageWidget() noexcept = default;
 void TileSheetImageWidget::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
-  m_origin = event->pos();
 
-  m_rubberBand->setGeometry(QRect{m_origin, QSize()});
-  m_rubberBand->show();
-}
+  if (event->buttons() & Qt::MouseButton::LeftButton &&
+      !m_rubberBand->isVisible()) {
+    m_origin = event->pos();
 
-void TileSheetImageWidget::mouseReleaseEvent(QMouseEvent* event)
-{
-  QWidget::mouseReleaseEvent(event);
-  m_rubberBand->hide();
-
-  // TODO compute the selection
+    m_rubberBand->setGeometry(QRect{m_origin, QSize()});
+    m_rubberBand->show();
+  }
 }
 
 void TileSheetImageWidget::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
-  m_rubberBand->setGeometry(QRect{m_origin, event->pos()}.normalized());
+
+  if (event->buttons() & Qt::MouseButton::LeftButton) {
+    m_rubberBand->setGeometry(QRect{m_origin, event->pos()}.normalized());
+  }
+}
+
+void TileSheetImageWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+  QWidget::mouseReleaseEvent(event);
+
+  if (event->button() == Qt::MouseButton::LeftButton) {
+    m_rubberBand->hide();
+  }
+  // TODO compute the selection
 }
 
 }  // namespace tactile
