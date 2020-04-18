@@ -3,12 +3,13 @@
 
 #include "smart_pointers.h"
 
-class QLabel;
-class QScrollArea;
 class QImage;
 class QLayout;
 
 namespace tactile {
+
+class TileSheetScrollArea;
+class TileSheetImageWidget;
 
 class TileSheetTab final : public QWidget {
  public:
@@ -17,8 +18,8 @@ class TileSheetTab final : public QWidget {
   ~TileSheetTab() noexcept override;
 
  private:
-  Unique<QScrollArea> m_scrollArea;
-  Unique<QLabel> m_imageLabel;
+  Unique<TileSheetScrollArea> m_scrollArea;
+  Unique<TileSheetImageWidget> m_imageWidget;
   Unique<QLayout> m_layout;
 };
 

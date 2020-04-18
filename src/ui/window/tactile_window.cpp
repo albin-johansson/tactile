@@ -24,7 +24,7 @@ namespace {
 [[nodiscard]] Unique<QDockWidget> create_dock_widget(
     QWidget* widget,
     const char* name,
-    const QMargins& margins = {0,0,0,0},
+    const QMargins& margins = {0, 0, 0, 0},
     QFlags<Qt::DockWidgetArea> areas = {
         Qt::DockWidgetArea::LeftDockWidgetArea,
         Qt::DockWidgetArea::RightDockWidgetArea})
@@ -193,8 +193,7 @@ void TactileWindow::init_connections() noexcept
   // TODO look into making listeners of signals check if window is in editor
   //  mode?
 
-  on_triggered(m_ui->actionAddTileSheet,
-               [this]() noexcept { emit s_new_tile_sheet(); });
+  on_triggered(m_ui->actionAddTileSheet, &W::s_new_tile_sheet);
 
   on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
@@ -355,6 +354,11 @@ void TactileWindow::init_connections() noexcept
     connect(m_centralWidget, &CEW::s_redraw, this, &W::s_redraw);
     connect(m_centralWidget, &CEW::s_selected_tab, this, &W::s_select_map);
   }
+
+  connect(m_tileSheetWidget,
+          &TileSheetWidget::s_requested_tile_sheet,
+          this,
+          &W::s_new_tile_sheet);
 }
 
 void TactileWindow::init_layout() noexcept

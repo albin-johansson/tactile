@@ -55,6 +55,7 @@ set(TACTILE_SOURCE_FILES
         core/util/maybe.h
         core/util/smart_pointers.h
         core/util/algorithm_utils.h
+        core/util/tactile_types.h
 
         core/tile/tile_map.h
         core/tile/tile_map.cpp
@@ -101,6 +102,12 @@ set(TACTILE_SOURCE_FILES
         ui/tilesheet/tile_sheet_empty_page.h
         ui/tilesheet/tile_sheet_content_page.cpp
         ui/tilesheet/tile_sheet_content_page.h
+        ui/tilesheet/tile_sheet_scroll_area.cpp
+        ui/tilesheet/tile_sheet_scroll_area.h
+        ui/tilesheet/tile_sheet_image_widget.cpp
+        ui/tilesheet/tile_sheet_image_widget.h
+        ui/tilesheet/tile_sheet_tab.cpp
+        ui/tilesheet/tile_sheet_tab.h
 
         ui/modal/about_dialog.cpp
         ui/modal/about_dialog.h
@@ -125,7 +132,7 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tile_map_tab_widget.cpp
         ui/editor/tile_map_tab_widget.h
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui ui/tilesheet/tile_sheet_tab.cpp ui/tilesheet/tile_sheet_tab.h core/util/tactile_types.h)
+        ui/editor/editor_pane.ui)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

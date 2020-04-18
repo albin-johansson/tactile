@@ -14,6 +14,8 @@ namespace tactile {
 class TileSheetTab;
 
 class TileSheetContentPage final : public QWidget {
+  Q_OBJECT
+
  public:
   explicit TileSheetContentPage(QWidget* parent = nullptr);
 
@@ -24,6 +26,9 @@ class TileSheetContentPage final : public QWidget {
   void remove_tile_sheet(int id) noexcept;
 
   [[nodiscard]] bool empty() const noexcept;
+
+ signals:
+  void s_requested_tile_sheet();
 
  private:
   Ui::TileSheetContentPageUI* m_ui;

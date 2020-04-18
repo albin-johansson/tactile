@@ -13,10 +13,22 @@ TileSheetWidget::TileSheetWidget(QWidget* parent)
   m_ui->setupUi(this);
 
   m_contentPage = new TileSheetContentPage{};
-  m_emptyIndex = m_ui->stackedWidget->addWidget(new TileSheetEmptyPage{});
+  m_emptyPage = new TileSheetEmptyPage{};
+
+  m_emptyIndex = m_ui->stackedWidget->addWidget(m_emptyPage);
   m_contentIndex = m_ui->stackedWidget->addWidget(m_contentPage);
 
   m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
+
+  connect(m_contentPage,
+          &TileSheetContentPage::s_requested_tile_sheet,
+          this,
+          &TileSheetWidget::s_requested_tile_sheet);
+
+  connect(m_emptyPage,
+          &TileSheetEmptyPage::s_requested_tile_sheet,
+          this,
+          &TileSheetWidget::s_requested_tile_sheet);
 }
 
 TileSheetWidget::~TileSheetWidget() noexcept
@@ -24,7 +36,7 @@ TileSheetWidget::~TileSheetWidget() noexcept
   delete m_ui;
 }
 
-void TileSheetWidget::add_tile_sheet(int id, Shared<QImage> image) noexcept
+void TileSheetWidget::add_tile_sheet(int id, const Shared<QImage>& image) noexcept
 {
   if (image->isNull()) {
     return;

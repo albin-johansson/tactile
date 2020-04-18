@@ -9,6 +9,12 @@ TileSheetContentPage::TileSheetContentPage(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TileSheetContentPageUI{}}
 {
   m_ui->setupUi(this);
+  m_ui->tabWidget->setMovable(false);
+
+  connect(m_ui->newButton,
+          &QPushButton::clicked,
+          this,
+          &TileSheetContentPage::s_requested_tile_sheet);
 }
 
 TileSheetContentPage::~TileSheetContentPage() noexcept
@@ -24,6 +30,7 @@ void TileSheetContentPage::add_tile_sheet(int id,
   } else {
     if (!image->isNull()) {
       auto tileSheetTab = std::make_shared<TileSheetTab>(*image);
+
       m_ui->tabWidget->addTab(tileSheetTab.get(), "untitled");
       m_tabs.emplace(id, tileSheetTab);
     }
