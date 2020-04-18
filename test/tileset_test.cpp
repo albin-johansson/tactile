@@ -1,8 +1,9 @@
+#include "tileset.h"
+
 #include <QImage>
 #include <catch.hpp>
 #include <memory>
 
-#include "core/tileset/tileset.h"
 #include "tactile_types.h"
 
 using namespace tactile;
