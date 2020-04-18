@@ -2,8 +2,8 @@
 #include <stdexcept>
 #include <unordered_map>
 
-#include "smart_pointers.h"
 #include "maybe.h"
+#include "smart_pointers.h"
 
 namespace tactile {
 

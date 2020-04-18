@@ -47,15 +47,15 @@ Tileset::Tileset(Tileset&& other) noexcept
 Tileset::~Tileset() noexcept = default;
 
 Unique<Tileset> Tileset::unique(const Shared<QImage>& image,
-                                    int tileWidth,
-                                    int tileHeight)
+                                int tileWidth,
+                                int tileHeight)
 {
   return std::make_unique<Tileset>(image, tileWidth, tileHeight);
 }
 
 Shared<Tileset> Tileset::shared(const Shared<QImage>& image,
-                                    int tileWidth,
-                                    int tileHeight)
+                                int tileWidth,
+                                int tileHeight)
 {
   return std::make_shared<Tileset>(image, tileWidth, tileHeight);
 }

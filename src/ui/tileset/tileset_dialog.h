@@ -54,8 +54,8 @@ class TilesetDialog final : public QDialog {
    * @return true if the line edit widget is valid; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] QValidator::State validate(const QLineEdit& edit) const
-      noexcept;
+  [[nodiscard]] QValidator::State validate(
+      const QLineEdit& edit) const noexcept;
 };
 
 }  // namespace tactile

@@ -40,7 +40,7 @@ TilesetDialog::TilesetDialog(QWidget* parent)
       if (m_image->isNull()) {
         // TODO indicate that something went wrong
         m_ui->imageLabel->setPixmap(m_defaultImageIcon);
-      } else  {
+      } else {
         m_ui->imageLabel->setPixmap(load_pixmap(*path));
       }
 
@@ -82,8 +82,7 @@ QPushButton* TilesetDialog::ok_button() noexcept
   return m_ui->buttonBox->button(QDialogButtonBox::Ok);
 }
 
-QValidator::State TilesetDialog::validate(const QLineEdit& edit) const
-    noexcept
+QValidator::State TilesetDialog::validate(const QLineEdit& edit) const noexcept
 {
   auto unused = 0;
   auto txt = edit.displayText();

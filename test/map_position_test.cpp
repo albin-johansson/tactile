@@ -72,7 +72,8 @@ TEST_CASE("MapPosition::col", "[MapPosition]")
   CHECK(position.col() == col);
 }
 
-TEST_CASE("MapPosition::north", "[MapPosition]") {
+TEST_CASE("MapPosition::north", "[MapPosition]")
+{
   const MapPosition fst{7, 15};
   const MapPosition snd = fst.north();
 
@@ -80,7 +81,8 @@ TEST_CASE("MapPosition::north", "[MapPosition]") {
   CHECK(snd.col() == fst.col());
 }
 
-TEST_CASE("MapPosition::east", "[MapPosition]") {
+TEST_CASE("MapPosition::east", "[MapPosition]")
+{
   const MapPosition fst{52, 77};
   const MapPosition snd = fst.east();
 
@@ -88,7 +90,8 @@ TEST_CASE("MapPosition::east", "[MapPosition]") {
   CHECK(snd.col() == fst.col() + 1);
 }
 
-TEST_CASE("MapPosition::south", "[MapPosition]") {
+TEST_CASE("MapPosition::south", "[MapPosition]")
+{
   const MapPosition fst{33, 6};
   const MapPosition snd = fst.south();
 
@@ -96,7 +99,8 @@ TEST_CASE("MapPosition::south", "[MapPosition]") {
   CHECK(snd.col() == fst.col());
 }
 
-TEST_CASE("MapPosition::west", "[MapPosition]") {
+TEST_CASE("MapPosition::west", "[MapPosition]")
+{
   const MapPosition fst{62, 39};
   const MapPosition snd = fst.west();
 

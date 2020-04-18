@@ -1,7 +1,8 @@
+#include "tilemap.h"
+
 #include <catch.hpp>
 
 #include "algorithm_utils.h"
-#include "tilemap.h"
 
 using namespace tactile;
 

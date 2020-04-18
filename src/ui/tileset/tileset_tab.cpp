@@ -10,8 +10,7 @@
 
 namespace tactile {
 
-TilesetTab::TilesetTab(const QImage& image, QWidget* parent)
-    : QWidget{parent}
+TilesetTab::TilesetTab(const QImage& image, QWidget* parent) : QWidget{parent}
 {
   if (image.isNull()) {
     throw BadArg{"Can't create tileset tab from null image!"};

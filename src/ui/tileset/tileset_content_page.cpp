@@ -23,7 +23,7 @@ TilesetContentPage::~TilesetContentPage() noexcept
 }
 
 void TilesetContentPage::add_tile_sheet(int id,
-                                          const Shared<QImage>& image) noexcept
+                                        const Shared<QImage>& image) noexcept
 {
   if (m_tabs.count(id)) {
     qDebug("Tried to add tileset with taken ID: %i", id);

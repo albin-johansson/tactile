@@ -87,8 +87,8 @@ class ResizeDialog final : public QDialog {
    * @return true if the line edit widget is valid; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] QValidator::State is_valid(const QLineEdit& edit) const
-      noexcept;
+  [[nodiscard]] QValidator::State is_valid(
+      const QLineEdit& edit) const noexcept;
 
  private slots:
   /**

@@ -51,8 +51,8 @@ class Tileset final {
    * @since 0.1.0
    */
   [[nodiscard]] static Unique<Tileset> unique(const Shared<QImage>& image,
-                                                int tileWidth,
-                                                int tileHeight);
+                                              int tileWidth,
+                                              int tileHeight);
 
   /**
    * Creates and returns a shared pointer to a tileset instance. Both the
@@ -66,8 +66,8 @@ class Tileset final {
    * @since 0.1.0
    */
   [[nodiscard]] static Shared<Tileset> shared(const Shared<QImage>& image,
-                                                int tileWidth,
-                                                int tileHeight);
+                                              int tileWidth,
+                                              int tileHeight);
 
   /**
    * Sets the first tile ID property of the tileset. Note that this method
@@ -202,7 +202,7 @@ class Tileset final {
   [[nodiscard]] const auto& selection() { return m_selection; }
 
  private:
-  Shared<QImage> m_sheet; // FIXME this field might be unnecessary
+  Shared<QImage> m_sheet;  // FIXME this field might be unnecessary
 
   int m_tileWidth;
   int m_tileHeight;

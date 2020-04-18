@@ -124,8 +124,8 @@ class TileLayer final {
    * <code>nothing</code> if the position is out-of-bounds.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<TileID> tile_at(const MapPosition& position) const
-      noexcept;
+  [[nodiscard]] Maybe<TileID> tile_at(
+      const MapPosition& position) const noexcept;
 
   /**
    * Indicates whether or not the specified position is in bounds of the tile
