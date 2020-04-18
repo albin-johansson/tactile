@@ -2,9 +2,9 @@
 
 #include <QImage>
 
-#include "core/tileset/tileset.h"
-#include "core/tileset/tileset_manager.h"
 #include "tilemap.h"
+#include "tileset.h"
+#include "tileset_manager.h"
 
 namespace tactile {
 
