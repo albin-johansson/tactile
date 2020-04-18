@@ -91,6 +91,8 @@ set(TACTILE_SOURCE_FILES
         ui/window/tactile_window.h
         ui/window/tactile_window.cpp
         ui/window/window.ui
+        ui/window/create_dock_widget.h
+        ui/window/create_dock_widget.cpp
 
         ui/tileset/tileset_widget.cpp
         ui/tileset/tileset_widget.h
