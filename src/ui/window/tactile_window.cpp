@@ -25,7 +25,7 @@ TactileWindow::TactileWindow(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  // TODO add mini-map and tileset widgets
+  // TODO add mini-map widget
 
   m_centralWidget = new CentralEditorWidget{};
   m_mouseToolWidget = new MouseToolWidget{};
