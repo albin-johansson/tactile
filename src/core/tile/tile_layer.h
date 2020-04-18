@@ -11,13 +11,13 @@ namespace tactile {
 class MapPosition;
 
 /**
- * The <code>TileLayer</code> class represents a layer of tiles in a tile map.
+ * The <code>TileLayer</code> class represents a layer of tiles in a tilemap.
  *
  * @since 0.1.0
  */
 class TileLayer final {
  public:
-  friend class TileMapRenderer;
+  friend class TilemapRenderer;
 
   /**
    * Creates a tile layer with the specified dimensions. All of the tiles in

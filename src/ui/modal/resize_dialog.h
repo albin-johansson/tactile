@@ -19,7 +19,7 @@ namespace tactile {
 
 /**
  * The <code>ResizeDialog</code> class represents the dialog that is used to
- * select the new size of the current tile map.
+ * select the new size of the current tilemap.
  *
  * @since 0.1.0
  */

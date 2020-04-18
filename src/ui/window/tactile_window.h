@@ -69,7 +69,7 @@ class TactileWindow final : public QMainWindow {
   void s_close_map(int id);
 
   /**
-   * A signal that is emitted when the user wants to add a row to the tile map.
+   * A signal that is emitted when the user wants to add a row to the tilemap.
    *
    * @since 0.1.0
    */
@@ -93,7 +93,7 @@ class TactileWindow final : public QMainWindow {
 
   /**
    * A signal that is emitted when the user wants to remove a column from the
-   * tile map.
+   * tilemap.
    *
    * @since 0.1.0
    */
@@ -101,7 +101,7 @@ class TactileWindow final : public QMainWindow {
 
   /**
    * A signal that is emitted when the user wants to center the camera over the
-   * tile map.
+   * tilemap.
    *
    * @since 0.1.0
    */
@@ -152,10 +152,10 @@ class TactileWindow final : public QMainWindow {
   void display_settings_dialog() noexcept;
 
   /**
-   * Centers the camera over the tile map.
+   * Centers the camera over the tilemap.
    *
-   * @param mapWidth the current width of the tile map.
-   * @param mapHeight the current height of the tile map.
+   * @param mapWidth the current width of the tilemap.
+   * @param mapHeight the current height of the tilemap.
    * @since 0.1.0
    */
   void center_camera(int mapWidth, int mapHeight);

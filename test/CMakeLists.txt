@@ -5,7 +5,7 @@ set(TACTILE_TEST_FILES
         test_main.cpp
         tile_layer_test.cpp
         map_position_test.cpp
-        tile_map_test.cpp
+        tilemap_test.cpp
         flood_fill_test.cpp
         tile_sheet_test.cpp
         tile_size_test.cpp

@@ -2,9 +2,9 @@
 
 #include <QImage>
 
-#include "tile_map.h"
 #include "tile_sheet.h"
 #include "tile_sheet_manager.h"
+#include "tilemap.h"
 
 namespace tactile {
 
@@ -18,9 +18,9 @@ TactileCore::~TactileCore() noexcept = default;
 void TactileCore::new_map(int id) noexcept
 {
   if (m_maps.count(id)) {
-    qWarning("Editor core already had tile map associated with %i!", id);
+    qWarning("Editor core already had tilemap associated with %i!", id);
   } else {
-    m_maps.insert({id, TileMap::unique(5, 5)});
+    m_maps.insert({id, Tilemap::unique(5, 5)});
     m_activeMapIndex = id;
   }
 }
@@ -39,7 +39,7 @@ void TactileCore::close_map(int id) noexcept
       m_activeMapIndex = begin->first;
     }
   } else {
-    qWarning("Attempted to remove tile map that doesn't exist: %i!", id);
+    qWarning("Attempted to remove tilemap that doesn't exist: %i!", id);
   }
 }
 
@@ -81,30 +81,30 @@ void TactileCore::set_cols(int nCols) noexcept
 
 Maybe<int> TactileCore::rows() const noexcept
 {
-  return maybe_get<int>([](const TileMap& map) noexcept { return map.rows(); });
+  return maybe_get<int>([](const Tilemap& map) noexcept { return map.rows(); });
 }
 
 Maybe<int> TactileCore::cols() const noexcept
 {
-  return maybe_get<int>([](const TileMap& map) noexcept { return map.cols(); });
+  return maybe_get<int>([](const Tilemap& map) noexcept { return map.cols(); });
 }
 
 Maybe<int> TactileCore::map_width() const noexcept
 {
   return maybe_get<int>(
-      [](const TileMap& map) noexcept { return map.width(); });
+      [](const Tilemap& map) noexcept { return map.width(); });
 }
 
 Maybe<int> TactileCore::map_height() const noexcept
 {
   return maybe_get<int>(
-      [](const TileMap& map) noexcept { return map.height(); });
+      [](const Tilemap& map) noexcept { return map.height(); });
 }
 
 Maybe<int> TactileCore::tile_size() const noexcept
 {
   return maybe_get<int>(
-      [](const TileMap& map) noexcept { return map.tile_size().size(); });
+      [](const Tilemap& map) noexcept { return map.tile_size().size(); });
 }
 
 void TactileCore::select_layer(int index) noexcept
@@ -185,7 +185,7 @@ void TactileCore::remove_col() noexcept
   }
 }
 
-TileMap* TactileCore::active_map() noexcept
+Tilemap* TactileCore::active_map() noexcept
 {
   if (m_activeMapIndex) {
     return m_maps.at(*m_activeMapIndex).get();
@@ -194,7 +194,7 @@ TileMap* TactileCore::active_map() noexcept
   }
 }
 
-const TileMap* TactileCore::active_map() const noexcept
+const Tilemap* TactileCore::active_map() const noexcept
 {
   if (m_activeMapIndex) {
     return m_maps.at(*m_activeMapIndex).get();

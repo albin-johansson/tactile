@@ -15,7 +15,7 @@ class TileMapTabWidget;
 
 /**
  * The <code>CentralEditorWidget</code> class represents the center stage of the
- * editor and contains the main tile map editor pane.
+ * editor and contains the main tilemap editor pane.
  *
  * @since 0.1.0
  */

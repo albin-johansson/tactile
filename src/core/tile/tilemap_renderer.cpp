@@ -1,12 +1,12 @@
-#include "tile_map_renderer.h"
+#include "tilemap_renderer.h"
 
 #include <QColor>
 #include <QPainter>
 #include <QSettings>
 
 #include "settings_utils.h"
-#include "tile_map.h"
 #include "tile_size.h"
+#include "tilemap.h"
 
 namespace tactile {
 namespace {
@@ -46,7 +46,7 @@ struct RenderBounds final {
 
 }  // namespace
 
-void TileMapRenderer::render(QPainter& painter, const TileMap& map) const
+void TilemapRenderer::render(QPainter& painter, const Tilemap& map) const
     noexcept
 {
   const auto tileSize = map.tile_size().size();

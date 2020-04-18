@@ -1,4 +1,4 @@
-#include "tile_map.h"
+#include "tilemap.h"
 
 #include <QPainter>
 
@@ -15,7 +15,7 @@ namespace {
 
 }  // namespace
 
-TileMap::TileMap(int nRows, int nCols)
+Tilemap::Tilemap(int nRows, int nCols)
     : m_nRows{clamp_map_dimension(nRows)},
       m_nCols{clamp_map_dimension(nCols)},
       m_activeLayer{0}
@@ -23,36 +23,36 @@ TileMap::TileMap(int nRows, int nCols)
   m_layers.emplace_back(nRows, nCols);
 }
 
-TileMap::~TileMap() noexcept = default;
+Tilemap::~Tilemap() noexcept = default;
 
-Unique<TileMap> TileMap::unique(int nRows, int nCols)
+Unique<Tilemap> Tilemap::unique(int nRows, int nCols)
 {
-  return std::make_unique<TileMap>(nRows, nCols);
+  return std::make_unique<Tilemap>(nRows, nCols);
 }
 
-Shared<TileMap> TileMap::shared(int nRows, int nCols)
+Shared<Tilemap> Tilemap::shared(int nRows, int nCols)
 {
-  return std::make_shared<TileMap>(nRows, nCols);
+  return std::make_shared<Tilemap>(nRows, nCols);
 }
 
-void TileMap::draw(QPainter& painter) const noexcept
+void Tilemap::draw(QPainter& painter) const noexcept
 {
   m_renderer.render(painter, *this);
 }
 
-void TileMap::select(int layer) noexcept
+void Tilemap::select(int layer) noexcept
 {
   if (has_layer(layer)) {
     m_activeLayer = layer;
   }
 }
 
-void TileMap::add_layer() noexcept
+void Tilemap::add_layer() noexcept
 {
   m_layers.emplace_back(m_nRows, m_nCols);
 }
 
-void TileMap::add_row(TileID id) noexcept
+void Tilemap::add_row(TileID id) noexcept
 {
   for (auto& layer : m_layers) {
     layer.add_row(id);
@@ -60,7 +60,7 @@ void TileMap::add_row(TileID id) noexcept
   ++m_nRows;
 }
 
-void TileMap::add_col(TileID id) noexcept
+void Tilemap::add_col(TileID id) noexcept
 {
   for (auto& layer : m_layers) {
     layer.add_col(id);
@@ -68,7 +68,7 @@ void TileMap::add_col(TileID id) noexcept
   ++m_nCols;
 }
 
-void TileMap::remove_row() noexcept
+void Tilemap::remove_row() noexcept
 {
   if (m_nRows == 1) {
     return;
@@ -80,7 +80,7 @@ void TileMap::remove_row() noexcept
   --m_nRows;
 }
 
-void TileMap::remove_col() noexcept
+void Tilemap::remove_col() noexcept
 {
   if (m_nCols == 1) {
     return;
@@ -92,7 +92,7 @@ void TileMap::remove_col() noexcept
   --m_nCols;
 }
 
-void TileMap::set_rows(int nRows) noexcept
+void Tilemap::set_rows(int nRows) noexcept
 {
   nRows = clamp_map_dimension(nRows);
 
@@ -111,7 +111,7 @@ void TileMap::set_rows(int nRows) noexcept
   m_nRows = nRows;
 }
 
-void TileMap::set_cols(int nCols) noexcept
+void Tilemap::set_cols(int nCols) noexcept
 {
   nCols = clamp_map_dimension(nCols);
 
@@ -130,7 +130,7 @@ void TileMap::set_cols(int nCols) noexcept
   m_nCols = nCols;
 }
 
-void TileMap::set_visibility(int layer, bool visibility) noexcept
+void Tilemap::set_visibility(int layer, bool visibility) noexcept
 {
   if (has_layer(layer)) {
     const auto index = static_cast<std::size_t>(layer);
@@ -138,18 +138,18 @@ void TileMap::set_visibility(int layer, bool visibility) noexcept
   }
 }
 
-bool TileMap::is_visible(int layer) const noexcept
+bool Tilemap::is_visible(int layer) const noexcept
 {
   const auto index = static_cast<std::size_t>(layer);
   return has_layer(layer) && m_layers.at(index).visible();
 }
 
-int TileMap::get_layer_amount() const noexcept
+int Tilemap::get_layer_amount() const noexcept
 {
   return static_cast<int>(m_layers.size());
 }
 
-bool TileMap::has_layer(int layer) const noexcept
+bool Tilemap::has_layer(int layer) const noexcept
 {
   return layer >= 0 && layer < get_layer_amount();
 }

@@ -67,7 +67,7 @@ TactileWindow::TactileWindow(QWidget* parent)
 
   init_connections();
   init_layout();
-  enable_startup_view();  // TODO option to reopen last tile map
+  enable_startup_view();  // TODO option to reopen last tilemap
 }
 
 TactileWindow::~TactileWindow() noexcept

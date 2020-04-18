@@ -57,8 +57,8 @@ set(TACTILE_SOURCE_FILES
         core/util/algorithm_utils.h
         core/util/tactile_types.h
 
-        core/tile/tile_map.h
-        core/tile/tile_map.cpp
+        core/tile/tilemap.h
+        core/tile/tilemap.cpp
         core/tile/tile_id.h
         core/tile/tile_layer.cpp
         core/tile/tile_layer.h
@@ -68,8 +68,8 @@ set(TACTILE_SOURCE_FILES
         core/tile/tile_sheet.h
         core/tile/tile_size.h
         core/tile/tile_size.cpp
-        core/tile/tile_map_renderer.cpp
-        core/tile/tile_map_renderer.h
+        core/tile/tilemap_renderer.cpp
+        core/tile/tilemap_renderer.h
         core/tile/tile_sheet_manager.cpp
         core/tile/tile_sheet_manager.h
 

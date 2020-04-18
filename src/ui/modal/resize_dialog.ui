@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Resize tile map</string>
+   <string>Resize tilemap</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="1" column="0">

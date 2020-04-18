@@ -59,7 +59,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Load tile map</string>
+          <string>Load tilemap</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

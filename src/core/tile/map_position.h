@@ -6,7 +6,7 @@ namespace tactile {
 
 /**
  * The <code>MapPosition</code> class represents a row- and column-based
- * position in a tile map.
+ * position in a tilemap.
  *
  * @since 0.1.0
  */

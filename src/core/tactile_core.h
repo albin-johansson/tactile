@@ -11,15 +11,15 @@ class QPainter;
 
 namespace tactile {
 
-class TileMap;
+class Tilemap;
 class TileSheetManager;
 
 /**
  * The <code>TactileCore</code> class represents the main interface for the
  * core model of the Tactile application.
  *
- * <p> All tile map mutating methods of the <code>TactileCore</code> class
- * have no effect if there is no active tile map.
+ * <p> All tilemap mutating methods of the <code>TactileCore</code> class
+ * have no effect if there is no active tilemap.
  *
  * @since 0.1.0
  */
@@ -40,9 +40,9 @@ class TactileCore final : public QObject {
   Q_DISABLE_COPY(TactileCore)
 
   /**
-   * Opens a tile map from the specified location.
+   * Opens a tilemap from the specified location.
    *
-   * @param fileName the file path of the file that holds the tile map, may not
+   * @param fileName the file path of the file that holds the tilemap, may not
    * be null.
    * @since 0.1.0
    */
@@ -66,19 +66,19 @@ class TactileCore final : public QObject {
                                           int tileHeight) noexcept;
 
   /**
-   * Sets the number of rows in the tile map. The amount of rows will always
+   * Sets the number of rows in the tilemap. The amount of rows will always
    * be at least 1.
    *
-   * @param nRows the new amount of rows in the tile map.
+   * @param nRows the new amount of rows in the tilemap.
    * @since 0.1.0
    */
   void set_rows(int nRows) noexcept;
 
   /**
-   * Sets the number of columns in the tile map. The amount of columns will
+   * Sets the number of columns in the tilemap. The amount of columns will
    * always be at least 1.
    *
-   * @param nCols the new amount of columns in the tile map.
+   * @param nCols the new amount of columns in the tilemap.
    * @since 0.1.0
    */
   void set_cols(int nCols) noexcept;
@@ -93,28 +93,28 @@ class TactileCore final : public QObject {
   void select_layer(int index) noexcept;
 
   /**
-   * Selects the tile map associated with the specified id. This method has
-   * no effect if the supplied key isn't associated with a tile map.
+   * Selects the tilemap associated with the specified id. This method has
+   * no effect if the supplied key isn't associated with a tilemap.
    *
-   * @param id the key of the tile map that will be selected.
+   * @param id the key of the tilemap that will be selected.
    * @since 0.1.0
    */
   void select_map(int id) noexcept;
 
   /**
-   * Returns the amount of rows in the active tile map.
+   * Returns the amount of rows in the active tilemap.
    *
-   * @return the amount of rows in the active tile map; nothing if there is no
-   * active tile map.
+   * @return the amount of rows in the active tilemap; nothing if there is no
+   * active tilemap.
    * @since 0.1.0
    */
   [[nodiscard]] Maybe<int> rows() const noexcept;
 
   /**
-   * Returns the amount of columns in the active tile map.
+   * Returns the amount of columns in the active tilemap.
    *
-   * @return the amount of columns in the active tile map; nothing if there
-   * is no active tile map.
+   * @return the amount of columns in the active tilemap; nothing if there
+   * is no active tilemap.
    * @since 0.1.0
    */
   [[nodiscard]] Maybe<int> cols() const noexcept;
@@ -127,7 +127,7 @@ class TactileCore final : public QObject {
 
  signals:
   /**
-   * A signal that is emitted when the state of the active tile map has
+   * A signal that is emitted when the state of the active tilemap has
    * changed.
    *
    * @since 0.1.0
@@ -138,11 +138,11 @@ class TactileCore final : public QObject {
   void draw(QPainter& painter) const noexcept;
 
   /**
-   * Starts working on a new tile map. The new tile map will be made active.
+   * Starts working on a new tilemap. The new tilemap will be made active.
    * This method has no effect if the supplied ID is already associated with
-   * a tile map.
+   * a tilemap.
    *
-   * @param id the integer that will be associated with the tile map, must be
+   * @param id the integer that will be associated with the tilemap, must be
    * unique.
    * @since 0.1.0
    */
@@ -151,7 +151,7 @@ class TactileCore final : public QObject {
   /**
    * Closes the map associated with the specified ID.
    *
-   * @param id the ID of the tile map that will be closed.
+   * @param id the ID of the tilemap that will be closed.
    * @since 0.1.0
    */
   void close_map(int id) noexcept;
@@ -172,35 +172,35 @@ class TactileCore final : public QObject {
 
  private:
   Maybe<int> m_activeMapIndex;
-  HashMap<int, Unique<TileMap>> m_maps;
+  HashMap<int, Unique<Tilemap>> m_maps;
   Unique<TileSheetManager> m_sheetManager;
 
   /**
    * Returns a pointer to the currently active map. You should check that the
    * returned pointer isn't null before using the returned pointer.
    *
-   * @return a pointer to the currently active tile map; null if there is none.
+   * @return a pointer to the currently active tilemap; null if there is none.
    * @since 0.1.0
    */
-  [[nodiscard]] TileMap* active_map() noexcept;
+  [[nodiscard]] Tilemap* active_map() noexcept;
 
   /**
    * Returns a pointer to the currently active map. You should check that the
    * returned pointer isn't null before using the returned pointer.
    *
-   * @return a pointer to the currently active tile map; null if there is none.
+   * @return a pointer to the currently active tilemap; null if there is none.
    * @since 0.1.0
    */
-  [[nodiscard]] const TileMap* active_map() const noexcept;
+  [[nodiscard]] const Tilemap* active_map() const noexcept;
 
   /**
    * A templated helper method for queries that returns something of the
-   * <code>Maybe</code> type from the active tile map.
+   * <code>Maybe</code> type from the active tilemap.
    *
    * @tparam ReturnType the type of the return value.
    * @tparam Functor the type of the function object.
    * @param fun the function object that performs the query, has to take
-   * a reference to a <code>TileMap</code> as a parameter.
+   * a reference to a <code>Tilemap</code> as a parameter.
    * @return either a value of the return type, or <code>nothing</code>.
    * @since 0.1.0
    */

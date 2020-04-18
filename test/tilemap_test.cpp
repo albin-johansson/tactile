@@ -1,16 +1,15 @@
-#include "tile_map.h"
-
 #include <catch.hpp>
 
 #include "algorithm_utils.h"
+#include "tilemap.h"
 
 using namespace tactile;
 
-TEST_CASE("TileMap(int, int)", "[TileMap]")
+TEST_CASE("Tilemap(int, int)", "[Tilemap]")
 {
   SECTION("Bad args")
   {
-    const TileMap map{0, 0};
+    const Tilemap map{0, 0};
     CHECK(map.rows() == 1);
     CHECK(map.cols() == 1);
   }
@@ -19,15 +18,15 @@ TEST_CASE("TileMap(int, int)", "[TileMap]")
   {
     const auto rows = 7;
     const auto cols = 5;
-    const TileMap map{rows, cols};
+    const Tilemap map{rows, cols};
     CHECK(map.rows() == rows);
     CHECK(map.cols() == cols);
   }
 }
 
-TEST_CASE("TileMap::add_layer", "[TileMap]")
+TEST_CASE("Tilemap::add_layer", "[Tilemap]")
 {
-  TileMap map{5, 5};
+  Tilemap map{5, 5};
 
   const auto nLayers = map.get_layer_amount();
 
@@ -36,30 +35,30 @@ TEST_CASE("TileMap::add_layer", "[TileMap]")
   CHECK(map.get_layer_amount() == nLayers + 1);
 }
 
-TEST_CASE("TileMap::add_row", "[TileMap]")
+TEST_CASE("Tilemap::add_row", "[Tilemap]")
 {
   const auto start = 4;
-  TileMap map{start, 4};
+  Tilemap map{start, 4};
 
   map.add_row();
 
   CHECK(map.rows() == start + 1);
 }
 
-TEST_CASE("TileMap::add_col", "[TileMap]")
+TEST_CASE("Tilemap::add_col", "[Tilemap]")
 {
   const auto start = 7;
-  TileMap map{1, start};
+  Tilemap map{1, start};
 
   map.add_col();
 
   CHECK(map.cols() == start + 1);
 }
 
-TEST_CASE("TileMap::remove_row", "[TileMap]")
+TEST_CASE("Tilemap::remove_row", "[Tilemap]")
 {
   const auto initialRows = 4;
-  TileMap map{initialRows, 10};
+  Tilemap map{initialRows, 10};
 
   map.remove_row();
   CHECK(map.rows() == (initialRows - 1));
@@ -69,10 +68,10 @@ TEST_CASE("TileMap::remove_row", "[TileMap]")
   CHECK(map.rows() == 1);
 }
 
-TEST_CASE("TileMap::remove_col", "[TileMap]")
+TEST_CASE("Tilemap::remove_col", "[Tilemap]")
 {
   const auto initialCols = 9;
-  TileMap map{7, initialCols};
+  Tilemap map{7, initialCols};
 
   map.remove_col();
   CHECK(map.cols() == (initialCols - 1));
@@ -82,9 +81,9 @@ TEST_CASE("TileMap::remove_col", "[TileMap]")
   CHECK(map.cols() == 1);
 }
 
-TEST_CASE("TileMap::set_rows", "[TileMap]")
+TEST_CASE("Tilemap::set_rows", "[Tilemap]")
 {
-  TileMap map{3, 3};
+  Tilemap map{3, 3};
 
   const auto nRows = 12;
   map.set_rows(nRows);
@@ -99,9 +98,9 @@ TEST_CASE("TileMap::set_rows", "[TileMap]")
   CHECK(map.rows() == 1);
 }
 
-TEST_CASE("TileMap::set_cols", "[TileMap]")
+TEST_CASE("Tilemap::set_cols", "[Tilemap]")
 {
-  TileMap map{3, 3};
+  Tilemap map{3, 3};
 
   const auto nCols = 9;
   map.set_cols(nCols);
@@ -116,9 +115,9 @@ TEST_CASE("TileMap::set_cols", "[TileMap]")
   CHECK(map.cols() == 1);
 }
 
-TEST_CASE("TileMap::set_visibility", "[TileMap]")
+TEST_CASE("Tilemap::set_visibility", "[Tilemap]")
 {
-  TileMap map{5, 5};
+  Tilemap map{5, 5};
 
   CHECK(!map.is_visible(-1));  // invalid index
   CHECK(map.is_visible(0));    // valid index, should be true
@@ -131,15 +130,15 @@ TEST_CASE("TileMap::set_visibility", "[TileMap]")
   CHECK(map.is_visible(0));
 }
 
-TEST_CASE("TileMap::get_layer_amount", "[TileMap]")
+TEST_CASE("Tilemap::get_layer_amount", "[Tilemap]")
 {
-  TileMap map{3, 3};
+  Tilemap map{3, 3};
   CHECK(map.get_layer_amount() == 1);
 }
 
-TEST_CASE("TileMap::is_visible", "[TileMap]")
+TEST_CASE("Tilemap::is_visible", "[Tilemap]")
 {
-  TileMap map{5, 5};
+  Tilemap map{5, 5};
 
   CHECK(!map.is_visible(-1));
   CHECK(!map.is_visible(1));

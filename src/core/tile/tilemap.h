@@ -6,42 +6,42 @@
 #include "smart_pointers.h"
 #include "tile_id.h"
 #include "tile_layer.h"
-#include "tile_map_renderer.h"
 #include "tile_size.h"
+#include "tilemap_renderer.h"
 
 class QPainter;
 
 namespace tactile {
 
 /**
- * The <code>TileMap</code> class represents the main tile maps in the
- * Tactile application. Tile maps are composed by multiple tile layers.
+ * The <code>Tilemap</code> class represents the main tilemaps in the
+ * Tactile application. tilemaps are composed by multiple tile layers.
  *
  * @see TileLayer
  * @since 0.1.0
  */
-class TileMap final { // TODO rename to Tilemap
+class Tilemap final { // TODO rename to Tilemap
  public:
-  friend class TileMapRenderer;
+  friend class TilemapRenderer;
 
   /**
-   * Creates a tile map instance with one layer. The amount of rows or
-   * columns in the tile map is always at least 1.
+   * Creates a tilemap instance with one layer. The amount of rows or
+   * columns in the tilemap is always at least 1.
    *
-   * @param nRows the initial number of rows in the tile map.
-   * @param nCols the initial number of columns in the tile map.
+   * @param nRows the initial number of rows in the tilemap.
+   * @param nCols the initial number of columns in the tilemap.
    * @since 0.1.0
    */
-  TileMap(int nRows, int nCols);
+  Tilemap(int nRows, int nCols);
 
-  ~TileMap() noexcept;
+  ~Tilemap() noexcept;
 
-  [[nodiscard]] static Unique<TileMap> unique(int nRows, int nCols);
+  [[nodiscard]] static Unique<Tilemap> unique(int nRows, int nCols);
 
-  [[nodiscard]] static Shared<TileMap> shared(int nRows, int nCols);
+  [[nodiscard]] static Shared<Tilemap> shared(int nRows, int nCols);
 
   /**
-   * Renders the tile map.
+   * Renders the tilemap.
    *
    * @param painter the painter that will be used.
    * @since 0.1.0
@@ -58,14 +58,14 @@ class TileMap final { // TODO rename to Tilemap
   void select(int layer) noexcept;
 
   /**
-   * Adds an empty layer to the tile map.
+   * Adds an empty layer to the tilemap.
    *
    * @since 0.1.0
    */
   void add_layer() noexcept;
 
   /**
-   * Adds a row to the tile map.
+   * Adds a row to the tilemap.
    *
    * @param id the tile ID that the new tiles will have, defaults to empty.
    * @since 0.1.0
@@ -73,7 +73,7 @@ class TileMap final { // TODO rename to Tilemap
   void add_row(TileID id = empty) noexcept;
 
   /**
-   * Adds a column to the tile map.
+   * Adds a column to the tilemap.
    *
    * @param id the tile ID that the new tiles will have, defaults to empty.
    * @since 0.1.0
@@ -81,7 +81,7 @@ class TileMap final { // TODO rename to Tilemap
   void add_col(TileID id = empty) noexcept;
 
   /**
-   * Removes a row from the tile map. This method has no effect if the tile
+   * Removes a row from the tilemap. This method has no effect if the tile
    * map only contains one row.
    *
    * @since 0.1.0
@@ -89,7 +89,7 @@ class TileMap final { // TODO rename to Tilemap
   void remove_row() noexcept;
 
   /**
-   * Removes a column from the tile map. This method has no effect if the tile
+   * Removes a column from the tilemap. This method has no effect if the tile
    * map only contains one column.
    *
    * @since 0.1.0
@@ -97,18 +97,18 @@ class TileMap final { // TODO rename to Tilemap
   void remove_col() noexcept;
 
   /**
-   * Sets the total number of rows in the tile map.
+   * Sets the total number of rows in the tilemap.
    *
-   * @param nRows the new number of rows in the tile map. Clamped to be at
+   * @param nRows the new number of rows in the tilemap. Clamped to be at
    * least 1.
    * @since 0.1.0
    */
   void set_rows(int nRows) noexcept;
 
   /**
-   * Sets the total number of columns in the tile map.
+   * Sets the total number of columns in the tilemap.
    *
-   * @param nCols the new number of columns in the tile map. Clamped to be at
+   * @param nCols the new number of columns in the tilemap. Clamped to be at
    * least 1.
    * @since 0.1.0
    */
@@ -137,26 +137,26 @@ class TileMap final { // TODO rename to Tilemap
   [[nodiscard]] bool is_visible(int layer) const noexcept;
 
   /**
-   * Returns the amount of layers present in the tile map. Tile maps are created
+   * Returns the amount of layers present in the tilemap. tilemaps are created
    * with 1 tile layer.
    *
-   * @return the amount of layers present in the tile map.
+   * @return the amount of layers present in the tilemap.
    * @since 0.1.0
    */
   [[nodiscard]] int get_layer_amount() const noexcept;
 
   /**
-   * Returns the total number of rows in the tile map.
+   * Returns the total number of rows in the tilemap.
    *
-   * @return the amount of rows in the tile map.
+   * @return the amount of rows in the tilemap.
    * @since 0.1.0
    */
   [[nodiscard]] int rows() const noexcept { return m_nRows; }
 
   /**
-   * Returns the total number of columns in the tile map.
+   * Returns the total number of columns in the tilemap.
    *
-   * @return the amount of columns in the tile map.
+   * @return the amount of columns in the tilemap.
    * @since 0.1.0
    */
   [[nodiscard]] int cols() const noexcept { return m_nCols; }
@@ -183,7 +183,7 @@ class TileMap final { // TODO rename to Tilemap
   int m_nCols;
   int m_activeLayer;
   std::vector<TileLayer> m_layers;
-  TileMapRenderer m_renderer;
+  TilemapRenderer m_renderer;
   TileSize m_tileSize;
 
   /**

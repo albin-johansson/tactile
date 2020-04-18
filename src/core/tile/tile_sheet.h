@@ -12,7 +12,7 @@ namespace tactile {
 
 /**
  * The <code>TileSheet</code> class represents an image that contains a set
- * of tiles that are used to build tile maps. All tile sheets store their
+ * of tiles that are used to build tilemaps. All tile sheets store their
  * first and last valid tile ID. Tile sheets should be created from images
  * that store their sprites aligned in a grid. Tiles in a tile sheet don't
  * need to be square.
