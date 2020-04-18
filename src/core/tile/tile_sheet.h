@@ -19,7 +19,7 @@ namespace tactile {
  *
  * @since 0.1.0
  */
-class TileSheet final {
+class TileSheet final { // TODO rename to TileSet
  public:
   /**
    * Creates a tile sheet with the initial first ID set to 1. Both the
@@ -202,7 +202,7 @@ class TileSheet final {
   [[nodiscard]] const auto& selection() { return m_selection; }
 
  private:
-  Shared<QImage> m_sheet;
+  Shared<QImage> m_sheet; // FIXME this field might be unnecessary
 
   int m_tileWidth;
   int m_tileHeight;
