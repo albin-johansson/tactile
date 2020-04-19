@@ -11,15 +11,15 @@
 namespace tactile {
 
 struct TilesetData final {
-  int tileWidth = 0;
-  int tileHeight = 0;
+  int tileWidth = 1;
+  int tileHeight = 1;
 };
 
-class ImageLabel final : public QLabel {
+class TilesetImageLabel final : public QLabel {
  public:
-  explicit ImageLabel(const QImage& image,
-                      TilesetData data,
-                      QWidget* parent = nullptr)
+  explicit TilesetImageLabel(const QImage& image,
+                             TilesetData data,
+                             QWidget* parent = nullptr)
       : QLabel{parent}
   {
     if (image.isNull()) {
@@ -34,11 +34,11 @@ class ImageLabel final : public QLabel {
     m_maxY = m_height - 1;
 
     m_tilesetData = data;
-    m_nRows = m_height / data.tileHeight;
+    m_nRows = m_height / data.tileHeight;  // TODO check that these aren't 0
     m_nCols = m_width / data.tileWidth;
   }
 
-  ~ImageLabel() {}
+  ~TilesetImageLabel() {}
 
  protected:
   void paintEvent(QPaintEvent* event) override
@@ -73,15 +73,18 @@ class ImageLabel final : public QLabel {
   TilesetData m_tilesetData;
 };
 
-TilesetImageWidget::TilesetImageWidget(const QImage& image, QWidget* parent)
+TilesetImageWidget::TilesetImageWidget(const QImage& image,
+                                       int tileWidth,
+                                       int tileHeight,
+                                       QWidget* parent)
     : QWidget{parent}
 {
   if (image.isNull()) {
     throw BadArg{"Can't create tileset image widget from null image!"};
   }
 
-  // FIXME add tileset data parameter to this ctor
-  m_imageLabel = std::make_unique<ImageLabel>(image, TilesetData{32, 32});
+  m_imageLabel = std::make_unique<TilesetImageLabel>(
+      image, TilesetData{tileWidth, tileHeight});
 
   m_layout = std::make_unique<QGridLayout>();
   m_layout->addWidget(m_imageLabel.get());

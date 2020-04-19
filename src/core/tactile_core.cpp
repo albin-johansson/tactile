@@ -55,8 +55,8 @@ void TactileCore::save_as(const char*) const
 }
 
 Maybe<int> TactileCore::add_tileset(const Shared<QImage>& image,
-                                       int tileWidth,
-                                       int tileHeight) noexcept
+                                    int tileWidth,
+                                    int tileHeight) noexcept
 {
   if (!image->isNull()) {
     return m_sheetManager->add(Tileset::unique(image, tileWidth, tileHeight));

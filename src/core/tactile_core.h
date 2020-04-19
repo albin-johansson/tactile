@@ -62,8 +62,8 @@ class TactileCore final : public QObject {
    * @since 0.1.0
    */
   [[nodiscard]] Maybe<int> add_tileset(const Shared<QImage>& image,
-                                          int tileWidth,
-                                          int tileHeight) noexcept;
+                                       int tileWidth,
+                                       int tileHeight) noexcept;
 
   /**
    * Sets the number of rows in the tilemap. The amount of rows will always

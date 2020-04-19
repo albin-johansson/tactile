@@ -10,13 +10,18 @@
 
 namespace tactile {
 
-TilesetTab::TilesetTab(const QImage& image, QWidget* parent) : QWidget{parent}
+TilesetTab::TilesetTab(const QImage& image,
+                       int tileWidth,
+                       int tileHeight,
+                       QWidget* parent)
+    : QWidget{parent}
 {
   if (image.isNull()) {
     throw BadArg{"Can't create tileset tab from null image!"};
   }
 
-  m_imageWidget = std::make_unique<TilesetImageWidget>(image);
+  m_imageWidget =
+      std::make_unique<TilesetImageWidget>(image, tileWidth, tileHeight);
 
   m_scrollArea = std::make_unique<QScrollArea>();
   m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);

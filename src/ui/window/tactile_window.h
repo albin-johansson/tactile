@@ -133,7 +133,10 @@ class TactileWindow final : public QMainWindow {
   void s_select_map(int id);
 
  public slots:
-  void add_tileset(int id, const Shared<QImage>& image) noexcept;
+  void add_tileset(int id,
+                   const Shared<QImage>& image,
+                   int tileWidth,
+                   int tileHeight) noexcept;
 
   void remove_tileset(int id) noexcept;
 

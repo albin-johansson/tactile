@@ -55,9 +55,12 @@ TactileWindow::~TactileWindow() noexcept
   delete m_ui;
 }
 
-void TactileWindow::add_tileset(int id, const Shared<QImage>& image) noexcept
+void TactileWindow::add_tileset(int id,
+                                const Shared<QImage>& image,
+                                int tileWidth,
+                                int tileHeight) noexcept
 {
-  m_tilesetWidget->add_tileset(id, image);
+  m_tilesetWidget->add_tileset(id, image, tileWidth, tileHeight);
 }
 
 void TactileWindow::remove_tileset(int id) noexcept

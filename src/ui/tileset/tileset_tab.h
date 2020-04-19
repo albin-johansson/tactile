@@ -13,7 +13,10 @@ class TilesetImageWidget;
 
 class TilesetTab final : public QWidget {
  public:
-  explicit TilesetTab(const QImage& image, QWidget* parent = nullptr);
+  explicit TilesetTab(const QImage& image,
+                      int tileWidth,
+                      int tileHeight,
+                      QWidget* parent = nullptr);
 
   ~TilesetTab() noexcept override;
 

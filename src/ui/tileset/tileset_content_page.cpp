@@ -23,13 +23,16 @@ TilesetContentPage::~TilesetContentPage() noexcept
 }
 
 void TilesetContentPage::add_tileset(int id,
-                                        const Shared<QImage>& image) noexcept
+                                     const Shared<QImage>& image,
+                                     int tileWidth,
+                                     int tileHeight) noexcept
 {
   if (m_tabs.count(id)) {
     qDebug("Tried to add tileset with taken ID: %i", id);
   } else {
     if (!image->isNull()) {
-      auto tilesetTab = std::make_shared<TilesetTab>(*image);
+      auto tilesetTab =
+          std::make_shared<TilesetTab>(*image, tileWidth, tileHeight);
 
       m_ui->tabWidget->addTab(tilesetTab.get(), "untitled");
       m_tabs.emplace(id, tilesetTab);

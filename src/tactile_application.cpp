@@ -152,7 +152,7 @@ void TactileApplication::init_connections() noexcept
       if (image && tileWidth && tileHeight) {
         const auto id = core->add_tileset(image, *tileWidth, *tileHeight);
         if (id) {
-          window->add_tileset(*id, image);
+          window->add_tileset(*id, image, *tileWidth, *tileHeight);
         }
       }
     }
