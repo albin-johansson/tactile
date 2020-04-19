@@ -38,10 +38,6 @@ QMainWindow::separator {
   height: 2px;
 }
 
-QDockWidget {
-
-}
-
 QTabWidget {
   border: 0;
 }
