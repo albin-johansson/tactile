@@ -5,10 +5,10 @@
 
 class QImage;
 class QLayout;
+class QScrollArea;
 
 namespace tactile {
 
-class TilesetScrollArea;
 class TilesetImageWidget;
 
 class TilesetTab final : public QWidget {
@@ -18,7 +18,7 @@ class TilesetTab final : public QWidget {
   ~TilesetTab() noexcept override;
 
  private:
-  Unique<TilesetScrollArea> m_scrollArea;
+  Unique<QScrollArea> m_scrollArea;
   Unique<TilesetImageWidget> m_imageWidget;
   Unique<QLayout> m_layout;
 };

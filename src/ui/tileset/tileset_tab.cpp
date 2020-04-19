@@ -2,10 +2,10 @@
 
 #include <QGridLayout>
 #include <QLabel>
+#include <QScrollArea>
 
 #include "tactile_types.h"
 #include "tileset_image_widget.h"
-#include "tileset_scroll_area.h"
 #include "widget_size_policy.h"
 
 namespace tactile {
@@ -18,7 +18,7 @@ TilesetTab::TilesetTab(const QImage& image, QWidget* parent) : QWidget{parent}
 
   m_imageWidget = std::make_unique<TilesetImageWidget>(image);
 
-  m_scrollArea = std::make_unique<TilesetScrollArea>();
+  m_scrollArea = std::make_unique<QScrollArea>();
   m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
   m_scrollArea->setWidget(m_imageWidget.get());
 

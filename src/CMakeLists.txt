@@ -108,8 +108,6 @@ set(TACTILE_SOURCE_FILES
         ui/tileset/tileset_empty_page.h
         ui/tileset/tileset_content_page.cpp
         ui/tileset/tileset_content_page.h
-        ui/tileset/tileset_scroll_area.cpp
-        ui/tileset/tileset_scroll_area.h
         ui/tileset/tileset_image_widget.cpp
         ui/tileset/tileset_image_widget.h
         ui/tileset/tileset_tab.cpp
