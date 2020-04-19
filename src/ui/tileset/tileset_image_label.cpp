@@ -38,8 +38,20 @@ void TilesetImageLabel::paintEvent(QPaintEvent* event)
 
   QPainter painter{this};
 
-  for (auto row = 0; row < m_nRows; ++row) {
-    for (auto col = 0; col < m_nCols; ++col) {
+  QPen pen;
+  pen.setColor(Qt::black);
+  pen.setWidth(1);
+  painter.setPen(pen);
+
+  const auto region = visibleRegion().boundingRect();
+
+  const auto minRow = region.y() / m_tileHeight;
+  const auto minCol = region.x() / m_tileWidth;
+  const auto maxRow = ((region.y() + region.height()) / m_tileHeight) + 1;
+  const auto maxCol = ((region.x() + region.width()) / m_tileWidth) + 1;
+
+  for (auto row = minRow; row < maxRow; ++row) {
+    for (auto col = minCol; col < maxCol; ++col) {
       const auto x = col * m_tileWidth;
       const auto y = row * m_tileHeight;
       painter.drawLine(x, 0, x, m_width);
