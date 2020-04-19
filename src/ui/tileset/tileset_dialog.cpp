@@ -35,13 +35,19 @@ TilesetDialog::TilesetDialog(QWidget* parent)
   connect(m_ui->imageButton, &QPushButton::pressed, this, [this] {
     const auto path = open_tileset_image(this);
     if (path) {
-      m_image->load(*path);
+      const auto pathStr = path->path().remove(0, 1);  // remove leading '/'
+      const auto fileName = path->fileName();
+
+      m_image->load(pathStr);
 
       if (m_image->isNull()) {
-        // TODO indicate that something went wrong
         m_ui->imageLabel->setPixmap(m_defaultImageIcon);
+        m_ui->imageInfoLabel->setText("Failed to open image: " + fileName);
+        m_ui->imageInfoLabel->setStyleSheet("QLabel { color : red; }");
       } else {
-        m_ui->imageLabel->setPixmap(load_pixmap(*path));
+        m_ui->imageLabel->setPixmap(load_pixmap(pathStr));
+        m_ui->imageInfoLabel->setText(fileName);
+        m_ui->imageInfoLabel->setStyleSheet("QLabel { color : black; }");
       }
 
       ok_button()->setEnabled(is_valid());

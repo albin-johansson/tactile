@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-Maybe<QString> open_tileset_image(QWidget* parent) noexcept
+Maybe<QUrl> open_tileset_image(QWidget* parent) noexcept
 {
   static QString cachedDirPath{""};
 
@@ -27,7 +27,7 @@ Maybe<QString> open_tileset_image(QWidget* parent) noexcept
   cachedDirPath = dialog.directoryUrl().toString();
 
   if (success) {
-    return dialog.selectedFiles().first();  // TODO support multiple selections?
+    return dialog.selectedUrls().first();
   } else {
     return nothing;
   }

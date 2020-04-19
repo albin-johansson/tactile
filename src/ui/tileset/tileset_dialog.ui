@@ -46,7 +46,7 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="headerLayout">
       <item>
        <widget class="QLabel" name="infoLabel">
         <property name="font">
@@ -56,10 +56,9 @@
          </font>
         </property>
         <property name="text">
-         <string>Select an image
- which contains the
- tile images, aligned
-in a grid.</string>
+         <string>Select an image which
+contains the tile images,
+aligned in a grid.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -70,26 +69,58 @@ in a grid.</string>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="imageLabel">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../../tactile2.qrc">:/res/icons/icons8/color/64/image.png</pixmap>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
+       <layout class="QGridLayout" name="gridLayout">
+        <item row="1" column="0">
+         <widget class="QLabel" name="imageLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="pixmap">
+           <pixmap resource="../../tactile2.qrc">:/res/icons/icons8/color/64/image.png</pixmap>
+          </property>
+          <property name="scaledContents">
+           <bool>false</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="imageInfoLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>No image selected</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="selectImageLayout">
       <item>
        <widget class="QPushButton" name="imageButton">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -102,7 +133,7 @@ in a grid.</string>
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="tileWidthLayout">
       <item>
        <widget class="QLabel" name="widthLabel">
         <property name="sizePolicy">
@@ -133,6 +164,9 @@ in a grid.</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>Specify width of the tiles in the image</string>
+        </property>
         <property name="placeholderText">
          <string>Width...</string>
         </property>
@@ -154,7 +188,7 @@ in a grid.</string>
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <layout class="QHBoxLayout" name="tileHeightLayout">
       <item>
        <widget class="QLabel" name="heightLabel">
         <property name="sizePolicy">
@@ -184,6 +218,9 @@ in a grid.</string>
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Specify height of the tiles in the image</string>
         </property>
         <property name="placeholderText">
          <string>Height...</string>

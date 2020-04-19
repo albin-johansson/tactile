@@ -1,5 +1,5 @@
 #pragma once
-#include <QString>
+#include <QUrl>
 
 #include "maybe.h"
 
@@ -15,7 +15,7 @@ namespace tactile {
  * @return the path of the image, if a file was selected; nothing otherwise.
  * @since 0.1.0
  */
-[[nodiscard]] Maybe<QString> open_tileset_image(
+[[nodiscard]] Maybe<QUrl> open_tileset_image(
     QWidget* parent = nullptr) noexcept;
 
 }  // namespace tactile
