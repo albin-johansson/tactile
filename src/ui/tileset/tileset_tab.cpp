@@ -27,6 +27,7 @@ TilesetTab::TilesetTab(const QImage& image,
   m_scrollArea->setWidget(m_imageWidget.get());
 
   m_layout = std::make_unique<QGridLayout>();
+  m_layout->setMargin(0);
   m_layout->addWidget(m_scrollArea.get());
 
   setLayout(m_layout.get());
