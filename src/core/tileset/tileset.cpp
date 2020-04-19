@@ -46,6 +46,36 @@ Tileset::Tileset(Tileset&& other) noexcept
 
 Tileset::~Tileset() noexcept = default;
 
+Tileset& Tileset::operator=(const Tileset& other) noexcept
+{
+  if (this != &other) {
+    m_sheet = other.m_sheet;
+    m_tileWidth = other.m_tileWidth;
+    m_tileHeight = other.m_tileHeight;
+    m_firstID = other.m_firstID;
+    m_rows = other.m_rows;
+    m_cols = other.m_cols;
+    m_nTiles = other.m_nTiles;
+    m_selection = other.m_selection;
+  }
+  return *this;
+}
+
+Tileset& Tileset::operator=(Tileset&& other) noexcept
+{
+  if (this != &other) {
+    m_sheet = std::move(other.m_sheet);
+    m_tileWidth = other.m_tileWidth;
+    m_tileHeight = other.m_tileHeight;
+    m_firstID = other.m_firstID;
+    m_rows = other.m_rows;
+    m_cols = other.m_cols;
+    m_nTiles = other.m_nTiles;
+    m_selection = std::move(other.m_selection);
+  }
+  return *this;
+}
+
 Unique<Tileset> Tileset::unique(const Shared<QImage>& image,
                                 int tileWidth,
                                 int tileHeight)

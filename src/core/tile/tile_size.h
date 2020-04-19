@@ -1,5 +1,7 @@
 #pragma once
 
+#include "type_utils.h"
+
 namespace tactile {
 
 /**
@@ -25,10 +27,6 @@ class TileSize final {
    * @since 0.1.0
    */
   inline static constexpr int minimumSize = 5;
-
-  TileSize(const TileSize&) = delete;
-
-  TileSize(TileSize&&) = delete;
 
   ~TileSize() noexcept = default;
 
@@ -76,5 +74,7 @@ class TileSize final {
  private:
   int m_size;
 };
+
+static_assert(validate_nothrow<TileSize>());
 
 }  // namespace tactile

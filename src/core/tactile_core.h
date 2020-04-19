@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <type_traits>
 #include <unordered_map>
 
 #include "maybe.h"
@@ -289,5 +290,10 @@ class TactileCore final : public QObject {
     }
   }
 };
+
+static_assert(std::is_final_v<TactileCore>);
+
+static_assert(!std::is_copy_constructible_v<TactileCore>);
+static_assert(!std::is_copy_assignable_v<TactileCore>);
 
 }  // namespace tactile

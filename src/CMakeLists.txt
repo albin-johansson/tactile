@@ -77,7 +77,7 @@ set(TACTILE_SOURCE_FILES
         core/tilemap/map_position.h
         core/tilemap/tilemap_renderer.cpp
         core/tilemap/tilemap_renderer.h
-        
+
         ui/startup_widget.cpp
         ui/startup_widget.h
         ui/startup_widget.ui
@@ -140,7 +140,7 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tile_map_tab_widget.cpp
         ui/editor/tile_map_tab_widget.h
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui)
+        ui/editor/editor_pane.ui core/util/type_utils.h)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 

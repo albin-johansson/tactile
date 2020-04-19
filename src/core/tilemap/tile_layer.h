@@ -5,6 +5,7 @@
 
 #include "maybe.h"
 #include "tile_id.h"
+#include "type_utils.h"
 
 namespace tactile {
 
@@ -153,5 +154,7 @@ class TileLayer final {
   TileMatrix m_tiles;
   bool m_visible;
 };
+
+static_assert(validate<TileLayer>());
 
 }  // namespace tactile

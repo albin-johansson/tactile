@@ -1,5 +1,7 @@
 #pragma once
 
+#include <type_utils.h>
+
 class QPainter;
 
 namespace tactile {
@@ -21,12 +23,6 @@ class TilemapRenderer final {
 
   ~TilemapRenderer() noexcept = default;
 
-  TilemapRenderer(const TilemapRenderer&) = delete;
-  TilemapRenderer(TilemapRenderer&&) = delete;
-
-  TilemapRenderer& operator=(const TilemapRenderer&) = delete;
-  TilemapRenderer& operator=(TilemapRenderer&&) = delete;
-
   /**
    * Renders a tilemap.
    *
@@ -36,5 +32,7 @@ class TilemapRenderer final {
    */
   void render(QPainter& painter, const Tilemap& map) const noexcept;
 };
+
+static_assert(validate_nothrow<TilemapRenderer>());
 
 }  // namespace tactile

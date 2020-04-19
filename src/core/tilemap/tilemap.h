@@ -8,6 +8,7 @@
 #include "tile_layer.h"
 #include "tile_size.h"
 #include "tilemap_renderer.h"
+#include "type_utils.h"
 
 class QPainter;
 
@@ -197,5 +198,7 @@ class Tilemap final {
    */
   [[nodiscard]] bool has_layer(int layer) const noexcept;
 };
+
+static_assert(validate<Tilemap>());
 
 }  // namespace tactile

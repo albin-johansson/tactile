@@ -1,10 +1,10 @@
 #pragma once
 
 #include <set>
-#include <type_traits>
 
 #include "smart_pointers.h"
 #include "tile_id.h"
+#include "type_utils.h"
 
 class QImage;
 
@@ -36,6 +36,10 @@ class Tileset final {
   Tileset(const Tileset& other) noexcept;
 
   Tileset(Tileset&& other) noexcept;
+
+  Tileset& operator=(const Tileset& other) noexcept;
+
+  Tileset& operator=(Tileset&& other) noexcept;
 
   ~Tileset() noexcept;
 
@@ -216,7 +220,7 @@ class Tileset final {
   std::set<TileID> m_selection;
 };
 
-static_assert(std::is_final_v<Tileset>);
+static_assert(validate<Tileset>());
 
 static_assert(std::is_nothrow_move_constructible_v<Tileset>);
 static_assert(std::is_nothrow_copy_constructible_v<Tileset>);
