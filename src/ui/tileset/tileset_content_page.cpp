@@ -1,5 +1,7 @@
 #include "tileset_content_page.h"
 
+#include <QPushButton>
+
 #include "tileset_tab.h"
 #include "ui_tileset_content_page.h"
 
@@ -9,6 +11,9 @@ TilesetContentPage::TilesetContentPage(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetContentPageUI{}}
 {
   m_ui->setupUi(this);
+
+//  auto* cornerBtn = new QPushButton{}; // deleted by tab widget
+//  m_ui->tabWidget->setCornerWidget(cornerBtn);
 }
 
 TilesetContentPage::~TilesetContentPage() noexcept
