@@ -9,12 +9,6 @@ TilesetContentPage::TilesetContentPage(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetContentPageUI{}}
 {
   m_ui->setupUi(this);
-  m_ui->tabWidget->setMovable(false);
-
-  connect(m_ui->newButton,
-          &QPushButton::clicked,
-          this,
-          &TilesetContentPage::s_requested_tileset);
 }
 
 TilesetContentPage::~TilesetContentPage() noexcept

@@ -112,6 +112,8 @@ set(TACTILE_SOURCE_FILES
         ui/tileset/tileset_image_widget.h
         ui/tileset/tileset_tab.cpp
         ui/tileset/tileset_tab.h
+        ui/tileset/tileset_image_label.cpp
+        ui/tileset/tileset_image_label.h
 
         ui/modal/about_dialog.cpp
         ui/modal/about_dialog.h
