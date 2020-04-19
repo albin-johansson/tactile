@@ -1,45 +1,67 @@
 
 QWidget {
-  background: #CCCCCC;
+  background: white;
+}
+
+QMenuBar::item {
+  padding: 2px 4px;
+  background: transparent;
+  border-radius: 2px;
 }
 
 QMenuBar::item:selected {
-  background-color: lightgray;
+  background: lightgray;
 }
 
 QMenuBar::item:pressed {
-  background-color: darkgray;
+  background: darkgray;
 }
 
 QMenu {
-  border: 1px solid #CCCCCC;
+  border: 1px solid black;
+}
+
+QMenu::item {
+  background-color: transparent;
 }
 
 QMenu::item:selected {
-  background-color: lightgray;
-  color: black;
-}
-
-QMenu::item:checked {
-  background-color: lightblue;
+  background-color: #5499c7;
 }
 
 QMenu::item:pressed {
-  background-color: darkgray;
+  background-color: #2471a3;
 }
 
-QToolTip {
-  background: white;
+QMainWindow::separator {
+  width: 4px;
+  height: 2px;
 }
 
-QPushButton {
-  background: white;
+QDockWidget {
+
 }
 
-QPushButton:checked {
-  background: lightblue;
+QTabWidget {
+  border: 0;
 }
 
-QTabBar::tab {
-  max-height: 2em;
+QTabWidget::pane {
+  margin: 0;
+}
+
+QTabBar {
+  border-radius: 0;
+  border: none;
+}
+
+QTabBar::tab:top {
+  border: 1px solid #d7dbdd;
+  margin: 0;
+  padding: 2px 8px;
+  border-bottom: 3px solid gray;
+}
+
+QTabBar::tab:top:selected {
+  border-bottom-color: #5499c7;
 }

@@ -52,7 +52,6 @@ TactileApplication::TactileApplication(int argc, char** argv)
   setApplicationVersion("0.1.0");
   setOrganizationName("albinjohansson");
   setApplicationName("Tactile");
-  //  setOrganizationDomain("https://github.com/albin-johansson/Tactile");
 
   QIcon icon{":/res/icons/tactile2_icon2.png"};
   setWindowIcon(icon);
@@ -77,10 +76,12 @@ void TactileApplication::load_style_sheet(const char* styleSheet)
   }
 
   QFile file{styleSheet};
-  file.open(QFile::ReadOnly);
-
-  auto style = QLatin1String{file.readAll()};
-  setStyleSheet(style);
+  if (file.open(QFile::ReadOnly)) {
+    auto style = QLatin1String{file.readAll()};
+    setStyleSheet(style);
+  } else {
+    qInfo("Failed to open stylesheet!");
+  }
 }
 
 void TactileApplication::init_connections() noexcept

@@ -28,6 +28,7 @@ void TilesetContentPage::add_tileset(int id,
       auto tilesetTab =
           std::make_shared<TilesetTab>(*image, tileWidth, tileHeight);
 
+      // FIXME use file name
       m_ui->tabWidget->addTab(tilesetTab.get(), "untitled");
       m_tabs.emplace(id, tilesetTab);
     }
