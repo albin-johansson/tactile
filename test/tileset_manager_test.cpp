@@ -23,7 +23,7 @@ TEST_CASE("TilesetManager::add", "[TilesetManager]")
 
   CHECK(!manager.add(nullptr).has_value());
   CHECK(manager.sheets() == 0);
-  CHECK(!manager.has_active_tile_sheet());
+  CHECK(!manager.has_active_tileset());
 
   const auto first = manager.add(create_tile_sheet());
   const auto second = manager.add(create_tile_sheet());
@@ -70,14 +70,14 @@ TEST_CASE("TilesetManager::select", "[TilesetManager]")
   TilesetManager manager;
 
   CHECK_NOTHROW(manager.select(9));
-  CHECK(!manager.has_active_tile_sheet());
+  CHECK(!manager.has_active_tileset());
 
   const auto id = manager.add(create_tile_sheet());
   manager.add(create_tile_sheet());  // NOLINT
 
   manager.select(id);
-  CHECK(manager.has_active_tile_sheet());
+  CHECK(manager.has_active_tileset());
 
   manager.select(nothing);
-  CHECK(!manager.has_active_tile_sheet());
+  CHECK(!manager.has_active_tileset());
 }
