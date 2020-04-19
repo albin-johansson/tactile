@@ -21,6 +21,8 @@ class TilesetManager final {
 
   ~TilesetManager() noexcept;
 
+  [[nodiscard]] static Unique<TilesetManager> unique();
+
   /**
    * Adds a tileset to the manager. This method has no effect if the supplied
    * tileset is null.

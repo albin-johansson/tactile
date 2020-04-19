@@ -58,8 +58,8 @@ TactileApplication::TactileApplication(int argc, char** argv)
 
   validate_settings();
 
-  m_window = std::make_unique<TactileWindow>();
-  m_editor = std::make_unique<TactileCore>();
+  m_window = TactileWindow::unique();
+  m_core = TactileCore::unique();
 
   init_connections();
   load_style_sheet(":/res/tactile_light.qss");
@@ -90,7 +90,7 @@ void TactileApplication::init_connections() noexcept
   using Core = TactileCore;
 
   auto* window = m_window.get();
-  auto* core = m_editor.get();
+  auto* core = m_core.get();
 
   connect(core, &Core::s_updated, window, &Window::trigger_redraw);
 

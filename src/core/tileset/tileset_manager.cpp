@@ -10,6 +10,11 @@ TilesetManager::TilesetManager() noexcept
 
 TilesetManager::~TilesetManager() noexcept = default;
 
+Unique<TilesetManager> TilesetManager::unique()
+{
+  return std::make_unique<TilesetManager>();
+}
+
 Maybe<int> TilesetManager::add(Unique<Tileset>&& sheet) noexcept
 {
   if (sheet) {

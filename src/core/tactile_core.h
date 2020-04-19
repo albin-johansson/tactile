@@ -16,7 +16,8 @@ class TilesetManager;
 
 /**
  * The <code>TactileCore</code> class represents the main interface for the
- * core model of the Tactile application.
+ * core model of the Tactile application. This class is the only QObject of
+ * all of the core components.
  *
  * <p> All tilemap mutating methods of the <code>TactileCore</code> class
  * have no effect if there is no active tilemap.
@@ -28,7 +29,7 @@ class TactileCore final : public QObject {
 
  public:
   /**
-   * Creates an instance of the Tactile editor class. There should only be one
+   * Creates an instance of the TactileCore class. There should only be one
    * instance of this class for every run of the application.
    *
    * @since 0.1.0
@@ -40,6 +41,14 @@ class TactileCore final : public QObject {
   Q_DISABLE_COPY(TactileCore)
 
   /**
+   * Creates and returns a unique pointer to a TactileCore instance.
+   *
+   * @return a unique pointer to a TactileCore instance.
+   * @since 0.1.0
+   */
+  [[nodiscard]] static Unique<TactileCore> unique();
+
+  /**
    * Opens a tilemap from the specified location.
    *
    * @param fileName the file path of the file that holds the tilemap, may not
@@ -48,7 +57,7 @@ class TactileCore final : public QObject {
    */
   void open_map(const char* fileName);  // TODO support TMX
 
-  void save_as(const char* fileName) const;
+  void save_as(const char* fileName) const;  // TODO implement
 
   /**
    * Adds a tileset based on the supplied image. This method has no effect
@@ -119,10 +128,31 @@ class TactileCore final : public QObject {
    */
   [[nodiscard]] Maybe<int> cols() const noexcept;
 
+  /**
+   * Returns the current width of the active tilemap.
+   *
+   * @return the current width of the active tilemap; nothing if there is no
+   * active tilemap.
+   * @since 0.1.0
+   */
   [[nodiscard]] Maybe<int> map_width() const noexcept;
 
+  /**
+   * Returns the current height of the active tilemap.
+   *
+   * @return the current height of the active tilemap; nothing if there is no
+   * active tilemap.
+   * @since 0.1.0
+   */
   [[nodiscard]] Maybe<int> map_height() const noexcept;
 
+  /**
+   * Returns the size of the tiles in the currently active tilemap.
+   *
+   * @return the size of the tiles in the currently active tilemap; nothing
+   * if there is no active tilemap.
+   * @since 0.1.0
+   */
   [[nodiscard]] Maybe<int> tile_size() const noexcept;
 
  signals:
@@ -135,6 +165,13 @@ class TactileCore final : public QObject {
   void s_updated();
 
  public slots:
+  /**
+   * Renders the currently active tile map. This method has no effect if
+   * there is no active tilemap.
+   *
+   * @param painter the painter that will be used to render the tilemap.
+   * @since 0.1.0
+   */
   void draw(QPainter& painter) const noexcept;
 
   /**
@@ -156,18 +193,56 @@ class TactileCore final : public QObject {
    */
   void close_map(int id) noexcept;
 
+  /**
+   * Adds a row to the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
   void add_row() noexcept;
 
+  /**
+   * Adds a column to the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
   void add_col() noexcept;
 
+  /**
+   * Removes a row from the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
   void remove_row() noexcept;
 
+  /**
+   * Removes a column from the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
   void remove_col() noexcept;
 
+  /**
+   * Increases the tile size that is being used by the currently active
+   * tilemap.
+   *
+   * @since 0.1.0
+   */
   void increase_tile_size() noexcept;
 
+  /**
+   * Decreases the tile size that is being used by the currently active
+   * tilemap.
+   *
+   * @since 0.1.0
+   */
   void decrease_tile_size() noexcept;
 
+  /**
+   * Resets the tile size that is being used by the currently active tilemap
+   * to its default value.
+   *
+   * @since 0.1.0
+   */
   void reset_tile_size() noexcept;
 
  private:

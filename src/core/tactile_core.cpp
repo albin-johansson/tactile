@@ -9,11 +9,15 @@
 namespace tactile {
 
 TactileCore::TactileCore()
-    : m_activeMapIndex{nothing},
-      m_sheetManager{std::make_unique<TilesetManager>()}
+    : m_activeMapIndex{nothing}, m_sheetManager{TilesetManager::unique()}
 {}
 
 TactileCore::~TactileCore() noexcept = default;
+
+Unique<TactileCore> TactileCore::unique()
+{
+  return std::make_unique<TactileCore>();
+}
 
 void TactileCore::new_map(int id) noexcept
 {

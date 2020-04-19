@@ -15,6 +15,7 @@ function(tactile_include_dirs [target])
     target_include_directories(${ARGV0} PUBLIC ui/tileset)
     target_include_directories(${ARGV0} PUBLIC ui/window)
     target_include_directories(${ARGV0} PUBLIC ui/util)
+    target_include_directories(${ARGV0} PUBLIC ui/tools)
 endfunction()
 
 function(tactile_append_gcc_compiler_flags [target])
@@ -76,13 +77,14 @@ set(TACTILE_SOURCE_FILES
         core/tilemap/map_position.h
         core/tilemap/tilemap_renderer.cpp
         core/tilemap/tilemap_renderer.h
-
-        ui/mouse_tool_widget.cpp
-        ui/mouse_tool_widget.h
+        
         ui/startup_widget.cpp
         ui/startup_widget.h
         ui/startup_widget.ui
-        ui/tool_button_widget.ui
+
+        ui/tools/mouse_tool_widget.cpp
+        ui/tools/mouse_tool_widget.h
+        ui/tools/tool_button_widget.ui
 
         ui/util/basic_widget_macro.h
         ui/util/widget_size_policy.h

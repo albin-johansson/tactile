@@ -21,6 +21,12 @@ class TilesetImageWidget final : public QWidget {
 
   ~TilesetImageWidget() noexcept override;
 
+  [[nodiscard]] static Unique<TilesetImageWidget> unique(
+      const QImage& image,
+      int tileWidth,
+      int tileHeight,
+      QWidget* parent = nullptr);
+
  protected:
   void mousePressEvent(QMouseEvent* event) override;
 

@@ -30,7 +30,7 @@ class TactileApplication final : public QApplication {
 
  private:
   Unique<TactileWindow> m_window;
-  Unique<TactileCore> m_editor;
+  Unique<TactileCore> m_core;
 
   void init_connections() noexcept;
 
@@ -54,7 +54,7 @@ class TactileApplication final : public QApplication {
   template <typename Sender, typename Receiver>
   void window_to_core(Sender s, Receiver r)
   {
-    connect(m_window.get(), s, m_editor.get(), r);
+    connect(m_window.get(), s, m_core.get(), r);
   }
 
   /**

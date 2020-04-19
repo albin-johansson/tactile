@@ -11,10 +11,10 @@
 #include "about_dialog.h"
 #include "central_editor_widget.h"
 #include "create_dock_widget.h"
-#include "mouse_tool_widget.h"
 #include "settings_dialog.h"
 #include "settings_utils.h"
 #include "tileset_widget.h"
+#include "ui/tools/mouse_tool_widget.h"
 #include "ui_window.h"
 #include "widget_size_policy.h"
 
@@ -53,6 +53,11 @@ TactileWindow::TactileWindow(QWidget* parent)
 TactileWindow::~TactileWindow() noexcept
 {
   delete m_ui;
+}
+
+Unique<TactileWindow> TactileWindow::unique(QWidget* parent)
+{
+  return std::make_unique<TactileWindow>(parent);
 }
 
 void TactileWindow::add_tileset(int id,

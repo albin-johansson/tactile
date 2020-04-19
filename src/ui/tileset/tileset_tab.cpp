@@ -20,8 +20,7 @@ TilesetTab::TilesetTab(const QImage& image,
     throw BadArg{"Can't create tileset tab from null image!"};
   }
 
-  m_imageWidget =
-      std::make_unique<TilesetImageWidget>(image, tileWidth, tileHeight);
+  m_imageWidget = TilesetImageWidget::unique(image, tileWidth, tileHeight);
 
   m_scrollArea = std::make_unique<QScrollArea>();
   m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);

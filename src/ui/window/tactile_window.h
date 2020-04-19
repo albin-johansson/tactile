@@ -43,6 +43,15 @@ class TactileWindow final : public QMainWindow {
   ~TactileWindow() noexcept override;
 
   /**
+   * Creates and returns a unique pointer to a tactile window.
+   *
+   * @param parent the parent widget, defaults to null.
+   * @return a unique pointer to a tactile window.
+   * @since 0.1.0
+   */
+  [[nodiscard]] static Unique<TactileWindow> unique(QWidget* parent = nullptr);
+
+  /**
    * Enables the startup view.
    *
    * @since 0.1.0

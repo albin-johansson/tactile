@@ -20,8 +20,7 @@ TilesetImageWidget::TilesetImageWidget(const QImage& image,
     throw BadArg{"Can't create tileset image widget from null image!"};
   }
 
-  m_imageLabel = std::make_unique<TilesetImageLabel>(
-      image, tileWidth, tileHeight);
+  m_imageLabel = TilesetImageLabel::unique(image, tileWidth, tileHeight);
 
   m_layout = std::make_unique<QGridLayout>();
   m_layout->addWidget(m_imageLabel.get());
@@ -33,6 +32,15 @@ TilesetImageWidget::TilesetImageWidget(const QImage& image,
 }
 
 TilesetImageWidget::~TilesetImageWidget() noexcept = default;
+
+Unique<TilesetImageWidget> TilesetImageWidget::unique(const QImage& image,
+                                                      int tileWidth,
+                                                      int tileHeight,
+                                                      QWidget* parent)
+{
+  return std::make_unique<TilesetImageWidget>(
+      image, tileWidth, tileHeight, parent);
+}
 
 void TilesetImageWidget::mousePressEvent(QMouseEvent* event)
 {

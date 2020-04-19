@@ -1,6 +1,8 @@
 #pragma once
 #include <QLabel>
 
+#include "smart_pointers.h"
+
 namespace tactile {
 
 class TilesetImageLabel final : public QLabel {
@@ -11,6 +13,12 @@ class TilesetImageLabel final : public QLabel {
                              QWidget* parent = nullptr);
 
   ~TilesetImageLabel() noexcept override;
+
+  [[nodiscard]] static Unique<TilesetImageLabel> unique(
+      const QImage& image,
+      int tileWidth,
+      int tileHeight,
+      QWidget* parent = nullptr);
 
  protected:
   void paintEvent(QPaintEvent* event) override;
