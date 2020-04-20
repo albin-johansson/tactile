@@ -2,6 +2,7 @@
 
 #include "tileset_content_page.h"
 #include "tileset_empty_page.h"
+#include "tileset_info.h"
 #include "ui_tileset_widget.h"
 
 namespace tactile {
@@ -36,18 +37,16 @@ TilesetWidget::~TilesetWidget() noexcept
   delete m_ui;
 }
 
-void TilesetWidget::add_tileset(int id,
-                                const Shared<QImage>& image,
-                                int tileWidth,
-                                int tileHeight) noexcept
+void TilesetWidget::add_tileset(const TilesetInfo& info,
+                                const QString& tabName) noexcept
 {
-  if (image->isNull()) {
+  if (info.image->isNull()) {
     return;
   }
 
   const auto wasEmpty = m_contentPage->empty();
 
-  m_contentPage->add_tileset(id, image, tileWidth, tileHeight);
+  m_contentPage->add_tileset(info, tabName);
 
   if (wasEmpty) {
     m_ui->stackedWidget->setCurrentIndex(m_contentIndex);

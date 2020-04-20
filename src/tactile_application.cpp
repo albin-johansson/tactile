@@ -11,6 +11,7 @@
 #include "tactile_core.h"
 #include "tactile_window.h"
 #include "tileset_dialog.h"
+#include "tileset_info.h"
 
 namespace tactile {
 namespace {
@@ -77,7 +78,7 @@ void TactileApplication::load_style_sheet(const char* styleSheet)
 
   QFile file{styleSheet};
   if (file.open(QFile::ReadOnly)) {
-    auto style = QLatin1String{file.readAll()};
+    const QString style{file.readAll()};
     setStyleSheet(style);
   } else {
     qInfo("Failed to open stylesheet!");
@@ -150,10 +151,12 @@ void TactileApplication::init_connections() noexcept
       const auto image = dialog.chosen_image();
       const auto tileWidth = dialog.chosen_width();
       const auto tileHeight = dialog.chosen_height();
+      const auto imageName = dialog.image_name();
       if (image && tileWidth && tileHeight) {
         const auto id = core->add_tileset(image, *tileWidth, *tileHeight);
         if (id) {
-          window->add_tileset(*id, image, *tileWidth, *tileHeight);
+          TilesetInfo info{image, *id, *tileWidth, *tileHeight};
+          window->add_tileset(info, imageName ? *imageName : "Untitled");
         }
       }
     }

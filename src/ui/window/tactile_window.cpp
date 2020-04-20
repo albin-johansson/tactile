@@ -60,12 +60,12 @@ Unique<TactileWindow> TactileWindow::unique(QWidget* parent)
   return std::make_unique<TactileWindow>(parent);
 }
 
-void TactileWindow::add_tileset(int id,
-                                const Shared<QImage>& image,
-                                int tileWidth,
-                                int tileHeight) noexcept
+// TODO these delegations can be replaced with signals
+
+void TactileWindow::add_tileset(const TilesetInfo& info,
+                                const QString& tabName) noexcept
 {
-  m_tilesetWidget->add_tileset(id, image, tileWidth, tileHeight);
+  m_tilesetWidget->add_tileset(info, tabName);
 }
 
 void TactileWindow::remove_tileset(int id) noexcept

@@ -2,6 +2,7 @@
 
 #include <QPushButton>
 
+#include "tileset_info.h"
 #include "tileset_tab.h"
 #include "ui_tileset_content_page.h"
 
@@ -12,8 +13,8 @@ TilesetContentPage::TilesetContentPage(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-//  auto* cornerBtn = new QPushButton{}; // deleted by tab widget
-//  m_ui->tabWidget->setCornerWidget(cornerBtn);
+  //  auto* cornerBtn = new QPushButton{}; // deleted by tab widget
+  //  m_ui->tabWidget->setCornerWidget(cornerBtn);
 }
 
 TilesetContentPage::~TilesetContentPage() noexcept
@@ -21,21 +22,17 @@ TilesetContentPage::~TilesetContentPage() noexcept
   delete m_ui;
 }
 
-void TilesetContentPage::add_tileset(int id,
-                                     const Shared<QImage>& image,
-                                     int tileWidth,
-                                     int tileHeight) noexcept
+void TilesetContentPage::add_tileset(const TilesetInfo& info,
+                                     const QString& tabName) noexcept
 {
-  if (m_tabs.count(id)) {
-    qDebug("Tried to add tileset with taken ID: %i", id);
+  if (m_tabs.count(info.id)) {
+    qDebug("Tried to add tileset with taken ID: %i", info.id);
   } else {
-    if (!image->isNull()) {
-      auto tilesetTab =
-          std::make_shared<TilesetTab>(*image, tileWidth, tileHeight);
-
-      // FIXME use file name
-      m_ui->tabWidget->addTab(tilesetTab.get(), "untitled");
-      m_tabs.emplace(id, tilesetTab);
+    if (!info.image->isNull()) {
+      auto tilesetTab = std::make_shared<TilesetTab>(
+          *info.image, info.tileWidth, info.tileHeight);
+      m_ui->tabWidget->addTab(tilesetTab.get(), tabName);
+      m_tabs.emplace(info.id, tilesetTab);
     }
   }
 }

@@ -46,6 +46,7 @@ TilesetDialog::TilesetDialog(QWidget* parent)
         m_ui->imageInfoLabel->setStyleSheet("QLabel { color : red; }");
       } else {
         m_ui->imageLabel->setPixmap(load_pixmap(pathStr));
+        m_imageName = fileName;
         m_ui->imageInfoLabel->setText(fileName);
         m_ui->imageInfoLabel->setStyleSheet("QLabel { color : black; }");
       }

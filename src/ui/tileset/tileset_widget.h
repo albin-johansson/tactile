@@ -11,6 +11,7 @@ namespace tactile {
 
 class TilesetContentPage;
 class TilesetEmptyPage;
+struct TilesetInfo;
 
 class TilesetWidget final : public QWidget {
   Q_OBJECT
@@ -20,10 +21,7 @@ class TilesetWidget final : public QWidget {
 
   ~TilesetWidget() noexcept override;
 
-  void add_tileset(int id,
-                   const Shared<QImage>& image,
-                   int tileWidth,
-                   int tileHeight) noexcept;
+  void add_tileset(const TilesetInfo& info, const QString& tabName) noexcept;
 
   void remove_tileset(int id) noexcept;
 

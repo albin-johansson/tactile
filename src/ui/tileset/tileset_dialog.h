@@ -19,17 +19,48 @@ class TilesetDialog final : public QDialog {
 
   ~TilesetDialog() noexcept override;
 
+  /**
+   * Returns a shared pointer to the image that was selected.
+   *
+   * @return a shared pointer to an image; null if there is no chosen image.
+   * @since 0.1.0
+   */
   [[nodiscard]] Shared<QImage> chosen_image() const noexcept { return m_image; }
 
+  /**
+   * Returns the chosen tile width.
+   *
+   * @return the chosen tile width; nothing if no tile width is available.
+   * @since 0.1.0
+   */
   [[nodiscard]] Maybe<int> chosen_width() const noexcept { return m_width; }
 
+  /**
+   * Returns the chosen tile height.
+   *
+   * @return the chosen tile height; nothing if no tile height is available.
+   * @since 0.1.0
+   */
   [[nodiscard]] Maybe<int> chosen_height() const noexcept { return m_height; }
+
+  /**
+   * Returns the name of the selected image.
+   *
+   * @return the name of the selected image; nothing if there is no selected
+   * image.
+   * @since 0.1.0
+   */
+  [[nodiscard]] Maybe<QString> image_name() const noexcept
+  {
+    return m_imageName;
+  }
 
  private:
   Ui::TilesetDialogUI* m_ui;
   Shared<QImage> m_image;
   Maybe<int> m_width;
   Maybe<int> m_height;
+  Maybe<QString> m_imageName;
   Unique<QIntValidator> m_validator;
   QPixmap m_defaultImageIcon;
 

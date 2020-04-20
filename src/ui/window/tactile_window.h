@@ -21,6 +21,7 @@ namespace tactile {
 class CentralEditorWidget;
 class MouseToolWidget;
 class TilesetWidget;
+struct TilesetInfo;
 
 /**
  * The <code>TactileWindow</code> class is a subclass of
@@ -142,10 +143,7 @@ class TactileWindow final : public QMainWindow {
   void s_select_map(int id);
 
  public slots:
-  void add_tileset(int id,
-                   const Shared<QImage>& image,
-                   int tileWidth,
-                   int tileHeight) noexcept;
+  void add_tileset(const TilesetInfo& info, const QString& tabName) noexcept;
 
   void remove_tileset(int id) noexcept;
 
