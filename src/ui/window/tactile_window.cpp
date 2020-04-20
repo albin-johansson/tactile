@@ -32,7 +32,7 @@ TactileWindow::TactileWindow(QWidget* parent)
   m_tilesetWidget = new TilesetWidget{};
 
   setCentralWidget(m_centralWidget);
-  centralWidget()->layout()->setContentsMargins(0, 2, 0, 0);
+//  centralWidget()->layout()->setContentsMargins(0, 2, 0, 0);
 
   m_mouseToolDock = create_dock_widget(m_mouseToolWidget, "mouseToolDock");
   set_size_policy(
