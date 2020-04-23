@@ -59,6 +59,7 @@ set(TACTILE_SOURCE_FILES
         core/util/smart_pointers.h
         core/util/algorithm_utils.h
         core/util/tactile_types.h
+        core/util/type_utils.h
 
         core/tile/tile_id.h
         core/tile/tile_size.h
@@ -68,6 +69,7 @@ set(TACTILE_SOURCE_FILES
         core/tileset/tileset.h
         core/tileset/tileset_manager.cpp
         core/tileset/tileset_manager.h
+        core/tileset/tileset_info.h
 
         core/tilemap/tilemap.h
         core/tilemap/tilemap.cpp
@@ -140,7 +142,7 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tile_map_tab_widget.cpp
         ui/editor/tile_map_tab_widget.h
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui core/util/type_utils.h core/tileset/tileset_info.h)
+        ui/editor/editor_pane.ui)
 
 add_library(TactileLib ${TACTILE_SOURCE_FILES})
 
