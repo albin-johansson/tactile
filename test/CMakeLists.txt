@@ -9,29 +9,30 @@ set(TACTILE_TEST_FILES
         flood_fill_test.cpp
         tileset_test.cpp
         tile_size_test.cpp
-        widget_size_policy_test.cpp tileset_manager_test.cpp)
+        widget_size_policy_test.cpp
+        tileset_manager_test.cpp)
 
-add_executable(TactileTests ${TACTILE_TEST_FILES})
+add_executable(testTactile ${TACTILE_TEST_FILES})
 
 add_library(Catch2 INTERFACE)
 target_include_directories(Catch2 INTERFACE ${TACTILE_LIB_DIR}/catch2)
 
-target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src)
-target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src/core)
-target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src/core/util)
-target_include_directories(TactileTests PUBLIC ${TACTILE_ROOT_DIR}/src/core/tile)
+target_include_directories(testTactile PUBLIC ${TACTILE_ROOT_DIR}/src)
+target_include_directories(testTactile PUBLIC ${TACTILE_ROOT_DIR}/src/core)
+target_include_directories(testTactile PUBLIC ${TACTILE_ROOT_DIR}/src/core/util)
+target_include_directories(testTactile PUBLIC ${TACTILE_ROOT_DIR}/src/core/tile)
 
-target_link_libraries(TactileTests
-        PUBLIC TactileLib
+target_link_libraries(testTactile
+        PUBLIC libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
         PUBLIC Qt5::Gui
         Catch2)
 
-copy_directory_post_build(TactileTests
+copy_directory_post_build(testTactile
         ${TACTILE_ROOT_DIR}/bin
         ${CMAKE_CURRENT_BINARY_DIR})
 
-copy_directory_post_build(TactileTests
+copy_directory_post_build(testTactile
         ${CMAKE_CURRENT_SOURCE_DIR}/res
         ${CMAKE_CURRENT_BINARY_DIR})
