@@ -1,401 +1,393 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>AboutUI</class>
-    <widget class="QWidget" name="AboutUI">
-        <property name="windowModality">
-            <enum>Qt::ApplicationModal</enum>
+ <class>AboutUI</class>
+ <widget class="QWidget" name="AboutUI">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>523</width>
+    <height>386</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>About Tactile</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../tactile.qrc">
+    <normaloff>:/resources/icons/tactile2_icon2.png</normaloff>:/resources/icons/tactile2_icon2.png</iconset>
+  </property>
+  <property name="windowOpacity">
+   <double>26.000000000000000</double>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>471</width>
+     <height>331</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetDefaultConstraint</enum>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <spacer name="horizontalSpacer_5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>523</width>
-                <height>386</height>
-            </rect>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
         </property>
-        <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-            </sizepolicy>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string/>
         </property>
-        <property name="font">
-            <font>
-                <family>Segoe UI</family>
-                <pointsize>12</pointsize>
-            </font>
-        </property>
-        <property name="windowTitle">
-            <string>About Tactile</string>
-        </property>
-        <property name="windowIcon">
-            <iconset resource="../../tactile">
-                <normaloff>:/resources/icons/tactile2_icon2.png</normaloff>
-                :/resources/icons/tactile2_icon2.png
-            </iconset>
-        </property>
-        <property name="windowOpacity">
-            <double>26.000000000000000</double>
-        </property>
-        <widget class="QWidget" name="verticalLayoutWidget">
-            <property name="geometry">
-                <rect>
-                    <x>30</x>
-                    <y>30</y>
-                    <width>471</width>
-                    <height>331</height>
-                </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout">
-                <property name="sizeConstraint">
-                    <enum>QLayout::SetDefaultConstraint</enum>
-                </property>
-                <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_3">
-                        <item>
-                            <spacer name="horizontalSpacer_5">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                        <item>
-                            <widget class="QLabel" name="label_4">
-                                <property name="text">
-                                    <string/>
-                                </property>
-                                <property name="pixmap">
-                                    <pixmap resource="../../tactile">
+        <property name="pixmap">
+         <pixmap>
                                         :/resources/icons/tactile2_icon2.png
                                     </pixmap>
-                                </property>
-                                <property name="alignment">
-                                    <set>Qt::AlignCenter</set>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <widget class="QLabel" name="label">
-                                <property name="font">
-                                    <font>
-                                        <family>Segoe UI</family>
-                                        <pointsize>16</pointsize>
-                                        <weight>50</weight>
-                                        <bold>false</bold>
-                                        <strikeout>false</strikeout>
-                                        <kerning>true</kerning>
-                                    </font>
-                                </property>
-                                <property name="text">
-                                    <string>Tactile 0.1.0 (alpha)</string>
-                                </property>
-                                <property name="alignment">
-                                    <set>Qt::AlignCenter</set>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <spacer name="horizontalSpacer_6">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                    </layout>
-                </item>
-                <item>
-                    <spacer name="verticalSpacer_2">
-                        <property name="orientation">
-                            <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                            <size>
-                                <width>20</width>
-                                <height>40</height>
-                            </size>
-                        </property>
-                    </spacer>
-                </item>
-                <item>
-                    <spacer name="verticalSpacer_4">
-                        <property name="orientation">
-                            <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                            <size>
-                                <width>20</width>
-                                <height>40</height>
-                            </size>
-                        </property>
-                    </spacer>
-                </item>
-                <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_4">
-                        <item>
-                            <spacer name="horizontalSpacer_7">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                        <item>
-                            <widget class="QLabel" name="label_9">
-                                <property name="text">
-                                    <string/>
-                                </property>
-                                <property name="pixmap">
-                                    <pixmap resource="../../tactile">
-                                        :/resources/icons/icons8/dark/qt.png
-                                    </pixmap>
-                                </property>
-                                <property name="alignment">
-                                    <set>Qt::AlignCenter</set>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <widget class="QLabel" name="label_3">
-                                <property name="font">
-                                    <font>
-                                        <family>Segoe UI</family>
-                                        <pointsize>12</pointsize>
-                                        <weight>50</weight>
-                                        <bold>false</bold>
-                                        <strikeout>false</strikeout>
-                                        <kerning>true</kerning>
-                                    </font>
-                                </property>
-                                <property name="text">
-                                    <string>This application utilises the &lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt;
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>16</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <strikeout>false</strikeout>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>Tactile 0.1.0 (alpha)</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <spacer name="verticalSpacer_4">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <spacer name="horizontalSpacer_7">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../../resources/icons/icons8/dark/qt.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>12</pointsize>
+          <weight>50</weight>
+          <bold>false</bold>
+          <strikeout>false</strikeout>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="text">
+         <string>This application utilises the &lt;a href=&quot;https://www.qt.io/&quot;&gt;Qt&lt;/a&gt;
                                         framework.
                                     </string>
-                                </property>
-                                <property name="alignment">
-                                    <set>Qt::AlignCenter</set>
-                                </property>
-                                <property name="openExternalLinks">
-                                    <bool>true</bool>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <spacer name="horizontalSpacer_8">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                    </layout>
-                </item>
-                <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_2">
-                        <item>
-                            <spacer name="horizontalSpacer_3">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                        <item>
-                            <widget class="QLabel" name="label_8">
-                                <property name="text">
-                                    <string/>
-                                </property>
-                                <property name="pixmap">
-                                    <pixmap resource="../../tactile">
-                                        :/resources/icons/icons8/color/64/icons8.png
-                                    </pixmap>
-                                </property>
-                                <property name="alignment">
-                                    <set>Qt::AlignCenter</set>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <widget class="QLabel" name="label_7">
-                                <property name="text">
-                                    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons by
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_8">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../../resources/icons/icons8/color/64/icons8.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Icons by
                                         &lt;a href=&quot;https://icons8.com/&quot;&gt;&lt;span
                                         style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Icons8&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
                                     </string>
-                                </property>
-                                <property name="alignment">
-                                    <set>Qt::AlignCenter</set>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <spacer name="horizontalSpacer_4">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                    </layout>
-                </item>
-                <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout">
-                        <item>
-                            <spacer name="horizontalSpacer">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                        <item>
-                            <widget class="QLabel" name="label_5">
-                                <property name="sizePolicy">
-                                    <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-                                        <horstretch>0</horstretch>
-                                        <verstretch>0</verstretch>
-                                    </sizepolicy>
-                                </property>
-                                <property name="layoutDirection">
-                                    <enum>Qt::RightToLeft</enum>
-                                </property>
-                                <property name="text">
-                                    <string/>
-                                </property>
-                                <property name="pixmap">
-                                    <pixmap resource="../../tactile">
-                                        :/resources/icons/icons8/color/64/git.png
-                                    </pixmap>
-                                </property>
-                                <property name="alignment">
-                                    <set>Qt::AlignCenter</set>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <widget class="QLabel" name="label_2">
-                                <property name="font">
-                                    <font>
-                                        <family>Segoe UI</family>
-                                        <pointsize>12</pointsize>
-                                    </font>
-                                </property>
-                                <property name="text">
-                                    <string>&lt;a href=&quot;https://github.com/albin-johansson/Tactile&quot;&gt;Source
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="pixmap">
+         <pixmap>../../resources/icons/icons8/color/64/github.png</pixmap>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="font">
+         <font>
+          <family>Segoe UI</family>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>&lt;a href=&quot;https://github.com/albin-johansson/Tactile&quot;&gt;Source
                                         code&lt;/a&gt;
                                     </string>
-                                </property>
-                                <property name="alignment">
-                                    <set>Qt::AlignCenter</set>
-                                </property>
-                                <property name="openExternalLinks">
-                                    <bool>true</bool>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <spacer name="horizontalSpacer_2">
-                                <property name="orientation">
-                                    <enum>Qt::Horizontal</enum>
-                                </property>
-                                <property name="sizeHint" stdset="0">
-                                    <size>
-                                        <width>40</width>
-                                        <height>20</height>
-                                    </size>
-                                </property>
-                            </spacer>
-                        </item>
-                    </layout>
-                </item>
-                <item>
-                    <spacer name="verticalSpacer_3">
-                        <property name="orientation">
-                            <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                            <size>
-                                <width>20</width>
-                                <height>40</height>
-                            </size>
-                        </property>
-                    </spacer>
-                </item>
-                <item>
-                    <widget class="QLabel" name="label_6">
-                        <property name="font">
-                            <font>
-                                <family>Segoe UI</family>
-                                <pointsize>12</pointsize>
-                                <weight>50</weight>
-                                <bold>false</bold>
-                                <strikeout>false</strikeout>
-                                <kerning>true</kerning>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Developed by Albin Johansson.</string>
-                        </property>
-                        <property name="alignment">
-                            <set>Qt::AlignCenter</set>
-                        </property>
-                    </widget>
-                </item>
-                <item>
-                    <spacer name="verticalSpacer">
-                        <property name="orientation">
-                            <enum>Qt::Vertical</enum>
-                        </property>
-                        <property name="sizeHint" stdset="0">
-                            <size>
-                                <width>20</width>
-                                <height>40</height>
-                            </size>
-                        </property>
-                    </spacer>
-                </item>
-            </layout>
-        </widget>
-    </widget>
-    <resources>
-        <include location="../../tactile"/>
-        <include location="../../tactile"/>
-    </resources>
-    <connections/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="openExternalLinks">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>12</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+        <strikeout>false</strikeout>
+        <kerning>true</kerning>
+       </font>
+      </property>
+      <property name="text">
+       <string>Developed by Albin Johansson.</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>40</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../tactile.qrc"/>
+  <include location="../../tactile.qrc"/>
+ </resources>
+ <connections/>
 </ui>

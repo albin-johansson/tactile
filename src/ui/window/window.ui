@@ -29,7 +29,7 @@
             <string>Tactile</string>
         </property>
         <property name="windowIcon">
-            <iconset resource="../../tactile">
+            <iconset resource="../../tactile.qrc">
                 <normaloff>:/resources/icons/tactile2_icon2.png</normaloff>
                 :/resources/icons/tactile2_icon2.png
             </iconset>
@@ -182,7 +182,7 @@
         </widget>
         <action name="actionNewMap">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/file.png</normaloff>
                     :/resources/icons/icons8/color/64/file.png
                 </iconset>
@@ -202,7 +202,7 @@
         </action>
         <action name="actionOpenMap">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/opened-folder.png</normaloff>
                     :/resources/icons/icons8/color/64/opened-folder.png
                 </iconset>
@@ -222,7 +222,7 @@
         </action>
         <action name="actionSave">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/save.png</normaloff>
                     :/resources/icons/icons8/color/64/save.png
                 </iconset>
@@ -242,7 +242,7 @@
         </action>
         <action name="actionSaveAs">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/save-as.png</normaloff>
                     :/resources/icons/icons8/color/64/save-as.png
                 </iconset>
@@ -262,7 +262,7 @@
         </action>
         <action name="actionRename">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/rename.png</normaloff>
                     :/resources/icons/icons8/color/64/rename.png
                 </iconset>
@@ -279,7 +279,7 @@
         </action>
         <action name="actionSettings">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/settings.png</normaloff>
                     :/resources/icons/icons8/color/64/settings.png
                 </iconset>
@@ -299,7 +299,7 @@
         </action>
         <action name="actionExit">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/exit.png</normaloff>
                     :/resources/icons/icons8/color/64/exit.png
                 </iconset>
@@ -319,7 +319,7 @@
                 <bool>false</bool>
             </property>
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/undo.png</normaloff>
                     :/resources/icons/icons8/color/64/undo.png
                 </iconset>
@@ -342,7 +342,7 @@
                 <bool>false</bool>
             </property>
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/redo.png</normaloff>
                     :/resources/icons/icons8/color/64/redo.png
                 </iconset>
@@ -362,7 +362,7 @@
         </action>
         <action name="actionAddRow">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/add-row.png</normaloff>
                     :/resources/icons/icons8/color/64/add-row.png
                 </iconset>
@@ -382,7 +382,7 @@
         </action>
         <action name="actionAddColumn">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/add-column.png</normaloff>
                     :/resources/icons/icons8/color/64/add-column.png
                 </iconset>
@@ -402,7 +402,7 @@
         </action>
         <action name="actionRemoveRow">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/remove-row.png</normaloff>
                     :/resources/icons/icons8/color/64/remove-row.png
                 </iconset>
@@ -422,7 +422,7 @@
         </action>
         <action name="actionRemoveColumn">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/remove-column.png</normaloff>
                     :/resources/icons/icons8/color/64/remove-column.png
                 </iconset>
@@ -442,7 +442,7 @@
         </action>
         <action name="actionCenterCamera">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/center-camera.png</normaloff>
                     :/resources/icons/icons8/color/64/center-camera.png
                 </iconset>
@@ -462,7 +462,7 @@
         </action>
         <action name="actionToggleGrid">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/grid.png</normaloff>
                     :/resources/icons/icons8/color/64/grid.png
                 </iconset>
@@ -482,7 +482,7 @@
         </action>
         <action name="actionZoomIn">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/zoom-in.png</normaloff>
                     :/resources/icons/icons8/color/64/zoom-in.png
                 </iconset>
@@ -502,7 +502,7 @@
         </action>
         <action name="actionZoomOut">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/zoom-out.png</normaloff>
                     :/resources/icons/icons8/color/64/zoom-out.png
                 </iconset>
@@ -532,7 +532,7 @@
         </action>
         <action name="actionPanUp">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/arrow-up.png</normaloff>
                     :/resources/icons/icons8/color/64/arrow-up.png
                 </iconset>
@@ -552,7 +552,7 @@
         </action>
         <action name="actionPanRight">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/arrow-right.png</normaloff>
                     :/resources/icons/icons8/color/64/arrow-right.png
                 </iconset>
@@ -572,7 +572,7 @@
         </action>
         <action name="actionPanLeft">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/arrow-left.png</normaloff>
                     :/resources/icons/icons8/color/64/arrow-left.png
                 </iconset>
@@ -592,7 +592,7 @@
         </action>
         <action name="actionPanDown">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/arrow-down.png</normaloff>
                     :/resources/icons/icons8/color/64/arrow-down.png
                 </iconset>
@@ -612,7 +612,7 @@
         </action>
         <action name="actionAboutTactile">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/about.png</normaloff>
                     :/resources/icons/icons8/color/64/about.png
                 </iconset>
@@ -632,7 +632,7 @@
                 <bool>true</bool>
             </property>
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/stamp.png</normaloff>
                     :/resources/icons/icons8/color/64/stamp.png
                 </iconset>
@@ -655,7 +655,7 @@
                 <bool>true</bool>
             </property>
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/bucket.png</normaloff>
                     :/resources/icons/icons8/color/64/bucket.png
                 </iconset>
@@ -678,7 +678,7 @@
                 <bool>true</bool>
             </property>
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/eraser.png</normaloff>
                     :/resources/icons/icons8/color/64/eraser.png
                 </iconset>
@@ -701,7 +701,7 @@
                 <bool>true</bool>
             </property>
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/rectangle.png</normaloff>
                     :/resources/icons/icons8/color/64/rectangle.png
                 </iconset>
@@ -730,7 +730,7 @@
                 <bool>true</bool>
             </property>
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/search.png</normaloff>
                     :/resources/icons/icons8/color/64/search.png
                 </iconset>
@@ -744,7 +744,7 @@
         </action>
         <action name="actionAddTileset">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/image.png</normaloff>
                     :/resources/icons/icons8/color/64/image.png
                 </iconset>
@@ -764,7 +764,7 @@
         </action>
         <action name="actionResizeMap">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/resize.png</normaloff>
                     :/resources/icons/icons8/color/64/resize.png
                 </iconset>
@@ -781,7 +781,7 @@
         </action>
         <action name="actionResetZoom">
             <property name="icon">
-                <iconset resource="../../tactile">
+                <iconset resource="../../tactile.qrc">
                     <normaloff>:/resources/icons/icons8/color/64/reset_zoom.png</normaloff>
                     :/resources/icons/icons8/color/64/reset_zoom.png
                 </iconset>
@@ -863,7 +863,7 @@
         </action>
     </widget>
     <resources>
-        <include location="../../tactile"/>
+        <include location="../../tactile.qrc"/>
     </resources>
     <connections/>
 </ui>
