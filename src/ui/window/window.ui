@@ -30,7 +30,8 @@
         </property>
         <property name="windowIcon">
             <iconset resource="../../tactile2.qrc">
-                <normaloff>:/res/icons/tactile2_icon2.png</normaloff>:/res/icons/tactile2_icon2.png
+                <normaloff>:/resources/icons/tactile2_icon2.png</normaloff>
+                :/resources/icons/tactile2_icon2.png
             </iconset>
         </property>
         <property name="styleSheet">
@@ -182,8 +183,8 @@
         <action name="actionNewMap">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/file.png</normaloff>
-                    :/res/icons/icons8/color/64/file.png
+                    <normaloff>:/resources/icons/icons8/color/64/file.png</normaloff>
+                    :/resources/icons/icons8/color/64/file.png
                 </iconset>
             </property>
             <property name="text">
@@ -202,8 +203,8 @@
         <action name="actionOpenMap">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/opened-folder.png</normaloff>
-                    :/res/icons/icons8/color/64/opened-folder.png
+                    <normaloff>:/resources/icons/icons8/color/64/opened-folder.png</normaloff>
+                    :/resources/icons/icons8/color/64/opened-folder.png
                 </iconset>
             </property>
             <property name="text">
@@ -222,8 +223,8 @@
         <action name="actionSave">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/save.png</normaloff>
-                    :/res/icons/icons8/color/64/save.png
+                    <normaloff>:/resources/icons/icons8/color/64/save.png</normaloff>
+                    :/resources/icons/icons8/color/64/save.png
                 </iconset>
             </property>
             <property name="text">
@@ -242,8 +243,8 @@
         <action name="actionSaveAs">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/save-as.png</normaloff>
-                    :/res/icons/icons8/color/64/save-as.png
+                    <normaloff>:/resources/icons/icons8/color/64/save-as.png</normaloff>
+                    :/resources/icons/icons8/color/64/save-as.png
                 </iconset>
             </property>
             <property name="text">
@@ -262,8 +263,8 @@
         <action name="actionRename">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/rename.png</normaloff>
-                    :/res/icons/icons8/color/64/rename.png
+                    <normaloff>:/resources/icons/icons8/color/64/rename.png</normaloff>
+                    :/resources/icons/icons8/color/64/rename.png
                 </iconset>
             </property>
             <property name="text">
@@ -279,8 +280,8 @@
         <action name="actionSettings">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/settings.png</normaloff>
-                    :/res/icons/icons8/color/64/settings.png
+                    <normaloff>:/resources/icons/icons8/color/64/settings.png</normaloff>
+                    :/resources/icons/icons8/color/64/settings.png
                 </iconset>
             </property>
             <property name="text">
@@ -299,8 +300,8 @@
         <action name="actionExit">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/exit.png</normaloff>
-                    :/res/icons/icons8/color/64/exit.png
+                    <normaloff>:/resources/icons/icons8/color/64/exit.png</normaloff>
+                    :/resources/icons/icons8/color/64/exit.png
                 </iconset>
             </property>
             <property name="text">
@@ -319,8 +320,8 @@
             </property>
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/undo.png</normaloff>
-                    :/res/icons/icons8/color/64/undo.png
+                    <normaloff>:/resources/icons/icons8/color/64/undo.png</normaloff>
+                    :/resources/icons/icons8/color/64/undo.png
                 </iconset>
             </property>
             <property name="text">
@@ -342,8 +343,8 @@
             </property>
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/redo.png</normaloff>
-                    :/res/icons/icons8/color/64/redo.png
+                    <normaloff>:/resources/icons/icons8/color/64/redo.png</normaloff>
+                    :/resources/icons/icons8/color/64/redo.png
                 </iconset>
             </property>
             <property name="text">
@@ -362,8 +363,8 @@
         <action name="actionAddRow">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/add-row.png</normaloff>
-                    :/res/icons/icons8/color/64/add-row.png
+                    <normaloff>:/resources/icons/icons8/color/64/add-row.png</normaloff>
+                    :/resources/icons/icons8/color/64/add-row.png
                 </iconset>
             </property>
             <property name="text">
@@ -382,8 +383,8 @@
         <action name="actionAddColumn">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/add-column.png</normaloff>
-                    :/res/icons/icons8/color/64/add-column.png
+                    <normaloff>:/resources/icons/icons8/color/64/add-column.png</normaloff>
+                    :/resources/icons/icons8/color/64/add-column.png
                 </iconset>
             </property>
             <property name="text">
@@ -402,8 +403,8 @@
         <action name="actionRemoveRow">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/remove-row.png</normaloff>
-                    :/res/icons/icons8/color/64/remove-row.png
+                    <normaloff>:/resources/icons/icons8/color/64/remove-row.png</normaloff>
+                    :/resources/icons/icons8/color/64/remove-row.png
                 </iconset>
             </property>
             <property name="text">
@@ -422,8 +423,8 @@
         <action name="actionRemoveColumn">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/remove-column.png</normaloff>
-                    :/res/icons/icons8/color/64/remove-column.png
+                    <normaloff>:/resources/icons/icons8/color/64/remove-column.png</normaloff>
+                    :/resources/icons/icons8/color/64/remove-column.png
                 </iconset>
             </property>
             <property name="text">
@@ -442,8 +443,8 @@
         <action name="actionCenterCamera">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/center-camera.png</normaloff>
-                    :/res/icons/icons8/color/64/center-camera.png
+                    <normaloff>:/resources/icons/icons8/color/64/center-camera.png</normaloff>
+                    :/resources/icons/icons8/color/64/center-camera.png
                 </iconset>
             </property>
             <property name="text">
@@ -462,8 +463,8 @@
         <action name="actionToggleGrid">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/grid.png</normaloff>
-                    :/res/icons/icons8/color/64/grid.png
+                    <normaloff>:/resources/icons/icons8/color/64/grid.png</normaloff>
+                    :/resources/icons/icons8/color/64/grid.png
                 </iconset>
             </property>
             <property name="text">
@@ -482,8 +483,8 @@
         <action name="actionZoomIn">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/zoom-in.png</normaloff>
-                    :/res/icons/icons8/color/64/zoom-in.png
+                    <normaloff>:/resources/icons/icons8/color/64/zoom-in.png</normaloff>
+                    :/resources/icons/icons8/color/64/zoom-in.png
                 </iconset>
             </property>
             <property name="text">
@@ -502,8 +503,8 @@
         <action name="actionZoomOut">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/zoom-out.png</normaloff>
-                    :/res/icons/icons8/color/64/zoom-out.png
+                    <normaloff>:/resources/icons/icons8/color/64/zoom-out.png</normaloff>
+                    :/resources/icons/icons8/color/64/zoom-out.png
                 </iconset>
             </property>
             <property name="text">
@@ -532,8 +533,8 @@
         <action name="actionPanUp">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/arrow-up.png</normaloff>
-                    :/res/icons/icons8/color/64/arrow-up.png
+                    <normaloff>:/resources/icons/icons8/color/64/arrow-up.png</normaloff>
+                    :/resources/icons/icons8/color/64/arrow-up.png
                 </iconset>
             </property>
             <property name="text">
@@ -552,8 +553,8 @@
         <action name="actionPanRight">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/arrow-right.png</normaloff>
-                    :/res/icons/icons8/color/64/arrow-right.png
+                    <normaloff>:/resources/icons/icons8/color/64/arrow-right.png</normaloff>
+                    :/resources/icons/icons8/color/64/arrow-right.png
                 </iconset>
             </property>
             <property name="text">
@@ -572,8 +573,8 @@
         <action name="actionPanLeft">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/arrow-left.png</normaloff>
-                    :/res/icons/icons8/color/64/arrow-left.png
+                    <normaloff>:/resources/icons/icons8/color/64/arrow-left.png</normaloff>
+                    :/resources/icons/icons8/color/64/arrow-left.png
                 </iconset>
             </property>
             <property name="text">
@@ -592,8 +593,8 @@
         <action name="actionPanDown">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/arrow-down.png</normaloff>
-                    :/res/icons/icons8/color/64/arrow-down.png
+                    <normaloff>:/resources/icons/icons8/color/64/arrow-down.png</normaloff>
+                    :/resources/icons/icons8/color/64/arrow-down.png
                 </iconset>
             </property>
             <property name="text">
@@ -612,8 +613,8 @@
         <action name="actionAboutTactile">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/about.png</normaloff>
-                    :/res/icons/icons8/color/64/about.png
+                    <normaloff>:/resources/icons/icons8/color/64/about.png</normaloff>
+                    :/resources/icons/icons8/color/64/about.png
                 </iconset>
             </property>
             <property name="text">
@@ -632,8 +633,8 @@
             </property>
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/stamp.png</normaloff>
-                    :/res/icons/icons8/color/64/stamp.png
+                    <normaloff>:/resources/icons/icons8/color/64/stamp.png</normaloff>
+                    :/resources/icons/icons8/color/64/stamp.png
                 </iconset>
             </property>
             <property name="text">
@@ -655,8 +656,8 @@
             </property>
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/bucket.png</normaloff>
-                    :/res/icons/icons8/color/64/bucket.png
+                    <normaloff>:/resources/icons/icons8/color/64/bucket.png</normaloff>
+                    :/resources/icons/icons8/color/64/bucket.png
                 </iconset>
             </property>
             <property name="text">
@@ -678,8 +679,8 @@
             </property>
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/eraser.png</normaloff>
-                    :/res/icons/icons8/color/64/eraser.png
+                    <normaloff>:/resources/icons/icons8/color/64/eraser.png</normaloff>
+                    :/resources/icons/icons8/color/64/eraser.png
                 </iconset>
             </property>
             <property name="text">
@@ -701,8 +702,8 @@
             </property>
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/rectangle.png</normaloff>
-                    :/res/icons/icons8/color/64/rectangle.png
+                    <normaloff>:/resources/icons/icons8/color/64/rectangle.png</normaloff>
+                    :/resources/icons/icons8/color/64/rectangle.png
                 </iconset>
             </property>
             <property name="text">
@@ -730,8 +731,8 @@
             </property>
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/search.png</normaloff>
-                    :/res/icons/icons8/color/64/search.png
+                    <normaloff>:/resources/icons/icons8/color/64/search.png</normaloff>
+                    :/resources/icons/icons8/color/64/search.png
                 </iconset>
             </property>
             <property name="text">
@@ -744,8 +745,8 @@
         <action name="actionAddTileset">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/image.png</normaloff>
-                    :/res/icons/icons8/color/64/image.png
+                    <normaloff>:/resources/icons/icons8/color/64/image.png</normaloff>
+                    :/resources/icons/icons8/color/64/image.png
                 </iconset>
             </property>
             <property name="text">
@@ -764,8 +765,8 @@
         <action name="actionResizeMap">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/resize.png</normaloff>
-                    :/res/icons/icons8/color/64/resize.png
+                    <normaloff>:/resources/icons/icons8/color/64/resize.png</normaloff>
+                    :/resources/icons/icons8/color/64/resize.png
                 </iconset>
             </property>
             <property name="text">
@@ -781,8 +782,8 @@
         <action name="actionResetZoom">
             <property name="icon">
                 <iconset resource="../../tactile2.qrc">
-                    <normaloff>:/res/icons/icons8/color/64/reset_zoom.png</normaloff>
-                    :/res/icons/icons8/color/64/reset_zoom.png
+                    <normaloff>:/resources/icons/icons8/color/64/reset_zoom.png</normaloff>
+                    :/resources/icons/icons8/color/64/reset_zoom.png
                 </iconset>
             </property>
             <property name="text">
@@ -815,8 +816,8 @@
             </property>
             <property name="icon">
                 <iconset>
-                    <selectedoff>:/res/icons/icons8/color/64/unchecked.png</selectedoff>
-                    <selectedon>:/res/icons/icons8/color/64/checked.png</selectedon>
+                    <selectedoff>:/resources/icons/icons8/color/64/unchecked.png</selectedoff>
+                    <selectedon>:/resources/icons/icons8/color/64/checked.png</selectedon>
                 </iconset>
             </property>
             <property name="text">
@@ -835,8 +836,8 @@
             </property>
             <property name="icon">
                 <iconset>
-                    <selectedoff>:/res/icons/icons8/color/64/unchecked.png</selectedoff>
-                    <selectedon>:/res/icons/icons8/color/64/checked.png</selectedon>
+                    <selectedoff>:/resources/icons/icons8/color/64/unchecked.png</selectedoff>
+                    <selectedon>:/resources/icons/icons8/color/64/checked.png</selectedon>
                 </iconset>
             </property>
             <property name="text">

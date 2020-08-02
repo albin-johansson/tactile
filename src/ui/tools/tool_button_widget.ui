@@ -83,8 +83,9 @@
                             </property>
                             <property name="icon">
                                 <iconset resource="../tactile2.qrc">
-                                    <normaloff>:/res/icons/icons8/color/64/stamp.png</normaloff>
-                                    :/res/icons/icons8/color/64/stamp.png
+                                    <normaloff>:/resources/icons/icons8/color/64/stamp.png
+                                    </normaloff>
+                                    :/resources/icons/icons8/color/64/stamp.png
                                 </iconset>
                             </property>
                             <property name="iconSize">
@@ -126,8 +127,9 @@
                             </property>
                             <property name="icon">
                                 <iconset resource="../tactile2.qrc">
-                                    <normaloff>:/res/icons/icons8/color/64/bucket.png</normaloff>
-                                    :/res/icons/icons8/color/64/bucket.png
+                                    <normaloff>:/resources/icons/icons8/color/64/bucket.png
+                                    </normaloff>
+                                    :/resources/icons/icons8/color/64/bucket.png
                                 </iconset>
                             </property>
                             <property name="iconSize">
@@ -163,8 +165,9 @@
                             </property>
                             <property name="icon">
                                 <iconset resource="../tactile2.qrc">
-                                    <normaloff>:/res/icons/icons8/color/64/eraser.png</normaloff>
-                                    :/res/icons/icons8/color/64/eraser.png
+                                    <normaloff>:/resources/icons/icons8/color/64/eraser.png
+                                    </normaloff>
+                                    :/resources/icons/icons8/color/64/eraser.png
                                 </iconset>
                             </property>
                             <property name="iconSize">
@@ -200,8 +203,9 @@
                             </property>
                             <property name="icon">
                                 <iconset resource="../tactile2.qrc">
-                                    <normaloff>:/res/icons/icons8/color/64/rectangle.png</normaloff>
-                                    :/res/icons/icons8/color/64/rectangle.png
+                                    <normaloff>:/resources/icons/icons8/color/64/rectangle.png
+                                    </normaloff>
+                                    :/resources/icons/icons8/color/64/rectangle.png
                                 </iconset>
                             </property>
                             <property name="checkable">
@@ -234,8 +238,9 @@
                             </property>
                             <property name="icon">
                                 <iconset resource="../tactile2.qrc">
-                                    <normaloff>:/res/icons/icons8/color/64/search.png</normaloff>
-                                    :/res/icons/icons8/color/64/search.png
+                                    <normaloff>:/resources/icons/icons8/color/64/search.png
+                                    </normaloff>
+                                    :/resources/icons/icons8/color/64/search.png
                                 </iconset>
                             </property>
                             <property name="checkable">

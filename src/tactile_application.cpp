@@ -54,7 +54,7 @@ TactileApplication::TactileApplication(int argc, char** argv)
   setOrganizationName("albinjohansson");
   setApplicationName("Tactile");
 
-  QIcon icon{":/res/icons/tactile2_icon2.png"};
+  QIcon icon{":/resources/icons/tactile2_icon2.png"};
   setWindowIcon(icon);
 
   validate_settings();
@@ -63,10 +63,10 @@ TactileApplication::TactileApplication(int argc, char** argv)
   m_core = TactileCore::unique();
 
   init_connections();
-  load_style_sheet(":/res/tactile_light.qss");
+  load_style_sheet(":/resources/tactile_light.qss");
 
   // TODO do this to indicate what tool is active
-  //  QPixmap pixmap{":/res/icons/icons8/color/64/eraser.png"};
+  //  QPixmap pixmap{":/resources/icons/icons8/color/64/eraser.png"};
   //  QCursor c{pixmap};
   //  QApplication::setOverrideCursor(c);
 

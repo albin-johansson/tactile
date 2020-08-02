@@ -68,9 +68,9 @@
                                     <property name="icon">
                                         <iconset resource="../../tactile2.qrc">
                                             <normaloff>
-                                                :/res/icons/icons8/color/64/image.png
+                                                :/resources/icons/icons8/color/64/image.png
                                             </normaloff>
-                                            :/res/icons/icons8/color/64/image.png
+                                            :/resources/icons/icons8/color/64/image.png
                                         </iconset>
                                     </property>
                                 </widget>

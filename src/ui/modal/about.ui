@@ -30,7 +30,8 @@
         </property>
         <property name="windowIcon">
             <iconset resource="../../tactile2.qrc">
-                <normaloff>:/res/icons/tactile2_icon2.png</normaloff>:/res/icons/tactile2_icon2.png
+                <normaloff>:/resources/icons/tactile2_icon2.png</normaloff>
+                :/resources/icons/tactile2_icon2.png
             </iconset>
         </property>
         <property name="windowOpacity">
@@ -71,7 +72,7 @@
                                 </property>
                                 <property name="pixmap">
                                     <pixmap resource="../../tactile2.qrc">
-                                        :/res/icons/tactile2_icon2.png
+                                        :/resources/icons/tactile2_icon2.png
                                     </pixmap>
                                 </property>
                                 <property name="alignment">
@@ -162,7 +163,7 @@
                                 </property>
                                 <property name="pixmap">
                                     <pixmap resource="../../tactile2.qrc">
-                                        :/res/icons/icons8/dark/qt.png
+                                        :/resources/icons/icons8/dark/qt.png
                                     </pixmap>
                                 </property>
                                 <property name="alignment">
@@ -232,7 +233,7 @@
                                 </property>
                                 <property name="pixmap">
                                     <pixmap resource="../../tactile2.qrc">
-                                        :/res/icons/icons8/color/64/icons8.png
+                                        :/resources/icons/icons8/color/64/icons8.png
                                     </pixmap>
                                 </property>
                                 <property name="alignment">
@@ -299,7 +300,7 @@
                                 </property>
                                 <property name="pixmap">
                                     <pixmap resource="../../tactile2.qrc">
-                                        :/res/icons/icons8/color/64/git.png
+                                        :/resources/icons/icons8/color/64/git.png
                                     </pixmap>
                                 </property>
                                 <property name="alignment">

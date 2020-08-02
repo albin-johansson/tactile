@@ -84,7 +84,7 @@
                                         </property>
                                         <property name="pixmap">
                                             <pixmap resource="../../tactile2.qrc">
-                                                :/res/icons/icons8/color/64/image.png
+                                                :/resources/icons/icons8/color/64/image.png
                                             </pixmap>
                                         </property>
                                         <property name="scaledContents">
