@@ -2,15 +2,15 @@ cmake_minimum_required(VERSION 3.12)
 project(tactile_test_proj)
 
 set(TACTILE_TEST_FILES
-        test_main.cpp
-        tile_layer_test.cpp
-        map_position_test.cpp
-        tilemap_test.cpp
-        flood_fill_test.cpp
-        tileset_test.cpp
-        tile_size_test.cpp
-        widget_size_policy_test.cpp
-        tileset_manager_test.cpp)
+        unit/test_main.cpp
+        unit/tile_layer_test.cpp
+        unit/map_position_test.cpp
+        unit/tilemap_test.cpp
+        unit/flood_fill_test.cpp
+        unit/tileset_test.cpp
+        unit/tile_size_test.cpp
+        unit/widget_size_policy_test.cpp
+        unit/tileset_manager_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 

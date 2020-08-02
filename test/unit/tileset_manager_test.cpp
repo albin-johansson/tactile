@@ -56,8 +56,8 @@ TEST_CASE("TilesetManager::remove_all", "[TilesetManager]")
   TilesetManager manager;
   CHECK_NOTHROW(manager.remove_all());
 
-  manager.add(create_tile_sheet());  // NOLINT
-  manager.add(create_tile_sheet());  // NOLINT
+  const auto a = manager.add(create_tile_sheet());
+  const auto b = manager.add(create_tile_sheet());
 
   CHECK(manager.sheets() == 2);
 
