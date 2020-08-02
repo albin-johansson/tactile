@@ -100,13 +100,18 @@ void Tilemap::set_rows(int nRows) noexcept
     return;
   }
 
-  const auto action =
-      (nRows > m_nRows)
-          ? [](TileLayer& layer) noexcept { layer.add_row(empty); }
-          : [](TileLayer& layer) noexcept { layer.remove_row(); };
-
   const auto nSteps = std::abs(nRows - m_nRows);
-  repeat(nSteps, [&] { for_all(m_layers, action); });
+
+  if (nRows > m_nRows) {
+    for (auto i = 0; i < nSteps; ++i) {
+      for_all(m_layers,
+              [](TileLayer& layer) noexcept { layer.add_row(empty); });
+    }
+  } else {
+    for (auto i = 0; i < nSteps; ++i) {
+      for_all(m_layers, [](TileLayer& layer) noexcept { layer.remove_row(); });
+    }
+  }
 
   m_nRows = nRows;
 }
@@ -119,13 +124,18 @@ void Tilemap::set_cols(int nCols) noexcept
     return;
   }
 
-  const auto action =
-      (nCols > m_nCols)
-          ? [](TileLayer& layer) noexcept { layer.add_col(empty); }
-          : [](TileLayer& layer) noexcept { layer.remove_col(); };
-
   const auto nSteps = std::abs(m_nCols - nCols);
-  repeat(nSteps, [&] { for_all(m_layers, action); });
+
+  if (nCols > m_nCols) {
+    for (auto i = 0; i < nSteps; ++i) {
+      for_all(m_layers,
+              [](TileLayer& layer) noexcept { layer.add_col(empty); });
+    }
+  } else {
+    for (auto i = 0; i < nSteps; ++i) {
+      for_all(m_layers, [](TileLayer& layer) noexcept { layer.remove_col(); });
+    }
+  }
 
   m_nCols = nCols;
 }
