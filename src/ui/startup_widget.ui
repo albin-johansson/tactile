@@ -210,7 +210,7 @@
         </layout>
     </widget>
     <resources>
-        <include location="../tactile2.qrc"/>
+        <include location="../tactile"/>
     </resources>
     <connections/>
 </ui>

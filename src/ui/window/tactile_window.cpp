@@ -15,7 +15,7 @@
 #include "settings_utils.hpp"
 #include "tileset_widget.hpp"
 #include "ui/tools/mouse_tool_widget.hpp"
-#include "ui_window.hpp"
+#include "ui_window.h"
 #include "widget_size_policy.hpp"
 
 namespace tactile {

@@ -82,7 +82,7 @@
                                 <string/>
                             </property>
                             <property name="icon">
-                                <iconset resource="../tactile2.qrc">
+                                <iconset resource="../tactile">
                                     <normaloff>:/resources/icons/icons8/color/64/stamp.png
                                     </normaloff>
                                     :/resources/icons/icons8/color/64/stamp.png
@@ -126,7 +126,7 @@
                                 <string notr="true"/>
                             </property>
                             <property name="icon">
-                                <iconset resource="../tactile2.qrc">
+                                <iconset resource="../tactile">
                                     <normaloff>:/resources/icons/icons8/color/64/bucket.png
                                     </normaloff>
                                     :/resources/icons/icons8/color/64/bucket.png
@@ -164,7 +164,7 @@
                                 <string/>
                             </property>
                             <property name="icon">
-                                <iconset resource="../tactile2.qrc">
+                                <iconset resource="../tactile">
                                     <normaloff>:/resources/icons/icons8/color/64/eraser.png
                                     </normaloff>
                                     :/resources/icons/icons8/color/64/eraser.png
@@ -202,7 +202,7 @@
                                 <string/>
                             </property>
                             <property name="icon">
-                                <iconset resource="../tactile2.qrc">
+                                <iconset resource="../tactile">
                                     <normaloff>:/resources/icons/icons8/color/64/rectangle.png
                                     </normaloff>
                                     :/resources/icons/icons8/color/64/rectangle.png
@@ -237,7 +237,7 @@
                                 <string/>
                             </property>
                             <property name="icon">
-                                <iconset resource="../tactile2.qrc">
+                                <iconset resource="../tactile">
                                     <normaloff>:/resources/icons/icons8/color/64/search.png
                                     </normaloff>
                                     :/resources/icons/icons8/color/64/search.png
@@ -269,7 +269,7 @@
         </layout>
     </widget>
     <resources>
-        <include location="../tactile2.qrc"/>
+        <include location="../tactile"/>
     </resources>
     <connections/>
 </ui>

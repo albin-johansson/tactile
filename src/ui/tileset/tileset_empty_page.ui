@@ -66,7 +66,7 @@
                                         <string>Add tileset...</string>
                                     </property>
                                     <property name="icon">
-                                        <iconset resource="../../tactile2.qrc">
+                                        <iconset resource="../../tactile">
                                             <normaloff>
                                                 :/resources/icons/icons8/color/64/image.png
                                             </normaloff>
@@ -108,7 +108,7 @@
         </layout>
     </widget>
     <resources>
-        <include location="../../tactile2.qrc"/>
+        <include location="../../tactile"/>
     </resources>
     <connections/>
 </ui>

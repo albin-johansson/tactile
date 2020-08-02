@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 project(tactile_src_proj)
 
 set(TACTILE_SOURCE_FILES
-        tactile2.qrc
+        tactile.qrc
 
         tactile_application.cpp
         tactile_application.hpp

@@ -1,6 +1,6 @@
 #include "stamp_toolbar.hpp"
 
-#include "ui_toolbar_stamp.hpp"
+#include "ui_toolbar_stamp.h"
 
 namespace tactile {
 

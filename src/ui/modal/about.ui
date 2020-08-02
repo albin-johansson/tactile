@@ -29,7 +29,7 @@
             <string>About Tactile</string>
         </property>
         <property name="windowIcon">
-            <iconset resource="../../tactile2.qrc">
+            <iconset resource="../../tactile">
                 <normaloff>:/resources/icons/tactile2_icon2.png</normaloff>
                 :/resources/icons/tactile2_icon2.png
             </iconset>
@@ -71,7 +71,7 @@
                                     <string/>
                                 </property>
                                 <property name="pixmap">
-                                    <pixmap resource="../../tactile2.qrc">
+                                    <pixmap resource="../../tactile">
                                         :/resources/icons/tactile2_icon2.png
                                     </pixmap>
                                 </property>
@@ -162,7 +162,7 @@
                                     <string/>
                                 </property>
                                 <property name="pixmap">
-                                    <pixmap resource="../../tactile2.qrc">
+                                    <pixmap resource="../../tactile">
                                         :/resources/icons/icons8/dark/qt.png
                                     </pixmap>
                                 </property>
@@ -232,7 +232,7 @@
                                     <string/>
                                 </property>
                                 <property name="pixmap">
-                                    <pixmap resource="../../tactile2.qrc">
+                                    <pixmap resource="../../tactile">
                                         :/resources/icons/icons8/color/64/icons8.png
                                     </pixmap>
                                 </property>
@@ -299,7 +299,7 @@
                                     <string/>
                                 </property>
                                 <property name="pixmap">
-                                    <pixmap resource="../../tactile2.qrc">
+                                    <pixmap resource="../../tactile">
                                         :/resources/icons/icons8/color/64/git.png
                                     </pixmap>
                                 </property>
@@ -394,8 +394,8 @@
         </widget>
     </widget>
     <resources>
-        <include location="../../tactile2.qrc"/>
-        <include location="../../tactile2.qrc"/>
+        <include location="../../tactile"/>
+        <include location="../../tactile"/>
     </resources>
     <connections/>
 </ui>

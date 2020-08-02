@@ -3,7 +3,7 @@
 #include "tileset_content_page.hpp"
 #include "tileset_empty_page.hpp"
 #include "tileset_info.hpp"
-#include "ui_tileset_widget.hpp"
+#include "ui_tileset_widget.h"
 
 namespace tactile {
 

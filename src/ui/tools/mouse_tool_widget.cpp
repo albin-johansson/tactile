@@ -2,7 +2,7 @@
 
 #include <QButtonGroup>
 
-#include "ui_tool_button_widget.hpp"
+#include "ui_tool_button_widget.h"
 
 namespace tactile {
 
