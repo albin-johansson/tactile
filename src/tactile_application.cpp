@@ -66,9 +66,9 @@ TactileApplication::TactileApplication(int argc, char** argv)
   load_style_sheet(":/res/tactile_light.qss");
 
   // TODO do this to indicate what tool is active
-//  QPixmap pixmap{":/res/icons/icons8/color/64/eraser.png"};
-//  QCursor c{pixmap};
-//  QApplication::setOverrideCursor(c);
+  //  QPixmap pixmap{":/res/icons/icons8/color/64/eraser.png"};
+  //  QCursor c{pixmap};
+  //  QApplication::setOverrideCursor(c);
 
   m_window->show();
 }
