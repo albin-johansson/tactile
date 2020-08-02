@@ -35,5 +35,5 @@ copy_directory_post_build(testTactile
         ${CMAKE_CURRENT_BINARY_DIR})
 
 copy_directory_post_build(testTactile
-        ${CMAKE_CURRENT_SOURCE_DIR}/res
+        ${CMAKE_CURRENT_SOURCE_DIR}/resources
         ${CMAKE_CURRENT_BINARY_DIR})
