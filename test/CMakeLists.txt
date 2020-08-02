@@ -15,7 +15,7 @@ set(TACTILE_TEST_FILES
 add_executable(testTactile ${TACTILE_TEST_FILES})
 
 add_library(libCatch INTERFACE)
-target_include_directories(libCatch INTERFACE lib/catch)
+target_include_directories(libCatch INTERFACE catch)
 
 target_include_directories(testTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
