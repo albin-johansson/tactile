@@ -1,7 +1,7 @@
 #pragma once
-#include <QApplication>
 
-#include "smart_pointers.hpp"
+#include <QApplication>
+#include <memory>
 
 class QPaintEvent;
 
@@ -29,8 +29,8 @@ class TactileApplication final : public QApplication {
   ~TactileApplication() noexcept override;
 
  private:
-  Unique<TactileWindow> m_window;
-  Unique<TactileCore> m_core;
+  std::unique_ptr<TactileWindow> m_window;
+  std::unique_ptr<TactileCore> m_core;
 
   void init_connections() noexcept;
 

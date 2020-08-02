@@ -3,18 +3,19 @@
 #include <QDockWidget>
 #include <QLayout>
 
+#include "tactile_error.hpp"
 #include "tactile_types.hpp"
 
 namespace tactile {
 
-[[nodiscard]] Unique<QDockWidget> create_dock_widget(
-    QWidget* widget,
-    const char* name,
-    const QMargins& margins,
-    QFlags<Qt::DockWidgetArea> areas)
+auto create_dock_widget(QWidget* widget,
+                        czstring name,
+                        const QMargins& margins,
+                        QFlags<Qt::DockWidgetArea> areas)
+    -> std::unique_ptr<QDockWidget>
 {
   if (!widget || !name) {
-    throw BadArg{"Failed to create dock widget!"};
+    throw tactile_error{"Failed to create dock widget!"};
   }
 
   auto dock = std::make_unique<QDockWidget>();

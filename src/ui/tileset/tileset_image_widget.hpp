@@ -1,7 +1,7 @@
 #pragma once
-#include <QWidget>
 
-#include "smart_pointers.hpp"
+#include <QWidget>
+#include <memory>
 
 class QLayout;
 class QLabel;
@@ -21,11 +21,11 @@ class TilesetImageWidget final : public QWidget {
 
   ~TilesetImageWidget() noexcept override;
 
-  [[nodiscard]] static Unique<TilesetImageWidget> unique(
-      const QImage& image,
-      int tileWidth,
-      int tileHeight,
-      QWidget* parent = nullptr);
+  [[nodiscard]] static auto unique(const QImage& image,
+                                   int tileWidth,
+                                   int tileHeight,
+                                   QWidget* parent = nullptr)
+      -> std::unique_ptr<TilesetImageWidget>;
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;
@@ -35,9 +35,9 @@ class TilesetImageWidget final : public QWidget {
   void mouseMoveEvent(QMouseEvent* event) override;
 
  private:
-  Unique<QLayout> m_layout;
-  Unique<QLabel> m_imageLabel;
-  Unique<QRubberBand> m_rubberBand;
+  std::unique_ptr<QLayout> m_layout;
+  std::unique_ptr<QLabel> m_imageLabel;
+  std::unique_ptr<QRubberBand> m_rubberBand;
   QPoint m_origin;
 };
 

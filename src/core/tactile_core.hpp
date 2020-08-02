@@ -1,12 +1,11 @@
 #pragma once
 
 #include <QObject>
+#include <memory>
 #include <optional>
 #include <type_traits>
 #include <unordered_map>
 
-#include "maybe.hpp"
-#include "smart_pointers.hpp"
 #include "tactile_types.hpp"
 
 class QPainter;
@@ -14,7 +13,7 @@ class QPainter;
 namespace tactile {
 
 class tilemap;
-class TilesetManager;
+class tileset_manager;
 
 /**
  * The <code>TactileCore</code> class represents the main interface for the
@@ -48,7 +47,7 @@ class TactileCore final : public QObject {
    * @return a unique pointer to a TactileCore instance.
    * @since 0.1.0
    */
-  [[nodiscard]] static auto unique() -> Unique<TactileCore>;
+  [[nodiscard]] static auto unique() -> std::unique_ptr<TactileCore>;
 
   /**
    * Opens a tilemap from the specified location.
@@ -72,7 +71,7 @@ class TactileCore final : public QObject {
    * sheet was added.
    * @since 0.1.0
    */
-  [[nodiscard]] auto add_tileset(const Shared<QImage>& image,
+  [[nodiscard]] auto add_tileset(const std::shared_ptr<QImage>& image,
                                  int tileWidth,
                                  int tileHeight) noexcept -> std::optional<int>;
 
@@ -249,8 +248,8 @@ class TactileCore final : public QObject {
 
  private:
   std::optional<int> m_activeMapIndex;
-  std::unordered_map<int, Unique<tilemap>> m_maps;
-  Unique<TilesetManager> m_sheetManager;
+  std::unordered_map<int, std::unique_ptr<tilemap>> m_maps;
+  std::unique_ptr<tileset_manager> m_sheetManager;
 
   /**
    * Returns a pointer to the currently active map. You should check that the

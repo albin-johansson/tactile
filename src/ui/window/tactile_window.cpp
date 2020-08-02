@@ -55,7 +55,7 @@ TactileWindow::~TactileWindow() noexcept
   delete m_ui;
 }
 
-Unique<TactileWindow> TactileWindow::unique(QWidget* parent)
+std::unique_ptr<TactileWindow> TactileWindow::unique(QWidget* parent)
 {
   return std::make_unique<TactileWindow>(parent);
 }

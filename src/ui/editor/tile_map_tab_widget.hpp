@@ -4,8 +4,6 @@
 #include <optional>
 #include <unordered_map>
 
-#include "maybe.hpp"
-
 namespace tactile {
 
 class EditorTab;

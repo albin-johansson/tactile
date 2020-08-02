@@ -4,8 +4,7 @@
 #include <QMainWindow>
 #include <QOpenGLWidget>
 #include <QWidget>
-
-#include "smart_pointers.hpp"
+#include <memory>
 
 namespace Ui {
 
@@ -50,7 +49,8 @@ class TactileWindow final : public QMainWindow {
    * @return a unique pointer to a tactile window.
    * @since 0.1.0
    */
-  [[nodiscard]] static Unique<TactileWindow> unique(QWidget* parent = nullptr);
+  [[nodiscard]] static auto unique(QWidget* parent = nullptr)
+      -> std::unique_ptr<TactileWindow>;
 
   /**
    * Enables the startup view.
@@ -189,10 +189,10 @@ class TactileWindow final : public QMainWindow {
   MouseToolWidget* m_mouseToolWidget;
   TilesetWidget* m_tilesetWidget;
 
-  Unique<QDockWidget> m_mouseToolDock;
-  Unique<QDockWidget> m_tilesetDock;
+  std::unique_ptr<QDockWidget> m_mouseToolDock;
+  std::unique_ptr<QDockWidget> m_tilesetDock;
 
-  Unique<QActionGroup> m_mouseToolGroup;
+  std::unique_ptr<QActionGroup> m_mouseToolGroup;
 
   /**
    * Initializes all of the connections related to the internal components of

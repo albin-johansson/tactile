@@ -10,8 +10,8 @@ class tilemap;
 
 class tile_layer;
 
-class Tileset;
+class tileset;
 
-class TilesetManager;
+class tileset_manager;
 
 }  // namespace tactile

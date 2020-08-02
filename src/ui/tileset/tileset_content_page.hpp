@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QWidget>
+#include <memory>
 
-#include "smart_pointers.hpp"
 #include "tactile_types.hpp"
 
 namespace Ui {
@@ -33,7 +33,7 @@ class TilesetContentPage final : public QWidget {
 
  private:
   Ui::TilesetContentPageUI* m_ui;
-  HashMap<int, Shared<TilesetTab>> m_tabs;
+  std::unordered_map<int, std::shared_ptr<TilesetTab>> m_tabs;
 
   //  [[nodiscard]] bool contains_tileset(int id) const noexcept;
 };

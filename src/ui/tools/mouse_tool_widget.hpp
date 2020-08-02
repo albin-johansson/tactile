@@ -1,7 +1,7 @@
 #pragma once
-#include <QDockWidget>
 
-#include "smart_pointers.hpp"
+#include <QDockWidget>
+#include <memory>
 
 class QButtonGroup;
 
@@ -49,7 +49,7 @@ class MouseToolWidget final : public QWidget {
 
  private:
   Ui::ToolButtonBarUI* m_ui;
-  Unique<QButtonGroup> m_group;
+  std::unique_ptr<QButtonGroup> m_group;
 
   void set_tools_disabled(bool disabled) noexcept;
 };

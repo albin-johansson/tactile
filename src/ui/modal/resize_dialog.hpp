@@ -2,10 +2,8 @@
 
 #include <QDialog>
 #include <QValidator>
+#include <memory>
 #include <optional>
-
-#include "maybe.hpp"
-#include "smart_pointers.hpp"
 
 namespace Ui {
 
@@ -61,7 +59,7 @@ class ResizeDialog final : public QDialog {
 
  private:
   Ui::ResizeDialogUI* m_ui;
-  Unique<QIntValidator> m_validator;
+  std::unique_ptr<QIntValidator> m_validator;
   std::optional<int> m_chosenWidth;
   std::optional<int> m_chosenHeight;
 

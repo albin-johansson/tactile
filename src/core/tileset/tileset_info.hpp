@@ -1,6 +1,6 @@
 #pragma once
 
-#include "smart_pointers.hpp"
+#include <memory>
 
 class QImage;
 
@@ -11,11 +11,11 @@ namespace tactile {
  *
  * @since 0.1.0
  */
-struct TilesetInfo final {
-  Shared<QImage> image = nullptr;
-  int id = 0;
-  int tileWidth = 1;
-  int tileHeight = 1;
+struct [[deprecated]] TilesetInfo final {
+  std::shared_ptr<QImage> image{};
+  int id{0};
+  int tileWidth{1};
+  int tileHeight{1};
 };
 
 }  // namespace tactile

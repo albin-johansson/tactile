@@ -2,7 +2,7 @@
 
 #include <QPainter>
 
-#include "tactile_types.hpp"
+#include "tactile_error.hpp"
 
 namespace tactile {
 
@@ -15,7 +15,7 @@ TilesetImageLabel::TilesetImageLabel(const QImage& image,
       m_tileHeight{tileHeight < 1 ? 1 : tileHeight}
 {
   if (image.isNull()) {
-    throw BadArg{"Can't create tileset image label from null image!"};
+    throw tactile_error{"Can't create tileset image label from null image!"};
   }
   setPixmap(QPixmap::fromImage(image));
 
@@ -32,10 +32,11 @@ TilesetImageLabel::TilesetImageLabel(const QImage& image,
 TilesetImageLabel::~TilesetImageLabel() noexcept
 {}
 
-Unique<TilesetImageLabel> TilesetImageLabel::unique(const QImage& image,
-                                                    int tileWidth,
-                                                    int tileHeight,
-                                                    QWidget* parent)
+std::unique_ptr<TilesetImageLabel> TilesetImageLabel::unique(
+    const QImage& image,
+    int tileWidth,
+    int tileHeight,
+    QWidget* parent)
 {
   return std::make_unique<TilesetImageLabel>(
       image, tileWidth, tileHeight, parent);

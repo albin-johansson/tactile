@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QRubberBand>
 
-#include "tactile_types.hpp"
+#include "tactile_error.hpp"
 #include "tileset_image_label.hpp"
 
 namespace tactile {
@@ -17,7 +17,7 @@ TilesetImageWidget::TilesetImageWidget(const QImage& image,
     : QWidget{parent}
 {
   if (image.isNull()) {
-    throw BadArg{"Can't create tileset image widget from null image!"};
+    throw tactile_error{"Can't create tileset image widget from null image!"};
   }
 
   m_imageLabel = TilesetImageLabel::unique(image, tileWidth, tileHeight);
@@ -33,10 +33,11 @@ TilesetImageWidget::TilesetImageWidget(const QImage& image,
 
 TilesetImageWidget::~TilesetImageWidget() noexcept = default;
 
-Unique<TilesetImageWidget> TilesetImageWidget::unique(const QImage& image,
-                                                      int tileWidth,
-                                                      int tileHeight,
-                                                      QWidget* parent)
+std::unique_ptr<TilesetImageWidget> TilesetImageWidget::unique(
+    const QImage& image,
+    int tileWidth,
+    int tileHeight,
+    QWidget* parent)
 {
   return std::make_unique<TilesetImageWidget>(
       image, tileWidth, tileHeight, parent);

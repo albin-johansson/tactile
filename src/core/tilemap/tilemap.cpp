@@ -24,12 +24,12 @@ tilemap::tilemap(int nRows, int nCols)
   m_layers.emplace_back(nRows, nCols);
 }
 
-auto tilemap::unique(int nRows, int nCols) -> Unique<tilemap>
+auto tilemap::unique(int nRows, int nCols) -> std::unique_ptr<tilemap>
 {
   return std::make_unique<tilemap>(nRows, nCols);
 }
 
-auto tilemap::shared(int nRows, int nCols) -> Shared<tilemap>
+auto tilemap::shared(int nRows, int nCols) -> std::shared_ptr<tilemap>
 {
   return std::make_shared<tilemap>(nRows, nCols);
 }

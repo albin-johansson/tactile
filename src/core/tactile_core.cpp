@@ -8,12 +8,12 @@
 
 namespace tactile {
 
-TactileCore::TactileCore() : m_sheetManager{TilesetManager::unique()}
+TactileCore::TactileCore() : m_sheetManager{tileset_manager::unique()}
 {}
 
 TactileCore::~TactileCore() noexcept = default;
 
-auto TactileCore::unique() -> Unique<TactileCore>
+auto TactileCore::unique() -> std::unique_ptr<TactileCore>
 {
   return std::make_unique<TactileCore>();
 }
@@ -57,12 +57,12 @@ void TactileCore::save_as(const char*) const
   qWarning("\"Save as\" isn't implemented!");
 }
 
-auto TactileCore::add_tileset(const Shared<QImage>& image,
+auto TactileCore::add_tileset(const std::shared_ptr<QImage>& image,
                               int tileWidth,
                               int tileHeight) noexcept -> std::optional<int>
 {
   if (!image->isNull()) {
-    return m_sheetManager->add(Tileset::unique(image, tileWidth, tileHeight));
+    return m_sheetManager->add(tileset::unique(image, tileWidth, tileHeight));
   } else {
     return std::nullopt;
   }

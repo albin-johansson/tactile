@@ -18,7 +18,6 @@
 #include <vector>
 
 #include "map_position.hpp"
-#include "maybe.hpp"
 #include "tile_id.hpp"
 
 namespace tactile {

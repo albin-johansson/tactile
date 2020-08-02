@@ -2,9 +2,8 @@
 
 #include <QDialog>
 #include <QIntValidator>
+#include <memory>
 #include <optional>
-
-#include "smart_pointers.hpp"
 
 class QLineEdit;
 
@@ -26,7 +25,10 @@ class TilesetDialog final : public QDialog {
    * @return a shared pointer to an image; null if there is no chosen image.
    * @since 0.1.0
    */
-  [[nodiscard]] Shared<QImage> chosen_image() const noexcept { return m_image; }
+  [[nodiscard]] std::shared_ptr<QImage> chosen_image() const noexcept
+  {
+    return m_image;
+  }
 
   /**
    * Returns the chosen tile width.
@@ -65,11 +67,11 @@ class TilesetDialog final : public QDialog {
 
  private:
   Ui::TilesetDialogUI* m_ui;
-  Shared<QImage> m_image;
+  std::shared_ptr<QImage> m_image;
   std::optional<int> m_width;
   std::optional<int> m_height;
   std::optional<QString> m_imageName;
-  Unique<QIntValidator> m_validator;
+  std::unique_ptr<QIntValidator> m_validator;
   QPixmap m_defaultImageIcon;
 
   void validate_input() noexcept;

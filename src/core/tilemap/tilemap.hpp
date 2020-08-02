@@ -1,9 +1,8 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
-#include "maybe.hpp"
-#include "smart_pointers.hpp"
 #include "tile_id.hpp"
 #include "tile_layer.hpp"
 #include "tile_size.hpp"
@@ -47,12 +46,14 @@ class tilemap final {
   /**
    * @copydoc tilemap(int, int)
    */
-  [[nodiscard]] static auto unique(int nRows, int nCols) -> Unique<tilemap>;
+  [[nodiscard]] static auto unique(int nRows, int nCols)
+      -> std::unique_ptr<tilemap>;
 
   /**
    * @copydoc tilemap(int, int)
    */
-  [[nodiscard]] static auto shared(int nRows, int nCols) -> Shared<tilemap>;
+  [[nodiscard]] static auto shared(int nRows, int nCols)
+      -> std::shared_ptr<tilemap>;
 
   /**
    * @brief Renders the tilemap.

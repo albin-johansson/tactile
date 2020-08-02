@@ -4,7 +4,7 @@
 #include <QLabel>
 #include <QScrollArea>
 
-#include "tactile_types.hpp"
+#include "tactile_error.hpp"
 #include "tileset_image_widget.hpp"
 #include "widget_size_policy.hpp"
 
@@ -17,7 +17,7 @@ TilesetTab::TilesetTab(const QImage& image,
     : QWidget{parent}
 {
   if (image.isNull()) {
-    throw BadArg{"Can't create tileset tab from null image!"};
+    throw tactile_error{"Can't create tileset tab from null image!"};
   }
 
   m_imageWidget = TilesetImageWidget::unique(image, tileWidth, tileHeight);

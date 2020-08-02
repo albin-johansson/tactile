@@ -1,7 +1,7 @@
 #pragma once
-#include <QWidget>
 
-#include "smart_pointers.hpp"
+#include <QWidget>
+#include <memory>
 
 class QImage;
 class QLayout;
@@ -21,9 +21,9 @@ class TilesetTab final : public QWidget {
   ~TilesetTab() noexcept override;
 
  private:
-  Unique<QScrollArea> m_scrollArea;
-  Unique<TilesetImageWidget> m_imageWidget;
-  Unique<QLayout> m_layout;
+  std::unique_ptr<QScrollArea> m_scrollArea;
+  std::unique_ptr<TilesetImageWidget> m_imageWidget;
+  std::unique_ptr<QLayout> m_layout;
 };
 
 }  // namespace tactile

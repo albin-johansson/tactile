@@ -14,9 +14,9 @@ set(TACTILE_SOURCE_FILES
         core/flood_fill.cpp
         core/tactile_core.hpp
         core/tactile_core.cpp
+        core/tactile_error.hpp
+        core/tactile_error.cpp
 
-        core/util/maybe.hpp
-        core/util/smart_pointers.hpp
         core/util/algorithm_utils.hpp
         core/util/tactile_types.hpp
         core/util/type_utils.hpp

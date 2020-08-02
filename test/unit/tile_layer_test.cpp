@@ -78,7 +78,7 @@ TEST_CASE("TileLayer::set_tile", "[TileLayer]")
 
   CHECK_NOTHROW(layer.set_tile({-1, -1}, 5));
   CHECK_NOTHROW(layer.set_tile({layer.rows(), layer.cols()}, 7));
-  CHECK(layer.tile_at({layer.rows(), layer.cols()}) == nothing);
+  CHECK(layer.tile_at({layer.rows(), layer.cols()}) == std::nullopt);
 }
 
 TEST_CASE("TileLayer::set_visible", "[TileLayer]")
@@ -97,9 +97,9 @@ TEST_CASE("TileLayer::set_visible", "[TileLayer]")
 TEST_CASE("TileLayer::tile_at", "[TileLayer]")
 {
   const tile_layer layer{5, 5};
-  CHECK(layer.tile_at({0, 0}) != nothing);
-  CHECK(layer.tile_at({4, 4}) != nothing);
-  CHECK(layer.tile_at({5, 5}) == nothing);
+  CHECK(layer.tile_at({0, 0}) != std::nullopt);
+  CHECK(layer.tile_at({4, 4}) != std::nullopt);
+  CHECK(layer.tile_at({5, 5}) == std::nullopt);
 }
 
 TEST_CASE("TileLayer::in_bounds", "[TileLayer]")

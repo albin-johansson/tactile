@@ -4,18 +4,13 @@
 
 namespace tactile {
 
-TilesetManager::TilesetManager() noexcept
-    : m_activeSheet{std::nullopt}, m_nextSheetKey{1}
-{}
-
-TilesetManager::~TilesetManager() noexcept = default;
-
-Unique<TilesetManager> TilesetManager::unique()
+auto tileset_manager::unique() -> std::unique_ptr<tileset_manager>
 {
-  return std::make_unique<TilesetManager>();
+  return std::make_unique<tileset_manager>();
 }
 
-Maybe<int> TilesetManager::add(Unique<Tileset>&& sheet) noexcept
+auto tileset_manager::add(std::unique_ptr<tileset>&& sheet) noexcept
+    -> std::optional<int>
 {
   if (sheet) {
     const auto id = m_nextSheetKey++;
@@ -26,17 +21,17 @@ Maybe<int> TilesetManager::add(Unique<Tileset>&& sheet) noexcept
   }
 }
 
-void TilesetManager::remove(int id) noexcept
+void tileset_manager::remove(int id) noexcept
 {
   m_sheets.erase(id);
 }
 
-void TilesetManager::remove_all() noexcept
+void tileset_manager::remove_all() noexcept
 {
   m_sheets.clear();
 }
 
-void TilesetManager::select(Maybe<int> id) noexcept
+void tileset_manager::select(std::optional<int> id) noexcept
 {
   if (!id) {
     m_activeSheet = std::nullopt;
@@ -45,6 +40,16 @@ void TilesetManager::select(Maybe<int> id) noexcept
       m_activeSheet = id;
     }
   }
+}
+
+auto tileset_manager::sheets() const noexcept -> int
+{
+  return static_cast<int>(m_sheets.size());
+}
+
+auto tileset_manager::has_active_tileset() const noexcept -> bool
+{
+  return m_activeSheet.has_value();
 }
 
 }  // namespace tactile

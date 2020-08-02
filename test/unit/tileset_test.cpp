@@ -4,6 +4,7 @@
 #include <catch.hpp>
 #include <memory>
 
+#include "tactile_error.hpp"
 #include "tactile_types.hpp"
 
 using namespace tactile;
@@ -12,37 +13,37 @@ TEST_CASE("Tileset(const SharedPtr<QImage>&, int, int)", "[Tileset]")
 {
   SECTION("Null image")
   {
-    Shared<QImage> image = nullptr;
-    CHECK_THROWS_AS(Tileset(nullptr, 10, 10), BadArg);
+    std::shared_ptr<QImage> image = nullptr;
+    CHECK_THROWS_AS(tileset(nullptr, 10, 10), tactile_error);
   }
 
   SECTION("Zero size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    CHECK_NOTHROW(Tileset{image, 0, 0});
+    CHECK_NOTHROW(tileset{image, 0, 0});
   }
 
   SECTION("Good args")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    CHECK_NOTHROW(Tileset{image, 32, 32});
+    CHECK_NOTHROW(tileset{image, 32, 32});
   }
 }
 
 TEST_CASE("Tileset::unique", "[Tileset]")
 {
-  CHECK_THROWS_AS(Tileset::unique(nullptr, 32, 32), BadArg);
+  CHECK_THROWS_AS(tileset::unique(nullptr, 32, 32), tactile_error);
 
   auto image = std::make_shared<QImage>("terrain.png");
-  CHECK(Tileset::unique(image, 32, 32));
+  CHECK(tileset::unique(image, 32, 32));
 }
 
 TEST_CASE("Tileset::shared", "[Tileset]")
 {
-  CHECK_THROWS_AS(Tileset::shared(nullptr, 32, 32), BadArg);
+  CHECK_THROWS_AS(tileset::shared(nullptr, 32, 32), tactile_error);
 
   auto image = std::make_shared<QImage>("terrain.png");
-  CHECK(Tileset::shared(image, 32, 32));
+  CHECK(tileset::shared(image, 32, 32));
 }
 
 TEST_CASE("Tileset::select", "[Tileset]")
@@ -50,7 +51,7 @@ TEST_CASE("Tileset::select", "[Tileset]")
   auto image = std::make_shared<QImage>("terrain.png");
   const auto tileWidth = 32;
   const auto tileHeight = 32;
-  Tileset sheet{image, tileWidth, tileHeight};
+  tileset sheet{image, tileWidth, tileHeight};
 
   sheet.select(0, 0);
   CHECK(sheet.selection().size() == 1);
@@ -71,7 +72,7 @@ TEST_CASE("Tileset::select", "[Tileset]")
 TEST_CASE("Tileset::set_first_id", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("terrain.png");
-  Tileset sheet{image, 32, 32};
+  tileset sheet{image, 32, 32};
 
   CHECK(sheet.first_id() == 1);
 
@@ -90,7 +91,7 @@ TEST_CASE("Tileset::set_first_id", "[Tileset]")
 TEST_CASE("Tileset::width", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("terrain.png");
-  Tileset sheet{image, 32, 32};
+  tileset sheet{image, 32, 32};
 
   CHECK(sheet.width() == image->width());
 }
@@ -98,7 +99,7 @@ TEST_CASE("Tileset::width", "[Tileset]")
 TEST_CASE("Tileset::height", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("outside.png");
-  Tileset sheet{image, 32, 32};
+  tileset sheet{image, 32, 32};
 
   CHECK(sheet.height() == image->height());
 }
@@ -106,7 +107,7 @@ TEST_CASE("Tileset::height", "[Tileset]")
 TEST_CASE("Tileset::tiles", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("outside.png");
-  Tileset sheet{image, 32, 32};
+  tileset sheet{image, 32, 32};
 
   CHECK(sheet.tiles() == 1024);
 }
@@ -114,7 +115,7 @@ TEST_CASE("Tileset::tiles", "[Tileset]")
 TEST_CASE("Tileset::last_id", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("outside.png");
-  Tileset sheet{image, 32, 32};
+  tileset sheet{image, 32, 32};
 
   CHECK(sheet.last_id() == 1025);
   CHECK(sheet.last_id() - sheet.first_id() == sheet.tiles());
@@ -126,7 +127,7 @@ TEST_CASE("Tileset::last_id", "[Tileset]")
 TEST_CASE("Tileset::contains", "[Tileset]")
 {
   auto image = std::make_shared<QImage>("terrain.png");
-  Tileset sheet{image, 32, 32};
+  tileset sheet{image, 32, 32};
 
   CHECK(sheet.contains(sheet.first_id()));
   CHECK(sheet.contains(sheet.last_id()));
@@ -145,7 +146,7 @@ TEST_CASE("Tileset::tile_at", "[Tileset]")
   SECTION("Outside of the tile sheet area")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    Tileset sheet{image, 32, 32};
+    tileset sheet{image, 32, 32};
 
     CHECK(sheet.tile_at(-1, -1) == empty);
     CHECK(sheet.tile_at(sheet.width() + 1, 0) == empty);
@@ -156,7 +157,7 @@ TEST_CASE("Tileset::tile_at", "[Tileset]")
   SECTION("Without changed first ID")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    Tileset sheet{image, 32, 32};
+    tileset sheet{image, 32, 32};
 
     const auto row = 7;
     const auto col = 5;
@@ -170,7 +171,7 @@ TEST_CASE("Tileset::tile_at", "[Tileset]")
   SECTION("With changed first ID")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    Tileset sheet{image, 32, 32};
+    tileset sheet{image, 32, 32};
 
     const auto first = 38;
     sheet.set_first_id(first);
@@ -190,14 +191,14 @@ TEST_CASE("Tileset::tile_width", "[Tileset]")
   SECTION("Good size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    Tileset sheet{image, 32, 15};
+    tileset sheet{image, 32, 15};
     CHECK(sheet.tile_width() == 32);
   }
 
   SECTION("Clamping bad size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    Tileset sheet{image, 0, 15};
+    tileset sheet{image, 0, 15};
     CHECK(sheet.tile_width() == 1);
   }
 }
@@ -207,14 +208,14 @@ TEST_CASE("Tileset::tile_height", "[Tileset]")
   SECTION("Good size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    Tileset sheet{image, 15, 32};
+    tileset sheet{image, 15, 32};
     CHECK(sheet.tile_height() == 32);
   }
 
   SECTION("Clamping bad size")
   {
     auto image = std::make_shared<QImage>("terrain.png");
-    Tileset sheet{image, 32, 0};
+    tileset sheet{image, 32, 0};
     CHECK(sheet.tile_height() == 1);
   }
 }

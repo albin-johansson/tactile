@@ -3,8 +3,6 @@
 #include <QWidget>
 #include <optional>
 
-#include "maybe.hpp"
-
 namespace Ui {
 class CentralWidgetUI;
 }
