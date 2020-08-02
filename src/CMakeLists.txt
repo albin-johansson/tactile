@@ -9,7 +9,7 @@ set(TACTILE_SOURCE_FILES
         settings_utils.hpp
         settings_utils.cpp
 
-        core/tactile_fwd.hpp
+        core/core_fwd.hpp
         core/flood_fill.hpp
         core/flood_fill.cpp
         core/tactile_core.hpp

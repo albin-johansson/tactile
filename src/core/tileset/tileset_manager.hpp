@@ -4,7 +4,7 @@
 #include <memory>
 #include <optional>
 
-#include "tactile_fwd.hpp"
+#include "core_fwd.hpp"
 
 namespace tactile {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tactile_fwd.hpp"
+#include "core_fwd.hpp"
 
 class QPainter;
 
