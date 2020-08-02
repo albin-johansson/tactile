@@ -1,8 +1,9 @@
 #pragma once
+
 #include <QDialog>
 #include <QIntValidator>
+#include <optional>
 
-#include "maybe.hpp"
 #include "smart_pointers.hpp"
 
 class QLineEdit;
@@ -30,27 +31,34 @@ class TilesetDialog final : public QDialog {
   /**
    * Returns the chosen tile width.
    *
-   * @return the chosen tile width; nothing if no tile width is available.
+   * @return the chosen tile width; std::nullopt if no tile width is available.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> chosen_width() const noexcept { return m_width; }
+  [[nodiscard]] std::optional<int> chosen_width() const noexcept
+  {
+    return m_width;
+  }
 
   /**
    * Returns the chosen tile height.
    *
-   * @return the chosen tile height; nothing if no tile height is available.
+   * @return the chosen tile height; std::nullopt if no tile height is
+   * available.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> chosen_height() const noexcept { return m_height; }
+  [[nodiscard]] std::optional<int> chosen_height() const noexcept
+  {
+    return m_height;
+  }
 
   /**
    * Returns the name of the selected image.
    *
-   * @return the name of the selected image; nothing if there is no selected
-   * image.
+   * @return the name of the selected image; std::nullopt if there is no
+   * selected image.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<QString> image_name() const noexcept
+  [[nodiscard]] std::optional<QString> image_name() const noexcept
   {
     return m_imageName;
   }
@@ -58,9 +66,9 @@ class TilesetDialog final : public QDialog {
  private:
   Ui::TilesetDialogUI* m_ui;
   Shared<QImage> m_image;
-  Maybe<int> m_width;
-  Maybe<int> m_height;
-  Maybe<QString> m_imageName;
+  std::optional<int> m_width;
+  std::optional<int> m_height;
+  std::optional<QString> m_imageName;
   Unique<QIntValidator> m_validator;
   QPixmap m_defaultImageIcon;
 

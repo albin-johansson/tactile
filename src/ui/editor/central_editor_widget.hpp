@@ -1,5 +1,7 @@
 #pragma once
+
 #include <QWidget>
+#include <optional>
 
 #include "maybe.hpp"
 
@@ -51,7 +53,7 @@ class CentralEditorWidget final : public QWidget {
 
   [[nodiscard]] bool in_editor_mode() const noexcept;
 
-  [[nodiscard]] Maybe<int> active_tab_id() const noexcept;
+  [[nodiscard]] std::optional<int> active_tab_id() const noexcept;
 
   [[nodiscard]] int open_tabs() const noexcept;
 

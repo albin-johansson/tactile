@@ -1,6 +1,8 @@
 #pragma once
+
 #include <QDialog>
 #include <QValidator>
+#include <optional>
 
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
@@ -38,10 +40,10 @@ class ResizeDialog final : public QDialog {
   /**
    * Returns the chosen width, if there was one.
    *
-   * @return the chosen width; nothing if there is none.
+   * @return the chosen width; std::nullopt if there is none.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> chosen_width() const noexcept
+  [[nodiscard]] std::optional<int> chosen_width() const noexcept
   {
     return m_chosenWidth;
   }
@@ -49,10 +51,10 @@ class ResizeDialog final : public QDialog {
   /**
    * Returns the chosen height, if there was one.
    *
-   * @return the chosen height; nothing if there is none.
+   * @return the chosen height; std::nullopt if there is none.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> chosen_height() const noexcept
+  [[nodiscard]] std::optional<int> chosen_height() const noexcept
   {
     return m_chosenHeight;
   }
@@ -60,8 +62,8 @@ class ResizeDialog final : public QDialog {
  private:
   Ui::ResizeDialogUI* m_ui;
   Unique<QIntValidator> m_validator;
-  Maybe<int> m_chosenWidth;
-  Maybe<int> m_chosenHeight;
+  std::optional<int> m_chosenWidth;
+  std::optional<int> m_chosenHeight;
 
   /**
    * Connects a line edit widget to the dialog. This method has no effect if

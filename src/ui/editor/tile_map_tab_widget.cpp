@@ -67,17 +67,17 @@ EditorTab* TileMapTabWidget::get_pane(int index) const noexcept
   return qobject_cast<EditorTab*>(widget(index));
 }
 
-Maybe<int> TileMapTabWidget::active_tab_id() const noexcept
+std::optional<int> TileMapTabWidget::active_tab_id() const noexcept
 {
   return tab_id(currentIndex());
 }
 
-Maybe<int> TileMapTabWidget::tab_id(int index) const noexcept
+std::optional<int> TileMapTabWidget::tab_id(int index) const noexcept
 {
   if (auto* pane = get_pane(index); pane) {
     return pane->id();
   } else {
-    return nothing;
+    return std::nullopt;
   }
 }
 

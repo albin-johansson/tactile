@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-Maybe<QUrl> open_tileset_image(QWidget* parent) noexcept
+auto open_tileset_image(QWidget* parent) noexcept -> std::optional<QUrl>
 {
   static QString cachedDirPath{""};
 
@@ -31,7 +31,7 @@ Maybe<QUrl> open_tileset_image(QWidget* parent) noexcept
   if (success) {
     return dialog.selectedUrls().first();
   } else {
-    return nothing;
+    return std::nullopt;
   }
 }
 

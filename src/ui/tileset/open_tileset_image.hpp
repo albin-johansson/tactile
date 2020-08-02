@@ -1,7 +1,7 @@
 #pragma once
-#include <QUrl>
 
-#include "maybe.hpp"
+#include <QUrl>
+#include <optional>
 
 class QWidget;
 
@@ -12,10 +12,11 @@ namespace tactile {
  * path of the selected file.
  *
  * @param parent the parent widget, defaults to null.
- * @return the path of the image, if a file was selected; nothing otherwise.
+ * @return the path of the image, if a file was selected; std::nullopt
+ * otherwise.
  * @since 0.1.0
  */
-[[nodiscard]] Maybe<QUrl> open_tileset_image(
-    QWidget* parent = nullptr) noexcept;
+[[nodiscard]] auto open_tileset_image(QWidget* parent = nullptr) noexcept
+    -> std::optional<QUrl>;
 
 }  // namespace tactile

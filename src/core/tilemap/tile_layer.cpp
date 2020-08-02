@@ -91,7 +91,7 @@ auto tile_layer::cols() const noexcept -> int
 }
 
 auto tile_layer::tile_at(const map_position& position) const noexcept
-    -> Maybe<tile_id>
+    -> std::optional<tile_id>
 {
   if (in_bounds(position)) {
     const auto row = static_cast<std::size_t>(position.row());

@@ -8,13 +8,12 @@
 
 namespace tactile {
 
-TactileCore::TactileCore()
-    : m_activeMapIndex{nothing}, m_sheetManager{TilesetManager::unique()}
+TactileCore::TactileCore() : m_sheetManager{TilesetManager::unique()}
 {}
 
 TactileCore::~TactileCore() noexcept = default;
 
-Unique<TactileCore> TactileCore::unique()
+auto TactileCore::unique() -> Unique<TactileCore>
 {
   return std::make_unique<TactileCore>();
 }
@@ -35,7 +34,7 @@ void TactileCore::close_map(int id) noexcept
     m_maps.erase(id);
 
     if (m_activeMapIndex == id) {
-      m_activeMapIndex = nothing;
+      m_activeMapIndex = std::nullopt;
     }
 
     if (!m_maps.empty()) {
@@ -58,14 +57,14 @@ void TactileCore::save_as(const char*) const
   qWarning("\"Save as\" isn't implemented!");
 }
 
-Maybe<int> TactileCore::add_tileset(const Shared<QImage>& image,
-                                    int tileWidth,
-                                    int tileHeight) noexcept
+auto TactileCore::add_tileset(const Shared<QImage>& image,
+                              int tileWidth,
+                              int tileHeight) noexcept -> std::optional<int>
 {
   if (!image->isNull()) {
     return m_sheetManager->add(Tileset::unique(image, tileWidth, tileHeight));
   } else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
@@ -83,29 +82,29 @@ void TactileCore::set_cols(int nCols) noexcept
   }
 }
 
-Maybe<int> TactileCore::rows() const noexcept
+auto TactileCore::rows() const noexcept -> std::optional<int>
 {
   return maybe_get<int>([](const tilemap& map) noexcept { return map.rows(); });
 }
 
-Maybe<int> TactileCore::cols() const noexcept
+auto TactileCore::cols() const noexcept -> std::optional<int>
 {
   return maybe_get<int>([](const tilemap& map) noexcept { return map.cols(); });
 }
 
-Maybe<int> TactileCore::map_width() const noexcept
+auto TactileCore::map_width() const noexcept -> std::optional<int>
 {
   return maybe_get<int>(
       [](const tilemap& map) noexcept { return map.width(); });
 }
 
-Maybe<int> TactileCore::map_height() const noexcept
+auto TactileCore::map_height() const noexcept -> std::optional<int>
 {
   return maybe_get<int>(
       [](const tilemap& map) noexcept { return map.height(); });
 }
 
-Maybe<int> TactileCore::tile_size() const noexcept
+auto TactileCore::tile_size() const noexcept -> std::optional<int>
 {
   return maybe_get<int>(
       [](const tilemap& map) noexcept { return map.get_tile_size().get(); });
@@ -189,7 +188,7 @@ void TactileCore::remove_col() noexcept
   }
 }
 
-tilemap* TactileCore::active_map() noexcept
+auto TactileCore::active_map() noexcept -> tilemap*
 {
   if (m_activeMapIndex) {
     return m_maps.at(*m_activeMapIndex).get();
@@ -198,7 +197,7 @@ tilemap* TactileCore::active_map() noexcept
   }
 }
 
-const tilemap* TactileCore::active_map() const noexcept
+auto TactileCore::active_map() const noexcept -> const tilemap*
 {
   if (m_activeMapIndex) {
     return m_maps.at(*m_activeMapIndex).get();

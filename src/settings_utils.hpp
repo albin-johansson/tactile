@@ -1,5 +1,6 @@
 #pragma once
-#include "maybe.hpp"
+
+#include <optional>
 
 class QVariant;
 class QByteArray;
@@ -23,11 +24,11 @@ void set_if_absent(const char* setting, const QVariant& value) noexcept;
  *
  * @param setting the name of the key associated with the byte array, can
  * safely be null.
- * @return a byte array if it exists; nothing otherwise.
+ * @return a byte array if it exists; std::nullopt otherwise.
  * @since 0.1.0
  */
-[[nodiscard]] Maybe<QByteArray> settings_byte_array(
-    const char* setting) noexcept;
+[[nodiscard]] auto settings_byte_array(const char* setting) noexcept
+    -> std::optional<QByteArray>;
 
 /**
  * Returns the boolean value from the settings that is associated with the
@@ -35,9 +36,10 @@ void set_if_absent(const char* setting, const QVariant& value) noexcept;
  *
  * @param setting the name of the key associated with the boolean value, can
  * safely be null.
- * @return the value of the setting, if it exists; nothing otherwise.
+ * @return the value of the setting, if it exists; std::nullopt otherwise.
  * @since 0.1.0
  */
-[[nodiscard]] Maybe<bool> settings_bool(const char* setting) noexcept;
+[[nodiscard]] auto settings_bool(const char* setting) noexcept
+    -> std::optional<bool>;
 
 }  // namespace tactile

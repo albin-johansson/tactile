@@ -82,7 +82,7 @@ bool CentralEditorWidget::in_editor_mode() const noexcept
   return m_ui->stackedWidget->currentIndex() == m_editorViewIndex;
 }
 
-Maybe<int> CentralEditorWidget::active_tab_id() const noexcept
+std::optional<int> CentralEditorWidget::active_tab_id() const noexcept
 {
   return m_mapTabWidget->active_tab_id();
 }

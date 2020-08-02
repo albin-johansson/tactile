@@ -1,11 +1,15 @@
 #include "settings_utils.hpp"
 
 #include <QSettings>
+#include <optional>
 
 namespace tactile {
 namespace {
 
-[[nodiscard]] Maybe<QVariant> get_value(const char* setting) noexcept
+// FIXME these functionsa are not noexcept
+
+[[nodiscard]] auto get_value(const char* setting) noexcept
+    -> std::optional<QVariant>
 {
   if (setting) {
     QSettings settings;
@@ -15,7 +19,7 @@ namespace {
     }
   }
 
-  return nothing;
+  return std::nullopt;
 }
 
 }  // namespace
@@ -31,23 +35,24 @@ void set_if_absent(const char* setting, const QVariant& value) noexcept
   }
 }
 
-Maybe<QByteArray> settings_byte_array(const char* setting) noexcept
+auto settings_byte_array(const char* setting) noexcept
+    -> std::optional<QByteArray>
 {
   const auto value = get_value(setting);
   if (value && value->canConvert(QVariant::ByteArray)) {
     return value->toByteArray();
   } else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
-Maybe<bool> settings_bool(const char* setting) noexcept
+auto settings_bool(const char* setting) noexcept -> std::optional<bool>
 {
   const auto value = get_value(setting);
   if (value && value->canConvert<bool>()) {
     return value->toBool();
   } else {
-    return nothing;
+    return std::nullopt;
   }
 }
 

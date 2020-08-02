@@ -14,6 +14,7 @@
 
 #pragma once
 
+#include <optional>
 #include <vector>
 
 #include "map_position.hpp"
@@ -151,18 +152,18 @@ class tile_layer final {
   /**
    * @brief Returns the ID of the tile at the specified position.
    *
-   * @note This method returns `nothing` if the supplied position
+   * @note This method returns `std::nullopt` if the supplied position
    * is out-of-bounds.
    *
    * @param position the position to obtain the tile ID of.
    *
-   * @return the ID of the tile at the specified position; `nothing` if the
+   * @return the ID of the tile at the specified position; `std::nullopt` if the
    * position is out-of-bounds.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto tile_at(const map_position& position) const noexcept
-      -> Maybe<tile_id>;
+      -> std::optional<tile_id>;
 
   /**
    * @brief Indicates whether or not the specified position is in bounds of the

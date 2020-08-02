@@ -1,5 +1,7 @@
 #pragma once
+
 #include <map>
+#include <optional>
 
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
@@ -21,7 +23,7 @@ class TilesetManager final {
 
   ~TilesetManager() noexcept;
 
-  [[nodiscard]] static Unique<TilesetManager> unique();
+  [[nodiscard]] static auto unique() -> Unique<TilesetManager>;
 
   /**
    * Adds a tileset to the manager. This method has no effect if the supplied
@@ -29,10 +31,11 @@ class TilesetManager final {
    *
    * @param id the key that will be associated with the tileset.
    * @param sheet the tileset that will be added.
-   * @return the ID of the added tileset; nothing if no tileset was added.
+   * @return the ID of the added tileset; std::nullopt if no tileset was added.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> add(Unique<Tileset>&& sheet) noexcept;
+  [[nodiscard]] auto add(Unique<Tileset>&& sheet) noexcept
+      -> std::optional<int>;
 
   /**
    * Removes a tileset from the manager. This method has no effect if the
@@ -54,10 +57,10 @@ class TilesetManager final {
    * Selects the tileset associated with the specified ID.
    *
    * @param id the key associated with the tileset that will be made
-   * active; nothing indicates that no tileset should be selected.
+   * active; std::nullopt indicates that no tileset should be selected.
    * @since 0.1.0
    */
-  void select(Maybe<int> id) noexcept;
+  void select(std::optional<int> id) noexcept;
 
   /**
    * Returns the amount of tilesets handled by the manager.
@@ -65,7 +68,7 @@ class TilesetManager final {
    * @return the amount of tilesets handled by the manager.
    * @since 0.1.0
    */
-  [[nodiscard]] int sheets() const noexcept
+  [[nodiscard]] auto sheets() const noexcept -> int
   {
     return static_cast<int>(m_sheets.size());
   }
@@ -76,13 +79,13 @@ class TilesetManager final {
    * @return true if there is an active tileset; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] bool has_active_tileset() const noexcept
+  [[nodiscard]] auto has_active_tileset() const noexcept -> bool
   {
     return m_activeSheet.has_value();
   }
 
  private:
-  Maybe<int> m_activeSheet;
+  std::optional<int> m_activeSheet;
   std::map<int, Unique<Tileset>> m_sheets;
   int m_nextSheetKey;
 };

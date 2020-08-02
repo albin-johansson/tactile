@@ -1,5 +1,7 @@
 #pragma once
+
 #include <QTabWidget>
+#include <optional>
 #include <unordered_map>
 
 #include "maybe.hpp"
@@ -24,9 +26,9 @@ class TileMapTabWidget final : public QTabWidget {
 
   void move_viewport(int dx, int dy) noexcept;
 
-  [[nodiscard]] Maybe<int> active_tab_id() const noexcept;
+  [[nodiscard]] std::optional<int> active_tab_id() const noexcept;
 
-  [[nodiscard]] Maybe<int> tab_id(int index) const noexcept;
+  [[nodiscard]] std::optional<int> tab_id(int index) const noexcept;
 
  signals:
   void s_redraw(QPainter& painter);

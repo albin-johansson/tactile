@@ -5,7 +5,7 @@
 namespace tactile {
 
 TilesetManager::TilesetManager() noexcept
-    : m_activeSheet{nothing}, m_nextSheetKey{1}
+    : m_activeSheet{std::nullopt}, m_nextSheetKey{1}
 {}
 
 TilesetManager::~TilesetManager() noexcept = default;
@@ -22,7 +22,7 @@ Maybe<int> TilesetManager::add(Unique<Tileset>&& sheet) noexcept
     m_sheets.emplace(id, std::move(sheet));
     return id;
   } else {
-    return nothing;
+    return std::nullopt;
   }
 }
 
@@ -39,7 +39,7 @@ void TilesetManager::remove_all() noexcept
 void TilesetManager::select(Maybe<int> id) noexcept
 {
   if (!id) {
-    m_activeSheet = nothing;
+    m_activeSheet = std::nullopt;
   } else {
     if (m_sheets.count(*id)) {
       m_activeSheet = id;

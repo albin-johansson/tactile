@@ -11,8 +11,8 @@ TilesetDialog::TilesetDialog(QWidget* parent)
     : QDialog{parent},
       m_ui{new Ui::TilesetDialogUI{}},
       m_image{std::make_shared<QImage>()},
-      m_width{nothing},
-      m_height{nothing}
+      m_width{std::nullopt},
+      m_height{std::nullopt}
 {
   m_ui->setupUi(this);
   m_validator = std::make_unique<QIntValidator>(1, 1'000, this);

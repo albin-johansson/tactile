@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <optional>
 #include <type_traits>
 #include <unordered_map>
 
@@ -47,7 +48,7 @@ class TactileCore final : public QObject {
    * @return a unique pointer to a TactileCore instance.
    * @since 0.1.0
    */
-  [[nodiscard]] static Unique<TactileCore> unique();
+  [[nodiscard]] static auto unique() -> Unique<TactileCore>;
 
   /**
    * Opens a tilemap from the specified location.
@@ -67,13 +68,13 @@ class TactileCore final : public QObject {
    * @param fileName the image that contains the tile images.
    * @param tileWidth the width of the tiles in the tileset.
    * @param tileHeight the height of the tiles in the tileset.
-   * @return the ID of the tileset that was added; nothing if no tile
+   * @return the ID of the tileset that was added; std::nullopt if no tile
    * sheet was added.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> add_tileset(const Shared<QImage>& image,
-                                       int tileWidth,
-                                       int tileHeight) noexcept;
+  [[nodiscard]] auto add_tileset(const Shared<QImage>& image,
+                                 int tileWidth,
+                                 int tileHeight) noexcept -> std::optional<int>;
 
   /**
    * Sets the number of rows in the tilemap. The amount of rows will always
@@ -114,47 +115,47 @@ class TactileCore final : public QObject {
   /**
    * Returns the amount of rows in the active tilemap.
    *
-   * @return the amount of rows in the active tilemap; nothing if there is no
-   * active tilemap.
+   * @return the amount of rows in the active tilemap; std::nullopt if there is
+   * no active tilemap.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> rows() const noexcept;
+  [[nodiscard]] auto rows() const noexcept -> std::optional<int>;
 
   /**
    * Returns the amount of columns in the active tilemap.
    *
-   * @return the amount of columns in the active tilemap; nothing if there
+   * @return the amount of columns in the active tilemap; std::nullopt if there
    * is no active tilemap.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> cols() const noexcept;
+  [[nodiscard]] auto cols() const noexcept -> std::optional<int>;
 
   /**
    * Returns the current width of the active tilemap.
    *
-   * @return the current width of the active tilemap; nothing if there is no
-   * active tilemap.
+   * @return the current width of the active tilemap; std::nullopt if there is
+   * no active tilemap.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> map_width() const noexcept;
+  [[nodiscard]] auto map_width() const noexcept -> std::optional<int>;
 
   /**
    * Returns the current height of the active tilemap.
    *
-   * @return the current height of the active tilemap; nothing if there is no
-   * active tilemap.
+   * @return the current height of the active tilemap; std::nullopt if there is
+   * no active tilemap.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> map_height() const noexcept;
+  [[nodiscard]] auto map_height() const noexcept -> std::optional<int>;
 
   /**
    * Returns the size of the tiles in the currently active tilemap.
    *
-   * @return the size of the tiles in the currently active tilemap; nothing
+   * @return the size of the tiles in the currently active tilemap; std::nullopt
    * if there is no active tilemap.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<int> tile_size() const noexcept;
+  [[nodiscard]] auto tile_size() const noexcept -> std::optional<int>;
 
  signals:
   /**
@@ -247,8 +248,8 @@ class TactileCore final : public QObject {
   void reset_tile_size() noexcept;
 
  private:
-  Maybe<int> m_activeMapIndex;
-  HashMap<int, Unique<tilemap>> m_maps;
+  std::optional<int> m_activeMapIndex;
+  std::unordered_map<int, Unique<tilemap>> m_maps;
   Unique<TilesetManager> m_sheetManager;
 
   /**
@@ -271,22 +272,22 @@ class TactileCore final : public QObject {
 
   /**
    * A templated helper method for queries that returns something of the
-   * <code>Maybe</code> type from the active tilemap.
+   * <code>std::optional</code> type from the active tilemap.
    *
    * @tparam ReturnType the type of the return value.
    * @tparam Functor the type of the function object.
    * @param fun the function object that performs the query, has to take
    * a reference to a <code>Tilemap</code> as a parameter.
-   * @return either a value of the return type, or <code>nothing</code>.
+   * @return either a value of the return type, or <code>std::nullopt</code>.
    * @since 0.1.0
    */
   template <typename ReturnType, typename Functor>
-  [[nodiscard]] Maybe<ReturnType> maybe_get(Functor fun) const
+  [[nodiscard]] std::optional<ReturnType> maybe_get(Functor fun) const
   {
     if (auto* map = active_map(); map) {
       return fun(*map);
     } else {
-      return nothing;
+      return std::nullopt;
     }
   }
 };
