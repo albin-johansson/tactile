@@ -1,29 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
-project(Tactile-src)
-
-#function(tactile_append_gcc_compiler_flags [target])
-#    target_compile_options(${ARGV0} PRIVATE
-#            -Wall
-#            -Wextra
-#            -Wpedantic
-#            -Wdouble-promotion
-#            -Wswitch-default
-#            -Wswitch-enum
-#            -Wunused
-#            -Wuninitialized
-#            -Wsuggest-final-types
-#            -Wsuggest-final-methods
-#            -Wsuggest-override
-#            -Wduplicated-cond
-#            -Wconversion)
-#endfunction()
-
-#function(tactile_link_libraries [target])
-#    target_link_libraries(${ARGV0}
-#            PUBLIC Qt5::Core
-#            PUBLIC Qt5::Widgets
-#            PUBLIC Qt5::Gui)
-#endfunction()
+project(tactile_src_proj)
 
 set(TACTILE_SOURCE_FILES
         tactile2.qrc
@@ -149,9 +125,6 @@ target_link_libraries(libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
         PUBLIC Qt5::Gui)
-
-#tactile_include_dirs(libTactile')
-#tactile_link_libraries(TactileLib)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(libTactile PRIVATE
