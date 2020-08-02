@@ -21,7 +21,7 @@ TileLayer::TileLayer(int nRows, int nCols) noexcept : m_visible{true}
   }
 }
 
-void TileLayer::flood(const MapPosition& position,
+void TileLayer::flood(const map_position& position,
                       tile_id target,
                       tile_id replacement) noexcept
 {
@@ -63,7 +63,7 @@ void TileLayer::remove_col() noexcept
   }
 }
 
-void TileLayer::set_tile(const MapPosition& position, tile_id id) noexcept
+void TileLayer::set_tile(const map_position& position, tile_id id) noexcept
 {
   if (in_bounds(position)) {
     const auto row = static_cast<std::size_t>(position.row());
@@ -87,7 +87,7 @@ int TileLayer::cols() const noexcept
   return static_cast<int>(m_tiles.at(0).size());
 }
 
-Maybe<tile_id> TileLayer::tile_at(const MapPosition& position) const noexcept
+Maybe<tile_id> TileLayer::tile_at(const map_position& position) const noexcept
 {
   if (in_bounds(position)) {
     const auto row = static_cast<std::size_t>(position.row());
@@ -98,7 +98,7 @@ Maybe<tile_id> TileLayer::tile_at(const MapPosition& position) const noexcept
   }
 }
 
-bool TileLayer::in_bounds(const MapPosition& position) const noexcept
+bool TileLayer::in_bounds(const map_position& position) const noexcept
 {
   const auto row = static_cast<std::size_t>(position.row());
   const auto col = static_cast<std::size_t>(position.col());

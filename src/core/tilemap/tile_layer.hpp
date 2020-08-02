@@ -9,7 +9,7 @@
 
 namespace tactile {
 
-class MapPosition;
+class map_position;
 
 /**
  * The <code>TileLayer</code> class represents a layer of tiles in a tilemap.
@@ -42,7 +42,7 @@ class TileLayer final {
    * @param replacement the tile type that will replace the target type.
    * @since 0.1.0
    */
-  void flood(const MapPosition& position,
+  void flood(const map_position& position,
              tile_id target,
              tile_id replacement) noexcept;
 
@@ -88,7 +88,7 @@ class TileLayer final {
    * @param id the new tile ID.
    * @since 0.1.0
    */
-  void set_tile(const MapPosition& position, tile_id id) noexcept;
+  void set_tile(const map_position& position, tile_id id) noexcept;
 
   /**
    * Sets whether or not the tile layer is visible.
@@ -126,7 +126,7 @@ class TileLayer final {
    * @since 0.1.0
    */
   [[nodiscard]] Maybe<tile_id> tile_at(
-      const MapPosition& position) const noexcept;
+      const map_position& position) const noexcept;
 
   /**
    * Indicates whether or not the specified position is in bounds of the tile
@@ -136,7 +136,7 @@ class TileLayer final {
    * @return true if the position is in bounds; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] bool in_bounds(const MapPosition& position) const noexcept;
+  [[nodiscard]] bool in_bounds(const map_position& position) const noexcept;
 
   /**
    * Indicates whether or not the tile layer is visible. Tile layers are visible

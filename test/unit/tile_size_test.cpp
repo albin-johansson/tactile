@@ -4,7 +4,7 @@
 
 using namespace tactile;
 
-TEST_CASE("TileSize::reset", "[TileSize]")
+TEST_CASE("tile_size::reset", "[tile_size]")
 {
   tile_size size;
 
@@ -14,7 +14,7 @@ TEST_CASE("TileSize::reset", "[TileSize]")
   CHECK(size.get() == tile_size::default_size());
 }
 
-TEST_CASE("TileSize::increase", "[TileSize]")
+TEST_CASE("tile_size::increase", "[tile_size]")
 {
   tile_size size;
 
@@ -24,7 +24,7 @@ TEST_CASE("TileSize::increase", "[TileSize]")
   CHECK(size.get() == 110);  // should increase by 10 percent
 }
 
-TEST_CASE("TileSize::decrease", "[TileSize]")
+TEST_CASE("tile_size::decrease", "[tile_size]")
 {
   tile_size size;
 
@@ -40,7 +40,7 @@ TEST_CASE("TileSize::decrease", "[TileSize]")
   CHECK(size.get() == tile_size::min_size());
 }
 
-TEST_CASE("TileSize::set_size", "[TileSize]")
+TEST_CASE("tile_size::set_size", "[tile_size]")
 {
   tile_size tileSize;
 

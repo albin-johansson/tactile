@@ -7,7 +7,7 @@
 namespace tactile {
 
 void flood_fill(TileLayer& layer,
-                const MapPosition& origin,
+                const map_position& origin,
                 tile_id target,
                 tile_id replacement) noexcept
 {
@@ -20,11 +20,11 @@ void flood_fill(TileLayer& layer,
 
   layer.set_tile(origin, replacement);
 
-  std::queue<MapPosition> queue;
+  std::queue<map_position> queue;
   queue.push(origin);
 
   const auto update = [&layer, &queue, target, replacement](
-                          const MapPosition& position) noexcept {
+                          const map_position& position) noexcept {
     const auto tile = layer.tile_at(position);
     if (tile && tile == target) {
       layer.set_tile(position, replacement);

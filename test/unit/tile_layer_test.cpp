@@ -68,7 +68,7 @@ TEST_CASE("TileLayer::set_tile", "[TileLayer]")
 {
   TileLayer layer{5, 5};
 
-  const MapPosition pos{2, 2};
+  const map_position pos{2, 2};
   CHECK(*layer.tile_at(pos) == empty);
 
   const auto tileID = 24;
