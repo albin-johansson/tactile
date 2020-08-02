@@ -2,7 +2,7 @@
 
 namespace tactile {
 
-using TileID = int;
-inline constexpr TileID empty = 0;
+using tile_id = int;
+inline constexpr tile_id empty = 0;
 
 }  // namespace tactile

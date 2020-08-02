@@ -82,7 +82,7 @@ class Tileset final {
    * @param firstID the new first tile ID, must be greater than zero.
    * @since 0.1.0
    */
-  void set_first_id(TileID firstID) noexcept;
+  void set_first_id(tile_id firstID) noexcept;
 
   /**
    * Selects the tile at the specified coordinates. Multiple tiles can be
@@ -109,7 +109,7 @@ class Tileset final {
    * @return true if the tileset contains the tile ID; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] bool contains(TileID id) const noexcept;
+  [[nodiscard]] bool contains(tile_id id) const noexcept;
 
   /**
    * Returns the tile ID of the tile at the specified coordinates.
@@ -120,7 +120,7 @@ class Tileset final {
    * <code>empty</code> if no tile was found.
    * @since 0.1.0
    */
-  [[nodiscard]] TileID tile_at(int x, int y) const noexcept;
+  [[nodiscard]] tile_id tile_at(int x, int y) const noexcept;
 
   /**
    * Returns the width of the tileset image.
@@ -169,7 +169,7 @@ class Tileset final {
    * @return the tile ID of the first tile in the tileset.
    * @since 0.1.0
    */
-  [[nodiscard]] TileID first_id() const noexcept { return m_firstID; }
+  [[nodiscard]] tile_id first_id() const noexcept { return m_firstID; }
 
   /**
    * Returns the last valid tile ID associated with the tileset.
@@ -177,7 +177,10 @@ class Tileset final {
    * @return the last valid tile ID associated with the tileset.
    * @since 0.1.0
    */
-  [[nodiscard]] TileID last_id() const noexcept { return first_id() + tiles(); }
+  [[nodiscard]] tile_id last_id() const noexcept
+  {
+    return first_id() + tiles();
+  }
 
   /**
    * Returns the width of the tile sprites in the tileset. Will always be
@@ -215,9 +218,9 @@ class Tileset final {
   int m_rows;
   int m_cols;
 
-  TileID m_firstID;
+  tile_id m_firstID;
 
-  std::set<TileID> m_selection;
+  std::set<tile_id> m_selection;
 };
 
 static_assert(validate<Tileset>());

@@ -90,7 +90,7 @@ Shared<Tileset> Tileset::shared(const Shared<QImage>& image,
   return std::make_shared<Tileset>(image, tileWidth, tileHeight);
 }
 
-void Tileset::set_first_id(TileID firstID) noexcept
+void Tileset::set_first_id(tile_id firstID) noexcept
 {
   if (firstID > 0) {
     m_firstID = firstID;
@@ -110,12 +110,12 @@ void Tileset::clear_selection() noexcept
   m_selection.clear();
 }
 
-bool Tileset::contains(TileID id) const noexcept
+bool Tileset::contains(tile_id id) const noexcept
 {
   return id >= first_id() && id <= last_id();
 }
 
-TileID Tileset::tile_at(int x, int y) const noexcept
+tile_id Tileset::tile_at(int x, int y) const noexcept
 {
   if (x < 0 || y < 0 || x > width() || y > height()) {
     return empty;

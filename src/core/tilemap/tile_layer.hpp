@@ -43,8 +43,8 @@ class TileLayer final {
    * @since 0.1.0
    */
   void flood(const MapPosition& position,
-             TileID target,
-             TileID replacement) noexcept;
+             tile_id target,
+             tile_id replacement) noexcept;
 
   /**
    * Adds a row to the tile layer.
@@ -52,7 +52,7 @@ class TileLayer final {
    * @param id the tile ID of all of the new cells in the added row.
    * @since 0.1.0
    */
-  void add_row(TileID id) noexcept;
+  void add_row(tile_id id) noexcept;
 
   /**
    * Adds a column to the tile layer.
@@ -60,7 +60,7 @@ class TileLayer final {
    * @param id the tile ID of all of the new cells in the added column.
    * @since 0.1.0
    */
-  void add_col(TileID id) noexcept;
+  void add_col(tile_id id) noexcept;
 
   /**
    * Removes a row from the tile layer. Note that a tile layer will always
@@ -88,7 +88,7 @@ class TileLayer final {
    * @param id the new tile ID.
    * @since 0.1.0
    */
-  void set_tile(const MapPosition& position, TileID id) noexcept;
+  void set_tile(const MapPosition& position, tile_id id) noexcept;
 
   /**
    * Sets whether or not the tile layer is visible.
@@ -125,7 +125,7 @@ class TileLayer final {
    * <code>nothing</code> if the position is out-of-bounds.
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<TileID> tile_at(
+  [[nodiscard]] Maybe<tile_id> tile_at(
       const MapPosition& position) const noexcept;
 
   /**
@@ -148,7 +148,7 @@ class TileLayer final {
   [[nodiscard]] bool visible() const noexcept { return m_visible; }
 
  private:
-  using TileRow = std::vector<TileID>;
+  using TileRow = std::vector<tile_id>;
   using TileMatrix = std::vector<TileRow>;
 
   TileMatrix m_tiles;

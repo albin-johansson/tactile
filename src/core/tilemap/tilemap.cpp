@@ -52,7 +52,7 @@ void Tilemap::add_layer() noexcept
   m_layers.emplace_back(m_nRows, m_nCols);
 }
 
-void Tilemap::add_row(TileID id) noexcept
+void Tilemap::add_row(tile_id id) noexcept
 {
   for (auto& layer : m_layers) {
     layer.add_row(id);
@@ -60,7 +60,7 @@ void Tilemap::add_row(TileID id) noexcept
   ++m_nRows;
 }
 
-void Tilemap::add_col(TileID id) noexcept
+void Tilemap::add_col(tile_id id) noexcept
 {
   for (auto& layer : m_layers) {
     layer.add_col(id);

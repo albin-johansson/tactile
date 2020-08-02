@@ -17,7 +17,7 @@ namespace tactile {
  */
 void flood_fill(TileLayer& layer,
                 const MapPosition& origin,
-                TileID target,
-                TileID replacement) noexcept;
+                tile_id target,
+                tile_id replacement) noexcept;
 
 }  // namespace tactile

@@ -71,7 +71,7 @@ class Tilemap final {
    * @param id the tile ID that the new tiles will have, defaults to empty.
    * @since 0.1.0
    */
-  void add_row(TileID id = empty) noexcept;
+  void add_row(tile_id id = empty) noexcept;
 
   /**
    * Adds a column to the tilemap.
@@ -79,7 +79,7 @@ class Tilemap final {
    * @param id the tile ID that the new tiles will have, defaults to empty.
    * @since 0.1.0
    */
-  void add_col(TileID id = empty) noexcept;
+  void add_col(tile_id id = empty) noexcept;
 
   /**
    * Removes a row from the tilemap. This method has no effect if the tile
@@ -164,17 +164,17 @@ class Tilemap final {
 
   [[nodiscard]] int width() const noexcept
   {
-    return m_nCols * m_tileSize.size();
+    return m_nCols * m_tileSize.get();
   }
 
   [[nodiscard]] int height() const noexcept
   {
-    return m_nRows * m_tileSize.size();
+    return m_nRows * m_tileSize.get();
   }
 
-  [[nodiscard]] TileSize& tile_size() noexcept { return m_tileSize; }
+  [[nodiscard]] tile_size& get_tile_size() noexcept { return m_tileSize; }
 
-  [[nodiscard]] const TileSize& tile_size() const noexcept
+  [[nodiscard]] const tile_size& get_tile_size() const noexcept
   {
     return m_tileSize;
   }
@@ -185,7 +185,7 @@ class Tilemap final {
   int m_activeLayer;
   std::vector<TileLayer> m_layers;
   TilemapRenderer m_renderer;
-  TileSize m_tileSize;
+  tile_size m_tileSize;
 
   /**
    * Indicates whether or not the specified layer index is associated with a

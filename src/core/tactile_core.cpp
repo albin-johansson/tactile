@@ -108,7 +108,7 @@ Maybe<int> TactileCore::map_height() const noexcept
 Maybe<int> TactileCore::tile_size() const noexcept
 {
   return maybe_get<int>(
-      [](const Tilemap& map) noexcept { return map.tile_size().size(); });
+      [](const Tilemap& map) noexcept { return map.get_tile_size().get(); });
 }
 
 void TactileCore::select_layer(int index) noexcept
@@ -129,7 +129,7 @@ void TactileCore::select_map(int id) noexcept
 void TactileCore::increase_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
-    map->tile_size().increase();
+    map->get_tile_size().increase();
     emit s_updated();
   }
 }
@@ -137,7 +137,7 @@ void TactileCore::increase_tile_size() noexcept
 void TactileCore::decrease_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
-    map->tile_size().decrease();
+    map->get_tile_size().decrease();
     emit s_updated();
   }
 }
@@ -145,7 +145,7 @@ void TactileCore::decrease_tile_size() noexcept
 void TactileCore::reset_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
-    map->tile_size().reset();
+    map->get_tile_size().reset();
     emit s_updated();
   }
 }

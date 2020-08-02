@@ -49,7 +49,7 @@ struct RenderBounds final {
 void TilemapRenderer::render(QPainter& painter,
                              const Tilemap& map) const noexcept
 {
-  const auto tileSize = map.tile_size().size();
+  const auto tileSize = map.get_tile_size().get();
   const auto bounds =
       calc_render_data(painter.viewport(), map.rows(), map.cols(), tileSize);
 
