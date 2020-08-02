@@ -1,46 +1,29 @@
 cmake_minimum_required(VERSION 3.12)
 project(Tactile-src)
 
-function(tactile_include_dirs [target])
-    target_include_directories(${ARGV0} PUBLIC ${TACTILE_ROOT_DIR}/src)
-    target_include_directories(${ARGV0} PUBLIC core)
-    target_include_directories(${ARGV0} PUBLIC core/util)
-    target_include_directories(${ARGV0} PUBLIC core/tile)
-    target_include_directories(${ARGV0} PUBLIC core/tilemap)
-    target_include_directories(${ARGV0} PUBLIC core/tileset)
-    target_include_directories(${ARGV0} PUBLIC ui)
-    target_include_directories(${ARGV0} PUBLIC ui/toolbar)
-    target_include_directories(${ARGV0} PUBLIC ui/editor)
-    target_include_directories(${ARGV0} PUBLIC ui/modal)
-    target_include_directories(${ARGV0} PUBLIC ui/tileset)
-    target_include_directories(${ARGV0} PUBLIC ui/window)
-    target_include_directories(${ARGV0} PUBLIC ui/util)
-    target_include_directories(${ARGV0} PUBLIC ui/tools)
-endfunction()
+#function(tactile_append_gcc_compiler_flags [target])
+#    target_compile_options(${ARGV0} PRIVATE
+#            -Wall
+#            -Wextra
+#            -Wpedantic
+#            -Wdouble-promotion
+#            -Wswitch-default
+#            -Wswitch-enum
+#            -Wunused
+#            -Wuninitialized
+#            -Wsuggest-final-types
+#            -Wsuggest-final-methods
+#            -Wsuggest-override
+#            -Wduplicated-cond
+#            -Wconversion)
+#endfunction()
 
-function(tactile_append_gcc_compiler_flags [target])
-    target_compile_options(${ARGV0} PRIVATE
-            -Wall
-            -Wextra
-            -Wpedantic
-            -Wdouble-promotion
-            -Wswitch-default
-            -Wswitch-enum
-            -Wunused
-            -Wuninitialized
-            -Wsuggest-final-types
-            -Wsuggest-final-methods
-            -Wsuggest-override
-            -Wduplicated-cond
-            -Wconversion)
-endfunction()
-
-function(tactile_link_libraries [target])
-    target_link_libraries(${ARGV0}
-            PUBLIC Qt5::Core
-            PUBLIC Qt5::Widgets
-            PUBLIC Qt5::Gui)
-endfunction()
+#function(tactile_link_libraries [target])
+#    target_link_libraries(${ARGV0}
+#            PUBLIC Qt5::Core
+#            PUBLIC Qt5::Widgets
+#            PUBLIC Qt5::Gui)
+#endfunction()
 
 set(TACTILE_SOURCE_FILES
         tactile2.qrc
@@ -144,23 +127,64 @@ set(TACTILE_SOURCE_FILES
         ui/editor/central_widget.ui
         ui/editor/editor_pane.ui)
 
-add_library(TactileLib ${TACTILE_SOURCE_FILES})
+add_library(libTactile ${TACTILE_SOURCE_FILES})
 
-tactile_include_dirs(TactileLib)
-tactile_link_libraries(TactileLib)
+target_include_directories(libTactile
+        PUBLIC ${TACTILE_ROOT_DIR}/src
+        PUBLIC core
+        PUBLIC core/util
+        PUBLIC core/tile
+        PUBLIC core/tilemap
+        PUBLIC core/tileset
+        PUBLIC ui
+        PUBLIC ui/toolbar
+        PUBLIC ui/editor
+        PUBLIC ui/modal
+        PUBLIC ui/tileset
+        PUBLIC ui/window
+        PUBLIC ui/util
+        PUBLIC ui/tools)
 
-add_executable(TactileRun
+target_link_libraries(libTactile
+        PUBLIC Qt5::Core
+        PUBLIC Qt5::Widgets
+        PUBLIC Qt5::Gui)
+
+#tactile_include_dirs(libTactile')
+#tactile_link_libraries(TactileLib)
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(libTactile PRIVATE
+            -Wall
+            -Wextra
+            -Wpedantic
+            -Wdouble-promotion
+            -Wswitch-default
+            -Wswitch-enum
+            -Wunused
+            -Wuninitialized
+            -Wsuggest-final-types
+            -Wsuggest-final-methods
+            -Wsuggest-override
+            -Wduplicated-cond
+            -Wconversion
+            -Wc++17-compat)
+else ()
+    target_compile_options(libTactile PRIVATE
+            /EHsc
+            /MP
+            /W3)
+endif ()
+
+add_executable(Tactile
         ${TACTILE_SOURCE_FILES}
         main.cpp)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    tactile_append_gcc_compiler_flags(TactileLib)
-    tactile_append_gcc_compiler_flags(TactileRun)
-endif ()
+add_dependencies(Tactile libTactile)
 
-tactile_include_dirs(TactileRun)
-tactile_link_libraries(TactileRun)
+target_link_libraries(Tactile
+        PUBLIC libTactile)
 
-copy_directory_post_build(TactileRun
+copy_directory_post_build(Tactile
         ${TACTILE_ROOT_DIR}/bin
         ${CMAKE_CURRENT_BINARY_DIR})
