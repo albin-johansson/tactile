@@ -10,7 +10,7 @@ TEST_CASE("Tilemap(int, int)", "[Tilemap]")
 {
   SECTION("Bad args")
   {
-    const Tilemap map{0, 0};
+    const tilemap map{0, 0};
     CHECK(map.rows() == 1);
     CHECK(map.cols() == 1);
   }
@@ -19,7 +19,7 @@ TEST_CASE("Tilemap(int, int)", "[Tilemap]")
   {
     const auto rows = 7;
     const auto cols = 5;
-    const Tilemap map{rows, cols};
+    const tilemap map{rows, cols};
     CHECK(map.rows() == rows);
     CHECK(map.cols() == cols);
   }
@@ -27,19 +27,19 @@ TEST_CASE("Tilemap(int, int)", "[Tilemap]")
 
 TEST_CASE("Tilemap::add_layer", "[Tilemap]")
 {
-  Tilemap map{5, 5};
+  tilemap map{5, 5};
 
-  const auto nLayers = map.get_layer_amount();
+  const auto nLayers = map.num_layers();
 
   map.add_layer();
 
-  CHECK(map.get_layer_amount() == nLayers + 1);
+  CHECK(map.num_layers() == nLayers + 1);
 }
 
 TEST_CASE("Tilemap::add_row", "[Tilemap]")
 {
   const auto start = 4;
-  Tilemap map{start, 4};
+  tilemap map{start, 4};
 
   map.add_row();
 
@@ -49,7 +49,7 @@ TEST_CASE("Tilemap::add_row", "[Tilemap]")
 TEST_CASE("Tilemap::add_col", "[Tilemap]")
 {
   const auto start = 7;
-  Tilemap map{1, start};
+  tilemap map{1, start};
 
   map.add_col();
 
@@ -59,7 +59,7 @@ TEST_CASE("Tilemap::add_col", "[Tilemap]")
 TEST_CASE("Tilemap::remove_row", "[Tilemap]")
 {
   const auto initialRows = 4;
-  Tilemap map{initialRows, 10};
+  tilemap map{initialRows, 10};
 
   map.remove_row();
   CHECK(map.rows() == (initialRows - 1));
@@ -72,7 +72,7 @@ TEST_CASE("Tilemap::remove_row", "[Tilemap]")
 TEST_CASE("Tilemap::remove_col", "[Tilemap]")
 {
   const auto initialCols = 9;
-  Tilemap map{7, initialCols};
+  tilemap map{7, initialCols};
 
   map.remove_col();
   CHECK(map.cols() == (initialCols - 1));
@@ -84,7 +84,7 @@ TEST_CASE("Tilemap::remove_col", "[Tilemap]")
 
 TEST_CASE("Tilemap::set_rows", "[Tilemap]")
 {
-  Tilemap map{3, 3};
+  tilemap map{3, 3};
 
   const auto nRows = 12;
   map.set_rows(nRows);
@@ -101,7 +101,7 @@ TEST_CASE("Tilemap::set_rows", "[Tilemap]")
 
 TEST_CASE("Tilemap::set_cols", "[Tilemap]")
 {
-  Tilemap map{3, 3};
+  tilemap map{3, 3};
 
   const auto nCols = 9;
   map.set_cols(nCols);
@@ -118,7 +118,7 @@ TEST_CASE("Tilemap::set_cols", "[Tilemap]")
 
 TEST_CASE("Tilemap::set_visibility", "[Tilemap]")
 {
-  Tilemap map{5, 5};
+  tilemap map{5, 5};
 
   CHECK(!map.is_visible(-1));  // invalid index
   CHECK(map.is_visible(0));    // valid index, should be true
@@ -133,13 +133,13 @@ TEST_CASE("Tilemap::set_visibility", "[Tilemap]")
 
 TEST_CASE("Tilemap::get_layer_amount", "[Tilemap]")
 {
-  Tilemap map{3, 3};
-  CHECK(map.get_layer_amount() == 1);
+  tilemap map{3, 3};
+  CHECK(map.num_layers() == 1);
 }
 
 TEST_CASE("Tilemap::is_visible", "[Tilemap]")
 {
-  Tilemap map{5, 5};
+  tilemap map{5, 5};
 
   CHECK(!map.is_visible(-1));
   CHECK(!map.is_visible(1));

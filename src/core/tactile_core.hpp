@@ -12,7 +12,7 @@ class QPainter;
 
 namespace tactile {
 
-class Tilemap;
+class tilemap;
 class TilesetManager;
 
 /**
@@ -248,7 +248,7 @@ class TactileCore final : public QObject {
 
  private:
   Maybe<int> m_activeMapIndex;
-  HashMap<int, Unique<Tilemap>> m_maps;
+  HashMap<int, Unique<tilemap>> m_maps;
   Unique<TilesetManager> m_sheetManager;
 
   /**
@@ -258,7 +258,7 @@ class TactileCore final : public QObject {
    * @return a pointer to the currently active tilemap; null if there is none.
    * @since 0.1.0
    */
-  [[nodiscard]] Tilemap* active_map() noexcept;
+  [[nodiscard]] tilemap* active_map() noexcept;
 
   /**
    * Returns a pointer to the currently active map. You should check that the
@@ -267,7 +267,7 @@ class TactileCore final : public QObject {
    * @return a pointer to the currently active tilemap; null if there is none.
    * @since 0.1.0
    */
-  [[nodiscard]] const Tilemap* active_map() const noexcept;
+  [[nodiscard]] const tilemap* active_map() const noexcept;
 
   /**
    * A templated helper method for queries that returns something of the

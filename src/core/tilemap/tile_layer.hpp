@@ -1,45 +1,65 @@
+/**
+ * @file tile_layer.hpp
+ *
+ * @brief Provides the `tile_layer` class.
+ *
+ * @since 0.1.0
+ *
+ * @author Albin Johansson
+ *
+ * @date 2020
+ *
+ * @copyright GPL-3.0
+ */
+
 #pragma once
 
-#include <memory>
 #include <vector>
 
+#include "map_position.hpp"
 #include "maybe.hpp"
 #include "tile_id.hpp"
-#include "type_utils.hpp"
 
 namespace tactile {
 
-class map_position;
-
 /**
- * The <code>TileLayer</code> class represents a layer of tiles in a tilemap.
+ * @class tile_layer
+ *
+ * @brief Represents a layer of tiles in a tilemap.
  *
  * @since 0.1.0
+ *
+ * @see `tilemap`
+ * @see `tilemap_renderer`
+ *
+ * @headerfile tile_layer.hpp
  */
-class TileLayer final {
+class tile_layer final {
  public:
-  friend class TilemapRenderer;
-
   /**
-   * Creates a tile layer with the specified dimensions. All of the tiles in
-   * the created layer are initialized with the value of the
-   * <code>empty</code> constant.
+   * @brief Creates a tile layer with the specified dimensions.
+   *
+   * @details All of the tiles in the created layer are initialized with the
+   * value of the `empty` tile ID.
    *
    * @param nRows the initial number of rows in the layer; clamped to 1 if
    * the supplied value is less than 1.
    * @param nCols the initial number of columns in the layer; clamped to 1 if
    * the supplied value is less than 1.
+   *
    * @since 0.1.0
    */
-  TileLayer(int nRows, int nCols) noexcept;
+  tile_layer(int nRows, int nCols);
 
   /**
-   * Runs a flood fill in the tile layer. This method has no effect if the
-   * flood fill cannot be performed.
+   * @brief Runs a flood fill in the tile layer.
+   *
+   * @note This method has no effect if the flood fill cannot be performed.
    *
    * @param position the starting position of the flood fill.
    * @param target the tile type that will be replaced.
    * @param replacement the tile type that will replace the target type.
+   *
    * @since 0.1.0
    */
   void flood(const map_position& position,
@@ -47,114 +67,133 @@ class TileLayer final {
              tile_id replacement) noexcept;
 
   /**
-   * Adds a row to the tile layer.
+   * @brief Adds a row to the tile layer.
    *
    * @param id the tile ID of all of the new cells in the added row.
+   *
    * @since 0.1.0
    */
-  void add_row(tile_id id) noexcept;
+  void add_row(tile_id id);
 
   /**
-   * Adds a column to the tile layer.
+   * @brief Adds a column to the tile layer.
    *
    * @param id the tile ID of all of the new cells in the added column.
+   *
    * @since 0.1.0
    */
-  void add_col(tile_id id) noexcept;
+  void add_col(tile_id id);
 
   /**
-   * Removes a row from the tile layer. Note that a tile layer will always
-   * have at least one row, so this method has no effect if the tile layer
-   * has exactly one row.
+   * @brief Removes a row from the tile layer.
+   *
+   * @note The tile layer will always have at least one row, so this method
+   * has no effect if the tile layer has exactly one row.
    *
    * @since 0.1.0
    */
   void remove_row() noexcept;
 
   /**
-   * Removes a column from the tile layer. Note that a tile layer will always
-   * have at least one column, so this method has no effect if the tile layer
-   * has exactly one column.
+   * @brief Removes a column from the tile layer.
+   *
+   * @note The tile layer will always have at least one column, so this
+   * method has no effect if the tile layer has exactly one column.
    *
    * @since 0.1.0
    */
   void remove_col() noexcept;
 
   /**
-   * Sets the tile ID of a tile in the tile layer. This method has no effect
-   * if the supplied position is out-of-bounds.
+   * @brief Sets the tile ID of a tile in the tile layer.
+   *
+   * @note This method has no effect if the supplied position is out-of-bounds.
    *
    * @param position the position of the tile that will be changed.
    * @param id the new tile ID.
+   *
    * @since 0.1.0
    */
   void set_tile(const map_position& position, tile_id id) noexcept;
 
   /**
-   * Sets whether or not the tile layer is visible.
+   * @brief Sets whether or not the tile layer is visible.
    *
-   * @param visible true if the tile layer should be visible; false otherwise.
+   * @param visible `true` if the tile layer should be visible; `false`
+   * otherwise.
+   *
    * @since 0.1.0
    */
   void set_visible(bool visible) noexcept;
 
   /**
-   * Returns the number of rows in the tile layer. A tile layer always
-   * contains at least one row.
+   * @brief Returns the number of rows in the tile layer.
+   *
+   * @note A tile layer always contains at least one row.
    *
    * @return the number of rows in the tile layer.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] int rows() const noexcept;
+  [[nodiscard]] auto rows() const noexcept -> int;
 
   /**
-   * Returns the number of columns in the tile layer. A tile layer always
-   * contains at least one column.
+   * @brief Returns the number of columns in the tile layer.
+   *
+   * @note A tile layer always contains at least one column.
    *
    * @return the number of columns in the tile layer.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] int cols() const noexcept;
+  [[nodiscard]] auto cols() const noexcept -> int;
 
   /**
-   * Returns the ID of the tile at the specified position. This method
-   * returns <code>nothing</code> if the supplied position is out-of-bounds.
+   * @brief Returns the ID of the tile at the specified position.
+   *
+   * @note This method returns `nothing` if the supplied position
+   * is out-of-bounds.
    *
    * @param position the position to obtain the tile ID of.
-   * @return the ID of the tile at the specified position;
-   * <code>nothing</code> if the position is out-of-bounds.
+   *
+   * @return the ID of the tile at the specified position; `nothing` if the
+   * position is out-of-bounds.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] Maybe<tile_id> tile_at(
-      const map_position& position) const noexcept;
+  [[nodiscard]] auto tile_at(const map_position& position) const noexcept
+      -> Maybe<tile_id>;
 
   /**
-   * Indicates whether or not the specified position is in bounds of the tile
-   * layer.
+   * @brief Indicates whether or not the specified position is in bounds of the
+   * tile layer.
    *
    * @param position the position that will be checked.
-   * @return true if the position is in bounds; false otherwise.
+   *
+   * @return `true` if the position is in bounds; `false` otherwise.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] bool in_bounds(const map_position& position) const noexcept;
+  [[nodiscard]] auto in_bounds(const map_position& position) const noexcept
+      -> bool;
 
   /**
-   * Indicates whether or not the tile layer is visible. Tile layers are visible
-   * by default.
+   * @brief Indicates whether or not the tile layer is visible.
    *
-   * @return true if the tile layer is visible; false otherwise.
+   * @note Tile layers are visible by default.
+   *
+   * @return `true` if the tile layer is visible; `false` otherwise.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] bool visible() const noexcept { return m_visible; }
+  [[nodiscard]] auto visible() const noexcept -> bool;
 
  private:
-  using TileRow = std::vector<tile_id>;
-  using TileMatrix = std::vector<TileRow>;
+  using tile_row = std::vector<tile_id>;
+  using tile_matrix = std::vector<tile_row>;
 
-  TileMatrix m_tiles;
-  bool m_visible;
+  tile_matrix m_tiles;
+  bool m_visible{true};
 };
-
-static_assert(validate<TileLayer>());
 
 }  // namespace tactile

@@ -3,19 +3,20 @@
 #include <QPainter>
 
 #include "algorithm_utils.hpp"
+#include "render_tilemap.hpp"
 #include "tile_id.hpp"
 
 namespace tactile {
 namespace {
 
-[[nodiscard]] int clamp_map_dimension(int dim) noexcept
+[[nodiscard]] auto clamp_map_dimension(int dim) noexcept -> int
 {
   return (dim < 1) ? 1 : dim;
 }
 
 }  // namespace
 
-Tilemap::Tilemap(int nRows, int nCols)
+tilemap::tilemap(int nRows, int nCols)
     : m_nRows{clamp_map_dimension(nRows)},
       m_nCols{clamp_map_dimension(nCols)},
       m_activeLayer{0}
@@ -23,36 +24,34 @@ Tilemap::Tilemap(int nRows, int nCols)
   m_layers.emplace_back(nRows, nCols);
 }
 
-Tilemap::~Tilemap() noexcept = default;
-
-Unique<Tilemap> Tilemap::unique(int nRows, int nCols)
+auto tilemap::unique(int nRows, int nCols) -> Unique<tilemap>
 {
-  return std::make_unique<Tilemap>(nRows, nCols);
+  return std::make_unique<tilemap>(nRows, nCols);
 }
 
-Shared<Tilemap> Tilemap::shared(int nRows, int nCols)
+auto tilemap::shared(int nRows, int nCols) -> Shared<tilemap>
 {
-  return std::make_shared<Tilemap>(nRows, nCols);
+  return std::make_shared<tilemap>(nRows, nCols);
 }
 
-void Tilemap::draw(QPainter& painter) const noexcept
+void tilemap::draw(QPainter& painter) const noexcept
 {
-  m_renderer.render(painter, *this);
+  render_tilemap(painter, *this);
 }
 
-void Tilemap::select(int layer) noexcept
+void tilemap::select(int layer) noexcept
 {
   if (has_layer(layer)) {
     m_activeLayer = layer;
   }
 }
 
-void Tilemap::add_layer() noexcept
+void tilemap::add_layer() noexcept
 {
   m_layers.emplace_back(m_nRows, m_nCols);
 }
 
-void Tilemap::add_row(tile_id id) noexcept
+void tilemap::add_row(tile_id id) noexcept
 {
   for (auto& layer : m_layers) {
     layer.add_row(id);
@@ -60,7 +59,7 @@ void Tilemap::add_row(tile_id id) noexcept
   ++m_nRows;
 }
 
-void Tilemap::add_col(tile_id id) noexcept
+void tilemap::add_col(tile_id id) noexcept
 {
   for (auto& layer : m_layers) {
     layer.add_col(id);
@@ -68,7 +67,7 @@ void Tilemap::add_col(tile_id id) noexcept
   ++m_nCols;
 }
 
-void Tilemap::remove_row() noexcept
+void tilemap::remove_row() noexcept
 {
   if (m_nRows == 1) {
     return;
@@ -80,7 +79,7 @@ void Tilemap::remove_row() noexcept
   --m_nRows;
 }
 
-void Tilemap::remove_col() noexcept
+void tilemap::remove_col() noexcept
 {
   if (m_nCols == 1) {
     return;
@@ -92,7 +91,7 @@ void Tilemap::remove_col() noexcept
   --m_nCols;
 }
 
-void Tilemap::set_rows(int nRows) noexcept
+void tilemap::set_rows(int nRows) noexcept
 {
   nRows = clamp_map_dimension(nRows);
 
@@ -105,18 +104,18 @@ void Tilemap::set_rows(int nRows) noexcept
   if (nRows > m_nRows) {
     for (auto i = 0; i < nSteps; ++i) {
       for_all(m_layers,
-              [](TileLayer& layer) noexcept { layer.add_row(empty); });
+              [](tile_layer& layer) noexcept { layer.add_row(empty); });
     }
   } else {
     for (auto i = 0; i < nSteps; ++i) {
-      for_all(m_layers, [](TileLayer& layer) noexcept { layer.remove_row(); });
+      for_all(m_layers, [](tile_layer& layer) noexcept { layer.remove_row(); });
     }
   }
 
   m_nRows = nRows;
 }
 
-void Tilemap::set_cols(int nCols) noexcept
+void tilemap::set_cols(int nCols) noexcept
 {
   nCols = clamp_map_dimension(nCols);
 
@@ -129,18 +128,18 @@ void Tilemap::set_cols(int nCols) noexcept
   if (nCols > m_nCols) {
     for (auto i = 0; i < nSteps; ++i) {
       for_all(m_layers,
-              [](TileLayer& layer) noexcept { layer.add_col(empty); });
+              [](tile_layer& layer) noexcept { layer.add_col(empty); });
     }
   } else {
     for (auto i = 0; i < nSteps; ++i) {
-      for_all(m_layers, [](TileLayer& layer) noexcept { layer.remove_col(); });
+      for_all(m_layers, [](tile_layer& layer) noexcept { layer.remove_col(); });
     }
   }
 
   m_nCols = nCols;
 }
 
-void Tilemap::set_visibility(int layer, bool visibility) noexcept
+void tilemap::set_visibility(int layer, bool visibility) noexcept
 {
   if (has_layer(layer)) {
     const auto index = static_cast<std::size_t>(layer);
@@ -148,20 +147,60 @@ void Tilemap::set_visibility(int layer, bool visibility) noexcept
   }
 }
 
-bool Tilemap::is_visible(int layer) const noexcept
+auto tilemap::is_visible(int layer) const noexcept -> bool
 {
   const auto index = static_cast<std::size_t>(layer);
   return has_layer(layer) && m_layers.at(index).visible();
 }
 
-int Tilemap::get_layer_amount() const noexcept
+auto tilemap::num_layers() const noexcept -> int
 {
   return static_cast<int>(m_layers.size());
 }
 
-bool Tilemap::has_layer(int layer) const noexcept
+auto tilemap::has_layer(int layer) const noexcept -> bool
 {
-  return layer >= 0 && layer < get_layer_amount();
+  return layer >= 0 && layer < num_layers();
+}
+
+auto tilemap::rows() const noexcept -> int
+{
+  return m_nRows;
+}
+
+auto tilemap::cols() const noexcept -> int
+{
+  return m_nCols;
+}
+
+auto tilemap::width() const noexcept -> int
+{
+  return m_nCols * m_tileSize.get();
+}
+
+auto tilemap::height() const noexcept -> int
+{
+  return m_nRows * m_tileSize.get();
+}
+
+auto tilemap::get_tile_size() noexcept -> tile_size&
+{
+  return m_tileSize;
+}
+
+auto tilemap::get_tile_size() const noexcept -> const tile_size&
+{
+  return m_tileSize;
+}
+
+auto tilemap::begin() const noexcept -> const_iterator
+{
+  return m_layers.begin();
+}
+
+auto tilemap::end() const noexcept -> const_iterator
+{
+  return m_layers.end();
 }
 
 }  // namespace tactile

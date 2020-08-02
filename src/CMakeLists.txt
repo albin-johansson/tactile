@@ -9,6 +9,7 @@ set(TACTILE_SOURCE_FILES
         settings_utils.hpp
         settings_utils.cpp
 
+        core/tactile_fwd.hpp
         core/flood_fill.hpp
         core/flood_fill.cpp
         core/tactile_core.hpp
@@ -36,8 +37,8 @@ set(TACTILE_SOURCE_FILES
         core/tilemap/tile_layer.hpp
         core/tilemap/map_position.cpp
         core/tilemap/map_position.hpp
-        core/tilemap/tilemap_renderer.cpp
-        core/tilemap/tilemap_renderer.hpp
+        core/tilemap/render_tilemap.cpp
+        core/tilemap/render_tilemap.hpp
 
         ui/startup_widget.cpp
         ui/startup_widget.hpp

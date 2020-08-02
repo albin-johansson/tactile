@@ -12,7 +12,7 @@ namespace tactile {
  * @since 0.1.0
  */
 template <typename T>
-inline constexpr bool validate() noexcept
+inline constexpr auto validate() noexcept -> bool
 {
   return std::is_final_v<T> && std::is_move_constructible_v<T> &&
          std::is_copy_constructible_v<T> && std::is_move_assignable_v<T> &&
@@ -30,7 +30,7 @@ inline constexpr bool validate() noexcept
  * @since 0.1.0
  */
 template <typename T>
-inline constexpr bool validate_nothrow() noexcept
+inline constexpr auto validate_nothrow() noexcept -> bool
 {
   return std::is_final_v<T> && std::is_nothrow_move_constructible_v<T> &&
          std::is_nothrow_copy_constructible_v<T> &&

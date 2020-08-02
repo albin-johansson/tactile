@@ -1,4 +1,4 @@
-#include "tilemap_renderer.hpp"
+#include "render_tilemap.hpp"
 
 #include <QColor>
 #include <QPainter>
@@ -11,17 +11,17 @@
 namespace tactile {
 namespace {
 
-struct RenderBounds final {
-  int minRow = 0;
-  int minCol = 0;
-  int maxRow = 0;
-  int maxCol = 0;
+struct render_bounds final {
+  int minRow{};
+  int minCol{};
+  int maxRow{};
+  int maxCol{};
 };
 
-[[nodiscard]] RenderBounds calc_render_data(const QRect& viewport,
-                                            int nRows,
-                                            int nCols,
-                                            int tileSize) noexcept
+[[nodiscard]] auto calc_bounds(const QRect& viewport,
+                               int nRows,
+                               int nCols,
+                               int tileSize) noexcept -> render_bounds
 {
   const auto minCol = (viewport.x() > 0) ? 0 : (-viewport.x() / tileSize);
   const auto minRow = (viewport.y() > 0) ? 0 : (-viewport.y() / tileSize);
@@ -34,7 +34,7 @@ struct RenderBounds final {
   return {minRow, minCol, maxRow, maxCol};
 }
 
-[[nodiscard]] QPen create_pen() noexcept
+[[nodiscard]] auto create_pen() noexcept -> QPen
 {
   QPen pen;
   pen.setColor(Qt::black);
@@ -46,12 +46,11 @@ struct RenderBounds final {
 
 }  // namespace
 
-void TilemapRenderer::render(QPainter& painter,
-                             const Tilemap& map) const noexcept
+void render_tilemap(QPainter& painter, const tilemap& map) noexcept
 {
   const auto tileSize = map.get_tile_size().get();
   const auto bounds =
-      calc_render_data(painter.viewport(), map.rows(), map.cols(), tileSize);
+      calc_bounds(painter.viewport(), map.rows(), map.cols(), tileSize);
 
   const auto renderGrid = settings_bool("visuals-grid").value_or(true);
 
@@ -61,7 +60,7 @@ void TilemapRenderer::render(QPainter& painter,
 
   const QColor emptyGray{0x55, 0x55, 0x55};
 
-  for (auto& layer : map.m_layers) {
+  for (auto& layer : map) {
     if (!layer.visible()) {
       continue;
     }

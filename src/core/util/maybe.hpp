@@ -16,6 +16,7 @@ using Maybe = std::optional<T>;
  *
  * @since 0.1.0
  */
-inline constexpr auto nothing = std::nullopt;
+[[deprecated("Use std::nullopt instead!")]] inline constexpr auto nothing =
+    std::nullopt;
 
 }  // namespace tactile

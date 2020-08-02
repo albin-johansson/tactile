@@ -44,12 +44,14 @@ auto map_position::west() const noexcept -> map_position
   return {m_row, m_col - 1};
 }
 
-auto operator==(const map_position& lhs, const map_position& rhs) noexcept -> bool
+auto operator==(const map_position& lhs, const map_position& rhs) noexcept
+    -> bool
 {
   return (lhs.row() == rhs.row()) && (lhs.col() == rhs.col());
 }
 
-auto operator!=(const map_position& lhs, const map_position& rhs) noexcept -> bool
+auto operator!=(const map_position& lhs, const map_position& rhs) noexcept
+    -> bool
 {
   return !(lhs == rhs);
 }

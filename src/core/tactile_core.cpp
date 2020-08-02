@@ -24,7 +24,7 @@ void TactileCore::new_map(int id) noexcept
   if (m_maps.count(id)) {
     qWarning("Editor core already had tilemap associated with %i!", id);
   } else {
-    m_maps.insert({id, Tilemap::unique(5, 5)});
+    m_maps.insert({id, tilemap::unique(5, 5)});
     m_activeMapIndex = id;
   }
 }
@@ -85,30 +85,30 @@ void TactileCore::set_cols(int nCols) noexcept
 
 Maybe<int> TactileCore::rows() const noexcept
 {
-  return maybe_get<int>([](const Tilemap& map) noexcept { return map.rows(); });
+  return maybe_get<int>([](const tilemap& map) noexcept { return map.rows(); });
 }
 
 Maybe<int> TactileCore::cols() const noexcept
 {
-  return maybe_get<int>([](const Tilemap& map) noexcept { return map.cols(); });
+  return maybe_get<int>([](const tilemap& map) noexcept { return map.cols(); });
 }
 
 Maybe<int> TactileCore::map_width() const noexcept
 {
   return maybe_get<int>(
-      [](const Tilemap& map) noexcept { return map.width(); });
+      [](const tilemap& map) noexcept { return map.width(); });
 }
 
 Maybe<int> TactileCore::map_height() const noexcept
 {
   return maybe_get<int>(
-      [](const Tilemap& map) noexcept { return map.height(); });
+      [](const tilemap& map) noexcept { return map.height(); });
 }
 
 Maybe<int> TactileCore::tile_size() const noexcept
 {
   return maybe_get<int>(
-      [](const Tilemap& map) noexcept { return map.get_tile_size().get(); });
+      [](const tilemap& map) noexcept { return map.get_tile_size().get(); });
 }
 
 void TactileCore::select_layer(int index) noexcept
@@ -189,7 +189,7 @@ void TactileCore::remove_col() noexcept
   }
 }
 
-Tilemap* TactileCore::active_map() noexcept
+tilemap* TactileCore::active_map() noexcept
 {
   if (m_activeMapIndex) {
     return m_maps.at(*m_activeMapIndex).get();
@@ -198,7 +198,7 @@ Tilemap* TactileCore::active_map() noexcept
   }
 }
 
-const Tilemap* TactileCore::active_map() const noexcept
+const tilemap* TactileCore::active_map() const noexcept
 {
   if (m_activeMapIndex) {
     return m_maps.at(*m_activeMapIndex).get();

@@ -7,7 +7,6 @@
 #include "tile_id.hpp"
 #include "tile_layer.hpp"
 #include "tile_size.hpp"
-#include "tilemap_renderer.hpp"
 #include "type_utils.hpp"
 
 class QPainter;
@@ -15,190 +14,256 @@ class QPainter;
 namespace tactile {
 
 /**
- * The <code>Tilemap</code> class represents the main tilemaps in the
- * Tactile application. tilemaps are composed by multiple tile layers.
+ * @class tilemap
  *
- * @see TileLayer
+ * @brief Represents the main tilemaps in the application.
+ *
+ * @details Tilemaps are composed by multiple tile layers.
+ *
+ * @see `tile_layer`
+ *
  * @since 0.1.0
+ *
+ * @headerfile tilemap.hpp
  */
-class Tilemap final {
+class tilemap final {
  public:
-  friend class TilemapRenderer;
+  using iterator = typename std::vector<tile_layer>::iterator;
+  using const_iterator = typename std::vector<tile_layer>::const_iterator;
 
   /**
-   * Creates a tilemap instance with one layer. The amount of rows or
-   * columns in the tilemap is always at least 1.
+   * @brief Creates a tilemap with one layer.
+   *
+   * @details The amount of rows and columns in the tilemap is always at
+   * least 1.
    *
    * @param nRows the initial number of rows in the tilemap.
    * @param nCols the initial number of columns in the tilemap.
+   *
    * @since 0.1.0
    */
-  Tilemap(int nRows, int nCols);
-
-  ~Tilemap() noexcept;
-
-  [[nodiscard]] static Unique<Tilemap> unique(int nRows, int nCols);
-
-  [[nodiscard]] static Shared<Tilemap> shared(int nRows, int nCols);
+  tilemap(int nRows, int nCols);
 
   /**
-   * Renders the tilemap.
+   * @copydoc tilemap(int, int)
+   */
+  [[nodiscard]] static auto unique(int nRows, int nCols) -> Unique<tilemap>;
+
+  /**
+   * @copydoc tilemap(int, int)
+   */
+  [[nodiscard]] static auto shared(int nRows, int nCols) -> Shared<tilemap>;
+
+  /**
+   * @brief Renders the tilemap.
    *
    * @param painter the painter that will be used.
+   *
    * @since 0.1.0
    */
   void draw(QPainter& painter) const noexcept;
 
   /**
-   * Selects the tile layer associated with the specified index. This method has
-   * no effect if the supplied index is invalid.
+   * @brief Selects the tile layer associated with the specified index.
+   *
+   * @note This method has no effect if the supplied index is invalid.
    *
    * @param layer the layer index of the tile layer that will be selected.
+   *
    * @since 0.1.0
    */
   void select(int layer) noexcept;
 
   /**
-   * Adds an empty layer to the tilemap.
+   * @brief Adds an empty layer to the tilemap.
    *
    * @since 0.1.0
    */
   void add_layer() noexcept;
 
   /**
-   * Adds a row to the tilemap.
+   * @brief Adds a row to the tilemap.
    *
    * @param id the tile ID that the new tiles will have, defaults to empty.
+   *
    * @since 0.1.0
    */
   void add_row(tile_id id = empty) noexcept;
 
   /**
-   * Adds a column to the tilemap.
+   * @brief Adds a column to the tilemap.
    *
    * @param id the tile ID that the new tiles will have, defaults to empty.
+   *
    * @since 0.1.0
    */
   void add_col(tile_id id = empty) noexcept;
 
   /**
-   * Removes a row from the tilemap. This method has no effect if the tile
-   * map only contains one row.
+   * @brief Removes a row from the tilemap.
+   *
+   * @note This method has no effect if the tile map only contains one row.
    *
    * @since 0.1.0
    */
   void remove_row() noexcept;
 
   /**
-   * Removes a column from the tilemap. This method has no effect if the tile
-   * map only contains one column.
+   * @brief Removes a column from the tilemap.
+   *
+   * @note This method has no effect if the tile map only contains one column.
    *
    * @since 0.1.0
    */
   void remove_col() noexcept;
 
   /**
-   * Sets the total number of rows in the tilemap.
+   * @brief Sets the total number of rows in the tilemap.
    *
    * @param nRows the new number of rows in the tilemap. Clamped to be at
    * least 1.
+   *
    * @since 0.1.0
    */
   void set_rows(int nRows) noexcept;
 
   /**
-   * Sets the total number of columns in the tilemap.
+   * @brief Sets the total number of columns in the tilemap.
    *
    * @param nCols the new number of columns in the tilemap. Clamped to be at
    * least 1.
+   *
    * @since 0.1.0
    */
   void set_cols(int nCols) noexcept;
 
   /**
-   * Sets the visibility of a tile layer. This method has no effect if the
-   * specified layer index isn't associated with a tile layer.
+   * @brief Sets the visibility of a tile layer.
+   *
+   * @note This method has no effect if the specified layer index isn't
+   * associated with a tile layer.
    *
    * @param layer the index of the layer that will have its visibility changed.
    * @param visibility true if the layer should be visible; false otherwise.
+   *
    * @since 0.1.0
    */
   void set_visibility(int layer, bool visibility) noexcept;
 
   /**
-   * Indicates whether or not the layer associated with the specified index is
-   * visible. This method returns false if the supplied index isn't associated
-   * with a tile layer. Tile layers are visible by default.
+   * @brief Indicates whether or not the layer associated with the specified
+   * index is visible.
    *
-   * @param layer the index of the tile layer that will be checked. An invalid
-   * index results in the method returning false.
-   * @return true if the layer is visible; false otherwise.
+   * @details This method returns false if the supplied index isn't
+   * associated with a tile layer. Tile layers are visible by default.
+   *
+   * @param layer the index of the tile layer that will be checked. An
+   * invalid index results in the method returning `false`.
+   *
+   * @return `true` if the layer is visible; `false` otherwise.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] bool is_visible(int layer) const noexcept;
+  [[nodiscard]] auto is_visible(int layer) const noexcept -> bool;
 
   /**
-   * Returns the amount of layers present in the tilemap. tilemaps are created
-   * with 1 tile layer.
+   * @brief Returns the amount of layers present in the tilemap.
+   *
+   * @deatils Tilemaps are initially created with 1 tile layer.
    *
    * @return the amount of layers present in the tilemap.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] int get_layer_amount() const noexcept;
+  [[nodiscard]] auto num_layers() const noexcept -> int;
 
   /**
-   * Returns the total number of rows in the tilemap.
+   * @brief Returns the total number of rows in the tilemap.
    *
    * @return the amount of rows in the tilemap.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] int rows() const noexcept { return m_nRows; }
+  [[nodiscard]] auto rows() const noexcept -> int;
 
   /**
-   * Returns the total number of columns in the tilemap.
+   * @brief Returns the total number of columns in the tilemap.
    *
    * @return the amount of columns in the tilemap.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] int cols() const noexcept { return m_nCols; }
+  [[nodiscard]] auto cols() const noexcept -> int;
 
-  [[nodiscard]] int width() const noexcept
-  {
-    return m_nCols * m_tileSize.get();
-  }
+  /**
+   * @brief Returns the pixel width of the tilemap.
+   *
+   * @return the pixel width of the tilemap.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto width() const noexcept -> int;
 
-  [[nodiscard]] int height() const noexcept
-  {
-    return m_nRows * m_tileSize.get();
-  }
+  /**
+   * @brief Returns the pixel height of the tilemap.
+   *
+   * @return the pixel height of the tilemap.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto height() const noexcept -> int;
 
-  [[nodiscard]] tile_size& get_tile_size() noexcept { return m_tileSize; }
+  /**
+   * @brief Returns the current tile size.
+   *
+   * @return the current tile size.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto get_tile_size() noexcept -> tile_size&;
 
-  [[nodiscard]] const tile_size& get_tile_size() const noexcept
-  {
-    return m_tileSize;
-  }
+  /**
+   * @copydoc get_tile_size()
+   */
+  [[nodiscard]] auto get_tile_size() const noexcept -> const tile_size&;
+
+  /**
+   * @brief Returns an iterator to the first layer.
+   *
+   * @return an iterator to the first layer.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto begin() const noexcept -> const_iterator;
+
+  /**
+   * @brief Returns an iterator one-past the last layer.
+   *
+   * @return an iterator one-past the last layer.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto end() const noexcept -> const_iterator;
 
  private:
   int m_nRows;
   int m_nCols;
   int m_activeLayer;
-  std::vector<TileLayer> m_layers;
-  TilemapRenderer m_renderer;
+  std::vector<tile_layer> m_layers;
   tile_size m_tileSize;
 
   /**
-   * Indicates whether or not the specified layer index is associated with a
-   * tile layer.
+   * @brief Indicates whether or not the specified layer index is associated
+   * with a tile layer.
    *
    * @param layer the tile layer index that will be checked.
-   * @return true if the supplied layer index is associated with a tile layer;
-   * false otherwise.
+   *
+   * @return `true` if the supplied layer index is associated with a tile layer;
+   * `false` otherwise.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] bool has_layer(int layer) const noexcept;
+  [[nodiscard]] auto has_layer(int layer) const noexcept -> bool;
 };
-
-static_assert(validate<Tilemap>());
 
 }  // namespace tactile
