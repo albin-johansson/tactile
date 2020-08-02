@@ -16,8 +16,10 @@ TilesetDialog::TilesetDialog(QWidget* parent)
 {
   m_ui->setupUi(this);
   m_validator = std::make_unique<QIntValidator>(1, 1'000, this);
-  if (m_ui->imageLabel->pixmap()) {
-    m_defaultImageIcon = *m_ui->imageLabel->pixmap();
+
+  const auto pixmap = m_ui->imageLabel->pixmap(Qt::ReturnByValueConstant{});
+  if (!pixmap.isNull()) {
+    m_defaultImageIcon = pixmap;
   } else {
     qWarning("Found no default pixmap for tileset image!");
   }
