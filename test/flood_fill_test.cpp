@@ -1,4 +1,4 @@
-#include "flood_fill.h"
+#include "flood_fill.hpp"
 
 #include <catch.hpp>
 #include <iostream>

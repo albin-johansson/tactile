@@ -1,4 +1,4 @@
-#include "about_dialog.h"
+#include "about_dialog.hpp"
 
 #include "ui_about.h"
 

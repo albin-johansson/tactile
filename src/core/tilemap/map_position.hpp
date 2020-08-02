@@ -1,6 +1,6 @@
 #pragma once
 
-#include "type_utils.h"
+#include "type_utils.hpp"
 
 namespace tactile {
 

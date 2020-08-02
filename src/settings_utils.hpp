@@ -1,5 +1,5 @@
 #pragma once
-#include "maybe.h"
+#include "maybe.hpp"
 
 class QVariant;
 class QByteArray;

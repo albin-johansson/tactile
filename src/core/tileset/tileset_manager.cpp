@@ -1,6 +1,6 @@
-#include "tileset_manager.h"
+#include "tileset_manager.hpp"
 
-#include "tileset.h"
+#include "tileset.hpp"
 
 namespace tactile {
 

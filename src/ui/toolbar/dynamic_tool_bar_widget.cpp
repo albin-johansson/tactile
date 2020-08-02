@@ -1,9 +1,9 @@
-#include "dynamic_tool_bar_widget.h"
+#include "dynamic_tool_bar_widget.hpp"
 
 #include <QStackedLayout>
 #include <QStackedWidget>
 
-#include "stamp_toolbar.h"
+#include "stamp_toolbar.hpp"
 
 namespace tactile {
 

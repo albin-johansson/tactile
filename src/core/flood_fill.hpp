@@ -1,7 +1,7 @@
 #pragma once
 
-#include "map_position.h"
-#include "tile_layer.h"
+#include "map_position.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile {
 

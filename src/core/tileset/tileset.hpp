@@ -2,9 +2,9 @@
 
 #include <set>
 
-#include "smart_pointers.h"
-#include "tile_id.h"
-#include "type_utils.h"
+#include "smart_pointers.hpp"
+#include "tile_id.hpp"
+#include "type_utils.hpp"
 
 class QImage;
 

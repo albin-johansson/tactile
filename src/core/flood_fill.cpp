@@ -1,8 +1,8 @@
-#include "flood_fill.h"
+#include "flood_fill.hpp"
 
 #include <queue>
 
-#include "map_position.h"
+#include "map_position.hpp"
 
 namespace tactile {
 

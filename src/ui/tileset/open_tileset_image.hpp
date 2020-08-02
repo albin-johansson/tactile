@@ -1,7 +1,7 @@
 #pragma once
 #include <QUrl>
 
-#include "maybe.h"
+#include "maybe.hpp"
 
 class QWidget;
 

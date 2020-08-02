@@ -1,4 +1,4 @@
-#include "mouse_tool_widget.h"
+#include "mouse_tool_widget.hpp"
 
 #include <QButtonGroup>
 

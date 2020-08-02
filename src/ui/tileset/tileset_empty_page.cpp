@@ -1,4 +1,4 @@
-#include "tileset_empty_page.h"
+#include "tileset_empty_page.hpp"
 
 #include "ui_tileset_empty_page.h"
 

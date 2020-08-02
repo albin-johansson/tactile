@@ -1,8 +1,8 @@
-#include "tileset_dialog.h"
+#include "tileset_dialog.hpp"
 
 #include <QLineEdit>
 
-#include "open_tileset_image.h"
+#include "open_tileset_image.hpp"
 #include "ui_tileset_dialog.h"
 
 namespace tactile {

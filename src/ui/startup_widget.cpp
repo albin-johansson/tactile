@@ -1,4 +1,4 @@
-#include "startup_widget.h"
+#include "startup_widget.hpp"
 
 #include "ui_startup_widget.h"
 

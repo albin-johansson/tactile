@@ -1,7 +1,7 @@
 #pragma once
 #include <QWidget>
 
-#include "smart_pointers.h"
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class TilesetWidgetUI;

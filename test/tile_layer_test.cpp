@@ -1,8 +1,8 @@
-#include "tile_layer.h"
+#include "tile_layer.hpp"
 
 #include <catch.hpp>
 
-#include "map_position.h"
+#include "map_position.hpp"
 
 using namespace tactile;
 

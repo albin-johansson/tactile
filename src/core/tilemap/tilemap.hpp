@@ -2,13 +2,13 @@
 
 #include <vector>
 
-#include "maybe.h"
-#include "smart_pointers.h"
-#include "tile_id.h"
-#include "tile_layer.h"
-#include "tile_size.h"
-#include "tilemap_renderer.h"
-#include "type_utils.h"
+#include "maybe.hpp"
+#include "smart_pointers.hpp"
+#include "tile_id.hpp"
+#include "tile_layer.hpp"
+#include "tile_size.hpp"
+#include "tilemap_renderer.hpp"
+#include "type_utils.hpp"
 
 class QPainter;
 

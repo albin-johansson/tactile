@@ -1,12 +1,12 @@
-#include "central_editor_widget.h"
+#include "central_editor_widget.hpp"
 
 #include <QTabWidget>
 
-#include "editor_tab.h"
-#include "startup_widget.h"
-#include "tile_map_tab_widget.h"
+#include "editor_tab.hpp"
+#include "startup_widget.hpp"
+#include "tile_map_tab_widget.hpp"
 #include "ui_central_widget.h"
-#include "widget_size_policy.h"
+#include "widget_size_policy.hpp"
 
 namespace tactile {
 

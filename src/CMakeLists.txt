@@ -5,101 +5,101 @@ set(TACTILE_SOURCE_FILES
         tactile2.qrc
 
         tactile_application.cpp
-        tactile_application.h
-        settings_utils.h
+        tactile_application.hpp
+        settings_utils.hpp
         settings_utils.cpp
 
-        core/flood_fill.h
+        core/flood_fill.hpp
         core/flood_fill.cpp
-        core/tactile_core.h
+        core/tactile_core.hpp
         core/tactile_core.cpp
 
-        core/util/maybe.h
-        core/util/smart_pointers.h
-        core/util/algorithm_utils.h
-        core/util/tactile_types.h
-        core/util/type_utils.h
+        core/util/maybe.hpp
+        core/util/smart_pointers.hpp
+        core/util/algorithm_utils.hpp
+        core/util/tactile_types.hpp
+        core/util/type_utils.hpp
 
-        core/tile/tile_id.h
-        core/tile/tile_size.h
+        core/tile/tile_id.hpp
+        core/tile/tile_size.hpp
         core/tile/tile_size.cpp
 
         core/tileset/tileset.cpp
-        core/tileset/tileset.h
+        core/tileset/tileset.hpp
         core/tileset/tileset_manager.cpp
-        core/tileset/tileset_manager.h
-        core/tileset/tileset_info.h
+        core/tileset/tileset_manager.hpp
+        core/tileset/tileset_info.hpp
 
-        core/tilemap/tilemap.h
+        core/tilemap/tilemap.hpp
         core/tilemap/tilemap.cpp
         core/tilemap/tile_layer.cpp
-        core/tilemap/tile_layer.h
+        core/tilemap/tile_layer.hpp
         core/tilemap/map_position.cpp
-        core/tilemap/map_position.h
+        core/tilemap/map_position.hpp
         core/tilemap/tilemap_renderer.cpp
-        core/tilemap/tilemap_renderer.h
+        core/tilemap/tilemap_renderer.hpp
 
         ui/startup_widget.cpp
-        ui/startup_widget.h
+        ui/startup_widget.hpp
         ui/startup_widget.ui
 
         ui/tools/mouse_tool_widget.cpp
-        ui/tools/mouse_tool_widget.h
+        ui/tools/mouse_tool_widget.hpp
         ui/tools/tool_button_widget.ui
 
-        ui/util/basic_widget_macro.h
-        ui/util/widget_size_policy.h
+        ui/util/basic_widget_macro.hpp
+        ui/util/widget_size_policy.hpp
         ui/util/widget_size_policy.cpp
 
-        ui/window/tactile_window.h
+        ui/window/tactile_window.hpp
         ui/window/tactile_window.cpp
         ui/window/window.ui
-        ui/window/create_dock_widget.h
+        ui/window/create_dock_widget.hpp
         ui/window/create_dock_widget.cpp
 
         ui/tileset/tileset_widget.cpp
-        ui/tileset/tileset_widget.h
+        ui/tileset/tileset_widget.hpp
         ui/tileset/tileset_widget.ui
         ui/tileset/tileset_dialog.cpp
-        ui/tileset/tileset_dialog.h
+        ui/tileset/tileset_dialog.hpp
         ui/tileset/tileset_dialog.ui
         ui/tileset/tileset_content_page.ui
         ui/tileset/tileset_empty_page.ui
         ui/tileset/open_tileset_image.cpp
-        ui/tileset/open_tileset_image.h
+        ui/tileset/open_tileset_image.hpp
         ui/tileset/tileset_empty_page.cpp
-        ui/tileset/tileset_empty_page.h
+        ui/tileset/tileset_empty_page.hpp
         ui/tileset/tileset_content_page.cpp
-        ui/tileset/tileset_content_page.h
+        ui/tileset/tileset_content_page.hpp
         ui/tileset/tileset_image_widget.cpp
-        ui/tileset/tileset_image_widget.h
+        ui/tileset/tileset_image_widget.hpp
         ui/tileset/tileset_tab.cpp
-        ui/tileset/tileset_tab.h
+        ui/tileset/tileset_tab.hpp
         ui/tileset/tileset_image_label.cpp
-        ui/tileset/tileset_image_label.h
+        ui/tileset/tileset_image_label.hpp
 
         ui/modal/about_dialog.cpp
-        ui/modal/about_dialog.h
-        ui/modal/settings_dialog.h
+        ui/modal/about_dialog.hpp
+        ui/modal/settings_dialog.hpp
         ui/modal/settings_dialog.cpp
-        ui/modal/resize_dialog.h
+        ui/modal/resize_dialog.hpp
         ui/modal/resize_dialog.cpp
         ui/modal/about.ui
         ui/modal/resize_dialog.ui
         ui/modal/settings.ui
 
         ui/toolbar/dynamic_tool_bar_widget.cpp
-        ui/toolbar/dynamic_tool_bar_widget.h
+        ui/toolbar/dynamic_tool_bar_widget.hpp
         ui/toolbar/stamp_toolbar.cpp
-        ui/toolbar/stamp_toolbar.h
+        ui/toolbar/stamp_toolbar.hpp
         ui/toolbar/toolbar_stamp.ui
 
         ui/editor/editor_tab.cpp
-        ui/editor/editor_tab.h
+        ui/editor/editor_tab.hpp
         ui/editor/central_editor_widget.cpp
-        ui/editor/central_editor_widget.h
+        ui/editor/central_editor_widget.hpp
         ui/editor/tile_map_tab_widget.cpp
-        ui/editor/tile_map_tab_widget.h
+        ui/editor/tile_map_tab_widget.hpp
         ui/editor/central_widget.ui
         ui/editor/editor_pane.ui)
 

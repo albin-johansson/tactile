@@ -1,12 +1,12 @@
-#include "tileset_tab.h"
+#include "tileset_tab.hpp"
 
 #include <QGridLayout>
 #include <QLabel>
 #include <QScrollArea>
 
-#include "tactile_types.h"
-#include "tileset_image_widget.h"
-#include "widget_size_policy.h"
+#include "tactile_types.hpp"
+#include "tileset_image_widget.hpp"
+#include "widget_size_policy.hpp"
 
 namespace tactile {
 

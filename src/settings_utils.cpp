@@ -1,4 +1,4 @@
-#include "settings_utils.h"
+#include "settings_utils.hpp"
 
 #include <QSettings>
 

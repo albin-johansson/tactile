@@ -1,7 +1,7 @@
 #pragma once
 #include <QDockWidget>
 
-#include "smart_pointers.h"
+#include "smart_pointers.hpp"
 
 class QButtonGroup;
 

@@ -1,12 +1,12 @@
-#include "tilemap_renderer.h"
+#include "tilemap_renderer.hpp"
 
 #include <QColor>
 #include <QPainter>
 #include <QSettings>
 
-#include "settings_utils.h"
-#include "tile_size.h"
-#include "tilemap.h"
+#include "settings_utils.hpp"
+#include "tile_size.hpp"
+#include "tilemap.hpp"
 
 namespace tactile {
 namespace {

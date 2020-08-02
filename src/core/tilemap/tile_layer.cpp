@@ -1,6 +1,6 @@
-#include "tile_layer.h"
+#include "tile_layer.hpp"
 
-#include "flood_fill.h"
+#include "flood_fill.hpp"
 
 namespace tactile {
 

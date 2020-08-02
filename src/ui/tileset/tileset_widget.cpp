@@ -1,8 +1,8 @@
-#include "tileset_widget.h"
+#include "tileset_widget.hpp"
 
-#include "tileset_content_page.h"
-#include "tileset_empty_page.h"
-#include "tileset_info.h"
+#include "tileset_content_page.hpp"
+#include "tileset_empty_page.hpp"
+#include "tileset_info.hpp"
 #include "ui_tileset_widget.h"
 
 namespace tactile {

@@ -1,4 +1,4 @@
-#include "settings_dialog.h"
+#include "settings_dialog.hpp"
 
 #include "ui_settings.h"
 

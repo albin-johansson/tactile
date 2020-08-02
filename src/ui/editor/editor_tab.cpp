@@ -1,10 +1,10 @@
-#include "editor_tab.h"
+#include "editor_tab.hpp"
 
 #include <QApplication>
 #include <QPainter>
 #include <QResizeEvent>
 
-#include "widget_size_policy.h"
+#include "widget_size_policy.hpp"
 
 namespace tactile {
 

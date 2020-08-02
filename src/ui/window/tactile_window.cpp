@@ -1,4 +1,4 @@
-#include "tactile_window.h"
+#include "tactile_window.hpp"
 
 #include <QApplication>
 #include <QFile>
@@ -8,15 +8,15 @@
 #include <QSettings>
 #include <QSpacerItem>
 
-#include "about_dialog.h"
-#include "central_editor_widget.h"
-#include "create_dock_widget.h"
-#include "settings_dialog.h"
-#include "settings_utils.h"
-#include "tileset_widget.h"
-#include "ui/tools/mouse_tool_widget.h"
+#include "about_dialog.hpp"
+#include "central_editor_widget.hpp"
+#include "create_dock_widget.hpp"
+#include "settings_dialog.hpp"
+#include "settings_utils.hpp"
+#include "tileset_widget.hpp"
+#include "ui/tools/mouse_tool_widget.hpp"
 #include "ui_window.h"
-#include "widget_size_policy.h"
+#include "widget_size_policy.hpp"
 
 namespace tactile {
 

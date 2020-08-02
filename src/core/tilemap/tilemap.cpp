@@ -1,9 +1,9 @@
-#include "tilemap.h"
+#include "tilemap.hpp"
 
 #include <QPainter>
 
-#include "algorithm_utils.h"
-#include "tile_id.h"
+#include "algorithm_utils.hpp"
+#include "tile_id.hpp"
 
 namespace tactile {
 namespace {

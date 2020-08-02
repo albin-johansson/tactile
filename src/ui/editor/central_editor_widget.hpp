@@ -1,7 +1,7 @@
 #pragma once
 #include <QWidget>
 
-#include "maybe.h"
+#include "maybe.hpp"
 
 namespace Ui {
 class CentralWidgetUI;

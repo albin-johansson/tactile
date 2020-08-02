@@ -1,9 +1,9 @@
-#include "create_dock_widget.h"
+#include "create_dock_widget.hpp"
 
 #include <QDockWidget>
 #include <QLayout>
 
-#include "tactile_types.h"
+#include "tactile_types.hpp"
 
 namespace tactile {
 

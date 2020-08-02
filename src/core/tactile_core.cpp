@@ -1,10 +1,10 @@
-#include "tactile_core.h"
+#include "tactile_core.hpp"
 
 #include <QImage>
 
-#include "tilemap.h"
-#include "tileset.h"
-#include "tileset_manager.h"
+#include "tilemap.hpp"
+#include "tileset.hpp"
+#include "tileset_manager.hpp"
 
 namespace tactile {
 

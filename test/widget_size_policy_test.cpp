@@ -1,4 +1,4 @@
-#include "widget_size_policy.h"
+#include "widget_size_policy.hpp"
 
 #include <QWidget>
 #include <catch.hpp>

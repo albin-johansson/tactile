@@ -1,9 +1,9 @@
-#include "tileset_manager.h"
+#include "tileset_manager.hpp"
 
 #include <QImage>
 #include <catch.hpp>
 
-#include "tileset.h"
+#include "tileset.hpp"
 
 using namespace tactile;
 

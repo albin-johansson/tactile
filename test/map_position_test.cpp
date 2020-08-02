@@ -1,4 +1,4 @@
-#include "map_position.h"
+#include "map_position.hpp"
 
 #include <catch.hpp>
 

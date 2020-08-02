@@ -2,7 +2,7 @@
 
 #include <QDialog>
 
-#include "basic_widget_macro.h"
+#include "basic_widget_macro.hpp"
 
 namespace Ui {
 

@@ -1,12 +1,12 @@
-#include "tileset_image_widget.h"
+#include "tileset_image_widget.hpp"
 
 #include <QGridLayout>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QRubberBand>
 
-#include "tactile_types.h"
-#include "tileset_image_label.h"
+#include "tactile_types.hpp"
+#include "tileset_image_label.hpp"
 
 namespace tactile {
 

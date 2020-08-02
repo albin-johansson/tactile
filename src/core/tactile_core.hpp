@@ -4,9 +4,9 @@
 #include <type_traits>
 #include <unordered_map>
 
-#include "maybe.h"
-#include "smart_pointers.h"
-#include "tactile_types.h"
+#include "maybe.hpp"
+#include "smart_pointers.hpp"
+#include "tactile_types.hpp"
 
 class QPainter;
 

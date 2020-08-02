@@ -1,4 +1,4 @@
-#include "tile_size.h"
+#include "tile_size.hpp"
 
 #include <catch.hpp>
 

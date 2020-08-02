@@ -1,4 +1,4 @@
-#include "stamp_toolbar.h"
+#include "stamp_toolbar.hpp"
 
 #include "ui_toolbar_stamp.h"
 

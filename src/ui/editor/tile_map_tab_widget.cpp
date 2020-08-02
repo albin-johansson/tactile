@@ -1,8 +1,8 @@
-#include "tile_map_tab_widget.h"
+#include "tile_map_tab_widget.hpp"
 
 #include <algorithm>
 
-#include "editor_tab.h"
+#include "editor_tab.hpp"
 
 namespace tactile {
 

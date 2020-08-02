@@ -1,4 +1,4 @@
-#include "resize_dialog.h"
+#include "resize_dialog.hpp"
 
 #include <QIntValidator>
 #include <QPushButton>

@@ -1,9 +1,9 @@
-#include "tileset_content_page.h"
+#include "tileset_content_page.hpp"
 
 #include <QPushButton>
 
-#include "tileset_info.h"
-#include "tileset_tab.h"
+#include "tileset_info.hpp"
+#include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
 namespace tactile {

@@ -3,9 +3,9 @@
 #include <memory>
 #include <vector>
 
-#include "maybe.h"
-#include "tile_id.h"
-#include "type_utils.h"
+#include "maybe.hpp"
+#include "tile_id.hpp"
+#include "type_utils.hpp"
 
 namespace tactile {
 

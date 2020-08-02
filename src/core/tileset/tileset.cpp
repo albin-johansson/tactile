@@ -1,9 +1,9 @@
 
-#include "tileset.h"
+#include "tileset.hpp"
 
 #include <QImage>
 
-#include "tactile_types.h"
+#include "tactile_types.hpp"
 
 namespace tactile {
 

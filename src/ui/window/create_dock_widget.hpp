@@ -1,7 +1,7 @@
 #pragma once
 #include <QMargins>
 
-#include "smart_pointers.h"
+#include "smart_pointers.hpp"
 
 class QDockWidget;
 class QWidget;

@@ -1,7 +1,7 @@
 #pragma once
 #include <QLabel>
 
-#include "smart_pointers.h"
+#include "smart_pointers.hpp"
 
 namespace tactile {
 

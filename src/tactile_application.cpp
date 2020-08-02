@@ -1,4 +1,4 @@
-#include "tactile_application.h"
+#include "tactile_application.hpp"
 
 #include <QFile>
 #include <QIcon>
@@ -6,12 +6,12 @@
 #include <QStyleFactory>
 #include <QSurfaceFormat>
 
-#include "resize_dialog.h"
-#include "settings_utils.h"
-#include "tactile_core.h"
-#include "tactile_window.h"
-#include "tileset_dialog.h"
-#include "tileset_info.h"
+#include "resize_dialog.hpp"
+#include "settings_utils.hpp"
+#include "tactile_core.hpp"
+#include "tactile_window.hpp"
+#include "tileset_dialog.hpp"
+#include "tileset_info.hpp"
 
 namespace tactile {
 namespace {

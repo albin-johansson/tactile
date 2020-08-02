@@ -1,4 +1,4 @@
-#include "open_tileset_image.h"
+#include "open_tileset_image.hpp"
 
 #include <QFileDialog>
 #include <QStandardPaths>
