@@ -14,20 +14,21 @@ set(TACTILE_TEST_FILES
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 
-add_library(Catch2 INTERFACE)
-target_include_directories(Catch2 INTERFACE ${TACTILE_LIB_DIR}/catch2)
+add_library(libCatch INTERFACE)
+target_include_directories(libCatch INTERFACE lib/catch)
 
-target_include_directories(testTactile PUBLIC ${TACTILE_ROOT_DIR}/src)
-target_include_directories(testTactile PUBLIC ${TACTILE_ROOT_DIR}/src/core)
-target_include_directories(testTactile PUBLIC ${TACTILE_ROOT_DIR}/src/core/util)
-target_include_directories(testTactile PUBLIC ${TACTILE_ROOT_DIR}/src/core/tile)
+target_include_directories(testTactile
+        PUBLIC ${TACTILE_ROOT_DIR}/src
+        PUBLIC ${TACTILE_ROOT_DIR}/src/core
+        PUBLIC ${TACTILE_ROOT_DIR}/src/core/util
+        PUBLIC ${TACTILE_ROOT_DIR}/src/core/tile)
 
 target_link_libraries(testTactile
         PUBLIC libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
         PUBLIC Qt5::Gui
-        Catch2)
+        PUBLIC libCatch)
 
 copy_directory_post_build(testTactile
         ${TACTILE_ROOT_DIR}/bin
