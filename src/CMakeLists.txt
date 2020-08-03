@@ -6,21 +6,28 @@ set(TACTILE_SOURCE_FILES
 
         app/app.cpp
         app/app.hpp
+        app/app_connections.hpp
+        app/app_connections.cpp
+        app/set_style_sheet.hpp
+        app/set_style_sheet.cpp
+        app/setup_app.hpp
+        app/setup_app.cpp
+
+        misc/version.hpp
         misc/settings_utils.hpp
         misc/settings_utils.cpp
-
-        model/core_fwd.hpp
-        model/flood_fill.hpp
-        model/flood_fill.cpp
-        model/core.hpp
-        model/core.cpp
         misc/tactile_error.hpp
         misc/tactile_error.cpp
+        misc/tactile_types.hpp
+
+        model/core_fwd.hpp
+        model/core.hpp
+        model/core.cpp
+        model/flood_fill.hpp
+        model/flood_fill.cpp
 
         model/util/algorithm_utils.hpp
-        misc/tactile_types.hpp
         model/util/type_utils.hpp
-
         model/tile/tile_size.hpp
         model/tile/tile_size.cpp
 
@@ -114,16 +121,7 @@ set(TACTILE_SOURCE_FILES
         command/remove_col.hpp
         command/remove_col.cpp
         command/resize_map.cpp
-        command/resize_map.hpp
-
-        app/app_connections.hpp
-        app/app_connections.cpp
-
-        app/set_style_sheet.hpp
-        app/set_style_sheet.cpp
-        app/setup_app.hpp
-        app/setup_app.cpp
-        misc/version.hpp)
+        command/resize_map.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
