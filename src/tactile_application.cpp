@@ -73,7 +73,7 @@ app::app(int argc, char** argv) : QApplication{argc, argv}
   m_window->show();
 }
 
-void app::load_style_sheet(const char* styleSheet)
+void app::load_style_sheet(czstring styleSheet)
 {
   if (!styleSheet) {
     return;

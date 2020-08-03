@@ -5,6 +5,7 @@
 
 #include "tactile_core.hpp"
 #include "tactile_fwd.hpp"
+#include "tactile_types.hpp"
 #include "tactile_window.hpp"
 
 namespace tactile {
@@ -43,7 +44,7 @@ class app final : public QApplication {
    *
    * @since 0.1.0
    */
-  void load_style_sheet(const char* styleSheet);
+  void load_style_sheet(czstring styleSheet);
 
   /**
    * @brief A helper method for establishing a connection from the window to

@@ -2,11 +2,11 @@
 
 #include <QWidget>
 
+#include "tactile_fwd.hpp"
+
 class QLayout;
 
 namespace tactile::ui {
-
-class StampToolbar;
 
 class DynamicToolBarWidget final : public QWidget {
   Q_OBJECT

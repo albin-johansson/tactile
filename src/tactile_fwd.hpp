@@ -12,4 +12,16 @@ class MouseToolWidget;
 
 class TilesetWidget;
 
+class TileMapTabWidget;
+
+class EditorTab;
+
+class TilesetTab;
+
+class TilesetContentPage;
+
+class TilesetEmptyPage;
+
+class StampToolbar;
+
 }  // namespace tactile::ui

@@ -3,6 +3,8 @@
 #include <QWidget>
 #include <optional>
 
+#include "tactile_fwd.hpp"
+
 namespace Ui {
 class CentralWidgetUI;
 }
@@ -10,8 +12,6 @@ class CentralWidgetUI;
 class QTabWidget;
 
 namespace tactile::ui {
-
-class TileMapTabWidget;
 
 /**
  * The <code>CentralEditorWidget</code> class represents the center stage of the

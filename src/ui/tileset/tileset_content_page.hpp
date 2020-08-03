@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <memory>
 
-#include "core_fwd.hpp"
+#include "tactile_fwd.hpp"
 #include "tactile_types.hpp"
 
 namespace Ui {
@@ -11,8 +11,6 @@ class TilesetContentPageUI;
 }
 
 namespace tactile::ui {
-
-class TilesetTab;
 
 class TilesetContentPage final : public QWidget {
   Q_OBJECT

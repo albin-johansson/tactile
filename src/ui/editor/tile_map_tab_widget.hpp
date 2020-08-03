@@ -4,9 +4,9 @@
 #include <optional>
 #include <unordered_map>
 
-namespace tactile::ui {
+#include "tactile_fwd.hpp"
 
-class EditorTab;
+namespace tactile::ui {
 
 class TileMapTabWidget final : public QTabWidget {
   Q_OBJECT
