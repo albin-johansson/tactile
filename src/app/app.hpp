@@ -6,8 +6,8 @@
 
 #include "command_stack.hpp"
 #include "core.hpp"
-#include "tactile_fwd.hpp"
-#include "tactile_types.hpp"
+#include "misc/tactile_fwd.hpp"
+#include "misc/tactile_types.hpp"
 #include "window.hpp"
 
 namespace tactile {

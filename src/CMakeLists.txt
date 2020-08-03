@@ -4,21 +4,21 @@ project(tactile_src_proj)
 set(TACTILE_SOURCE_FILES
         tactile.qrc
 
-        app.cpp
-        app.hpp
-        settings_utils.hpp
-        settings_utils.cpp
+        app/app.cpp
+        app/app.hpp
+        misc/settings_utils.hpp
+        misc/settings_utils.cpp
 
         model/core_fwd.hpp
         model/flood_fill.hpp
         model/flood_fill.cpp
         model/core.hpp
         model/core.cpp
-        tactile_error.hpp
-        tactile_error.cpp
+        misc/tactile_error.hpp
+        misc/tactile_error.cpp
 
         model/util/algorithm_utils.hpp
-        tactile_types.hpp
+        misc/tactile_types.hpp
         model/util/type_utils.hpp
 
         model/tile/tile_size.hpp
@@ -101,7 +101,7 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tile_map_tab_widget.cpp
         ui/editor/tile_map_tab_widget.hpp
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui tactile_fwd.hpp
+        ui/editor/editor_pane.ui misc/tactile_fwd.hpp
 
         command/command_stack.cpp
         command/command_stack.hpp
@@ -116,14 +116,14 @@ set(TACTILE_SOURCE_FILES
         command/resize_map.cpp
         command/resize_map.hpp
 
-        app_connections.hpp
-        app_connections.cpp
+        app/app_connections.hpp
+        app/app_connections.cpp
 
         app/set_style_sheet.hpp
         app/set_style_sheet.cpp
         app/setup_app.hpp
         app/setup_app.cpp
-        version.hpp)
+        misc/version.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
@@ -131,6 +131,7 @@ target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
         PUBLIC command
         PUBLIC app
+        PUBLIC misc
         PUBLIC model
         PUBLIC model/util
         PUBLIC model/tile
