@@ -16,9 +16,9 @@ resize_dialog::resize_dialog(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  m_validator = std::make_unique<QIntValidator>(1, 20'000, this);
-  m_ui->widthEdit->setValidator(m_validator.get());
-  m_ui->heightEdit->setValidator(m_validator.get());
+  m_validator = new QIntValidator{1, 20'000, this};
+  m_ui->widthEdit->setValidator(m_validator);
+  m_ui->heightEdit->setValidator(m_validator);
 
   connect_line_edit(m_ui->widthEdit);
   connect_line_edit(m_ui->heightEdit);
