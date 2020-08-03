@@ -5,6 +5,7 @@
 #include "algorithm_utils.hpp"
 
 using namespace tactile;
+using namespace tactile::model;
 
 TEST_CASE("Tilemap(int, int)", "[Tilemap]")
 {

@@ -5,6 +5,7 @@
 #include "map_position.hpp"
 
 using namespace tactile;
+using namespace tactile::model;
 
 TEST_CASE("TileLayer(int, int)", "[TileLayer]")
 {

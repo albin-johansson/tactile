@@ -8,6 +8,7 @@
 #include "tactile_types.hpp"
 
 using namespace tactile;
+using namespace tactile::model;
 
 TEST_CASE("Tileset(const SharedPtr<QImage>&, int, int)", "[Tileset]")
 {

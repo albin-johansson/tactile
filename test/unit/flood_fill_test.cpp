@@ -4,6 +4,7 @@
 #include <iostream>
 
 using namespace tactile;
+using namespace tactile::model;
 
 TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
 {

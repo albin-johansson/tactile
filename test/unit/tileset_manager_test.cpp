@@ -6,7 +6,7 @@
 
 #include "tileset.hpp"
 
-using namespace tactile;
+using namespace tactile::model;
 
 namespace {
 
