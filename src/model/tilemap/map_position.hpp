@@ -144,4 +144,4 @@ class map_position final {
 static_assert(std::is_nothrow_default_constructible_v<map_position>);
 static_assert(std::is_nothrow_destructible_v<map_position>);
 
-}  // namespace tactile
+}  // namespace tactile::model

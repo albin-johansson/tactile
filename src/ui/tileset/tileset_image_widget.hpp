@@ -15,9 +15,9 @@ class tileset_image_widget final : public QWidget {
 
  public:
   explicit tileset_image_widget(const QImage& image,
-                              int tileWidth,
-                              int tileHeight,
-                              QWidget* parent = nullptr);
+                                int tileWidth,
+                                int tileHeight,
+                                QWidget* parent = nullptr);
 
   ~tileset_image_widget() noexcept override;
 

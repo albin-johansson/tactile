@@ -92,4 +92,4 @@ class tileset_manager final {
   int m_nextSheetKey{1};
 };
 
-}  // namespace tactile
+}  // namespace tactile::model

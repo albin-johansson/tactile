@@ -52,4 +52,4 @@ auto tileset_manager::has_active_tileset() const noexcept -> bool
   return m_activeSheet.has_value();
 }
 
-}  // namespace tactile
+}  // namespace tactile::model

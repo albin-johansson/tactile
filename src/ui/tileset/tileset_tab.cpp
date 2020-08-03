@@ -11,9 +11,9 @@
 namespace tactile::ui {
 
 tileset_tab::tileset_tab(const QImage& image,
-                       int tileWidth,
-                       int tileHeight,
-                       QWidget* parent)
+                         int tileWidth,
+                         int tileHeight,
+                         QWidget* parent)
     : QWidget{parent}
 {
   if (image.isNull()) {

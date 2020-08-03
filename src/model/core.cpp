@@ -56,8 +56,8 @@ void core::save_as(czstring) const
 }
 
 auto core::add_tileset(const std::shared_ptr<QImage>& image,
-                               int tileWidth,
-                               int tileHeight) noexcept -> std::optional<int>
+                       int tileWidth,
+                       int tileHeight) noexcept -> std::optional<int>
 {
   if (!image->isNull()) {
     return m_sheetManager->add(tileset::unique(image, tileWidth, tileHeight));
@@ -204,4 +204,4 @@ auto core::active_map() const noexcept -> const tilemap*
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::model

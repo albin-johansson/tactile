@@ -43,4 +43,4 @@ void flood_fill(tile_layer& layer,
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::model

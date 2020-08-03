@@ -56,4 +56,4 @@ auto operator!=(const map_position& lhs, const map_position& rhs) noexcept
   return !(lhs == rhs);
 }
 
-}  // namespace tactile
+}  // namespace tactile::model

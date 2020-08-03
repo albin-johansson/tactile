@@ -16,4 +16,4 @@ namespace tactile::model {
  */
 void render_tilemap(QPainter& painter, const tilemap& map) noexcept;
 
-}  // namespace tactile
+}  // namespace tactile::model

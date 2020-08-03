@@ -84,4 +84,4 @@ class tile_size final {
 
 static_assert(validate_nothrow<tile_size>());
 
-}  // namespace tactile
+}  // namespace tactile::model

@@ -40,7 +40,7 @@ tileset_widget::~tileset_widget() noexcept
 }
 
 void tileset_widget::add_tileset(const TilesetInfo& info,
-                                const QString& tabName) noexcept
+                                 const QString& tabName) noexcept
 {
   if (info.image->isNull()) {
     return;

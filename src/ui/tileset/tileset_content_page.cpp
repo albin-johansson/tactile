@@ -25,7 +25,7 @@ tileset_content_page::~tileset_content_page() noexcept
 }
 
 void tileset_content_page::add_tileset(const TilesetInfo& info,
-                                     const QString& tabName) noexcept
+                                       const QString& tabName) noexcept
 {
   if (m_tabs.count(info.id)) {
     qDebug("Tried to add tileset with taken ID: %i", info.id);

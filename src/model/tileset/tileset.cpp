@@ -125,4 +125,4 @@ auto tileset::selection() -> const std::set<tile_id>&
   return m_selection;
 }
 
-}  // namespace tactile
+}  // namespace tactile::model

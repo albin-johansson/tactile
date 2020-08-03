@@ -18,4 +18,4 @@ struct [[deprecated]] TilesetInfo final {
   int tileHeight{1};
 };
 
-}  // namespace tactile
+}  // namespace tactile::model

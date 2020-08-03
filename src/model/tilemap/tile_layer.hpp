@@ -196,4 +196,4 @@ class tile_layer final {
   bool m_visible{true};
 };
 
-}  // namespace tactile
+}  // namespace tactile::model

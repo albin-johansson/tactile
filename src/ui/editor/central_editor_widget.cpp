@@ -52,7 +52,8 @@ void central_editor_widget::close_tab(int id) noexcept
   m_mapTabWidget->remove_tile_map_tab(id);
 }
 
-void central_editor_widget::center_viewport(int mapWidth, int mapHeight) noexcept
+void central_editor_widget::center_viewport(int mapWidth,
+                                            int mapHeight) noexcept
 {
   m_mapTabWidget->center_viewport(mapWidth, mapHeight);
 }

@@ -310,4 +310,4 @@ class core final : public QObject {
   }
 };
 
-}  // namespace tactile
+}  // namespace tactile::model

@@ -18,4 +18,4 @@ class core;
 
 struct TilesetInfo;
 
-}  // namespace tactile
+}  // namespace tactile::model

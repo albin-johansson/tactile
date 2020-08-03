@@ -114,4 +114,4 @@ auto tile_layer::visible() const noexcept -> bool
   return m_visible;
 }
 
-}  // namespace tactile
+}  // namespace tactile::model
