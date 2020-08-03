@@ -44,13 +44,13 @@ void tactile_core::handle_close_map(int id) noexcept
   }
 }
 
-void tactile_core::open_map(const char*)
+void tactile_core::open_map(czstring)
 {
   // TODO parse Tactile or TMX formats
   qWarning("\"Open map\" isn't implemented!");
 }
 
-void tactile_core::save_as(const char*) const
+void tactile_core::save_as(czstring) const
 {
   qWarning("\"Save as\" isn't implemented!");
 }
