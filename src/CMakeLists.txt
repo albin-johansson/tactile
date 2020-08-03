@@ -102,7 +102,7 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tile_map_tab_widget.cpp
         ui/editor/tile_map_tab_widget.hpp
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui)
+        ui/editor/editor_pane.ui tactile_fwd.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

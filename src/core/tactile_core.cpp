@@ -8,17 +8,15 @@
 
 namespace tactile {
 
-TactileCore::TactileCore() : m_sheetManager{tileset_manager::unique()}
+tactile_core::tactile_core() : m_sheetManager{tileset_manager::unique()}
 {}
 
-TactileCore::~TactileCore() noexcept = default;
-
-auto TactileCore::unique() -> std::unique_ptr<TactileCore>
+auto tactile_core::unique() -> std::unique_ptr<tactile_core>
 {
-  return std::make_unique<TactileCore>();
+  return std::make_unique<tactile_core>();
 }
 
-void TactileCore::new_map(int id) noexcept
+void tactile_core::on_new_map(int id) noexcept
 {
   if (m_maps.count(id)) {
     qWarning("Editor core already had tilemap associated with %i!", id);
@@ -28,7 +26,7 @@ void TactileCore::new_map(int id) noexcept
   }
 }
 
-void TactileCore::close_map(int id) noexcept
+void tactile_core::on_close_map(int id) noexcept
 {
   if (m_maps.count(id)) {
     m_maps.erase(id);
@@ -46,20 +44,20 @@ void TactileCore::close_map(int id) noexcept
   }
 }
 
-void TactileCore::open_map(const char*)
+void tactile_core::open_map(const char*)
 {
   // TODO parse Tactile or TMX formats
   qWarning("\"Open map\" isn't implemented!");
 }
 
-void TactileCore::save_as(const char*) const
+void tactile_core::save_as(const char*) const
 {
   qWarning("\"Save as\" isn't implemented!");
 }
 
-auto TactileCore::add_tileset(const std::shared_ptr<QImage>& image,
-                              int tileWidth,
-                              int tileHeight) noexcept -> std::optional<int>
+auto tactile_core::add_tileset(const std::shared_ptr<QImage>& image,
+                               int tileWidth,
+                               int tileHeight) noexcept -> std::optional<int>
 {
   if (!image->isNull()) {
     return m_sheetManager->add(tileset::unique(image, tileWidth, tileHeight));
@@ -68,49 +66,49 @@ auto TactileCore::add_tileset(const std::shared_ptr<QImage>& image,
   }
 }
 
-void TactileCore::set_rows(int nRows) noexcept
+void tactile_core::set_rows(int nRows) noexcept
 {
   if (auto* map = active_map(); map) {
     map->set_rows(nRows);
   }
 }
 
-void TactileCore::set_cols(int nCols) noexcept
+void tactile_core::set_cols(int nCols) noexcept
 {
   if (auto* map = active_map(); map) {
     map->set_cols(nCols);
   }
 }
 
-auto TactileCore::rows() const noexcept -> std::optional<int>
+auto tactile_core::rows() const noexcept -> std::optional<int>
 {
   return maybe_get<int>([](const tilemap& map) noexcept { return map.rows(); });
 }
 
-auto TactileCore::cols() const noexcept -> std::optional<int>
+auto tactile_core::cols() const noexcept -> std::optional<int>
 {
   return maybe_get<int>([](const tilemap& map) noexcept { return map.cols(); });
 }
 
-auto TactileCore::map_width() const noexcept -> std::optional<int>
+auto tactile_core::map_width() const noexcept -> std::optional<int>
 {
   return maybe_get<int>(
       [](const tilemap& map) noexcept { return map.width(); });
 }
 
-auto TactileCore::map_height() const noexcept -> std::optional<int>
+auto tactile_core::map_height() const noexcept -> std::optional<int>
 {
   return maybe_get<int>(
       [](const tilemap& map) noexcept { return map.height(); });
 }
 
-auto TactileCore::tile_size() const noexcept -> std::optional<int>
+auto tactile_core::tile_size() const noexcept -> std::optional<int>
 {
   return maybe_get<int>(
       [](const tilemap& map) noexcept { return map.get_tile_size().get(); });
 }
 
-void TactileCore::select_layer(int index) noexcept
+void tactile_core::select_layer(int index) noexcept
 {
   if (auto* map = active_map(); map) {
     map->select(index);
@@ -118,14 +116,14 @@ void TactileCore::select_layer(int index) noexcept
   }
 }
 
-void TactileCore::select_map(int id) noexcept
+void tactile_core::select_map(int id) noexcept
 {
   if (m_maps.count(id)) {
     m_activeMapIndex = id;
   }
 }
 
-void TactileCore::increase_tile_size() noexcept
+void tactile_core::on_increase_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().increase();
@@ -133,7 +131,7 @@ void TactileCore::increase_tile_size() noexcept
   }
 }
 
-void TactileCore::decrease_tile_size() noexcept
+void tactile_core::on_decrease_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().decrease();
@@ -141,7 +139,7 @@ void TactileCore::decrease_tile_size() noexcept
   }
 }
 
-void TactileCore::reset_tile_size() noexcept
+void tactile_core::on_reset_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().reset();
@@ -149,14 +147,14 @@ void TactileCore::reset_tile_size() noexcept
   }
 }
 
-void TactileCore::draw(QPainter& painter) const noexcept
+void tactile_core::on_draw(QPainter& painter) const noexcept
 {
   if (auto* map = active_map(); map) {
     map->draw(painter);
   }
 }
 
-void TactileCore::add_row() noexcept
+void tactile_core::on_add_row() noexcept
 {
   if (auto* map = active_map(); map) {
     map->add_row();
@@ -164,7 +162,7 @@ void TactileCore::add_row() noexcept
   }
 }
 
-void TactileCore::add_col() noexcept
+void tactile_core::on_add_col() noexcept
 {
   if (auto* map = active_map(); map) {
     map->add_col();
@@ -172,7 +170,7 @@ void TactileCore::add_col() noexcept
   }
 }
 
-void TactileCore::remove_row() noexcept
+void tactile_core::on_remove_row() noexcept
 {
   if (auto* map = active_map(); map) {
     map->remove_row();
@@ -180,7 +178,7 @@ void TactileCore::remove_row() noexcept
   }
 }
 
-void TactileCore::remove_col() noexcept
+void tactile_core::on_remove_col() noexcept
 {
   if (auto* map = active_map(); map) {
     map->remove_col();
@@ -188,7 +186,7 @@ void TactileCore::remove_col() noexcept
   }
 }
 
-auto TactileCore::active_map() noexcept -> tilemap*
+auto tactile_core::active_map() noexcept -> tilemap*
 {
   if (m_activeMapIndex) {
     return m_maps.at(*m_activeMapIndex).get();
@@ -197,7 +195,7 @@ auto TactileCore::active_map() noexcept -> tilemap*
   }
 }
 
-auto TactileCore::active_map() const noexcept -> const tilemap*
+auto tactile_core::active_map() const noexcept -> const tilemap*
 {
   if (m_activeMapIndex) {
     return m_maps.at(*m_activeMapIndex).get();

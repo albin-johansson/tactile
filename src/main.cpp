@@ -6,6 +6,6 @@
 
 int main(int argc, char** argv)
 {
-  tactile::TactileApplication app{argc, argv};
+  tactile::app app{argc, argv};
   return QGuiApplication::exec();
 }

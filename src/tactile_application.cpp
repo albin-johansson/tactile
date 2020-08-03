@@ -44,7 +44,7 @@ void validate_settings() noexcept
 
 }  // namespace
 
-TactileApplication::TactileApplication(int argc, char** argv)
+app::app(int argc, char** argv)
     : QApplication{argc, argv}
 {
   init_surface_format();
@@ -60,7 +60,7 @@ TactileApplication::TactileApplication(int argc, char** argv)
   validate_settings();
 
   m_window = TactileWindow::unique();
-  m_core = TactileCore::unique();
+  m_core = tactile_core::unique();
 
   init_connections();
   load_style_sheet(":/resources/tactile_light.qss");
@@ -73,9 +73,9 @@ TactileApplication::TactileApplication(int argc, char** argv)
   m_window->show();
 }
 
-TactileApplication::~TactileApplication() noexcept = default;
+app::~app() noexcept = default;
 
-void TactileApplication::load_style_sheet(const char* styleSheet)
+void app::load_style_sheet(const char* styleSheet)
 {
   if (!styleSheet) {
     return;
@@ -90,33 +90,33 @@ void TactileApplication::load_style_sheet(const char* styleSheet)
   }
 }
 
-void TactileApplication::init_connections() noexcept
+void app::init_connections() noexcept
 {
   using Window = TactileWindow;
-  using Core = TactileCore;
+  using Core = tactile_core;
 
   auto* window = m_window.get();
   auto* core = m_core.get();
 
   connect(core, &Core::s_updated, window, &Window::trigger_redraw);
 
-  window_to_core(&Window::s_added_row, &Core::add_row);
-  window_to_core(&Window::s_added_row, &Core::add_row);
-  window_to_core(&Window::s_added_col, &Core::add_col);
-  window_to_core(&Window::s_removed_row, &Core::remove_row);
-  window_to_core(&Window::s_removed_col, &Core::remove_col);
+  window_to_core(&Window::s_added_row, &Core::on_add_row);
+  window_to_core(&Window::s_added_row, &Core::on_add_row);
+  window_to_core(&Window::s_added_col, &Core::on_add_col);
+  window_to_core(&Window::s_removed_row, &Core::on_remove_row);
+  window_to_core(&Window::s_removed_col, &Core::on_remove_col);
 
   window_to_core(&Window::s_new_map,
-                 [core](int id) noexcept { core->new_map(id); });
+                 [core](int id) noexcept { core->on_new_map(id); });
 
-  window_to_core(&Window::s_close_map, &Core::close_map);
+  window_to_core(&Window::s_close_map, &Core::on_close_map);
   window_to_core(&Window::s_select_map, &Core::select_map);
 
-  window_to_core(&Window::s_redraw, &Core::draw);
+  window_to_core(&Window::s_redraw, &Core::on_draw);
 
-  window_to_core(&Window::s_increase_tile_size, &Core::increase_tile_size);
-  window_to_core(&Window::s_decrease_tile_size, &Core::decrease_tile_size);
-  window_to_core(&Window::s_reset_tile_size, &Core::reset_tile_size);
+  window_to_core(&Window::s_increase_tile_size, &Core::on_increase_tile_size);
+  window_to_core(&Window::s_decrease_tile_size, &Core::on_decrease_tile_size);
+  window_to_core(&Window::s_reset_tile_size, &Core::on_reset_tile_size);
 
   window_to_core(&Window::s_pan_up, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {

@@ -3,52 +3,58 @@
 #include <QApplication>
 #include <memory>
 
-class QPaintEvent;
+#include "tactile_fwd.hpp"
 
 namespace tactile {
 
-class TactileWindow;
-class TactileCore;
-
 /**
- * The <code>TactileApplication</code> class is a subclass of
- * <code>QApplication</code> that represents the entire Tactile application.
+ * @class app
  *
- * @see QApplication
+ * @brief Represents the tactile application.
+ *
+ * @see `QApplication`
+ *
  * @since 0.1.0
+ *
+ * @headerfile tactile_application.hpp
  */
-class TactileApplication final : public QApplication {
+class app final : public QApplication {
  public:
   /**
    * @param argc the amount of command-line arguments.
    * @param argv the array of command-line arguments.
+   *
    * @since 0.1.0
    */
-  TactileApplication(int argc, char** argv);
+  app(int argc, char** argv);
 
-  ~TactileApplication() noexcept override;
+  ~app() noexcept override;
 
  private:
   std::unique_ptr<TactileWindow> m_window;
-  std::unique_ptr<TactileCore> m_core;
+  std::unique_ptr<tactile_core> m_core;
 
   void init_connections() noexcept;
 
   /**
-   * Loads and applies the specified style sheet.
+   * @brief Loads and applies the specified style sheet.
    *
    * @param styleSheet the file path of the QSS style-sheet.
+   *
    * @since 0.1.0
    */
   void load_style_sheet(const char* styleSheet);
 
   /**
-   * A helper method for establishing a connection from the window to the core.
+   * @brief A helper method for establishing a connection from the window to
+   * the core.
    *
    * @tparam Sender the type of the sender functor.
    * @tparam Receiver the type of the receiver functor.
+   *
    * @param s the function pointer to the signal.
    * @param r the function pointer/object that handles the signal.
+   *
    * @since 0.1.0
    */
   template <typename Sender, typename Receiver>
@@ -58,13 +64,15 @@ class TactileApplication final : public QApplication {
   }
 
   /**
-   * A helper method for establishing a connection from the window to this
-   * application instance.
+   * @brief A helper method for establishing a connection from the window to
+   * this application instance.
    *
    * @tparam Sender the type of the sender functor.
    * @tparam Handler the type of the handler functor.
+   *
    * @param s the function pointer to the signal.
    * @param r the function pointer/object that handles the signal.
+   *
    * @since 0.1.0
    */
   template <typename Sender, typename Handler>

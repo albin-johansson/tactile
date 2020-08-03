@@ -8,7 +8,7 @@ namespace {
 
 // FIXME these functionsa are not noexcept
 
-[[nodiscard]] auto get_value(const char* setting) noexcept
+[[nodiscard]] auto get_value(czstring setting) noexcept
     -> std::optional<QVariant>
 {
   if (setting) {
@@ -24,7 +24,7 @@ namespace {
 
 }  // namespace
 
-void set_if_absent(const char* setting, const QVariant& value) noexcept
+void set_if_absent(czstring setting, const QVariant& value) noexcept
 {
   if (setting) {
     QSettings settings;
@@ -35,8 +35,7 @@ void set_if_absent(const char* setting, const QVariant& value) noexcept
   }
 }
 
-auto settings_byte_array(const char* setting) noexcept
-    -> std::optional<QByteArray>
+auto settings_byte_array(czstring setting) noexcept -> std::optional<QByteArray>
 {
   const auto value = get_value(setting);
   if (value && value->canConvert(QVariant::ByteArray)) {
@@ -46,7 +45,7 @@ auto settings_byte_array(const char* setting) noexcept
   }
 }
 
-auto settings_bool(const char* setting) noexcept -> std::optional<bool>
+auto settings_bool(czstring setting) noexcept -> std::optional<bool>
 {
   const auto value = get_value(setting);
   if (value && value->canConvert<bool>()) {
