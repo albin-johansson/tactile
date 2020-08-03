@@ -4,8 +4,8 @@ project(tactile_src_proj)
 set(TACTILE_SOURCE_FILES
         tactile.qrc
 
-        tactile_application.cpp
-        tactile_application.hpp
+        app.cpp
+        app.hpp
         settings_utils.hpp
         settings_utils.cpp
 

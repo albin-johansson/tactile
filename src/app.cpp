@@ -1,4 +1,4 @@
-#include "tactile_application.hpp"
+#include "app.hpp"
 
 #include <QDockWidget>
 #include <QFile>

@@ -2,7 +2,7 @@
 #include <QtGui>
 #include <QtWidgets>
 
-#include "tactile_application.hpp"
+#include "app.hpp"
 
 int main(int argc, char** argv)
 {

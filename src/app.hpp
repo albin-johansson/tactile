@@ -19,7 +19,7 @@ namespace tactile {
  *
  * @since 0.1.0
  *
- * @headerfile tactile_application.hpp
+ * @headerfile app.hpp
  */
 class app final : public QApplication {
  public:
