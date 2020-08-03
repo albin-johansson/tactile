@@ -29,9 +29,9 @@ class tilemap_tab_widget final : public QTabWidget {
   [[nodiscard]] auto tab_id(int index) const noexcept -> std::optional<int>;
 
  signals:
-  void s_redraw(QPainter& painter);
+  void request_redraw(QPainter& painter);
 
-  void s_remove_tab(int id);
+  void request_remove_tab(int id);
 
  private:
   [[nodiscard]] auto get_pane(int index) const noexcept -> editor_tab*;

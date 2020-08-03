@@ -32,12 +32,12 @@ central_editor_widget::~central_editor_widget() noexcept
 void central_editor_widget::init_connections() noexcept
 {
   connect(m_mapTabWidget,
-          &tilemap_tab_widget::s_redraw,
+          &tilemap_tab_widget::request_redraw,
           this,
           &central_editor_widget::request_redraw);
 
   connect(m_mapTabWidget,
-          &tilemap_tab_widget::s_remove_tab,
+          &tilemap_tab_widget::request_remove_tab,
           this,
           &central_editor_widget::request_remove_tab);
 

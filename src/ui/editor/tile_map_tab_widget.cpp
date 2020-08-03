@@ -10,7 +10,7 @@ tilemap_tab_widget::tilemap_tab_widget(QWidget* parent) : QTabWidget{parent}
 {
   setTabsClosable(true);
   connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
-    emit s_remove_tab(get_pane(index)->id());
+    emit request_remove_tab(get_pane(index)->id());
     removeTab(index);
   });
 }
@@ -27,7 +27,7 @@ auto tilemap_tab_widget::add_tile_map_tab(const QString& title) noexcept -> int
   auto* pane = new editor_tab{id++};
   addTab(pane, newTitle);
 
-  connect(pane, &editor_tab::s_redraw, this, &tilemap_tab_widget::s_redraw);
+  connect(pane, &editor_tab::s_redraw, this, &tilemap_tab_widget::request_redraw);
 
   return pane->id();
 }
