@@ -3,6 +3,7 @@
 #include <QImage>
 #include <memory>
 #include <set>
+#include <string_view>
 
 #include "tactile_types.hpp"
 #include "type_utils.hpp"
@@ -43,18 +44,20 @@ class tileset final {
   tileset(const QImage& image, int tileWidth, int tileHeight);
 
   /**
-   * @copydoc tileset(const QImage&, int, int)
+   * @brief Creates a tileset with the initial first ID set to 1.
+   *
+   * @details Both the supplied width and height will be adjusted to be at
+   * least 1.
+   *
+   * @param path the path to the image that contains the tile sprites.
+   * @param tileWidth the width of the tiles in the tileset.
+   * @param tileHeight the height of the tiles in the tileset.
+   *
+   * @throws tactile_error if the tileset cannot be created.
+   *
+   * @since 0.1.0
    */
-  [[nodiscard]] static auto unique(const QImage& image,
-                                   int tileWidth,
-                                   int tileHeight) -> std::unique_ptr<tileset>;
-
-  /**
-   * @copydoc tileset(const QImage&, int, int)
-   */
-  [[nodiscard]] static auto shared(const QImage& image,
-                                   int tileWidth,
-                                   int tileHeight) -> std::shared_ptr<tileset>;
+  tileset(const QString& path, int tileWidth, int tileHeight);
 
   /**
    * @brief Sets the first tile ID property of the tileset.

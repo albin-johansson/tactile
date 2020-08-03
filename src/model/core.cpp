@@ -8,20 +8,12 @@
 
 namespace tactile::model {
 
-core::core() : m_sheetManager{tileset_manager::unique()}
-{}
-
-auto core::unique() -> std::unique_ptr<core>
-{
-  return std::make_unique<core>();
-}
-
 void core::handle_new_map(int id) noexcept
 {
   if (m_maps.count(id)) {
     qWarning("Editor core already had tilemap associated with %i!", id);
   } else {
-    m_maps.insert({id, tilemap::unique(5, 5)});
+    m_maps.insert({id, tilemap{5, 5}});
     m_activeMapIndex = id;
   }
 }
@@ -60,7 +52,7 @@ auto core::add_tileset(const QImage& image,
                        int tileHeight) noexcept -> std::optional<int>
 {
   if (!image.isNull()) {
-    return m_sheetManager->add(tileset::unique(image, tileWidth, tileHeight));
+    return m_sheetManager.emplace(image, tileWidth, tileHeight);
   } else {
     return std::nullopt;
   }
@@ -68,15 +60,15 @@ auto core::add_tileset(const QImage& image,
 
 void core::set_rows(int nRows) noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->set_rows(nRows);
+  if (has_active_map()) {
+    active_map().set_rows(nRows);
   }
 }
 
 void core::set_cols(int nCols) noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->set_cols(nCols);
+  if (has_active_map()) {
+    active_map().set_cols(nCols);
   }
 }
 
@@ -110,8 +102,8 @@ auto core::tile_size() const noexcept -> std::optional<int>
 
 void core::select_layer(int index) noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->select(index);
+  if (has_active_map()) {
+    active_map().select(index);
     emit request_update();
   }
 }
@@ -130,83 +122,75 @@ auto core::has_active_map() const noexcept -> bool
 
 void core::handle_increase_tile_size() noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->get_tile_size().increase();
+  if (has_active_map()) {
+    active_map().get_tile_size().increase();
     emit request_update();
   }
 }
 
 void core::handle_decrease_tile_size() noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->get_tile_size().decrease();
+  if (has_active_map()) {
+    active_map().get_tile_size().decrease();
     emit request_update();
   }
 }
 
 void core::handle_reset_tile_size() noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->get_tile_size().reset();
+  if (has_active_map()) {
+    active_map().get_tile_size().reset();
     emit request_update();
   }
 }
 
 void core::handle_draw(QPainter& painter) const noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->draw(painter);
+  if (has_active_map()) {
+    active_map().draw(painter);
   }
 }
 
 void core::handle_add_row() noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->add_row();
+  if (has_active_map()) {
+    active_map().add_row();
     emit request_update();
   }
 }
 
 void core::handle_add_col() noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->add_col();
+  if (has_active_map()) {
+    active_map().add_col();
     emit request_update();
   }
 }
 
 void core::handle_remove_row() noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->remove_row();
+  if (has_active_map()) {
+    active_map().remove_row();
     emit request_update();
   }
 }
 
 void core::handle_remove_col() noexcept
 {
-  if (auto* map = active_map(); map) {
-    map->remove_col();
+  if (has_active_map()) {
+    active_map().remove_col();
     emit request_update();
   }
 }
 
-auto core::active_map() noexcept -> tilemap*
+auto core::active_map() noexcept -> tilemap&
 {
-  if (m_activeMapIndex) {
-    return m_maps.at(*m_activeMapIndex).get();
-  } else {
-    return nullptr;
-  }
+  return m_maps.at(*m_activeMapIndex);
 }
 
-auto core::active_map() const noexcept -> const tilemap*
+auto core::active_map() const noexcept -> const tilemap&
 {
-  if (m_activeMapIndex) {
-    return m_maps.at(*m_activeMapIndex).get();
-  } else {
-    return nullptr;
-  }
+  return m_maps.at(*m_activeMapIndex);
 }
 
 }  // namespace tactile::model

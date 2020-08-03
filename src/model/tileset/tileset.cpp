@@ -22,16 +22,18 @@ tileset::tileset(const QImage& image, int tileWidth, int tileHeight)
   m_nTiles = m_rows * m_cols;
 }
 
-auto tileset::unique(const QImage& image, int tileWidth, int tileHeight)
-    -> std::unique_ptr<tileset>
+tileset::tileset(const QString& path, int tileWidth, int tileHeight)
+    : m_sheet{path},
+      m_tileWidth{(tileWidth < 1) ? 1 : tileWidth},
+      m_tileHeight{(tileHeight < 1) ? 1 : tileHeight}
 {
-  return std::make_unique<tileset>(image, tileWidth, tileHeight);
-}
+  if (m_sheet.isNull()) {
+    throw tactile_error{"Failed to load tileset image!"};
+  }
 
-auto tileset::shared(const QImage& image, int tileWidth, int tileHeight)
-    -> std::shared_ptr<tileset>
-{
-  return std::make_shared<tileset>(image, tileWidth, tileHeight);
+  m_rows = height() / m_tileHeight;
+  m_cols = width() / m_tileWidth;
+  m_nTiles = m_rows * m_cols;
 }
 
 void tileset::set_first_id(tile_id firstID) noexcept
@@ -56,7 +58,7 @@ void tileset::clear_selection() noexcept
 
 auto tileset::contains(tile_id id) const noexcept -> bool
 {
-  return id >= first_id() && id <= last_id();
+  return (id >= first_id()) && (id <= last_id());
 }
 
 auto tileset::tile_at(int x, int y) const noexcept -> tile_id

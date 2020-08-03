@@ -18,41 +18,16 @@ TEST_CASE("tileset(const SharedPtr<QImage>&, int, int)", "[tileset]")
     CHECK_THROWS_AS(tileset(image, 10, 10), tactile_error);
   }
 
-  SECTION("Zero size")
-  {
-    const QImage image{"terrain.png"};
-    CHECK_NOTHROW(tileset{image, 0, 0});
-  }
+  SECTION("Zero size") { CHECK_NOTHROW(tileset{"terrain.png", 0, 0}); }
 
-  SECTION("Good args")
-  {
-    const QImage image{"terrain.png"};
-    CHECK_NOTHROW(tileset{image, 32, 32});
-  }
-}
-
-TEST_CASE("tileset::unique", "[tileset]")
-{
-  CHECK_THROWS_AS(tileset::unique(QImage{}, 32, 32), tactile_error);
-
-  const QImage image{"terrain.png"};
-  CHECK(tileset::unique(image, 32, 32));
-}
-
-TEST_CASE("tileset::shared", "[tileset]")
-{
-  CHECK_THROWS_AS(tileset::shared(QImage{}, 32, 32), tactile_error);
-
-  const QImage image{"terrain.png"};
-  CHECK(tileset::shared(image, 32, 32));
+  SECTION("Good args") { CHECK_NOTHROW(tileset{"terrain.png", 32, 32}); }
 }
 
 TEST_CASE("tileset::select", "[tileset]")
 {
-  const QImage image{"terrain.png"};
   const auto tileWidth = 32;
   const auto tileHeight = 32;
-  tileset sheet{image, tileWidth, tileHeight};
+  tileset sheet{"terrain.png", tileWidth, tileHeight};
 
   sheet.select(0, 0);
   CHECK(sheet.selection().size() == 1);
@@ -72,8 +47,7 @@ TEST_CASE("tileset::select", "[tileset]")
 
 TEST_CASE("tileset::set_first_id", "[tileset]")
 {
-  const QImage image{"terrain.png"};
-  tileset sheet{image, 32, 32};
+  tileset sheet{"terrain.png", 32, 32};
 
   CHECK(sheet.first_id() == 1);
 
@@ -115,8 +89,7 @@ TEST_CASE("tileset::tiles", "[tileset]")
 
 TEST_CASE("tileset::last_id", "[tileset]")
 {
-  const QImage image{"terrain.png"};
-  tileset sheet{image, 32, 32};
+  tileset sheet{"terrain.png", 32, 32};
 
   CHECK(sheet.last_id() == 1025);
   CHECK(sheet.last_id() - sheet.first_id() == sheet.tiles());
@@ -127,8 +100,7 @@ TEST_CASE("tileset::last_id", "[tileset]")
 
 TEST_CASE("tileset::contains", "[tileset]")
 {
-  const QImage image{"terrain.png"};
-  tileset sheet{image, 32, 32};
+  tileset sheet{"terrain.png", 32, 32};
 
   CHECK(sheet.contains(sheet.first_id()));
   CHECK(sheet.contains(sheet.last_id()));
@@ -146,8 +118,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 {
   SECTION("Outside of the tile sheet area")
   {
-    const QImage image{"terrain.png"};
-    tileset sheet{image, 32, 32};
+    tileset sheet{"terrain.png", 32, 32};
 
     CHECK(sheet.tile_at(-1, -1) == empty);
     CHECK(sheet.tile_at(sheet.width() + 1, 0) == empty);
@@ -157,8 +128,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 
   SECTION("Without changed first ID")
   {
-    const QImage image{"terrain.png"};
-    tileset sheet{image, 32, 32};
+    tileset sheet{"terrain.png", 32, 32};
 
     const auto row = 7;
     const auto col = 5;
@@ -171,8 +141,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 
   SECTION("With changed first ID")
   {
-    const QImage image{"terrain.png"};
-    tileset sheet{image, 32, 32};
+    tileset sheet{"terrain.png", 32, 32};
 
     const auto first = 38;
     sheet.set_first_id(first);
@@ -191,15 +160,13 @@ TEST_CASE("tileset::tile_width", "[tileset]")
 {
   SECTION("Good size")
   {
-    const QImage image{"terrain.png"};
-    tileset sheet{image, 32, 15};
+    tileset sheet{"terrain.png", 32, 15};
     CHECK(sheet.tile_width() == 32);
   }
 
   SECTION("Clamping bad size")
   {
-    const QImage image{"terrain.png"};
-    tileset sheet{image, 0, 15};
+    tileset sheet{"terrain.png", 0, 15};
     CHECK(sheet.tile_width() == 1);
   }
 }
@@ -208,15 +175,13 @@ TEST_CASE("tileset::tile_height", "[tileset]")
 {
   SECTION("Good size")
   {
-    const QImage image{"terrain.png"};
-    tileset sheet{image, 15, 32};
+    tileset sheet{"terrain.png", 15, 32};
     CHECK(sheet.tile_height() == 32);
   }
 
   SECTION("Clamping bad size")
   {
-    const QImage image{"terrain.png"};
-    tileset sheet{image, 32, 0};
+    tileset sheet{"terrain.png", 32, 0};
     CHECK(sheet.tile_height() == 1);
   }
 }

@@ -1,6 +1,5 @@
 #include "tileset_manager.hpp"
 
-#include <QImage>
 #include <catch.hpp>
 #include <memory>
 
@@ -8,27 +7,15 @@
 
 using namespace tactile::model;
 
-namespace {
-
-[[nodiscard]] auto create_tile_sheet() noexcept -> std::unique_ptr<tileset>
-{
-  return tileset::unique(QImage{"terrain.png"}, 32, 32);
-}
-
-}  // namespace
-
-TEST_CASE("tileset_manager::add", "[tileset_manager]")
+TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
 {
   tileset_manager manager;
 
-  CHECK(!manager.add(nullptr).has_value());
   CHECK(manager.sheets() == 0);
   CHECK(!manager.has_active_tileset());
 
-  const auto first = manager.add(create_tile_sheet());
-  const auto second = manager.add(create_tile_sheet());
-  CHECK(first.has_value());
-  CHECK(second.has_value());
+  const auto first = manager.emplace("terrain.png", 32, 32);
+  const auto second = manager.emplace("terrain.png", 32, 32);
 
   CHECK(second > first);
 
@@ -40,14 +27,13 @@ TEST_CASE("tileset_manager::remove", "[tileset_manager]")
   tileset_manager manager;
   CHECK_NOTHROW(manager.remove(0));
 
-  const auto id = manager.add(create_tile_sheet());
-  CHECK(id.has_value());
+  const auto id = manager.emplace("terrain.png", 32, 32);
   CHECK(manager.sheets() == 1);
 
-  manager.remove(*id + 5);
+  manager.remove(id + 5);
   CHECK(manager.sheets() == 1);
 
-  manager.remove(*id);
+  manager.remove(id);
   CHECK(manager.sheets() == 0);
 }
 
@@ -56,8 +42,8 @@ TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
   tileset_manager manager;
   CHECK_NOTHROW(manager.remove_all());
 
-  const auto a = manager.add(create_tile_sheet());
-  const auto b = manager.add(create_tile_sheet());
+  manager.emplace("terrain.png", 32, 32);
+  manager.emplace("terrain.png", 32, 32);
 
   CHECK(manager.sheets() == 2);
 
@@ -72,8 +58,8 @@ TEST_CASE("tileset_manager::select", "[tileset_manager]")
   CHECK_NOTHROW(manager.select(9));
   CHECK(!manager.has_active_tileset());
 
-  const auto id = manager.add(create_tile_sheet());
-  manager.add(create_tile_sheet());  // NOLINT
+  const auto id = manager.emplace("terrain.png", 32, 32);
+  manager.emplace("terrain.png", 32, 32);
 
   manager.select(id);
   CHECK(manager.has_active_tileset());

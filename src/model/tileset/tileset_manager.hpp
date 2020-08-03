@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include <optional>
+#include <utility>
 
 #include "core_fwd.hpp"
 #include "tileset.hpp"
@@ -22,23 +23,26 @@ namespace tactile::model {
  */
 class tileset_manager final {
  public:
-  [[nodiscard]] static auto unique() -> std::unique_ptr<tileset_manager>;
-
   /**
    * @brief Adds a tileset to the manager.
    *
-   * @note This method has no effect if the supplied tileset is null.
+   * @tparam Args the types of the arguments that will be forwarded.
    *
    * @param id the key that will be associated with the tileset.
-   * @param sheet the tileset that will be added.
+   * @param args the arguments that will be forwarded to a `tileset`
+   * constructor.
    *
-   * @return the ID of the added tileset; `std::nullopt` if no tileset was
-   * added.
+   * @return the ID of the added tileset.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto add(std::unique_ptr<tileset>&& sheet) noexcept
-      -> std::optional<int>;
+  template <typename... Args>
+  [[nodiscard]] auto emplace(Args&&... args) -> int
+  {
+    const auto id = m_nextSheetKey++;
+    m_sheets.emplace(id, tileset{std::forward<Args>(args)...});
+    return id;
+  }
 
   /**
    * @brief Removes a tileset from the manager.
@@ -88,7 +92,7 @@ class tileset_manager final {
 
  private:
   std::optional<int> m_activeSheet;
-  std::map<int, std::unique_ptr<tileset>> m_sheets;
+  std::map<int, tileset> m_sheets;
   int m_nextSheetKey{1};
 };
 

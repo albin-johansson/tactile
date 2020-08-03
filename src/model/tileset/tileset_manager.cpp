@@ -4,23 +4,6 @@
 
 namespace tactile::model {
 
-auto tileset_manager::unique() -> std::unique_ptr<tileset_manager>
-{
-  return std::make_unique<tileset_manager>();
-}
-
-auto tileset_manager::add(std::unique_ptr<tileset>&& sheet) noexcept
-    -> std::optional<int>
-{
-  if (sheet) {
-    const auto id = m_nextSheetKey++;
-    m_sheets.emplace(id, std::move(sheet));
-    return id;
-  } else {
-    return std::nullopt;
-  }
-}
-
 void tileset_manager::remove(int id) noexcept
 {
   m_sheets.erase(id);

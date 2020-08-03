@@ -32,21 +32,6 @@ class core final : public QObject {
   Q_OBJECT
 
  public:
-  /**
-   * @brief Creates an tactile core instance.
-   *
-   * @note There should only be one instance of this class for every run of
-   * the application.
-   *
-   * @since 0.1.0
-   */
-  core();
-
-  /**
-   * @copydoc core()
-   */
-  [[nodiscard]] static auto unique() -> std::unique_ptr<core>;
-
   void open_map(czstring fileName);  // TODO support TMX
 
   void save_as(czstring fileName) const;  // TODO implement
@@ -273,26 +258,22 @@ class core final : public QObject {
 
  private:
   std::optional<int> m_activeMapIndex;
-  std::unordered_map<int, std::unique_ptr<tilemap>> m_maps;
-  std::unique_ptr<tileset_manager> m_sheetManager;
+  std::unordered_map<int, tilemap> m_maps;
+  tileset_manager m_sheetManager;
 
   /**
-   * @brief Returns a pointer to the currently active map.
+   * @brief Returns the currently active map.
    *
-   * @details You should check that the returned pointer isn't null before
-   * using it.
-   *
-   * @return a pointer to the currently active tilemap; `nullptr` if there is
-   * none.
+   * @return the currently active tilemap.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto active_map() noexcept -> tilemap*;
+  [[nodiscard]] auto active_map() noexcept -> tilemap&;
 
   /**
    * @copydoc active_map()
    */
-  [[nodiscard]] auto active_map() const noexcept -> const tilemap*;
+  [[nodiscard]] auto active_map() const noexcept -> const tilemap&;
 
   /**
    * @brief A templated helper method for queries that might return a value
@@ -311,8 +292,8 @@ class core final : public QObject {
   template <typename Ret, typename Functor>
   [[nodiscard]] auto maybe_get(Functor fun) const -> std::optional<Ret>
   {
-    if (auto* map = active_map(); map) {
-      return fun(*map);
+    if (has_active_map()) {
+      return fun(active_map());
     } else {
       return std::nullopt;
     }

@@ -44,18 +44,6 @@ class tilemap final {
   tilemap(int nRows, int nCols);
 
   /**
-   * @copydoc tilemap(int, int)
-   */
-  [[nodiscard]] static auto unique(int nRows, int nCols)
-      -> std::unique_ptr<tilemap>;
-
-  /**
-   * @copydoc tilemap(int, int)
-   */
-  [[nodiscard]] static auto shared(int nRows, int nCols)
-      -> std::shared_ptr<tilemap>;
-
-  /**
    * @brief Renders the tilemap.
    *
    * @param painter the painter that will be used.

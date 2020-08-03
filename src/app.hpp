@@ -37,7 +37,7 @@ class app final : public QApplication {
 
  private:
   std::unique_ptr<ui::window> m_window;
-  std::unique_ptr<model::core> m_core;
+  model::core m_core;
   command_stack* m_commands{};  // TODO one stack per map
 
   [[nodiscard]] auto window_ptr() noexcept -> ui::window*
@@ -45,10 +45,7 @@ class app final : public QApplication {
     return m_window.get();
   }
 
-  [[nodiscard]] auto core_ptr() noexcept -> model::core*
-  {
-    return m_core.get();
-  }
+  [[nodiscard]] auto core_ptr() noexcept -> model::core* { return &m_core; }
 
  private slots:
   void handle_undo();
