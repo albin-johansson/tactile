@@ -4,6 +4,14 @@
 
 namespace tactile {
 
-class TactileWindow;
+class window;
+
+class CentralEditorWidget;
+
+class MouseToolWidget;
+
+class TilesetWidget;
+
+struct TilesetInfo;
 
 }  // namespace tactile

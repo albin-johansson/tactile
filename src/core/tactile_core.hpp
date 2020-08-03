@@ -7,6 +7,8 @@
 
 #include "core_fwd.hpp"
 #include "tactile_types.hpp"
+#include "tilemap.hpp"
+#include "tileset_manager.hpp"
 
 class QPainter;
 
@@ -182,7 +184,7 @@ class tactile_core final : public QObject {
    *
    * @since 0.1.0
    */
-  void on_draw(QPainter& painter) const noexcept;
+  void handle_draw(QPainter& painter) const noexcept;
 
   /**
    * @brief Starts working on a new tilemap.
@@ -197,7 +199,7 @@ class tactile_core final : public QObject {
    *
    * @since 0.1.0
    */
-  void on_new_map(int id) noexcept;
+  void handle_new_map(int id) noexcept;
 
   /**
    * @brief Closes the map associated with the specified ID.
@@ -206,35 +208,35 @@ class tactile_core final : public QObject {
    *
    * @since 0.1.0
    */
-  void on_close_map(int id) noexcept;
+  void handle_close_map(int id) noexcept;
 
   /**
    * @brief Adds a row to the currently active tilemap.
    *
    * @since 0.1.0
    */
-  void on_add_row() noexcept;
+  void handle_add_row() noexcept;
 
   /**
    * @brief Adds a column to the currently active tilemap.
    *
    * @since 0.1.0
    */
-  void on_add_col() noexcept;
+  void handle_add_col() noexcept;
 
   /**
    * @brief Removes a row from the currently active tilemap.
    *
    * @since 0.1.0
    */
-  void on_remove_row() noexcept;
+  void handle_remove_row() noexcept;
 
   /**
    * @brief Removes a column from the currently active tilemap.
    *
    * @since 0.1.0
    */
-  void on_remove_col() noexcept;
+  void handle_remove_col() noexcept;
 
   /**
    * @brief Increases the tile size that is being used by the currently active
@@ -242,7 +244,7 @@ class tactile_core final : public QObject {
    *
    * @since 0.1.0
    */
-  void on_increase_tile_size() noexcept;
+  void handle_increase_tile_size() noexcept;
 
   /**
    * @brief Decreases the tile size that is being used by the currently active
@@ -250,7 +252,7 @@ class tactile_core final : public QObject {
    *
    * @since 0.1.0
    */
-  void on_decrease_tile_size() noexcept;
+  void handle_decrease_tile_size() noexcept;
 
   /**
    * @brief Resets the tile size that is being used by the currently active
@@ -258,7 +260,7 @@ class tactile_core final : public QObject {
    *
    * @since 0.1.0
    */
-  void on_reset_tile_size() noexcept;
+  void handle_reset_tile_size() noexcept;
 
  private:
   std::optional<int> m_activeMapIndex;

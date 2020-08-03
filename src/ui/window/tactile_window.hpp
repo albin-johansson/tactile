@@ -6,6 +6,9 @@
 #include <QWidget>
 #include <memory>
 
+#include "tactile_fwd.hpp"
+#include "tactile_types.hpp"
+
 namespace Ui {
 
 class MainWindow;
@@ -17,50 +20,45 @@ class QActionGroup;
 
 namespace tactile {
 
-class CentralEditorWidget;
-class MouseToolWidget;
-class TilesetWidget;
-struct TilesetInfo;
-
 /**
- * The <code>TactileWindow</code> class is a subclass of
- * <code>QMainWindow</code> that represents the window used in the Tactile
- * application.
+ * @class window
  *
- * @see QMainWindow
+ * @brief Represents the main window used in the application.
+ *
+ * @see `QMainWindow`
+ *
  * @since 0.1.0
+ *
+ * @headerfile tactile_window.hpp
  */
-class TactileWindow final : public QMainWindow {
+class window final : public QMainWindow {
   Q_OBJECT
 
  public:
   /**
    * @param parent a pointer to the parent widget, defaults to null.
+   *
    * @since 0.1.0
    */
-  explicit TactileWindow(QWidget* parent = nullptr);
+  explicit window(QWidget* parent = nullptr);
 
-  ~TactileWindow() noexcept override;
+  ~window() noexcept override;
 
   /**
-   * Creates and returns a unique pointer to a tactile window.
-   *
-   * @param parent the parent widget, defaults to null.
-   * @return a unique pointer to a tactile window.
-   * @since 0.1.0
+   * @copydoc window(QWidget*)
    */
   [[nodiscard]] static auto unique(QWidget* parent = nullptr)
-      -> std::unique_ptr<TactileWindow>;
+      -> std::unique_ptr<window>;
 
   /**
-   * Enables the startup view.
+   * @brief Enables the startup view.
    *
    * @since 0.1.0
    */
   void enable_startup_view() noexcept;
 
   /**
-   * Enables the main editor view.
+   * @brief Enables the main editor view.
    *
    * @since 0.1.0
    */
@@ -68,7 +66,7 @@ class TactileWindow final : public QMainWindow {
 
  signals:
   /**
-   * A signal that is emitted when the editor pane should be redrawn.
+   * @brief A signal that is emitted when the editor pane should be redrawn.
    *
    * @since 0.1.0
    */
@@ -79,46 +77,47 @@ class TactileWindow final : public QMainWindow {
   void s_close_map(int id);
 
   /**
-   * A signal that is emitted when the user wants to add a row to the tilemap.
+   * @brief A signal that is emitted when the user wants to add a row to the
+   * tilemap.
    *
    * @since 0.1.0
    */
   void s_added_row();
 
   /**
-   * A signal that is emitted when the user wants to add a column to the tile
-   * map.
+   * @brief A signal that is emitted when the user wants to add a column to
+   * the tile map.
    *
    * @since 0.1.0
    */
   void s_added_col();
 
   /**
-   * A signal that is emitted when the user wants to remove a row from the tile
-   * map.
+   * @brief A signal that is emitted when the user wants to remove a row from
+   * the tile map.
    *
    * @since 0.1.0
    */
   void s_removed_row();
 
   /**
-   * A signal that is emitted when the user wants to remove a column from the
-   * tilemap.
+   * @brief A signal that is emitted when the user wants to remove a column
+   * from the tilemap.
    *
    * @since 0.1.0
    */
   void s_removed_col();
 
   /**
-   * A signal that is emitted when the user wants to center the camera over the
-   * tilemap.
+   * @brief A signal that is emitted when the user wants to center the camera
+   * over the tilemap.
    *
    * @since 0.1.0
    */
   void s_center_camera();
 
   /**
-   * A signal that is emitted when the user wants to add a tileset.
+   * @brief A signal that is emitted when the user wants to add a tileset.
    *
    * @since 0.1.0
    */
@@ -143,47 +142,49 @@ class TactileWindow final : public QMainWindow {
   void s_select_map(int id);
 
  public slots:
-  void add_tileset(const TilesetInfo& info, const QString& tabName) noexcept;
+  void handle_add_tileset(const TilesetInfo& info,
+                          const QString& tabName) noexcept;
 
-  void remove_tileset(int id) noexcept;
+  void handle_remove_tileset(int id) noexcept;
 
   /**
-   * Displays the about dialog.
+   * @brief Displays the about dialog.
    *
    * @since 0.1.0
    */
-  void display_about_dialog() noexcept;
+  void handle_display_about_dialog() noexcept;
 
   /**
-   * Displays the settings dialog.
+   * @brief Displays the settings dialog.
    *
    * @since 0.1.0
    */
-  void display_settings_dialog() noexcept;
+  void handle_display_settings_dialog() noexcept;
 
   /**
-   * Centers the camera over the tilemap.
+   * @brief Centers the camera over the tilemap.
    *
    * @param mapWidth the current width of the tilemap.
    * @param mapHeight the current height of the tilemap.
-   * @since 0.1.0
-   */
-  void center_camera(int mapWidth, int mapHeight);
-
-  /**
-   * Triggers a s_redraw of the editor pane.
    *
    * @since 0.1.0
    */
-  void trigger_redraw();
+  void handle_center_camera(int mapWidth, int mapHeight);
 
-  void move_camera(int dx, int dy);
+  /**
+   * @brief Triggers a s_redraw of the editor pane.
+   *
+   * @since 0.1.0
+   */
+  void handle_trigger_redraw();
+
+  void handle_move_camera(int dx, int dy);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
 
  private:
-  Ui::MainWindow* m_ui;
+  owner<Ui::MainWindow*> m_ui;
 
   CentralEditorWidget* m_centralWidget;
   MouseToolWidget* m_mouseToolWidget;
@@ -191,12 +192,11 @@ class TactileWindow final : public QMainWindow {
 
   std::unique_ptr<QDockWidget> m_mouseToolDock;
   std::unique_ptr<QDockWidget> m_tilesetDock;
-
   std::unique_ptr<QActionGroup> m_mouseToolGroup;
 
   /**
-   * Initializes all of the connections related to the internal components of
-   * the window.
+   * @brief Initializes all of the connections related to the internal
+   * components of the window.
    *
    * @since 0.1.0
    */
@@ -211,12 +211,13 @@ class TactileWindow final : public QMainWindow {
   void show_all_docks() noexcept;
 
   /**
-   * Indicates whether or not the editor view is enabled.
+   * @brief Indicates whether or not the editor view is enabled.
    *
-   * @return true if the editor view is enabled; false otherwise.
+   * @return `true` if the editor view is enabled; `false` otherwise.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] bool in_editor_mode() const noexcept;
+  [[nodiscard]] auto in_editor_mode() const noexcept -> bool;
 
   template <typename Functor>
   void on_triggered(QAction* action, Functor fun) noexcept

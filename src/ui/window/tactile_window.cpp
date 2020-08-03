@@ -11,16 +11,16 @@
 #include "about_dialog.hpp"
 #include "central_editor_widget.hpp"
 #include "create_dock_widget.hpp"
+#include "mouse_tool_widget.hpp"
 #include "settings_dialog.hpp"
 #include "settings_utils.hpp"
 #include "tileset_widget.hpp"
-#include "ui/tools/mouse_tool_widget.hpp"
 #include "ui_window.h"
 #include "widget_size_policy.hpp"
 
 namespace tactile {
 
-TactileWindow::TactileWindow(QWidget* parent)
+window::window(QWidget* parent)
     : QMainWindow{parent}, m_ui{new Ui::MainWindow{}}
 {
   m_ui->setupUi(this);
@@ -31,7 +31,8 @@ TactileWindow::TactileWindow(QWidget* parent)
   m_mouseToolWidget = new MouseToolWidget{};
   m_tilesetWidget = new TilesetWidget{};
 
-  setCentralWidget(m_centralWidget);
+  setCentralWidget(m_centralWidget);  // claims ownership of central widget
+
   //  centralWidget()->layout()->setContentsMargins(0, 2, 0, 0);
 
   m_mouseToolDock = create_dock_widget(m_mouseToolWidget, "mouseToolDock");
@@ -50,72 +51,72 @@ TactileWindow::TactileWindow(QWidget* parent)
   enable_startup_view();  // TODO option to reopen last tilemap
 }
 
-TactileWindow::~TactileWindow() noexcept
+window::~window() noexcept
 {
   delete m_ui;
 }
 
-std::unique_ptr<TactileWindow> TactileWindow::unique(QWidget* parent)
+auto window::unique(QWidget* parent) -> std::unique_ptr<window>
 {
-  return std::make_unique<TactileWindow>(parent);
+  return std::make_unique<window>(parent);
 }
 
 // TODO these delegations can be replaced with signals
 
-void TactileWindow::add_tileset(const TilesetInfo& info,
+void window::handle_add_tileset(const TilesetInfo& info,
                                 const QString& tabName) noexcept
 {
   m_tilesetWidget->add_tileset(info, tabName);
 }
 
-void TactileWindow::remove_tileset(int id) noexcept
+void window::handle_remove_tileset(int id) noexcept
 {
   m_tilesetWidget->remove_tileset(id);
 }
 
-void TactileWindow::enable_startup_view() noexcept
+void window::enable_startup_view() noexcept
 {
   m_centralWidget->enable_startup_view();
   m_mouseToolWidget->disable_tools();
   hide_all_docks();
 }
 
-void TactileWindow::enable_editor_view() noexcept
+void window::enable_editor_view() noexcept
 {
   m_centralWidget->enable_editor_view();
   m_mouseToolWidget->enable_tools();  // FIXME only enable relevant tools
 }
 
-void TactileWindow::display_about_dialog() noexcept
+void window::handle_display_about_dialog() noexcept
 {
   AboutDialog about;
   about.exec();
 }
 
-void TactileWindow::display_settings_dialog() noexcept
+void window::handle_display_settings_dialog() noexcept
 {
   SettingsDialog settings;
   settings.exec();
 }
 
-void TactileWindow::center_camera(int mapWidth, int mapHeight)
+void window::handle_center_camera(int mapWidth, int mapHeight)
 {
   m_centralWidget->center_viewport(mapWidth, mapHeight);
-  trigger_redraw();
+  handle_trigger_redraw();
 }
 
-void TactileWindow::move_camera(int dx, int dy)
+void window::handle_move_camera(int dx, int dy)
 {
   m_centralWidget->move_viewport(dx, dy);
-  trigger_redraw();
+  handle_trigger_redraw();
 }
 
-void TactileWindow::trigger_redraw()
+void window::handle_trigger_redraw()
 {
   m_centralWidget->trigger_redraw();
 }
 
-void TactileWindow::closeEvent(QCloseEvent* event)
+void window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);
 
@@ -124,7 +125,7 @@ void TactileWindow::closeEvent(QCloseEvent* event)
   settings.setValue("last-open-layout-geometry", saveGeometry());
 }
 
-void TactileWindow::init_connections() noexcept
+void window::init_connections() noexcept
 {
   connect(m_centralWidget,
           &CentralEditorWidget::s_removed_tab,
@@ -173,10 +174,10 @@ void TactileWindow::init_connections() noexcept
     }
   });
 
-  using W = TactileWindow;
+  using W = window;
 
-  on_triggered(m_ui->actionAboutTactile, &W::display_about_dialog);
-  on_triggered(m_ui->actionSettings, &W::display_settings_dialog);
+  on_triggered(m_ui->actionAboutTactile, &W::handle_display_about_dialog);
+  on_triggered(m_ui->actionSettings, &W::handle_display_settings_dialog);
 
   // TODO look into making listeners of signals check if window is in editor
   //  mode?
@@ -212,7 +213,7 @@ void TactileWindow::init_connections() noexcept
       QSettings settings;
       const auto prev = settings.value("visuals-grid").toBool();
       settings.setValue("visuals-grid", !prev);
-      trigger_redraw();
+      handle_trigger_redraw();
     }
   });
 
@@ -349,7 +350,7 @@ void TactileWindow::init_connections() noexcept
           &W::s_new_tileset);
 }
 
-void TactileWindow::init_layout() noexcept
+void window::init_layout() noexcept
 {
   const auto loadPrevious = settings_bool("load-previous-layout-on-startup");
   if (loadPrevious && loadPrevious.value()) {
@@ -365,7 +366,7 @@ void TactileWindow::init_layout() noexcept
   }
 }
 
-void TactileWindow::reset_dock_layout() noexcept
+void window::reset_dock_layout() noexcept
 {
   removeDockWidget(m_mouseToolDock.get());
   removeDockWidget(m_tilesetDock.get());
@@ -377,19 +378,19 @@ void TactileWindow::reset_dock_layout() noexcept
   m_tilesetDock->show();
 }
 
-void TactileWindow::hide_all_docks() noexcept
+void window::hide_all_docks() noexcept
 {
   m_mouseToolDock->close();
   m_tilesetDock->close();
 }
 
-void TactileWindow::show_all_docks() noexcept
+void window::show_all_docks() noexcept
 {
   m_mouseToolDock->show();
   m_tilesetDock->show();
 }
 
-bool TactileWindow::in_editor_mode() const noexcept
+auto window::in_editor_mode() const noexcept -> bool
 {
   return m_centralWidget->in_editor_mode();
 }

@@ -1,5 +1,6 @@
 #include "tactile_application.hpp"
 
+#include <QDockWidget>
 #include <QFile>
 #include <QIcon>
 #include <QPainter>
@@ -44,8 +45,7 @@ void validate_settings() noexcept
 
 }  // namespace
 
-app::app(int argc, char** argv)
-    : QApplication{argc, argv}
+app::app(int argc, char** argv) : QApplication{argc, argv}
 {
   init_surface_format();
 
@@ -59,7 +59,7 @@ app::app(int argc, char** argv)
 
   validate_settings();
 
-  m_window = TactileWindow::unique();
+  m_window = window::unique();
   m_core = tactile_core::unique();
 
   init_connections();
@@ -73,7 +73,6 @@ app::app(int argc, char** argv)
   m_window->show();
 }
 
-app::~app() noexcept = default;
 
 void app::load_style_sheet(const char* styleSheet)
 {
@@ -92,53 +91,55 @@ void app::load_style_sheet(const char* styleSheet)
 
 void app::init_connections() noexcept
 {
-  using Window = TactileWindow;
+  using Window = window;
   using Core = tactile_core;
 
   auto* window = m_window.get();
   auto* core = m_core.get();
 
-  connect(core, &Core::s_updated, window, &Window::trigger_redraw);
+  connect(core, &Core::s_updated, window, &Window::handle_trigger_redraw);
 
-  window_to_core(&Window::s_added_row, &Core::on_add_row);
-  window_to_core(&Window::s_added_row, &Core::on_add_row);
-  window_to_core(&Window::s_added_col, &Core::on_add_col);
-  window_to_core(&Window::s_removed_row, &Core::on_remove_row);
-  window_to_core(&Window::s_removed_col, &Core::on_remove_col);
+  window_to_core(&Window::s_added_row, &Core::handle_add_row);
+  window_to_core(&Window::s_added_row, &Core::handle_add_row);
+  window_to_core(&Window::s_added_col, &Core::handle_add_col);
+  window_to_core(&Window::s_removed_row, &Core::handle_remove_row);
+  window_to_core(&Window::s_removed_col, &Core::handle_remove_col);
 
   window_to_core(&Window::s_new_map,
-                 [core](int id) noexcept { core->on_new_map(id); });
+                 [core](int id) noexcept { core->handle_new_map(id); });
 
-  window_to_core(&Window::s_close_map, &Core::on_close_map);
+  window_to_core(&Window::s_close_map, &Core::handle_close_map);
   window_to_core(&Window::s_select_map, &Core::select_map);
 
-  window_to_core(&Window::s_redraw, &Core::on_draw);
+  window_to_core(&Window::s_redraw, &Core::handle_draw);
 
-  window_to_core(&Window::s_increase_tile_size, &Core::on_increase_tile_size);
-  window_to_core(&Window::s_decrease_tile_size, &Core::on_decrease_tile_size);
-  window_to_core(&Window::s_reset_tile_size, &Core::on_reset_tile_size);
+  window_to_core(&Window::s_increase_tile_size,
+                 &Core::handle_increase_tile_size);
+  window_to_core(&Window::s_decrease_tile_size,
+                 &Core::handle_decrease_tile_size);
+  window_to_core(&Window::s_reset_tile_size, &Core::handle_reset_tile_size);
 
   window_to_core(&Window::s_pan_up, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
-      window->move_camera(0, *tileSize);
+      window->handle_move_camera(0, *tileSize);
     }
   });
 
   window_to_core(&Window::s_pan_right, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
-      window->move_camera(-(*tileSize), 0);
+      window->handle_move_camera(-(*tileSize), 0);
     }
   });
 
   window_to_core(&Window::s_pan_down, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
-      window->move_camera(0, -(*tileSize));
+      window->handle_move_camera(0, -(*tileSize));
     }
   });
 
   window_to_core(&Window::s_pan_left, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
-      window->move_camera(*tileSize, 0);
+      window->handle_move_camera(*tileSize, 0);
     }
   });
 
@@ -146,7 +147,7 @@ void app::init_connections() noexcept
     const auto width = core->map_width();
     const auto height = core->map_height();
     if (width && height) {
-      window->center_camera(*width, *height);
+      window->handle_center_camera(*width, *height);
     }
   });
 
@@ -161,7 +162,7 @@ void app::init_connections() noexcept
         const auto id = core->add_tileset(image, *tileWidth, *tileHeight);
         if (id) {
           TilesetInfo info{image, *id, *tileWidth, *tileHeight};
-          window->add_tileset(info, imageName ? *imageName : "Untitled");
+          window->handle_add_tileset(info, imageName ? *imageName : "Untitled");
         }
       }
     }
@@ -172,7 +173,7 @@ void app::init_connections() noexcept
     if (dialog.exec()) {
       core->set_rows(*dialog.chosen_height());
       core->set_cols(*dialog.chosen_width());
-      window->trigger_redraw();
+      window->handle_trigger_redraw();
     }
   });
 }

@@ -3,7 +3,9 @@
 #include <QApplication>
 #include <memory>
 
+#include "tactile_core.hpp"
 #include "tactile_fwd.hpp"
+#include "tactile_window.hpp"
 
 namespace tactile {
 
@@ -28,10 +30,8 @@ class app final : public QApplication {
    */
   app(int argc, char** argv);
 
-  ~app() noexcept override;
-
  private:
-  std::unique_ptr<TactileWindow> m_window;
+  std::unique_ptr<window> m_window;
   std::unique_ptr<tactile_core> m_core;
 
   void init_connections() noexcept;

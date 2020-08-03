@@ -16,7 +16,7 @@ auto tactile_core::unique() -> std::unique_ptr<tactile_core>
   return std::make_unique<tactile_core>();
 }
 
-void tactile_core::on_new_map(int id) noexcept
+void tactile_core::handle_new_map(int id) noexcept
 {
   if (m_maps.count(id)) {
     qWarning("Editor core already had tilemap associated with %i!", id);
@@ -26,7 +26,7 @@ void tactile_core::on_new_map(int id) noexcept
   }
 }
 
-void tactile_core::on_close_map(int id) noexcept
+void tactile_core::handle_close_map(int id) noexcept
 {
   if (m_maps.count(id)) {
     m_maps.erase(id);
@@ -123,7 +123,7 @@ void tactile_core::select_map(int id) noexcept
   }
 }
 
-void tactile_core::on_increase_tile_size() noexcept
+void tactile_core::handle_increase_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().increase();
@@ -131,7 +131,7 @@ void tactile_core::on_increase_tile_size() noexcept
   }
 }
 
-void tactile_core::on_decrease_tile_size() noexcept
+void tactile_core::handle_decrease_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().decrease();
@@ -139,7 +139,7 @@ void tactile_core::on_decrease_tile_size() noexcept
   }
 }
 
-void tactile_core::on_reset_tile_size() noexcept
+void tactile_core::handle_reset_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().reset();
@@ -147,14 +147,14 @@ void tactile_core::on_reset_tile_size() noexcept
   }
 }
 
-void tactile_core::on_draw(QPainter& painter) const noexcept
+void tactile_core::handle_draw(QPainter& painter) const noexcept
 {
   if (auto* map = active_map(); map) {
     map->draw(painter);
   }
 }
 
-void tactile_core::on_add_row() noexcept
+void tactile_core::handle_add_row() noexcept
 {
   if (auto* map = active_map(); map) {
     map->add_row();
@@ -162,7 +162,7 @@ void tactile_core::on_add_row() noexcept
   }
 }
 
-void tactile_core::on_add_col() noexcept
+void tactile_core::handle_add_col() noexcept
 {
   if (auto* map = active_map(); map) {
     map->add_col();
@@ -170,7 +170,7 @@ void tactile_core::on_add_col() noexcept
   }
 }
 
-void tactile_core::on_remove_row() noexcept
+void tactile_core::handle_remove_row() noexcept
 {
   if (auto* map = active_map(); map) {
     map->remove_row();
@@ -178,7 +178,7 @@ void tactile_core::on_remove_row() noexcept
   }
 }
 
-void tactile_core::on_remove_col() noexcept
+void tactile_core::handle_remove_col() noexcept
 {
   if (auto* map = active_map(); map) {
     map->remove_col();

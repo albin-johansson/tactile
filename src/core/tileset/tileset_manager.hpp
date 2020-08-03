@@ -5,6 +5,7 @@
 #include <optional>
 
 #include "core_fwd.hpp"
+#include "tileset.hpp"
 
 namespace tactile {
 
