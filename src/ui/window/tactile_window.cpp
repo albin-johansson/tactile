@@ -28,7 +28,7 @@ window::window(QWidget* parent)
   // TODO add mini-map widget
 
   m_centralWidget = new central_editor_widget{};
-  m_mouseToolWidget = new MouseToolWidget{};
+  m_mouseToolWidget = new mouse_tool_widget{};
   m_tilesetWidget = new tileset_widget{};
 
   setCentralWidget(m_centralWidget);  // claims ownership of central widget
@@ -290,7 +290,7 @@ void window::init_connections() noexcept
     m_mouseToolGroup->addAction(m_ui->actionEraserTool);
     m_mouseToolGroup->addAction(m_ui->actionRectangleTool);
 
-    using MTW = MouseToolWidget;
+    using MTW = mouse_tool_widget;
 
     connect(m_mouseToolWidget, &MTW::s_stamp_enabled, this, [this] {
       m_ui->actionStampTool->setChecked(true);
@@ -313,19 +313,19 @@ void window::init_connections() noexcept
     });
 
     on_triggered(m_ui->actionStampTool,
-                 [this] { m_mouseToolWidget->enable_stamp(); });
+                 [this] { m_mouseToolWidget->handle_enable_stamp(); });
 
     on_triggered(m_ui->actionBucketTool,
-                 [this] { m_mouseToolWidget->enable_bucket(); });
+                 [this] { m_mouseToolWidget->handle_enable_bucket(); });
 
     on_triggered(m_ui->actionEraserTool,
-                 [this] { m_mouseToolWidget->enable_eraser(); });
+                 [this] { m_mouseToolWidget->handle_enable_eraser(); });
 
     on_triggered(m_ui->actionRectangleTool,
-                 [this] { m_mouseToolWidget->enable_rectangle(); });
+                 [this] { m_mouseToolWidget->handle_enable_rectangle(); });
 
     on_triggered(m_ui->actionFindSameTool,
-                 [this] { m_mouseToolWidget->enable_find_same(); });
+                 [this] { m_mouseToolWidget->handle_enable_find_same(); });
   }
 
   connect(m_mouseToolDock.get(),

@@ -3,6 +3,8 @@
 #include <QDockWidget>
 #include <memory>
 
+#include "tactile_types.hpp"
+
 class QButtonGroup;
 
 namespace Ui {
@@ -13,13 +15,13 @@ class ToolButtonBarUI;
 
 namespace tactile::ui {
 
-class MouseToolWidget final : public QWidget {
+class mouse_tool_widget final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit MouseToolWidget(QWidget* parent = nullptr);
+  explicit mouse_tool_widget(QWidget* parent = nullptr);
 
-  ~MouseToolWidget() noexcept override;
+  ~mouse_tool_widget() noexcept override;
 
   void enable_tools() noexcept;
 
@@ -37,18 +39,18 @@ class MouseToolWidget final : public QWidget {
   void s_find_same_enabled();
 
  public slots:
-  void enable_stamp() noexcept;
+  void handle_enable_stamp() noexcept;
 
-  void enable_bucket() noexcept;
+  void handle_enable_bucket() noexcept;
 
-  void enable_eraser() noexcept;
+  void handle_enable_eraser() noexcept;
 
-  void enable_rectangle() noexcept;
+  void handle_enable_rectangle() noexcept;
 
-  void enable_find_same() noexcept;
+  void handle_enable_find_same() noexcept;
 
  private:
-  Ui::ToolButtonBarUI* m_ui;
+  owner<Ui::ToolButtonBarUI*> m_ui;
   std::unique_ptr<QButtonGroup> m_group;
 
   void set_tools_disabled(bool disabled) noexcept;

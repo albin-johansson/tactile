@@ -6,7 +6,7 @@
 
 namespace tactile::ui {
 
-MouseToolWidget::MouseToolWidget(QWidget* parent)
+mouse_tool_widget::mouse_tool_widget(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::ToolButtonBarUI{}}
 {
   m_ui->setupUi(this);
@@ -15,11 +15,11 @@ MouseToolWidget::MouseToolWidget(QWidget* parent)
     connect(sender, &QPushButton::pressed, this, handler);
   };
 
-  on_pressed(m_ui->stampButton, &MouseToolWidget::s_stamp_enabled);
-  on_pressed(m_ui->bucketButton, &MouseToolWidget::s_bucket_enabled);
-  on_pressed(m_ui->eraserButton, &MouseToolWidget::s_eraser_enabled);
-  on_pressed(m_ui->rectangleButton, &MouseToolWidget::s_rectangle_enabled);
-  on_pressed(m_ui->findSameButton, &MouseToolWidget::s_find_same_enabled);
+  on_pressed(m_ui->stampButton, &mouse_tool_widget::s_stamp_enabled);
+  on_pressed(m_ui->bucketButton, &mouse_tool_widget::s_bucket_enabled);
+  on_pressed(m_ui->eraserButton, &mouse_tool_widget::s_eraser_enabled);
+  on_pressed(m_ui->rectangleButton, &mouse_tool_widget::s_rectangle_enabled);
+  on_pressed(m_ui->findSameButton, &mouse_tool_widget::s_find_same_enabled);
 
   m_group = std::make_unique<QButtonGroup>();
   m_group->setExclusive(true);
@@ -30,47 +30,47 @@ MouseToolWidget::MouseToolWidget(QWidget* parent)
   m_group->addButton(m_ui->findSameButton);
 }
 
-MouseToolWidget::~MouseToolWidget() noexcept
+mouse_tool_widget::~mouse_tool_widget() noexcept
 {
   delete m_ui;
 }
 
-void MouseToolWidget::enable_tools() noexcept
+void mouse_tool_widget::enable_tools() noexcept
 {
   set_tools_disabled(false);
 }
 
-void MouseToolWidget::disable_tools() noexcept
+void mouse_tool_widget::disable_tools() noexcept
 {
   set_tools_disabled(true);
 }
 
-void MouseToolWidget::enable_stamp() noexcept
+void mouse_tool_widget::handle_enable_stamp() noexcept
 {
   m_ui->stampButton->setChecked(true);
 }
 
-void MouseToolWidget::enable_bucket() noexcept
+void mouse_tool_widget::handle_enable_bucket() noexcept
 {
   m_ui->bucketButton->setChecked(true);
 }
 
-void MouseToolWidget::enable_eraser() noexcept
+void mouse_tool_widget::handle_enable_eraser() noexcept
 {
   m_ui->eraserButton->setChecked(true);
 }
 
-void MouseToolWidget::enable_rectangle() noexcept
+void mouse_tool_widget::handle_enable_rectangle() noexcept
 {
   m_ui->rectangleButton->setChecked(true);
 }
 
-void MouseToolWidget::enable_find_same() noexcept
+void mouse_tool_widget::handle_enable_find_same() noexcept
 {
   m_ui->findSameButton->setChecked(true);
 }
 
-void MouseToolWidget::set_tools_disabled(bool disabled) noexcept
+void mouse_tool_widget::set_tools_disabled(bool disabled) noexcept
 {
   m_ui->stampButton->setDisabled(disabled);
   m_ui->bucketButton->setDisabled(disabled);

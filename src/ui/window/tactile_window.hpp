@@ -187,7 +187,7 @@ class window final : public QMainWindow {
   owner<Ui::MainWindow*> m_ui;
 
   central_editor_widget* m_centralWidget;
-  MouseToolWidget* m_mouseToolWidget;
+  mouse_tool_widget* m_mouseToolWidget;
   tileset_widget* m_tilesetWidget;
 
   std::unique_ptr<QDockWidget> m_mouseToolDock;

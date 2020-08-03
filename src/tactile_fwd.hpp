@@ -8,7 +8,7 @@ class window;
 
 class central_editor_widget;
 
-class MouseToolWidget;
+class mouse_tool_widget;
 
 class tilemap_tab_widget;
 
