@@ -24,7 +24,7 @@ tileset_widget::tileset_widget(QWidget* parent)
   m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
 
   connect(m_contentPage,
-          &tileset_content_page::s_requested_tileset,
+          &tileset_content_page::request_add_tileset,
           this,
           &tileset_widget::s_requested_tileset);
 

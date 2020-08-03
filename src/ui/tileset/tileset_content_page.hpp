@@ -28,11 +28,11 @@ class tileset_content_page final : public QWidget {
   [[nodiscard]] auto empty() const noexcept -> bool;
 
  signals:
-  void s_requested_tileset();
+  void request_add_tileset(); // FIXME seemingly unused
 
  private:
   owner<Ui::TilesetContentPageUI*> m_ui;
-  std::unordered_map<int, std::shared_ptr<tileset_tab>> m_tabs;
+  std::unordered_map<int, tileset_tab*> m_tabs;
 
   //  [[nodiscard]] bool contains_tileset(int id) const noexcept;
 };

@@ -31,10 +31,12 @@ void tileset_content_page::add_tileset(const tileset_info& info,
     qDebug("Tried to add tileset with taken ID: %i", info.id);
   } else {
     if (!info.image->isNull()) {
-      auto tilesetTab = std::make_shared<tileset_tab>(
-          *info.image, info.tileWidth, info.tileHeight);
-      m_ui->tabWidget->addTab(tilesetTab.get(), tabName);
-      m_tabs.emplace(info.id, tilesetTab);
+
+      // ownership is transferred
+      auto* tab = new tileset_tab{*info.image, info.tileWidth, info.tileHeight};
+      m_ui->tabWidget->addTab(tab, tabName);
+
+      m_tabs.emplace(info.id, tab);
     }
   }
 }
