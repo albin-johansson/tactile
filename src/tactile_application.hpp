@@ -31,7 +31,7 @@ class app final : public QApplication {
   app(int argc, char** argv);
 
  private:
-  std::unique_ptr<window> m_window;
+  std::unique_ptr<ui::window> m_window;
   std::unique_ptr<tactile_core> m_core;
 
   void init_connections() noexcept;

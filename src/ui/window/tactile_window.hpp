@@ -18,7 +18,7 @@ class MainWindow;
 class QPainter;
 class QActionGroup;
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * @class window
@@ -226,4 +226,4 @@ class window final : public QMainWindow {
   }
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

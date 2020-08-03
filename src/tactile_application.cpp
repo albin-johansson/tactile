@@ -59,7 +59,7 @@ app::app(int argc, char** argv) : QApplication{argc, argv}
 
   validate_settings();
 
-  m_window = window::unique();
+  m_window = ui::window::unique();
   m_core = tactile_core::unique();
 
   init_connections();
@@ -72,7 +72,6 @@ app::app(int argc, char** argv) : QApplication{argc, argv}
 
   m_window->show();
 }
-
 
 void app::load_style_sheet(const char* styleSheet)
 {
@@ -91,59 +90,59 @@ void app::load_style_sheet(const char* styleSheet)
 
 void app::init_connections() noexcept
 {
-  using Window = window;
-  using Core = tactile_core;
+  using core_t = tactile_core;
 
   auto* window = m_window.get();
   auto* core = m_core.get();
 
-  connect(core, &Core::s_updated, window, &Window::handle_trigger_redraw);
+  connect(core, &core_t::s_updated, window, &ui::window::handle_trigger_redraw);
 
-  window_to_core(&Window::s_added_row, &Core::handle_add_row);
-  window_to_core(&Window::s_added_row, &Core::handle_add_row);
-  window_to_core(&Window::s_added_col, &Core::handle_add_col);
-  window_to_core(&Window::s_removed_row, &Core::handle_remove_row);
-  window_to_core(&Window::s_removed_col, &Core::handle_remove_col);
+  window_to_core(&ui::window::s_added_row, &core_t::handle_add_row);
+  window_to_core(&ui::window::s_added_row, &core_t::handle_add_row);
+  window_to_core(&ui::window::s_added_col, &core_t::handle_add_col);
+  window_to_core(&ui::window::s_removed_row, &core_t::handle_remove_row);
+  window_to_core(&ui::window::s_removed_col, &core_t::handle_remove_col);
 
-  window_to_core(&Window::s_new_map,
+  window_to_core(&ui::window::s_new_map,
                  [core](int id) noexcept { core->handle_new_map(id); });
 
-  window_to_core(&Window::s_close_map, &Core::handle_close_map);
-  window_to_core(&Window::s_select_map, &Core::select_map);
+  window_to_core(&ui::window::s_close_map, &core_t::handle_close_map);
+  window_to_core(&ui::window::s_select_map, &core_t::select_map);
 
-  window_to_core(&Window::s_redraw, &Core::handle_draw);
+  window_to_core(&ui::window::s_redraw, &core_t::handle_draw);
 
-  window_to_core(&Window::s_increase_tile_size,
-                 &Core::handle_increase_tile_size);
-  window_to_core(&Window::s_decrease_tile_size,
-                 &Core::handle_decrease_tile_size);
-  window_to_core(&Window::s_reset_tile_size, &Core::handle_reset_tile_size);
+  window_to_core(&ui::window::s_increase_tile_size,
+                 &core_t::handle_increase_tile_size);
+  window_to_core(&ui::window::s_decrease_tile_size,
+                 &core_t::handle_decrease_tile_size);
+  window_to_core(&ui::window::s_reset_tile_size,
+                 &core_t::handle_reset_tile_size);
 
-  window_to_core(&Window::s_pan_up, [window, core] {
+  window_to_core(&ui::window::s_pan_up, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
       window->handle_move_camera(0, *tileSize);
     }
   });
 
-  window_to_core(&Window::s_pan_right, [window, core] {
+  window_to_core(&ui::window::s_pan_right, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
       window->handle_move_camera(-(*tileSize), 0);
     }
   });
 
-  window_to_core(&Window::s_pan_down, [window, core] {
+  window_to_core(&ui::window::s_pan_down, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
       window->handle_move_camera(0, -(*tileSize));
     }
   });
 
-  window_to_core(&Window::s_pan_left, [window, core] {
+  window_to_core(&ui::window::s_pan_left, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
       window->handle_move_camera(*tileSize, 0);
     }
   });
 
-  window_to_this(&Window::s_center_camera, [window, core] {
+  window_to_this(&ui::window::s_center_camera, [window, core] {
     const auto width = core->map_width();
     const auto height = core->map_height();
     if (width && height) {
@@ -151,7 +150,7 @@ void app::init_connections() noexcept
     }
   });
 
-  window_to_this(&Window::s_new_tileset, [window, core] {
+  window_to_this(&ui::window::s_new_tileset, [window, core] {
     TilesetDialog dialog;
     if (dialog.exec()) {
       const auto image = dialog.chosen_image();
@@ -168,7 +167,7 @@ void app::init_connections() noexcept
     }
   });
 
-  window_to_this(&Window::s_resize_map, [window, core] {
+  window_to_this(&ui::window::s_resize_map, [window, core] {
     ResizeDialog dialog;
     if (dialog.exec()) {
       core->set_rows(*dialog.chosen_height());

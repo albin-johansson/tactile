@@ -4,7 +4,11 @@
 
 namespace tactile {
 
+namespace ui {
+
 class window;
+
+}
 
 class CentralEditorWidget;
 
