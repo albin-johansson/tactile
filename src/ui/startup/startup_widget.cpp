@@ -4,6 +4,6 @@
 
 namespace tactile::ui {
 
-TACTILE_BASIC_WIDGET_DEF(StartupWidget, QWidget, Ui::StartupWidgetUI)
+TACTILE_BASIC_WIDGET_DEF(startup_widget, QWidget, Ui::StartupWidgetUI)
 
 }  // namespace tactile::ui

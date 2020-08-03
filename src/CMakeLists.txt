@@ -39,9 +39,9 @@ set(TACTILE_SOURCE_FILES
         model/tilemap/render_tilemap.cpp
         model/tilemap/render_tilemap.hpp
 
-        ui/startup_widget.cpp
-        ui/startup_widget.hpp
-        ui/startup_widget.ui
+        ui/startup/startup_widget.cpp
+        ui/startup/startup_widget.hpp
+        ui/startup/startup_widget.ui
 
         ui/tools/mouse_tool_widget.cpp
         ui/tools/mouse_tool_widget.hpp

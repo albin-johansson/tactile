@@ -3,8 +3,8 @@
 #include <QTabWidget>
 
 #include "editor_tab.hpp"
-#include "startup_widget.hpp"
 #include "tile_map_tab_widget.hpp"
+#include "ui/startup/startup_widget.hpp"
 #include "ui_central_widget.h"
 #include "widget_size_policy.hpp"
 
@@ -17,7 +17,7 @@ CentralEditorWidget::CentralEditorWidget(QWidget* parent)
 
   m_mapTabWidget = new TileMapTabWidget{};
 
-  m_startupViewIndex = m_ui->stackedWidget->addWidget(new StartupWidget{});
+  m_startupViewIndex = m_ui->stackedWidget->addWidget(new startup_widget{});
   m_editorViewIndex = m_ui->stackedWidget->addWidget(m_mapTabWidget);
 
   init_connections();

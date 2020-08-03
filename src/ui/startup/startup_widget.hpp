@@ -11,6 +11,6 @@ class StartupWidgetUI;
 
 namespace tactile::ui {
 
-TACTILE_BASIC_WIDGET_DECL(StartupWidget, QWidget, Ui::StartupWidgetUI)
+TACTILE_BASIC_WIDGET_DECL(startup_widget, QWidget, Ui::StartupWidgetUI)
 
 }  // namespace tactile::ui
