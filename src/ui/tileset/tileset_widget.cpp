@@ -26,12 +26,12 @@ tileset_widget::tileset_widget(QWidget* parent)
   connect(m_contentPage,
           &tileset_content_page::request_add_tileset,
           this,
-          &tileset_widget::s_requested_tileset);
+          &tileset_widget::request_new_tileset);
 
   connect(m_emptyPage,
-          &tileset_empty_page::s_requested_tileset,
+          &tileset_empty_page::request_new_tileset,
           this,
-          &tileset_widget::s_requested_tileset);
+          &tileset_widget::request_new_tileset);
 }
 
 tileset_widget::~tileset_widget() noexcept
@@ -42,7 +42,7 @@ tileset_widget::~tileset_widget() noexcept
 void tileset_widget::add_tileset(const tileset_info& info,
                                  const QString& tabName) noexcept
 {
-  if (info.image->isNull()) {
+  if (info.image.isNull()) {
     return;
   }
 

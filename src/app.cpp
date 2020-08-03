@@ -138,7 +138,7 @@ void app::handle_new_tileset()
     const auto tileHeight = dialog.chosen_height();
     const auto imageName = dialog.image_name();
 
-    if (image && tileWidth && tileHeight) {
+    if (!image.isNull() && tileWidth && tileHeight) {
       const auto id = m_core->add_tileset(image, *tileWidth, *tileHeight);
       if (id) {
         tileset_info info{image, *id, *tileWidth, *tileHeight};

@@ -30,10 +30,10 @@ void tileset_content_page::add_tileset(const tileset_info& info,
   if (m_tabs.count(info.id)) {
     qDebug("Tried to add tileset with taken ID: %i", info.id);
   } else {
-    if (!info.image->isNull()) {
+    if (!info.image.isNull()) {
 
       // ownership is transferred
-      auto* tab = new tileset_tab{*info.image, info.tileWidth, info.tileHeight};
+      auto* tab = new tileset_tab{info.image, info.tileWidth, info.tileHeight};
       m_ui->tabWidget->addTab(tab, tabName);
 
       m_tabs.emplace(info.id, tab);

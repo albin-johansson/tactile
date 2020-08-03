@@ -26,7 +26,7 @@ class tileset_widget final : public QWidget {
   void remove_tileset(int id) noexcept;
 
  signals:
-  void s_requested_tileset();
+  void request_new_tileset();
 
  private:
   owner<Ui::TilesetWidgetUI*> m_ui;

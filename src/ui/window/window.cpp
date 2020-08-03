@@ -369,7 +369,7 @@ void window::init_connections() noexcept
   }
 
   connect(m_tilesetWidget,
-          &tileset_widget::s_requested_tileset,
+          &tileset_widget::request_new_tileset,
           this,
           &W::request_new_tileset);
 }

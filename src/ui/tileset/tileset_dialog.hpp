@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QDialog>
+#include <QImage>
 #include <QIntValidator>
-#include <memory>
 #include <optional>
 
 #include "tactile_types.hpp"
@@ -22,15 +22,13 @@ class tileset_dialog final : public QDialog {
   ~tileset_dialog() noexcept override;
 
   /**
-   * @brief Returns a shared pointer to the image that was selected.
+   * @brief Returns the image that was selected.
    *
-   * @return a shared pointer to an image; might be null if there is no chosen
-   * image.
+   * @return the selected image, which might not represent a valid image.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto chosen_image() const noexcept
-      -> const std::shared_ptr<QImage>&;
+  [[nodiscard]] auto chosen_image() const noexcept -> const QImage&;
 
   /**
    * @brief Returns the chosen tile width.
@@ -63,11 +61,11 @@ class tileset_dialog final : public QDialog {
 
  private:
   owner<Ui::TilesetDialogUI*> m_ui;
-  std::shared_ptr<QImage> m_image;
+  QImage m_image{};
   std::optional<int> m_width;
   std::optional<int> m_height;
   std::optional<QString> m_imageName;
-  std::unique_ptr<QIntValidator> m_validator;
+  QIntValidator* m_validator;
   QPixmap m_defaultImageIcon;
 
   void validate_input() noexcept;
@@ -91,6 +89,9 @@ class tileset_dialog final : public QDialog {
    */
   [[nodiscard]] auto validate(const QLineEdit& edit) const noexcept
       -> QValidator::State;
+
+ private slots:
+  void handle_image_select();
 };
 
 }  // namespace tactile::ui

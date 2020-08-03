@@ -20,28 +20,17 @@ tileset_image_widget::tileset_image_widget(const QImage& image,
     throw tactile_error{"Can't create tileset image widget from null image!"};
   }
 
-  m_imageLabel = tileset_image_label::unique(image, tileWidth, tileHeight);
+  m_layout = new QGridLayout{this};
 
-  m_layout = std::make_unique<QGridLayout>();
-  m_layout->addWidget(m_imageLabel.get());
+  m_imageLabel = new tileset_image_label{image, tileWidth, tileHeight};
+  m_rubberBand = new QRubberBand{QRubberBand::Rectangle, m_imageLabel};
 
-  setLayout(m_layout.get());
+  m_layout->addWidget(m_imageLabel);  // layout claims ownership of label
 
-  m_rubberBand =
-      std::make_unique<QRubberBand>(QRubberBand::Rectangle, m_imageLabel.get());
+  setLayout(m_layout);
 }
 
 tileset_image_widget::~tileset_image_widget() noexcept = default;
-
-auto tileset_image_widget::unique(const QImage& image,
-                                  int tileWidth,
-                                  int tileHeight,
-                                  QWidget* parent)
-    -> std::unique_ptr<tileset_image_widget>
-{
-  return std::make_unique<tileset_image_widget>(
-      image, tileWidth, tileHeight, parent);
-}
 
 void tileset_image_widget::mousePressEvent(QMouseEvent* event)
 {

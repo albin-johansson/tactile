@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QWidget>
-#include <memory>
 
 class QLayout;
 class QLabel;
@@ -21,12 +20,6 @@ class tileset_image_widget final : public QWidget {
 
   ~tileset_image_widget() noexcept override;
 
-  [[nodiscard]] static auto unique(const QImage& image,
-                                   int tileWidth,
-                                   int tileHeight,
-                                   QWidget* parent = nullptr)
-      -> std::unique_ptr<tileset_image_widget>;
-
  protected:
   void mousePressEvent(QMouseEvent* event) override;
 
@@ -35,9 +28,9 @@ class tileset_image_widget final : public QWidget {
   void mouseMoveEvent(QMouseEvent* event) override;
 
  private:
-  std::unique_ptr<QLayout> m_layout;
-  std::unique_ptr<QLabel> m_imageLabel;
-  std::unique_ptr<QRubberBand> m_rubberBand;
+  QLayout* m_layout;
+  QLabel* m_imageLabel;
+  QRubberBand* m_rubberBand;
   QPoint m_origin;
 };
 

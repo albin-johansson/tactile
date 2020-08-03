@@ -18,12 +18,10 @@ namespace {
 }  // namespace
 
 tileset_dialog::tileset_dialog(QWidget* parent)
-    : QDialog{parent},
-      m_ui{new Ui::TilesetDialogUI{}},
-      m_image{std::make_shared<QImage>()}
+    : QDialog{parent}, m_ui{new Ui::TilesetDialogUI{}}
 {
   m_ui->setupUi(this);
-  m_validator = std::make_unique<QIntValidator>(1, 1'000, this);
+  m_validator = new QIntValidator{1, 1'000, this};
 
   const auto pixmap = m_ui->imageLabel->pixmap(Qt::ReturnByValueConstant{});
   if (!pixmap.isNull()) {
@@ -42,28 +40,10 @@ tileset_dialog::tileset_dialog(QWidget* parent)
           this,
           &tileset_dialog::validate_input);
 
-  connect(m_ui->imageButton, &QPushButton::pressed, this, [this] {
-    const auto path = open_tileset_image(this);
-    if (path) {
-      const auto pathStr = path->path().remove(0, 1);  // remove leading '/'
-      const auto fileName = path->fileName();
-
-      m_image->load(pathStr);
-
-      if (m_image->isNull()) {
-        m_ui->imageLabel->setPixmap(m_defaultImageIcon);
-        m_ui->imageInfoLabel->setText("Failed to open image: " + fileName);
-        m_ui->imageInfoLabel->setStyleSheet("QLabel { color : red; }");
-      } else {
-        m_ui->imageLabel->setPixmap(load_pixmap(pathStr));
-        m_imageName = fileName;
-        m_ui->imageInfoLabel->setText(fileName);
-        m_ui->imageInfoLabel->setStyleSheet("QLabel { color : black; }");
-      }
-
-      ok_button()->setEnabled(is_valid());
-    }
-  });
+  connect(m_ui->imageButton,
+          &QPushButton::pressed,
+          this,
+          &tileset_dialog::handle_image_select);
 }
 
 tileset_dialog::~tileset_dialog() noexcept
@@ -71,8 +51,32 @@ tileset_dialog::~tileset_dialog() noexcept
   delete m_ui;
 }
 
-auto tileset_dialog::chosen_image() const noexcept
-    -> const std::shared_ptr<QImage>&
+void tileset_dialog::handle_image_select()
+{
+  const auto path = open_tileset_image(this);
+
+  if (path) {
+    const auto pathStr = path->path().remove(0, 1);  // remove leading '/'
+    const auto fileName = path->fileName();
+
+    m_image.load(pathStr);
+
+    if (m_image.isNull()) {
+      m_ui->imageLabel->setPixmap(m_defaultImageIcon);
+      m_ui->imageInfoLabel->setText("Failed to open image: " + fileName);
+      m_ui->imageInfoLabel->setStyleSheet("QLabel { color : red; }");
+    } else {
+      m_ui->imageLabel->setPixmap(load_pixmap(pathStr));
+      m_imageName = fileName;
+      m_ui->imageInfoLabel->setText(fileName);
+      m_ui->imageInfoLabel->setStyleSheet("QLabel { color : black; }");
+    }
+
+    ok_button()->setEnabled(is_valid());
+  }
+}
+
+auto tileset_dialog::chosen_image() const noexcept -> const QImage&
 {
   return m_image;
 }
@@ -96,7 +100,7 @@ auto tileset_dialog::is_valid() const noexcept -> bool
 {
   return validate(*m_ui->widthEdit) == QValidator::Acceptable &&
          validate(*m_ui->heightEdit) == QValidator::Acceptable &&
-         !m_image->isNull();
+         !m_image.isNull();
 }
 
 void tileset_dialog::validate_input() noexcept

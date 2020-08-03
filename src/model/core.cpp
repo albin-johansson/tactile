@@ -55,11 +55,11 @@ void core::save_as(czstring) const
   qWarning("\"Save as\" isn't implemented!");
 }
 
-auto core::add_tileset(const std::shared_ptr<QImage>& image,
+auto core::add_tileset(const QImage& image,
                        int tileWidth,
                        int tileHeight) noexcept -> std::optional<int>
 {
-  if (!image->isNull()) {
+  if (!image.isNull()) {
     return m_sheetManager->add(tileset::unique(image, tileWidth, tileHeight));
   } else {
     return std::nullopt;

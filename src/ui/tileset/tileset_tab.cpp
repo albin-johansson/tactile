@@ -20,17 +20,20 @@ tileset_tab::tileset_tab(const QImage& image,
     throw tactile_error{"Can't create tileset tab from null image!"};
   }
 
-  m_imageWidget = tileset_image_widget::unique(image, tileWidth, tileHeight);
+  setObjectName("tileset_tab");
 
-  m_scrollArea = std::make_unique<QScrollArea>();
-  m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
-  m_scrollArea->setWidget(m_imageWidget.get());
-
-  m_layout = std::make_unique<QGridLayout>();
+  m_layout = new QGridLayout{this};
   m_layout->setMargin(0);
-  m_layout->addWidget(m_scrollArea.get());
 
-  setLayout(m_layout.get());
+  m_scrollArea = new QScrollArea{};
+  m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
+
+  m_imageWidget = new tileset_image_widget{image, tileWidth, tileHeight};
+  m_scrollArea->setWidget(m_imageWidget);  // scroll area becomes parent
+
+  m_layout->addWidget(m_scrollArea);  // layout claims ownership of scroll area
+
+  setLayout(m_layout);
   set_size_policy(this, QSizePolicy::Expanding);
 }
 

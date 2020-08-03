@@ -8,14 +8,12 @@
 
 namespace tactile::model {
 
-tileset::tileset(const std::shared_ptr<QImage>& image,
-                 int tileWidth,
-                 int tileHeight)
+tileset::tileset(const QImage& image, int tileWidth, int tileHeight)
     : m_sheet{image},
       m_tileWidth{(tileWidth < 1) ? 1 : tileWidth},
       m_tileHeight{(tileHeight < 1) ? 1 : tileHeight}
 {
-  if (!image) {
+  if (image.isNull()) {
     throw tactile_error{"Cannot create tileset from null image!"};
   }
 
@@ -24,16 +22,14 @@ tileset::tileset(const std::shared_ptr<QImage>& image,
   m_nTiles = m_rows * m_cols;
 }
 
-auto tileset::unique(const std::shared_ptr<QImage>& image,
-                     int tileWidth,
-                     int tileHeight) -> std::unique_ptr<tileset>
+auto tileset::unique(const QImage& image, int tileWidth, int tileHeight)
+    -> std::unique_ptr<tileset>
 {
   return std::make_unique<tileset>(image, tileWidth, tileHeight);
 }
 
-auto tileset::shared(const std::shared_ptr<QImage>& image,
-                     int tileWidth,
-                     int tileHeight) -> std::shared_ptr<tileset>
+auto tileset::shared(const QImage& image, int tileWidth, int tileHeight)
+    -> std::shared_ptr<tileset>
 {
   return std::make_shared<tileset>(image, tileWidth, tileHeight);
 }
@@ -77,12 +73,12 @@ auto tileset::tile_at(int x, int y) const noexcept -> tile_id
 
 auto tileset::width() const noexcept -> int
 {
-  return m_sheet->width();
+  return m_sheet.width();
 }
 
 auto tileset::height() const noexcept -> int
 {
-  return m_sheet->height();
+  return m_sheet.height();
 }
 
 auto tileset::rows() const noexcept -> int

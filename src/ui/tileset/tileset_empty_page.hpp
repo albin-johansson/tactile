@@ -19,7 +19,7 @@ class tileset_empty_page final : public QWidget {
   ~tileset_empty_page() noexcept override;
 
  signals:
-  void s_requested_tileset();
+  void request_new_tileset();
 
  private:
   owner<Ui::TilesetEmptyPageUI*> m_ui;

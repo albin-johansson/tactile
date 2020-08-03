@@ -12,12 +12,12 @@ namespace {
 
 [[nodiscard]] auto create_tile_sheet() noexcept -> std::unique_ptr<tileset>
 {
-  return tileset::unique(std::make_shared<QImage>("terrain.png"), 32, 32);
+  return tileset::unique(QImage{"terrain.png"}, 32, 32);
 }
 
 }  // namespace
 
-TEST_CASE("TilesetManager::add", "[TilesetManager]")
+TEST_CASE("tileset_manager::add", "[tileset_manager]")
 {
   tileset_manager manager;
 
@@ -35,7 +35,7 @@ TEST_CASE("TilesetManager::add", "[TilesetManager]")
   CHECK(manager.sheets() == 2);
 }
 
-TEST_CASE("TilesetManager::remove", "[TilesetManager]")
+TEST_CASE("tileset_manager::remove", "[tileset_manager]")
 {
   tileset_manager manager;
   CHECK_NOTHROW(manager.remove(0));
@@ -51,7 +51,7 @@ TEST_CASE("TilesetManager::remove", "[TilesetManager]")
   CHECK(manager.sheets() == 0);
 }
 
-TEST_CASE("TilesetManager::remove_all", "[TilesetManager]")
+TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
 {
   tileset_manager manager;
   CHECK_NOTHROW(manager.remove_all());
@@ -65,7 +65,7 @@ TEST_CASE("TilesetManager::remove_all", "[TilesetManager]")
   CHECK(manager.sheets() == 0);
 }
 
-TEST_CASE("TilesetManager::select", "[TilesetManager]")
+TEST_CASE("tileset_manager::select", "[tileset_manager]")
 {
   tileset_manager manager;
 

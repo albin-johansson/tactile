@@ -65,7 +65,7 @@ class core final : public QObject {
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto add_tileset(const std::shared_ptr<QImage>& image,
+  [[nodiscard]] auto add_tileset(const QImage& image,
                                  int tileWidth,
                                  int tileHeight) noexcept -> std::optional<int>;
 

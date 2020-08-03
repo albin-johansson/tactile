@@ -1,12 +1,11 @@
 #pragma once
 
+#include <QImage>
 #include <memory>
 #include <set>
 
 #include "tactile_types.hpp"
 #include "type_utils.hpp"
-
-class QImage;
 
 namespace tactile::model {
 
@@ -41,19 +40,19 @@ class tileset final {
    *
    * @since 0.1.0
    */
-  tileset(const std::shared_ptr<QImage>& image, int tileWidth, int tileHeight);
+  tileset(const QImage& image, int tileWidth, int tileHeight);
 
   /**
-   * @copydoc tileset(const std::shared_ptr<QImage>&, int, int)
+   * @copydoc tileset(const QImage&, int, int)
    */
-  [[nodiscard]] static auto unique(const std::shared_ptr<QImage>& image,
+  [[nodiscard]] static auto unique(const QImage& image,
                                    int tileWidth,
                                    int tileHeight) -> std::unique_ptr<tileset>;
 
   /**
-   * @copydoc tileset(const std::shared_ptr<QImage>&, int, int)
+   * @copydoc tileset(const QImage&, int, int)
    */
-  [[nodiscard]] static auto shared(const std::shared_ptr<QImage>& image,
+  [[nodiscard]] static auto shared(const QImage& image,
                                    int tileWidth,
                                    int tileHeight) -> std::shared_ptr<tileset>;
 
@@ -214,7 +213,7 @@ class tileset final {
   [[nodiscard, deprecated]] auto selection() -> const std::set<tile_id>&;
 
  private:
-  std::shared_ptr<QImage> m_sheet;  // FIXME this field might be unnecessary
+  QImage m_sheet;  // FIXME this field might be unnecessary
   tile_id m_firstID{1};
   std::set<tile_id> m_selection;
   int m_rows;
