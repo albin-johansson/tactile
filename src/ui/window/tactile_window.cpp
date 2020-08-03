@@ -27,7 +27,7 @@ window::window(QWidget* parent)
 
   // TODO add mini-map widget
 
-  m_centralWidget = new CentralEditorWidget{};
+  m_centralWidget = new central_editor_widget{};
   m_mouseToolWidget = new MouseToolWidget{};
   m_tilesetWidget = new TilesetWidget{};
 
@@ -113,7 +113,7 @@ void window::handle_move_camera(int dx, int dy)
 
 void window::handle_trigger_redraw()
 {
-  m_centralWidget->trigger_redraw();
+  m_centralWidget->handle_trigger_redraw();
 }
 
 void window::closeEvent(QCloseEvent* event)
@@ -128,7 +128,7 @@ void window::closeEvent(QCloseEvent* event)
 void window::init_connections() noexcept
 {
   connect(m_centralWidget,
-          &CentralEditorWidget::s_removed_tab,
+          &central_editor_widget::s_removed_tab,
           this,
           [this](int id) noexcept {
             emit s_close_map(id);
@@ -339,7 +339,7 @@ void window::init_connections() noexcept
           &QAction::setChecked);
 
   {
-    using CEW = CentralEditorWidget;
+    using CEW = central_editor_widget;
     connect(m_centralWidget, &CEW::s_redraw, this, &W::s_redraw);
     connect(m_centralWidget, &CEW::s_selected_tab, this, &W::s_select_map);
   }

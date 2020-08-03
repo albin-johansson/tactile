@@ -8,17 +8,13 @@
 
 namespace tactile::ui {
 
-EditorTab::EditorTab(int id, QWidget* parent)
-    : QWidget{parent},
-      m_viewport{0, 0, width(), height()},
-      m_id{id},
-      m_lastMouseX{0},
-      m_lastMouseY{0}
+editor_tab::editor_tab(int id, QWidget* parent)
+    : QWidget{parent}, m_viewport{0, 0, width(), height()}, m_id{id}
 {
   set_size_policy(this, QSizePolicy::Policy::Expanding);
 }
 
-void EditorTab::center_viewport(int mapWidth, int mapHeight) noexcept
+void editor_tab::center_viewport(int mapWidth, int mapHeight) noexcept
 {
   const auto x = (m_viewport.width() - mapWidth) / 2;
   const auto y = (m_viewport.height() - mapHeight) / 2;
@@ -26,7 +22,7 @@ void EditorTab::center_viewport(int mapWidth, int mapHeight) noexcept
   m_viewport.moveTo(x, y);
 }
 
-void EditorTab::move_viewport(int dx, int dy) noexcept
+void editor_tab::move_viewport(int dx, int dy) noexcept
 {
   const auto width = m_viewport.width();
   const auto height = m_viewport.height();
@@ -36,7 +32,12 @@ void EditorTab::move_viewport(int dx, int dy) noexcept
   m_viewport.setHeight(height);
 }
 
-void EditorTab::paintEvent(QPaintEvent* event)
+auto editor_tab::id() const noexcept -> int
+{
+  return m_id;
+}
+
+void editor_tab::paintEvent(QPaintEvent* event)
 {
   QWidget::paintEvent(event);
 
@@ -47,7 +48,7 @@ void EditorTab::paintEvent(QPaintEvent* event)
   emit s_redraw(painter);
 }
 
-void EditorTab::resizeEvent(QResizeEvent* event)
+void editor_tab::resizeEvent(QResizeEvent* event)
 {
   QWidget::resizeEvent(event);
 
@@ -61,7 +62,7 @@ void EditorTab::resizeEvent(QResizeEvent* event)
   update();
 }
 
-void EditorTab::mousePressEvent(QMouseEvent* event)
+void editor_tab::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
   if (event->buttons() & Qt::MouseButton::MidButton) {
@@ -71,13 +72,13 @@ void EditorTab::mousePressEvent(QMouseEvent* event)
   }
 }
 
-void EditorTab::mouseReleaseEvent(QMouseEvent* event)
+void editor_tab::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
   QApplication::restoreOverrideCursor();
 }
 
-void EditorTab::mouseMoveEvent(QMouseEvent* event)
+void editor_tab::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
   if (event->buttons() & Qt::MouseButton::MidButton) {

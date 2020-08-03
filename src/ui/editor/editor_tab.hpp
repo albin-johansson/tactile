@@ -6,17 +6,17 @@ class QPainter;
 
 namespace tactile::ui {
 
-class EditorTab final : public QWidget {
+class editor_tab final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit EditorTab(int id, QWidget* parent = nullptr);
+  explicit editor_tab(int id, QWidget* parent = nullptr);
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 
   void move_viewport(int dx, int dy) noexcept;
 
-  [[nodiscard]] int id() const noexcept { return m_id; }
+  [[nodiscard]] auto id() const noexcept -> int;
 
  signals:
   void s_redraw(QPainter& painter);
@@ -35,8 +35,8 @@ class EditorTab final : public QWidget {
  private:
   QRect m_viewport;
   int m_id;
-  int m_lastMouseX;
-  int m_lastMouseY;
+  int m_lastMouseX{};
+  int m_lastMouseY{};
 };
 
 }  // namespace tactile::ui

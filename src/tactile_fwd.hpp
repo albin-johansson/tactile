@@ -6,15 +6,15 @@ namespace tactile::ui {
 
 class window;
 
-class CentralEditorWidget;
+class central_editor_widget;
 
 class MouseToolWidget;
 
 class TilesetWidget;
 
-class TileMapTabWidget;
+class tilemap_tab_widget;
 
-class EditorTab;
+class editor_tab;
 
 class TilesetTab;
 

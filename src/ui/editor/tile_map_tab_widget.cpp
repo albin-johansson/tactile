@@ -6,7 +6,7 @@
 
 namespace tactile::ui {
 
-TileMapTabWidget::TileMapTabWidget(QWidget* parent) : QTabWidget{parent}
+tilemap_tab_widget::tilemap_tab_widget(QWidget* parent) : QTabWidget{parent}
 {
   setTabsClosable(true);
   connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
@@ -15,26 +15,24 @@ TileMapTabWidget::TileMapTabWidget(QWidget* parent) : QTabWidget{parent}
   });
 }
 
-TileMapTabWidget::~TileMapTabWidget() noexcept = default;
+tilemap_tab_widget::~tilemap_tab_widget() noexcept = default;
 
-int TileMapTabWidget::add_tile_map_tab(const QString& title) noexcept
+auto tilemap_tab_widget::add_tile_map_tab(const QString& title) noexcept -> int
 {
   static int id = 0;  // serial ID
 
   auto newTitle = title;
   newTitle.append(QString::number(id));
 
-  auto* pane = new EditorTab{id++};
+  auto* pane = new editor_tab{id++};
   addTab(pane, newTitle);
 
-  using ET = EditorTab;
-  using TMTW = TileMapTabWidget;
-  connect(pane, &ET::s_redraw, this, &TMTW::s_redraw);
+  connect(pane, &editor_tab::s_redraw, this, &tilemap_tab_widget::s_redraw);
 
   return pane->id();
 }
 
-void TileMapTabWidget::remove_tile_map_tab(int id) noexcept
+void tilemap_tab_widget::remove_tile_map_tab(int id) noexcept
 {
   const auto amount = count();
   for (int i = 0; i < amount; ++i) {
@@ -44,7 +42,7 @@ void TileMapTabWidget::remove_tile_map_tab(int id) noexcept
   }
 }
 
-void TileMapTabWidget::center_viewport(int mapWidth, int mapHeight) noexcept
+void tilemap_tab_widget::center_viewport(int mapWidth, int mapHeight) noexcept
 {
   if (count() > 0) {
     if (auto* pane = get_pane(currentIndex()); pane) {
@@ -53,7 +51,7 @@ void TileMapTabWidget::center_viewport(int mapWidth, int mapHeight) noexcept
   }
 }
 
-void TileMapTabWidget::move_viewport(int dx, int dy) noexcept
+void tilemap_tab_widget::move_viewport(int dx, int dy) noexcept
 {
   if (count() > 0) {
     if (auto* pane = get_pane(currentIndex()); pane) {
@@ -62,17 +60,17 @@ void TileMapTabWidget::move_viewport(int dx, int dy) noexcept
   }
 }
 
-EditorTab* TileMapTabWidget::get_pane(int index) const noexcept
+auto tilemap_tab_widget::get_pane(int index) const noexcept -> editor_tab*
 {
-  return qobject_cast<EditorTab*>(widget(index));
+  return qobject_cast<editor_tab*>(widget(index));
 }
 
-std::optional<int> TileMapTabWidget::active_tab_id() const noexcept
+auto tilemap_tab_widget::active_tab_id() const noexcept -> std::optional<int>
 {
   return tab_id(currentIndex());
 }
 
-std::optional<int> TileMapTabWidget::tab_id(int index) const noexcept
+auto tilemap_tab_widget::tab_id(int index) const noexcept -> std::optional<int>
 {
   if (auto* pane = get_pane(index); pane) {
     return pane->id();

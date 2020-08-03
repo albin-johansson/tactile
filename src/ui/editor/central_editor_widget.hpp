@@ -14,20 +14,24 @@ class QTabWidget;
 namespace tactile::ui {
 
 /**
- * The <code>CentralEditorWidget</code> class represents the center stage of the
- * editor and contains the main tilemap editor pane.
+ * @class central_editor_widget
+ *
+ * @brief Represents the center stage of the editor and contains the main
+ * tilemap editor pane.
  *
  * @since 0.1.0
+ *
+ * @headerfile central_editor_widget.hpp
  */
-class CentralEditorWidget final : public QWidget {
+class central_editor_widget final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit CentralEditorWidget(QWidget* parent = nullptr);
+  explicit central_editor_widget(QWidget* parent = nullptr);
 
-  ~CentralEditorWidget() noexcept override;
+  ~central_editor_widget() noexcept override;
 
-  int add_new_map_tab(const QString& title) noexcept;
+  auto add_new_map_tab(const QString& title) noexcept -> int;
 
   void close_tab(int id) noexcept;
 
@@ -49,14 +53,14 @@ class CentralEditorWidget final : public QWidget {
    */
   void enable_editor_view() noexcept;
 
-  [[nodiscard]] bool in_editor_mode() const noexcept;
+  [[nodiscard]] auto in_editor_mode() const noexcept -> bool;
 
-  [[nodiscard]] std::optional<int> active_tab_id() const noexcept;
+  [[nodiscard]] auto active_tab_id() const noexcept -> std::optional<int>;
 
-  [[nodiscard]] int open_tabs() const noexcept;
+  [[nodiscard]] auto open_tabs() const noexcept -> int;
 
  public slots:
-  void trigger_redraw() noexcept;
+  void handle_trigger_redraw() noexcept;
 
  signals:
   void s_redraw(QPainter& painter);
@@ -67,7 +71,7 @@ class CentralEditorWidget final : public QWidget {
 
  private:
   Ui::CentralWidgetUI* m_ui;
-  TileMapTabWidget* m_mapTabWidget;
+  tilemap_tab_widget* m_mapTabWidget;
   int m_editorViewIndex;
   int m_startupViewIndex;
 
