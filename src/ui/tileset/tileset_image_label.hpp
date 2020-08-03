@@ -14,12 +14,6 @@ class tileset_image_label final : public QLabel {
 
   ~tileset_image_label() noexcept override;
 
-  [[nodiscard]] static auto unique(const QImage& image,
-                                   int tileWidth,
-                                   int tileHeight,
-                                   QWidget* parent = nullptr)
-      -> std::unique_ptr<tileset_image_label>;
-
  protected:
   void paintEvent(QPaintEvent* event) override;
 

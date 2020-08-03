@@ -31,16 +31,6 @@ tileset_image_label::tileset_image_label(const QImage& image,
 
 tileset_image_label::~tileset_image_label() noexcept = default;
 
-auto tileset_image_label::unique(const QImage& image,
-                                 int tileWidth,
-                                 int tileHeight,
-                                 QWidget* parent)
-    -> std::unique_ptr<tileset_image_label>
-{
-  return std::make_unique<tileset_image_label>(
-      image, tileWidth, tileHeight, parent);
-}
-
 void tileset_image_label::paintEvent(QPaintEvent* event)
 {
   QLabel::paintEvent(event);

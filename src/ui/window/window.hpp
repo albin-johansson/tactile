@@ -45,12 +45,6 @@ class window final : public QMainWindow {
   ~window() noexcept override;
 
   /**
-   * @copydoc window(QWidget*)
-   */
-  [[nodiscard]] static auto unique(QWidget* parent = nullptr)
-      -> std::unique_ptr<window>;
-
-  /**
    * @brief Enables the startup view.
    *
    * @since 0.1.0

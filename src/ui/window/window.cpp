@@ -60,11 +60,6 @@ window::~window() noexcept
   delete m_ui;
 }
 
-auto window::unique(QWidget* parent) -> std::unique_ptr<window>
-{
-  return std::make_unique<window>(parent);
-}
-
 void window::handle_undo_state_update(bool canUndo)
 {
   m_ui->actionUndo->setEnabled(canUndo);
