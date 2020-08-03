@@ -12,7 +12,7 @@
 
 class QPainter;
 
-namespace tactile {
+namespace tactile::model {
 
 /**
  * @class core

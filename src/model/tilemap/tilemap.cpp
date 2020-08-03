@@ -4,9 +4,8 @@
 
 #include "algorithm_utils.hpp"
 #include "render_tilemap.hpp"
-#include "tile_id.hpp"
 
-namespace tactile {
+namespace tactile::model {
 namespace {
 
 [[nodiscard]] auto clamp_map_dimension(int dim) noexcept -> int
@@ -203,4 +202,4 @@ auto tilemap::end() const noexcept -> const_iterator
   return m_layers.end();
 }
 
-}  // namespace tactile
+}  // namespace tactile::model

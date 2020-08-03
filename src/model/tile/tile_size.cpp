@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-namespace tactile {
+namespace tactile::model {
 
 void tile_size::reset() noexcept
 {

@@ -18,9 +18,9 @@
 #include <vector>
 
 #include "map_position.hpp"
-#include "tile_id.hpp"
+#include "tactile_types.hpp"
 
-namespace tactile {
+namespace tactile::model {
 
 /**
  * @class tile_layer

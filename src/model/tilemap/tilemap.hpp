@@ -3,14 +3,14 @@
 #include <memory>
 #include <vector>
 
-#include "tile_id.hpp"
+#include "tactile_types.hpp"
 #include "tile_layer.hpp"
 #include "tile_size.hpp"
 #include "type_utils.hpp"
 
 class QPainter;
 
-namespace tactile {
+namespace tactile::model {
 
 /**
  * @class tilemap
@@ -267,4 +267,4 @@ class tilemap final {
   [[nodiscard]] auto has_layer(int layer) const noexcept -> bool;
 };
 
-}  // namespace tactile
+}  // namespace tactile::model

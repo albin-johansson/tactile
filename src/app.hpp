@@ -33,7 +33,7 @@ class app final : public QApplication {
 
  private:
   std::unique_ptr<ui::window> m_window;
-  std::unique_ptr<core> m_core;
+  std::unique_ptr<model::core> m_core;
 
   void init_connections() noexcept;
 

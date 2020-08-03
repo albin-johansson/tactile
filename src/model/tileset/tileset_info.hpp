@@ -4,7 +4,7 @@
 
 class QImage;
 
-namespace tactile {
+namespace tactile::model {
 
 /**
  * The <code>TilesetInfo</code> struct provides information about a tileset.

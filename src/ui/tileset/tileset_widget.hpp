@@ -19,7 +19,8 @@ class TilesetWidget final : public QWidget {
 
   ~TilesetWidget() noexcept override;
 
-  void add_tileset(const TilesetInfo& info, const QString& tabName) noexcept;
+  void add_tileset(const model::TilesetInfo& info,
+                   const QString& tabName) noexcept;
 
   void remove_tileset(int id) noexcept;
 

@@ -2,7 +2,7 @@
 
 #include "type_utils.hpp"
 
-namespace tactile {
+namespace tactile::model {
 
 /**
  * @class tile_size

@@ -4,7 +4,7 @@
 
 class QPainter;
 
-namespace tactile {
+namespace tactile::model {
 
 /**
  * @brief Renders a tilemap.

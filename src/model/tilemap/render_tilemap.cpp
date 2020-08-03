@@ -8,7 +8,7 @@
 #include "tile_size.hpp"
 #include "tilemap.hpp"
 
-namespace tactile {
+namespace tactile::model {
 namespace {
 
 struct render_bounds final {

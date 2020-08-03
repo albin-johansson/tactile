@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tactile {
+namespace tactile::model {
 
 class map_position;
 

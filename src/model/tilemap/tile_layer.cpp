@@ -4,7 +4,7 @@
 
 #include "flood_fill.hpp"
 
-namespace tactile {
+namespace tactile::model {
 
 tile_layer::tile_layer(int nRows, int nCols)
 {

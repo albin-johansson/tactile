@@ -3,12 +3,12 @@
 #include <memory>
 #include <set>
 
-#include "tile_id.hpp"
+#include "tactile_types.hpp"
 #include "type_utils.hpp"
 
 class QImage;
 
-namespace tactile {
+namespace tactile::model {
 
 /**
  * @class tileset
@@ -232,4 +232,4 @@ static_assert(std::is_move_assignable_v<tileset>);
 static_assert(std::is_copy_constructible_v<tileset>);
 static_assert(std::is_copy_assignable_v<tileset>);
 
-}  // namespace tactile
+}  // namespace tactile::model

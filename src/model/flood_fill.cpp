@@ -4,7 +4,7 @@
 
 #include "map_position.hpp"
 
-namespace tactile {
+namespace tactile::model {
 
 void flood_fill(tile_layer& layer,
                 const map_position& origin,

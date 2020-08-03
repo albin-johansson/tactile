@@ -14,14 +14,13 @@ set(TACTILE_SOURCE_FILES
         model/flood_fill.cpp
         model/core.hpp
         model/core.cpp
-        model/tactile_error.hpp
-        model/tactile_error.cpp
+        tactile_error.hpp
+        tactile_error.cpp
 
         model/util/algorithm_utils.hpp
-        model/util/tactile_types.hpp
+        tactile_types.hpp
         model/util/type_utils.hpp
 
-        model/tile/tile_id.hpp
         model/tile/tile_size.hpp
         model/tile/tile_size.cpp
 
@@ -102,7 +101,7 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tile_map_tab_widget.cpp
         ui/editor/tile_map_tab_widget.hpp
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui tactile_fwd.hpp)
+        ui/editor/editor_pane.ui tactile_fwd.hpp tactile_stdinc.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

@@ -5,6 +5,8 @@
 #include "tileset_info.hpp"
 #include "ui_tileset_widget.h"
 
+using tactile::model::TilesetInfo;
+
 namespace tactile::ui {
 
 TilesetWidget::TilesetWidget(QWidget* parent)

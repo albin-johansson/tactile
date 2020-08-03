@@ -1,6 +1,6 @@
 #include "map_position.hpp"
 
-namespace tactile {
+namespace tactile::model {
 namespace {
 
 [[nodiscard]] constexpr auto clamp_component(int comp) noexcept -> int

@@ -6,7 +6,7 @@
 #include "tactile_error.hpp"
 #include "tactile_types.hpp"
 
-namespace tactile {
+namespace tactile::model {
 
 tileset::tileset(const std::shared_ptr<QImage>& image,
                  int tileWidth,

@@ -2,7 +2,7 @@
 
 #include "tileset.hpp"
 
-namespace tactile {
+namespace tactile::model {
 
 auto tileset_manager::unique() -> std::unique_ptr<tileset_manager>
 {

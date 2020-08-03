@@ -7,7 +7,7 @@
 #include "core_fwd.hpp"
 #include "tileset.hpp"
 
-namespace tactile {
+namespace tactile::model {
 
 /**
  * @class tileset_manager

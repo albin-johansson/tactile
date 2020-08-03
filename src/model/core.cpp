@@ -6,7 +6,7 @@
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
 
-namespace tactile {
+namespace tactile::model {
 
 core::core() : m_sheetManager{tileset_manager::unique()}
 {}
