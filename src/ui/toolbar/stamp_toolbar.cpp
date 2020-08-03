@@ -2,7 +2,7 @@
 
 #include "ui_toolbar_stamp.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 StampToolbar::StampToolbar(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::StampToolbarUI{}}
@@ -13,4 +13,4 @@ StampToolbar::~StampToolbar() noexcept
   delete m_ui;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-namespace tactile {
+namespace tactile::ui {
 
 void set_size_policy(QWidget* widget, QSizePolicy::Policy policy) noexcept
 {
@@ -23,4 +23,4 @@ void set_size_policy(QWidget* widget,
   widget->setSizePolicy(policy);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

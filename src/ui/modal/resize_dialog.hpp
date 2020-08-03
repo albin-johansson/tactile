@@ -15,7 +15,7 @@ class QIntValidator;
 class QPushButton;
 class QLineEdit;
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * The <code>ResizeDialog</code> class represents the dialog that is used to
@@ -99,4 +99,4 @@ class ResizeDialog final : public QDialog {
   void validate_input() noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

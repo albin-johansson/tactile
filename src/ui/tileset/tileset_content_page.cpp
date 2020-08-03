@@ -6,7 +6,7 @@
 #include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 TilesetContentPage::TilesetContentPage(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetContentPageUI{}}
@@ -52,4 +52,4 @@ bool TilesetContentPage::empty() const noexcept
   return m_ui->tabWidget->count() == 0;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

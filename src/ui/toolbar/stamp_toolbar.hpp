@@ -8,7 +8,7 @@ class StampToolbarUI;
 
 }
 
-namespace tactile {
+namespace tactile::ui {
 
 class StampToolbar final : public QWidget {
   Q_OBJECT
@@ -22,4 +22,4 @@ class StampToolbar final : public QWidget {
   Ui::StampToolbarUI* m_ui;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

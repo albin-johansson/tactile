@@ -6,7 +6,7 @@
 
 #include "ui_resize_dialog.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 ResizeDialog::ResizeDialog(QWidget* parent)
     : QDialog{parent},
@@ -62,4 +62,4 @@ QValidator::State ResizeDialog::is_valid(const QLineEdit& edit) const noexcept
   return m_validator->validate(txt, unused);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

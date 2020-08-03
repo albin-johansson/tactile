@@ -3,15 +3,16 @@
 #include <QWidget>
 #include <memory>
 
+#include "core_fwd.hpp"
+
 namespace Ui {
 class TilesetWidgetUI;
 }
 
-namespace tactile {
+namespace tactile::ui {
 
 class TilesetContentPage;
 class TilesetEmptyPage;
-struct TilesetInfo;
 
 class TilesetWidget final : public QWidget {
   Q_OBJECT
@@ -36,4 +37,4 @@ class TilesetWidget final : public QWidget {
   int m_contentIndex;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

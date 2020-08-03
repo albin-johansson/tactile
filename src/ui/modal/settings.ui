@@ -1,173 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>SettingsUI</class>
-    <widget class="QDialog" name="SettingsUI">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>675</width>
-                <height>523</height>
-            </rect>
-        </property>
-        <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+  <class>SettingsUI</class>
+  <widget class="QDialog" name="SettingsUI">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>675</width>
+        <height>523</height>
+      </rect>
+    </property>
+    <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+      </sizepolicy>
+    </property>
+    <property name="windowTitle">
+      <string>Dialog</string>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_2">
+      <item row="1" column="1">
+        <widget class="QStackedWidget" name="stackedWidget">
+          <widget class="QWidget" name="page">
+            <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
-            </sizepolicy>
-        </property>
-        <property name="windowTitle">
-            <string>Dialog</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout_2">
-            <item row="1" column="1">
-                <widget class="QStackedWidget" name="stackedWidget">
-                    <widget class="QWidget" name="page">
+              </sizepolicy>
+            </property>
+            <widget class="QWidget" name="gridLayoutWidget">
+              <property name="geometry">
+                <rect>
+                  <x>1</x>
+                  <y>0</y>
+                  <width>391</width>
+                  <height>471</height>
+                </rect>
+              </property>
+              <layout class="QGridLayout" name="gridLayout">
+                <item row="0" column="0">
+                  <layout class="QVBoxLayout" name="verticalLayout">
+                    <item>
+                      <widget class="QGroupBox" name="groupBox">
                         <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                        <widget class="QWidget" name="gridLayoutWidget">
-                            <property name="geometry">
-                                <rect>
-                                    <x>1</x>
-                                    <y>0</y>
-                                    <width>391</width>
-                                    <height>471</height>
-                                </rect>
-                            </property>
-                            <layout class="QGridLayout" name="gridLayout">
-                                <item row="0" column="0">
-                                    <layout class="QVBoxLayout" name="verticalLayout">
-                                        <item>
-                                            <widget class="QGroupBox" name="groupBox">
-                                                <property name="sizePolicy">
-                                                    <sizepolicy hsizetype="Preferred"
-                                                                vsizetype="Minimum">
-                                                        <horstretch>0</horstretch>
-                                                        <verstretch>0</verstretch>
-                                                    </sizepolicy>
-                                                </property>
-                                                <property name="title">
-                                                    <string>Rendering</string>
-                                                </property>
-                                                <widget class="QWidget" name="gridLayoutWidget_2">
-                                                    <property name="geometry">
-                                                        <rect>
-                                                            <x>20</x>
-                                                            <y>70</y>
-                                                            <width>387</width>
-                                                            <height>230</height>
-                                                        </rect>
-                                                    </property>
-                                                    <layout class="QGridLayout" name="gridLayout_3">
-                                                        <item row="0" column="0">
-                                                            <widget class="QCheckBox"
-                                                                    name="checkBox">
-                                                                <property name="sizePolicy">
-                                                                    <sizepolicy
-                                                                            hsizetype="Preferred"
-                                                                            vsizetype="Fixed">
-                                                                        <horstretch>0</horstretch>
-                                                                        <verstretch>0</verstretch>
-                                                                    </sizepolicy>
-                                                                </property>
-                                                                <property name="text">
-                                                                    <string>OpenGL rendering
-                                                                    </string>
-                                                                </property>
-                                                            </widget>
-                                                        </item>
-                                                    </layout>
-                                                </widget>
-                                            </widget>
-                                        </item>
-                                    </layout>
-                                </item>
-                            </layout>
-                        </widget>
-                    </widget>
-                </widget>
-            </item>
-            <item row="1" column="0">
-                <widget class="QTreeWidget" name="treeWidget">
-                    <property name="sizePolicy">
-                        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                          <sizepolicy hsizetype="Preferred"
+                                      vsizetype="Minimum">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <column>
-                        <property name="text">
-                            <string>Settings</string>
+                          </sizepolicy>
                         </property>
-                    </column>
-                    <item>
-                        <property name="text">
-                            <string>Visuals</string>
+                        <property name="title">
+                          <string>Rendering</string>
                         </property>
+                        <widget class="QWidget" name="gridLayoutWidget_2">
+                          <property name="geometry">
+                            <rect>
+                              <x>20</x>
+                              <y>70</y>
+                              <width>387</width>
+                              <height>230</height>
+                            </rect>
+                          </property>
+                          <layout class="QGridLayout" name="gridLayout_3">
+                            <item row="0" column="0">
+                              <widget class="QCheckBox"
+                                      name="checkBox">
+                                <property name="sizePolicy">
+                                  <sizepolicy
+                                      hsizetype="Preferred"
+                                      vsizetype="Fixed">
+                                    <horstretch>0</horstretch>
+                                    <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                </property>
+                                <property name="text">
+                                  <string>OpenGL rendering
+                                  </string>
+                                </property>
+                              </widget>
+                            </item>
+                          </layout>
+                        </widget>
+                      </widget>
                     </item>
-                    <item>
-                        <property name="text">
-                            <string>Interface</string>
-                        </property>
-                    </item>
-                    <item>
-                        <property name="text">
-                            <string>General</string>
-                        </property>
-                    </item>
-                </widget>
-            </item>
-            <item row="2" column="1">
-                <widget class="QDialogButtonBox" name="buttonBox">
-                    <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="standardButtons">
-                        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-                    </property>
-                </widget>
-            </item>
-        </layout>
-    </widget>
-    <resources>
-        <include location="../../tactile.qrc"/>
-    </resources>
-    <connections>
-        <connection>
-            <sender>buttonBox</sender>
-            <signal>accepted()</signal>
-            <receiver>SettingsUI</receiver>
-            <slot>accept()</slot>
-            <hints>
-                <hint type="sourcelabel">
-                    <x>248</x>
-                    <y>254</y>
-                </hint>
-                <hint type="destinationlabel">
-                    <x>157</x>
-                    <y>274</y>
-                </hint>
-            </hints>
-        </connection>
-        <connection>
-            <sender>buttonBox</sender>
-            <signal>rejected()</signal>
-            <receiver>SettingsUI</receiver>
-            <slot>reject()</slot>
-            <hints>
-                <hint type="sourcelabel">
-                    <x>316</x>
-                    <y>260</y>
-                </hint>
-                <hint type="destinationlabel">
-                    <x>286</x>
-                    <y>274</y>
-                </hint>
-            </hints>
-        </connection>
-    </connections>
+                  </layout>
+                </item>
+              </layout>
+            </widget>
+          </widget>
+        </widget>
+      </item>
+      <item row="1" column="0">
+        <widget class="QTreeWidget" name="treeWidget">
+          <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+            </sizepolicy>
+          </property>
+          <column>
+            <property name="text">
+              <string>Settings</string>
+            </property>
+          </column>
+          <item>
+            <property name="text">
+              <string>Visuals</string>
+            </property>
+          </item>
+          <item>
+            <property name="text">
+              <string>Interface</string>
+            </property>
+          </item>
+          <item>
+            <property name="text">
+              <string>General</string>
+            </property>
+          </item>
+        </widget>
+      </item>
+      <item row="2" column="1">
+        <widget class="QDialogButtonBox" name="buttonBox">
+          <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="standardButtons">
+            <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+          </property>
+        </widget>
+      </item>
+    </layout>
+  </widget>
+  <resources>
+    <include location="../../tactile.qrc"/>
+  </resources>
+  <connections>
+    <connection>
+      <sender>buttonBox</sender>
+      <signal>accepted()</signal>
+      <receiver>SettingsUI</receiver>
+      <slot>accept()</slot>
+      <hints>
+        <hint type="sourcelabel">
+          <x>248</x>
+          <y>254</y>
+        </hint>
+        <hint type="destinationlabel">
+          <x>157</x>
+          <y>274</y>
+        </hint>
+      </hints>
+    </connection>
+    <connection>
+      <sender>buttonBox</sender>
+      <signal>rejected()</signal>
+      <receiver>SettingsUI</receiver>
+      <slot>reject()</slot>
+      <hints>
+        <hint type="sourcelabel">
+          <x>316</x>
+          <y>260</y>
+        </hint>
+        <hint type="destinationlabel">
+          <x>286</x>
+          <y>274</y>
+        </hint>
+      </hints>
+    </connection>
+  </connections>
 </ui>

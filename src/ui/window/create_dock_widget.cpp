@@ -6,7 +6,7 @@
 #include "tactile_error.hpp"
 #include "tactile_types.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 auto create_dock_widget(QWidget* widget,
                         czstring name,
@@ -27,4 +27,4 @@ auto create_dock_widget(QWidget* widget,
   return dock;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

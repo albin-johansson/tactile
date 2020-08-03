@@ -8,7 +8,7 @@
 class QDockWidget;
 class QWidget;
 
-namespace tactile {
+namespace tactile::ui {
 
 [[nodiscard]] constexpr auto default_dock_widget_areas() noexcept
     -> QFlags<Qt::DockWidgetArea>
@@ -41,4 +41,4 @@ namespace tactile {
     QFlags<Qt::DockWidgetArea> areas = default_dock_widget_areas())
     -> std::unique_ptr<QDockWidget>;
 
-}  // namespace tactile
+}  // namespace tactile::ui

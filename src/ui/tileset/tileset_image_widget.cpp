@@ -8,7 +8,7 @@
 #include "tactile_error.hpp"
 #include "tileset_image_label.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 TilesetImageWidget::TilesetImageWidget(const QImage& image,
                                        int tileWidth,
@@ -75,4 +75,4 @@ void TilesetImageWidget::mouseReleaseEvent(QMouseEvent* event)
   // TODO compute the selection
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

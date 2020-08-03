@@ -151,7 +151,7 @@ void app::init_connections() noexcept
   });
 
   window_to_this(&ui::window::s_new_tileset, [window, core] {
-    TilesetDialog dialog;
+    ui::TilesetDialog dialog;
     if (dialog.exec()) {
       const auto image = dialog.chosen_image();
       const auto tileWidth = dialog.chosen_width();
@@ -168,7 +168,7 @@ void app::init_connections() noexcept
   });
 
   window_to_this(&ui::window::s_resize_map, [window, core] {
-    ResizeDialog dialog;
+    ui::ResizeDialog dialog;
     if (dialog.exec()) {
       core->set_rows(*dialog.chosen_height());
       core->set_cols(*dialog.chosen_width());

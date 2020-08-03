@@ -5,7 +5,7 @@
 
 #include "stamp_toolbar.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 DynamicToolBarWidget::DynamicToolBarWidget(QWidget* parent) : QWidget{parent}
 {
@@ -28,4 +28,4 @@ DynamicToolBarWidget::~DynamicToolBarWidget() noexcept
   delete m_layout;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

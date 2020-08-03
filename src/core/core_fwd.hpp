@@ -16,4 +16,6 @@ class tileset_manager;
 
 class tactile_core;
 
+struct TilesetInfo;
+
 }  // namespace tactile

@@ -3,7 +3,7 @@
 #include <QLabel>
 #include <memory>
 
-namespace tactile {
+namespace tactile::ui {
 
 class TilesetImageLabel final : public QLabel {
  public:
@@ -34,4 +34,4 @@ class TilesetImageLabel final : public QLabel {
   int m_nCols;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

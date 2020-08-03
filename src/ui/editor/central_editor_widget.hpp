@@ -9,7 +9,7 @@ class CentralWidgetUI;
 
 class QTabWidget;
 
-namespace tactile {
+namespace tactile::ui {
 
 class TileMapTabWidget;
 
@@ -74,4 +74,4 @@ class CentralEditorWidget final : public QWidget {
   void init_connections() noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

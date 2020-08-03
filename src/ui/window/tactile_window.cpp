@@ -395,4 +395,4 @@ auto window::in_editor_mode() const noexcept -> bool
   return m_centralWidget->in_editor_mode();
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

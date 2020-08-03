@@ -8,7 +8,7 @@ class QLabel;
 class QImage;
 class QRubberBand;
 
-namespace tactile {
+namespace tactile::ui {
 
 class TilesetImageWidget final : public QWidget {
   Q_OBJECT
@@ -41,4 +41,4 @@ class TilesetImageWidget final : public QWidget {
   QPoint m_origin;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

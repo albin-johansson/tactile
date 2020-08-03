@@ -4,7 +4,7 @@
 #include <optional>
 #include <unordered_map>
 
-namespace tactile {
+namespace tactile::ui {
 
 class EditorTab;
 
@@ -37,4 +37,4 @@ class TileMapTabWidget final : public QTabWidget {
   [[nodiscard]] EditorTab* get_pane(int index) const noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

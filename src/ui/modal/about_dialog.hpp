@@ -10,7 +10,7 @@ class AboutUI;
 
 }
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * The <code>AboutDialog</code> class represents the "About Tactile" dialog
@@ -21,4 +21,4 @@ namespace tactile {
  */
 TACTILE_BASIC_WIDGET_DECL(AboutDialog, QDialog, Ui::AboutUI)
 
-}  // namespace tactile
+}  // namespace tactile::ui

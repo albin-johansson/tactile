@@ -2,13 +2,9 @@
 
 #include "core_fwd.hpp"
 
-namespace tactile {
-
-namespace ui {
+namespace tactile::ui {
 
 class window;
-
-}
 
 class CentralEditorWidget;
 
@@ -16,6 +12,4 @@ class MouseToolWidget;
 
 class TilesetWidget;
 
-struct TilesetInfo;
-
-}  // namespace tactile
+}  // namespace tactile::ui

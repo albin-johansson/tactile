@@ -7,7 +7,7 @@ class QImage;
 class QLayout;
 class QScrollArea;
 
-namespace tactile {
+namespace tactile::ui {
 
 class TilesetImageWidget;
 
@@ -26,4 +26,4 @@ class TilesetTab final : public QWidget {
   std::unique_ptr<QLayout> m_layout;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

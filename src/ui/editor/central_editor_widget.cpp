@@ -8,7 +8,7 @@
 #include "ui_central_widget.h"
 #include "widget_size_policy.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 CentralEditorWidget::CentralEditorWidget(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::CentralWidgetUI{}}
@@ -92,4 +92,4 @@ int CentralEditorWidget::open_tabs() const noexcept
   return m_mapTabWidget->count();
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

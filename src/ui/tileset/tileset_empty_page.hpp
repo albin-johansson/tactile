@@ -5,7 +5,7 @@ namespace Ui {
 class TilesetEmptyPageUI;
 }
 
-namespace tactile {
+namespace tactile::ui {
 
 class TilesetEmptyPage final : public QWidget {
   Q_OBJECT
@@ -22,4 +22,4 @@ class TilesetEmptyPage final : public QWidget {
   Ui::TilesetEmptyPageUI* m_ui;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

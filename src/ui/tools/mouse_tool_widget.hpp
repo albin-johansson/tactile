@@ -11,7 +11,7 @@ class ToolButtonBarUI;
 
 }
 
-namespace tactile {
+namespace tactile::ui {
 
 class MouseToolWidget final : public QWidget {
   Q_OBJECT
@@ -54,4 +54,4 @@ class MouseToolWidget final : public QWidget {
   void set_tools_disabled(bool disabled) noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

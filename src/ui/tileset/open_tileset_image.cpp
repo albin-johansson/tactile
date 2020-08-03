@@ -4,7 +4,7 @@
 #include <QStandardPaths>
 #include <QTranslator>
 
-namespace tactile {
+namespace tactile::ui {
 
 auto open_tileset_image(QWidget* parent) noexcept -> std::optional<QUrl>
 {
@@ -35,4 +35,4 @@ auto open_tileset_image(QWidget* parent) noexcept -> std::optional<QUrl>
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

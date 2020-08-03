@@ -6,7 +6,7 @@
 
 #include "widget_size_policy.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 EditorTab::EditorTab(int id, QWidget* parent)
     : QWidget{parent},
@@ -88,4 +88,4 @@ void EditorTab::mouseMoveEvent(QMouseEvent* event)
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

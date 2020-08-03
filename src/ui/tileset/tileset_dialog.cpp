@@ -5,7 +5,7 @@
 #include "open_tileset_image.hpp"
 #include "ui_tileset_dialog.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 TilesetDialog::TilesetDialog(QWidget* parent)
     : QDialog{parent},
@@ -98,4 +98,4 @@ QValidator::State TilesetDialog::validate(const QLineEdit& edit) const noexcept
   return m_validator->validate(txt, unused);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

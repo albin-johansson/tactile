@@ -4,7 +4,7 @@
 
 #include "editor_tab.hpp"
 
-namespace tactile {
+namespace tactile::ui {
 
 TileMapTabWidget::TileMapTabWidget(QWidget* parent) : QTabWidget{parent}
 {
@@ -81,4 +81,4 @@ std::optional<int> TileMapTabWidget::tab_id(int index) const noexcept
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

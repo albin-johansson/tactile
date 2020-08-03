@@ -4,7 +4,7 @@
 
 class QPainter;
 
-namespace tactile {
+namespace tactile::ui {
 
 class EditorTab final : public QWidget {
   Q_OBJECT
@@ -39,4 +39,4 @@ class EditorTab final : public QWidget {
   int m_lastMouseY;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

@@ -11,7 +11,7 @@ namespace Ui {
 class TilesetDialogUI;
 }
 
-namespace tactile {
+namespace tactile::ui {
 
 class TilesetDialog final : public QDialog {
  public:
@@ -99,4 +99,4 @@ class TilesetDialog final : public QDialog {
       const QLineEdit& edit) const noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

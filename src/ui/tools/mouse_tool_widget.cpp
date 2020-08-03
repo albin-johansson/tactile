@@ -4,7 +4,7 @@
 
 #include "ui_tool_button_widget.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 MouseToolWidget::MouseToolWidget(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::ToolButtonBarUI{}}
@@ -79,4 +79,4 @@ void MouseToolWidget::set_tools_disabled(bool disabled) noexcept
   m_ui->findSameButton->setDisabled(disabled);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

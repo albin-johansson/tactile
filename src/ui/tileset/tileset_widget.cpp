@@ -5,7 +5,7 @@
 #include "tileset_info.hpp"
 #include "ui_tileset_widget.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 TilesetWidget::TilesetWidget(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetWidgetUI{}}
@@ -58,4 +58,4 @@ void TilesetWidget::remove_tileset(int id) noexcept
   m_contentPage->remove_tileset(id);
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

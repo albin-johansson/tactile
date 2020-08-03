@@ -4,7 +4,7 @@
 
 class QWidget;
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * Sets the size policy of a widget. This method has no effect if the
@@ -32,4 +32,4 @@ void set_size_policy(QWidget* widget,
                      QSizePolicy::Policy horizontalPolicy,
                      QSizePolicy::Policy verticalPolicy) noexcept;
 
-}  // namespace tactile
+}  // namespace tactile::ui

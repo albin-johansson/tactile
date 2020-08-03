@@ -5,7 +5,7 @@
 
 class QWidget;
 
-namespace tactile {
+namespace tactile::ui {
 
 /**
  * Opens a file chooser dialog for selecting a tileset image and returns the
@@ -19,4 +19,4 @@ namespace tactile {
 [[nodiscard]] auto open_tileset_image(QWidget* parent = nullptr) noexcept
     -> std::optional<QUrl>;
 
-}  // namespace tactile
+}  // namespace tactile::ui

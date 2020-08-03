@@ -2,7 +2,7 @@
 
 #include "ui_tileset_empty_page.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 TilesetEmptyPage::TilesetEmptyPage(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetEmptyPageUI{}}
@@ -20,4 +20,4 @@ TilesetEmptyPage::~TilesetEmptyPage() noexcept
   delete m_ui;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

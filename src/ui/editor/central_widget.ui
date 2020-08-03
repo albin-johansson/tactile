@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>CentralWidgetUI</class>
-    <widget class="QWidget" name="CentralWidgetUI">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>727</width>
-                <height>512</height>
-            </rect>
-        </property>
-        <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+  <class>CentralWidgetUI</class>
+  <widget class="QWidget" name="CentralWidgetUI">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>727</width>
+        <height>512</height>
+      </rect>
+    </property>
+    <property name="sizePolicy">
+      <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+      </sizepolicy>
+    </property>
+    <property name="windowTitle">
+      <string>Form</string>
+    </property>
+    <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+        <widget class="QStackedWidget" name="stackedWidget">
+          <property name="currentIndex">
+            <number>1</number>
+          </property>
+          <widget class="QWidget" name="startPage"/>
+          <widget class="QWidget" name="tilemapPage">
+            <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
-            </sizepolicy>
-        </property>
-        <property name="windowTitle">
-            <string>Form</string>
-        </property>
-        <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
-                <widget class="QStackedWidget" name="stackedWidget">
-                    <property name="currentIndex">
-                        <number>1</number>
-                    </property>
-                    <widget class="QWidget" name="startPage"/>
-                    <widget class="QWidget" name="tilemapPage">
-                        <property name="sizePolicy">
-                            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                            </sizepolicy>
-                        </property>
-                        <widget class="QTabWidget" name="tabWidget">
-                            <property name="geometry">
-                                <rect>
-                                    <x>0</x>
-                                    <y>0</y>
-                                    <width>721</width>
-                                    <height>501</height>
-                                </rect>
-                            </property>
-                            <property name="minimumSize">
-                                <size>
-                                    <width>0</width>
-                                    <height>0</height>
-                                </size>
-                            </property>
-                            <property name="currentIndex">
-                                <number>0</number>
-                            </property>
-                            <widget class="QWidget" name="tab">
-                                <attribute name="title">
-                                    <string>Tab 1</string>
-                                </attribute>
-                            </widget>
-                        </widget>
-                    </widget>
-                </widget>
-            </item>
-        </layout>
-    </widget>
-    <resources>
-        <include location="../../tactile.qrc"/>
-    </resources>
-    <connections/>
+              </sizepolicy>
+            </property>
+            <widget class="QTabWidget" name="tabWidget">
+              <property name="geometry">
+                <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>721</width>
+                  <height>501</height>
+                </rect>
+              </property>
+              <property name="minimumSize">
+                <size>
+                  <width>0</width>
+                  <height>0</height>
+                </size>
+              </property>
+              <property name="currentIndex">
+                <number>0</number>
+              </property>
+              <widget class="QWidget" name="tab">
+                <attribute name="title">
+                  <string>Tab 1</string>
+                </attribute>
+              </widget>
+            </widget>
+          </widget>
+        </widget>
+      </item>
+    </layout>
+  </widget>
+  <resources>
+    <include location="../../tactile.qrc"/>
+  </resources>
+  <connections/>
 </ui>

@@ -2,7 +2,7 @@
 
 #include "ui_settings.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog{parent}, m_ui{new Ui::SettingsUI{}}
@@ -15,4 +15,4 @@ SettingsDialog::~SettingsDialog() noexcept
   delete m_ui;
 }
 
-}  // namespace tactile
+}  // namespace tactile::ui

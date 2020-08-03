@@ -4,7 +4,7 @@
 
 class QLayout;
 
-namespace tactile {
+namespace tactile::ui {
 
 class StampToolbar;
 
@@ -28,4 +28,4 @@ class DynamicToolBarWidget final : public QWidget {
   StampToolbar* m_stampToolbar;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

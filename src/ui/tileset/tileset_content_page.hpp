@@ -3,16 +3,16 @@
 #include <QWidget>
 #include <memory>
 
+#include "core_fwd.hpp"
 #include "tactile_types.hpp"
 
 namespace Ui {
 class TilesetContentPageUI;
 }
 
-namespace tactile {
+namespace tactile::ui {
 
 class TilesetTab;
-struct TilesetInfo;
 
 class TilesetContentPage final : public QWidget {
   Q_OBJECT
@@ -38,4 +38,4 @@ class TilesetContentPage final : public QWidget {
   //  [[nodiscard]] bool contains_tileset(int id) const noexcept;
 };
 
-}  // namespace tactile
+}  // namespace tactile::ui

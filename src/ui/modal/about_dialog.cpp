@@ -2,8 +2,8 @@
 
 #include "ui_about.h"
 
-namespace tactile {
+namespace tactile::ui {
 
 TACTILE_BASIC_WIDGET_DEF(AboutDialog, QDialog, Ui::AboutUI)
 
-}  // namespace tactile
+}  // namespace tactile::ui
