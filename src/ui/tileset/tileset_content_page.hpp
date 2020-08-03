@@ -28,7 +28,7 @@ class tileset_content_page final : public QWidget {
   [[nodiscard]] auto empty() const noexcept -> bool;
 
  signals:
-  void request_add_tileset(); // FIXME seemingly unused
+  void request_add_tileset();  // FIXME seemingly unused
 
  private:
   owner<Ui::TilesetContentPageUI*> m_ui;

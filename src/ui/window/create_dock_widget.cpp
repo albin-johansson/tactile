@@ -10,8 +10,7 @@ namespace tactile::ui {
 auto create_dock_widget(QWidget* widget,
                         czstring name,
                         const QMargins& margins,
-                        QFlags<Qt::DockWidgetArea> areas)
-    -> owner<QDockWidget*>
+                        QFlags<Qt::DockWidgetArea> areas) -> owner<QDockWidget*>
 {
   if (!widget || !name) {
     throw tactile_error{"Failed to create dock widget!"};
