@@ -15,7 +15,7 @@ class QPainter;
 namespace tactile {
 
 /**
- * @class tactile_core
+ * @class core
  *
  * @brief Represents the main interface for the core model of the application.
  *
@@ -26,9 +26,9 @@ namespace tactile {
  *
  * @since 0.1.0
  *
- * @headerfile tactile_core.hpp
+ * @headerfile core.hpp
  */
-class tactile_core final : public QObject {
+class core final : public QObject {
   Q_OBJECT
 
  public:
@@ -40,12 +40,12 @@ class tactile_core final : public QObject {
    *
    * @since 0.1.0
    */
-  tactile_core();
+  core();
 
   /**
-   * @copydoc tactile_core()
+   * @copydoc core()
    */
-  [[nodiscard]] static auto unique() -> std::unique_ptr<tactile_core>;
+  [[nodiscard]] static auto unique() -> std::unique_ptr<core>;
 
   void open_map(czstring fileName);  // TODO support TMX
 

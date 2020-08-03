@@ -12,8 +12,8 @@ set(TACTILE_SOURCE_FILES
         model/core_fwd.hpp
         model/flood_fill.hpp
         model/flood_fill.cpp
-        model/tactile_core.hpp
-        model/tactile_core.cpp
+        model/core.hpp
+        model/core.cpp
         model/tactile_error.hpp
         model/tactile_error.cpp
 

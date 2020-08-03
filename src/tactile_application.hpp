@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <memory>
 
-#include "tactile_core.hpp"
+#include "core.hpp"
 #include "tactile_fwd.hpp"
 #include "tactile_types.hpp"
 #include "tactile_window.hpp"
@@ -33,7 +33,7 @@ class app final : public QApplication {
 
  private:
   std::unique_ptr<ui::window> m_window;
-  std::unique_ptr<tactile_core> m_core;
+  std::unique_ptr<core> m_core;
 
   void init_connections() noexcept;
 

@@ -7,9 +7,9 @@
 #include <QStyleFactory>
 #include <QSurfaceFormat>
 
+#include "core.hpp"
 #include "resize_dialog.hpp"
 #include "settings_utils.hpp"
-#include "tactile_core.hpp"
 #include "tactile_window.hpp"
 #include "tileset_dialog.hpp"
 #include "tileset_info.hpp"
@@ -60,7 +60,7 @@ app::app(int argc, char** argv) : QApplication{argc, argv}
   validate_settings();
 
   m_window = ui::window::unique();
-  m_core = tactile_core::unique();
+  m_core = core::unique();
 
   init_connections();
   load_style_sheet(":/resources/tactile_light.qss");
@@ -90,33 +90,30 @@ void app::load_style_sheet(czstring styleSheet)
 
 void app::init_connections() noexcept
 {
-  using core_t = tactile_core;
-
   auto* window = m_window.get();
   auto* core = m_core.get();
 
-  connect(core, &core_t::s_updated, window, &ui::window::handle_trigger_redraw);
+  connect(core, &core::s_updated, window, &ui::window::handle_trigger_redraw);
 
-  window_to_core(&ui::window::s_added_row, &core_t::handle_add_row);
-  window_to_core(&ui::window::s_added_row, &core_t::handle_add_row);
-  window_to_core(&ui::window::s_added_col, &core_t::handle_add_col);
-  window_to_core(&ui::window::s_removed_row, &core_t::handle_remove_row);
-  window_to_core(&ui::window::s_removed_col, &core_t::handle_remove_col);
+  window_to_core(&ui::window::s_added_row, &core::handle_add_row);
+  window_to_core(&ui::window::s_added_row, &core::handle_add_row);
+  window_to_core(&ui::window::s_added_col, &core::handle_add_col);
+  window_to_core(&ui::window::s_removed_row, &core::handle_remove_row);
+  window_to_core(&ui::window::s_removed_col, &core::handle_remove_col);
 
   window_to_core(&ui::window::s_new_map,
                  [core](int id) noexcept { core->handle_new_map(id); });
 
-  window_to_core(&ui::window::s_close_map, &core_t::handle_close_map);
-  window_to_core(&ui::window::s_select_map, &core_t::select_map);
+  window_to_core(&ui::window::s_close_map, &core::handle_close_map);
+  window_to_core(&ui::window::s_select_map, &core::select_map);
 
-  window_to_core(&ui::window::s_redraw, &core_t::handle_draw);
+  window_to_core(&ui::window::s_redraw, &core::handle_draw);
 
   window_to_core(&ui::window::s_increase_tile_size,
-                 &core_t::handle_increase_tile_size);
+                 &core::handle_increase_tile_size);
   window_to_core(&ui::window::s_decrease_tile_size,
-                 &core_t::handle_decrease_tile_size);
-  window_to_core(&ui::window::s_reset_tile_size,
-                 &core_t::handle_reset_tile_size);
+                 &core::handle_decrease_tile_size);
+  window_to_core(&ui::window::s_reset_tile_size, &core::handle_reset_tile_size);
 
   window_to_core(&ui::window::s_pan_up, [window, core] {
     if (const auto tileSize = core->tile_size(); tileSize) {
