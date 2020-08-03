@@ -138,7 +138,7 @@ void window::closeEvent(QCloseEvent* event)
 void window::init_connections() noexcept
 {
   connect(m_centralWidget,
-          &central_editor_widget::s_removed_tab,
+          &central_editor_widget::request_remove_tab,
           this,
           [this](int id) noexcept {
             emit request_close_map(id);
@@ -362,9 +362,10 @@ void window::init_connections() noexcept
 
   {
     using CEW = central_editor_widget;
-    connect(m_centralWidget, &CEW::s_redraw, this, &W::request_redraw);
+    connect(m_centralWidget, &CEW::request_redraw, this, &W::request_redraw);
     connect(
-        m_centralWidget, &CEW::s_selected_tab, this, &W::request_select_map);
+        m_centralWidget,
+            &CEW::request_select_tab, this, &W::request_select_map);
   }
 
   connect(m_tilesetWidget,

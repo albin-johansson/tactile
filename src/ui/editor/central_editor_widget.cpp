@@ -15,7 +15,7 @@ central_editor_widget::central_editor_widget(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  m_mapTabWidget = new tilemap_tab_widget{};
+  m_mapTabWidget = new tilemap_tab_widget{this};
 
   m_startupViewIndex = m_ui->stackedWidget->addWidget(new startup_widget{});
   m_editorViewIndex = m_ui->stackedWidget->addWidget(m_mapTabWidget);
@@ -31,18 +31,28 @@ central_editor_widget::~central_editor_widget() noexcept
 
 void central_editor_widget::init_connections() noexcept
 {
-  using TMTW = tilemap_tab_widget;
-  using CEW = central_editor_widget;
-  connect(m_mapTabWidget, &TMTW::s_redraw, this, &CEW::s_redraw);
-  connect(m_mapTabWidget, &TMTW::s_remove_tab, this, &CEW::s_removed_tab);
-  connect(m_mapTabWidget, &TMTW::currentChanged, this, [this](int index) {
-    if (const auto id = m_mapTabWidget->tab_id(index); id) {
-      emit s_selected_tab(*id);
-    }
-  });
+  connect(m_mapTabWidget,
+          &tilemap_tab_widget::s_redraw,
+          this,
+          &central_editor_widget::request_redraw);
+
+  connect(m_mapTabWidget,
+          &tilemap_tab_widget::s_remove_tab,
+          this,
+          &central_editor_widget::request_remove_tab);
+
+  connect(m_mapTabWidget,
+          &tilemap_tab_widget::currentChanged,
+          this,
+          [this](int index) {
+            if (const auto id = m_mapTabWidget->tab_id(index); id) {
+              emit request_select_tab(*id);
+            }
+          });
 }
 
-int central_editor_widget::add_new_map_tab(const QString& title) noexcept
+auto central_editor_widget::add_new_map_tab(const QString& title) noexcept
+    -> int
 {
   return m_mapTabWidget->add_tile_map_tab(title);
 }
@@ -78,17 +88,17 @@ void central_editor_widget::enable_editor_view() noexcept
   m_ui->stackedWidget->setCurrentIndex(m_editorViewIndex);
 }
 
-bool central_editor_widget::in_editor_mode() const noexcept
+auto central_editor_widget::in_editor_mode() const noexcept -> bool
 {
   return m_ui->stackedWidget->currentIndex() == m_editorViewIndex;
 }
 
-std::optional<int> central_editor_widget::active_tab_id() const noexcept
+auto central_editor_widget::active_tab_id() const noexcept -> std::optional<int>
 {
   return m_mapTabWidget->active_tab_id();
 }
 
-int central_editor_widget::open_tabs() const noexcept
+auto central_editor_widget::open_tabs() const noexcept -> int
 {
   return m_mapTabWidget->count();
 }
