@@ -4,7 +4,6 @@
 #include <QLayout>
 
 #include "tactile_error.hpp"
-#include "tactile_types.hpp"
 
 namespace tactile::ui {
 
@@ -12,13 +11,13 @@ auto create_dock_widget(QWidget* widget,
                         czstring name,
                         const QMargins& margins,
                         QFlags<Qt::DockWidgetArea> areas)
-    -> std::unique_ptr<QDockWidget>
+    -> owner<QDockWidget*>
 {
   if (!widget || !name) {
     throw tactile_error{"Failed to create dock widget!"};
   }
 
-  auto dock = std::make_unique<QDockWidget>();
+  auto dock = new QDockWidget{};
   dock->setObjectName(name);
   dock->setVisible(false);
   dock->setAllowedAreas(areas);

@@ -26,9 +26,9 @@ app::app(int argc, char** argv) : QApplication{argc, argv}
 {
   setup_app();
 
-  m_window = window::unique();
-  m_core = core::unique();
-  m_commands = std::make_unique<command_stack>();
+  m_window = std::make_unique<window>();
+  m_core = std::make_unique<core>();
+  m_commands = new command_stack{this};
 
   app_connections{*this};
   set_style_sheet(*this, ":/resources/tactile_light.qss");

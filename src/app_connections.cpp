@@ -50,12 +50,12 @@ app_connections::app_connections(app& app)
 
 void app_connections::init_command_connections(app& app) noexcept
 {
-  connect(app.m_commands.get(),
+  connect(app.m_commands,
           &QUndoStack::canUndoChanged,
           m_window,
           &window::handle_undo_state_update);
 
-  connect(app.m_commands.get(),
+  connect(app.m_commands,
           &QUndoStack::canRedoChanged,
           m_window,
           &window::handle_redo_state_update);

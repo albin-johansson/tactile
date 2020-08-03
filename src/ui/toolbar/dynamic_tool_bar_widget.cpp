@@ -22,8 +22,6 @@ dynamic_tool_bar_widget::dynamic_tool_bar_widget(QWidget* parent)
   m_layout->addWidget(stacked);
 
   setLayout(m_layout);
-
-  dumpObjectTree();
 }
 
 }  // namespace tactile::ui

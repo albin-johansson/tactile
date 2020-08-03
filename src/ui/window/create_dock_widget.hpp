@@ -39,6 +39,6 @@ namespace tactile::ui {
     czstring name,
     const QMargins& margins = {},
     QFlags<Qt::DockWidgetArea> areas = default_dock_widget_areas())
-    -> std::unique_ptr<QDockWidget>;
+    -> owner<QDockWidget*>;
 
 }  // namespace tactile::ui

@@ -147,6 +147,7 @@ class window final : public QMainWindow {
 
  public slots:
   void handle_undo_state_update(bool canUndo);
+
   void handle_redo_state_update(bool canUndo);
 
   void handle_add_tileset(const model::tileset_info& info,
@@ -191,15 +192,13 @@ class window final : public QMainWindow {
   void closeEvent(QCloseEvent* event) override;
 
  private:
-  owner<Ui::MainWindow*> m_ui;
-
-  central_editor_widget* m_centralWidget;
-  mouse_tool_widget* m_mouseToolWidget;
-  tileset_widget* m_tilesetWidget;
-
-  std::unique_ptr<QDockWidget> m_mouseToolDock;
-  std::unique_ptr<QDockWidget> m_tilesetDock;
-  std::unique_ptr<QActionGroup> m_mouseToolGroup;
+  owner<Ui::MainWindow*> m_ui{};
+  central_editor_widget* m_centralWidget{};
+  mouse_tool_widget* m_mouseToolWidget{};
+  tileset_widget* m_tilesetWidget{};
+  QDockWidget* m_mouseToolDock{};
+  QDockWidget* m_tilesetDock{};
+  QActionGroup* m_mouseToolGroup{};
 
   /**
    * @brief Initializes all of the connections related to the internal

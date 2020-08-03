@@ -15,13 +15,15 @@ mouse_tool_widget::mouse_tool_widget(QWidget* parent)
     connect(sender, &QPushButton::pressed, this, handler);
   };
 
-  on_pressed(m_ui->stampButton, &mouse_tool_widget::s_stamp_enabled);
-  on_pressed(m_ui->bucketButton, &mouse_tool_widget::s_bucket_enabled);
-  on_pressed(m_ui->eraserButton, &mouse_tool_widget::s_eraser_enabled);
-  on_pressed(m_ui->rectangleButton, &mouse_tool_widget::s_rectangle_enabled);
-  on_pressed(m_ui->findSameButton, &mouse_tool_widget::s_find_same_enabled);
+  on_pressed(m_ui->stampButton, &mouse_tool_widget::request_enable_stamp);
+  on_pressed(m_ui->bucketButton, &mouse_tool_widget::request_enable_bucket);
+  on_pressed(m_ui->eraserButton, &mouse_tool_widget::request_enable_eraser);
+  on_pressed(m_ui->rectangleButton,
+             &mouse_tool_widget::request_enable_rectangle);
+  on_pressed(m_ui->findSameButton,
+             &mouse_tool_widget::request_enable_find_same);
 
-  m_group = std::make_unique<QButtonGroup>();
+  m_group = new QButtonGroup{this};
   m_group->setExclusive(true);
   m_group->addButton(m_ui->stampButton);
   m_group->addButton(m_ui->bucketButton);

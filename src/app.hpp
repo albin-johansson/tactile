@@ -38,7 +38,7 @@ class app final : public QApplication {
  private:
   std::unique_ptr<ui::window> m_window;
   std::unique_ptr<model::core> m_core;
-  std::unique_ptr<command_stack> m_commands;  // TODO one stack per map
+  command_stack* m_commands{};  // TODO one stack per map
 
   [[nodiscard]] auto window_ptr() noexcept -> ui::window*
   {

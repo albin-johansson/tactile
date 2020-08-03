@@ -28,15 +28,15 @@ class mouse_tool_widget final : public QWidget {
   void disable_tools() noexcept;
 
  signals:
-  void s_stamp_enabled();
+  void request_enable_stamp();
 
-  void s_bucket_enabled();
+  void request_enable_bucket();
 
-  void s_eraser_enabled();
+  void request_enable_eraser();
 
-  void s_rectangle_enabled();
+  void request_enable_rectangle();
 
-  void s_find_same_enabled();
+  void request_enable_find_same();
 
  public slots:
   void handle_enable_stamp() noexcept;
@@ -50,8 +50,8 @@ class mouse_tool_widget final : public QWidget {
   void handle_enable_find_same() noexcept;
 
  private:
-  owner<Ui::ToolButtonBarUI*> m_ui;
-  std::unique_ptr<QButtonGroup> m_group;
+  owner<Ui::ToolButtonBarUI*> m_ui{};
+  QButtonGroup* m_group{};
 
   void set_tools_disabled(bool disabled) noexcept;
 };

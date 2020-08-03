@@ -28,23 +28,27 @@ window::window(QWidget* parent)
   // TODO add mini-map widget
 
   m_centralWidget = new central_editor_widget{};
+
+  // These are claimed by the dock widgets
   m_mouseToolWidget = new mouse_tool_widget{};
   m_tilesetWidget = new tileset_widget{};
 
   setCentralWidget(m_centralWidget);  // claims ownership of central widget
 
-  //  centralWidget()->layout()->setContentsMargins(0, 2, 0, 0);
-
   m_mouseToolDock = create_dock_widget(m_mouseToolWidget, "mouseToolDock");
-  set_size_policy(
-      m_mouseToolDock.get(), QSizePolicy::Minimum, QSizePolicy::Expanding);
-  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock.get());
-
   m_tilesetDock = create_dock_widget(m_tilesetWidget, "tilesetDock");
+
+  m_mouseToolDock->setParent(this);
+  m_tilesetDock->setParent(this);
+
   m_tilesetDock->setWindowTitle("Tilesets");
 
-  set_size_policy(m_tilesetDock.get(), QSizePolicy::Expanding);
-  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock.get());
+  set_size_policy(
+      m_mouseToolDock, QSizePolicy::Minimum, QSizePolicy::Expanding);
+  set_size_policy(m_tilesetDock, QSizePolicy::Expanding);
+
+  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
+  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
 
   init_connections();
   init_layout();
@@ -304,7 +308,7 @@ void window::init_connections() noexcept
   on_triggered(m_ui->actionResetLayout, [this] { reset_dock_layout(); });
 
   {
-    m_mouseToolGroup = std::make_unique<QActionGroup>(this);
+    m_mouseToolGroup = new QActionGroup{this};
     m_mouseToolGroup->setExclusive(true);
     m_mouseToolGroup->addAction(m_ui->actionStampTool);
     m_mouseToolGroup->addAction(m_ui->actionBucketTool);
@@ -314,23 +318,23 @@ void window::init_connections() noexcept
 
     using MTW = mouse_tool_widget;
 
-    connect(m_mouseToolWidget, &MTW::s_stamp_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::request_enable_stamp, this, [this] {
       m_ui->actionStampTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::s_bucket_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::request_enable_bucket, this, [this] {
       m_ui->actionBucketTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::s_eraser_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::request_enable_eraser, this, [this] {
       m_ui->actionEraserTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::s_rectangle_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::request_enable_rectangle, this, [this] {
       m_ui->actionRectangleTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::s_find_same_enabled, this, [this] {
+    connect(m_mouseToolWidget, &MTW::request_enable_find_same, this, [this] {
       m_ui->actionFindSameTool->setChecked(true);
     });
 
@@ -350,23 +354,25 @@ void window::init_connections() noexcept
                  [this] { m_mouseToolWidget->handle_enable_find_same(); });
   }
 
-  connect(m_mouseToolDock.get(),
+  connect(m_mouseToolDock,
           &QDockWidget::visibilityChanged,
           m_ui->actionMouseTools,
           &QAction::setChecked);
 
-  connect(m_tilesetDock.get(),
+  connect(m_tilesetDock,
           &QDockWidget::visibilityChanged,
           m_ui->actionTilesets,
           &QAction::setChecked);
 
-  {
-    using CEW = central_editor_widget;
-    connect(m_centralWidget, &CEW::request_redraw, this, &W::request_redraw);
-    connect(
-        m_centralWidget,
-            &CEW::request_select_tab, this, &W::request_select_map);
-  }
+  connect(m_centralWidget,
+          &central_editor_widget::request_redraw,
+          this,
+          &W::request_redraw);
+
+  connect(m_centralWidget,
+          &central_editor_widget::request_select_tab,
+          this,
+          &W::request_select_map);
 
   connect(m_tilesetWidget,
           &tileset_widget::request_new_tileset,
@@ -392,13 +398,13 @@ void window::init_layout() noexcept
 
 void window::reset_dock_layout() noexcept
 {
-  removeDockWidget(m_mouseToolDock.get());
-  removeDockWidget(m_tilesetDock.get());
+  removeDockWidget(m_mouseToolDock);
+  removeDockWidget(m_tilesetDock);
 
-  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock.get());
+  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
   m_mouseToolDock->show();
 
-  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock.get());
+  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
   m_tilesetDock->show();
 }
 
