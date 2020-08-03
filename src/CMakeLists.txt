@@ -9,36 +9,36 @@ set(TACTILE_SOURCE_FILES
         settings_utils.hpp
         settings_utils.cpp
 
-        core/core_fwd.hpp
-        core/flood_fill.hpp
-        core/flood_fill.cpp
-        core/tactile_core.hpp
-        core/tactile_core.cpp
-        core/tactile_error.hpp
-        core/tactile_error.cpp
+        model/core_fwd.hpp
+        model/flood_fill.hpp
+        model/flood_fill.cpp
+        model/tactile_core.hpp
+        model/tactile_core.cpp
+        model/tactile_error.hpp
+        model/tactile_error.cpp
 
-        core/util/algorithm_utils.hpp
-        core/util/tactile_types.hpp
-        core/util/type_utils.hpp
+        model/util/algorithm_utils.hpp
+        model/util/tactile_types.hpp
+        model/util/type_utils.hpp
 
-        core/tile/tile_id.hpp
-        core/tile/tile_size.hpp
-        core/tile/tile_size.cpp
+        model/tile/tile_id.hpp
+        model/tile/tile_size.hpp
+        model/tile/tile_size.cpp
 
-        core/tileset/tileset.cpp
-        core/tileset/tileset.hpp
-        core/tileset/tileset_manager.cpp
-        core/tileset/tileset_manager.hpp
-        core/tileset/tileset_info.hpp
+        model/tileset/tileset.cpp
+        model/tileset/tileset.hpp
+        model/tileset/tileset_manager.cpp
+        model/tileset/tileset_manager.hpp
+        model/tileset/tileset_info.hpp
 
-        core/tilemap/tilemap.hpp
-        core/tilemap/tilemap.cpp
-        core/tilemap/tile_layer.cpp
-        core/tilemap/tile_layer.hpp
-        core/tilemap/map_position.cpp
-        core/tilemap/map_position.hpp
-        core/tilemap/render_tilemap.cpp
-        core/tilemap/render_tilemap.hpp
+        model/tilemap/tilemap.hpp
+        model/tilemap/tilemap.cpp
+        model/tilemap/tile_layer.cpp
+        model/tilemap/tile_layer.hpp
+        model/tilemap/map_position.cpp
+        model/tilemap/map_position.hpp
+        model/tilemap/render_tilemap.cpp
+        model/tilemap/render_tilemap.hpp
 
         ui/startup_widget.cpp
         ui/startup_widget.hpp
@@ -108,11 +108,11 @@ add_library(libTactile ${TACTILE_SOURCE_FILES})
 
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
-        PUBLIC core
-        PUBLIC core/util
-        PUBLIC core/tile
-        PUBLIC core/tilemap
-        PUBLIC core/tileset
+        PUBLIC model
+        PUBLIC model/util
+        PUBLIC model/tile
+        PUBLIC model/tilemap
+        PUBLIC model/tileset
         PUBLIC ui
         PUBLIC ui/toolbar
         PUBLIC ui/editor
