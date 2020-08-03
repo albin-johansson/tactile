@@ -70,11 +70,15 @@ class window final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void s_redraw(QPainter& painter);
+  void request_redraw(QPainter& painter);
 
-  void s_new_map(int id);
+  void request_new_map(int id);
 
-  void s_close_map(int id);
+  void request_close_map(int id);
+
+  void request_undo();
+
+  void request_redo();
 
   /**
    * @brief A signal that is emitted when the user wants to add a row to the
@@ -82,7 +86,7 @@ class window final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void s_added_row();
+  void request_add_row();
 
   /**
    * @brief A signal that is emitted when the user wants to add a column to
@@ -90,7 +94,7 @@ class window final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void s_added_col();
+  void request_add_col();
 
   /**
    * @brief A signal that is emitted when the user wants to remove a row from
@@ -98,7 +102,7 @@ class window final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void s_removed_row();
+  void request_remove_row();
 
   /**
    * @brief A signal that is emitted when the user wants to remove a column
@@ -106,7 +110,7 @@ class window final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void s_removed_col();
+  void request_remove_col();
 
   /**
    * @brief A signal that is emitted when the user wants to center the camera
@@ -114,34 +118,37 @@ class window final : public QMainWindow {
    *
    * @since 0.1.0
    */
-  void s_center_camera();
+  void request_center_camera();
 
   /**
    * @brief A signal that is emitted when the user wants to add a tileset.
    *
    * @since 0.1.0
    */
-  void s_new_tileset();
+  void request_new_tileset();
 
-  void s_resize_map();
+  void request_resize_map();
 
-  void s_increase_tile_size();
+  void request_increase_tile_size();
 
-  void s_decrease_tile_size();
+  void request_decrease_tile_size();
 
-  void s_reset_tile_size();
+  void request_reset_tile_size();
 
-  void s_pan_right();
+  void request_pan_right();
 
-  void s_pan_down();
+  void request_pan_down();
 
-  void s_pan_left();
+  void request_pan_left();
 
-  void s_pan_up();
+  void request_pan_up();
 
-  void s_select_map(int id);
+  void request_select_map(int id);
 
  public slots:
+  void handle_undo_state_update(bool canUndo);
+  void handle_redo_state_update(bool canUndo);
+
   void handle_add_tileset(const model::tileset_info& info,
                           const QString& tabName) noexcept;
 
@@ -172,11 +179,11 @@ class window final : public QMainWindow {
   void handle_center_camera(int mapWidth, int mapHeight);
 
   /**
-   * @brief Triggers a s_redraw of the editor pane.
+   * @brief Triggers a redraw of the editor pane.
    *
    * @since 0.1.0
    */
-  void handle_trigger_redraw();
+  void handle_draw();
 
   void handle_move_camera(int dx, int dy);
 

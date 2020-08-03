@@ -1,4 +1,4 @@
-#include "tactile_window.hpp"
+#include "window.hpp"
 
 #include <QApplication>
 #include <QFile>
@@ -61,6 +61,16 @@ auto window::unique(QWidget* parent) -> std::unique_ptr<window>
   return std::make_unique<window>(parent);
 }
 
+void window::handle_undo_state_update(bool canUndo)
+{
+  m_ui->actionUndo->setEnabled(canUndo);
+}
+
+void window::handle_redo_state_update(bool canUndo)
+{
+  m_ui->actionRedo->setEnabled(canUndo);
+}
+
 // TODO these delegations can be replaced with signals
 
 void window::handle_add_tileset(const model::tileset_info& info,
@@ -102,16 +112,16 @@ void window::handle_display_settings_dialog() noexcept
 void window::handle_center_camera(int mapWidth, int mapHeight)
 {
   m_centralWidget->center_viewport(mapWidth, mapHeight);
-  handle_trigger_redraw();
+  handle_draw();
 }
 
 void window::handle_move_camera(int dx, int dy)
 {
   m_centralWidget->move_viewport(dx, dy);
-  handle_trigger_redraw();
+  handle_draw();
 }
 
-void window::handle_trigger_redraw()
+void window::handle_draw()
 {
   m_centralWidget->handle_trigger_redraw();
 }
@@ -131,7 +141,7 @@ void window::init_connections() noexcept
           &central_editor_widget::s_removed_tab,
           this,
           [this](int id) noexcept {
-            emit s_close_map(id);
+            emit request_close_map(id);
 
             // FIXME borderline hack, the tab isn't actually removed yet so 1
             //  is the same as checking if there are not open tabs.
@@ -145,12 +155,12 @@ void window::init_connections() noexcept
   on_triggered(m_ui->actionNewMap, [this]() noexcept {
     const auto id = m_centralWidget->add_new_map_tab("map");
 
-    emit s_new_map(id);
+    emit request_new_map(id);
 
     if (!in_editor_mode()) {
       enable_editor_view();
       show_all_docks();  // TODO just reopen docks that were visible
-      emit s_center_camera();
+      emit request_center_camera();
     }
 
     // TODO...
@@ -163,7 +173,7 @@ void window::init_connections() noexcept
       const auto id = m_centralWidget->active_tab_id();
       if (id) {
         m_centralWidget->close_tab(*id);
-        emit s_close_map(*id);
+        emit request_close_map(*id);
 
         if (m_centralWidget->open_tabs() == 0) {
           enable_startup_view();
@@ -179,32 +189,44 @@ void window::init_connections() noexcept
   on_triggered(m_ui->actionAboutTactile, &W::handle_display_about_dialog);
   on_triggered(m_ui->actionSettings, &W::handle_display_settings_dialog);
 
+  on_triggered(m_ui->actionUndo, [this] {
+    if (in_editor_mode()) {
+      emit request_undo();
+    }
+  });
+
+  on_triggered(m_ui->actionRedo, [this] {
+    if (in_editor_mode()) {
+      emit request_redo();
+    }
+  });
+
   // TODO look into making listeners of signals check if window is in editor
   //  mode?
 
-  on_triggered(m_ui->actionAddTileset, &W::s_new_tileset);
+  on_triggered(m_ui->actionAddTileset, &W::request_new_tileset);
 
   on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
-      emit s_added_row();
+      emit request_add_row();
     }
   });
 
   on_triggered(m_ui->actionAddColumn, [this]() noexcept {
     if (in_editor_mode()) {
-      emit s_added_col();
+      emit request_add_col();
     }
   });
 
   on_triggered(m_ui->actionRemoveRow, [this]() noexcept {
     if (in_editor_mode()) {
-      emit s_removed_row();
+      emit request_remove_row();
     }
   });
 
   on_triggered(m_ui->actionRemoveColumn, [this]() noexcept {
     if (in_editor_mode()) {
-      emit s_removed_col();
+      emit request_remove_col();
     }
   });
 
@@ -213,61 +235,61 @@ void window::init_connections() noexcept
       QSettings settings;
       const auto prev = settings.value("visuals-grid").toBool();
       settings.setValue("visuals-grid", !prev);
-      handle_trigger_redraw();
+      handle_draw();
     }
   });
 
   on_triggered(m_ui->actionZoomIn, [this] {
     if (in_editor_mode()) {
-      emit s_increase_tile_size();
+      emit request_increase_tile_size();
     }
   });
 
   on_triggered(m_ui->actionZoomOut, [this] {
     if (in_editor_mode()) {
-      emit s_decrease_tile_size();
+      emit request_decrease_tile_size();
     }
   });
 
   on_triggered(m_ui->actionResetZoom, [this] {
     if (in_editor_mode()) {
-      emit s_reset_tile_size();
+      emit request_reset_tile_size();
     }
   });
 
   on_triggered(m_ui->actionPanUp, [this] {
     if (in_editor_mode()) {
-      emit s_pan_up();
+      emit request_pan_up();
     }
   });
 
   on_triggered(m_ui->actionPanDown, [this] {
     if (in_editor_mode()) {
-      emit s_pan_down();
+      emit request_pan_down();
     }
   });
 
   on_triggered(m_ui->actionPanRight, [this] {
     if (in_editor_mode()) {
-      emit s_pan_right();
+      emit request_pan_right();
     }
   });
 
   on_triggered(m_ui->actionPanLeft, [this] {
     if (in_editor_mode()) {
-      emit s_pan_left();
+      emit request_pan_left();
     }
   });
 
   on_triggered(m_ui->actionCenterCamera, [this] {
     if (in_editor_mode()) {
-      emit s_center_camera();
+      emit request_center_camera();
     }
   });
 
   on_triggered(m_ui->actionResizeMap, [this] {
     if (in_editor_mode()) {
-      emit s_resize_map();
+      emit request_resize_map();
     }
   });
 
@@ -340,14 +362,15 @@ void window::init_connections() noexcept
 
   {
     using CEW = central_editor_widget;
-    connect(m_centralWidget, &CEW::s_redraw, this, &W::s_redraw);
-    connect(m_centralWidget, &CEW::s_selected_tab, this, &W::s_select_map);
+    connect(m_centralWidget, &CEW::s_redraw, this, &W::request_redraw);
+    connect(
+        m_centralWidget, &CEW::s_selected_tab, this, &W::request_select_map);
   }
 
   connect(m_tilesetWidget,
           &tileset_widget::s_requested_tileset,
           this,
-          &W::s_new_tileset);
+          &W::request_new_tileset);
 }
 
 void window::init_layout() noexcept

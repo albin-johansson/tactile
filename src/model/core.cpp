@@ -112,7 +112,7 @@ void core::select_layer(int index) noexcept
 {
   if (auto* map = active_map(); map) {
     map->select(index);
-    emit s_updated();
+    emit request_update();
   }
 }
 
@@ -123,11 +123,16 @@ void core::select_map(int id) noexcept
   }
 }
 
+auto core::has_active_map() const noexcept -> bool
+{
+  return m_activeMapIndex.has_value();
+}
+
 void core::handle_increase_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().increase();
-    emit s_updated();
+    emit request_update();
   }
 }
 
@@ -135,7 +140,7 @@ void core::handle_decrease_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().decrease();
-    emit s_updated();
+    emit request_update();
   }
 }
 
@@ -143,7 +148,7 @@ void core::handle_reset_tile_size() noexcept
 {
   if (auto* map = active_map(); map) {
     map->get_tile_size().reset();
-    emit s_updated();
+    emit request_update();
   }
 }
 
@@ -158,7 +163,7 @@ void core::handle_add_row() noexcept
 {
   if (auto* map = active_map(); map) {
     map->add_row();
-    emit s_updated();
+    emit request_update();
   }
 }
 
@@ -166,7 +171,7 @@ void core::handle_add_col() noexcept
 {
   if (auto* map = active_map(); map) {
     map->add_col();
-    emit s_updated();
+    emit request_update();
   }
 }
 
@@ -174,7 +179,7 @@ void core::handle_remove_row() noexcept
 {
   if (auto* map = active_map(); map) {
     map->remove_row();
-    emit s_updated();
+    emit request_update();
   }
 }
 
@@ -182,7 +187,7 @@ void core::handle_remove_col() noexcept
 {
   if (auto* map = active_map(); map) {
     map->remove_col();
-    emit s_updated();
+    emit request_update();
   }
 }
 

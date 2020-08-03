@@ -2,7 +2,11 @@
 
 #include "core_fwd.hpp"
 
-namespace tactile::ui {
+namespace tactile {
+
+class app;
+
+namespace ui {
 
 class window;
 
@@ -26,4 +30,5 @@ class tileset_image_widget;
 
 class stamp_toolbar;
 
-}  // namespace tactile::ui
+}  // namespace ui
+}  // namespace tactile

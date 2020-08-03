@@ -116,6 +116,15 @@ class core final : public QObject {
   void select_map(int id) noexcept;
 
   /**
+   * @brief Indicates whether or not there is an active tilemap.
+   *
+   * @return `true` if there is an active tilemap; `false` otherwise.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto has_active_map() const noexcept -> bool;
+
+  /**
    * @brief Returns the amount of rows in the active tilemap.
    *
    * @return the amount of rows in the active tilemap; `std::nullopt` if there
@@ -172,7 +181,7 @@ class core final : public QObject {
    *
    * @since 0.1.0
    */
-  void s_updated();
+  void request_update();
 
  public slots:
   /**

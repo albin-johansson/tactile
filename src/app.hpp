@@ -2,11 +2,13 @@
 
 #include <QApplication>
 #include <memory>
+#include <utility>
 
+#include "command_stack.hpp"
 #include "core.hpp"
 #include "tactile_fwd.hpp"
 #include "tactile_types.hpp"
-#include "tactile_window.hpp"
+#include "window.hpp"
 
 namespace tactile {
 
@@ -23,6 +25,8 @@ namespace tactile {
  */
 class app final : public QApplication {
  public:
+  friend class app_connections;
+
   /**
    * @param argc the amount of command-line arguments.
    * @param argv the array of command-line arguments.
@@ -34,53 +38,44 @@ class app final : public QApplication {
  private:
   std::unique_ptr<ui::window> m_window;
   std::unique_ptr<model::core> m_core;
+  std::unique_ptr<command_stack> m_commands;  // TODO one stack per map
 
-  void init_connections() noexcept;
-
-  /**
-   * @brief Loads and applies the specified style sheet.
-   *
-   * @param styleSheet the file path of the QSS style-sheet.
-   *
-   * @since 0.1.0
-   */
-  void load_style_sheet(czstring styleSheet);
-
-  /**
-   * @brief A helper method for establishing a connection from the window to
-   * the core.
-   *
-   * @tparam Sender the type of the sender functor.
-   * @tparam Receiver the type of the receiver functor.
-   *
-   * @param s the function pointer to the signal.
-   * @param r the function pointer/object that handles the signal.
-   *
-   * @since 0.1.0
-   */
-  template <typename Sender, typename Receiver>
-  void window_to_core(Sender s, Receiver r)
+  [[nodiscard]] auto window_ptr() noexcept -> ui::window*
   {
-    connect(m_window.get(), s, m_core.get(), r);
+    return m_window.get();
   }
 
-  /**
-   * @brief A helper method for establishing a connection from the window to
-   * this application instance.
-   *
-   * @tparam Sender the type of the sender functor.
-   * @tparam Handler the type of the handler functor.
-   *
-   * @param s the function pointer to the signal.
-   * @param r the function pointer/object that handles the signal.
-   *
-   * @since 0.1.0
-   */
-  template <typename Sender, typename Handler>
-  void window_to_this(Sender s, Handler h)
+  [[nodiscard]] auto core_ptr() noexcept -> model::core*
   {
-    connect(m_window.get(), s, this, h);
+    return m_core.get();
   }
+
+ private slots:
+  void handle_undo();
+
+  void handle_redo();
+
+  void handle_add_row();
+
+  void handle_add_col();
+
+  void handle_remove_row();
+
+  void handle_remove_col();
+
+  void handle_resize_map();
+
+  void handle_pan_up();
+
+  void handle_pan_down();
+
+  void handle_pan_right();
+
+  void handle_pan_left();
+
+  void handle_center_camera();
+
+  void handle_new_tileset();
 };
 
 }  // namespace tactile

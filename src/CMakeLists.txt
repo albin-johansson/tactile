@@ -51,8 +51,8 @@ set(TACTILE_SOURCE_FILES
         ui/util/widget_size_policy.hpp
         ui/util/widget_size_policy.cpp
 
-        ui/window/tactile_window.hpp
-        ui/window/tactile_window.cpp
+        ui/window/window.hpp
+        ui/window/window.cpp
         ui/window/window.ui
         ui/window/create_dock_widget.hpp
         ui/window/create_dock_widget.cpp
@@ -101,12 +101,36 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tile_map_tab_widget.cpp
         ui/editor/tile_map_tab_widget.hpp
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui tactile_fwd.hpp tactile_stdinc.hpp)
+        ui/editor/editor_pane.ui tactile_fwd.hpp
+
+        command/command_stack.cpp
+        command/command_stack.hpp
+        command/add_row.cpp
+        command/add_row.hpp
+        command/add_col.hpp
+        command/add_col.cpp
+        command/remove_row.hpp
+        command/remove_row.cpp
+        command/remove_col.hpp
+        command/remove_col.cpp
+        command/resize_map.cpp
+        command/resize_map.hpp
+
+        app_connections.hpp
+        app_connections.cpp
+
+        app/set_style_sheet.hpp
+        app/set_style_sheet.cpp
+        app/setup_app.hpp
+        app/setup_app.cpp
+        version.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
+        PUBLIC command
+        PUBLIC app
         PUBLIC model
         PUBLIC model/util
         PUBLIC model/tile
