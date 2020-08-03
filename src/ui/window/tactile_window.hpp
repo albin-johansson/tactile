@@ -142,7 +142,7 @@ class window final : public QMainWindow {
   void s_select_map(int id);
 
  public slots:
-  void handle_add_tileset(const model::TilesetInfo& info,
+  void handle_add_tileset(const model::tileset_info& info,
                           const QString& tabName) noexcept;
 
   void handle_remove_tileset(int id) noexcept;

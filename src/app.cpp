@@ -160,7 +160,7 @@ void app::init_connections() noexcept
       if (image && tileWidth && tileHeight) {
         const auto id = core->add_tileset(image, *tileWidth, *tileHeight);
         if (id) {
-          TilesetInfo info{image, *id, *tileWidth, *tileHeight};
+          tileset_info info{image, *id, *tileWidth, *tileHeight};
           window->handle_add_tileset(info, imageName ? *imageName : "Untitled");
         }
       }

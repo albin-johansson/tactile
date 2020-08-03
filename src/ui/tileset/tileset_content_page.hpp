@@ -20,7 +20,7 @@ class tileset_content_page final : public QWidget {
 
   ~tileset_content_page() noexcept override;
 
-  void add_tileset(const model::TilesetInfo& info,
+  void add_tileset(const model::tileset_info& info,
                    const QString& tabName) noexcept;
 
   void remove_tileset(int id) noexcept;

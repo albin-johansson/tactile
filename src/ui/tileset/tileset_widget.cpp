@@ -5,7 +5,7 @@
 #include "tileset_info.hpp"
 #include "ui_tileset_widget.h"
 
-using tactile::model::TilesetInfo;
+using tactile::model::tileset_info;
 
 namespace tactile::ui {
 
@@ -39,7 +39,7 @@ tileset_widget::~tileset_widget() noexcept
   delete m_ui;
 }
 
-void tileset_widget::add_tileset(const TilesetInfo& info,
+void tileset_widget::add_tileset(const tileset_info& info,
                                  const QString& tabName) noexcept
 {
   if (info.image->isNull()) {

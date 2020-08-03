@@ -6,7 +6,7 @@
 #include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
-using tactile::model::TilesetInfo;
+using tactile::model::tileset_info;
 
 namespace tactile::ui {
 
@@ -24,7 +24,7 @@ tileset_content_page::~tileset_content_page() noexcept
   delete m_ui;
 }
 
-void tileset_content_page::add_tileset(const TilesetInfo& info,
+void tileset_content_page::add_tileset(const tileset_info& info,
                                        const QString& tabName) noexcept
 {
   if (m_tabs.count(info.id)) {

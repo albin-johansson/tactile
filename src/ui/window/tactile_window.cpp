@@ -63,7 +63,7 @@ auto window::unique(QWidget* parent) -> std::unique_ptr<window>
 
 // TODO these delegations can be replaced with signals
 
-void window::handle_add_tileset(const model::TilesetInfo& info,
+void window::handle_add_tileset(const model::tileset_info& info,
                                 const QString& tabName) noexcept
 {
   m_tilesetWidget->add_tileset(info, tabName);
