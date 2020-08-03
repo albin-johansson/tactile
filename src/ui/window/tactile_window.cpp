@@ -89,13 +89,13 @@ void window::enable_editor_view() noexcept
 
 void window::handle_display_about_dialog() noexcept
 {
-  AboutDialog about;
+  about_dialog about;
   about.exec();
 }
 
 void window::handle_display_settings_dialog() noexcept
 {
-  SettingsDialog settings;
+  settings_dialog settings;
   settings.exec();
 }
 

@@ -168,7 +168,7 @@ void app::init_connections() noexcept
   });
 
   window_to_this(&window::s_resize_map, [window, core] {
-    ResizeDialog dialog;
+    resize_dialog dialog;
     if (dialog.exec()) {
       core->set_rows(*dialog.chosen_height());
       core->set_cols(*dialog.chosen_width());

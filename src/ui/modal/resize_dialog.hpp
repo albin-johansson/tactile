@@ -18,44 +18,45 @@ class QLineEdit;
 namespace tactile::ui {
 
 /**
- * The <code>ResizeDialog</code> class represents the dialog that is used to
- * select the new size of the current tilemap.
+ * @class resize_dialog
+ *
+ * @brief Represents the dialog that is used to select the new size of the
+ * current tilemap.
  *
  * @since 0.1.0
+ *
+ * @headerfile resize_dialog.hpp
  */
-class ResizeDialog final : public QDialog {
+class resize_dialog final : public QDialog {
   Q_OBJECT
 
  public:
   /**
    * @param parent a pointer to the parent widget, defaults to null.
+   *
    * @since 0.1.0
    */
-  explicit ResizeDialog(QWidget* parent = nullptr);
+  explicit resize_dialog(QWidget* parent = nullptr);
 
-  ~ResizeDialog() noexcept override;
+  ~resize_dialog() noexcept override;
 
   /**
-   * Returns the chosen width, if there was one.
+   * @brief Returns the chosen width, if there was one.
    *
-   * @return the chosen width; std::nullopt if there is none.
+   * @return the chosen width; `std::nullopt` if there is none.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] std::optional<int> chosen_width() const noexcept
-  {
-    return m_chosenWidth;
-  }
+  [[nodiscard]] auto chosen_width() const noexcept -> std::optional<int>;
 
   /**
-   * Returns the chosen height, if there was one.
+   * @brief Returns the chosen height, if there was one.
    *
-   * @return the chosen height; std::nullopt if there is none.
+   * @return the chosen height; `std::nullopt` if there is none.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] std::optional<int> chosen_height() const noexcept
-  {
-    return m_chosenHeight;
-  }
+  [[nodiscard]] auto chosen_height() const noexcept -> std::optional<int>;
 
  private:
   Ui::ResizeDialogUI* m_ui;
@@ -64,31 +65,37 @@ class ResizeDialog final : public QDialog {
   std::optional<int> m_chosenHeight;
 
   /**
-   * Connects a line edit widget to the dialog. This method has no effect if
-   * the supplied pointer is null.
+   * @brief Connects a line edit widget to the dialog.
+   *
+   * @note This method has no effect if the supplied pointer is null.
    *
    * @param edit a pointer to the line edit widget that will be connected.
+   *
    * @since 0.1.0
    */
   void connect_line_edit(QLineEdit* edit) noexcept;
 
   /**
-   * Returns a pointer to the "OK" button.
+   * @brief Returns a pointer to the "OK" button.
    *
    * @return a pointer to the "OK" button.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] QPushButton* ok_button() const noexcept;
+  [[nodiscard]] auto ok_button() const noexcept -> QPushButton*;
 
   /**
-   * Indicates whether or not the supplied line edit widget has valid input.
+   * @brief Indicates whether or not the supplied line edit widget has valid
+   * input.
    *
    * @param edit the line edit widget that will be checked.
-   * @return true if the line edit widget is valid; false otherwise.
+   *
+   * @return `true` if the line edit widget is valid; `false` otherwise.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] QValidator::State is_valid(
-      const QLineEdit& edit) const noexcept;
+  [[nodiscard]] auto is_valid(const QLineEdit& edit) const noexcept
+      -> QValidator::State;
 
  private slots:
   /**

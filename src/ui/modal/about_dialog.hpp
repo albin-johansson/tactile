@@ -13,12 +13,17 @@ class AboutUI;
 namespace tactile::ui {
 
 /**
- * The <code>AboutDialog</code> class represents the "About Tactile" dialog
- * window that displays information about the application.
+ * @class about_dialog
  *
- * @see QDialog
+ * @brief Represents the "About Tactile" dialog window that displays
+ * information about the application.
+ *
+ * @see `QDialog`
+ *
  * @since 0.1.0
+ *
+ * @headerfile about_dialog.hpp
  */
-TACTILE_BASIC_WIDGET_DECL(AboutDialog, QDialog, Ui::AboutUI)
+TACTILE_BASIC_WIDGET_DECL(about_dialog, QDialog, Ui::AboutUI)
 
 }  // namespace tactile::ui

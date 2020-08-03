@@ -8,7 +8,7 @@
 
 namespace tactile::ui {
 
-ResizeDialog::ResizeDialog(QWidget* parent)
+resize_dialog::resize_dialog(QWidget* parent)
     : QDialog{parent},
       m_ui{new Ui::ResizeDialogUI{}},
       m_chosenWidth{std::nullopt},
@@ -26,19 +26,30 @@ ResizeDialog::ResizeDialog(QWidget* parent)
   ok_button()->setEnabled(false);
 }
 
-ResizeDialog::~ResizeDialog() noexcept
+resize_dialog::~resize_dialog() noexcept
 {
   delete m_ui;
 }
 
-void ResizeDialog::connect_line_edit(QLineEdit* edit) noexcept
+auto resize_dialog::chosen_width() const noexcept -> std::optional<int>
+{
+  return m_chosenWidth;
+}
+
+auto resize_dialog::chosen_height() const noexcept -> std::optional<int>
+{
+  return m_chosenHeight;
+}
+
+void resize_dialog::connect_line_edit(QLineEdit* edit) noexcept
 {
   if (edit) {
-    connect(edit, &QLineEdit::textChanged, this, &ResizeDialog::validate_input);
+    connect(
+        edit, &QLineEdit::textChanged, this, &resize_dialog::validate_input);
   }
 }
 
-void ResizeDialog::validate_input() noexcept
+void resize_dialog::validate_input() noexcept
 {
   const auto widthState = is_valid(*m_ui->widthEdit);
   const auto heightState = is_valid(*m_ui->heightEdit);
@@ -50,12 +61,13 @@ void ResizeDialog::validate_input() noexcept
   }
 }
 
-QPushButton* ResizeDialog::ok_button() const noexcept
+auto resize_dialog::ok_button() const noexcept -> QPushButton*
 {
   return m_ui->buttonBox->button(QDialogButtonBox::Ok);
 }
 
-QValidator::State ResizeDialog::is_valid(const QLineEdit& edit) const noexcept
+auto resize_dialog::is_valid(const QLineEdit& edit) const noexcept
+    -> QValidator::State
 {
   auto unused = 0;
   auto txt = edit.displayText();

@@ -4,13 +4,13 @@
 
 namespace tactile::ui {
 
-SettingsDialog::SettingsDialog(QWidget* parent)
+settings_dialog::settings_dialog(QWidget* parent)
     : QDialog{parent}, m_ui{new Ui::SettingsUI{}}
 {
   m_ui->setupUi(this);
 }
 
-SettingsDialog::~SettingsDialog() noexcept
+settings_dialog::~settings_dialog() noexcept
 {
   delete m_ui;
 }

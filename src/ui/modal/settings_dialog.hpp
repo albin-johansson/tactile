@@ -11,13 +11,13 @@ class SettingsUI;
 
 namespace tactile::ui {
 
-class SettingsDialog final : public QDialog {
+class settings_dialog final : public QDialog {
   Q_OBJECT
 
  public:
-  explicit SettingsDialog(QWidget* parent = nullptr);
+  explicit settings_dialog(QWidget* parent = nullptr);
 
-  ~SettingsDialog() noexcept override;
+  ~settings_dialog() noexcept override;
 
  private:
   Ui::SettingsUI* m_ui;
