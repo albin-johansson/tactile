@@ -7,25 +7,19 @@
 
 namespace tactile::ui {
 
-DynamicToolBarWidget::DynamicToolBarWidget(QWidget* parent) : QWidget{parent}
+dynamic_tool_bar_widget::dynamic_tool_bar_widget(QWidget* parent)
+    : QWidget{parent}, m_layout{std::make_unique<QStackedLayout>(this)}
 {
   // TODO add all different state-based widgets
 
-  m_layout = new QStackedLayout{this};
-
   auto* stacked = new QStackedWidget{};
 
-  m_stampToolbar = new StampToolbar{};
+  m_stampToolbar = new stamp_toolbar{};
 
   stacked->addWidget(m_stampToolbar);
   m_layout->addWidget(stacked);
 
-  setLayout(m_layout);
-}
-
-DynamicToolBarWidget::~DynamicToolBarWidget() noexcept
-{
-  delete m_layout;
+  setLayout(m_layout.get());
 }
 
 }  // namespace tactile::ui

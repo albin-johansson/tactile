@@ -4,11 +4,11 @@
 
 namespace tactile::ui {
 
-StampToolbar::StampToolbar(QWidget* parent)
+stamp_toolbar::stamp_toolbar(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::StampToolbarUI{}}
 {}
 
-StampToolbar::~StampToolbar() noexcept
+stamp_toolbar::~stamp_toolbar() noexcept
 {
   delete m_ui;
 }

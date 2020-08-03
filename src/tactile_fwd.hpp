@@ -24,6 +24,6 @@ class tileset_empty_page;
 
 class tileset_image_widget;
 
-class StampToolbar;
+class stamp_toolbar;
 
 }  // namespace tactile::ui

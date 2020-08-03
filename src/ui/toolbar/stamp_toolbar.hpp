@@ -2,6 +2,8 @@
 
 #include <QWidget>
 
+#include "tactile_types.hpp"
+
 namespace Ui {
 
 class StampToolbarUI;
@@ -10,16 +12,16 @@ class StampToolbarUI;
 
 namespace tactile::ui {
 
-class StampToolbar final : public QWidget {
+class stamp_toolbar final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit StampToolbar(QWidget* parent = nullptr);
+  explicit stamp_toolbar(QWidget* parent = nullptr);
 
-  ~StampToolbar() noexcept override;
+  ~stamp_toolbar() noexcept override;
 
  private:
-  Ui::StampToolbarUI* m_ui;
+  owner<Ui::StampToolbarUI*> m_ui;
 };
 
 }  // namespace tactile::ui

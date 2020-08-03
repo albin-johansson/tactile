@@ -1,20 +1,20 @@
 #pragma once
 
 #include <QWidget>
+#include <memory>
 
 #include "tactile_fwd.hpp"
+#include "tactile_types.hpp"
 
 class QLayout;
 
 namespace tactile::ui {
 
-class DynamicToolBarWidget final : public QWidget {
+class dynamic_tool_bar_widget final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit DynamicToolBarWidget(QWidget* parent = nullptr);
-
-  ~DynamicToolBarWidget() noexcept override;
+  explicit dynamic_tool_bar_widget(QWidget* parent = nullptr);
 
  signals:
   void s_stamp_tool();
@@ -24,8 +24,8 @@ class DynamicToolBarWidget final : public QWidget {
   void s_eraser_tool();
 
  private:
-  QLayout* m_layout;
-  StampToolbar* m_stampToolbar;
+  std::unique_ptr<QLayout> m_layout;
+  stamp_toolbar* m_stampToolbar;
 };
 
 }  // namespace tactile::ui
