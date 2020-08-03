@@ -151,7 +151,7 @@ void app::init_connections() noexcept
   });
 
   window_to_this(&window::s_new_tileset, [window, core] {
-    TilesetDialog dialog;
+    tileset_dialog dialog;
     if (dialog.exec()) {
       const auto image = dialog.chosen_image();
       const auto tileWidth = dialog.chosen_width();

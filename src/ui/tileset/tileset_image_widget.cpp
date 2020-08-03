@@ -10,17 +10,17 @@
 
 namespace tactile::ui {
 
-TilesetImageWidget::TilesetImageWidget(const QImage& image,
-                                       int tileWidth,
-                                       int tileHeight,
-                                       QWidget* parent)
+tileset_image_widget::tileset_image_widget(const QImage& image,
+                                           int tileWidth,
+                                           int tileHeight,
+                                           QWidget* parent)
     : QWidget{parent}
 {
   if (image.isNull()) {
     throw tactile_error{"Can't create tileset image widget from null image!"};
   }
 
-  m_imageLabel = TilesetImageLabel::unique(image, tileWidth, tileHeight);
+  m_imageLabel = tileset_image_label::unique(image, tileWidth, tileHeight);
 
   m_layout = std::make_unique<QGridLayout>();
   m_layout->addWidget(m_imageLabel.get());
@@ -31,19 +31,19 @@ TilesetImageWidget::TilesetImageWidget(const QImage& image,
       std::make_unique<QRubberBand>(QRubberBand::Rectangle, m_imageLabel.get());
 }
 
-TilesetImageWidget::~TilesetImageWidget() noexcept = default;
+tileset_image_widget::~tileset_image_widget() noexcept = default;
 
-std::unique_ptr<TilesetImageWidget> TilesetImageWidget::unique(
-    const QImage& image,
-    int tileWidth,
-    int tileHeight,
-    QWidget* parent)
+auto tileset_image_widget::unique(const QImage& image,
+                                  int tileWidth,
+                                  int tileHeight,
+                                  QWidget* parent)
+    -> std::unique_ptr<tileset_image_widget>
 {
-  return std::make_unique<TilesetImageWidget>(
+  return std::make_unique<tileset_image_widget>(
       image, tileWidth, tileHeight, parent);
 }
 
-void TilesetImageWidget::mousePressEvent(QMouseEvent* event)
+void tileset_image_widget::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
 
@@ -56,7 +56,7 @@ void TilesetImageWidget::mousePressEvent(QMouseEvent* event)
   }
 }
 
-void TilesetImageWidget::mouseMoveEvent(QMouseEvent* event)
+void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
 
@@ -65,7 +65,7 @@ void TilesetImageWidget::mouseMoveEvent(QMouseEvent* event)
   }
 }
 
-void TilesetImageWidget::mouseReleaseEvent(QMouseEvent* event)
+void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
 

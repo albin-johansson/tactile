@@ -10,7 +10,7 @@
 
 namespace tactile::ui {
 
-TilesetTab::TilesetTab(const QImage& image,
+tileset_tab::tileset_tab(const QImage& image,
                        int tileWidth,
                        int tileHeight,
                        QWidget* parent)
@@ -20,7 +20,7 @@ TilesetTab::TilesetTab(const QImage& image,
     throw tactile_error{"Can't create tileset tab from null image!"};
   }
 
-  m_imageWidget = TilesetImageWidget::unique(image, tileWidth, tileHeight);
+  m_imageWidget = tileset_image_widget::unique(image, tileWidth, tileHeight);
 
   m_scrollArea = std::make_unique<QScrollArea>();
   m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
@@ -34,6 +34,6 @@ TilesetTab::TilesetTab(const QImage& image,
   set_size_policy(this, QSizePolicy::Expanding);
 }
 
-TilesetTab::~TilesetTab() noexcept = default;
+tileset_tab::~tileset_tab() noexcept = default;
 
 }  // namespace tactile::ui

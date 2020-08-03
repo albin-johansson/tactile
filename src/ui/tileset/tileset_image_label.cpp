@@ -6,10 +6,10 @@
 
 namespace tactile::ui {
 
-TilesetImageLabel::TilesetImageLabel(const QImage& image,
-                                     int tileWidth,
-                                     int tileHeight,
-                                     QWidget* parent)
+tileset_image_label::tileset_image_label(const QImage& image,
+                                         int tileWidth,
+                                         int tileHeight,
+                                         QWidget* parent)
     : QLabel{parent},
       m_tileWidth{tileWidth < 1 ? 1 : tileWidth},
       m_tileHeight{tileHeight < 1 ? 1 : tileHeight}
@@ -29,20 +29,19 @@ TilesetImageLabel::TilesetImageLabel(const QImage& image,
   m_nCols = m_width / m_tileHeight;
 }
 
-TilesetImageLabel::~TilesetImageLabel() noexcept
-{}
+tileset_image_label::~tileset_image_label() noexcept = default;
 
-std::unique_ptr<TilesetImageLabel> TilesetImageLabel::unique(
-    const QImage& image,
-    int tileWidth,
-    int tileHeight,
-    QWidget* parent)
+auto tileset_image_label::unique(const QImage& image,
+                                 int tileWidth,
+                                 int tileHeight,
+                                 QWidget* parent)
+    -> std::unique_ptr<tileset_image_label>
 {
-  return std::make_unique<TilesetImageLabel>(
+  return std::make_unique<tileset_image_label>(
       image, tileWidth, tileHeight, parent);
 }
 
-void TilesetImageLabel::paintEvent(QPaintEvent* event)
+void tileset_image_label::paintEvent(QPaintEvent* event)
 {
   QLabel::paintEvent(event);
 

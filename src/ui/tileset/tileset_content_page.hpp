@@ -12,27 +12,27 @@ class TilesetContentPageUI;
 
 namespace tactile::ui {
 
-class TilesetContentPage final : public QWidget {
+class tileset_content_page final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit TilesetContentPage(QWidget* parent = nullptr);
+  explicit tileset_content_page(QWidget* parent = nullptr);
 
-  ~TilesetContentPage() noexcept override;
+  ~tileset_content_page() noexcept override;
 
   void add_tileset(const model::TilesetInfo& info,
                    const QString& tabName) noexcept;
 
   void remove_tileset(int id) noexcept;
 
-  [[nodiscard]] bool empty() const noexcept;
+  [[nodiscard]] auto empty() const noexcept -> bool;
 
  signals:
   void s_requested_tileset();
 
  private:
-  Ui::TilesetContentPageUI* m_ui;
-  std::unordered_map<int, std::shared_ptr<TilesetTab>> m_tabs;
+  owner<Ui::TilesetContentPageUI*> m_ui;
+  std::unordered_map<int, std::shared_ptr<tileset_tab>> m_tabs;
 
   //  [[nodiscard]] bool contains_tileset(int id) const noexcept;
 };

@@ -4,7 +4,7 @@
 
 namespace tactile::ui {
 
-TilesetEmptyPage::TilesetEmptyPage(QWidget* parent)
+tileset_empty_page::tileset_empty_page(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetEmptyPageUI{}}
 {
   m_ui->setupUi(this);
@@ -12,10 +12,10 @@ TilesetEmptyPage::TilesetEmptyPage(QWidget* parent)
   connect(m_ui->addSheetButton,
           &QPushButton::clicked,
           this,
-          &TilesetEmptyPage::s_requested_tileset);
+          &tileset_empty_page::s_requested_tileset);
 }
 
-TilesetEmptyPage::~TilesetEmptyPage() noexcept
+tileset_empty_page::~tileset_empty_page() noexcept
 {
   delete m_ui;
 }

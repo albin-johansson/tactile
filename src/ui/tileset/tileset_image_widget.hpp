@@ -10,22 +10,22 @@ class QRubberBand;
 
 namespace tactile::ui {
 
-class TilesetImageWidget final : public QWidget {
+class tileset_image_widget final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit TilesetImageWidget(const QImage& image,
+  explicit tileset_image_widget(const QImage& image,
                               int tileWidth,
                               int tileHeight,
                               QWidget* parent = nullptr);
 
-  ~TilesetImageWidget() noexcept override;
+  ~tileset_image_widget() noexcept override;
 
   [[nodiscard]] static auto unique(const QImage& image,
                                    int tileWidth,
                                    int tileHeight,
                                    QWidget* parent = nullptr)
-      -> std::unique_ptr<TilesetImageWidget>;
+      -> std::unique_ptr<tileset_image_widget>;
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;

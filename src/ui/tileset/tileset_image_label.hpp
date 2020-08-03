@@ -5,20 +5,20 @@
 
 namespace tactile::ui {
 
-class TilesetImageLabel final : public QLabel {
+class tileset_image_label final : public QLabel {
  public:
-  explicit TilesetImageLabel(const QImage& image,
-                             int tileWidth,
-                             int tileHeight,
-                             QWidget* parent = nullptr);
+  explicit tileset_image_label(const QImage& image,
+                               int tileWidth,
+                               int tileHeight,
+                               QWidget* parent = nullptr);
 
-  ~TilesetImageLabel() noexcept override;
+  ~tileset_image_label() noexcept override;
 
   [[nodiscard]] static auto unique(const QImage& image,
                                    int tileWidth,
                                    int tileHeight,
                                    QWidget* parent = nullptr)
-      -> std::unique_ptr<TilesetImageLabel>;
+      -> std::unique_ptr<tileset_image_label>;
 
  protected:
   void paintEvent(QPaintEvent* event) override;

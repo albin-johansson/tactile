@@ -10,17 +10,19 @@ class central_editor_widget;
 
 class MouseToolWidget;
 
-class TilesetWidget;
-
 class tilemap_tab_widget;
 
 class editor_tab;
 
-class TilesetTab;
+class tileset_widget;
 
-class TilesetContentPage;
+class tileset_tab;
 
-class TilesetEmptyPage;
+class tileset_content_page;
+
+class tileset_empty_page;
+
+class tileset_image_widget;
 
 class StampToolbar;
 

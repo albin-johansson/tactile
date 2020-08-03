@@ -10,7 +10,7 @@ using tactile::model::TilesetInfo;
 
 namespace tactile::ui {
 
-TilesetContentPage::TilesetContentPage(QWidget* parent)
+tileset_content_page::tileset_content_page(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetContentPageUI{}}
 {
   m_ui->setupUi(this);
@@ -19,19 +19,19 @@ TilesetContentPage::TilesetContentPage(QWidget* parent)
   //  m_ui->tabWidget->setCornerWidget(cornerBtn);
 }
 
-TilesetContentPage::~TilesetContentPage() noexcept
+tileset_content_page::~tileset_content_page() noexcept
 {
   delete m_ui;
 }
 
-void TilesetContentPage::add_tileset(const TilesetInfo& info,
+void tileset_content_page::add_tileset(const TilesetInfo& info,
                                      const QString& tabName) noexcept
 {
   if (m_tabs.count(info.id)) {
     qDebug("Tried to add tileset with taken ID: %i", info.id);
   } else {
     if (!info.image->isNull()) {
-      auto tilesetTab = std::make_shared<TilesetTab>(
+      auto tilesetTab = std::make_shared<tileset_tab>(
           *info.image, info.tileWidth, info.tileHeight);
       m_ui->tabWidget->addTab(tilesetTab.get(), tabName);
       m_tabs.emplace(info.id, tilesetTab);
@@ -39,7 +39,7 @@ void TilesetContentPage::add_tileset(const TilesetInfo& info,
   }
 }
 
-void TilesetContentPage::remove_tileset(int id) noexcept
+void tileset_content_page::remove_tileset(int id) noexcept
 {
   if (m_tabs.count(id)) {
     m_tabs.erase(id);
@@ -49,7 +49,7 @@ void TilesetContentPage::remove_tileset(int id) noexcept
   }
 }
 
-bool TilesetContentPage::empty() const noexcept
+auto tileset_content_page::empty() const noexcept -> bool
 {
   return m_ui->tabWidget->count() == 0;
 }

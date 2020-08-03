@@ -29,7 +29,7 @@ window::window(QWidget* parent)
 
   m_centralWidget = new central_editor_widget{};
   m_mouseToolWidget = new MouseToolWidget{};
-  m_tilesetWidget = new TilesetWidget{};
+  m_tilesetWidget = new tileset_widget{};
 
   setCentralWidget(m_centralWidget);  // claims ownership of central widget
 
@@ -345,7 +345,7 @@ void window::init_connections() noexcept
   }
 
   connect(m_tilesetWidget,
-          &TilesetWidget::s_requested_tileset,
+          &tileset_widget::s_requested_tileset,
           this,
           &W::s_new_tileset);
 }

@@ -1,5 +1,8 @@
 #pragma once
+
 #include <QWidget>
+
+#include "tactile_types.hpp"
 
 namespace Ui {
 class TilesetEmptyPageUI;
@@ -7,19 +10,19 @@ class TilesetEmptyPageUI;
 
 namespace tactile::ui {
 
-class TilesetEmptyPage final : public QWidget {
+class tileset_empty_page final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit TilesetEmptyPage(QWidget* parent = nullptr);
+  explicit tileset_empty_page(QWidget* parent = nullptr);
 
-  ~TilesetEmptyPage() noexcept override;
+  ~tileset_empty_page() noexcept override;
 
  signals:
   void s_requested_tileset();
 
  private:
-  Ui::TilesetEmptyPageUI* m_ui;
+  owner<Ui::TilesetEmptyPageUI*> m_ui;
 };
 
 }  // namespace tactile::ui

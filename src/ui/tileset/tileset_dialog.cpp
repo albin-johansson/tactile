@@ -6,13 +6,21 @@
 #include "ui_tileset_dialog.h"
 
 namespace tactile::ui {
+namespace {
 
-TilesetDialog::TilesetDialog(QWidget* parent)
+[[nodiscard]] auto load_pixmap(const QString& path) -> QPixmap
+{
+  QPixmap pixmap{path};
+  pixmap = pixmap.scaledToHeight(100);
+  return pixmap;
+}
+
+}  // namespace
+
+tileset_dialog::tileset_dialog(QWidget* parent)
     : QDialog{parent},
       m_ui{new Ui::TilesetDialogUI{}},
-      m_image{std::make_shared<QImage>()},
-      m_width{std::nullopt},
-      m_height{std::nullopt}
+      m_image{std::make_shared<QImage>()}
 {
   m_ui->setupUi(this);
   m_validator = std::make_unique<QIntValidator>(1, 1'000, this);
@@ -27,12 +35,12 @@ TilesetDialog::TilesetDialog(QWidget* parent)
   connect(m_ui->widthEdit,
           &QLineEdit::textChanged,
           this,
-          &TilesetDialog::validate_input);
+          &tileset_dialog::validate_input);
 
   connect(m_ui->heightEdit,
           &QLineEdit::textChanged,
           this,
-          &TilesetDialog::validate_input);
+          &tileset_dialog::validate_input);
 
   connect(m_ui->imageButton, &QPushButton::pressed, this, [this] {
     const auto path = open_tileset_image(this);
@@ -58,26 +66,40 @@ TilesetDialog::TilesetDialog(QWidget* parent)
   });
 }
 
-TilesetDialog::~TilesetDialog() noexcept
+tileset_dialog::~tileset_dialog() noexcept
 {
   delete m_ui;
 }
 
-bool TilesetDialog::is_valid() const noexcept
+auto tileset_dialog::chosen_image() const noexcept
+    -> const std::shared_ptr<QImage>&
+{
+  return m_image;
+}
+
+auto tileset_dialog::chosen_width() const noexcept -> std::optional<int>
+{
+  return m_width;
+}
+
+auto tileset_dialog::chosen_height() const noexcept -> std::optional<int>
+{
+  return m_height;
+}
+
+auto tileset_dialog::image_name() const noexcept -> std::optional<QString>
+{
+  return m_imageName;
+}
+
+auto tileset_dialog::is_valid() const noexcept -> bool
 {
   return validate(*m_ui->widthEdit) == QValidator::Acceptable &&
          validate(*m_ui->heightEdit) == QValidator::Acceptable &&
          !m_image->isNull();
 }
 
-QPixmap TilesetDialog::load_pixmap(const QString& path) const noexcept
-{
-  QPixmap pixmap{path};
-  pixmap = pixmap.scaledToHeight(100);
-  return pixmap;
-}
-
-void TilesetDialog::validate_input() noexcept
+void tileset_dialog::validate_input() noexcept
 {
   ok_button()->setEnabled(is_valid());
   if (ok_button()->isEnabled()) {
@@ -86,12 +108,13 @@ void TilesetDialog::validate_input() noexcept
   }
 }
 
-QPushButton* TilesetDialog::ok_button() noexcept
+auto tileset_dialog::ok_button() noexcept -> QPushButton*
 {
   return m_ui->buttonBox->button(QDialogButtonBox::Ok);
 }
 
-QValidator::State TilesetDialog::validate(const QLineEdit& edit) const noexcept
+auto tileset_dialog::validate(const QLineEdit& edit) const noexcept
+    -> QValidator::State
 {
   auto unused = 0;
   auto txt = edit.displayText();

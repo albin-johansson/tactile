@@ -9,14 +9,14 @@ using tactile::model::TilesetInfo;
 
 namespace tactile::ui {
 
-TilesetWidget::TilesetWidget(QWidget* parent)
+tileset_widget::tileset_widget(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetWidgetUI{}}
 
 {
   m_ui->setupUi(this);
 
-  m_contentPage = new TilesetContentPage{};
-  m_emptyPage = new TilesetEmptyPage{};
+  m_contentPage = new tileset_content_page{};
+  m_emptyPage = new tileset_empty_page{};
 
   m_emptyIndex = m_ui->stackedWidget->addWidget(m_emptyPage);
   m_contentIndex = m_ui->stackedWidget->addWidget(m_contentPage);
@@ -24,22 +24,22 @@ TilesetWidget::TilesetWidget(QWidget* parent)
   m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
 
   connect(m_contentPage,
-          &TilesetContentPage::s_requested_tileset,
+          &tileset_content_page::s_requested_tileset,
           this,
-          &TilesetWidget::s_requested_tileset);
+          &tileset_widget::s_requested_tileset);
 
   connect(m_emptyPage,
-          &TilesetEmptyPage::s_requested_tileset,
+          &tileset_empty_page::s_requested_tileset,
           this,
-          &TilesetWidget::s_requested_tileset);
+          &tileset_widget::s_requested_tileset);
 }
 
-TilesetWidget::~TilesetWidget() noexcept
+tileset_widget::~tileset_widget() noexcept
 {
   delete m_ui;
 }
 
-void TilesetWidget::add_tileset(const TilesetInfo& info,
+void tileset_widget::add_tileset(const TilesetInfo& info,
                                 const QString& tabName) noexcept
 {
   if (info.image->isNull()) {
@@ -55,7 +55,7 @@ void TilesetWidget::add_tileset(const TilesetInfo& info,
   }
 }
 
-void TilesetWidget::remove_tileset(int id) noexcept
+void tileset_widget::remove_tileset(int id) noexcept
 {
   m_contentPage->remove_tileset(id);
 }

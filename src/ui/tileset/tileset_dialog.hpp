@@ -5,6 +5,8 @@
 #include <memory>
 #include <optional>
 
+#include "tactile_types.hpp"
+
 class QLineEdit;
 
 namespace Ui {
@@ -13,60 +15,54 @@ class TilesetDialogUI;
 
 namespace tactile::ui {
 
-class TilesetDialog final : public QDialog {
+class tileset_dialog final : public QDialog {
  public:
-  explicit TilesetDialog(QWidget* parent = nullptr);
+  explicit tileset_dialog(QWidget* parent = nullptr);
 
-  ~TilesetDialog() noexcept override;
+  ~tileset_dialog() noexcept override;
 
   /**
-   * Returns a shared pointer to the image that was selected.
+   * @brief Returns a shared pointer to the image that was selected.
    *
-   * @return a shared pointer to an image; null if there is no chosen image.
+   * @return a shared pointer to an image; might be null if there is no chosen
+   * image.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] std::shared_ptr<QImage> chosen_image() const noexcept
-  {
-    return m_image;
-  }
+  [[nodiscard]] auto chosen_image() const noexcept
+      -> const std::shared_ptr<QImage>&;
 
   /**
-   * Returns the chosen tile width.
+   * @brief Returns the chosen tile width.
    *
    * @return the chosen tile width; std::nullopt if no tile width is available.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] std::optional<int> chosen_width() const noexcept
-  {
-    return m_width;
-  }
+  [[nodiscard]] auto chosen_width() const noexcept -> std::optional<int>;
 
   /**
-   * Returns the chosen tile height.
+   * @brief Returns the chosen tile height.
    *
-   * @return the chosen tile height; std::nullopt if no tile height is
+   * @return the chosen tile height; `std::nullopt` if no tile height is
    * available.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] std::optional<int> chosen_height() const noexcept
-  {
-    return m_height;
-  }
+  [[nodiscard]] auto chosen_height() const noexcept -> std::optional<int>;
 
   /**
-   * Returns the name of the selected image.
+   * @brief Returns the name of the selected image.
    *
-   * @return the name of the selected image; std::nullopt if there is no
+   * @return the name of the selected image; `std::nullopt` if there is no
    * selected image.
+   *
    * @since 0.1.0
    */
-  [[nodiscard]] std::optional<QString> image_name() const noexcept
-  {
-    return m_imageName;
-  }
+  [[nodiscard]] auto image_name() const noexcept -> std::optional<QString>;
 
  private:
-  Ui::TilesetDialogUI* m_ui;
+  owner<Ui::TilesetDialogUI*> m_ui;
   std::shared_ptr<QImage> m_image;
   std::optional<int> m_width;
   std::optional<int> m_height;
@@ -76,9 +72,7 @@ class TilesetDialog final : public QDialog {
 
   void validate_input() noexcept;
 
-  [[nodiscard]] bool is_valid() const noexcept;
-
-  [[nodiscard]] QPixmap load_pixmap(const QString& path) const noexcept;
+  [[nodiscard]] auto is_valid() const noexcept -> bool;
 
   /**
    * Returns a pointer to the "OK" button.
@@ -86,7 +80,7 @@ class TilesetDialog final : public QDialog {
    * @return a pointer to the "OK" button.
    * @since 0.1.0
    */
-  [[nodiscard]] QPushButton* ok_button() noexcept;
+  [[nodiscard]] auto ok_button() noexcept -> QPushButton*;
 
   /**
    * Indicates whether or not the supplied line edit widget has valid input.
@@ -95,8 +89,8 @@ class TilesetDialog final : public QDialog {
    * @return true if the line edit widget is valid; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] QValidator::State validate(
-      const QLineEdit& edit) const noexcept;
+  [[nodiscard]] auto validate(const QLineEdit& edit) const noexcept
+      -> QValidator::State;
 };
 
 }  // namespace tactile::ui
