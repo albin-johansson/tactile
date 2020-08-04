@@ -2,20 +2,26 @@
 
 #include <algorithm>
 
-#include "tilemap_scene.hpp"
+#include "tilemap_view.hpp"
 
 namespace tactile::ui {
 
 tilemap_tab::tilemap_tab(QWidget* parent) : QTabWidget{parent}
 {
   setTabsClosable(true);
-  connect(this, &QTabWidget::tabCloseRequested, this, [this](int index) {
-    emit request_remove_tab(get_pane(index)->id());
-    removeTab(index);
-  });
+  connect(this,
+          &QTabWidget::tabCloseRequested,
+          this,
+          &tilemap_tab::handle_tab_close);
 }
 
 tilemap_tab::~tilemap_tab() noexcept = default;
+
+void tilemap_tab::handle_tab_close(int index)
+{
+  emit request_remove_tab(get_pane(index)->id());
+  removeTab(index);
+}
 
 auto tilemap_tab::add_tile_map_tab(const QString& title) noexcept -> int
 {
@@ -24,13 +30,13 @@ auto tilemap_tab::add_tile_map_tab(const QString& title) noexcept -> int
   auto newTitle = title;
   newTitle.append(QString::number(id));
 
-  auto* pane = new tilemap_scene{id++};
-  addTab(pane, newTitle);
+  auto* view = new tilemap_view{id++};
+  addTab(view, newTitle);
 
   connect(
-      pane, &tilemap_scene::s_redraw, this, &tilemap_tab::request_redraw);
+      view, &tilemap_view::request_redraw, this, &tilemap_tab::request_redraw);
 
-  return pane->id();
+  return view->id();
 }
 
 void tilemap_tab::remove_tile_map_tab(int id) noexcept
@@ -61,9 +67,9 @@ void tilemap_tab::move_viewport(int dx, int dy) noexcept
   }
 }
 
-auto tilemap_tab::get_pane(int index) const noexcept -> tilemap_scene*
+auto tilemap_tab::get_pane(int index) const noexcept -> tilemap_view*
 {
-  return qobject_cast<tilemap_scene*>(widget(index));
+  return qobject_cast<tilemap_view*>(widget(index));
 }
 
 auto tilemap_tab::active_tab_id() const noexcept -> std::optional<int>

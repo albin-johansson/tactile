@@ -18,6 +18,8 @@ class tilemap_tab;
 
 class tilemap_scene;
 
+class tilemap_view;
+
 class tileset_widget;
 
 class tileset_tab;

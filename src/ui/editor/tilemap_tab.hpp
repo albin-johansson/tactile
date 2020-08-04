@@ -34,7 +34,10 @@ class tilemap_tab final : public QTabWidget {
   void request_remove_tab(int id);
 
  private:
-  [[nodiscard]] auto get_pane(int index) const noexcept -> tilemap_scene*;
+  [[nodiscard]] auto get_pane(int index) const noexcept -> tilemap_view*;
+
+ private slots:
+  void handle_tab_close(int index);
 };
 
 }  // namespace tactile::ui

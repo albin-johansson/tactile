@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QGraphicsScene>
 #include <QRect>
 #include <QWidget>
 
@@ -7,37 +8,42 @@ class QPainter;
 
 namespace tactile::ui {
 
-class tilemap_scene final : public QWidget {
+class tilemap_scene final : public QGraphicsScene {
   Q_OBJECT
 
  public:
   explicit tilemap_scene(int id, QWidget* parent = nullptr);
 
-  void center_viewport(int mapWidth, int mapHeight) noexcept;
+//  void center_viewport(int mapWidth, int mapHeight) noexcept;
 
-  void move_viewport(int dx, int dy) noexcept;
+//  void move_viewport(int dx, int dy) noexcept;
+
+  //  void set_viewport_size(const QSize& size) noexcept;
 
   [[nodiscard]] auto id() const noexcept -> int;
 
  signals:
-  void s_redraw(QPainter& painter);
+  void request_redraw(QPainter& painter);
 
  protected:
-  void paintEvent(QPaintEvent* event) override;
+  void drawBackground(QPainter* painter, const QRectF& rect) override;
 
-  void resizeEvent(QResizeEvent* event) override;
+  void drawForeground(QPainter* painter, const QRectF& rect) override;
 
-  void mousePressEvent(QMouseEvent* event) override;
+  //  void paintEvent(QPaintEvent* event) override;
 
-  void mouseReleaseEvent(QMouseEvent* event) override;
+  //  void resizeEvent(QResizeEvent* event) override;
 
-  void mouseMoveEvent(QMouseEvent* event) override;
+  void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+
+  void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+
+  void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
  private:
-  QRect m_viewport;
+//  QRect m_viewport{};
   int m_id;
-  int m_lastMouseX{};
-  int m_lastMouseY{};
+  QPointF m_lastMouseScenePos{};
 };
 
 }  // namespace tactile::ui
