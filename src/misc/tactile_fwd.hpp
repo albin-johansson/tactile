@@ -14,9 +14,9 @@ class central_editor_widget;
 
 class mouse_tool_widget;
 
-class tilemap_tab_widget;
+class tilemap_tab;
 
-class editor_tab;
+class tilemap_scene;
 
 class tileset_widget;
 

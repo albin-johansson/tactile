@@ -8,13 +8,13 @@
 
 namespace tactile::ui {
 
-class tilemap_tab_widget final : public QTabWidget {
+class tilemap_tab final : public QTabWidget {
   Q_OBJECT
 
  public:
-  explicit tilemap_tab_widget(QWidget* parent = nullptr);
+  explicit tilemap_tab(QWidget* parent = nullptr);
 
-  ~tilemap_tab_widget() noexcept override;
+  ~tilemap_tab() noexcept override;
 
   [[nodiscard]] auto add_tile_map_tab(const QString& title) noexcept -> int;
 
@@ -34,7 +34,7 @@ class tilemap_tab_widget final : public QTabWidget {
   void request_remove_tab(int id);
 
  private:
-  [[nodiscard]] auto get_pane(int index) const noexcept -> editor_tab*;
+  [[nodiscard]] auto get_pane(int index) const noexcept -> tilemap_scene*;
 };
 
 }  // namespace tactile::ui

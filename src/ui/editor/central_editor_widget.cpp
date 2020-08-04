@@ -2,8 +2,8 @@
 
 #include <QTabWidget>
 
-#include "editor_tab.hpp"
-#include "tile_map_tab_widget.hpp"
+#include "tilemap_scene.hpp"
+#include "tilemap_tab.hpp"
 #include "ui/startup/startup_widget.hpp"
 #include "ui_central_widget.h"
 #include "widget_size_policy.hpp"
@@ -15,7 +15,7 @@ central_editor_widget::central_editor_widget(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  m_mapTabWidget = new tilemap_tab_widget{this};
+  m_mapTabWidget = new tilemap_tab{this};
 
   m_startupViewIndex = m_ui->stackedWidget->addWidget(new startup_widget{});
   m_editorViewIndex = m_ui->stackedWidget->addWidget(m_mapTabWidget);
@@ -32,17 +32,17 @@ central_editor_widget::~central_editor_widget() noexcept
 void central_editor_widget::init_connections() noexcept
 {
   connect(m_mapTabWidget,
-          &tilemap_tab_widget::request_redraw,
+          &tilemap_tab::request_redraw,
           this,
           &central_editor_widget::request_redraw);
 
   connect(m_mapTabWidget,
-          &tilemap_tab_widget::request_remove_tab,
+          &tilemap_tab::request_remove_tab,
           this,
           &central_editor_widget::request_remove_tab);
 
   connect(m_mapTabWidget,
-          &tilemap_tab_widget::currentChanged,
+          &tilemap_tab::currentChanged,
           this,
           [this](int index) {
             if (const auto id = m_mapTabWidget->tab_id(index); id) {

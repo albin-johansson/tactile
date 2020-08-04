@@ -1,4 +1,5 @@
 #pragma once
+
 #include <QRect>
 #include <QWidget>
 
@@ -6,11 +7,11 @@ class QPainter;
 
 namespace tactile::ui {
 
-class editor_tab final : public QWidget {
+class tilemap_scene final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit editor_tab(int id, QWidget* parent = nullptr);
+  explicit tilemap_scene(int id, QWidget* parent = nullptr);
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 

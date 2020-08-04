@@ -101,12 +101,12 @@ set(TACTILE_SOURCE_FILES
         ui/toolbar/stamp_toolbar.hpp
         ui/toolbar/toolbar_stamp.ui
 
-        ui/editor/editor_tab.cpp
-        ui/editor/editor_tab.hpp
+        ui/editor/tilemap_scene.cpp
+        ui/editor/tilemap_scene.hpp
         ui/editor/central_editor_widget.cpp
         ui/editor/central_editor_widget.hpp
-        ui/editor/tile_map_tab_widget.cpp
-        ui/editor/tile_map_tab_widget.hpp
+        ui/editor/tilemap_tab.cpp
+        ui/editor/tilemap_tab.hpp
         ui/editor/central_widget.ui
         ui/editor/editor_pane.ui misc/tactile_fwd.hpp
 

@@ -1,4 +1,4 @@
-#include "editor_tab.hpp"
+#include "tilemap_scene.hpp"
 
 #include <QApplication>
 #include <QPainter>
@@ -8,13 +8,13 @@
 
 namespace tactile::ui {
 
-editor_tab::editor_tab(int id, QWidget* parent)
+tilemap_scene::tilemap_scene(int id, QWidget* parent)
     : QWidget{parent}, m_viewport{0, 0, width(), height()}, m_id{id}
 {
   set_size_policy(this, QSizePolicy::Policy::Expanding);
 }
 
-void editor_tab::center_viewport(int mapWidth, int mapHeight) noexcept
+void tilemap_scene::center_viewport(int mapWidth, int mapHeight) noexcept
 {
   const auto x = (m_viewport.width() - mapWidth) / 2;
   const auto y = (m_viewport.height() - mapHeight) / 2;
@@ -22,7 +22,7 @@ void editor_tab::center_viewport(int mapWidth, int mapHeight) noexcept
   m_viewport.moveTo(x, y);
 }
 
-void editor_tab::move_viewport(int dx, int dy) noexcept
+void tilemap_scene::move_viewport(int dx, int dy) noexcept
 {
   const auto width = m_viewport.width();
   const auto height = m_viewport.height();
@@ -32,12 +32,12 @@ void editor_tab::move_viewport(int dx, int dy) noexcept
   m_viewport.setHeight(height);
 }
 
-auto editor_tab::id() const noexcept -> int
+auto tilemap_scene::id() const noexcept -> int
 {
   return m_id;
 }
 
-void editor_tab::paintEvent(QPaintEvent* event)
+void tilemap_scene::paintEvent(QPaintEvent* event)
 {
   QWidget::paintEvent(event);
 
@@ -48,7 +48,7 @@ void editor_tab::paintEvent(QPaintEvent* event)
   emit s_redraw(painter);
 }
 
-void editor_tab::resizeEvent(QResizeEvent* event)
+void tilemap_scene::resizeEvent(QResizeEvent* event)
 {
   QWidget::resizeEvent(event);
 
@@ -62,9 +62,10 @@ void editor_tab::resizeEvent(QResizeEvent* event)
   update();
 }
 
-void editor_tab::mousePressEvent(QMouseEvent* event)
+void tilemap_scene::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
+
   if (event->buttons() & Qt::MouseButton::MidButton) {
     m_lastMouseX = event->x();
     m_lastMouseY = event->y();
@@ -72,15 +73,17 @@ void editor_tab::mousePressEvent(QMouseEvent* event)
   }
 }
 
-void editor_tab::mouseReleaseEvent(QMouseEvent* event)
+void tilemap_scene::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
+
   QApplication::restoreOverrideCursor();
 }
 
-void editor_tab::mouseMoveEvent(QMouseEvent* event)
+void tilemap_scene::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
+
   if (event->buttons() & Qt::MouseButton::MidButton) {
     m_viewport.translate(event->x() - m_lastMouseX, event->y() - m_lastMouseY);
     m_lastMouseX = event->x();

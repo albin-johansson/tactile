@@ -71,7 +71,7 @@ class central_editor_widget final : public QWidget {
 
  private:
   Ui::CentralWidgetUI* m_ui;
-  tilemap_tab_widget* m_mapTabWidget;
+  tilemap_tab* m_mapTabWidget;
   int m_editorViewIndex;
   int m_startupViewIndex;
 
