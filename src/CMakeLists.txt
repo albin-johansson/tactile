@@ -23,8 +23,9 @@ set(TACTILE_SOURCE_FILES
         model/core_fwd.hpp
         model/core.hpp
         model/core.cpp
-        model/flood_fill.hpp
-        model/flood_fill.cpp
+
+        model/algo/flood_fill.hpp
+        model/algo/flood_fill.cpp
 
         model/util/algorithm_utils.hpp
         model/util/type_utils.hpp
@@ -138,6 +139,7 @@ target_include_directories(libTactile
         PUBLIC model/tile
         PUBLIC model/tilemap
         PUBLIC model/tileset
+        PUBLIC model/algo
         PUBLIC ui
         PUBLIC ui/toolbar
         PUBLIC ui/editor
