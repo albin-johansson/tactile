@@ -128,13 +128,9 @@ set(TACTILE_SOURCE_FILES
 
         ui/editor/tilemap_view.cpp
         ui/editor/tilemap_view.hpp
-        ui/editor/tile_layer_item.cpp
-        ui/editor/tile_layer_item.hpp
         ui/editor/tilemap_item.cpp
         ui/editor/tilemap_item.hpp
 
-        model/tilemap_model.cpp
-        model/tilemap_model.hpp
         model/tile_layer_model.cpp
         model/tile_layer_model.hpp)
 
