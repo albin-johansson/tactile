@@ -59,12 +59,7 @@ class window final : public QMainWindow {
   void enable_editor_view() noexcept;
 
  signals:
-  /**
-   * @brief A signal that is emitted when the editor pane should be redrawn.
-   *
-   * @since 0.1.0
-   */
-  void request_redraw(QPainter& painter);
+  void request_redraw(QPainter& painter, const QRectF& exposed);
 
   void request_new_map(int id);
 
@@ -181,6 +176,8 @@ class window final : public QMainWindow {
   void handle_draw();
 
   void handle_move_camera(int dx, int dy);
+
+  void handle_new_map(model::core* core);
 
  protected:
   void closeEvent(QCloseEvent* event) override;

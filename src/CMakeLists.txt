@@ -26,8 +26,8 @@ set(TACTILE_SOURCE_FILES
 
         model/algo/flood_fill.hpp
         model/algo/flood_fill.cpp
+        model/algo/algorithm_utils.hpp
 
-        model/util/algorithm_utils.hpp
         model/util/type_utils.hpp
         model/tile/tile_size.hpp
         model/tile/tile_size.cpp
@@ -109,7 +109,9 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tilemap_tab.cpp
         ui/editor/tilemap_tab.hpp
         ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui misc/tactile_fwd.hpp
+        ui/editor/editor_pane.ui
+
+        misc/tactile_fwd.hpp
 
         command/command_stack.cpp
         command/command_stack.hpp
@@ -125,7 +127,16 @@ set(TACTILE_SOURCE_FILES
         command/resize_map.hpp
 
         ui/editor/tilemap_view.cpp
-        ui/editor/tilemap_view.hpp)
+        ui/editor/tilemap_view.hpp
+        ui/editor/tile_layer_item.cpp
+        ui/editor/tile_layer_item.hpp
+        ui/editor/tilemap_item.cpp
+        ui/editor/tilemap_item.hpp
+
+        model/tilemap_model.cpp
+        model/tilemap_model.hpp
+        model/tile_layer_model.cpp
+        model/tile_layer_model.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

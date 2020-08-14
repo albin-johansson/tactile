@@ -31,7 +31,9 @@ class central_editor_widget final : public QWidget {
 
   ~central_editor_widget() noexcept override;
 
-  auto add_new_map_tab(const QString& title) noexcept -> int;
+  auto add_new_map_tab(model::core* core, const QString& title) noexcept -> int;
+
+  [[nodiscard]] auto next_tab_id() const noexcept -> int;
 
   void close_tab(int id) noexcept;
 
@@ -63,7 +65,7 @@ class central_editor_widget final : public QWidget {
   void handle_trigger_redraw() noexcept;
 
  signals:
-  void request_redraw(QPainter& painter);
+  void request_redraw(QPainter& painter, const QRectF& exposed);
 
   void request_remove_tab(int id);
 

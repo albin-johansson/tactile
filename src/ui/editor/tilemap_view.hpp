@@ -3,6 +3,7 @@
 #include <QGraphicsView>
 #include <QRect>
 
+#include "core.hpp"
 #include "tilemap_scene.hpp"
 
 namespace tactile::ui {
@@ -20,7 +21,7 @@ class tilemap_view final : public QGraphicsView {
   Q_OBJECT
 
  public:
-  explicit tilemap_view(int id, QWidget* parent = nullptr);
+  explicit tilemap_view(model::core* core, int id, QWidget* parent = nullptr);
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 
@@ -29,14 +30,14 @@ class tilemap_view final : public QGraphicsView {
   [[nodiscard]] auto id() const noexcept -> int;
 
  signals:
-  void request_redraw(QPainter& painter);
+  void request_redraw(QPainter& painter, const QRectF& exposed);
 
  protected:
-    void mousePressEvent(QMouseEvent* event) override;
+  void mousePressEvent(QMouseEvent* event) override;
 
-    void mouseMoveEvent(QMouseEvent* event) override;
+  void mouseMoveEvent(QMouseEvent* event) override;
 
-    void mouseReleaseEvent(QMouseEvent* event) override;
+  void mouseReleaseEvent(QMouseEvent* event) override;
 
   //  void paintEvent(QPaintEvent* event) override;
   //

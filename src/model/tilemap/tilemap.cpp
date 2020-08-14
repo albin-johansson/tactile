@@ -1,9 +1,6 @@
 #include "tilemap.hpp"
 
-#include <QPainter>
-
 #include "algorithm_utils.hpp"
-#include "render_tilemap.hpp"
 
 namespace tactile::model {
 namespace {
@@ -21,11 +18,6 @@ tilemap::tilemap(int nRows, int nCols)
       m_activeLayer{0}
 {
   m_layers.emplace_back(nRows, nCols);
-}
-
-void tilemap::draw(QPainter& painter) const noexcept
-{
-  render_tilemap(painter, *this);
 }
 
 void tilemap::select(int layer) noexcept

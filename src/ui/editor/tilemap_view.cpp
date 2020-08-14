@@ -3,27 +3,38 @@
 #include <QMouseEvent>
 #include <QPaintEvent>
 #include <QResizeEvent>
+#include <QScrollBar>
 
 namespace tactile::ui {
 
-tilemap_view::tilemap_view(int id, QWidget* parent) : QGraphicsView{parent}
+// TODO remove core* argument?
+tilemap_view::tilemap_view(model::core* core, int id, QWidget* parent)
+    : QGraphicsView{parent}
 {
-  setScene(new tilemap_scene{id, this});
+  setTransformationAnchor(QGraphicsView::AnchorViewCenter);
+
+  //  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  //  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+
+  setScene(new tilemap_scene{core, id, this});
 
   connect(get_tilemap_scene(),
           &tilemap_scene::request_redraw,
           this,
           &tilemap_view::request_redraw);
-
 }
 
 void tilemap_view::move_viewport(int dx, int dy) noexcept
 {
-  translate(dx, dy);
+  const auto old = scene()->sceneRect();
+  scene()->setSceneRect(old.x() + dx, old.y() + dy, old.width(), old.height());
+
+  update();
 }
 
 void tilemap_view::center_viewport(int mapWidth, int mapHeight) noexcept
 {
+  // TODO
   //  m_scene->center_viewport(mapWidth, mapHeight);
 }
 
@@ -39,18 +50,18 @@ void tilemap_view::mouseMoveEvent(QMouseEvent* event)
   m_lastMousePos = event->globalPos();
   m_lastMouseScenePos = mapToScene(viewport()->mapFromGlobal(m_lastMousePos));
 
-  //  if (event->buttons() & Qt::MouseButton::MidButton) {
-  //    const auto pos = event->pos();
+  //    if (event->buttons() & Qt::MouseButton::MidButton) {
+  //      const auto pos = event->pos();
   //
-  //    const int x = pos.x();
-  //    const int y = pos.y();
+  //      const int x = pos.x();
+  //      const int y = pos.y();
   //
-  //    translate(x - m_lastMouseX, y - m_lastMouseY);
+  //      translate(x - m_lastMouseX, y - m_lastMouseY);
   //
-  //    m_lastMouseX = x;
-  //    m_lastMouseY = y;
-  //    update();
-  //  }
+  //      m_lastMouseX = x;
+  //      m_lastMouseY = y;
+  //      update();
+  //    }
 }
 
 void tilemap_view::mouseReleaseEvent(QMouseEvent* event)

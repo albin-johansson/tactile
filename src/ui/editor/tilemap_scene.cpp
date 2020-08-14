@@ -5,18 +5,25 @@
 #include <QPainter>
 #include <QResizeEvent>
 
+#include "tilemap_item.hpp"
 #include "widget_size_policy.hpp"
 
 namespace tactile::ui {
 
-tilemap_scene::tilemap_scene(int id, QWidget* parent)
-    : QGraphicsScene{parent}, m_id{id}
+tilemap_scene::tilemap_scene(model::core* core, int id, QWidget* parent)
+    : QGraphicsScene{parent}, m_core{core}, m_id{id}
 {
-//  m_viewport.setX(0);
-//  m_viewport.setY(0);
+  auto* item = new tilemap_item{core};
+  connect(item,
+          &tilemap_item::request_redraw,
+          this,
+          &tilemap_scene::request_redraw);
+  addItem(item);
+
+  setSceneRect(100, 100, 100, 100);
 }
 
-//void tilemap_scene::center_viewport(int mapWidth, int mapHeight) noexcept
+// void tilemap_scene::center_viewport(int mapWidth, int mapHeight) noexcept
 //{
 //  const auto x = (m_viewport.width() - mapWidth) / 2;
 //  const auto y = (m_viewport.height() - mapHeight) / 2;
@@ -24,7 +31,7 @@ tilemap_scene::tilemap_scene(int id, QWidget* parent)
 //  m_viewport.moveTo(x, y);
 //}
 
-//void tilemap_scene::move_viewport(int dx, int dy) noexcept
+// void tilemap_scene::move_viewport(int dx, int dy) noexcept
 //{
 //  const auto width = m_viewport.width();
 //  const auto height = m_viewport.height();
@@ -40,28 +47,23 @@ auto tilemap_scene::id() const noexcept -> int
   return m_id;
 }
 
-void tilemap_scene::drawBackground(QPainter* painter, const QRectF& rect)
-{
-  QGraphicsScene::drawBackground(painter, rect);
-  painter->fillRect(rect, Qt::black);
-}
-
-void tilemap_scene::drawForeground(QPainter* painter, const QRectF& rect)
-{
-  QGraphicsScene::drawForeground(painter, rect);
-
-//  m_viewport.setSize(rect.size().toSize());
-
-//  painter->setPen(Qt::magenta);
-//  painter->drawRect();
-
-
-
-
-
-
-  emit request_redraw(*painter);
-}
+// void tilemap_scene::drawBackground(QPainter* painter, const QRectF& rect)
+//{
+//  QGraphicsScene::drawBackground(painter, rect);
+//  painter->fillRect(rect, Qt::black);
+//}
+//
+// void tilemap_scene::drawForeground(QPainter* painter, const QRectF& rect)
+//{
+//  QGraphicsScene::drawForeground(painter, rect);
+//
+//  //  m_viewport.setSize(rect.size().toSize());
+//
+//  //  painter->setPen(Qt::magenta);
+//  //  painter->drawRect();
+//
+//  emit request_redraw(*painter);
+//}
 
 // void tilemap_scene::resizeEvent(QResizeEvent* event)
 //{
@@ -77,25 +79,31 @@ void tilemap_scene::drawForeground(QPainter* painter, const QRectF& rect)
 //  update();
 //}
 
+void tilemap_scene::drawBackground(QPainter* painter, const QRectF& rect)
+{
+  QGraphicsScene::drawBackground(painter, rect);
+  painter->fillRect(rect, Qt::black);
+}
+
 void tilemap_scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mousePressEvent(event);
 
-//  if (event->buttons() & Qt::MouseButton::MidButton) {
-//    const auto pos = event->scenePos();
-//
-//    m_lastMouseX = pos.x();
-//    m_lastMouseY = pos.y();
-//
-//    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
-//  }
+  //  if (event->buttons() & Qt::MouseButton::MidButton) {
+  //    const auto pos = event->scenePos();
+  //
+  //    m_lastMouseX = pos.x();
+  //    m_lastMouseY = pos.y();
+  //
+  //    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+  //  }
 }
 
 void tilemap_scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mouseReleaseEvent(event);
-//
-//  QApplication::restoreOverrideCursor();
+  //
+  //  QApplication::restoreOverrideCursor();
 }
 
 void tilemap_scene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)

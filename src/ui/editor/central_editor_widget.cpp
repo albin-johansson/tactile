@@ -41,20 +41,24 @@ void central_editor_widget::init_connections() noexcept
           this,
           &central_editor_widget::request_remove_tab);
 
-  connect(m_mapTabWidget,
-          &tilemap_tab::currentChanged,
-          this,
-          [this](int index) {
-            if (const auto id = m_mapTabWidget->tab_id(index); id) {
-              emit request_select_tab(*id);
-            }
-          });
+  connect(
+      m_mapTabWidget, &tilemap_tab::currentChanged, this, [this](int index) {
+        if (const auto id = m_mapTabWidget->tab_id(index); id) {
+          emit request_select_tab(*id);
+        }
+      });
 }
 
-auto central_editor_widget::add_new_map_tab(const QString& title) noexcept
+auto central_editor_widget::add_new_map_tab(model::core* core,
+                                            const QString& title) noexcept
     -> int
 {
-  return m_mapTabWidget->add_tile_map_tab(title);
+  return m_mapTabWidget->add_tile_map_tab(core, title);
+}
+
+auto central_editor_widget::next_tab_id() const noexcept -> int
+{
+  return m_mapTabWidget->next_tab_id();
 }
 
 void central_editor_widget::close_tab(int id) noexcept

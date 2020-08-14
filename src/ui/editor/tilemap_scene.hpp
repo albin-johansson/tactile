@@ -4,6 +4,8 @@
 #include <QRect>
 #include <QWidget>
 
+#include "core.hpp"
+
 class QPainter;
 
 namespace tactile::ui {
@@ -12,7 +14,7 @@ class tilemap_scene final : public QGraphicsScene {
   Q_OBJECT
 
  public:
-  explicit tilemap_scene(int id, QWidget* parent = nullptr);
+  explicit tilemap_scene(model::core* core, int id, QWidget* parent = nullptr);
 
 //  void center_viewport(int mapWidth, int mapHeight) noexcept;
 
@@ -23,16 +25,10 @@ class tilemap_scene final : public QGraphicsScene {
   [[nodiscard]] auto id() const noexcept -> int;
 
  signals:
-  void request_redraw(QPainter& painter);
+  void request_redraw(QPainter& painter, const QRectF& exposed);
 
  protected:
   void drawBackground(QPainter* painter, const QRectF& rect) override;
-
-  void drawForeground(QPainter* painter, const QRectF& rect) override;
-
-  //  void paintEvent(QPaintEvent* event) override;
-
-  //  void resizeEvent(QResizeEvent* event) override;
 
   void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
 
@@ -41,6 +37,7 @@ class tilemap_scene final : public QGraphicsScene {
   void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
  private:
+  model::core* m_core;
 //  QRect m_viewport{};
   int m_id;
   QPointF m_lastMouseScenePos{};

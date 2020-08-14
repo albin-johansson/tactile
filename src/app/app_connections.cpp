@@ -86,7 +86,7 @@ void app_connections::init_camera_connections(app& app) noexcept
 
 void app_connections::init_tilemap_connections(app& app) noexcept
 {
-  connect(m_window, &window::request_new_map, m_core, &core::handle_new_map);
+  connect(m_window, &window::request_new_map, &app, &app::handle_new_map);
 
   connect(
       m_window, &window::request_close_map, m_core, &core::handle_close_map);

@@ -169,16 +169,18 @@ class core final : public QObject {
   void request_update();
 
  public slots:
-  /**
-   * @brief Renders the currently active tile map.
-   *
-   * @note This method has no effect if there is no active tilemap.
-   *
-   * @param painter the painter that will be used to render the tilemap.
-   *
-   * @since 0.1.0
-   */
-  void handle_draw(QPainter& painter) const noexcept;
+//  /**
+//   * @brief Renders the currently active tile map.
+//   *
+//   * @note This method has no effect if there is no active tilemap.
+//   *
+//   * @param painter the painter that will be used to render the tilemap.
+//   *
+//   * @since 0.1.0
+//   */
+//  [[deprecated]] void handle_draw(QPainter& painter) const noexcept;
+
+  void handle_draw(QPainter& painter, const QRectF& exposed);
 
   /**
    * @brief Starts working on a new tilemap.

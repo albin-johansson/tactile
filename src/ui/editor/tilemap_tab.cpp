@@ -23,14 +23,13 @@ void tilemap_tab::handle_tab_close(int index)
   removeTab(index);
 }
 
-auto tilemap_tab::add_tile_map_tab(const QString& title) noexcept -> int
+auto tilemap_tab::add_tile_map_tab(model::core* core,
+                                   const QString& title) noexcept -> int
 {
-  static int id = 0;  // serial ID
-
   auto newTitle = title;
-  newTitle.append(QString::number(id));
+  newTitle.append(QString::number(m_currentID));
 
-  auto* view = new tilemap_view{id++};
+  auto* view = new tilemap_view{core, m_currentID++};
   addTab(view, newTitle);
 
   connect(
@@ -65,6 +64,11 @@ void tilemap_tab::move_viewport(int dx, int dy) noexcept
       pane->move_viewport(dx, dy);
     }
   }
+}
+
+auto tilemap_tab::next_tab_id() const noexcept -> int
+{
+  return m_currentID + 1;
 }
 
 auto tilemap_tab::get_pane(int index) const noexcept -> tilemap_view*

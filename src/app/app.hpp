@@ -35,9 +35,11 @@ class app final : public QApplication {
    */
   app(int argc, char** argv);
 
+  ~app() noexcept;
+
  private:
   std::unique_ptr<ui::window> m_window;
-  model::core m_core;
+  owner<model::core*> m_core;
   command_stack* m_commands{};  // TODO one stack per map
 
   [[nodiscard]] auto window_ptr() noexcept -> ui::window*
@@ -45,7 +47,7 @@ class app final : public QApplication {
     return m_window.get();
   }
 
-  [[nodiscard]] auto core_ptr() noexcept -> model::core* { return &m_core; }
+  [[nodiscard]] auto core_ptr() noexcept -> model::core* { return m_core; }
 
  private slots:
   void handle_undo();
@@ -73,6 +75,8 @@ class app final : public QApplication {
   void handle_center_camera();
 
   void handle_new_tileset();
+
+  void handle_new_map(int id);
 };
 
 }  // namespace tactile

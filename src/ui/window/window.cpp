@@ -125,6 +125,16 @@ void window::handle_draw()
   m_centralWidget->handle_trigger_redraw();
 }
 
+void window::handle_new_map(model::core* core)
+{
+  m_centralWidget->add_new_map_tab(core, "map");
+  if (!in_editor_mode()) {
+    enable_editor_view();
+    show_all_docks();  // TODO just reopen docks that were visible
+    emit request_center_camera();
+  }
+}
+
 void window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);
@@ -152,17 +162,15 @@ void window::init_connections() noexcept
   on_triggered(m_ui->actionExit, [] { QApplication::exit(); });
 
   on_triggered(m_ui->actionNewMap, [this]() noexcept {
-    const auto id = m_centralWidget->add_new_map_tab("map");
+    //    const auto id = m_centralWidget->add_new_map_tab("map");
 
-    emit request_new_map(id);
+    emit request_new_map(m_centralWidget->next_tab_id());
 
-    if (!in_editor_mode()) {
-      enable_editor_view();
-      show_all_docks();  // TODO just reopen docks that were visible
-      emit request_center_camera();
-    }
-
-    // TODO...
+    //    if (!in_editor_mode()) {
+    //      enable_editor_view();
+    //      show_all_docks();  // TODO just reopen docks that were visible
+    //      emit request_center_camera();
+    //    }
   });
 
   on_triggered(m_ui->actionCloseMap, [this]() noexcept {

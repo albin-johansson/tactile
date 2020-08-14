@@ -8,8 +8,6 @@
 #include "tile_size.hpp"
 #include "type_utils.hpp"
 
-class QPainter;
-
 namespace tactile::model {
 
 /**
@@ -42,15 +40,6 @@ class tilemap final {
    * @since 0.1.0
    */
   tilemap(int nRows, int nCols);
-
-  /**
-   * @brief Renders the tilemap.
-   *
-   * @param painter the painter that will be used.
-   *
-   * @since 0.1.0
-   */
-  void draw(QPainter& painter) const noexcept;
 
   /**
    * @brief Selects the tile layer associated with the specified index.

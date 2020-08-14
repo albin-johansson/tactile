@@ -2,6 +2,7 @@
 
 #include <QImage>
 
+#include "render_tilemap.hpp"
 #include "tilemap.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
@@ -144,10 +145,17 @@ void core::handle_reset_tile_size() noexcept
   }
 }
 
-void core::handle_draw(QPainter& painter) const noexcept
+//void core::handle_draw(QPainter& painter) const noexcept
+//{
+//  if (has_active_map()) {
+//    active_map().draw(painter);
+//  }
+//}
+
+void core::handle_draw(QPainter& painter, const QRectF& exposed)
 {
   if (has_active_map()) {
-    active_map().draw(painter);
+    render_tilemap(painter, active_map(), exposed);
   }
 }
 
