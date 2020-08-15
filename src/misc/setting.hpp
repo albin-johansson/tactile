@@ -39,7 +39,7 @@ class setting final {
 namespace settings {
 
 template <typename U>
-static void set(const QString& key, U&& value)
+void set(const QString& key, U&& value)
 {
   QSettings settings;
   Q_ASSERT(settings.status() == QSettings::NoError);
@@ -48,7 +48,7 @@ static void set(const QString& key, U&& value)
 }
 
 template <typename U>
-static void set_if_missing(const QString& key, U&& value)
+void set_if_missing(const QString& key, U&& value)
 {
   QSettings settings;
   Q_ASSERT(settings.status() == QSettings::NoError);
