@@ -18,7 +18,6 @@ set(TACTILE_SOURCE_FILES
         misc/tactile_error.cpp
         misc/tactile_types.hpp
         misc/tactile_fwd.hpp
-        misc/setting.cpp
         misc/setting.hpp
         misc/setting_identifiers.hpp
 
