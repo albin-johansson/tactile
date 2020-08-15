@@ -136,6 +136,19 @@ set(TACTILE_SOURCE_FILES
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
+set(GSL_SOURCES
+        ${LIBRARY_DIR}/microsoft/gsl/gsl
+        ${LIBRARY_DIR}/microsoft/gsl/gsl_algorithm
+        ${LIBRARY_DIR}/microsoft/gsl/gsl_assert
+        ${LIBRARY_DIR}/microsoft/gsl/gsl_byte
+        ${LIBRARY_DIR}/microsoft/gsl/gsl_util
+        ${LIBRARY_DIR}/microsoft/gsl/multi_span
+        ${LIBRARY_DIR}/microsoft/gsl/pointers
+        ${LIBRARY_DIR}/microsoft/gsl/span
+        ${LIBRARY_DIR}/microsoft/gsl/span_ext
+        ${LIBRARY_DIR}/microsoft/gsl/string_span)
+add_header_only_lib(libGSL ${LIBRARY_DIR}/microsoft ${GSL_SOURCES})
+
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
         PUBLIC command
@@ -159,7 +172,8 @@ target_include_directories(libTactile
 target_link_libraries(libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
-        PUBLIC Qt5::Gui)
+        PUBLIC Qt5::Gui
+        PUBLIC libGSL)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(libTactile PRIVATE
@@ -190,8 +204,7 @@ add_executable(Tactile
 
 add_dependencies(Tactile libTactile)
 
-target_link_libraries(Tactile
-        PUBLIC libTactile)
+target_link_libraries(Tactile PUBLIC libTactile)
 
 copy_directory_post_build(Tactile
         ${TACTILE_ROOT_DIR}/bin

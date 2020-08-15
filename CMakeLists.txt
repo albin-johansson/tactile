@@ -4,6 +4,7 @@ project(tactile)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(CMAKE_PREFIX_PATH $ENV{Qt5_PATH})
+set(LIBRARY_DIR ${PROJECT_SOURCE_DIR}/lib)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
@@ -32,6 +33,16 @@ function(copy_directory_post_build [target [from [to]]])
             COMMAND ${CMAKE_COMMAND} -E copy_directory
             ${ARGV1}
             ${ARGV2})
+endfunction()
+
+# Creates an interface library target for a header-only library.
+#   name: the name of the library target.
+#   includeDirectory: the path of the directory that contains the headers of the library.
+#   sources: the headers associated with the library.
+function(add_header_only_lib [name [includeDirectory [sources]]])
+    add_library(${ARGV0} INTERFACE)
+    target_sources(${ARGV0} INTERFACE ${ARGV2})
+    target_include_directories(${ARGV0} SYSTEM INTERFACE ${ARGV1})
 endfunction()
 
 add_subdirectory(src)
