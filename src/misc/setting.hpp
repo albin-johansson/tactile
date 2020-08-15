@@ -38,23 +38,23 @@ class setting final {
 
 namespace settings {
 
-template <typename U>
-void set(const QString& key, U&& value)
+template <typename T>
+void set(const QString& key, T&& value)
 {
   QSettings settings;
   Q_ASSERT(settings.status() == QSettings::NoError);
 
-  settings.setValue(key, std::forward<U>(value));
+  settings.setValue(key, std::forward<T>(value));
 }
 
-template <typename U>
-void set_if_missing(const QString& key, U&& value)
+template <typename T>
+void set_if_missing(const QString& key, T&& value)
 {
   QSettings settings;
   Q_ASSERT(settings.status() == QSettings::NoError);
 
   if (!settings.contains(key)) {
-    settings.setValue(key, std::forward<U>(value));
+    settings.setValue(key, std::forward<T>(value));
   }
 }
 
