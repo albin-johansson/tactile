@@ -14,11 +14,13 @@ set(TACTILE_SOURCE_FILES
         app/setup_app.cpp
 
         misc/version.hpp
-        misc/settings_utils.hpp
-        misc/settings_utils.cpp
         misc/tactile_error.hpp
         misc/tactile_error.cpp
         misc/tactile_types.hpp
+        misc/tactile_fwd.hpp
+        misc/setting.cpp
+        misc/setting.hpp
+        misc/setting_identifiers.hpp
 
         model/core_fwd.hpp
         model/core.hpp
@@ -110,8 +112,6 @@ set(TACTILE_SOURCE_FILES
         ui/editor/tilemap_tab.hpp
         ui/editor/central_widget.ui
         ui/editor/editor_pane.ui
-
-        misc/tactile_fwd.hpp
 
         command/command_stack.cpp
         command/command_stack.hpp

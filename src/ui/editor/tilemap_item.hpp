@@ -7,6 +7,7 @@
 
 namespace tactile::ui {
 
+// TODO avoid QObject inheritance
 class tilemap_item final : public QObject, public QGraphicsItem  {
   Q_OBJECT
   Q_INTERFACES(QGraphicsItem)

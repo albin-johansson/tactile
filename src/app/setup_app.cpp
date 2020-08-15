@@ -7,7 +7,8 @@
 #include <QSurfaceFormat>
 
 #include "app.hpp"
-#include "settings_utils.hpp"
+#include "setting.hpp"
+#include "setting_identifiers.hpp"
 #include "version.hpp"
 
 namespace tactile {
@@ -29,14 +30,13 @@ void init_surface_format() noexcept
 }
 
 /**
- * Initializes the settings to their default values, if they are absent.
+ * @brief Initializes the settings to their default values, if they are absent.
  *
  * @since 0.1.0
  */
 void validate_settings() noexcept
 {
-  set_if_absent("visuals-grid", true);
-  set_if_absent("load-previous-layout-on-startup", true);
+  settings::set_if_missing(cfg::graphics::grid(), true);
 }
 
 }  // namespace
@@ -51,6 +51,8 @@ void setup_app()
   QApplication::setApplicationVersion(version());
   QApplication::setOrganizationName("albin-johansson");
   QApplication::setApplicationName("tactile");
+
+  validate_settings();
 }
 
 }  // namespace tactile

@@ -2,11 +2,10 @@
 
 #include <QColor>
 #include <QPainter>
-#include <QSettings>
 #include <algorithm>
 
-#include "settings_utils.hpp"
-#include "tile_size.hpp"
+#include "setting.hpp"
+#include "setting_identifiers.hpp"
 #include "tilemap.hpp"
 
 namespace tactile::model {
@@ -77,11 +76,12 @@ void render_layer(QPainter& painter,
                   const QRectF& exposed,
                   const int tileSize)
 {
-//  const QRect bounds{0, 0, layer.cols() * tileSize, layer.rows() * tileSize};
+  //  const QRect bounds{0, 0, layer.cols() * tileSize, layer.rows() *
+  //  tileSize};
   const auto startX = exposed.left();
   const auto startY = exposed.top();
-//  const auto endX = bounds.right();
-//  const auto endY = bounds.bottom();
+  //  const auto endX = bounds.right();
+  //  const auto endY = bounds.bottom();
 
   const int minCol = 0;
   const int minRow = 0;
@@ -90,14 +90,17 @@ void render_layer(QPainter& painter,
 
   constexpr QColor emptyGray{0x55, 0x55, 0x55};
 
+  const auto grid = setting<bool>{cfg::graphics::grid()};
+  const auto renderGrid = grid.value_or(true);
+
   for (auto row = minRow; row < maxRow; ++row) {
     for (auto col = minCol; col < maxCol; ++col) {
       const auto x = startX + (col * tileSize);
       const auto y = startY + (row * tileSize);
       painter.fillRect(x, y, tileSize, tileSize, emptyGray);
-      //      if (renderGrid) {
-      //        painter.drawRect(x, y, tileSize, tileSize);
-      //      }
+      if (renderGrid) {
+        painter.drawRect(x, y, tileSize, tileSize);
+      }
     }
   }
 }

@@ -5,15 +5,15 @@
 #include <QFileDialog>
 #include <QOpenGLFunctions>
 #include <QPainter>
-#include <QSettings>
 #include <QSpacerItem>
 
 #include "about_dialog.hpp"
 #include "central_editor_widget.hpp"
 #include "create_dock_widget.hpp"
 #include "mouse_tool_widget.hpp"
+#include "setting.hpp"
+#include "setting_identifiers.hpp"
 #include "settings_dialog.hpp"
-#include "settings_utils.hpp"
 #include "tileset_widget.hpp"
 #include "ui_window.h"
 #include "widget_size_policy.hpp"
@@ -139,9 +139,8 @@ void window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);
 
-  QSettings settings;
-  settings.setValue("last-open-layout-state", saveState());
-  settings.setValue("last-open-layout-geometry", saveGeometry());
+  settings::set(cfg::window::last_layout_geometry(), saveGeometry());
+  settings::set(cfg::window::last_layout_state(), saveState());
 }
 
 void window::init_connections() noexcept
@@ -239,10 +238,11 @@ void window::init_connections() noexcept
 
   on_triggered(m_ui->actionToggleGrid, [this] {
     if (in_editor_mode()) {
-      QSettings settings;
-      const auto prev = settings.value("visuals-grid").toBool();
-      settings.setValue("visuals-grid", !prev);
-      handle_draw();
+      if (setting<bool> grid{cfg::graphics::grid()}; grid) {
+        const auto prev = *grid;
+        settings::set(cfg::graphics::grid(), !prev);
+        handle_draw();
+      }
     }
   });
 
@@ -385,17 +385,13 @@ void window::init_connections() noexcept
 
 void window::init_layout() noexcept
 {
-  const auto loadPrevious = settings_bool("load-previous-layout-on-startup");
-  if (loadPrevious && loadPrevious.value()) {
-    const auto state = settings_byte_array("last-open-layout-state");
-    if (state) {
-      restoreState(*state);
-    }
+  if (setting<QByteArray> geometry{cfg::window::last_layout_geometry()};
+      geometry) {
+    restoreGeometry(*geometry);
+  }
 
-    const auto geometry = settings_byte_array("last-open-layout-geometry");
-    if (geometry) {
-      restoreGeometry(*geometry);
-    }
+  if (setting<QByteArray> state{cfg::window::last_layout_state()}; state) {
+    restoreState(*state);
   }
 }
 
