@@ -9,6 +9,7 @@ namespace tactile::ui {
 
 class tilemap_item final : public QObject, public QGraphicsItem  {
   Q_OBJECT
+  Q_INTERFACES(QGraphicsItem)
 
  public:
   explicit tilemap_item(model::core* core, QGraphicsItem* parent = nullptr);
