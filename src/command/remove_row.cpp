@@ -18,14 +18,14 @@ void remove_row::undo()
 {
   QUndoCommand::undo();
 
-  m_core->handle_add_row();
+  m_core->add_row();
 }
 
 void remove_row::redo()
 {
   QUndoCommand::redo();
 
-  m_core->handle_remove_row();
+  m_core->remove_row();
 }
 
 }  // namespace tactile::cmd

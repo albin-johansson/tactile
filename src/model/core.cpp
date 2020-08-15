@@ -159,7 +159,7 @@ void core::handle_draw(QPainter& painter, const QRectF& exposed)
   }
 }
 
-void core::handle_add_row() noexcept
+void core::add_row() noexcept
 {
   if (has_active_map()) {
     active_map().add_row();
@@ -167,7 +167,7 @@ void core::handle_add_row() noexcept
   }
 }
 
-void core::handle_add_col() noexcept
+void core::add_col() noexcept
 {
   if (has_active_map()) {
     active_map().add_col();
@@ -175,7 +175,7 @@ void core::handle_add_col() noexcept
   }
 }
 
-void core::handle_remove_row() noexcept
+void core::remove_row() noexcept
 {
   if (has_active_map()) {
     active_map().remove_row();
@@ -183,7 +183,7 @@ void core::handle_remove_row() noexcept
   }
 }
 
-void core::handle_remove_col() noexcept
+void core::remove_col() noexcept
 {
   if (has_active_map()) {
     active_map().remove_col();

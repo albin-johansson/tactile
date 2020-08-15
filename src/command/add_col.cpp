@@ -17,14 +17,14 @@ void add_col::undo()
 {
   QUndoCommand::undo();
 
-  m_core->handle_remove_col();
+  m_core->remove_col();
 }
 
 void add_col::redo()
 {
   QUndoCommand::redo();
 
-  m_core->handle_add_col();
+  m_core->add_col();
 }
 
 }  // namespace tactile::cmd

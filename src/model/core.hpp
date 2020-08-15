@@ -101,6 +101,34 @@ class core final : public QObject {
   void select_map(int id) noexcept;
 
   /**
+   * @brief Adds a row to the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
+  void add_row() noexcept;
+
+  /**
+   * @brief Adds a column to the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
+  void add_col() noexcept;
+
+  /**
+   * @brief Removes a row from the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
+  void remove_row() noexcept;
+
+  /**
+   * @brief Removes a column from the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
+  void remove_col() noexcept;
+
+  /**
    * @brief Indicates whether or not there is an active tilemap.
    *
    * @return `true` if there is an active tilemap; `false` otherwise.
@@ -169,17 +197,6 @@ class core final : public QObject {
   void request_update();
 
  public slots:
-//  /**
-//   * @brief Renders the currently active tile map.
-//   *
-//   * @note This method has no effect if there is no active tilemap.
-//   *
-//   * @param painter the painter that will be used to render the tilemap.
-//   *
-//   * @since 0.1.0
-//   */
-//  [[deprecated]] void handle_draw(QPainter& painter) const noexcept;
-
   void handle_draw(QPainter& painter, const QRectF& exposed);
 
   /**
@@ -205,34 +222,6 @@ class core final : public QObject {
    * @since 0.1.0
    */
   void handle_close_map(int id) noexcept;
-
-  /**
-   * @brief Adds a row to the currently active tilemap.
-   *
-   * @since 0.1.0
-   */
-  void handle_add_row() noexcept;
-
-  /**
-   * @brief Adds a column to the currently active tilemap.
-   *
-   * @since 0.1.0
-   */
-  void handle_add_col() noexcept;
-
-  /**
-   * @brief Removes a row from the currently active tilemap.
-   *
-   * @since 0.1.0
-   */
-  void handle_remove_row() noexcept;
-
-  /**
-   * @brief Removes a column from the currently active tilemap.
-   *
-   * @since 0.1.0
-   */
-  void handle_remove_col() noexcept;
 
   /**
    * @brief Increases the tile size that is being used by the currently active
