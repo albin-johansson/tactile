@@ -19,13 +19,7 @@ void tilemap_item::paint(QPainter* painter,
   assert(painter);
   assert(option);
 
-//  const auto viewport = painter->viewport();
-//  qInfo("Viewport: (%i, %i, %i, %i)",
-//        viewport.x(),
-//        viewport.y(),
-//        viewport.width(),
-//        viewport.height());
-
+  // TODO store pointer to associated tilemap
   emit request_redraw(*painter, option->exposedRect);
 }
 
