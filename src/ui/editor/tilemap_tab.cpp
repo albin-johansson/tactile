@@ -23,19 +23,18 @@ void tilemap_tab::handle_tab_close(int index)
   removeTab(index);
 }
 
-auto tilemap_tab::add_tile_map_tab(model::core* core,
-                                   const QString& title) noexcept -> int
+void tilemap_tab::add_tile_map_tab(model::core_model* core,
+                                   const QString& title,
+                                   int id) noexcept
 {
   auto newTitle = title;
-  newTitle.append(QString::number(m_currentID));
+  newTitle.append(QString::number(id));
 
-  auto* view = new tilemap_view{core, m_currentID++};
+  auto* view = new tilemap_view{core, id};
   addTab(view, newTitle);
 
   connect(
       view, &tilemap_view::request_redraw, this, &tilemap_tab::request_redraw);
-
-  return view->id();
 }
 
 void tilemap_tab::remove_tile_map_tab(int id) noexcept
@@ -44,6 +43,16 @@ void tilemap_tab::remove_tile_map_tab(int id) noexcept
   for (int i = 0; i < amount; ++i) {
     if (auto* pane = get_pane(i); pane && pane->id() == id) {
       removeTab(i);
+    }
+  }
+}
+
+void tilemap_tab::select_tab(int id)
+{
+  const auto amount = count();
+  for (int i = 0; i < amount; ++i) {
+    if (auto* pane = get_pane(i); pane && pane->id() == id) {
+      setCurrentIndex(i);
     }
   }
 }
@@ -64,11 +73,6 @@ void tilemap_tab::move_viewport(int dx, int dy) noexcept
       pane->move_viewport(dx, dy);
     }
   }
-}
-
-auto tilemap_tab::next_tab_id() const noexcept -> int
-{
-  return m_currentID + 1;
 }
 
 auto tilemap_tab::get_pane(int index) const noexcept -> tilemap_view*

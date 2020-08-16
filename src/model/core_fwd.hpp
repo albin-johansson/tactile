@@ -12,9 +12,9 @@ class tile_layer;
 
 class tileset;
 
-class tileset_manager;
+class tileset_model;
 
-class core;
+class core_model;
 
 struct tileset_info;
 

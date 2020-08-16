@@ -49,16 +49,16 @@ void central_editor_widget::init_connections() noexcept
       });
 }
 
-auto central_editor_widget::add_new_map_tab(model::core* core,
-                                            const QString& title) noexcept
-    -> int
+void central_editor_widget::add_new_map_tab(model::core_model* core,
+                                            const QString& title,
+                                            int id) noexcept
 {
-  return m_mapTabWidget->add_tile_map_tab(core, title);
+  m_mapTabWidget->add_tile_map_tab(core, title, id);
 }
 
-auto central_editor_widget::next_tab_id() const noexcept -> int
+void central_editor_widget::select_tab(int id)
 {
-  return m_mapTabWidget->next_tab_id();
+  m_mapTabWidget->select_tab(id);
 }
 
 void central_editor_widget::close_tab(int id) noexcept

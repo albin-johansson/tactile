@@ -27,7 +27,7 @@ class app_connections final {
   explicit app_connections(app& app);
 
  private:
-  model::core* m_core;
+  model::core_model* m_core;
   ui::window* m_window;
 
   void init_tilemap_connections(app& app) noexcept;

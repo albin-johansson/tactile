@@ -1,8 +1,8 @@
 #pragma once
 
-#include <map>
 #include <memory>
 #include <optional>
+#include <unordered_map>
 #include <utility>
 
 #include "core_fwd.hpp"
@@ -11,7 +11,7 @@
 namespace tactile::model {
 
 /**
- * @class tileset_manager
+ * @class tileset_model
  *
  * @brief Used to manager multiple instances of the `tileset` class.
  *
@@ -19,9 +19,9 @@ namespace tactile::model {
  *
  * @since 0.1.0
  *
- * @headerfile tileset_manager.hpp
+ * @headerfile tileset_model.hpp
  */
-class tileset_manager final {
+class tileset_model final {
  public:
   /**
    * @brief Adds a tileset to the manager.
@@ -39,8 +39,8 @@ class tileset_manager final {
   template <typename... Args>
   [[nodiscard]] auto emplace(Args&&... args) -> int
   {
-    const auto id = m_nextSheetKey++;
-    m_sheets.emplace(id, tileset{std::forward<Args>(args)...});
+    const auto id = m_nextID++;
+    m_tilesets.emplace(id, tileset{std::forward<Args>(args)...});
     return id;
   }
 
@@ -91,9 +91,9 @@ class tileset_manager final {
   [[nodiscard]] auto has_active_tileset() const noexcept -> bool;
 
  private:
-  std::optional<int> m_activeSheet;
-  std::map<int, tileset> m_sheets;
-  int m_nextSheetKey{1};
+  std::optional<int> m_activeID;
+  std::unordered_map<int, tileset> m_tilesets;
+  int m_nextID{1};
 };
 
 }  // namespace tactile::model

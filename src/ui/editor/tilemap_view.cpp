@@ -8,7 +8,7 @@
 namespace tactile::ui {
 
 // TODO remove core* argument?
-tilemap_view::tilemap_view(model::core* core, int id, QWidget* parent)
+tilemap_view::tilemap_view(model::core_model* core, int id, QWidget* parent)
     : QGraphicsView{parent}
 {
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);

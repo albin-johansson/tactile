@@ -4,10 +4,9 @@
 #include <memory>
 #include <utility>
 
-#include "command_stack.hpp"
-#include "core.hpp"
-#include "misc/tactile_fwd.hpp"
-#include "misc/tactile_types.hpp"
+#include "core_model.hpp"
+#include "tactile_fwd.hpp"
+#include "tactile_types.hpp"
 #include "window.hpp"
 
 namespace tactile {
@@ -35,19 +34,21 @@ class app final : public QApplication {
    */
   app(int argc, char** argv);
 
-  ~app() noexcept;
+  ~app() noexcept override;
 
  private:
   std::unique_ptr<ui::window> m_window;
-  owner<model::core*> m_core;
-  command_stack* m_commands{};  // TODO one stack per map
+  owner<model::core_model*> m_core;
 
   [[nodiscard]] auto window_ptr() noexcept -> ui::window*
   {
     return m_window.get();
   }
 
-  [[nodiscard]] auto core_ptr() noexcept -> model::core* { return m_core; }
+  [[nodiscard]] auto core_ptr() noexcept -> model::core_model*
+  {
+    return m_core;
+  }
 
  private slots:
   void handle_undo();
@@ -76,7 +77,7 @@ class app final : public QApplication {
 
   void handle_new_tileset();
 
-  void handle_new_map(int id);
+  void handle_new_map();
 };
 
 }  // namespace tactile

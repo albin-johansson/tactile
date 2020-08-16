@@ -31,9 +31,11 @@ class central_editor_widget final : public QWidget {
 
   ~central_editor_widget() noexcept override;
 
-  auto add_new_map_tab(model::core* core, const QString& title) noexcept -> int;
+  void add_new_map_tab(model::core_model* core,
+                       const QString& title,
+                       int id) noexcept;
 
-  [[nodiscard]] auto next_tab_id() const noexcept -> int;
+  void select_tab(int id);
 
   void close_tab(int id) noexcept;
 

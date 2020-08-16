@@ -61,7 +61,7 @@ class window final : public QMainWindow {
  signals:
   void request_redraw(QPainter& painter, const QRectF& exposed);
 
-  void request_new_map(int id);
+  void request_new_map();
 
   void request_close_map(int id);
 
@@ -137,7 +137,11 @@ class window final : public QMainWindow {
  public slots:
   void handle_undo_state_update(bool canUndo);
 
-  void handle_redo_state_update(bool canUndo);
+  void handle_redo_state_update(bool canRedo);
+
+  void handle_undo_text_update(const QString& text);
+
+  void handle_redo_text_update(const QString& text);
 
   void handle_add_tileset(const model::tileset_info& info,
                           const QString& tabName) noexcept;
@@ -177,7 +181,7 @@ class window final : public QMainWindow {
 
   void handle_move_camera(int dx, int dy);
 
-  void handle_new_map(model::core* core);
+  void handle_new_map(model::core_model* core, int id);
 
  protected:
   void closeEvent(QCloseEvent* event) override;

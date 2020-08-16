@@ -156,6 +156,19 @@ class tilemap final {
   [[nodiscard]] auto num_layers() const noexcept -> int;
 
   /**
+   * @brief Indicates whether or not the specified layer index is associated
+   * with a tile layer.
+   *
+   * @param layer the tile layer index that will be checked.
+   *
+   * @return `true` if the supplied layer index is associated with a tile layer;
+   * `false` otherwise.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto has_layer(int layer) const noexcept -> bool;
+
+  /**
    * @brief Returns the total number of rows in the tilemap.
    *
    * @return the amount of rows in the tilemap.
@@ -229,19 +242,6 @@ class tilemap final {
   int m_activeLayer;
   std::vector<tile_layer> m_layers;
   tile_size m_tileSize;
-
-  /**
-   * @brief Indicates whether or not the specified layer index is associated
-   * with a tile layer.
-   *
-   * @param layer the tile layer index that will be checked.
-   *
-   * @return `true` if the supplied layer index is associated with a tile layer;
-   * `false` otherwise.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto has_layer(int layer) const noexcept -> bool;
 };
 
 }  // namespace tactile::model

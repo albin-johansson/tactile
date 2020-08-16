@@ -4,7 +4,7 @@
 #include <QRect>
 #include <QWidget>
 
-#include "core.hpp"
+#include "core_model.hpp"
 
 class QPainter;
 
@@ -14,7 +14,7 @@ class tilemap_scene final : public QGraphicsScene {
   Q_OBJECT
 
  public:
-  explicit tilemap_scene(model::core* core, int id, QWidget* parent = nullptr);
+  explicit tilemap_scene(model::core_model* core, int id, QWidget* parent = nullptr);
 
 //  void center_viewport(int mapWidth, int mapHeight) noexcept;
 
@@ -37,7 +37,7 @@ class tilemap_scene final : public QGraphicsScene {
   void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
  private:
-  model::core* m_core;
+  model::core_model* m_core;
 //  QRect m_viewport{};
   int m_id;
   QPointF m_lastMouseScenePos{};

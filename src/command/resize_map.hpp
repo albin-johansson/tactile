@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QUndoCommand>
-
-#include "core.hpp"
+#include "abstract_command.hpp"
 
 namespace tactile::cmd {
 
@@ -15,25 +13,24 @@ namespace tactile::cmd {
  *
  * @headerfile resize_map.hpp
  */
-class resize_map final : public QUndoCommand {
+class resize_map final : public abstract_command {
  public:
   /**
    * @brief Creates a `resize_map` instance.
    *
-   * @param core a pointer to the associated `core` instance, cannot be null.
+   * @param map a pointer to the associated tilemap.
    * @param nRows the new number of rows for the active tilemap.
    * @param nCols the new number of columns for the active tilemap.
    *
    * @since 0.1.0
    */
-  explicit resize_map(model::core* core, int nRows, int nCols);
+  resize_map(not_null<model::tilemap*> map, int nRows, int nCols);
 
   void undo() override;
 
   void redo() override;
 
  private:
-  model::core* m_core;
   int m_rows;
   int m_cols;
   int m_oldRows{1};

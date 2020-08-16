@@ -16,16 +16,17 @@ class tilemap_tab final : public QTabWidget {
 
   ~tilemap_tab() noexcept override;
 
-  [[nodiscard]] auto add_tile_map_tab(model::core* core,
-                                      const QString& title) noexcept -> int;
+  void add_tile_map_tab(model::core_model* core,
+                        const QString& title,
+                        int id) noexcept;
 
   void remove_tile_map_tab(int id) noexcept;
+
+  void select_tab(int id);
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 
   void move_viewport(int dx, int dy) noexcept;
-
-  [[nodiscard]] auto next_tab_id() const noexcept -> int;
 
   [[nodiscard]] auto active_tab_id() const noexcept -> std::optional<int>;
 
@@ -37,8 +38,6 @@ class tilemap_tab final : public QTabWidget {
   void request_remove_tab(int id);
 
  private:
-  int m_currentID{};  // serial ID
-
   [[nodiscard]] auto get_pane(int index) const noexcept -> tilemap_view*;
 
  private slots:

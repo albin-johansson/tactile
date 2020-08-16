@@ -23,21 +23,26 @@ set(TACTILE_SOURCE_FILES
         misc/setting_identifiers.hpp
 
         model/core_fwd.hpp
-        model/core.hpp
-        model/core.cpp
+        model/core_model.hpp
+        model/core_model.cpp
+        model/tile_layer_model.cpp
+        model/tile_layer_model.hpp
+        model/map_model.cpp
+        model/map_model.hpp
 
         model/algo/flood_fill.hpp
         model/algo/flood_fill.cpp
         model/algo/algorithm_utils.hpp
 
         model/util/type_utils.hpp
+
         model/tile/tile_size.hpp
         model/tile/tile_size.cpp
 
         model/tileset/tileset.cpp
         model/tileset/tileset.hpp
-        model/tileset/tileset_manager.cpp
-        model/tileset/tileset_manager.hpp
+        model/tileset/tileset_model.cpp
+        model/tileset/tileset_model.hpp
         model/tileset/tileset_info.hpp
 
         model/tilemap/tilemap.hpp
@@ -110,11 +115,17 @@ set(TACTILE_SOURCE_FILES
         ui/editor/central_editor_widget.hpp
         ui/editor/tilemap_tab.cpp
         ui/editor/tilemap_tab.hpp
+        ui/editor/tilemap_view.cpp
+        ui/editor/tilemap_view.hpp
+        ui/editor/tilemap_item.cpp
+        ui/editor/tilemap_item.hpp
         ui/editor/central_widget.ui
         ui/editor/editor_pane.ui
-
+        
         command/command_stack.cpp
         command/command_stack.hpp
+        command/abstract_command.cpp
+        command/abstract_command.hpp
         command/add_row.cpp
         command/add_row.hpp
         command/add_col.hpp
@@ -124,15 +135,7 @@ set(TACTILE_SOURCE_FILES
         command/remove_col.hpp
         command/remove_col.cpp
         command/resize_map.cpp
-        command/resize_map.hpp
-
-        ui/editor/tilemap_view.cpp
-        ui/editor/tilemap_view.hpp
-        ui/editor/tilemap_item.cpp
-        ui/editor/tilemap_item.hpp
-
-        model/tile_layer_model.cpp
-        model/tile_layer_model.hpp)
+        command/resize_map.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

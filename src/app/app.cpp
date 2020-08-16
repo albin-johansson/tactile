@@ -6,7 +6,7 @@
 #include "add_col.hpp"
 #include "add_row.hpp"
 #include "app_connections.hpp"
-#include "core.hpp"
+#include "core_model.hpp"
 #include "remove_col.hpp"
 #include "remove_row.hpp"
 #include "resize_dialog.hpp"
@@ -22,12 +22,12 @@ using namespace tactile::model;
 
 namespace tactile {
 
-app::app(int argc, char** argv) : QApplication{argc, argv}, m_core{new core{}}
+app::app(int argc, char** argv)
+    : QApplication{argc, argv}, m_core{new core_model{}}
 {
   setup_app();
 
   m_window = std::make_unique<window>();
-  m_commands = new command_stack{this};
 
   app_connections{*this};
   set_style_sheet(*this, ":/resources/tactile_light.qss");
@@ -47,40 +47,32 @@ app::~app() noexcept
 
 void app::handle_undo()
 {
-  m_commands->undo();
+  m_core->undo();
 }
 
 void app::handle_redo()
 {
-  m_commands->redo();
+  m_core->redo();
 }
 
 void app::handle_add_row()
 {
-  if (m_core->has_active_map()) {
-    m_commands->push<cmd::add_row>(m_core);
-  }
+  m_core->add_row();
 }
 
 void app::handle_add_col()
 {
-  if (m_core->has_active_map()) {
-    m_commands->push<cmd::add_col>(m_core);
-  }
+  m_core->add_col();
 }
 
 void app::handle_remove_row()
 {
-  if (m_core->has_active_map()) {
-    m_commands->push<cmd::remove_row>(m_core);
-  }
+  m_core->remove_row();
 }
 
 void app::handle_remove_col()
 {
-  if (m_core->has_active_map()) {
-    m_commands->push<cmd::remove_col>(m_core);
-  }
+  m_core->remove_col();
 }
 
 void app::handle_resize_map()
@@ -91,7 +83,7 @@ void app::handle_resize_map()
     if (dialog.exec()) {
       const auto rows = *dialog.chosen_height();
       const auto cols = *dialog.chosen_width();
-      m_commands->push<cmd::resize_map>(m_core, rows, cols);
+      m_core->resize_map(rows, cols);
     }
   }
 }
@@ -152,10 +144,10 @@ void app::handle_new_tileset()
   }
 }
 
-void app::handle_new_map(int id)
+void app::handle_new_map()
 {
-  m_core->handle_new_map(id);
-  m_window->handle_new_map(m_core);
+  const auto id = m_core->add_map();
+  m_window->handle_new_map(m_core, id);
 }
 
 }  // namespace tactile

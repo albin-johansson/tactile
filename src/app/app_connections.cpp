@@ -2,10 +2,10 @@
 
 #include <QObject>
 
-#include "core.hpp"
+#include "core_model.hpp"
 #include "window.hpp"
 
-using tactile::model::core;
+using tactile::model::core_model;
 using tactile::ui::window;
 
 namespace tactile {
@@ -22,8 +22,9 @@ void connect(Sender&& sender, Signal&& signal, Receiver&& receiver, Slot&& slot)
 app_connections::app_connections(app& app)
     : m_core{app.core_ptr()}, m_window{app.window_ptr()}
 {
-  connect(m_window, &window::request_redraw, m_core, &core::handle_draw);
-  connect(m_core, &core::request_update, m_window, &window::handle_draw);
+  connect(m_window, &window::request_redraw, m_core, &core_model::handle_draw);
+  connect(
+      m_core, &core_model::redraw_requested, m_window, &window::handle_draw);
 
   init_command_connections(app);
   init_camera_connections(app);
@@ -32,17 +33,17 @@ app_connections::app_connections(app& app)
   connect(m_window,
           &window::request_increase_tile_size,
           m_core,
-          &core::handle_increase_tile_size);
+          &core_model::handle_increase_tile_size);
 
   connect(m_window,
           &window::request_decrease_tile_size,
           m_core,
-          &core::handle_decrease_tile_size);
+          &core_model::handle_decrease_tile_size);
 
   connect(m_window,
           &window::request_reset_tile_size,
           m_core,
-          &core::handle_reset_tile_size);
+          &core_model::handle_reset_tile_size);
 
   connect(
       m_window, &window::request_new_tileset, &app, &app::handle_new_tileset);
@@ -50,15 +51,25 @@ app_connections::app_connections(app& app)
 
 void app_connections::init_command_connections(app& app) noexcept
 {
-  connect(app.m_commands,
-          &QUndoStack::canUndoChanged,
+  connect(m_core,
+          &core_model::undo_state_updated,
           m_window,
           &window::handle_undo_state_update);
 
-  connect(app.m_commands,
-          &QUndoStack::canRedoChanged,
+  connect(m_core,
+          &core_model::redo_state_updated,
           m_window,
           &window::handle_redo_state_update);
+
+  connect(m_core,
+          &core_model::undo_text_updated,
+          m_window,
+          &window::handle_undo_text_update);
+
+  connect(m_core,
+          &core_model::redo_text_updated,
+          m_window,
+          &window::handle_redo_text_update);
 
   connect(m_window, &window::request_undo, &app, &app::handle_undo);
   connect(m_window, &window::request_redo, &app, &app::handle_redo);
@@ -88,10 +99,13 @@ void app_connections::init_tilemap_connections(app& app) noexcept
 {
   connect(m_window, &window::request_new_map, &app, &app::handle_new_map);
 
-  connect(
-      m_window, &window::request_close_map, m_core, &core::handle_close_map);
+  connect(m_window,
+          &window::request_close_map,
+          m_core,
+          &core_model::handle_close_map);
 
-  connect(m_window, &window::request_select_map, m_core, &core::select_map);
+  connect(
+      m_window, &window::request_select_map, m_core, &core_model::select_map);
 }
 
 }  // namespace tactile

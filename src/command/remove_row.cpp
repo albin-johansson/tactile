@@ -1,31 +1,23 @@
 #include "remove_row.hpp"
 
-#include "tactile_error.hpp"
-
-using tactile::model::core;
-
 namespace tactile::cmd {
 
-remove_row::remove_row(model::core* core)
-    : QUndoCommand{"Remove Row"}, m_core{core}
-{
-  if (!core) {
-    throw tactile_error{"Cannot create remove_row command from null core!"};
-  }
-}
+remove_row::remove_row(not_null<model::tilemap*> map)
+    : abstract_command{"Remove Row", map}
+{}
 
 void remove_row::undo()
 {
   QUndoCommand::undo();
 
-  m_core->add_row();
+  m_map->add_row();
 }
 
 void remove_row::redo()
 {
   QUndoCommand::redo();
 
-  m_core->remove_row();
+  m_map->remove_row();
 }
 
 }  // namespace tactile::cmd

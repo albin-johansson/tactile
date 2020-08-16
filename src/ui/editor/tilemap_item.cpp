@@ -8,7 +8,7 @@
 
 namespace tactile::ui {
 
-tilemap_item::tilemap_item(model::core* core, QGraphicsItem* parent)
+tilemap_item::tilemap_item(model::core_model* core, QGraphicsItem* parent)
     : QGraphicsItem{parent}
 {}
 

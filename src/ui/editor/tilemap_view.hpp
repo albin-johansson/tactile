@@ -3,7 +3,7 @@
 #include <QGraphicsView>
 #include <QRect>
 
-#include "core.hpp"
+#include "core_model.hpp"
 #include "tilemap_scene.hpp"
 
 namespace tactile::ui {
@@ -21,7 +21,7 @@ class tilemap_view final : public QGraphicsView {
   Q_OBJECT
 
  public:
-  explicit tilemap_view(model::core* core, int id, QWidget* parent = nullptr);
+  explicit tilemap_view(model::core_model* core, int id, QWidget* parent = nullptr);
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 

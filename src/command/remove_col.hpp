@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QUndoCommand>
-
-#include "core.hpp"
+#include "abstract_command.hpp"
 
 namespace tactile::cmd {
 
@@ -15,23 +13,13 @@ namespace tactile::cmd {
  *
  * @headerfile remove_col.hpp
  */
-class remove_col final : public QUndoCommand {
+class remove_col final : public abstract_command {
  public:
-  /**
-   * @brief Creates a `remove_col` instance.
-   *
-   * @param core a pointer to the associated `core` instance, cannot be null.
-   *
-   * @since 0.1.0
-   */
-  explicit remove_col(model::core* core);
+  explicit remove_col(not_null<model::tilemap*> map);
 
   void undo() override;
 
   void redo() override;
-
- private:
-  model::core* m_core;
 };
 
 }  // namespace tactile::cmd

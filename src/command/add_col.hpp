@@ -1,8 +1,6 @@
 #pragma once
 
-#include <QUndoCommand>
-
-#include "core.hpp"
+#include "abstract_command.hpp"
 
 namespace tactile::cmd {
 
@@ -15,23 +13,20 @@ namespace tactile::cmd {
  *
  * @headerfile add_col.hpp
  */
-class add_col final : public QUndoCommand {
+class add_col final : public abstract_command {
  public:
   /**
    * @brief Creates am `add_col` instance.
    *
-   * @param core a pointer to the associated `core` instance, cannot be null.
+   * @param map the associated tilemap.
    *
    * @since 0.1.0
    */
-  explicit add_col(model::core* core);
+  explicit add_col(not_null<model::tilemap*> map);
 
   void undo() override;
 
   void redo() override;
-
- private:
-  model::core* m_core;
 };
 
 }  // namespace tactile::cmd

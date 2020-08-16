@@ -65,9 +65,19 @@ void window::handle_undo_state_update(bool canUndo)
   m_ui->actionUndo->setEnabled(canUndo);
 }
 
-void window::handle_redo_state_update(bool canUndo)
+void window::handle_redo_state_update(bool canRedo)
 {
-  m_ui->actionRedo->setEnabled(canUndo);
+  m_ui->actionRedo->setEnabled(canRedo);
+}
+
+void window::handle_undo_text_update(const QString& text)
+{
+  m_ui->actionUndo->setText("Undo " + text);
+}
+
+void window::handle_redo_text_update(const QString& text)
+{
+  m_ui->actionRedo->setText("Redo " + text);
 }
 
 // TODO these delegations can be replaced with signals
@@ -125,9 +135,10 @@ void window::handle_draw()
   m_centralWidget->handle_trigger_redraw();
 }
 
-void window::handle_new_map(model::core* core)
+void window::handle_new_map(model::core_model* core, int id)
 {
-  m_centralWidget->add_new_map_tab(core, "map");
+  m_centralWidget->add_new_map_tab(core, "map", id);
+  m_centralWidget->select_tab(id);
   if (!in_editor_mode()) {
     enable_editor_view();
     show_all_docks();  // TODO just reopen docks that were visible
@@ -151,8 +162,8 @@ void window::init_connections() noexcept
           [this](int id) noexcept {
             emit request_close_map(id);
 
-            // FIXME borderline hack, the tab isn't actually removed yet so 1
-            //  is the same as checking if there are not open tabs.
+            // The tab isn't actually removed yet, this checks if there will be
+            // no open tabs
             if (m_centralWidget->open_tabs() == 1) {
               enable_startup_view();
             }
@@ -160,17 +171,7 @@ void window::init_connections() noexcept
 
   on_triggered(m_ui->actionExit, [] { QApplication::exit(); });
 
-  on_triggered(m_ui->actionNewMap, [this]() noexcept {
-    //    const auto id = m_centralWidget->add_new_map_tab("map");
-
-    emit request_new_map(m_centralWidget->next_tab_id());
-
-    //    if (!in_editor_mode()) {
-    //      enable_editor_view();
-    //      show_all_docks();  // TODO just reopen docks that were visible
-    //      emit request_center_camera();
-    //    }
-  });
+  on_triggered(m_ui->actionNewMap, &window::request_new_map);
 
   on_triggered(m_ui->actionCloseMap, [this]() noexcept {
     if (in_editor_mode()) {
@@ -190,10 +191,8 @@ void window::init_connections() noexcept
     }
   });
 
-  using W = window;
-
-  on_triggered(m_ui->actionAboutTactile, &W::handle_display_about_dialog);
-  on_triggered(m_ui->actionSettings, &W::handle_display_settings_dialog);
+  on_triggered(m_ui->actionAboutTactile, &window::handle_display_about_dialog);
+  on_triggered(m_ui->actionSettings, &window::handle_display_settings_dialog);
 
   on_triggered(m_ui->actionUndo, [this] {
     if (in_editor_mode()) {
@@ -210,7 +209,7 @@ void window::init_connections() noexcept
   // TODO look into making listeners of signals check if window is in editor
   //  mode?
 
-  on_triggered(m_ui->actionAddTileset, &W::request_new_tileset);
+  on_triggered(m_ui->actionAddTileset, &window::request_new_tileset);
 
   on_triggered(m_ui->actionAddRow, [this]() noexcept {
     if (in_editor_mode()) {
@@ -370,17 +369,17 @@ void window::init_connections() noexcept
   connect(m_centralWidget,
           &central_editor_widget::request_redraw,
           this,
-          &W::request_redraw);
+          &window::request_redraw);
 
   connect(m_centralWidget,
           &central_editor_widget::request_select_tab,
           this,
-          &W::request_select_map);
+          &window::request_select_map);
 
   connect(m_tilesetWidget,
           &tileset_widget::request_new_tileset,
           this,
-          &W::request_new_tileset);
+          &window::request_new_tileset);
 }
 
 void window::init_layout() noexcept

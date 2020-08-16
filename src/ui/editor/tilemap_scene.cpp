@@ -10,7 +10,7 @@
 
 namespace tactile::ui {
 
-tilemap_scene::tilemap_scene(model::core* core, int id, QWidget* parent)
+tilemap_scene::tilemap_scene(model::core_model* core, int id, QWidget* parent)
     : QGraphicsScene{parent}, m_core{core}, m_id{id}
 {
   auto* item = new tilemap_item{core};
