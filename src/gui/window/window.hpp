@@ -1,8 +1,10 @@
 #pragma once
 
 #include <QAction>
+#include <QActionGroup>
 #include <QMainWindow>
 #include <QOpenGLWidget>
+#include <QPainter>
 #include <QWidget>
 #include <memory>
 
@@ -11,12 +13,9 @@
 
 namespace Ui {
 
-class MainWindow;
+class window;
 
 }
-
-class QPainter;
-class QActionGroup;
 
 namespace tactile::gui {
 
@@ -35,6 +34,8 @@ class window final : public QMainWindow {
   Q_OBJECT
 
  public:
+  friend class window_connections;
+
   /**
    * @param parent a pointer to the parent widget, defaults to null.
    *
@@ -149,20 +150,6 @@ class window final : public QMainWindow {
   void handle_remove_tileset(int id) noexcept;
 
   /**
-   * @brief Displays the about dialog.
-   *
-   * @since 0.1.0
-   */
-  void handle_display_about_dialog() noexcept;
-
-  /**
-   * @brief Displays the settings dialog.
-   *
-   * @since 0.1.0
-   */
-  void handle_display_settings_dialog() noexcept;
-
-  /**
    * @brief Centers the camera over the tilemap.
    *
    * @param mapWidth the current width of the tilemap.
@@ -187,7 +174,7 @@ class window final : public QMainWindow {
   void closeEvent(QCloseEvent* event) override;
 
  private:
-  owner<Ui::MainWindow*> m_ui{};
+  owner<Ui::window*> m_ui{};
   central_editor_widget* m_centralWidget{};
   mouse_tool_widget* m_mouseToolWidget{};
   tileset_widget* m_tilesetWidget{};
@@ -225,6 +212,71 @@ class window final : public QMainWindow {
   {
     connect(action, &QAction::triggered, this, fun);
   }
+
+ private slots:
+  void handle_remove_tab(int tabID);
+
+  void on_action_undo_triggered();
+
+  void on_action_redo_triggered();
+
+  void on_action_close_map_triggered();
+
+  void on_action_tilesets_visibility_triggered();
+
+  void on_action_mouse_tools_visibility_triggered();
+
+  void on_action_save_triggered();
+
+  void on_action_save_as_triggered();
+
+  void on_action_rename_triggered();
+
+  void on_action_settings_triggered();
+
+  void on_action_exit_triggered();
+
+  void on_action_add_row_triggered();
+
+  void on_action_add_column_triggered();
+
+  void on_action_remove_row_triggered();
+
+  void on_action_remove_column_triggered();
+
+  void on_action_resize_map_triggered();
+
+  void on_action_toggle_grid_triggered();
+
+  void on_action_pan_up_triggered();
+
+  void on_action_pan_down_triggered();
+
+  void on_action_pan_right_triggered();
+
+  void on_action_pan_left_triggered();
+
+  void on_action_zoom_in_triggered();
+
+  void on_action_zoom_out_triggered();
+
+  void on_action_reset_zoom_triggered();
+
+  void on_action_center_camera_triggered();
+
+  void on_action_reset_layout_triggered();
+
+  void on_action_stamp_tool_triggered();
+
+  void on_action_bucket_tool_triggered();
+
+  void on_action_eraser_tool_triggered();
+
+  void on_action_rectangle_tool_triggered();
+
+  void on_action_find_same_tool_triggered();
+
+  void on_action_about_triggered();
 };
 
 }  // namespace tactile::gui

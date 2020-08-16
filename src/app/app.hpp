@@ -23,6 +23,8 @@ namespace tactile {
  * @headerfile app.hpp
  */
 class app final : public QApplication {
+  Q_OBJECT
+
  public:
   friend class app_connections;
 

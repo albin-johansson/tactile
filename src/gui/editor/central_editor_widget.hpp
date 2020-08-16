@@ -6,7 +6,7 @@
 #include "tactile_fwd.hpp"
 
 namespace Ui {
-class CentralWidgetUI;
+class main_editor;
 }
 
 class QTabWidget;
@@ -74,7 +74,7 @@ class central_editor_widget final : public QWidget {
   void request_select_tab(int id);
 
  private:
-  Ui::CentralWidgetUI* m_ui;
+  Ui::main_editor* m_ui;
   tilemap_tab* m_mapTabWidget;
   int m_editorViewIndex;
   int m_startupViewIndex;

@@ -11,7 +11,7 @@
 namespace tactile::gui {
 
 central_editor_widget::central_editor_widget(QWidget* parent)
-    : QWidget{parent}, m_ui{new Ui::CentralWidgetUI{}}
+    : QWidget{parent}, m_ui{new Ui::main_editor{}}
 {
   m_ui->setupUi(this);
 
