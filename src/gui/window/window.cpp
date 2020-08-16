@@ -318,25 +318,25 @@ void window::init_connections() noexcept
     m_mouseToolGroup->addAction(m_ui->actionEraserTool);
     m_mouseToolGroup->addAction(m_ui->actionRectangleTool);
 
-    using MTW = mouse_tool_widget;
+    using mtw = mouse_tool_widget;
 
-    connect(m_mouseToolWidget, &MTW::request_enable_stamp, this, [this] {
+    connect(m_mouseToolWidget, &mtw::request_enable_stamp, this, [this] {
       m_ui->actionStampTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::request_enable_bucket, this, [this] {
+    connect(m_mouseToolWidget, &mtw::request_enable_bucket, this, [this] {
       m_ui->actionBucketTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::request_enable_eraser, this, [this] {
+    connect(m_mouseToolWidget, &mtw::request_enable_eraser, this, [this] {
       m_ui->actionEraserTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::request_enable_rectangle, this, [this] {
+    connect(m_mouseToolWidget, &mtw::request_enable_rectangle, this, [this] {
       m_ui->actionRectangleTool->setChecked(true);
     });
 
-    connect(m_mouseToolWidget, &MTW::request_enable_find_same, this, [this] {
+    connect(m_mouseToolWidget, &mtw::request_enable_find_same, this, [this] {
       m_ui->actionFindSameTool->setChecked(true);
     });
 

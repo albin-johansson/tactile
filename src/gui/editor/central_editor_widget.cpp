@@ -2,9 +2,9 @@
 
 #include <QTabWidget>
 
+#include "startup_widget.hpp"
 #include "tilemap_scene.hpp"
 #include "tilemap_tab.hpp"
-#include "ui/startup/startup_widget.hpp"
 #include "ui_central_widget.h"
 #include "widget_size_policy.hpp"
 

@@ -3,31 +3,26 @@
 #include <QDockWidget>
 #include <QPainter>
 
-#include "add_col.hpp"
-#include "add_row.hpp"
 #include "app_connections.hpp"
 #include "core_model.hpp"
-#include "remove_col.hpp"
-#include "remove_row.hpp"
 #include "resize_dialog.hpp"
-#include "resize_map.hpp"
 #include "set_style_sheet.hpp"
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "tileset_info.hpp"
 #include "window.hpp"
 
-using namespace tactile::gui;
-using namespace tactile::model;
-
 namespace tactile {
+
+using model::core_model;
+using model::tileset_info;
 
 app::app(int argc, char** argv)
     : QApplication{argc, argv}, m_core{new core_model{}}
 {
   setup_app();
 
-  m_window = std::make_unique<window>();
+  m_window = std::make_unique<gui::window>();
 
   app_connections{*this};
   set_style_sheet(*this, ":/resources/tactile_light.qss");
@@ -78,7 +73,7 @@ void app::handle_remove_col()
 void app::handle_resize_map()
 {
   if (m_core->has_active_map()) {
-    resize_dialog dialog;
+    gui::resize_dialog dialog;
 
     if (dialog.exec()) {
       const auto rows = *dialog.chosen_height();
@@ -127,7 +122,7 @@ void app::handle_center_camera()
 
 void app::handle_new_tileset()
 {
-  tileset_dialog dialog;
+  gui::tileset_dialog dialog;
   if (dialog.exec()) {
     const auto& image = dialog.chosen_image();
     const auto tileWidth = dialog.chosen_width();

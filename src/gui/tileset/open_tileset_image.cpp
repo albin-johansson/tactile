@@ -19,8 +19,8 @@ auto open_tileset_image(QWidget* parent) noexcept -> std::optional<QUrl>
   dialog.setWindowTitle("Open tileset");
 
   if (cachedDirPath.isEmpty()) {
-    using Paths = QStandardPaths;
-    dialog.setDirectory(Paths::writableLocation(Paths::PicturesLocation));
+    using paths = QStandardPaths;
+    dialog.setDirectory(paths::writableLocation(paths::PicturesLocation));
   } else {
     dialog.setDirectory(cachedDirPath);
   }

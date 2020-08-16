@@ -164,6 +164,7 @@ target_include_directories(libTactile
         PUBLIC model/tileset
         PUBLIC model/algo
         PUBLIC gui
+        PUBLIC gui/startup
         PUBLIC gui/toolbar
         PUBLIC gui/editor
         PUBLIC gui/modal

@@ -5,10 +5,11 @@
 #include "core_model.hpp"
 #include "window.hpp"
 
-using tactile::model::core_model;
-using tactile::model::core_model;
-
 namespace tactile {
+
+using model::core_model;
+using gui::window;
+
 namespace {
 
 template <typename Sender, typename Signal, typename Receiver, typename Slot>
