@@ -9,34 +9,34 @@ class QButtonGroup;
 
 namespace Ui {
 
-class ToolButtonBarUI;
+class tool_widget;
 
 }
 
 namespace tactile::gui {
 
-class mouse_tool_widget final : public QWidget {
+class tool_widget final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit mouse_tool_widget(QWidget* parent = nullptr);
+  explicit tool_widget(QWidget* parent = nullptr);
 
-  ~mouse_tool_widget() noexcept override;
+  ~tool_widget() noexcept override;
 
   void enable_tools() noexcept;
 
   void disable_tools() noexcept;
 
  signals:
-  void request_enable_stamp();
+  void stamp_enabled();
 
-  void request_enable_bucket();
+  void bucket_enabled();
 
-  void request_enable_eraser();
+  void eraser_enabled();
 
-  void request_enable_rectangle();
+  void rectangle_enabled();
 
-  void request_enable_find_same();
+  void find_same_enabled();
 
  public slots:
   void handle_enable_stamp() noexcept;
@@ -50,7 +50,7 @@ class mouse_tool_widget final : public QWidget {
   void handle_enable_find_same() noexcept;
 
  private:
-  owner<Ui::ToolButtonBarUI*> m_ui{};
+  owner<Ui::tool_widget*> m_ui{};
   QButtonGroup* m_group{};
 
   void set_tools_disabled(bool disabled) noexcept;

@@ -17,8 +17,8 @@ class tileset_dock final : public QDockWidget {
     return m_widget;
   }
 
-  signals:
-   void new_tileset_requested();
+ signals:
+  void new_tileset_requested();
 
  private:
   tileset_widget* m_widget{};

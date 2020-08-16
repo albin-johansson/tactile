@@ -12,7 +12,7 @@ class window;
 
 class central_editor_widget;
 
-class mouse_tool_widget;
+class tool_widget;
 
 class tilemap_tab;
 

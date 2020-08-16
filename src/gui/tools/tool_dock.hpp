@@ -2,7 +2,7 @@
 
 #include <QDockWidget>
 
-#include "mouse_tool_widget.hpp"
+#include "tool_widget.hpp"
 
 namespace tactile::gui {
 
@@ -12,7 +12,7 @@ class tool_dock final : public QDockWidget {
  public:
   explicit tool_dock(QWidget* parent = nullptr);
 
-  [[nodiscard]] auto get_tool_widget() noexcept -> mouse_tool_widget*
+  [[nodiscard]] auto get_tool_widget() noexcept -> tool_widget*
   {
     return m_widget;
   }
@@ -29,7 +29,7 @@ class tool_dock final : public QDockWidget {
   void find_same_enabled();
 
  private:
-  mouse_tool_widget* m_widget{};
+  tool_widget* m_widget{};
 };
 
 }  // namespace tactile::gui

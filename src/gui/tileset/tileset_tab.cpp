@@ -6,7 +6,6 @@
 
 #include "tactile_error.hpp"
 #include "tileset_image_widget.hpp"
-#include "widget_size_policy.hpp"
 
 namespace tactile::gui {
 
@@ -34,7 +33,7 @@ tileset_tab::tileset_tab(const QImage& image,
   m_layout->addWidget(m_scrollArea);  // layout claims ownership of scroll area
 
   setLayout(m_layout);
-  set_size_policy(this, QSizePolicy::Expanding);
+  setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 tileset_tab::~tileset_tab() noexcept = default;

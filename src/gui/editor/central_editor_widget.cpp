@@ -6,7 +6,6 @@
 #include "tilemap_scene.hpp"
 #include "tilemap_tab.hpp"
 #include "ui_central_widget.h"
-#include "widget_size_policy.hpp"
 
 namespace tactile::gui {
 
@@ -21,7 +20,7 @@ central_editor_widget::central_editor_widget(QWidget* parent)
   m_editorViewIndex = m_ui->stackedWidget->addWidget(m_mapTabWidget);
 
   init_connections();
-  set_size_policy(this, QSizePolicy::Expanding);
+  setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 central_editor_widget::~central_editor_widget() noexcept

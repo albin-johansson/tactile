@@ -9,10 +9,10 @@
 
 #include "about_dialog.hpp"
 #include "central_editor_widget.hpp"
-#include "mouse_tool_widget.hpp"
 #include "setting.hpp"
 #include "setting_identifiers.hpp"
 #include "settings_dialog.hpp"
+#include "tool_widget.hpp"
 #include "ui_window.h"
 
 namespace tactile::gui {

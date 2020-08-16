@@ -58,19 +58,17 @@ set(TACTILE_SOURCE_FILES
         gui/startup/startup_widget.hpp
         gui/startup/startup_widget.ui
 
-        gui/tools/mouse_tool_widget.cpp
-        gui/tools/mouse_tool_widget.hpp
-        gui/tools/tool_button_widget.ui
+        gui/tools/tool_widget.cpp
+        gui/tools/tool_widget.hpp
+        gui/tools/tool_widget.ui
+        gui/tools/tool_dock.cpp
+        gui/tools/tool_dock.hpp
 
         gui/util/basic_widget_macro.hpp
-        gui/util/widget_size_policy.hpp
-        gui/util/widget_size_policy.cpp
 
         gui/window/window.hpp
         gui/window/window.cpp
         gui/window/window.ui
-        gui/window/create_dock_widget.hpp
-        gui/window/create_dock_widget.cpp
 
         gui/tileset/tileset_widget.cpp
         gui/tileset/tileset_widget.hpp
@@ -92,6 +90,8 @@ set(TACTILE_SOURCE_FILES
         gui/tileset/tileset_tab.hpp
         gui/tileset/tileset_image_label.cpp
         gui/tileset/tileset_image_label.hpp
+        gui/tileset/tileset_dock.cpp
+        gui/tileset/tileset_dock.hpp
 
         gui/modal/about_dialog.cpp
         gui/modal/about_dialog.hpp
@@ -135,7 +135,7 @@ set(TACTILE_SOURCE_FILES
         command/remove_col.hpp
         command/remove_col.cpp
         command/resize_map.cpp
-        command/resize_map.hpp gui/tools/tool_dock.cpp gui/tools/tool_dock.hpp gui/tileset/tileset_dock.cpp gui/tileset/tileset_dock.hpp)
+        command/resize_map.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

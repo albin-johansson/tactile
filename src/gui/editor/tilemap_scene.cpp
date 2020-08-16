@@ -6,7 +6,6 @@
 #include <QResizeEvent>
 
 #include "tilemap_item.hpp"
-#include "widget_size_policy.hpp"
 
 namespace tactile::gui {
 
