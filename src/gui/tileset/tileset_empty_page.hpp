@@ -8,7 +8,7 @@ namespace Ui {
 class TilesetEmptyPageUI;
 }
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class tileset_empty_page final : public QWidget {
   Q_OBJECT

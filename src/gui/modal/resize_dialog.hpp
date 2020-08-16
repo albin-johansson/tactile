@@ -14,7 +14,7 @@ class QIntValidator;
 class QPushButton;
 class QLineEdit;
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 /**
  * @class resize_dialog

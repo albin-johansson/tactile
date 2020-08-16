@@ -4,7 +4,7 @@
 
 #include "tilemap_view.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 tilemap_tab::tilemap_tab(QWidget* parent) : QTabWidget{parent}
 {

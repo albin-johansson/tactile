@@ -6,7 +6,7 @@
 #include "core_model.hpp"
 #include "tilemap_scene.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 /**
  * @class tilemap_view

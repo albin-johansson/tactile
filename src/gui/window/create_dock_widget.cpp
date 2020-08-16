@@ -5,7 +5,7 @@
 
 #include "tactile_error.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 auto create_dock_widget(QWidget* widget,
                         czstring name,

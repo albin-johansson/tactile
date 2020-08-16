@@ -6,7 +6,7 @@
 #include "render_tilemap.hpp"
 #include "tactile_error.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 tilemap_item::tilemap_item(model::core_model* core, QGraphicsItem* parent)
     : QGraphicsItem{parent}

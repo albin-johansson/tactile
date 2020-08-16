@@ -3,7 +3,7 @@
 #include <QWidget>
 #include <catch.hpp>
 
-using namespace tactile::ui;
+using namespace tactile::gui;
 
 TEST_CASE("set_size_policy1", "[set_size_policy]")
 {

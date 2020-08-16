@@ -6,7 +6,7 @@
 
 #include "ui_resize_dialog.h"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 resize_dialog::resize_dialog(QWidget* parent)
     : QDialog{parent},

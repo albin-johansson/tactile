@@ -18,7 +18,7 @@
 #include "ui_window.h"
 #include "widget_size_policy.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 window::window(QWidget* parent)
     : QMainWindow{parent}, m_ui{new Ui::MainWindow{}}

@@ -2,7 +2,7 @@
 
 #include "ui_tileset_empty_page.h"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 tileset_empty_page::tileset_empty_page(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::TilesetEmptyPageUI{}}

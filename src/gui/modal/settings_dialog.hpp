@@ -9,7 +9,7 @@ class SettingsUI;
 
 }
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class settings_dialog final : public QDialog {
   Q_OBJECT

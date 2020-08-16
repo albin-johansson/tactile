@@ -5,7 +5,7 @@
 #include <QResizeEvent>
 #include <QScrollBar>
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 // TODO remove core* argument?
 tilemap_view::tilemap_view(model::core_model* core, int id, QWidget* parent)

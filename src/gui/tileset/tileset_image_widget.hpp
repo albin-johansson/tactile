@@ -7,7 +7,7 @@ class QLabel;
 class QImage;
 class QRubberBand;
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class tileset_image_widget final : public QWidget {
   Q_OBJECT

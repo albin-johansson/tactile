@@ -3,7 +3,7 @@
 #include <QLabel>
 #include <memory>
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class tileset_image_label final : public QLabel {
  public:

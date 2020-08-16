@@ -8,7 +8,7 @@
 #include "tileset_image_widget.hpp"
 #include "widget_size_policy.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 tileset_tab::tileset_tab(const QImage& image,
                          int tileWidth,

@@ -8,7 +8,7 @@ class QImage;
 class QLayout;
 class QScrollArea;
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class tileset_tab final : public QWidget {
  public:

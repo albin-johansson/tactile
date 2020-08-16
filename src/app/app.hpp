@@ -37,10 +37,10 @@ class app final : public QApplication {
   ~app() noexcept override;
 
  private:
-  std::unique_ptr<ui::window> m_window;
+  std::unique_ptr<gui::window> m_window;
   owner<model::core_model*> m_core;
 
-  [[nodiscard]] auto window_ptr() noexcept -> ui::window*
+  [[nodiscard]] auto window_ptr() noexcept -> gui::window*
   {
     return m_window.get();
   }

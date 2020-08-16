@@ -8,7 +8,7 @@
 #include "ui_central_widget.h"
 #include "widget_size_policy.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 central_editor_widget::central_editor_widget(QWidget* parent)
     : QWidget{parent}, m_ui{new Ui::CentralWidgetUI{}}

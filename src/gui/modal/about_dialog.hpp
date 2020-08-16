@@ -10,7 +10,7 @@ class AboutUI;
 
 }
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 /**
  * @class about_dialog

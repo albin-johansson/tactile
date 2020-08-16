@@ -28,7 +28,7 @@ class app_connections final {
 
  private:
   model::core_model* m_core;
-  ui::window* m_window;
+  gui::window* m_window;
 
   void init_tilemap_connections(app& app) noexcept;
 

@@ -8,7 +8,7 @@
 
 class QPainter;
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class tilemap_scene final : public QGraphicsScene {
   Q_OBJECT

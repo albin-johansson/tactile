@@ -5,7 +5,7 @@
 #include "open_tileset_image.hpp"
 #include "ui_tileset_dialog.h"
 
-namespace tactile::ui {
+namespace tactile::gui {
 namespace {
 
 [[nodiscard]] auto load_pixmap(const QString& path) -> QPixmap

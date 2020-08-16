@@ -5,7 +5,7 @@
 
 #include "stamp_toolbar.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 dynamic_tool_bar_widget::dynamic_tool_bar_widget(QWidget* parent)
     : QWidget{parent}

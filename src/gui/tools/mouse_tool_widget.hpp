@@ -13,7 +13,7 @@ class ToolButtonBarUI;
 
 }
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class mouse_tool_widget final : public QWidget {
   Q_OBJECT

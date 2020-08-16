@@ -6,7 +6,7 @@
 
 #include "tactile_fwd.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class tilemap_tab final : public QTabWidget {
   Q_OBJECT

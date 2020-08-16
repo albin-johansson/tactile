@@ -8,7 +8,7 @@
 #include "tilemap_item.hpp"
 #include "widget_size_policy.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 tilemap_scene::tilemap_scene(model::core_model* core, int id, QWidget* parent)
     : QGraphicsScene{parent}, m_core{core}, m_id{id}

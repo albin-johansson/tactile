@@ -4,7 +4,7 @@
 
 class QWidget;
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 /**
  * @brief Sets the size policy of a widget.

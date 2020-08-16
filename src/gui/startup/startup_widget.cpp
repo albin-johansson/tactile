@@ -2,7 +2,7 @@
 
 #include "ui_startup_widget.h"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 TACTILE_BASIC_WIDGET_DEF(startup_widget, QWidget, Ui::StartupWidgetUI)
 

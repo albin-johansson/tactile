@@ -6,7 +6,7 @@ namespace tactile {
 
 class app;
 
-namespace ui {
+namespace gui {
 
 class window;
 

@@ -4,7 +4,7 @@
 
 #include "tactile_error.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 tileset_image_label::tileset_image_label(const QImage& image,
                                          int tileWidth,

@@ -17,7 +17,7 @@
 #include "tileset_info.hpp"
 #include "window.hpp"
 
-using namespace tactile::ui;
+using namespace tactile::gui;
 using namespace tactile::model;
 
 namespace tactile {

@@ -5,7 +5,7 @@
 
 #include "core_model.hpp"
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 // TODO avoid QObject inheritance
 class tilemap_item final : public QObject, public QGraphicsItem  {

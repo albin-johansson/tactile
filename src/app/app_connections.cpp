@@ -6,7 +6,7 @@
 #include "window.hpp"
 
 using tactile::model::core_model;
-using tactile::ui::window;
+using tactile::model::core_model;
 
 namespace tactile {
 namespace {

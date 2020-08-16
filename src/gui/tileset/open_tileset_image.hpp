@@ -5,7 +5,7 @@
 
 class QWidget;
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 /**
  * @brief Opens a file chooser dialog for selecting a tileset image and returns

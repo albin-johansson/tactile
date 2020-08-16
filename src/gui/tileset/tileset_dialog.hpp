@@ -13,7 +13,7 @@ namespace Ui {
 class TilesetDialogUI;
 }
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 class tileset_dialog final : public QDialog {
  public:

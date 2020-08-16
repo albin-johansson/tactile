@@ -9,7 +9,7 @@ class StartupWidgetUI;
 
 }
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 TACTILE_BASIC_WIDGET_DECL(startup_widget, QWidget, Ui::StartupWidgetUI)
 

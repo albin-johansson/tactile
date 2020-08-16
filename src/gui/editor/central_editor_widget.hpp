@@ -11,7 +11,7 @@ class CentralWidgetUI;
 
 class QTabWidget;
 
-namespace tactile::ui {
+namespace tactile::gui {
 
 /**
  * @class central_editor_widget
