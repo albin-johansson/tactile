@@ -5,7 +5,7 @@
 #include "startup_widget.hpp"
 #include "tilemap_scene.hpp"
 #include "tilemap_tab.hpp"
-#include "ui_central_widget.h"
+#include "ui_main_editor.h"
 
 namespace tactile::gui {
 
