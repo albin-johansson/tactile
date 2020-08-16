@@ -54,74 +54,74 @@ set(TACTILE_SOURCE_FILES
         model/tilemap/render_tilemap.cpp
         model/tilemap/render_tilemap.hpp
 
-        ui/startup/startup_widget.cpp
-        ui/startup/startup_widget.hpp
-        ui/startup/startup_widget.ui
+        gui/startup/startup_widget.cpp
+        gui/startup/startup_widget.hpp
+        gui/startup/startup_widget.ui
 
-        ui/tools/mouse_tool_widget.cpp
-        ui/tools/mouse_tool_widget.hpp
-        ui/tools/tool_button_widget.ui
+        gui/tools/mouse_tool_widget.cpp
+        gui/tools/mouse_tool_widget.hpp
+        gui/tools/tool_button_widget.ui
 
-        ui/util/basic_widget_macro.hpp
-        ui/util/widget_size_policy.hpp
-        ui/util/widget_size_policy.cpp
+        gui/util/basic_widget_macro.hpp
+        gui/util/widget_size_policy.hpp
+        gui/util/widget_size_policy.cpp
 
-        ui/window/window.hpp
-        ui/window/window.cpp
-        ui/window/window.ui
-        ui/window/create_dock_widget.hpp
-        ui/window/create_dock_widget.cpp
+        gui/window/window.hpp
+        gui/window/window.cpp
+        gui/window/window.ui
+        gui/window/create_dock_widget.hpp
+        gui/window/create_dock_widget.cpp
 
-        ui/tileset/tileset_widget.cpp
-        ui/tileset/tileset_widget.hpp
-        ui/tileset/tileset_widget.ui
-        ui/tileset/tileset_dialog.cpp
-        ui/tileset/tileset_dialog.hpp
-        ui/tileset/tileset_dialog.ui
-        ui/tileset/tileset_content_page.ui
-        ui/tileset/tileset_empty_page.ui
-        ui/tileset/open_tileset_image.cpp
-        ui/tileset/open_tileset_image.hpp
-        ui/tileset/tileset_empty_page.cpp
-        ui/tileset/tileset_empty_page.hpp
-        ui/tileset/tileset_content_page.cpp
-        ui/tileset/tileset_content_page.hpp
-        ui/tileset/tileset_image_widget.cpp
-        ui/tileset/tileset_image_widget.hpp
-        ui/tileset/tileset_tab.cpp
-        ui/tileset/tileset_tab.hpp
-        ui/tileset/tileset_image_label.cpp
-        ui/tileset/tileset_image_label.hpp
+        gui/tileset/tileset_widget.cpp
+        gui/tileset/tileset_widget.hpp
+        gui/tileset/tileset_widget.ui
+        gui/tileset/tileset_dialog.cpp
+        gui/tileset/tileset_dialog.hpp
+        gui/tileset/tileset_dialog.ui
+        gui/tileset/tileset_content_page.ui
+        gui/tileset/tileset_empty_page.ui
+        gui/tileset/open_tileset_image.cpp
+        gui/tileset/open_tileset_image.hpp
+        gui/tileset/tileset_empty_page.cpp
+        gui/tileset/tileset_empty_page.hpp
+        gui/tileset/tileset_content_page.cpp
+        gui/tileset/tileset_content_page.hpp
+        gui/tileset/tileset_image_widget.cpp
+        gui/tileset/tileset_image_widget.hpp
+        gui/tileset/tileset_tab.cpp
+        gui/tileset/tileset_tab.hpp
+        gui/tileset/tileset_image_label.cpp
+        gui/tileset/tileset_image_label.hpp
 
-        ui/modal/about_dialog.cpp
-        ui/modal/about_dialog.hpp
-        ui/modal/settings_dialog.hpp
-        ui/modal/settings_dialog.cpp
-        ui/modal/resize_dialog.hpp
-        ui/modal/resize_dialog.cpp
-        ui/modal/about.ui
-        ui/modal/resize_dialog.ui
-        ui/modal/settings.ui
+        gui/modal/about_dialog.cpp
+        gui/modal/about_dialog.hpp
+        gui/modal/settings_dialog.hpp
+        gui/modal/settings_dialog.cpp
+        gui/modal/resize_dialog.hpp
+        gui/modal/resize_dialog.cpp
+        gui/modal/about.ui
+        gui/modal/resize_dialog.ui
+        gui/modal/settings.ui
 
-        ui/toolbar/dynamic_tool_bar_widget.cpp
-        ui/toolbar/dynamic_tool_bar_widget.hpp
-        ui/toolbar/stamp_toolbar.cpp
-        ui/toolbar/stamp_toolbar.hpp
-        ui/toolbar/toolbar_stamp.ui
+        gui/toolbar/dynamic_tool_bar_widget.cpp
+        gui/toolbar/dynamic_tool_bar_widget.hpp
+        gui/toolbar/stamp_toolbar.cpp
+        gui/toolbar/stamp_toolbar.hpp
+        gui/toolbar/toolbar_stamp.ui
 
-        ui/editor/tilemap_scene.cpp
-        ui/editor/tilemap_scene.hpp
-        ui/editor/central_editor_widget.cpp
-        ui/editor/central_editor_widget.hpp
-        ui/editor/tilemap_tab.cpp
-        ui/editor/tilemap_tab.hpp
-        ui/editor/tilemap_view.cpp
-        ui/editor/tilemap_view.hpp
-        ui/editor/tilemap_item.cpp
-        ui/editor/tilemap_item.hpp
-        ui/editor/central_widget.ui
-        ui/editor/editor_pane.ui
-        
+        gui/editor/tilemap_scene.cpp
+        gui/editor/tilemap_scene.hpp
+        gui/editor/central_editor_widget.cpp
+        gui/editor/central_editor_widget.hpp
+        gui/editor/tilemap_tab.cpp
+        gui/editor/tilemap_tab.hpp
+        gui/editor/tilemap_view.cpp
+        gui/editor/tilemap_view.hpp
+        gui/editor/tilemap_item.cpp
+        gui/editor/tilemap_item.hpp
+        gui/editor/central_widget.ui
+        gui/editor/editor_pane.ui
+
         command/command_stack.cpp
         command/command_stack.hpp
         command/abstract_command.cpp
@@ -163,14 +163,14 @@ target_include_directories(libTactile
         PUBLIC model/tilemap
         PUBLIC model/tileset
         PUBLIC model/algo
-        PUBLIC ui
-        PUBLIC ui/toolbar
-        PUBLIC ui/editor
-        PUBLIC ui/modal
-        PUBLIC ui/tileset
-        PUBLIC ui/window
-        PUBLIC ui/util
-        PUBLIC ui/tools)
+        PUBLIC gui
+        PUBLIC gui/toolbar
+        PUBLIC gui/editor
+        PUBLIC gui/modal
+        PUBLIC gui/tileset
+        PUBLIC gui/window
+        PUBLIC gui/util
+        PUBLIC gui/tools)
 
 target_link_libraries(libTactile
         PUBLIC Qt5::Core

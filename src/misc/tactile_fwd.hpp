@@ -32,5 +32,5 @@ class tileset_image_widget;
 
 class stamp_toolbar;
 
-}  // namespace ui
+}  // namespace gui
 }  // namespace tactile
