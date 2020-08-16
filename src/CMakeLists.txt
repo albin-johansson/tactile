@@ -111,8 +111,8 @@ set(TACTILE_SOURCE_FILES
 
         gui/editor/tilemap_scene.cpp
         gui/editor/tilemap_scene.hpp
-        gui/editor/central_editor_widget.cpp
-        gui/editor/central_editor_widget.hpp
+        gui/editor/main_editor.cpp
+        gui/editor/main_editor.hpp
         gui/editor/tilemap_tab.cpp
         gui/editor/tilemap_tab.hpp
         gui/editor/tilemap_view.cpp

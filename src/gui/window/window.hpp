@@ -177,7 +177,7 @@ class window final : public QMainWindow {
  private:
   owner<Ui::window*> m_ui{};
 
-  central_editor_widget* m_centralWidget{};  // TODO rename to main_editor
+  main_editor* m_centralWidget{};  // TODO rename to main_editor
   tool_dock* m_toolDock{};
   tileset_dock* m_tilesetDock{};
 

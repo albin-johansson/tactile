@@ -14,22 +14,22 @@ class QTabWidget;
 namespace tactile::gui {
 
 /**
- * @class central_editor_widget
+ * @class main_editor
  *
  * @brief Represents the center stage of the editor and contains the main
  * tilemap editor pane.
  *
  * @since 0.1.0
  *
- * @headerfile central_editor_widget.hpp
+ * @headerfile main_editor.hpp
  */
-class central_editor_widget final : public QWidget {
+class main_editor final : public QWidget {
   Q_OBJECT
 
  public:
-  explicit central_editor_widget(QWidget* parent = nullptr);
+  explicit main_editor(QWidget* parent = nullptr);
 
-  ~central_editor_widget() noexcept override;
+  ~main_editor() noexcept override;
 
   void add_new_map_tab(model::core_model* core,
                        const QString& title,
@@ -74,12 +74,15 @@ class central_editor_widget final : public QWidget {
   void request_select_tab(int id);
 
  private:
-  Ui::main_editor* m_ui;
-  tilemap_tab* m_mapTabWidget;
-  int m_editorViewIndex;
-  int m_startupViewIndex;
+  Ui::main_editor* m_ui{};
+  tilemap_tab* m_mapTabWidget{};
+  int m_editorID{};
+  int m_startupID{};
 
   void init_connections() noexcept;
+
+ private slots:
+  void tab_changed(int index);
 };
 
 }  // namespace tactile::gui
