@@ -3,13 +3,14 @@
 #include <QAction>
 #include <QActionGroup>
 #include <QMainWindow>
-#include <QOpenGLWidget>
 #include <QPainter>
+#include <QRect>
 #include <QWidget>
-#include <memory>
 
 #include "tactile_fwd.hpp"
 #include "tactile_types.hpp"
+#include "tileset_dock.hpp"
+#include "tool_dock.hpp"
 
 namespace Ui {
 
@@ -175,12 +176,12 @@ class window final : public QMainWindow {
 
  private:
   owner<Ui::window*> m_ui{};
-  central_editor_widget* m_centralWidget{};
-  mouse_tool_widget* m_mouseToolWidget{};
-  tileset_widget* m_tilesetWidget{};
-  QDockWidget* m_mouseToolDock{};
-  QDockWidget* m_tilesetDock{};
-  QActionGroup* m_mouseToolGroup{};
+
+  central_editor_widget* m_centralWidget{};  // TODO rename to main_editor
+  tool_dock* m_toolDock{};
+  tileset_dock* m_tilesetDock{};
+
+  QActionGroup* m_toolGroup{};
 
   /**
    * @brief Initializes all of the connections related to the internal
@@ -232,10 +233,6 @@ class window final : public QMainWindow {
 
   void on_action_rename_triggered();
 
-  void on_action_settings_triggered();
-
-  void on_action_exit_triggered();
-
   void on_action_add_row_triggered();
 
   void on_action_add_column_triggered();
@@ -276,7 +273,11 @@ class window final : public QMainWindow {
 
   void on_action_find_same_tool_triggered();
 
-  void on_action_about_triggered();
+  static void on_action_exit_triggered();
+
+  static void on_action_settings_triggered();
+
+  static void on_action_about_triggered();
 };
 
 }  // namespace tactile::gui

@@ -5,19 +5,15 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QOpenGLFunctions>
-#include <QPainter>
 #include <QSpacerItem>
 
 #include "about_dialog.hpp"
 #include "central_editor_widget.hpp"
-#include "create_dock_widget.hpp"
 #include "mouse_tool_widget.hpp"
 #include "setting.hpp"
 #include "setting_identifiers.hpp"
 #include "settings_dialog.hpp"
-#include "tileset_widget.hpp"
 #include "ui_window.h"
-#include "widget_size_policy.hpp"
 
 namespace tactile::gui {
 
@@ -27,28 +23,13 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 
   // TODO add mini-map widget
 
-  m_centralWidget = new central_editor_widget{};
+  m_centralWidget = new central_editor_widget{this};
+  m_toolDock = new tool_dock{this};
+  m_tilesetDock = new tileset_dock{this};
 
-  // These are claimed by the dock widgets
-  m_mouseToolWidget = new mouse_tool_widget{};
-  m_tilesetWidget = new tileset_widget{};
-
-  setCentralWidget(m_centralWidget);  // claims ownership of central widget
-
-  m_mouseToolDock = create_dock_widget(m_mouseToolWidget, "mouseToolDock");
-  m_tilesetDock = create_dock_widget(m_tilesetWidget, "tilesetDock");
-
-  m_mouseToolDock->setParent(this);
-  m_tilesetDock->setParent(this);
-
-  m_tilesetDock->setWindowTitle("Tilesets");
-
-  set_size_policy(
-      m_mouseToolDock, QSizePolicy::Minimum, QSizePolicy::Expanding);
-  set_size_policy(m_tilesetDock, QSizePolicy::Expanding);
-
-  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
-  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
+  setCentralWidget(m_centralWidget);
+  addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);
+  addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
 
   init_connections();
   init_layout();
@@ -58,6 +39,128 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 window::~window() noexcept
 {
   delete m_ui;
+}
+
+void window::init_connections() noexcept
+{
+  on_triggered(m_ui->action_new_map, &window::request_new_map);
+  on_triggered(m_ui->action_add_tileset, &window::request_new_tileset);
+
+  connect(m_centralWidget,
+          &central_editor_widget::request_remove_tab,
+          this,
+          &window::handle_remove_tab);
+
+  {
+    m_toolGroup = new QActionGroup{this};
+    m_toolGroup->setExclusive(true);
+    m_toolGroup->addAction(m_ui->action_stamp_tool);
+    m_toolGroup->addAction(m_ui->action_bucket_tool);
+    m_toolGroup->addAction(m_ui->action_find_same_tool);
+    m_toolGroup->addAction(m_ui->action_eraser_tool);
+    m_toolGroup->addAction(m_ui->action_rectangle_tool);
+
+    connect(m_toolDock, &tool_dock::stamp_enabled, this, [this] {
+      m_ui->action_stamp_tool->setChecked(true);
+    });
+
+    connect(m_toolDock, &tool_dock::bucket_enabled, this, [this] {
+      m_ui->action_bucket_tool->setChecked(true);
+    });
+
+    connect(m_toolDock, &tool_dock::eraser_enabled, this, [this] {
+      m_ui->action_eraser_tool->setChecked(true);
+    });
+
+    connect(m_toolDock, &tool_dock::rectangle_enabled, this, [this] {
+      m_ui->action_rectangle_tool->setChecked(true);
+    });
+
+    connect(m_toolDock, &tool_dock::find_same_enabled, this, [this] {
+      m_ui->action_find_same_tool->setChecked(true);
+    });
+  }
+
+  connect(m_toolDock,
+          &QDockWidget::visibilityChanged,
+          m_ui->action_mouse_tools_visibility,
+          &QAction::setChecked);
+
+  connect(m_tilesetDock,
+          &QDockWidget::visibilityChanged,
+          m_ui->action_tilesets_visibility,
+          &QAction::setChecked);
+
+  connect(m_centralWidget,
+          &central_editor_widget::request_redraw,
+          this,
+          &window::request_redraw);
+
+  connect(m_centralWidget,
+          &central_editor_widget::request_select_tab,
+          this,
+          &window::request_select_map);
+
+  connect(m_tilesetDock,
+          &tileset_dock::new_tileset_requested,
+          this,
+          &window::request_new_tileset);
+}
+
+void window::enable_startup_view() noexcept
+{
+  m_centralWidget->enable_startup_view();
+  m_toolDock->get_tool_widget()->disable_tools();
+  hide_all_docks();
+}
+
+void window::enable_editor_view() noexcept
+{
+  m_centralWidget->enable_editor_view();
+
+  // FIXME only enable relevant tools
+  m_toolDock->get_tool_widget()->enable_tools();
+}
+
+void window::init_layout() noexcept
+{
+  if (setting<QByteArray> geometry{cfg::window::last_layout_geometry()};
+      geometry) {
+    restoreGeometry(*geometry);
+  }
+
+  if (setting<QByteArray> state{cfg::window::last_layout_state()}; state) {
+    restoreState(*state);
+  }
+}
+
+void window::reset_dock_layout() noexcept
+{
+  removeDockWidget(m_toolDock);
+  removeDockWidget(m_tilesetDock);
+
+  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_toolDock);
+  m_toolDock->show();
+
+  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
+  m_tilesetDock->show();
+}
+
+void window::hide_all_docks() noexcept
+{
+  m_toolDock->close();
+  m_tilesetDock->close();
+}
+
+void window::show_all_docks() noexcept
+{
+  m_toolDock->show();
+  m_tilesetDock->show();
+}
+
+auto window::in_editor_mode() const noexcept -> bool
+{
+  return m_centralWidget->in_editor_mode();
 }
 
 void window::handle_undo_state_update(bool canUndo)
@@ -80,30 +183,15 @@ void window::handle_redo_text_update(const QString& text)
   m_ui->action_redo->setText("Redo " + text);
 }
 
-// TODO these delegations can be replaced with signals
-
 void window::handle_add_tileset(const model::tileset_info& info,
                                 const QString& tabName) noexcept
 {
-  m_tilesetWidget->add_tileset(info, tabName);
+  m_tilesetDock->get_tileset_widget()->add_tileset(info, tabName);
 }
 
 void window::handle_remove_tileset(int id) noexcept
 {
-  m_tilesetWidget->remove_tileset(id);
-}
-
-void window::enable_startup_view() noexcept
-{
-  m_centralWidget->enable_startup_view();
-  m_mouseToolWidget->disable_tools();
-  hide_all_docks();
-}
-
-void window::enable_editor_view() noexcept
-{
-  m_centralWidget->enable_editor_view();
-  m_mouseToolWidget->enable_tools();  // FIXME only enable relevant tools
+  m_tilesetDock->get_tileset_widget()->remove_tileset(id);
 }
 
 void window::handle_center_camera(int mapWidth, int mapHeight)
@@ -140,118 +228,6 @@ void window::closeEvent(QCloseEvent* event)
 
   settings::set(cfg::window::last_layout_geometry(), saveGeometry());
   settings::set(cfg::window::last_layout_state(), saveState());
-}
-
-void window::init_connections() noexcept
-{
-  on_triggered(m_ui->action_new_map, &window::request_new_map);
-  on_triggered(m_ui->action_add_tileset, &window::request_new_tileset);
-
-  connect(m_centralWidget,
-          &central_editor_widget::request_remove_tab,
-          this,
-          &window::handle_remove_tab);
-
-  // TODO look into making listeners of signals check if window is in editor
-  //  mode?
-
-  {
-    m_mouseToolGroup = new QActionGroup{this};
-    m_mouseToolGroup->setExclusive(true);
-    m_mouseToolGroup->addAction(m_ui->action_stamp_tool);
-    m_mouseToolGroup->addAction(m_ui->action_bucket_tool);
-    m_mouseToolGroup->addAction(m_ui->action_find_same_tool);
-    m_mouseToolGroup->addAction(m_ui->action_eraser_tool);
-    m_mouseToolGroup->addAction(m_ui->action_rectangle_tool);
-
-    using mtw = mouse_tool_widget;
-
-    connect(m_mouseToolWidget, &mtw::request_enable_stamp, this, [this] {
-      m_ui->action_stamp_tool->setChecked(true);
-    });
-
-    connect(m_mouseToolWidget, &mtw::request_enable_bucket, this, [this] {
-      m_ui->action_bucket_tool->setChecked(true);
-    });
-
-    connect(m_mouseToolWidget, &mtw::request_enable_eraser, this, [this] {
-      m_ui->action_eraser_tool->setChecked(true);
-    });
-
-    connect(m_mouseToolWidget, &mtw::request_enable_rectangle, this, [this] {
-      m_ui->action_rectangle_tool->setChecked(true);
-    });
-
-    connect(m_mouseToolWidget, &mtw::request_enable_find_same, this, [this] {
-      m_ui->action_find_same_tool->setChecked(true);
-    });
-  }
-
-  connect(m_mouseToolDock,
-          &QDockWidget::visibilityChanged,
-          m_ui->action_mouse_tools_visibility,
-          &QAction::setChecked);
-
-  connect(m_tilesetDock,
-          &QDockWidget::visibilityChanged,
-          m_ui->action_tilesets_visibility,
-          &QAction::setChecked);
-
-  connect(m_centralWidget,
-          &central_editor_widget::request_redraw,
-          this,
-          &window::request_redraw);
-
-  connect(m_centralWidget,
-          &central_editor_widget::request_select_tab,
-          this,
-          &window::request_select_map);
-
-  connect(m_tilesetWidget,
-          &tileset_widget::request_new_tileset,
-          this,
-          &window::request_new_tileset);
-}
-
-void window::init_layout() noexcept
-{
-  if (setting<QByteArray> geometry{cfg::window::last_layout_geometry()};
-      geometry) {
-    restoreGeometry(*geometry);
-  }
-
-  if (setting<QByteArray> state{cfg::window::last_layout_state()}; state) {
-    restoreState(*state);
-  }
-}
-
-void window::reset_dock_layout() noexcept
-{
-  removeDockWidget(m_mouseToolDock);
-  removeDockWidget(m_tilesetDock);
-
-  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_mouseToolDock);
-  m_mouseToolDock->show();
-
-  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
-  m_tilesetDock->show();
-}
-
-void window::hide_all_docks() noexcept
-{
-  m_mouseToolDock->close();
-  m_tilesetDock->close();
-}
-
-void window::show_all_docks() noexcept
-{
-  m_mouseToolDock->show();
-  m_tilesetDock->show();
-}
-
-auto window::in_editor_mode() const noexcept -> bool
-{
-  return m_centralWidget->in_editor_mode();
 }
 
 void window::handle_remove_tab(int tabID)
@@ -303,7 +279,7 @@ void window::on_action_tilesets_visibility_triggered()
 
 void window::on_action_mouse_tools_visibility_triggered()
 {
-  m_mouseToolDock->setVisible(m_ui->action_mouse_tools_visibility->isChecked());
+  m_toolDock->setVisible(m_ui->action_mouse_tools_visibility->isChecked());
 }
 
 void window::on_action_save_triggered()
@@ -319,17 +295,6 @@ void window::on_action_save_as_triggered()
 void window::on_action_rename_triggered()
 {
   // TODO
-}
-
-void window::on_action_settings_triggered()
-{
-  settings_dialog settings;
-  settings.exec();
-}
-
-void window::on_action_exit_triggered()
-{
-  QApplication::exit();
 }
 
 void window::on_action_add_row_triggered()
@@ -441,27 +406,38 @@ void window::on_action_reset_layout_triggered()
 
 void window::on_action_stamp_tool_triggered()
 {
-  m_mouseToolWidget->handle_enable_stamp();
+  m_toolDock->get_tool_widget()->handle_enable_stamp();
 }
 
 void window::on_action_bucket_tool_triggered()
 {
-  m_mouseToolWidget->handle_enable_bucket();
+  m_toolDock->get_tool_widget()->handle_enable_bucket();
 }
 
 void window::on_action_eraser_tool_triggered()
 {
-  m_mouseToolWidget->handle_enable_eraser();
+  m_toolDock->get_tool_widget()->handle_enable_eraser();
 }
 
 void window::on_action_rectangle_tool_triggered()
 {
-  m_mouseToolWidget->handle_enable_rectangle();
+  m_toolDock->get_tool_widget()->handle_enable_rectangle();
 }
 
 void window::on_action_find_same_tool_triggered()
 {
-  m_mouseToolWidget->handle_enable_find_same();
+  m_toolDock->get_tool_widget()->handle_enable_find_same();
+}
+
+void window::on_action_exit_triggered()
+{
+  QApplication::exit();
+}
+
+void window::on_action_settings_triggered()
+{
+  settings_dialog settings;
+  settings.exec();
 }
 
 void window::on_action_about_triggered()

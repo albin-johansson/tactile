@@ -135,7 +135,7 @@ set(TACTILE_SOURCE_FILES
         command/remove_col.hpp
         command/remove_col.cpp
         command/resize_map.cpp
-        command/resize_map.hpp)
+        command/resize_map.hpp gui/tools/tool_dock.cpp gui/tools/tool_dock.hpp gui/tileset/tileset_dock.cpp gui/tileset/tileset_dock.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
