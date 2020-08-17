@@ -1,4 +1,8 @@
 <RCC>
+  <qresource prefix="style/">
+    <file alias="tactile">resources/style/tactile.qss</file>
+  </qresource>
+
   <qresource prefix="/">
     <file>resources/theme/dark.json</file>
     <file>resources/theme/light.json</file>

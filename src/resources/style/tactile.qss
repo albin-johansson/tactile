@@ -1,0 +1,22 @@
+QTabWidget {
+  border: 0;
+}
+
+QTabWidget::pane {
+  margin: 0;
+}
+
+QTabBar {
+  border-radius: 0;
+  border: none;
+}
+
+QTabBar::tab:top {
+  margin: 0;
+  padding: 2px 8px;
+  border-bottom: 3px solid gray;
+}
+
+QTabBar::tab:top:selected {
+  border-bottom-color: #5499c7;
+}

@@ -48,6 +48,11 @@ app_connections::app_connections(app& app)
 
   connect(
       m_window, &window::request_new_tileset, &app, &app::handle_new_tileset);
+
+  connect(m_window,
+          &window::reload_stylesheet,
+          &app,
+          &app::handle_reload_stylesheet);
 }
 
 void app_connections::init_command_connections(app& app) noexcept

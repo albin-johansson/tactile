@@ -80,6 +80,8 @@ class app final : public QApplication {
   void handle_new_tileset();
 
   void handle_new_map();
+
+  void handle_reload_stylesheet();
 };
 
 }  // namespace tactile

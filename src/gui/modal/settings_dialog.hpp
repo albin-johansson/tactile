@@ -2,6 +2,7 @@
 
 #include <QDialog>
 #include <QWidget>
+#include <QString>
 
 namespace Ui {
 
@@ -19,8 +20,12 @@ class settings_dialog final : public QDialog {
 
   ~settings_dialog() noexcept override;
 
+ signals:
+  void reload_stylesheet();
+
  private:
   Ui::SettingsUI* m_ui;
+  QString m_initialTheme;
 
  private slots:
   void handle_accept();

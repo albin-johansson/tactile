@@ -17,7 +17,8 @@ settings_dialog::settings_dialog(QWidget* parent)
   prefs::setting<QString> themeName{prefs::id::graphics::theme_name()};
   Q_ASSERT(themeName);
 
-  m_ui->themeComboBox->setCurrentText(*themeName);
+  m_initialTheme = *themeName;
+  m_ui->themeComboBox->setCurrentText(m_initialTheme);
 }
 
 settings_dialog::~settings_dialog() noexcept
@@ -27,8 +28,11 @@ settings_dialog::~settings_dialog() noexcept
 
 void settings_dialog::handle_accept()
 {
-  // TODO don't touch settings that didn't change
-  prefs::theme::set_theme(m_ui->themeComboBox->currentText());
+  if (const auto theme = m_ui->themeComboBox->currentText();
+      theme != m_initialTheme) {
+    prefs::theme::set_theme(theme);
+    emit reload_stylesheet();
+  }
 }
 
 }  // namespace tactile::gui

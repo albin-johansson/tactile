@@ -439,6 +439,8 @@ void window::on_action_exit_triggered()
 void window::on_action_settings_triggered()
 {
   settings_dialog settings;
+  connect(&settings, &settings_dialog::reload_stylesheet, this, &window::reload_stylesheet);
+
   settings.exec();
 }
 

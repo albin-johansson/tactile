@@ -61,6 +61,8 @@ class window final : public QMainWindow {
   void enable_editor_view() noexcept;
 
  signals:
+  void reload_stylesheet();
+
   void request_redraw(QPainter& painter, const QRectF& exposed);
 
   void request_new_map();
@@ -275,7 +277,7 @@ class window final : public QMainWindow {
 
   static void on_action_exit_triggered();
 
-  static void on_action_settings_triggered();
+  void on_action_settings_triggered();
 
   static void on_action_about_triggered();
 };
