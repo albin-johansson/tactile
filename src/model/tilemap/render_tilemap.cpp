@@ -4,8 +4,8 @@
 #include <QPainter>
 #include <algorithm>
 
-#include "setting.hpp"
-#include "setting_identifiers.hpp"
+#include "prefs/setting.hpp"
+#include "prefs/setting_identifiers.hpp"
 #include "tilemap.hpp"
 
 namespace tactile::model {
@@ -90,7 +90,7 @@ void render_layer(QPainter& painter,
 
   constexpr QColor emptyGray{0x55, 0x55, 0x55};
 
-  const auto grid = setting<bool>{cfg::graphics::grid()};
+  const auto grid = prefs::setting<bool>{prefs::id::graphics::grid()};
   const auto renderGrid = grid.value_or(true);
 
   for (auto row = minRow; row < maxRow; ++row) {

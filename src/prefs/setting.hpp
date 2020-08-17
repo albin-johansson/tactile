@@ -5,7 +5,7 @@
 #include <optional>
 #include <utility>
 
-namespace tactile {
+namespace tactile::prefs {
 
 template <typename T>
 class setting final {
@@ -36,8 +36,6 @@ class setting final {
   std::optional<T> m_value;
 };
 
-namespace settings {
-
 template <typename T>
 void set(const QString& key, T&& value)
 {
@@ -58,5 +56,4 @@ void set_if_missing(const QString& key, T&& value)
   }
 }
 
-}  // namespace settings
-}  // namespace tactile
+}  // namespace tactile::prefs

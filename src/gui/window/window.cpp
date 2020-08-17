@@ -9,8 +9,8 @@
 
 #include "about_dialog.hpp"
 #include "main_editor.hpp"
-#include "setting.hpp"
-#include "setting_identifiers.hpp"
+#include "prefs/setting.hpp"
+#include "prefs/setting_identifiers.hpp"
 #include "settings_dialog.hpp"
 #include "tool_widget.hpp"
 #include "ui_window.h"
@@ -124,12 +124,14 @@ void window::enable_editor_view() noexcept
 
 void window::init_layout() noexcept
 {
-  if (setting<QByteArray> geometry{cfg::window::last_layout_geometry()};
+  if (prefs::setting<QByteArray> geometry{
+          prefs::id::window::last_layout_geometry()};
       geometry) {
     restoreGeometry(*geometry);
   }
 
-  if (setting<QByteArray> state{cfg::window::last_layout_state()}; state) {
+  if (prefs::setting<QByteArray> state{prefs::id::window::last_layout_state()};
+      state) {
     restoreState(*state);
   }
 }
@@ -226,8 +228,8 @@ void window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);
 
-  settings::set(cfg::window::last_layout_geometry(), saveGeometry());
-  settings::set(cfg::window::last_layout_state(), saveState());
+  prefs::set(prefs::id::window::last_layout_geometry(), saveGeometry());
+  prefs::set(prefs::id::window::last_layout_state(), saveState());
 }
 
 void window::handle_remove_tab(int tabID)
@@ -335,9 +337,9 @@ void window::on_action_resize_map_triggered()
 void window::on_action_toggle_grid_triggered()
 {
   if (in_editor_mode()) {
-    if (setting<bool> grid{cfg::graphics::grid()}; grid) {
+    if (prefs::setting<bool> grid{prefs::id::graphics::grid()}; grid) {
       const auto prev = *grid;
-      settings::set(cfg::graphics::grid(), !prev);
+      prefs::set(prefs::id::graphics::grid(), !prev);
       handle_draw();
     }
   }

@@ -21,6 +21,9 @@ class settings_dialog final : public QDialog {
 
  private:
   Ui::SettingsUI* m_ui;
+
+ private slots:
+  void handle_accept();
 };
 
 }  // namespace tactile::gui

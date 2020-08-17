@@ -3,12 +3,14 @@
 #include <QApplication>
 #include <QGuiApplication>
 #include <QIcon>
+#include <QPalette>
 #include <QStyleFactory>
 #include <QSurfaceFormat>
 
 #include "app.hpp"
 #include "setting.hpp"
 #include "setting_identifiers.hpp"
+#include "theme.hpp"
 #include "version.hpp"
 
 namespace tactile {
@@ -36,7 +38,13 @@ void init_surface_format() noexcept
  */
 void validate_settings() noexcept
 {
-  settings::set_if_missing(cfg::graphics::grid(), true);
+  prefs::set_if_missing(prefs::id::graphics::grid(), true);
+
+  prefs::set_if_missing(prefs::id::graphics::theme_name(),
+                        prefs::theme::get_default_name().toString());
+
+  prefs::set_if_missing(prefs::id::graphics::theme(),
+                        prefs::theme::get_default());
 }
 
 }  // namespace
@@ -53,6 +61,12 @@ void setup_app()
   QApplication::setApplicationName("tactile");
 
   validate_settings();
+
+  if (prefs::setting<QString> name{prefs::id::graphics::theme_name()}; name) {
+    prefs::theme::set_theme(*name);
+  } else {
+    prefs::theme::reset();
+  }
 }
 
 }  // namespace tactile

@@ -19,8 +19,8 @@ set(TACTILE_SOURCE_FILES
         misc/tactile_error.cpp
         misc/tactile_types.hpp
         misc/tactile_fwd.hpp
-        misc/setting.hpp
-        misc/setting_identifiers.hpp
+        prefs/setting.hpp
+        prefs/setting_identifiers.hpp
 
         model/core_fwd.hpp
         model/core_model.hpp
@@ -119,7 +119,7 @@ set(TACTILE_SOURCE_FILES
         gui/editor/tilemap_view.hpp
         gui/editor/tilemap_item.cpp
         gui/editor/tilemap_item.hpp
-        gui/editor/central_widget.ui
+        gui/editor/main_editor.ui
         gui/editor/editor_pane.ui
 
         command/command_stack.cpp
@@ -135,9 +135,16 @@ set(TACTILE_SOURCE_FILES
         command/remove_col.hpp
         command/remove_col.cpp
         command/resize_map.cpp
-        command/resize_map.hpp)
+        command/resize_map.hpp
+
+        prefs/theme.cpp
+        prefs/theme.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
+
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_definitions(-DQT_NO_DEBUG_OUTPUT)
+endif ()
 
 set(GSL_SOURCES
         ${LIBRARY_DIR}/microsoft/gsl/gsl
@@ -164,9 +171,11 @@ target_include_directories(libTactile
         PUBLIC model/tileset
         PUBLIC model/algo
         PUBLIC gui
+        PUBLIC prefs
         PUBLIC gui/startup
         PUBLIC gui/toolbar
         PUBLIC gui/editor
+        PUBLIC gui/theme
         PUBLIC gui/modal
         PUBLIC gui/tileset
         PUBLIC gui/window
