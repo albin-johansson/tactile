@@ -3,11 +3,13 @@
     <file alias="tactile">resources/style/tactile.qss</file>
   </qresource>
 
-  <qresource prefix="/">
-    <file>resources/theme/dark.json</file>
-    <file>resources/theme/light.json</file>
-    <file>resources/theme/atom_one_dark.json</file>
+  <qresource prefix="theme/">
+    <file alias="dark">resources/theme/dark.json</file>
+    <file alias="light">resources/theme/light.json</file>
+    <file alias="atomOneDark">resources/theme/atom_one_dark.json</file>
+  </qresource>
 
+  <qresource prefix="/">
     <file>resources/icons/tactile_icon.png</file>
     <file>resources/icons/tactile2_icon.png</file>
     <file>resources/icons/tactile2_icon2.png</file>

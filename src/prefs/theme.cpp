@@ -155,19 +155,19 @@ auto parse(const QByteArray& name) -> QPalette
 
 auto get_dark() -> const QPalette&
 {
-  static const auto dark = parse(":resources/theme/dark.json");
+  static const auto dark = parse(":theme/dark");
   return dark;
 }
 
 auto get_light() -> const QPalette&
 {
-  static const auto light = parse(":resources/theme/light.json");
+  static const auto light = parse(":theme/light");
   return light;
 }
 
 auto get_atom_one_dark() -> const QPalette&
 {
-  static const auto oneDark = parse(":resources/theme/atom_one_dark.json");
+  static const auto oneDark = parse(":theme/atomOneDark");
   return oneDark;
 }
 
