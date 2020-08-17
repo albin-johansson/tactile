@@ -56,9 +56,7 @@
          </font>
         </property>
         <property name="text">
-         <string>Select an image which contains the tile images, aligned
-                    in a grid.
-                  </string>
+         <string>Select an image which contains the tile images, aligned in a grid.</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
