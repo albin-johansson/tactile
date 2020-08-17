@@ -142,7 +142,6 @@ auto parse(const QByteArray& name) -> QPalette
   QJsonParseError error{};
   const auto document = QJsonDocument::fromJson(themeFile.readAll(), &error);
   if (document.isNull()) {
-    qInfo("%s", error.errorString().toStdString().c_str());
     throw tactile_error{"Couldn't open/find JSON theme file: " +
                         error.errorString().toStdString()};
   }
