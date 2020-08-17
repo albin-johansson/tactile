@@ -275,9 +275,11 @@ class window final : public QMainWindow {
 
   void on_action_find_same_tool_triggered();
 
-  static void on_action_exit_triggered();
-
   void on_action_settings_triggered();
+
+  static void on_action_about_qt_triggered();
+
+  static void on_action_exit_triggered();
 
   static void on_action_about_triggered();
 };

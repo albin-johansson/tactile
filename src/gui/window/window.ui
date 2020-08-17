@@ -149,6 +149,7 @@
      <string>Help</string>
     </property>
     <addaction name="action_about"/>
+    <addaction name="action_about_qt"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -800,6 +801,15 @@
      <family>Segoe UI</family>
      <pointsize>10</pointsize>
     </font>
+   </property>
+  </action>
+  <action name="action_about_qt">
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/dark/qt.png</normaloff>:/resources/icons/icons8/dark/qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>About Qt...</string>
    </property>
   </action>
  </widget>

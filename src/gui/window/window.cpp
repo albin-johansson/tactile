@@ -431,11 +431,6 @@ void window::on_action_find_same_tool_triggered()
   m_toolDock->get_tool_widget()->handle_enable_find_same();
 }
 
-void window::on_action_exit_triggered()
-{
-  QApplication::exit();
-}
-
 void window::on_action_settings_triggered()
 {
   settings_dialog settings;
@@ -445,6 +440,16 @@ void window::on_action_settings_triggered()
           &window::handle_theme_changed);
 
   settings.exec();
+}
+
+void window::on_action_about_qt_triggered()
+{
+  QApplication::aboutQt();
+}
+
+void window::on_action_exit_triggered()
+{
+  QApplication::exit();
 }
 
 void window::on_action_about_triggered()
