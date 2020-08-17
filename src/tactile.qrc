@@ -1,6 +1,8 @@
 <RCC>
   <qresource prefix="/">
-    <file>resources/tactile_light.qss</file>
+    <file>resources/theme/dark.json</file>
+    <file>resources/theme/light.json</file>
+    <file>resources/theme/atom_one_dark.json</file>
 
     <file>resources/icons/tactile_icon.png</file>
     <file>resources/icons/tactile2_icon.png</file>
