@@ -16,5 +16,6 @@ template <typename T>
 using not_null = gsl::not_null<T>;
 
 using czstring = gsl::czstring<>;
+using u16_czstring = gsl::cu16zstring<>;
 
 }  // namespace tactile
