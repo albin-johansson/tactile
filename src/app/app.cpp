@@ -20,12 +20,12 @@ using model::tileset_info;
 app::app(int argc, char** argv)
     : QApplication{argc, argv}, m_core{new core_model{}}
 {
+  handle_reload_stylesheet();
   setup_app();
 
   m_window = std::make_unique<gui::window>();
 
   app_connections{*this};
-  handle_reload_stylesheet();
 
   // do this to indicate what tool is active
   //  QPixmap pixmap{":/resources/icons/icons8/color/64/eraser.png"};
