@@ -5,6 +5,33 @@
 #include "tilemap_view.hpp"
 
 namespace tactile::gui {
+namespace {
+
+inline constexpr auto styling =
+    R"(QTabWidget {
+         border: 0;
+       }
+
+       QTabWidget::pane {
+         margin: 0;
+       }
+
+       QTabBar {
+         border-radius: 0;
+         border: none;
+       }
+
+       QTabBar::tab:top {
+         margin: 0;
+         padding: 2px 8px;
+         border-bottom: 3px solid gray;
+       }
+
+       QTabBar::tab:top:selected {
+         border-bottom-color: #5499c7;
+       })";
+
+}  // namespace
 
 tilemap_tab::tilemap_tab(QWidget* parent) : QTabWidget{parent}
 {
@@ -13,6 +40,7 @@ tilemap_tab::tilemap_tab(QWidget* parent) : QTabWidget{parent}
           &QTabWidget::tabCloseRequested,
           this,
           &tilemap_tab::handle_tab_close);
+  setStyleSheet(styling);
 }
 
 tilemap_tab::~tilemap_tab() noexcept = default;
@@ -21,6 +49,11 @@ void tilemap_tab::handle_tab_close(int index)
 {
   emit request_remove_tab(get_pane(index)->id());
   removeTab(index);
+}
+
+void tilemap_tab::theme_changed()
+{
+  setStyleSheet(styling);
 }
 
 void tilemap_tab::add_tile_map_tab(model::core_model* core,

@@ -61,8 +61,6 @@ class window final : public QMainWindow {
   void enable_editor_view() noexcept;
 
  signals:
-  void reload_stylesheet();
-
   void request_redraw(QPainter& painter, const QRectF& exposed);
 
   void request_new_map();
@@ -179,7 +177,7 @@ class window final : public QMainWindow {
  private:
   owner<Ui::window*> m_ui{};
 
-  main_editor* m_centralWidget{};  // TODO rename to main_editor
+  main_editor* m_mainEditor{};
   tool_dock* m_toolDock{};
   tileset_dock* m_tilesetDock{};
 
@@ -218,6 +216,8 @@ class window final : public QMainWindow {
 
  private slots:
   void handle_remove_tab(int tabID);
+
+  void handle_theme_changed();
 
   void on_action_undo_triggered();
 

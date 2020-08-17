@@ -73,6 +73,8 @@ class main_editor final : public QWidget {
 
   void request_select_tab(int id);
 
+  void theme_changed();
+
  private:
   Ui::main_editor* m_ui{};
   tilemap_tab* m_mapTabWidget{};

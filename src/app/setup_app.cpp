@@ -53,7 +53,7 @@ void setup_app()
 {
   init_surface_format();
 
-  QGuiApplication::setWindowIcon(QIcon{":/resources/icons/tactile2_icon2.png"});
+  QGuiApplication::setWindowIcon(QIcon{":logo/windowIcon"});
 
   QApplication::setStyle(QStyleFactory::create("Fusion"));
   QApplication::setApplicationVersion(version());

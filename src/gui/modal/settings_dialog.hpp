@@ -21,7 +21,7 @@ class settings_dialog final : public QDialog {
   ~settings_dialog() noexcept override;
 
  signals:
-  void reload_stylesheet();
+  void reload_theme();
 
  private:
   Ui::SettingsUI* m_ui;

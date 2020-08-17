@@ -6,7 +6,6 @@
 #include "app_connections.hpp"
 #include "core_model.hpp"
 #include "resize_dialog.hpp"
-#include "set_style_sheet.hpp"
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "tileset_info.hpp"
@@ -20,7 +19,6 @@ using model::tileset_info;
 app::app(int argc, char** argv)
     : QApplication{argc, argv}, m_core{new core_model{}}
 {
-  handle_reload_stylesheet();
   setup_app();
 
   m_window = std::make_unique<gui::window>();
@@ -143,12 +141,6 @@ void app::handle_new_map()
 {
   const auto id = m_core->add_map();
   m_window->handle_new_map(m_core, id);
-}
-
-void app::handle_reload_stylesheet()
-{
-  // Entire stylesheet is reloaded, not optimal, but this is rarely needed.
-  set_style_sheet(*this, ":style/tactile");
 }
 
 }  // namespace tactile

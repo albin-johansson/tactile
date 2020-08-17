@@ -1,12 +1,12 @@
 <RCC>
-  <qresource prefix="style/">
-    <file alias="tactile">resources/style/tactile.qss</file>
-  </qresource>
-
   <qresource prefix="theme/">
     <file alias="dark">resources/theme/dark.json</file>
     <file alias="light">resources/theme/light.json</file>
     <file alias="atomOneDark">resources/theme/atom_one_dark.json</file>
+  </qresource>
+
+  <qresource prefix="logo/">
+    <file alias="windowIcon">resources/icons/tactile2_icon2.png</file>
   </qresource>
 
   <qresource prefix="/">

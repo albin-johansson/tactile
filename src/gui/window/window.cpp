@@ -23,11 +23,11 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 
   // TODO add mini-map widget
 
-  m_centralWidget = new main_editor{this};
+  m_mainEditor = new main_editor{this};
   m_toolDock = new tool_dock{this};
   m_tilesetDock = new tileset_dock{this};
 
-  setCentralWidget(m_centralWidget);
+  setCentralWidget(m_mainEditor);
   addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);
   addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
 
@@ -46,7 +46,7 @@ void window::init_connections() noexcept
   on_triggered(m_ui->action_new_map, &window::request_new_map);
   on_triggered(m_ui->action_add_tileset, &window::request_new_tileset);
 
-  connect(m_centralWidget,
+  connect(m_mainEditor,
           &main_editor::request_remove_tab,
           this,
           &window::handle_remove_tab);
@@ -91,12 +91,12 @@ void window::init_connections() noexcept
           m_ui->action_tilesets_visibility,
           &QAction::setChecked);
 
-  connect(m_centralWidget,
+  connect(m_mainEditor,
           &main_editor::request_redraw,
           this,
           &window::request_redraw);
 
-  connect(m_centralWidget,
+  connect(m_mainEditor,
           &main_editor::request_select_tab,
           this,
           &window::request_select_map);
@@ -109,14 +109,14 @@ void window::init_connections() noexcept
 
 void window::enable_startup_view() noexcept
 {
-  m_centralWidget->enable_startup_view();
+  m_mainEditor->enable_startup_view();
   m_toolDock->get_tool_widget()->disable_tools();
   hide_all_docks();
 }
 
 void window::enable_editor_view() noexcept
 {
-  m_centralWidget->enable_editor_view();
+  m_mainEditor->enable_editor_view();
 
   // FIXME only enable relevant tools
   m_toolDock->get_tool_widget()->enable_tools();
@@ -162,7 +162,7 @@ void window::show_all_docks() noexcept
 
 auto window::in_editor_mode() const noexcept -> bool
 {
-  return m_centralWidget->in_editor_mode();
+  return m_mainEditor->in_editor_mode();
 }
 
 void window::handle_undo_state_update(bool canUndo)
@@ -198,25 +198,25 @@ void window::handle_remove_tileset(int id) noexcept
 
 void window::handle_center_camera(int mapWidth, int mapHeight)
 {
-  m_centralWidget->center_viewport(mapWidth, mapHeight);
+  m_mainEditor->center_viewport(mapWidth, mapHeight);
   handle_draw();
 }
 
 void window::handle_move_camera(int dx, int dy)
 {
-  m_centralWidget->move_viewport(dx, dy);
+  m_mainEditor->move_viewport(dx, dy);
   handle_draw();
 }
 
 void window::handle_draw()
 {
-  m_centralWidget->handle_trigger_redraw();
+  m_mainEditor->handle_trigger_redraw();
 }
 
 void window::handle_new_map(model::core_model* core, int id)
 {
-  m_centralWidget->add_new_map_tab(core, "map", id);
-  m_centralWidget->select_tab(id);
+  m_mainEditor->add_new_map_tab(core, "map", id);
+  m_mainEditor->select_tab(id);
   if (!in_editor_mode()) {
     enable_editor_view();
     show_all_docks();  // TODO just reopen docks that were visible
@@ -238,7 +238,7 @@ void window::handle_remove_tab(int tabID)
 
   // The tab isn't actually removed yet, this checks if there will be
   // no open tabs
-  if (m_centralWidget->open_tabs() == 1) {
+  if (m_mainEditor->open_tabs() == 1) {
     enable_startup_view();
   }
 }
@@ -262,13 +262,13 @@ void window::on_action_close_map_triggered()
   if (in_editor_mode()) {
     // TODO save current state of open map
 
-    const auto id = m_centralWidget->active_tab_id();
+    const auto id = m_mainEditor->active_tab_id();
     Q_ASSERT(id);
 
-    m_centralWidget->close_tab(*id);
+    m_mainEditor->close_tab(*id);
     emit request_close_map(*id);
 
-    if (m_centralWidget->open_tabs() == 0) {
+    if (m_mainEditor->open_tabs() == 0) {
       enable_startup_view();
     }
   }
@@ -439,7 +439,10 @@ void window::on_action_exit_triggered()
 void window::on_action_settings_triggered()
 {
   settings_dialog settings;
-  connect(&settings, &settings_dialog::reload_stylesheet, this, &window::reload_stylesheet);
+  connect(&settings,
+          &settings_dialog::reload_theme,
+          this,
+          &window::handle_theme_changed);
 
   settings.exec();
 }
@@ -448,6 +451,11 @@ void window::on_action_about_triggered()
 {
   about_dialog about;
   about.exec();
+}
+
+void window::handle_theme_changed()
+{
+  emit m_mainEditor->theme_changed();
 }
 
 }  // namespace tactile::gui

@@ -30,6 +30,11 @@ main_editor::~main_editor() noexcept
 
 void main_editor::init_connections() noexcept
 {
+  connect(this,
+          &main_editor::theme_changed,
+          m_mapTabWidget,
+          &tilemap_tab::theme_changed);
+
   connect(m_mapTabWidget,
           &tilemap_tab::request_redraw,
           this,

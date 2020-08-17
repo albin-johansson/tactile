@@ -37,6 +37,9 @@ class tilemap_tab final : public QTabWidget {
 
   void request_remove_tab(int id);
 
+ public slots:
+  void theme_changed();
+
  private:
   [[nodiscard]] auto get_pane(int index) const noexcept -> tilemap_view*;
 
