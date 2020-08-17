@@ -1,0 +1,16 @@
+{
+  "name": "Atom One Dark",
+  "Window": "#21252B",
+  "WindowText": "#AFB1B3",
+  "Base": "#282C34",
+  "AlternateBase": "#454853",
+  "ToolTipBase": "#3A3F4B",
+  "ToolTipText": "#AFB1B3",
+  "Text": "#AFB1B3",
+  "BrightText": "#FFFFFF",
+  "Button": "#313741",
+  "ButtonText": "#AFB1B3",
+  "Link": "#2A8280",
+  "Highlight": "#2A82DA",
+  "HighlightedText": "#000000"
+}
