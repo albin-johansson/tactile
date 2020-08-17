@@ -6,7 +6,6 @@
 #include "app_connections.hpp"
 #include "core_model.hpp"
 #include "resize_dialog.hpp"
-#include "set_style_sheet.hpp"
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "tileset_info.hpp"
@@ -25,7 +24,6 @@ app::app(int argc, char** argv)
   m_window = std::make_unique<gui::window>();
 
   app_connections{*this};
-  set_style_sheet(*this, ":/resources/tactile_light.qss");
 
   // do this to indicate what tool is active
   //  QPixmap pixmap{":/resources/icons/icons8/color/64/eraser.png"};
