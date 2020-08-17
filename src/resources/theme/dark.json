@@ -1,0 +1,25 @@
+{
+  "name": "Dark",
+  "Window": "#353535",
+  "WindowText": "#FFFFFF",
+  "Base": "#191919",
+  "AlternateBase": "#353535",
+  "ToolTipBase": "#353535",
+  "ToolTipText": "#FFFFFF",
+  "Text": "#FFFFFF",
+  "BrightText": "#FF0000",
+  "Button": "#353535",
+  "ButtonText": "#FFFFFF",
+  "Link": "#2A82DA",
+  "Highlight": "#2A82DA",
+  "HighlightedText": "#FFFFFF",
+  "Dark": "#232323",
+  "Shadow": "#141414",
+  "disabled": {
+    "WindowText": "#7F7F7F",
+    "Text": "#7F7F7F",
+    "ButtonText": "#7F7F7F",
+    "Highlight": "#505050",
+    "HighlightedText": "#7F7F7F"
+  }
+}
