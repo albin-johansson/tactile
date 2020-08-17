@@ -4,13 +4,6 @@
 
 namespace tactile {
 
-tactile_error::tactile_error(czstring what)
-{
-  if (what) {
-    m_what = what;
-  }
-}
-
 tactile_error::tactile_error(std::string what)
 {
   if (!what.empty()) {

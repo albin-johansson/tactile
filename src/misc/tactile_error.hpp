@@ -14,16 +14,6 @@ class tactile_error final : public std::exception {
   /**
    * @brief Creates an exception with the supplied message.
    *
-   * @param what the message of the exception. If the string is null, "N/A" is
-   * used.
-   *
-   * @since 0.1.0
-   */
-  explicit tactile_error(czstring what);
-
-  /**
-   * @brief Creates an exception with the supplied message.
-   *
    * @param what the message of the exception. If the string is empty, "N/A"
    * is used.
    *
