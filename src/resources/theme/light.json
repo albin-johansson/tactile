@@ -1,0 +1,16 @@
+{
+  "name": "Light",
+  "Window": "#FAFAFA",
+  "WindowText": "#82838E",
+  "Base": "#FFFFFF",
+  "AlternateBase": "#DADADA",
+  "ToolTipBase": "#393939",
+  "ToolTipText": "#FFFFFF",
+  "Text": "#82838E",
+  "BrightText": "#D0D1DE",
+  "Button": "#EEEEEE",
+  "ButtonText": "#82838E",
+  "Link": "#2A82DA",
+  "Highlight": "#2A82DA",
+  "HighlightedText": "#000000"
+}
