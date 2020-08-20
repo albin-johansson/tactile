@@ -1,166 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-  <class>StartupWidgetUI</class>
-  <widget class="QWidget" name="StartupWidgetUI">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>400</width>
-        <height>300</height>
-      </rect>
-    </property>
-    <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-      </sizepolicy>
-    </property>
-    <property name="windowTitle">
-      <string>Form</string>
-    </property>
-    <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="1">
-        <spacer name="verticalSpacer">
-          <property name="orientation">
-            <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-            <size>
-              <width>20</width>
-              <height>40</height>
-            </size>
-          </property>
-        </spacer>
-      </item>
-      <item row="3" column="2">
-        <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-            <size>
-              <width>40</width>
-              <height>20</height>
-            </size>
-          </property>
-        </spacer>
-      </item>
-      <item row="3" column="1">
-        <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <item>
-                <widget class="QLabel" name="loadMapLabel">
-                  <property name="font">
-                    <font>
-                      <family>Segoe UI</family>
-                      <pointsize>12</pointsize>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Load tilemap</string>
-                  </property>
-                  <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <widget class="QLabel" name="loadMapBindLabel">
-                  <property name="font">
-                    <font>
-                      <family>Segoe UI</family>
-                      <pointsize>12</pointsize>
-                      <italic>true</italic>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Ctrl+O</string>
-                  </property>
-                  <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                </widget>
-              </item>
-            </layout>
-          </item>
-          <item row="1" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout">
-              <item>
-                <widget class="QLabel" name="loadSheetLabel">
-                  <property name="font">
-                    <font>
-                      <family>Segoe UI</family>
-                      <pointsize>12</pointsize>
-                      <weight>50</weight>
-                      <bold>false</bold>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Load tileset</string>
-                  </property>
-                  <property name="alignment">
-                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <widget class="QLabel" name="loadSheetBindLabel">
-                  <property name="font">
-                    <font>
-                      <family>Segoe UI</family>
-                      <pointsize>12</pointsize>
-                      <italic>true</italic>
-                    </font>
-                  </property>
-                  <property name="text">
-                    <string>Ctrl+T</string>
-                  </property>
-                  <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                </widget>
-              </item>
-            </layout>
-          </item>
-        </layout>
-      </item>
-      <item row="6" column="1">
-        <spacer name="verticalSpacer_2">
-          <property name="orientation">
-            <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-            <size>
-              <width>20</width>
-              <height>40</height>
-            </size>
-          </property>
-        </spacer>
-      </item>
-      <item row="3" column="0">
-        <spacer name="horizontalSpacer">
-          <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-            <size>
-              <width>40</width>
-              <height>20</height>
-            </size>
-          </property>
-        </spacer>
-      </item>
-      <item row="1" column="1">
-        <widget class="QLabel" name="iconLabel">
-          <property name="font">
-            <font>
-              <pointsize>10</pointsize>
-            </font>
-          </property>
-          <property name="text">
-            <string>&lt;html&gt;
+ <class>startup_widget</class>
+ <widget class="QWidget" name="startup_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="1">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="2">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QLabel" name="loadMapLabel">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Load tilemap</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="loadMapBindLabel">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>12</pointsize>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>Ctrl+O</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QLabel" name="loadSheetLabel">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>12</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Load tileset</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="loadSheetBindLabel">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>12</pointsize>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>Ctrl+T</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="1">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLabel" name="iconLabel">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;
               &lt;head/&gt;
               &lt;body&gt;
               &lt;p&gt;
@@ -170,47 +170,47 @@
               &lt;/body&gt;
               &lt;/html&gt;
             </string>
-          </property>
-          <property name="alignment">
-            <set>Qt::AlignCenter</set>
-          </property>
-        </widget>
-      </item>
-      <item row="2" column="1">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-            <widget class="QLabel" name="startBlankLabel">
-              <property name="font">
-                <font>
-                  <family>Segoe UI</family>
-                  <pointsize>12</pointsize>
-                </font>
-              </property>
-              <property name="text">
-                <string>Start without tileset</string>
-              </property>
-            </widget>
-          </item>
-          <item>
-            <widget class="QLabel" name="label">
-              <property name="font">
-                <font>
-                  <family>Segoe UI</family>
-                  <pointsize>12</pointsize>
-                  <italic>true</italic>
-                </font>
-              </property>
-              <property name="text">
-                <string>Ctrl+N</string>
-              </property>
-            </widget>
-          </item>
-        </layout>
-      </item>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="startBlankLabel">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>12</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Start without tileset</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>12</pointsize>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Ctrl+N</string>
+       </property>
+      </widget>
+     </item>
     </layout>
-  </widget>
-  <resources>
-    <include location="../tactile.qrc"/>
-  </resources>
-  <connections/>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../tactile.qrc"/>
+ </resources>
+ <connections/>
 </ui>

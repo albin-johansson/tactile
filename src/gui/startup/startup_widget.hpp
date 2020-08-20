@@ -3,7 +3,7 @@
 #include <QWidget>
 
 namespace Ui {
-class StartupWidgetUI;
+class startup_widget;
 }
 
 namespace tactile::gui {
@@ -16,7 +16,7 @@ class startup_widget final : public QWidget
   ~startup_widget() noexcept override;
 
  private:
-  Ui::StartupWidgetUI* m_ui;
+  Ui::startup_widget* m_ui;
 };
 
 }  // namespace tactile::gui

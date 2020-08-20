@@ -5,7 +5,7 @@
 namespace tactile::gui {
 
 startup_widget::startup_widget(QWidget* parent)
-    : QWidget{parent}, m_ui{new Ui::StartupWidgetUI{}}
+    : QWidget{parent}, m_ui{new Ui::startup_widget{}}
 {
   m_ui->setupUi(this);
 }
