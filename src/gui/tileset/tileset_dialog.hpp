@@ -59,7 +59,7 @@ class tileset_dialog final : public QDialog {
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto image_name() const noexcept -> std::optional<QString>;
+  [[nodiscard]] auto image_name() const -> std::optional<QString>;
 
  private:
   owner<Ui::tileset_dialog*> m_ui;
@@ -70,9 +70,9 @@ class tileset_dialog final : public QDialog {
   QIntValidator* m_validator;
   QPixmap m_defaultImageIcon;
 
-  void validate_input() noexcept;
+  void validate_input();
 
-  [[nodiscard]] auto is_valid() const noexcept -> bool;
+  [[nodiscard]] auto is_valid() const -> bool;
 
   /**
    * Returns a pointer to the "OK" button.
@@ -80,7 +80,7 @@ class tileset_dialog final : public QDialog {
    * @return a pointer to the "OK" button.
    * @since 0.1.0
    */
-  [[nodiscard]] auto ok_button() noexcept -> QPushButton*;
+  [[nodiscard]] auto ok_button() -> QPushButton*;
 
   /**
    * Indicates whether or not the supplied line edit widget has valid input.
@@ -89,8 +89,7 @@ class tileset_dialog final : public QDialog {
    * @return true if the line edit widget is valid; false otherwise.
    * @since 0.1.0
    */
-  [[nodiscard]] auto validate(const QLineEdit& edit) const noexcept
-      -> QValidator::State;
+  [[nodiscard]] auto validate(const QLineEdit& edit) const -> QValidator::State;
 
  private slots:
   void on_imageButton_pressed();

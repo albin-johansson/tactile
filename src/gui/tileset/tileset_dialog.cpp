@@ -86,19 +86,19 @@ auto tileset_dialog::chosen_height() const noexcept -> std::optional<int>
   return m_height;
 }
 
-auto tileset_dialog::image_name() const noexcept -> std::optional<QString>
+auto tileset_dialog::image_name() const -> std::optional<QString>
 {
   return m_imageName;
 }
 
-auto tileset_dialog::is_valid() const noexcept -> bool
+auto tileset_dialog::is_valid() const -> bool
 {
   return validate(*m_ui->widthEdit) == QValidator::Acceptable &&
          validate(*m_ui->heightEdit) == QValidator::Acceptable &&
          !m_image.isNull();
 }
 
-void tileset_dialog::validate_input() noexcept
+void tileset_dialog::validate_input()
 {
   ok_button()->setEnabled(is_valid());
   if (ok_button()->isEnabled()) {
@@ -107,13 +107,12 @@ void tileset_dialog::validate_input() noexcept
   }
 }
 
-auto tileset_dialog::ok_button() noexcept -> QPushButton*
+auto tileset_dialog::ok_button() -> QPushButton*
 {
   return m_ui->buttonBox->button(QDialogButtonBox::Ok);
 }
 
-auto tileset_dialog::validate(const QLineEdit& edit) const noexcept
-    -> QValidator::State
+auto tileset_dialog::validate(const QLineEdit& edit) const -> QValidator::State
 {
   auto unused = 0;
   auto txt = edit.displayText();
