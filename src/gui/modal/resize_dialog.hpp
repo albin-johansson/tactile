@@ -26,7 +26,8 @@ namespace tactile::gui {
  *
  * @headerfile resize_dialog.hpp
  */
-class resize_dialog final : public QDialog {
+class resize_dialog final : public QDialog
+{
   Q_OBJECT
 
  public:

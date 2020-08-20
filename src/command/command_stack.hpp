@@ -14,7 +14,8 @@ namespace tactile {
  *
  * @headerfile command_stack.hpp
  */
-class command_stack final : public QUndoStack {
+class command_stack final : public QUndoStack
+{
  public:
   explicit command_stack(QObject* parent = nullptr);
 

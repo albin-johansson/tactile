@@ -27,7 +27,8 @@ namespace tactile::model {
  *
  * @headerfile tileset.hpp
  */
-class tileset final {
+class tileset final
+{
  public:
   using const_iterator = std::set<tile_id>::const_iterator;
 

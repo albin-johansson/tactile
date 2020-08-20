@@ -13,7 +13,8 @@ namespace tactile::cmd {
  *
  * @headerfile remove_row.hpp
  */
-class remove_row final : public abstract_command {
+class remove_row final : public abstract_command
+{
  public:
   explicit remove_row(not_null<model::tilemap*> map);
 

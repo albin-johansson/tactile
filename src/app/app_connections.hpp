@@ -15,7 +15,8 @@ namespace tactile {
  *
  * @headerfile app_connections.hpp
  */
-class app_connections final {
+class app_connections final
+{
  public:
   /**
    * @brief Initializes the connections for an `app` instance.

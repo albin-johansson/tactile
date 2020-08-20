@@ -9,7 +9,8 @@ class QRubberBand;
 
 namespace tactile::gui {
 
-class tileset_image_widget final : public QWidget {
+class tileset_image_widget final : public QWidget
+{
   Q_OBJECT
 
  public:

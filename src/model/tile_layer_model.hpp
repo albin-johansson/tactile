@@ -6,7 +6,8 @@
 
 namespace tactile::model {
 
-class tile_layer_model final : public QObject {
+class tile_layer_model final : public QObject
+{
   Q_OBJECT
 
  public:
@@ -18,9 +19,6 @@ class tile_layer_model final : public QObject {
   void layer_removed(tile_layer& layer);
 
  private:
-
-
-
 };
 
 }  // namespace tactile::model

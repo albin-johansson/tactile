@@ -15,7 +15,8 @@ class tool_widget;
 
 namespace tactile::gui {
 
-class tool_widget final : public QWidget {
+class tool_widget final : public QWidget
+{
   Q_OBJECT
 
  public:

@@ -80,4 +80,4 @@ namespace window {
 
 }  // namespace window
 
-}  // namespace tactile::cfg
+}  // namespace tactile::prefs::id

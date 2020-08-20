@@ -17,11 +17,14 @@ namespace tactile::gui {
  *
  * @headerfile tilemap_view.hpp
  */
-class tilemap_view final : public QGraphicsView {
+class tilemap_view final : public QGraphicsView
+{
   Q_OBJECT
 
  public:
-  explicit tilemap_view(model::core_model* core, int id, QWidget* parent = nullptr);
+  explicit tilemap_view(model::core_model* core,
+                        int id,
+                        QWidget* parent = nullptr);
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 

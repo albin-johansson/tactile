@@ -13,7 +13,8 @@ namespace tactile::cmd {
  *
  * @headerfile resize_map.hpp
  */
-class resize_map final : public abstract_command {
+class resize_map final : public abstract_command
+{
  public:
   /**
    * @brief Creates a `resize_map` instance.

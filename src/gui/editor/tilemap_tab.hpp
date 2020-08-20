@@ -8,7 +8,8 @@
 
 namespace tactile::gui {
 
-class tilemap_tab final : public QTabWidget {
+class tilemap_tab final : public QTabWidget
+{
   Q_OBJECT
 
  public:

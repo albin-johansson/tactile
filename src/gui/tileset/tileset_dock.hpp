@@ -6,7 +6,8 @@
 
 namespace tactile::gui {
 
-class tileset_dock final : public QDockWidget {
+class tileset_dock final : public QDockWidget
+{
   Q_OBJECT
 
  public:

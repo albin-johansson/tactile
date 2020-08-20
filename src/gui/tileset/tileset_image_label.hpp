@@ -5,7 +5,8 @@
 
 namespace tactile::gui {
 
-class tileset_image_label final : public QLabel {
+class tileset_image_label final : public QLabel
+{
  public:
   explicit tileset_image_label(const QImage& image,
                                int tileWidth,

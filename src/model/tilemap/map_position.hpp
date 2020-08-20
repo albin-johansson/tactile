@@ -23,7 +23,8 @@ namespace {
  *
  * @headerfile map_position.hpp
  */
-class map_position final {
+class map_position final
+{
  public:
   /**
    * @brief Creates a map position that represents (0, 0).

@@ -23,7 +23,8 @@ namespace tactile::gui {
  *
  * @headerfile main_editor.hpp
  */
-class main_editor final : public QWidget {
+class main_editor final : public QWidget
+{
   Q_OBJECT
 
  public:

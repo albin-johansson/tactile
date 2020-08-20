@@ -10,7 +10,8 @@ namespace tactile::model {
 
 using layer_id = int;
 
-class map_model final : public QObject {
+class map_model final : public QObject
+{
   Q_OBJECT
 
  public:

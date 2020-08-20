@@ -34,7 +34,8 @@ namespace tactile::model {
  *
  * @headerfile tile_layer.hpp
  */
-class tile_layer final {
+class tile_layer final
+{
  public:
   /**
    * @brief Creates a tile layer with the specified dimensions.

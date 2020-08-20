@@ -13,7 +13,8 @@ namespace tactile::cmd {
  *
  * @headerfile add_row.hpp
  */
-class add_row final : public abstract_command {
+class add_row final : public abstract_command
+{
  public:
   explicit add_row(not_null<model::tilemap*> map);
 

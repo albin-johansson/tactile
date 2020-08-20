@@ -22,7 +22,8 @@ namespace tactile {
  *
  * @headerfile app.hpp
  */
-class app final : public QApplication {
+class app final : public QApplication
+{
   Q_OBJECT
 
  public:

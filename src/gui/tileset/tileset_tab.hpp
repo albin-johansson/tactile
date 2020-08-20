@@ -10,7 +10,8 @@ class QScrollArea;
 
 namespace tactile::gui {
 
-class tileset_tab final : public QWidget {
+class tileset_tab final : public QWidget
+{
  public:
   explicit tileset_tab(const QImage& image,
                        int tileWidth,

@@ -14,7 +14,8 @@ namespace tactile::model {
  *
  * @headerfile tile_size.hpp
  */
-class tile_size final {
+class tile_size final
+{
  public:
   /**
    * @brief Returns the default size of tiles.

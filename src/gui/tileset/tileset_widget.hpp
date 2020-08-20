@@ -12,7 +12,8 @@ class TilesetWidgetUI;
 
 namespace tactile::gui {
 
-class tileset_widget final : public QWidget {
+class tileset_widget final : public QWidget
+{
   Q_OBJECT
 
  public:

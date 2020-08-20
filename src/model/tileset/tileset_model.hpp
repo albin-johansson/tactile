@@ -21,7 +21,8 @@ namespace tactile::model {
  *
  * @headerfile tileset_model.hpp
  */
-class tileset_model final {
+class tileset_model final
+{
  public:
   /**
    * @brief Adds a tileset to the manager.

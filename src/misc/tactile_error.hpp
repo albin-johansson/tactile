@@ -7,7 +7,8 @@
 
 namespace tactile {
 
-class tactile_error final : public std::exception {
+class tactile_error final : public std::exception
+{
  public:
   tactile_error() = default;
 

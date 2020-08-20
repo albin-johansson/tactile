@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QDialog>
-#include <QWidget>
 #include <QString>
+#include <QWidget>
 
 namespace Ui {
 
@@ -12,7 +12,8 @@ class SettingsUI;
 
 namespace tactile::gui {
 
-class settings_dialog final : public QDialog {
+class settings_dialog final : public QDialog
+{
   Q_OBJECT
 
  public:

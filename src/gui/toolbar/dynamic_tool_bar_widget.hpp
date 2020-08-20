@@ -9,7 +9,8 @@ class QLayout;
 
 namespace tactile::gui {
 
-class dynamic_tool_bar_widget final : public QWidget {
+class dynamic_tool_bar_widget final : public QWidget
+{
   Q_OBJECT
 
  public:

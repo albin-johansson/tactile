@@ -6,7 +6,8 @@ class QImage;
 
 namespace tactile::model {
 
-struct [[deprecated]] tileset_info final {
+struct [[deprecated]] tileset_info final
+{
   QImage image;
   int id{0};
   int tileWidth{1};

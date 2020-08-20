@@ -15,7 +15,8 @@ class tileset_dialog;
 
 namespace tactile::gui {
 
-class tileset_dialog final : public QDialog {
+class tileset_dialog final : public QDialog
+{
   Q_OBJECT
 
  public:

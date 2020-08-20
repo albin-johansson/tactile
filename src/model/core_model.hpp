@@ -29,7 +29,8 @@ using map_id = int;
  *
  * @headerfile core_model.hpp
  */
-class core_model final : public QObject {
+class core_model final : public QObject
+{
   Q_OBJECT
 
  public:

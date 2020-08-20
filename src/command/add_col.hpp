@@ -13,7 +13,8 @@ namespace tactile::cmd {
  *
  * @headerfile add_col.hpp
  */
-class add_col final : public abstract_command {
+class add_col final : public abstract_command
+{
  public:
   /**
    * @brief Creates am `add_col` instance.

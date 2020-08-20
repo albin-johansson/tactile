@@ -8,7 +8,8 @@
 namespace tactile::prefs {
 
 template <typename T>
-class setting final {
+class setting final
+{
  public:
   explicit setting(const QString& key)
   {

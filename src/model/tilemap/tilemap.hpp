@@ -23,7 +23,8 @@ namespace tactile::model {
  *
  * @headerfile tilemap.hpp
  */
-class tilemap final {
+class tilemap final
+{
  public:
   using iterator = typename std::vector<tile_layer>::iterator;
   using const_iterator = typename std::vector<tile_layer>::const_iterator;

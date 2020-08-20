@@ -11,7 +11,8 @@
 namespace tactile::model {
 namespace {
 
-struct render_bounds final {
+struct render_bounds final
+{
   int minRow{};
   int minCol{};
   int maxRow{};

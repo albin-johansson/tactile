@@ -29,7 +29,8 @@ inline constexpr QStringView atomOneDark{u"Atom One Dark"};
   return light == name || dark == name || atomOneDark == name;
 }
 
-class palette {
+class palette
+{
  public:
   using role = QPalette::ColorRole;
   using group = QPalette::ColorGroup;

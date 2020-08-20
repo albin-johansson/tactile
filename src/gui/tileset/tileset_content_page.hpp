@@ -12,7 +12,8 @@ class TilesetContentPageUI;
 
 namespace tactile::gui {
 
-class tileset_content_page final : public QWidget {
+class tileset_content_page final : public QWidget
+{
   Q_OBJECT
 
  public:

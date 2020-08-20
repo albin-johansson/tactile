@@ -8,12 +8,14 @@
 namespace tactile::gui {
 
 // TODO avoid QObject inheritance
-class tilemap_item final : public QObject, public QGraphicsItem  {
+class tilemap_item final : public QObject, public QGraphicsItem
+{
   Q_OBJECT
   Q_INTERFACES(QGraphicsItem)
 
  public:
-  explicit tilemap_item(model::core_model* core, QGraphicsItem* parent = nullptr);
+  explicit tilemap_item(model::core_model* core,
+                        QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
              const QStyleOptionGraphicsItem* option,

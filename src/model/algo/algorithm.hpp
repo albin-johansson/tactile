@@ -29,7 +29,8 @@ constexpr void do_n(int n, Callable callable) noexcept(noexcept(callable()))
  * @param value the value that will be clamped.
  * @param least the threshold that `value` must be greater than or equal to.
  *
- * @return `value` if `value` was greater than or equal to `least`; otherwise `least` is returned.
+ * @return `value` if `value` was greater than or equal to `least`; otherwise
+ * `least` is returned.
  *
  * @since 0.1.0
  */
