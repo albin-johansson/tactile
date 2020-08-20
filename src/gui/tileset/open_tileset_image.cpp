@@ -14,8 +14,8 @@ auto open_tileset_image(QWidget* parent) noexcept -> std::optional<QUrl>
   dialog.setFileMode(QFileDialog::ExistingFile);
   dialog.setViewMode(QFileDialog::Detail);
 
-  // TODO investigate why JPG doesn't seem to work when included
-  dialog.setNameFilter(QTranslator::tr("Images (*.png)"));
+  // FIXME investigate why JPG doesn't seem to work when included
+  dialog.setNameFilter(QTranslator::tr("Images (*.png *.jpg)"));
   dialog.setWindowTitle("Open tileset");
 
   if (cachedDirPath.isEmpty()) {
