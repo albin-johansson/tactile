@@ -5,22 +5,29 @@
 #include "flood_fill.hpp"
 
 namespace tactile::model {
+namespace {
+
+[[nodiscard]] auto create_row(int nCols, tile_id value = empty)
+    -> std::vector<tile_id>
+{
+  std::vector<tile_id> row;
+  row.reserve(nCols);
+  row.assign(nCols, value);
+  return row;
+}
+
+}  // namespace
 
 tile_layer::tile_layer(int nRows, int nCols)
 {
   nRows = (nRows < 1) ? 1 : nRows;
   nCols = (nCols < 1) ? 1 : nCols;
 
-  for (auto r = 0; r < nRows; ++r) {
-    tile_row row;
-    row.reserve(static_cast<std::size_t>(nCols));
+  m_tiles.reserve(nRows);
+  m_tiles.assign(nRows, create_row(nCols));
 
-    for (auto c = 0; c < nCols; ++c) {
-      row.push_back(empty);
-    }
-
-    m_tiles.push_back(row);
-  }
+  assert(rows() == nRows);
+  assert(cols() == nCols);
 }
 
 void tile_layer::flood(const map_position& position,
@@ -32,14 +39,7 @@ void tile_layer::flood(const map_position& position,
 
 void tile_layer::add_row(tile_id id)
 {
-  const auto nCols = cols();
-
-  tile_row row;
-  row.reserve(static_cast<std::size_t>(nCols));
-  for (int i = 0; i < nCols; ++i) {
-    row.push_back(id);
-  }
-  m_tiles.push_back(row);
+  m_tiles.push_back(create_row(cols(), id));
 }
 
 void tile_layer::add_col(tile_id id)
@@ -68,9 +68,7 @@ void tile_layer::remove_col() noexcept
 void tile_layer::set_tile(const map_position& position, tile_id id) noexcept
 {
   if (in_bounds(position)) {
-    const auto row = static_cast<std::size_t>(position.row());
-    const auto col = static_cast<std::size_t>(position.col());
-    m_tiles[row][col] = id;
+    m_tiles[position.urow()][position.ucol()] = id;
   }
 }
 
@@ -94,9 +92,7 @@ auto tile_layer::tile_at(const map_position& position) const noexcept
     -> std::optional<tile_id>
 {
   if (in_bounds(position)) {
-    const auto row = static_cast<std::size_t>(position.row());
-    const auto col = static_cast<std::size_t>(position.col());
-    return m_tiles[row][col];
+    return m_tiles[position.urow()][position.ucol()];
   } else {
     return std::nullopt;
   }
@@ -104,9 +100,8 @@ auto tile_layer::tile_at(const map_position& position) const noexcept
 
 auto tile_layer::in_bounds(const map_position& position) const noexcept -> bool
 {
-  const auto row = static_cast<std::size_t>(position.row());
-  const auto col = static_cast<std::size_t>(position.col());
-  return (row < m_tiles.size()) && (col < m_tiles[row].size());
+  const auto row = position.urow();
+  return (row < m_tiles.size()) && (position.ucol() < m_tiles[row].size());
 }
 
 auto tile_layer::visible() const noexcept -> bool
