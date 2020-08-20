@@ -10,7 +10,7 @@
 using namespace tactile;
 using namespace tactile::model;
 
-TEST_CASE("tileset(const SharedPtr<QImage>&, int, int)", "[tileset]")
+TEST_CASE("tileset(QImage, int, int)", "[tileset]")
 {
   SECTION("Null image")
   {
@@ -30,19 +30,24 @@ TEST_CASE("tileset::select", "[tileset]")
   tileset sheet{"terrain.png", tileWidth, tileHeight};
 
   sheet.select(0, 0);
-  CHECK(sheet.selection().size() == 1);
+  CHECK(std::distance(sheet.begin(), sheet.end()) == 1);
+  CHECK(sheet.num_selected() == 1);
 
   sheet.select(0, 0);
-  CHECK(sheet.selection().size() == 1);
+  CHECK(std::distance(sheet.begin(), sheet.end()) == 1);
+  CHECK(sheet.num_selected() == 1);
 
   sheet.select(3 * tileWidth, 2 * tileHeight);
-  CHECK(sheet.selection().size() == 2);
+  CHECK(std::distance(sheet.begin(), sheet.end()) == 2);
+  CHECK(sheet.num_selected() == 2);
 
   sheet.select(-1, -1);
-  CHECK(sheet.selection().size() == 2);
+  CHECK(std::distance(sheet.begin(), sheet.end()) == 2);
+  CHECK(sheet.num_selected() == 2);
 
   sheet.clear_selection();
-  CHECK(sheet.selection().empty());
+  CHECK(std::distance(sheet.begin(), sheet.end()) == 0);
+  CHECK(sheet.num_selected() == 0);
 }
 
 TEST_CASE("tileset::set_first_id", "[tileset]")
@@ -54,12 +59,6 @@ TEST_CASE("tileset::set_first_id", "[tileset]")
   const auto id = 84;
   sheet.set_first_id(id);
 
-  CHECK(sheet.first_id() == id);
-
-  sheet.set_first_id(0);  // invalid
-  CHECK(sheet.first_id() == id);
-
-  sheet.set_first_id(-1);  // invalid
   CHECK(sheet.first_id() == id);
 }
 
@@ -184,9 +183,4 @@ TEST_CASE("tileset::tile_height", "[tileset]")
     tileset sheet{"terrain.png", 32, 0};
     CHECK(sheet.tile_height() == 1);
   }
-}
-
-TEST_CASE("tileset::selection", "[tileset]")
-{
-  // TODO
 }

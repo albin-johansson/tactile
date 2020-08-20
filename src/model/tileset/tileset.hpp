@@ -1,9 +1,7 @@
 #pragma once
 
 #include <QImage>
-#include <memory>
 #include <set>
-#include <string_view>
 
 #include "tactile_types.hpp"
 #include "type_utils.hpp"
@@ -17,9 +15,13 @@ namespace tactile::model {
  *
  * @details A tileset is really just an image that contains a set of tiles
  * that are used to build tilemaps, where all tilesets store their first and
- * last valid tile identifiers. Tilesets must be created from images that
- * store their sprites aligned in a grid. However, the tiles don't
- * necessarily have to be be square.
+ * last valid tile identifiers.
+ *
+ * @details Tilesets must be created from images that store their sprites
+ * aligned in a grid. However, the tiles don't necessarily have to be be square.
+ *
+ * @details The `tileset` class supports iteration of the selected cells, by
+ * providing `begin` and `end` member functions.
  *
  * @since 0.1.0
  *
@@ -27,6 +29,8 @@ namespace tactile::model {
  */
 class tileset final {
  public:
+  using const_iterator = std::set<tile_id>::const_iterator;
+
   /**
    * @brief Creates a tileset with the initial first ID set to 1.
    *
@@ -41,7 +45,7 @@ class tileset final {
    *
    * @since 0.1.0
    */
-  tileset(const QImage& image, int tileWidth, int tileHeight);
+  tileset(QImage image, int tileWidth, int tileHeight);
 
   /**
    * @brief Creates a tileset with the initial first ID set to 1.
@@ -62,13 +66,12 @@ class tileset final {
   /**
    * @brief Sets the first tile ID property of the tileset.
    *
-   * @details This method has no effect if the supplied ID isn't greater than
-   * zero.
+   * @pre `firstID` must be greater than 0.
    *
    * @note This method doesn't check if the supplied tile ID isn't already
    * taken by another tileset.
    *
-   * @param firstID the new first tile ID, must be greater than zero.
+   * @param firstID the new first tile ID.
    *
    * @since 0.1.0
    */
@@ -86,7 +89,7 @@ class tileset final {
    *
    * @since 0.1.0
    */
-  void select(int x, int y) noexcept;
+  void select(int x, int y);
 
   /**
    * @brief Clears any previously selected tiles.
@@ -207,13 +210,31 @@ class tileset final {
   [[nodiscard]] auto tile_height() const noexcept -> int;
 
   /**
-   * @brief Returns the currently selected tile IDs.
+   * @brief Returns a begin iterator, for iterating selected cells.
    *
-   * @return the currently selected tile IDs.
+   * @return a begin iterator.
    *
    * @since 0.1.0
    */
-  [[nodiscard, deprecated]] auto selection() -> const std::set<tile_id>&;
+  [[nodiscard]] auto begin() const noexcept -> const_iterator;
+
+  /**
+   * @brief Returns an end iterator, for iterating selected cells.
+   *
+   * @return an end iterator.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto end() const noexcept -> const_iterator;
+
+  /**
+   * @brief Returns the current amount of selected cells.
+   *
+   * @return the amount of currently selected cells.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto num_selected() const noexcept -> int;
 
  private:
   QImage m_sheet;  // FIXME this field might be unnecessary

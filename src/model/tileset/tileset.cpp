@@ -1,19 +1,21 @@
 
 #include "tileset.hpp"
 
-#include <QImage>
+#include <cassert>  // assert
+#include <utility>  // move
 
+#include "algorithm.hpp"
 #include "tactile_error.hpp"
 #include "tactile_types.hpp"
 
 namespace tactile::model {
 
-tileset::tileset(const QImage& image, int tileWidth, int tileHeight)
-    : m_sheet{image},
-      m_tileWidth{(tileWidth < 1) ? 1 : tileWidth},
-      m_tileHeight{(tileHeight < 1) ? 1 : tileHeight}
+tileset::tileset(QImage image, int tileWidth, int tileHeight)
+    : m_sheet{std::move(image)},
+      m_tileWidth{at_least(tileWidth, 1)},
+      m_tileHeight{at_least(tileHeight, 1)}
 {
-  if (image.isNull()) {
+  if (m_sheet.isNull()) {
     throw tactile_error{"Cannot create tileset from null image!"};
   }
 
@@ -23,30 +25,18 @@ tileset::tileset(const QImage& image, int tileWidth, int tileHeight)
 }
 
 tileset::tileset(const QString& path, int tileWidth, int tileHeight)
-    : m_sheet{path},
-      m_tileWidth{(tileWidth < 1) ? 1 : tileWidth},
-      m_tileHeight{(tileHeight < 1) ? 1 : tileHeight}
-{
-  if (m_sheet.isNull()) {
-    throw tactile_error{"Failed to load tileset image!"};
-  }
-
-  m_rows = height() / m_tileHeight;
-  m_cols = width() / m_tileWidth;
-  m_nTiles = m_rows * m_cols;
-}
+    : tileset{QImage{path}, tileWidth, tileHeight}
+{}
 
 void tileset::set_first_id(tile_id firstID) noexcept
 {
-  if (firstID > 0) {
-    m_firstID = firstID;
-  }
+  assert(firstID > 0);
+  m_firstID = firstID;
 }
 
-void tileset::select(int x, int y) noexcept
+void tileset::select(int x, int y)
 {
-  const auto tile = tile_at(x, y);
-  if (tile != empty) {
+  if (const auto tile = tile_at(x, y); tile != empty) {
     m_selection.emplace(tile);
   }
 }
@@ -118,9 +108,19 @@ auto tileset::tile_height() const noexcept -> int
   return m_tileHeight;
 }
 
-auto tileset::selection() -> const std::set<tile_id>&
+auto tileset::begin() const noexcept -> tileset::const_iterator
 {
-  return m_selection;
+  return m_selection.begin();
+}
+
+auto tileset::end() const noexcept -> tileset::const_iterator
+{
+  return m_selection.end();
+}
+
+auto tileset::num_selected() const noexcept -> int
+{
+  return m_selection.size();
 }
 
 }  // namespace tactile::model
