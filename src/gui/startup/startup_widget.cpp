@@ -4,6 +4,15 @@
 
 namespace tactile::gui {
 
-TACTILE_BASIC_WIDGET_DEF(startup_widget, QWidget, Ui::StartupWidgetUI)
+startup_widget::startup_widget(QWidget* parent)
+    : QWidget{parent}, m_ui{new Ui::StartupWidgetUI{}}
+{
+  m_ui->setupUi(this);
+}
+
+startup_widget::~startup_widget() noexcept
+{
+  delete m_ui;
+}
 
 }  // namespace tactile::gui

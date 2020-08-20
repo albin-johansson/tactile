@@ -63,8 +63,6 @@ set(TACTILE_SOURCE_FILES
         gui/tools/tool_dock.cpp
         gui/tools/tool_dock.hpp
 
-        gui/util/basic_widget_macro.hpp
-
         gui/window/window.hpp
         gui/window/window.cpp
         gui/window/window.ui

@@ -1,16 +1,22 @@
 #pragma once
+
 #include <QWidget>
 
-#include "basic_widget_macro.hpp"
-
 namespace Ui {
-
 class StartupWidgetUI;
-
 }
 
 namespace tactile::gui {
 
-TACTILE_BASIC_WIDGET_DECL(startup_widget, QWidget, Ui::StartupWidgetUI)
+class startup_widget final : public QWidget
+{
+ public:
+  explicit startup_widget(QWidget* parent = nullptr);
+
+  ~startup_widget() noexcept override;
+
+ private:
+  Ui::StartupWidgetUI* m_ui;
+};
 
 }  // namespace tactile::gui

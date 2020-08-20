@@ -2,12 +2,8 @@
 
 #include <QDialog>
 
-#include "basic_widget_macro.hpp"
-
 namespace Ui {
-
 class AboutUI;
-
 }
 
 namespace tactile::gui {
@@ -24,6 +20,15 @@ namespace tactile::gui {
  *
  * @headerfile about_dialog.hpp
  */
-TACTILE_BASIC_WIDGET_DECL(about_dialog, QDialog, Ui::AboutUI)
+class about_dialog final : public QDialog
+{
+ public:
+  explicit about_dialog(QWidget* parent = nullptr);
+
+  ~about_dialog() noexcept override;
+
+ private:
+  Ui::AboutUI* m_ui;
+};
 
 }  // namespace tactile::gui
