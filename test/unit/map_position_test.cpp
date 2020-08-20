@@ -72,6 +72,22 @@ TEST_CASE("map_position::col", "[map_position]")
   CHECK(position.col() == col);
 }
 
+TEST_CASE("map_position::urow", "[map_position]")
+{
+  const auto row = 6532;
+  const map_position position{row, 0};
+
+  CHECK(position.urow() == static_cast<std::size_t>(row));
+}
+
+TEST_CASE("map_position::ucol", "[map_position]")
+{
+  const auto col = 18343;
+  const map_position position{0, col};
+
+  CHECK(position.ucol() == static_cast<std::size_t>(col));
+}
+
 TEST_CASE("map_position::north", "[map_position]")
 {
   const map_position fst{7, 15};

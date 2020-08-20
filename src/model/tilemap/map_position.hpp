@@ -1,8 +1,16 @@
 #pragma once
 
-#include "type_utils.hpp"
+#include <cstddef>  // size_t
 
 namespace tactile::model {
+namespace {
+
+[[nodiscard]] constexpr auto clamp_component(int comp) noexcept -> int
+{
+  return (comp < 0) ? 0 : comp;
+}
+
+}  // namespace
 
 /**
  * @class map_position
@@ -15,7 +23,7 @@ namespace tactile::model {
  */
 class map_position final {
  public:
-  map_position() noexcept = default;
+  constexpr map_position() noexcept = default;
 
   /**
    * @brief Creates a map position.
@@ -26,7 +34,9 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  map_position(int row, int col) noexcept;
+  constexpr map_position(int row, int col) noexcept
+      : m_row{clamp_component(row)}, m_col{clamp_component(col)}
+  {}
 
   /**
    * @brief Sets the row coordinate of the map position.
@@ -36,7 +46,7 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  void set_row(int row) noexcept;
+  constexpr void set_row(int row) noexcept { m_row = clamp_component(row); }
 
   /**
    * @brief Sets the column coordinate of the map position.
@@ -46,7 +56,7 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  void set_col(int col) noexcept;
+  constexpr void set_col(int col) noexcept { m_col = clamp_component(col); }
 
   /**
    * @brief Returns a map position that is one step north of this map position.
@@ -55,7 +65,10 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto north() const noexcept -> map_position;
+  [[nodiscard]] constexpr auto north() const noexcept -> map_position
+  {
+    return {m_row - 1, m_col};
+  }
 
   /**
    * @brief Returns a map position that is one step to the east of this map
@@ -65,7 +78,10 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto east() const noexcept -> map_position;
+  [[nodiscard]] constexpr auto east() const noexcept -> map_position
+  {
+    return {m_row, m_col + 1};
+  }
 
   /**
    * @brief Returns a map position that is one step south of this map position.
@@ -74,7 +90,10 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto south() const noexcept -> map_position;
+  [[nodiscard]] constexpr auto south() const noexcept -> map_position
+  {
+    return {m_row + 1, m_col};
+  }
 
   /**
    * @brief Returns a map position that is one step to the west of this map
@@ -84,29 +103,60 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto west() const noexcept -> map_position;
+  [[nodiscard]] constexpr auto west() const noexcept -> map_position
+  {
+    return {m_row, m_col - 1};
+  }
 
   /**
-   * @brief Returns the row value of the map position.
+   * @brief Returns the row index of the map position.
    *
    * @note The returned value is never negative.
    *
-   * @return the row value of the map position.
+   * @return the row index of the map position.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto row() const noexcept -> int { return m_row; }
+  [[nodiscard]] constexpr auto row() const noexcept -> int { return m_row; }
 
   /**
-   * @brief Returns the column value of the map position.
+   * @brief Returns the column index of the map position.
    *
    * @note The returned value is never negative.
    *
-   * @return the column value of the map position.
+   * @return the column index of the map position.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto col() const noexcept -> int { return m_col; }
+  [[nodiscard]] constexpr auto col() const noexcept -> int { return m_col; }
+
+  /**
+   * @brief Returns the row index associated with the map position.
+   *
+   * @details This function is meant to be used when indexing vectors, etc.
+   *
+   * @return the row index.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] constexpr auto urow() const noexcept -> std::size_t
+  {
+    return static_cast<std::size_t>(m_row);
+  }
+
+  /**
+   * @brief Returns the column index associated with the map position.
+   *
+   * @details This function is meant to be used when indexing vectors, etc.
+   *
+   * @return the column index.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] constexpr auto ucol() const noexcept -> std::size_t
+  {
+    return static_cast<std::size_t>(m_col);
+  }
 
  private:
   int m_row{};
@@ -124,8 +174,12 @@ class map_position final {
  *
  * @since 0.1.0
  */
-[[nodiscard]] auto operator==(const map_position& lhs,
-                              const map_position& rhs) noexcept -> bool;
+[[nodiscard]] inline constexpr auto operator==(const map_position& lhs,
+                                               const map_position& rhs) noexcept
+    -> bool
+{
+  return (lhs.row() == rhs.row()) && (lhs.col() == rhs.col());
+}
 
 /**
  * @brief Indicates whether or not two map positions aren't the same.
@@ -138,10 +192,11 @@ class map_position final {
  *
  * @since 0.1.0
  */
-[[nodiscard]] auto operator!=(const map_position& lhs,
-                              const map_position& rhs) noexcept -> bool;
-
-static_assert(std::is_nothrow_default_constructible_v<map_position>);
-static_assert(std::is_nothrow_destructible_v<map_position>);
+[[nodiscard]] inline constexpr auto operator!=(const map_position& lhs,
+                                               const map_position& rhs) noexcept
+    -> bool
+{
+  return !(lhs == rhs);
+}
 
 }  // namespace tactile::model

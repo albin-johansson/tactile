@@ -49,7 +49,6 @@ set(TACTILE_SOURCE_FILES
         model/tilemap/tilemap.cpp
         model/tilemap/tile_layer.cpp
         model/tilemap/tile_layer.hpp
-        model/tilemap/map_position.cpp
         model/tilemap/map_position.hpp
         model/tilemap/render_tilemap.cpp
         model/tilemap/render_tilemap.hpp
