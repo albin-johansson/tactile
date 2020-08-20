@@ -3,17 +3,9 @@
 #include "algorithm.hpp"
 
 namespace tactile::model {
-namespace {
-
-[[nodiscard]] constexpr auto clamp_map_dimension(int dim) noexcept -> int
-{
-  return (dim < 1) ? 1 : dim;
-}
-
-}  // namespace
 
 tilemap::tilemap(int nRows, int nCols)
-    : m_nRows{clamp_map_dimension(nRows)}, m_nCols{clamp_map_dimension(nCols)}
+    : m_nRows{at_least(nRows, 1)}, m_nCols{at_least(nCols, 1)}
 {
   m_layers.emplace_back(nRows, nCols);
 }
@@ -72,7 +64,7 @@ void tilemap::remove_col() noexcept
 
 void tilemap::set_rows(int nRows)
 {
-  nRows = clamp_map_dimension(nRows);
+  nRows = at_least(nRows, 1);
 
   if (nRows == m_nRows) {
     return;
@@ -87,7 +79,7 @@ void tilemap::set_rows(int nRows)
 
 void tilemap::set_cols(int nCols)
 {
-  nCols = clamp_map_dimension(nCols);
+  nCols = at_least(nCols, 1);
 
   if (nCols == m_nCols) {
     return;
@@ -103,8 +95,7 @@ void tilemap::set_cols(int nCols)
 void tilemap::set_visibility(int layer, bool visibility) noexcept
 {
   if (has_layer(layer)) {
-    const auto index = static_cast<std::size_t>(layer);
-    m_layers.at(index).set_visible(visibility);
+    m_layers.at(static_cast<std::size_t>(layer)).set_visible(visibility);
   }
 }
 
