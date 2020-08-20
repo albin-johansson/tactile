@@ -210,9 +210,16 @@ else ()
             /W3)
 endif ()
 
-add_executable(Tactile
-        ${TACTILE_SOURCE_FILES}
-        main.cpp)
+if (WIN32)
+    add_executable(Tactile WIN32
+            ${TACTILE_SOURCE_FILES}
+            main.cpp)
+else ()
+    add_executable(Tactile
+            ${TACTILE_SOURCE_FILES}
+            main.cpp)
+endif ()
+
 
 add_dependencies(Tactile libTactile)
 
