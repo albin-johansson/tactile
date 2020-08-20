@@ -3,6 +3,7 @@
 #include <catch.hpp>
 
 #include "map_position.hpp"
+#include "algorithm.hpp"
 
 using namespace tactile;
 using namespace tactile::model;
@@ -63,6 +64,38 @@ TEST_CASE("TileLayer::remove_col", "[TileLayer]")
     layer.remove_col();  // shouldn't throw
   }
   CHECK(layer.cols() == 1);
+}
+
+TEST_CASE("TileLayer::set_rows", "[TileLayer]")
+{
+  tile_layer layer{5, 5};
+
+  CHECK(layer.rows() == 5);
+  CHECK(layer.cols() == 5);
+
+  layer.set_rows(32);
+  CHECK(layer.rows() == 32);
+  CHECK(layer.cols() == 5);
+
+  layer.set_rows(15);
+  CHECK(layer.rows() == 15);
+  CHECK(layer.cols() == 5);
+}
+
+TEST_CASE("TileLayer::set_cols", "[TileLayer]")
+{
+  tile_layer layer{5, 5};
+
+  CHECK(layer.rows() == 5);
+  CHECK(layer.cols() == 5);
+
+  layer.set_cols(41);
+  CHECK(layer.rows() == 5);
+  CHECK(layer.cols() == 41);
+
+  layer.set_cols(8);
+  CHECK(layer.rows() == 5);
+  CHECK(layer.cols() == 8);
 }
 
 TEST_CASE("TileLayer::set_tile", "[TileLayer]")

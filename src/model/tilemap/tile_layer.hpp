@@ -105,6 +105,28 @@ class tile_layer final {
   void remove_col() noexcept;
 
   /**
+   * @brief Sets the total number of rows in the layer.
+   *
+   * @pre `nRows` must be greater than or equal to 1.
+   *
+   * @param nRows the new number of rows in the layer.
+   *
+   * @since 0.1.0
+   */
+  void set_rows(int nRows);
+
+  /**
+   * @brief Sets the total number of columns in the layer.
+   *
+   * @pre `nCols` must be greater than or equal to 1.
+   *
+   * @param nCols the new number of columns in the layer.
+   *
+   * @since 0.1.0
+   */
+  void set_cols(int nCols);
+
+  /**
    * @brief Sets the tile ID of a tile in the tile layer.
    *
    * @note This method has no effect if the supplied position is out-of-bounds.

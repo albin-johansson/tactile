@@ -32,7 +32,7 @@ set(TACTILE_SOURCE_FILES
 
         model/algo/flood_fill.hpp
         model/algo/flood_fill.cpp
-        model/algo/algorithm_utils.hpp
+        model/algo/algorithm.hpp
 
         model/util/type_utils.hpp
 

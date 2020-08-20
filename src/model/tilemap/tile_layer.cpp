@@ -1,7 +1,9 @@
 #include "tile_layer.hpp"
 
-#include <cassert>
+#include <cassert>  // assert
+#include <cmath>    // abs
 
+#include "algorithm.hpp"
 #include "flood_fill.hpp"
 
 namespace tactile::model {
@@ -62,6 +64,44 @@ void tile_layer::remove_col() noexcept
     if (row.size() > 1) {
       row.pop_back();
     }
+  }
+}
+
+void tile_layer::set_rows(int nRows)
+{
+  assert(nRows >= 1);
+
+  const auto current = rows();
+
+  if (nRows == current) {
+    return;
+  }
+
+  const auto diff = std::abs(current - nRows);
+
+  if (current < nRows) {
+    do_n(diff, [this] { add_row(empty); });
+  } else {
+    do_n(diff, [this]() noexcept { remove_row(); });
+  }
+}
+
+void tile_layer::set_cols(int nCols)
+{
+  assert(nCols >= 1);
+
+  const auto current = cols();
+
+  if (nCols == current) {
+    return;
+  }
+
+  const auto diff = std::abs(current - nCols);
+
+  if (current < nCols) {
+    do_n(diff, [this] { add_col(empty); });
+  } else {
+    do_n(diff, [this]() noexcept { remove_col(); });
   }
 }
 

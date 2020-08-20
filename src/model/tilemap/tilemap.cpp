@@ -1,11 +1,11 @@
 #include "tilemap.hpp"
 
-#include "algorithm_utils.hpp"
+#include "algorithm.hpp"
 
 namespace tactile::model {
 namespace {
 
-[[nodiscard]] auto clamp_map_dimension(int dim) noexcept -> int
+[[nodiscard]] constexpr auto clamp_map_dimension(int dim) noexcept -> int
 {
   return (dim < 1) ? 1 : dim;
 }
@@ -13,9 +13,7 @@ namespace {
 }  // namespace
 
 tilemap::tilemap(int nRows, int nCols)
-    : m_nRows{clamp_map_dimension(nRows)},
-      m_nCols{clamp_map_dimension(nCols)},
-      m_activeLayer{0}
+    : m_nRows{clamp_map_dimension(nRows)}, m_nCols{clamp_map_dimension(nCols)}
 {
   m_layers.emplace_back(nRows, nCols);
 }
@@ -27,12 +25,12 @@ void tilemap::select(int layer) noexcept
   }
 }
 
-void tilemap::add_layer() noexcept
+void tilemap::add_layer()
 {
   m_layers.emplace_back(m_nRows, m_nCols);
 }
 
-void tilemap::add_row(tile_id id) noexcept
+void tilemap::add_row(tile_id id)
 {
   for (auto& layer : m_layers) {
     layer.add_row(id);
@@ -40,7 +38,7 @@ void tilemap::add_row(tile_id id) noexcept
   ++m_nRows;
 }
 
-void tilemap::add_col(tile_id id) noexcept
+void tilemap::add_col(tile_id id)
 {
   for (auto& layer : m_layers) {
     layer.add_col(id);
@@ -72,7 +70,7 @@ void tilemap::remove_col() noexcept
   --m_nCols;
 }
 
-void tilemap::set_rows(int nRows) noexcept
+void tilemap::set_rows(int nRows)
 {
   nRows = clamp_map_dimension(nRows);
 
@@ -80,23 +78,14 @@ void tilemap::set_rows(int nRows) noexcept
     return;
   }
 
-  const auto nSteps = std::abs(nRows - m_nRows);
-
-  if (nRows > m_nRows) {
-    for (auto i = 0; i < nSteps; ++i) {
-      for_all(m_layers,
-              [](tile_layer& layer) noexcept { layer.add_row(empty); });
-    }
-  } else {
-    for (auto i = 0; i < nSteps; ++i) {
-      for_all(m_layers, [](tile_layer& layer) noexcept { layer.remove_row(); });
-    }
+  for (auto& layer : m_layers) {
+    layer.set_rows(nRows);
   }
 
   m_nRows = nRows;
 }
 
-void tilemap::set_cols(int nCols) noexcept
+void tilemap::set_cols(int nCols)
 {
   nCols = clamp_map_dimension(nCols);
 
@@ -104,17 +93,8 @@ void tilemap::set_cols(int nCols) noexcept
     return;
   }
 
-  const auto nSteps = std::abs(m_nCols - nCols);
-
-  if (nCols > m_nCols) {
-    for (auto i = 0; i < nSteps; ++i) {
-      for_all(m_layers,
-              [](tile_layer& layer) noexcept { layer.add_col(empty); });
-    }
-  } else {
-    for (auto i = 0; i < nSteps; ++i) {
-      for_all(m_layers, [](tile_layer& layer) noexcept { layer.remove_col(); });
-    }
+  for (auto& layer : m_layers) {
+    layer.set_cols(nCols);
   }
 
   m_nCols = nCols;

@@ -57,7 +57,7 @@ class tilemap final {
    *
    * @since 0.1.0
    */
-  void add_layer() noexcept;
+  void add_layer();
 
   /**
    * @brief Adds a row to the tilemap.
@@ -66,7 +66,7 @@ class tilemap final {
    *
    * @since 0.1.0
    */
-  void add_row(tile_id id = empty) noexcept;
+  void add_row(tile_id id = empty);
 
   /**
    * @brief Adds a column to the tilemap.
@@ -75,7 +75,7 @@ class tilemap final {
    *
    * @since 0.1.0
    */
-  void add_col(tile_id id = empty) noexcept;
+  void add_col(tile_id id = empty);
 
   /**
    * @brief Removes a row from the tilemap.
@@ -103,7 +103,7 @@ class tilemap final {
    *
    * @since 0.1.0
    */
-  void set_rows(int nRows) noexcept;
+  void set_rows(int nRows);
 
   /**
    * @brief Sets the total number of columns in the tilemap.
@@ -113,7 +113,7 @@ class tilemap final {
    *
    * @since 0.1.0
    */
-  void set_cols(int nCols) noexcept;
+  void set_cols(int nCols);
 
   /**
    * @brief Sets the visibility of a tile layer.
@@ -239,7 +239,7 @@ class tilemap final {
  private:
   int m_nRows;
   int m_nCols;
-  int m_activeLayer;
+  int m_activeLayer{};
   std::vector<tile_layer> m_layers;
   tile_size m_tileSize;
 };

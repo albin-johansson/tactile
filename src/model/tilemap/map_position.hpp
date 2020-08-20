@@ -2,6 +2,8 @@
 
 #include <cstddef>  // size_t
 
+#include "algorithm.hpp"
+
 namespace tactile::model {
 namespace {
 
@@ -23,6 +25,11 @@ namespace {
  */
 class map_position final {
  public:
+  /**
+   * @brief Creates a map position that represents (0, 0).
+   *
+   * @since 0.1.0
+   */
   constexpr map_position() noexcept = default;
 
   /**
@@ -35,7 +42,7 @@ class map_position final {
    * @since 0.1.0
    */
   constexpr map_position(int row, int col) noexcept
-      : m_row{clamp_component(row)}, m_col{clamp_component(col)}
+      : m_row{at_least(row, 0)}, m_col{at_least(col, 0)}
   {}
 
   /**
@@ -46,7 +53,7 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  constexpr void set_row(int row) noexcept { m_row = clamp_component(row); }
+  constexpr void set_row(int row) noexcept { m_row = at_least(row, 0); }
 
   /**
    * @brief Sets the column coordinate of the map position.
@@ -56,7 +63,7 @@ class map_position final {
    *
    * @since 0.1.0
    */
-  constexpr void set_col(int col) noexcept { m_col = clamp_component(col); }
+  constexpr void set_col(int col) noexcept { m_col = at_least(col, 0); }
 
   /**
    * @brief Returns a map position that is one step north of this map position.

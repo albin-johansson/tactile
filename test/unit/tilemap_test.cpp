@@ -2,7 +2,7 @@
 
 #include <catch.hpp>
 
-#include "algorithm_utils.hpp"
+#include "algorithm.hpp"
 
 using namespace tactile;
 using namespace tactile::model;
@@ -65,7 +65,7 @@ TEST_CASE("Tilemap::remove_row", "[Tilemap]")
   map.remove_row();
   CHECK(map.rows() == (initialRows - 1));
 
-  repeat(20, [&map] { map.remove_row(); });
+  do_n(20, [&map] { map.remove_row(); });
 
   CHECK(map.rows() == 1);
 }
@@ -78,7 +78,7 @@ TEST_CASE("Tilemap::remove_col", "[Tilemap]")
   map.remove_col();
   CHECK(map.cols() == (initialCols - 1));
 
-  repeat(20, [&map] { map.remove_col(); });
+  do_n(20, [&map] { map.remove_col(); });
 
   CHECK(map.cols() == 1);
 }
