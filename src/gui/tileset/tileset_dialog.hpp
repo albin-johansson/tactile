@@ -10,12 +10,14 @@
 class QLineEdit;
 
 namespace Ui {
-class TilesetDialogUI;
+class tileset_dialog;
 }
 
 namespace tactile::gui {
 
 class tileset_dialog final : public QDialog {
+  Q_OBJECT
+
  public:
   explicit tileset_dialog(QWidget* parent = nullptr);
 
@@ -60,7 +62,7 @@ class tileset_dialog final : public QDialog {
   [[nodiscard]] auto image_name() const noexcept -> std::optional<QString>;
 
  private:
-  owner<Ui::TilesetDialogUI*> m_ui;
+  owner<Ui::tileset_dialog*> m_ui;
   QImage m_image{};
   std::optional<int> m_width;
   std::optional<int> m_height;
@@ -91,7 +93,11 @@ class tileset_dialog final : public QDialog {
       -> QValidator::State;
 
  private slots:
-  void handle_image_select();
+  void on_imageButton_pressed();
+
+  void on_widthEdit_textChanged();
+
+  void on_heightEdit_textChanged();
 };
 
 }  // namespace tactile::gui

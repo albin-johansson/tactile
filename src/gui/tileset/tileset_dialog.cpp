@@ -18,7 +18,7 @@ namespace {
 }  // namespace
 
 tileset_dialog::tileset_dialog(QWidget* parent)
-    : QDialog{parent}, m_ui{new Ui::TilesetDialogUI{}}
+    : QDialog{parent}, m_ui{new Ui::tileset_dialog{}}
 {
   m_ui->setupUi(this);
   m_validator = new QIntValidator{1, 1'000, this};
@@ -30,21 +30,6 @@ tileset_dialog::tileset_dialog(QWidget* parent)
     qWarning("Found no default pixmap for tileset image!");
   }
 
-  connect(m_ui->widthEdit,
-          &QLineEdit::textChanged,
-          this,
-          &tileset_dialog::validate_input);
-
-  connect(m_ui->heightEdit,
-          &QLineEdit::textChanged,
-          this,
-          &tileset_dialog::validate_input);
-
-  connect(m_ui->imageButton,
-          &QPushButton::pressed,
-          this,
-          &tileset_dialog::handle_image_select);
-
   ok_button()->setEnabled(false);
 }
 
@@ -53,11 +38,9 @@ tileset_dialog::~tileset_dialog() noexcept
   delete m_ui;
 }
 
-void tileset_dialog::handle_image_select()
+void tileset_dialog::on_imageButton_pressed()
 {
-  const auto path = open_tileset_image(this);
-
-  if (path) {
+  if (const auto path = open_tileset_image(this); path) {
     const auto pathStr = path->path().remove(0, 1);  // remove leading '/'
     const auto fileName = path->fileName();
 
@@ -76,6 +59,16 @@ void tileset_dialog::handle_image_select()
 
     ok_button()->setEnabled(is_valid());
   }
+}
+
+void tileset_dialog::on_widthEdit_textChanged()
+{
+  validate_input();
+}
+
+void tileset_dialog::on_heightEdit_textChanged()
+{
+  validate_input();
 }
 
 auto tileset_dialog::chosen_image() const noexcept -> const QImage&
