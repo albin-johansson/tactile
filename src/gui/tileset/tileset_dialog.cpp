@@ -44,6 +44,8 @@ tileset_dialog::tileset_dialog(QWidget* parent)
           &QPushButton::pressed,
           this,
           &tileset_dialog::handle_image_select);
+
+  ok_button()->setEnabled(false);
 }
 
 tileset_dialog::~tileset_dialog() noexcept
