@@ -184,13 +184,17 @@ void window::handle_redo_text_update(const QString& text)
   m_ui->action_redo->setText("Redo " + text);
 }
 
-void window::handle_add_tileset(const model::tileset_info& info,
+void window::handle_add_tileset(const QImage& image,
+                                tileset_id id,
+                                int tileWidth,
+                                int tileHeight,
                                 const QString& tabName) noexcept
 {
-  m_tilesetDock->get_tileset_widget()->add_tileset(info, tabName);
+  m_tilesetDock->get_tileset_widget()->add_tileset(
+      image, id, tileWidth, tileHeight, tabName);
 }
 
-void window::handle_remove_tileset(int id) noexcept
+void window::handle_remove_tileset(tileset_id id) noexcept
 {
   m_tilesetDock->get_tileset_widget()->remove_tileset(id);
 }
@@ -212,7 +216,7 @@ void window::handle_draw()
   m_mainEditor->handle_redraw();
 }
 
-void window::handle_new_map(not_null<model::tilemap*> map, int id)
+void window::handle_new_map(not_null<model::tilemap*> map, map_id id)
 {
   m_mainEditor->add_new_map_tab(map, "map", id);
   m_mainEditor->select_tab(id);
@@ -231,7 +235,7 @@ void window::closeEvent(QCloseEvent* event)
   prefs::set(prefs::id::window::last_layout_state(), saveState());
 }
 
-void window::handle_remove_tab(int tabID)
+void window::handle_remove_tab(map_id tabID)
 {
   emit request_close_map(tabID);
 

@@ -10,7 +10,7 @@ tilemap::tilemap(int nRows, int nCols)
   m_layers.emplace_back(nRows, nCols);
 }
 
-void tilemap::select(int layer) noexcept
+void tilemap::select(layer_id layer) noexcept
 {
   if (has_layer(layer)) {
     m_activeLayer = layer;
@@ -92,16 +92,16 @@ void tilemap::set_cols(int nCols)
   m_nCols = nCols;
 }
 
-void tilemap::set_visibility(int layer, bool visibility) noexcept
+void tilemap::set_visibility(layer_id layer, bool visibility) noexcept
 {
   if (has_layer(layer)) {
-    m_layers.at(static_cast<std::size_t>(layer)).set_visible(visibility);
+    m_layers.at(static_cast<std::size_t>(layer.get())).set_visible(visibility);
   }
 }
 
-auto tilemap::is_visible(int layer) const noexcept -> bool
+auto tilemap::is_visible(layer_id layer) const noexcept -> bool
 {
-  const auto index = static_cast<std::size_t>(layer);
+  const auto index = static_cast<std::size_t>(layer.get());
   return has_layer(layer) && m_layers.at(index).visible();
 }
 
@@ -110,9 +110,10 @@ auto tilemap::num_layers() const noexcept -> int
   return static_cast<int>(m_layers.size());
 }
 
-auto tilemap::has_layer(int layer) const noexcept -> bool
+auto tilemap::has_layer(layer_id layer) const noexcept -> bool
 {
-  return layer >= 0 && layer < num_layers();
+  const auto& value = layer.get();
+  return value >= 0 && value < num_layers();
 }
 
 auto tilemap::rows() const noexcept -> int

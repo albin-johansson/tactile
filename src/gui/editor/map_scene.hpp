@@ -16,10 +16,10 @@ class map_scene final : public QGraphicsScene
 
  public:
   explicit map_scene(not_null<model::tilemap*> map,
-                     int id,
+                     map_id id,
                      QWidget* parent = nullptr);
 
-  [[nodiscard]] auto id() const noexcept -> int;
+  [[nodiscard]] auto id() const noexcept -> map_id;
 
  protected:
   void drawBackground(QPainter* painter, const QRectF& rect) override;
@@ -32,7 +32,7 @@ class map_scene final : public QGraphicsScene
 
  private:
   //  QRect m_viewport{};
-  int m_id;
+  map_id m_id;
   QPointF m_lastMouseScenePos{};
 };
 

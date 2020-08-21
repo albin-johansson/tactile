@@ -8,13 +8,11 @@
 #include "resize_dialog.hpp"
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
-#include "tileset_info.hpp"
 #include "window.hpp"
 
 namespace tactile {
 
 using model::core_model;
-using model::tileset_info;
 
 app::app(int argc, char** argv)
     : QApplication{argc, argv}, m_core{new core_model{}}
@@ -100,8 +98,11 @@ void app::handle_new_tileset()
     if (!image.isNull() && tileWidth && tileHeight) {
       const auto id = m_core->add_tileset(image, *tileWidth, *tileHeight);
       if (id) {
-        tileset_info info{image, *id, *tileWidth, *tileHeight};
-        m_window->handle_add_tileset(info, imageName ? *imageName : "Untitled");
+        m_window->handle_add_tileset(image,
+                                     *id,
+                                     *tileWidth,
+                                     *tileHeight,
+                                     imageName ? *imageName : "Untitled");
       }
     }
   }

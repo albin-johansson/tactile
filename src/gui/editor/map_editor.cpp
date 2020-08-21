@@ -2,8 +2,8 @@
 
 #include <QTabWidget>
 
+#include "map_tab_widget.hpp"
 #include "startup_widget.hpp"
-#include "tilemap_tab.hpp"
 #include "ui_map_editor.h"
 
 namespace tactile::gui {
@@ -13,7 +13,7 @@ map_editor::map_editor(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  m_mapTabWidget = new tilemap_tab{this};
+  m_mapTabWidget = new map_tab_widget{this};
 
   m_startupID = m_ui->stackedWidget->addWidget(new startup_widget{this});
   m_editorID = m_ui->stackedWidget->addWidget(m_mapTabWidget);
@@ -32,34 +32,34 @@ void map_editor::init_connections() noexcept
   connect(this,
           &map_editor::theme_changed,
           m_mapTabWidget,
-          &tilemap_tab::theme_changed);
+          &map_tab_widget::theme_changed);
 
   connect(m_mapTabWidget,
-          &tilemap_tab::request_remove_tab,
+          &map_tab_widget::request_remove_tab,
           this,
           &map_editor::request_remove_tab);
 
   connect(m_mapTabWidget,
-          &tilemap_tab::currentChanged,
+          &map_tab_widget::currentChanged,
           this,
           &map_editor::tab_changed);
 }
 
 void map_editor::add_new_map_tab(not_null<model::tilemap*> map,
-                                  const QString& title,
-                                  int id) noexcept
+                                 const QString& title,
+                                 map_id id) noexcept
 {
-  m_mapTabWidget->add_tile_map_tab(map, title, id);
+  m_mapTabWidget->add_map_tab(map, title, id);
 }
 
-void map_editor::select_tab(int id)
+void map_editor::select_tab(map_id id)
 {
   m_mapTabWidget->select_tab(id);
 }
 
-void map_editor::close_tab(int id) noexcept
+void map_editor::close_tab(map_id id) noexcept
 {
-  m_mapTabWidget->remove_tile_map_tab(id);
+  m_mapTabWidget->remove_map_tab(id);
 }
 
 void map_editor::center_viewport(int mapWidth, int mapHeight) noexcept
@@ -92,7 +92,7 @@ auto map_editor::in_editor_mode() const noexcept -> bool
   return m_ui->stackedWidget->currentIndex() == m_editorID;
 }
 
-auto map_editor::active_tab_id() const noexcept -> std::optional<int>
+auto map_editor::active_tab_id() const noexcept -> std::optional<map_id>
 {
   return m_mapTabWidget->active_tab_id();
 }

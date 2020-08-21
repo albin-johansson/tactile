@@ -21,10 +21,13 @@ class tileset_content_page final : public QWidget
 
   ~tileset_content_page() noexcept override;
 
-  void add_tileset(const model::tileset_info& info,
+  void add_tileset(const QImage& image,
+                   tileset_id id,
+                   int tileWidth,
+                   int tileHeight,
                    const QString& tabName) noexcept;
 
-  void remove_tileset(int id) noexcept;
+  void remove_tileset(tileset_id id) noexcept;
 
   [[nodiscard]] auto empty() const noexcept -> bool;
 
@@ -33,7 +36,7 @@ class tileset_content_page final : public QWidget
 
  private:
   owner<Ui::TilesetContentPageUI*> m_ui;
-  std::unordered_map<int, tileset_tab*> m_tabs;
+  std::unordered_map<tileset_id, tileset_tab*> m_tabs;
 
   //  [[nodiscard]] bool contains_tileset(int id) const noexcept;
 };

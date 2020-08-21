@@ -9,7 +9,7 @@
 
 namespace tactile::gui {
 
-map_scene::map_scene(not_null<model::tilemap*> map, int id, QWidget* parent)
+map_scene::map_scene(not_null<model::tilemap*> map, map_id id, QWidget* parent)
     : QGraphicsScene{parent}, m_id{id}
 {
   auto* item = new map_item{map};
@@ -41,7 +41,7 @@ map_scene::map_scene(not_null<model::tilemap*> map, int id, QWidget* parent)
 //  m_viewport.setHeight(height);
 //}
 
-auto map_scene::id() const noexcept -> int
+auto map_scene::id() const noexcept -> map_id
 {
   return m_id;
 }

@@ -23,14 +23,14 @@ class tilemap_view final : public QGraphicsView
 
  public:
   explicit tilemap_view(not_null<model::tilemap*> map,
-                        int id,
+                        map_id id,
                         QWidget* parent = nullptr);
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 
   void move_viewport(int dx, int dy) noexcept;
 
-  [[nodiscard]] auto id() const noexcept -> int;
+  [[nodiscard]] auto id() const noexcept -> map_id;
 
   void force_redraw();
 

@@ -41,7 +41,6 @@ set(TACTILE_SOURCE_FILES
         model/tileset/tileset.hpp
         model/tileset/tileset_model.cpp
         model/tileset/tileset_model.hpp
-        model/tileset/tileset_info.hpp
 
         model/tilemap/tilemap.hpp
         model/tilemap/tilemap.cpp

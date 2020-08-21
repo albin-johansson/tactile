@@ -38,9 +38,10 @@ class tileset_model final
    * @since 0.1.0
    */
   template <typename... Args>
-  [[nodiscard]] auto emplace(Args&&... args) -> int
+  [[nodiscard]] auto emplace(Args&&... args) -> tileset_id
   {
-    const auto id = m_nextID++;
+    const auto id{m_nextID};
+    ++m_nextID;
     m_tilesets.emplace(id, tileset{std::forward<Args>(args)...});
     return id;
   }
@@ -54,7 +55,7 @@ class tileset_model final
    *
    * @since 0.1.0
    */
-  void remove(int id) noexcept;
+  void remove(tileset_id id) noexcept;
 
   /**
    * @brief Removes all tilesets from the manager.
@@ -71,7 +72,7 @@ class tileset_model final
    *
    * @since 0.1.0
    */
-  void select(std::optional<int> id) noexcept;
+  void select(std::optional<tileset_id> id) noexcept;
 
   /**
    * @brief Returns the amount of tilesets handled by the manager.
@@ -92,9 +93,9 @@ class tileset_model final
   [[nodiscard]] auto has_active_tileset() const noexcept -> bool;
 
  private:
-  std::optional<int> m_activeID;
-  std::unordered_map<int, tileset> m_tilesets;
-  int m_nextID{1};
+  std::optional<tileset_id> m_activeID;
+  std::unordered_map<tileset_id, tileset> m_tilesets;
+  tileset_id m_nextID{1};
 };
 
 }  // namespace tactile::model

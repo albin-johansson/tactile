@@ -15,8 +15,6 @@ class QPainter;
 
 namespace tactile::model {
 
-using map_id = int;
-
 /**
  * @class core_model
  *
@@ -36,7 +34,7 @@ class core_model final : public QObject
  public:
   void resize_map(int nRows, int nCols);
 
-  [[nodiscard]] auto add_map() -> int;
+  [[nodiscard]] auto add_map() -> map_id;
 
   /**
    * @brief Adds a tileset based on the supplied image.
@@ -54,7 +52,8 @@ class core_model final : public QObject
    */
   [[nodiscard]] auto add_tileset(const QImage& image,
                                  int tileWidth,
-                                 int tileHeight) noexcept -> std::optional<int>;
+                                 int tileHeight) noexcept
+      -> std::optional<tileset_id>;
 
   /**
    * @brief Indicates whether or not there is an active tilemap.
@@ -124,7 +123,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_map(int id) noexcept -> tilemap*;
+  [[nodiscard]] auto get_map(map_id id) noexcept -> tilemap*;
 
  signals:
   void redraw_requested();
@@ -187,7 +186,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void select_layer(int index) noexcept;
+  void select_layer(layer_id id) noexcept;
 
   /**
    * @brief Selects the tilemap associated with the specified id.
@@ -196,7 +195,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void select_map(int id) noexcept;
+  void select_map(map_id id) noexcept;
 
   /**
    * @brief Closes the map associated with the specified ID.

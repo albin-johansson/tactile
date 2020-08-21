@@ -2,7 +2,6 @@
 
 #include <QPushButton>
 
-#include "tileset_info.hpp"
 #include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
@@ -24,29 +23,30 @@ tileset_content_page::~tileset_content_page() noexcept
   delete m_ui;
 }
 
-void tileset_content_page::add_tileset(const tileset_info& info,
+void tileset_content_page::add_tileset(const QImage& image,
+                                       tileset_id id,
+                                       int tileWidth,
+                                       int tileHeight,
                                        const QString& tabName) noexcept
 {
-  if (m_tabs.count(info.id)) {
-    qDebug("Tried to add tileset with taken ID: %i", info.id);
+  if (m_tabs.count(id)) {
+    qDebug("Tried to add tileset with taken ID: %i", id.get());
   } else {
-    if (!info.image.isNull()) {
-      // ownership is transferred
-      auto* tab = new tileset_tab{info.image, info.tileWidth, info.tileHeight};
+    if (!image.isNull()) {
+      auto* tab = new tileset_tab{image, tileWidth, tileHeight, this};
       m_ui->tabWidget->addTab(tab, tabName);
-
-      m_tabs.emplace(info.id, tab);
+      m_tabs.emplace(id, tab);
     }
   }
 }
 
-void tileset_content_page::remove_tileset(int id) noexcept
+void tileset_content_page::remove_tileset(tileset_id id) noexcept
 {
   if (m_tabs.count(id)) {
     m_tabs.erase(id);
     m_ui->tabWidget->removeTab(m_ui->tabWidget->currentIndex());
   } else {
-    qDebug("Tried to remove non-existent tileset, ID: %i", id);
+    qDebug("Tried to remove non-existent tileset, ID: %i", id.get());
   }
 }
 

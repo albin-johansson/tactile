@@ -50,7 +50,7 @@ class tilemap final
    *
    * @since 0.1.0
    */
-  void select(int layer) noexcept;
+  void select(layer_id layer) noexcept;
 
   /**
    * @brief Adds an empty layer to the tilemap.
@@ -126,7 +126,7 @@ class tilemap final
    *
    * @since 0.1.0
    */
-  void set_visibility(int layer, bool visibility) noexcept;
+  void set_visibility(layer_id layer, bool visibility) noexcept;
 
   /**
    * @brief Indicates whether or not the layer associated with the specified
@@ -142,7 +142,7 @@ class tilemap final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto is_visible(int layer) const noexcept -> bool;
+  [[nodiscard]] auto is_visible(layer_id layer) const noexcept -> bool;
 
   /**
    * @brief Returns the amount of layers present in the tilemap.
@@ -166,7 +166,7 @@ class tilemap final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto has_layer(int layer) const noexcept -> bool;
+  [[nodiscard]] auto has_layer(layer_id layer) const noexcept -> bool;
 
   /**
    * @brief Returns the total number of rows in the tilemap.
@@ -239,7 +239,7 @@ class tilemap final
  private:
   int m_nRows;
   int m_nCols;
-  int m_activeLayer{};
+  layer_id m_activeLayer{};
   std::vector<tile_layer> m_layers;
   tile_size m_tileSize;
 };

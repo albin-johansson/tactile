@@ -21,10 +21,13 @@ class tileset_widget final : public QWidget
 
   ~tileset_widget() noexcept override;
 
-  void add_tileset(const model::tileset_info& info,
+  void add_tileset(const QImage& image,
+                   tileset_id id,
+                   int tileWidth,
+                   int tileHeight,
                    const QString& tabName) noexcept;
 
-  void remove_tileset(int id) noexcept;
+  void remove_tileset(tileset_id id) noexcept;
 
  signals:
   void request_new_tileset();

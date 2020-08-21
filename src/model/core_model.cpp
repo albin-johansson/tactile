@@ -64,7 +64,7 @@ void core_model::remove_col() noexcept
   }
 }
 
-auto core_model::add_map() -> int
+auto core_model::add_map() -> map_id
 {
   const auto id = m_nextMapID;
   Q_ASSERT(!m_maps.count(id));
@@ -97,7 +97,7 @@ void core_model::handle_close_map(map_id id) noexcept
 
   m_maps.erase(id);
 
-  if (m_currentMapID == id) {
+  if (m_currentMapID && (m_currentMapID->get() == id.get())) {
     m_currentMapID = std::nullopt;
   }
 
@@ -109,7 +109,8 @@ void core_model::handle_close_map(map_id id) noexcept
 
 auto core_model::add_tileset(const QImage& image,
                              int tileWidth,
-                             int tileHeight) noexcept -> std::optional<int>
+                             int tileHeight) noexcept
+    -> std::optional<tileset_id>
 {
   if (!image.isNull()) {
     return m_tilesets.emplace(image, tileWidth, tileHeight);
@@ -163,7 +164,7 @@ auto core_model::tile_size() const noexcept -> std::optional<int>
   }
 }
 
-auto core_model::get_map(int id) noexcept -> tilemap*
+auto core_model::get_map(map_id id) noexcept -> tilemap*
 {
   if (const auto it = m_maps.find(id); it != m_maps.end()) {
     return it->second->get();
@@ -172,19 +173,19 @@ auto core_model::get_map(int id) noexcept -> tilemap*
   }
 }
 
-void core_model::select_layer(int index) noexcept
+void core_model::select_layer(layer_id id) noexcept
 {
   if (auto* map = current_map(); map) {
-    map->select_layer(index);
+    map->select_layer(id);
     emit redraw_requested();
   }
 }
 
-void core_model::select_map(int id) noexcept
+void core_model::select_map(map_id id) noexcept
 {
   Q_ASSERT(m_maps.count(id));
 
-  if (m_currentMapID != id) {
+  if (m_currentMapID && (m_currentMapID->get() != id.get())) {
     m_currentMapID = id;
 
     auto* map = current_map();

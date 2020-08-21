@@ -4,7 +4,7 @@
 
 namespace tactile::model {
 
-void tileset_model::remove(int id) noexcept
+void tileset_model::remove(tileset_id id) noexcept
 {
   m_tilesets.erase(id);
 }
@@ -14,7 +14,7 @@ void tileset_model::remove_all() noexcept
   m_tilesets.clear();
 }
 
-void tileset_model::select(std::optional<int> id) noexcept
+void tileset_model::select(std::optional<tileset_id> id) noexcept
 {
   if (!id) {
     m_activeID = std::nullopt;

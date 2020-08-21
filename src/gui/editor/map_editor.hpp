@@ -35,11 +35,11 @@ class map_editor final : public QWidget
 
   void add_new_map_tab(not_null<model::tilemap*> map,
                        const QString& title,
-                       int id) noexcept;
+                       map_id id) noexcept;
 
-  void select_tab(int id);
+  void select_tab(map_id id);
 
-  void close_tab(int id) noexcept;
+  void close_tab(map_id id) noexcept;
 
   void center_viewport(int mapWidth, int mapHeight) noexcept;
 
@@ -61,7 +61,7 @@ class map_editor final : public QWidget
 
   [[nodiscard]] auto in_editor_mode() const noexcept -> bool;
 
-  [[nodiscard]] auto active_tab_id() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto active_tab_id() const noexcept -> std::optional<map_id>;
 
   [[nodiscard]] auto open_tabs() const noexcept -> int;
 
@@ -69,15 +69,15 @@ class map_editor final : public QWidget
   void handle_redraw();
 
  signals:
-  void request_remove_tab(int id);
+  void request_remove_tab(map_id id);
 
-  void request_select_tab(int id);
+  void request_select_tab(map_id id);
 
   void theme_changed();
 
  private:
   Ui::map_editor* m_ui{};
-  tilemap_tab* m_mapTabWidget{};
+  map_tab_widget* m_mapTabWidget{};
   int m_editorID{};
   int m_startupID{};
 

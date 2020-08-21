@@ -66,7 +66,7 @@ class window final : public QMainWindow
 
   void request_new_map();
 
-  void request_close_map(int id);
+  void request_close_map(map_id id);
 
   void request_undo();
 
@@ -100,7 +100,7 @@ class window final : public QMainWindow
 
   void request_pan_up();
 
-  void request_select_map(int id);
+  void request_select_map(map_id id);
 
  public slots:
   void handle_undo_state_update(bool canUndo);
@@ -111,10 +111,13 @@ class window final : public QMainWindow
 
   void handle_redo_text_update(const QString& text);
 
-  void handle_add_tileset(const model::tileset_info& info,
+  void handle_add_tileset(const QImage& image,
+                          tileset_id id,
+                          int tileWidth,
+                          int tileHeight,
                           const QString& tabName) noexcept;
 
-  void handle_remove_tileset(int id) noexcept;
+  void handle_remove_tileset(tileset_id id) noexcept;
 
   /**
    * @brief Centers the camera over the tilemap.
@@ -135,7 +138,7 @@ class window final : public QMainWindow
 
   void handle_move_camera(int dx, int dy);
 
-  void handle_new_map(not_null<model::tilemap*> map, int id);
+  void handle_new_map(not_null<model::tilemap*> map, map_id id);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
@@ -175,7 +178,7 @@ class window final : public QMainWindow
   [[nodiscard]] auto in_editor_mode() const noexcept -> bool;
 
  private slots:
-  void handle_remove_tab(int tabID);
+  void handle_remove_tab(map_id tabID);
 
   void handle_theme_changed();
 

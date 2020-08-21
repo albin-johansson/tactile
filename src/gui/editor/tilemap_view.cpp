@@ -9,7 +9,7 @@
 namespace tactile::gui {
 
 tilemap_view::tilemap_view(not_null<model::tilemap*> map,
-                           int id,
+                           map_id id,
                            QWidget* parent)
     : QGraphicsView{parent}
 {
@@ -66,7 +66,7 @@ void tilemap_view::mouseReleaseEvent(QMouseEvent* event)
   QGraphicsView::mouseReleaseEvent(event);
 }
 
-auto tilemap_view::id() const noexcept -> int
+auto tilemap_view::id() const noexcept -> map_id
 {
   return get_scene()->id();
 }

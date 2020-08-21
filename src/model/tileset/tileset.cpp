@@ -30,7 +30,7 @@ tileset::tileset(const QString& path, int tileWidth, int tileHeight)
 
 void tileset::set_first_id(tile_id firstID) noexcept
 {
-  assert(firstID > 0);
+  assert(firstID.get() > 0);
   m_firstID = firstID;
 }
 
@@ -59,7 +59,7 @@ auto tileset::tile_at(int x, int y) const noexcept -> tile_id
     const auto row = (y / m_tileHeight);
     const auto col = (x / m_tileWidth);
     const auto index = row * m_cols + col;
-    return m_firstID + index;
+    return m_firstID + tile_id{index};
   }
 }
 
@@ -95,7 +95,7 @@ auto tileset::first_id() const noexcept -> tile_id
 
 auto tileset::last_id() const noexcept -> tile_id
 {
-  return first_id() + tiles();
+  return first_id() + tile_id{tiles()};
 }
 
 auto tileset::tile_width() const noexcept -> int
