@@ -7,7 +7,7 @@ In its current state, Tactile shouldn't be used by anyone.
 
 ## Tools and technologies used
 * **Windows 10** Main platform.
-* **C++17** Main compiler used is MSVC.
+* **C++20** Main compiler used is MSVC.
 * **[Qt](https://www.qt.io/)**
 * **[Catch2](https://github.com/catchorg/Catch2)**
 
