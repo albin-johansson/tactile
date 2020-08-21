@@ -1,9 +1,13 @@
 #pragma once
 
 #include <QUndoStack>
+#include <concepts>
 #include <utility>
 
 namespace tactile {
+
+template <typename T>
+concept Command = std::derived_from<T, QUndoCommand>;
 
 /**
  * @class command_stack
@@ -22,7 +26,7 @@ class command_stack final : public QUndoStack
   /**
    * @brief Pushes a command onto the undo stack after executing it.
    *
-   * @tparam Command the type of the command.
+   * @tparam C the type of the command.
    * @tparam Args the types of the arguments that will be forwarded.
    *
    * @param args the arguments that will be forwarded to the command
@@ -30,10 +34,10 @@ class command_stack final : public QUndoStack
    *
    * @since 0.1.0
    */
-  template <typename Command, typename... Args>
+  template <Command C, typename... Args>
   void push(Args&&... args)
   {
-    QUndoStack::push(new Command{std::forward<Args>(args)...});
+    QUndoStack::push(new C{std::forward<Args>(args)...});
   }
 };
 
