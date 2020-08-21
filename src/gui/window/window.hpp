@@ -143,7 +143,7 @@ class window final : public QMainWindow
  private:
   owner<Ui::window*> m_ui{};
 
-  main_editor* m_mainEditor{};
+  map_editor* m_mainEditor{};
   tool_dock* m_toolDock{};
   tileset_dock* m_tilesetDock{};
 

@@ -8,7 +8,7 @@
 #include <QSpacerItem>
 
 #include "about_dialog.hpp"
-#include "main_editor.hpp"
+#include "map_editor.hpp"
 #include "setting.hpp"
 #include "setting_identifiers.hpp"
 #include "settings_dialog.hpp"
@@ -23,7 +23,7 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 
   // TODO add mini-map widget
 
-  m_mainEditor = new main_editor{this};
+  m_mainEditor = new map_editor{this};
   m_toolDock = new tool_dock{this};
   m_tilesetDock = new tileset_dock{this};
 
@@ -51,7 +51,7 @@ void window::init_connections() noexcept
   onTriggered(m_ui->action_add_tileset, &window::request_new_tileset);
 
   connect(m_mainEditor,
-          &main_editor::request_remove_tab,
+          &map_editor::request_remove_tab,
           this,
           &window::handle_remove_tab);
 
@@ -96,7 +96,7 @@ void window::init_connections() noexcept
           &QAction::setChecked);
 
   connect(m_mainEditor,
-          &main_editor::request_select_tab,
+          &map_editor::request_select_tab,
           this,
           &window::request_select_map);
 

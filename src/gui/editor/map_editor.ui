@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>main_editor</class>
- <widget class="QWidget" name="main_editor">
+ <class>map_editor</class>
+ <widget class="QWidget" name="map_editor">
   <property name="geometry">
    <rect>
     <x>0</x>

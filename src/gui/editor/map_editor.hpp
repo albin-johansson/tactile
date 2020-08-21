@@ -7,7 +7,7 @@
 #include "tactile_types.hpp"
 
 namespace Ui {
-class main_editor;
+class map_editor;
 }
 
 class QTabWidget;
@@ -15,7 +15,7 @@ class QTabWidget;
 namespace tactile::gui {
 
 /**
- * @class main_editor
+ * @class map_editor
  *
  * @brief Represents the center stage of the editor and contains the main
  * tilemap editor pane.
@@ -24,14 +24,14 @@ namespace tactile::gui {
  *
  * @headerfile main_editor.hpp
  */
-class main_editor final : public QWidget
+class map_editor final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit main_editor(QWidget* parent = nullptr);
+  explicit map_editor(QWidget* parent = nullptr);
 
-  ~main_editor() noexcept override;
+  ~map_editor() noexcept override;
 
   void add_new_map_tab(not_null<model::tilemap*> map,
                        const QString& title,
@@ -76,7 +76,7 @@ class main_editor final : public QWidget
   void theme_changed();
 
  private:
-  Ui::main_editor* m_ui{};
+  Ui::map_editor* m_ui{};
   tilemap_tab* m_mapTabWidget{};
   int m_editorID{};
   int m_startupID{};

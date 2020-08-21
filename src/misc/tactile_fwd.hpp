@@ -10,7 +10,7 @@ namespace gui {
 
 class window;
 
-class main_editor;
+class map_editor;
 
 class tool_widget;
 

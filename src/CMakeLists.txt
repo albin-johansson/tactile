@@ -104,8 +104,8 @@ set(TACTILE_SOURCE_FILES
 
         gui/editor/tilemap_scene.cpp
         gui/editor/tilemap_scene.hpp
-        gui/editor/main_editor.cpp
-        gui/editor/main_editor.hpp
+        gui/editor/map_editor.cpp
+        gui/editor/map_editor.hpp
         gui/editor/tilemap_tab.cpp
         gui/editor/tilemap_tab.hpp
         gui/editor/tilemap_view.cpp
