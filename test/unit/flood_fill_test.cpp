@@ -10,7 +10,7 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
 {
   tile_layer layer{5, 5};
   for (int i = 0; i < 5; ++i) {
-    layer.set_tile({i, i}, 1);
+    layer.set_tile({i, i}, tile_id{1});
   }
 
   /*
@@ -21,8 +21,8 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
    0 0 0 0 1
    */
 
-  const auto id = 2;
-  layer.flood({1, 0}, 0, id);
+  const tile_id id{2};
+  layer.flood({1, 0}, tile_id{0}, id);
 
   /*
    Expected:
@@ -52,11 +52,12 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
 
   SECTION("Unaffected diagonal blocking the flood")
   {
-    CHECK(*layer.tile_at({0, 0}) == 1);
-    CHECK(*layer.tile_at({1, 1}) == 1);
-    CHECK(*layer.tile_at({2, 2}) == 1);
-    CHECK(*layer.tile_at({3, 3}) == 1);
-    CHECK(*layer.tile_at({4, 4}) == 1);
+    const tile_id id{1};
+    CHECK(*layer.tile_at({0, 0}) == id);
+    CHECK(*layer.tile_at({1, 1}) == id);
+    CHECK(*layer.tile_at({2, 2}) == id);
+    CHECK(*layer.tile_at({3, 3}) == id);
+    CHECK(*layer.tile_at({4, 4}) == id);
   }
 
   SECTION("Unaffected right hand side")
@@ -80,7 +81,7 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
 TEST_CASE("Out-of-bounds position", "[FloodFill]")
 {
   tile_layer layer{5, 5};
-  CHECK_NOTHROW(layer.flood({5, 5}, 0, 0));
-  CHECK_NOTHROW(layer.flood({6, 6}, 0, 0));
-  CHECK_NOTHROW(flood_fill(layer, {6, 6}, 0, 0));
+  CHECK_NOTHROW(layer.flood({5, 5}, empty, empty));
+  CHECK_NOTHROW(layer.flood({6, 6}, empty, empty));
+  CHECK_NOTHROW(flood_fill(layer, {6, 6}, empty, empty));
 }

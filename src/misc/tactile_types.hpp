@@ -13,9 +13,11 @@ using id_type = fluent::NamedType<Rep,
                                   Tag,
                                   fluent::Comparable,
                                   fluent::Addable,
+                                  fluent::Subtractable,
                                   fluent::PreIncrementable,
                                   fluent::PostIncrementable,
-                                  fluent::Hashable>;
+                                  fluent::Hashable,
+                                  fluent::Printable>;
 
 struct tile_id_t
 {};

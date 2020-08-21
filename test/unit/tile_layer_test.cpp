@@ -19,7 +19,7 @@ TEST_CASE("TileLayer(int, int)", "[TileLayer]")
 TEST_CASE("TileLayer::add_row", "[TileLayer]")
 {
   const auto nRows = 5;
-  const auto tileID = 84;
+  const tile_id tileID{84};
 
   tile_layer layer{nRows, 3};
   layer.add_row(tileID);
@@ -35,7 +35,7 @@ TEST_CASE("TileLayer::add_row", "[TileLayer]")
 TEST_CASE("TileLayer::add_col", "[TileLayer]")
 {
   const auto nCols = 7;
-  const auto tileID = 33;
+  const tile_id tileID{33};
 
   tile_layer layer{5, nCols};
   layer.add_col(tileID);
@@ -105,13 +105,13 @@ TEST_CASE("TileLayer::set_tile", "[TileLayer]")
   const map_position pos{2, 2};
   CHECK(*layer.tile_at(pos) == empty);
 
-  const auto tileID = 24;
+  const tile_id tileID{24};
   layer.set_tile(pos, tileID);
 
   CHECK(*layer.tile_at(pos) == tileID);
 
-  CHECK_NOTHROW(layer.set_tile({-1, -1}, 5));
-  CHECK_NOTHROW(layer.set_tile({layer.rows(), layer.cols()}, 7));
+  CHECK_NOTHROW(layer.set_tile({-1, -1}, tile_id{5}));
+  CHECK_NOTHROW(layer.set_tile({layer.rows(), layer.cols()}, tile_id{7}));
   CHECK(layer.tile_at({layer.rows(), layer.cols()}) == std::nullopt);
 }
 

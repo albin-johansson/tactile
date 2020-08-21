@@ -130,7 +130,9 @@ set(TACTILE_SOURCE_FILES
         command/resize_map.hpp
 
         prefs/theme.cpp
-        prefs/theme.hpp)
+        prefs/theme.hpp
+
+        )
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

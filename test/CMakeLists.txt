@@ -12,7 +12,8 @@ set(TACTILE_TEST_FILES
         unit/flood_fill_test.cpp
         unit/tileset_test.cpp
         unit/tile_size_test.cpp
-        unit/tileset_manager_test.cpp)
+        unit/tileset_manager_test.cpp
+        )
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 

@@ -1,9 +1,11 @@
 #include <catch.hpp>
 #include <memory>
 
+#include "tactile_types.hpp"
 #include "tileset.hpp"
 #include "tileset_model.hpp"
 
+using tactile::tileset_id;
 using namespace tactile::model;
 
 TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
@@ -24,12 +26,12 @@ TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
 TEST_CASE("tileset_manager::remove", "[tileset_manager]")
 {
   tileset_model manager;
-  CHECK_NOTHROW(manager.remove(0));
+  CHECK_NOTHROW(manager.remove(tileset_id{0}));
 
   const auto id = manager.emplace("terrain.png", 32, 32);
   CHECK(manager.sheets() == 1);
 
-  manager.remove(id + 5);
+  manager.remove(id + tileset_id{5});
   CHECK(manager.sheets() == 1);
 
   manager.remove(id);
@@ -54,7 +56,7 @@ TEST_CASE("tileset_manager::select", "[tileset_manager]")
 {
   tileset_model manager;
 
-  CHECK_NOTHROW(manager.select(9));
+  CHECK_NOTHROW(manager.select(tileset_id{9}));
   CHECK(!manager.has_active_tileset());
 
   const auto id = manager.emplace("terrain.png", 32, 32);

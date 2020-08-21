@@ -121,15 +121,15 @@ TEST_CASE("Tilemap::set_visibility", "[Tilemap]")
 {
   tilemap map{5, 5};
 
-  CHECK(!map.is_visible(-1));  // invalid index
-  CHECK(map.is_visible(0));    // valid index, should be true
-  CHECK(!map.is_visible(1));   // invalid index
+  CHECK(!map.is_visible(layer_id{-1}));  // invalid index
+  CHECK(map.is_visible(layer_id{0}));    // valid index, should be true
+  CHECK(!map.is_visible(layer_id{1}));   // invalid index
 
-  map.set_visibility(0, false);
-  CHECK(!map.is_visible(0));
+  map.set_visibility(layer_id{0}, false);
+  CHECK(!map.is_visible(layer_id{0}));
 
-  map.set_visibility(0, true);
-  CHECK(map.is_visible(0));
+  map.set_visibility(layer_id{0}, true);
+  CHECK(map.is_visible(layer_id{0}));
 }
 
 TEST_CASE("Tilemap::get_layer_amount", "[Tilemap]")
@@ -142,7 +142,7 @@ TEST_CASE("Tilemap::is_visible", "[Tilemap]")
 {
   tilemap map{5, 5};
 
-  CHECK(!map.is_visible(-1));
-  CHECK(!map.is_visible(1));
-  CHECK(map.is_visible(0));
+  CHECK(!map.is_visible(layer_id{-1}));
+  CHECK(!map.is_visible(layer_id{1}));
+  CHECK(map.is_visible(layer_id{0}));
 }

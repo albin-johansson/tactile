@@ -54,9 +54,9 @@ TEST_CASE("tileset::set_first_id", "[tileset]")
 {
   tileset sheet{"terrain.png", 32, 32};
 
-  CHECK(sheet.first_id() == 1);
+  CHECK(sheet.first_id() == tile_id{1});
 
-  const auto id = 84;
+  const tile_id id{84};
   sheet.set_first_id(id);
 
   CHECK(sheet.first_id() == id);
@@ -90,11 +90,11 @@ TEST_CASE("tileset::last_id", "[tileset]")
 {
   tileset sheet{"terrain.png", 32, 32};
 
-  CHECK(sheet.last_id() == 1025);
-  CHECK(sheet.last_id() - sheet.first_id() == sheet.tiles());
+  CHECK(sheet.last_id() == tile_id{1025});
+  CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.tiles()});
 
-  sheet.set_first_id(43);
-  CHECK(sheet.last_id() - sheet.first_id() == sheet.tiles());
+  sheet.set_first_id(tile_id{43});
+  CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.tiles()});
 }
 
 TEST_CASE("tileset::contains", "[tileset]")
@@ -103,13 +103,13 @@ TEST_CASE("tileset::contains", "[tileset]")
 
   CHECK(sheet.contains(sheet.first_id()));
   CHECK(sheet.contains(sheet.last_id()));
-  CHECK(!sheet.contains(sheet.first_id() - 1));
-  CHECK(!sheet.contains(sheet.last_id() + 1));
+  CHECK(!sheet.contains(sheet.first_id() - tile_id{1}));
+  CHECK(!sheet.contains(sheet.last_id() + tile_id{1}));
 
-  const auto id = 82;
+  const tile_id id{82};
   sheet.set_first_id(id);
   CHECK(sheet.contains(id));
-  CHECK(sheet.contains(id + 5));
+  CHECK(sheet.contains(id + tile_id{5}));
   CHECK(sheet.contains(sheet.last_id()));
 }
 
@@ -134,7 +134,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
     const auto x = col * sheet.tile_width() + 13;
     const auto y = row * sheet.tile_height() + 24;
 
-    const auto index = row * sheet.cols() + col;
+    const tile_id index{row * sheet.cols() + col};
     CHECK(sheet.tile_at(x, y) == sheet.first_id() + index);
   }
 
@@ -142,7 +142,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
   {
     tileset sheet{"terrain.png", 32, 32};
 
-    const auto first = 38;
+    const tile_id first{38};
     sheet.set_first_id(first);
 
     const auto row = 9;
@@ -150,7 +150,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
     const auto x = col * sheet.tile_width();
     const auto y = row * sheet.tile_height();
 
-    const auto index = row * sheet.cols() + col;
+    const tile_id index{row * sheet.cols() + col};
     CHECK(sheet.tile_at(x, y) == sheet.first_id() + index);
   }
 }
