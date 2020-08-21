@@ -5,14 +5,14 @@
 #include <QPainter>
 #include <QResizeEvent>
 
-#include "tilemap_item.hpp"
+#include "map_item.hpp"
 
 namespace tactile::gui {
 
 tilemap_scene::tilemap_scene(not_null<model::tilemap*> map, int id, QWidget* parent)
     : QGraphicsScene{parent}, m_id{id}
 {
-  auto* item = new tilemap_item{map};
+  auto* item = new map_item{map};
 //  connect(item,
 //          &tilemap_item::request_redraw,
 //          this,

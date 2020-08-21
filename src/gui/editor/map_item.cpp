@@ -1,4 +1,4 @@
-#include "tilemap_item.hpp"
+#include "map_item.hpp"
 
 #include <QGraphicsWidget>
 #include <QPainter>
@@ -12,13 +12,13 @@ namespace tactile::gui {
 using model::tile_layer;
 using model::tilemap;
 
-tilemap_item::tilemap_item(not_null<tilemap*> map, QGraphicsItem* parent)
+map_item::map_item(not_null<tilemap*> map, QGraphicsItem* parent)
     : QGraphicsItem{parent}, m_map{map}
 {}
 
-void tilemap_item::paint(QPainter* painter,
-                         const QStyleOptionGraphicsItem* option,
-                         QWidget*)
+void map_item::paint(QPainter* painter,
+                     const QStyleOptionGraphicsItem* option,
+                     QWidget*)
 {
   Q_ASSERT(painter);
   Q_ASSERT(option);
@@ -32,9 +32,9 @@ void tilemap_item::paint(QPainter* painter,
   }
 }
 
-void tilemap_item::draw_layer(QPainter& painter,
-                              const tile_layer& layer,
-                              const QRectF& exposed)
+void map_item::draw_layer(QPainter& painter,
+                          const tile_layer& layer,
+                          const QRectF& exposed)
 {
   const auto tileSize = m_map->get_tile_size().get();
 
@@ -67,7 +67,7 @@ void tilemap_item::draw_layer(QPainter& painter,
   }
 }
 
-auto tilemap_item::boundingRect() const -> QRectF
+auto map_item::boundingRect() const -> QRectF
 {
   const qreal width = m_map->width();
   const qreal height = m_map->height();

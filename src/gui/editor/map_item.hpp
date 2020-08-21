@@ -7,11 +7,11 @@
 
 namespace tactile::gui {
 
-class tilemap_item final : public QGraphicsItem
+class map_item final : public QGraphicsItem
 {
  public:
-  explicit tilemap_item(not_null<model::tilemap*> map,
-                        QGraphicsItem* parent = nullptr);
+  explicit map_item(not_null<model::tilemap*> map,
+                    QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
              const QStyleOptionGraphicsItem* option,

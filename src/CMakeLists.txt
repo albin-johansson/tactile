@@ -110,9 +110,9 @@ set(TACTILE_SOURCE_FILES
         gui/editor/tilemap_tab.hpp
         gui/editor/tilemap_view.cpp
         gui/editor/tilemap_view.hpp
-        gui/editor/tilemap_item.cpp
-        gui/editor/tilemap_item.hpp
-        gui/editor/main_editor.ui
+        gui/editor/map_item.cpp
+        gui/editor/map_item.hpp
+        gui/editor/map_editor.ui
         gui/editor/editor_pane.ui
 
         command/command_stack.cpp
