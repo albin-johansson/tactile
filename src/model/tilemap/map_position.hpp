@@ -5,14 +5,6 @@
 #include "algorithm.hpp"
 
 namespace tactile::model {
-namespace {
-
-[[nodiscard]] constexpr auto clamp_component(int comp) noexcept -> int
-{
-  return (comp < 0) ? 0 : comp;
-}
-
-}  // namespace
 
 /**
  * @class map_position
