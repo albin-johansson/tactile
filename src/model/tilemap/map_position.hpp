@@ -166,45 +166,11 @@ class map_position final
     return static_cast<std::size_t>(m_col);
   }
 
+  auto operator==(const map_position&) const noexcept -> bool = default;
+
  private:
   int m_row{};
   int m_col{};
 };
-
-/**
- * @brief Indicates whether or not two map positions are the same.
- *
- * @param lhs the left-hand side map position.
- * @param rhs the right-hand side map position.
- *
- * @return `true` if the map positions have the same coordinates; `false`
- * otherwise.
- *
- * @since 0.1.0
- */
-[[nodiscard]] inline constexpr auto operator==(const map_position& lhs,
-                                               const map_position& rhs) noexcept
-    -> bool
-{
-  return (lhs.row() == rhs.row()) && (lhs.col() == rhs.col());
-}
-
-/**
- * @brief Indicates whether or not two map positions aren't the same.
- *
- * @param lhs the left-hand side map position.
- * @param rhs the right-hand side map position.
- *
- * @return `true` if the map positions don't have the same coordinates; `false`
- * otherwise.
- *
- * @since 0.1.0
- */
-[[nodiscard]] inline constexpr auto operator!=(const map_position& lhs,
-                                               const map_position& rhs) noexcept
-    -> bool
-{
-  return !(lhs == rhs);
-}
 
 }  // namespace tactile::model

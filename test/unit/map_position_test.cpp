@@ -124,7 +124,7 @@ TEST_CASE("map_position::west", "[map_position]")
   CHECK(snd.col() == fst.col() - 1);
 }
 
-TEST_CASE("map_position equality operator", "[map_position]")
+TEST_CASE("map_position operator==", "[map_position]")
 {
   const map_position pos{45, 23};
   CHECK(pos == pos);
@@ -135,7 +135,7 @@ TEST_CASE("map_position equality operator", "[map_position]")
   CHECK(copy == pos);
 }
 
-TEST_CASE("map_position inequality operator", "[map_position]")
+TEST_CASE("map_position operator!=", "[map_position]")
 {
   const map_position pos{45, 23};
   CHECK(!(pos != pos));
