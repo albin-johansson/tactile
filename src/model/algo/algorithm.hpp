@@ -4,6 +4,19 @@
 
 namespace tactile {
 
+// clang-format off
+
+template <typename T>
+concept PlainCallable = requires(T t)
+{
+  { t() };
+};
+
+template <typename T>
+concept Arithmetic = std::is_arithmetic_v<T>;
+
+// clang-format on
+
 /**
  * @brief Invokes the supplied callable for the specified amount of times.
  *
@@ -13,7 +26,7 @@ namespace tactile {
  *
  * @since 0.1.0
  */
-template <typename Callable>
+template <PlainCallable Callable>
 constexpr void do_n(int n, Callable callable) noexcept(noexcept(callable()))
 {
   for (auto i = 0; i < n; ++i) {
@@ -34,7 +47,7 @@ constexpr void do_n(int n, Callable callable) noexcept(noexcept(callable()))
  *
  * @since 0.1.0
  */
-template <typename T>
+template <Arithmetic T>
 [[nodiscard]] constexpr auto at_least(T value, T least) noexcept -> T
 {
   return (value < least) ? least : value;
