@@ -21,6 +21,10 @@ class tilemap_item final : public QGraphicsItem
 
  private:
   model::tilemap* m_map;
+
+  void draw_layer(QPainter& painter,
+                  const model::tile_layer& layer,
+                  const QRectF& exposed);
 };
 
 }  // namespace tactile::gui

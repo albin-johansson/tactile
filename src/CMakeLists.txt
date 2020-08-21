@@ -48,8 +48,6 @@ set(TACTILE_SOURCE_FILES
         model/tilemap/tile_layer.cpp
         model/tilemap/tile_layer.hpp
         model/tilemap/map_position.hpp
-        model/tilemap/render_tilemap.cpp
-        model/tilemap/render_tilemap.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp

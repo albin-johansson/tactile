@@ -2,7 +2,6 @@
 
 #include <QImage>
 
-#include "render_tilemap.hpp"
 #include "tilemap.hpp"
 #include "tileset.hpp"
 #include "tileset_model.hpp"
@@ -228,13 +227,6 @@ void core_model::handle_reset_tile_size() noexcept
   if (auto* map = current_map(); map) {
     map->reset_tile_size();
     emit redraw_requested();
-  }
-}
-
-void core_model::handle_draw(QPainter& painter, const QRectF& exposed)
-{
-  if (auto* map = current_map(); map) {
-    map->draw(painter, exposed);
   }
 }
 

@@ -198,8 +198,6 @@ class core_model final : public QObject
    */
   void select_map(int id) noexcept;
 
-  void handle_draw(QPainter& painter, const QRectF& exposed);
-
   /**
    * @brief Closes the map associated with the specified ID.
    *

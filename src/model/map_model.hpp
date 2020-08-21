@@ -17,8 +17,6 @@ class map_model final : public QObject
  public:
   explicit map_model(QObject* parent = nullptr);
 
-  void draw(QPainter& painter, const QRectF& exposed);
-
   /// @name Commands
   /// @{
 

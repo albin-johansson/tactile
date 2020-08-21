@@ -23,7 +23,6 @@ void connect(Sender&& sender, Signal&& signal, Receiver&& receiver, Slot&& slot)
 app_connections::app_connections(app& app)
     : m_core{app.core_ptr()}, m_window{app.window_ptr()}
 {
-  connect(m_window, &window::request_redraw, m_core, &core_model::handle_draw);
   connect(
       m_core, &core_model::redraw_requested, m_window, &window::handle_draw);
 

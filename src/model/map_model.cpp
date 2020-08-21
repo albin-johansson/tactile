@@ -4,7 +4,6 @@
 #include "add_row.hpp"
 #include "remove_col.hpp"
 #include "remove_row.hpp"
-#include "render_tilemap.hpp"
 #include "resize_map.hpp"
 
 namespace tactile::model {
@@ -43,11 +42,6 @@ void map_model::undo()
 void map_model::redo()
 {
   m_commands->redo();
-}
-
-void map_model::draw(QPainter& painter, const QRectF& exposed)
-{
-  render_tilemap(painter, *m_map, exposed);
 }
 
 void map_model::add_row()
