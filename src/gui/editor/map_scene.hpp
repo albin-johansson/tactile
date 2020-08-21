@@ -10,20 +10,14 @@ class QPainter;
 
 namespace tactile::gui {
 
-class tilemap_scene final : public QGraphicsScene
+class map_scene final : public QGraphicsScene
 {
   Q_OBJECT
 
  public:
-  explicit tilemap_scene(not_null<model::tilemap*> map,
-                         int id,
-                         QWidget* parent = nullptr);
-
-  //  void center_viewport(int mapWidth, int mapHeight) noexcept;
-
-  //  void move_viewport(int dx, int dy) noexcept;
-
-  //  void set_viewport_size(const QSize& size) noexcept;
+  explicit map_scene(not_null<model::tilemap*> map,
+                     int id,
+                     QWidget* parent = nullptr);
 
   [[nodiscard]] auto id() const noexcept -> int;
 

@@ -16,7 +16,7 @@ class tool_widget;
 
 class tilemap_tab;
 
-class tilemap_scene;
+class map_scene;
 
 class tilemap_view;
 

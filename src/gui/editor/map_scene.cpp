@@ -1,4 +1,4 @@
-#include "tilemap_scene.hpp"
+#include "map_scene.hpp"
 
 #include <QApplication>
 #include <QGraphicsSceneMouseEvent>
@@ -9,14 +9,14 @@
 
 namespace tactile::gui {
 
-tilemap_scene::tilemap_scene(not_null<model::tilemap*> map, int id, QWidget* parent)
+map_scene::map_scene(not_null<model::tilemap*> map, int id, QWidget* parent)
     : QGraphicsScene{parent}, m_id{id}
 {
   auto* item = new map_item{map};
-//  connect(item,
-//          &tilemap_item::request_redraw,
-//          this,
-//          &tilemap_scene::request_redraw);
+  //  connect(item,
+  //          &tilemap_item::request_redraw,
+  //          this,
+  //          &tilemap_scene::request_redraw);
   addItem(item);
 
   setSceneRect(100, 100, 100, 100);
@@ -41,7 +41,7 @@ tilemap_scene::tilemap_scene(not_null<model::tilemap*> map, int id, QWidget* par
 //  m_viewport.setHeight(height);
 //}
 
-auto tilemap_scene::id() const noexcept -> int
+auto map_scene::id() const noexcept -> int
 {
   return m_id;
 }
@@ -78,13 +78,13 @@ auto tilemap_scene::id() const noexcept -> int
 //  update();
 //}
 
-void tilemap_scene::drawBackground(QPainter* painter, const QRectF& rect)
+void map_scene::drawBackground(QPainter* painter, const QRectF& rect)
 {
   QGraphicsScene::drawBackground(painter, rect);
   painter->fillRect(rect, Qt::black);
 }
 
-void tilemap_scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void map_scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mousePressEvent(event);
 
@@ -98,14 +98,14 @@ void tilemap_scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
   //  }
 }
 
-void tilemap_scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void map_scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mouseReleaseEvent(event);
   //
   //  QApplication::restoreOverrideCursor();
 }
 
-void tilemap_scene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+void map_scene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mouseMoveEvent(event);
   m_lastMouseScenePos = event->scenePos();

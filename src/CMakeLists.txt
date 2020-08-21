@@ -102,8 +102,8 @@ set(TACTILE_SOURCE_FILES
         gui/toolbar/stamp_toolbar.hpp
         gui/toolbar/toolbar_stamp.ui
 
-        gui/editor/tilemap_scene.cpp
-        gui/editor/tilemap_scene.hpp
+        gui/editor/map_scene.cpp
+        gui/editor/map_scene.hpp
         gui/editor/map_editor.cpp
         gui/editor/map_editor.hpp
         gui/editor/tilemap_tab.cpp

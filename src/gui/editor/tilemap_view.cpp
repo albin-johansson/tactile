@@ -18,7 +18,7 @@ tilemap_view::tilemap_view(not_null<model::tilemap*> map,
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-  setScene(new tilemap_scene{map, id, this});
+  setScene(new map_scene{map, id, this});
 }
 
 void tilemap_view::move_viewport(int dx, int dy) noexcept
@@ -76,9 +76,9 @@ void tilemap_view::force_redraw()
   scene()->update(0, 0, 1'000, 1'000);  // FIXME
 }
 
-auto tilemap_view::get_scene() const noexcept -> const tilemap_scene*
+auto tilemap_view::get_scene() const noexcept -> const map_scene*
 {
-  return qobject_cast<const tilemap_scene*>(scene());
+  return qobject_cast<const map_scene*>(scene());
 }
 
 // bool tilemap_view::event(QEvent* event)

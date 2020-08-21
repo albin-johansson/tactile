@@ -4,7 +4,7 @@
 #include <QRect>
 
 #include "core_model.hpp"
-#include "tilemap_scene.hpp"
+#include "map_scene.hpp"
 
 namespace tactile::gui {
 
@@ -47,7 +47,7 @@ class tilemap_view final : public QGraphicsView
   QPoint m_lastMousePos{};
   QPointF m_lastMouseScenePos{};
 
-  [[nodiscard]] auto get_scene() const noexcept -> const tilemap_scene*;
+  [[nodiscard]] auto get_scene() const noexcept -> const map_scene*;
 };
 
 }  // namespace tactile::gui
