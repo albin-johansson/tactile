@@ -6,7 +6,6 @@
 #include "tactile_types.hpp"
 #include "tile_layer.hpp"
 #include "tile_size.hpp"
-#include "type_utils.hpp"
 
 namespace tactile::model {
 

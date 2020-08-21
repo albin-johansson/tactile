@@ -4,7 +4,6 @@
 #include <set>
 
 #include "tactile_types.hpp"
-#include "type_utils.hpp"
 
 namespace tactile::model {
 

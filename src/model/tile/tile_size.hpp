@@ -1,7 +1,5 @@
 #pragma once
 
-#include "type_utils.hpp"
-
 namespace tactile::model {
 
 /**
@@ -82,7 +80,5 @@ class tile_size final
  private:
   int m_size{default_size()};
 };
-
-static_assert(validate_nothrow<tile_size>());
 
 }  // namespace tactile::model

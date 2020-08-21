@@ -34,8 +34,6 @@ set(TACTILE_SOURCE_FILES
         model/algo/flood_fill.cpp
         model/algo/algorithm.hpp
 
-        model/util/type_utils.hpp
-
         model/tile/tile_size.hpp
         model/tile/tile_size.cpp
 
