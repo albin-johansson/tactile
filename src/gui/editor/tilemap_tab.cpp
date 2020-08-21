@@ -130,9 +130,4 @@ auto tilemap_tab::tab_id(int index) const noexcept -> std::optional<int>
   }
 }
 
-void tilemap_tab::paintEvent(QPaintEvent* event)
-{
-  QTabWidget::paintEvent(event);
-}
-
 }  // namespace tactile::gui

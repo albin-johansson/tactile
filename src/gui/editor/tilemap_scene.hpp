@@ -27,9 +27,6 @@ class tilemap_scene final : public QGraphicsScene
 
   [[nodiscard]] auto id() const noexcept -> int;
 
- signals:
-  [[deprecated]] void request_redraw(QPainter& painter, const QRectF& exposed);
-
  protected:
   void drawBackground(QPainter* painter, const QRectF& rect) override;
 

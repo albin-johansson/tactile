@@ -42,9 +42,6 @@ class tilemap_tab final : public QTabWidget
 
   void redraw();
 
- protected:
-  void paintEvent(QPaintEvent* event) override;
-
  private:
   [[nodiscard]] auto get_view(int index) const noexcept -> tilemap_view*;
 

@@ -3,7 +3,6 @@
 #include <QTabWidget>
 
 #include "startup_widget.hpp"
-#include "tilemap_scene.hpp"
 #include "tilemap_tab.hpp"
 #include "ui_main_editor.h"
 

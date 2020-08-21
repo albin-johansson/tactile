@@ -73,7 +73,7 @@ auto tilemap_view::id() const noexcept -> int
 
 void tilemap_view::force_redraw()
 {
-  scene()->update(0, 0, 1'000, 1'000); // FIXME
+  scene()->update(0, 0, 1'000, 1'000);  // FIXME
 }
 
 auto tilemap_view::get_scene() const noexcept -> const tilemap_scene*
