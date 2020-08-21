@@ -38,36 +38,6 @@ app::~app() noexcept
   delete m_core;
 }
 
-void app::handle_undo()
-{
-  m_core->undo();
-}
-
-void app::handle_redo()
-{
-  m_core->redo();
-}
-
-void app::handle_add_row()
-{
-  m_core->add_row();
-}
-
-void app::handle_add_col()
-{
-  m_core->add_col();
-}
-
-void app::handle_remove_row()
-{
-  m_core->remove_row();
-}
-
-void app::handle_remove_col()
-{
-  m_core->remove_col();
-}
-
 void app::handle_resize_map()
 {
   if (m_core->has_active_map()) {
@@ -140,7 +110,7 @@ void app::handle_new_tileset()
 void app::handle_new_map()
 {
   const auto id = m_core->add_map();
-  m_window->handle_new_map(m_core, id);
+  m_window->handle_new_map(m_core->get_map(id), id);
 }
 
 }  // namespace tactile

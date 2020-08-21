@@ -72,13 +72,15 @@ void app_connections::init_command_connections(app& app) noexcept
           m_window,
           &window::handle_redo_text_update);
 
-  connect(m_window, &window::request_undo, &app, &app::handle_undo);
-  connect(m_window, &window::request_redo, &app, &app::handle_redo);
+  connect(m_window, &window::request_undo, m_core, &core_model::undo);
+  connect(m_window, &window::request_redo, m_core, &core_model::redo);
 
-  connect(m_window, &window::request_add_row, &app, &app::handle_add_row);
-  connect(m_window, &window::request_add_col, &app, &app::handle_add_col);
-  connect(m_window, &window::request_remove_row, &app, &app::handle_remove_row);
-  connect(m_window, &window::request_remove_col, &app, &app::handle_remove_col);
+  connect(m_window, &window::request_add_row, m_core, &core_model::add_row);
+  connect(m_window, &window::request_add_col, m_core, &core_model::add_col);
+  connect(
+      m_window, &window::request_remove_row, m_core, &core_model::remove_row);
+  connect(
+      m_window, &window::request_remove_col, m_core, &core_model::remove_col);
 
   connect(m_window, &window::request_resize_map, &app, &app::handle_resize_map);
 }

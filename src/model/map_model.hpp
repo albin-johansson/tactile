@@ -45,6 +45,7 @@ class map_model final : public QObject
   [[nodiscard]] auto redo_text() const -> QString;
 
   /// @}
+
   /// @name Tilemap queries
   /// @{
 
@@ -57,6 +58,7 @@ class map_model final : public QObject
   [[nodiscard]] auto height() const noexcept -> int;
 
   /// @}
+
   /// @name Layer handling
   /// @{
 
@@ -65,6 +67,7 @@ class map_model final : public QObject
   [[nodiscard]] auto has_layer(layer_id layer) const noexcept -> bool;
 
   /// @}
+
   /// @name Tile size
   /// @{
 
@@ -81,6 +84,8 @@ class map_model final : public QObject
   [[nodiscard]] auto map() noexcept -> tilemap&;
 
   [[nodiscard]] auto map() const noexcept -> const tilemap&;
+
+  [[nodiscard]] auto get() noexcept -> tilemap*;
 
  signals:
   void undo_state_updated(bool canUndo);

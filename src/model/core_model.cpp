@@ -164,6 +164,15 @@ auto core_model::tile_size() const noexcept -> std::optional<int>
   }
 }
 
+auto core_model::get_map(int id) noexcept -> tilemap*
+{
+  if (const auto it = m_maps.find(id); it != m_maps.end()) {
+    return it->second->get();
+  } else {
+    return nullptr;
+  }
+}
+
 void core_model::select_layer(int index) noexcept
 {
   if (auto* map = current_map(); map) {

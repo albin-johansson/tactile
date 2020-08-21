@@ -206,7 +206,7 @@ else ()
             /W3)
 endif ()
 
-if (WIN32)
+if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
     add_executable(Tactile WIN32
             ${TACTILE_SOURCE_FILES}
             main.cpp)

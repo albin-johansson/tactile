@@ -156,4 +156,9 @@ auto map_model::map() const noexcept -> const tilemap&
   return *m_map;
 }
 
+auto map_model::get() noexcept -> tilemap*
+{
+  return m_map.get();
+}
+
 }  // namespace tactile::model

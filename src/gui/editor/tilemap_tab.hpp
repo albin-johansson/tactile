@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "tactile_fwd.hpp"
+#include "tactile_types.hpp"
 
 namespace tactile::gui {
 
@@ -17,7 +18,7 @@ class tilemap_tab final : public QTabWidget
 
   ~tilemap_tab() noexcept override;
 
-  void add_tile_map_tab(model::core_model* core,
+  void add_tile_map_tab(not_null<model::tilemap*> map,
                         const QString& title,
                         int id) noexcept;
 
@@ -34,15 +35,18 @@ class tilemap_tab final : public QTabWidget
   [[nodiscard]] auto tab_id(int index) const noexcept -> std::optional<int>;
 
  signals:
-  void request_redraw(QPainter& painter, const QRectF& exposed);
-
   void request_remove_tab(int id);
 
  public slots:
   void theme_changed();
 
+  void redraw();
+
+ protected:
+  void paintEvent(QPaintEvent* event) override;
+
  private:
-  [[nodiscard]] auto get_pane(int index) const noexcept -> tilemap_view*;
+  [[nodiscard]] auto get_view(int index) const noexcept -> tilemap_view*;
 
  private slots:
   void handle_tab_close(int index);

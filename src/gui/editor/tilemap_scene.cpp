@@ -9,14 +9,14 @@
 
 namespace tactile::gui {
 
-tilemap_scene::tilemap_scene(model::core_model* core, int id, QWidget* parent)
-    : QGraphicsScene{parent}, m_core{core}, m_id{id}
+tilemap_scene::tilemap_scene(not_null<model::tilemap*> map, int id, QWidget* parent)
+    : QGraphicsScene{parent}, m_id{id}
 {
-  auto* item = new tilemap_item{core};
-  connect(item,
-          &tilemap_item::request_redraw,
-          this,
-          &tilemap_scene::request_redraw);
+  auto* item = new tilemap_item{map};
+//  connect(item,
+//          &tilemap_item::request_redraw,
+//          this,
+//          &tilemap_scene::request_redraw);
   addItem(item);
 
   setSceneRect(100, 100, 100, 100);

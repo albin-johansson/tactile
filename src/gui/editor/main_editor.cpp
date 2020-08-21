@@ -36,11 +36,6 @@ void main_editor::init_connections() noexcept
           &tilemap_tab::theme_changed);
 
   connect(m_mapTabWidget,
-          &tilemap_tab::request_redraw,
-          this,
-          &main_editor::request_redraw);
-
-  connect(m_mapTabWidget,
           &tilemap_tab::request_remove_tab,
           this,
           &main_editor::request_remove_tab);
@@ -51,11 +46,11 @@ void main_editor::init_connections() noexcept
           &main_editor::tab_changed);
 }
 
-void main_editor::add_new_map_tab(model::core_model* core,
+void main_editor::add_new_map_tab(not_null<model::tilemap*> map,
                                   const QString& title,
                                   int id) noexcept
 {
-  m_mapTabWidget->add_tile_map_tab(core, title, id);
+  m_mapTabWidget->add_tile_map_tab(map, title, id);
 }
 
 void main_editor::select_tab(int id)
@@ -78,9 +73,9 @@ void main_editor::move_viewport(int dx, int dy) noexcept
   m_mapTabWidget->move_viewport(dx, dy);
 }
 
-void main_editor::handle_trigger_redraw() noexcept
+void main_editor::handle_redraw()
 {
-  m_mapTabWidget->update();
+  m_mapTabWidget->redraw();
 }
 
 void main_editor::enable_startup_view() noexcept

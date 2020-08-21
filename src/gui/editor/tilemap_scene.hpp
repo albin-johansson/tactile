@@ -15,7 +15,7 @@ class tilemap_scene final : public QGraphicsScene
   Q_OBJECT
 
  public:
-  explicit tilemap_scene(model::core_model* core,
+  explicit tilemap_scene(not_null<model::tilemap*> map,
                          int id,
                          QWidget* parent = nullptr);
 
@@ -28,7 +28,7 @@ class tilemap_scene final : public QGraphicsScene
   [[nodiscard]] auto id() const noexcept -> int;
 
  signals:
-  void request_redraw(QPainter& painter, const QRectF& exposed);
+  [[deprecated]] void request_redraw(QPainter& painter, const QRectF& exposed);
 
  protected:
   void drawBackground(QPainter* painter, const QRectF& rect) override;
@@ -40,7 +40,6 @@ class tilemap_scene final : public QGraphicsScene
   void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
  private:
-  model::core_model* m_core;
   //  QRect m_viewport{};
   int m_id;
   QPointF m_lastMouseScenePos{};

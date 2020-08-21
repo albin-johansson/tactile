@@ -54,18 +54,6 @@ class app final : public QApplication
   }
 
  private slots:
-  void handle_undo();
-
-  void handle_redo();
-
-  void handle_add_row();
-
-  void handle_add_col();
-
-  void handle_remove_row();
-
-  void handle_remove_col();
-
   void handle_resize_map();
 
   void handle_pan_up();

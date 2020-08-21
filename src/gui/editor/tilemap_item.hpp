@@ -8,13 +8,10 @@
 namespace tactile::gui {
 
 // TODO avoid QObject inheritance
-class tilemap_item final : public QObject, public QGraphicsItem
+class tilemap_item final : public QGraphicsItem
 {
-  Q_OBJECT
-  Q_INTERFACES(QGraphicsItem)
-
  public:
-  explicit tilemap_item(model::core_model* core,
+  explicit tilemap_item(not_null<model::tilemap*> map,
                         QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
@@ -23,8 +20,8 @@ class tilemap_item final : public QObject, public QGraphicsItem
 
   [[nodiscard]] auto boundingRect() const -> QRectF override;
 
- signals:
-  void request_redraw(QPainter& painter, const QRectF& exposed);
+ private:
+  model::tilemap* m_map;
 };
 
 }  // namespace tactile::gui

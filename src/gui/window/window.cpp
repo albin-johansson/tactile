@@ -9,8 +9,8 @@
 
 #include "about_dialog.hpp"
 #include "main_editor.hpp"
-#include "prefs/setting.hpp"
-#include "prefs/setting_identifiers.hpp"
+#include "setting.hpp"
+#include "setting_identifiers.hpp"
 #include "settings_dialog.hpp"
 #include "tool_widget.hpp"
 #include "ui_window.h"
@@ -43,8 +43,12 @@ window::~window() noexcept
 
 void window::init_connections() noexcept
 {
-  on_triggered(m_ui->action_new_map, &window::request_new_map);
-  on_triggered(m_ui->action_add_tileset, &window::request_new_tileset);
+  auto onTriggered = [this](auto&& action, auto&& fun) {
+    connect(action, &QAction::triggered, this, fun);
+  };
+
+  onTriggered(m_ui->action_new_map, &window::request_new_map);
+  onTriggered(m_ui->action_add_tileset, &window::request_new_tileset);
 
   connect(m_mainEditor,
           &main_editor::request_remove_tab,
@@ -90,11 +94,6 @@ void window::init_connections() noexcept
           &QDockWidget::visibilityChanged,
           m_ui->action_tilesets_visibility,
           &QAction::setChecked);
-
-  connect(m_mainEditor,
-          &main_editor::request_redraw,
-          this,
-          &window::request_redraw);
 
   connect(m_mainEditor,
           &main_editor::request_select_tab,
@@ -210,12 +209,12 @@ void window::handle_move_camera(int dx, int dy)
 
 void window::handle_draw()
 {
-  m_mainEditor->handle_trigger_redraw();
+  m_mainEditor->handle_redraw();
 }
 
-void window::handle_new_map(model::core_model* core, int id)
+void window::handle_new_map(not_null<model::tilemap*> map, int id)
 {
-  m_mainEditor->add_new_map_tab(core, "map", id);
+  m_mainEditor->add_new_map_tab(map, "map", id);
   m_mainEditor->select_tab(id);
   if (!in_editor_mode()) {
     enable_editor_view();

@@ -22,7 +22,7 @@ class tilemap_view final : public QGraphicsView
   Q_OBJECT
 
  public:
-  explicit tilemap_view(model::core_model* core,
+  explicit tilemap_view(not_null<model::tilemap*> map,
                         int id,
                         QWidget* parent = nullptr);
 
@@ -32,8 +32,7 @@ class tilemap_view final : public QGraphicsView
 
   [[nodiscard]] auto id() const noexcept -> int;
 
- signals:
-  void request_redraw(QPainter& painter, const QRectF& exposed);
+  void force_redraw();
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;
@@ -42,15 +41,12 @@ class tilemap_view final : public QGraphicsView
 
   void mouseReleaseEvent(QMouseEvent* event) override;
 
-  //  void paintEvent(QPaintEvent* event) override;
-  //
-  void resizeEvent(QResizeEvent* event) override;
+  //  bool event(QEvent* event) override;
 
  private:
   QPoint m_lastMousePos{};
   QPointF m_lastMouseScenePos{};
 
-  [[nodiscard]] auto get_tilemap_scene() noexcept -> tilemap_scene*;
   [[nodiscard]] auto get_scene() const noexcept -> const tilemap_scene*;
 };
 

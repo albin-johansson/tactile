@@ -72,51 +72,16 @@ class window final : public QMainWindow
 
   void request_redo();
 
-  /**
-   * @brief A signal that is emitted when the user wants to add a row to the
-   * tilemap.
-   *
-   * @since 0.1.0
-   */
   void request_add_row();
 
-  /**
-   * @brief A signal that is emitted when the user wants to add a column to
-   * the tile map.
-   *
-   * @since 0.1.0
-   */
   void request_add_col();
 
-  /**
-   * @brief A signal that is emitted when the user wants to remove a row from
-   * the tile map.
-   *
-   * @since 0.1.0
-   */
   void request_remove_row();
 
-  /**
-   * @brief A signal that is emitted when the user wants to remove a column
-   * from the tilemap.
-   *
-   * @since 0.1.0
-   */
   void request_remove_col();
 
-  /**
-   * @brief A signal that is emitted when the user wants to center the camera
-   * over the tilemap.
-   *
-   * @since 0.1.0
-   */
   void request_center_camera();
 
-  /**
-   * @brief A signal that is emitted when the user wants to add a tileset.
-   *
-   * @since 0.1.0
-   */
   void request_new_tileset();
 
   void request_resize_map();
@@ -170,7 +135,7 @@ class window final : public QMainWindow
 
   void handle_move_camera(int dx, int dy);
 
-  void handle_new_map(model::core_model* core, int id);
+  void handle_new_map(not_null<model::tilemap*> map, int id);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
@@ -208,12 +173,6 @@ class window final : public QMainWindow
    * @since 0.1.0
    */
   [[nodiscard]] auto in_editor_mode() const noexcept -> bool;
-
-  template <typename Functor>
-  void on_triggered(QAction* action, Functor fun) noexcept
-  {
-    connect(action, &QAction::triggered, this, fun);
-  }
 
  private slots:
   void handle_remove_tab(int tabID);

@@ -34,44 +34,7 @@ class core_model final : public QObject
   Q_OBJECT
 
  public:
-  /// @name Commands
-  /// @{
-
-  void undo();
-
-  void redo();
-
   void resize_map(int nRows, int nCols);
-
-  /**
-   * @brief Adds a row to the currently active tilemap.
-   *
-   * @since 0.1.0
-   */
-  void add_row() noexcept;
-
-  /**
-   * @brief Adds a column to the currently active tilemap.
-   *
-   * @since 0.1.0
-   */
-  void add_col() noexcept;
-
-  /**
-   * @brief Removes a row from the currently active tilemap.
-   *
-   * @since 0.1.0
-   */
-  void remove_row() noexcept;
-
-  /**
-   * @brief Removes a column from the currently active tilemap.
-   *
-   * @since 0.1.0
-   */
-  void remove_col() noexcept;
-
-  /// @}
 
   [[nodiscard]] auto add_map() -> int;
 
@@ -92,27 +55,6 @@ class core_model final : public QObject
   [[nodiscard]] auto add_tileset(const QImage& image,
                                  int tileWidth,
                                  int tileHeight) noexcept -> std::optional<int>;
-
-  /**
-   * @brief Selects the tile layer associated with the specified index.
-   *
-   * @note This method has no effect if the supplied index isn't associated
-   * with a tile layer.
-   *
-   * @param index the index of the tile layer that will be selected.
-   *
-   * @since 0.1.0
-   */
-  void select_layer(int index) noexcept;
-
-  /**
-   * @brief Selects the tilemap associated with the specified id.
-   *
-   * @param id the key of the tilemap that will be selected.
-   *
-   * @since 0.1.0
-   */
-  void select_map(int id) noexcept;
 
   /**
    * @brief Indicates whether or not there is an active tilemap.
@@ -173,6 +115,17 @@ class core_model final : public QObject
    */
   [[nodiscard]] auto tile_size() const noexcept -> std::optional<int>;
 
+  /**
+   * @brief Returns a pointer to the tilemap associated with the specified ID.
+   *
+   * @param id the identifier associated with the desired tilemap.
+   *
+   * @return a pointer to a tilemap; null if no tilemap was found.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto get_map(int id) noexcept -> tilemap*;
+
  signals:
   void redraw_requested();
 
@@ -187,6 +140,64 @@ class core_model final : public QObject
   void switched_map(map_id id);
 
  public slots:
+  /// @name Commands
+  /// @{
+
+  void undo();
+
+  void redo();
+
+  /**
+   * @brief Adds a row to the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
+  void add_row() noexcept;
+
+  /**
+   * @brief Adds a column to the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
+  void add_col() noexcept;
+
+  /**
+   * @brief Removes a row from the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
+  void remove_row() noexcept;
+
+  /**
+   * @brief Removes a column from the currently active tilemap.
+   *
+   * @since 0.1.0
+   */
+  void remove_col() noexcept;
+
+  /// @}
+
+  /**
+   * @brief Selects the tile layer associated with the specified index.
+   *
+   * @note This method has no effect if the supplied index isn't associated
+   * with a tile layer.
+   *
+   * @param index the index of the tile layer that will be selected.
+   *
+   * @since 0.1.0
+   */
+  void select_layer(int index) noexcept;
+
+  /**
+   * @brief Selects the tilemap associated with the specified id.
+   *
+   * @param id the key of the tilemap that will be selected.
+   *
+   * @since 0.1.0
+   */
+  void select_map(int id) noexcept;
+
   void handle_draw(QPainter& painter, const QRectF& exposed);
 
   /**

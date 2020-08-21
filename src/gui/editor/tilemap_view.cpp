@@ -1,35 +1,30 @@
 #include "tilemap_view.hpp"
 
+#include <QDebug>
+#include <QEvent>
 #include <QMouseEvent>
-#include <QPaintEvent>
 #include <QResizeEvent>
 #include <QScrollBar>
 
 namespace tactile::gui {
 
-// TODO remove core* argument?
-tilemap_view::tilemap_view(model::core_model* core, int id, QWidget* parent)
+tilemap_view::tilemap_view(not_null<model::tilemap*> map,
+                           int id,
+                           QWidget* parent)
     : QGraphicsView{parent}
 {
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);
 
-  //  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-  //  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-  setScene(new tilemap_scene{core, id, this});
-
-  connect(get_tilemap_scene(),
-          &tilemap_scene::request_redraw,
-          this,
-          &tilemap_view::request_redraw);
+  setScene(new tilemap_scene{map, id, this});
 }
 
 void tilemap_view::move_viewport(int dx, int dy) noexcept
 {
   const auto old = scene()->sceneRect();
   scene()->setSceneRect(old.x() + dx, old.y() + dy, old.width(), old.height());
-
-  update();
 }
 
 void tilemap_view::center_viewport(int mapWidth, int mapHeight) noexcept
@@ -46,6 +41,8 @@ void tilemap_view::mousePressEvent(QMouseEvent* event)
 void tilemap_view::mouseMoveEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseMoveEvent(event);
+
+  qInfo("Mouse move event!");
 
   m_lastMousePos = event->globalPos();
   m_lastMouseScenePos = mapToScene(viewport()->mapFromGlobal(m_lastMousePos));
@@ -69,32 +66,31 @@ void tilemap_view::mouseReleaseEvent(QMouseEvent* event)
   QGraphicsView::mouseReleaseEvent(event);
 }
 
-// void tilemap_view::paintEvent(QPaintEvent* event)
-//{
-//  QGraphicsView::paintEvent(event);
-//}
-//
-void tilemap_view::resizeEvent(QResizeEvent* event)
-{
-  QGraphicsView::resizeEvent(event);
-
-  //  scene()->setSceneRect(0, 0, event->size().width(),
-  //  event->size().height());
-}
-
 auto tilemap_view::id() const noexcept -> int
 {
   return get_scene()->id();
 }
 
-auto tilemap_view::get_tilemap_scene() noexcept -> tilemap_scene*
+void tilemap_view::force_redraw()
 {
-  return qobject_cast<tilemap_scene*>(scene());
+  scene()->update(0, 0, 1'000, 1'000); // FIXME
 }
 
 auto tilemap_view::get_scene() const noexcept -> const tilemap_scene*
 {
   return qobject_cast<const tilemap_scene*>(scene());
 }
+
+// bool tilemap_view::event(QEvent* event)
+//{
+//  if (const auto type = event->type();
+//      type == QEvent::TouchBegin || type == QEvent::TouchUpdate ||
+//      type == QEvent::TouchEnd || type == QEvent::TouchCancel) {
+//    qInfo("Touch!");
+//    return QGraphicsView::event(event);
+//  } else {
+//    return QGraphicsView::event(event);
+//  }
+//}
 
 }  // namespace tactile::gui

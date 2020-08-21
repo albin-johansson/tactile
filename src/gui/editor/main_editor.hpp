@@ -4,6 +4,7 @@
 #include <optional>
 
 #include "tactile_fwd.hpp"
+#include "tactile_types.hpp"
 
 namespace Ui {
 class main_editor;
@@ -32,7 +33,7 @@ class main_editor final : public QWidget
 
   ~main_editor() noexcept override;
 
-  void add_new_map_tab(model::core_model* core,
+  void add_new_map_tab(not_null<model::tilemap*> map,
                        const QString& title,
                        int id) noexcept;
 
@@ -65,11 +66,9 @@ class main_editor final : public QWidget
   [[nodiscard]] auto open_tabs() const noexcept -> int;
 
  public slots:
-  void handle_trigger_redraw() noexcept;
+  void handle_redraw();
 
  signals:
-  void request_redraw(QPainter& painter, const QRectF& exposed);
-
   void request_remove_tab(int id);
 
   void request_select_tab(int id);
