@@ -168,7 +168,7 @@ concept LogicalNegation = requires (T t) {
  * @tparam Rep the representation type, e.g `int` or `std::string`.
  * @tparam Tag the tag type that uniquely identifies the type.
  *
- * @headerfile iron.hpp
+ * @headerfile nenya.hpp
  */
 template <typename Rep, typename Tag>
 class mirror_type
