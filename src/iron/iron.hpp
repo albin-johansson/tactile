@@ -225,55 +225,55 @@ class mirror_type
 
   [[nodiscard]] constexpr auto operator+(arg rhs) const requires Addable<Rep>
   {
-    return mirror_type{m_value + rhs.get()};
+    return mirror_type{m_value + rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator-(arg rhs) const
       requires Subtraction<Rep>
   {
-    return mirror_type{m_value - rhs.get()};
+    return mirror_type{m_value - rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator/(arg rhs) const requires Division<Rep>
   {
-    return mirror_type{m_value / rhs.get()};
+    return mirror_type{m_value / rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator*(arg rhs) const
       requires Multiplication<Rep>
   {
-    return mirror_type{m_value * rhs.get()};
+    return mirror_type{m_value * rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator%(arg rhs) const requires Modulo<Rep>
   {
-    return mirror_type{m_value % rhs.get()};
+    return mirror_type{m_value % rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator&(arg rhs) const requires BitwiseAND<Rep>
   {
-    return mirror_type{m_value & rhs.get()};
+    return mirror_type{m_value & rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator|(arg rhs) const requires BitwiseOR<Rep>
   {
-    return mirror_type{m_value | rhs.get()};
+    return mirror_type{m_value | rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator^(arg rhs) const requires XOR<Rep>
   {
-    return mirror_type{m_value ^ rhs.get()};
+    return mirror_type{m_value ^ rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator<<(arg rhs) const requires LeftShift<Rep>
   {
-    return mirror_type{m_value << rhs.get()};
+    return mirror_type{m_value << rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator>>(arg rhs) const
       requires RightShift<Rep>
   {
-    return mirror_type{m_value >> rhs.get()};
+    return mirror_type{m_value >> rhs.m_value};
   }
 
   /// @} // end of arithmetic operators
