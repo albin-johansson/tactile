@@ -69,9 +69,9 @@ class map_editor final : public QWidget
   void handle_redraw();
 
  signals:
-  void request_remove_tab(map_id id);
+  void request_remove_tab(map_id);
 
-  void request_select_tab(map_id id);
+  void request_select_tab(map_id);
 
   void theme_changed();
 
