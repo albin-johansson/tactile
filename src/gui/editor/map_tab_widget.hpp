@@ -42,10 +42,10 @@ class map_tab_widget final : public QTabWidget
   void redraw();
 
  private:
-  [[nodiscard]] auto get_view(int index) noexcept -> tilemap_view*;
-  [[nodiscard]] auto get_view(int index) const noexcept -> const tilemap_view*;
+  [[nodiscard]] auto get_view(int index) noexcept -> map_view*;
+  [[nodiscard]] auto get_view(int index) const noexcept -> const map_view*;
 
-  [[nodiscard]] auto view_for_id(map_id id) noexcept -> tilemap_view*;
+  [[nodiscard]] auto view_for_id(map_id id) noexcept -> map_view*;
 
  private slots:
   void handle_tab_close(int index);

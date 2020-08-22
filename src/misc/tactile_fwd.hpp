@@ -18,7 +18,7 @@ class map_tab_widget;
 
 class map_scene;
 
-class tilemap_view;
+class map_view;
 
 class tileset_widget;
 

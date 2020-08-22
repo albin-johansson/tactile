@@ -1,4 +1,4 @@
-#include "tilemap_view.hpp"
+#include "map_view.hpp"
 
 #include <QDebug>
 #include <QEvent>
@@ -8,7 +8,7 @@
 
 namespace tactile::gui {
 
-tilemap_view::tilemap_view(not_null<model::tilemap*> map,
+map_view::map_view(not_null<model::tilemap*> map,
                            map_id id,
                            QWidget* parent)
     : QGraphicsView{parent}
@@ -21,24 +21,24 @@ tilemap_view::tilemap_view(not_null<model::tilemap*> map,
   setScene(new map_scene{map, id, this});
 }
 
-void tilemap_view::move_viewport(int dx, int dy) noexcept
+void map_view::move_viewport(int dx, int dy) noexcept
 {
   const auto old = scene()->sceneRect();
   scene()->setSceneRect(old.x() + dx, old.y() + dy, old.width(), old.height());
 }
 
-void tilemap_view::center_viewport(int mapWidth, int mapHeight) noexcept
+void map_view::center_viewport(int mapWidth, int mapHeight) noexcept
 {
   // TODO
   //  m_scene->center_viewport(mapWidth, mapHeight);
 }
 
-void tilemap_view::mousePressEvent(QMouseEvent* event)
+void map_view::mousePressEvent(QMouseEvent* event)
 {
   QGraphicsView::mousePressEvent(event);
 }
 
-void tilemap_view::mouseMoveEvent(QMouseEvent* event)
+void map_view::mouseMoveEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseMoveEvent(event);
 
@@ -61,22 +61,22 @@ void tilemap_view::mouseMoveEvent(QMouseEvent* event)
   //    }
 }
 
-void tilemap_view::mouseReleaseEvent(QMouseEvent* event)
+void map_view::mouseReleaseEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseReleaseEvent(event);
 }
 
-auto tilemap_view::id() const noexcept -> map_id
+auto map_view::id() const noexcept -> map_id
 {
   return get_scene()->id();
 }
 
-void tilemap_view::force_redraw()
+void map_view::force_redraw()
 {
   scene()->update(0, 0, 1'000, 1'000);  // FIXME
 }
 
-auto tilemap_view::get_scene() const noexcept -> const map_scene*
+auto map_view::get_scene() const noexcept -> const map_scene*
 {
   return qobject_cast<const map_scene*>(scene());
 }

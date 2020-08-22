@@ -107,8 +107,8 @@ set(TACTILE_SOURCE_FILES
         gui/editor/map_editor.hpp
         gui/editor/map_tab_widget.cpp
         gui/editor/map_tab_widget.hpp
-        gui/editor/tilemap_view.cpp
-        gui/editor/tilemap_view.hpp
+        gui/editor/map_view.cpp
+        gui/editor/map_view.hpp
         gui/editor/map_item.cpp
         gui/editor/map_item.hpp
         gui/editor/map_editor.ui

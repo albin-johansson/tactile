@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "tilemap_view.hpp"
+#include "map_view.hpp"
 
 namespace tactile::gui {
 namespace {
@@ -70,7 +70,7 @@ void map_tab_widget::add_map_tab(not_null<model::tilemap*> map,
   auto newTitle = title;
   newTitle.append(QString::number(id.get()));
 
-  addTab(new tilemap_view{map, id, this}, newTitle);
+  addTab(new map_view{map, id, this}, newTitle);
 }
 
 void map_tab_widget::remove_map_tab(map_id id) noexcept
@@ -115,17 +115,17 @@ auto map_tab_widget::tab_id(int index) const noexcept -> std::optional<map_id>
   }
 }
 
-auto map_tab_widget::get_view(int index) noexcept -> tilemap_view*
+auto map_tab_widget::get_view(int index) noexcept -> map_view*
 {
-  return qobject_cast<tilemap_view*>(widget(index));
+  return qobject_cast<map_view*>(widget(index));
 }
 
-auto map_tab_widget::get_view(int index) const noexcept -> const tilemap_view*
+auto map_tab_widget::get_view(int index) const noexcept -> const map_view*
 {
-  return qobject_cast<tilemap_view*>(widget(index));
+  return qobject_cast<map_view*>(widget(index));
 }
 
-auto map_tab_widget::view_for_id(map_id id) noexcept -> tilemap_view*
+auto map_tab_widget::view_for_id(map_id id) noexcept -> map_view*
 {
   const auto amount = count();
   for (int i = 0; i < amount; ++i) {

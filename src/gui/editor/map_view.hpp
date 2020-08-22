@@ -17,12 +17,12 @@ namespace tactile::gui {
  *
  * @headerfile tilemap_view.hpp
  */
-class tilemap_view final : public QGraphicsView
+class map_view final : public QGraphicsView
 {
   Q_OBJECT
 
  public:
-  explicit tilemap_view(not_null<model::tilemap*> map,
+  explicit map_view(not_null<model::tilemap*> map,
                         map_id id,
                         QWidget* parent = nullptr);
 
