@@ -177,7 +177,8 @@ class mirror_type
  public:
   using arg = const mirror_type&;
 
-  constexpr mirror_type() requires std::is_default_constructible_v<Rep> = default;
+  constexpr mirror_type() requires std::is_default_constructible_v<Rep> =
+      default;
 
   constexpr explicit mirror_type(const Rep& value) : m_value{value} {}
 
@@ -228,7 +229,7 @@ class mirror_type
   }
 
   [[nodiscard]] constexpr auto operator-(arg rhs) const
-  requires Subtraction<Rep>
+      requires Subtraction<Rep>
   {
     return mirror_type{m_value - rhs.get()};
   }
@@ -239,7 +240,7 @@ class mirror_type
   }
 
   [[nodiscard]] constexpr auto operator*(arg rhs) const
-  requires Multiplication<Rep>
+      requires Multiplication<Rep>
   {
     return mirror_type{m_value * rhs.get()};
   }
@@ -270,7 +271,7 @@ class mirror_type
   }
 
   [[nodiscard]] constexpr auto operator>>(arg rhs) const
-  requires RightShift<Rep>
+      requires RightShift<Rep>
   {
     return mirror_type{m_value >> rhs.get()};
   }
@@ -346,13 +347,13 @@ class mirror_type
   /// @{
 
   [[nodiscard]] constexpr auto operator==(arg rhs) const
-  requires std::equality_comparable<Rep>
+      requires std::equality_comparable<Rep>
   {
     return m_value == rhs.m_value;
   }
 
   [[nodiscard]] constexpr auto operator!=(arg rhs) const
-  requires std::equality_comparable<Rep>
+      requires std::equality_comparable<Rep>
   {
     return m_value != rhs.m_value;
   }
@@ -363,19 +364,19 @@ class mirror_type
   }
 
   [[nodiscard]] constexpr auto operator<=(arg rhs) const
-  requires LessThanOrEqual<Rep>
+      requires LessThanOrEqual<Rep>
   {
     return m_value <= rhs.m_value;
   }
 
   [[nodiscard]] constexpr auto operator>(arg rhs) const
-  requires GreaterThan<Rep>
+      requires GreaterThan<Rep>
   {
     return m_value > rhs.m_value;
   }
 
   [[nodiscard]] constexpr auto operator>=(arg rhs) const
-  requires GreaterThanOrEqual<Rep>
+      requires GreaterThanOrEqual<Rep>
   {
     return m_value >= rhs.m_value;
   }
