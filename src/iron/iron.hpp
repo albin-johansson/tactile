@@ -177,8 +177,7 @@ class mirror_type
  public:
   using arg = const mirror_type&;
 
-  constexpr mirror_type() requires std::is_default_constructible_v<Rep> =
-  default;
+  constexpr mirror_type() requires std::is_default_constructible_v<Rep> = default;
 
   constexpr explicit mirror_type(const Rep& value) : m_value{value} {}
 
