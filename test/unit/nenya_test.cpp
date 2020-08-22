@@ -1,12 +1,12 @@
-#include "iron.hpp"
-
 #include <catch.hpp>
 #include <string>
 
-using mirror_int = iron::mirror_type<int, struct mirror_int_t>;
-using mirror_str = iron::mirror_type<std::string, struct mirror_str_t>;
+#include "nenya.hpp"
 
-TEST_CASE("mirror_type:: addition", "[iron]")
+using mirror_int = nenya::mirror_type<int, struct mirror_int_t>;
+using mirror_str = nenya::mirror_type<std::string, struct mirror_str_t>;
+
+TEST_CASE("mirror_type:: addition", "[nenya]")
 {
   auto fst_i = GENERATE(7, -421, 831934);
   auto snd_i = GENERATE(3, 145, -173400);
@@ -19,10 +19,10 @@ TEST_CASE("mirror_type:: addition", "[iron]")
   CHECK(sum.get() == fst_i + snd_i);
 }
 
-TEST_CASE("mirror_type:: addition assignment", "[iron]")
+TEST_CASE("mirror_type:: addition assignment", "[nenya]")
 {}
 
-TEST_CASE("mirror_type:: subtraction", "[iron]")
+TEST_CASE("mirror_type:: subtraction", "[nenya]")
 {
   const int fst_i{15};
   const int snd_i{4};
@@ -37,10 +37,10 @@ TEST_CASE("mirror_type:: subtraction", "[iron]")
   CHECK(diff.get() == diff_i);
 }
 
-TEST_CASE("mirror_type:: subtraction assignment", "[iron]")
+TEST_CASE("mirror_type:: subtraction assignment", "[nenya]")
 {}
 
-TEST_CASE("mirror_type:: unary minus", "[iron]")
+TEST_CASE("mirror_type:: unary minus", "[nenya]")
 {
   const int val_i{123};
   const mirror_int val{val_i};
@@ -52,7 +52,7 @@ TEST_CASE("mirror_type:: unary minus", "[iron]")
   CHECK(inv.get() == inv_i);
 }
 
-TEST_CASE("mirror_type:: multiplication", "[iron]")
+TEST_CASE("mirror_type:: multiplication", "[nenya]")
 {
   const int fst_i{4};
   const int snd_i{6};
@@ -67,5 +67,7 @@ TEST_CASE("mirror_type:: multiplication", "[iron]")
   CHECK(product.get() == product_i);
 }
 
-TEST_CASE("mirror_type:: multiplication assignment", "[iron]")
-{}
+TEST_CASE("mirror_type:: multiplication assignment", "[nenya]")
+{
+
+}
