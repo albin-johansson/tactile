@@ -42,7 +42,8 @@ matrix:
           sources:
             - ubuntu-toolchain-r-test
           packages:
-            - g++9
+            - g++-9
+            - cmake
       before_install:
         - sudo apt-get update
         - export CC=/usr/bin/gcc-9
