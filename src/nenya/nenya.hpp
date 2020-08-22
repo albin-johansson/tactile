@@ -6,30 +6,37 @@
 #include <type_traits>
 #include <utility>  // move
 
+/**
+ * @namespace nenya
+ *
+ * @brief Contains a small library for easily creating strong types.
+ *
+ * @headerfile nenya.hpp
+ */
 namespace nenya {
 
 // clang-format off
 
 template <typename T>
-concept PreIncrementable = requires(T t)
+concept PreIncrement = requires(T t)
 {
   { ++t } -> std::convertible_to<T>;
 };
 
 template <typename T>
-concept PostIncrementable = requires(T t)
+concept PostIncrement = requires(T t)
 {
   { t++ } -> std::convertible_to<T>;
 };
 
 template <typename T>
-concept Addable = requires(T t)
+concept Addition = requires(T t)
 {
   { t + t } -> std::convertible_to<T>;
 };
 
 template <typename T>
-concept AdditionAssignable = requires(T t)
+concept AdditionAssignment = requires(T t)
 {
   { t += t };
 };
@@ -231,14 +238,14 @@ class mirror_type
   /// @name Unary operators
   /// @{
 
-  auto operator++() noexcept(noexcept(++m_value)) requires PreIncrementable<Rep>
+  auto operator++() noexcept(noexcept(++m_value)) requires PreIncrement<Rep>
   {
     ++m_value;
     return *this;
   }
 
   auto operator++(int) noexcept(noexcept(m_value++)) -> mirror_type
-      requires PostIncrementable<Rep>
+      requires PostIncrement<Rep>
   {
     return mirror_type{m_value++};
   }
@@ -279,7 +286,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator+(const mirror_type& rhs) const
       noexcept(noexcept(m_value + rhs.m_value))
-      requires Addable<Rep>
+      requires Addition<Rep>
   {
     return mirror_type{m_value + rhs.m_value};
   }
@@ -362,7 +369,7 @@ class mirror_type
   /// @{
 
   constexpr auto operator+=(const mirror_type& rhs) noexcept(noexcept(m_value += rhs.m_value))
-      requires AdditionAssignable<Rep>
+      requires AdditionAssignment<Rep>
   {
     m_value += rhs.m_value;
     return *this;
