@@ -132,6 +132,7 @@ set(TACTILE_SOURCE_FILES
         prefs/theme.cpp
         prefs/theme.hpp
 
+        iron/iron.hpp
         )
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
@@ -165,6 +166,7 @@ target_include_directories(libTactile
         PUBLIC command
         PUBLIC app
         PUBLIC misc
+        PUBLIC iron
         PUBLIC model
         PUBLIC model/util
         PUBLIC model/tile

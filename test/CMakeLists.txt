@@ -13,6 +13,7 @@ set(TACTILE_TEST_FILES
         unit/tileset_test.cpp
         unit/tile_size_test.cpp
         unit/tileset_manager_test.cpp
+        unit/iron_test.cpp
         )
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
