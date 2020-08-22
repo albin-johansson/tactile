@@ -6,6 +6,15 @@
 using mirror_int = nenya::mirror_type<int, struct mirror_int_t>;
 using mirror_str = nenya::mirror_type<std::string, struct mirror_str_t>;
 
+TEST_CASE("mirror_type:: default values", "[nenya]")
+{
+  const mirror_int i;
+  const mirror_str s;
+
+  CHECK(i.get() == 0);
+  CHECK(s.get() == "");  // NOLINT
+}
+
 TEST_CASE("mirror_type:: addition", "[nenya]")
 {
   auto fst_i = GENERATE(7, -421, 831934);
@@ -95,7 +104,7 @@ TEST_CASE("mirror_type:: bitwise AND", "[nenya]")
 
   const auto result = fst & snd;
 
-  CHECK(result.get() == (fst_i & snd_i)); // NOLINT
+  CHECK(result.get() == (fst_i & snd_i));  // NOLINT
 
   static_assert(noexcept(fst & snd));
 }
@@ -110,9 +119,54 @@ TEST_CASE("mirror_type:: bitwise OR", "[nenya]")
 
   const auto result = fst | snd;
 
-  CHECK(result.get() == (fst_i | snd_i)); // NOLINT
+  CHECK(result.get() == (fst_i | snd_i));  // NOLINT
 
   static_assert(noexcept(fst | snd));
+}
+
+TEST_CASE("mirror_type:: XOR", "[nenya]")
+{
+  auto fst_i = GENERATE(0b1010, 0b0111);
+  auto snd_i = GENERATE(0b1100, 0b1010);
+
+  const mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  const auto result = fst ^ snd;
+
+  CHECK(result.get() == (fst_i ^ snd_i));  // NOLINT
+
+  static_assert(noexcept(fst ^ snd));
+}
+
+TEST_CASE("mirror_type:: left shift", "[nenya]")
+{
+  auto fst_i = GENERATE(0b0001, 0b1011);
+  auto snd_i = GENERATE(0b1100, 0b0001);
+
+  const mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  const auto result = fst << snd;
+
+  CHECK(result.get() == (fst_i << snd_i));  // NOLINT
+
+  static_assert(noexcept(fst << snd));
+}
+
+TEST_CASE("mirror_type:: right shift", "[nenya]")
+{
+  auto fst_i = GENERATE(0b1101, 0b1011);
+  auto snd_i = GENERATE(0b0001, 0b1101);
+
+  const mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  const auto result = fst >> snd;
+
+  CHECK(result.get() == (fst_i >> snd_i));  // NOLINT
+
+  static_assert(noexcept(fst >> snd));
 }
 
 TEST_CASE("mirror_type:: unary minus", "[nenya]")
@@ -181,6 +235,22 @@ TEST_CASE("mirror_type:: subtraction assignment", "[nenya]")
   static_assert(noexcept(fst -= snd));
 }
 
+TEST_CASE("mirror_type:: division assignment", "[nenya]")
+{
+  auto fst_i = GENERATE(9123, -18);
+  auto snd_i = GENERATE(31, 1233);
+
+  mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  fst /= snd;
+
+  CHECK(fst.get() == fst_i / snd_i);
+  CHECK(snd.get() == snd_i);
+
+  static_assert(noexcept(fst /= snd));
+}
+
 TEST_CASE("mirror_type:: multiplication assignment", "[nenya]")
 {
   auto fst_i = GENERATE(81, -17);
@@ -194,5 +264,147 @@ TEST_CASE("mirror_type:: multiplication assignment", "[nenya]")
   CHECK(fst.get() == fst_i * snd_i);
   CHECK(snd.get() == snd_i);
 
-  static_assert(noexcept(fst * snd));
+  static_assert(noexcept(fst *= snd));
+}
+
+TEST_CASE("mirror_type:: modulo assignment", "[nenya]")
+{
+  auto fst_i = GENERATE(1882, -117);
+  auto snd_i = GENERATE(339, 3873);
+
+  mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  fst %= snd;
+
+  CHECK(fst.get() == fst_i % snd_i);
+  CHECK(snd.get() == snd_i);
+
+  static_assert(noexcept(fst %= snd));
+}
+
+TEST_CASE("mirror_type:: bitwise AND assignment", "[nenya]")
+{
+  auto fst_i = GENERATE(812, -441);
+  auto snd_i = GENERATE(33123, 812);
+
+  mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  fst &= snd;
+
+  CHECK(fst.get() == (fst_i & snd_i));  // NOLINT
+  CHECK(snd.get() == snd_i);
+
+  static_assert(noexcept(fst &= snd));
+}
+
+TEST_CASE("mirror_type:: bitwise OR assignment", "[nenya]")
+{
+  auto fst_i = GENERATE(8193, -994);
+  auto snd_i = GENERATE(3314, 8193);
+
+  mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  fst |= snd;
+
+  CHECK(fst.get() == (fst_i | snd_i));  // NOLINT
+  CHECK(snd.get() == snd_i);
+
+  static_assert(noexcept(fst |= snd));
+}
+
+TEST_CASE("mirror_type:: left shift assignment", "[nenya]")
+{
+  auto fst_i = GENERATE(546, -912);
+  auto snd_i = GENERATE(1234, 31234);
+
+  mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  fst <<= snd;
+
+  CHECK(fst.get() == (fst_i << snd_i));  // NOLINT
+  CHECK(snd.get() == snd_i);
+
+  static_assert(noexcept(fst <<= snd));
+}
+
+TEST_CASE("mirror_type:: right shift assignment", "[nenya]")
+{
+  auto fst_i = GENERATE(4812, -415);
+  auto snd_i = GENERATE(5467, 4812);
+
+  mirror_int fst{fst_i};
+  const mirror_int snd{snd_i};
+
+  fst >>= snd;
+
+  CHECK(fst.get() == (fst_i >> snd_i));  // NOLINT
+  CHECK(snd.get() == snd_i);
+
+  static_assert(noexcept(fst >>= snd));
+}
+
+TEST_CASE("mirror_type:: equality operator", "[nenya]")
+{
+  SECTION("int")
+  {
+    const mirror_int i{8124};
+    const mirror_int j{i};
+    CHECK(i == j);
+    CHECK(j == i);
+
+    const mirror_int k{1834};
+    CHECK_FALSE(i == k);
+    CHECK_FALSE(k == i);
+
+    static_assert(noexcept(i == j));
+  }
+
+  SECTION("string")
+  {
+    const mirror_str a{"foo"};
+    const mirror_str b{a};  // NOLINT
+    CHECK(a == b);
+    CHECK(b == a);
+
+    const mirror_str c{"bar"};
+    CHECK_FALSE(a == c);
+    CHECK_FALSE(c == a);
+
+    static_assert(noexcept(a == c));
+  }
+}
+
+TEST_CASE("mirror_type:: inequality operator", "[nenya]")
+{
+  SECTION("int")
+  {
+    const mirror_int i{8124};
+    const mirror_int j{482};
+    CHECK(i != j);
+    CHECK(j != i);
+
+    const mirror_int k{i};
+    CHECK_FALSE(i != k);
+    CHECK_FALSE(k != i);
+
+    static_assert(noexcept(i != j));
+  }
+
+  SECTION("string")
+  {
+    const mirror_str a{"foo"};
+    const mirror_str b{"bar"};
+    CHECK(a != b);
+    CHECK(b != a);
+
+    const mirror_str c{a};  // NOLINT
+    CHECK_FALSE(a != c);
+    CHECK_FALSE(c != a);
+
+    static_assert(noexcept(a != b));
+  }
 }
