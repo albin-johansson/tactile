@@ -1,23 +1,16 @@
 #pragma once
 
-#include <NamedType/named_type.hpp>
 #include <concepts>
 #include <gsl/gsl>
 #include <type_traits>
 
+#include "nenya.hpp"
+
 namespace tactile {
 namespace detail {
 
-template <typename Rep, typename Tag>
-using id_type = fluent::NamedType<Rep,
-                                  Tag,
-                                  fluent::Comparable,
-                                  fluent::Addable,
-                                  fluent::Subtractable,
-                                  fluent::PreIncrementable,
-                                  fluent::PostIncrementable,
-                                  fluent::Hashable,
-                                  fluent::Printable>;
+// the tags are located here just to avoid auto-complete confusing tile_id and
+// tile_id_t for example.
 
 struct tile_id_t
 {};
@@ -33,10 +26,10 @@ struct tileset_id_t
 
 }  // namespace detail
 
-using tile_id = detail::id_type<int, detail::tile_id_t>;
-using layer_id = detail::id_type<int, detail::layer_id_t>;
-using map_id = detail::id_type<int, detail::map_id_t>;
-using tileset_id = detail::id_type<int, detail::tileset_id_t>;
+using tile_id = nenya::mirror_type<int, detail::tile_id_t>;
+using layer_id = nenya::mirror_type<int, detail::layer_id_t>;
+using map_id = nenya::mirror_type<int, detail::map_id_t>;
+using tileset_id = nenya::mirror_type<int, detail::tileset_id_t>;
 
 inline constexpr tile_id empty{0};
 

@@ -408,3 +408,109 @@ TEST_CASE("mirror_type:: inequality operator", "[nenya]")
     static_assert(noexcept(a != b));
   }
 }
+
+TEST_CASE("mirror_type:: less-than operator", "[nenya]")
+{
+  SECTION("int")
+  {
+    const mirror_int i{123};
+    const mirror_int j{321};
+    CHECK(i < j);
+    CHECK_FALSE(j < i);
+
+    static_assert(noexcept(i < j));
+  }
+
+  SECTION("string")
+  {
+    const mirror_str a{"abb"};
+    const mirror_str b{"abc"};
+    CHECK(a < b);
+    CHECK_FALSE(b < a);
+
+    static_assert(noexcept(a < b));
+  }
+}
+
+TEST_CASE("mirror_type:: less-than-or-equals operator", "[nenya]")
+{
+  SECTION("int")
+  {
+    const mirror_int i{123};
+    const mirror_int j{321};
+    CHECK(i <= j);
+    CHECK_FALSE(j <= i);
+
+    const mirror_int k{i};
+    CHECK(i >= k);
+
+    static_assert(noexcept(i <= j));
+  }
+
+  SECTION("string")
+  {
+    const mirror_str a{"abb"};
+    const mirror_str b{"abc"};
+    CHECK(a <= b);
+    CHECK_FALSE(b <= a);
+
+    const mirror_str c{a};  // NOLINT
+    CHECK(a >= c);
+
+    static_assert(noexcept(a <= b));
+  }
+}
+
+TEST_CASE("mirror_type:: greater-than operator", "[nenya]")
+{
+  SECTION("int")
+  {
+    const mirror_int i{8391};
+    const mirror_int j{583};
+    CHECK(i > j);
+    CHECK_FALSE(j > i);
+
+    static_assert(noexcept(i > j));
+  }
+
+  SECTION("string")
+  {
+    const mirror_str a{"bbb"};
+    const mirror_str b{"aaa"};
+    CHECK(a > b);
+    CHECK_FALSE(b > a);
+
+    static_assert(noexcept(a > b));
+  }
+}
+
+TEST_CASE("mirror_type:: greater-than-or-equals operator", "[nenya]")
+{
+  SECTION("int")
+  {
+    const mirror_int i{8391};
+    const mirror_int j{583};
+
+    CHECK(i >= j);
+    CHECK_FALSE(j >= i);
+
+    const mirror_int k{i};
+    CHECK(i >= k);
+
+    static_assert(noexcept(i >= j));
+  }
+
+  SECTION("string")
+  {
+    const mirror_str a{"bbb"};
+    const mirror_str b{"aaa"};
+
+    CHECK(a >= b);
+    CHECK_FALSE(b >= a);
+
+    const mirror_str c{a};  // NOLINT
+    CHECK(a >= c);
+
+    static_assert(noexcept(a >= b));
+  }
+}
