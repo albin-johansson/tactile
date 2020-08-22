@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-void set_style_sheet(QApplication& app, czstring file)
+void set_style_sheet(QApplication& app, const QString& file)
 {
   QFile styleSheet{file};
   if (styleSheet.open(QFile::ReadOnly)) {
