@@ -44,9 +44,9 @@ matrix:
           packages:
             - g++9
       before_install:
+        - sudo apt-get update
         - export CC=/usr/bin/gcc-9
         - export CXX=/usr/bin/g++-9
-        - 
       script:
         - mkdir build
         - cd build
