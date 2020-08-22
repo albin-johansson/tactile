@@ -1,5 +1,6 @@
 #pragma once
 
+#include <compare>
 #include <concepts>
 #include <type_traits>
 #include <utility>  // move
@@ -174,46 +175,59 @@ concept LogicalNegation = requires (T t) {
 template <typename Rep, typename Tag>
 class mirror_type
 {
+  // clang-format off
+
+  inline static constexpr bool nothrowCopy = std::is_nothrow_copy_constructible_v<Rep>;
+  inline static constexpr bool nothrowMove = std::is_nothrow_copy_constructible_v<Rep>;
+
  public:
   using arg = const mirror_type&;
 
-  constexpr mirror_type() requires std::is_default_constructible_v<Rep> =
-      default;
+  constexpr mirror_type() = default;
 
-  constexpr explicit mirror_type(const Rep& value) : m_value{value} {}
+  constexpr explicit mirror_type(const Rep& value) noexcept(nothrowCopy)
+      : m_value{value}
+  {}
+
+  constexpr explicit mirror_type(Rep&& value) noexcept(nothrowMove)
+      : m_value{std::move(value)}
+  {}
 
   /// @name Unary operators
   /// @{
 
-  auto operator++() requires PreIncrementable<Rep>
+  auto operator++() noexcept(noexcept(++m_value)) requires PreIncrementable<Rep>
   {
     ++m_value;
     return *this;
   }
 
-  auto operator++(int) -> mirror_type requires PostIncrementable<Rep>
+  auto operator++(int) noexcept(noexcept(m_value++)) -> mirror_type
+      requires PostIncrementable<Rep>
   {
-    const auto tmp = m_value;
-    ++m_value;
-    return tmp;
+    return mirror_type{m_value++};
   }
 
-  [[nodiscard]] constexpr auto operator+() const requires UnaryPlus<Rep>
+  [[nodiscard]] constexpr auto operator+() const noexcept(noexcept(+m_value))
+      requires UnaryPlus<Rep>
   {
     return mirror_type{+m_value};
   }
 
-  [[nodiscard]] constexpr auto operator-() const requires UnaryMinus<Rep>
+  [[nodiscard]] constexpr auto operator-() const noexcept(noexcept(-m_value))
+      requires UnaryMinus<Rep>
   {
     return mirror_type{-m_value};
   }
 
-  [[nodiscard]] constexpr auto operator~() const requires BitwiseNOT<Rep>
+  [[nodiscard]] constexpr auto operator~() const noexcept(noexcept(~m_value))
+      requires BitwiseNOT<Rep>
   {
     return mirror_type{~m_value};
   }
 
-  [[nodiscard]] constexpr auto operator!() const requires LogicalNegation<Rep>
+  [[nodiscard]] constexpr auto operator!() const noexcept(noexcept(!m_value))
+      requires LogicalNegation<Rep>
   {
     return !m_value;
   }
@@ -223,54 +237,71 @@ class mirror_type
   /// @name Arithmetic operators
   /// @{
 
-  [[nodiscard]] constexpr auto operator+(arg rhs) const requires Addable<Rep>
+  [[nodiscard]] constexpr auto operator+(arg rhs) const
+      noexcept(noexcept(m_value + rhs.m_value))
+      requires Addable<Rep>
   {
     return mirror_type{m_value + rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator-(arg rhs) const
+      noexcept(noexcept(m_value - rhs.m_value))
       requires Subtraction<Rep>
   {
     return mirror_type{m_value - rhs.m_value};
   }
 
-  [[nodiscard]] constexpr auto operator/(arg rhs) const requires Division<Rep>
+  [[nodiscard]] constexpr auto operator/(arg rhs) const
+      noexcept(noexcept(m_value / rhs.m_value))
+      requires Division<Rep>
   {
     return mirror_type{m_value / rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator*(arg rhs) const
+      noexcept(noexcept(m_value * rhs.m_value))
       requires Multiplication<Rep>
   {
     return mirror_type{m_value * rhs.m_value};
   }
 
-  [[nodiscard]] constexpr auto operator%(arg rhs) const requires Modulo<Rep>
+  [[nodiscard]] constexpr auto operator%(arg rhs) const
+      noexcept(noexcept(m_value % rhs.m_value))
+      requires Modulo<Rep>
   {
     return mirror_type{m_value % rhs.m_value};
   }
 
-  [[nodiscard]] constexpr auto operator&(arg rhs) const requires BitwiseAND<Rep>
+  [[nodiscard]] constexpr auto operator&(arg rhs) const
+      noexcept(noexcept(m_value & rhs.m_value))
+      requires BitwiseAND<Rep>
   {
     return mirror_type{m_value & rhs.m_value};
   }
 
-  [[nodiscard]] constexpr auto operator|(arg rhs) const requires BitwiseOR<Rep>
+  [[nodiscard]] constexpr auto operator|(arg rhs) const
+      noexcept(noexcept(m_value | rhs.m_value))
+      requires BitwiseOR<Rep>
   {
     return mirror_type{m_value | rhs.m_value};
   }
 
-  [[nodiscard]] constexpr auto operator^(arg rhs) const requires XOR<Rep>
+  [[nodiscard]] constexpr auto operator^(arg rhs) const
+      noexcept(noexcept(m_value ^ rhs.m_value))
+      requires XOR<Rep>
   {
     return mirror_type{m_value ^ rhs.m_value};
   }
 
-  [[nodiscard]] constexpr auto operator<<(arg rhs) const requires LeftShift<Rep>
+  [[nodiscard]] constexpr auto operator<<(arg rhs) const
+      noexcept(noexcept(m_value << rhs.m_value))
+      requires LeftShift<Rep>
   {
     return mirror_type{m_value << rhs.m_value};
   }
 
   [[nodiscard]] constexpr auto operator>>(arg rhs) const
+      noexcept(noexcept(m_value >> rhs.m_value))
       requires RightShift<Rep>
   {
     return mirror_type{m_value >> rhs.m_value};
@@ -281,61 +312,71 @@ class mirror_type
   /// @name Assignment operators
   /// @{
 
-  constexpr auto operator+=(arg rhs) requires AdditionAssignable<Rep>
+  constexpr auto operator+=(arg rhs) noexcept(noexcept(m_value += rhs.m_value))
+      requires AdditionAssignable<Rep>
   {
     m_value += rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator-=(arg rhs) requires SubtractionAssigment<Rep>
+  constexpr auto operator-=(arg rhs) noexcept(noexcept(m_value -= rhs.m_value))
+      requires SubtractionAssigment<Rep>
   {
     m_value -= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator/=(arg rhs) requires DivisionAssignment<Rep>
+  constexpr auto operator/=(arg rhs) noexcept(noexcept(m_value /= rhs.m_value))
+      requires DivisionAssignment<Rep>
   {
     m_value /= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator*=(arg rhs) requires MultiplicationAssignment<Rep>
+  constexpr auto operator*=(arg rhs) noexcept(noexcept(m_value *= rhs.m_value))
+      requires MultiplicationAssignment<Rep>
   {
     m_value *= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator%=(arg rhs) requires ModuloAssignment<Rep>
+  constexpr auto operator%=(arg rhs) noexcept(noexcept(m_value %= rhs.m_value))
+      requires ModuloAssignment<Rep>
   {
     m_value %= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator&=(arg rhs) requires BitwiseANDAssignment<Rep>
+  constexpr auto operator&=(arg rhs) noexcept(noexcept(m_value &= rhs.m_value))
+      requires BitwiseANDAssignment<Rep>
   {
     m_value &= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator|=(arg rhs) requires BitwiseORAssignment<Rep>
+  constexpr auto operator|=(arg rhs) noexcept(noexcept(m_value |= rhs.m_value))
+      requires BitwiseORAssignment<Rep>
   {
     m_value |= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator^=(arg rhs) requires XORAssignment<Rep>
+  constexpr auto operator^=(arg rhs) noexcept(noexcept(m_value ^= rhs.m_value))
+      requires XORAssignment<Rep>
   {
     m_value ^= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator<<=(arg rhs) requires LeftShiftAssignment<Rep>
+  constexpr auto operator<<=(arg rhs) noexcept(noexcept(m_value <<= rhs.m_value))
+      requires LeftShiftAssignment<Rep>
   {
     m_value <<= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator>>=(arg rhs) requires RightShiftAssignment<Rep>
+  constexpr auto operator>>=(arg rhs) noexcept(noexcept(m_value >>= rhs.m_value))
+      requires RightShiftAssignment<Rep>
   {
     m_value >>= rhs.m_value;
     return *this;
@@ -347,39 +388,48 @@ class mirror_type
   /// @{
 
   [[nodiscard]] constexpr auto operator==(arg rhs) const
+      noexcept(noexcept(m_value == rhs.m_value))
       requires std::equality_comparable<Rep>
   {
     return m_value == rhs.m_value;
   }
 
   [[nodiscard]] constexpr auto operator!=(arg rhs) const
+      noexcept(noexcept(m_value != rhs.m_value))
       requires std::equality_comparable<Rep>
   {
     return m_value != rhs.m_value;
   }
 
-  [[nodiscard]] constexpr auto operator<(arg rhs) const requires LessThan<Rep>
+  [[nodiscard]] constexpr auto operator<(arg rhs) const
+      noexcept(noexcept(m_value < rhs.m_value))
+      requires LessThan<Rep>
   {
     return m_value < rhs.m_value;
   }
 
   [[nodiscard]] constexpr auto operator<=(arg rhs) const
+      noexcept(noexcept(m_value <= rhs.m_value))
       requires LessThanOrEqual<Rep>
   {
     return m_value <= rhs.m_value;
   }
 
   [[nodiscard]] constexpr auto operator>(arg rhs) const
+      noexcept(noexcept(m_value > rhs.m_value))
       requires GreaterThan<Rep>
   {
     return m_value > rhs.m_value;
   }
 
   [[nodiscard]] constexpr auto operator>=(arg rhs) const
+      noexcept(noexcept(m_value >= rhs.m_value))
       requires GreaterThanOrEqual<Rep>
   {
     return m_value >= rhs.m_value;
   }
+
+  // clang-format on
 
   /// @} end of comparison operators
 
@@ -392,3 +442,110 @@ class mirror_type
  private:
   Rep m_value;
 };
+
+// template <typename T>
+// concept DefaultConstructible = std::is_default_constructible_v<T>;
+//
+// template <typename T>
+// concept NothrowDefaultConstructible =
+//    std::is_nothrow_default_constructible_v<T>;
+//
+// template <typename T>
+// concept NothrowMoveConstructible = std::is_nothrow_move_constructible_v<T>;
+//
+// template <typename T>
+// concept NothrowCopyConstructible = std::is_nothrow_copy_constructible_v<T>;
+//
+// template <typename T, typename Tag, template <typename> typename... Skills>
+// class strong_type : public Skills<strong_type<T, Tag, Skills...>>...
+//{
+//  inline static constexpr bool ntDef = NothrowDefaultConstructible<T>;
+//  inline static constexpr bool ntCopy = NothrowCopyConstructible<T>;
+//  inline static constexpr bool ntMove = NothrowMoveConstructible<T>;
+//
+// public:
+//  using value_type = T;
+//  using reference = T&;
+//  using pointer = T*;
+//  using const_reference = const T&;
+//  using const_pointer = const T*;
+//
+//  // clang-format off
+//
+//  constexpr strong_type() noexcept(ntDef) requires DefaultConstructible<T> =
+//  default;
+//
+//  // clang-format on
+//
+//  explicit constexpr strong_type(const T& value) noexcept(ntCopy)
+//      : m_value{value}
+//  {}
+//
+//  // clang-format off
+//
+//  constexpr explicit strong_type(T&& value) noexcept(ntMove) requires
+//  NothrowMoveConstructible<T>
+//      : m_value{std::move(value)}
+//  {}
+//
+//  // clang-format on
+//
+//  [[nodiscard]] constexpr auto get() -> T& { return m_value; }
+//
+//  [[nodiscard]] constexpr auto get() const -> const T& { return m_value; }
+//
+//  [[nodiscard]] constexpr explicit operator T() const { return m_value; }
+//
+// private:
+//  T m_value;
+//};
+//
+// template <typename T, template <typename> typename>
+// class crtp
+//{
+// public:
+//  [[nodiscard]] auto underlying() -> T& { return static_cast<T&>(*this); }
+//
+//  [[nodiscard]] auto underlying() const -> const T&
+//  {
+//    return static_cast<const T&>(*this);
+//  }
+//};
+//
+// template <typename T>
+// class pre_increment : public crtp<T, pre_increment>
+//{
+// public:
+//  auto operator++() -> T&
+//  {
+//    ++this->underlying().get();
+//    return this->underlying();
+//  }
+//};
+//
+// template <typename T>
+// class post_increment : public crtp<T, post_increment>
+//{
+// public:
+//  auto operator++(int) -> T { return T{this->underlying().get()++}; }
+//};
+//
+// template <typename T>
+// class addition;
+//
+// template <typename T>
+// class subtraction;
+//
+// template <typename T>
+// class multiplication;
+//
+// template <typename T>
+// class division;
+//
+// template <typename T>
+// class bitwise_or;
+//
+// template <typename T>
+// class bitwise_and;
+
+}  // namespace iron
