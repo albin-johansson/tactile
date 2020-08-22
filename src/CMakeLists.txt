@@ -153,13 +153,6 @@ set(GSL_SOURCES
         ${LIBRARY_DIR}/microsoft/gsl/string_span)
 add_header_only_lib(libGSL ${LIBRARY_DIR}/microsoft ${GSL_SOURCES})
 
-set(NAMEDTYPE_SOURCES
-        ${LIBRARY_DIR}/joboccara/NamedType/crtp.hpp
-        ${LIBRARY_DIR}/joboccara/NamedType/named_type.hpp
-        ${LIBRARY_DIR}/joboccara/NamedType/named_type_impl.hpp
-        ${LIBRARY_DIR}/joboccara/NamedType/underlying_functionalities.hpp)
-add_header_only_lib(libNamedType ${LIBRARY_DIR}/joboccara ${NAMEDTYPE_SOURCES})
-
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
         PUBLIC command
@@ -188,8 +181,7 @@ target_link_libraries(libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
         PUBLIC Qt5::Gui
-        PUBLIC libGSL
-        PUBLIC libNamedType)
+        PUBLIC libGSL)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(libTactile PRIVATE
