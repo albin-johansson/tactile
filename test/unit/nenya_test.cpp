@@ -15,6 +15,21 @@ TEST_CASE("mirror_type:: default values", "[nenya]")
   CHECK(s.get() == "");  // NOLINT
 }
 
+TEST_CASE("mirror_type:: explicit conversions", "[nenya]")
+{
+  const mirror_int i{7};
+  const auto j = static_cast<int>(i);
+
+  CHECK(i.get() == j);
+  static_assert(noexcept(static_cast<int>(i)));
+
+  const mirror_str s{"foo"};
+  const auto t = static_cast<std::string>(s);
+
+  CHECK(s.get() == t);
+  static_assert(!noexcept(static_cast<std::string>(s)));
+}
+
 TEST_CASE("mirror_type:: addition", "[nenya]")
 {
   auto fst_i = GENERATE(7, -421, 831934);
@@ -265,6 +280,33 @@ TEST_CASE("mirror_type:: multiplication assignment", "[nenya]")
   CHECK(snd.get() == snd_i);
 
   static_assert(noexcept(fst *= snd));
+}
+
+TEST_CASE("mirror_type:: subscript", "[nenya]")
+{
+  SECTION("Not const")
+  {
+    mirror_str str{"foo"};
+
+    char& ch = str[0];
+    CHECK(ch == 'f');
+
+    ch = 'b';
+    CHECK(ch == 'b');
+
+    CHECK(str.get() == "boo");
+
+    static_assert(noexcept(str[0]));
+  }
+
+  SECTION("Const")
+  {
+    const mirror_str str{"bar"};
+    const char& ch = str[0];
+    CHECK(ch == 'b');
+
+    static_assert(noexcept(str[0]));
+  }
 }
 
 TEST_CASE("mirror_type:: modulo assignment", "[nenya]")
