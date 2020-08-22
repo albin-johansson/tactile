@@ -456,7 +456,7 @@ class mirror_type
   // TODO: operator->, operator*, operator&&, operator||, operator[]
 
  private:
-  Rep m_value;
+  Rep m_value{};
 };
 
 // template <typename T>
