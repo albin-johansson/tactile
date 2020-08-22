@@ -190,6 +190,12 @@ concept LogicalNegation = requires(T t)
   { !t } -> std::convertible_to<bool>;
 };
 
+template<typename T>
+concept Hashable = requires(T a) {
+  { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
+  noexcept(std::hash<T>{}(a));
+};
+
 // clang-format on
 
 /**
@@ -491,125 +497,6 @@ class mirror_type
  private:
   Rep m_value{};
 };
-
-// template <typename T>
-// struct hash
-//{};
-
-// clang-format off
-
-template<typename T>
-concept Hashable = requires(T a) {
-  { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
-  noexcept(std::hash<T>{}(a));
-};
-
-// clang-format on
-
-// template <typename T>
-// concept DefaultConstructible = std::is_default_constructible_v<T>;
-//
-// template <typename T>
-// concept NothrowDefaultConstructible =
-//    std::is_nothrow_default_constructible_v<T>;
-//
-// template <typename T>
-// concept NothrowMoveConstructible = std::is_nothrow_move_constructible_v<T>;
-//
-// template <typename T>
-// concept NothrowCopyConstructible = std::is_nothrow_copy_constructible_v<T>;
-//
-// template <typename T, typename Tag, template <typename> typename... Skills>
-// class strong_type : public Skills<strong_type<T, Tag, Skills...>>...
-//{
-//  inline static constexpr bool ntDef = NothrowDefaultConstructible<T>;
-//  inline static constexpr bool ntCopy = NothrowCopyConstructible<T>;
-//  inline static constexpr bool ntMove = NothrowMoveConstructible<T>;
-//
-// public:
-//  using value_type = T;
-//  using reference = T&;
-//  using pointer = T*;
-//  using const_reference = const T&;
-//  using const_pointer = const T*;
-//
-//  // clang-format off
-//
-//  constexpr strong_type() noexcept(ntDef) requires DefaultConstructible<T> =
-//  default;
-//
-//  // clang-format on
-//
-//  explicit constexpr strong_type(const T& value) noexcept(ntCopy)
-//      : m_value{value}
-//  {}
-//
-//  // clang-format off
-//
-//  constexpr explicit strong_type(T&& value) noexcept(ntMove) requires
-//  NothrowMoveConstructible<T>
-//      : m_value{std::move(value)}
-//  {}
-//
-//  // clang-format on
-//
-//  [[nodiscard]] constexpr auto get() -> T& { return m_value; }
-//
-//  [[nodiscard]] constexpr auto get() const -> const T& { return m_value; }
-//
-//  [[nodiscard]] constexpr explicit operator T() const { return m_value; }
-//
-// private:
-//  T m_value;
-//};
-//
-// template <typename T, template <typename> typename>
-// class crtp
-//{
-// public:
-//  [[nodiscard]] auto underlying() -> T& { return static_cast<T&>(*this); }
-//
-//  [[nodiscard]] auto underlying() const -> const T&
-//  {
-//    return static_cast<const T&>(*this);
-//  }
-//};
-//
-// template <typename T>
-// class pre_increment : public crtp<T, pre_increment>
-//{
-// public:
-//  auto operator++() -> T&
-//  {
-//    ++this->underlying().get();
-//    return this->underlying();
-//  }
-//};
-//
-// template <typename T>
-// class post_increment : public crtp<T, post_increment>
-//{
-// public:
-//  auto operator++(int) -> T { return T{this->underlying().get()++}; }
-//};
-//
-// template <typename T>
-// class addition;
-//
-// template <typename T>
-// class subtraction;
-//
-// template <typename T>
-// class multiplication;
-//
-// template <typename T>
-// class division;
-//
-// template <typename T>
-// class bitwise_or;
-//
-// template <typename T>
-// class bitwise_and;
 
 }  // namespace nenya
 
