@@ -229,6 +229,10 @@ concept Hashable = requires(T a) {
  * Furthermore, the logical AND and OR operators lose their short-circuit
  * semantics when overloaded.
  *
+ * @details This class is hashable if `Rep` provides a specialization of
+ * `std::hash`. It works out-of-the-box with common types such as `int` or
+ * `std::string`.
+ *
  * @tparam Rep the representation type, e.g `int` or `std::string`.
  * @tparam Tag the tag type that uniquely identifies the type.
  *
