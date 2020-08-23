@@ -31,6 +31,26 @@ using layer_id = nenya::mirror_type<int, detail::layer_id_t>;
 using map_id = nenya::mirror_type<int, detail::map_id_t>;
 using tileset_id = nenya::mirror_type<int, detail::tileset_id_t>;
 
+constexpr auto operator""_tile(unsigned long long value) noexcept -> tile_id
+{
+  return tile_id{static_cast<int>(value)};
+}
+
+constexpr auto operator""_layer(unsigned long long value) noexcept -> layer_id
+{
+  return layer_id{static_cast<int>(value)};
+}
+
+constexpr auto operator""_map(unsigned long long value) noexcept -> map_id
+{
+  return map_id{static_cast<int>(value)};
+}
+
+constexpr auto operator""_tset(unsigned long long value) noexcept -> tileset_id
+{
+  return tileset_id{static_cast<int>(value)};
+}
+
 inline constexpr tile_id empty{0};
 
 // clang-format off
