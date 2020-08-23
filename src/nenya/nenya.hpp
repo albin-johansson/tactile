@@ -233,6 +233,9 @@ concept Hashable = requires(T a) {
  * `std::hash`. It works out-of-the-box with common types such as `int` or
  * `std::string`.
  *
+ * @details Furthermore, this class is fully `noexcept` aware and will respect
+ * the `noexcept`-ness of the underlying type.
+ *
  * @tparam Rep the representation type, e.g `int` or `std::string`.
  * @tparam Tag the tag type that uniquely identifies the type.
  *
