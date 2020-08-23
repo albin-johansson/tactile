@@ -572,8 +572,8 @@ class mirror_type
 
 namespace std {
 
-template <typename Rep, typename Tag> requires nenya::Hashable<Rep>
-struct hash<::nenya::mirror_type<Rep, Tag>>
+template <typename Rep, typename Tag> requires ::nenya::Hashable<Rep>
+struct hash<::nenya::mirror_type<Rep, Tag>> final
 {
   using mirror_type = ::nenya::mirror_type<Rep, Tag>;
 
