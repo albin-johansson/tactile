@@ -25,3 +25,7 @@ before_build:
 
 build_script:
   - ninja
+
+test_script:
+  - cd test
+  - testTactile
