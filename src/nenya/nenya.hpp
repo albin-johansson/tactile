@@ -233,8 +233,8 @@ concept Hashable = requires(T a) {
  * `std::hash`. It works out-of-the-box with common types such as `int` or
  * `std::string`.
  *
- * @details Furthermore, this class is fully `noexcept` aware and will respect
- * the `noexcept`-ness of the underlying type.
+ * @details Furthermore, this class is `constexpr` and `noexcept` aware and will
+ * respect the properties of the underlying type.
  *
  * @tparam Rep the representation type, e.g `int` or `std::string`.
  * @tparam Tag the tag type that uniquely identifies the type.
@@ -263,14 +263,14 @@ class mirror_type
   /// @name Unary operators
   /// @{
 
-  auto operator++() noexcept(noexcept(++m_value)) -> mirror_type&
+  constexpr auto operator++() noexcept(noexcept(++m_value)) -> mirror_type&
       requires PreIncrement<Rep>
   {
     ++m_value;
     return *this;
   }
 
-  auto operator++(int) noexcept(noexcept(m_value++)) -> mirror_type
+  constexpr auto operator++(int) noexcept(noexcept(m_value++)) -> mirror_type
       requires PostIncrement<Rep>
   {
     return mirror_type{m_value++};
@@ -545,9 +545,12 @@ class mirror_type
 
   /// @} end of comparison operators
 
-  [[nodiscard]] auto get() noexcept(nothrowCopy) -> Rep& { return m_value; }
+  [[nodiscard]] constexpr auto get() noexcept(nothrowCopy) -> Rep&
+  {
+    return m_value;
+  }
 
-  [[nodiscard]] auto get() const noexcept(nothrowCopy) -> const Rep&
+  [[nodiscard]] constexpr auto get() const noexcept(nothrowCopy) -> const Rep&
   {
     return m_value;
   }
@@ -556,11 +559,14 @@ class mirror_type
 
   auto operator->() noexcept -> Rep* { return &m_value; };
 
-  explicit operator Rep() const noexcept(nothrowCopy) { return m_value; }
+  constexpr explicit operator Rep() const noexcept(nothrowCopy)
+  {
+    return m_value;
+  }
 
   // clang-format off
 
-  explicit operator bool() const
+  constexpr explicit operator bool() const
       noexcept(noexcept(static_cast<bool>(m_value)))
       requires BoolConversion<Rep> && (!std::same_as<Rep, bool>)
   {
