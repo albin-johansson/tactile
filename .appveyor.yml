@@ -8,7 +8,7 @@ install:
 
   - set QT_VERSION=5.15.0
   - set Qt5_PATH=C:\Qt\%QT_VERSION%\msvc2019_64
-#  - set PATH=%PATH%;%Qt5_PATH%\bin;%
+  - set PATH=%PATH%;%Qt5_PATH%\bin;%
 
   # Updates PATH to support command-line usage of compiler
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
