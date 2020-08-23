@@ -23,5 +23,5 @@ BraceWrapping:
   SplitEmptyRecord: false
   SplitEmptyFunction: false
 
-AllowShortFunctionsOnASingleLine: InlineOnly
+AllowShortFunctionsOnASingleLine: None
 AllowShortBlocksOnASingleLine: Never
