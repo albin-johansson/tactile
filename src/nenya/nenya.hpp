@@ -168,6 +168,12 @@ concept RightShiftAssignment = requires(T t)
 };
 
 template <typename T>
+concept BoolConversion = requires(T t)
+{
+  { static_cast<bool>(t) };
+};
+
+template <typename T>
 concept LessThan = requires(T t)
 {
   { t < t } -> std::convertible_to<bool>;
@@ -216,6 +222,12 @@ concept Hashable = requires(T a) {
  *
  * @brief A strong type that automatically inherits all of the properties of the
  * representation type.
+ *
+ * @details This class will mirror adopt all available operators except for
+ * `operator*`, `operator&&` and `operator||`. The dereference operator is
+ * considered too error-prone for a strong type, it's easy to misuse.
+ * Furthermore, the logical AND and OR operators lose their short-circuit
+ * semantics when overloaded.
  *
  * @tparam Rep the representation type, e.g `int` or `std::string`.
  * @tparam Tag the tag type that uniquely identifies the type.
@@ -389,70 +401,80 @@ class mirror_type
   /// @name Assignment operators
   /// @{
 
-  constexpr auto operator+=(const mirror_type& rhs) noexcept(noexcept(m_value += rhs.m_value))
+  constexpr auto operator+=(const mirror_type& rhs)
+      noexcept(noexcept(m_value += rhs.m_value))
       -> mirror_type& requires AdditionAssignment<Rep>
   {
     m_value += rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator-=(const mirror_type& rhs) noexcept(noexcept(m_value -= rhs.m_value))
+  constexpr auto operator-=(const mirror_type& rhs)
+      noexcept(noexcept(m_value -= rhs.m_value))
       -> mirror_type& requires SubtractionAssigment<Rep>
   {
     m_value -= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator/=(const mirror_type& rhs) noexcept(noexcept(m_value /= rhs.m_value))
+  constexpr auto operator/=(const mirror_type& rhs)
+      noexcept(noexcept(m_value /= rhs.m_value))
       -> mirror_type& requires DivisionAssignment<Rep>
   {
     m_value /= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator*=(const mirror_type& rhs) noexcept(noexcept(m_value *= rhs.m_value))
+  constexpr auto operator*=(const mirror_type& rhs)
+      noexcept(noexcept(m_value *= rhs.m_value))
       -> mirror_type& requires MultiplicationAssignment<Rep>
   {
     m_value *= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator%=(const mirror_type& rhs) noexcept(noexcept(m_value %= rhs.m_value))
+  constexpr auto operator%=(const mirror_type& rhs)
+      noexcept(noexcept(m_value %= rhs.m_value))
       -> mirror_type& requires ModuloAssignment<Rep>
   {
     m_value %= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator&=(const mirror_type& rhs) noexcept(noexcept(m_value &= rhs.m_value))
+  constexpr auto operator&=(const mirror_type& rhs)
+      noexcept(noexcept(m_value &= rhs.m_value))
       -> mirror_type& requires BitwiseANDAssignment<Rep>
   {
     m_value &= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator|=(const mirror_type& rhs) noexcept(noexcept(m_value |= rhs.m_value))
+  constexpr auto operator|=(const mirror_type& rhs)
+      noexcept(noexcept(m_value |= rhs.m_value))
       -> mirror_type& requires BitwiseORAssignment<Rep>
   {
     m_value |= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator^=(const mirror_type& rhs) noexcept(noexcept(m_value ^= rhs.m_value))
+  constexpr auto operator^=(const mirror_type& rhs)
+      noexcept(noexcept(m_value ^= rhs.m_value))
       -> mirror_type& requires XORAssignment<Rep>
   {
     m_value ^= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator<<=(const mirror_type& rhs) noexcept(noexcept(m_value <<= rhs.m_value))
+  constexpr auto operator<<=(const mirror_type& rhs)
+      noexcept(noexcept(m_value <<= rhs.m_value))
       -> mirror_type& requires LeftShiftAssignment<Rep>
   {
     m_value <<= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator>>=(const mirror_type& rhs) noexcept(noexcept(m_value >>= rhs.m_value))
+  constexpr auto operator>>=(const mirror_type& rhs)
+      noexcept(noexcept(m_value >>= rhs.m_value))
       -> mirror_type& requires RightShiftAssignment<Rep>
   {
     m_value >>= rhs.m_value;
@@ -516,13 +538,29 @@ class mirror_type
 
   /// @} end of comparison operators
 
-  [[nodiscard]] auto get() -> Rep& { return m_value; }
+  [[nodiscard]] auto get() noexcept(nothrowCopy) -> Rep& { return m_value; }
 
-  [[nodiscard]] auto get() const -> const Rep& { return m_value; }
+  [[nodiscard]] auto get() const noexcept(nothrowCopy) -> const Rep&
+  {
+    return m_value;
+  }
+
+  auto operator->() const noexcept -> const Rep* { return &m_value; }
+
+  auto operator->() noexcept -> Rep* { return &m_value; };
 
   explicit operator Rep() const noexcept(nothrowCopy) { return m_value; }
 
-  // TODO: operator->, operator*, operator&&, operator||, operator[]
+  // clang-format off
+
+  explicit operator bool() const
+      noexcept(noexcept(static_cast<bool>(m_value)))
+      requires BoolConversion<Rep> && (!std::same_as<Rep, bool>)
+  {
+    return static_cast<bool>(m_value);
+  }
+
+  // clang-format on
 
  private:
   Rep m_value{};
