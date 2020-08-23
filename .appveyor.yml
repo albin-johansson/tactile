@@ -17,7 +17,7 @@ before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
 
   # Copy Qt runtime binaries to our bin folder
-  - copy /I %Qt5_PATH%\bin %cd%\bin
+  - Xcopy /E /I %Qt5_PATH%\bin %cd%\bin
 
   - mkdir build
   - cd build 
