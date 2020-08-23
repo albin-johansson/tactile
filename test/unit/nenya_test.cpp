@@ -600,7 +600,4 @@ TEST_CASE("mirror_type::get", "[nenya]")
 
   CHECK(str.get().empty());
   CHECK(i.get() == 0);
-
-  static_assert(!noexcept(str.get()));
-  static_assert(noexcept(i.get()));
 }
