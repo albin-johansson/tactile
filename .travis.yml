@@ -39,8 +39,8 @@ matrix:
       before_install:
         - sudo apt-get update
         - sudo apt-get install build-essential libgl1-mesa-dev
-#        - export CC=gcc-9
-#        - export CXX=g++-9
+#        - export CC=/usr/bin/gcc-9
+        - export CXX=/usr/bin/g++-9
         - g++ --version
       install:
         - |
