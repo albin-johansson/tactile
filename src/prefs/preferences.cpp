@@ -6,39 +6,34 @@
 
 namespace tactile::prefs {
 
-auto window::last_layout_geometry() -> setting<QByteArray>&
+auto window::last_layout_geometry() -> setting<QByteArray>
 {
   static const auto str = QStringLiteral(u"window/lastLayoutGeometry");
-  static auto pref = setting<QByteArray>{str};
-  return pref;
+  return setting<QByteArray>{str};
 }
 
-auto window::last_layout_state() -> setting<QByteArray>&
+auto window::last_layout_state() -> setting<QByteArray>
 {
   static const auto str = QStringLiteral(u"window/lastLayoutState");
-  static auto pref = setting<QByteArray>{str};
-  return pref;
+  return setting<QByteArray>{str};
 }
 
-auto graphics::render_grid() -> setting<bool>&
+auto graphics::render_grid() -> setting<bool>
 {
   static const auto str = QStringLiteral(u"graphics/grid");
-  static auto pref = setting<bool>{str};
-  return pref;
+  return setting<bool>{str};
 }
 
-auto graphics::theme() -> setting<QPalette>&
+auto graphics::theme() -> setting<QPalette>
 {
   static const auto str = QStringLiteral(u"graphics/theme");
-  static auto pref = setting<QPalette>{str};
-  return pref;
+  return setting<QPalette>{str};
 }
 
-auto graphics::theme_name() -> setting<QString>&
+auto graphics::theme_name() -> setting<QString>
 {
   static const auto str = QStringLiteral(u"graphics/themeName");
-  static auto pref = setting<QString>{str};
-  return pref;
+  return setting<QString>{str};
 }
 
 void validate()

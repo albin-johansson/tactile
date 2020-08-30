@@ -123,11 +123,11 @@ void window::enable_editor_view() noexcept
 
 void window::init_layout() noexcept
 {
-  if (auto& geometry = prefs::window::last_layout_geometry(); geometry) {
+  if (const auto geometry = prefs::window::last_layout_geometry(); geometry) {
     restoreGeometry(*geometry);
   }
 
-  if (auto& state = prefs::window::last_layout_state(); state) {
+  if (const auto state = prefs::window::last_layout_state(); state) {
     restoreState(*state);
   }
 }
@@ -336,7 +336,7 @@ void window::on_action_resize_map_triggered()
 void window::on_action_toggle_grid_triggered()
 {
   if (in_editor_mode()) {
-    if (auto& grid = prefs::graphics::render_grid(); grid) {
+    if (auto grid = prefs::graphics::render_grid(); grid) {
       grid.set(!*grid);
       handle_draw();
     }
