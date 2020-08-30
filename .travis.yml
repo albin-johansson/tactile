@@ -30,9 +30,9 @@ addons:
       - gcc-9
       - g++-9
 
-install:
-  - export CC="gcc-9"
-  - export CXX="g++-9"
+before_script:
+  - export CC=gcc-9
+  - export CXX=g++-9
 
   - g++ --version
 
