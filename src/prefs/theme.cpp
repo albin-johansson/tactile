@@ -4,21 +4,29 @@
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonValue>
-#include <QStringView>
 
+#include "parse_palette.hpp"
 #include "preferences.hpp"
 #include "tactile_error.hpp"
-#include "tactile_types.hpp"
 
-namespace tactile::prefs::theme {
+namespace tactile::theme {
 namespace {
 
 inline constexpr QStringView light{u"Light"};
 inline constexpr QStringView dark{u"Dark"};
 inline constexpr QStringView atomOneDark{u"Atom One Dark"};
 
+/**
+ * @brief Indicates whether or not the supplied name is one of the
+ * pre-defined themes.
+ *
+ * @param name the name of the theme that will be checked.
+ *
+ * @return `true` if the supplied name is associated with a standard theme;
+ * `false` otherwise.
+ *
+ * @since 0.1.0
+ */
 [[nodiscard]] auto is_standard_theme(QStringView name) -> bool
 {
   if (name.isNull() || name.isEmpty()) {
@@ -28,103 +36,32 @@ inline constexpr QStringView atomOneDark{u"Atom One Dark"};
   return light == name || dark == name || atomOneDark == name;
 }
 
-class palette
-{
- public:
-  using role = QPalette::ColorRole;
-  using group = QPalette::ColorGroup;
-
-  explicit palette(const QJsonObject& json)
-  {
-    set(json);
-
-    if (json.contains(u"disabled")) {
-      const auto item = json[u"disabled"];
-      Q_ASSERT(item.isObject());
-
-      const auto obj = item.toObject();
-      set(obj, group::Disabled);
-    }
-  }
-
-  [[nodiscard]] auto get() const -> const QPalette&
-  {
-    return m_palette;
-  }
-
- private:
-  QPalette m_palette;
-
-  void set_if_exists(const QJsonObject& json,
-                     group group,
-                     role role,
-                     u16_czstring key)
-  {
-    if (const auto iterator = json.find(key); iterator != json.end()) {
-      const auto value = iterator.value();
-      Q_ASSERT(value.isString());
-
-      m_palette.setColor(group, role, QColor{value.toString()});
-    } else {
-      qDebug() << "Did not find key in theme file:" << QStringView{key};
-    }
-  }
-
-  void set(const QJsonObject& json, group group = group::All)
-  {
-    set_if_exists(json, group, role::Window, u"Window");
-    set_if_exists(json, group, role::WindowText, u"WindowText");
-
-    set_if_exists(json, group, role::Base, u"Base");
-    set_if_exists(json, group, role::AlternateBase, u"AlternateBase");
-
-    set_if_exists(json, group, role::ToolTipBase, u"ToolTipBase");
-    set_if_exists(json, group, role::ToolTipText, u"ToolTipText");
-
-    set_if_exists(json, group, role::Text, u"Text");
-    set_if_exists(json, group, role::BrightText, u"BrightText");
-
-    set_if_exists(json, group, role::Button, u"Button");
-    set_if_exists(json, group, role::ButtonText, u"ButtonText");
-
-    set_if_exists(json, group, role::Light, u"Light");
-    set_if_exists(json, group, role::Midlight, u"Midlight");
-    set_if_exists(json, group, role::Dark, u"Dark");
-    set_if_exists(json, group, role::Mid, u"Mid");
-    set_if_exists(json, group, role::Shadow, u"Shadow");
-
-    set_if_exists(json, group, role::Highlight, u"Highlight");
-    set_if_exists(json, group, role::HighlightedText, u"HighlightedText");
-
-    set_if_exists(json, group, role::Link, u"Link");
-    set_if_exists(json, group, role::LinkVisited, u"LinkVisited");
-  }
-};
-
 }  // namespace
 
 void reset()
 {
-  set_theme(dark.toString());
+  set_theme(get_default_name().toString());
 }
 
 void set_theme(const QString& name)
 {
   if (is_standard_theme(name)) {
     const auto palette = from_name(name);
+    if (!palette) {
+      qDebug() << "Failed to set theme with name: " << name;
+      return;
+    }
 
-    graphics::theme().set(palette);
-    graphics::theme_name().set(name);
-    QApplication::setPalette(palette);
+    prefs::graphics::theme().set(*palette);
+    prefs::graphics::theme_name().set(name);
+    QApplication::setPalette(*palette);
 
   } else {
-    // parse
-
-    throw tactile_error{"Not supported yet..."};
+    throw tactile_error{"Automatic theme parsing isn't supported yet!"};
   }
 }
 
-auto from_name(const QString& name) -> QPalette
+auto from_name(QStringView name) -> std::optional<QPalette>
 {
   if (dark == name) {
     return get_dark();
@@ -133,43 +70,26 @@ auto from_name(const QString& name) -> QPalette
   } else if (light == name) {
     return get_light();
   } else {
-    throw tactile_error{"Couldn't obtain palette from name!"};
+    return std::nullopt;
   }
-}
-
-auto parse(const QByteArray& name) -> QPalette
-{
-  QFile themeFile{name};
-  themeFile.open(QFile::ReadOnly | QFile::Text);
-
-  QJsonParseError error{};
-  const auto document = QJsonDocument::fromJson(themeFile.readAll(), &error);
-  if (document.isNull()) {
-    throw tactile_error{"Couldn't open/find JSON theme file: " +
-                        error.errorString().toStdString()};
-  }
-
-  Q_ASSERT(document.isObject());
-  palette palette{document.object()};
-
-  return palette.get();
 }
 
 auto get_dark() -> const QPalette&
 {
-  static const auto dark = parse(":theme/dark");
+  static const auto dark = json::parse_palette(QStringLiteral(":theme/dark"));
   return dark;
 }
 
 auto get_light() -> const QPalette&
 {
-  static const auto light = parse(":theme/light");
+  static const auto light = json::parse_palette(QStringLiteral(":theme/light"));
   return light;
 }
 
 auto get_atom_one_dark() -> const QPalette&
 {
-  static const auto oneDark = parse(":theme/atomOneDark");
+  static const auto oneDark =
+      json::parse_palette(QStringLiteral(":theme/atomOneDark"));
   return oneDark;
 }
 
@@ -183,4 +103,4 @@ auto get_default_name() -> QStringView
   return dark;
 }
 
-}  // namespace tactile::prefs::theme
+}  // namespace tactile::theme

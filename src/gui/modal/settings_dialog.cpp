@@ -30,7 +30,7 @@ void settings_dialog::handle_accept()
 {
   if (const auto theme = m_ui->themeComboBox->currentText();
       theme != m_initialTheme) {
-    prefs::theme::set_theme(theme);
+    theme::set_theme(theme);
     emit reload_theme();
   }
 }

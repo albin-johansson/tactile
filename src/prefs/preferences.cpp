@@ -39,7 +39,7 @@ auto graphics::theme_name() -> setting<QString>
 void validate()
 {
   graphics::render_grid().set_if_missing(true);
-  graphics::theme().set_if_missing(prefs::theme::get_default());
+  graphics::theme().set_if_missing(theme::get_default());
   graphics::theme_name().set_if_missing(theme::get_default_name().toString());
 }
 

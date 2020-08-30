@@ -134,7 +134,10 @@ set(TACTILE_SOURCE_FILES
         nenya/nenya.hpp
 
         prefs/preferences.cpp
-        prefs/preferences.hpp)
+        prefs/preferences.hpp
+
+        parse/parse_palette.cpp
+        parse/parse_palette.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
@@ -171,6 +174,7 @@ target_include_directories(libTactile
         PUBLIC model/algo
         PUBLIC gui
         PUBLIC prefs
+        PUBLIC parse
         PUBLIC gui/startup
         PUBLIC gui/toolbar
         PUBLIC gui/editor
