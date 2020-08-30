@@ -132,7 +132,10 @@ set(TACTILE_SOURCE_FILES
         prefs/theme.cpp
         prefs/theme.hpp
 
-        nenya/nenya.hpp)
+        nenya/nenya.hpp
+
+        prefs/preferences.cpp
+        prefs/preferences.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
@@ -152,6 +155,8 @@ set(GSL_SOURCES
         ${LIBRARY_DIR}/microsoft/gsl/span_ext
         ${LIBRARY_DIR}/microsoft/gsl/string_span)
 add_header_only_lib(libGSL ${LIBRARY_DIR}/microsoft ${GSL_SOURCES})
+
+add_header_only_lib(libSemimap ${LIBRARY_DIR}/hogliux/semimap ${LIBRARY_DIR}/hogliux/semimap/semimap.h)
 
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
@@ -175,13 +180,16 @@ target_include_directories(libTactile
         PUBLIC gui/tileset
         PUBLIC gui/window
         PUBLIC gui/util
-        PUBLIC gui/tools)
+        PUBLIC gui/tools
+#        PUBLIC ${Boost_INCLUDE_DIRS}
+        )
 
 target_link_libraries(libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
         PUBLIC Qt5::Gui
-        PUBLIC libGSL)
+        PUBLIC libGSL
+        PUBLIC libSemimap)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(libTactile PRIVATE

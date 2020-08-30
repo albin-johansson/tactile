@@ -1,7 +1,7 @@
 #include "settings_dialog.hpp"
 
+#include "preferences.hpp"
 #include "setting.hpp"
-#include "setting_identifiers.hpp"
 #include "theme.hpp"
 #include "ui_settings.h"
 
@@ -14,7 +14,7 @@ settings_dialog::settings_dialog(QWidget* parent)
 
   connect(this, &QDialog::accepted, this, &settings_dialog::handle_accept);
 
-  prefs::setting<QString> themeName{prefs::id::graphics::theme_name()};
+  auto themeName = prefs::graphics::theme_name();
   Q_ASSERT(themeName);
 
   m_initialTheme = *themeName;

@@ -9,13 +9,13 @@
 namespace tactile::gui {
 
 /**
- * @class tilemap_view
+ * @class map_view
  *
  * @brief Represents the UI component that holds a tilemap.
  *
  * @since 0.1.0
  *
- * @headerfile tilemap_view.hpp
+ * @headerfile map_view.hpp
  */
 class map_view final : public QGraphicsView
 {

@@ -8,8 +8,7 @@
 #include <QJsonValue>
 #include <QStringView>
 
-#include "setting.hpp"
-#include "setting_identifiers.hpp"
+#include "preferences.hpp"
 #include "tactile_error.hpp"
 #include "tactile_types.hpp"
 
@@ -48,7 +47,10 @@ class palette
     }
   }
 
-  [[nodiscard]] auto get() const -> const QPalette& { return m_palette; }
+  [[nodiscard]] auto get() const -> const QPalette&
+  {
+    return m_palette;
+  }
 
  private:
   QPalette m_palette;
@@ -111,8 +113,8 @@ void set_theme(const QString& name)
   if (is_standard_theme(name)) {
     const auto palette = from_name(name);
 
-    prefs::set(id::graphics::theme(), palette);
-    prefs::set(id::graphics::theme_name(), name);
+    graphics::theme().set(palette);
+    graphics::theme_name().set(name);
     QApplication::setPalette(palette);
 
   } else {

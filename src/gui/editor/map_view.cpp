@@ -42,8 +42,6 @@ void map_view::mouseMoveEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseMoveEvent(event);
 
-  qInfo("Mouse move event!");
-
   m_lastMousePos = event->globalPos();
   m_lastMouseScenePos = mapToScene(viewport()->mapFromGlobal(m_lastMousePos));
 

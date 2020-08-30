@@ -4,8 +4,8 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 
+#include "preferences.hpp"
 #include "setting.hpp"
-#include "setting_identifiers.hpp"
 
 namespace tactile::gui {
 
@@ -52,8 +52,7 @@ void map_item::draw_layer(QPainter& painter,
 
   constexpr QColor emptyGray{0x55, 0x55, 0x55};
 
-  const auto grid = prefs::setting<bool>{prefs::id::graphics::grid()};
-  const auto renderGrid = grid.value_or(true);
+  const auto renderGrid = prefs::graphics::render_grid().value_or(true);
 
   for (auto row = minRow; row < maxRow; ++row) {
     for (auto col = minCol; col < maxCol; ++col) {

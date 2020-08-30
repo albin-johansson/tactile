@@ -9,8 +9,8 @@
 
 #include "about_dialog.hpp"
 #include "map_editor.hpp"
+#include "preferences.hpp"
 #include "setting.hpp"
-#include "setting_identifiers.hpp"
 #include "settings_dialog.hpp"
 #include "tool_widget.hpp"
 #include "ui_window.h"
@@ -123,14 +123,11 @@ void window::enable_editor_view() noexcept
 
 void window::init_layout() noexcept
 {
-  if (prefs::setting<QByteArray> geometry{
-          prefs::id::window::last_layout_geometry()};
-      geometry) {
+  if (auto& geometry = prefs::window::last_layout_geometry(); geometry) {
     restoreGeometry(*geometry);
   }
 
-  if (prefs::setting<QByteArray> state{prefs::id::window::last_layout_state()};
-      state) {
+  if (auto& state = prefs::window::last_layout_state(); state) {
     restoreState(*state);
   }
 }
@@ -230,9 +227,8 @@ void window::handle_new_map(not_null<model::tilemap*> map, map_id id)
 void window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);
-
-  prefs::set(prefs::id::window::last_layout_geometry(), saveGeometry());
-  prefs::set(prefs::id::window::last_layout_state(), saveState());
+  prefs::window::last_layout_geometry().set(saveGeometry());
+  prefs::window::last_layout_geometry().set(saveState());
 }
 
 void window::handle_remove_tab(map_id tabID)
@@ -340,9 +336,8 @@ void window::on_action_resize_map_triggered()
 void window::on_action_toggle_grid_triggered()
 {
   if (in_editor_mode()) {
-    if (prefs::setting<bool> grid{prefs::id::graphics::grid()}; grid) {
-      const auto prev = *grid;
-      prefs::set(prefs::id::graphics::grid(), !prev);
+    if (auto& grid = prefs::graphics::render_grid(); grid) {
+      grid.set(!*grid);
       handle_draw();
     }
   }

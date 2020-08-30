@@ -2,8 +2,25 @@ cmake_minimum_required(VERSION 3.12)
 
 project(tactile)
 
+if (NOT DEFINED ENV{Qt5_PATH})
+    message(WARNING "Couldn't find Qt5_PATH environment variable!")
+else ()
+    message("Qt5 path: $ENV{Qt5_PATH}\ ")
+endif ()
+
+if (NOT DEFINED ENV{BOOST_ROOT})
+    message(WARNING "Couldn't find BOOST_ROOT environment variable!")
+else ()
+    message("Boost path: $ENV{BOOST_ROOT}\ ")
+endif ()
+
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
-set(CMAKE_PREFIX_PATH $ENV{Qt5_PATH})
+set(CMAKE_PREFIX_PATH "$ENV{BOOST_ROOT}; $ENV{Qt5_PATH}")
+
+foreach(path ${CMAKE_PREFIX_PATH})
+    message("CMake prefix path: " ${path})
+endforeach(path)
+
 set(LIBRARY_DIR ${PROJECT_SOURCE_DIR}/lib)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -11,13 +28,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-if (NOT DEFINED ENV{Qt5_PATH})
-    message(WARNING "Qt5_PATH is not a defined environment variable!")
-else ()
-    message("Qt5 path: $ENV{Qt5_PATH}\ ")
-endif ()
-
 find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+#find_package(Boost 1.74.0 REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
