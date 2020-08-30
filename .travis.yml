@@ -31,8 +31,8 @@ addons:
       - g++-9
 
 before_script:
-  - export CC=gcc-9
-  - export CXX=g++-9
+  - export CC=/usr/bin/gcc-9
+  - export CXX=/usr/bin/g++-9
 
   - g++ --version
 
