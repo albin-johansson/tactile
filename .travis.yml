@@ -50,7 +50,8 @@ matrix:
             export PATH=${DEPS_DIR}/cmake/bin:${PATH}
           fi
 
-        - travis_retry curl -L http://download.qt.io/archive/qt/${QT_VERSION_NO_PATCH}/${QT_VERSION}/single/qt-everywhere-src-${QT_VERSION}.tar.xz | tar xz
+        - wget -c http://download.qt.io/archive/qt/${QT_VERSION_NO_PATCH}/${QT_VERSION}/single/qt-everywhere-src-${QT_VERSION}.tar.xz
+        - tar xf qt-everywhere-src-${QT_VERSION}.tar.xz
         - cd qt-everywhere-src-${QT_VERSION}
         - ./configure
         - make
