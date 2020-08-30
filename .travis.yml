@@ -14,6 +14,13 @@ env:
   global:
     - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
     - CMAKE_VERSION=3.16
+    - QT_VERSION_NO_PATCH=5.15
+    - QT_VERSION=5.15.0
+#    - QT_DIRECTORY=~/Qt
+
+#cache:
+#  directories:
+#    - ${QT_DIRECTORY}
 
 matrix:
   include:
@@ -26,6 +33,9 @@ matrix:
             - ubuntu-toolchain-r-test
           packages:
             - g++-9
+#      env:
+#        - QT_BINARIES=${QT_DIRECTORY}/${QT_VERSION}/gcc_64/bin
+#        - Qt5_PATH=${QT_BINARIES}
       before_install:
         - sudo apt-get update
         - sudo apt-get install build-essential libgl1-mesa-dev
@@ -39,7 +49,12 @@ matrix:
             travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
             export PATH=${DEPS_DIR}/cmake/bin:${PATH}
           fi
-        - sudo apt-get install qt5-default
+
+        - travis_retry curl -L http://download.qt.io/archive/qt/${QT_VERSION_NO_PATCH}/${QT_VERSION}/single/qt-everywhere-src-${QT_VERSION}.tar.xz | tar xz
+        - cd qt-everywhere-src-${QT_VERSION}
+        - ./configure
+        - make
+        - sudo make install
       script:
         - mkdir build
         - cd build
