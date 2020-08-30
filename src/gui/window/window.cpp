@@ -228,7 +228,7 @@ void window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);
   prefs::window::last_layout_geometry().set(saveGeometry());
-  prefs::window::last_layout_geometry().set(saveState());
+  prefs::window::last_layout_state().set(saveState());
 }
 
 void window::handle_remove_tab(map_id tabID)
