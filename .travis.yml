@@ -30,10 +30,11 @@ addons:
       - gcc-9
       - g++-9
 
-before_script:
-  - export CC=/usr/bin/gcc-9
-  - export CXX=/usr/bin/g++-9
+before_install:
+  - eval CC=gcc-9
+  - eval CXX=g++-9
 
+before_script:
   - g++ --version
 
   - sudo apt-get update
