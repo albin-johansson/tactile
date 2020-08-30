@@ -20,7 +20,6 @@ set(TACTILE_SOURCE_FILES
         misc/tactile_types.hpp
         misc/tactile_fwd.hpp
         prefs/setting.hpp
-        prefs/setting_identifiers.hpp
 
         model/core_fwd.hpp
         model/core_model.hpp
