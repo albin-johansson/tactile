@@ -2,7 +2,7 @@
 #include "tileset.hpp"
 
 #include <cassert>  // assert
-#include <utility>  // move
+#include <utility>  // move, ssize
 
 #include "algorithm.hpp"
 #include "tactile_error.hpp"
@@ -120,7 +120,7 @@ auto tileset::end() const noexcept -> tileset::const_iterator
 
 auto tileset::num_selected() const noexcept -> int
 {
-  return m_selection.size();
+  return std::ssize(m_selection);
 }
 
 }  // namespace tactile::model
