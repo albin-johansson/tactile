@@ -2,15 +2,33 @@
 
 #include <QSettings>
 #include <QString>
-#include <optional>
-#include <utility>
+#include <optional>  // optional
+#include <utility>   // forward
 
 namespace tactile::prefs {
 
+/**
+ * @class setting
+ *
+ * @brief Represents a persistent setting.
+ *
+ * @tparam T the type of the value associated with the setting.
+ *
+ * @since 0.1.0
+ *
+ * @headerfile setting.hpp
+ */
 template <typename T>
 class setting final
 {
  public:
+  /**
+   * @brief Creates a setting based on the supplied key.
+   *
+   * @param key the key associated with the desired setting.
+   *
+   * @since 0.1.0
+   */
   explicit setting(QString key) : m_key{std::move(key)}
   {
     const QSettings settings;
@@ -22,6 +40,13 @@ class setting final
     }
   }
 
+  /**
+   * @brief Sets the value of the setting.
+   *
+   * @param value the new value of the setting.
+   *
+   * @since 0.1.0
+   */
   void set(const T& value)
   {
     QSettings settings;
@@ -31,6 +56,13 @@ class setting final
     m_value = value;
   }
 
+  /**
+   * @brief Sets the value of the setting, if there is no current value.
+   *
+   * @param value the new value of the setting.
+   *
+   * @since 0.1.0
+   */
   void set_if_missing(const T& value)
   {
     QSettings settings;
@@ -42,21 +74,53 @@ class setting final
     }
   }
 
+  /**
+   * @brief Returns a reference to the value of the setting.
+   *
+   * @return a reference to the value of the setting.
+   *
+   * @since 0.1.0
+   */
   auto operator*() const -> const T&
   {
     return *m_value;
   }
 
-  auto operator->() const -> const T&
+  /**
+   * @brief Returns a pointer to the value of the setting.
+   *
+   * @return a pointer to the value of the setting.
+   *
+   * @since 0.1.0
+   */
+  auto operator->() const -> const T*
   {
-    return *m_value;
+    return m_value.operator->();
   }
 
+  /**
+   * @brief Returns the current value of the setting, or the default value if
+   * there is no current value.
+   *
+   * @param fallback the default value that is used if there is no current
+   * value.
+   *
+   * @return the current value of the setting or `fallback`.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto value_or(T&& fallback) const -> T
   {
     return m_value.value_or(std::forward<T>(fallback));
   }
 
+  /**
+   * @brief Indicates whether or not the settings holds a valid value.
+   *
+   * @return `true` if the settings has a value; `false` otherwise.
+   *
+   * @since 0.1.0
+   */
   explicit operator bool() const noexcept
   {
     return m_value.has_value();
