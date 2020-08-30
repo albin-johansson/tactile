@@ -30,14 +30,15 @@ addons:
       - gcc-9
       - g++-9
 
-before_install:
+install:
+  - export CC="gcc-9"
+  - export CXX="g++-9"
+
+  - g++ --version
+
   - sudo apt-get update
   - sudo apt-get install build-essential libgl1-mesa-dev
-  - sudo apt-get update
-  - export CC=/usr/bin/gcc-9
-  - export CXX=/usr/bin/g++-9
 
-install:
   - |
     if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
       CMAKE_URL="http://cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.0-Linux-x86_64.tar.gz"
@@ -45,9 +46,6 @@ install:
       travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
       export PATH=${DEPS_DIR}/cmake/bin:${PATH}
     fi
-
-  - gcc --version
-  - g++ --version
 
   - wget -c http://download.qt.io/archive/qt/${QT_VERSION_NO_PATCH}/${QT_VERSION}/single/qt-everywhere-src-${QT_VERSION}.tar.xz
   - tar xf qt-everywhere-src-${QT_VERSION}.tar.xz
