@@ -217,7 +217,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(libTactile PRIVATE
             -fcxx-exceptions
-            -fcxx-concepts
             -Wall
             -Wextra
             -Wpedantic
