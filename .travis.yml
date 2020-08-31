@@ -1,4 +1,4 @@
-dist: trusty
+dist: focal # Ubuntu 20.04
 
 language: cpp
 
@@ -6,7 +6,7 @@ notifications:
   email: false
 
 # Requirements:
-#  - Qt 5.15
+#  - Qt 5.15?
 #  - CMake 3.12-ish
 #  - C++20 compiler: GCC 9/10, Clang 10/11
 
@@ -14,8 +14,8 @@ env:
   global:
     - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
     - CMAKE_VERSION=3.16
-    - QT_VERSION_NO_PATCH=5.15
-    - QT_VERSION=5.15.0
+    # - QT_VERSION_NO_PATCH=5.15
+    # - QT_VERSION=5.15.0
 #    - QT_DIRECTORY=~/Qt
 
 #cache:
@@ -27,24 +27,18 @@ addons:
     sources:
       - ubuntu-toolchain-r-test
     packages:
-      - gcc-9
-      - g++-9
       - cmake
 
 before_install:
-  # Link gcc-6 and g++-6 to their standard commands
-  - sudo ln -s /usr/bin/gcc-9 /usr/local/bin/gcc
-  - sudo ln -s /usr/bin/g++-9 /usr/local/bin/g++
+  # - sudo ln -s /usr/bin/gcc-9 /usr/local/bin/gcc
+  # - sudo ln -s /usr/bin/g++-9 /usr/local/bin/g++
 
-  # Export CC and CXX to tell cmake which compiler to use
-  - export CC=/usr/bin/gcc-9
-  - export CXX=/usr/bin/g++-9
+  # - export CC=/usr/bin/gcc-9
+  # - export CXX=/usr/bin/g++-9
 
-  - gcc -v && g++ -v && cmake --version
+  - gcc --version && g++ --version && cmake --version
 
 before_script:
-  - g++ --version
-
   - sudo apt-get update
   - sudo apt-get install build-essential libgl1-mesa-dev
 
@@ -56,12 +50,12 @@ before_script:
       export PATH=${DEPS_DIR}/cmake/bin:${PATH}
     fi
 
-  - wget -c http://download.qt.io/archive/qt/${QT_VERSION_NO_PATCH}/${QT_VERSION}/single/qt-everywhere-src-${QT_VERSION}.tar.xz
-  - tar xf qt-everywhere-src-${QT_VERSION}.tar.xz
-  - cd qt-everywhere-src-${QT_VERSION}
-  - ./configure -confirm-license -nomake tests -nomake examples -opensource
-  - make
-  - sudo make install
+  # - wget -c http://download.qt.io/archive/qt/${QT_VERSION_NO_PATCH}/${QT_VERSION}/single/qt-everywhere-src-${QT_VERSION}.tar.xz
+  # - tar xf qt-everywhere-src-${QT_VERSION}.tar.xz
+  # - cd qt-everywhere-src-${QT_VERSION}
+  # - ./configure -confirm-license -nomake tests -nomake examples -opensource
+  # - make
+  # - sudo make install
 
 script:
   - mkdir build
