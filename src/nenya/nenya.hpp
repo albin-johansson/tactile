@@ -305,14 +305,16 @@ class mirror_type
   }
 
   template <typename I>
-  constexpr decltype(auto) operator[](const I& key) noexcept(noexcept(m_value[key]))
+  constexpr decltype(auto) operator[](const I& key)
+      noexcept(noexcept(m_value.operator[](key)))
       requires Subscript<Rep, I>
   {
     return m_value[key];
   }
 
   template <typename I>
-  constexpr decltype(auto) operator[](const I& key) const noexcept(noexcept(m_value[key]))
+  constexpr decltype(auto) operator[](const I& key) const
+      noexcept(noexcept(m_value.operator[](key)))
       requires Subscript<Rep, I>
   {
     return m_value[key];
