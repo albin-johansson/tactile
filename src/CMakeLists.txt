@@ -208,8 +208,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
             -Wsuggest-final-methods
             -Wsuggest-override
             -Wduplicated-cond
-            -Wconversion
-            -Wc++17-compat)
+            -Wconversion)
 else ()
     target_compile_options(libTactile PRIVATE
             /EHsc
