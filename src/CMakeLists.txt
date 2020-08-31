@@ -184,7 +184,7 @@ target_include_directories(libTactile
         PUBLIC gui/window
         PUBLIC gui/util
         PUBLIC gui/tools
-#        PUBLIC ${Boost_INCLUDE_DIRS}
+        #        PUBLIC ${Boost_INCLUDE_DIRS}
         )
 
 target_link_libraries(libTactile
@@ -209,11 +209,29 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
             -Wsuggest-override
             -Wduplicated-cond
             -Wconversion)
-else ()
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(libTactile PRIVATE
             /EHsc
             /MP
             /W3)
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(libTactile PRIVATE
+            /EHsc
+            -Wall
+            -Wextra
+            -Wpedantic
+            -Wdouble-promotion
+            -Wswitch-default
+            -Wswitch-enum
+            -Wunused
+            -Wuninitialized
+            -Wconversion
+            -Wno-c++98-compat
+            -Wno-c++98-compat-pedantic
+            -Wno-unused-template
+            -Wno-unused-macros
+            -Wno-newline-eof
+            -Wno-documentation-unknown-command)
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
