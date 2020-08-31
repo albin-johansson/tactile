@@ -5,45 +5,28 @@ language: cpp
 notifications:
   email: false
 
-env:
-  global:
-    - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
-    - CMAKE_VERSION=3.16
-    # - QT_VERSION_NO_PATCH=5.15
-    # - QT_VERSION=5.15.0
-    # - QT_DIRECTORY=~/Qt
-
-#cache:
-#  directories:
-#    - ${QT_DIRECTORY}
+compiler: clang
 
 addons:
   apt:
     packages:
       - cmake
       - qt5-default
-      - g++-10
-      - gcc-10
+#      - g++-10
+#      - gcc-10
       - ninja-build
       - build-essential
       - libgl1-mesa-dev
 
 before_script:
-  - export CC=/usr/bin/gcc-10
-  - export CXX=/usr/bin/g++-10
+#  - export CC=/usr/bin/gcc-10
+#  - export CXX=/usr/bin/clang-10
 
   - sudo apt-get update
 
   - gcc --version
   - g++ --version
   - cmake --version
-
-  # - wget -c http://download.qt.io/archive/qt/${QT_VERSION_NO_PATCH}/${QT_VERSION}/single/qt-everywhere-src-${QT_VERSION}.tar.xz
-  # - tar xf qt-everywhere-src-${QT_VERSION}.tar.xz
-  # - cd qt-everywhere-src-${QT_VERSION}
-  # - ./configure -confirm-license -nomake tests -nomake examples -opensource
-  # - make
-  # - sudo make install
 
 script:
   - mkdir build
