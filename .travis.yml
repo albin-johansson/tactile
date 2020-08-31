@@ -21,12 +21,12 @@ addons:
 
 before_script:
 #  - export CC=/usr/bin/gcc-10
-#  - export CXX=/usr/bin/clang-10
+  - export CXX=/usr/bin/clang++-10
 
   - sudo apt-get update
 
   - gcc --version
-  - g++ --version
+  - clang --version
   - cmake --version
 
 script:
