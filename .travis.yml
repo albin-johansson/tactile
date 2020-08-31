@@ -24,10 +24,11 @@ env:
 
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
+    # sources:
+    #   - ubuntu-toolchain-r-test
     packages:
       - cmake
+      - qt5
 
 before_install:
   # - sudo ln -s /usr/bin/gcc-9 /usr/local/bin/gcc
@@ -42,13 +43,13 @@ before_script:
   - sudo apt-get update
   - sudo apt-get install build-essential libgl1-mesa-dev
 
-  - |
-    if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
-      CMAKE_URL="http://cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.0-Linux-x86_64.tar.gz"
-      mkdir -p ${DEPS_DIR}/cmake
-      travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
-      export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-    fi
+  # - |
+  #   if [[ ${TRAVIS_OS_NAME} == "linux" ]]; then
+  #     CMAKE_URL="http://cmake.org/files/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}.0-Linux-x86_64.tar.gz"
+  #     mkdir -p ${DEPS_DIR}/cmake
+  #     travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
+  #     export PATH=${DEPS_DIR}/cmake/bin:${PATH}
+  #   fi
 
   # - wget -c http://download.qt.io/archive/qt/${QT_VERSION_NO_PATCH}/${QT_VERSION}/single/qt-everywhere-src-${QT_VERSION}.tar.xz
   # - tar xf qt-everywhere-src-${QT_VERSION}.tar.xz
