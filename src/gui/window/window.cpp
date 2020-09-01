@@ -215,7 +215,7 @@ void window::handle_draw()
 
 void window::handle_new_map(not_null<model::tilemap*> map, map_id id)
 {
-  m_mainEditor->add_new_map_tab(map, "map", id);
+  m_mainEditor->add_new_map_tab(map, "map", id);  // TODO pass core and map_id?
   m_mainEditor->select_tab(id);
   if (!in_editor_mode()) {
     enable_editor_view();
