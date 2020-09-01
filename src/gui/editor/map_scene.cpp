@@ -10,16 +10,17 @@
 namespace tactile::gui {
 
 map_scene::map_scene(not_null<model::tilemap*> map, map_id id, QWidget* parent)
-    : QGraphicsScene{parent}, m_id{id}
+    : QGraphicsScene{parent}, m_item{new map_item{map}}, m_id{id}
 {
-  auto* item = new map_item{map};
+  //  auto* item = new map_item{map};
   //  connect(item,
   //          &tilemap_item::request_redraw,
   //          this,
   //          &tilemap_scene::request_redraw);
-  addItem(item);
+  addItem(m_item);
 
   setSceneRect(100, 100, 100, 100);
+
 }
 
 // void tilemap_scene::center_viewport(int mapWidth, int mapHeight) noexcept
@@ -30,20 +31,14 @@ map_scene::map_scene(not_null<model::tilemap*> map, map_id id, QWidget* parent)
 //  m_viewport.moveTo(x, y);
 //}
 
-// void tilemap_scene::move_viewport(int dx, int dy) noexcept
-//{
-//  const auto width = m_viewport.width();
-//  const auto height = m_viewport.height();
-//
-//  m_viewport.translate(dx, dy);
-//
-//  m_viewport.setWidth(width);
-//  m_viewport.setHeight(height);
-//}
-
 auto map_scene::id() const noexcept -> map_id
 {
   return m_id;
+}
+
+void map_scene::move_map_item(int dx, int dy)
+{
+  m_item->moveBy(dx, dy);
 }
 
 // void tilemap_scene::drawBackground(QPainter* painter, const QRectF& rect)

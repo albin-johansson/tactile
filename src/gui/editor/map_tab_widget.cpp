@@ -97,7 +97,7 @@ void map_tab_widget::center_viewport(int mapWidth, int mapHeight) noexcept
 void map_tab_widget::move_viewport(int dx, int dy) noexcept
 {
   if (auto* pane = get_view(currentIndex())) {
-    pane->move_viewport(dx, dy);
+    pane->move_map(dx, dy);
   }
 }
 

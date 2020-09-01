@@ -8,28 +8,26 @@
 
 namespace tactile::gui {
 
-map_view::map_view(not_null<model::tilemap*> map,
-                           map_id id,
-                           QWidget* parent)
+map_view::map_view(not_null<model::tilemap*> map, map_id id, QWidget* parent)
     : QGraphicsView{parent}
 {
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);
 
+  // TODO define range
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
   setScene(new map_scene{map, id, this});
 }
 
-void map_view::move_viewport(int dx, int dy) noexcept
+void map_view::move_map(int dx, int dy) noexcept
 {
-  const auto old = scene()->sceneRect();
-  scene()->setSceneRect(old.x() + dx, old.y() + dy, old.width(), old.height());
+  get_map_scene()->move_map_item(dx, dy);
 }
 
 void map_view::center_viewport(int mapWidth, int mapHeight) noexcept
 {
-  // TODO
+  // TODO reimplement
   //  m_scene->center_viewport(mapWidth, mapHeight);
 }
 
@@ -42,8 +40,9 @@ void map_view::mouseMoveEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseMoveEvent(event);
 
-  m_lastMousePos = event->globalPos();
-  m_lastMouseScenePos = mapToScene(viewport()->mapFromGlobal(m_lastMousePos));
+  //  m_lastMousePos = event->globalPos();
+  //  m_lastMouseScenePos =
+  //  mapToScene(viewport()->mapFromGlobal(m_lastMousePos));
 
   //    if (event->buttons() & Qt::MouseButton::MidButton) {
   //      const auto pos = event->pos();
@@ -66,15 +65,20 @@ void map_view::mouseReleaseEvent(QMouseEvent* event)
 
 auto map_view::id() const noexcept -> map_id
 {
-  return get_scene()->id();
+  return get_map_scene()->id();
 }
 
-void map_view::force_redraw()
+void map_view::force_redraw()  // TODO remove?!!
 {
-  scene()->update(0, 0, 1'000, 1'000);  // FIXME
+  scene()->update();
 }
 
-auto map_view::get_scene() const noexcept -> const map_scene*
+auto map_view::get_map_scene() noexcept -> map_scene*
+{
+  return qobject_cast<map_scene*>(scene());
+}
+
+auto map_view::get_map_scene() const noexcept -> const map_scene*
 {
   return qobject_cast<const map_scene*>(scene());
 }

@@ -5,6 +5,7 @@
 #include <QWidget>
 
 #include "core_model.hpp"
+#include "tactile_fwd.hpp"
 
 class QPainter;
 
@@ -21,6 +22,8 @@ class map_scene final : public QGraphicsScene
 
   [[nodiscard]] auto id() const noexcept -> map_id;
 
+  void move_map_item(int dx, int dy);
+
  protected:
   void drawBackground(QPainter* painter, const QRectF& rect) override;
 
@@ -32,6 +35,7 @@ class map_scene final : public QGraphicsScene
 
  private:
   //  QRect m_viewport{};
+  map_item* m_item;
   map_id m_id;
   QPointF m_lastMouseScenePos{};
 };

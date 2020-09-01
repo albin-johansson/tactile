@@ -62,8 +62,6 @@ class window final : public QMainWindow
   void enable_editor_view() noexcept;
 
  signals:
-  void request_redraw(QPainter& painter, const QRectF& exposed);
-
   void request_new_map();
 
   void request_close_map(map_id id);

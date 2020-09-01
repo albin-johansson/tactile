@@ -20,6 +20,8 @@ class map_scene;
 
 class map_view;
 
+class map_item;
+
 class tileset_widget;
 
 class tileset_tab;
