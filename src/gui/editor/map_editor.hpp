@@ -22,7 +22,7 @@ namespace tactile::gui {
  *
  * @since 0.1.0
  *
- * @headerfile main_editor.hpp
+ * @headerfile map_editor.hpp
  */
 class map_editor final : public QWidget
 {

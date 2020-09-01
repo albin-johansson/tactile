@@ -29,7 +29,6 @@ class tileset_model final
    *
    * @tparam Args the types of the arguments that will be forwarded.
    *
-   * @param id the key that will be associated with the tileset.
    * @param args the arguments that will be forwarded to a `tileset`
    * constructor.
    *

@@ -29,7 +29,7 @@ namespace tactile::gui {
  *
  * @since 0.1.0
  *
- * @headerfile tactile_window.hpp
+ * @headerfile window.hpp
  */
 class window final : public QMainWindow
 {

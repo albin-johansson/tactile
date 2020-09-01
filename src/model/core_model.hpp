@@ -41,7 +41,7 @@ class core_model final : public QObject
    *
    * @note This method has no effect if the tileset cannot be added.
    *
-   * @param fileName the image that contains the tile images.
+   * @param image the image that contains the tile images.
    * @param tileWidth the width of the tiles in the tileset.
    * @param tileHeight the height of the tiles in the tileset.
    *
@@ -182,7 +182,7 @@ class core_model final : public QObject
    * @note This method has no effect if the supplied index isn't associated
    * with a tile layer.
    *
-   * @param index the index of the tile layer that will be selected.
+   * @param id the index of the tile layer that will be selected.
    *
    * @since 0.1.0
    */

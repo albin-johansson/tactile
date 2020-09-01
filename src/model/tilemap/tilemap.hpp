@@ -147,7 +147,7 @@ class tilemap final
   /**
    * @brief Returns the amount of layers present in the tilemap.
    *
-   * @deatils Tilemaps are initially created with 1 tile layer.
+   * @details Tilemaps are initially created with 1 tile layer.
    *
    * @return the amount of layers present in the tilemap.
    *

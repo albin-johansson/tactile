@@ -51,7 +51,7 @@ class map_position final
   /**
    * @brief Sets the column coordinate of the map position.
    *
-   * @param row the new column value of the map position, clamped to zero if
+   * @param col the new column value of the map position, clamped to zero if
    * negative.
    *
    * @since 0.1.0
