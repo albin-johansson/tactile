@@ -49,7 +49,7 @@ void map_item::draw_layer(QPainter& painter,
   constexpr QColor emptyLightGray{0x55, 0x55, 0x55};
   constexpr QColor emptyDarkGray{0x33, 0x33, 0x33};
 
-  const auto renderGrid = prefs::graphics::render_grid().value_or(true);
+  const auto renderGrid = prefs::graphics::render_grid().value_or(false);
 
   for (int row = beginRow; row < endRow; ++row) {
     for (int col = beginCol; col < endCol; ++col) {
