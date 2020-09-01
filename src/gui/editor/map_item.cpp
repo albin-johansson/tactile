@@ -29,13 +29,13 @@ void map_item::draw_layer(QPainter& painter,
 
   const auto tileSize = m_map->get_tile_size().get();
 
-  const auto get_end_row = [=](int nRows) -> int {
+  const auto get_end_row = [&exposed, tileSize](int nRows) -> int {
     const auto endY = static_cast<int>(exposed.y() + exposed.height());
     const auto row = (endY / tileSize) + 1;
     return std::min(nRows, row);
   };
 
-  const auto get_end_col = [=](int nCols) -> int {
+  const auto get_end_col = [&exposed, tileSize](int nCols) -> int {
     const auto endX = static_cast<int>(exposed.x() + exposed.width());
     const auto col = (endX / tileSize) + 1;
     return std::min(nCols, col);
