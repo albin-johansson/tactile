@@ -42,7 +42,7 @@ void tileset_widget::add_tileset(const QImage& image,
                                  tileset_id id,
                                  int tileWidth,
                                  int tileHeight,
-                                 const QString& tabName) noexcept
+                                 const QString& tabName)
 {
   if (image.isNull()) {
     return;
@@ -57,7 +57,7 @@ void tileset_widget::add_tileset(const QImage& image,
   }
 }
 
-void tileset_widget::remove_tileset(tileset_id id) noexcept
+void tileset_widget::remove_tileset(tileset_id id)
 {
   m_contentPage->remove_tileset(id);
 }

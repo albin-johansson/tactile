@@ -1,12 +1,10 @@
 #pragma once
 
-#include <QWidget>
+#include <qlayout.h>
+#include <qscrollarea.h>
+#include <qwidget.h>
 
 #include "tactile_fwd.hpp"
-
-class QImage;
-class QLayout;
-class QScrollArea;
 
 namespace tactile::gui {
 

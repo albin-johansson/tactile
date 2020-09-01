@@ -25,11 +25,11 @@ class tileset_content_page final : public QWidget
                    tileset_id id,
                    int tileWidth,
                    int tileHeight,
-                   const QString& tabName) noexcept;
+                   const QString& tabName);
 
-  void remove_tileset(tileset_id id) noexcept;
+  void remove_tileset(tileset_id id);
 
-  [[nodiscard]] auto empty() const noexcept -> bool;
+  [[nodiscard]] auto empty() const -> bool;
 
  signals:
   void request_add_tileset();  // FIXME seemingly unused

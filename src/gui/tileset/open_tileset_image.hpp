@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QUrl>
-#include <optional>
+#include <qurl.h>
+#include <qwidget.h>
 
-class QWidget;
+#include <optional>
 
 namespace tactile::gui {
 
@@ -18,7 +18,7 @@ namespace tactile::gui {
  *
  * @since 0.1.0
  */
-[[nodiscard]] auto open_tileset_image(QWidget* parent = nullptr) noexcept
+[[nodiscard]] auto open_tileset_image(QWidget* parent = nullptr)
     -> std::optional<QUrl>;
 
 }  // namespace tactile::gui

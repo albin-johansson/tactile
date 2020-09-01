@@ -1,12 +1,12 @@
 #include "open_tileset_image.hpp"
 
-#include <QFileDialog>
-#include <QStandardPaths>
-#include <QTranslator>
+#include <qfiledialog.h>
+#include <qstandardpaths.h>
+#include <qtranslator.h>
 
 namespace tactile::gui {
 
-auto open_tileset_image(QWidget* parent) noexcept -> std::optional<QUrl>
+auto open_tileset_image(QWidget* parent) -> std::optional<QUrl>
 {
   static QString cachedDirPath{""};
 

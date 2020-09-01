@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QWidget>
+#include <qwidget.h>
 
 #include "tactile_types.hpp"
 

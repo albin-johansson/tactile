@@ -25,9 +25,9 @@ class tileset_widget final : public QWidget
                    tileset_id id,
                    int tileWidth,
                    int tileHeight,
-                   const QString& tabName) noexcept;
+                   const QString& tabName) ;
 
-  void remove_tileset(tileset_id id) noexcept;
+  void remove_tileset(tileset_id id) ;
 
  signals:
   void request_new_tileset();

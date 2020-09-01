@@ -71,17 +71,17 @@ void tileset_dialog::on_heightEdit_textChanged()
   validate_input();
 }
 
-auto tileset_dialog::chosen_image() const noexcept -> const QImage&
+auto tileset_dialog::chosen_image() const -> const QImage&
 {
   return m_image;
 }
 
-auto tileset_dialog::chosen_width() const noexcept -> std::optional<int>
+auto tileset_dialog::chosen_width() const -> std::optional<int>
 {
   return m_width;
 }
 
-auto tileset_dialog::chosen_height() const noexcept -> std::optional<int>
+auto tileset_dialog::chosen_height() const -> std::optional<int>
 {
   return m_height;
 }

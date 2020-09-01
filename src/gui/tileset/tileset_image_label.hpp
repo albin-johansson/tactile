@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QLabel>
+#include <qlabel.h>
+
 #include <memory>
 
 namespace tactile::gui {

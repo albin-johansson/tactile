@@ -27,7 +27,7 @@ void tileset_content_page::add_tileset(const QImage& image,
                                        tileset_id id,
                                        int tileWidth,
                                        int tileHeight,
-                                       const QString& tabName) noexcept
+                                       const QString& tabName)
 {
   if (m_tabs.count(id)) {
     qDebug("Tried to add tileset with taken ID: %i", id.get());
@@ -40,7 +40,7 @@ void tileset_content_page::add_tileset(const QImage& image,
   }
 }
 
-void tileset_content_page::remove_tileset(tileset_id id) noexcept
+void tileset_content_page::remove_tileset(tileset_id id)
 {
   if (m_tabs.count(id)) {
     m_tabs.erase(id);
@@ -50,7 +50,7 @@ void tileset_content_page::remove_tileset(tileset_id id) noexcept
   }
 }
 
-auto tileset_content_page::empty() const noexcept -> bool
+auto tileset_content_page::empty() const -> bool
 {
   return m_ui->tabWidget->count() == 0;
 }

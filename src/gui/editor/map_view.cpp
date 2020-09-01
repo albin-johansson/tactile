@@ -20,12 +20,12 @@ map_view::map_view(not_null<model::tilemap*> map, map_id id, QWidget* parent)
   setScene(new map_scene{map, id, this});
 }
 
-void map_view::move_map(int dx, int dy) noexcept
+void map_view::move_map(int dx, int dy)
 {
   get_map_scene()->move_map_item(dx, dy);
 }
 
-void map_view::center_viewport(int mapWidth, int mapHeight) noexcept
+void map_view::center_map()
 {
   // TODO reimplement
   //  m_scene->center_viewport(mapWidth, mapHeight);
@@ -63,7 +63,7 @@ void map_view::mouseReleaseEvent(QMouseEvent* event)
   QGraphicsView::mouseReleaseEvent(event);
 }
 
-auto map_view::id() const noexcept -> map_id
+auto map_view::id() const -> map_id
 {
   return get_map_scene()->id();
 }
@@ -73,12 +73,12 @@ void map_view::force_redraw()  // TODO remove?!!
   scene()->update();
 }
 
-auto map_view::get_map_scene() noexcept -> map_scene*
+auto map_view::get_map_scene() -> map_scene*
 {
   return qobject_cast<map_scene*>(scene());
 }
 
-auto map_view::get_map_scene() const noexcept -> const map_scene*
+auto map_view::get_map_scene() const -> const map_scene*
 {
   return qobject_cast<const map_scene*>(scene());
 }

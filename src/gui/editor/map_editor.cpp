@@ -27,7 +27,7 @@ map_editor::~map_editor() noexcept
   delete m_ui;
 }
 
-void map_editor::init_connections() noexcept
+void map_editor::init_connections()
 {
   connect(this,
           &map_editor::theme_changed,
@@ -47,7 +47,7 @@ void map_editor::init_connections() noexcept
 
 void map_editor::add_new_map_tab(not_null<model::tilemap*> map,
                                  const QString& title,
-                                 map_id id) noexcept
+                                 map_id id)
 {
   m_mapTabWidget->add_map_tab(map, title, id);
 }
@@ -62,14 +62,14 @@ void map_editor::close_tab(map_id id) noexcept
   m_mapTabWidget->remove_map_tab(id);
 }
 
-void map_editor::center_viewport(int mapWidth, int mapHeight) noexcept
+void map_editor::center_viewport()
 {
-  m_mapTabWidget->center_viewport(mapWidth, mapHeight);
+  m_mapTabWidget->center_map();
 }
 
-void map_editor::move_viewport(int dx, int dy) noexcept
+void map_editor::move_map(int dx, int dy) noexcept
 {
-  m_mapTabWidget->move_viewport(dx, dy);
+  m_mapTabWidget->move_map(dx, dy);
 }
 
 void map_editor::handle_redraw()
@@ -87,24 +87,24 @@ void map_editor::enable_editor_view() noexcept
   m_ui->stackedWidget->setCurrentIndex(m_editorID);
 }
 
-auto map_editor::in_editor_mode() const noexcept -> bool
+auto map_editor::in_editor_mode() const -> bool
 {
   return m_ui->stackedWidget->currentIndex() == m_editorID;
 }
 
-auto map_editor::active_tab_id() const noexcept -> std::optional<map_id>
+auto map_editor::active_tab_id() const -> std::optional<map_id>
 {
   return m_mapTabWidget->active_tab_id();
 }
 
-auto map_editor::open_tabs() const noexcept -> int
+auto map_editor::num_tabs() const -> int
 {
   return m_mapTabWidget->count();
 }
 
 void map_editor::tab_changed(int index)
 {
-  if (const auto id = m_mapTabWidget->tab_id(index); id) {
+  if (const auto id = m_mapTabWidget->tab_map_id(index); id) {
     emit request_select_tab(*id);
   }
 }

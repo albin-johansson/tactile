@@ -31,17 +31,17 @@ resize_dialog::~resize_dialog() noexcept
   delete m_ui;
 }
 
-auto resize_dialog::chosen_width() const noexcept -> std::optional<int>
+auto resize_dialog::chosen_width() const -> std::optional<int>
 {
   return m_chosenWidth;
 }
 
-auto resize_dialog::chosen_height() const noexcept -> std::optional<int>
+auto resize_dialog::chosen_height() const -> std::optional<int>
 {
   return m_chosenHeight;
 }
 
-void resize_dialog::connect_line_edit(QLineEdit* edit) noexcept
+void resize_dialog::connect_line_edit(QLineEdit* edit)
 {
   if (edit) {
     connect(
@@ -49,7 +49,7 @@ void resize_dialog::connect_line_edit(QLineEdit* edit) noexcept
   }
 }
 
-void resize_dialog::validate_input() noexcept
+void resize_dialog::validate_input()
 {
   const auto widthState = is_valid(*m_ui->widthEdit);
   const auto heightState = is_valid(*m_ui->heightEdit);
@@ -61,13 +61,12 @@ void resize_dialog::validate_input() noexcept
   }
 }
 
-auto resize_dialog::ok_button() const noexcept -> QPushButton*
+auto resize_dialog::ok_button() const -> QPushButton*
 {
   return m_ui->buttonBox->button(QDialogButtonBox::Ok);
 }
 
-auto resize_dialog::is_valid(const QLineEdit& edit) const noexcept
-    -> QValidator::State
+auto resize_dialog::is_valid(const QLineEdit& edit) const -> QValidator::State
 {
   auto unused = 0;
   auto txt = edit.displayText();

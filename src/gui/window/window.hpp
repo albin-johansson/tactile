@@ -52,14 +52,14 @@ class window final : public QMainWindow
    *
    * @since 0.1.0
    */
-  void enable_startup_view() noexcept;
+  void enable_startup_view();
 
   /**
    * @brief Enables the main editor view.
    *
    * @since 0.1.0
    */
-  void enable_editor_view() noexcept;
+  void enable_editor_view();
 
  signals:
   void request_new_map();
@@ -113,19 +113,16 @@ class window final : public QMainWindow
                           tileset_id id,
                           int tileWidth,
                           int tileHeight,
-                          const QString& tabName) noexcept;
+                          const QString& tabName);
 
-  void handle_remove_tileset(tileset_id id) noexcept;
+  void handle_remove_tileset(tileset_id id);
 
   /**
    * @brief Centers the camera over the tilemap.
    *
-   * @param mapWidth the current width of the tilemap.
-   * @param mapHeight the current height of the tilemap.
-   *
    * @since 0.1.0
    */
-  void handle_center_camera(int mapWidth, int mapHeight);
+  void handle_center_camera();
 
   /**
    * @brief Triggers a redraw of the editor pane.
@@ -156,15 +153,15 @@ class window final : public QMainWindow
    *
    * @since 0.1.0
    */
-  void init_connections() noexcept;
+  void init_connections();
 
-  void init_layout() noexcept;
+  void init_layout();
 
-  void reset_dock_layout() noexcept;
+  void reset_dock_layout();
 
-  void hide_all_docks() noexcept;
+  void hide_all_docks();
 
-  void show_all_docks() noexcept;
+  void show_all_docks();
 
   /**
    * @brief Indicates whether or not the editor view is enabled.
@@ -173,7 +170,7 @@ class window final : public QMainWindow
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto in_editor_mode() const noexcept -> bool;
+  [[nodiscard]] auto in_editor_mode() const -> bool;
 
  private slots:
   void handle_remove_tab(map_id tabID);

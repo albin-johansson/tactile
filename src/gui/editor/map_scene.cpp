@@ -20,7 +20,6 @@ map_scene::map_scene(not_null<model::tilemap*> map, map_id id, QWidget* parent)
   addItem(m_item);
 
   setSceneRect(100, 100, 100, 100);
-
 }
 
 // void tilemap_scene::center_viewport(int mapWidth, int mapHeight) noexcept
@@ -30,11 +29,6 @@ map_scene::map_scene(not_null<model::tilemap*> map, map_id id, QWidget* parent)
 //
 //  m_viewport.moveTo(x, y);
 //}
-
-auto map_scene::id() const noexcept -> map_id
-{
-  return m_id;
-}
 
 void map_scene::move_map_item(int dx, int dy)
 {

@@ -41,7 +41,7 @@ window::~window() noexcept
   delete m_ui;
 }
 
-void window::init_connections() noexcept
+void window::init_connections()
 {
   auto onTriggered = [this](auto&& action, auto&& fun) {
     connect(action, &QAction::triggered, this, fun);
@@ -106,14 +106,14 @@ void window::init_connections() noexcept
           &window::request_new_tileset);
 }
 
-void window::enable_startup_view() noexcept
+void window::enable_startup_view()
 {
   m_mainEditor->enable_startup_view();
   m_toolDock->get_tool_widget()->disable_tools();
   hide_all_docks();
 }
 
-void window::enable_editor_view() noexcept
+void window::enable_editor_view()
 {
   m_mainEditor->enable_editor_view();
 
@@ -121,7 +121,7 @@ void window::enable_editor_view() noexcept
   m_toolDock->get_tool_widget()->enable_tools();
 }
 
-void window::init_layout() noexcept
+void window::init_layout()
 {
   if (const auto geometry = prefs::window::last_layout_geometry(); geometry) {
     restoreGeometry(*geometry);
@@ -132,7 +132,7 @@ void window::init_layout() noexcept
   }
 }
 
-void window::reset_dock_layout() noexcept
+void window::reset_dock_layout()
 {
   removeDockWidget(m_toolDock);
   removeDockWidget(m_tilesetDock);
@@ -144,19 +144,19 @@ void window::reset_dock_layout() noexcept
   m_tilesetDock->show();
 }
 
-void window::hide_all_docks() noexcept
+void window::hide_all_docks()
 {
   m_toolDock->close();
   m_tilesetDock->close();
 }
 
-void window::show_all_docks() noexcept
+void window::show_all_docks()
 {
   m_toolDock->show();
   m_tilesetDock->show();
 }
 
-auto window::in_editor_mode() const noexcept -> bool
+auto window::in_editor_mode() const -> bool
 {
   return m_mainEditor->in_editor_mode();
 }
@@ -185,26 +185,26 @@ void window::handle_add_tileset(const QImage& image,
                                 tileset_id id,
                                 int tileWidth,
                                 int tileHeight,
-                                const QString& tabName) noexcept
+                                const QString& tabName)
 {
   m_tilesetDock->get_tileset_widget()->add_tileset(
       image, id, tileWidth, tileHeight, tabName);
 }
 
-void window::handle_remove_tileset(tileset_id id) noexcept
+void window::handle_remove_tileset(tileset_id id)
 {
   m_tilesetDock->get_tileset_widget()->remove_tileset(id);
 }
 
-void window::handle_center_camera(int mapWidth, int mapHeight)
+void window::handle_center_camera()
 {
-  m_mainEditor->center_viewport(mapWidth, mapHeight);
+  m_mainEditor->center_viewport();
   handle_draw();
 }
 
 void window::handle_move_camera(int dx, int dy)
 {
-  m_mainEditor->move_viewport(dx, dy);
+  m_mainEditor->move_map(dx, dy);
   handle_draw();
 }
 
@@ -237,7 +237,7 @@ void window::handle_remove_tab(map_id tabID)
 
   // The tab isn't actually removed yet, this checks if there will be
   // no open tabs
-  if (m_mainEditor->open_tabs() == 1) {
+  if (m_mainEditor->num_tabs() == 1) {
     enable_startup_view();
   }
 }
@@ -267,7 +267,7 @@ void window::on_action_close_map_triggered()
     m_mainEditor->close_tab(*id);
     emit request_close_map(*id);
 
-    if (m_mainEditor->open_tabs() == 0) {
+    if (m_mainEditor->num_tabs() == 0) {
       enable_startup_view();
     }
   }

@@ -26,11 +26,11 @@ class map_view final : public QGraphicsView
                     map_id id,
                     QWidget* parent = nullptr);
 
-  void center_viewport(int mapWidth, int mapHeight) noexcept;
+  void center_map();
 
-  void move_map(int dx, int dy) noexcept;
+  void move_map(int dx, int dy);
 
-  [[nodiscard]] auto id() const noexcept -> map_id;
+  [[nodiscard]] auto id() const -> map_id;
 
   void force_redraw();  // instead of this, add set_width/height that updates
                         // the underlying map item
@@ -48,9 +48,9 @@ class map_view final : public QGraphicsView
   QPoint m_lastMousePos{};
   QPointF m_lastMouseScenePos{};
 
-  [[nodiscard]] auto get_map_scene() noexcept -> map_scene*;
+  [[nodiscard]] auto get_map_scene() -> map_scene*;
 
-  [[nodiscard]] auto get_map_scene() const noexcept -> const map_scene*;
+  [[nodiscard]] auto get_map_scene() const -> const map_scene*;
 };
 
 }  // namespace tactile::gui

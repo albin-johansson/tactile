@@ -79,11 +79,7 @@ void app::handle_pan_left()
 
 void app::handle_center_camera()
 {
-  const auto width = m_core->map_width();
-  const auto height = m_core->map_height();
-  if (width && height) {
-    m_window->handle_center_camera(*width, *height);
-  }
+  m_window->handle_center_camera(); // TODO just connect signal to slot
 }
 
 void app::handle_new_tileset()

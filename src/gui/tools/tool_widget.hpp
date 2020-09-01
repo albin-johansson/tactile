@@ -24,9 +24,9 @@ class tool_widget final : public QWidget
 
   ~tool_widget() noexcept override;
 
-  void enable_tools() noexcept;
+  void enable_tools();
 
-  void disable_tools() noexcept;
+  void disable_tools();
 
  signals:
   void stamp_enabled();
@@ -40,21 +40,21 @@ class tool_widget final : public QWidget
   void find_same_enabled();
 
  public slots:
-  void handle_enable_stamp() noexcept;
+  void handle_enable_stamp();
 
-  void handle_enable_bucket() noexcept;
+  void handle_enable_bucket();
 
-  void handle_enable_eraser() noexcept;
+  void handle_enable_eraser();
 
-  void handle_enable_rectangle() noexcept;
+  void handle_enable_rectangle();
 
-  void handle_enable_find_same() noexcept;
+  void handle_enable_find_same();
 
  private:
   owner<Ui::tool_widget*> m_ui{};
   QButtonGroup* m_group{};
 
-  void set_tools_disabled(bool disabled) noexcept;
+  void set_tools_disabled(bool disabled);
 };
 
 }  // namespace tactile::gui

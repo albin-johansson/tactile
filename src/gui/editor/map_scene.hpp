@@ -20,9 +20,12 @@ class map_scene final : public QGraphicsScene
                      map_id id,
                      QWidget* parent = nullptr);
 
-  [[nodiscard]] auto id() const noexcept -> map_id;
-
   void move_map_item(int dx, int dy);
+
+  [[nodiscard]] auto id() const noexcept -> map_id
+  {
+    return m_id;
+  }
 
  protected:
   void drawBackground(QPainter* painter, const QRectF& rect) override;
@@ -34,7 +37,6 @@ class map_scene final : public QGraphicsScene
   void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
 
  private:
-  //  QRect m_viewport{};
   map_item* m_item;
   map_id m_id;
   QPointF m_lastMouseScenePos{};

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QDockWidget>
+#include <qdockwidget.h>
 
 #include "tileset_widget.hpp"
 

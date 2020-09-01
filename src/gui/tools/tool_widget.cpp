@@ -11,7 +11,7 @@ tool_widget::tool_widget(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  const auto on_pressed = [this](auto* sender, auto handler) noexcept {
+  const auto on_pressed = [this](auto* sender, auto handler) {
     connect(sender, &QPushButton::pressed, this, handler);
   };
 
@@ -35,42 +35,42 @@ tool_widget::~tool_widget() noexcept
   delete m_ui;
 }
 
-void tool_widget::enable_tools() noexcept
+void tool_widget::enable_tools()
 {
   set_tools_disabled(false);
 }
 
-void tool_widget::disable_tools() noexcept
+void tool_widget::disable_tools()
 {
   set_tools_disabled(true);
 }
 
-void tool_widget::handle_enable_stamp() noexcept
+void tool_widget::handle_enable_stamp()
 {
   m_ui->stampButton->setChecked(true);
 }
 
-void tool_widget::handle_enable_bucket() noexcept
+void tool_widget::handle_enable_bucket()
 {
   m_ui->bucketButton->setChecked(true);
 }
 
-void tool_widget::handle_enable_eraser() noexcept
+void tool_widget::handle_enable_eraser()
 {
   m_ui->eraserButton->setChecked(true);
 }
 
-void tool_widget::handle_enable_rectangle() noexcept
+void tool_widget::handle_enable_rectangle()
 {
   m_ui->rectangleButton->setChecked(true);
 }
 
-void tool_widget::handle_enable_find_same() noexcept
+void tool_widget::handle_enable_find_same()
 {
   m_ui->findSameButton->setChecked(true);
 }
 
-void tool_widget::set_tools_disabled(bool disabled) noexcept
+void tool_widget::set_tools_disabled(bool disabled)
 {
   m_ui->stampButton->setDisabled(disabled);
   m_ui->bucketButton->setDisabled(disabled);

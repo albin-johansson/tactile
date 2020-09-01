@@ -1,11 +1,9 @@
 #pragma once
 
-#include <QWidget>
-
-class QLayout;
-class QLabel;
-class QImage;
-class QRubberBand;
+#include <qlabel.h>
+#include <qpoint.h>
+#include <qrubberband.h>
+#include <qwidget.h>
 
 namespace tactile::gui {
 

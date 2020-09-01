@@ -1,8 +1,9 @@
 #pragma once
 
-#include <QDialog>
-#include <QImage>
-#include <QIntValidator>
+#include <qdialog.h>
+#include <qimage.h>
+#include <qvalidator.h>
+
 #include <optional>
 
 #include "tactile_types.hpp"
@@ -31,7 +32,7 @@ class tileset_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto chosen_image() const noexcept -> const QImage&;
+  [[nodiscard]] auto chosen_image() const -> const QImage&;
 
   /**
    * @brief Returns the chosen tile width.
@@ -40,7 +41,7 @@ class tileset_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto chosen_width() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto chosen_width() const -> std::optional<int>;
 
   /**
    * @brief Returns the chosen tile height.
@@ -50,7 +51,7 @@ class tileset_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto chosen_height() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto chosen_height() const -> std::optional<int>;
 
   /**
    * @brief Returns the name of the selected image.

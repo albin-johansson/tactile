@@ -47,7 +47,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto chosen_width() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto chosen_width() const -> std::optional<int>;
 
   /**
    * @brief Returns the chosen height, if there was one.
@@ -56,7 +56,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto chosen_height() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto chosen_height() const -> std::optional<int>;
 
  private:
   Ui::ResizeDialogUI* m_ui;
@@ -73,7 +73,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  void connect_line_edit(QLineEdit* edit) noexcept;
+  void connect_line_edit(QLineEdit* edit);
 
   /**
    * @brief Returns a pointer to the "OK" button.
@@ -82,7 +82,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto ok_button() const noexcept -> QPushButton*;
+  [[nodiscard]] auto ok_button() const -> QPushButton*;
 
   /**
    * @brief Indicates whether or not the supplied line edit widget has valid
@@ -94,8 +94,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto is_valid(const QLineEdit& edit) const noexcept
-      -> QValidator::State;
+  [[nodiscard]] auto is_valid(const QLineEdit& edit) const -> QValidator::State;
 
  private slots:
   /**
@@ -103,7 +102,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  void validate_input() noexcept;
+  void validate_input();
 };
 
 }  // namespace tactile::gui

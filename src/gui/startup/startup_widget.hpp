@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QWidget>
+#include <qwidget.h>
 
 namespace Ui {
 class startup_widget;

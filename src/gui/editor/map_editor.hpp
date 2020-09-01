@@ -35,35 +35,38 @@ class map_editor final : public QWidget
 
   void add_new_map_tab(not_null<model::tilemap*> map,
                        const QString& title,
-                       map_id id) noexcept;
+                       map_id id);
 
   void select_tab(map_id id);
 
   void close_tab(map_id id) noexcept;
 
-  void center_viewport(int mapWidth, int mapHeight) noexcept;
+  void center_viewport();
 
-  void move_viewport(int dx, int dy) noexcept;
+  void move_map(int dx, int dy) noexcept;
 
   /**
-   * Enables the startup view.
+   * @brief Enables the startup view.
+   *
+   * @details The startup view is the main page show upon startup or when no
+   * maps are active.
    *
    * @since 0.1.0
    */
   void enable_startup_view() noexcept;
 
   /**
-   * Enables the main editor view.
+   * @brief Enables the main editor view.
    *
    * @since 0.1.0
    */
   void enable_editor_view() noexcept;
 
-  [[nodiscard]] auto in_editor_mode() const noexcept -> bool;
+  [[nodiscard]] auto in_editor_mode() const -> bool;
 
-  [[nodiscard]] auto active_tab_id() const noexcept -> std::optional<map_id>;
+  [[nodiscard]] auto active_tab_id() const -> std::optional<map_id>;
 
-  [[nodiscard]] auto open_tabs() const noexcept -> int;
+  [[nodiscard]] auto num_tabs() const -> int;
 
  public slots:
   void handle_redraw();
@@ -81,7 +84,7 @@ class map_editor final : public QWidget
   int m_editorID{};
   int m_startupID{};
 
-  void init_connections() noexcept;
+  void init_connections();
 
  private slots:
   void tab_changed(int index);
