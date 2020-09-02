@@ -5,7 +5,7 @@
 #include "tactile_types.hpp"
 
 namespace Ui {
-class TilesetEmptyPageUI; // FIXME
+class TilesetEmptyPageUI;  // FIXME
 }
 
 namespace tactile::gui {

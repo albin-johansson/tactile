@@ -51,7 +51,7 @@ auto tileset::contains(tile_id id) const noexcept -> bool
   return (id >= first_id()) && (id <= last_id());
 }
 
-auto tileset::tile_at(int x, int y) const  -> tile_id
+auto tileset::tile_at(int x, int y) const -> tile_id
 {
   if (x < 0 || y < 0 || x > width() || y > height()) {
     return empty;

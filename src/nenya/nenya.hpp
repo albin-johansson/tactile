@@ -557,9 +557,15 @@ class mirror_type
     return m_value;
   }
 
-  auto operator->() const noexcept -> const Rep* { return &m_value; }
+  auto operator->() const noexcept -> const Rep*
+  {
+    return &m_value;
+  }
 
-  auto operator->() noexcept -> Rep* { return &m_value; };
+  auto operator->() noexcept -> Rep*
+  {
+    return &m_value;
+  };
 
   constexpr explicit operator Rep() const noexcept(nothrowCopy)
   {
