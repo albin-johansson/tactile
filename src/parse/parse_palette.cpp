@@ -1,8 +1,8 @@
 #include "parse_palette.hpp"
 
-#include <QFile>
-#include <QJsonObject>
-#include <QJsonParseError>
+#include <qfile.h>
+#include <qjsondocument.h>
+#include <qjsonobject.h>
 
 #include "tactile_error.hpp"
 

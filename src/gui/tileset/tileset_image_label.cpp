@@ -1,6 +1,6 @@
 #include "tileset_image_label.hpp"
 
-#include <QPainter>
+#include <qpainter.h>
 
 #include "tactile_error.hpp"
 

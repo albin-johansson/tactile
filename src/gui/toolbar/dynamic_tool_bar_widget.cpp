@@ -1,7 +1,7 @@
 #include "dynamic_tool_bar_widget.hpp"
 
-#include <QStackedLayout>
-#include <QStackedWidget>
+#include <qstackedlayout.h>
+#include <qstackedwidget.h>
 
 #include "stamp_toolbar.hpp"
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QDialog>
-#include <QString>
-#include <QWidget>
+#include <qdialog.h>
+#include <qstring.h>
+#include <qwidget.h>
 
 namespace Ui {
 

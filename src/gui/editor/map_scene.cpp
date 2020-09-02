@@ -1,9 +1,9 @@
 #include "map_scene.hpp"
 
-#include <QApplication>
-#include <QGraphicsSceneMouseEvent>
-#include <QPainter>
-#include <QResizeEvent>
+#include <qapplication.h>
+#include <qevent.h>
+#include <qgraphicssceneevent.h>
+#include <qpainter.h>
 
 #include "map_item.hpp"
 

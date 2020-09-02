@@ -1,11 +1,11 @@
 #pragma once
 
-#include <QAction>
-#include <QActionGroup>
-#include <QMainWindow>
-#include <QPainter>
-#include <QRect>
-#include <QWidget>
+#include <qaction.h>
+#include <qactiongroup.h>
+#include <qmainwindow.h>
+#include <qpainter.h>
+#include <qrect.h>
+#include <qwidget.h>
 
 #include "tactile_fwd.hpp"
 #include "tactile_types.hpp"

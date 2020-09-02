@@ -1,6 +1,6 @@
 #include "tileset_content_page.hpp"
 
-#include <QPushButton>
+#include <qpushbutton.h>
 
 #include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"

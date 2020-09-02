@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QWidget>
+#include <qwidget.h>
+
 #include <optional>
 
 #include "tactile_fwd.hpp"

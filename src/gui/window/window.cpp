@@ -1,11 +1,11 @@
 #include "window.hpp"
 
-#include <QApplication>
-#include <QDebug>
-#include <QFile>
-#include <QFileDialog>
-#include <QOpenGLFunctions>
-#include <QSpacerItem>
+#include <qapplication.h>
+#include <qdebug.h>
+#include <qfile.h>
+#include <qfiledialog.h>
+#include <qlayoutitem.h>
+#include <qopenglfunctions.h>
 
 #include "about_dialog.hpp"
 #include "map_editor.hpp"

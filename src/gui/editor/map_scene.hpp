@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QGraphicsScene>
-#include <QRect>
-#include <QWidget>
+#include <qgraphicsscene.h>
+#include <qrect.h>
+#include <qwidget.h>
 
 #include "core_model.hpp"
 #include "tactile_fwd.hpp"

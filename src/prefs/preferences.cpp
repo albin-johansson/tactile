@@ -1,6 +1,6 @@
 #include "preferences.hpp"
 
-#include <QString>
+#include <qstring.h>
 
 #include "theme.hpp"
 

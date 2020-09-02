@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QPalette>
-#include <QString>
+#include <qpalette.h>
+#include <qstring.h>
 
 #include "tactile_types.hpp"
 

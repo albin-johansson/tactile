@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QByteArray>
-#include <QPalette>
+#include <qbytearray.h>
+#include <qpalette.h>
 
 #include "setting.hpp"
 

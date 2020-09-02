@@ -1,9 +1,9 @@
 #include "theme.hpp"
 
-#include <QApplication>
-#include <QFile>
-#include <QJsonArray>
-#include <QJsonDocument>
+#include <qapplication.h>
+#include <qfile.h>
+#include <qjsonarray.h>
+#include <qjsondocument.h>
 
 #include "parse_palette.hpp"
 #include "preferences.hpp"

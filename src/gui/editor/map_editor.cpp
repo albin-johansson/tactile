@@ -1,6 +1,6 @@
 #include "map_editor.hpp"
 
-#include <QTabWidget>
+#include <qtabwidget.h>
 
 #include "map_tab_widget.hpp"
 #include "startup_widget.hpp"

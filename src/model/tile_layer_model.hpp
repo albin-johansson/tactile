@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QObject>
+#include <qobject.h>
 
 #include "tile_layer.hpp"
 

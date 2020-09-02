@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QObject>
+#include <qobject.h>
+
 #include <map>
 #include <memory>
 #include <optional>

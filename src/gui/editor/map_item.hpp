@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QGraphicsItem>
+#include <qgraphicsitem.h>
 
 #include "core_model.hpp"
 #include "tactile_fwd.hpp"

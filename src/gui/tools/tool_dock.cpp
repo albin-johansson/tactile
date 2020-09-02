@@ -1,6 +1,6 @@
 #include "tool_dock.hpp"
 
-#include <QLayout>
+#include <qlayout.h>
 
 namespace tactile::gui {
 

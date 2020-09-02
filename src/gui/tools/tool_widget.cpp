@@ -1,6 +1,6 @@
 #include "tool_widget.hpp"
 
-#include <QButtonGroup>
+#include <qbuttongroup.h>
 
 #include "ui_tool_widget.h"
 

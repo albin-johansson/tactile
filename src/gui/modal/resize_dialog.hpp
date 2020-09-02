@@ -1,7 +1,8 @@
 #pragma once
 
-#include <QDialog>
-#include <QValidator>
+#include <qdialog.h>
+#include <qvalidator.h>
+
 #include <optional>
 
 namespace Ui {

@@ -1,8 +1,8 @@
 #include "tileset_tab.hpp"
 
-#include <QGridLayout>
-#include <QLabel>
-#include <QScrollArea>
+#include <qgridlayout.h>
+#include <qlabel.h>
+#include <qscrollarea.h>
 
 #include "tactile_error.hpp"
 #include "tileset_image_widget.hpp"

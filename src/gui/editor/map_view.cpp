@@ -1,10 +1,8 @@
 #include "map_view.hpp"
 
-#include <QDebug>
-#include <QEvent>
-#include <QMouseEvent>
-#include <QResizeEvent>
-#include <QScrollBar>
+#include <qdebug.h>
+#include <qevent.h>
+#include <qscrollbar.h>
 
 namespace tactile::gui {
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QObject>
-#include <QPainter>
+#include <qobject.h>
+#include <qpainter.h>
 
 #include "command_stack.hpp"
 #include "tilemap.hpp"

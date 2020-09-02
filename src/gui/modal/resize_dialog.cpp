@@ -1,7 +1,8 @@
 #include "resize_dialog.hpp"
 
-#include <QIntValidator>
-#include <QPushButton>
+#include <qpushbutton.h>
+#include <qvalidator.h>
+
 #include <string>
 
 #include "ui_resize_dialog.h"
