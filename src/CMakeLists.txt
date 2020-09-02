@@ -84,15 +84,15 @@ set(TACTILE_SOURCE_FILES
         gui/tileset/tileset_dock.cpp
         gui/tileset/tileset_dock.hpp
 
-        gui/modal/about_dialog.cpp
-        gui/modal/about_dialog.hpp
-        gui/modal/settings_dialog.hpp
-        gui/modal/settings_dialog.cpp
-        gui/modal/resize_dialog.hpp
-        gui/modal/resize_dialog.cpp
-        gui/modal/about.ui
-        gui/modal/resize_dialog.ui
-        gui/modal/settings.ui
+        gui/about/about_dialog.cpp
+        gui/about/about_dialog.hpp
+        gui/settings/settings_dialog.hpp
+        gui/settings/settings_dialog.cpp
+        gui/action/resize_map/resize_dialog.hpp
+        gui/action/resize_map/resize_dialog.cpp
+        gui/about/about.ui
+        gui/action/resize_map/resize_dialog.ui
+        gui/settings/settings.ui
 
         gui/toolbar/dynamic_tool_bar_widget.cpp
         gui/toolbar/dynamic_tool_bar_widget.hpp
@@ -179,11 +179,14 @@ target_include_directories(libTactile
         PUBLIC gui/toolbar
         PUBLIC gui/editor
         PUBLIC gui/theme
-        PUBLIC gui/modal
         PUBLIC gui/tileset
         PUBLIC gui/window
         PUBLIC gui/util
         PUBLIC gui/tools
+        PUBLIC gui/about
+        PUBLIC gui/settings
+        PUBLIC gui/action
+        PUBLIC gui/action/resize_map
         #        PUBLIC ${Boost_INCLUDE_DIRS}
         )
 
