@@ -39,13 +39,8 @@ app::~app() noexcept
 void app::handle_resize_map()
 {
   if (m_core->has_active_map()) {
-    gui::resize_dialog dialog;
-
-    if (dialog.exec()) {
-      const auto rows = *dialog.chosen_height();
-      const auto cols = *dialog.chosen_width();
-      m_core->resize_map(rows, cols);
-    }
+    gui::resize_dialog::spawn(
+        [this](int rows, int cols) { m_core->resize_map(rows, cols); });
   }
 }
 

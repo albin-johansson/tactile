@@ -39,6 +39,37 @@ class resize_dialog final : public QDialog
    */
   explicit resize_dialog(QWidget* parent = nullptr);
 
+  /**
+   * @brief Spawns a resize dialog and blocks the invoking thread.
+   *
+   * @details This function will invoke the supplied function object if the
+   * dialog was closed successfully and a width and height was successfully
+   * obtained.
+   *
+   * @note The signature of the function object should be
+   * `void(int rows, int cols)`, where rows is the amount of rows and cols is
+   * the amount of columns.
+   *
+   * @tparam T the type of the function object.
+   *
+   * @param callback the function object that will be invoked if the dialog
+   * was successfully closed.
+   *
+   * @since 0.1.0
+   */
+  template <typename T>
+  static void spawn(T&& callback)
+  {
+    resize_dialog dialog;
+    if (dialog.exec()) {
+      const auto rows = dialog.chosen_height();
+      const auto cols = dialog.chosen_width();
+      if (rows && cols) {
+        callback(*rows, *cols);
+      }
+    }
+  }
+
   ~resize_dialog() noexcept override;
 
   /**
