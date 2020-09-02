@@ -1,13 +1,14 @@
 #pragma once
 
-#include <QWidget>
+#include <qwidget.h>
+
 #include <memory>
 
 #include "tactile_fwd.hpp"
 #include "tactile_types.hpp"
 
 namespace Ui {
-class TilesetContentPageUI;
+class TilesetContentPageUI; // FIXME
 }
 
 namespace tactile::gui {

@@ -51,7 +51,7 @@ auto tileset::contains(tile_id id) const noexcept -> bool
   return (id >= first_id()) && (id <= last_id());
 }
 
-auto tileset::tile_at(int x, int y) const noexcept -> tile_id
+auto tileset::tile_at(int x, int y) const  -> tile_id
 {
   if (x < 0 || y < 0 || x > width() || y > height()) {
     return empty;
@@ -63,12 +63,12 @@ auto tileset::tile_at(int x, int y) const noexcept -> tile_id
   }
 }
 
-auto tileset::width() const noexcept -> int
+auto tileset::width() const -> int
 {
   return m_sheet.width();
 }
 
-auto tileset::height() const noexcept -> int
+auto tileset::height() const -> int
 {
   return m_sheet.height();
 }
@@ -83,7 +83,7 @@ auto tileset::cols() const noexcept -> int
   return m_cols;
 }
 
-auto tileset::tiles() const noexcept -> int
+auto tileset::num_tiles() const noexcept -> int
 {
   return m_nTiles;
 }
@@ -95,7 +95,7 @@ auto tileset::first_id() const noexcept -> tile_id
 
 auto tileset::last_id() const noexcept -> tile_id
 {
-  return first_id() + tile_id{tiles()};
+  return first_id() + tile_id{num_tiles()};
 }
 
 auto tileset::tile_width() const noexcept -> int
@@ -108,19 +108,19 @@ auto tileset::tile_height() const noexcept -> int
   return m_tileHeight;
 }
 
-auto tileset::begin() const noexcept -> tileset::const_iterator
+auto tileset::begin() const noexcept -> const_iterator
 {
   return m_selection.begin();
 }
 
-auto tileset::end() const noexcept -> tileset::const_iterator
+auto tileset::end() const noexcept -> const_iterator
 {
   return m_selection.end();
 }
 
 auto tileset::num_selected() const noexcept -> int
 {
-  return std::ssize(m_selection);
+  return static_cast<int>(m_selection.size());
 }
 
 }  // namespace tactile::model

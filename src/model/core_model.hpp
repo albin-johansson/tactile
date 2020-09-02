@@ -52,8 +52,7 @@ class core_model final : public QObject
    */
   [[nodiscard]] auto add_tileset(const QImage& image,
                                  int tileWidth,
-                                 int tileHeight) noexcept
-      -> std::optional<tileset_id>;
+                                 int tileHeight) -> std::optional<tileset_id>;
 
   /**
    * @brief Indicates whether or not there is an active tilemap.
@@ -72,7 +71,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto rows() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto rows() const -> std::optional<int>;
 
   /**
    * @brief Returns the amount of columns in the active tilemap.
@@ -82,7 +81,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto cols() const -> std::optional<int>;
 
   /**
    * @brief Returns the current width of the active tilemap.
@@ -92,7 +91,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto map_width() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto map_width() const -> std::optional<int>;
 
   /**
    * @brief Returns the current height of the active tilemap.
@@ -102,7 +101,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto map_height() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto map_height() const -> std::optional<int>;
 
   /**
    * @brief Returns the size of the tiles in the currently active tilemap.
@@ -112,7 +111,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_size() const noexcept -> std::optional<int>;
+  [[nodiscard]] auto tile_size() const -> std::optional<int>;
 
   /**
    * @brief Returns a pointer to the tilemap associated with the specified ID.
@@ -123,7 +122,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_map(map_id id) noexcept -> tilemap*;
+  [[nodiscard]] auto get_map(map_id id) -> tilemap*;
 
  signals:
   void redraw_requested();
@@ -151,28 +150,28 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void add_row() noexcept;
+  void add_row();
 
   /**
    * @brief Adds a column to the currently active tilemap.
    *
    * @since 0.1.0
    */
-  void add_col() noexcept;
+  void add_col();
 
   /**
    * @brief Removes a row from the currently active tilemap.
    *
    * @since 0.1.0
    */
-  void remove_row() noexcept;
+  void remove_row();
 
   /**
    * @brief Removes a column from the currently active tilemap.
    *
    * @since 0.1.0
    */
-  void remove_col() noexcept;
+  void remove_col();
 
   /// @}
 
@@ -186,7 +185,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void select_layer(layer_id id) noexcept;
+  void select_layer(layer_id id);
 
   /**
    * @brief Selects the tilemap associated with the specified id.
@@ -195,7 +194,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void select_map(map_id id) noexcept;
+  void select_map(map_id id);
 
   /**
    * @brief Closes the map associated with the specified ID.
@@ -204,7 +203,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void handle_close_map(map_id id) noexcept;  // FIXME not a slot
+  void handle_close_map(map_id id);  // FIXME not a slot
 
   /**
    * @brief Increases the tile size that is being used by the currently active
@@ -212,7 +211,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void handle_increase_tile_size() noexcept;  // FIXME not a slot
+  void handle_increase_tile_size();  // FIXME not a slot
 
   /**
    * @brief Decreases the tile size that is being used by the currently active
@@ -220,7 +219,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void handle_decrease_tile_size() noexcept;  // FIXME not a slot
+  void handle_decrease_tile_size();  // FIXME not a slot
 
   /**
    * @brief Resets the tile size that is being used by the currently active
@@ -228,7 +227,7 @@ class core_model final : public QObject
    *
    * @since 0.1.0
    */
-  void handle_reset_tile_size() noexcept;  // FIXME not a slot
+  void handle_reset_tile_size();  // FIXME not a slot
 
  private:
   std::optional<map_id> m_currentMapID;

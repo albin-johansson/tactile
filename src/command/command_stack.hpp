@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QUndoStack>
+#include <qundostack.h>
+
 #include <concepts>
 #include <utility>
 

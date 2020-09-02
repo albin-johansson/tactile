@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QApplication>
+#include <qapplication.h>
+#include <qstring.h>
 
 #include "tactile_types.hpp"
 

@@ -1,10 +1,6 @@
 #include "core_model.hpp"
 
-#include <QImage>
-
-#include "tilemap.hpp"
 #include "tileset.hpp"
-#include "tileset_model.hpp"
 
 namespace tactile::model {
 
@@ -32,7 +28,7 @@ void core_model::resize_map(int nRows, int nCols)
   }
 }
 
-void core_model::add_row() noexcept
+void core_model::add_row()
 {
   if (auto* map = current_map(); map) {
     map->add_row();
@@ -40,7 +36,7 @@ void core_model::add_row() noexcept
   }
 }
 
-void core_model::add_col() noexcept
+void core_model::add_col()
 {
   if (auto* map = current_map(); map) {
     map->add_column();
@@ -48,7 +44,7 @@ void core_model::add_col() noexcept
   }
 }
 
-void core_model::remove_row() noexcept
+void core_model::remove_row()
 {
   if (auto* map = current_map(); map) {
     map->remove_row();
@@ -56,7 +52,7 @@ void core_model::remove_row() noexcept
   }
 }
 
-void core_model::remove_col() noexcept
+void core_model::remove_col()
 {
   if (auto* map = current_map(); map) {
     map->remove_column();
@@ -88,7 +84,7 @@ auto core_model::add_map() -> map_id
   return id;
 }
 
-void core_model::handle_close_map(map_id id) noexcept
+void core_model::handle_close_map(map_id id)
 {
   Q_ASSERT(m_maps.count(id));
 
@@ -107,9 +103,7 @@ void core_model::handle_close_map(map_id id) noexcept
   }
 }
 
-auto core_model::add_tileset(const QImage& image,
-                             int tileWidth,
-                             int tileHeight) noexcept
+auto core_model::add_tileset(const QImage& image, int tileWidth, int tileHeight)
     -> std::optional<tileset_id>
 {
   if (!image.isNull()) {
@@ -119,7 +113,7 @@ auto core_model::add_tileset(const QImage& image,
   }
 }
 
-auto core_model::rows() const noexcept -> std::optional<int>
+auto core_model::rows() const -> std::optional<int>
 {
   if (auto* map = current_map(); map) {
     return map->rows();
@@ -128,7 +122,7 @@ auto core_model::rows() const noexcept -> std::optional<int>
   }
 }
 
-auto core_model::cols() const noexcept -> std::optional<int>
+auto core_model::cols() const -> std::optional<int>
 {
   if (auto* map = current_map(); map) {
     return map->columns();
@@ -137,7 +131,7 @@ auto core_model::cols() const noexcept -> std::optional<int>
   }
 }
 
-auto core_model::map_width() const noexcept -> std::optional<int>
+auto core_model::map_width() const -> std::optional<int>
 {
   if (auto* map = current_map(); map) {
     return map->width();
@@ -146,7 +140,7 @@ auto core_model::map_width() const noexcept -> std::optional<int>
   }
 }
 
-auto core_model::map_height() const noexcept -> std::optional<int>
+auto core_model::map_height() const -> std::optional<int>
 {
   if (auto* map = current_map(); map) {
     return map->height();
@@ -155,7 +149,7 @@ auto core_model::map_height() const noexcept -> std::optional<int>
   }
 }
 
-auto core_model::tile_size() const noexcept -> std::optional<int>
+auto core_model::tile_size() const -> std::optional<int>
 {
   if (auto* map = current_map(); map) {
     return map->current_tile_size();
@@ -164,7 +158,7 @@ auto core_model::tile_size() const noexcept -> std::optional<int>
   }
 }
 
-auto core_model::get_map(map_id id) noexcept -> tilemap*
+auto core_model::get_map(map_id id) -> tilemap*
 {
   if (const auto it = m_maps.find(id); it != m_maps.end()) {
     return it->second->get();
@@ -173,7 +167,7 @@ auto core_model::get_map(map_id id) noexcept -> tilemap*
   }
 }
 
-void core_model::select_layer(layer_id id) noexcept
+void core_model::select_layer(layer_id id)
 {
   if (auto* map = current_map(); map) {
     map->select_layer(id);
@@ -181,7 +175,7 @@ void core_model::select_layer(layer_id id) noexcept
   }
 }
 
-void core_model::select_map(map_id id) noexcept
+void core_model::select_map(map_id id)
 {
   Q_ASSERT(m_maps.count(id));
 
@@ -207,7 +201,7 @@ auto core_model::has_active_map() const noexcept -> bool
   return m_currentMapID.has_value();
 }
 
-void core_model::handle_increase_tile_size() noexcept
+void core_model::handle_increase_tile_size()
 {
   if (auto* map = current_map(); map) {
     map->increase_tile_size();
@@ -215,7 +209,7 @@ void core_model::handle_increase_tile_size() noexcept
   }
 }
 
-void core_model::handle_decrease_tile_size() noexcept
+void core_model::handle_decrease_tile_size()
 {
   if (auto* map = current_map(); map) {
     map->decrease_tile_size();
@@ -223,7 +217,7 @@ void core_model::handle_decrease_tile_size() noexcept
   }
 }
 
-void core_model::handle_reset_tile_size() noexcept
+void core_model::handle_reset_tile_size()
 {
   if (auto* map = current_map(); map) {
     map->reset_tile_size();
@@ -233,12 +227,12 @@ void core_model::handle_reset_tile_size() noexcept
 
 auto core_model::current_map() -> map_model*
 {
-  return m_currentMapID ? m_maps.at(*m_currentMapID) : nullptr;
+  return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
 }
 
 auto core_model::current_map() const -> const map_model*
 {
-  return m_currentMapID ? m_maps.at(*m_currentMapID) : nullptr;
+  return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
 }
 
 }  // namespace tactile::model

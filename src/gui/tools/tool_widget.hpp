@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QDockWidget>
+#include <qdockwidget.h>
+
 #include <memory>
 
 #include "tactile_types.hpp"

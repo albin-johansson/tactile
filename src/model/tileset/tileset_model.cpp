@@ -14,7 +14,7 @@ void tileset_model::remove_all() noexcept
   m_tilesets.clear();
 }
 
-void tileset_model::select(std::optional<tileset_id> id) noexcept
+void tileset_model::select(std::optional<tileset_id> id)
 {
   if (!id) {
     m_activeID = std::nullopt;

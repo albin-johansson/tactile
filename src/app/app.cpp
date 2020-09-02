@@ -1,7 +1,7 @@
 #include "app.hpp"
 
-#include <QDockWidget>
-#include <QPainter>
+#include <qdockwidget.h>
+#include <qpainter.h>
 
 #include "app_connections.hpp"
 #include "core_model.hpp"
@@ -79,7 +79,7 @@ void app::handle_pan_left()
 
 void app::handle_center_camera()
 {
-  m_window->handle_center_camera(); // TODO just connect signal to slot
+  m_window->handle_center_camera();  // TODO just connect signal to slot
 }
 
 void app::handle_new_tileset()

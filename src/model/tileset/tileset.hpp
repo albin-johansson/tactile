@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QImage>
+#include <qimage.h>
+
 #include <set>
 
 #include "tactile_types.hpp"
@@ -120,7 +121,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_at(int x, int y) const noexcept -> tile_id;
+  [[nodiscard]] auto tile_at(int x, int y) const -> tile_id;
 
   /**
    * @brief Returns the width of the tileset image.
@@ -129,7 +130,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto width() const noexcept -> int;
+  [[nodiscard]] auto width() const -> int;
 
   /**
    * @brief Returns the height of the tileset image.
@@ -138,7 +139,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto height() const noexcept -> int;
+  [[nodiscard]] auto height() const -> int;
 
   /**
    * @brief Returns the total number of rows of tiles in the tileset.
@@ -165,7 +166,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tiles() const noexcept -> int;
+  [[nodiscard]] auto num_tiles() const noexcept -> int;
 
   /**
    * @brief Returns the tile ID of the first tile in the tileset.

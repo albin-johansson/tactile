@@ -34,7 +34,7 @@ tile_layer::tile_layer(int nRows, int nCols)
 
 void tile_layer::flood(const map_position& position,
                        tile_id target,
-                       tile_id replacement) noexcept
+                       tile_id replacement)
 {
   flood_fill(*this, position, target, replacement);
 }
@@ -128,7 +128,7 @@ auto tile_layer::cols() const noexcept -> int
   return static_cast<int>(m_tiles[0].size());
 }
 
-auto tile_layer::tile_at(const map_position& position) const noexcept
+auto tile_layer::tile_at(const map_position& position) const
     -> std::optional<tile_id>
 {
   if (in_bounds(position)) {

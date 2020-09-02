@@ -63,9 +63,7 @@ class tile_layer final
    *
    * @since 0.1.0
    */
-  void flood(const map_position& position,
-             tile_id target,
-             tile_id replacement) noexcept;
+  void flood(const map_position& position, tile_id target, tile_id replacement);
 
   /**
    * @brief Adds a row to the tile layer.
@@ -184,7 +182,7 @@ class tile_layer final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_at(const map_position& position) const noexcept
+  [[nodiscard]] auto tile_at(const map_position& position) const
       -> std::optional<tile_id>;
 
   /**

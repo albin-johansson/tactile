@@ -83,7 +83,7 @@ TEST_CASE("tileset::tiles", "[tileset]")
   const QImage image{"terrain.png"};
   tileset sheet{image, 32, 32};
 
-  CHECK(sheet.tiles() == 1024);
+  CHECK(sheet.num_tiles() == 1024);
 }
 
 TEST_CASE("tileset::last_id", "[tileset]")
@@ -91,10 +91,10 @@ TEST_CASE("tileset::last_id", "[tileset]")
   tileset sheet{"terrain.png", 32, 32};
 
   CHECK(sheet.last_id() == tile_id{1025});
-  CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.tiles()});
+  CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.num_tiles()});
 
   sheet.set_first_id(tile_id{43});
-  CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.tiles()});
+  CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.num_tiles()});
 }
 
 TEST_CASE("tileset::contains", "[tileset]")

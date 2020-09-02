@@ -69,12 +69,12 @@ void map_model::resize(int nRows, int nCols)
   m_commands->push<cmd::resize_map>(m_map.get(), nRows, nCols);
 }
 
-auto map_model::can_undo() const noexcept -> bool
+auto map_model::can_undo() const -> bool
 {
   return m_commands->canUndo();
 }
 
-auto map_model::can_redo() const noexcept -> bool
+auto map_model::can_redo() const -> bool
 {
   return m_commands->canRedo();
 }
@@ -142,12 +142,12 @@ auto map_model::current_tile_size() const noexcept -> int
 
 auto map_model::map() noexcept -> tilemap&
 {
-  return *m_map;
+  return *m_map.operator->();  // because operator* isn't noexcept
 }
 
 auto map_model::map() const noexcept -> const tilemap&
 {
-  return *m_map;
+  return *m_map.operator->();  // because operator* isn't noexcept
 }
 
 auto map_model::get() noexcept -> tilemap*

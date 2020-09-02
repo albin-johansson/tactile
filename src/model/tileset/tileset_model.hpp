@@ -71,7 +71,7 @@ class tileset_model final
    *
    * @since 0.1.0
    */
-  void select(std::optional<tileset_id> id) noexcept;
+  void select(std::optional<tileset_id> id);
 
   /**
    * @brief Returns the amount of tilesets handled by the manager.

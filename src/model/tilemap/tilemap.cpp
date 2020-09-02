@@ -95,14 +95,14 @@ void tilemap::set_cols(int nCols)
 void tilemap::set_visibility(layer_id layer, bool visibility) noexcept
 {
   if (has_layer(layer)) {
-    m_layers.at(static_cast<std::size_t>(layer.get())).set_visible(visibility);
+    m_layers[static_cast<std::size_t>(layer.get())].set_visible(visibility);
   }
 }
 
 auto tilemap::is_visible(layer_id layer) const noexcept -> bool
 {
   const auto index = static_cast<std::size_t>(layer.get());
-  return has_layer(layer) && m_layers.at(index).visible();
+  return has_layer(layer) && m_layers[index].visible();
 }
 
 auto tilemap::num_layers() const noexcept -> int

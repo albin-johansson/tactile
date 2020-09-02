@@ -1,6 +1,6 @@
 #include "tileset_dialog.hpp"
 
-#include <QLineEdit>
+#include <qlineedit.h>
 
 #include "open_tileset_image.hpp"
 #include "ui_tileset_dialog.h"

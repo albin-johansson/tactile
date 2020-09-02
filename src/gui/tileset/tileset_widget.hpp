@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QWidget>
+#include <qwidget.h>
+
 #include <memory>
 
 #include "tactile_fwd.hpp"
@@ -25,9 +26,9 @@ class tileset_widget final : public QWidget
                    tileset_id id,
                    int tileWidth,
                    int tileHeight,
-                   const QString& tabName) ;
+                   const QString& tabName);
 
-  void remove_tileset(tileset_id id) ;
+  void remove_tileset(tileset_id id);
 
  signals:
   void request_new_tileset();

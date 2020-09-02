@@ -32,9 +32,9 @@ class map_model final : public QObject
 
   void resize(int nRows, int nCols);
 
-  [[nodiscard]] auto can_undo() const noexcept -> bool;
+  [[nodiscard]] auto can_undo() const -> bool;
 
-  [[nodiscard]] auto can_redo() const noexcept -> bool;
+  [[nodiscard]] auto can_redo() const -> bool;
 
   [[nodiscard]] auto undo_text() const -> QString;
 

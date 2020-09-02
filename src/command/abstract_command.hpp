@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QString>
-#include <QUndoCommand>
+#include <qstring.h>
+#include <qundostack.h>
 
 #include "tactile_types.hpp"
 #include "tilemap.hpp"

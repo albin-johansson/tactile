@@ -46,7 +46,10 @@ class map_position final
    *
    * @since 0.1.0
    */
-  constexpr void set_row(int row) noexcept { m_row = at_least(row, 0); }
+  constexpr void set_row(int row) noexcept
+  {
+    m_row = at_least(row, 0);
+  }
 
   /**
    * @brief Sets the column coordinate of the map position.
@@ -56,7 +59,10 @@ class map_position final
    *
    * @since 0.1.0
    */
-  constexpr void set_col(int col) noexcept { m_col = at_least(col, 0); }
+  constexpr void set_col(int col) noexcept
+  {
+    m_col = at_least(col, 0);
+  }
 
   /**
    * @brief Returns a map position that is one step north of this map position.
@@ -117,7 +123,10 @@ class map_position final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] constexpr auto row() const noexcept -> int { return m_row; }
+  [[nodiscard]] constexpr auto row() const noexcept -> int
+  {
+    return m_row;
+  }
 
   /**
    * @brief Returns the column index of the map position.
@@ -128,7 +137,10 @@ class map_position final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] constexpr auto col() const noexcept -> int { return m_col; }
+  [[nodiscard]] constexpr auto col() const noexcept -> int
+  {
+    return m_col;
+  }
 
   /**
    * @brief Returns the row index associated with the map position.
@@ -158,7 +170,8 @@ class map_position final
     return static_cast<std::size_t>(m_col);
   }
 
-  auto operator==(const map_position&) const noexcept -> bool = default;
+  [[nodiscard]] auto operator==(const map_position&) const noexcept
+      -> bool = default;
 
  private:
   int m_row{};

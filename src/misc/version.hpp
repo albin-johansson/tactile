@@ -13,7 +13,7 @@ namespace tactile {
  *
  * @since 0.1.0
  */
-[[nodiscard]] inline constexpr auto version() noexcept -> czstring
+[[nodiscard]] constexpr auto version() noexcept -> czstring
 {
   return "0.1.0";
 }

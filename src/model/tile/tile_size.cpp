@@ -9,7 +9,7 @@ void tile_size::reset() noexcept
   m_size = default_size();
 }
 
-void tile_size::increase() noexcept
+void tile_size::increase()
 {
   m_size = static_cast<int>(std::round(static_cast<double>(m_size) * 1.1));
 }

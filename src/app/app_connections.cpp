@@ -1,6 +1,6 @@
 #include "app_connections.hpp"
 
-#include <QObject>
+#include <qobject.h>
 
 #include "core_model.hpp"
 #include "window.hpp"

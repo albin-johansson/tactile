@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QDockWidget>
+#include <qdockwidget.h>
 
 #include "tool_widget.hpp"
 
