@@ -17,6 +17,16 @@ class QLineEdit;
 
 namespace tactile::gui {
 
+/**
+ * @interface ResizeDialogCallback
+ *
+ * @brief Requires that the type is a function object that takes two `int`s
+ * as parameters.
+ *
+ * @tparam T the type that will be checked.
+ *
+ * @since 0.1.0
+ */
 template <typename T>
 concept ResizeDialogCallback = std::invocable<T, int, int>;
 
@@ -42,6 +52,8 @@ class resize_dialog final : public QDialog
    */
   explicit resize_dialog(QWidget* parent = nullptr);
 
+  ~resize_dialog() noexcept override;
+
   /**
    * @brief Spawns a resize dialog and blocks the invoking thread.
    *
@@ -61,33 +73,13 @@ class resize_dialog final : public QDialog
   {
     resize_dialog dialog;
     if (dialog.exec()) {
-      const auto rows = dialog.chosen_height();
-      const auto cols = dialog.chosen_width();
+      const auto rows = dialog.m_chosenHeight;
+      const auto cols = dialog.m_chosenWidth;
       if (rows && cols) {
         callback(*rows, *cols);
       }
     }
   }
-
-  ~resize_dialog() noexcept override;
-
-  /**
-   * @brief Returns the chosen width, if there was one.
-   *
-   * @return the chosen width; `std::nullopt` if there is none.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto chosen_width() const -> std::optional<int>;
-
-  /**
-   * @brief Returns the chosen height, if there was one.
-   *
-   * @return the chosen height; `std::nullopt` if there is none.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto chosen_height() const -> std::optional<int>;
 
  private:
   Ui::ResizeDialogUI* m_ui;

@@ -71,26 +71,6 @@ void tileset_dialog::on_heightEdit_textChanged()
   validate_input();
 }
 
-auto tileset_dialog::chosen_image() const -> const QImage&
-{
-  return m_image;
-}
-
-auto tileset_dialog::chosen_width() const -> std::optional<int>
-{
-  return m_width;
-}
-
-auto tileset_dialog::chosen_height() const -> std::optional<int>
-{
-  return m_height;
-}
-
-auto tileset_dialog::image_name() const -> std::optional<QString>
-{
-  return m_imageName;
-}
-
 auto tileset_dialog::is_valid() const -> bool
 {
   return validate(*m_ui->widthEdit) == QValidator::Acceptable &&

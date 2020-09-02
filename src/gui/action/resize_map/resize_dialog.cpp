@@ -32,16 +32,6 @@ resize_dialog::~resize_dialog() noexcept
   delete m_ui;
 }
 
-auto resize_dialog::chosen_width() const -> std::optional<int>
-{
-  return m_chosenWidth;
-}
-
-auto resize_dialog::chosen_height() const -> std::optional<int>
-{
-  return m_chosenHeight;
-}
-
 void resize_dialog::connect_line_edit(QLineEdit* edit)
 {
   if (edit) {

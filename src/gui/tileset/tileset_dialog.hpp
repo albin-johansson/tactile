@@ -17,6 +17,15 @@ class tileset_dialog;
 
 namespace tactile::gui {
 
+/**
+ * @interface TilesetDialogCallback
+ *
+ * @brief Requires that the type is a valid tileset dialog callback.
+ *
+ * @tparam T the type that will be checked.
+ *
+ * @since 0.1.0
+ */
 template <typename T>
 concept TilesetDialogCallback =
     std::invocable<T, const QImage&, int, int, const QString&>;
@@ -35,53 +44,15 @@ class tileset_dialog final : public QDialog
   {
     tileset_dialog dialog;
     if (dialog.exec()) {
-      const auto& image = dialog.chosen_image();
-      const auto tileWidth = dialog.chosen_width();
-      const auto tileHeight = dialog.chosen_height();
-      const auto name = dialog.image_name();
+      const auto& image = dialog.m_image;
+      const auto tileWidth = dialog.m_width;
+      const auto tileHeight = dialog.m_height;
+      const auto name = dialog.m_imageName;
       if (!image.isNull() && tileWidth && tileHeight) {
         callback(image, *tileWidth, *tileHeight, name ? *name : "Untitled");
       }
     }
   }
-
-  /**
-   * @brief Returns the image that was selected.
-   *
-   * @return the selected image, which might not represent a valid image.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto chosen_image() const -> const QImage&;
-
-  /**
-   * @brief Returns the chosen tile width.
-   *
-   * @return the chosen tile width; std::nullopt if no tile width is available.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto chosen_width() const -> std::optional<int>;
-
-  /**
-   * @brief Returns the chosen tile height.
-   *
-   * @return the chosen tile height; `std::nullopt` if no tile height is
-   * available.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto chosen_height() const -> std::optional<int>;
-
-  /**
-   * @brief Returns the name of the selected image.
-   *
-   * @return the name of the selected image; `std::nullopt` if there is no
-   * selected image.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto image_name() const -> std::optional<QString>;
 
  private:
   owner<Ui::tileset_dialog*> m_ui;
