@@ -6,7 +6,7 @@ namespace tactile::model {
 
 void core_model::undo()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->undo();
     emit redraw_requested();
   }
@@ -14,7 +14,7 @@ void core_model::undo()
 
 void core_model::redo()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->redo();
     emit redraw_requested();
   }
@@ -22,7 +22,7 @@ void core_model::redo()
 
 void core_model::resize_map(int nRows, int nCols)
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->resize(nRows, nCols);
     emit redraw_requested();
   }
@@ -30,7 +30,7 @@ void core_model::resize_map(int nRows, int nCols)
 
 void core_model::add_row()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->add_row();
     emit redraw_requested();
   }
@@ -38,7 +38,7 @@ void core_model::add_row()
 
 void core_model::add_col()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->add_column();
     emit redraw_requested();
   }
@@ -46,7 +46,7 @@ void core_model::add_col()
 
 void core_model::remove_row()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->remove_row();
     emit redraw_requested();
   }
@@ -54,7 +54,7 @@ void core_model::remove_row()
 
 void core_model::remove_col()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->remove_column();
     emit redraw_requested();
   }
@@ -115,7 +115,7 @@ auto core_model::add_tileset(const QImage& image, int tileWidth, int tileHeight)
 
 auto core_model::rows() const -> std::optional<int>
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     return map->rows();
   } else {
     return std::nullopt;
@@ -124,7 +124,7 @@ auto core_model::rows() const -> std::optional<int>
 
 auto core_model::cols() const -> std::optional<int>
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     return map->columns();
   } else {
     return std::nullopt;
@@ -133,7 +133,7 @@ auto core_model::cols() const -> std::optional<int>
 
 auto core_model::map_width() const -> std::optional<int>
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     return map->width();
   } else {
     return std::nullopt;
@@ -142,7 +142,7 @@ auto core_model::map_width() const -> std::optional<int>
 
 auto core_model::map_height() const -> std::optional<int>
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     return map->height();
   } else {
     return std::nullopt;
@@ -151,7 +151,7 @@ auto core_model::map_height() const -> std::optional<int>
 
 auto core_model::tile_size() const -> std::optional<int>
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     return map->current_tile_size();
   } else {
     return std::nullopt;
@@ -169,7 +169,7 @@ auto core_model::get_map(map_id id) -> tilemap*
 
 void core_model::select_layer(layer_id id)
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->select_layer(id);
     emit redraw_requested();
   }
@@ -203,7 +203,7 @@ auto core_model::has_active_map() const noexcept -> bool
 
 void core_model::handle_increase_tile_size()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->increase_tile_size();
     emit redraw_requested();
   }
@@ -211,7 +211,7 @@ void core_model::handle_increase_tile_size()
 
 void core_model::handle_decrease_tile_size()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->decrease_tile_size();
     emit redraw_requested();
   }
@@ -219,7 +219,7 @@ void core_model::handle_decrease_tile_size()
 
 void core_model::handle_reset_tile_size()
 {
-  if (auto* map = current_map(); map) {
+  if (auto* map = current_map()) {
     map->reset_tile_size();
     emit redraw_requested();
   }
