@@ -7,12 +7,6 @@ namespace tactile {
 // clang-format off
 
 template <typename T>
-concept PlainCallable = requires(T t)
-{
-  { t() };
-};
-
-template <typename T>
 concept Arithmetic = std::is_arithmetic_v<T>;
 
 // clang-format on
@@ -20,14 +14,16 @@ concept Arithmetic = std::is_arithmetic_v<T>;
 /**
  * @brief Invokes the supplied callable for the specified amount of times.
  *
+ * @tparam T the type of the callable.
+ *
  * @param n the amount of times the callable should be invoked.
  * @param callable the callable that will be invoked, must overload the
  * ()-operator.
  *
  * @since 0.1.0
  */
-template <PlainCallable Callable>
-constexpr void do_n(int n, Callable callable) noexcept(noexcept(callable()))
+template <std::invocable T>
+constexpr void do_n(int n, T&& callable) noexcept(noexcept(callable()))
 {
   for (auto i = 0; i < n; ++i) {
     callable();

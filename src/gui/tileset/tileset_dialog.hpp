@@ -4,6 +4,7 @@
 #include <qimage.h>
 #include <qvalidator.h>
 
+#include <concepts>
 #include <optional>
 
 #include "tactile_types.hpp"
@@ -16,6 +17,10 @@ class tileset_dialog;
 
 namespace tactile::gui {
 
+template <typename T>
+concept TilesetDialogCallback =
+    std::invocable<T, const QImage&, int, int, const QString&>;
+
 class tileset_dialog final : public QDialog
 {
   Q_OBJECT
@@ -24,6 +29,21 @@ class tileset_dialog final : public QDialog
   explicit tileset_dialog(QWidget* parent = nullptr);
 
   ~tileset_dialog() noexcept override;
+
+  template <TilesetDialogCallback T>
+  static void spawn(T&& callback)
+  {
+    tileset_dialog dialog;
+    if (dialog.exec()) {
+      const auto& image = dialog.chosen_image();
+      const auto tileWidth = dialog.chosen_width();
+      const auto tileHeight = dialog.chosen_height();
+      const auto name = dialog.image_name();
+      if (!image.isNull() && tileWidth && tileHeight) {
+        callback(image, *tileWidth, *tileHeight, name ? *name : "Untitled");
+      }
+    }
+  }
 
   /**
    * @brief Returns the image that was selected.

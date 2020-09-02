@@ -17,6 +17,9 @@ class QLineEdit;
 
 namespace tactile::gui {
 
+template <typename T>
+concept ResizeDialogCallback = std::invocable<T, int, int>;
+
 /**
  * @class resize_dialog
  *
@@ -46,10 +49,6 @@ class resize_dialog final : public QDialog
    * dialog was closed successfully and a width and height was successfully
    * obtained.
    *
-   * @note The signature of the function object should be
-   * `void(int rows, int cols)`, where rows is the amount of rows and cols is
-   * the amount of columns.
-   *
    * @tparam T the type of the function object.
    *
    * @param callback the function object that will be invoked if the dialog
@@ -57,7 +56,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  template <typename T>
+  template <ResizeDialogCallback T>
   static void spawn(T&& callback)
   {
     resize_dialog dialog;

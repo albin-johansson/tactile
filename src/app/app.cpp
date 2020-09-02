@@ -79,24 +79,14 @@ void app::handle_center_camera()
 
 void app::handle_new_tileset()
 {
-  gui::tileset_dialog dialog;
-  if (dialog.exec()) {
-    const auto& image = dialog.chosen_image();
-    const auto tileWidth = dialog.chosen_width();
-    const auto tileHeight = dialog.chosen_height();
-    const auto imageName = dialog.image_name();
-
-    if (!image.isNull() && tileWidth && tileHeight) {
-      const auto id = m_core->add_tileset(image, *tileWidth, *tileHeight);
-      if (id) {
-        m_window->handle_add_tileset(image,
-                                     *id,
-                                     *tileWidth,
-                                     *tileHeight,
-                                     imageName ? *imageName : "Untitled");
-      }
+  gui::tileset_dialog::spawn([this](const QImage& image,
+                                    int tileWidth,
+                                    int tileHeight,
+                                    const QString& name) {
+    if (const auto id = m_core->add_tileset(image, tileWidth, tileHeight); id) {
+      m_window->handle_add_tileset(image, *id, tileWidth, tileHeight, name);
     }
-  }
+  });
 }
 
 void app::handle_new_map()
