@@ -30,6 +30,15 @@ template <typename T>
 concept TilesetDialogCallback =
     std::invocable<T, const QImage&, int, int, const QString&>;
 
+/**
+ * @class tileset_dialog
+ *
+ * @brief Represents the dialog used to add new tilesets.
+ *
+ * @since 0.1.0
+ *
+ * @headerfile tileset_dialog.hpp
+ */
 class tileset_dialog final : public QDialog
 {
   Q_OBJECT
