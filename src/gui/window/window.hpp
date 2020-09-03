@@ -78,8 +78,6 @@ class window final : public QMainWindow
 
   void request_remove_col();
 
-  void request_center_camera();
-
   void request_new_tileset();
 
   void request_resize_map();
@@ -116,13 +114,6 @@ class window final : public QMainWindow
                           const QString& tabName);
 
   void handle_remove_tileset(tileset_id id);
-
-  /**
-   * @brief Centers the camera over the tilemap.
-   *
-   * @since 0.1.0
-   */
-  void handle_center_camera();
 
   /**
    * @brief Triggers a redraw of the editor pane.
@@ -162,6 +153,8 @@ class window final : public QMainWindow
   void hide_all_docks();
 
   void show_all_docks();
+
+  void center_map();
 
   /**
    * @brief Indicates whether or not the editor view is enabled.

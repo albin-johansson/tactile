@@ -90,11 +90,6 @@ void app_connections::init_camera_connections(app& app) noexcept
   connect(m_window, &window::request_pan_down, &app, &app::handle_pan_down);
   connect(m_window, &window::request_pan_right, &app, &app::handle_pan_right);
   connect(m_window, &window::request_pan_left, &app, &app::handle_pan_left);
-
-  connect(m_window,
-          &window::request_center_camera,
-          &app,
-          &app::handle_center_camera);
 }
 
 void app_connections::init_tilemap_connections(app& app) noexcept

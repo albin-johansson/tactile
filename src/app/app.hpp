@@ -65,8 +65,6 @@ class app final : public QApplication
 
   void handle_pan_left();
 
-  void handle_center_camera();
-
   void handle_new_tileset();
 
   void handle_new_map();

@@ -196,7 +196,7 @@ void window::handle_remove_tileset(tileset_id id)
   m_tilesetDock->get_tileset_widget()->remove_tileset(id);
 }
 
-void window::handle_center_camera()
+void window::center_map()
 {
   m_mainEditor->center_viewport();
   handle_draw();
@@ -220,7 +220,7 @@ void window::handle_new_map(not_null<model::tilemap*> map, map_id id)
   if (!in_editor_mode()) {
     enable_editor_view();
     show_all_docks();  // TODO just reopen docks that were visible
-    emit request_center_camera();
+    center_map();
   }
 }
 
@@ -395,7 +395,7 @@ void window::on_action_reset_zoom_triggered()
 void window::on_action_center_camera_triggered()
 {
   if (in_editor_mode()) {
-    emit request_center_camera();
+    center_map();
   }
 }
 

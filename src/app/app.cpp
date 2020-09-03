@@ -72,11 +72,6 @@ void app::handle_pan_left()
   }
 }
 
-void app::handle_center_camera()
-{
-  m_window->handle_center_camera();  // TODO just connect signal to slot
-}
-
 void app::handle_new_tileset()
 {
   gui::tileset_dialog::spawn([this](const QImage& image,
