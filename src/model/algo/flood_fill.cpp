@@ -38,9 +38,9 @@ void flood_fill(layer& layer,
   queue.push(origin);
 
   const auto update = [&](const position& pos) {
-    if (const auto tile = layer.tile_at(position); tile && tile == target) {
-      layer.set_tile(position, replacement);
-      queue.push(position);
+    if (const auto tile = layer.tile_at(pos); tile && tile == target) {
+      layer.set_tile(pos, replacement);
+      queue.push(pos);
     }
   };
 
