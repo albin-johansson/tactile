@@ -4,7 +4,7 @@
 
 #include <memory>
 
-#include "tactile_types.hpp"
+#include "types.hpp"
 
 class QButtonGroup;
 

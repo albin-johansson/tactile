@@ -8,9 +8,9 @@
 
 #include "core_fwd.hpp"
 #include "map_model.hpp"
-#include "tactile_types.hpp"
 #include "tilemap.hpp"
 #include "tileset_model.hpp"
+#include "types.hpp"
 
 class QPainter;
 

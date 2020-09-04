@@ -8,9 +8,9 @@
 #include <qwidget.h>
 
 #include "tactile_fwd.hpp"
-#include "tactile_types.hpp"
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"
+#include "types.hpp"
 
 namespace Ui {
 

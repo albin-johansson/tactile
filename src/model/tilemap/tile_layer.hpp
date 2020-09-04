@@ -18,7 +18,7 @@
 #include <vector>
 
 #include "map_position.hpp"
-#include "tactile_types.hpp"
+#include "types.hpp"
 
 namespace tactile::model {
 

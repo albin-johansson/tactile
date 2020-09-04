@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "tactile_error.hpp"
-#include "tactile_types.hpp"
+#include "types.hpp"
 
 using namespace tactile;
 using namespace tactile::model;

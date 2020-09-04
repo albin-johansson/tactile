@@ -7,7 +7,7 @@
 
 #include "core_model.hpp"
 #include "tactile_fwd.hpp"
-#include "tactile_types.hpp"
+#include "types.hpp"
 #include "window.hpp"
 
 namespace tactile {

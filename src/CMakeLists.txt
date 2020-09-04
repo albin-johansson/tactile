@@ -17,7 +17,7 @@ set(TACTILE_SOURCE_FILES
         misc/version.hpp
         misc/tactile_error.hpp
         misc/tactile_error.cpp
-        misc/tactile_types.hpp
+        model/types.hpp
         misc/tactile_fwd.hpp
         prefs/setting.hpp
 

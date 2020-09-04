@@ -1,9 +1,9 @@
 #include <catch.hpp>
 #include <memory>
 
-#include "tactile_types.hpp"
 #include "tileset.hpp"
 #include "tileset_model.hpp"
+#include "types.hpp"
 
 using tactile::tileset_id;
 using tactile::operator""_tw;

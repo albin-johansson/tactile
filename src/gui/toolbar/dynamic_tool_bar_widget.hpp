@@ -3,7 +3,7 @@
 #include <qwidget.h>
 
 #include "tactile_fwd.hpp"
-#include "tactile_types.hpp"
+#include "types.hpp"
 
 class QLayout;
 

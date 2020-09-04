@@ -3,8 +3,8 @@
 #include <qstring.h>
 #include <qundostack.h>
 
-#include "tactile_types.hpp"
 #include "tilemap.hpp"
+#include "types.hpp"
 
 namespace tactile::cmd {
 

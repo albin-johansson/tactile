@@ -6,7 +6,7 @@
 
 #include <optional>
 
-#include "tactile_types.hpp"
+#include "types.hpp"
 
 /**
  * @namespace tactile::theme

@@ -3,9 +3,9 @@
 #include <memory>
 #include <vector>
 
-#include "tactile_types.hpp"
 #include "tile_layer.hpp"
 #include "tile_size.hpp"
+#include "types.hpp"
 
 namespace tactile::model {
 

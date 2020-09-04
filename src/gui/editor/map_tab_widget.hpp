@@ -5,7 +5,7 @@
 #include <optional>  // optional
 
 #include "tactile_fwd.hpp"
-#include "tactile_types.hpp"
+#include "types.hpp"
 
 namespace tactile::gui {
 

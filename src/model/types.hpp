@@ -59,14 +59,12 @@ constexpr auto operator""_ts(unsigned long long value) noexcept -> tileset_id
   return tileset_id{static_cast<int>(value)};
 }
 
-constexpr auto operator""_tw(unsigned long long value) noexcept
-    -> tile_width
+constexpr auto operator""_tw(unsigned long long value) noexcept -> tile_width
 {
   return tile_width{static_cast<int>(value)};
 }
 
-constexpr auto operator""_th(unsigned long long value) noexcept
-    -> tile_height
+constexpr auto operator""_th(unsigned long long value) noexcept -> tile_height
 {
   return tile_height{static_cast<int>(value)};
 }

@@ -7,7 +7,7 @@
 #include <concepts>
 #include <optional>
 
-#include "tactile_types.hpp"
+#include "types.hpp"
 
 class QLineEdit;
 

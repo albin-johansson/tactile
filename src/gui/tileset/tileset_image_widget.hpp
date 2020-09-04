@@ -5,7 +5,7 @@
 #include <qrubberband.h>
 #include <qwidget.h>
 
-#include "tactile_types.hpp"
+#include "types.hpp"
 
 namespace tactile::gui {
 
