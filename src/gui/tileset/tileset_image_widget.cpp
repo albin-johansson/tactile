@@ -1,5 +1,6 @@
 #include "tileset_image_widget.hpp"
 
+#include <qapplication.h>
 #include <qevent.h>
 #include <qgridlayout.h>
 #include <qpainter.h>
@@ -21,11 +22,10 @@ tileset_image_widget::tileset_image_widget(const QImage& image,
 
   m_layout = new QGridLayout{this};
 
-  m_imageLabel = new tileset_image_label{image, tileWidth, tileHeight};
+  m_imageLabel = new tileset_image_label{image, tileWidth, tileHeight, this};
   m_rubberBand = new QRubberBand{QRubberBand::Rectangle, m_imageLabel};
 
-  m_layout->addWidget(m_imageLabel);  // layout claims ownership of label
-
+  m_layout->addWidget(m_imageLabel);
   setLayout(m_layout);
 }
 
@@ -35,31 +35,46 @@ void tileset_image_widget::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
 
-  if (event->buttons() & Qt::MouseButton::LeftButton &&
-      !m_rubberBand->isVisible()) {
-    m_origin = event->pos();
+  m_lastMousePos = event->pos();
 
-    m_rubberBand->setGeometry(QRect{m_origin, QSize()});
+  const auto buttons = event->buttons();
+  if (buttons & Qt::MouseButton::LeftButton) {
+    m_origin = m_lastMousePos;
+    m_rubberBand->setGeometry(QRect{m_origin, QSize{}});
     m_rubberBand->show();
   }
+//  else if (buttons & Qt::MouseButton::MidButton) {
+//    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+//
+//  }
 }
 
 void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
 
-  if (event->buttons() & Qt::MouseButton::LeftButton) {
-    m_rubberBand->setGeometry(QRect{m_origin, event->pos()}.normalized());
+  const auto buttons = event->buttons();
+  const auto pos = event->pos();
+
+  if (buttons & Qt::MouseButton::LeftButton) {
+    m_rubberBand->setGeometry(QRect{m_origin, pos}.normalized());
   }
+//  else if (buttons & Qt::MouseButton::MidButton) {
+    // TODO move image
+
+
+    //    move_map(pos.x() - m_lastMousePos.x(), pos.y() - m_lastMousePos.y());
+//  }
+
+  m_lastMousePos = pos;
 }
 
 void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
 
-  if (event->button() == Qt::MouseButton::LeftButton) {
-    m_rubberBand->hide();
-  }
+//  QApplication::restoreOverrideCursor();
+
   // TODO compute the selection
 }
 

@@ -33,6 +33,7 @@ class tileset_image_widget final : public QWidget
   QLabel* m_imageLabel;
   QRubberBand* m_rubberBand;
   QPoint m_origin;
+  QPoint m_lastMousePos;
 };
 
 }  // namespace tactile::gui

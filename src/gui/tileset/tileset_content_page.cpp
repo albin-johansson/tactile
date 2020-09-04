@@ -12,8 +12,8 @@ tileset_content_page::tileset_content_page(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  //  auto* cornerBtn = new QPushButton{}; // deleted by tab widget
-  //  m_ui->tabWidget->setCornerWidget(cornerBtn);
+//  auto* cornerBtn = new QPushButton{m_ui->tabWidget};
+//  m_ui->tabWidget->setCornerWidget(cornerBtn);
 }
 
 tileset_content_page::~tileset_content_page() noexcept

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <qlayout.h>
+#include <qpoint.h>
 #include <qscrollarea.h>
 #include <qwidget.h>
 
@@ -19,10 +20,18 @@ class tileset_tab final : public QWidget
 
   ~tileset_tab() noexcept override;
 
+ protected:
+  void mousePressEvent(QMouseEvent* event) override;
+
+  void mouseReleaseEvent(QMouseEvent* event) override;
+
+  void mouseMoveEvent(QMouseEvent* event) override;
+
  private:
   QScrollArea* m_scrollArea;
   tileset_image_widget* m_imageWidget;
   QLayout* m_layout;
+  QPoint m_lastMousePos;
 };
 
 }  // namespace tactile::gui
