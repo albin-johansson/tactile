@@ -155,4 +155,4 @@ auto map_model::get() noexcept -> map*
   return m_map.get();
 }
 
-}  // namespace tactile::model
+}  // namespace tactile::core

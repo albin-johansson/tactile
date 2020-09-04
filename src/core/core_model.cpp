@@ -237,4 +237,4 @@ auto core_model::current_map() const -> const map_model*
   return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
 }
 
-}  // namespace tactile::model
+}  // namespace tactile::core

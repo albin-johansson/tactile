@@ -35,4 +35,4 @@ auto tileset_model::has_active_tileset() const noexcept -> bool
   return m_activeID.has_value();
 }
 
-}  // namespace tactile::model
+}  // namespace tactile::core

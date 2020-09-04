@@ -216,4 +216,4 @@ class layer final
   bool m_visible{true};
 };
 
-}  // namespace tactile::model
+}  // namespace tactile::core

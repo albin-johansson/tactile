@@ -97,4 +97,4 @@ class tileset_model final
   tileset_id m_nextID{1};
 };
 
-}  // namespace tactile::model
+}  // namespace tactile::core

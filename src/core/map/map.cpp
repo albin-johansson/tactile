@@ -157,4 +157,4 @@ auto map::end() const noexcept -> const_iterator
   return m_layers.end();
 }
 
-}  // namespace tactile::model
+}  // namespace tactile::core

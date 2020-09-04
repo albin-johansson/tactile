@@ -146,4 +146,4 @@ auto layer::visible() const noexcept -> bool
   return m_visible;
 }
 
-}  // namespace tactile::model
+}  // namespace tactile::core

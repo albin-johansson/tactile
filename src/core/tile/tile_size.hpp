@@ -87,4 +87,4 @@ class tile_size final
   int m_size{default_size()};
 };
 
-}  // namespace tactile::model
+}  // namespace tactile::core

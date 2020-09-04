@@ -125,4 +125,4 @@ auto tileset::num_selected() const noexcept -> int
   return static_cast<int>(m_selection.size());
 }
 
-}  // namespace tactile::model
+}  // namespace tactile::core

@@ -256,4 +256,4 @@ static_assert(std::is_move_assignable_v<tileset>);
 static_assert(std::is_copy_constructible_v<tileset>);
 static_assert(std::is_copy_assignable_v<tileset>);
 
-}  // namespace tactile::model
+}  // namespace tactile::core

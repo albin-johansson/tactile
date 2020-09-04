@@ -27,4 +27,4 @@ void tile_size::set_size(int size) noexcept
   m_size = at_least(size, min_size());
 }
 
-}  // namespace tactile::model
+}  // namespace tactile::core

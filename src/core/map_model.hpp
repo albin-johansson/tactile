@@ -97,4 +97,4 @@ class map_model final : public QObject
   command_stack* m_commands;
 };
 
-}  // namespace tactile::model
+}  // namespace tactile::core

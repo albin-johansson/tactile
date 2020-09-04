@@ -55,4 +55,4 @@ void flood_fill(layer& layer,
   }
 }
 
-}  // namespace tactile::model
+}  // namespace tactile::core

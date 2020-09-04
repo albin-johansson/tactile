@@ -21,4 +21,4 @@ void flood_fill(layer& layer,
                 tile_id target,
                 tile_id replacement);
 
-}  // namespace tactile::model
+}  // namespace tactile::core

@@ -19,7 +19,7 @@ namespace tactile::model {
 /**
  * @class core_model
  *
- * @brief Represents the main interface for the core model of the application.
+ * @brief Represents the main interface for the core core of the application.
  *
  * @note All map mutating methods in this class have no effect if there
  * is no active map.
@@ -241,4 +241,4 @@ class core_model final : public QObject
   [[nodiscard]] auto current_map() const -> const map_model*;
 };
 
-}  // namespace tactile::model
+}  // namespace tactile::core

@@ -258,4 +258,4 @@ class map final
   tile_size m_tileSize;
 };
 
-}  // namespace tactile::model
+}  // namespace tactile::core

@@ -203,4 +203,4 @@ class position final
   int m_col{};
 };
 
-}  // namespace tactile::model
+}  // namespace tactile::core

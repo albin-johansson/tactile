@@ -17,32 +17,32 @@ set(TACTILE_SOURCE_FILES
         app/setup_app.hpp
         app/setup_app.cpp
 
-        model/types.hpp
-        model/core_fwd.hpp
-        model/core_model.hpp
-        model/core_model.cpp
-        model/map_model.cpp
-        model/map_model.hpp
-        model/tactile_error.hpp
-        model/tactile_error.cpp
+        core/types.hpp
+        core/core_fwd.hpp
+        core/core_model.hpp
+        core/core_model.cpp
+        core/map_model.cpp
+        core/map_model.hpp
+        core/tactile_error.hpp
+        core/tactile_error.cpp
 
-        model/algorithm/flood_fill.hpp
-        model/algorithm/flood_fill.cpp
-        model/algorithm/algorithm.hpp
+        core/algorithm/flood_fill.hpp
+        core/algorithm/flood_fill.cpp
+        core/algorithm/algorithm.hpp
 
-        model/tile/tile_size.hpp
-        model/tile/tile_size.cpp
+        core/tile/tile_size.hpp
+        core/tile/tile_size.cpp
 
-        model/tileset/tileset.cpp
-        model/tileset/tileset.hpp
-        model/tileset/tileset_model.cpp
-        model/tileset/tileset_model.hpp
+        core/tileset/tileset.cpp
+        core/tileset/tileset.hpp
+        core/tileset/tileset_model.cpp
+        core/tileset/tileset_model.hpp
 
-        model/map/map.hpp
-        model/map/map.cpp
-        model/map/layer.cpp
-        model/map/layer.hpp
-        model/map/position.hpp
+        core/map/map.hpp
+        core/map/map.cpp
+        core/map/layer.cpp
+        core/map/layer.hpp
+        core/map/position.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp
@@ -166,12 +166,12 @@ target_include_directories(libTactile
         PUBLIC nenya
         PUBLIC prefs
         PUBLIC parse
-        PUBLIC model
-        PUBLIC model/util
-        PUBLIC model/tile
-        PUBLIC model/map
-        PUBLIC model/tileset
-        PUBLIC model/algorithm
+        PUBLIC core
+        PUBLIC core/util
+        PUBLIC core/tile
+        PUBLIC core/map
+        PUBLIC core/tileset
+        PUBLIC core/algorithm
         PUBLIC gui
         PUBLIC gui/startup
         PUBLIC gui/toolbar
