@@ -34,7 +34,7 @@ class map_editor final : public QWidget
 
   ~map_editor() noexcept override;
 
-  void add_new_map_tab(not_null<model::map*> map,
+  void add_new_map_tab(not_null<core::map*> map,
                        const QString& title,
                        map_id id);
 

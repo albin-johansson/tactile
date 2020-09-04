@@ -21,7 +21,7 @@
 #include "tile_size.hpp"
 #include "types.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 /**
  * @class map

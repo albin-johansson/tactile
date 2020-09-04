@@ -42,14 +42,14 @@ class app final : public QApplication
 
  private:
   std::unique_ptr<gui::window> m_window;
-  owner<model::core_model*> m_core;
+  owner<core::core_model*> m_core;
 
   [[nodiscard]] auto window_ptr() noexcept -> gui::window*
   {
     return m_window.get();
   }
 
-  [[nodiscard]] auto core_ptr() noexcept -> model::core_model*
+  [[nodiscard]] auto core_ptr() noexcept -> core::core_model*
   {
     return m_core;
   }

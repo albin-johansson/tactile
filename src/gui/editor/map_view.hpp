@@ -22,7 +22,7 @@ class map_view final : public QGraphicsView
   Q_OBJECT
 
  public:
-  explicit map_view(not_null<model::map*> map,
+  explicit map_view(not_null<core::map*> map,
                     map_id id,
                     QWidget* parent = nullptr);
 

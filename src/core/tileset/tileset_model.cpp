@@ -2,7 +2,7 @@
 
 #include "tileset.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 void tileset_model::remove(tileset_id id) noexcept
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tactile::model {
+namespace tactile::core {
 
 /**
  * @class tile_size

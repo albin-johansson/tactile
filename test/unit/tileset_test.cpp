@@ -8,7 +8,7 @@
 #include "types.hpp"
 
 using namespace tactile;
-using namespace tactile::model;
+using namespace tactile::core;
 
 TEST_CASE("tileset(QImage, int, int)", "[tileset]")
 {

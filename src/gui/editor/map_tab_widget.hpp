@@ -43,7 +43,7 @@ class map_tab_widget final : public QTabWidget
    *
    * @since 0.1.0
    */
-  void add_map_tab(not_null<model::map*> map,
+  void add_map_tab(not_null<core::map*> map,
                    const QString& title,
                    map_id id);
 

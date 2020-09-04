@@ -6,7 +6,7 @@
 #include "remove_row.hpp"
 #include "resize_map.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 map_model::map_model(QObject* parent)
     : QObject{parent},

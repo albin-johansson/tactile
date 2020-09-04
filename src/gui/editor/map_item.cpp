@@ -11,8 +11,8 @@
 
 namespace tactile::gui {
 
-using model::layer;
-using model::map;
+using core::layer;
+using core::map;
 
 map_item::map_item(not_null<map*> map, QGraphicsItem* parent)
     : QGraphicsItem{parent}, m_map{map}
@@ -25,8 +25,8 @@ void map_item::draw_layer(QPainter& painter,
                           const layer& layer,
                           const QRectF& exposed)
 {
-  using model::col;
-  using model::row;
+  using core::col;
+  using core::row;
 
   if (exposed.isEmpty()) {
     return;
@@ -37,13 +37,13 @@ void map_item::draw_layer(QPainter& painter,
   const auto get_end_row = [&exposed, tileSize](int nRows) -> row {
     const auto endY = static_cast<int>(exposed.y() + exposed.height());
     const auto row = (endY / tileSize) + 1;
-    return model::row{std::min(nRows, row)};
+    return core::row{std::min(nRows, row)};
   };
 
   const auto get_end_col = [&exposed, tileSize](int nCols) -> col {
     const auto endX = static_cast<int>(exposed.x() + exposed.width());
     const auto col = (endX / tileSize) + 1;
-    return model::col{std::min(nCols, col)};
+    return core::col{std::min(nCols, col)};
   };
 
   const auto beginRow = std::max(0, static_cast<int>(exposed.y() / tileSize));

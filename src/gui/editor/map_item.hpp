@@ -27,7 +27,7 @@ class map_item final : public QGraphicsItem
    *
    * @since 0.1.0
    */
-  explicit map_item(not_null<model::map*> map,
+  explicit map_item(not_null<core::map*> map,
                     QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
@@ -37,10 +37,10 @@ class map_item final : public QGraphicsItem
   [[nodiscard]] auto boundingRect() const -> QRectF override;
 
  private:
-  model::map* m_map{};
+  core::map* m_map{};
 
   void draw_layer(QPainter& painter,
-                  const model::layer& layer,
+                  const core::layer& layer,
                   const QRectF& exposed);
 };
 

@@ -6,7 +6,7 @@
 #include "position.hpp"
 
 using namespace tactile;
-using namespace tactile::model;
+using namespace tactile::core;
 
 TEST_CASE("layer(int, int)", "[layer]")
 {

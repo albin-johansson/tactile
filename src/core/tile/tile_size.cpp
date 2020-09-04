@@ -4,7 +4,7 @@
 
 #include "algorithm.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 void tile_size::reset() noexcept
 {

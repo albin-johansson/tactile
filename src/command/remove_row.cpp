@@ -2,7 +2,7 @@
 
 namespace tactile::cmd {
 
-remove_row::remove_row(not_null<model::map*> map)
+remove_row::remove_row(not_null<core::map*> map)
     : abstract_command{"Remove Row", map}
 {}
 

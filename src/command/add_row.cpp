@@ -2,7 +2,7 @@
 
 namespace tactile::cmd {
 
-add_row::add_row(not_null<model::map*> map)
+add_row::add_row(not_null<core::map*> map)
     : abstract_command{"Add Row", map}
 {}
 

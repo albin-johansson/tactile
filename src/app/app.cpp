@@ -12,7 +12,7 @@
 
 namespace tactile {
 
-using model::core_model;
+using core::core_model;
 
 app::app(int argc, char** argv)
     : QApplication{argc, argv}, m_core{new core_model{}}

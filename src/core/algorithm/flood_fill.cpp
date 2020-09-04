@@ -8,7 +8,7 @@
 
 #include "position.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 void flood_fill(layer& layer,
                 const position& origin,

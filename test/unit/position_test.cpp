@@ -2,7 +2,7 @@
 
 #include <catch.hpp>
 
-using namespace tactile::model;
+using namespace tactile::core;
 
 TEST_CASE("position()", "[position]")
 {

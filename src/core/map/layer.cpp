@@ -6,7 +6,7 @@
 #include "algorithm.hpp"
 #include "flood_fill.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 namespace {
 
 [[nodiscard]] auto create_row(int nCols, tile_id value = empty)

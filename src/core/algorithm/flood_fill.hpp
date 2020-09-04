@@ -3,7 +3,7 @@
 #include "layer.hpp"
 #include "position.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 /**
  * @brief Runs a flood fill in the supplied tile layer.

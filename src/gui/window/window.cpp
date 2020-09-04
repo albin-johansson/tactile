@@ -213,7 +213,7 @@ void window::handle_draw()
   m_mainEditor->handle_redraw();
 }
 
-void window::handle_new_map(not_null<model::map*> map, map_id id)
+void window::handle_new_map(not_null<core::map*> map, map_id id)
 {
   m_mainEditor->add_new_map_tab(map, "map", id);  // TODO pass core and map_id?
   m_mainEditor->select_tab(id);

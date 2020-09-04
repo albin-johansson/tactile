@@ -8,7 +8,7 @@
 using tactile::tileset_id;
 using tactile::operator""_tw;
 using tactile::operator""_th;
-using namespace tactile::model;
+using namespace tactile::core;
 
 TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
 {

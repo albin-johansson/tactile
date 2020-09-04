@@ -8,7 +8,7 @@
 namespace tactile {
 
 using gui::window;
-using model::core_model;
+using gui::window;
 
 namespace {
 

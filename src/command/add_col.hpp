@@ -23,7 +23,7 @@ class add_col final : public abstract_command
    *
    * @since 0.1.0
    */
-  explicit add_col(not_null<model::map*> map);
+  explicit add_col(not_null<core::map*> map);
 
   void undo() override;
 

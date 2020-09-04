@@ -20,7 +20,7 @@
 #include "position.hpp"
 #include "types.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 /**
  * @class layer

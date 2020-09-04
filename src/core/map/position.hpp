@@ -5,7 +5,7 @@
 #include "algorithm.hpp"
 #include "nenya.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 namespace detail {
 
 struct row_tag final

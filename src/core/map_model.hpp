@@ -6,7 +6,7 @@
 #include "command_stack.hpp"
 #include "map.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 class map_model final : public QObject
 {

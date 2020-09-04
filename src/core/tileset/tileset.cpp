@@ -8,7 +8,7 @@
 #include "tactile_error.hpp"
 #include "types.hpp"
 
-namespace tactile::model {
+namespace tactile::core {
 
 tileset::tileset(QImage image, tile_width tileWidth, tile_height tileHeight)
     : m_sheet{std::move(image)},
