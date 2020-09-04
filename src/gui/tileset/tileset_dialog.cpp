@@ -15,6 +15,9 @@ namespace {
   return pixmap;
 }
 
+inline constexpr auto failureLabelStyle = "QLabel { color : red; }";
+inline constexpr auto successLabelStyle = "QLabel { color : black; }";
+
 }  // namespace
 
 tileset_dialog::tileset_dialog(QWidget* parent)
@@ -49,12 +52,12 @@ void tileset_dialog::on_imageButton_pressed()
     if (m_image.isNull()) {
       m_ui->imageLabel->setPixmap(m_defaultImageIcon);
       m_ui->imageInfoLabel->setText("Failed to open image: " + fileName);
-      m_ui->imageInfoLabel->setStyleSheet("QLabel { color : red; }");
+      m_ui->imageInfoLabel->setStyleSheet(failureLabelStyle);
     } else {
       m_ui->imageLabel->setPixmap(load_pixmap(pathStr));
       m_imageName = fileName;
       m_ui->imageInfoLabel->setText(fileName);
-      m_ui->imageInfoLabel->setStyleSheet("QLabel { color : black; }");
+      m_ui->imageInfoLabel->setStyleSheet(successLabelStyle);
     }
 
     ok_button()->setEnabled(is_valid());
