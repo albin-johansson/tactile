@@ -43,10 +43,6 @@ void tileset_image_widget::mousePressEvent(QMouseEvent* event)
     m_rubberBand->setGeometry(QRect{m_origin, QSize{}});
     m_rubberBand->show();
   }
-//  else if (buttons & Qt::MouseButton::MidButton) {
-//    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
-//
-//  }
 }
 
 void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
@@ -59,12 +55,6 @@ void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
   if (buttons & Qt::MouseButton::LeftButton) {
     m_rubberBand->setGeometry(QRect{m_origin, pos}.normalized());
   }
-//  else if (buttons & Qt::MouseButton::MidButton) {
-    // TODO move image
-
-
-    //    move_map(pos.x() - m_lastMousePos.x(), pos.y() - m_lastMousePos.y());
-//  }
 
   m_lastMousePos = pos;
 }
@@ -72,10 +62,6 @@ void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
 void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
-
-//  QApplication::restoreOverrideCursor();
-
-  // TODO compute the selection
 }
 
 }  // namespace tactile::gui
