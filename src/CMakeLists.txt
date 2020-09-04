@@ -26,9 +26,9 @@ set(TACTILE_SOURCE_FILES
         model/tactile_error.hpp
         model/tactile_error.cpp
 
-        model/algo/flood_fill.hpp
-        model/algo/flood_fill.cpp
-        model/algo/algorithm.hpp
+        model/algorithm/flood_fill.hpp
+        model/algorithm/flood_fill.cpp
+        model/algorithm/algorithm.hpp
 
         model/tile/tile_size.hpp
         model/tile/tile_size.cpp
@@ -171,7 +171,7 @@ target_include_directories(libTactile
         PUBLIC model/tile
         PUBLIC model/tilemap
         PUBLIC model/tileset
-        PUBLIC model/algo
+        PUBLIC model/algorithm
         PUBLIC gui
         PUBLIC gui/startup
         PUBLIC gui/toolbar
