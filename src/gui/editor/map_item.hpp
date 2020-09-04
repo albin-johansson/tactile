@@ -3,7 +3,7 @@
 #include <qgraphicsitem.h>
 
 #include "core_model.hpp"
-#include "tactile_fwd.hpp"
+#include "fwd.hpp"
 
 namespace tactile::gui {
 

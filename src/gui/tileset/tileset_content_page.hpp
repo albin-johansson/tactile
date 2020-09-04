@@ -4,7 +4,7 @@
 
 #include <memory>
 
-#include "tactile_fwd.hpp"
+#include "fwd.hpp"
 #include "types.hpp"
 
 namespace Ui {

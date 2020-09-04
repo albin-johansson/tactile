@@ -5,7 +5,7 @@
 #include <qwidget.h>
 
 #include "core_model.hpp"
-#include "tactile_fwd.hpp"
+#include "fwd.hpp"
 
 class QPainter;
 

@@ -2,7 +2,7 @@
 
 #include <qwidget.h>
 
-#include "tactile_fwd.hpp"
+#include "fwd.hpp"
 #include "types.hpp"
 
 class QLayout;

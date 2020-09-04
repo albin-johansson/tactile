@@ -6,7 +6,7 @@
 #include <utility>
 
 #include "core_model.hpp"
-#include "tactile_fwd.hpp"
+#include "fwd.hpp"
 #include "types.hpp"
 #include "window.hpp"
 
