@@ -9,7 +9,7 @@ namespace tactile {
 
 template <typename T>
 concept Ordered = requires (T t) {
-  { t < t };
+  { t < t } -> std::convertible_to<bool>;
 };
 
 // clang-format on
