@@ -18,9 +18,9 @@ map_view::map_view(not_null<core::map*> map, map_id id, QWidget* parent)
   setScene(new map_scene{map, id, this});
 }
 
-void map_view::move_map(int dx, int dy)
+void map_view::force_redraw()
 {
-  get_map_scene()->move_map(dx, dy);
+  scene()->update();
 }
 
 void map_view::center_map()
@@ -28,46 +28,14 @@ void map_view::center_map()
   get_map_scene()->center_map();
 }
 
-void map_view::mousePressEvent(QMouseEvent* event)
+void map_view::move_map(int dx, int dy)
 {
-  QGraphicsView::mousePressEvent(event);
-}
-
-void map_view::mouseMoveEvent(QMouseEvent* event)
-{
-  QGraphicsView::mouseMoveEvent(event);
-
-  //  m_lastMousePos = event->globalPos();
-  //  m_lastMouseScenePos =
-  //  mapToScene(viewport()->mapFromGlobal(m_lastMousePos));
-
-  //    if (event->buttons() & Qt::MouseButton::MidButton) {
-  //      const auto pos = event->pos();
-  //
-  //      const int x = pos.x();
-  //      const int y = pos.y();
-  //
-  //      translate(x - m_lastMouseX, y - m_lastMouseY);
-  //
-  //      m_lastMouseX = x;
-  //      m_lastMouseY = y;
-  //      update();
-  //    }
-}
-
-void map_view::mouseReleaseEvent(QMouseEvent* event)
-{
-  QGraphicsView::mouseReleaseEvent(event);
+  get_map_scene()->move_map(dx, dy);
 }
 
 auto map_view::id() const -> map_id
 {
   return get_map_scene()->id();
-}
-
-void map_view::force_redraw()  // TODO remove?!!
-{
-  scene()->update();
 }
 
 auto map_view::get_map_scene() -> map_scene*
@@ -78,6 +46,31 @@ auto map_view::get_map_scene() -> map_scene*
 auto map_view::get_map_scene() const -> const map_scene*
 {
   return qobject_cast<const map_scene*>(scene());
+}
+
+void map_view::mousePressEvent(QMouseEvent* event)
+{
+  QGraphicsView::mousePressEvent(event);
+
+  m_lastMousePos = event->pos();
+}
+
+void map_view::mouseMoveEvent(QMouseEvent* event)
+{
+  QGraphicsView::mouseMoveEvent(event);
+
+  const auto pos = event->pos();
+
+  if (event->buttons() & Qt::MouseButton::MidButton) {
+    move_map(pos.x() - m_lastMousePos.x(), pos.y() - m_lastMousePos.y());
+  }
+
+  m_lastMousePos = pos;
+}
+
+void map_view::mouseReleaseEvent(QMouseEvent* event)
+{
+  QGraphicsView::mouseReleaseEvent(event);
 }
 
 // bool tilemap_view::event(QEvent* event)

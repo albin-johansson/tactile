@@ -26,14 +26,13 @@ class map_view final : public QGraphicsView
                     map_id id,
                     QWidget* parent = nullptr);
 
+  void force_redraw();
+
   void center_map();
 
   void move_map(int dx, int dy);
 
   [[nodiscard]] auto id() const -> map_id;
-
-  void force_redraw();  // instead of this, add set_width/height that updates
-                        // the underlying map item
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;
@@ -42,11 +41,8 @@ class map_view final : public QGraphicsView
 
   void mouseReleaseEvent(QMouseEvent* event) override;
 
-  //  bool event(QEvent* event) override;
-
  private:
   QPoint m_lastMousePos{};
-  QPointF m_lastMouseScenePos{};
 
   [[nodiscard]] auto get_map_scene() -> map_scene*;
 
