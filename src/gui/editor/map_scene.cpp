@@ -13,23 +13,9 @@ namespace tactile::gui {
 map_scene::map_scene(not_null<core::map*> map, map_id id, QWidget* parent)
     : QGraphicsScene{parent}, m_item{new map_item{map}}, m_id{id}
 {
-  //  auto* item = new map_item{map};
-  //  connect(item,
-  //          &tilemap_item::request_redraw,
-  //          this,
-  //          &tilemap_scene::request_redraw);
   addItem(m_item);
-
   setSceneRect(100, 100, 100, 100);
 }
-
-// void tilemap_scene::center_viewport(int mapWidth, int mapHeight) noexcept
-//{
-//  const auto x = (m_viewport.width() - mapWidth) / 2;
-//  const auto y = (m_viewport.height() - mapHeight) / 2;
-//
-//  m_viewport.moveTo(x, y);
-//}
 
 void map_scene::move_map_item(int dx, int dy)
 {
