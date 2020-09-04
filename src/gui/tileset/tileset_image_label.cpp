@@ -37,10 +37,6 @@ void tileset_image_label::paintEvent(QPaintEvent* event)
   QLabel::paintEvent(event);
 
   QPainter painter{this};
-
-  //  QPen pen;
-  //  pen.setColor(Qt::black);
-  //  pen.setWidth(1);
   painter.setPen(QPen{Qt::black, 1});
 
   const auto region = visibleRegion().boundingRect();
