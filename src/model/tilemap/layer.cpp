@@ -32,11 +32,9 @@ layer::layer(int nRows, int nCols)
   assert(cols() == nCols);
 }
 
-void layer::flood(const position& pos,
-                  tile_id target,
-                  tile_id replacement)
+void layer::flood(const position& pos, tile_id target, tile_id replacement)
 {
-  flood_fill(*this, position, target, replacement);
+  flood_fill(*this, pos, target, replacement);
 }
 
 void layer::add_row(tile_id id)
@@ -107,8 +105,8 @@ void layer::set_cols(int nCols)
 
 void layer::set_tile(const position& pos, tile_id id) noexcept
 {
-  if (in_bounds(position)) {
-    m_tiles[position.urow()][position.ucol()] = id;
+  if (in_bounds(pos)) {
+    m_tiles[pos.urow()][pos.ucol()] = id;
   }
 }
 
@@ -128,11 +126,10 @@ auto layer::cols() const noexcept -> int
   return static_cast<int>(m_tiles[0].size());
 }
 
-auto layer::tile_at(const position& pos) const
-    -> std::optional<tile_id>
+auto layer::tile_at(const position& pos) const -> std::optional<tile_id>
 {
-  if (in_bounds(position)) {
-    return m_tiles[position.urow()][position.ucol()];
+  if (in_bounds(pos)) {
+    return m_tiles[pos.urow()][pos.ucol()];
   } else {
     return std::nullopt;
   }
@@ -140,8 +137,8 @@ auto layer::tile_at(const position& pos) const
 
 auto layer::in_bounds(const position& pos) const noexcept -> bool
 {
-  const auto row = position.urow();
-  return (row < m_tiles.size()) && (position.ucol() < m_tiles[row].size());
+  const auto row = pos.urow();
+  return (row < m_tiles.size()) && (pos.ucol() < m_tiles[row].size());
 }
 
 auto layer::visible() const noexcept -> bool
