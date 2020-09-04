@@ -8,7 +8,7 @@ using namespace tactile::model;
 
 TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
 {
-  tile_layer layer{5, 5};
+  layer layer{5, 5};
   for (int i = 0; i < 5; ++i) {
     layer.set_tile({i, i}, tile_id{1});
   }
@@ -80,7 +80,7 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
 
 TEST_CASE("Out-of-bounds position", "[FloodFill]")
 {
-  tile_layer layer{5, 5};
+  layer layer{5, 5};
   CHECK_NOTHROW(layer.flood({5, 5}, empty, empty));
   CHECK_NOTHROW(layer.flood({6, 6}, empty, empty));
   CHECK_NOTHROW(flood_fill(layer, {6, 6}, empty, empty));

@@ -1,7 +1,7 @@
 #pragma once
 
+#include "layer.hpp"
 #include "map_position.hpp"
-#include "tile_layer.hpp"
 
 namespace tactile::model {
 
@@ -16,7 +16,7 @@ namespace tactile::model {
  *
  * @since 0.1.0
  */
-void flood_fill(tile_layer& layer,
+void flood_fill(layer& layer,
                 const map_position& origin,
                 tile_id target,
                 tile_id replacement);

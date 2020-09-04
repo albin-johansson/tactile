@@ -10,7 +10,7 @@
 
 namespace tactile::gui {
 
-using model::tile_layer;
+using model::layer;
 using model::tilemap;
 
 map_item::map_item(not_null<tilemap*> map, QGraphicsItem* parent)
@@ -21,7 +21,7 @@ map_item::map_item(not_null<tilemap*> map, QGraphicsItem* parent)
 }
 
 void map_item::draw_layer(QPainter& painter,
-                          const tile_layer& layer,
+                          const layer& layer,
                           const QRectF& exposed)
 {
   if (exposed.isEmpty()) {

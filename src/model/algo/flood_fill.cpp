@@ -10,7 +10,7 @@
 
 namespace tactile::model {
 
-void flood_fill(tile_layer& layer,
+void flood_fill(layer& layer,
                 const map_position& origin,
                 tile_id target,
                 tile_id replacement)

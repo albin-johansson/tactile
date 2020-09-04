@@ -6,7 +6,7 @@ enable_testing()
 
 set(TACTILE_TEST_FILES
         unit/test_main.cpp
-        unit/tile_layer_test.cpp
+        unit/layer_test.cpp
         unit/map_position_test.cpp
         unit/tilemap_test.cpp
         unit/flood_fill_test.cpp

@@ -1,4 +1,4 @@
-#include "tile_layer.hpp"
+#include "layer.hpp"
 
 #include <cassert>  // assert
 #include <cmath>    // abs
@@ -20,7 +20,7 @@ namespace {
 
 }  // namespace
 
-tile_layer::tile_layer(int nRows, int nCols)
+layer::layer(int nRows, int nCols)
 {
   nRows = at_least(nRows, 1);
   nCols = at_least(nCols, 1);
@@ -32,33 +32,33 @@ tile_layer::tile_layer(int nRows, int nCols)
   assert(cols() == nCols);
 }
 
-void tile_layer::flood(const map_position& position,
-                       tile_id target,
-                       tile_id replacement)
+void layer::flood(const map_position& position,
+                  tile_id target,
+                  tile_id replacement)
 {
   flood_fill(*this, position, target, replacement);
 }
 
-void tile_layer::add_row(tile_id id)
+void layer::add_row(tile_id id)
 {
   m_tiles.push_back(create_row(cols(), id));
 }
 
-void tile_layer::add_col(tile_id id)
+void layer::add_col(tile_id id)
 {
   for (auto& row : m_tiles) {
     row.push_back(id);
   }
 }
 
-void tile_layer::remove_row() noexcept
+void layer::remove_row() noexcept
 {
   if (m_tiles.size() > 1) {
     m_tiles.pop_back();
   }
 }
 
-void tile_layer::remove_col() noexcept
+void layer::remove_col() noexcept
 {
   for (auto& row : m_tiles) {
     if (row.size() > 1) {
@@ -67,7 +67,7 @@ void tile_layer::remove_col() noexcept
   }
 }
 
-void tile_layer::set_rows(int nRows)
+void layer::set_rows(int nRows)
 {
   assert(nRows >= 1);
 
@@ -86,7 +86,7 @@ void tile_layer::set_rows(int nRows)
   }
 }
 
-void tile_layer::set_cols(int nCols)
+void layer::set_cols(int nCols)
 {
   assert(nCols >= 1);
 
@@ -105,30 +105,30 @@ void tile_layer::set_cols(int nCols)
   }
 }
 
-void tile_layer::set_tile(const map_position& position, tile_id id) noexcept
+void layer::set_tile(const map_position& position, tile_id id) noexcept
 {
   if (in_bounds(position)) {
     m_tiles[position.urow()][position.ucol()] = id;
   }
 }
 
-void tile_layer::set_visible(bool visible) noexcept
+void layer::set_visible(bool visible) noexcept
 {
   m_visible = visible;
 }
 
-auto tile_layer::rows() const noexcept -> int
+auto layer::rows() const noexcept -> int
 {
   return static_cast<int>(m_tiles.size());
 }
 
-auto tile_layer::cols() const noexcept -> int
+auto layer::cols() const noexcept -> int
 {
   assert(!m_tiles.empty());
   return static_cast<int>(m_tiles[0].size());
 }
 
-auto tile_layer::tile_at(const map_position& position) const
+auto layer::tile_at(const map_position& position) const
     -> std::optional<tile_id>
 {
   if (in_bounds(position)) {
@@ -138,13 +138,13 @@ auto tile_layer::tile_at(const map_position& position) const
   }
 }
 
-auto tile_layer::in_bounds(const map_position& position) const noexcept -> bool
+auto layer::in_bounds(const map_position& position) const noexcept -> bool
 {
   const auto row = position.urow();
   return (row < m_tiles.size()) && (position.ucol() < m_tiles[row].size());
 }
 
-auto tile_layer::visible() const noexcept -> bool
+auto layer::visible() const noexcept -> bool
 {
   return m_visible;
 }

@@ -4,7 +4,7 @@ namespace tactile::model {
 
 class tilemap;
 
-class tile_layer;
+class layer;
 
 class map_position;
 

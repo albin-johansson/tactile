@@ -1,7 +1,7 @@
 /**
  * @file tile_layer.hpp
  *
- * @brief Provides the `tile_layer` class.
+ * @brief Provides the `layer` class.
  *
  * @since 0.1.0
  *
@@ -23,7 +23,7 @@
 namespace tactile::model {
 
 /**
- * @class tile_layer
+ * @class layer
  *
  * @brief Represents a layer of tiles in a tilemap.
  *
@@ -32,9 +32,9 @@ namespace tactile::model {
  * @see `tilemap`
  * @see `tilemap_renderer`
  *
- * @headerfile tile_layer.hpp
+ * @headerfile layer.hpp
  */
-class tile_layer final
+class layer final
 {
  public:
   /**
@@ -50,7 +50,7 @@ class tile_layer final
    *
    * @since 0.1.0
    */
-  tile_layer(int nRows, int nCols);
+  layer(int nRows, int nCols);
 
   /**
    * @brief Runs a flood fill in the tile layer.

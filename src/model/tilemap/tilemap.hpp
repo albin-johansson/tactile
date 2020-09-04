@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include "tile_layer.hpp"
+#include "layer.hpp"
 #include "tile_size.hpp"
 #include "types.hpp"
 
@@ -25,8 +25,8 @@ namespace tactile::model {
 class tilemap final
 {
  public:
-  using iterator = typename std::vector<tile_layer>::iterator;
-  using const_iterator = typename std::vector<tile_layer>::const_iterator;
+  using iterator = typename std::vector<layer>::iterator;
+  using const_iterator = typename std::vector<layer>::const_iterator;
 
   /**
    * @brief Creates a tilemap with one layer.
@@ -240,7 +240,7 @@ class tilemap final
   int m_nRows;
   int m_nCols;
   layer_id m_activeLayer{};
-  std::vector<tile_layer> m_layers;
+  std::vector<layer> m_layers;
   tile_size m_tileSize;
 };
 

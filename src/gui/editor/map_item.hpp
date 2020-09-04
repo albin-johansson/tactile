@@ -40,7 +40,7 @@ class map_item final : public QGraphicsItem
   model::tilemap* m_map{};
 
   void draw_layer(QPainter& painter,
-                  const model::tile_layer& layer,
+                  const model::layer& layer,
                   const QRectF& exposed);
 };
 
