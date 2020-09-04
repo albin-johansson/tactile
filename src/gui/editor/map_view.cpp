@@ -1,5 +1,6 @@
 #include "map_view.hpp"
 
+#include <qapplication.h>
 #include <qdebug.h>
 #include <qevent.h>
 #include <qscrollbar.h>
@@ -53,6 +54,8 @@ void map_view::mousePressEvent(QMouseEvent* event)
   QGraphicsView::mousePressEvent(event);
 
   m_lastMousePos = event->pos();
+
+  QApplication::setOverrideCursor(Qt::ClosedHandCursor);
 }
 
 void map_view::mouseMoveEvent(QMouseEvent* event)
@@ -71,6 +74,7 @@ void map_view::mouseMoveEvent(QMouseEvent* event)
 void map_view::mouseReleaseEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseReleaseEvent(event);
+  QApplication::restoreOverrideCursor();
 }
 
 // bool tilemap_view::event(QEvent* event)
