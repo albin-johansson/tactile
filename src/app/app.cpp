@@ -75,8 +75,8 @@ void app::handle_pan_left()
 void app::handle_new_tileset()
 {
   gui::tileset_dialog::spawn([this](const QImage& image,
-                                    int tileWidth,
-                                    int tileHeight,
+                                    tile_width tileWidth,
+                                    tile_height tileHeight,
                                     const QString& name) {
     if (const auto id = m_core->add_tileset(image, tileWidth, tileHeight); id) {
       m_window->handle_add_tileset(image, *id, tileWidth, tileHeight, name);

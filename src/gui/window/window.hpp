@@ -109,8 +109,8 @@ class window final : public QMainWindow
 
   void handle_add_tileset(const QImage& image,
                           tileset_id id,
-                          int tileWidth,
-                          int tileHeight,
+                          tile_width tileWidth,
+                          tile_height tileHeight,
                           const QString& tabName);
 
   void handle_remove_tileset(tileset_id id);

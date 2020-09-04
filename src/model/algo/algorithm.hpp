@@ -1,13 +1,16 @@
 #pragma once
 
 #include <algorithm>
+#include <concepts>
 
 namespace tactile {
 
 // clang-format off
 
 template <typename T>
-concept Arithmetic = std::is_arithmetic_v<T>;
+concept Ordered = requires (T t) {
+  { t < t };
+};
 
 // clang-format on
 
@@ -43,7 +46,7 @@ constexpr void do_n(int n, T&& callable) noexcept(noexcept(callable()))
  *
  * @since 0.1.0
  */
-template <Arithmetic T>
+template <Ordered T>
 [[nodiscard]] constexpr auto at_least(T value, T least) noexcept -> T
 {
   return (value < least) ? least : value;

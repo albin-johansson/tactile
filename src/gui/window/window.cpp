@@ -183,8 +183,8 @@ void window::handle_redo_text_update(const QString& text)
 
 void window::handle_add_tileset(const QImage& image,
                                 tileset_id id,
-                                int tileWidth,
-                                int tileHeight,
+                                tile_width tileWidth,
+                                tile_height tileHeight,
                                 const QString& tabName)
 {
   m_tilesetDock->get_tileset_widget()->add_tileset(

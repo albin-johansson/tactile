@@ -40,8 +40,8 @@ tileset_widget::~tileset_widget() noexcept
 
 void tileset_widget::add_tileset(const QImage& image,
                                  tileset_id id,
-                                 int tileWidth,
-                                 int tileHeight,
+                                 tile_width tileWidth,
+                                 tile_height tileHeight,
                                  const QString& tabName)
 {
   if (image.isNull()) {

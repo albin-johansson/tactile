@@ -131,8 +131,8 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 
     const auto row = 7;
     const auto col = 5;
-    const auto x = col * sheet.tile_width() + 13;
-    const auto y = row * sheet.tile_height() + 24;
+    const auto x = col * sheet.get_tile_width() + 13;
+    const auto y = row * sheet.get_tile_height() + 24;
 
     const tile_id index{row * sheet.cols() + col};
     CHECK(sheet.tile_at(x, y) == sheet.first_id() + index);
@@ -147,8 +147,8 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 
     const auto row = 9;
     const auto col = 4;
-    const auto x = col * sheet.tile_width();
-    const auto y = row * sheet.tile_height();
+    const auto x = col * sheet.get_tile_width();
+    const auto y = row * sheet.get_tile_height();
 
     const tile_id index{row * sheet.cols() + col};
     CHECK(sheet.tile_at(x, y) == sheet.first_id() + index);
@@ -160,13 +160,13 @@ TEST_CASE("tileset::tile_width", "[tileset]")
   SECTION("Good size")
   {
     tileset sheet{"terrain.png", 32, 15};
-    CHECK(sheet.tile_width() == 32);
+    CHECK(sheet.get_tile_width() == 32);
   }
 
   SECTION("Clamping bad size")
   {
     tileset sheet{"terrain.png", 0, 15};
-    CHECK(sheet.tile_width() == 1);
+    CHECK(sheet.get_tile_width() == 1);
   }
 }
 
@@ -175,12 +175,12 @@ TEST_CASE("tileset::tile_height", "[tileset]")
   SECTION("Good size")
   {
     tileset sheet{"terrain.png", 15, 32};
-    CHECK(sheet.tile_height() == 32);
+    CHECK(sheet.get_tile_height() == 32);
   }
 
   SECTION("Clamping bad size")
   {
     tileset sheet{"terrain.png", 32, 0};
-    CHECK(sheet.tile_height() == 1);
+    CHECK(sheet.get_tile_height() == 1);
   }
 }

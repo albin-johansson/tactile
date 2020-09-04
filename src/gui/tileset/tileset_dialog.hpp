@@ -28,7 +28,7 @@ namespace tactile::gui {
  */
 template <typename T>
 concept TilesetDialogCallback =
-    std::invocable<T, const QImage&, int, int, const QString&>;
+    std::invocable<T, const QImage&, tile_width, tile_height, const QString&>;
 
 /**
  * @class tileset_dialog
@@ -66,8 +66,8 @@ class tileset_dialog final : public QDialog
  private:
   owner<Ui::tileset_dialog*> m_ui;
   QImage m_image{};
-  std::optional<int> m_width;
-  std::optional<int> m_height;
+  std::optional<tile_width> m_width;
+  std::optional<tile_height> m_height;
   std::optional<QString> m_imageName;
   QIntValidator* m_validator;
   QPixmap m_defaultImageIcon;

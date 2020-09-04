@@ -10,8 +10,8 @@
 namespace tactile::gui {
 
 tileset_image_widget::tileset_image_widget(const QImage& image,
-                                           int tileWidth,
-                                           int tileHeight,
+                                           tile_width tileWidth,
+                                           tile_height tileHeight,
                                            QWidget* parent)
     : QWidget{parent}
 {

@@ -103,7 +103,9 @@ void core_model::handle_close_map(map_id id)
   }
 }
 
-auto core_model::add_tileset(const QImage& image, int tileWidth, int tileHeight)
+auto core_model::add_tileset(const QImage& image,
+                             tile_width tileWidth,
+                             tile_height tileHeight)
     -> std::optional<tileset_id>
 {
   if (!image.isNull()) {

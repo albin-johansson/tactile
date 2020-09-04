@@ -82,8 +82,10 @@ void tileset_dialog::validate_input()
 {
   ok_button()->setEnabled(is_valid());
   if (ok_button()->isEnabled()) {
-    m_width = std::stoi(m_ui->widthEdit->displayText().toStdString());
-    m_height = std::stoi(m_ui->heightEdit->displayText().toStdString());
+    m_width =
+        tile_width{std::stoi(m_ui->widthEdit->displayText().toStdString())};
+    m_height =
+        tile_height{std::stoi(m_ui->heightEdit->displayText().toStdString())};
   }
 }
 

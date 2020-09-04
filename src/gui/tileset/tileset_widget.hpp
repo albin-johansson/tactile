@@ -24,8 +24,8 @@ class tileset_widget final : public QWidget
 
   void add_tileset(const QImage& image,
                    tileset_id id,
-                   int tileWidth,
-                   int tileHeight,
+                   tile_width tileWidth,
+                   tile_height tileHeight,
                    const QString& tabName);
 
   void remove_tileset(tileset_id id);

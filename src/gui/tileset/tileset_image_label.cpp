@@ -2,17 +2,18 @@
 
 #include <qpainter.h>
 
+#include "algorithm.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::gui {
 
 tileset_image_label::tileset_image_label(const QImage& image,
-                                         int tileWidth,
-                                         int tileHeight,
+                                         tile_width tileWidth,
+                                         tile_height tileHeight,
                                          QWidget* parent)
     : QLabel{parent},
-      m_tileWidth{tileWidth < 1 ? 1 : tileWidth},
-      m_tileHeight{tileHeight < 1 ? 1 : tileHeight}
+      m_tileWidth{at_least(tileWidth, 1_tw)},
+      m_tileHeight{at_least(tileHeight, 1_th)}
 {
   if (image.isNull()) {
     throw tactile_error{"Can't create tileset image label from null image!"};

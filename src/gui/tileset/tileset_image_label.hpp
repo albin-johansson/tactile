@@ -4,14 +4,16 @@
 
 #include <memory>
 
+#include "tactile_types.hpp"
+
 namespace tactile::gui {
 
 class tileset_image_label final : public QLabel
 {
  public:
   explicit tileset_image_label(const QImage& image,
-                               int tileWidth,
-                               int tileHeight,
+                               tile_width tileWidth,
+                               tile_height tileHeight,
                                QWidget* parent = nullptr);
 
   ~tileset_image_label() noexcept override;

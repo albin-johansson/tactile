@@ -25,8 +25,8 @@ tileset_content_page::~tileset_content_page() noexcept
 
 void tileset_content_page::add_tileset(const QImage& image,
                                        tileset_id id,
-                                       int tileWidth,
-                                       int tileHeight,
+                                       tile_width tileWidth,
+                                       tile_height tileHeight,
                                        const QString& tabName)
 {
   if (m_tabs.count(id)) {

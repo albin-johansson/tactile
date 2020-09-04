@@ -46,7 +46,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  tileset(QImage image, int tileWidth, int tileHeight);
+  tileset(QImage image, tile_width tileWidth, tile_height tileHeight);
 
   /**
    * @brief Creates a tileset with the initial first ID set to 1.
@@ -62,7 +62,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  tileset(const QString& path, int tileWidth, int tileHeight);
+  tileset(const QString& path, tile_width tileWidth, tile_height tileHeight);
 
   /**
    * @brief Sets the first tile ID property of the tileset.
@@ -197,7 +197,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_width() const noexcept -> int;
+  [[nodiscard]] auto get_tile_width() const noexcept -> tile_width;
 
   /**
    * @brief Returns the height of the tile sprites in the tileset.
@@ -208,7 +208,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_height() const noexcept -> int;
+  [[nodiscard]] auto get_tile_height() const noexcept -> tile_height;
 
   /**
    * @brief Returns a begin iterator, for iterating selected cells.
@@ -243,8 +243,8 @@ class tileset final
   std::set<tile_id> m_selection;
   int m_rows;
   int m_cols;
-  int m_tileWidth;
-  int m_tileHeight;
+  tile_width m_tileWidth;
+  tile_height m_tileHeight;
   int m_nTiles;
 };
 

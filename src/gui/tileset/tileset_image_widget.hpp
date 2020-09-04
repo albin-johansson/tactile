@@ -5,6 +5,8 @@
 #include <qrubberband.h>
 #include <qwidget.h>
 
+#include "tactile_types.hpp"
+
 namespace tactile::gui {
 
 class tileset_image_widget final : public QWidget
@@ -13,8 +15,8 @@ class tileset_image_widget final : public QWidget
 
  public:
   explicit tileset_image_widget(const QImage& image,
-                                int tileWidth,
-                                int tileHeight,
+                                tile_width tileWidth,
+                                tile_height tileHeight,
                                 QWidget* parent = nullptr);
 
   ~tileset_image_widget() noexcept override;

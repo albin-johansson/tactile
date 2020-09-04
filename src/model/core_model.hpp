@@ -52,8 +52,9 @@ class core_model final : public QObject
    * @since 0.1.0
    */
   [[nodiscard]] auto add_tileset(const QImage& image,
-                                 int tileWidth,
-                                 int tileHeight) -> std::optional<tileset_id>;
+                                 tile_width tileWidth,
+                                 tile_height tileHeight)
+      -> std::optional<tileset_id>;
 
   /**
    * @brief Indicates whether or not there is an active tilemap.

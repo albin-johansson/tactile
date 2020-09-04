@@ -10,21 +10,23 @@
 
 namespace tactile::model {
 
-tileset::tileset(QImage image, int tileWidth, int tileHeight)
+tileset::tileset(QImage image, tile_width tileWidth, tile_height tileHeight)
     : m_sheet{std::move(image)},
-      m_tileWidth{at_least(tileWidth, 1)},
-      m_tileHeight{at_least(tileHeight, 1)}
+      m_tileWidth{at_least(tileWidth, 1_tw)},
+      m_tileHeight{at_least(tileHeight, 1_th)}
 {
   if (m_sheet.isNull()) {
     throw tactile_error{"Cannot create tileset from null image!"};
   }
 
-  m_rows = height() / m_tileHeight;
-  m_cols = width() / m_tileWidth;
+  m_rows = height() / m_tileHeight.get();
+  m_cols = width() / m_tileWidth.get();
   m_nTiles = m_rows * m_cols;
 }
 
-tileset::tileset(const QString& path, int tileWidth, int tileHeight)
+tileset::tileset(const QString& path,
+                 tile_width tileWidth,
+                 tile_height tileHeight)
     : tileset{QImage{path}, tileWidth, tileHeight}
 {}
 
@@ -56,8 +58,8 @@ auto tileset::tile_at(int x, int y) const -> tile_id
   if (x < 0 || y < 0 || x > width() || y > height()) {
     return empty;
   } else {
-    const auto row = (y / m_tileHeight);
-    const auto col = (x / m_tileWidth);
+    const auto row = (y / m_tileHeight.get());
+    const auto col = (x / m_tileWidth.get());
     const auto index = row * m_cols + col;
     return m_firstID + tile_id{index};
   }
@@ -98,12 +100,12 @@ auto tileset::last_id() const noexcept -> tile_id
   return first_id() + tile_id{num_tiles()};
 }
 
-auto tileset::tile_width() const noexcept -> int
+auto tileset::get_tile_width() const noexcept -> tile_width
 {
   return m_tileWidth;
 }
 
-auto tileset::tile_height() const noexcept -> int
+auto tileset::get_tile_height() const noexcept -> tile_height
 {
   return m_tileHeight;
 }
