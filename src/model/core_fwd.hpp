@@ -2,7 +2,7 @@
 
 namespace tactile::model {
 
-class tilemap;
+class map;
 
 class layer;
 

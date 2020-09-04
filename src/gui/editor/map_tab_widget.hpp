@@ -37,46 +37,46 @@ class map_tab_widget final : public QTabWidget
    *
    * @param map a pointer to the map that will be associated with the tab.
    * @param title the title that will be visible in the tab.
-   * @param id the identifier associated with the tilemap.
+   * @param id the identifier associated with the map.
    *
-   * @todo Pass core_model pointer instead of tilemap?
+   * @todo Pass core_model pointer instead of map?
    *
    * @since 0.1.0
    */
-  void add_map_tab(not_null<model::tilemap*> map,
+  void add_map_tab(not_null<model::map*> map,
                    const QString& title,
                    map_id id);
 
   /**
-   * @brief Removes the tab associated with the specified tilemap.
+   * @brief Removes the tab associated with the specified map.
    *
-   * @param id the identifier associated with the tilemap that will be removed.
+   * @param id the identifier associated with the map that will be removed.
    *
    * @since 0.1.0
    */
   void remove_map_tab(map_id id);
 
   /**
-   * @brief Selects the tab associated with the specified tilemap.
+   * @brief Selects the tab associated with the specified map.
    *
-   * @param id the identifier associated with the tilemap that will be selected.
+   * @param id the identifier associated with the map that will be selected.
    *
    * @since 0.1.0
    */
   void select_tab(map_id id);
 
   /**
-   * @brief Centers the currently active tilemap to fit the viewport.
+   * @brief Centers the currently active map to fit the viewport.
    *
    * @since 0.1.0
    */
   void center_map();
 
   /**
-   * @brief Moves the currently active tilemap.
+   * @brief Moves the currently active map.
    *
-   * @param dx the amount to move the tilemap by along the x-axis.
-   * @param dy the amount to move the tilemap by along the y-axis.
+   * @param dx the amount to move the map by along the x-axis.
+   * @param dy the amount to move the map by along the y-axis.
    *
    * @since 0.1.0
    */

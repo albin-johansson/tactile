@@ -1,17 +1,17 @@
-#include <catch.hpp>
-
 #include "position.hpp"
+
+#include <catch.hpp>
 
 using namespace tactile::model;
 
-TEST_CASE("map_position()", "[map_position]")
+TEST_CASE("position()", "[position]")
 {
   const position position;
   CHECK(position.get_row() == 0_row);
   CHECK(position.get_col() == 0_col);
 }
 
-TEST_CASE("map_position(int, int)", "[map_position]")
+TEST_CASE("position(int, int)", "[position]")
 {
   SECTION("Valid arguments")
   {
@@ -36,7 +36,7 @@ TEST_CASE("map_position(int, int)", "[map_position]")
   }
 }
 
-TEST_CASE("map_position::set_row", "[map_position]")
+TEST_CASE("position::set_row", "[position]")
 {
   position position;
 
@@ -46,7 +46,7 @@ TEST_CASE("map_position::set_row", "[map_position]")
   CHECK(position.get_row() == row);
 }
 
-TEST_CASE("map_position::set_col", "[map_position]")
+TEST_CASE("position::set_col", "[position]")
 {
   position position;
 
@@ -56,7 +56,7 @@ TEST_CASE("map_position::set_col", "[map_position]")
   CHECK(position.get_col() == col);
 }
 
-TEST_CASE("map_position::row", "[map_position]")
+TEST_CASE("position::row", "[position]")
 {
   const auto row = 8324_row;
   const position position{row, 0_col};
@@ -64,7 +64,7 @@ TEST_CASE("map_position::row", "[map_position]")
   CHECK(position.get_row() == row);
 }
 
-TEST_CASE("map_position::col", "[map_position]")
+TEST_CASE("position::col", "[position]")
 {
   const auto col = 493_col;
   const position position{0_row, col};
@@ -72,7 +72,7 @@ TEST_CASE("map_position::col", "[map_position]")
   CHECK(position.get_col() == col);
 }
 
-TEST_CASE("map_position::urow", "[map_position]")
+TEST_CASE("position::urow", "[position]")
 {
   const auto row = 6532_row;
   const position position{row, 0_col};
@@ -80,7 +80,7 @@ TEST_CASE("map_position::urow", "[map_position]")
   CHECK(position.urow() == static_cast<std::size_t>(row.get()));
 }
 
-TEST_CASE("map_position::ucol", "[map_position]")
+TEST_CASE("position::ucol", "[position]")
 {
   const auto col = 18343_col;
   const position position{0_row, col};
@@ -88,7 +88,7 @@ TEST_CASE("map_position::ucol", "[map_position]")
   CHECK(position.ucol() == static_cast<std::size_t>(col.get()));
 }
 
-TEST_CASE("map_position::north", "[map_position]")
+TEST_CASE("position::north", "[position]")
 {
   const position fst{7_row, 15_col};
   const position snd = fst.north();
@@ -97,7 +97,7 @@ TEST_CASE("map_position::north", "[map_position]")
   CHECK(snd.get_col() == fst.get_col());
 }
 
-TEST_CASE("map_position::east", "[map_position]")
+TEST_CASE("position::east", "[position]")
 {
   const position fst{52_row, 77_col};
   const position snd = fst.east();
@@ -106,7 +106,7 @@ TEST_CASE("map_position::east", "[map_position]")
   CHECK(snd.get_col() == fst.get_col() + 1_col);
 }
 
-TEST_CASE("map_position::south", "[map_position]")
+TEST_CASE("position::south", "[position]")
 {
   const position fst{33_row, 6_col};
   const position snd = fst.south();
@@ -115,7 +115,7 @@ TEST_CASE("map_position::south", "[map_position]")
   CHECK(snd.get_col() == fst.get_col());
 }
 
-TEST_CASE("map_position::west", "[map_position]")
+TEST_CASE("position::west", "[position]")
 {
   const position fst{62_row, 39_col};
   const position snd = fst.west();
@@ -124,7 +124,7 @@ TEST_CASE("map_position::west", "[map_position]")
   CHECK(snd.get_col() == fst.get_col() - 1_col);
 }
 
-TEST_CASE("map_position operator==", "[map_position]")
+TEST_CASE("position operator==", "[position]")
 {
   const position pos{45_row, 23_col};
   CHECK(pos == pos);
@@ -135,7 +135,7 @@ TEST_CASE("map_position operator==", "[map_position]")
   CHECK(copy == pos);
 }
 
-TEST_CASE("map_position operator!=", "[map_position]")
+TEST_CASE("position operator!=", "[position]")
 {
   const position pos{45_row, 23_col};
   CHECK(!(pos != pos));

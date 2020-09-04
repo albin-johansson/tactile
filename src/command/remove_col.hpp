@@ -7,7 +7,7 @@ namespace tactile::cmd {
 /**
  * @class remove_col
  *
- * @brief Represents the action of removing a column from the active tilemap.
+ * @brief Represents the action of removing a column from the active map.
  *
  * @since 0.1.0
  *
@@ -16,7 +16,7 @@ namespace tactile::cmd {
 class remove_col final : public abstract_command
 {
  public:
-  explicit remove_col(not_null<model::tilemap*> map);
+  explicit remove_col(not_null<model::map*> map);
 
   void undo() override;
 

@@ -38,11 +38,11 @@ set(TACTILE_SOURCE_FILES
         model/tileset/tileset_model.cpp
         model/tileset/tileset_model.hpp
 
-        model/tilemap/tilemap.hpp
-        model/tilemap/tilemap.cpp
-        model/tilemap/layer.cpp
-        model/tilemap/layer.hpp
-        model/tilemap/position.hpp
+        model/map/map.hpp
+        model/map/map.cpp
+        model/map/layer.cpp
+        model/map/layer.hpp
+        model/map/position.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp
@@ -169,7 +169,7 @@ target_include_directories(libTactile
         PUBLIC model
         PUBLIC model/util
         PUBLIC model/tile
-        PUBLIC model/tilemap
+        PUBLIC model/map
         PUBLIC model/tileset
         PUBLIC model/algorithm
         PUBLIC gui

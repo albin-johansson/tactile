@@ -34,7 +34,7 @@ using col = nenya::mirror_type<int, detail::col_tag>;
 /**
  * @class position
  *
- * @brief Represents a row- and column-based position in a tilemap.
+ * @brief Represents a row- and column-based position in a map.
  *
  * @since 0.1.0
  *

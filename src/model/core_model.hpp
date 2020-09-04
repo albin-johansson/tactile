@@ -7,8 +7,8 @@
 #include <optional>
 
 #include "core_fwd.hpp"
+#include "map.hpp"
 #include "map_model.hpp"
-#include "tilemap.hpp"
 #include "tileset_model.hpp"
 #include "types.hpp"
 
@@ -21,8 +21,8 @@ namespace tactile::model {
  *
  * @brief Represents the main interface for the core model of the application.
  *
- * @note All tilemap mutating methods in this class have no effect if there
- * is no active tilemap.
+ * @note All map mutating methods in this class have no effect if there
+ * is no active map.
  *
  * @since 0.1.0
  *
@@ -57,74 +57,74 @@ class core_model final : public QObject
       -> std::optional<tileset_id>;
 
   /**
-   * @brief Indicates whether or not there is an active tilemap.
+   * @brief Indicates whether or not there is an active map.
    *
-   * @return `true` if there is an active tilemap; `false` otherwise.
+   * @return `true` if there is an active map; `false` otherwise.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto has_active_map() const noexcept -> bool;
 
   /**
-   * @brief Returns the amount of rows in the active tilemap.
+   * @brief Returns the amount of rows in the active map.
    *
-   * @return the amount of rows in the active tilemap; `std::nullopt` if there
-   * is no active tilemap.
+   * @return the amount of rows in the active map; `std::nullopt` if there
+   * is no active map.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto rows() const -> std::optional<int>;
 
   /**
-   * @brief Returns the amount of columns in the active tilemap.
+   * @brief Returns the amount of columns in the active map.
    *
-   * @return the amount of columns in the active tilemap; `std::nullopt` if
-   * there is no active tilemap.
+   * @return the amount of columns in the active map; `std::nullopt` if
+   * there is no active map.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto cols() const -> std::optional<int>;
 
   /**
-   * @brief Returns the current width of the active tilemap.
+   * @brief Returns the current width of the active map.
    *
-   * @return the current width of the active tilemap; `std::nullopt` if there is
-   * no active tilemap.
+   * @return the current width of the active map; `std::nullopt` if there is
+   * no active map.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto map_width() const -> std::optional<int>;
 
   /**
-   * @brief Returns the current height of the active tilemap.
+   * @brief Returns the current height of the active map.
    *
-   * @return the current height of the active tilemap; `std::nullopt` if there
-   * is no active tilemap.
+   * @return the current height of the active map; `std::nullopt` if there
+   * is no active map.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto map_height() const -> std::optional<int>;
 
   /**
-   * @brief Returns the size of the tiles in the currently active tilemap.
+   * @brief Returns the size of the tiles in the currently active map.
    *
-   * @return the size of the tiles in the currently active tilemap;
-   * `std::nullopt` if there is no active tilemap.
+   * @return the size of the tiles in the currently active map;
+   * `std::nullopt` if there is no active map.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto tile_size() const -> std::optional<int>;
 
   /**
-   * @brief Returns a pointer to the tilemap associated with the specified ID.
+   * @brief Returns a pointer to the map associated with the specified ID.
    *
-   * @param id the identifier associated with the desired tilemap.
+   * @param id the identifier associated with the desired map.
    *
-   * @return a pointer to a tilemap; null if no tilemap was found.
+   * @return a pointer to a map; null if no map was found.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_map(map_id id) -> tilemap*;
+  [[nodiscard]] auto get_map(map_id id) -> map*;
 
  signals:
   void redraw_requested();
@@ -148,28 +148,28 @@ class core_model final : public QObject
   void redo();
 
   /**
-   * @brief Adds a row to the currently active tilemap.
+   * @brief Adds a row to the currently active map.
    *
    * @since 0.1.0
    */
   void add_row();
 
   /**
-   * @brief Adds a column to the currently active tilemap.
+   * @brief Adds a column to the currently active map.
    *
    * @since 0.1.0
    */
   void add_col();
 
   /**
-   * @brief Removes a row from the currently active tilemap.
+   * @brief Removes a row from the currently active map.
    *
    * @since 0.1.0
    */
   void remove_row();
 
   /**
-   * @brief Removes a column from the currently active tilemap.
+   * @brief Removes a column from the currently active map.
    *
    * @since 0.1.0
    */
@@ -190,9 +190,9 @@ class core_model final : public QObject
   void select_layer(layer_id id);
 
   /**
-   * @brief Selects the tilemap associated with the specified id.
+   * @brief Selects the map associated with the specified id.
    *
-   * @param id the key of the tilemap that will be selected.
+   * @param id the key of the map that will be selected.
    *
    * @since 0.1.0
    */
@@ -201,7 +201,7 @@ class core_model final : public QObject
   /**
    * @brief Closes the map associated with the specified ID.
    *
-   * @param id the ID of the tilemap that will be closed.
+   * @param id the ID of the map that will be closed.
    *
    * @since 0.1.0
    */
@@ -209,7 +209,7 @@ class core_model final : public QObject
 
   /**
    * @brief Increases the tile size that is being used by the currently active
-   * tilemap.
+   * map.
    *
    * @since 0.1.0
    */
@@ -217,7 +217,7 @@ class core_model final : public QObject
 
   /**
    * @brief Decreases the tile size that is being used by the currently active
-   * tilemap.
+   * map.
    *
    * @since 0.1.0
    */
@@ -225,7 +225,7 @@ class core_model final : public QObject
 
   /**
    * @brief Resets the tile size that is being used by the currently active
-   * tilemap to its default value.
+   * map to its default value.
    *
    * @since 0.1.0
    */

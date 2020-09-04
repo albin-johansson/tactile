@@ -2,7 +2,7 @@
 
 namespace tactile::cmd {
 
-add_col::add_col(not_null<model::tilemap*> map)
+add_col::add_col(not_null<model::map*> map)
     : abstract_command{"Add Column", map}
 {}
 

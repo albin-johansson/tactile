@@ -19,7 +19,7 @@ namespace tactile::gui {
  * @class map_editor
  *
  * @brief Represents the center stage of the editor and contains the main
- * tilemap editor pane.
+ * map editor pane.
  *
  * @since 0.1.0
  *
@@ -34,7 +34,7 @@ class map_editor final : public QWidget
 
   ~map_editor() noexcept override;
 
-  void add_new_map_tab(not_null<model::tilemap*> map,
+  void add_new_map_tab(not_null<model::map*> map,
                        const QString& title,
                        map_id id);
 

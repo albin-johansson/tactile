@@ -31,7 +31,7 @@ class app_connections final
   model::core_model* m_core;
   gui::window* m_window;
 
-  void init_tilemap_connections(app& app) noexcept;
+  void init_map_connections(app& app) noexcept;
 
   void init_camera_connections(app& app) noexcept;
 

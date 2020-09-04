@@ -7,7 +7,7 @@ namespace tactile::cmd {
 /**
  * @class add_col
  *
- * @brief Represents the action of adding a column to the active tilemap.
+ * @brief Represents the action of adding a column to the active map.
  *
  * @since 0.1.0
  *
@@ -19,11 +19,11 @@ class add_col final : public abstract_command
   /**
    * @brief Creates am `add_col` instance.
    *
-   * @param map the associated tilemap.
+   * @param map the associated map.
    *
    * @since 0.1.0
    */
-  explicit add_col(not_null<model::tilemap*> map);
+  explicit add_col(not_null<model::map*> map);
 
   void undo() override;
 

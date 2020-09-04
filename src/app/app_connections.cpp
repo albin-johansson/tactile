@@ -28,7 +28,7 @@ app_connections::app_connections(app& app)
 
   init_command_connections(app);
   init_camera_connections(app);
-  init_tilemap_connections(app);
+  init_map_connections(app);
 
   connect(m_window,
           &window::request_increase_tile_size,
@@ -92,7 +92,7 @@ void app_connections::init_camera_connections(app& app) noexcept
   connect(m_window, &window::request_pan_left, &app, &app::handle_pan_left);
 }
 
-void app_connections::init_tilemap_connections(app& app) noexcept
+void app_connections::init_map_connections(app& app) noexcept
 {
   connect(m_window, &window::request_new_map, &app, &app::handle_new_map);
 

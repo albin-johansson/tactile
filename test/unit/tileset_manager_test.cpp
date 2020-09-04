@@ -45,8 +45,8 @@ TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
   tileset_model manager;
   CHECK_NOTHROW(manager.remove_all());
 
-  manager.emplace("terrain.png", 32_tw, 32_th);
-  manager.emplace("terrain.png", 32_tw, 32_th);
+  const auto a = manager.emplace("terrain.png", 32_tw, 32_th);
+  const auto b = manager.emplace("terrain.png", 32_tw, 32_th);
 
   CHECK(manager.sheets() == 2);
 

@@ -3,7 +3,7 @@
 #include <qstring.h>
 #include <qundostack.h>
 
-#include "tilemap.hpp"
+#include "map.hpp"
 #include "types.hpp"
 
 namespace tactile::cmd {
@@ -11,9 +11,9 @@ namespace tactile::cmd {
 class abstract_command : public QUndoCommand
 {
  protected:
-  explicit abstract_command(const QString& text, not_null<model::tilemap*> map);
+  explicit abstract_command(const QString& text, not_null<model::map*> map);
 
-  model::tilemap* m_map;
+  model::map* m_map;
 };
 
 }  // namespace tactile::cmd

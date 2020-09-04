@@ -1,3 +1,17 @@
+/**
+ * @file map.hpp
+ *
+ * @brief Provides the `map` class.
+ *
+ * @since 0.1.0
+ *
+ * @author Albin Johansson
+ *
+ * @date 2020
+ *
+ * @copyright GPL-3.0
+ */
+
 #pragma once
 
 #include <memory>
@@ -10,36 +24,36 @@
 namespace tactile::model {
 
 /**
- * @class tilemap
+ * @class map
  *
  * @brief Represents the main tilemaps in the application.
  *
  * @details Tilemaps are composed by multiple tile layers.
  *
- * @see `tile_layer`
+ * @see `layer`
  *
  * @since 0.1.0
  *
- * @headerfile tilemap.hpp
+ * @headerfile map.hpp
  */
-class tilemap final
+class map final
 {
  public:
   using iterator = typename std::vector<layer>::iterator;
   using const_iterator = typename std::vector<layer>::const_iterator;
 
   /**
-   * @brief Creates a tilemap with one layer.
+   * @brief Creates a map with one layer.
    *
-   * @details The amount of rows and columns in the tilemap is always at
+   * @details The amount of rows and columns in the map is always at
    * least 1.
    *
-   * @param nRows the initial number of rows in the tilemap.
-   * @param nCols the initial number of columns in the tilemap.
+   * @param nRows the initial number of rows in the map.
+   * @param nCols the initial number of columns in the map.
    *
    * @since 0.1.0
    */
-  tilemap(int nRows, int nCols);
+  map(int nRows, int nCols);
 
   /**
    * @brief Selects the tile layer associated with the specified index.
@@ -53,14 +67,14 @@ class tilemap final
   void select(layer_id layer) noexcept;
 
   /**
-   * @brief Adds an empty layer to the tilemap.
+   * @brief Adds an empty layer to the map.
    *
    * @since 0.1.0
    */
   void add_layer();
 
   /**
-   * @brief Adds a row to the tilemap.
+   * @brief Adds a row to the map.
    *
    * @param id the tile ID that the new tiles will have, defaults to empty.
    *
@@ -69,7 +83,7 @@ class tilemap final
   void add_row(tile_id id = empty);
 
   /**
-   * @brief Adds a column to the tilemap.
+   * @brief Adds a column to the map.
    *
    * @param id the tile ID that the new tiles will have, defaults to empty.
    *
@@ -78,7 +92,7 @@ class tilemap final
   void add_col(tile_id id = empty);
 
   /**
-   * @brief Removes a row from the tilemap.
+   * @brief Removes a row from the map.
    *
    * @note This method has no effect if the tile map only contains one row.
    *
@@ -87,7 +101,7 @@ class tilemap final
   void remove_row() noexcept;
 
   /**
-   * @brief Removes a column from the tilemap.
+   * @brief Removes a column from the map.
    *
    * @note This method has no effect if the tile map only contains one column.
    *
@@ -96,9 +110,9 @@ class tilemap final
   void remove_col() noexcept;
 
   /**
-   * @brief Sets the total number of rows in the tilemap.
+   * @brief Sets the total number of rows in the map.
    *
-   * @param nRows the new number of rows in the tilemap. Clamped to be at
+   * @param nRows the new number of rows in the map. Clamped to be at
    * least 1.
    *
    * @since 0.1.0
@@ -106,9 +120,9 @@ class tilemap final
   void set_rows(int nRows);
 
   /**
-   * @brief Sets the total number of columns in the tilemap.
+   * @brief Sets the total number of columns in the map.
    *
-   * @param nCols the new number of columns in the tilemap. Clamped to be at
+   * @param nCols the new number of columns in the map. Clamped to be at
    * least 1.
    *
    * @since 0.1.0
@@ -145,11 +159,11 @@ class tilemap final
   [[nodiscard]] auto is_visible(layer_id layer) const noexcept -> bool;
 
   /**
-   * @brief Returns the amount of layers present in the tilemap.
+   * @brief Returns the amount of layers present in the map.
    *
    * @details Tilemaps are initially created with 1 tile layer.
    *
-   * @return the amount of layers present in the tilemap.
+   * @return the amount of layers present in the map.
    *
    * @since 0.1.0
    */
@@ -169,36 +183,36 @@ class tilemap final
   [[nodiscard]] auto has_layer(layer_id layer) const noexcept -> bool;
 
   /**
-   * @brief Returns the total number of rows in the tilemap.
+   * @brief Returns the total number of rows in the map.
    *
-   * @return the amount of rows in the tilemap.
+   * @return the amount of rows in the map.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto rows() const noexcept -> int;
 
   /**
-   * @brief Returns the total number of columns in the tilemap.
+   * @brief Returns the total number of columns in the map.
    *
-   * @return the amount of columns in the tilemap.
+   * @return the amount of columns in the map.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto cols() const noexcept -> int;
 
   /**
-   * @brief Returns the pixel width of the tilemap.
+   * @brief Returns the pixel width of the map.
    *
-   * @return the pixel width of the tilemap.
+   * @return the pixel width of the map.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto width() const noexcept -> int;
 
   /**
-   * @brief Returns the pixel height of the tilemap.
+   * @brief Returns the pixel height of the map.
    *
-   * @return the pixel height of the tilemap.
+   * @return the pixel height of the map.
    *
    * @since 0.1.0
    */

@@ -2,7 +2,7 @@
 
 namespace tactile::cmd {
 
-resize_map::resize_map(not_null<model::tilemap*> map, int rows, int cols)
+resize_map::resize_map(not_null<model::map*> map, int rows, int cols)
     : abstract_command{"Resize Map", map}, m_rows{rows}, m_cols{cols}
 {}
 

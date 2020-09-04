@@ -10,7 +10,7 @@ namespace tactile::model {
 
 map_model::map_model(QObject* parent)
     : QObject{parent},
-      m_map{(std::make_unique<tilemap>(5, 5))},
+      m_map{(std::make_unique<map>(5, 5))},
       m_commands{new command_stack{this}}
 {
   connect(m_commands,
@@ -140,17 +140,17 @@ auto map_model::current_tile_size() const noexcept -> int
   return m_map->get_tile_size().get();
 }
 
-auto map_model::map() noexcept -> tilemap&
+auto map_model::get_map() noexcept -> map&
 {
   return *m_map.operator->();  // because operator* isn't noexcept
 }
 
-auto map_model::map() const noexcept -> const tilemap&
+auto map_model::get_map() const noexcept -> const map&
 {
   return *m_map.operator->();  // because operator* isn't noexcept
 }
 
-auto map_model::get() noexcept -> tilemap*
+auto map_model::get() noexcept -> map*
 {
   return m_map.get();
 }

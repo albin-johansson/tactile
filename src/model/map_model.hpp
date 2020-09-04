@@ -4,7 +4,7 @@
 #include <qpainter.h>
 
 #include "command_stack.hpp"
-#include "tilemap.hpp"
+#include "map.hpp"
 
 namespace tactile::model {
 
@@ -77,11 +77,11 @@ class map_model final : public QObject
 
   /// @}
 
-  [[nodiscard]] auto map() noexcept -> tilemap&;
+  [[nodiscard]] auto get_map() noexcept -> map&;
 
-  [[nodiscard]] auto map() const noexcept -> const tilemap&;
+  [[nodiscard]] auto get_map() const noexcept -> const map&;
 
-  [[nodiscard]] auto get() noexcept -> tilemap*;
+  [[nodiscard]] auto get() noexcept -> map*;
 
  signals:
   void undo_state_updated(bool canUndo);
@@ -93,7 +93,7 @@ class map_model final : public QObject
   void redo_text_updated(const QString& text);
 
  private:
-  std::unique_ptr<tilemap> m_map;
+  std::unique_ptr<map> m_map;
   command_stack* m_commands;
 };
 

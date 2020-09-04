@@ -1,5 +1,5 @@
 /**
- * @file tile_layer.hpp
+ * @file layer.hpp
  *
  * @brief Provides the `layer` class.
  *
@@ -25,11 +25,11 @@ namespace tactile::model {
 /**
  * @class layer
  *
- * @brief Represents a layer of tiles in a tilemap.
+ * @brief Represents a layer of tiles in a map.
  *
  * @since 0.1.0
  *
- * @see `tilemap`
+ * @see `map`
  * @see `tilemap_renderer`
  *
  * @headerfile layer.hpp

@@ -9,7 +9,7 @@
 
 namespace tactile::gui {
 
-map_scene::map_scene(not_null<model::tilemap*> map, map_id id, QWidget* parent)
+map_scene::map_scene(not_null<model::map*> map, map_id id, QWidget* parent)
     : QGraphicsScene{parent}, m_item{new map_item{map}}, m_id{id}
 {
   //  auto* item = new map_item{map};

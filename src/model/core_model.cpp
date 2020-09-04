@@ -160,7 +160,7 @@ auto core_model::tile_size() const -> std::optional<int>
   }
 }
 
-auto core_model::get_map(map_id id) -> tilemap*
+auto core_model::get_map(map_id id) -> map*
 {
   if (const auto it = m_maps.find(id); it != m_maps.end()) {
     return it->second->get();

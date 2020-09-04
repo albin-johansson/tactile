@@ -32,7 +32,7 @@ concept ResizeDialogCallback = std::invocable<T, int, int>;
  * @class resize_dialog
  *
  * @brief Represents the dialog that is used to select the new size of the
- * current tilemap.
+ * current map.
  *
  * @since 0.1.0
  *

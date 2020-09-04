@@ -33,7 +33,7 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 
   init_connections();
   init_layout();
-  enable_startup_view();  // TODO option to reopen last tilemap
+  enable_startup_view();  // TODO option to reopen last map
 }
 
 window::~window() noexcept
@@ -213,7 +213,7 @@ void window::handle_draw()
   m_mainEditor->handle_redraw();
 }
 
-void window::handle_new_map(not_null<model::tilemap*> map, map_id id)
+void window::handle_new_map(not_null<model::map*> map, map_id id)
 {
   m_mainEditor->add_new_map_tab(map, "map", id);  // TODO pass core and map_id?
   m_mainEditor->select_tab(id);

@@ -12,9 +12,9 @@
 namespace tactile::gui {
 
 using model::layer;
-using model::tilemap;
+using model::map;
 
-map_item::map_item(not_null<tilemap*> map, QGraphicsItem* parent)
+map_item::map_item(not_null<map*> map, QGraphicsItem* parent)
     : QGraphicsItem{parent}, m_map{map}
 {
   // This is to be able to use exposedRect

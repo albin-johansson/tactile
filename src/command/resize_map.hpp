@@ -7,7 +7,7 @@ namespace tactile::cmd {
 /**
  * @class resize_map
  *
- * @brief Represents the action of resizing the active tilemap.
+ * @brief Represents the action of resizing the active map.
  *
  * @since 0.1.0
  *
@@ -19,13 +19,13 @@ class resize_map final : public abstract_command
   /**
    * @brief Creates a `resize_map` instance.
    *
-   * @param map a pointer to the associated tilemap.
-   * @param nRows the new number of rows for the active tilemap.
-   * @param nCols the new number of columns for the active tilemap.
+   * @param map a pointer to the associated map.
+   * @param nRows the new number of rows for the active map.
+   * @param nCols the new number of columns for the active map.
    *
    * @since 0.1.0
    */
-  resize_map(not_null<model::tilemap*> map, int nRows, int nCols);
+  resize_map(not_null<model::map*> map, int nRows, int nCols);
 
   void undo() override;
 

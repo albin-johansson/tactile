@@ -7,7 +7,7 @@ namespace tactile::cmd {
 /**
  * @class add_row
  *
- * @brief Represents the action of adding a row to the active tilemap.
+ * @brief Represents the action of adding a row to the active map.
  *
  * @since 0.1.0
  *
@@ -16,7 +16,7 @@ namespace tactile::cmd {
 class add_row final : public abstract_command
 {
  public:
-  explicit add_row(not_null<model::tilemap*> map);
+  explicit add_row(not_null<model::map*> map);
 
   void undo() override;
 

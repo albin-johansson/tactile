@@ -45,7 +45,7 @@ void map_editor::init_connections()
           &map_editor::tab_changed);
 }
 
-void map_editor::add_new_map_tab(not_null<model::tilemap*> map,
+void map_editor::add_new_map_tab(not_null<model::map*> map,
                                  const QString& title,
                                  map_id id)
 {
