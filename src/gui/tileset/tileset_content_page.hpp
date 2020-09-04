@@ -2,7 +2,7 @@
 
 #include <qwidget.h>
 
-#include <memory>
+#include <unordered_map>
 
 #include "fwd.hpp"
 #include "types.hpp"
@@ -33,7 +33,7 @@ class tileset_content_page final : public QWidget
   [[nodiscard]] auto empty() const -> bool;
 
  signals:
-  void request_add_tileset();  // FIXME seemingly unused
+  void request_add_tileset();
 
  private:
   owner<Ui::tileset_content_page*> m_ui;
