@@ -25,8 +25,7 @@ void map_view::move_map(int dx, int dy)
 
 void map_view::center_map()
 {
-  // TODO reimplement
-  //  m_scene->center_viewport(mapWidth, mapHeight);
+  get_map_scene()->center_map();
 }
 
 void map_view::mousePressEvent(QMouseEvent* event)

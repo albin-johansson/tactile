@@ -22,6 +22,8 @@ class map_scene final : public QGraphicsScene
 
   void move_map_item(int dx, int dy);
 
+  void center_map();
+
   [[nodiscard]] auto id() const noexcept -> map_id
   {
     return m_id;

@@ -4,6 +4,7 @@
 #include <qevent.h>
 #include <qgraphicssceneevent.h>
 #include <qpainter.h>
+#include <qrect.h>
 
 #include "map_item.hpp"
 
@@ -33,6 +34,15 @@ map_scene::map_scene(not_null<core::map*> map, map_id id, QWidget* parent)
 void map_scene::move_map_item(int dx, int dy)
 {
   m_item->moveBy(dx, dy);
+}
+
+void map_scene::center_map()
+{
+  const auto rect = sceneRect();
+  const auto bounds = m_item->boundingRect();
+
+  m_item->setX(rect.x() + (rect.width() - bounds.width()) / 2.0);
+  m_item->setY(rect.y() + (rect.height() - bounds.height()) / 2.0);
 }
 
 // void tilemap_scene::drawBackground(QPainter* painter, const QRectF& rect)
