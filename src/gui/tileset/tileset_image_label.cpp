@@ -26,8 +26,8 @@ tileset_image_label::tileset_image_label(const QImage& image,
   m_maxX = m_width - 1;
   m_maxY = m_height - 1;
 
-  m_nRows = m_height / m_tileWidth;
-  m_nCols = m_width / m_tileHeight;
+  m_nRows = m_height / m_tileWidth.get();
+  m_nCols = m_width / m_tileHeight.get();
 }
 
 tileset_image_label::~tileset_image_label() noexcept = default;
@@ -41,15 +41,19 @@ void tileset_image_label::paintEvent(QPaintEvent* event)
 
   const auto region = visibleRegion().boundingRect();
 
-  const auto minRow = region.y() / m_tileHeight;
-  const auto minCol = region.x() / m_tileWidth;
-  const auto maxRow = ((region.y() + region.height()) / m_tileHeight) + 1;
-  const auto maxCol = ((region.x() + region.width()) / m_tileWidth) + 1;
+  const auto tileWidth = m_tileWidth.get();
+  const auto tileHeight = m_tileHeight.get();
+
+  const auto minRow = region.y() / tileHeight;
+  const auto minCol = region.x() / tileWidth;
+  const auto maxRow = ((region.y() + region.height()) / tileHeight) + 1;
+  const auto maxCol = ((region.x() + region.width()) / tileWidth) + 1;
 
   for (auto row = minRow; row < maxRow; ++row) {
     for (auto col = minCol; col < maxCol; ++col) {
-      painter.drawRect(
-          col * m_tileWidth, row * m_tileHeight, m_width, m_height);
+      const auto x = col * tileWidth;
+      const auto y = row * tileHeight;
+      painter.drawRect(x, y, m_width, m_height);
     }
   }
 

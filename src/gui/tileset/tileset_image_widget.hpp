@@ -34,6 +34,10 @@ class tileset_image_widget final : public QWidget
   QRubberBand* m_rubberBand;
   QPoint m_origin;
   QPoint m_lastMousePos;
+  tile_width m_tileWidth;
+  tile_height m_tileHeight;
+
+  [[nodiscard]] auto get_adjusted_selection() const -> QRect;
 };
 
 }  // namespace tactile::gui

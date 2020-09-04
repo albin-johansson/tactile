@@ -22,8 +22,8 @@ class tileset_image_label final : public QLabel
   void paintEvent(QPaintEvent* event) override;
 
  private:
-  int m_tileWidth;
-  int m_tileHeight;
+  tile_width m_tileWidth;
+  tile_height m_tileHeight;
   int m_width;
   int m_height;
   int m_maxX;
