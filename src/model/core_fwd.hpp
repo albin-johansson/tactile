@@ -6,7 +6,7 @@ class tilemap;
 
 class layer;
 
-class map_position;
+class position;
 
 class tile_size;
 

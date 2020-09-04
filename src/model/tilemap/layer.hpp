@@ -17,7 +17,7 @@
 #include <optional>
 #include <vector>
 
-#include "map_position.hpp"
+#include "position.hpp"
 #include "types.hpp"
 
 namespace tactile::model {
@@ -57,13 +57,13 @@ class layer final
    *
    * @note This method has no effect if the flood fill cannot be performed.
    *
-   * @param position the starting position of the flood fill.
+   * @param pos the starting position of the flood fill.
    * @param target the tile type that will be replaced.
    * @param replacement the tile type that will replace the target type.
    *
    * @since 0.1.0
    */
-  void flood(const map_position& position, tile_id target, tile_id replacement);
+  void flood(const position& pos, tile_id target, tile_id replacement);
 
   /**
    * @brief Adds a row to the tile layer.
@@ -130,12 +130,12 @@ class layer final
    *
    * @note This method has no effect if the supplied position is out-of-bounds.
    *
-   * @param position the position of the tile that will be changed.
+   * @param pos the position of the tile that will be changed.
    * @param id the new tile ID.
    *
    * @since 0.1.0
    */
-  void set_tile(const map_position& position, tile_id id) noexcept;
+  void set_tile(const position& pos, tile_id id) noexcept;
 
   /**
    * @brief Sets whether or not the tile layer is visible.
@@ -175,28 +175,27 @@ class layer final
    * @note This method returns `std::nullopt` if the supplied position
    * is out-of-bounds.
    *
-   * @param position the position to obtain the tile ID of.
+   * @param pos the position to obtain the tile ID of.
    *
    * @return the ID of the tile at the specified position; `std::nullopt` if the
    * position is out-of-bounds.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_at(const map_position& position) const
+  [[nodiscard]] auto tile_at(const position& pos) const
       -> std::optional<tile_id>;
 
   /**
    * @brief Indicates whether or not the specified position is in bounds of the
    * tile layer.
    *
-   * @param position the position that will be checked.
+   * @param pos the position that will be checked.
    *
    * @return `true` if the position is in bounds; `false` otherwise.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto in_bounds(const map_position& position) const noexcept
-      -> bool;
+  [[nodiscard]] auto in_bounds(const position& pos) const noexcept -> bool;
 
   /**
    * @brief Indicates whether or not the tile layer is visible.

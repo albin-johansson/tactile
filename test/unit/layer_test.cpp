@@ -3,7 +3,7 @@
 #include <catch.hpp>
 
 #include "algorithm.hpp"
-#include "map_position.hpp"
+#include "position.hpp"
 
 using namespace tactile;
 using namespace tactile::model;
@@ -102,7 +102,7 @@ TEST_CASE("layer::set_tile", "[layer]")
 {
   layer layer{5, 5};
 
-  const map_position pos{2, 2};
+  const position pos{2, 2};
   CHECK(*layer.tile_at(pos) == empty);
 
   const tile_id tileID{24};

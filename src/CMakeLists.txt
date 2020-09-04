@@ -21,8 +21,6 @@ set(TACTILE_SOURCE_FILES
         model/core_fwd.hpp
         model/core_model.hpp
         model/core_model.cpp
-        model/layer_model.cpp
-        model/layer_model.hpp
         model/map_model.cpp
         model/map_model.hpp
         model/tactile_error.hpp
@@ -44,7 +42,7 @@ set(TACTILE_SOURCE_FILES
         model/tilemap/tilemap.cpp
         model/tilemap/layer.cpp
         model/tilemap/layer.hpp
-        model/tilemap/map_position.hpp
+        model/tilemap/position.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp

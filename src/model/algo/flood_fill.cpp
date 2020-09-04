@@ -6,12 +6,12 @@
 #include <memory_resource>
 #include <queue>  // queue
 
-#include "map_position.hpp"
+#include "position.hpp"
 
 namespace tactile::model {
 
 void flood_fill(layer& layer,
-                const map_position& origin,
+                const position& origin,
                 tile_id target,
                 tile_id replacement)
 {
@@ -24,12 +24,12 @@ void flood_fill(layer& layer,
 
   layer.set_tile(origin, replacement);
 
-  // 3,200 bytes given that map_position is 8 bytes
-  using buffer_t = std::array<std::byte, 400 * sizeof(map_position)>;
+  // 3,200 bytes given that position is 8 bytes
+  using buffer_t = std::array<std::byte, 400 * sizeof(position)>;
 
   // TODO profile with VS and compare with unsynchronized_pool_resource
   using resource_t = std::pmr::monotonic_buffer_resource;
-  using pmr_queue = std::queue<map_position, std::pmr::deque<map_position>>;
+  using pmr_queue = std::queue<position, std::pmr::deque<position>>;
 
   buffer_t buffer{};
   resource_t resource{buffer.data(), sizeof buffer};
@@ -37,7 +37,7 @@ void flood_fill(layer& layer,
 
   queue.push(origin);
 
-  const auto update = [&](const map_position& position) {
+  const auto update = [&](const position& pos) {
     if (const auto tile = layer.tile_at(position); tile && tile == target) {
       layer.set_tile(position, replacement);
       queue.push(position);

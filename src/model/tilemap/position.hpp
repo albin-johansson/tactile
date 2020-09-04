@@ -7,15 +7,15 @@
 namespace tactile::model {
 
 /**
- * @class map_position
+ * @class position
  *
  * @brief Represents a row- and column-based position in a tilemap.
  *
  * @since 0.1.0
  *
- * @headerfile map_position.hpp
+ * @headerfile position.hpp
  */
-class map_position final
+class position final
 {
  public:
   /**
@@ -23,7 +23,7 @@ class map_position final
    *
    * @since 0.1.0
    */
-  constexpr map_position() noexcept = default;
+  constexpr position() noexcept = default;
 
   /**
    * @brief Creates a map position.
@@ -34,7 +34,7 @@ class map_position final
    *
    * @since 0.1.0
    */
-  constexpr map_position(int row, int col) noexcept
+  constexpr position(int row, int col) noexcept
       : m_row{at_least(row, 0)}, m_col{at_least(col, 0)}
   {}
 
@@ -71,7 +71,7 @@ class map_position final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] constexpr auto north() const noexcept -> map_position
+  [[nodiscard]] constexpr auto north() const noexcept -> position
   {
     return {m_row - 1, m_col};
   }
@@ -84,7 +84,7 @@ class map_position final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] constexpr auto east() const noexcept -> map_position
+  [[nodiscard]] constexpr auto east() const noexcept -> position
   {
     return {m_row, m_col + 1};
   }
@@ -96,7 +96,7 @@ class map_position final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] constexpr auto south() const noexcept -> map_position
+  [[nodiscard]] constexpr auto south() const noexcept -> position
   {
     return {m_row + 1, m_col};
   }
@@ -109,7 +109,7 @@ class map_position final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] constexpr auto west() const noexcept -> map_position
+  [[nodiscard]] constexpr auto west() const noexcept -> position
   {
     return {m_row, m_col - 1};
   }
@@ -170,7 +170,7 @@ class map_position final
     return static_cast<std::size_t>(m_col);
   }
 
-  [[nodiscard]] auto operator==(const map_position&) const noexcept
+  [[nodiscard]] auto operator==(const position&) const noexcept
       -> bool = default;
 
  private:
