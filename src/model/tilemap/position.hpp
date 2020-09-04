@@ -3,8 +3,33 @@
 #include <cstddef>  // size_t
 
 #include "algorithm.hpp"
+#include "nenya.hpp"
 
 namespace tactile::model {
+namespace detail {
+
+struct row_tag final
+{};
+
+struct col_tag final
+{};
+
+}  // namespace detail
+
+using row = nenya::mirror_type<int, detail::row_tag>;
+using col = nenya::mirror_type<int, detail::col_tag>;
+
+[[nodiscard]] constexpr auto operator"" _row(unsigned long long value) noexcept
+    -> row
+{
+  return row{static_cast<int>(value)};
+}
+
+[[nodiscard]] constexpr auto operator"" _col(unsigned long long value) noexcept
+    -> col
+{
+  return col{static_cast<int>(value)};
+}
 
 /**
  * @class position
@@ -34,8 +59,8 @@ class position final
    *
    * @since 0.1.0
    */
-  constexpr position(int row, int col) noexcept
-      : m_row{at_least(row, 0)}, m_col{at_least(col, 0)}
+  constexpr position(row row, col col) noexcept
+      : m_row{at_least(row.get(), 0)}, m_col{at_least(col.get(), 0)}
   {}
 
   /**
@@ -46,9 +71,9 @@ class position final
    *
    * @since 0.1.0
    */
-  constexpr void set_row(int row) noexcept
+  constexpr void set_row(row row) noexcept
   {
-    m_row = at_least(row, 0);
+    m_row = at_least(row.get(), 0);
   }
 
   /**
@@ -59,9 +84,9 @@ class position final
    *
    * @since 0.1.0
    */
-  constexpr void set_col(int col) noexcept
+  constexpr void set_col(col col) noexcept
   {
-    m_col = at_least(col, 0);
+    m_col = at_least(col.get(), 0);
   }
 
   /**
@@ -73,7 +98,7 @@ class position final
    */
   [[nodiscard]] constexpr auto north() const noexcept -> position
   {
-    return {m_row - 1, m_col};
+    return {row{m_row - 1}, col{m_col}};
   }
 
   /**
@@ -86,7 +111,7 @@ class position final
    */
   [[nodiscard]] constexpr auto east() const noexcept -> position
   {
-    return {m_row, m_col + 1};
+    return {row{m_row}, col{m_col + 1}};
   }
 
   /**
@@ -98,7 +123,7 @@ class position final
    */
   [[nodiscard]] constexpr auto south() const noexcept -> position
   {
-    return {m_row + 1, m_col};
+    return {row{m_row + 1}, col{m_col}};
   }
 
   /**
@@ -111,7 +136,7 @@ class position final
    */
   [[nodiscard]] constexpr auto west() const noexcept -> position
   {
-    return {m_row, m_col - 1};
+    return {row{m_row}, col{m_col - 1}};
   }
 
   /**
@@ -123,9 +148,9 @@ class position final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] constexpr auto row() const noexcept -> int
+  [[nodiscard]] constexpr auto get_row() const noexcept -> row
   {
-    return m_row;
+    return row{m_row};
   }
 
   /**
@@ -137,9 +162,9 @@ class position final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] constexpr auto col() const noexcept -> int
+  [[nodiscard]] constexpr auto get_col() const noexcept -> col
   {
-    return m_col;
+    return col{m_col};
   }
 
   /**
@@ -173,6 +198,7 @@ class position final
   [[nodiscard]] auto operator<=>(const position&) const noexcept = default;
 
  private:
+  // not using the row and col types in order to default spaceship operator
   int m_row{};
   int m_col{};
 };

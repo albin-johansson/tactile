@@ -7,32 +7,32 @@ using namespace tactile::model;
 TEST_CASE("map_position()", "[map_position]")
 {
   const position position;
-  CHECK(position.row() == 0);
-  CHECK(position.col() == 0);
+  CHECK(position.get_row() == 0_row);
+  CHECK(position.get_col() == 0_col);
 }
 
 TEST_CASE("map_position(int, int)", "[map_position]")
 {
   SECTION("Valid arguments")
   {
-    const auto row = 123;
-    const auto col = 557;
+    const auto row = 123_row;
+    const auto col = 557_col;
     const position position{row, col};
-    CHECK(position.row() == row);
-    CHECK(position.col() == col);
+    CHECK(position.get_row() == row);
+    CHECK(position.get_col() == col);
   }
 
   SECTION("Edge-case arguments")
   {
-    const position valid1{0, 0};
-    CHECK(valid1.row() == 0);
-    CHECK(valid1.col() == 0);
+    const position valid1{0_row, 0_col};
+    CHECK(valid1.get_row() == 0_row);
+    CHECK(valid1.get_col() == 0_col);
 
-    const position invalid1{-1, 0};
-    CHECK(invalid1.row() == 0);
+    const position invalid1{-1_row, 0_col};
+    CHECK(invalid1.get_row() == 0_row);
 
-    const position invalid2{0, -1};
-    CHECK(invalid2.col() == 0);
+    const position invalid2{0_row, -1_col};
+    CHECK(invalid2.get_col() == 0_col);
   }
 }
 
@@ -40,93 +40,93 @@ TEST_CASE("map_position::set_row", "[map_position]")
 {
   position position;
 
-  const auto row = 892;
+  const auto row = 892_row;
   position.set_row(row);
 
-  CHECK(position.row() == row);
+  CHECK(position.get_row() == row);
 }
 
 TEST_CASE("map_position::set_col", "[map_position]")
 {
   position position;
 
-  const auto col = 438291;
+  const auto col = 438291_col;
   position.set_col(col);
 
-  CHECK(position.col() == col);
+  CHECK(position.get_col() == col);
 }
 
 TEST_CASE("map_position::row", "[map_position]")
 {
-  const auto row = 8324;
-  const position position{row, 0};
+  const auto row = 8324_row;
+  const position position{row, 0_col};
 
-  CHECK(position.row() == row);
+  CHECK(position.get_row() == row);
 }
 
 TEST_CASE("map_position::col", "[map_position]")
 {
-  const auto col = 493;
-  const position position{0, col};
+  const auto col = 493_col;
+  const position position{0_row, col};
 
-  CHECK(position.col() == col);
+  CHECK(position.get_col() == col);
 }
 
 TEST_CASE("map_position::urow", "[map_position]")
 {
-  const auto row = 6532;
-  const position position{row, 0};
+  const auto row = 6532_row;
+  const position position{row, 0_col};
 
-  CHECK(position.urow() == static_cast<std::size_t>(row));
+  CHECK(position.urow() == static_cast<std::size_t>(row.get()));
 }
 
 TEST_CASE("map_position::ucol", "[map_position]")
 {
-  const auto col = 18343;
-  const position position{0, col};
+  const auto col = 18343_col;
+  const position position{0_row, col};
 
-  CHECK(position.ucol() == static_cast<std::size_t>(col));
+  CHECK(position.ucol() == static_cast<std::size_t>(col.get()));
 }
 
 TEST_CASE("map_position::north", "[map_position]")
 {
-  const position fst{7, 15};
+  const position fst{7_row, 15_col};
   const position snd = fst.north();
 
-  CHECK(snd.row() == fst.row() - 1);
-  CHECK(snd.col() == fst.col());
+  CHECK(snd.get_row() == fst.get_row() - 1_row);
+  CHECK(snd.get_col() == fst.get_col());
 }
 
 TEST_CASE("map_position::east", "[map_position]")
 {
-  const position fst{52, 77};
+  const position fst{52_row, 77_col};
   const position snd = fst.east();
 
-  CHECK(snd.row() == fst.row());
-  CHECK(snd.col() == fst.col() + 1);
+  CHECK(snd.get_row() == fst.get_row());
+  CHECK(snd.get_col() == fst.get_col() + 1_col);
 }
 
 TEST_CASE("map_position::south", "[map_position]")
 {
-  const position fst{33, 6};
+  const position fst{33_row, 6_col};
   const position snd = fst.south();
 
-  CHECK(snd.row() == fst.row() + 1);
-  CHECK(snd.col() == fst.col());
+  CHECK(snd.get_row() == fst.get_row() + 1_row);
+  CHECK(snd.get_col() == fst.get_col());
 }
 
 TEST_CASE("map_position::west", "[map_position]")
 {
-  const position fst{62, 39};
+  const position fst{62_row, 39_col};
   const position snd = fst.west();
 
-  CHECK(snd.row() == fst.row());
-  CHECK(snd.col() == fst.col() - 1);
+  CHECK(snd.get_row() == fst.get_row());
+  CHECK(snd.get_col() == fst.get_col() - 1_col);
 }
 
 TEST_CASE("map_position operator==", "[map_position]")
 {
-  const position pos{45, 23};
+  const position pos{45_row, 23_col};
   CHECK(pos == pos);
 
   const position copy{pos};
@@ -137,10 +137,10 @@ TEST_CASE("map_position operator==", "[map_position]")
 
 TEST_CASE("map_position operator!=", "[map_position]")
 {
-  const position pos{45, 23};
+  const position pos{45_row, 23_col};
   CHECK(!(pos != pos));
 
-  const position other{839, 54};
+  const position other{839_row, 54_col};
   CHECK(pos != other);
   CHECK(other != pos);
 }

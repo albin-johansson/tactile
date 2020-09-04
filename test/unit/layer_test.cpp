@@ -26,9 +26,11 @@ TEST_CASE("layer::add_row", "[layer]")
 
   CHECK(layer.rows() == (nRows + 1));
 
+  const row r{nRows};
   for (int i = 0; i < layer.cols(); ++i) {
-    CHECK(*layer.tile_at({nRows - 1, i}) == empty);
-    CHECK(*layer.tile_at({nRows, i}) == tileID);
+    const col c{i};
+    CHECK(*layer.tile_at({r - 1_row, c}) == empty);
+    CHECK(*layer.tile_at({r, c}) == tileID);
   }
 }
 
@@ -42,9 +44,11 @@ TEST_CASE("layer::add_col", "[layer]")
 
   CHECK(layer.cols() == (nCols + 1));
 
+  const col c{nCols};
   for (int i = 0; i < layer.rows(); ++i) {
-    CHECK(*layer.tile_at({i, nCols - 1}) == empty);
-    CHECK(*layer.tile_at({i, nCols}) == tileID);
+    const row r{i};
+    CHECK(*layer.tile_at({r, c - 1_col}) == empty);
+    CHECK(*layer.tile_at({r, c}) == tileID);
   }
 }
 
@@ -102,7 +106,7 @@ TEST_CASE("layer::set_tile", "[layer]")
 {
   layer layer{5, 5};
 
-  const position pos{2, 2};
+  const position pos{2_row, 2_col};
   CHECK(*layer.tile_at(pos) == empty);
 
   const tile_id tileID{24};
@@ -110,9 +114,10 @@ TEST_CASE("layer::set_tile", "[layer]")
 
   CHECK(*layer.tile_at(pos) == tileID);
 
-  CHECK_NOTHROW(layer.set_tile({-1, -1}, tile_id{5}));
-  CHECK_NOTHROW(layer.set_tile({layer.rows(), layer.cols()}, tile_id{7}));
-  CHECK(layer.tile_at({layer.rows(), layer.cols()}) == std::nullopt);
+  CHECK_NOTHROW(layer.set_tile({-1_row, -1_col}, tile_id{5}));
+  CHECK_NOTHROW(
+      layer.set_tile({row{layer.rows()}, col{layer.cols()}}, tile_id{7}));
+  CHECK(layer.tile_at({row{layer.rows()}, col{layer.cols()}}) == std::nullopt);
 }
 
 TEST_CASE("layer::set_visible", "[layer]")
@@ -131,15 +136,15 @@ TEST_CASE("layer::set_visible", "[layer]")
 TEST_CASE("layer::tile_at", "[layer]")
 {
   const layer layer{5, 5};
-  CHECK(layer.tile_at({0, 0}) != std::nullopt);
-  CHECK(layer.tile_at({4, 4}) != std::nullopt);
-  CHECK(layer.tile_at({5, 5}) == std::nullopt);
+  CHECK(layer.tile_at({0_row, 0_col}) != std::nullopt);
+  CHECK(layer.tile_at({4_row, 4_col}) != std::nullopt);
+  CHECK(layer.tile_at({5_row, 5_col}) == std::nullopt);
 }
 
 TEST_CASE("layer::in_bounds", "[layer]")
 {
   const layer layer{5, 5};
-  CHECK(layer.in_bounds({0, 0}));
-  CHECK(layer.in_bounds({4, 4}));
-  CHECK(!layer.in_bounds({5, 5}));
+  CHECK(layer.in_bounds({0_row, 0_col}));
+  CHECK(layer.in_bounds({4_row, 4_col}));
+  CHECK(!layer.in_bounds({5_row, 5_col}));
 }

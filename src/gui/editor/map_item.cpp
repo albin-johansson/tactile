@@ -6,6 +6,7 @@
 
 #include <algorithm>  // min, max
 
+#include "position.hpp"
 #include "preferences.hpp"
 
 namespace tactile::gui {
@@ -24,22 +25,25 @@ void map_item::draw_layer(QPainter& painter,
                           const layer& layer,
                           const QRectF& exposed)
 {
+  using model::col;
+  using model::row;
+
   if (exposed.isEmpty()) {
     return;
   }
 
   const auto tileSize = m_map->get_tile_size().get();
 
-  const auto get_end_row = [&exposed, tileSize](int nRows) -> int {
+  const auto get_end_row = [&exposed, tileSize](int nRows) -> row {
     const auto endY = static_cast<int>(exposed.y() + exposed.height());
     const auto row = (endY / tileSize) + 1;
-    return std::min(nRows, row);
+    return model::row{std::min(nRows, row)};
   };
 
-  const auto get_end_col = [&exposed, tileSize](int nCols) -> int {
+  const auto get_end_col = [&exposed, tileSize](int nCols) -> col {
     const auto endX = static_cast<int>(exposed.x() + exposed.width());
     const auto col = (endX / tileSize) + 1;
-    return std::min(nCols, col);
+    return model::col{std::min(nCols, col)};
   };
 
   const auto beginRow = std::max(0, static_cast<int>(exposed.y() / tileSize));
@@ -51,13 +55,14 @@ void map_item::draw_layer(QPainter& painter,
   constexpr QColor emptyDarkGray{0x33, 0x33, 0x33};
   const auto renderGrid = prefs::graphics::render_grid().value_or(false);
 
-  for (int row = beginRow; row < endRow; ++row) {
-    for (int col = beginCol; col < endCol; ++col) {
-      const auto x = col * tileSize;
-      const auto y = row * tileSize;
+  for (row row{beginRow}; row < endRow; ++row) {
+    for (col col{beginCol}; col < endCol; ++col) {
+      const auto x = col.get() * tileSize;
+      const auto y = row.get() * tileSize;
 
-      const auto& color =
-          ((row % 2 == 0) == (col % 2 == 0)) ? emptyDarkGray : emptyLightGray;
+      const auto& color = ((row.get() % 2 == 0) == (col.get() % 2 == 0))
+                              ? emptyDarkGray
+                              : emptyLightGray;
 
       painter.fillRect(x, y, tileSize, tileSize, color);
       if (renderGrid) {
