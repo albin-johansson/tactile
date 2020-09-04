@@ -11,7 +11,7 @@ namespace tactile::gui {
 
 resize_dialog::resize_dialog(QWidget* parent)
     : QDialog{parent},
-      m_ui{new Ui::ResizeDialogUI{}},
+      m_ui{new Ui::resize_dialog{}},
       m_chosenWidth{std::nullopt},
       m_chosenHeight{std::nullopt}
 {

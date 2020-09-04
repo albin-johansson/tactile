@@ -6,9 +6,7 @@
 #include <optional>
 
 namespace Ui {
-
-class ResizeDialogUI;
-
+class resize_dialog;
 }
 
 class QIntValidator;
@@ -82,7 +80,7 @@ class resize_dialog final : public QDialog
   }
 
  private:
-  Ui::ResizeDialogUI* m_ui;
+  Ui::resize_dialog* m_ui;
   QIntValidator* m_validator;
   std::optional<int> m_chosenWidth;
   std::optional<int> m_chosenHeight;

@@ -5,7 +5,7 @@
 namespace tactile::gui {
 
 about_dialog::about_dialog(QWidget* parent)
-    : QDialog{parent}, m_ui{new Ui::AboutUI{}}
+    : QDialog{parent}, m_ui{new Ui::about_dialog{}}
 {
   m_ui->setupUi(this);
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ResizeDialogUI</class>
- <widget class="QDialog" name="ResizeDialogUI">
+ <class>resize_dialog</class>
+ <widget class="QDialog" name="resize_dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -240,13 +240,13 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../tactile.qrc"/>
+  <include location="../../../tactile.qrc"/>
  </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>ResizeDialogUI</receiver>
+   <receiver>resize_dialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -262,7 +262,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>ResizeDialogUI</receiver>
+   <receiver>resize_dialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

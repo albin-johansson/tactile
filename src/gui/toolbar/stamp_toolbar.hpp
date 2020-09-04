@@ -5,9 +5,7 @@
 #include "types.hpp"
 
 namespace Ui {
-
-class StampToolbarUI;
-
+class stamp_toolbar;
 }
 
 namespace tactile::gui {
@@ -22,7 +20,7 @@ class stamp_toolbar final : public QWidget
   ~stamp_toolbar() noexcept override;
 
  private:
-  owner<Ui::StampToolbarUI*> m_ui;
+  owner<Ui::stamp_toolbar*> m_ui;
 };
 
 }  // namespace tactile::gui

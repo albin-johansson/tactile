@@ -3,7 +3,7 @@
 #include <qdialog.h>
 
 namespace Ui {
-class AboutUI;
+class about_dialog;
 }
 
 namespace tactile::gui {
@@ -28,7 +28,7 @@ class about_dialog final : public QDialog
   ~about_dialog() noexcept override;
 
  private:
-  Ui::AboutUI* m_ui;
+  Ui::about_dialog* m_ui;
 };
 
 }  // namespace tactile::gui

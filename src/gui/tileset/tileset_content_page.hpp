@@ -8,7 +8,7 @@
 #include "types.hpp"
 
 namespace Ui {
-class TilesetContentPageUI;  // FIXME
+class tileset_content_page;
 }
 
 namespace tactile::gui {
@@ -36,7 +36,7 @@ class tileset_content_page final : public QWidget
   void request_add_tileset();  // FIXME seemingly unused
 
  private:
-  owner<Ui::TilesetContentPageUI*> m_ui;
+  owner<Ui::tileset_content_page*> m_ui;
   std::unordered_map<tileset_id, tileset_tab*> m_tabs;
 
   //  [[nodiscard]] bool contains_tileset(int id) const noexcept;

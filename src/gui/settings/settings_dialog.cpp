@@ -8,7 +8,7 @@
 namespace tactile::gui {
 
 settings_dialog::settings_dialog(QWidget* parent)
-    : QDialog{parent}, m_ui{new Ui::SettingsUI{}}
+    : QDialog{parent}, m_ui{new Ui::settings_dialog{}}
 {
   m_ui->setupUi(this);
 

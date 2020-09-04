@@ -5,9 +5,7 @@
 #include <qwidget.h>
 
 namespace Ui {
-
-class SettingsUI;
-
+class settings_dialog;
 }
 
 namespace tactile::gui {
@@ -25,7 +23,7 @@ class settings_dialog final : public QDialog
   void reload_theme();
 
  private:
-  Ui::SettingsUI* m_ui;
+  Ui::settings_dialog* m_ui;
   QString m_initialTheme;
 
  private slots:

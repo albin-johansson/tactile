@@ -8,7 +8,7 @@
 #include "types.hpp"
 
 namespace Ui {
-class TilesetWidgetUI;
+class tileset_widget;
 }
 
 namespace tactile::gui {
@@ -34,7 +34,7 @@ class tileset_widget final : public QWidget
   void request_new_tileset();
 
  private:
-  owner<Ui::TilesetWidgetUI*> m_ui;
+  owner<Ui::tileset_widget*> m_ui;
   tileset_content_page* m_contentPage;
   tileset_empty_page* m_emptyPage;
   int m_emptyIndex;

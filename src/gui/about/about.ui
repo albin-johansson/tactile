@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AboutUI</class>
- <widget class="QWidget" name="AboutUI">
+ <class>about_dialog</class>
+ <widget class="QWidget" name="about_dialog">
   <property name="windowModality">
    <enum>Qt::ApplicationModal</enum>
   </property>
