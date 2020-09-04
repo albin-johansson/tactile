@@ -2,6 +2,8 @@
 
 #include <cmath>
 
+#include "algorithm.hpp"
+
 namespace tactile::model {
 
 void tile_size::reset() noexcept
@@ -16,14 +18,13 @@ void tile_size::increase()
 
 void tile_size::decrease() noexcept
 {
-  m_size = static_cast<int>(static_cast<double>(m_size) * 0.9);
-  m_size = (m_size < min_size()) ? min_size() : m_size;
+  const auto size = static_cast<int>(static_cast<double>(m_size) * 0.9);
+  m_size = at_least(size, min_size());
 }
 
 void tile_size::set_size(int size) noexcept
 {
-  size = (size < min_size()) ? min_size() : size;
-  m_size = size;
+  m_size = at_least(size, min_size());
 }
 
 }  // namespace tactile::model

@@ -22,8 +22,8 @@ namespace {
 
 tile_layer::tile_layer(int nRows, int nCols)
 {
-  nRows = (nRows < 1) ? 1 : nRows;
-  nCols = (nCols < 1) ? 1 : nCols;
+  nRows = at_least(nRows, 1);
+  nCols = at_least(nCols, 1);
 
   m_tiles.reserve(nRows);
   m_tiles.assign(nRows, create_row(nCols));
