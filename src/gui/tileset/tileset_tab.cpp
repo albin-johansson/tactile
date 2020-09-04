@@ -72,8 +72,6 @@ void tileset_tab::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
   QApplication::restoreOverrideCursor();
-
-  // TODO compute the selection
 }
 
 }  // namespace tactile::gui
