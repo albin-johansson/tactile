@@ -15,18 +15,24 @@ TEST_CASE("tileset(QImage, int, int)", "[tileset]")
   SECTION("Null image")
   {
     QImage image;
-    CHECK_THROWS_AS(tileset(image, 10, 10), tactile_error);
+    CHECK_THROWS_AS(tileset(image, 10_tw, 10_th), tactile_error);
   }
 
-  SECTION("Zero size") { CHECK_NOTHROW(tileset{"terrain.png", 0, 0}); }
+  SECTION("Zero size")
+  {
+    CHECK_NOTHROW(tileset{"terrain.png", 0_tw, 0_th});
+  }
 
-  SECTION("Good args") { CHECK_NOTHROW(tileset{"terrain.png", 32, 32}); }
+  SECTION("Good args")
+  {
+    CHECK_NOTHROW(tileset{"terrain.png", 32_tw, 32_th});
+  }
 }
 
 TEST_CASE("tileset::select", "[tileset]")
 {
-  const auto tileWidth = 32;
-  const auto tileHeight = 32;
+  const auto tileWidth = 32_tw;
+  const auto tileHeight = 32_th;
   tileset sheet{"terrain.png", tileWidth, tileHeight};
 
   sheet.select(0, 0);
@@ -37,7 +43,8 @@ TEST_CASE("tileset::select", "[tileset]")
   CHECK(std::distance(sheet.begin(), sheet.end()) == 1);
   CHECK(sheet.num_selected() == 1);
 
-  sheet.select(3 * tileWidth, 2 * tileHeight);
+  sheet.select(static_cast<int>(3_tw * tileWidth),
+               static_cast<int>(2_th * tileHeight));
   CHECK(std::distance(sheet.begin(), sheet.end()) == 2);
   CHECK(sheet.num_selected() == 2);
 
@@ -52,7 +59,7 @@ TEST_CASE("tileset::select", "[tileset]")
 
 TEST_CASE("tileset::set_first_id", "[tileset]")
 {
-  tileset sheet{"terrain.png", 32, 32};
+  tileset sheet{"terrain.png", 32_tw, 32_th};
 
   CHECK(sheet.first_id() == tile_id{1});
 
@@ -65,7 +72,7 @@ TEST_CASE("tileset::set_first_id", "[tileset]")
 TEST_CASE("tileset::width", "[tileset]")
 {
   const QImage image{"terrain.png"};
-  tileset sheet{image, 32, 32};
+  tileset sheet{image, 32_tw, 32_th};
 
   CHECK(sheet.width() == image.width());
 }
@@ -73,7 +80,7 @@ TEST_CASE("tileset::width", "[tileset]")
 TEST_CASE("tileset::height", "[tileset]")
 {
   const QImage image{"terrain.png"};
-  tileset sheet{image, 32, 32};
+  tileset sheet{image, 32_tw, 32_th};
 
   CHECK(sheet.height() == image.height());
 }
@@ -81,14 +88,14 @@ TEST_CASE("tileset::height", "[tileset]")
 TEST_CASE("tileset::tiles", "[tileset]")
 {
   const QImage image{"terrain.png"};
-  tileset sheet{image, 32, 32};
+  tileset sheet{image, 32_tw, 32_th};
 
   CHECK(sheet.num_tiles() == 1024);
 }
 
 TEST_CASE("tileset::last_id", "[tileset]")
 {
-  tileset sheet{"terrain.png", 32, 32};
+  tileset sheet{"terrain.png", 32_tw, 32_th};
 
   CHECK(sheet.last_id() == tile_id{1025});
   CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.num_tiles()});
@@ -99,7 +106,7 @@ TEST_CASE("tileset::last_id", "[tileset]")
 
 TEST_CASE("tileset::contains", "[tileset]")
 {
-  tileset sheet{"terrain.png", 32, 32};
+  tileset sheet{"terrain.png", 32_tw, 32_th};
 
   CHECK(sheet.contains(sheet.first_id()));
   CHECK(sheet.contains(sheet.last_id()));
@@ -117,7 +124,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 {
   SECTION("Outside of the tile sheet area")
   {
-    tileset sheet{"terrain.png", 32, 32};
+    tileset sheet{"terrain.png", 32_tw, 32_th};
 
     CHECK(sheet.tile_at(-1, -1) == empty);
     CHECK(sheet.tile_at(sheet.width() + 1, 0) == empty);
@@ -127,12 +134,12 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 
   SECTION("Without changed first ID")
   {
-    tileset sheet{"terrain.png", 32, 32};
+    tileset sheet{"terrain.png", 32_tw, 32_th};
 
     const auto row = 7;
     const auto col = 5;
-    const auto x = col * sheet.get_tile_width() + 13;
-    const auto y = row * sheet.get_tile_height() + 24;
+    const auto x = col * sheet.get_tile_width().get() + 13;
+    const auto y = row * sheet.get_tile_height().get() + 24;
 
     const tile_id index{row * sheet.cols() + col};
     CHECK(sheet.tile_at(x, y) == sheet.first_id() + index);
@@ -140,15 +147,15 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 
   SECTION("With changed first ID")
   {
-    tileset sheet{"terrain.png", 32, 32};
+    tileset sheet{"terrain.png", 32_tw, 32_th};
 
     const tile_id first{38};
     sheet.set_first_id(first);
 
     const auto row = 9;
     const auto col = 4;
-    const auto x = col * sheet.get_tile_width();
-    const auto y = row * sheet.get_tile_height();
+    const auto x = col * sheet.get_tile_width().get();
+    const auto y = row * sheet.get_tile_height().get();
 
     const tile_id index{row * sheet.cols() + col};
     CHECK(sheet.tile_at(x, y) == sheet.first_id() + index);
@@ -159,14 +166,14 @@ TEST_CASE("tileset::tile_width", "[tileset]")
 {
   SECTION("Good size")
   {
-    tileset sheet{"terrain.png", 32, 15};
-    CHECK(sheet.get_tile_width() == 32);
+    tileset sheet{"terrain.png", 32_tw, 15_th};
+    CHECK(sheet.get_tile_width() == 32_tw);
   }
 
   SECTION("Clamping bad size")
   {
-    tileset sheet{"terrain.png", 0, 15};
-    CHECK(sheet.get_tile_width() == 1);
+    tileset sheet{"terrain.png", 0_tw, 15_th};
+    CHECK(sheet.get_tile_width() == 1_tw);
   }
 }
 
@@ -174,13 +181,13 @@ TEST_CASE("tileset::tile_height", "[tileset]")
 {
   SECTION("Good size")
   {
-    tileset sheet{"terrain.png", 15, 32};
-    CHECK(sheet.get_tile_height() == 32);
+    tileset sheet{"terrain.png", 15_tw, 32_th};
+    CHECK(sheet.get_tile_height() == 32_th);
   }
 
   SECTION("Clamping bad size")
   {
-    tileset sheet{"terrain.png", 32, 0};
-    CHECK(sheet.get_tile_height() == 1);
+    tileset sheet{"terrain.png", 32_tw, 0_th};
+    CHECK(sheet.get_tile_height() == 1_th);
   }
 }
