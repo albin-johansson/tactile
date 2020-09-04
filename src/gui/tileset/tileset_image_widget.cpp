@@ -62,6 +62,8 @@ void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
 void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
+
+  // TODO compute selection
 }
 
 }  // namespace tactile::gui
