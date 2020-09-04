@@ -5,6 +5,9 @@ project(tactile_src)
 set(TACTILE_SOURCE_FILES
         tactile.qrc
 
+        tactile_fwd.hpp
+        version.hpp
+
         app/app.cpp
         app/app.hpp
         app/app_connections.hpp
@@ -14,13 +17,7 @@ set(TACTILE_SOURCE_FILES
         app/setup_app.hpp
         app/setup_app.cpp
 
-        misc/version.hpp
-        misc/tactile_error.hpp
-        misc/tactile_error.cpp
         model/types.hpp
-        misc/tactile_fwd.hpp
-        prefs/setting.hpp
-
         model/core_fwd.hpp
         model/core_model.hpp
         model/core_model.cpp
@@ -28,6 +25,8 @@ set(TACTILE_SOURCE_FILES
         model/tile_layer_model.hpp
         model/map_model.cpp
         model/map_model.hpp
+        model/tactile_error.hpp
+        model/tactile_error.cpp
 
         model/algo/flood_fill.hpp
         model/algo/flood_fill.cpp
@@ -86,13 +85,16 @@ set(TACTILE_SOURCE_FILES
 
         gui/about/about_dialog.cpp
         gui/about/about_dialog.hpp
+
         gui/settings/settings_dialog.hpp
         gui/settings/settings_dialog.cpp
+        gui/settings/settings.ui
+
         gui/action/resize_map/resize_dialog.hpp
         gui/action/resize_map/resize_dialog.cpp
-        gui/about/about.ui
         gui/action/resize_map/resize_dialog.ui
-        gui/settings/settings.ui
+
+        gui/about/about.ui
 
         gui/toolbar/dynamic_tool_bar_widget.cpp
         gui/toolbar/dynamic_tool_bar_widget.hpp
@@ -128,16 +130,15 @@ set(TACTILE_SOURCE_FILES
         command/resize_map.cpp
         command/resize_map.hpp
 
+        prefs/setting.hpp
         prefs/theme.cpp
         prefs/theme.hpp
-
-        nenya/nenya.hpp
-
         prefs/preferences.cpp
         prefs/preferences.hpp
-
         parse/parse_palette.cpp
-        parse/parse_palette.hpp)
+        parse/parse_palette.hpp
+
+        nenya/nenya.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
