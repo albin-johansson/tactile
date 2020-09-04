@@ -6,6 +6,8 @@
 #include "tileset_model.hpp"
 
 using tactile::tileset_id;
+using tactile::operator""_tw;
+using tactile::operator""_th;
 using namespace tactile::model;
 
 TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
@@ -15,8 +17,8 @@ TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
   CHECK(manager.sheets() == 0);
   CHECK(!manager.has_active_tileset());
 
-  const auto first = manager.emplace("terrain.png", 32, 32);
-  const auto second = manager.emplace("terrain.png", 32, 32);
+  const auto first = manager.emplace("terrain.png", 32_tw, 32_th);
+  const auto second = manager.emplace("terrain.png", 32_tw, 32_th);
 
   CHECK(second > first);
 
@@ -28,7 +30,7 @@ TEST_CASE("tileset_manager::remove", "[tileset_manager]")
   tileset_model manager;
   CHECK_NOTHROW(manager.remove(tileset_id{0}));
 
-  const auto id = manager.emplace("terrain.png", 32, 32);
+  const auto id = manager.emplace("terrain.png", 32_tw, 32_th);
   CHECK(manager.sheets() == 1);
 
   manager.remove(id + tileset_id{5});
@@ -43,8 +45,8 @@ TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
   tileset_model manager;
   CHECK_NOTHROW(manager.remove_all());
 
-  manager.emplace("terrain.png", 32, 32);
-  manager.emplace("terrain.png", 32, 32);
+  manager.emplace("terrain.png", 32_tw, 32_th);
+  manager.emplace("terrain.png", 32_tw, 32_th);
 
   CHECK(manager.sheets() == 2);
 
@@ -59,8 +61,8 @@ TEST_CASE("tileset_manager::select", "[tileset_manager]")
   CHECK_NOTHROW(manager.select(tileset_id{9}));
   CHECK(!manager.has_active_tileset());
 
-  const auto id = manager.emplace("terrain.png", 32, 32);
-  manager.emplace("terrain.png", 32, 32);
+  const auto id = manager.emplace("terrain.png", 32_tw, 32_th);
+  manager.emplace("terrain.png", 32_tw, 32_th);
 
   manager.select(id);
   CHECK(manager.has_active_tileset());
