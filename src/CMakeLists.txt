@@ -163,10 +163,11 @@ add_header_only_lib(libSemimap ${LIBRARY_DIR}/hogliux/semimap ${LIBRARY_DIR}/hog
 
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
-        PUBLIC command
         PUBLIC app
-        PUBLIC misc
+        PUBLIC command
         PUBLIC nenya
+        PUBLIC prefs
+        PUBLIC parse
         PUBLIC model
         PUBLIC model/util
         PUBLIC model/tile
@@ -174,8 +175,6 @@ target_include_directories(libTactile
         PUBLIC model/tileset
         PUBLIC model/algo
         PUBLIC gui
-        PUBLIC prefs
-        PUBLIC parse
         PUBLIC gui/startup
         PUBLIC gui/toolbar
         PUBLIC gui/editor

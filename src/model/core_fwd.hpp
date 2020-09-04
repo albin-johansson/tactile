@@ -2,20 +2,18 @@
 
 namespace tactile::model {
 
-class map_position;
-
-class tile_size;
-
 class tilemap;
 
 class tile_layer;
+
+class map_position;
+
+class tile_size;
 
 class tileset;
 
 class tileset_model;
 
 class core_model;
-
-struct tileset_info;
 
 }  // namespace tactile::model
