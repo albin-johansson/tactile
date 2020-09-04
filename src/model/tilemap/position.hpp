@@ -170,8 +170,7 @@ class position final
     return static_cast<std::size_t>(m_col);
   }
 
-  [[nodiscard]] auto operator==(const position&) const noexcept
-      -> bool = default;
+  [[nodiscard]] auto operator<=>(const position&) const noexcept = default;
 
  private:
   int m_row{};
