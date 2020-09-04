@@ -20,7 +20,7 @@ map_view::map_view(not_null<core::map*> map, map_id id, QWidget* parent)
 
 void map_view::move_map(int dx, int dy)
 {
-  get_map_scene()->move_map_item(dx, dy);
+  get_map_scene()->move_map(dx, dy);
 }
 
 void map_view::center_map()

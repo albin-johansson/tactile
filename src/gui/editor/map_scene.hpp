@@ -20,7 +20,7 @@ class map_scene final : public QGraphicsScene
                      map_id id,
                      QWidget* parent = nullptr);
 
-  void move_map_item(int dx, int dy);
+  void move_map(int dx, int dy);
 
   void center_map();
 

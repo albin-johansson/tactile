@@ -17,7 +17,7 @@ map_scene::map_scene(not_null<core::map*> map, map_id id, QWidget* parent)
   setSceneRect(100, 100, 100, 100);
 }
 
-void map_scene::move_map_item(int dx, int dy)
+void map_scene::move_map(int dx, int dy)
 {
   m_item->moveBy(dx, dy);
 }
@@ -30,24 +30,6 @@ void map_scene::center_map()
   m_item->setX(rect.x() + (rect.width() - bounds.width()) / 2.0);
   m_item->setY(rect.y() + (rect.height() - bounds.height()) / 2.0);
 }
-
-// void tilemap_scene::drawBackground(QPainter* painter, const QRectF& rect)
-//{
-//  QGraphicsScene::drawBackground(painter, rect);
-//  painter->fillRect(rect, Qt::black);
-//}
-//
-// void tilemap_scene::drawForeground(QPainter* painter, const QRectF& rect)
-//{
-//  QGraphicsScene::drawForeground(painter, rect);
-//
-//  //  m_viewport.setSize(rect.size().toSize());
-//
-//  //  painter->setPen(Qt::magenta);
-//  //  painter->drawRect();
-//
-//  emit request_redraw(*painter);
-//}
 
 // void tilemap_scene::resizeEvent(QResizeEvent* event)
 //{
@@ -86,7 +68,6 @@ void map_scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void map_scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
   QGraphicsScene::mouseReleaseEvent(event);
-  //
   //  QApplication::restoreOverrideCursor();
 }
 
