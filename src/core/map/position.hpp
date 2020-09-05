@@ -34,7 +34,7 @@ using col = nenya::mirror_type<int, detail::col_tag>;
 /**
  * @class position
  *
- * @brief Represents a row- and column-based position in a map.
+ * @brief Represents a row- and column-based position.
  *
  * @since 0.1.0
  *
