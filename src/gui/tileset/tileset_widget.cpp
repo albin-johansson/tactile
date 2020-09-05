@@ -26,7 +26,7 @@ tileset_widget::tileset_widget(QWidget* parent)
           &tileset_widget::request_new_tileset);
 
   connect(m_contentPage,
-          &tileset_content_page::request_add_tileset,
+          &tileset_content_page::add_new_tileset,
           this,
           &tileset_widget::request_new_tileset);
 
@@ -73,10 +73,5 @@ void tileset_widget::add_tileset(const QImage& image,
     m_ui->stackedWidget->setCurrentIndex(m_contentIndex);
   }
 }
-
-//void tileset_widget::remove_tileset(tileset_id id)
-//{
-//  m_contentPage->remove_tileset(id);
-//}
 
 }  // namespace tactile::gui

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <algorithm>
-#include <concepts>
+#include <algorithm>  // remove_if
+#include <concepts>   // convertible_to, invocable
 
 namespace tactile {
 
@@ -50,6 +50,13 @@ template <Ordered T>
 [[nodiscard]] constexpr auto at_least(T value, T least) noexcept -> T
 {
   return (value < least) ? least : value;
+}
+
+template <typename T, typename P>
+void erase(T&& container, P&& predicate)
+{
+  container.erase(std::remove_if(begin(container), end(container), predicate),
+                  end(container));
 }
 
 }  // namespace tactile

@@ -4,6 +4,7 @@
 
 #include <algorithm>  // find_if
 
+#include "algorithm.hpp"
 #include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
@@ -17,11 +18,12 @@ tileset_content_page::tileset_content_page(QWidget* parent)
   m_tabs.reserve(5);
 
   auto* cornerBtn = new QPushButton{m_ui->tabWidget};
-  cornerBtn->setIcon(QIcon{":resources/icons/icons8/color/64/add.png"});
+  cornerBtn->setIcon(
+      QIcon{QStringLiteral(":resources/icons/icons8/color/64/add.png")});
   connect(cornerBtn,
           &QPushButton::pressed,
           this,
-          &tileset_content_page::request_add_tileset);
+          &tileset_content_page::add_new_tileset);
   m_ui->tabWidget->setCornerWidget(cornerBtn, Qt::Corner::TopRightCorner);
 
   connect(m_ui->tabWidget,
@@ -47,26 +49,32 @@ void tileset_content_page::add_tileset(const QImage& image,
                                        const QString& tabName)
 {
   Q_ASSERT(!has_tab(id));
+  Q_ASSERT(!image.isNull());
 
-  if (!image.isNull()) {
-    auto* tab = new tileset_tab{image, id, tileWidth, tileHeight, this};
-    connect(tab,
-            &tileset_tab::tileset_selection_changed,
-            this,
-            &tileset_content_page::tileset_selection_changed);
-    m_tabs.push_back(tab);
-    const auto index = m_ui->tabWidget->addTab(tab, tabName);
-    m_ui->tabWidget->setCurrentIndex(index);
-  }
+  auto* tab = new tileset_tab{image, id, tileWidth, tileHeight, this};
+
+  connect(tab,
+          &tileset_tab::tileset_selection_changed,
+          this,
+          &tileset_content_page::tileset_selection_changed);
+
+  m_tabs.push_back(tab);
+
+  const auto index = m_ui->tabWidget->addTab(tab, tabName);
+  m_ui->tabWidget->setCurrentIndex(index);
 }
 
 void tileset_content_page::remove_tileset(tileset_id id)
 {
-  if (const auto it = find_tab(id); it != m_tabs.end()) {
-    m_tabs.erase(it);
-    m_ui->tabWidget->removeTab(m_ui->tabWidget->currentIndex());
-    emit removed_tileset(id);
-  }
+  Q_ASSERT(has_tab(id));
+
+  const auto index = index_of(id);
+  Q_ASSERT(index);
+
+  erase(m_tabs,
+        [id](const tileset_tab* tab) noexcept { return tab->id() == id; });
+  m_ui->tabWidget->removeTab(*index);
+  emit removed_tileset(id);
 }
 
 auto tileset_content_page::empty() const -> bool
@@ -92,11 +100,23 @@ auto tileset_content_page::tab_from_index(int index) -> tileset_tab*
   return qobject_cast<tileset_tab*>(m_ui->tabWidget->widget(index));
 }
 
+auto tileset_content_page::index_of(tileset_id id) const -> std::optional<int>
+{
+  const auto size = std::ssize(m_tabs);
+
+  for (int index = 0; index < size; ++index) {
+    if (m_tabs[index]->id() == id) {
+      return index;
+    }
+  }
+
+  return std::nullopt;
+}
+
 void tileset_content_page::handle_remove_tab(int index)
 {
   if (auto* tab = tab_from_index(index)) {
-    const auto id = tab->id();
-    remove_tileset(id);
+    remove_tileset(tab->id());
   }
 }
 
