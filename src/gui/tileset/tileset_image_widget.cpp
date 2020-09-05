@@ -54,12 +54,20 @@ auto tileset_image_widget::get_adjusted_selection() const -> QRect
   const auto modBottom = gBottom % tileHeight;
   newGeometry.setBottom(gBottom - modBottom);
 
-  // TODO Improve handling of 1 by X and X by 1 selections
+  if (newGeometry.width() < tileWidth) {
+    newGeometry.setWidth(tileWidth);
+  }
 
-  //  Q_ASSERT(newGeometry.x() % tileWidth == 0);
-  //  Q_ASSERT(newGeometry.y() % tileHeight == 0);
-  //  Q_ASSERT(newGeometry.width() % tileWidth == 0);
-  //  Q_ASSERT(newGeometry.height() % tileHeight == 0);
+  if (newGeometry.height() < tileHeight) {
+    newGeometry.setHeight(tileHeight);
+  }
+
+  // TODO Fix one pixel cells for 1 by X and X by 1 selections
+
+//  Q_ASSERT(newGeometry.x() % tileWidth == 0);
+//  Q_ASSERT(newGeometry.y() % tileHeight == 0);
+//  Q_ASSERT(newGeometry.width() % tileWidth == 0);
+//  Q_ASSERT(newGeometry.height() % tileHeight == 0);
 
   return newGeometry;
 }
