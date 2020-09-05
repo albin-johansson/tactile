@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "core_fwd.hpp"
+#include "position.hpp"
 #include "tileset.hpp"
 
 namespace tactile::core {
@@ -27,6 +28,8 @@ class tileset_model final
   /**
    * @brief Adds a tileset to the manager.
    *
+   * @details The added tileset will be made the currently active tileset.
+   *
    * @tparam Args the types of the arguments that will be forwarded.
    *
    * @param args the arguments that will be forwarded to a `tileset`
@@ -42,6 +45,9 @@ class tileset_model final
     const auto id{m_nextID};
     ++m_nextID;
     m_tilesets.emplace(id, tileset{std::forward<Args>(args)...});
+    m_activeID = id;
+
+    qDebug("tileset_model > added tileset with ID: %i", id.get());
     return id;
   }
 
@@ -72,6 +78,8 @@ class tileset_model final
    * @since 0.1.0
    */
   void select(std::optional<tileset_id> id);
+
+  void update_selection(position topLeft, position bottomRight);
 
   /**
    * @brief Returns the amount of tilesets handled by the manager.

@@ -56,6 +56,8 @@ class core_model final : public QObject
                                  tile_height tileHeight)
       -> std::optional<tileset_id>;
 
+  void update_tileset_selection(position topLeft, position bottomRight);
+
   /**
    * @brief Indicates whether or not there is an active map.
    *
@@ -176,6 +178,10 @@ class core_model final : public QObject
   void remove_col();
 
   /// @}
+
+  void remove_tileset(tileset_id id);
+
+  void select_tileset(tileset_id id);
 
   /**
    * @brief Selects the tile layer associated with the specified index.

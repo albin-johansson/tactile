@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "fwd.hpp"
+#include "position.hpp"
 #include "types.hpp"
 
 namespace Ui {
@@ -28,10 +29,17 @@ class tileset_widget final : public QWidget
                    tile_height tileHeight,
                    const QString& tabName);
 
-  void remove_tileset(tileset_id id);
+//  void remove_tileset(tileset_id id);
 
  signals:
   void request_new_tileset();
+
+  void selected_tileset(tileset_id id);
+
+  void removed_tileset(tileset_id id);
+
+  void tileset_selection_changed(core::position topLeft,
+                                 core::position bottomRight);
 
  private:
   owner<Ui::tileset_widget*> m_ui;

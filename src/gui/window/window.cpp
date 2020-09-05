@@ -104,6 +104,21 @@ void window::init_connections()
           &tileset_dock::new_tileset_requested,
           this,
           &window::request_new_tileset);
+
+  connect(m_tilesetDock,
+          &tileset_dock::selected_tileset,
+          this,
+          &window::selected_tileset);
+
+  connect(m_tilesetDock,
+          &tileset_dock::removed_tileset,
+          this,
+          &window::removed_tileset);
+
+  connect(m_tilesetDock,
+          &tileset_dock::tileset_selection_changed,
+          this,
+          &window::tileset_selection_changed);
 }
 
 void window::enable_startup_view()
@@ -191,10 +206,10 @@ void window::handle_add_tileset(const QImage& image,
       image, id, tileWidth, tileHeight, tabName);
 }
 
-void window::handle_remove_tileset(tileset_id id)
-{
-  m_tilesetDock->get_tileset_widget()->remove_tileset(id);
-}
+// void window::handle_remove_tileset(tileset_id id)
+//{
+//  m_tilesetDock->get_tileset_widget()->remove_tileset(id);
+//}
 
 void window::center_map()
 {

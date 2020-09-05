@@ -8,6 +8,7 @@
 #include <qwidget.h>
 
 #include "fwd.hpp"
+#include "position.hpp"
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"
 #include "types.hpp"
@@ -80,6 +81,13 @@ class window final : public QMainWindow
 
   void request_new_tileset();
 
+  void removed_tileset(tileset_id id);
+
+  void selected_tileset(tileset_id id);
+
+  void tileset_selection_changed(core::position topLeft,
+                                 core::position bottomRight);
+
   void request_resize_map();
 
   void request_increase_tile_size();
@@ -113,7 +121,7 @@ class window final : public QMainWindow
                           tile_height tileHeight,
                           const QString& tabName);
 
-  void handle_remove_tileset(tileset_id id);
+//  void handle_remove_tileset(tileset_id id);
 
   /**
    * @brief Triggers a redraw of the editor pane.
@@ -131,11 +139,9 @@ class window final : public QMainWindow
 
  private:
   owner<Ui::window*> m_ui{};
-
   map_editor* m_mainEditor{};
   tool_dock* m_toolDock{};
   tileset_dock* m_tilesetDock{};
-
   QActionGroup* m_toolGroup{};
 
   /**

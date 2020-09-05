@@ -43,6 +43,22 @@ void tileset::select(int x, int y)
   }
 }
 
+void tileset::set_selection(position topLeft, position bottomRight)
+{
+  clear_selection();
+
+  const auto endRow = bottomRight.get_row();
+  const auto endCol = bottomRight.get_col();
+
+  for (row r = topLeft.get_row(); r < endRow; ++r) {
+    for (col c = topLeft.get_col(); c < endCol; ++c) {
+      if (const auto tile = tile_at(r, c); tile != empty) {
+        m_selection.emplace(tile);
+      }
+    }
+  }
+}
+
 void tileset::clear_selection() noexcept
 {
   m_selection.clear();
@@ -61,6 +77,16 @@ auto tileset::tile_at(int x, int y) const -> tile_id
     const auto row = (y / m_tileHeight.get());
     const auto col = (x / m_tileWidth.get());
     const auto index = row * m_cols + col;
+    return m_firstID + tile_id{index};
+  }
+}
+
+auto tileset::tile_at(row r, col c) const -> tile_id
+{
+  if (r < 0_row || c < 0_col || r > row{rows()} || c > col{cols()}) {
+    return empty;
+  } else {
+    const auto index = r.get() * m_cols + c.get();
     return m_firstID + tile_id{index};
   }
 }

@@ -185,8 +185,7 @@ target_include_directories(libTactile
         PUBLIC gui/settings
         PUBLIC gui/action
         PUBLIC gui/action/resize_map
-        #        PUBLIC ${Boost_INCLUDE_DIRS}
-        )
+        PUBLIC ${Boost_INCLUDE_DIRS})
 
 target_link_libraries(libTactile
         PUBLIC Qt5::Core

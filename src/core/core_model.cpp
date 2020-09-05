@@ -115,6 +115,24 @@ auto core_model::add_tileset(const QImage& image,
   }
 }
 
+void core_model::remove_tileset(tileset_id id)
+{
+  m_tilesets.remove(id);
+  qDebug("core_model > removed tileset with ID: %i", id.get());
+}
+
+void core_model::select_tileset(tileset_id id)
+{
+  assert(true);
+  m_tilesets.select(id);
+}
+
+void core_model::update_tileset_selection(position topLeft,
+                                          position bottomRight)
+{
+  m_tilesets.update_selection(topLeft, bottomRight);
+}
+
 auto core_model::rows() const -> std::optional<int>
 {
   if (auto* map = current_map()) {

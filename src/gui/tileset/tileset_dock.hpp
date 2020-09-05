@@ -2,6 +2,7 @@
 
 #include <qdockwidget.h>
 
+#include "position.hpp"
 #include "tileset_widget.hpp"
 
 namespace tactile::gui {
@@ -20,6 +21,13 @@ class tileset_dock final : public QDockWidget
 
  signals:
   void new_tileset_requested();
+
+  void selected_tileset(tileset_id id);
+
+  void removed_tileset(tileset_id id);
+
+  void tileset_selection_changed(core::position topLeft,
+                                 core::position bottomRight);
 
  private:
   tileset_widget* m_widget{};

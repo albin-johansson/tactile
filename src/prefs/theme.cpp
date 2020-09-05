@@ -48,7 +48,6 @@ void set_theme(const QString& name)
   if (is_standard_theme(name)) {
     const auto palette = from_name(name);
     if (!palette) {
-      qDebug() << "Failed to set theme with name: " << name;
       return;
     }
 

@@ -7,6 +7,7 @@
 
 #include "core_model.hpp"
 #include "fwd.hpp"
+#include "position.hpp"
 #include "types.hpp"
 #include "window.hpp"
 
@@ -66,6 +67,9 @@ class app final : public QApplication
   void handle_pan_left();
 
   void handle_new_tileset();
+
+  void tileset_selection_changed(core::position topLeft,
+                                 core::position bottomRight);
 
   void handle_new_map();
 };

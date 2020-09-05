@@ -47,6 +47,17 @@ app_connections::app_connections(app& app)
 
   connect(
       m_window, &window::request_new_tileset, &app, &app::handle_new_tileset);
+
+  connect(
+      m_window, &window::removed_tileset, m_core, &core_model::remove_tileset);
+
+  connect(
+      m_window, &window::selected_tileset, m_core, &core_model::select_tileset);
+
+  connect(m_window,
+          &window::tileset_selection_changed,
+          &app,
+          &app::tileset_selection_changed);
 }
 
 void app_connections::init_command_connections(app& app) noexcept

@@ -4,7 +4,7 @@
 
 #include "app.hpp"
 
-int main(int argc, char** argv)
+auto main(int argc, char** argv) -> int
 {
   tactile::app app{argc, argv};
   return QGuiApplication::exec();

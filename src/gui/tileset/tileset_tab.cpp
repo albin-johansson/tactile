@@ -13,10 +13,11 @@
 namespace tactile::gui {
 
 tileset_tab::tileset_tab(const QImage& image,
+                         tileset_id id,
                          tile_width tileWidth,
                          tile_height tileHeight,
                          QWidget* parent)
-    : QWidget{parent}
+    : QWidget{parent}, m_id{id}
 {
   if (image.isNull()) {
     throw tactile_error{"Can't create tileset tab from null image!"};
@@ -37,6 +38,11 @@ tileset_tab::tileset_tab(const QImage& image,
 
   setLayout(m_layout);
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+  connect(m_imageWidget,
+          &tileset_image_widget::tileset_selection_changed,
+          this,
+          &tileset_tab::tileset_selection_changed);
 }
 
 tileset_tab::~tileset_tab() noexcept = default;

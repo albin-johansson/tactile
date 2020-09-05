@@ -5,6 +5,7 @@
 #include <qrubberband.h>
 #include <qwidget.h>
 
+#include "position.hpp"
 #include "types.hpp"
 
 namespace tactile::gui {
@@ -20,6 +21,10 @@ class tileset_image_widget final : public QWidget
                                 QWidget* parent = nullptr);
 
   ~tileset_image_widget() noexcept override;
+
+ signals:
+  void tileset_selection_changed(core::position topLeft,
+                                 core::position bottomRight);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;

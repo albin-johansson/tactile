@@ -4,6 +4,7 @@
 
 #include <set>
 
+#include "position.hpp"
 #include "types.hpp"
 
 namespace tactile::core {
@@ -92,6 +93,8 @@ class tileset final
    */
   void select(int x, int y);
 
+  void set_selection(position topLeft, position bottomRight);
+
   /**
    * @brief Clears any previously selected tiles.
    *
@@ -122,6 +125,8 @@ class tileset final
    * @since 0.1.0
    */
   [[nodiscard]] auto tile_at(int x, int y) const -> tile_id;
+
+  [[nodiscard]] auto tile_at(row r, col col) const -> tile_id;
 
   /**
    * @brief Returns the width of the tileset image.

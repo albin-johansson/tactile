@@ -7,6 +7,10 @@ namespace tactile::core {
 void tileset_model::remove(tileset_id id) noexcept
 {
   m_tilesets.erase(id);
+  if (id == m_activeID) {
+    m_activeID = std::nullopt;
+    qDebug("tileset_model > no current active tileset");
+  }
 }
 
 void tileset_model::remove_all() noexcept
@@ -16,12 +20,19 @@ void tileset_model::remove_all() noexcept
 
 void tileset_model::select(std::optional<tileset_id> id)
 {
-  if (!id) {
-    m_activeID = std::nullopt;
+  if (id) {
+    Q_ASSERT(m_tilesets.contains(*id));
+    m_activeID = id;
+    qDebug("tileset_model > the active tileset is now %i", id->get());
   } else {
-    if (m_tilesets.count(*id)) {
-      m_activeID = id;
-    }
+    m_activeID = std::nullopt;
+  }
+}
+
+void tileset_model::update_selection(position topLeft, position bottomRight)
+{
+  if (has_active_tileset()) {
+    m_tilesets.at(*m_activeID).set_selection(topLeft, bottomRight);
   }
 }
 

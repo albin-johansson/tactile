@@ -110,8 +110,15 @@ void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
         selection.height() >= m_tileHeight.get()) {
       m_rubberBand->setGeometry(selection);
 
-      // TODO apply selection to model
+      const auto& geometry = m_rubberBand->geometry();
 
+      const core::position topLeft{core::row{geometry.y() / m_tileHeight.get()},
+                                   core::col{geometry.x() / m_tileWidth.get()}};
+      const core::position bottomRight{
+          core::row{geometry.bottom() / m_tileHeight.get()},
+          core::col{geometry.right() / m_tileWidth.get()}};
+
+      emit tileset_selection_changed(topLeft, bottomRight);
     } else {
       m_rubberBand->hide();  // selection was too small, just hide it
     }
