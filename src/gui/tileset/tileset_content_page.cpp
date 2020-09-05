@@ -19,7 +19,7 @@ tileset_content_page::tileset_content_page(QWidget* parent)
 
   auto* cornerBtn = new QPushButton{m_ui->tabWidget};
   cornerBtn->setIcon(
-      QIcon{QStringLiteral(":resources/icons/icons8/color/64/add.png")});
+      QIcon{QStringLiteral(u":resources/icons/icons8/color/64/add.png")});
   connect(cornerBtn,
           &QPushButton::pressed,
           this,
