@@ -46,4 +46,9 @@ auto tileset_model::has_active_tileset() const noexcept -> bool
   return m_activeID.has_value();
 }
 
+auto tileset_model::current_tileset() const -> const tileset*
+{
+  return m_activeID ? &m_tilesets.at(*m_activeID) : nullptr;
+}
+
 }  // namespace tactile::core

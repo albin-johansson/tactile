@@ -53,8 +53,14 @@ void map_view::mousePressEvent(QMouseEvent* event)
 {
   QGraphicsView::mousePressEvent(event);
 
-  m_lastMousePos = event->pos();
-  QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+  const auto buttons = event->buttons();
+
+  if (buttons & Qt::MouseButton::MidButton) {
+    m_lastMousePos = event->pos();
+    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
+  }
+
+  emit mouse_pressed(event, mapFromScene(get_map_scene()->map_position()));
 }
 
 void map_view::mouseMoveEvent(QMouseEvent* event)
@@ -62,18 +68,28 @@ void map_view::mouseMoveEvent(QMouseEvent* event)
   QGraphicsView::mouseMoveEvent(event);
 
   const auto pos = event->pos();
+  const auto buttons = event->buttons();
 
-  if (event->buttons() & Qt::MouseButton::MidButton) {
+  if (buttons & Qt::MouseButton::MidButton) {
     move_map(pos.x() - m_lastMousePos.x(), pos.y() - m_lastMousePos.y());
   }
 
   m_lastMousePos = pos;
+
+  emit mouse_moved(event, mapFromScene(get_map_scene()->map_position()));
 }
 
 void map_view::mouseReleaseEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseReleaseEvent(event);
-  QApplication::restoreOverrideCursor();
+
+  const auto button = event->button();
+
+  if (button == Qt::MouseButton::MidButton) {
+    QApplication::restoreOverrideCursor();
+  }
+
+  emit mouse_released(event, mapFromScene(get_map_scene()->map_position()));
 }
 
 }  // namespace tactile::gui

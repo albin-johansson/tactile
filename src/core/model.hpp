@@ -1,5 +1,6 @@
 #pragma once
 
+#include <qevent.h>
 #include <qobject.h>
 
 #include <map>
@@ -10,6 +11,7 @@
 #include "map.hpp"
 #include "map_model.hpp"
 #include "tileset_model.hpp"
+#include "tool_model.hpp"
 #include "types.hpp"
 
 class QPainter;
@@ -30,6 +32,8 @@ class model final : public QObject
   Q_OBJECT
 
  public:
+  model();
+
   void resize_map(int nRows, int nCols);
 
   [[nodiscard]] auto add_map() -> map_id;
@@ -54,6 +58,8 @@ class model final : public QObject
       -> std::optional<tileset_id>;
 
   void update_tileset_selection(position topLeft, position bottomRight);
+
+  void set_tile(const position& pos, tile_id id);
 
   /**
    * @brief Indicates whether or not there is an active map.
@@ -124,6 +130,12 @@ class model final : public QObject
    * @since 0.1.0
    */
   [[nodiscard]] auto get_map(map_id id) -> map*;
+
+  [[nodiscard]] auto current_map() -> map_model*;
+
+  [[nodiscard]] auto current_map() const -> const map_model*;
+
+  [[nodiscard]] auto current_tileset() const -> const tileset*;
 
  signals:
   void redraw_requested();
@@ -234,14 +246,18 @@ class model final : public QObject
    */
   void handle_reset_tile_size();  // FIXME not a slot
 
+  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_released(QMouseEvent* event, QPointF mapPosition);
+
  private:
   std::optional<map_id> m_currentMapID;
   std::map<map_id, map_model*> m_maps;
   tileset_model m_tilesets;
+  tool_model m_tools;
   map_id m_nextMapID{1};
-
-  [[nodiscard]] auto current_map() -> map_model*;
-  [[nodiscard]] auto current_map() const -> const map_model*;
 };
 
 }  // namespace tactile::core

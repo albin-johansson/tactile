@@ -43,6 +43,21 @@ void map_editor::init_connections()
           &map_tab_widget::currentChanged,
           this,
           &map_editor::tab_changed);
+
+  connect(m_mapTabWidget,
+          &map_tab_widget::mouse_pressed,
+          this,
+          &map_editor::mouse_pressed);
+
+  connect(m_mapTabWidget,
+          &map_tab_widget::mouse_moved,
+          this,
+          &map_editor::mouse_moved);
+
+  connect(m_mapTabWidget,
+          &map_tab_widget::mouse_released,
+          this,
+          &map_editor::mouse_released);
 }
 
 void map_editor::add_new_map_tab(not_null<core::map*> map,
@@ -104,7 +119,7 @@ auto map_editor::num_tabs() const -> int
 
 void map_editor::tab_changed(int index)
 {
-  if (const auto id = m_mapTabWidget->tab_map_id(index); id) {
+  if (const auto id = m_mapTabWidget->id_from_index(index); id) {
     emit request_select_tab(*id);
   }
 }

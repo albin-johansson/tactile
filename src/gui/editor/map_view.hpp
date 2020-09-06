@@ -34,6 +34,13 @@ class map_view final : public QGraphicsView
 
   [[nodiscard]] auto id() const -> map_id;
 
+ signals:
+  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_released(QMouseEvent* event, QPointF mapPosition);
+
  protected:
   void mousePressEvent(QMouseEvent* event) override;
 

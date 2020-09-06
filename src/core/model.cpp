@@ -4,6 +4,9 @@
 
 namespace tactile::core {
 
+model::model() : m_tools{this}
+{}
+
 void model::undo()
 {
   if (auto* map = current_map()) {
@@ -104,9 +107,8 @@ void model::handle_close_map(map_id id)
 }
 
 auto model::add_tileset(const QImage& image,
-                             tile_width tileWidth,
-                             tile_height tileHeight)
-    -> std::optional<tileset_id>
+                        tile_width tileWidth,
+                        tile_height tileHeight) -> std::optional<tileset_id>
 {
   if (!image.isNull()) {
     return m_tilesets.emplace(image, tileWidth, tileHeight);
@@ -127,8 +129,7 @@ void model::select_tileset(tileset_id id)
   m_tilesets.select(id);
 }
 
-void model::update_tileset_selection(position topLeft,
-                                          position bottomRight)
+void model::update_tileset_selection(position topLeft, position bottomRight)
 {
   m_tilesets.update_selection(topLeft, bottomRight);
 }
@@ -216,6 +217,16 @@ void model::select_map(map_id id)
   }
 }
 
+void model::set_tile(const position& pos, tile_id id)
+{
+  if (auto* map = current_map()) {
+
+
+
+    emit redraw_requested();
+  }
+}
+
 auto model::has_active_map() const noexcept -> bool
 {
   return m_currentMapID.has_value();
@@ -245,6 +256,21 @@ void model::handle_reset_tile_size()
   }
 }
 
+void model::mouse_pressed(QMouseEvent* event, QPointF mapPosition)
+{
+  m_tools.pressed(event, mapPosition);
+}
+
+void model::mouse_moved(QMouseEvent* event, QPointF mapPosition)
+{
+  m_tools.moved(event, mapPosition);
+}
+
+void model::mouse_released(QMouseEvent* event, QPointF mapPosition)
+{
+  m_tools.released(event, mapPosition);
+}
+
 auto model::current_map() -> map_model*
 {
   return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
@@ -253,6 +279,11 @@ auto model::current_map() -> map_model*
 auto model::current_map() const -> const map_model*
 {
   return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
+}
+
+auto model::current_tileset() const -> const tileset*
+{
+  return m_tilesets.current_tileset();
 }
 
 }  // namespace tactile::core

@@ -64,6 +64,7 @@ void map_item::draw_layer(QPainter& painter,
                               ? emptyDarkGray
                               : emptyLightGray;
 
+      // TODO painter.drawPixmap
       painter.fillRect(x, y, tileSize, tileSize, color);
       if (renderGrid) {
         painter.drawRect(x, y, tileSize, tileSize);

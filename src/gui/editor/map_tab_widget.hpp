@@ -43,9 +43,7 @@ class map_tab_widget final : public QTabWidget
    *
    * @since 0.1.0
    */
-  void add_map_tab(not_null<core::map*> map,
-                   const QString& title,
-                   map_id id);
+  void add_map_tab(not_null<core::map*> map, const QString& title, map_id id);
 
   /**
    * @brief Removes the tab associated with the specified map.
@@ -102,10 +100,16 @@ class map_tab_widget final : public QTabWidget
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tab_map_id(int index) const -> std::optional<map_id>;
+  [[nodiscard]] auto id_from_index(int index) const -> std::optional<map_id>;
 
  signals:
   void request_remove_tab(map_id id);
+
+  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_released(QMouseEvent* event, QPointF mapPosition);
 
  public slots:
   void theme_changed();
@@ -113,11 +117,15 @@ class map_tab_widget final : public QTabWidget
   void redraw();
 
  private:
+  [[nodiscard]] auto current_view() -> map_view*;
+
+  [[nodiscard]] auto current_view() const -> const map_view*;
+
   [[nodiscard]] auto get_view(int index) -> map_view*;
 
   [[nodiscard]] auto get_view(int index) const -> const map_view*;
 
-  [[nodiscard]] auto view_for_id(map_id id) -> map_view*;
+  [[nodiscard]] auto view_from_id(map_id id) -> map_view*;
 
  private slots:
   void handle_tab_close(int index);

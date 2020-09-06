@@ -23,11 +23,11 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 
   // TODO add mini-map widget
 
-  m_mainEditor = new map_editor{this};
+  m_editor = new map_editor{this};
   m_toolDock = new tool_dock{this};
   m_tilesetDock = new tileset_dock{this};
 
-  setCentralWidget(m_mainEditor);
+  setCentralWidget(m_editor);
   addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);
   addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
 
@@ -50,7 +50,7 @@ void window::init_connections()
   onTriggered(m_ui->action_new_map, &window::request_new_map);
   onTriggered(m_ui->action_add_tileset, &window::request_new_tileset);
 
-  connect(m_mainEditor,
+  connect(m_editor,
           &map_editor::request_remove_tab,
           this,
           &window::handle_remove_tab);
@@ -95,10 +95,14 @@ void window::init_connections()
           m_ui->action_tilesets_visibility,
           &QAction::setChecked);
 
-  connect(m_mainEditor,
+  connect(m_editor,
           &map_editor::request_select_tab,
           this,
           &window::request_select_map);
+
+  connect(m_editor, &map_editor::mouse_pressed, this, &window::mouse_pressed);
+  connect(m_editor, &map_editor::mouse_moved, this, &window::mouse_moved);
+  connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
 
   connect(m_tilesetDock,
           &tileset_dock::new_tileset_requested,
@@ -123,14 +127,14 @@ void window::init_connections()
 
 void window::enable_startup_view()
 {
-  m_mainEditor->enable_startup_view();
+  m_editor->enable_startup_view();
   m_toolDock->get_tool_widget()->disable_tools();
   hide_all_docks();
 }
 
 void window::enable_editor_view()
 {
-  m_mainEditor->enable_editor_view();
+  m_editor->enable_editor_view();
 
   // FIXME only enable relevant tools
   m_toolDock->get_tool_widget()->enable_tools();
@@ -173,7 +177,7 @@ void window::show_all_docks()
 
 auto window::in_editor_mode() const -> bool
 {
-  return m_mainEditor->in_editor_mode();
+  return m_editor->in_editor_mode();
 }
 
 void window::handle_undo_state_update(bool canUndo)
@@ -213,25 +217,25 @@ void window::handle_add_tileset(const QImage& image,
 
 void window::center_map()
 {
-  m_mainEditor->center_viewport();
+  m_editor->center_viewport();
   handle_draw();
 }
 
 void window::handle_move_camera(int dx, int dy)
 {
-  m_mainEditor->move_map(dx, dy);
+  m_editor->move_map(dx, dy);
   handle_draw();
 }
 
 void window::handle_draw()
 {
-  m_mainEditor->handle_redraw();
+  m_editor->handle_redraw();
 }
 
 void window::handle_new_map(not_null<core::map*> map, map_id id)
 {
-  m_mainEditor->add_new_map_tab(map, "map", id);  // TODO pass core and map_id?
-  m_mainEditor->select_tab(id);
+  m_editor->add_new_map_tab(map, "map", id);  // TODO pass core and map_id?
+  m_editor->select_tab(id);
   if (!in_editor_mode()) {
     enable_editor_view();
     show_all_docks();  // TODO just reopen docks that were visible
@@ -252,7 +256,7 @@ void window::handle_remove_tab(map_id tabID)
 
   // The tab isn't actually removed yet, this checks if there will be
   // no open tabs
-  if (m_mainEditor->num_tabs() == 1) {
+  if (m_editor->num_tabs() == 1) {
     enable_startup_view();
   }
 }
@@ -276,13 +280,13 @@ void window::on_action_close_map_triggered()
   if (in_editor_mode()) {
     // TODO save current state of open map
 
-    const auto id = m_mainEditor->active_tab_id();
+    const auto id = m_editor->active_tab_id();
     Q_ASSERT(id);
 
-    m_mainEditor->close_tab(*id);
+    m_editor->close_tab(*id);
     emit request_close_map(*id);
 
-    if (m_mainEditor->num_tabs() == 0) {
+    if (m_editor->num_tabs() == 0) {
       enable_startup_view();
     }
   }
@@ -473,7 +477,7 @@ void window::on_action_about_triggered()
 
 void window::handle_theme_changed()
 {
-  emit m_mainEditor->theme_changed();
+  emit m_editor->theme_changed();
 }
 
 }  // namespace tactile::gui

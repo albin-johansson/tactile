@@ -1,6 +1,7 @@
 #pragma once
 
 #include <qimage.h>
+#include <qpixmap.h>
 
 #include <set>
 
@@ -31,6 +32,12 @@ namespace tactile::core {
 class tileset final
 {
  public:
+  struct selection final
+  {
+    position topLeft;
+    position bottomRight;
+  };
+
   using const_iterator = std::set<tile_id>::const_iterator;
 
   /**
@@ -47,7 +54,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  tileset(QImage image, tile_width tileWidth, tile_height tileHeight);
+  tileset(const QImage& image, tile_width tileWidth, tile_height tileHeight);
 
   /**
    * @brief Creates a tileset with the initial first ID set to 1.
@@ -79,28 +86,28 @@ class tileset final
    */
   void set_first_id(tile_id firstID) noexcept;
 
-  /**
-   * @brief Selects the tile at the specified coordinates.
-   *
-   * @details Multiple tiles can be selected simultaneously.
-   *
-   * @note This method has no effect if the supplied position is out-of-bounds.
-   *
-   * @param x the x-coordinate of the selection.
-   * @param y the y-coordinate of the selection.
-   *
-   * @since 0.1.0
-   */
-  void select(int x, int y);
+//  /**
+//   * @brief Selects the tile at the specified coordinates.
+//   *
+//   * @details Multiple tiles can be selected simultaneously.
+//   *
+//   * @note This method has no effect if the supplied position is out-of-bounds.
+//   *
+//   * @param x the x-coordinate of the selection.
+//   * @param y the y-coordinate of the selection.
+//   *
+//   * @since 0.1.0
+//   */
+//  void select(int x, int y);
 
   void set_selection(position topLeft, position bottomRight);
 
-  /**
-   * @brief Clears any previously selected tiles.
-   *
-   * @since 0.1.0
-   */
-  void clear_selection() noexcept;
+//  /**
+//   * @brief Clears any previously selected tiles.
+//   *
+//   * @since 0.1.0
+//   */
+//  void clear_selection() noexcept;
 
   /**
    * @brief Indicates whether or not the tileset contains the specified tile ID.
@@ -193,6 +200,8 @@ class tileset final
    */
   [[nodiscard]] auto last_id() const noexcept -> tile_id;
 
+  [[nodiscard]] auto image() const -> const QPixmap&;
+
   /**
    * @brief Returns the width of the tile sprites in the tileset.
    *
@@ -215,37 +224,38 @@ class tileset final
    */
   [[nodiscard]] auto get_tile_height() const noexcept -> tile_height;
 
-  /**
-   * @brief Returns a begin iterator, for iterating selected cells.
-   *
-   * @return a begin iterator.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto begin() const noexcept -> const_iterator;
+  [[nodiscard]] auto get_selection() const noexcept -> const selection&;
+//  /**
+//   * @brief Returns a begin iterator, for iterating selected cells.
+//   *
+//   * @return a begin iterator.
+//   *
+//   * @since 0.1.0
+//   */
+//  [[nodiscard]] auto begin() const noexcept -> const_iterator;
+//
+//  /**
+//   * @brief Returns an end iterator, for iterating selected cells.
+//   *
+//   * @return an end iterator.
+//   *
+//   * @since 0.1.0
+//   */
+//  [[nodiscard]] auto end() const noexcept -> const_iterator;
 
-  /**
-   * @brief Returns an end iterator, for iterating selected cells.
-   *
-   * @return an end iterator.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto end() const noexcept -> const_iterator;
-
-  /**
-   * @brief Returns the current amount of selected cells.
-   *
-   * @return the amount of currently selected cells.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto num_selected() const noexcept -> int;
+//  /**
+//   * @brief Returns the current amount of selected cells.
+//   *
+//   * @return the amount of currently selected cells.
+//   *
+//   * @since 0.1.0
+//   */
+//  [[nodiscard]] auto num_selected() const noexcept -> int;
 
  private:
-  QImage m_sheet;  // FIXME this field might be unnecessary
+  QPixmap m_sheet;
   tile_id m_firstID{1};
-  std::set<tile_id> m_selection;
+  selection m_selection;
   int m_rows;
   int m_cols;
   tile_width m_tileWidth;

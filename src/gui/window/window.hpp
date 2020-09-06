@@ -106,6 +106,12 @@ class window final : public QMainWindow
 
   void request_select_map(map_id id);
 
+  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_released(QMouseEvent* event, QPointF mapPosition);
+
  public slots:
   void handle_undo_state_update(bool canUndo);
 
@@ -139,7 +145,7 @@ class window final : public QMainWindow
 
  private:
   owner<Ui::window*> m_ui{};
-  map_editor* m_mainEditor{};
+  map_editor* m_editor{};
   tool_dock* m_toolDock{};
   tileset_dock* m_tilesetDock{};
   QActionGroup* m_toolGroup{};

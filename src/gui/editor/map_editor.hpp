@@ -1,5 +1,6 @@
 #pragma once
 
+#include <qevent.h>
 #include <qwidget.h>
 
 #include <optional>
@@ -73,9 +74,15 @@ class map_editor final : public QWidget
   void handle_redraw();
 
  signals:
-  void request_remove_tab(map_id);
+  void request_remove_tab(map_id id);
 
-  void request_select_tab(map_id);
+  void request_select_tab(map_id id);
+
+  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_released(QMouseEvent* event, QPointF mapPosition);
 
   void theme_changed();
 

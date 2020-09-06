@@ -1,5 +1,9 @@
 #include "map.hpp"
 
+#include <qdebug.h>
+
+#include <cassert>
+
 #include "algorithm.hpp"
 
 namespace tactile::core {
@@ -9,6 +13,15 @@ map::map(int nRows, int nCols)
 {
   m_layers.reserve(5);
   m_layers.emplace_back(nRows, nCols);
+}
+
+void map::set_tile(const position& pos, tile_id id)
+{
+  qDebug("map > setting tile (%i, %i) to %i",
+         pos.get_row().get(),
+         pos.get_col().get(),
+         id.get());
+  m_layers.at(m_activeLayer.get()).set_tile(pos, id);
 }
 
 void map::select(layer_id layer) noexcept
@@ -115,6 +128,12 @@ auto map::has_layer(layer_id layer) const noexcept -> bool
 {
   const auto& value = layer.get();
   return value >= 0 && value < num_layers();
+}
+
+auto map::in_bounds(row r, col c) const -> bool
+{
+  return (r >= 0_row) && (c >= 0_col) && (r.get() < rows()) &&
+         (c.get() < cols());
 }
 
 auto map::rows() const noexcept -> int

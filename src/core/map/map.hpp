@@ -55,6 +55,8 @@ class map final
    */
   map(int nRows, int nCols);
 
+  void set_tile(const position& pos, tile_id id);
+
   /**
    * @brief Selects the tile layer associated with the specified index.
    *
@@ -182,6 +184,8 @@ class map final
    */
   [[nodiscard]] auto has_layer(layer_id layer) const noexcept -> bool;
 
+  [[nodiscard]] auto in_bounds(row r, col c) const -> bool;
+
   /**
    * @brief Returns the total number of rows in the map.
    *
@@ -253,7 +257,7 @@ class map final
  private:
   int m_nRows;
   int m_nCols;
-  layer_id m_activeLayer{};
+  layer_id m_activeLayer{0};
   std::vector<layer> m_layers;
   tile_size m_tileSize;
 };

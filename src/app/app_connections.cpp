@@ -23,8 +23,7 @@ void connect(Sender&& sender, Signal&& signal, Receiver&& receiver, Slot&& slot)
 app_connections::app_connections(app& app)
     : m_core{app.model_ptr()}, m_window{app.window_ptr()}
 {
-  connect(
-      m_core, &model::redraw_requested, m_window, &window::handle_draw);
+  connect(m_core, &model::redraw_requested, m_window, &window::handle_draw);
 
   init_command_connections(app);
   init_camera_connections(app);
@@ -48,11 +47,9 @@ app_connections::app_connections(app& app)
   connect(
       m_window, &window::request_new_tileset, &app, &app::handle_new_tileset);
 
-  connect(
-      m_window, &window::removed_tileset, m_core, &model::remove_tileset);
+  connect(m_window, &window::removed_tileset, m_core, &model::remove_tileset);
 
-  connect(
-      m_window, &window::selected_tileset, m_core, &model::select_tileset);
+  connect(m_window, &window::selected_tileset, m_core, &model::select_tileset);
 
   connect(m_window,
           &window::tileset_selection_changed,
@@ -87,10 +84,8 @@ void app_connections::init_command_connections(app& app) noexcept
 
   connect(m_window, &window::request_add_row, m_core, &model::add_row);
   connect(m_window, &window::request_add_col, m_core, &model::add_col);
-  connect(
-      m_window, &window::request_remove_row, m_core, &model::remove_row);
-  connect(
-      m_window, &window::request_remove_col, m_core, &model::remove_col);
+  connect(m_window, &window::request_remove_row, m_core, &model::remove_row);
+  connect(m_window, &window::request_remove_col, m_core, &model::remove_col);
 
   connect(m_window, &window::request_resize_map, &app, &app::handle_resize_map);
 }
@@ -107,13 +102,14 @@ void app_connections::init_map_connections(app& app) noexcept
 {
   connect(m_window, &window::request_new_map, &app, &app::handle_new_map);
 
-  connect(m_window,
-          &window::request_close_map,
-          m_core,
-          &model::handle_close_map);
-
   connect(
-      m_window, &window::request_select_map, m_core, &model::select_map);
+      m_window, &window::request_close_map, m_core, &model::handle_close_map);
+
+  connect(m_window, &window::request_select_map, m_core, &model::select_map);
+
+  connect(m_window, &window::mouse_pressed, m_core, &model::mouse_pressed);
+  connect(m_window, &window::mouse_moved, m_core, &model::mouse_moved);
+  connect(m_window, &window::mouse_released, m_core, &model::mouse_released);
 }
 
 }  // namespace tactile

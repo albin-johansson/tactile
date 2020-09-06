@@ -31,6 +31,11 @@ void map_scene::center_map()
   m_item->setY(rect.y() + (rect.height() - bounds.height()) / 2.0);
 }
 
+auto map_scene::map_position() const -> QPointF
+{
+  return m_item->pos();
+}
+
 // void tilemap_scene::resizeEvent(QResizeEvent* event)
 //{
 //  QWidget::resizeEvent(event);

@@ -101,9 +101,11 @@ class tileset_model final
    */
   [[nodiscard]] auto has_active_tileset() const noexcept -> bool;
 
+  [[nodiscard]] auto current_tileset() const -> const tileset*;
+
  private:
   std::optional<tileset_id> m_activeID;
-  std::unordered_map<tileset_id, tileset> m_tilesets;
+  std::unordered_map<tileset_id, tileset> m_tilesets; // TODO small_map
   tileset_id m_nextID{1};
 };
 

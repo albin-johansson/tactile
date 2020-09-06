@@ -136,7 +136,7 @@ set(TACTILE_SOURCE_FILES
         parse/parse_palette.cpp
         parse/parse_palette.hpp
 
-        nenya/nenya.hpp)
+        nenya/nenya.hpp tool/tool.hpp tool/stamp_tool.cpp tool/stamp_tool.hpp tool/tool_model.cpp tool/tool_model.hpp util/small_map.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
@@ -166,6 +166,8 @@ target_include_directories(libTactile
         PUBLIC nenya
         PUBLIC prefs
         PUBLIC parse
+        PUBLIC tool
+        PUBLIC util
         PUBLIC core
         PUBLIC core/util
         PUBLIC core/tile

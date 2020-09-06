@@ -6,6 +6,9 @@ namespace tactile {
 
 class app;
 
+class tool;
+class stamp_tool;
+
 namespace gui {
 
 class window;
