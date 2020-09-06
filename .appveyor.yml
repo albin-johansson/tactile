@@ -10,7 +10,7 @@ install:
   - set Qt5_PATH=C:\Qt\%QT_VERSION%\msvc2019_64
   - set QT_QPA_PLATFORM_PLUGIN_PATH=%Qt5_PATH%\plugins\platforms
   - set PATH=%PATH%;%Qt5_PATH%\bin;%
-  - set BOOST_ROOT=C:\Libraries\boost_1_74_0
+  - set BOOST_ROOT=C:\Libraries\boost_1_73_0
 
   # Updates PATH to support command-line usage of compiler
   - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
