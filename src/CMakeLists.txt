@@ -19,8 +19,8 @@ set(TACTILE_SOURCE_FILES
 
         core/types.hpp
         core/core_fwd.hpp
-        core/core_model.hpp
-        core/core_model.cpp
+        core/model.hpp
+        core/model.cpp
         core/map_model.cpp
         core/map_model.hpp
         core/tactile_error.hpp

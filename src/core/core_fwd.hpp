@@ -14,6 +14,6 @@ class tileset;
 
 class tileset_model;
 
-class core_model;
+class model;
 
 }  // namespace tactile::core

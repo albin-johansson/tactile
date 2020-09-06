@@ -2,12 +2,12 @@
 
 #include <qobject.h>
 
-#include "core_model.hpp"
+#include "model.hpp"
 #include "window.hpp"
 
 namespace tactile {
 
-using core::core_model;
+using core::model;
 using gui::window;
 
 namespace {
@@ -21,10 +21,10 @@ void connect(Sender&& sender, Signal&& signal, Receiver&& receiver, Slot&& slot)
 }  // namespace
 
 app_connections::app_connections(app& app)
-    : m_core{app.core_ptr()}, m_window{app.window_ptr()}
+    : m_core{app.model_ptr()}, m_window{app.window_ptr()}
 {
   connect(
-      m_core, &core_model::redraw_requested, m_window, &window::handle_draw);
+      m_core, &model::redraw_requested, m_window, &window::handle_draw);
 
   init_command_connections(app);
   init_camera_connections(app);
@@ -33,26 +33,26 @@ app_connections::app_connections(app& app)
   connect(m_window,
           &window::request_increase_tile_size,
           m_core,
-          &core_model::handle_increase_tile_size);
+          &model::handle_increase_tile_size);
 
   connect(m_window,
           &window::request_decrease_tile_size,
           m_core,
-          &core_model::handle_decrease_tile_size);
+          &model::handle_decrease_tile_size);
 
   connect(m_window,
           &window::request_reset_tile_size,
           m_core,
-          &core_model::handle_reset_tile_size);
+          &model::handle_reset_tile_size);
 
   connect(
       m_window, &window::request_new_tileset, &app, &app::handle_new_tileset);
 
   connect(
-      m_window, &window::removed_tileset, m_core, &core_model::remove_tileset);
+      m_window, &window::removed_tileset, m_core, &model::remove_tileset);
 
   connect(
-      m_window, &window::selected_tileset, m_core, &core_model::select_tileset);
+      m_window, &window::selected_tileset, m_core, &model::select_tileset);
 
   connect(m_window,
           &window::tileset_selection_changed,
@@ -63,34 +63,34 @@ app_connections::app_connections(app& app)
 void app_connections::init_command_connections(app& app) noexcept
 {
   connect(m_core,
-          &core_model::undo_state_updated,
+          &model::undo_state_updated,
           m_window,
           &window::handle_undo_state_update);
 
   connect(m_core,
-          &core_model::redo_state_updated,
+          &model::redo_state_updated,
           m_window,
           &window::handle_redo_state_update);
 
   connect(m_core,
-          &core_model::undo_text_updated,
+          &model::undo_text_updated,
           m_window,
           &window::handle_undo_text_update);
 
   connect(m_core,
-          &core_model::redo_text_updated,
+          &model::redo_text_updated,
           m_window,
           &window::handle_redo_text_update);
 
-  connect(m_window, &window::request_undo, m_core, &core_model::undo);
-  connect(m_window, &window::request_redo, m_core, &core_model::redo);
+  connect(m_window, &window::request_undo, m_core, &model::undo);
+  connect(m_window, &window::request_redo, m_core, &model::redo);
 
-  connect(m_window, &window::request_add_row, m_core, &core_model::add_row);
-  connect(m_window, &window::request_add_col, m_core, &core_model::add_col);
+  connect(m_window, &window::request_add_row, m_core, &model::add_row);
+  connect(m_window, &window::request_add_col, m_core, &model::add_col);
   connect(
-      m_window, &window::request_remove_row, m_core, &core_model::remove_row);
+      m_window, &window::request_remove_row, m_core, &model::remove_row);
   connect(
-      m_window, &window::request_remove_col, m_core, &core_model::remove_col);
+      m_window, &window::request_remove_col, m_core, &model::remove_col);
 
   connect(m_window, &window::request_resize_map, &app, &app::handle_resize_map);
 }
@@ -110,10 +110,10 @@ void app_connections::init_map_connections(app& app) noexcept
   connect(m_window,
           &window::request_close_map,
           m_core,
-          &core_model::handle_close_map);
+          &model::handle_close_map);
 
   connect(
-      m_window, &window::request_select_map, m_core, &core_model::select_map);
+      m_window, &window::request_select_map, m_core, &model::select_map);
 }
 
 }  // namespace tactile

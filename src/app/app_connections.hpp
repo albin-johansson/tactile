@@ -28,7 +28,7 @@ class app_connections final
   explicit app_connections(app& app);
 
  private:
-  core::core_model* m_core;
+  core::model* m_core;
   gui::window* m_window;
 
   void init_map_connections(app& app) noexcept;

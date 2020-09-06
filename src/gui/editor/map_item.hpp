@@ -2,8 +2,8 @@
 
 #include <qgraphicsitem.h>
 
-#include "core_model.hpp"
 #include "fwd.hpp"
+#include "model.hpp"
 
 namespace tactile::gui {
 

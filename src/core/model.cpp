@@ -1,10 +1,10 @@
-#include "core_model.hpp"
+#include "model.hpp"
 
 #include "tileset.hpp"
 
 namespace tactile::core {
 
-void core_model::undo()
+void model::undo()
 {
   if (auto* map = current_map()) {
     map->undo();
@@ -12,7 +12,7 @@ void core_model::undo()
   }
 }
 
-void core_model::redo()
+void model::redo()
 {
   if (auto* map = current_map()) {
     map->redo();
@@ -20,7 +20,7 @@ void core_model::redo()
   }
 }
 
-void core_model::resize_map(int nRows, int nCols)
+void model::resize_map(int nRows, int nCols)
 {
   if (auto* map = current_map()) {
     map->resize(nRows, nCols);
@@ -28,7 +28,7 @@ void core_model::resize_map(int nRows, int nCols)
   }
 }
 
-void core_model::add_row()
+void model::add_row()
 {
   if (auto* map = current_map()) {
     map->add_row();
@@ -36,7 +36,7 @@ void core_model::add_row()
   }
 }
 
-void core_model::add_col()
+void model::add_col()
 {
   if (auto* map = current_map()) {
     map->add_column();
@@ -44,7 +44,7 @@ void core_model::add_col()
   }
 }
 
-void core_model::remove_row()
+void model::remove_row()
 {
   if (auto* map = current_map()) {
     map->remove_row();
@@ -52,7 +52,7 @@ void core_model::remove_row()
   }
 }
 
-void core_model::remove_col()
+void model::remove_col()
 {
   if (auto* map = current_map()) {
     map->remove_column();
@@ -60,7 +60,7 @@ void core_model::remove_col()
   }
 }
 
-auto core_model::add_map() -> map_id
+auto model::add_map() -> map_id
 {
   const auto id = m_nextMapID;
   Q_ASSERT(!m_maps.count(id));
@@ -71,10 +71,10 @@ auto core_model::add_map() -> map_id
     connect(map, signal, this, slot);
   };
 
-  bind(&map_model::undo_state_updated, &core_model::undo_state_updated);
-  bind(&map_model::redo_state_updated, &core_model::redo_state_updated);
-  bind(&map_model::undo_text_updated, &core_model::undo_text_updated);
-  bind(&map_model::redo_text_updated, &core_model::redo_text_updated);
+  bind(&map_model::undo_state_updated, &model::undo_state_updated);
+  bind(&map_model::redo_state_updated, &model::redo_state_updated);
+  bind(&map_model::undo_text_updated, &model::undo_text_updated);
+  bind(&map_model::redo_text_updated, &model::redo_text_updated);
 
   m_maps.emplace(id, map);
   m_currentMapID = id;
@@ -84,7 +84,7 @@ auto core_model::add_map() -> map_id
   return id;
 }
 
-void core_model::handle_close_map(map_id id)
+void model::handle_close_map(map_id id)
 {
   Q_ASSERT(m_maps.count(id));
 
@@ -103,7 +103,7 @@ void core_model::handle_close_map(map_id id)
   }
 }
 
-auto core_model::add_tileset(const QImage& image,
+auto model::add_tileset(const QImage& image,
                              tile_width tileWidth,
                              tile_height tileHeight)
     -> std::optional<tileset_id>
@@ -115,25 +115,25 @@ auto core_model::add_tileset(const QImage& image,
   }
 }
 
-void core_model::remove_tileset(tileset_id id)
+void model::remove_tileset(tileset_id id)
 {
   m_tilesets.remove(id);
   qDebug("core_model > removed tileset with ID: %i", id.get());
 }
 
-void core_model::select_tileset(tileset_id id)
+void model::select_tileset(tileset_id id)
 {
   assert(true);
   m_tilesets.select(id);
 }
 
-void core_model::update_tileset_selection(position topLeft,
+void model::update_tileset_selection(position topLeft,
                                           position bottomRight)
 {
   m_tilesets.update_selection(topLeft, bottomRight);
 }
 
-auto core_model::rows() const -> std::optional<int>
+auto model::rows() const -> std::optional<int>
 {
   if (auto* map = current_map()) {
     return map->rows();
@@ -142,7 +142,7 @@ auto core_model::rows() const -> std::optional<int>
   }
 }
 
-auto core_model::cols() const -> std::optional<int>
+auto model::cols() const -> std::optional<int>
 {
   if (auto* map = current_map()) {
     return map->columns();
@@ -151,7 +151,7 @@ auto core_model::cols() const -> std::optional<int>
   }
 }
 
-auto core_model::map_width() const -> std::optional<int>
+auto model::map_width() const -> std::optional<int>
 {
   if (auto* map = current_map()) {
     return map->width();
@@ -160,7 +160,7 @@ auto core_model::map_width() const -> std::optional<int>
   }
 }
 
-auto core_model::map_height() const -> std::optional<int>
+auto model::map_height() const -> std::optional<int>
 {
   if (auto* map = current_map()) {
     return map->height();
@@ -169,7 +169,7 @@ auto core_model::map_height() const -> std::optional<int>
   }
 }
 
-auto core_model::tile_size() const -> std::optional<int>
+auto model::tile_size() const -> std::optional<int>
 {
   if (auto* map = current_map()) {
     return map->current_tile_size();
@@ -178,7 +178,7 @@ auto core_model::tile_size() const -> std::optional<int>
   }
 }
 
-auto core_model::get_map(map_id id) -> map*
+auto model::get_map(map_id id) -> map*
 {
   if (const auto it = m_maps.find(id); it != m_maps.end()) {
     return it->second->get();
@@ -187,7 +187,7 @@ auto core_model::get_map(map_id id) -> map*
   }
 }
 
-void core_model::select_layer(layer_id id)
+void model::select_layer(layer_id id)
 {
   if (auto* map = current_map()) {
     map->select_layer(id);
@@ -195,7 +195,7 @@ void core_model::select_layer(layer_id id)
   }
 }
 
-void core_model::select_map(map_id id)
+void model::select_map(map_id id)
 {
   Q_ASSERT(m_maps.count(id));
 
@@ -216,12 +216,12 @@ void core_model::select_map(map_id id)
   }
 }
 
-auto core_model::has_active_map() const noexcept -> bool
+auto model::has_active_map() const noexcept -> bool
 {
   return m_currentMapID.has_value();
 }
 
-void core_model::handle_increase_tile_size()
+void model::handle_increase_tile_size()
 {
   if (auto* map = current_map()) {
     map->increase_tile_size();
@@ -229,7 +229,7 @@ void core_model::handle_increase_tile_size()
   }
 }
 
-void core_model::handle_decrease_tile_size()
+void model::handle_decrease_tile_size()
 {
   if (auto* map = current_map()) {
     map->decrease_tile_size();
@@ -237,7 +237,7 @@ void core_model::handle_decrease_tile_size()
   }
 }
 
-void core_model::handle_reset_tile_size()
+void model::handle_reset_tile_size()
 {
   if (auto* map = current_map()) {
     map->reset_tile_size();
@@ -245,12 +245,12 @@ void core_model::handle_reset_tile_size()
   }
 }
 
-auto core_model::current_map() -> map_model*
+auto model::current_map() -> map_model*
 {
   return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
 }
 
-auto core_model::current_map() const -> const map_model*
+auto model::current_map() const -> const map_model*
 {
   return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
 }

@@ -4,8 +4,8 @@
 #include <qrect.h>
 #include <qwidget.h>
 
-#include "core_model.hpp"
 #include "fwd.hpp"
+#include "model.hpp"
 
 class QPainter;
 

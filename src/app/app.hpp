@@ -5,8 +5,8 @@
 #include <memory>
 #include <utility>
 
-#include "core_model.hpp"
 #include "fwd.hpp"
+#include "model.hpp"
 #include "position.hpp"
 #include "types.hpp"
 #include "window.hpp"
@@ -43,16 +43,16 @@ class app final : public QApplication
 
  private:
   std::unique_ptr<gui::window> m_window;
-  owner<core::core_model*> m_core;
+  owner<core::model*> m_model;
 
   [[nodiscard]] auto window_ptr() noexcept -> gui::window*
   {
     return m_window.get();
   }
 
-  [[nodiscard]] auto core_ptr() noexcept -> core::core_model*
+  [[nodiscard]] auto model_ptr() noexcept -> core::model*
   {
-    return m_core;
+    return m_model;
   }
 
  private slots:

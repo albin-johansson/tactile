@@ -17,18 +17,15 @@ class QPainter;
 namespace tactile::core {
 
 /**
- * @class core_model
+ * @class model
  *
- * @brief Represents the main interface for the core core of the application.
- *
- * @note All map mutating methods in this class have no effect if there
- * is no active map.
+ * @brief Represents the main interface for the core of the application.
  *
  * @since 0.1.0
  *
- * @headerfile core_model.hpp
+ * @headerfile model.hpp
  */
-class core_model final : public QObject
+class model final : public QObject
 {
   Q_OBJECT
 
