@@ -72,6 +72,8 @@ class tileset_model final
   /**
    * @brief Selects the tileset associated with the specified ID.
    *
+   * @pre `id` must be associated with a tileset if it isn't `std::nullopt`.
+   *
    * @param id the key associated with the tileset that will be made
    * active; `std::nullopt` indicates that no tileset should be selected.
    *

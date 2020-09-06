@@ -58,7 +58,6 @@ TEST_CASE("tileset_manager::select", "[tileset_manager]")
 {
   tileset_model manager;
 
-  CHECK_NOTHROW(manager.select(tileset_id{9}));
   CHECK(!manager.has_active_tileset());
 
   const auto id = manager.emplace("terrain.png", 32_tw, 32_th);
