@@ -1,6 +1,5 @@
 #include "tileset.hpp"
 
-#include <QImage>
 #include <catch.hpp>
 #include <memory>
 
@@ -20,41 +19,15 @@ TEST_CASE("tileset(QImage, int, int)", "[tileset]")
 
   SECTION("Zero size")
   {
-    CHECK_NOTHROW(tileset{"terrain.png", 0_tw, 0_th});
+    const tileset tileset{"terrain.png", 0_tw, 0_th};
+    CHECK(tileset.get_tile_width() == 1_tw);
+    CHECK(tileset.get_tile_height() == 1_th);
   }
 
   SECTION("Good args")
   {
     CHECK_NOTHROW(tileset{"terrain.png", 32_tw, 32_th});
   }
-}
-
-TEST_CASE("tileset::select", "[tileset]")
-{
-  const auto tileWidth = 32_tw;
-  const auto tileHeight = 32_th;
-  tileset sheet{"terrain.png", tileWidth, tileHeight};
-
-  sheet.select(0, 0);
-  CHECK(std::distance(sheet.begin(), sheet.end()) == 1);
-  CHECK(sheet.num_selected() == 1);
-
-  sheet.select(0, 0);
-  CHECK(std::distance(sheet.begin(), sheet.end()) == 1);
-  CHECK(sheet.num_selected() == 1);
-
-  sheet.select(static_cast<int>(3_tw * tileWidth),
-               static_cast<int>(2_th * tileHeight));
-  CHECK(std::distance(sheet.begin(), sheet.end()) == 2);
-  CHECK(sheet.num_selected() == 2);
-
-  sheet.select(-1, -1);
-  CHECK(std::distance(sheet.begin(), sheet.end()) == 2);
-  CHECK(sheet.num_selected() == 2);
-
-  sheet.clear_selection();
-  CHECK(std::distance(sheet.begin(), sheet.end()) == 0);
-  CHECK(sheet.num_selected() == 0);
 }
 
 TEST_CASE("tileset::set_first_id", "[tileset]")
@@ -97,10 +70,10 @@ TEST_CASE("tileset::last_id", "[tileset]")
 {
   tileset sheet{"terrain.png", 32_tw, 32_th};
 
-  CHECK(sheet.last_id() == tile_id{1025});
+  CHECK(sheet.last_id() == 1025_t);
   CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.num_tiles()});
 
-  sheet.set_first_id(tile_id{43});
+  sheet.set_first_id(43_t);
   CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.num_tiles()});
 }
 
@@ -126,23 +99,21 @@ TEST_CASE("tileset::tile_at", "[tileset]")
   {
     tileset sheet{"terrain.png", 32_tw, 32_th};
 
-    CHECK(sheet.tile_at(-1, -1) == empty);
-    CHECK(sheet.tile_at(sheet.width() + 1, 0) == empty);
-    CHECK(sheet.tile_at(0, sheet.height() + 1) == empty);
-    CHECK(sheet.tile_at(sheet.width() + 1, sheet.height() + 1) == empty);
+    CHECK(sheet.tile_at(-1_row, -1_col) == empty);
+    CHECK(sheet.tile_at(row{sheet.width() + 1}, 0_col) == empty);
+    CHECK(sheet.tile_at(0_row, col{sheet.height() + 1}) == empty);
+    CHECK(sheet.tile_at(row{sheet.width() + 1}, col{sheet.height() + 1}) ==
+          empty);
   }
 
   SECTION("Without changed first ID")
   {
     tileset sheet{"terrain.png", 32_tw, 32_th};
 
-    const auto row = 7;
-    const auto col = 5;
-    const auto x = col * sheet.get_tile_width().get() + 13;
-    const auto y = row * sheet.get_tile_height().get() + 24;
-
-    const tile_id index{row * sheet.cols() + col};
-    CHECK(sheet.tile_at(x, y) == sheet.first_id() + index);
+    const auto row = 7_row;
+    const auto col = 5_col;
+    const tile_id index{row.get() * sheet.cols() + col.get()};
+    CHECK(sheet.tile_at(row, col) == sheet.first_id() + index);
   }
 
   SECTION("With changed first ID")
@@ -152,13 +123,11 @@ TEST_CASE("tileset::tile_at", "[tileset]")
     const tile_id first{38};
     sheet.set_first_id(first);
 
-    const auto row = 9;
-    const auto col = 4;
-    const auto x = col * sheet.get_tile_width().get();
-    const auto y = row * sheet.get_tile_height().get();
+    const auto row = 9_row;
+    const auto col = 4_col;
 
-    const tile_id index{row * sheet.cols() + col};
-    CHECK(sheet.tile_at(x, y) == sheet.first_id() + index);
+    const tile_id index{row.get() * sheet.cols() + col.get()};
+    CHECK(sheet.tile_at(row, col) == sheet.first_id() + index);
   }
 }
 
