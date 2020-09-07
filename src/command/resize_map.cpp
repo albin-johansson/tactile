@@ -3,7 +3,9 @@
 namespace tactile::cmd {
 
 resize_map::resize_map(not_null<core::map*> map, int rows, int cols)
-    : abstract_command{"Resize Map", map}, m_rows{rows}, m_cols{cols}
+    : abstract_command{QStringLiteral(u"Resize Map"), map},
+      m_rows{rows},
+      m_cols{cols}
 {}
 
 void resize_map::undo()

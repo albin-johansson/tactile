@@ -3,7 +3,7 @@
 namespace tactile::cmd {
 
 add_row::add_row(not_null<core::map*> map)
-    : abstract_command{"Add Row", map}
+    : abstract_command{QStringLiteral(u"Add Row"), map}
 {}
 
 void add_row::undo()

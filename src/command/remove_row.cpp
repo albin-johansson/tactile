@@ -3,7 +3,7 @@
 namespace tactile::cmd {
 
 remove_row::remove_row(not_null<core::map*> map)
-    : abstract_command{"Remove Row", map}
+    : abstract_command{QStringLiteral(u"Remove Row"), map}
 {}
 
 void remove_row::undo()

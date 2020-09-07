@@ -3,7 +3,7 @@
 namespace tactile::cmd {
 
 add_col::add_col(not_null<core::map*> map)
-    : abstract_command{"Add Column", map}
+    : abstract_command{QStringLiteral(u"Add Column"), map}
 {}
 
 void add_col::undo()
