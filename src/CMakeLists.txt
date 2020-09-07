@@ -144,6 +144,7 @@ set(TACTILE_SOURCE_FILES
         tool/tool_model.cpp
         tool/tool_model.hpp
 
+        util/small_map.hpp
         )
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
