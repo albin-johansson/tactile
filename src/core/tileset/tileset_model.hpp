@@ -6,6 +6,7 @@
 
 #include "core_fwd.hpp"
 #include "position.hpp"
+#include "small_map.hpp"
 #include "tileset.hpp"
 
 namespace tactile::core {
@@ -24,6 +25,8 @@ namespace tactile::core {
 class tileset_model final
 {
  public:
+  tileset_model();
+
   /**
    * @brief Adds a tileset to the manager.
    *
@@ -154,7 +157,7 @@ class tileset_model final
 
  private:
   std::optional<tileset_id> m_activeID;
-  std::map<tileset_id, tileset> m_tilesets;  // TODO small_map
+  small_map<tileset_id, tileset> m_tilesets;
   tileset_id m_nextID{1};
   tile_id m_nextGlobalTileID{1};
 };

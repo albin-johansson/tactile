@@ -4,6 +4,11 @@
 
 namespace tactile::core {
 
+tileset_model::tileset_model()
+{
+  m_tilesets.reserve(5);
+}
+
 void tileset_model::remove(tileset_id id) noexcept
 {
   m_tilesets.erase(id);
@@ -28,7 +33,7 @@ void tileset_model::select(std::optional<tileset_id> id)
 }
 
 void tileset_model::set_selection(const position& topLeft,
-                                     const position& bottomRight)
+                                  const position& bottomRight)
 {
   if (has_active_tileset()) {
     m_tilesets.at(*m_activeID).set_selection(topLeft, bottomRight);
@@ -91,7 +96,7 @@ auto tileset_model::current_tileset() const -> const tileset*
 auto tileset_model::contains(tile_id id) const -> bool
 {
   return std::any_of(
-      begin(m_tilesets), end(m_tilesets), [id](const auto& pair) {
+      m_tilesets.begin(), m_tilesets.end(), [id](const auto& pair) {
         return pair.second.contains(id);
       });
 }
