@@ -59,8 +59,6 @@ class model final : public QObject
 
   void update_tileset_selection(position topLeft, position bottomRight);
 
-  void set_tile(const position& pos, tile_id id);
-
   /**
    * @brief Indicates whether or not there is an active map.
    *

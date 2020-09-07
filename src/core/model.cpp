@@ -223,13 +223,6 @@ void model::select_map(map_id id)
   }
 }
 
-void model::set_tile(const position& pos, tile_id id)
-{
-  if (auto* map = current_map()) {
-    emit redraw_requested();
-  }
-}
-
 auto model::has_active_map() const noexcept -> bool
 {
   return m_currentMapID.has_value();
