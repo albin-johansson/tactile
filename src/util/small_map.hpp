@@ -51,6 +51,18 @@ class small_map final
   }
 
   /**
+   * @brief Clears the map of all entries.
+   *
+   * @details The map is empty after this operation.
+   *
+   * @since 0.1.0
+   */
+  void clear() noexcept
+  {
+    m_data.clear();
+  }
+
+  /**
    * @brief Inserts a key/value-pair in-place.
    *
    * @details This function will replace any previous existing key/value-pair

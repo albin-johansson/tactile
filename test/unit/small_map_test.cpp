@@ -67,6 +67,19 @@ TEST_CASE("small_map::reserve", "[small_map]")
   CHECK(map.capacity() == n);
 }
 
+TEST_CASE("small_map::clear", "[small_map]")
+{
+  small_map<int, int> map;
+
+  map.emplace(0, 10);
+  map.emplace(1, 20);
+  map.emplace(2, 30);
+
+  map.clear();
+
+  CHECK(map.empty());
+}
+
 TEST_CASE("small_map::at", "[small_map]")
 {
   using namespace std::string_view_literals;
