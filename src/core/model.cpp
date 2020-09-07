@@ -220,8 +220,6 @@ void model::select_map(map_id id)
     emit redo_text_updated(map->redo_text());
 
     emit switched_map(id);
-
-    // TODO need to signal window to switch active tab
   }
 }
 
