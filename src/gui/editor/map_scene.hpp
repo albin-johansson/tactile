@@ -17,6 +17,7 @@ class map_scene final : public QGraphicsScene
 
  public:
   explicit map_scene(not_null<core::map*> map,
+                     not_null<core::tileset_model*> tilesets,
                      map_id id,
                      QWidget* parent = nullptr);
 
@@ -34,16 +35,9 @@ class map_scene final : public QGraphicsScene
  protected:
   void drawBackground(QPainter* painter, const QRectF& rect) override;
 
-  void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
-
-  void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-
-  void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
-
  private:
   map_item* m_item;
   map_id m_id;
-  QPointF m_lastMouseScenePos{};
 };
 
 }  // namespace tactile::gui

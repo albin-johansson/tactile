@@ -114,11 +114,20 @@ void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 
       const core::position topLeft{core::row{geometry.y() / m_tileHeight.get()},
                                    core::col{geometry.x() / m_tileWidth.get()}};
-      const core::position bottomRight{
-          core::row{geometry.bottom() / m_tileHeight.get()},
-          core::col{geometry.right() / m_tileWidth.get()}};
 
-      emit tileset_selection_changed(topLeft, bottomRight);
+      using core::operator""_col;
+      using core::operator""_row;
+
+      const auto calc_bottom_right = [&] {
+        const core::row row{geometry.bottom() / m_tileHeight.get()};
+        const core::col col{geometry.right() / m_tileWidth.get()};
+        const core::position bottomRight{
+            std::max(row - 1_row, topLeft.get_row()),
+            std::max(col - 1_col, topLeft.get_col())};
+        return bottomRight;
+      };
+
+      emit tileset_selection_changed(topLeft, calc_bottom_right());
     } else {
       m_rubberBand->hide();  // selection was too small, just hide it
     }

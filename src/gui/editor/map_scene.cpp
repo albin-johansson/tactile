@@ -10,8 +10,11 @@
 
 namespace tactile::gui {
 
-map_scene::map_scene(not_null<core::map*> map, map_id id, QWidget* parent)
-    : QGraphicsScene{parent}, m_item{new map_item{map}}, m_id{id}
+map_scene::map_scene(not_null<core::map*> map,
+                     not_null<core::tileset_model*> tilesets,
+                     map_id id,
+                     QWidget* parent)
+    : QGraphicsScene{parent}, m_item{new map_item{map, tilesets}}, m_id{id}
 {
   addItem(m_item);
   setSceneRect(100, 100, 100, 100);
@@ -36,50 +39,10 @@ auto map_scene::map_position() const -> QPointF
   return m_item->pos();
 }
 
-// void tilemap_scene::resizeEvent(QResizeEvent* event)
-//{
-//  QWidget::resizeEvent(event);
-//
-//  const auto& newSize = event->size();
-//  const auto newWidth = newSize.width();
-//  const auto newHeight = newSize.height();
-//
-//  m_viewport.setWidth(newWidth);
-//  m_viewport.setHeight(newHeight);
-//
-//  update();
-//}
-
 void map_scene::drawBackground(QPainter* painter, const QRectF& rect)
 {
   QGraphicsScene::drawBackground(painter, rect);
   painter->fillRect(rect, Qt::black);
-}
-
-void map_scene::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-  QGraphicsScene::mousePressEvent(event);
-
-  //  if (event->buttons() & Qt::MouseButton::MidButton) {
-  //    const auto pos = event->scenePos();
-  //
-  //    m_lastMouseX = pos.x();
-  //    m_lastMouseY = pos.y();
-  //
-  //    QApplication::setOverrideCursor(Qt::ClosedHandCursor);
-  //  }
-}
-
-void map_scene::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
-  QGraphicsScene::mouseReleaseEvent(event);
-  //  QApplication::restoreOverrideCursor();
-}
-
-void map_scene::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
-{
-  QGraphicsScene::mouseMoveEvent(event);
-  m_lastMouseScenePos = event->scenePos();
 }
 
 }  // namespace tactile::gui

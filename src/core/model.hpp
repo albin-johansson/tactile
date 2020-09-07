@@ -137,6 +137,11 @@ class model final : public QObject
 
   [[nodiscard]] auto current_tileset() const -> const tileset*;
 
+  [[nodiscard]] auto get_tileset_model() -> tileset_model*
+  {
+    return m_tilesets.get();
+  }
+
  signals:
   void redraw_requested();
 
@@ -255,7 +260,7 @@ class model final : public QObject
  private:
   std::optional<map_id> m_currentMapID;
   std::map<map_id, map_model*> m_maps;
-  tileset_model m_tilesets;
+  std::unique_ptr<tileset_model> m_tilesets;
   tool_model m_tools;
   map_id m_nextMapID{1};
 };

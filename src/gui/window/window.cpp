@@ -232,9 +232,12 @@ void window::handle_draw()
   m_editor->handle_redraw();
 }
 
-void window::handle_new_map(not_null<core::map*> map, map_id id)
+void window::handle_new_map(not_null<core::map*> map,
+                            not_null<core::tileset_model*> tilesets,
+                            map_id id)
 {
-  m_editor->add_new_map_tab(map, "map", id);  // TODO pass core and map_id?
+  m_editor->add_new_map_tab(
+      map, tilesets, "map", id);  // TODO pass core and map_id?
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
     enable_editor_view();

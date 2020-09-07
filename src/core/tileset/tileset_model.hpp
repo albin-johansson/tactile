@@ -1,9 +1,8 @@
 #pragma once
 
-#include <memory>
-#include <optional>
-#include <unordered_map>
-#include <utility>
+#include <map>       // map
+#include <optional>  // optional
+#include <utility>   // forward, move
 
 #include "core_fwd.hpp"
 #include "position.hpp"
@@ -44,10 +43,15 @@ class tileset_model final
   {
     const auto id{m_nextID};
     ++m_nextID;
-    m_tilesets.emplace(id, tileset{std::forward<Args>(args)...});
+
+    tileset tileset{std::forward<Args>(args)...};
+    tileset.set_first_id(m_nextGlobalTileID);
+
+    m_nextGlobalTileID = tileset.last_id() + 1_t;
+
+    m_tilesets.emplace(id, std::move(tileset));
     m_activeID = id;
 
-    qDebug("tileset_model > added tileset with ID: %i", id.get());
     return id;
   }
 
@@ -81,7 +85,50 @@ class tileset_model final
    */
   void select(std::optional<tileset_id> id);
 
-  void update_selection(position topLeft, position bottomRight);
+  /**
+   * @brief Sets the current tileset selection of the active tileset.
+   *
+   * @param topLeft the top-left corner of the selection.
+   * @param bottomRight the bottom-right corner of the selection.
+   *
+   * @since 0.1.0
+   */
+  void set_selection(const position& topLeft, const position& bottomRight);
+
+  /**
+   * @brief Returns the image associated with the specified tile.
+   *
+   * @param id the ID of the tile to obtain the image for.
+   *
+   * @return the image associated with the specified tile.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto image(tile_id id) const -> const QPixmap&;
+
+  /**
+   * @brief Returns the source rectangle associated with the specified tile.
+   *
+   * @param id the ID of the tile to obtain the source rectangle for.
+   *
+   * @return the source rectangle associated with the tile.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto image_source(tile_id id) const -> QRect;
+
+  /**
+   * @brief Returns the range of tile identifiers associated with the specified
+   * tileset.
+   *
+   * @param id the ID of the tileset that will be queried.
+   *
+   * @return the range of the specified tileset, as [first, last].
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto range_of(tileset_id id) const
+      -> std::pair<tile_id, tile_id>;
 
   /**
    * @brief Returns the amount of tilesets handled by the manager.
@@ -103,10 +150,13 @@ class tileset_model final
 
   [[nodiscard]] auto current_tileset() const -> const tileset*;
 
+  [[nodiscard]] auto contains(tile_id id) const -> bool;
+
  private:
   std::optional<tileset_id> m_activeID;
-  std::unordered_map<tileset_id, tileset> m_tilesets; // TODO small_map
+  std::map<tileset_id, tileset> m_tilesets;  // TODO small_map
   tileset_id m_nextID{1};
+  tile_id m_nextGlobalTileID{1};
 };
 
 }  // namespace tactile::core

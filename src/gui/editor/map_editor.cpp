@@ -61,10 +61,11 @@ void map_editor::init_connections()
 }
 
 void map_editor::add_new_map_tab(not_null<core::map*> map,
+                                 not_null<core::tileset_model*> tilesets,
                                  const QString& title,
                                  map_id id)
 {
-  m_mapTabWidget->add_map_tab(map, title, id);
+  m_mapTabWidget->add_map_tab(map, tilesets, title, id);
 }
 
 void map_editor::select_tab(map_id id)

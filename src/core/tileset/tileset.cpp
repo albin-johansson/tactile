@@ -2,7 +2,6 @@
 #include "tileset.hpp"
 
 #include <cassert>  // assert
-#include <utility>  // move, ssize
 
 #include "algorithm.hpp"
 #include "tactile_error.hpp"
@@ -38,74 +37,24 @@ void tileset::set_first_id(tile_id firstID) noexcept
   m_firstID = firstID;
 }
 
-// void tileset::select(int x, int y)
-//{
-//  if (const auto tile = tile_at(x, y); tile != empty) {
-//    m_selection.emplace(tile);
-//  }
-//}
-
-void tileset::set_selection(position topLeft, position bottomRight)
+void tileset::set_selection(const position& topLeft,
+                            const position& bottomRight)
 {
-//  clear_selection();
-
-  qDebug("tileset > setting selection with TL: (%i, %i) and BR: (%i, %i)",
-         topLeft.get_row(),
-         topLeft.get_col(),
-         bottomRight.get_row(),
-         bottomRight.get_col());
   m_selection = {topLeft, bottomRight};
-  //
-  //  if (topLeft == bottomRight) {
-  //    if (const auto tile = tile_at(topLeft.get_row(), topLeft.get_col());
-  //        tile != empty) {
-  //      m_selection.emplace(tile);
-  //    }
-  //    return;
-  //  }
-  //
-  //  const auto endRow = bottomRight.get_row();
-  //  const auto endCol = bottomRight.get_col();
-  //
-  //  for (row r = topLeft.get_row(); r < endRow; ++r) {
-  //    for (col c = topLeft.get_col(); c < endCol; ++c) {
-  //      if (const auto tile = tile_at(r, c); tile != empty) {
-  //        m_selection.emplace(tile);
-  //        qDebug("tileset > added (%i, %i) to selection", r.get(), c.get());
-  //      }
-  //    }
-  //  }
 }
-
-// void tileset::clear_selection() noexcept
-//{
-//  m_selection.clear();
-//}
 
 auto tileset::contains(tile_id id) const noexcept -> bool
 {
   return (id >= first_id()) && (id <= last_id());
 }
 
-auto tileset::tile_at(int x, int y) const -> tile_id
-{
-  if (x < 0 || y < 0 || x > width() || y > height()) {
-    return empty;
-  } else {
-    const auto row = (y / m_tileHeight.get());
-    const auto col = (x / m_tileWidth.get());
-    const auto index = row * m_cols + col;
-    return m_firstID + tile_id{index};
-  }
-}
-
 auto tileset::tile_at(row r, col c) const -> tile_id
 {
-  if (r < 0_row || c < 0_col || r > row{rows()} || c > col{cols()}) {
-    return empty;
-  } else {
+  if ((r >= 0_row) && (c >= 0_col) && (r < row{rows()}) && (c < col{cols()})) {
     const auto index = r.get() * m_cols + c.get();
     return m_firstID + tile_id{index};
+  } else {
+    return empty;
   }
 }
 
@@ -163,20 +112,5 @@ auto tileset::get_selection() const noexcept -> const selection&
 {
   return m_selection;
 }
-
-// auto tileset::begin() const noexcept -> const_iterator
-//{
-//  return m_selection.begin();
-//}
-//
-// auto tileset::end() const noexcept -> const_iterator
-//{
-//  return m_selection.end();
-//}
-
-// auto tileset::num_selected() const noexcept -> int
-//{
-//  return static_cast<int>(m_selection.size());
-//}
 
 }  // namespace tactile::core

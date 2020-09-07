@@ -17,11 +17,14 @@ map::map(int nRows, int nCols)
 
 void map::set_tile(const position& pos, tile_id id)
 {
-  qDebug("map > setting tile (%i, %i) to %i",
-         pos.get_row().get(),
-         pos.get_col().get(),
-         id.get());
   m_layers.at(m_activeLayer.get()).set_tile(pos, id);
+}
+
+void map::remove_all(tile_id id)
+{
+  for (auto& layer : m_layers) {
+    layer.remove_all(id);
+  }
 }
 
 void map::select(layer_id layer) noexcept

@@ -93,7 +93,8 @@ void app::tileset_selection_changed(core::position topLeft,
 void app::handle_new_map()
 {
   const auto id = m_model->add_map();
-  m_window->handle_new_map(m_model->get_map(id), id);
+  m_window->handle_new_map(
+      m_model->get_map(id), m_model->get_tileset_model(), id);
 }
 
 }  // namespace tactile

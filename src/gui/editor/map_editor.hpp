@@ -36,6 +36,7 @@ class map_editor final : public QWidget
   ~map_editor() noexcept override;
 
   void add_new_map_tab(not_null<core::map*> map,
+                       not_null<core::tileset_model*> tilesets,
                        const QString& title,
                        map_id id);
 

@@ -7,7 +7,10 @@
 
 namespace tactile::gui {
 
-map_view::map_view(not_null<core::map*> map, map_id id, QWidget* parent)
+map_view::map_view(not_null<core::map*> map,
+                   not_null<core::tileset_model*> tilesets,
+                   map_id id,
+                   QWidget* parent)
     : QGraphicsView{parent}
 {
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);
@@ -16,7 +19,7 @@ map_view::map_view(not_null<core::map*> map, map_id id, QWidget* parent)
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-  setScene(new map_scene{map, id, this});
+  setScene(new map_scene{map, tilesets, id, this});
 }
 
 void map_view::force_redraw()

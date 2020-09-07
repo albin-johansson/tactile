@@ -1,6 +1,10 @@
 #pragma once
 
+#include <optional>
+
 #include "fwd.hpp"
+#include "position.hpp"
+#include "tileset.hpp"
 #include "tool.hpp"
 
 namespace tactile {
@@ -18,6 +22,13 @@ class stamp_tool final : public tool
 
  private:
   core::model* m_model{};
+
+  [[nodiscard]] auto translate_mouse_position(const QPoint& mousePosition,
+                                              const QPointF& mapPosition) const
+      -> std::optional<core::position>;
+
+  void set_tiles(const core::position& position,
+                 const core::tileset& tileset);
 
   //  [[nodiscard]] auto is_single_tile_selected() const -> bool;
 };

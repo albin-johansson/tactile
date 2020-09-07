@@ -66,6 +66,15 @@ class layer final
   void flood(const position& pos, tile_id target, tile_id replacement);
 
   /**
+   * @brief Removes all occurrences of the specified ID in the layer.
+   *
+   * @param id the ID that will be replaced with `empty`.
+   *
+   * @since 0.1.0
+   */
+  void remove_all(tile_id id);
+
+  /**
    * @brief Adds a row to the tile layer.
    *
    * @param id the tile ID of all of the new cells in the added row.

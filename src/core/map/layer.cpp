@@ -37,6 +37,19 @@ void layer::flood(const position& pos, tile_id target, tile_id replacement)
   flood_fill(*this, pos, target, replacement);
 }
 
+void layer::remove_all(tile_id id)
+{
+  const auto nRows = rows();
+  const auto nCols = cols();
+  for (auto r = 0; r < nRows; ++r) {
+    for (auto c = 0; c < nCols; ++c) {
+      if (m_tiles[r][c] == id) {
+        m_tiles[r][c] = empty;
+      }
+    }
+  }
+}
+
 void layer::add_row(tile_id id)
 {
   m_tiles.push_back(create_row(cols(), id));

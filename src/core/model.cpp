@@ -4,7 +4,7 @@
 
 namespace tactile::core {
 
-model::model() : m_tools{this}
+model::model() : m_tools{this}, m_tilesets{std::make_unique<tileset_model>()}
 {}
 
 void model::undo()
@@ -111,7 +111,7 @@ auto model::add_tileset(const QImage& image,
                         tile_height tileHeight) -> std::optional<tileset_id>
 {
   if (!image.isNull()) {
-    return m_tilesets.emplace(image, tileWidth, tileHeight);
+    return m_tilesets->emplace(image, tileWidth, tileHeight);
   } else {
     return std::nullopt;
   }
@@ -119,19 +119,27 @@ auto model::add_tileset(const QImage& image,
 
 void model::remove_tileset(tileset_id id)
 {
-  m_tilesets.remove(id);
-  qDebug("core_model > removed tileset with ID: %i", id.get());
+  const auto [first, last] = m_tilesets->range_of(id);
+
+  for (auto& [mapID, mapModel] : m_maps) {
+    auto* map = mapModel->get();
+
+    for (auto i = first; i < last; ++i) {
+      map->remove_all(i);
+    }
+  }
+  m_tilesets->remove(id);
+  emit redraw_requested();
 }
 
 void model::select_tileset(tileset_id id)
 {
-  assert(true);
-  m_tilesets.select(id);
+  m_tilesets->select(id);
 }
 
 void model::update_tileset_selection(position topLeft, position bottomRight)
 {
-  m_tilesets.update_selection(topLeft, bottomRight);
+  m_tilesets->set_selection(topLeft, bottomRight);
 }
 
 auto model::rows() const -> std::optional<int>
@@ -220,9 +228,6 @@ void model::select_map(map_id id)
 void model::set_tile(const position& pos, tile_id id)
 {
   if (auto* map = current_map()) {
-
-
-
     emit redraw_requested();
   }
 }
@@ -283,7 +288,7 @@ auto model::current_map() const -> const map_model*
 
 auto model::current_tileset() const -> const tileset*
 {
-  return m_tilesets.current_tileset();
+  return m_tilesets->current_tileset();
 }
 
 }  // namespace tactile::core

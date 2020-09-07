@@ -55,7 +55,25 @@ class map final
    */
   map(int nRows, int nCols);
 
+  /**
+   * @brief Sets the value of the tile at the specified position in the
+   * currently active layer.
+   *
+   * @param pos the position of the tile that will be modified.
+   * @param id the new value of the tile.
+   *
+   * @since 0.1.0
+   */
   void set_tile(const position& pos, tile_id id);
+
+  /**
+   * @brief Removes all occurrences of the specified ID in all layers.
+   *
+   * @param id the ID that will be replaced with `empty`.
+   *
+   * @since 0.1.0
+   */
+  void remove_all(tile_id id);
 
   /**
    * @brief Selects the tile layer associated with the specified index.

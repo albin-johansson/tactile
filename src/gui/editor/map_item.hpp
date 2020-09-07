@@ -23,11 +23,13 @@ class map_item final : public QGraphicsItem
    * @brief Creates a map item.
    *
    * @param map the associated map, cannot be null.
+   * @param tilesets the associated tileset model, cannot be null.
    * @param parent the parent item.
    *
    * @since 0.1.0
    */
   explicit map_item(not_null<core::map*> map,
+                    not_null<core::tileset_model*> tilesets,
                     QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
@@ -38,10 +40,13 @@ class map_item final : public QGraphicsItem
 
  private:
   core::map* m_map{};
+  core::tileset_model* m_tilesets{};
 
   void draw_layer(QPainter& painter,
                   const core::layer& layer,
                   const QRectF& exposed);
+
+  void draw_tile(QPainter& painter, tile_id tile, int x, int y, int tileSize);
 };
 
 }  // namespace tactile::gui

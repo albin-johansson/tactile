@@ -32,13 +32,22 @@ namespace tactile::core {
 class tileset final
 {
  public:
+  /**
+   * @struct tileset::selection
+   *
+   * @brief Represents the selection of tiles in a tileset.
+   *
+   * @details The two positions represent a rectangular selection.
+   *
+   * @since 0.1.0
+   *
+   * @headerfile tileset.hpp
+   */
   struct selection final
   {
-    position topLeft;
-    position bottomRight;
+    position topLeft;      ///< The top-left corner position.
+    position bottomRight;  ///< The bottom-right corner position.
   };
-
-  using const_iterator = std::set<tile_id>::const_iterator;
 
   /**
    * @brief Creates a tileset with the initial first ID set to 1.
@@ -86,28 +95,15 @@ class tileset final
    */
   void set_first_id(tile_id firstID) noexcept;
 
-//  /**
-//   * @brief Selects the tile at the specified coordinates.
-//   *
-//   * @details Multiple tiles can be selected simultaneously.
-//   *
-//   * @note This method has no effect if the supplied position is out-of-bounds.
-//   *
-//   * @param x the x-coordinate of the selection.
-//   * @param y the y-coordinate of the selection.
-//   *
-//   * @since 0.1.0
-//   */
-//  void select(int x, int y);
-
-  void set_selection(position topLeft, position bottomRight);
-
-//  /**
-//   * @brief Clears any previously selected tiles.
-//   *
-//   * @since 0.1.0
-//   */
-//  void clear_selection() noexcept;
+  /**
+   * @brief Sets the current selection in the tileset.
+   *
+   * @param topLeft the top-left position of the selection.
+   * @param bottomRight the bottom-right position of the selection.
+   *
+   * @since 0.1.0
+   */
+  void set_selection(const position& topLeft, const position& bottomRight);
 
   /**
    * @brief Indicates whether or not the tileset contains the specified tile ID.
@@ -121,18 +117,16 @@ class tileset final
   [[nodiscard]] auto contains(tile_id id) const noexcept -> bool;
 
   /**
-   * @brief Returns the tile ID of the tile at the specified coordinates.
+   * @brief Returns the ID of the tile at the specified position.
    *
-   * @param x the x-coordinate to check.
-   * @param y the y-coordinate to check.
+   * @param r the row index of the desired tile.
+   * @param c the column index of the desired tile.
    *
-   * @return the tile ID of the tile at the specified position; `empty` if no
-   * tile was found.
+   * @return the ID of the tile at the specified position; `empty` if the
+   * position was out-of-bounds.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_at(int x, int y) const -> tile_id;
-
   [[nodiscard]] auto tile_at(row r, col col) const -> tile_id;
 
   /**
@@ -200,6 +194,13 @@ class tileset final
    */
   [[nodiscard]] auto last_id() const noexcept -> tile_id;
 
+  /**
+   * @brief Returns the image associated with the tileset.
+   *
+   * @return the image associated with the tileset.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto image() const -> const QPixmap&;
 
   /**
@@ -224,33 +225,14 @@ class tileset final
    */
   [[nodiscard]] auto get_tile_height() const noexcept -> tile_height;
 
+  /**
+   * @brief Returns the current selection in the tileset.
+   *
+   * @return the current selection in the tileset.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto get_selection() const noexcept -> const selection&;
-//  /**
-//   * @brief Returns a begin iterator, for iterating selected cells.
-//   *
-//   * @return a begin iterator.
-//   *
-//   * @since 0.1.0
-//   */
-//  [[nodiscard]] auto begin() const noexcept -> const_iterator;
-//
-//  /**
-//   * @brief Returns an end iterator, for iterating selected cells.
-//   *
-//   * @return an end iterator.
-//   *
-//   * @since 0.1.0
-//   */
-//  [[nodiscard]] auto end() const noexcept -> const_iterator;
-
-//  /**
-//   * @brief Returns the current amount of selected cells.
-//   *
-//   * @return the amount of currently selected cells.
-//   *
-//   * @since 0.1.0
-//   */
-//  [[nodiscard]] auto num_selected() const noexcept -> int;
 
  private:
   QPixmap m_sheet;

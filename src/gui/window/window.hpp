@@ -127,8 +127,6 @@ class window final : public QMainWindow
                           tile_height tileHeight,
                           const QString& tabName);
 
-//  void handle_remove_tileset(tileset_id id);
-
   /**
    * @brief Triggers a redraw of the editor pane.
    *
@@ -138,7 +136,9 @@ class window final : public QMainWindow
 
   void handle_move_camera(int dx, int dy);
 
-  void handle_new_map(not_null<core::map*> map, map_id id);
+  void handle_new_map(not_null<core::map*> map,
+                      not_null<core::tileset_model*> tilesets,
+                      map_id id);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
