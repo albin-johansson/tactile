@@ -13,6 +13,9 @@ namespace tactile::gui {
  *
  * @brief Represents the UI component that presents a map.
  *
+ * @details This class also handles the mouse input for maps, and delegates
+ * mouse events to the model that will be used by the mouse tools.
+ *
  * @since 0.1.0
  *
  * @headerfile map_view.hpp
