@@ -16,6 +16,7 @@ addons:
       - ninja-build
       - build-essential
       - libgl1-mesa-dev
+      - boost
 
 before_script:
   - export CC=/usr/bin/clang-10
