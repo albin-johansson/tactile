@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(tactile_src)
+project(tactile_src CXX)
 
 set(TACTILE_SOURCE_FILES
         tactile.qrc
@@ -224,7 +224,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(libTactile PRIVATE
             -Xclang
-            -std=c++20
             -Wall
             -Wextra
             -Wpedantic
