@@ -30,8 +30,8 @@ auto stamp_tool::translate_mouse_position(const QPoint& mousePosition,
     return std::nullopt;
   }
 
-  Q_ASSERT(m_model->has_active_map());
-  auto* map = m_model->current_map()->get();
+  auto* map = m_model->current_raw_map();
+  Q_ASSERT(map);
 
   const auto tileSize = map->get_tile_size().get();
 
@@ -48,7 +48,7 @@ auto stamp_tool::translate_mouse_position(const QPoint& mousePosition,
 void stamp_tool::set_tiles(const position& position,
                            const core::tileset& tileset)
 {
-  auto* map = m_model->current_map()->get();
+  auto* map = m_model->current_raw_map();
   Q_ASSERT(map);
 
   const auto& [topLeft, bottomRight] = tileset.get_selection();
@@ -84,16 +84,11 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
     return;
   }
 
-  auto* map = m_model->current_map()->get();
-  if (!map) {
-    return;
-  }
-
   if (event->buttons() & Qt::MouseButton::LeftButton) {
     if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
         pos) {
       set_tiles(*pos, *tileset);
-      emit m_model->redraw_requested();
+      emit m_model->redraw();
     }
   }
 }
@@ -105,18 +100,18 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
     return;
   }
 
-  if (!m_model->current_tileset()) {
-    return;
-  }
+  if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
+      pos) {
+    emit m_model->enable_stamp_preview(*pos);
 
-  if (event->buttons() & Qt::MouseButton::LeftButton) {
-    if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
-        pos) {
+    if (event->buttons() & Qt::MouseButton::LeftButton) {
       set_tiles(*pos, *tileset);
-      emit m_model->redraw_requested();
     }
+
+    emit m_model->redraw();
   } else {
-    // TODO update the preview here, emit signal
+    // mouse is outside of map, so disable preview
+    emit m_model->disable_stamp_preview();
   }
 }
 
@@ -130,6 +125,16 @@ void stamp_tool::released(QMouseEvent* event, const QPointF& mapPosition)
     // TODO we want to be able to undo the changes, create command without
     // executing it.
   }
+}
+
+void stamp_tool::entered(QEvent* event)
+{
+  // do nothing
+}
+
+void stamp_tool::exited(QEvent* event)
+{
+  emit m_model->disable_stamp_preview();
 }
 
 }  // namespace tactile

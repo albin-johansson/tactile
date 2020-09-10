@@ -23,7 +23,15 @@ void connect(Sender&& sender, Signal&& signal, Receiver&& receiver, Slot&& slot)
 app_connections::app_connections(app& app)
     : m_core{app.model_ptr()}, m_window{app.window_ptr()}
 {
-  connect(m_core, &model::redraw_requested, m_window, &window::handle_draw);
+  connect(m_core, &model::redraw, m_window, &window::handle_draw);
+  connect(m_core,
+          &model::enable_stamp_preview,
+          m_window,
+          &window::enable_stamp_preview);
+  connect(m_core,
+          &model::disable_stamp_preview,
+          m_window,
+          &window::disable_stamp_preview);
 
   init_command_connections(app);
   init_camera_connections(app);
@@ -110,6 +118,8 @@ void app_connections::init_map_connections(app& app) noexcept
   connect(m_window, &window::mouse_pressed, m_core, &model::mouse_pressed);
   connect(m_window, &window::mouse_moved, m_core, &model::mouse_moved);
   connect(m_window, &window::mouse_released, m_core, &model::mouse_released);
+  connect(m_window, &window::mouse_entered, m_core, &model::mouse_entered);
+  connect(m_window, &window::mouse_exited, m_core, &model::mouse_exited);
 }
 
 }  // namespace tactile

@@ -74,35 +74,51 @@ void map_tab_widget::add_map_tab(not_null<core::map*> map,
   connect(view, &map_view::mouse_moved, this, &map_tab_widget::mouse_moved);
   connect(
       view, &map_view::mouse_released, this, &map_tab_widget::mouse_released);
+  connect(view, &map_view::mouse_entered, this, &map_tab_widget::mouse_entered);
+  connect(view, &map_view::mouse_exited, this, &map_tab_widget::mouse_exited);
 
   addTab(view, title + QString::number(id.get()));
 }
 
 void map_tab_widget::remove_map_tab(map_id id)
 {
-  if (auto* pane = view_from_id(id)) {
-    removeTab(indexOf(pane));
+  if (auto* view = view_from_id(id)) {
+    removeTab(indexOf(view));
   }
 }
 
 void map_tab_widget::select_tab(map_id id)
 {
-  if (auto* pane = view_from_id(id)) {
-    setCurrentWidget(pane);
+  if (auto* view = view_from_id(id)) {
+    setCurrentWidget(view);
   }
 }
 
 void map_tab_widget::center_map()
 {
-  if (auto* pane = current_view()) {
-    pane->center_map();
+  if (auto* view = current_view()) {
+    view->center_map();
   }
 }
 
 void map_tab_widget::move_map(int dx, int dy)
 {
-  if (auto* pane = current_view()) {
-    pane->move_map(dx, dy);
+  if (auto* view = current_view()) {
+    view->move_map(dx, dy);
+  }
+}
+
+void map_tab_widget::enable_stamp_preview(const core::position& position)
+{
+  if (auto* view = current_view()) {
+    view->enable_stamp_preview(position);
+  }
+}
+
+void map_tab_widget::disable_stamp_preview()
+{
+  if (auto* view = current_view()) {
+    view->disable_stamp_preview();
   }
 }
 
@@ -113,8 +129,8 @@ auto map_tab_widget::active_tab_id() const -> std::optional<map_id>
 
 auto map_tab_widget::id_from_index(int index) const -> std::optional<map_id>
 {
-  if (const auto* pane = get_view(index)) {
-    return pane->id();
+  if (const auto* view = get_view(index)) {
+    return view->id();
   } else {
     return std::nullopt;
   }

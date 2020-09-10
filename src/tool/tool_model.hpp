@@ -22,6 +22,10 @@ class tool_model final : public tool
 
   void released(QMouseEvent* event, const QPointF& mapPosition) override;
 
+  void entered(QEvent* event) override;
+
+  void exited(QEvent* event) override;
+
  private:
   // TODO avoid virtual inheritance because all tools are known at compile-time
   tool* m_current{};

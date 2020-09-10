@@ -84,6 +84,10 @@ class map_tab_widget final : public QTabWidget
    */
   void move_map(int dx, int dy);
 
+  void enable_stamp_preview(const core::position& position);
+
+  void disable_stamp_preview();
+
   /**
    * @brief Returns the map ID associated with the currently active tab.
    *
@@ -114,6 +118,10 @@ class map_tab_widget final : public QTabWidget
   void mouse_moved(QMouseEvent* event, QPointF mapPosition);
 
   void mouse_released(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_entered(QEvent* event);
+
+  void mouse_exited(QEvent* event);
 
  public slots:
   void theme_changed();

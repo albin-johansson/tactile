@@ -33,6 +33,10 @@ class map_view final : public QGraphicsView
 
   void move_map(int dx, int dy);
 
+  void enable_stamp_preview(const core::position& position);
+
+  void disable_stamp_preview();
+
   [[nodiscard]] auto id() const -> map_id;
 
  signals:
@@ -42,12 +46,20 @@ class map_view final : public QGraphicsView
 
   void mouse_released(QMouseEvent* event, QPointF mapPosition);
 
+  void mouse_entered(QEvent* event);
+
+  void mouse_exited(QEvent* event);
+
  protected:
   void mousePressEvent(QMouseEvent* event) override;
 
   void mouseMoveEvent(QMouseEvent* event) override;
 
   void mouseReleaseEvent(QMouseEvent* event) override;
+
+  void enterEvent(QEvent* event) override;
+
+  void leaveEvent(QEvent* event) override;
 
  private:
   QPoint m_lastMousePos{};

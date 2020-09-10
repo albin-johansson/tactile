@@ -103,6 +103,8 @@ void window::init_connections()
   connect(m_editor, &map_editor::mouse_pressed, this, &window::mouse_pressed);
   connect(m_editor, &map_editor::mouse_moved, this, &window::mouse_moved);
   connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
+  connect(m_editor, &map_editor::mouse_entered, this, &window::mouse_entered);
+  connect(m_editor, &map_editor::mouse_exited, this, &window::mouse_exited);
 
   connect(m_tilesetDock,
           &tileset_dock::new_tileset_requested,
@@ -230,6 +232,16 @@ void window::handle_move_camera(int dx, int dy)
 void window::handle_draw()
 {
   m_editor->handle_redraw();
+}
+
+void window::enable_stamp_preview(const core::position& position)
+{
+  m_editor->enable_stamp_preview(position);
+}
+
+void window::disable_stamp_preview()
+{
+  m_editor->disable_stamp_preview();
 }
 
 void window::handle_new_map(not_null<core::map*> map,

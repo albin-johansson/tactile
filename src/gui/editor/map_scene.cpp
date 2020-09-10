@@ -34,6 +34,16 @@ void map_scene::center_map()
   m_item->setY(rect.y() + (rect.height() - bounds.height()) / 2.0);
 }
 
+void map_scene::enable_stamp_preview(const core::position& position)
+{
+  m_item->enable_stamp_preview(position);
+}
+
+void map_scene::disable_stamp_preview()
+{
+  m_item->disable_stamp_preview();
+}
+
 auto map_scene::map_position() const -> QPointF
 {
   return m_item->pos();

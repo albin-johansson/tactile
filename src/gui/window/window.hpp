@@ -112,6 +112,10 @@ class window final : public QMainWindow
 
   void mouse_released(QMouseEvent* event, QPointF mapPosition);
 
+  void mouse_entered(QEvent* event);
+
+  void mouse_exited(QEvent* event);
+
  public slots:
   void handle_undo_state_update(bool canUndo);
 
@@ -133,6 +137,10 @@ class window final : public QMainWindow
    * @since 0.1.0
    */
   void handle_draw();
+
+  void enable_stamp_preview(const core::position& position);
+
+  void disable_stamp_preview();
 
   void handle_move_camera(int dx, int dy);
 

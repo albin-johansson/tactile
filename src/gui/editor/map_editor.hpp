@@ -35,6 +35,10 @@ class map_editor final : public QWidget
 
   ~map_editor() noexcept override;
 
+  void enable_stamp_preview(const core::position& position);
+
+  void disable_stamp_preview();
+
   void add_new_map_tab(not_null<core::map*> map,
                        not_null<core::tileset_model*> tilesets,
                        const QString& title,
@@ -84,6 +88,10 @@ class map_editor final : public QWidget
   void mouse_moved(QMouseEvent* event, QPointF mapPosition);
 
   void mouse_released(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_entered(QEvent* event);
+
+  void mouse_exited(QEvent* event);
 
   void theme_changed();
 

@@ -129,9 +129,13 @@ class model final : public QObject
    */
   [[nodiscard]] auto get_map(map_id id) -> map*;
 
-  [[nodiscard]] auto current_map() -> map_model*;
+  [[nodiscard]] auto current_map_model() -> map_model*;
 
-  [[nodiscard]] auto current_map() const -> const map_model*;
+  [[nodiscard]] auto current_map_model() const -> const map_model*;
+
+  [[nodiscard]] auto current_raw_map() -> map*;
+
+  [[nodiscard]] auto current_raw_map() const -> const map*;
 
   [[nodiscard]] auto current_tileset() const -> const tileset*;
 
@@ -141,7 +145,11 @@ class model final : public QObject
   }
 
  signals:
-  void redraw_requested();
+  void redraw();
+
+  void disable_stamp_preview();
+
+  void enable_stamp_preview(const position& position);
 
   void undo_state_updated(bool canUndo);
 
@@ -254,6 +262,10 @@ class model final : public QObject
   void mouse_moved(QMouseEvent* event, QPointF mapPosition);
 
   void mouse_released(QMouseEvent* event, QPointF mapPosition);
+
+  void mouse_entered(QEvent* event);
+
+  void mouse_exited(QEvent* event);
 
  private:
   std::optional<map_id> m_currentMapID;

@@ -25,6 +25,10 @@ class map_scene final : public QGraphicsScene
 
   void center_map();
 
+  void enable_stamp_preview(const core::position& position);
+
+  void disable_stamp_preview();
+
   [[nodiscard]] auto map_position() const -> QPointF;
 
   [[nodiscard]] auto id() const noexcept -> map_id

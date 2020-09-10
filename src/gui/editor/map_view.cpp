@@ -18,6 +18,7 @@ map_view::map_view(not_null<core::map*> map,
   // TODO define range
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  setMouseTracking(true);  // register mouse events with no pressed buttons
 
   setScene(new map_scene{map, tilesets, id, this});
 }
@@ -35,6 +36,16 @@ void map_view::center_map()
 void map_view::move_map(int dx, int dy)
 {
   get_map_scene()->move_map(dx, dy);
+}
+
+void map_view::enable_stamp_preview(const core::position& position)
+{
+  get_map_scene()->enable_stamp_preview(position);
+}
+
+void map_view::disable_stamp_preview()
+{
+  get_map_scene()->disable_stamp_preview();
 }
 
 auto map_view::id() const -> map_id
@@ -93,6 +104,18 @@ void map_view::mouseReleaseEvent(QMouseEvent* event)
   }
 
   emit mouse_released(event, mapFromScene(get_map_scene()->map_position()));
+}
+
+void map_view::enterEvent(QEvent* event)
+{
+  QWidget::enterEvent(event);
+  emit mouse_entered(event);
+}
+
+void map_view::leaveEvent(QEvent* event)
+{
+  QWidget::leaveEvent(event);
+  emit mouse_exited(event);
 }
 
 }  // namespace tactile::gui

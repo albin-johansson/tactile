@@ -9,57 +9,57 @@ model::model() : m_tools{this}, m_tilesets{std::make_unique<tileset_model>()}
 
 void model::undo()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->undo();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
 void model::redo()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->redo();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
 void model::resize_map(int nRows, int nCols)
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->resize(nRows, nCols);
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
 void model::add_row()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->add_row();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
 void model::add_col()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->add_column();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
 void model::remove_row()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->remove_row();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
 void model::remove_col()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->remove_column();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
@@ -129,7 +129,7 @@ void model::remove_tileset(tileset_id id)
     }
   }
   m_tilesets->remove(id);
-  emit redraw_requested();
+  emit redraw();
 }
 
 void model::select_tileset(tileset_id id)
@@ -144,7 +144,7 @@ void model::update_tileset_selection(position topLeft, position bottomRight)
 
 auto model::rows() const -> std::optional<int>
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     return map->rows();
   } else {
     return std::nullopt;
@@ -153,7 +153,7 @@ auto model::rows() const -> std::optional<int>
 
 auto model::cols() const -> std::optional<int>
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     return map->columns();
   } else {
     return std::nullopt;
@@ -162,7 +162,7 @@ auto model::cols() const -> std::optional<int>
 
 auto model::map_width() const -> std::optional<int>
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     return map->width();
   } else {
     return std::nullopt;
@@ -171,7 +171,7 @@ auto model::map_width() const -> std::optional<int>
 
 auto model::map_height() const -> std::optional<int>
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     return map->height();
   } else {
     return std::nullopt;
@@ -180,7 +180,7 @@ auto model::map_height() const -> std::optional<int>
 
 auto model::tile_size() const -> std::optional<int>
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     return map->current_tile_size();
   } else {
     return std::nullopt;
@@ -198,9 +198,9 @@ auto model::get_map(map_id id) -> map*
 
 void model::select_layer(layer_id id)
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->select_layer(id);
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
@@ -211,7 +211,7 @@ void model::select_map(map_id id)
   if (m_currentMapID && (m_currentMapID->get() != id.get())) {
     m_currentMapID = id;
 
-    auto* map = current_map();
+    auto* map = current_map_model();
     Q_ASSERT(map);
 
     emit undo_state_updated(map->can_undo());
@@ -230,25 +230,25 @@ auto model::has_active_map() const noexcept -> bool
 
 void model::handle_increase_tile_size()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->increase_tile_size();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
 void model::handle_decrease_tile_size()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->decrease_tile_size();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
 void model::handle_reset_tile_size()
 {
-  if (auto* map = current_map()) {
+  if (auto* map = current_map_model()) {
     map->reset_tile_size();
-    emit redraw_requested();
+    emit redraw();
   }
 }
 
@@ -267,14 +267,36 @@ void model::mouse_released(QMouseEvent* event, QPointF mapPosition)
   m_tools.released(event, mapPosition);
 }
 
-auto model::current_map() -> map_model*
+void model::mouse_entered(QEvent* event)
+{
+  m_tools.entered(event);
+}
+
+void model::mouse_exited(QEvent* event)
+{
+  m_tools.exited(event);
+}
+
+auto model::current_map_model() -> map_model*
 {
   return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
 }
 
-auto model::current_map() const -> const map_model*
+auto model::current_map_model() const -> const map_model*
 {
   return m_currentMapID ? m_maps.at(m_currentMapID.value()) : nullptr;
+}
+
+auto model::current_raw_map() -> map*
+{
+  auto* model = current_map_model();
+  return model ? model->get() : nullptr;
+}
+
+auto model::current_raw_map() const -> const map*
+{
+  const auto* model = current_map_model();
+  return model ? model->get() : nullptr;
 }
 
 auto model::current_tileset() const -> const tileset*

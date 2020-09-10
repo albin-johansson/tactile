@@ -20,6 +20,10 @@ class stamp_tool final : public tool
 
   void released(QMouseEvent* event, const QPointF& mapPosition) override;
 
+  void entered(QEvent* event) override;
+
+  void exited(QEvent* event) override;
+
  private:
   core::model* m_model{};
 
@@ -27,10 +31,7 @@ class stamp_tool final : public tool
                                               const QPointF& mapPosition) const
       -> std::optional<core::position>;
 
-  void set_tiles(const core::position& position,
-                 const core::tileset& tileset);
-
-  //  [[nodiscard]] auto is_single_tile_selected() const -> bool;
+  void set_tiles(const core::position& position, const core::tileset& tileset);
 };
 
 }  // namespace tactile

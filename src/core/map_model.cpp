@@ -155,4 +155,9 @@ auto map_model::get() noexcept -> map*
   return m_map.get();
 }
 
+auto map_model::get() const noexcept -> const map*
+{
+  return m_map.get();
+}
+
 }  // namespace tactile::core

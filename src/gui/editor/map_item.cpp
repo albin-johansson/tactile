@@ -54,15 +54,25 @@ map_item::map_item(not_null<map*> map,
   setFlags(QGraphicsItem::ItemUsesExtendedStyleOption);
 }
 
+void map_item::disable_stamp_preview()
+{
+  m_mousePosition.reset();
+  update();
+}
+
+void map_item::enable_stamp_preview(const core::position& position)
+{
+  m_mousePosition = position;
+}
+
 void map_item::draw_layer(QPainter& painter,
                           const layer& layer,
-                          const QRectF& exposed)
+                          const QRectF& exposed,
+                          int tileSize)
 {
   if (exposed.isEmpty()) {
     return;
   }
-
-  const auto tileSize = m_map->get_tile_size().get();
 
   const auto beginRow = std::max(0, static_cast<int>(exposed.y() / tileSize));
   const auto beginCol = std::max(0, static_cast<int>(exposed.x() / tileSize));
@@ -103,6 +113,72 @@ void map_item::draw_tile(QPainter& painter,
   painter.drawPixmap(dst, image, src);
 }
 
+void map_item::draw_preview_multiple_tiles(
+    QPainter& painter,
+    const core::position& mousePosition,
+    const core::tileset::selection& selection,
+    int tileSize)
+{
+  // TODO test rendering preview centered around mouse
+
+  using core::operator""_row;
+  using core::operator""_col;
+
+  auto* tileset = m_tilesets->current_tileset();
+  Q_ASSERT(tileset);
+
+  const auto& [topLeft, bottomRight] = selection;
+
+  const auto nRows = 1_row + (bottomRight.get_row() - topLeft.get_row());
+  const auto nCols = 1_col + (bottomRight.get_col() - topLeft.get_col());
+
+  const auto mouseRow = mousePosition.get_row();
+  const auto mouseCol = mousePosition.get_col();
+
+  for (core::row r{0}; r < nRows; ++r) {
+    for (core::col c{0}; c < nCols; ++c) {
+      const auto tileRow = mouseRow + r;
+      const auto tileCol = mouseCol + c;
+      if (m_map->in_bounds(tileRow, tileCol)) {
+        const auto x = (mousePosition.get_col() + c).get() * tileSize;
+        const auto y = (mousePosition.get_row() + r).get() * tileSize;
+        draw_tile(
+            painter,
+            tileset->tile_at(topLeft.get_row() + r, topLeft.get_col() + c),
+            x,
+            y,
+            tileSize);
+      }
+    }
+  }
+}
+
+void map_item::draw_preview(QPainter& painter, int tileSize)
+{
+  auto* tileset = m_tilesets->current_tileset();
+  Q_ASSERT(tileset);
+
+  const auto& mousePos = *m_mousePosition;
+  const auto& [topLeft, bottomRight] = tileset->get_selection();
+
+  painter.setOpacity(0.5);
+
+  if (topLeft == bottomRight) {
+    const auto x = mousePos.get_col().get() * tileSize;
+    const auto y = mousePos.get_row().get() * tileSize;
+    draw_tile(painter,
+              tileset->tile_at(topLeft.get_row(), topLeft.get_col()),
+              x,
+              y,
+              tileSize);
+  } else {
+    draw_preview_multiple_tiles(
+        painter, mousePos, tileset->get_selection(), tileSize);
+  }
+
+  painter.setOpacity(1);
+}
+
 void map_item::paint(QPainter* painter,
                      const QStyleOptionGraphicsItem* option,
                      QWidget*)
@@ -110,11 +186,17 @@ void map_item::paint(QPainter* painter,
   Q_ASSERT(painter);
   Q_ASSERT(option);
 
+  const auto tileSize = m_map->get_tile_size().get();
+
   const auto& exposed = option->exposedRect;
   for (const auto& layer : *m_map) {
     if (layer.visible()) {
-      draw_layer(*painter, layer, exposed);
+      draw_layer(*painter, layer, exposed, tileSize);
     }
+  }
+
+  if (m_mousePosition) {
+    draw_preview(*painter, tileSize);
   }
 }
 

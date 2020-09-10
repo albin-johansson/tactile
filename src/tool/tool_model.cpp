@@ -47,5 +47,18 @@ void tool_model::released(QMouseEvent* event, const QPointF& mapPosition)
     m_current->released(event, mapPosition);
   }
 }
+void tool_model::entered(QEvent* event)
+{
+  if (m_current) {
+    m_current->entered(event);
+  }
+}
+
+void tool_model::exited(QEvent* event)
+{
+  if (m_current) {
+    m_current->exited(event);
+  }
+}
 
 }  // namespace tactile

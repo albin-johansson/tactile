@@ -58,6 +58,26 @@ void map_editor::init_connections()
           &map_tab_widget::mouse_released,
           this,
           &map_editor::mouse_released);
+
+  connect(m_mapTabWidget,
+          &map_tab_widget::mouse_entered,
+          this,
+          &map_editor::mouse_entered);
+
+  connect(m_mapTabWidget,
+          &map_tab_widget::mouse_exited,
+          this,
+          &map_editor::mouse_exited);
+}
+
+void map_editor::enable_stamp_preview(const core::position& position)
+{
+  m_mapTabWidget->enable_stamp_preview(position);
+}
+
+void map_editor::disable_stamp_preview()
+{
+  m_mapTabWidget->disable_stamp_preview();
 }
 
 void map_editor::add_new_map_tab(not_null<core::map*> map,

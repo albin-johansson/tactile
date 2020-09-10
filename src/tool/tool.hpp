@@ -14,6 +14,10 @@ class tool
   virtual void moved(QMouseEvent* event, const QPointF& mapPosition) = 0;
 
   virtual void released(QMouseEvent* event, const QPointF& mapPosition) = 0;
+
+  virtual void entered(QEvent* event) = 0;
+
+  virtual void exited(QEvent* event) = 0;
 };
 
 }  // namespace tactile

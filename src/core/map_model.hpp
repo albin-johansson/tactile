@@ -83,6 +83,8 @@ class map_model final : public QObject
 
   [[nodiscard]] auto get() noexcept -> map*;
 
+  [[nodiscard]] auto get() const noexcept -> const map*;
+
  signals:
   void undo_state_updated(bool canUndo);
 
