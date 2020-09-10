@@ -224,7 +224,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(libTactile PRIVATE
             -Xclang
-            -fconcepts-ts
+            -std=c++20
             -Wall
             -Wextra
             -Wpedantic
