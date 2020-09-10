@@ -12,15 +12,15 @@ addons:
     packages:
       - cmake
       - qt5-default
-      - clang-10
+      - clang-12
       - ninja-build
       - build-essential
       - libgl1-mesa-dev
       - libboost-dev
 
 before_script:
-  - export CC=/usr/bin/clang-10
-  - export CXX=/usr/bin/clang++-10
+  - export CC=/usr/bin/clang-12
+  - export CXX=/usr/bin/clang++-12
 
   - sudo apt-get update
 
