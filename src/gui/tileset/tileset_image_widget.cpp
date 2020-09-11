@@ -25,6 +25,8 @@ tileset_image_widget::tileset_image_widget(const QImage& image,
   }
 
   m_layout = new QGridLayout{this};
+  m_layout->setMargin(0);
+
   m_imageLabel = new tileset_image_label{image, tileWidth, tileHeight, this};
   m_rubberBand = new QRubberBand{QRubberBand::Rectangle, m_imageLabel};
 
