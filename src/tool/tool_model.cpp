@@ -9,10 +9,7 @@ namespace tactile {
 tool_model::tool_model(core::model* model)
     : m_stamp{std::make_unique<stamp_tool>(model)},
       m_eraser{std::make_unique<eraser_tool>(model)}
-{
-  // FIXME only for testing
-  m_current = m_stamp.get();
-}
+{}
 
 void tool_model::switch_to(abstract_tool* tool)
 {
