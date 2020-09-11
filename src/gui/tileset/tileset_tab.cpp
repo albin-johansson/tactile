@@ -17,7 +17,8 @@ tileset_tab::tileset_tab(const QImage& image,
                          tile_width tileWidth,
                          tile_height tileHeight,
                          QWidget* parent)
-    : QWidget{parent}, m_id{id}
+    : QWidget{parent},
+      m_id{id}
 {
   if (image.isNull()) {
     throw tactile_error{"Can't create tileset tab from null image!"};

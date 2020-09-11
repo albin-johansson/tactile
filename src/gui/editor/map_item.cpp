@@ -48,7 +48,9 @@ void draw_tile_background(QPainter& painter, row r, col c, int tileSize)
 map_item::map_item(not_null<map*> map,
                    not_null<core::tileset_model*> tilesets,
                    QGraphicsItem* parent)
-    : QGraphicsItem{parent}, m_map{map}, m_tilesets{tilesets}
+    : QGraphicsItem{parent},
+      m_map{map},
+      m_tilesets{tilesets}
 {
   // This is to be able to use exposedRect
   setFlags(QGraphicsItem::ItemUsesExtendedStyleOption);

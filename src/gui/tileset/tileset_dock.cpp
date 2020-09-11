@@ -3,7 +3,8 @@
 namespace tactile::gui {
 
 tileset_dock::tileset_dock(QWidget* parent)
-    : QDockWidget{parent}, m_widget{new tileset_widget{this}}
+    : QDockWidget{parent},
+      m_widget{new tileset_widget{this}}
 {
   setObjectName("tilesetDock");
   setWindowTitle(tr("Tilesets"));

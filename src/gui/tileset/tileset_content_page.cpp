@@ -11,7 +11,8 @@
 namespace tactile::gui {
 
 tileset_content_page::tileset_content_page(QWidget* parent)
-    : QWidget{parent}, m_ui{new Ui::tileset_content_page{}}
+    : QWidget{parent},
+      m_ui{new Ui::tileset_content_page{}}
 {
   m_ui->setupUi(this);
 

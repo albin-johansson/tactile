@@ -7,7 +7,8 @@
 namespace tactile::gui {
 
 tool_widget::tool_widget(QWidget* parent)
-    : QWidget{parent}, m_ui{new Ui::tool_widget{}}
+    : QWidget{parent},
+      m_ui{new Ui::tool_widget{}}
 {
   m_ui->setupUi(this);
 

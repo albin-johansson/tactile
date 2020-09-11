@@ -14,7 +14,9 @@ map_scene::map_scene(not_null<core::map*> map,
                      not_null<core::tileset_model*> tilesets,
                      map_id id,
                      QWidget* parent)
-    : QGraphicsScene{parent}, m_item{new map_item{map, tilesets}}, m_id{id}
+    : QGraphicsScene{parent},
+      m_item{new map_item{map, tilesets}},
+      m_id{id}
 {
   addItem(m_item);
   setSceneRect(100, 100, 100, 100);

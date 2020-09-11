@@ -5,7 +5,8 @@
 namespace tactile::gui {
 
 tool_dock::tool_dock(QWidget* parent)
-    : QDockWidget{parent}, m_widget{new tool_widget{this}}
+    : QDockWidget{parent},
+      m_widget{new tool_widget{this}}
 {
   setObjectName("toolDock");
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);

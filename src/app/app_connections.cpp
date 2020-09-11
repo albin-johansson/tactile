@@ -21,7 +21,8 @@ void connect(Sender&& sender, Signal&& signal, Receiver&& receiver, Slot&& slot)
 }  // namespace
 
 app_connections::app_connections(app& app)
-    : m_core{app.model_ptr()}, m_window{app.window_ptr()}
+    : m_core{app.model_ptr()},
+      m_window{app.window_ptr()}
 {
   connect(m_core, &model::redraw, m_window, &window::handle_draw);
   connect(m_core,

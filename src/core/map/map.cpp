@@ -9,7 +9,8 @@
 namespace tactile::core {
 
 map::map(int nRows, int nCols)
-    : m_nRows{at_least(nRows, 1)}, m_nCols{at_least(nCols, 1)}
+    : m_nRows{at_least(nRows, 1)},
+      m_nCols{at_least(nCols, 1)}
 {
   m_layers.reserve(5);
   m_layers.emplace_back(nRows, nCols);

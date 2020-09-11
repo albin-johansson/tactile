@@ -16,7 +16,9 @@ tileset_image_widget::tileset_image_widget(const QImage& image,
                                            tile_width tileWidth,
                                            tile_height tileHeight,
                                            QWidget* parent)
-    : QWidget{parent}, m_tileWidth{tileWidth}, m_tileHeight{tileHeight}
+    : QWidget{parent},
+      m_tileWidth{tileWidth},
+      m_tileHeight{tileHeight}
 {
   if (image.isNull()) {
     throw tactile_error{"Can't create tileset image widget from null image!"};

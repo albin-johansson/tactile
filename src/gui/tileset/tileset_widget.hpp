@@ -29,8 +29,6 @@ class tileset_widget final : public QWidget
                    tile_height tileHeight,
                    const QString& tabName);
 
-//  void remove_tileset(tileset_id id);
-
  signals:
   void request_new_tileset();
 
