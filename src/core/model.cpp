@@ -7,6 +7,18 @@ namespace tactile::core {
 model::model() : m_tools{this}, m_tilesets{std::make_unique<tileset_model>()}
 {}
 
+void model::send_undo_redo_update()
+{
+  const auto* mapModel = current_map_model();
+
+  emit undo_state_updated(mapModel && mapModel->can_undo());
+  emit redo_state_updated(mapModel && mapModel->can_redo());
+  emit undo_text_updated(mapModel ? mapModel->undo_text()
+                                  : QStringLiteral(u""));
+  emit redo_text_updated(mapModel ? mapModel->redo_text()
+                                  : QStringLiteral(u""));
+}
+
 void model::undo()
 {
   if (auto* map = current_map_model()) {
@@ -89,25 +101,27 @@ auto model::add_map() -> map_id
 
   ++m_nextMapID;
 
+  send_undo_redo_update();
+
   return id;
 }
 
 void model::handle_close_map(map_id id)
 {
-  Q_ASSERT(m_maps.count(id));
+  Q_ASSERT(m_maps.contains(id));
 
-  auto* map = m_maps.at(id);
-  map->disconnect();
-
+  m_maps.at(id)->disconnect();
   m_maps.erase(id);
 
   if (m_currentMapID && (m_currentMapID->get() == id.get())) {
     m_currentMapID = std::nullopt;
+    send_undo_redo_update();
   }
 
   if (!m_maps.empty()) {
     const auto begin = m_maps.begin();
     m_currentMapID = begin->first;
+    send_undo_redo_update();
   }
 }
 
@@ -216,13 +230,7 @@ void model::select_map(map_id id)
   if (m_currentMapID && (m_currentMapID->get() != id.get())) {
     m_currentMapID = id;
 
-    auto* map = current_map_model();
-    Q_ASSERT(map);
-
-    emit undo_state_updated(map->can_undo());
-    emit redo_state_updated(map->can_redo());
-    emit undo_text_updated(map->undo_text());
-    emit redo_text_updated(map->redo_text());
+    send_undo_redo_update();
 
     emit switched_map(id);
   }

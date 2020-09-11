@@ -276,6 +276,8 @@ class model final : public QObject
   std::unique_ptr<tileset_model> m_tilesets;
   tool_model m_tools;
   map_id m_nextMapID{1};
+
+  void send_undo_redo_update();
 };
 
 }  // namespace tactile::core
