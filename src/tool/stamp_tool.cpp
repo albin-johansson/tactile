@@ -48,7 +48,7 @@ void stamp_tool::apply_current_selection_to_map(const core::position& position,
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
   auto* tileset = get_model()->current_tileset();
-  if (!tileset) {
+  if (!tileset || !tileset->get_selection()) {
     return;
   }
 
