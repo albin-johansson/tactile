@@ -127,6 +127,8 @@ set(TACTILE_SOURCE_FILES
         command/remove_col.cpp
         command/resize_map.cpp
         command/resize_map.hpp
+        command/bucket_fill.cpp
+        command/bucket_fill.hpp
 
         prefs/setting.hpp
         prefs/theme.cpp

@@ -3,12 +3,14 @@
 #include <qobject.h>
 #include <qpainter.h>
 
+#include <utility>  // forward
+
 #include "command_stack.hpp"
 #include "map.hpp"
 
 namespace tactile::core {
 
-class map_model final : public QObject // TODO rename to map_document
+class map_model final : public QObject  // TODO rename to map_document
 {
   Q_OBJECT
 
@@ -21,6 +23,10 @@ class map_model final : public QObject // TODO rename to map_document
   void undo();
 
   void redo();
+
+  void flood(const core::position& position,
+             tile_id target,
+             tile_id replacement);
 
   void add_row();
 

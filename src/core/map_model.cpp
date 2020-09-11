@@ -2,6 +2,7 @@
 
 #include "add_col.hpp"
 #include "add_row.hpp"
+#include "bucket_fill.hpp"
 #include "remove_col.hpp"
 #include "remove_row.hpp"
 #include "resize_map.hpp"
@@ -42,6 +43,14 @@ void map_model::undo()
 void map_model::redo()
 {
   m_commands->redo();
+}
+
+void map_model::flood(const position& position,
+                      tile_id target,
+                      tile_id replacement)
+{
+  m_commands->push<cmd::bucket_fill>(
+      m_map.get(), position, target, replacement);
 }
 
 void map_model::add_row()
