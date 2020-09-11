@@ -93,6 +93,8 @@ void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
 
+  // TODO improve the accuracy of the selection when selecting multiple tiles
+
   const auto pos = event->pos();
 
   if (event->buttons() & Qt::MouseButton::LeftButton) {
