@@ -96,6 +96,8 @@ class tileset final
    */
   void set_first_id(tile_id firstID) noexcept;
 
+  // TODO way to clear selection
+
   /**
    * @brief Sets the current selection in the tileset.
    *
@@ -128,7 +130,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_at(row r, col col) const -> tile_id;
+  [[nodiscard]] auto tile_at(row r, col c) const -> tile_id;
 
   /**
    * @brief Returns the width of the tileset image.
