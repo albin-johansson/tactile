@@ -22,11 +22,6 @@ app::app(int argc, char** argv) : QApplication{argc, argv}, m_model{new model{}}
 
   app_connections{*this};
 
-  // do this to indicate what tool is active
-  //  QPixmap pixmap{":/resources/icons/icons8/color/64/eraser.png"};
-  //  QCursor c{pixmap};
-  //  QApplication::setOverrideCursor(c);
-
   m_window->show();
 }
 
