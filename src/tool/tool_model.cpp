@@ -1,5 +1,6 @@
 #include "tool_model.hpp"
 
+#include "bucket_tool.hpp"
 #include "eraser_tool.hpp"
 #include "model.hpp"
 #include "stamp_tool.hpp"
@@ -8,7 +9,8 @@ namespace tactile {
 
 tool_model::tool_model(core::model* model)
     : m_stamp{std::make_unique<stamp_tool>(model)},
-      m_eraser{std::make_unique<eraser_tool>(model)}
+      m_eraser{std::make_unique<eraser_tool>(model)},
+      m_bucket{std::make_unique<bucket_tool>(model)}
 {}
 
 void tool_model::switch_to(abstract_tool* tool)
@@ -43,6 +45,10 @@ void tool_model::select(tool_id tool)
     }
     case tool_id::eraser: {
       switch_to(m_eraser.get());
+      break;
+    }
+    case tool_id::bucket: {
+      switch_to(m_bucket.get());
       break;
     }
   }

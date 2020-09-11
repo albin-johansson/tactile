@@ -119,6 +119,8 @@ class tileset final
    */
   [[nodiscard]] auto contains(tile_id id) const noexcept -> bool;
 
+  [[nodiscard]] auto is_single_tile_selected() const noexcept -> bool;
+
   /**
    * @brief Returns the ID of the tile at the specified position.
    *
@@ -131,6 +133,8 @@ class tileset final
    * @since 0.1.0
    */
   [[nodiscard]] auto tile_at(row r, col c) const -> tile_id;
+
+  [[nodiscard]] auto tile_at(const position& position) const -> tile_id;
 
   /**
    * @brief Returns the width of the tileset image.

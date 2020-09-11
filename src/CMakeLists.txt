@@ -145,6 +145,8 @@ set(TACTILE_SOURCE_FILES
         tool/stamp_tool.hpp
         tool/eraser_tool.hpp
         tool/eraser_tool.cpp
+        tool/bucket_tool.cpp
+        tool/bucket_tool.hpp
 
         util/nenya.hpp
         util/small_map.hpp)

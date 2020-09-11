@@ -55,6 +55,8 @@ class map final
    */
   map(int nRows, int nCols);
 
+  void flood(const position& pos, tile_id target, tile_id replacement);
+
   /**
    * @brief Sets the value of the tile at the specified position in the
    * currently active layer.
@@ -161,6 +163,9 @@ class map final
    * @since 0.1.0
    */
   void set_visibility(layer_id layer, bool visibility) noexcept;
+
+  [[nodiscard]] auto tile_at(const position& position) const
+      -> std::optional<tile_id>;
 
   /**
    * @brief Indicates whether or not the layer associated with the specified
@@ -278,6 +283,10 @@ class map final
   layer_id m_activeLayer{0};
   std::vector<layer> m_layers;
   tile_size m_tileSize;
+
+  [[nodiscard]] auto current_layer() -> layer&;
+
+  [[nodiscard]] auto current_layer() const -> const layer&;
 };
 
 }  // namespace tactile::core

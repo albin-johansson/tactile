@@ -48,6 +48,11 @@ auto tileset::contains(tile_id id) const noexcept -> bool
   return (id >= first_id()) && (id <= last_id());
 }
 
+auto tileset::is_single_tile_selected() const noexcept -> bool
+{
+  return m_selection && (m_selection->topLeft == m_selection->bottomRight);
+}
+
 auto tileset::tile_at(row r, col c) const -> tile_id
 {
   if ((r >= 0_row) && (c >= 0_col) && (r < row{rows()}) && (c < col{cols()})) {
@@ -56,6 +61,11 @@ auto tileset::tile_at(row r, col c) const -> tile_id
   } else {
     return empty;
   }
+}
+
+auto tileset::tile_at(const position& position) const -> tile_id
+{
+  return tile_at(position.get_row(), position.get_col());
 }
 
 auto tileset::width() const -> int

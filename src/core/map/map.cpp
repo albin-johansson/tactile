@@ -16,9 +16,14 @@ map::map(int nRows, int nCols)
   m_layers.emplace_back(nRows, nCols);
 }
 
+void map::flood(const position& pos, tile_id target, tile_id replacement)
+{
+  current_layer().flood(pos, target, replacement);
+}
+
 void map::set_tile(const position& pos, tile_id id)
 {
-  m_layers.at(m_activeLayer.get()).set_tile(pos, id);
+  current_layer().set_tile(pos, id);
 }
 
 void map::remove_all(tile_id id)
@@ -117,6 +122,11 @@ void map::set_visibility(layer_id layer, bool visibility) noexcept
   }
 }
 
+auto map::tile_at(const position& position) const -> std::optional<tile_id>
+{
+  return current_layer().tile_at(position);
+}
+
 auto map::is_visible(layer_id layer) const noexcept -> bool
 {
   const auto index = static_cast<std::size_t>(layer.get());
@@ -178,6 +188,20 @@ auto map::begin() const noexcept -> const_iterator
 auto map::end() const noexcept -> const_iterator
 {
   return m_layers.end();
+}
+
+auto map::current_layer() -> layer&
+{
+  const auto index = static_cast<std::size_t>(m_activeLayer.get());
+  assert(index >= 0 && index < m_layers.size());
+  return m_layers[index];
+}
+
+auto map::current_layer() const -> const layer&
+{
+  const auto index = static_cast<std::size_t>(m_activeLayer.get());
+  assert(index >= 0 && index < m_layers.size());
+  return m_layers[index];
 }
 
 }  // namespace tactile::core

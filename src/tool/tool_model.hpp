@@ -84,6 +84,7 @@ class tool_model final
   abstract_tool* m_current{};
   std::unique_ptr<abstract_tool> m_stamp;
   std::unique_ptr<abstract_tool> m_eraser;
+  std::unique_ptr<abstract_tool> m_bucket;
 
   /**
    * @brief Switches to the specified tool as the active tool.
