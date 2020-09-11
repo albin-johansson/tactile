@@ -157,9 +157,10 @@ void map_item::draw_preview(QPainter& painter, int tileSize)
 {
   auto* tileset = m_tilesets->current_tileset();
   Q_ASSERT(tileset);
+  Q_ASSERT(tileset->get_selection());
 
   const auto& mousePos = *m_mousePosition;
-  const auto& [topLeft, bottomRight] = tileset->get_selection();
+  const auto& [topLeft, bottomRight] = *tileset->get_selection();
 
   painter.setOpacity(0.5);
 
@@ -173,7 +174,7 @@ void map_item::draw_preview(QPainter& painter, int tileSize)
               tileSize);
   } else {
     draw_preview_multiple_tiles(
-        painter, mousePos, tileset->get_selection(), tileSize);
+        painter, mousePos, *tileset->get_selection(), tileSize);
   }
 
   painter.setOpacity(1);

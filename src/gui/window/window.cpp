@@ -64,25 +64,26 @@ void window::init_connections()
     m_toolGroup->addAction(m_ui->action_eraser_tool);
     m_toolGroup->addAction(m_ui->action_rectangle_tool);
 
-    connect(m_toolDock, &tool_dock::stamp_enabled, this, [this] {
-      m_ui->action_stamp_tool->setChecked(true);
-    });
-
-    connect(m_toolDock, &tool_dock::bucket_enabled, this, [this] {
-      m_ui->action_bucket_tool->setChecked(true);
-    });
-
-    connect(m_toolDock, &tool_dock::eraser_enabled, this, [this] {
-      m_ui->action_eraser_tool->setChecked(true);
-    });
-
-    connect(m_toolDock, &tool_dock::rectangle_enabled, this, [this] {
-      m_ui->action_rectangle_tool->setChecked(true);
-    });
-
-    connect(m_toolDock, &tool_dock::find_same_enabled, this, [this] {
-      m_ui->action_find_same_tool->setChecked(true);
-    });
+    connect(m_toolDock,
+            &tool_dock::stamp_enabled,
+            this,
+            &window::handle_stamp_enabled);
+    connect(m_toolDock,
+            &tool_dock::bucket_enabled,
+            this,
+            &window::handle_bucket_enabled);
+    connect(m_toolDock,
+            &tool_dock::eraser_enabled,
+            this,
+            &window::handle_eraser_enabled);
+    connect(m_toolDock,
+            &tool_dock::rectangle_enabled,
+            this,
+            &window::handle_rectangle_enabled);
+    connect(m_toolDock,
+            &tool_dock::find_same_enabled,
+            this,
+            &window::handle_find_same_enabled);
   }
 
   connect(m_toolDock,
@@ -211,11 +212,6 @@ void window::handle_add_tileset(const QImage& image,
   m_tilesetDock->get_tileset_widget()->add_tileset(
       image, id, tileWidth, tileHeight, tabName);
 }
-
-// void window::handle_remove_tileset(tileset_id id)
-//{
-//  m_tilesetDock->get_tileset_widget()->remove_tileset(id);
-//}
 
 void window::center_map()
 {
@@ -493,6 +489,36 @@ void window::on_action_about_triggered()
 void window::handle_theme_changed()
 {
   emit m_editor->theme_changed();
+}
+
+void window::handle_stamp_enabled()
+{
+  m_ui->action_stamp_tool->setChecked(true);
+  emit select_tool(tool_id::stamp);
+}
+
+void window::handle_bucket_enabled()
+{
+  m_ui->action_bucket_tool->setChecked(true);
+  emit select_tool(tool_id::bucket);
+}
+
+void window::handle_eraser_enabled()
+{
+  m_ui->action_eraser_tool->setChecked(true);
+  emit select_tool(tool_id::eraser);
+}
+
+void window::handle_rectangle_enabled()
+{
+  m_ui->action_rectangle_tool->setChecked(true);
+  emit select_tool(tool_id::rectangle);
+}
+
+void window::handle_find_same_enabled()
+{
+  m_ui->action_find_same_tool->setChecked(true);
+  emit select_tool(tool_id::find_same);
 }
 
 }  // namespace tactile::gui

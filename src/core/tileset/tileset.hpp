@@ -3,6 +3,7 @@
 #include <qimage.h>
 #include <qpixmap.h>
 
+#include <optional>
 #include <set>
 
 #include "position.hpp"
@@ -232,12 +233,13 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_selection() const noexcept -> const selection&;
+  [[nodiscard]] auto get_selection() const noexcept
+      -> const std::optional<selection>&;
 
  private:
   QPixmap m_sheet;
   tile_id m_firstID{1};
-  selection m_selection;
+  std::optional<selection> m_selection;
   int m_rows;
   int m_cols;
   tile_width m_tileWidth;

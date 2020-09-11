@@ -48,26 +48,31 @@ void tool_widget::disable_tools()
 void tool_widget::handle_enable_stamp()
 {
   m_ui->stampButton->setChecked(true);
+  emit stamp_enabled();
 }
 
 void tool_widget::handle_enable_bucket()
 {
   m_ui->bucketButton->setChecked(true);
+  emit bucket_enabled();
 }
 
 void tool_widget::handle_enable_eraser()
 {
   m_ui->eraserButton->setChecked(true);
+  emit eraser_enabled();
 }
 
 void tool_widget::handle_enable_rectangle()
 {
   m_ui->rectangleButton->setChecked(true);
+  emit rectangle_enabled();
 }
 
 void tool_widget::handle_enable_find_same()
 {
   m_ui->findSameButton->setChecked(true);
+  emit find_same_enabled();
 }
 
 void tool_widget::set_tools_disabled(bool disabled)

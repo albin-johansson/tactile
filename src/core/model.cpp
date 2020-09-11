@@ -63,6 +63,11 @@ void model::remove_col()
   }
 }
 
+void model::select_tool(tool_id tool)
+{
+  m_tools.select(tool);
+}
+
 auto model::add_map() -> map_id
 {
   const auto id = m_nextMapID;

@@ -108,7 +108,7 @@ auto tileset::get_tile_height() const noexcept -> tile_height
   return m_tileHeight;
 }
 
-auto tileset::get_selection() const noexcept -> const selection&
+auto tileset::get_selection() const noexcept -> const std::optional<selection>&
 {
   return m_selection;
 }

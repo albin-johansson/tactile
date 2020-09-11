@@ -3,55 +3,23 @@
 #include <optional>
 
 #include "model.hpp"
-#include "tactile_error.hpp"
 
 namespace tactile {
 
-using core::position;
-using core::tileset;
 using core::operator""_row;
 using core::operator""_col;
 
-stamp_tool::stamp_tool(core::model* model) : m_model{model}
+stamp_tool::stamp_tool(core::model* model) : abstract_tool{model}
+{}
+
+void stamp_tool::apply_current_selection_to_map(const core::position& position,
+                                                const core::tileset& tileset)
 {
-  if (!m_model) {
-    throw tactile_error{"Cannot create stamp tool from null model!"};
-  }
-}
-
-auto stamp_tool::translate_mouse_position(const QPoint& mousePosition,
-                                          const QPointF& mapPosition) const
-    -> std::optional<core::position>
-{
-  const auto x = mousePosition.x() - mapPosition.x();
-  const auto y = mousePosition.y() - mapPosition.y();
-
-  if (x < 0 || y < 0) {
-    return std::nullopt;
-  }
-
-  auto* map = m_model->current_raw_map();
+  auto* map = get_model()->current_raw_map();
   Q_ASSERT(map);
+  Q_ASSERT(tileset.get_selection());
 
-  const auto tileSize = map->get_tile_size().get();
-
-  const core::row row{static_cast<int>(y) / tileSize};
-  const core::col col{static_cast<int>(x) / tileSize};
-
-  if (map->in_bounds(row, col)) {
-    return core::position{row, col};
-  } else {
-    return std::nullopt;
-  }
-}
-
-void stamp_tool::set_tiles(const position& position,
-                           const core::tileset& tileset)
-{
-  auto* map = m_model->current_raw_map();
-  Q_ASSERT(map);
-
-  const auto& [topLeft, bottomRight] = tileset.get_selection();
+  const auto& [topLeft, bottomRight] = *tileset.get_selection();
 
   if (topLeft == bottomRight) {
     map->set_tile(position,
@@ -79,7 +47,7 @@ void stamp_tool::set_tiles(const position& position,
 
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* tileset = m_model->current_tileset();
+  auto* tileset = get_model()->current_tileset();
   if (!tileset) {
     return;
   }
@@ -87,37 +55,37 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
   if (event->buttons() & Qt::MouseButton::LeftButton) {
     if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
         pos) {
-      set_tiles(*pos, *tileset);
-      emit m_model->redraw();
+      apply_current_selection_to_map(*pos, *tileset);
+      emit get_model()->redraw();
     }
   }
 }
 
 void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* tileset = m_model->current_tileset();
-  if (!tileset) {
+  auto* tileset = get_model()->current_tileset();
+  if (!tileset || !tileset->get_selection()) {
     return;
   }
 
   if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
       pos) {
-    emit m_model->enable_stamp_preview(*pos);
+    emit get_model()->enable_stamp_preview(*pos);
 
     if (event->buttons() & Qt::MouseButton::LeftButton) {
-      set_tiles(*pos, *tileset);
+      apply_current_selection_to_map(*pos, *tileset);
     }
 
-    emit m_model->redraw();
+    emit get_model()->redraw();
   } else {
     // mouse is outside of map, so disable preview
-    emit m_model->disable_stamp_preview();
+    emit get_model()->disable_stamp_preview();
   }
 }
 
 void stamp_tool::released(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (!m_model->current_tileset()) {
+  if (!get_model()->current_tileset()) {
     return;
   }
 
@@ -127,14 +95,14 @@ void stamp_tool::released(QMouseEvent* event, const QPointF& mapPosition)
   }
 }
 
-void stamp_tool::entered(QEvent* event)
-{
-  // do nothing
-}
-
 void stamp_tool::exited(QEvent* event)
 {
-  emit m_model->disable_stamp_preview();
+  emit get_model()->disable_stamp_preview();
+}
+
+void stamp_tool::disable()
+{
+  emit get_model()->disable_stamp_preview();
 }
 
 }  // namespace tactile

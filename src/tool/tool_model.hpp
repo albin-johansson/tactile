@@ -2,34 +2,34 @@
 
 #include <memory>  // unique_ptr
 
-#include "fwd.hpp"
-#include "tool.hpp"
+#include "abstract_tool.hpp"
+#include "tool_id.hpp"
 
 namespace tactile {
 
-class tool_model final : public tool
+class tool_model final
 {
  public:
-  enum class tool_id { none, stamp };
-
   explicit tool_model(core::model* model);
 
   void select(tool_id tool);
 
-  void pressed(QMouseEvent* event, const QPointF& mapPosition) override;
+  void pressed(QMouseEvent* event, const QPointF& mapPosition);
 
-  void moved(QMouseEvent* event, const QPointF& mapPosition) override;
+  void moved(QMouseEvent* event, const QPointF& mapPosition);
 
-  void released(QMouseEvent* event, const QPointF& mapPosition) override;
+  void released(QMouseEvent* event, const QPointF& mapPosition);
 
-  void entered(QEvent* event) override;
+  void entered(QEvent* event);
 
-  void exited(QEvent* event) override;
+  void exited(QEvent* event);
 
  private:
-  // TODO avoid virtual inheritance because all tools are known at compile-time
-  tool* m_current{};
-  std::unique_ptr<tool> m_stamp;
+  abstract_tool* m_current{};
+  std::unique_ptr<abstract_tool> m_stamp;
+  std::unique_ptr<abstract_tool> m_eraser;
+
+  void switch_to(abstract_tool* tool);
 };
 
 }  // namespace tactile

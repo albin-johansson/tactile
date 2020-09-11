@@ -11,6 +11,7 @@
 #include "position.hpp"
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"
+#include "tool_id.hpp"
 #include "types.hpp"
 
 namespace Ui {
@@ -80,6 +81,8 @@ class window final : public QMainWindow
   void request_remove_col();
 
   void request_new_tileset();
+
+  void select_tool(tool_id tool);
 
   void removed_tileset(tileset_id id);
 
@@ -189,6 +192,16 @@ class window final : public QMainWindow
   void handle_remove_tab(map_id tabID);
 
   void handle_theme_changed();
+
+  void handle_stamp_enabled();
+
+  void handle_bucket_enabled();
+
+  void handle_eraser_enabled();
+
+  void handle_rectangle_enabled();
+
+  void handle_find_same_enabled();
 
   void on_action_undo_triggered();
 

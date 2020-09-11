@@ -11,6 +11,7 @@
 #include "map.hpp"
 #include "map_model.hpp"
 #include "tileset_model.hpp"
+#include "tool_id.hpp"
 #include "tool_model.hpp"
 #include "types.hpp"
 
@@ -198,6 +199,8 @@ class model final : public QObject
   void remove_col();
 
   /// @}
+
+  void select_tool(tool_id tool);
 
   void remove_tileset(tileset_id id);
 

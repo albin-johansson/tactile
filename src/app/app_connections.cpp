@@ -52,6 +52,8 @@ app_connections::app_connections(app& app)
           m_core,
           &model::handle_reset_tile_size);
 
+  connect(m_window, &window::select_tool, m_core, &model::select_tool);
+
   connect(
       m_window, &window::request_new_tileset, &app, &app::handle_new_tileset);
 

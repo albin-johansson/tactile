@@ -136,16 +136,18 @@ set(TACTILE_SOURCE_FILES
         parse/parse_palette.cpp
         parse/parse_palette.hpp
 
-        util/nenya.hpp
-
-        tool/tool.hpp
-        tool/stamp_tool.cpp
-        tool/stamp_tool.hpp
+        tool/tool_id.hpp
         tool/tool_model.cpp
         tool/tool_model.hpp
+        tool/abstract_tool.hpp
+        tool/abstract_tool.cpp
+        tool/stamp_tool.cpp
+        tool/stamp_tool.hpp
+        tool/eraser_tool.hpp
+        tool/eraser_tool.cpp
 
-        util/small_map.hpp
-        )
+        util/nenya.hpp
+        util/small_map.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
