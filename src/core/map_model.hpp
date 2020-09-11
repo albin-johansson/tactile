@@ -8,7 +8,7 @@
 
 namespace tactile::core {
 
-class map_model final : public QObject
+class map_model final : public QObject // TODO rename to map_document
 {
   Q_OBJECT
 
