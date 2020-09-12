@@ -99,11 +99,11 @@ TEST_CASE("tileset::tile_at", "[tileset]")
   {
     tileset sheet{"terrain.png", 32_tw, 32_th};
 
-    CHECK(sheet.tile_at(-1_row, -1_col) == empty);
-    CHECK(sheet.tile_at(row_t{sheet.width() + 1}, 0_col) == empty);
-    CHECK(sheet.tile_at(0_row, col_t{sheet.height() + 1}) == empty);
-    CHECK(sheet.tile_at(row_t{sheet.width() + 1}, col_t{sheet.height() + 1}) ==
-          empty);
+    CHECK(sheet.tile_at({-1_row, -1_col}) == empty);
+    CHECK(sheet.tile_at({row_t{sheet.width() + 1}, 0_col}) == empty);
+    CHECK(sheet.tile_at({0_row, col_t{sheet.height() + 1}}) == empty);
+    CHECK(sheet.tile_at(
+              {row_t{sheet.width() + 1}, col_t{sheet.height() + 1}}) == empty);
   }
 
   SECTION("Without changed first ID")
@@ -113,7 +113,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
     const auto row = 7_row;
     const auto col = 5_col;
     const tile_id index{row.get() * sheet.cols() + col.get()};
-    CHECK(sheet.tile_at(row, col) == sheet.first_id() + index);
+    CHECK(sheet.tile_at({row, col}) == sheet.first_id() + index);
   }
 
   SECTION("With changed first ID")
@@ -127,7 +127,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
     const auto col = 4_col;
 
     const tile_id index{row.get() * sheet.cols() + col.get()};
-    CHECK(sheet.tile_at(row, col) == sheet.first_id() + index);
+    CHECK(sheet.tile_at({row, col}) == sheet.first_id() + index);
   }
 }
 
