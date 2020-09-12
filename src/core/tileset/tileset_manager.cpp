@@ -33,7 +33,7 @@ void tileset_manager::select(std::optional<tileset_id> id)
 }
 
 void tileset_manager::set_selection(const position& topLeft,
-                                  const position& bottomRight)
+                                    const position& bottomRight)
 {
   if (has_active_tileset()) {
     m_tilesets.at(*m_activeID).set_selection(topLeft, bottomRight);
@@ -82,7 +82,8 @@ auto tileset_manager::image_source(tile_id id) const -> QRect
   throw tactile_error{"tileset_model > failed to obtain source rectangle!"};
 }
 
-auto tileset_manager::range_of(tileset_id id) const -> std::pair<tile_id, tile_id>
+auto tileset_manager::range_of(tileset_id id) const
+    -> std::pair<tile_id, tile_id>
 {
   const auto& tileset = m_tilesets.at(id);
   return {tileset.first_id(), tileset.last_id()};
