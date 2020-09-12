@@ -1,7 +1,7 @@
 #pragma once
 
-#include "row_col_command.hpp"
 #include "command_id.hpp"
+#include "row_col_command.hpp"
 
 namespace tactile::cmd {
 

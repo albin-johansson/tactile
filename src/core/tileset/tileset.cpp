@@ -58,19 +58,16 @@ auto tileset::is_single_tile_selected() const noexcept -> bool
   return m_selection && (m_selection->topLeft == m_selection->bottomRight);
 }
 
-auto tileset::tile_at(row r, col c) const -> tile_id
+auto tileset::tile_at(const position& position) const -> tile_id
 {
-  if ((r >= 0_row) && (c >= 0_col) && (r < row{rows()}) && (c < col{cols()})) {
+  const auto [r, c] = position.unpack();
+  if ((r >= 0_row) && (c >= 0_col) && (r < row_t{rows()}) &&
+      (c < col_t{cols()})) {
     const auto index = r.get() * m_cols + c.get();
     return m_firstID + tile_id{index};
   } else {
     return empty;
   }
-}
-
-auto tileset::tile_at(const position& position) const -> tile_id
-{
-  return tile_at(position.get_row(), position.get_col());
 }
 
 auto tileset::width() const -> int

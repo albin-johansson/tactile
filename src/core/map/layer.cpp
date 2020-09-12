@@ -119,7 +119,7 @@ void layer::set_cols(int nCols)
 void layer::set_tile(const position& pos, tile_id id) noexcept
 {
   if (in_bounds(pos)) {
-    m_tiles[pos.urow()][pos.ucol()] = id;
+    m_tiles[pos.row_index()][pos.col_index()] = id;
   }
 }
 
@@ -142,7 +142,7 @@ auto layer::cols() const noexcept -> int
 auto layer::tile_at(const position& pos) const -> std::optional<tile_id>
 {
   if (in_bounds(pos)) {
-    return m_tiles[pos.urow()][pos.ucol()];
+    return m_tiles[pos.row_index()][pos.col_index()];
   } else {
     return std::nullopt;
   }
@@ -150,8 +150,8 @@ auto layer::tile_at(const position& pos) const -> std::optional<tile_id>
 
 auto layer::in_bounds(const position& pos) const noexcept -> bool
 {
-  const auto row = pos.urow();
-  return (row < m_tiles.size()) && (pos.ucol() < m_tiles[row].size());
+  const auto row = pos.row_index();
+  return (row < m_tiles.size()) && (pos.col_index() < m_tiles[row].size());
 }
 
 auto layer::visible() const noexcept -> bool

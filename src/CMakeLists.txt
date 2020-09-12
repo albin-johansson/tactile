@@ -26,6 +26,7 @@ set(TACTILE_SOURCE_FILES
         core/tactile_error.hpp
         core/tactile_error.cpp
         core/iterate_tileset_selection.hpp
+        core/position.hpp
 
         core/algorithm/flood_fill.hpp
         core/algorithm/flood_fill.cpp
@@ -43,7 +44,6 @@ set(TACTILE_SOURCE_FILES
         core/map/map.cpp
         core/map/layer.cpp
         core/map/layer.hpp
-        core/map/position.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp

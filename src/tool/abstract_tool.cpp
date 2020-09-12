@@ -38,8 +38,8 @@ auto abstract_tool::translate_mouse_position(const QPoint& mousePosition,
 
   const auto tileSize = map->get_tile_size().get();
 
-  const core::row row{static_cast<int>(y) / tileSize};
-  const core::col col{static_cast<int>(x) / tileSize};
+  const core::row_t row{static_cast<int>(y) / tileSize};
+  const core::col_t col{static_cast<int>(x) / tileSize};
 
   if (map->in_bounds(row, col)) {
     return core::position{row, col};

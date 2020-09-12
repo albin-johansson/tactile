@@ -96,8 +96,6 @@ class tileset final
    */
   void set_first_id(tile_id firstID) noexcept;
 
-  // TODO way to clear selection
-
   /**
    * @brief Sets the current selection in the tileset.
    *
@@ -108,6 +106,11 @@ class tileset final
    */
   void set_selection(const position& topLeft, const position& bottomRight);
 
+  /**
+   * @brief Clears any current selection.
+   *
+   * @since 0.1.0
+   */
   void clear_selection() noexcept;
 
   /**
@@ -121,21 +124,25 @@ class tileset final
    */
   [[nodiscard]] auto contains(tile_id id) const noexcept -> bool;
 
+  /**
+   * @brief Indicates whether or not a single tile is selected in the tileset.
+   *
+   * @return `true` if only a single tile is selected; `false` otherwise.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto is_single_tile_selected() const noexcept -> bool;
 
   /**
    * @brief Returns the ID of the tile at the specified position.
    *
-   * @param r the row index of the desired tile.
-   * @param c the column index of the desired tile.
+   * @param position the position of the desired tile.
    *
    * @return the ID of the tile at the specified position; `empty` if the
    * position was out-of-bounds.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto tile_at(row r, col c) const -> tile_id;
-
   [[nodiscard]] auto tile_at(const position& position) const -> tile_id;
 
   /**

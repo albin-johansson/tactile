@@ -26,9 +26,9 @@ TEST_CASE("layer::add_row", "[layer]")
 
   CHECK(layer.rows() == (nRows + 1));
 
-  const row r{nRows};
+  const row_t r{nRows};
   for (int i = 0; i < layer.cols(); ++i) {
-    const col c{i};
+    const col_t c{i};
     CHECK(*layer.tile_at({r - 1_row, c}) == empty);
     CHECK(*layer.tile_at({r, c}) == tileID);
   }
@@ -44,9 +44,9 @@ TEST_CASE("layer::add_col", "[layer]")
 
   CHECK(layer.cols() == (nCols + 1));
 
-  const col c{nCols};
+  const col_t c{nCols};
   for (int i = 0; i < layer.rows(); ++i) {
-    const row r{i};
+    const row_t r{i};
     CHECK(*layer.tile_at({r, c - 1_col}) == empty);
     CHECK(*layer.tile_at({r, c}) == tileID);
   }
@@ -116,8 +116,8 @@ TEST_CASE("layer::set_tile", "[layer]")
 
   CHECK_NOTHROW(layer.set_tile({-1_row, -1_col}, tile_id{5}));
   CHECK_NOTHROW(
-      layer.set_tile({row{layer.rows()}, col{layer.cols()}}, tile_id{7}));
-  CHECK(layer.tile_at({row{layer.rows()}, col{layer.cols()}}) == std::nullopt);
+      layer.set_tile({row_t{layer.rows()}, col_t{layer.cols()}}, tile_id{7}));
+  CHECK(layer.tile_at({row_t{layer.rows()}, col_t{layer.cols()}}) == std::nullopt);
 }
 
 TEST_CASE("layer::set_visible", "[layer]")

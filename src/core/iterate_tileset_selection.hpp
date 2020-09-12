@@ -26,16 +26,12 @@ void iterate_tileset_selection(T&& callback,
   if (topLeft == bottomRight) {
     callback(tileset, origin, topLeft);
   } else {
-    const auto nRows = 1_row + (bottomRight.get_row() - topLeft.get_row());
-    const auto nCols = 1_col + (bottomRight.get_col() - topLeft.get_col());
-
-    const auto mouseRow = origin.get_row();
-    const auto mouseCol = origin.get_col();
-
-    for (row r{0}; r < nRows; ++r) {
-      for (col c{0}; c < nCols; ++c) {
-        const position tilePos{mouseRow + r, mouseCol + c};
-        const position tilesetPos = topLeft.offset(r, c);
+    const auto nRows = 1_row + (bottomRight.row() - topLeft.row());
+    const auto nCols = 1_col + (bottomRight.col() - topLeft.col());
+    for (row_t row{0}; row < nRows; ++row) {
+      for (col_t col{0}; col < nCols; ++col) {
+        const auto tilePos = origin.offset_by(row, col);
+        const auto tilesetPos = topLeft.offset_by(row, col);
         callback(tileset, tilePos, tilesetPos);
       }
     }

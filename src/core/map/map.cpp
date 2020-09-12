@@ -144,15 +144,15 @@ auto map::has_layer(layer_id layer) const noexcept -> bool
   return value >= 0 && value < num_layers();
 }
 
-auto map::in_bounds(row r, col c) const -> bool
+auto map::in_bounds(row_t row, col_t col) const -> bool
 {
-  return (r >= 0_row) && (c >= 0_col) && (r.get() < rows()) &&
-         (c.get() < cols());
+  return (row >= 0_row) && (col >= 0_col) && (row.get() < rows()) &&
+         (col.get() < cols());
 }
 
 auto map::in_bounds(const position& pos) const -> bool
 {
-  return in_bounds(pos.get_row(), pos.get_col());
+  return in_bounds(pos.row(), pos.col());
 }
 
 auto map::rows() const noexcept -> int

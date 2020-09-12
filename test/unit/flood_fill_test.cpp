@@ -10,7 +10,7 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
 {
   layer layer{5, 5};
   for (int i = 0; i < 5; ++i) {
-    layer.set_tile({row{i}, col{i}}, tile_id{1});
+    layer.set_tile({row_t{i}, col_t{i}}, tile_id{1});
   }
 
   /*
@@ -22,7 +22,7 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
    */
 
   const tile_id id{2};
-  layer.flood({row{1}, col{0}}, tile_id{0}, id);
+  layer.flood({row_t{1}, col_t{0}}, tile_id{0}, id);
 
   /*
    Expected:

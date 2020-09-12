@@ -11,36 +11,36 @@
 
 namespace tactile::gui {
 
-using core::col;
+using core::col_t;
 using core::layer;
 using core::map;
-using core::row;
+using core::row_t;
 
 namespace {
 
-auto get_end_row(const QRectF& exposed, int nRows, int tileSize) -> row
+auto get_end_row(const QRectF& exposed, int nRows, int tileSize) -> row_t
 {
   const auto endY = static_cast<int>(exposed.y() + exposed.height());
   const auto r = (endY / tileSize) + 1;
-  return row{std::min(nRows, r)};
+  return row_t{std::min(nRows, r)};
 }
 
-auto get_end_col(const QRectF& exposed, int nCols, int tileSize) -> col
+auto get_end_col(const QRectF& exposed, int nCols, int tileSize) -> col_t
 {
   const auto endX = static_cast<int>(exposed.x() + exposed.width());
   const auto c = (endX / tileSize) + 1;
-  return col{std::min(nCols, c)};
+  return col_t{std::min(nCols, c)};
 }
 
-void draw_tile_background(QPainter& painter, row r, col c, int tileSize)
+void draw_tile_background(QPainter& painter, row_t row, col_t col, int tileSize)
 {
   constexpr QColor emptyLightGray{0x55, 0x55, 0x55};
   constexpr QColor emptyDarkGray{0x33, 0x33, 0x33};
-  const auto& color = ((r.get() % 2 == 0) == (c.get() % 2 == 0))
+  const auto& color = ((row.get() % 2 == 0) == (col.get() % 2 == 0))
                           ? emptyDarkGray
                           : emptyLightGray;
   painter.fillRect(
-      c.get() * tileSize, r.get() * tileSize, tileSize, tileSize, color);
+      col.get() * tileSize, row.get() * tileSize, tileSize, tileSize, color);
 }
 
 }  // namespace
@@ -83,8 +83,8 @@ void map_item::draw_layer(QPainter& painter,
 
   const auto renderGrid = prefs::graphics::render_grid().value_or(false);
 
-  for (row row{beginRow}; row < endRow; ++row) {
-    for (col col{beginCol}; col < endCol; ++col) {
+  for (row_t row{beginRow}; row < endRow; ++row) {
+    for (col_t col{beginCol}; col < endCol; ++col) {
       const auto x = col.get() * tileSize;
       const auto y = row.get() * tileSize;
 
@@ -131,25 +131,20 @@ void map_item::draw_preview_multiple_tiles(
 
   const auto& [topLeft, bottomRight] = selection;
 
-  const auto nRows = 1_row + (bottomRight.get_row() - topLeft.get_row());
-  const auto nCols = 1_col + (bottomRight.get_col() - topLeft.get_col());
+  const auto nRows = 1_row + (bottomRight.row() - topLeft.row());
+  const auto nCols = 1_col + (bottomRight.col() - topLeft.col());
 
-  const auto mouseRow = mousePosition.get_row();
-  const auto mouseCol = mousePosition.get_col();
-
-  for (core::row r{0}; r < nRows; ++r) {
-    for (core::col c{0}; c < nCols; ++c) {
-      const auto tileRow = mouseRow + r;
-      const auto tileCol = mouseCol + c;
-      if (m_map->in_bounds(tileRow, tileCol)) {
-        const auto x = (mousePosition.get_col() + c).get() * tileSize;
-        const auto y = (mousePosition.get_row() + r).get() * tileSize;
-        draw_tile(
-            painter,
-            tileset->tile_at(topLeft.get_row() + r, topLeft.get_col() + c),
-            x,
-            y,
-            tileSize);
+  for (core::row_t row{0}; row < nRows; ++row) {
+    for (core::col_t col{0}; col < nCols; ++col) {
+      const auto tilePos = mousePosition.offset_by(row, col);
+      if (m_map->in_bounds(tilePos)) {
+        const auto x = tilePos.col().get() * tileSize;
+        const auto y = tilePos.row().get() * tileSize;
+        draw_tile(painter,
+                  tileset->tile_at(topLeft.offset_by(row, col)),
+                  x,
+                  y,
+                  tileSize);
       }
     }
   }
@@ -167,13 +162,9 @@ void map_item::draw_preview(QPainter& painter, int tileSize)
   painter.setOpacity(0.5);
 
   if (topLeft == bottomRight) {
-    const auto x = mousePos.get_col().get() * tileSize;
-    const auto y = mousePos.get_row().get() * tileSize;
-    draw_tile(painter,
-              tileset->tile_at(topLeft.get_row(), topLeft.get_col()),
-              x,
-              y,
-              tileSize);
+    const auto x = mousePos.col().get() * tileSize;
+    const auto y = mousePos.row().get() * tileSize;
+    draw_tile(painter, tileset->tile_at(topLeft), x, y, tileSize);
   } else {
     draw_preview_multiple_tiles(
         painter, mousePos, *tileset->get_selection(), tileSize);

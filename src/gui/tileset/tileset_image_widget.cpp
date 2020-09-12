@@ -118,18 +118,18 @@ void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 
       const auto& geometry = m_rubberBand->geometry();
 
-      const core::position topLeft{core::row{geometry.y() / m_tileHeight.get()},
-                                   core::col{geometry.x() / m_tileWidth.get()}};
+      const core::position topLeft{
+          core::row_t{geometry.y() / m_tileHeight.get()},
+          core::col_t{geometry.x() / m_tileWidth.get()}};
 
       using core::operator""_col;
       using core::operator""_row;
 
       const auto calc_bottom_right = [&] {
-        const core::row row{geometry.bottom() / m_tileHeight.get()};
-        const core::col col{geometry.right() / m_tileWidth.get()};
-        const core::position bottomRight{
-            std::max(row - 1_row, topLeft.get_row()),
-            std::max(col - 1_col, topLeft.get_col())};
+        const core::row_t row{geometry.bottom() / m_tileHeight.get()};
+        const core::col_t col{geometry.right() / m_tileWidth.get()};
+        const core::position bottomRight{std::max(row - 1_row, topLeft.row()),
+                                         std::max(col - 1_col, topLeft.col())};
         return bottomRight;
       };
 
