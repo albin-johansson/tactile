@@ -115,7 +115,6 @@ set(TACTILE_SOURCE_FILES
         gui/editor/editor_pane.ui
 
         command/command_id.hpp
-        command/command_stack.cpp
         command/command_stack.hpp
         command/abstract_command.cpp
         command/abstract_command.hpp

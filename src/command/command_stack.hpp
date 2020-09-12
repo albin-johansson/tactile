@@ -19,7 +19,8 @@ namespace tactile {
 class command_stack final : public QUndoStack
 {
  public:
-  explicit command_stack(QObject* parent = nullptr);
+  explicit command_stack(QObject* parent = nullptr) : QUndoStack{parent}
+  {}
 
   /**
    * @brief Pushes a command onto the undo stack after executing it.
