@@ -5,6 +5,8 @@
 
 namespace tactile {
 
+using namespace core;
+
 abstract_tool::abstract_tool(core::model* model) : m_model{model}
 {
   if (!m_model) {
@@ -38,11 +40,11 @@ auto abstract_tool::translate_mouse_position(const QPoint& mousePosition,
 
   const auto tileSize = map->get_tile_size().get();
 
-  const core::row_t row{static_cast<int>(y) / tileSize};
-  const core::col_t col{static_cast<int>(x) / tileSize};
+  const row_t row{static_cast<int>(y) / tileSize};
+  const col_t col{static_cast<int>(x) / tileSize};
 
-  if (map->in_bounds(row, col)) {
-    return core::position{row, col};
+  if (const position position{row, col}; map->in_bounds(position)) {
+    return position;
   } else {
     return std::nullopt;
   }

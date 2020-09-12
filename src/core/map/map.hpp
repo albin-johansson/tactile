@@ -207,8 +207,6 @@ class map final
    */
   [[nodiscard]] auto has_layer(layer_id layer) const noexcept -> bool;
 
-  [[nodiscard]] auto in_bounds(row_t row, col_t col) const -> bool;
-
   [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
 
   /**
