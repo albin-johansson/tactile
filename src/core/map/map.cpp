@@ -33,7 +33,7 @@ void map::remove_all(tile_id id)
   }
 }
 
-void map::select(layer_id layer) noexcept
+void map::select_layer(layer_id layer) noexcept
 {
   if (has_layer(layer)) {
     m_activeLayer = layer;

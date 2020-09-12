@@ -9,7 +9,7 @@
 
 #include "core_fwd.hpp"
 #include "map.hpp"
-#include "map_model.hpp"
+#include "map_document.hpp"
 #include "tileset_model.hpp"
 #include "tool_id.hpp"
 #include "tool_model.hpp"
@@ -130,9 +130,9 @@ class model final : public QObject
    */
   [[nodiscard]] auto get_map(map_id id) -> map*;
 
-  [[nodiscard]] auto current_map_model() -> map_model*;
+  [[nodiscard]] auto current_map_document() -> map_document*;
 
-  [[nodiscard]] auto current_map_model() const -> const map_model*;
+  [[nodiscard]] auto current_map_document() const -> const map_document*;
 
   [[nodiscard]] auto current_raw_map() -> map*;
 
@@ -274,7 +274,7 @@ class model final : public QObject
 
  private:
   std::optional<map_id> m_currentMapID;
-  std::map<map_id, map_model*> m_maps;
+  std::map<map_id, map_document*> m_mapDocuments;
   std::unique_ptr<tileset_model> m_tilesets;
   tool_model m_tools;
   map_id m_nextMapID{1};

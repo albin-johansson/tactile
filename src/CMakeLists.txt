@@ -21,8 +21,8 @@ set(TACTILE_SOURCE_FILES
         core/core_fwd.hpp
         core/model.hpp
         core/model.cpp
-        core/map_model.cpp
-        core/map_model.hpp
+        core/map_document.cpp
+        core/map_document.hpp
         core/tactile_error.hpp
         core/tactile_error.cpp
         core/iterate_tileset_selection.hpp

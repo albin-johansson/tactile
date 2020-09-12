@@ -89,10 +89,10 @@ void stamp_tool::released(QMouseEvent* event, const QPointF&)
   }
 
   if (event->button() == Qt::MouseButton::LeftButton) {
-    auto* mapModel = get_model()->current_map_model();
-    Q_ASSERT(mapModel);
+    auto* document = get_model()->current_map_document();
+    Q_ASSERT(document);
 
-    mapModel->add_stamp_sequence(std::move(m_oldState), std::move(m_sequence));
+    document->add_stamp_sequence(std::move(m_oldState), std::move(m_sequence));
 
     // Clearing the maps allows for them to be used after being moved from
     m_oldState.clear();

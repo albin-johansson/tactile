@@ -86,7 +86,7 @@ class map final
    *
    * @since 0.1.0
    */
-  void select(layer_id layer) noexcept;
+  void select_layer(layer_id layer) noexcept;
 
   /**
    * @brief Adds an empty layer to the map.

@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "abstract_tool.hpp"
 #include "fwd.hpp"
 #include "position.hpp"
@@ -43,7 +41,6 @@ class eraser_tool final : public abstract_tool
 
  private:
   small_map<core::position, tile_id> m_oldState;
-  std::vector<core::position> m_positions;
 
   /**
    * @brief Updates the state of the eraser, by erasing the tile at the mouse
