@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>       // map
 #include <optional>  // optional
 #include <utility>   // forward, move
 
@@ -8,6 +7,7 @@
 #include "position.hpp"
 #include "small_map.hpp"
 #include "tileset.hpp"
+#include "types.hpp"
 
 namespace tactile::core {
 
@@ -44,7 +44,7 @@ class tileset_manager final
   template <typename... Args>
   [[nodiscard]] auto emplace(Args&&... args) -> tileset_id
   {
-    const auto id{m_nextID};
+    const auto id = m_nextID;
     ++m_nextID;
 
     tileset tileset{std::forward<Args>(args)...};
