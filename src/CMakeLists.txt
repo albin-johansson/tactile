@@ -132,6 +132,8 @@ set(TACTILE_SOURCE_FILES
         command/bucket_fill.hpp
         command/stamp_sequence.cpp
         command/stamp_sequence.hpp
+        command/erase_sequence.cpp
+        command/erase_sequence.hpp
 
         prefs/setting.hpp
         prefs/theme.cpp

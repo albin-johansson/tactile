@@ -35,6 +35,9 @@ class map_model final : public QObject  // TODO rename to map_document
   void add_stamp_sequence(small_map<core::position, tile_id>&& oldState,
                           small_map<core::position, tile_id>&& sequence);
 
+  void add_erase_sequence(small_map<core::position, tile_id>&& oldState,
+                          std::vector<core::position>&& positions);
+
   void add_row();
 
   void add_column();

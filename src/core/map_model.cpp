@@ -3,6 +3,7 @@
 #include "add_col.hpp"
 #include "add_row.hpp"
 #include "bucket_fill.hpp"
+#include "erase_sequence.hpp"
 #include "remove_col.hpp"
 #include "remove_row.hpp"
 #include "resize_map.hpp"
@@ -62,6 +63,14 @@ void map_model::add_stamp_sequence(
 {
   m_commands->push<cmd::stamp_sequence>(
       m_map.get(), std::move(oldState), std::move(sequence));
+}
+
+void map_model::add_erase_sequence(
+    small_map<core::position, tile_id>&& oldState,
+    std::vector<core::position>&& positions)
+{
+  m_commands->push<cmd::erase_sequence>(
+      m_map.get(), std::move(oldState), std::move(positions));
 }
 
 void map_model::add_row()
