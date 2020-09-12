@@ -11,10 +11,10 @@ namespace tactile::core {
 
 // map, tileset, tilePos, tilesetPos
 template <typename T>
-concept TileIterationCallback =
+concept TilesetIterationCallback =
     std::invocable<T, const tileset&, const position&, const position&>;
 
-template <TileIterationCallback T>
+template <TilesetIterationCallback T>
 void iterate_tileset_selection(T&& callback,
                                const tileset& tileset,
                                const position& origin)
