@@ -1,6 +1,7 @@
 #pragma once
 
-#include "abstract_command.hpp"
+#include "row_col_command.hpp"
+#include "command_id.hpp"
 
 namespace tactile::cmd {
 
@@ -13,7 +14,7 @@ namespace tactile::cmd {
  *
  * @headerfile remove_row.hpp
  */
-class remove_row final : public abstract_command
+class remove_row final : public row_col_command
 {
  public:
   explicit remove_row(not_null<core::map*> map);
@@ -21,6 +22,11 @@ class remove_row final : public abstract_command
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(id::remove_row);
+  }
 };
 
 }  // namespace tactile::cmd

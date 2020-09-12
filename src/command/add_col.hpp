@@ -1,6 +1,7 @@
 #pragma once
 
-#include "abstract_command.hpp"
+#include "command_id.hpp"
+#include "row_col_command.hpp"
 
 namespace tactile::cmd {
 
@@ -13,7 +14,7 @@ namespace tactile::cmd {
  *
  * @headerfile add_col.hpp
  */
-class add_col final : public abstract_command
+class add_col final : public row_col_command
 {
  public:
   /**
@@ -28,6 +29,11 @@ class add_col final : public abstract_command
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(id::add_column);
+  }
 };
 
 }  // namespace tactile::cmd

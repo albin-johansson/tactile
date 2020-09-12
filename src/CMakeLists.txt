@@ -114,6 +114,7 @@ set(TACTILE_SOURCE_FILES
         gui/editor/map_editor.ui
         gui/editor/editor_pane.ui
 
+        command/command_id.hpp
         command/command_stack.cpp
         command/command_stack.hpp
         command/abstract_command.cpp
@@ -134,6 +135,8 @@ set(TACTILE_SOURCE_FILES
         command/stamp_sequence.hpp
         command/erase_sequence.cpp
         command/erase_sequence.hpp
+        command/row_col_command.cpp
+        command/row_col_command.hpp
 
         prefs/setting.hpp
         prefs/theme.cpp
