@@ -209,6 +209,8 @@ class map final
 
   [[nodiscard]] auto in_bounds(row r, col c) const -> bool;
 
+  [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
+
   /**
    * @brief Returns the total number of rows in the map.
    *

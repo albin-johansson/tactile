@@ -108,6 +108,8 @@ class tileset final
    */
   void set_selection(const position& topLeft, const position& bottomRight);
 
+  void clear_selection() noexcept;
+
   /**
    * @brief Indicates whether or not the tileset contains the specified tile ID.
    *

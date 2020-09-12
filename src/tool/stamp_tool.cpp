@@ -1,48 +1,39 @@
 #include "stamp_tool.hpp"
 
-#include <optional>
-
+#include "iterate_tileset_selection.hpp"
 #include "model.hpp"
 
 namespace tactile {
 
-using core::operator""_row;
-using core::operator""_col;
+using namespace core;
 
-stamp_tool::stamp_tool(core::model* model) : abstract_tool{model}
-{}
-
-void stamp_tool::apply_current_selection_to_map(const core::position& position,
-                                                const core::tileset& tileset)
+stamp_tool::stamp_tool(model* model) : abstract_tool{model}
 {
-  auto* map = get_model()->current_raw_map();
-  Q_ASSERT(map);
-  Q_ASSERT(tileset.get_selection());
+  m_oldState.reserve(20);
+  m_sequence.reserve(20);
+}
 
-  const auto& [topLeft, bottomRight] = *tileset.get_selection();
+void stamp_tool::update_stamp_sequence(map& map,
+                                       const tileset& ts,
+                                       const position& origin)
+{
+  iterate_tileset_selection(
+      [&, this](const tileset& ts,
+                const position& tilePos,
+                const position& tilesetPos) {
+        if (map.in_bounds(tilePos)) {
+          const auto newID = ts.tile_at(tilesetPos);
 
-  if (topLeft == bottomRight) {
-    map->set_tile(position,
-                  tileset.tile_at(topLeft.get_row(), topLeft.get_col()));
-  } else {
-    const auto nRows = 1_row + (bottomRight.get_row() - topLeft.get_row());
-    const auto nCols = 1_col + (bottomRight.get_col() - topLeft.get_col());
+          if (!m_oldState.contains(tilePos)) {
+            m_oldState.emplace(tilePos, map.tile_at(tilePos).value());
+          }
+          m_sequence.emplace(tilePos, newID);
 
-    const auto mouseRow = position.get_row();
-    const auto mouseCol = position.get_col();
-
-    for (core::row r{0}; r < nRows; ++r) {
-      for (core::col c{0}; c < nCols; ++c) {
-        const auto tileRow = mouseRow + r;
-        const auto tileCol = mouseCol + c;
-        if (map->in_bounds(tileRow, tileCol)) {
-          map->set_tile(
-              {tileRow, tileCol},
-              tileset.tile_at(topLeft.get_row() + r, topLeft.get_col() + c));
+          map.set_tile(tilePos, newID);
         }
-      }
-    }
-  }
+      },
+      ts,
+      origin);
 }
 
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
@@ -55,7 +46,11 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
   if (event->buttons() & Qt::MouseButton::LeftButton) {
     if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
         pos) {
-      apply_current_selection_to_map(*pos, *tileset);
+      auto* map = get_model()->current_raw_map();
+      Q_ASSERT(map);
+
+      update_stamp_sequence(*map, *tileset, *pos);
+
       emit get_model()->redraw();
     }
   }
@@ -63,7 +58,7 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 
 void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* tileset = get_model()->current_tileset();
+  const auto* tileset = get_model()->current_tileset();
   if (!tileset || !tileset->get_selection()) {
     return;
   }
@@ -72,8 +67,11 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
       pos) {
     emit get_model()->enable_stamp_preview(*pos);
 
+    auto* map = get_model()->current_raw_map();
+    Q_ASSERT(map);
+
     if (event->buttons() & Qt::MouseButton::LeftButton) {
-      apply_current_selection_to_map(*pos, *tileset);
+      update_stamp_sequence(*map, *tileset, *pos);
     }
 
     emit get_model()->redraw();
@@ -83,19 +81,26 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
   }
 }
 
-void stamp_tool::released(QMouseEvent* event, const QPointF& mapPosition)
+void stamp_tool::released(QMouseEvent* event, const QPointF&)
 {
-  if (!get_model()->current_tileset()) {
+  auto* tileset = get_model()->current_tileset();
+  if (!tileset || !tileset->get_selection()) {
     return;
   }
 
   if (event->button() == Qt::MouseButton::LeftButton) {
-    // TODO we want to be able to undo the changes, create command without
-    // executing it.
+    auto* mapModel = get_model()->current_map_model();
+    Q_ASSERT(mapModel);
+
+    mapModel->add_stamp_sequence(std::move(m_oldState), std::move(m_sequence));
+
+    // Clearing the maps allows for them to be used after being moved from
+    m_oldState.clear();
+    m_sequence.clear();
   }
 }
 
-void stamp_tool::exited(QEvent* event)
+void stamp_tool::exited(QEvent*)
 {
   emit get_model()->disable_stamp_preview();
 }

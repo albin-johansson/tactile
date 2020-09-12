@@ -140,6 +140,8 @@ class model final : public QObject
 
   [[nodiscard]] auto current_tileset() const -> const tileset*;
 
+  [[nodiscard]] auto current_tileset_id() const -> std::optional<tileset_id>;
+
   [[nodiscard]] auto get_tileset_model() -> tileset_model*
   {
     return m_tilesets.get();

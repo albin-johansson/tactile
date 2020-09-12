@@ -90,6 +90,11 @@ class position final
     m_col = at_least(col.get(), 0);
   }
 
+  [[nodiscard]] constexpr auto offset(row r, col c) const noexcept -> position
+  {
+    return {row{m_row} + r, col{m_col} + c};
+  }
+
   /**
    * @brief Returns a map position that is one step north of this map position.
    *

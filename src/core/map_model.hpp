@@ -7,8 +7,12 @@
 
 #include "command_stack.hpp"
 #include "map.hpp"
+#include "small_map.hpp"
+#include "tileset.hpp"
 
 namespace tactile::core {
+
+class tileset_model;
 
 class map_model final : public QObject  // TODO rename to map_document
 {
@@ -27,6 +31,9 @@ class map_model final : public QObject  // TODO rename to map_document
   void flood(const core::position& position,
              tile_id target,
              tile_id replacement);
+
+  void add_stamp_sequence(small_map<core::position, tile_id>&& oldState,
+                          small_map<core::position, tile_id>&& sequence);
 
   void add_row();
 

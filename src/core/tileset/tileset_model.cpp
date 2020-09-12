@@ -40,6 +40,16 @@ void tileset_model::set_selection(const position& topLeft,
   }
 }
 
+auto tileset_model::at(tileset_id id) -> tileset&
+{
+  return m_tilesets.at(id);
+}
+
+auto tileset_model::at(tileset_id id) const -> const tileset&
+{
+  return m_tilesets.at(id);
+}
+
 auto tileset_model::image(tile_id id) const -> const QPixmap&
 {
   for (const auto& [key, tileset] : m_tilesets) {
@@ -91,6 +101,11 @@ auto tileset_model::has_active_tileset() const noexcept -> bool
 auto tileset_model::current_tileset() const -> const tileset*
 {
   return m_activeID ? &m_tilesets.at(*m_activeID) : nullptr;
+}
+
+auto tileset_model::current_tileset_id() const -> std::optional<tileset_id>
+{
+  return m_activeID;
 }
 
 auto tileset_model::contains(tile_id id) const -> bool

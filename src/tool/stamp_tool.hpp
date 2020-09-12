@@ -1,8 +1,9 @@
 #pragma once
 
-#include <optional>
-
 #include "abstract_tool.hpp"
+#include "fwd.hpp"
+#include "position.hpp"
+#include "small_map.hpp"
 #include "tileset.hpp"
 
 namespace tactile {
@@ -44,16 +45,12 @@ class stamp_tool final : public abstract_tool
   void disable() override;
 
  private:
-  /**
-   * @brief Applies the current tileset selection to the map.
-   *
-   * @param position the position of the origin tile that will be changed.
-   * @param tileset the currently active tileset.
-   *
-   * @since 0.1.0
-   */
-  void apply_current_selection_to_map(const core::position& position,
-                                      const core::tileset& tileset);
+  small_map<core::position, tile_id> m_oldState;
+  small_map<core::position, tile_id> m_sequence;
+
+  void update_stamp_sequence(core::map& map,
+                             const core::tileset& tileset,
+                             const core::position& origin);
 };
 
 }  // namespace tactile

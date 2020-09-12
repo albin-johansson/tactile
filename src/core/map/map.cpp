@@ -150,6 +150,11 @@ auto map::in_bounds(row r, col c) const -> bool
          (c.get() < cols());
 }
 
+auto map::in_bounds(const position& pos) const -> bool
+{
+  return in_bounds(pos.get_row(), pos.get_col());
+}
+
 auto map::rows() const noexcept -> int
 {
   return m_nRows;

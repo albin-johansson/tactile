@@ -98,6 +98,10 @@ class tileset_model final
    */
   void set_selection(const position& topLeft, const position& bottomRight);
 
+  [[nodiscard]] auto at(tileset_id id) -> tileset&;
+
+  [[nodiscard]] auto at(tileset_id id) const -> const tileset&;
+
   /**
    * @brief Returns the image associated with the specified tile.
    *
@@ -152,6 +156,8 @@ class tileset_model final
   [[nodiscard]] auto has_active_tileset() const noexcept -> bool;
 
   [[nodiscard]] auto current_tileset() const -> const tileset*;
+
+  [[nodiscard]] auto current_tileset_id() const -> std::optional<tileset_id>;
 
   [[nodiscard]] auto contains(tile_id id) const -> bool;
 

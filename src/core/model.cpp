@@ -317,4 +317,9 @@ auto model::current_tileset() const -> const tileset*
   return m_tilesets->current_tileset();
 }
 
+auto model::current_tileset_id() const -> std::optional<tileset_id>
+{
+  return m_tilesets->current_tileset_id();
+}
+
 }  // namespace tactile::core

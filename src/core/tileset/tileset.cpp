@@ -43,6 +43,11 @@ void tileset::set_selection(const position& topLeft,
   m_selection = {topLeft, bottomRight};
 }
 
+void tileset::clear_selection() noexcept
+{
+  m_selection.reset();
+}
+
 auto tileset::contains(tile_id id) const noexcept -> bool
 {
   return (id >= first_id()) && (id <= last_id());

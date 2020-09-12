@@ -6,6 +6,7 @@
 #include "remove_col.hpp"
 #include "remove_row.hpp"
 #include "resize_map.hpp"
+#include "stamp_sequence.hpp"
 
 namespace tactile::core {
 
@@ -14,6 +15,8 @@ map_model::map_model(QObject* parent)
       m_map{(std::make_unique<map>(5, 5))},
       m_commands{new command_stack{this}}
 {
+  m_commands->setUndoLimit(100);
+
   connect(m_commands,
           &command_stack::canUndoChanged,
           this,
@@ -51,6 +54,14 @@ void map_model::flood(const position& position,
 {
   m_commands->push<cmd::bucket_fill>(
       m_map.get(), position, target, replacement);
+}
+
+void map_model::add_stamp_sequence(
+    small_map<core::position, tile_id>&& oldState,
+    small_map<core::position, tile_id>&& sequence)
+{
+  m_commands->push<cmd::stamp_sequence>(
+      m_map.get(), std::move(oldState), std::move(sequence));
 }
 
 void map_model::add_row()

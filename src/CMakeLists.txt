@@ -25,6 +25,7 @@ set(TACTILE_SOURCE_FILES
         core/map_model.hpp
         core/tactile_error.hpp
         core/tactile_error.cpp
+        core/iterate_tileset_selection.hpp
 
         core/algorithm/flood_fill.hpp
         core/algorithm/flood_fill.cpp
@@ -129,6 +130,8 @@ set(TACTILE_SOURCE_FILES
         command/resize_map.hpp
         command/bucket_fill.cpp
         command/bucket_fill.hpp
+        command/stamp_sequence.cpp
+        command/stamp_sequence.hpp
 
         prefs/setting.hpp
         prefs/theme.cpp
