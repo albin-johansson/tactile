@@ -45,7 +45,7 @@ class map_tab_widget final : public QTabWidget
    * @since 0.1.0
    */
   void add_map_tab(not_null<core::map*> map,
-                   not_null<core::tileset_model*> tilesets,
+                   not_null<core::tileset_manager*> tilesets,
                    const QString& title,
                    map_id id);
 

@@ -12,7 +12,7 @@ class tile_size;
 
 class tileset;
 
-class tileset_model;
+class tileset_manager;
 
 class model;
 

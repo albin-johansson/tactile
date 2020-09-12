@@ -1,8 +1,9 @@
+#include "tileset_manager.hpp"
+
 #include <catch.hpp>
 #include <memory>
 
 #include "tileset.hpp"
-#include "tileset_model.hpp"
 #include "types.hpp"
 
 using tactile::tileset_id;
@@ -12,7 +13,7 @@ using namespace tactile::core;
 
 TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
 {
-  tileset_model manager;
+  tileset_manager manager;
 
   CHECK(manager.sheets() == 0);
   CHECK(!manager.has_active_tileset());
@@ -27,7 +28,7 @@ TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
 
 TEST_CASE("tileset_manager::remove", "[tileset_manager]")
 {
-  tileset_model manager;
+  tileset_manager manager;
   CHECK_NOTHROW(manager.remove(tileset_id{0}));
 
   const auto id = manager.emplace("terrain.png", 32_tw, 32_th);
@@ -42,7 +43,7 @@ TEST_CASE("tileset_manager::remove", "[tileset_manager]")
 
 TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
 {
-  tileset_model manager;
+  tileset_manager manager;
   CHECK_NOTHROW(manager.remove_all());
 
   const auto a = manager.emplace("terrain.png", 32_tw, 32_th);
@@ -56,7 +57,7 @@ TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
 
 TEST_CASE("tileset_manager::select", "[tileset_manager]")
 {
-  tileset_model manager;
+  tileset_manager manager;
 
   CHECK(!manager.has_active_tileset());
 

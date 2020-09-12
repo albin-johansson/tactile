@@ -32,7 +32,7 @@ class map_item final : public QGraphicsItem
    * @since 0.1.0
    */
   explicit map_item(not_null<core::map*> map,
-                    not_null<core::tileset_model*> tilesets,
+                    not_null<core::tileset_manager*> tilesets,
                     QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
@@ -47,7 +47,7 @@ class map_item final : public QGraphicsItem
 
  private:
   core::map* m_map{};
-  core::tileset_model* m_tilesets{};
+  core::tileset_manager* m_tilesets{};
   std::optional<core::position> m_mousePosition;
 
   void draw_layer(QPainter& painter,

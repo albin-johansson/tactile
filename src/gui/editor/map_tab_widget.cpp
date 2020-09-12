@@ -64,7 +64,7 @@ void map_tab_widget::redraw()
 }
 
 void map_tab_widget::add_map_tab(not_null<core::map*> map,
-                                 not_null<core::tileset_model*> tilesets,
+                                 not_null<core::tileset_manager*> tilesets,
                                  const QString& title,
                                  map_id id)
 {

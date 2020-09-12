@@ -52,7 +52,7 @@ void draw_tile_background(QPainter& painter,
 }  // namespace
 
 map_item::map_item(not_null<map*> map,
-                   not_null<tileset_model*> tilesets,
+                   not_null<tileset_manager*> tilesets,
                    QGraphicsItem* parent)
     : QGraphicsItem{parent},
       m_map{map},

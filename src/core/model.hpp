@@ -10,7 +10,7 @@
 #include "core_fwd.hpp"
 #include "map.hpp"
 #include "map_document.hpp"
-#include "tileset_model.hpp"
+#include "tileset_manager.hpp"
 #include "tool_id.hpp"
 #include "tool_model.hpp"
 #include "types.hpp"
@@ -142,7 +142,7 @@ class model final : public QObject
 
   [[nodiscard]] auto current_tileset_id() const -> std::optional<tileset_id>;
 
-  [[nodiscard]] auto get_tileset_model() -> tileset_model*
+  [[nodiscard]] auto get_tileset_model() -> tileset_manager*
   {
     return m_tilesets.get();
   }
@@ -275,7 +275,7 @@ class model final : public QObject
  private:
   std::optional<map_id> m_currentMapID;
   std::map<map_id, map_document*> m_mapDocuments;
-  std::unique_ptr<tileset_model> m_tilesets;
+  std::unique_ptr<tileset_manager> m_tilesets;
   tool_model m_tools;
   map_id m_nextMapID{1};
 

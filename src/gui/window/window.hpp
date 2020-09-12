@@ -148,7 +148,7 @@ class window final : public QMainWindow
   void handle_move_camera(int dx, int dy);
 
   void handle_new_map(not_null<core::map*> map,
-                      not_null<core::tileset_model*> tilesets,
+                      not_null<core::tileset_manager*> tilesets,
                       map_id id);
 
  protected:

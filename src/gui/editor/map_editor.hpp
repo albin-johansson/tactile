@@ -40,7 +40,7 @@ class map_editor final : public QWidget
   void disable_stamp_preview();
 
   void add_new_map_tab(not_null<core::map*> map,
-                       not_null<core::tileset_model*> tilesets,
+                       not_null<core::tileset_manager*> tilesets,
                        const QString& title,
                        map_id id);
 

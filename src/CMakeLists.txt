@@ -35,8 +35,8 @@ set(TACTILE_SOURCE_FILES
 
         core/tileset/tileset.cpp
         core/tileset/tileset.hpp
-        core/tileset/tileset_model.cpp
-        core/tileset/tileset_model.hpp
+        core/tileset/tileset_manager.cpp
+        core/tileset/tileset_manager.hpp
 
         core/map/map.hpp
         core/map/map.cpp

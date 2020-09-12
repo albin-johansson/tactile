@@ -7,7 +7,7 @@
 #include "position.hpp"
 #include "small_map.hpp"
 #include "tileset.hpp"
-#include "tileset_model.hpp"
+#include "tileset_manager.hpp"
 #include "types.hpp"
 
 namespace tactile::cmd {

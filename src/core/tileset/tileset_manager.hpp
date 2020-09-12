@@ -12,20 +12,20 @@
 namespace tactile::core {
 
 /**
- * @class tileset_model
+ * @class tileset_manager
  *
- * @brief Used to manager multiple instances of the `tileset` class.
+ * @brief Handles multiple tilesets.
  *
  * @see `tileset`
  *
  * @since 0.1.0
  *
- * @headerfile tileset_model.hpp
+ * @headerfile tileset_manager.hpp
  */
-class tileset_model final
+class tileset_manager final
 {
  public:
-  tileset_model();
+  tileset_manager();
 
   /**
    * @brief Adds a tileset to the manager.

@@ -11,7 +11,7 @@
 namespace tactile::gui {
 
 map_scene::map_scene(not_null<core::map*> map,
-                     not_null<core::tileset_model*> tilesets,
+                     not_null<core::tileset_manager*> tilesets,
                      map_id id,
                      QWidget* parent)
     : QGraphicsScene{parent},

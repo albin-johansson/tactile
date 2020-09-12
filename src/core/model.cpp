@@ -4,7 +4,7 @@
 
 namespace tactile::core {
 
-model::model() : m_tools{this}, m_tilesets{std::make_unique<tileset_model>()}
+model::model() : m_tools{this}, m_tilesets{std::make_unique<tileset_manager>()}
 {}
 
 void model::send_undo_redo_update()
