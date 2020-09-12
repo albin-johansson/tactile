@@ -32,7 +32,7 @@ void tool_model::switch_to(abstract_tool* tool)
 
 void tool_model::select(tool_id tool)
 {
-  switch (tool) {  // TODO add rest of tools
+  switch (tool) {  // TODO rectangle, find_same
     default:
       [[fallthrough]];
     case tool_id::none: {
