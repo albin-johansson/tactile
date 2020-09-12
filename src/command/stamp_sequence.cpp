@@ -3,8 +3,8 @@
 namespace tactile::cmd {
 
 stamp_sequence::stamp_sequence(not_null<core::map*> map,
-                               small_map<core::position, tile_id>&& oldState,
-                               small_map<core::position, tile_id>&& sequence)
+                               vector_map<core::position, tile_id>&& oldState,
+                               vector_map<core::position, tile_id>&& sequence)
     : abstract_command{QStringLiteral(u"Stamp Sequence"), map},
       m_oldState{std::move(oldState)},
       m_sequence{std::move(sequence)}

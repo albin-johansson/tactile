@@ -158,7 +158,7 @@ set(TACTILE_SOURCE_FILES
         tool/bucket_tool.hpp
 
         util/nenya.hpp
-        util/small_map.hpp)
+        util/vector_map.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

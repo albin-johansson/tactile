@@ -3,8 +3,8 @@
 #include "abstract_tool.hpp"
 #include "fwd.hpp"
 #include "position.hpp"
-#include "small_map.hpp"
 #include "tileset.hpp"
+#include "vector_map.hpp"
 
 namespace tactile {
 
@@ -45,8 +45,8 @@ class stamp_tool final : public abstract_tool
   void disable() override;
 
  private:
-  small_map<core::position, tile_id> m_oldState;
-  small_map<core::position, tile_id> m_sequence;
+  vector_map<core::position, tile_id> m_oldState;
+  vector_map<core::position, tile_id> m_sequence;
 
   void update_stamp_sequence(core::map& map,
                              const core::tileset& tileset,

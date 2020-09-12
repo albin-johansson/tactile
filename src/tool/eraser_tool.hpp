@@ -3,8 +3,8 @@
 #include "abstract_tool.hpp"
 #include "fwd.hpp"
 #include "position.hpp"
-#include "small_map.hpp"
 #include "types.hpp"
+#include "vector_map.hpp"
 
 namespace tactile {
 
@@ -40,7 +40,7 @@ class eraser_tool final : public abstract_tool
   void released(QMouseEvent* event, const QPointF& mapPosition) override;
 
  private:
-  small_map<core::position, tile_id> m_oldState;
+  vector_map<core::position, tile_id> m_oldState;
 
   /**
    * @brief Updates the state of the eraser, by erasing the tile at the mouse

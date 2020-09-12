@@ -8,7 +8,7 @@
 namespace tactile {
 
 /**
- * @class small_map
+ * @class vector_map
  *
  * @brief An associative container for small sets of key-value pairs.
  *
@@ -22,10 +22,10 @@ namespace tactile {
  *
  * @since 0.1.0
  *
- * @headerfile small_map.hpp
+ * @headerfile vector_map.hpp
  */
 template <typename Key, typename Value>
-class small_map final
+class vector_map final
 {
   using storage_type = std::vector<std::pair<Key, Value>>;
 

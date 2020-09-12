@@ -5,9 +5,9 @@
 
 #include "core_fwd.hpp"
 #include "position.hpp"
-#include "small_map.hpp"
 #include "tileset.hpp"
 #include "types.hpp"
+#include "vector_map.hpp"
 
 namespace tactile::core {
 
@@ -163,7 +163,7 @@ class tileset_manager final
 
  private:
   std::optional<tileset_id> m_activeID;
-  small_map<tileset_id, tileset> m_tilesets;
+  vector_map<tileset_id, tileset> m_tilesets;
   tileset_id m_nextID{1};
   tile_id m_nextGlobalTileID{1};
 };

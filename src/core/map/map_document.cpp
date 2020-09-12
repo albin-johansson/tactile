@@ -57,14 +57,14 @@ void map_document::flood(const position& position,
       m_map.get(), position, target, replacement);
 }
 
-void map_document::add_stamp_sequence(small_map<position, tile_id>&& oldState,
-                                      small_map<position, tile_id>&& sequence)
+void map_document::add_stamp_sequence(vector_map<position, tile_id>&& oldState,
+                                      vector_map<position, tile_id>&& sequence)
 {
   m_commands->push<cmd::stamp_sequence>(
       m_map.get(), std::move(oldState), std::move(sequence));
 }
 
-void map_document::add_erase_sequence(small_map<position, tile_id>&& oldState)
+void map_document::add_erase_sequence(vector_map<position, tile_id>&& oldState)
 {
   m_commands->push<cmd::erase_sequence>(m_map.get(), std::move(oldState));
 }

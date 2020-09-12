@@ -1,4 +1,4 @@
-#include "small_map.hpp"
+#include "vector_map.hpp"
 
 #include <catch.hpp>
 #include <string>
@@ -6,19 +6,19 @@
 
 using namespace tactile;
 
-TEST_CASE("small_map defaults", "[small_map]")
+TEST_CASE("small_map defaults", "[vector_map]")
 {
-  const small_map<int, int> map;
+  const vector_map<int, int> map;
   CHECK(map.capacity() == 0);
   CHECK(map.size() == 0);  // NOLINT
   CHECK(map.empty());
 }
 
-TEST_CASE("small_map::emplace", "[small_map]")
+TEST_CASE("vector_map::emplace", "[vector_map]")
 {
   using namespace std::string_view_literals;
 
-  small_map<int, std::string> map;
+  vector_map<int, std::string> map;
   const auto i = 7;
 
   SECTION("Emplacing one string")
@@ -37,9 +37,9 @@ TEST_CASE("small_map::emplace", "[small_map]")
   }
 }
 
-TEST_CASE("small_map::erase", "[small_map]")
+TEST_CASE("vector_map::erase", "[vector_map]")
 {
-  small_map<int, std::string> map;
+  vector_map<int, std::string> map;
   CHECK_NOTHROW(map.erase(0));
 
   map.emplace(0, "foo");
@@ -58,18 +58,18 @@ TEST_CASE("small_map::erase", "[small_map]")
   CHECK(map.empty());
 }
 
-TEST_CASE("small_map::reserve", "[small_map]")
+TEST_CASE("vector_map::reserve", "[vector_map]")
 {
-  small_map<int, int> map;
+  vector_map<int, int> map;
   const auto n = 10;
 
   map.reserve(n);
   CHECK(map.capacity() == n);
 }
 
-TEST_CASE("small_map::clear", "[small_map]")
+TEST_CASE("vector_map::clear", "[vector_map]")
 {
-  small_map<int, int> map;
+  vector_map<int, int> map;
 
   map.emplace(0, 10);
   map.emplace(1, 20);
@@ -80,11 +80,11 @@ TEST_CASE("small_map::clear", "[small_map]")
   CHECK(map.empty());
 }
 
-TEST_CASE("small_map::at", "[small_map]")
+TEST_CASE("vector_map::at", "[vector_map]")
 {
   using namespace std::string_view_literals;
 
-  small_map<int, std::string> map;
+  vector_map<int, std::string> map;
   CHECK_THROWS_AS(map.at(0), std::out_of_range);
 
   map.emplace(0, "foo");
@@ -92,11 +92,11 @@ TEST_CASE("small_map::at", "[small_map]")
   CHECK(str == "foo"sv);
 }
 
-TEST_CASE("small_map::operator[]", "[small_map]")
+TEST_CASE("vector_map::operator[]", "[vector_map]")
 {
   using namespace std::string_view_literals;
 
-  small_map<int, std::string> map;
+  vector_map<int, std::string> map;
   CHECK_THROWS_AS(map[0], std::out_of_range);
 
   map.emplace(0, "foo");
@@ -104,9 +104,9 @@ TEST_CASE("small_map::operator[]", "[small_map]")
   CHECK(str == "foo"sv);
 }
 
-TEST_CASE("small_map begin/end", "[small_map]")
+TEST_CASE("small_map begin/end", "[vector_map]")
 {
-  small_map<int, std::string> map;
+  vector_map<int, std::string> map;
   map.emplace(1, "abc");
   map.emplace(2, "def");
   map.emplace(3, "ghi");

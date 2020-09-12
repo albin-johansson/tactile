@@ -7,9 +7,9 @@
 #include "command_stack.hpp"
 #include "map.hpp"
 #include "position.hpp"
-#include "small_map.hpp"
 #include "tileset.hpp"
 #include "types.hpp"
+#include "vector_map.hpp"
 
 namespace tactile::core {
 
@@ -88,8 +88,8 @@ class map_document final : public QObject
    *
    * @since 0.1.0
    */
-  void add_stamp_sequence(small_map<position, tile_id>&& oldState,
-                          small_map<position, tile_id>&& sequence);
+  void add_stamp_sequence(vector_map<position, tile_id>&& oldState,
+                          vector_map<position, tile_id>&& sequence);
 
   /**
    * @brief Adds an erase sequence to the command stack.
@@ -103,7 +103,7 @@ class map_document final : public QObject
    *
    * @since 0.1.0
    */
-  void add_erase_sequence(small_map<position, tile_id>&& oldState);
+  void add_erase_sequence(vector_map<position, tile_id>&& oldState);
 
   /**
    * @brief Adds a row to the associated map.
