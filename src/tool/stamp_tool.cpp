@@ -46,7 +46,7 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
   if (event->buttons() & Qt::MouseButton::LeftButton) {
     if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
         pos) {
-      auto* map = get_model()->current_raw_map();
+      auto* map = get_model()->current_map();
       Q_ASSERT(map);
 
       update_stamp_sequence(*map, *tileset, *pos);
@@ -67,7 +67,7 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
       pos) {
     emit get_model()->enable_stamp_preview(*pos);
 
-    auto* map = get_model()->current_raw_map();
+    auto* map = get_model()->current_map();
     Q_ASSERT(map);
 
     if (event->buttons() & Qt::MouseButton::LeftButton) {

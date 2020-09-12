@@ -33,7 +33,7 @@ auto abstract_tool::translate_mouse_position(const QPoint& mousePosition,
     return std::nullopt;
   }
 
-  auto* map = m_model->current_raw_map();
+  auto* map = m_model->current_map();
   Q_ASSERT(map);
 
   const auto tileSize = map->get_tile_size().get();

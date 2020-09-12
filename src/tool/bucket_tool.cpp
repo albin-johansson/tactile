@@ -9,7 +9,7 @@ bucket_tool::bucket_tool(core::model* model) : abstract_tool{model}
 
 void bucket_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* map = get_model()->current_raw_map();
+  auto* map = get_model()->current_map();
   if (!map) {
     return;
   }

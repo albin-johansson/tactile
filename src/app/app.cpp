@@ -40,29 +40,29 @@ void app::handle_resize_map()
 
 void app::handle_pan_up()
 {
-  if (const auto tileSize = m_model->tile_size(); tileSize) {
-    m_window->handle_move_camera(0, *tileSize);
+  if (const auto* map = m_model->current_map()) {
+    m_window->handle_move_camera(0, map->get_tile_size().get());
   }
 }
 
 void app::handle_pan_down()
 {
-  if (const auto tileSize = m_model->tile_size(); tileSize) {
-    m_window->handle_move_camera(0, -(*tileSize));
+  if (const auto* map = m_model->current_map()) {
+    m_window->handle_move_camera(0, -map->get_tile_size().get());
   }
 }
 
 void app::handle_pan_right()
 {
-  if (const auto tileSize = m_model->tile_size(); tileSize) {
-    m_window->handle_move_camera(-(*tileSize), 0);
+  if (const auto* map = m_model->current_map()) {
+    m_window->handle_move_camera(-map->get_tile_size().get(), 0);
   }
 }
 
 void app::handle_pan_left()
 {
-  if (const auto tileSize = m_model->tile_size(); tileSize) {
-    m_window->handle_move_camera(*tileSize, 0);
+  if (const auto* map = m_model->current_map()) {
+    m_window->handle_move_camera(map->get_tile_size().get(), 0);
   }
 }
 
@@ -89,7 +89,7 @@ void app::handle_new_map()
 {
   const auto id = m_model->add_map();
   m_window->handle_new_map(
-      m_model->get_map(id), m_model->get_tileset_model(), id);
+      m_model->get_map(id), m_model->get_tileset_manager(), id);
 }
 
 }  // namespace tactile

@@ -41,17 +41,17 @@ app_connections::app_connections(app& app)
   connect(m_window,
           &window::request_increase_tile_size,
           m_core,
-          &model::handle_increase_tile_size);
+          &model::increase_tile_size);
 
   connect(m_window,
           &window::request_decrease_tile_size,
           m_core,
-          &model::handle_decrease_tile_size);
+          &model::decrease_tile_size);
 
   connect(m_window,
           &window::request_reset_tile_size,
           m_core,
-          &model::handle_reset_tile_size);
+          &model::reset_tile_size);
 
   connect(m_window, &window::select_tool, m_core, &model::select_tool);
 
@@ -113,8 +113,7 @@ void app_connections::init_map_connections(app& app) noexcept
 {
   connect(m_window, &window::request_new_map, &app, &app::handle_new_map);
 
-  connect(
-      m_window, &window::request_close_map, m_core, &model::handle_close_map);
+  connect(m_window, &window::request_close_map, m_core, &model::close_map);
 
   connect(m_window, &window::request_select_map, m_core, &model::select_map);
 

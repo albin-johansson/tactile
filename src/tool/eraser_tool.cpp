@@ -11,7 +11,7 @@ eraser_tool::eraser_tool(core::model* model) : abstract_tool{model}
 
 void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* map = get_model()->current_raw_map();
+  auto* map = get_model()->current_map();
   if (!map) {
     return;
   }
@@ -41,7 +41,7 @@ void eraser_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 
 void eraser_tool::released(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* map = get_model()->current_raw_map();
+  auto* map = get_model()->current_map();
   if (!map) {
     return;
   }
