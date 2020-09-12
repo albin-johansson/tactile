@@ -60,10 +60,13 @@ auto tileset::is_single_tile_selected() const noexcept -> bool
 
 auto tileset::tile_at(const position& position) const -> tile_id
 {
-  const auto [r, c] = position.unpack();
-  if ((r >= 0_row) && (c >= 0_col) && (r < row_t{rows()}) &&
-      (c < col_t{cols()})) {
-    const auto index = r.get() * m_cols + c.get();
+  const auto [row, col] = position.unpack();
+
+  const auto endRow = row_t{rows()};
+  const auto endCol = col_t{cols()};
+
+  if ((row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol)) {
+    const auto index = row.get() * m_cols + col.get();
     return m_firstID + tile_id{index};
   } else {
     return empty;
