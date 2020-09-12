@@ -2,7 +2,7 @@
 
 #include <algorithm>  // find_if
 #include <stdexcept>  // out_of_range
-#include <utility>    // forward
+#include <utility>    // forward, pair
 #include <vector>     // vector
 
 namespace tactile {
@@ -117,7 +117,7 @@ class vector_map final
     if (auto it = find(key); it != m_data.end()) {
       return it->second;
     } else {
-      throw std::out_of_range{"Couldn't find key in small_map!"};
+      throw std::out_of_range{"Couldn't find key!"};
     }
   }
 
@@ -129,7 +129,7 @@ class vector_map final
     if (const auto it = find(key); it != m_data.end()) {
       return it->second;
     } else {
-      throw std::out_of_range{"Couldn't find key in small_map!"};
+      throw std::out_of_range{"Couldn't find key!"};
     }
   }
 
@@ -147,6 +147,32 @@ class vector_map final
   [[nodiscard]] auto operator[](const key_type& key) const -> const mapped_type&
   {
     return at(key);
+  }
+
+  /**
+   * @brief Returns an iterator to the element associated with the specified
+   * key.
+   *
+   * @param key the key to lookup.
+   *
+   * @return an iterator to the found element; `end()` is returned if the
+   * element wasn't found.
+   */
+  [[nodiscard]] auto find(const key_type& key) -> iterator
+  {
+    return std::find_if(m_data.begin(), m_data.end(), [key](const auto& pair) {
+      return pair.first == key;
+    });
+  }
+
+  /**
+   * @copydoc find
+   */
+  [[nodiscard]] auto find(const key_type& key) const -> const_iterator
+  {
+    return std::find_if(m_data.begin(), m_data.end(), [key](const auto& pair) {
+      return pair.first == key;
+    });
   }
 
   /**
@@ -242,20 +268,6 @@ class vector_map final
 
  private:
   storage_type m_data;
-
-  [[nodiscard]] auto find(const key_type& key) -> iterator
-  {
-    return std::find_if(m_data.begin(), m_data.end(), [key](const auto& pair) {
-      return pair.first == key;
-    });
-  }
-
-  [[nodiscard]] auto find(const key_type& key) const -> const_iterator
-  {
-    return std::find_if(m_data.begin(), m_data.end(), [key](const auto& pair) {
-      return pair.first == key;
-    });
-  }
 };
 
 }  // namespace tactile
