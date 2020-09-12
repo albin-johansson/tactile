@@ -11,10 +11,7 @@
 
 namespace tactile::gui {
 
-using core::col_t;
-using core::layer;
-using core::map;
-using core::row_t;
+using namespace core;
 
 namespace {
 
@@ -32,21 +29,30 @@ auto get_end_col(const QRectF& exposed, int nCols, int tileSize) -> col_t
   return col_t{std::min(nCols, c)};
 }
 
-void draw_tile_background(QPainter& painter, row_t row, col_t col, int tileSize)
+void draw_tile_background(QPainter& painter,
+                          const position& position,
+                          int tileSize)
 {
   constexpr QColor emptyLightGray{0x55, 0x55, 0x55};
   constexpr QColor emptyDarkGray{0x33, 0x33, 0x33};
+
+  const auto row = position.row();
+  const auto col = position.col();
+
   const auto& color = ((row.get() % 2 == 0) == (col.get() % 2 == 0))
                           ? emptyDarkGray
                           : emptyLightGray;
-  painter.fillRect(
-      col.get() * tileSize, row.get() * tileSize, tileSize, tileSize, color);
+  painter.fillRect(position.col_to_x(tileSize),
+                   position.row_to_y(tileSize),
+                   tileSize,
+                   tileSize,
+                   color);
 }
 
 }  // namespace
 
 map_item::map_item(not_null<map*> map,
-                   not_null<core::tileset_model*> tilesets,
+                   not_null<tileset_model*> tilesets,
                    QGraphicsItem* parent)
     : QGraphicsItem{parent},
       m_map{map},
@@ -62,7 +68,7 @@ void map_item::disable_stamp_preview()
   update();
 }
 
-void map_item::enable_stamp_preview(const core::position& position)
+void map_item::enable_stamp_preview(const position& position)
 {
   m_mousePosition = position;
 }
@@ -85,12 +91,14 @@ void map_item::draw_layer(QPainter& painter,
 
   for (row_t row{beginRow}; row < endRow; ++row) {
     for (col_t col{beginCol}; col < endCol; ++col) {
-      const auto x = col.get() * tileSize;
-      const auto y = row.get() * tileSize;
+      const position position{row, col};
 
-      draw_tile_background(painter, row, col, tileSize);
+      const auto x = position.col_to_x(tileSize);
+      const auto y = position.row_to_y(tileSize);
 
-      if (const auto tile = layer.tile_at({row, col}); tile != empty) {
+      draw_tile_background(painter, position, tileSize);
+
+      if (const auto tile = layer.tile_at(position); tile != empty) {
         draw_tile(painter, *tile, x, y, tileSize);
       }
 
@@ -115,16 +123,12 @@ void map_item::draw_tile(QPainter& painter,
   painter.drawPixmap(dst, image, src);
 }
 
-void map_item::draw_preview_multiple_tiles(
-    QPainter& painter,
-    const core::position& mousePosition,
-    const core::tileset::selection& selection,
-    int tileSize)
+void map_item::draw_preview_multiple_tiles(QPainter& painter,
+                                           const position& mousePosition,
+                                           const tileset::selection& selection,
+                                           int tileSize)
 {
   // TODO test rendering preview centered around mouse
-
-  using core::operator""_row;
-  using core::operator""_col;
 
   auto* tileset = m_tilesets->current_tileset();
   Q_ASSERT(tileset);
@@ -134,16 +138,14 @@ void map_item::draw_preview_multiple_tiles(
   const auto nRows = 1_row + (bottomRight.row() - topLeft.row());
   const auto nCols = 1_col + (bottomRight.col() - topLeft.col());
 
-  for (core::row_t row{0}; row < nRows; ++row) {
-    for (core::col_t col{0}; col < nCols; ++col) {
+  for (row_t row{0}; row < nRows; ++row) {
+    for (col_t col{0}; col < nCols; ++col) {
       const auto tilePos = mousePosition.offset_by(row, col);
       if (m_map->in_bounds(tilePos)) {
-        const auto x = tilePos.col().get() * tileSize;
-        const auto y = tilePos.row().get() * tileSize;
         draw_tile(painter,
                   tileset->tile_at(topLeft.offset_by(row, col)),
-                  x,
-                  y,
+                  tilePos.col_to_x(tileSize),
+                  tilePos.row_to_y(tileSize),
                   tileSize);
       }
     }
@@ -162,9 +164,11 @@ void map_item::draw_preview(QPainter& painter, int tileSize)
   painter.setOpacity(0.5);
 
   if (topLeft == bottomRight) {
-    const auto x = mousePos.col().get() * tileSize;
-    const auto y = mousePos.row().get() * tileSize;
-    draw_tile(painter, tileset->tile_at(topLeft), x, y, tileSize);
+    draw_tile(painter,
+              tileset->tile_at(topLeft),
+              mousePos.col_to_x(tileSize),
+              mousePos.row_to_y(tileSize),
+              tileSize);
   } else {
     draw_preview_multiple_tiles(
         painter, mousePos, *tileset->get_selection(), tileSize);

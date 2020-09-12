@@ -26,8 +26,9 @@ void iterate_tileset_selection(T&& callback,
   if (topLeft == bottomRight) {
     callback(tileset, origin, topLeft);
   } else {
-    const auto nRows = 1_row + (bottomRight.row() - topLeft.row());
-    const auto nCols = 1_col + (bottomRight.col() - topLeft.col());
+    const auto diff = bottomRight - topLeft;
+    const auto nRows = 1_row + diff.row();
+    const auto nCols = 1_col + diff.col();
     for (row_t row{0}; row < nRows; ++row) {
       for (col_t col{0}; col < nCols; ++col) {
         const auto tilePos = origin.offset_by(row, col);

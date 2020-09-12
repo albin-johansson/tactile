@@ -229,6 +229,34 @@ class position final
     return static_cast<std::size_t>(m_col);
   }
 
+  /**
+   * @brief Returns the column index converted to an x-coordinate.
+   *
+   * @param tileSize the current tile size.
+   *
+   * @return the column index converted to an x-coordinate.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] constexpr auto col_to_x(int tileSize) const noexcept -> int
+  {
+    return m_col * tileSize;
+  }
+
+  /**
+   * @brief Returns the row index converted to a y-coordinate.
+   *
+   * @param tileSize the current tile size.
+   *
+   * @return the row index converted to a y-coordinate.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] constexpr auto row_to_y(int tileSize) const noexcept -> int
+  {
+    return m_row * tileSize;
+  }
+
   [[nodiscard]] auto operator<=>(const position&) const noexcept = default;
 
  private:
@@ -236,5 +264,39 @@ class position final
   int m_row{};
   int m_col{};
 };
+
+/**
+ * @brief Adds two positions and returns the result.
+ *
+ * @param lhs the left-hand side position.
+ * @param rhs the right-hand side position.
+ *
+ * @return a position that is the sum of two positions.
+ *
+ * @since 0.1.0
+ */
+[[nodiscard]] inline constexpr auto operator+(const position& lhs,
+                                              const position& rhs) noexcept
+    -> position
+{
+  return position{lhs.row() + rhs.row(), lhs.col() + rhs.col()};
+}
+
+/**
+ * @brief Subtracts two positions and returns the result.
+ *
+ * @param lhs the left-hand side position.
+ * @param rhs the right-hand side position.
+ *
+ * @return a position that is the difference between two positions.
+ *
+ * @since 0.1.0
+ */
+[[nodiscard]] inline constexpr auto operator-(const position& lhs,
+                                              const position& rhs) noexcept
+    -> position
+{
+  return position{lhs.row() - rhs.row(), lhs.col() - rhs.col()};
+}
 
 }  // namespace tactile::core

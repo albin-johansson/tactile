@@ -10,6 +10,8 @@
 #include "tactile_error.hpp"
 #include "tileset_image_label.hpp"
 
+using namespace tactile::core;
+
 namespace tactile::gui {
 
 tileset_image_widget::tileset_image_widget(const QImage& image,
@@ -118,18 +120,14 @@ void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 
       const auto& geometry = m_rubberBand->geometry();
 
-      const core::position topLeft{
-          core::row_t{geometry.y() / m_tileHeight.get()},
-          core::col_t{geometry.x() / m_tileWidth.get()}};
-
-      using core::operator""_col;
-      using core::operator""_row;
+      const position topLeft{row_t{geometry.y() / m_tileHeight.get()},
+                             col_t{geometry.x() / m_tileWidth.get()}};
 
       const auto calc_bottom_right = [&] {
-        const core::row_t row{geometry.bottom() / m_tileHeight.get()};
-        const core::col_t col{geometry.right() / m_tileWidth.get()};
-        const core::position bottomRight{std::max(row - 1_row, topLeft.row()),
-                                         std::max(col - 1_col, topLeft.col())};
+        const row_t row{geometry.bottom() / m_tileHeight.get()};
+        const col_t col{geometry.right() / m_tileWidth.get()};
+        const position bottomRight{std::max(row - 1_row, topLeft.row()),
+                                   std::max(col - 1_col, topLeft.col())};
         return bottomRight;
       };
 
