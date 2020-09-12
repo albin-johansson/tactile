@@ -99,7 +99,6 @@ TEST_CASE("tileset::tile_at", "[tileset]")
   {
     tileset sheet{"terrain.png", 32_tw, 32_th};
 
-    CHECK(sheet.tile_at({-1_row, -1_col}) == empty);
     CHECK(sheet.tile_at({row_t{sheet.width() + 1}, 0_col}) == empty);
     CHECK(sheet.tile_at({0_row, col_t{sheet.height() + 1}}) == empty);
     CHECK(sheet.tile_at(
