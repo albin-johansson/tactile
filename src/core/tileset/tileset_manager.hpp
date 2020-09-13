@@ -47,8 +47,7 @@ class tileset_manager final
     const auto id = m_nextID;
     ++m_nextID;
 
-    tileset tileset{std::forward<Args>(args)...};
-    tileset.set_first_id(m_nextGlobalTileID);
+    tileset tileset{m_nextGlobalTileID, std::forward<Args>(args)...};
 
     m_nextGlobalTileID = tileset.last_id() + 1_t;
 

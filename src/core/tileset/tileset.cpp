@@ -8,11 +8,43 @@
 #include "types.hpp"
 
 namespace tactile::core {
+namespace {
 
-tileset::tileset(const QImage& image,
+auto create_source_rect_cache(tile_id first,
+                              tile_id last,
+                              int nCols,
+                              tile_width tw,
+                              tile_height th)
+    -> std::unordered_map<tile_id, QRect>
+{
+  std::unordered_map<tile_id, QRect> cache;
+
+  const auto amount = (last + 1_t) - first;
+  cache.reserve(amount.get());
+
+  const auto tileWidth = tw.get();
+  const auto tileHeight = th.get();
+
+  for (tile_id id{first}; id <= last; ++id) {
+    const auto index = id - first;
+
+    const auto x = (index.get() % nCols) * tileWidth;
+    const auto y = (index.get() / nCols) * tileHeight;
+
+    cache.emplace(id, QRect{x, y, tileWidth, tileHeight});
+  }
+
+  return cache;
+}
+
+}  // namespace
+
+tileset::tileset(tile_id firstID,
+                 const QImage& image,
                  tile_width tileWidth,
                  tile_height tileHeight)
     : m_sheet{QPixmap::fromImage(image)},
+      m_firstID{firstID},
       m_tileWidth{at_least(tileWidth, 1_tw)},
       m_tileHeight{at_least(tileHeight, 1_th)}
 {
@@ -23,12 +55,34 @@ tileset::tileset(const QImage& image,
   m_rows = height() / m_tileHeight.get();
   m_cols = width() / m_tileWidth.get();
   m_nTiles = m_rows * m_cols;
+
+  m_sourceRects = create_source_rect_cache(
+      m_firstID, last_id(), m_cols, m_tileWidth, m_tileHeight);
+
+  //  const auto tw = get_tile_width().get();
+  //  const auto th = get_tile_height().get();
+  //
+  //  const auto first = first_id();
+  //  const auto last = last_id();
+  //
+  //  for (tile_id id{first}; id <= last; ++id) {
+  //    const auto index = id - first;
+  //
+  //    const auto row = index.get() / cols();
+  //    const auto col = index.get() % cols();
+  //
+  //    const auto x = col * tw;
+  //    const auto y = row * th;
+  //
+  //    m_sourceRects.emplace(id, QRect{x, y, tw, th});
+  //  }
 }
 
-tileset::tileset(const QString& path,
+tileset::tileset(tile_id firstID,
+                 const QString& path,
                  tile_width tileWidth,
                  tile_height tileHeight)
-    : tileset{QImage{path}, tileWidth, tileHeight}
+    : tileset{firstID, QImage{path}, tileWidth, tileHeight}
 {}
 
 void tileset::set_first_id(tile_id firstID) noexcept
@@ -111,6 +165,15 @@ auto tileset::last_id() const noexcept -> tile_id
 auto tileset::image() const -> const QPixmap&
 {
   return m_sheet;
+}
+
+auto tileset::image_source(tile_id id) const -> std::optional<QRect>
+{
+  if (const auto it = m_sourceRects.find(id); it != m_sourceRects.end()) {
+    return it->second;
+  } else {
+    return std::nullopt;
+  }
 }
 
 auto tileset::get_tile_width() const noexcept -> tile_width

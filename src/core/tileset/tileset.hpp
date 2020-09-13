@@ -2,9 +2,10 @@
 
 #include <qimage.h>
 #include <qpixmap.h>
+#include <qrect.h>
 
-#include <optional>
-#include <set>
+#include <optional>       // optional
+#include <unordered_map>  // unordered_map
 
 #include "position.hpp"
 #include "types.hpp"
@@ -51,11 +52,12 @@ class tileset final
   };
 
   /**
-   * @brief Creates a tileset with the initial first ID set to 1.
+   * @brief Creates a tileset.
    *
    * @details Both the supplied width and height will be adjusted to be at
    * least 1.
    *
+   * @param firstID the first tile ID associated with the tileset.
    * @param image the image that contains the tile sprites, mustn't be null.
    * @param tileWidth the width of the tiles in the tileset.
    * @param tileHeight the height of the tiles in the tileset.
@@ -64,14 +66,18 @@ class tileset final
    *
    * @since 0.1.0
    */
-  tileset(const QImage& image, tile_width tileWidth, tile_height tileHeight);
+  tileset(tile_id firstID,
+          const QImage& image,
+          tile_width tileWidth,
+          tile_height tileHeight);
 
   /**
-   * @brief Creates a tileset with the initial first ID set to 1.
+   * @brief Creates a tileset.
    *
    * @details Both the supplied width and height will be adjusted to be at
    * least 1.
    *
+   * @param firstID the first tile ID associated with the tileset.
    * @param path the path to the image that contains the tile sprites.
    * @param tileWidth the width of the tiles in the tileset.
    * @param tileHeight the height of the tiles in the tileset.
@@ -80,7 +86,10 @@ class tileset final
    *
    * @since 0.1.0
    */
-  tileset(const QString& path, tile_width tileWidth, tile_height tileHeight);
+  tileset(tile_id firstID,
+          const QString& path,
+          tile_width tileWidth,
+          tile_height tileHeight);
 
   /**
    * @brief Sets the first tile ID property of the tileset.
@@ -94,7 +103,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  void set_first_id(tile_id firstID) noexcept;
+  [[deprecated]] void set_first_id(tile_id firstID) noexcept;
 
   /**
    * @brief Sets the current selection in the tileset.
@@ -219,6 +228,8 @@ class tileset final
    */
   [[nodiscard]] auto image() const -> const QPixmap&;
 
+  [[nodiscard]] auto image_source(tile_id id) const -> std::optional<QRect>;
+
   /**
    * @brief Returns the width of the tile sprites in the tileset.
    *
@@ -255,11 +266,12 @@ class tileset final
   QPixmap m_sheet;
   tile_id m_firstID{1};
   std::optional<selection> m_selection;
-  int m_rows;
-  int m_cols;
-  tile_width m_tileWidth;
-  tile_height m_tileHeight;
-  int m_nTiles;
+  std::unordered_map<tile_id, QRect> m_sourceRects;
+  int m_rows{};
+  int m_cols{};
+  tile_width m_tileWidth{};
+  tile_height m_tileHeight{};
+  int m_nTiles{};
 };
 
 static_assert(std::is_final_v<tileset>);
