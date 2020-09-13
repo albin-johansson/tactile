@@ -55,6 +55,15 @@ class map final
    */
   map(int nRows, int nCols);
 
+  /**
+   * @brief Performs a flood-fill at the specified position.
+   *
+   * @param pos the origin position of the flood-fill.
+   * @param target the target ID that will be replaced.
+   * @param replacement the tile ID that will be used instead of `target`.
+   *
+   * @since 0.1.0
+   */
   void flood(const position& pos, tile_id target, tile_id replacement);
 
   /**
@@ -164,6 +173,16 @@ class map final
    */
   void set_visibility(layer_id layer, bool visibility) noexcept;
 
+  /**
+   * @brief Returns the ID of the tile at the specified position.
+   *
+   * @param position the position of the tile to query.
+   *
+   * @return the ID of the tile at the specified position; `std::nullopt` if the
+   * position is out-of-bounds.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto tile_at(const position& position) const
       -> std::optional<tile_id>;
 
@@ -207,6 +226,16 @@ class map final
    */
   [[nodiscard]] auto has_layer(layer_id layer) const noexcept -> bool;
 
+  /**
+   * @brief Indicates whether or not the supplied position is within the bounds
+   * of the map.
+   *
+   * @param pos the position that will be checked.
+   *
+   * @return `true` if the supplied positions is in bounds; `false` otherwise.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
 
   /**
