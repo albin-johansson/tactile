@@ -30,18 +30,6 @@ TEST_CASE("tileset(tile_id, QImage, tile_width, tile_height)", "[tileset]")
   }
 }
 
-TEST_CASE("tileset::set_first_id", "[tileset]")
-{
-  tileset sheet{1_t, "terrain.png", 32_tw, 32_th};
-
-  CHECK(sheet.first_id() == tile_id{1});
-
-  const tile_id id{84};
-  sheet.set_first_id(id);
-
-  CHECK(sheet.first_id() == id);
-}
-
 TEST_CASE("tileset::width", "[tileset]")
 {
   const QImage image{"terrain.png"};
@@ -63,7 +51,7 @@ TEST_CASE("tileset::tiles", "[tileset]")
   const QImage image{"terrain.png"};
   tileset sheet{1_t, image, 32_tw, 32_th};
 
-  CHECK(sheet.num_tiles() == 1024);
+  CHECK(sheet.rows() * sheet.cols() == 1024);
 }
 
 TEST_CASE("tileset::last_id", "[tileset]")
@@ -71,10 +59,8 @@ TEST_CASE("tileset::last_id", "[tileset]")
   tileset sheet{1_t, "terrain.png", 32_tw, 32_th};
 
   CHECK(sheet.last_id() == 1025_t);
-  CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.num_tiles()});
-
-  sheet.set_first_id(43_t);
-  CHECK(sheet.last_id() - sheet.first_id() == tile_id{sheet.num_tiles()});
+  CHECK(sheet.last_id() - sheet.first_id() ==
+        tile_id{sheet.rows() * sheet.cols()});
 }
 
 TEST_CASE("tileset::contains", "[tileset]")
@@ -85,12 +71,6 @@ TEST_CASE("tileset::contains", "[tileset]")
   CHECK(sheet.contains(sheet.last_id()));
   CHECK(!sheet.contains(sheet.first_id() - tile_id{1}));
   CHECK(!sheet.contains(sheet.last_id() + tile_id{1}));
-
-  const tile_id id{82};
-  sheet.set_first_id(id);
-  CHECK(sheet.contains(id));
-  CHECK(sheet.contains(id + tile_id{5}));
-  CHECK(sheet.contains(sheet.last_id()));
 }
 
 TEST_CASE("tileset::tile_at", "[tileset]")
@@ -105,26 +85,12 @@ TEST_CASE("tileset::tile_at", "[tileset]")
               {row_t{sheet.width() + 1}, col_t{sheet.height() + 1}}) == empty);
   }
 
-  SECTION("Without changed first ID")
+  SECTION("Valid ID")
   {
     tileset sheet{1_t, "terrain.png", 32_tw, 32_th};
 
     const auto row = 7_row;
     const auto col = 5_col;
-    const tile_id index{row.get() * sheet.cols() + col.get()};
-    CHECK(sheet.tile_at({row, col}) == sheet.first_id() + index);
-  }
-
-  SECTION("With changed first ID")
-  {
-    tileset sheet{1_t, "terrain.png", 32_tw, 32_th};
-
-    const tile_id first{38};
-    sheet.set_first_id(first);
-
-    const auto row = 9_row;
-    const auto col = 4_col;
-
     const tile_id index{row.get() * sheet.cols() + col.get()};
     CHECK(sheet.tile_at({row, col}) == sheet.first_id() + index);
   }

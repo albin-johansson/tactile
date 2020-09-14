@@ -92,20 +92,6 @@ class tileset final
           tile_height tileHeight);
 
   /**
-   * @brief Sets the first tile ID property of the tileset.
-   *
-   * @pre `firstID` must be greater than 0.
-   *
-   * @note This method doesn't check if the supplied tile ID isn't already
-   * taken by another tileset.
-   *
-   * @param firstID the new first tile ID.
-   *
-   * @since 0.1.0
-   */
-  [[deprecated]] void set_first_id(tile_id firstID) noexcept;
-
-  /**
    * @brief Sets the current selection in the tileset.
    *
    * @param topLeft the top-left position of the selection.
@@ -173,51 +159,17 @@ class tileset final
   [[nodiscard]] auto height() const -> int;
 
   /**
-   * @brief Returns the total number of rows of tiles in the tileset.
+   * @brief Returns the image source rectangle associated with the specified
+   * tile.
    *
-   * @return the total number of rows in the tileset.
+   * @param id the ID of the tile to obtain the source rectangle of.
    *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto rows() const noexcept -> int;
-
-  /**
-   * @brief Returns the total number of columns of tiles in the tileset.
-   *
-   * @return the total number of columns in the tileset.
+   * @return the source rectangle associated with the tile; `std::nullopt` if
+   * no source rectangle was found.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const noexcept -> int;
-
-  /**
-   * @brief Returns the total number of tiles contained in the tileset.
-   *
-   * @return the total number of tiles contained in the tileset.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto num_tiles() const noexcept -> int;
-
-  /**
-   * @brief Returns the tile ID of the first tile in the tileset.
-   *
-   * @details The default first tile ID is `1`.
-   *
-   * @return the ID of the first tile in the tileset.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto first_id() const noexcept -> tile_id;
-
-  /**
-   * @brief Returns the last valid tile ID associated with the tileset.
-   *
-   * @return the last valid ID associated with the tileset.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto last_id() const noexcept -> tile_id;
+  [[nodiscard]] auto image_source(tile_id id) const -> std::optional<QRect>;
 
   /**
    * @brief Returns the image associated with the tileset.
@@ -226,9 +178,10 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto image() const -> const QPixmap&;
-
-  [[nodiscard]] auto image_source(tile_id id) const -> std::optional<QRect>;
+  [[nodiscard]] auto image() const -> const QPixmap&
+  {
+    return m_image;
+  }
 
   /**
    * @brief Returns the width of the tile sprites in the tileset.
@@ -239,7 +192,10 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_tile_width() const noexcept -> tile_width;
+  [[nodiscard]] auto get_tile_width() const noexcept -> tile_width
+  {
+    return m_tileWidth;
+  }
 
   /**
    * @brief Returns the height of the tile sprites in the tileset.
@@ -250,7 +206,10 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_tile_height() const noexcept -> tile_height;
+  [[nodiscard]] auto get_tile_height() const noexcept -> tile_height
+  {
+    return m_tileHeight;
+  }
 
   /**
    * @brief Returns the current selection in the tileset.
@@ -260,18 +219,72 @@ class tileset final
    * @since 0.1.0
    */
   [[nodiscard]] auto get_selection() const noexcept
-      -> const std::optional<selection>&;
+      -> const std::optional<selection>&
+  {
+    return m_selection;
+  }
+
+  /**
+   * @brief Returns the total number of rows of tiles in the tileset.
+   *
+   * @return the total number of rows in the tileset.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto rows() const noexcept -> int
+  {
+    return m_numRows;
+  }
+
+  /**
+   * @brief Returns the total number of columns of tiles in the tileset.
+   *
+   * @return the total number of columns in the tileset.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto cols() const noexcept -> int
+  {
+    return m_numCols;
+  }
+
+  /**
+   * @brief Returns the tile ID of the first tile in the tileset.
+   *
+   * @details The default first tile ID is `1`.
+   *
+   * @return the ID of the first tile in the tileset.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto first_id() const noexcept -> tile_id
+  {
+    return m_firstID;
+  }
+
+  /**
+   * @brief Returns the last valid tile ID associated with the tileset.
+   *
+   * @return the last valid ID associated with the tileset.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto last_id() const noexcept -> tile_id
+  {
+    return m_lastID;
+  }
 
  private:
-  QPixmap m_sheet;
+  QPixmap m_image;
   tile_id m_firstID{1};
+  tile_id m_lastID;
   std::optional<selection> m_selection;
   std::unordered_map<tile_id, QRect> m_sourceRects;
-  int m_rows{};
-  int m_cols{};
   tile_width m_tileWidth{};
   tile_height m_tileHeight{};
-  int m_nTiles{};
+  int m_numRows{};
+  int m_numCols{};
+  int m_numTiles{};
 };
 
 static_assert(std::is_final_v<tileset>);
