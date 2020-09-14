@@ -154,9 +154,4 @@ auto layer::in_bounds(const position& pos) const noexcept -> bool
   return (row < m_tiles.size()) && (pos.col_index() < m_tiles[row].size());
 }
 
-auto layer::visible() const noexcept -> bool
-{
-  return m_visible;
-}
-
 }  // namespace tactile::core

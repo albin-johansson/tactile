@@ -197,12 +197,18 @@ class map_document final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get() noexcept -> map*;
+  [[nodiscard]] auto get() noexcept -> map*
+  {
+    return m_map.get();
+  }
 
   /**
    * @copydoc get()
    */
-  [[nodiscard]] auto get() const noexcept -> const map*;
+  [[nodiscard]] auto get() const noexcept -> const map*
+  {
+    return m_map.get();
+  }
 
  signals:
   void undo_state_updated(bool canUndo);

@@ -114,14 +114,4 @@ auto map_document::redo_text() const -> QString
   return m_commands->redoText();
 }
 
-auto map_document::get() noexcept -> map*
-{
-  return m_map.get();
-}
-
-auto map_document::get() const noexcept -> const map*
-{
-  return m_map.get();
-}
-
 }  // namespace tactile::core

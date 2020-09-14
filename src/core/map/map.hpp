@@ -245,7 +245,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto rows() const noexcept -> int;
+  [[nodiscard]] auto rows() const -> int;
 
   /**
    * @brief Returns the total number of columns in the map.
@@ -254,7 +254,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const noexcept -> int;
+  [[nodiscard]] auto cols() const -> int;
 
   /**
    * @brief Returns the pixel width of the map.
@@ -263,7 +263,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto width() const noexcept -> int;
+  [[nodiscard]] auto width() const -> int;
 
   /**
    * @brief Returns the pixel height of the map.
@@ -272,7 +272,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto height() const noexcept -> int;
+  [[nodiscard]] auto height() const -> int;
 
   /**
    * @brief Returns the current tile size.
@@ -281,12 +281,18 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_tile_size() noexcept -> tile_size&;
+  [[nodiscard]] auto get_tile_size() noexcept -> tile_size&
+  {
+    return m_tileSize;
+  }
 
   /**
    * @copydoc get_tile_size()
    */
-  [[nodiscard]] auto get_tile_size() const noexcept -> const tile_size&;
+  [[nodiscard]] auto get_tile_size() const noexcept -> const tile_size&
+  {
+    return m_tileSize;
+  }
 
   /**
    * @brief Returns an iterator to the first layer.
@@ -295,7 +301,10 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto begin() const noexcept -> const_iterator;
+  [[nodiscard]] auto begin() const noexcept -> const_iterator
+  {
+    return m_layers.begin();
+  }
 
   /**
    * @brief Returns an iterator one-past the last layer.
@@ -304,11 +313,12 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto end() const noexcept -> const_iterator;
+  [[nodiscard]] auto end() const noexcept -> const_iterator
+  {
+    return m_layers.end();
+  }
 
  private:
-  int m_nRows;
-  int m_nCols;
   layer_id m_activeLayer{0};
   std::vector<layer> m_layers;
   tile_size m_tileSize;

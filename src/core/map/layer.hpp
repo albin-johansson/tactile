@@ -36,6 +36,9 @@ namespace tactile::core {
  */
 class layer final
 {
+  using tile_row = std::vector<tile_id>;
+  using tile_matrix = std::vector<tile_row>;
+
  public:
   /**
    * @brief Creates a tile layer with the specified dimensions.
@@ -215,12 +218,12 @@ class layer final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto visible() const noexcept -> bool;
+  [[nodiscard]] auto visible() const noexcept -> bool
+  {
+    return m_visible;
+  }
 
  private:
-  using tile_row = std::vector<tile_id>;
-  using tile_matrix = std::vector<tile_row>;
-
   tile_matrix m_tiles;
   bool m_visible{true};
 };

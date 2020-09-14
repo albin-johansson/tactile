@@ -68,7 +68,10 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto has_active_map() const noexcept -> bool;
+  [[nodiscard]] auto has_active_map() const noexcept -> bool
+  {
+    return m_maps->has_active_map();
+  }
 
   /**
    * @brief Returns a pointer to the map associated with the specified ID.
@@ -79,17 +82,35 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_map(map_id id) -> map*;
+  [[nodiscard]] auto get_map(map_id id) -> map*
+  {
+    return m_maps->at(id);
+  }
 
-  [[nodiscard]] auto current_map_document() -> map_document*;
+  [[nodiscard]] auto current_map_document() -> map_document*
+  {
+    return m_maps->current_document();
+  }
 
-  [[nodiscard]] auto current_map_document() const -> const map_document*;
+  [[nodiscard]] auto current_map_document() const -> const map_document*
+  {
+    return m_maps->current_document();
+  }
 
-  [[nodiscard]] auto current_map() -> map*;
+  [[nodiscard]] auto current_map() -> map*
+  {
+    return m_maps->current_map();
+  }
 
-  [[nodiscard]] auto current_map() const -> const map*;
+  [[nodiscard]] auto current_map() const -> const map*
+  {
+    return m_maps->current_map();
+  }
 
-  [[nodiscard]] auto current_tileset() const -> const tileset*;
+  [[nodiscard]] auto current_tileset() const -> const tileset*
+  {
+    return m_tilesets->current_tileset();
+  }
 
   [[nodiscard]] auto get_tileset_manager() -> tileset_manager*
   {
@@ -206,15 +227,30 @@ class model final : public QObject
    */
   void close_map(map_id id);
 
-  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
+  void mouse_pressed(QMouseEvent* event, QPointF mapPosition)
+  {
+    m_tools.pressed(event, mapPosition);
+  }
 
-  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
+  void mouse_moved(QMouseEvent* event, QPointF mapPosition)
+  {
+    m_tools.moved(event, mapPosition);
+  }
 
-  void mouse_released(QMouseEvent* event, QPointF mapPosition);
+  void mouse_released(QMouseEvent* event, QPointF mapPosition)
+  {
+    m_tools.released(event, mapPosition);
+  }
 
-  void mouse_entered(QEvent* event);
+  void mouse_entered(QEvent* event)
+  {
+    m_tools.entered(event);
+  }
 
-  void mouse_exited(QEvent* event);
+  void mouse_exited(QEvent* event)
+  {
+    m_tools.entered(event);
+  }
 
  private:
   std::unique_ptr<map_manager> m_maps;
