@@ -14,13 +14,18 @@
 
 #pragma once
 
-#include <optional>
-#include <vector>
+#include <cassert>   // assert
+#include <concepts>  // invocable
+#include <optional>  // optional
+#include <vector>    // vector
 
 #include "position.hpp"
 #include "types.hpp"
 
 namespace tactile::core {
+
+template <typename T>
+concept LayerTileIterationCallable = std::invocable<T, tile_id>;
 
 /**
  * @class layer
@@ -54,6 +59,19 @@ class layer final
    * @since 0.1.0
    */
   layer(row_t nRows, col_t nCols);
+
+  template <LayerTileIterationCallable T>
+  void for_each(T&& callable) const
+  {
+    const auto endRow = rows();
+    const auto endCol = cols();
+    for (row_t row{0}; row < endRow; ++row) {
+      for (col_t col{0}; col < endCol; ++col) {
+        assert(in_bounds({row, col}));
+        callable(m_tiles[row.get()][col.get()]);
+      }
+    }
+  }
 
   /**
    * @brief Runs a flood fill in the tile layer.
