@@ -76,14 +76,6 @@ void window::init_connections()
             &tool_dock::eraser_enabled,
             this,
             &window::handle_eraser_enabled);
-    connect(m_toolDock,
-            &tool_dock::rectangle_enabled,
-            this,
-            &window::handle_rectangle_enabled);
-    connect(m_toolDock,
-            &tool_dock::find_same_enabled,
-            this,
-            &window::handle_find_same_enabled);
   }
 
   connect(m_toolDock,
@@ -447,16 +439,6 @@ void window::on_action_bucket_tool_triggered()
 void window::on_action_eraser_tool_triggered()
 {
   m_toolDock->get_tool_widget()->handle_enable_eraser();
-}
-
-void window::on_action_rectangle_tool_triggered()
-{
-  m_toolDock->get_tool_widget()->handle_enable_rectangle();
-}
-
-void window::on_action_find_same_tool_triggered()
-{
-  m_toolDock->get_tool_widget()->handle_enable_find_same();
 }
 
 void window::on_action_settings_triggered()

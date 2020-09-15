@@ -255,10 +255,6 @@ class window final : public QMainWindow
 
   void on_action_eraser_tool_triggered();
 
-  void on_action_rectangle_tool_triggered();
-
-  void on_action_find_same_tool_triggered();
-
   void on_action_settings_triggered();
 
   static void on_action_about_qt_triggered();

@@ -173,67 +173,6 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="rectangleButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>40</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Rectangle selection</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../tactile.qrc">
-         <normaloff>:/resources/icons/icons8/color/64/rectangle.png</normaloff>:/resources/icons/icons8/color/64/rectangle.png</iconset>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-       <property name="checked">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="findSameButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>40</width>
-         <height>35</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string>Find same</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../tactile.qrc">
-         <normaloff>:/resources/icons/icons8/color/64/search.png</normaloff>:/resources/icons/icons8/color/64/search.png</iconset>
-       </property>
-       <property name="checkable">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>

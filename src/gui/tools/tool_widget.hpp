@@ -36,20 +36,12 @@ class tool_widget final : public QWidget
 
   void eraser_enabled();
 
-  void rectangle_enabled();
-
-  void find_same_enabled();
-
  public slots:
   void handle_enable_stamp();
 
   void handle_enable_bucket();
 
   void handle_enable_eraser();
-
-  void handle_enable_rectangle();
-
-  void handle_enable_find_same();
 
  private:
   owner<Ui::tool_widget*> m_ui{};

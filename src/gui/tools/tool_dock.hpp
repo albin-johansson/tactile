@@ -25,10 +25,6 @@ class tool_dock final : public QDockWidget
 
   void eraser_enabled();
 
-  void rectangle_enabled();
-
-  void find_same_enabled();
-
  private:
   tool_widget* m_widget{};
 };

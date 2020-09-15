@@ -19,14 +19,6 @@ tool_dock::tool_dock(QWidget* parent)
       m_widget, &tool_widget::bucket_enabled, this, &tool_dock::bucket_enabled);
   connect(
       m_widget, &tool_widget::eraser_enabled, this, &tool_dock::eraser_enabled);
-  connect(m_widget,
-          &tool_widget::rectangle_enabled,
-          this,
-          &tool_dock::rectangle_enabled);
-  connect(m_widget,
-          &tool_widget::find_same_enabled,
-          this,
-          &tool_dock::find_same_enabled);
 }
 
 }  // namespace tactile::gui

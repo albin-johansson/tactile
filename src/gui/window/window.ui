@@ -122,8 +122,6 @@
     <addaction name="action_stamp_tool"/>
     <addaction name="action_bucket_tool"/>
     <addaction name="action_eraser_tool"/>
-    <addaction name="action_rectangle_tool"/>
-    <addaction name="action_find_same_tool"/>
     <addaction name="separator"/>
     <addaction name="action_add_tileset"/>
    </widget>
