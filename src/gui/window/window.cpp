@@ -228,7 +228,7 @@ void window::set_actions_enabled(bool enabled)
   m_ui->action_remove_column->setEnabled(enabled);
   m_ui->action_resize_map->setEnabled(enabled);
   m_ui->action_stamp_tool->setEnabled(enabled);
-  m_ui->action_eraser_tool->setEnabled(enabled);
+  m_ui->action_bucket_tool->setEnabled(enabled);
   m_ui->action_eraser_tool->setEnabled(enabled);
 
   // View
