@@ -134,6 +134,11 @@ auto map_editor::active_tab_id() const -> std::optional<map_id>
   return m_mapTabWidget->active_tab_id();
 }
 
+auto map_editor::active_tab_name() const -> std::optional<QString>
+{
+  return m_mapTabWidget->active_tab_name();
+}
+
 auto map_editor::num_tabs() const -> int
 {
   return m_mapTabWidget->count();

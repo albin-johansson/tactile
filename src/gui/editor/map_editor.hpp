@@ -73,6 +73,8 @@ class map_editor final : public QWidget
 
   [[nodiscard]] auto active_tab_id() const -> std::optional<map_id>;
 
+  [[nodiscard]] auto active_tab_name() const -> std::optional<QString>;
+
   [[nodiscard]] auto num_tabs() const -> int;
 
  public slots:

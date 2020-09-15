@@ -110,6 +110,8 @@ class map_tab_widget final : public QTabWidget
    */
   [[nodiscard]] auto id_from_index(int index) const -> std::optional<map_id>;
 
+  [[nodiscard]] auto active_tab_name() const -> std::optional<QString>;
+
  signals:
   void request_remove_tab(map_id id);
 

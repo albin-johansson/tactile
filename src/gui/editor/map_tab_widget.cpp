@@ -136,6 +136,16 @@ auto map_tab_widget::id_from_index(int index) const -> std::optional<map_id>
   }
 }
 
+auto map_tab_widget::active_tab_name() const -> std::optional<QString>
+{
+  const auto index = currentIndex();
+  if (index != -1) {
+    return tabText(index);
+  } else {
+    return std::nullopt;
+  }
+}
+
 auto map_tab_widget::current_view() -> map_view*
 {
   return get_view(currentIndex());
