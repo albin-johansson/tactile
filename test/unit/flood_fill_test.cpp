@@ -6,11 +6,11 @@
 using namespace tactile;
 using namespace tactile::core;
 
-TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
+TEST_CASE("Correctness of flood fill algorithm", "[flood_fill]")
 {
-  layer layer{5, 5};
+  layer layer{5_row, 5_col};
   for (int i = 0; i < 5; ++i) {
-    layer.set_tile({row_t{i}, col_t{i}}, tile_id{1});
+    layer.set_tile({row_t{i}, col_t{i}}, 1_t);
   }
 
   /*
@@ -22,7 +22,7 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
    */
 
   const tile_id id{2};
-  layer.flood({row_t{1}, col_t{0}}, tile_id{0}, id);
+  layer.flood({1_row, 0_col}, 0_t, id);
 
   /*
    Expected:
@@ -78,9 +78,9 @@ TEST_CASE("Correctness of flood fill algorithm", "[FloodFill]")
   }
 }
 
-TEST_CASE("Out-of-bounds position", "[FloodFill]")
+TEST_CASE("Out-of-bounds position", "[flood_fill]")
 {
-  layer layer{5, 5};
+  layer layer{5_row, 5_col};
   CHECK_NOTHROW(layer.flood({5_row, 5_col}, empty, empty));
   CHECK_NOTHROW(layer.flood({6_row, 6_col}, empty, empty));
   CHECK_NOTHROW(flood_fill(layer, {6_row, 6_col}, empty, empty));
