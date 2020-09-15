@@ -80,7 +80,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>23</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="font">
@@ -235,6 +235,9 @@
    </property>
   </action>
   <action name="action_save">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/save.png</normaloff>:/resources/icons/icons8/color/64/save.png</iconset>
@@ -253,6 +256,9 @@
    </property>
   </action>
   <action name="action_save_as">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/save-as.png</normaloff>:/resources/icons/icons8/color/64/save-as.png</iconset>
@@ -271,6 +277,9 @@
    </property>
   </action>
   <action name="action_rename">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/rename.png</normaloff>:/resources/icons/icons8/color/64/rename.png</iconset>
@@ -361,6 +370,9 @@
    </property>
   </action>
   <action name="action_add_row">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/add-row.png</normaloff>:/resources/icons/icons8/color/64/add-row.png</iconset>
@@ -379,6 +391,9 @@
    </property>
   </action>
   <action name="action_add_column">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/add-column.png</normaloff>:/resources/icons/icons8/color/64/add-column.png</iconset>
@@ -397,6 +412,9 @@
    </property>
   </action>
   <action name="action_remove_row">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/remove-row.png</normaloff>:/resources/icons/icons8/color/64/remove-row.png</iconset>
@@ -415,6 +433,9 @@
    </property>
   </action>
   <action name="action_remove_column">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/remove-column.png</normaloff>:/resources/icons/icons8/color/64/remove-column.png</iconset>
@@ -433,6 +454,9 @@
    </property>
   </action>
   <action name="action_center_camera">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/center-camera.png</normaloff>:/resources/icons/icons8/color/64/center-camera.png</iconset>
@@ -451,6 +475,9 @@
    </property>
   </action>
   <action name="action_toggle_grid">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/grid.png</normaloff>:/resources/icons/icons8/color/64/grid.png</iconset>
@@ -469,6 +496,9 @@
    </property>
   </action>
   <action name="action_zoom_in">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/zoom-in.png</normaloff>:/resources/icons/icons8/color/64/zoom-in.png</iconset>
@@ -487,6 +517,9 @@
    </property>
   </action>
   <action name="action_zoom_out">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/zoom-out.png</normaloff>:/resources/icons/icons8/color/64/zoom-out.png</iconset>
@@ -515,6 +548,9 @@
    </property>
   </action>
   <action name="action_pan_up">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/arrow-up.png</normaloff>:/resources/icons/icons8/color/64/arrow-up.png</iconset>
@@ -533,6 +569,9 @@
    </property>
   </action>
   <action name="action_pan_right">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/arrow-right.png</normaloff>:/resources/icons/icons8/color/64/arrow-right.png</iconset>
@@ -551,6 +590,9 @@
    </property>
   </action>
   <action name="action_pan_left">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/arrow-left.png</normaloff>:/resources/icons/icons8/color/64/arrow-left.png</iconset>
@@ -569,6 +611,9 @@
    </property>
   </action>
   <action name="action_pan_down">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/arrow-down.png</normaloff>:/resources/icons/icons8/color/64/arrow-down.png</iconset>
@@ -605,6 +650,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/stamp.png</normaloff>:/resources/icons/icons8/color/64/stamp.png</iconset>
@@ -626,6 +674,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/bucket.png</normaloff>:/resources/icons/icons8/color/64/bucket.png</iconset>
@@ -646,6 +697,9 @@
   <action name="action_eraser_tool">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
@@ -725,6 +779,9 @@
    </property>
   </action>
   <action name="action_resize_map">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/resize.png</normaloff>:/resources/icons/icons8/color/64/resize.png</iconset>
@@ -740,6 +797,9 @@
    </property>
   </action>
   <action name="action_reset_zoom">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/reset_zoom.png</normaloff>:/resources/icons/icons8/color/64/reset_zoom.png</iconset>
@@ -755,6 +815,9 @@
    </property>
   </action>
   <action name="action_close_map">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Close map</string>
    </property>

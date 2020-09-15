@@ -54,14 +54,14 @@ class window final : public QMainWindow
    *
    * @since 0.1.0
    */
-  void enable_startup_view();
+  void enter_no_content_view();
 
   /**
    * @brief Enables the main editor view.
    *
    * @since 0.1.0
    */
-  void enable_editor_view();
+  void enter_content_view();
 
  signals:
   void request_new_map();
@@ -178,6 +178,8 @@ class window final : public QMainWindow
   void show_all_docks();
 
   void center_map();
+
+  void set_actions_enabled(bool enabled);
 
   /**
    * @brief Indicates whether or not the editor view is enabled.

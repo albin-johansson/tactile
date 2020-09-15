@@ -34,12 +34,12 @@ tool_widget::~tool_widget() noexcept
 
 void tool_widget::enable_tools()
 {
-  set_tools_disabled(false);
+  set_tools_enabled(true);
 }
 
 void tool_widget::disable_tools()
 {
-  set_tools_disabled(true);
+  set_tools_enabled(false);
 }
 
 void tool_widget::handle_enable_stamp()
@@ -60,11 +60,11 @@ void tool_widget::handle_enable_eraser()
   emit eraser_enabled();
 }
 
-void tool_widget::set_tools_disabled(bool disabled)
+void tool_widget::set_tools_enabled(bool enabled)
 {
-  m_ui->stampButton->setDisabled(disabled);
-  m_ui->bucketButton->setDisabled(disabled);
-  m_ui->eraserButton->setDisabled(disabled);
+  m_ui->stampButton->setEnabled(enabled);
+  m_ui->bucketButton->setEnabled(enabled);
+  m_ui->eraserButton->setEnabled(enabled);
 }
 
 }  // namespace tactile::gui

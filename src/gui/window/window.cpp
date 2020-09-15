@@ -33,7 +33,7 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 
   init_connections();
   init_layout();
-  enable_startup_view();  // TODO option to reopen last map
+  enter_no_content_view();  // TODO option to reopen last map
 }
 
 window::~window() noexcept
@@ -120,19 +120,21 @@ void window::init_connections()
           &window::tileset_selection_changed);
 }
 
-void window::enable_startup_view()
+void window::enter_no_content_view()
 {
   m_editor->enable_startup_view();
   m_toolDock->get_tool_widget()->disable_tools();
+
+  set_actions_enabled(false);
   hide_all_docks();
 }
 
-void window::enable_editor_view()
+void window::enter_content_view()
 {
   m_editor->enable_editor_view();
-
-  // FIXME only enable relevant tools
   m_toolDock->get_tool_widget()->enable_tools();
+
+  set_actions_enabled(true);
 }
 
 void window::init_layout()
@@ -211,6 +213,36 @@ void window::center_map()
   handle_draw();
 }
 
+void window::set_actions_enabled(bool enabled)
+{
+  // File
+  m_ui->action_close_map->setEnabled(enabled);
+  m_ui->action_save->setEnabled(enabled);
+  m_ui->action_save_as->setEnabled(enabled);
+  m_ui->action_rename->setEnabled(enabled);
+
+  // Edit
+  m_ui->action_add_column->setEnabled(enabled);
+  m_ui->action_add_row->setEnabled(enabled);
+  m_ui->action_remove_row->setEnabled(enabled);
+  m_ui->action_remove_column->setEnabled(enabled);
+  m_ui->action_resize_map->setEnabled(enabled);
+  m_ui->action_stamp_tool->setEnabled(enabled);
+  m_ui->action_eraser_tool->setEnabled(enabled);
+  m_ui->action_eraser_tool->setEnabled(enabled);
+
+  // View
+  m_ui->action_center_camera->setEnabled(enabled);
+  m_ui->action_toggle_grid->setEnabled(enabled);
+  m_ui->action_zoom_in->setEnabled(enabled);
+  m_ui->action_zoom_out->setEnabled(enabled);
+  m_ui->action_reset_zoom->setEnabled(enabled);
+  m_ui->action_pan_up->setEnabled(enabled);
+  m_ui->action_pan_down->setEnabled(enabled);
+  m_ui->action_pan_right->setEnabled(enabled);
+  m_ui->action_pan_left->setEnabled(enabled);
+}
+
 void window::handle_move_camera(int dx, int dy)
 {
   m_editor->move_map(dx, dy);
@@ -240,7 +272,7 @@ void window::handle_new_map(not_null<core::map*> map,
       map, tilesets, "map", id);  // TODO pass core and map_id?
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
-    enable_editor_view();
+    enter_content_view();
     show_all_docks();  // TODO just reopen docks that were visible
     center_map();
   }
@@ -260,7 +292,7 @@ void window::handle_remove_tab(map_id tabID)
   // The tab isn't actually removed yet, this checks if there will be
   // no open tabs
   if (m_editor->num_tabs() == 1) {
-    enable_startup_view();
+    enter_no_content_view();
   }
 }
 
@@ -290,7 +322,7 @@ void window::on_action_close_map_triggered()
     emit request_close_map(*id);
 
     if (m_editor->num_tabs() == 0) {
-      enable_startup_view();
+      enter_no_content_view();
     }
   }
 }

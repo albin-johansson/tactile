@@ -47,7 +47,7 @@ class tool_widget final : public QWidget
   owner<Ui::tool_widget*> m_ui{};
   QButtonGroup* m_group{};
 
-  void set_tools_disabled(bool disabled);
+  void set_tools_enabled(bool enabled);
 };
 
 }  // namespace tactile::gui
