@@ -95,6 +95,9 @@ set(TACTILE_SOURCE_FILES
         gui/action/resize_map/resize_dialog.cpp
         gui/action/resize_map/resize_dialog.ui
 
+        gui/action/save/save_as_dialog.cpp
+        gui/action/save/save_as_dialog.hpp
+
         gui/about/about.ui
 
         gui/toolbar/dynamic_tool_bar_widget.cpp
@@ -213,6 +216,7 @@ target_include_directories(libTactile
         PUBLIC gui/settings
         PUBLIC gui/action
         PUBLIC gui/action/resize_map
+        PUBLIC gui/action/save
         PUBLIC ${Boost_INCLUDE_DIRS})
 
 target_link_libraries(libTactile
