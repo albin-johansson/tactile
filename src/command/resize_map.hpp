@@ -25,17 +25,17 @@ class resize_map final : public abstract_command
    *
    * @since 0.1.0
    */
-  resize_map(not_null<core::map*> map, int nRows, int nCols);
+  resize_map(not_null<core::map*> map, core::row_t nRows, core::col_t nCols);
 
   void undo() override;
 
   void redo() override;
 
  private:
-  int m_rows;
-  int m_cols;
-  int m_oldRows{1};
-  int m_oldCols{1};
+  core::row_t m_rows;
+  core::col_t m_cols;
+  core::row_t m_oldRows{1};
+  core::col_t m_oldCols{1};
 };
 
 }  // namespace tactile::cmd

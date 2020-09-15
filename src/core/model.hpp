@@ -59,7 +59,7 @@ class model final : public QObject
 
   void update_tileset_selection(position topLeft, position bottomRight);
 
-  void resize_map(int nRows, int nCols);
+  void resize_map(row_t nRows, col_t nCols);
 
   /**
    * @brief Indicates whether or not there is an active map.

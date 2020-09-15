@@ -5,6 +5,8 @@
 
 #include <optional>
 
+#include "position.hpp"
+
 namespace Ui {
 class resize_dialog;
 }
@@ -26,7 +28,7 @@ namespace tactile::gui {
  * @since 0.1.0
  */
 template <typename T>
-concept ResizeDialogCallback = std::invocable<T, int, int>;
+concept ResizeDialogCallback = std::invocable<T, core::row_t, core::col_t>;
 
 /**
  * @class resize_dialog
@@ -82,8 +84,8 @@ class resize_dialog final : public QDialog
  private:
   Ui::resize_dialog* m_ui;
   QIntValidator* m_validator;
-  std::optional<int> m_chosenWidth;
-  std::optional<int> m_chosenHeight;
+  std::optional<core::col_t> m_chosenWidth;
+  std::optional<core::row_t> m_chosenHeight;
 
   /**
    * @brief Connects a line edit widget to the dialog.

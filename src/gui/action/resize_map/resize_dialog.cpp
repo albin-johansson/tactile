@@ -7,6 +7,8 @@
 
 #include "ui_resize_dialog.h"
 
+using namespace tactile::core;
+
 namespace tactile::gui {
 
 resize_dialog::resize_dialog(QWidget* parent)
@@ -47,8 +49,10 @@ void resize_dialog::validate_input()
   ok_button()->setEnabled(widthState == QValidator::Acceptable &&
                           heightState == QValidator::Acceptable);
   if (ok_button()->isEnabled()) {
-    m_chosenWidth = std::stoi(m_ui->widthEdit->displayText().toStdString());
-    m_chosenHeight = std::stoi(m_ui->heightEdit->displayText().toStdString());
+    m_chosenWidth =
+        col_t{std::stoi(m_ui->widthEdit->displayText().toStdString())};
+    m_chosenHeight =
+        row_t{std::stoi(m_ui->heightEdit->displayText().toStdString())};
   }
 }
 

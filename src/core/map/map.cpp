@@ -8,10 +8,10 @@
 
 namespace tactile::core {
 
-map::map(int nRows, int nCols)
+map::map(row_t nRows, col_t nCols)
 {
   m_layers.reserve(5);
-  m_layers.emplace_back(at_least(nRows, 1), at_least(nCols, 1));
+  m_layers.emplace_back(at_least(nRows, 1_row), at_least(nCols, 1_col));
 }
 
 void map::flood(const position& pos, tile_id target, tile_id replacement)
@@ -59,7 +59,7 @@ void map::add_col(tile_id id)
 
 void map::remove_row() noexcept
 {
-  if (rows() == 1) {
+  if (rows() == 1_row) {
     return;
   }
 
@@ -70,7 +70,7 @@ void map::remove_row() noexcept
 
 void map::remove_col() noexcept
 {
-  if (cols() == 1) {
+  if (cols() == 1_col) {
     return;
   }
 
@@ -79,9 +79,9 @@ void map::remove_col() noexcept
   }
 }
 
-void map::set_rows(int nRows)
+void map::set_rows(row_t nRows)
 {
-  nRows = at_least(nRows, 1);
+  nRows = at_least(nRows, 1_row);
 
   if (nRows == rows()) {
     return;
@@ -92,9 +92,9 @@ void map::set_rows(int nRows)
   }
 }
 
-void map::set_cols(int nCols)
+void map::set_cols(col_t nCols)
 {
-  nCols = at_least(nCols, 1);
+  nCols = at_least(nCols, 1_col);
 
   if (nCols == cols()) {
     return;
@@ -143,24 +143,24 @@ auto map::in_bounds(const position& pos) const -> bool
   return (row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol);
 }
 
-auto map::rows() const -> int
+auto map::rows() const -> row_t
 {
   return current_layer().rows();
 }
 
-auto map::cols() const -> int
+auto map::cols() const -> col_t
 {
   return current_layer().cols();
 }
 
 auto map::width() const -> int
 {
-  return cols() * m_tileSize.get();
+  return cols().get() * m_tileSize.get();
 }
 
 auto map::height() const -> int
 {
-  return rows() * m_tileSize.get();
+  return rows().get() * m_tileSize.get();
 }
 
 auto map::current_layer() -> layer&

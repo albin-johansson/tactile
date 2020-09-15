@@ -12,7 +12,9 @@
 
 namespace tactile {
 
+using core::col_t;
 using core::model;
+using core::row_t;
 
 app::app(int argc, char** argv) : QApplication{argc, argv}, m_model{new model{}}
 {
@@ -34,7 +36,7 @@ void app::handle_resize_map()
 {
   if (m_model->has_active_map()) {
     gui::resize_dialog::spawn(
-        [this](int rows, int cols) { m_model->resize_map(rows, cols); });
+        [this](row_t rows, col_t cols) { m_model->resize_map(rows, cols); });
   }
 }
 

@@ -9,24 +9,24 @@
 namespace tactile::core {
 namespace {
 
-[[nodiscard]] auto create_row(int nCols, tile_id value = empty)
+[[nodiscard]] auto create_row(col_t nCols, tile_id value = empty)
     -> std::vector<tile_id>
 {
   std::vector<tile_id> row;
-  row.reserve(nCols);
-  row.assign(nCols, value);
+  row.reserve(nCols.get());
+  row.assign(nCols.get(), value);
   return row;
 }
 
 }  // namespace
 
-layer::layer(int nRows, int nCols)
+layer::layer(row_t nRows, col_t nCols)
 {
-  nRows = at_least(nRows, 1);
-  nCols = at_least(nCols, 1);
+  nRows = at_least(nRows, 1_row);
+  nCols = at_least(nCols, 1_col);
 
-  m_tiles.reserve(nRows);
-  m_tiles.assign(nRows, create_row(nCols));
+  m_tiles.reserve(nRows.get());
+  m_tiles.assign(nRows.get(), create_row(nCols));
 
   assert(rows() == nRows);
   assert(cols() == nCols);
@@ -39,8 +39,8 @@ void layer::flood(const position& pos, tile_id target, tile_id replacement)
 
 void layer::remove_all(tile_id id)
 {
-  const auto nRows = rows();
-  const auto nCols = cols();
+  const auto nRows = rows().get();
+  const auto nCols = cols().get();
   for (auto r = 0; r < nRows; ++r) {
     for (auto c = 0; c < nCols; ++c) {
       if (m_tiles[r][c] == id) {
@@ -78,9 +78,9 @@ void layer::remove_col() noexcept
   }
 }
 
-void layer::set_rows(int nRows)
+void layer::set_rows(row_t nRows)
 {
-  assert(nRows >= 1);
+  assert(nRows >= 1_row);
 
   const auto current = rows();
 
@@ -88,7 +88,7 @@ void layer::set_rows(int nRows)
     return;
   }
 
-  const auto diff = std::abs(current - nRows);
+  const auto diff = std::abs(current.get() - nRows.get());
 
   if (current < nRows) {
     do_n(diff, [this] { add_row(empty); });
@@ -97,9 +97,9 @@ void layer::set_rows(int nRows)
   }
 }
 
-void layer::set_cols(int nCols)
+void layer::set_cols(col_t nCols)
 {
-  assert(nCols >= 1);
+  assert(nCols >= 1_col);
 
   const auto current = cols();
 
@@ -107,7 +107,7 @@ void layer::set_cols(int nCols)
     return;
   }
 
-  const auto diff = std::abs(current - nCols);
+  const auto diff = std::abs(current.get() - nCols.get());
 
   if (current < nCols) {
     do_n(diff, [this] { add_col(empty); });
@@ -128,15 +128,15 @@ void layer::set_visible(bool visible) noexcept
   m_visible = visible;
 }
 
-auto layer::rows() const noexcept -> int
+auto layer::rows() const noexcept -> row_t
 {
-  return static_cast<int>(m_tiles.size());
+  return row_t{static_cast<int>(m_tiles.size())};
 }
 
-auto layer::cols() const noexcept -> int
+auto layer::cols() const noexcept -> col_t
 {
   assert(!m_tiles.empty());
-  return static_cast<int>(m_tiles[0].size());
+  return col_t{static_cast<int>(m_tiles[0].size())};
 }
 
 auto layer::tile_at(const position& pos) const -> std::optional<tile_id>

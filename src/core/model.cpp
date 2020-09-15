@@ -48,7 +48,7 @@ void model::redo()
   }
 }
 
-void model::resize_map(int nRows, int nCols)
+void model::resize_map(row_t nRows, col_t nCols)
 {
   if (auto* document = current_map_document()) {
     document->resize(nRows, nCols);

@@ -53,7 +53,7 @@ class map final
    *
    * @since 0.1.0
    */
-  map(int nRows, int nCols);
+  map(row_t nRows, col_t nCols);
 
   /**
    * @brief Performs a flood-fill at the specified position.
@@ -148,7 +148,7 @@ class map final
    *
    * @since 0.1.0
    */
-  void set_rows(int nRows);
+  void set_rows(row_t nRows);
 
   /**
    * @brief Sets the total number of columns in the map.
@@ -158,7 +158,7 @@ class map final
    *
    * @since 0.1.0
    */
-  void set_cols(int nCols);
+  void set_cols(col_t nCols);
 
   /**
    * @brief Sets the visibility of a tile layer.
@@ -245,7 +245,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto rows() const -> int;
+  [[nodiscard]] auto rows() const -> row_t;
 
   /**
    * @brief Returns the total number of columns in the map.
@@ -254,7 +254,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const -> int;
+  [[nodiscard]] auto cols() const -> col_t;
 
   /**
    * @brief Returns the pixel width of the map.

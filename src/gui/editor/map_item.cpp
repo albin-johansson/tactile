@@ -15,18 +15,18 @@ using namespace core;
 
 namespace {
 
-auto get_end_row(const QRectF& exposed, int nRows, int tileSize) -> row_t
+auto get_end_row(const QRectF& exposed, row_t nRows, int tileSize) -> row_t
 {
   const auto endY = static_cast<int>(exposed.y() + exposed.height());
   const auto r = (endY / tileSize) + 1;
-  return row_t{std::min(nRows, r)};
+  return row_t{std::min(nRows.get(), r)};
 }
 
-auto get_end_col(const QRectF& exposed, int nCols, int tileSize) -> col_t
+auto get_end_col(const QRectF& exposed, col_t nCols, int tileSize) -> col_t
 {
   const auto endX = static_cast<int>(exposed.x() + exposed.width());
   const auto c = (endX / tileSize) + 1;
-  return col_t{std::min(nCols, c)};
+  return col_t{std::min(nCols.get(), c)};
 }
 
 void draw_tile_background(QPainter& painter,

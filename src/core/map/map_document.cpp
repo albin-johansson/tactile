@@ -13,7 +13,7 @@ namespace tactile::core {
 
 map_document::map_document(QObject* parent)
     : QObject{parent},
-      m_map{std::make_unique<map>(5, 5)},
+      m_map{std::make_unique<map>(5_row, 5_col)},
       m_commands{new command_stack{this}}
 {
   m_commands->setUndoLimit(100);
@@ -89,7 +89,7 @@ void map_document::remove_column()
   m_commands->push<cmd::remove_col>(m_map.get());
 }
 
-void map_document::resize(int nRows, int nCols)
+void map_document::resize(row_t nRows, col_t nCols)
 {
   m_commands->push<cmd::resize_map>(m_map.get(), nRows, nCols);
 }

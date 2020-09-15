@@ -53,7 +53,7 @@ class layer final
    *
    * @since 0.1.0
    */
-  layer(int nRows, int nCols);
+  layer(row_t nRows, col_t nCols);
 
   /**
    * @brief Runs a flood fill in the tile layer.
@@ -124,7 +124,7 @@ class layer final
    *
    * @since 0.1.0
    */
-  void set_rows(int nRows);
+  void set_rows(row_t nRows);
 
   /**
    * @brief Sets the total number of columns in the layer.
@@ -135,7 +135,7 @@ class layer final
    *
    * @since 0.1.0
    */
-  void set_cols(int nCols);
+  void set_cols(col_t nCols);
 
   /**
    * @brief Sets the tile ID of a tile in the tile layer.
@@ -168,7 +168,7 @@ class layer final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto rows() const noexcept -> int;
+  [[nodiscard]] auto rows() const noexcept -> row_t;
 
   /**
    * @brief Returns the number of columns in the tile layer.
@@ -179,7 +179,7 @@ class layer final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const noexcept -> int;
+  [[nodiscard]] auto cols() const noexcept -> col_t;
 
   /**
    * @brief Returns the ID of the tile at the specified position.

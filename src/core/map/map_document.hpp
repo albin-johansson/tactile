@@ -149,7 +149,7 @@ class map_document final : public QObject
    *
    * @since 0.1.0
    */
-  void resize(int nRows, int nCols);
+  void resize(row_t nRows, col_t nCols);
 
   /**
    * @brief Indicates whether or not there is an undoable command.
