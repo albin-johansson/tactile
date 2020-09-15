@@ -25,6 +25,8 @@ namespace tactile::core {
 class tileset_manager final
 {
  public:
+  using const_iterator = vector_map<tileset_id, tileset>::const_iterator;
+
   tileset_manager();
 
   /**
@@ -159,6 +161,16 @@ class tileset_manager final
   [[nodiscard]] auto current_tileset_id() const -> std::optional<tileset_id>;
 
   [[nodiscard]] auto contains(tile_id id) const -> bool;
+
+  [[nodiscard]] auto begin() const noexcept -> const_iterator
+  {
+    return m_tilesets.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept -> const_iterator
+  {
+    return m_tilesets.end();
+  }
 
  private:
   std::optional<tileset_id> m_activeID;
