@@ -22,7 +22,7 @@ app::app(int argc, char** argv) : QApplication{argc, argv}, m_model{new model{}}
 
   m_window = std::make_unique<gui::window>();
 
-  app_connections{*this};
+  app_connections{this};
 
   m_window->show();
 }

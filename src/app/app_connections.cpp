@@ -20,9 +20,9 @@ void connect(Sender&& sender, Signal&& signal, Receiver&& receiver, Slot&& slot)
 
 }  // namespace
 
-app_connections::app_connections(app& app)
-    : m_core{app.model_ptr()},
-      m_window{app.window_ptr()}
+app_connections::app_connections(app* app)
+    : m_core{app->model_ptr()},
+      m_window{app->window_ptr()}
 {
   connect(m_core, &model::redraw, m_window, &window::handle_draw);
   connect(m_core,
@@ -56,7 +56,7 @@ app_connections::app_connections(app& app)
   connect(m_window, &window::select_tool, m_core, &model::select_tool);
 
   connect(
-      m_window, &window::request_new_tileset, &app, &app::handle_new_tileset);
+      m_window, &window::request_new_tileset, app, &app::handle_new_tileset);
 
   connect(m_window, &window::removed_tileset, m_core, &model::remove_tileset);
 
@@ -64,11 +64,11 @@ app_connections::app_connections(app& app)
 
   connect(m_window,
           &window::tileset_selection_changed,
-          &app,
+          app,
           &app::tileset_selection_changed);
 }
 
-void app_connections::init_command_connections(app& app) noexcept
+void app_connections::init_command_connections(app* app) noexcept
 {
   connect(m_core,
           &model::undo_state_updated,
@@ -98,20 +98,20 @@ void app_connections::init_command_connections(app& app) noexcept
   connect(m_window, &window::request_remove_row, m_core, &model::remove_row);
   connect(m_window, &window::request_remove_col, m_core, &model::remove_col);
 
-  connect(m_window, &window::request_resize_map, &app, &app::handle_resize_map);
+  connect(m_window, &window::request_resize_map, app, &app::handle_resize_map);
 }
 
-void app_connections::init_camera_connections(app& app) noexcept
+void app_connections::init_camera_connections(app* app) noexcept
 {
-  connect(m_window, &window::request_pan_up, &app, &app::handle_pan_up);
-  connect(m_window, &window::request_pan_down, &app, &app::handle_pan_down);
-  connect(m_window, &window::request_pan_right, &app, &app::handle_pan_right);
-  connect(m_window, &window::request_pan_left, &app, &app::handle_pan_left);
+  connect(m_window, &window::request_pan_up, app, &app::handle_pan_up);
+  connect(m_window, &window::request_pan_down, app, &app::handle_pan_down);
+  connect(m_window, &window::request_pan_right, app, &app::handle_pan_right);
+  connect(m_window, &window::request_pan_left, app, &app::handle_pan_left);
 }
 
-void app_connections::init_map_connections(app& app) noexcept
+void app_connections::init_map_connections(app* app) noexcept
 {
-  connect(m_window, &window::request_new_map, &app, &app::handle_new_map);
+  connect(m_window, &window::request_new_map, app, &app::handle_new_map);
 
   connect(m_window, &window::request_close_map, m_core, &model::close_map);
 
