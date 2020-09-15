@@ -180,6 +180,12 @@ set(GSL_SOURCES
         ${LIBRARY_DIR}/microsoft/gsl/string_span)
 add_header_only_lib(libGSL ${LIBRARY_DIR}/microsoft ${GSL_SOURCES})
 
+set(PUGIXML_SOURCES
+        ${LIBRARY_DIR}/zeux/pugixml/pugixml.hpp
+        ${LIBRARY_DIR}/zeux/pugixml/pugixml.cpp
+        ${LIBRARY_DIR}/zeux/pugixml/pugiconfig.cpp)
+add_header_only_lib(libPugiXML ${LIBRARY_DIR}/zeux ${PUGIXML_SOURCES})
+
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
         PUBLIC app
@@ -213,7 +219,8 @@ target_link_libraries(libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
         PUBLIC Qt5::Gui
-        PUBLIC libGSL)
+        PUBLIC libGSL
+        PUBLIC libPugiXML)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(libTactile PRIVATE
