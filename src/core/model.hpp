@@ -249,7 +249,7 @@ class model final : public QObject
 
   void mouse_exited(QEvent* event)
   {
-    m_tools.entered(event);
+    m_tools.exited(event);
   }
 
  private:
