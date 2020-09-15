@@ -189,12 +189,12 @@ void window::handle_redo_state_update(bool canRedo)
 
 void window::handle_undo_text_update(const QString& text)
 {
-  m_ui->action_undo->setText("Undo " + text);
+  m_ui->action_undo->setText(QStringLiteral(u"Undo ") + text);
 }
 
 void window::handle_redo_text_update(const QString& text)
 {
-  m_ui->action_redo->setText("Redo " + text);
+  m_ui->action_redo->setText(QStringLiteral(u"Redo ") + text);
 }
 
 void window::handle_add_tileset(const QImage& image,
