@@ -87,31 +87,67 @@ class model final : public QObject
     return m_maps->at(id);
   }
 
+  /**
+   * @brief Returns a pointer to the current map document.
+   *
+   * @return a pointer to the current map document; `nullptr` if there is no
+   * active map document.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto current_map_document() -> map_document*
   {
     return m_maps->current_document();
   }
 
+  /**
+   * @copydoc current_map_document()
+   */
   [[nodiscard]] auto current_map_document() const -> const map_document*
   {
     return m_maps->current_document();
   }
 
+  /**
+   * @brief Returns a pointer to the current map.
+   *
+   * @return a pointer to the current map; `nullptr` if there is no active map.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto current_map() -> map*
   {
     return m_maps->current_map();
   }
 
+  /**
+   * @copydoc current_document()
+   */
   [[nodiscard]] auto current_map() const -> const map*
   {
     return m_maps->current_map();
   }
 
+  /**
+   * @brief Returns a pointer to the currently active tileset.
+   *
+   * @return a pointer to the currently active tileset; `nullptr` if there is
+   * no active tileset.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto current_tileset() const -> const tileset*
   {
     return m_tilesets->current_tileset();
   }
 
+  /**
+   * @brief Returns a pointer to the tileset manager.
+   *
+   * @return a pointer to the tileset manager, won't be null.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto get_tileset_manager() -> tileset_manager*
   {
     return m_tilesets.get();
