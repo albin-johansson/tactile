@@ -27,10 +27,10 @@ void iterate_tileset_selection(T&& callback,
     callback(tileset, origin, topLeft);
   } else {
     const auto diff = bottomRight - topLeft;
-    const auto nRows = 1_row + diff.row();
-    const auto nCols = 1_col + diff.col();
-    for (row_t row{0}; row < nRows; ++row) {
-      for (col_t col{0}; col < nCols; ++col) {
+    const auto endRow = 1_row + diff.row();
+    const auto endCol = 1_col + diff.col();
+    for (row_t row{0}; row < endRow; ++row) {
+      for (col_t col{0}; col < endCol; ++col) {
         const auto tilePos = origin.offset_by(row, col);
         const auto tilesetPos = topLeft.offset_by(row, col);
         callback(tileset, tilePos, tilesetPos);
