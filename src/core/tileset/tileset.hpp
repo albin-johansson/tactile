@@ -231,7 +231,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto rows() const noexcept -> int
+  [[nodiscard]] auto rows() const noexcept -> row_t
   {
     return m_numRows;
   }
@@ -243,7 +243,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const noexcept -> int
+  [[nodiscard]] auto cols() const noexcept -> col_t
   {
     return m_numCols;
   }
@@ -274,6 +274,18 @@ class tileset final
     return m_lastID;
   }
 
+  /**
+   * @brief Returns the amount of tiles in the tileset.
+   *
+   * @return the amount of tiles in the tileset.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto tile_count() const noexcept -> int
+  {
+    return m_numTiles;
+  }
+
  private:
   QPixmap m_image;
   tile_id m_firstID{1};
@@ -282,8 +294,8 @@ class tileset final
   std::unordered_map<tile_id, QRect> m_sourceRects;
   tile_width m_tileWidth{};
   tile_height m_tileHeight{};
-  int m_numRows{};
-  int m_numCols{};
+  row_t m_numRows{};
+  col_t m_numCols{};
   int m_numTiles{};
 };
 

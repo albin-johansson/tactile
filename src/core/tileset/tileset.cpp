@@ -10,7 +10,7 @@ namespace {
 
 auto create_source_rect_cache(tile_id first,
                               tile_id last,
-                              int nCols,
+                              col_t nCols,
                               tile_width tw,
                               tile_height th)
     -> std::unordered_map<tile_id, QRect>
@@ -26,8 +26,8 @@ auto create_source_rect_cache(tile_id first,
   for (tile_id id{first}; id <= last; ++id) {
     const auto index = id - first;
 
-    const auto x = (index.get() % nCols) * tileWidth;
-    const auto y = (index.get() / nCols) * tileHeight;
+    const auto x = (index.get() % nCols.get()) * tileWidth;
+    const auto y = (index.get() / nCols.get()) * tileHeight;
 
     cache.emplace(id, QRect{x, y, tileWidth, tileHeight});
   }
@@ -50,9 +50,10 @@ tileset::tileset(tile_id firstID,
     throw tactile_error{"Cannot create tileset from null image!"};
   }
 
-  m_numRows = height() / m_tileHeight.get();
-  m_numCols = width() / m_tileWidth.get();
-  m_lastID = m_firstID + tile_id{m_numRows * m_numCols};
+  m_numRows = row_t{height() / m_tileHeight.get()};
+  m_numCols = col_t{width() / m_tileWidth.get()};
+  m_numTiles = m_numRows.get() * m_numCols.get();
+  m_lastID = m_firstID + tile_id{m_numTiles};
   m_sourceRects = create_source_rect_cache(
       m_firstID, m_lastID, m_numCols, m_tileWidth, m_tileHeight);
 }
@@ -93,7 +94,7 @@ auto tileset::tile_at(const position& position) const -> tile_id
   const auto endCol = col_t{cols()};
 
   if ((row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol)) {
-    const auto index = row.get() * m_numCols + col.get();
+    const auto index = row.get() * m_numCols.get() + col.get();
     return m_firstID + tile_id{index};
   } else {
     return empty;
