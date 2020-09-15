@@ -114,7 +114,6 @@ set(TACTILE_SOURCE_FILES
         gui/editor/map_item.cpp
         gui/editor/map_item.hpp
         gui/editor/map_editor.ui
-        gui/editor/editor_pane.ui
 
         command/command_id.hpp
         command/command_stack.hpp
