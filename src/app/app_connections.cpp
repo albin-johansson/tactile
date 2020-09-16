@@ -66,6 +66,8 @@ app_connections::app_connections(app* app)
           &window::tileset_selection_changed,
           app,
           &app::tileset_selection_changed);
+
+  connect(m_window, &window::save_as, app, &app::save_as);
 }
 
 void app_connections::init_command_connections(app* app) noexcept

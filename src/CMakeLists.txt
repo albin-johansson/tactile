@@ -162,7 +162,12 @@ set(TACTILE_SOURCE_FILES
         tool/bucket_tool.hpp
 
         util/nenya.hpp
-        util/vector_map.hpp)
+        util/vector_map.hpp
+
+        service/saves/save_tmx.cpp
+        service/saves/save_tmx.hpp
+        service/saves/save_service.cpp
+        service/saves/save_service.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
@@ -217,6 +222,8 @@ target_include_directories(libTactile
         PUBLIC gui/action
         PUBLIC gui/action/resize_map
         PUBLIC gui/action/save
+        PUBLIC service
+        PUBLIC service/saves
         PUBLIC ${Boost_INCLUDE_DIRS})
 
 target_link_libraries(libTactile

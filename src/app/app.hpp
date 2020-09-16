@@ -1,6 +1,7 @@
 #pragma once
 
 #include <qapplication.h>
+#include <qurl.h>
 
 #include <memory>
 #include <utility>
@@ -56,6 +57,8 @@ class app final : public QApplication
   }
 
  private slots:
+  void save_as(const QUrl& url);
+
   void handle_resize_map();
 
   void handle_pan_up();

@@ -10,6 +10,8 @@
 #include "about_dialog.hpp"
 #include "map_editor.hpp"
 #include "preferences.hpp"
+#include "save_as_dialog.hpp"
+#include "save_service.hpp"
 #include "setting.hpp"
 #include "settings_dialog.hpp"
 #include "tool_widget.hpp"
@@ -344,7 +346,15 @@ void window::on_action_save_triggered()
 
 void window::on_action_save_as_triggered()
 {
-  // TODO
+  auto get_tab_name = [this]() -> QString {
+    if (const auto name = m_editor->active_tab_name(); name) {
+      return *name;
+    } else {
+      return QStringLiteral(u"map");
+    }
+  };
+  save_as_dialog::spawn([this](const QUrl& url) { emit save_as(url); },
+                        get_tab_name());
 }
 
 void window::on_action_rename_triggered()
@@ -354,7 +364,7 @@ void window::on_action_rename_triggered()
 
 void window::on_action_add_row_triggered()
 {
-  if (in_editor_mode()) {
+  if (in_editor_mode()) {  // FIXME these are redundant now?
     emit request_add_row();
   }
 }

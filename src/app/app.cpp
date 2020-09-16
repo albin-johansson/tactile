@@ -6,6 +6,7 @@
 #include "app_connections.hpp"
 #include "model.hpp"
 #include "resize_dialog.hpp"
+#include "save_service.hpp"
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "window.hpp"
@@ -30,6 +31,11 @@ app::app(int argc, char** argv) : QApplication{argc, argv}, m_model{new model{}}
 app::~app() noexcept
 {
   delete m_model;
+}
+
+void app::save_as(const QUrl& url)
+{
+  service::save(url, *m_model->current_map(), *m_model->get_tileset_manager());
 }
 
 void app::handle_resize_map()
