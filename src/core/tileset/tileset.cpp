@@ -76,6 +76,16 @@ void tileset::clear_selection() noexcept
   m_selection.reset();
 }
 
+void tileset::set_name(QString name)
+{
+  m_name = std::move(name);
+}
+
+void tileset::set_path(QString path)
+{
+  m_path = std::move(path);
+}
+
 auto tileset::contains(tile_id id) const noexcept -> bool
 {
   return (id >= first_id()) && (id <= last_id());

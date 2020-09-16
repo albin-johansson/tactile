@@ -8,9 +8,12 @@ namespace tactile {
 // clang-format off
 
 template <typename T>
-concept Ordered = requires (T t) {
+concept ordered = requires (T t) {
   { t < t } -> std::convertible_to<bool>;
 };
+
+template <typename T>
+concept arithmetic = std::is_arithmetic_v<T>;
 
 // clang-format on
 
@@ -46,14 +49,15 @@ constexpr void do_n(int n, T&& callable) noexcept(noexcept(callable()))
  *
  * @since 0.1.0
  */
-template <Ordered T>
+template <ordered T>
 [[nodiscard]] constexpr auto at_least(T value, T least) noexcept -> T
 {
   return (value < least) ? least : value;
 }
 
 template <typename T, typename P>
-void erase(T&& container, P&& predicate)
+[[deprecated("Use std::erase_if instead")]] void erase(T&& container,
+                                                       P&& predicate)
 {
   container.erase(std::remove_if(begin(container), end(container), predicate),
                   end(container));

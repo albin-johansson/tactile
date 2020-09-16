@@ -9,19 +9,19 @@
 namespace tactile::gui {
 
 template <typename T>
-concept SaveAsDialogCallback = std::invocable<T, const QUrl&>;
+concept save_as_dialog_callback = std::invocable<T, const QString&>;
 
 class save_as_dialog final : public QFileDialog
 {
  public:
   explicit save_as_dialog(const QString& fileName, QWidget* parent = nullptr);
 
-  template <SaveAsDialogCallback T>
+  template <save_as_dialog_callback T>
   static void spawn(T&& callback, const QString& fileName)
   {
     save_as_dialog dialog{fileName};
     if (dialog.exec()) {
-      callback(dialog.selectedUrls().at(0));
+      callback(dialog.selectedFiles().at(0));
     }
   }
 };

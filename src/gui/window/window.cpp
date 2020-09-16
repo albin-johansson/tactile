@@ -353,7 +353,7 @@ void window::on_action_save_as_triggered()
       return QStringLiteral(u"map");
     }
   };
-  save_as_dialog::spawn([this](const QUrl& url) { emit save_as(url); },
+  save_as_dialog::spawn([this](const QString& path) { emit save_as(path); },
                         get_tab_name());
 }
 

@@ -7,7 +7,7 @@
 
 namespace tactile::service {
 
-void save(const QUrl& url,
+void save(const QString& path,
           const core::map& map,
           const core::tileset_manager& tilesets);
 

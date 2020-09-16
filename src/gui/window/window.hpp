@@ -64,7 +64,7 @@ class window final : public QMainWindow
   void enter_content_view();
 
  signals:
-  void save_as(const QUrl& url);
+  void save_as(const QString& path);
 
   void request_new_map();
 

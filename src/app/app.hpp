@@ -57,7 +57,7 @@ class app final : public QApplication
   }
 
  private slots:
-  void save_as(const QUrl& url);
+  void save_as(const QString& path);
 
   void handle_resize_map();
 

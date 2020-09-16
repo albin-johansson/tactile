@@ -3,7 +3,7 @@
 #include <qwidget.h>
 
 #include <optional>  // optional
-#include <vector>    // vector
+#include <vector>    // vector, erase_if
 
 #include "fwd.hpp"
 #include "position.hpp"

@@ -44,15 +44,19 @@ class model final : public QObject
    * @note This method has no effect if the tileset cannot be added.
    *
    * @param image the image that contains the tile images.
+   * @param path the file path of the tileset image.
+   * @param name the name associated with the tileset.
    * @param tileWidth the width of the tiles in the tileset.
    * @param tileHeight the height of the tiles in the tileset.
    *
-   * @return the ID of the tileset that was added; `std::nullopt` if no tile
-   * sheet was added.
+   * @return the ID of the tileset that was added; `std::nullopt` if no tileset
+   * was added.
    *
    * @since 0.1.0
    */
   [[nodiscard]] auto add_tileset(const QImage& image,
+                                 const QString& path,
+                                 const QString& name,
                                  tile_width tileWidth,
                                  tile_height tileHeight)
       -> std::optional<tileset_id>;

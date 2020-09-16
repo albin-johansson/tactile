@@ -33,9 +33,9 @@ app::~app() noexcept
   delete m_model;
 }
 
-void app::save_as(const QUrl& url)
+void app::save_as(const QString& path)
 {
-  service::save(url, *m_model->current_map(), *m_model->get_tileset_manager());
+  service::save(path, *m_model->current_map(), *m_model->get_tileset_manager());
 }
 
 void app::handle_resize_map()
@@ -77,10 +77,12 @@ void app::handle_pan_left()
 void app::handle_new_tileset()
 {
   gui::tileset_dialog::spawn([this](const QImage& image,
+                                    const QString& path,
                                     tile_width tileWidth,
                                     tile_height tileHeight,
                                     const QString& name) {
-    if (const auto id = m_model->add_tileset(image, tileWidth, tileHeight);
+    if (const auto id =
+            m_model->add_tileset(image, path, name, tileWidth, tileHeight);
         id) {
       m_window->handle_add_tileset(image, *id, tileWidth, tileHeight, name);
     }

@@ -4,7 +4,6 @@
 
 #include <algorithm>  // find_if
 
-#include "algorithm.hpp"
 #include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
@@ -72,8 +71,10 @@ void tileset_content_page::remove_tileset(tileset_id id)
   const auto index = index_of(id);
   Q_ASSERT(index);
 
-  erase(m_tabs,
-        [id](const tileset_tab* tab) noexcept { return tab->id() == id; });
+  std::erase_if(m_tabs, [id](const tileset_tab* tab) noexcept {
+    return tab->id() == id;
+  });
+
   m_ui->tabWidget->removeTab(*index);
   emit removed_tileset(id);
 }

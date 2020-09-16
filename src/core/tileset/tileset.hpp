@@ -3,6 +3,7 @@
 #include <qimage.h>
 #include <qpixmap.h>
 #include <qrect.h>
+#include <qstring.h>
 
 #include <concepts>       // invocable
 #include <optional>       // optional
@@ -137,6 +138,17 @@ class tileset final
    * @since 0.1.0
    */
   void clear_selection() noexcept;
+
+  /**
+   * @brief Sets the name of the tileset.
+   *
+   * @param name the new name of the tileset.
+   *
+   * @since 0.1.0
+   */
+  void set_name(QString name);
+
+  void set_path(QString path);
 
   /**
    * @brief Indicates whether or not the tileset contains the specified tile ID.
@@ -316,6 +328,23 @@ class tileset final
     return m_numTiles;
   }
 
+  /**
+   * @brief Returns the name associated with the tileset.
+   *
+   * @return the name of the tileset.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto name() const -> const QString&
+  {
+    return m_name;
+  }
+
+  [[nodiscard]] auto path() const -> const QString&
+  {
+    return m_path;
+  }
+
  private:
   QPixmap m_image;
   tile_id m_firstID{1};
@@ -327,6 +356,8 @@ class tileset final
   row_t m_numRows{};
   col_t m_numCols{};
   int m_numTiles{};
+  QString m_path{};
+  QString m_name{QStringLiteral(u"Untitled")};
 };
 
 static_assert(std::is_final_v<tileset>);

@@ -1,5 +1,6 @@
 #include "tileset_dialog.hpp"
 
+#include <qfileinfo.h>
 #include <qlineedit.h>
 
 #include "open_tileset_image.hpp"
@@ -55,9 +56,11 @@ void tileset_dialog::on_imageButton_pressed()
       m_ui->imageInfoLabel->setText("Failed to open image: " + fileName);
       m_ui->imageInfoLabel->setStyleSheet(failureLabelStyle);
     } else {
+      const QFileInfo info{path->fileName()};
       m_ui->imageLabel->setPixmap(load_pixmap(pathStr));
-      m_imageName = fileName;
-      m_ui->imageInfoLabel->setText(fileName);
+      m_imageName = info.baseName();
+      m_path = pathStr;
+      m_ui->imageInfoLabel->setText(info.baseName());
       m_ui->imageInfoLabel->setStyleSheet(successLabelStyle);
     }
 

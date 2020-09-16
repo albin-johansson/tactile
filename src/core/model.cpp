@@ -146,11 +146,17 @@ void model::select_map(map_id id)
 }
 
 auto model::add_tileset(const QImage& image,
+                        const QString& path,
+                        const QString& name,
                         tile_width tileWidth,
                         tile_height tileHeight) -> std::optional<tileset_id>
 {
   if (!image.isNull()) {
-    return m_tilesets->emplace(image, tileWidth, tileHeight);
+    const auto id = m_tilesets->emplace(image, tileWidth, tileHeight);
+    auto& tileset = m_tilesets->at(id);
+    tileset.set_name(name);
+    tileset.set_path(path);
+    return id;
   } else {
     return std::nullopt;
   }

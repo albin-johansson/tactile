@@ -27,8 +27,12 @@ namespace tactile::gui {
  * @since 0.1.0
  */
 template <typename T>
-concept TilesetDialogCallback =
-    std::invocable<T, const QImage&, tile_width, tile_height, const QString&>;
+concept TilesetDialogCallback = std::invocable<T,
+                                               const QImage&,
+                                               const QString&,
+                                               tile_width,
+                                               tile_height,
+                                               const QString&>;
 
 /**
  * @class tileset_dialog
@@ -58,7 +62,11 @@ class tileset_dialog final : public QDialog
       const auto tileHeight = dialog.m_height;
       const auto name = dialog.m_imageName;
       if (!image.isNull() && tileWidth && tileHeight) {
-        callback(image, *tileWidth, *tileHeight, name ? *name : "Untitled");
+        callback(image,
+                 dialog.m_path,
+                 *tileWidth,
+                 *tileHeight,
+                 name ? *name : "Untitled");
       }
     }
   }
@@ -66,6 +74,7 @@ class tileset_dialog final : public QDialog
  private:
   owner<Ui::tileset_dialog*> m_ui;
   QImage m_image{};
+  QString m_path{};
   std::optional<tile_width> m_width;
   std::optional<tile_height> m_height;
   std::optional<QString> m_imageName;
