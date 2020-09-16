@@ -133,23 +133,16 @@ void map_item::draw_preview_multiple_tiles(QPainter& painter,
   auto* tileset = m_tilesets->current_tileset();
   Q_ASSERT(tileset);
 
-  const auto& [topLeft, bottomRight] = selection;
-
-  const auto nRows = 1_row + (bottomRight.row() - topLeft.row());
-  const auto nCols = 1_col + (bottomRight.col() - topLeft.col());
-
-  for (row_t row{0}; row < nRows; ++row) {
-    for (col_t col{0}; col < nCols; ++col) {
-      const auto tilePos = mousePosition.offset_by(row, col);
-      if (m_map->in_bounds(tilePos)) {
-        draw_tile(painter,
-                  tileset->tile_at(topLeft.offset_by(row, col)),
-                  tilePos.col_to_x(tileSize),
-                  tilePos.row_to_y(tileSize),
-                  tileSize);
-      }
+  tileset->iterate_selection([&](position pos) {
+    const auto tilePos = mousePosition.offset_by(pos);
+    if (m_map->in_bounds(tilePos)) {
+      draw_tile(painter,
+                tileset->tile_at(selection.topLeft.offset_by(pos)),
+                tilePos.col_to_x(tileSize),
+                tilePos.row_to_y(tileSize),
+                tileSize);
     }
-  }
+  });
 }
 
 void map_item::draw_preview(QPainter& painter, int tileSize)

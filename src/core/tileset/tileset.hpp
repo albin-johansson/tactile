@@ -4,6 +4,7 @@
 #include <qpixmap.h>
 #include <qrect.h>
 
+#include <concepts>       // invocable
 #include <optional>       // optional
 #include <unordered_map>  // unordered_map
 
@@ -90,6 +91,35 @@ class tileset final
           const QString& path,
           tile_width tileWidth,
           tile_height tileHeight);
+
+  /**
+   * @brief Iterates the current selection.
+   *
+   * @detail This function has no effect if there is no current selection.
+   *
+   * @tparam T the type of the callable.
+   *
+   * @param callable the callable that will be invoked for each tile in the
+   * selection.
+   *
+   * @since 0.1.0
+   */
+  template <std::invocable<position> T>
+  void iterate_selection(T&& callable) const
+  {
+    if (m_selection) {
+      const auto& [topLeft, bottomRight] = *m_selection;
+
+      const auto nRows = 1_row + (bottomRight.row() - topLeft.row());
+      const auto nCols = 1_col + (bottomRight.col() - topLeft.col());
+
+      for (row_t row{0}; row < nRows; ++row) {
+        for (col_t col{0}; col < nCols; ++col) {
+          callable({row, col});
+        }
+      }
+    }
+  }
 
   /**
    * @brief Sets the current selection in the tileset.
