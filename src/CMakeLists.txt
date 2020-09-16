@@ -163,6 +163,7 @@ set(TACTILE_SOURCE_FILES
 
         util/nenya.hpp
         util/vector_map.hpp
+        util/to_string.hpp
 
         service/saves/save_tmx.cpp
         service/saves/save_tmx.hpp
