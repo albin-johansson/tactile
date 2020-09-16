@@ -17,6 +17,8 @@ void save(const QString& path, const map& map, const tileset_manager& tilesets)
     save_tmx(path, map, tilesets);
 
   } else if (suffix == QStringLiteral(u"json")) {
+    qWarning("Save as JSON is not yet implemented!");
+
   } else {
     qWarning("Did not recognize save format!");
   }
