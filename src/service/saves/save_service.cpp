@@ -3,6 +3,7 @@
 #include <qdebug.h>
 #include <qfileinfo.h>
 
+#include "save_json.hpp"
 #include "save_tmx.hpp"
 
 using namespace tactile::core;
@@ -17,7 +18,7 @@ void save(const QString& path, const map& map, const tileset_manager& tilesets)
     save_tmx(path, map, tilesets);
 
   } else if (suffix == QStringLiteral(u"json")) {
-    qWarning("Save as JSON is not yet implemented!");
+    save_json(path, map, tilesets);
 
   } else {
     qWarning("Did not recognize save format!");

@@ -168,7 +168,9 @@ set(TACTILE_SOURCE_FILES
         service/saves/save_tmx.cpp
         service/saves/save_tmx.hpp
         service/saves/save_service.cpp
-        service/saves/save_service.hpp)
+        service/saves/save_service.hpp
+        service/saves/save_json.cpp
+        service/saves/save_json.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

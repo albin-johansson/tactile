@@ -33,8 +33,6 @@ void save_tilesets(pugi::xml_node& root,
     const auto name = tileset.name().toStdString();
     add_attribute(tilesetNode, "name", name.c_str());
 
-    // TODO add attributes: source
-
     /*
      * Reminder: Tiled tilesets can be external or "inline", if source is used,
      * then we need to create separate files for the tilesets.
