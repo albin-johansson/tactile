@@ -89,7 +89,7 @@ set(TACTILE_SOURCE_FILES
 
         gui/settings/settings_dialog.hpp
         gui/settings/settings_dialog.cpp
-        gui/settings/settings.ui
+        gui/settings/settings_dialog.ui
 
         gui/action/resize_map/resize_dialog.hpp
         gui/action/resize_map/resize_dialog.cpp
