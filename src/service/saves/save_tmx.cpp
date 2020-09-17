@@ -109,7 +109,7 @@ void save_layers(pugi::xml_node& root, const map& map)
 {
   auto root = document.append_child("map");
 
-  add_attribute(root, "version", "1.4");
+  add_attribute(root, "version", "1.4.2");
   add_attribute(root, "orientation", "orthogonal");
   add_attribute(root, "renderorder", "right-down");
   add_attribute(root, "width", map.cols().get());
