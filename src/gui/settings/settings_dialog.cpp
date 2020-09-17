@@ -3,7 +3,7 @@
 #include "preferences.hpp"
 #include "setting.hpp"
 #include "theme.hpp"
-#include "ui_settings.h"
+#include "ui_settings_dialog.h"
 
 namespace tactile::gui {
 
