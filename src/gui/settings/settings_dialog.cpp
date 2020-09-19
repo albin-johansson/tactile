@@ -1,6 +1,7 @@
 #include "settings_dialog.hpp"
 
 #include <qpushbutton.h>
+#include <qvalidator.h>
 
 #include <optional>
 
@@ -31,6 +32,10 @@ settings_dialog::settings_dialog(QWidget* parent)
       m_ui{new Ui::settings_dialog{}}
 {
   m_ui->setupUi(this);
+
+  auto* validator = new QIntValidator{0, 9'999, this};
+  m_ui->tileWidthText->setValidator(validator);
+  m_ui->tileHeightText->setValidator(validator);
 
   fetch_current_settings();
 
