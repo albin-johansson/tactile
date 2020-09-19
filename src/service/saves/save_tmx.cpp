@@ -6,10 +6,11 @@
 #include <pugixml/pugixml.hpp>
 #include <string>  // string
 
+#include "preferences.hpp"
 #include "tactile_error.hpp"
 #include "to_string.hpp"
 
-// TODO consider setting for inclusion of default values, e.g. opacity of layers
+// TODO adhere to prefs::saves::generate_defaults, prefs::saves::embed_tilesets
 
 using namespace tactile::core;
 
@@ -114,10 +115,8 @@ void save_layers(pugi::xml_node& root, const map& map)
   add_attribute(root, "renderorder", "right-down");
   add_attribute(root, "width", map.cols().get());
   add_attribute(root, "height", map.rows().get());
-
-  // FIXME what are reasonable assumptions here, perhaps a setting for this?
-  add_attribute(root, "tilewidth", 32);
-  add_attribute(root, "tileheight", 32);
+  add_attribute(root, "tilewidth", prefs::saves::tile_width().value());
+  add_attribute(root, "tileheight", prefs::saves::tile_height().value());
 
   return root;
 }

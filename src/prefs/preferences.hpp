@@ -84,6 +84,18 @@ namespace graphics {
 
 }  // namespace graphics
 
+namespace saves {
+
+[[nodiscard]] auto embed_tilesets() -> setting<bool>;
+
+[[nodiscard]] auto generate_defaults() -> setting<bool>;
+
+[[nodiscard]] auto tile_width() -> setting<int>;
+
+[[nodiscard]] auto tile_height() -> setting<int>;
+
+}  // namespace saves
+
 /**
  * @brief Initializes the settings to their default values, if they are absent.
  *

@@ -99,6 +99,11 @@ class setting final
     return m_value.operator->();
   }
 
+  [[nodiscard]] auto value() const -> const T&
+  {
+    return m_value.value();
+  }
+
   /**
    * @brief Returns the current value of the setting, or the default value if
    * there is no current value.

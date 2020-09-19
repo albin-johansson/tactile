@@ -9,7 +9,10 @@
 
 #include <utility>  // move
 
+#include "preferences.hpp"
 #include "to_string.hpp"
+
+// TODO adhere to prefs::saves::generate_defaults, prefs::saves::embed_tilesets
 
 using namespace tactile::core;
 
@@ -97,11 +100,8 @@ namespace {
   root.insert(u"infinite", false);
   root.insert(u"type", QStringLiteral(u"map"));
   root.insert(u"version", 1.4);
-
-  // FIXME
-  root.insert(u"tilewidth", 32);
-  root.insert(u"tileheight", 32);
-
+  root.insert(u"tilewidth", prefs::saves::tile_width().value());
+  root.insert(u"tileheight", prefs::saves::tile_height().value());
   root.insert(u"tilesets", save_tilesets(tilesets, path));
   root.insert(u"layers", save_layers(map));
 

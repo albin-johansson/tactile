@@ -24,10 +24,18 @@ class settings_dialog final : public QDialog
 
  private:
   Ui::settings_dialog* m_ui;
-  QString m_initialTheme;
+  QString m_theme{};
+  int m_tileWidth{};
+  int m_tileHeight{};
+  bool m_embedTilesets{};
+  bool m_generateDefaults{};
 
  private slots:
   void handle_accept();
+
+  void handle_apply(bool checked);
+
+  void fetch_current_settings();
 };
 
 }  // namespace tactile::gui
