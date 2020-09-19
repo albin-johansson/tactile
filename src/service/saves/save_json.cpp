@@ -7,8 +7,6 @@
 #include <qjsondocument.h>
 #include <qjsonobject.h>
 
-#include <utility>  // move
-
 #include "preferences.hpp"
 #include "to_string.hpp"
 
