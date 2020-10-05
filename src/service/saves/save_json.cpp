@@ -7,6 +7,7 @@
 #include <qjsondocument.h>
 #include <qjsonobject.h>
 
+#include "export_options.hpp"
 #include "preferences.hpp"
 #include "to_string.hpp"
 
@@ -18,26 +19,34 @@ namespace tactile::service {
 namespace {
 
 [[nodiscard]] auto save_tilesets(const tileset_manager& tilesets,
-                                 const QString& destination) -> QJsonArray
+                                 const QString& destination,
+                                 const export_options& options) -> QJsonArray
 {
   QJsonArray array;
 
   for (const auto& [id, tileset] : tilesets) {
     QJsonObject object;
 
-    object.insert(u"firstgid", tileset.first_id().get());
-    object.insert(u"name", tileset.name());
-    object.insert(u"tilewidth", tileset.get_tile_width().get());
-    object.insert(u"tileheight", tileset.get_tile_height().get());
-    object.insert(u"tilecount", tileset.tile_count());
-    object.insert(u"columns", tileset.cols().get());
-    object.insert(u"imagewidth", tileset.width());
-    object.insert(u"imageheight", tileset.height());
-    object.insert(u"margin", 0);
-    object.insert(u"spacing", 0);
+    object.insert(QStringLiteral(u"firstgid"), tileset.first_id().get());
+    object.insert(QStringLiteral(u"name"), tileset.name());
+    object.insert(QStringLiteral(u"tilewidth"), tileset.get_tile_width().get());
+    object.insert(QStringLiteral(u"tileheight"),
+                  tileset.get_tile_height().get());
+    object.insert(QStringLiteral(u"tilecount"), tileset.tile_count());
+    object.insert(QStringLiteral(u"columns"), tileset.cols().get());
+    object.insert(QStringLiteral(u"imagewidth"), tileset.width());
+    object.insert(QStringLiteral(u"imageheight"), tileset.height());
+    object.insert(QStringLiteral(u"margin"), 0);
+    object.insert(QStringLiteral(u"spacing"), 0);
 
     const QFileInfo info{destination};
-    object.insert(u"image", info.dir().relativeFilePath(tileset.path()));
+    object.insert(QStringLiteral(u"image"),
+                  info.dir().relativeFilePath(tileset.path()));
+
+    if (options.generateDefaults) {
+      object.insert(QStringLiteral(u"objectalignment"),
+                    QStringLiteral(u"unspecified"));
+    }
 
     array.append(object);
   }
@@ -45,36 +54,40 @@ namespace {
   return array;
 }
 
-[[nodiscard]] auto save_layers(const map& map) -> QJsonArray
+[[nodiscard]] auto save_layers(const map& map, const export_options& options)
+    -> QJsonArray
 {
   QJsonArray array;
 
   for (int id{1}; const auto& layer : map) {
     QJsonObject object;
 
-    object.insert(u"compression", QStringLiteral(u""));
-    object.insert(u"encoding", QStringLiteral(u"csv"));
-    object.insert(u"width", layer.cols().get());
-    object.insert(u"height", layer.rows().get());
-    object.insert(u"id", id);
-
     if (const auto str = to_string(id); str) {
       const auto name = "Layer " + *str;
-      object.insert(u"name", QString::fromStdString(name));
+      object.insert(QStringLiteral(u"name"), QString::fromStdString(name));
     }
 
-    object.insert(u"offsetx", 0.0);
-    object.insert(u"offsety", 0.0);
-    object.insert(u"opacity", 1.0);
-    object.insert(u"properties", QJsonArray{});
-    object.insert(u"type", QStringLiteral(u"tilelayer"));
-    object.insert(u"visible", layer.visible());
-    object.insert(u"x", 0);
-    object.insert(u"y", 0);
+    object.insert(QStringLiteral(u"width"), layer.cols().get());
+    object.insert(QStringLiteral(u"height"), layer.rows().get());
+    object.insert(QStringLiteral(u"id"), id);
+    object.insert(QStringLiteral(u"opacity"), 1.0);
+    //    object.insert(QStringLiteral(u"properties"), QJsonArray{});
+    object.insert(QStringLiteral(u"type"), QStringLiteral(u"tilelayer"));
+    object.insert(QStringLiteral(u"visible"), layer.visible());
+    object.insert(QStringLiteral(u"x"), 0);
+    object.insert(QStringLiteral(u"y"), 0);
+
+    if (options.generateDefaults) {
+      object.insert(QStringLiteral(u"encoding"), QStringLiteral(u"csv"));
+      object.insert(QStringLiteral(u"compression"), QStringLiteral(u""));
+      object.insert(QStringLiteral(u"draworder"), QStringLiteral(u"topdown"));
+      object.insert(QStringLiteral(u"offsetx"), 0.0);
+      object.insert(QStringLiteral(u"offsety"), 0.0);
+    }
 
     QJsonArray data;
     layer.for_each([&](tile_id tile) { data.append(tile.get()); });
-    object.insert(u"data", data);
+    object.insert(QStringLiteral(u"data"), data);
 
     array.append(object);
     ++id;
@@ -85,23 +98,31 @@ namespace {
 
 [[nodiscard]] auto create_root(const map& map,
                                const tileset_manager& tilesets,
-                               const QString& path) -> QJsonObject
+                               const QString& path,
+                               const export_options& options) -> QJsonObject
 {
   QJsonObject root;
 
-  root.insert(u"tiledversion", QStringLiteral(u"1.4.2"));
-  root.insert(u"orientation", QStringLiteral(u"orthogonal"));
-  root.insert(u"renderorder", QStringLiteral(u"right-down"));
-  root.insert(u"width", map.cols().get());
-  root.insert(u"height", map.rows().get());
-  root.insert(u"compressionlevel", -1);
-  root.insert(u"infinite", false);
-  root.insert(u"type", QStringLiteral(u"map"));
-  root.insert(u"version", 1.4);
-  root.insert(u"tilewidth", prefs::saves::tile_width().value());
-  root.insert(u"tileheight", prefs::saves::tile_height().value());
-  root.insert(u"tilesets", save_tilesets(tilesets, path));
-  root.insert(u"layers", save_layers(map));
+  // TODO better way to specify version
+  root.insert(QStringLiteral(u"tiledversion"), QStringLiteral(u"1.4.2"));
+  root.insert(QStringLiteral(u"orientation"), QStringLiteral(u"orthogonal"));
+  root.insert(QStringLiteral(u"renderorder"), QStringLiteral(u"right-down"));
+  root.insert(QStringLiteral(u"width"), map.cols().get());
+  root.insert(QStringLiteral(u"height"), map.rows().get());
+  root.insert(QStringLiteral(u"compressionlevel"), -1);
+  root.insert(QStringLiteral(u"infinite"), false);
+  root.insert(QStringLiteral(u"type"), QStringLiteral(u"map"));
+
+  // TODO better way to specify version
+  root.insert(QStringLiteral(u"version"), 1.4);
+  root.insert(QStringLiteral(u"tilewidth"), prefs::saves::tile_width().value());
+  root.insert(QStringLiteral(u"tileheight"),
+              prefs::saves::tile_height().value());
+  root.insert(QStringLiteral(u"nextobjectid"), 1);
+  root.insert(QStringLiteral(u"nextlayerid"), map.num_layers() + 1);
+  root.insert(QStringLiteral(u"tilesets"),
+              save_tilesets(tilesets, path, options));
+  root.insert(QStringLiteral(u"layers"), save_layers(map, options));
 
   return root;
 }
@@ -112,8 +133,12 @@ void save_json(const QString& path,
                const map& map,
                const tileset_manager& tilesets)
 {
+  export_options options;
+  options.generateDefaults = prefs::saves::generate_defaults().value_or(false);
+  options.embedTilesets = prefs::saves::embed_tilesets().value_or(true);
+
   QJsonDocument document{};
-  document.setObject(create_root(map, tilesets, path));
+  document.setObject(create_root(map, tilesets, path, options));
 
   QFile file{path};
   file.open(QFile::WriteOnly);
