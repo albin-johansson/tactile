@@ -300,32 +300,26 @@ void window::handle_remove_tab(map_id tabID)
 
 void window::on_action_undo_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_undo();
-  }
+  emit request_undo();
 }
 
 void window::on_action_redo_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_redo();
-  }
+  emit request_redo();
 }
 
 void window::on_action_close_map_triggered()
 {
-  if (in_editor_mode()) {
-    // TODO save current state of open map
+  // TODO save current state of open map
 
-    const auto id = m_editor->active_tab_id();
-    Q_ASSERT(id);
+  const auto id = m_editor->active_tab_id();
+  Q_ASSERT(id);
 
-    m_editor->close_tab(*id);
-    emit request_close_map(*id);
+  m_editor->close_tab(*id);
+  emit request_close_map(*id);
 
-    if (m_editor->num_tabs() == 0) {
-      enter_no_content_view();
-    }
+  if (m_editor->num_tabs() == 0) {
+    enter_no_content_view();
   }
 }
 
@@ -364,103 +358,75 @@ void window::on_action_rename_triggered()
 
 void window::on_action_add_row_triggered()
 {
-  if (in_editor_mode()) {  // FIXME these are redundant now?
-    emit request_add_row();
-  }
+  emit request_add_row();
 }
 
 void window::on_action_add_column_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_add_col();
-  }
+  emit request_add_col();
 }
 
 void window::on_action_remove_row_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_remove_row();
-  }
+  emit request_remove_row();
 }
 
 void window::on_action_remove_column_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_remove_col();
-  }
+  emit request_remove_col();
 }
 
 void window::on_action_resize_map_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_resize_map();
-  }
+  emit request_resize_map();
 }
 
 void window::on_action_toggle_grid_triggered()
 {
-  if (in_editor_mode()) {
-    if (auto grid = prefs::graphics::render_grid(); grid) {
-      grid.set(!*grid);
-      handle_draw();
-    }
+  if (auto grid = prefs::graphics::render_grid(); grid) {
+    grid.set(!*grid);
+    handle_draw();
   }
 }
 
 void window::on_action_pan_up_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_pan_up();
-  }
+  emit request_pan_up();
 }
 
 void window::on_action_pan_down_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_pan_down();
-  }
+  emit request_pan_down();
 }
 
 void window::on_action_pan_right_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_pan_right();
-  }
+  emit request_pan_right();
 }
 
 void window::on_action_pan_left_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_pan_left();
-  }
+  emit request_pan_left();
 }
 
 void window::on_action_zoom_in_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_increase_tile_size();
-  }
+  emit request_increase_tile_size();
 }
 
 void window::on_action_zoom_out_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_decrease_tile_size();
-  }
+  emit request_decrease_tile_size();
 }
 
 void window::on_action_reset_zoom_triggered()
 {
-  if (in_editor_mode()) {
-    emit request_reset_tile_size();
-  }
+  emit request_reset_tile_size();
 }
 
 void window::on_action_center_camera_triggered()
 {
-  if (in_editor_mode()) {
-    center_map();
-  }
+  center_map();
 }
 
 void window::on_action_reset_layout_triggered()
