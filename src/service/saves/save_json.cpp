@@ -20,6 +20,16 @@ namespace {
 
 inline constexpr double g_tiledJsonVersion{1.4};
 
+/**
+ * @brief Adds common tileset attributes between embedded and external tilesets.
+ *
+ * @param object the JSON object to add the common attributes to.
+ * @param tileset the tileset that will be saved.
+ * @param mapDestination the file path of the map file.
+ * @param options the export options that will be used.
+ *
+ * @since 0.1.0
+ */
 void add_common_attributes(QJsonObject& object,
                            const tileset& tileset,
                            const QString& mapDestination,
@@ -43,6 +53,17 @@ void add_common_attributes(QJsonObject& object,
   }
 }
 
+/**
+ * @brief Creates a JSON object that represents an embedded tileset.
+ *
+ * @param tileset the tileset that will be saved.
+ * @param mapDestination the file path of the map file.
+ * @param options the export options that will be used.
+ *
+ * @return the created JSON object.
+ *
+ * @since 0.1.0
+ */
 [[nodiscard]] auto make_embedded_tileset_object(const tileset& tileset,
                                                 const QString& mapDestination,
                                                 const export_options& options)
@@ -56,6 +77,20 @@ void add_common_attributes(QJsonObject& object,
   return object;
 }
 
+/**
+ * @brief Creates a JSON object that represents an external tileset.
+ *
+ * @note The returned JSON object should be present in the JSON *map* file, not
+ * the actual external tileset file.
+ *
+ * @param tileset the tileset that will be saved.
+ * @param mapDestination the file path of the map file.
+ * @param options the export options that will be used.
+ *
+ * @return the created JSON object.
+ *
+ * @since 0.1.0
+ */
 [[nodiscard]] auto make_external_tileset_object(const tileset& tileset,
                                                 const QString& mapDestination,
                                                 const export_options& options)
@@ -69,6 +104,18 @@ void add_common_attributes(QJsonObject& object,
   return object;
 }
 
+/**
+ * @brief Creates an external JSON file that contains the data for a tileset.
+ *
+ * @details This function is used if the "Embed tilesets" option is disabled.
+ * The tileset file will be stored next to the map file.
+ *
+ * @param tileset the tileset that will be saved.
+ * @param mapDestination the file path of the map file, *not* the tileset file.
+ * @param options the export options that will be used.
+ *
+ * @since 0.1.0
+ */
 void create_external_tileset_file(const tileset& tileset,
                                   const QString& mapDestination,
                                   const export_options& options)
@@ -90,6 +137,17 @@ void create_external_tileset_file(const tileset& tileset,
   file.write(document.toJson());
 }
 
+/**
+ * @brief Creates a JSON array that contains the tilesets used by the map.
+ *
+ * @param tilesets the tilesets used by the map.
+ * @param mapDestination the file path of the map file.
+ * @param options the export options that will be used.
+ *
+ * @return a JSON array of the tilesets.
+ *
+ * @since 0.1.0
+ */
 [[nodiscard]] auto save_tilesets(const tileset_manager& tilesets,
                                  const QString& mapDestination,
                                  const export_options& options) -> QJsonArray
@@ -110,6 +168,16 @@ void create_external_tileset_file(const tileset& tileset,
   return array;
 }
 
+/**
+ * @brief Creates a JSON array that contains the layers of a map.
+ *
+ * @param map the map that contains the layers that will be saved.
+ * @param options the export options that will be used.
+ *
+ * @return a JSON array of the map layers.
+ *
+ * @since 0.1.0
+ */
 [[nodiscard]] auto save_layers(const map& map, const export_options& options)
     -> QJsonArray
 {
@@ -152,6 +220,18 @@ void create_external_tileset_file(const tileset& tileset,
   return array;
 }
 
+/**
+ * @brief Creates the root JSON object for the map file.
+ *
+ * @param map the map that will be saved.
+ * @param tilesets the tilesets that are used.
+ * @param mapDestination the destination path of the map file.
+ * @param options the export options that will be used.
+ *
+ * @return the root JSON object.
+ *
+ * @since 0.1.0
+ */
 [[nodiscard]] auto create_root(const map& map,
                                const tileset_manager& tilesets,
                                const QString& mapDestination,
