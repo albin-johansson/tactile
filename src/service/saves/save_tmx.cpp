@@ -3,6 +3,7 @@
 #include <qdir.h>
 #include <qfileinfo.h>
 
+#include <QtXml>
 #include <pugixml/pugixml.hpp>
 #include <string>  // string
 
@@ -17,78 +18,86 @@ using namespace tactile::core;
 namespace tactile::service {
 namespace {
 
-template <typename T, typename U>
-void add_attribute(pugi::xml_node& node, T&& name, U&& value)
-{
-  node.append_attribute(name).set_value(value);
-}
-
-void add_image_node(pugi::xml_node& parent,
+void add_image_node(QDomDocument& document,
+                    QDomElement& parent,
                     const tileset& tileset,
                     const QFileInfo& mapInfo)
 {
-  auto node = parent.append_child("image");
+  auto image = document.createElement(QStringLiteral(u"image"));
 
-  const auto relativePath = mapInfo.dir().relativeFilePath(tileset.path());
-  const auto imagePath = relativePath.toStdString();
+  image.setAttribute(QStringLiteral(u"source"),
+                     mapInfo.dir().relativeFilePath(tileset.path()));
+  image.setAttribute(QStringLiteral(u"width"), tileset.width());
+  image.setAttribute(QStringLiteral(u"height"), tileset.height());
 
-  add_attribute(node, "source", imagePath.c_str());
-  add_attribute(node, "width", tileset.width());
-  add_attribute(node, "height", tileset.height());
+  parent.appendChild(image);
 }
 
-void add_common_attributes(pugi::xml_node& node,
+void add_common_attributes(QDomDocument& document,
+                           QDomElement& node,
                            const tileset& tileset,
                            const QFileInfo& mapInfo)
 {
-  const auto name = tileset.name().toStdString();
-  add_attribute(node, "version", g_tiledXmlVersion);
-  add_attribute(node, "tiledversion", g_tiledVersion);
-  add_attribute(node, "name", name.c_str());
-  add_attribute(node, "tilewidth", tileset.get_tile_width().get());
-  add_attribute(node, "tileheight", tileset.get_tile_height().get());
-  add_attribute(node, "tilecount", tileset.tile_count());
-  add_attribute(node, "columns", tileset.cols().get());
+  node.setAttribute(QStringLiteral(u"version"), g_tiledXmlVersion);
+  node.setAttribute(QStringLiteral(u"tiledversion"), g_tiledVersion);
+  node.setAttribute(QStringLiteral(u"name"), tileset.name());
+  node.setAttribute(QStringLiteral(u"tilewidth"),
+                    tileset.get_tile_width().get());
+  node.setAttribute(QStringLiteral(u"tileheight"),
+                    tileset.get_tile_height().get());
+  node.setAttribute(QStringLiteral(u"tilecount"), tileset.tile_count());
+  node.setAttribute(QStringLiteral(u"columns"), tileset.cols().get());
 
-  add_image_node(node, tileset, mapInfo);
+  add_image_node(document, node, tileset, mapInfo);
 }
 
 void create_external_tileset_file(const tileset& tileset,
                                   const QFileInfo& mapInfo,
                                   const export_options& options)
 {
-  pugi::xml_document document{};
+  QDomDocument document{};
 
-  auto node = document.append_child("tileset");
-  add_common_attributes(node, tileset, mapInfo);
+  auto node = document.createElement(QStringLiteral(u"tileset"));
+  add_common_attributes(document, node, tileset, mapInfo);
+
+  document.appendChild(node);
 
   const auto path = mapInfo.absoluteDir().absoluteFilePath(
       tileset.name() + QStringLiteral(u".tsx"));
-  document.save_file(path.toStdString().c_str());
+
+  QFile file{path};
+  file.open(QIODevice::WriteOnly);
+
+  QTextStream stream{&file};
+  stream << document;
+  file.close();
 }
 
-void save_tilesets(pugi::xml_node& root,
+void save_tilesets(QDomDocument& document,
+                   QDomElement& root,
                    const tileset_manager& tilesets,
                    const QFileInfo& mapInfo,
                    const export_options& options)
 {
   for (const auto& [id, tileset] : tilesets) {
-    auto tilesetNode = root.append_child("tileset");
+    auto node = document.createElement(QStringLiteral(u"tileset"));
 
-    add_attribute(tilesetNode, "firstgid", tileset.first_id().get());
+    node.setAttribute(QStringLiteral(u"firstgid"), tileset.first_id().get());
 
     if (options.embedTilesets) {
-      add_common_attributes(tilesetNode, tileset, mapInfo);
+      add_common_attributes(document, node, tileset, mapInfo);
     } else {
       const auto source = mapInfo.dir().relativeFilePath(
           tileset.name() + QStringLiteral(u".tsx"));
-      add_attribute(tilesetNode, "source", source.toStdString().c_str());
+      node.setAttribute(QStringLiteral(u"source"), source);
       create_external_tileset_file(tileset, mapInfo, options);
     }
+
+    root.appendChild(node);
   }
 }
 
-void save_layers(pugi::xml_node& root, const map& map)
+void save_layers(QDomDocument& document, QDomElement& root, const map& map)
 {
   std::string stringBuffer;
   const auto count = map.rows().get() * map.cols().get();
@@ -96,71 +105,81 @@ void save_layers(pugi::xml_node& root, const map& map)
 
   int id{1};
   for (const auto& layer : map) {
-    auto layerNode = root.append_child("layer");
+    auto node = document.createElement(QStringLiteral(u"layer"));
 
-    add_attribute(layerNode, "id", id);
-
-    if (const auto str = to_string(id); str) {
-      const auto name = "Layer " + *str;
-      add_attribute(layerNode, "name", name.c_str());
-    }
-
-    add_attribute(layerNode, "width", layer.cols().get());
-    add_attribute(layerNode, "height", layer.rows().get());
+    node.setAttribute(QStringLiteral(u"id"), id);
+    node.setAttribute(QStringLiteral(u"name"),
+                      QStringLiteral(u"Layer ") + QString::number(id));
+    node.setAttribute(QStringLiteral(u"width"), layer.cols().get());
+    node.setAttribute(QStringLiteral(u"height"), layer.rows().get());
 
     if (!layer.visible()) {
-      add_attribute(layerNode, "visible", 0);
+      node.setAttribute(QStringLiteral(u"visible"), 0);
     }
 
-    auto data = layerNode.append_child("data");
-    add_attribute(data, "encoding", "csv");
+    auto data = document.createElement(QStringLiteral(u"data"));
+    data.setAttribute(QStringLiteral(u"encoding"), QStringLiteral(u"csv"));
 
-    bool fst{true};
+    QString buffer;
+    buffer.reserve(layer.rows().get() * layer.cols().get());
+
+    bool first{true};
     layer.for_each([&](tile_id tile) {
-      if (!fst) {
-        using namespace std::string_literals;
-        stringBuffer += ","s;
+      if (first) {
+        first = false;
       } else {
-        fst = false;
+        buffer += QStringLiteral(u",");
       }
-
-      if (const auto str = to_string(tile.get()); str) {
-        stringBuffer += *str;
-      } else {
-        throw tactile_error{"Failed to write tile data to string buffer!"};
-      }
+      buffer += QString::number(tile.get());
     });
 
-    data.text().set(stringBuffer.c_str());
-    stringBuffer.clear();
+    data.appendChild(document.createTextNode(buffer));
+    node.appendChild(data);
+    root.appendChild(node);
+
     ++id;
   }
 }
 
-[[nodiscard]] auto create_root(pugi::xml_document& document,
-                               const map& map,
-                               const export_options& options) -> pugi::xml_node
+void create_root(QDomDocument& document,
+                 const map& map,
+                 const tileset_manager& tilesets,
+                 const QFileInfo& mapInfo,
+                 const export_options& options)
 {
-  auto root = document.append_child("map");
+  auto root = document.createElement(QStringLiteral(u"map"));
 
-  add_attribute(root, "version", g_tiledXmlVersion);
-  add_attribute(root, "tiledversion", g_tiledVersion);
-  add_attribute(root, "orientation", "orthogonal");
-  add_attribute(root, "renderorder", "right-down");
-  add_attribute(root, "width", map.cols().get());
-  add_attribute(root, "height", map.rows().get());
-  add_attribute(root, "tilewidth", prefs::saves::tile_width().value());
-  add_attribute(root, "tileheight", prefs::saves::tile_height().value());
-  add_attribute(root, "infinite", 0);
-  add_attribute(root, "nextlayerid", map.num_layers() + 1);
-  add_attribute(root, "nextobjectid", 1);
+  root.setAttribute(QStringLiteral(u"version"), g_tiledXmlVersion);
+  root.setAttribute(QStringLiteral(u"tiledversion"), g_tiledVersion);
+
+  root.setAttribute(QStringLiteral(u"orientation"),
+                    QStringLiteral(u"orthogonal"));
+
+  root.setAttribute(QStringLiteral(u"renderorder"),
+                    QStringLiteral(u"right-down"));
+
+  root.setAttribute(QStringLiteral(u"width"), map.cols().get());
+  root.setAttribute(QStringLiteral(u"height"), map.rows().get());
+
+  root.setAttribute(QStringLiteral(u"tilewidth"),
+                    prefs::saves::tile_width().value());
+
+  root.setAttribute(QStringLiteral(u"tileheight"),
+                    prefs::saves::tile_height().value());
+
+  root.setAttribute(QStringLiteral(u"infinite"), 0);
+  root.setAttribute(QStringLiteral(u"nextlayerid"), map.num_layers() + 1);
+  root.setAttribute(QStringLiteral(u"nextobjectid"), 1);
 
   if (options.generateDefaults) {
-    add_attribute(root, "compressionlevel", -1);
-    add_attribute(root, "backgroundcolor", "#00000000");
+    root.setAttribute(QStringLiteral(u"compressionlevel"), -1);
+    root.setAttribute(QStringLiteral(u"backgroundcolor"), "#00000000");
   }
 
-  return root;
+  save_tilesets(document, root, tilesets, mapInfo, options);
+  save_layers(document, root, map);
+
+  document.appendChild(root);
 }
 
 }  // namespace
@@ -170,17 +189,18 @@ void save_tmx(const QString& path,
               const tileset_manager& tilesets)
 {
   const auto options = make_export_options();
-
-  pugi::xml_document document{};
-
   const QFileInfo info{path};
 
-  auto root = create_root(document, map, options);
-  save_tilesets(root, tilesets, info, options);
-  save_layers(root, map);
+  // TODO <?xml version="1.0" encoding="UTF-8"?>
+  QDomDocument document{};
+  create_root(document, map, tilesets, info, options);
 
-  const auto pathStr = path.toStdString();
-  document.save_file(pathStr.c_str());
+  QFile file{path};
+  file.open(QIODevice::WriteOnly);
+
+  QTextStream stream{&file};
+  stream << document;
+  file.close();
 }
 
 }  // namespace tactile::service

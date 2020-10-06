@@ -235,6 +235,7 @@ target_link_libraries(libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
         PUBLIC Qt5::Gui
+        PUBLIC Qt5::Xml
         PUBLIC libGSL
         PUBLIC libPugiXML)
 

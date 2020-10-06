@@ -21,7 +21,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-find_package(Qt5 COMPONENTS Core Widgets Gui REQUIRED)
+find_package(Qt5 COMPONENTS Core Widgets Gui Xml REQUIRED)
 find_package(Boost REQUIRED)
 
 set(CMAKE_AUTOMOC ON)
