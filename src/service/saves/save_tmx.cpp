@@ -4,14 +4,10 @@
 #include <qfileinfo.h>
 
 #include <QtXml>
-#include <pugixml/pugixml.hpp>
-#include <string>  // string
 
 #include "export_options.hpp"
 #include "preferences.hpp"
-#include "tactile_error.hpp"
 #include "tiled_version.hpp"
-#include "to_string.hpp"
 
 using namespace tactile::core;
 
@@ -62,10 +58,8 @@ void create_external_tileset_file(const tileset& tileset,
 
   document.appendChild(node);
 
-  const auto path = mapInfo.absoluteDir().absoluteFilePath(
-      tileset.name() + QStringLiteral(u".tsx"));
-
-  QFile file{path};
+  QFile file{mapInfo.absoluteDir().absoluteFilePath(tileset.name() +
+                                                    QStringLiteral(u".tsx"))};
   file.open(QIODevice::WriteOnly);
 
   QTextStream stream{&file};
@@ -99,10 +93,6 @@ void save_tilesets(QDomDocument& document,
 
 void save_layers(QDomDocument& document, QDomElement& root, const map& map)
 {
-  std::string stringBuffer;
-  const auto count = map.rows().get() * map.cols().get();
-  stringBuffer.reserve(count * 2);
-
   int id{1};
   for (const auto& layer : map) {
     auto node = document.createElement(QStringLiteral(u"layer"));
@@ -121,7 +111,8 @@ void save_layers(QDomDocument& document, QDomElement& root, const map& map)
     data.setAttribute(QStringLiteral(u"encoding"), QStringLiteral(u"csv"));
 
     QString buffer;
-    buffer.reserve(layer.rows().get() * layer.cols().get());
+    const auto count = map.rows().get() * map.cols().get();
+    buffer.reserve(count);
 
     bool first{true};
     layer.for_each([&](tile_id tile) {
@@ -151,22 +142,16 @@ void create_root(QDomDocument& document,
 
   root.setAttribute(QStringLiteral(u"version"), g_tiledXmlVersion);
   root.setAttribute(QStringLiteral(u"tiledversion"), g_tiledVersion);
-
   root.setAttribute(QStringLiteral(u"orientation"),
                     QStringLiteral(u"orthogonal"));
-
   root.setAttribute(QStringLiteral(u"renderorder"),
                     QStringLiteral(u"right-down"));
-
   root.setAttribute(QStringLiteral(u"width"), map.cols().get());
   root.setAttribute(QStringLiteral(u"height"), map.rows().get());
-
   root.setAttribute(QStringLiteral(u"tilewidth"),
                     prefs::saves::tile_width().value());
-
   root.setAttribute(QStringLiteral(u"tileheight"),
                     prefs::saves::tile_height().value());
-
   root.setAttribute(QStringLiteral(u"infinite"), 0);
   root.setAttribute(QStringLiteral(u"nextlayerid"), map.num_layers() + 1);
   root.setAttribute(QStringLiteral(u"nextobjectid"), 1);
