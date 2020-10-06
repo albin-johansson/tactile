@@ -12,8 +12,6 @@
 #include "tiled_version.hpp"
 #include "to_string.hpp"
 
-// TODO adhere to prefs::saves::generate_defaults, prefs::saves::embed_tilesets
-
 using namespace tactile::core;
 
 namespace tactile::service {
@@ -25,8 +23,23 @@ void add_attribute(pugi::xml_node& node, T&& name, U&& value)
   node.append_attribute(name).set_value(value);
 }
 
+void add_image_node(pugi::xml_node& parent,
+                    const tileset& tileset,
+                    const QFileInfo& mapInfo)
+{
+  auto node = parent.append_child("image");
+
+  const auto relativePath = mapInfo.dir().relativeFilePath(tileset.path());
+  const auto imagePath = relativePath.toStdString();
+
+  add_attribute(node, "source", imagePath.c_str());
+  add_attribute(node, "width", tileset.width());
+  add_attribute(node, "height", tileset.height());
+}
+
 void add_common_attributes(pugi::xml_node& node,
-                           const tileset& tileset)
+                           const tileset& tileset,
+                           const QFileInfo& mapInfo)
 {
   const auto name = tileset.name().toStdString();
   add_attribute(node, "version", g_tiledXmlVersion);
@@ -36,42 +49,27 @@ void add_common_attributes(pugi::xml_node& node,
   add_attribute(node, "tileheight", tileset.get_tile_height().get());
   add_attribute(node, "tilecount", tileset.tile_count());
   add_attribute(node, "columns", tileset.cols().get());
-}
 
-void add_image_node(pugi::xml_node& parent,
-                    const tileset& tileset,
-                    const QString& mapDestination)
-{
-  auto node = parent.append_child("image");
-
-  const QFileInfo info{mapDestination};
-  const auto relativePath = info.dir().relativeFilePath(tileset.path());
-  const auto imagePath = relativePath.toStdString();
-
-  add_attribute(node, "source", imagePath.c_str());
-  add_attribute(node, "width", tileset.width());
-  add_attribute(node, "height", tileset.height());
+  add_image_node(node, tileset, mapInfo);
 }
 
 void create_external_tileset_file(const tileset& tileset,
-                                  const QString& mapDestination,
+                                  const QFileInfo& mapInfo,
                                   const export_options& options)
 {
   pugi::xml_document document{};
 
   auto node = document.append_child("tileset");
-  add_common_attributes(node, tileset);
-  add_image_node(node, tileset, mapDestination);
+  add_common_attributes(node, tileset, mapInfo);
 
-  const QFileInfo info{mapDestination};
-  const auto path = info.absoluteDir().absoluteFilePath(
+  const auto path = mapInfo.absoluteDir().absoluteFilePath(
       tileset.name() + QStringLiteral(u".tsx"));
   document.save_file(path.toStdString().c_str());
 }
 
 void save_tilesets(pugi::xml_node& root,
                    const tileset_manager& tilesets,
-                   const QString& mapDestination,
+                   const QFileInfo& mapInfo,
                    const export_options& options)
 {
   for (const auto& [id, tileset] : tilesets) {
@@ -80,14 +78,12 @@ void save_tilesets(pugi::xml_node& root,
     add_attribute(tilesetNode, "firstgid", tileset.first_id().get());
 
     if (options.embedTilesets) {
-      add_common_attributes(tilesetNode, tileset);
-      add_image_node(tilesetNode, tileset, mapDestination);
+      add_common_attributes(tilesetNode, tileset, mapInfo);
     } else {
-      const QFileInfo info{mapDestination};
-      const auto source =
-          info.dir().relativeFilePath(tileset.name() + QStringLiteral(u".tsx"));
+      const auto source = mapInfo.dir().relativeFilePath(
+          tileset.name() + QStringLiteral(u".tsx"));
       add_attribute(tilesetNode, "source", source.toStdString().c_str());
-      create_external_tileset_file(tileset, mapDestination, options);
+      create_external_tileset_file(tileset, mapInfo, options);
     }
   }
 }
@@ -177,8 +173,10 @@ void save_tmx(const QString& path,
 
   pugi::xml_document document{};
 
+  const QFileInfo info{path};
+
   auto root = create_root(document, map, options);
-  save_tilesets(root, tilesets, path, options);
+  save_tilesets(root, tilesets, info, options);
   save_layers(root, map);
 
   const auto pathStr = path.toStdString();
