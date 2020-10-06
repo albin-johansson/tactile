@@ -115,7 +115,8 @@ void create_external_tileset_file(const tileset& tileset,
 {
   QJsonArray array;
 
-  for (int id{1}; const auto& layer : map) {
+  int id{1};
+  for (const auto& layer : map) {
     QJsonObject object;
 
     if (const auto str = to_string(id); str) {
