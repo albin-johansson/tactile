@@ -122,7 +122,7 @@ void create_external_tileset_file(const tileset& tileset,
 
   add_common_attributes(object, tileset, mapDestination, options);
   object.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
-  object.insert(u"version", g_tiledJsonVersion);
+  object.insert(u"version", TACTILE_TILED_JSON_VERSION_LITERAL);
   object.insert(u"type", QStringLiteral(u"tileset"));
 
   document.setObject(object);
@@ -244,7 +244,7 @@ void create_external_tileset_file(const tileset& tileset,
   root.insert(u"compressionlevel", -1);
   root.insert(u"infinite", false);
   root.insert(u"type", QStringLiteral(u"map"));
-  root.insert(u"version", g_tiledJsonVersion);
+  root.insert(u"version", TACTILE_TILED_JSON_VERSION_LITERAL);
   root.insert(u"tilewidth", prefs::saves::tile_width().value());
   root.insert(u"tileheight", prefs::saves::tile_height().value());
   root.insert(u"nextobjectid", 1);
