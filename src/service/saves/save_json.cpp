@@ -11,7 +11,7 @@
 #include "preferences.hpp"
 #include "to_string.hpp"
 
-// TODO adhere to prefs::saves::generate_defaults, prefs::saves::embed_tilesets
+// TODO adhere to prefs::saves::embed_tilesets
 
 using namespace tactile::core;
 
