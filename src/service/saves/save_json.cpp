@@ -137,9 +137,7 @@ void save_json(const QString& path,
                const map& map,
                const tileset_manager& tilesets)
 {
-  export_options options;
-  options.generateDefaults = prefs::saves::generate_defaults().value_or(false);
-  options.embedTilesets = prefs::saves::embed_tilesets().value_or(true);
+  const auto options = make_export_options();
 
   QJsonDocument document{};
   document.setObject(create_root(map, tilesets, path, options));
