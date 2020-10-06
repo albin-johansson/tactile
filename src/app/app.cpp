@@ -38,6 +38,10 @@ void app::save_as(const QString& path)
   service::save(path, *m_model->current_map(), *m_model->get_tileset_manager());
 }
 
+void app::open_map(const QString& path)
+{
+}
+
 void app::handle_resize_map()
 {
   if (m_model->has_active_map()) {

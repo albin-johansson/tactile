@@ -59,6 +59,8 @@ class app final : public QApplication
  private slots:
   void save_as(const QString& path);
 
+  void open_map(const QString& path);
+
   void handle_resize_map();
 
   void handle_pan_up();

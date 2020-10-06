@@ -98,6 +98,9 @@ set(TACTILE_SOURCE_FILES
         gui/action/save/save_as_dialog.cpp
         gui/action/save/save_as_dialog.hpp
 
+        gui/action/open_map/open_map_dialog.cpp
+        gui/action/open_map/open_map_dialog.hpp
+
         gui/about/about.ui
 
         gui/toolbar/dynamic_tool_bar_widget.cpp

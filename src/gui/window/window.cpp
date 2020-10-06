@@ -9,6 +9,7 @@
 
 #include "about_dialog.hpp"
 #include "map_editor.hpp"
+#include "open_map_dialog.hpp"
 #include "preferences.hpp"
 #include "save_as_dialog.hpp"
 #include "save_service.hpp"
@@ -349,6 +350,13 @@ void window::on_action_save_as_triggered()
   };
   save_as_dialog::spawn([this](const QString& path) { emit save_as(path); },
                         get_tab_name());
+}
+
+void window::on_action_open_map_triggered()
+{
+  open_map_dialog::spawn([this](const QString& path) {
+    emit open_map(path);
+  });
 }
 
 void window::on_action_rename_triggered()

@@ -66,6 +66,8 @@ class window final : public QMainWindow
  signals:
   void save_as(const QString& path);
 
+  void open_map(const QString& path);
+
   void request_new_map();
 
   void request_close_map(map_id id);
@@ -220,6 +222,8 @@ class window final : public QMainWindow
   void on_action_save_triggered();
 
   void on_action_save_as_triggered();
+
+  void on_action_open_map_triggered();
 
   void on_action_rename_triggered();
 
