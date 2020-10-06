@@ -158,7 +158,8 @@ void create_root(QDomDocument& document,
 
   if (options.generateDefaults) {
     root.setAttribute(QStringLiteral(u"compressionlevel"), -1);
-    root.setAttribute(QStringLiteral(u"backgroundcolor"), "#00000000");
+    root.setAttribute(QStringLiteral(u"backgroundcolor"),
+                      QStringLiteral(u"#00000000"));
   }
 
   save_tilesets(document, root, tilesets, mapInfo, options);
@@ -176,7 +177,6 @@ void save_tmx(const QString& path,
   const auto options = make_export_options();
   const QFileInfo info{path};
 
-  // TODO <?xml version="1.0" encoding="UTF-8"?>
   QDomDocument document{};
   create_root(document, map, tilesets, info, options);
 
