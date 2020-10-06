@@ -11,12 +11,39 @@
 #include "preferences.hpp"
 #include "to_string.hpp"
 
-// TODO adhere to prefs::saves::embed_tilesets
-
 using namespace tactile::core;
 
 namespace tactile::service {
 namespace {
+
+[[nodiscard]] auto save_tileset(const tileset& tileset,
+                                const QString& destination,
+                                const export_options& options) -> QJsonObject
+{
+  QJsonObject object;
+
+  object.insert(QStringLiteral(u"firstgid"), tileset.first_id().get());
+  object.insert(QStringLiteral(u"name"), tileset.name());
+  object.insert(QStringLiteral(u"tilewidth"), tileset.get_tile_width().get());
+  object.insert(QStringLiteral(u"tileheight"), tileset.get_tile_height().get());
+  object.insert(QStringLiteral(u"tilecount"), tileset.tile_count());
+  object.insert(QStringLiteral(u"columns"), tileset.cols().get());
+  object.insert(QStringLiteral(u"imagewidth"), tileset.width());
+  object.insert(QStringLiteral(u"imageheight"), tileset.height());
+  object.insert(QStringLiteral(u"margin"), 0);
+  object.insert(QStringLiteral(u"spacing"), 0);
+
+  const QFileInfo info{destination};
+  object.insert(QStringLiteral(u"image"),
+                info.dir().relativeFilePath(tileset.path()));
+
+  if (options.generateDefaults) {
+    object.insert(QStringLiteral(u"objectalignment"),
+                  QStringLiteral(u"unspecified"));
+  }
+
+  return object;
+}
 
 [[nodiscard]] auto save_tilesets(const tileset_manager& tilesets,
                                  const QString& destination,
@@ -25,30 +52,8 @@ namespace {
   QJsonArray array;
 
   for (const auto& [id, tileset] : tilesets) {
-    QJsonObject object;
-
-    object.insert(QStringLiteral(u"firstgid"), tileset.first_id().get());
-    object.insert(QStringLiteral(u"name"), tileset.name());
-    object.insert(QStringLiteral(u"tilewidth"), tileset.get_tile_width().get());
-    object.insert(QStringLiteral(u"tileheight"),
-                  tileset.get_tile_height().get());
-    object.insert(QStringLiteral(u"tilecount"), tileset.tile_count());
-    object.insert(QStringLiteral(u"columns"), tileset.cols().get());
-    object.insert(QStringLiteral(u"imagewidth"), tileset.width());
-    object.insert(QStringLiteral(u"imageheight"), tileset.height());
-    object.insert(QStringLiteral(u"margin"), 0);
-    object.insert(QStringLiteral(u"spacing"), 0);
-
-    const QFileInfo info{destination};
-    object.insert(QStringLiteral(u"image"),
-                  info.dir().relativeFilePath(tileset.path()));
-
-    if (options.generateDefaults) {
-      object.insert(QStringLiteral(u"objectalignment"),
-                    QStringLiteral(u"unspecified"));
-    }
-
-    array.append(object);
+    // Tilesets are always embedded in the Tiled JSON format.
+    array.append(save_tileset(tileset, destination, options));
   }
 
   return array;
@@ -71,7 +76,6 @@ namespace {
     object.insert(QStringLiteral(u"height"), layer.rows().get());
     object.insert(QStringLiteral(u"id"), id);
     object.insert(QStringLiteral(u"opacity"), 1.0);
-    //    object.insert(QStringLiteral(u"properties"), QJsonArray{});
     object.insert(QStringLiteral(u"type"), QStringLiteral(u"tilelayer"));
     object.insert(QStringLiteral(u"visible"), layer.visible());
     object.insert(QStringLiteral(u"x"), 0);
