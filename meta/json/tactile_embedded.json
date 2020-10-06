@@ -4,7 +4,6 @@
     "infinite": false,
     "layers": [
         {
-            "compression": "",
             "data": [
                 360,
                 360,
@@ -32,13 +31,9 @@
                 360,
                 360
             ],
-            "draworder": "topdown",
-            "encoding": "csv",
             "height": 5,
             "id": 1,
             "name": "Layer 1",
-            "offsetx": 0,
-            "offsety": 0,
             "opacity": 1,
             "type": "tilelayer",
             "visible": true,
@@ -57,12 +52,11 @@
         {
             "columns": 32,
             "firstgid": 1,
-            "image": "../terrain.png",
+            "image": "../../../../../Pictures/terrain.png",
             "imageheight": 1024,
             "imagewidth": 1024,
             "margin": 0,
             "name": "terrain",
-            "objectalignment": "unspecified",
             "spacing": 0,
             "tilecount": 1024,
             "tileheight": 32,
