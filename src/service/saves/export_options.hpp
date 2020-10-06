@@ -4,8 +4,8 @@ namespace tactile::service {
 
 struct export_options final
 {
-  bool generateDefaults{false};
-  bool embedTilesets{true};
+  bool generateDefaults;
+  bool embedTilesets;
 };
 
 }  // namespace tactile::service
