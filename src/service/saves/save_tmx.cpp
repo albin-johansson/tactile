@@ -26,9 +26,7 @@ void add_attribute(pugi::xml_node& node, T&& name, U&& value)
 }
 
 void add_common_attributes(pugi::xml_node& node,
-                           const tileset& tileset,
-                           const QString& mapDestination,
-                           const export_options& options)
+                           const tileset& tileset)
 {
   const auto name = tileset.name().toStdString();
   add_attribute(node, "version", g_tiledXmlVersion);
@@ -62,7 +60,7 @@ void create_external_tileset_file(const tileset& tileset,
   pugi::xml_document document{};
 
   auto node = document.append_child("tileset");
-  add_common_attributes(node, tileset, mapDestination, options);
+  add_common_attributes(node, tileset);
   add_image_node(node, tileset, mapDestination);
 
   const QFileInfo info{mapDestination};
@@ -82,7 +80,7 @@ void save_tilesets(pugi::xml_node& root,
     add_attribute(tilesetNode, "firstgid", tileset.first_id().get());
 
     if (options.embedTilesets) {
-      add_common_attributes(tilesetNode, tileset, mapDestination, options);
+      add_common_attributes(tilesetNode, tileset);
       add_image_node(tilesetNode, tileset, mapDestination);
     } else {
       const QFileInfo info{mapDestination};
