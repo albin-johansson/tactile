@@ -9,16 +9,13 @@
 
 #include "export_options.hpp"
 #include "preferences.hpp"
+#include "tiled_version.hpp"
 #include "to_string.hpp"
 
 using namespace tactile::core;
 
-#define TILED_VERSION QStringLiteral(u"1.4.2")
-
 namespace tactile::service {
 namespace {
-
-inline constexpr double g_tiledJsonVersion{1.4};
 
 /**
  * @brief Adds common tileset attributes between embedded and external tilesets.
@@ -124,7 +121,7 @@ void create_external_tileset_file(const tileset& tileset,
   QJsonObject object;
 
   add_common_attributes(object, tileset, mapDestination, options);
-  object.insert(u"tiledversion", TILED_VERSION);
+  object.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   object.insert(u"version", g_tiledJsonVersion);
   object.insert(u"type", QStringLiteral(u"tileset"));
 
@@ -239,7 +236,7 @@ void create_external_tileset_file(const tileset& tileset,
 {
   QJsonObject root;
 
-  root.insert(u"tiledversion", TILED_VERSION);
+  root.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   root.insert(u"orientation", QStringLiteral(u"orthogonal"));
   root.insert(u"renderorder", QStringLiteral(u"right-down"));
   root.insert(u"width", map.cols().get());
