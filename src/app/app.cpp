@@ -1,10 +1,12 @@
 #include "app.hpp"
 
+#include <qdebug.h>
 #include <qdockwidget.h>
 #include <qpainter.h>
 
 #include "app_connections.hpp"
 #include "model.hpp"
+#include "open_map.hpp"
 #include "resize_dialog.hpp"
 #include "save_service.hpp"
 #include "setup_app.hpp"
@@ -40,6 +42,11 @@ void app::save_as(const QString& path)
 
 void app::open_map(const QString& path)
 {
+//  auto [doc, tilesets] = service::open_map(path);
+
+  // TODO implement
+
+
 }
 
 void app::handle_resize_map()
@@ -102,6 +109,7 @@ void app::tileset_selection_changed(core::position topLeft,
 void app::handle_new_map()
 {
   const auto id = m_model->add_map();
+
   m_window->handle_new_map(
       m_model->get_map(id), m_model->get_tileset_manager(), id);
 }
