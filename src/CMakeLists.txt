@@ -230,6 +230,7 @@ target_include_directories(libTactile
         PUBLIC gui/action
         PUBLIC gui/action/resize_map
         PUBLIC gui/action/save
+        PUBLIC gui/action/open_map
         PUBLIC service
         PUBLIC service/saves
         PUBLIC ${Boost_INCLUDE_DIRS})
