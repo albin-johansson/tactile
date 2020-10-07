@@ -14,6 +14,7 @@ namespace tactile::core {
 map_document::map_document(QObject* parent)
     : QObject{parent},
       m_map{std::make_unique<map>(5_row, 5_col)},
+      m_tilesets{std::make_unique<tileset_manager>()},
       m_commands{new command_stack{this}}
 {
   m_commands->setUndoLimit(100);
@@ -92,6 +93,45 @@ void map_document::remove_column()
 void map_document::resize(row_t nRows, col_t nCols)
 {
   m_commands->push<cmd::resize_map>(m_map.get(), nRows, nCols);
+}
+
+auto map_document::add_tileset(const QImage& image,
+                               const QString& path,
+                               const QString& name,
+                               tile_width tileWidth,
+                               tile_height tileHeight)
+    -> std::optional<tileset_id>
+{
+  if (!image.isNull()) {
+    const auto id = m_tilesets->emplace(image, tileWidth, tileHeight);
+    auto& tileset = m_tilesets->at(id);
+    tileset.set_name(name);
+    tileset.set_path(path);
+    return id;
+  } else {
+    return std::nullopt;
+  }
+}
+
+void map_document::remove_tileset(tileset_id id)
+{
+  const auto [first, last] = m_tilesets->range_of(id);
+
+  for (auto i = first; i < last; ++i) {
+    m_map->remove_all(i);
+  }
+
+  m_tilesets->remove(id);
+}
+
+void map_document::select_tileset(tileset_id id)
+{
+  m_tilesets->select(id);
+}
+
+void map_document::set_selection(position topLeft, position bottomRight)
+{
+  m_tilesets->set_selection(topLeft, bottomRight);
 }
 
 auto map_document::can_undo() const -> bool

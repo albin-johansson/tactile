@@ -1,6 +1,8 @@
 #pragma once
 
+#include <qimage.h>
 #include <qobject.h>
+#include <qstring.h>
 
 #include <optional>  // optional
 
@@ -21,6 +23,19 @@ class map_manager final : public QObject
 
   void select(map_id id);
 
+  [[nodiscard]] auto add_tileset(const QImage& image,
+                                 const QString& path,
+                                 const QString& name,
+                                 tile_width tileWidth,
+                                 tile_height tileHeight)
+      -> std::optional<tileset_id>;
+
+  void remove_tileset(tileset_id id);
+
+  void select_tileset(tileset_id id);
+
+  void update_tileset_selection(position topLeft, position bottomRight);
+
   [[nodiscard]] auto has_active_map() const noexcept -> bool;
 
   [[nodiscard]] auto at(map_id id) -> map*;
@@ -34,6 +49,12 @@ class map_manager final : public QObject
   [[nodiscard]] auto current_map() -> map*;
 
   [[nodiscard]] auto current_map() const -> const map*;
+
+  [[nodiscard]] auto current_tileset() const -> const tileset*;
+
+  [[nodiscard]] auto get_tileset_manager() -> tileset_manager*;
+
+  [[nodiscard]] auto get_tileset_manager() const -> const tileset_manager*;
 
   [[nodiscard]] auto begin() noexcept
   {

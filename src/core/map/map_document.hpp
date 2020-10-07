@@ -1,15 +1,18 @@
 #pragma once
 
+#include <qimage.h>
 #include <qobject.h>
+#include <qstring.h>
 
-#include <memory>  // unique_ptr
+#include <memory>    // unique_ptr
+#include <optional>  // optional
 
 #include "command_stack.hpp"
 #include "map.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
+#include "tileset_manager.hpp"
 #include "types.hpp"
-#include "vector_map.hpp"
 
 namespace tactile::core {
 
@@ -151,6 +154,19 @@ class map_document final : public QObject
    */
   void resize(row_t nRows, col_t nCols);
 
+  [[nodiscard]] auto add_tileset(const QImage& image,
+                                 const QString& path,
+                                 const QString& name,
+                                 tile_width tileWidth,
+                                 tile_height tileHeight)
+      -> std::optional<tileset_id>;
+
+  void remove_tileset(tileset_id id);
+
+  void select_tileset(tileset_id id);
+
+  void set_selection(position topLeft, position bottomRight);
+
   /**
    * @brief Indicates whether or not there is an undoable command.
    *
@@ -210,6 +226,22 @@ class map_document final : public QObject
     return m_map.get();
   }
 
+  [[nodiscard]] auto current_tileset() const -> const tileset*
+  {
+    return m_tilesets->current_tileset();
+  }
+
+  [[nodiscard]] auto get_tileset_manager() noexcept -> tileset_manager*
+  {
+    return m_tilesets.get();
+  }
+
+  [[nodiscard]] auto get_tileset_manager() const noexcept
+      -> const tileset_manager*
+  {
+    return m_tilesets.get();
+  }
+
  signals:
   void undo_state_updated(bool canUndo);
 
@@ -221,6 +253,7 @@ class map_document final : public QObject
 
  private:
   std::unique_ptr<map> m_map;
+  std::unique_ptr<tileset_manager> m_tilesets;
   command_stack* m_commands;
 };
 

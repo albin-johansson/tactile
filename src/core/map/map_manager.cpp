@@ -72,6 +72,42 @@ void map_manager::select(map_id id)
   }
 }
 
+auto map_manager::add_tileset(const QImage& image,
+                              const QString& path,
+                              const QString& name,
+                              tile_width tileWidth,
+                              tile_height tileHeight)
+    -> std::optional<tileset_id>
+{
+  if (auto* document = current_document()) {
+    return document->add_tileset(image, path, name, tileWidth, tileHeight);
+  } else {
+    return std::nullopt;
+  }
+}
+
+void map_manager::remove_tileset(tileset_id id)
+{
+  for (auto& [mapID, document] : m_mapDocuments) {
+    document->remove_tileset(id);
+  }
+}
+
+void map_manager::select_tileset(tileset_id id)
+{
+  if (auto* document = current_document()) {
+    document->select_tileset(id);
+  }
+}
+
+void map_manager::update_tileset_selection(position topLeft,
+                                           position bottomRight)
+{
+  if (auto* document = current_document()) {
+    document->set_selection(topLeft, bottomRight);
+  }
+}
+
 auto map_manager::has_active_map() const noexcept -> bool
 {
   return m_currentMapID.has_value();
@@ -97,12 +133,12 @@ auto map_manager::at(map_id id) const -> const map*
 
 auto map_manager::current_document() -> map_document*
 {
-  return m_currentMapID ? m_mapDocuments.at(*m_currentMapID) : nullptr;
+  return m_currentMapID ? m_mapDocuments.at(m_currentMapID.value()) : nullptr;
 }
 
 auto map_manager::current_document() const -> const map_document*
 {
-  return m_currentMapID ? m_mapDocuments.at(*m_currentMapID) : nullptr;
+  return m_currentMapID ? m_mapDocuments.at(m_currentMapID.value()) : nullptr;
 }
 
 auto map_manager::current_map() -> map*
@@ -115,6 +151,24 @@ auto map_manager::current_map() const -> const map*
 {
   const auto* document = current_document();
   return document ? document->get() : nullptr;
+}
+
+auto map_manager::current_tileset() const -> const tileset*
+{
+  const auto* document = current_document();
+  return document ? document->current_tileset() : nullptr;
+}
+
+auto map_manager::get_tileset_manager() -> tileset_manager*
+{
+  auto* document = current_document();
+  return document->get_tileset_manager();
+}
+
+auto map_manager::get_tileset_manager() const -> const tileset_manager*
+{
+  const auto* document = current_document();
+  return document->get_tileset_manager();
 }
 
 }  // namespace tactile::core

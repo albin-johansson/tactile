@@ -86,7 +86,7 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_map(map_id id) -> map*
+  [[nodiscard, deprecated]] auto get_map(map_id id) -> map*
   {
     return m_maps->at(id);
   }
@@ -119,7 +119,7 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto current_map() -> map*
+  [[nodiscard, deprecated]] auto current_map() -> map*
   {
     return m_maps->current_map();
   }
@@ -142,7 +142,7 @@ class model final : public QObject
    */
   [[nodiscard]] auto current_tileset() const -> const tileset*
   {
-    return m_tilesets->current_tileset();
+    return m_maps->current_tileset();
   }
 
   /**
@@ -152,9 +152,9 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_tileset_manager() -> tileset_manager*
+  [[nodiscard, deprecated]] auto get_tileset_manager() -> tileset_manager*
   {
-    return m_tilesets.get();
+    return m_maps->get_tileset_manager();
   }
 
  signals:
@@ -294,7 +294,6 @@ class model final : public QObject
 
  private:
   std::unique_ptr<map_manager> m_maps;
-  std::unique_ptr<tileset_manager> m_tilesets;
   tool_model m_tools;
 };
 
