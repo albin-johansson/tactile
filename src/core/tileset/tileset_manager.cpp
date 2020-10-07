@@ -1,5 +1,7 @@
 #include "tileset_manager.hpp"
 
+#include <algorithm>  // any_of
+
 #include "tactile_error.hpp"
 
 namespace tactile::core {
