@@ -38,65 +38,62 @@ void stamp_tool::update_stamp_sequence(map& map,
 
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* tileset = get_model()->current_tileset();
-  if (!tileset || !tileset->get_selection()) {
-    return;
-  }
+  if (auto* document = get_model()->current_map_document()) {
+    auto* tileset = document->current_tileset();
+    if (!tileset || !tileset->get_selection().has_value()) {
+      return;
+    }
 
-  if (event->buttons() & Qt::MouseButton::LeftButton) {
-    if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
-        pos) {
-      auto* map = get_model()->current_map();
-      Q_ASSERT(map);
-
-      update_stamp_sequence(*map, *tileset, *pos);
-
-      emit get_model()->redraw();
+    if (event->buttons() & Qt::MouseButton::LeftButton) {
+      const auto pos = translate_mouse_position(event->pos(), mapPosition);
+      if (pos) {
+        update_stamp_sequence(document->map_ref(), *tileset, *pos);
+        emit get_model()->redraw();
+      }
     }
   }
 }
 
 void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 {
-  const auto* tileset = get_model()->current_tileset();
-  if (!tileset || !tileset->get_selection()) {
-    return;
-  }
-
-  if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
-      pos) {
-    emit get_model()->enable_stamp_preview(*pos);
-
-    auto* map = get_model()->current_map();
-    Q_ASSERT(map);
-
-    if (event->buttons() & Qt::MouseButton::LeftButton) {
-      update_stamp_sequence(*map, *tileset, *pos);
+  if (auto* document = get_model()->current_map_document()) {
+    const auto* tileset = document->current_tileset();
+    if (!tileset || !tileset->get_selection()) {
+      return;
     }
 
-    emit get_model()->redraw();
-  } else {
-    // mouse is outside of map, so disable preview
-    emit get_model()->disable_stamp_preview();
+    const auto pos = translate_mouse_position(event->pos(), mapPosition);
+    if (pos) {
+      emit get_model()->enable_stamp_preview(*pos);
+
+      if (event->buttons() & Qt::MouseButton::LeftButton) {
+        update_stamp_sequence(document->map_ref(), *tileset, *pos);
+      }
+
+      emit get_model()->redraw();
+    } else {
+      // mouse is outside of map, so disable preview
+      emit get_model()->disable_stamp_preview();
+    }
   }
 }
 
 void stamp_tool::released(QMouseEvent* event, const QPointF&)
 {
-  auto* tileset = get_model()->current_tileset();
-  if (!tileset || !tileset->get_selection()) {
-    return;
-  }
+  if (auto* document = get_model()->current_map_document()) {
+    auto* tileset = document->current_tileset();
+    if (!tileset || !tileset->get_selection()) {
+      return;
+    }
 
-  if (event->button() == Qt::MouseButton::LeftButton) {
-    auto* document = get_model()->current_map_document();
-    Q_ASSERT(document);
+    if (event->button() == Qt::MouseButton::LeftButton) {
+      document->add_stamp_sequence(std::move(m_oldState),
+                                   std::move(m_sequence));
 
-    document->add_stamp_sequence(std::move(m_oldState), std::move(m_sequence));
-
-    // Clearing the maps allows for them to be used after being moved from
-    m_oldState.clear();
-    m_sequence.clear();
+      // Clearing the maps allows for them to be used after being moved from
+      m_oldState.clear();
+      m_sequence.clear();
+    }
   }
 }
 
