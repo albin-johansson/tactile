@@ -11,20 +11,18 @@ eraser_tool::eraser_tool(core::model* model) : abstract_tool{model}
 
 void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* map = get_model()->current_map();
-  if (!map) {
-    return;
-  }
+  if (auto* document = get_model()->current_map_document()) {
+    auto* map = document->get();
+    if (event->buttons() & Qt::MouseButton::LeftButton) {
+      const auto pos = translate_mouse_position(event->pos(), mapPosition);
+      if (pos) {
+        if (!m_oldState.contains(*pos)) {
+          m_oldState.emplace(*pos, map->tile_at(*pos).value());
+        }
 
-  if (event->buttons() & Qt::MouseButton::LeftButton) {
-    if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
-        pos) {
-      if (!m_oldState.contains(*pos)) {
-        m_oldState.emplace(*pos, map->tile_at(*pos).value());
+        map->set_tile(*pos, empty);
+        emit get_model()->redraw();
       }
-
-      map->set_tile(*pos, empty);
-      emit get_model()->redraw();
     }
   }
 }
@@ -41,17 +39,11 @@ void eraser_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 
 void eraser_tool::released(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* map = get_model()->current_map();
-  if (!map) {
-    return;
-  }
-
-  if (event->button() == Qt::MouseButton::LeftButton) {
-    auto* document = get_model()->current_map_document();
-    Q_ASSERT(document);
-
-    document->add_erase_sequence(std::move(m_oldState));
-    m_oldState.clear();
+  if (auto* document = get_model()->current_map_document()) {
+    if (event->button() == Qt::MouseButton::LeftButton) {
+      document->add_erase_sequence(std::move(m_oldState));
+      m_oldState.clear();
+    }
   }
 }
 
