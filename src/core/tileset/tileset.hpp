@@ -123,6 +123,47 @@ class tileset final
   }
 
   /**
+   * @brief Iterates the currently selected tiles in the tileset.
+   *
+   * @details This function is for example useful for the stamp tool, which
+   * needs to iterate the selected tiles in the tileset, whilst also keeping
+   * track of which position in the map needs to be changed.
+   *
+   * @note This function has no effect if there is no current selection.
+   *
+   * @tparam T the type of the callable, the first parameter is the map
+   * position, the second parameter is the tileset position.
+   *
+   * @param mapOrigin the origin tile map position.
+   * @param callable the callable that will be invoked for each selected tile in
+   * the tileset.
+   *
+   * @since 0.1.0
+   */
+  template <std::invocable<position, position> T>
+  void iterate_selection(const position& mapOrigin, T&& callable) const
+  {
+    if (m_selection) {
+      const auto& [topLeft, bottomRight] = *m_selection;
+
+      if (topLeft == bottomRight) {
+        callable(mapOrigin, topLeft);
+      } else {
+        const auto diff = bottomRight - topLeft;
+        const auto endRow = 1_row + diff.row();
+        const auto endCol = 1_col + diff.col();
+        for (row_t row{0}; row < endRow; ++row) {
+          for (col_t col{0}; col < endCol; ++col) {
+            const auto tilePos = mapOrigin.offset_by(row, col);
+            const auto tilesetPos = topLeft.offset_by(row, col);
+            callable(tilePos, tilesetPos);
+          }
+        }
+      }
+    }
+  }
+
+  /**
    * @brief Sets the current selection in the tileset.
    *
    * @param topLeft the top-left position of the selection.

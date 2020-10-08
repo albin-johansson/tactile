@@ -180,13 +180,13 @@ auto map_manager::current_tileset() const -> const tileset*
 auto map_manager::get_tileset_manager() -> tileset_manager*
 {
   auto* document = current_document();
-  return document->get_tileset_manager();
+  return document->tilesets();
 }
 
 auto map_manager::get_tileset_manager() const -> const tileset_manager*
 {
   const auto* document = current_document();
-  return document->get_tileset_manager();
+  return document->tilesets();
 }
 
 }  // namespace tactile::core

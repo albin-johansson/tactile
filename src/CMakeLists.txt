@@ -23,7 +23,6 @@ set(TACTILE_SOURCE_FILES
         core/model.cpp
         core/tactile_error.hpp
         core/tactile_error.cpp
-        core/iterate_tileset_selection.hpp
         core/position.hpp
 
         core/algorithm/flood_fill.hpp

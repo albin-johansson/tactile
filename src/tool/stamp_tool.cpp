@@ -1,6 +1,5 @@
 #include "stamp_tool.hpp"
 
-#include "iterate_tileset_selection.hpp"
 #include "model.hpp"
 
 namespace tactile {
@@ -17,23 +16,18 @@ void stamp_tool::update_stamp_sequence(map& map,
                                        const tileset& ts,
                                        const position& origin)
 {
-  iterate_tileset_selection(
-      [&, this](const tileset& ts,
-                const position& tilePos,
-                const position& tilesetPos) {
-        if (map.in_bounds(tilePos)) {
-          const auto newID = ts.tile_at(tilesetPos);
+  ts.iterate_selection(origin, [&](position mapPos, position tilesetPos) {
+    if (map.in_bounds(mapPos)) {
+      const auto newID = ts.tile_at(tilesetPos);
 
-          if (!m_oldState.contains(tilePos)) {
-            m_oldState.emplace(tilePos, map.tile_at(tilePos).value());
-          }
-          m_sequence.emplace(tilePos, newID);
+      if (!m_oldState.contains(mapPos)) {
+        m_oldState.emplace(mapPos, map.tile_at(mapPos).value());
+      }
+      m_sequence.emplace(mapPos, newID);
 
-          map.set_tile(tilePos, newID);
-        }
-      },
-      ts,
-      origin);
+      map.set_tile(mapPos, newID);
+    }
+  });
 }
 
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)

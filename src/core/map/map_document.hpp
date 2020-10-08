@@ -237,6 +237,11 @@ class map_document final : public QObject
    */
   [[nodiscard]] auto redo_text() const -> QString;
 
+  [[nodiscard]] auto in_bounds(const position& pos) const -> bool
+  {
+    return m_map->in_bounds(pos);
+  }
+
   /**
    * @brief Returns a pointer to the associated tilemap.
    *
@@ -247,7 +252,7 @@ class map_document final : public QObject
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get() noexcept -> map*
+  [[nodiscard, deprecated]] auto get() noexcept -> map*
   {
     return m_map.get();
   }
@@ -260,7 +265,7 @@ class map_document final : public QObject
     return m_map.get();
   }
 
-  [[nodiscard]] auto map_ref() -> map&
+  [[nodiscard, deprecated]] auto map_ref() -> map&
   {
     assert(m_map);
     return *m_map;
@@ -282,13 +287,12 @@ class map_document final : public QObject
     return m_tilesets->current_tileset();
   }
 
-  [[nodiscard]] auto get_tileset_manager() noexcept -> tileset_manager*
+  [[nodiscard]] auto tilesets() noexcept -> tileset_manager*
   {
     return m_tilesets.get();
   }
 
-  [[nodiscard]] auto get_tileset_manager() const noexcept
-      -> const tileset_manager*
+  [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*
   {
     return m_tilesets.get();
   }

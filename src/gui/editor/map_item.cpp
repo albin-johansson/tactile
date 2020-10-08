@@ -116,13 +116,12 @@ void map_item::draw_tile(QPainter& painter,
                          int y,
                          int tileSize)
 {
-  auto* tilesets = m_map->get_tileset_manager();
-  Q_ASSERT(tilesets->contains(tile));
-
-  const auto& image = tilesets->image(tile);
-  const auto src = tilesets->image_source(tile);
-  const QRect dst{x, y, tileSize, tileSize};
-  painter.drawPixmap(dst, image, src);
+  if (auto* tilesets = m_map->tilesets()) {
+    const auto& image = tilesets->image(tile);
+    const auto src = tilesets->image_source(tile);
+    const QRect dst{x, y, tileSize, tileSize};
+    painter.drawPixmap(dst, image, src);
+  }
 }
 
 void map_item::draw_preview_multiple_tiles(QPainter& painter,
@@ -131,13 +130,12 @@ void map_item::draw_preview_multiple_tiles(QPainter& painter,
                                            int tileSize)
 {
   // TODO test rendering preview centered around mouse
-
   auto* tileset = m_map->current_tileset();
   Q_ASSERT(tileset);
 
   tileset->iterate_selection([&](position pos) {
     const auto tilePos = mousePosition.offset_by(pos);
-    if (m_map->get()->in_bounds(tilePos)) {
+    if (m_map->in_bounds(tilePos)) {
       draw_tile(painter,
                 tileset->tile_at(selection.topLeft.offset_by(pos)),
                 tilePos.col_to_x(tileSize),
