@@ -28,7 +28,7 @@ auto abstract_tool::translate_mouse_position(const QPoint& mousePosition,
                                              const QPointF& mapPosition) const
     -> std::optional<core::position>
 {
-  if (auto* document = m_model->current_map_document()) {
+  if (const auto* document = m_model->current_map_document()) {
     const auto x = mousePosition.x() - mapPosition.x();
     const auto y = mousePosition.y() - mapPosition.y();
 
