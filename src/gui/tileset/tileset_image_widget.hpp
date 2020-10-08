@@ -6,6 +6,7 @@
 #include <qwidget.h>
 
 #include "position.hpp"
+#include "tileset.hpp"
 #include "types.hpp"
 
 namespace tactile::gui {
@@ -15,9 +16,7 @@ class tileset_image_widget final : public QWidget
   Q_OBJECT
 
  public:
-  explicit tileset_image_widget(const QImage& image,
-                                tile_width tileWidth,
-                                tile_height tileHeight,
+  explicit tileset_image_widget(const core::tileset& tileset,
                                 QWidget* parent = nullptr);
 
   ~tileset_image_widget() noexcept override;

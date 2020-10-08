@@ -82,6 +82,11 @@ class model final : public QObject
     return m_maps->at(id);
   }
 
+  [[nodiscard]] auto current_map() const -> std::optional<map_id>
+  {
+    return m_maps->current_map();
+  }
+
   /**
    * @brief Returns a pointer to the current map document.
    *

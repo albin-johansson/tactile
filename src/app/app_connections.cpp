@@ -125,6 +125,8 @@ void app_connections::init_map_connections(app* app) noexcept
   connect(m_window, &window::mouse_released, m_core, &model::mouse_released);
   connect(m_window, &window::mouse_entered, m_core, &model::mouse_entered);
   connect(m_window, &window::mouse_exited, m_core, &model::mouse_exited);
+
+  connect(m_core, &model::switched_map, m_window, &window::switched_map);
 }
 
 }  // namespace tactile

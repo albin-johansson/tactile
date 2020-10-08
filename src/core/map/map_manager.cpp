@@ -88,7 +88,7 @@ auto map_manager::add_tileset(const QImage& image,
 
 void map_manager::remove_tileset(tileset_id id)
 {
-  for (auto& [mapID, document] : m_mapDocuments) {
+  if (auto* document = current_document()) {
     document->remove_tileset(id);
   }
 }
@@ -129,6 +129,11 @@ auto map_manager::at(map_id id) const -> const map_document*
   } else {
     return nullptr;
   }
+}
+
+auto map_manager::current_map() const -> std::optional<map_id>
+{
+  return m_currentMapID;
 }
 
 auto map_manager::current_document() -> map_document*

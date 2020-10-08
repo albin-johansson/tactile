@@ -162,6 +162,8 @@ class tileset_manager final
 
   [[nodiscard]] auto contains(tile_id id) const -> bool;
 
+  [[nodiscard]] auto contains(tileset_id id) const -> bool;
+
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
     return m_tilesets.begin();

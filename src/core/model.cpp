@@ -136,6 +136,7 @@ void model::close_map(map_id id)
 void model::select_map(map_id id)
 {
   m_maps->select(id);
+  emit switched_map(id);
 }
 
 auto model::add_tileset(const QImage& image,

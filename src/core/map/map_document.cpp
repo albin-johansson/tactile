@@ -115,6 +115,8 @@ auto map_document::add_tileset(const QImage& image,
 
 void map_document::remove_tileset(tileset_id id)
 {
+  Q_ASSERT(m_tilesets->contains(id));
+
   const auto [first, last] = m_tilesets->range_of(id);
 
   for (auto i = first; i < last; ++i) {

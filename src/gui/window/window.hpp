@@ -133,11 +133,11 @@ class window final : public QMainWindow
 
   void handle_redo_text_update(const QString& text);
 
-  void handle_add_tileset(const QImage& image,
+  void handle_add_tileset(map_id map,
                           tileset_id id,
-                          tile_width tileWidth,
-                          tile_height tileHeight,
-                          const QString& tabName);
+                          const core::tileset& tileset);
+
+  void switched_map(map_id map);
 
   /**
    * @brief Triggers a redraw of the editor pane.

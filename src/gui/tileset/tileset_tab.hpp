@@ -7,6 +7,7 @@
 
 #include "fwd.hpp"
 #include "position.hpp"
+#include "tileset.hpp"
 #include "types.hpp"
 
 namespace tactile::gui {
@@ -16,10 +17,8 @@ class tileset_tab final : public QWidget
   Q_OBJECT
 
  public:
-  explicit tileset_tab(const QImage& image,
-                       tileset_id id,
-                       tile_width tileWidth,
-                       tile_height tileHeight,
+  explicit tileset_tab(tileset_id id,
+                       const core::tileset& tileset,
                        QWidget* parent = nullptr);
 
   ~tileset_tab() noexcept override;

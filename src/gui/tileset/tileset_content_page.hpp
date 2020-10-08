@@ -2,12 +2,14 @@
 
 #include <qwidget.h>
 
+#include <map>
 #include <optional>  // optional
 #include <vector>    // vector, erase_if
 
 #include "fwd.hpp"
 #include "position.hpp"
 #include "types.hpp"
+#include "vector_map.hpp"
 
 namespace Ui {
 class tileset_content_page;
@@ -29,6 +31,10 @@ class tileset_content_page final : public QWidget
 {
   Q_OBJECT
 
+  using tileset_map = std::map<tileset_id, tileset_tab*>;
+  using tilemap_map = std::map<map_id, tileset_map>;
+  using const_iterator = tilemap_map::const_iterator;
+
  public:
   /**
    * @brief Creates a `tileset_content_page` instance.
@@ -44,22 +50,16 @@ class tileset_content_page final : public QWidget
   /**
    * @brief Adds a tileset tab that represents the supplied tileset.
    *
-   * @pre `id` must not be used by another tileset tab.
-   * @pre `image` must refer to a non-null image.
+   * @pre `map` must not have been added before.
+   * @pre `id` must not have been added before.
    *
-   * @param image the image associated with the tileset.
-   * @param id the ID associated with the tileset.
-   * @param tileWidth the width of the tiles in the tileset.
-   * @param tileHeight the height of the tiles in the tileset.
-   * @param tabName the name of the tileset tab.
+   * @param map the ID associated with the map that owns the tileset.
+   * @param id the ID associated with the tileset that will be added.
+   * @param tileset the tileset that will be added.
    *
    * @since 0.1.0
    */
-  void add_tileset(const QImage& image,
-                   tileset_id id,
-                   tile_width tileWidth,
-                   tile_height tileHeight,
-                   const QString& tabName);
+  void add_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 
   /**
    * @brief Removes the tileset tab associated with the specified tileset.
@@ -89,6 +89,8 @@ class tileset_content_page final : public QWidget
    * @since 0.1.0
    */
   void switch_to_empty_page();
+
+  void switch_to_content_page();
 
   /**
    * @brief Requests a new tileset to be added to the model.
@@ -127,10 +129,13 @@ class tileset_content_page final : public QWidget
   void tileset_selection_changed(core::position topLeft,
                                  core::position bottomRight);
 
+ public slots:
+  void selected_map(map_id map);
+
  private:
-  using const_iterator = std::vector<tileset_tab*>::const_iterator;
   owner<Ui::tileset_content_page*> m_ui;
-  std::vector<tileset_tab*> m_tabs;
+  std::optional<map_id> m_currentMap;
+  tilemap_map m_mapTabs;
 
   /**
    * @brief Indicates whether or not there is a tab associated with the
@@ -143,18 +148,6 @@ class tileset_content_page final : public QWidget
    * @since 0.1.0
    */
   [[nodiscard]] auto has_tab(tileset_id id) const -> bool;
-
-  /**
-   * @brief Attempts to find the tab associated with the specified ID.
-   *
-   * @param id the ID to look for.
-   *
-   * @return an iterator to the tab that was found; points one past the end of
-   * the tab collection if no such tab was found.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto find_tab(tileset_id id) const -> const_iterator;
 
   /**
    * @brief Returns the tab associated with the specified index.
@@ -178,6 +171,16 @@ class tileset_content_page final : public QWidget
    * @since 0.1.0
    */
   [[nodiscard]] auto index_of(tileset_id id) const -> std::optional<int>;
+
+  [[nodiscard]] auto current_tab() const -> const tileset_map&
+  {
+    return m_mapTabs.at(m_currentMap.value());
+  }
+
+  [[nodiscard]] auto current_tab() -> tileset_map&
+  {
+    return m_mapTabs.at(m_currentMap.value());
+  }
 
  private slots:
   void handle_remove_tab(int index);

@@ -107,4 +107,9 @@ auto tileset_manager::contains(tile_id id) const -> bool
       });
 }
 
+auto tileset_manager::contains(tileset_id id) const -> bool
+{
+  return m_tilesets.contains(id);
+}
+
 }  // namespace tactile::core

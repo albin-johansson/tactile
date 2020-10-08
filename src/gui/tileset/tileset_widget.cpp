@@ -49,6 +49,9 @@ tileset_widget::tileset_widget(QWidget* parent)
   connect(m_contentPage, &tileset_content_page::switch_to_empty_page, [this]() {
     m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
   });
+  connect(m_contentPage,
+          &tileset_content_page::switch_to_content_page,
+          [this]() { m_ui->stackedWidget->setCurrentIndex(m_contentIndex); });
 }
 
 tileset_widget::~tileset_widget() noexcept
@@ -56,20 +59,12 @@ tileset_widget::~tileset_widget() noexcept
   delete m_ui;
 }
 
-void tileset_widget::add_tileset(const QImage& image,
+void tileset_widget::add_tileset(map_id map,
                                  tileset_id id,
-                                 tile_width tileWidth,
-                                 tile_height tileHeight,
-                                 const QString& tabName)
+                                 const core::tileset& tileset)
 {
-  if (image.isNull()) {
-    return;
-  }
-
   const auto wasEmpty = m_contentPage->empty();
-
-  m_contentPage->add_tileset(image, id, tileWidth, tileHeight, tabName);
-
+  m_contentPage->add_tileset(map, id, tileset);
   if (wasEmpty) {
     m_ui->stackedWidget->setCurrentIndex(m_contentIndex);
   }

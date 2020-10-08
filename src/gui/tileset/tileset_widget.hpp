@@ -6,6 +6,7 @@
 
 #include "fwd.hpp"
 #include "position.hpp"
+#include "tileset_content_page.hpp"
 #include "types.hpp"
 
 namespace Ui {
@@ -23,11 +24,7 @@ class tileset_widget final : public QWidget
 
   ~tileset_widget() noexcept override;
 
-  void add_tileset(const QImage& image,
-                   tileset_id id,
-                   tile_width tileWidth,
-                   tile_height tileHeight,
-                   const QString& tabName);
+  void add_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 
  signals:
   void request_new_tileset();
@@ -38,6 +35,12 @@ class tileset_widget final : public QWidget
 
   void tileset_selection_changed(core::position topLeft,
                                  core::position bottomRight);
+
+ public slots:
+  void selected_map(map_id map)
+  {
+    m_contentPage->selected_map(map);
+  }
 
  private:
   owner<Ui::tileset_widget*> m_ui;

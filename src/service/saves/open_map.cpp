@@ -6,7 +6,7 @@
 
 namespace tactile::service {
 
-auto open_map(const QString& path) -> open_map_result
+auto open_map(const QString& path) -> core::map_document*
 {
   const QFileInfo info{path};
 
@@ -16,7 +16,7 @@ auto open_map(const QString& path) -> open_map_result
   } else if (suffix == QStringLiteral(u"tmx")) {
   }
 
-  return open_map_result();
+  return nullptr;
 }
 
 }  // namespace tactile::service

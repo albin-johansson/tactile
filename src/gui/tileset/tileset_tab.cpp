@@ -12,18 +12,12 @@
 
 namespace tactile::gui {
 
-tileset_tab::tileset_tab(const QImage& image,
-                         tileset_id id,
-                         tile_width tileWidth,
-                         tile_height tileHeight,
+tileset_tab::tileset_tab(tileset_id id,
+                         const core::tileset& tileset,
                          QWidget* parent)
     : QWidget{parent},
       m_id{id}
 {
-  if (image.isNull()) {
-    throw tactile_error{"Can't create tileset tab from null image!"};
-  }
-
   setObjectName("tileset_tab");
 
   m_layout = new QGridLayout{this};
@@ -32,7 +26,7 @@ tileset_tab::tileset_tab(const QImage& image,
   m_scrollArea = new QScrollArea{this};
   m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
 
-  m_imageWidget = new tileset_image_widget{image, tileWidth, tileHeight, this};
+  m_imageWidget = new tileset_image_widget{tileset, this};
   m_scrollArea->setWidget(m_imageWidget);
 
   m_layout->addWidget(m_scrollArea);

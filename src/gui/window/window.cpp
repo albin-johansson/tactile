@@ -200,14 +200,16 @@ void window::handle_redo_text_update(const QString& text)
   m_ui->action_redo->setText(QStringLiteral(u"Redo ") + text);
 }
 
-void window::handle_add_tileset(const QImage& image,
+void window::handle_add_tileset(map_id map,
                                 tileset_id id,
-                                tile_width tileWidth,
-                                tile_height tileHeight,
-                                const QString& tabName)
+                                const core::tileset& tileset)
 {
-  m_tilesetDock->get_tileset_widget()->add_tileset(
-      image, id, tileWidth, tileHeight, tabName);
+  m_tilesetDock->get_tileset_widget()->add_tileset(map, id, tileset);
+}
+
+void window::switched_map(map_id map)
+{
+  m_tilesetDock->selected_map(map);
 }
 
 void window::center_map()

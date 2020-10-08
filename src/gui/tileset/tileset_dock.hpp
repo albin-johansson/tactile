@@ -29,6 +29,12 @@ class tileset_dock final : public QDockWidget
   void tileset_selection_changed(core::position topLeft,
                                  core::position bottomRight);
 
+ public slots:
+  void selected_map(map_id map)
+  {
+    m_widget->selected_map(map);
+  }
+
  private:
   tileset_widget* m_widget{};
 };

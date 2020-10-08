@@ -95,7 +95,9 @@ void app::handle_new_tileset()
     const auto id =
         m_model->add_tileset(image, path, name, tileWidth, tileHeight);
     if (id) {
-      m_window->handle_add_tileset(image, *id, tileWidth, tileHeight, name);
+      const auto& tileset = m_model->current_document()->tilesets()->at(*id);
+      m_window->handle_add_tileset(
+          m_model->current_map().value(), *id, tileset);
     }
   });
 }

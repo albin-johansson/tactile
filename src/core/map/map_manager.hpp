@@ -47,6 +47,8 @@ class map_manager final : public QObject
 
   [[nodiscard]] auto at(map_id id) const -> const map_document*;
 
+  [[nodiscard]] auto current_map() const -> std::optional<map_id>;
+
   [[nodiscard]] auto current_document() -> map_document*;
 
   [[nodiscard]] auto current_document() const -> const map_document*;

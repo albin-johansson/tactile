@@ -4,6 +4,7 @@
 
 #include <memory>
 
+#include "tileset.hpp"
 #include "types.hpp"
 
 namespace tactile::gui {
@@ -11,9 +12,7 @@ namespace tactile::gui {
 class tileset_image_label final : public QLabel
 {
  public:
-  explicit tileset_image_label(const QImage& image,
-                               tile_width tileWidth,
-                               tile_height tileHeight,
+  explicit tileset_image_label(const core::tileset& tileset,
                                QWidget* parent = nullptr);
 
   ~tileset_image_label() noexcept override;

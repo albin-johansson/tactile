@@ -14,22 +14,16 @@ using namespace tactile::core;
 
 namespace tactile::gui {
 
-tileset_image_widget::tileset_image_widget(const QImage& image,
-                                           tile_width tileWidth,
-                                           tile_height tileHeight,
+tileset_image_widget::tileset_image_widget(const tileset& tileset,
                                            QWidget* parent)
     : QWidget{parent},
-      m_tileWidth{tileWidth},
-      m_tileHeight{tileHeight}
+      m_tileWidth{tileset.get_tile_width()},
+      m_tileHeight{tileset.get_tile_height()}
 {
-  if (image.isNull()) {
-    throw tactile_error{"Can't create tileset image widget from null image!"};
-  }
-
   m_layout = new QGridLayout{this};
   m_layout->setMargin(0);
 
-  m_imageLabel = new tileset_image_label{image, tileWidth, tileHeight, this};
+  m_imageLabel = new tileset_image_label{tileset, this};
   m_rubberBand = new QRubberBand{QRubberBand::Rectangle, m_imageLabel};
 
   m_layout->addWidget(m_imageLabel);

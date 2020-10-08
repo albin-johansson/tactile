@@ -15,8 +15,6 @@ tileset_content_page::tileset_content_page(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  m_tabs.reserve(5);
-
   auto* cornerBtn = new QPushButton{m_ui->tabWidget};
   cornerBtn->setIcon(
       QIcon{QStringLiteral(u":resources/icons/icons8/color/64/add.png")});
@@ -42,25 +40,19 @@ tileset_content_page::~tileset_content_page() noexcept
   delete m_ui;
 }
 
-void tileset_content_page::add_tileset(const QImage& image,
+void tileset_content_page::add_tileset(map_id map,
                                        tileset_id id,
-                                       tile_width tileWidth,
-                                       tile_height tileHeight,
-                                       const QString& tabName)
+                                       const core::tileset& tileset)
 {
   Q_ASSERT(!has_tab(id));
-  Q_ASSERT(!image.isNull());
 
-  auto* tab = new tileset_tab{image, id, tileWidth, tileHeight, this};
-
+  auto* tab = new tileset_tab{id, tileset, this};
   connect(tab,
           &tileset_tab::tileset_selection_changed,
           this,
           &tileset_content_page::tileset_selection_changed);
-
-  m_tabs.push_back(tab);
-
-  const auto index = m_ui->tabWidget->addTab(tab, tabName);
+  m_mapTabs.at(map).emplace(id, tab);
+  const auto index = m_ui->tabWidget->addTab(tab, tileset.name());
   m_ui->tabWidget->setCurrentIndex(index);
 }
 
@@ -71,9 +63,7 @@ void tileset_content_page::remove_tileset(tileset_id id)
   const auto index = index_of(id);
   Q_ASSERT(index);
 
-  std::erase_if(m_tabs, [id](const tileset_tab* tab) noexcept {
-    return tab->id() == id;
-  });
+  current_tab().erase(id);
 
   m_ui->tabWidget->removeTab(*index);
   emit removed_tileset(id);
@@ -84,17 +74,34 @@ auto tileset_content_page::empty() const -> bool
   return m_ui->tabWidget->count() == 0;
 }
 
-auto tileset_content_page::has_tab(tileset_id id) const -> bool
+void tileset_content_page::selected_map(map_id map)
 {
-  return find_tab(id) != m_tabs.end();
+  if (m_currentMap) {
+    m_ui->tabWidget->clear();
+  }
+
+  m_currentMap = map;
+
+  if (!m_mapTabs.contains(map)) {
+    m_mapTabs.emplace(map, std::map<tileset_id, tileset_tab*>{});
+  } else {
+    for (const auto& [key, value] : m_mapTabs.at(map)) {
+      m_ui->tabWidget->addTab(value, QStringLiteral(u"Foo"));
+    }
+    m_ui->tabWidget->setCurrentIndex(0);
+  }
+
+  if (current_tab().empty()) {
+    emit switch_to_empty_page();
+  } else {
+    emit switch_to_content_page();
+  }
 }
 
-auto tileset_content_page::find_tab(tileset_id id) const -> const_iterator
+auto tileset_content_page::has_tab(tileset_id id) const -> bool
 {
-  const auto predicate = [id](const tileset_tab* tab) noexcept {
-    return tab->id() == id;
-  };
-  return std::find_if(m_tabs.begin(), m_tabs.end(), predicate);
+  const auto& current = current_tab();
+  return current.find(id) != current.end();
 }
 
 auto tileset_content_page::tab_from_index(int index) -> tileset_tab*
@@ -104,11 +111,12 @@ auto tileset_content_page::tab_from_index(int index) -> tileset_tab*
 
 auto tileset_content_page::index_of(tileset_id id) const -> std::optional<int>
 {
-  const auto size = std::ssize(m_tabs);
-
-  for (int index = 0; index < size; ++index) {
-    if (m_tabs[index]->id() == id) {
+  int index{0};
+  for (const auto& [tilesetID, tab] : current_tab()) {
+    if (tilesetID == id) {
       return index;
+    } else {
+      ++index;
     }
   }
 
