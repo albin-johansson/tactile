@@ -4,7 +4,8 @@
 #include <qobject.h>
 #include <qstring.h>
 
-#include <concepts>
+#include <cassert>   // assert
+#include <concepts>  // invocable
 #include <memory>    // unique_ptr
 #include <optional>  // optional
 
@@ -14,6 +15,7 @@
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
 #include "types.hpp"
+
 namespace tactile::core {
 
 template <typename T>
@@ -245,6 +247,18 @@ class map_document final : public QObject
   [[nodiscard]] auto get() const noexcept -> const map*
   {
     return m_map.get();
+  }
+
+  [[nodiscard]] auto map_ref() -> map&
+  {
+    assert(m_map);
+    return *m_map;
+  }
+
+  [[nodiscard]] auto map_ref() const -> const map&
+  {
+    assert(m_map);
+    return *m_map;
   }
 
   auto operator->() const noexcept -> const map*
