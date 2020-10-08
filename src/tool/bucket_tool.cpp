@@ -9,22 +9,16 @@ bucket_tool::bucket_tool(core::model* model) : abstract_tool{model}
 
 void bucket_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  auto* map = get_model()->current_map();
-  if (!map) {
-    return;
-  }
+  if (auto* document = get_model()->current_map_document()) {
+    auto* tileset = document->current_tileset();
+    if (!tileset || !tileset->get_selection()) {
+      return;
+    }
 
-  auto* tileset = get_model()->current_tileset();
-  if (!tileset || !tileset->get_selection()) {
-    return;
-  }
-
-  if (event->buttons() & Qt::MouseButton::LeftButton) {
-    if (const auto pos = translate_mouse_position(event->pos(), mapPosition);
-        pos) {
-      if (tileset->is_single_tile_selected()) {
-        if (const auto target = map->tile_at(*pos); target) {
-          auto* document = get_model()->current_map_document();
+    if (event->buttons() & Qt::MouseButton::LeftButton) {
+      const auto pos = translate_mouse_position(event->pos(), mapPosition);
+      if (pos && tileset->is_single_tile_selected()) {
+        if (const auto target = document->get()->tile_at(*pos); target) {
           document->flood(*pos,
                           *target,
                           tileset->tile_at(tileset->get_selection()->topLeft));
