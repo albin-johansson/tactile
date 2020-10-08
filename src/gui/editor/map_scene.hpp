@@ -5,6 +5,7 @@
 #include <qwidget.h>
 
 #include "fwd.hpp"
+#include "map_document.hpp"
 #include "model.hpp"
 
 class QPainter;
@@ -16,8 +17,7 @@ class map_scene final : public QGraphicsScene
   Q_OBJECT
 
  public:
-  explicit map_scene(not_null<core::map*> map,
-                     not_null<core::tileset_manager*> tilesets,
+  explicit map_scene(not_null<core::map_document*> map,
                      map_id id,
                      QWidget* parent = nullptr);
 

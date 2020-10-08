@@ -8,6 +8,7 @@
 
 #include "position.hpp"
 #include "preferences.hpp"
+#include "tactile_error.hpp"
 
 namespace tactile::gui {
 
@@ -51,13 +52,13 @@ void draw_tile_background(QPainter& painter,
 
 }  // namespace
 
-map_item::map_item(not_null<map*> map,
-                   not_null<tileset_manager*> tilesets,
-                   QGraphicsItem* parent)
+map_item::map_item(core::map_document* map, QGraphicsItem* parent)
     : QGraphicsItem{parent},
-      m_map{map},
-      m_tilesets{tilesets}
+      m_map{map}
 {
+  if (!m_map) {
+    throw tactile_error{"Cannot create map item based on null map document!"};
+  }
   // This is to be able to use exposedRect
   setFlags(QGraphicsItem::ItemUsesExtendedStyleOption);
 }
@@ -84,8 +85,8 @@ void map_item::draw_layer(QPainter& painter,
 
   const auto beginRow = std::max(0, static_cast<int>(exposed.y() / tileSize));
   const auto beginCol = std::max(0, static_cast<int>(exposed.x() / tileSize));
-  const auto endRow = get_end_row(exposed, m_map->rows(), tileSize);
-  const auto endCol = get_end_col(exposed, m_map->cols(), tileSize);
+  const auto endRow = get_end_row(exposed, m_map->get()->rows(), tileSize);
+  const auto endCol = get_end_col(exposed, m_map->get()->cols(), tileSize);
 
   const auto renderGrid = prefs::graphics::render_grid().value_or(false);
 
@@ -115,10 +116,11 @@ void map_item::draw_tile(QPainter& painter,
                          int y,
                          int tileSize)
 {
-  Q_ASSERT(m_tilesets->contains(tile));
+  auto* tilesets = m_map->get_tileset_manager();
+  Q_ASSERT(tilesets->contains(tile));
 
-  const auto& image = m_tilesets->image(tile);
-  const auto src = m_tilesets->image_source(tile);
+  const auto& image = tilesets->image(tile);
+  const auto src = tilesets->image_source(tile);
   const QRect dst{x, y, tileSize, tileSize};
   painter.drawPixmap(dst, image, src);
 }
@@ -130,12 +132,12 @@ void map_item::draw_preview_multiple_tiles(QPainter& painter,
 {
   // TODO test rendering preview centered around mouse
 
-  auto* tileset = m_tilesets->current_tileset();
+  auto* tileset = m_map->current_tileset();
   Q_ASSERT(tileset);
 
   tileset->iterate_selection([&](position pos) {
     const auto tilePos = mousePosition.offset_by(pos);
-    if (m_map->in_bounds(tilePos)) {
+    if (m_map->get()->in_bounds(tilePos)) {
       draw_tile(painter,
                 tileset->tile_at(selection.topLeft.offset_by(pos)),
                 tilePos.col_to_x(tileSize),
@@ -147,7 +149,7 @@ void map_item::draw_preview_multiple_tiles(QPainter& painter,
 
 void map_item::draw_preview(QPainter& painter, int tileSize)
 {
-  auto* tileset = m_tilesets->current_tileset();
+  auto* tileset = m_map->current_tileset();
   Q_ASSERT(tileset);
   Q_ASSERT(tileset->get_selection());
 
@@ -177,14 +179,14 @@ void map_item::paint(QPainter* painter,
   Q_ASSERT(painter);
   Q_ASSERT(option);
 
-  const auto tileSize = m_map->get_tile_size().get();
-
+  const auto tileSize = m_map->get()->get_tile_size().get();
   const auto& exposed = option->exposedRect;
-  for (const auto& layer : *m_map) {
+
+  m_map->each_layer([&](const layer& layer) {
     if (layer.visible()) {
       draw_layer(*painter, layer, exposed, tileSize);
     }
-  }
+  });
 
   if (m_mousePosition) {
     draw_preview(*painter, tileSize);
@@ -193,8 +195,8 @@ void map_item::paint(QPainter* painter,
 
 auto map_item::boundingRect() const -> QRectF
 {
-  const auto width = static_cast<qreal>(m_map->width());
-  const auto height = static_cast<qreal>(m_map->height());
+  const auto width = static_cast<qreal>(m_map->get()->width());
+  const auto height = static_cast<qreal>(m_map->get()->height());
   return {0, 0, width, height};
 }
 

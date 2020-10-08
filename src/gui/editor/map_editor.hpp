@@ -6,6 +6,7 @@
 #include <optional>
 
 #include "fwd.hpp"
+#include "map_document.hpp"
 #include "types.hpp"
 
 namespace Ui {
@@ -39,8 +40,7 @@ class map_editor final : public QWidget
 
   void disable_stamp_preview();
 
-  void add_new_map_tab(not_null<core::map*> map,
-                       not_null<core::tileset_manager*> tilesets,
+  void add_new_map_tab(not_null<core::map_document*> map,
                        const QString& title,
                        map_id id);
 

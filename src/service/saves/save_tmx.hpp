@@ -2,13 +2,10 @@
 
 #include <qstring.h>
 
-#include "map.hpp"
-#include "tileset_manager.hpp"
+#include "map_document.hpp"
 
 namespace tactile::service {
 
-void save_tmx(const QString& path,
-              const core::map& map,
-              const core::tileset_manager& tilesets);
+void save_tmx(const QString& path, const core::map_document& document);
 
 }  // namespace tactile::service

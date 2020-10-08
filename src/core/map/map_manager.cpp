@@ -115,8 +115,8 @@ auto map_manager::has_active_map() const noexcept -> bool
 
 auto map_manager::at(map_id id) -> map*
 {
-  if (const auto it = m_mapDocuments.find(id); it != m_mapDocuments.end()) {
-    return it->second->get();
+  if (auto* document = get_document(id)) {
+    return document->get();
   } else {
     return nullptr;
   }
@@ -124,8 +124,26 @@ auto map_manager::at(map_id id) -> map*
 
 auto map_manager::at(map_id id) const -> const map*
 {
+  if (const auto* document = get_document(id)) {
+    return document->get();
+  } else {
+    return nullptr;
+  }
+}
+
+auto map_manager::get_document(map_id id) -> map_document*
+{
   if (const auto it = m_mapDocuments.find(id); it != m_mapDocuments.end()) {
-    return it->second->get();
+    return it->second;
+  } else {
+    return nullptr;
+  }
+}
+
+auto map_manager::get_document(map_id id) const -> const map_document*
+{
+  if (const auto it = m_mapDocuments.find(id); it != m_mapDocuments.end()) {
+    return it->second;
   } else {
     return nullptr;
   }

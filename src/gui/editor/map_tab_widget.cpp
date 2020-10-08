@@ -63,12 +63,11 @@ void map_tab_widget::redraw()
   }
 }
 
-void map_tab_widget::add_map_tab(not_null<core::map*> map,
-                                 not_null<core::tileset_manager*> tilesets,
+void map_tab_widget::add_map_tab(not_null<core::map_document*> map,
                                  const QString& title,
                                  map_id id)
 {
-  auto* view = new map_view{map, tilesets, id, this};
+  auto* view = new map_view{map, id, this};
 
   connect(view, &map_view::mouse_pressed, this, &map_tab_widget::mouse_pressed);
   connect(view, &map_view::mouse_moved, this, &map_tab_widget::mouse_moved);

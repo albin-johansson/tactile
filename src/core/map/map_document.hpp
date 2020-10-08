@@ -4,6 +4,7 @@
 #include <qobject.h>
 #include <qstring.h>
 
+#include <concepts>
 #include <memory>    // unique_ptr
 #include <optional>  // optional
 
@@ -13,18 +14,22 @@
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
 #include "types.hpp"
-
 namespace tactile::core {
+
+template <typename T>
+concept MapDocumentTilesetIterCallback =
+    std::invocable<T, tileset_id, const tileset&>;
 
 /**
  * @class map_document
  *
  * @brief Represents a map and a history of changes to the map.
  *
- * @details This class is a wrapper for a map along with an associated command
- * stack. It provides an interface similar to that of map for those functions
- * that will be handled by commands. For the map functions that aren't handled
- * through commands, use the associated map instance directly instead.
+ * @details This class is a wrapper for a map, its associated tilesets and the
+ * command history. It provides an interface similar to that of map for those
+ * functions that will be handled by commands. Furthermore, this class provides
+ * an overloaded `operator->` to obtain a `const` pointer to the internal map
+ * instance, to enable access to the internal map.
  *
  * @see map
  *
@@ -167,6 +172,22 @@ class map_document final : public QObject
 
   void set_selection(position topLeft, position bottomRight);
 
+  template <MapDocumentTilesetIterCallback T>
+  void each_tileset(T&& lambda) const
+  {
+    for (const auto& [id, tileset] : *m_tilesets) {
+      lambda(id, tileset);
+    }
+  }
+
+  template <typename T>
+  void each_layer(T&& lambda) const
+  {
+    for (const auto& layer : *m_map) {
+      lambda(layer);
+    }
+  }
+
   /**
    * @brief Indicates whether or not there is an undoable command.
    *
@@ -226,6 +247,11 @@ class map_document final : public QObject
     return m_map.get();
   }
 
+  auto operator->() const noexcept -> const map*
+  {
+    return m_map.get();
+  }
+
   [[nodiscard]] auto current_tileset() const -> const tileset*
   {
     return m_tilesets->current_tileset();
@@ -254,7 +280,7 @@ class map_document final : public QObject
  private:
   std::unique_ptr<map> m_map;
   std::unique_ptr<tileset_manager> m_tilesets;
-  command_stack* m_commands;
+  command_stack* m_commands{};
 };
 
 }  // namespace tactile::core

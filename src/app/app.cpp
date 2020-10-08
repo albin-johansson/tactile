@@ -37,7 +37,9 @@ app::~app() noexcept
 
 void app::save_as(const QString& path)
 {
-  service::save(path, *m_model->current_map(), *m_model->get_tileset_manager());
+  const auto* document = m_model->current_map_document();
+  Q_ASSERT(document);
+  service::save(path, *document);
 }
 
 void app::open_map(const QString& path)
@@ -109,9 +111,7 @@ void app::tileset_selection_changed(core::position topLeft,
 void app::handle_new_map()
 {
   const auto id = m_model->add_map();
-
-  m_window->handle_new_map(
-      m_model->get_map(id), m_model->get_tileset_manager(), id);
+  m_window->handle_new_map(m_model->get_document(id), id);
 }
 
 }  // namespace tactile

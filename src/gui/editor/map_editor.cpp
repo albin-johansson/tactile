@@ -81,12 +81,11 @@ void map_editor::disable_stamp_preview()
   m_mapTabWidget->disable_stamp_preview();
 }
 
-void map_editor::add_new_map_tab(not_null<core::map*> map,
-                                 not_null<core::tileset_manager*> tilesets,
+void map_editor::add_new_map_tab(not_null<core::map_document*> map,
                                  const QString& title,
                                  map_id id)
 {
-  m_mapTabWidget->add_map_tab(map, tilesets, title, id);
+  m_mapTabWidget->add_map_tab(map, title, id);
 }
 
 void map_editor::select_tab(map_id id)

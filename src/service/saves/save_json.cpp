@@ -137,7 +137,7 @@ void create_external_tileset_file(const tileset& tileset,
 /**
  * @brief Creates a JSON array that contains the tilesets used by the map.
  *
- * @param tilesets the tilesets used by the map.
+ * @param map the map that will be saved.
  * @param mapDestination the file path of the map file.
  * @param options the export options that will be used.
  *
@@ -145,13 +145,13 @@ void create_external_tileset_file(const tileset& tileset,
  *
  * @since 0.1.0
  */
-[[nodiscard]] auto save_tilesets(const tileset_manager& tilesets,
+[[nodiscard]] auto save_tilesets(const map_document& map,
                                  const QString& mapDestination,
                                  const export_options& options) -> QJsonArray
 {
   QJsonArray array;
 
-  for (const auto& [id, tileset] : tilesets) {
+  map.each_tileset([&](tileset_id id, const tileset& tileset) {
     if (options.embedTilesets) {
       array.append(
           make_embedded_tileset_object(tileset, mapDestination, options));
@@ -160,7 +160,7 @@ void create_external_tileset_file(const tileset& tileset,
           make_external_tileset_object(tileset, mapDestination, options));
       create_external_tileset_file(tileset, mapDestination, options);
     }
-  }
+  });
 
   return array;
 }
@@ -175,13 +175,13 @@ void create_external_tileset_file(const tileset& tileset,
  *
  * @since 0.1.0
  */
-[[nodiscard]] auto save_layers(const map& map, const export_options& options)
-    -> QJsonArray
+[[nodiscard]] auto save_layers(const map_document& map,
+                               const export_options& options) -> QJsonArray
 {
   QJsonArray array;
 
   int id{1};
-  for (const auto& layer : map) {
+  map.each_layer([&](const layer& layer) {
     QJsonObject object;
 
     if (const auto str = to_string(id); str) {
@@ -212,7 +212,7 @@ void create_external_tileset_file(const tileset& tileset,
 
     array.append(object);
     ++id;
-  }
+  });
 
   return array;
 }
@@ -221,7 +221,6 @@ void create_external_tileset_file(const tileset& tileset,
  * @brief Creates the root JSON object for the map file.
  *
  * @param map the map that will be saved.
- * @param tilesets the tilesets that are used.
  * @param mapDestination the destination path of the map file.
  * @param options the export options that will be used.
  *
@@ -229,8 +228,7 @@ void create_external_tileset_file(const tileset& tileset,
  *
  * @since 0.1.0
  */
-[[nodiscard]] auto create_root(const map& map,
-                               const tileset_manager& tilesets,
+[[nodiscard]] auto create_root(const map_document& map,
                                const QString& mapDestination,
                                const export_options& options) -> QJsonObject
 {
@@ -239,8 +237,8 @@ void create_external_tileset_file(const tileset& tileset,
   root.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   root.insert(u"orientation", QStringLiteral(u"orthogonal"));
   root.insert(u"renderorder", QStringLiteral(u"right-down"));
-  root.insert(u"width", map.cols().get());
-  root.insert(u"height", map.rows().get());
+  root.insert(u"width", map->cols().get());
+  root.insert(u"height", map->rows().get());
   root.insert(u"compressionlevel", -1);
   root.insert(u"infinite", false);
   root.insert(u"type", QStringLiteral(u"map"));
@@ -248,8 +246,8 @@ void create_external_tileset_file(const tileset& tileset,
   root.insert(u"tilewidth", prefs::saves::tile_width().value());
   root.insert(u"tileheight", prefs::saves::tile_height().value());
   root.insert(u"nextobjectid", 1);
-  root.insert(u"nextlayerid", map.num_layers() + 1);
-  root.insert(u"tilesets", save_tilesets(tilesets, mapDestination, options));
+  root.insert(u"nextlayerid", map->num_layers() + 1);
+  root.insert(u"tilesets", save_tilesets(map, mapDestination, options));
   root.insert(u"layers", save_layers(map, options));
 
   return root;
@@ -257,14 +255,12 @@ void create_external_tileset_file(const tileset& tileset,
 
 }  // namespace
 
-void save_json(const QString& path,
-               const map& map,
-               const tileset_manager& tilesets)
+void save_json(const QString& path, const core::map_document& map)
 {
   const auto options = make_export_options();
 
   QJsonDocument document{};
-  document.setObject(create_root(map, tilesets, path, options));
+  document.setObject(create_root(map, path, options));
 
   QFile file{path};
   file.open(QFile::WriteOnly);

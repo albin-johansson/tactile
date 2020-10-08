@@ -42,6 +42,10 @@ class map_manager final : public QObject
 
   [[nodiscard]] auto at(map_id id) const -> const map*;
 
+  [[nodiscard]] auto get_document(map_id id) -> map_document*;
+
+  [[nodiscard]] auto get_document(map_id id) const -> const map_document*;
+
   [[nodiscard]] auto current_document() -> map_document*;
 
   [[nodiscard]] auto current_document() const -> const map_document*;

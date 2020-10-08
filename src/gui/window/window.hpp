@@ -8,6 +8,7 @@
 #include <qwidget.h>
 
 #include "fwd.hpp"
+#include "map_document.hpp"
 #include "position.hpp"
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"
@@ -151,9 +152,7 @@ class window final : public QMainWindow
 
   void handle_move_camera(int dx, int dy);
 
-  void handle_new_map(not_null<core::map*> map,
-                      not_null<core::tileset_manager*> tilesets,
-                      map_id id);
+  void handle_new_map(not_null<core::map_document*> map, map_id id);
 
  protected:
   void closeEvent(QCloseEvent* event) override;

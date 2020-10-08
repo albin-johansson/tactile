@@ -77,18 +77,23 @@ class model final : public QObject
     return m_maps->has_active_map();
   }
 
-  /**
-   * @brief Returns a pointer to the map associated with the specified ID.
-   *
-   * @param id the identifier associated with the desired map.
-   *
-   * @return a pointer to a map; null if no map was found.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard, deprecated]] auto get_map(map_id id) -> map*
+  //  /**
+  //   * @brief Returns a pointer to the map associated with the specified ID.
+  //   *
+  //   * @param id the identifier associated with the desired map.
+  //   *
+  //   * @return a pointer to a map; null if no map was found.
+  //   *
+  //   * @since 0.1.0
+  //   */
+  //  [[nodiscard, deprecated]] auto get_map(map_id id) -> map*
+  //  {
+  //    return m_maps->at(id);
+  //  }
+
+  [[nodiscard]] auto get_document(map_id id) -> map_document*
   {
-    return m_maps->at(id);
+    return m_maps->get_document(id);
   }
 
   /**

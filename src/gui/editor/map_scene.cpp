@@ -10,12 +10,11 @@
 
 namespace tactile::gui {
 
-map_scene::map_scene(not_null<core::map*> map,
-                     not_null<core::tileset_manager*> tilesets,
+map_scene::map_scene(not_null<core::map_document*> map,
                      map_id id,
                      QWidget* parent)
     : QGraphicsScene{parent},
-      m_item{new map_item{map, tilesets}},
+      m_item{new map_item{map}},
       m_id{id}
 {
   addItem(m_item);

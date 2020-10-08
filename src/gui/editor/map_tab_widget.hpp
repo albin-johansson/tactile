@@ -5,6 +5,7 @@
 #include <optional>  // optional
 
 #include "fwd.hpp"
+#include "map_document.hpp"
 #include "types.hpp"
 
 namespace tactile::gui {
@@ -35,8 +36,8 @@ class map_tab_widget final : public QTabWidget
   /**
    * @brief Adds a map tab.
    *
-   * @param map a pointer to the map that will be associated with the tab.
-   * @param tilesets a pointer to the associated tileset model.
+   * @param map a pointer to the map document that will be associated with the
+   * tab.
    * @param title the title that will be visible in the tab.
    * @param id the identifier associated with the map.
    *
@@ -44,8 +45,7 @@ class map_tab_widget final : public QTabWidget
    *
    * @since 0.1.0
    */
-  void add_map_tab(not_null<core::map*> map,
-                   not_null<core::tileset_manager*> tilesets,
+  void add_map_tab(not_null<core::map_document*> map,
                    const QString& title,
                    map_id id);
 

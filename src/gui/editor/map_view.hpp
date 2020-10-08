@@ -3,6 +3,7 @@
 #include <qgraphicsview.h>
 #include <qrect.h>
 
+#include "map_document.hpp"
 #include "map_scene.hpp"
 #include "model.hpp"
 
@@ -25,8 +26,7 @@ class map_view final : public QGraphicsView
   Q_OBJECT
 
  public:
-  explicit map_view(not_null<core::map*> map,
-                    not_null<core::tileset_manager*> tilesets,
+  explicit map_view(not_null<core::map_document*> map,
                     map_id id,
                     QWidget* parent = nullptr);
 

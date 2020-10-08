@@ -267,12 +267,9 @@ void window::disable_stamp_preview()
   m_editor->disable_stamp_preview();
 }
 
-void window::handle_new_map(not_null<core::map*> map,
-                            not_null<core::tileset_manager*> tilesets,
-                            map_id id)
+void window::handle_new_map(not_null<core::map_document*> map, map_id id)
 {
-  m_editor->add_new_map_tab(
-      map, tilesets, "map", id);  // TODO pass core and map_id?
+  m_editor->add_new_map_tab(map, "map", id);  // TODO pass core and map_id?
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
     enter_content_view();
@@ -354,9 +351,7 @@ void window::on_action_save_as_triggered()
 
 void window::on_action_open_map_triggered()
 {
-  open_map_dialog::spawn([this](const QString& path) {
-    emit open_map(path);
-  });
+  open_map_dialog::spawn([this](const QString& path) { emit open_map(path); });
 }
 
 void window::on_action_rename_triggered()

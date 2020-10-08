@@ -69,11 +69,11 @@ void create_external_tileset_file(const tileset& tileset,
 
 void save_tilesets(QDomDocument& document,
                    QDomElement& root,
-                   const tileset_manager& tilesets,
+                   const core::map_document& map,
                    const QFileInfo& mapInfo,
                    const export_options& options)
 {
-  for (const auto& [id, tileset] : tilesets) {
+  map.each_tileset([&](tileset_id id, const tileset& tileset) {
     auto node = document.createElement(QStringLiteral(u"tileset"));
 
     node.setAttribute(QStringLiteral(u"firstgid"), tileset.first_id().get());
@@ -88,13 +88,15 @@ void save_tilesets(QDomDocument& document,
     }
 
     root.appendChild(node);
-  }
+  });
 }
 
-void save_layers(QDomDocument& document, QDomElement& root, const map& map)
+void save_layers(QDomDocument& document,
+                 QDomElement& root,
+                 const map_document& map)
 {
   int id{1};
-  for (const auto& layer : map) {
+  map.each_layer([&](const layer& layer) {
     auto node = document.createElement(QStringLiteral(u"layer"));
 
     node.setAttribute(QStringLiteral(u"id"), id);
@@ -111,7 +113,7 @@ void save_layers(QDomDocument& document, QDomElement& root, const map& map)
     data.setAttribute(QStringLiteral(u"encoding"), QStringLiteral(u"csv"));
 
     QString buffer;
-    const auto count = map.rows().get() * map.cols().get();
+    const auto count = map->rows().get() * map->cols().get();
     buffer.reserve(count);
 
     bool first{true};
@@ -129,12 +131,11 @@ void save_layers(QDomDocument& document, QDomElement& root, const map& map)
     root.appendChild(node);
 
     ++id;
-  }
+  });
 }
 
 void create_root(QDomDocument& document,
-                 const map& map,
-                 const tileset_manager& tilesets,
+                 const core::map_document& map,
                  const QFileInfo& mapInfo,
                  const export_options& options)
 {
@@ -146,14 +147,14 @@ void create_root(QDomDocument& document,
                     QStringLiteral(u"orthogonal"));
   root.setAttribute(QStringLiteral(u"renderorder"),
                     QStringLiteral(u"right-down"));
-  root.setAttribute(QStringLiteral(u"width"), map.cols().get());
-  root.setAttribute(QStringLiteral(u"height"), map.rows().get());
+  root.setAttribute(QStringLiteral(u"width"), map->cols().get());
+  root.setAttribute(QStringLiteral(u"height"), map->rows().get());
   root.setAttribute(QStringLiteral(u"tilewidth"),
                     prefs::saves::tile_width().value());
   root.setAttribute(QStringLiteral(u"tileheight"),
                     prefs::saves::tile_height().value());
   root.setAttribute(QStringLiteral(u"infinite"), 0);
-  root.setAttribute(QStringLiteral(u"nextlayerid"), map.num_layers() + 1);
+  root.setAttribute(QStringLiteral(u"nextlayerid"), map->num_layers() + 1);
   root.setAttribute(QStringLiteral(u"nextobjectid"), 1);
 
   if (options.generateDefaults) {
@@ -162,7 +163,7 @@ void create_root(QDomDocument& document,
                       QStringLiteral(u"#00000000"));
   }
 
-  save_tilesets(document, root, tilesets, mapInfo, options);
+  save_tilesets(document, root, map, mapInfo, options);
   save_layers(document, root, map);
 
   document.appendChild(root);
@@ -170,15 +171,13 @@ void create_root(QDomDocument& document,
 
 }  // namespace
 
-void save_tmx(const QString& path,
-              const map& map,
-              const tileset_manager& tilesets)
+void save_tmx(const QString& path, const core::map_document& map)
 {
   const auto options = make_export_options();
   const QFileInfo info{path};
 
   QDomDocument document{};
-  create_root(document, map, tilesets, info, options);
+  create_root(document, map, info, options);
 
   QFile file{path};
   file.open(QIODevice::WriteOnly);

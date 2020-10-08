@@ -7,8 +7,7 @@
 
 namespace tactile::gui {
 
-map_view::map_view(not_null<core::map*> map,
-                   not_null<core::tileset_manager*> tilesets,
+map_view::map_view(not_null<core::map_document*> map,
                    map_id id,
                    QWidget* parent)
     : QGraphicsView{parent}
@@ -20,7 +19,7 @@ map_view::map_view(not_null<core::map*> map,
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setMouseTracking(true);  // register mouse events with no pressed buttons
 
-  setScene(new map_scene{map, tilesets, id, this});
+  setScene(new map_scene{map, id, this});
 }
 
 void map_view::force_redraw()

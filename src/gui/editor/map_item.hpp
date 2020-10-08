@@ -5,6 +5,7 @@
 #include <optional>
 
 #include "fwd.hpp"
+#include "map_document.hpp"
 #include "model.hpp"
 #include "tileset.hpp"
 
@@ -25,15 +26,14 @@ class map_item final : public QGraphicsItem
   /**
    * @brief Creates a map item.
    *
-   * @param map the associated map, cannot be null.
-   * @param tilesets the associated tileset model, cannot be null.
+   * @param map the associated map document, cannot be null.
    * @param parent the parent item.
+   *
+   * @throws tactile_error if the supplied map document is null.
    *
    * @since 0.1.0
    */
-  explicit map_item(not_null<core::map*> map,
-                    not_null<core::tileset_manager*> tilesets,
-                    QGraphicsItem* parent = nullptr);
+  explicit map_item(core::map_document* map, QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
              const QStyleOptionGraphicsItem* option,
@@ -46,8 +46,7 @@ class map_item final : public QGraphicsItem
   [[nodiscard]] auto boundingRect() const -> QRectF override;
 
  private:
-  core::map* m_map{};
-  core::tileset_manager* m_tilesets{};
+  core::map_document* m_map{};
   std::optional<core::position> m_mousePosition;
 
   void draw_layer(QPainter& painter,
