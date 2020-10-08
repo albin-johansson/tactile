@@ -37,7 +37,7 @@ app::~app() noexcept
 
 void app::save_as(const QString& path)
 {
-  const auto* document = m_model->current_map_document();
+  const auto* document = m_model->current_document();
   Q_ASSERT(document);
   service::save(path, *document);
 }
@@ -61,29 +61,29 @@ void app::handle_resize_map()
 
 void app::handle_pan_up()
 {
-  if (const auto* map = m_model->current_map()) {
-    m_window->handle_move_camera(0, map->get_tile_size().get());
+  if (const auto* document = m_model->current_document()) {
+    m_window->handle_move_camera(0, document->current_tile_size());
   }
 }
 
 void app::handle_pan_down()
 {
-  if (const auto* map = m_model->current_map()) {
-    m_window->handle_move_camera(0, -map->get_tile_size().get());
+  if (const auto* document = m_model->current_document()) {
+    m_window->handle_move_camera(0, -document->current_tile_size());
   }
 }
 
 void app::handle_pan_right()
 {
-  if (const auto* map = m_model->current_map()) {
-    m_window->handle_move_camera(-map->get_tile_size().get(), 0);
+  if (const auto* document = m_model->current_document()) {
+    m_window->handle_move_camera(-document->current_tile_size(), 0);
   }
 }
 
 void app::handle_pan_left()
 {
-  if (const auto* map = m_model->current_map()) {
-    m_window->handle_move_camera(map->get_tile_size().get(), 0);
+  if (const auto* document = m_model->current_document()) {
+    m_window->handle_move_camera(document->current_tile_size(), 0);
   }
 }
 
@@ -94,9 +94,9 @@ void app::handle_new_tileset()
                                     tile_width tileWidth,
                                     tile_height tileHeight,
                                     const QString& name) {
-    if (const auto id =
-            m_model->add_tileset(image, path, name, tileWidth, tileHeight);
-        id) {
+    const auto id =
+        m_model->add_tileset(image, path, name, tileWidth, tileHeight);
+    if (id) {
       m_window->handle_add_tileset(image, *id, tileWidth, tileHeight, name);
     }
   });
