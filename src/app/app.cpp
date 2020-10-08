@@ -44,7 +44,7 @@ void app::save_as(const QString& path)
 
 void app::open_map(const QString& path)
 {
-//  auto [doc, tilesets] = service::open_map(path);
+  //  auto [doc, tilesets] = service::open_map(path);
 
   // TODO implement
 }
