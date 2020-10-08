@@ -153,6 +153,11 @@ auto map::cols() const -> col_t
   return current_layer().cols();
 }
 
+auto map::tile_count() const -> int
+{
+  return rows().get() * cols().get();
+}
+
 auto map::width() const -> int
 {
   return cols().get() * m_tileSize.get();

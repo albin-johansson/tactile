@@ -257,6 +257,15 @@ class map final
   [[nodiscard]] auto cols() const -> col_t;
 
   /**
+   * @brief Returns the amount of tiles in the map.
+   *
+   * @return the number of tiles in the map.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto tile_count() const -> int;
+
+  /**
    * @brief Returns the pixel width of the map.
    *
    * @return the pixel width of the map.

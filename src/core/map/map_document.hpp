@@ -178,6 +178,9 @@ class map_document final : public QObject
 
   void reset_tile_size();  // not a command
 
+  /**
+   * @copydoc map::set_tile()
+   */
   void set_tile(const position& pos, tile_id id)  // not a command
   {
     m_map->set_tile(pos, id);
@@ -235,42 +238,66 @@ class map_document final : public QObject
    */
   [[nodiscard]] auto redo_text() const -> QString;
 
+  /**
+   * @copydoc map::in_bounds()
+   */
   [[nodiscard]] auto in_bounds(const position& pos) const -> bool
   {
     return m_map->in_bounds(pos);
   }
 
+  /**
+   * @copydoc map::tile_at()
+   */
   [[nodiscard]] auto tile_at(const position& position) const
       -> std::optional<tile_id>
   {
     return m_map->tile_at(position);
   }
 
+  /**
+   * @copydoc map::tile_count()
+   */
   [[nodiscard]] auto tile_count() const noexcept -> int
   {
-    return rows().get() * cols().get();
+    return m_map->tile_count();
   }
 
+  /**
+   * @copydoc map::num_layers()
+   */
   [[nodiscard]] auto num_layers() const noexcept -> int
   {
     return m_map->num_layers();
   }
 
+  /**
+   * @copydoc map::rows()
+   */
   [[nodiscard]] auto rows() const -> row_t
   {
     return m_map->rows();
   }
 
+  /**
+   * @copydoc map::cols()
+   */
   [[nodiscard]] auto cols() const -> col_t
   {
     return m_map->cols();
   }
 
+  /**
+   * @copydoc map::width()
+   */
   [[nodiscard]] auto width() const -> int
   {
     return m_map->width();
   }
 
+  /**
+   * @copydoc map::height()
+   */
   [[nodiscard]] auto height() const -> int
   {
     return m_map->height();
@@ -281,6 +308,9 @@ class map_document final : public QObject
     return m_map->get_tile_size().get();
   }
 
+  /**
+   * @copydoc tileset_manager::current_tileset()
+   */
   [[nodiscard]] auto current_tileset() const -> const tileset*
   {
     return m_tilesets->current_tileset();
