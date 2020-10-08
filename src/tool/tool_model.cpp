@@ -74,6 +74,7 @@ void tool_model::released(QMouseEvent* event, const QPointF& mapPosition)
     m_current->released(event, mapPosition);
   }
 }
+
 void tool_model::entered(QEvent* event)
 {
   if (m_current) {
