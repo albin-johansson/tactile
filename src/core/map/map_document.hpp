@@ -22,6 +22,9 @@ template <typename T>
 concept MapDocumentTilesetIterCallback =
     std::invocable<T, tileset_id, const tileset&>;
 
+template <typename T>
+concept MapDocumentLayerIterCallback = std::invocable<T, const layer&>;
+
 /**
  * @class map_document
  *
@@ -182,7 +185,7 @@ class map_document final : public QObject
     }
   }
 
-  template <typename T>
+  template <MapDocumentLayerIterCallback T>
   void each_layer(T&& lambda) const
   {
     for (const auto& layer : *m_map) {
