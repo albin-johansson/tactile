@@ -16,7 +16,12 @@ class map_manager final : public QObject
 {
   Q_OBJECT
 
+  using storage_type = vector_map<map_id, map_document*>;
+
  public:
+  using iterator = typename storage_type::iterator;
+  using const_iterator = typename storage_type::const_iterator;
+
   [[nodiscard]] auto add() -> map_id;
 
   void close(map_id id);
@@ -38,44 +43,32 @@ class map_manager final : public QObject
 
   [[nodiscard]] auto has_active_map() const noexcept -> bool;
 
-  [[nodiscard]] auto at(map_id id) -> map*;
+  [[nodiscard]] auto at(map_id id) -> map_document*;
 
-  [[nodiscard]] auto at(map_id id) const -> const map*;
-
-  [[nodiscard]] auto get_document(map_id id) -> map_document*;
-
-  [[nodiscard]] auto get_document(map_id id) const -> const map_document*;
+  [[nodiscard]] auto at(map_id id) const -> const map_document*;
 
   [[nodiscard]] auto current_document() -> map_document*;
 
   [[nodiscard]] auto current_document() const -> const map_document*;
 
-  [[nodiscard]] auto current_map() -> map*;
-
-  [[nodiscard]] auto current_map() const -> const map*;
-
   [[nodiscard]] auto current_tileset() const -> const tileset*;
 
-  [[nodiscard]] auto get_tileset_manager() -> tileset_manager*;
-
-  [[nodiscard]] auto get_tileset_manager() const -> const tileset_manager*;
-
-  [[nodiscard]] auto begin() noexcept
+  [[nodiscard]] auto begin() noexcept -> iterator
   {
     return m_mapDocuments.begin();
   }
 
-  [[nodiscard]] auto begin() const noexcept
+  [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
     return m_mapDocuments.begin();
   }
 
-  [[nodiscard]] auto end() noexcept
+  [[nodiscard]] auto end() noexcept -> iterator
   {
     return m_mapDocuments.end();
   }
 
-  [[nodiscard]] auto end() const noexcept
+  [[nodiscard]] auto end() const noexcept -> const_iterator
   {
     return m_mapDocuments.end();
   }
@@ -93,7 +86,7 @@ class map_manager final : public QObject
 
  private:
   std::optional<map_id> m_currentMapID;
-  vector_map<map_id, map_document*> m_mapDocuments;
+  storage_type m_mapDocuments;
   map_id m_nextMapID{1};
 
   void emit_undo_redo_update();

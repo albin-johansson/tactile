@@ -18,13 +18,6 @@
 
 namespace tactile::core {
 
-template <typename T>
-concept MapDocumentTilesetIterCallback =
-    std::invocable<T, tileset_id, const tileset&>;
-
-template <typename T>
-concept MapDocumentLayerIterCallback = std::invocable<T, const layer&>;
-
 /**
  * @class map_document
  *
@@ -185,7 +178,12 @@ class map_document final : public QObject
 
   void reset_tile_size();  // not a command
 
-  template <MapDocumentTilesetIterCallback T>
+  void set_tile(const position& pos, tile_id id)  // not a command
+  {
+    m_map->set_tile(pos, id);
+  }
+
+  template <std::invocable<tileset_id, const tileset&> T>
   void each_tileset(T&& lambda) const
   {
     for (const auto& [id, tileset] : *m_tilesets) {
@@ -193,7 +191,7 @@ class map_document final : public QObject
     }
   }
 
-  template <MapDocumentLayerIterCallback T>
+  template <std::invocable<const layer&> T>
   void each_layer(T&& lambda) const
   {
     for (const auto& layer : *m_map) {
@@ -242,44 +240,45 @@ class map_document final : public QObject
     return m_map->in_bounds(pos);
   }
 
-  /**
-   * @brief Returns a pointer to the associated tilemap.
-   *
-   * @details The returned pointer is stable and will never be null during the
-   * lifetime of the map document.
-   *
-   * @return a pointer to the associated tilemap.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard, deprecated]] auto get() noexcept -> map*
+  [[nodiscard]] auto tile_at(const position& position) const
+      -> std::optional<tile_id>
   {
-    return m_map.get();
+    return m_map->tile_at(position);
   }
 
-  /**
-   * @copydoc get()
-   */
-  [[nodiscard]] auto get() const noexcept -> const map*
+  [[nodiscard]] auto tile_count() const noexcept -> int
   {
-    return m_map.get();
+    return rows().get() * cols().get();
   }
 
-  [[nodiscard, deprecated]] auto map_ref() -> map&
+  [[nodiscard]] auto num_layers() const noexcept -> int
   {
-    assert(m_map);
-    return *m_map;
+    return m_map->num_layers();
   }
 
-  [[nodiscard]] auto map_ref() const -> const map&
+  [[nodiscard]] auto rows() const -> row_t
   {
-    assert(m_map);
-    return *m_map;
+    return m_map->rows();
   }
 
-  auto operator->() const noexcept -> const map*
+  [[nodiscard]] auto cols() const -> col_t
   {
-    return m_map.get();
+    return m_map->cols();
+  }
+
+  [[nodiscard]] auto width() const -> int
+  {
+    return m_map->width();
+  }
+
+  [[nodiscard]] auto height() const -> int
+  {
+    return m_map->height();
+  }
+
+  [[nodiscard]] auto current_tile_size() const noexcept -> int
+  {
+    return m_map->get_tile_size().get();
   }
 
   [[nodiscard]] auto current_tileset() const -> const tileset*

@@ -12,7 +12,7 @@ stamp_tool::stamp_tool(model* model) : abstract_tool{model}
   m_sequence.reserve(20);
 }
 
-void stamp_tool::update_stamp_sequence(map& map,
+void stamp_tool::update_stamp_sequence(map_document& map,
                                        const tileset& ts,
                                        const position& origin)
 {
@@ -41,7 +41,7 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
     if (event->buttons() & Qt::MouseButton::LeftButton) {
       const auto pos = translate_mouse_position(event->pos(), mapPosition);
       if (pos) {
-        update_stamp_sequence(document->map_ref(), *tileset, *pos);
+        update_stamp_sequence(*document, *tileset, *pos);
         emit get_model()->redraw();
       }
     }
@@ -61,7 +61,7 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
       emit get_model()->enable_stamp_preview(*pos);
 
       if (event->buttons() & Qt::MouseButton::LeftButton) {
-        update_stamp_sequence(document->map_ref(), *tileset, *pos);
+        update_stamp_sequence(*document, *tileset, *pos);
       }
 
       emit get_model()->redraw();

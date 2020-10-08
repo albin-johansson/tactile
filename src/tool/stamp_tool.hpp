@@ -2,6 +2,7 @@
 
 #include "abstract_tool.hpp"
 #include "fwd.hpp"
+#include "map_document.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "vector_map.hpp"
@@ -48,7 +49,7 @@ class stamp_tool final : public abstract_tool
   vector_map<core::position, tile_id> m_oldState;
   vector_map<core::position, tile_id> m_sequence;
 
-  void update_stamp_sequence(core::map& map,
+  void update_stamp_sequence(core::map_document& map,
                              const core::tileset& tileset,
                              const core::position& origin);
 };

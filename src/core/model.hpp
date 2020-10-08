@@ -79,7 +79,7 @@ class model final : public QObject
 
   [[nodiscard]] auto get_document(map_id id) -> map_document*
   {
-    return m_maps->get_document(id);
+    return m_maps->at(id);
   }
 
   /**

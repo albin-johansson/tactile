@@ -85,8 +85,8 @@ void map_item::draw_layer(QPainter& painter,
 
   const auto beginRow = std::max(0, static_cast<int>(exposed.y() / tileSize));
   const auto beginCol = std::max(0, static_cast<int>(exposed.x() / tileSize));
-  const auto endRow = get_end_row(exposed, m_map->get()->rows(), tileSize);
-  const auto endCol = get_end_col(exposed, m_map->get()->cols(), tileSize);
+  const auto endRow = get_end_row(exposed, m_map->rows(), tileSize);
+  const auto endCol = get_end_col(exposed, m_map->cols(), tileSize);
 
   const auto renderGrid = prefs::graphics::render_grid().value_or(false);
 
@@ -177,7 +177,7 @@ void map_item::paint(QPainter* painter,
   Q_ASSERT(painter);
   Q_ASSERT(option);
 
-  const auto tileSize = m_map->get()->get_tile_size().get();
+  const auto tileSize = m_map->current_tile_size();
   const auto& exposed = option->exposedRect;
 
   m_map->each_layer([&](const layer& layer) {
@@ -193,8 +193,8 @@ void map_item::paint(QPainter* painter,
 
 auto map_item::boundingRect() const -> QRectF
 {
-  const auto width = static_cast<qreal>(m_map->get()->width());
-  const auto height = static_cast<qreal>(m_map->get()->height());
+  const auto width = static_cast<qreal>(m_map->width());
+  const auto height = static_cast<qreal>(m_map->height());
   return {0, 0, width, height};
 }
 

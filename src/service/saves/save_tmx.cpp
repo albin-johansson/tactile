@@ -113,8 +113,7 @@ void save_layers(QDomDocument& document,
     data.setAttribute(QStringLiteral(u"encoding"), QStringLiteral(u"csv"));
 
     QString buffer;
-    const auto count = map->rows().get() * map->cols().get();
-    buffer.reserve(count);
+    buffer.reserve(map.tile_count() * 2);  // include the separating comma
 
     bool first{true};
     layer.for_each([&](tile_id tile) {
@@ -147,14 +146,14 @@ void create_root(QDomDocument& document,
                     QStringLiteral(u"orthogonal"));
   root.setAttribute(QStringLiteral(u"renderorder"),
                     QStringLiteral(u"right-down"));
-  root.setAttribute(QStringLiteral(u"width"), map->cols().get());
-  root.setAttribute(QStringLiteral(u"height"), map->rows().get());
+  root.setAttribute(QStringLiteral(u"width"), map.cols().get());
+  root.setAttribute(QStringLiteral(u"height"), map.rows().get());
   root.setAttribute(QStringLiteral(u"tilewidth"),
                     prefs::saves::tile_width().value());
   root.setAttribute(QStringLiteral(u"tileheight"),
                     prefs::saves::tile_height().value());
   root.setAttribute(QStringLiteral(u"infinite"), 0);
-  root.setAttribute(QStringLiteral(u"nextlayerid"), map->num_layers() + 1);
+  root.setAttribute(QStringLiteral(u"nextlayerid"), map.num_layers() + 1);
   root.setAttribute(QStringLiteral(u"nextobjectid"), 1);
 
   if (options.generateDefaults) {

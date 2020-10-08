@@ -113,25 +113,7 @@ auto map_manager::has_active_map() const noexcept -> bool
   return m_currentMapID.has_value();
 }
 
-auto map_manager::at(map_id id) -> map*
-{
-  if (auto* document = get_document(id)) {
-    return document->get();
-  } else {
-    return nullptr;
-  }
-}
-
-auto map_manager::at(map_id id) const -> const map*
-{
-  if (const auto* document = get_document(id)) {
-    return document->get();
-  } else {
-    return nullptr;
-  }
-}
-
-auto map_manager::get_document(map_id id) -> map_document*
+auto map_manager::at(map_id id) -> map_document*
 {
   if (const auto it = m_mapDocuments.find(id); it != m_mapDocuments.end()) {
     return it->second;
@@ -140,7 +122,7 @@ auto map_manager::get_document(map_id id) -> map_document*
   }
 }
 
-auto map_manager::get_document(map_id id) const -> const map_document*
+auto map_manager::at(map_id id) const -> const map_document*
 {
   if (const auto it = m_mapDocuments.find(id); it != m_mapDocuments.end()) {
     return it->second;
@@ -159,34 +141,10 @@ auto map_manager::current_document() const -> const map_document*
   return m_currentMapID ? m_mapDocuments.at(m_currentMapID.value()) : nullptr;
 }
 
-auto map_manager::current_map() -> map*
-{
-  auto* document = current_document();
-  return document ? document->get() : nullptr;
-}
-
-auto map_manager::current_map() const -> const map*
-{
-  const auto* document = current_document();
-  return document ? document->get() : nullptr;
-}
-
 auto map_manager::current_tileset() const -> const tileset*
 {
   const auto* document = current_document();
   return document ? document->current_tileset() : nullptr;
-}
-
-auto map_manager::get_tileset_manager() -> tileset_manager*
-{
-  auto* document = current_document();
-  return document->tilesets();
-}
-
-auto map_manager::get_tileset_manager() const -> const tileset_manager*
-{
-  const auto* document = current_document();
-  return document->tilesets();
 }
 
 }  // namespace tactile::core
