@@ -177,6 +177,14 @@ class map_document final : public QObject
 
   void set_selection(position topLeft, position bottomRight);
 
+  void select_layer(layer_id id);  // not a command
+
+  void increase_tile_size();  // not a command
+
+  void decrease_tile_size();  // not a command
+
+  void reset_tile_size();  // not a command
+
   template <MapDocumentTilesetIterCallback T>
   void each_tileset(T&& lambda) const
   {

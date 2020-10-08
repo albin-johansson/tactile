@@ -134,6 +134,26 @@ void map_document::set_selection(position topLeft, position bottomRight)
   m_tilesets->set_selection(topLeft, bottomRight);
 }
 
+void map_document::select_layer(layer_id id)
+{
+  m_map->select_layer(id);
+}
+
+void map_document::increase_tile_size()
+{
+  m_map->get_tile_size().increase();
+}
+
+void map_document::decrease_tile_size()
+{
+  m_map->get_tile_size().decrease();
+}
+
+void map_document::reset_tile_size()
+{
+  m_map->get_tile_size().reset();
+}
+
 auto map_document::can_undo() const -> bool
 {
   return m_commands->canUndo();

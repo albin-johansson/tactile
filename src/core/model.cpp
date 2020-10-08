@@ -7,22 +7,18 @@ namespace tactile::core {
 model::model() : m_maps{std::make_unique<map_manager>()}, m_tools{this}
 {
   connect(m_maps.get(), &map_manager::switched_map, this, &model::switched_map);
-
   connect(m_maps.get(),
           &map_manager::undo_state_updated,
           this,
           &model::undo_state_updated);
-
   connect(m_maps.get(),
           &map_manager::redo_state_updated,
           this,
           &model::redo_state_updated);
-
   connect(m_maps.get(),
           &map_manager::undo_text_updated,
           this,
           &model::undo_text_updated);
-
   connect(m_maps.get(),
           &map_manager::redo_text_updated,
           this,
@@ -87,32 +83,32 @@ void model::remove_col()
 
 void model::select_layer(layer_id id)
 {
-  if (auto* map = current_map()) {
-    map->select_layer(id);
+  if (auto* document = current_map_document()) {
+    document->select_layer(id);
     emit redraw();
   }
 }
 
 void model::increase_tile_size()
 {
-  if (auto* map = current_map()) {
-    map->get_tile_size().increase();
+  if (auto* document = current_map_document()) {
+    document->increase_tile_size();
     emit redraw();
   }
 }
 
 void model::decrease_tile_size()
 {
-  if (auto* map = current_map()) {
-    map->get_tile_size().decrease();
+  if (auto* document = current_map_document()) {
+    document->decrease_tile_size();
     emit redraw();
   }
 }
 
 void model::reset_tile_size()
 {
-  if (auto* map = current_map()) {
-    map->get_tile_size().reset();
+  if (auto* document = current_map_document()) {
+    document->reset_tile_size();
     emit redraw();
   }
 }
