@@ -47,8 +47,6 @@ void app::open_map(const QString& path)
 //  auto [doc, tilesets] = service::open_map(path);
 
   // TODO implement
-
-
 }
 
 void app::handle_resize_map()
