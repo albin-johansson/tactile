@@ -27,7 +27,7 @@ model::model() : m_maps{std::make_unique<map_manager>()}, m_tools{this}
 
 void model::undo()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->undo();
     emit redraw();
   }
@@ -35,7 +35,7 @@ void model::undo()
 
 void model::redo()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->redo();
     emit redraw();
   }
@@ -43,7 +43,7 @@ void model::redo()
 
 void model::resize_map(row_t nRows, col_t nCols)
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->resize(nRows, nCols);
     emit redraw();
   }
@@ -51,7 +51,7 @@ void model::resize_map(row_t nRows, col_t nCols)
 
 void model::add_row()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->add_row();
     emit redraw();
   }
@@ -59,7 +59,7 @@ void model::add_row()
 
 void model::add_col()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->add_column();
     emit redraw();
   }
@@ -67,7 +67,7 @@ void model::add_col()
 
 void model::remove_row()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->remove_row();
     emit redraw();
   }
@@ -75,7 +75,7 @@ void model::remove_row()
 
 void model::remove_col()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->remove_column();
     emit redraw();
   }
@@ -83,7 +83,7 @@ void model::remove_col()
 
 void model::select_layer(layer_id id)
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->select_layer(id);
     emit redraw();
   }
@@ -91,7 +91,7 @@ void model::select_layer(layer_id id)
 
 void model::increase_tile_size()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->increase_tile_size();
     emit redraw();
   }
@@ -99,7 +99,7 @@ void model::increase_tile_size()
 
 void model::decrease_tile_size()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->decrease_tile_size();
     emit redraw();
   }
@@ -107,7 +107,7 @@ void model::decrease_tile_size()
 
 void model::reset_tile_size()
 {
-  if (auto* document = current_map_document()) {
+  if (auto* document = current_document()) {
     document->reset_tile_size();
     emit redraw();
   }

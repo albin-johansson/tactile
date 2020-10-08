@@ -32,7 +32,7 @@ void stamp_tool::update_stamp_sequence(map& map,
 
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_map_document()) {
+  if (auto* document = get_model()->current_document()) {
     auto* tileset = document->current_tileset();
     if (!tileset || !tileset->get_selection().has_value()) {
       return;
@@ -50,7 +50,7 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 
 void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_map_document()) {
+  if (auto* document = get_model()->current_document()) {
     const auto* tileset = document->current_tileset();
     if (!tileset || !tileset->get_selection()) {
       return;
@@ -74,7 +74,7 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 
 void stamp_tool::released(QMouseEvent* event, const QPointF&)
 {
-  if (auto* document = get_model()->current_map_document()) {
+  if (auto* document = get_model()->current_document()) {
     auto* tileset = document->current_tileset();
     if (!tileset || !tileset->get_selection()) {
       return;

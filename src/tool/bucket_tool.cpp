@@ -9,7 +9,7 @@ bucket_tool::bucket_tool(core::model* model) : abstract_tool{model}
 
 void bucket_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_map_document()) {
+  if (auto* document = get_model()->current_document()) {
     auto* tileset = document->current_tileset();
     if (!tileset || !tileset->get_selection()) {
       return;
