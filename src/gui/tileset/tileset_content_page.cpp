@@ -76,6 +76,9 @@ auto tileset_content_page::empty() const -> bool
 
 void tileset_content_page::selected_map(map_id map)
 {
+  // FIXME crashes when switching map when current map has >= 2 tilesets
+  //  probably has to do with emitting signals too early
+
   if (m_currentMap) {
     m_ui->tabWidget->clear();
   }
