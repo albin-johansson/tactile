@@ -88,8 +88,8 @@ void tileset_content_page::selected_map(map_id map)
   if (!m_mapTabs.contains(map)) {
     m_mapTabs.emplace(map, std::map<tileset_id, tileset_tab*>{});
   } else {
-    for (const auto& [key, value] : m_mapTabs.at(map)) {
-      m_ui->tabWidget->addTab(value, QStringLiteral(u"Foo"));
+    for (const auto& [key, tab] : m_mapTabs.at(map)) {
+      m_ui->tabWidget->addTab(tab, tab->name());
     }
     m_ui->tabWidget->setCurrentIndex(0);
   }

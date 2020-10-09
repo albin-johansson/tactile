@@ -28,6 +28,11 @@ class tileset_tab final : public QWidget
     return m_id;
   }
 
+  [[nodiscard]] auto name() const noexcept -> const QString&
+  {
+    return m_name;
+  }
+
  signals:
   void tileset_selection_changed(core::position topLeft,
                                  core::position bottomRight);
@@ -45,6 +50,7 @@ class tileset_tab final : public QWidget
   QLayout* m_layout;
   QPoint m_lastMousePos;
   tileset_id m_id;
+  QString m_name;
 };
 
 }  // namespace tactile::gui
