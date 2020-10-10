@@ -1,17 +1,3 @@
-/**
- * @file map.hpp
- *
- * @brief Provides the `map` class.
- *
- * @since 0.1.0
- *
- * @author Albin Johansson
- *
- * @date 2020
- *
- * @copyright GPL-3.0
- */
-
 #pragma once
 
 #include <memory>

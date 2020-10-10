@@ -1,17 +1,3 @@
-/**
- * @file layer.hpp
- *
- * @brief Provides the `layer` class.
- *
- * @since 0.1.0
- *
- * @author Albin Johansson
- *
- * @date 2020
- *
- * @copyright GPL-3.0
- */
-
 #pragma once
 
 #include <cassert>   // assert
