@@ -45,8 +45,6 @@ void tileset_content_page::add_tileset(map_id map,
                                        tileset_id id,
                                        const core::tileset& tileset)
 {
-  qDebug("Adding tileset to UI...");
-
   Q_ASSERT(!current_tab().contains(id));
 
   auto* tab = new tileset_tab{id, tileset, this};
@@ -62,8 +60,6 @@ void tileset_content_page::add_tileset(map_id map,
 
 void tileset_content_page::remove_tileset(tileset_id id, bool notify)
 {
-  qDebug("Removing tileset from UI...");
-
   Q_ASSERT(current_tab().contains(id));
 
   const auto index = index_of(id).value();
