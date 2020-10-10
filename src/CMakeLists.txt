@@ -175,7 +175,7 @@ set(TACTILE_SOURCE_FILES
         service/saves/export_options.hpp
         service/saves/tiled_version.hpp
         service/saves/open_map.cpp
-        service/saves/open_map.hpp)
+        service/saves/open_map.hpp command/add_tileset.cpp command/add_tileset.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

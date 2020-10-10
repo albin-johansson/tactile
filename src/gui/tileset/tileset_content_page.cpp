@@ -45,6 +45,8 @@ void tileset_content_page::add_tileset(map_id map,
                                        tileset_id id,
                                        const core::tileset& tileset)
 {
+  qDebug("Adding tileset to UI...");
+
   Q_ASSERT(!current_tab().contains(id));
 
   auto* tab = new tileset_tab{id, tileset, this};
@@ -58,8 +60,10 @@ void tileset_content_page::add_tileset(map_id map,
   m_ui->tabWidget->setCurrentIndex(index);
 }
 
-void tileset_content_page::remove_tileset(tileset_id id)
+void tileset_content_page::remove_tileset(tileset_id id, bool notify)
 {
+  qDebug("Removing tileset from UI...");
+
   Q_ASSERT(current_tab().contains(id));
 
   const auto index = index_of(id).value();
@@ -67,7 +71,10 @@ void tileset_content_page::remove_tileset(tileset_id id)
   current_tab().erase(id);
 
   m_ui->tabWidget->removeTab(index);
-  emit removed_tileset(id);
+
+  if (notify) {
+    emit ui_removed_tileset(id);
+  }
 }
 
 auto tileset_content_page::empty() const -> bool
@@ -150,7 +157,7 @@ void tileset_content_page::handle_tab_changed(int index)
 void tileset_content_page::handle_tab_clicked(int index)
 {
   if (auto* tab = tab_from_index(index)) {
-    emit selected_tileset(tab->id());
+    emit ui_selected_tileset(tab->id());
   }
 }
 

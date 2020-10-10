@@ -29,6 +29,8 @@ auto map_manager::add() -> map_id
   bind(&map_document::redo_state_updated, &map_manager::redo_state_updated);
   bind(&map_document::undo_text_updated, &map_manager::undo_text_updated);
   bind(&map_document::redo_text_updated, &map_manager::redo_text_updated);
+  bind(&map_document::added_tileset, &map_manager::added_tileset);
+  bind(&map_document::removed_tileset, &map_manager::removed_tileset);
 
   m_mapDocuments.emplace(id, document);
   m_currentMapID = id;
@@ -69,21 +71,18 @@ void map_manager::select(map_id id)
   }
 }
 
-auto map_manager::add_tileset(const QImage& image,
-                              const QString& path,
-                              const QString& name,
-                              tile_width tileWidth,
-                              tile_height tileHeight)
-    -> std::optional<tileset_id>
+void map_manager::ui_added_tileset(const QImage& image,
+                                     const QString& path,
+                                     const QString& name,
+                                     tile_width tileWidth,
+                                     tile_height tileHeight)
 {
   if (auto* document = current_document()) {
-    return document->add_tileset(image, path, name, tileWidth, tileHeight);
-  } else {
-    return std::nullopt;
+    document->add_tileset(image, path, name, tileWidth, tileHeight);
   }
 }
 
-void map_manager::remove_tileset(tileset_id id)
+void map_manager::ui_removed_tileset(tileset_id id)
 {
   if (auto* document = current_document()) {
     document->remove_tileset(id);

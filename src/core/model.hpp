@@ -38,29 +38,6 @@ class model final : public QObject
 
   [[nodiscard]] auto add_map() -> map_id;
 
-  /**
-   * @brief Adds a tileset based on the supplied image.
-   *
-   * @note This method has no effect if the tileset cannot be added.
-   *
-   * @param image the image that contains the tile images.
-   * @param path the file path of the tileset image.
-   * @param name the name associated with the tileset.
-   * @param tileWidth the width of the tiles in the tileset.
-   * @param tileHeight the height of the tiles in the tileset.
-   *
-   * @return the ID of the tileset that was added; `std::nullopt` if no tileset
-   * was added.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto add_tileset(const QImage& image,
-                                 const QString& path,
-                                 const QString& name,
-                                 tile_width tileWidth,
-                                 tile_height tileHeight)
-      -> std::optional<tileset_id>;
-
   void update_tileset_selection(position topLeft, position bottomRight);
 
   void resize_map(row_t nRows, col_t nCols);
@@ -124,6 +101,10 @@ class model final : public QObject
   void undo_text_updated(const QString& text);
 
   void redo_text_updated(const QString& text);
+
+  void added_tileset(map_id map, tileset_id id, const tileset& tileset);
+
+  void removed_tileset(map_id map, tileset_id id);
 
  public slots:
   void undo();
@@ -198,7 +179,26 @@ class model final : public QObject
    */
   void reset_tile_size();
 
-  void remove_tileset(tileset_id id);
+  /**
+   * @brief Adds a tileset based on the supplied image.
+   *
+   * @note This method has no effect if the tileset cannot be added.
+   *
+   * @param image the image that contains the tile images.
+   * @param path the file path of the tileset image.
+   * @param name the name associated with the tileset.
+   * @param tileWidth the width of the tiles in the tileset.
+   * @param tileHeight the height of the tiles in the tileset.
+   *
+   * @since 0.1.0
+   */
+  void add_tileset(const QImage& image,
+                          const QString& path,
+                          const QString& name,
+                          tile_width tileWidth,
+                          tile_height tileHeight);
+
+  void user_removed_tileset(tileset_id id);
 
   /**
    * @brief Selects the map associated with the specified id.

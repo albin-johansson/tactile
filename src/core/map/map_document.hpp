@@ -157,12 +157,7 @@ class map_document final : public QObject
    */
   void resize(row_t nRows, col_t nCols);
 
-  [[nodiscard]] auto add_tileset(const QImage& image,
-                                 const QString& path,
-                                 const QString& name,
-                                 tile_width tileWidth,
-                                 tile_height tileHeight)
-      -> std::optional<tileset_id>;
+  void add_tileset(tileset_id id, std::shared_ptr<tileset> tileset);
 
   void remove_tileset(tileset_id id);
 
@@ -190,7 +185,7 @@ class map_document final : public QObject
   void each_tileset(T&& lambda) const
   {
     for (const auto& [id, tileset] : *m_tilesets) {
-      lambda(id, tileset);
+      lambda(id, *tileset);
     }
   }
 
@@ -334,6 +329,17 @@ class map_document final : public QObject
   void undo_text_updated(const QString& text);
 
   void redo_text_updated(const QString& text);
+
+  void added_tileset(tileset_id id);
+
+  void removed_tileset(tileset_id id);
+
+ public slots:
+  void add_tileset(const QImage& image,
+                   const QString& path,
+                   const QString& name,
+                   tile_width tileWidth,
+                   tile_height tileHeight);
 
  private:
   std::unique_ptr<map> m_map;

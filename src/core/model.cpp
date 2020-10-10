@@ -22,6 +22,14 @@ model::model() : m_maps{std::make_unique<map_manager>()}, m_tools{this}
           &map_manager::redo_text_updated,
           this,
           &model::redo_text_updated);
+  connect(m_maps.get(), &map_manager::added_tileset, [this](tileset_id id) {
+    const auto& tileset = current_document()->tilesets()->at(id);
+    emit added_tileset(current_map().value(), id, tileset);
+  });
+  connect(
+      m_maps.get(), &map_manager::removed_tileset, [this](tileset_id tileset) {
+        emit removed_tileset(current_map().value(), tileset);
+      });
 }
 
 void model::undo()
@@ -138,18 +146,18 @@ void model::select_map(map_id id)
   emit switched_map(id);
 }
 
-auto model::add_tileset(const QImage& image,
+void model::add_tileset(const QImage& image,
                         const QString& path,
                         const QString& name,
                         tile_width tileWidth,
-                        tile_height tileHeight) -> std::optional<tileset_id>
+                        tile_height tileHeight)
 {
-  return m_maps->add_tileset(image, path, name, tileWidth, tileHeight);
+  m_maps->ui_added_tileset(image, path, name, tileWidth, tileHeight);
 }
 
-void model::remove_tileset(tileset_id id)
+void model::user_removed_tileset(tileset_id id)
 {
-  m_maps->remove_tileset(id);
+  m_maps->ui_removed_tileset(id);
   emit redraw();
 }
 

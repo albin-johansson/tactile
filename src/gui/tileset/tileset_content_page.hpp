@@ -132,7 +132,7 @@ class tileset_content_page final : public QWidget
    *
    * @since 0.1.0
    */
-  void remove_tileset(tileset_id id);
+  void remove_tileset(tileset_id id, bool notify = true);
 
   /**
    * @brief Indicates whether or not there are any tileset tabs.
@@ -168,7 +168,7 @@ class tileset_content_page final : public QWidget
    *
    * @since 0.1.0
    */
-  void selected_tileset(tileset_id id);
+  void ui_selected_tileset(tileset_id id);
 
   /**
    * @brief Dispatched when a tileset has been removed.
@@ -177,7 +177,7 @@ class tileset_content_page final : public QWidget
    *
    * @since 0.1.0
    */
-  void removed_tileset(tileset_id id);
+  void ui_removed_tileset(tileset_id id);
 
   /**
    * @brief Dispatched when the tile selection has changed in the current

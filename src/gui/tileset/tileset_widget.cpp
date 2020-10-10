@@ -32,14 +32,14 @@ tileset_widget::tileset_widget(QWidget* parent)
           &tileset_widget::request_new_tileset);
 
   connect(m_contentPage,
-          &tileset_content_page::selected_tileset,
+          &tileset_content_page::ui_selected_tileset,
           this,
-          &tileset_widget::selected_tileset);
+          &tileset_widget::ui_selected_tileset);
 
   connect(m_contentPage,
-          &tileset_content_page::removed_tileset,
+          &tileset_content_page::ui_removed_tileset,
           this,
-          &tileset_widget::removed_tileset);
+          &tileset_widget::ui_removed_tileset);
 
   connect(m_contentPage,
           &tileset_content_page::tileset_selection_changed,

@@ -14,25 +14,30 @@ class tileset_dock final : public QDockWidget
  public:
   explicit tileset_dock(QWidget* parent = nullptr);
 
-  [[nodiscard]] auto get_tileset_widget() noexcept -> tileset_widget*
+  void add_tileset(map_id map, tileset_id id, const core::tileset& tileset)
   {
-    return m_widget;
+    m_widget->add_tileset(map, id, tileset);
   }
 
  signals:
-  void new_tileset_requested();
+  void ui_requested_tileset();
 
-  void selected_tileset(tileset_id id);
+  void ui_selected_tileset(tileset_id id);
 
-  void removed_tileset(tileset_id id);
+  void ui_removed_tileset(tileset_id id);
 
   void tileset_selection_changed(core::position topLeft,
                                  core::position bottomRight);
 
  public slots:
-  void selected_map(map_id map)
+  void select_map(map_id map)
   {
     m_widget->selected_map(map);
+  }
+
+  void remove_tileset(tileset_id id)
+  {
+    m_widget->remove_tileset(id);
   }
 
  private:

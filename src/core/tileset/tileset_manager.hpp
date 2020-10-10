@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>    // shared_ptr
 #include <optional>  // optional
 #include <utility>   // forward, move
 
@@ -24,40 +25,14 @@ namespace tactile::core {
  */
 class tileset_manager final
 {
+  using tileset_map = vector_map<tileset_id, std::shared_ptr<tileset>>;
+
  public:
-  using const_iterator = vector_map<tileset_id, tileset>::const_iterator;
+  using const_iterator = tileset_map::const_iterator;
 
   tileset_manager();
 
-  /**
-   * @brief Adds a tileset to the manager.
-   *
-   * @details The added tileset will be made the currently active tileset.
-   *
-   * @tparam Args the types of the arguments that will be forwarded.
-   *
-   * @param args the arguments that will be forwarded to a `tileset`
-   * constructor.
-   *
-   * @return the ID of the added tileset.
-   *
-   * @since 0.1.0
-   */
-  template <typename... Args>
-  [[nodiscard]] auto emplace(Args&&... args) -> tileset_id
-  {
-    const auto id = m_nextID;
-    ++m_nextID;
-
-    tileset tileset{m_nextGlobalTileID, std::forward<Args>(args)...};
-
-    m_nextGlobalTileID = tileset.last_id() + 1_t;
-
-    m_tilesets.emplace(id, std::move(tileset));
-    m_activeID = id;
-
-    return id;
-  }
+  void add(tileset_id id, std::shared_ptr<tileset> tileset);
 
   /**
    * @brief Removes a tileset from the manager.
@@ -65,6 +40,8 @@ class tileset_manager final
    * @note This method has no effect if the specified ID isn't used.
    *
    * @param id the key associated with the tileset that will be removed.
+   * @param notify `true` if the `removed_tileset` signal should be emitted;
+   * `false` otherwise.
    *
    * @since 0.1.0
    */
@@ -164,6 +141,16 @@ class tileset_manager final
 
   [[nodiscard]] auto contains(tileset_id id) const -> bool;
 
+  [[nodiscard]] auto next_tileset_id() const noexcept -> tileset_id
+  {
+    return m_nextID;
+  }
+
+  [[nodiscard]] auto next_global_tile_id() const noexcept -> tile_id
+  {
+    return m_nextGlobalTileID;
+  }
+
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
     return m_tilesets.begin();
@@ -176,7 +163,7 @@ class tileset_manager final
 
  private:
   std::optional<tileset_id> m_activeID;
-  vector_map<tileset_id, tileset> m_tilesets;
+  tileset_map m_tilesets;
   tileset_id m_nextID{1};
   tile_id m_nextGlobalTileID{1};
 };

@@ -28,15 +28,6 @@ class map_manager final : public QObject
 
   void select(map_id id);
 
-  [[nodiscard]] auto add_tileset(const QImage& image,
-                                 const QString& path,
-                                 const QString& name,
-                                 tile_width tileWidth,
-                                 tile_height tileHeight)
-      -> std::optional<tileset_id>;
-
-  void remove_tileset(tileset_id id);
-
   void select_tileset(tileset_id id);
 
   void update_tileset_selection(position topLeft, position bottomRight);
@@ -83,6 +74,19 @@ class map_manager final : public QObject
   void undo_text_updated(const QString& text);
 
   void redo_text_updated(const QString& text);
+
+  void added_tileset(tileset_id id);
+
+  void removed_tileset(tileset_id id);
+
+ public slots:
+  void ui_added_tileset(const QImage& image,
+                        const QString& path,
+                        const QString& name,
+                        tile_width tileWidth,
+                        tile_height tileHeight);
+
+  void ui_removed_tileset(tileset_id id);
 
  private:
   std::optional<map_id> m_currentMapID;

@@ -29,9 +29,9 @@ class tileset_widget final : public QWidget
  signals:
   void request_new_tileset();
 
-  void selected_tileset(tileset_id id);
+  void ui_selected_tileset(tileset_id id);
 
-  void removed_tileset(tileset_id id);
+  void ui_removed_tileset(tileset_id id);
 
   void tileset_selection_changed(core::position topLeft,
                                  core::position bottomRight);
@@ -40,6 +40,11 @@ class tileset_widget final : public QWidget
   void selected_map(map_id map)
   {
     m_contentPage->selected_map(map);
+  }
+
+  void remove_tileset(tileset_id id)
+  {
+    m_contentPage->remove_tileset(id, false);
   }
 
  private:

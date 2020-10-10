@@ -137,6 +137,8 @@ class window final : public QMainWindow
                           tileset_id id,
                           const core::tileset& tileset);
 
+  void handle_removed_tileset(map_id map, tileset_id id);
+
   void switched_map(map_id map);
 
   /**

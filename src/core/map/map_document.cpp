@@ -2,6 +2,7 @@
 
 #include "add_col.hpp"
 #include "add_row.hpp"
+#include "add_tileset.hpp"
 #include "bucket_fill.hpp"
 #include "erase_sequence.hpp"
 #include "remove_col.hpp"
@@ -23,17 +24,14 @@ map_document::map_document(QObject* parent)
           &command_stack::canUndoChanged,
           this,
           &map_document::undo_state_updated);
-
   connect(m_commands,
           &command_stack::canRedoChanged,
           this,
           &map_document::redo_state_updated);
-
   connect(m_commands,
           &command_stack::undoTextChanged,
           this,
           &map_document::undo_text_updated);
-
   connect(m_commands,
           &command_stack::redoTextChanged,
           this,
@@ -95,22 +93,29 @@ void map_document::resize(row_t nRows, col_t nCols)
   m_commands->push<cmd::resize_map>(m_map.get(), nRows, nCols);
 }
 
-auto map_document::add_tileset(const QImage& image,
+void map_document::add_tileset(const QImage& image,
                                const QString& path,
                                const QString& name,
                                tile_width tileWidth,
                                tile_height tileHeight)
-    -> std::optional<tileset_id>
 {
   if (!image.isNull()) {
-    const auto id = m_tilesets->emplace(image, tileWidth, tileHeight);
-    auto& tileset = m_tilesets->at(id);
-    tileset.set_name(name);
-    tileset.set_path(path);
-    return id;
-  } else {
-    return std::nullopt;
+    const auto id = m_tilesets->next_tileset_id();
+    const auto gid = m_tilesets->next_global_tile_id();
+
+    auto ts = std::make_shared<tileset>(gid, image, tileWidth, tileHeight);
+    ts->set_name(name);
+    ts->set_path(path);
+
+    // This will cause an `added_tileset` signal to be emitted
+    m_commands->push<cmd::add_tileset>(this, std::move(ts), id);
   }
+}
+
+void map_document::add_tileset(tileset_id id, std::shared_ptr<tileset> tileset)
+{
+  m_tilesets->add(id, std::move(tileset));
+  emit added_tileset(id);
 }
 
 void map_document::remove_tileset(tileset_id id)
@@ -124,6 +129,7 @@ void map_document::remove_tileset(tileset_id id)
   }
 
   m_tilesets->remove(id);
+  emit removed_tileset(id);
 }
 
 void map_document::select_tileset(tileset_id id)

@@ -103,17 +103,17 @@ void window::init_connections()
   connect(m_editor, &map_editor::mouse_exited, this, &window::mouse_exited);
 
   connect(m_tilesetDock,
-          &tileset_dock::new_tileset_requested,
+          &tileset_dock::ui_requested_tileset,
           this,
           &window::request_new_tileset);
 
   connect(m_tilesetDock,
-          &tileset_dock::selected_tileset,
+          &tileset_dock::ui_selected_tileset,
           this,
           &window::selected_tileset);
 
   connect(m_tilesetDock,
-          &tileset_dock::removed_tileset,
+          &tileset_dock::ui_removed_tileset,
           this,
           &window::removed_tileset);
 
@@ -204,12 +204,17 @@ void window::handle_add_tileset(map_id map,
                                 tileset_id id,
                                 const core::tileset& tileset)
 {
-  m_tilesetDock->get_tileset_widget()->add_tileset(map, id, tileset);
+  m_tilesetDock->add_tileset(map, id, tileset);
+}
+
+void window::handle_removed_tileset(map_id map, tileset_id id)
+{
+  m_tilesetDock->remove_tileset(id);
 }
 
 void window::switched_map(map_id map)
 {
-  m_tilesetDock->selected_map(map);
+  m_tilesetDock->select_map(map);
 }
 
 void window::center_map()
