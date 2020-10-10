@@ -145,12 +145,12 @@ auto map::in_bounds(const position& pos) const -> bool
 
 auto map::rows() const -> row_t
 {
-  return current_layer().rows();
+  return current_layer().row_count();
 }
 
 auto map::cols() const -> col_t
 {
-  return current_layer().cols();
+  return current_layer().col_count();
 }
 
 auto map::tile_count() const -> int

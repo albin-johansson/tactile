@@ -102,8 +102,8 @@ void save_layers(QDomDocument& document,
     node.setAttribute(QStringLiteral(u"id"), id);
     node.setAttribute(QStringLiteral(u"name"),
                       QStringLiteral(u"Layer ") + QString::number(id));
-    node.setAttribute(QStringLiteral(u"width"), layer.cols().get());
-    node.setAttribute(QStringLiteral(u"height"), layer.rows().get());
+    node.setAttribute(QStringLiteral(u"width"), layer.col_count().get());
+    node.setAttribute(QStringLiteral(u"height"), layer.row_count().get());
 
     if (!layer.visible()) {
       node.setAttribute(QStringLiteral(u"visible"), 0);

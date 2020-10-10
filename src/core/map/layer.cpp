@@ -28,8 +28,8 @@ layer::layer(row_t nRows, col_t nCols)
   m_tiles.reserve(nRows.get());
   m_tiles.assign(nRows.get(), create_row(nCols));
 
-  assert(rows() == nRows);
-  assert(cols() == nCols);
+  assert(row_count() == nRows);
+  assert(col_count() == nCols);
 }
 
 void layer::flood(const position& pos, tile_id target, tile_id replacement)
@@ -39,8 +39,8 @@ void layer::flood(const position& pos, tile_id target, tile_id replacement)
 
 void layer::remove_all(tile_id id)
 {
-  const auto nRows = rows().get();
-  const auto nCols = cols().get();
+  const auto nRows = row_count().get();
+  const auto nCols = col_count().get();
   for (auto r = 0; r < nRows; ++r) {
     for (auto c = 0; c < nCols; ++c) {
       if (m_tiles[r][c] == id) {
@@ -52,7 +52,7 @@ void layer::remove_all(tile_id id)
 
 void layer::add_row(tile_id id)
 {
-  m_tiles.push_back(create_row(cols(), id));
+  m_tiles.push_back(create_row(col_count(), id));
 }
 
 void layer::add_col(tile_id id)
@@ -82,7 +82,7 @@ void layer::set_rows(row_t nRows)
 {
   assert(nRows >= 1_row);
 
-  const auto current = rows();
+  const auto current = row_count();
 
   if (nRows == current) {
     return;
@@ -101,7 +101,7 @@ void layer::set_cols(col_t nCols)
 {
   assert(nCols >= 1_col);
 
-  const auto current = cols();
+  const auto current = col_count();
 
   if (nCols == current) {
     return;
@@ -128,15 +128,20 @@ void layer::set_visible(bool visible) noexcept
   m_visible = visible;
 }
 
-auto layer::rows() const noexcept -> row_t
+auto layer::row_count() const noexcept -> row_t
 {
   return row_t{static_cast<int>(m_tiles.size())};
 }
 
-auto layer::cols() const noexcept -> col_t
+auto layer::col_count() const noexcept -> col_t
 {
   assert(!m_tiles.empty());
   return col_t{static_cast<int>(m_tiles[0].size())};
+}
+
+auto layer::tile_count() const noexcept -> int
+{
+  return row_count().get() * col_count().get();
 }
 
 auto layer::tile_at(const position& pos) const -> std::optional<tile_id>

@@ -24,9 +24,6 @@
 
 namespace tactile::core {
 
-template <typename T>
-concept LayerTileIterationCallable = std::invocable<T, tile_id>;
-
 /**
  * @class layer
  *
@@ -35,7 +32,6 @@ concept LayerTileIterationCallable = std::invocable<T, tile_id>;
  * @since 0.1.0
  *
  * @see `map`
- * @see `tilemap_renderer`
  *
  * @headerfile layer.hpp
  */
@@ -60,15 +56,24 @@ class layer final
    */
   layer(row_t nRows, col_t nCols);
 
-  template <LayerTileIterationCallable T>
+  /**
+   * @brief Iterates each tile in the layer.
+   *
+   * @tparam T the type of the function object that will be invoked.
+   *
+   * @param callable the callable that will be invoked for each tile in the
+   * layer.
+   *
+   * @since 0.1.0
+   */
+  template <std::invocable<tile_id> T>
   void for_each(T&& callable) const
   {
-    const auto endRow = rows();
-    const auto endCol = cols();
+    const auto endRow = row_count();
+    const auto endCol = col_count();
     for (row_t row{0}; row < endRow; ++row) {
       for (col_t col{0}; col < endCol; ++col) {
-        assert(in_bounds({row, col}));
-        callable(m_tiles[row.get()][col.get()]);
+        callable(m_tiles.at(row.get()).at(col.get()));
       }
     }
   }
@@ -186,7 +191,7 @@ class layer final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto rows() const noexcept -> row_t;
+  [[nodiscard]] auto row_count() const noexcept -> row_t;
 
   /**
    * @brief Returns the number of columns in the tile layer.
@@ -197,7 +202,16 @@ class layer final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const noexcept -> col_t;
+  [[nodiscard]] auto col_count() const noexcept -> col_t;
+
+  /**
+   * @brief Returns the total amount of tiles in the layer.
+   *
+   * @return the number of tiles in the layer.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto tile_count() const noexcept -> int;
 
   /**
    * @brief Returns the ID of the tile at the specified position.

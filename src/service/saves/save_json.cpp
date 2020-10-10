@@ -189,8 +189,8 @@ void create_external_tileset_file(const tileset& tileset,
       object.insert(u"name", QString::fromStdString(name));
     }
 
-    object.insert(u"width", layer.cols().get());
-    object.insert(u"height", layer.rows().get());
+    object.insert(u"width", layer.col_count().get());
+    object.insert(u"height", layer.row_count().get());
     object.insert(u"id", id);
     object.insert(u"opacity", 1.0);
     object.insert(u"type", QStringLiteral(u"tilelayer"));
