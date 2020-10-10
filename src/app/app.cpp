@@ -37,9 +37,9 @@ app::~app() noexcept
 
 void app::save_as(const QString& path)
 {
-  const auto* document = m_model->current_document();
-  Q_ASSERT(document);
-  service::save(path, *document);
+  if (const auto* document = m_model->current_document()) {
+    service::save(path, *document);
+  }
 }
 
 void app::open_map(const QString& path)
