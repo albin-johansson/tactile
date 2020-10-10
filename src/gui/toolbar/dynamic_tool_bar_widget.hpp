@@ -2,7 +2,7 @@
 
 #include <qwidget.h>
 
-#include "fwd.hpp"
+#include "stamp_toolbar.hpp"
 #include "types.hpp"
 
 class QLayout;

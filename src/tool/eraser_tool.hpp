@@ -1,7 +1,6 @@
 #pragma once
 
 #include "abstract_tool.hpp"
-#include "fwd.hpp"
 #include "position.hpp"
 #include "types.hpp"
 #include "vector_map.hpp"

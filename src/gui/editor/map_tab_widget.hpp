@@ -4,8 +4,8 @@
 
 #include <optional>  // optional
 
-#include "fwd.hpp"
 #include "map_document.hpp"
+#include "map_view.hpp"
 #include "types.hpp"
 
 namespace tactile::gui {

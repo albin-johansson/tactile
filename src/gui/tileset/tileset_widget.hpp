@@ -4,9 +4,9 @@
 
 #include <memory>
 
-#include "fwd.hpp"
 #include "position.hpp"
 #include "tileset_content_page.hpp"
+#include "tileset_empty_page.hpp"
 #include "types.hpp"
 
 namespace Ui {

@@ -5,9 +5,9 @@
 #include <qscrollarea.h>
 #include <qwidget.h>
 
-#include "fwd.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
+#include "tileset_image_widget.hpp"
 #include "types.hpp"
 
 namespace tactile::gui {

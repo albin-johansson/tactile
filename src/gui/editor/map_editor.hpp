@@ -5,8 +5,8 @@
 
 #include <optional>
 
-#include "fwd.hpp"
 #include "map_document.hpp"
+#include "map_tab_widget.hpp"
 #include "types.hpp"
 
 namespace Ui {

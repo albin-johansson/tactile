@@ -6,7 +6,6 @@
 #include <memory>
 #include <utility>
 
-#include "fwd.hpp"
 #include "model.hpp"
 #include "position.hpp"
 #include "types.hpp"

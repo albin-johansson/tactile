@@ -7,8 +7,8 @@
 #include <qrect.h>
 #include <qwidget.h>
 
-#include "fwd.hpp"
 #include "map_document.hpp"
+#include "map_editor.hpp"
 #include "position.hpp"
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"

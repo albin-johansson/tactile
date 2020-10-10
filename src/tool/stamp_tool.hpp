@@ -1,7 +1,6 @@
 #pragma once
 
 #include "abstract_tool.hpp"
-#include "fwd.hpp"
 #include "map_document.hpp"
 #include "position.hpp"
 #include "tileset.hpp"

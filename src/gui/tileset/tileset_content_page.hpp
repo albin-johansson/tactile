@@ -6,8 +6,8 @@
 #include <optional>  // optional
 #include <vector>    // vector, erase_if
 
-#include "fwd.hpp"
 #include "position.hpp"
+#include "tileset_tab.hpp"
 #include "types.hpp"
 #include "vector_map.hpp"
 

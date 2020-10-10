@@ -4,7 +4,6 @@
 
 #include <optional>
 
-#include "fwd.hpp"
 #include "map_document.hpp"
 #include "model.hpp"
 #include "tileset.hpp"

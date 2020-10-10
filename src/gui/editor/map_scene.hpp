@@ -4,8 +4,8 @@
 #include <qrect.h>
 #include <qwidget.h>
 
-#include "fwd.hpp"
 #include "map_document.hpp"
+#include "map_item.hpp"
 #include "model.hpp"
 
 class QPainter;
