@@ -2,8 +2,6 @@
 
 #include <qpushbutton.h>
 
-#include <algorithm>  // find_if
-
 #include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
@@ -47,28 +45,28 @@ void tileset_content_page::add_tileset(map_id map,
                                        tileset_id id,
                                        const core::tileset& tileset)
 {
-  Q_ASSERT(!has_tab(id));
+  Q_ASSERT(!current_tab().contains(id));
 
   auto* tab = new tileset_tab{id, tileset, this};
   connect(tab,
           &tileset_tab::tileset_selection_changed,
           this,
           &tileset_content_page::tileset_selection_changed);
-  m_mapTabs.at(map).emplace(id, tab);
+  m_tabData.at(map).add(id, tab);
+
   const auto index = m_ui->tabWidget->addTab(tab, tileset.name());
   m_ui->tabWidget->setCurrentIndex(index);
 }
 
 void tileset_content_page::remove_tileset(tileset_id id)
 {
-  Q_ASSERT(has_tab(id));
+  Q_ASSERT(current_tab().contains(id));
 
-  const auto index = index_of(id);
-  Q_ASSERT(index);
+  const auto index = index_of(id).value();
 
   current_tab().erase(id);
 
-  m_ui->tabWidget->removeTab(*index);
+  m_ui->tabWidget->removeTab(index);
   emit removed_tileset(id);
 }
 
@@ -79,8 +77,7 @@ auto tileset_content_page::empty() const -> bool
 
 void tileset_content_page::selected_map(map_id map)
 {
-  // FIXME crashes when switching map when current map has >= 2 tilesets
-  //  probably has to do with emitting signals too early
+  m_switchingMap = true;
 
   if (m_currentMap) {
     m_ui->tabWidget->clear();
@@ -88,26 +85,25 @@ void tileset_content_page::selected_map(map_id map)
 
   m_currentMap = map;
 
-  if (!m_mapTabs.contains(map)) {
-    m_mapTabs.emplace(map, tileset_map{});
+  if (!m_tabData.contains(map)) {
+    m_tabData.emplace(map, tab_data{});
   } else {
-    for (const auto& [key, tab] : m_mapTabs.at(map)) {
+    const auto index = current_tab().cached_index().value_or(0);
+
+    for (const auto& [key, tab] : m_tabData.at(map)) {
       m_ui->tabWidget->addTab(tab, tab->name());
     }
-    m_ui->tabWidget->setCurrentIndex(0);
+
+    m_ui->tabWidget->setCurrentIndex(index);
   }
 
-  if (current_tab().empty()) {
+  if (current_tab().is_empty()) {
     emit switch_to_empty_page();
   } else {
     emit switch_to_content_page();
   }
-}
 
-auto tileset_content_page::has_tab(tileset_id id) const -> bool
-{
-  const auto& current = current_tab();
-  return current.find(id) != current.end();
+  m_switchingMap = false;
 }
 
 auto tileset_content_page::tab_from_index(int index) -> tileset_tab*
@@ -125,7 +121,6 @@ auto tileset_content_page::index_of(tileset_id id) const -> std::optional<int>
       ++index;
     }
   }
-
   return std::nullopt;
 }
 
@@ -138,6 +133,10 @@ void tileset_content_page::handle_remove_tab(int index)
 
 void tileset_content_page::handle_tab_changed(int index)
 {
+  if (!m_switchingMap) {
+    current_tab().set_cached_index(index);
+  }
+
   if (index == -1) {
     emit switch_to_empty_page();
   }

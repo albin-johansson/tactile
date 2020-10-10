@@ -17,6 +17,70 @@ class tileset_content_page;
 
 namespace tactile::gui {
 
+class tab_data final
+{
+ public:
+  tab_data() = default;
+
+  void erase(tileset_id id)
+  {
+    m_tabs.erase(id);
+  }
+
+  void add(tileset_id id, tileset_tab* tab)
+  {
+    m_tabs.emplace(id, tab);
+  }
+
+  void set_cached_index(int index) noexcept
+  {
+    m_cachedIndex = index;
+  }
+
+  [[nodiscard]] auto cached_index() const noexcept -> std::optional<int>
+  {
+    if (m_cachedIndex != -1) {
+      return m_cachedIndex;
+    } else {
+      return std::nullopt;
+    }
+  }
+
+  [[nodiscard]] auto is_empty() const noexcept -> bool
+  {
+    return m_tabs.empty();
+  }
+
+  [[nodiscard]] auto contains(tileset_id id) const -> bool
+  {
+    return m_tabs.contains(id);
+  }
+
+  auto begin() noexcept
+  {
+    return m_tabs.begin();
+  }
+
+  auto begin() const noexcept
+  {
+    return m_tabs.begin();
+  }
+
+  auto end() noexcept
+  {
+    return m_tabs.end();
+  }
+
+  auto end() const noexcept
+  {
+    return m_tabs.end();
+  }
+
+ private:
+  std::map<tileset_id, tileset_tab*> m_tabs{};
+  int m_cachedIndex{-1};
+};
+
 /**
  * @class tileset_content_page
  *
@@ -31,9 +95,7 @@ class tileset_content_page final : public QWidget
 {
   Q_OBJECT
 
-  using tileset_map = std::map<tileset_id, tileset_tab*>;
-  using tilemap_map = std::map<map_id, tileset_map>;
-  using const_iterator = tilemap_map::const_iterator;
+  using const_iterator = std::map<map_id, tab_data>::const_iterator;
 
  public:
   /**
@@ -135,19 +197,8 @@ class tileset_content_page final : public QWidget
  private:
   owner<Ui::tileset_content_page*> m_ui;
   std::optional<map_id> m_currentMap;
-  tilemap_map m_mapTabs;
-
-  /**
-   * @brief Indicates whether or not there is a tab associated with the
-   * specified ID.
-   *
-   * @param id the ID to look for.
-   *
-   * @return `true` if there is a tab associated with the ID; `false` otherwise.
-   *
-   * @since 0.1.0
-   */
-  [[nodiscard]] auto has_tab(tileset_id id) const -> bool;
+  std::map<map_id, tab_data> m_tabData;
+  bool m_switchingMap{false};  ///< Used to know when to store tab indices
 
   /**
    * @brief Returns the tab associated with the specified index.
@@ -172,14 +223,14 @@ class tileset_content_page final : public QWidget
    */
   [[nodiscard]] auto index_of(tileset_id id) const -> std::optional<int>;
 
-  [[nodiscard]] auto current_tab() const -> const tileset_map&
+  [[nodiscard]] auto current_tab() const -> const tab_data&
   {
-    return m_mapTabs.at(m_currentMap.value());
+    return m_tabData.at(m_currentMap.value());
   }
 
-  [[nodiscard]] auto current_tab() -> tileset_map&
+  [[nodiscard]] auto current_tab() -> tab_data&
   {
-    return m_mapTabs.at(m_currentMap.value());
+    return m_tabData.at(m_currentMap.value());
   }
 
  private slots:
