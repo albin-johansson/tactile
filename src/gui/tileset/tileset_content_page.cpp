@@ -83,6 +83,19 @@ void tileset_content_page::selected_map(map_id map)
     m_ui->tabWidget->clear();
   }
 
+  switch_to(map);
+
+  if (current_tab().is_empty()) {
+    emit switch_to_empty_page();
+  } else {
+    emit switch_to_content_page();
+  }
+
+  m_switchingMap = false;
+}
+
+void tileset_content_page::switch_to(map_id map)
+{
   m_currentMap = map;
 
   if (!m_tabData.contains(map)) {
@@ -96,14 +109,6 @@ void tileset_content_page::selected_map(map_id map)
 
     m_ui->tabWidget->setCurrentIndex(index);
   }
-
-  if (current_tab().is_empty()) {
-    emit switch_to_empty_page();
-  } else {
-    emit switch_to_content_page();
-  }
-
-  m_switchingMap = false;
 }
 
 auto tileset_content_page::tab_from_index(int index) -> tileset_tab*

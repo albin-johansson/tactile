@@ -200,6 +200,8 @@ class tileset_content_page final : public QWidget
   std::map<map_id, tab_data> m_tabData;
   bool m_switchingMap{false};  ///< Used to know when to store tab indices
 
+  void switch_to(map_id map);
+
   /**
    * @brief Returns the tab associated with the specified index.
    *
