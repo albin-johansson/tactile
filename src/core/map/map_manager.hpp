@@ -76,8 +76,6 @@ class map_manager final : public QObject
   }
 
  signals:
-  void switched_map(map_id id);
-
   void undo_state_updated(bool canUndo);
 
   void redo_state_updated(bool canRedo);

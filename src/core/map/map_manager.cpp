@@ -21,7 +21,7 @@ auto map_manager::add() -> map_id
 
   auto* document = new map_document{this};
 
-  auto bind = [document, this](auto&& signal, auto&& slot) {
+  const auto bind = [document, this](auto&& signal, auto&& slot) {
     connect(document, signal, this, slot);
   };
 
@@ -63,12 +63,9 @@ void map_manager::select(map_id id)
 {
   Q_ASSERT(m_mapDocuments.contains(id));
 
-  if (m_currentMapID && (m_currentMapID->get() != id.get())) {
+  if (m_currentMapID != id) {
     m_currentMapID = id;
-
     emit_undo_redo_update();
-
-    emit switched_map(id);
   }
 }
 

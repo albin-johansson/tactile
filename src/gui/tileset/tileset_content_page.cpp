@@ -28,11 +28,14 @@ tileset_content_page::tileset_content_page(QWidget* parent)
           &QTabWidget::tabCloseRequested,
           this,
           &tileset_content_page::handle_remove_tab);
-
   connect(m_ui->tabWidget,
           &QTabWidget::currentChanged,
           this,
           &tileset_content_page::handle_tab_changed);
+  connect(m_ui->tabWidget,
+          &QTabWidget::tabBarClicked,
+          this,
+          &tileset_content_page::handle_tab_clicked);
 }
 
 tileset_content_page::~tileset_content_page() noexcept
@@ -86,7 +89,7 @@ void tileset_content_page::selected_map(map_id map)
   m_currentMap = map;
 
   if (!m_mapTabs.contains(map)) {
-    m_mapTabs.emplace(map, std::map<tileset_id, tileset_tab*>{});
+    m_mapTabs.emplace(map, tileset_map{});
   } else {
     for (const auto& [key, tab] : m_mapTabs.at(map)) {
       m_ui->tabWidget->addTab(tab, tab->name());
@@ -137,10 +140,13 @@ void tileset_content_page::handle_tab_changed(int index)
 {
   if (index == -1) {
     emit switch_to_empty_page();
-  } else {
-    if (auto* tab = tab_from_index(index)) {
-      emit selected_tileset(tab->id());
-    }
+  }
+}
+
+void tileset_content_page::handle_tab_clicked(int index)
+{
+  if (auto* tab = tab_from_index(index)) {
+    emit selected_tileset(tab->id());
   }
 }
 

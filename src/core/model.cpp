@@ -6,7 +6,6 @@ namespace tactile::core {
 
 model::model() : m_maps{std::make_unique<map_manager>()}, m_tools{this}
 {
-  connect(m_maps.get(), &map_manager::switched_map, this, &model::switched_map);
   connect(m_maps.get(),
           &map_manager::undo_state_updated,
           this,

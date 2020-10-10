@@ -186,6 +186,8 @@ class tileset_content_page final : public QWidget
   void handle_remove_tab(int index);
 
   void handle_tab_changed(int index);
+
+  void handle_tab_clicked(int index);
 };
 
 }  // namespace tactile::gui
