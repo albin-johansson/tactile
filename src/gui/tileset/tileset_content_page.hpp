@@ -95,8 +95,6 @@ class tileset_content_page final : public QWidget
 {
   Q_OBJECT
 
-  using const_iterator = std::map<map_id, tab_data>::const_iterator;
-
  public:
   /**
    * @brief Creates a `tileset_content_page` instance.
@@ -129,6 +127,8 @@ class tileset_content_page final : public QWidget
    * @pre `id` must be associated with an existing tileset tab.
    *
    * @param id the ID associated with the tileset tab which will be removed.
+   * @param notify `true` if the `ui_removed_tileset` signal should be emitted;
+   * `false` otherwise.
    *
    * @since 0.1.0
    */
@@ -144,55 +144,21 @@ class tileset_content_page final : public QWidget
   [[nodiscard]] auto empty() const -> bool;
 
  signals:
-  /**
-   * @brief Requests the tileset widget to switch to the empty page, since no
-   * tilesets are available.
-   *
-   * @since 0.1.0
-   */
   void switch_to_empty_page();
 
   void switch_to_content_page();
 
-  /**
-   * @brief Requests a new tileset to be added to the model.
-   *
-   * @since 0.1.0
-   */
-  void add_new_tileset();
+  void ui_requested_tileset();
 
-  /**
-   * @brief Dispatched when the active tileset has changed.
-   *
-   * @param id the ID of the selected tileset.
-   *
-   * @since 0.1.0
-   */
   void ui_selected_tileset(tileset_id id);
 
-  /**
-   * @brief Dispatched when a tileset has been removed.
-   *
-   * @param id the ID of the tileset that was removed.
-   *
-   * @since 0.1.0
-   */
   void ui_removed_tileset(tileset_id id);
 
-  /**
-   * @brief Dispatched when the tile selection has changed in the current
-   * tileset.
-   *
-   * @param topLeft the position of the top-left tile.
-   * @param bottomRight the position of the bottom-right tile.
-   *
-   * @since 0.1.0
-   */
   void tileset_selection_changed(core::position topLeft,
                                  core::position bottomRight);
 
  public slots:
-  void selected_map(map_id map);
+  void select_map(map_id map);
 
  private:
   owner<Ui::tileset_content_page*> m_ui;

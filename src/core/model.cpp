@@ -120,50 +120,16 @@ void model::reset_tile_size()
   }
 }
 
-void model::select_tool(tool_id tool)
-{
-  m_tools.select(tool);
-}
-
-void model::select_tileset(tileset_id id)
-{
-  m_maps->select_tileset(id);
-}
-
-auto model::add_map() -> map_id
-{
-  return m_maps->add();
-}
-
-void model::close_map(map_id id)
-{
-  m_maps->close(id);
-}
-
-void model::select_map(map_id id)
+void model::ui_selected_map(map_id id)
 {
   m_maps->select(id);
   emit switched_map(id);
-}
-
-void model::add_tileset(const QImage& image,
-                        const QString& path,
-                        const QString& name,
-                        tile_width tileWidth,
-                        tile_height tileHeight)
-{
-  m_maps->ui_added_tileset(image, path, name, tileWidth, tileHeight);
 }
 
 void model::ui_removed_tileset(tileset_id id)
 {
   m_maps->ui_removed_tileset(id);
   emit redraw();
-}
-
-void model::update_tileset_selection(position topLeft, position bottomRight)
-{
-  m_maps->update_tileset_selection(topLeft, bottomRight);
 }
 
 }  // namespace tactile::core

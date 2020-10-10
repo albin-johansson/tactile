@@ -40,8 +40,6 @@ class tileset_manager final
    * @note This method has no effect if the specified ID isn't used.
    *
    * @param id the key associated with the tileset that will be removed.
-   * @param notify `true` if the `removed_tileset` signal should be emitted;
-   * `false` otherwise.
    *
    * @since 0.1.0
    */

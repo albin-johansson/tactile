@@ -92,7 +92,7 @@ void app::handle_new_tileset()
                                     tile_width tileWidth,
                                     tile_height tileHeight,
                                     const QString& name) {
-    m_model->add_tileset(image, path, name, tileWidth, tileHeight);
+    m_model->ui_added_tileset(image, path, name, tileWidth, tileHeight);
   });
 }
 

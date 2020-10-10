@@ -2,7 +2,6 @@
 
 #include <qpushbutton.h>
 
-#include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
 namespace tactile::gui {
@@ -19,7 +18,7 @@ tileset_content_page::tileset_content_page(QWidget* parent)
   connect(cornerBtn,
           &QPushButton::pressed,
           this,
-          &tileset_content_page::add_new_tileset);
+          &tileset_content_page::ui_requested_tileset);
   m_ui->tabWidget->setCornerWidget(cornerBtn, Qt::Corner::TopRightCorner);
 
   connect(m_ui->tabWidget,
@@ -78,7 +77,7 @@ auto tileset_content_page::empty() const -> bool
   return m_ui->tabWidget->count() == 0;
 }
 
-void tileset_content_page::selected_map(map_id map)
+void tileset_content_page::select_map(map_id map)
 {
   m_switchingMap = true;
 

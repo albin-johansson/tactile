@@ -119,7 +119,7 @@ void app_connections::init_map_connections(app* app) noexcept
   connect(m_window, &window::request_new_map, app, &app::handle_new_map);
 
   connect(m_window, &window::request_close_map, m_core, &model::close_map);
-  connect(m_window, &window::request_select_map, m_core, &model::select_map);
+  connect(m_window, &window::request_select_map, m_core, &model::ui_selected_map);
   connect(m_window, &window::mouse_pressed, m_core, &model::mouse_pressed);
   connect(m_window, &window::mouse_moved, m_core, &model::mouse_moved);
   connect(m_window, &window::mouse_released, m_core, &model::mouse_released);

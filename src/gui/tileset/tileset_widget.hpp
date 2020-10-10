@@ -2,8 +2,6 @@
 
 #include <qwidget.h>
 
-#include <memory>
-
 #include "position.hpp"
 #include "tileset_content_page.hpp"
 #include "tileset_empty_page.hpp"
@@ -24,10 +22,8 @@ class tileset_widget final : public QWidget
 
   ~tileset_widget() noexcept override;
 
-  void add_tileset(map_id map, tileset_id id, const core::tileset& tileset);
-
  signals:
-  void request_new_tileset();
+  void ui_requested_tileset();
 
   void ui_selected_tileset(tileset_id id);
 
@@ -37,10 +33,12 @@ class tileset_widget final : public QWidget
                                  core::position bottomRight);
 
  public slots:
-  void selected_map(map_id map)
+  void select_map(map_id map)
   {
-    m_contentPage->selected_map(map);
+    m_contentPage->select_map(map);
   }
+
+  void add_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 
   void remove_tileset(tileset_id id)
   {
@@ -48,11 +46,11 @@ class tileset_widget final : public QWidget
   }
 
  private:
-  owner<Ui::tileset_widget*> m_ui;
-  tileset_content_page* m_contentPage;
-  tileset_empty_page* m_emptyPage;
-  int m_emptyIndex;
-  int m_contentIndex;
+  Ui::tileset_widget* m_ui;
+  tileset_content_page* m_contentPage{};
+  tileset_empty_page* m_emptyPage{};
+  int m_emptyIndex{};
+  int m_contentIndex{};
 };
 
 }  // namespace tactile::gui

@@ -36,41 +36,44 @@ class model final : public QObject
  public:
   model();
 
-  [[nodiscard]] auto add_map() -> map_id;
+  [[nodiscard]] auto add_map() -> map_id
+  {
+    return m_maps->add();
+  }
 
-  void update_tileset_selection(position topLeft, position bottomRight);
+  void update_tileset_selection(position topLeft, position bottomRight)
+  {
+    m_maps->update_tileset_selection(topLeft, bottomRight);
+  }
 
   void resize_map(row_t nRows, col_t nCols);
 
   /**
-   * @brief Indicates whether or not there is an active map.
-   *
-   * @return `true` if there is an active map; `false` otherwise.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::has_active_map()
    */
   [[nodiscard]] auto has_active_map() const noexcept -> bool
   {
     return m_maps->has_active_map();
   }
 
+  /**
+   * @copydoc map_manager::at()
+   */
   [[nodiscard]] auto get_document(map_id id) -> map_document*
   {
     return m_maps->at(id);
   }
 
+  /**
+   * @copydoc map_manager::current_map()
+   */
   [[nodiscard]] auto current_map() const -> std::optional<map_id>
   {
     return m_maps->current_map();
   }
 
   /**
-   * @brief Returns a pointer to the current map document.
-   *
-   * @return a pointer to the current map document; `nullptr` if there is no
-   * active map document.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::current_document()
    */
   [[nodiscard]] auto current_document() -> map_document*
   {
@@ -78,7 +81,7 @@ class model final : public QObject
   }
 
   /**
-   * @copydoc current_map_document()
+   * @copydoc current_document()
    */
   [[nodiscard]] auto current_document() const -> const map_document*
   {
@@ -151,9 +154,15 @@ class model final : public QObject
    */
   void select_layer(layer_id id);
 
-  void select_tool(tool_id tool);
+  void select_tool(tool_id tool)
+  {
+    m_tools.select(tool);
+  }
 
-  void select_tileset(tileset_id id);
+  void select_tileset(tileset_id id)
+  {
+    m_maps->select_tileset(id);
+  }
 
   /**
    * @brief Increases the tile size that is being used by the currently active
@@ -192,11 +201,14 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  void add_tileset(const QImage& image,
-                          const QString& path,
-                          const QString& name,
-                          tile_width tileWidth,
-                          tile_height tileHeight);
+  void ui_added_tileset(const QImage& image,
+                        const QString& path,
+                        const QString& name,
+                        tile_width tileWidth,
+                        tile_height tileHeight)
+  {
+    m_maps->ui_added_tileset(image, path, name, tileWidth, tileHeight);
+  }
 
   void ui_removed_tileset(tileset_id id);
 
@@ -207,7 +219,7 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  void select_map(map_id id);
+  void ui_selected_map(map_id id);
 
   /**
    * @brief Closes the map associated with the specified ID.
@@ -216,7 +228,10 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  void close_map(map_id id);
+  void close_map(map_id id)
+  {
+    m_maps->close(id);
+  }
 
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition)
   {

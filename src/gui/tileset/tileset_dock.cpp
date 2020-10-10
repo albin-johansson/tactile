@@ -13,7 +13,7 @@ tileset_dock::tileset_dock(QWidget* parent)
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
   connect(m_widget,
-          &tileset_widget::request_new_tileset,
+          &tileset_widget::ui_requested_tileset,
           this,
           &tileset_dock::ui_requested_tileset);
 

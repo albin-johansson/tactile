@@ -204,17 +204,17 @@ void window::handle_add_tileset(map_id map,
                                 tileset_id id,
                                 const core::tileset& tileset)
 {
-  m_tilesetDock->add_tileset(map, id, tileset);
+  m_tilesetDock->added_tileset(map, id, tileset);
 }
 
 void window::handle_removed_tileset(map_id map, tileset_id id)
 {
-  m_tilesetDock->remove_tileset(id);
+  m_tilesetDock->removed_tileset(id);
 }
 
 void window::switched_map(map_id map)
 {
-  m_tilesetDock->select_map(map);
+  m_tilesetDock->selected_map(map);
 }
 
 void window::center_map()
