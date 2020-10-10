@@ -85,8 +85,7 @@ void map_manager::ui_added_tileset(const QImage& image,
 void map_manager::ui_removed_tileset(tileset_id id)
 {
   if (auto* document = current_document()) {
-    // Since the UI already has removed the tileset, don't notify the UI
-    document->remove_tileset(id, false);
+    document->ui_removed_tileset(id);
   }
 }
 

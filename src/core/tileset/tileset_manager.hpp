@@ -141,6 +141,11 @@ class tileset_manager final
 
   [[nodiscard]] auto contains(tileset_id id) const -> bool;
 
+  [[nodiscard]] auto get_ptr(tileset_id id) -> std::shared_ptr<tileset>&
+  {
+    return m_tilesets.at(id);
+  }
+
   [[nodiscard]] auto next_tileset_id() const noexcept -> tileset_id
   {
     return m_nextID;

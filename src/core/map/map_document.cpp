@@ -8,6 +8,7 @@
 #include "remove_col.hpp"
 #include "remove_row.hpp"
 #include "resize_map.hpp"
+#include "remove_tileset.hpp"
 #include "stamp_sequence.hpp"
 
 namespace tactile::core {
@@ -133,6 +134,11 @@ void map_document::remove_tileset(tileset_id id, bool notify)
   if (notify) {
     emit removed_tileset(id);
   }
+}
+
+void map_document::ui_removed_tileset(tileset_id id)
+{
+  m_commands->push<cmd::remove_tileset>(this, m_tilesets->get_ptr(id), id);
 }
 
 void map_document::select_tileset(tileset_id id)
