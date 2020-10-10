@@ -159,7 +159,7 @@ class map_document final : public QObject
 
   void add_tileset(tileset_id id, std::shared_ptr<tileset> tileset);
 
-  void remove_tileset(tileset_id id);
+  void remove_tileset(tileset_id id, bool notify = true);
 
   void select_tileset(tileset_id id);
 

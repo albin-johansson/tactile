@@ -115,7 +115,7 @@ void window::init_connections()
   connect(m_tilesetDock,
           &tileset_dock::ui_removed_tileset,
           this,
-          &window::removed_tileset);
+          &window::ui_removed_tileset);
 
   connect(m_tilesetDock,
           &tileset_dock::tileset_selection_changed,

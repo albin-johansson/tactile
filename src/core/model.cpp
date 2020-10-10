@@ -155,7 +155,7 @@ void model::add_tileset(const QImage& image,
   m_maps->ui_added_tileset(image, path, name, tileWidth, tileHeight);
 }
 
-void model::user_removed_tileset(tileset_id id)
+void model::ui_removed_tileset(tileset_id id)
 {
   m_maps->ui_removed_tileset(id);
   emit redraw();

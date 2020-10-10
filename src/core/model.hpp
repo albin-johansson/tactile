@@ -198,7 +198,7 @@ class model final : public QObject
                           tile_width tileWidth,
                           tile_height tileHeight);
 
-  void user_removed_tileset(tileset_id id);
+  void ui_removed_tileset(tileset_id id);
 
   /**
    * @brief Selects the map associated with the specified id.

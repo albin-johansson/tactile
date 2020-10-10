@@ -118,7 +118,7 @@ void map_document::add_tileset(tileset_id id, std::shared_ptr<tileset> tileset)
   emit added_tileset(id);
 }
 
-void map_document::remove_tileset(tileset_id id)
+void map_document::remove_tileset(tileset_id id, bool notify)
 {
   Q_ASSERT(m_tilesets->contains(id));
 
@@ -129,7 +129,10 @@ void map_document::remove_tileset(tileset_id id)
   }
 
   m_tilesets->remove(id);
-  emit removed_tileset(id);
+
+  if (notify) {
+    emit removed_tileset(id);
+  }
 }
 
 void map_document::select_tileset(tileset_id id)

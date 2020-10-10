@@ -62,8 +62,10 @@ app_connections::app_connections(app* app)
           m_window,
           &window::handle_removed_tileset);
 
-  connect(
-      m_window, &window::removed_tileset, m_core, &model::user_removed_tileset);
+  connect(m_window,
+          &window::ui_removed_tileset,
+          m_core,
+          &model::ui_removed_tileset);
   connect(m_window, &window::selected_tileset, m_core, &model::select_tileset);
 
   connect(m_window,

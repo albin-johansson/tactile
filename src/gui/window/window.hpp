@@ -89,7 +89,7 @@ class window final : public QMainWindow
 
   void select_tool(tool_id tool);
 
-  void removed_tileset(tileset_id id);
+  void ui_removed_tileset(tileset_id id);
 
   void selected_tileset(tileset_id id);
 
