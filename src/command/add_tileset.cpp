@@ -26,28 +26,14 @@ add_tileset::add_tileset(core::map_document* document,
 
 void add_tileset::undo()
 {
-  //  if (!m_document->contains(m_id)) {
-  //    setObsolete(true);
-  //  }
-
   QUndoCommand::undo();
-
-  //  if (!isObsolete()) {
   m_document->remove_tileset(m_id);
-  //  }
 }
 
 void add_tileset::redo()
 {
-  //  if (m_manager->contains(m_id)) {
-  //    setObsolete(true);
-  //  }
-
   QUndoCommand::redo();
-
-  //  if (!isObsolete()) {
   m_document->add_tileset(m_id, m_tileset);
-  //  }
 }
 
 }  // namespace tactile::cmd
