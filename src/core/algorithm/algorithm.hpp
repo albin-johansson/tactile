@@ -55,12 +55,4 @@ template <ordered T>
   return (value < least) ? least : value;
 }
 
-template <typename T, typename P>
-[[deprecated("Use std::erase_if instead")]] void erase(T&& container,
-                                                       P&& predicate)
-{
-  container.erase(std::remove_if(begin(container), end(container), predicate),
-                  end(container));
-}
-
 }  // namespace tactile
