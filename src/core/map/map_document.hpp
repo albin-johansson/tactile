@@ -314,11 +314,6 @@ class map_document final : public QObject
     return m_tilesets->current_tileset();
   }
 
-  [[nodiscard]] auto tilesets() noexcept -> tileset_manager*
-  {
-    return m_tilesets.get();
-  }
-
   [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*
   {
     return m_tilesets.get();

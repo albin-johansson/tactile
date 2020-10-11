@@ -116,7 +116,7 @@ void map_item::draw_tile(QPainter& painter,
                          int y,
                          int tileSize)
 {
-  if (auto* tilesets = m_map->tilesets()) {
+  if (const auto* tilesets = m_map->tilesets()) {
     const auto& image = tilesets->image(tile);
     const auto src = tilesets->image_source(tile);
     const QRect dst{x, y, tileSize, tileSize};
