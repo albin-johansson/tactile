@@ -1,7 +1,7 @@
 #pragma once
 
-#include <memory>
-#include <vector>
+#include <optional>  // optional
+#include <vector>    // vector
 
 #include "layer.hpp"
 #include "tile_size.hpp"
@@ -25,7 +25,6 @@ namespace tactile::core {
 class map final
 {
  public:
-  using iterator = typename std::vector<layer>::iterator;
   using const_iterator = typename std::vector<layer>::const_iterator;
 
   /**
@@ -127,6 +126,30 @@ class map final
   void remove_col() noexcept;
 
   /**
+   * @copydoc tile_size::increase()
+   */
+  void increase_tile_size()
+  {
+    m_tileSize.increase();
+  }
+
+  /**
+   * @copydoc tile_size::decrease()
+   */
+  void decrease_tile_size() noexcept
+  {
+    m_tileSize.decrease();
+  }
+
+  /**
+   * @copydoc tile_size::reset()
+   */
+  void reset_tile_size() noexcept
+  {
+    m_tileSize.reset();
+  }
+
+  /**
    * @brief Sets the total number of rows in the map.
    *
    * @param nRows the new number of rows in the map. Clamped to be at
@@ -197,7 +220,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto num_layers() const noexcept -> int;
+  [[nodiscard]] auto layer_count() const noexcept -> int;
 
   /**
    * @brief Indicates whether or not the specified layer index is associated
@@ -231,7 +254,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto rows() const -> row_t;
+  [[nodiscard]] auto row_count() const -> row_t;
 
   /**
    * @brief Returns the total number of columns in the map.
@@ -240,7 +263,7 @@ class map final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const -> col_t;
+  [[nodiscard]] auto col_count() const -> col_t;
 
   /**
    * @brief Returns the amount of tiles in the map.
@@ -270,23 +293,27 @@ class map final
   [[nodiscard]] auto height() const -> int;
 
   /**
-   * @brief Returns the current tile size.
+   * @brief Returns the ID of the currently active layer.
+   *
+   * @return the ID of the active layer.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto active_layer_id() const noexcept -> layer_id
+  {
+    return m_activeLayer;
+  }
+
+  /**
+   * @brief Returns the current tile size value.
    *
    * @return the current tile size.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto get_tile_size() noexcept -> tile_size&
+  [[nodiscard]] auto current_tile_size() const noexcept -> int
   {
-    return m_tileSize;
-  }
-
-  /**
-   * @copydoc get_tile_size()
-   */
-  [[nodiscard]] auto get_tile_size() const noexcept -> const tile_size&
-  {
-    return m_tileSize;
+    return m_tileSize.get();
   }
 
   /**

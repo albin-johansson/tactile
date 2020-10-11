@@ -85,8 +85,8 @@ void map_item::draw_layer(QPainter& painter,
 
   const auto beginRow = std::max(0, static_cast<int>(exposed.y() / tileSize));
   const auto beginCol = std::max(0, static_cast<int>(exposed.x() / tileSize));
-  const auto endRow = get_end_row(exposed, m_map->rows(), tileSize);
-  const auto endCol = get_end_col(exposed, m_map->cols(), tileSize);
+  const auto endRow = get_end_row(exposed, m_map->row_count(), tileSize);
+  const auto endCol = get_end_col(exposed, m_map->col_count(), tileSize);
 
   const auto renderGrid = prefs::graphics::render_grid().value_or(false);
 

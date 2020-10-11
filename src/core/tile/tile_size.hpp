@@ -54,7 +54,7 @@ class tile_size final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] int get() const noexcept
+  [[nodiscard]] auto get() const noexcept -> int
   {
     return m_size;
   }

@@ -259,27 +259,27 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::num_layers()
+   * @copydoc map::layer_count()
    */
-  [[nodiscard]] auto num_layers() const noexcept -> int
+  [[nodiscard]] auto layer_count() const noexcept -> int
   {
-    return m_map->num_layers();
+    return m_map->layer_count();
   }
 
   /**
-   * @copydoc map::rows()
+   * @copydoc map::row_count()
    */
-  [[nodiscard]] auto rows() const -> row_t
+  [[nodiscard]] auto row_count() const -> row_t
   {
-    return m_map->rows();
+    return m_map->row_count();
   }
 
   /**
-   * @copydoc map::cols()
+   * @copydoc map::col_count()
    */
-  [[nodiscard]] auto cols() const -> col_t
+  [[nodiscard]] auto col_count() const -> col_t
   {
-    return m_map->cols();
+    return m_map->col_count();
   }
 
   /**
@@ -298,9 +298,12 @@ class map_document final : public QObject
     return m_map->height();
   }
 
+  /**
+   * @copydoc map::current_tile_size()
+   */
   [[nodiscard]] auto current_tile_size() const noexcept -> int
   {
-    return m_map->get_tile_size().get();
+    return m_map->current_tile_size();
   }
 
   /**

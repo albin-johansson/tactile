@@ -40,7 +40,7 @@ void map::select_layer(layer_id layer) noexcept
 
 void map::add_layer()
 {
-  m_layers.emplace_back(rows(), cols());
+  m_layers.emplace_back(row_count(), col_count());
 }
 
 void map::add_row(tile_id id)
@@ -59,7 +59,7 @@ void map::add_col(tile_id id)
 
 void map::remove_row() noexcept
 {
-  if (rows() == 1_row) {
+  if (row_count() == 1_row) {
     return;
   }
 
@@ -70,7 +70,7 @@ void map::remove_row() noexcept
 
 void map::remove_col() noexcept
 {
-  if (cols() == 1_col) {
+  if (col_count() == 1_col) {
     return;
   }
 
@@ -83,7 +83,7 @@ void map::set_rows(row_t nRows)
 {
   nRows = at_least(nRows, 1_row);
 
-  if (nRows == rows()) {
+  if (nRows == row_count()) {
     return;
   }
 
@@ -96,7 +96,7 @@ void map::set_cols(col_t nCols)
 {
   nCols = at_least(nCols, 1_col);
 
-  if (nCols == cols()) {
+  if (nCols == col_count()) {
     return;
   }
 
@@ -123,7 +123,7 @@ auto map::is_visible(layer_id layer) const noexcept -> bool
   return has_layer(layer) && m_layers[index].visible();
 }
 
-auto map::num_layers() const noexcept -> int
+auto map::layer_count() const noexcept -> int
 {
   return static_cast<int>(m_layers.size());
 }
@@ -131,41 +131,41 @@ auto map::num_layers() const noexcept -> int
 auto map::has_layer(layer_id layer) const noexcept -> bool
 {
   const auto& value = layer.get();
-  return value >= 0 && value < num_layers();
+  return value >= 0 && value < layer_count();
 }
 
 auto map::in_bounds(const position& pos) const -> bool
 {
-  const row_t endRow{rows()};
-  const col_t endCol{cols()};
+  const row_t endRow{row_count()};
+  const col_t endCol{col_count()};
 
   const auto [row, col] = pos.unpack();
   return (row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol);
 }
 
-auto map::rows() const -> row_t
+auto map::row_count() const -> row_t
 {
   return current_layer().row_count();
 }
 
-auto map::cols() const -> col_t
+auto map::col_count() const -> col_t
 {
   return current_layer().col_count();
 }
 
 auto map::tile_count() const -> int
 {
-  return rows().get() * cols().get();
+  return row_count().get() * col_count().get();
 }
 
 auto map::width() const -> int
 {
-  return cols().get() * m_tileSize.get();
+  return col_count().get() * m_tileSize.get();
 }
 
 auto map::height() const -> int
 {
-  return rows().get() * m_tileSize.get();
+  return row_count().get() * m_tileSize.get();
 }
 
 auto map::current_layer() -> layer&

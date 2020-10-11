@@ -237,8 +237,8 @@ void create_external_tileset_file(const tileset& tileset,
   root.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   root.insert(u"orientation", QStringLiteral(u"orthogonal"));
   root.insert(u"renderorder", QStringLiteral(u"right-down"));
-  root.insert(u"width", map.cols().get());
-  root.insert(u"height", map.rows().get());
+  root.insert(u"width", map.col_count().get());
+  root.insert(u"height", map.row_count().get());
   root.insert(u"compressionlevel", -1);
   root.insert(u"infinite", false);
   root.insert(u"type", QStringLiteral(u"map"));
@@ -246,7 +246,7 @@ void create_external_tileset_file(const tileset& tileset,
   root.insert(u"tilewidth", prefs::saves::tile_width().value());
   root.insert(u"tileheight", prefs::saves::tile_height().value());
   root.insert(u"nextobjectid", 1);
-  root.insert(u"nextlayerid", map.num_layers() + 1);
+  root.insert(u"nextlayerid", map.layer_count() + 1);
   root.insert(u"tilesets", save_tilesets(map, mapDestination, options));
   root.insert(u"layers", save_layers(map, options));
 

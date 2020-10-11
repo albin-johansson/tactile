@@ -96,7 +96,7 @@ class tileset final
   /**
    * @brief Iterates the current selection.
    *
-   * @detail This function has no effect if there is no current selection.
+   * @details This function has no effect if there is no current selection.
    *
    * @tparam T the type of the callable.
    *

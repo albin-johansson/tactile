@@ -25,8 +25,8 @@ void resize_map::redo()
 {
   QUndoCommand::redo();
 
-  m_oldRows = m_map->rows();
-  m_oldCols = m_map->cols();
+  m_oldRows = m_map->row_count();
+  m_oldCols = m_map->col_count();
 
   m_map->set_rows(m_rows);
   m_map->set_cols(m_cols);

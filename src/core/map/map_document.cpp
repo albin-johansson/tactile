@@ -7,8 +7,8 @@
 #include "erase_sequence.hpp"
 #include "remove_col.hpp"
 #include "remove_row.hpp"
-#include "resize_map.hpp"
 #include "remove_tileset.hpp"
+#include "resize_map.hpp"
 #include "stamp_sequence.hpp"
 
 namespace tactile::core {
@@ -158,17 +158,17 @@ void map_document::select_layer(layer_id id)
 
 void map_document::increase_tile_size()
 {
-  m_map->get_tile_size().increase();
+  m_map->increase_tile_size();
 }
 
 void map_document::decrease_tile_size()
 {
-  m_map->get_tile_size().decrease();
+  m_map->decrease_tile_size();
 }
 
 void map_document::reset_tile_size()
 {
-  m_map->get_tile_size().reset();
+  m_map->reset_tile_size();
 }
 
 auto map_document::can_undo() const -> bool
