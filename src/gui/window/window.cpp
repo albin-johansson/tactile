@@ -276,7 +276,7 @@ void window::disable_stamp_preview()
 
 void window::handle_new_map(core::map_document* map, map_id id)
 {
-  m_editor->add_new_map_tab(map, QStringLiteral(u"map"), id);
+  m_editor->add_new_map_tab(map, id, QStringLiteral(u"map"));
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
     enter_content_view();

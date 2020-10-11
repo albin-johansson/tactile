@@ -64,8 +64,8 @@ void map_tab_widget::redraw()
 }
 
 void map_tab_widget::add_map_tab(core::map_document* map,
-                                 const QString& title,
-                                 map_id id)
+                                 map_id id,
+                                 const QString& title)
 {
   auto* view = new map_view{map, id, this};
 

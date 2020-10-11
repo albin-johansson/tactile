@@ -41,8 +41,8 @@ class map_editor final : public QWidget
   void disable_stamp_preview();
 
   void add_new_map_tab(core::map_document* map,
-                       const QString& title,
-                       map_id id);
+                       map_id id,
+                       const QString& title);
 
   void select_tab(map_id id);
 

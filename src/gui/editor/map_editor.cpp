@@ -82,10 +82,10 @@ void map_editor::disable_stamp_preview()
 }
 
 void map_editor::add_new_map_tab(core::map_document* map,
-                                 const QString& title,
-                                 map_id id)
+                                 map_id id,
+                                 const QString& title)
 {
-  m_mapTabWidget->add_map_tab(map, title, id);
+  m_mapTabWidget->add_map_tab(map, id, title);
 }
 
 void map_editor::select_tab(map_id id)
