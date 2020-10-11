@@ -3,6 +3,7 @@
 #include <QUndoCommand>
 #include <memory>  // shared_ptr
 
+#include "command_id.hpp"
 #include "map_document.hpp"
 #include "tileset.hpp"
 
@@ -18,6 +19,11 @@ class add_tileset final : public QUndoCommand
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(id::add_tileset);
+  }
 
  private:
   core::map_document* m_document;

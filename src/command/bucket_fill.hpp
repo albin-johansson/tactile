@@ -1,6 +1,7 @@
 #pragma once
 
 #include "abstract_command.hpp"
+#include "command_id.hpp"
 
 namespace tactile::cmd {
 
@@ -25,6 +26,11 @@ class bucket_fill final : public abstract_command
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(id::bucket_fill);
+  }
 
  private:
   core::position m_position;

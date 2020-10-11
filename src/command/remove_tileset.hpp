@@ -3,6 +3,7 @@
 #include <QUndoCommand>
 #include <memory>  // shared_ptr
 
+#include "command_id.hpp"
 #include "map_document.hpp"
 
 namespace tactile::cmd {
@@ -17,6 +18,11 @@ class remove_tileset final : public QUndoCommand
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(id::remove_tileset);
+  }
 
  private:
   core::map_document* m_document;

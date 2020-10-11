@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "abstract_command.hpp"
+#include "command_id.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
@@ -22,6 +23,11 @@ class stamp_sequence final : public abstract_command
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(id::stamp);
+  }
 
  private:
   vector_map<core::position, tile_id> m_oldState;

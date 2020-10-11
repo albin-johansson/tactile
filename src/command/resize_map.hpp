@@ -1,6 +1,7 @@
 #pragma once
 
 #include "abstract_command.hpp"
+#include "command_id.hpp"
 
 namespace tactile::cmd {
 
@@ -30,6 +31,11 @@ class resize_map final : public abstract_command
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(id::resize_map);
+  }
 
  private:
   core::row_t m_rows;

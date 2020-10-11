@@ -11,7 +11,9 @@ enum class id
   bucket_fill,
   eraser,
   stamp,
-  resize_map
+  resize_map,
+  add_tileset,
+  remove_tileset
 };
 
 }  // namespace tactile::cmd
