@@ -11,7 +11,7 @@ TEST_CASE("position()", "[position]")
   CHECK(position.col() == 0_col);
 }
 
-TEST_CASE("position(int, int)", "[position]")
+TEST_CASE("position(row_t, col_t)", "[position]")
 {
   SECTION("Valid arguments")
   {
