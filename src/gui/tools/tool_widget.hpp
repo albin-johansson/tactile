@@ -44,7 +44,7 @@ class tool_widget final : public QWidget
   void handle_enable_eraser();
 
  private:
-  owner<Ui::tool_widget*> m_ui{};
+  Ui::tool_widget* m_ui{};
   QButtonGroup* m_group{};
 
   void set_tools_enabled(bool enabled);

@@ -63,7 +63,7 @@ void map_tab_widget::redraw()
   }
 }
 
-void map_tab_widget::add_map_tab(not_null<core::map_document*> map,
+void map_tab_widget::add_map_tab(core::map_document* map,
                                  const QString& title,
                                  map_id id)
 {

@@ -154,13 +154,13 @@ class window final : public QMainWindow
 
   void handle_move_camera(int dx, int dy);
 
-  void handle_new_map(not_null<core::map_document*> map, map_id id);
+  void handle_new_map(core::map_document* map, map_id id);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
 
  private:
-  owner<Ui::window*> m_ui{};
+  Ui::window* m_ui{};
   map_editor* m_editor{};
   tool_dock* m_toolDock{};
   tileset_dock* m_tilesetDock{};

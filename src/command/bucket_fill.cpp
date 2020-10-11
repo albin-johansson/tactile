@@ -2,7 +2,7 @@
 
 namespace tactile::cmd {
 
-bucket_fill::bucket_fill(not_null<core::map*> map,
+bucket_fill::bucket_fill(core::map* map,
                          const core::position& position,
                          tile_id target,
                          tile_id replacement)

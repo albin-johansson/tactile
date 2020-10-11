@@ -161,7 +161,7 @@ class tileset_content_page final : public QWidget
   void select_map(map_id map);
 
  private:
-  owner<Ui::tileset_content_page*> m_ui;
+  Ui::tileset_content_page* m_ui{};
   std::optional<map_id> m_currentMap;
   std::map<map_id, tab_data> m_tabData;
   bool m_switchingMap{false};  ///< Used to know when to store tab indices

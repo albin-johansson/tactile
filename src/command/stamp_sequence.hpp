@@ -15,7 +15,7 @@ namespace tactile::cmd {
 class stamp_sequence final : public abstract_command
 {
  public:
-  stamp_sequence(not_null<core::map*> map,
+  stamp_sequence(core::map* map,
                  vector_map<core::position, tile_id>&& oldState,
                  vector_map<core::position, tile_id>&& sequence);
 

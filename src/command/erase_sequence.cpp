@@ -4,7 +4,7 @@
 
 namespace tactile::cmd {
 
-erase_sequence::erase_sequence(not_null<core::map*> map,
+erase_sequence::erase_sequence(core::map* map,
                                vector_map<core::position, tile_id>&& oldState)
     : abstract_command{QStringLiteral(u"Erase Tiles"), map},
       m_oldState{std::move(oldState)}

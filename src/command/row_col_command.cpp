@@ -2,7 +2,7 @@
 
 namespace tactile::cmd {
 
-row_col_command::row_col_command(const QString& name, not_null<core::map*> map)
+row_col_command::row_col_command(const QString& name, core::map* map)
     : abstract_command{name, map}
 {}
 

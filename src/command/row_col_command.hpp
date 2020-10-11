@@ -7,7 +7,7 @@ namespace tactile::cmd {
 class row_col_command : public abstract_command
 {
  public:
-  explicit row_col_command(const QString& name, not_null<core::map*> map);
+  explicit row_col_command(const QString& name, core::map* map);
 
   auto mergeWith(const QUndoCommand* other) -> bool final;
 

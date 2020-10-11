@@ -20,7 +20,7 @@ class stamp_toolbar final : public QWidget
   ~stamp_toolbar() noexcept override;
 
  private:
-  owner<Ui::stamp_toolbar*> m_ui;
+  Ui::stamp_toolbar* m_ui{};
 };
 
 }  // namespace tactile::gui

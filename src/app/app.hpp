@@ -43,7 +43,7 @@ class app final : public QApplication
 
  private:
   std::unique_ptr<gui::window> m_window;
-  owner<core::model*> m_model;
+  core::model* m_model{};
 
   [[nodiscard]] auto window_ptr() noexcept -> gui::window*
   {

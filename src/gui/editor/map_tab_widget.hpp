@@ -41,13 +41,9 @@ class map_tab_widget final : public QTabWidget
    * @param title the title that will be visible in the tab.
    * @param id the identifier associated with the map.
    *
-   * @todo Pass core_model pointer instead of map?
-   *
    * @since 0.1.0
    */
-  void add_map_tab(not_null<core::map_document*> map,
-                   const QString& title,
-                   map_id id);
+  void add_map_tab(core::map_document* map, const QString& title, map_id id);
 
   /**
    * @brief Removes the tab associated with the specified map.

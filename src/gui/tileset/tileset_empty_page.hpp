@@ -23,7 +23,7 @@ class tileset_empty_page final : public QWidget
   void request_new_tileset();
 
  private:
-  owner<Ui::tileset_empty_page*> m_ui;
+  Ui::tileset_empty_page* m_ui{};
 };
 
 }  // namespace tactile::gui

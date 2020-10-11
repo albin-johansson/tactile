@@ -4,7 +4,7 @@ using namespace tactile::core;
 
 namespace tactile::cmd {
 
-resize_map::resize_map(not_null<core::map*> map, row_t rows, col_t cols)
+resize_map::resize_map(core::map* map, row_t rows, col_t cols)
     : abstract_command{QStringLiteral(u"Resize Map"), map},
       m_rows{rows},
       m_cols{cols}

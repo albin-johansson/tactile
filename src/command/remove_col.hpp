@@ -17,7 +17,7 @@ namespace tactile::cmd {
 class remove_col final : public row_col_command
 {
  public:
-  explicit remove_col(not_null<core::map*> map);
+  explicit remove_col(core::map* map);
 
   void undo() override;
 

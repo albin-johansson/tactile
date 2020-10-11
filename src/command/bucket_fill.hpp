@@ -17,7 +17,7 @@ class bucket_fill final : public abstract_command
    *
    * @since 0.1.0
    */
-  explicit bucket_fill(not_null<core::map*> map,
+  explicit bucket_fill(core::map* map,
                        const core::position& position,
                        tile_id target,
                        tile_id replacement);

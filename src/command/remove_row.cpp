@@ -4,7 +4,7 @@
 
 namespace tactile::cmd {
 
-remove_row::remove_row(not_null<core::map*> map)
+remove_row::remove_row(core::map* map)
     : row_col_command{QStringLiteral(u"Remove Row"), map}
 {}
 

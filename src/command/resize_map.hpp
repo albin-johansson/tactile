@@ -25,7 +25,7 @@ class resize_map final : public abstract_command
    *
    * @since 0.1.0
    */
-  resize_map(not_null<core::map*> map, core::row_t nRows, core::col_t nCols);
+  resize_map(core::map* map, core::row_t nRows, core::col_t nCols);
 
   void undo() override;
 

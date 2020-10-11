@@ -17,7 +17,7 @@ class map_scene final : public QGraphicsScene
   Q_OBJECT
 
  public:
-  explicit map_scene(not_null<core::map_document*> map,
+  explicit map_scene(core::map_document* map,
                      map_id id,
                      QWidget* parent = nullptr);
 

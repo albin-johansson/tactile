@@ -7,9 +7,7 @@
 
 namespace tactile::gui {
 
-map_view::map_view(not_null<core::map_document*> map,
-                   map_id id,
-                   QWidget* parent)
+map_view::map_view(core::map_document* map, map_id id, QWidget* parent)
     : QGraphicsView{parent}
 {
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);

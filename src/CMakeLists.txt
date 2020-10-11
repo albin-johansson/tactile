@@ -187,19 +187,6 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     add_definitions(-DQT_NO_DEBUG_OUTPUT)
 endif ()
 
-set(GSL_SOURCES
-        ${LIBRARY_DIR}/microsoft/gsl/gsl
-        ${LIBRARY_DIR}/microsoft/gsl/gsl_algorithm
-        ${LIBRARY_DIR}/microsoft/gsl/gsl_assert
-        ${LIBRARY_DIR}/microsoft/gsl/gsl_byte
-        ${LIBRARY_DIR}/microsoft/gsl/gsl_util
-        ${LIBRARY_DIR}/microsoft/gsl/multi_span
-        ${LIBRARY_DIR}/microsoft/gsl/pointers
-        ${LIBRARY_DIR}/microsoft/gsl/span
-        ${LIBRARY_DIR}/microsoft/gsl/span_ext
-        ${LIBRARY_DIR}/microsoft/gsl/string_span)
-add_header_only_lib(libGSL ${LIBRARY_DIR}/microsoft ${GSL_SOURCES})
-
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
         PUBLIC app
@@ -237,8 +224,7 @@ target_link_libraries(libTactile
         PUBLIC Qt5::Core
         PUBLIC Qt5::Widgets
         PUBLIC Qt5::Gui
-        PUBLIC Qt5::Xml
-        PUBLIC libGSL)
+        PUBLIC Qt5::Xml)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     target_compile_options(libTactile PRIVATE

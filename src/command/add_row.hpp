@@ -17,7 +17,7 @@ namespace tactile::cmd {
 class add_row final : public row_col_command
 {
  public:
-  explicit add_row(not_null<core::map*> map);
+  explicit add_row(core::map* map);
 
   void undo() override;
 

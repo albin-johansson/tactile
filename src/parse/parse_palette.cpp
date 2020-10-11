@@ -15,7 +15,7 @@ void parse_group(const QJsonObject& json,
 {
   using color_role = QPalette::ColorRole;
 
-  const auto set_if_exists = [&](color_role role, u16_czstring key) {
+  const auto set_if_exists = [&](color_role role, cz16string key) {
     if (const auto it = json.find(key); it != json.end()) {
       const auto value = it.value();
       Q_ASSERT(value.isString());

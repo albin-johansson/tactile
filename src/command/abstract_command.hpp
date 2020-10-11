@@ -11,9 +11,9 @@ namespace tactile::cmd {
 class abstract_command : public QUndoCommand
 {
  protected:
-  explicit abstract_command(const QString& text, not_null<core::map*> map);
+  explicit abstract_command(const QString& text, core::map* map);
 
-  core::map* m_map;
+  core::map* m_map{};
 };
 
 }  // namespace tactile::cmd

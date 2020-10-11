@@ -4,7 +4,7 @@
 
 namespace tactile::cmd {
 
-add_col::add_col(not_null<core::map*> map)
+add_col::add_col(core::map* map)
     : row_col_command{QStringLiteral(u"Add Column"), map}
 {}
 

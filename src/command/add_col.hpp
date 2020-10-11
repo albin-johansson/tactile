@@ -24,7 +24,7 @@ class add_col final : public row_col_command
    *
    * @since 0.1.0
    */
-  explicit add_col(not_null<core::map*> map);
+  explicit add_col(core::map* map);
 
   void undo() override;
 

@@ -72,7 +72,7 @@ class tileset_dialog final : public QDialog
   }
 
  private:
-  owner<Ui::tileset_dialog*> m_ui;
+  Ui::tileset_dialog* m_ui{};
   QImage m_image{};
   QString m_path{};
   std::optional<tile_width> m_width;
