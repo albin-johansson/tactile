@@ -106,17 +106,14 @@ void window::init_connections()
           &tileset_dock::ui_requested_tileset,
           this,
           &window::request_new_tileset);
-
   connect(m_tilesetDock,
           &tileset_dock::ui_selected_tileset,
           this,
           &window::selected_tileset);
-
   connect(m_tilesetDock,
           &tileset_dock::ui_removed_tileset,
           this,
           &window::ui_removed_tileset);
-
   connect(m_tilesetDock,
           &tileset_dock::tileset_selection_changed,
           this,
@@ -316,12 +313,10 @@ void window::on_action_redo_triggered()
 void window::on_action_close_map_triggered()
 {
   // TODO save current state of open map
+  const auto id = m_editor->active_tab_id().value();
 
-  const auto id = m_editor->active_tab_id();
-  Q_ASSERT(id);
-
-  m_editor->close_tab(*id);
-  emit request_close_map(*id);
+  m_editor->close_tab(id);
+  emit request_close_map(id);
 
   if (m_editor->num_tabs() == 0) {
     enter_no_content_view();
