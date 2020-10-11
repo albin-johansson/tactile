@@ -31,7 +31,7 @@ void remove_tileset::undo()
 
 void remove_tileset::redo()
 {
-  QUndoCommand::undo();
+  QUndoCommand::redo();
 
   // This command is associated with the "X"-button on tileset tabs, which means
   // that the tileset has already been removed from the UI the first time the
