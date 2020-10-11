@@ -107,12 +107,6 @@ class position final
     return {row_t{m_row} + row, col_t{m_col} + col};
   }
 
-  [[nodiscard]] constexpr auto offset_by(const position& other) const noexcept
-      -> position
-  {
-    return {row() + other.row(), col() + other.col()};
-  }
-
   /**
    * @brief Returns a map position that is one step north of this map position.
    *

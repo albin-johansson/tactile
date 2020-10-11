@@ -66,12 +66,12 @@ TEST_CASE("position::offset_by(row_t, col_t)", "[position]")
   CHECK(result.col() == 6_col);
 }
 
-TEST_CASE("position::offset_by(position)", "[position]")
+TEST_CASE("position::operator+", "[position]")
 {
   const core::position fst{2_row, 3_col};
   const core::position snd{6_row, 4_col};
 
-  const auto result = fst.offset_by(snd);
+  const auto result = fst + snd;
   CHECK(result.row() == fst.row() + snd.row());
   CHECK(result.col() == fst.col() + snd.col());
 }

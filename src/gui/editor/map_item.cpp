@@ -134,10 +134,10 @@ void map_item::draw_preview_multiple_tiles(QPainter& painter,
   Q_ASSERT(tileset);
 
   tileset->iterate_selection([&](position pos) {
-    const auto tilePos = mousePosition.offset_by(pos);
+    const auto tilePos = mousePosition + pos;
     if (m_map->in_bounds(tilePos)) {
       draw_tile(painter,
-                tileset->tile_at(selection.topLeft.offset_by(pos)),
+                tileset->tile_at(selection.topLeft + pos),
                 tilePos.col_to_x(tileSize),
                 tilePos.row_to_y(tileSize),
                 tileSize);
