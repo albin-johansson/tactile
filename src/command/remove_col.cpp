@@ -1,7 +1,5 @@
 #include "remove_col.hpp"
 
-#include <algorithm>  // copy
-
 #include "algorithm.hpp"
 
 using tactile::core::operator""_row;
@@ -11,8 +9,7 @@ namespace tactile::cmd {
 
 remove_col::remove_col(core::map* map)
     : QUndoCommand{QStringLiteral(u"Remove Column")},
-      m_map{map},
-      m_removedCol{m_map->col_count() - 1_col}
+      m_map{map}
 {}
 
 void remove_col::undo()

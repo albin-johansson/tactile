@@ -2,7 +2,6 @@
 
 #include <QUndoCommand>
 #include <map>     // map
-#include <vector>  // vector
 
 #include "command_id.hpp"
 #include "row_col_command.hpp"
@@ -36,7 +35,6 @@ class remove_col final : public QUndoCommand
 
  private:
   core::map* m_map{};
-  core::col_t m_removedCol;
   std::map<layer_id, std::map<core::position, tile_id>> m_layerData;
   int m_times{1};
 };
