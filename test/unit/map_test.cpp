@@ -113,7 +113,7 @@ TEST_CASE("map::remove_row", "[map]")
   map.remove_row();
   CHECK(map.row_count() == (initialRows - 1_row));
 
-  do_n(20, [&map] { map.remove_row(); });
+  invoke_n(20, [&map] { map.remove_row(); });
 
   CHECK(map.row_count() == 1_row);
 }
@@ -126,7 +126,7 @@ TEST_CASE("map::remove_col", "[map]")
   map.remove_col();
   CHECK(map.col_count() == (initialCols - 1_col));
 
-  do_n(20, [&map] { map.remove_col(); });
+  invoke_n(20, [&map] { map.remove_col(); });
 
   CHECK(map.col_count() == 1_col);
 }

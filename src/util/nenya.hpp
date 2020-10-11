@@ -30,6 +30,18 @@ concept PostIncrement = requires(T t)
 };
 
 template <typename T>
+concept PreDecrement = requires(T t)
+{
+  { --t } -> std::convertible_to<T>;
+};
+
+template <typename T>
+concept PostDecrement = requires(T t)
+{
+  { t-- } -> std::convertible_to<T>;
+};
+
+template <typename T>
 concept Addition = requires(T t)
 {
   { t + t } -> std::convertible_to<T>;
@@ -274,6 +286,19 @@ class mirror_type
       requires PostIncrement<Rep>
   {
     return mirror_type{m_value++};
+  }
+
+  constexpr auto operator--() noexcept(noexcept(--m_value)) -> mirror_type&
+  requires PreIncrement<Rep>
+  {
+    --m_value;
+    return *this;
+  }
+
+  constexpr auto operator--(int) noexcept(noexcept(m_value--)) -> mirror_type
+  requires PostIncrement<Rep>
+  {
+    return mirror_type{m_value--};
   }
 
   [[nodiscard]]

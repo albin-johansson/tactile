@@ -1,5 +1,6 @@
 #pragma once
 
+#include <concepts>  // invocable
 #include <optional>  // optional
 #include <vector>    // vector
 
@@ -39,6 +40,16 @@ class map final
    * @since 0.1.0
    */
   map(row_t nRows, col_t nCols);
+
+  template <std::invocable<layer_id, const layer&> T>
+  void each_layer(T&& callable) const
+  {
+    layer_id id{0};
+    for (const auto& layer : m_layers) {
+      callable(id, layer);
+      ++id;
+    }
+  }
 
   /**
    * @brief Performs a flood-fill at the specified position.

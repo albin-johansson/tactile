@@ -12,14 +12,14 @@ void add_row::undo()
 {
   QUndoCommand::undo();
 
-  do_n(amount(), [this] { m_map->remove_row(); });
+  invoke_n(amount(), [this] { m_map->remove_row(); });
 }
 
 void add_row::redo()
 {
   QUndoCommand::redo();
 
-  do_n(amount(), [this] { m_map->add_row(); });
+  invoke_n(amount(), [this] { m_map->add_row(); });
 }
 
 }  // namespace tactile::cmd

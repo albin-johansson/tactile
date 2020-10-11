@@ -29,7 +29,7 @@ concept arithmetic = std::is_arithmetic_v<T>;
  * @since 0.1.0
  */
 template <std::invocable T>
-constexpr void do_n(int n, T&& callable) noexcept(noexcept(callable()))
+constexpr void invoke_n(int n, T&& callable) noexcept(noexcept(callable()))
 {
   for (auto i = 0; i < n; ++i) {
     callable();
