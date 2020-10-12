@@ -174,16 +174,16 @@ set(TACTILE_SOURCE_FILES
         util/vector_map.hpp
         util/to_string.hpp
 
-        service/saves/save_tmx.cpp
-        service/saves/save_tmx.hpp
-        service/saves/save_service.cpp
-        service/saves/save_service.hpp
-        service/saves/save_json.cpp
-        service/saves/save_json.hpp
-        service/saves/export_options.hpp
-        service/saves/tiled_version.hpp
-        service/saves/open_map.cpp
-        service/saves/open_map.hpp)
+        service/save/save_tmx.cpp
+        service/save/save_tmx.hpp
+        service/save/save_service.cpp
+        service/save/save_service.hpp
+        service/save/save_json.cpp
+        service/save/save_json.hpp
+        service/save/export_options.hpp
+        service/save/tiled_version.hpp
+        service/save/open_map.cpp
+        service/save/open_map.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
@@ -221,7 +221,7 @@ target_include_directories(libTactile
         PUBLIC gui/action/save
         PUBLIC gui/action/open_map
         PUBLIC service
-        PUBLIC service/saves
+        PUBLIC service/save
         PUBLIC ${Boost_INCLUDE_DIRS})
 
 target_link_libraries(libTactile
