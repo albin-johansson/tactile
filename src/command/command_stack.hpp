@@ -1,9 +1,8 @@
 #pragma once
 
-#include <qundostack.h>
-
-#include <concepts>
-#include <utility>
+#include <QUndoStack>
+#include <concepts>  // derived_from
+#include <utility>   // forward
 
 namespace tactile {
 
