@@ -2,8 +2,8 @@
 
 #include <QDialog>
 #include <QLineEdit>
-#include <QValidator>
 #include <QPushButton>
+#include <QValidator>
 #include <concepts>  // invocable
 #include <optional>  // optional
 

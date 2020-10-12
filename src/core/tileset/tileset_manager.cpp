@@ -11,8 +11,7 @@ tileset_manager::tileset_manager()
   m_tilesets.reserve(5);
 }
 
-void tileset_manager::add(tileset_id id,
-                          std::shared_ptr<tileset> tileset)
+void tileset_manager::add(tileset_id id, std::shared_ptr<tileset> tileset)
 {
   ++m_nextID;
   m_nextGlobalTileID = tileset->last_id() + 1_t;
