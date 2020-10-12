@@ -59,7 +59,7 @@ class layer final
     const auto endCol = col_count();
     for (row_t row{0}; row < endRow; ++row) {
       for (col_t col{0}; col < endCol; ++col) {
-        callable(m_tiles.at(row.get()).at(col.get()));
+        callable(m_tiles[row.get()][col.get()]);
       }
     }
   }
