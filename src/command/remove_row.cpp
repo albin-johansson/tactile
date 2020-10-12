@@ -2,24 +2,34 @@
 
 #include "algorithm.hpp"
 
+using tactile::core::operator""_row;
+using tactile::core::operator""_col;
+
 namespace tactile::cmd {
 
 remove_row::remove_row(core::map* map)
-    : row_col_command{QStringLiteral(u"Remove Row"), map}
+    : remove_row_col{map, QStringLiteral(u"Remove Row")}
 {}
 
 void remove_row::undo()
 {
   QUndoCommand::undo();
-
-  invoke_n(amount(), [this] { m_map->add_row(); });
+  invoke_n(times(), [this] { get_map()->add_row(); });
+  restore_tiles();
 }
 
 void remove_row::redo()
 {
   QUndoCommand::redo();
 
-  invoke_n(amount(), [this] { m_map->remove_row(); });
+  auto* map = get_map();
+
+  const auto endCol = map->col_count();
+  const auto endRow = map->row_count();
+  const auto beginRow = endRow - 1_row - core::row_t{times()};
+
+  save_tiles({beginRow, endRow}, {0_col, endCol});
+  invoke_n(times(), [this] { get_map()->remove_row(); });
 }
 
 }  // namespace tactile::cmd

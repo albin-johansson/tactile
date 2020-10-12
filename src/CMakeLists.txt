@@ -145,6 +145,8 @@ set(TACTILE_SOURCE_FILES
         command/add_tileset.hpp
         command/remove_tileset.cpp
         command/remove_tileset.hpp
+        command/remove_row_col.hpp
+        command/remove_row_col.cpp
 
         prefs/setting.hpp
         prefs/theme.cpp
