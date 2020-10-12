@@ -29,6 +29,7 @@ class stamp_sequence final : public abstract_command
  private:
   vector_map<core::position, tile_id> m_oldState;
   vector_map<core::position, tile_id> m_sequence;
+  layer_id m_layer{};
   bool m_first{true};
 };
 

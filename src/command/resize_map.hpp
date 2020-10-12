@@ -42,6 +42,22 @@ class resize_map final : public map_command
   core::col_t m_cols;
   core::row_t m_oldRows{1};
   core::col_t m_oldCols{1};
+
+  /**
+   * @brief Indicates whether or not the command will result in some tiles being
+   * removed.
+   *
+   * @details This is meant to be used to determine whether or not any tiles
+   * need to be saved before resizing the map.
+   *
+   * @return `true` if some tiles will be lost; `false` otherwise.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto lossy_resize() const noexcept -> bool
+  {
+    return m_oldRows > m_rows || m_oldCols > m_cols;
+  }
 };
 
 }  // namespace tactile::cmd

@@ -19,7 +19,7 @@ void resize_map::undo()
   map->set_rows(m_oldRows);
   map->set_cols(m_oldCols);
 
-  if (m_oldRows > m_rows || m_oldCols > m_cols) {
+  if (lossy_resize()) {
     restore_tiles();
   }
 }
@@ -33,9 +33,7 @@ void resize_map::redo()
   m_oldRows = map->row_count();
   m_oldCols = map->col_count();
 
-  if (m_oldRows > m_rows || m_oldCols > m_cols) {
-    // We are making the map smaller, so save tiles that will be removed
-
+  if (lossy_resize()) {
     const auto rows = map->row_count();
     const auto cols = map->col_count();
 
