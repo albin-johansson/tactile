@@ -51,7 +51,8 @@ TEST_CASE("map::remove_all", "[map]")
   map.add_layer();
   map.add_layer();
 
-  map.flood({}, empty, 1_t);
+  std::vector<core::position> positions;
+  map.flood({}, empty, positions);
   map.remove_all(1_t);
 
   for (const auto& layer : map) {

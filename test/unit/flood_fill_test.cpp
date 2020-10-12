@@ -4,13 +4,14 @@
 #include <iostream>
 
 using namespace tactile;
-using namespace tactile::core;
+using core::operator""_row;
+using core::operator""_col;
 
 TEST_CASE("Correctness of flood fill algorithm", "[flood_fill]")
 {
-  layer layer{5_row, 5_col};
+  core::layer layer{5_row, 5_col};
   for (int i = 0; i < 5; ++i) {
-    layer.set_tile({row_t{i}, col_t{i}}, 1_t);
+    layer.set_tile({core::row_t{i}, core::col_t{i}}, 1_t);
   }
 
   /*
@@ -21,8 +22,9 @@ TEST_CASE("Correctness of flood fill algorithm", "[flood_fill]")
    0 0 0 0 1
    */
 
-  const tile_id id{2};
-  layer.flood({1_row, 0_col}, 0_t, id);
+  const tile_id replacement{2};
+  std::vector<core::position> positions;
+  layer.flood({1_row, 0_col}, replacement, positions);
 
   /*
    Expected:
@@ -35,19 +37,19 @@ TEST_CASE("Correctness of flood fill algorithm", "[flood_fill]")
 
   SECTION("Affected tiles")
   {
-    CHECK(*layer.tile_at({1_row, 0_col}) == id);
-    CHECK(*layer.tile_at({2_row, 0_col}) == id);
-    CHECK(*layer.tile_at({3_row, 0_col}) == id);
-    CHECK(*layer.tile_at({4_row, 0_col}) == id);
+    CHECK(*layer.tile_at({1_row, 0_col}) == replacement);
+    CHECK(*layer.tile_at({2_row, 0_col}) == replacement);
+    CHECK(*layer.tile_at({3_row, 0_col}) == replacement);
+    CHECK(*layer.tile_at({4_row, 0_col}) == replacement);
 
-    CHECK(*layer.tile_at({2_row, 1_col}) == id);
-    CHECK(*layer.tile_at({3_row, 1_col}) == id);
-    CHECK(*layer.tile_at({4_row, 1_col}) == id);
+    CHECK(*layer.tile_at({2_row, 1_col}) == replacement);
+    CHECK(*layer.tile_at({3_row, 1_col}) == replacement);
+    CHECK(*layer.tile_at({4_row, 1_col}) == replacement);
 
-    CHECK(*layer.tile_at({3_row, 2_col}) == id);
-    CHECK(*layer.tile_at({4_row, 2_col}) == id);
+    CHECK(*layer.tile_at({3_row, 2_col}) == replacement);
+    CHECK(*layer.tile_at({4_row, 2_col}) == replacement);
 
-    CHECK(*layer.tile_at({4_row, 3_col}) == id);
+    CHECK(*layer.tile_at({4_row, 3_col}) == replacement);
   }
 
   SECTION("Unaffected diagonal blocking the flood")
@@ -80,8 +82,14 @@ TEST_CASE("Correctness of flood fill algorithm", "[flood_fill]")
 
 TEST_CASE("Out-of-bounds position", "[flood_fill]")
 {
-  layer layer{5_row, 5_col};
-  CHECK_NOTHROW(layer.flood({5_row, 5_col}, empty, empty));
-  CHECK_NOTHROW(layer.flood({6_row, 6_col}, empty, empty));
-  CHECK_NOTHROW(flood_fill(layer, {6_row, 6_col}, empty, empty));
+  core::layer layer{5_row, 5_col};
+
+  std::vector<core::position> positions;
+  CHECK_NOTHROW(layer.flood({5_row, 5_col}, empty, positions));
+
+  positions.clear();
+  CHECK_NOTHROW(layer.flood({6_row, 6_col}, empty, positions));
+
+  positions.clear();
+  CHECK_NOTHROW(core::flood_fill(layer, {6_row, 6_col}, empty, positions));
 }

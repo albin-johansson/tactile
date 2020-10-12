@@ -48,8 +48,9 @@ TEST_CASE("layer::for_each", "[layer]")
 TEST_CASE("layer::remove_all", "[layer]")
 {
   core::layer layer{5_row, 5_col};
+  std::vector<core::position> positions;
 
-  layer.flood({}, 0_t, 1_t);
+  layer.flood({}, 1_t, positions);
   layer.for_each([](tile_id id) { CHECK(id == 1_t); });
 
   layer.remove_all(1_t);
