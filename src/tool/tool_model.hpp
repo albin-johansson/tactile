@@ -3,10 +3,12 @@
 #include <memory>  // unique_ptr
 
 #include "abstract_tool.hpp"
-#include "model.hpp"
 #include "tool_id.hpp"
 
 namespace tactile {
+namespace core {
+class model;
+}
 
 class tool_model final
 {

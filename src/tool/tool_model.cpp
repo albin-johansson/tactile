@@ -2,6 +2,7 @@
 
 #include "bucket_tool.hpp"
 #include "eraser_tool.hpp"
+#include "model.hpp"
 #include "stamp_tool.hpp"
 
 namespace tactile {

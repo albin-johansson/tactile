@@ -1,5 +1,7 @@
 #include "bucket_tool.hpp"
 
+#include "model.hpp"
+
 namespace tactile {
 
 bucket_tool::bucket_tool(core::model* model) : abstract_tool{model}

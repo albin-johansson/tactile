@@ -4,10 +4,12 @@
 #include <QPoint>
 #include <optional>  // optional
 
-#include "model.hpp"
 #include "position.hpp"
 
 namespace tactile {
+namespace core {
+class model;
+}
 
 /**
  * @class abstract_tool
