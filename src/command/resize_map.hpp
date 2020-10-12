@@ -1,7 +1,7 @@
 #pragma once
 
-#include "abstract_command.hpp"
 #include "command_id.hpp"
+#include "map_command.hpp"
 
 namespace tactile::cmd {
 
@@ -14,7 +14,7 @@ namespace tactile::cmd {
  *
  * @headerfile resize_map.hpp
  */
-class resize_map final : public abstract_command
+class resize_map final : public map_command
 {
  public:
   /**
