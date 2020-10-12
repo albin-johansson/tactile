@@ -25,7 +25,7 @@ class command_stack final : public QUndoStack
   /**
    * @brief Pushes a command onto the undo stack after executing it.
    *
-   * @tparam Command the type of the command.
+   * @tparam T the type of the command.
    * @tparam Args the types of the arguments that will be forwarded.
    *
    * @param args the arguments that will be forwarded to the command
@@ -33,10 +33,10 @@ class command_stack final : public QUndoStack
    *
    * @since 0.1.0
    */
-  template <std::derived_from<QUndoCommand> Command, typename... Args>
+  template <std::derived_from<QUndoCommand> T, typename... Args>
   void push(Args&&... args)
   {
-    QUndoStack::push(new Command{std::forward<Args>(args)...});
+    QUndoStack::push(new T{std::forward<Args>(args)...});
   }
 };
 
