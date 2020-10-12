@@ -8,7 +8,9 @@ bucket_fill::bucket_fill(core::map* map,
     : abstract_command{QStringLiteral(u"Bucket Fill"), map},
       m_origin{position},
       m_replacement{replacement}
-{}
+{
+  m_positions.reserve(64);
+}
 
 void bucket_fill::undo()
 {
