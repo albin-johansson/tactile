@@ -1,6 +1,6 @@
 #include "open_map_dialog.hpp"
 
-#include <qstandardpaths.h>
+#include <QStandardPaths>
 
 namespace tactile::gui {
 

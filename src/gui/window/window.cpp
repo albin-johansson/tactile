@@ -1,12 +1,5 @@
 #include "window.hpp"
 
-#include <qapplication.h>
-#include <qdebug.h>
-#include <qfile.h>
-#include <qfiledialog.h>
-#include <qlayoutitem.h>
-#include <qopenglfunctions.h>
-
 #include "about_dialog.hpp"
 #include "map_editor.hpp"
 #include "open_map_dialog.hpp"

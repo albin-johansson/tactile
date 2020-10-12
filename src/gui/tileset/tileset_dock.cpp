@@ -16,17 +16,14 @@ tileset_dock::tileset_dock(QWidget* parent)
           &tileset_widget::ui_requested_tileset,
           this,
           &tileset_dock::ui_requested_tileset);
-
   connect(m_widget,
           &tileset_widget::ui_selected_tileset,
           this,
           &tileset_dock::ui_selected_tileset);
-
   connect(m_widget,
           &tileset_widget::ui_removed_tileset,
           this,
           &tileset_dock::ui_removed_tileset);
-
   connect(m_widget,
           &tileset_widget::tileset_selection_changed,
           this,

@@ -1,6 +1,5 @@
 #include "abstract_tool.hpp"
 
-#include "model.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile {

@@ -1,7 +1,5 @@
 #include "map_editor.hpp"
 
-#include <qtabwidget.h>
-
 #include "map_tab_widget.hpp"
 #include "startup_widget.hpp"
 #include "ui_map_editor.h"

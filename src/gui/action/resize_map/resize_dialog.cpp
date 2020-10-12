@@ -1,10 +1,5 @@
 #include "resize_dialog.hpp"
 
-#include <qpushbutton.h>
-#include <qvalidator.h>
-
-#include <string>
-
 #include "ui_resize_dialog.h"
 
 using namespace tactile::core;
@@ -49,10 +44,15 @@ void resize_dialog::validate_input()
   ok_button()->setEnabled(widthState == QValidator::Acceptable &&
                           heightState == QValidator::Acceptable);
   if (ok_button()->isEnabled()) {
-    m_chosenWidth =
-        col_t{std::stoi(m_ui->widthEdit->displayText().toStdString())};
-    m_chosenHeight =
-        row_t{std::stoi(m_ui->heightEdit->displayText().toStdString())};
+    bool ok{};
+
+    if (const auto width = m_ui->widthEdit->displayText().toInt(&ok); ok) {
+      m_chosenWidth = col_t{width};
+    }
+
+    if (const auto height = m_ui->heightEdit->displayText().toInt(&ok); ok) {
+      m_chosenHeight = row_t{height};
+    }
   }
 }
 

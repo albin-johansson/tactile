@@ -1,7 +1,7 @@
 #pragma once
 
-#include <qpalette.h>
-#include <qstring.h>
+#include <QPalette>
+#include <QString>
 
 #include "types.hpp"
 

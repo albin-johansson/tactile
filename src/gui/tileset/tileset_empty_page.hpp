@@ -1,6 +1,6 @@
 #pragma once
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "types.hpp"
 

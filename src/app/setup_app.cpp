@@ -1,9 +1,9 @@
 #include "setup_app.hpp"
 
-#include <qapplication.h>
-#include <qicon.h>
-#include <qstylefactory.h>
-#include <qsurfaceformat.h>
+#include <QApplication>
+#include <QIcon>
+#include <QStyleFactory>
+#include <QSurfaceFormat>
 
 #include "app.hpp"
 #include "preferences.hpp"

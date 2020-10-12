@@ -1,7 +1,6 @@
 #include "save_service.hpp"
 
-#include <qdebug.h>
-#include <qfileinfo.h>
+#include <QFileInfo>
 
 #include "save_json.hpp"
 #include "save_tmx.hpp"

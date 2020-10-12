@@ -1,17 +1,13 @@
 #pragma once
 
-#include <qevent.h>
-#include <qpoint.h>
+#include <QMouseEvent>
+#include <QPoint>
+#include <optional>  // optional
 
-#include <optional>
+#include "model.hpp"
+#include "position.hpp"
 
 namespace tactile {
-namespace core {
-
-class model;
-class position;
-
-}  // namespace core
 
 /**
  * @class abstract_tool

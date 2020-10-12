@@ -1,6 +1,6 @@
 #include "set_style_sheet.hpp"
 
-#include <qfile.h>
+#include <QFile>
 
 namespace tactile {
 

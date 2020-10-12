@@ -1,6 +1,6 @@
 #pragma once
 
-#include <qdialog.h>
+#include <QDialog>
 
 namespace Ui {
 class about_dialog;

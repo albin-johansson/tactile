@@ -1,7 +1,7 @@
 #pragma once
 
-#include <qgraphicsview.h>
-#include <qrect.h>
+#include <QGraphicsView>
+#include <QRect>
 
 #include "map_document.hpp"
 #include "map_scene.hpp"

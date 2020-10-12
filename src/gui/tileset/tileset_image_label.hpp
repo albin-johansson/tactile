@@ -1,8 +1,6 @@
 #pragma once
 
-#include <qlabel.h>
-
-#include <memory>
+#include <QLabel>
 
 #include "tileset.hpp"
 #include "types.hpp"

@@ -1,6 +1,6 @@
 #include "tileset_image_label.hpp"
 
-#include <qpainter.h>
+#include <QPainter>
 
 namespace tactile::gui {
 

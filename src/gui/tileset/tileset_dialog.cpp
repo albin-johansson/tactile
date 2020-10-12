@@ -1,7 +1,6 @@
 #include "tileset_dialog.hpp"
 
-#include <qfileinfo.h>
-#include <qlineedit.h>
+#include <QFileInfo>
 
 #include "open_tileset_image.hpp"
 #include "ui_tileset_dialog.h"
@@ -89,10 +88,15 @@ void tileset_dialog::validate_input()
 {
   ok_button()->setEnabled(is_valid());
   if (ok_button()->isEnabled()) {
-    m_width =
-        tile_width{std::stoi(m_ui->widthEdit->displayText().toStdString())};
-    m_height =
-        tile_height{std::stoi(m_ui->heightEdit->displayText().toStdString())};
+    bool ok{};
+
+    if (const auto width = m_ui->widthEdit->displayText().toInt(&ok); ok) {
+      m_width = tile_width{width};
+    }
+
+    if (const auto height = m_ui->heightEdit->displayText().toInt(&ok); ok) {
+      m_height = tile_height{height};
+    }
   }
 }
 

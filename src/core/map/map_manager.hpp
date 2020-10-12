@@ -1,9 +1,8 @@
 #pragma once
 
-#include <qimage.h>
-#include <qobject.h>
-#include <qstring.h>
-
+#include <QImage>
+#include <QObject>
+#include <QString>
 #include <optional>  // optional
 
 #include "map_document.hpp"

@@ -1,5 +1,7 @@
 #include "stamp_sequence.hpp"
 
+#include <utility>  // move
+
 namespace tactile::cmd {
 
 stamp_sequence::stamp_sequence(core::map* map,

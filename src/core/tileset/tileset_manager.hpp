@@ -1,8 +1,10 @@
 #pragma once
 
+#include <QPixmap>
+#include <QRect>
 #include <memory>    // shared_ptr
 #include <optional>  // optional
-#include <utility>   // forward, move
+#include <utility>   // forward, move, pair
 
 #include "core_fwd.hpp"
 #include "position.hpp"

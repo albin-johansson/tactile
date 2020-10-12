@@ -1,8 +1,9 @@
 #pragma once
 
-#include <qevent.h>
-#include <qobject.h>
-
+#include <QEvent>
+#include <QImage>
+#include <QObject>
+#include <QString>
 #include <memory>    // unique_ptr
 #include <optional>  // optional
 

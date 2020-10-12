@@ -1,11 +1,9 @@
 #pragma once
 
-#include <qaction.h>
-#include <qactiongroup.h>
-#include <qmainwindow.h>
-#include <qpainter.h>
-#include <qrect.h>
-#include <qwidget.h>
+#include <QActionGroup>
+#include <QMainWindow>
+#include <QString>
+#include <QWidget>
 
 #include "map_document.hpp"
 #include "map_editor.hpp"

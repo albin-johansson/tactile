@@ -1,9 +1,5 @@
 #include "map_tab_widget.hpp"
 
-#include <algorithm>
-
-#include "map_view.hpp"
-
 namespace tactile::gui {
 namespace {
 

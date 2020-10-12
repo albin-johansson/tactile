@@ -1,9 +1,8 @@
 #include "map_item.hpp"
 
-#include <qgraphicswidget.h>
-#include <qpainter.h>
-#include <qstyleoption.h>
-
+#include <QGraphicsWidget>
+#include <QPainter>
+#include <QStyleOption>
 #include <algorithm>  // min, max
 
 #include "position.hpp"

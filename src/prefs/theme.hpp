@@ -1,10 +1,9 @@
 #pragma once
 
-#include <qpalette.h>
-#include <qstring.h>
-#include <qstringview.h>
-
-#include <optional>
+#include <QPalette>
+#include <QString>
+#include <QStringView>
+#include <optional>  // optional
 
 #include "types.hpp"
 

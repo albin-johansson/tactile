@@ -1,9 +1,5 @@
 #include "app.hpp"
 
-#include <qdebug.h>
-#include <qdockwidget.h>
-#include <qpainter.h>
-
 #include "app_connections.hpp"
 #include "model.hpp"
 #include "open_map.hpp"

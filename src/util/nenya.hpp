@@ -1,10 +1,9 @@
 #pragma once
 
 #include <compare>
-#include <concepts>
+#include <concepts>    // convertible_to
 #include <functional>  // hash
-#include <type_traits>
-#include <utility>  // move
+#include <utility>     // move
 
 /**
  * @namespace nenya

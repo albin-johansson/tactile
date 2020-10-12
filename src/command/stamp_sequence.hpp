@@ -1,8 +1,5 @@
 #pragma once
 
-#include <utility>  // pair, move
-#include <vector>
-
 #include "abstract_command.hpp"
 #include "command_id.hpp"
 #include "position.hpp"

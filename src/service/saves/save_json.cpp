@@ -1,11 +1,11 @@
 #include "save_json.hpp"
 
-#include <qdir.h>
-#include <qfile.h>
-#include <qfileinfo.h>
-#include <qjsonarray.h>
-#include <qjsondocument.h>
-#include <qjsonobject.h>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #include "export_options.hpp"
 #include "preferences.hpp"

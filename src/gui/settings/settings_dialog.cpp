@@ -1,9 +1,9 @@
 #include "settings_dialog.hpp"
 
-#include <qpushbutton.h>
-#include <qvalidator.h>
-
-#include <optional>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QValidator>
+#include <optional>  // optional
 
 #include "preferences.hpp"
 #include "setting.hpp"

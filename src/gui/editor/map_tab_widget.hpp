@@ -1,7 +1,7 @@
 #pragma once
 
-#include <qtabwidget.h>
-
+#include <QString>
+#include <QTabWidget>
 #include <optional>  // optional
 
 #include "map_document.hpp"

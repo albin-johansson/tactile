@@ -1,8 +1,8 @@
 #pragma once
 
-#include <qgraphicsscene.h>
-#include <qrect.h>
-#include <qwidget.h>
+#include <QGraphicsScene>
+#include <QRect>
+#include <QWidget>
 
 #include "map_document.hpp"
 #include "map_item.hpp"

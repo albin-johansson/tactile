@@ -1,19 +1,17 @@
 #pragma once
 
-#include <qevent.h>
-#include <qwidget.h>
-
-#include <optional>
+#include <QEvent>
+#include <QWidget>
+#include <optional>  // optional
 
 #include "map_document.hpp"
 #include "map_tab_widget.hpp"
+#include "position.hpp"
 #include "types.hpp"
 
 namespace Ui {
 class map_editor;
 }
-
-class QTabWidget;
 
 namespace tactile::gui {
 

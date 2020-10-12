@@ -1,8 +1,8 @@
 #include "open_tileset_image.hpp"
 
-#include <qfiledialog.h>
-#include <qstandardpaths.h>
-#include <qtranslator.h>
+#include <QFileDialog>
+#include <QStandardPaths>
+#include <QTranslator>
 
 namespace tactile::gui {
 

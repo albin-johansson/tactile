@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "command_id.hpp"
 #include "remove_row_col.hpp"
 

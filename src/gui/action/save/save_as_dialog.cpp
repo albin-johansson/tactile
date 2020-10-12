@@ -1,6 +1,6 @@
 #include "save_as_dialog.hpp"
 
-#include <qstandardpaths.h>
+#include <QStandardPaths>
 
 namespace tactile::gui {
 

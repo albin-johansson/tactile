@@ -1,12 +1,11 @@
 #pragma once
 
-#include <qimage.h>
-#include <qobject.h>
-#include <qstring.h>
-
+#include <QImage>
+#include <QObject>
+#include <QString>
 #include <cassert>   // assert
 #include <concepts>  // invocable
-#include <memory>    // unique_ptr
+#include <memory>    // unique_ptr, shared_ptr
 #include <optional>  // optional
 
 #include "command_stack.hpp"
@@ -15,6 +14,7 @@
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
 #include "types.hpp"
+#include "vector_map.hpp"
 
 namespace tactile::core {
 

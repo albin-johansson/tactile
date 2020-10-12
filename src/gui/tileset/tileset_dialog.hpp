@@ -1,11 +1,12 @@
 #pragma once
 
-#include <qdialog.h>
-#include <qimage.h>
-#include <qvalidator.h>
-
-#include <concepts>
-#include <optional>
+#include <QDialog>
+#include <QImage>
+#include <QLineEdit>
+#include <QPixmap>
+#include <QValidator>
+#include <concepts>  // invocable
+#include <optional>  // optional
 
 #include "types.hpp"
 

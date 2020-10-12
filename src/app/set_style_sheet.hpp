@@ -1,7 +1,7 @@
 #pragma once
 
-#include <qapplication.h>
-#include <qstring.h>
+#include <QApplication>
+#include <QString>
 
 #include "types.hpp"
 

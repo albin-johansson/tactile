@@ -1,6 +1,6 @@
 #pragma once
 
-#include <qurl.h>
+#include <QString>
 
 #include "map_document.hpp"
 

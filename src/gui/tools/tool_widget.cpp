@@ -1,7 +1,5 @@
 #include "tool_widget.hpp"
 
-#include <qbuttongroup.h>
-
 #include "ui_tool_widget.h"
 
 namespace tactile::gui {

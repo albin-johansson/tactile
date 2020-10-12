@@ -1,7 +1,5 @@
 #include "stamp_tool.hpp"
 
-#include "model.hpp"
-
 namespace tactile {
 
 using namespace core;

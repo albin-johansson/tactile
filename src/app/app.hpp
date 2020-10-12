@@ -1,10 +1,9 @@
 #pragma once
 
-#include <qapplication.h>
-#include <qurl.h>
-
-#include <memory>
-#include <utility>
+#include <QApplication>
+#include <QString>
+#include <QUrl>
+#include <memory>  // unique_ptr
 
 #include "model.hpp"
 #include "position.hpp"

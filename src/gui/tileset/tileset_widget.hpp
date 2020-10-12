@@ -1,6 +1,6 @@
 #pragma once
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "position.hpp"
 #include "tileset_content_page.hpp"

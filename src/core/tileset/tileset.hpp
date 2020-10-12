@@ -1,10 +1,9 @@
 #pragma once
 
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qrect.h>
-#include <qstring.h>
-
+#include <QImage>
+#include <QPixmap>
+#include <QRect>
+#include <QString>
 #include <concepts>       // invocable
 #include <optional>       // optional
 #include <unordered_map>  // unordered_map

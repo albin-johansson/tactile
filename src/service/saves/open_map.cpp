@@ -1,8 +1,6 @@
 #include "open_map.hpp"
 
-#include <qfileinfo.h>
-
-#include <qjsondocument.h>
+#include <QFileInfo>
 
 namespace tactile::service {
 

@@ -1,17 +1,12 @@
 #pragma once
 
-#include <qdockwidget.h>
-
-#include <memory>
+#include <QButtonGroup>
+#include <QWidget>
 
 #include "types.hpp"
 
-class QButtonGroup;
-
 namespace Ui {
-
 class tool_widget;
-
 }
 
 namespace tactile::gui {

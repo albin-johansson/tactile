@@ -1,8 +1,7 @@
 #include "save_tmx.hpp"
 
-#include <qdir.h>
-#include <qfileinfo.h>
-
+#include <QDir>
+#include <QFileInfo>
 #include <QtXml>
 
 #include "export_options.hpp"

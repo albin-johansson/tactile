@@ -1,9 +1,9 @@
 #pragma once
 
-#include <qlabel.h>
-#include <qpoint.h>
-#include <qrubberband.h>
-#include <qwidget.h>
+#include <QLabel>
+#include <QPoint>
+#include <QRubberBand>
+#include <QWidget>
 
 #include "position.hpp"
 #include "tileset.hpp"

@@ -1,9 +1,8 @@
 #pragma once
 
-#include <qurl.h>
-#include <qwidget.h>
-
-#include <optional>
+#include <QUrl>
+#include <QWidget>
+#include <optional>  // optional
 
 namespace tactile::gui {
 

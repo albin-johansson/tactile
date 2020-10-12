@@ -1,7 +1,7 @@
 #pragma once
 
-#include <qstring.h>
-#include <qundostack.h>
+#include <QString>
+#include <QUndoCommand>
 
 #include "map.hpp"
 #include "types.hpp"

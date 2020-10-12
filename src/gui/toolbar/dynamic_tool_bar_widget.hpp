@@ -1,6 +1,6 @@
 #pragma once
 
-#include <qwidget.h>
+#include <QWidget>
 
 #include "stamp_toolbar.hpp"
 #include "types.hpp"

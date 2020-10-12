@@ -1,8 +1,7 @@
 #pragma once
 
-#include <qsettings.h>
-#include <qstring.h>
-
+#include <QSettings>
+#include <QString>
 #include <optional>  // optional
 #include <utility>   // forward
 

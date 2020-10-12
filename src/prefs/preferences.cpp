@@ -1,7 +1,5 @@
 #include "preferences.hpp"
 
-#include <qstring.h>
-
 #include "theme.hpp"
 
 namespace tactile::prefs {

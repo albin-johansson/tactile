@@ -1,10 +1,8 @@
 #pragma once
 
-#include <qwidget.h>
-
-#include <map>
+#include <QWidget>
+#include <map>       // map
 #include <optional>  // optional
-#include <vector>    // vector, erase_if
 
 #include "position.hpp"
 #include "tileset_tab.hpp"

@@ -1,9 +1,9 @@
 #pragma once
 
-#include <qlayout.h>
-#include <qpoint.h>
-#include <qscrollarea.h>
-#include <qwidget.h>
+#include <QLayout>
+#include <QPoint>
+#include <QScrollArea>
+#include <QWidget>
 
 #include "position.hpp"
 #include "tileset.hpp"

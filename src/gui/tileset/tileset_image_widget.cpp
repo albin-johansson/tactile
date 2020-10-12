@@ -1,13 +1,11 @@
 #include "tileset_image_widget.hpp"
 
-#include <qapplication.h>
-#include <qevent.h>
-#include <qgridlayout.h>
-#include <qpainter.h>
-
+#include <QEvent>
+#include <QGridLayout>
+#include <QMouseEvent>
+#include <QPainter>
 #include <algorithm>  // max
 
-#include "tactile_error.hpp"
 #include "tileset_image_label.hpp"
 
 using namespace tactile::core;

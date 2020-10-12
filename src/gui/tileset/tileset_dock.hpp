@@ -1,8 +1,9 @@
 #pragma once
 
-#include <qdockwidget.h>
+#include <QDockWidget>
 
 #include "position.hpp"
+#include "tileset.hpp"
 #include "tileset_widget.hpp"
 
 namespace tactile::gui {

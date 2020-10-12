@@ -1,8 +1,7 @@
 #pragma once
 
-#include <qgraphicsitem.h>
-
-#include <optional>
+#include <QGraphicsItem>
+#include <optional>  // optional
 
 #include "map_document.hpp"
 #include "model.hpp"

@@ -1,9 +1,11 @@
 #pragma once
 
-#include <qdialog.h>
-#include <qvalidator.h>
-
-#include <optional>
+#include <QDialog>
+#include <QLineEdit>
+#include <QValidator>
+#include <QPushButton>
+#include <concepts>  // invocable
+#include <optional>  // optional
 
 #include "position.hpp"
 
@@ -11,24 +13,7 @@ namespace Ui {
 class resize_dialog;
 }
 
-class QIntValidator;
-class QPushButton;
-class QLineEdit;
-
 namespace tactile::gui {
-
-/**
- * @interface ResizeDialogCallback
- *
- * @brief Requires that the type is a function object that takes two `int`s
- * as parameters.
- *
- * @tparam T the type that will be checked.
- *
- * @since 0.1.0
- */
-template <typename T>
-concept ResizeDialogCallback = std::invocable<T, core::row_t, core::col_t>;
 
 /**
  * @class resize_dialog
@@ -68,7 +53,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  template <ResizeDialogCallback T>
+  template <std::invocable<core::row_t, core::col_t> T>
   static void spawn(T&& callback)
   {
     resize_dialog dialog;
