@@ -1,10 +1,7 @@
 #include "flood_fill.hpp"
 
-#include <array>            // array
-#include <cstddef>          // byte
-#include <deque>            // deque
-#include <memory_resource>  // monotonic_buffer_resource
-#include <queue>            // queue
+#include <array>  // array
+#include <queue>  // queue
 
 #include "position.hpp"
 
@@ -12,33 +9,25 @@ namespace tactile::core {
 
 void flood_fill(layer& layer,
                 const position& origin,
-                tile_id target,
-                tile_id replacement)
+                tile_id replacement,
+                std::vector<position>& affected)
 {
-  const bool returnImmediately = !layer.in_bounds(origin) ||
-                                 (target == replacement) ||
-                                 (layer.tile_at(origin) != target);
-  if (returnImmediately) {
+  const auto target = layer.tile_at(origin);
+
+  if (!layer.in_bounds(origin) || (target == replacement)) {
     return;
   }
 
   layer.set_tile(origin, replacement);
 
-  // 3,200 bytes given that position is 8 bytes
-  using buffer_t = std::array<std::byte, 400 * sizeof(position)>;
+  std::queue<position> queue;
 
-  // TODO profile with VS and compare with unsynchronized_pool_resource
-  using resource_t = std::pmr::monotonic_buffer_resource;
-  using pmr_queue = std::queue<position, std::pmr::deque<position>>;
-
-  buffer_t buffer{};
-  resource_t resource{buffer.data(), sizeof buffer};
-  pmr_queue queue{&resource};
-
+  affected.push_back(origin);
   queue.push(origin);
 
   const auto update = [&](const position& pos) {
     if (const auto tile = layer.tile_at(pos); tile && tile == target) {
+      affected.push_back(pos);
       layer.set_tile(pos, replacement);
       queue.push(pos);
     }

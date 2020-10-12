@@ -18,13 +18,9 @@ void bucket_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
     if (event->buttons() & Qt::MouseButton::LeftButton) {
       const auto pos = translate_mouse_position(event->pos(), mapPosition);
       if (pos && tileset->is_single_tile_selected()) {
-        const auto target = document->tile_at(*pos);
-        if (target) {
-          document->flood(*pos,
-                          *target,
-                          tileset->tile_at(tileset->get_selection()->topLeft));
-          emit get_model()->redraw();
-        }
+        document->flood(*pos,
+                        tileset->tile_at(tileset->get_selection()->topLeft));
+        emit get_model()->redraw();
       }
     }
   }

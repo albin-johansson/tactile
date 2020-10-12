@@ -14,9 +14,11 @@ map::map(row_t nRows, col_t nCols)
   m_layers.emplace_back(at_least(nRows, 1_row), at_least(nCols, 1_col));
 }
 
-void map::flood(const position& pos, tile_id target, tile_id replacement)
+void map::flood(const position& origin,
+                tile_id replacement,
+                std::vector<position>& positions)
 {
-  current_layer().flood(pos, target, replacement);
+  current_layer().flood(origin, replacement, positions);
 }
 
 void map::set_tile(const position& pos, tile_id id)

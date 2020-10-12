@@ -52,15 +52,18 @@ class map final
   }
 
   /**
-   * @brief Performs a flood-fill at the specified position.
+   * @brief Runs a flood fill in the currently active layer.
    *
-   * @param pos the origin position of the flood-fill.
-   * @param target the target ID that will be replaced.
-   * @param replacement the tile ID that will be used instead of `target`.
+   * @param origin the starting position of the flood fill.
+   * @param replacement the tile type that will be used as the replacement.
+   * @param[out] positions the vector that the affected positions will be added
+   * to.
    *
    * @since 0.1.0
    */
-  void flood(const position& pos, tile_id target, tile_id replacement);
+  void flood(const position& origin,
+             tile_id replacement,
+             std::vector<position>& positions);
 
   /**
    * @brief Sets the value of the tile at the specified position in the

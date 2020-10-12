@@ -49,12 +49,9 @@ void map_document::redo()
   m_commands->redo();
 }
 
-void map_document::flood(const position& position,
-                         tile_id target,
-                         tile_id replacement)
+void map_document::flood(const position& position, tile_id replacement)
 {
-  m_commands->push<cmd::bucket_fill>(
-      m_map.get(), position, target, replacement);
+  m_commands->push<cmd::bucket_fill>(m_map.get(), position, replacement);
 }
 
 void map_document::add_stamp_sequence(vector_map<position, tile_id>&& oldState,

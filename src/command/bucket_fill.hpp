@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>  // vector
+
 #include "abstract_command.hpp"
 #include "command_id.hpp"
 
@@ -13,14 +15,12 @@ class bucket_fill final : public abstract_command
    *
    * @param map the associated map.
    * @param position the origin position of the flood fill.
-   * @param target the target tile ID to replace.
-   * @param replacement the tile ID that will be used to replace `target` tiles.
+   * @param replacement the tile ID that will be used to replace target tiles.
    *
    * @since 0.1.0
    */
   explicit bucket_fill(core::map* map,
                        const core::position& position,
-                       tile_id target,
                        tile_id replacement);
 
   void undo() override;
@@ -33,9 +33,11 @@ class bucket_fill final : public abstract_command
   }
 
  private:
-  core::position m_position;
-  tile_id m_target;
+  core::position m_origin;
   tile_id m_replacement;
+  tile_id m_target{};
+  layer_id m_layer{};
+  std::vector<core::position> m_positions;
 };
 
 }  // namespace tactile::cmd

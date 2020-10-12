@@ -71,15 +71,11 @@ class map_document final : public QObject
    * @brief Performs a flood-fill at the specified position.
    *
    * @param position the origin position of the flood-fill.
-   * @param target the target tile ID that will be replaced.
-   * @param replacement the tile ID that will be used instead of `target`.
-   *
-   * @todo In theory, the target ID should be possible to determine from the
-   * origin position.
+   * @param replacement the tile ID that will be used instead of the target ID.
    *
    * @since 0.1.0
    */
-  void flood(const position& position, tile_id target, tile_id replacement);
+  void flood(const position& position, tile_id replacement);
 
   /**
    * @brief Adds a stamp sequence to the command stack.

@@ -32,9 +32,11 @@ layer::layer(row_t nRows, col_t nCols)
   assert(col_count() == nCols);
 }
 
-void layer::flood(const position& pos, tile_id target, tile_id replacement)
+void layer::flood(const position& origin,
+                  tile_id replacement,
+                  std::vector<position>& positions)
 {
-  flood_fill(*this, pos, target, replacement);
+  flood_fill(*this, origin, replacement, positions);
 }
 
 void layer::remove_all(tile_id id)

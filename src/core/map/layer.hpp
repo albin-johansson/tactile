@@ -65,17 +65,18 @@ class layer final
   }
 
   /**
-   * @brief Runs a flood fill in the tile layer.
+   * @brief Runs a flood fill in the layer.
    *
-   * @note This method has no effect if the flood fill cannot be performed.
-   *
-   * @param pos the starting position of the flood fill.
-   * @param target the tile type that will be replaced.
-   * @param replacement the tile type that will replace the target type.
+   * @param origin the starting position of the flood fill.
+   * @param replacement the tile type that will be used as the replacement.
+   * @param[out] positions the vector that the affected positions will be added
+   * to.
    *
    * @since 0.1.0
    */
-  void flood(const position& pos, tile_id target, tile_id replacement);
+  void flood(const position& origin,
+             tile_id replacement,
+             std::vector<position>& positions);
 
   /**
    * @brief Removes all occurrences of the specified ID in the layer.
