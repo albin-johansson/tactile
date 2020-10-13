@@ -27,8 +27,7 @@ void map_command::restore_tiles()
   m_map->select_layer(activeLayer);
 }
 
-void map_command::save_tiles(map_command::row_range rows,
-                             map_command::col_range cols)
+void map_command::save_tiles(row_range rows, col_range cols)
 {
   m_map->each_layer([&](layer_id id, const core::layer& layer) {
     auto& tiles = tile_data(id);
