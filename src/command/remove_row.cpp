@@ -28,6 +28,7 @@ void remove_row::redo()
   const auto endRow = map->row_count();
   const auto beginRow = endRow - 1_row - core::row_t{times()};
 
+  clear_cache();
   save_tiles({beginRow, endRow}, {0_col, endCol});
   invoke_n(times(), [this] { get_map()->remove_row(); });
 }

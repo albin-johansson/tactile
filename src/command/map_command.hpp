@@ -22,6 +22,8 @@ class map_command : public QUndoCommand
 
   void save_tiles(row_range rows, col_range cols);
 
+  void clear_cache();
+
   [[nodiscard]] auto get_map() noexcept -> core::map*
   {
     return m_map;

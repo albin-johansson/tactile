@@ -28,6 +28,7 @@ void remove_col::redo()
   const auto endCol = map->col_count();
   const auto beginCol = endCol - 1_col - core::col_t{times()};
 
+  clear_cache();
   save_tiles({0_row, endRow}, {beginCol, endCol});
   invoke_n(times(), [&] { get_map()->remove_col(); });
 }

@@ -37,6 +37,7 @@ void resize_map::redo()
     const auto rows = map->row_count();
     const auto cols = map->col_count();
 
+    clear_cache();
     save_tiles({rows - m_oldRows - m_rows, rows}, {0_col, cols});
     save_tiles({0_row, rows}, {cols - m_oldCols - m_cols, cols});
   }

@@ -43,4 +43,9 @@ void map_command::save_tiles(map_command::row_range rows,
   });
 }
 
+void map_command::clear_cache()
+{
+  m_layerData.clear();
+}
+
 }  // namespace tactile::cmd
