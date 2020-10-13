@@ -182,8 +182,11 @@ set(TACTILE_SOURCE_FILES
         service/save/save_json.hpp
         service/save/export_options.hpp
         service/save/tiled_version.hpp
-        service/save/open_map.cpp
-        service/save/open_map.hpp)
+
+        service/open/open_map.cpp
+        service/open/open_map.hpp
+        service/open/open_json.cpp
+        service/open/open_json.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
@@ -222,6 +225,7 @@ target_include_directories(libTactile
         PUBLIC gui/action/open_map
         PUBLIC service
         PUBLIC service/save
+        PUBLIC service/open
         PUBLIC ${Boost_INCLUDE_DIRS})
 
 target_link_libraries(libTactile

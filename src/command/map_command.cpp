@@ -15,7 +15,7 @@ map_command::map_command(core::map* map, const QString& name)
 
 void map_command::restore_tiles()
 {
-  const auto activeLayer = m_map->active_layer_id();
+  const auto activeLayer = m_map->active_layer_id().value();
 
   for (const auto& [layer, data] : m_layerData) {
     m_map->select_layer(layer);

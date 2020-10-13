@@ -16,7 +16,7 @@ void stamp_sequence::undo()
 {
   QUndoCommand::undo();
 
-  const auto layer = m_map->active_layer_id();
+  const auto layer = m_map->active_layer_id().value();
 
   m_map->select_layer(m_layer);
   for (const auto& [position, tile] : m_oldState) {
@@ -30,7 +30,7 @@ void stamp_sequence::redo()
 {
   // The stamp tools works directly when applied, so we don't do anything when
   // the command is executed when first inserted into the command stack.
-  m_layer = m_map->active_layer_id();
+  m_layer = m_map->active_layer_id().value();
   if (m_first) {
     m_first = false;
     return;

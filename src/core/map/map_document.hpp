@@ -7,6 +7,7 @@
 #include <concepts>  // invocable
 #include <memory>    // unique_ptr, shared_ptr
 #include <optional>  // optional
+#include <utility>   // move
 
 #include "command_stack.hpp"
 #include "map.hpp"
@@ -153,43 +154,124 @@ class map_document final : public QObject
    */
   void resize(row_t nRows, col_t nCols);
 
+  /**
+   * @brief Adds a tileset to the document.
+   *
+   * @details This function emits the `added_tileset(tileset_id)` signal.
+   *
+   * @param id the ID that will be associated with the tileset.
+   * @param tileset the tileset that will be added, cannot be null.
+   *
+   * @since 0.1.0
+   */
   void add_tileset(tileset_id id, std::shared_ptr<tileset> tileset);
 
+  /**
+   * @brief Removes a tileset from the document.
+   *
+   * @details This function emits the `removed_tileset(tileset_id)` signal if
+   * `notify` is `true`.
+   *
+   * @param id the ID associated with the tileset that will be removed.
+   * @param notify `true` if a signal should be emitted; `false` otherwise.
+   *
+   * @since 0.1.0
+   */
   void remove_tileset(tileset_id id, bool notify = true);
 
+  /**
+   * @copydoc tileset_manager::select_tileset(tileset_id)
+   */
   void select_tileset(tileset_id id);
 
+  /**
+   * @copydoc tileset_manager::set_selection(position,position)
+   */
   void set_selection(position topLeft, position bottomRight);
 
-  void select_layer(layer_id id);  // not a command
+  /**
+   * @copydoc tileset_manager::select_layer(layer_id)
+   */
+  void select_layer(layer_id id);
 
-  void increase_tile_size();  // not a command
+  /**
+   * @copydoc map::add_layer(layer_id,layer&&)
+   */
+  void add_layer(layer_id id, layer&& layer)
+  {
+    m_map->add_layer(id, std::move(layer));
+  }
 
-  void decrease_tile_size();  // not a command
+  /**
+   * @copydoc map::remove_layers()
+   */
+  void remove_layers()
+  {
+    m_map->remove_layers();
+  }
 
-  void reset_tile_size();  // not a command
+  /**
+   * @copydoc map::increase_tile_size()
+   */
+  void increase_tile_size();
+
+  /**
+   * @copydoc map::decrease_tile_size()
+   */
+  void decrease_tile_size();
+
+  /**
+   * @copydoc map::reset_tile_size()
+   */
+  void reset_tile_size();
+
+  /**
+   * @copydoc map::set_next_layer_id()
+   */
+  void set_next_layer_id(layer_id id) noexcept
+  {
+    m_map->set_next_layer_id(id);
+  }
 
   /**
    * @copydoc map::set_tile()
    */
-  void set_tile(const position& pos, tile_id id)  // not a command
+  void set_tile(const position& pos, tile_id id)
   {
     m_map->set_tile(pos, id);
   }
 
+  /**
+   * @brief Iterates each tileset associated with the document.
+   *
+   * @tparam T the type of the function object.
+   *
+   * @param callable the function object that will be invoked for each tileset.
+   *
+   * @since 0.1.0
+   */
   template <std::invocable<tileset_id, const tileset&> T>
-  void each_tileset(T&& lambda) const
+  void each_tileset(T&& callable) const
   {
     for (const auto& [id, tileset] : *m_tilesets) {
-      lambda(id, *tileset);
+      callable(id, *tileset);
     }
   }
 
-  template <std::invocable<const layer&> T>
-  void each_layer(T&& lambda) const
+  /**
+   * @brief Iterates each layer associated with the document.
+   *
+   * @tparam T the type of the function object.
+   *
+   * @param callable the function object that will be invoked for each layer.
+   *
+   * @since 0.1.0
+   */
+  template <std::invocable<layer_id, const layer&> T>
+  void each_layer(T&& callable) const
   {
-    for (const auto& layer : *m_map) {
-      lambda(layer);
+    for (const auto& [key, layer] : *m_map) {
+      callable(key, layer);
     }
   }
 

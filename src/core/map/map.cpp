@@ -2,7 +2,7 @@
 
 #include <qdebug.h>
 
-#include <cassert>
+#include <utility>  // move
 
 #include "algorithm.hpp"
 
@@ -11,7 +11,9 @@ namespace tactile::core {
 map::map(row_t nRows, col_t nCols)
 {
   m_layers.reserve(5);
-  m_layers.emplace_back(at_least(nRows, 1_row), at_least(nCols, 1_col));
+  m_layers.emplace(m_nextLayer, at_least(nRows, 1_row), at_least(nCols, 1_col));
+  m_activeLayer = m_nextLayer;
+  ++m_nextLayer;
 }
 
 void map::flood(const position& origin,
@@ -28,57 +30,75 @@ void map::set_tile(const position& pos, tile_id id)
 
 void map::remove_all(tile_id id)
 {
-  for (auto& layer : m_layers) {
+  for (auto& [key, layer] : m_layers) {
     layer.remove_all(id);
   }
 }
 
-void map::select_layer(layer_id layer) noexcept
+void map::remove_layers()
 {
-  if (has_layer(layer)) {
-    m_activeLayer = layer;
+  m_layers.clear();
+  m_activeLayer.reset();
+}
+
+void map::select_layer(layer_id id) noexcept
+{
+  if (has_layer(id)) {
+    m_activeLayer = id;
   }
 }
 
 void map::add_layer()
 {
-  m_layers.emplace_back(row_count(), col_count());
+  m_layers.emplace(m_nextLayer, row_count(), col_count());
+  ++m_nextLayer;
+}
+
+void map::add_layer(layer_id id, layer&& layer)
+{
+  m_layers.emplace(id, std::move(layer));
 }
 
 void map::add_row(tile_id id)
 {
-  for (auto& layer : m_layers) {
+  for (auto& [key, layer] : m_layers) {
     layer.add_row(id);
   }
 }
 
 void map::add_col(tile_id id)
 {
-  for (auto& layer : m_layers) {
+  for (auto& [key, layer] : m_layers) {
     layer.add_col(id);
   }
 }
 
-void map::remove_row() noexcept
+void map::remove_row()
 {
   if (row_count() == 1_row) {
     return;
   }
 
-  for (auto& layer : m_layers) {
+  for (auto& [key, layer] : m_layers) {
     layer.remove_row();
   }
 }
 
-void map::remove_col() noexcept
+void map::remove_col()
 {
   if (col_count() == 1_col) {
     return;
   }
 
-  for (auto& layer : m_layers) {
+  for (auto& [key, layer] : m_layers) {
     layer.remove_col();
   }
+}
+
+void map::set_next_layer_id(layer_id id) noexcept
+{
+  Q_ASSERT(!has_layer(id));
+  m_nextLayer = id;
 }
 
 void map::set_rows(row_t nRows)
@@ -89,7 +109,7 @@ void map::set_rows(row_t nRows)
     return;
   }
 
-  for (auto& layer : m_layers) {
+  for (auto& [key, layer] : m_layers) {
     layer.set_rows(nRows);
   }
 }
@@ -102,15 +122,15 @@ void map::set_cols(col_t nCols)
     return;
   }
 
-  for (auto& layer : m_layers) {
+  for (auto& [key, layer] : m_layers) {
     layer.set_cols(nCols);
   }
 }
 
-void map::set_visibility(layer_id layer, bool visibility) noexcept
+void map::set_visibility(layer_id id, bool visibility)
 {
-  if (has_layer(layer)) {
-    m_layers[static_cast<std::size_t>(layer.get())].set_visible(visibility);
+  if (auto* layer = find_layer(id)) {
+    layer->set_visible(visibility);
   }
 }
 
@@ -119,10 +139,13 @@ auto map::tile_at(const position& position) const -> std::optional<tile_id>
   return current_layer().tile_at(position);
 }
 
-auto map::is_visible(layer_id layer) const noexcept -> bool
+auto map::is_visible(layer_id id) const -> bool
 {
-  const auto index = static_cast<std::size_t>(layer.get());
-  return has_layer(layer) && m_layers[index].visible();
+  if (const auto* layer = find_layer(id)) {
+    return layer->visible();
+  } else {
+    return false;
+  }
 }
 
 auto map::layer_count() const noexcept -> int
@@ -130,10 +153,9 @@ auto map::layer_count() const noexcept -> int
   return static_cast<int>(m_layers.size());
 }
 
-auto map::has_layer(layer_id layer) const noexcept -> bool
+auto map::has_layer(layer_id id) const -> bool
 {
-  const auto& value = layer.get();
-  return value >= 0 && value < layer_count();
+  return m_layers.contains(id);
 }
 
 auto map::in_bounds(const position& pos) const -> bool
@@ -172,16 +194,30 @@ auto map::height() const -> int
 
 auto map::current_layer() -> layer&
 {
-  const auto index = static_cast<std::size_t>(m_activeLayer.get());
-  assert(index >= 0 && index < m_layers.size());
-  return m_layers[index];
+  return m_layers.at(m_activeLayer.value());
 }
 
 auto map::current_layer() const -> const layer&
 {
-  const auto index = static_cast<std::size_t>(m_activeLayer.get());
-  assert(index >= 0 && index < m_layers.size());
-  return m_layers[index];
+  return m_layers.at(m_activeLayer.value());
+}
+
+auto map::find_layer(layer_id id) -> layer*
+{
+  if (const auto it = m_layers.find(id); it != m_layers.end()) {
+    return &it->second;
+  } else {
+    return nullptr;
+  }
+}
+
+auto map::find_layer(layer_id id) const -> const layer*
+{
+  if (const auto it = m_layers.find(id); it != m_layers.end()) {
+    return &it->second;
+  } else {
+    return nullptr;
+  }
 }
 
 }  // namespace tactile::core

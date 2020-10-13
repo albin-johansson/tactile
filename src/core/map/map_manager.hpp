@@ -21,7 +21,11 @@ class map_manager final : public QObject
   using iterator = typename storage_type::iterator;
   using const_iterator = typename storage_type::const_iterator;
 
+  explicit map_manager(QObject* parent = nullptr);
+
   [[nodiscard]] auto add() -> map_id;
+
+  [[nodiscard]] auto add(map_document* document) -> map_id;
 
   void close(map_id id);
 

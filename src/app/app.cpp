@@ -2,9 +2,9 @@
 
 #include "app_connections.hpp"
 #include "model.hpp"
-#include "open_map.hpp"
 #include "resize_dialog.hpp"
 #include "save_service.hpp"
+#include "service/open/open_map.hpp"
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "window.hpp"
@@ -41,9 +41,15 @@ void app::save_as(const QString& path)
 
 void app::open_map(const QString& path)
 {
-  //  auto* document = service::open_map(path);
+  auto* document = service::open_map(path);
 
-  // TODO implement
+  const auto mapId = m_model->add_map(document);
+  m_window->handle_new_map(document, mapId);
+
+  document->each_tileset(
+      [&](tileset_id tilesetId, const core::tileset& tileset) {
+        m_window->handle_add_tileset(mapId, tilesetId, tileset);
+      });
 }
 
 void app::handle_resize_map()

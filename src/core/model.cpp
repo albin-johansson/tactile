@@ -4,32 +4,30 @@
 
 namespace tactile::core {
 
-model::model() : m_maps{std::make_unique<map_manager>()}, m_tools{this}
+model::model() : m_maps{new map_manager{this}}, m_tools{this}
 {
-  connect(m_maps.get(),
+  connect(m_maps,
           &map_manager::undo_state_updated,
           this,
           &model::undo_state_updated);
-  connect(m_maps.get(),
+  connect(m_maps,
           &map_manager::redo_state_updated,
           this,
           &model::redo_state_updated);
-  connect(m_maps.get(),
-          &map_manager::undo_text_updated,
-          this,
-          &model::undo_text_updated);
-  connect(m_maps.get(),
-          &map_manager::redo_text_updated,
-          this,
-          &model::redo_text_updated);
-  connect(m_maps.get(), &map_manager::added_tileset, [this](tileset_id id) {
+
+  connect(
+      m_maps, &map_manager::undo_text_updated, this, &model::undo_text_updated);
+  connect(
+      m_maps, &map_manager::redo_text_updated, this, &model::redo_text_updated);
+
+  connect(m_maps, &map_manager::added_tileset, [this](tileset_id id) {
     const auto& tileset = current_document()->tilesets()->at(id);
     emit added_tileset(current_map().value(), id, tileset);
   });
-  connect(
-      m_maps.get(), &map_manager::removed_tileset, [this](tileset_id tileset) {
-        emit removed_tileset(current_map().value(), tileset);
-      });
+
+  connect(m_maps, &map_manager::removed_tileset, [this](tileset_id id) {
+    emit removed_tileset(current_map().value(), id);
+  });
 }
 
 void model::undo()

@@ -37,9 +37,32 @@ class model final : public QObject
  public:
   model();
 
+  /**
+   * @brief Adds a map document to the model.
+   *
+   * @return the map ID that was associated with the document.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto add_map() -> map_id
   {
     return m_maps->add();
+  }
+
+  /**
+   * @brief Adds a map document to the model.
+   *
+   * @note The model claims ownership of the supplied document.
+   *
+   * @param document a pointer to the document that will be added.
+   *
+   * @return the map ID that was associated with the document.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto add_map(map_document* document) -> map_id
+  {
+    return m_maps->add(document);
   }
 
   void update_tileset_selection(position topLeft, position bottomRight)
@@ -155,11 +178,17 @@ class model final : public QObject
    */
   void select_layer(layer_id id);
 
+  /**
+   * @copydoc tool_model::select(tool_id)
+   */
   void select_tool(tool_id tool)
   {
     m_tools.select(tool);
   }
 
+  /**
+   * @copydoc tool_model::select_tileset(tileset_id)
+   */
   void select_tileset(tileset_id id)
   {
     m_maps->select_tileset(id);
@@ -234,33 +263,48 @@ class model final : public QObject
     m_maps->close(id);
   }
 
+  /**
+   * @copydoc tool_model::pressed(QMouseEvent*,QPointF)
+   */
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition)
   {
     m_tools.pressed(event, mapPosition);
   }
 
+  /**
+   * @copydoc tool_model::moved(QMouseEvent*,QPointF)
+   */
   void mouse_moved(QMouseEvent* event, QPointF mapPosition)
   {
     m_tools.moved(event, mapPosition);
   }
 
+  /**
+   * @copydoc tool_model::released(QMouseEvent*,QPointF)
+   */
   void mouse_released(QMouseEvent* event, QPointF mapPosition)
   {
     m_tools.released(event, mapPosition);
   }
 
+  /**
+   * @copydoc tool_model::entered(QMouseEvent*,QPointF)
+   */
   void mouse_entered(QEvent* event)
   {
     m_tools.entered(event);
   }
 
+  /**
+   * @copydoc tool_model::exited(QMouseEvent*,QPointF)
+   */
   void mouse_exited(QEvent* event)
   {
     m_tools.exited(event);
   }
 
  private:
-  std::unique_ptr<map_manager> m_maps;
+  map_manager* m_maps{};
   tool_model m_tools;
 };
 

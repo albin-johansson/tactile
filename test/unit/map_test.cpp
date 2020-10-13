@@ -55,7 +55,7 @@ TEST_CASE("map::remove_all", "[map]")
   map.flood({}, empty, positions);
   map.remove_all(1_t);
 
-  for (const auto& layer : map) {
+  for (const auto& [key, layer] : map) {
     layer.for_each([](tile_id id) { CHECK(id == empty); });
   }
 }
@@ -63,17 +63,17 @@ TEST_CASE("map::remove_all", "[map]")
 TEST_CASE("map::select_layer", "[map]")
 {
   core::map map{4_row, 4_col};
-  CHECK(map.active_layer_id() == 0_layer);
+  CHECK(map.active_layer_id() == 1_layer);
 
   CHECK_NOTHROW(map.select_layer(-1_layer));
-  CHECK(map.active_layer_id() == 0_layer);
+  CHECK(map.active_layer_id() == 1_layer);
 
   map.add_layer();
   map.select_layer(1_layer);
   CHECK(map.active_layer_id() == 1_layer);
 
   CHECK_NOTHROW(map.select_layer(2_layer));
-  CHECK(map.active_layer_id() == 1_layer);
+  CHECK(map.active_layer_id() == 2_layer);
 }
 
 TEST_CASE("map::add_layer", "[map]")
@@ -170,15 +170,15 @@ TEST_CASE("map::set_visibility", "[map]")
 {
   core::map map{5_row, 5_col};
 
-  CHECK(!map.is_visible(layer_id{-1}));  // invalid index
-  CHECK(map.is_visible(layer_id{0}));    // valid index, should be true
-  CHECK(!map.is_visible(layer_id{1}));   // invalid index
+  CHECK(!map.is_visible(-1_layer));  // invalid index
+  CHECK(!map.is_visible(0_layer));   // invalid index
+  CHECK(map.is_visible(1_layer));    // valid index, should be true
 
-  map.set_visibility(layer_id{0}, false);
-  CHECK(!map.is_visible(layer_id{0}));
+  map.set_visibility(1_layer, false);
+  CHECK(!map.is_visible(1_layer));
 
-  map.set_visibility(layer_id{0}, true);
-  CHECK(map.is_visible(layer_id{0}));
+  map.set_visibility(1_layer, true);
+  CHECK(map.is_visible(1_layer));
 }
 
 TEST_CASE("map::tile_at", "[map]")
@@ -194,8 +194,8 @@ TEST_CASE("map::is_visible", "[map]")
   const core::map map{5_row, 5_col};
 
   CHECK(!map.is_visible(-1_layer));
-  CHECK(!map.is_visible(1_layer));
-  CHECK(map.is_visible(0_layer));
+  CHECK(!map.is_visible(0_layer));
+  CHECK(map.is_visible(1_layer));
 }
 
 TEST_CASE("map::layer_count", "[map]")
@@ -211,13 +211,13 @@ TEST_CASE("map::has_layer", "[map]")
 {
   core::map map{4_row, 4_col};
 
-  CHECK(map.has_layer(0_layer));
+  CHECK(map.has_layer(1_layer));
   CHECK(!map.has_layer(-1_layer));
-  CHECK(!map.has_layer(1_layer));
+  CHECK(!map.has_layer(2_layer));
 
   map.add_layer();
-  CHECK(map.has_layer(1_layer));
-  CHECK(!map.has_layer(2_layer));
+  CHECK(map.has_layer(2_layer));
+  CHECK(!map.has_layer(3_layer));
 }
 
 TEST_CASE("map::in_bounds", "[map]")
@@ -264,11 +264,11 @@ TEST_CASE("map::height", "[map]")
 TEST_CASE("map::active_layer_id", "[map]")
 {
   core::map map{4_row, 5_col};
-  CHECK(map.active_layer_id() == 0_layer);
+  CHECK(map.active_layer_id() == 1_layer);
 
   map.add_layer();
-  map.select_layer(1_layer);
-  CHECK(map.active_layer_id() == 1_layer);
+  map.select_layer(2_layer);
+  CHECK(map.active_layer_id() == 2_layer);
 }
 
 TEST_CASE("map::current_tile_size", "[map]")

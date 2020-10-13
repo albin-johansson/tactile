@@ -16,7 +16,7 @@ void bucket_fill::undo()
 {
   QUndoCommand::undo();
 
-  const auto layer = m_map->active_layer_id();
+  const auto layer = m_map->active_layer_id().value();
 
   m_map->select_layer(m_layer);
   for (const auto& position : m_positions) {
@@ -32,7 +32,7 @@ void bucket_fill::redo()
 
   m_positions.clear();
 
-  m_layer = m_map->active_layer_id();
+  m_layer = m_map->active_layer_id().value();
   m_target = m_map->tile_at(m_origin).value();
   m_map->flood(m_origin, m_replacement, m_positions);
 }

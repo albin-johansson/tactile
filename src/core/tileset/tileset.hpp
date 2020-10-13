@@ -63,6 +63,8 @@ class tileset final
    * @param tileWidth the width of the tiles in the tileset.
    * @param tileHeight the height of the tiles in the tileset.
    *
+   * @todo Throw on tile dimensions <= 0, it makes map parsing easier.
+   *
    * @throws tactile_error if the supplied image is null.
    *
    * @since 0.1.0
@@ -82,6 +84,8 @@ class tileset final
    * @param path the path to the image that contains the tile sprites.
    * @param tileWidth the width of the tiles in the tileset.
    * @param tileHeight the height of the tiles in the tileset.
+   *
+   * @todo Throw on tile dimensions <= 0, it makes map parsing easier.
    *
    * @throws tactile_error if the tileset cannot be created.
    *
@@ -167,6 +171,8 @@ class tileset final
    *
    * @param topLeft the top-left position of the selection.
    * @param bottomRight the bottom-right position of the selection.
+   *
+   * @todo Use tileset::selection struct as parameter.
    *
    * @since 0.1.0
    */

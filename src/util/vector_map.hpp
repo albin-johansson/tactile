@@ -2,7 +2,7 @@
 
 #include <algorithm>  // find_if
 #include <stdexcept>  // out_of_range
-#include <utility>    // forward, pair
+#include <utility>    // forward, pair, make_pair
 #include <vector>     // vector
 
 namespace tactile {
@@ -32,6 +32,7 @@ class vector_map final
  public:
   using key_type = Key;
   using mapped_type = Value;
+  using pair_type = std::pair<key_type, mapped_type>;
   using value_type = typename storage_type::value_type;
   using size_type = typename storage_type::size_type;
   using iterator = typename storage_type::iterator;
@@ -84,7 +85,28 @@ class vector_map final
     if (const auto it = find(key); it != m_data.end()) {
       m_data.erase(it);
     }
-    return m_data.emplace_back(key, std::forward<Args>(args)...);
+    return m_data.emplace_back(key, mapped_type{std::forward<Args>(args)...});
+  }
+
+  /**
+   * @brief Inserts a key/value-pair.
+   *
+   * @details This function will replace any previous existing key/value-pair
+   * that uses the specified key.
+   *
+   * @param key the key that will be associated with the value.
+   * @param value the value that will be associated with the key.
+   *
+   * @return a reference to the inserted key/value-pair.
+   *
+   * @since 0.1.0
+   */
+  decltype(auto) emplace(const key_type& key, mapped_type&& value)
+  {
+    if (const auto it = find(key); it != m_data.end()) {
+      m_data.erase(it);
+    }
+    return m_data.emplace_back(key, std::move(value));
   }
 
   /**

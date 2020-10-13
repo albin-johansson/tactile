@@ -2,11 +2,11 @@
 
 #include <concepts>  // invocable
 #include <optional>  // optional
-#include <vector>    // vector
 
 #include "layer.hpp"
 #include "tile_size.hpp"
 #include "types.hpp"
+#include "vector_map.hpp"
 
 namespace tactile::core {
 
@@ -26,7 +26,7 @@ namespace tactile::core {
 class map final
 {
  public:
-  using const_iterator = typename std::vector<layer>::const_iterator;
+  using const_iterator = vector_map<layer_id, layer>::const_iterator;
 
   /**
    * @brief Creates a map with one layer.
@@ -44,10 +44,8 @@ class map final
   template <std::invocable<layer_id, const layer&> T>
   void each_layer(T&& callable) const
   {
-    layer_id id{0};
-    for (const auto& layer : m_layers) {
-      callable(id, layer);
-      ++id;
+    for (const auto& [key, layer] : m_layers) {
+      callable(key, layer);
     }
   }
 
@@ -86,15 +84,25 @@ class map final
   void remove_all(tile_id id);
 
   /**
-   * @brief Selects the tile layer associated with the specified index.
+   * @brief Removes all layers from the map.
    *
-   * @note This method has no effect if the supplied index is invalid.
-   *
-   * @param layer the layer index of the tile layer that will be selected.
+   * @post You must add at least one layer before invoking any layer-related
+   * member function of the map object, after invoking this function.
    *
    * @since 0.1.0
    */
-  void select_layer(layer_id layer) noexcept;
+  void remove_layers();
+
+  /**
+   * @brief Selects the tile layer associated with the specified ID.
+   *
+   * @note This method has no effect if the supplied ID is invalid.
+   *
+   * @param id the layer ID of the tile layer that will be selected.
+   *
+   * @since 0.1.0
+   */
+  void select_layer(layer_id id) noexcept;
 
   /**
    * @brief Adds an empty layer to the map.
@@ -102,6 +110,18 @@ class map final
    * @since 0.1.0
    */
   void add_layer();
+
+  /**
+   * @brief Adds a layer to the map.
+   *
+   * @note This function does *not* modify the next layer ID property.
+   *
+   * @param id the ID that will be associated with the layer.
+   * @param layer the layer that will be added.
+   *
+   * @since 0.1.0
+   */
+  void add_layer(layer_id id, layer&& layer);
 
   /**
    * @brief Adds a row to the map.
@@ -128,7 +148,7 @@ class map final
    *
    * @since 0.1.0
    */
-  void remove_row() noexcept;
+  void remove_row();
 
   /**
    * @brief Removes a column from the map.
@@ -137,7 +157,7 @@ class map final
    *
    * @since 0.1.0
    */
-  void remove_col() noexcept;
+  void remove_col();
 
   /**
    * @copydoc tile_size::increase()
@@ -164,6 +184,21 @@ class map final
   }
 
   /**
+   * @brief Sets the next available layer ID.
+   *
+   * @pre There mustn't be a layer associated with `id`.
+   *
+   * @details This property is automatically incremented when calling
+   * `add_layer()`. This function is meant to be used when parsing maps from
+   * save files.
+   *
+   * @param id the ID that will be used by the next layer.
+   *
+   * @since 0.1.0
+   */
+  void set_next_layer_id(layer_id id) noexcept;
+
+  /**
    * @brief Sets the total number of rows in the map.
    *
    * @param nRows the new number of rows in the map. Clamped to be at
@@ -186,15 +221,15 @@ class map final
   /**
    * @brief Sets the visibility of a tile layer.
    *
-   * @note This method has no effect if the specified layer index isn't
-   * associated with a tile layer.
+   * @note This method has no effect if the specified layer ID isn't associated
+   * with a tile layer.
    *
-   * @param layer the index of the layer that will have its visibility changed.
-   * @param visibility true if the layer should be visible; false otherwise.
+   * @param id the ID of the layer that will have its visibility changed.
+   * @param visibility `true` if the layer should be visible; `false` otherwise.
    *
    * @since 0.1.0
    */
-  void set_visibility(layer_id layer, bool visibility) noexcept;
+  void set_visibility(layer_id id, bool visibility);
 
   /**
    * @brief Returns the ID of the tile at the specified position.
@@ -211,19 +246,18 @@ class map final
 
   /**
    * @brief Indicates whether or not the layer associated with the specified
-   * index is visible.
+   * ID is visible.
    *
-   * @details This method returns false if the supplied index isn't
-   * associated with a tile layer. Tile layers are visible by default.
+   * @details This method returns false if the supplied ID isn't associated with
+   * a tile layer. Tile layers are visible by default.
    *
-   * @param layer the index of the tile layer that will be checked. An
-   * invalid index results in the method returning `false`.
+   * @param id the ID of the tile layer that will be checked.
    *
    * @return `true` if the layer is visible; `false` otherwise.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto is_visible(layer_id layer) const noexcept -> bool;
+  [[nodiscard]] auto is_visible(layer_id id) const -> bool;
 
   /**
    * @brief Returns the amount of layers present in the map.
@@ -237,17 +271,17 @@ class map final
   [[nodiscard]] auto layer_count() const noexcept -> int;
 
   /**
-   * @brief Indicates whether or not the specified layer index is associated
+   * @brief Indicates whether or not the specified layer ID is associated
    * with a tile layer.
    *
-   * @param layer the tile layer index that will be checked.
+   * @param id the tile layer ID that will be checked.
    *
-   * @return `true` if the supplied layer index is associated with a tile layer;
+   * @return `true` if the supplied layer ID is associated with a tile layer;
    * `false` otherwise.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto has_layer(layer_id layer) const noexcept -> bool;
+  [[nodiscard]] auto has_layer(layer_id id) const -> bool;
 
   /**
    * @brief Indicates whether or not the supplied position is within the bounds
@@ -309,11 +343,12 @@ class map final
   /**
    * @brief Returns the ID of the currently active layer.
    *
-   * @return the ID of the active layer.
+   * @return the ID of the active layer; `std::nullopt` if there is no active
+   * layer.
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto active_layer_id() const noexcept -> layer_id
+  [[nodiscard]] auto active_layer_id() const noexcept -> std::optional<layer_id>
   {
     return m_activeLayer;
   }
@@ -355,13 +390,18 @@ class map final
   }
 
  private:
-  layer_id m_activeLayer{0};
-  std::vector<layer> m_layers;
+  vector_map<layer_id, layer> m_layers;
+  std::optional<layer_id> m_activeLayer;
+  layer_id m_nextLayer{1};
   tile_size m_tileSize;
 
   [[nodiscard]] auto current_layer() -> layer&;
 
   [[nodiscard]] auto current_layer() const -> const layer&;
+
+  [[nodiscard]] auto find_layer(layer_id id) -> layer*;
+
+  [[nodiscard]] auto find_layer(layer_id id) const -> const layer*;
 };
 
 }  // namespace tactile::core

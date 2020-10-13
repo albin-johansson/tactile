@@ -10,7 +10,6 @@
 #include "export_options.hpp"
 #include "preferences.hpp"
 #include "tiled_version.hpp"
-#include "to_string.hpp"
 
 using namespace tactile::core;
 
@@ -180,18 +179,14 @@ void create_external_tileset_file(const tileset& tileset,
 {
   QJsonArray array;
 
-  int id{1};
-  map.each_layer([&](const layer& layer) {
+  map.each_layer([&](layer_id id, const layer& layer) {
     QJsonObject object;
 
-    if (const auto str = to_string(id); str) {
-      const auto name = "Layer " + *str;
-      object.insert(u"name", QString::fromStdString(name));
-    }
-
+    object.insert(u"name",
+                  QStringLiteral(u"Layer ") + QString::number(id.get()));
     object.insert(u"width", layer.col_count().get());
     object.insert(u"height", layer.row_count().get());
-    object.insert(u"id", id);
+    object.insert(u"id", id.get());
     object.insert(u"opacity", 1.0);
     object.insert(u"type", QStringLiteral(u"tilelayer"));
     object.insert(u"visible", layer.visible());
@@ -211,7 +206,6 @@ void create_external_tileset_file(const tileset& tileset,
     object.insert(u"data", data);
 
     array.append(object);
-    ++id;
   });
 
   return array;

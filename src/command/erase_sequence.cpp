@@ -14,7 +14,7 @@ void erase_sequence::undo()
 {
   QUndoCommand::undo();
 
-  const auto layer = m_map->active_layer_id();
+  const auto layer = m_map->active_layer_id().value();
 
   m_map->select_layer(m_layer);
   for (const auto& [position, tile] : m_oldState) {
@@ -26,7 +26,7 @@ void erase_sequence::undo()
 
 void erase_sequence::redo()
 {
-  m_layer = m_map->active_layer_id();
+  m_layer = m_map->active_layer_id().value();
   if (m_first) {
     m_first = false;
     return;

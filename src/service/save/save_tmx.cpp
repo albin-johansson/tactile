@@ -94,13 +94,12 @@ void save_layers(QDomDocument& document,
                  QDomElement& root,
                  const map_document& map)
 {
-  int id{1};
-  map.each_layer([&](const layer& layer) {
+  map.each_layer([&](layer_id id, const layer& layer) {
     auto node = document.createElement(QStringLiteral(u"layer"));
 
-    node.setAttribute(QStringLiteral(u"id"), id);
+    node.setAttribute(QStringLiteral(u"id"), id.get());
     node.setAttribute(QStringLiteral(u"name"),
-                      QStringLiteral(u"Layer ") + QString::number(id));
+                      QStringLiteral(u"Layer ") + QString::number(id.get()));
     node.setAttribute(QStringLiteral(u"width"), layer.col_count().get());
     node.setAttribute(QStringLiteral(u"height"), layer.row_count().get());
 
@@ -127,8 +126,6 @@ void save_layers(QDomDocument& document,
     data.appendChild(document.createTextNode(buffer));
     node.appendChild(data);
     root.appendChild(node);
-
-    ++id;
   });
 }
 

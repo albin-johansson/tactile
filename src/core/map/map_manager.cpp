@@ -2,6 +2,9 @@
 
 namespace tactile::core {
 
+map_manager::map_manager(QObject* parent) : QObject{parent}
+{}
+
 void map_manager::emit_undo_redo_update()
 {
   const auto* document = current_document();
@@ -16,10 +19,15 @@ void map_manager::emit_undo_redo_update()
 
 auto map_manager::add() -> map_id
 {
+  return add(new map_document{this});
+}
+
+auto map_manager::add(map_document* document) -> map_id
+{
   const auto id = m_nextMapID;
   Q_ASSERT(!m_mapDocuments.contains(id));
 
-  auto* document = new map_document{this};
+  document->setParent(this);
 
   const auto bind = [document, this](auto&& signal, auto&& slot) {
     connect(document, signal, this, slot);

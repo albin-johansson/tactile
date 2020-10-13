@@ -179,7 +179,7 @@ void map_item::paint(QPainter* painter,
   const auto tileSize = m_map->current_tile_size();
   const auto& exposed = option->exposedRect;
 
-  m_map->each_layer([&](const layer& layer) {
+  m_map->each_layer([&](layer_id, const layer& layer) {
     if (layer.visible()) {
       draw_layer(*painter, layer, exposed, tileSize);
     }
