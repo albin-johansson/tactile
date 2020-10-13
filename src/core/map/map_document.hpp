@@ -25,10 +25,7 @@ namespace tactile::core {
  * @brief Represents a map and a history of changes to the map.
  *
  * @details This class is a wrapper for a map, its associated tilesets and the
- * command history. It provides an interface similar to that of map for those
- * functions that will be handled by commands. Furthermore, this class provides
- * an overloaded `operator->` to obtain a `const` pointer to the internal map
- * instance, to enable access to the internal map.
+ * command history.
  *
  * @see map
  *
