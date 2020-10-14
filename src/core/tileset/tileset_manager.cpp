@@ -13,10 +13,17 @@ tileset_manager::tileset_manager()
 
 void tileset_manager::add(tileset_id id, std::shared_ptr<tileset> tileset)
 {
-  ++m_nextID;
+  Q_ASSERT(!contains(id));
   m_nextGlobalTileID = tileset->last_id() + 1_t;
   m_tilesets.emplace(id, std::move(tileset));
   m_activeID = id;
+}
+
+auto tileset_manager::add(std::shared_ptr<tileset> tileset) -> tileset_id
+{
+  const auto id = m_nextID++;
+  add(id, std::move(tileset));
+  return id;
 }
 
 void tileset_manager::remove(tileset_id id) noexcept
@@ -94,7 +101,7 @@ auto tileset_manager::range_of(tileset_id id) const
   return {tileset->first_id(), tileset->last_id()};
 }
 
-auto tileset_manager::sheets() const noexcept -> int
+auto tileset_manager::count() const noexcept -> int
 {
   return static_cast<int>(m_tilesets.size());
 }

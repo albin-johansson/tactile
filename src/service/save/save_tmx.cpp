@@ -42,7 +42,7 @@ void add_common_attributes(QDomDocument& document,
   node.setAttribute(QStringLiteral(u"tileheight"),
                     tileset.get_tile_height().get());
   node.setAttribute(QStringLiteral(u"tilecount"), tileset.tile_count());
-  node.setAttribute(QStringLiteral(u"columns"), tileset.cols().get());
+  node.setAttribute(QStringLiteral(u"columns"), tileset.col_count().get());
 
   add_image_node(document, node, tileset, mapInfo);
 }

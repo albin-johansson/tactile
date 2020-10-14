@@ -340,6 +340,11 @@ class map final
    */
   [[nodiscard]] auto height() const -> int;
 
+  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&
+  {
+    return m_layers.at(id);
+  }
+
   /**
    * @brief Returns the ID of the currently active layer.
    *

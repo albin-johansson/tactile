@@ -36,6 +36,8 @@ class tileset_manager final
 
   void add(tileset_id id, std::shared_ptr<tileset> tileset);
 
+  [[nodiscard]] auto add(std::shared_ptr<tileset> tileset) -> tileset_id;
+
   /**
    * @brief Removes a tileset from the manager.
    *
@@ -124,7 +126,7 @@ class tileset_manager final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto sheets() const noexcept -> int;
+  [[nodiscard]] auto count() const noexcept -> int;
 
   /**
    * @brief Indicates whether or not the manager has an active tileset.

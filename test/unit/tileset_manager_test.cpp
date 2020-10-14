@@ -23,7 +23,7 @@ TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
 {
   tileset_manager manager;
 
-  CHECK(manager.sheets() == 0);
+  CHECK(manager.count() == 0);
   CHECK(!manager.has_active_tileset());
 
   const auto fst = manager.next_tileset_id();
@@ -33,7 +33,7 @@ TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
   manager.add(snd, make_tileset(manager));
 
   CHECK(snd > fst);
-  CHECK(manager.sheets() == 2);
+  CHECK(manager.count() == 2);
 }
 
 TEST_CASE("tileset_manager::remove", "[tileset_manager]")
@@ -44,13 +44,13 @@ TEST_CASE("tileset_manager::remove", "[tileset_manager]")
   const auto id = 0_ts;
   manager.add(id, std::make_shared<tileset>(0_t, "terrain.png", 32_tw, 32_th));
 
-  CHECK(manager.sheets() == 1);
+  CHECK(manager.count() == 1);
 
   manager.remove(id + tileset_id{5});
-  CHECK(manager.sheets() == 1);
+  CHECK(manager.count() == 1);
 
   manager.remove(id);
-  CHECK(manager.sheets() == 0);
+  CHECK(manager.count() == 0);
 }
 
 TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
@@ -61,10 +61,10 @@ TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
   manager.add(manager.next_tileset_id(), make_tileset(manager));
   manager.add(manager.next_tileset_id(), make_tileset(manager));
 
-  CHECK(manager.sheets() == 2);
+  CHECK(manager.count() == 2);
 
   manager.remove_all();
-  CHECK(manager.sheets() == 0);
+  CHECK(manager.count() == 0);
 }
 
 TEST_CASE("tileset_manager::select", "[tileset_manager]")

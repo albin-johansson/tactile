@@ -32,7 +32,7 @@ void add_common_attributes(QJsonObject& object,
                            const QString& mapDestination,
                            const export_options& options)
 {
-  object.insert(u"columns", tileset.cols().get());
+  object.insert(u"columns", tileset.col_count().get());
 
   const QFileInfo info{mapDestination};
   object.insert(u"image", info.dir().relativeFilePath(tileset.path()));

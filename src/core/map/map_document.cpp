@@ -11,6 +11,8 @@
 #include "resize_map.hpp"
 #include "stamp_sequence.hpp"
 
+#include <qdebug.h>
+
 namespace tactile::core {
 
 map_document::map_document(QObject* parent)
@@ -113,6 +115,12 @@ void map_document::add_tileset(const QImage& image,
 void map_document::add_tileset(tileset_id id, std::shared_ptr<tileset> tileset)
 {
   m_tilesets->add(id, std::move(tileset));
+  emit added_tileset(id);
+}
+
+void map_document::add_tileset(std::shared_ptr<tileset> tileset)
+{
+  const auto id = m_tilesets->add(std::move(tileset));
   emit added_tileset(id);
 }
 

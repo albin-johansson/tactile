@@ -101,7 +101,7 @@ auto tileset::tile_at(const position& position) const -> tile_id
   const auto [row, col] = position.unpack();
 
   const auto endRow = row_t{rows()};
-  const auto endCol = col_t{cols()};
+  const auto endCol = col_t{col_count()};
 
   if ((row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol)) {
     const auto index = row.get() * m_numCols.get() + col.get();

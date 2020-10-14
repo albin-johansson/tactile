@@ -163,11 +163,13 @@ class map_document final : public QObject
    */
   void add_tileset(tileset_id id, std::shared_ptr<tileset> tileset);
 
+  void add_tileset(std::shared_ptr<tileset> tileset);
+
   /**
    * @brief Removes a tileset from the document.
    *
-   * @details This function emits the `removed_tileset(tileset_id)` signal if
-   * `notify` is `true`.
+   * @details This function emits the `removed_tileset(tileset_id)` signal
+   * if `notify` is `true`.
    *
    * @param id the ID associated with the tileset that will be removed.
    * @param notify `true` if a signal should be emitted; `false` otherwise.
@@ -228,14 +230,6 @@ class map_document final : public QObject
   void set_next_layer_id(layer_id id) noexcept
   {
     m_map->set_next_layer_id(id);
-  }
-
-  /**
-   * @copydoc tileset_manager::increment_next_tileset_id()
-   */
-  void increment_next_tileset_id() noexcept
-  {
-    m_tilesets->increment_next_tileset_id();
   }
 
   /**
@@ -333,6 +327,11 @@ class map_document final : public QObject
     return m_map->tile_at(position);
   }
 
+  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&
+  {
+    return m_map->get_layer(id);
+  }
+
   /**
    * @copydoc map::tile_count()
    */
@@ -387,14 +386,6 @@ class map_document final : public QObject
   [[nodiscard]] auto current_tile_size() const noexcept -> int
   {
     return m_map->current_tile_size();
-  }
-
-  /**
-   * @copydoc tileset_manager::next_tileset_id()
-   */
-  [[nodiscard]] auto next_tileset_id() const -> tileset_id
-  {
-    return m_tilesets->next_tileset_id();
   }
 
   /**

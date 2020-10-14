@@ -331,7 +331,7 @@ class tileset final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto cols() const noexcept -> col_t
+  [[nodiscard]] auto col_count() const noexcept -> col_t
   {
     return m_numCols;
   }

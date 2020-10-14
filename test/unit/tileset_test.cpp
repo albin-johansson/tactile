@@ -90,7 +90,7 @@ TEST_CASE("tileset::tile_at", "[tileset]")
 
     const auto row = 7_row;
     const auto col = 5_col;
-    const tile_id index{row.get() * sheet.cols().get() + col.get()};
+    const tile_id index{row.get() * sheet.col_count().get() + col.get()};
     CHECK(sheet.tile_at({row, col}) == sheet.first_id() + index);
   }
 }

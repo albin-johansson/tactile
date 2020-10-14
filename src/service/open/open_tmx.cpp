@@ -28,8 +28,7 @@ void add_tileset_common(core::map_document* document,
   tileset->set_name(elem.attribute(QStringLiteral(u"name")));
   tileset->set_path(absolutePath);
 
-  document->add_tileset(document->next_tileset_id(), std::move(tileset));
-  document->increment_next_tileset_id();
+  document->add_tileset(std::move(tileset));
 }
 
 void add_tileset(core::map_document* document,

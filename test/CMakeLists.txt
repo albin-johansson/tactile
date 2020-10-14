@@ -14,7 +14,8 @@ set(TACTILE_TEST_FILES
         unit/tile_size_test.cpp
         unit/tileset_manager_test.cpp
         unit/nenya_test.cpp
-        unit/vector_map_test.cpp)
+        unit/vector_map_test.cpp
+        unit/service/tmx_import_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 
