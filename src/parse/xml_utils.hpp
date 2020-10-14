@@ -2,7 +2,7 @@
 
 #include <QFileInfo>
 #include <QtXml>
-#include <concepts>  // constructible_from
+#include <concepts>  // constructible_from, invocable
 
 #include "tactile_error.hpp"
 
