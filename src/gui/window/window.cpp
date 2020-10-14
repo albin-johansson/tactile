@@ -230,6 +230,7 @@ void window::set_actions_enabled(bool enabled)
   m_ui->action_stamp_tool->setEnabled(enabled);
   m_ui->action_bucket_tool->setEnabled(enabled);
   m_ui->action_eraser_tool->setEnabled(enabled);
+  m_ui->action_add_tileset->setEnabled(enabled);
 
   // View
   m_ui->action_center_camera->setEnabled(enabled);

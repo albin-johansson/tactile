@@ -80,7 +80,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>29</height>
+     <height>23</height>
     </rect>
    </property>
    <property name="font">
@@ -761,6 +761,9 @@
    </property>
   </action>
   <action name="action_add_tileset">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/image.png</normaloff>:/resources/icons/icons8/color/64/image.png</iconset>
