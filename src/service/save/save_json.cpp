@@ -8,6 +8,7 @@
 #include <QJsonObject>
 
 #include "export_options.hpp"
+#include "json_utils.hpp"
 #include "preferences.hpp"
 #include "tiled_version.hpp"
 
@@ -65,7 +66,7 @@ void add_common_attributes(QJsonObject& object,
                                                 const export_options& options)
     -> QJsonObject
 {
-  QJsonObject object;
+  QJsonObject object{};
 
   add_common_attributes(object, tileset, mapDestination, options);
   object.insert(u"firstgid", tileset.first_id().get());
@@ -92,7 +93,7 @@ void add_common_attributes(QJsonObject& object,
                                                 const export_options& options)
     -> QJsonObject
 {
-  QJsonObject object;
+  QJsonObject object{};
 
   object.insert(u"firstgid", tileset.first_id().get());
   object.insert(u"source", tileset.name() + QStringLiteral(u".json"));
@@ -117,7 +118,7 @@ void create_external_tileset_file(const tileset& tileset,
                                   const export_options& options)
 {
   QJsonDocument document{};
-  QJsonObject object;
+  QJsonObject object{};
 
   add_common_attributes(object, tileset, mapDestination, options);
   object.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
@@ -127,10 +128,9 @@ void create_external_tileset_file(const tileset& tileset,
   document.setObject(object);
 
   const QFileInfo info{mapDestination};
-  QFile file{info.absoluteDir().absoluteFilePath(tileset.name() +
-                                                 QStringLiteral(u".json"))};
-  file.open(QFile::WriteOnly);
-  file.write(document.toJson());
+  json::write_file(info.absoluteDir().absoluteFilePath(
+                       tileset.name() + QStringLiteral(u".json")),
+                   document);
 }
 
 /**
@@ -226,7 +226,7 @@ void create_external_tileset_file(const tileset& tileset,
                                const QString& mapDestination,
                                const export_options& options) -> QJsonObject
 {
-  QJsonObject root;
+  QJsonObject root{};
 
   root.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   root.insert(u"orientation", QStringLiteral(u"orthogonal"));
@@ -251,14 +251,9 @@ void create_external_tileset_file(const tileset& tileset,
 
 void save_json(const QString& path, const core::map_document& map)
 {
-  const auto options = make_export_options();
-
   QJsonDocument document{};
-  document.setObject(create_root(map, path, options));
-
-  QFile file{path};
-  file.open(QFile::WriteOnly);
-  file.write(document.toJson());
+  document.setObject(create_root(map, path, make_export_options()));
+  json::write_file(path, document);
 }
 
 }  // namespace tactile::service

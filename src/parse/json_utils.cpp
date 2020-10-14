@@ -21,4 +21,12 @@ auto from_file(const QFileInfo& path) -> QJsonDocument
   return json;
 }
 
+void write_file(const QFileInfo& path, const QJsonDocument& document)
+{
+  QFile file{path.absoluteFilePath()};
+  file.open(QFile::WriteOnly | QFile::Text);
+  file.write(document.toJson());
+  file.close();
+}
+
 }  // namespace tactile::json
