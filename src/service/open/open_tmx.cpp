@@ -69,15 +69,11 @@ void add_tileset(core::map_document* document,
 
 auto open_tmx_map(const QFileInfo& path) -> core::map_document*
 {
-  Q_ASSERT(path.exists());
-
   const auto tmx = xml::from_file(path);
+  const auto root = tmx.documentElement();
 
   auto* document = new core::map_document{};
   document->remove_layers();
-
-  const auto root = tmx.documentElement();
-
   document->set_next_layer_id(
       xml::int_attr<layer_id>(root, QStringLiteral(u"nextlayerid")));
 
