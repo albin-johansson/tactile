@@ -34,7 +34,7 @@ template <std::constructible_from<int> T = int>
   }
 }
 
-template <std::invocable<QDomNode> T>
+template <std::invocable<const QDomNode&> T>
 void each_elem(const QDomElement& element, const QString& tag, T&& callable)
 {
   const auto elements = element.elementsByTagName(tag);
