@@ -15,8 +15,6 @@ template <std::constructible_from<int> T = int>
   if (const auto result = element.attribute(key).toInt(&ok); ok) {
     return T{result};
   } else {
-    qDebug() << QStringLiteral(u"No integer attribute:") << key
-             << QStringLiteral(u"in element with tag:") << element.tagName();
     throw tactile_error{"Failed to obtain attribute from XML attribute!"};
   }
 }
