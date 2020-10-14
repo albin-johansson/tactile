@@ -52,6 +52,11 @@ void tileset_manager::set_selection(const position& topLeft,
   }
 }
 
+void tileset_manager::increment_next_tileset_id() noexcept
+{
+  ++m_nextID;
+}
+
 auto tileset_manager::at(tileset_id id) -> tileset&
 {
   return *m_tilesets.at(id);

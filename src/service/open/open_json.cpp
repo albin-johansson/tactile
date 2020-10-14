@@ -19,6 +19,8 @@ void add_tilesets(core::map_document* document,
                   const QFileInfo& path,
                   const QJsonArray& tilesets)
 {
+  // TODO support external tilesets
+
   tileset_id id{1};
   for (const auto& elem : tilesets) {
     const auto object = elem.toObject();

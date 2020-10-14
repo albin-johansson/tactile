@@ -96,6 +96,7 @@ void map_item::draw_layer(QPainter& painter,
       const auto x = position.col_to_x(tileSize);
       const auto y = position.row_to_y(tileSize);
 
+      // FIXME only render background once
       draw_tile_background(painter, position, tileSize);
 
       if (const auto tile = layer.tile_at(position); tile != empty) {

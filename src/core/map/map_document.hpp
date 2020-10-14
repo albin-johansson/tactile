@@ -231,6 +231,14 @@ class map_document final : public QObject
   }
 
   /**
+   * @copydoc tileset_manager::increment_next_tileset_id()
+   */
+  void increment_next_tileset_id() noexcept
+  {
+    m_tilesets->increment_next_tileset_id();
+  }
+
+  /**
    * @copydoc map::set_tile()
    */
   void set_tile(const position& pos, tile_id id)
@@ -379,6 +387,14 @@ class map_document final : public QObject
   [[nodiscard]] auto current_tile_size() const noexcept -> int
   {
     return m_map->current_tile_size();
+  }
+
+  /**
+   * @copydoc tileset_manager::next_tileset_id()
+   */
+  [[nodiscard]] auto next_tileset_id() const -> tileset_id
+  {
+    return m_tilesets->next_tileset_id();
   }
 
   /**

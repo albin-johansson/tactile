@@ -155,8 +155,12 @@ set(TACTILE_SOURCE_FILES
         prefs/theme.hpp
         prefs/preferences.cpp
         prefs/preferences.hpp
+
         parse/parse_palette.cpp
         parse/parse_palette.hpp
+        parse/string_utils.hpp
+        parse/xml_utils.hpp
+        parse/xml_utils.cpp
 
         tool/tool_id.hpp
         tool/tool_model.cpp
@@ -172,7 +176,6 @@ set(TACTILE_SOURCE_FILES
 
         util/nenya.hpp
         util/vector_map.hpp
-        util/to_string.hpp
 
         service/save/save_tmx.cpp
         service/save/save_tmx.hpp
@@ -186,7 +189,9 @@ set(TACTILE_SOURCE_FILES
         service/open/open_map.cpp
         service/open/open_map.hpp
         service/open/open_json.cpp
-        service/open/open_json.hpp)
+        service/open/open_json.hpp
+        service/open/open_tmx.cpp
+        service/open/open_tmx.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 

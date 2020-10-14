@@ -76,6 +76,8 @@ class tileset_manager final
    */
   void set_selection(const position& topLeft, const position& bottomRight);
 
+  void increment_next_tileset_id() noexcept;
+
   [[nodiscard]] auto at(tileset_id id) -> tileset&;
 
   [[nodiscard]] auto at(tileset_id id) const -> const tileset&;
