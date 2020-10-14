@@ -217,7 +217,7 @@ void window::set_actions_enabled(bool enabled)
 {
   // File
   m_ui->action_close_map->setEnabled(enabled);
-  m_ui->action_save->setEnabled(enabled);
+  //  m_ui->action_save->setEnabled(enabled); // TODO uncomment when added
   m_ui->action_save_as->setEnabled(enabled);
   m_ui->action_rename->setEnabled(enabled);
 
