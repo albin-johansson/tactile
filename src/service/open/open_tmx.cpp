@@ -9,6 +9,29 @@
 namespace tactile::service {
 namespace {
 
+void add_tileset_common(core::map_document* document,
+                        const QDomElement& elem,
+                        const QFileInfo& path,
+                        tile_id gid)
+{
+  const auto tileWidth =
+      xml::int_attr<tile_width>(elem, QStringLiteral(u"tilewidth"));
+  const auto tileHeight =
+      xml::int_attr<tile_height>(elem, QStringLiteral(u"tileheight"));
+
+  const auto imageElem = elem.firstChildElement(QStringLiteral(u"image"));
+  const auto source = imageElem.attribute(QStringLiteral(u"source"));
+  const auto absolutePath = path.dir().absoluteFilePath(source);
+
+  auto tileset =
+      std::make_shared<core::tileset>(gid, absolutePath, tileWidth, tileHeight);
+  tileset->set_name(elem.attribute(QStringLiteral(u"name")));
+  tileset->set_path(absolutePath);
+
+  document->add_tileset(document->next_tileset_id(), std::move(tileset));
+  document->increment_next_tileset_id();
+}
+
 void add_tileset(core::map_document* document,
                  const QFileInfo& path,
                  const QDomNode& tilesetNode)
@@ -16,26 +39,14 @@ void add_tileset(core::map_document* document,
   const auto elem = xml::to_elem(tilesetNode);
   Q_ASSERT(elem.tagName() == QStringLiteral(u"tileset"));
 
+  const auto gid = xml::int_attr<tile_id>(elem, QStringLiteral(u"firstgid"));
+
   if (elem.hasAttribute(QStringLiteral(u"source"))) {
-    // external tileset
+    const auto source = elem.attribute(QStringLiteral(u"source"));
+    const auto external = xml::from_file(path.dir().absoluteFilePath(source));
+    add_tileset_common(document, external.documentElement(), path, gid);
   } else {
-    const auto gid = xml::int_attr<tile_id>(elem, QStringLiteral(u"firstgid"));
-    const auto tileWidth =
-        xml::int_attr<tile_width>(elem, QStringLiteral(u"tilewidth"));
-    const auto tileHeight =
-        xml::int_attr<tile_height>(elem, QStringLiteral(u"tileheight"));
-
-    const auto imageElem = elem.firstChildElement(QStringLiteral(u"image"));
-    const auto source = imageElem.attribute(QStringLiteral(u"source"));
-    const auto absolutePath = path.dir().absoluteFilePath(source);
-
-    auto tileset = std::make_shared<core::tileset>(
-        gid, absolutePath, tileWidth, tileHeight);
-    tileset->set_name(elem.attribute(QStringLiteral(u"name")));
-    tileset->set_path(absolutePath);
-
-    document->add_tileset(document->next_tileset_id(), std::move(tileset));
-    document->increment_next_tileset_id();
+    add_tileset_common(document, elem, path, gid);
   }
 }
 
