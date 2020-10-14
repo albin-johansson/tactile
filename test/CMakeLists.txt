@@ -34,9 +34,6 @@ target_include_directories(testTactile
 
 target_link_libraries(testTactile
         PUBLIC libTactile
-        PUBLIC Qt5::Core
-        PUBLIC Qt5::Widgets
-        PUBLIC Qt5::Gui
         PUBLIC libCatch)
 
 copy_directory_post_build(testTactile
