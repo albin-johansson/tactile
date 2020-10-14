@@ -219,7 +219,7 @@ void window::set_actions_enabled(bool enabled)
   m_ui->action_close_map->setEnabled(enabled);
   //  m_ui->action_save->setEnabled(enabled); // TODO uncomment when added
   m_ui->action_save_as->setEnabled(enabled);
-  m_ui->action_rename->setEnabled(enabled);
+  //  m_ui->action_rename->setEnabled(enabled); // TODO uncomment when added
 
   // Edit
   m_ui->action_add_column->setEnabled(enabled);
