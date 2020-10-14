@@ -35,4 +35,14 @@ auto from_file(const QFileInfo& path) -> QDomDocument
   return document;
 }
 
+void write_file(const QFileInfo& path, const QDomDocument& document)
+{
+  QFile file{path.absoluteFilePath()};
+  file.open(QFile::WriteOnly | QFile::Text);
+
+  QTextStream stream{&file};
+  stream << document;
+  file.close();
+}
+
 }  // namespace tactile::xml

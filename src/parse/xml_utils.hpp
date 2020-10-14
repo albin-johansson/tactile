@@ -46,4 +46,6 @@ void each_elem(const QDomElement& element, const QString& tag, T&& callable)
 
 [[nodiscard]] auto from_file(const QFileInfo& path) -> QDomDocument;
 
+void write_file(const QFileInfo& path, const QDomDocument& document);
+
 }  // namespace tactile::xml

@@ -7,6 +7,7 @@
 #include "export_options.hpp"
 #include "preferences.hpp"
 #include "tiled_version.hpp"
+#include "xml_utils.hpp"
 
 using namespace tactile::core;
 
@@ -57,13 +58,9 @@ void create_external_tileset_file(const tileset& tileset,
 
   document.appendChild(node);
 
-  QFile file{mapInfo.absoluteDir().absoluteFilePath(tileset.name() +
-                                                    QStringLiteral(u".tsx"))};
-  file.open(QIODevice::WriteOnly);
-
-  QTextStream stream{&file};
-  stream << document;
-  file.close();
+  xml::write_file(mapInfo.absoluteDir().absoluteFilePath(
+                      tileset.name() + QStringLiteral(u".tsx")),
+                  document);
 }
 
 void save_tilesets(QDomDocument& document,
@@ -174,12 +171,7 @@ void save_tmx(const QString& path, const core::map_document& map)
   QDomDocument document{};
   create_root(document, map, info, options);
 
-  QFile file{path};
-  file.open(QIODevice::WriteOnly);
-
-  QTextStream stream{&file};
-  stream << document;
-  file.close();
+  xml::write_file(path, document);
 }
 
 }  // namespace tactile::service
