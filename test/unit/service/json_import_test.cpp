@@ -1,18 +1,18 @@
 #include <catch.hpp>
 
-#include "open_tmx.hpp"
+#include "open_json.hpp"
 
 using namespace tactile;
 using core::operator""_row;
 using core::operator""_col;
 
-TEST_CASE("Import TMX with embedded tilesets", "[import_tmx]")
+TEST_CASE("Import JSON with embedded tilesets", "[import_json]")
 {
-  const auto path = QStringLiteral(u"tmx/embedded.tmx");
+  const auto path = QStringLiteral(u"json/embedded.json");
 
   QObject object;
 
-  auto* document = service::open_tmx_map(path);
+  auto* document = service::open_json_map(path);
   REQUIRE(document != nullptr);
 
   document->setParent(&object);  // to make sure that the document is deleted
@@ -28,7 +28,6 @@ TEST_CASE("Import TMX with embedded tilesets", "[import_tmx]")
       auto& layer = document->get_layer(1_layer);
       REQUIRE(layer.row_count() == 5_row);
       REQUIRE(layer.col_count() == 7_col);
-      //  CHECK(layer.name() == QStringLiteral(u"Tile Layer 1"));
       CHECK(layer.visible());
 
       CHECK(layer.tile_at({0_row, 0_col}).value() == 360_t);
@@ -42,7 +41,6 @@ TEST_CASE("Import TMX with embedded tilesets", "[import_tmx]")
       auto& layer = document->get_layer(2_layer);
       REQUIRE(layer.row_count() == 5_row);
       REQUIRE(layer.col_count() == 7_col);
-      //  CHECK(layer.name() == QStringLiteral(u"Tile Layer 2"));
       CHECK(layer.visible());
 
       CHECK(layer.tile_at({0_row, 0_col}).value() == empty);
@@ -77,13 +75,13 @@ TEST_CASE("Import TMX with embedded tilesets", "[import_tmx]")
   }
 }
 
-TEST_CASE("Import TMX with external tilesets", "[import_tmx]")
+TEST_CASE("Import JSON with external tilesets", "[import_json]")
 {
-  const auto path = QStringLiteral(u"tmx/external.tmx");
+  const auto path = QStringLiteral(u"json/external.json");
 
   QObject object;
 
-  auto* document = service::open_tmx_map(path);
+  auto* document = service::open_json_map(path);
   REQUIRE(document != nullptr);
 
   document->setParent(&object);  // to make sure that the document is deleted
