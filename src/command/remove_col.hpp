@@ -8,7 +8,7 @@ namespace tactile::cmd {
 /**
  * @class remove_col
  *
- * @brief Represents the action of removing a column from the active map.
+ * @brief Represents the dialog of removing a column from the active map.
  *
  * @since 0.1.0
  *

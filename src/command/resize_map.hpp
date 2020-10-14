@@ -8,7 +8,7 @@ namespace tactile::cmd {
 /**
  * @class resize_map
  *
- * @brief Represents the action of resizing the active map.
+ * @brief Represents the dialog of resizing the active map.
  *
  * @since 0.1.0
  *

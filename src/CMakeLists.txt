@@ -89,15 +89,15 @@ set(TACTILE_SOURCE_FILES
         gui/settings/settings_dialog.cpp
         gui/settings/settings_dialog.ui
 
-        gui/action/resize_map/resize_dialog.hpp
-        gui/action/resize_map/resize_dialog.cpp
-        gui/action/resize_map/resize_dialog.ui
+        gui/dialog/resize_map/resize_dialog.hpp
+        gui/dialog/resize_map/resize_dialog.cpp
+        gui/dialog/resize_map/resize_dialog.ui
 
-        gui/action/save/save_as_dialog.cpp
-        gui/action/save/save_as_dialog.hpp
+        gui/dialog/save/save_as_dialog.cpp
+        gui/dialog/save/save_as_dialog.hpp
 
-        gui/action/open_map/open_map_dialog.cpp
-        gui/action/open_map/open_map_dialog.hpp
+        gui/dialog/open_map/open_map_dialog.cpp
+        gui/dialog/open_map/open_map_dialog.hpp
 
         gui/about/about.ui
 
@@ -226,10 +226,10 @@ target_include_directories(libTactile
         PUBLIC gui/tools
         PUBLIC gui/about
         PUBLIC gui/settings
-        PUBLIC gui/action
-        PUBLIC gui/action/resize_map
-        PUBLIC gui/action/save
-        PUBLIC gui/action/open_map
+        PUBLIC gui/dialog
+        PUBLIC gui/dialog/resize_map
+        PUBLIC gui/dialog/save
+        PUBLIC gui/dialog/open_map
         PUBLIC service
         PUBLIC service/save
         PUBLIC service/open

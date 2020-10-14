@@ -8,7 +8,7 @@ namespace tactile::cmd {
 /**
  * @class add_col
  *
- * @brief Represents the action of adding a column to the active map.
+ * @brief Represents the dialog of adding a column to the active map.
  *
  * @since 0.1.0
  *

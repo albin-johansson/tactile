@@ -8,7 +8,7 @@ namespace tactile::cmd {
 /**
  * @class add_row
  *
- * @brief Represents the action of adding a row to the active map.
+ * @brief Represents the dialog of adding a row to the active map.
  *
  * @since 0.1.0
  *
