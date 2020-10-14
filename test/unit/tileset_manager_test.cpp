@@ -19,18 +19,15 @@ namespace {
 
 }  // namespace
 
-TEST_CASE("tileset_manager::emplace", "[tileset_manager]")
+TEST_CASE("tileset_manager::add", "[tileset_manager]")
 {
   tileset_manager manager;
 
   CHECK(manager.count() == 0);
   CHECK(!manager.has_active_tileset());
 
-  const auto fst = manager.next_tileset_id();
-  manager.add(fst, make_tileset(manager));
-
-  const auto snd = manager.next_tileset_id();
-  manager.add(snd, make_tileset(manager));
+  const auto fst = manager.add(make_tileset(manager));
+  const auto snd = manager.add(make_tileset(manager));
 
   CHECK(snd > fst);
   CHECK(manager.count() == 2);
@@ -58,8 +55,8 @@ TEST_CASE("tileset_manager::remove_all", "[tileset_manager]")
   tileset_manager manager;
   CHECK_NOTHROW(manager.remove_all());
 
-  manager.add(manager.next_tileset_id(), make_tileset(manager));
-  manager.add(manager.next_tileset_id(), make_tileset(manager));
+  const auto fst = manager.add(make_tileset(manager));
+  const auto snd = manager.add(make_tileset(manager));
 
   CHECK(manager.count() == 2);
 
