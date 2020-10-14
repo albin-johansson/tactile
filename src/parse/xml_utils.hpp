@@ -39,7 +39,7 @@ void each_elem(const QDomElement& element, const QString& tag, T&& callable)
 {
   const auto elements = element.elementsByTagName(tag);
   const auto count = elements.count();
-  for (int i = 0; i < count; ++i) {
+  for (auto i = 0; i < count; ++i) {
     callable(elements.at(i));
   }
 }
