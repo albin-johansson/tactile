@@ -29,6 +29,23 @@ auto get_end_col(const QRectF& exposed, col_t nCols, int tileSize) -> col_t
   return col_t{std::min(nCols.get(), c)};
 }
 
+[[nodiscard]] auto make_bounds(const QRectF& exposed,
+                               row_t rows,
+                               col_t cols,
+                               int tileSize) -> render_bounds
+{
+  render_bounds bounds;
+
+  bounds.rowBegin =
+      row_t{std::max(0, static_cast<int>(exposed.y() / tileSize))};
+  bounds.colBegin =
+      col_t{std::max(0, static_cast<int>(exposed.x() / tileSize))};
+  bounds.rowEnd = get_end_row(exposed, rows, tileSize);
+  bounds.colEnd = get_end_col(exposed, cols, tileSize);
+
+  return bounds;
+}
+
 void draw_tile_background(QPainter& painter,
                           const position& position,
                           int tileSize)
@@ -73,41 +90,43 @@ void map_item::enable_stamp_preview(const position& position)
   m_mousePosition = position;
 }
 
+auto map_item::make_settings(const QRectF& exposed, int tileSize)
+    -> render_settings
+{
+  render_settings settings;
+
+  settings.bounds =
+      make_bounds(exposed, m_map->row_count(), m_map->col_count(), tileSize);
+  settings.drawGrid = prefs::graphics::render_grid().value_or(false);
+  settings.tileSize = m_map->current_tile_size();
+
+  return settings;
+}
+
+void map_item::draw_background(QPainter& painter,
+                               const render_settings& settings)
+{
+  each_tile(painter, settings.bounds, [&, this](position position) {
+    draw_tile_background(painter, position, settings.tileSize);
+  });
+}
+
 void map_item::draw_layer(QPainter& painter,
                           const layer& layer,
-                          const QRectF& exposed,
-                          int tileSize)
+                          const render_settings& settings)
 {
-  if (exposed.isEmpty()) {
-    return;
-  }
+  each_tile(painter, settings.bounds, [&, this](position position) {
+    const auto x = position.col_to_x(settings.tileSize);
+    const auto y = position.row_to_y(settings.tileSize);
 
-  const auto beginRow = std::max(0, static_cast<int>(exposed.y() / tileSize));
-  const auto beginCol = std::max(0, static_cast<int>(exposed.x() / tileSize));
-  const auto endRow = get_end_row(exposed, m_map->row_count(), tileSize);
-  const auto endCol = get_end_col(exposed, m_map->col_count(), tileSize);
-
-  const auto renderGrid = prefs::graphics::render_grid().value_or(false);
-
-  for (row_t row{beginRow}; row < endRow; ++row) {
-    for (col_t col{beginCol}; col < endCol; ++col) {
-      const position position{row, col};
-
-      const auto x = position.col_to_x(tileSize);
-      const auto y = position.row_to_y(tileSize);
-
-      // FIXME only render background once
-      draw_tile_background(painter, position, tileSize);
-
-      if (const auto tile = layer.tile_at(position); tile != empty) {
-        draw_tile(painter, *tile, x, y, tileSize);
-      }
-
-      if (renderGrid) {
-        painter.drawRect(x, y, tileSize, tileSize);
-      }
+    if (const auto tile = layer.tile_at(position); tile != empty) {
+      draw_tile(painter, *tile, x, y, settings.tileSize);
     }
-  }
+
+    if (settings.drawGrid) {
+      painter.drawRect(x, y, settings.tileSize, settings.tileSize);
+    }
+  });
 }
 
 void map_item::draw_tile(QPainter& painter,
@@ -149,12 +168,11 @@ void map_item::draw_preview(QPainter& painter, int tileSize)
 {
   auto* tileset = m_map->current_tileset();
   Q_ASSERT(tileset);
-  Q_ASSERT(tileset->get_selection());
 
-  const auto& mousePos = *m_mousePosition;
-  const auto& [topLeft, bottomRight] = *tileset->get_selection();
+  const auto& mousePos = m_mousePosition.value();
+  const auto& [topLeft, bottomRight] = tileset->get_selection().value();
 
-  painter.setOpacity(0.5);
+  painter.setOpacity(m_previewOpacity);
 
   if (topLeft == bottomRight) {
     draw_tile(painter,
@@ -179,10 +197,16 @@ void map_item::paint(QPainter* painter,
 
   const auto tileSize = m_map->current_tile_size();
   const auto& exposed = option->exposedRect;
+  if (exposed.isEmpty()) {
+    return;
+  }
+
+  const auto settings = make_settings(exposed, tileSize);
+  draw_background(*painter, settings);
 
   m_map->each_layer([&](layer_id, const layer& layer) {
     if (layer.visible()) {
-      draw_layer(*painter, layer, exposed, tileSize);
+      draw_layer(*painter, layer, settings);
     }
   });
 
