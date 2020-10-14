@@ -19,8 +19,6 @@ void add_tileset(core::map_document* document,
   if (elem.hasAttribute(QStringLiteral(u"source"))) {
     // external tileset
   } else {
-    qDebug() << "Path: " << path.absoluteFilePath();
-
     const auto gid = xml::int_attr<tile_id>(elem, QStringLiteral(u"firstgid"));
     const auto tileWidth =
         xml::int_attr<tile_width>(elem, QStringLiteral(u"tilewidth"));
@@ -30,9 +28,6 @@ void add_tileset(core::map_document* document,
     const auto imageElem = elem.firstChildElement(QStringLiteral(u"image"));
     const auto source = imageElem.attribute(QStringLiteral(u"source"));
     const auto absolutePath = path.dir().absoluteFilePath(source);
-
-    qDebug() << "Source path" << source;
-    qDebug() << "Absolute path" << absolutePath;
 
     auto tileset = std::make_shared<core::tileset>(
         gid, absolutePath, tileWidth, tileHeight);
