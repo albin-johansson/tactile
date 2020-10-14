@@ -16,7 +16,8 @@ set(TACTILE_TEST_FILES
         unit/nenya_test.cpp
         unit/vector_map_test.cpp
         unit/service/tmx_import_test.cpp
-        unit/service/json_import_test.cpp)
+        unit/service/json_import_test.cpp
+        unit/parse/xml_utils_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 

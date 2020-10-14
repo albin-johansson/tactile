@@ -15,8 +15,6 @@ auto to_elem(const QDomNode& node) -> QDomElement
 
 auto from_file(const QFileInfo& path) -> QDomDocument
 {
-  Q_ASSERT(path.exists());
-
   QDomDocument document{};
 
   QFile file{path.absoluteFilePath()};
