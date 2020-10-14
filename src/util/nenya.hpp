@@ -257,8 +257,8 @@ class mirror_type
 {
   // clang-format off
 
-  inline static constexpr bool nothrowCopy = std::is_nothrow_copy_constructible_v<Rep>;
-  inline static constexpr bool nothrowMove = std::is_nothrow_copy_constructible_v<Rep>;
+  inline constexpr static bool nothrowCopy = std::is_nothrow_copy_constructible_v<Rep>;
+  inline constexpr static bool nothrowMove = std::is_nothrow_copy_constructible_v<Rep>;
 
  public:
   constexpr mirror_type() = default;

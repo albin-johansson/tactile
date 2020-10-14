@@ -66,7 +66,7 @@ class tile_size final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] static constexpr auto default_size() noexcept -> int
+  [[nodiscard]] constexpr static auto default_size() noexcept -> int
   {
     return 50;
   }
@@ -78,7 +78,7 @@ class tile_size final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] static constexpr auto min_size() noexcept -> int
+  [[nodiscard]] constexpr static auto min_size() noexcept -> int
   {
     return 5;
   }
