@@ -8,6 +8,7 @@
 #include <memory>   // make_shared
 #include <utility>  // move
 
+#include "json_utils.hpp"
 #include "layer.hpp"
 #include "tactile_error.hpp"
 #include "tileset.hpp"
@@ -15,31 +16,44 @@
 namespace tactile::service {
 namespace {
 
+void add_tileset_common(core::map_document* document,
+                        const QJsonObject& object,
+                        const QFileInfo& path,
+                        tile_id gid)
+{
+  const tile_width tileWidth{object.value(u"tilewidth").toInt()};
+  const tile_height tileHeight{object.value(u"tileheight").toInt()};
+
+  const auto relativePath = object.value(u"image").toString();
+  const auto absolutePath = path.dir().absoluteFilePath(relativePath);
+
+  auto tileset =
+      std::make_shared<core::tileset>(gid, absolutePath, tileWidth, tileHeight);
+
+  tileset->set_name(object.value(u"name").toString());
+  tileset->set_path(absolutePath);
+
+  document->add_tileset(document->next_tileset_id(), std::move(tileset));
+  document->increment_next_tileset_id();
+}
+
 void add_tilesets(core::map_document* document,
                   const QFileInfo& path,
                   const QJsonArray& tilesets)
 {
-  // TODO support external tilesets
-
-  tileset_id id{1};
   for (const auto& elem : tilesets) {
     const auto object = elem.toObject();
 
     const tile_id gid{object.value(u"firstgid").toInt()};
-    const tile_width tileWidth{object.value(u"tilewidth").toInt()};
-    const tile_height tileHeight{object.value(u"tileheight").toInt()};
 
-    const auto relativePath = object.value(u"image").toString();
-    const auto absolutePath = path.dir().absoluteFilePath(relativePath);
-
-    auto tileset = std::make_shared<core::tileset>(
-        gid, absolutePath, tileWidth, tileHeight);
-
-    tileset->set_name(object.value(u"name").toString());
-    tileset->set_path(absolutePath);
-
-    document->add_tileset(id, std::move(tileset));
-    ++id;
+    if (object.contains(u"source")) {
+      const auto source = object.value(u"source").toString();
+      const auto external =
+          json::from_file(path.dir().absoluteFilePath(source));
+      add_tileset_common(document, external.object(), path, gid);
+    } else {
+      add_tileset_common(document, object, path, gid);
+    }
   }
 }
 
@@ -84,20 +98,10 @@ auto open_json_map(const QFileInfo& path) -> core::map_document*
 {
   Q_ASSERT(path.exists());
 
-  QFile file{path.absoluteFilePath()};
-  file.open(QFile::ReadOnly | QFile::Text);
-
-  auto json = QJsonDocument::fromJson(file.readAll());
-
-  if (json.isNull()) {
-    throw tactile_error{"Failed to open JSON map file!"};
-  }
-
-  file.close();
-
+  const auto json = json::from_file(path.absoluteFilePath());
   const auto root = json.object();
-  auto* document = new core::map_document{};
 
+  auto* document = new core::map_document{};
   document->set_next_layer_id(layer_id{root.value(u"nextlayerid").toInt(1)});
 
   add_tilesets(document, path, root.value(u"tilesets").toArray());

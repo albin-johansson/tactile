@@ -161,6 +161,8 @@ set(TACTILE_SOURCE_FILES
         parse/string_utils.hpp
         parse/xml_utils.hpp
         parse/xml_utils.cpp
+        parse/json_utils.cpp
+        parse/json_utils.hpp
 
         tool/tool_id.hpp
         tool/tool_model.cpp
