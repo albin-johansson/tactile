@@ -53,6 +53,10 @@ class map_view final : public QGraphicsView
 
   void mouse_exited(QEvent* event);
 
+  void increase_zoom();
+
+  void decrease_zoom();
+
  protected:
   void mousePressEvent(QMouseEvent* event) override;
 
@@ -64,8 +68,15 @@ class map_view final : public QGraphicsView
 
   void leaveEvent(QEvent* event) override;
 
+  void keyPressEvent(QKeyEvent* event) override;
+
+  void keyReleaseEvent(QKeyEvent* event) override;
+
+  void wheelEvent(QWheelEvent* event) override;
+
  private:
   QPoint m_lastMousePos{};
+  bool m_canZoom{};
 
   [[nodiscard]] auto get_map_scene() -> map_scene*;
 

@@ -67,6 +67,16 @@ void map_editor::init_connections()
           &map_tab_widget::mouse_exited,
           this,
           &map_editor::mouse_exited);
+
+  connect(m_mapTabWidget,
+          &map_tab_widget::increase_zoom,
+          this,
+          &map_editor::increase_zoom);
+
+  connect(m_mapTabWidget,
+          &map_tab_widget::decrease_zoom,
+          this,
+          &map_editor::decrease_zoom);
 }
 
 void map_editor::enable_stamp_preview(const core::position& position)

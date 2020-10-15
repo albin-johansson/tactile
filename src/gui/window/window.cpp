@@ -94,6 +94,14 @@ void window::init_connections()
   connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
   connect(m_editor, &map_editor::mouse_entered, this, &window::mouse_entered);
   connect(m_editor, &map_editor::mouse_exited, this, &window::mouse_exited);
+  connect(m_editor,
+          &map_editor::increase_zoom,
+          this,
+          &window::request_increase_tile_size);
+  connect(m_editor,
+          &map_editor::decrease_zoom,
+          this,
+          &window::request_decrease_tile_size);
 
   connect(m_tilesetDock,
           &tileset_dock::ui_requested_tileset,

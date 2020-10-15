@@ -93,6 +93,10 @@ class map_editor final : public QWidget
 
   void mouse_exited(QEvent* event);
 
+  void increase_zoom();
+
+  void decrease_zoom();
+
   void theme_changed();
 
  private:

@@ -121,6 +121,10 @@ class map_tab_widget final : public QTabWidget
 
   void mouse_exited(QEvent* event);
 
+  void increase_zoom();
+
+  void decrease_zoom();
+
  public slots:
   void theme_changed();
 

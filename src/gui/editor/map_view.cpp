@@ -115,4 +115,49 @@ void map_view::leaveEvent(QEvent* event)
   emit mouse_exited(event);
 }
 
+void map_view::keyPressEvent(QKeyEvent* event)
+{
+  QGraphicsView::keyPressEvent(event);
+
+  if (event->modifiers() & Qt::CTRL) {
+    m_canZoom = true;
+  }
+}
+
+void map_view::keyReleaseEvent(QKeyEvent* event)
+{
+  QGraphicsView::keyReleaseEvent(event);
+
+  if (event->modifiers() & Qt::CTRL) {
+    m_canZoom = false;
+  }
+}
+
+void map_view::wheelEvent(QWheelEvent* event)
+{
+  QGraphicsView::wheelEvent(event);
+
+  if (m_canZoom) {
+    const auto pixels = event->pixelDelta();
+    const auto degrees = event->angleDelta() / 8;
+
+    if (!pixels.isNull()) {
+      if (pixels.y() > 0) {
+        emit increase_zoom();
+      } else {
+        emit decrease_zoom();
+      }
+    } else if (!degrees.isNull()) {
+      const auto numSteps = degrees / 15;
+      if (numSteps.y() > 0) {
+        emit increase_zoom();
+      } else {
+        emit decrease_zoom();
+      }
+    }
+
+    event->accept();
+  }
+}
+
 }  // namespace tactile::gui

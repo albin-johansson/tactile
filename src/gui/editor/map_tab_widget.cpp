@@ -71,6 +71,8 @@ void map_tab_widget::add_map_tab(core::map_document* map,
       view, &map_view::mouse_released, this, &map_tab_widget::mouse_released);
   connect(view, &map_view::mouse_entered, this, &map_tab_widget::mouse_entered);
   connect(view, &map_view::mouse_exited, this, &map_tab_widget::mouse_exited);
+  connect(view, &map_view::increase_zoom, this, &map_tab_widget::increase_zoom);
+  connect(view, &map_view::decrease_zoom, this, &map_tab_widget::decrease_zoom);
 
   addTab(view, title + QString::number(id.get()));
 }
