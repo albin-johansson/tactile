@@ -16,7 +16,6 @@ The following bullet points describe the goals that guide the design and develop
 
 ## Implemented features
 
-* Easy to use but more importantly, easy to learn.
 * Work on multiple maps simultaneously.
 * Support for multiple layers.
 * Support for both embedded and external tilesets.
