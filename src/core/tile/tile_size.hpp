@@ -68,7 +68,7 @@ class tile_size final
    */
   [[nodiscard]] constexpr static auto default_size() noexcept -> int
   {
-    return 50;
+    return 100;
   }
 
   /**
