@@ -62,7 +62,7 @@ class map_item final : public QGraphicsItem
   core::map_document* m_map{};
   std::optional<core::position> m_mousePosition;
 
-  inline constexpr static double m_previewOpacity{0.5};
+  inline constexpr static qreal m_previewOpacity{0.5};
 
   [[nodiscard]] auto make_settings(const QRectF& exposed, int tileSize)
       -> render_settings;
