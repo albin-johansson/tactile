@@ -109,6 +109,7 @@ void map_document::add_tileset(const QImage& image,
 
     // This will cause an `added_tileset` signal to be emitted
     m_commands->push<cmd::add_tileset>(this, std::move(ts), id);
+    m_tilesets->increment_next_tileset_id();
   }
 }
 
