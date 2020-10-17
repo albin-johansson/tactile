@@ -182,6 +182,7 @@ set(TACTILE_SOURCE_FILES
         util/set_style_sheet.cpp
         util/setup_app.hpp
         util/setup_app.cpp
+        util/connection_utils.hpp
 
         service/save/save_tmx.cpp
         service/save/save_tmx.hpp
@@ -197,9 +198,7 @@ set(TACTILE_SOURCE_FILES
         service/open/open_json.cpp
         service/open/open_json.hpp
         service/open/open_tmx.cpp
-        service/open/open_tmx.hpp
-
-        gui/connection_utils.hpp)
+        service/open/open_tmx.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
