@@ -123,5 +123,7 @@
     <file>resources/icons/icons8/color/64/data-grid.png</file>
     <file>resources/icons/icons8/color/64/remove.png</file>
     <file>resources/icons/icons8/color/64/new-copy.png</file>
+    <file>resources/icons/icons8/color/64/visible.png</file>
+    <file>resources/icons/icons8/color/64/invisible.png</file>
   </qresource>
 </RCC>
