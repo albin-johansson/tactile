@@ -260,7 +260,6 @@ void window::switched_map(map_id id, const core::map_document& document)
 void window::center_map()
 {
   m_editor->center_viewport();
-  force_redraw();
 }
 
 void window::set_actions_enabled(bool enabled)
@@ -297,7 +296,6 @@ void window::set_actions_enabled(bool enabled)
 void window::handle_move_camera(int dx, int dy)
 {
   m_editor->move_map(dx, dy);
-//  force_redraw();
 }
 
 void window::force_redraw()
