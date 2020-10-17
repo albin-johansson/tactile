@@ -125,5 +125,7 @@
     <file>resources/icons/icons8/color/64/new-copy.png</file>
     <file>resources/icons/icons8/color/64/visible.png</file>
     <file>resources/icons/icons8/color/64/invisible.png</file>
+    <file>resources/icons/icons8/color/64/up.png</file>
+    <file>resources/icons/icons8/color/64/down.png</file>
   </qresource>
 </RCC>
