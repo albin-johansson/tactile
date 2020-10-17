@@ -177,6 +177,11 @@ void map_document::reset_tile_size()
   m_map->reset_tile_size();
 }
 
+void map_document::set_layer_visibility(bool visible)
+{
+  m_map->set_visibility(current_layer_id().value(), visible);
+}
+
 auto map_document::can_undo() const -> bool
 {
   return m_commands->canUndo();

@@ -75,6 +75,7 @@ app_connections::app_connections(app* app)
   window_to_model(&win::ui_requested_new_layer,     &mod::add_layer);
   window_to_model(&win::ui_requested_remove_layer,  &mod::remove_layer);
   window_to_model(&win::ui_selected_layer,          &mod::select_layer);
+  window_to_model(&win::ui_set_layer_visibility,    &mod::set_layer_visibility);
 
   window_to_app(&win::request_resize_map,        &app::handle_resize_map);
   window_to_app(&win::request_pan_up,            &app::handle_pan_up);

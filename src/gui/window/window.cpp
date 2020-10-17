@@ -138,6 +138,10 @@ void window::init_connections()
           &layer_dock::ui_selected_layer,
           this,
           &window::ui_selected_layer);
+  connect(m_layerDock,
+          &layer_dock::ui_set_layer_visibility,
+          this,
+          &window::ui_set_layer_visibility);
 }
 
 void window::enter_no_content_view()

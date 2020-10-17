@@ -15,15 +15,13 @@ layer_widget::layer_widget(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  connect(m_ui->newLayerButton,
-          &QPushButton::pressed,
-          this,
-          &layer_widget::ui_requested_new_layer);
+  // clang-format off
 
-  connect(m_ui->removeLayerButton,
-          &QPushButton::pressed,
-          this,
-          &layer_widget::ui_requested_remove_layer);
+  connect(m_ui->newLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_new_layer);
+  connect(m_ui->removeLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_remove_layer);
+  connect(m_ui->visibleButton, &QPushButton::toggled, this, &layer_widget::ui_set_layer_visibility);
+
+  // clang-format on
 
   connect(m_ui->layerList,
           &QListWidget::currentItemChanged,
@@ -45,18 +43,46 @@ layer_widget::layer_widget(QWidget* parent)
 
 void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
 {
+  static const QIcon close{
+      QStringLiteral(u":resources/icons/icons8/color/64/remove.png")};
+  static const QIcon up{
+      QStringLiteral(u":resources/icons/icons8/color/64/up.png")};
+  static const QIcon down{
+      QStringLiteral(u":resources/icons/icons8/color/64/down.png")};
+  static const QIcon eye{
+      QStringLiteral(u":resources/icons/icons8/color/64/visible.png")};
+  
+  Q_ASSERT(!close.isNull());
+  Q_ASSERT(!up.isNull());
+  Q_ASSERT(!down.isNull());
+  Q_ASSERT(!eye.isNull());
+
   if (m_ui->layerList->itemAt(pos)) {
     QMenu menu{this};
 
     QAction remove{tr("Remove layer"), this};
+    remove.setIcon(close);
     remove.setEnabled(m_ui->layerList->count() > 1);
     connect(&remove, &QAction::triggered, [this](bool checked) {
       emit ui_requested_remove_layer();
     });
 
     QAction toggleVisibility{tr("Toggle visibility"), this};
+    toggleVisibility.setIcon(eye);
+    connect(&toggleVisibility, &QAction::triggered, [this] {
+      m_ui->visibleButton->toggle();
+    });
+
+    QAction moveUp{tr("Move layer up"), this};
+    moveUp.setIcon(up);
+
+    QAction moveDown{tr("Move layer down"), this};
+    moveDown.setIcon(down);
 
     menu.addAction(&toggleVisibility);
+    menu.addAction(menu.addSeparator());
+    menu.addAction(&moveUp);
+    menu.addAction(&moveDown);
     menu.addAction(menu.addSeparator());
     menu.addAction(&remove);
 

@@ -24,6 +24,8 @@ class layer_dock final : public QDockWidget
 
   void ui_selected_layer(layer_id id);
 
+  void ui_set_layer_visibility(bool visible);
+
  public slots:
   void added_layer(layer_id id, const core::layer& layer)
   {

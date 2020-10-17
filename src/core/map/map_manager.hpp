@@ -33,6 +33,8 @@ class map_manager final : public QObject
 
   void select_tileset(tileset_id id);
 
+  void set_layer_visibility(bool visible);
+
   void update_tileset_selection(position topLeft, position bottomRight);
 
   [[nodiscard]] auto has_active_map() const noexcept -> bool;

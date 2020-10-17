@@ -107,6 +107,13 @@ void map_manager::select_tileset(tileset_id id)
   }
 }
 
+void map_manager::set_layer_visibility(bool visible)
+{
+  if (auto* document = current_document()) {
+    document->set_layer_visibility(visible);
+  }
+}
+
 void map_manager::update_tileset_selection(position topLeft,
                                            position bottomRight)
 {

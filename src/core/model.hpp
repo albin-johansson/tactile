@@ -197,6 +197,12 @@ class model final : public QObject
     m_maps->select_tileset(id);
   }
 
+  void set_layer_visibility(bool visible)
+  {
+    m_maps->set_layer_visibility(visible);
+    emit redraw();
+  }
+
   /**
    * @brief Increases the tile size that is being used by the currently active
    * map.

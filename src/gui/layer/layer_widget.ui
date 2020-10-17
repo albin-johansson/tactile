@@ -76,7 +76,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/arrow-up.png</normaloff>:/resources/icons/icons8/color/64/arrow-up.png</iconset>
+           <normaloff>:/resources/icons/icons8/color/64/up.png</normaloff>:/resources/icons/icons8/color/64/up.png</iconset>
          </property>
         </widget>
        </item>
@@ -90,7 +90,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/arrow-down.png</normaloff>:/resources/icons/icons8/color/64/arrow-down.png</iconset>
+           <normaloff>:/resources/icons/icons8/color/64/down.png</normaloff>:/resources/icons/icons8/color/64/down.png</iconset>
          </property>
         </widget>
        </item>
@@ -125,7 +125,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QPushButton" name="visibleButton">
+        <widget class="QRadioButton" name="visibleButton">
          <property name="toolTip">
           <string>Toggle visibility</string>
          </property>
@@ -134,25 +134,13 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/invisible.png</normaloff>
-           <normalon>:/resources/icons/icons8/color/64/visible.png</normalon>
-           <disabledoff>:/resources/icons/icons8/color/64/invisible.png</disabledoff>
-           <activeoff>:/resources/icons/icons8/color/64/invisible.png</activeoff>
-           <activeon>:/resources/icons/icons8/color/64/visible.png</activeon>
-           <selectedoff>:/resources/icons/icons8/color/64/invisible.png</selectedoff>
-           <selectedon>:/resources/icons/icons8/color/64/visible.png</selectedon>:/resources/icons/icons8/color/64/invisible.png</iconset>
+           <normaloff>:/resources/icons/icons8/color/64/visible.png</normaloff>:/resources/icons/icons8/color/64/visible.png</iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>
          </property>
          <property name="checked">
           <bool>true</bool>
-         </property>
-         <property name="default">
-          <bool>false</bool>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
          </property>
         </widget>
        </item>

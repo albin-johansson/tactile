@@ -25,6 +25,10 @@ layer_dock::layer_dock(QWidget* parent)
           &layer_widget::ui_selected_layer,
           this,
           &layer_dock::ui_selected_layer);
+  connect(m_widget,
+          &layer_widget::ui_set_layer_visibility,
+          this,
+          &layer_dock::ui_set_layer_visibility);
 }
 
 }  // namespace tactile::gui
