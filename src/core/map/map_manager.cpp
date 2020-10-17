@@ -39,6 +39,9 @@ auto map_manager::add(map_document* document) -> map_id
   bind(&map_document::redo_text_updated, &map_manager::redo_text_updated);
   bind(&map_document::added_tileset, &map_manager::added_tileset);
   bind(&map_document::removed_tileset, &map_manager::removed_tileset);
+  bind(&map_document::added_layer, &map_manager::added_layer);
+  bind(&map_document::removed_layer, &map_manager::removed_layer);
+  bind(&map_document::selected_layer, &map_manager::selected_layer);
 
   m_mapDocuments.emplace(id, document);
   m_currentMapID = id;

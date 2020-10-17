@@ -11,6 +11,7 @@ namespace tactile::core {
 map::map(row_t nRows, col_t nCols)
 {
   m_layers.reserve(5);
+
   m_layers.emplace(m_nextLayer, at_least(nRows, 1_row), at_least(nCols, 1_col));
   m_activeLayer = m_nextLayer;
   ++m_nextLayer;
@@ -41,6 +42,14 @@ void map::remove_layers()
   m_activeLayer.reset();
 }
 
+void map::remove_layer()
+{
+  if (m_activeLayer) {
+    m_layers.erase(*m_activeLayer);
+    m_activeLayer.reset();
+  }
+}
+
 void map::select_layer(layer_id id) noexcept
 {
   if (has_layer(id)) {
@@ -48,10 +57,19 @@ void map::select_layer(layer_id id) noexcept
   }
 }
 
-void map::add_layer()
+auto map::add_layer() -> layer_id
 {
-  m_layers.emplace(m_nextLayer, row_count(), col_count());
+  const auto id = m_nextLayer;
+
+  if (!m_activeLayer) {
+    m_layers.emplace(id, 5_row, 5_col);
+  } else {
+    m_layers.emplace(id, row_count(), col_count());
+  }
+
   ++m_nextLayer;
+
+  return id;
 }
 
 void map::add_layer(layer_id id, layer&& layer)

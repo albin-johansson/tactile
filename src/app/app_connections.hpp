@@ -28,14 +28,12 @@ class app_connections final
   explicit app_connections(app* app);
 
  private:
-  core::model* m_core;
+  core::model* m_model;
   gui::window* m_window;
 
-  void init_map_connections(app* app) noexcept;
+  void from_model();
 
-  void init_camera_connections(app* app) noexcept;
-
-  void init_command_connections(app* app) noexcept;
+  void from_window();
 };
 
 }  // namespace tactile

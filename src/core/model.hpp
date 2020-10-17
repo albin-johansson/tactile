@@ -115,22 +115,21 @@ class model final : public QObject
  signals:
   void redraw();
 
-  void switched_map(map_id id);
+  void switched_map(map_id id, const map_document& document);
+
+  void added_layer(layer_id id, const layer& layer);
+  void selected_layer(layer_id id, const layer& layer);
+  void removed_layer(layer_id id);
 
   void disable_stamp_preview();
-
   void enable_stamp_preview(const position& position);
 
   void undo_state_updated(bool canUndo);
-
   void redo_state_updated(bool canRedo);
-
   void undo_text_updated(const QString& text);
-
   void redo_text_updated(const QString& text);
 
   void added_tileset(map_id map, tileset_id id, const tileset& tileset);
-
   void removed_tileset(map_id map, tileset_id id);
 
  public slots:
@@ -165,6 +164,10 @@ class model final : public QObject
    * @since 0.1.0
    */
   void remove_col();
+
+  void add_layer();
+
+  void remove_layer();
 
   /**
    * @brief Selects the tile layer associated with the specified index.

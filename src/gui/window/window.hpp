@@ -5,6 +5,7 @@
 #include <QString>
 #include <QWidget>
 
+#include "layer_dock.hpp"
 #include "map_document.hpp"
 #include "map_editor.hpp"
 #include "position.hpp"
@@ -64,62 +65,49 @@ class window final : public QMainWindow
 
  signals:
   void save_as(const QString& path);
-
   void open_map(const QString& path);
 
   void request_new_map();
-
   void request_close_map(map_id id);
 
   void request_undo();
-
   void request_redo();
 
   void request_add_row();
-
   void request_add_col();
 
   void request_remove_row();
-
   void request_remove_col();
-
-  void request_new_tileset();
 
   void select_tool(tool_id tool);
 
+  void ui_requested_new_layer();
+  void ui_requested_remove_layer();
+  void ui_selected_layer(layer_id id);
+
+  void request_new_tileset();
   void ui_removed_tileset(tileset_id id);
-
   void selected_tileset(tileset_id id);
-
   void tileset_selection_changed(core::position topLeft,
                                  core::position bottomRight);
 
   void request_resize_map();
 
   void request_increase_tile_size();
-
   void request_decrease_tile_size();
-
   void request_reset_tile_size();
 
   void request_pan_right();
-
   void request_pan_down();
-
   void request_pan_left();
-
   void request_pan_up();
 
   void request_select_map(map_id id);
 
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
-
   void mouse_moved(QMouseEvent* event, QPointF mapPosition);
-
   void mouse_released(QMouseEvent* event, QPointF mapPosition);
-
   void mouse_entered(QEvent* event);
-
   void mouse_exited(QEvent* event);
 
  public slots:
@@ -137,13 +125,12 @@ class window final : public QMainWindow
 
   void handle_removed_tileset(map_id map, tileset_id id);
 
-  void switched_map(map_id map);
+  void handle_selected_layer(layer_id id, const core::layer& layer);
+  void handle_added_layer(layer_id id, const core::layer& layer);
+  void handle_removed_layer(layer_id id);
 
-  /**
-   * @brief Triggers a redraw of the editor pane.
-   *
-   * @since 0.1.0
-   */
+  void switched_map(map_id map, const core::map_document& document);
+
   void handle_draw();
 
   void enable_stamp_preview(const core::position& position);
@@ -161,6 +148,7 @@ class window final : public QMainWindow
   Ui::window* m_ui{};
   map_editor* m_editor{};
   tool_dock* m_toolDock{};
+  layer_dock* m_layerDock{};
   tileset_dock* m_tilesetDock{};
   QActionGroup* m_toolGroup{};
 

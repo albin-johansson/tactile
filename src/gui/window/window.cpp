@@ -21,11 +21,15 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 
   m_editor = new map_editor{this};
   m_toolDock = new tool_dock{this};
+  m_layerDock = new layer_dock{this};
   m_tilesetDock = new tileset_dock{this};
 
   setCentralWidget(m_editor);
   addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);
+
+  // FIXME order doesn't seem to matter?
   addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
+  addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
 
   init_connections();
   init_layout();
@@ -78,17 +82,19 @@ void window::init_connections()
           &QDockWidget::visibilityChanged,
           m_ui->action_mouse_tools_visibility,
           &QAction::setChecked);
-
   connect(m_tilesetDock,
           &QDockWidget::visibilityChanged,
           m_ui->action_tilesets_visibility,
+          &QAction::setChecked);
+  connect(m_layerDock,
+          &QDockWidget::visibilityChanged,
+          m_ui->actionLayersVisibility,
           &QAction::setChecked);
 
   connect(m_editor,
           &map_editor::request_select_tab,
           this,
           &window::request_select_map);
-
   connect(m_editor, &map_editor::mouse_pressed, this, &window::mouse_pressed);
   connect(m_editor, &map_editor::mouse_moved, this, &window::mouse_moved);
   connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
@@ -119,6 +125,19 @@ void window::init_connections()
           &tileset_dock::tileset_selection_changed,
           this,
           &window::tileset_selection_changed);
+
+  connect(m_layerDock,
+          &layer_dock::ui_requested_new_layer,
+          this,
+          &window::ui_requested_new_layer);
+  connect(m_layerDock,
+          &layer_dock::ui_requested_remove_layer,
+          this,
+          &window::ui_requested_remove_layer);
+  connect(m_layerDock,
+          &layer_dock::ui_selected_layer,
+          this,
+          &window::ui_selected_layer);
 }
 
 void window::enter_no_content_view()
@@ -159,17 +178,22 @@ void window::reset_dock_layout()
 
   addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
   m_tilesetDock->show();
+
+  addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
+  m_layerDock->show();
 }
 
 void window::hide_all_docks()
 {
   m_toolDock->close();
+  m_layerDock->close();
   m_tilesetDock->close();
 }
 
 void window::show_all_docks()
 {
   m_toolDock->show();
+  m_layerDock->show();
   m_tilesetDock->show();
 }
 
@@ -205,14 +229,30 @@ void window::handle_add_tileset(map_id map,
   m_tilesetDock->added_tileset(map, id, tileset);
 }
 
-void window::handle_removed_tileset(map_id map, tileset_id id)
+void window::handle_removed_tileset(map_id, tileset_id id)  // FIXME ?
 {
   m_tilesetDock->removed_tileset(id);
 }
 
-void window::switched_map(map_id map)
+void window::handle_selected_layer(layer_id id, const core::layer& layer)
 {
-  m_tilesetDock->selected_map(map);
+  m_layerDock->selected_layer(id, layer);
+}
+
+void window::handle_added_layer(layer_id id, const core::layer& layer)
+{
+  m_layerDock->added_layer(id, layer);
+}
+
+void window::handle_removed_layer(layer_id id)
+{
+  m_layerDock->removed_layer(id);
+}
+
+void window::switched_map(map_id id, const core::map_document& document)
+{
+  m_tilesetDock->selected_map(id);
+  m_layerDock->selected_map(document);
 }
 
 void window::center_map()

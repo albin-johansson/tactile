@@ -71,16 +71,16 @@ class map_manager final : public QObject
 
  signals:
   void undo_state_updated(bool canUndo);
-
   void redo_state_updated(bool canRedo);
-
   void undo_text_updated(const QString& text);
-
   void redo_text_updated(const QString& text);
 
   void added_tileset(tileset_id id);
-
   void removed_tileset(tileset_id id);
+
+  void added_layer(layer_id id, const layer& layer);
+  void selected_layer(layer_id id, const layer& layer);
+  void removed_layer(layer_id id);
 
  public slots:
   void ui_added_tileset(const QImage& image,

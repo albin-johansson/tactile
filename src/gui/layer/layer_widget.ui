@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>layer_widget</class>
+ <widget class="QWidget" name="layer_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>401</width>
+    <height>292</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="buttonLayout">
+       <item>
+        <widget class="QPushButton" name="newLayerButton">
+         <property name="toolTip">
+          <string>Add layer</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/add.png</normaloff>:/resources/icons/icons8/color/64/add.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removeLayerButton">
+         <property name="toolTip">
+          <string>Remove layer</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/remove.png</normaloff>:/resources/icons/icons8/color/64/remove.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="duplicateButton">
+         <property name="toolTip">
+          <string>Duplicate layer</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/new-copy.png</normaloff>:/resources/icons/icons8/color/64/new-copy.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="upButton">
+         <property name="toolTip">
+          <string>Move layer up</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/arrow-up.png</normaloff>:/resources/icons/icons8/color/64/arrow-up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="downButton">
+         <property name="toolTip">
+          <string>Move layer down</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/arrow-down.png</normaloff>:/resources/icons/icons8/color/64/arrow-down.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="bottomLayout">
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="visibleButton">
+         <property name="toolTip">
+          <string>Toggle visibility</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/invisible.png</normaloff>
+           <normalon>:/resources/icons/icons8/color/64/visible.png</normalon>
+           <disabledoff>:/resources/icons/icons8/color/64/invisible.png</disabledoff>
+           <activeoff>:/resources/icons/icons8/color/64/invisible.png</activeoff>
+           <activeon>:/resources/icons/icons8/color/64/visible.png</activeon>
+           <selectedoff>:/resources/icons/icons8/color/64/invisible.png</selectedoff>
+           <selectedon>:/resources/icons/icons8/color/64/visible.png</selectedon>:/resources/icons/icons8/color/64/invisible.png</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+         <property name="default">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QDoubleSpinBox" name="opacitySpinBox">
+         <property name="toolTip">
+          <string>Layer opacity</string>
+         </property>
+         <property name="showGroupSeparator" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="maximum">
+          <double>1.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <widget class="QListWidget" name="layerList">
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../tactile.qrc"/>
+ </resources>
+ <connections/>
+</ui>

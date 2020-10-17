@@ -143,6 +143,7 @@
      <addaction name="separator"/>
      <addaction name="action_mouse_tools_visibility"/>
      <addaction name="action_tilesets_visibility"/>
+     <addaction name="actionLayersVisibility"/>
     </widget>
     <addaction name="menuAppearance"/>
     <addaction name="separator"/>
@@ -858,6 +859,9 @@
    <property name="checkable">
     <bool>true</bool>
    </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset>
      <selectedoff>:/resources/icons/icons8/color/64/unchecked.png</selectedoff>
@@ -892,6 +896,22 @@
    </property>
    <property name="text">
     <string>About Qt...</string>
+   </property>
+  </action>
+  <action name="actionLayersVisibility">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/unchecked.png</normaloff>
+     <normalon>:/resources/icons/icons8/color/64/checked.png</normalon>:/resources/icons/icons8/color/64/unchecked.png</iconset>
+   </property>
+   <property name="text">
+    <string>Layers</string>
    </property>
   </action>
  </widget>

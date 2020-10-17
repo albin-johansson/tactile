@@ -14,11 +14,14 @@ model::model() : m_maps{new map_manager{this}}, m_tools{this}
           &map_manager::redo_state_updated,
           this,
           &model::redo_state_updated);
-
   connect(
       m_maps, &map_manager::undo_text_updated, this, &model::undo_text_updated);
   connect(
       m_maps, &map_manager::redo_text_updated, this, &model::redo_text_updated);
+
+  connect(m_maps, &map_manager::added_layer, this, &model::added_layer);
+  connect(m_maps, &map_manager::removed_layer, this, &model::removed_layer);
+  connect(m_maps, &map_manager::selected_layer, this, &model::selected_layer);
 
   connect(m_maps, &map_manager::added_tileset, [this](tileset_id id) {
     const auto& tileset = current_document()->tilesets()->at(id);
@@ -86,6 +89,20 @@ void model::remove_col()
   }
 }
 
+void model::add_layer()
+{
+  if (auto* document = current_document()) {
+    document->add_layer();
+  }
+}
+
+void model::remove_layer()
+{
+  if (auto* document = current_document()) {
+    document->remove_layer();
+  }
+}
+
 void model::select_layer(layer_id id)
 {
   if (auto* document = current_document()) {
@@ -121,7 +138,11 @@ void model::reset_tile_size()
 void model::ui_selected_map(map_id id)
 {
   m_maps->select(id);
-  emit switched_map(id);
+
+  auto* document = m_maps->at(id);
+  Q_ASSERT(document);
+
+  emit switched_map(id, *document);
 }
 
 void model::ui_removed_tileset(tileset_id id)

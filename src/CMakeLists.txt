@@ -82,6 +82,14 @@ set(TACTILE_SOURCE_FILES
         gui/tileset/tileset_dock.cpp
         gui/tileset/tileset_dock.hpp
 
+        gui/layer/layer_dock.cpp
+        gui/layer/layer_dock.hpp
+        gui/layer/layer_widget.cpp
+        gui/layer/layer_widget.hpp
+        gui/layer/layer_widget.ui
+        gui/layer/layer_item.cpp
+        gui/layer/layer_item.hpp
+
         gui/about/about_dialog.cpp
         gui/about/about_dialog.hpp
 
@@ -221,6 +229,7 @@ target_include_directories(libTactile
         PUBLIC gui/editor
         PUBLIC gui/theme
         PUBLIC gui/tileset
+        PUBLIC gui/layer
         PUBLIC gui/window
         PUBLIC gui/util
         PUBLIC gui/tools

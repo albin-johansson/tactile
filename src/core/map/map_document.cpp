@@ -1,5 +1,7 @@
 #include "map_document.hpp"
 
+#include <qdebug.h>
+
 #include "add_col.hpp"
 #include "add_row.hpp"
 #include "add_tileset.hpp"
@@ -10,8 +12,6 @@
 #include "remove_tileset.hpp"
 #include "resize_map.hpp"
 #include "stamp_sequence.hpp"
-
-#include <qdebug.h>
 
 namespace tactile::core {
 
@@ -159,6 +159,7 @@ void map_document::set_selection(position topLeft, position bottomRight)
 void map_document::select_layer(layer_id id)
 {
   m_map->select_layer(id);
+  emit selected_layer(id, m_map->get_layer(id));
 }
 
 void map_document::increase_tile_size()

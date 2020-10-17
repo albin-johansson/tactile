@@ -199,6 +199,21 @@ class map_document final : public QObject
   void add_layer(layer_id id, layer&& layer)
   {
     m_map->add_layer(id, std::move(layer));
+    emit added_layer(id, m_map->get_layer(id));
+  }
+
+  void add_layer()
+  {
+    const auto id = m_map->add_layer();
+    emit added_layer(id, m_map->get_layer(id));
+  }
+
+  void remove_layer()
+  {
+    if (const auto id = m_map->active_layer_id(); id) {
+      m_map->remove_layer();
+      emit removed_layer(*id);
+    }
   }
 
   /**
@@ -207,6 +222,7 @@ class map_document final : public QObject
   void remove_layers()
   {
     m_map->remove_layers();
+    // TODO signal?
   }
 
   /**
@@ -401,18 +417,24 @@ class map_document final : public QObject
     return m_tilesets.get();
   }
 
+  [[nodiscard]] auto current_layer_id() const noexcept
+      -> std::optional<layer_id>
+  {
+    return m_map->active_layer_id();
+  }
+
  signals:
   void undo_state_updated(bool canUndo);
-
   void redo_state_updated(bool canRedo);
-
   void undo_text_updated(const QString& text);
-
   void redo_text_updated(const QString& text);
 
   void added_tileset(tileset_id id);
-
   void removed_tileset(tileset_id id);
+
+  void added_layer(layer_id id, const layer& layer);
+  void selected_layer(layer_id id, const layer& layer);
+  void removed_layer(layer_id id);  // TODO
 
  public slots:
   void add_tileset(const QImage& image,

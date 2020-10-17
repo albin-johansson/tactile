@@ -94,6 +94,18 @@ class map final
   void remove_layers();
 
   /**
+   * @brief Removes the currently active layer from the map.
+   *
+   * @note This function has no effect if there is no active layer.
+   *
+   * @warning If there is an active layer, then it will be removed but no other
+   * layer will be made active.
+   *
+   * @since 0.1.0
+   */
+  void remove_layer();
+
+  /**
    * @brief Selects the tile layer associated with the specified ID.
    *
    * @note This method has no effect if the supplied ID is invalid.
@@ -109,7 +121,7 @@ class map final
    *
    * @since 0.1.0
    */
-  void add_layer();
+  auto add_layer() -> layer_id;
 
   /**
    * @brief Adds a layer to the map.
