@@ -25,55 +25,67 @@ app_connections::app_connections(app* app)
   using win = window;
   using mod = model;
 
+  const auto model_to_window = [=](auto&& sender, auto&& receiver) {
+    connect(m_model, sender, m_window, receiver);
+  };
+
+  const auto window_to_model = [=](auto&& sender, auto&& receiver) {
+    connect(m_window, sender, m_model, receiver);
+  };
+
+  const auto window_to_app = [=](auto&& sender, auto&& receiver) {
+    connect(m_window, sender, app, receiver);
+  };
+
   // clang-format off
 
-  connect(m_model, &mod::redraw,                m_window, &win::handle_draw);
-  connect(m_model, &mod::enable_stamp_preview,  m_window, &win::enable_stamp_preview);
-  connect(m_model, &mod::disable_stamp_preview, m_window, &win::disable_stamp_preview);
-  connect(m_model, &mod::undo_state_updated,    m_window, &win::handle_undo_state_update);
-  connect(m_model, &mod::redo_state_updated,    m_window, &win::handle_redo_state_update);
-  connect(m_model, &mod::undo_text_updated,     m_window, &win::handle_undo_text_update);
-  connect(m_model, &mod::redo_text_updated,     m_window, &win::handle_redo_text_update);
-  connect(m_model, &mod::switched_map,          m_window, &win::switched_map);
-  connect(m_model, &mod::added_tileset,         m_window, &win::handle_add_tileset);
-  connect(m_model, &mod::removed_tileset,       m_window, &win::handle_removed_tileset);
-  connect(m_model, &mod::added_layer,           m_window, &win::handle_added_layer);
-  connect(m_model, &mod::removed_layer,         m_window, &win::handle_removed_layer);
-  connect(m_model, &mod::selected_layer,        m_window, &win::handle_selected_layer);
+  model_to_window(&mod::redraw,                &win::handle_draw);
+  model_to_window(&mod::enable_stamp_preview,  &win::enable_stamp_preview);
+  model_to_window(&mod::disable_stamp_preview, &win::disable_stamp_preview);
+  model_to_window(&mod::undo_state_updated,    &win::handle_undo_state_update);
+  model_to_window(&mod::redo_state_updated,    &win::handle_redo_state_update);
+  model_to_window(&mod::undo_text_updated,     &win::handle_undo_text_update);
+  model_to_window(&mod::redo_text_updated,     &win::handle_redo_text_update);
+  model_to_window(&mod::switched_map,          &win::switched_map);
+  model_to_window(&mod::added_tileset,         &win::handle_add_tileset);
+  model_to_window(&mod::removed_tileset,       &win::handle_removed_tileset);
+  model_to_window(&mod::added_layer,           &win::handle_added_layer);
+  model_to_window(&mod::removed_layer,         &win::handle_removed_layer);
+  model_to_window(&mod::selected_layer,        &win::handle_selected_layer);
 
-  connect(m_window, &win::request_undo,               m_model, &mod::undo);
-  connect(m_window, &win::request_redo,               m_model, &mod::redo);
-  connect(m_window, &win::request_add_row,            m_model, &mod::add_row);
-  connect(m_window, &win::request_add_col,            m_model, &mod::add_col);
-  connect(m_window, &win::request_remove_row,         m_model, &mod::remove_row);
-  connect(m_window, &win::request_remove_col,         m_model, &mod::remove_col);
-  connect(m_window, &win::request_close_map,          m_model, &mod::close_map);
-  connect(m_window, &win::request_select_map,         m_model, &mod::ui_selected_map);
-  connect(m_window, &win::mouse_pressed,              m_model, &mod::mouse_pressed);
-  connect(m_window, &win::mouse_moved,                m_model, &mod::mouse_moved);
-  connect(m_window, &win::mouse_released,             m_model, &mod::mouse_released);
-  connect(m_window, &win::mouse_entered,              m_model, &mod::mouse_entered);
-  connect(m_window, &win::mouse_exited,               m_model, &mod::mouse_exited);
-  connect(m_window, &win::request_increase_tile_size, m_model, &mod::increase_tile_size);
-  connect(m_window, &win::request_decrease_tile_size, m_model, &mod::decrease_tile_size);
-  connect(m_window, &win::request_reset_tile_size,    m_model, &mod::reset_tile_size);
-  connect(m_window, &win::select_tool,                m_model, &mod::select_tool);
-  connect(m_window, &win::ui_removed_tileset,         m_model, &mod::ui_removed_tileset);
-  connect(m_window, &win::selected_tileset,           m_model, &mod::select_tileset);
-  connect(m_window, &win::ui_requested_new_layer,     m_model, &mod::add_layer);
-  connect(m_window, &win::ui_requested_remove_layer,  m_model, &mod::remove_layer);
-  connect(m_window, &win::ui_selected_layer,          m_model, &mod::select_layer);
+  window_to_model(&win::request_undo,               &mod::undo);
+  window_to_model(&win::request_redo,               &mod::redo);
+  window_to_model(&win::request_add_row,            &mod::add_row);
+  window_to_model(&win::request_add_col,            &mod::add_col);
+  window_to_model(&win::request_remove_row,         &mod::remove_row);
+  window_to_model(&win::request_remove_col,         &mod::remove_col);
+  window_to_model(&win::request_close_map,          &mod::close_map);
+  window_to_model(&win::request_select_map,         &mod::ui_selected_map);
+  window_to_model(&win::mouse_pressed,              &mod::mouse_pressed);
+  window_to_model(&win::mouse_moved,                &mod::mouse_moved);
+  window_to_model(&win::mouse_released,             &mod::mouse_released);
+  window_to_model(&win::mouse_entered,              &mod::mouse_entered);
+  window_to_model(&win::mouse_exited,               &mod::mouse_exited);
+  window_to_model(&win::request_increase_tile_size, &mod::increase_tile_size);
+  window_to_model(&win::request_decrease_tile_size, &mod::decrease_tile_size);
+  window_to_model(&win::request_reset_tile_size,    &mod::reset_tile_size);
+  window_to_model(&win::select_tool,                &mod::select_tool);
+  window_to_model(&win::ui_removed_tileset,         &mod::ui_removed_tileset);
+  window_to_model(&win::selected_tileset,           &mod::select_tileset);
+  window_to_model(&win::ui_requested_new_layer,     &mod::add_layer);
+  window_to_model(&win::ui_requested_remove_layer,  &mod::remove_layer);
+  window_to_model(&win::ui_selected_layer,          &mod::select_layer);
 
-  connect(m_window, &win::request_resize_map,        app, &app::handle_resize_map);
-  connect(m_window, &win::request_pan_up,            app, &app::handle_pan_up);
-  connect(m_window, &win::request_pan_down,          app, &app::handle_pan_down);
-  connect(m_window, &win::request_pan_right,         app, &app::handle_pan_right);
-  connect(m_window, &win::request_pan_left,          app, &app::handle_pan_left);
-  connect(m_window, &win::request_new_map,           app, &app::handle_new_map);
-  connect(m_window, &win::request_new_tileset,       app, &app::handle_new_tileset);
-  connect(m_window, &win::tileset_selection_changed, app, &app::tileset_selection_changed);
-  connect(m_window, &win::save_as,                   app, &app::save_as);
-  connect(m_window, &win::open_map,                  app, &app::open_map);
+  window_to_app(&win::request_resize_map,        &app::handle_resize_map);
+  window_to_app(&win::request_pan_up,            &app::handle_pan_up);
+  window_to_app(&win::request_pan_down,          &app::handle_pan_down);
+  window_to_app(&win::request_pan_right,         &app::handle_pan_right);
+  window_to_app(&win::request_pan_left,          &app::handle_pan_left);
+  window_to_app(&win::request_new_map,           &app::handle_new_map);
+  window_to_app(&win::request_new_tileset,       &app::handle_new_tileset);
+  window_to_app(&win::tileset_selection_changed, &app::tileset_selection_changed);
+  window_to_app(&win::save_as,                   &app::save_as);
+  window_to_app(&win::open_map,                  &app::open_map);
 
   // clang-format on
 }
