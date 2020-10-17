@@ -118,5 +118,10 @@
     <file>resources/icons/icons8/color/64/reset_zoom.png</file>
     <file>resources/icons/icons8/color/64/checked.png</file>
     <file>resources/icons/icons8/color/64/unchecked.png</file>
+    <file>resources/icons/icons8/color/64/layer.png</file>
+    <file>resources/icons/icons8/color/64/opacity.png</file>
+    <file>resources/icons/icons8/color/64/data-grid.png</file>
+    <file>resources/icons/icons8/color/64/remove.png</file>
+    <file>resources/icons/icons8/color/64/new-copy.png</file>
   </qresource>
 </RCC>
