@@ -48,11 +48,9 @@ void window::init_mouse_tool_group()
 
   m_toolGroup = new QActionGroup{this};
   m_toolGroup->setExclusive(true);
-  m_toolGroup->addAction(m_ui->action_stamp_tool);
-  m_toolGroup->addAction(m_ui->action_bucket_tool);
-  m_toolGroup->addAction(m_ui->action_find_same_tool);
-  m_toolGroup->addAction(m_ui->action_eraser_tool);
-  m_toolGroup->addAction(m_ui->action_rectangle_tool);
+  m_toolGroup->addAction(m_ui->actionStampTool);
+  m_toolGroup->addAction(m_ui->actionBucketTool);
+  m_toolGroup->addAction(m_ui->actionEraserTool);
 
   // clang-format off
   connect(m_toolDock, &tool_dock::enable_stamp, this, &window::stamp_enabled);
@@ -69,11 +67,11 @@ void window::init_connections()
 
   // clang-format off
 
-  on_triggered(m_ui->action_new_map, &window::ui_new_map);
-  on_triggered(m_ui->action_add_tileset, &window::ui_new_tileset);
+  on_triggered(m_ui->actionNewMap, &window::ui_new_map);
+  on_triggered(m_ui->actionAddTileset, &window::ui_new_tileset);
 
-  connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->action_mouse_tools_visibility, &QAction::setChecked);
-  connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->action_tilesets_visibility, &QAction::setChecked);
+  connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
+  connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
   connect(m_layerDock, &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
 
   connect(m_editor, &map_editor::ui_select_map, this, &window::ui_select_map);
@@ -163,22 +161,22 @@ auto window::in_editor_mode() const -> bool
 
 void window::undo_state_updated(bool canUndo)
 {
-  m_ui->action_undo->setEnabled(canUndo);
+  m_ui->actionUndo->setEnabled(canUndo);
 }
 
 void window::redo_state_updated(bool canRedo)
 {
-  m_ui->action_redo->setEnabled(canRedo);
+  m_ui->actionRedo->setEnabled(canRedo);
 }
 
 void window::undo_text_updated(const QString& text)
 {
-  m_ui->action_undo->setText(QStringLiteral(u"Undo ") + text);
+  m_ui->actionUndo->setText(QStringLiteral(u"Undo ") + text);
 }
 
 void window::redo_text_updated(const QString& text)
 {
-  m_ui->action_redo->setText(QStringLiteral(u"Redo ") + text);
+  m_ui->actionRedo->setText(QStringLiteral(u"Redo ") + text);
 }
 
 void window::added_tileset(map_id map,
@@ -222,32 +220,32 @@ void window::center_map()
 void window::set_actions_enabled(bool enabled)
 {
   // File
-  m_ui->action_close_map->setEnabled(enabled);
+  m_ui->actionCloseMap->setEnabled(enabled);
   //  m_ui->action_save->setEnabled(enabled); // TODO uncomment when added
-  m_ui->action_save_as->setEnabled(enabled);
+  m_ui->actionSaveAs->setEnabled(enabled);
   //  m_ui->action_rename->setEnabled(enabled); // TODO uncomment when added
 
   // Edit
-  m_ui->action_add_column->setEnabled(enabled);
-  m_ui->action_add_row->setEnabled(enabled);
-  m_ui->action_remove_row->setEnabled(enabled);
-  m_ui->action_remove_column->setEnabled(enabled);
-  m_ui->action_resize_map->setEnabled(enabled);
-  m_ui->action_stamp_tool->setEnabled(enabled);
-  m_ui->action_bucket_tool->setEnabled(enabled);
-  m_ui->action_eraser_tool->setEnabled(enabled);
-  m_ui->action_add_tileset->setEnabled(enabled);
+  m_ui->actionAddCol->setEnabled(enabled);
+  m_ui->actionAddRow->setEnabled(enabled);
+  m_ui->actionRemoveRow->setEnabled(enabled);
+  m_ui->actionRemoveCol->setEnabled(enabled);
+  m_ui->actionResizeMap->setEnabled(enabled);
+  m_ui->actionStampTool->setEnabled(enabled);
+  m_ui->actionBucketTool->setEnabled(enabled);
+  m_ui->actionEraserTool->setEnabled(enabled);
+  m_ui->actionAddTileset->setEnabled(enabled);
 
   // View
-  m_ui->action_center_camera->setEnabled(enabled);
-  m_ui->action_toggle_grid->setEnabled(enabled);
-  m_ui->action_zoom_in->setEnabled(enabled);
-  m_ui->action_zoom_out->setEnabled(enabled);
-  m_ui->action_reset_zoom->setEnabled(enabled);
-  m_ui->action_pan_up->setEnabled(enabled);
-  m_ui->action_pan_down->setEnabled(enabled);
-  m_ui->action_pan_right->setEnabled(enabled);
-  m_ui->action_pan_left->setEnabled(enabled);
+  m_ui->actionCenterCamera->setEnabled(enabled);
+  m_ui->actionToggleGrid->setEnabled(enabled);
+  m_ui->actionZoomIn->setEnabled(enabled);
+  m_ui->actionZoomOut->setEnabled(enabled);
+  m_ui->actionResetZoom->setEnabled(enabled);
+  m_ui->actionPanUp->setEnabled(enabled);
+  m_ui->actionPanDown->setEnabled(enabled);
+  m_ui->actionPanRight->setEnabled(enabled);
+  m_ui->actionPanLeft->setEnabled(enabled);
 }
 
 void window::handle_move_camera(int dx, int dy)
@@ -299,17 +297,17 @@ void window::handle_remove_map(map_id tabID)
   }
 }
 
-void window::on_action_undo_triggered()
+void window::on_actionUndo_triggered()
 {
   emit ui_undo();
 }
 
-void window::on_action_redo_triggered()
+void window::on_actionRedo_triggered()
 {
   emit ui_redo();
 }
 
-void window::on_action_close_map_triggered()
+void window::on_actionCloseMap_triggered()
 {
   // TODO save current state of open map
   const auto id = m_editor->active_tab_id().value();
@@ -322,22 +320,22 @@ void window::on_action_close_map_triggered()
   }
 }
 
-void window::on_action_tilesets_visibility_triggered()
+void window::on_actionTilesetsVisibility_triggered()
 {
-  m_tilesetDock->setVisible(m_ui->action_tilesets_visibility->isChecked());
+  m_tilesetDock->setVisible(m_ui->actionTilesetsVisibility->isChecked());
 }
 
-void window::on_action_mouse_tools_visibility_triggered()
+void window::on_actionToolsVisibility_triggered()
 {
-  m_toolDock->setVisible(m_ui->action_mouse_tools_visibility->isChecked());
+  m_toolDock->setVisible(m_ui->actionToolsVisibility->isChecked());
 }
 
-void window::on_action_save_triggered()
+void window::on_actionSave_triggered()
 {
   // TODO
 }
 
-void window::on_action_save_as_triggered()
+void window::on_actionSaveAs_triggered()
 {
   auto get_tab_name = [this]() -> QString {
     if (const auto name = m_editor->active_tab_name(); name) {
@@ -350,43 +348,43 @@ void window::on_action_save_as_triggered()
                         get_tab_name());
 }
 
-void window::on_action_open_map_triggered()
+void window::on_actionOpenMap_triggered()
 {
   open_map_dialog::spawn(
       [this](const QString& path) { emit ui_open_map(path); });
 }
 
-void window::on_action_rename_triggered()
+void window::on_actionRename_triggered()
 {
   // TODO
 }
 
-void window::on_action_add_row_triggered()
+void window::on_actionAddRow_triggered()
 {
   emit ui_add_row();
 }
 
-void window::on_action_add_column_triggered()
+void window::on_actionAddCol_triggered()
 {
   emit ui_add_col();
 }
 
-void window::on_action_remove_row_triggered()
+void window::on_actionRemoveRow_triggered()
 {
   emit ui_remove_row();
 }
 
-void window::on_action_remove_column_triggered()
+void window::on_actionRemoveCol_triggered()
 {
   emit ui_remove_col();
 }
 
-void window::on_action_resize_map_triggered()
+void window::on_actionResizeMap_triggered()
 {
   emit ui_resize_map();
 }
 
-void window::on_action_toggle_grid_triggered()
+void window::on_actionToggleGrid_triggered()
 {
   if (auto grid = prefs::graphics::render_grid(); grid) {
     grid.set(!*grid);
@@ -394,67 +392,67 @@ void window::on_action_toggle_grid_triggered()
   }
 }
 
-void window::on_action_pan_up_triggered()
+void window::on_actionPanUp_triggered()
 {
   emit ui_pan_up();
 }
 
-void window::on_action_pan_down_triggered()
+void window::on_actionPanDown_triggered()
 {
   emit ui_pan_down();
 }
 
-void window::on_action_pan_right_triggered()
+void window::on_actionPanRight_triggered()
 {
   emit ui_pan_right();
 }
 
-void window::on_action_pan_left_triggered()
+void window::on_actionPanLeft_triggered()
 {
   emit ui_pan_left();
 }
 
-void window::on_action_zoom_in_triggered()
+void window::on_actionZoomIn_triggered()
 {
   emit ui_increase_zoom();
 }
 
-void window::on_action_zoom_out_triggered()
+void window::on_actionZoomOut_triggered()
 {
   emit ui_decrease_zoom();
 }
 
-void window::on_action_reset_zoom_triggered()
+void window::on_actionResetZoom_triggered()
 {
   emit ui_reset_tile_size();
 }
 
-void window::on_action_center_camera_triggered()
+void window::on_actionCenterCamera_triggered()
 {
   center_map();
 }
 
-void window::on_action_reset_layout_triggered()
+void window::on_actionResetLayout_triggered()
 {
   reset_dock_layout();
 }
 
-void window::on_action_stamp_tool_triggered()
+void window::on_actionStampTool_triggered()
 {
   m_toolDock->stamp_enabled();
 }
 
-void window::on_action_bucket_tool_triggered()
+void window::on_actionBucketTool_triggered()
 {
   m_toolDock->bucket_enabled();
 }
 
-void window::on_action_eraser_tool_triggered()
+void window::on_actionEraserTool_triggered()
 {
   m_toolDock->eraser_enabled();
 }
 
-void window::on_action_settings_triggered()  // NOLINT
+void window::on_actionSettings_triggered()  // NOLINT
 {
   settings_dialog settings;
 
@@ -465,17 +463,17 @@ void window::on_action_settings_triggered()  // NOLINT
   settings.exec();
 }
 
-void window::on_action_about_qt_triggered()
+void window::on_actionAboutQt_triggered()
 {
   QApplication::aboutQt();
 }
 
-void window::on_action_exit_triggered()
+void window::on_actionExit_triggered()
 {
   QApplication::exit();
 }
 
-void window::on_action_about_triggered()
+void window::on_actionAbout_triggered()
 {
   about_dialog about;
   about.exec();
@@ -488,32 +486,20 @@ void window::handle_theme_changed()
 
 void window::stamp_enabled()
 {
-  m_ui->action_stamp_tool->setChecked(true);
+  m_ui->actionStampTool->setChecked(true);
   emit ui_selected_tool(tool_id::stamp);
 }
 
 void window::bucket_enabled()
 {
-  m_ui->action_bucket_tool->setChecked(true);
+  m_ui->actionBucketTool->setChecked(true);
   emit ui_selected_tool(tool_id::bucket);
 }
 
 void window::eraser_enabled()
 {
-  m_ui->action_eraser_tool->setChecked(true);
+  m_ui->actionEraserTool->setChecked(true);
   emit ui_selected_tool(tool_id::eraser);
-}
-
-void window::handle_rectangle_enabled()
-{
-  m_ui->action_rectangle_tool->setChecked(true);
-  emit ui_selected_tool(tool_id::rectangle);
-}
-
-void window::handle_find_same_enabled()
-{
-  m_ui->action_find_same_tool->setChecked(true);
-  emit ui_selected_tool(tool_id::find_same);
 }
 
 }  // namespace tactile::gui

@@ -193,71 +193,67 @@ class window final : public QMainWindow
 
   void eraser_enabled();
 
-  void handle_rectangle_enabled();
+  void on_actionUndo_triggered();
 
-  void handle_find_same_enabled();
+  void on_actionRedo_triggered();
 
-  void on_action_undo_triggered();
+  void on_actionCloseMap_triggered();
 
-  void on_action_redo_triggered();
+  void on_actionTilesetsVisibility_triggered();
 
-  void on_action_close_map_triggered();
+  void on_actionToolsVisibility_triggered();
 
-  void on_action_tilesets_visibility_triggered();
+  void on_actionSave_triggered();
 
-  void on_action_mouse_tools_visibility_triggered();
+  void on_actionSaveAs_triggered();
 
-  void on_action_save_triggered();
+  void on_actionOpenMap_triggered();
 
-  void on_action_save_as_triggered();
+  void on_actionRename_triggered();
 
-  void on_action_open_map_triggered();
+  void on_actionAddRow_triggered();
 
-  void on_action_rename_triggered();
+  void on_actionAddCol_triggered();
 
-  void on_action_add_row_triggered();
+  void on_actionRemoveRow_triggered();
 
-  void on_action_add_column_triggered();
+  void on_actionRemoveCol_triggered();
 
-  void on_action_remove_row_triggered();
+  void on_actionResizeMap_triggered();
 
-  void on_action_remove_column_triggered();
+  void on_actionToggleGrid_triggered();
 
-  void on_action_resize_map_triggered();
+  void on_actionPanUp_triggered();
 
-  void on_action_toggle_grid_triggered();
+  void on_actionPanDown_triggered();
 
-  void on_action_pan_up_triggered();
+  void on_actionPanRight_triggered();
 
-  void on_action_pan_down_triggered();
+  void on_actionPanLeft_triggered();
 
-  void on_action_pan_right_triggered();
+  void on_actionZoomIn_triggered();
 
-  void on_action_pan_left_triggered();
+  void on_actionZoomOut_triggered();
 
-  void on_action_zoom_in_triggered();
+  void on_actionResetZoom_triggered();
 
-  void on_action_zoom_out_triggered();
+  void on_actionCenterCamera_triggered();
 
-  void on_action_reset_zoom_triggered();
+  void on_actionResetLayout_triggered();
 
-  void on_action_center_camera_triggered();
+  void on_actionStampTool_triggered();
 
-  void on_action_reset_layout_triggered();
+  void on_actionBucketTool_triggered();
 
-  void on_action_stamp_tool_triggered();
+  void on_actionEraserTool_triggered();
 
-  void on_action_bucket_tool_triggered();
+  void on_actionSettings_triggered();
 
-  void on_action_eraser_tool_triggered();
+  static void on_actionAboutQt_triggered();
 
-  void on_action_settings_triggered();
+  static void on_actionExit_triggered();
 
-  static void on_action_about_qt_triggered();
-
-  static void on_action_exit_triggered();
-
-  static void on_action_about_triggered();
+  static void on_actionAbout_triggered();
 };
 
 }  // namespace tactile::gui

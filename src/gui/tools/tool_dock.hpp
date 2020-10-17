@@ -25,7 +25,7 @@ class tool_dock final : public QDockWidget
 
   void stamp_enabled()
   {
-    m_widget->handle_enable_bucket();
+    m_widget->handle_enable_stamp();
   }
 
   void eraser_enabled()

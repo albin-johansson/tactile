@@ -93,37 +93,37 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="action_new_map"/>
-    <addaction name="action_open_map"/>
-    <addaction name="action_close_map"/>
+    <addaction name="actionNewMap"/>
+    <addaction name="actionOpenMap"/>
+    <addaction name="actionCloseMap"/>
     <addaction name="separator"/>
-    <addaction name="action_save"/>
-    <addaction name="action_save_as"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
     <addaction name="separator"/>
-    <addaction name="action_rename"/>
+    <addaction name="actionRename"/>
     <addaction name="separator"/>
-    <addaction name="action_settings"/>
+    <addaction name="actionSettings"/>
     <addaction name="separator"/>
-    <addaction name="action_exit"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="action_undo"/>
-    <addaction name="action_redo"/>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
     <addaction name="separator"/>
-    <addaction name="action_add_row"/>
-    <addaction name="action_add_column"/>
-    <addaction name="action_remove_row"/>
-    <addaction name="action_remove_column"/>
-    <addaction name="action_resize_map"/>
+    <addaction name="actionAddRow"/>
+    <addaction name="actionAddCol"/>
+    <addaction name="actionRemoveRow"/>
+    <addaction name="actionRemoveCol"/>
+    <addaction name="actionResizeMap"/>
     <addaction name="separator"/>
-    <addaction name="action_stamp_tool"/>
-    <addaction name="action_bucket_tool"/>
-    <addaction name="action_eraser_tool"/>
+    <addaction name="actionStampTool"/>
+    <addaction name="actionBucketTool"/>
+    <addaction name="actionEraserTool"/>
     <addaction name="separator"/>
-    <addaction name="action_add_tileset"/>
+    <addaction name="actionAddTileset"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -139,34 +139,34 @@
      <property name="title">
       <string>Appearance</string>
      </property>
-     <addaction name="action_reset_layout"/>
+     <addaction name="actionResetLayout"/>
      <addaction name="separator"/>
-     <addaction name="action_mouse_tools_visibility"/>
-     <addaction name="action_tilesets_visibility"/>
+     <addaction name="actionToolsVisibility"/>
+     <addaction name="actionTilesetsVisibility"/>
      <addaction name="actionLayersVisibility"/>
     </widget>
     <addaction name="menuAppearance"/>
     <addaction name="separator"/>
-    <addaction name="action_center_camera"/>
+    <addaction name="actionCenterCamera"/>
     <addaction name="separator"/>
-    <addaction name="action_toggle_grid"/>
+    <addaction name="actionToggleGrid"/>
     <addaction name="separator"/>
-    <addaction name="action_zoom_in"/>
-    <addaction name="action_zoom_out"/>
-    <addaction name="action_reset_zoom"/>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
+    <addaction name="actionResetZoom"/>
     <addaction name="separator"/>
-    <addaction name="action_pan_up"/>
-    <addaction name="action_pan_down"/>
-    <addaction name="action_pan_right"/>
-    <addaction name="action_pan_left"/>
+    <addaction name="actionPanUp"/>
+    <addaction name="actionPanDown"/>
+    <addaction name="actionPanRight"/>
+    <addaction name="actionPanLeft"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="action_about"/>
-    <addaction name="action_about_qt"/>
+    <addaction name="actionAbout"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
@@ -190,16 +190,16 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_new_map"/>
-   <addaction name="action_open_map"/>
+   <addaction name="actionNewMap"/>
+   <addaction name="actionOpenMap"/>
    <addaction name="separator"/>
-   <addaction name="action_save"/>
+   <addaction name="actionSave"/>
    <addaction name="separator"/>
-   <addaction name="action_undo"/>
-   <addaction name="action_redo"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
    <addaction name="separator"/>
   </widget>
-  <action name="action_new_map">
+  <action name="actionNewMap">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/file.png</normaloff>:/resources/icons/icons8/color/64/file.png</iconset>
@@ -217,7 +217,7 @@
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="action_open_map">
+  <action name="actionOpenMap">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/opened-folder.png</normaloff>:/resources/icons/icons8/color/64/opened-folder.png</iconset>
@@ -235,7 +235,7 @@
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="action_save">
+  <action name="actionSave">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -256,7 +256,7 @@
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="action_save_as">
+  <action name="actionSaveAs">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -277,7 +277,7 @@
     <string>Ctrl+Shift+S</string>
    </property>
   </action>
-  <action name="action_rename">
+  <action name="actionRename">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -295,7 +295,7 @@
     </font>
    </property>
   </action>
-  <action name="action_settings">
+  <action name="actionSettings">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/settings.png</normaloff>:/resources/icons/icons8/color/64/settings.png</iconset>
@@ -313,7 +313,7 @@
     <string>Ctrl+Alt+S</string>
    </property>
   </action>
-  <action name="action_exit">
+  <action name="actionExit">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/exit.png</normaloff>:/resources/icons/icons8/color/64/exit.png</iconset>
@@ -328,7 +328,7 @@
     </font>
    </property>
   </action>
-  <action name="action_undo">
+  <action name="actionUndo">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -349,7 +349,7 @@
     <string>Ctrl+Z</string>
    </property>
   </action>
-  <action name="action_redo">
+  <action name="actionRedo">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -370,7 +370,7 @@
     <string>Ctrl+Y</string>
    </property>
   </action>
-  <action name="action_add_row">
+  <action name="actionAddRow">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -391,7 +391,7 @@
     <string>Alt+R</string>
    </property>
   </action>
-  <action name="action_add_column">
+  <action name="actionAddCol">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -412,7 +412,7 @@
     <string>Alt+C</string>
    </property>
   </action>
-  <action name="action_remove_row">
+  <action name="actionRemoveRow">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -433,7 +433,7 @@
     <string>Alt+Shift+R</string>
    </property>
   </action>
-  <action name="action_remove_column">
+  <action name="actionRemoveCol">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -454,7 +454,7 @@
     <string>Alt+Shift+C</string>
    </property>
   </action>
-  <action name="action_center_camera">
+  <action name="actionCenterCamera">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -475,7 +475,7 @@
     <string>Ctrl+Space</string>
    </property>
   </action>
-  <action name="action_toggle_grid">
+  <action name="actionToggleGrid">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -496,7 +496,7 @@
     <string>Ctrl+G</string>
    </property>
   </action>
-  <action name="action_zoom_in">
+  <action name="actionZoomIn">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -517,7 +517,7 @@
     <string>Ctrl++</string>
    </property>
   </action>
-  <action name="action_zoom_out">
+  <action name="actionZoomOut">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -548,7 +548,7 @@
     <string>l</string>
    </property>
   </action>
-  <action name="action_pan_up">
+  <action name="actionPanUp">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -569,7 +569,7 @@
     <string>Ctrl+Up</string>
    </property>
   </action>
-  <action name="action_pan_right">
+  <action name="actionPanRight">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -590,7 +590,7 @@
     <string>Ctrl+Right</string>
    </property>
   </action>
-  <action name="action_pan_left">
+  <action name="actionPanLeft">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -611,7 +611,7 @@
     <string>Ctrl+Left</string>
    </property>
   </action>
-  <action name="action_pan_down">
+  <action name="actionPanDown">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -632,7 +632,7 @@
     <string>Ctrl+Down</string>
    </property>
   </action>
-  <action name="action_about">
+  <action name="actionAbout">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/color/64/about.png</normaloff>:/resources/icons/icons8/color/64/about.png</iconset>
@@ -647,7 +647,7 @@
     </font>
    </property>
   </action>
-  <action name="action_stamp_tool">
+  <action name="actionStampTool">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -671,7 +671,7 @@
     <string>S</string>
    </property>
   </action>
-  <action name="action_bucket_tool">
+  <action name="actionBucketTool">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -695,7 +695,7 @@
     <string>B</string>
    </property>
   </action>
-  <action name="action_eraser_tool">
+  <action name="actionEraserTool">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -761,7 +761,7 @@
     <string>F</string>
    </property>
   </action>
-  <action name="action_add_tileset">
+  <action name="actionAddTileset">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -782,7 +782,7 @@
     <string>Ctrl+T</string>
    </property>
   </action>
-  <action name="action_resize_map">
+  <action name="actionResizeMap">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -800,7 +800,7 @@
     </font>
    </property>
   </action>
-  <action name="action_reset_zoom">
+  <action name="actionResetZoom">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -818,7 +818,7 @@
     </font>
    </property>
   </action>
-  <action name="action_close_map">
+  <action name="actionCloseMap">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -832,7 +832,7 @@
     </font>
    </property>
   </action>
-  <action name="action_mouse_tools_visibility">
+  <action name="actionToolsVisibility">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -855,7 +855,7 @@
     </font>
    </property>
   </action>
-  <action name="action_tilesets_visibility">
+  <action name="actionTilesetsVisibility">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -878,7 +878,7 @@
     </font>
    </property>
   </action>
-  <action name="action_reset_layout">
+  <action name="actionResetLayout">
    <property name="text">
     <string>Reset layout</string>
    </property>
@@ -889,7 +889,7 @@
     </font>
    </property>
   </action>
-  <action name="action_about_qt">
+  <action name="actionAboutQt">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
      <normaloff>:/resources/icons/icons8/dark/qt.png</normaloff>:/resources/icons/icons8/dark/qt.png</iconset>
