@@ -38,11 +38,7 @@ class model final : public QObject
   model();
 
   /**
-   * @brief Adds a map document to the model.
-   *
-   * @return the map ID that was associated with the document.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::add()
    */
   [[nodiscard]] auto add_map() -> map_id
   {
@@ -50,15 +46,7 @@ class model final : public QObject
   }
 
   /**
-   * @brief Adds a map document to the model.
-   *
-   * @note The model claims ownership of the supplied document.
-   *
-   * @param document a pointer to the document that will be added.
-   *
-   * @return the map ID that was associated with the document.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::add(map_document* document)
    */
   [[nodiscard]] auto add_map(map_document* document) -> map_id
   {
@@ -69,8 +57,6 @@ class model final : public QObject
   {
     m_maps->update_tileset_selection(topLeft, bottomRight);
   }
-
-  void resize_map(row_t nRows, col_t nCols);
 
   /**
    * @copydoc map_manager::has_active_map()
@@ -133,12 +119,52 @@ class model final : public QObject
   void removed_tileset(tileset_id id);
 
  public slots:
+  /**
+   * @brief Reverts the effects of the last performed command.
+   *
+   * @details This function emits the `redraw` signal.
+   *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @since 0.1.0
+   */
   void undo();
 
+  /**
+   * @brief Restores the effects of the last undone command.
+   *
+   * @details This function emits the `redraw` signal.
+   *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @since 0.1.0
+   */
   void redo();
 
   /**
+   * @brief Resizes the currently active map.
+   *
+   * @details This function emits the `redraw` signal.
+   *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @param nRows the new number of rows, must be greater than 0.
+   * @param nCols the new number of columns, must be greater than 0.
+   *
+   * @see cmd::resize_map
+   *
+   * @since 0.1.0
+   */
+  void resize_map(row_t nRows, col_t nCols);
+
+  /**
    * @brief Adds a row to the currently active map.
+   *
+   * @details This function emits the `redraw` signal.
+   *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @see cmd::add_row
    *
    * @since 0.1.0
    */
@@ -147,12 +173,22 @@ class model final : public QObject
   /**
    * @brief Adds a column to the currently active map.
    *
+   * @details This function emits the `redraw` signal.
+   *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @see cmd::add_col
+   *
    * @since 0.1.0
    */
   void add_col();
 
   /**
    * @brief Removes a row from the currently active map.
+   *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @see cmd::remove_row
    *
    * @since 0.1.0
    */
@@ -161,19 +197,45 @@ class model final : public QObject
   /**
    * @brief Removes a column from the currently active map.
    *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @see cmd::remove_col
+   *
    * @since 0.1.0
    */
   void remove_col();
 
+  /**
+   * @brief Adds a layer to the currently active map.
+   *
+   * @details This function emits the `added_layer` signal.
+   *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @since 0.1.0
+   */
   void add_layer();
 
+  /**
+   * @brief Removes the active layer from the currently active map.
+   *
+   * @details This function emits the `removed_layer` signal.
+   *
+   * @note This function has no effect if there is no active map document.
+   *
+   * @since 0.1.0
+   *
+   * @todo Add remove_layer command.
+   */
   void remove_active_layer();
 
   /**
    * @brief Selects the tile layer associated with the specified index.
    *
+   * @details This function emits the `selected_layer` and `redraw` signals.
+   *
    * @note This method has no effect if the supplied index isn't associated
-   * with a tile layer.
+   * with a tile layer or if there is no active map document.
    *
    * @param id the index of the tile layer that will be selected.
    *
@@ -249,7 +311,11 @@ class model final : public QObject
     m_maps->ui_added_tileset(image, path, name, tileWidth, tileHeight);
   }
 
-  void ui_removed_tileset(tileset_id id);
+  void ui_removed_tileset(tileset_id id)
+  {
+    m_maps->ui_removed_tileset(id);
+    emit redraw();
+  }
 
   /**
    * @brief Selects the map associated with the specified id.

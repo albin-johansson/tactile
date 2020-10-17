@@ -23,8 +23,27 @@ class map_manager final : public QObject
 
   explicit map_manager(QObject* parent = nullptr);
 
+  /**
+   * @brief Adds a new map document.
+   *
+   * @return the map ID that associated with the document.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto add() -> map_id;
 
+  /**
+   * @brief Adds a new map document.
+   *
+   * @note The model claims ownership of the supplied document.
+   *
+   * @param document a pointer to the document that will be added, can't be
+   * null.
+   *
+   * @return the map ID that was associated with the document.
+   *
+   * @since 0.1.0
+   */
   [[nodiscard]] auto add(map_document* document) -> map_id;
 
   void close(map_id id);

@@ -94,6 +94,8 @@ void map_document::remove_column()
 
 void map_document::resize(row_t nRows, col_t nCols)
 {
+  Q_ASSERT(nRows > 0_row);
+  Q_ASSERT(nCols > 0_col);
   m_commands->push<cmd::resize_map>(m_map.get(), nRows, nCols);
 }
 

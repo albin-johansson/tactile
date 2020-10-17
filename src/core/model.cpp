@@ -134,10 +134,4 @@ void model::ui_selected_map(map_id id)
   emit switched_map(id, *document);
 }
 
-void model::ui_removed_tileset(tileset_id id)
-{
-  m_maps->ui_removed_tileset(id);
-  emit redraw();
-}
-
 }  // namespace tactile::core

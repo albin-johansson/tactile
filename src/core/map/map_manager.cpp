@@ -24,6 +24,8 @@ auto map_manager::add() -> map_id
 
 auto map_manager::add(map_document* document) -> map_id
 {
+  Q_ASSERT(document);
+
   const auto id = m_nextMapID;
   Q_ASSERT(!m_mapDocuments.contains(id));
 
