@@ -45,7 +45,7 @@ layer_widget::layer_widget(QWidget* parent)
 
 void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
 {
-  if (auto* item = m_ui->layerList->itemAt(pos)) {
+  if (m_ui->layerList->itemAt(pos)) {
     QMenu menu{this};
 
     QAction remove{tr("Remove layer"), this};
