@@ -39,7 +39,7 @@ app_connections::app_connections(app* app)
 
   // clang-format off
 
-  model_to_window(&mod::redraw,                &win::handle_draw);
+  model_to_window(&mod::redraw,                &win::force_redraw);
   model_to_window(&mod::enable_stamp_preview,  &win::enable_stamp_preview);
   model_to_window(&mod::disable_stamp_preview, &win::disable_stamp_preview);
   model_to_window(&mod::undo_state_updated,    &win::undo_state_updated);

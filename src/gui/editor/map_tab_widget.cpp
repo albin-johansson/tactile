@@ -52,7 +52,7 @@ void map_tab_widget::theme_changed()
   setStyleSheet(styling);
 }
 
-void map_tab_widget::redraw()
+void map_tab_widget::force_redraw()
 {
   if (auto* view = current_view()) {
     view->force_redraw();

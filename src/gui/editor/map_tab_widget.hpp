@@ -128,7 +128,7 @@ class map_tab_widget final : public QTabWidget
  public slots:
   void theme_changed();
 
-  void redraw();
+  void force_redraw();
 
  private:
   [[nodiscard]] auto current_view() -> map_view*;

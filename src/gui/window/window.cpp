@@ -260,7 +260,7 @@ void window::switched_map(map_id id, const core::map_document& document)
 void window::center_map()
 {
   m_editor->center_viewport();
-  handle_draw();
+  force_redraw();
 }
 
 void window::set_actions_enabled(bool enabled)
@@ -297,12 +297,12 @@ void window::set_actions_enabled(bool enabled)
 void window::handle_move_camera(int dx, int dy)
 {
   m_editor->move_map(dx, dy);
-  handle_draw();
+//  force_redraw();
 }
 
-void window::handle_draw()
+void window::force_redraw()
 {
-  m_editor->handle_redraw();
+  m_editor->force_redraw();
 }
 
 void window::enable_stamp_preview(const core::position& position)
@@ -435,7 +435,7 @@ void window::on_action_toggle_grid_triggered()
 {
   if (auto grid = prefs::graphics::render_grid(); grid) {
     grid.set(!*grid);
-    handle_draw();
+    force_redraw();
   }
 }
 

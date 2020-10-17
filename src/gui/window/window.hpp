@@ -130,7 +130,7 @@ class window final : public QMainWindow
 
   void switched_map(map_id map, const core::map_document& document);
 
-  void handle_draw();
+  void force_redraw();
 
   void enable_stamp_preview(const core::position& position);
 

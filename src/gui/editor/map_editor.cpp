@@ -116,9 +116,9 @@ void map_editor::move_map(int dx, int dy) noexcept
   m_mapTabWidget->move_map(dx, dy);
 }
 
-void map_editor::handle_redraw()
+void map_editor::force_redraw()
 {
-  m_mapTabWidget->redraw();
+  m_mapTabWidget->force_redraw();
 }
 
 void map_editor::enable_startup_view() noexcept

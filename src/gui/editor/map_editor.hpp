@@ -76,7 +76,7 @@ class map_editor final : public QWidget
   [[nodiscard]] auto num_tabs() const -> int;
 
  public slots:
-  void handle_redraw();
+  void force_redraw();
 
  signals:
   void request_remove_tab(map_id id);
