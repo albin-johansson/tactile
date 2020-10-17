@@ -182,7 +182,6 @@ set(TACTILE_SOURCE_FILES
         util/set_style_sheet.cpp
         util/setup_app.hpp
         util/setup_app.cpp
-        util/connection_utils.hpp
 
         service/save/save_tmx.cpp
         service/save/save_tmx.hpp

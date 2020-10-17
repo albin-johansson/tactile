@@ -1,7 +1,6 @@
 #include "window.hpp"
 
 #include "about_dialog.hpp"
-#include "connection_utils.hpp"
 #include "map_editor.hpp"
 #include "open_map_dialog.hpp"
 #include "preferences.hpp"
