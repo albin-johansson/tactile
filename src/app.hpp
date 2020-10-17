@@ -44,12 +44,9 @@ class app final : public QApplication
   std::unique_ptr<gui::window> m_window;
   core::model* m_model{};
 
-  [[nodiscard]] auto window_ptr() noexcept -> gui::window*
-  {
-    return m_window.get();
-  }
+  void init_connections();
 
-  [[nodiscard]] auto model_ptr() noexcept -> core::model*
+  [[nodiscard, deprecated]] auto model_ptr() noexcept -> core::model*
   {
     return m_model;
   }

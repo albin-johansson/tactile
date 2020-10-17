@@ -17,10 +17,19 @@ app::app(int argc, char** argv)
     : QApplication{argc, argv},
       m_model{new core::model{}}
 {
-  setup_app();  // TODO could this be done in main() instead?
-
+  setup_app();
   m_window = std::make_unique<gui::window>();
+  init_connections();
+  m_window->show();
+}
 
+app::~app() noexcept
+{
+  delete m_model;
+}
+
+void app::init_connections()
+{
   using win = gui::window;
   using mod = core::model;
 
@@ -88,13 +97,6 @@ app::app(int argc, char** argv)
   from_window(&win::ui_open_map,                  &app::open_map);
 
   // clang-format on
-
-  m_window->show();
-}
-
-app::~app() noexcept
-{
-  delete m_model;
 }
 
 void app::save_as(const QString& path)

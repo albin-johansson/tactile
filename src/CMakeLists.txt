@@ -5,14 +5,9 @@ project(tactile_src CXX)
 set(TACTILE_SOURCE_FILES
         tactile.qrc
 
+        app.cpp
+        app.hpp
         version.hpp
-
-        app/app.cpp
-        app/app.hpp
-        app/set_style_sheet.hpp
-        app/set_style_sheet.cpp
-        app/setup_app.hpp
-        app/setup_app.cpp
 
         core/types.hpp
         core/core_fwd.hpp
@@ -90,6 +85,7 @@ set(TACTILE_SOURCE_FILES
 
         gui/about/about_dialog.cpp
         gui/about/about_dialog.hpp
+        gui/about/about.ui
 
         gui/settings/settings_dialog.hpp
         gui/settings/settings_dialog.cpp
@@ -104,8 +100,6 @@ set(TACTILE_SOURCE_FILES
 
         gui/dialog/open_map/open_map_dialog.cpp
         gui/dialog/open_map/open_map_dialog.hpp
-
-        gui/about/about.ui
 
         gui/toolbar/dynamic_tool_bar_widget.cpp
         gui/toolbar/dynamic_tool_bar_widget.hpp
@@ -184,6 +178,10 @@ set(TACTILE_SOURCE_FILES
 
         util/nenya.hpp
         util/vector_map.hpp
+        util/set_style_sheet.hpp
+        util/set_style_sheet.cpp
+        util/setup_app.hpp
+        util/setup_app.cpp
 
         service/save/save_tmx.cpp
         service/save/save_tmx.hpp
@@ -199,7 +197,9 @@ set(TACTILE_SOURCE_FILES
         service/open/open_json.cpp
         service/open/open_json.hpp
         service/open/open_tmx.cpp
-        service/open/open_tmx.hpp gui/connection_utils.hpp)
+        service/open/open_tmx.hpp
+
+        gui/connection_utils.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
@@ -209,7 +209,6 @@ endif ()
 
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
-        PUBLIC app
         PUBLIC command
         PUBLIC prefs
         PUBLIC parse
