@@ -13,17 +13,37 @@ class tool_dock final : public QDockWidget
  public:
   explicit tool_dock(QWidget* parent = nullptr);
 
-  [[nodiscard]] auto get_tool_widget() noexcept -> tool_widget*
+  void enable_tools()
   {
-    return m_widget;
+    m_widget->enable_tools();
+  }
+
+  void disable_tools()
+  {
+    m_widget->disable_tools();
+  }
+
+  void stamp_enabled()
+  {
+    m_widget->handle_enable_bucket();
+  }
+
+  void eraser_enabled()
+  {
+    m_widget->handle_enable_eraser();
+  }
+
+  void bucket_enabled()
+  {
+    m_widget->handle_enable_bucket();
   }
 
  signals:
-  void stamp_enabled();
+  void enable_stamp();
 
-  void bucket_enabled();
+  void enable_bucket();
 
-  void eraser_enabled();
+  void enable_eraser();
 
  private:
   tool_widget* m_widget{};

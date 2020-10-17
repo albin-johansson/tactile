@@ -8,17 +8,16 @@ tool_dock::tool_dock(QWidget* parent)
     : QDockWidget{parent},
       m_widget{new tool_widget{this}}
 {
-  setObjectName("toolDock");
+  setObjectName(QStringLiteral(u"tool_dock"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
   setWidget(m_widget);
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-  connect(
-      m_widget, &tool_widget::stamp_enabled, this, &tool_dock::stamp_enabled);
-  connect(
-      m_widget, &tool_widget::bucket_enabled, this, &tool_dock::bucket_enabled);
-  connect(
-      m_widget, &tool_widget::eraser_enabled, this, &tool_dock::eraser_enabled);
+  // clang-format off
+  connect(m_widget, &tool_widget::stamp_enabled, this, &tool_dock::enable_stamp);
+  connect(m_widget, &tool_widget::bucket_enabled, this, &tool_dock::enable_bucket);
+  connect(m_widget, &tool_widget::eraser_enabled, this, &tool_dock::enable_eraser);
+  // clang-format on
 }
 
 }  // namespace tactile::gui

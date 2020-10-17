@@ -1,6 +1,7 @@
 #include "window.hpp"
 
 #include "about_dialog.hpp"
+#include "connection_utils.hpp"
 #include "map_editor.hpp"
 #include "open_map_dialog.hpp"
 #include "preferences.hpp"
@@ -17,8 +18,6 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 {
   m_ui->setupUi(this);
 
-  // TODO add mini-map widget
-
   m_editor = new map_editor{this};
   m_toolDock = new tool_dock{this};
   m_layerDock = new layer_dock{this};
@@ -31,8 +30,10 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
   addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
 
+  init_mouse_tool_group();
   init_connections();
-  init_layout();
+
+  restore_layout();
   enter_no_content_view();  // TODO option to reopen last map
 }
 
@@ -41,30 +42,31 @@ window::~window() noexcept
   delete m_ui;
 }
 
-void window::init_connections()
+void window::init_mouse_tool_group()
 {
-  auto on_triggered = [this](auto&& action, auto&& fun) {
-    connect(action, &QAction::triggered, this, fun);
-  };
+  Q_ASSERT(!m_toolGroup);
 
-  on_triggered(m_ui->action_new_map, &window::ui_new_map);
-  on_triggered(m_ui->action_add_tileset, &window::ui_new_tileset);
+  m_toolGroup = new QActionGroup{this};
+  m_toolGroup->setExclusive(true);
+  m_toolGroup->addAction(m_ui->action_stamp_tool);
+  m_toolGroup->addAction(m_ui->action_bucket_tool);
+  m_toolGroup->addAction(m_ui->action_find_same_tool);
+  m_toolGroup->addAction(m_ui->action_eraser_tool);
+  m_toolGroup->addAction(m_ui->action_rectangle_tool);
 
   // clang-format off
+  connect(m_toolDock, &tool_dock::enable_stamp, this, &window::stamp_enabled);
+  connect(m_toolDock, &tool_dock::enable_bucket, this, &window::bucket_enabled);
+  connect(m_toolDock, &tool_dock::enable_eraser, this, &window::eraser_enabled);
+  // clang-format on
+}
 
-  {
-    m_toolGroup = new QActionGroup{this};
-    m_toolGroup->setExclusive(true);
-    m_toolGroup->addAction(m_ui->action_stamp_tool);
-    m_toolGroup->addAction(m_ui->action_bucket_tool);
-    m_toolGroup->addAction(m_ui->action_find_same_tool);
-    m_toolGroup->addAction(m_ui->action_eraser_tool);
-    m_toolGroup->addAction(m_ui->action_rectangle_tool);
+void window::init_connections()
+{
+  // clang-format off
 
-    connect(m_toolDock, &tool_dock::stamp_enabled, this, &window::stamp_enabled);
-    connect(m_toolDock, &tool_dock::bucket_enabled, this, &window::bucket_enabled);
-    connect(m_toolDock, &tool_dock::eraser_enabled, this, &window::eraser_enabled);
-  }
+  on_triggered(m_ui->action_new_map, this, &window::ui_new_map);
+  on_triggered(m_ui->action_add_tileset, this, &window::ui_new_tileset);
 
   connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->action_mouse_tools_visibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->action_tilesets_visibility, &QAction::setChecked);
@@ -96,7 +98,7 @@ void window::init_connections()
 void window::enter_no_content_view()
 {
   m_editor->enable_startup_view();
-  m_toolDock->get_tool_widget()->disable_tools();
+  m_toolDock->disable_tools();
 
   set_actions_enabled(false);
   hide_all_docks();
@@ -105,12 +107,12 @@ void window::enter_no_content_view()
 void window::enter_content_view()
 {
   m_editor->enable_editor_view();
-  m_toolDock->get_tool_widget()->enable_tools();
+  m_toolDock->enable_tools();
 
   set_actions_enabled(true);
 }
 
-void window::init_layout()
+void window::restore_layout()
 {
   if (const auto geometry = prefs::window::last_layout_geometry(); geometry) {
     restoreGeometry(*geometry);
@@ -435,26 +437,26 @@ void window::on_action_reset_layout_triggered()
 
 void window::on_action_stamp_tool_triggered()
 {
-  m_toolDock->get_tool_widget()->handle_enable_stamp();
+  m_toolDock->stamp_enabled();
 }
 
 void window::on_action_bucket_tool_triggered()
 {
-  m_toolDock->get_tool_widget()->handle_enable_bucket();
+  m_toolDock->bucket_enabled();
 }
 
 void window::on_action_eraser_tool_triggered()
 {
-  m_toolDock->get_tool_widget()->handle_enable_eraser();
+  m_toolDock->eraser_enabled();
 }
 
-void window::on_action_settings_triggered()
+void window::on_action_settings_triggered()  // NOLINT
 {
   settings_dialog settings;
-  connect(&settings,
-          &settings_dialog::reload_theme,
-          this,
-          &window::handle_theme_changed);
+
+  // clang-format off
+  connect(&settings, &settings_dialog::reload_theme, this, &window::handle_theme_changed);
+  // clang-format on
 
   settings.exec();
 }

@@ -151,6 +151,8 @@ class window final : public QMainWindow
   tileset_dock* m_tilesetDock{};
   QActionGroup* m_toolGroup{};
 
+  void init_mouse_tool_group();
+
   /**
    * @brief Initializes all of the connections related to the internal
    * components of the window.
@@ -159,7 +161,7 @@ class window final : public QMainWindow
    */
   void init_connections();
 
-  void init_layout();
+  void restore_layout();
 
   void reset_dock_layout();
 

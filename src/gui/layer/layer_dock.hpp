@@ -8,8 +8,6 @@
 
 namespace tactile::gui {
 
-class layer_widget;
-
 class layer_dock final : public QDockWidget
 {
   Q_OBJECT

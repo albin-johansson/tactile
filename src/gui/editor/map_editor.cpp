@@ -28,55 +28,18 @@ map_editor::~map_editor() noexcept
 
 void map_editor::init_connections()
 {
-  connect(this,
-          &map_editor::theme_changed,
-          m_tabWidget,
-          &map_tab_widget::theme_changed);
-
-  connect(m_tabWidget,
-          &map_tab_widget::request_remove_tab,
-          this,
-          &map_editor::ui_remove_map);
-
-  connect(m_tabWidget,
-          &map_tab_widget::currentChanged,
-          this,
-          &map_editor::tab_changed);
-
-  connect(m_tabWidget,
-          &map_tab_widget::mouse_pressed,
-          this,
-          &map_editor::mouse_pressed);
-
-  connect(m_tabWidget,
-          &map_tab_widget::mouse_moved,
-          this,
-          &map_editor::mouse_moved);
-
-  connect(m_tabWidget,
-          &map_tab_widget::mouse_released,
-          this,
-          &map_editor::mouse_released);
-
-  connect(m_tabWidget,
-          &map_tab_widget::mouse_entered,
-          this,
-          &map_editor::mouse_entered);
-
-  connect(m_tabWidget,
-          &map_tab_widget::mouse_exited,
-          this,
-          &map_editor::mouse_exited);
-
-  connect(m_tabWidget,
-          &map_tab_widget::increase_zoom,
-          this,
-          &map_editor::increase_zoom);
-
-  connect(m_tabWidget,
-          &map_tab_widget::decrease_zoom,
-          this,
-          &map_editor::decrease_zoom);
+  // clang-format off
+  connect(this, &map_editor::theme_changed, m_tabWidget, &map_tab_widget::theme_changed);
+  connect(m_tabWidget, &map_tab_widget::currentChanged, this, &map_editor::tab_changed);
+  connect(m_tabWidget, &map_tab_widget::ui_remove_map, this, &map_editor::ui_remove_map);
+  connect(m_tabWidget, &map_tab_widget::increase_zoom, this, &map_editor::increase_zoom);
+  connect(m_tabWidget, &map_tab_widget::decrease_zoom, this, &map_editor::decrease_zoom);
+  connect(m_tabWidget, &map_tab_widget::mouse_pressed, this, &map_editor::mouse_pressed);
+  connect(m_tabWidget, &map_tab_widget::mouse_moved, this, &map_editor::mouse_moved);
+  connect(m_tabWidget, &map_tab_widget::mouse_released, this, &map_editor::mouse_released);
+  connect(m_tabWidget, &map_tab_widget::mouse_entered, this, &map_editor::mouse_entered);
+  connect(m_tabWidget, &map_tab_widget::mouse_exited, this, &map_editor::mouse_exited);
+  // clang-format on
 }
 
 void map_editor::enable_stamp_preview(const core::position& position)

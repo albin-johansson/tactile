@@ -109,7 +109,7 @@ class map_tab_widget final : public QTabWidget
   [[nodiscard]] auto active_tab_name() const -> std::optional<QString>;
 
  signals:
-  void request_remove_tab(map_id id);
+  void ui_remove_map(map_id id);
 
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
 

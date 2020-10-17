@@ -1,11 +1,10 @@
 #pragma once
 
-#include <QEvent>
+#include <QMouseEvent>
 #include <QWidget>
 #include <optional>  // optional
 
 #include "map_document.hpp"
-#include "map_tab_widget.hpp"
 #include "position.hpp"
 #include "types.hpp"
 
@@ -14,6 +13,8 @@ class map_editor;
 }
 
 namespace tactile::gui {
+
+class map_tab_widget;
 
 /**
  * @class map_editor
@@ -38,9 +39,7 @@ class map_editor final : public QWidget
 
   void disable_stamp_preview();
 
-  void add_map_tab(core::map_document* map,
-                       map_id id,
-                       const QString& title);
+  void add_map_tab(core::map_document* map, map_id id, const QString& title);
 
   void select_tab(map_id id);
 
