@@ -112,6 +112,8 @@ class window final : public QMainWindow
   void mouse_exited(QEvent* event);
 
  public slots:
+  void force_redraw();
+
   void undo_state_updated(bool canUndo);
 
   void redo_state_updated(bool canRedo);
@@ -125,12 +127,12 @@ class window final : public QMainWindow
   void removed_tileset(tileset_id id);
 
   void selected_layer(layer_id id, const core::layer& layer);
+
   void added_layer(layer_id id, const core::layer& layer);
+
   void removed_layer(layer_id id);
 
   void switched_map(map_id map, const core::map_document& document);
-
-  void force_redraw();
 
   void enable_stamp_preview(const core::position& position);
 
@@ -169,7 +171,7 @@ class window final : public QMainWindow
 
   void show_all_docks();
 
-  void center_map();
+  void center_viewport();
 
   void set_actions_enabled(bool enabled);
 

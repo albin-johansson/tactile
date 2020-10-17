@@ -97,23 +97,6 @@ void window::init_connections()
   // clang-format on
 }
 
-void window::enter_no_content_view()
-{
-  m_editor->enable_startup_view();
-  m_toolDock->disable_tools();
-
-  set_actions_enabled(false);
-  hide_all_docks();
-}
-
-void window::enter_content_view()
-{
-  m_editor->enable_editor_view();
-  m_toolDock->enable_tools();
-
-  set_actions_enabled(true);
-}
-
 void window::restore_layout()
 {
   if (const auto geometry = prefs::window::last_layout_geometry(); geometry) {
@@ -154,9 +137,71 @@ void window::show_all_docks()
   m_tilesetDock->show();
 }
 
+void window::center_viewport()
+{
+  m_editor->center_viewport();
+}
+
+void window::set_actions_enabled(bool enabled)
+{
+  // File
+  m_ui->actionCloseMap->setEnabled(enabled);
+  //  m_ui->action_save->setEnabled(enabled); // TODO uncomment when added
+  m_ui->actionSaveAs->setEnabled(enabled);
+  //  m_ui->action_rename->setEnabled(enabled); // TODO uncomment when added
+
+  // Edit
+  m_ui->actionAddCol->setEnabled(enabled);
+  m_ui->actionAddRow->setEnabled(enabled);
+  m_ui->actionRemoveRow->setEnabled(enabled);
+  m_ui->actionRemoveCol->setEnabled(enabled);
+  m_ui->actionResizeMap->setEnabled(enabled);
+  m_ui->actionStampTool->setEnabled(enabled);
+  m_ui->actionBucketTool->setEnabled(enabled);
+  m_ui->actionEraserTool->setEnabled(enabled);
+  m_ui->actionAddTileset->setEnabled(enabled);
+
+  // View
+  m_ui->actionResetLayout->setEnabled(enabled);
+  m_ui->actionToolsVisibility->setEnabled(enabled);
+  m_ui->actionTilesetsVisibility->setEnabled(enabled);
+  m_ui->actionLayersVisibility->setEnabled(enabled);
+  m_ui->actionCenterCamera->setEnabled(enabled);
+  m_ui->actionToggleGrid->setEnabled(enabled);
+  m_ui->actionZoomIn->setEnabled(enabled);
+  m_ui->actionZoomOut->setEnabled(enabled);
+  m_ui->actionResetZoom->setEnabled(enabled);
+  m_ui->actionPanUp->setEnabled(enabled);
+  m_ui->actionPanDown->setEnabled(enabled);
+  m_ui->actionPanRight->setEnabled(enabled);
+  m_ui->actionPanLeft->setEnabled(enabled);
+}
+
 auto window::in_editor_mode() const -> bool
 {
   return m_editor->in_editor_mode();
+}
+
+void window::enter_no_content_view()
+{
+  m_editor->enable_startup_view();
+  m_toolDock->disable_tools();
+
+  set_actions_enabled(false);
+  hide_all_docks();
+}
+
+void window::enter_content_view()
+{
+  m_editor->enable_editor_view();
+  m_toolDock->enable_tools();
+
+  set_actions_enabled(true);
+}
+
+void window::force_redraw()
+{
+  m_editor->force_redraw();
 }
 
 void window::undo_state_updated(bool canUndo)
@@ -212,56 +257,6 @@ void window::switched_map(map_id id, const core::map_document& document)
   m_layerDock->selected_map(document);
 }
 
-void window::center_map()
-{
-  m_editor->center_viewport();
-}
-
-void window::set_actions_enabled(bool enabled)
-{
-  // File
-  m_ui->actionCloseMap->setEnabled(enabled);
-  //  m_ui->action_save->setEnabled(enabled); // TODO uncomment when added
-  m_ui->actionSaveAs->setEnabled(enabled);
-  //  m_ui->action_rename->setEnabled(enabled); // TODO uncomment when added
-
-  // Edit
-  m_ui->actionAddCol->setEnabled(enabled);
-  m_ui->actionAddRow->setEnabled(enabled);
-  m_ui->actionRemoveRow->setEnabled(enabled);
-  m_ui->actionRemoveCol->setEnabled(enabled);
-  m_ui->actionResizeMap->setEnabled(enabled);
-  m_ui->actionStampTool->setEnabled(enabled);
-  m_ui->actionBucketTool->setEnabled(enabled);
-  m_ui->actionEraserTool->setEnabled(enabled);
-  m_ui->actionAddTileset->setEnabled(enabled);
-
-  // View
-  m_ui->actionResetLayout->setEnabled(enabled);
-  m_ui->actionToolsVisibility->setEnabled(enabled);
-  m_ui->actionTilesetsVisibility->setEnabled(enabled);
-  m_ui->actionLayersVisibility->setEnabled(enabled);
-  m_ui->actionCenterCamera->setEnabled(enabled);
-  m_ui->actionToggleGrid->setEnabled(enabled);
-  m_ui->actionZoomIn->setEnabled(enabled);
-  m_ui->actionZoomOut->setEnabled(enabled);
-  m_ui->actionResetZoom->setEnabled(enabled);
-  m_ui->actionPanUp->setEnabled(enabled);
-  m_ui->actionPanDown->setEnabled(enabled);
-  m_ui->actionPanRight->setEnabled(enabled);
-  m_ui->actionPanLeft->setEnabled(enabled);
-}
-
-void window::handle_move_camera(int dx, int dy)
-{
-  m_editor->move_map(dx, dy);
-}
-
-void window::force_redraw()
-{
-  m_editor->force_redraw();
-}
-
 void window::enable_stamp_preview(const core::position& position)
 {
   m_editor->enable_stamp_preview(position);
@@ -272,6 +267,11 @@ void window::disable_stamp_preview()
   m_editor->disable_stamp_preview();
 }
 
+void window::handle_move_camera(int dx, int dy)
+{
+  m_editor->move_map(dx, dy);
+}
+
 void window::handle_new_map(core::map_document* map, map_id id)
 {
   m_editor->add_map_tab(map, id, QStringLiteral(u"map"));
@@ -279,7 +279,7 @@ void window::handle_new_map(core::map_document* map, map_id id)
   if (!in_editor_mode()) {
     enter_content_view();
     show_all_docks();  // TODO just reopen docks that were visible
-    center_map();
+    center_viewport();
   }
 }
 
@@ -299,6 +299,29 @@ void window::handle_remove_map(map_id tabID)
   if (m_editor->tab_count() == 1) {
     enter_no_content_view();
   }
+}
+
+void window::handle_theme_changed()
+{
+  emit m_editor->theme_changed();
+}
+
+void window::stamp_enabled()
+{
+  m_ui->actionStampTool->setChecked(true);
+  emit ui_selected_tool(tool_id::stamp);
+}
+
+void window::bucket_enabled()
+{
+  m_ui->actionBucketTool->setChecked(true);
+  emit ui_selected_tool(tool_id::bucket);
+}
+
+void window::eraser_enabled()
+{
+  m_ui->actionEraserTool->setChecked(true);
+  emit ui_selected_tool(tool_id::eraser);
 }
 
 void window::on_actionUndo_triggered()
@@ -438,7 +461,7 @@ void window::on_actionResetZoom_triggered()
 
 void window::on_actionCenterCamera_triggered()
 {
-  center_map();
+  center_viewport();
 }
 
 void window::on_actionResetLayout_triggered()
@@ -486,29 +509,6 @@ void window::on_actionAbout_triggered()
 {
   about_dialog about;
   about.exec();
-}
-
-void window::handle_theme_changed()
-{
-  emit m_editor->theme_changed();
-}
-
-void window::stamp_enabled()
-{
-  m_ui->actionStampTool->setChecked(true);
-  emit ui_selected_tool(tool_id::stamp);
-}
-
-void window::bucket_enabled()
-{
-  m_ui->actionBucketTool->setChecked(true);
-  emit ui_selected_tool(tool_id::bucket);
-}
-
-void window::eraser_enabled()
-{
-  m_ui->actionEraserTool->setChecked(true);
-  emit ui_selected_tool(tool_id::eraser);
 }
 
 }  // namespace tactile::gui
