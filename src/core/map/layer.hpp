@@ -33,14 +33,22 @@ class layer final
    * @details All of the tiles in the created layer are initialized with the
    * value of the `empty` tile ID.
    *
-   * @param nRows the initial number of rows in the layer; clamped to 1 if
-   * the supplied value is less than 1.
-   * @param nCols the initial number of columns in the layer; clamped to 1 if
-   * the supplied value is less than 1.
+   * @param nRows the initial number of rows in the layer.
+   * @param nCols the initial number of columns in the layer.
+   *
+   * @throws tactile_error if `nRows` or `nCols` aren't greater than 0.
    *
    * @since 0.1.0
    */
   layer(row_t nRows, col_t nCols);
+
+  /**
+   * @brief Creates a tile layer.
+   *
+   * @since 0.1.0
+   */
+  layer() : layer{5_row, 5_col}
+  {}
 
   /**
    * @brief Iterates each tile in the layer.

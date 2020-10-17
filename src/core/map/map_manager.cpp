@@ -19,7 +19,7 @@ void map_manager::emit_undo_redo_update()
 
 auto map_manager::add() -> map_id
 {
-  return add(new map_document{this});
+  return add(new map_document{5_row, 5_col, this});
 }
 
 auto map_manager::add(map_document* document) -> map_id

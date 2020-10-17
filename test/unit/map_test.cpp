@@ -3,6 +3,7 @@
 #include <catch.hpp>
 
 #include "algorithm.hpp"
+#include "tactile_error.hpp"
 
 using namespace tactile;
 using core::operator""_row;
@@ -10,22 +11,18 @@ using core::operator""_col;
 
 TEST_CASE("map(row_t, col_t)", "[map]")
 {
-  SECTION("Negative dimensions")
+  SECTION("Invalid dimensions")
   {
-    const core::map map{-1_row, -1_col};
-    CHECK(map.row_count() == 1_row);
-    CHECK(map.col_count() == 1_col);
-  }
-
-  SECTION("Zeroed dimensions")
-  {
-    const core::map map{0_row, 0_col};
-    CHECK(map.row_count() == 1_row);
-    CHECK(map.col_count() == 1_col);
+    CHECK_THROWS_AS(core::map(0_row, 1_col), tactile_error);
+    CHECK_THROWS_AS(core::map(1_row, 0_col), tactile_error);
+    CHECK_THROWS_AS(core::map(0_row, 0_col), tactile_error);
+    CHECK_THROWS_AS(core::map(-1_row, -1_col), tactile_error);
   }
 
   SECTION("Valid dimensions")
   {
+    CHECK_NOTHROW(core::map{1_row, 1_col});
+
     const auto rows = 7_row;
     const auto cols = 5_col;
     const core::map map{rows, cols};

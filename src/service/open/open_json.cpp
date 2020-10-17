@@ -58,8 +58,6 @@ void add_tilesets(core::map_document* document,
 
 void add_layers(core::map_document* document, const QJsonArray& layers)
 {
-  document->remove_layers();
-
   bool first{true};
   for (const auto& elem : layers) {
     const auto object = elem.toObject();

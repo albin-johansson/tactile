@@ -29,18 +29,33 @@ class map final
   using const_iterator = vector_map<layer_id, layer>::const_iterator;
 
   /**
-   * @brief Creates a map with one layer.
+   * @brief Creates an empty map with no layers.
    *
-   * @details The amount of rows and columns in the map is always at
-   * least 1.
+   * @since 0.1.0
+   */
+  map() = default;
+
+  /**
+   * @brief Creates a map with one layer.
    *
    * @param nRows the initial number of rows in the map.
    * @param nCols the initial number of columns in the map.
+   *
+   * @throws tactile_error if `nRows` or `nCols` aren't greater than 0.
    *
    * @since 0.1.0
    */
   map(row_t nRows, col_t nCols);
 
+  /**
+   * @brief Visits each layer in the map.
+   *
+   * @tparam T the type of the function object.
+   *
+   * @param callable the callable that will be invoked for each layer.
+   *
+   * @since 0.1.0
+   */
   template <std::invocable<layer_id, const layer&> T>
   void each_layer(T&& callable) const
   {

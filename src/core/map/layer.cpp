@@ -5,6 +5,7 @@
 
 #include "algorithm.hpp"
 #include "flood_fill.hpp"
+#include "tactile_error.hpp"
 
 namespace tactile::core {
 namespace {
@@ -22,8 +23,9 @@ namespace {
 
 layer::layer(row_t nRows, col_t nCols)
 {
-  nRows = at_least(nRows, 1_row);
-  nCols = at_least(nCols, 1_col);
+  if (nRows < 1_row || nCols < 1_col) {
+    throw tactile_error{"Invalid layer dimensions!"};
+  }
 
   m_tiles.reserve(nRows.get());
   m_tiles.assign(nRows.get(), create_row(nCols));

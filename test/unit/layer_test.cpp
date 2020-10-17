@@ -4,6 +4,7 @@
 
 #include "algorithm.hpp"
 #include "position.hpp"
+#include "tactile_error.hpp"
 
 using namespace tactile;
 using core::operator""_row;
@@ -11,22 +12,18 @@ using core::operator""_col;
 
 TEST_CASE("layer(row_t, col_t)", "[layer]")
 {
-  SECTION("Negative dimensions")
+  SECTION("Invalid dimensions")
   {
-    const core::layer layer{-1_row, -1_col};
-    CHECK(layer.row_count() == 1_row);
-    CHECK(layer.col_count() == 1_col);
-  }
-
-  SECTION("Zeroed dimensions")
-  {
-    const core::layer layer{0_row, 0_col};
-    CHECK(layer.row_count() == 1_row);
-    CHECK(layer.col_count() == 1_col);
+    CHECK_THROWS_AS(core::layer(0_row, 0_col), tactile_error);
+    CHECK_THROWS_AS(core::layer(1_row, 0_col), tactile_error);
+    CHECK_THROWS_AS(core::layer(0_row, 1_col), tactile_error);
+    CHECK_THROWS_AS(core::layer(-1_row, -1_col), tactile_error);
   }
 
   SECTION("Valid dimensions")
   {
+    CHECK_NOTHROW(core::layer(1_row, 1_col));
+
     const auto rows = 18_row;
     const auto cols = 52_col;
     const core::layer layer{rows, cols};
@@ -37,7 +34,7 @@ TEST_CASE("layer(row_t, col_t)", "[layer]")
 
 TEST_CASE("layer::for_each", "[layer]")
 {
-  core::layer layer{10_row, 10_col};
+  core::layer layer;
 
   int count{0};
   layer.for_each([&](tile_id id) { ++count; });
@@ -47,7 +44,7 @@ TEST_CASE("layer::for_each", "[layer]")
 
 TEST_CASE("layer::remove_all", "[layer]")
 {
-  core::layer layer{5_row, 5_col};
+  core::layer layer;
   std::vector<core::position> positions;
 
   layer.flood({}, 1_t, positions);
@@ -141,7 +138,7 @@ TEST_CASE("layer::set_cols", "[layer]")
 
 TEST_CASE("layer::set_tile", "[layer]")
 {
-  core::layer layer{5_row, 5_col};
+  core::layer layer;
 
   const core::position pos{2_row, 2_col};
   CHECK(*layer.tile_at(pos) == empty);
@@ -161,7 +158,7 @@ TEST_CASE("layer::set_tile", "[layer]")
 
 TEST_CASE("layer::set_visible", "[layer]")
 {
-  core::layer layer{5_row, 5_col};
+  core::layer layer;
 
   CHECK(layer.visible());
 
@@ -208,6 +205,6 @@ TEST_CASE("layer::in_bounds", "[layer]")
 
 TEST_CASE("layer::visible", "[layer]")
 {
-  const core::layer layer{4_row, 4_col};
+  const core::layer layer;
   CHECK(layer.visible());
 }

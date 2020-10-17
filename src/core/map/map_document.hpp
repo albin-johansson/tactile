@@ -39,13 +39,26 @@ class map_document final : public QObject
 
  public:
   /**
-   * @brief Creates a map document.
+   * @brief Creates an empty map document.
    *
    * @param parent the parent object.
    *
    * @since 0.1.0
    */
   explicit map_document(QObject* parent = nullptr);
+
+  /**
+   * @brief Creates a map document with a map that contains one layer.
+   *
+   * @param nRows the initial number of rows in the map.
+   * @param nCols the initial number of columns in the map.
+   * @param parent the parent object.
+   *
+   * @throws tactile_error if `nRows` or `nCols` aren't greater than 0.
+   *
+   * @since 0.1.0
+   */
+  explicit map_document(row_t nRows, col_t nCols, QObject* parent = nullptr);
 
   /**
    * @brief Reverts the effects of the most recent command.
@@ -445,6 +458,8 @@ class map_document final : public QObject
   std::unique_ptr<map> m_map;
   std::unique_ptr<tileset_manager> m_tilesets;
   command_stack* m_commands{};
+
+  void setup();
 };
 
 }  // namespace tactile::core

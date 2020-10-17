@@ -83,7 +83,6 @@ auto open_tmx_map(const QFileInfo& path) -> core::map_document*
   const auto root = tmx.documentElement();
 
   auto* document = new core::map_document{};
-  document->remove_layers();
   document->set_next_layer_id(
       xml::int_attr<layer_id>(root, QStringLiteral(u"nextlayerid")));
 

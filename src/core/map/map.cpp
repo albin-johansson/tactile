@@ -5,14 +5,19 @@
 #include <utility>  // move
 
 #include "algorithm.hpp"
+#include "tactile_error.hpp"
 
 namespace tactile::core {
 
 map::map(row_t nRows, col_t nCols)
 {
-  m_layers.reserve(5);
+  if (nRows < 1_row || nCols < 1_col) {
+    throw tactile_error{"Invalid map dimensions!"};
+  }
 
-  m_layers.emplace(m_nextLayer, at_least(nRows, 1_row), at_least(nCols, 1_col));
+  m_layers.reserve(5);
+  m_layers.emplace(m_nextLayer, nRows, nCols);
+
   m_activeLayer = m_nextLayer;
   ++m_nextLayer;
 }

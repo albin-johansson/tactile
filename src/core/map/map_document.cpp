@@ -17,28 +17,32 @@ namespace tactile::core {
 
 map_document::map_document(QObject* parent)
     : QObject{parent},
-      m_map{std::make_unique<map>(5_row, 5_col)},
+      m_map{std::make_unique<map>()},
       m_tilesets{std::make_unique<tileset_manager>()},
       m_commands{new command_stack{this}}
 {
+  setup();
+}
+
+map_document::map_document(row_t nRows, col_t nCols, QObject* parent)
+    : QObject{parent},
+      m_map{std::make_unique<map>(nRows, nCols)},
+      m_tilesets{std::make_unique<tileset_manager>()},
+      m_commands{new command_stack{this}}
+{
+  setup();
+}
+
+void map_document::setup()
+{
   m_commands->setUndoLimit(100);
 
-  connect(m_commands,
-          &command_stack::canUndoChanged,
-          this,
-          &map_document::undo_state_updated);
-  connect(m_commands,
-          &command_stack::canRedoChanged,
-          this,
-          &map_document::redo_state_updated);
-  connect(m_commands,
-          &command_stack::undoTextChanged,
-          this,
-          &map_document::undo_text_updated);
-  connect(m_commands,
-          &command_stack::redoTextChanged,
-          this,
-          &map_document::redo_text_updated);
+  // clang-format off
+  connect(m_commands, &command_stack::canUndoChanged, this, &map_document::undo_state_updated);
+  connect(m_commands, &command_stack::canRedoChanged, this, &map_document::redo_state_updated);
+  connect(m_commands, &command_stack::undoTextChanged, this, &map_document::undo_text_updated);
+  connect(m_commands, &command_stack::redoTextChanged, this, &map_document::redo_text_updated);
+  // clang-format on
 }
 
 void map_document::undo()
