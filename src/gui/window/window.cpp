@@ -266,7 +266,7 @@ void window::disable_stamp_preview()
 
 void window::handle_new_map(core::map_document* map, map_id id)
 {
-  m_editor->add_new_map_tab(map, id, QStringLiteral(u"map"));
+  m_editor->add_map_tab(map, id, QStringLiteral(u"map"));
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
     enter_content_view();
@@ -288,7 +288,7 @@ void window::handle_remove_map(map_id tabID)
 
   // The tab isn't actually removed yet, this checks if there will be
   // no open tabs
-  if (m_editor->num_tabs() == 1) {
+  if (m_editor->tab_count() == 1) {
     enter_no_content_view();
   }
 }
@@ -311,7 +311,7 @@ void window::on_action_close_map_triggered()
   m_editor->close_tab(id);
   emit ui_close_map(id);
 
-  if (m_editor->num_tabs() == 0) {
+  if (m_editor->tab_count() == 0) {
     enter_no_content_view();
   }
 }

@@ -38,7 +38,7 @@ class map_editor final : public QWidget
 
   void disable_stamp_preview();
 
-  void add_new_map_tab(core::map_document* map,
+  void add_map_tab(core::map_document* map,
                        map_id id,
                        const QString& title);
 
@@ -73,7 +73,7 @@ class map_editor final : public QWidget
 
   [[nodiscard]] auto active_tab_name() const -> std::optional<QString>;
 
-  [[nodiscard]] auto num_tabs() const -> int;
+  [[nodiscard]] auto tab_count() const -> int;
 
  public slots:
   void force_redraw();
@@ -101,7 +101,7 @@ class map_editor final : public QWidget
 
  private:
   Ui::map_editor* m_ui{};
-  map_tab_widget* m_mapTabWidget{};
+  map_tab_widget* m_tabWidget{};
   int m_editorID{};
   int m_startupID{};
 
