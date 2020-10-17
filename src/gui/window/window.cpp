@@ -330,6 +330,11 @@ void window::on_actionToolsVisibility_triggered()
   m_toolDock->setVisible(m_ui->actionToolsVisibility->isChecked());
 }
 
+void window::on_actionLayersVisibility_triggered()
+{
+  m_layerDock->setVisible(m_ui->actionLayersVisibility->isChecked());
+}
+
 void window::on_actionSave_triggered()
 {
   // TODO

@@ -203,6 +203,8 @@ class window final : public QMainWindow
 
   void on_actionToolsVisibility_triggered();
 
+  void on_actionLayersVisibility_triggered();
+
   void on_actionSave_triggered();
 
   void on_actionSaveAs_triggered();
