@@ -43,7 +43,7 @@ map_tab_widget::~map_tab_widget() noexcept = default;
 
 void map_tab_widget::handle_tab_close(int index)
 {
-  emit ui_remove_map(get_view(index)->id());  // TODO rename -> past tense
+  emit ui_remove_map(get_view(index)->id());
   removeTab(index);
 }
 
