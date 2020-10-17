@@ -47,8 +47,8 @@ void window::init_connections()
     connect(action, &QAction::triggered, this, fun);
   };
 
-  onTriggered(m_ui->action_new_map, &window::request_new_map);
-  onTriggered(m_ui->action_add_tileset, &window::request_new_tileset);
+  onTriggered(m_ui->action_new_map, &window::ui_new_map);
+  onTriggered(m_ui->action_add_tileset, &window::ui_new_tileset);
 
   connect(m_editor,
           &map_editor::request_remove_tab,
@@ -91,10 +91,8 @@ void window::init_connections()
           m_ui->actionLayersVisibility,
           &QAction::setChecked);
 
-  connect(m_editor,
-          &map_editor::request_select_tab,
-          this,
-          &window::request_select_map);
+  connect(
+      m_editor, &map_editor::request_select_tab, this, &window::ui_select_map);
   connect(m_editor, &map_editor::mouse_pressed, this, &window::mouse_pressed);
   connect(m_editor, &map_editor::mouse_moved, this, &window::mouse_moved);
   connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
@@ -103,20 +101,20 @@ void window::init_connections()
   connect(m_editor,
           &map_editor::increase_zoom,
           this,
-          &window::request_increase_tile_size);
+          &window::ui_increase_tile_size);
   connect(m_editor,
           &map_editor::decrease_zoom,
           this,
-          &window::request_decrease_tile_size);
+          &window::ui_decrease_tile_size);
 
   connect(m_tilesetDock,
           &tileset_dock::ui_requested_tileset,
           this,
-          &window::request_new_tileset);
+          &window::ui_new_tileset);
   connect(m_tilesetDock,
           &tileset_dock::ui_selected_tileset,
           this,
-          &window::selected_tileset);
+          &window::ui_selected_tileset);
   connect(m_tilesetDock,
           &tileset_dock::ui_removed_tileset,
           this,
@@ -124,7 +122,7 @@ void window::init_connections()
   connect(m_tilesetDock,
           &tileset_dock::tileset_selection_changed,
           this,
-          &window::tileset_selection_changed);
+          &window::ui_tileset_selection_changed);
 
   connect(m_layerDock,
           &layer_dock::ui_requested_new_layer,
@@ -206,49 +204,49 @@ auto window::in_editor_mode() const -> bool
   return m_editor->in_editor_mode();
 }
 
-void window::handle_undo_state_update(bool canUndo)
+void window::undo_state_updated(bool canUndo)
 {
   m_ui->action_undo->setEnabled(canUndo);
 }
 
-void window::handle_redo_state_update(bool canRedo)
+void window::redo_state_updated(bool canRedo)
 {
   m_ui->action_redo->setEnabled(canRedo);
 }
 
-void window::handle_undo_text_update(const QString& text)
+void window::undo_text_updated(const QString& text)
 {
   m_ui->action_undo->setText(QStringLiteral(u"Undo ") + text);
 }
 
-void window::handle_redo_text_update(const QString& text)
+void window::redo_text_updated(const QString& text)
 {
   m_ui->action_redo->setText(QStringLiteral(u"Redo ") + text);
 }
 
-void window::handle_add_tileset(map_id map,
-                                tileset_id id,
-                                const core::tileset& tileset)
+void window::added_tileset(map_id map,
+                           tileset_id id,
+                           const core::tileset& tileset)
 {
   m_tilesetDock->added_tileset(map, id, tileset);
 }
 
-void window::handle_removed_tileset(map_id, tileset_id id)  // FIXME ?
+void window::removed_tileset(map_id, tileset_id id)  // FIXME ?
 {
   m_tilesetDock->removed_tileset(id);
 }
 
-void window::handle_selected_layer(layer_id id, const core::layer& layer)
+void window::selected_layer(layer_id id, const core::layer& layer)
 {
   m_layerDock->selected_layer(id, layer);
 }
 
-void window::handle_added_layer(layer_id id, const core::layer& layer)
+void window::added_layer(layer_id id, const core::layer& layer)
 {
   m_layerDock->added_layer(id, layer);
 }
 
-void window::handle_removed_layer(layer_id id)
+void window::removed_layer(layer_id id)
 {
   m_layerDock->removed_layer(id);
 }
@@ -337,7 +335,7 @@ void window::closeEvent(QCloseEvent* event)
 
 void window::handle_remove_tab(map_id tabID)
 {
-  emit request_close_map(tabID);
+  emit ui_close_map(tabID);
 
   // The tab isn't actually removed yet, this checks if there will be
   // no open tabs
@@ -348,12 +346,12 @@ void window::handle_remove_tab(map_id tabID)
 
 void window::on_action_undo_triggered()
 {
-  emit request_undo();
+  emit ui_undo();
 }
 
 void window::on_action_redo_triggered()
 {
-  emit request_redo();
+  emit ui_redo();
 }
 
 void window::on_action_close_map_triggered()
@@ -362,7 +360,7 @@ void window::on_action_close_map_triggered()
   const auto id = m_editor->active_tab_id().value();
 
   m_editor->close_tab(id);
-  emit request_close_map(id);
+  emit ui_close_map(id);
 
   if (m_editor->num_tabs() == 0) {
     enter_no_content_view();
@@ -393,13 +391,14 @@ void window::on_action_save_as_triggered()
       return QStringLiteral(u"map");
     }
   };
-  save_as_dialog::spawn([this](const QString& path) { emit save_as(path); },
+  save_as_dialog::spawn([this](const QString& path) { emit ui_save_as(path); },
                         get_tab_name());
 }
 
 void window::on_action_open_map_triggered()
 {
-  open_map_dialog::spawn([this](const QString& path) { emit open_map(path); });
+  open_map_dialog::spawn(
+      [this](const QString& path) { emit ui_open_map(path); });
 }
 
 void window::on_action_rename_triggered()
@@ -409,27 +408,27 @@ void window::on_action_rename_triggered()
 
 void window::on_action_add_row_triggered()
 {
-  emit request_add_row();
+  emit ui_add_row();
 }
 
 void window::on_action_add_column_triggered()
 {
-  emit request_add_col();
+  emit ui_add_col();
 }
 
 void window::on_action_remove_row_triggered()
 {
-  emit request_remove_row();
+  emit ui_remove_row();
 }
 
 void window::on_action_remove_column_triggered()
 {
-  emit request_remove_col();
+  emit ui_remove_col();
 }
 
 void window::on_action_resize_map_triggered()
 {
-  emit request_resize_map();
+  emit ui_resize_map();
 }
 
 void window::on_action_toggle_grid_triggered()
@@ -442,37 +441,37 @@ void window::on_action_toggle_grid_triggered()
 
 void window::on_action_pan_up_triggered()
 {
-  emit request_pan_up();
+  emit ui_pan_up();
 }
 
 void window::on_action_pan_down_triggered()
 {
-  emit request_pan_down();
+  emit ui_pan_down();
 }
 
 void window::on_action_pan_right_triggered()
 {
-  emit request_pan_right();
+  emit ui_pan_right();
 }
 
 void window::on_action_pan_left_triggered()
 {
-  emit request_pan_left();
+  emit ui_pan_left();
 }
 
 void window::on_action_zoom_in_triggered()
 {
-  emit request_increase_tile_size();
+  emit ui_increase_tile_size();
 }
 
 void window::on_action_zoom_out_triggered()
 {
-  emit request_decrease_tile_size();
+  emit ui_decrease_tile_size();
 }
 
 void window::on_action_reset_zoom_triggered()
 {
-  emit request_reset_tile_size();
+  emit ui_reset_tile_size();
 }
 
 void window::on_action_center_camera_triggered()
@@ -535,31 +534,31 @@ void window::handle_theme_changed()
 void window::handle_stamp_enabled()
 {
   m_ui->action_stamp_tool->setChecked(true);
-  emit select_tool(tool_id::stamp);
+  emit ui_selected_tool(tool_id::stamp);
 }
 
 void window::handle_bucket_enabled()
 {
   m_ui->action_bucket_tool->setChecked(true);
-  emit select_tool(tool_id::bucket);
+  emit ui_selected_tool(tool_id::bucket);
 }
 
 void window::handle_eraser_enabled()
 {
   m_ui->action_eraser_tool->setChecked(true);
-  emit select_tool(tool_id::eraser);
+  emit ui_selected_tool(tool_id::eraser);
 }
 
 void window::handle_rectangle_enabled()
 {
   m_ui->action_rectangle_tool->setChecked(true);
-  emit select_tool(tool_id::rectangle);
+  emit ui_selected_tool(tool_id::rectangle);
 }
 
 void window::handle_find_same_enabled()
 {
   m_ui->action_find_same_tool->setChecked(true);
-  emit select_tool(tool_id::find_same);
+  emit ui_selected_tool(tool_id::find_same);
 }
 
 }  // namespace tactile::gui

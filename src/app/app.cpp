@@ -48,7 +48,7 @@ void app::open_map(const QString& path)
 
   document->each_tileset(
       [&](tileset_id tilesetId, const core::tileset& tileset) {
-        m_window->handle_add_tileset(mapId, tilesetId, tileset);
+        m_window->added_tileset(mapId, tilesetId, tileset);
       });
 }
 

@@ -64,46 +64,46 @@ class window final : public QMainWindow
   void enter_content_view();
 
  signals:
-  void save_as(const QString& path);
-  void open_map(const QString& path);
+  void ui_save_as(const QString& path);
+  void ui_open_map(const QString& path);
 
-  void request_new_map();
-  void request_close_map(map_id id);
+  void ui_new_map();
+  void ui_close_map(map_id id);
 
-  void request_undo();
-  void request_redo();
+  void ui_undo();
+  void ui_redo();
 
-  void request_add_row();
-  void request_add_col();
+  void ui_add_row();
+  void ui_add_col();
 
-  void request_remove_row();
-  void request_remove_col();
+  void ui_remove_row();
+  void ui_remove_col();
 
-  void select_tool(tool_id tool);
+  void ui_selected_tool(tool_id tool);
 
   void ui_requested_new_layer();
   void ui_requested_remove_layer();
   void ui_selected_layer(layer_id id);
   void ui_set_layer_visibility(bool visible);
 
-  void request_new_tileset();
+  void ui_new_tileset();
   void ui_removed_tileset(tileset_id id);
-  void selected_tileset(tileset_id id);
-  void tileset_selection_changed(core::position topLeft,
-                                 core::position bottomRight);
+  void ui_selected_tileset(tileset_id id);
+  void ui_tileset_selection_changed(core::position topLeft,
+                                    core::position bottomRight);
 
-  void request_resize_map();
+  void ui_resize_map();
 
-  void request_increase_tile_size();
-  void request_decrease_tile_size();
-  void request_reset_tile_size();
+  void ui_increase_tile_size();
+  void ui_decrease_tile_size();
+  void ui_reset_tile_size();
 
-  void request_pan_right();
-  void request_pan_down();
-  void request_pan_left();
-  void request_pan_up();
+  void ui_pan_right();
+  void ui_pan_down();
+  void ui_pan_left();
+  void ui_pan_up();
 
-  void request_select_map(map_id id);
+  void ui_select_map(map_id id);
 
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
   void mouse_moved(QMouseEvent* event, QPointF mapPosition);
@@ -112,23 +112,21 @@ class window final : public QMainWindow
   void mouse_exited(QEvent* event);
 
  public slots:
-  void handle_undo_state_update(bool canUndo);
+  void undo_state_updated(bool canUndo);
 
-  void handle_redo_state_update(bool canRedo);
+  void redo_state_updated(bool canRedo);
 
-  void handle_undo_text_update(const QString& text);
+  void undo_text_updated(const QString& text);
 
-  void handle_redo_text_update(const QString& text);
+  void redo_text_updated(const QString& text);
 
-  void handle_add_tileset(map_id map,
-                          tileset_id id,
-                          const core::tileset& tileset);
+  void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 
-  void handle_removed_tileset(map_id map, tileset_id id);
+  void removed_tileset(map_id map, tileset_id id);
 
-  void handle_selected_layer(layer_id id, const core::layer& layer);
-  void handle_added_layer(layer_id id, const core::layer& layer);
-  void handle_removed_layer(layer_id id);
+  void selected_layer(layer_id id, const core::layer& layer);
+  void added_layer(layer_id id, const core::layer& layer);
+  void removed_layer(layer_id id);
 
   void switched_map(map_id map, const core::map_document& document);
 
