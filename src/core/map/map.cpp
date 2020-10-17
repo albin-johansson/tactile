@@ -34,20 +34,14 @@ void map::set_tile(const position& pos, tile_id id)
   current_layer().set_tile(pos, id);
 }
 
-void map::remove_all(tile_id id)
+void map::remove_occurrences(tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
     layer.remove_all(id);
   }
 }
 
-void map::remove_layers()
-{
-  m_layers.clear();
-  m_activeLayer.reset();
-}
-
-void map::remove_layer()
+void map::remove_active_layer()
 {
   if (m_activeLayer) {
     m_layers.erase(*m_activeLayer);
@@ -55,9 +49,9 @@ void map::remove_layer()
   }
 }
 
-void map::select_layer(layer_id id) noexcept
+void map::select_layer(layer_id id)
 {
-  if (has_layer(id)) {
+  if (m_layers.contains(id)) {
     m_activeLayer = id;
   }
 }
@@ -79,6 +73,7 @@ auto map::add_layer() -> layer_id
 
 void map::add_layer(layer_id id, layer&& layer)
 {
+  Q_ASSERT(!m_layers.contains(id));
   m_layers.emplace(id, std::move(layer));
 }
 

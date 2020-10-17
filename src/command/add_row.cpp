@@ -19,7 +19,7 @@ void add_row::redo()
 {
   QUndoCommand::redo();
 
-  invoke_n(amount(), [this] { m_map->add_row(); });
+  invoke_n(amount(), [this] { m_map->add_row(empty); });
 }
 
 }  // namespace tactile::cmd

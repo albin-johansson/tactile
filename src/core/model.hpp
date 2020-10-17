@@ -167,7 +167,7 @@ class model final : public QObject
 
   void add_layer();
 
-  void remove_layer();
+  void remove_active_layer();
 
   /**
    * @brief Selects the tile layer associated with the specified index.

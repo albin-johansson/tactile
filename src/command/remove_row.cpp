@@ -14,7 +14,7 @@ remove_row::remove_row(core::map* map)
 void remove_row::undo()
 {
   QUndoCommand::undo();
-  invoke_n(times(), [this] { get_map()->add_row(); });
+  invoke_n(times(), [this] { get_map()->add_row(empty); });
   restore_tiles();
 }
 

@@ -136,7 +136,7 @@ void map_document::remove_tileset(tileset_id id, bool notify)
   const auto [first, last] = m_tilesets->range_of(id);
 
   for (auto i = first; i < last; ++i) {
-    m_map->remove_all(i);
+    m_map->remove_occurrences(i);
   }
 
   m_tilesets->remove(id);

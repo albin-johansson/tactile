@@ -9,6 +9,13 @@ using namespace tactile;
 using core::operator""_row;
 using core::operator""_col;
 
+TEST_CASE("map()", "[map]")
+{
+  core::map map;
+  CHECK(map.layer_count() == 0);
+  CHECK(!map.active_layer_id());
+}
+
 TEST_CASE("map(row_t, col_t)", "[map]")
 {
   SECTION("Invalid dimensions")
@@ -31,6 +38,20 @@ TEST_CASE("map(row_t, col_t)", "[map]")
   }
 }
 
+TEST_CASE("map::each_layer", "[map]")
+{
+  core::map map;
+
+  map.add_layer();
+  map.add_layer();
+  map.add_layer();
+
+  int count{};
+  map.each_layer([&](layer_id id, const core::layer& layer) { ++count; });
+
+  CHECK(count == 3);
+}
+
 TEST_CASE("map::set_tile", "[map]")
 {
   core::map map{4_row, 4_col};
@@ -41,7 +62,7 @@ TEST_CASE("map::set_tile", "[map]")
   CHECK(map.tile_at(pos) == 7_t);
 }
 
-TEST_CASE("map::remove_all", "[map]")
+TEST_CASE("map::remove_occurrences", "[map]")
 {
   core::map map{4_row, 4_col};
 
@@ -50,11 +71,39 @@ TEST_CASE("map::remove_all", "[map]")
 
   std::vector<core::position> positions;
   map.flood({}, empty, positions);
-  map.remove_all(1_t);
+  map.remove_occurrences(1_t);
 
   for (const auto& [key, layer] : map) {
     layer.for_each([](tile_id id) { CHECK(id == empty); });
   }
+}
+
+TEST_CASE("map::add_layer", "[map]")
+{
+  core::map map{5_row, 5_col};
+
+  const auto count = map.layer_count();
+  const auto id = map.add_layer();
+
+  CHECK(map.active_layer_id() != id);  // new layer isn't active
+  CHECK(map.layer_count() == count + 1);
+}
+
+TEST_CASE("map::remove_active_layer", "[map]")
+{
+  core::map map;
+  CHECK_NOTHROW(map.remove_active_layer());
+
+  const auto id = map.add_layer();
+  map.add_layer();
+
+  CHECK_NOTHROW(map.remove_active_layer());
+  CHECK(map.layer_count() == 2);
+
+  map.select_layer(id);
+  map.remove_active_layer();
+  CHECK(map.layer_count() == 1);
+  CHECK(!map.active_layer_id());
 }
 
 TEST_CASE("map::select_layer", "[map]")
@@ -73,22 +122,12 @@ TEST_CASE("map::select_layer", "[map]")
   CHECK(map.active_layer_id() == 2_layer);
 }
 
-TEST_CASE("map::add_layer", "[map]")
-{
-  core::map map{5_row, 5_col};
-
-  const auto count = map.layer_count();
-  map.add_layer();
-
-  CHECK(map.layer_count() == count + 1);
-}
-
 TEST_CASE("map::add_row", "[map]")
 {
   const auto start = 4_row;
   core::map map{start, 4_col};
 
-  map.add_row();
+  map.add_row(empty);
 
   CHECK(map.row_count() == start + 1_row);
 }
@@ -98,7 +137,7 @@ TEST_CASE("map::add_col", "[map]")
   const auto start = 7_col;
   core::map map{1_row, start};
 
-  map.add_col();
+  map.add_col(empty);
 
   CHECK(map.col_count() == start + 1_col);
 }
@@ -127,6 +166,46 @@ TEST_CASE("map::remove_col", "[map]")
   invoke_n(20, [&map] { map.remove_col(); });
 
   CHECK(map.col_count() == 1_col);
+}
+
+TEST_CASE("map::increase_tile_size", "[map]")
+{
+  core::map map;
+
+  const auto before = map.current_tile_size();
+  map.increase_tile_size();
+  const auto after = map.current_tile_size();
+
+  CHECK(after > before);
+}
+
+TEST_CASE("map::decrease_tile_size", "[map]")
+{
+  core::map map;
+
+  const auto before = map.current_tile_size();
+  map.decrease_tile_size();
+  const auto after = map.current_tile_size();
+
+  CHECK(after < before);
+}
+
+TEST_CASE("map::reset_tile_size", "[map]")
+{
+  core::map map;
+
+  for (int i = 0; i < 10; ++i) {
+    map.increase_tile_size();
+  }
+
+  map.reset_tile_size();
+  CHECK(map.current_tile_size() == core::tile_size::default_size());
+}
+
+TEST_CASE("map::set_next_layer_id", "[map]")
+{
+  core::map map;
+  CHECK_NOTHROW(map.set_next_layer_id(1_layer));
 }
 
 TEST_CASE("map::set_rows", "[map]")
@@ -272,4 +351,13 @@ TEST_CASE("map::current_tile_size", "[map]")
 {
   const core::map map{4_row, 4_col};
   CHECK(map.current_tile_size() == core::tile_size::default_size());
+}
+
+TEST_CASE("map::get_layer", "[map]")
+{
+  core::map map;
+  CHECK_THROWS(map.get_layer(1_layer));
+
+  const auto id = map.add_layer();
+  CHECK_NOTHROW(map.get_layer(id));
 }

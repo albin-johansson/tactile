@@ -215,21 +215,12 @@ class map_document final : public QObject
     emit added_layer(id, m_map->get_layer(id));
   }
 
-  void remove_layer()
+  void remove_active_layer()
   {
     if (const auto id = m_map->active_layer_id(); id) {
-      m_map->remove_layer();
+      m_map->remove_active_layer();
       emit removed_layer(*id);
     }
-  }
-
-  /**
-   * @copydoc map::remove_layers()
-   */
-  void remove_layers()
-  {
-    m_map->remove_layers();
-    // TODO signal?
   }
 
   /**

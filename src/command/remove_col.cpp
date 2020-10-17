@@ -14,7 +14,7 @@ remove_col::remove_col(core::map* map)
 void remove_col::undo()
 {
   QUndoCommand::undo();
-  invoke_n(times(), [&] { get_map()->add_col(); });
+  invoke_n(times(), [&] { get_map()->add_col(empty); });
   restore_tiles();
 }
 

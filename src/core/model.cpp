@@ -85,10 +85,10 @@ void model::add_layer()
   }
 }
 
-void model::remove_layer()
+void model::remove_active_layer()
 {
   if (auto* document = current_document()) {
-    document->remove_layer();
+    document->remove_active_layer();
   }
 }
 

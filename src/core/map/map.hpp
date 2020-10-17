@@ -96,43 +96,12 @@ class map final
    *
    * @since 0.1.0
    */
-  void remove_all(tile_id id);
-
-  /**
-   * @brief Removes all layers from the map.
-   *
-   * @post You must add at least one layer before invoking any layer-related
-   * member function of the map object, after invoking this function.
-   *
-   * @since 0.1.0
-   */
-  void remove_layers();
-
-  /**
-   * @brief Removes the currently active layer from the map.
-   *
-   * @note This function has no effect if there is no active layer.
-   *
-   * @warning If there is an active layer, then it will be removed but no other
-   * layer will be made active.
-   *
-   * @since 0.1.0
-   */
-  void remove_layer();
-
-  /**
-   * @brief Selects the tile layer associated with the specified ID.
-   *
-   * @note This method has no effect if the supplied ID is invalid.
-   *
-   * @param id the layer ID of the tile layer that will be selected.
-   *
-   * @since 0.1.0
-   */
-  void select_layer(layer_id id) noexcept;
+  void remove_occurrences(tile_id id);
 
   /**
    * @brief Adds an empty layer to the map.
+   *
+   * @note The added layer will *not* be made the active layer.
    *
    * @since 0.1.0
    */
@@ -151,22 +120,45 @@ class map final
   void add_layer(layer_id id, layer&& layer);
 
   /**
-   * @brief Adds a row to the map.
+   * @brief Removes the currently active layer from the map.
    *
-   * @param id the tile ID that the new tiles will have, defaults to empty.
+   * @note This function has no effect if there is no active layer.
+   *
+   * @warning If there is an active layer, then it will be removed but no other
+   * layer will be made active.
    *
    * @since 0.1.0
    */
-  void add_row(tile_id id = empty);
+  void remove_active_layer();
+
+  /**
+   * @brief Selects the tile layer associated with the specified ID.
+   *
+   * @note This method has no effect if the supplied ID is invalid.
+   *
+   * @param id the layer ID of the tile layer that will be selected.
+   *
+   * @since 0.1.0
+   */
+  void select_layer(layer_id id);
+
+  /**
+   * @brief Adds a row to the map.
+   *
+   * @param id the tile ID that the new tiles will have.
+   *
+   * @since 0.1.0
+   */
+  void add_row(tile_id id);
 
   /**
    * @brief Adds a column to the map.
    *
-   * @param id the tile ID that the new tiles will have, defaults to empty.
+   * @param id the tile ID that the new tiles will have.
    *
    * @since 0.1.0
    */
-  void add_col(tile_id id = empty);
+  void add_col(tile_id id);
 
   /**
    * @brief Removes a row from the map.
@@ -367,11 +359,6 @@ class map final
    */
   [[nodiscard]] auto height() const -> int;
 
-  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&
-  {
-    return m_layers.at(id);
-  }
-
   /**
    * @brief Returns the ID of the currently active layer.
    *
@@ -395,6 +382,22 @@ class map final
   [[nodiscard]] auto current_tile_size() const noexcept -> int
   {
     return m_tileSize.get();
+  }
+
+  /**
+   * @brief Returns the layer associated with the specified ID.
+   *
+   * @note This function throws if no layer is found.
+   *
+   * @param id the ID associated with the desired layer.
+   *
+   * @return a reference to the layer associated with the specified ID.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&
+  {
+    return m_layers.at(id);
   }
 
   /**

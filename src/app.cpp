@@ -76,7 +76,7 @@ void app::init_connections()
   window_to_model(&win::ui_removed_tileset,        &mod::ui_removed_tileset);
   window_to_model(&win::ui_selected_tileset,       &mod::select_tileset);
   window_to_model(&win::ui_requested_new_layer,    &mod::add_layer);
-  window_to_model(&win::ui_requested_remove_layer, &mod::remove_layer);
+  window_to_model(&win::ui_requested_remove_layer, &mod::remove_active_layer);
   window_to_model(&win::ui_selected_layer,         &mod::select_layer);
   window_to_model(&win::ui_set_layer_visibility,   &mod::set_layer_visibility);
   window_to_model(&win::mouse_pressed,             &mod::mouse_pressed);
