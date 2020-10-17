@@ -3,7 +3,7 @@
 A tilemap editor that aims to be easy-to-use, fast and lightweight. Furthermore, compatibility with
 the excellent [Tiled](https://www.mapeditor.org/) map editor is pursued.
 
-![startup_screen](meta/screenshots/tactile_010_start.png "startup")
+![example](meta/screenshots/v010.png "example")
 
 ## Aim
 
