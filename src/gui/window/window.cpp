@@ -237,6 +237,10 @@ void window::set_actions_enabled(bool enabled)
   m_ui->actionAddTileset->setEnabled(enabled);
 
   // View
+  m_ui->actionResetLayout->setEnabled(enabled);
+  m_ui->actionToolsVisibility->setEnabled(enabled);
+  m_ui->actionTilesetsVisibility->setEnabled(enabled);
+  m_ui->actionLayersVisibility->setEnabled(enabled);
   m_ui->actionCenterCamera->setEnabled(enabled);
   m_ui->actionToggleGrid->setEnabled(enabled);
   m_ui->actionZoomIn->setEnabled(enabled);
