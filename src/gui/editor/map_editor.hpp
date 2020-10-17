@@ -79,9 +79,9 @@ class map_editor final : public QWidget
   void force_redraw();
 
  signals:
-  void request_remove_tab(map_id id);
+  void ui_remove_map(map_id id);
 
-  void request_select_tab(map_id id);
+  void ui_select_map(map_id id);
 
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
 

@@ -61,8 +61,8 @@ app_connections::app_connections(app* app)
   window_to_model(&win::ui_remove_col,             &mod::remove_col);
   window_to_model(&win::ui_close_map,              &mod::close_map);
   window_to_model(&win::ui_select_map,             &mod::ui_selected_map);
-  window_to_model(&win::ui_increase_tile_size,     &mod::increase_tile_size);
-  window_to_model(&win::ui_decrease_tile_size,     &mod::decrease_tile_size);
+  window_to_model(&win::ui_increase_zoom,          &mod::increase_tile_size);
+  window_to_model(&win::ui_decrease_zoom,          &mod::decrease_tile_size);
   window_to_model(&win::ui_reset_tile_size,        &mod::reset_tile_size);
   window_to_model(&win::ui_selected_tool,          &mod::select_tool);
   window_to_model(&win::ui_removed_tileset,        &mod::ui_removed_tileset);

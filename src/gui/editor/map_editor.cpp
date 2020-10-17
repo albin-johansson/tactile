@@ -36,7 +36,7 @@ void map_editor::init_connections()
   connect(m_mapTabWidget,
           &map_tab_widget::request_remove_tab,
           this,
-          &map_editor::request_remove_tab);
+          &map_editor::ui_remove_map);
 
   connect(m_mapTabWidget,
           &map_tab_widget::currentChanged,
@@ -154,7 +154,7 @@ auto map_editor::num_tabs() const -> int
 void map_editor::tab_changed(int index)
 {
   if (const auto id = m_mapTabWidget->id_from_index(index); id) {
-    emit request_select_tab(*id);
+    emit ui_select_map(*id);
   }
 }
 

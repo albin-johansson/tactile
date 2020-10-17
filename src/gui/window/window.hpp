@@ -94,8 +94,8 @@ class window final : public QMainWindow
 
   void ui_resize_map();
 
-  void ui_increase_tile_size();
-  void ui_decrease_tile_size();
+  void ui_increase_zoom();
+  void ui_decrease_zoom();
   void ui_reset_tile_size();
 
   void ui_pan_right();
@@ -181,15 +181,15 @@ class window final : public QMainWindow
   [[nodiscard]] auto in_editor_mode() const -> bool;
 
  private slots:
-  void handle_remove_tab(map_id tabID);
+  void handle_remove_map(map_id tabID);
 
   void handle_theme_changed();
 
-  void handle_stamp_enabled();
+  void stamp_enabled();
 
-  void handle_bucket_enabled();
+  void bucket_enabled();
 
-  void handle_eraser_enabled();
+  void eraser_enabled();
 
   void handle_rectangle_enabled();
 

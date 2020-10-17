@@ -43,17 +43,14 @@ window::~window() noexcept
 
 void window::init_connections()
 {
-  auto onTriggered = [this](auto&& action, auto&& fun) {
+  auto on_triggered = [this](auto&& action, auto&& fun) {
     connect(action, &QAction::triggered, this, fun);
   };
 
-  onTriggered(m_ui->action_new_map, &window::ui_new_map);
-  onTriggered(m_ui->action_add_tileset, &window::ui_new_tileset);
+  on_triggered(m_ui->action_new_map, &window::ui_new_map);
+  on_triggered(m_ui->action_add_tileset, &window::ui_new_tileset);
 
-  connect(m_editor,
-          &map_editor::request_remove_tab,
-          this,
-          &window::handle_remove_tab);
+  // clang-format off
 
   {
     m_toolGroup = new QActionGroup{this};
@@ -64,82 +61,36 @@ void window::init_connections()
     m_toolGroup->addAction(m_ui->action_eraser_tool);
     m_toolGroup->addAction(m_ui->action_rectangle_tool);
 
-    connect(m_toolDock,
-            &tool_dock::stamp_enabled,
-            this,
-            &window::handle_stamp_enabled);
-    connect(m_toolDock,
-            &tool_dock::bucket_enabled,
-            this,
-            &window::handle_bucket_enabled);
-    connect(m_toolDock,
-            &tool_dock::eraser_enabled,
-            this,
-            &window::handle_eraser_enabled);
+    connect(m_toolDock, &tool_dock::stamp_enabled, this, &window::stamp_enabled);
+    connect(m_toolDock, &tool_dock::bucket_enabled, this, &window::bucket_enabled);
+    connect(m_toolDock, &tool_dock::eraser_enabled, this, &window::eraser_enabled);
   }
 
-  connect(m_toolDock,
-          &QDockWidget::visibilityChanged,
-          m_ui->action_mouse_tools_visibility,
-          &QAction::setChecked);
-  connect(m_tilesetDock,
-          &QDockWidget::visibilityChanged,
-          m_ui->action_tilesets_visibility,
-          &QAction::setChecked);
-  connect(m_layerDock,
-          &QDockWidget::visibilityChanged,
-          m_ui->actionLayersVisibility,
-          &QAction::setChecked);
+  connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->action_mouse_tools_visibility, &QAction::setChecked);
+  connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->action_tilesets_visibility, &QAction::setChecked);
+  connect(m_layerDock, &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
 
-  connect(
-      m_editor, &map_editor::request_select_tab, this, &window::ui_select_map);
+  connect(m_editor, &map_editor::ui_select_map, this, &window::ui_select_map);
+  connect(m_editor, &map_editor::ui_remove_map, this, &window::handle_remove_map);
+  connect(m_editor, &map_editor::increase_zoom, this, &window::ui_increase_zoom);
+  connect(m_editor, &map_editor::decrease_zoom, this, &window::ui_decrease_zoom);
   connect(m_editor, &map_editor::mouse_pressed, this, &window::mouse_pressed);
   connect(m_editor, &map_editor::mouse_moved, this, &window::mouse_moved);
   connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
   connect(m_editor, &map_editor::mouse_entered, this, &window::mouse_entered);
   connect(m_editor, &map_editor::mouse_exited, this, &window::mouse_exited);
-  connect(m_editor,
-          &map_editor::increase_zoom,
-          this,
-          &window::ui_increase_tile_size);
-  connect(m_editor,
-          &map_editor::decrease_zoom,
-          this,
-          &window::ui_decrease_tile_size);
 
-  connect(m_tilesetDock,
-          &tileset_dock::ui_requested_tileset,
-          this,
-          &window::ui_new_tileset);
-  connect(m_tilesetDock,
-          &tileset_dock::ui_selected_tileset,
-          this,
-          &window::ui_selected_tileset);
-  connect(m_tilesetDock,
-          &tileset_dock::ui_removed_tileset,
-          this,
-          &window::ui_removed_tileset);
-  connect(m_tilesetDock,
-          &tileset_dock::tileset_selection_changed,
-          this,
-          &window::ui_tileset_selection_changed);
+  connect(m_tilesetDock, &tileset_dock::ui_requested_tileset, this, &window::ui_new_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_selected_tileset, this, &window::ui_selected_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_removed_tileset, this, &window::ui_removed_tileset);
+  connect(m_tilesetDock, &tileset_dock::tileset_selection_changed, this, &window::ui_tileset_selection_changed);
 
-  connect(m_layerDock,
-          &layer_dock::ui_requested_new_layer,
-          this,
-          &window::ui_requested_new_layer);
-  connect(m_layerDock,
-          &layer_dock::ui_requested_remove_layer,
-          this,
-          &window::ui_requested_remove_layer);
-  connect(m_layerDock,
-          &layer_dock::ui_selected_layer,
-          this,
-          &window::ui_selected_layer);
-  connect(m_layerDock,
-          &layer_dock::ui_set_layer_visibility,
-          this,
-          &window::ui_set_layer_visibility);
+  connect(m_layerDock, &layer_dock::ui_requested_new_layer, this, &window::ui_requested_new_layer);
+  connect(m_layerDock, &layer_dock::ui_requested_remove_layer, this, &window::ui_requested_remove_layer);
+  connect(m_layerDock, &layer_dock::ui_selected_layer, this, &window::ui_selected_layer);
+  connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
+
+  // clang-format on
 }
 
 void window::enter_no_content_view()
@@ -331,7 +282,7 @@ void window::closeEvent(QCloseEvent* event)
   prefs::window::last_layout_state().set(saveState());
 }
 
-void window::handle_remove_tab(map_id tabID)
+void window::handle_remove_map(map_id tabID)
 {
   emit ui_close_map(tabID);
 
@@ -459,12 +410,12 @@ void window::on_action_pan_left_triggered()
 
 void window::on_action_zoom_in_triggered()
 {
-  emit ui_increase_tile_size();
+  emit ui_increase_zoom();
 }
 
 void window::on_action_zoom_out_triggered()
 {
-  emit ui_decrease_tile_size();
+  emit ui_decrease_zoom();
 }
 
 void window::on_action_reset_zoom_triggered()
@@ -529,19 +480,19 @@ void window::handle_theme_changed()
   emit m_editor->theme_changed();
 }
 
-void window::handle_stamp_enabled()
+void window::stamp_enabled()
 {
   m_ui->action_stamp_tool->setChecked(true);
   emit ui_selected_tool(tool_id::stamp);
 }
 
-void window::handle_bucket_enabled()
+void window::bucket_enabled()
 {
   m_ui->action_bucket_tool->setChecked(true);
   emit ui_selected_tool(tool_id::bucket);
 }
 
-void window::handle_eraser_enabled()
+void window::eraser_enabled()
 {
   m_ui->action_eraser_tool->setChecked(true);
   emit ui_selected_tool(tool_id::eraser);
