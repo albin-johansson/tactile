@@ -179,23 +179,17 @@ class map_document final : public QObject
   void remove_tileset(tileset_id id, bool notify = true);
 
   /**
-   * @copydoc tileset_manager::select_tileset(tileset_id)
+   * @copydoc tileset_manager::select()
    */
   void select_tileset(tileset_id id);
 
   /**
-   * @copydoc tileset_manager::set_selection(position,position)
+   * @copydoc tileset_manager::set_selection()
    */
   void set_selection(position topLeft, position bottomRight);
 
-  /**
-   * @copydoc tileset_manager::select_layer(layer_id)
-   */
   void select_layer(layer_id id);
 
-  /**
-   * @copydoc map::add_layer(layer_id,layer&&)
-   */
   void add_layer(layer_id id, layer&& layer)
   {
     m_map->add_layer(id, std::move(layer));

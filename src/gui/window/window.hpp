@@ -50,7 +50,7 @@ class window final : public QMainWindow
   ~window() noexcept override;
 
   /**
-   * @brief Enables the startup view.
+   * @brief Enables the view that is shown when no maps are active.
    *
    * @since 0.1.0
    */

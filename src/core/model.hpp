@@ -190,7 +190,7 @@ class model final : public QObject
   }
 
   /**
-   * @copydoc tool_model::select_tileset(tileset_id)
+   * @copydoc map_manager::select_tileset(tileset_id)
    */
   void select_tileset(tileset_id id)
   {
@@ -273,7 +273,7 @@ class model final : public QObject
   }
 
   /**
-   * @copydoc tool_model::pressed(QMouseEvent*,QPointF)
+   * @copydoc tool_model::pressed()
    */
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition)
   {
@@ -281,7 +281,7 @@ class model final : public QObject
   }
 
   /**
-   * @copydoc tool_model::moved(QMouseEvent*,QPointF)
+   * @copydoc tool_model::moved()
    */
   void mouse_moved(QMouseEvent* event, QPointF mapPosition)
   {
@@ -289,7 +289,7 @@ class model final : public QObject
   }
 
   /**
-   * @copydoc tool_model::released(QMouseEvent*,QPointF)
+   * @copydoc tool_model::released()
    */
   void mouse_released(QMouseEvent* event, QPointF mapPosition)
   {
@@ -297,7 +297,7 @@ class model final : public QObject
   }
 
   /**
-   * @copydoc tool_model::entered(QMouseEvent*,QPointF)
+   * @copydoc tool_model::entered()
    */
   void mouse_entered(QEvent* event)
   {
@@ -305,7 +305,7 @@ class model final : public QObject
   }
 
   /**
-   * @copydoc tool_model::exited(QMouseEvent*,QPointF)
+   * @copydoc tool_model::exited()
    */
   void mouse_exited(QEvent* event)
   {
