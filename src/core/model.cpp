@@ -6,31 +6,20 @@ namespace tactile::core {
 
 model::model() : m_maps{new map_manager{this}}, m_tools{this}
 {
-  connect(m_maps,
-          &map_manager::undo_state_updated,
-          this,
-          &model::undo_state_updated);
-  connect(m_maps,
-          &map_manager::redo_state_updated,
-          this,
-          &model::redo_state_updated);
-  connect(
-      m_maps, &map_manager::undo_text_updated, this, &model::undo_text_updated);
-  connect(
-      m_maps, &map_manager::redo_text_updated, this, &model::redo_text_updated);
-
+  // clang-format off
+  connect(m_maps, &map_manager::undo_state_updated, this, &model::undo_state_updated);
+  connect(m_maps, &map_manager::redo_state_updated, this, &model::redo_state_updated);
+  connect(m_maps, &map_manager::undo_text_updated, this, &model::undo_text_updated);
+  connect(m_maps, &map_manager::redo_text_updated, this, &model::redo_text_updated);
   connect(m_maps, &map_manager::added_layer, this, &model::added_layer);
   connect(m_maps, &map_manager::removed_layer, this, &model::removed_layer);
   connect(m_maps, &map_manager::selected_layer, this, &model::selected_layer);
-
+  connect(m_maps, &map_manager::removed_tileset, this, &model::removed_tileset);
   connect(m_maps, &map_manager::added_tileset, [this](tileset_id id) {
     const auto& tileset = current_document()->tilesets()->at(id);
     emit added_tileset(current_map().value(), id, tileset);
   });
-
-  connect(m_maps, &map_manager::removed_tileset, [this](tileset_id id) {
-    emit removed_tileset(current_map().value(), id);
-  });
+  // clang-format on
 }
 
 void model::undo()

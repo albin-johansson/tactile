@@ -188,7 +188,7 @@ void window::added_tileset(map_id map,
   m_tilesetDock->added_tileset(map, id, tileset);
 }
 
-void window::removed_tileset(map_id, tileset_id id)  // FIXME ?
+void window::removed_tileset(tileset_id id)
 {
   m_tilesetDock->removed_tileset(id);
 }

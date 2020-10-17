@@ -122,7 +122,7 @@ class window final : public QMainWindow
 
   void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 
-  void removed_tileset(map_id map, tileset_id id);
+  void removed_tileset(tileset_id id);
 
   void selected_layer(layer_id id, const core::layer& layer);
   void added_layer(layer_id id, const core::layer& layer);

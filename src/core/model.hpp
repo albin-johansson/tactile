@@ -130,7 +130,7 @@ class model final : public QObject
   void redo_text_updated(const QString& text);
 
   void added_tileset(map_id map, tileset_id id, const tileset& tileset);
-  void removed_tileset(map_id map, tileset_id id);
+  void removed_tileset(tileset_id id);
 
  public slots:
   void undo();
