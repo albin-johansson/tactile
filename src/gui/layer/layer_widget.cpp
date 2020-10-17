@@ -49,9 +49,12 @@ void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
     QMenu menu{this};
 
     QAction remove{tr("Remove layer"), this};
-    QAction toggleVisibility{tr("Toggle visibility"), this};
+    remove.setEnabled(m_ui->layerList->count() > 1);
+    connect(&remove, &QAction::triggered, [this](bool checked) {
+      emit ui_requested_remove_layer();
+    });
 
-    // TODO connect actions
+    QAction toggleVisibility{tr("Toggle visibility"), this};
 
     menu.addAction(&toggleVisibility);
     menu.addAction(menu.addSeparator());
@@ -86,7 +89,6 @@ void layer_widget::selected_layer(layer_id id, const core::layer& layer)
 
   m_ui->visibleButton->setChecked(layer.visible());
   //  m_ui->opacitySpinBox->setValue(layer.opacity()); // TODO
-
 }
 
 void layer_widget::selected_map(const core::map_document& document)
@@ -130,7 +132,7 @@ auto layer_widget::item_for_layer_id(layer_id id) -> layer_item*
 
 void layer_widget::update_possible_actions()
 {
-  m_ui->removeLayerButton->setDisabled(m_ui->layerList->count() <= 1);
+  m_ui->removeLayerButton->setEnabled(m_ui->layerList->count() > 1);
 }
 
 }  // namespace tactile::gui
