@@ -22,7 +22,7 @@ class layer_dock final : public QDockWidget
 
   void ui_requested_remove_layer();
 
-  void ui_selected_layer(layer_id);
+  void ui_selected_layer(layer_id id);
 
  public slots:
   void added_layer(layer_id id, const core::layer& layer)
