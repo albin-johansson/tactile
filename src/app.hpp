@@ -5,12 +5,17 @@
 #include <QUrl>
 #include <memory>  // unique_ptr
 
-#include "model.hpp"
 #include "position.hpp"
 #include "types.hpp"
-#include "window.hpp"
 
 namespace tactile {
+
+namespace core {
+class model;
+}
+namespace gui {
+class window;
+}
 
 /**
  * @class app
@@ -28,8 +33,6 @@ class app final : public QApplication
   Q_OBJECT
 
  public:
-  friend class app_connections;
-
   /**
    * @param argc the amount of command-line arguments.
    * @param argv the array of command-line arguments.
@@ -45,11 +48,6 @@ class app final : public QApplication
   core::model* m_model{};
 
   void init_connections();
-
-  [[nodiscard, deprecated]] auto model_ptr() noexcept -> core::model*
-  {
-    return m_model;
-  }
 
  private slots:
   void save_as(const QString& path);

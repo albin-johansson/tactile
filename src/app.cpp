@@ -33,11 +33,11 @@ void app::init_connections()
   using win = gui::window;
   using mod = core::model;
 
-  const auto model_to_window = [this](auto&& sender, auto&& receiver) {
+  const auto mod_to_win = [this](auto&& sender, auto&& receiver) {
     connect(m_model, sender, m_window.get(), receiver);
   };
 
-  const auto window_to_model = [this](auto&& sender, auto&& receiver) {
+  const auto win_to_mod = [this](auto&& sender, auto&& receiver) {
     connect(m_window.get(), sender, m_model, receiver);
   };
 
@@ -47,43 +47,43 @@ void app::init_connections()
 
   // clang-format off
 
-  model_to_window(&mod::redraw,                &win::force_redraw);
-  model_to_window(&mod::enable_stamp_preview,  &win::enable_stamp_preview);
-  model_to_window(&mod::disable_stamp_preview, &win::disable_stamp_preview);
-  model_to_window(&mod::undo_state_updated,    &win::undo_state_updated);
-  model_to_window(&mod::redo_state_updated,    &win::redo_state_updated);
-  model_to_window(&mod::undo_text_updated,     &win::undo_text_updated);
-  model_to_window(&mod::redo_text_updated,     &win::redo_text_updated);
-  model_to_window(&mod::switched_map,          &win::switched_map);
-  model_to_window(&mod::added_tileset,         &win::added_tileset);
-  model_to_window(&mod::removed_tileset,       &win::removed_tileset);
-  model_to_window(&mod::added_layer,           &win::added_layer);
-  model_to_window(&mod::removed_layer,         &win::removed_layer);
-  model_to_window(&mod::selected_layer,        &win::selected_layer);
+  mod_to_win(&mod::redraw,                &win::force_redraw);
+  mod_to_win(&mod::enable_stamp_preview,  &win::enable_stamp_preview);
+  mod_to_win(&mod::disable_stamp_preview, &win::disable_stamp_preview);
+  mod_to_win(&mod::undo_state_updated,    &win::undo_state_updated);
+  mod_to_win(&mod::redo_state_updated,    &win::redo_state_updated);
+  mod_to_win(&mod::undo_text_updated,     &win::undo_text_updated);
+  mod_to_win(&mod::redo_text_updated,     &win::redo_text_updated);
+  mod_to_win(&mod::switched_map,          &win::switched_map);
+  mod_to_win(&mod::added_tileset,         &win::added_tileset);
+  mod_to_win(&mod::removed_tileset,       &win::removed_tileset);
+  mod_to_win(&mod::added_layer,           &win::added_layer);
+  mod_to_win(&mod::removed_layer,         &win::removed_layer);
+  mod_to_win(&mod::selected_layer,        &win::selected_layer);
 
-  window_to_model(&win::ui_undo,                   &mod::undo);
-  window_to_model(&win::ui_redo,                   &mod::redo);
-  window_to_model(&win::ui_add_row,                &mod::add_row);
-  window_to_model(&win::ui_add_col,                &mod::add_col);
-  window_to_model(&win::ui_remove_row,             &mod::remove_row);
-  window_to_model(&win::ui_remove_col,             &mod::remove_col);
-  window_to_model(&win::ui_close_map,              &mod::close_map);
-  window_to_model(&win::ui_select_map,             &mod::ui_selected_map);
-  window_to_model(&win::ui_increase_zoom,          &mod::increase_tile_size);
-  window_to_model(&win::ui_decrease_zoom,          &mod::decrease_tile_size);
-  window_to_model(&win::ui_reset_tile_size,        &mod::reset_tile_size);
-  window_to_model(&win::ui_selected_tool,          &mod::select_tool);
-  window_to_model(&win::ui_removed_tileset,        &mod::ui_removed_tileset);
-  window_to_model(&win::ui_selected_tileset,       &mod::select_tileset);
-  window_to_model(&win::ui_requested_new_layer,    &mod::add_layer);
-  window_to_model(&win::ui_requested_remove_layer, &mod::remove_active_layer);
-  window_to_model(&win::ui_selected_layer,         &mod::select_layer);
-  window_to_model(&win::ui_set_layer_visibility,   &mod::set_layer_visibility);
-  window_to_model(&win::mouse_pressed,             &mod::mouse_pressed);
-  window_to_model(&win::mouse_moved,               &mod::mouse_moved);
-  window_to_model(&win::mouse_released,            &mod::mouse_released);
-  window_to_model(&win::mouse_entered,             &mod::mouse_entered);
-  window_to_model(&win::mouse_exited,              &mod::mouse_exited);
+  win_to_mod(&win::ui_undo,                   &mod::undo);
+  win_to_mod(&win::ui_redo,                   &mod::redo);
+  win_to_mod(&win::ui_add_row,                &mod::add_row);
+  win_to_mod(&win::ui_add_col,                &mod::add_col);
+  win_to_mod(&win::ui_remove_row,             &mod::remove_row);
+  win_to_mod(&win::ui_remove_col,             &mod::remove_col);
+  win_to_mod(&win::ui_close_map,              &mod::close_map);
+  win_to_mod(&win::ui_select_map,             &mod::ui_selected_map);
+  win_to_mod(&win::ui_increase_zoom,          &mod::increase_tile_size);
+  win_to_mod(&win::ui_decrease_zoom,          &mod::decrease_tile_size);
+  win_to_mod(&win::ui_reset_tile_size,        &mod::reset_tile_size);
+  win_to_mod(&win::ui_selected_tool,          &mod::select_tool);
+  win_to_mod(&win::ui_removed_tileset,        &mod::ui_removed_tileset);
+  win_to_mod(&win::ui_selected_tileset,       &mod::select_tileset);
+  win_to_mod(&win::ui_requested_new_layer,    &mod::add_layer);
+  win_to_mod(&win::ui_requested_remove_layer, &mod::remove_active_layer);
+  win_to_mod(&win::ui_selected_layer,         &mod::select_layer);
+  win_to_mod(&win::ui_set_layer_visibility,   &mod::set_layer_visibility);
+  win_to_mod(&win::mouse_pressed,             &mod::mouse_pressed);
+  win_to_mod(&win::mouse_moved,               &mod::mouse_moved);
+  win_to_mod(&win::mouse_released,            &mod::mouse_released);
+  win_to_mod(&win::mouse_entered,             &mod::mouse_entered);
+  win_to_mod(&win::mouse_exited,              &mod::mouse_exited);
 
   from_window(&win::ui_resize_map,                &app::handle_resize_map);
   from_window(&win::ui_pan_up,                    &app::handle_pan_up);
