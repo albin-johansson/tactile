@@ -17,7 +17,7 @@ model::model() : m_maps{new map_manager{this}}, m_tools{this}
   connect(m_maps, &map_manager::removed_tileset, this, &model::removed_tileset);
   connect(m_maps, &map_manager::added_tileset, [this](tileset_id id) {
     const auto& tileset = current_document()->tilesets()->at(id);
-    emit added_tileset(current_map().value(), id, tileset);
+    emit added_tileset(current_map_id().value(), id, tileset);
   });
   // clang-format on
 }

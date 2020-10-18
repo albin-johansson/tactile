@@ -77,7 +77,7 @@ class model final : public QObject
   /**
    * @copydoc map_manager::current_map()
    */
-  [[nodiscard]] auto current_map() const -> std::optional<map_id>
+  [[nodiscard]] auto current_map_id() const -> std::optional<map_id>
   {
     return m_maps->current_map();
   }
