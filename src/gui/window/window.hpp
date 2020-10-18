@@ -37,8 +37,6 @@ class window final : public QMainWindow
   Q_OBJECT
 
  public:
-  friend class window_connections;
-
   /**
    * @param parent a pointer to the parent widget, defaults to null.
    *
