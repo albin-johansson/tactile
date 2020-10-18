@@ -5,22 +5,21 @@
 #include <QString>
 #include <QWidget>
 
-#include "layer_dock.hpp"
 #include "map_document.hpp"
-#include "map_editor.hpp"
 #include "position.hpp"
-#include "tileset_dock.hpp"
-#include "tool_dock.hpp"
 #include "tool_id.hpp"
 #include "types.hpp"
 
 namespace Ui {
-
 class window;
-
 }
 
 namespace tactile::gui {
+
+class map_editor;
+class tool_dock;
+class layer_dock;
+class tileset_dock;
 
 /**
  * @class window
