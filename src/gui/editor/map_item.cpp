@@ -148,12 +148,14 @@ void map_item::draw_preview_multiple_tiles(QPainter& painter,
                                            const tileset::selection& selection,
                                            int tileSize)
 {
-  // TODO test rendering preview centered around mouse
   auto* tileset = m_map->current_tileset();
   Q_ASSERT(tileset);
 
+  const auto diff = selection.bottomRight - selection.topLeft;
+  const position offset{diff.row() / 2_row, diff.col() / 2_col};
+
   tileset->iterate_selection([&](position pos) {
-    const auto tilePos = mousePosition + pos;
+    const auto tilePos = mousePosition + pos - offset;
     if (m_map->in_bounds(tilePos)) {
       draw_tile(painter,
                 tileset->tile_at(selection.topLeft + pos),

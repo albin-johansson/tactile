@@ -153,11 +153,13 @@ class tileset final
         callable(mapOrigin, topLeft);
       } else {
         const auto diff = bottomRight - topLeft;
+        const position offset{diff.row() / 2_row, diff.col() / 2_col};
+
         const auto endRow = 1_row + diff.row();
         const auto endCol = 1_col + diff.col();
         for (row_t row{0}; row < endRow; ++row) {
           for (col_t col{0}; col < endCol; ++col) {
-            const auto tilePos = mapOrigin.offset_by(row, col);
+            const auto tilePos = mapOrigin.offset_by(row, col) - offset;
             const auto tilesetPos = topLeft.offset_by(row, col);
             callable(tilePos, tilesetPos);
           }
