@@ -203,6 +203,8 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     add_definitions(-DQT_NO_DEBUG_OUTPUT)
 endif ()
 
+add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
+
 target_include_directories(libTactile
         PUBLIC ${TACTILE_ROOT_DIR}/src
         PUBLIC command

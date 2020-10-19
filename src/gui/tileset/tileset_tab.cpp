@@ -21,7 +21,7 @@ tileset_tab::tileset_tab(tileset_id id,
   setObjectName("tileset_tab");
 
   m_layout = new QGridLayout{this};
-  m_layout->setMargin(0);
+  m_layout->setContentsMargins(0, 0, 0, 0);
 
   m_scrollArea = new QScrollArea{this};
   m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
