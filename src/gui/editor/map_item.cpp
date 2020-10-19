@@ -106,7 +106,7 @@ auto map_item::make_settings(const QRectF& exposed, int tileSize)
 void map_item::draw_background(QPainter& painter,
                                const render_settings& settings)
 {
-  each_tile(painter, settings.bounds, [&, this](position position) {
+  each_tile(painter, settings.bounds, [&](position position) {
     draw_tile_background(painter, position, settings.tileSize);
   });
 }
@@ -119,7 +119,7 @@ void map_item::draw_layer(QPainter& painter,
     const auto x = position.col_to_x(settings.tileSize);
     const auto y = position.row_to_y(settings.tileSize);
 
-    if (const auto tile = layer.tile_at(position); tile != empty) {
+    if (const auto tile = layer.tile_at(position); tile && tile != empty) {
       draw_tile(painter, *tile, x, y, settings.tileSize);
     }
 
