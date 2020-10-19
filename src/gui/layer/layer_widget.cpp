@@ -20,6 +20,7 @@ layer_widget::layer_widget(QWidget* parent)
   connect(m_ui->newLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_new_layer);
   connect(m_ui->removeLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_remove_layer);
   connect(m_ui->visibleButton, &QPushButton::toggled, this, &layer_widget::ui_set_layer_visibility);
+  connect(m_ui->opacitySpinBox, &QDoubleSpinBox::valueChanged, this, &layer_widget::ui_set_layer_opacity);
 
   // clang-format on
 
@@ -114,7 +115,7 @@ void layer_widget::selected_layer(layer_id id, const core::layer& layer)
   Q_ASSERT(item_for_layer_id(id) != nullptr);
 
   m_ui->visibleButton->setChecked(layer.visible());
-  //  m_ui->opacitySpinBox->setValue(layer.opacity()); // TODO
+  m_ui->opacitySpinBox->setValue(layer.opacity());
 }
 
 void layer_widget::selected_map(const core::map_document& document)

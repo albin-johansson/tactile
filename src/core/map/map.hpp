@@ -240,8 +240,8 @@ class map final
   /**
    * @brief Sets the visibility of a tile layer.
    *
-   * @note This method has no effect if the specified layer ID isn't associated
-   * with a tile layer.
+   * @note This function has no effect if the specified layer ID isn't
+   * associated with a tile layer.
    *
    * @param id the ID of the layer that will have its visibility changed.
    * @param visibility `true` if the layer should be visible; `false` otherwise.
@@ -249,6 +249,19 @@ class map final
    * @since 0.1.0
    */
   void set_visibility(layer_id id, bool visibility);
+
+  /**
+   * @brief Sets the opacity of a layer.
+   *
+   * @note This function has no effect if the specified layer ID isn't
+   * associated with a layer.
+   *
+   * @param id the ID of the layer that will be modified.
+   * @param opacity the new opacity of the layer, in the range [0, 1].
+   *
+   * @since 0.1.0
+   */
+  void set_opacity(layer_id id, double opacity);
 
   /**
    * @brief Returns the ID of the tile at the specified position.

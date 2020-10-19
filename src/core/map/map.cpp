@@ -152,6 +152,13 @@ void map::set_visibility(layer_id id, bool visibility)
   }
 }
 
+void map::set_opacity(layer_id id, double opacity)
+{
+  if (auto* layer = find_layer(id)) {
+    layer->set_opacity(opacity);
+  }
+}
+
 auto map::tile_at(const position& position) const -> std::optional<tile_id>
 {
   return current_layer().tile_at(position);

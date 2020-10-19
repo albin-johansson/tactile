@@ -82,6 +82,7 @@ class window final : public QMainWindow
   void ui_requested_remove_layer();
   void ui_selected_layer(layer_id id);
   void ui_set_layer_visibility(bool visible);
+  void ui_set_layer_opacity(double opacity);
 
   void ui_new_tileset();
   void ui_removed_tileset(tileset_id id);

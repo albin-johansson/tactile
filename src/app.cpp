@@ -79,6 +79,7 @@ void app::init_connections()
   win_to_mod(&win::ui_requested_remove_layer, &mod::remove_active_layer);
   win_to_mod(&win::ui_selected_layer,         &mod::select_layer);
   win_to_mod(&win::ui_set_layer_visibility,   &mod::set_layer_visibility);
+  win_to_mod(&win::ui_set_layer_opacity,      &mod::set_layer_opacity);
   win_to_mod(&win::mouse_pressed,             &mod::mouse_pressed);
   win_to_mod(&win::mouse_moved,               &mod::mouse_moved);
   win_to_mod(&win::mouse_released,            &mod::mouse_released);

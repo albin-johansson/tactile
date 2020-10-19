@@ -265,6 +265,12 @@ class model final : public QObject
     emit redraw();
   }
 
+  void set_layer_opacity(double opacity)
+  {
+    m_maps->set_layer_opacity(opacity);
+    emit redraw();
+  }
+
   /**
    * @brief Increases the tile size that is being used by the currently active
    * map.

@@ -115,6 +115,7 @@ void map_item::draw_layer(QPainter& painter,
                           const layer& layer,
                           const render_settings& settings)
 {
+  painter.setOpacity(layer.opacity());
   each_tile(painter, settings.bounds, [&, this](position position) {
     const auto x = position.col_to_x(settings.tileSize);
     const auto y = position.row_to_y(settings.tileSize);
@@ -127,6 +128,7 @@ void map_item::draw_layer(QPainter& painter,
       painter.drawRect(x, y, settings.tileSize, settings.tileSize);
     }
   });
+  painter.setOpacity(1);
 }
 
 void map_item::draw_tile(QPainter& painter,

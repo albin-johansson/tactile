@@ -189,6 +189,11 @@ void map_document::set_layer_visibility(bool visible)
   m_map->set_visibility(current_layer_id().value(), visible);
 }
 
+void map_document::set_layer_opacity(double opacity)
+{
+  m_map->set_opacity(current_layer_id().value(), opacity);
+}
+
 auto map_document::can_undo() const -> bool
 {
   return m_commands->canUndo();

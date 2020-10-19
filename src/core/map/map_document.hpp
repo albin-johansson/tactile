@@ -239,6 +239,7 @@ class map_document final : public QObject
   void reset_tile_size();
 
   void set_layer_visibility(bool visible);
+  void set_layer_opacity(double opacity);
 
   /**
    * @copydoc map::set_next_layer_id()

@@ -30,6 +30,8 @@ class layer_widget final : public QWidget
 
   void ui_selected_layer(layer_id id);
 
+  void ui_set_layer_opacity(double opacity);
+
   void ui_set_layer_visibility(bool visible);
 
  public slots:

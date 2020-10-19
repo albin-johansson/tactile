@@ -116,6 +116,13 @@ void map_manager::set_layer_visibility(bool visible)
   }
 }
 
+void map_manager::set_layer_opacity(double opacity)
+{
+  if (auto* document = current_document()) {
+    document->set_layer_opacity(opacity);
+  }
+}
+
 void map_manager::update_tileset_selection(position topLeft,
                                            position bottomRight)
 {
