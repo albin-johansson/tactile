@@ -182,8 +182,7 @@ void create_external_tileset_file(const tileset& tileset,
   map.each_layer([&](layer_id id, const layer& layer) {
     QJsonObject object;
 
-    object.insert(u"name",
-                  QStringLiteral(u"Layer ") + QString::number(id.get()));
+    object.insert(u"name", layer.name());
     object.insert(u"width", layer.col_count().get());
     object.insert(u"height", layer.row_count().get());
     object.insert(u"id", id.get());

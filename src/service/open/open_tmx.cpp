@@ -62,6 +62,8 @@ void add_tileset(core::map_document* document,
   core::layer layer{rows, cols};
   layer.set_visible(xml::int_attr(elem, QStringLiteral(u"visible"), 1) == 1);
   layer.set_opacity(xml::double_attr(elem, QStringLiteral(u"opacity"), 1.0));
+  layer.set_name(
+      elem.attribute(QStringLiteral(u"name"), QStringLiteral(u"Layer")));
 
   const auto data = elem.firstChildElement(QStringLiteral(u"data"));
   const auto tiles = data.text().split(u',');

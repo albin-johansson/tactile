@@ -95,8 +95,7 @@ void save_layers(QDomDocument& document,
     auto node = document.createElement(QStringLiteral(u"layer"));
 
     node.setAttribute(QStringLiteral(u"id"), id.get());
-    node.setAttribute(QStringLiteral(u"name"),
-                      QStringLiteral(u"Layer ") + QString::number(id.get()));
+    node.setAttribute(QStringLiteral(u"name"), layer.name());
     node.setAttribute(QStringLiteral(u"width"), layer.col_count().get());
     node.setAttribute(QStringLiteral(u"height"), layer.row_count().get());
 
