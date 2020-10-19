@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QListWidgetItem>
 #include <QWidget>
 #include <optional>  // optional
 
@@ -54,6 +55,9 @@ class layer_widget final : public QWidget
   [[nodiscard]] auto item_for_layer_id(layer_id id) -> layer_item*;
 
   void update_possible_actions();
+
+ private slots:
+  void layer_item_changed(QListWidgetItem* current, QListWidgetItem* previous);
 };
 
 }  // namespace tactile::gui

@@ -14,32 +14,16 @@ layer_widget::layer_widget(QWidget* parent)
       m_ui{new Ui::layer_widget{}}
 {
   m_ui->setupUi(this);
+  m_ui->layerList->setContextMenuPolicy(Qt::CustomContextMenu);
 
   // clang-format off
-
+  connect(m_ui->layerList, &QListWidget::customContextMenuRequested, this, &layer_widget::trigger_layer_item_context_menu);
   connect(m_ui->newLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_new_layer);
   connect(m_ui->removeLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_remove_layer);
   connect(m_ui->visibleButton, &QPushButton::toggled, this, &layer_widget::ui_set_layer_visibility);
   connect(m_ui->opacitySpinBox, &QDoubleSpinBox::valueChanged, this, &layer_widget::ui_set_layer_opacity);
-
+  connect(m_ui->layerList, &QListWidget::currentItemChanged, this, &layer_widget::layer_item_changed);
   // clang-format on
-
-  connect(m_ui->layerList,
-          &QListWidget::currentItemChanged,
-          [this](QListWidgetItem* current, QListWidgetItem* previous) {
-            if (current != previous) {
-              if (auto* item = dynamic_cast<layer_item*>(current)) {
-                emit ui_selected_layer(item->layer());
-              }
-            }
-            update_possible_actions();
-          });
-
-  m_ui->layerList->setContextMenuPolicy(Qt::CustomContextMenu);
-  connect(m_ui->layerList,
-          &QListWidget::customContextMenuRequested,
-          this,
-          &layer_widget::trigger_layer_item_context_menu);
 }
 
 void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
@@ -161,6 +145,17 @@ auto layer_widget::item_for_layer_id(layer_id id) -> layer_item*
 void layer_widget::update_possible_actions()
 {
   m_ui->removeLayerButton->setEnabled(m_ui->layerList->count() > 1);
+}
+
+void layer_widget::layer_item_changed(QListWidgetItem* current,
+                                      QListWidgetItem* previous)
+{
+  if (current != previous) {
+    if (auto* item = dynamic_cast<layer_item*>(current)) {
+      emit ui_selected_layer(item->layer());
+    }
+  }
+  update_possible_actions();
 }
 
 }  // namespace tactile::gui
