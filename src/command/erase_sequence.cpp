@@ -2,13 +2,20 @@
 
 #include <utility>  // move
 
+#include "tactile_error.hpp"
+
 namespace tactile::cmd {
 
 erase_sequence::erase_sequence(core::map* map,
                                vector_map<core::position, tile_id>&& oldState)
-    : abstract_command{QStringLiteral(u"Erase Tiles"), map},
+    : QUndoCommand{QStringLiteral(u"Erase Tiles")},
+      m_map{map},
       m_oldState{std::move(oldState)}
-{}
+{
+  if (!m_map) {
+    throw tactile_error{"Cannot create erase_sequence command from null map!"};
+  }
+}
 
 void erase_sequence::undo()
 {

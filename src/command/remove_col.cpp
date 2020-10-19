@@ -8,7 +8,7 @@ using tactile::core::operator""_col;
 namespace tactile::cmd {
 
 remove_col::remove_col(core::map* map)
-    : remove_row_col{map, QStringLiteral(u"Remove Column")}
+    : repeated_map_command{map, QStringLiteral(u"Remove Column")}
 {}
 
 void remove_col::undo()

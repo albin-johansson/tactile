@@ -1,12 +1,18 @@
 #include "add_row.hpp"
 
 #include "algorithm.hpp"
+#include "tactile_error.hpp"
 
 namespace tactile::cmd {
 
 add_row::add_row(core::map* map)
-    : row_col_command{QStringLiteral(u"Add Row"), map}
-{}
+    : repeated_command{QStringLiteral(u"Add Row")},
+      m_map{map}
+{
+  if (!m_map) {
+    throw tactile_error{"Cannot create command from null map!"};
+  }
+}
 
 void add_row::undo()
 {

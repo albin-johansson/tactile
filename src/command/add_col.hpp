@@ -1,7 +1,8 @@
 #pragma once
 
 #include "command_id.hpp"
-#include "row_col_command.hpp"
+#include "repeated_command.hpp"
+#include "map.hpp"
 
 namespace tactile::cmd {
 
@@ -14,7 +15,7 @@ namespace tactile::cmd {
  *
  * @headerfile add_col.hpp
  */
-class add_col final : public row_col_command
+class add_col final : public repeated_command
 {
  public:
   /**
@@ -34,6 +35,9 @@ class add_col final : public row_col_command
   {
     return static_cast<int>(id::add_column);
   }
+
+ private:
+  core::map* m_map{};
 };
 
 }  // namespace tactile::cmd

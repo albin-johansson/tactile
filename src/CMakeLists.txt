@@ -121,8 +121,6 @@ set(TACTILE_SOURCE_FILES
 
         command/command_id.hpp
         command/command_stack.hpp
-        command/abstract_command.cpp
-        command/abstract_command.hpp
         command/add_row.cpp
         command/add_row.hpp
         command/add_col.hpp
@@ -139,14 +137,14 @@ set(TACTILE_SOURCE_FILES
         command/stamp_sequence.hpp
         command/erase_sequence.cpp
         command/erase_sequence.hpp
-        command/row_col_command.cpp
-        command/row_col_command.hpp
+        command/repeated_command.cpp
+        command/repeated_command.hpp
         command/add_tileset.cpp
         command/add_tileset.hpp
         command/remove_tileset.cpp
         command/remove_tileset.hpp
-        command/remove_row_col.hpp
-        command/remove_row_col.cpp
+        command/repeated_map_command.hpp
+        command/repeated_map_command.cpp
         command/map_command.cpp
         command/map_command.hpp
 

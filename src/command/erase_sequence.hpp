@@ -1,14 +1,16 @@
 #pragma once
 
-#include "abstract_command.hpp"
+#include <QUndoCommand>
+
 #include "command_id.hpp"
+#include "map.hpp"
 #include "position.hpp"
 #include "types.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::cmd {
 
-class erase_sequence final : public abstract_command
+class erase_sequence final : public QUndoCommand
 {
  public:
   erase_sequence(core::map* map,
@@ -24,6 +26,7 @@ class erase_sequence final : public abstract_command
   }
 
  private:
+  core::map* m_map{};
   vector_map<core::position, tile_id> m_oldState;
   layer_id m_layer{};
   bool m_first{true};

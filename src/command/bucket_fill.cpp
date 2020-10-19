@@ -1,14 +1,20 @@
 #include "bucket_fill.hpp"
 
+#include "tactile_error.hpp"
+
 namespace tactile::cmd {
 
 bucket_fill::bucket_fill(core::map* map,
                          const core::position& position,
                          tile_id replacement)
-    : abstract_command{QStringLiteral(u"Bucket Fill"), map},
+    : QUndoCommand{QStringLiteral(u"Bucket Fill")},
+      m_map{map},
       m_origin{position},
       m_replacement{replacement}
 {
+  if (!m_map) {
+    throw tactile_error{"Cannot create bucket_fill command from null map!"};
+  }
   m_positions.reserve(64);
 }
 

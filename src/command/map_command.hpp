@@ -14,6 +14,8 @@ class map_command : public QUndoCommand
  public:
   using row_range = std::pair<core::row_t, core::row_t>;
   using col_range = std::pair<core::col_t, core::col_t>;
+  using tile_data_t = std::map<core::position, tile_id>;
+  using layer_data_t = std::map<layer_id, tile_data_t>;
 
   map_command(core::map* map, const QString& name);
 
@@ -36,14 +38,14 @@ class map_command : public QUndoCommand
     return m_layerData[id];
   }
 
-  [[nodiscard]] decltype(auto) layer_data() const
+  [[nodiscard]] auto layer_data() const -> const layer_data_t&
   {
     return m_layerData;
   }
 
  private:
   core::map* m_map{};
-  std::map<layer_id, std::map<core::position, tile_id>> m_layerData;
+  layer_data_t m_layerData;
 };
 
 }  // namespace tactile::cmd

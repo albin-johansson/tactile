@@ -1,13 +1,14 @@
 #pragma once
 
+#include <QUndoCommand>
 #include <vector>  // vector
 
-#include "abstract_command.hpp"
 #include "command_id.hpp"
+#include "map.hpp"
 
 namespace tactile::cmd {
 
-class bucket_fill final : public abstract_command
+class bucket_fill final : public QUndoCommand
 {
  public:
   /**
@@ -33,6 +34,7 @@ class bucket_fill final : public abstract_command
   }
 
  private:
+  core::map* m_map{};
   core::position m_origin;
   tile_id m_replacement;
   tile_id m_target{};

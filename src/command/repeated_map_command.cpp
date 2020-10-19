@@ -1,15 +1,15 @@
-#include "remove_row_col.hpp"
+#include "repeated_map_command.hpp"
 
 namespace tactile::cmd {
 
-remove_row_col::remove_row_col(core::map* map, const QString& name)
+repeated_map_command::repeated_map_command(core::map* map, const QString& name)
     : map_command{map, name}
 {}
 
-auto remove_row_col::mergeWith(const QUndoCommand* other) -> bool
+auto repeated_map_command::mergeWith(const QUndoCommand* other) -> bool
 {
   if (id() == other->id()) {
-    if (auto* ptr = dynamic_cast<const remove_row_col*>(other)) {
+    if (auto* ptr = dynamic_cast<const repeated_map_command*>(other)) {
       m_times += ptr->m_times;
 
       for (const auto& [layer, data] : ptr->layer_data()) {

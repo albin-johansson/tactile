@@ -6,11 +6,10 @@
 
 namespace tactile::cmd {
 
-// TODO come up with better name
-class remove_row_col : public map_command
+class repeated_map_command : public map_command
 {
  public:
-  remove_row_col(core::map* map, const QString& name);
+  repeated_map_command(core::map* map, const QString& name);
 
   auto mergeWith(const QUndoCommand* other) -> bool final;
 

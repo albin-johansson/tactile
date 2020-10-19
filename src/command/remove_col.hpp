@@ -1,7 +1,7 @@
 #pragma once
 
 #include "command_id.hpp"
-#include "remove_row_col.hpp"
+#include "repeated_map_command.hpp"
 
 namespace tactile::cmd {
 
@@ -14,7 +14,7 @@ namespace tactile::cmd {
  *
  * @headerfile remove_col.hpp
  */
-class remove_col final : public remove_row_col
+class remove_col final : public repeated_map_command
 {
  public:
   explicit remove_col(core::map* map);

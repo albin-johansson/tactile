@@ -3,7 +3,7 @@
 #include "command_id.hpp"
 #include "map.hpp"
 #include "position.hpp"
-#include "remove_row_col.hpp"
+#include "repeated_map_command.hpp"
 
 namespace tactile::cmd {
 
@@ -16,7 +16,7 @@ namespace tactile::cmd {
  *
  * @headerfile remove_row.hpp
  */
-class remove_row final : public remove_row_col
+class remove_row final : public repeated_map_command
 {
  public:
   explicit remove_row(core::map* map);

@@ -1,7 +1,9 @@
 #pragma once
 
-#include "abstract_command.hpp"
+#include <QUndoCommand>
+
 #include "command_id.hpp"
+#include "map.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
@@ -10,7 +12,7 @@
 
 namespace tactile::cmd {
 
-class stamp_sequence final : public abstract_command
+class stamp_sequence final : public QUndoCommand
 {
  public:
   stamp_sequence(core::map* map,
@@ -27,6 +29,7 @@ class stamp_sequence final : public abstract_command
   }
 
  private:
+  core::map* m_map{};
   vector_map<core::position, tile_id> m_oldState;
   vector_map<core::position, tile_id> m_sequence;
   layer_id m_layer{};
