@@ -159,6 +159,13 @@ void map::set_opacity(layer_id id, double opacity)
   }
 }
 
+void map::set_name(layer_id id, const QString& name)
+{
+  if (auto* layer = find_layer(id)) {
+    layer->set_name(name);
+  }
+}
+
 auto map::tile_at(const position& position) const -> std::optional<tile_id>
 {
   return current_layer().tile_at(position);

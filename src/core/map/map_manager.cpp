@@ -123,6 +123,13 @@ void map_manager::set_layer_opacity(double opacity)
   }
 }
 
+void map_manager::set_layer_name(const QString& name)
+{
+  if (auto* document = current_document()) {
+    document->set_layer_name(name);
+  }
+}
+
 void map_manager::update_tileset_selection(position topLeft,
                                            position bottomRight)
 {

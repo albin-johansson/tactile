@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QString>
 #include <cassert>   // assert
 #include <concepts>  // invocable
 #include <optional>  // optional
@@ -177,6 +178,15 @@ class layer final
   void set_opacity(double opacity);
 
   /**
+   * @brief Sets the name of the layer.
+   *
+   * @param name the new name of the layer.
+   *
+   * @since 0.1.0
+   */
+  void set_name(QString name);
+
+  /**
    * @brief Sets whether or not the tile layer is visible.
    *
    * @param visible `true` if the tile layer should be visible; `false`
@@ -246,6 +256,20 @@ class layer final
   [[nodiscard]] auto in_bounds(const position& pos) const noexcept -> bool;
 
   /**
+   * @brief Returns the name associated with the layer.
+   *
+   * @note By default, layers have no name assigned to them.
+   *
+   * @return the name of the layer.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto name() const -> const QString&
+  {
+    return m_name;
+  }
+
+  /**
    * @brief Returns the opacity of the layer.
    *
    * @return the opacity of the layer, in the range [0, 1].
@@ -273,6 +297,7 @@ class layer final
 
  private:
   tile_matrix m_tiles;
+  QString m_name;
   double m_opacity{1};
   bool m_visible{true};
 };

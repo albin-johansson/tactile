@@ -271,6 +271,12 @@ class model final : public QObject
     emit redraw();
   }
 
+  void set_layer_name(const QString& name)
+  {
+    m_maps->set_layer_name(name);
+    emit redraw();
+  }
+
   /**
    * @brief Increases the tile size that is being used by the currently active
    * map.

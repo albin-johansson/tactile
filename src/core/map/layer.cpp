@@ -140,6 +140,11 @@ void layer::set_opacity(double opacity)
   m_opacity = std::clamp(opacity, 0.0, 1.0);
 }
 
+void layer::set_name(QString name)
+{
+  m_name = std::move(name);
+}
+
 void layer::set_visible(bool visible) noexcept
 {
   m_visible = visible;

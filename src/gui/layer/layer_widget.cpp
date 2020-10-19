@@ -22,7 +22,8 @@ layer_widget::layer_widget(QWidget* parent)
   connect(m_ui->removeLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_remove_layer);
   connect(m_ui->visibleButton, &QPushButton::toggled, this, &layer_widget::ui_set_layer_visibility);
   connect(m_ui->opacitySpinBox, &QDoubleSpinBox::valueChanged, this, &layer_widget::ui_set_layer_opacity);
-  connect(m_ui->layerList, &QListWidget::currentItemChanged, this, &layer_widget::layer_item_changed);
+  connect(m_ui->layerList, &QListWidget::currentItemChanged, this, &layer_widget::current_item_changed);
+  connect(m_ui->layerList, &QListWidget::itemChanged, this, &layer_widget::item_changed);
   // clang-format on
 }
 
@@ -147,8 +148,8 @@ void layer_widget::update_possible_actions()
   m_ui->removeLayerButton->setEnabled(m_ui->layerList->count() > 1);
 }
 
-void layer_widget::layer_item_changed(QListWidgetItem* current,
-                                      QListWidgetItem* previous)
+void layer_widget::current_item_changed(QListWidgetItem* current,
+                                        QListWidgetItem* previous)
 {
   if (current != previous) {
     if (auto* item = dynamic_cast<layer_item*>(current)) {
@@ -156,6 +157,11 @@ void layer_widget::layer_item_changed(QListWidgetItem* current,
     }
   }
   update_possible_actions();
+}
+
+void layer_widget::item_changed(QListWidgetItem* item)
+{
+  emit ui_set_layer_name(item->text());
 }
 
 }  // namespace tactile::gui

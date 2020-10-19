@@ -35,6 +35,8 @@ class layer_widget final : public QWidget
 
   void ui_set_layer_visibility(bool visible);
 
+  void ui_set_layer_name(const QString& name);
+
  public slots:
   void added_layer(layer_id id, const core::layer& layer);
 
@@ -57,7 +59,9 @@ class layer_widget final : public QWidget
   void update_possible_actions();
 
  private slots:
-  void layer_item_changed(QListWidgetItem* current, QListWidgetItem* previous);
+  void current_item_changed(QListWidgetItem* current, QListWidgetItem* previous);
+
+  void item_changed(QListWidgetItem* item);
 };
 
 }  // namespace tactile::gui

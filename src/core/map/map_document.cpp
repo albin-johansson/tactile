@@ -194,6 +194,11 @@ void map_document::set_layer_opacity(double opacity)
   m_map->set_opacity(current_layer_id().value(), opacity);
 }
 
+void map_document::set_layer_name(const QString& name)
+{
+  m_map->set_name(current_layer_id().value(), name);
+}
+
 auto map_document::can_undo() const -> bool
 {
   return m_commands->canUndo();

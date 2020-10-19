@@ -56,6 +56,8 @@ class map_manager final : public QObject
 
   void set_layer_opacity(double opacity);
 
+  void set_layer_name(const QString& name);
+
   void update_tileset_selection(position topLeft, position bottomRight);
 
   [[nodiscard]] auto has_active_map() const noexcept -> bool;

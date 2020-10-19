@@ -96,6 +96,7 @@ void window::init_connections()
   connect(m_layerDock, &layer_dock::ui_selected_layer, this, &window::ui_selected_layer);
   connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
   connect(m_layerDock, &layer_dock::ui_set_layer_opacity, this, &window::ui_set_layer_opacity);
+  connect(m_layerDock, &layer_dock::ui_set_layer_name, this, &window::ui_set_layer_name);
 
   // clang-format on
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QString>
 #include <concepts>  // invocable
 #include <optional>  // optional
 
@@ -262,6 +263,19 @@ class map final
    * @since 0.1.0
    */
   void set_opacity(layer_id id, double opacity);
+
+  /**
+   * @brief Sets the name of the specified layer.
+   *
+   * @note This function has no effect if the specified layer ID isn't
+   * associated with a layer.
+   *
+   * @param id the ID of the layer that will be modified.
+   * @param name the name that will be associated with the layer.
+   *
+   * @since 0.1.0
+   */
+  void set_name(layer_id id, const QString& name);
 
   /**
    * @brief Returns the ID of the tile at the specified position.
