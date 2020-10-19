@@ -16,9 +16,10 @@
   "Dark": "#232323",
   "Shadow": "#111111",
   "disabled": {
-    "WindowText": "#7F7F7F",
-    "Text": "#7F7F7F",
-    "ButtonText": "#7F7F7F",
+    "WindowText": "#808080",
+    "Text": "#808080",
+    "ButtonText": "#808080",
+    "Light": "#353535",
     "Highlight": "#505050",
     "HighlightedText": "#7F7F7F"
   }
