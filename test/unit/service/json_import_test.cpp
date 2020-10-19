@@ -29,6 +29,7 @@ TEST_CASE("Import JSON with embedded tilesets", "[import_json]")
       REQUIRE(layer.row_count() == 5_row);
       REQUIRE(layer.col_count() == 7_col);
       CHECK(layer.visible());
+      CHECK(layer.opacity() == 1.0);
 
       CHECK(layer.tile_at({0_row, 0_col}).value() == 360_t);
       CHECK(layer.tile_at({3_row, 0_col}).value() == 360_t);
@@ -42,6 +43,7 @@ TEST_CASE("Import JSON with embedded tilesets", "[import_json]")
       REQUIRE(layer.row_count() == 5_row);
       REQUIRE(layer.col_count() == 7_col);
       CHECK(layer.visible());
+      CHECK(layer.opacity() == 0.8);
 
       CHECK(layer.tile_at({0_row, 0_col}).value() == empty);
       CHECK(layer.tile_at({3_row, 0_col}).value() == empty);
@@ -98,6 +100,7 @@ TEST_CASE("Import JSON with external tilesets", "[import_json]")
       REQUIRE(layer.row_count() == 6_row);
       REQUIRE(layer.col_count() == 8_col);
       CHECK(layer.visible());
+      CHECK(layer.opacity() == 0.2);
 
       CHECK(layer.tile_at({0_row, 0_col}).value() == 107_t);
       CHECK(layer.tile_at({5_row, 0_col}).value() == 107_t);
@@ -111,6 +114,7 @@ TEST_CASE("Import JSON with external tilesets", "[import_json]")
       REQUIRE(layer.row_count() == 6_row);
       REQUIRE(layer.col_count() == 8_col);
       CHECK(layer.visible());
+      CHECK(layer.opacity() == 1.0);
 
       CHECK(layer.tile_at({0_row, 0_col}).value() == 1293_t);
       CHECK(layer.tile_at({0_row, 7_col}).value() == empty);

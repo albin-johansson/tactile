@@ -44,6 +44,24 @@ TEST_CASE("xml::int_attr", "[xml_utils]")
   }
 }
 
+TEST_CASE("xml::double_attr", "[xml_utils]")
+{
+  QDomDocument document;
+  auto elem = document.createElement(QStringLiteral(u"foo"));
+
+  CHECK_NOTHROW(xml::double_attr(elem, QStringLiteral(u"random"), 0.0));
+
+  const auto def = 27.6;
+  CHECK(xml::double_attr(elem, QStringLiteral(u"xyz"), def) == def);
+
+  SECTION("Using strong double type")
+  {
+    using mana = nenya::mirror_type<double, struct mana_t>;
+    const mana value{9.2};
+    CHECK(xml::double_attr<mana>(elem, QStringLiteral(u"xyz"), value) == value);
+  }
+}
+
 TEST_CASE("xml::each_elem", "[xml_utils]")
 {
   QDomDocument document{};
@@ -56,8 +74,9 @@ TEST_CASE("xml::each_elem", "[xml_utils]")
   document.appendChild(root);
 
   int count{0};
-  xml::each_elem(
-      root, QStringLiteral(u"foo"), [&](const QDomNode& node) { ++count; });
+  xml::each_elem(root, QStringLiteral(u"foo"), [&](const QDomNode& node) {
+    ++count;
+  });
 
   CHECK(count == 3);
 }

@@ -7,7 +7,7 @@
          "height":6,
          "id":1,
          "name":"Tile Layer 1",
-         "opacity":1,
+         "opacity":0.2,
          "type":"tilelayer",
          "visible":true,
          "width":8,
