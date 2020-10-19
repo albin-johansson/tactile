@@ -378,14 +378,18 @@ void window::on_actionSaveAs_triggered()
       return QStringLiteral(u"map");
     }
   };
-  save_as_dialog::spawn([this](const QString& path) { emit ui_save_as(path); },
-                        get_tab_name());
+  save_as_dialog::spawn(
+      [this](const QString& path) {
+        emit ui_save_as(path);
+      },
+      get_tab_name());
 }
 
 void window::on_actionOpenMap_triggered()
 {
-  open_map_dialog::spawn(
-      [this](const QString& path) { emit ui_open_map(path); });
+  open_map_dialog::spawn([this](const QString& path) {
+    emit ui_open_map(path);
+  });
 }
 
 void window::on_actionRename_triggered()

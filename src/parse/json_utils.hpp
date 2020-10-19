@@ -9,4 +9,4 @@ namespace tactile::json {
 
 void write_file(const QFileInfo& path, const QJsonDocument& document);
 
-}
+}  // namespace tactile::json

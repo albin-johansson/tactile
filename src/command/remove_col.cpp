@@ -14,7 +14,9 @@ remove_col::remove_col(core::map* map)
 void remove_col::undo()
 {
   QUndoCommand::undo();
-  invoke_n(times(), [&] { get_map()->add_col(empty); });
+  invoke_n(times(), [&] {
+    get_map()->add_col(empty);
+  });
   restore_tiles();
 }
 
@@ -30,7 +32,9 @@ void remove_col::redo()
 
   clear_cache();
   save_tiles({0_row, endRow}, {beginCol, endCol});
-  invoke_n(times(), [&] { get_map()->remove_col(); });
+  invoke_n(times(), [&] {
+    get_map()->remove_col();
+  });
 }
 
 }  // namespace tactile::cmd

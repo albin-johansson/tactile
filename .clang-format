@@ -28,3 +28,5 @@ AllowShortBlocksOnASingleLine: Never
 
 BreakConstructorInitializers: BeforeColon
 AllowAllConstructorInitializersOnNextLine: false
+
+AllowShortLambdasOnASingleLine: None

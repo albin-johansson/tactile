@@ -95,9 +95,13 @@ void layer::set_rows(row_t nRows)
   const auto diff = std::abs(current.get() - nRows.get());
 
   if (current < nRows) {
-    invoke_n(diff, [this] { add_row(empty); });
+    invoke_n(diff, [this] {
+      add_row(empty);
+    });
   } else {
-    invoke_n(diff, [this]() noexcept { remove_row(); });
+    invoke_n(diff, [this]() noexcept {
+      remove_row();
+    });
   }
 }
 
@@ -114,9 +118,13 @@ void layer::set_cols(col_t nCols)
   const auto diff = std::abs(current.get() - nCols.get());
 
   if (current < nCols) {
-    invoke_n(diff, [this] { add_col(empty); });
+    invoke_n(diff, [this] {
+      add_col(empty);
+    });
   } else {
-    invoke_n(diff, [this]() noexcept { remove_col(); });
+    invoke_n(diff, [this]() noexcept {
+      remove_col();
+    });
   }
 }
 

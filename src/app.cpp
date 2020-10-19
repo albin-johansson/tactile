@@ -122,8 +122,9 @@ void app::open_map(const QString& path)
 void app::handle_resize_map()
 {
   if (m_model->has_active_map()) {
-    gui::resize_dialog::spawn(
-        [this](row_t rows, col_t cols) { m_model->resize_map(rows, cols); });
+    gui::resize_dialog::spawn([this](row_t rows, col_t cols) {
+      m_model->resize_map(rows, cols);
+    });
   }
 }
 

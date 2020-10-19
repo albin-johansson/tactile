@@ -18,14 +18,18 @@ void add_col::undo()
 {
   QUndoCommand::undo();
 
-  invoke_n(amount(), [this] { m_map->remove_col(); });
+  invoke_n(amount(), [this] {
+    m_map->remove_col();
+  });
 }
 
 void add_col::redo()
 {
   QUndoCommand::redo();
 
-  invoke_n(amount(), [this] { m_map->add_col(empty); });
+  invoke_n(amount(), [this] {
+    m_map->add_col(empty);
+  });
 }
 
 }  // namespace tactile::cmd

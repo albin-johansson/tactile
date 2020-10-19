@@ -51,7 +51,7 @@ void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
       QStringLiteral(u":resources/icons/icons8/color/64/down.png")};
   static const QIcon eye{
       QStringLiteral(u":resources/icons/icons8/color/64/visible.png")};
-  
+
   Q_ASSERT(!close.isNull());
   Q_ASSERT(!up.isNull());
   Q_ASSERT(!down.isNull());
@@ -122,8 +122,9 @@ void layer_widget::selected_map(const core::map_document& document)
   m_ui->layerList->clear();
   m_nameSuffix = 1;
 
-  document.each_layer(
-      [this](layer_id id, const core::layer&) { add_layer(id); });
+  document.each_layer([this](layer_id id, const core::layer&) {
+    add_layer(id);
+  });
 
   if (const auto id = document.current_layer_id(); id) {
     if (auto* item = item_for_layer_id(*id)) {

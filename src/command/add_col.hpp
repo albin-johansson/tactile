@@ -1,8 +1,8 @@
 #pragma once
 
 #include "command_id.hpp"
-#include "repeated_command.hpp"
 #include "map.hpp"
+#include "repeated_command.hpp"
 
 namespace tactile::cmd {
 

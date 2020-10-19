@@ -9,6 +9,4 @@ layer_item::layer_item(const QString& name, layer_id id, QListWidget* parent)
   setIcon(QIcon{QStringLiteral(u":resources/icons/icons8/color/64/layer.png")});
 }
 
-
-
 }  // namespace tactile::gui
