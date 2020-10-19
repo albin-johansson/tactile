@@ -204,15 +204,17 @@ void map_item::paint(QPainter* painter,
   const auto settings = make_settings(exposed, tileSize);
   draw_background(*painter, settings);
 
-  m_map->each_layer([&](layer_id, const layer& layer) {
+  const auto activeLayer = m_map->current_layer_id();
+
+  m_map->each_layer([&](layer_id id, const layer& layer) {
     if (layer.visible()) {
       draw_layer(*painter, layer, settings);
     }
-  });
 
-  if (m_mousePosition) {
-    draw_preview(*painter, tileSize);
-  }
+    if (m_mousePosition && activeLayer == id) {
+      draw_preview(*painter, tileSize);
+    }
+  });
 }
 
 auto map_item::boundingRect() const -> QRectF
