@@ -159,7 +159,7 @@ auto layer_widget::item_for_layer_id(layer_id id) -> layer_item*
 
 auto layer_widget::current_item() const -> const layer_item*
 {
-  return dynamic_cast<layer_item*>(m_ui->layerList->currentItem());
+  return dynamic_cast<const layer_item*>(m_ui->layerList->currentItem());
 }
 
 void layer_widget::update_possible_actions()
