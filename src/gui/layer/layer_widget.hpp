@@ -56,7 +56,7 @@ class layer_widget final : public QWidget
 
   [[nodiscard]] auto item_for_layer_id(layer_id id) -> layer_item*;
 
-  [[nodiscard]] auto current_item() -> layer_item*;
+  [[nodiscard]] auto current_item() const -> const layer_item*;
 
   void update_possible_actions();
 
