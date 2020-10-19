@@ -12,5 +12,15 @@
   "ButtonText": "#D5D8DA",
   "Link": "#2A8280",
   "Highlight": "#2A82DA",
-  "HighlightedText": "#000000"
+  "HighlightedText": "#D5D8DA",
+  "Dark": "#232323",
+  "Shadow": "#111111",
+  "disabled": {
+    "WindowText": "#808080",
+    "Text": "#808080",
+    "ButtonText": "#808080",
+    "Light": "#353535",
+    "Highlight": "#505050",
+    "HighlightedText": "#7F7F7F"
+  }
 }
