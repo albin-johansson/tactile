@@ -59,7 +59,8 @@ class layer_widget final : public QWidget
   void update_possible_actions();
 
  private slots:
-  void current_item_changed(QListWidgetItem* current, QListWidgetItem* previous);
+  void current_item_changed(QListWidgetItem* current,
+                            QListWidgetItem* previous);
 
   void item_changed(QListWidgetItem* item);
 };
