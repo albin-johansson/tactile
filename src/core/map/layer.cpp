@@ -135,6 +135,11 @@ void layer::set_tile(const position& pos, tile_id id) noexcept
   }
 }
 
+void layer::set_opacity(double opacity)
+{
+  m_opacity = std::clamp(opacity, 0.0, 1.0);
+}
+
 void layer::set_visible(bool visible) noexcept
 {
   m_visible = visible;

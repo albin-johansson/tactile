@@ -37,7 +37,9 @@ TEST_CASE("layer::for_each", "[layer]")
   core::layer layer;
 
   int count{0};
-  layer.for_each([&](tile_id id) { ++count; });
+  layer.for_each([&](tile_id id) {
+    ++count;
+  });
 
   CHECK(count == layer.tile_count());
 }
@@ -48,10 +50,14 @@ TEST_CASE("layer::remove_all", "[layer]")
   std::vector<core::position> positions;
 
   layer.flood({}, 1_t, positions);
-  layer.for_each([](tile_id id) { CHECK(id == 1_t); });
+  layer.for_each([](tile_id id) {
+    CHECK(id == 1_t);
+  });
 
   layer.remove_all(1_t);
-  layer.for_each([](tile_id id) { CHECK(id == empty); });
+  layer.for_each([](tile_id id) {
+    CHECK(id == empty);
+  });
 }
 
 TEST_CASE("layer::add_row", "[layer]")
@@ -154,6 +160,32 @@ TEST_CASE("layer::set_tile", "[layer]")
       tile_id{7}));
   CHECK(layer.tile_at({core::row_t{layer.row_count()},
                        core::col_t{layer.col_count()}}) == std::nullopt);
+}
+
+TEST_CASE("layer::set_opacity", "[layer]")
+{
+  core::layer layer;
+  CHECK(layer.opacity() == 1.0);
+
+  SECTION("Valid opacity")
+  {
+    const auto alpha = 0.75;
+    layer.set_opacity(alpha);
+
+    CHECK(layer.opacity() == alpha);
+  }
+
+  SECTION("Underflow opacity")
+  {
+    layer.set_opacity(-1);
+    CHECK(layer.opacity() == 0);
+  }
+
+  SECTION("Overflow opacity")
+  {
+    layer.set_opacity(1.1);
+    CHECK(layer.opacity() == 1);
+  }
 }
 
 TEST_CASE("layer::set_visible", "[layer]")

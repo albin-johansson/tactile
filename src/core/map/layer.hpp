@@ -168,6 +168,15 @@ class layer final
   void set_tile(const position& pos, tile_id id) noexcept;
 
   /**
+   * @brief Sets the opacity of the layer.
+   *
+   * @param opacity the new opacity of the layer, will be clamped to [0, 1].
+   *
+   * @since 0.1.0
+   */
+  void set_opacity(double opacity);
+
+  /**
    * @brief Sets whether or not the tile layer is visible.
    *
    * @param visible `true` if the tile layer should be visible; `false`
@@ -237,6 +246,18 @@ class layer final
   [[nodiscard]] auto in_bounds(const position& pos) const noexcept -> bool;
 
   /**
+   * @brief Returns the opacity of the layer.
+   *
+   * @return the opacity of the layer, in the range [0, 1].
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto opacity() const noexcept -> double
+  {
+    return m_opacity;
+  }
+
+  /**
    * @brief Indicates whether or not the tile layer is visible.
    *
    * @note Tile layers are visible by default.
@@ -252,6 +273,7 @@ class layer final
 
  private:
   tile_matrix m_tiles;
+  double m_opacity{1};
   bool m_visible{true};
 };
 
