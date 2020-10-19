@@ -20,11 +20,21 @@ layer_widget::layer_widget(QWidget* parent)
   connect(m_ui->layerList, &QListWidget::customContextMenuRequested, this, &layer_widget::trigger_layer_item_context_menu);
   connect(m_ui->newLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_new_layer);
   connect(m_ui->removeLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_remove_layer);
-  connect(m_ui->visibleButton, &QPushButton::toggled, this, &layer_widget::ui_set_layer_visibility);
-  connect(m_ui->opacitySpinBox, &QDoubleSpinBox::valueChanged, this, &layer_widget::ui_set_layer_opacity);
   connect(m_ui->layerList, &QListWidget::currentItemChanged, this, &layer_widget::current_item_changed);
   connect(m_ui->layerList, &QListWidget::itemChanged, this, &layer_widget::item_changed);
   // clang-format on
+  connect(m_ui->visibleButton, &QPushButton::toggled, [this](bool visible) {
+    if (auto* item = current_item()) {
+      emit ui_set_layer_visibility(item->layer(), visible);
+    }
+  });
+  connect(m_ui->opacitySpinBox,
+          &QDoubleSpinBox::valueChanged,
+          [this](double value) {
+            if (auto* item = current_item()) {
+              emit ui_set_layer_opacity(item->layer(), value);
+            }
+          });
 }
 
 void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
@@ -83,7 +93,7 @@ layer_widget::~layer_widget() noexcept
 
 void layer_widget::added_layer(layer_id id, const core::layer& layer)
 {
-  add_layer(id);
+  add_layer(id, layer);
 }
 
 void layer_widget::removed_layer(layer_id id)
@@ -108,8 +118,8 @@ void layer_widget::selected_map(const core::map_document& document)
   m_ui->layerList->clear();
   m_nameSuffix = 1;
 
-  document.each_layer([this](layer_id id, const core::layer&) {
-    add_layer(id);
+  document.each_layer([this](layer_id id, const core::layer& layer) {
+    add_layer(id, layer);
   });
 
   if (const auto id = document.current_layer_id(); id) {
@@ -120,13 +130,17 @@ void layer_widget::selected_map(const core::map_document& document)
   }
 }
 
-void layer_widget::add_layer(layer_id id)
+void layer_widget::add_layer(layer_id id, const core::layer& layer)
 {
-  m_ui->layerList->addItem(
-      new layer_item{QStringLiteral(u"Layer ") + QString::number(m_nameSuffix),
-                     id,
-                     m_ui->layerList});
-  ++m_nameSuffix;
+  if (!layer.name().isEmpty()) {
+    m_ui->layerList->addItem(new layer_item{layer.name(), id, m_ui->layerList});
+  } else {
+    m_ui->layerList->addItem(new layer_item{
+        QStringLiteral(u"Layer ") + QString::number(m_nameSuffix),
+        id,
+        m_ui->layerList});
+    ++m_nameSuffix;
+  }
   update_possible_actions();
 }
 
@@ -141,6 +155,11 @@ auto layer_widget::item_for_layer_id(layer_id id) -> layer_item*
     }
   }
   return nullptr;
+}
+
+auto layer_widget::current_item() -> layer_item*
+{
+  return dynamic_cast<layer_item*>(m_ui->layerList->currentItem());
 }
 
 void layer_widget::update_possible_actions()
@@ -161,7 +180,9 @@ void layer_widget::current_item_changed(QListWidgetItem* current,
 
 void layer_widget::item_changed(QListWidgetItem* item)
 {
-  emit ui_set_layer_name(item->text());
+  if (auto* layerItem = dynamic_cast<layer_item*>(item)) {
+    emit ui_set_layer_name(layerItem->layer(), item->text());
+  }
 }
 
 }  // namespace tactile::gui

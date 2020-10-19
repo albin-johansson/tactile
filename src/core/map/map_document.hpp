@@ -238,11 +238,11 @@ class map_document final : public QObject
    */
   void reset_tile_size();
 
-  void set_layer_visibility(bool visible);
+  void set_layer_visibility(layer_id id, bool visible);
 
-  void set_layer_opacity(double opacity);
+  void set_layer_opacity(layer_id id, double opacity);
 
-  void set_layer_name(const QString& name);
+  void set_layer_name(layer_id id, const QString& name);
 
   /**
    * @copydoc map::set_next_layer_id()

@@ -259,21 +259,21 @@ class model final : public QObject
     m_maps->select_tileset(id);
   }
 
-  void set_layer_visibility(bool visible)
+  void set_layer_visibility(layer_id id, bool visible)
   {
-    m_maps->set_layer_visibility(visible);
+    m_maps->set_layer_visibility(id, visible);
     emit redraw();
   }
 
-  void set_layer_opacity(double opacity)
+  void set_layer_opacity(layer_id id, double opacity)
   {
-    m_maps->set_layer_opacity(opacity);
+    m_maps->set_layer_opacity(id, opacity);
     emit redraw();
   }
 
-  void set_layer_name(const QString& name)
+  void set_layer_name(layer_id id, const QString& name)
   {
-    m_maps->set_layer_name(name);
+    m_maps->set_layer_name(id, name);
     emit redraw();
   }
 

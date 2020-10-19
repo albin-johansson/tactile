@@ -22,11 +22,11 @@ class layer_dock final : public QDockWidget
 
   void ui_selected_layer(layer_id id);
 
-  void ui_set_layer_visibility(bool visible);
+  void ui_set_layer_visibility(layer_id id, bool visible);
 
-  void ui_set_layer_opacity(double opacity);
+  void ui_set_layer_opacity(layer_id id, double opacity);
 
-  void ui_set_layer_name(const QString& name);
+  void ui_set_layer_name(layer_id id, const QString& name);
 
  public slots:
   void added_layer(layer_id id, const core::layer& layer)

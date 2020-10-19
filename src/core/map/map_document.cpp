@@ -184,19 +184,19 @@ void map_document::reset_tile_size()
   m_map->reset_tile_size();
 }
 
-void map_document::set_layer_visibility(bool visible)
+void map_document::set_layer_visibility(layer_id id, bool visible)
 {
-  m_map->set_visibility(current_layer_id().value(), visible);
+  m_map->set_visibility(id, visible);
 }
 
-void map_document::set_layer_opacity(double opacity)
+void map_document::set_layer_opacity(layer_id id, double opacity)
 {
-  m_map->set_opacity(current_layer_id().value(), opacity);
+  m_map->set_opacity(id, opacity);
 }
 
-void map_document::set_layer_name(const QString& name)
+void map_document::set_layer_name(layer_id id, const QString& name)
 {
-  m_map->set_name(current_layer_id().value(), name);
+  m_map->set_name(id, name);
 }
 
 auto map_document::can_undo() const -> bool

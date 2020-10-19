@@ -109,24 +109,24 @@ void map_manager::select_tileset(tileset_id id)
   }
 }
 
-void map_manager::set_layer_visibility(bool visible)
+void map_manager::set_layer_visibility(layer_id id, bool visible)
 {
   if (auto* document = current_document()) {
-    document->set_layer_visibility(visible);
+    document->set_layer_visibility(id, visible);
   }
 }
 
-void map_manager::set_layer_opacity(double opacity)
+void map_manager::set_layer_opacity(layer_id id, double opacity)
 {
   if (auto* document = current_document()) {
-    document->set_layer_opacity(opacity);
+    document->set_layer_opacity(id, opacity);
   }
 }
 
-void map_manager::set_layer_name(const QString& name)
+void map_manager::set_layer_name(layer_id id, const QString& name)
 {
   if (auto* document = current_document()) {
-    document->set_layer_name(name);
+    document->set_layer_name(id, name);
   }
 }
 

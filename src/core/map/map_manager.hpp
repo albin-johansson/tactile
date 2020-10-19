@@ -52,11 +52,11 @@ class map_manager final : public QObject
 
   void select_tileset(tileset_id id);
 
-  void set_layer_visibility(bool visible);
+  void set_layer_visibility(layer_id id, bool visible);
 
-  void set_layer_opacity(double opacity);
+  void set_layer_opacity(layer_id id, double opacity);
 
-  void set_layer_name(const QString& name);
+  void set_layer_name(layer_id id, const QString& name);
 
   void update_tileset_selection(position topLeft, position bottomRight);
 
