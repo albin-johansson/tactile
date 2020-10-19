@@ -68,6 +68,7 @@ void add_layers(core::map_document* document, const QJsonArray& layers)
 
     core::layer layer{rows, cols};
     layer.set_visible(object.value(u"visible").toBool(true));
+    layer.set_opacity(object.value(u"opacity").toDouble(1.0));
     // TODO set name (not yet incorporated in layer)
 
     const auto data = object.value(u"data").toArray();

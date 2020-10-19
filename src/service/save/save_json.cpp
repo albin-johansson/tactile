@@ -187,7 +187,7 @@ void create_external_tileset_file(const tileset& tileset,
     object.insert(u"width", layer.col_count().get());
     object.insert(u"height", layer.row_count().get());
     object.insert(u"id", id.get());
-    object.insert(u"opacity", 1.0);
+    object.insert(u"opacity", layer.opacity());
     object.insert(u"type", QStringLiteral(u"tilelayer"));
     object.insert(u"visible", layer.visible());
     object.insert(u"x", 0);

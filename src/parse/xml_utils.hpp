@@ -32,6 +32,19 @@ template <std::constructible_from<int> T = int>
   }
 }
 
+template <std::constructible_from<double> T = double>
+[[nodiscard]] auto double_attr(const QDomElement& element,
+                               const QString& key,
+                               T fallback) -> T
+{
+  bool ok{};
+  if (const auto result = element.attribute(key).toDouble(&ok); ok) {
+    return T{result};
+  } else {
+    return fallback;
+  }
+}
+
 template <std::invocable<const QDomNode&> T>
 void each_elem(const QDomElement& element, const QString& tag, T&& callable)
 {

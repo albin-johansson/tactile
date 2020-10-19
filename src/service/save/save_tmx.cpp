@@ -100,6 +100,10 @@ void save_layers(QDomDocument& document,
     node.setAttribute(QStringLiteral(u"width"), layer.col_count().get());
     node.setAttribute(QStringLiteral(u"height"), layer.row_count().get());
 
+    if (layer.opacity() != 1.0) {
+      node.setAttribute(QStringLiteral(u"opacity"), layer.opacity());
+    }
+
     if (!layer.visible()) {
       node.setAttribute(QStringLiteral(u"visible"), 0);
     }
