@@ -43,11 +43,15 @@ tileset::tileset(tile_id firstID,
                  tile_height tileHeight)
     : m_image{QPixmap::fromImage(image)},
       m_firstID{firstID},
-      m_tileWidth{at_least(tileWidth, 1_tw)},
-      m_tileHeight{at_least(tileHeight, 1_th)}
+      m_tileWidth{tileWidth},
+      m_tileHeight{tileHeight}
 {
   if (m_image.isNull()) {
     throw tactile_error{"Cannot create tileset from null image!"};
+  }
+
+  if (m_tileWidth < 1_tw || m_tileHeight < 1_th) {
+    throw tactile_error{"Invalid tileset tile dimensions!"};
   }
 
   m_numRows = row_t{height() / m_tileHeight.get()};
