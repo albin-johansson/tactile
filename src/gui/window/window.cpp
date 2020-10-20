@@ -11,7 +11,6 @@
 #include "settings_dialog.hpp"
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"
-#include "tool_widget.hpp"
 #include "ui_window.h"
 
 namespace tactile::gui {
