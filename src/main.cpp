@@ -3,5 +3,5 @@
 auto main(int argc, char** argv) -> int
 {
   tactile::app app{argc, argv};
-  return QGuiApplication::exec();
+  return tactile::app::exec();
 }
