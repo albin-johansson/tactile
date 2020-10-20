@@ -53,7 +53,7 @@ class resize_dialog final : public QDialog
    *
    * @since 0.1.0
    */
-  template <std::invocable<core::row_t, core::col_t> T>
+  template <std::invocable<row_t, col_t> T>
   static void spawn(T&& callback)
   {
     resize_dialog dialog;
@@ -69,8 +69,8 @@ class resize_dialog final : public QDialog
  private:
   Ui::resize_dialog* m_ui;
   QIntValidator* m_validator;
-  std::optional<core::col_t> m_chosenWidth;
-  std::optional<core::row_t> m_chosenHeight;
+  std::optional<col_t> m_chosenWidth;
+  std::optional<row_t> m_chosenHeight;
 
   /**
    * @brief Connects a line edit widget to the dialog.

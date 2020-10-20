@@ -5,8 +5,8 @@
 #include <QUrl>
 #include <memory>  // unique_ptr
 
+#include "czstring.hpp"
 #include "position.hpp"
-#include "types.hpp"
 
 namespace tactile {
 

@@ -9,7 +9,7 @@
 #include "core_fwd.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
-#include "types.hpp"
+#include "tileset_id.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::core {

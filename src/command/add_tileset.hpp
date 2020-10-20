@@ -6,6 +6,7 @@
 #include "command_id.hpp"
 #include "map_document.hpp"
 #include "tileset.hpp"
+#include "tileset_id.hpp"
 
 namespace tactile::cmd {
 

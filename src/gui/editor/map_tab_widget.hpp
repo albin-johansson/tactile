@@ -4,9 +4,9 @@
 #include <QTabWidget>
 #include <optional>  // optional
 
+#include "czstring.hpp"
 #include "map_document.hpp"
 #include "map_view.hpp"
-#include "types.hpp"
 
 namespace tactile::gui {
 

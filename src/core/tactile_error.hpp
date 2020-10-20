@@ -3,7 +3,7 @@
 #include <exception>
 #include <string>
 
-#include "types.hpp"
+#include "czstring.hpp"
 
 namespace tactile {
 

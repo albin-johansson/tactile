@@ -2,7 +2,7 @@
 
 #include <QListWidgetItem>
 
-#include "types.hpp"
+#include "layer_id.hpp"
 
 namespace tactile::gui {
 

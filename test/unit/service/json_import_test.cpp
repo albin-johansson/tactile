@@ -3,8 +3,6 @@
 #include "open_json.hpp"
 
 using namespace tactile;
-using core::operator""_row;
-using core::operator""_col;
 
 TEST_CASE("Import JSON with embedded tilesets", "[import_json]")
 {

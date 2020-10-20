@@ -6,8 +6,9 @@
 #include <QWidget>
 
 #include "position.hpp"
+#include "tile_height.hpp"
+#include "tile_width.hpp"
 #include "tileset.hpp"
-#include "types.hpp"
 
 namespace tactile::gui {
 

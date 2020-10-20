@@ -2,8 +2,8 @@
 
 #include <QWidget>
 
+#include "czstring.hpp"
 #include "stamp_toolbar.hpp"
-#include "types.hpp"
 
 class QLayout;
 

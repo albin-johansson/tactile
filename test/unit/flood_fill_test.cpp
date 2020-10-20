@@ -4,14 +4,12 @@
 #include <iostream>
 
 using namespace tactile;
-using core::operator""_row;
-using core::operator""_col;
 
 TEST_CASE("Correctness of flood fill algorithm", "[flood_fill]")
 {
   core::layer layer{5_row, 5_col};
   for (int i = 0; i < 5; ++i) {
-    layer.set_tile({core::row_t{i}, core::col_t{i}}, 1_t);
+    layer.set_tile({row_t{i}, col_t{i}}, 1_t);
   }
 
   /*

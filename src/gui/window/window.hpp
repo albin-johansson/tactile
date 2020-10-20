@@ -6,9 +6,9 @@
 #include <QWidget>
 
 #include "map_document.hpp"
+#include "map_id.hpp"
 #include "position.hpp"
 #include "tool_id.hpp"
-#include "types.hpp"
 
 namespace Ui {
 class window;

@@ -9,7 +9,9 @@
 #include <unordered_map>  // unordered_map
 
 #include "position.hpp"
-#include "types.hpp"
+#include "tile_height.hpp"
+#include "tile_id.hpp"
+#include "tile_width.hpp"
 
 namespace tactile::core {
 

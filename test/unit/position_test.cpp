@@ -3,8 +3,6 @@
 #include <catch.hpp>
 
 using namespace tactile;
-using core::operator""_row;
-using core::operator""_col;
 
 TEST_CASE("position()", "[position]")
 {

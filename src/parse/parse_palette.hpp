@@ -3,7 +3,7 @@
 #include <QPalette>
 #include <QString>
 
-#include "types.hpp"
+#include "czstring.hpp"
 
 namespace tactile::json {
 

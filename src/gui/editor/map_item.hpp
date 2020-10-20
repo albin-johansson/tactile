@@ -11,10 +11,10 @@ namespace tactile::gui {
 
 struct render_bounds final
 {
-  core::row_t rowBegin;
-  core::row_t rowEnd;
-  core::col_t colBegin;
-  core::col_t colEnd;
+  row_t rowBegin;
+  row_t rowEnd;
+  col_t colBegin;
+  col_t colEnd;
 };
 
 struct render_settings final

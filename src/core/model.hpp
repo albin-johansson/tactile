@@ -8,13 +8,13 @@
 #include <optional>  // optional
 
 #include "core_fwd.hpp"
+#include "czstring.hpp"
 #include "map.hpp"
 #include "map_document.hpp"
 #include "map_manager.hpp"
 #include "tileset_manager.hpp"
 #include "tool_id.hpp"
 #include "tool_model.hpp"
-#include "types.hpp"
 #include "vector_map.hpp"
 
 class QPainter;

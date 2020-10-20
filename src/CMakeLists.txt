@@ -9,13 +9,19 @@ set(TACTILE_SOURCE_FILES
         app.hpp
         version.hpp
 
-        core/types.hpp
+        core/czstring.hpp
         core/core_fwd.hpp
         core/model.hpp
         core/model.cpp
         core/tactile_error.hpp
         core/tactile_error.cpp
         core/position.hpp
+        core/tile_id.hpp
+        core/tile_width.hpp
+        core/tile_height.hpp
+        core/layer_id.hpp
+        core/map_id.hpp
+        core/tileset_id.hpp
 
         core/algorithm/flood_fill.hpp
         core/algorithm/flood_fill.cpp

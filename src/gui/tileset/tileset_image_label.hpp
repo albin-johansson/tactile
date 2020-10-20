@@ -2,8 +2,8 @@
 
 #include <QLabel>
 
+#include "czstring.hpp"
 #include "tileset.hpp"
-#include "types.hpp"
 
 namespace tactile::gui {
 

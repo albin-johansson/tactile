@@ -5,7 +5,7 @@
 #include <QStringView>
 #include <optional>  // optional
 
-#include "types.hpp"
+#include "czstring.hpp"
 
 /**
  * @namespace tactile::theme

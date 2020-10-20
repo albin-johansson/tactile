@@ -12,8 +12,8 @@ namespace tactile::cmd {
 class map_command : public QUndoCommand
 {
  public:
-  using row_range = std::pair<core::row_t, core::row_t>;
-  using col_range = std::pair<core::col_t, core::col_t>;
+  using row_range = std::pair<row_t, row_t>;
+  using col_range = std::pair<col_t, col_t>;
   using tile_data_t = std::map<core::position, tile_id>;
   using layer_data_t = std::map<layer_id, tile_data_t>;
 

@@ -3,8 +3,8 @@
 #include <catch.hpp>
 #include <memory>
 
+#include "czstring.hpp"
 #include "tileset.hpp"
-#include "types.hpp"
 
 using namespace tactile;
 using namespace tactile::core;

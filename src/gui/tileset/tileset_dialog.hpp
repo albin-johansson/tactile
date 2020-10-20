@@ -8,9 +8,8 @@
 #include <concepts>  // invocable
 #include <optional>  // optional
 
-#include "types.hpp"
-
-class QLineEdit;
+#include "tile_height.hpp"
+#include "tile_width.hpp"
 
 namespace Ui {
 class tileset_dialog;

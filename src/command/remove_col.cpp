@@ -2,9 +2,6 @@
 
 #include "algorithm.hpp"
 
-using tactile::core::operator""_row;
-using tactile::core::operator""_col;
-
 namespace tactile::cmd {
 
 remove_col::remove_col(core::map* map)
@@ -28,7 +25,7 @@ void remove_col::redo()
 
   const auto endRow = map->row_count();
   const auto endCol = map->col_count();
-  const auto beginCol = endCol - 1_col - core::col_t{times()};
+  const auto beginCol = endCol - 1_col - col_t{times()};
 
   clear_cache();
   save_tiles({0_row, endRow}, {beginCol, endCol});

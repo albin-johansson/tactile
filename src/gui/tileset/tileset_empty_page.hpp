@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-#include "types.hpp"
+#include "czstring.hpp"
 
 namespace Ui {
 class tileset_empty_page;

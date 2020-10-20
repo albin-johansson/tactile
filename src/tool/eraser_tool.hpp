@@ -2,7 +2,7 @@
 
 #include "abstract_tool.hpp"
 #include "position.hpp"
-#include "types.hpp"
+#include "tile_id.hpp"
 #include "vector_map.hpp"
 
 namespace tactile {

@@ -6,7 +6,7 @@
 #include "algorithm.hpp"
 #include "nenya.hpp"
 
-namespace tactile::core {
+namespace tactile {
 namespace detail {
 
 struct row_tag final
@@ -31,6 +31,8 @@ using col_t = nenya::mirror_type<int, detail::col_tag>;
 {
   return col_t{static_cast<int>(value)};
 }
+
+namespace core {
 
 /**
  * @class position
@@ -299,4 +301,5 @@ class position final
   return position{lhs.row() - rhs.row(), lhs.col() - rhs.col()};
 }
 
-}  // namespace tactile::core
+}  // namespace core
+}  // namespace tactile

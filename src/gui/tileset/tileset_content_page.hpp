@@ -4,9 +4,9 @@
 #include <map>       // map
 #include <optional>  // optional
 
+#include "map_id.hpp"
 #include "position.hpp"
 #include "tileset_tab.hpp"
-#include "types.hpp"
 #include "vector_map.hpp"
 
 namespace Ui {

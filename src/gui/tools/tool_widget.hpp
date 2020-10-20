@@ -3,7 +3,7 @@
 #include <QButtonGroup>
 #include <QWidget>
 
-#include "types.hpp"
+#include "czstring.hpp"
 
 namespace Ui {
 class tool_widget;

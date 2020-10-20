@@ -2,10 +2,10 @@
 
 #include <QWidget>
 
+#include "czstring.hpp"
 #include "position.hpp"
 #include "tileset_content_page.hpp"
 #include "tileset_empty_page.hpp"
-#include "types.hpp"
 
 namespace Ui {
 class tileset_widget;

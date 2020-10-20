@@ -6,7 +6,7 @@
 #include <optional>  // optional
 
 #include "map_document.hpp"
-#include "types.hpp"
+#include "map_id.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::core {

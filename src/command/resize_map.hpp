@@ -26,7 +26,7 @@ class resize_map final : public map_command
    *
    * @since 0.1.0
    */
-  resize_map(core::map* map, core::row_t nRows, core::col_t nCols);
+  resize_map(core::map* map, row_t nRows, col_t nCols);
 
   void undo() override;
 
@@ -38,10 +38,10 @@ class resize_map final : public map_command
   }
 
  private:
-  core::row_t m_rows;
-  core::col_t m_cols;
-  core::row_t m_oldRows{1};
-  core::col_t m_oldCols{1};
+  row_t m_rows;
+  col_t m_cols;
+  row_t m_oldRows{1};
+  col_t m_oldCols{1};
 
   /**
    * @brief Indicates whether or not the command will result in some tiles being

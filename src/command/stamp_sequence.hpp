@@ -3,11 +3,11 @@
 #include <QUndoCommand>
 
 #include "command_id.hpp"
+#include "czstring.hpp"
 #include "map.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
-#include "types.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::cmd {

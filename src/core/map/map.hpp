@@ -5,8 +5,8 @@
 #include <optional>  // optional
 
 #include "layer.hpp"
+#include "layer_id.hpp"
 #include "tile_size.hpp"
-#include "types.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::core {

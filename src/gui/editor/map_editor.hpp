@@ -5,8 +5,8 @@
 #include <optional>  // optional
 
 #include "map_document.hpp"
+#include "map_id.hpp"
 #include "position.hpp"
-#include "types.hpp"
 
 namespace Ui {
 class map_editor;

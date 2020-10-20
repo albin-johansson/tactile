@@ -2,8 +2,8 @@
 #include "tileset.hpp"
 
 #include "algorithm.hpp"
+#include "czstring.hpp"
 #include "tactile_error.hpp"
-#include "types.hpp"
 
 namespace tactile::core {
 namespace {

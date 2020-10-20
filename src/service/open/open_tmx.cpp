@@ -56,8 +56,8 @@ void add_tileset(core::map_document* document,
   Q_ASSERT(elem.tagName() == QStringLiteral(u"layer"));
 
   const auto id = xml::int_attr<layer_id>(elem, QStringLiteral(u"id"));
-  const auto rows = xml::int_attr<core::row_t>(elem, QStringLiteral(u"height"));
-  const auto cols = xml::int_attr<core::col_t>(elem, QStringLiteral(u"width"));
+  const auto rows = xml::int_attr<row_t>(elem, QStringLiteral(u"height"));
+  const auto cols = xml::int_attr<col_t>(elem, QStringLiteral(u"width"));
 
   core::layer layer{rows, cols};
   layer.set_visible(xml::int_attr(elem, QStringLiteral(u"visible"), 1) == 1);
@@ -69,8 +69,8 @@ void add_tileset(core::map_document* document,
   const auto tiles = data.text().split(u',');
 
   for (int index{0}; const auto& value : tiles) {
-    const core::position pos{core::row_t{index / cols.get()},
-                             core::col_t{index % cols.get()}};
+    const core::position pos{row_t{index / cols.get()},
+                             col_t{index % cols.get()}};
     layer.set_tile(pos, to_int<tile_id>(value));
     ++index;
   }

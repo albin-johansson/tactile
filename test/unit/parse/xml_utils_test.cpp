@@ -2,7 +2,7 @@
 
 #include <catch.hpp>
 
-#include "types.hpp"
+#include "tile_id.hpp"
 
 using namespace tactile;
 

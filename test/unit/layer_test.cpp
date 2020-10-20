@@ -7,8 +7,6 @@
 #include "tactile_error.hpp"
 
 using namespace tactile;
-using core::operator""_row;
-using core::operator""_col;
 
 TEST_CASE("layer(row_t, col_t)", "[layer]")
 {
@@ -156,10 +154,10 @@ TEST_CASE("layer::set_tile", "[layer]")
 
   CHECK_NOTHROW(layer.set_tile({-1_row, -1_col}, tile_id{5}));
   CHECK_NOTHROW(layer.set_tile(
-      {core::row_t{layer.row_count()}, core::col_t{layer.col_count()}},
+      {row_t{layer.row_count()}, col_t{layer.col_count()}},
       tile_id{7}));
-  CHECK(layer.tile_at({core::row_t{layer.row_count()},
-                       core::col_t{layer.col_count()}}) == std::nullopt);
+  CHECK(layer.tile_at({row_t{layer.row_count()},
+                       col_t{layer.col_count()}}) == std::nullopt);
 }
 
 TEST_CASE("layer::set_opacity", "[layer]")

@@ -7,7 +7,7 @@
 #include <vector>    // vector
 
 #include "position.hpp"
-#include "types.hpp"
+#include "tile_id.hpp"
 
 namespace tactile::core {
 

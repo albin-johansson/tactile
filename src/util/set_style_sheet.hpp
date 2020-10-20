@@ -3,7 +3,7 @@
 #include <QApplication>
 #include <QString>
 
-#include "types.hpp"
+#include "czstring.hpp"
 
 namespace tactile {
 
