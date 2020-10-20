@@ -32,10 +32,9 @@ inline constexpr auto styling =
 map_tab_widget::map_tab_widget(QWidget* parent) : QTabWidget{parent}
 {
   setTabsClosable(true);
-  connect(this,
-          &QTabWidget::tabCloseRequested,
-          this,
-          &map_tab_widget::handle_tab_close);
+  // clang-format off
+  connect(this, &QTabWidget::tabCloseRequested, this, &map_tab_widget::handle_tab_close);
+  // clang-format on
   setStyleSheet(styling);
 }
 
@@ -65,14 +64,15 @@ void map_tab_widget::add_map_tab(core::map_document* map,
 {
   auto* view = new map_view{map, id, this};
 
+  // clang-format off
   connect(view, &map_view::mouse_pressed, this, &map_tab_widget::mouse_pressed);
   connect(view, &map_view::mouse_moved, this, &map_tab_widget::mouse_moved);
-  connect(
-      view, &map_view::mouse_released, this, &map_tab_widget::mouse_released);
+  connect(view, &map_view::mouse_released, this, &map_tab_widget::mouse_released);
   connect(view, &map_view::mouse_entered, this, &map_tab_widget::mouse_entered);
   connect(view, &map_view::mouse_exited, this, &map_tab_widget::mouse_exited);
   connect(view, &map_view::increase_zoom, this, &map_tab_widget::increase_zoom);
   connect(view, &map_view::decrease_zoom, this, &map_tab_widget::decrease_zoom);
+  // clang-format on
 
   addTab(view, title + QString::number(id.get()));
 }
