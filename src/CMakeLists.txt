@@ -89,13 +89,13 @@ set(TACTILE_SOURCE_FILES
         gui/layer/layer_item.cpp
         gui/layer/layer_item.hpp
 
-        gui/about/about_dialog.cpp
-        gui/about/about_dialog.hpp
-        gui/about/about.ui
-
         gui/settings/settings_dialog.hpp
         gui/settings/settings_dialog.cpp
         gui/settings/settings_dialog.ui
+
+        gui/dialog/about/about_dialog.cpp
+        gui/dialog/about/about_dialog.hpp
+        gui/dialog/about/about.ui
 
         gui/dialog/resize_map/resize_dialog.hpp
         gui/dialog/resize_map/resize_dialog.cpp
@@ -234,9 +234,9 @@ target_include_directories(libTactile
         PUBLIC gui/window
         PUBLIC gui/util
         PUBLIC gui/tools
-        PUBLIC gui/about
         PUBLIC gui/settings
         PUBLIC gui/dialog
+        PUBLIC gui/dialog/about
         PUBLIC gui/dialog/resize_map
         PUBLIC gui/dialog/save
         PUBLIC gui/dialog/open_map
