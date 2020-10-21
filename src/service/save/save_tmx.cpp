@@ -22,7 +22,7 @@ void add_image_node(QDomDocument& document,
   auto image = document.createElement(QStringLiteral(u"image"));
 
   image.setAttribute(QStringLiteral(u"source"),
-                     mapInfo.dir().relativeFilePath(tileset.path()));
+                     mapInfo.dir().relativeFilePath(tileset.string_path()));
   image.setAttribute(QStringLiteral(u"width"), tileset.width());
   image.setAttribute(QStringLiteral(u"height"), tileset.height());
 

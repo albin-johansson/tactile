@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QEvent>
+#include <QFileInfo>
 #include <QImage>
 #include <QObject>
 #include <QString>
@@ -315,7 +316,7 @@ class model final : public QObject
    * @since 0.1.0
    */
   void ui_added_tileset(const QImage& image,
-                        const QString& path,
+                        const QFileInfo& path,
                         const QString& name,
                         tile_width tileWidth,
                         tile_height tileHeight)

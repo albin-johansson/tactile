@@ -85,7 +85,7 @@ void map_manager::select(map_id id)
 }
 
 void map_manager::ui_added_tileset(const QImage& image,
-                                   const QString& path,
+                                   const QFileInfo& path,
                                    const QString& name,
                                    tile_width tileWidth,
                                    tile_height tileHeight)

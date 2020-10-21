@@ -86,11 +86,11 @@ void tileset_dialog::validate_input()
     bool ok{};
 
     if (const auto width = m_ui->widthEdit->displayText().toInt(&ok); ok) {
-      m_width = tile_width{width};
+      m_tileWidth = tile_width{width};
     }
 
     if (const auto height = m_ui->heightEdit->displayText().toInt(&ok); ok) {
-      m_height = tile_height{height};
+      m_tileHeight = tile_height{height};
     }
   }
 }

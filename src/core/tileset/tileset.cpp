@@ -85,7 +85,7 @@ void tileset::set_name(QString name)
   m_name = std::move(name);
 }
 
-void tileset::set_path(QString path)
+void tileset::set_path(QFileInfo path)
 {
   m_path = std::move(path);
 }

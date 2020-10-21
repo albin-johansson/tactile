@@ -100,7 +100,7 @@ void map_document::resize(row_t nRows, col_t nCols)
 }
 
 void map_document::add_tileset(const QImage& image,
-                               const QString& path,
+                               const QFileInfo& path,
                                const QString& name,
                                tile_width tileWidth,
                                tile_height tileHeight)

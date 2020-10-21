@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QFileInfo>
 #include <QImage>
 #include <QObject>
 #include <QString>
@@ -442,7 +443,7 @@ class map_document final : public QObject
 
  public slots:
   void add_tileset(const QImage& image,
-                   const QString& path,
+                   const QFileInfo& path,
                    const QString& name,
                    tile_width tileWidth,
                    tile_height tileHeight);

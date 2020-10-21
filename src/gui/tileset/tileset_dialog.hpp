@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QDialog>
+#include <QFileInfo>
 #include <QImage>
 #include <QLineEdit>
 #include <QPixmap>
@@ -17,22 +18,14 @@ class tileset_dialog;
 
 namespace tactile::gui {
 
-/**
- * @interface TilesetDialogCallback
- *
- * @brief Requires that the type is a valid tileset dialog callback.
- *
- * @tparam T the type that will be checked.
- *
- * @since 0.1.0
- */
-template <typename T>
-concept TilesetDialogCallback = std::invocable<T,
-                                               const QImage&,
-                                               const QString&,
-                                               tile_width,
-                                               tile_height,
-                                               const QString&>;
+struct tileset_info final
+{
+  QImage image;
+  QString name;
+  tile_width tileWidth;
+  tile_height tileHeight;
+  QFileInfo path;
+};
 
 /**
  * @class tileset_dialog
@@ -52,21 +45,23 @@ class tileset_dialog final : public QDialog
 
   ~tileset_dialog() noexcept override;
 
-  template <TilesetDialogCallback T>
+  template <std::invocable<const tileset_info&> T>
   static void spawn(T&& callback)
   {
     tileset_dialog dialog;
     if (dialog.exec()) {
       const auto& image = dialog.m_image;
-      const auto tileWidth = dialog.m_width;
-      const auto tileHeight = dialog.m_height;
-      const auto name = dialog.m_imageName;
+      const auto tileWidth = dialog.m_tileWidth;
+      const auto tileHeight = dialog.m_tileHeight;
       if (!image.isNull() && tileWidth && tileHeight) {
-        callback(image,
-                 dialog.m_path,
-                 *tileWidth,
-                 *tileHeight,
-                 name ? *name : "Untitled");
+        const auto& name = dialog.m_imageName;
+        const tileset_info info{
+            .image = dialog.m_image,
+            .name = name ? *name : QStringLiteral(u"Untitled"),
+            .tileWidth = *tileWidth,
+            .tileHeight = *tileHeight,
+            .path = dialog.m_path};
+        callback(info);
       }
     }
   }
@@ -75,8 +70,8 @@ class tileset_dialog final : public QDialog
   Ui::tileset_dialog* m_ui{};
   QImage m_image{};
   QString m_path{};
-  std::optional<tile_width> m_width;
-  std::optional<tile_height> m_height;
+  std::optional<tile_width> m_tileWidth;
+  std::optional<tile_height> m_tileHeight;
   std::optional<QString> m_imageName;
   QIntValidator* m_validator;
   QPixmap m_defaultImageIcon;

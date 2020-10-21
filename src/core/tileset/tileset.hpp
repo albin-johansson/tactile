@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QFileInfo>
 #include <QImage>
 #include <QPixmap>
 #include <QRect>
@@ -196,7 +197,7 @@ class tileset final
    */
   void set_name(QString name);
 
-  void set_path(QString path);
+  void set_path(QFileInfo path);
 
   /**
    * @brief Indicates whether or not the tileset contains the specified tile ID.
@@ -388,9 +389,14 @@ class tileset final
     return m_name;
   }
 
-  [[nodiscard]] auto path() const -> const QString&
+  [[nodiscard]] auto path() const -> const QFileInfo&
   {
     return m_path;
+  }
+
+  [[nodiscard]] auto string_path() const -> QString
+  {
+    return m_path.path();
   }
 
  private:
@@ -404,7 +410,7 @@ class tileset final
   row_t m_numRows{};
   col_t m_numCols{};
   int m_numTiles{};
-  QString m_path{};
+  QFileInfo m_path{};
   QString m_name{QStringLiteral(u"Untitled")};
 };
 

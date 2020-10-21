@@ -157,12 +157,9 @@ void app::handle_pan_left()
 
 void app::handle_new_tileset()
 {
-  gui::tileset_dialog::spawn([this](const QImage& image,
-                                    const QString& path,
-                                    tile_width tileWidth,
-                                    tile_height tileHeight,
-                                    const QString& name) {
-    m_model->ui_added_tileset(image, path, name, tileWidth, tileHeight);
+  gui::tileset_dialog::spawn([this](const gui::tileset_info& info) {
+    m_model->ui_added_tileset(
+        info.image, info.path, info.name, info.tileWidth, info.tileHeight);
   });
 }
 
