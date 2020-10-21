@@ -123,10 +123,11 @@ auto tileset_manager::current_tileset_id() const -> std::optional<tileset_id>
 
 auto tileset_manager::contains(tile_id id) const -> bool
 {
-  return std::any_of(
-      m_tilesets.begin(), m_tilesets.end(), [id](const auto& pair) {
-        return pair.second->contains(id);
-      });
+  return std::any_of(m_tilesets.begin(),
+                     m_tilesets.end(),
+                     [id](const auto& pair) {
+                       return pair.second->contains(id);
+                     });
 }
 
 auto tileset_manager::contains(tileset_id id) const -> bool

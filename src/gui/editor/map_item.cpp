@@ -185,8 +185,10 @@ void map_item::draw_preview(QPainter& painter, int tileSize)
               mousePos.row_to_y(tileSize),
               tileSize);
   } else {
-    draw_preview_multiple_tiles(
-        painter, mousePos, *tileset->get_selection(), tileSize);
+    draw_preview_multiple_tiles(painter,
+                                mousePos,
+                                *tileset->get_selection(),
+                                tileSize);
   }
 
   painter.setOpacity(1);

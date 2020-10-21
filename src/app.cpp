@@ -158,8 +158,11 @@ void app::handle_pan_left()
 void app::handle_new_tileset()
 {
   gui::tileset_dialog::spawn([this](const gui::tileset_info& info) {
-    m_model->ui_added_tileset(
-        info.image, info.path, info.name, info.tileWidth, info.tileHeight);
+    m_model->ui_added_tileset(info.image,
+                              info.path,
+                              info.name,
+                              info.tileWidth,
+                              info.tileHeight);
   });
 }
 

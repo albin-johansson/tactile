@@ -63,8 +63,9 @@ void map_document::flood(const position& position, tile_id replacement)
 void map_document::add_stamp_sequence(vector_map<position, tile_id>&& oldState,
                                       vector_map<position, tile_id>&& sequence)
 {
-  m_commands->push<cmd::stamp_sequence>(
-      m_map.get(), std::move(oldState), std::move(sequence));
+  m_commands->push<cmd::stamp_sequence>(m_map.get(),
+                                        std::move(oldState),
+                                        std::move(sequence));
 }
 
 void map_document::add_erase_sequence(vector_map<position, tile_id>&& oldState)

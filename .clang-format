@@ -30,3 +30,6 @@ BreakConstructorInitializers: BeforeColon
 AllowAllConstructorInitializersOnNextLine: false
 
 AllowShortLambdasOnASingleLine: None
+AllowAllArgumentsOnNextLine: false
+
+BreakInheritanceList: BeforeColon

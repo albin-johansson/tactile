@@ -32,8 +32,10 @@ resize_dialog::~resize_dialog() noexcept
 void resize_dialog::connect_line_edit(QLineEdit* edit)
 {
   if (edit) {
-    connect(
-        edit, &QLineEdit::textChanged, this, &resize_dialog::validate_input);
+    connect(edit,
+            &QLineEdit::textChanged,
+            this,
+            &resize_dialog::validate_input);
   }
 }
 

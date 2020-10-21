@@ -58,8 +58,11 @@ tileset::tileset(tile_id firstID,
   m_numCols = col_t{width() / m_tileWidth.get()};
   m_numTiles = m_numRows.get() * m_numCols.get();
   m_lastID = m_firstID + tile_id{m_numTiles};
-  m_sourceRects = create_source_rect_cache(
-      m_firstID, m_lastID, m_numCols, m_tileWidth, m_tileHeight);
+  m_sourceRects = create_source_rect_cache(m_firstID,
+                                           m_lastID,
+                                           m_numCols,
+                                           m_tileWidth,
+                                           m_tileHeight);
 }
 
 tileset::tileset(tile_id firstID,
