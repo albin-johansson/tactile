@@ -119,7 +119,7 @@ void map_view::keyPressEvent(QKeyEvent* event)
 {
   QGraphicsView::keyPressEvent(event);
 
-  if (event->modifiers() & Qt::CTRL) {
+  if (event->key() == Qt::Key::Key_Control) {
     m_canZoom = true;
   }
 }
@@ -128,7 +128,7 @@ void map_view::keyReleaseEvent(QKeyEvent* event)
 {
   QGraphicsView::keyReleaseEvent(event);
 
-  if (event->modifiers() & Qt::CTRL) {
+  if (event->key() == Qt::Key::Key_Control) {
     m_canZoom = false;
   }
 }
