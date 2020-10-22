@@ -86,7 +86,7 @@ void map_manager::select(map_id id)
   }
 }
 
-void map_manager::ui_added_tileset(const QImage& image,
+void map_manager::add_tileset(const QImage& image,
                                    const QFileInfo& path,
                                    const QString& name,
                                    tile_width tileWidth,
@@ -146,7 +146,7 @@ void map_manager::move_layer_forward(layer_id id)
   }
 }
 
-void map_manager::update_tileset_selection(position topLeft,
+void map_manager::set_tileset_selection(position topLeft,
                                            position bottomRight)
 {
   if (auto* document = current_document()) {
@@ -177,7 +177,7 @@ auto map_manager::at(map_id id) const -> const map_document*
   }
 }
 
-auto map_manager::current_map() const -> std::optional<map_id>
+auto map_manager::current_map_id() const -> std::optional<map_id>
 {
   return m_currentMapID;
 }

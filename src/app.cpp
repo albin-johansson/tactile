@@ -173,7 +173,7 @@ void app::handle_new_tileset()
 void app::tileset_selection_changed(core::position topLeft,
                                     core::position bottomRight)
 {
-  m_model->update_tileset_selection(topLeft, bottomRight);
+  m_model->set_tileset_selection(topLeft, bottomRight);
 }
 
 void app::handle_new_map()

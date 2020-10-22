@@ -54,9 +54,12 @@ class model final : public QObject
     return m_maps->add(document);
   }
 
-  void update_tileset_selection(position topLeft, position bottomRight)
+  /**
+   * @copydoc map_manager::set_tileset_selection()
+   */
+  void set_tileset_selection(position topLeft, position bottomRight)
   {
-    m_maps->update_tileset_selection(topLeft, bottomRight);
+    m_maps->set_tileset_selection(topLeft, bottomRight);
   }
 
   /**
@@ -76,11 +79,11 @@ class model final : public QObject
   }
 
   /**
-   * @copydoc map_manager::current_map()
+   * @copydoc map_manager::current_map_id()
    */
   [[nodiscard]] auto current_map_id() const -> std::optional<map_id>
   {
-    return m_maps->current_map();
+    return m_maps->current_map_id();
   }
 
   /**
@@ -300,17 +303,8 @@ class model final : public QObject
   }
 
   /**
-   * @brief Moves the specified layer forwards, meaning that it will be
-   * rendered *later*.
-   *
-   * @details The mental model for users is that the layers behave as if they
-   * were on a stack, even if they aren't stored that way in the model.
-   *
-   * @details This function emits the `move_layer_forward` and `redraw` signals.
-   *
-   * @param id the ID associated with the layer that will be moved.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::move_layer_forward()
+   * @signal `redraw`
    */
   void move_layer_forward(layer_id id)
   {
@@ -343,17 +337,7 @@ class model final : public QObject
   void reset_tile_size();
 
   /**
-   * @brief Adds a tileset based on the supplied image.
-   *
-   * @note This method has no effect if the tileset cannot be added.
-   *
-   * @param image the image that contains the tile images.
-   * @param path the file path of the tileset image.
-   * @param name the name associated with the tileset.
-   * @param tileWidth the width of the tiles in the tileset.
-   * @param tileHeight the height of the tiles in the tileset.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::add_tileset()
    */
   void ui_added_tileset(const QImage& image,
                         const QFileInfo& path,
@@ -361,7 +345,7 @@ class model final : public QObject
                         tile_width tileWidth,
                         tile_height tileHeight)
   {
-    m_maps->ui_added_tileset(image, path, name, tileWidth, tileHeight);
+    m_maps->add_tileset(image, path, name, tileWidth, tileHeight);
   }
 
   void ui_removed_tileset(tileset_id id)

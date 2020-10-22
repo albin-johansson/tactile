@@ -245,11 +245,11 @@ class map final
    * associated with a tile layer.
    *
    * @param id the ID of the layer that will have its visibility changed.
-   * @param visibility `true` if the layer should be visible; `false` otherwise.
+   * @param visible `true` if the layer should be visible; `false` otherwise.
    *
    * @since 0.1.0
    */
-  void set_visibility(layer_id id, bool visibility);
+  void set_visibility(layer_id id, bool visible);
 
   /**
    * @brief Sets the opacity of a layer.
@@ -277,8 +277,32 @@ class map final
    */
   void set_name(layer_id id, const QString& name);
 
+  /**
+   * @brief Moves the specified layer back one step in the render order.
+   *
+   * @details This function will make the specified layer be rendered later.
+   *
+   * @note This function has no effect if the specified layer ID isn't
+   * associated with a layer.
+   *
+   * @param id the ID associated with the layer that will be moved.
+   *
+   * @since 0.1.0
+   */
   void move_layer_back(layer_id id);
 
+  /**
+   * @brief Moves the specified layer forwards one step in the render order.
+   *
+   * @details This function will make the specified layer be rendered earlier.
+   *
+   * @note This function has no effect if the specified layer ID isn't
+   * associated with a layer.
+   *
+   * @param id the ID associated with the layer that will be moved.
+   *
+   * @since 0.1.0
+   */
   void move_layer_forward(layer_id id);
 
   /**

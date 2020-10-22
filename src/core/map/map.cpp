@@ -146,10 +146,10 @@ void map::set_cols(col_t nCols)
   }
 }
 
-void map::set_visibility(layer_id id, bool visibility)
+void map::set_visibility(layer_id id, bool visible)
 {
   if (auto* layer = find_layer(id)) {
-    layer->set_visible(visibility);
+    layer->set_visible(visible);
   }
 }
 

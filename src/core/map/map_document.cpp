@@ -170,6 +170,18 @@ void map_document::select_layer(layer_id id)
   emit selected_layer(id, m_map->get_layer(id));
 }
 
+void map_document::add_layer(layer_id id, layer&& layer)
+{
+  m_map->add_layer(id, std::move(layer));
+  emit added_layer(id, m_map->get_layer(id));
+}
+
+void map_document::add_layer()
+{
+  const auto id = m_map->add_layer();
+  emit added_layer(id, m_map->get_layer(id));
+}
+
 void map_document::increase_tile_size()
 {
   m_map->increase_tile_size();

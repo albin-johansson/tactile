@@ -166,29 +166,26 @@ class map_document final : public QObject
   void resize(row_t nRows, col_t nCols);
 
   /**
-   * @brief Adds a tileset to the document.
-   *
-   * @details This function emits the `added_tileset(tileset_id)` signal.
-   *
-   * @param id the ID that will be associated with the tileset.
-   * @param tileset the tileset that will be added, cannot be null.
-   *
-   * @since 0.1.0
+   * @copydoc tileset_manager::add(tileset_id,std::shared_ptr<tileset>)
+   * @signal `added_tileset`
    */
   void add_tileset(tileset_id id, std::shared_ptr<tileset> tileset);
 
+  /**
+   * @copydoc tileset_manager::add(std::shared_ptr<tileset> tileset)
+   * @signal `added_tileset`
+   */
   void add_tileset(std::shared_ptr<tileset> tileset);
 
   /**
    * @brief Removes a tileset from the document.
    *
-   * @details This function emits the `removed_tileset(tileset_id)` signal
-   * if `notify` is `true`.
-   *
    * @param id the ID associated with the tileset that will be removed.
    * @param notify `true` if a signal should be emitted; `false` otherwise.
    *
    * @since 0.1.0
+   *
+   * @signal `removed_tileset`
    */
   void remove_tileset(tileset_id id, bool notify = true);
 
@@ -202,20 +199,31 @@ class map_document final : public QObject
    */
   void set_selection(position topLeft, position bottomRight);
 
+  /**
+   * @copydoc map::select_layer()
+   * @signal `selected_layer`
+   */
   void select_layer(layer_id id);
 
-  void add_layer(layer_id id, layer&& layer)
-  {
-    m_map->add_layer(id, std::move(layer));
-    emit added_layer(id, m_map->get_layer(id));
-  }
+  /**
+   * @copydoc map::add_layer(layer_id id, layer&& layer)
+   * @signal `added_layer`
+   */
+  void add_layer(layer_id id, layer&& layer);
 
-  void add_layer()
-  {
-    const auto id = m_map->add_layer();
-    emit added_layer(id, m_map->get_layer(id));
-  }
+  /**
+   * @copybrief map::add_layer()
+   * @signal `added_layer`
+   */
+  void add_layer();
 
+  /**
+   * @brief Attempts to remove the currently active layer.
+   *
+   * @since 0.1.0
+   *
+   * @signal `removed_layer`
+   */
   void remove_active_layer()
   {
     if (const auto id = m_map->active_layer_id(); id) {
@@ -239,14 +247,31 @@ class map_document final : public QObject
    */
   void reset_tile_size();
 
+  /**
+   * @copydoc map::set_visibility()
+   */
   void set_layer_visibility(layer_id id, bool visible);
 
+  /**
+   * @copydoc map::set_opacity()
+   */
   void set_layer_opacity(layer_id id, double opacity);
 
+  /**
+   * @copydoc map::set_name()
+   */
   void set_layer_name(layer_id id, const QString& name);
 
+  /**
+   * @copydoc map::move_layer_back()
+   * @signal `moved_layer_back`
+   */
   void move_layer_back(layer_id id);
 
+  /**
+   * @copydoc map::move_layer_forward()
+   * @signal `moved_layer_forward`
+   */
   void move_layer_forward(layer_id id);
 
   /**
@@ -448,6 +473,21 @@ class map_document final : public QObject
   void moved_layer_forward(layer_id id);
 
  public slots:
+  /**
+   * @brief Adds a tileset to the document.
+   *
+   * @note This function has no effect if the tileset cannot be added.
+   *
+   * @param image the image that contains the tile images.
+   * @param path the file path of the tileset image.
+   * @param name the name associated with the tileset.
+   * @param tileWidth the width of the tiles in the tileset.
+   * @param tileHeight the height of the tiles in the tileset.
+   *
+   * @since 0.1.0
+   *
+   * @signal `added_tileset`
+   */
   void add_tileset(const QImage& image,
                    const QFileInfo& path,
                    const QString& name,
