@@ -91,8 +91,7 @@ class window final : public QMainWindow
   void ui_new_tileset();
   void ui_removed_tileset(tileset_id id);
   void ui_selected_tileset(tileset_id id);
-  void ui_tileset_selection_changed(core::position topLeft,
-                                    core::position bottomRight);
+  void ui_tileset_selection_changed(const core::tileset::selection& selection);
 
   void ui_resize_map();
 

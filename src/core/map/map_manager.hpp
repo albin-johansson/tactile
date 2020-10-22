@@ -134,7 +134,7 @@ class map_manager final : public QObject
   /**
    * @copydoc map_document::set_selection()
    */
-  void set_tileset_selection(position topLeft, position bottomRight);
+  void set_tileset_selection(const tileset::selection& selection);
 
   /**
    * @brief Indicates whether or not there is an active map document.

@@ -159,9 +159,9 @@ void map_document::select_tileset(tileset_id id)
   m_tilesets->select(id);
 }
 
-void map_document::set_selection(position topLeft, position bottomRight)
+void map_document::set_selection(const tileset::selection& selection)
 {
-  m_tilesets->set_selection(topLeft, bottomRight);
+  m_tilesets->set_selection(selection);
 }
 
 void map_document::select_layer(layer_id id)

@@ -147,11 +147,10 @@ void map_manager::move_layer_forward(layer_id id)
   }
 }
 
-void map_manager::set_tileset_selection(position topLeft,
-                                           position bottomRight)
+void map_manager::set_tileset_selection(const tileset::selection& selection)
 {
   if (auto* document = current_document()) {
-    document->set_selection(topLeft, bottomRight);
+    document->set_selection(selection);
   }
 }
 

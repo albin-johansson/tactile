@@ -172,10 +172,9 @@ void app::handle_new_tileset()
   });
 }
 
-void app::tileset_selection_changed(core::position topLeft,
-                                    core::position bottomRight)
+void app::tileset_selection_changed(const core::tileset::selection& selection)
 {
-  m_model->set_tileset_selection(topLeft, bottomRight);
+  m_model->set_tileset_selection(selection);
 }
 
 void app::handle_new_map()

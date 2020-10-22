@@ -143,17 +143,11 @@ class tileset_content_page final : public QWidget
 
  signals:
   void switch_to_empty_page();
-
   void switch_to_content_page();
-
   void ui_requested_tileset();
-
   void ui_selected_tileset(tileset_id id);
-
   void ui_removed_tileset(tileset_id id);
-
-  void tileset_selection_changed(core::position topLeft,
-                                 core::position bottomRight);
+  void tileset_selection_changed(const core::tileset::selection& selection);
 
  public slots:
   void select_map(map_id map);

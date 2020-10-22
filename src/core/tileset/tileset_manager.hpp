@@ -71,12 +71,11 @@ class tileset_manager final
   /**
    * @brief Sets the current tileset selection of the active tileset.
    *
-   * @param topLeft the top-left corner of the selection.
-   * @param bottomRight the bottom-right corner of the selection.
+   * @param selection the new selection.
    *
    * @since 0.1.0
    */
-  void set_selection(const position& topLeft, const position& bottomRight);
+  void set_selection(const tileset::selection& selection);
 
   void increment_next_tileset_id() noexcept;
 

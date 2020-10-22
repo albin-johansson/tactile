@@ -72,10 +72,9 @@ tileset::tileset(tile_id firstID,
     : tileset{firstID, QImage{path}, tileWidth, tileHeight}
 {}
 
-void tileset::set_selection(const position& topLeft,
-                            const position& bottomRight)
+void tileset::set_selection(const selection& selection)
 {
-  m_selection = {topLeft, bottomRight};
+  m_selection = selection;
 }
 
 void tileset::clear_selection() noexcept

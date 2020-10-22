@@ -7,6 +7,7 @@
 
 #include "czstring.hpp"
 #include "position.hpp"
+#include "tileset.hpp"
 
 namespace tactile {
 
@@ -66,8 +67,7 @@ class app final : public QApplication
 
   void handle_new_tileset();
 
-  void tileset_selection_changed(core::position topLeft,
-                                 core::position bottomRight);
+  void tileset_selection_changed(const core::tileset::selection& selection);
 
   void handle_new_map();
 };

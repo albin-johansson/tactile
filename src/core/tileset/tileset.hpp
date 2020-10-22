@@ -172,14 +172,11 @@ class tileset final
   /**
    * @brief Sets the current selection in the tileset.
    *
-   * @param topLeft the top-left position of the selection.
-   * @param bottomRight the bottom-right position of the selection.
-   *
-   * @todo Use tileset::selection struct as parameter.
+   * @param selection the new selection.
    *
    * @since 0.1.0
    */
-  void set_selection(const position& topLeft, const position& bottomRight);
+  void set_selection(const selection& selection);
 
   /**
    * @brief Clears any current selection.

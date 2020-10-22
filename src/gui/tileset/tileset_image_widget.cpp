@@ -123,7 +123,7 @@ void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
         return bottomRight;
       };
 
-      emit tileset_selection_changed(topLeft, calc_bottom_right());
+      emit tileset_selection_changed({topLeft, calc_bottom_right()});
     } else {
       m_rubberBand->hide();  // selection was too small, just hide it
     }

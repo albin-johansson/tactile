@@ -23,8 +23,7 @@ class tileset_image_widget final : public QWidget
   ~tileset_image_widget() noexcept override;
 
  signals:
-  void tileset_selection_changed(core::position topLeft,
-                                 core::position bottomRight);
+  void tileset_selection_changed(const core::tileset::selection& selection);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;

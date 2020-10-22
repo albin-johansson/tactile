@@ -51,11 +51,10 @@ void tileset_manager::select(std::optional<tileset_id> id)
   }
 }
 
-void tileset_manager::set_selection(const position& topLeft,
-                                    const position& bottomRight)
+void tileset_manager::set_selection(const tileset::selection& selection)
 {
   if (has_active_tileset()) {
-    m_tilesets.at(*m_activeID)->set_selection(topLeft, bottomRight);
+    m_tilesets.at(*m_activeID)->set_selection(selection);
   }
 }
 

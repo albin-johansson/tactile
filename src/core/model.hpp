@@ -57,9 +57,9 @@ class model final : public QObject
   /**
    * @copydoc map_manager::set_tileset_selection()
    */
-  void set_tileset_selection(position topLeft, position bottomRight)
+  void set_tileset_selection(const tileset::selection& selection)
   {
-    m_maps->set_tileset_selection(topLeft, bottomRight);
+    m_maps->set_tileset_selection(selection);
   }
 
   /**

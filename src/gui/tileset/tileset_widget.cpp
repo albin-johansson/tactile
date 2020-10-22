@@ -18,26 +18,13 @@ tileset_widget::tileset_widget(QWidget* parent)
   m_contentIndex = m_ui->stackedWidget->addWidget(m_contentPage);
   m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
 
-  connect(m_emptyPage,
-          &tileset_empty_page::request_new_tileset,
-          this,
-          &tileset_widget::ui_requested_tileset);
-  connect(m_contentPage,
-          &tileset_content_page::ui_requested_tileset,
-          this,
-          &tileset_widget::ui_requested_tileset);
-  connect(m_contentPage,
-          &tileset_content_page::ui_selected_tileset,
-          this,
-          &tileset_widget::ui_selected_tileset);
-  connect(m_contentPage,
-          &tileset_content_page::ui_removed_tileset,
-          this,
-          &tileset_widget::ui_removed_tileset);
-  connect(m_contentPage,
-          &tileset_content_page::tileset_selection_changed,
-          this,
-          &tileset_widget::tileset_selection_changed);
+  // clang-format off
+  connect(m_emptyPage, &tileset_empty_page::request_new_tileset, this, &tileset_widget::ui_requested_tileset);
+  connect(m_contentPage, &tileset_content_page::ui_requested_tileset, this, &tileset_widget::ui_requested_tileset);
+  connect(m_contentPage, &tileset_content_page::ui_selected_tileset, this, &tileset_widget::ui_selected_tileset);
+  connect(m_contentPage, &tileset_content_page::ui_removed_tileset, this, &tileset_widget::ui_removed_tileset);
+  connect(m_contentPage, &tileset_content_page::tileset_selection_changed, this, &tileset_widget::tileset_selection_changed);
+  // clang-format on
   connect(m_contentPage, &tileset_content_page::switch_to_empty_page, [this] {
     m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
   });
