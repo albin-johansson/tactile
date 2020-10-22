@@ -59,21 +59,12 @@ void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
     menu.set_move_down_enabled(m_ui->downButton->isEnabled());
     menu.set_remove_enabled(m_ui->removeLayerButton->isEnabled());
 
-    connect(&menu, &layer_item_context_menu::toggle_visibility, [this] {
-      m_ui->visibleButton->toggle();
-    });
-
-    connect(&menu, &layer_item_context_menu::move_layer_up, [this] {
-      m_ui->upButton->click();
-    });
-
-    connect(&menu, &layer_item_context_menu::move_layer_down, [this] {
-      m_ui->downButton->click();
-    });
-
-    connect(&menu, &layer_item_context_menu::remove_layer, [this] {
-      m_ui->removeLayerButton->click();
-    });
+    // clang-format off
+    connect(&menu, &layer_item_context_menu::toggle_visibility, m_ui->visibleButton, &QAbstractButton::toggle);
+    connect(&menu, &layer_item_context_menu::move_layer_up, m_ui->upButton, &QAbstractButton::click);
+    connect(&menu, &layer_item_context_menu::move_layer_down, m_ui->downButton, &QAbstractButton::click);
+    connect(&menu, &layer_item_context_menu::remove_layer, m_ui->removeLayerButton, &QAbstractButton::click);
+    // clang-format on
 
     menu.exec(mapToGlobal(pos));
   }
