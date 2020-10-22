@@ -60,6 +60,7 @@ class layer_widget final : public QWidget
 
  private:
   Ui::layer_widget* m_ui{};
+  std::optional<int> m_duplicateTargetRow;
   int m_nameSuffix{1};
 
   void trigger_layer_item_context_menu(const QPoint& pos);

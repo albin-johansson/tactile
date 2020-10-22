@@ -37,6 +37,7 @@ layer_widget::layer_widget(QWidget* parent)
   });
   connect(m_ui->duplicateButton, &QPushButton::pressed, [this] {
     if (auto* item = current_item()) {
+      m_duplicateTargetRow = m_ui->layerList->row(item) + 1;
       emit ui_duplicate_layer(item->layer());
     }
   });
@@ -89,13 +90,20 @@ void layer_widget::added_layer(layer_id id, const core::layer& layer)
 void layer_widget::added_duplicated_layer(layer_id id, const core::layer& layer)
 {
   add_layer(id, layer);
+  auto* item = item_for_layer_id(id);
+  Q_ASSERT(item);
 
   const auto name = layer.name() + tr(" (Copy)");
-  auto* item = item_for_layer_id(id);
   item->setText(name);
   emit ui_set_layer_name(id, name);
 
-  // TODO place the duplicated item next to the original item
+  // The layer item is initially added to the end, move up until it's in place
+  const auto target = m_duplicateTargetRow.value();
+  while (m_ui->layerList->row(item) != target) {
+    emit ui_move_layer_up(id);
+  }
+
+  m_duplicateTargetRow.reset();
 }
 
 void layer_widget::removed_layer(layer_id id)
