@@ -60,11 +60,11 @@ auto saves::tile_height() -> setting<int>
 
 void validate()
 {
-  graphics::render_grid().set_if_missing(true);
+  graphics::render_grid().set_if_missing(false);
   graphics::theme().set_if_missing(theme::get_default());
   graphics::theme_name().set_if_missing(theme::get_default_name().toString());
 
-  saves::embed_tilesets().set_if_missing(true);
+  saves::embed_tilesets().set_if_missing(false);
   saves::generate_defaults().set_if_missing(false);
   saves::tile_width().set_if_missing(32);
   saves::tile_height().set_if_missing(32);
