@@ -78,8 +78,8 @@ class window final : public QMainWindow
 
   void ui_selected_tool(tool_id tool);
 
-  void ui_requested_new_layer();
-  void ui_requested_remove_layer();
+  void ui_add_layer();
+  void ui_remove_layer(layer_id id);
   void ui_selected_layer(layer_id id);
   void ui_set_layer_visibility(layer_id id, bool visible);
   void ui_set_layer_opacity(layer_id id, double opacity);

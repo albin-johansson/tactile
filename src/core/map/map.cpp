@@ -42,12 +42,15 @@ void map::remove_occurrences(tile_id id)
   }
 }
 
-void map::remove_active_layer()
+void map::remove_layer(layer_id id)
 {
-  if (m_activeLayer) {
-    m_layers.erase(*m_activeLayer);
+  Q_ASSERT(m_layers.contains(id));
+
+  if (m_activeLayer == id) {
     m_activeLayer.reset();
   }
+
+  m_layers.erase(id);
 }
 
 void map::select_layer(layer_id id)

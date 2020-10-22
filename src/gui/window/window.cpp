@@ -90,8 +90,8 @@ void window::init_connections()
   connect(m_tilesetDock, &tileset_dock::ui_removed_tileset, this, &window::ui_removed_tileset);
   connect(m_tilesetDock, &tileset_dock::tileset_selection_changed, this, &window::ui_tileset_selection_changed);
 
-  connect(m_layerDock, &layer_dock::ui_requested_new_layer, this, &window::ui_requested_new_layer);
-  connect(m_layerDock, &layer_dock::ui_requested_remove_layer, this, &window::ui_requested_remove_layer);
+  connect(m_layerDock, &layer_dock::ui_add_layer, this, &window::ui_add_layer);
+  connect(m_layerDock, &layer_dock::ui_remove_layer, this, &window::ui_remove_layer);
   connect(m_layerDock, &layer_dock::ui_selected_layer, this, &window::ui_selected_layer);
   connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
   connect(m_layerDock, &layer_dock::ui_set_layer_opacity, this, &window::ui_set_layer_opacity);

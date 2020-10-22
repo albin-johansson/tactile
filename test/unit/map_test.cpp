@@ -87,20 +87,19 @@ TEST_CASE("map::add_layer", "[map]")
   CHECK(map.layer_count() == count + 1);
 }
 
-TEST_CASE("map::remove_active_layer", "[map]")
+TEST_CASE("map::remove_layer", "[map]")
 {
   core::map map;
-  CHECK_NOTHROW(map.remove_active_layer());
 
-  const auto id = map.add_layer();
-  map.add_layer();
+  const auto fst = map.add_layer();
+  const auto snd = map.add_layer();
 
-  CHECK_NOTHROW(map.remove_active_layer());
-  CHECK(map.layer_count() == 2);
-
-  map.select_layer(id);
-  map.remove_active_layer();
+  CHECK_NOTHROW(map.remove_layer(snd));
   CHECK(map.layer_count() == 1);
+
+  map.select_layer(fst);
+  map.remove_layer(fst);
+  CHECK(map.layer_count() == 0);
   CHECK(!map.active_layer_id());
 }
 

@@ -25,22 +25,14 @@ class layer_widget final : public QWidget
   ~layer_widget() noexcept override;
 
  signals:
-  void ui_requested_new_layer();
-
-  void ui_requested_remove_layer();  // FIXME specify layer ID
-
+  void ui_add_layer();
+  void ui_remove_layer(layer_id id);
   void ui_selected_layer(layer_id id);
-
   void ui_set_layer_opacity(layer_id id, double opacity);
-
   void ui_set_layer_visibility(layer_id id, bool visible);
-
   void ui_set_layer_name(layer_id id, const QString& name);
-
   void ui_move_layer_down(layer_id id);
-
   void ui_move_layer_up(layer_id id);
-
   void ui_duplicate_layer(layer_id id);
 
  public slots:

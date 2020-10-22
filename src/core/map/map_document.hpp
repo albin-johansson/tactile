@@ -218,19 +218,17 @@ class map_document final : public QObject
   void add_layer();
 
   /**
-   * @brief Attempts to remove the currently active layer.
+   * @brief Removes the specified layer from the document.
+   *
+   * @pre `id` must be associated with an existing layer.
+   *
+   * @param id the ID of the layer that will be removed.
    *
    * @since 0.1.0
    *
    * @signal `removed_layer`
    */
-  void remove_active_layer()
-  {
-    if (const auto id = m_map->active_layer_id(); id) {
-      m_map->remove_active_layer();
-      emit removed_layer(*id);
-    }
-  }
+  void remove_layer(layer_id id);
 
   /**
    * @brief Duplicates the layer associated with the specified ID.
@@ -482,7 +480,7 @@ class map_document final : public QObject
   void added_layer(layer_id id, const layer& layer);
   void added_duplicated_layer(layer_id id, const layer& layer);
   void selected_layer(layer_id id, const layer& layer);
-  void removed_layer(layer_id id);  // TODO
+  void removed_layer(layer_id id);
   void moved_layer_back(layer_id id);
   void moved_layer_forward(layer_id id);
 

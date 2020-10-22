@@ -19,33 +19,42 @@ layer_widget::layer_widget(QWidget* parent)
 
   // clang-format off
   connect(m_ui->layerList, &QListWidget::customContextMenuRequested, this, &layer_widget::trigger_layer_item_context_menu);
-  connect(m_ui->newLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_new_layer);
-  connect(m_ui->removeLayerButton, &QPushButton::pressed, this, &layer_widget::ui_requested_remove_layer);
+  connect(m_ui->newLayerButton, &QPushButton::pressed, this, &layer_widget::ui_add_layer);
   connect(m_ui->layerList, &QListWidget::currentItemChanged, this, &layer_widget::current_item_changed);
   connect(m_ui->layerList, &QListWidget::itemChanged, this, &layer_widget::item_changed);
   // clang-format on
+
+  connect(m_ui->removeLayerButton, &QPushButton::pressed, [this] {
+    if (auto* item = current_item()) {
+      emit ui_remove_layer(item->layer());
+    }
+  });
 
   connect(m_ui->upButton, &QPushButton::pressed, [this] {
     if (auto* item = current_item()) {
       emit ui_move_layer_up(item->layer());
     }
   });
+
   connect(m_ui->downButton, &QPushButton::pressed, [this] {
     if (auto* item = current_item()) {
       emit ui_move_layer_down(item->layer());
     }
   });
+
   connect(m_ui->duplicateButton, &QPushButton::pressed, [this] {
     if (auto* item = current_item()) {
       m_duplicateTargetRow = m_ui->layerList->row(item) + 1;
       emit ui_duplicate_layer(item->layer());
     }
   });
+
   connect(m_ui->visibleButton, &QPushButton::toggled, [this](bool visible) {
     if (auto* item = current_item()) {
       emit ui_set_layer_visibility(item->layer(), visible);
     }
   });
+
   connect(m_ui->opacitySpinBox,
           &QDoubleSpinBox::valueChanged,
           [this](double value) {

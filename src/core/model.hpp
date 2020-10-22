@@ -224,17 +224,15 @@ class model final : public QObject
   void add_layer();
 
   /**
-   * @brief Removes the active layer from the currently active map.
+   * @brief Removes the specified layer from the currently active map.
    *
-   * @details This function emits the `removed_layer` signal.
+   * @param id the ID associated with the layer that will be removed.
    *
-   * @note This function has no effect if there is no active map document.
+   * @signal `removed_layer`.
    *
    * @since 0.1.0
-   *
-   * @todo Add remove_layer command.
    */
-  void remove_active_layer();
+  void remove_layer(layer_id id);
 
   /**
    * @brief Selects the tile layer associated with the specified index.

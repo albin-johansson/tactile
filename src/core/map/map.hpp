@@ -136,16 +136,16 @@ class map final
       -> std::pair<layer_id, layer>&;
 
   /**
-   * @brief Removes the currently active layer from the map.
+   * @brief Removes the specified layer from the map.
    *
-   * @note This function has no effect if there is no active layer.
+   * @pre `id` must be associated with an existing layer.
    *
-   * @warning If there is an active layer, then it will be removed but no other
-   * layer will be made active.
+   * @warning If the removed layer was the active layer, then no other layer
+   * will be made active.
    *
    * @since 0.1.0
    */
-  void remove_active_layer();
+  void remove_layer(layer_id id);
 
   /**
    * @brief Selects the tile layer associated with the specified ID.
