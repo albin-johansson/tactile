@@ -37,17 +37,20 @@ void stamp_sequence::redo()
 {
   // The stamp tools works directly when applied, so we don't do anything when
   // the command is executed when first inserted into the command stack.
-  m_layer = m_map->active_layer_id().value();
   if (m_first) {
+    m_layer = m_map->active_layer_id().value();
     m_first = false;
     return;
   }
 
   QUndoCommand::redo();
 
+  const auto layer = m_map->active_layer_id().value();
+  m_map->select_layer(m_layer);
   for (const auto& [position, tile] : m_sequence) {
     m_map->set_tile(position, tile);
   }
+  m_map->select_layer(layer);
 }
 
 }  // namespace tactile::cmd

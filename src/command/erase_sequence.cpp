@@ -22,28 +22,29 @@ void erase_sequence::undo()
   QUndoCommand::undo();
 
   const auto layer = m_map->active_layer_id().value();
-
   m_map->select_layer(m_layer);
   for (const auto& [position, tile] : m_oldState) {
     m_map->set_tile(position, tile);
   }
-
   m_map->select_layer(layer);
 }
 
 void erase_sequence::redo()
 {
-  m_layer = m_map->active_layer_id().value();
   if (m_first) {
+    m_layer = m_map->active_layer_id().value();
     m_first = false;
     return;
   }
 
   QUndoCommand::redo();
 
+  const auto layer = m_map->active_layer_id().value();
+  m_map->select_layer(m_layer);
   for (const auto& [position, _] : m_oldState) {
     m_map->set_tile(position, empty);
   }
+  m_map->select_layer(layer);
 }
 
 }  // namespace tactile::cmd
