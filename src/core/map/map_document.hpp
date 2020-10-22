@@ -245,6 +245,10 @@ class map_document final : public QObject
 
   void set_layer_name(layer_id id, const QString& name);
 
+  void move_layer_back(layer_id id);
+
+  void move_layer_forward(layer_id id);
+
   /**
    * @copydoc map::set_next_layer_id()
    */
@@ -440,6 +444,8 @@ class map_document final : public QObject
   void added_layer(layer_id id, const layer& layer);
   void selected_layer(layer_id id, const layer& layer);
   void removed_layer(layer_id id);  // TODO
+  void moved_layer_back(layer_id id);
+  void moved_layer_forward(layer_id id);
 
  public slots:
   void add_tileset(const QImage& image,

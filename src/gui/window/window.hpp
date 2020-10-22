@@ -84,6 +84,8 @@ class window final : public QMainWindow
   void ui_set_layer_visibility(layer_id id, bool visible);
   void ui_set_layer_opacity(layer_id id, double opacity);
   void ui_set_layer_name(layer_id id, const QString& name);
+  void ui_move_layer_down(layer_id id);
+  void ui_move_layer_up(layer_id id);
 
   void ui_new_tileset();
   void ui_removed_tileset(tileset_id id);
@@ -130,6 +132,10 @@ class window final : public QMainWindow
   void added_layer(layer_id id, const core::layer& layer);
 
   void removed_layer(layer_id id);
+
+  void moved_layer_up(layer_id id);
+
+  void moved_layer_down(layer_id id);
 
   void switched_map(map_id map, const core::map_document& document);
 

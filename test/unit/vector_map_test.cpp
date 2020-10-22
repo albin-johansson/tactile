@@ -6,7 +6,7 @@
 
 using namespace tactile;
 
-TEST_CASE("small_map defaults", "[vector_map]")
+TEST_CASE("vector_map defaults", "[vector_map]")
 {
   const vector_map<int, int> map;
   CHECK(map.capacity() == 0);
@@ -113,7 +113,7 @@ TEST_CASE("vector_map::operator[]", "[vector_map]")
   CHECK(str == "foo"sv);
 }
 
-TEST_CASE("small_map begin/end", "[vector_map]")
+TEST_CASE("vector_map begin/end", "[vector_map]")
 {
   vector_map<int, std::string> map;
   map.emplace(1, "abc");
@@ -121,4 +121,42 @@ TEST_CASE("small_map begin/end", "[vector_map]")
   map.emplace(3, "ghi");
 
   CHECK(std::distance(map.begin(), map.end()) == 3);
+}
+
+TEST_CASE("vector_map::index_of", "[vector_map]")
+{
+  vector_map<int, std::string> map;
+
+  map.emplace(4, "foo");
+  map.emplace(8, "bar");
+
+  REQUIRE(map.index_of(4).has_value());
+  CHECK(map.index_of(4) == 0);
+
+  REQUIRE(map.index_of(8).has_value());
+  CHECK(map.index_of(8) == 1);
+}
+
+TEST_CASE("vector_map::move_elem_forward/back", "[vector_map]")
+{
+  vector_map<int, std::string> map;
+
+  REQUIRE_NOTHROW(map.move_elem_forward(0));
+  REQUIRE_NOTHROW(map.move_elem_back(0));
+
+  map.emplace(3, "foo");
+  map.emplace(7, "bar");
+
+  REQUIRE(map.index_of(3) == 0);
+  REQUIRE(map.index_of(7) == 1);
+  REQUIRE_NOTHROW(map.move_elem_forward(3));   // noop
+  REQUIRE_NOTHROW(map.move_elem_back(7));  // noop
+
+  map.move_elem_forward(7);
+  REQUIRE(map.index_of(3) == 1);
+  REQUIRE(map.index_of(7) == 0);
+
+  map.move_elem_back(7);
+  REQUIRE(map.index_of(3) == 0);
+  REQUIRE(map.index_of(7) == 1);
 }

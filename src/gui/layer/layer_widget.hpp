@@ -27,7 +27,7 @@ class layer_widget final : public QWidget
  signals:
   void ui_requested_new_layer();
 
-  void ui_requested_remove_layer();
+  void ui_requested_remove_layer();  // FIXME specify layer ID
 
   void ui_selected_layer(layer_id id);
 
@@ -37,6 +37,10 @@ class layer_widget final : public QWidget
 
   void ui_set_layer_name(layer_id id, const QString& name);
 
+  void ui_move_layer_down(layer_id id);
+
+  void ui_move_layer_up(layer_id id);
+
  public slots:
   void added_layer(layer_id id, const core::layer& layer);
 
@@ -45,6 +49,10 @@ class layer_widget final : public QWidget
   void selected_layer(layer_id id, const core::layer& layer);
 
   void selected_map(const core::map_document& document);
+
+  void moved_layer_back(layer_id id);
+
+  void moved_layer_forward(layer_id id);
 
  private:
   Ui::layer_widget* m_ui{};

@@ -23,6 +23,17 @@ layer_widget::layer_widget(QWidget* parent)
   connect(m_ui->layerList, &QListWidget::currentItemChanged, this, &layer_widget::current_item_changed);
   connect(m_ui->layerList, &QListWidget::itemChanged, this, &layer_widget::item_changed);
   // clang-format on
+
+  connect(m_ui->upButton, &QPushButton::pressed, [this] {
+    if (auto* item = current_item()) {
+      emit ui_move_layer_up(item->layer());
+    }
+  });
+  connect(m_ui->downButton, &QPushButton::pressed, [this] {
+    if (auto* item = current_item()) {
+      emit ui_move_layer_down(item->layer());
+    }
+  });
   connect(m_ui->visibleButton, &QPushButton::toggled, [this](bool visible) {
     if (auto* item = current_item()) {
       emit ui_set_layer_visibility(item->layer(), visible);
@@ -58,28 +69,43 @@ void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
 
     QAction remove{tr("Remove layer"), this};
     remove.setIcon(close);
-    remove.setEnabled(m_ui->layerList->count() > 1);
+    remove.setEnabled(m_ui->removeLayerButton->isEnabled());
     connect(&remove, &QAction::triggered, [this](bool checked) {
       emit ui_requested_remove_layer();
     });
 
     QAction toggleVisibility{tr("Toggle visibility"), this};
     toggleVisibility.setIcon(eye);
+    toggleVisibility.setEnabled(m_ui->visibleButton->isEnabled());
     connect(&toggleVisibility, &QAction::triggered, [this] {
       m_ui->visibleButton->toggle();
     });
 
     QAction moveUp{tr("Move layer up"), this};
     moveUp.setIcon(up);
+    moveUp.setEnabled(m_ui->upButton->isEnabled());
+    connect(&moveUp, &QAction::triggered, [this] {
+      m_ui->upButton->click();
+    });
 
     QAction moveDown{tr("Move layer down"), this};
     moveDown.setIcon(down);
+    moveDown.setEnabled(m_ui->downButton->isEnabled());
+    connect(&moveDown, &QAction::triggered, [this] {
+      m_ui->downButton->click();
+    });
+
+    QAction sep1;
+    sep1.setSeparator(true);
+
+    QAction sep2;
+    sep2.setSeparator(true);
 
     menu.addAction(&toggleVisibility);
-    menu.addAction(menu.addSeparator());
+    menu.addAction(&sep1);
     menu.addAction(&moveUp);
     menu.addAction(&moveDown);
-    menu.addAction(menu.addSeparator());
+    menu.addAction(&sep2);
     menu.addAction(&remove);
 
     menu.exec(mapToGlobal(pos));
@@ -130,6 +156,34 @@ void layer_widget::selected_map(const core::map_document& document)
   }
 }
 
+void layer_widget::moved_layer_back(layer_id id)
+{
+  if (const auto* item = item_for_layer_id(id)) {
+    const auto row = m_ui->layerList->row(item);
+    const auto newRow = row + 1;
+
+    m_ui->layerList->insertItem(newRow, m_ui->layerList->takeItem(row));
+    m_ui->layerList->setCurrentRow(newRow);
+    update_possible_actions();
+
+    Q_ASSERT(m_ui->layerList->row(item) == newRow);
+  }
+}
+
+void layer_widget::moved_layer_forward(layer_id id)
+{
+  if (const auto* item = item_for_layer_id(id)) {
+    const auto row = m_ui->layerList->row(item);
+    const auto newRow = row - 1;
+
+    m_ui->layerList->insertItem(newRow, m_ui->layerList->takeItem(row));
+    m_ui->layerList->setCurrentRow(newRow);
+    update_possible_actions();
+
+    Q_ASSERT(m_ui->layerList->row(item) == newRow);
+  }
+}
+
 void layer_widget::add_layer(layer_id id, const core::layer& layer)
 {
   if (!layer.name().isEmpty()) {
@@ -164,7 +218,12 @@ auto layer_widget::current_item() const -> const layer_item*
 
 void layer_widget::update_possible_actions()
 {
-  m_ui->removeLayerButton->setEnabled(m_ui->layerList->count() > 1);
+  const auto itemCount = m_ui->layerList->count();
+  const auto currentRow = m_ui->layerList->currentRow();
+
+  m_ui->removeLayerButton->setEnabled(itemCount > 1);
+  m_ui->upButton->setEnabled(itemCount > 1 && currentRow != 0);
+  m_ui->downButton->setEnabled(itemCount > 1 && (currentRow != itemCount - 1));
 }
 
 void layer_widget::current_item_changed(QListWidgetItem* current,

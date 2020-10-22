@@ -28,6 +28,10 @@ class layer_dock final : public QDockWidget
 
   void ui_set_layer_name(layer_id id, const QString& name);
 
+  void ui_move_layer_down(layer_id id);
+
+  void ui_move_layer_up(layer_id id);
+
  public slots:
   void added_layer(layer_id id, const core::layer& layer)
   {
@@ -47,6 +51,16 @@ class layer_dock final : public QDockWidget
   void selected_map(const core::map_document& document)
   {
     m_widget->selected_map(document);
+  }
+
+  void moved_layer_back(layer_id id)
+  {
+    m_widget->moved_layer_back(id);
+  }
+
+  void moved_layer_forward(layer_id id)
+  {
+    m_widget->moved_layer_forward(id);
   }
 
  private:

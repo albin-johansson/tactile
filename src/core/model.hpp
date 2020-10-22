@@ -107,6 +107,8 @@ class model final : public QObject
   void added_layer(layer_id id, const layer& layer);
   void selected_layer(layer_id id, const layer& layer);
   void removed_layer(layer_id id);
+  void moved_layer_back(layer_id id);
+  void moved_layer_forward(layer_id id);
 
   void disable_stamp_preview();
   void enable_stamp_preview(const position& position);
@@ -275,6 +277,44 @@ class model final : public QObject
   void set_layer_name(layer_id id, const QString& name)
   {
     m_maps->set_layer_name(id, name);
+    emit redraw();
+  }
+
+  /**
+   * @brief Moves the specified layer backwards, meaning that it will be
+   * rendered *earlier*.
+   *
+   * @details The mental model for users is that the layers behave as if they
+   * were on a stack, even if they aren't stored that way in the model.
+   *
+   * @details This function emits the `moved_layer_back` and `redraw` signals.
+   *
+   * @param id the ID associated with the layer that will be moved.
+   *
+   * @since 0.1.0
+   */
+  void move_layer_back(layer_id id)
+  {
+    m_maps->move_layer_back(id);
+    emit redraw();
+  }
+
+  /**
+   * @brief Moves the specified layer forwards, meaning that it will be
+   * rendered *later*.
+   *
+   * @details The mental model for users is that the layers behave as if they
+   * were on a stack, even if they aren't stored that way in the model.
+   *
+   * @details This function emits the `move_layer_forward` and `redraw` signals.
+   *
+   * @param id the ID associated with the layer that will be moved.
+   *
+   * @since 0.1.0
+   */
+  void move_layer_forward(layer_id id)
+  {
+    m_maps->move_layer_forward(id);
     emit redraw();
   }
 

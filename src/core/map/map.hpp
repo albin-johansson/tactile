@@ -277,6 +277,10 @@ class map final
    */
   void set_name(layer_id id, const QString& name);
 
+  void move_layer_back(layer_id id);
+
+  void move_layer_forward(layer_id id);
+
   /**
    * @brief Returns the ID of the tile at the specified position.
    *

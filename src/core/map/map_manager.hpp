@@ -59,6 +59,10 @@ class map_manager final : public QObject
 
   void set_layer_name(layer_id id, const QString& name);
 
+  void move_layer_back(layer_id id);
+
+  void move_layer_forward(layer_id id);
+
   void update_tileset_selection(position topLeft, position bottomRight);
 
   [[nodiscard]] auto has_active_map() const noexcept -> bool;
@@ -107,6 +111,8 @@ class map_manager final : public QObject
   void added_layer(layer_id id, const layer& layer);
   void selected_layer(layer_id id, const layer& layer);
   void removed_layer(layer_id id);
+  void moved_layer_back(layer_id id);
+  void moved_layer_forward(layer_id id);
 
  public slots:
   void ui_added_tileset(const QImage& image,

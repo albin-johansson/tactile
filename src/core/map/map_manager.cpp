@@ -44,6 +44,8 @@ auto map_manager::add(map_document* document) -> map_id
   bind(&map_document::added_layer, &map_manager::added_layer);
   bind(&map_document::removed_layer, &map_manager::removed_layer);
   bind(&map_document::selected_layer, &map_manager::selected_layer);
+  bind(&map_document::moved_layer_back, &map_manager::moved_layer_back);
+  bind(&map_document::moved_layer_forward, &map_manager::moved_layer_forward);
 
   m_mapDocuments.emplace(id, document);
   m_currentMapID = id;
@@ -127,6 +129,20 @@ void map_manager::set_layer_name(layer_id id, const QString& name)
 {
   if (auto* document = current_document()) {
     document->set_layer_name(id, name);
+  }
+}
+
+void map_manager::move_layer_back(layer_id id)
+{
+  if (auto* document = current_document()) {
+    document->move_layer_back(id);
+  }
+}
+
+void map_manager::move_layer_forward(layer_id id)
+{
+  if (auto* document = current_document()) {
+    document->move_layer_forward(id);
   }
 }
 

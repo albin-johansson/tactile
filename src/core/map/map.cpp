@@ -2,7 +2,8 @@
 
 #include <qdebug.h>
 
-#include <utility>  // move
+#include <algorithm>  // iter_swap
+#include <utility>    // move
 
 #include "algorithm.hpp"
 #include "tactile_error.hpp"
@@ -164,6 +165,16 @@ void map::set_name(layer_id id, const QString& name)
   if (auto* layer = find_layer(id)) {
     layer->set_name(name);
   }
+}
+
+void map::move_layer_back(layer_id id)
+{
+  m_layers.move_elem_back(id);
+}
+
+void map::move_layer_forward(layer_id id)
+{
+  m_layers.move_elem_forward(id);
 }
 
 auto map::tile_at(const position& position) const -> std::optional<tile_id>

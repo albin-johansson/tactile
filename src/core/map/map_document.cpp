@@ -200,6 +200,18 @@ void map_document::set_layer_name(layer_id id, const QString& name)
   m_map->set_name(id, name);
 }
 
+void map_document::move_layer_back(layer_id id)
+{
+  m_map->move_layer_back(id);
+  emit moved_layer_back(id);
+}
+
+void map_document::move_layer_forward(layer_id id)
+{
+  m_map->move_layer_forward(id);
+  emit moved_layer_forward(id);
+}
+
 auto map_document::can_undo() const -> bool
 {
   return m_commands->canUndo();

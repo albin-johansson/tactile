@@ -96,6 +96,8 @@ void window::init_connections()
   connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
   connect(m_layerDock, &layer_dock::ui_set_layer_opacity, this, &window::ui_set_layer_opacity);
   connect(m_layerDock, &layer_dock::ui_set_layer_name, this, &window::ui_set_layer_name);
+  connect(m_layerDock, &layer_dock::ui_move_layer_up, this, &window::ui_move_layer_up);
+  connect(m_layerDock, &layer_dock::ui_move_layer_down, this, &window::ui_move_layer_down);
 
   // clang-format on
 }
@@ -252,6 +254,16 @@ void window::added_layer(layer_id id, const core::layer& layer)
 void window::removed_layer(layer_id id)
 {
   m_layerDock->removed_layer(id);
+}
+
+void window::moved_layer_up(layer_id id)
+{
+  m_layerDock->moved_layer_back(id);
+}
+
+void window::moved_layer_down(layer_id id)
+{
+  m_layerDock->moved_layer_forward(id);
 }
 
 void window::switched_map(map_id id, const core::map_document& document)

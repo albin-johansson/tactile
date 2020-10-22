@@ -1,6 +1,7 @@
 #pragma once
 
-#include <algorithm>  // find_if
+#include <algorithm>  // find_if, swap_iter
+#include <optional>   // optional
 #include <stdexcept>  // out_of_range
 #include <utility>    // forward, pair, make_pair
 #include <vector>     // vector
@@ -123,6 +124,16 @@ class vector_map final
     }
   }
 
+  [[nodiscard]] auto at_index(std::size_t index) -> pair_type&
+  {
+    return m_data.at(index);
+  }
+
+  [[nodiscard]] auto at_index(std::size_t index) const -> const pair_type&
+  {
+    return m_data.at(index);
+  }
+
   /**
    * @brief Returns the value associated with the specified key.
    *
@@ -212,6 +223,55 @@ class vector_map final
   }
 
   /**
+   * @brief Returns the index of the key/value-pair associated with the
+   * specified key in the underlying vector.
+   *
+   * @param key the key of the pair to query.
+   *
+   * @return the index of the pair in the underlying vector; `std::nullopt` if
+   * the key is unknown.
+   */
+  [[nodiscard]] auto index_of(const key_type& key) const
+      -> std::optional<std::size_t>
+  {
+    if (const auto it = find(key); it != end()) {
+      return std::distance(begin(), it);
+    } else {
+      return std::nullopt;
+    }
+  }
+
+  void move_elem_forward(const key_type& key)
+  {
+    move_elem(key, true);
+  }
+
+  void move_elem_back(const key_type& key)
+  {
+    move_elem(key, false);
+  }
+
+  [[nodiscard]] auto front() -> pair_type&
+  {
+    return m_data.front();
+  }
+
+  [[nodiscard]] auto front() const -> const pair_type&
+  {
+    return m_data.front();
+  }
+
+  [[nodiscard]] auto back() -> pair_type&
+  {
+    return m_data.back();
+  }
+
+  [[nodiscard]] auto back() const -> const pair_type&
+  {
+    return m_data.front();
+  }
+
+  /**
    * @brief Indicates whether or not the map is empty.
    *
    * @return `true` if the map is empty; `false` otherwise.
@@ -290,6 +350,22 @@ class vector_map final
 
  private:
   storage_type m_data;
+
+  void move_elem(const key_type& key, bool forward)
+  {
+    if (const auto it = find(key); it != end()) {
+      const auto index = std::distance(begin(), it);
+      if (forward) {
+        if (index != 0) {
+          std::iter_swap(it, it - 1);
+        }
+      } else {
+        if (index != size() - 1) {
+          std::iter_swap(it, it + 1);
+        }
+      }
+    }
+  }
 };
 
 }  // namespace tactile
