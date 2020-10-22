@@ -5,6 +5,7 @@
 #include <QRadioButton>
 
 #include "layer_item.hpp"
+#include "layer_item_context_menu.hpp"
 #include "ui_layer_widget.h"
 
 namespace tactile::gui {
@@ -50,63 +51,29 @@ layer_widget::layer_widget(QWidget* parent)
 
 void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
 {
-  static const QIcon close{
-      QStringLiteral(u":resources/icons/icons8/color/64/remove.png")};
-  static const QIcon up{
-      QStringLiteral(u":resources/icons/icons8/color/64/up.png")};
-  static const QIcon down{
-      QStringLiteral(u":resources/icons/icons8/color/64/down.png")};
-  static const QIcon eye{
-      QStringLiteral(u":resources/icons/icons8/color/64/visible.png")};
-
-  Q_ASSERT(!close.isNull());
-  Q_ASSERT(!up.isNull());
-  Q_ASSERT(!down.isNull());
-  Q_ASSERT(!eye.isNull());
-
   if (m_ui->layerList->itemAt(pos)) {
-    QMenu menu{this};
+    layer_item_context_menu menu{this};
 
-    QAction remove{tr("Remove layer"), this};
-    remove.setIcon(close);
-    remove.setEnabled(m_ui->removeLayerButton->isEnabled());
-    connect(&remove, &QAction::triggered, [this](bool checked) {
-      emit ui_requested_remove_layer();
-    });
+    menu.set_visibility_enabled(m_ui->visibleButton->isEnabled());
+    menu.set_move_up_enabled(m_ui->upButton->isEnabled());
+    menu.set_move_down_enabled(m_ui->downButton->isEnabled());
+    menu.set_remove_enabled(m_ui->removeLayerButton->isEnabled());
 
-    QAction toggleVisibility{tr("Toggle visibility"), this};
-    toggleVisibility.setIcon(eye);
-    toggleVisibility.setEnabled(m_ui->visibleButton->isEnabled());
-    connect(&toggleVisibility, &QAction::triggered, [this] {
+    connect(&menu, &layer_item_context_menu::toggle_visibility, [this] {
       m_ui->visibleButton->toggle();
     });
 
-    QAction moveUp{tr("Move layer up"), this};
-    moveUp.setIcon(up);
-    moveUp.setEnabled(m_ui->upButton->isEnabled());
-    connect(&moveUp, &QAction::triggered, [this] {
+    connect(&menu, &layer_item_context_menu::move_layer_up, [this] {
       m_ui->upButton->click();
     });
 
-    QAction moveDown{tr("Move layer down"), this};
-    moveDown.setIcon(down);
-    moveDown.setEnabled(m_ui->downButton->isEnabled());
-    connect(&moveDown, &QAction::triggered, [this] {
+    connect(&menu, &layer_item_context_menu::move_layer_down, [this] {
       m_ui->downButton->click();
     });
 
-    QAction sep1;
-    sep1.setSeparator(true);
-
-    QAction sep2;
-    sep2.setSeparator(true);
-
-    menu.addAction(&toggleVisibility);
-    menu.addAction(&sep1);
-    menu.addAction(&moveUp);
-    menu.addAction(&moveDown);
-    menu.addAction(&sep2);
-    menu.addAction(&remove);
+    connect(&menu, &layer_item_context_menu::remove_layer, [this] {
+      emit ui_requested_remove_layer();
+    });
 
     menu.exec(mapToGlobal(pos));
   }

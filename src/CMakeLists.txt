@@ -88,6 +88,8 @@ set(TACTILE_SOURCE_FILES
         gui/layer/layer_widget.ui
         gui/layer/layer_item.cpp
         gui/layer/layer_item.hpp
+        gui/layer/layer_item_context_menu.cpp
+        gui/layer/layer_item_context_menu.hpp
 
         gui/settings/settings_dialog.hpp
         gui/settings/settings_dialog.cpp
