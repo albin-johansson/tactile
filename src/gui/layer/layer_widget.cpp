@@ -72,7 +72,7 @@ void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
     });
 
     connect(&menu, &layer_item_context_menu::remove_layer, [this] {
-      emit ui_requested_remove_layer();
+      m_ui->removeLayerButton->click();
     });
 
     menu.exec(mapToGlobal(pos));
