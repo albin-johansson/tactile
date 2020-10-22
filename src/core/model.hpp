@@ -108,6 +108,7 @@ class model final : public QObject
   void switched_map(map_id id, const map_document& document);
 
   void added_layer(layer_id id, const layer& layer);
+  void added_duplicated_layer(layer_id id, const layer& layer);
   void selected_layer(layer_id id, const layer& layer);
   void removed_layer(layer_id id);
   void moved_layer_back(layer_id id);
@@ -311,6 +312,8 @@ class model final : public QObject
     m_maps->move_layer_forward(id);
     emit redraw();
   }
+
+  void duplicate_layer(layer_id id);
 
   /**
    * @brief Increases the tile size that is being used by the currently active

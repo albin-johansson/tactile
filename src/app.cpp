@@ -44,21 +44,22 @@ void app::init_connections()
 
   // clang-format off
 
-  mod_to_win(&mod::redraw,                &win::force_redraw);
-  mod_to_win(&mod::enable_stamp_preview,  &win::enable_stamp_preview);
-  mod_to_win(&mod::disable_stamp_preview, &win::disable_stamp_preview);
-  mod_to_win(&mod::undo_state_updated,    &win::undo_state_updated);
-  mod_to_win(&mod::redo_state_updated,    &win::redo_state_updated);
-  mod_to_win(&mod::undo_text_updated,     &win::undo_text_updated);
-  mod_to_win(&mod::redo_text_updated,     &win::redo_text_updated);
-  mod_to_win(&mod::switched_map,          &win::switched_map);
-  mod_to_win(&mod::added_tileset,         &win::added_tileset);
-  mod_to_win(&mod::removed_tileset,       &win::removed_tileset);
-  mod_to_win(&mod::added_layer,           &win::added_layer);
-  mod_to_win(&mod::removed_layer,         &win::removed_layer);
-  mod_to_win(&mod::selected_layer,        &win::selected_layer);
-  mod_to_win(&mod::moved_layer_back,        &win::moved_layer_up);
-  mod_to_win(&mod::moved_layer_forward,      &win::moved_layer_down);
+  mod_to_win(&mod::redraw,                 &win::force_redraw);
+  mod_to_win(&mod::enable_stamp_preview,   &win::enable_stamp_preview);
+  mod_to_win(&mod::disable_stamp_preview,  &win::disable_stamp_preview);
+  mod_to_win(&mod::undo_state_updated,     &win::undo_state_updated);
+  mod_to_win(&mod::redo_state_updated,     &win::redo_state_updated);
+  mod_to_win(&mod::undo_text_updated,      &win::undo_text_updated);
+  mod_to_win(&mod::redo_text_updated,      &win::redo_text_updated);
+  mod_to_win(&mod::switched_map,           &win::switched_map);
+  mod_to_win(&mod::added_tileset,          &win::added_tileset);
+  mod_to_win(&mod::removed_tileset,        &win::removed_tileset);
+  mod_to_win(&mod::added_layer,            &win::added_layer);
+  mod_to_win(&mod::added_duplicated_layer, &win::added_duplicated_layer);
+  mod_to_win(&mod::removed_layer,          &win::removed_layer);
+  mod_to_win(&mod::selected_layer,         &win::selected_layer);
+  mod_to_win(&mod::moved_layer_back,       &win::moved_layer_up);
+  mod_to_win(&mod::moved_layer_forward,    &win::moved_layer_down);
 
   win_to_mod(&win::ui_undo,                   &mod::undo);
   win_to_mod(&win::ui_redo,                   &mod::redo);
@@ -82,6 +83,7 @@ void app::init_connections()
   win_to_mod(&win::ui_set_layer_name,         &mod::set_layer_name);
   win_to_mod(&win::ui_move_layer_down,        &mod::move_layer_back);
   win_to_mod(&win::ui_move_layer_up,          &mod::move_layer_forward);
+  win_to_mod(&win::ui_duplicate_layer,        &mod::duplicate_layer);
   win_to_mod(&win::mouse_pressed,             &mod::mouse_pressed);
   win_to_mod(&win::mouse_moved,               &mod::mouse_moved);
   win_to_mod(&win::mouse_released,            &mod::mouse_released);

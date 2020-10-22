@@ -35,6 +35,11 @@ layer_widget::layer_widget(QWidget* parent)
       emit ui_move_layer_down(item->layer());
     }
   });
+  connect(m_ui->duplicateButton, &QPushButton::pressed, [this] {
+    if (auto* item = current_item()) {
+      emit ui_duplicate_layer(item->layer());
+    }
+  });
   connect(m_ui->visibleButton, &QPushButton::toggled, [this](bool visible) {
     if (auto* item = current_item()) {
       emit ui_set_layer_visibility(item->layer(), visible);
@@ -63,6 +68,7 @@ void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
     connect(&menu, &layer_item_context_menu::toggle_visibility, m_ui->visibleButton, &QAbstractButton::toggle);
     connect(&menu, &layer_item_context_menu::move_layer_up, m_ui->upButton, &QAbstractButton::click);
     connect(&menu, &layer_item_context_menu::move_layer_down, m_ui->downButton, &QAbstractButton::click);
+    connect(&menu, &layer_item_context_menu::duplicate_layer, m_ui->duplicateButton, &QAbstractButton::click);
     connect(&menu, &layer_item_context_menu::remove_layer, m_ui->removeLayerButton, &QAbstractButton::click);
     // clang-format on
 
@@ -78,6 +84,18 @@ layer_widget::~layer_widget() noexcept
 void layer_widget::added_layer(layer_id id, const core::layer& layer)
 {
   add_layer(id, layer);
+}
+
+void layer_widget::added_duplicated_layer(layer_id id, const core::layer& layer)
+{
+  add_layer(id, layer);
+
+  const auto name = layer.name() + tr(" (Copy)");
+  auto* item = item_for_layer_id(id);
+  item->setText(name);
+  emit ui_set_layer_name(id, name);
+
+  // TODO place the duplicated item next to the original item
 }
 
 void layer_widget::removed_layer(layer_id id)

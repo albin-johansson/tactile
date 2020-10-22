@@ -182,6 +182,12 @@ void map_document::add_layer()
   emit added_layer(id, m_map->get_layer(id));
 }
 
+void map_document::duplicate_layer(layer_id id)
+{
+  const auto& [newId, layer] = m_map->duplicate_layer(id);
+  emit added_duplicated_layer(newId, layer);
+}
+
 void map_document::increase_tile_size()
 {
   m_map->increase_tile_size();

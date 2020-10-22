@@ -233,6 +233,19 @@ class map_document final : public QObject
   }
 
   /**
+   * @brief Duplicates the layer associated with the specified ID.
+   *
+   * @pre `id` must be associated with an existing layer.
+   *
+   * @param id the ID associated with the layer that will be duplicated.
+   *
+   * @since 0.1.0
+   *
+   * @signal `added_duplicated_layer`
+   */
+  void duplicate_layer(layer_id id);
+
+  /**
    * @copydoc map::increase_tile_size()
    */
   void increase_tile_size();
@@ -467,6 +480,7 @@ class map_document final : public QObject
   void removed_tileset(tileset_id id);
 
   void added_layer(layer_id id, const layer& layer);
+  void added_duplicated_layer(layer_id id, const layer& layer);
   void selected_layer(layer_id id, const layer& layer);
   void removed_layer(layer_id id);  // TODO
   void moved_layer_back(layer_id id);

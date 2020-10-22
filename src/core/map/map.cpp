@@ -78,6 +78,20 @@ void map::add_layer(layer_id id, layer&& layer)
   m_layers.emplace(id, std::move(layer));
 }
 
+auto map::duplicate_layer(layer_id id) -> std::pair<layer_id, layer>&
+{
+  Q_ASSERT(m_layers.contains(id));
+  const auto& layer = m_layers.at(id);
+
+  const auto newId = m_nextLayer;
+  auto copy = layer;
+
+  auto& pair = m_layers.emplace(newId, std::move(copy));
+
+  ++m_nextLayer;
+  return pair;
+}
+
 void map::add_row(tile_id id)
 {
   for (auto& [key, layer] : m_layers) {

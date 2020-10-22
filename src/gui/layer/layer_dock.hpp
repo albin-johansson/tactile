@@ -32,10 +32,17 @@ class layer_dock final : public QDockWidget
 
   void ui_move_layer_up(layer_id id);
 
+  void ui_duplicate_layer(layer_id id);
+
  public slots:
   void added_layer(layer_id id, const core::layer& layer)
   {
     m_widget->added_layer(id, layer);
+  }
+
+  void added_duplicated_layer(layer_id id, const core::layer& layer)
+  {
+    m_widget->added_duplicated_layer(id, layer);
   }
 
   void removed_layer(layer_id id)

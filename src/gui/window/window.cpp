@@ -98,6 +98,7 @@ void window::init_connections()
   connect(m_layerDock, &layer_dock::ui_set_layer_name, this, &window::ui_set_layer_name);
   connect(m_layerDock, &layer_dock::ui_move_layer_up, this, &window::ui_move_layer_up);
   connect(m_layerDock, &layer_dock::ui_move_layer_down, this, &window::ui_move_layer_down);
+  connect(m_layerDock, &layer_dock::ui_duplicate_layer, this, &window::ui_duplicate_layer);
 
   // clang-format on
 }
@@ -249,6 +250,11 @@ void window::selected_layer(layer_id id, const core::layer& layer)
 void window::added_layer(layer_id id, const core::layer& layer)
 {
   m_layerDock->added_layer(id, layer);
+}
+
+void window::added_duplicated_layer(layer_id id, const core::layer& layer)
+{
+  m_layerDock->added_duplicated_layer(id, layer);
 }
 
 void window::removed_layer(layer_id id)

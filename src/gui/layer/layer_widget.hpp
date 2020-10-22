@@ -41,8 +41,12 @@ class layer_widget final : public QWidget
 
   void ui_move_layer_up(layer_id id);
 
+  void ui_duplicate_layer(layer_id id);
+
  public slots:
   void added_layer(layer_id id, const core::layer& layer);
+
+  void added_duplicated_layer(layer_id id, const core::layer& layer);
 
   void removed_layer(layer_id id);
 

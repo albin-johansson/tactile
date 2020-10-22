@@ -86,6 +86,7 @@ class window final : public QMainWindow
   void ui_set_layer_name(layer_id id, const QString& name);
   void ui_move_layer_down(layer_id id);
   void ui_move_layer_up(layer_id id);
+  void ui_duplicate_layer(layer_id id);
 
   void ui_new_tileset();
   void ui_removed_tileset(tileset_id id);
@@ -130,6 +131,8 @@ class window final : public QMainWindow
   void selected_layer(layer_id id, const core::layer& layer);
 
   void added_layer(layer_id id, const core::layer& layer);
+
+  void added_duplicated_layer(layer_id id, const core::layer& layer);
 
   void removed_layer(layer_id id);
 

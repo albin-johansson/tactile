@@ -20,6 +20,7 @@ layer_dock::layer_dock(QWidget* parent)
   connect(m_widget, &layer_widget::ui_set_layer_name, this, &layer_dock::ui_set_layer_name);
   connect(m_widget, &layer_widget::ui_move_layer_down, this, &layer_dock::ui_move_layer_down);
   connect(m_widget, &layer_widget::ui_move_layer_up, this, &layer_dock::ui_move_layer_up);
+  connect(m_widget, &layer_widget::ui_duplicate_layer, this, &layer_dock::ui_duplicate_layer);
   // clang-format on
 }
 

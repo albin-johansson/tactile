@@ -3,6 +3,7 @@
 #include <QString>
 #include <concepts>  // invocable
 #include <optional>  // optional
+#include <utility>   // pair
 
 #include "layer.hpp"
 #include "layer_id.hpp"
@@ -119,6 +120,20 @@ class map final
    * @since 0.1.0
    */
   void add_layer(layer_id id, layer&& layer);
+
+  /**
+   * @brief Duplicates the layer associated with the specified ID.
+   *
+   * @pre `id` must be associated with an existing layer.
+   *
+   * @param id the ID of the layer that will be duplicated.
+   *
+   * @return the new layer ID and the duplicated layer.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto duplicate_layer(layer_id id)
+      -> std::pair<layer_id, layer>&;
 
   /**
    * @brief Removes the currently active layer from the map.
