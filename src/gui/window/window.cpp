@@ -26,8 +26,6 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
 
   setCentralWidget(m_editor);
   addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);
-
-  // FIXME order doesn't seem to matter?
   addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
 
