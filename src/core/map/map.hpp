@@ -2,6 +2,7 @@
 
 #include <QString>
 #include <concepts>  // invocable
+#include <memory>    // shared_ptr
 #include <optional>  // optional
 #include <utility>   // pair
 
@@ -27,8 +28,10 @@ namespace tactile::core {
  */
 class map final
 {
+  using storage_type = vector_map<layer_id, std::shared_ptr<layer>>;
+
  public:
-  using const_iterator = vector_map<layer_id, layer>::const_iterator;
+  using const_iterator = storage_type::const_iterator;
 
   /**
    * @brief Creates an empty map with no layers.
@@ -62,7 +65,7 @@ class map final
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : m_layers) {
-      callable(key, layer);
+      callable(key, *layer);
     }
   }
 
@@ -119,7 +122,7 @@ class map final
    *
    * @since 0.1.0
    */
-  void add_layer(layer_id id, layer&& layer);
+  void add_layer(layer_id id, std::shared_ptr<layer> layer);
 
   /**
    * @brief Duplicates the layer associated with the specified ID.
@@ -133,7 +136,7 @@ class map final
    * @since 0.1.0
    */
   [[nodiscard]] auto duplicate_layer(layer_id id)
-      -> std::pair<layer_id, layer>&;
+      -> std::pair<layer_id, std::shared_ptr<layer>>&;
 
   /**
    * @brief Removes the specified layer from the map.
@@ -146,6 +149,19 @@ class map final
    * @since 0.1.0
    */
   void remove_layer(layer_id id);
+
+  /**
+   * @brief Removes a layer from the map and returns it.
+   *
+   * @pre `id` must be associated with an existing layer.
+   *
+   * @param id the ID associated with the layer that will be removed.
+   *
+   * @return the layer that was removed.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto take_layer(layer_id id) -> std::shared_ptr<layer>;
 
   /**
    * @brief Selects the tile layer associated with the specified ID.
@@ -467,7 +483,7 @@ class map final
    */
   [[nodiscard]] auto get_layer(layer_id id) const -> const layer&
   {
-    return m_layers.at(id);
+    return *m_layers.at(id);
   }
 
   /**
@@ -495,7 +511,7 @@ class map final
   }
 
  private:
-  vector_map<layer_id, layer> m_layers;
+  storage_type m_layers;
   std::optional<layer_id> m_activeLayer;
   layer_id m_nextLayer{1};
   tile_size m_tileSize;

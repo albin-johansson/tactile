@@ -8,6 +8,7 @@
 #include "bucket_fill.hpp"
 #include "erase_sequence.hpp"
 #include "remove_col.hpp"
+#include "remove_layer.hpp"
 #include "remove_row.hpp"
 #include "remove_tileset.hpp"
 #include "resize_map.hpp"
@@ -170,10 +171,11 @@ void map_document::select_layer(layer_id id)
   emit selected_layer(id, m_map->get_layer(id));
 }
 
-void map_document::add_layer(layer_id id, layer&& layer)
+void map_document::add_layer(layer_id id, const std::shared_ptr<layer>& layer)
 {
-  m_map->add_layer(id, std::move(layer));
-  emit added_layer(id, m_map->get_layer(id));
+  Q_ASSERT(layer);
+  m_map->add_layer(id, layer);
+  emit added_layer(id, *layer);
 }
 
 void map_document::add_layer()
@@ -184,14 +186,18 @@ void map_document::add_layer()
 
 void map_document::remove_layer(layer_id id)
 {
-  m_map->remove_layer(id);
-  emit removed_layer(id);
+  m_commands->push<cmd::remove_layer>(this, id);
+}
+
+auto map_document::take_layer(layer_id id) -> std::shared_ptr<layer>
+{
+  return m_map->take_layer(id);
 }
 
 void map_document::duplicate_layer(layer_id id)
 {
   const auto& [newId, layer] = m_map->duplicate_layer(id);
-  emit added_duplicated_layer(newId, layer);
+  emit added_duplicated_layer(newId, *layer);
 }
 
 void map_document::increase_tile_size()

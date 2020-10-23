@@ -206,10 +206,10 @@ class map_document final : public QObject
   void select_layer(layer_id id);
 
   /**
-   * @copydoc map::add_layer(layer_id id, layer&& layer)
+   * @copydoc map::add_layer(layer_id id, std::shared_ptr<layer> layer)
    * @signal `added_layer`
    */
-  void add_layer(layer_id id, layer&& layer);
+  void add_layer(layer_id id, const std::shared_ptr<layer>& layer);
 
   /**
    * @copybrief map::add_layer()
@@ -229,6 +229,11 @@ class map_document final : public QObject
    * @signal `removed_layer`
    */
   void remove_layer(layer_id id);
+
+  /**
+   * @copydoc map::take_layer()
+   */
+  [[nodiscard]] auto take_layer(layer_id id) -> std::shared_ptr<layer>;
 
   /**
    * @brief Duplicates the layer associated with the specified ID.
@@ -331,7 +336,7 @@ class map_document final : public QObject
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : *m_map) {
-      callable(key, layer);
+      callable(key, *layer);
     }
   }
 

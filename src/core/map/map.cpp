@@ -17,7 +17,7 @@ map::map(row_t nRows, col_t nCols)
   }
 
   m_layers.reserve(5);
-  m_layers.emplace(m_nextLayer, nRows, nCols);
+  m_layers.emplace(m_nextLayer, std::make_shared<layer>(nRows, nCols));
 
   m_activeLayer = m_nextLayer;
   ++m_nextLayer;
@@ -38,7 +38,7 @@ void map::set_tile(const position& pos, tile_id id)
 void map::remove_occurrences(tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
-    layer.remove_all(id);
+    layer->remove_all(id);
   }
 }
 
@@ -53,6 +53,20 @@ void map::remove_layer(layer_id id)
   m_layers.erase(id);
 }
 
+auto map::take_layer(layer_id id) -> std::shared_ptr<layer>
+{
+  Q_ASSERT(m_layers.contains(id));
+
+  if (m_activeLayer == id) {
+    m_activeLayer.reset();
+  }
+
+  auto layer = m_layers.at(id);
+  m_layers.erase(id);
+
+  return layer;
+}
+
 void map::select_layer(layer_id id)
 {
   if (m_layers.contains(id)) {
@@ -65,9 +79,9 @@ auto map::add_layer() -> layer_id
   const auto id = m_nextLayer;
 
   if (!m_activeLayer) {
-    m_layers.emplace(id, 5_row, 5_col);
+    m_layers.emplace(id, std::make_shared<layer>(5_row, 5_col));
   } else {
-    m_layers.emplace(id, row_count(), col_count());
+    m_layers.emplace(id, std::make_shared<layer>(row_count(), col_count()));
   }
 
   ++m_nextLayer;
@@ -75,13 +89,15 @@ auto map::add_layer() -> layer_id
   return id;
 }
 
-void map::add_layer(layer_id id, layer&& layer)
+void map::add_layer(layer_id id, std::shared_ptr<layer> layer)
 {
   Q_ASSERT(!m_layers.contains(id));
+  Q_ASSERT(layer);
   m_layers.emplace(id, std::move(layer));
 }
 
-auto map::duplicate_layer(layer_id id) -> std::pair<layer_id, layer>&
+auto map::duplicate_layer(layer_id id)
+    -> std::pair<layer_id, std::shared_ptr<layer>>&
 {
   Q_ASSERT(m_layers.contains(id));
   const auto& layer = m_layers.at(id);
@@ -98,14 +114,14 @@ auto map::duplicate_layer(layer_id id) -> std::pair<layer_id, layer>&
 void map::add_row(tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
-    layer.add_row(id);
+    layer->add_row(id);
   }
 }
 
 void map::add_col(tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
-    layer.add_col(id);
+    layer->add_col(id);
   }
 }
 
@@ -116,7 +132,7 @@ void map::remove_row()
   }
 
   for (auto& [key, layer] : m_layers) {
-    layer.remove_row();
+    layer->remove_row();
   }
 }
 
@@ -127,7 +143,7 @@ void map::remove_col()
   }
 
   for (auto& [key, layer] : m_layers) {
-    layer.remove_col();
+    layer->remove_col();
   }
 }
 
@@ -146,7 +162,7 @@ void map::set_rows(row_t nRows)
   }
 
   for (auto& [key, layer] : m_layers) {
-    layer.set_rows(nRows);
+    layer->set_rows(nRows);
   }
 }
 
@@ -159,7 +175,7 @@ void map::set_cols(col_t nCols)
   }
 
   for (auto& [key, layer] : m_layers) {
-    layer.set_cols(nCols);
+    layer->set_cols(nCols);
   }
 }
 
@@ -254,18 +270,18 @@ auto map::height() const -> int
 
 auto map::current_layer() -> layer&
 {
-  return m_layers.at(m_activeLayer.value());
+  return *m_layers.at(m_activeLayer.value());
 }
 
 auto map::current_layer() const -> const layer&
 {
-  return m_layers.at(m_activeLayer.value());
+  return *m_layers.at(m_activeLayer.value());
 }
 
 auto map::find_layer(layer_id id) -> layer*
 {
   if (const auto it = m_layers.find(id); it != m_layers.end()) {
-    return &it->second;
+    return it->second.get();
   } else {
     return nullptr;
   }
@@ -274,7 +290,7 @@ auto map::find_layer(layer_id id) -> layer*
 auto map::find_layer(layer_id id) const -> const layer*
 {
   if (const auto it = m_layers.find(id); it != m_layers.end()) {
-    return &it->second;
+    return it->second.get();
   } else {
     return nullptr;
   }

@@ -155,6 +155,8 @@ set(TACTILE_SOURCE_FILES
         command/repeated_map_command.cpp
         command/map_command.cpp
         command/map_command.hpp
+        command/remove_layer.cpp
+        command/remove_layer.hpp
 
         prefs/setting.hpp
         prefs/theme.cpp

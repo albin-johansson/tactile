@@ -50,7 +50,7 @@ void add_tileset(core::map_document* document,
 }
 
 [[nodiscard]] auto make_layer(const QDomNode& layerNode)
-    -> std::pair<layer_id, core::layer>
+    -> std::pair<layer_id, std::shared_ptr<core::layer>>
 {
   const auto elem = xml::to_elem(layerNode);
   Q_ASSERT(elem.tagName() == QStringLiteral(u"layer"));
@@ -59,10 +59,10 @@ void add_tileset(core::map_document* document,
   const auto rows = xml::int_attr<row_t>(elem, QStringLiteral(u"height"));
   const auto cols = xml::int_attr<col_t>(elem, QStringLiteral(u"width"));
 
-  core::layer layer{rows, cols};
-  layer.set_visible(xml::int_attr(elem, QStringLiteral(u"visible"), 1) == 1);
-  layer.set_opacity(xml::double_attr(elem, QStringLiteral(u"opacity"), 1.0));
-  layer.set_name(
+  auto layer = std::make_shared<core::layer>(rows, cols);
+  layer->set_visible(xml::int_attr(elem, QStringLiteral(u"visible"), 1) == 1);
+  layer->set_opacity(xml::double_attr(elem, QStringLiteral(u"opacity"), 1.0));
+  layer->set_name(
       elem.attribute(QStringLiteral(u"name"), QStringLiteral(u"Layer")));
 
   const auto data = elem.firstChildElement(QStringLiteral(u"data"));
@@ -71,7 +71,7 @@ void add_tileset(core::map_document* document,
   for (int index{0}; const auto& value : tiles) {
     const core::position pos{row_t{index / cols.get()},
                              col_t{index % cols.get()}};
-    layer.set_tile(pos, to_int<tile_id>(value));
+    layer->set_tile(pos, to_int<tile_id>(value));
     ++index;
   }
 
@@ -96,7 +96,7 @@ auto open_tmx_map(const QFileInfo& path) -> core::map_document*
   bool first{true};
   xml::each_elem(root, QStringLiteral(u"layer"), [&](const QDomNode& node) {
     auto [id, layer] = make_layer(node);
-    document->add_layer(id, std::move(layer));
+    document->add_layer(id, layer);
     if (first) {
       first = false;
       document->select_layer(id);

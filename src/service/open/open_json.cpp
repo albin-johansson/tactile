@@ -66,10 +66,10 @@ void add_layers(core::map_document* document, const QJsonArray& layers)
     const row_t rows{object.value(u"height").toInt(-1)};
     const col_t cols{object.value(u"width").toInt(-1)};
 
-    core::layer layer{rows, cols};
-    layer.set_visible(object.value(u"visible").toBool(true));
-    layer.set_opacity(object.value(u"opacity").toDouble(1.0));
-    layer.set_name(object.value(u"name").toString());
+    auto layer = std::make_shared<core::layer>(rows, cols);
+    layer->set_visible(object.value(u"visible").toBool(true));
+    layer->set_opacity(object.value(u"opacity").toDouble(1.0));
+    layer->set_name(object.value(u"name").toString());
 
     const auto data = object.value(u"data").toArray();
     for (int index{0}; const auto value : data) {
@@ -77,11 +77,11 @@ void add_layers(core::map_document* document, const QJsonArray& layers)
                                col_t{index % cols.get()}};
       const tile_id tile{value.toInt(empty.get())};
 
-      layer.set_tile(pos, tile);
+      layer->set_tile(pos, tile);
       ++index;
     }
 
-    document->add_layer(id, std::move(layer));
+    document->add_layer(id, layer);
 
     if (first) {
       first = false;
