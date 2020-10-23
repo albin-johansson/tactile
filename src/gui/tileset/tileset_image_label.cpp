@@ -8,18 +8,13 @@ tileset_image_label::tileset_image_label(const core::tileset& tileset,
                                          QWidget* parent)
     : QLabel{parent},
       m_tileWidth{tileset.get_tile_width()},
-      m_tileHeight{tileset.get_tile_height()}
+      m_tileHeight{tileset.get_tile_height()},
+      m_width{tileset.width()},
+      m_height{tileset.height()},
+      m_maxX{m_width - 1},
+      m_maxY{m_height - 1}
 {
   setPixmap(tileset.image());
-
-  m_width = tileset.width();
-  m_height = tileset.height();
-
-  m_maxX = m_width - 1;
-  m_maxY = m_height - 1;
-
-  m_nRows = m_height / m_tileWidth.get();
-  m_nCols = m_width / m_tileHeight.get();
 }
 
 tileset_image_label::~tileset_image_label() noexcept = default;

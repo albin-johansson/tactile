@@ -2,7 +2,6 @@
 
 #include <QLabel>
 
-#include "czstring.hpp"
 #include "tileset.hpp"
 
 namespace tactile::gui {
@@ -25,8 +24,6 @@ class tileset_image_label final : public QLabel
   int m_height;
   int m_maxX;
   int m_maxY;
-  int m_nRows;
-  int m_nCols;
 };
 
 }  // namespace tactile::gui
