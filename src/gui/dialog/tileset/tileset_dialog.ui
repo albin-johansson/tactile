@@ -65,7 +65,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../tactile.qrc">:/resources/icons/icons8/color/64/image.png</pixmap>
+        <pixmap resource="../../../tactile.qrc">:/resources/icons/icons8/color/64/image.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>false</bool>
@@ -199,6 +199,7 @@
   </layout>
  </widget>
  <resources>
+  <include location="../../../tactile.qrc"/>
   <include location="../../tactile.qrc"/>
  </resources>
  <connections>
