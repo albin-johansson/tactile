@@ -2,11 +2,14 @@
 
 #include <QDockWidget>
 
+#include "map_id.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
-#include "tileset_widget.hpp"
+#include "tileset_id.hpp"
 
 namespace tactile::gui {
+
+class tileset_widget;
 
 class tileset_dock final : public QDockWidget
 {
@@ -22,20 +25,11 @@ class tileset_dock final : public QDockWidget
   void ui_set_tileset_selection(const core::tileset::selection& selection);
 
  public slots:
-  void selected_map(map_id map)
-  {
-    m_widget->selected_map(map);
-  }
+  void selected_map(map_id id);
 
-  void added_tileset(map_id map, tileset_id id, const core::tileset& tileset)
-  {
-    m_widget->added_tileset(map, id, tileset);
-  }
+  void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 
-  void removed_tileset(tileset_id id)
-  {
-    m_widget->removed_tileset(id);
-  }
+  void removed_tileset(tileset_id id);
 
  private:
   tileset_widget* m_widget{};
