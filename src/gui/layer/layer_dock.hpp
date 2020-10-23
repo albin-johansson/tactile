@@ -3,10 +3,11 @@
 #include <QDockWidget>
 
 #include "layer.hpp"
-#include "layer_widget.hpp"
 #include "map_document.hpp"
 
 namespace tactile::gui {
+
+class layer_widget;
 
 class layer_dock final : public QDockWidget
 {
@@ -27,40 +28,19 @@ class layer_dock final : public QDockWidget
   void ui_duplicate_layer(layer_id id);
 
  public slots:
-  void added_layer(layer_id id, const core::layer& layer)
-  {
-    m_widget->added_layer(id, layer);
-  }
+  void added_layer(layer_id id, const core::layer& layer);
 
-  void added_duplicated_layer(layer_id id, const core::layer& layer)
-  {
-    m_widget->added_duplicated_layer(id, layer);
-  }
+  void added_duplicated_layer(layer_id id, const core::layer& layer);
 
-  void removed_layer(layer_id id)
-  {
-    m_widget->removed_layer(id);
-  }
+  void removed_layer(layer_id id);
 
-  void selected_layer(layer_id id, const core::layer& layer)
-  {
-    m_widget->selected_layer(id, layer);
-  }
+  void selected_layer(layer_id id, const core::layer& layer);
 
-  void selected_map(const core::map_document& document)
-  {
-    m_widget->selected_map(document);
-  }
+  void selected_map(const core::map_document& document);
 
-  void moved_layer_back(layer_id id)
-  {
-    m_widget->moved_layer_back(id);
-  }
+  void moved_layer_back(layer_id id);
 
-  void moved_layer_forward(layer_id id)
-  {
-    m_widget->moved_layer_forward(id);
-  }
+  void moved_layer_forward(layer_id id);
 
  private:
   layer_widget* m_widget{};
