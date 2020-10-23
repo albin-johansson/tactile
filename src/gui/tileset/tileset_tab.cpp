@@ -2,8 +2,8 @@
 
 #include <QApplication>
 #include <QGridLayout>
-#include <QLabel>
 #include <QMouseEvent>
+#include <QScrollArea>
 #include <QScrollBar>
 
 #include "tactile_error.hpp"
@@ -37,7 +37,7 @@ tileset_tab::tileset_tab(tileset_id id,
   connect(m_imageWidget,
           &tileset_image_widget::tileset_selection_changed,
           this,
-          &tileset_tab::tileset_selection_changed);
+          &tileset_tab::set_tileset_selection);
 }
 
 tileset_tab::~tileset_tab() noexcept = default;

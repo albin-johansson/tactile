@@ -1,16 +1,17 @@
 #pragma once
 
-#include <QLayout>
 #include <QPoint>
-#include <QScrollArea>
+#include <QString>
 #include <QWidget>
 
-#include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
-#include "tileset_image_widget.hpp"
+
+class QScrollArea;
 
 namespace tactile::gui {
+
+class tileset_image_widget;
 
 class tileset_tab final : public QWidget
 {
@@ -28,13 +29,13 @@ class tileset_tab final : public QWidget
     return m_id;
   }
 
-  [[nodiscard]] auto name() const noexcept -> const QString&
+  [[nodiscard]] auto name() const -> const QString&
   {
     return m_name;
   }
 
  signals:
-  void tileset_selection_changed(const core::tileset::selection& selection);
+  void set_tileset_selection(const core::tileset::selection& selection);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;
@@ -44,12 +45,12 @@ class tileset_tab final : public QWidget
   void mouseMoveEvent(QMouseEvent* event) override;
 
  private:
-  QScrollArea* m_scrollArea;
-  tileset_image_widget* m_imageWidget;
-  QLayout* m_layout;
-  QPoint m_lastMousePos;
   tileset_id m_id;
   QString m_name;
+  QLayout* m_layout;
+  QScrollArea* m_scrollArea;
+  tileset_image_widget* m_imageWidget;
+  QPoint m_lastMousePos;
 };
 
 }  // namespace tactile::gui

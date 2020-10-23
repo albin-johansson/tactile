@@ -88,7 +88,7 @@ void tileset_content_page::added_tileset(map_id map,
 
   auto* tab = new tileset_tab{id, tileset, m_ui->tabWidget};
   connect(tab,
-          &tileset_tab::tileset_selection_changed,
+          &tileset_tab::set_tileset_selection,
           this,
           &tileset_content_page::ui_set_tileset_selection);
   m_tabManagers.at(map).add(id, tab);
