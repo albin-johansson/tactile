@@ -72,7 +72,7 @@ TEST_CASE("map::remove_occurrences", "[map]")
   map.remove_occurrences(1_t);
 
   for (const auto& [key, layer] : map) {
-    layer.for_each([](tile_id id) { CHECK(id == empty); });
+    layer->for_each([](tile_id id) { CHECK(id == empty); });
   }
 }
 
