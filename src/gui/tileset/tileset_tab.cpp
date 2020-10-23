@@ -35,7 +35,7 @@ tileset_tab::tileset_tab(tileset_id id,
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
   connect(m_imageWidget,
-          &tileset_image_widget::tileset_selection_changed,
+          &tileset_image_widget::ui_set_tileset_selection,
           this,
           &tileset_tab::set_tileset_selection);
 }

@@ -1,18 +1,15 @@
 #include "tileset_image_widget.hpp"
 
-#include <QEvent>
 #include <QGridLayout>
 #include <QMouseEvent>
-#include <QPainter>
+#include <QRubberBand>
 #include <algorithm>  // max
 
 #include "tileset_image_label.hpp"
 
-using namespace tactile::core;
-
 namespace tactile::gui {
 
-tileset_image_widget::tileset_image_widget(const tileset& tileset,
+tileset_image_widget::tileset_image_widget(const core::tileset& tileset,
                                            QWidget* parent)
     : QWidget{parent},
       m_tileWidth{tileset.get_tile_width()},
@@ -112,18 +109,18 @@ void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 
       const auto& geometry = m_rubberBand->geometry();
 
-      const position topLeft{row_t{geometry.y() / m_tileHeight.get()},
-                             col_t{geometry.x() / m_tileWidth.get()}};
+      const core::position topLeft{row_t{geometry.y() / m_tileHeight.get()},
+                                   col_t{geometry.x() / m_tileWidth.get()}};
 
       const auto calc_bottom_right = [&] {
         const row_t row{geometry.bottom() / m_tileHeight.get()};
         const col_t col{geometry.right() / m_tileWidth.get()};
-        const position bottomRight{std::max(row - 1_row, topLeft.row()),
-                                   std::max(col - 1_col, topLeft.col())};
+        const core::position bottomRight{std::max(row - 1_row, topLeft.row()),
+                                         std::max(col - 1_col, topLeft.col())};
         return bottomRight;
       };
 
-      emit tileset_selection_changed({topLeft, calc_bottom_right()});
+      emit ui_set_tileset_selection({topLeft, calc_bottom_right()});
     } else {
       m_rubberBand->hide();  // selection was too small, just hide it
     }

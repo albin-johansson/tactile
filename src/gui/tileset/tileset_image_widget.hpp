@@ -1,14 +1,15 @@
 #pragma once
 
-#include <QLabel>
 #include <QPoint>
-#include <QRubberBand>
 #include <QWidget>
 
 #include "position.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
 #include "tileset.hpp"
+
+class QLabel;
+class QRubberBand;
 
 namespace tactile::gui {
 
@@ -23,7 +24,7 @@ class tileset_image_widget final : public QWidget
   ~tileset_image_widget() noexcept override;
 
  signals:
-  void tileset_selection_changed(const core::tileset::selection& selection);
+  void ui_set_tileset_selection(const core::tileset::selection& selection);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;
@@ -33,13 +34,13 @@ class tileset_image_widget final : public QWidget
   void mouseMoveEvent(QMouseEvent* event) override;
 
  private:
+  tile_width m_tileWidth;
+  tile_height m_tileHeight;
   QLayout* m_layout;
   QLabel* m_imageLabel;
   QRubberBand* m_rubberBand;
   QPoint m_origin;
   QPoint m_lastMousePos;
-  tile_width m_tileWidth;
-  tile_height m_tileHeight;
 
   [[nodiscard]] auto get_adjusted_selection() const -> QRect;
 };
