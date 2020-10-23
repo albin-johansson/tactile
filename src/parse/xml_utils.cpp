@@ -1,6 +1,6 @@
 #include "xml_utils.hpp"
 
-#include <QFile>
+#include <QSaveFile>
 
 namespace tactile::xml {
 
@@ -35,12 +35,15 @@ auto from_file(const QFileInfo& path) -> QDomDocument
 
 void write_file(const QFileInfo& path, const QDomDocument& document)
 {
-  QFile file{path.absoluteFilePath()};
-  file.open(QFile::WriteOnly | QFile::Text);
+  QSaveFile file{path.absoluteFilePath()};
 
-  QTextStream stream{&file};
-  stream << document;
-  file.close();
+  file.setDirectWriteFallback(true);
+  file.open(QFile::WriteOnly | QFile::Text);
+  if (const auto result = file.write(document.toByteArray()); result == -1) {
+    file.cancelWriting();
+  } else {
+    file.commit();
+  }
 }
 
 }  // namespace tactile::xml

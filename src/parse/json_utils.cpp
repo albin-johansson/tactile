@@ -1,5 +1,7 @@
 #include "json_utils.hpp"
 
+#include <QSaveFile>
+
 #include "tactile_error.hpp"
 
 namespace tactile::json {
@@ -23,10 +25,15 @@ auto from_file(const QFileInfo& path) -> QJsonDocument
 
 void write_file(const QFileInfo& path, const QJsonDocument& document)
 {
-  QFile file{path.absoluteFilePath()};
+  QSaveFile file{path.absoluteFilePath()};
+
+  file.setDirectWriteFallback(true);
   file.open(QFile::WriteOnly | QFile::Text);
-  file.write(document.toJson());
-  file.close();
+  if (const auto result = file.write(document.toJson()); result == -1) {
+    file.cancelWriting();
+  } else {
+    file.commit();
+  }
 }
 
 }  // namespace tactile::json
