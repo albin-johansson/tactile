@@ -28,6 +28,8 @@ namespace {
 
 }  // namespace
 
+using namespace prefs;
+
 settings_dialog::settings_dialog(QWidget* parent)
     : QDialog{parent},
       m_ui{new Ui::settings_dialog{}}
@@ -42,8 +44,9 @@ settings_dialog::settings_dialog(QWidget* parent)
 
   // clang-format off
   connect(this, &QDialog::accepted, this, &settings_dialog::handle_accept);
-  connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &settings_dialog::handle_apply);
-  connect(m_ui->exportRestoreDefaults, &QPushButton::clicked, this, &settings_dialog::handle_export_restore_defaults);
+  connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &settings_dialog::apply);
+  connect(m_ui->exportRestoreDefaults, &QPushButton::clicked, this, &settings_dialog::restore_export_defaults);
+  connect(m_ui->appearanceRestoreDefaults, &QPushButton::clicked, this, &settings_dialog::restore_appearance_defaults);
   // clang-format on
 
   update_general_components();
@@ -83,42 +86,42 @@ void settings_dialog::handle_accept()
 
   if (const auto defaultFormat = m_ui->defaultFormatCombo->currentText();
       defaultFormat != m_defaultFormat) {
-    prefs::saves::default_format().set(defaultFormat);
+    saves::default_format().set(defaultFormat);
   }
 
   if (const auto embedTilesets = m_ui->embedTilesetsCheck->isChecked();
       embedTilesets != m_embedTilesets) {
-    prefs::saves::embed_tilesets().set(embedTilesets);
+    saves::embed_tilesets().set(embedTilesets);
   }
+
 
   if (const auto genDefaults = m_ui->generateDefaultsCheck->isChecked();
       genDefaults != m_generateDefaults) {
-    prefs::saves::generate_defaults().set(genDefaults);
+    saves::generate_defaults().set(genDefaults);
   }
 
   if (const auto readable = m_ui->readableOutputCheck->isChecked();
       readable != m_readableOutput) {
-    prefs::saves::readable_output().set(readable);
+    saves::readable_output().set(readable);
   }
 
   if (const auto value = text_as_int(m_ui->tileWidthEdit); value) {
-    prefs::saves::tile_width().set(*value);
+    saves::tile_width().set(*value);
   }
 
   if (const auto value = text_as_int(m_ui->tileHeightEdit); value) {
-    prefs::saves::tile_height().set(*value);
+    saves::tile_height().set(*value);
   }
 }
 
-void settings_dialog::handle_apply()
+void settings_dialog::apply()
 {
   handle_accept();
   fetch_current_settings();
 }
 
-void settings_dialog::handle_export_restore_defaults()
+void settings_dialog::restore_export_defaults()
 {
-  using namespace prefs;
   m_ui->embedTilesetsCheck->setChecked(saves::embed_tilesets_def());
   m_ui->readableOutputCheck->setChecked(saves::readable_output_def());
   m_ui->defaultFormatCombo->setCurrentText(saves::default_format_def());
@@ -127,15 +130,26 @@ void settings_dialog::handle_export_restore_defaults()
   m_ui->tileHeightEdit->setText(QString::number(saves::tile_height_def()));
 }
 
+void settings_dialog::restore_appearance_defaults()
+{
+  m_ui->themeComboBox->setCurrentText(graphics::theme_name_def());
+}
+
 void settings_dialog::fetch_current_settings()
 {
-  m_theme = prefs::graphics::theme_name().value();
-  m_defaultFormat = prefs::saves::default_format().value();
-  m_tileWidth = prefs::saves::tile_width().value();
-  m_tileHeight = prefs::saves::tile_height().value();
-  m_embedTilesets = prefs::saves::embed_tilesets().value();
-  m_generateDefaults = prefs::saves::generate_defaults().value();
-  m_readableOutput = prefs::saves::readable_output().value();
+  // General
+  // TODO...
+
+  // Export
+  m_embedTilesets = saves::embed_tilesets().value();
+  m_readableOutput = saves::readable_output().value();
+  m_defaultFormat = saves::default_format().value();
+  m_generateDefaults = saves::generate_defaults().value();
+  m_tileWidth = saves::tile_width().value();
+  m_tileHeight = saves::tile_height().value();
+
+  // Appearance
+  m_theme = graphics::theme_name().value();
 }
 
 }  // namespace tactile::gui

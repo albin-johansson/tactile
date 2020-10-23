@@ -34,6 +34,12 @@ auto graphics::theme_name() -> setting<QString>
   return setting<QString>{str};
 }
 
+auto graphics::theme_name_def() -> const QString&
+{
+  static const auto name = theme::get_default_name().toString();
+  return name;
+}
+
 auto saves::embed_tilesets() -> setting<bool>
 {
   static const auto str = QStringLiteral(u"saves/embedTilesets");

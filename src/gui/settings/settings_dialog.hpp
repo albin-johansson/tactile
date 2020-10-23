@@ -41,9 +41,11 @@ class settings_dialog final : public QDialog
  private slots:
   void handle_accept();
 
-  void handle_apply();
+  void apply();
 
-  void handle_export_restore_defaults();
+  void restore_export_defaults();
+
+  void restore_appearance_defaults();
 
   void fetch_current_settings();
 };

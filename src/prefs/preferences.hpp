@@ -88,6 +88,8 @@ namespace graphics {
  */
 [[nodiscard]] auto theme_name() -> setting<QString>;
 
+[[nodiscard]] auto theme_name_def() -> const QString&;
+
 }  // namespace graphics
 
 namespace saves {
