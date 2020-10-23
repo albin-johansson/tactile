@@ -22,7 +22,7 @@ void add_image_node(QDomDocument& document,
   auto image = document.createElement(QStringLiteral(u"image"));
 
   image.setAttribute(QStringLiteral(u"source"),
-                     mapInfo.dir().relativeFilePath(tileset.string_path()));
+                     mapInfo.dir().relativeFilePath(tileset.file_path()));
   image.setAttribute(QStringLiteral(u"width"), tileset.width());
   image.setAttribute(QStringLiteral(u"height"), tileset.height());
 
@@ -174,7 +174,7 @@ void save_tmx(const QString& path, const core::map_document& map)
   QDomDocument document{};
   create_root(document, map, info, options);
 
-  xml::write_file(path, document);
+  xml::write_file(path, document); // TODO use QSaveFile
 }
 
 }  // namespace tactile::service

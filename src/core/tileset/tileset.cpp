@@ -70,7 +70,9 @@ tileset::tileset(tile_id firstID,
                  tile_width tileWidth,
                  tile_height tileHeight)
     : tileset{firstID, QImage{path}, tileWidth, tileHeight}
-{}
+{
+  m_path = path;
+}
 
 void tileset::set_selection(const selection& selection)
 {

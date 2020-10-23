@@ -386,14 +386,14 @@ class tileset final
     return m_name;
   }
 
-  [[nodiscard]] auto path() const -> const QFileInfo&
+  [[nodiscard]] auto path_info() const -> const QFileInfo&
   {
     return m_path;
   }
 
-  [[nodiscard]] auto string_path() const -> QString
+  [[nodiscard]] auto file_path() const -> QString
   {
-    return m_path.path();
+    return m_path.filePath();
   }
 
  private:

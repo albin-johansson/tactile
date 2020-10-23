@@ -35,7 +35,7 @@ void add_common_attributes(QJsonObject& object,
   object.insert(u"columns", tileset.col_count().get());
 
   const QFileInfo info{mapDestination};
-  object.insert(u"image", info.dir().relativeFilePath(tileset.string_path()));
+  object.insert(u"image", info.dir().relativeFilePath(tileset.file_path()));
   object.insert(u"imagewidth", tileset.width());
   object.insert(u"imageheight", tileset.height());
   object.insert(u"margin", 0);
