@@ -40,24 +40,38 @@ settings_dialog::settings_dialog(QWidget* parent)
 
   fetch_current_settings();
 
+  // clang-format off
   connect(this, &QDialog::accepted, this, &settings_dialog::handle_accept);
-  connect(m_ui->buttonBox->button(QDialogButtonBox::Apply),
-          &QPushButton::clicked,
-          this,
-          &settings_dialog::handle_apply);
+  connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &settings_dialog::handle_apply);
+  connect(m_ui->exportRestoreDefaults, &QPushButton::clicked, this, &settings_dialog::handle_export_restore_defaults);
+  // clang-format on
 
-  m_ui->themeComboBox->setCurrentText(m_theme);
-  m_ui->defaultFormatCombo->setCurrentText(m_defaultFormat);
-  m_ui->embedTilesetsCheck->setChecked(m_embedTilesets);
-  m_ui->generateDefaultsCheck->setChecked(m_generateDefaults);
-  m_ui->readableOutputCheck->setChecked(m_readableOutput);
-  m_ui->tileWidthEdit->setText(QString::number(m_tileWidth));
-  m_ui->tileHeightEdit->setText(QString::number(m_tileHeight));
+  update_general_components();
+  update_export_components();
+  update_appearance_components();
 }
 
 settings_dialog::~settings_dialog() noexcept
 {
   delete m_ui;
+}
+
+void settings_dialog::update_general_components()
+{}
+
+void settings_dialog::update_export_components()
+{
+  m_ui->embedTilesetsCheck->setChecked(m_embedTilesets);
+  m_ui->readableOutputCheck->setChecked(m_readableOutput);
+  m_ui->defaultFormatCombo->setCurrentText(m_defaultFormat);
+  m_ui->generateDefaultsCheck->setChecked(m_generateDefaults);
+  m_ui->tileWidthEdit->setText(QString::number(m_tileWidth));
+  m_ui->tileHeightEdit->setText(QString::number(m_tileHeight));
+}
+
+void settings_dialog::update_appearance_components()
+{
+  m_ui->themeComboBox->setCurrentText(m_theme);
 }
 
 void settings_dialog::handle_accept()
@@ -96,10 +110,21 @@ void settings_dialog::handle_accept()
   }
 }
 
-void settings_dialog::handle_apply(bool)
+void settings_dialog::handle_apply()
 {
   handle_accept();
   fetch_current_settings();
+}
+
+void settings_dialog::handle_export_restore_defaults()
+{
+  using namespace prefs;
+  m_ui->embedTilesetsCheck->setChecked(saves::embed_tilesets_def());
+  m_ui->readableOutputCheck->setChecked(saves::readable_output_def());
+  m_ui->defaultFormatCombo->setCurrentText(saves::default_format_def());
+  m_ui->generateDefaultsCheck->setChecked(saves::generate_defaults_def());
+  m_ui->tileWidthEdit->setText(QString::number(saves::tile_width_def()));
+  m_ui->tileHeightEdit->setText(QString::number(saves::tile_height_def()));
 }
 
 void settings_dialog::fetch_current_settings()

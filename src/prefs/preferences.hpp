@@ -65,6 +65,11 @@ namespace graphics {
  */
 [[nodiscard]] auto render_grid() -> setting<bool>;
 
+[[nodiscard]] constexpr auto render_grid_def() noexcept -> bool
+{
+  return false;
+}
+
 /**
  * @brief Returns a setting that represents the theme of the application.
  *
@@ -89,15 +94,42 @@ namespace saves {
 
 [[nodiscard]] auto embed_tilesets() -> setting<bool>;
 
+[[nodiscard]] constexpr auto embed_tilesets_def() noexcept -> bool
+{
+  return false;
+}
+
 [[nodiscard]] auto generate_defaults() -> setting<bool>;
+
+[[nodiscard]] constexpr auto generate_defaults_def() noexcept -> bool
+{
+  return false;
+}
 
 [[nodiscard]] auto readable_output() -> setting<bool>;
 
+[[nodiscard]] constexpr auto readable_output_def() noexcept -> bool
+{
+  return true;
+}
+
 [[nodiscard]] auto tile_width() -> setting<int>;
+
+[[nodiscard]] constexpr auto tile_width_def() noexcept -> int
+{
+  return 32;
+}
 
 [[nodiscard]] auto tile_height() -> setting<int>;
 
+[[nodiscard]] constexpr auto tile_height_def() noexcept -> int
+{
+  return 32;
+}
+
 [[nodiscard]] auto default_format() -> setting<QString>;
+
+[[nodiscard]] auto default_format_def() -> const QString&;
 
 }  // namespace saves
 

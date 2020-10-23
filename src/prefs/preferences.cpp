@@ -70,18 +70,24 @@ auto saves::default_format() -> setting<QString>
   return setting<QString>{str};
 }
 
+auto saves::default_format_def() -> const QString&
+{
+  static const auto format = QStringLiteral(u"JSON");
+  return format;
+}
+
 void validate()
 {
-  graphics::render_grid().set_if_missing(false);
+  graphics::render_grid().set_if_missing(graphics::render_grid_def());
   graphics::theme().set_if_missing(theme::get_default());
   graphics::theme_name().set_if_missing(theme::get_default_name().toString());
 
-  saves::embed_tilesets().set_if_missing(false);
-  saves::generate_defaults().set_if_missing(false);
-  saves::readable_output().set_if_missing(true);
-  saves::tile_width().set_if_missing(32);
-  saves::tile_height().set_if_missing(32);
-  saves::default_format().set_if_missing(QStringLiteral(u"JSON"));
+  saves::embed_tilesets().set_if_missing(saves::embed_tilesets_def());
+  saves::generate_defaults().set_if_missing(saves::generate_defaults_def());
+  saves::readable_output().set_if_missing(saves::readable_output_def());
+  saves::tile_width().set_if_missing(saves::tile_width_def());
+  saves::tile_height().set_if_missing(saves::tile_height_def());
+  saves::default_format().set_if_missing(saves::default_format_def());
 }
 
 }  // namespace tactile::prefs

@@ -32,10 +32,18 @@ class settings_dialog final : public QDialog
   bool m_generateDefaults{};
   bool m_readableOutput{};
 
+  void update_general_components();
+
+  void update_export_components();
+
+  void update_appearance_components();
+
  private slots:
   void handle_accept();
 
-  void handle_apply(bool checked);
+  void handle_apply();
+
+  void handle_export_restore_defaults();
 
   void fetch_current_settings();
 };
