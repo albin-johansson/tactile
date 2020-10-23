@@ -3,6 +3,7 @@
 #include <QPushButton>
 
 #include "signal_blocker.hpp"
+#include "tileset_tab.hpp"
 #include "ui_tileset_content_page.h"
 
 namespace tactile::gui {
@@ -92,7 +93,6 @@ void tileset_content_page::added_tileset(map_id map,
           &tileset_content_page::ui_set_tileset_selection);
   m_tabManagers.at(map).add(id, tab);
 
-  //  signal_blocker blocker{this};
   const auto index = m_ui->tabWidget->addTab(tab, tileset.name());
   m_ui->tabWidget->setCurrentIndex(index);
 }
@@ -106,7 +106,7 @@ void tileset_content_page::removed_tileset(tileset_id id)
   manager.remove(id);
 }
 
-auto tileset_content_page::empty() const -> bool
+auto tileset_content_page::is_empty() const -> bool
 {
   return m_ui->tabWidget->count() == 0;
 }
@@ -126,6 +126,11 @@ void tileset_content_page::switch_to(map_id map)
 auto tileset_content_page::tab_from_index(int index) -> tileset_tab*
 {
   return qobject_cast<tileset_tab*>(m_ui->tabWidget->widget(index));
+}
+
+auto tileset_content_page::current_manager() -> tileset_tab_manager&
+{
+  return m_tabManagers.at(m_currentMap.value());
 }
 
 }  // namespace tactile::gui

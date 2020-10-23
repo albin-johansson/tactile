@@ -45,7 +45,7 @@ void tileset_widget::added_tileset(map_id map,
                                    tileset_id id,
                                    const core::tileset& tileset)
 {
-  const auto wasEmpty = m_contentPage->empty();
+  const auto wasEmpty = m_contentPage->is_empty();
   m_contentPage->added_tileset(map, id, tileset);
   if (wasEmpty) {
     m_ui->stackedWidget->setCurrentIndex(m_contentIndex);

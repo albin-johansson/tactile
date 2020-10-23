@@ -1,12 +1,11 @@
 #pragma once
 
 #include <QWidget>
-#include <map>       // map
 #include <optional>  // optional
 
 #include "map_id.hpp"
 #include "position.hpp"
-#include "tileset_tab.hpp"
+#include "tileset.hpp"
 #include "tileset_tab_manager.hpp"
 #include "vector_map.hpp"
 
@@ -16,11 +15,15 @@ class tileset_content_page;
 
 namespace tactile::gui {
 
+class tileset_tab;
+
 /**
  * @class tileset_content_page
  *
- * @brief Represents the contents of a tileset widget when there are at least
- * one available tileset.
+ * @brief Represents the page with the tilesets associated with a map.
+ *
+ * @note This widget is meant to be shown when a map has at least one available
+ * tileset.
  *
  * @since 0.1.0
  *
@@ -31,13 +34,6 @@ class tileset_content_page final : public QWidget
   Q_OBJECT
 
  public:
-  /**
-   * @brief Creates a `tileset_content_page` instance.
-   *
-   * @param parent a pointer to the parent widget.
-   *
-   * @since 0.1.0
-   */
   explicit tileset_content_page(QWidget* parent = nullptr);
 
   ~tileset_content_page() noexcept override;
@@ -49,7 +45,7 @@ class tileset_content_page final : public QWidget
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto empty() const -> bool;
+  [[nodiscard]] auto is_empty() const -> bool;
 
  signals:
   void switch_to_empty_page();
@@ -60,12 +56,19 @@ class tileset_content_page final : public QWidget
   void ui_set_tileset_selection(const core::tileset::selection& selection);
 
  public slots:
+  /**
+   * @brief Makes the tileset content page display the tilesets associated with
+   * the specified map.
+   *
+   * @param map the ID associated with the selected map.
+   *
+   * @since 0.1.0
+   */
   void selected_map(map_id map);
 
   /**
    * @brief Adds a tileset tab that represents the supplied tileset.
    *
-   * @pre `map` must not have been added before.
    * @pre `id` must not have been added before.
    *
    * @param map the ID associated with the map that owns the tileset.
@@ -90,10 +93,25 @@ class tileset_content_page final : public QWidget
  private:
   Ui::tileset_content_page* m_ui{};
   std::optional<map_id> m_currentMap;
-  std::map<map_id, tileset_tab_manager> m_tabManagers;
+  vector_map<map_id, tileset_tab_manager> m_tabManagers;
 
+  /**
+   * @brief Switches to the tileset tabs associated with the specified map.
+   *
+   * @param map the ID of the map to switch to.
+   *
+   * @since 0.1.0
+   *
+   * @signal `ui_select_tileset`
+   */
   void switch_to(map_id map);
 
+  /**
+   * @brief Adds the corner button to the tab widget, which is used to add
+   * tilesets.
+   *
+   * @since 0.1.0
+   */
   void add_corner_button();
 
   /**
@@ -107,15 +125,17 @@ class tileset_content_page final : public QWidget
    */
   [[nodiscard]] auto tab_from_index(int index) -> tileset_tab*;
 
-  [[nodiscard]] auto current_manager() const -> const tileset_tab_manager&
-  {
-    return m_tabManagers.at(m_currentMap.value());
-  }
-
-  [[nodiscard]] auto current_manager() -> tileset_tab_manager&
-  {
-    return m_tabManagers.at(m_currentMap.value());
-  }
+  /**
+   * @brief Returns the tab manager associated with the current map.
+   *
+   * @note This function throws if there is no current map *or* if there is no
+   * manager associated with the current map.
+   *
+   * @return the tab manager associated with the current map.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto current_manager() -> tileset_tab_manager&;
 };
 
 }  // namespace tactile::gui
