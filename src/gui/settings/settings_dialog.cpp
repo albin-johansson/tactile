@@ -1,5 +1,6 @@
 #include "settings_dialog.hpp"
 
+#include <QComboBox>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QValidator>
@@ -46,6 +47,7 @@ settings_dialog::settings_dialog(QWidget* parent)
           &settings_dialog::handle_apply);
 
   m_ui->themeComboBox->setCurrentText(m_theme);
+  m_ui->defaultFormatCombo->setCurrentText(m_defaultFormat);
   m_ui->embedTilesetsCheck->setChecked(m_embedTilesets);
   m_ui->generateDefaultsCheck->setChecked(m_generateDefaults);
   m_ui->tileWidthEdit->setText(QString::number(m_tileWidth));
@@ -62,6 +64,11 @@ void settings_dialog::handle_accept()
   if (const auto theme = m_ui->themeComboBox->currentText(); theme != m_theme) {
     theme::set_theme(theme);
     emit reload_theme();
+  }
+
+  if (const auto defaultFormat = m_ui->defaultFormatCombo->currentText();
+      defaultFormat != m_defaultFormat) {
+    prefs::saves::default_format().set(defaultFormat);
   }
 
   if (const auto embedTilesets = m_ui->embedTilesetsCheck->isChecked();
@@ -92,6 +99,7 @@ void settings_dialog::handle_apply(bool)
 void settings_dialog::fetch_current_settings()
 {
   m_theme = prefs::graphics::theme_name().value();
+  m_defaultFormat = prefs::saves::default_format().value();
   m_tileWidth = prefs::saves::tile_width().value();
   m_tileHeight = prefs::saves::tile_height().value();
   m_embedTilesets = prefs::saves::embed_tilesets().value();

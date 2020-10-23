@@ -58,6 +58,12 @@ auto saves::tile_height() -> setting<int>
   return setting<int>{str};
 }
 
+auto saves::default_format() -> setting<QString>
+{
+  static const auto str = QStringLiteral(u"saves/defaultFormat");
+  return setting<QString>{str};
+}
+
 void validate()
 {
   graphics::render_grid().set_if_missing(false);
@@ -68,6 +74,7 @@ void validate()
   saves::generate_defaults().set_if_missing(false);
   saves::tile_width().set_if_missing(32);
   saves::tile_height().set_if_missing(32);
+  saves::default_format().set_if_missing(QStringLiteral(u"JSON"));
 }
 
 }  // namespace tactile::prefs

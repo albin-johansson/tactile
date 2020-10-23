@@ -24,7 +24,8 @@ class settings_dialog final : public QDialog
 
  private:
   Ui::settings_dialog* m_ui;
-  QString m_theme{};
+  QString m_theme;
+  QString m_defaultFormat;
   int m_tileWidth{};
   int m_tileHeight{};
   bool m_embedTilesets{};

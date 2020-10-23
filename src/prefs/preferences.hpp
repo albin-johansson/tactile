@@ -95,6 +95,8 @@ namespace saves {
 
 [[nodiscard]] auto tile_height() -> setting<int>;
 
+[[nodiscard]] auto default_format() -> setting<QString>;
+
 }  // namespace saves
 
 /**
