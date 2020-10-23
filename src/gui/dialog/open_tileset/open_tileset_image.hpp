@@ -1,23 +1,22 @@
 #pragma once
 
-#include <QUrl>
+#include <QString>
 #include <QWidget>
 #include <optional>  // optional
 
 namespace tactile::gui {
 
 /**
- * @brief Opens a file chooser dialog for selecting a tileset image and returns
- * the path of the selected file.
+ * @brief Spawns a dialog for selecting a tileset image and returns
+ * the path of the selected image.
  *
- * @param parent the parent widget, defaults to null.
+ * @param parent the parent widget.
  *
- * @return the path of the image, if a file was selected; `std::nullopt`
- * otherwise.
+ * @return the path of the image; `std::nullopt`if no file was selected.
  *
  * @since 0.1.0
  */
 [[nodiscard]] auto open_tileset_image(QWidget* parent = nullptr)
-    -> std::optional<QUrl>;
+    -> std::optional<QString>;
 
 }  // namespace tactile::gui

@@ -6,30 +6,29 @@
 
 namespace tactile::gui {
 
-auto open_tileset_image(QWidget* parent) -> std::optional<QUrl>
+auto open_tileset_image(QWidget* parent) -> std::optional<QString>
 {
-  static QString cachedDirPath{""};
+  static QString cachedPath;
 
   QFileDialog dialog{parent};
   dialog.setFileMode(QFileDialog::ExistingFile);
   dialog.setViewMode(QFileDialog::Detail);
 
-  // FIXME investigate why JPG doesn't seem to work when included
   dialog.setNameFilter(QTranslator::tr("Images (*.png *.jpg)"));
-  dialog.setWindowTitle("Open tileset");
+  dialog.setWindowTitle(QTranslator::tr("Open tileset"));
 
-  if (cachedDirPath.isEmpty()) {
-    using paths = QStandardPaths;
-    dialog.setDirectory(paths::writableLocation(paths::PicturesLocation));
+  if (cachedPath.isEmpty()) {
+    dialog.setDirectory(
+        QStandardPaths::writableLocation(QStandardPaths::PicturesLocation));
   } else {
-    dialog.setDirectory(cachedDirPath);
+    dialog.setDirectory(cachedPath);
   }
 
   const auto success = dialog.exec();
-  cachedDirPath = dialog.directoryUrl().toString();
+  cachedPath = dialog.directory().path();
 
   if (success) {
-    return dialog.selectedUrls().first();
+    return dialog.selectedFiles().first();
   } else {
     return std::nullopt;
   }

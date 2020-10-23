@@ -3,19 +3,10 @@
 #include <QFileInfo>
 
 #include "open_tileset_image.hpp"
+#include "tactile_error.hpp"
 #include "ui_tileset_dialog.h"
 
 namespace tactile::gui {
-namespace {
-
-[[nodiscard]] auto load_pixmap(const QString& path) -> QPixmap
-{
-  QPixmap pixmap{path};
-  pixmap = pixmap.scaledToHeight(100);
-  return pixmap;
-}
-
-}  // namespace
 
 tileset_dialog::tileset_dialog(QWidget* parent)
     : QDialog{parent},
@@ -24,11 +15,9 @@ tileset_dialog::tileset_dialog(QWidget* parent)
   m_ui->setupUi(this);
   m_validator = new QIntValidator{1, 1'000, this};
 
-  const auto pixmap = m_ui->imageLabel->pixmap(Qt::ReturnByValueConstant{});
-  if (!pixmap.isNull()) {
-    m_defaultImageIcon = pixmap;
-  } else {
-    qWarning("Found no default pixmap for tileset image!");
+  m_defaultImageIcon = m_ui->imageLabel->pixmap(Qt::ReturnByValueConstant{});
+  if (m_defaultImageIcon.isNull()) {
+    throw tactile_error{"Could not create default pixmap!"};
   }
 
   ok_button()->setEnabled(false);
@@ -42,20 +31,19 @@ tileset_dialog::~tileset_dialog() noexcept
 void tileset_dialog::on_imageButton_pressed()
 {
   if (const auto path = open_tileset_image(this); path) {
-    const auto pathStr = path->path().remove(0, 1);  // remove leading '/'
-    const auto fileName = path->fileName();
+    const QFileInfo file{*path};
+    const auto absoluteFile = file.absoluteFilePath();
 
-    m_image.load(pathStr);
+    m_image.load(file.absoluteFilePath());
 
     if (m_image.isNull()) {
       m_ui->imageLabel->setPixmap(m_defaultImageIcon);
       m_ui->sourceEdit->setText(QStringLiteral(u"Failed to open image!"));
     } else {
-      const QFileInfo info{path->fileName()};
-      m_ui->imageLabel->setPixmap(load_pixmap(pathStr));
-      m_ui->sourceEdit->setText(info.absoluteFilePath());
-      m_imageName = info.baseName();
-      m_path = pathStr;
+      m_ui->imageLabel->setPixmap(QPixmap{absoluteFile}.scaledToHeight(100));
+      m_ui->sourceEdit->setText(absoluteFile);
+      m_imageName = file.baseName();
+      m_path = absoluteFile;
     }
 
     ok_button()->setEnabled(is_valid());
