@@ -50,6 +50,7 @@ settings_dialog::settings_dialog(QWidget* parent)
   m_ui->defaultFormatCombo->setCurrentText(m_defaultFormat);
   m_ui->embedTilesetsCheck->setChecked(m_embedTilesets);
   m_ui->generateDefaultsCheck->setChecked(m_generateDefaults);
+  m_ui->readableOutputCheck->setChecked(m_readableOutput);
   m_ui->tileWidthEdit->setText(QString::number(m_tileWidth));
   m_ui->tileHeightEdit->setText(QString::number(m_tileHeight));
 }
@@ -81,6 +82,11 @@ void settings_dialog::handle_accept()
     prefs::saves::generate_defaults().set(genDefaults);
   }
 
+  if (const auto readable = m_ui->readableOutputCheck->isChecked();
+      readable != m_readableOutput) {
+    prefs::saves::readable_output().set(readable);
+  }
+
   if (const auto value = text_as_int(m_ui->tileWidthEdit); value) {
     prefs::saves::tile_width().set(*value);
   }
@@ -104,6 +110,7 @@ void settings_dialog::fetch_current_settings()
   m_tileHeight = prefs::saves::tile_height().value();
   m_embedTilesets = prefs::saves::embed_tilesets().value();
   m_generateDefaults = prefs::saves::generate_defaults().value();
+  m_readableOutput = prefs::saves::readable_output().value();
 }
 
 }  // namespace tactile::gui

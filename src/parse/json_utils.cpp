@@ -2,6 +2,7 @@
 
 #include <QSaveFile>
 
+#include "preferences.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::json {
@@ -29,7 +30,15 @@ void write_file(const QFileInfo& path, const QJsonDocument& document)
 
   file.setDirectWriteFallback(true);
   file.open(QFile::WriteOnly | QFile::Text);
-  if (const auto result = file.write(document.toJson()); result == -1) {
+
+  auto format = QJsonDocument::JsonFormat::Indented;
+  if (const auto humanReadable = prefs::saves::readable_output();
+      humanReadable) {
+    format = *humanReadable ? QJsonDocument::JsonFormat::Indented
+                            : QJsonDocument::JsonFormat::Compact;
+  }
+
+  if (const auto result = file.write(document.toJson(format)); result == -1) {
     file.cancelWriting();
   } else {
     file.commit();

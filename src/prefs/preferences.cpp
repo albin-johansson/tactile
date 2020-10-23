@@ -46,6 +46,12 @@ auto saves::generate_defaults() -> setting<bool>
   return setting<bool>{str};
 }
 
+auto saves::readable_output() -> setting<bool>
+{
+  static const auto str = QStringLiteral(u"saves/humanReadableOutput");
+  return setting<bool>{str};
+}
+
 auto saves::tile_width() -> setting<int>
 {
   static const auto str = QStringLiteral(u"saves/tileWidth");
@@ -72,6 +78,7 @@ void validate()
 
   saves::embed_tilesets().set_if_missing(false);
   saves::generate_defaults().set_if_missing(false);
+  saves::readable_output().set_if_missing(true);
   saves::tile_width().set_if_missing(32);
   saves::tile_height().set_if_missing(32);
   saves::default_format().set_if_missing(QStringLiteral(u"JSON"));

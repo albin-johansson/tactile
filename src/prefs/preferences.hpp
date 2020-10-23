@@ -91,6 +91,8 @@ namespace saves {
 
 [[nodiscard]] auto generate_defaults() -> setting<bool>;
 
+[[nodiscard]] auto readable_output() -> setting<bool>;
+
 [[nodiscard]] auto tile_width() -> setting<int>;
 
 [[nodiscard]] auto tile_height() -> setting<int>;

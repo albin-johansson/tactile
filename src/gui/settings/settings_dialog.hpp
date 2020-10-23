@@ -30,6 +30,7 @@ class settings_dialog final : public QDialog
   int m_tileHeight{};
   bool m_embedTilesets{};
   bool m_generateDefaults{};
+  bool m_readableOutput{};
 
  private slots:
   void handle_accept();
