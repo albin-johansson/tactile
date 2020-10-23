@@ -63,8 +63,6 @@ set(TACTILE_SOURCE_FILES
         gui/tileset/tileset_widget.ui
         gui/tileset/tileset_content_page.ui
         gui/tileset/tileset_empty_page.ui
-        gui/tileset/open_tileset_image.cpp
-        gui/tileset/open_tileset_image.hpp
         gui/tileset/tileset_empty_page.cpp
         gui/tileset/tileset_empty_page.hpp
         gui/tileset/tileset_content_page.cpp
@@ -111,6 +109,8 @@ set(TACTILE_SOURCE_FILES
         gui/dialog/open_tileset/tileset_dialog.cpp
         gui/dialog/open_tileset/tileset_dialog.hpp
         gui/dialog/open_tileset/tileset_dialog.ui
+        gui/dialog/open_tileset/open_tileset_image.cpp
+        gui/dialog/open_tileset/open_tileset_image.hpp
 
         gui/toolbar/dynamic_tool_bar_widget.cpp
         gui/toolbar/dynamic_tool_bar_widget.hpp
