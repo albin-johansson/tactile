@@ -67,7 +67,7 @@ void window::init_connections()
   // clang-format off
 
   on_triggered(m_ui->actionNewMap, &window::ui_new_map);
-  on_triggered(m_ui->actionAddTileset, &window::ui_new_tileset);
+  on_triggered(m_ui->actionAddTileset, &window::ui_add_tileset);
 
   connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
@@ -83,10 +83,10 @@ void window::init_connections()
   connect(m_editor, &map_editor::mouse_entered, this, &window::mouse_entered);
   connect(m_editor, &map_editor::mouse_exited, this, &window::mouse_exited);
 
-  connect(m_tilesetDock, &tileset_dock::ui_requested_tileset, this, &window::ui_new_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_selected_tileset, this, &window::ui_selected_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_removed_tileset, this, &window::ui_removed_tileset);
-  connect(m_tilesetDock, &tileset_dock::tileset_selection_changed, this, &window::ui_tileset_selection_changed);
+  connect(m_tilesetDock, &tileset_dock::ui_add_tileset, this, &window::ui_add_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_select_tileset, this, &window::ui_select_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_remove_tileset, this, &window::ui_remove_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_set_tileset_selection, this, &window::ui_set_tileset_selection);
 
   connect(m_layerDock, &layer_dock::ui_add_layer, this, &window::ui_add_layer);
   connect(m_layerDock, &layer_dock::ui_remove_layer, this, &window::ui_remove_layer);

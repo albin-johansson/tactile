@@ -15,10 +15,10 @@ tileset_dock::tileset_dock(QWidget* parent)
   using widget = tileset_widget;
   using dock = tileset_dock;
   // clang-format off
-  connect(m_widget, &widget::ui_requested_tileset, this, &dock::ui_requested_tileset);
-  connect(m_widget, &widget::ui_selected_tileset, this, &dock::ui_selected_tileset);
-  connect(m_widget, &widget::ui_removed_tileset, this, &dock::ui_removed_tileset);
-  connect(m_widget, &widget::tileset_selection_changed, this, &dock::tileset_selection_changed);
+  connect(m_widget, &widget::ui_add_tileset, this, &dock::ui_add_tileset);
+  connect(m_widget, &widget::ui_select_tileset, this, &dock::ui_select_tileset);
+  connect(m_widget, &widget::ui_remove_tileset, this, &dock::ui_remove_tileset);
+  connect(m_widget, &widget::ui_set_tileset_selection, this, &dock::ui_set_tileset_selection);
   // clang-format on
 }
 

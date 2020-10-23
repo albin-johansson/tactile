@@ -135,7 +135,7 @@ void model::reset_tile_size()
   }
 }
 
-void model::ui_selected_map(map_id id)
+void model::ui_select_map(map_id id)
 {
   m_maps->select(id);
 

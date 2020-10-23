@@ -44,6 +44,36 @@ void app::init_connections()
 
   // clang-format off
 
+  win_to_mod(&win::ui_undo,                  &mod::undo);
+  win_to_mod(&win::ui_redo,                  &mod::redo);
+  win_to_mod(&win::ui_add_row,               &mod::add_row);
+  win_to_mod(&win::ui_add_col,               &mod::add_col);
+  win_to_mod(&win::ui_remove_row,            &mod::remove_row);
+  win_to_mod(&win::ui_remove_col,            &mod::remove_col);
+  win_to_mod(&win::ui_close_map,             &mod::close_map);
+  win_to_mod(&win::ui_select_map,            &mod::ui_select_map);
+  win_to_mod(&win::ui_increase_zoom,         &mod::increase_tile_size);
+  win_to_mod(&win::ui_decrease_zoom,         &mod::decrease_tile_size);
+  win_to_mod(&win::ui_reset_tile_size,       &mod::reset_tile_size);
+  win_to_mod(&win::ui_selected_tool,         &mod::select_tool);
+  win_to_mod(&win::ui_remove_tileset,        &mod::ui_remove_tileset);
+  win_to_mod(&win::ui_select_tileset,        &mod::select_tileset);
+  win_to_mod(&win::ui_set_tileset_selection, &mod::set_tileset_selection);
+  win_to_mod(&win::ui_add_layer,             &mod::add_layer);
+  win_to_mod(&win::ui_remove_layer,          &mod::remove_layer);
+  win_to_mod(&win::ui_selected_layer,        &mod::select_layer);
+  win_to_mod(&win::ui_set_layer_visibility,  &mod::set_layer_visibility);
+  win_to_mod(&win::ui_set_layer_opacity,     &mod::set_layer_opacity);
+  win_to_mod(&win::ui_set_layer_name,        &mod::set_layer_name);
+  win_to_mod(&win::ui_move_layer_down,       &mod::move_layer_back);
+  win_to_mod(&win::ui_move_layer_up,         &mod::move_layer_forward);
+  win_to_mod(&win::ui_duplicate_layer,       &mod::duplicate_layer);
+  win_to_mod(&win::mouse_pressed,            &mod::mouse_pressed);
+  win_to_mod(&win::mouse_moved,              &mod::mouse_moved);
+  win_to_mod(&win::mouse_released,           &mod::mouse_released);
+  win_to_mod(&win::mouse_entered,            &mod::mouse_entered);
+  win_to_mod(&win::mouse_exited,             &mod::mouse_exited);
+
   mod_to_win(&mod::redraw,                 &win::force_redraw);
   mod_to_win(&mod::enable_stamp_preview,   &win::enable_stamp_preview);
   mod_to_win(&mod::disable_stamp_preview,  &win::disable_stamp_preview);
@@ -61,45 +91,15 @@ void app::init_connections()
   mod_to_win(&mod::moved_layer_back,       &win::moved_layer_up);
   mod_to_win(&mod::moved_layer_forward,    &win::moved_layer_down);
 
-  win_to_mod(&win::ui_undo,                 &mod::undo);
-  win_to_mod(&win::ui_redo,                 &mod::redo);
-  win_to_mod(&win::ui_add_row,              &mod::add_row);
-  win_to_mod(&win::ui_add_col,              &mod::add_col);
-  win_to_mod(&win::ui_remove_row,           &mod::remove_row);
-  win_to_mod(&win::ui_remove_col,           &mod::remove_col);
-  win_to_mod(&win::ui_close_map,            &mod::close_map);
-  win_to_mod(&win::ui_select_map,           &mod::ui_selected_map);
-  win_to_mod(&win::ui_increase_zoom,        &mod::increase_tile_size);
-  win_to_mod(&win::ui_decrease_zoom,        &mod::decrease_tile_size);
-  win_to_mod(&win::ui_reset_tile_size,      &mod::reset_tile_size);
-  win_to_mod(&win::ui_selected_tool,        &mod::select_tool);
-  win_to_mod(&win::ui_removed_tileset,      &mod::ui_removed_tileset);
-  win_to_mod(&win::ui_selected_tileset,     &mod::select_tileset);
-  win_to_mod(&win::ui_add_layer,            &mod::add_layer);
-  win_to_mod(&win::ui_remove_layer,         &mod::remove_layer);
-  win_to_mod(&win::ui_selected_layer,       &mod::select_layer);
-  win_to_mod(&win::ui_set_layer_visibility, &mod::set_layer_visibility);
-  win_to_mod(&win::ui_set_layer_opacity,    &mod::set_layer_opacity);
-  win_to_mod(&win::ui_set_layer_name,       &mod::set_layer_name);
-  win_to_mod(&win::ui_move_layer_down,      &mod::move_layer_back);
-  win_to_mod(&win::ui_move_layer_up,        &mod::move_layer_forward);
-  win_to_mod(&win::ui_duplicate_layer,      &mod::duplicate_layer);
-  win_to_mod(&win::mouse_pressed,           &mod::mouse_pressed);
-  win_to_mod(&win::mouse_moved,             &mod::mouse_moved);
-  win_to_mod(&win::mouse_released,          &mod::mouse_released);
-  win_to_mod(&win::mouse_entered,           &mod::mouse_entered);
-  win_to_mod(&win::mouse_exited,            &mod::mouse_exited);
-
-  from_window(&win::ui_resize_map,                &app::handle_resize_map);
-  from_window(&win::ui_pan_up,                    &app::handle_pan_up);
-  from_window(&win::ui_pan_down,                  &app::handle_pan_down);
-  from_window(&win::ui_pan_right,                 &app::handle_pan_right);
-  from_window(&win::ui_pan_left,                  &app::handle_pan_left);
-  from_window(&win::ui_new_map,                   &app::handle_new_map);
-  from_window(&win::ui_new_tileset,               &app::handle_new_tileset);
-  from_window(&win::ui_tileset_selection_changed, &app::tileset_selection_changed);
-  from_window(&win::ui_save_as,                   &app::save_as);
-  from_window(&win::ui_open_map,                  &app::open_map);
+  from_window(&win::ui_add_tileset, &app::handle_new_tileset);
+  from_window(&win::ui_resize_map,  &app::handle_resize_map);
+  from_window(&win::ui_pan_up,      &app::handle_pan_up);
+  from_window(&win::ui_pan_down,    &app::handle_pan_down);
+  from_window(&win::ui_pan_right,   &app::handle_pan_right);
+  from_window(&win::ui_pan_left,    &app::handle_pan_left);
+  from_window(&win::ui_new_map,     &app::handle_new_map);
+  from_window(&win::ui_save_as,     &app::save_as);
+  from_window(&win::ui_open_map,    &app::open_map);
 
   // clang-format on
 }
@@ -164,17 +164,12 @@ void app::handle_pan_left()
 void app::handle_new_tileset()
 {
   gui::tileset_dialog::spawn([this](const gui::tileset_info& info) {
-    m_model->ui_added_tileset(info.image,
-                              info.path,
-                              info.name,
-                              info.tileWidth,
-                              info.tileHeight);
+    m_model->ui_add_tileset(info.image,
+                            info.path,
+                            info.name,
+                            info.tileWidth,
+                            info.tileHeight);
   });
-}
-
-void app::tileset_selection_changed(const core::tileset::selection& selection)
-{
-  m_model->set_tileset_selection(selection);
 }
 
 void app::handle_new_map()

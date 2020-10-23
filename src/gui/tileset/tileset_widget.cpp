@@ -19,12 +19,13 @@ tileset_widget::tileset_widget(QWidget* parent)
   m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
 
   // clang-format off
-  connect(m_emptyPage, &tileset_empty_page::request_new_tileset, this, &tileset_widget::ui_requested_tileset);
-  connect(m_contentPage, &tileset_content_page::ui_requested_tileset, this, &tileset_widget::ui_requested_tileset);
-  connect(m_contentPage, &tileset_content_page::ui_selected_tileset, this, &tileset_widget::ui_selected_tileset);
-  connect(m_contentPage, &tileset_content_page::ui_removed_tileset, this, &tileset_widget::ui_removed_tileset);
-  connect(m_contentPage, &tileset_content_page::tileset_selection_changed, this, &tileset_widget::tileset_selection_changed);
+  connect(m_emptyPage, &tileset_empty_page::request_new_tileset, this, &tileset_widget::ui_add_tileset);
+  connect(m_contentPage, &tileset_content_page::ui_add_tileset, this, &tileset_widget::ui_add_tileset);
+  connect(m_contentPage, &tileset_content_page::ui_select_tileset, this, &tileset_widget::ui_select_tileset);
+  connect(m_contentPage, &tileset_content_page::ui_remove_tileset, this, &tileset_widget::ui_remove_tileset);
+  connect(m_contentPage, &tileset_content_page::ui_set_tileset_selection, this, &tileset_widget::ui_set_tileset_selection);
   // clang-format on
+
   connect(m_contentPage, &tileset_content_page::switch_to_empty_page, [this] {
     m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
   });
@@ -38,12 +39,12 @@ tileset_widget::~tileset_widget() noexcept
   delete m_ui;
 }
 
-void tileset_widget::add_tileset(map_id map,
-                                 tileset_id id,
-                                 const core::tileset& tileset)
+void tileset_widget::added_tileset(map_id map,
+                                   tileset_id id,
+                                   const core::tileset& tileset)
 {
   const auto wasEmpty = m_contentPage->empty();
-  m_contentPage->add_tileset(map, id, tileset);
+  m_contentPage->added_tileset(map, id, tileset);
   if (wasEmpty) {
     m_ui->stackedWidget->setCurrentIndex(m_contentIndex);
   }

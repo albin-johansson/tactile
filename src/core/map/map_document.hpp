@@ -510,7 +510,7 @@ class map_document final : public QObject
                    tile_width tileWidth,
                    tile_height tileHeight);
 
-  void ui_removed_tileset(tileset_id id);
+  void ui_remove_tileset(tileset_id id);
 
  private:
   std::unique_ptr<map> m_map;

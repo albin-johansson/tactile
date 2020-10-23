@@ -149,7 +149,7 @@ void map_document::remove_tileset(tileset_id id)
   emit removed_tileset(id);
 }
 
-void map_document::ui_removed_tileset(tileset_id id)
+void map_document::ui_remove_tileset(tileset_id id)
 {
   m_commands->push<cmd::remove_tileset>(this, m_tilesets->get_ptr(id), id);
 }

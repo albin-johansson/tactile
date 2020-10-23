@@ -77,6 +77,8 @@ set(TACTILE_SOURCE_FILES
         gui/tileset/tileset_image_label.hpp
         gui/tileset/tileset_dock.cpp
         gui/tileset/tileset_dock.hpp
+        gui/tileset/tileset_tab_manager.cpp
+        gui/tileset/tileset_tab_manager.hpp
 
         gui/layer/layer_dock.cpp
         gui/layer/layer_dock.hpp
@@ -248,6 +250,7 @@ target_include_directories(libTactile
         PUBLIC gui/dialog/resize_map
         PUBLIC gui/dialog/save
         PUBLIC gui/dialog/open_map
+        PUBLIC gui/dialog/tileset
         PUBLIC service
         PUBLIC service/save
         PUBLIC service/open

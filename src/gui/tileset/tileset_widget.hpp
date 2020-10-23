@@ -23,22 +23,22 @@ class tileset_widget final : public QWidget
   ~tileset_widget() noexcept override;
 
  signals:
-  void ui_requested_tileset();
-  void ui_selected_tileset(tileset_id id);
-  void ui_removed_tileset(tileset_id id);
-  void tileset_selection_changed(const core::tileset::selection& selection);
+  void ui_add_tileset();
+  void ui_remove_tileset(tileset_id id);
+  void ui_select_tileset(tileset_id id);
+  void ui_set_tileset_selection(const core::tileset::selection& selection);
 
  public slots:
-  void select_map(map_id map)
+  void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
+
+  void removed_tileset(tileset_id id)
   {
-    m_contentPage->select_map(map);
+    m_contentPage->removed_tileset(id);
   }
 
-  void add_tileset(map_id map, tileset_id id, const core::tileset& tileset);
-
-  void remove_tileset(tileset_id id)
+  void selected_map(map_id map)
   {
-    m_contentPage->remove_tileset(id, false);
+    m_contentPage->selected_map(map);
   }
 
  private:

@@ -26,12 +26,14 @@ add_layer::add_layer(core::map_document* document,
 
 void add_layer::undo()
 {
+  QUndoCommand::undo();
   m_document->take_layer(m_id);
   emit m_document->removed_layer(m_id);
 }
 
 void add_layer::redo()
 {
+  QUndoCommand::redo();
   m_document->add_layer(m_id, m_layer);
 }
 

@@ -340,18 +340,18 @@ class model final : public QObject
   /**
    * @copydoc map_manager::add_tileset()
    */
-  void ui_added_tileset(const QImage& image,
-                        const QFileInfo& path,
-                        const QString& name,
-                        tile_width tileWidth,
-                        tile_height tileHeight)
+  void ui_add_tileset(const QImage& image,
+                      const QFileInfo& path,
+                      const QString& name,
+                      tile_width tileWidth,
+                      tile_height tileHeight)
   {
     m_maps->add_tileset(image, path, name, tileWidth, tileHeight);
   }
 
-  void ui_removed_tileset(tileset_id id)
+  void ui_remove_tileset(tileset_id id)
   {
-    m_maps->ui_removed_tileset(id);
+    m_maps->ui_remove_tileset(id);
     emit redraw();
   }
 
@@ -362,7 +362,7 @@ class model final : public QObject
    *
    * @since 0.1.0
    */
-  void ui_selected_map(map_id id);
+  void ui_select_map(map_id id);
 
   /**
    * @brief Closes the map associated with the specified ID.

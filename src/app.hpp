@@ -67,8 +67,6 @@ class app final : public QApplication
 
   void handle_new_tileset();
 
-  void tileset_selection_changed(const core::tileset::selection& selection);
-
   void handle_new_map();
 };
 

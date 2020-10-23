@@ -98,10 +98,10 @@ void map_manager::add_tileset(const QImage& image,
   }
 }
 
-void map_manager::ui_removed_tileset(tileset_id id)
+void map_manager::ui_remove_tileset(tileset_id id)
 {
   if (auto* document = current_document()) {
-    document->ui_removed_tileset(id);
+    document->ui_remove_tileset(id);
   }
 }
 

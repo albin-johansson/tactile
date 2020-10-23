@@ -32,19 +32,7 @@ void remove_tileset::undo()
 void remove_tileset::redo()
 {
   QUndoCommand::redo();
-
-  // This command is associated with the "X"-button on tileset tabs, which means
-  // that the tileset has already been removed from the UI the first time the
-  // command is executed. Only emit signals when the command is executed as a
-  // direct result of user undo/redo request.
-  if (m_first) {
-    m_document->blockSignals(true);
-    m_document->remove_tileset(m_id);
-    m_document->blockSignals(false);
-    m_first = false;
-  } else {
-    m_document->remove_tileset(m_id);
-  }
+  m_document->remove_tileset(m_id);
 }
 
 }  // namespace tactile::cmd

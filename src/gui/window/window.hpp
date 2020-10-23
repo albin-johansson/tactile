@@ -88,10 +88,10 @@ class window final : public QMainWindow
   void ui_move_layer_up(layer_id id);
   void ui_duplicate_layer(layer_id id);
 
-  void ui_new_tileset();
-  void ui_removed_tileset(tileset_id id);
-  void ui_selected_tileset(tileset_id id);
-  void ui_tileset_selection_changed(const core::tileset::selection& selection);
+  void ui_add_tileset();
+  void ui_remove_tileset(tileset_id id);
+  void ui_select_tileset(tileset_id id);
+  void ui_set_tileset_selection(const core::tileset::selection& selection);
 
   void ui_resize_map();
 

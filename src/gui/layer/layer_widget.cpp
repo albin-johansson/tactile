@@ -135,7 +135,7 @@ void layer_widget::selected_layer(layer_id id, const core::layer& layer)
 void layer_widget::selected_map(const core::map_document& document)
 {
   m_ui->layerList->clear();
-  m_nameSuffix = 1;
+  m_nameSuffix = 1; // FIXME this needs to be associated with each map
 
   document.each_layer([this](layer_id id, const core::layer& layer) {
     add_layer(id, layer);
@@ -224,7 +224,7 @@ void layer_widget::current_item_changed(QListWidgetItem* current,
 {
   if (current != previous) {
     if (auto* item = dynamic_cast<layer_item*>(current)) {
-      emit ui_selected_layer(item->layer());
+      emit ui_select_layer(item->layer());
     }
   }
   update_possible_actions();
