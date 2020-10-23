@@ -34,8 +34,8 @@ settings_dialog::settings_dialog(QWidget* parent)
   m_ui->setupUi(this);
 
   auto* validator = new QIntValidator{0, 9'999, this};
-  m_ui->tileWidthText->setValidator(validator);
-  m_ui->tileHeightText->setValidator(validator);
+  m_ui->tileWidthEdit->setValidator(validator);
+  m_ui->tileHeightEdit->setValidator(validator);
 
   fetch_current_settings();
 
@@ -48,8 +48,8 @@ settings_dialog::settings_dialog(QWidget* parent)
   m_ui->themeComboBox->setCurrentText(m_theme);
   m_ui->embedTilesetsCheck->setChecked(m_embedTilesets);
   m_ui->generateDefaultsCheck->setChecked(m_generateDefaults);
-  m_ui->tileWidthText->setText(QString::number(m_tileWidth));
-  m_ui->tileHeightText->setText(QString::number(m_tileHeight));
+  m_ui->tileWidthEdit->setText(QString::number(m_tileWidth));
+  m_ui->tileHeightEdit->setText(QString::number(m_tileHeight));
 }
 
 settings_dialog::~settings_dialog() noexcept
@@ -74,11 +74,11 @@ void settings_dialog::handle_accept()
     prefs::saves::generate_defaults().set(genDefaults);
   }
 
-  if (const auto value = text_as_int(m_ui->tileWidthText); value) {
+  if (const auto value = text_as_int(m_ui->tileWidthEdit); value) {
     prefs::saves::tile_width().set(*value);
   }
 
-  if (const auto value = text_as_int(m_ui->tileHeightText); value) {
+  if (const auto value = text_as_int(m_ui->tileHeightEdit); value) {
     prefs::saves::tile_height().set(*value);
   }
 }
