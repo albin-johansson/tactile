@@ -19,7 +19,7 @@ class layer_dock final : public QDockWidget
  signals:
   void ui_add_layer();
   void ui_remove_layer(layer_id id);
-  void ui_selected_layer(layer_id id);
+  void ui_select_layer(layer_id id);
   void ui_set_layer_visibility(layer_id id, bool visible);
   void ui_set_layer_opacity(layer_id id, double opacity);
   void ui_set_layer_name(layer_id id, const QString& name);

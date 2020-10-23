@@ -61,7 +61,7 @@ void app::init_connections()
   win_to_mod(&win::ui_set_tileset_selection, &mod::set_tileset_selection);
   win_to_mod(&win::ui_add_layer,             &mod::add_layer);
   win_to_mod(&win::ui_remove_layer,          &mod::remove_layer);
-  win_to_mod(&win::ui_selected_layer,        &mod::select_layer);
+  win_to_mod(&win::ui_select_layer,        &mod::select_layer);
   win_to_mod(&win::ui_set_layer_visibility,  &mod::set_layer_visibility);
   win_to_mod(&win::ui_set_layer_opacity,     &mod::set_layer_opacity);
   win_to_mod(&win::ui_set_layer_name,        &mod::set_layer_name);

@@ -16,7 +16,7 @@ layer_dock::layer_dock(QWidget* parent)
   // clang-format off
   connect(m_widget, &layer_widget::ui_add_layer, this, &layer_dock::ui_add_layer);
   connect(m_widget, &layer_widget::ui_remove_layer, this, &layer_dock::ui_remove_layer);
-  connect(m_widget, &layer_widget::ui_select_layer, this, &layer_dock::ui_selected_layer);
+  connect(m_widget, &layer_widget::ui_select_layer, this, &layer_dock::ui_select_layer);
   connect(m_widget, &layer_widget::ui_set_layer_visibility, this, &layer_dock::ui_set_layer_visibility);
   connect(m_widget, &layer_widget::ui_set_layer_opacity, this, &layer_dock::ui_set_layer_opacity);
   connect(m_widget, &layer_widget::ui_set_layer_name, this, &layer_dock::ui_set_layer_name);

@@ -90,7 +90,7 @@ void window::init_connections()
 
   connect(m_layerDock, &layer_dock::ui_add_layer, this, &window::ui_add_layer);
   connect(m_layerDock, &layer_dock::ui_remove_layer, this, &window::ui_remove_layer);
-  connect(m_layerDock, &layer_dock::ui_selected_layer, this, &window::ui_selected_layer);
+  connect(m_layerDock, &layer_dock::ui_select_layer, this, &window::ui_select_layer);
   connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
   connect(m_layerDock, &layer_dock::ui_set_layer_opacity, this, &window::ui_set_layer_opacity);
   connect(m_layerDock, &layer_dock::ui_set_layer_name, this, &window::ui_set_layer_name);
