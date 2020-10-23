@@ -47,7 +47,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <property name="sizePolicy">
@@ -393,10 +393,29 @@
             </item>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="tilesetBackgroundLabel">
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="renderingGroup">
+         <property name="title">
+          <string>Rendering</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_5">
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="acceleratedRenderingCheck">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
-             <string>Tileset background:</string>
+             <string>Use OpenGL (may crash on resize)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="gridColorLabel">
+            <property name="text">
+             <string>Grid color:</string>
             </property>
             <property name="wordWrap">
              <bool>true</bool>
@@ -404,7 +423,7 @@
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="QPushButton" name="tilesetBackgroundButton">
+           <widget class="QPushButton" name="gridColorButton">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -419,25 +438,6 @@
             </property>
             <property name="text">
              <string>Pick color...</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="renderingGroup">
-         <property name="title">
-          <string>Rendering</string>
-         </property>
-         <layout class="QFormLayout" name="formLayout_5">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="acceleratedRenderingCheck">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Use OpenGL (may crash on resize)</string>
             </property>
            </widget>
           </item>
