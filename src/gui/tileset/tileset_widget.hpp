@@ -2,16 +2,18 @@
 
 #include <QWidget>
 
-#include "czstring.hpp"
-#include "position.hpp"
-#include "tileset_content_page.hpp"
-#include "tileset_empty_page.hpp"
+#include "map_id.hpp"
+#include "tileset.hpp"
+#include "tileset_id.hpp"
 
 namespace Ui {
 class tileset_widget;
 }
 
 namespace tactile::gui {
+
+class tileset_content_page;
+class tileset_empty_page;
 
 class tileset_widget final : public QWidget
 {
@@ -31,15 +33,9 @@ class tileset_widget final : public QWidget
  public slots:
   void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 
-  void removed_tileset(tileset_id id)
-  {
-    m_contentPage->removed_tileset(id);
-  }
+  void removed_tileset(tileset_id id);
 
-  void selected_map(map_id map)
-  {
-    m_contentPage->selected_map(map);
-  }
+  void selected_map(map_id id);
 
  private:
   Ui::tileset_widget* m_ui;

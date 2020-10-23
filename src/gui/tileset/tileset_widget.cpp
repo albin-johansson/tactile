@@ -1,6 +1,8 @@
 #include "tileset_widget.hpp"
 
 #include "ui_tileset_widget.h"
+#include "tileset_content_page.hpp"
+#include "tileset_empty_page.hpp"
 
 namespace tactile::gui {
 
@@ -48,6 +50,16 @@ void tileset_widget::added_tileset(map_id map,
   if (wasEmpty) {
     m_ui->stackedWidget->setCurrentIndex(m_contentIndex);
   }
+}
+
+void tileset_widget::removed_tileset(tileset_id id)
+{
+  m_contentPage->removed_tileset(id);
+}
+
+void tileset_widget::selected_map(map_id id)
+{
+  m_contentPage->selected_map(id);
 }
 
 }  // namespace tactile::gui
