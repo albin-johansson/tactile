@@ -2,8 +2,6 @@
 
 #include <QWidget>
 
-#include "czstring.hpp"
-
 namespace Ui {
 class tileset_empty_page;
 }
@@ -20,7 +18,7 @@ class tileset_empty_page final : public QWidget
   ~tileset_empty_page() noexcept override;
 
  signals:
-  void request_new_tileset();
+  void ui_add_tileset();
 
  private:
   Ui::tileset_empty_page* m_ui{};

@@ -13,7 +13,7 @@ tileset_empty_page::tileset_empty_page(QWidget* parent)
   connect(m_ui->addSheetButton,
           &QPushButton::clicked,
           this,
-          &tileset_empty_page::request_new_tileset);
+          &tileset_empty_page::ui_add_tileset);
 }
 
 tileset_empty_page::~tileset_empty_page() noexcept

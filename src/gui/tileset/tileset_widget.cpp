@@ -21,7 +21,7 @@ tileset_widget::tileset_widget(QWidget* parent)
   m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
 
   // clang-format off
-  connect(m_emptyPage, &tileset_empty_page::request_new_tileset, this, &tileset_widget::ui_add_tileset);
+  connect(m_emptyPage, &tileset_empty_page::ui_add_tileset, this, &tileset_widget::ui_add_tileset);
   connect(m_contentPage, &tileset_content_page::ui_add_tileset, this, &tileset_widget::ui_add_tileset);
   connect(m_contentPage, &tileset_content_page::ui_select_tileset, this, &tileset_widget::ui_select_tileset);
   connect(m_contentPage, &tileset_content_page::ui_remove_tileset, this, &tileset_widget::ui_remove_tileset);
