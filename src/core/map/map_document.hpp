@@ -181,13 +181,12 @@ class map_document final : public QObject
    * @brief Removes a tileset from the document.
    *
    * @param id the ID associated with the tileset that will be removed.
-   * @param notify `true` if a signal should be emitted; `false` otherwise.
    *
    * @since 0.1.0
    *
    * @signal `removed_tileset`
    */
-  void remove_tileset(tileset_id id, bool notify = true);
+  void remove_tileset(tileset_id id);
 
   /**
    * @copydoc tileset_manager::select()
