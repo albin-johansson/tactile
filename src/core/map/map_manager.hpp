@@ -102,7 +102,7 @@ class map_manager final : public QObject
                    tile_height tileHeight);
 
   /**
-   * @copydoc map_document::ui_removed_tileset()
+   * @copydoc map_document::ui_remove_tileset()
    */
   void ui_remove_tileset(tileset_id id);
 
