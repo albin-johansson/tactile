@@ -64,7 +64,7 @@ void tileset_content_page::add_corner_button()
 void tileset_content_page::selected_map(map_id map)
 {
   {
-    signal_blocker blocker{m_ui->tabWidget};
+    signal_blocker blocker{m_ui->tabWidget};  // avoid `ui_select_tileset`
 
     if (m_currentMap) {
       m_ui->tabWidget->clear();
