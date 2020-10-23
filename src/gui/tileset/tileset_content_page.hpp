@@ -1,13 +1,13 @@
 #pragma once
 
 #include <QWidget>
+#include <map>       // map
 #include <optional>  // optional
 
 #include "map_id.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_tab_manager.hpp"
-#include "vector_map.hpp"
 
 namespace Ui {
 class tileset_content_page;
@@ -93,7 +93,7 @@ class tileset_content_page final : public QWidget
  private:
   Ui::tileset_content_page* m_ui{};
   std::optional<map_id> m_currentMap;
-  vector_map<map_id, tileset_tab_manager> m_tabManagers;
+  std::map<map_id, tileset_tab_manager> m_tabManagers;
 
   /**
    * @brief Switches to the tileset tabs associated with the specified map.
