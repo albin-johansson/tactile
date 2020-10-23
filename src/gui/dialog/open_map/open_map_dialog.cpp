@@ -2,14 +2,23 @@
 
 #include <QStandardPaths>
 
+#include "preferences.hpp"
+
 namespace tactile::gui {
 
 open_map_dialog::open_map_dialog(QWidget* parent) : QFileDialog{parent}
 {
   setAcceptMode(QFileDialog::AcceptOpen);
   setFileMode(QFileDialog::ExistingFiles);
-  setNameFilter(QStringLiteral(u"TMX files (*.tmx);;JSON files (*.json)"));
-  setWindowTitle(QStringLiteral(u"Open..."));
+
+  if (const auto format = prefs::saves::default_format();
+      format.value() == QStringLiteral(u"JSON")) {
+    setNameFilter(tr("JSON files (*.json);;TMX files (*.tmx)"));
+  } else {
+    setNameFilter(tr("TMX files (*.tmx);;JSON files (*.json)"));
+  }
+
+  setWindowTitle(tr("Open..."));
   setDirectory(
       QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
 }
