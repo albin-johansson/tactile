@@ -337,6 +337,17 @@ class map final
   void move_layer_forward(layer_id id);
 
   /**
+   * @brief Creates and returns an empty layer but doesn't add it to the map.
+   *
+   * @note This function *does* increment the next layer ID property.
+   *
+   * @return the created layer.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto make_layer() -> std::shared_ptr<layer>;
+
+  /**
    * @brief Returns the ID of the tile at the specified position.
    *
    * @param position the position of the tile to query.
@@ -456,6 +467,18 @@ class map final
   [[nodiscard]] auto active_layer_id() const noexcept -> std::optional<layer_id>
   {
     return m_activeLayer;
+  }
+
+  /**
+   * @brief Returns the ID that will be used by the next layer.
+   *
+   * @return the ID of the next layer.
+   *
+   * @since 0.1.0
+   */
+  [[nodiscard]] auto next_layer_id() const noexcept -> layer_id
+  {
+    return m_nextLayer;
   }
 
   /**

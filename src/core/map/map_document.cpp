@@ -3,6 +3,7 @@
 #include <qdebug.h>
 
 #include "add_col.hpp"
+#include "add_layer.hpp"
 #include "add_row.hpp"
 #include "add_tileset.hpp"
 #include "bucket_fill.hpp"
@@ -180,8 +181,8 @@ void map_document::add_layer(layer_id id, const std::shared_ptr<layer>& layer)
 
 void map_document::add_layer()
 {
-  const auto id = m_map->add_layer();
-  emit added_layer(id, m_map->get_layer(id));
+  const auto id = m_map->next_layer_id();  // must be before make_layer call
+  m_commands->push<cmd::add_layer>(this, m_map->make_layer(), id);
 }
 
 void map_document::remove_layer(layer_id id)

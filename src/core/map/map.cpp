@@ -77,15 +77,7 @@ void map::select_layer(layer_id id)
 auto map::add_layer() -> layer_id
 {
   const auto id = m_nextLayer;
-
-  if (!m_activeLayer) {
-    m_layers.emplace(id, std::make_shared<layer>(5_row, 5_col));
-  } else {
-    m_layers.emplace(id, std::make_shared<layer>(row_count(), col_count()));
-  }
-
-  ++m_nextLayer;
-
+  m_layers.emplace(id, make_layer());
   return id;
 }
 
@@ -208,6 +200,16 @@ void map::move_layer_back(layer_id id)
 void map::move_layer_forward(layer_id id)
 {
   m_layers.move_elem_forward(id);
+}
+
+auto map::make_layer() -> std::shared_ptr<layer>
+{
+  ++m_nextLayer;
+  if (!m_activeLayer) {
+    return std::make_shared<layer>(5_row, 5_col);
+  } else {
+    return std::make_shared<layer>(row_count(), col_count());
+  }
 }
 
 auto map::tile_at(const position& position) const -> std::optional<tile_id>
