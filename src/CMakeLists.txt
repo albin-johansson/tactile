@@ -108,9 +108,9 @@ set(TACTILE_SOURCE_FILES
         gui/dialog/open_map/open_map_dialog.cpp
         gui/dialog/open_map/open_map_dialog.hpp
 
-        gui/dialog/tileset/tileset_dialog.cpp
-        gui/dialog/tileset/tileset_dialog.hpp
-        gui/dialog/tileset/tileset_dialog.ui
+        gui/dialog/open_tileset/tileset_dialog.cpp
+        gui/dialog/open_tileset/tileset_dialog.hpp
+        gui/dialog/open_tileset/tileset_dialog.ui
 
         gui/toolbar/dynamic_tool_bar_widget.cpp
         gui/toolbar/dynamic_tool_bar_widget.hpp
@@ -250,7 +250,7 @@ target_include_directories(libTactile
         PUBLIC gui/dialog/resize_map
         PUBLIC gui/dialog/save
         PUBLIC gui/dialog/open_map
-        PUBLIC gui/dialog/tileset
+        PUBLIC gui/dialog/open_tileset
         PUBLIC service
         PUBLIC service/save
         PUBLIC service/open
