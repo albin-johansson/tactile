@@ -15,6 +15,7 @@ inline constexpr auto styling =
        QTabBar {
          border-radius: 0;
          border: none;
+         font-size: 12px;
        }
 
        QTabBar::tab:top {
