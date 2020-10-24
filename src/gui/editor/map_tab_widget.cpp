@@ -148,11 +148,6 @@ auto map_tab_widget::current_view() -> map_view*
   return get_view(currentIndex());
 }
 
-auto map_tab_widget::current_view() const -> const map_view*
-{
-  return get_view(currentIndex());
-}
-
 auto map_tab_widget::get_view(int index) -> map_view*
 {
   return qobject_cast<map_view*>(widget(index));

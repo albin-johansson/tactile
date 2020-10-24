@@ -4,7 +4,6 @@
 #include <QTabWidget>
 #include <optional>  // optional
 
-#include "czstring.hpp"
 #include "map_document.hpp"
 #include "map_view.hpp"
 
@@ -110,20 +109,13 @@ class map_tab_widget final : public QTabWidget
 
  signals:
   void ui_remove_map(map_id id);
-
-  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
-
-  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
-
-  void mouse_released(QMouseEvent* event, QPointF mapPosition);
-
-  void mouse_entered(QEvent* event);
-
-  void mouse_exited(QEvent* event);
-
   void increase_zoom();
-
   void decrease_zoom();
+  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
+  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
+  void mouse_released(QMouseEvent* event, QPointF mapPosition);
+  void mouse_entered(QEvent* event);
+  void mouse_exited(QEvent* event);
 
  public slots:
   void theme_changed();
@@ -132,8 +124,6 @@ class map_tab_widget final : public QTabWidget
 
  private:
   [[nodiscard]] auto current_view() -> map_view*;
-
-  [[nodiscard]] auto current_view() const -> const map_view*;
 
   [[nodiscard]] auto get_view(int index) -> map_view*;
 
