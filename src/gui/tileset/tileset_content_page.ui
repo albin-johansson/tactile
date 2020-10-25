@@ -29,16 +29,6 @@
    <property name="spacing">
     <number>2</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QTabWidget" name="tabWidget">
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
-     </property>
-     <property name="tabsClosable">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <resources>

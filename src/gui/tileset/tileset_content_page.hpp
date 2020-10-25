@@ -15,6 +15,7 @@ class tileset_content_page;
 
 namespace tactile::gui {
 
+class tab_widget;
 class tileset_tab;
 class tileset_tab_context_menu;
 
@@ -54,6 +55,7 @@ class tileset_content_page final : public QWidget
   void ui_add_tileset();
   void ui_select_tileset(tileset_id id);
   void ui_remove_tileset(tileset_id id);
+  void ui_rename_tileset(tileset_id id, const QString& name);
   void ui_set_tileset_selection(const core::tileset::selection& selection);
 
  public slots:
@@ -93,6 +95,7 @@ class tileset_content_page final : public QWidget
 
  private:
   Ui::tileset_content_page* m_ui{};
+  tab_widget* m_tabWidget{};
   tileset_tab_context_menu* m_contextMenu{};
   std::optional<map_id> m_currentMap;
   std::map<map_id, tileset_tab_manager> m_tabManagers;
