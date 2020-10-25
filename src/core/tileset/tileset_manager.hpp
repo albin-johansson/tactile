@@ -56,6 +56,8 @@ class tileset_manager final
    */
   void remove_all() noexcept;
 
+  void rename(tileset_id id, const QString& name);
+
   /**
    * @brief Selects the tileset associated with the specified ID.
    *

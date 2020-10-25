@@ -241,6 +241,11 @@ void map_document::move_layer_forward(layer_id id)
   emit moved_layer_forward(id);
 }
 
+void map_document::set_tileset_name(tileset_id id, const QString& name)
+{
+  m_tilesets->rename(id, name);
+}
+
 auto map_document::can_undo() const -> bool
 {
   return m_commands->canUndo();

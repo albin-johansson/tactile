@@ -135,6 +135,13 @@ void model::reset_tile_size()
   }
 }
 
+void model::set_tileset_name(tileset_id id, const QString& name)
+{
+  if (auto* document = current_document()) {
+    document->set_tileset_name(id, name);
+  }
+}
+
 void model::ui_select_map(map_id id)
 {
   m_maps->select(id);

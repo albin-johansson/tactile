@@ -289,6 +289,8 @@ class map_document final : public QObject
    */
   void move_layer_forward(layer_id id);
 
+  void set_tileset_name(tileset_id id, const QString& name);
+
   /**
    * @copydoc map::set_next_layer_id()
    */

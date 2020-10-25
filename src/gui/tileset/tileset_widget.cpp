@@ -1,8 +1,8 @@
 #include "tileset_widget.hpp"
 
-#include "ui_tileset_widget.h"
 #include "tileset_content_page.hpp"
 #include "tileset_empty_page.hpp"
+#include "ui_tileset_widget.h"
 
 namespace tactile::gui {
 
@@ -25,6 +25,7 @@ tileset_widget::tileset_widget(QWidget* parent)
   connect(m_contentPage, &tileset_content_page::ui_add_tileset, this, &tileset_widget::ui_add_tileset);
   connect(m_contentPage, &tileset_content_page::ui_select_tileset, this, &tileset_widget::ui_select_tileset);
   connect(m_contentPage, &tileset_content_page::ui_remove_tileset, this, &tileset_widget::ui_remove_tileset);
+  connect(m_contentPage, &tileset_content_page::ui_rename_tileset, this, &tileset_widget::ui_rename_tileset);
   connect(m_contentPage, &tileset_content_page::ui_set_tileset_selection, this, &tileset_widget::ui_set_tileset_selection);
   // clang-format on
 

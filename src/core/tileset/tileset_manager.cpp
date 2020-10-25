@@ -41,6 +41,11 @@ void tileset_manager::remove_all() noexcept
   m_tilesets.clear();
 }
 
+void tileset_manager::rename(tileset_id id, const QString& name)
+{
+  m_tilesets.at(id)->set_name(name);
+}
+
 void tileset_manager::select(std::optional<tileset_id> id)
 {
   if (id) {

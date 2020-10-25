@@ -355,6 +355,8 @@ class model final : public QObject
     emit redraw();
   }
 
+  void set_tileset_name(tileset_id id, const QString& name);
+
   /**
    * @brief Selects the map associated with the specified id.
    *

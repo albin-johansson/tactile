@@ -90,6 +90,7 @@ void window::init_connections()
   connect(m_tilesetDock, &tileset_dock::ui_add_tileset, this, &window::ui_add_tileset);
   connect(m_tilesetDock, &tileset_dock::ui_select_tileset, this, &window::ui_select_tileset);
   connect(m_tilesetDock, &tileset_dock::ui_remove_tileset, this, &window::ui_remove_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_rename_tileset, this, &window::ui_rename_tileset);
   connect(m_tilesetDock, &tileset_dock::ui_set_tileset_selection, this, &window::ui_set_tileset_selection);
 
   connect(m_layerDock, &layer_dock::ui_add_layer, this, &window::ui_add_layer);

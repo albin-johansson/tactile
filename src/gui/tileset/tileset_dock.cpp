@@ -20,6 +20,7 @@ tileset_dock::tileset_dock(QWidget* parent)
   connect(m_widget, &widget::ui_add_tileset, this, &dock::ui_add_tileset);
   connect(m_widget, &widget::ui_select_tileset, this, &dock::ui_select_tileset);
   connect(m_widget, &widget::ui_remove_tileset, this, &dock::ui_remove_tileset);
+  connect(m_widget, &widget::ui_rename_tileset, this, &dock::ui_rename_tileset);
   connect(m_widget, &widget::ui_set_tileset_selection, this, &dock::ui_set_tileset_selection);
   // clang-format on
 }
