@@ -139,9 +139,9 @@ class setting final
    *
    * @since 0.1.0
    */
-  [[nodiscard]] auto value_or(T&& fallback) const -> T
+  [[nodiscard]] auto value_or(const T& fallback) const -> T
   {
-    return m_value.value_or(std::forward<T>(fallback));
+    return m_value.value_or(fallback);
   }
 
   /**

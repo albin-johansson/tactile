@@ -31,12 +31,10 @@ void write_file(const QFileInfo& path, const QJsonDocument& document)
   file.setDirectWriteFallback(true);
   file.open(QFile::WriteOnly | QFile::Text);
 
-  auto format = QJsonDocument::JsonFormat::Indented;
-  if (const auto humanReadable = prefs::saves::readable_output();
-      humanReadable) {
-    format = *humanReadable ? QJsonDocument::JsonFormat::Indented
-                            : QJsonDocument::JsonFormat::Compact;
-  }
+  constexpr auto def = prefs::saves::readable_output_def();
+  const auto format = prefs::saves::readable_output().value_or(def)
+                          ? QJsonDocument::JsonFormat::Indented
+                          : QJsonDocument::JsonFormat::Compact;
 
   if (const auto result = file.write(document.toJson(format)); result == -1) {
     file.cancelWriting();

@@ -457,10 +457,11 @@ void window::on_actionResizeMap_triggered()
 
 void window::on_actionToggleGrid_triggered()
 {
-  if (auto grid = prefs::graphics::render_grid(); grid) {
-    grid.set(!*grid);
+  auto grid = prefs::graphics::render_grid();
+  grid.with([&, this](bool value) {
+    grid.set(!value);
     force_redraw();
-  }
+  });
 }
 
 void window::on_actionPanUp_triggered()

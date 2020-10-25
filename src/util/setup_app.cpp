@@ -43,7 +43,7 @@ void setup_app()
 
   prefs::validate();
 
-  if (auto name = prefs::graphics::theme_name(); name) {
+  if (const auto name = prefs::graphics::theme_name(); name) {
     theme::set_theme(*name);
   } else {
     theme::reset();
