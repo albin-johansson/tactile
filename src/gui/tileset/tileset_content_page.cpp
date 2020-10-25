@@ -1,9 +1,12 @@
 #include "tileset_content_page.hpp"
 
 #include <QPushButton>
+#include <QTabBar>
 
+#include "icons.hpp"
 #include "signal_blocker.hpp"
 #include "tileset_tab.hpp"
+#include "tileset_tab_context_menu.hpp"
 #include "ui_tileset_content_page.h"
 
 namespace tactile::gui {
@@ -14,7 +17,23 @@ tileset_content_page::tileset_content_page(QWidget* parent)
 {
   m_ui->setupUi(this);
 
+  m_contextMenu = new tileset_tab_context_menu{this};
+//  connect(m_contextMenu, &tileset_tab_context_menu::rename, [this](int index) {
+//    // TODO
+//  });
+
+  connect(m_contextMenu, &tileset_tab_context_menu::remove, [this](int index) {
+    if (auto* tab = tab_from_index(index)) {
+      emit ui_remove_tileset(tab->id());
+    }
+  });
+
   add_corner_button();
+
+  connect(m_ui->tabWidget,
+          &QTabWidget::customContextMenuRequested,
+          this,
+          &tileset_content_page::trigger_context_menu);
 
   connect(m_ui->tabWidget, &QTabWidget::tabCloseRequested, [this](int index) {
     if (auto* tab = tab_from_index(index)) {
@@ -48,10 +67,7 @@ tileset_content_page::~tileset_content_page() noexcept
 void tileset_content_page::add_corner_button()
 {
   auto* button = new QPushButton{m_ui->tabWidget};
-
-  const QIcon icon{QStringLiteral(u":resources/icons/icons8/color/64/add.png")};
-  Q_ASSERT(!icon.isNull());
-  button->setIcon(icon);
+  button->setIcon(icons::add());
 
   connect(button,
           &QPushButton::pressed,
@@ -59,6 +75,14 @@ void tileset_content_page::add_corner_button()
           &tileset_content_page::ui_add_tileset);
 
   m_ui->tabWidget->setCornerWidget(button, Qt::Corner::TopRightCorner);
+}
+
+void tileset_content_page::trigger_context_menu(const QPoint& pos)
+{
+  if (const auto index = m_ui->tabWidget->tabBar()->tabAt(pos); index != -1) {
+    m_contextMenu->set_tab_index(index);
+    m_contextMenu->exec(mapToGlobal(pos));
+  }
 }
 
 void tileset_content_page::selected_map(map_id map)

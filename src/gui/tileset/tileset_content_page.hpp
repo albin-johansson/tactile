@@ -16,6 +16,7 @@ class tileset_content_page;
 namespace tactile::gui {
 
 class tileset_tab;
+class tileset_tab_context_menu;
 
 /**
  * @class tileset_content_page
@@ -92,6 +93,7 @@ class tileset_content_page final : public QWidget
 
  private:
   Ui::tileset_content_page* m_ui{};
+  tileset_tab_context_menu* m_contextMenu{};
   std::optional<map_id> m_currentMap;
   std::map<map_id, tileset_tab_manager> m_tabManagers;
 
@@ -113,6 +115,8 @@ class tileset_content_page final : public QWidget
    * @since 0.1.0
    */
   void add_corner_button();
+
+  void trigger_context_menu(const QPoint& pos);
 
   /**
    * @brief Returns the tab associated with the specified index.

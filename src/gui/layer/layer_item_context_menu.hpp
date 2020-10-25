@@ -27,19 +27,13 @@ class layer_item_context_menu final : public QMenu
   void remove_layer();
 
  private:
-  QAction m_visibility;
-  QAction m_sep0;
-  QAction m_moveUp;
-  QAction m_moveDown;
-  QAction m_sep1;
-  QAction m_duplicate;
-  QAction m_remove;
-
-  [[nodiscard]] static auto visibility_icon() -> const QIcon&;
-  [[nodiscard]] static auto move_up_icon() -> const QIcon&;
-  [[nodiscard]] static auto move_down_icon() -> const QIcon&;
-  [[nodiscard]] static auto duplicate_icon() -> const QIcon&;
-  [[nodiscard]] static auto remove_icon() -> const QIcon&;
+  QAction* m_visibility{};
+  [[maybe_unused]] QAction* m_sep0{};
+  QAction* m_moveUp{};
+  QAction* m_moveDown{};
+  [[maybe_unused]] QAction* m_sep1{};
+  QAction* m_duplicate{};
+  QAction* m_remove{};
 };
 
 }  // namespace tactile::gui

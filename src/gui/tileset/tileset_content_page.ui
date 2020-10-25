@@ -31,8 +31,11 @@
    </property>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
+     <property name="contextMenuPolicy">
+      <enum>Qt::CustomContextMenu</enum>
+     </property>
      <property name="tabsClosable">
-      <bool>true</bool>
+      <bool>false</bool>
      </property>
     </widget>
    </item>

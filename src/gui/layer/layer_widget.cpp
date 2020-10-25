@@ -16,8 +16,15 @@ layer_widget::layer_widget(QWidget* parent)
 {
   m_ui->setupUi(this);
   m_ui->layerList->setContextMenuPolicy(Qt::CustomContextMenu);
+  m_contextMenu = new layer_item_context_menu{this};
 
   // clang-format off
+  connect(m_contextMenu, &layer_item_context_menu::toggle_visibility, m_ui->visibleButton, &QAbstractButton::toggle);
+  connect(m_contextMenu, &layer_item_context_menu::move_layer_up, m_ui->upButton, &QAbstractButton::click);
+  connect(m_contextMenu, &layer_item_context_menu::move_layer_down, m_ui->downButton, &QAbstractButton::click);
+  connect(m_contextMenu, &layer_item_context_menu::duplicate_layer, m_ui->duplicateButton, &QAbstractButton::click);
+  connect(m_contextMenu, &layer_item_context_menu::remove_layer, m_ui->removeLayerButton, &QAbstractButton::click);
+
   connect(m_ui->layerList, &QListWidget::customContextMenuRequested, this, &layer_widget::trigger_layer_item_context_menu);
   connect(m_ui->newLayerButton, &QPushButton::pressed, this, &layer_widget::ui_add_layer);
   connect(m_ui->layerList, &QListWidget::currentItemChanged, this, &layer_widget::current_item_changed);
@@ -67,22 +74,11 @@ layer_widget::layer_widget(QWidget* parent)
 void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
 {
   if (m_ui->layerList->itemAt(pos)) {
-    layer_item_context_menu menu{this};
-
-    menu.set_visibility_enabled(m_ui->visibleButton->isEnabled());
-    menu.set_move_up_enabled(m_ui->upButton->isEnabled());
-    menu.set_move_down_enabled(m_ui->downButton->isEnabled());
-    menu.set_remove_enabled(m_ui->removeLayerButton->isEnabled());
-
-    // clang-format off
-    connect(&menu, &layer_item_context_menu::toggle_visibility, m_ui->visibleButton, &QAbstractButton::toggle);
-    connect(&menu, &layer_item_context_menu::move_layer_up, m_ui->upButton, &QAbstractButton::click);
-    connect(&menu, &layer_item_context_menu::move_layer_down, m_ui->downButton, &QAbstractButton::click);
-    connect(&menu, &layer_item_context_menu::duplicate_layer, m_ui->duplicateButton, &QAbstractButton::click);
-    connect(&menu, &layer_item_context_menu::remove_layer, m_ui->removeLayerButton, &QAbstractButton::click);
-    // clang-format on
-
-    menu.exec(mapToGlobal(pos));
+    m_contextMenu->set_visibility_enabled(m_ui->visibleButton->isEnabled());
+    m_contextMenu->set_move_up_enabled(m_ui->upButton->isEnabled());
+    m_contextMenu->set_move_down_enabled(m_ui->downButton->isEnabled());
+    m_contextMenu->set_remove_enabled(m_ui->removeLayerButton->isEnabled());
+    m_contextMenu->exec(mapToGlobal(pos));
   }
 }
 
@@ -135,7 +131,7 @@ void layer_widget::selected_layer(layer_id id, const core::layer& layer)
 void layer_widget::selected_map(const core::map_document& document)
 {
   m_ui->layerList->clear();
-  m_nameSuffix = 1; // FIXME this needs to be associated with each map
+  m_nameSuffix = 1;  // FIXME this needs to be associated with each map
 
   document.each_layer([this](layer_id id, const core::layer& layer) {
     add_layer(id, layer);

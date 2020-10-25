@@ -14,6 +14,7 @@ class layer_widget;
 namespace tactile::gui {
 
 class layer_item;
+class layer_item_context_menu;
 
 class layer_widget final : public QWidget
 {
@@ -52,6 +53,7 @@ class layer_widget final : public QWidget
 
  private:
   Ui::layer_widget* m_ui{};
+  layer_item_context_menu* m_contextMenu{};
   std::optional<int> m_duplicateTargetRow;
   int m_nameSuffix{1};
 

@@ -214,7 +214,7 @@ set(TACTILE_SOURCE_FILES
         service/open/open_json.cpp
         service/open/open_json.hpp
         service/open/open_tmx.cpp
-        service/open/open_tmx.hpp)
+        service/open/open_tmx.hpp gui/tileset/tileset_tab_context_menu.cpp gui/tileset/tileset_tab_context_menu.hpp gui/icons.cpp gui/icons.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
