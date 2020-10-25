@@ -1,12 +1,11 @@
 #pragma once
 
-#include <QDockWidget>
-
+#include "dock_widget.hpp"
 #include "tool_widget.hpp"
 
 namespace tactile::gui {
 
-class tool_dock final : public QDockWidget
+class tool_dock final : public dock_widget
 {
   Q_OBJECT
 
@@ -40,9 +39,7 @@ class tool_dock final : public QDockWidget
 
  signals:
   void enable_stamp();
-
   void enable_bucket();
-
   void enable_eraser();
 
  private:

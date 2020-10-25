@@ -33,7 +33,7 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
   init_connections();
 
   restore_layout();
-  enter_no_content_view();  // TODO option to reopen last map
+  enter_no_content_view();
 }
 
 window::~window() noexcept
@@ -72,6 +72,10 @@ void window::init_connections()
   connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
   connect(m_layerDock, &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
+
+  connect(m_toolDock, &tool_dock::closed, [] { prefs::graphics::tool_widget_visible().set(false); });
+  connect(m_layerDock, &tool_dock::closed, [] { prefs::graphics::layer_widget_visible().set(false); });
+  connect(m_tilesetDock, &tool_dock::closed, [] { prefs::graphics::tileset_widget_visible().set(false); });
 
   connect(m_editor, &map_editor::ui_select_map, this, &window::ui_select_map);
   connect(m_editor, &map_editor::ui_remove_map, this, &window::handle_remove_map);
@@ -120,12 +124,15 @@ void window::reset_dock_layout()
 
   addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_toolDock);
   m_toolDock->show();
+  prefs::graphics::tool_widget_visible().set(true);
 
   addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
   m_tilesetDock->show();
+  prefs::graphics::tileset_widget_visible().set(true);
 
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
   m_layerDock->show();
+  prefs::graphics::layer_widget_visible().set(true);
 }
 
 void window::hide_all_docks()
@@ -135,11 +142,19 @@ void window::hide_all_docks()
   m_tilesetDock->hide();
 }
 
-void window::show_all_docks()
+void window::restore_dock_visibility()
 {
-  m_toolDock->show();
-  m_layerDock->show();
-  m_tilesetDock->show();
+  prefs::graphics::tool_widget_visible().with([this](bool value) {
+    m_toolDock->setVisible(value);
+  });
+
+  prefs::graphics::tileset_widget_visible().with([this](bool value) {
+    m_tilesetDock->setVisible(value);
+  });
+
+  prefs::graphics::layer_widget_visible().with([this](bool value) {
+    m_layerDock->setVisible(value);
+  });
 }
 
 void window::center_viewport()
@@ -202,6 +217,7 @@ void window::enter_content_view()
   m_toolDock->enable_tools();
 
   set_actions_enabled(true);
+  restore_dock_visibility();
 }
 
 void window::force_redraw()
@@ -298,7 +314,6 @@ void window::handle_new_map(core::map_document* map, map_id id)
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
     enter_content_view();
-    show_all_docks();  // TODO just reopen docks that were visible
     center_viewport();
   }
 }
@@ -369,17 +384,23 @@ void window::on_actionCloseMap_triggered()
 
 void window::on_actionTilesetsVisibility_triggered()
 {
-  m_tilesetDock->setVisible(m_ui->actionTilesetsVisibility->isChecked());
+  const auto visible = m_ui->actionTilesetsVisibility->isChecked();
+  m_tilesetDock->setVisible(visible);
+  prefs::graphics::tileset_widget_visible().set(visible);
 }
 
 void window::on_actionToolsVisibility_triggered()
 {
-  m_toolDock->setVisible(m_ui->actionToolsVisibility->isChecked());
+  const auto visible = m_ui->actionToolsVisibility->isChecked();
+  m_toolDock->setVisible(visible);
+  prefs::graphics::tool_widget_visible().set(visible);
 }
 
 void window::on_actionLayersVisibility_triggered()
 {
-  m_layerDock->setVisible(m_ui->actionLayersVisibility->isChecked());
+  const auto visible = m_ui->actionLayersVisibility->isChecked();
+  m_layerDock->setVisible(visible);
+  prefs::graphics::layer_widget_visible().set(visible);
 }
 
 void window::on_actionSave_triggered()

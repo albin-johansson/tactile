@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QDockWidget>
-
+#include "dock_widget.hpp"
 #include "map_id.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
@@ -11,7 +10,7 @@ namespace tactile::gui {
 
 class tileset_widget;
 
-class tileset_dock final : public QDockWidget
+class tileset_dock final : public dock_widget
 {
   Q_OBJECT
 

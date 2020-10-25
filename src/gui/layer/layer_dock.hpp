@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QDockWidget>
-
+#include "dock_widget.hpp"
 #include "layer.hpp"
 #include "map_document.hpp"
 
@@ -9,7 +8,7 @@ namespace tactile::gui {
 
 class layer_widget;
 
-class layer_dock final : public QDockWidget
+class layer_dock final : public dock_widget
 {
   Q_OBJECT
 

@@ -5,7 +5,7 @@
 namespace tactile::gui {
 
 tool_dock::tool_dock(QWidget* parent)
-    : QDockWidget{parent},
+    : dock_widget{parent},
       m_widget{new tool_widget{this}}
 {
   setObjectName(QStringLiteral(u"tool_dock"));

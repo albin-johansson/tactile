@@ -176,7 +176,7 @@ class window final : public QMainWindow
 
   void hide_all_docks();
 
-  void show_all_docks();
+  void restore_dock_visibility();
 
   void center_viewport();
 

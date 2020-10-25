@@ -90,6 +90,12 @@ namespace graphics {
 
 [[nodiscard]] auto theme_name_def() -> const QString&;
 
+[[nodiscard]] auto tool_widget_visible() -> setting<bool>;
+
+[[nodiscard]] auto layer_widget_visible() -> setting<bool>;
+
+[[nodiscard]] auto tileset_widget_visible() -> setting<bool>;
+
 }  // namespace graphics
 
 namespace saves {

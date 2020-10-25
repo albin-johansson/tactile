@@ -44,6 +44,9 @@ set(TACTILE_SOURCE_FILES
         core/map/map_manager.cpp
         core/map/map_manager.hpp
 
+        gui/dock_widget.cpp
+        gui/dock_widget.hpp
+
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp
         gui/startup/startup_widget.ui

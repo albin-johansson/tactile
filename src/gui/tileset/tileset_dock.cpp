@@ -5,7 +5,7 @@
 namespace tactile::gui {
 
 tileset_dock::tileset_dock(QWidget* parent)
-    : QDockWidget{parent},
+    : dock_widget{parent},
       m_widget{new tileset_widget{this}}
 {
   setObjectName(QStringLiteral(u"tileset_dock"));

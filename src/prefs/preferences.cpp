@@ -40,6 +40,24 @@ auto graphics::theme_name_def() -> const QString&
   return name;
 }
 
+auto graphics::tool_widget_visible() -> setting<bool>
+{
+  static const auto str = QStringLiteral(u"graphics/toolWidgetVisible");
+  return setting<bool>{str};
+}
+
+auto graphics::layer_widget_visible() -> setting<bool>
+{
+  static const auto str = QStringLiteral(u"graphics/layerWidgetVisible");
+  return setting<bool>{str};
+}
+
+auto graphics::tileset_widget_visible() -> setting<bool>
+{
+  static const auto str = QStringLiteral(u"graphics/tilesetWidgetVisible");
+  return setting<bool>{str};
+}
+
 auto saves::embed_tilesets() -> setting<bool>
 {
   static const auto str = QStringLiteral(u"saves/embedTilesets");
@@ -87,6 +105,9 @@ void validate()
   graphics::render_grid().set_if_missing(graphics::render_grid_def());
   graphics::theme().set_if_missing(theme::get_default());
   graphics::theme_name().set_if_missing(theme::get_default_name().toString());
+  graphics::tool_widget_visible().set_if_missing(true);
+  graphics::tileset_widget_visible().set_if_missing(true);
+  graphics::layer_widget_visible().set_if_missing(true);
 
   saves::embed_tilesets().set_if_missing(saves::embed_tilesets_def());
   saves::generate_defaults().set_if_missing(saves::generate_defaults_def());
