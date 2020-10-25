@@ -46,6 +46,8 @@ set(TACTILE_SOURCE_FILES
 
         gui/dock_widget.cpp
         gui/dock_widget.hpp
+        gui/icons.cpp
+        gui/icons.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp
@@ -80,6 +82,8 @@ set(TACTILE_SOURCE_FILES
         gui/tileset/tileset_dock.hpp
         gui/tileset/tileset_tab_manager.cpp
         gui/tileset/tileset_tab_manager.hpp
+        gui/tileset/tileset_tab_context_menu.cpp
+        gui/tileset/tileset_tab_context_menu.hpp
 
         gui/layer/layer_dock.cpp
         gui/layer/layer_dock.hpp
@@ -214,7 +218,7 @@ set(TACTILE_SOURCE_FILES
         service/open/open_json.cpp
         service/open/open_json.hpp
         service/open/open_tmx.cpp
-        service/open/open_tmx.hpp gui/tileset/tileset_tab_context_menu.cpp gui/tileset/tileset_tab_context_menu.hpp gui/icons.cpp gui/icons.hpp)
+        service/open/open_tmx.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
