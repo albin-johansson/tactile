@@ -371,7 +371,7 @@ void window::on_actionRedo_triggered()
 
 void window::on_actionCloseMap_triggered()
 {
-  // TODO save current state of open map
+  // TODO save current state of open map (exit saves?)
   const auto id = m_editor->active_tab_id().value();
 
   m_editor->close_tab(id);
