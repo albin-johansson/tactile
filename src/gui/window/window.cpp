@@ -130,9 +130,9 @@ void window::reset_dock_layout()
 
 void window::hide_all_docks()
 {
-  m_toolDock->close();
-  m_layerDock->close();
-  m_tilesetDock->close();
+  m_toolDock->hide();
+  m_layerDock->hide();
+  m_tilesetDock->hide();
 }
 
 void window::show_all_docks()
