@@ -2,6 +2,7 @@
 
 #include <QSettings>
 #include <QString>
+#include <concepts>  // invocable
 #include <optional>  // optional
 #include <utility>   // forward
 
@@ -71,6 +72,30 @@ class setting final
     if (!settings.contains(m_key)) {
       settings.setValue(m_key, value);
       m_value = value;
+    }
+  }
+
+  /**
+   * @brief Invokes a function object with the current value of the setting, if
+   * there is one.
+   *
+   * @details This function was inspired by the fact that it can be a little
+   * difficult to differentiate the conversion to `bool`, used to check for a
+   * valid value of a setting, from obtaining the actual value of the setting.
+   * This is especially noticeable with boolean settings.
+   *
+   * @tparam U the type of the function object.
+   *
+   * @param callable the function object that will be invoked if there is a
+   * value associated with the setting.
+   *
+   * @since 0.1.0
+   */
+  template <std::invocable<const T&> U>
+  void with(U&& callable)
+  {
+    if (m_value) {
+      callable(*m_value);
     }
   }
 
