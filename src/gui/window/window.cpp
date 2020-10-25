@@ -116,6 +116,7 @@ void window::reset_dock_layout()
 {
   removeDockWidget(m_toolDock);
   removeDockWidget(m_tilesetDock);
+  removeDockWidget(m_layerDock);
 
   addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_toolDock);
   m_toolDock->show();
