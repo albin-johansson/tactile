@@ -388,18 +388,11 @@ void window::on_actionSave_triggered()
 
 void window::on_actionSaveAs_triggered()
 {
-  auto get_tab_name = [this]() -> QString {
-    if (const auto name = m_editor->active_tab_name(); name) {
-      return *name;
-    } else {
-      return QStringLiteral(u"map");
-    }
-  };
   save_as_dialog::spawn(
       [this](const QString& path) {
         emit ui_save_as(path);
       },
-      get_tab_name());
+      m_editor->active_tab_name().value_or(QStringLiteral(u"map")));
 }
 
 void window::on_actionOpenMap_triggered()
