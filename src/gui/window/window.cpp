@@ -103,13 +103,13 @@ void window::init_connections()
 
 void window::restore_layout()
 {
-  if (const auto geometry = prefs::window::last_layout_geometry(); geometry) {
-    restoreGeometry(*geometry);
-  }
+  prefs::window::last_layout_geometry().with([this](const QByteArray& geom) {
+    restoreGeometry(geom);
+  });
 
-  if (const auto state = prefs::window::last_layout_state(); state) {
-    restoreState(*state);
-  }
+  prefs::window::last_layout_state().with([this](const QByteArray& state) {
+    restoreState(state);
+  });
 }
 
 void window::reset_dock_layout()
