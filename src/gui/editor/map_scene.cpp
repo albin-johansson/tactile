@@ -1,16 +1,14 @@
 #include "map_scene.hpp"
 
-#include <qapplication.h>
-#include <qevent.h>
-#include <qgraphicssceneevent.h>
-#include <qpainter.h>
-#include <qrect.h>
+#include <QApplication>
+#include <QGraphicsSceneEvent>
+#include <QPainter>
 
 #include "map_item.hpp"
 
 namespace tactile::gui {
 
-map_scene::map_scene(core::map_document* map, map_id id, QWidget* parent)
+map_scene::map_scene(core::map_document* map, map_id id, QObject* parent)
     : QGraphicsScene{parent},
       m_item{new map_item{map}},
       m_id{id}

@@ -1,13 +1,21 @@
 #pragma once
 
 #include <QGraphicsView>
+#include <QMouseEvent>
 #include <QRect>
 
-#include "map_document.hpp"
-#include "map_scene.hpp"
-#include "model.hpp"
+#include "map_id.hpp"
+#include "position.hpp"
 
-namespace tactile::gui {
+namespace tactile {
+
+namespace core {
+class map_document;
+}
+
+namespace gui {
+
+class map_scene;
 
 /**
  * @class map_view
@@ -44,17 +52,11 @@ class map_view final : public QGraphicsView
 
  signals:
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
-
   void mouse_moved(QMouseEvent* event, QPointF mapPosition);
-
   void mouse_released(QMouseEvent* event, QPointF mapPosition);
-
   void mouse_entered(QEvent* event);
-
   void mouse_exited(QEvent* event);
-
   void increase_zoom();
-
   void decrease_zoom();
 
  protected:
@@ -83,4 +85,5 @@ class map_view final : public QGraphicsView
   [[nodiscard]] auto get_map_scene() const -> const map_scene*;
 };
 
-}  // namespace tactile::gui
+}  // namespace gui
+}  // namespace tactile

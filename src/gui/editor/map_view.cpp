@@ -1,9 +1,10 @@
 #include "map_view.hpp"
 
-#include <qapplication.h>
-#include <qdebug.h>
-#include <qevent.h>
-#include <qscrollbar.h>
+#include <QApplication>
+#include <QScrollBar>
+
+#include "map_document.hpp"
+#include "map_scene.hpp"
 
 namespace tactile::gui {
 

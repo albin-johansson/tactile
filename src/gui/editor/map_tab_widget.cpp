@@ -1,5 +1,9 @@
 #include "map_tab_widget.hpp"
 
+#include <QMouseEvent>
+
+#include "map_document.hpp"
+
 namespace tactile::gui {
 namespace {
 

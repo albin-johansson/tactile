@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <optional>  // optional
 
-#include "map_document.hpp"
 #include "map_id.hpp"
 #include "position.hpp"
 
@@ -12,7 +11,13 @@ namespace Ui {
 class map_editor;
 }
 
-namespace tactile::gui {
+namespace tactile {
+
+namespace core {
+class map_document;
+}
+
+namespace gui {
 
 class map_tab_widget;
 
@@ -79,24 +84,15 @@ class map_editor final : public QWidget
 
  signals:
   void ui_remove_map(map_id id);
-
   void ui_select_map(map_id id);
-
-  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
-
-  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
-
-  void mouse_released(QMouseEvent* event, QPointF mapPosition);
-
-  void mouse_entered(QEvent* event);
-
-  void mouse_exited(QEvent* event);
-
   void increase_zoom();
-
   void decrease_zoom();
-
   void theme_changed();
+  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
+  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
+  void mouse_released(QMouseEvent* event, QPointF mapPosition);
+  void mouse_entered(QEvent* event);
+  void mouse_exited(QEvent* event);
 
  private:
   Ui::map_editor* m_ui{};
@@ -110,4 +106,5 @@ class map_editor final : public QWidget
   void tab_changed(int index);
 };
 
-}  // namespace tactile::gui
+}  // namespace gui
+}  // namespace tactile

@@ -5,6 +5,8 @@
 #include <QStyleOption>
 #include <algorithm>  // min, max
 
+#include "map.hpp"
+#include "map_document.hpp"
 #include "position.hpp"
 #include "preferences.hpp"
 #include "tactile_error.hpp"

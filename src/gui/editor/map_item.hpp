@@ -3,11 +3,18 @@
 #include <QGraphicsItem>
 #include <optional>  // optional
 
-#include "map_document.hpp"
-#include "model.hpp"
+#include "position.hpp"
+#include "tile_id.hpp"
 #include "tileset.hpp"
 
-namespace tactile::gui {
+namespace tactile {
+
+namespace core {
+class map_document;
+class layer;
+}  // namespace core
+
+namespace gui {
 
 struct render_bounds final
 {
@@ -94,4 +101,5 @@ class map_item final : public QGraphicsItem
   }
 };
 
-}  // namespace tactile::gui
+}  // namespace gui
+}  // namespace tactile

@@ -1,5 +1,6 @@
 #include "map_editor.hpp"
 
+#include "map_document.hpp"
 #include "map_tab_widget.hpp"
 #include "startup_widget.hpp"
 #include "ui_map_editor.h"

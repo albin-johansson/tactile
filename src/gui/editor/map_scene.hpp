@@ -1,16 +1,21 @@
 #pragma once
 
 #include <QGraphicsScene>
+#include <QPainter>
 #include <QRect>
-#include <QWidget>
 
-#include "map_document.hpp"
-#include "map_item.hpp"
-#include "model.hpp"
+#include "map_id.hpp"
+#include "position.hpp"
 
-class QPainter;
+namespace tactile {
 
-namespace tactile::gui {
+namespace core {
+class map_document;
+}
+
+namespace gui {
+
+class map_item;
 
 class map_scene final : public QGraphicsScene
 {
@@ -19,7 +24,7 @@ class map_scene final : public QGraphicsScene
  public:
   explicit map_scene(core::map_document* map,
                      map_id id,
-                     QWidget* parent = nullptr);
+                     QObject* parent = nullptr);
 
   void move_map(int dx, int dy);
 
@@ -44,4 +49,5 @@ class map_scene final : public QGraphicsScene
   map_id m_id;
 };
 
-}  // namespace tactile::gui
+}  // namespace gui
+}  // namespace tactile

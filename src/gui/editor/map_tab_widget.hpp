@@ -4,10 +4,15 @@
 #include <QTabWidget>
 #include <optional>  // optional
 
-#include "map_document.hpp"
 #include "map_view.hpp"
 
-namespace tactile::gui {
+namespace tactile {
+
+namespace core {
+class map_document;
+}
+
+namespace gui {
 
 /**
  * @class map_tab_widget
@@ -135,4 +140,5 @@ class map_tab_widget final : public QTabWidget
   void handle_tab_close(int index);
 };
 
-}  // namespace tactile::gui
+}  // namespace gui
+}  // namespace tactile
