@@ -44,10 +44,14 @@ set(TACTILE_SOURCE_FILES
         core/map/map_manager.cpp
         core/map/map_manager.hpp
 
-        gui/dock_widget.cpp
-        gui/dock_widget.hpp
         gui/icons.cpp
         gui/icons.hpp
+        gui/dock_widget.cpp
+        gui/dock_widget.hpp
+        gui/tab_bar.cpp
+        gui/tab_bar.hpp
+        gui/tab_widget.cpp
+        gui/tab_widget.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp
@@ -218,12 +222,7 @@ set(TACTILE_SOURCE_FILES
         service/open/open_json.cpp
         service/open/open_json.hpp
         service/open/open_tmx.cpp
-        service/open/open_tmx.hpp
-
-        gui/tab_bar.cpp
-        gui/tab_bar.hpp
-        gui/tab_widget.cpp
-        gui/tab_widget.hpp)
+        service/open/open_tmx.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
