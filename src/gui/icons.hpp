@@ -27,4 +27,4 @@ namespace tactile::gui::icons {
 
 [[nodiscard]] auto move_down() -> const QIcon&;
 
-}
+}  // namespace tactile::gui::icons

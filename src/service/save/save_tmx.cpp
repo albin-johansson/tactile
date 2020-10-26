@@ -174,7 +174,7 @@ void save_tmx(const QString& path, const core::map_document& map)
   QDomDocument document{};
   create_root(document, map, info, options);
 
-  xml::write_file(path, document); // TODO use QSaveFile
+  xml::write_file(path, document);  // TODO use QSaveFile
 }
 
 }  // namespace tactile::service

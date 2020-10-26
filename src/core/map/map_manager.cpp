@@ -42,7 +42,8 @@ auto map_manager::add(map_document* document) -> map_id
   bind(&map_document::added_tileset, &map_manager::added_tileset);
   bind(&map_document::removed_tileset, &map_manager::removed_tileset);
   bind(&map_document::added_layer, &map_manager::added_layer);
-  bind(&map_document::added_duplicated_layer, &map_manager::added_duplicated_layer);
+  bind(&map_document::added_duplicated_layer,
+       &map_manager::added_duplicated_layer);
   bind(&map_document::removed_layer, &map_manager::removed_layer);
   bind(&map_document::selected_layer, &map_manager::selected_layer);
   bind(&map_document::moved_layer_back, &map_manager::moved_layer_back);
@@ -88,10 +89,10 @@ void map_manager::select(map_id id)
 }
 
 void map_manager::add_tileset(const QImage& image,
-                                   const QFileInfo& path,
-                                   const QString& name,
-                                   tile_width tileWidth,
-                                   tile_height tileHeight)
+                              const QFileInfo& path,
+                              const QString& name,
+                              tile_width tileWidth,
+                              tile_height tileHeight)
 {
   if (auto* document = current_document()) {
     document->add_tileset(image, path, name, tileWidth, tileHeight);

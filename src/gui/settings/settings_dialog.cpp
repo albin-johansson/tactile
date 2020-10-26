@@ -94,7 +94,6 @@ void settings_dialog::handle_accept()
     saves::embed_tilesets().set(embedTilesets);
   }
 
-
   if (const auto genDefaults = m_ui->generateDefaultsCheck->isChecked();
       genDefaults != m_generateDefaults) {
     saves::generate_defaults().set(genDefaults);
