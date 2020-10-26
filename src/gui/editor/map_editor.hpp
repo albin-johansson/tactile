@@ -22,14 +22,14 @@ namespace gui {
 class map_tab_widget;
 
 /**
- * @class map_editor
+ * \class map_editor
  *
- * @brief Represents the center stage of the editor and contains the main
+ * \brief Represents the center stage of the editor and contains the main
  * map editor pane.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile map_editor.hpp
+ * \headerfile map_editor.hpp
  */
 class map_editor final : public QWidget
 {
@@ -55,19 +55,19 @@ class map_editor final : public QWidget
   void move_map(int dx, int dy) noexcept;
 
   /**
-   * @brief Enables the startup view.
+   * \brief Enables the startup view.
    *
-   * @details The startup view is the main page show upon startup or when no
+   * \details The startup view is the main page show upon startup or when no
    * maps are active.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void enable_startup_view() noexcept;
 
   /**
-   * @brief Enables the main editor view.
+   * \brief Enables the main editor view.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void enable_editor_view() noexcept;
 

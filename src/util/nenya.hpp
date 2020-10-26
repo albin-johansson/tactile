@@ -6,11 +6,11 @@
 #include <utility>     // move
 
 /**
- * @namespace nenya
+ * \namespace nenya
  *
- * @brief Contains a small library for easily creating strong types.
+ * \brief Contains a small library for easily creating strong types.
  *
- * @headerfile nenya.hpp
+ * \headerfile nenya.hpp
  */
 namespace nenya {
 
@@ -229,28 +229,28 @@ concept Hashable = requires(T a) {
 // clang-format on
 
 /**
- * @class mirror_type
+ * \class mirror_type
  *
- * @brief A strong type that automatically inherits all of the properties of the
+ * \brief A strong type that automatically inherits all of the properties of the
  * representation type.
  *
- * @details This class will mirror adopt all available operators except for
+ * \details This class will mirror adopt all available operators except for
  * `operator*`, `operator&&` and `operator||`. The dereference operator is
  * considered too error-prone for a strong type, it's easy to misuse.
  * Furthermore, the logical AND and OR operators lose their short-circuit
  * semantics when overloaded.
  *
- * @details This class is hashable if `Rep` provides a specialization of
+ * \details This class is hashable if `Rep` provides a specialization of
  * `std::hash`. It works out-of-the-box with common types such as `int` or
  * `std::string`.
  *
- * @details Furthermore, this class is `constexpr` and `noexcept` aware and will
+ * \details Furthermore, this class is `constexpr` and `noexcept` aware and will
  * respect the properties of the underlying type.
  *
- * @tparam Rep the representation type, e.g `int` or `std::string`.
- * @tparam Tag the tag type that uniquely identifies the type.
+ * \tparam Rep the representation type, e.g `int` or `std::string`.
+ * \tparam Tag the tag type that uniquely identifies the type.
  *
- * @headerfile nenya.hpp
+ * \headerfile nenya.hpp
  */
 template <typename Rep, typename Tag>
 class mirror_type
@@ -271,8 +271,8 @@ class mirror_type
       : m_value{std::move(value)}
   {}
 
-  /// @name Unary operators
-  /// @{
+  /// \name Unary operators
+  /// \{
 
   constexpr auto operator++() noexcept(noexcept(++m_value)) -> mirror_type&
       requires PreIncrement<Rep>
@@ -344,10 +344,10 @@ class mirror_type
     return m_value[key];
   }
 
-  /// @} // end of unary operators
+  /// \} // end of unary operators
 
-  /// @name Arithmetic operators
-  /// @{
+  /// \name Arithmetic operators
+  /// \{
 
   [[nodiscard]]
   constexpr auto operator+(const mirror_type& rhs) const
@@ -429,10 +429,10 @@ class mirror_type
     return mirror_type{m_value >> rhs.m_value};
   }
 
-  /// @} // end of arithmetic operators
+  /// \} // end of arithmetic operators
 
-  /// @name Assignment operators
-  /// @{
+  /// \name Assignment operators
+  /// \{
 
   constexpr auto operator+=(const mirror_type& rhs)
       noexcept(noexcept(m_value += rhs.m_value))
@@ -514,10 +514,10 @@ class mirror_type
     return *this;
   }
 
-  /// @} // end of assignment operators
+  /// \} // end of assignment operators
 
-  /// @name Comparison operators
-  /// @{
+  /// \name Comparison operators
+  /// \{
 
   [[nodiscard]]
   constexpr auto operator==(const mirror_type& rhs) const
@@ -569,7 +569,7 @@ class mirror_type
 
   // clang-format on
 
-  /// @} end of comparison operators
+  /// \} end of comparison operators
 
   [[nodiscard]] constexpr auto get() noexcept(nothrowCopy) -> Rep&
   {

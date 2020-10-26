@@ -17,37 +17,37 @@
 namespace tactile::core {
 
 /**
- * @class tileset
+ * \class tileset
  *
- * @brief Represents a collection of tiles in a sprite sheet.
+ * \brief Represents a collection of tiles in a sprite sheet.
  *
- * @details A tileset is really just an image that contains a set of tiles
+ * \details A tileset is really just an image that contains a set of tiles
  * that are used to build tilemaps, where all tilesets store their first and
  * last valid tile identifiers.
  *
- * @details Tilesets must be created from images that store their sprites
+ * \details Tilesets must be created from images that store their sprites
  * aligned in a grid. However, the tiles don't necessarily have to be be square.
  *
- * @details The `tileset` class supports iteration of the selected cells, by
+ * \details The `tileset` class supports iteration of the selected cells, by
  * providing `begin` and `end` member functions.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile tileset.hpp
+ * \headerfile tileset.hpp
  */
 class tileset final
 {
  public:
   /**
-   * @struct tileset::selection
+   * \struct tileset::selection
    *
-   * @brief Represents the selection of tiles in a tileset.
+   * \brief Represents the selection of tiles in a tileset.
    *
-   * @details The two positions represent a rectangular selection.
+   * \details The two positions represent a rectangular selection.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    *
-   * @headerfile tileset.hpp
+   * \headerfile tileset.hpp
    */
   struct selection final
   {
@@ -56,20 +56,20 @@ class tileset final
   };
 
   /**
-   * @brief Creates a tileset.
+   * \brief Creates a tileset.
    *
-   * @details Both the supplied width and height will be adjusted to be at
+   * \details Both the supplied width and height will be adjusted to be at
    * least 1.
    *
-   * @param firstID the first tile ID associated with the tileset.
-   * @param image the image that contains the tile sprites, mustn't be null.
-   * @param tileWidth the width of the tiles in the tileset.
-   * @param tileHeight the height of the tiles in the tileset.
+   * \param firstID the first tile ID associated with the tileset.
+   * \param image the image that contains the tile sprites, mustn't be null.
+   * \param tileWidth the width of the tiles in the tileset.
+   * \param tileHeight the height of the tiles in the tileset.
    *
-   * @throws tactile_error if the supplied image is null.
-   * @throws tactile_error if the supplied tile width or height are less than 1.
+   * \throws tactile_error if the supplied image is null.
+   * \throws tactile_error if the supplied tile width or height are less than 1.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   tileset(tile_id firstID,
           const QImage& image,
@@ -77,20 +77,20 @@ class tileset final
           tile_height tileHeight);
 
   /**
-   * @brief Creates a tileset.
+   * \brief Creates a tileset.
    *
-   * @details Both the supplied width and height will be adjusted to be at
+   * \details Both the supplied width and height will be adjusted to be at
    * least 1.
    *
-   * @param firstID the first tile ID associated with the tileset.
-   * @param path the path to the image that contains the tile sprites.
-   * @param tileWidth the width of the tiles in the tileset.
-   * @param tileHeight the height of the tiles in the tileset.
+   * \param firstID the first tile ID associated with the tileset.
+   * \param path the path to the image that contains the tile sprites.
+   * \param tileWidth the width of the tiles in the tileset.
+   * \param tileHeight the height of the tiles in the tileset.
    *
-   * @throws tactile_error if the tileset cannot be created.
-   * @throws tactile_error if the supplied tile width or height are less than 1.
+   * \throws tactile_error if the tileset cannot be created.
+   * \throws tactile_error if the supplied tile width or height are less than 1.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   tileset(tile_id firstID,
           const QString& path,
@@ -98,16 +98,16 @@ class tileset final
           tile_height tileHeight);
 
   /**
-   * @brief Iterates the current selection.
+   * \brief Iterates the current selection.
    *
-   * @details This function has no effect if there is no current selection.
+   * \details This function has no effect if there is no current selection.
    *
-   * @tparam T the type of the callable.
+   * \tparam T the type of the callable.
    *
-   * @param callable the callable that will be invoked for each tile in the
+   * \param callable the callable that will be invoked for each tile in the
    * selection.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   template <std::invocable<position> T>
   void iterate_selection(T&& callable) const
@@ -127,22 +127,22 @@ class tileset final
   }
 
   /**
-   * @brief Iterates the currently selected tiles in the tileset.
+   * \brief Iterates the currently selected tiles in the tileset.
    *
-   * @details This function is for example useful for the stamp tool, which
+   * \details This function is for example useful for the stamp tool, which
    * needs to iterate the selected tiles in the tileset, whilst also keeping
    * track of which position in the map needs to be changed.
    *
-   * @note This function has no effect if there is no current selection.
+   * \note This function has no effect if there is no current selection.
    *
-   * @tparam T the type of the callable, the first parameter is the map
+   * \tparam T the type of the callable, the first parameter is the map
    * position, the second parameter is the tileset position.
    *
-   * @param mapOrigin the origin tile map position.
-   * @param callable the callable that will be invoked for each selected tile in
+   * \param mapOrigin the origin tile map position.
+   * \param callable the callable that will be invoked for each selected tile in
    * the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   template <std::invocable<position, position> T>
   void iterate_selection(const position& mapOrigin, T&& callable) const
@@ -170,101 +170,101 @@ class tileset final
   }
 
   /**
-   * @brief Sets the current selection in the tileset.
+   * \brief Sets the current selection in the tileset.
    *
-   * @param selection the new selection.
+   * \param selection the new selection.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void set_selection(const selection& selection);
 
   /**
-   * @brief Clears any current selection.
+   * \brief Clears any current selection.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void clear_selection() noexcept;
 
   /**
-   * @brief Sets the name of the tileset.
+   * \brief Sets the name of the tileset.
    *
-   * @param name the new name of the tileset.
+   * \param name the new name of the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void set_name(QString name);
 
   void set_path(QFileInfo path);
 
   /**
-   * @brief Indicates whether or not the tileset contains the specified tile ID.
+   * \brief Indicates whether or not the tileset contains the specified tile ID.
    *
-   * @param id the tile ID that will be checked.
+   * \param id the tile ID that will be checked.
    *
-   * @return `true` if the tileset contains the tile ID; `false` otherwise.
+   * \return `true` if the tileset contains the tile ID; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto contains(tile_id id) const noexcept -> bool;
 
   /**
-   * @brief Indicates whether or not a single tile is selected in the tileset.
+   * \brief Indicates whether or not a single tile is selected in the tileset.
    *
-   * @return `true` if only a single tile is selected; `false` otherwise.
+   * \return `true` if only a single tile is selected; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto is_single_tile_selected() const noexcept -> bool;
 
   /**
-   * @brief Returns the ID of the tile at the specified position.
+   * \brief Returns the ID of the tile at the specified position.
    *
-   * @param position the position of the desired tile.
+   * \param position the position of the desired tile.
    *
-   * @return the ID of the tile at the specified position; `empty` if the
+   * \return the ID of the tile at the specified position; `empty` if the
    * position was out-of-bounds.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto tile_at(const position& position) const -> tile_id;
 
   /**
-   * @brief Returns the width of the tileset image.
+   * \brief Returns the width of the tileset image.
    *
-   * @return the width of the tileset image.
+   * \return the width of the tileset image.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto width() const -> int;
 
   /**
-   * @brief Returns the height of the tileset image.
+   * \brief Returns the height of the tileset image.
    *
-   * @return the height of the tileset image.
+   * \return the height of the tileset image.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto height() const -> int;
 
   /**
-   * @brief Returns the image source rectangle associated with the specified
+   * \brief Returns the image source rectangle associated with the specified
    * tile.
    *
-   * @param id the ID of the tile to obtain the source rectangle of.
+   * \param id the ID of the tile to obtain the source rectangle of.
    *
-   * @return the source rectangle associated with the tile; `std::nullopt` if
+   * \return the source rectangle associated with the tile; `std::nullopt` if
    * no source rectangle was found.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto image_source(tile_id id) const -> std::optional<QRect>;
 
   /**
-   * @brief Returns the image associated with the tileset.
+   * \brief Returns the image associated with the tileset.
    *
-   * @return the image associated with the tileset.
+   * \return the image associated with the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto image() const -> const QPixmap&
   {
@@ -272,13 +272,13 @@ class tileset final
   }
 
   /**
-   * @brief Returns the width of the tile sprites in the tileset.
+   * \brief Returns the width of the tile sprites in the tileset.
    *
-   * @note The returned value is at least 1.
+   * \note The returned value is at least 1.
    *
-   * @return the width of the tile sprites in the tileset.
+   * \return the width of the tile sprites in the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto get_tile_width() const noexcept -> tile_width
   {
@@ -286,13 +286,13 @@ class tileset final
   }
 
   /**
-   * @brief Returns the height of the tile sprites in the tileset.
+   * \brief Returns the height of the tile sprites in the tileset.
    *
-   * @note The returned value is at least 1.
+   * \note The returned value is at least 1.
    *
-   * @return the height of the tile sprites in the tileset.
+   * \return the height of the tile sprites in the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto get_tile_height() const noexcept -> tile_height
   {
@@ -300,11 +300,11 @@ class tileset final
   }
 
   /**
-   * @brief Returns the current selection in the tileset.
+   * \brief Returns the current selection in the tileset.
    *
-   * @return the current selection in the tileset.
+   * \return the current selection in the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto get_selection() const noexcept
       -> const std::optional<selection>&
@@ -313,11 +313,11 @@ class tileset final
   }
 
   /**
-   * @brief Returns the total number of rows of tiles in the tileset.
+   * \brief Returns the total number of rows of tiles in the tileset.
    *
-   * @return the total number of rows in the tileset.
+   * \return the total number of rows in the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto rows() const noexcept -> row_t
   {
@@ -325,11 +325,11 @@ class tileset final
   }
 
   /**
-   * @brief Returns the total number of columns of tiles in the tileset.
+   * \brief Returns the total number of columns of tiles in the tileset.
    *
-   * @return the total number of columns in the tileset.
+   * \return the total number of columns in the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto col_count() const noexcept -> col_t
   {
@@ -337,13 +337,13 @@ class tileset final
   }
 
   /**
-   * @brief Returns the tile ID of the first tile in the tileset.
+   * \brief Returns the tile ID of the first tile in the tileset.
    *
-   * @details The default first tile ID is `1`.
+   * \details The default first tile ID is `1`.
    *
-   * @return the ID of the first tile in the tileset.
+   * \return the ID of the first tile in the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto first_id() const noexcept -> tile_id
   {
@@ -351,11 +351,11 @@ class tileset final
   }
 
   /**
-   * @brief Returns the last valid tile ID associated with the tileset.
+   * \brief Returns the last valid tile ID associated with the tileset.
    *
-   * @return the last valid ID associated with the tileset.
+   * \return the last valid ID associated with the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto last_id() const noexcept -> tile_id
   {
@@ -363,11 +363,11 @@ class tileset final
   }
 
   /**
-   * @brief Returns the amount of tiles in the tileset.
+   * \brief Returns the amount of tiles in the tileset.
    *
-   * @return the amount of tiles in the tileset.
+   * \return the amount of tiles in the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto tile_count() const noexcept -> int
   {
@@ -375,11 +375,11 @@ class tileset final
   }
 
   /**
-   * @brief Returns the name associated with the tileset.
+   * \brief Returns the name associated with the tileset.
    *
-   * @return the name of the tileset.
+   * \return the name of the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto name() const -> const QString&
   {

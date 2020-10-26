@@ -12,13 +12,13 @@ class bucket_fill final : public QUndoCommand
 {
  public:
   /**
-   * @brief Creates a `bucket_fill` instance.
+   * \brief Creates a `bucket_fill` instance.
    *
-   * @param map the associated map.
-   * @param position the origin position of the flood fill.
-   * @param replacement the tile ID that will be used to replace target tiles.
+   * \param map the associated map.
+   * \param position the origin position of the flood fill.
+   * \param replacement the tile ID that will be used to replace target tiles.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit bucket_fill(core::map* map,
                        const core::position& position,

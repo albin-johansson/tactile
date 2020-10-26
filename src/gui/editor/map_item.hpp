@@ -32,26 +32,26 @@ struct render_settings final
 };
 
 /**
- * @class map_item
+ * \class map_item
  *
- * @brief Responsible for the visual representation of maps.
+ * \brief Responsible for the visual representation of maps.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile map_item.hpp
+ * \headerfile map_item.hpp
  */
 class map_item final : public QGraphicsItem
 {
  public:
   /**
-   * @brief Creates a map item.
+   * \brief Creates a map item.
    *
-   * @param map the associated map document, cannot be null.
-   * @param parent the parent item.
+   * \param map the associated map document, cannot be null.
+   * \param parent the parent item.
    *
-   * @throws tactile_error if the supplied map document is null.
+   * \throws tactile_error if the supplied map document is null.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit map_item(core::map_document* map, QGraphicsItem* parent = nullptr);
 

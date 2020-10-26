@@ -6,13 +6,13 @@
 namespace tactile::cmd {
 
 /**
- * @class remove_col
+ * \class remove_col
  *
- * @brief Represents the dialog of removing a column from the active map.
+ * \brief Represents the dialog of removing a column from the active map.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile remove_col.hpp
+ * \headerfile remove_col.hpp
  */
 class remove_col final : public repeated_map_command
 {

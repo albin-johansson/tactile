@@ -3,13 +3,13 @@
 namespace tactile {
 
 /**
- * @enum tool_id
+ * \enum tool_id
  *
- * @brief Provides identifiers for the various mouse tools.
+ * \brief Provides identifiers for the various mouse tools.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile tool_id.hpp
+ * \headerfile tool_id.hpp
  */
 enum class tool_id
 {

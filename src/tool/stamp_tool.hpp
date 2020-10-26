@@ -9,26 +9,26 @@
 namespace tactile {
 
 /**
- * @class stamp_tool
+ * \class stamp_tool
  *
- * @brief Represents a "stamp" tool, which applies the current tileset selection
+ * \brief Represents a "stamp" tool, which applies the current tileset selection
  * to the tiles in the map.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile stamp_tool.hpp
+ * \headerfile stamp_tool.hpp
  */
 class stamp_tool final : public abstract_tool
 {
  public:
   /**
-   * @brief Creates an `stamp_tool` instance.
+   * \brief Creates an `stamp_tool` instance.
    *
-   * @param model a pointer to the associated model, cannot be null.
+   * \param model a pointer to the associated model, cannot be null.
    *
-   * @throws tactile_error if the supplied pointer is null.
+   * \throws tactile_error if the supplied pointer is null.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit stamp_tool(core::model* model);
 

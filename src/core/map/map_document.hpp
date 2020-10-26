@@ -21,18 +21,18 @@
 namespace tactile::core {
 
 /**
- * @class map_document
+ * \class map_document
  *
- * @brief Represents a map and a history of changes to the map.
+ * \brief Represents a map and a history of changes to the map.
  *
- * @details This class is a wrapper for a map, its associated tilesets and the
+ * \details This class is a wrapper for a map, its associated tilesets and the
  * command history.
  *
- * @see map
+ * \see map
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile map_document.hpp
+ * \headerfile map_document.hpp
  */
 class map_document final : public QObject
 {
@@ -40,259 +40,259 @@ class map_document final : public QObject
 
  public:
   /**
-   * @brief Creates an empty map document.
+   * \brief Creates an empty map document.
    *
-   * @param parent the parent object.
+   * \param parent the parent object.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit map_document(QObject* parent = nullptr);
 
   /**
-   * @brief Creates a map document with a map that contains one layer.
+   * \brief Creates a map document with a map that contains one layer.
    *
-   * @param nRows the initial number of rows in the map.
-   * @param nCols the initial number of columns in the map.
-   * @param parent the parent object.
+   * \param nRows the initial number of rows in the map.
+   * \param nCols the initial number of columns in the map.
+   * \param parent the parent object.
    *
-   * @throws tactile_error if `nRows` or `nCols` aren't greater than 0.
+   * \throws tactile_error if `nRows` or `nCols` aren't greater than 0.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit map_document(row_t nRows, col_t nCols, QObject* parent = nullptr);
 
   /**
-   * @brief Reverts the effects of the most recent command.
+   * \brief Reverts the effects of the most recent command.
    *
-   * @note This function has no effect if there is no undoable command.
+   * \note This function has no effect if there is no undoable command.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void undo();
 
   /**
-   * @brief Executes the most recently reverted command.
+   * \brief Executes the most recently reverted command.
    *
-   * @note This function has no effect if there is no redoable command.
+   * \note This function has no effect if there is no redoable command.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void redo();
 
   /**
-   * @brief Performs a flood-fill at the specified position.
+   * \brief Performs a flood-fill at the specified position.
    *
-   * @param position the origin position of the flood-fill.
-   * @param replacement the tile ID that will be used instead of the target ID.
+   * \param position the origin position of the flood-fill.
+   * \param replacement the tile ID that will be used instead of the target ID.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void flood(const position& position, tile_id replacement);
 
   /**
-   * @brief Adds a stamp sequence to the command stack.
+   * \brief Adds a stamp sequence to the command stack.
    *
-   * @note Stamp sequence commands are not executed when first put onto the
+   * \note Stamp sequence commands are not executed when first put onto the
    * command stack, since they expect their effect to have been applied before
    * the command was created.
    *
-   * @param oldState the previous state of the tiles affected by the stamp
+   * \param oldState the previous state of the tiles affected by the stamp
    * sequence.
-   * @param sequence the stamp sequence with the positions and the new tile IDs.
+   * \param sequence the stamp sequence with the positions and the new tile IDs.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void add_stamp_sequence(vector_map<position, tile_id>&& oldState,
                           vector_map<position, tile_id>&& sequence);
 
   /**
-   * @brief Adds an erase sequence to the command stack.
+   * \brief Adds an erase sequence to the command stack.
    *
-   * @note Erase sequence commands are not executed when first put onto the
+   * \note Erase sequence commands are not executed when first put onto the
    * command stack, since they expect their effect to have been applied before
    * the command was created.
    *
-   * @param oldState the positions of the affected tiles along with their old
+   * \param oldState the positions of the affected tiles along with their old
    * IDs.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void add_erase_sequence(vector_map<position, tile_id>&& oldState);
 
   /**
-   * @brief Adds a row to the associated map.
+   * \brief Adds a row to the associated map.
    *
-   * @note Consecutive add row commands will be merged into one command.
+   * \note Consecutive add row commands will be merged into one command.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void add_row();
 
   /**
-   * @brief Adds a column to the associated map.
+   * \brief Adds a column to the associated map.
    *
-   * @note Consecutive add column commands will be merged into one command.
+   * \note Consecutive add column commands will be merged into one command.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void add_column();
 
   /**
-   * @brief Removes a row from the associated map.
+   * \brief Removes a row from the associated map.
    *
-   * @note Consecutive remove row commands will be merged into one command.
+   * \note Consecutive remove row commands will be merged into one command.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void remove_row();
 
   /**
-   * @brief Removes a column from the associated map.
+   * \brief Removes a column from the associated map.
    *
-   * @note Consecutive remove column commands will be merged into one command.
+   * \note Consecutive remove column commands will be merged into one command.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void remove_column();
 
   /**
-   * @brief Resizes the map.
+   * \brief Resizes the map.
    *
-   * @param nRows the new amount of rows in the map.
-   * @param nCols the new amount of columns in the map.
+   * \param nRows the new amount of rows in the map.
+   * \param nCols the new amount of columns in the map.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void resize(row_t nRows, col_t nCols);
 
   /**
-   * @copydoc tileset_manager::add(tileset_id,std::shared_ptr<tileset>)
-   * @signal `added_tileset`
+   * \copydoc tileset_manager::add(tileset_id,std::shared_ptr<tileset>)
+   * \signal `added_tileset`
    */
   void add_tileset(tileset_id id, std::shared_ptr<tileset> tileset);
 
   /**
-   * @copydoc tileset_manager::add(std::shared_ptr<tileset> tileset)
-   * @signal `added_tileset`
+   * \copydoc tileset_manager::add(std::shared_ptr<tileset> tileset)
+   * \signal `added_tileset`
    */
   void add_tileset(std::shared_ptr<tileset> tileset);
 
   /**
-   * @brief Removes a tileset from the document.
+   * \brief Removes a tileset from the document.
    *
-   * @param id the ID associated with the tileset that will be removed.
+   * \param id the ID associated with the tileset that will be removed.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    *
-   * @signal `removed_tileset`
+   * \signal `removed_tileset`
    */
   void remove_tileset(tileset_id id);
 
   /**
-   * @copydoc tileset_manager::select()
+   * \copydoc tileset_manager::select()
    */
   void select_tileset(tileset_id id);
 
   /**
-   * @copydoc tileset_manager::set_selection()
+   * \copydoc tileset_manager::set_selection()
    */
   void set_selection(const tileset::selection& selection);
 
   /**
-   * @copydoc map::select_layer()
-   * @signal `selected_layer`
+   * \copydoc map::select_layer()
+   * \signal `selected_layer`
    */
   void select_layer(layer_id id);
 
   /**
-   * @copydoc map::add_layer(layer_id id, std::shared_ptr<layer> layer)
-   * @signal `added_layer`
+   * \copydoc map::add_layer(layer_id id, std::shared_ptr<layer> layer)
+   * \signal `added_layer`
    */
   void add_layer(layer_id id, const std::shared_ptr<layer>& layer);
 
   /**
-   * @copybrief map::add_layer()
-   * @signal `added_layer`
+   * \copybrief map::add_layer()
+   * \signal `added_layer`
    */
   void add_layer();
 
   /**
-   * @brief Removes the specified layer from the document.
+   * \brief Removes the specified layer from the document.
    *
-   * @pre `id` must be associated with an existing layer.
+   * \pre `id` must be associated with an existing layer.
    *
-   * @param id the ID of the layer that will be removed.
+   * \param id the ID of the layer that will be removed.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    *
-   * @signal `removed_layer`
+   * \signal `removed_layer`
    */
   void remove_layer(layer_id id);
 
   /**
-   * @copydoc map::take_layer()
+   * \copydoc map::take_layer()
    */
   auto take_layer(layer_id id) -> std::shared_ptr<layer>;
 
   /**
-   * @brief Duplicates the layer associated with the specified ID.
+   * \brief Duplicates the layer associated with the specified ID.
    *
-   * @pre `id` must be associated with an existing layer.
+   * \pre `id` must be associated with an existing layer.
    *
-   * @param id the ID associated with the layer that will be duplicated.
+   * \param id the ID associated with the layer that will be duplicated.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    *
-   * @signal `added_duplicated_layer`
+   * \signal `added_duplicated_layer`
    */
   void duplicate_layer(layer_id id);
 
   /**
-   * @copydoc map::increase_tile_size()
+   * \copydoc map::increase_tile_size()
    */
   void increase_tile_size();
 
   /**
-   * @copydoc map::decrease_tile_size()
+   * \copydoc map::decrease_tile_size()
    */
   void decrease_tile_size();
 
   /**
-   * @copydoc map::reset_tile_size()
+   * \copydoc map::reset_tile_size()
    */
   void reset_tile_size();
 
   /**
-   * @copydoc map::set_visibility()
+   * \copydoc map::set_visibility()
    */
   void set_layer_visibility(layer_id id, bool visible);
 
   /**
-   * @copydoc map::set_opacity()
+   * \copydoc map::set_opacity()
    */
   void set_layer_opacity(layer_id id, double opacity);
 
   /**
-   * @copydoc map::set_name()
+   * \copydoc map::set_name()
    */
   void set_layer_name(layer_id id, const QString& name);
 
   /**
-   * @copydoc map::move_layer_back()
-   * @signal `moved_layer_back`
+   * \copydoc map::move_layer_back()
+   * \signal `moved_layer_back`
    */
   void move_layer_back(layer_id id);
 
   /**
-   * @copydoc map::move_layer_forward()
-   * @signal `moved_layer_forward`
+   * \copydoc map::move_layer_forward()
+   * \signal `moved_layer_forward`
    */
   void move_layer_forward(layer_id id);
 
   void set_tileset_name(tileset_id id, const QString& name);
 
   /**
-   * @copydoc map::set_next_layer_id()
+   * \copydoc map::set_next_layer_id()
    */
   void set_next_layer_id(layer_id id) noexcept
   {
@@ -300,7 +300,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::set_tile()
+   * \copydoc map::set_tile()
    */
   void set_tile(const position& pos, tile_id id)
   {
@@ -308,13 +308,13 @@ class map_document final : public QObject
   }
 
   /**
-   * @brief Iterates each tileset associated with the document.
+   * \brief Iterates each tileset associated with the document.
    *
-   * @tparam T the type of the function object.
+   * \tparam T the type of the function object.
    *
-   * @param callable the function object that will be invoked for each tileset.
+   * \param callable the function object that will be invoked for each tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   template <std::invocable<tileset_id, const tileset&> T>
   void each_tileset(T&& callable) const
@@ -325,13 +325,13 @@ class map_document final : public QObject
   }
 
   /**
-   * @brief Iterates each layer associated with the document.
+   * \brief Iterates each layer associated with the document.
    *
-   * @tparam T the type of the function object.
+   * \tparam T the type of the function object.
    *
-   * @param callable the function object that will be invoked for each layer.
+   * \param callable the function object that will be invoked for each layer.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   template <std::invocable<layer_id, const layer&> T>
   void each_layer(T&& callable) const
@@ -342,43 +342,43 @@ class map_document final : public QObject
   }
 
   /**
-   * @brief Indicates whether or not there is an undoable command.
+   * \brief Indicates whether or not there is an undoable command.
    *
-   * @return `true` if there is an undoable command; `false` otherwise.
+   * \return `true` if there is an undoable command; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto can_undo() const -> bool;
 
   /**
-   * @brief Indicates whether or not there is an redoable command.
+   * \brief Indicates whether or not there is an redoable command.
    *
-   * @return `true` if there is an redoable command; `false` otherwise.
+   * \return `true` if there is an redoable command; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto can_redo() const -> bool;
 
   /**
-   * @brief Returns the text associated with the currently undoable command.
+   * \brief Returns the text associated with the currently undoable command.
    *
-   * @return the text associated with the currently undoable command.
+   * \return the text associated with the currently undoable command.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto undo_text() const -> QString;
 
   /**
-   * @brief Returns the text associated with the currently redoable command.
+   * \brief Returns the text associated with the currently redoable command.
    *
-   * @return the text associated with the currently redoable command.
+   * \return the text associated with the currently redoable command.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto redo_text() const -> QString;
 
   /**
-   * @copydoc map::in_bounds()
+   * \copydoc map::in_bounds()
    */
   [[nodiscard]] auto in_bounds(const position& pos) const -> bool
   {
@@ -386,7 +386,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::tile_at()
+   * \copydoc map::tile_at()
    */
   [[nodiscard]] auto tile_at(const position& position) const
       -> std::optional<tile_id>
@@ -400,7 +400,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::tile_count()
+   * \copydoc map::tile_count()
    */
   [[nodiscard]] auto tile_count() const noexcept -> int
   {
@@ -408,7 +408,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::layer_count()
+   * \copydoc map::layer_count()
    */
   [[nodiscard]] auto layer_count() const noexcept -> int
   {
@@ -416,7 +416,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::row_count()
+   * \copydoc map::row_count()
    */
   [[nodiscard]] auto row_count() const -> row_t
   {
@@ -424,7 +424,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::col_count()
+   * \copydoc map::col_count()
    */
   [[nodiscard]] auto col_count() const -> col_t
   {
@@ -432,7 +432,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::width()
+   * \copydoc map::width()
    */
   [[nodiscard]] auto width() const -> int
   {
@@ -440,7 +440,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::height()
+   * \copydoc map::height()
    */
   [[nodiscard]] auto height() const -> int
   {
@@ -448,7 +448,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc map::current_tile_size()
+   * \copydoc map::current_tile_size()
    */
   [[nodiscard]] auto current_tile_size() const noexcept -> int
   {
@@ -456,7 +456,7 @@ class map_document final : public QObject
   }
 
   /**
-   * @copydoc tileset_manager::current_tileset()
+   * \copydoc tileset_manager::current_tileset()
    */
   [[nodiscard]] auto current_tileset() const -> const tileset*
   {
@@ -492,19 +492,19 @@ class map_document final : public QObject
 
  public slots:
   /**
-   * @brief Adds a tileset to the document.
+   * \brief Adds a tileset to the document.
    *
-   * @note This function has no effect if the tileset cannot be added.
+   * \note This function has no effect if the tileset cannot be added.
    *
-   * @param image the image that contains the tile images.
-   * @param path the file path of the tileset image.
-   * @param name the name associated with the tileset.
-   * @param tileWidth the width of the tiles in the tileset.
-   * @param tileHeight the height of the tiles in the tileset.
+   * \param image the image that contains the tile images.
+   * \param path the file path of the tileset image.
+   * \param name the name associated with the tileset.
+   * \param tileWidth the width of the tiles in the tileset.
+   * \param tileHeight the height of the tiles in the tileset.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    *
-   * @signal `added_tileset`
+   * \signal `added_tileset`
    */
   void add_tileset(const QImage& image,
                    const QFileInfo& path,

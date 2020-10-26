@@ -7,13 +7,13 @@
 namespace tactile::cmd {
 
 /**
- * @class add_row
+ * \class add_row
  *
- * @brief Represents the dialog of adding a row to the active map.
+ * \brief Represents the dialog of adding a row to the active map.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile add_row.hpp
+ * \headerfile add_row.hpp
  */
 class add_row final : public repeated_command
 {

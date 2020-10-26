@@ -9,21 +9,21 @@
 namespace tactile {
 
 /**
- * @class vector_map
+ * \class vector_map
  *
- * @brief An associative container for small sets of key-value pairs.
+ * \brief An associative container for small sets of key-value pairs.
  *
- * @details This container is useful when the number of pairs are small, often
+ * \details This container is useful when the number of pairs are small, often
  * less than 10 elements. This is because the internal representation is based
  * on a `std::vector`, which means that iteration and lookup is very fast and
  * cache-friendly.
  *
- * @tparam Key the type of the keys.
- * @tparam Value the type of the mapped values.
+ * \tparam Key the type of the keys.
+ * \tparam Value the type of the mapped values.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile vector_map.hpp
+ * \headerfile vector_map.hpp
  */
 template <typename Key, typename Value>
 class vector_map final
@@ -40,12 +40,12 @@ class vector_map final
   using const_iterator = typename storage_type::const_iterator;
 
   /**
-   * @brief Ensures that the map has capacity for the specified amount of
+   * \brief Ensures that the map has capacity for the specified amount of
    * elements.
    *
-   * @param capacity the amount of elements to reserve memory for.
+   * \param capacity the amount of elements to reserve memory for.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void reserve(size_type capacity)
   {
@@ -53,11 +53,11 @@ class vector_map final
   }
 
   /**
-   * @brief Clears the map of all entries.
+   * \brief Clears the map of all entries.
    *
-   * @details The map is empty after this operation.
+   * \details The map is empty after this operation.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void clear() noexcept
   {
@@ -65,20 +65,20 @@ class vector_map final
   }
 
   /**
-   * @brief Inserts a key/value-pair in-place.
+   * \brief Inserts a key/value-pair in-place.
    *
-   * @details This function will replace any previous existing key/value-pair
+   * \details This function will replace any previous existing key/value-pair
    * that uses the specified key.
    *
-   * @tparam Args the types of the arguments that will be forwarded.
+   * \tparam Args the types of the arguments that will be forwarded.
    *
-   * @param key the key that will be associated with the value.
-   * @param args the arguments that will be forwarded to the appropriate value
+   * \param key the key that will be associated with the value.
+   * \param args the arguments that will be forwarded to the appropriate value
    * constructor.
    *
-   * @return a reference to the inserted key/value-pair.
+   * \return a reference to the inserted key/value-pair.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   template <typename... Args>
   decltype(auto) emplace(const key_type& key, Args&&... args)
@@ -90,17 +90,17 @@ class vector_map final
   }
 
   /**
-   * @brief Inserts a key/value-pair.
+   * \brief Inserts a key/value-pair.
    *
-   * @details This function will replace any previous existing key/value-pair
+   * \details This function will replace any previous existing key/value-pair
    * that uses the specified key.
    *
-   * @param key the key that will be associated with the value.
-   * @param value the value that will be associated with the key.
+   * \param key the key that will be associated with the value.
+   * \param value the value that will be associated with the key.
    *
-   * @return a reference to the inserted key/value-pair.
+   * \return a reference to the inserted key/value-pair.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   decltype(auto) emplace(const key_type& key, mapped_type&& value)
   {
@@ -111,11 +111,11 @@ class vector_map final
   }
 
   /**
-   * @brief Removes the key/value-pair associated with the specified key.
+   * \brief Removes the key/value-pair associated with the specified key.
    *
-   * @param key the key of the pair that will be removed.
+   * \param key the key of the pair that will be removed.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void erase(const key_type& key)
   {
@@ -135,15 +135,15 @@ class vector_map final
   }
 
   /**
-   * @brief Returns the value associated with the specified key.
+   * \brief Returns the value associated with the specified key.
    *
-   * @param key the key associated with the desired value.
+   * \param key the key associated with the desired value.
    *
-   * @return the value associated with the specified key.
+   * \return the value associated with the specified key.
    *
-   * @throws out_of_range if the key is not associated with a value.
+   * \throws out_of_range if the key is not associated with a value.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto at(const key_type& key) -> mapped_type&
   {
@@ -155,7 +155,7 @@ class vector_map final
   }
 
   /**
-   * @copydoc at(const key_type&)
+   * \copydoc at(const key_type&)
    */
   [[nodiscard]] auto at(const key_type& key) const -> const mapped_type&
   {
@@ -167,7 +167,7 @@ class vector_map final
   }
 
   /**
-   * @copydoc at(const key_type&)
+   * \copydoc at(const key_type&)
    */
   [[nodiscard]] auto operator[](const key_type& key) -> mapped_type&
   {
@@ -175,7 +175,7 @@ class vector_map final
   }
 
   /**
-   * @copydoc at(const key_type&)
+   * \copydoc at(const key_type&)
    */
   [[nodiscard]] auto operator[](const key_type& key) const -> const mapped_type&
   {
@@ -183,12 +183,12 @@ class vector_map final
   }
 
   /**
-   * @brief Returns an iterator to the element associated with the specified
+   * \brief Returns an iterator to the element associated with the specified
    * key.
    *
-   * @param key the key to lookup.
+   * \param key the key to lookup.
    *
-   * @return an iterator to the found element; `end()` is returned if the
+   * \return an iterator to the found element; `end()` is returned if the
    * element wasn't found.
    */
   [[nodiscard]] auto find(const key_type& key) -> iterator
@@ -199,7 +199,7 @@ class vector_map final
   }
 
   /**
-   * @copydoc find
+   * \copydoc find
    */
   [[nodiscard]] auto find(const key_type& key) const -> const_iterator
   {
@@ -209,13 +209,13 @@ class vector_map final
   }
 
   /**
-   * @brief Indicates whether or not the map contains the specified key.
+   * \brief Indicates whether or not the map contains the specified key.
    *
-   * @param key the key to look for.
+   * \param key the key to look for.
    *
-   * @return `true` if the map contains the supplied key; `false` otherwise.
+   * \return `true` if the map contains the supplied key; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto contains(const key_type& key) const -> bool
   {
@@ -223,12 +223,12 @@ class vector_map final
   }
 
   /**
-   * @brief Returns the index of the key/value-pair associated with the
+   * \brief Returns the index of the key/value-pair associated with the
    * specified key in the underlying vector.
    *
-   * @param key the key of the pair to query.
+   * \param key the key of the pair to query.
    *
-   * @return the index of the pair in the underlying vector; `std::nullopt` if
+   * \return the index of the pair in the underlying vector; `std::nullopt` if
    * the key is unknown.
    */
   [[nodiscard]] auto index_of(const key_type& key) const
@@ -272,11 +272,11 @@ class vector_map final
   }
 
   /**
-   * @brief Indicates whether or not the map is empty.
+   * \brief Indicates whether or not the map is empty.
    *
-   * @return `true` if the map is empty; `false` otherwise.
+   * \return `true` if the map is empty; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto empty() const noexcept -> bool
   {
@@ -284,11 +284,11 @@ class vector_map final
   }
 
   /**
-   * @brief Returns the number of elements stored in the map.
+   * \brief Returns the number of elements stored in the map.
    *
-   * @return the number of elements stored in the map.
+   * \return the number of elements stored in the map.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto size() const noexcept -> size_type
   {
@@ -296,14 +296,14 @@ class vector_map final
   }
 
   /**
-   * @brief Returns the capacity of the map.
+   * \brief Returns the capacity of the map.
    *
-   * @details The capacity is the number of key/value-pairs the map can store
+   * \details The capacity is the number of key/value-pairs the map can store
    * before having to re-allocate memory.
    *
-   * @return the current capacity of the map.
+   * \return the current capacity of the map.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto capacity() const noexcept -> size_type
   {
@@ -311,11 +311,11 @@ class vector_map final
   }
 
   /**
-   * @brief Returns an iterator to the first element.
+   * \brief Returns an iterator to the first element.
    *
-   * @return an iterator to the first element.
+   * \return an iterator to the first element.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto begin() noexcept -> iterator
   {
@@ -323,7 +323,7 @@ class vector_map final
   }
 
   /**
-   * @copydoc begin()
+   * \copydoc begin()
    */
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
@@ -331,9 +331,9 @@ class vector_map final
   }
 
   /**
-   * @brief Returns an iterator one-past the last element.
+   * \brief Returns an iterator one-past the last element.
    *
-   * @return an iterator one-past the last element.
+   * \return an iterator one-past the last element.
    */
   [[nodiscard]] auto end() noexcept -> iterator
   {
@@ -341,7 +341,7 @@ class vector_map final
   }
 
   /**
-   * @copydoc end()
+   * \copydoc end()
    */
   [[nodiscard]] auto end() const noexcept -> const_iterator
   {

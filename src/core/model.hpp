@@ -17,13 +17,13 @@ class map_manager;
 class layer;
 
 /**
- * @class model
+ * \class model
  *
- * @brief Represents the main interface for the core of the application.
+ * \brief Represents the main interface for the core of the application.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile model.hpp
+ * \headerfile model.hpp
  */
 class model final : public QObject
 {
@@ -33,37 +33,37 @@ class model final : public QObject
   model();
 
   /**
-   * @copydoc map_manager::add()
+   * \copydoc map_manager::add()
    */
   [[nodiscard]] auto add_map() -> map_id;
 
   /**
-   * @copydoc map_manager::add(map_document* document)
+   * \copydoc map_manager::add(map_document* document)
    */
   [[nodiscard]] auto add_map(map_document* document) -> map_id;
 
   /**
-   * @copydoc map_manager::has_active_map()
+   * \copydoc map_manager::has_active_map()
    */
   [[nodiscard]] auto has_active_map() const noexcept -> bool;
 
   /**
-   * @copydoc map_manager::at()
+   * \copydoc map_manager::at()
    */
   [[nodiscard]] auto get_document(map_id id) -> map_document*;
 
   /**
-   * @copydoc map_manager::current_map_id()
+   * \copydoc map_manager::current_map_id()
    */
   [[nodiscard]] auto current_map_id() const -> std::optional<map_id>;
 
   /**
-   * @copydoc map_manager::current_document()
+   * \copydoc map_manager::current_document()
    */
   [[nodiscard]] auto current_document() -> map_document*;
 
   /**
-   * @copydoc current_document()
+   * \copydoc current_document()
    */
   [[nodiscard]] auto current_document() const -> const map_document*;
 
@@ -92,204 +92,204 @@ class model final : public QObject
 
  public slots:
   /**
-   * @brief Reverts the effects of the last performed command.
+   * \brief Reverts the effects of the last performed command.
    *
-   * @details This function emits the `redraw` signal.
+   * \note This function has no effect if there is no active map document.
    *
-   * @note This function has no effect if there is no active map document.
+   * \since 0.1.0
    *
-   * @since 0.1.0
+   * \signal `redraw`
    */
   void undo();
 
   /**
-   * @brief Restores the effects of the last undone command.
+   * \brief Restores the effects of the last undone command.
    *
-   * @details This function emits the `redraw` signal.
+   * \note This function has no effect if there is no active map document.
    *
-   * @note This function has no effect if there is no active map document.
+   * \since 0.1.0
    *
-   * @since 0.1.0
+   * \signal `redraw`
    */
   void redo();
 
   /**
-   * @brief Resizes the currently active map.
+   * \brief Resizes the currently active map.
    *
-   * @details This function emits the `redraw` signal.
+   * \note This function has no effect if there is no active map document.
    *
-   * @note This function has no effect if there is no active map document.
+   * \param nRows the new number of rows, must be greater than 0.
+   * \param nCols the new number of columns, must be greater than 0.
    *
-   * @param nRows the new number of rows, must be greater than 0.
-   * @param nCols the new number of columns, must be greater than 0.
+   * \see cmd::resize_map
    *
-   * @see cmd::resize_map
+   * \since 0.1.0
    *
-   * @since 0.1.0
+   * \signal `redraw`
    */
   void resize_map(row_t nRows, col_t nCols);
 
   /**
-   * @brief Adds a row to the currently active map.
+   * \brief Adds a row to the currently active map.
    *
-   * @details This function emits the `redraw` signal.
+   * \note This function has no effect if there is no active map document.
    *
-   * @note This function has no effect if there is no active map document.
+   * \see cmd::add_row
    *
-   * @see cmd::add_row
+   * \since 0.1.0
    *
-   * @since 0.1.0
+   * \signal `redraw`
    */
   void add_row();
 
   /**
-   * @brief Adds a column to the currently active map.
+   * \brief Adds a column to the currently active map.
    *
-   * @details This function emits the `redraw` signal.
+   * \note This function has no effect if there is no active map document.
    *
-   * @note This function has no effect if there is no active map document.
+   * \see cmd::add_col
    *
-   * @see cmd::add_col
+   * \since 0.1.0
    *
-   * @since 0.1.0
+   * \signal `redraw`
    */
   void add_col();
 
   /**
-   * @brief Removes a row from the currently active map.
+   * \brief Removes a row from the currently active map.
    *
-   * @note This function has no effect if there is no active map document.
+   * \note This function has no effect if there is no active map document.
    *
-   * @see cmd::remove_row
+   * \see cmd::remove_row
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void remove_row();
 
   /**
-   * @brief Removes a column from the currently active map.
+   * \brief Removes a column from the currently active map.
    *
-   * @note This function has no effect if there is no active map document.
+   * \note This function has no effect if there is no active map document.
    *
-   * @see cmd::remove_col
+   * \see cmd::remove_col
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void remove_col();
 
   /**
-   * @brief Adds a layer to the currently active map.
+   * \brief Adds a layer to the currently active map.
    *
-   * @details This function emits the `added_layer` signal.
+   * \note This function has no effect if there is no active map document.
    *
-   * @note This function has no effect if there is no active map document.
+   * \since 0.1.0
    *
-   * @since 0.1.0
+   * \signal `added_layer`
    */
   void add_layer();
 
   /**
-   * @brief Removes the specified layer from the currently active map.
+   * \brief Removes the specified layer from the currently active map.
    *
-   * @param id the ID associated with the layer that will be removed.
+   * \param id the ID associated with the layer that will be removed.
    *
-   * @signal `removed_layer`.
+   * \since 0.1.0
    *
-   * @since 0.1.0
+   * \signal `removed_layer`.
    */
   void remove_layer(layer_id id);
 
   /**
-   * @brief Selects the tile layer associated with the specified index.
+   * \brief Selects the tile layer associated with the specified index.
    *
-   * @details This function emits the `selected_layer` and `redraw` signals.
-   *
-   * @note This method has no effect if the supplied index isn't associated
+   * \note This method has no effect if the supplied index isn't associated
    * with a tile layer or if there is no active map document.
    *
-   * @param id the index of the tile layer that will be selected.
+   * \param id the index of the tile layer that will be selected.
    *
-   * @since 0.1.0
+   * \since 0.1.0
+   *
+   * \signal `selected_layer`, `redraw`
    */
   void select_layer(layer_id id);
 
   /**
-   * @copydoc tool_model::select(tool_id)
+   * \copydoc tool_model::select(tool_id)
    */
   void select_tool(tool_id id);
 
   /**
-   * @copydoc map_manager::select_tileset(tileset_id)
+   * \copydoc map_manager::select_tileset(tileset_id)
    */
   void select_tileset(tileset_id id);
 
   /**
-   * @copydoc map_manager::set_tileset_selection()
+   * \copydoc map_manager::set_tileset_selection()
    */
   void set_tileset_selection(const tileset::selection& selection);
 
   /**
-   * @copydoc map_manager::set_layer_visibility()
-   * @signal `redraw`
+   * \copydoc map_manager::set_layer_visibility()
+   * \signal `redraw`
    */
   void set_layer_visibility(layer_id id, bool visible);
 
   /**
-   * @copydoc map_manager::set_layer_opacity()
-   * @signal `redraw`
+   * \copydoc map_manager::set_layer_opacity()
+   * \signal `redraw`
    */
   void set_layer_opacity(layer_id id, double opacity);
 
   /**
-   * @copydoc map_manager::set_layer_name()
-   * @signal `redraw`
+   * \copydoc map_manager::set_layer_name()
+   * \signal `redraw`
    */
   void set_layer_name(layer_id id, const QString& name);
 
   /**
-   * @copydoc map_manager::move_layer_back()
-   * @signal `redraw`
+   * \copydoc map_manager::move_layer_back()
+   * \signal `redraw`
    */
   void move_layer_back(layer_id id);
 
   /**
-   * @copydoc map_manager::move_layer_forward()
-   * @signal `redraw`
+   * \copydoc map_manager::move_layer_forward()
+   * \signal `redraw`
    */
   void move_layer_forward(layer_id id);
 
   /**
-   * @copydoc map_document::duplicate_layer()
-   * @signal `redraw`
+   * \copydoc map_document::duplicate_layer()
+   * \signal `redraw`
    */
   void duplicate_layer(layer_id id);
 
   /**
-   * @brief Increases the tile size that is being used by the currently active
+   * \brief Increases the tile size that is being used by the currently active
    * map.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void increase_tile_size();
 
   /**
-   * @brief Decreases the tile size that is being used by the currently active
+   * \brief Decreases the tile size that is being used by the currently active
    * map.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void decrease_tile_size();
 
   /**
-   * @brief Resets the tile size that is being used by the currently active
+   * \brief Resets the tile size that is being used by the currently active
    * map to its default value.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void reset_tile_size();
 
   /**
-   * @copydoc map_manager::add_tileset()
+   * \copydoc map_manager::add_tileset()
    */
   void create_tileset(const QImage& image,
                       const QFileInfo& path,
@@ -298,46 +298,46 @@ class model final : public QObject
                       tile_height tileHeight);
 
   /**
-   * @copydoc map_manager::remove_tileset()
-   * @signal `redraw`
+   * \copydoc map_manager::remove_tileset()
+   * \signal `redraw`
    */
   void remove_tileset(tileset_id id);
 
   void set_tileset_name(tileset_id id, const QString& name);
 
   /**
-   * @copydoc map_manager::select()
-   * @signal `switched_map`
+   * \copydoc map_manager::select()
+   * \signal `switched_map`
    */
   void select_map(map_id id);
 
   /**
-   * @copydoc map_manager::close()
+   * \copydoc map_manager::close()
    */
   void close_map(map_id id);
 
   /**
-   * @copydoc tool_model::pressed()
+   * \copydoc tool_model::pressed()
    */
   void mouse_pressed(QMouseEvent* event, const QPointF& mapPosition);
 
   /**
-   * @copydoc tool_model::moved()
+   * \copydoc tool_model::moved()
    */
   void mouse_moved(QMouseEvent* event, const QPointF& mapPosition);
 
   /**
-   * @copydoc tool_model::released()
+   * \copydoc tool_model::released()
    */
   void mouse_released(QMouseEvent* event, const QPointF& mapPosition);
 
   /**
-   * @copydoc tool_model::entered()
+   * \copydoc tool_model::entered()
    */
   void mouse_entered(QEvent* event);
 
   /**
-   * @copydoc tool_model::exited()
+   * \copydoc tool_model::exited()
    */
   void mouse_exited(QEvent* event);
 

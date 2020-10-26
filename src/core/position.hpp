@@ -35,32 +35,32 @@ using col_t = nenya::mirror_type<int, detail::col_tag>;
 namespace core {
 
 /**
- * @class position
+ * \class position
  *
- * @brief Represents a row- and column-based position.
+ * \brief Represents a row- and column-based position.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile position.hpp
+ * \headerfile position.hpp
  */
 class position final
 {
  public:
   /**
-   * @brief Creates a map position that represents (0, 0).
+   * \brief Creates a map position that represents (0, 0).
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   constexpr position() noexcept = default;
 
   /**
-   * @brief Creates a map position.
+   * \brief Creates a map position.
    *
-   * @param row the row value of the map position, clamped to zero if negative.
-   * @param col the column value of the map position, clamped to zero if
+   * \param row the row value of the map position, clamped to zero if negative.
+   * \param col the column value of the map position, clamped to zero if
    * negative.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   constexpr position(row_t row, col_t col) noexcept
       : m_row{at_least(row.get(), 0)},
@@ -68,12 +68,12 @@ class position final
   {}
 
   /**
-   * @brief Sets the row coordinate of the map position.
+   * \brief Sets the row coordinate of the map position.
    *
-   * @param row the new row value of the map position, clamped to zero if
+   * \param row the new row value of the map position, clamped to zero if
    * negative.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   constexpr void set_row(row_t row) noexcept
   {
@@ -81,12 +81,12 @@ class position final
   }
 
   /**
-   * @brief Sets the column coordinate of the map position.
+   * \brief Sets the column coordinate of the map position.
    *
-   * @param col the new column value of the map position, clamped to zero if
+   * \param col the new column value of the map position, clamped to zero if
    * negative.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   constexpr void set_col(col_t col) noexcept
   {
@@ -94,14 +94,14 @@ class position final
   }
 
   /**
-   * @brief Creates and returns a position that is offset from this position.
+   * \brief Creates and returns a position that is offset from this position.
    *
-   * @param row the offset that will be added to the row index.
-   * @param col the offset that will be added to the column index.
+   * \param row the offset that will be added to the row index.
+   * \param col the offset that will be added to the column index.
    *
-   * @return a position that is offset from this position.
+   * \return a position that is offset from this position.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto offset_by(row_t row, col_t col) const noexcept
       -> position
@@ -110,11 +110,11 @@ class position final
   }
 
   /**
-   * @brief Returns a map position that is one step north of this map position.
+   * \brief Returns a map position that is one step north of this map position.
    *
-   * @return a map position that is one step north of this map position.
+   * \return a map position that is one step north of this map position.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto north() const noexcept -> position
   {
@@ -122,12 +122,12 @@ class position final
   }
 
   /**
-   * @brief Returns a map position that is one step to the east of this map
+   * \brief Returns a map position that is one step to the east of this map
    * position.
    *
-   * @return a map position that is one step to the east of this map position.
+   * \return a map position that is one step to the east of this map position.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto east() const noexcept -> position
   {
@@ -135,11 +135,11 @@ class position final
   }
 
   /**
-   * @brief Returns a map position that is one step south of this map position.
+   * \brief Returns a map position that is one step south of this map position.
    *
-   * @return a map position that is one step south of this map position.
+   * \return a map position that is one step south of this map position.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto south() const noexcept -> position
   {
@@ -147,12 +147,12 @@ class position final
   }
 
   /**
-   * @brief Returns a map position that is one step to the west of this map
+   * \brief Returns a map position that is one step to the west of this map
    * position.
    *
-   * @return a map position that is one step to the west of this map position.
+   * \return a map position that is one step to the west of this map position.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto west() const noexcept -> position
   {
@@ -160,14 +160,14 @@ class position final
   }
 
   /**
-   * @brief Returns a pair that holds the row and column values.
+   * \brief Returns a pair that holds the row and column values.
    *
-   * @details This function is meant to be used with structured bindings, as a
+   * \details This function is meant to be used with structured bindings, as a
    * convenient way to deconstruct the position.
    *
-   * @return a pair that holds the coordinates of the position.
+   * \return a pair that holds the coordinates of the position.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto unpack() const noexcept
       -> std::pair<row_t, col_t>
@@ -176,13 +176,13 @@ class position final
   }
 
   /**
-   * @brief Returns the row index of the map position.
+   * \brief Returns the row index of the map position.
    *
-   * @note The returned value is never negative.
+   * \note The returned value is never negative.
    *
-   * @return the row index of the map position.
+   * \return the row index of the map position.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto row() const noexcept -> row_t
   {
@@ -190,13 +190,13 @@ class position final
   }
 
   /**
-   * @brief Returns the column index of the map position.
+   * \brief Returns the column index of the map position.
    *
-   * @note The returned value is never negative.
+   * \note The returned value is never negative.
    *
-   * @return the column index of the map position.
+   * \return the column index of the map position.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto col() const noexcept -> col_t
   {
@@ -204,13 +204,13 @@ class position final
   }
 
   /**
-   * @brief Returns the row index associated with the map position.
+   * \brief Returns the row index associated with the map position.
    *
-   * @details This function is meant to be used when indexing vectors, etc.
+   * \details This function is meant to be used when indexing vectors, etc.
    *
-   * @return the row index.
+   * \return the row index.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto row_index() const noexcept -> std::size_t
   {
@@ -218,13 +218,13 @@ class position final
   }
 
   /**
-   * @brief Returns the column index associated with the map position.
+   * \brief Returns the column index associated with the map position.
    *
-   * @details This function is meant to be used when indexing vectors, etc.
+   * \details This function is meant to be used when indexing vectors, etc.
    *
-   * @return the column index.
+   * \return the column index.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto col_index() const noexcept -> std::size_t
   {
@@ -232,13 +232,13 @@ class position final
   }
 
   /**
-   * @brief Returns the column index converted to an x-coordinate.
+   * \brief Returns the column index converted to an x-coordinate.
    *
-   * @param tileSize the current tile size.
+   * \param tileSize the current tile size.
    *
-   * @return the column index converted to an x-coordinate.
+   * \return the column index converted to an x-coordinate.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto col_to_x(int tileSize) const noexcept -> int
   {
@@ -246,13 +246,13 @@ class position final
   }
 
   /**
-   * @brief Returns the row index converted to a y-coordinate.
+   * \brief Returns the row index converted to a y-coordinate.
    *
-   * @param tileSize the current tile size.
+   * \param tileSize the current tile size.
    *
-   * @return the row index converted to a y-coordinate.
+   * \return the row index converted to a y-coordinate.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] constexpr auto row_to_y(int tileSize) const noexcept -> int
   {
@@ -268,14 +268,14 @@ class position final
 };
 
 /**
- * @brief Adds two positions and returns the result.
+ * \brief Adds two positions and returns the result.
  *
- * @param lhs the left-hand side position.
- * @param rhs the right-hand side position.
+ * \param lhs the left-hand side position.
+ * \param rhs the right-hand side position.
  *
- * @return a position that is the sum of two positions.
+ * \return a position that is the sum of two positions.
  *
- * @since 0.1.0
+ * \since 0.1.0
  */
 [[nodiscard]] inline constexpr auto operator+(const position& lhs,
                                               const position& rhs) noexcept
@@ -285,14 +285,14 @@ class position final
 }
 
 /**
- * @brief Subtracts two positions and returns the result.
+ * \brief Subtracts two positions and returns the result.
  *
- * @param lhs the left-hand side position.
- * @param rhs the right-hand side position.
+ * \param lhs the left-hand side position.
+ * \param rhs the right-hand side position.
  *
- * @return a position that is the difference between two positions.
+ * \return a position that is the difference between two positions.
  *
- * @since 0.1.0
+ * \since 0.1.0
  */
 [[nodiscard]] inline constexpr auto operator-(const position& lhs,
                                               const position& rhs) noexcept

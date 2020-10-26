@@ -28,13 +28,13 @@ struct tileset_info final
 };
 
 /**
- * @class tileset_dialog
+ * \class tileset_dialog
  *
- * @brief Represents the dialog used to add new tilesets.
+ * \brief Represents the dialog used to add new tilesets.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile tileset_dialog.hpp
+ * \headerfile tileset_dialog.hpp
  */
 class tileset_dialog final : public QDialog
 {
@@ -83,17 +83,17 @@ class tileset_dialog final : public QDialog
   /**
    * Returns a pointer to the "OK" button.
    *
-   * @return a pointer to the "OK" button.
-   * @since 0.1.0
+   * \return a pointer to the "OK" button.
+   * \since 0.1.0
    */
   [[nodiscard]] auto ok_button() -> QPushButton*;
 
   /**
    * Indicates whether or not the supplied line edit widget has valid input.
    *
-   * @param edit the line edit widget that will be checked.
-   * @return true if the line edit widget is valid; false otherwise.
-   * @since 0.1.0
+   * \param edit the line edit widget that will be checked.
+   * \return true if the line edit widget is valid; false otherwise.
+   * \since 0.1.0
    */
   [[nodiscard]] auto validate(const QLineEdit& edit) const -> QValidator::State;
 

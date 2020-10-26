@@ -14,9 +14,9 @@ namespace tactile {
 namespace {
 
 /**
- * @brief Initialises the surface format used by the application.
+ * \brief Initialises the surface format used by the application.
  *
- * @since 0.1.0
+ * \since 0.1.0
  */
 void init_surface_format() noexcept
 {

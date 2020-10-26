@@ -14,15 +14,15 @@
 namespace tactile::core {
 
 /**
- * @class tileset_manager
+ * \class tileset_manager
  *
- * @brief Handles multiple `tileset` instances.
+ * \brief Handles multiple `tileset` instances.
  *
- * @see `tileset`
+ * \see `tileset`
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile tileset_manager.hpp
+ * \headerfile tileset_manager.hpp
  */
 class tileset_manager final
 {
@@ -38,43 +38,43 @@ class tileset_manager final
   [[nodiscard]] auto add(std::shared_ptr<tileset> tileset) -> tileset_id;
 
   /**
-   * @brief Removes a tileset from the manager.
+   * \brief Removes a tileset from the manager.
    *
-   * @note This method has no effect if the specified ID isn't used.
+   * \note This method has no effect if the specified ID isn't used.
    *
-   * @param id the key associated with the tileset that will be removed.
+   * \param id the key associated with the tileset that will be removed.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void remove(tileset_id id) noexcept;
 
   /**
-   * @brief Removes all tilesets from the manager.
+   * \brief Removes all tilesets from the manager.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void remove_all() noexcept;
 
   void rename(tileset_id id, const QString& name);
 
   /**
-   * @brief Selects the tileset associated with the specified ID.
+   * \brief Selects the tileset associated with the specified ID.
    *
-   * @pre `id` must be associated with a tileset if it isn't `std::nullopt`.
+   * \pre `id` must be associated with a tileset if it isn't `std::nullopt`.
    *
-   * @param id the key associated with the tileset that will be made
+   * \param id the key associated with the tileset that will be made
    * active; `std::nullopt` indicates that no tileset should be selected.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void select(std::optional<tileset_id> id);
 
   /**
-   * @brief Sets the current tileset selection of the active tileset.
+   * \brief Sets the current tileset selection of the active tileset.
    *
-   * @param selection the new selection.
+   * \param selection the new selection.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void set_selection(const tileset::selection& selection);
 
@@ -85,55 +85,55 @@ class tileset_manager final
   [[nodiscard]] auto at(tileset_id id) const -> const tileset&;
 
   /**
-   * @brief Returns the image associated with the specified tile.
+   * \brief Returns the image associated with the specified tile.
    *
-   * @param id the ID of the tile to obtain the image for.
+   * \param id the ID of the tile to obtain the image for.
    *
-   * @return the image associated with the specified tile.
+   * \return the image associated with the specified tile.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto image(tile_id id) const -> const QPixmap&;
 
   /**
-   * @brief Returns the source rectangle associated with the specified tile.
+   * \brief Returns the source rectangle associated with the specified tile.
    *
-   * @param id the ID of the tile to obtain the source rectangle for.
+   * \param id the ID of the tile to obtain the source rectangle for.
    *
-   * @return the source rectangle associated with the tile.
+   * \return the source rectangle associated with the tile.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto image_source(tile_id id) const -> QRect;
 
   /**
-   * @brief Returns the range of tile identifiers associated with the specified
+   * \brief Returns the range of tile identifiers associated with the specified
    * tileset.
    *
-   * @param id the ID of the tileset that will be queried.
+   * \param id the ID of the tileset that will be queried.
    *
-   * @return the range of the specified tileset, as [first, last].
+   * \return the range of the specified tileset, as [first, last].
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto range_of(tileset_id id) const
       -> std::pair<tile_id, tile_id>;
 
   /**
-   * @brief Returns the amount of tilesets handled by the manager.
+   * \brief Returns the amount of tilesets handled by the manager.
    *
-   * @return the amount of tilesets handled by the manager.
+   * \return the amount of tilesets handled by the manager.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto count() const noexcept -> int;
 
   /**
-   * @brief Indicates whether or not the manager has an active tileset.
+   * \brief Indicates whether or not the manager has an active tileset.
    *
-   * @return `true` if there is an active tileset; `false` otherwise.
+   * \return `true` if there is an active tileset; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto has_active_tileset() const noexcept -> bool;
 

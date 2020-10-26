@@ -14,15 +14,15 @@ inline constexpr QStringView dark{u"Dark"};
 inline constexpr QStringView atomOneDark{u"Atom One Dark"};
 
 /**
- * @brief Indicates whether or not the supplied name is one of the
+ * \brief Indicates whether or not the supplied name is one of the
  * pre-defined themes.
  *
- * @param name the name of the theme that will be checked.
+ * \param name the name of the theme that will be checked.
  *
- * @return `true` if the supplied name is associated with a standard theme;
+ * \return `true` if the supplied name is associated with a standard theme;
  * `false` otherwise.
  *
- * @since 0.1.0
+ * \since 0.1.0
  */
 [[nodiscard]] auto is_standard_theme(QStringView name) -> bool
 {

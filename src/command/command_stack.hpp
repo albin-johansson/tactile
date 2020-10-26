@@ -7,13 +7,13 @@
 namespace tactile {
 
 /**
- * @class command_stack
+ * \class command_stack
  *
- * @brief Represents a stack of commands.
+ * \brief Represents a stack of commands.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile command_stack.hpp
+ * \headerfile command_stack.hpp
  */
 class command_stack final : public QUndoStack
 {
@@ -22,15 +22,15 @@ class command_stack final : public QUndoStack
   {}
 
   /**
-   * @brief Pushes a command onto the undo stack after executing it.
+   * \brief Pushes a command onto the undo stack after executing it.
    *
-   * @tparam T the type of the command.
-   * @tparam Args the types of the arguments that will be forwarded.
+   * \tparam T the type of the command.
+   * \tparam Args the types of the arguments that will be forwarded.
    *
-   * @param args the arguments that will be forwarded to the command
+   * \param args the arguments that will be forwarded to the command
    * constructor.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   template <std::derived_from<QUndoCommand> T, typename... Args>
   void push(Args&&... args)

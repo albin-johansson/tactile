@@ -7,23 +7,23 @@
 namespace tactile::cmd {
 
 /**
- * @class add_col
+ * \class add_col
  *
- * @brief Represents the dialog of adding a column to the active map.
+ * \brief Represents the dialog of adding a column to the active map.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile add_col.hpp
+ * \headerfile add_col.hpp
  */
 class add_col final : public repeated_command
 {
  public:
   /**
-   * @brief Creates am `add_col` instance.
+   * \brief Creates am `add_col` instance.
    *
-   * @param map the associated map.
+   * \param map the associated map.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit add_col(core::map* map);
 

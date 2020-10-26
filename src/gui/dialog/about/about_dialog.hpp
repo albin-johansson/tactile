@@ -9,16 +9,16 @@ class about_dialog;
 namespace tactile::gui {
 
 /**
- * @class about_dialog
+ * \class about_dialog
  *
- * @brief Represents the "About Tactile" dialog window that displays
+ * \brief Represents the "About Tactile" dialog window that displays
  * information about the application.
  *
- * @see `QDialog`
+ * \see `QDialog`
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile about_dialog.hpp
+ * \headerfile about_dialog.hpp
  */
 class about_dialog final : public QDialog
 {

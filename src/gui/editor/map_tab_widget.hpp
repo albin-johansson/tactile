@@ -15,11 +15,11 @@ class map_document;
 namespace gui {
 
 /**
- * @class map_tab_widget
+ * \class map_tab_widget
  *
- * @brief Represents the tab widget that holds all of the map views.
+ * \brief Represents the tab widget that holds all of the map views.
  *
- * @headerfile map_tab_widget.hpp
+ * \headerfile map_tab_widget.hpp
  */
 class map_tab_widget final : public QTabWidget
 {
@@ -27,60 +27,60 @@ class map_tab_widget final : public QTabWidget
 
  public:
   /**
-   * @brief Creates a map tab widget.
+   * \brief Creates a map tab widget.
    *
-   * @param parent a pointer to the parent widget.
+   * \param parent a pointer to the parent widget.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit map_tab_widget(QWidget* parent = nullptr);
 
   ~map_tab_widget() noexcept override;
 
   /**
-   * @brief Adds a map tab.
+   * \brief Adds a map tab.
    *
-   * @param map a pointer to the map document that will be associated with the
+   * \param map a pointer to the map document that will be associated with the
    * tab.
-   * @param id the identifier associated with the map.
-   * @param title the title that will be visible in the tab.
+   * \param id the identifier associated with the map.
+   * \param title the title that will be visible in the tab.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void add_map_tab(core::map_document* map, map_id id, const QString& title);
 
   /**
-   * @brief Removes the tab associated with the specified map.
+   * \brief Removes the tab associated with the specified map.
    *
-   * @param id the identifier associated with the map that will be removed.
+   * \param id the identifier associated with the map that will be removed.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void remove_map_tab(map_id id);
 
   /**
-   * @brief Selects the tab associated with the specified map.
+   * \brief Selects the tab associated with the specified map.
    *
-   * @param id the identifier associated with the map that will be selected.
+   * \param id the identifier associated with the map that will be selected.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void select_tab(map_id id);
 
   /**
-   * @brief Centers the currently active map to fit the viewport.
+   * \brief Centers the currently active map to fit the viewport.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void center_map();
 
   /**
-   * @brief Moves the currently active map.
+   * \brief Moves the currently active map.
    *
-   * @param dx the amount to move the map by along the x-axis.
-   * @param dy the amount to move the map by along the y-axis.
+   * \param dx the amount to move the map by along the x-axis.
+   * \param dy the amount to move the map by along the y-axis.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void move_map(int dx, int dy);
 
@@ -89,24 +89,24 @@ class map_tab_widget final : public QTabWidget
   void disable_stamp_preview();
 
   /**
-   * @brief Returns the map ID associated with the currently active tab.
+   * \brief Returns the map ID associated with the currently active tab.
    *
-   * @return the map ID of the active tab; `std::nullopt` if there is no active
+   * \return the map ID of the active tab; `std::nullopt` if there is no active
    * tab.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto active_tab_id() const -> std::optional<map_id>;
 
   /**
-   * @brief Returns the map ID associated with the specified tab.
+   * \brief Returns the map ID associated with the specified tab.
    *
-   * @param index the index of the tab that will be queried.
+   * \param index the index of the tab that will be queried.
    *
-   * @return the map ID of the specified tab; `std::nullopt` if no such ID
+   * \return the map ID of the specified tab; `std::nullopt` if no such ID
    * exists.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto id_from_index(int index) const -> std::optional<map_id>;
 

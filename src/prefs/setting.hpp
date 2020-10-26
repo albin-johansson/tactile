@@ -9,26 +9,26 @@
 namespace tactile::prefs {
 
 /**
- * @class setting
+ * \class setting
  *
- * @brief Represents a persistent setting.
+ * \brief Represents a persistent setting.
  *
- * @tparam T the type of the value associated with the setting.
+ * \tparam T the type of the value associated with the setting.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile setting.hpp
+ * \headerfile setting.hpp
  */
 template <typename T>
 class setting final
 {
  public:
   /**
-   * @brief Creates a setting based on the supplied key.
+   * \brief Creates a setting based on the supplied key.
    *
-   * @param key the key associated with the desired setting.
+   * \param key the key associated with the desired setting.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit setting(QString key) : m_key{std::move(key)}
   {
@@ -42,11 +42,11 @@ class setting final
   }
 
   /**
-   * @brief Sets the value of the setting.
+   * \brief Sets the value of the setting.
    *
-   * @param value the new value of the setting.
+   * \param value the new value of the setting.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void set(const T& value)
   {
@@ -58,11 +58,11 @@ class setting final
   }
 
   /**
-   * @brief Sets the value of the setting, if there is no current value.
+   * \brief Sets the value of the setting, if there is no current value.
    *
-   * @param value the new value of the setting.
+   * \param value the new value of the setting.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void set_if_missing(const T& value)
   {
@@ -76,20 +76,20 @@ class setting final
   }
 
   /**
-   * @brief Invokes a function object with the current value of the setting, if
+   * \brief Invokes a function object with the current value of the setting, if
    * there is one.
    *
-   * @details This function was inspired by the fact that it can be a little
+   * \details This function was inspired by the fact that it can be a little
    * difficult to differentiate the conversion to `bool`, used to check for a
    * valid value of a setting, from obtaining the actual value of the setting.
    * This is especially noticeable with boolean settings.
    *
-   * @tparam U the type of the function object.
+   * \tparam U the type of the function object.
    *
-   * @param callable the function object that will be invoked if there is a
+   * \param callable the function object that will be invoked if there is a
    * value associated with the setting.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   template <std::invocable<const T&> U>
   void with(U&& callable)
@@ -100,11 +100,11 @@ class setting final
   }
 
   /**
-   * @brief Returns a reference to the value of the setting.
+   * \brief Returns a reference to the value of the setting.
    *
-   * @return a reference to the value of the setting.
+   * \return a reference to the value of the setting.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   auto operator*() const -> const T&
   {
@@ -112,11 +112,11 @@ class setting final
   }
 
   /**
-   * @brief Returns a pointer to the value of the setting.
+   * \brief Returns a pointer to the value of the setting.
    *
-   * @return a pointer to the value of the setting.
+   * \return a pointer to the value of the setting.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   auto operator->() const -> const T*
   {
@@ -129,15 +129,15 @@ class setting final
   }
 
   /**
-   * @brief Returns the current value of the setting, or the default value if
+   * \brief Returns the current value of the setting, or the default value if
    * there is no current value.
    *
-   * @param fallback the default value that is used if there is no current
+   * \param fallback the default value that is used if there is no current
    * value.
    *
-   * @return the current value of the setting or `fallback`.
+   * \return the current value of the setting or `fallback`.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto value_or(const T& fallback) const -> T
   {
@@ -145,11 +145,11 @@ class setting final
   }
 
   /**
-   * @brief Indicates whether or not the settings holds a valid value.
+   * \brief Indicates whether or not the settings holds a valid value.
    *
-   * @return `true` if the settings has a value; `false` otherwise.
+   * \return `true` if the settings has a value; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit operator bool() const noexcept
   {

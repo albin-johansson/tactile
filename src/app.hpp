@@ -19,15 +19,15 @@ class window;
 }
 
 /**
- * @class app
+ * \class app
  *
- * @brief Represents the tactile application.
+ * \brief Represents the tactile application.
  *
- * @see `QApplication`
+ * \see `QApplication`
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile app.hpp
+ * \headerfile app.hpp
  */
 class app final : public QApplication
 {
@@ -35,10 +35,10 @@ class app final : public QApplication
 
  public:
   /**
-   * @param argc the amount of command-line arguments.
-   * @param argv the array of command-line arguments.
+   * \param argc the amount of command-line arguments.
+   * \param argv the array of command-line arguments.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   app(int argc, char** argv);
 

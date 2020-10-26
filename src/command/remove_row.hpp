@@ -8,13 +8,13 @@
 namespace tactile::cmd {
 
 /**
- * @class remove_row
+ * \class remove_row
  *
- * @brief Represents the dialog of removing a row from the active map.
+ * \brief Represents the dialog of removing a row from the active map.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile remove_row.hpp
+ * \headerfile remove_row.hpp
  */
 class remove_row final : public repeated_map_command
 {

@@ -18,16 +18,16 @@ namespace gui {
 class map_scene;
 
 /**
- * @class map_view
+ * \class map_view
  *
- * @brief Represents the UI component that presents a map.
+ * \brief Represents the UI component that presents a map.
  *
- * @details This class also handles the mouse input for maps, and delegates
+ * \details This class also handles the mouse input for maps, and delegates
  * mouse events to the model that will be used by the mouse tools.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile map_view.hpp
+ * \headerfile map_view.hpp
  */
 class map_view final : public QGraphicsView
 {

@@ -22,15 +22,15 @@ class layer_dock;
 class tileset_dock;
 
 /**
- * @class window
+ * \class window
  *
- * @brief Represents the main window used in the application.
+ * \brief Represents the main window used in the application.
  *
- * @see `QMainWindow`
+ * \see `QMainWindow`
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile window.hpp
+ * \headerfile window.hpp
  */
 class window final : public QMainWindow
 {
@@ -38,25 +38,25 @@ class window final : public QMainWindow
 
  public:
   /**
-   * @param parent a pointer to the parent widget, defaults to null.
+   * \param parent a pointer to the parent widget, defaults to null.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit window(QWidget* parent = nullptr);
 
   ~window() noexcept override;
 
   /**
-   * @brief Enables the view that is shown when no maps are active.
+   * \brief Enables the view that is shown when no maps are active.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void enter_no_content_view();
 
   /**
-   * @brief Enables the main editor view.
+   * \brief Enables the main editor view.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void enter_content_view();
 
@@ -164,10 +164,10 @@ class window final : public QMainWindow
   void init_mouse_tool_group();
 
   /**
-   * @brief Initializes all of the connections related to the internal
+   * \brief Initializes all of the connections related to the internal
    * components of the window.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void init_connections();
 
@@ -184,11 +184,11 @@ class window final : public QMainWindow
   void set_actions_enabled(bool enabled);
 
   /**
-   * @brief Indicates whether or not the editor view is enabled.
+   * \brief Indicates whether or not the editor view is enabled.
    *
-   * @return `true` if the editor view is enabled; `false` otherwise.
+   * \return `true` if the editor view is enabled; `false` otherwise.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   [[nodiscard]] auto in_editor_mode() const -> bool;
 

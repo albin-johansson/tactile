@@ -8,25 +8,25 @@
 namespace tactile {
 
 /**
- * @class eraser_tool
+ * \class eraser_tool
  *
- * @brief Represents an "eraser" tool, which sets tiles to be empty.
+ * \brief Represents an "eraser" tool, which sets tiles to be empty.
  *
- * @since 0.1.0
+ * \since 0.1.0
  *
- * @headerfile eraser_tool.hpp
+ * \headerfile eraser_tool.hpp
  */
 class eraser_tool final : public abstract_tool
 {
  public:
   /**
-   * @brief Creates an `eraser_tool` instance.
+   * \brief Creates an `eraser_tool` instance.
    *
-   * @param model a pointer to the associated model, cannot be null.
+   * \param model a pointer to the associated model, cannot be null.
    *
-   * @throws tactile_error if the supplied pointer is null.
+   * \throws tactile_error if the supplied pointer is null.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   explicit eraser_tool(core::model* model);
 
@@ -42,16 +42,16 @@ class eraser_tool final : public abstract_tool
   vector_map<core::position, tile_id> m_oldState;
 
   /**
-   * @brief Updates the state of the eraser, by erasing the tile at the mouse
+   * \brief Updates the state of the eraser, by erasing the tile at the mouse
    * position.
    *
-   * @details This function is meant to be called from the `pressed` and `moved`
+   * \details This function is meant to be called from the `pressed` and `moved`
    * functions.
    *
-   * @param event the associated event.
-   * @param mapPosition the current position of the map.
+   * \param event the associated event.
+   * \param mapPosition the current position of the map.
    *
-   * @since 0.1.0
+   * \since 0.1.0
    */
   void update_eraser(QMouseEvent* event, const QPointF& mapPosition);
 };
