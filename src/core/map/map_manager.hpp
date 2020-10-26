@@ -88,55 +88,6 @@ class map_manager final : public QObject
   void select(map_id id);
 
   /**
-   * \copydoc map_document::select_tileset()
-   */
-  void select_tileset(tileset_id id);
-
-  /**
-   * \copydoc map_document::add_tileset()
-   */
-  void add_tileset(const QImage& image,
-                   const QFileInfo& path,
-                   const QString& name,
-                   tile_width tileWidth,
-                   tile_height tileHeight);
-
-  /**
-   * \copydoc map_document::ui_remove_tileset()
-   */
-  void remove_tileset(tileset_id id);
-
-  /**
-   * \copydoc map_document::set_layer_visibility()
-   */
-  void set_layer_visibility(layer_id id, bool visible);
-
-  /**
-   * \copydoc map_document::set_layer_opacity()
-   */
-  void set_layer_opacity(layer_id id, double opacity);
-
-  /**
-   * \copydoc map_document::set_layer_name()
-   */
-  void set_layer_name(layer_id id, const QString& name);
-
-  /**
-   * \copydoc map_document::move_layer_back()
-   */
-  void move_layer_back(layer_id id);
-
-  /**
-   * \copydoc map_document::move_layer_back()
-   */
-  void move_layer_forward(layer_id id);
-
-  /**
-   * \copydoc map_document::set_selection()
-   */
-  void set_tileset_selection(const tileset::selection& selection);
-
-  /**
    * \brief Indicates whether or not there is an active map document.
    *
    * \return `true` if there is an active map document; `false` otherwise.
@@ -197,26 +148,6 @@ class map_manager final : public QObject
    */
   [[nodiscard]] auto current_tileset() const -> const tileset*;
 
-  [[nodiscard]] auto begin() noexcept -> iterator
-  {
-    return m_mapDocuments.begin();
-  }
-
-  [[nodiscard]] auto begin() const noexcept -> const_iterator
-  {
-    return m_mapDocuments.begin();
-  }
-
-  [[nodiscard]] auto end() noexcept -> iterator
-  {
-    return m_mapDocuments.end();
-  }
-
-  [[nodiscard]] auto end() const noexcept -> const_iterator
-  {
-    return m_mapDocuments.end();
-  }
-
  signals:
   void undo_state_updated(bool canUndo);
   void redo_state_updated(bool canRedo);
@@ -234,9 +165,9 @@ class map_manager final : public QObject
   void moved_layer_forward(layer_id id);
 
  private:
-  std::optional<map_id> m_currentMapID;
-  storage_type m_mapDocuments;
-  map_id m_nextMapID{1};
+  std::optional<map_id> m_current;
+  storage_type m_documents;
+  map_id m_nextId{1};
 
   void emit_undo_redo_update();
 };

@@ -159,7 +159,7 @@ void map_document::select_tileset(tileset_id id)
   m_tilesets->select(id);
 }
 
-void map_document::set_selection(const tileset::selection& selection)
+void map_document::set_tileset_selection(const tileset::selection& selection)
 {
   m_tilesets->set_selection(selection);
 }

@@ -145,42 +145,56 @@ void model::select_tool(tool_id id)
 
 void model::select_tileset(tileset_id id)
 {
-  m_maps->select_tileset(id);
+  if (auto* document = current_document()) {
+    document->select_tileset(id);
+  }
 }
 
 void model::set_tileset_selection(const tileset::selection& selection)
 {
-  m_maps->set_tileset_selection(selection);
+  if (auto* document = current_document()) {
+    document->set_tileset_selection(selection);
+  }
 }
 
 void model::set_layer_visibility(layer_id id, bool visible)
 {
-  m_maps->set_layer_visibility(id, visible);
-  emit redraw();
+  if (auto* document = current_document()) {
+    document->set_layer_visibility(id, visible);
+    emit redraw();
+  }
 }
 
 void model::set_layer_opacity(layer_id id, double opacity)
 {
-  m_maps->set_layer_opacity(id, opacity);
-  emit redraw();
+  if (auto* document = current_document()) {
+    document->set_layer_opacity(id, opacity);
+    emit redraw();
+  }
 }
 
 void model::set_layer_name(layer_id id, const QString& name)
 {
-  m_maps->set_layer_name(id, name);
-  emit redraw();
+  if (auto* document = current_document()) {
+    document->set_layer_name(id, name);
+    emit redraw();
+  }
 }
 
 void model::move_layer_back(layer_id id)
 {
-  m_maps->move_layer_back(id);
-  emit redraw();
+  if (auto* document = current_document()) {
+    document->move_layer_back(id);
+    emit redraw();
+  }
 }
 
 void model::move_layer_forward(layer_id id)
 {
-  m_maps->move_layer_forward(id);
-  emit redraw();
+  if (auto* document = current_document()) {
+    document->move_layer_forward(id);
+    emit redraw();
+  }
 }
 
 void model::duplicate_layer(layer_id id)
@@ -221,13 +235,17 @@ void model::create_tileset(const QImage& image,
                            tile_width tileWidth,
                            tile_height tileHeight)
 {
-  m_maps->add_tileset(image, path, name, tileWidth, tileHeight);
+  if (auto* document = current_document()) {
+    document->add_tileset(image, path, name, tileWidth, tileHeight);
+  }
 }
 
 void model::remove_tileset(tileset_id id)
 {
-  m_maps->remove_tileset(id);
-  emit redraw();
+  if (auto* document = current_document()) {
+    document->remove_tileset(id);
+    emit redraw();
+  }
 }
 
 void model::set_tileset_name(tileset_id id, const QString& name)

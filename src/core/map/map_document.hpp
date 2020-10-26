@@ -196,7 +196,7 @@ class map_document final : public QObject
   /**
    * \copydoc tileset_manager::set_selection()
    */
-  void set_selection(const tileset::selection& selection);
+  void set_tileset_selection(const tileset::selection& selection);
 
   /**
    * \copydoc map::select_layer()
