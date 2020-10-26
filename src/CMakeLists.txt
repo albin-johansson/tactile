@@ -10,7 +10,6 @@ set(TACTILE_SOURCE_FILES
         version.hpp
 
         core/czstring.hpp
-        core/core_fwd.hpp
         core/model.hpp
         core/model.cpp
         core/tactile_error.hpp

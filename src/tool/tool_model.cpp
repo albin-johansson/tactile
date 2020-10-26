@@ -30,9 +30,9 @@ void tool_model::switch_to(abstract_tool* tool)
   }
 }
 
-void tool_model::select(tool_id tool)
+void tool_model::select(tool_id id)
 {
-  switch (tool) {
+  switch (id) {
     default:
       [[fallthrough]];
     case tool_id::none: {

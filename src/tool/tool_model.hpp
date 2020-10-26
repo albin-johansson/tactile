@@ -27,11 +27,11 @@ class tool_model final
   /**
    * @brief Selects the specified tool.
    *
-   * @param tool the ID associated with the tool that will be enabled.
+   * @param id the ID associated with the tool that will be enabled.
    *
    * @since 0.1.0
    */
-  void select(tool_id tool);
+  void select(tool_id id);
 
   /**
    * @brief Handles a mouse pressed event.

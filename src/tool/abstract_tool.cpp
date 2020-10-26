@@ -1,5 +1,6 @@
 #include "abstract_tool.hpp"
 
+#include "map_document.hpp"
 #include "model.hpp"
 #include "tactile_error.hpp"
 

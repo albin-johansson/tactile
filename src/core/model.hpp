@@ -1,26 +1,20 @@
 #pragma once
 
-#include <QEvent>
-#include <QFileInfo>
-#include <QImage>
 #include <QObject>
-#include <QString>
-#include <memory>    // unique_ptr
 #include <optional>  // optional
 
-#include "core_fwd.hpp"
-#include "czstring.hpp"
-#include "map.hpp"
-#include "map_document.hpp"
-#include "map_manager.hpp"
-#include "tileset_manager.hpp"
+#include "layer_id.hpp"
+#include "map_id.hpp"
+#include "tileset.hpp"
+#include "tileset_id.hpp"
 #include "tool_id.hpp"
 #include "tool_model.hpp"
-#include "vector_map.hpp"
-
-class QPainter;
 
 namespace tactile::core {
+
+class map_document;
+class map_manager;
+class layer;
 
 /**
  * @class model
@@ -41,66 +35,37 @@ class model final : public QObject
   /**
    * @copydoc map_manager::add()
    */
-  [[nodiscard]] auto add_map() -> map_id
-  {
-    return m_maps->add();
-  }
+  [[nodiscard]] auto add_map() -> map_id;
 
   /**
    * @copydoc map_manager::add(map_document* document)
    */
-  [[nodiscard]] auto add_map(map_document* document) -> map_id
-  {
-    return m_maps->add(document);
-  }
-
-  /**
-   * @copydoc map_manager::set_tileset_selection()
-   */
-  void set_tileset_selection(const tileset::selection& selection)
-  {
-    m_maps->set_tileset_selection(selection);
-  }
+  [[nodiscard]] auto add_map(map_document* document) -> map_id;
 
   /**
    * @copydoc map_manager::has_active_map()
    */
-  [[nodiscard]] auto has_active_map() const noexcept -> bool
-  {
-    return m_maps->has_active_map();
-  }
+  [[nodiscard]] auto has_active_map() const noexcept -> bool;
 
   /**
    * @copydoc map_manager::at()
    */
-  [[nodiscard]] auto get_document(map_id id) -> map_document*
-  {
-    return m_maps->at(id);
-  }
+  [[nodiscard]] auto get_document(map_id id) -> map_document*;
 
   /**
    * @copydoc map_manager::current_map_id()
    */
-  [[nodiscard]] auto current_map_id() const -> std::optional<map_id>
-  {
-    return m_maps->current_map_id();
-  }
+  [[nodiscard]] auto current_map_id() const -> std::optional<map_id>;
 
   /**
    * @copydoc map_manager::current_document()
    */
-  [[nodiscard]] auto current_document() -> map_document*
-  {
-    return m_maps->current_document();
-  }
+  [[nodiscard]] auto current_document() -> map_document*;
 
   /**
    * @copydoc current_document()
    */
-  [[nodiscard]] auto current_document() const -> const map_document*
-  {
-    return m_maps->current_document();
-  }
+  [[nodiscard]] auto current_document() const -> const map_document*;
 
  signals:
   void redraw();
@@ -251,66 +216,52 @@ class model final : public QObject
   /**
    * @copydoc tool_model::select(tool_id)
    */
-  void select_tool(tool_id tool)
-  {
-    m_tools.select(tool);
-  }
+  void select_tool(tool_id id);
 
   /**
    * @copydoc map_manager::select_tileset(tileset_id)
    */
-  void select_tileset(tileset_id id)
-  {
-    m_maps->select_tileset(id);
-  }
-
-  void set_layer_visibility(layer_id id, bool visible)
-  {
-    m_maps->set_layer_visibility(id, visible);
-    emit redraw();
-  }
-
-  void set_layer_opacity(layer_id id, double opacity)
-  {
-    m_maps->set_layer_opacity(id, opacity);
-    emit redraw();
-  }
-
-  void set_layer_name(layer_id id, const QString& name)
-  {
-    m_maps->set_layer_name(id, name);
-    emit redraw();
-  }
+  void select_tileset(tileset_id id);
 
   /**
-   * @brief Moves the specified layer backwards, meaning that it will be
-   * rendered *earlier*.
-   *
-   * @details The mental model for users is that the layers behave as if they
-   * were on a stack, even if they aren't stored that way in the model.
-   *
-   * @details This function emits the `moved_layer_back` and `redraw` signals.
-   *
-   * @param id the ID associated with the layer that will be moved.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::set_tileset_selection()
    */
-  void move_layer_back(layer_id id)
-  {
-    m_maps->move_layer_back(id);
-    emit redraw();
-  }
+  void set_tileset_selection(const tileset::selection& selection);
+
+  /**
+   * @copydoc map_manager::set_layer_visibility()
+   * @signal `redraw`
+   */
+  void set_layer_visibility(layer_id id, bool visible);
+
+  /**
+   * @copydoc map_manager::set_layer_opacity()
+   * @signal `redraw`
+   */
+  void set_layer_opacity(layer_id id, double opacity);
+
+  /**
+   * @copydoc map_manager::set_layer_name()
+   * @signal `redraw`
+   */
+  void set_layer_name(layer_id id, const QString& name);
+
+  /**
+   * @copydoc map_manager::move_layer_back()
+   * @signal `redraw`
+   */
+  void move_layer_back(layer_id id);
 
   /**
    * @copydoc map_manager::move_layer_forward()
    * @signal `redraw`
    */
-  void move_layer_forward(layer_id id)
-  {
-    m_maps->move_layer_forward(id);
-    emit redraw();
-  }
+  void move_layer_forward(layer_id id);
 
+  /**
+   * @copydoc map_document::duplicate_layer()
+   * @signal `redraw`
+   */
   void duplicate_layer(layer_id id);
 
   /**
@@ -340,83 +291,55 @@ class model final : public QObject
   /**
    * @copydoc map_manager::add_tileset()
    */
-  void ui_add_tileset(const QImage& image,
+  void create_tileset(const QImage& image,
                       const QFileInfo& path,
                       const QString& name,
                       tile_width tileWidth,
-                      tile_height tileHeight)
-  {
-    m_maps->add_tileset(image, path, name, tileWidth, tileHeight);
-  }
+                      tile_height tileHeight);
 
-  void ui_remove_tileset(tileset_id id)
-  {
-    m_maps->ui_remove_tileset(id);
-    emit redraw();
-  }
+  /**
+   * @copydoc map_manager::remove_tileset()
+   * @signal `redraw`
+   */
+  void remove_tileset(tileset_id id);
 
   void set_tileset_name(tileset_id id, const QString& name);
 
   /**
-   * @brief Selects the map associated with the specified id.
-   *
-   * @param id the key of the map that will be selected.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::select()
+   * @signal `switched_map`
    */
-  void ui_select_map(map_id id);
+  void select_map(map_id id);
 
   /**
-   * @brief Closes the map associated with the specified ID.
-   *
-   * @param id the ID of the map that will be closed.
-   *
-   * @since 0.1.0
+   * @copydoc map_manager::close()
    */
-  void close_map(map_id id)
-  {
-    m_maps->close(id);
-  }
+  void close_map(map_id id);
 
   /**
    * @copydoc tool_model::pressed()
    */
-  void mouse_pressed(QMouseEvent* event, QPointF mapPosition)
-  {
-    m_tools.pressed(event, mapPosition);
-  }
+  void mouse_pressed(QMouseEvent* event, const QPointF& mapPosition);
 
   /**
    * @copydoc tool_model::moved()
    */
-  void mouse_moved(QMouseEvent* event, QPointF mapPosition)
-  {
-    m_tools.moved(event, mapPosition);
-  }
+  void mouse_moved(QMouseEvent* event, const QPointF& mapPosition);
 
   /**
    * @copydoc tool_model::released()
    */
-  void mouse_released(QMouseEvent* event, QPointF mapPosition)
-  {
-    m_tools.released(event, mapPosition);
-  }
+  void mouse_released(QMouseEvent* event, const QPointF& mapPosition);
 
   /**
    * @copydoc tool_model::entered()
    */
-  void mouse_entered(QEvent* event)
-  {
-    m_tools.entered(event);
-  }
+  void mouse_entered(QEvent* event);
 
   /**
    * @copydoc tool_model::exited()
    */
-  void mouse_exited(QEvent* event)
-  {
-    m_tools.exited(event);
-  }
+  void mouse_exited(QEvent* event);
 
  private:
   map_manager* m_maps{};

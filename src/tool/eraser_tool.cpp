@@ -1,5 +1,6 @@
 #include "eraser_tool.hpp"
 
+#include "map_document.hpp"
 #include "model.hpp"
 
 namespace tactile {

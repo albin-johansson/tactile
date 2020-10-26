@@ -1,6 +1,6 @@
 #include "model.hpp"
 
-#include "tileset.hpp"
+#include "map_manager.hpp"
 
 namespace tactile::core {
 
@@ -23,6 +23,41 @@ model::model() : m_maps{new map_manager{this}}, m_tools{this}
     emit added_tileset(current_map_id().value(), id, tileset);
   });
   // clang-format on
+}
+
+auto model::add_map() -> map_id
+{
+  return m_maps->add();
+}
+
+auto model::add_map(map_document* document) -> map_id
+{
+  return m_maps->add(document);
+}
+
+auto model::has_active_map() const noexcept -> bool
+{
+  return m_maps->has_active_map();
+}
+
+auto model::get_document(map_id id) -> map_document*
+{
+  return m_maps->at(id);
+}
+
+auto model::current_map_id() const -> std::optional<map_id>
+{
+  return m_maps->current_map_id();
+}
+
+auto model::current_document() -> map_document*
+{
+  return m_maps->current_document();
+}
+
+auto model::current_document() const -> const map_document*
+{
+  return m_maps->current_document();
 }
 
 void model::undo()
@@ -103,6 +138,51 @@ void model::select_layer(layer_id id)
   }
 }
 
+void model::select_tool(tool_id id)
+{
+  m_tools.select(id);
+}
+
+void model::select_tileset(tileset_id id)
+{
+  m_maps->select_tileset(id);
+}
+
+void model::set_tileset_selection(const tileset::selection& selection)
+{
+  m_maps->set_tileset_selection(selection);
+}
+
+void model::set_layer_visibility(layer_id id, bool visible)
+{
+  m_maps->set_layer_visibility(id, visible);
+  emit redraw();
+}
+
+void model::set_layer_opacity(layer_id id, double opacity)
+{
+  m_maps->set_layer_opacity(id, opacity);
+  emit redraw();
+}
+
+void model::set_layer_name(layer_id id, const QString& name)
+{
+  m_maps->set_layer_name(id, name);
+  emit redraw();
+}
+
+void model::move_layer_back(layer_id id)
+{
+  m_maps->move_layer_back(id);
+  emit redraw();
+}
+
+void model::move_layer_forward(layer_id id)
+{
+  m_maps->move_layer_forward(id);
+  emit redraw();
+}
+
 void model::duplicate_layer(layer_id id)
 {
   if (auto* document = current_document()) {
@@ -135,6 +215,21 @@ void model::reset_tile_size()
   }
 }
 
+void model::create_tileset(const QImage& image,
+                           const QFileInfo& path,
+                           const QString& name,
+                           tile_width tileWidth,
+                           tile_height tileHeight)
+{
+  m_maps->add_tileset(image, path, name, tileWidth, tileHeight);
+}
+
+void model::remove_tileset(tileset_id id)
+{
+  m_maps->remove_tileset(id);
+  emit redraw();
+}
+
 void model::set_tileset_name(tileset_id id, const QString& name)
 {
   if (auto* document = current_document()) {
@@ -142,14 +237,44 @@ void model::set_tileset_name(tileset_id id, const QString& name)
   }
 }
 
-void model::ui_select_map(map_id id)
+void model::select_map(map_id id)
 {
   m_maps->select(id);
 
-  auto* document = m_maps->at(id);
+  auto* document = m_maps->current_document();
   Q_ASSERT(document);
 
   emit switched_map(id, *document);
+}
+
+void model::close_map(map_id id)
+{
+  m_maps->close(id);
+}
+
+void model::mouse_pressed(QMouseEvent* event, const QPointF& mapPosition)
+{
+  m_tools.pressed(event, mapPosition);
+}
+
+void model::mouse_moved(QMouseEvent* event, const QPointF& mapPosition)
+{
+  m_tools.moved(event, mapPosition);
+}
+
+void model::mouse_released(QMouseEvent* event, const QPointF& mapPosition)
+{
+  m_tools.released(event, mapPosition);
+}
+
+void model::mouse_entered(QEvent* event)
+{
+  m_tools.entered(event);
+}
+
+void model::mouse_exited(QEvent* event)
+{
+  m_tools.exited(event);
 }
 
 }  // namespace tactile::core

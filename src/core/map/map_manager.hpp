@@ -104,7 +104,7 @@ class map_manager final : public QObject
   /**
    * @copydoc map_document::ui_remove_tileset()
    */
-  void ui_remove_tileset(tileset_id id);
+  void remove_tileset(tileset_id id);
 
   /**
    * @copydoc map_document::set_layer_visibility()

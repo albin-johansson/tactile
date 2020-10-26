@@ -51,12 +51,12 @@ void app::init_connections()
   win_to_mod(&win::ui_remove_row,            &mod::remove_row);
   win_to_mod(&win::ui_remove_col,            &mod::remove_col);
   win_to_mod(&win::ui_close_map,             &mod::close_map);
-  win_to_mod(&win::ui_select_map,            &mod::ui_select_map);
+  win_to_mod(&win::ui_select_map,            &mod::select_map);
   win_to_mod(&win::ui_increase_zoom,         &mod::increase_tile_size);
   win_to_mod(&win::ui_decrease_zoom,         &mod::decrease_tile_size);
   win_to_mod(&win::ui_reset_tile_size,       &mod::reset_tile_size);
   win_to_mod(&win::ui_selected_tool,         &mod::select_tool);
-  win_to_mod(&win::ui_remove_tileset,        &mod::ui_remove_tileset);
+  win_to_mod(&win::ui_remove_tileset,        &mod::remove_tileset);
   win_to_mod(&win::ui_select_tileset,        &mod::select_tileset);
   win_to_mod(&win::ui_rename_tileset,        &mod::set_tileset_name);
   win_to_mod(&win::ui_set_tileset_selection, &mod::set_tileset_selection);
@@ -165,7 +165,7 @@ void app::handle_pan_left()
 void app::handle_new_tileset()
 {
   gui::tileset_dialog::spawn([this](const gui::tileset_info& info) {
-    m_model->ui_add_tileset(info.image,
+    m_model->create_tileset(info.image,
                             info.path,
                             info.name,
                             info.tileWidth,

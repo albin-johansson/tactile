@@ -6,7 +6,6 @@
 #include <optional>  // optional
 #include <utility>   // forward, move, pair
 
-#include "core_fwd.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
@@ -17,7 +16,7 @@ namespace tactile::core {
 /**
  * @class tileset_manager
  *
- * @brief Handles multiple tilesets.
+ * @brief Handles multiple `tileset` instances.
  *
  * @see `tileset`
  *
