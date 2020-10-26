@@ -29,37 +29,38 @@ tileset_image_widget::~tileset_image_widget() noexcept = default;
 
 auto tileset_image_widget::get_adjusted_selection() const -> QRect
 {
-  const auto& geometry = m_rubberBand->geometry();
-
-  const auto gX = geometry.x();
-  const auto gY = geometry.y();
-  const auto gRight = geometry.right();
-  const auto gBottom = geometry.bottom();
+  const auto& rect = m_rubberBand->geometry();
 
   const auto tileWidth = m_tileWidth.get();
   const auto tileHeight = m_tileHeight.get();
 
-  QRect newGeometry;
-  newGeometry.setX(gX - (gX % tileWidth));
-  newGeometry.setY(gY - (gY % tileHeight));
+  QRect adjusted;
+  adjusted.setX(rect.x() - (rect.x() % tileWidth));
+  adjusted.setY(rect.y() - (rect.y() % tileHeight));
 
-  const auto modRight = gRight % tileWidth;
-  newGeometry.setRight(gRight - modRight);
+  const auto modRight = (rect.right() % tileWidth);
+  const auto modBottom = (rect.bottom() % tileHeight);
+  adjusted.setRight(rect.right() - modRight);
+  adjusted.setBottom(rect.bottom() - modBottom);
 
-  const auto modBottom = gBottom % tileHeight;
-  newGeometry.setBottom(gBottom - modBottom);
-
-  if (const auto width = newGeometry.width();
-      (width < tileWidth) || width == (tileWidth + 1)) {
-    newGeometry.setWidth(tileWidth);
+  if ((adjusted.width() < tileWidth) || adjusted.width() == (tileWidth + 1)) {
+    adjusted.setWidth(tileWidth);
   }
 
-  if (const auto height = newGeometry.height();
-      (height < tileHeight) || height == (tileHeight + 1)) {
-    newGeometry.setHeight(tileHeight);
+  if ((adjusted.height() < tileHeight) ||
+      adjusted.height() == (tileHeight + 1)) {
+    adjusted.setHeight(tileHeight);
   }
 
-  return newGeometry;
+  if (modRight > 0 && adjusted.width() != tileWidth) {
+    adjusted.setRight(adjusted.right() + tileWidth);
+  }
+
+  if (modBottom > 0 && adjusted.height() != tileHeight) {
+    adjusted.setBottom(adjusted.bottom() + tileHeight);
+  }
+
+  return adjusted;
 }
 
 void tileset_image_widget::mousePressEvent(QMouseEvent* event)
