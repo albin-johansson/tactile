@@ -87,6 +87,8 @@ set(TACTILE_SOURCE_FILES
         gui/tileset/tileset_tab_manager.hpp
         gui/tileset/tileset_tab_context_menu.cpp
         gui/tileset/tileset_tab_context_menu.hpp
+        gui/tileset/tileset_rubber_band.cpp
+        gui/tileset/tileset_rubber_band.hpp
 
         gui/layer/layer_dock.cpp
         gui/layer/layer_dock.hpp
