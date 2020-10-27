@@ -5,15 +5,12 @@
 
 namespace tactile::gui {
 
-template <typename T>
-concept OpenMapDialogCallback = std::invocable<T, const QString&>;
-
 class open_map_dialog final : public QFileDialog
 {
  public:
   explicit open_map_dialog(QWidget* parent = nullptr);
 
-  template <OpenMapDialogCallback T>
+  template <std::invocable<const QString&> T>
   static void spawn(T&& callback)
   {
     open_map_dialog dialog;
