@@ -243,7 +243,7 @@ void model::create_tileset(const QImage& image,
 void model::remove_tileset(tileset_id id)
 {
   if (auto* document = current_document()) {
-    document->remove_tileset(id);
+    document->ui_remove_tileset(id);
     emit redraw();
   }
 }
