@@ -1,7 +1,5 @@
 #include "tileset_rubber_band.hpp"
 
-#include <QDebug>
-
 namespace tactile::gui {
 
 tileset_rubber_band::tileset_rubber_band(QWidget* parent)
@@ -35,9 +33,6 @@ void tileset_rubber_band::mouse_moved(const QPoint& pos)
 
 void tileset_rubber_band::mouse_released()
 {
-  const auto& geo = geometry();
-  Q_ASSERT(geo.width() >= m_tileWidth.get());
-  Q_ASSERT(geo.height() >= m_tileHeight.get());
   emit finished_selection(get_selection());
 }
 
@@ -58,23 +53,17 @@ void tileset_rubber_band::fit_geometry()
 
 auto tileset_rubber_band::adjusted_geometry() const -> QRect
 {
-  const auto& rect = geometry();
-
+  const auto& current = geometry();
   const auto tw = m_tileWidth.get();
   const auto th = m_tileHeight.get();
 
   QRect adjusted;
-  adjusted.setX(rect.x() - (rect.x() % tw));
-  adjusted.setY(rect.y() - (rect.y() % th));
+  adjusted.setX(current.x() - (current.x() % tw));
+  adjusted.setY(current.y() - (current.y() % th));
 
-  const auto modRight = rect.right() % tw;
-  const auto right = rect.right() - modRight;
-
-  const auto modBottom = rect.bottom() % th;
-  const auto bottom = rect.bottom() - modBottom;
-
-  adjusted.setRight(right - 1);
-  adjusted.setBottom(bottom - 1);
+  // Subtracts 1 at the end to avoid width that is 1 pixel large than tile size
+  adjusted.setRight(current.right() - (current.right() % tw) - 1);
+  adjusted.setBottom(current.bottom() - (current.bottom() % th) - 1);
 
   adjusted.setWidth(std::max(tw, adjusted.width()));
   adjusted.setHeight(std::max(th, adjusted.height()));
@@ -95,16 +84,13 @@ auto tileset_rubber_band::adjusted_geometry() const -> QRect
 auto tileset_rubber_band::get_selection() const -> core::tileset::selection
 {
   const auto& geo = geometry();
-
   const auto tw = m_tileWidth.get();
   const auto th = m_tileHeight.get();
 
-  const core::position topLeft{row_t{geo.y() / th}, col_t{geo.x() / tw}};
-  const core::position bottomRight{
-      std::max(row_t{geo.bottom() / th}, topLeft.row()),
-      std::max(col_t{geo.right() / tw}, topLeft.col())};
-
-  return {topLeft, bottomRight};
+  const core::position tl{row_t{geo.y() / th}, col_t{geo.x() / tw}};
+  const core::position br{std::max(row_t{geo.bottom() / th}, tl.row()),
+                          std::max(col_t{geo.right() / tw}, tl.col())};
+  return {tl, br};
 }
 
 }  // namespace tactile::gui
