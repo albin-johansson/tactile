@@ -1,5 +1,7 @@
 #include "tileset_rubber_band.hpp"
 
+#include <algorithm>  // max
+
 namespace tactile::gui {
 
 tileset_rubber_band::tileset_rubber_band(QWidget* parent)
@@ -61,7 +63,7 @@ auto tileset_rubber_band::adjusted_geometry() const -> QRect
   adjusted.setX(current.x() - (current.x() % tw));
   adjusted.setY(current.y() - (current.y() % th));
 
-  // Subtracts 1 at the end to avoid width that is 1 pixel large than tile size
+  // Subtracts 1 at the end to avoid size that is 1 pixel larger than tile size
   adjusted.setRight(current.right() - (current.right() % tw) - 1);
   adjusted.setBottom(current.bottom() - (current.bottom() % th) - 1);
 

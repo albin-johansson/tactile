@@ -2,7 +2,6 @@
 
 #include <QGridLayout>
 #include <QMouseEvent>
-#include <algorithm>  // max
 
 #include "tileset_image_label.hpp"
 #include "tileset_rubber_band.hpp"
