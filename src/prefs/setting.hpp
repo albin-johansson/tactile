@@ -2,11 +2,19 @@
 
 #include <QSettings>
 #include <QString>
-#include <concepts>  // invocable
+#include <concepts>  // invocable, same_as
 #include <optional>  // optional
 #include <utility>   // forward
 
 namespace tactile::prefs {
+
+// clang-format off
+template <typename T>
+concept negatable = requires(T t)
+{
+  { !t } -> std::convertible_to<T>;
+};
+// clang-format on
 
 /**
  * \class setting
@@ -96,6 +104,20 @@ class setting final
   {
     if (m_value) {
       callable(*m_value);
+    }
+  }
+
+  /**
+   * \brief Toggles the value of the setting.
+   *
+   * \note This is only available when the underlying setting type is negatable.
+   *
+   * \since 0.1.0
+   */
+  void toggle() requires negatable<T>
+  {
+    if (m_value) {
+      set(!*m_value);
     }
   }
 
