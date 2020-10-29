@@ -219,41 +219,41 @@ class model final : public QObject
   void select_tool(tool_id id);
 
   /**
-   * \copydoc map_manager::select_tileset(tileset_id)
+   * \copydoc map_document::select_tileset()
    */
   void select_tileset(tileset_id id);
 
   /**
-   * \copydoc map_manager::set_tileset_selection()
+   * \copydoc map_document::set_tileset_selection()
    */
   void set_tileset_selection(const tileset::selection& selection);
 
   /**
-   * \copydoc map_manager::set_layer_visibility()
+   * \copydoc map_document::set_layer_visibility()
    * \signal `redraw`
    */
   void set_layer_visibility(layer_id id, bool visible);
 
   /**
-   * \copydoc map_manager::set_layer_opacity()
+   * \copydoc map_document::set_layer_opacity()
    * \signal `redraw`
    */
   void set_layer_opacity(layer_id id, double opacity);
 
   /**
-   * \copydoc map_manager::set_layer_name()
+   * \copydoc map_document::set_layer_name()
    * \signal `redraw`
    */
   void set_layer_name(layer_id id, const QString& name);
 
   /**
-   * \copydoc map_manager::move_layer_back()
+   * \copydoc map_document::move_layer_back()
    * \signal `redraw`
    */
   void move_layer_back(layer_id id);
 
   /**
-   * \copydoc map_manager::move_layer_forward()
+   * \copydoc map_document::move_layer_forward()
    * \signal `redraw`
    */
   void move_layer_forward(layer_id id);
@@ -289,7 +289,7 @@ class model final : public QObject
   void reset_tile_size();
 
   /**
-   * \copydoc map_manager::add_tileset()
+   * \copydoc map_document::add_tileset()
    */
   void create_tileset(const QImage& image,
                       const QFileInfo& path,
@@ -298,7 +298,7 @@ class model final : public QObject
                       tile_height tileHeight);
 
   /**
-   * \copydoc map_manager::remove_tileset()
+   * \copydoc map_document::ui_remove_tileset()
    * \signal `redraw`
    */
   void remove_tileset(tileset_id id);
