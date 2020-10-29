@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package>
+  <DisplayName>The tactile map editor</DisplayName>
+  <Description>Install the tactile application.</Description>
+  <Version>0.1.0</Version>
+  <ReleaseDate>2020-10-29</ReleaseDate>
+  <Licenses>
+    <License name="GPL-3.0" file="LICENSE" />
+  </Licenses>
+  <Default>true</Default>
+  <ForcedInstallation>true</ForcedInstallation>
+</Package>
