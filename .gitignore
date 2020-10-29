@@ -42,3 +42,4 @@ cmake-build-*
 
 # Allow all necessary installer data and metainformation
 !installer/packages/com.albinjohansson.tactile/**/*
+!installer/*
