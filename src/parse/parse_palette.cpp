@@ -65,8 +65,7 @@ void parse_group(const QJsonObject& json,
   QJsonParseError error{};
   const auto document = QJsonDocument::fromJson(themeFile.readAll(), &error);
   if (document.isNull()) {
-    throw tactile_error{"Couldn't open/find JSON theme file: " +
-                        error.errorString().toStdString()};
+    throw tactile_error{"Couldn't open/find JSON theme file"};
   }
 
   Q_ASSERT(document.isObject());

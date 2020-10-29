@@ -13,7 +13,6 @@ set(TACTILE_SOURCE_FILES
         core/model.hpp
         core/model.cpp
         core/tactile_error.hpp
-        core/tactile_error.cpp
         core/position.hpp
         core/tile_id.hpp
         core/tile_width.hpp

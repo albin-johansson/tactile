@@ -20,12 +20,16 @@ class tactile_error final : public std::exception
    *
    * \since 0.1.0
    */
-  explicit tactile_error(std::string what);
+  explicit tactile_error(czstring what) : m_what{what ? what : "N/A"}
+  {}
 
-  [[nodiscard]] auto what() const noexcept -> czstring override;
+  [[nodiscard]] auto what() const noexcept -> czstring override
+  {
+    return m_what;
+  }
 
  private:
-  std::string m_what{"N/A"};
+  czstring m_what{"N/A"};
 };
 
 }  // namespace tactile
