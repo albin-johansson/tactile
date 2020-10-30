@@ -1,7 +1,5 @@
 #include "remove_layer.hpp"
 
-#include <utility>  // move
-
 #include "map_document.hpp"
 #include "tactile_error.hpp"
 
