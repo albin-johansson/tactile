@@ -217,6 +217,11 @@ auto map::tile_at(const position& position) const -> std::optional<tile_id>
   return current_layer().tile_at(position);
 }
 
+auto map::index_of(layer_id id) const -> std::optional<int>
+{
+  return m_layers.index_of(id);
+}
+
 auto map::is_visible(layer_id id) const -> bool
 {
   if (const auto* layer = find_layer(id)) {

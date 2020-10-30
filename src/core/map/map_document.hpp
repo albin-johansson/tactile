@@ -378,6 +378,14 @@ class map_document final : public QObject
   [[nodiscard]] auto redo_text() const -> QString;
 
   /**
+   * \copydoc map::index_of()
+   */
+  [[nodiscard]] auto index_of_layer(layer_id id) const -> std::optional<int>
+  {
+    return m_map->index_of(id);
+  }
+
+  /**
    * \copydoc map::in_bounds()
    */
   [[nodiscard]] auto in_bounds(const position& pos) const -> bool

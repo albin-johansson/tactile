@@ -361,6 +361,18 @@ class map final
       -> std::optional<tile_id>;
 
   /**
+   * \brief Returns the index associated with the specified layer.
+   *
+   * \param id the ID associated with the layer to obtain the index of.
+   *
+   * \return the index of the specified layer; `std::nullopt` if the layer
+   * wasn't found.
+   *
+   * \since 0.1.0
+   */
+  [[nodiscard]] auto index_of(layer_id id) const -> std::optional<int>;
+
+  /**
    * \brief Indicates whether or not the layer associated with the specified
    * ID is visible.
    *

@@ -26,6 +26,7 @@ class remove_layer final : public QUndoCommand
   core::map_document* m_document{};
   std::shared_ptr<core::layer> m_layer;
   layer_id m_id;
+  int m_index{};
 };
 
 }  // namespace cmd
