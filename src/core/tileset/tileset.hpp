@@ -144,7 +144,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  template <std::invocable<position, position> T>
+  template <std::invocable<const position&, const position&> T>
   void iterate_selection(const position& mapOrigin, T&& callable) const
   {
     if (m_selection) {
