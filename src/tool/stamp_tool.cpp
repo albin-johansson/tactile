@@ -16,18 +16,20 @@ void stamp_tool::update_stamp_sequence(map_document& map,
                                        const tileset& ts,
                                        const position& origin)
 {
-  ts.iterate_selection(origin, [&](position mapPos, position tilesetPos) {
-    if (map.in_bounds(mapPos)) {
-      const auto newID = ts.tile_at(tilesetPos);
+  ts.iterate_selection(origin,
+                       [&](const position& mapPos, const position& tilesetPos) {
+                         if (map.in_bounds(mapPos)) {
+                           const auto newID = ts.tile_at(tilesetPos);
 
-      if (!m_oldState.contains(mapPos)) {
-        m_oldState.emplace(mapPos, map.tile_at(mapPos).value());
-      }
-      m_sequence.emplace(mapPos, newID);
+                           if (!m_oldState.contains(mapPos)) {
+                             m_oldState.emplace(mapPos,
+                                                map.tile_at(mapPos).value());
+                           }
+                           m_sequence.emplace(mapPos, newID);
 
-      map.set_tile(mapPos, newID);
-    }
-  });
+                           map.set_tile(mapPos, newID);
+                         }
+                       });
 }
 
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
