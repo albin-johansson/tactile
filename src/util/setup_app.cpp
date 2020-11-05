@@ -34,12 +34,11 @@ void setup_app()
 {
   init_surface_format();
 
-  QGuiApplication::setWindowIcon(QIcon{":logo/windowIcon"});
-
-  QApplication::setStyle(QStyleFactory::create("Fusion"));
+  QApplication::setWindowIcon(QIcon{QStringLiteral(u":logo/windowIcon")});
+  QApplication::setStyle(QStyleFactory::create(QStringLiteral(u"Fusion")));
   QApplication::setApplicationVersion(version());
-  QApplication::setOrganizationName("albin-johansson");
-  QApplication::setApplicationName("tactile");
+  QApplication::setOrganizationName(QStringLiteral(u"albin-johansson"));
+  QApplication::setApplicationName(QStringLiteral(u"tactile"));
 
   prefs::validate();
 
