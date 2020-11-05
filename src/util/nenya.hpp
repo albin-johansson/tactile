@@ -17,211 +17,109 @@ namespace nenya {
 // clang-format off
 
 template <typename T>
-concept PreIncrement = requires(T t)
-{
-  { ++t } -> std::convertible_to<T>;
-};
+concept pre_increment = requires(T t) { { ++t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept PostIncrement = requires(T t)
-{
-  { t++ } -> std::convertible_to<T>;
-};
+concept post_increment = requires(T t) { { t++ } -> std::convertible_to<T>; };
 
 template <typename T>
-concept PreDecrement = requires(T t)
-{
-  { --t } -> std::convertible_to<T>;
-};
+concept pre_decrement = requires(T t) { { --t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept PostDecrement = requires(T t)
-{
-  { t-- } -> std::convertible_to<T>;
-};
+concept post_decrement = requires(T t) { { t-- } -> std::convertible_to<T>; };
 
 template <typename T>
-concept Addition = requires(T t)
-{
-  { t + t } -> std::convertible_to<T>;
-};
+concept addition = requires(T t) { { t + t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept AdditionAssignment = requires(T t)
-{
-  { t += t };
-};
+concept addition_assignment = requires(T t) { { t += t }; };
 
 template <typename T>
-concept UnaryPlus = requires(T t)
-{
-  { +t } -> std::convertible_to<T>;
-};
+concept unary_plus = requires(T t) { { +t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept Subtraction = requires(T t)
-{
-  { t - t } -> std::convertible_to<T>;
-};
+concept subtraction = requires(T t) { { t - t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept SubtractionAssigment = requires(T t)
-{
-  { t -= t };
-};
+concept subtraction_assignment = requires(T t) { { t -= t }; };
 
 template <typename T>
-concept UnaryMinus = requires(T t)
-{
-  { -t } -> std::convertible_to<T>;
-};
+concept unary_minus = requires(T t) { { -t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept Multiplication = requires(T t)
-{
-  { t * t } -> std::convertible_to<T>;
-};
+concept multiplication = requires(T t) { { t * t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept MultiplicationAssignment = requires(T t)
-{
-  { t *= t };
-};
+concept multiplication_assignment = requires(T t) { { t *= t }; };
 
 template <typename T>
-concept Division = requires(T t)
-{
-  { t / t } -> std::convertible_to<T>;
-};
+concept division = requires(T t) { { t / t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept DivisionAssignment = requires(T t)
-{
-  { t /= t };
-};
+concept division_assignment = requires(T t) { { t /= t }; };
 
 template <typename T>
-concept Modulo = requires(T t)
-{
-  { t % t } -> std::convertible_to<T>;
-};
+concept modulo = requires(T t) { { t % t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept ModuloAssignment = requires(T t)
-{
-  { t %= t };
-};
+concept modulo_assignment = requires(T t) { { t %= t }; };
 
 template <typename T>
-concept BitwiseNOT = requires(T t)
-{
-  { ~t } -> std::convertible_to<T>;
-};
+concept bit_not = requires(T t) { { ~t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept BitwiseAND = requires(T t)
-{
-  { t& t } -> std::convertible_to<T>;
-};
+concept bit_and = requires(T t) { { t& t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept BitwiseANDAssignment = requires(T t)
-{
-  { t &= t };
-};
+concept bit_and_assignment = requires(T t) { { t &= t }; };
 
 template <typename T>
-concept BitwiseOR = requires(T t)
-{
-  { t | t } -> std::convertible_to<T>;
-};
+concept bit_or = requires(T t) { { t | t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept BitwiseORAssignment = requires(T t)
-{
-  { t |= t };
-};
+concept bit_or_assignment = requires(T t) { { t |= t }; };
 
 template <typename T>
-concept XOR = requires(T t)
-{
-  { t ^ t } -> std::convertible_to<T>;
-};
+concept bit_xor = requires(T t) { { t ^ t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept XORAssignment = requires(T t)
-{
-  { t ^= t };
-};
+concept bit_xor_assignment = requires(T t) { { t ^= t }; };
 
 template <typename T>
-concept LeftShift = requires(T t)
-{
-  { t << t } -> std::convertible_to<T>;
-};
+concept left_shift = requires(T t) { { t << t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept LeftShiftAssignment = requires(T t)
-{
-  { t <<= t };
-};
+concept left_shift_assignment = requires(T t) { { t <<= t }; };
 
 template <typename T>
-concept RightShift = requires(T t)
-{
-  { t >> t } -> std::convertible_to<T>;
-};
+concept right_shift = requires(T t) { { t >> t } -> std::convertible_to<T>; };
 
 template <typename T>
-concept RightShiftAssignment = requires(T t)
-{
-  { t >>= t };
-};
+concept right_shift_assignment = requires(T t) { { t >>= t }; };
 
 template <typename T>
-concept BoolConversion = requires(T t)
-{
-  { static_cast<bool>(t) };
-};
+concept bool_convertible = requires(T t) { { static_cast<bool>(t) }; };
 
 template <typename T>
-concept LessThan = requires(T t)
-{
-  { t < t } -> std::convertible_to<bool>;
-};
+concept less = requires(T t) { { t < t } -> std::convertible_to<bool>; };
 
 template <typename T>
-concept LessThanOrEqual = requires(T t)
-{
-  { t <= t } -> std::convertible_to<bool>;
-};
+concept less_equal = requires(T t) { { t <= t } -> std::convertible_to<bool>; };
 
 template <typename T>
-concept GreaterThan = requires(T t)
-{
-  { t > t } -> std::convertible_to<bool>;
-};
+concept greater = requires(T t) { { t > t } -> std::convertible_to<bool>; };
 
 template <typename T>
-concept GreaterThanOrEqual = requires(T t)
-{
-  { t >= t } -> std::convertible_to<bool>;
-};
+concept greater_equal = requires(T t) { { t >= t } -> std::convertible_to<bool>; };
 
 template <typename T>
-concept LogicalNegation = requires(T t)
-{
-  { !t } -> std::convertible_to<bool>;
-};
+concept negation = requires(T t) { { !t } -> std::convertible_to<bool>; };
 
 template <typename T, typename Index>
-concept Subscript = requires(T t, Index i)
-{
-  { t[i] };
-};
+concept subscript = requires(T t, Index i) { { t[i] }; };
 
 template<typename T>
-concept Hashable = requires(T a) {
+concept hashable = requires(T a) {
   { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
   noexcept(std::hash<T>{}(a));
 };
@@ -274,72 +172,70 @@ class mirror_type
   /// \name Unary operators
   /// \{
 
-  constexpr auto operator++() noexcept(noexcept(++m_value)) -> mirror_type&
-      requires PreIncrement<Rep>
+  constexpr mirror_type& operator++() noexcept(noexcept(++m_value))
+      requires pre_increment<Rep>
   {
     ++m_value;
     return *this;
   }
 
-  constexpr auto operator++(int) noexcept(noexcept(m_value++)) -> mirror_type
-      requires PostIncrement<Rep>
+  constexpr mirror_type operator++(int) noexcept(noexcept(m_value++))
+      requires post_increment<Rep>
   {
     return mirror_type{m_value++};
   }
 
-  constexpr auto operator--() noexcept(noexcept(--m_value)) -> mirror_type&
-  requires PreIncrement<Rep>
+  constexpr mirror_type& operator--() noexcept(noexcept(--m_value))
+      requires pre_decrement<Rep>
   {
     --m_value;
     return *this;
   }
 
-  constexpr auto operator--(int) noexcept(noexcept(m_value--)) -> mirror_type
-  requires PostIncrement<Rep>
+  constexpr mirror_type operator--(int) noexcept(noexcept(m_value--))
+      requires post_decrement<Rep>
   {
     return mirror_type{m_value--};
   }
 
   [[nodiscard]]
   constexpr auto operator+() const noexcept(noexcept(+m_value))
-      requires UnaryPlus<Rep>
+      requires unary_plus<Rep>
   {
     return mirror_type{+m_value};
   }
 
   [[nodiscard]]
   constexpr auto operator-() const noexcept(noexcept(-m_value))
-      requires UnaryMinus<Rep>
+      requires unary_minus<Rep>
   {
     return mirror_type{-m_value};
   }
 
   [[nodiscard]]
   constexpr auto operator~() const noexcept(noexcept(~m_value))
-      requires BitwiseNOT<Rep>
+      requires bit_not<Rep>
   {
     return mirror_type{~m_value};
   }
 
   [[nodiscard]]
   constexpr auto operator!() const noexcept(noexcept(!m_value))
-      requires LogicalNegation<Rep>
+      requires negation<Rep>
   {
     return !m_value;
   }
 
-  template <typename I>
-  constexpr decltype(auto) operator[](const I& key)
+  template <typename Index> requires subscript<Rep, Index>
+  constexpr decltype(auto) operator[](const Index& key)
       noexcept(noexcept(m_value.operator[](key)))
-      requires Subscript<Rep, I>
   {
     return m_value[key];
   }
 
-  template <typename I>
-  constexpr decltype(auto) operator[](const I& key) const
+  template <typename Index> requires subscript<Rep, Index>
+  constexpr decltype(auto) operator[](const Index& key) const
       noexcept(noexcept(m_value.operator[](key)))
-      requires Subscript<Rep, I>
   {
     return m_value[key];
   }
@@ -352,7 +248,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator+(const mirror_type& rhs) const
       noexcept(noexcept(m_value + rhs.m_value))
-      requires Addition<Rep>
+      requires addition<Rep>
   {
     return mirror_type{m_value + rhs.m_value};
   }
@@ -360,7 +256,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator-(const mirror_type& rhs) const
       noexcept(noexcept(m_value - rhs.m_value))
-      requires Subtraction<Rep>
+      requires subtraction<Rep>
   {
     return mirror_type{m_value - rhs.m_value};
   }
@@ -368,7 +264,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator/(const mirror_type& rhs) const
       noexcept(noexcept(m_value / rhs.m_value))
-      requires Division<Rep>
+      requires division<Rep>
   {
     return mirror_type{m_value / rhs.m_value};
   }
@@ -376,7 +272,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator*(const mirror_type& rhs) const
       noexcept(noexcept(m_value * rhs.m_value))
-      requires Multiplication<Rep>
+      requires multiplication<Rep>
   {
     return mirror_type{m_value * rhs.m_value};
   }
@@ -384,7 +280,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator%(const mirror_type& rhs) const
       noexcept(noexcept(m_value % rhs.m_value))
-      requires Modulo<Rep>
+      requires modulo<Rep>
   {
     return mirror_type{m_value % rhs.m_value};
   }
@@ -392,7 +288,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator&(const mirror_type& rhs) const
       noexcept(noexcept(m_value & rhs.m_value))
-      requires BitwiseAND<Rep>
+      requires bit_and<Rep>
   {
     return mirror_type{m_value & rhs.m_value};
   }
@@ -400,7 +296,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator|(const mirror_type& rhs) const
       noexcept(noexcept(m_value | rhs.m_value))
-      requires BitwiseOR<Rep>
+      requires bit_or<Rep>
   {
     return mirror_type{m_value | rhs.m_value};
   }
@@ -408,7 +304,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator^(const mirror_type& rhs) const
       noexcept(noexcept(m_value ^ rhs.m_value))
-      requires XOR<Rep>
+      requires bit_xor<Rep>
   {
     return mirror_type{m_value ^ rhs.m_value};
   }
@@ -416,7 +312,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator<<(const mirror_type& rhs) const
       noexcept(noexcept(m_value << rhs.m_value))
-      requires LeftShift<Rep>
+      requires left_shift<Rep>
   {
     return mirror_type{m_value << rhs.m_value};
   }
@@ -424,7 +320,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator>>(const mirror_type& rhs) const
       noexcept(noexcept(m_value >> rhs.m_value))
-      requires RightShift<Rep>
+      requires right_shift<Rep>
   {
     return mirror_type{m_value >> rhs.m_value};
   }
@@ -434,81 +330,81 @@ class mirror_type
   /// \name Assignment operators
   /// \{
 
-  constexpr auto operator+=(const mirror_type& rhs)
+  constexpr mirror_type& operator+=(const mirror_type& rhs)
       noexcept(noexcept(m_value += rhs.m_value))
-      -> mirror_type& requires AdditionAssignment<Rep>
+      requires addition_assignment<Rep>
   {
     m_value += rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator-=(const mirror_type& rhs)
+  constexpr mirror_type& operator-=(const mirror_type& rhs)
       noexcept(noexcept(m_value -= rhs.m_value))
-      -> mirror_type& requires SubtractionAssigment<Rep>
+      requires subtraction_assignment<Rep>
   {
     m_value -= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator/=(const mirror_type& rhs)
+  constexpr mirror_type& operator/=(const mirror_type& rhs)
       noexcept(noexcept(m_value /= rhs.m_value))
-      -> mirror_type& requires DivisionAssignment<Rep>
+      requires division_assignment<Rep>
   {
     m_value /= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator*=(const mirror_type& rhs)
+  constexpr mirror_type& operator*=(const mirror_type& rhs)
       noexcept(noexcept(m_value *= rhs.m_value))
-      -> mirror_type& requires MultiplicationAssignment<Rep>
+      requires multiplication_assignment<Rep>
   {
     m_value *= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator%=(const mirror_type& rhs)
+  constexpr mirror_type& operator%=(const mirror_type& rhs)
       noexcept(noexcept(m_value %= rhs.m_value))
-      -> mirror_type& requires ModuloAssignment<Rep>
+      requires modulo_assignment<Rep>
   {
     m_value %= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator&=(const mirror_type& rhs)
+  constexpr mirror_type& operator&=(const mirror_type& rhs)
       noexcept(noexcept(m_value &= rhs.m_value))
-      -> mirror_type& requires BitwiseANDAssignment<Rep>
+      requires bit_and_assignment<Rep>
   {
     m_value &= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator|=(const mirror_type& rhs)
+  constexpr mirror_type& operator|=(const mirror_type& rhs)
       noexcept(noexcept(m_value |= rhs.m_value))
-      -> mirror_type& requires BitwiseORAssignment<Rep>
+      requires bit_or_assignment<Rep>
   {
     m_value |= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator^=(const mirror_type& rhs)
+  constexpr mirror_type& operator^=(const mirror_type& rhs)
       noexcept(noexcept(m_value ^= rhs.m_value))
-      -> mirror_type& requires XORAssignment<Rep>
+      requires bit_xor_assignment<Rep>
   {
     m_value ^= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator<<=(const mirror_type& rhs)
+  constexpr mirror_type& operator<<=(const mirror_type& rhs)
       noexcept(noexcept(m_value <<= rhs.m_value))
-      -> mirror_type& requires LeftShiftAssignment<Rep>
+      requires left_shift_assignment<Rep>
   {
     m_value <<= rhs.m_value;
     return *this;
   }
 
-  constexpr auto operator>>=(const mirror_type& rhs)
+  constexpr mirror_type& operator>>=(const mirror_type& rhs)
       noexcept(noexcept(m_value >>= rhs.m_value))
-      -> mirror_type& requires RightShiftAssignment<Rep>
+      requires right_shift_assignment<Rep>
   {
     m_value >>= rhs.m_value;
     return *this;
@@ -538,7 +434,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator<(const mirror_type& rhs) const
       noexcept(noexcept(m_value < rhs.m_value))
-      requires LessThan<Rep>
+      requires less<Rep>
   {
     return m_value < rhs.m_value;
   }
@@ -546,7 +442,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator<=(const mirror_type& rhs) const
       noexcept(noexcept(m_value <= rhs.m_value))
-      requires LessThanOrEqual<Rep>
+      requires less_equal<Rep>
   {
     return m_value <= rhs.m_value;
   }
@@ -554,7 +450,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator>(const mirror_type& rhs) const
       noexcept(noexcept(m_value > rhs.m_value))
-      requires GreaterThan<Rep>
+      requires greater<Rep>
   {
     return m_value > rhs.m_value;
   }
@@ -562,7 +458,7 @@ class mirror_type
   [[nodiscard]]
   constexpr auto operator>=(const mirror_type& rhs) const
       noexcept(noexcept(m_value >= rhs.m_value))
-      requires GreaterThanOrEqual<Rep>
+      requires greater_equal<Rep>
   {
     return m_value >= rhs.m_value;
   }
@@ -571,22 +467,22 @@ class mirror_type
 
   /// \} end of comparison operators
 
-  [[nodiscard]] constexpr auto get() noexcept(nothrowCopy) -> Rep&
+  [[nodiscard]] constexpr Rep& get() noexcept(nothrowCopy)
   {
     return m_value;
   }
 
-  [[nodiscard]] constexpr auto get() const noexcept(nothrowCopy) -> const Rep&
+  [[nodiscard]] constexpr const Rep& get() const noexcept(nothrowCopy)
   {
     return m_value;
   }
 
-  auto operator->() const noexcept -> const Rep*
+  const Rep* operator->() const noexcept
   {
     return &m_value;
   }
 
-  auto operator->() noexcept -> Rep*
+  Rep* operator->() noexcept
   {
     return &m_value;
   };
@@ -600,7 +496,7 @@ class mirror_type
 
   constexpr explicit operator bool() const
       noexcept(noexcept(static_cast<bool>(m_value)))
-      requires BoolConversion<Rep> && (!std::same_as<Rep, bool>)
+      requires bool_convertible<Rep> && (!std::same_as<Rep, bool>)
   {
     return static_cast<bool>(m_value);
   }
@@ -617,12 +513,12 @@ class mirror_type
 
 namespace std {
 
-template <typename Rep, typename Tag> requires ::nenya::Hashable<Rep>
-struct hash<::nenya::mirror_type<Rep, Tag>> final
+template <nenya::hashable Rep, typename Tag>
+struct hash<nenya::mirror_type<Rep, Tag>> final
 {
-  using mirror_type = ::nenya::mirror_type<Rep, Tag>;
+  using mirror_type = nenya::mirror_type<Rep, Tag>;
 
-  auto operator()(const mirror_type& key) const noexcept -> size_t
+  size_t operator()(const mirror_type& key) const noexcept
   {
     return std::hash<Rep>{}(key.get());
   }
