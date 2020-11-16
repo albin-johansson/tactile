@@ -1,6 +1,5 @@
 #pragma once
 
-#include <algorithm>  // remove_if
 #include <concepts>   // convertible_to, invocable
 
 namespace tactile {

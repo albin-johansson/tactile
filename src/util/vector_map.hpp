@@ -1,7 +1,9 @@
 #pragma once
 
-#include <algorithm>  // find_if, swap_iter
+#include <algorithm>  // swap_iter
+#include <iterator>   // distance
 #include <optional>   // optional
+#include <ranges>     // find_if
 #include <stdexcept>  // out_of_range
 #include <utility>    // forward, pair, make_pair
 #include <vector>     // vector
@@ -193,7 +195,7 @@ class vector_map final
    */
   [[nodiscard]] auto find(const key_type& key) -> iterator
   {
-    return std::find_if(m_data.begin(), m_data.end(), [key](const auto& pair) {
+    return std::ranges::find_if(m_data, [key](const auto& pair) {
       return pair.first == key;
     });
   }
@@ -203,7 +205,7 @@ class vector_map final
    */
   [[nodiscard]] auto find(const key_type& key) const -> const_iterator
   {
-    return std::find_if(m_data.begin(), m_data.end(), [key](const auto& pair) {
+    return std::ranges::find_if(m_data, [key](const auto& pair) {
       return pair.first == key;
     });
   }
