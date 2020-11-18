@@ -1,13 +1,16 @@
 #include "open_tmx.hpp"
 
 #include <QtXml>
+#include <optional>  // optional
 
 #include "string_utils.hpp"
-#include "tactile_error.hpp"
 #include "xml_utils.hpp"
 
 namespace tactile::service {
 namespace {
+
+using layer_parse_result =
+    std::optional<std::pair<layer_id, std::shared_ptr<core::layer>>>;
 
 void add_tileset_common(core::map_document* document,
                         const QDomElement& elem,
@@ -36,7 +39,7 @@ void add_tileset(core::map_document* document,
                  const QDomNode& tilesetNode)
 {
   const auto elem = xml::to_elem(tilesetNode);
-  Q_ASSERT(elem.tagName() == QStringLiteral(u"tileset"));
+  Q_ASSERT(elem.tagName() == QStringView{u"tileset"});
 
   const auto gid = xml::int_attr<tile_id>(elem, QStringLiteral(u"firstgid"));
 
@@ -49,11 +52,15 @@ void add_tileset(core::map_document* document,
   }
 }
 
-[[nodiscard]] auto make_layer(const QDomNode& layerNode)
-    -> std::pair<layer_id, std::shared_ptr<core::layer>>
+[[nodiscard]] auto make_layer(const QDomNode& layerNode) -> layer_parse_result
 {
   const auto elem = xml::to_elem(layerNode);
   Q_ASSERT(elem.tagName() == QStringLiteral(u"layer"));
+
+  const auto type = elem.attribute(QStringLiteral(u"type"));
+  if (type != QStringLiteral(u"tilelayer")) {
+    return std::nullopt;
+  }
 
   const auto id = xml::int_attr<layer_id>(elem, QStringLiteral(u"id"));
   const auto rows = xml::int_attr<row_t>(elem, QStringLiteral(u"height"));
@@ -75,7 +82,9 @@ void add_tileset(core::map_document* document,
     ++index;
   }
 
-  return {id, layer};
+  layer_parse_result result;
+  result.emplace(id, layer);
+  return result;
 }
 
 }  // namespace
@@ -95,11 +104,13 @@ auto open_tmx_map(const QFileInfo& path) -> core::map_document*
 
   bool first{true};
   xml::each_elem(root, QStringLiteral(u"layer"), [&](const QDomNode& node) {
-    auto [id, layer] = make_layer(node);
-    document->add_layer(id, layer);
-    if (first) {
-      first = false;
-      document->select_layer(id);
+    if (auto result = make_layer(node); result) {
+      auto [id, layer] = *result;
+      document->add_layer(id, layer);
+      if (first) {
+        first = false;
+        document->select_layer(id);
+      }
     }
   });
 

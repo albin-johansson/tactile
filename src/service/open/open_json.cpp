@@ -61,6 +61,9 @@ void add_layers(core::map_document* document, const QJsonArray& layers)
   bool first{true};
   for (const auto& elem : layers) {
     const auto object = elem.toObject();
+    if (object.value(u"type").toString() != QStringView{u"tilelayer"}) {
+      continue;
+    }
 
     const layer_id id{object.value(u"id").toInt(-1)};
     const row_t rows{object.value(u"height").toInt(-1)};
