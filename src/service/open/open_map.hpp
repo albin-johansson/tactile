@@ -15,7 +15,7 @@ namespace tactile::service {
  *
  * \param path the path of the save file.
  *
- * \return a pointer to the created map document.
+ * \return a pointer to the created map document; null if something went wrong.
  *
  * \since 0.1.0
  */

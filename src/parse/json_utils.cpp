@@ -7,7 +7,7 @@
 
 namespace tactile::json {
 
-auto from_file(const QFileInfo& path) -> QJsonDocument
+auto from_file(const QFileInfo& path) -> std::optional<QJsonDocument>
 {
   QFile file{path.absoluteFilePath()};
   file.open(QFile::ReadOnly | QFile::Text);
@@ -16,7 +16,7 @@ auto from_file(const QFileInfo& path) -> QJsonDocument
 
   if (json.isNull()) {
     file.close();
-    throw tactile_error{"Failed to open JSON map file!"};
+    return std::nullopt;
   } else {
     file.close();
   }
@@ -24,7 +24,7 @@ auto from_file(const QFileInfo& path) -> QJsonDocument
   return json;
 }
 
-void write_file(const QFileInfo& path, const QJsonDocument& document)
+auto write_file(const QFileInfo& path, const QJsonDocument& document) -> bool
 {
   QSaveFile file{path.absoluteFilePath()};
 
@@ -38,8 +38,10 @@ void write_file(const QFileInfo& path, const QJsonDocument& document)
 
   if (const auto result = file.write(document.toJson(format)); result == -1) {
     file.cancelWriting();
+    return false;
   } else {
     file.commit();
+    return true;
   }
 }
 

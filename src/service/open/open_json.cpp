@@ -10,7 +10,6 @@
 
 #include "json_utils.hpp"
 #include "layer.hpp"
-#include "tactile_error.hpp"
 #include "tileset.hpp"
 
 namespace tactile::service {
@@ -36,9 +35,9 @@ void add_tileset_common(core::map_document* document,
   document->add_tileset(std::move(tileset));
 }
 
-void add_tilesets(core::map_document* document,
-                  const QFileInfo& path,
-                  const QJsonArray& tilesets)
+[[nodiscard]] auto add_tilesets(core::map_document* document,
+                                const QFileInfo& path,
+                                const QJsonArray& tilesets) -> bool
 {
   for (const auto& elem : tilesets) {
     const auto object = elem.toObject();
@@ -49,14 +48,21 @@ void add_tilesets(core::map_document* document,
       const auto source = object.value(u"source").toString();
       const auto external =
           json::from_file(path.dir().absoluteFilePath(source));
-      add_tileset_common(document, external.object(), path, gid);
+      if (external) {
+        add_tileset_common(document, external->object(), path, gid);
+      } else {
+        return false;
+      }
     } else {
       add_tileset_common(document, object, path, gid);
     }
   }
+
+  return true;
 }
 
-void add_layers(core::map_document* document, const QJsonArray& layers)
+[[nodiscard]] auto add_layers(core::map_document* document,
+                              const QJsonArray& layers) -> bool
 {
   bool first{true};
   for (const auto& elem : layers) {
@@ -91,6 +97,8 @@ void add_layers(core::map_document* document, const QJsonArray& layers)
       document->select_layer(id);
     }
   }
+
+  return true;
 }
 
 }  // namespace
@@ -100,15 +108,25 @@ auto open_json_map(const QFileInfo& path) -> core::map_document*
   Q_ASSERT(path.exists());
 
   const auto json = json::from_file(path.absoluteFilePath());
-  const auto root = json.object();
+  if (!json) {
+    return nullptr;
+  }
+
+  const auto root = json->object();
 
   auto* document = new core::map_document{};
   document->set_next_layer_id(layer_id{root.value(u"nextlayerid").toInt(1)});
 
-  add_tilesets(document, path, root.value(u"tilesets").toArray());
-  add_layers(document, root.value(u"layers").toArray());
+  const auto tilesetsOk =
+      add_tilesets(document, path, root.value(u"tilesets").toArray());
+  const auto layersOk = add_layers(document, root.value(u"layers").toArray());
 
-  return document;
+  if (tilesetsOk && layersOk) {
+    return document;
+  } else {
+    delete document;
+    return nullptr;
+  }
 }
 
 }  // namespace tactile::service
