@@ -114,15 +114,16 @@ void app::save_as(const QString& path)
 
 void app::open_map(const QString& path)
 {
-  auto* document = service::open_map(path);
-
-  const auto mapId = m_model->add_map(document);
-  m_window->handle_new_map(document, mapId);
-
-  document->each_tileset(
-      [&](tileset_id tilesetId, const core::tileset& tileset) {
-        m_window->added_tileset(mapId, tilesetId, tileset);
-      });
+  if (auto* document = service::open_map(path)) {
+    const auto mapId = m_model->add_map(document);
+    m_window->handle_new_map(document, mapId);
+    document->each_tileset(
+        [&](const tileset_id id, const core::tileset& tileset) {
+          m_window->added_tileset(mapId, id, tileset);
+        });
+  } else {
+    // TODO show error modal
+  }
 }
 
 void app::handle_resize_map()
