@@ -31,8 +31,7 @@ class map_command : public QUndoCommand
     return m_map;
   }
 
-  [[nodiscard]] auto tile_data(layer_id id)
-      -> std::map<core::position, tile_id>&
+  [[nodiscard]] auto tile_data(layer_id id) -> tile_data_t&
   {
     // default constructs new map if layer wasn't present
     return m_layerData[id];
