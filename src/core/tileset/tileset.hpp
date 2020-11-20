@@ -28,8 +28,7 @@ namespace tactile::core {
  * \details Tilesets must be created from images that store their sprites
  * aligned in a grid. However, the tiles don't necessarily have to be be square.
  *
- * \details The `tileset` class supports iteration of the selected cells, by
- * providing `begin` and `end` member functions.
+ * \details Supports iteration of the selected cells.
  *
  * \since 0.1.0
  *
@@ -58,9 +57,6 @@ class tileset final
   /**
    * \brief Creates a tileset.
    *
-   * \details Both the supplied width and height will be adjusted to be at
-   * least 1.
-   *
    * \param firstID the first tile ID associated with the tileset.
    * \param image the image that contains the tile sprites, mustn't be null.
    * \param tileWidth the width of the tiles in the tileset.
@@ -78,9 +74,6 @@ class tileset final
 
   /**
    * \brief Creates a tileset.
-   *
-   * \details Both the supplied width and height will be adjusted to be at
-   * least 1.
    *
    * \param firstID the first tile ID associated with the tileset.
    * \param path the path to the image that contains the tile sprites.
