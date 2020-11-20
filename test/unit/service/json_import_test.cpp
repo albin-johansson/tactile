@@ -1,6 +1,6 @@
 #include <catch.hpp>
 
-#include "open_json.hpp"
+#include "open_map.hpp"
 
 using namespace tactile;
 
@@ -10,7 +10,7 @@ TEST_CASE("Import JSON with embedded tilesets", "[import_json]")
 
   QObject object;
 
-  auto* document = service::open_json_map(path);
+  auto* document = service::open_map(path);
   REQUIRE(document != nullptr);
 
   document->setParent(&object);  // to make sure that the document is deleted
@@ -81,7 +81,7 @@ TEST_CASE("Import JSON with external tilesets", "[import_json]")
 
   QObject object;
 
-  auto* document = service::open_json_map(path);
+  auto* document = service::open_map(path);
   REQUIRE(document != nullptr);
 
   document->setParent(&object);  // to make sure that the document is deleted

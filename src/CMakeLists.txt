@@ -187,6 +187,8 @@ set(TACTILE_SOURCE_FILES
         parse/xml_utils.cpp
         parse/json_utils.cpp
         parse/json_utils.hpp
+        parse/tiled_json_parser.cpp
+        parse/tiled_json_parser.hpp
 
         tool/tool_id.hpp
         tool/tool_model.cpp
@@ -219,8 +221,6 @@ set(TACTILE_SOURCE_FILES
 
         service/open/open_map.cpp
         service/open/open_map.hpp
-        service/open/open_json.cpp
-        service/open/open_json.hpp
         service/open/open_tmx.cpp
         service/open/open_tmx.hpp)
 

@@ -13,7 +13,7 @@ TEST_CASE("xml::int_attr", "[xml_utils]")
     QDomDocument document;
     auto elem = document.createElement(QStringLiteral(u"foo"));
 
-    CHECK_THROWS(xml::int_attr(elem, QStringLiteral(u"random")));
+    CHECK(xml::int_attr(elem, QStringLiteral(u"random")) == std::nullopt);
 
     const auto name = QStringLiteral(u"kenobi");
     const auto value = 1'337;
@@ -101,5 +101,5 @@ TEST_CASE("xml::to_elem", "[xml_utils]")
 TEST_CASE("xml::from_file", "[xml_utils]")
 {
   CHECK_NOTHROW(xml::from_file(QStringLiteral(u"sample.xml")));
-  CHECK_THROWS(xml::from_file(QStringLiteral(u"not_a_file.xml")));
+  CHECK(xml::from_file(QStringLiteral(u"not_a_file.xml")) == std::nullopt);
 }

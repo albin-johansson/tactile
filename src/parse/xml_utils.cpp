@@ -13,7 +13,7 @@ auto to_elem(const QDomNode& node) -> QDomElement
   }
 }
 
-auto from_file(const QFileInfo& path) -> QDomDocument
+auto from_file(const QFileInfo& path) -> std::optional<QDomDocument>
 {
   QDomDocument document{};
 
@@ -24,8 +24,7 @@ auto from_file(const QFileInfo& path) -> QDomDocument
   if (const auto success = document.setContent(file.readAll(), &error);
       !success) {
     file.close();
-    qDebug() << error;
-    throw tactile_error{"Failed to parse TMX file!"};
+    return std::nullopt;
   } else {
     file.close();
   }
