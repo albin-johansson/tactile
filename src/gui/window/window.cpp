@@ -163,7 +163,7 @@ void window::center_viewport()
   m_editor->center_viewport();
 }
 
-void window::set_actions_enabled(bool enabled)
+void window::set_actions_enabled(const bool enabled)
 {
   // File
   m_ui->actionCloseMap->setEnabled(enabled);
@@ -226,12 +226,12 @@ void window::force_redraw()
   m_editor->force_redraw();
 }
 
-void window::undo_state_updated(bool canUndo)
+void window::undo_state_updated(const bool canUndo)
 {
   m_ui->actionUndo->setEnabled(canUndo);
 }
 
-void window::redo_state_updated(bool canRedo)
+void window::redo_state_updated(const bool canRedo)
 {
   m_ui->actionRedo->setEnabled(canRedo);
 }
@@ -246,49 +246,49 @@ void window::redo_text_updated(const QString& text)
   m_ui->actionRedo->setText(QStringLiteral(u"Redo ") + text);
 }
 
-void window::added_tileset(map_id map,
-                           tileset_id id,
+void window::added_tileset(const map_id map,
+                           const tileset_id id,
                            const core::tileset& tileset)
 {
   m_tilesetDock->added_tileset(map, id, tileset);
 }
 
-void window::removed_tileset(tileset_id id)
+void window::removed_tileset(const tileset_id id)
 {
   m_tilesetDock->removed_tileset(id);
 }
 
-void window::selected_layer(layer_id id, const core::layer& layer)
+void window::selected_layer(const layer_id id, const core::layer& layer)
 {
   m_layerDock->selected_layer(id, layer);
 }
 
-void window::added_layer(layer_id id, const core::layer& layer)
+void window::added_layer(const layer_id id, const core::layer& layer)
 {
   m_layerDock->added_layer(id, layer);
 }
 
-void window::added_duplicated_layer(layer_id id, const core::layer& layer)
+void window::added_duplicated_layer(const layer_id id, const core::layer& layer)
 {
   m_layerDock->added_duplicated_layer(id, layer);
 }
 
-void window::removed_layer(layer_id id)
+void window::removed_layer(const layer_id id)
 {
   m_layerDock->removed_layer(id);
 }
 
-void window::moved_layer_up(layer_id id)
+void window::moved_layer_up(const layer_id id)
 {
   m_layerDock->moved_layer_back(id);
 }
 
-void window::moved_layer_down(layer_id id)
+void window::moved_layer_down(const layer_id id)
 {
   m_layerDock->moved_layer_forward(id);
 }
 
-void window::switched_map(map_id id, const core::map_document& document)
+void window::switched_map(const map_id id, const core::map_document& document)
 {
   m_tilesetDock->selected_map(id);
   m_layerDock->selected_map(document);
@@ -304,7 +304,7 @@ void window::disable_stamp_preview()
   m_editor->disable_stamp_preview();
 }
 
-void window::handle_move_camera(int dx, int dy)
+void window::handle_move_camera(const int dx, const int dy)
 {
   m_editor->move_map(dx, dy);
 }
@@ -328,7 +328,7 @@ void window::closeEvent(QCloseEvent* event)
   prefs::window::last_layout_state().set(saveState());
 }
 
-void window::handle_remove_map(map_id tabID)
+void window::handle_remove_map(const map_id tabID)
 {
   emit ui_close_map(tabID);
 
