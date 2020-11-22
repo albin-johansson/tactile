@@ -35,7 +35,7 @@ class tiled_tmx_parser final
 
   /**
    * \brief Returns the code associated with any potential error when parsing
-   * the JSON file.
+   * the file.
    *
    * \return the error code associated with the parser.
    *
@@ -72,7 +72,7 @@ class tiled_tmx_parser final
                                     const QFileInfo& path) -> bool;
 
   [[nodiscard]] auto parse_tileset_first_gid(const QDomElement& elem)
-  -> std::optional<tile_id>;
+      -> std::optional<tile_id>;
 
   [[nodiscard]] auto parse_external_tileset(const QDomElement& elem,
                                             const QFileInfo& path,
