@@ -1,6 +1,6 @@
 #include <catch.hpp>
 
-#include "open_tmx.hpp"
+#include "open_map.hpp"
 
 using namespace tactile;
 
@@ -10,7 +10,8 @@ TEST_CASE("Import TMX with embedded tilesets", "[import_tmx]")
 
   QObject object;
 
-  auto* document = service::open_tmx_map(path);
+  parse_error error;
+  auto* document = service::open_map(path, &error);
   REQUIRE(document != nullptr);
 
   document->setParent(&object);  // to make sure that the document is deleted
@@ -81,7 +82,8 @@ TEST_CASE("Import TMX with external tilesets", "[import_tmx]")
 
   QObject object;
 
-  auto* document = service::open_tmx_map(path);
+  parse_error error;
+  auto* document = service::open_map(path, &error);
   REQUIRE(document != nullptr);
 
   document->setParent(&object);  // to make sure that the document is deleted
