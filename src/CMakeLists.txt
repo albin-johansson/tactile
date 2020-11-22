@@ -228,8 +228,7 @@ set(TACTILE_SOURCE_FILES
 
         service/open/open_map.cpp
         service/open/open_map.hpp
-        service/open/open_tmx.cpp
-        service/open/open_tmx.hpp)
+        )
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
