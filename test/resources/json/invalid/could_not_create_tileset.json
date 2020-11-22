@@ -28,7 +28,6 @@
         360,
         360,
         360,
-        "",
         354,
         354,
         354,
@@ -52,13 +51,27 @@
       "width": 7
     }
   ],
-  "nextlayerid": 3,
   "nextobjectid": 1,
+  "nextlayerid": 2,
   "orientation": "orthogonal",
   "renderorder": "right-down",
   "tiledversion": "1.4.2",
   "tileheight": 32,
-  "tilesets": [],
+  "tilesets": [
+    {
+      "columns":32,
+      "firstgid":1,
+      "image":"..\/terrain.png",
+      "imageheight":1024,
+      "imagewidth":1024,
+      "margin":0,
+      "name":"terrain",
+      "spacing":0,
+      "tilecount":1024,
+      "tileheight":32,
+      "tilewidth":32
+     }
+  ],
   "tilewidth": 32,
   "type": "map",
   "version": 1.4,

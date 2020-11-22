@@ -1,6 +1,5 @@
 {
   "compressionlevel": -1,
-  "height": 5,
   "infinite": false,
   "layers": [
     {
@@ -41,67 +40,19 @@
         354,
         354
       ],
-      "height": 5,
       "id": 1,
       "name": "Tile Layer 1",
       "opacity": 1,
       "type": "tilelayer",
       "visible": true,
-      "width": 7,
       "x": 0,
-      "y": 0
-    },
-    {
-      "data": [
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        297,
-        0,
-        0,
-        0,
-        0,
-        0,
-        200,
-        329,
-        0,
-        0,
-        0,
-        0,
-        0,
-        297,
-        0,
-        0,
-        0,
-        0,
-        200,
-        328,
-        329,
-        0,
-        0,
-        200,
-        328,
-        329,
-        0,
-        0,
-        0
-      ],
+      "y": 0,
       "height": 5,
-      "id": 2,
-      "name": "Tile Layer 2",
-      "opacity": 0.8,
-      "type": "tilelayer",
-      "visible": true,
-      "width": 7,
-      "x": 0,
-      "y": 0
+      "width": 7
     }
   ],
-  "nextlayerid": 3,
   "nextobjectid": 1,
+  "nextlayerid": 2,
   "orientation": "orthogonal",
   "renderorder": "right-down",
   "tiledversion": "1.4.2",
@@ -109,7 +60,6 @@
   "tilesets": [
     {
       "columns": 32,
-      "firstgid": 1,
       "image": "../terrain.png",
       "imageheight": 1024,
       "imagewidth": 1024,
@@ -124,5 +74,6 @@
   "tilewidth": 32,
   "type": "map",
   "version": 1.4,
-  "width": 7
+  "width": 7,
+  "height": 5
 }

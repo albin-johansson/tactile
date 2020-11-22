@@ -28,7 +28,6 @@
         360,
         360,
         360,
-        "",
         354,
         354,
         354,
@@ -52,13 +51,18 @@
       "width": 7
     }
   ],
-  "nextlayerid": 3,
   "nextobjectid": 1,
+  "nextlayerid": 2,
   "orientation": "orthogonal",
   "renderorder": "right-down",
   "tiledversion": "1.4.2",
   "tileheight": 32,
-  "tilesets": [],
+  "tilesets": [
+    {
+      "firstgid":1,
+      "source":"does_not_exist.json"
+     }
+  ],
   "tilewidth": 32,
   "type": "map",
   "version": 1.4,
