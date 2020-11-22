@@ -91,7 +91,7 @@ auto tiled_json_parser::open_file(const QFileInfo& path)
     return std::nullopt;
   }
 
-  auto json = json::from_file(path.absoluteFilePath());
+  auto json = json::from_file(path);
 
   if (!json) {
     m_error = parse_error::could_not_parse_json;
@@ -181,6 +181,9 @@ auto tiled_json_parser::parse_tileset_common(const QJsonObject& object,
   }
 
   const auto absolutePath = path.dir().absoluteFilePath(relativePath);
+  if (!QFileInfo{absolutePath}.exists()) {
+    return set_error(parse_error::external_tileset_does_not_exist);
+  }
 
   try {
     auto tileset = std::make_shared<core::tileset>(firstGid,
