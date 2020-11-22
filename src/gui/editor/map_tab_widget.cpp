@@ -79,7 +79,11 @@ void map_tab_widget::add_map_tab(core::map_document* map,
   connect(view, &map_view::decrease_zoom, this, &map_tab_widget::decrease_zoom);
   // clang-format on
 
-  addTab(view, title + QString::number(id.get()));
+  if (title == QStringLiteral(u"map")) {
+    addTab(view, title + QString::number(id.get()));
+  } else {
+    addTab(view, title);
+  }
 }
 
 void map_tab_widget::remove_map_tab(map_id id)

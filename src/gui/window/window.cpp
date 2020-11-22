@@ -309,9 +309,11 @@ void window::handle_move_camera(int dx, int dy)
   m_editor->move_map(dx, dy);
 }
 
-void window::handle_new_map(core::map_document* map, map_id id)
+void window::handle_new_map(core::map_document* map,
+                            const map_id id,
+                            const QString& name)
 {
-  m_editor->add_map_tab(map, id, QStringLiteral(u"map"));
+  m_editor->add_map_tab(map, id, name);
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
     enter_content_view();
