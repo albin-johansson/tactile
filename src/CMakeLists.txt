@@ -105,7 +105,7 @@ set(TACTILE_SOURCE_FILES
 
         gui/dialog/about/about_dialog.cpp
         gui/dialog/about/about_dialog.hpp
-        gui/dialog/about/about.ui
+        gui/dialog/about/about_dialog.ui
 
         gui/dialog/resize_map/resize_dialog.hpp
         gui/dialog/resize_map/resize_dialog.cpp

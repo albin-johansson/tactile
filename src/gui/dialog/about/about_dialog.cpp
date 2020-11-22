@@ -1,6 +1,6 @@
 #include "about_dialog.hpp"
 
-#include "ui_about.h"
+#include "ui_about_dialog.h"
 
 namespace tactile::gui {
 
