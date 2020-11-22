@@ -120,12 +120,6 @@ TEST_CASE("JSON parser: Tileset missing name", "[tiled_json_parser]")
              tactile::parse_error::tileset_missing_name);
 }
 
-TEST_CASE("JSON parser: Could not create tileset", "[tiled_json_parser]")
-{
-  test_error("json/invalid/could_not_create_tileset.json",
-             tactile::parse_error::could_not_create_tileset);
-}
-
 TEST_CASE("JSON parser: Could not read external tileset", "[tiled_json_parser]")
 {
   test_error("json/invalid/could_not_read_external_tileset.json",
