@@ -3,7 +3,8 @@
 #include <QDir>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <ranges>  // all_of
+#include <ranges>   // all_of
+#include <utility>  // exchange
 
 #include "json_utils.hpp"
 
@@ -69,9 +70,7 @@ tiled_json_parser::~tiled_json_parser() noexcept
 
 auto tiled_json_parser::take_document() -> core::map_document*
 {
-  auto* document = m_document;
-  m_document = nullptr;
-  return document;
+  return std::exchange(m_document, nullptr);
 }
 
 auto tiled_json_parser::error_code() const -> parse_error
