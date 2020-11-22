@@ -49,7 +49,7 @@ class vector_map final
    *
    * \since 0.1.0
    */
-  void reserve(size_type capacity)
+  void reserve(const size_type capacity)
   {
     m_data.reserve(capacity);
   }
@@ -85,9 +85,7 @@ class vector_map final
   template <typename... Args>
   decltype(auto) emplace(const key_type& key, Args&&... args)
   {
-    if (const auto it = find(key); it != m_data.end()) {
-      m_data.erase(it);
-    }
+    erase(key);
     return m_data.emplace_back(key, mapped_type{std::forward<Args>(args)...});
   }
 
@@ -106,9 +104,7 @@ class vector_map final
    */
   decltype(auto) emplace(const key_type& key, mapped_type&& value)
   {
-    if (const auto it = find(key); it != m_data.end()) {
-      m_data.erase(it);
-    }
+    erase(key);
     return m_data.emplace_back(key, std::move(value));
   }
 
@@ -121,17 +117,17 @@ class vector_map final
    */
   void erase(const key_type& key)
   {
-    if (const auto it = find(key); it != m_data.end()) {
-      m_data.erase(it);
-    }
+    std::erase_if(m_data, [&key](const pair_type& pair) {
+      return pair.first == key;
+    });
   }
 
-  [[nodiscard]] auto at_index(std::size_t index) -> pair_type&
+  [[nodiscard]] auto at_index(const std::size_t index) -> pair_type&
   {
     return m_data.at(index);
   }
 
-  [[nodiscard]] auto at_index(std::size_t index) const -> const pair_type&
+  [[nodiscard]] auto at_index(const std::size_t index) const -> const pair_type&
   {
     return m_data.at(index);
   }
@@ -353,7 +349,7 @@ class vector_map final
  private:
   storage_type m_data;
 
-  void move_elem(const key_type& key, bool forward)
+  void move_elem(const key_type& key, const bool forward)
   {
     if (const auto it = find(key); it != end()) {
       const auto index = std::distance(begin(), it);

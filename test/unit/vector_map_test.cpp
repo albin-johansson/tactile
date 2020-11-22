@@ -28,21 +28,21 @@ TEST_CASE("vector_map::emplace", "[vector_map]")
     CHECK(value == "hello"sv);
   }
 
-  SECTION("Emplacing a pair")
-  {
-    vector_map<int, std::pair<int, double>> pairs;
-    auto& [key, value] = pairs.emplace(7, 13, 37.3);
-    CHECK(key == 7);
-    CHECK(value.first == 13);
-    CHECK(value.second == 37.3);
-  }
-
   SECTION("Overwriting the string with the same key")
   {
     auto& [key, value] = map.emplace(i, "world");
     CHECK(map.size() == 1);
     CHECK(key == i);
     CHECK(value == "world"sv);
+  }
+
+  SECTION("Emplacing a pair")
+  {
+    vector_map<int, std::pair<int, double>> pairs;
+    auto& [key, value] = pairs.emplace(24, 13, 37.3);
+    CHECK(key == 24);
+    CHECK(value.first == 13);
+    CHECK(value.second == 37.3);
   }
 }
 
