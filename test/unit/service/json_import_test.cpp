@@ -10,7 +10,8 @@ TEST_CASE("Import JSON with embedded tilesets", "[import_json]")
 
   QObject object;
 
-  auto* document = service::open_map(path);
+  parse_error error;
+  auto* document = service::open_map(path, &error);
   REQUIRE(document != nullptr);
 
   document->setParent(&object);  // to make sure that the document is deleted
@@ -81,7 +82,8 @@ TEST_CASE("Import JSON with external tilesets", "[import_json]")
 
   QObject object;
 
-  auto* document = service::open_map(path);
+  parse_error error;
+  auto* document = service::open_map(path, &error);
   REQUIRE(document != nullptr);
 
   document->setParent(&object);  // to make sure that the document is deleted
