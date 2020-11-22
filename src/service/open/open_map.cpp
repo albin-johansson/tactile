@@ -8,16 +8,18 @@
 
 namespace tactile::service {
 
-auto open_map(const QString& path) -> core::map_document*
+auto open_map(const QString& path, parse_error* error) -> core::map_document*
 {
   const QFileInfo info{path};
   const auto suffix = info.suffix();
   if (suffix == QStringLiteral(u"json")) {
     tiled_json_parser parser{info};
+    *error = parser.error_code();
     if (!parser) {
-      // TODO return error message and trigger modal error window!
+      return nullptr;
+    } else {
+      return parser.take_document();
     }
-    return parser.take_document();
   } else if (suffix == QStringLiteral(u"tmx")) {
     return open_tmx_map(info);
   } else {

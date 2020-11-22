@@ -3,6 +3,7 @@
 #include <QString>
 
 #include "map_document.hpp"
+#include "tiled_json_parser.hpp"
 
 namespace tactile::service {
 
@@ -14,11 +15,13 @@ namespace tactile::service {
  * to avoid a memory leak.
  *
  * \param path the path of the save file.
+ * \param[out] error pointer to an error code will be written to.
  *
  * \return a pointer to the created map document; null if something went wrong.
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto open_map(const QString& path) -> core::map_document*;
+[[nodiscard]] auto open_map(const QString& path, parse_error* error)
+    -> core::map_document*;
 
 }  // namespace tactile::service

@@ -116,6 +116,9 @@ set(TACTILE_SOURCE_FILES
 
         gui/dialog/open_map/open_map_dialog.cpp
         gui/dialog/open_map/open_map_dialog.hpp
+        gui/dialog/open_map/open_map_error_dialog.ui
+        gui/dialog/open_map/open_map_error_dialog.cpp
+        gui/dialog/open_map/open_map_error_dialog.hpp
 
         gui/dialog/open_tileset/tileset_dialog.cpp
         gui/dialog/open_tileset/tileset_dialog.hpp
@@ -189,6 +192,8 @@ set(TACTILE_SOURCE_FILES
         parse/json_utils.hpp
         parse/tiled_json_parser.cpp
         parse/tiled_json_parser.hpp
+        parse/parse_error.hpp
+        parse/parse_error.cpp
 
         tool/tool_id.hpp
         tool/tool_model.cpp

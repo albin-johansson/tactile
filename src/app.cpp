@@ -7,6 +7,8 @@
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "window.hpp"
+#include "open_map_error_dialog.hpp"
+#include "parse_error.hpp"
 
 namespace tactile {
 
@@ -114,7 +116,8 @@ void app::save_as(const QString& path)
 
 void app::open_map(const QString& path)
 {
-  if (auto* document = service::open_map(path)) {
+  parse_error error;
+  if (auto* document = service::open_map(path, &error)) {
     const auto mapId = m_model->add_map(document);
     m_window->handle_new_map(document, mapId);
     document->each_tileset(
@@ -122,7 +125,10 @@ void app::open_map(const QString& path)
           m_window->added_tileset(mapId, id, tileset);
         });
   } else {
-    // TODO show error modal
+    gui::open_map_error_dialog dialog{m_window.get()};
+    dialog.set_file(path);
+    dialog.set_error_message(to_message(error));
+    dialog.exec();
   }
 }
 
