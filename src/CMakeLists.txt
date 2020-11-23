@@ -9,17 +9,18 @@ set(TACTILE_SOURCE_FILES
         tactile_app.hpp
         version.hpp
 
-        core/czstring.hpp
         core/model.hpp
         core/model.cpp
         core/tactile_error.hpp
         core/position.hpp
-        core/tile_id.hpp
-        core/tile_width.hpp
-        core/tile_height.hpp
-        core/layer_id.hpp
-        core/map_id.hpp
-        core/tileset_id.hpp
+
+        core/aliases/czstring.hpp
+        core/aliases/tile_id.hpp
+        core/aliases/tile_width.hpp
+        core/aliases/tile_height.hpp
+        core/aliases/layer_id.hpp
+        core/aliases/map_id.hpp
+        core/aliases/tileset_id.hpp
 
         core/algorithm/flood_fill.hpp
         core/algorithm/flood_fill.cpp
@@ -227,8 +228,7 @@ set(TACTILE_SOURCE_FILES
         service/save/tiled_version.hpp
 
         service/open/open_map.cpp
-        service/open/open_map.hpp
-        )
+        service/open/open_map.hpp)
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
