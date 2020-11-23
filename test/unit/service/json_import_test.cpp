@@ -70,7 +70,7 @@ TEST_CASE("Import JSON with embedded tilesets", "[import_json]")
     CHECK(tileset.height() == 1024);
     CHECK(tileset.col_count() == 32_col);
 
-    const auto& actual = tileset.path_info();
+    const auto& actual = tileset.file();
     const QFileInfo expected{QStringLiteral(u"terrain.png")};
     CHECK(actual.absoluteFilePath() == expected.absoluteFilePath());
   }
@@ -146,7 +146,7 @@ TEST_CASE("Import JSON with external tilesets", "[import_json]")
       CHECK(tileset.height() == 1024);
       CHECK(tileset.col_count() == 32_col);
 
-      const auto& actual = tileset.path_info();
+      const auto& actual = tileset.file();
       const QFileInfo expected{QStringLiteral(u"terrain.png")};
       CHECK(actual.absoluteFilePath() == expected.absoluteFilePath());
     }
@@ -164,7 +164,7 @@ TEST_CASE("Import JSON with external tilesets", "[import_json]")
       CHECK(tileset.height() == 1024);
       CHECK(tileset.col_count() == 32_col);
 
-      const auto& actual = tileset.path_info() ;
+      const auto& actual = tileset.file() ;
       const QFileInfo expected{QStringLiteral(u"outside.png")};
       CHECK(actual.absoluteFilePath() == expected.absoluteFilePath());
     }

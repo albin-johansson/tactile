@@ -6,9 +6,9 @@
 #include <QRect>
 #include <QString>
 #include <concepts>       // invocable
-#include <optional>       // optional
 #include <unordered_map>  // unordered_map
 
+#include "maybe.hpp"
 #include "position.hpp"
 #include "tile_height.hpp"
 #include "tile_id.hpp"
@@ -28,8 +28,6 @@ namespace tactile::core {
  * \details Tilesets must be created from images that store their sprites
  * aligned in a grid. However, the tiles don't necessarily have to be be square.
  *
- * \details Supports iteration of the selected cells.
- *
  * \since 0.1.0
  *
  * \headerfile tileset.hpp
@@ -37,6 +35,8 @@ namespace tactile::core {
 class tileset final
 {
  public:
+  using rect_map = std::unordered_map<tile_id, QRect>;
+
   /**
    * \struct tileset::selection
    *
@@ -57,7 +57,7 @@ class tileset final
   /**
    * \brief Creates a tileset.
    *
-   * \param firstID the first tile ID associated with the tileset.
+   * \param firstId the first tile ID associated with the tileset.
    * \param image the image that contains the tile sprites, mustn't be null.
    * \param tileWidth the width of the tiles in the tileset.
    * \param tileHeight the height of the tiles in the tileset.
@@ -67,7 +67,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  tileset(tile_id firstID,
+  tileset(tile_id firstId,
           const QImage& image,
           tile_width tileWidth,
           tile_height tileHeight);
@@ -187,6 +187,13 @@ class tileset final
    */
   void set_name(QString name);
 
+  /**
+   * \brief Sets the file path associated with the tileset.
+   *
+   * \param path the file path associated with the tileset.
+   *
+   * \since 0.1.0
+   */
   void set_path(QFileInfo path);
 
   /**
@@ -250,7 +257,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto image_source(tile_id id) const -> std::optional<QRect>;
+  [[nodiscard]] auto image_source(tile_id id) const -> maybe<QRect>;
 
   /**
    * \brief Returns the image associated with the tileset.
@@ -299,8 +306,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_selection() const noexcept
-      -> const std::optional<selection>&
+  [[nodiscard]] auto get_selection() const noexcept -> const maybe<selection>&
   {
     return m_selection;
   }
@@ -314,7 +320,7 @@ class tileset final
    */
   [[nodiscard]] auto rows() const noexcept -> row_t
   {
-    return m_numRows;
+    return m_nRows;
   }
 
   /**
@@ -326,7 +332,7 @@ class tileset final
    */
   [[nodiscard]] auto col_count() const noexcept -> col_t
   {
-    return m_numCols;
+    return m_nCols;
   }
 
   /**
@@ -340,7 +346,7 @@ class tileset final
    */
   [[nodiscard]] auto first_id() const noexcept -> tile_id
   {
-    return m_firstID;
+    return m_firstId;
   }
 
   /**
@@ -352,7 +358,7 @@ class tileset final
    */
   [[nodiscard]] auto last_id() const noexcept -> tile_id
   {
-    return m_lastID;
+    return m_lastId;
   }
 
   /**
@@ -364,7 +370,7 @@ class tileset final
    */
   [[nodiscard]] auto tile_count() const noexcept -> int
   {
-    return m_numTiles;
+    return m_tileCount;
   }
 
   /**
@@ -379,11 +385,25 @@ class tileset final
     return m_name;
   }
 
-  [[nodiscard]] auto path_info() const -> const QFileInfo&
+  /**
+   * \brief Returns the file associated with the tileset.
+   *
+   * \return the file associated with the tileset.
+   *
+   * \since 0.1.0
+   */
+  [[nodiscard]] auto file() const -> const QFileInfo&
   {
     return m_path;
   }
 
+  /**
+   * \brief Returns the file path of the file associated with the tileset.
+   *
+   * \return the file path associated with the tileset.
+   *
+   * \since 0.1.0
+   */
   [[nodiscard]] auto file_path() const -> QString
   {
     return m_path.filePath();
@@ -391,15 +411,19 @@ class tileset final
 
  private:
   QPixmap m_image;
-  tile_id m_firstID{1};
-  tile_id m_lastID;
-  std::optional<selection> m_selection;
-  std::unordered_map<tile_id, QRect> m_sourceRects;
+
+  tile_id m_firstId{1};
+  tile_id m_lastId;
+
+  maybe<selection> m_selection;
+  rect_map m_sourceRects;
+
   tile_width m_tileWidth{};
   tile_height m_tileHeight{};
-  row_t m_numRows{};
-  col_t m_numCols{};
-  int m_numTiles{};
+  row_t m_nRows{};
+  col_t m_nCols{};
+  int m_tileCount{};
+
   QFileInfo m_path{};
   QString m_name{QStringLiteral(u"Untitled")};
 };
