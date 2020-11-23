@@ -1,6 +1,6 @@
 #pragma once
 
-#include <concepts>   // convertible_to, invocable
+#include <concepts>  // convertible_to, invocable
 
 namespace tactile {
 
@@ -28,7 +28,8 @@ concept arithmetic = std::is_arithmetic_v<T>;
  * \since 0.1.0
  */
 template <std::invocable T>
-constexpr void invoke_n(int n, T&& callable) noexcept(noexcept(callable()))
+constexpr void invoke_n(const int n,
+                        T&& callable) noexcept(noexcept(callable()))
 {
   for (auto i = 0; i < n; ++i) {
     callable();
@@ -49,7 +50,8 @@ constexpr void invoke_n(int n, T&& callable) noexcept(noexcept(callable()))
  * \since 0.1.0
  */
 template <ordered T>
-[[nodiscard]] constexpr auto at_least(T value, T least) noexcept -> T
+[[nodiscard]] constexpr auto at_least(const T value, const T least) noexcept
+    -> T
 {
   return (value < least) ? least : value;
 }
