@@ -160,7 +160,9 @@ void map_document::remove_tileset(const tileset_id id)
 
 void map_document::ui_remove_tileset(const tileset_id id)
 {
-  m_commands->push<cmd::remove_tileset>(this, m_tilesets->get_ptr(id), id);
+  m_commands->push<cmd::remove_tileset>(this,
+                                        m_tilesets->get_tileset_pointer(id),
+                                        id);
 }
 
 void map_document::select_tileset(const tileset_id id)
