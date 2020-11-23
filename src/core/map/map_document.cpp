@@ -26,7 +26,9 @@ map_document::map_document(QObject* parent)
   setup();
 }
 
-map_document::map_document(row_t nRows, col_t nCols, QObject* parent)
+map_document::map_document(const row_t nRows,
+                           const col_t nCols,
+                           QObject* parent)
     : QObject{parent},
       m_map{std::make_unique<map>(nRows, nCols)},
       m_tilesets{std::make_unique<tileset_manager>()},
@@ -63,7 +65,7 @@ void map_document::redo()
   m_commands->redo();
 }
 
-void map_document::flood(const position& position, tile_id replacement)
+void map_document::flood(const position& position, const tile_id replacement)
 {
   m_commands->push<cmd::bucket_fill>(m_map.get(), position, replacement);
 }
@@ -101,7 +103,7 @@ void map_document::remove_column()
   m_commands->push<cmd::remove_col>(m_map.get());
 }
 
-void map_document::resize(row_t nRows, col_t nCols)
+void map_document::resize(const row_t nRows, const col_t nCols)
 {
   Q_ASSERT(nRows > 0_row);
   Q_ASSERT(nCols > 0_col);
@@ -111,8 +113,8 @@ void map_document::resize(row_t nRows, col_t nCols)
 void map_document::add_tileset(const QImage& image,
                                const QFileInfo& path,
                                const QString& name,
-                               tile_width tileWidth,
-                               tile_height tileHeight)
+                               const tile_width tileWidth,
+                               const tile_height tileHeight)
 {
   if (!image.isNull()) {
     const auto id = m_tilesets->next_tileset_id();
@@ -128,7 +130,8 @@ void map_document::add_tileset(const QImage& image,
   }
 }
 
-void map_document::add_tileset(tileset_id id, std::shared_ptr<tileset> tileset)
+void map_document::add_tileset(const tileset_id id,
+                               std::shared_ptr<tileset> tileset)
 {
   m_tilesets->add(id, std::move(tileset));
   emit added_tileset(id);
@@ -140,7 +143,7 @@ void map_document::add_tileset(std::shared_ptr<tileset> tileset)
   emit added_tileset(id);
 }
 
-void map_document::remove_tileset(tileset_id id)
+void map_document::remove_tileset(const tileset_id id)
 {
   Q_ASSERT(m_tilesets->contains(id));
 
@@ -155,12 +158,12 @@ void map_document::remove_tileset(tileset_id id)
   emit removed_tileset(id);
 }
 
-void map_document::ui_remove_tileset(tileset_id id)
+void map_document::ui_remove_tileset(const tileset_id id)
 {
   m_commands->push<cmd::remove_tileset>(this, m_tilesets->get_ptr(id), id);
 }
 
-void map_document::select_tileset(tileset_id id)
+void map_document::select_tileset(const tileset_id id)
 {
   m_tilesets->select(id);
 }
@@ -170,13 +173,14 @@ void map_document::set_tileset_selection(const tileset::selection& selection)
   m_tilesets->set_selection(selection);
 }
 
-void map_document::select_layer(layer_id id)
+void map_document::select_layer(const layer_id id)
 {
   m_map->select_layer(id);
   emit selected_layer(id, m_map->get_layer(id));
 }
 
-void map_document::add_layer(layer_id id, const std::shared_ptr<layer>& layer)
+void map_document::add_layer(const layer_id id,
+                             const std::shared_ptr<layer>& layer)
 {
   Q_ASSERT(layer);
   m_map->add_layer(id, layer);
@@ -189,17 +193,17 @@ void map_document::add_layer()
   m_commands->push<cmd::add_layer>(this, m_map->make_layer(), id);
 }
 
-void map_document::remove_layer(layer_id id)
+void map_document::remove_layer(const layer_id id)
 {
   m_commands->push<cmd::remove_layer>(this, id);
 }
 
-auto map_document::take_layer(layer_id id) -> std::shared_ptr<layer>
+auto map_document::take_layer(const layer_id id) -> std::shared_ptr<layer>
 {
   return m_map->take_layer(id);
 }
 
-void map_document::duplicate_layer(layer_id id)
+void map_document::duplicate_layer(const layer_id id)
 {
   const auto& [newId, layer] = m_map->duplicate_layer(id);
   emit added_duplicated_layer(newId, *layer);
@@ -225,17 +229,17 @@ void map_document::mark_as_clean()
   m_commands->setClean();
 }
 
-void map_document::set_layer_visibility(layer_id id, bool visible)
+void map_document::set_layer_visibility(const layer_id id, const bool visible)
 {
   m_map->set_visibility(id, visible);
 }
 
-void map_document::set_layer_opacity(layer_id id, double opacity)
+void map_document::set_layer_opacity(const layer_id id, const double opacity)
 {
   m_map->set_opacity(id, opacity);
 }
 
-void map_document::set_layer_name(layer_id id, const QString& name)
+void map_document::set_layer_name(const layer_id id, const QString& name)
 {
   m_map->set_name(id, name);
 }
@@ -245,19 +249,19 @@ void map_document::set_path(QFileInfo path)
   m_path = std::move(path);
 }
 
-void map_document::move_layer_back(layer_id id)
+void map_document::move_layer_back(const layer_id id)
 {
   m_map->move_layer_back(id);
   emit moved_layer_back(id);
 }
 
-void map_document::move_layer_forward(layer_id id)
+void map_document::move_layer_forward(const layer_id id)
 {
   m_map->move_layer_forward(id);
   emit moved_layer_forward(id);
 }
 
-void map_document::set_tileset_name(tileset_id id, const QString& name)
+void map_document::set_tileset_name(const tileset_id id, const QString& name)
 {
   m_tilesets->rename(id, name);
 }
