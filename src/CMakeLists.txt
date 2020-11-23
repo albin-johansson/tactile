@@ -251,6 +251,7 @@ target_include_directories(libTactile
         PUBLIC core/map
         PUBLIC core/tileset
         PUBLIC core/algorithm
+        PUBLIC core/aliases
         PUBLIC gui
         PUBLIC gui/startup
         PUBLIC gui/toolbar
