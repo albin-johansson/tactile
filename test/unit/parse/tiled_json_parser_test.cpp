@@ -1,5 +1,6 @@
 #include "tiled_json_parser.hpp"
 
+#include "czstring.hpp"
 #include <catch.hpp>
 
 using namespace tactile;
