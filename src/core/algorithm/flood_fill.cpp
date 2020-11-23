@@ -9,7 +9,7 @@ namespace tactile::core {
 
 void flood_fill(layer& layer,
                 const position& origin,
-                tile_id replacement,
+                const tile_id replacement,
                 std::vector<position>& affected)
 {
   const auto target = layer.tile_at(origin);
