@@ -20,12 +20,30 @@ struct col_tag final
 using row_t = nenya::mirror_type<int, detail::row_tag>;
 using col_t = nenya::mirror_type<int, detail::col_tag>;
 
+/**
+ * \brief Creates a row value.
+ *
+ * \param value the row index.
+ *
+ * \return a row value.
+ *
+ * \since 0.1.0
+ */
 [[nodiscard]] constexpr auto operator"" _row(unsigned long long value) noexcept
     -> row_t
 {
   return row_t{static_cast<int>(value)};
 }
 
+/**
+ * \brief Creates a column value.
+ *
+ * \param value the column index.
+ *
+ * \return a column value.
+ *
+ * \since 0.1.0
+ */
 [[nodiscard]] constexpr auto operator"" _col(unsigned long long value) noexcept
     -> col_t
 {
@@ -62,7 +80,7 @@ class position final
    *
    * \since 0.1.0
    */
-  constexpr position(row_t row, col_t col) noexcept
+  constexpr position(const row_t row, const col_t col) noexcept
       : m_row{at_least(row.get(), 0)},
         m_col{at_least(col.get(), 0)}
   {}
@@ -75,7 +93,7 @@ class position final
    *
    * \since 0.1.0
    */
-  constexpr void set_row(row_t row) noexcept
+  constexpr void set_row(const row_t row) noexcept
   {
     m_row = at_least(row.get(), 0);
   }
@@ -88,7 +106,7 @@ class position final
    *
    * \since 0.1.0
    */
-  constexpr void set_col(col_t col) noexcept
+  constexpr void set_col(const col_t col) noexcept
   {
     m_col = at_least(col.get(), 0);
   }
@@ -103,7 +121,8 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto offset_by(row_t row, col_t col) const noexcept
+  [[nodiscard]] constexpr auto offset_by(const row_t row,
+                                         const col_t col) const noexcept
       -> position
   {
     return {row_t{m_row} + row, col_t{m_col} + col};
@@ -240,7 +259,8 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto col_to_x(int tileSize) const noexcept -> int
+  [[nodiscard]] constexpr auto col_to_x(const int tileSize) const noexcept
+      -> int
   {
     return m_col * tileSize;
   }
@@ -254,7 +274,8 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto row_to_y(int tileSize) const noexcept -> int
+  [[nodiscard]] constexpr auto row_to_y(const int tileSize) const noexcept
+      -> int
   {
     return m_row * tileSize;
   }
@@ -277,9 +298,8 @@ class position final
  *
  * \since 0.1.0
  */
-[[nodiscard]] inline constexpr auto operator+(const position& lhs,
-                                              const position& rhs) noexcept
-    -> position
+[[nodiscard]] constexpr auto operator+(const position& lhs,
+                                       const position& rhs) noexcept -> position
 {
   return position{lhs.row() + rhs.row(), lhs.col() + rhs.col()};
 }
@@ -294,9 +314,8 @@ class position final
  *
  * \since 0.1.0
  */
-[[nodiscard]] inline constexpr auto operator-(const position& lhs,
-                                              const position& rhs) noexcept
-    -> position
+[[nodiscard]] constexpr auto operator-(const position& lhs,
+                                       const position& rhs) noexcept -> position
 {
   return position{lhs.row() - rhs.row(), lhs.col() - rhs.col()};
 }
