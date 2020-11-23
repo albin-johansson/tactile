@@ -4,15 +4,13 @@
 #include <QImage>
 #include <QObject>
 #include <QString>
-#include <cassert>   // assert
 #include <concepts>  // invocable
 #include <memory>    // unique_ptr, shared_ptr
-#include <optional>  // optional
 #include <utility>   // move
 
 #include "command_stack.hpp"
-#include "czstring.hpp"
 #include "map.hpp"
+#include "maybe.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
@@ -26,7 +24,7 @@ namespace tactile::core {
  * \brief Represents a map and a history of changes to the map.
  *
  * \details This class is a wrapper for a map, its associated tilesets and the
- * command history.
+ * command history, etc.
  *
  * \see map
  *
@@ -313,23 +311,25 @@ class map_document final : public QObject
    */
   void move_layer_forward(layer_id id);
 
+  /**
+   * \brief Sets the name of the tileset associated with the specified ID.
+   *
+   * \param id the ID associated with the tileset that will be renamed.
+   * \param name the new name of the tileset.
+   *
+   * \since 0.1.0
+   */
   void set_tileset_name(tileset_id id, const QString& name);
 
   /**
    * \copydoc map::set_next_layer_id()
    */
-  void set_next_layer_id(layer_id id) noexcept
-  {
-    m_map->set_next_layer_id(id);
-  }
+  void set_next_layer_id(layer_id id) noexcept;
 
   /**
    * \copydoc map::set_tile()
    */
-  void set_tile(const position& pos, tile_id id)
-  {
-    m_map->set_tile(pos, id);
-  }
+  void set_tile(const position& pos, tile_id id);
 
   /**
    * \brief Iterates each tileset associated with the document.
@@ -406,107 +406,76 @@ class map_document final : public QObject
   /**
    * \copydoc map::index_of()
    */
-  [[nodiscard]] auto index_of_layer(layer_id id) const -> std::optional<int>
-  {
-    return m_map->index_of(id);
-  }
+  [[nodiscard]] auto index_of_layer(layer_id id) const -> maybe<int>;
 
   /**
    * \copydoc map::in_bounds()
    */
-  [[nodiscard]] auto in_bounds(const position& pos) const -> bool
-  {
-    return m_map->in_bounds(pos);
-  }
+  [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
 
   /**
    * \copydoc map::tile_at()
    */
-  [[nodiscard]] auto tile_at(const position& position) const
-      -> std::optional<tile_id>
-  {
-    return m_map->tile_at(position);
-  }
+  [[nodiscard]] auto tile_at(const position& position) const -> maybe<tile_id>;
 
-  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&
-  {
-    return m_map->get_layer(id);
-  }
+  /**
+   * \copydoc map::get_layer()
+   */
+  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&;
 
   /**
    * \copydoc map::tile_count()
    */
-  [[nodiscard]] auto tile_count() const noexcept -> int
-  {
-    return m_map->tile_count();
-  }
+  [[nodiscard]] auto tile_count() const -> int;
 
   /**
    * \copydoc map::layer_count()
    */
-  [[nodiscard]] auto layer_count() const noexcept -> int
-  {
-    return m_map->layer_count();
-  }
+  [[nodiscard]] auto layer_count() const noexcept -> int;
 
   /**
    * \copydoc map::row_count()
    */
-  [[nodiscard]] auto row_count() const -> row_t
-  {
-    return m_map->row_count();
-  }
+  [[nodiscard]] auto row_count() const -> row_t;
 
   /**
    * \copydoc map::col_count()
    */
-  [[nodiscard]] auto col_count() const -> col_t
-  {
-    return m_map->col_count();
-  }
+  [[nodiscard]] auto col_count() const -> col_t;
 
   /**
    * \copydoc map::width()
    */
-  [[nodiscard]] auto width() const -> int
-  {
-    return m_map->width();
-  }
+  [[nodiscard]] auto width() const -> int;
 
   /**
    * \copydoc map::height()
    */
-  [[nodiscard]] auto height() const -> int
-  {
-    return m_map->height();
-  }
+  [[nodiscard]] auto height() const -> int;
 
   /**
    * \copydoc map::current_tile_size()
    */
-  [[nodiscard]] auto current_tile_size() const noexcept -> int
-  {
-    return m_map->current_tile_size();
-  }
+  [[nodiscard]] auto current_tile_size() const noexcept -> int;
 
   /**
    * \copydoc tileset_manager::current_tileset()
    */
-  [[nodiscard]] auto current_tileset() const -> const tileset*
-  {
-    return m_tilesets->current_tileset();
-  }
+  [[nodiscard]] auto current_tileset() const -> const tileset*;
 
-  [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*
-  {
-    return m_tilesets.get();
-  }
+  /**
+   * \brief Returns a pointer to the associated tileset manager.
+   *
+   * \return a pointer to the associated tileset manager.
+   *
+   * \since 0.1.0
+   */
+  [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*;
 
-  [[nodiscard]] auto current_layer_id() const noexcept
-      -> std::optional<layer_id>
-  {
-    return m_map->active_layer_id();
-  }
+  /**
+   * \copydoc map::active_layer_id()
+   */
+  [[nodiscard]] auto current_layer_id() const noexcept -> maybe<layer_id>;
 
   /**
    * \brief Returns the file path associated with the map document.
@@ -515,10 +484,7 @@ class map_document final : public QObject
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto path() const -> const QFileInfo&
-  {
-    return m_path;
-  }
+  [[nodiscard]] auto path() const -> const QFileInfo&;
 
  signals:
   void undo_state_updated(bool canUndo);
@@ -527,15 +493,15 @@ class map_document final : public QObject
   void redo_text_updated(const QString& text);
   void clean_changed(bool clean);
 
-  void added_tileset(tileset_id id);
-  void removed_tileset(tileset_id id);
+  void added_tileset(tileset_id);
+  void removed_tileset(tileset_id);
 
-  void added_layer(layer_id id, const layer& layer);
-  void added_duplicated_layer(layer_id id, const layer& layer);
-  void selected_layer(layer_id id, const layer& layer);
-  void removed_layer(layer_id id);
-  void moved_layer_back(layer_id id);
-  void moved_layer_forward(layer_id id);
+  void added_layer(layer_id, const layer&);
+  void added_duplicated_layer(layer_id, const layer&);
+  void selected_layer(layer_id, const layer&);
+  void removed_layer(layer_id);
+  void moved_layer_back(layer_id);
+  void moved_layer_forward(layer_id);
 
  public slots:
   /**

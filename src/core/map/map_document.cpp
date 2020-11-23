@@ -268,6 +268,16 @@ void map_document::set_tileset_name(const tileset_id id, const QString& name)
   m_tilesets->rename(id, name);
 }
 
+void map_document::set_next_layer_id(const layer_id id) noexcept
+{
+  m_map->set_next_layer_id(id);
+}
+
+void map_document::set_tile(const position& pos, const tile_id id)
+{
+  m_map->set_tile(pos, id);
+}
+
 auto map_document::is_clean() const -> bool
 {
   return m_commands->isClean() && m_path.exists();
@@ -291,6 +301,81 @@ auto map_document::undo_text() const -> QString
 auto map_document::redo_text() const -> QString
 {
   return m_commands->redoText();
+}
+
+auto map_document::index_of_layer(const layer_id id) const -> maybe<int>
+{
+  return m_map->index_of(id);
+}
+
+auto map_document::in_bounds(const position& pos) const -> bool
+{
+  return m_map->in_bounds(pos);
+}
+
+auto map_document::tile_at(const position& position) const -> maybe<tile_id>
+{
+  return m_map->tile_at(position);
+}
+
+auto map_document::get_layer(const layer_id id) const -> const layer&
+{
+  return m_map->get_layer(id);
+}
+
+auto map_document::tile_count() const -> int
+{
+  return m_map->tile_count();
+}
+
+auto map_document::layer_count() const noexcept -> int
+{
+  return m_map->layer_count();
+}
+
+auto map_document::row_count() const -> row_t
+{
+  return m_map->row_count();
+}
+
+auto map_document::col_count() const -> col_t
+{
+  return m_map->col_count();
+}
+
+auto map_document::width() const -> int
+{
+  return m_map->width();
+}
+
+auto map_document::height() const -> int
+{
+  return m_map->height();
+}
+
+auto map_document::current_tile_size() const noexcept -> int
+{
+  return m_map->current_tile_size();
+}
+
+auto map_document::current_tileset() const -> const tileset*
+{
+  return m_tilesets->current_tileset();
+}
+
+auto map_document::tilesets() const noexcept -> const tileset_manager*
+{
+  return m_tilesets.get();
+}
+
+auto map_document::current_layer_id() const noexcept -> maybe<layer_id>
+{
+  return m_map->active_layer_id();
+}
+
+auto map_document::path() const -> const QFileInfo&
+{
+  return m_path;
 }
 
 }  // namespace tactile::core
