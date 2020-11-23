@@ -128,6 +128,13 @@ void map_tab_widget::disable_stamp_preview()
   }
 }
 
+void map_tab_widget::set_active_tab_name(const QString& name)
+{
+  if (const auto index = currentIndex(); index != -1) {
+    setTabText(index, name);
+  }
+}
+
 auto map_tab_widget::active_tab_id() const -> std::optional<map_id>
 {
   return id_from_index(currentIndex());

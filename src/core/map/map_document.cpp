@@ -1,6 +1,6 @@
 #include "map_document.hpp"
 
-#include <qdebug.h>
+#include <utility>  // move
 
 #include "add_col.hpp"
 #include "add_layer.hpp"
@@ -40,8 +40,9 @@ void map_document::setup()
   m_commands->setUndoLimit(100);
 
   // clang-format off
-  connect(m_commands, &command_stack::canUndoChanged, this, &map_document::undo_state_updated);
-  connect(m_commands, &command_stack::canRedoChanged, this, &map_document::redo_state_updated);
+  connect(m_commands, &command_stack::cleanChanged,    this, &map_document::clean_changed);
+  connect(m_commands, &command_stack::canUndoChanged,  this, &map_document::undo_state_updated);
+  connect(m_commands, &command_stack::canRedoChanged,  this, &map_document::redo_state_updated);
   connect(m_commands, &command_stack::undoTextChanged, this, &map_document::undo_text_updated);
   connect(m_commands, &command_stack::redoTextChanged, this, &map_document::redo_text_updated);
   // clang-format on
@@ -50,6 +51,11 @@ void map_document::setup()
 void map_document::undo()
 {
   m_commands->undo();
+
+  /* Emit clean_changed once more, because we need to take into account that the
+     document might not feature an associated file path yet (that is what
+     is_clean does) */
+  emit clean_changed(is_clean());
 }
 
 void map_document::redo()
@@ -214,6 +220,11 @@ void map_document::reset_tile_size()
   m_map->reset_tile_size();
 }
 
+void map_document::mark_as_clean()
+{
+  m_commands->setClean();
+}
+
 void map_document::set_layer_visibility(layer_id id, bool visible)
 {
   m_map->set_visibility(id, visible);
@@ -227,6 +238,11 @@ void map_document::set_layer_opacity(layer_id id, double opacity)
 void map_document::set_layer_name(layer_id id, const QString& name)
 {
   m_map->set_name(id, name);
+}
+
+void map_document::set_path(QFileInfo path)
+{
+  m_path = std::move(path);
 }
 
 void map_document::move_layer_back(layer_id id)
@@ -244,6 +260,11 @@ void map_document::move_layer_forward(layer_id id)
 void map_document::set_tileset_name(tileset_id id, const QString& name)
 {
   m_tilesets->rename(id, name);
+}
+
+auto map_document::is_clean() const -> bool
+{
+  return m_commands->isClean() && m_path.exists();
 }
 
 auto map_document::can_undo() const -> bool

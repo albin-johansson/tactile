@@ -7,17 +7,19 @@ namespace tactile::core {
 model::model() : m_maps{new map_manager{this}}, m_tools{this}
 {
   // clang-format off
-  connect(m_maps, &map_manager::undo_state_updated, this, &model::undo_state_updated);
-  connect(m_maps, &map_manager::redo_state_updated, this, &model::redo_state_updated);
-  connect(m_maps, &map_manager::undo_text_updated, this, &model::undo_text_updated);
-  connect(m_maps, &map_manager::redo_text_updated, this, &model::redo_text_updated);
-  connect(m_maps, &map_manager::added_layer, this, &model::added_layer);
+  connect(m_maps, &map_manager::undo_state_updated,     this, &model::undo_state_updated);
+  connect(m_maps, &map_manager::redo_state_updated,     this, &model::redo_state_updated);
+  connect(m_maps, &map_manager::undo_text_updated,      this, &model::undo_text_updated);
+  connect(m_maps, &map_manager::redo_text_updated,      this, &model::redo_text_updated);
+  connect(m_maps, &map_manager::clean_changed,          this, &model::clean_changed);
+  connect(m_maps, &map_manager::added_layer,            this, &model::added_layer);
   connect(m_maps, &map_manager::added_duplicated_layer, this, &model::added_duplicated_layer);
-  connect(m_maps, &map_manager::removed_layer, this, &model::removed_layer);
-  connect(m_maps, &map_manager::selected_layer, this, &model::selected_layer);
-  connect(m_maps, &map_manager::moved_layer_back, this, &model::moved_layer_back);
-  connect(m_maps, &map_manager::moved_layer_forward, this, &model::moved_layer_forward);
-  connect(m_maps, &map_manager::removed_tileset, this, &model::removed_tileset);
+  connect(m_maps, &map_manager::removed_layer,          this, &model::removed_layer);
+  connect(m_maps, &map_manager::selected_layer,         this, &model::selected_layer);
+  connect(m_maps, &map_manager::moved_layer_back,       this, &model::moved_layer_back);
+  connect(m_maps, &map_manager::moved_layer_forward,    this, &model::moved_layer_forward);
+  connect(m_maps, &map_manager::removed_tileset,        this, &model::removed_tileset);
+
   connect(m_maps, &map_manager::added_tileset, [this](tileset_id id) {
     const auto& tileset = current_document()->tilesets()->at(id);
     emit added_tileset(current_map_id().value(), id, tileset);
@@ -76,7 +78,7 @@ void model::redo()
   }
 }
 
-void model::resize_map(row_t nRows, col_t nCols)
+void model::resize_map(const row_t nRows, const col_t nCols)
 {
   if (auto* document = current_document()) {
     document->resize(nRows, nCols);
@@ -123,14 +125,14 @@ void model::add_layer()
   }
 }
 
-void model::remove_layer(layer_id id)
+void model::remove_layer(const layer_id id)
 {
   if (auto* document = current_document()) {
     document->remove_layer(id);
   }
 }
 
-void model::select_layer(layer_id id)
+void model::select_layer(const layer_id id)
 {
   if (auto* document = current_document()) {
     document->select_layer(id);
@@ -138,12 +140,12 @@ void model::select_layer(layer_id id)
   }
 }
 
-void model::select_tool(tool_id id)
+void model::select_tool(const tool_id id)
 {
   m_tools.select(id);
 }
 
-void model::select_tileset(tileset_id id)
+void model::select_tileset(const tileset_id id)
 {
   if (auto* document = current_document()) {
     document->select_tileset(id);
@@ -157,7 +159,7 @@ void model::set_tileset_selection(const tileset::selection& selection)
   }
 }
 
-void model::set_layer_visibility(layer_id id, bool visible)
+void model::set_layer_visibility(const layer_id id, const bool visible)
 {
   if (auto* document = current_document()) {
     document->set_layer_visibility(id, visible);
@@ -165,7 +167,7 @@ void model::set_layer_visibility(layer_id id, bool visible)
   }
 }
 
-void model::set_layer_opacity(layer_id id, double opacity)
+void model::set_layer_opacity(const layer_id id, const double opacity)
 {
   if (auto* document = current_document()) {
     document->set_layer_opacity(id, opacity);
@@ -173,7 +175,7 @@ void model::set_layer_opacity(layer_id id, double opacity)
   }
 }
 
-void model::set_layer_name(layer_id id, const QString& name)
+void model::set_layer_name(const layer_id id, const QString& name)
 {
   if (auto* document = current_document()) {
     document->set_layer_name(id, name);
@@ -181,7 +183,7 @@ void model::set_layer_name(layer_id id, const QString& name)
   }
 }
 
-void model::move_layer_back(layer_id id)
+void model::move_layer_back(const layer_id id)
 {
   if (auto* document = current_document()) {
     document->move_layer_back(id);
@@ -189,7 +191,7 @@ void model::move_layer_back(layer_id id)
   }
 }
 
-void model::move_layer_forward(layer_id id)
+void model::move_layer_forward(const layer_id id)
 {
   if (auto* document = current_document()) {
     document->move_layer_forward(id);
@@ -197,7 +199,7 @@ void model::move_layer_forward(layer_id id)
   }
 }
 
-void model::duplicate_layer(layer_id id)
+void model::duplicate_layer(const layer_id id)
 {
   if (auto* document = current_document()) {
     document->duplicate_layer(id);
@@ -232,15 +234,15 @@ void model::reset_tile_size()
 void model::create_tileset(const QImage& image,
                            const QFileInfo& path,
                            const QString& name,
-                           tile_width tileWidth,
-                           tile_height tileHeight)
+                           const tile_width tileWidth,
+                           const tile_height tileHeight)
 {
   if (auto* document = current_document()) {
     document->add_tileset(image, path, name, tileWidth, tileHeight);
   }
 }
 
-void model::remove_tileset(tileset_id id)
+void model::remove_tileset(const tileset_id id)
 {
   if (auto* document = current_document()) {
     document->ui_remove_tileset(id);
@@ -248,14 +250,14 @@ void model::remove_tileset(tileset_id id)
   }
 }
 
-void model::set_tileset_name(tileset_id id, const QString& name)
+void model::set_tileset_name(const tileset_id id, const QString& name)
 {
   if (auto* document = current_document()) {
     document->set_tileset_name(id, name);
   }
 }
 
-void model::select_map(map_id id)
+void model::select_map(const map_id id)
 {
   m_maps->select(id);
 
@@ -265,7 +267,7 @@ void model::select_map(map_id id)
   emit switched_map(id, *document);
 }
 
-void model::close_map(map_id id)
+void model::close_map(const map_id id)
 {
   m_maps->close(id);
 }

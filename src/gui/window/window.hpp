@@ -60,7 +60,12 @@ class window final : public QMainWindow
    */
   void enter_content_view();
 
+  void trigger_save_as();
+
+  void set_active_tab_name(const QString& name);
+
  signals:
+  void ui_save();
   void ui_save_as(const QString& path);
   void ui_open_map(const QString& path);
 
@@ -124,6 +129,8 @@ class window final : public QMainWindow
 
   void redo_text_updated(const QString& text);
 
+  void clean_changed(bool clean);
+
   void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 
   void removed_tileset(tileset_id id);
@@ -148,7 +155,7 @@ class window final : public QMainWindow
 
   void handle_move_camera(int dx, int dy);
 
-  void handle_new_map(core::map_document* map,
+  void handle_new_map(core::map_document* document,
                       map_id id,
                       const QString& name = QStringLiteral(u"map"));
 

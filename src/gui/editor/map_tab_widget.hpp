@@ -89,6 +89,17 @@ class map_tab_widget final : public QTabWidget
   void disable_stamp_preview();
 
   /**
+   * \brief Sets the name of the currently active tab.
+   *
+   * \details This function has no effect if there is no active tab.
+   *
+   * \param name the new name of the tab.
+   *
+   * \since 0.1.0
+   */
+  void set_active_tab_name(const QString& name);
+
+  /**
    * \brief Returns the map ID associated with the currently active tab.
    *
    * \return the map ID of the active tab; `std::nullopt` if there is no active

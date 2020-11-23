@@ -84,6 +84,7 @@ void tactile_app::init_connections()
   mod_to_win(&mod::redo_state_updated,     &win::redo_state_updated);
   mod_to_win(&mod::undo_text_updated,      &win::undo_text_updated);
   mod_to_win(&mod::redo_text_updated,      &win::redo_text_updated);
+  mod_to_win(&mod::clean_changed,          &win::clean_changed);
   mod_to_win(&mod::switched_map,           &win::switched_map);
   mod_to_win(&mod::added_tileset,          &win::added_tileset);
   mod_to_win(&mod::removed_tileset,        &win::removed_tileset);
@@ -101,16 +102,33 @@ void tactile_app::init_connections()
   from_window(&win::ui_pan_right,   &tactile_app::handle_pan_right);
   from_window(&win::ui_pan_left,    &tactile_app::handle_pan_left);
   from_window(&win::ui_new_map,     &tactile_app::handle_new_map);
+  from_window(&win::ui_save,        &tactile_app::save);
   from_window(&win::ui_save_as,     &tactile_app::save_as);
   from_window(&win::ui_open_map,    &tactile_app::open_map);
 
   // clang-format on
 }
 
+void tactile_app::save()
+{
+  if (auto* document = m_model->current_document()) {
+    if (!document->path().exists()) {  // Documents don't have a path initially
+      m_window->trigger_save_as();
+    } else {
+      service::save(document->path().absoluteFilePath(), *document);
+      document->mark_as_clean();
+    }
+  }
+}
+
 void tactile_app::save_as(const QString& path)
 {
-  if (const auto* document = m_model->current_document()) {
+  if (auto* document = m_model->current_document()) {
     service::save(path, *document);
+    const QFileInfo file{path};
+    document->mark_as_clean();
+    document->set_path(file);
+    m_window->set_active_tab_name(file.baseName());
   }
 }
 
@@ -124,6 +142,7 @@ void tactile_app::open_map(const QString& path)
         [&](const tileset_id id, const core::tileset& tileset) {
           m_window->added_tileset(mapId, id, tileset);
         });
+//    document->mark_as_clean();
   } else {
     gui::open_map_error_dialog dialog{m_window.get()};
     dialog.set_file(path);

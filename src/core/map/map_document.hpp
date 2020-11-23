@@ -67,6 +67,8 @@ class map_document final : public QObject
    * \note This function has no effect if there is no undoable command.
    *
    * \since 0.1.0
+   *
+   * \signal `clean_changed`
    */
   void undo();
 
@@ -263,6 +265,19 @@ class map_document final : public QObject
   void reset_tile_size();
 
   /**
+   * \brief Marks the command stack state as "clean".
+   *
+   * \details Marking the state of the document as "clean" means that this is
+   * the default state, used to prevent saving a document unnecessarily when no
+   * effective change has been made to it.
+   *
+   * \note This function should be called every time the document is saved.
+   *
+   * \since 0.1.0
+   */
+  void mark_as_clean();
+
+  /**
    * \copydoc map::set_visibility()
    */
   void set_layer_visibility(layer_id id, bool visible);
@@ -276,6 +291,15 @@ class map_document final : public QObject
    * \copydoc map::set_name()
    */
   void set_layer_name(layer_id id, const QString& name);
+
+  /**
+   * \brief Sets the file path associated with the map document.
+   *
+   * \param path the file path of the map document.
+   *
+   * \since 0.1.0
+   */
+  void set_path(QFileInfo path);
 
   /**
    * \copydoc map::move_layer_back()
@@ -340,6 +364,8 @@ class map_document final : public QObject
       callable(key, *layer);
     }
   }
+
+  [[nodiscard]] auto is_clean() const -> bool;
 
   /**
    * \brief Indicates whether or not there is an undoable command.
@@ -482,11 +508,24 @@ class map_document final : public QObject
     return m_map->active_layer_id();
   }
 
+  /**
+   * \brief Returns the file path associated with the map document.
+   *
+   * \return the file path associated with the map document.
+   *
+   * \since 0.1.0
+   */
+  [[nodiscard]] auto path() const -> const QFileInfo&
+  {
+    return m_path;
+  }
+
  signals:
   void undo_state_updated(bool canUndo);
   void redo_state_updated(bool canRedo);
   void undo_text_updated(const QString& text);
   void redo_text_updated(const QString& text);
+  void clean_changed(bool clean);
 
   void added_tileset(tileset_id id);
   void removed_tileset(tileset_id id);
@@ -526,6 +565,7 @@ class map_document final : public QObject
   std::unique_ptr<map> m_map;
   std::unique_ptr<tileset_manager> m_tilesets;
   command_stack* m_commands{};
+  QFileInfo m_path;
 
   void setup();
 };

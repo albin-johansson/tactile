@@ -47,6 +47,7 @@ tiled_json_parser::tiled_json_parser(const QFileInfo& path)
 {
   if (const auto json = open_file(path); json) {
     m_document = new core::map_document{};
+    m_document->set_path(path);
 
     const auto root = json->object();
     if (!parse_next_layer_id(root)) {

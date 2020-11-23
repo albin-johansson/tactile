@@ -71,6 +71,11 @@ class map_editor final : public QWidget
    */
   void enable_editor_view() noexcept;
 
+  /**
+   * \copydoc map_tab_widget::set_active_tab_name()
+   */
+  void set_active_tab_name(const QString& name);
+
   [[nodiscard]] auto in_editor_mode() const -> bool;
 
   [[nodiscard]] auto active_tab_id() const -> std::optional<map_id>;

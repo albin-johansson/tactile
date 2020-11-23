@@ -69,40 +69,39 @@ void window::init_connections()
   on_triggered(m_ui->actionNewMap, &window::ui_new_map);
   on_triggered(m_ui->actionAddTileset, &window::ui_add_tileset);
 
-  connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
+  connect(m_toolDock,    &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
-  connect(m_layerDock, &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
+  connect(m_layerDock,   &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
 
-  connect(m_toolDock, &tool_dock::closed, [] { prefs::graphics::tool_widget_visible().set(false); });
-  connect(m_layerDock, &tool_dock::closed, [] { prefs::graphics::layer_widget_visible().set(false); });
+  connect(m_toolDock,    &tool_dock::closed, [] { prefs::graphics::tool_widget_visible().set(false); });
+  connect(m_layerDock,   &tool_dock::closed, [] { prefs::graphics::layer_widget_visible().set(false); });
   connect(m_tilesetDock, &tool_dock::closed, [] { prefs::graphics::tileset_widget_visible().set(false); });
 
-  connect(m_editor, &map_editor::ui_select_map, this, &window::ui_select_map);
-  connect(m_editor, &map_editor::ui_remove_map, this, &window::handle_remove_map);
-  connect(m_editor, &map_editor::increase_zoom, this, &window::ui_increase_zoom);
-  connect(m_editor, &map_editor::decrease_zoom, this, &window::ui_decrease_zoom);
-  connect(m_editor, &map_editor::mouse_pressed, this, &window::mouse_pressed);
-  connect(m_editor, &map_editor::mouse_moved, this, &window::mouse_moved);
+  connect(m_editor, &map_editor::ui_select_map,  this, &window::ui_select_map);
+  connect(m_editor, &map_editor::ui_remove_map,  this, &window::handle_remove_map);
+  connect(m_editor, &map_editor::increase_zoom,  this, &window::ui_increase_zoom);
+  connect(m_editor, &map_editor::decrease_zoom,  this, &window::ui_decrease_zoom);
+  connect(m_editor, &map_editor::mouse_pressed,  this, &window::mouse_pressed);
+  connect(m_editor, &map_editor::mouse_moved,    this, &window::mouse_moved);
   connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
-  connect(m_editor, &map_editor::mouse_entered, this, &window::mouse_entered);
-  connect(m_editor, &map_editor::mouse_exited, this, &window::mouse_exited);
+  connect(m_editor, &map_editor::mouse_entered,  this, &window::mouse_entered);
+  connect(m_editor, &map_editor::mouse_exited,   this, &window::mouse_exited);
 
-  connect(m_tilesetDock, &tileset_dock::ui_add_tileset, this, &window::ui_add_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_select_tileset, this, &window::ui_select_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_remove_tileset, this, &window::ui_remove_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_rename_tileset, this, &window::ui_rename_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_add_tileset,           this, &window::ui_add_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_select_tileset,        this, &window::ui_select_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_remove_tileset,        this, &window::ui_remove_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_rename_tileset,        this, &window::ui_rename_tileset);
   connect(m_tilesetDock, &tileset_dock::ui_set_tileset_selection, this, &window::ui_set_tileset_selection);
 
-  connect(m_layerDock, &layer_dock::ui_add_layer, this, &window::ui_add_layer);
-  connect(m_layerDock, &layer_dock::ui_remove_layer, this, &window::ui_remove_layer);
-  connect(m_layerDock, &layer_dock::ui_select_layer, this, &window::ui_select_layer);
+  connect(m_layerDock, &layer_dock::ui_add_layer,            this, &window::ui_add_layer);
+  connect(m_layerDock, &layer_dock::ui_remove_layer,         this, &window::ui_remove_layer);
+  connect(m_layerDock, &layer_dock::ui_select_layer,         this, &window::ui_select_layer);
   connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
-  connect(m_layerDock, &layer_dock::ui_set_layer_opacity, this, &window::ui_set_layer_opacity);
-  connect(m_layerDock, &layer_dock::ui_set_layer_name, this, &window::ui_set_layer_name);
-  connect(m_layerDock, &layer_dock::ui_move_layer_up, this, &window::ui_move_layer_up);
-  connect(m_layerDock, &layer_dock::ui_move_layer_down, this, &window::ui_move_layer_down);
-  connect(m_layerDock, &layer_dock::ui_duplicate_layer, this, &window::ui_duplicate_layer);
-
+  connect(m_layerDock, &layer_dock::ui_set_layer_opacity,    this, &window::ui_set_layer_opacity);
+  connect(m_layerDock, &layer_dock::ui_set_layer_name,       this, &window::ui_set_layer_name);
+  connect(m_layerDock, &layer_dock::ui_move_layer_up,        this, &window::ui_move_layer_up);
+  connect(m_layerDock, &layer_dock::ui_move_layer_down,      this, &window::ui_move_layer_down);
+  connect(m_layerDock, &layer_dock::ui_duplicate_layer,      this, &window::ui_duplicate_layer);
   // clang-format on
 }
 
@@ -167,9 +166,9 @@ void window::set_actions_enabled(const bool enabled)
 {
   // File
   m_ui->actionCloseMap->setEnabled(enabled);
-  //  m_ui->action_save->setEnabled(enabled); // TODO uncomment when added
+  m_ui->actionSave->setEnabled(enabled);
   m_ui->actionSaveAs->setEnabled(enabled);
-  //  m_ui->action_rename->setEnabled(enabled); // TODO uncomment when added
+  //  m_ui->actionRename->setEnabled(enabled); // TODO uncomment when added
 
   // Edit
   m_ui->actionAddCol->setEnabled(enabled);
@@ -221,6 +220,16 @@ void window::enter_content_view()
   restore_dock_visibility();
 }
 
+void window::trigger_save_as()
+{
+  on_actionSaveAs_triggered();
+}
+
+void window::set_active_tab_name(const QString& name)
+{
+  m_editor->set_active_tab_name(name);
+}
+
 void window::force_redraw()
 {
   m_editor->force_redraw();
@@ -244,6 +253,11 @@ void window::undo_text_updated(const QString& text)
 void window::redo_text_updated(const QString& text)
 {
   m_ui->actionRedo->setText(QStringLiteral(u"Redo ") + text);
+}
+
+void window::clean_changed(const bool clean)
+{
+  m_ui->actionSave->setDisabled(clean);
 }
 
 void window::added_tileset(const map_id map,
@@ -309,16 +323,18 @@ void window::handle_move_camera(const int dx, const int dy)
   m_editor->move_map(dx, dy);
 }
 
-void window::handle_new_map(core::map_document* map,
+void window::handle_new_map(core::map_document* document,
                             const map_id id,
                             const QString& name)
 {
-  m_editor->add_map_tab(map, id, name);
+  m_editor->add_map_tab(document, id, name);
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
     enter_content_view();
     center_viewport();
   }
+
+  m_ui->actionSave->setDisabled(document->is_clean());
 }
 
 void window::closeEvent(QCloseEvent* event)
@@ -408,7 +424,7 @@ void window::on_actionLayersVisibility_triggered()
 
 void window::on_actionSave_triggered()
 {
-  // TODO
+  emit ui_save();
 }
 
 void window::on_actionSaveAs_triggered()

@@ -51,6 +51,8 @@ class tactile_app final : public QApplication
   void init_connections();
 
  private slots:
+  void save();
+
   void save_as(const QString& path);
 
   void open_map(const QString& path);

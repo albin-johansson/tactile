@@ -12,6 +12,7 @@ tiled_tmx_parser::tiled_tmx_parser(const QFileInfo& path)
 {
   if (const auto xml = open_file(path); xml) {
     m_document = new core::map_document{};
+    m_document->set_path(path);
 
     const auto root = xml->documentElement();
     if (!parse_next_layer_id(root)) {

@@ -95,6 +95,11 @@ void map_editor::enable_editor_view() noexcept
   m_ui->stackedWidget->setCurrentIndex(m_editorID);
 }
 
+void map_editor::set_active_tab_name(const QString& name)
+{
+  m_tabWidget->set_active_tab_name(name);
+}
+
 auto map_editor::in_editor_mode() const -> bool
 {
   return m_ui->stackedWidget->currentIndex() == m_editorID;

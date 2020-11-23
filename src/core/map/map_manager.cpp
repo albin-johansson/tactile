@@ -37,18 +37,19 @@ auto map_manager::add(map_document* document) -> map_id
   };
 
   // clang-format off
-  bind(&map_document::undo_state_updated, &map_manager::undo_state_updated);
-  bind(&map_document::redo_state_updated, &map_manager::redo_state_updated);
-  bind(&map_document::undo_text_updated, &map_manager::undo_text_updated);
-  bind(&map_document::redo_text_updated, &map_manager::redo_text_updated);
-  bind(&map_document::added_tileset, &map_manager::added_tileset);
-  bind(&map_document::removed_tileset, &map_manager::removed_tileset);
-  bind(&map_document::added_layer, &map_manager::added_layer);
+  bind(&map_document::undo_state_updated,     &map_manager::undo_state_updated);
+  bind(&map_document::redo_state_updated,     &map_manager::redo_state_updated);
+  bind(&map_document::undo_text_updated,      &map_manager::undo_text_updated);
+  bind(&map_document::redo_text_updated,      &map_manager::redo_text_updated);
+  bind(&map_document::clean_changed,          &map_manager::clean_changed);
+  bind(&map_document::added_tileset,          &map_manager::added_tileset);
+  bind(&map_document::removed_tileset,        &map_manager::removed_tileset);
+  bind(&map_document::added_layer,            &map_manager::added_layer);
   bind(&map_document::added_duplicated_layer, &map_manager::added_duplicated_layer);
-  bind(&map_document::removed_layer, &map_manager::removed_layer);
-  bind(&map_document::selected_layer, &map_manager::selected_layer);
-  bind(&map_document::moved_layer_back, &map_manager::moved_layer_back);
-  bind(&map_document::moved_layer_forward, &map_manager::moved_layer_forward);
+  bind(&map_document::removed_layer,          &map_manager::removed_layer);
+  bind(&map_document::selected_layer,         &map_manager::selected_layer);
+  bind(&map_document::moved_layer_back,       &map_manager::moved_layer_back);
+  bind(&map_document::moved_layer_forward,    &map_manager::moved_layer_forward);
   // clang-format on
 
   const auto id = m_nextId;
@@ -87,6 +88,7 @@ void map_manager::select(map_id id)
   if (m_current != id) {
     m_current = id;
     emit_undo_redo_update();
+    emit clean_changed(current_document()->is_clean());
   }
 }
 

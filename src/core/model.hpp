@@ -86,6 +86,7 @@ class model final : public QObject
   void redo_state_updated(bool canRedo);
   void undo_text_updated(const QString& text);
   void redo_text_updated(const QString& text);
+  void clean_changed(bool clean);
 
   void added_tileset(map_id map, tileset_id id, const tileset& tileset);
   void removed_tileset(tileset_id id);
@@ -98,7 +99,7 @@ class model final : public QObject
    *
    * \since 0.1.0
    *
-   * \signal `redraw`
+   * \signal `redraw`, `clean_changed`
    */
   void undo();
 

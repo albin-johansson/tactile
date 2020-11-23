@@ -83,7 +83,7 @@ class map_manager final : public QObject
    * \since 0.1.0
    *
    * \signal `undo_state_updated`, `redo_state_updated`, `undo_text_updated`,
-   * `redo_text_updated`.
+   * `redo_text_updated`, `clean_changed`.
    */
   void select(map_id id);
 
@@ -153,6 +153,7 @@ class map_manager final : public QObject
   void redo_state_updated(bool canRedo);
   void undo_text_updated(const QString& text);
   void redo_text_updated(const QString& text);
+  void clean_changed(bool clean);
 
   void added_tileset(tileset_id id);
   void removed_tileset(tileset_id id);
