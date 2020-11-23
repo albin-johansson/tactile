@@ -105,12 +105,12 @@ auto map_editor::in_editor_mode() const -> bool
   return m_ui->stackedWidget->currentIndex() == m_editorID;
 }
 
-auto map_editor::active_tab_id() const -> std::optional<map_id>
+auto map_editor::active_tab_id() const -> maybe<map_id>
 {
   return m_tabWidget->active_tab_id();
 }
 
-auto map_editor::active_tab_name() const -> std::optional<QString>
+auto map_editor::active_tab_name() const -> maybe<QString>
 {
   return m_tabWidget->active_tab_name();
 }

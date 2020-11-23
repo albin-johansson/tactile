@@ -2,7 +2,8 @@
 
 #include <QLineEdit>
 #include <QTabBar>
-#include <optional>  // optional
+
+#include "maybe.hpp"
 
 namespace tactile::gui {
 
@@ -23,7 +24,7 @@ class tab_bar final : public QTabBar
 
  private:
   QLineEdit* m_edit{};
-  std::optional<int> m_renameIndex;
+  maybe<int> m_renameIndex;
 };
 
 }  // namespace tactile::gui

@@ -7,7 +7,7 @@
 
 namespace tactile::json {
 
-auto from_file(const QFileInfo& path) -> std::optional<QJsonDocument>
+auto from_file(const QFileInfo& path) -> maybe<QJsonDocument>
 {
   QFile file{path.absoluteFilePath()};
   if (!file.open(QFile::ReadOnly | QFile::Text)) {

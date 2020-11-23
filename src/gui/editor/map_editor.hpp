@@ -2,9 +2,9 @@
 
 #include <QMouseEvent>
 #include <QWidget>
-#include <optional>  // optional
 
 #include "map_id.hpp"
+#include "maybe.hpp"
 #include "position.hpp"
 
 namespace Ui {
@@ -78,9 +78,9 @@ class map_editor final : public QWidget
 
   [[nodiscard]] auto in_editor_mode() const -> bool;
 
-  [[nodiscard]] auto active_tab_id() const -> std::optional<map_id>;
+  [[nodiscard]] auto active_tab_id() const -> maybe<map_id>;
 
-  [[nodiscard]] auto active_tab_name() const -> std::optional<QString>;
+  [[nodiscard]] auto active_tab_name() const -> maybe<QString>;
 
   [[nodiscard]] auto tab_count() const -> int;
 

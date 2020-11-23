@@ -3,15 +3,15 @@
 #include <QFileInfo>
 #include <QtXml>
 #include <concepts>  // constructible_from, invocable
-#include <optional>  // optional
 
+#include "maybe.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::xml {
 
 template <std::constructible_from<int> T = int>
 [[nodiscard]] auto int_attr(const QDomElement& element, const QString& key)
-    -> std::optional<T>
+    -> maybe<T>
 {
   bool ok{};
   if (const auto result = element.attribute(key).toInt(&ok); ok) {
@@ -59,8 +59,7 @@ void each_elem(const QDomElement& element, const QString& tag, T&& callable)
 
 [[nodiscard]] auto to_elem(const QDomNode& node) -> QDomElement;
 
-[[nodiscard]] auto from_file(const QFileInfo& path)
-    -> std::optional<QDomDocument>;
+[[nodiscard]] auto from_file(const QFileInfo& path) -> maybe<QDomDocument>;
 
 void write_file(const QFileInfo& path, const QDomDocument& document);
 

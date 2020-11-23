@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QGraphicsItem>
-#include <optional>  // optional
 
+#include "maybe.hpp"
 #include "position.hpp"
 #include "tile_id.hpp"
 #include "tileset.hpp"
@@ -67,7 +67,7 @@ class map_item final : public QGraphicsItem
 
  private:
   core::map_document* m_map{};
-  std::optional<core::position> m_mousePosition;
+  maybe<core::position> m_mousePosition;
 
   inline constexpr static qreal m_previewOpacity{0.5};
 

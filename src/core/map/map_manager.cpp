@@ -115,7 +115,7 @@ auto map_manager::at(map_id id) const -> const map_document*
   }
 }
 
-auto map_manager::current_map_id() const -> std::optional<map_id>
+auto map_manager::current_map_id() const -> maybe<map_id>
 {
   return m_current;
 }

@@ -50,7 +50,7 @@ tiled_tmx_parser::operator bool() const noexcept
 }
 
 auto tiled_tmx_parser::open_file(const QFileInfo& path)
-    -> std::optional<QDomDocument>
+    -> maybe<QDomDocument>
 {
   if (!path.exists()) {
     m_error = parse_error::map_file_not_found;
@@ -109,7 +109,7 @@ auto tiled_tmx_parser::parse_tilesets(const QDomElement& root,
 }
 
 auto tiled_tmx_parser::parse_tileset_first_gid(const QDomElement& elem)
-    -> std::optional<tile_id>
+    -> maybe<tile_id>
 {
   const auto gid = xml::int_attr<tile_id>(elem, QStringLiteral(u"firstgid"));
 

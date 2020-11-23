@@ -4,8 +4,8 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QValidator>
-#include <optional>  // optional
 
+#include "maybe.hpp"
 #include "preferences.hpp"
 #include "setting.hpp"
 #include "theme.hpp"
@@ -14,7 +14,7 @@
 namespace tactile::gui {
 namespace {
 
-[[nodiscard]] auto text_as_int(const QLineEdit* edit) -> std::optional<int>
+[[nodiscard]] auto text_as_int(const QLineEdit* edit) -> maybe<int>
 {
   Q_ASSERT(edit);
   const auto text = edit->text();

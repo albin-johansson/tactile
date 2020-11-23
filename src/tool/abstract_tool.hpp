@@ -2,8 +2,8 @@
 
 #include <QMouseEvent>
 #include <QPoint>
-#include <optional>  // optional
 
+#include "maybe.hpp"
 #include "position.hpp"
 
 namespace tactile {
@@ -150,7 +150,7 @@ class abstract_tool
    */
   [[nodiscard]] auto translate_mouse_position(const QPoint& mousePosition,
                                               const QPointF& mapPosition) const
-      -> std::optional<core::position>;
+      -> maybe<core::position>;
 
  private:
   core::model* m_model{};

@@ -2,9 +2,9 @@
 
 #include <QString>
 #include <QTabWidget>
-#include <optional>  // optional
 
 #include "map_view.hpp"
+#include "maybe.hpp"
 
 namespace tactile {
 
@@ -107,7 +107,7 @@ class map_tab_widget final : public QTabWidget
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto active_tab_id() const -> std::optional<map_id>;
+  [[nodiscard]] auto active_tab_id() const -> maybe<map_id>;
 
   /**
    * \brief Returns the map ID associated with the specified tab.
@@ -119,9 +119,9 @@ class map_tab_widget final : public QTabWidget
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto id_from_index(int index) const -> std::optional<map_id>;
+  [[nodiscard]] auto id_from_index(int index) const -> maybe<map_id>;
 
-  [[nodiscard]] auto active_tab_name() const -> std::optional<QString>;
+  [[nodiscard]] auto active_tab_name() const -> maybe<QString>;
 
  signals:
   void ui_remove_map(map_id id);

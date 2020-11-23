@@ -1,10 +1,10 @@
 #pragma once
 
 #include <QWidget>
-#include <map>       // map
-#include <optional>  // optional
+#include <map>  // map
 
 #include "map_id.hpp"
+#include "maybe.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_tab_manager.hpp"
@@ -97,7 +97,7 @@ class tileset_content_page final : public QWidget
   Ui::tileset_content_page* m_ui{};
   tab_widget* m_tabWidget{};
   tileset_tab_context_menu* m_contextMenu{};
-  std::optional<map_id> m_currentMap;
+  maybe<map_id> m_currentMap;
   std::map<map_id, tileset_tab_manager> m_tabManagers;
 
   /**

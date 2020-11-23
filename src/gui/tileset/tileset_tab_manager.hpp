@@ -1,7 +1,6 @@
 #pragma once
 
-#include <optional>  // optional
-
+#include "maybe.hpp"
 #include "tileset_id.hpp"
 #include "vector_map.hpp"
 
@@ -28,7 +27,7 @@ class tileset_tab_manager final
 
   [[nodiscard]] auto is_empty() const -> bool;
 
-  [[nodiscard]] auto cached_index() const -> std::optional<int>
+  [[nodiscard]] auto cached_index() const -> maybe<int>
   {
     return m_cachedIndex;
   }
@@ -55,7 +54,7 @@ class tileset_tab_manager final
 
  private:
   vector_map<tileset_id, tileset_tab*> m_tabs;
-  std::optional<int> m_cachedIndex;
+  maybe<int> m_cachedIndex;
 };
 
 }  // namespace tactile::gui

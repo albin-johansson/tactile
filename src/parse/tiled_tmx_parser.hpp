@@ -2,9 +2,9 @@
 
 #include <QFileInfo>
 #include <QtXml>
-#include <optional>  // optional
 
 #include "map_document.hpp"
+#include "maybe.hpp"
 #include "parse_error.hpp"
 
 namespace tactile {
@@ -63,8 +63,7 @@ class tiled_tmx_parser final
     return false;
   }
 
-  [[nodiscard]] auto open_file(const QFileInfo& path)
-      -> std::optional<QDomDocument>;
+  [[nodiscard]] auto open_file(const QFileInfo& path) -> maybe<QDomDocument>;
 
   [[nodiscard]] auto parse_next_layer_id(const QDomElement& root) -> bool;
 
@@ -72,7 +71,7 @@ class tiled_tmx_parser final
                                     const QFileInfo& path) -> bool;
 
   [[nodiscard]] auto parse_tileset_first_gid(const QDomElement& elem)
-      -> std::optional<tile_id>;
+      -> maybe<tile_id>;
 
   [[nodiscard]] auto parse_external_tileset(const QDomElement& elem,
                                             const QFileInfo& path,

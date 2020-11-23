@@ -3,9 +3,9 @@
 #include <QPalette>
 #include <QString>
 #include <QStringView>
-#include <optional>  // optional
 
 #include "czstring.hpp"
+#include "maybe.hpp"
 
 /**
  * \namespace tactile::theme
@@ -47,7 +47,7 @@ void set_theme(const QString& name);
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto from_name(QStringView name) -> std::optional<QPalette>;
+[[nodiscard]] auto from_name(QStringView name) -> maybe<QPalette>;
 
 /**
  * \brief Returns the palette of the dark theme.

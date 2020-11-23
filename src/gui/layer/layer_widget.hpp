@@ -2,10 +2,10 @@
 
 #include <QListWidgetItem>
 #include <QWidget>
-#include <optional>  // optional
 
 #include "layer.hpp"
 #include "map_document.hpp"
+#include "maybe.hpp"
 
 namespace Ui {
 class layer_widget;
@@ -54,7 +54,7 @@ class layer_widget final : public QWidget
  private:
   Ui::layer_widget* m_ui{};
   layer_item_context_menu* m_contextMenu{};
-  std::optional<int> m_duplicateTargetRow;
+  maybe<int> m_duplicateTargetRow;
   int m_nameSuffix{1};
 
   void trigger_layer_item_context_menu(const QPoint& pos);

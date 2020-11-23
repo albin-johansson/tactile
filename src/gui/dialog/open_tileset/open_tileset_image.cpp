@@ -6,7 +6,7 @@
 
 namespace tactile::gui {
 
-auto open_tileset_image(QWidget* parent) -> std::optional<QString>
+auto open_tileset_image(QWidget* parent) -> maybe<QString>
 {
   static QString cachedPath;
 

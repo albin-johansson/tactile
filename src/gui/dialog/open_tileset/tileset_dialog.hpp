@@ -7,8 +7,8 @@
 #include <QPixmap>
 #include <QValidator>
 #include <concepts>  // invocable
-#include <optional>  // optional
 
+#include "maybe.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
 
@@ -70,9 +70,9 @@ class tileset_dialog final : public QDialog
   Ui::tileset_dialog* m_ui{};
   QImage m_image{};
   QString m_path{};
-  std::optional<tile_width> m_tileWidth;
-  std::optional<tile_height> m_tileHeight;
-  std::optional<QString> m_imageName;
+  maybe<tile_width> m_tileWidth;
+  maybe<tile_height> m_tileHeight;
+  maybe<QString> m_imageName;
   QIntValidator* m_validator;
   QPixmap m_defaultImageIcon;
 

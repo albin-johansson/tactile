@@ -57,7 +57,7 @@ void set_theme(const QString& name)
   }
 }
 
-auto from_name(QStringView name) -> std::optional<QPalette>
+auto from_name(QStringView name) -> maybe<QPalette>
 {
   if (dark == name) {
     return get_dark();

@@ -135,12 +135,12 @@ void map_tab_widget::set_active_tab_name(const QString& name)
   }
 }
 
-auto map_tab_widget::active_tab_id() const -> std::optional<map_id>
+auto map_tab_widget::active_tab_id() const -> maybe<map_id>
 {
   return id_from_index(currentIndex());
 }
 
-auto map_tab_widget::id_from_index(int index) const -> std::optional<map_id>
+auto map_tab_widget::id_from_index(int index) const -> maybe<map_id>
 {
   if (const auto* view = get_view(index)) {
     return view->id();
@@ -149,7 +149,7 @@ auto map_tab_widget::id_from_index(int index) const -> std::optional<map_id>
   }
 }
 
-auto map_tab_widget::active_tab_name() const -> std::optional<QString>
+auto map_tab_widget::active_tab_name() const -> maybe<QString>
 {
   const auto index = currentIndex();
   if (index != -1) {

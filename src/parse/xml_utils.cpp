@@ -13,7 +13,7 @@ auto to_elem(const QDomNode& node) -> QDomElement
   }
 }
 
-auto from_file(const QFileInfo& path) -> std::optional<QDomDocument>
+auto from_file(const QFileInfo& path) -> maybe<QDomDocument>
 {
   QDomDocument document{};
 

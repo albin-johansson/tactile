@@ -3,9 +3,9 @@
 #include <QFileInfo>
 #include <QJsonDocument>
 #include <QString>
-#include <optional>  // optional
 
 #include "map_document.hpp"
+#include "maybe.hpp"
 #include "parse_error.hpp"
 
 namespace tactile {
@@ -77,8 +77,7 @@ class tiled_json_parser final
     return false;
   }
 
-  [[nodiscard]] auto open_file(const QFileInfo& path)
-      -> std::optional<QJsonDocument>;
+  [[nodiscard]] auto open_file(const QFileInfo& path) -> maybe<QJsonDocument>;
 
   [[nodiscard]] auto parse_next_layer_id(const QJsonObject& root) -> bool;
 
@@ -86,7 +85,7 @@ class tiled_json_parser final
                                     const QFileInfo& path) -> bool;
 
   [[nodiscard]] auto parse_tileset_first_gid(const QJsonObject& object)
-      -> std::optional<tile_id>;
+      -> maybe<tile_id>;
 
   [[nodiscard]] auto parse_external_tileset(const QJsonObject& object,
                                             const QFileInfo& path,

@@ -2,7 +2,8 @@
 
 #include <QString>
 #include <QWidget>
-#include <optional>  // optional
+
+#include "maybe.hpp"
 
 namespace tactile::gui {
 
@@ -17,6 +18,6 @@ namespace tactile::gui {
  * \since 0.1.0
  */
 [[nodiscard]] auto open_tileset_image(QWidget* parent = nullptr)
-    -> std::optional<QString>;
+    -> maybe<QString>;
 
 }  // namespace tactile::gui

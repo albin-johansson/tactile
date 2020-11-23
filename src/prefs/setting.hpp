@@ -3,8 +3,9 @@
 #include <QSettings>
 #include <QString>
 #include <concepts>  // invocable, same_as
-#include <optional>  // optional
 #include <utility>   // forward
+
+#include "maybe.hpp"
 
 namespace tactile::prefs {
 
@@ -179,7 +180,7 @@ class setting final
   }
 
  private:
-  std::optional<T> m_value;
+  maybe<T> m_value;
   QString m_key;
 };
 

@@ -2,12 +2,12 @@
 
 #include <QFileInfo>
 #include <QJsonDocument>
-#include <optional>  // optional
+
+#include "maybe.hpp"
 
 namespace tactile::json {
 
-[[nodiscard]] auto from_file(const QFileInfo& path)
-    -> std::optional<QJsonDocument>;
+[[nodiscard]] auto from_file(const QFileInfo& path) -> maybe<QJsonDocument>;
 
 auto write_file(const QFileInfo& path, const QJsonDocument& document) -> bool;
 

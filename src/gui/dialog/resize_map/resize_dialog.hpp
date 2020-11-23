@@ -5,8 +5,8 @@
 #include <QPushButton>
 #include <QValidator>
 #include <concepts>  // invocable
-#include <optional>  // optional
 
+#include "maybe.hpp"
 #include "position.hpp"
 
 namespace Ui {
@@ -69,8 +69,8 @@ class resize_dialog final : public QDialog
  private:
   Ui::resize_dialog* m_ui;
   QIntValidator* m_validator;
-  std::optional<col_t> m_chosenWidth;
-  std::optional<row_t> m_chosenHeight;
+  maybe<col_t> m_chosenWidth;
+  maybe<row_t> m_chosenHeight;
 
   /**
    * \brief Connects a line edit widget to the dialog.

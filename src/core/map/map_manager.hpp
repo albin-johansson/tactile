@@ -4,10 +4,10 @@
 #include <QImage>
 #include <QObject>
 #include <QString>
-#include <optional>  // optional
 
 #include "map_document.hpp"
 #include "map_id.hpp"
+#include "maybe.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::core {
@@ -121,7 +121,7 @@ class map_manager final : public QObject
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto current_map_id() const -> std::optional<map_id>;
+  [[nodiscard]] auto current_map_id() const -> maybe<map_id>;
 
   /**
    * \brief Returns the currently active map document.
@@ -166,7 +166,7 @@ class map_manager final : public QObject
   void moved_layer_forward(layer_id id);
 
  private:
-  std::optional<map_id> m_current;
+  maybe<map_id> m_current;
   storage_type m_documents;
   map_id m_nextId{1};
 
