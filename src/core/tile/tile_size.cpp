@@ -1,6 +1,6 @@
 #include "tile_size.hpp"
 
-#include <cmath>
+#include <cmath>  // round
 
 #include "algorithm.hpp"
 
@@ -22,7 +22,7 @@ void tile_size::decrease() noexcept
   m_size = at_least(size, min_size());
 }
 
-void tile_size::set_size(int size) noexcept
+void tile_size::set_size(const int size) noexcept
 {
   m_size = at_least(size, min_size());
 }
