@@ -3,11 +3,11 @@
 #include <QString>
 #include <concepts>  // invocable
 #include <memory>    // shared_ptr
-#include <optional>  // optional
 #include <utility>   // pair
 
 #include "layer.hpp"
 #include "layer_id.hpp"
+#include "maybe.hpp"
 #include "tile_size.hpp"
 #include "vector_map.hpp"
 
@@ -28,10 +28,10 @@ namespace tactile::core {
  */
 class map final
 {
-  using storage_type = vector_map<layer_id, std::shared_ptr<layer>>;
-
  public:
-  using const_iterator = storage_type::const_iterator;
+  using layer_pair = std::pair<layer_id, std::shared_ptr<layer>>;
+  using layer_map = vector_map<layer_id, std::shared_ptr<layer>>;
+  using const_iterator = layer_map::const_iterator;
 
   /**
    * \brief Creates an empty map with no layers.
@@ -135,8 +135,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto duplicate_layer(layer_id id)
-      -> std::pair<layer_id, std::shared_ptr<layer>>&;
+  [[nodiscard]] auto duplicate_layer(layer_id id) -> layer_pair&;
 
   /**
    * \brief Removes the specified layer from the map.
@@ -257,7 +256,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void set_rows(row_t nRows);
+  void set_row_count(row_t nRows);
 
   /**
    * \brief Sets the total number of columns in the map.
@@ -267,7 +266,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void set_cols(col_t nCols);
+  void set_col_count(col_t nCols);
 
   /**
    * \brief Sets the visibility of a tile layer.
@@ -357,8 +356,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tile_at(const position& position) const
-      -> std::optional<tile_id>;
+  [[nodiscard]] auto tile_at(const position& position) const -> maybe<tile_id>;
 
   /**
    * \brief Returns the index associated with the specified layer.
@@ -370,7 +368,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto index_of(layer_id id) const -> std::optional<int>;
+  [[nodiscard]] auto index_of(layer_id id) const -> maybe<int>;
 
   /**
    * \brief Indicates whether or not the layer associated with the specified
@@ -476,7 +474,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto active_layer_id() const noexcept -> std::optional<layer_id>
+  [[nodiscard]] auto active_layer_id() const noexcept -> maybe<layer_id>
   {
     return m_activeLayer;
   }
@@ -546,8 +544,8 @@ class map final
   }
 
  private:
-  storage_type m_layers;
-  std::optional<layer_id> m_activeLayer;
+  layer_map m_layers;
+  maybe<layer_id> m_activeLayer;
   layer_id m_nextLayer{1};
   tile_size m_tileSize;
 

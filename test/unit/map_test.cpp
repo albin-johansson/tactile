@@ -205,37 +205,37 @@ TEST_CASE("map::set_next_layer_id", "[map]")
   CHECK_NOTHROW(map.set_next_layer_id(1_layer));
 }
 
-TEST_CASE("map::set_rows", "[map]")
+TEST_CASE("map::set_row_count", "[map]")
 {
   core::map map{3_row, 3_col};
 
   const auto nRows = 12_row;
-  map.set_rows(nRows);
+  map.set_row_count(nRows);
 
   CHECK(map.col_count() == 3_col);
   CHECK(map.row_count() == nRows);
 
-  map.set_rows(0_row);
+  map.set_row_count(0_row);
   CHECK(map.row_count() == 1_row);
 
-  map.set_rows(-1_row);
+  map.set_row_count(-1_row);
   CHECK(map.row_count() == 1_row);
 }
 
-TEST_CASE("map::set_cols", "[map]")
+TEST_CASE("map::set_col_count", "[map]")
 {
   core::map map{3_row, 3_col};
 
   const auto nCols = 9_col;
-  map.set_cols(nCols);
+  map.set_col_count(nCols);
 
   CHECK(map.row_count() == 3_row);
   CHECK(map.col_count() == nCols);
 
-  map.set_cols(0_col);
+  map.set_col_count(0_col);
   CHECK(map.col_count() == 1_col);
 
-  map.set_cols(-1_col);
+  map.set_col_count(-1_col);
   CHECK(map.col_count() == 1_col);
 }
 

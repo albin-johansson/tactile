@@ -10,7 +10,7 @@
 
 namespace tactile::core {
 
-map::map(row_t nRows, col_t nCols)
+map::map(const row_t nRows, const col_t nCols)
 {
   if (nRows < 1_row || nCols < 1_col) {
     throw tactile_error{"Invalid map dimensions!"};
@@ -24,25 +24,25 @@ map::map(row_t nRows, col_t nCols)
 }
 
 void map::flood(const position& origin,
-                tile_id replacement,
+                const tile_id replacement,
                 std::vector<position>& positions)
 {
   current_layer().flood(origin, replacement, positions);
 }
 
-void map::set_tile(const position& pos, tile_id id)
+void map::set_tile(const position& pos, const tile_id id)
 {
   current_layer().set_tile(pos, id);
 }
 
-void map::remove_occurrences(tile_id id)
+void map::remove_occurrences(const tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
     layer->remove_all(id);
   }
 }
 
-void map::remove_layer(layer_id id)
+void map::remove_layer(const layer_id id)
 {
   Q_ASSERT(m_layers.contains(id));
 
@@ -53,7 +53,7 @@ void map::remove_layer(layer_id id)
   m_layers.erase(id);
 }
 
-auto map::take_layer(layer_id id) -> std::shared_ptr<layer>
+auto map::take_layer(const layer_id id) -> std::shared_ptr<layer>
 {
   Q_ASSERT(m_layers.contains(id));
 
@@ -67,7 +67,7 @@ auto map::take_layer(layer_id id) -> std::shared_ptr<layer>
   return layer;
 }
 
-void map::select_layer(layer_id id)
+void map::select_layer(const layer_id id)
 {
   if (m_layers.contains(id)) {
     m_activeLayer = id;
@@ -81,14 +81,14 @@ auto map::add_layer() -> layer_id
   return id;
 }
 
-void map::add_layer(layer_id id, std::shared_ptr<layer> layer)
+void map::add_layer(const layer_id id, std::shared_ptr<layer> layer)
 {
   Q_ASSERT(!m_layers.contains(id));
   Q_ASSERT(layer);
   m_layers.emplace(id, std::move(layer));
 }
 
-auto map::duplicate_layer(layer_id id)
+auto map::duplicate_layer(const layer_id id)
     -> std::pair<layer_id, std::shared_ptr<layer>>&
 {
   Q_ASSERT(m_layers.contains(id));
@@ -103,14 +103,14 @@ auto map::duplicate_layer(layer_id id)
   return pair;
 }
 
-void map::add_row(tile_id id)
+void map::add_row(const tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
     layer->add_row(id);
   }
 }
 
-void map::add_col(tile_id id)
+void map::add_col(const tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
     layer->add_col(id);
@@ -139,13 +139,13 @@ void map::remove_col()
   }
 }
 
-void map::set_next_layer_id(layer_id id) noexcept
+void map::set_next_layer_id(const layer_id id) noexcept
 {
   Q_ASSERT(!has_layer(id));
   m_nextLayer = id;
 }
 
-void map::set_rows(row_t nRows)
+void map::set_row_count(row_t nRows)
 {
   nRows = at_least(nRows, 1_row);
 
@@ -158,7 +158,7 @@ void map::set_rows(row_t nRows)
   }
 }
 
-void map::set_cols(col_t nCols)
+void map::set_col_count(col_t nCols)
 {
   nCols = at_least(nCols, 1_col);
 
@@ -171,33 +171,33 @@ void map::set_cols(col_t nCols)
   }
 }
 
-void map::set_visibility(layer_id id, bool visible)
+void map::set_visibility(const layer_id id, const bool visible)
 {
   if (auto* layer = find_layer(id)) {
     layer->set_visible(visible);
   }
 }
 
-void map::set_opacity(layer_id id, double opacity)
+void map::set_opacity(const layer_id id, const double opacity)
 {
   if (auto* layer = find_layer(id)) {
     layer->set_opacity(opacity);
   }
 }
 
-void map::set_name(layer_id id, const QString& name)
+void map::set_name(const layer_id id, const QString& name)
 {
   if (auto* layer = find_layer(id)) {
     layer->set_name(name);
   }
 }
 
-void map::move_layer_back(layer_id id)
+void map::move_layer_back(const layer_id id)
 {
   m_layers.move_elem_back(id);
 }
 
-void map::move_layer_forward(layer_id id)
+void map::move_layer_forward(const layer_id id)
 {
   m_layers.move_elem_forward(id);
 }
@@ -212,17 +212,17 @@ auto map::make_layer() -> std::shared_ptr<layer>
   }
 }
 
-auto map::tile_at(const position& position) const -> std::optional<tile_id>
+auto map::tile_at(const position& position) const -> maybe<tile_id>
 {
   return current_layer().tile_at(position);
 }
 
-auto map::index_of(layer_id id) const -> std::optional<int>
+auto map::index_of(const layer_id id) const -> maybe<int>
 {
   return m_layers.index_of(id);
 }
 
-auto map::is_visible(layer_id id) const -> bool
+auto map::is_visible(const layer_id id) const -> bool
 {
   if (const auto* layer = find_layer(id)) {
     return layer->visible();
@@ -236,7 +236,7 @@ auto map::layer_count() const noexcept -> int
   return static_cast<int>(m_layers.size());
 }
 
-auto map::has_layer(layer_id id) const -> bool
+auto map::has_layer(const layer_id id) const -> bool
 {
   return m_layers.contains(id);
 }
@@ -285,7 +285,7 @@ auto map::current_layer() const -> const layer&
   return *m_layers.at(m_activeLayer.value());
 }
 
-auto map::find_layer(layer_id id) -> layer*
+auto map::find_layer(const layer_id id) -> layer*
 {
   if (const auto it = m_layers.find(id); it != m_layers.end()) {
     return it->second.get();
@@ -294,7 +294,7 @@ auto map::find_layer(layer_id id) -> layer*
   }
 }
 
-auto map::find_layer(layer_id id) const -> const layer*
+auto map::find_layer(const layer_id id) const -> const layer*
 {
   if (const auto it = m_layers.find(id); it != m_layers.end()) {
     return it->second.get();

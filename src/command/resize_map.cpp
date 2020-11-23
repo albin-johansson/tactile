@@ -16,8 +16,8 @@ void resize_map::undo()
 
   auto* map = get_map();
 
-  map->set_rows(m_oldRows);
-  map->set_cols(m_oldCols);
+  map->set_row_count(m_oldRows);
+  map->set_col_count(m_oldCols);
 
   if (lossy_resize()) {
     restore_tiles();
@@ -42,8 +42,8 @@ void resize_map::redo()
     save_tiles({0_row, rows}, {cols - m_oldCols - m_cols, cols});
   }
 
-  map->set_rows(m_rows);
-  map->set_cols(m_cols);
+  map->set_row_count(m_rows);
+  map->set_col_count(m_cols);
 }
 
 }  // namespace tactile::cmd
