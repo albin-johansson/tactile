@@ -2,13 +2,13 @@
 
 #include "model.hpp"
 #include "open_map.hpp"
+#include "open_map_error_dialog.hpp"
+#include "parse_error.hpp"
 #include "resize_dialog.hpp"
 #include "save_service.hpp"
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "window.hpp"
-#include "open_map_error_dialog.hpp"
-#include "parse_error.hpp"
 
 namespace tactile {
 
