@@ -1,11 +1,10 @@
 #pragma once
 
 #include <QString>
-#include <cassert>   // assert
 #include <concepts>  // invocable
-#include <optional>  // optional
 #include <vector>    // vector
 
+#include "maybe.hpp"
 #include "position.hpp"
 #include "tile_id.hpp"
 
@@ -240,8 +239,7 @@ class layer final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tile_at(const position& pos) const
-      -> std::optional<tile_id>;
+  [[nodiscard]] auto tile_at(const position& pos) const -> maybe<tile_id>;
 
   /**
    * \brief Indicates whether or not the specified position is in bounds of the
