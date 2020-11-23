@@ -142,7 +142,6 @@ void tactile_app::open_map(const QString& path)
         [&](const tileset_id id, const core::tileset& tileset) {
           m_window->added_tileset(mapId, id, tileset);
         });
-//    document->mark_as_clean();
   } else {
     gui::open_map_error_dialog dialog{m_window.get()};
     dialog.set_file(path);
