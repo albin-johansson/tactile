@@ -1,10 +1,10 @@
 #pragma once
 
 #include <QObject>
-#include <optional>  // optional
 
 #include "layer_id.hpp"
 #include "map_id.hpp"
+#include "maybe.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 #include "tool_id.hpp"
@@ -55,7 +55,7 @@ class model final : public QObject
   /**
    * \copydoc map_manager::current_map_id()
    */
-  [[nodiscard]] auto current_map_id() const -> std::optional<map_id>;
+  [[nodiscard]] auto current_map_id() const -> maybe<map_id>;
 
   /**
    * \copydoc map_manager::current_document()
@@ -289,14 +289,16 @@ class model final : public QObject
    */
   void reset_tile_size();
 
+  // clang-format off
   /**
-   * \copydoc map_document::add_tileset()
+   * \copydoc map_document::add_tileset(const QImage&, const QFileInfo&, const QString&, tile_width, tile_height)
    */
   void create_tileset(const QImage& image,
                       const QFileInfo& path,
                       const QString& name,
                       tile_width tileWidth,
                       tile_height tileHeight);
+  // clang-format on
 
   /**
    * \copydoc map_document::ui_remove_tileset()

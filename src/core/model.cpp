@@ -42,12 +42,12 @@ auto model::has_active_map() const noexcept -> bool
   return m_maps->has_active_map();
 }
 
-auto model::get_document(map_id id) -> map_document*
+auto model::get_document(const map_id id) -> map_document*
 {
   return m_maps->at(id);
 }
 
-auto model::current_map_id() const -> std::optional<map_id>
+auto model::current_map_id() const -> maybe<map_id>
 {
   return m_maps->current_map_id();
 }

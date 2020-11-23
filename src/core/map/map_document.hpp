@@ -166,13 +166,13 @@ class map_document final : public QObject
   void resize(row_t nRows, col_t nCols);
 
   /**
-   * \copydoc tileset_manager::add(tileset_id,std::shared_ptr<tileset>)
+   * \copydoc tileset_manager::add(tileset_id, std::shared_ptr<tileset>)
    * \signal `added_tileset`
    */
   void add_tileset(tileset_id id, std::shared_ptr<tileset> tileset);
 
   /**
-   * \copydoc tileset_manager::add(std::shared_ptr<tileset> tileset)
+   * \copybrief tileset_manager::add(std::shared_ptr<tileset>)
    * \signal `added_tileset`
    */
   void add_tileset(std::shared_ptr<tileset> tileset);
