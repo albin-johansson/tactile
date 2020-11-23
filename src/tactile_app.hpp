@@ -19,7 +19,7 @@ class window;
 }
 
 /**
- * \class app
+ * \class tactile_app
  *
  * \brief Represents the tactile application.
  *
@@ -27,9 +27,9 @@ class window;
  *
  * \since 0.1.0
  *
- * \headerfile app.hpp
+ * \headerfile tactile_app.hpp
  */
-class app final : public QApplication
+class tactile_app final : public QApplication
 {
   Q_OBJECT
 
@@ -40,9 +40,9 @@ class app final : public QApplication
    *
    * \since 0.1.0
    */
-  app(int argc, char** argv);
+  tactile_app(int argc, char** argv);
 
-  ~app() noexcept override;
+  ~tactile_app() noexcept override;
 
  private:
   std::unique_ptr<gui::window> m_window;

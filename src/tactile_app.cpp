@@ -1,4 +1,4 @@
-#include "app.hpp"
+#include "tactile_app.hpp"
 
 #include "model.hpp"
 #include "open_map.hpp"
@@ -12,7 +12,7 @@
 
 namespace tactile {
 
-app::app(int argc, char** argv)
+tactile_app::tactile_app(int argc, char** argv)
     : QApplication{argc, argv},
       m_model{new core::model{}}
 {
@@ -22,12 +22,12 @@ app::app(int argc, char** argv)
   m_window->show();
 }
 
-app::~app() noexcept
+tactile_app::~tactile_app() noexcept
 {
   delete m_model;
 }
 
-void app::init_connections()
+void tactile_app::init_connections()
 {
   using win = gui::window;
   using mod = core::model;
@@ -94,27 +94,27 @@ void app::init_connections()
   mod_to_win(&mod::moved_layer_back,       &win::moved_layer_up);
   mod_to_win(&mod::moved_layer_forward,    &win::moved_layer_down);
 
-  from_window(&win::ui_add_tileset, &app::handle_new_tileset);
-  from_window(&win::ui_resize_map,  &app::handle_resize_map);
-  from_window(&win::ui_pan_up,      &app::handle_pan_up);
-  from_window(&win::ui_pan_down,    &app::handle_pan_down);
-  from_window(&win::ui_pan_right,   &app::handle_pan_right);
-  from_window(&win::ui_pan_left,    &app::handle_pan_left);
-  from_window(&win::ui_new_map,     &app::handle_new_map);
-  from_window(&win::ui_save_as,     &app::save_as);
-  from_window(&win::ui_open_map,    &app::open_map);
+  from_window(&win::ui_add_tileset, &tactile_app::handle_new_tileset);
+  from_window(&win::ui_resize_map,  &tactile_app::handle_resize_map);
+  from_window(&win::ui_pan_up,      &tactile_app::handle_pan_up);
+  from_window(&win::ui_pan_down,    &tactile_app::handle_pan_down);
+  from_window(&win::ui_pan_right,   &tactile_app::handle_pan_right);
+  from_window(&win::ui_pan_left,    &tactile_app::handle_pan_left);
+  from_window(&win::ui_new_map,     &tactile_app::handle_new_map);
+  from_window(&win::ui_save_as,     &tactile_app::save_as);
+  from_window(&win::ui_open_map,    &tactile_app::open_map);
 
   // clang-format on
 }
 
-void app::save_as(const QString& path)
+void tactile_app::save_as(const QString& path)
 {
   if (const auto* document = m_model->current_document()) {
     service::save(path, *document);
   }
 }
 
-void app::open_map(const QString& path)
+void tactile_app::open_map(const QString& path)
 {
   parse_error error;
   if (auto* document = service::open_map(path, &error)) {
@@ -132,7 +132,7 @@ void app::open_map(const QString& path)
   }
 }
 
-void app::handle_resize_map()
+void tactile_app::handle_resize_map()
 {
   if (m_model->has_active_map()) {
     gui::resize_dialog::spawn([this](row_t rows, col_t cols) {
@@ -141,35 +141,35 @@ void app::handle_resize_map()
   }
 }
 
-void app::handle_pan_up()
+void tactile_app::handle_pan_up()
 {
   if (const auto* document = m_model->current_document()) {
     m_window->handle_move_camera(0, document->current_tile_size());
   }
 }
 
-void app::handle_pan_down()
+void tactile_app::handle_pan_down()
 {
   if (const auto* document = m_model->current_document()) {
     m_window->handle_move_camera(0, -document->current_tile_size());
   }
 }
 
-void app::handle_pan_right()
+void tactile_app::handle_pan_right()
 {
   if (const auto* document = m_model->current_document()) {
     m_window->handle_move_camera(-document->current_tile_size(), 0);
   }
 }
 
-void app::handle_pan_left()
+void tactile_app::handle_pan_left()
 {
   if (const auto* document = m_model->current_document()) {
     m_window->handle_move_camera(document->current_tile_size(), 0);
   }
 }
 
-void app::handle_new_tileset()
+void tactile_app::handle_new_tileset()
 {
   gui::tileset_dialog::spawn([this](const gui::tileset_info& info) {
     m_model->create_tileset(info.image,
@@ -180,7 +180,7 @@ void app::handle_new_tileset()
   });
 }
 
-void app::handle_new_map()
+void tactile_app::handle_new_map()
 {
   const auto id = m_model->add_map();
   m_window->handle_new_map(m_model->get_document(id), id);

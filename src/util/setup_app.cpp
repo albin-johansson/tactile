@@ -5,8 +5,8 @@
 #include <QStyleFactory>
 #include <QSurfaceFormat>
 
-#include "app.hpp"
 #include "preferences.hpp"
+#include "tactile_app.hpp"
 #include "theme.hpp"
 #include "version.hpp"
 

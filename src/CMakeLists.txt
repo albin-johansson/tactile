@@ -5,8 +5,8 @@ project(tactile_src CXX)
 set(TACTILE_SOURCE_FILES
         tactile.qrc
 
-        app.cpp
-        app.hpp
+        tactile_app.cpp
+        tactile_app.hpp
         version.hpp
 
         core/czstring.hpp

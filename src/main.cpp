@@ -1,7 +1,7 @@
-#include "app.hpp"
+#include "tactile_app.hpp"
 
 auto main(int argc, char** argv) -> int
 {
-  tactile::app app{argc, argv};
-  return tactile::app::exec();
+  tactile::tactile_app app{argc, argv};
+  return tactile::tactile_app::exec();
 }
