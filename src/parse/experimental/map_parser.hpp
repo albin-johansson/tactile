@@ -293,6 +293,13 @@ class map_parser final
     bool ok{true};
     m_parser.each_layer(root, [&, this](const object_type& elem) {
       if (ok) {
+        if constexpr (type == map_file_type::json) {
+          if (elem->value(u"type").toString() != QStringView{u"tilelayer"}) {
+            qWarning("Skipping layer in file because it was not a tile layer!");
+            return;
+          }
+        }
+
         const auto id = elem.integer(element_id::id);
         if (!id) {
           ok = set_error(parse_error::layer_missing_id);
