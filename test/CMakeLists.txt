@@ -20,7 +20,8 @@ set(TACTILE_TEST_FILES
         unit/parse/xml_utils_test.cpp
         unit/parse/json_utils_test.cpp
         unit/parse/string_utils_test.cpp
-        unit/parse/tiled_json_parser_test.cpp)
+        unit/parse/tiled_json_parser_test.cpp
+        unit/parse/map_parser_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 

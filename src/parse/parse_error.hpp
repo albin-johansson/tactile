@@ -18,6 +18,7 @@ enum class parse_error
   map_file_not_found,    ///< The main map file was not found.
   could_not_parse_json,  ///< Couldn't parse the contents of the JSON file.
   could_not_parse_tmx,   ///< Couldn't parse the contents of the TMX file.
+  could_not_parse_file,  ///< Couldn't parse the contents of the map file.
 
   map_missing_next_layer_id,  ///< Map did not feature "nextlayerid".
   map_missing_tilesets,       ///< Map did not feature "tilesets".
