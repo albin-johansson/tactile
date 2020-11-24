@@ -49,8 +49,7 @@ tiled_tmx_parser::operator bool() const noexcept
   return m_error == parse_error::none;
 }
 
-auto tiled_tmx_parser::open_file(const QFileInfo& path)
-    -> maybe<QDomDocument>
+auto tiled_tmx_parser::open_file(const QFileInfo& path) -> maybe<QDomDocument>
 {
   if (!path.exists()) {
     m_error = parse_error::map_file_not_found;

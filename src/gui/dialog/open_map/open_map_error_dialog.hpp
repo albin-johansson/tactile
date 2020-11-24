@@ -26,4 +26,4 @@ class open_map_error_dialog final : public QDialog
   Ui::open_map_error_dialog* m_ui{};
 };
 
-}
+}  // namespace tactile::gui

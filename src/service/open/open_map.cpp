@@ -21,7 +21,7 @@ auto open_map(const QString& path, parse_error* error) -> core::map_document*
       return parser.take_document();
     }
   } else if (suffix == QStringLiteral(u"tmx")) {
-    tiled_tmx_parser parser {info};
+    tiled_tmx_parser parser{info};
     *error = parser.error_code();
     if (!parser) {
       return nullptr;

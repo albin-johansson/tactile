@@ -48,8 +48,7 @@ auto to_message(const parse_error error) -> QString
       return QStringLiteral(u"Tileset did not feature tile width property!");
 
     case parse_error::tileset_missing_tile_height:
-      return QStringLiteral(
-          u"Tileset did not feature tile height property!");
+      return QStringLiteral(u"Tileset did not feature tile height property!");
 
     case parse_error::tileset_missing_image_path:
       return QStringLiteral(u"Tileset did not feature image property!");
