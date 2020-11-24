@@ -306,6 +306,9 @@ class model final : public QObject
    */
   void remove_tileset(tileset_id id);
 
+  /**
+   * \copydoc map_document::set_tileset_name()
+   */
   void set_tileset_name(tileset_id id, const QString& name);
 
   /**
