@@ -205,7 +205,7 @@ set(TACTILE_SOURCE_FILES
         parse/experimental/json_element.cpp
         parse/experimental/json_element.hpp
         parse/experimental/map_file_type.hpp
-        parse/experimental/element_type.hpp
+        parse/experimental/element_id.hpp
         parse/experimental/tmx_element.cpp
         parse/experimental/tmx_element.hpp
 

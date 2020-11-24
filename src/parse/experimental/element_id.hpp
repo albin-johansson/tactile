@@ -2,7 +2,7 @@
 
 namespace tactile::tmx {
 
-enum class element_type
+enum class element_id
 {
   tileset,
   tilesets,

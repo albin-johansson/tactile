@@ -2,7 +2,7 @@
 
 #include <QtXml>
 
-#include "element_type.hpp"
+#include "element_id.hpp"
 #include "layer.hpp"
 #include "map_file_type.hpp"
 #include "maybe.hpp"
