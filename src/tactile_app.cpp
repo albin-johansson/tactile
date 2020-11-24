@@ -32,79 +32,79 @@ void tactile_app::init_connections()
   using win = gui::window;
   using mod = core::model;
 
-  const auto mod_to_win = [this](auto&& sender, auto&& receiver) {
+  const auto modToWin = [this](auto&& sender, auto&& receiver) {
     connect(m_model, sender, m_window.get(), receiver);
   };
 
-  const auto win_to_mod = [this](auto&& sender, auto&& receiver) {
+  const auto winToMod = [this](auto&& sender, auto&& receiver) {
     connect(m_window.get(), sender, m_model, receiver);
   };
 
-  const auto from_window = [this](auto&& sender, auto&& receiver) {
+  const auto fromWindow = [this](auto&& sender, auto&& receiver) {
     connect(m_window.get(), sender, this, receiver);
   };
 
   // clang-format off
 
-  win_to_mod(&win::ui_undo,                  &mod::undo);
-  win_to_mod(&win::ui_redo,                  &mod::redo);
-  win_to_mod(&win::ui_add_row,               &mod::add_row);
-  win_to_mod(&win::ui_add_col,               &mod::add_col);
-  win_to_mod(&win::ui_remove_row,            &mod::remove_row);
-  win_to_mod(&win::ui_remove_col,            &mod::remove_col);
-  win_to_mod(&win::ui_close_map,             &mod::close_map);
-  win_to_mod(&win::ui_select_map,            &mod::select_map);
-  win_to_mod(&win::ui_increase_zoom,         &mod::increase_tile_size);
-  win_to_mod(&win::ui_decrease_zoom,         &mod::decrease_tile_size);
-  win_to_mod(&win::ui_reset_tile_size,       &mod::reset_tile_size);
-  win_to_mod(&win::ui_selected_tool,         &mod::select_tool);
-  win_to_mod(&win::ui_remove_tileset,        &mod::remove_tileset);
-  win_to_mod(&win::ui_select_tileset,        &mod::select_tileset);
-  win_to_mod(&win::ui_rename_tileset,        &mod::set_tileset_name);
-  win_to_mod(&win::ui_set_tileset_selection, &mod::set_tileset_selection);
-  win_to_mod(&win::ui_add_layer,             &mod::add_layer);
-  win_to_mod(&win::ui_remove_layer,          &mod::remove_layer);
-  win_to_mod(&win::ui_select_layer,          &mod::select_layer);
-  win_to_mod(&win::ui_set_layer_visibility,  &mod::set_layer_visibility);
-  win_to_mod(&win::ui_set_layer_opacity,     &mod::set_layer_opacity);
-  win_to_mod(&win::ui_set_layer_name,        &mod::set_layer_name);
-  win_to_mod(&win::ui_move_layer_down,       &mod::move_layer_back);
-  win_to_mod(&win::ui_move_layer_up,         &mod::move_layer_forward);
-  win_to_mod(&win::ui_duplicate_layer,       &mod::duplicate_layer);
-  win_to_mod(&win::mouse_pressed,            &mod::mouse_pressed);
-  win_to_mod(&win::mouse_moved,              &mod::mouse_moved);
-  win_to_mod(&win::mouse_released,           &mod::mouse_released);
-  win_to_mod(&win::mouse_entered,            &mod::mouse_entered);
-  win_to_mod(&win::mouse_exited,             &mod::mouse_exited);
+  winToMod(&win::ui_undo,                  &mod::undo);
+  winToMod(&win::ui_redo,                  &mod::redo);
+  winToMod(&win::ui_add_row,               &mod::add_row);
+  winToMod(&win::ui_add_col,               &mod::add_col);
+  winToMod(&win::ui_remove_row,            &mod::remove_row);
+  winToMod(&win::ui_remove_col,            &mod::remove_col);
+  winToMod(&win::ui_close_map,             &mod::close_map);
+  winToMod(&win::ui_select_map,            &mod::select_map);
+  winToMod(&win::ui_increase_zoom,         &mod::increase_tile_size);
+  winToMod(&win::ui_decrease_zoom,         &mod::decrease_tile_size);
+  winToMod(&win::ui_reset_tile_size,       &mod::reset_tile_size);
+  winToMod(&win::ui_selected_tool,         &mod::select_tool);
+  winToMod(&win::ui_remove_tileset,        &mod::remove_tileset);
+  winToMod(&win::ui_select_tileset,        &mod::select_tileset);
+  winToMod(&win::ui_rename_tileset,        &mod::set_tileset_name);
+  winToMod(&win::ui_set_tileset_selection, &mod::set_tileset_selection);
+  winToMod(&win::ui_add_layer,             &mod::add_layer);
+  winToMod(&win::ui_remove_layer,          &mod::remove_layer);
+  winToMod(&win::ui_select_layer,          &mod::select_layer);
+  winToMod(&win::ui_set_layer_visibility,  &mod::set_layer_visibility);
+  winToMod(&win::ui_set_layer_opacity,     &mod::set_layer_opacity);
+  winToMod(&win::ui_set_layer_name,        &mod::set_layer_name);
+  winToMod(&win::ui_move_layer_down,       &mod::move_layer_back);
+  winToMod(&win::ui_move_layer_up,         &mod::move_layer_forward);
+  winToMod(&win::ui_duplicate_layer,       &mod::duplicate_layer);
+  winToMod(&win::mouse_pressed,            &mod::mouse_pressed);
+  winToMod(&win::mouse_moved,              &mod::mouse_moved);
+  winToMod(&win::mouse_released,           &mod::mouse_released);
+  winToMod(&win::mouse_entered,            &mod::mouse_entered);
+  winToMod(&win::mouse_exited,             &mod::mouse_exited);
 
-  mod_to_win(&mod::redraw,                 &win::force_redraw);
-  mod_to_win(&mod::enable_stamp_preview,   &win::enable_stamp_preview);
-  mod_to_win(&mod::disable_stamp_preview,  &win::disable_stamp_preview);
-  mod_to_win(&mod::undo_state_updated,     &win::undo_state_updated);
-  mod_to_win(&mod::redo_state_updated,     &win::redo_state_updated);
-  mod_to_win(&mod::undo_text_updated,      &win::undo_text_updated);
-  mod_to_win(&mod::redo_text_updated,      &win::redo_text_updated);
-  mod_to_win(&mod::clean_changed,          &win::clean_changed);
-  mod_to_win(&mod::switched_map,           &win::switched_map);
-  mod_to_win(&mod::added_tileset,          &win::added_tileset);
-  mod_to_win(&mod::removed_tileset,        &win::removed_tileset);
-  mod_to_win(&mod::added_layer,            &win::added_layer);
-  mod_to_win(&mod::added_duplicated_layer, &win::added_duplicated_layer);
-  mod_to_win(&mod::removed_layer,          &win::removed_layer);
-  mod_to_win(&mod::selected_layer,         &win::selected_layer);
-  mod_to_win(&mod::moved_layer_back,       &win::moved_layer_up);
-  mod_to_win(&mod::moved_layer_forward,    &win::moved_layer_down);
+  modToWin(&mod::redraw,                 &win::force_redraw);
+  modToWin(&mod::enable_stamp_preview,   &win::enable_stamp_preview);
+  modToWin(&mod::disable_stamp_preview,  &win::disable_stamp_preview);
+  modToWin(&mod::undo_state_updated,     &win::undo_state_updated);
+  modToWin(&mod::redo_state_updated,     &win::redo_state_updated);
+  modToWin(&mod::undo_text_updated,      &win::undo_text_updated);
+  modToWin(&mod::redo_text_updated,      &win::redo_text_updated);
+  modToWin(&mod::clean_changed,          &win::clean_changed);
+  modToWin(&mod::switched_map,           &win::switched_map);
+  modToWin(&mod::added_tileset,          &win::added_tileset);
+  modToWin(&mod::removed_tileset,        &win::removed_tileset);
+  modToWin(&mod::added_layer,            &win::added_layer);
+  modToWin(&mod::added_duplicated_layer, &win::added_duplicated_layer);
+  modToWin(&mod::removed_layer,          &win::removed_layer);
+  modToWin(&mod::selected_layer,         &win::selected_layer);
+  modToWin(&mod::moved_layer_back,       &win::moved_layer_up);
+  modToWin(&mod::moved_layer_forward,    &win::moved_layer_down);
 
-  from_window(&win::ui_add_tileset, &tactile_app::handle_new_tileset);
-  from_window(&win::ui_resize_map,  &tactile_app::handle_resize_map);
-  from_window(&win::ui_pan_up,      &tactile_app::handle_pan_up);
-  from_window(&win::ui_pan_down,    &tactile_app::handle_pan_down);
-  from_window(&win::ui_pan_right,   &tactile_app::handle_pan_right);
-  from_window(&win::ui_pan_left,    &tactile_app::handle_pan_left);
-  from_window(&win::ui_new_map,     &tactile_app::handle_new_map);
-  from_window(&win::ui_save,        &tactile_app::save);
-  from_window(&win::ui_save_as,     &tactile_app::save_as);
-  from_window(&win::ui_open_map,    &tactile_app::open_map);
+  fromWindow(&win::ui_add_tileset, &tactile_app::handle_new_tileset);
+  fromWindow(&win::ui_resize_map,  &tactile_app::handle_resize_map);
+  fromWindow(&win::ui_pan_up,      &tactile_app::handle_pan_up);
+  fromWindow(&win::ui_pan_down,    &tactile_app::handle_pan_down);
+  fromWindow(&win::ui_pan_right,   &tactile_app::handle_pan_right);
+  fromWindow(&win::ui_pan_left,    &tactile_app::handle_pan_left);
+  fromWindow(&win::ui_new_map,     &tactile_app::handle_new_map);
+  fromWindow(&win::ui_save,        &tactile_app::save);
+  fromWindow(&win::ui_save_as,     &tactile_app::save_as);
+  fromWindow(&win::ui_open_map,    &tactile_app::open_map);
 
   // clang-format on
 }
