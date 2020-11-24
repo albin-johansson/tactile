@@ -63,6 +63,7 @@ class map_parser final
   {
     if (const auto file = open_file(path); file) {
       m_document = new core::map_document{};
+      m_document->set_path(path);
 
       const auto root = m_parser.root(*file);
       if (!parse_next_layer_id(root)) {
