@@ -8,7 +8,7 @@
 
 namespace tactile::gui {
 
-map_view::map_view(core::map_document* map, map_id id, QWidget* parent)
+map_view::map_view(core::map_document* map, const map_id id, QWidget* parent)
     : QGraphicsView{parent}
 {
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);
@@ -33,7 +33,7 @@ void map_view::center_map()
   }
 }
 
-void map_view::move_map(int dx, int dy)
+void map_view::move_map(const int dx, const int dy)
 {
   if (auto* scene = get_map_scene()) {
     scene->move_map(dx, dy);
@@ -150,7 +150,6 @@ void map_view::wheelEvent(QWheelEvent* event)
     event->accept();
   }
 }
-
 
 auto map_view::get_map_scene() -> map_scene*
 {

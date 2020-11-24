@@ -4,14 +4,14 @@
 
 namespace tactile::gui {
 
-void tileset_tab_manager::add(tileset_id id, tileset_tab* tab)
+void tileset_tab_manager::add(const tileset_id id, tileset_tab* tab)
 {
   Q_ASSERT(tab);
   Q_ASSERT(tab->parent());  // require that the tab has an owner
   m_tabs.emplace(id, tab);
 }
 
-void tileset_tab_manager::remove(tileset_id id)
+void tileset_tab_manager::remove(const tileset_id id)
 {
   m_tabs.erase(id);
 }
@@ -21,22 +21,22 @@ void tileset_tab_manager::clear() noexcept
   m_tabs.clear();
 }
 
-void tileset_tab_manager::set_cached_index(int index)
+void tileset_tab_manager::set_cached_index(const int index)
 {
   m_cachedIndex = index;
 }
 
-auto tileset_tab_manager::at(tileset_id id) const -> const tileset_tab*
+auto tileset_tab_manager::at(const tileset_id id) const -> const tileset_tab*
 {
   return m_tabs.at(id);
 }
 
-auto tileset_tab_manager::index_of(tileset_id id) const -> int
+auto tileset_tab_manager::index_of(const tileset_id id) const -> int
 {
   return static_cast<int>(m_tabs.index_of(id).value());
 }
 
-auto tileset_tab_manager::contains(tileset_id id) const -> bool
+auto tileset_tab_manager::contains(const tileset_id id) const -> bool
 {
   return m_tabs.contains(id);
 }

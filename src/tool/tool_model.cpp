@@ -30,7 +30,7 @@ void tool_model::switch_to(abstract_tool* tool)
   }
 }
 
-void tool_model::select(tool_id id)
+void tool_model::select(const tool_id id)
 {
   switch (id) {
     default:

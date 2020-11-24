@@ -18,7 +18,7 @@ tileset_tab_context_menu::tileset_tab_context_menu(QWidget* parent)
   });
 }
 
-void tileset_tab_context_menu::set_tab_index(int index)
+void tileset_tab_context_menu::set_tab_index(const int index)
 {
   m_index = index;
 }

@@ -87,12 +87,13 @@ layer_widget::~layer_widget() noexcept
   delete m_ui;
 }
 
-void layer_widget::added_layer(layer_id id, const core::layer& layer)
+void layer_widget::added_layer(const layer_id id, const core::layer& layer)
 {
   add_layer(id, layer);
 }
 
-void layer_widget::added_duplicated_layer(layer_id id, const core::layer& layer)
+void layer_widget::added_duplicated_layer(const layer_id id,
+                                          const core::layer& layer)
 {
   add_layer(id, layer);
   auto* item = item_for_layer_id(id);
@@ -120,7 +121,7 @@ void layer_widget::removed_layer(layer_id id)
   update_possible_actions();
 }
 
-void layer_widget::selected_layer(layer_id id, const core::layer& layer)
+void layer_widget::selected_layer(const layer_id id, const core::layer& layer)
 {
   Q_ASSERT(item_for_layer_id(id) != nullptr);
 
@@ -133,7 +134,7 @@ void layer_widget::selected_map(const core::map_document& document)
   m_ui->layerList->clear();
   m_nameSuffix = 1;  // FIXME this needs to be associated with each map
 
-  document.each_layer([this](layer_id id, const core::layer& layer) {
+  document.each_layer([this](const layer_id id, const core::layer& layer) {
     add_layer(id, layer);
   });
 
@@ -145,7 +146,7 @@ void layer_widget::selected_map(const core::map_document& document)
   }
 }
 
-void layer_widget::moved_layer_back(layer_id id)
+void layer_widget::moved_layer_back(const layer_id id)
 {
   if (const auto* item = item_for_layer_id(id)) {
     const auto row = m_ui->layerList->row(item);
@@ -159,7 +160,7 @@ void layer_widget::moved_layer_back(layer_id id)
   }
 }
 
-void layer_widget::moved_layer_forward(layer_id id)
+void layer_widget::moved_layer_forward(const layer_id id)
 {
   if (const auto* item = item_for_layer_id(id)) {
     const auto row = m_ui->layerList->row(item);
@@ -173,7 +174,7 @@ void layer_widget::moved_layer_forward(layer_id id)
   }
 }
 
-void layer_widget::add_layer(layer_id id, const core::layer& layer)
+void layer_widget::add_layer(const layer_id id, const core::layer& layer)
 {
   if (!layer.name().isEmpty()) {
     m_ui->layerList->addItem(new layer_item{layer.name(), id, m_ui->layerList});
@@ -187,7 +188,7 @@ void layer_widget::add_layer(layer_id id, const core::layer& layer)
   update_possible_actions();
 }
 
-auto layer_widget::item_for_layer_id(layer_id id) -> layer_item*
+auto layer_widget::item_for_layer_id(const layer_id id) -> layer_item*
 {
   const auto count = m_ui->layerList->count();
   for (auto row = 0; row < count; ++row) {

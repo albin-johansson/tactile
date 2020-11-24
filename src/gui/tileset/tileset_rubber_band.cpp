@@ -38,12 +38,12 @@ void tileset_rubber_band::mouse_released()
   emit finished_selection(get_selection());
 }
 
-void tileset_rubber_band::set_tile_width(tile_width tileWidth) noexcept
+void tileset_rubber_band::set_tile_width(const tile_width tileWidth) noexcept
 {
   m_tileWidth = tileWidth;
 }
 
-void tileset_rubber_band::set_tile_height(tile_height tileHeight) noexcept
+void tileset_rubber_band::set_tile_height(const tile_height tileHeight) noexcept
 {
   m_tileHeight = tileHeight;
 }

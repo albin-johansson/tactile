@@ -42,8 +42,8 @@ tileset_widget::~tileset_widget() noexcept
   delete m_ui;
 }
 
-void tileset_widget::added_tileset(map_id map,
-                                   tileset_id id,
+void tileset_widget::added_tileset(const map_id map,
+                                   const tileset_id id,
                                    const core::tileset& tileset)
 {
   const auto wasEmpty = m_contentPage->is_empty();
@@ -53,12 +53,12 @@ void tileset_widget::added_tileset(map_id map,
   }
 }
 
-void tileset_widget::removed_tileset(tileset_id id)
+void tileset_widget::removed_tileset(const tileset_id id)
 {
   m_contentPage->removed_tileset(id);
 }
 
-void tileset_widget::selected_map(map_id id)
+void tileset_widget::selected_map(const map_id id)
 {
   m_contentPage->selected_map(id);
 }

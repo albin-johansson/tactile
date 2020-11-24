@@ -8,7 +8,7 @@
 
 namespace tactile::gui {
 
-map_scene::map_scene(core::map_document* map, map_id id, QObject* parent)
+map_scene::map_scene(core::map_document* map, const map_id id, QObject* parent)
     : QGraphicsScene{parent},
       m_item{new map_item{map}},
       m_id{id}
@@ -17,7 +17,7 @@ map_scene::map_scene(core::map_document* map, map_id id, QObject* parent)
   setActivePanel(m_item);
 }
 
-void map_scene::move_map(int dx, int dy)
+void map_scene::move_map(const int dx, const int dy)
 {
   m_item->moveBy(dx, dy);
 }

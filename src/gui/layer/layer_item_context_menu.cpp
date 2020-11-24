@@ -23,22 +23,22 @@ layer_item_context_menu::layer_item_context_menu(QWidget* parent)
   // clang-format on
 }
 
-void layer_item_context_menu::set_visibility_enabled(bool enabled)
+void layer_item_context_menu::set_visibility_enabled(const bool enabled)
 {
   m_visibility->setEnabled(enabled);
 }
 
-void layer_item_context_menu::set_remove_enabled(bool enabled)
+void layer_item_context_menu::set_remove_enabled(const bool enabled)
 {
   m_remove->setEnabled(enabled);
 }
 
-void layer_item_context_menu::set_move_up_enabled(bool enabled)
+void layer_item_context_menu::set_move_up_enabled(const bool enabled)
 {
   m_moveUp->setEnabled(enabled);
 }
 
-void layer_item_context_menu::set_move_down_enabled(bool enabled)
+void layer_item_context_menu::set_move_down_enabled(const bool enabled)
 {
   m_moveDown->setEnabled(enabled);
 }

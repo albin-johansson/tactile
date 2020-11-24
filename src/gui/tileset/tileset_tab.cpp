@@ -6,7 +6,6 @@
 #include <QScrollArea>
 #include <QScrollBar>
 
-#include "tactile_error.hpp"
 #include "tileset_image_widget.hpp"
 
 namespace tactile::gui {

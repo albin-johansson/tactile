@@ -179,7 +179,7 @@ void create_external_tileset_file(const tileset& tileset,
 {
   QJsonArray array;
 
-  map.each_layer([&](layer_id id, const layer& layer) {
+  map.each_layer([&](const layer_id id, const layer& layer) {
     QJsonObject object;
 
     object.insert(u"name", layer.name());
@@ -201,7 +201,7 @@ void create_external_tileset_file(const tileset& tileset,
     }
 
     QJsonArray data;
-    layer.for_each([&](tile_id tile) {
+    layer.for_each([&](const tile_id tile) {
       data.append(tile.get());
     });
     object.insert(u"data", data);

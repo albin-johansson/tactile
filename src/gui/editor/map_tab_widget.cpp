@@ -45,7 +45,7 @@ map_tab_widget::map_tab_widget(QWidget* parent) : QTabWidget{parent}
 
 map_tab_widget::~map_tab_widget() noexcept = default;
 
-void map_tab_widget::handle_tab_close(int index)
+void map_tab_widget::handle_tab_close(const int index)
 {
   emit ui_remove_map(get_view(index)->id());
   removeTab(index);
@@ -64,7 +64,7 @@ void map_tab_widget::force_redraw()
 }
 
 void map_tab_widget::add_map_tab(core::map_document* map,
-                                 map_id id,
+                                 const map_id id,
                                  const QString& title)
 {
   auto* view = new map_view{map, id, this};
@@ -86,14 +86,14 @@ void map_tab_widget::add_map_tab(core::map_document* map,
   }
 }
 
-void map_tab_widget::remove_map_tab(map_id id)
+void map_tab_widget::remove_map_tab(const map_id id)
 {
   if (auto* view = view_from_id(id)) {
     removeTab(indexOf(view));
   }
 }
 
-void map_tab_widget::select_tab(map_id id)
+void map_tab_widget::select_tab(const map_id id)
 {
   if (auto* view = view_from_id(id)) {
     setCurrentWidget(view);
@@ -107,7 +107,7 @@ void map_tab_widget::center_map()
   }
 }
 
-void map_tab_widget::move_map(int dx, int dy)
+void map_tab_widget::move_map(const int dx, const int dy)
 {
   if (auto* view = current_view()) {
     view->move_map(dx, dy);
@@ -140,7 +140,7 @@ auto map_tab_widget::active_tab_id() const -> maybe<map_id>
   return id_from_index(currentIndex());
 }
 
-auto map_tab_widget::id_from_index(int index) const -> maybe<map_id>
+auto map_tab_widget::id_from_index(const int index) const -> maybe<map_id>
 {
   if (const auto* view = get_view(index)) {
     return view->id();
@@ -164,20 +164,20 @@ auto map_tab_widget::current_view() -> map_view*
   return get_view(currentIndex());
 }
 
-auto map_tab_widget::get_view(int index) -> map_view*
+auto map_tab_widget::get_view(const int index) -> map_view*
 {
   return qobject_cast<map_view*>(widget(index));
 }
 
-auto map_tab_widget::get_view(int index) const -> const map_view*
+auto map_tab_widget::get_view(const int index) const -> const map_view*
 {
   return qobject_cast<map_view*>(widget(index));
 }
 
-auto map_tab_widget::view_from_id(map_id id) -> map_view*
+auto map_tab_widget::view_from_id(const map_id id) -> map_view*
 {
   const auto amount = count();
-  for (int i = 0; i < amount; ++i) {
+  for (auto i = 0; i < amount; ++i) {
     if (auto* pane = get_view(i); pane && pane->id() == id) {
       return pane;
     }

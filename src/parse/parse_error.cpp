@@ -2,7 +2,7 @@
 
 namespace tactile {
 
-auto to_message(parse_error error) -> QString
+auto to_message(const parse_error error) -> QString
 {
   switch (error) {
     case parse_error::none:

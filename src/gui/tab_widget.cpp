@@ -11,7 +11,7 @@ tab_widget::tab_widget(QWidget* parent) : QTabWidget{parent}
   setTabBar(bar);
 }
 
-void tab_widget::edit_tab(int index)
+void tab_widget::edit_tab(const int index)
 {
   qobject_cast<tab_bar*>(tabBar())->edit_tab(index);
 }

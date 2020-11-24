@@ -91,7 +91,7 @@ void save_layers(QDomDocument& document,
                  QDomElement& root,
                  const map_document& map)
 {
-  map.each_layer([&](layer_id id, const layer& layer) {
+  map.each_layer([&](const layer_id id, const layer& layer) {
     auto node = document.createElement(QStringLiteral(u"layer"));
 
     node.setAttribute(QStringLiteral(u"id"), id.get());
@@ -114,7 +114,7 @@ void save_layers(QDomDocument& document,
     buffer.reserve(map.tile_count() * 2);  // include the separating comma
 
     bool first{true};
-    layer.for_each([&](tile_id tile) {
+    layer.for_each([&](const tile_id tile) {
       if (first) {
         first = false;
       } else {

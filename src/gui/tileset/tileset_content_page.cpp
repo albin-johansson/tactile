@@ -100,7 +100,7 @@ void tileset_content_page::trigger_context_menu(const QPoint& pos)
   }
 }
 
-void tileset_content_page::selected_map(map_id map)
+void tileset_content_page::selected_map(const map_id map)
 {
   {
     signal_blocker blocker{m_tabWidget};  // avoid `ui_select_tileset`
@@ -119,8 +119,8 @@ void tileset_content_page::selected_map(map_id map)
   }
 }
 
-void tileset_content_page::added_tileset(map_id map,
-                                         tileset_id id,
+void tileset_content_page::added_tileset(const map_id map,
+                                         const tileset_id id,
                                          const core::tileset& tileset)
 {
   Q_ASSERT(!current_manager().contains(id));
@@ -136,7 +136,7 @@ void tileset_content_page::added_tileset(map_id map,
   m_tabWidget->setCurrentIndex(index);
 }
 
-void tileset_content_page::removed_tileset(tileset_id id)
+void tileset_content_page::removed_tileset(const tileset_id id)
 {
   auto& manager = current_manager();
   Q_ASSERT(manager.contains(id));
@@ -150,7 +150,7 @@ auto tileset_content_page::is_empty() const -> bool
   return m_tabWidget->count() == 0;
 }
 
-void tileset_content_page::switch_to(map_id map)
+void tileset_content_page::switch_to(const map_id map)
 {
   m_currentMap = map;
   const auto& manager = m_tabManagers[*m_currentMap];
@@ -162,7 +162,7 @@ void tileset_content_page::switch_to(map_id map)
   m_tabWidget->setCurrentIndex(manager.cached_index().value_or(0));
 }
 
-auto tileset_content_page::tab_from_index(int index) -> tileset_tab*
+auto tileset_content_page::tab_from_index(const int index) -> tileset_tab*
 {
   return qobject_cast<tileset_tab*>(m_tabWidget->widget(index));
 }

@@ -17,14 +17,16 @@ using namespace core;
 
 namespace {
 
-auto get_end_row(const QRectF& exposed, row_t nRows, int tileSize) -> row_t
+auto get_end_row(const QRectF& exposed, const row_t nRows, const int tileSize)
+    -> row_t
 {
   const auto endY = static_cast<int>(exposed.y() + exposed.height());
   const auto r = (endY / tileSize) + 1;
   return row_t{std::min(nRows.get(), r)};
 }
 
-auto get_end_col(const QRectF& exposed, col_t nCols, int tileSize) -> col_t
+auto get_end_col(const QRectF& exposed, const col_t nCols, const int tileSize)
+    -> col_t
 {
   const auto endX = static_cast<int>(exposed.x() + exposed.width());
   const auto c = (endX / tileSize) + 1;
@@ -32,9 +34,9 @@ auto get_end_col(const QRectF& exposed, col_t nCols, int tileSize) -> col_t
 }
 
 [[nodiscard]] auto make_bounds(const QRectF& exposed,
-                               row_t rows,
-                               col_t cols,
-                               int tileSize) -> render_bounds
+                               const row_t rows,
+                               const col_t cols,
+                               const int tileSize) -> render_bounds
 {
   render_bounds bounds;
 
@@ -50,7 +52,7 @@ auto get_end_col(const QRectF& exposed, col_t nCols, int tileSize) -> col_t
 
 void draw_tile_background(QPainter& painter,
                           const position& position,
-                          int tileSize)
+                          const int tileSize)
 {
   constexpr QColor emptyLightGray{0x55, 0x55, 0x55};
   constexpr QColor emptyDarkGray{0x33, 0x33, 0x33};
@@ -92,7 +94,7 @@ void map_item::enable_stamp_preview(const position& position)
   m_mousePosition = position;
 }
 
-auto map_item::make_settings(const QRectF& exposed, int tileSize)
+auto map_item::make_settings(const QRectF& exposed, const int tileSize)
     -> render_settings
 {
   render_settings settings;
@@ -134,10 +136,10 @@ void map_item::draw_layer(QPainter& painter,
 }
 
 void map_item::draw_tile(QPainter& painter,
-                         tile_id tile,
-                         int x,
-                         int y,
-                         int tileSize)
+                         const tile_id tile,
+                         const int x,
+                         const int y,
+                         const int tileSize)
 {
   if (const auto* tilesets = m_map->tilesets()) {
     const auto& image = tilesets->image(tile);
@@ -150,7 +152,7 @@ void map_item::draw_tile(QPainter& painter,
 void map_item::draw_preview_multiple_tiles(QPainter& painter,
                                            const position& mousePosition,
                                            const tileset::selection& selection,
-                                           int tileSize)
+                                           const int tileSize)
 {
   auto* tileset = m_map->current_tileset();
   Q_ASSERT(tileset);
@@ -170,7 +172,7 @@ void map_item::draw_preview_multiple_tiles(QPainter& painter,
   });
 }
 
-void map_item::draw_preview(QPainter& painter, int tileSize)
+void map_item::draw_preview(QPainter& painter, const int tileSize)
 {
   auto* tileset = m_map->current_tileset();
   Q_ASSERT(tileset);

@@ -11,7 +11,7 @@ namespace {
 
 void parse_group(const QJsonObject& json,
                  QPalette& palette,
-                 QPalette::ColorGroup group = QPalette::ColorGroup::All)
+                 const QPalette::ColorGroup group = QPalette::ColorGroup::All)
 {
   using color_role = QPalette::ColorRole;
 

@@ -24,7 +24,7 @@ inline constexpr QStringView atomOneDark{u"Atom One Dark"};
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto is_standard_theme(QStringView name) -> bool
+[[nodiscard]] auto is_standard_theme(const QStringView name) -> bool
 {
   if (name.isNull() || name.isEmpty()) {
     return false;
@@ -57,7 +57,7 @@ void set_theme(const QString& name)
   }
 }
 
-auto from_name(QStringView name) -> maybe<QPalette>
+auto from_name(const QStringView name) -> maybe<QPalette>
 {
   if (dark == name) {
     return get_dark();

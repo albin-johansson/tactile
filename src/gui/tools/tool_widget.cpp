@@ -58,7 +58,7 @@ void tool_widget::handle_enable_eraser()
   emit eraser_enabled();
 }
 
-void tool_widget::set_tools_enabled(bool enabled)
+void tool_widget::set_tools_enabled(const bool enabled)
 {
   m_ui->stampButton->setEnabled(enabled);
   m_ui->bucketButton->setEnabled(enabled);

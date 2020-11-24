@@ -54,18 +54,18 @@ void map_editor::disable_stamp_preview()
 }
 
 void map_editor::add_map_tab(core::map_document* map,
-                             map_id id,
+                             const map_id id,
                              const QString& title)
 {
   m_tabWidget->add_map_tab(map, id, title);
 }
 
-void map_editor::select_tab(map_id id)
+void map_editor::select_tab(const map_id id)
 {
   m_tabWidget->select_tab(id);
 }
 
-void map_editor::close_tab(map_id id) noexcept
+void map_editor::close_tab(const map_id id) noexcept
 {
   m_tabWidget->remove_map_tab(id);
 }
@@ -75,7 +75,7 @@ void map_editor::center_viewport()
   m_tabWidget->center_map();
 }
 
-void map_editor::move_map(int dx, int dy) noexcept
+void map_editor::move_map(const int dx, const int dy) noexcept
 {
   m_tabWidget->move_map(dx, dy);
 }
@@ -120,7 +120,7 @@ auto map_editor::tab_count() const -> int
   return m_tabWidget->count();
 }
 
-void map_editor::tab_changed(int index)
+void map_editor::tab_changed(const int index)
 {
   if (const auto id = m_tabWidget->id_from_index(index); id) {
     emit ui_select_map(*id);

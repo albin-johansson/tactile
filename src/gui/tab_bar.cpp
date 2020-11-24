@@ -16,7 +16,7 @@ tab_bar::tab_bar(QWidget* parent) : QTabBar{parent}, m_edit{new QLineEdit{this}}
   });
 }
 
-void tab_bar::edit_tab(int index)
+void tab_bar::edit_tab(const int index)
 {
   m_renameIndex = index;
 

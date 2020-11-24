@@ -25,19 +25,19 @@ tileset_dock::tileset_dock(QWidget* parent)
   // clang-format on
 }
 
-void tileset_dock::selected_map(map_id id)
+void tileset_dock::selected_map(const map_id id)
 {
   m_widget->selected_map(id);
 }
 
-void tileset_dock::added_tileset(map_id map,
-                                 tileset_id id,
+void tileset_dock::added_tileset(const map_id map,
+                                 const tileset_id id,
                                  const core::tileset& tileset)
 {
   m_widget->added_tileset(map, id, tileset);
 }
 
-void tileset_dock::removed_tileset(tileset_id id)
+void tileset_dock::removed_tileset(const tileset_id id)
 {
   m_widget->removed_tileset(id);
 }

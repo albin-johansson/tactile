@@ -144,15 +144,15 @@ void window::hide_all_docks()
 
 void window::restore_dock_visibility()
 {
-  prefs::graphics::tool_widget_visible().with([this](bool value) {
+  prefs::graphics::tool_widget_visible().with([this](const bool value) {
     m_toolDock->setVisible(value);
   });
 
-  prefs::graphics::tileset_widget_visible().with([this](bool value) {
+  prefs::graphics::tileset_widget_visible().with([this](const bool value) {
     m_tilesetDock->setVisible(value);
   });
 
-  prefs::graphics::layer_widget_visible().with([this](bool value) {
+  prefs::graphics::layer_widget_visible().with([this](const bool value) {
     m_layerDock->setVisible(value);
   });
 }
