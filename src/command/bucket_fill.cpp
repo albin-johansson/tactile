@@ -6,7 +6,7 @@ namespace tactile::cmd {
 
 bucket_fill::bucket_fill(core::map* map,
                          const core::position& position,
-                         tile_id replacement)
+                         const tile_id replacement)
     : QUndoCommand{QStringLiteral(u"Bucket Fill")},
       m_map{map},
       m_origin{position},

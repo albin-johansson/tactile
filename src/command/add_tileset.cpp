@@ -8,7 +8,7 @@ namespace tactile::cmd {
 
 add_tileset::add_tileset(core::map_document* document,
                          std::shared_ptr<core::tileset> tileset,
-                         tileset_id id)
+                         const tileset_id id)
     : QUndoCommand{QStringLiteral(u"Add Tileset")},
       m_document{document},
       m_tileset{std::move(tileset)},
