@@ -8,7 +8,7 @@
 #include "map_file_type.hpp"
 #include "maybe.hpp"
 #include "parse_error.hpp"
-#include "tmx_element.hpp"
+#include "xml_element.hpp"
 #include "xml_utils.hpp"
 
 namespace tactile::tmx {
@@ -17,7 +17,7 @@ class xml_engine final
 {
  public:
   using document_type = QDomDocument;
-  using object_type = tmx_element;
+  using object_type = xml_element;
   inline constexpr static map_file_type fileType = map_file_type::tmx;
 
   [[nodiscard]] static auto root(const document_type& document) -> object_type;

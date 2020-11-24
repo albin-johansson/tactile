@@ -1,4 +1,4 @@
-#include "tmx_element.hpp"
+#include "xml_element.hpp"
 
 #include <cassert>  // assert
 
@@ -6,15 +6,15 @@
 
 namespace tactile::tmx {
 
-tmx_element::tmx_element(const QDomElement& element) : m_element{element}
+xml_element::xml_element(const QDomElement& element) : m_element{element}
 {}
 
-auto tmx_element::contains(const element_id id) const -> bool
+auto xml_element::contains(const element_id id) const -> bool
 {
   return m_element.hasAttribute(stringify_element_id(id));
 }
 
-auto tmx_element::integer(const element_id id) const -> maybe<int>
+auto xml_element::integer(const element_id id) const -> maybe<int>
 {
   bool ok;
   const auto result = m_element.attribute(stringify_element_id(id)).toInt(&ok);
@@ -25,13 +25,13 @@ auto tmx_element::integer(const element_id id) const -> maybe<int>
   }
 }
 
-auto tmx_element::integer(const element_id id, const int def) const
+auto xml_element::integer(const element_id id, const int def) const
     -> maybe<int>
 {
   return integer(id).value_or(def);
 }
 
-auto tmx_element::floating(const element_id id, const double def) const
+auto xml_element::floating(const element_id id, const double def) const
     -> double
 {
   bool ok;
@@ -44,7 +44,7 @@ auto tmx_element::floating(const element_id id, const double def) const
   }
 }
 
-auto tmx_element::string(const element_id id) const -> maybe<QString>
+auto xml_element::string(const element_id id) const -> maybe<QString>
 {
   const auto result = m_element.attribute(stringify_element_id(id));
   if (!result.isNull()) {
@@ -54,13 +54,13 @@ auto tmx_element::string(const element_id id) const -> maybe<QString>
   }
 }
 
-auto tmx_element::string(const element_id id, const QString& def) const
+auto xml_element::string(const element_id id, const QString& def) const
     -> QString
 {
   return string(id).value_or(def);
 }
 
-auto tmx_element::stringify_element_id(const element_id type) -> QString
+auto xml_element::stringify_element_id(const element_id type) -> QString
 {
   switch (type) {
     case element_id::tileset:

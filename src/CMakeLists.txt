@@ -204,8 +204,8 @@ set(TACTILE_SOURCE_FILES
         parse/experimental/map_parser.hpp
         parse/experimental/json_element.cpp
         parse/experimental/json_element.hpp
-        parse/experimental/tmx_element.cpp
-        parse/experimental/tmx_element.hpp
+        parse/experimental/xml_element.cpp
+        parse/experimental/xml_element.hpp
         parse/experimental/xml_engine.cpp
         parse/experimental/xml_engine.hpp
         parse/experimental/json_engine.cpp

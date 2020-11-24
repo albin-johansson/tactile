@@ -14,7 +14,7 @@
 #include "map_file_type.hpp"
 #include "maybe.hpp"
 #include "parse_error.hpp"
-#include "tmx_element.hpp"
+#include "xml_element.hpp"
 #include "xml_engine.hpp"
 #include "xml_utils.hpp"
 

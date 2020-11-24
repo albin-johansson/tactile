@@ -7,10 +7,10 @@
 
 namespace tactile::tmx {
 
-class tmx_element final
+class xml_element final
 {
  public:
-  explicit tmx_element(const QDomElement& element);
+  explicit xml_element(const QDomElement& element);
 
   [[nodiscard]] auto contains(element_id id) const -> bool;
 

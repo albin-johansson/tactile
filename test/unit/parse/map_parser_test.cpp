@@ -10,10 +10,10 @@ using namespace tactile;
 using xml_parser = tmx::map_parser<tmx::xml_engine>;
 using json_parser = tmx::map_parser<tmx::json_engine>;
 
-static_assert(tmx::is_object<tmx::tmx_element>);
+static_assert(tmx::is_object<tmx::xml_element>);
 static_assert(tmx::is_object<tmx::json_element>);
 
-static_assert(tmx::is_parser<tmx::xml_engine, QDomDocument, tmx::tmx_element>);
+static_assert(tmx::is_parser<tmx::xml_engine, QDomDocument, tmx::xml_element>);
 static_assert(
     tmx::is_parser<tmx::json_engine, QJsonDocument, tmx::json_element>);
 
