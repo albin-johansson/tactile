@@ -4,6 +4,8 @@
 
 #include "json_element.hpp"
 #include "json_engine.hpp"
+#include "xml_element.hpp"
+#include "xml_engine.hpp"
 
 using namespace tactile;
 

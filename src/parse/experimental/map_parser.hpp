@@ -1,22 +1,15 @@
 #pragma once
 
+#include <QDir>
 #include <QFileInfo>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QtXml>
 #include <concepts>  // same_as
 #include <utility>   // exchange
 
-#include "json_element.hpp"
-#include "json_utils.hpp"
+#include "element_id.hpp"
 #include "map_document.hpp"
 #include "map_file_type.hpp"
 #include "maybe.hpp"
 #include "parse_error.hpp"
-#include "xml_element.hpp"
-#include "xml_engine.hpp"
-#include "xml_utils.hpp"
 
 namespace tactile::tmx {
 
@@ -33,19 +26,20 @@ concept is_object = requires(T t, element_id id, const QString& str)
   { t.string(id, str) } -> std::same_as<QString>;
 };
 
-template <typename P, typename D, typename E>
-concept is_parser = requires(P parser,
-                             const D& document,
-                             const E& elem,
+template <typename Parser, typename Document, typename Object>
+concept is_parser = is_object<Object> &&
+                    requires(Parser parser,
+                             const Document& document,
+                             const Object& object,
                              core::layer& layer,
                              parse_error& error,
                              const QFileInfo& path)
 {
-  { parser.root(document) } -> std::same_as<E>;
-  { parser.from_file(path) } -> std::same_as<maybe<D>>;
-  { parser.add_tiles(layer, elem, error) } -> std::same_as<bool>;
-  { parser.each_tileset(elem, [](const E&) {}) };
-  { parser.each_layer(elem, [](const E&) {}) };
+  { parser.root(document) } -> std::same_as<Object>;
+  { parser.from_file(path) } -> std::same_as<maybe<Document>>;
+  { parser.add_tiles(layer, object, error) } -> std::same_as<bool>;
+  { parser.each_tileset(object, [](const Object&) {}) };
+  { parser.each_layer(object, [](const Object&) {}) };
 };
 
 // clang-format on
@@ -58,6 +52,8 @@ class map_parser final
   using document_type = typename parser_type::document_type;
   using object_type = typename parser_type::object_type;
   inline constexpr static map_file_type type = Parser::fileType;
+
+  static_assert(is_parser<parser_type, document_type, object_type>);
 
   explicit map_parser(const QFileInfo& path)
   {
