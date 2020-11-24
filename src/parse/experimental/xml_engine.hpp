@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtXml>
+#include <concepts>  // invocable
 
 #include "element_id.hpp"
 #include "layer.hpp"
@@ -19,10 +20,10 @@ class xml_engine final
   using object_type = tmx_element;
   inline constexpr static map_file_type fileType = map_file_type::tmx;
 
-  [[nodiscard]] auto root(const QDomDocument& document) -> object_type;
+  [[nodiscard]] static auto root(const document_type& document) -> object_type;
 
   [[nodiscard]] static auto from_file(const QFileInfo& path)
-      -> maybe<QDomDocument>;
+      -> maybe<document_type>;
 
   [[nodiscard]] static auto add_tiles(core::layer& layer,
                                       const object_type& element,

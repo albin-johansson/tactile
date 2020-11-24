@@ -199,15 +199,17 @@ set(TACTILE_SOURCE_FILES
         parse/parse_error.hpp
         parse/parse_error.cpp
 
-        parse/experimental/map_parser.hpp
-        parse/experimental/xml_engine.cpp
-        parse/experimental/xml_engine.hpp
-        parse/experimental/json_element.cpp
-        parse/experimental/json_element.hpp
         parse/experimental/map_file_type.hpp
         parse/experimental/element_id.hpp
+        parse/experimental/map_parser.hpp
+        parse/experimental/json_element.cpp
+        parse/experimental/json_element.hpp
         parse/experimental/tmx_element.cpp
         parse/experimental/tmx_element.hpp
+        parse/experimental/xml_engine.cpp
+        parse/experimental/xml_engine.hpp
+        parse/experimental/json_engine.cpp
+        parse/experimental/json_engine.hpp
 
         tool/tool_id.hpp
         tool/tool_model.cpp

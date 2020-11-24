@@ -2,19 +2,19 @@
 
 namespace tactile::tmx {
 
-auto xml_engine::root(const QDomDocument& document) -> object_type
+auto xml_engine::root(const document_type& document) -> object_type
 {
   return object_type{document.documentElement()};
 }
 
-auto xml_engine::from_file(const QFileInfo& path) -> maybe<QDomDocument>
+auto xml_engine::from_file(const QFileInfo& path) -> maybe<document_type>
 {
   return xml::from_file(path);
 }
 
 auto xml_engine::add_tiles(core::layer& layer,
-                                const object_type& element,
-                                parse_error& error) -> bool
+                           const object_type& element,
+                           parse_error& error) -> bool
 {
   const auto data = element->firstChildElement(QStringLiteral(u"data"));
   const auto tiles = data.text().split(u',');

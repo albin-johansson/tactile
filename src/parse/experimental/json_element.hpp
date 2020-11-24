@@ -12,10 +12,7 @@ class json_element final
  public:
   explicit json_element(QJsonObject object);
 
-  [[nodiscard]] auto contains(const QString& str) const -> bool;
-
-  [[nodiscard]]
-  auto contains(element_id id) const -> bool;
+  [[nodiscard]] auto contains(element_id id) const -> bool;
 
   [[nodiscard]] auto integer(const QString& str) const -> maybe<int>;
 
@@ -41,6 +38,16 @@ class json_element final
 
   [[nodiscard]]
   auto string(element_id id, const QString& def) const -> QString;
+
+  auto operator->() noexcept -> QJsonObject*
+  {
+    return &m_object;
+  }
+
+  auto operator->() const noexcept -> const QJsonObject*
+  {
+    return &m_object;
+  }
 
  private:
   QJsonObject m_object;

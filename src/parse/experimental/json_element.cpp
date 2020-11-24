@@ -10,9 +10,9 @@ namespace tactile::tmx {
 json_element::json_element(QJsonObject object) : m_object{std::move(object)}
 {}
 
-auto json_element::contains(const QString& str) const -> bool
+auto json_element::contains(const element_id id) const -> bool
 {
-  return m_object.contains(str);
+  return m_object.contains(stringify_element_id(id));
 }
 
 auto json_element::integer(const QString& str) const -> maybe<int>
@@ -105,7 +105,7 @@ auto json_element::stringify_element_id(const element_id type) -> QStringView
       return u"tileset";
 
     case element_id::tilesets:
-      throw tactile_error{"JSON format does not feature \"tilesets\"!"};
+      return u"tilesets";
 
     case element_id::next_layer_id:
       return u"nextlayerid";

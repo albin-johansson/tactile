@@ -67,7 +67,7 @@ auto tmx_element::stringify_element_id(const element_id type) -> QString
       return QStringLiteral(u"tileset");
 
     case element_id::tilesets:
-      return QStringLiteral(u"tilesets");
+      throw tactile_error{"TMX format does not feature \"tilesets\"!"};
 
     case element_id::next_layer_id:
       return QStringLiteral(u"nextlayerid");
