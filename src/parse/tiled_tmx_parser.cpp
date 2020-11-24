@@ -59,7 +59,7 @@ auto tiled_tmx_parser::open_file(const QFileInfo& path) -> maybe<QDomDocument>
   auto tmx = xml::from_file(path);
 
   if (!tmx) {
-    m_error = parse_error::could_not_parse_tmx;
+    m_error = parse_error::could_not_parse_file;
   }
 
   return tmx;

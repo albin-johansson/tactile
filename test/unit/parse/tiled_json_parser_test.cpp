@@ -1,7 +1,8 @@
 #include "tiled_json_parser.hpp"
 
-#include "czstring.hpp"
 #include <catch.hpp>
+
+#include "czstring.hpp"
 
 using namespace tactile;
 
@@ -40,7 +41,7 @@ TEST_CASE("JSON parser: Map not found", "[tiled_json_parser]")
 TEST_CASE("JSON parser: Could not parse JSON", "[tiled_json_parser]")
 {
   test_error("json/invalid/could_not_parse.json",
-             tactile::parse_error::could_not_parse_json);
+             tactile::parse_error::could_not_parse_file);
 }
 
 TEST_CASE("JSON parser: Layer missing width property", "[tiled_json_parser]")

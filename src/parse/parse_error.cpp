@@ -11,11 +11,8 @@ auto to_message(const parse_error error) -> QString
     case parse_error::map_file_not_found:
       return QStringLiteral(u"Did not find map file!");
 
-    case parse_error::could_not_parse_json:
-      return QStringLiteral(u"Could not parse JSON file!");
-
-    case parse_error::could_not_parse_tmx:
-      return QStringLiteral(u"Could not parse TMX file!");
+    case parse_error::could_not_parse_file:
+      return QStringLiteral(u"Could not parse file!");
 
     case parse_error::map_missing_next_layer_id:
       return QStringLiteral(u"Map did not feature next layer ID property!");

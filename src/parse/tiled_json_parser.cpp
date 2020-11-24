@@ -94,7 +94,7 @@ auto tiled_json_parser::open_file(const QFileInfo& path) -> maybe<QJsonDocument>
   auto json = json::from_file(path);
 
   if (!json) {
-    m_error = parse_error::could_not_parse_json;
+    m_error = parse_error::could_not_parse_file;
   }
 
   return json;
