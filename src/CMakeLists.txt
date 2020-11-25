@@ -185,12 +185,14 @@ set(TACTILE_SOURCE_FILES
         prefs/preferences.cpp
         prefs/preferences.hpp
 
-        parse/parse_palette.cpp
-        parse/parse_palette.hpp
-        parse/xml_utils.hpp
-        parse/xml_utils.cpp
-        parse/json_utils.cpp
-        parse/json_utils.hpp
+        parse/palette/parse_palette.cpp
+        parse/palette/parse_palette.hpp
+
+        parse/xml/xml_utils.hpp
+        parse/xml/xml_utils.cpp
+
+        parse/json/json_utils.cpp
+        parse/json/json_utils.hpp
 
         parse/tmx/parse_error.hpp
         parse/tmx/parse_error.cpp
@@ -252,6 +254,9 @@ target_include_directories(libTactile
         PUBLIC prefs
         PUBLIC parse
         PUBLIC parse/tmx
+        PUBLIC parse/xml
+        PUBLIC parse/json
+        PUBLIC parse/palette
         PUBLIC tool
         PUBLIC util
         PUBLIC core
