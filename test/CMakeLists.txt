@@ -19,7 +19,6 @@ set(TACTILE_TEST_FILES
         unit/service/json_import_test.cpp
         unit/parse/xml_utils_test.cpp
         unit/parse/json_utils_test.cpp
-        unit/parse/string_utils_test.cpp
         unit/parse/tiled_json_parser_test.cpp
         unit/parse/map_parser_test.cpp)
 
