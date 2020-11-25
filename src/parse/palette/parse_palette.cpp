@@ -13,9 +13,7 @@ void parse_group(const QJsonObject& json,
                  QPalette& palette,
                  const QPalette::ColorGroup group = QPalette::ColorGroup::All)
 {
-  using color_role = QPalette::ColorRole;
-
-  const auto set_if_exists = [&](color_role role, cz16string key) {
+  const auto setIfExists = [&](const QPalette::ColorRole role, cz16string key) {
     if (const auto it = json.find(key); it != json.end()) {
       const auto value = it.value();
       Q_ASSERT(value.isString());
@@ -24,32 +22,32 @@ void parse_group(const QJsonObject& json,
     }
   };
 
-  set_if_exists(color_role::Window, u"Window");
-  set_if_exists(color_role::WindowText, u"WindowText");
+  setIfExists(QPalette::ColorRole::Window, u"Window");
+  setIfExists(QPalette::ColorRole::WindowText, u"WindowText");
 
-  set_if_exists(color_role::Base, u"Base");
-  set_if_exists(color_role::AlternateBase, u"AlternateBase");
+  setIfExists(QPalette::ColorRole::Base, u"Base");
+  setIfExists(QPalette::ColorRole::AlternateBase, u"AlternateBase");
 
-  set_if_exists(color_role::ToolTipBase, u"ToolTipBase");
-  set_if_exists(color_role::ToolTipText, u"ToolTipText");
+  setIfExists(QPalette::ColorRole::ToolTipBase, u"ToolTipBase");
+  setIfExists(QPalette::ColorRole::ToolTipText, u"ToolTipText");
 
-  set_if_exists(color_role::Text, u"Text");
-  set_if_exists(color_role::BrightText, u"BrightText");
+  setIfExists(QPalette::ColorRole::Text, u"Text");
+  setIfExists(QPalette::ColorRole::BrightText, u"BrightText");
 
-  set_if_exists(color_role::Button, u"Button");
-  set_if_exists(color_role::ButtonText, u"ButtonText");
+  setIfExists(QPalette::ColorRole::Button, u"Button");
+  setIfExists(QPalette::ColorRole::ButtonText, u"ButtonText");
 
-  set_if_exists(color_role::Light, u"Light");
-  set_if_exists(color_role::Midlight, u"Midlight");
-  set_if_exists(color_role::Dark, u"Dark");
-  set_if_exists(color_role::Mid, u"Mid");
-  set_if_exists(color_role::Shadow, u"Shadow");
+  setIfExists(QPalette::ColorRole::Light, u"Light");
+  setIfExists(QPalette::ColorRole::Midlight, u"Midlight");
+  setIfExists(QPalette::ColorRole::Dark, u"Dark");
+  setIfExists(QPalette::ColorRole::Mid, u"Mid");
+  setIfExists(QPalette::ColorRole::Shadow, u"Shadow");
 
-  set_if_exists(color_role::Highlight, u"Highlight");
-  set_if_exists(color_role::HighlightedText, u"HighlightedText");
+  setIfExists(QPalette::ColorRole::Highlight, u"Highlight");
+  setIfExists(QPalette::ColorRole::HighlightedText, u"HighlightedText");
 
-  set_if_exists(color_role::Link, u"Link");
-  set_if_exists(color_role::LinkVisited, u"LinkVisited");
+  setIfExists(QPalette::ColorRole::Link, u"Link");
+  setIfExists(QPalette::ColorRole::LinkVisited, u"LinkVisited");
 }
 
 [[nodiscard]] auto get_json_object(const QString& file) -> QJsonObject
