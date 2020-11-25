@@ -120,7 +120,7 @@ void map_item::draw_layer(QPainter& painter,
                           const render_settings& settings)
 {
   painter.setOpacity(layer.opacity());
-  each_tile(painter, settings.bounds, [&, this](position position) {
+  each_tile(painter, settings.bounds, [&, this](const position position) {
     const auto x = position.col_to_x(settings.tileSize);
     const auto y = position.row_to_y(settings.tileSize);
 
@@ -216,7 +216,7 @@ void map_item::paint(QPainter* painter,
 
   const auto activeLayer = m_map->current_layer_id();
 
-  m_map->each_layer([&](layer_id id, const layer& layer) {
+  m_map->each_layer([&](const layer_id id, const layer& layer) {
     if (layer.visible()) {
       draw_layer(*painter, layer, settings);
     }
