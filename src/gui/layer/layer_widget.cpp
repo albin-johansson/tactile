@@ -129,13 +129,18 @@ void layer_widget::selected_layer(const layer_id id, const core::layer& layer)
   m_ui->opacitySpinBox->setValue(layer.opacity());
 }
 
-void layer_widget::selected_map(const core::map_document& document)
+void layer_widget::selected_map(const map_id mapId,
+                                const core::map_document& document)
 {
+  m_currentMap = mapId;
   m_ui->layerList->clear();
-  m_nameSuffix = 1;  // FIXME this needs to be associated with each map
 
-  document.each_layer([this](const layer_id id, const core::layer& layer) {
-    add_layer(id, layer);
+  if (!m_suffixes.contains(mapId)) {
+    m_suffixes.emplace(mapId, 1);
+  }
+
+  document.each_layer([this](const layer_id layerId, const core::layer& layer) {
+    add_layer(layerId, layer);
   });
 
   if (const auto id = document.current_layer_id(); id) {
@@ -179,11 +184,14 @@ void layer_widget::add_layer(const layer_id id, const core::layer& layer)
   if (!layer.name().isEmpty()) {
     m_ui->layerList->addItem(new layer_item{layer.name(), id, m_ui->layerList});
   } else {
-    m_ui->layerList->addItem(new layer_item{
-        QStringLiteral(u"Layer ") + QString::number(m_nameSuffix),
-        id,
-        m_ui->layerList});
-    ++m_nameSuffix;
+    auto& suffix = m_suffixes.at(m_currentMap.value());
+
+    m_ui->layerList->addItem(
+        new layer_item{QStringLiteral(u"Layer ") + QString::number(suffix),
+                       id,
+                       m_ui->layerList});
+
+    ++suffix;
   }
   update_possible_actions();
 }

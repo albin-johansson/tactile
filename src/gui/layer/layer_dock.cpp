@@ -47,9 +47,9 @@ void layer_dock::selected_layer(const layer_id id, const core::layer& layer)
   m_widget->selected_layer(id, layer);
 }
 
-void layer_dock::selected_map(const core::map_document& document)
+void layer_dock::selected_map(const map_id id, const core::map_document& document)
 {
-  m_widget->selected_map(document);
+  m_widget->selected_map(id, document);
 }
 
 void layer_dock::moved_layer_back(const layer_id id)

@@ -3,6 +3,7 @@
 #include "dock_widget.hpp"
 #include "layer.hpp"
 #include "map_document.hpp"
+#include "map_id.hpp"
 
 namespace tactile::gui {
 
@@ -35,7 +36,7 @@ class layer_dock final : public dock_widget
 
   void selected_layer(layer_id id, const core::layer& layer);
 
-  void selected_map(const core::map_document& document);
+  void selected_map(map_id id, const core::map_document& document);
 
   void moved_layer_back(layer_id id);
 

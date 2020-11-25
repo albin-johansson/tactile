@@ -5,7 +5,9 @@
 
 #include "layer.hpp"
 #include "map_document.hpp"
+#include "map_id.hpp"
 #include "maybe.hpp"
+#include "vector_map.hpp"
 
 namespace Ui {
 class layer_widget;
@@ -45,7 +47,7 @@ class layer_widget final : public QWidget
 
   void selected_layer(layer_id id, const core::layer& layer);
 
-  void selected_map(const core::map_document& document);
+  void selected_map(map_id mapId, const core::map_document& document);
 
   void moved_layer_back(layer_id id);
 
@@ -54,8 +56,9 @@ class layer_widget final : public QWidget
  private:
   Ui::layer_widget* m_ui{};
   layer_item_context_menu* m_contextMenu{};
+  vector_map<map_id, int> m_suffixes;
+  maybe<map_id> m_currentMap;
   maybe<int> m_duplicateTargetRow;
-  int m_nameSuffix{1};
 
   void trigger_layer_item_context_menu(const QPoint& pos);
 
