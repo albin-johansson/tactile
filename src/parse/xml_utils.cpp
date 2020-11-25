@@ -4,15 +4,6 @@
 
 namespace tactile::xml {
 
-auto to_elem(const QDomNode& node) -> QDomElement
-{
-  if (node.isElement()) {
-    return node.toElement();
-  } else {
-    throw tactile_error{"Failed to convert XML node to element!"};
-  }
-}
-
 auto from_file(const QFileInfo& path) -> maybe<QDomDocument>
 {
   QDomDocument document{};

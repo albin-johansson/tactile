@@ -81,23 +81,6 @@ TEST_CASE("xml::each_elem", "[xml_utils]")
   CHECK(count == 3);
 }
 
-TEST_CASE("xml::to_elem", "[xml_utils]")
-{
-  QDomDocument document{};
-
-  const auto elem = document.createElement(QStringLiteral(u"foo"));
-  CHECK_NOTHROW(xml::to_elem(elem));
-
-  const auto text = document.createTextNode(QStringLiteral(u"qwerty"));
-  CHECK_THROWS(xml::to_elem(text));
-
-  const auto attribute = document.createAttribute(QStringLiteral(u"wow"));
-  CHECK_THROWS(xml::to_elem(attribute));
-
-  const auto comment = document.createComment(QStringLiteral(u"abcdef"));
-  CHECK_THROWS(xml::to_elem(comment));
-}
-
 TEST_CASE("xml::from_file", "[xml_utils]")
 {
   CHECK_NOTHROW(xml::from_file(QStringLiteral(u"sample.xml")));
