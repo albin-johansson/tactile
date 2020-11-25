@@ -6,7 +6,7 @@
 
 #include "tactile_error.hpp"
 
-namespace tactile::json {
+namespace tactile {
 namespace {
 
 void parse_group(const QJsonObject& json,
@@ -82,8 +82,8 @@ auto parse_palette(const QString& file) -> QPalette
 
   parse_group(json, palette);
 
-  if (constexpr auto disabled = u"disabled"; json.contains(disabled)) {
-    const auto item = json[disabled];
+  if (const auto it = json.find(u"disabled"); it != json.end()) {
+    const auto item = it.value();
     Q_ASSERT(item.isObject());
 
     const auto obj = item.toObject();
@@ -93,4 +93,4 @@ auto parse_palette(const QString& file) -> QPalette
   return palette;
 }
 
-}  // namespace tactile::json
+}  // namespace tactile

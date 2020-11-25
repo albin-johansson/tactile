@@ -5,7 +5,7 @@
 
 #include "czstring.hpp"
 
-namespace tactile::json {
+namespace tactile {
 
 /**
  * \brief Parses a palette from a JSON file.
@@ -20,4 +20,4 @@ namespace tactile::json {
  */
 [[nodiscard]] auto parse_palette(const QString& file) -> QPalette;
 
-}  // namespace tactile::json
+}  // namespace tactile

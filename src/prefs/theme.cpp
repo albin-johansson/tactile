@@ -72,20 +72,20 @@ auto from_name(const QStringView name) -> maybe<QPalette>
 
 auto get_dark() -> const QPalette&
 {
-  static const auto dark = json::parse_palette(QStringLiteral(":theme/dark"));
+  static const auto dark = parse_palette(QStringLiteral(u":theme/dark"));
   return dark;
 }
 
 auto get_light() -> const QPalette&
 {
-  static const auto light = json::parse_palette(QStringLiteral(":theme/light"));
+  static const auto light = parse_palette(QStringLiteral(u":theme/light"));
   return light;
 }
 
 auto get_atom_one_dark() -> const QPalette&
 {
   static const auto oneDark =
-      json::parse_palette(QStringLiteral(":theme/atomOneDark"));
+      parse_palette(QStringLiteral(u":theme/atomOneDark"));
   return oneDark;
 }
 
