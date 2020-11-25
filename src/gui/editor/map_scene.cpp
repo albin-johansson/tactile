@@ -14,7 +14,6 @@ map_scene::map_scene(core::map_document* map, const map_id id, QObject* parent)
       m_id{id}
 {
   addItem(m_item);
-  setActivePanel(m_item);
 }
 
 void map_scene::move_map(const int dx, const int dy)
