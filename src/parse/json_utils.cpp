@@ -3,7 +3,6 @@
 #include <QSaveFile>
 
 #include "preferences.hpp"
-#include "tactile_error.hpp"
 
 namespace tactile::json {
 

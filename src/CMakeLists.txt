@@ -196,9 +196,9 @@ set(TACTILE_SOURCE_FILES
         parse/tiled_json_parser.hpp
         parse/tiled_tmx_parser.cpp
         parse/tiled_tmx_parser.hpp
-        parse/parse_error.hpp
-        parse/parse_error.cpp
 
+        parse/tmx/parse_error.hpp
+        parse/tmx/parse_error.cpp
         parse/tmx/map_file_type.hpp
         parse/tmx/element_id.hpp
         parse/tmx/map_parser.hpp
