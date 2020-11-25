@@ -191,7 +191,7 @@ class map_parser final
       return ok;
     });
 
-    return true;
+    return ok;
   }
 
   [[nodiscard]] auto parse_tileset_first_gid(const object_type& object)
