@@ -19,10 +19,13 @@ before_build:
   - cd %APPVEYOR_BUILD_FOLDER%
 
   # Copy Qt runtime binaries to our bin folder
-  - Xcopy /E /I %Qt5_PATH%\bin\*.dll %cd%\bin
+# - Xcopy /E /I %Qt5_PATH%\bin\*.dll %cd%\bin
+  - Xcopy /E /I %Qt5_PATH%\bin\Qt5Core.dll %cd%\bin
+  - Xcopy /E /I %Qt5_PATH%\bin\Qt5Gui.dll %cd%\bin
+  - Xcopy /E /I %Qt5_PATH%\bin\Qt5Xml.dll %cd%\bin
 
   - mkdir build
-  - cd build 
+  - cd build
   - cmake .. -DCMAKE_BUILD_TYPE=Debug -G Ninja
 
 build_script:
