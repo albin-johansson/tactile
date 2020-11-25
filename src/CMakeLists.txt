@@ -187,7 +187,6 @@ set(TACTILE_SOURCE_FILES
 
         parse/parse_palette.cpp
         parse/parse_palette.hpp
-        parse/string_utils.hpp
         parse/xml_utils.hpp
         parse/xml_utils.cpp
         parse/json_utils.cpp
