@@ -2,7 +2,7 @@
 
 #include <QString>
 
-namespace tactile {
+namespace tactile::tmx {
 
 /**
  * \enum parse_error
@@ -40,4 +40,4 @@ enum class parse_error
 
 [[nodiscard]] auto to_message(parse_error error) -> QString;
 
-}  // namespace tactile
+}  // namespace tactile::tmx

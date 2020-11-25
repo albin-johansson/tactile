@@ -10,7 +10,7 @@ TEST_CASE("Import TMX with embedded tilesets", "[import_tmx]")
 
   QObject object;
 
-  parse_error error;
+  tmx::parse_error error;
   auto* document = service::open_map(path, &error);
   REQUIRE(document != nullptr);
 
@@ -82,7 +82,7 @@ TEST_CASE("Import TMX with external tilesets", "[import_tmx]")
 
   QObject object;
 
-  parse_error error;
+  tmx::parse_error error;
   auto* document = service::open_map(path, &error);
   REQUIRE(document != nullptr);
 

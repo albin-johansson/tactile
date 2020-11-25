@@ -1,6 +1,6 @@
 #include "parse_error.hpp"
 
-namespace tactile {
+namespace tactile::tmx {
 
 auto to_message(const parse_error error) -> QString
 {
@@ -67,4 +67,4 @@ auto to_message(const parse_error error) -> QString
   }
 }
 
-}  // namespace tactile
+}  // namespace tactile::tmx

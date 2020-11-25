@@ -57,7 +57,7 @@ void each_elem(const QDomElement& element, const QString& tag, T&& callable)
   }
 }
 
-[[nodiscard]] auto to_elem(const QDomNode& node) -> QDomElement;
+[[nodiscard, deprecated]] auto to_elem(const QDomNode& node) -> QDomElement;
 
 [[nodiscard]] auto from_file(const QFileInfo& path) -> maybe<QDomDocument>;
 

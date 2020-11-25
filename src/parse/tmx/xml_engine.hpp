@@ -36,8 +36,9 @@ class xml_engine final
     const auto count = elements.count();
     for (auto i = 0; i < count; ++i) {
       const auto& node = elements.at(i);
+      Q_ASSERT(node.isElement());
 
-      const object_type elem{xml::to_elem(node)};
+      const object_type elem{node.toElement()};
       Q_ASSERT(elem->tagName() == QStringView{u"tileset"});
 
       if (!callable(elem)) {
@@ -53,8 +54,9 @@ class xml_engine final
     const auto count = elements.count();
     for (auto i = 0; i < count; ++i) {
       const auto& node = elements.at(i);
+      Q_ASSERT(node.isElement());
 
-      const object_type elem{xml::to_elem(node)};
+      const object_type elem{node.toElement()};
       Q_ASSERT(elem->tagName() == QStringLiteral(u"layer"));
 
       callable(elem);

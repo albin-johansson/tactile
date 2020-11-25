@@ -25,14 +25,14 @@ TEST_CASE("tmx_parser", "[map_parser]")
   {
     xml_parser parser{QFileInfo{"tmx/embedded.tmx"}};
     CHECK(parser);
-    CHECK(parser.error_code() == parse_error::none);
+    CHECK(parser.error_code() == tmx::parse_error::none);
   }
 
   SECTION("Invalid map")
   {
     xml_parser parser{QFileInfo{"tmx/does_not_exist.tmx"}};
     CHECK(!parser);
-    CHECK(parser.error_code() == parse_error::map_file_not_found);
+    CHECK(parser.error_code() == tmx::parse_error::map_file_not_found);
   }
 }
 
@@ -42,13 +42,13 @@ TEST_CASE("json_parser", "[map_parser]")
   {
     json_parser parser{QFileInfo{"json/external.json"}};
     CHECK(parser);
-    CHECK(parser.error_code() == parse_error::none);
+    CHECK(parser.error_code() == tmx::parse_error::none);
   }
 
   SECTION("Invalid map")
   {
     json_parser parser{QFileInfo{"json/invalid/layer_missing_height.json"}};
     CHECK(!parser);
-    CHECK(parser.error_code() == parse_error::layer_missing_height);
+    CHECK(parser.error_code() == tmx::parse_error::layer_missing_height);
   }
 }

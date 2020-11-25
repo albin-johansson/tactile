@@ -5,15 +5,13 @@
 #include "json_engine.hpp"
 #include "map_parser.hpp"
 #include "tactile_error.hpp"
-#include "tiled_json_parser.hpp"
-#include "tiled_tmx_parser.hpp"
 #include "xml_engine.hpp"
 
 namespace tactile::service {
 namespace {
 
 template <typename T>
-auto open_using(const QFileInfo& file, parse_error* error)
+auto open_using(const QFileInfo& file, tmx::parse_error* error)
     -> core::map_document*
 {
   tmx::map_parser<T> parser{file};
@@ -27,7 +25,7 @@ auto open_using(const QFileInfo& file, parse_error* error)
 
 }  // namespace
 
-auto open_map(const QString& path, parse_error* error) -> core::map_document*
+auto open_map(const QString& path, tmx::parse_error* error) -> core::map_document*
 {
   const QFileInfo info{path};
   const auto suffix = info.suffix();

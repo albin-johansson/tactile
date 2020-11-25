@@ -192,10 +192,6 @@ set(TACTILE_SOURCE_FILES
         parse/xml_utils.cpp
         parse/json_utils.cpp
         parse/json_utils.hpp
-        parse/tiled_json_parser.cpp
-        parse/tiled_json_parser.hpp
-        parse/tiled_tmx_parser.cpp
-        parse/tiled_tmx_parser.hpp
 
         parse/tmx/parse_error.hpp
         parse/tmx/parse_error.cpp
