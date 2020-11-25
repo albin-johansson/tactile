@@ -106,30 +106,12 @@ void map_view::leaveEvent(QEvent* event)
   emit mouse_exited(event);
 }
 
-void map_view::keyPressEvent(QKeyEvent* event)
-{
-  QGraphicsView::keyPressEvent(event);
-
-  if (event->key() == Qt::Key::Key_Control) {
-    m_canZoom = true;
-  }
-}
-
-void map_view::keyReleaseEvent(QKeyEvent* event)
-{
-  QGraphicsView::keyReleaseEvent(event);
-
-  if (event->key() == Qt::Key::Key_Control) {
-    m_canZoom = false;
-  }
 }
 
 void map_view::wheelEvent(QWheelEvent* event)
 {
-  QGraphicsView::wheelEvent(event);
-
-  if (m_canZoom) {
-    const auto pixels = event->pixelDelta();
+  if (event->modifiers() & Qt::ControlModifier) {
+    auto pixels = event->pixelDelta();
     const auto degrees = event->angleDelta() / 8;
 
     if (!pixels.isNull()) {
@@ -147,7 +129,6 @@ void map_view::wheelEvent(QWheelEvent* event)
       }
     }
 
-    event->accept();
   }
 }
 
