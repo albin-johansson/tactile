@@ -106,8 +106,6 @@ void map_view::leaveEvent(QEvent* event)
   emit mouse_exited(event);
 }
 
-}
-
 void map_view::wheelEvent(QWheelEvent* event)
 {
   if (event->modifiers() & Qt::ControlModifier) {
