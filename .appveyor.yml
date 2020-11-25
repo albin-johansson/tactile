@@ -20,9 +20,6 @@ before_build:
 
   # Copy Qt runtime binaries to our bin folder
   - xcopy /e /i %Qt5_PATH%\bin\*.dll %cd%\bin
-  # - xcopy %Qt5_PATH%\bin\Qt5Core.dll %cd%\bin /e /i
-  # - xcopy %Qt5_PATH%\bin\Qt5Gui.dll %cd%\bin /e /i
-  # - xcopy %Qt5_PATH%\bin\Qt5Xml.dll %cd%\bin /e /i
 
   - mkdir build
   - cd build
