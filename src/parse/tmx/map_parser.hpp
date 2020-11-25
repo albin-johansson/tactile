@@ -46,7 +46,8 @@ concept is_parser = is_object<Object> &&
 
 template <typename Parser>
 class map_parser final
-{
+{  // TODO avoid if constexpr blocks for handling the different file types
+
  public:
   using parser_type = Parser;
   using document_type = typename parser_type::document_type;
@@ -178,24 +179,16 @@ class map_parser final
     m_parser.each_tileset(root, [&](const object_type& elem) {
       if (ok) {
         const auto firstGid = parse_tileset_first_gid(elem);
-        if (!firstGid) {
-          return false;
-        }
+        ok = firstGid.has_value();
 
-        if (elem.contains(element_id::source)) {
-          // external tileset
-          if (!parse_external_tileset(elem, path, *firstGid)) {
-            return false;
-          }
-        } else {
-          // embedded tileset
-          if (!parse_tileset_common(elem, path, *firstGid)) {
-            return false;
-          }
+        if (ok) {
+          ok = elem.contains(element_id::source)
+                   ? parse_external_tileset(elem, path, *firstGid)
+                   : parse_tileset_common(elem, path, *firstGid);
         }
-        return true;
       }
-      return false;
+
+      return ok;
     });
 
     return true;
