@@ -30,3 +30,16 @@
 *.exe
 *.out
 *.app
+
+compile_commands.json
+
+.vs
+.vscode
+.idea
+doxygen-out
+build
+cmake-build-*
+
+# Allow all necessary installer data and metainformation
+!installer/packages/com.albinjohansson.tactile/**/*
+!installer/*

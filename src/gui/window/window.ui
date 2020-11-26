@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>window</class>
+ <widget class="QMainWindow" name="window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>897</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>300</width>
+    <height>100</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Segoe UI</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="acceptDrops">
+   <bool>true</bool>
+  </property>
+  <property name="windowTitle">
+   <string>Tactile</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../tactile.qrc">
+    <normaloff>:/resources/icons/tactile2_icon2.png</normaloff>:/resources/icons/tactile2_icon2.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <property name="leftMargin">
+     <number>6</number>
+    </property>
+    <property name="topMargin">
+     <number>6</number>
+    </property>
+    <property name="rightMargin">
+     <number>6</number>
+    </property>
+    <property name="bottomMargin">
+     <number>6</number>
+    </property>
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="mainLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <item>
+       <widget class="QStackedWidget" name="stackedWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>897</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNewMap"/>
+    <addaction name="actionOpenMap"/>
+    <addaction name="actionCloseMap"/>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSaveAs"/>
+    <addaction name="separator"/>
+    <addaction name="actionRename"/>
+    <addaction name="separator"/>
+    <addaction name="actionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionAddRow"/>
+    <addaction name="actionAddCol"/>
+    <addaction name="actionRemoveRow"/>
+    <addaction name="actionRemoveCol"/>
+    <addaction name="actionResizeMap"/>
+    <addaction name="separator"/>
+    <addaction name="actionStampTool"/>
+    <addaction name="actionBucketTool"/>
+    <addaction name="actionEraserTool"/>
+    <addaction name="separator"/>
+    <addaction name="actionAddTileset"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuAppearance">
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="title">
+      <string>Appearance</string>
+     </property>
+     <addaction name="actionResetLayout"/>
+     <addaction name="separator"/>
+     <addaction name="actionToolsVisibility"/>
+     <addaction name="actionTilesetsVisibility"/>
+     <addaction name="actionLayersVisibility"/>
+    </widget>
+    <addaction name="menuAppearance"/>
+    <addaction name="separator"/>
+    <addaction name="actionCenterCamera"/>
+    <addaction name="separator"/>
+    <addaction name="actionToggleGrid"/>
+    <addaction name="separator"/>
+    <addaction name="actionZoomIn"/>
+    <addaction name="actionZoomOut"/>
+    <addaction name="actionResetZoom"/>
+    <addaction name="separator"/>
+    <addaction name="actionPanUp"/>
+    <addaction name="actionPanDown"/>
+    <addaction name="actionPanRight"/>
+    <addaction name="actionPanLeft"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+    <addaction name="actionAboutQt"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="windowTitle">
+    <string>Tool bar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionNewMap"/>
+   <addaction name="actionOpenMap"/>
+   <addaction name="separator"/>
+   <addaction name="actionSave"/>
+   <addaction name="actionSaveAs"/>
+   <addaction name="separator"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="separator"/>
+   <addaction name="actionAddTileset"/>
+   <addaction name="actionResizeMap"/>
+   <addaction name="separator"/>
+   <addaction name="actionCenterCamera"/>
+   <addaction name="actionZoomOut"/>
+   <addaction name="actionZoomIn"/>
+   <addaction name="separator"/>
+   <addaction name="actionStampTool"/>
+   <addaction name="actionBucketTool"/>
+   <addaction name="actionEraserTool"/>
+  </widget>
+  <action name="actionNewMap">
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/file.png</normaloff>:/resources/icons/icons8/color/64/file.png</iconset>
+   </property>
+   <property name="text">
+    <string>New map</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionOpenMap">
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/opened-folder.png</normaloff>:/resources/icons/icons8/color/64/opened-folder.png</iconset>
+   </property>
+   <property name="text">
+    <string>Open map...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/save.png</normaloff>:/resources/icons/icons8/color/64/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSaveAs">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/save-as.png</normaloff>:/resources/icons/icons8/color/64/save-as.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionRename">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/rename.png</normaloff>:/resources/icons/icons8/color/64/rename.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rename...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/settings.png</normaloff>:/resources/icons/icons8/color/64/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Settings...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+S</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/exit.png</normaloff>:/resources/icons/icons8/color/64/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/undo.png</normaloff>:/resources/icons/icons8/color/64/undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/redo.png</normaloff>:/resources/icons/icons8/color/64/redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionAddRow">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/add-row.png</normaloff>:/resources/icons/icons8/color/64/add-row.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add row</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+R</string>
+   </property>
+  </action>
+  <action name="actionAddCol">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/add-column.png</normaloff>:/resources/icons/icons8/color/64/add-column.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add column</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+C</string>
+   </property>
+  </action>
+  <action name="actionRemoveRow">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/remove-row.png</normaloff>:/resources/icons/icons8/color/64/remove-row.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove row</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+R</string>
+   </property>
+  </action>
+  <action name="actionRemoveCol">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/remove-column.png</normaloff>:/resources/icons/icons8/color/64/remove-column.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove column</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Alt+Shift+C</string>
+   </property>
+  </action>
+  <action name="actionCenterCamera">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/center-camera.png</normaloff>:/resources/icons/icons8/color/64/center-camera.png</iconset>
+   </property>
+   <property name="text">
+    <string>Center camera</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Space</string>
+   </property>
+  </action>
+  <action name="actionToggleGrid">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/grid.png</normaloff>:/resources/icons/icons8/color/64/grid.png</iconset>
+   </property>
+   <property name="text">
+    <string>Toggle grid</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+G</string>
+   </property>
+  </action>
+  <action name="actionZoomIn">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/zoom-in.png</normaloff>:/resources/icons/icons8/color/64/zoom-in.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom in</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl++</string>
+   </property>
+  </action>
+  <action name="actionZoomOut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/zoom-out.png</normaloff>:/resources/icons/icons8/color/64/zoom-out.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom out</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionPanUp">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/arrow-up.png</normaloff>:/resources/icons/icons8/color/64/arrow-up.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pan up</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Up</string>
+   </property>
+  </action>
+  <action name="actionPanRight">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/arrow-right.png</normaloff>:/resources/icons/icons8/color/64/arrow-right.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pan right</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Right</string>
+   </property>
+  </action>
+  <action name="actionPanLeft">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/arrow-left.png</normaloff>:/resources/icons/icons8/color/64/arrow-left.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pan left</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Left</string>
+   </property>
+  </action>
+  <action name="actionPanDown">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/arrow-down.png</normaloff>:/resources/icons/icons8/color/64/arrow-down.png</iconset>
+   </property>
+   <property name="text">
+    <string>Pan down</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Down</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/about.png</normaloff>:/resources/icons/icons8/color/64/about.png</iconset>
+   </property>
+   <property name="text">
+    <string>About Tactile...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionStampTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/stamp.png</normaloff>:/resources/icons/icons8/color/64/stamp.png</iconset>
+   </property>
+   <property name="text">
+    <string>Stamp</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
+  </action>
+  <action name="actionBucketTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/bucket.png</normaloff>:/resources/icons/icons8/color/64/bucket.png</iconset>
+   </property>
+   <property name="text">
+    <string>Bucket</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>B</string>
+   </property>
+  </action>
+  <action name="actionEraserTool">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/eraser.png</normaloff>:/resources/icons/icons8/color/64/eraser.png</iconset>
+   </property>
+   <property name="text">
+    <string>Eraser</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>E</string>
+   </property>
+  </action>
+  <action name="actionAddTileset">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/image.png</normaloff>:/resources/icons/icons8/color/64/image.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add tileset...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionResizeMap">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/resize.png</normaloff>:/resources/icons/icons8/color/64/resize.png</iconset>
+   </property>
+   <property name="text">
+    <string>Resize map...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionResetZoom">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/reset_zoom.png</normaloff>:/resources/icons/icons8/color/64/reset_zoom.png</iconset>
+   </property>
+   <property name="text">
+    <string>Reset zoom</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionCloseMap">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Close map</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionToolsVisibility">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <selectedoff>:/resources/icons/icons8/color/64/unchecked.png</selectedoff>
+     <selectedon>:/resources/icons/icons8/color/64/checked.png</selectedon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Mouse tools</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionTilesetsVisibility">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <selectedoff>:/resources/icons/icons8/color/64/unchecked.png</selectedoff>
+     <selectedon>:/resources/icons/icons8/color/64/checked.png</selectedon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Tilesets</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionResetLayout">
+   <property name="text">
+    <string>Reset layout</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/dark/qt.png</normaloff>:/resources/icons/icons8/dark/qt.png</iconset>
+   </property>
+   <property name="text">
+    <string>About Qt...</string>
+   </property>
+  </action>
+  <action name="actionLayersVisibility">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/icons8/color/64/unchecked.png</normaloff>
+     <normalon>:/resources/icons/icons8/color/64/checked.png</normalon>:/resources/icons/icons8/color/64/unchecked.png</iconset>
+   </property>
+   <property name="text">
+    <string>Layers</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../../tactile.qrc"/>
+ </resources>
+ <connections/>
+</ui>

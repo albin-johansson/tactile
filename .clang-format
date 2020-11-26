@@ -1,0 +1,35 @@
+---
+BasedOnStyle: Google
+IndentWidth: 2
+---
+Language: Cpp
+Standard: c++20
+DerivePointerAlignment: false
+PointerAlignment: Left
+AllowAllParametersOfDeclarationOnNextLine: false
+
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+
+BinPackParameters: false
+BinPackArguments: false
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterEnum: true
+  AfterStruct: true
+  AfterClass: true
+  AfterFunction: true
+  SplitEmptyRecord: false
+  SplitEmptyFunction: false
+
+AllowShortFunctionsOnASingleLine: None
+AllowShortBlocksOnASingleLine: Never
+
+BreakConstructorInitializers: BeforeColon
+AllowAllConstructorInitializersOnNextLine: false
+
+AllowShortLambdasOnASingleLine: None
+AllowAllArgumentsOnNextLine: false
+
+BreakInheritanceList: BeforeColon

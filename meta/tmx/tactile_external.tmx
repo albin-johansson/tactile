@@ -1,0 +1,6 @@
+<map tileheight="32" nextobjectid="1" infinite="0" nextlayerid="2" version="1.4" tilewidth="32" tiledversion="1.4.2" renderorder="right-down" orientation="orthogonal" height="5" width="5">
+ <tileset source="terrain.tsx" firstgid="1"/>
+ <layer id="1" height="5" width="5" name="Layer 1">
+  <data encoding="csv">360,360,360,107,107,360,360,107,107,354,360,107,107,354,354,107,107,354,354,354,107,354,354,354,354</data>
+ </layer>
+</map>
