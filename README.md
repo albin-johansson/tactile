@@ -32,6 +32,10 @@ The following bullet points describe the goals that guide the design and develop
 * Minimap overview.
 * View external tileset files.
 * Object layers.
+* Layer properties.
+* Custom themes.
+* OpenGL-based rendering.
+* Maps with tiles that aren't square.
 
 ## Source code
 
