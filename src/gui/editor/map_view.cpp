@@ -12,7 +12,11 @@ map_view::map_view(core::map_document* map, const map_id id, QWidget* parent)
     : QGraphicsView{parent}
 {
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);
-  setMouseTracking(true);  // register mouse events with no pressed buttons
+  setAttribute(Qt::WA_StaticContents, true);
+
+  // register mouse events with no pressed buttons
+  setMouseTracking(true);
+
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
