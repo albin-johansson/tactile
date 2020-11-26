@@ -1,4 +1,4 @@
-# tactile [![version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://semver.org) [![Language](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization) [![Build status](https://ci.appveyor.com/api/projects/status/1dsfluq6ep8yj5lr?svg=true)](https://ci.appveyor.com/project/AlbinJohansson/tactile)
+# tactile [![version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://semver.org) [![Language](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization) [![Build status](https://ci.appveyor.com/api/projects/status/1dsfluq6ep8yj5lr?svg=true)](https://ci.appveyor.com/project/AlbinJohansson/tactile)
 
 A tilemap editor that aims to be easy-to-use, fast and lightweight. Furthermore, compatibility with
 the excellent [Tiled](https://www.mapeditor.org/) map editor is pursued.
