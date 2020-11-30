@@ -12,62 +12,6 @@
   <qresource prefix="/">
     <file>resources/icons/icon.png</file>
 
-    <file>resources/icons/icons8/dark/invisible_32px.png</file>
-    <file>resources/icons/icons8/dark/visible_32px.png</file>
-    <file>resources/icons/icons8/dark/rename_32px.png</file>
-    <file>resources/icons/icons8/dark/rubber_stamp_32px.png</file>
-    <file>resources/icons/icons8/dark/camera_32px.png</file>
-    <file>resources/icons/icons8/dark/circle_32px.png</file>
-    <file>resources/icons/icons8/dark/define_location_32px.png</file>
-    <file>resources/icons/icons8/dark/github_32px.png</file>
-    <file>resources/icons/icons8/dark/icons8_32px.png</file>
-    <file>resources/icons/icons8/dark/about_32px.png</file>
-    <file>resources/icons/icons8/dark/1_32px.png</file>
-    <file>resources/icons/icons8/dark/2_32px.png</file>
-    <file>resources/icons/icons8/dark/3_32px.png</file>
-    <file>resources/icons/icons8/dark/4_32px.png</file>
-    <file>resources/icons/icons8/dark/add-column_32px.png</file>
-    <file>resources/icons/icons8/dark/add-row_32px.png</file>
-    <file>resources/icons/icons8/dark/arrow-pointing-down_32px.png</file>
-    <file>resources/icons/icons8/dark/bookmark_32px.png</file>
-    <file>resources/icons/icons8/dark/copy_32px.png</file>
-    <file>resources/icons/icons8/dark/create_32px.png</file>
-    <file>resources/icons/icons8/dark/cursor_32px.png</file>
-    <file>resources/icons/icons8/dark/delete_32px.png</file>
-    <file>resources/icons/icons8/dark/delete-column_32px.png</file>
-    <file>resources/icons/icons8/dark/delete-row_32px.png</file>
-    <file>resources/icons/icons8/dark/dice_32px.png</file>
-    <file>resources/icons/icons8/dark/document_32px.png</file>
-    <file>resources/icons/icons8/dark/edit_32px.png</file>
-    <file>resources/icons/icons8/dark/erase_32px.png</file>
-    <file>resources/icons/icons8/dark/error_32px.png</file>
-    <file>resources/icons/icons8/dark/exit_32px.png</file>
-    <file>resources/icons/icons8/dark/file_32px.png</file>
-    <file>resources/icons/icons8/dark/fill-color_32px.png</file>
-    <file>resources/icons/icons8/dark/filled-bookmark-ribbon_32px.png</file>
-    <file>resources/icons/icons8/dark/filled-circle-32px.png</file>
-    <file>resources/icons/icons8/dark/grid_32px.png</file>
-    <file>resources/icons/icons8/dark/group-objects_32px.png</file>
-    <file>resources/icons/icons8/dark/hand-rock_32px.png</file>
-    <file>resources/icons/icons8/dark/left_32px.png</file>
-    <file>resources/icons/icons8/dark/move_32px.png</file>
-    <file>resources/icons/icons8/dark/opened-folder_32px.png</file>
-    <file>resources/icons/icons8/dark/paste_32px.png</file>
-    <file>resources/icons/icons8/dark/picture_32px.png</file>
-    <file>resources/icons/icons8/dark/plus_32px.png</file>
-    <file>resources/icons/icons8/dark/redo_32px.png</file>
-    <file>resources/icons/icons8/dark/right_32px.png</file>
-    <file>resources/icons/icons8/dark/save_32px.png</file>
-    <file>resources/icons/icons8/dark/save-as_32px.png</file>
-    <file>resources/icons/icons8/dark/settings_32px.png</file>
-    <file>resources/icons/icons8/dark/trash_32px.png</file>
-    <file>resources/icons/icons8/dark/undo_32px.png</file>
-    <file>resources/icons/icons8/dark/up_32px.png</file>
-    <file>resources/icons/icons8/dark/website_32px.png</file>
-    <file>resources/icons/icons8/dark/zoom-in_32px.png</file>
-    <file>resources/icons/icons8/dark/zoom-out_32px.png</file>
-    <file>resources/icons/icons8/dark/qt.png</file>
-
     <file>resources/icons/icons8/color/64/bucket.png</file>
     <file>resources/icons/icons8/color/64/eraser.png</file>
     <file>resources/icons/icons8/color/64/about.png</file>
