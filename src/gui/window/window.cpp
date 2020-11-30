@@ -38,6 +38,8 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
   init_mouse_tool_group();
   init_connections();
 
+  showMaximized();
+
   restore_layout();
   enter_no_content_view();
 }
