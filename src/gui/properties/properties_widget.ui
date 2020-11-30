@@ -162,50 +162,6 @@
           <normaloff>:/resources/icons/icons8/color/64/category.png</normaloff>:/resources/icons/icons8/color/64/category.png</iconset>
         </property>
        </column>
-       <item>
-        <property name="text">
-         <string>width</string>
-        </property>
-        <property name="text">
-         <string>23</string>
-        </property>
-        <property name="text">
-         <string>int</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>height</string>
-        </property>
-        <property name="text">
-         <string>45</string>
-        </property>
-        <property name="text">
-         <string>int</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>name</string>
-        </property>
-        <property name="text">
-         <string>Foo</string>
-        </property>
-        <property name="text">
-         <string>string</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>opacity</string>
-        </property>
-        <property name="text">
-         <string>0.75</string>
-        </property>
-        <property name="text">
-         <string>float</string>
-        </property>
-       </item>
       </widget>
      </item>
     </layout>
