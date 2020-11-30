@@ -58,6 +58,12 @@ auto graphics::tileset_widget_visible() -> setting<bool>
   return setting<bool>{str};
 }
 
+auto graphics::properties_widget_visible() -> setting<bool>
+{
+  static const auto str = QStringLiteral(u"graphics/propertiesWidgetVisible");
+  return setting<bool>{str};
+}
+
 auto saves::embed_tilesets() -> setting<bool>
 {
   static const auto str = QStringLiteral(u"saves/embedTilesets");
@@ -108,6 +114,7 @@ void validate()
   graphics::tool_widget_visible().set_if_missing(true);
   graphics::tileset_widget_visible().set_if_missing(true);
   graphics::layer_widget_visible().set_if_missing(true);
+  graphics::properties_widget_visible().set_if_missing(true);
 
   saves::embed_tilesets().set_if_missing(saves::embed_tilesets_def());
   saves::generate_defaults().set_if_missing(saves::generate_defaults_def());

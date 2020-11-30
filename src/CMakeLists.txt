@@ -146,6 +146,9 @@ set(TACTILE_SOURCE_FILES
         gui/editor/map_item.hpp
         gui/editor/map_editor.ui
 
+        gui/properties/properties_dock.cpp
+        gui/properties/properties_dock.hpp
+
         command/command_id.hpp
         command/command_stack.hpp
         command/add_row.cpp
@@ -277,6 +280,7 @@ target_include_directories(libTactile
         PUBLIC gui/util
         PUBLIC gui/tools
         PUBLIC gui/settings
+        PUBLIC gui/properties
         PUBLIC gui/dialog
         PUBLIC gui/dialog/about
         PUBLIC gui/dialog/resize_map

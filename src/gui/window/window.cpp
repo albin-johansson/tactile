@@ -5,6 +5,7 @@
 #include "map_editor.hpp"
 #include "open_map_dialog.hpp"
 #include "preferences.hpp"
+#include "properties_dock.hpp"
 #include "save_as_dialog.hpp"
 #include "save_service.hpp"
 #include "setting.hpp"
@@ -23,11 +24,16 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
   m_toolDock = new tool_dock{this};
   m_layerDock = new layer_dock{this};
   m_tilesetDock = new tileset_dock{this};
+  m_propertiesDock = new properties_dock{this};
 
   setCentralWidget(m_editor);
   addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);
   addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
+  addDockWidget(Qt::RightDockWidgetArea, m_propertiesDock);
+
+  tabifyDockWidget(m_layerDock, m_propertiesDock);
+  m_layerDock->raise();  // Layer dock is initially of greater interest
 
   init_mouse_tool_group();
   init_connections();
@@ -73,9 +79,10 @@ void window::init_connections()
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
   connect(m_layerDock,   &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
 
-  connect(m_toolDock,    &tool_dock::closed, [] { prefs::graphics::tool_widget_visible().set(false); });
-  connect(m_layerDock,   &tool_dock::closed, [] { prefs::graphics::layer_widget_visible().set(false); });
-  connect(m_tilesetDock, &tool_dock::closed, [] { prefs::graphics::tileset_widget_visible().set(false); });
+  connect(m_toolDock,       &tool_dock::closed, [] { prefs::graphics::tool_widget_visible().set(false); });
+  connect(m_layerDock,      &tool_dock::closed, [] { prefs::graphics::layer_widget_visible().set(false); });
+  connect(m_tilesetDock,    &tool_dock::closed, [] { prefs::graphics::tileset_widget_visible().set(false); });
+  connect(m_propertiesDock, &tool_dock::closed, [] { prefs::graphics::properties_widget_visible().set(false); });
 
   connect(m_editor, &map_editor::ui_select_map,  this, &window::ui_select_map);
   connect(m_editor, &map_editor::ui_remove_map,  this, &window::handle_remove_map);
@@ -121,6 +128,7 @@ void window::reset_dock_layout()
   removeDockWidget(m_toolDock);
   removeDockWidget(m_tilesetDock);
   removeDockWidget(m_layerDock);
+  removeDockWidget(m_propertiesDock);
 
   addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_toolDock);
   m_toolDock->show();
@@ -133,6 +141,11 @@ void window::reset_dock_layout()
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
   m_layerDock->show();
   prefs::graphics::layer_widget_visible().set(true);
+
+  addDockWidget(Qt::RightDockWidgetArea, m_propertiesDock);
+  m_propertiesDock->show();
+  tabifyDockWidget(m_layerDock, m_propertiesDock);
+  prefs::graphics::properties_widget_visible().set(true);
 }
 
 void window::hide_all_docks()
@@ -140,6 +153,7 @@ void window::hide_all_docks()
   m_toolDock->hide();
   m_layerDock->hide();
   m_tilesetDock->hide();
+  m_propertiesDock->hide();
 }
 
 void window::restore_dock_visibility()
@@ -154,6 +168,10 @@ void window::restore_dock_visibility()
 
   prefs::graphics::layer_widget_visible().with([this](const bool value) {
     m_layerDock->setVisible(value);
+  });
+
+  prefs::graphics::properties_widget_visible().with([this](const bool value) {
+    m_propertiesDock->setVisible(value);
   });
 }
 

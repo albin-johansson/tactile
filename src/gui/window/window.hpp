@@ -20,6 +20,7 @@ class map_editor;
 class tool_dock;
 class layer_dock;
 class tileset_dock;
+class properties_dock;
 
 /**
  * \class window
@@ -168,6 +169,7 @@ class window final : public QMainWindow
   tool_dock* m_toolDock{};
   layer_dock* m_layerDock{};
   tileset_dock* m_tilesetDock{};
+  properties_dock* m_propertiesDock{};
   QActionGroup* m_toolGroup{};
 
   void init_mouse_tool_group();

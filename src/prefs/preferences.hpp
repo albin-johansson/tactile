@@ -96,6 +96,8 @@ namespace graphics {
 
 [[nodiscard]] auto tileset_widget_visible() -> setting<bool>;
 
+[[nodiscard]] auto properties_widget_visible() -> setting<bool>;
+
 }  // namespace graphics
 
 namespace saves {
