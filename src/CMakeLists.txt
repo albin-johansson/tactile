@@ -148,6 +148,9 @@ set(TACTILE_SOURCE_FILES
 
         gui/properties/properties_dock.cpp
         gui/properties/properties_dock.hpp
+        gui/properties/properties_widget.cpp
+        gui/properties/properties_widget.hpp
+        gui/properties/properties_widget.ui
 
         command/command_id.hpp
         command/command_stack.hpp

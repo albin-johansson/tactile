@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>properties_widget</class>
+ <widget class="QWidget" name="properties_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTreeWidget" name="treeWidget">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="uniformRowHeights">
+      <bool>true</bool>
+     </property>
+     <property name="animated">
+      <bool>false</bool>
+     </property>
+     <property name="columnCount">
+      <number>3</number>
+     </property>
+     <attribute name="headerHighlightSections">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Property</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Type</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Value</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>width</string>
+      </property>
+      <property name="text">
+       <string>int</string>
+      </property>
+      <property name="text">
+       <string>23</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>height</string>
+      </property>
+      <property name="text">
+       <string>int</string>
+      </property>
+      <property name="text">
+       <string>45</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>name</string>
+      </property>
+      <property name="text">
+       <string>string</string>
+      </property>
+      <property name="text">
+       <string>Foo</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
