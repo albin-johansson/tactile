@@ -66,4 +66,21 @@ auto move_down() -> const QIcon&
   return icon;
 }
 
+
+auto expand() -> const QIcon&
+{
+  static const QIcon icon{
+      QStringLiteral(u":resources/icons/icons8/color/64/expand.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
+auto collapse() -> const QIcon&
+{
+  static const QIcon icon{
+      QStringLiteral(u":resources/icons/icons8/color/64/collapse.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
 }  // namespace tactile::gui::icons
