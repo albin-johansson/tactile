@@ -213,7 +213,7 @@
   <action name="actionNewMap">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/file.png</normaloff>:/resources/icons/color/64/file.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/file.png</normaloff>:/resources/icons/fluent/64/file.png</iconset>
    </property>
    <property name="text">
     <string>New map</string>
@@ -231,7 +231,7 @@
   <action name="actionOpenMap">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/opened-folder.png</normaloff>:/resources/icons/color/64/opened-folder.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/opened-folder.png</normaloff>:/resources/icons/fluent/64/opened-folder.png</iconset>
    </property>
    <property name="text">
     <string>Open map...</string>
@@ -252,7 +252,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/save.png</normaloff>:/resources/icons/color/64/save.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/save.png</normaloff>:/resources/icons/fluent/64/save.png</iconset>
    </property>
    <property name="text">
     <string>Save</string>
@@ -273,7 +273,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/save-as.png</normaloff>:/resources/icons/color/64/save-as.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/save-as.png</normaloff>:/resources/icons/fluent/64/save-as.png</iconset>
    </property>
    <property name="text">
     <string>Save as...</string>
@@ -309,7 +309,7 @@
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/settings.png</normaloff>:/resources/icons/color/64/settings.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/settings.png</normaloff>:/resources/icons/fluent/64/settings.png</iconset>
    </property>
    <property name="text">
     <string>Settings...</string>
@@ -327,7 +327,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/exit.png</normaloff>:/resources/icons/color/64/exit.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/exit.png</normaloff>:/resources/icons/fluent/64/exit.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -345,7 +345,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/undo.png</normaloff>:/resources/icons/color/64/undo.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/undo.png</normaloff>:/resources/icons/fluent/64/undo.png</iconset>
    </property>
    <property name="text">
     <string>Undo</string>
@@ -366,7 +366,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/redo.png</normaloff>:/resources/icons/color/64/redo.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/redo.png</normaloff>:/resources/icons/fluent/64/redo.png</iconset>
    </property>
    <property name="text">
     <string>Redo</string>
@@ -471,7 +471,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/center-camera.png</normaloff>:/resources/icons/color/64/center-camera.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/center-camera.png</normaloff>:/resources/icons/fluent/64/center-camera.png</iconset>
    </property>
    <property name="text">
     <string>Center camera</string>
@@ -492,7 +492,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/grid.png</normaloff>:/resources/icons/color/64/grid.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/grid.png</normaloff>:/resources/icons/fluent/64/grid.png</iconset>
    </property>
    <property name="text">
     <string>Toggle grid</string>
@@ -513,7 +513,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/zoom-in.png</normaloff>:/resources/icons/color/64/zoom-in.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/zoom-in.png</normaloff>:/resources/icons/fluent/64/zoom-in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom in</string>
@@ -534,7 +534,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/zoom-out.png</normaloff>:/resources/icons/color/64/zoom-out.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/zoom-out.png</normaloff>:/resources/icons/fluent/64/zoom-out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom out</string>
@@ -555,7 +555,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/arrow-up.png</normaloff>:/resources/icons/color/64/arrow-up.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/arrow-up.png</normaloff>:/resources/icons/fluent/64/arrow-up.png</iconset>
    </property>
    <property name="text">
     <string>Pan up</string>
@@ -576,7 +576,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/arrow-right.png</normaloff>:/resources/icons/color/64/arrow-right.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/arrow-right.png</normaloff>:/resources/icons/fluent/64/arrow-right.png</iconset>
    </property>
    <property name="text">
     <string>Pan right</string>
@@ -597,7 +597,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/arrow-left.png</normaloff>:/resources/icons/color/64/arrow-left.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/arrow-left.png</normaloff>:/resources/icons/fluent/64/arrow-left.png</iconset>
    </property>
    <property name="text">
     <string>Pan left</string>
@@ -618,7 +618,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/arrow-down.png</normaloff>:/resources/icons/color/64/arrow-down.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/arrow-down.png</normaloff>:/resources/icons/fluent/64/arrow-down.png</iconset>
    </property>
    <property name="text">
     <string>Pan down</string>
@@ -636,7 +636,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/about.png</normaloff>:/resources/icons/color/64/about.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/help.png</normaloff>:/resources/icons/fluent/64/help.png</iconset>
    </property>
    <property name="text">
     <string>About Tactile...</string>
@@ -657,7 +657,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/stamp.png</normaloff>:/resources/icons/color/64/stamp.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/stamp.png</normaloff>:/resources/icons/fluent/64/stamp.png</iconset>
    </property>
    <property name="text">
     <string>Stamp</string>
@@ -681,7 +681,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/bucket.png</normaloff>:/resources/icons/color/64/bucket.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/bucket.png</normaloff>:/resources/icons/fluent/64/bucket.png</iconset>
    </property>
    <property name="text">
     <string>Bucket</string>
@@ -705,7 +705,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/eraser.png</normaloff>:/resources/icons/color/64/eraser.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/eraser.png</normaloff>:/resources/icons/fluent/64/eraser.png</iconset>
    </property>
    <property name="text">
     <string>Eraser</string>
@@ -726,7 +726,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/image.png</normaloff>:/resources/icons/color/64/image.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/image.png</normaloff>:/resources/icons/fluent/64/image.png</iconset>
    </property>
    <property name="text">
     <string>Add tileset...</string>
@@ -747,7 +747,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/resize.png</normaloff>:/resources/icons/color/64/resize.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/resize.png</normaloff>:/resources/icons/fluent/64/resize.png</iconset>
    </property>
    <property name="text">
     <string>Resize map...</string>
@@ -796,13 +796,12 @@
     <bool>true</bool>
    </property>
    <property name="checked">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <selectedoff>:/resources/icons/color/64/unchecked.png</selectedoff>
-     <selectedon>:/resources/icons/color/64/checked.png</selectedon>
-    </iconset>
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/fluent/64/unchecked.png</normaloff>
+     <normalon>:/resources/icons/fluent/64/checked.png</normalon>:/resources/icons/fluent/64/unchecked.png</iconset>
    </property>
    <property name="text">
     <string>Mouse tools</string>
@@ -822,10 +821,9 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset>
-     <selectedoff>:/resources/icons/color/64/unchecked.png</selectedoff>
-     <selectedon>:/resources/icons/color/64/checked.png</selectedon>
-    </iconset>
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/fluent/64/unchecked.png</normaloff>
+     <normalon>:/resources/icons/fluent/64/checked.png</normalon>:/resources/icons/fluent/64/unchecked.png</iconset>
    </property>
    <property name="text">
     <string>Tilesets</string>
@@ -850,7 +848,7 @@
   </action>
   <action name="actionAboutQt">
    <property name="icon">
-    <iconset resource="../../tactile.qrc">
+    <iconset>
      <normaloff>:/resources/icons/dark/qt.png</normaloff>:/resources/icons/dark/qt.png</iconset>
    </property>
    <property name="text">
@@ -866,8 +864,8 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/color/64/unchecked.png</normaloff>
-     <normalon>:/resources/icons/color/64/checked.png</normalon>:/resources/icons/color/64/unchecked.png</iconset>
+     <normaloff>:/resources/icons/fluent/64/unchecked.png</normaloff>
+     <normalon>:/resources/icons/fluent/64/checked.png</normalon>:/resources/icons/fluent/64/unchecked.png</iconset>
    </property>
    <property name="text">
     <string>Layers</string>

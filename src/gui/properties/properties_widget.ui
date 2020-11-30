@@ -25,7 +25,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/color/64/add.png</normaloff>:/resources/icons/color/64/add.png</iconset>
+           <normaloff>:/resources/icons/fluent/64/add.png</normaloff>:/resources/icons/fluent/64/add.png</iconset>
          </property>
         </widget>
        </item>
@@ -39,7 +39,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/color/64/remove.png</normaloff>:/resources/icons/color/64/remove.png</iconset>
+           <normaloff>:/resources/icons/fluent/64/remove.png</normaloff>:/resources/icons/fluent/64/remove.png</iconset>
          </property>
         </widget>
        </item>
@@ -67,7 +67,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/color/64/up.png</normaloff>:/resources/icons/color/64/up.png</iconset>
+           <normaloff>:/resources/icons/fluent/64/arrow-up.png</normaloff>:/resources/icons/fluent/64/arrow-up.png</iconset>
          </property>
         </widget>
        </item>
@@ -81,7 +81,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/color/64/down.png</normaloff>:/resources/icons/color/64/down.png</iconset>
+           <normaloff>:/resources/icons/fluent/64/arrow-down.png</normaloff>:/resources/icons/fluent/64/arrow-down.png</iconset>
          </property>
         </widget>
        </item>
@@ -147,7 +147,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../tactile.qrc">
-          <normaloff>:/resources/icons/color/64/key.png</normaloff>:/resources/icons/color/64/key.png</iconset>
+          <normaloff>:/resources/icons/fluent/64/key.png</normaloff>:/resources/icons/fluent/64/key.png</iconset>
         </property>
        </column>
        <column>
