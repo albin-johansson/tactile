@@ -66,8 +66,7 @@ auto move_down() -> const QIcon&
   return icon;
 }
 
-
-auto expand() -> const QIcon&
+auto expanded() -> const QIcon&
 {
   static const QIcon icon{
       QStringLiteral(u":resources/icons/icons8/color/64/expand.png")};
@@ -75,10 +74,10 @@ auto expand() -> const QIcon&
   return icon;
 }
 
-auto collapse() -> const QIcon&
+auto collapsed() -> const QIcon&
 {
   static const QIcon icon{
-      QStringLiteral(u":resources/icons/icons8/color/64/collapse.png")};
+      QStringLiteral(u":resources/icons/icons8/color/64/right_v_arrow.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
