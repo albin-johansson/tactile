@@ -130,5 +130,10 @@
     <file>resources/icons/icons8/color/64/key.png</file>
     <file>resources/icons/icons8/color/64/category.png</file>
     <file>resources/icons/icons8/color/64/registry.png</file>
+    <file>resources/icons/icons8/color/64/expand.png</file>
+    <file>resources/icons/icons8/color/64/collapse.png</file>
+
+    <file>resources/icons/icons8/fluent/64/collapse.png</file>
+    <file>resources/icons/icons8/fluent/64/expand.png</file>
   </qresource>
 </RCC>
