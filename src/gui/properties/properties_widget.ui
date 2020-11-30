@@ -10,85 +10,210 @@
     <height>300</height>
    </rect>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QTreeWidget" name="treeWidget">
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="rootIsDecorated">
-      <bool>false</bool>
-     </property>
-     <property name="uniformRowHeights">
-      <bool>true</bool>
-     </property>
-     <property name="animated">
-      <bool>false</bool>
-     </property>
-     <property name="columnCount">
-      <number>3</number>
-     </property>
-     <attribute name="headerHighlightSections">
-      <bool>false</bool>
-     </attribute>
-     <column>
-      <property name="text">
-       <string>Property</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Type</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>Value</string>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>width</string>
-      </property>
-      <property name="text">
-       <string>int</string>
-      </property>
-      <property name="text">
-       <string>23</string>
-      </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <layout class="QVBoxLayout" name="leftButtonsLayout">
+       <item>
+        <widget class="QPushButton" name="newPropertyButton">
+         <property name="toolTip">
+          <string>Add property</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/add.png</normaloff>:/resources/icons/icons8/color/64/add.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="removePropertyButton">
+         <property name="toolTip">
+          <string>Remove property</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/remove.png</normaloff>:/resources/icons/icons8/color/64/remove.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="duplicatePropertyButton">
+         <property name="toolTip">
+          <string>Duplicate property</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/new-copy.png</normaloff>:/resources/icons/icons8/color/64/new-copy.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="upButton">
+         <property name="toolTip">
+          <string>Move property up</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/up.png</normaloff>:/resources/icons/icons8/color/64/up.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="downButton">
+         <property name="toolTip">
+          <string>Move property down</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/icons8/color/64/down.png</normaloff>:/resources/icons/icons8/color/64/down.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
-     <item>
-      <property name="text">
-       <string>height</string>
-      </property>
-      <property name="text">
-       <string>int</string>
-      </property>
-      <property name="text">
-       <string>45</string>
-      </property>
+     <item row="0" column="1">
+      <widget class="QTreeWidget" name="treeWidget">
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <property name="midLineWidth">
+        <number>1</number>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOn</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAsNeeded</enum>
+       </property>
+       <property name="tabKeyNavigation">
+        <bool>true</bool>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="rootIsDecorated">
+        <bool>false</bool>
+       </property>
+       <property name="uniformRowHeights">
+        <bool>true</bool>
+       </property>
+       <property name="animated">
+        <bool>false</bool>
+       </property>
+       <property name="columnCount">
+        <number>3</number>
+       </property>
+       <attribute name="headerHighlightSections">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>Property</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../tactile.qrc">
+          <normaloff>:/resources/icons/icons8/color/64/key.png</normaloff>:/resources/icons/icons8/color/64/key.png</iconset>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../tactile.qrc">
+          <normaloff>:/resources/icons/icons8/color/64/registry.png</normaloff>:/resources/icons/icons8/color/64/registry.png</iconset>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Type</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../tactile.qrc">
+          <normaloff>:/resources/icons/icons8/color/64/category.png</normaloff>:/resources/icons/icons8/color/64/category.png</iconset>
+        </property>
+       </column>
+       <item>
+        <property name="text">
+         <string>width</string>
+        </property>
+        <property name="text">
+         <string>23</string>
+        </property>
+        <property name="text">
+         <string>int</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>height</string>
+        </property>
+        <property name="text">
+         <string>45</string>
+        </property>
+        <property name="text">
+         <string>int</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>name</string>
+        </property>
+        <property name="text">
+         <string>Foo</string>
+        </property>
+        <property name="text">
+         <string>string</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>opacity</string>
+        </property>
+        <property name="text">
+         <string>0.75</string>
+        </property>
+        <property name="text">
+         <string>float</string>
+        </property>
+       </item>
+      </widget>
      </item>
-     <item>
-      <property name="text">
-       <string>name</string>
-      </property>
-      <property name="text">
-       <string>string</string>
-      </property>
-      <property name="text">
-       <string>Foo</string>
-      </property>
-     </item>
-    </widget>
+    </layout>
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../tactile.qrc"/>
+ </resources>
  <connections/>
 </ui>
