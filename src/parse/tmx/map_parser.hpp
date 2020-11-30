@@ -10,6 +10,7 @@
 #include "map_file_type.hpp"
 #include "maybe.hpp"
 #include "parse_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::tmx {
 
@@ -237,8 +238,8 @@ class map_parser final
     maybe<QString> relativePath;
     if constexpr (type == map_file_type::tmx) {
       const auto imageElem =
-          object->firstChildElement(QStringLiteral(u"image"));
-      relativePath = imageElem.attribute(QStringLiteral(u"source"));
+          object->firstChildElement(TACTILE_QSTRING(u"image"));
+      relativePath = imageElem.attribute(TACTILE_QSTRING(u"source"));
       if (relativePath->isNull()) {
         return set_error(parse_error::tileset_missing_image_path);
       }
@@ -324,7 +325,7 @@ class map_parser final
         layer->set_visible(elem.integer(element_id::visible, 1) == 1);
         layer->set_opacity(elem.floating(element_id::opacity, 1.0));
         layer->set_name(
-            elem.string(element_id::name, QStringLiteral(u"Layer")));
+            elem.string(element_id::name, TACTILE_QSTRING(u"Layer")));
 
         if (!m_parser.add_tiles(*layer, elem, m_error)) {
           ok = false;

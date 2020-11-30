@@ -10,6 +10,7 @@
 #include "export_options.hpp"
 #include "json_utils.hpp"
 #include "preferences.hpp"
+#include "tactile_qstring.hpp"
 #include "tiled_version.hpp"
 
 using namespace tactile::core;
@@ -46,7 +47,7 @@ void add_common_attributes(QJsonObject& object,
   object.insert(u"tileheight", tileset.get_tile_height().get());
 
   if (options.generateDefaults) {
-    object.insert(u"objectalignment", QStringLiteral(u"unspecified"));
+    object.insert(u"objectalignment", TACTILE_QSTRING(u"unspecified"));
   }
 }
 
@@ -96,7 +97,7 @@ void add_common_attributes(QJsonObject& object,
   QJsonObject object{};
 
   object.insert(u"firstgid", tileset.first_id().get());
-  object.insert(u"source", tileset.name() + QStringLiteral(u".json"));
+  object.insert(u"source", tileset.name() + TACTILE_QSTRING(u".json"));
 
   return object;
 }
@@ -123,13 +124,13 @@ void create_external_tileset_file(const tileset& tileset,
   add_common_attributes(object, tileset, mapDestination, options);
   object.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   object.insert(u"version", TACTILE_TILED_JSON_VERSION_LITERAL);
-  object.insert(u"type", QStringLiteral(u"tileset"));
+  object.insert(u"type", TACTILE_QSTRING(u"tileset"));
 
   document.setObject(object);
 
   const QFileInfo info{mapDestination};
   json::write_file(info.absoluteDir().absoluteFilePath(
-                       tileset.name() + QStringLiteral(u".json")),
+                       tileset.name() + TACTILE_QSTRING(u".json")),
                    document);
 }
 
@@ -187,15 +188,15 @@ void create_external_tileset_file(const tileset& tileset,
     object.insert(u"height", layer.row_count().get());
     object.insert(u"id", id.get());
     object.insert(u"opacity", layer.opacity());
-    object.insert(u"type", QStringLiteral(u"tilelayer"));
+    object.insert(u"type", TACTILE_QSTRING(u"tilelayer"));
     object.insert(u"visible", layer.visible());
     object.insert(u"x", 0);
     object.insert(u"y", 0);
 
     if (options.generateDefaults) {
-      object.insert(u"encoding", QStringLiteral(u"csv"));
-      object.insert(u"compression", QStringLiteral(u""));
-      object.insert(u"draworder", QStringLiteral(u"topdown"));
+      object.insert(u"encoding", TACTILE_QSTRING(u"csv"));
+      object.insert(u"compression", TACTILE_QSTRING(u""));
+      object.insert(u"draworder", TACTILE_QSTRING(u"topdown"));
       object.insert(u"offsetx", 0.0);
       object.insert(u"offsety", 0.0);
     }
@@ -230,13 +231,13 @@ void create_external_tileset_file(const tileset& tileset,
   QJsonObject root{};
 
   root.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
-  root.insert(u"orientation", QStringLiteral(u"orthogonal"));
-  root.insert(u"renderorder", QStringLiteral(u"right-down"));
+  root.insert(u"orientation", TACTILE_QSTRING(u"orthogonal"));
+  root.insert(u"renderorder", TACTILE_QSTRING(u"right-down"));
   root.insert(u"width", map.col_count().get());
   root.insert(u"height", map.row_count().get());
   root.insert(u"compressionlevel", -1);
   root.insert(u"infinite", false);
-  root.insert(u"type", QStringLiteral(u"map"));
+  root.insert(u"type", TACTILE_QSTRING(u"map"));
   root.insert(u"version", TACTILE_TILED_JSON_VERSION_LITERAL);
   root.insert(u"tilewidth", prefs::saves::tile_width().value());
   root.insert(u"tileheight", prefs::saves::tile_height().value());

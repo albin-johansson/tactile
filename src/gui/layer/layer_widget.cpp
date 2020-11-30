@@ -7,6 +7,7 @@
 #include "icons.hpp"
 #include "layer_item.hpp"
 #include "layer_item_context_menu.hpp"
+#include "tactile_qstring.hpp"
 #include "ui_layer_widget.h"
 
 namespace tactile::gui {
@@ -194,7 +195,7 @@ void layer_widget::add_layer(const layer_id id, const core::layer& layer)
     auto& suffix = m_suffixes.at(m_currentMap.value());
 
     m_ui->layerList->addItem(
-        new layer_item{QStringLiteral(u"Layer ") + QString::number(suffix),
+        new layer_item{TACTILE_QSTRING(u"Layer ") + QString::number(suffix),
                        id,
                        m_ui->layerList});
 

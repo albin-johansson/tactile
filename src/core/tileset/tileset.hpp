@@ -10,6 +10,7 @@
 
 #include "maybe.hpp"
 #include "position.hpp"
+#include "tactile_qstring.hpp"
 #include "tile_height.hpp"
 #include "tile_id.hpp"
 #include "tile_width.hpp"
@@ -425,7 +426,7 @@ class tileset final
   int m_tileCount{};
 
   QFileInfo m_path{};
-  QString m_name{QStringLiteral(u"Untitled")};
+  QString m_name{TACTILE_QSTRING(u"Untitled")};
 };
 
 static_assert(std::is_final_v<tileset>);

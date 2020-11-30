@@ -1,36 +1,37 @@
 #include "preferences.hpp"
 
+#include "tactile_qstring.hpp"
 #include "theme.hpp"
 
 namespace tactile::prefs {
 
 auto window::last_layout_geometry() -> setting<QByteArray>
 {
-  static const auto str = QStringLiteral(u"window/lastLayoutGeometry");
+  static const auto str = TACTILE_QSTRING(u"window/lastLayoutGeometry");
   return setting<QByteArray>{str};
 }
 
 auto window::last_layout_state() -> setting<QByteArray>
 {
-  static const auto str = QStringLiteral(u"window/lastLayoutState");
+  static const auto str = TACTILE_QSTRING(u"window/lastLayoutState");
   return setting<QByteArray>{str};
 }
 
 auto graphics::render_grid() -> setting<bool>
 {
-  static const auto str = QStringLiteral(u"graphics/grid");
+  static const auto str = TACTILE_QSTRING(u"graphics/grid");
   return setting<bool>{str};
 }
 
 auto graphics::theme() -> setting<QPalette>
 {
-  static const auto str = QStringLiteral(u"graphics/theme");
+  static const auto str = TACTILE_QSTRING(u"graphics/theme");
   return setting<QPalette>{str};
 }
 
 auto graphics::theme_name() -> setting<QString>
 {
-  static const auto str = QStringLiteral(u"graphics/themeName");
+  static const auto str = TACTILE_QSTRING(u"graphics/themeName");
   return setting<QString>{str};
 }
 
@@ -42,25 +43,25 @@ auto graphics::theme_name_def() -> const QString&
 
 auto graphics::tool_widget_visible() -> setting<bool>
 {
-  static const auto str = QStringLiteral(u"graphics/toolWidgetVisible");
+  static const auto str = TACTILE_QSTRING(u"graphics/toolWidgetVisible");
   return setting<bool>{str};
 }
 
 auto graphics::layer_widget_visible() -> setting<bool>
 {
-  static const auto str = QStringLiteral(u"graphics/layerWidgetVisible");
+  static const auto str = TACTILE_QSTRING(u"graphics/layerWidgetVisible");
   return setting<bool>{str};
 }
 
 auto graphics::tileset_widget_visible() -> setting<bool>
 {
-  static const auto str = QStringLiteral(u"graphics/tilesetWidgetVisible");
+  static const auto str = TACTILE_QSTRING(u"graphics/tilesetWidgetVisible");
   return setting<bool>{str};
 }
 
 auto graphics::properties_widget_visible() -> setting<bool>
 {
-  static const auto str = QStringLiteral(u"graphics/propertiesWidgetVisible");
+  static const auto str = TACTILE_QSTRING(u"graphics/propertiesWidgetVisible");
   return setting<bool>{str};
 }
 
@@ -86,43 +87,43 @@ void graphics::reset_properties_widget_visible()
 
 auto saves::embed_tilesets() -> setting<bool>
 {
-  static const auto str = QStringLiteral(u"saves/embedTilesets");
+  static const auto str = TACTILE_QSTRING(u"saves/embedTilesets");
   return setting<bool>{str};
 }
 
 auto saves::generate_defaults() -> setting<bool>
 {
-  static const auto str = QStringLiteral(u"saves/generateDefaults");
+  static const auto str = TACTILE_QSTRING(u"saves/generateDefaults");
   return setting<bool>{str};
 }
 
 auto saves::readable_output() -> setting<bool>
 {
-  static const auto str = QStringLiteral(u"saves/humanReadableOutput");
+  static const auto str = TACTILE_QSTRING(u"saves/humanReadableOutput");
   return setting<bool>{str};
 }
 
 auto saves::tile_width() -> setting<int>
 {
-  static const auto str = QStringLiteral(u"saves/tileWidth");
+  static const auto str = TACTILE_QSTRING(u"saves/tileWidth");
   return setting<int>{str};
 }
 
 auto saves::tile_height() -> setting<int>
 {
-  static const auto str = QStringLiteral(u"saves/tileHeight");
+  static const auto str = TACTILE_QSTRING(u"saves/tileHeight");
   return setting<int>{str};
 }
 
 auto saves::default_format() -> setting<QString>
 {
-  static const auto str = QStringLiteral(u"saves/defaultFormat");
+  static const auto str = TACTILE_QSTRING(u"saves/defaultFormat");
   return setting<QString>{str};
 }
 
 auto saves::default_format_def() -> const QString&
 {
-  static const auto format = QStringLiteral(u"JSON");
+  static const auto format = TACTILE_QSTRING(u"JSON");
   return format;
 }
 

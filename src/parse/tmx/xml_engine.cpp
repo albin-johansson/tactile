@@ -16,7 +16,7 @@ auto xml_engine::add_tiles(core::layer& layer,
                            const object_type& element,
                            parse_error& error) -> bool
 {
-  const auto data = element->firstChildElement(QStringLiteral(u"data"));
+  const auto data = element->firstChildElement(TACTILE_QSTRING(u"data"));
   const auto tiles = data.text().split(u',');
   const auto nCols = layer.col_count().get();
 

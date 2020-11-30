@@ -8,6 +8,7 @@
 #include "map_document.hpp"
 #include "map_id.hpp"
 #include "position.hpp"
+#include "tactile_qstring.hpp"
 #include "tool_id.hpp"
 
 namespace Ui {
@@ -158,7 +159,7 @@ class window final : public QMainWindow
 
   void handle_new_map(core::map_document* document,
                       map_id id,
-                      const QString& name = QStringLiteral(u"map"));
+                      const QString& name = TACTILE_QSTRING(u"map"));
 
  protected:
   void closeEvent(QCloseEvent* event) override;

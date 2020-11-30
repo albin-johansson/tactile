@@ -1,5 +1,6 @@
 #include "tileset_dock.hpp"
 
+#include "tactile_qstring.hpp"
 #include "tileset_widget.hpp"
 
 namespace tactile::gui {
@@ -8,7 +9,7 @@ tileset_dock::tileset_dock(QWidget* parent)
     : dock_widget{parent},
       m_widget{new tileset_widget{this}}
 {
-  setObjectName(QStringLiteral(u"tileset_dock"));
+  setObjectName(TACTILE_QSTRING(u"tileset_dock"));
   setWindowTitle(tr("Tilesets"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

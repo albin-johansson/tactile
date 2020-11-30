@@ -1,7 +1,9 @@
 #pragma once
 
-#define TACTILE_TILED_VERSION_LITERAL QStringLiteral(u"1.4.2")
-#define TACTILE_TILED_JSON_VERSION_LITERAL QStringLiteral(u"1.4")
+#include "tactile_qstring.hpp"
+
+#define TACTILE_TILED_VERSION_LITERAL TACTILE_QSTRING(u"1.4.2")
+#define TACTILE_TILED_JSON_VERSION_LITERAL TACTILE_QSTRING(u"1.4")
 
 namespace tactile {
 

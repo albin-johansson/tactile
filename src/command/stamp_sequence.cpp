@@ -3,13 +3,14 @@
 #include <utility>  // move
 
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 stamp_sequence::stamp_sequence(core::map* map,
                                vector_map<core::position, tile_id>&& oldState,
                                vector_map<core::position, tile_id>&& sequence)
-    : QUndoCommand{QStringLiteral(u"Stamp Sequence")},
+    : QUndoCommand{TACTILE_QSTRING(u"Stamp Sequence")},
       m_map{map},
       m_oldState{std::move(oldState)},
       m_sequence{std::move(sequence)}

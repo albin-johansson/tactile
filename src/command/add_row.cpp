@@ -2,11 +2,12 @@
 
 #include "algorithm.hpp"
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 add_row::add_row(core::map* map)
-    : repeated_command{QStringLiteral(u"Add Row")},
+    : repeated_command{TACTILE_QSTRING(u"Add Row")},
       m_map{map}
 {
   if (!m_map) {

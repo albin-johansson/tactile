@@ -1,13 +1,14 @@
 #include "remove_tileset.hpp"
 
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 remove_tileset::remove_tileset(core::map_document* document,
                                std::shared_ptr<core::tileset> tileset,
                                const tileset_id id)
-    : QUndoCommand{QStringLiteral(u"Remove Tileset")},
+    : QUndoCommand{TACTILE_QSTRING(u"Remove Tileset")},
       m_document{document},
       m_tileset{std::move(tileset)},
       m_id{id}

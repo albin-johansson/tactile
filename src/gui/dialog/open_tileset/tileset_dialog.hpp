@@ -9,6 +9,7 @@
 #include <concepts>  // invocable
 
 #include "maybe.hpp"
+#include "tactile_qstring.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
 
@@ -57,7 +58,7 @@ class tileset_dialog final : public QDialog
         const auto& name = dialog.m_imageName;
         const tileset_info info{
             .image = dialog.m_image,
-            .name = name ? *name : QStringLiteral(u"Untitled"),
+            .name = name ? *name : TACTILE_QSTRING(u"Untitled"),
             .tileWidth = *tileWidth,
             .tileHeight = *tileHeight,
             .path = dialog.m_path};

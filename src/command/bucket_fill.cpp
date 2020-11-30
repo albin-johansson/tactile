@@ -1,13 +1,14 @@
 #include "bucket_fill.hpp"
 
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 bucket_fill::bucket_fill(core::map* map,
                          const core::position& position,
                          const tile_id replacement)
-    : QUndoCommand{QStringLiteral(u"Bucket Fill")},
+    : QUndoCommand{TACTILE_QSTRING(u"Bucket Fill")},
       m_map{map},
       m_origin{position},
       m_replacement{replacement}

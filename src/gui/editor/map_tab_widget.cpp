@@ -3,6 +3,7 @@
 #include <QMouseEvent>
 
 #include "map_document.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::gui {
 namespace {
@@ -79,7 +80,7 @@ void map_tab_widget::add_map_tab(core::map_document* map,
   connect(view, &map_view::decrease_zoom, this, &map_tab_widget::decrease_zoom);
   // clang-format on
 
-  if (title == QStringLiteral(u"map")) {
+  if (title == TACTILE_QSTRING(u"map")) {
     addTab(view, title + QString::number(id.get()));
   } else {
     addTab(view, title);

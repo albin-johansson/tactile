@@ -7,6 +7,7 @@
 
 #include "preferences.hpp"
 #include "tactile_app.hpp"
+#include "tactile_qstring.hpp"
 #include "theme.hpp"
 #include "version.hpp"
 
@@ -35,11 +36,11 @@ void setup_app()
 {
   init_surface_format();
 
-  QApplication::setWindowIcon(QIcon{QStringLiteral(u":logo/windowIcon")});
-  QApplication::setStyle(QStyleFactory::create(QStringLiteral(u"Fusion")));
+  QApplication::setWindowIcon(QIcon{TACTILE_QSTRING(u":logo/windowIcon")});
+  QApplication::setStyle(QStyleFactory::create(TACTILE_QSTRING(u"Fusion")));
   QApplication::setApplicationVersion(version());
-  QApplication::setOrganizationName(QStringLiteral(u"albin-johansson"));
-  QApplication::setApplicationName(QStringLiteral(u"tactile"));
+  QApplication::setOrganizationName(TACTILE_QSTRING(u"albin-johansson"));
+  QApplication::setApplicationName(TACTILE_QSTRING(u"tactile"));
 
   prefs::validate();
 

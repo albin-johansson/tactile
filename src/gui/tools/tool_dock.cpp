@@ -2,13 +2,15 @@
 
 #include <QLayout>
 
+#include "tactile_qstring.hpp"
+
 namespace tactile::gui {
 
 tool_dock::tool_dock(QWidget* parent)
     : dock_widget{parent},
       m_widget{new tool_widget{this}}
 {
-  setObjectName(QStringLiteral(u"tool_dock"));
+  setObjectName(TACTILE_QSTRING(u"tool_dock"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
   setWidget(m_widget);
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);

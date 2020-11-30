@@ -1,5 +1,7 @@
 #include "map_manager.hpp"
 
+#include "tactile_qstring.hpp"
+
 namespace tactile::core {
 
 map_manager::map_manager(QObject* parent) : QObject{parent}
@@ -15,8 +17,8 @@ void map_manager::emit_undo_redo_update()
   } else {
     emit undo_state_updated(false);
     emit redo_state_updated(false);
-    emit undo_text_updated(QStringLiteral(u""));
-    emit redo_text_updated(QStringLiteral(u""));
+    emit undo_text_updated(TACTILE_QSTRING(u""));
+    emit redo_text_updated(TACTILE_QSTRING(u""));
   }
 }
 

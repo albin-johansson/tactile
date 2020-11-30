@@ -268,12 +268,12 @@ void window::redo_state_updated(const bool canRedo)
 
 void window::undo_text_updated(const QString& text)
 {
-  m_ui->actionUndo->setText(QStringLiteral(u"Undo ") + text);
+  m_ui->actionUndo->setText(TACTILE_QSTRING(u"Undo ") + text);
 }
 
 void window::redo_text_updated(const QString& text)
 {
-  m_ui->actionRedo->setText(QStringLiteral(u"Redo ") + text);
+  m_ui->actionRedo->setText(TACTILE_QSTRING(u"Redo ") + text);
 }
 
 void window::clean_changed(const bool clean)
@@ -455,7 +455,7 @@ void window::on_actionSaveAs_triggered()
       [this](const QString& path) {
         emit ui_save_as(path);
       },
-      m_editor->active_tab_name().value_or(QStringLiteral(u"map")));
+      m_editor->active_tab_name().value_or(TACTILE_QSTRING(u"map")));
 }
 
 void window::on_actionOpenMap_triggered()

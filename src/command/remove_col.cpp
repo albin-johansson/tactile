@@ -1,11 +1,12 @@
 #include "remove_col.hpp"
 
 #include "algorithm.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 remove_col::remove_col(core::map* map)
-    : repeated_map_command{map, QStringLiteral(u"Remove Column")}
+    : repeated_map_command{map, TACTILE_QSTRING(u"Remove Column")}
 {}
 
 void remove_col::undo()

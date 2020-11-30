@@ -3,6 +3,7 @@
 #include <cassert>  // assert
 
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::tmx {
 
@@ -64,46 +65,46 @@ auto xml_element::stringify_element_id(const element_id type) -> QString
 {
   switch (type) {
     case element_id::tileset:
-      return QStringLiteral(u"tileset");
+      return TACTILE_QSTRING(u"tileset");
 
     case element_id::tilesets:
       throw tactile_error{"TMX format does not feature \"tilesets\"!"};
 
     case element_id::next_layer_id:
-      return QStringLiteral(u"nextlayerid");
+      return TACTILE_QSTRING(u"nextlayerid");
 
     case element_id::source:
-      return QStringLiteral(u"source");
+      return TACTILE_QSTRING(u"source");
 
     case element_id::first_gid:
-      return QStringLiteral(u"firstgid");
+      return TACTILE_QSTRING(u"firstgid");
 
     case element_id::tile_width:
-      return QStringLiteral(u"tilewidth");
+      return TACTILE_QSTRING(u"tilewidth");
 
     case element_id::tile_height:
-      return QStringLiteral(u"tileheight");
+      return TACTILE_QSTRING(u"tileheight");
 
     case element_id::image:
-      return QStringLiteral(u"image");
+      return TACTILE_QSTRING(u"image");
 
     case element_id::name:
-      return QStringLiteral(u"name");
+      return TACTILE_QSTRING(u"name");
 
     case element_id::id:
-      return QStringLiteral(u"id");
+      return TACTILE_QSTRING(u"id");
 
     case element_id::width:
-      return QStringLiteral(u"width");
+      return TACTILE_QSTRING(u"width");
 
     case element_id::height:
-      return QStringLiteral(u"height");
+      return TACTILE_QSTRING(u"height");
 
     case element_id::visible:
-      return QStringLiteral(u"visible");
+      return TACTILE_QSTRING(u"visible");
 
     case element_id::opacity:
-      return QStringLiteral(u"opacity");
+      return TACTILE_QSTRING(u"opacity");
 
     default:
       throw tactile_error{"Reached end of switch statement!"};

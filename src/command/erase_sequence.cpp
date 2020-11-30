@@ -3,12 +3,13 @@
 #include <utility>  // move
 
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 erase_sequence::erase_sequence(core::map* map,
                                vector_map<core::position, tile_id>&& oldState)
-    : QUndoCommand{QStringLiteral(u"Erase Tiles")},
+    : QUndoCommand{TACTILE_QSTRING(u"Erase Tiles")},
       m_map{map},
       m_oldState{std::move(oldState)}
 {

@@ -1,6 +1,7 @@
 #include "layer_dock.hpp"
 
 #include "layer_widget.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::gui {
 
@@ -8,7 +9,7 @@ layer_dock::layer_dock(QWidget* parent)
     : dock_widget{parent},
       m_widget{new layer_widget{this}}
 {
-  setObjectName(QStringLiteral(u"layer_dock"));
+  setObjectName(TACTILE_QSTRING(u"layer_dock"));
   setWindowTitle(tr("Layers"));
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setWidget(m_widget);
@@ -47,7 +48,8 @@ void layer_dock::selected_layer(const layer_id id, const core::layer& layer)
   m_widget->selected_layer(id, layer);
 }
 
-void layer_dock::selected_map(const map_id id, const core::map_document& document)
+void layer_dock::selected_map(const map_id id,
+                              const core::map_document& document)
 {
   m_widget->selected_map(id, document);
 }

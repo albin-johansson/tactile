@@ -2,11 +2,12 @@
 
 #include "algorithm.hpp"
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 add_col::add_col(core::map* map)
-    : repeated_command{QStringLiteral(u"Add Column")},
+    : repeated_command{TACTILE_QSTRING(u"Add Column")},
       m_map{map}
 {
   if (!m_map) {

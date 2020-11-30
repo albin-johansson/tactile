@@ -3,13 +3,14 @@
 #include <utility>  // move
 
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 add_tileset::add_tileset(core::map_document* document,
                          std::shared_ptr<core::tileset> tileset,
                          const tileset_id id)
-    : QUndoCommand{QStringLiteral(u"Add Tileset")},
+    : QUndoCommand{TACTILE_QSTRING(u"Add Tileset")},
       m_document{document},
       m_tileset{std::move(tileset)},
       m_id{id}
