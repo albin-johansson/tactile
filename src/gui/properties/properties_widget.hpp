@@ -17,4 +17,4 @@ class properties_widget final : public QWidget
   Ui::properties_widget* m_ui{};
 };
 
-}
+}  // namespace tactile::gui
