@@ -5,7 +5,7 @@ namespace tactile::gui::icons {
 auto add() -> const QIcon&
 {
   static const QIcon icon{
-      QStringLiteral(u":resources/icons/color/64/add.png")};
+      QStringLiteral(u":resources/icons/fluent/64/add.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
@@ -13,7 +13,7 @@ auto add() -> const QIcon&
 auto remove() -> const QIcon&
 {
   static const QIcon icon{
-      QStringLiteral(u":resources/icons/color/64/remove.png")};
+      QStringLiteral(u":resources/icons/fluent/64/remove.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
@@ -45,7 +45,7 @@ auto layer() -> const QIcon&
 auto visible() -> const QIcon&
 {
   static const QIcon icon{
-      QStringLiteral(u":resources/icons/color/64/visible.png")};
+      QStringLiteral(u":resources/icons/fluent/64/visible.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
@@ -53,7 +53,7 @@ auto visible() -> const QIcon&
 auto move_up() -> const QIcon&
 {
   static const QIcon icon{
-      QStringLiteral(u":resources/icons/color/64/up.png")};
+      QStringLiteral(u":resources/icons/fluent/64/arrow-up.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
@@ -61,7 +61,7 @@ auto move_up() -> const QIcon&
 auto move_down() -> const QIcon&
 {
   static const QIcon icon{
-      QStringLiteral(u":resources/icons/color/64/down.png")};
+      QStringLiteral(u":resources/icons/fluent/64/arrow-down.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
@@ -69,7 +69,7 @@ auto move_down() -> const QIcon&
 auto expanded() -> const QIcon&
 {
   static const QIcon icon{
-      QStringLiteral(u":resources/icons/color/64/expand.png")};
+      QStringLiteral(u":resources/icons/fluent/64/expanded.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
@@ -77,7 +77,7 @@ auto expanded() -> const QIcon&
 auto collapsed() -> const QIcon&
 {
   static const QIcon icon{
-      QStringLiteral(u":resources/icons/color/64/right_v_arrow.png")};
+      QStringLiteral(u":resources/icons/fluent/64/collapsed.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
