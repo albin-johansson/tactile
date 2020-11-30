@@ -1,8 +1,7 @@
 #pragma once
 
 #include <QString>
-#include <utility>  // forward
-#include <variant>  // variant
+#include <variant>  // variant, monostate
 
 #include "maybe.hpp"
 
