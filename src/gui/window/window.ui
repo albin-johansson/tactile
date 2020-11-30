@@ -30,7 +30,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../tactile.qrc">
-    <normaloff>:/resources/icons/tactile2_icon2.png</normaloff>:/resources/icons/tactile2_icon2.png</iconset>
+    <normaloff>:/resources/icons/icon.png</normaloff>:/resources/icons/icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>

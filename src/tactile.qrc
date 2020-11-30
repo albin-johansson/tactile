@@ -6,13 +6,11 @@
   </qresource>
 
   <qresource prefix="logo/">
-    <file alias="windowIcon">resources/icons/tactile2_icon2.png</file>
+    <file alias="windowIcon">resources/icons/icon.png</file>
   </qresource>
 
   <qresource prefix="/">
-    <file>resources/icons/tactile_icon.png</file>
-    <file>resources/icons/tactile2_icon.png</file>
-    <file>resources/icons/tactile2_icon2.png</file>
+    <file>resources/icons/icon.png</file>
 
     <file>resources/icons/icons8/dark/invisible_32px.png</file>
     <file>resources/icons/icons8/dark/visible_32px.png</file>
