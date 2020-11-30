@@ -50,6 +50,14 @@ auto visible() -> const QIcon&
   return icon;
 }
 
+auto invisible() -> const QIcon&
+{
+  static const QIcon icon{
+      QStringLiteral(u":resources/icons/fluent/64/invisible.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
 auto move_up() -> const QIcon&
 {
   static const QIcon icon{

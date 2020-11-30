@@ -23,6 +23,8 @@ namespace tactile::gui::icons {
 
 [[nodiscard]] auto visible() -> const QIcon&;
 
+[[nodiscard]] auto invisible() -> const QIcon&;
+
 [[nodiscard]] auto move_up() -> const QIcon&;
 
 [[nodiscard]] auto move_down() -> const QIcon&;
