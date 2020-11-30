@@ -68,9 +68,9 @@
          <property name="icon">
           <iconset>
            <normaloff>
-                        :/resources/icons/icons8/color/64/image.png
+                        :/resources/icons/color/64/image.png
                       </normaloff>
-                        :/resources/icons/icons8/color/64/image.png
+                        :/resources/icons/color/64/image.png
                       </iconset>
          </property>
         </widget>

@@ -34,7 +34,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/add.png</normaloff>:/resources/icons/icons8/color/64/add.png</iconset>
+           <normaloff>:/resources/icons/color/64/add.png</normaloff>:/resources/icons/color/64/add.png</iconset>
          </property>
         </widget>
        </item>
@@ -48,7 +48,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/remove.png</normaloff>:/resources/icons/icons8/color/64/remove.png</iconset>
+           <normaloff>:/resources/icons/color/64/remove.png</normaloff>:/resources/icons/color/64/remove.png</iconset>
          </property>
         </widget>
        </item>
@@ -62,7 +62,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/new-copy.png</normaloff>:/resources/icons/icons8/color/64/new-copy.png</iconset>
+           <normaloff>:/resources/icons/color/64/new-copy.png</normaloff>:/resources/icons/color/64/new-copy.png</iconset>
          </property>
         </widget>
        </item>
@@ -76,7 +76,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/up.png</normaloff>:/resources/icons/icons8/color/64/up.png</iconset>
+           <normaloff>:/resources/icons/color/64/up.png</normaloff>:/resources/icons/color/64/up.png</iconset>
          </property>
         </widget>
        </item>
@@ -90,7 +90,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/down.png</normaloff>:/resources/icons/icons8/color/64/down.png</iconset>
+           <normaloff>:/resources/icons/color/64/down.png</normaloff>:/resources/icons/color/64/down.png</iconset>
          </property>
         </widget>
        </item>
@@ -134,7 +134,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/icons8/color/64/visible.png</normaloff>:/resources/icons/icons8/color/64/visible.png</iconset>
+           <normaloff>:/resources/icons/color/64/visible.png</normaloff>:/resources/icons/color/64/visible.png</iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>

@@ -28,7 +28,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../../tactile.qrc">:/resources/icons/icons8/color/64/warning.png</pixmap>
+        <pixmap resource="../../../tactile.qrc">:/resources/icons/color/64/warning.png</pixmap>
        </property>
       </widget>
      </item>
