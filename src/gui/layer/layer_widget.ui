@@ -133,9 +133,9 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../tactile.qrc">
-           <normaloff>:/resources/icons/fluent/64/invisible.png</normaloff>
-           <normalon>:/resources/icons/fluent/64/visible.png</normalon>:/resources/icons/fluent/64/invisible.png</iconset>
+          <iconset>
+           <normalon>:/resources/icons/fluent/64/visible.png</normalon>
+          </iconset>
          </property>
          <property name="checkable">
           <bool>true</bool>

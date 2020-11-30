@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QRadioButton>
 
+#include "icons.hpp"
 #include "layer_item.hpp"
 #include "layer_item_context_menu.hpp"
 #include "ui_layer_widget.h"
@@ -56,11 +57,15 @@ layer_widget::layer_widget(QWidget* parent)
     }
   });
 
-  connect(m_ui->visibleButton, &QPushButton::toggled, [this](bool visible) {
-    if (auto* item = current_item()) {
-      emit ui_set_layer_visibility(item->layer(), visible);
-    }
-  });
+  connect(m_ui->visibleButton,
+          &QPushButton::toggled,
+          [this](const bool visible) {
+            if (auto* item = current_item()) {
+              emit ui_set_layer_visibility(item->layer(), visible);
+              m_ui->visibleButton->setIcon(visible ? icons::visible()
+                                                   : icons::invisible());
+            }
+          });
 
   connect(m_ui->opacitySpinBox,
           &QDoubleSpinBox::valueChanged,
@@ -126,6 +131,8 @@ void layer_widget::selected_layer(const layer_id id, const core::layer& layer)
   Q_ASSERT(item_for_layer_id(id) != nullptr);
 
   m_ui->visibleButton->setChecked(layer.visible());
+  m_ui->visibleButton->setIcon(layer.visible() ? icons::visible()
+                                               : icons::invisible());
   m_ui->opacitySpinBox->setValue(layer.opacity());
 }
 
