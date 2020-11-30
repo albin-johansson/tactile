@@ -64,6 +64,26 @@ auto graphics::properties_widget_visible() -> setting<bool>
   return setting<bool>{str};
 }
 
+void graphics::reset_tool_widget_visible()
+{
+  tool_widget_visible().set(tool_widget_visible_def());
+}
+
+void graphics::reset_layer_widget_visible()
+{
+  layer_widget_visible().set(layer_widget_visible_def());
+}
+
+void graphics::reset_tileset_widget_visible()
+{
+  tileset_widget_visible().set(tileset_widget_visible_def());
+}
+
+void graphics::reset_properties_widget_visible()
+{
+  properties_widget_visible().set(properties_widget_visible_def());
+}
+
 auto saves::embed_tilesets() -> setting<bool>
 {
   static const auto str = QStringLiteral(u"saves/embedTilesets");
@@ -108,13 +128,16 @@ auto saves::default_format_def() -> const QString&
 
 void validate()
 {
-  graphics::render_grid().set_if_missing(graphics::render_grid_def());
-  graphics::theme().set_if_missing(theme::get_default());
-  graphics::theme_name().set_if_missing(theme::get_default_name().toString());
-  graphics::tool_widget_visible().set_if_missing(true);
-  graphics::tileset_widget_visible().set_if_missing(true);
-  graphics::layer_widget_visible().set_if_missing(true);
-  graphics::properties_widget_visible().set_if_missing(true);
+  {
+    using namespace graphics;
+    theme().set_if_missing(theme::get_default());
+    theme_name().set_if_missing(theme::get_default_name().toString());
+    render_grid().set_if_missing(render_grid_def());
+    tool_widget_visible().set_if_missing(tool_widget_visible_def());
+    tileset_widget_visible().set_if_missing(tileset_widget_visible_def());
+    layer_widget_visible().set_if_missing(layer_widget_visible_def());
+    properties_widget_visible().set_if_missing(properties_widget_visible_def());
+  }
 
   saves::embed_tilesets().set_if_missing(saves::embed_tilesets_def());
   saves::generate_defaults().set_if_missing(saves::generate_defaults_def());

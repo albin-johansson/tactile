@@ -133,21 +133,22 @@ void window::reset_dock_layout()
   removeDockWidget(m_propertiesDock);
 
   addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_toolDock);
-  m_toolDock->show();
-  prefs::graphics::tool_widget_visible().set(true);
+  prefs::graphics::reset_tool_widget_visible();
+  m_toolDock->setVisible(prefs::graphics::tool_widget_visible().value());
 
   addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
-  m_tilesetDock->show();
-  prefs::graphics::tileset_widget_visible().set(true);
+  prefs::graphics::reset_tileset_widget_visible();
+  m_tilesetDock->setVisible(prefs::graphics::tileset_widget_visible().value());
 
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
-  m_layerDock->show();
-  prefs::graphics::layer_widget_visible().set(true);
+  prefs::graphics::reset_layer_widget_visible();
+  m_layerDock->setVisible(prefs::graphics::layer_widget_visible().value());
 
   addDockWidget(Qt::RightDockWidgetArea, m_propertiesDock);
-  m_propertiesDock->show();
+  prefs::graphics::reset_properties_widget_visible();
+  m_propertiesDock->setVisible(
+      prefs::graphics::properties_widget_visible().value());
   tabifyDockWidget(m_layerDock, m_propertiesDock);
-  prefs::graphics::properties_widget_visible().set(true);
 }
 
 void window::hide_all_docks()

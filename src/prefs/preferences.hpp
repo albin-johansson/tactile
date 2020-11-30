@@ -98,6 +98,34 @@ namespace graphics {
 
 [[nodiscard]] auto properties_widget_visible() -> setting<bool>;
 
+void reset_tool_widget_visible();
+
+void reset_layer_widget_visible();
+
+void reset_tileset_widget_visible();
+
+void reset_properties_widget_visible();
+
+[[nodiscard]] constexpr auto tool_widget_visible_def() noexcept -> bool
+{
+  return false;
+}
+
+[[nodiscard]] constexpr auto layer_widget_visible_def() noexcept -> bool
+{
+  return true;
+}
+
+[[nodiscard]] constexpr auto tileset_widget_visible_def() noexcept -> bool
+{
+  return true;
+}
+
+[[nodiscard]] constexpr auto properties_widget_visible_def() noexcept -> bool
+{
+  return true;
+}
+
 }  // namespace graphics
 
 namespace saves {
