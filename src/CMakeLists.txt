@@ -14,6 +14,9 @@ set(TACTILE_SOURCE_FILES
         core/tactile_error.hpp
         core/position.hpp
 
+        core/property/property.cpp
+        core/property/property.hpp
+
         core/aliases/czstring.hpp
         core/aliases/tile_id.hpp
         core/aliases/tile_width.hpp
@@ -267,6 +270,7 @@ target_include_directories(libTactile
         PUBLIC util
         PUBLIC core
         PUBLIC core/util
+        PUBLIC core/property
         PUBLIC core/tile
         PUBLIC core/map
         PUBLIC core/tileset
