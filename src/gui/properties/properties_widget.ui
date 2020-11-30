@@ -145,18 +145,10 @@
         <property name="textAlignment">
          <set>AlignLeading|AlignTop</set>
         </property>
-        <property name="icon">
-         <iconset resource="../../tactile.qrc">
-          <normaloff>:/resources/icons/fluent/64/key.png</normaloff>:/resources/icons/fluent/64/key.png</iconset>
-        </property>
        </column>
        <column>
         <property name="text">
          <string>Value</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../tactile.qrc">
-          <normaloff>:/resources/icons/color/64/registry.png</normaloff>:/resources/icons/color/64/registry.png</iconset>
         </property>
        </column>
       </widget>
