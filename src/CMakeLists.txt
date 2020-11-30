@@ -236,6 +236,7 @@ set(TACTILE_SOURCE_FILES
         util/setup_app.hpp
         util/setup_app.cpp
         util/signal_blocker.hpp
+        util/tactile_qstring.hpp
 
         service/save/save_tmx.cpp
         service/save/save_tmx.hpp
