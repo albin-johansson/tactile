@@ -70,7 +70,46 @@
     <file>resources/icons/color/64/collapse.png</file>
     <file>resources/icons/color/64/right_v_arrow.png</file>
 
-    <file>resources/icons/fluent/64/collapse.png</file>
-    <file>resources/icons/fluent/64/expand.png</file>
+    <file>resources/icons/fluent/64/add.png</file>
+    <file>resources/icons/fluent/64/arrow-down.png</file>
+    <file>resources/icons/fluent/64/arrow-left.png</file>
+    <file>resources/icons/fluent/64/arrow-right.png</file>
+    <file>resources/icons/fluent/64/arrow-up.png</file>
+    <file>resources/icons/fluent/64/binoculars.png</file>
+    <file>resources/icons/fluent/64/bucket.png</file>
+    <file>resources/icons/fluent/64/center-camera.png</file>
+    <file>resources/icons/fluent/64/checked.png</file>
+    <file>resources/icons/fluent/64/collapsed.png</file>
+    <file>resources/icons/fluent/64/copy.png</file>
+    <file>resources/icons/fluent/64/delete.png</file>
+    <file>resources/icons/fluent/64/eraser.png</file>
+    <file>resources/icons/fluent/64/error.png</file>
+    <file>resources/icons/fluent/64/exit.png</file>
+    <file>resources/icons/fluent/64/expanded.png</file>
+    <file>resources/icons/fluent/64/file.png</file>
+    <file>resources/icons/fluent/64/github.png</file>
+    <file>resources/icons/fluent/64/grid.png</file>
+    <file>resources/icons/fluent/64/help.png</file>
+    <file>resources/icons/fluent/64/icons8.png</file>
+    <file>resources/icons/fluent/64/image.png</file>
+    <file>resources/icons/fluent/64/invisible.png</file>
+    <file>resources/icons/fluent/64/key.png</file>
+    <file>resources/icons/fluent/64/opened-folder.png</file>
+    <file>resources/icons/fluent/64/paint-roller.png</file>
+    <file>resources/icons/fluent/64/rectangle.png</file>
+    <file>resources/icons/fluent/64/redo.png</file>
+    <file>resources/icons/fluent/64/remove.png</file>
+    <file>resources/icons/fluent/64/rename.png</file>
+    <file>resources/icons/fluent/64/resize.png</file>
+    <file>resources/icons/fluent/64/save.png</file>
+    <file>resources/icons/fluent/64/save-all.png</file>
+    <file>resources/icons/fluent/64/save-as.png</file>
+    <file>resources/icons/fluent/64/settings.png</file>
+    <file>resources/icons/fluent/64/stamp.png</file>
+    <file>resources/icons/fluent/64/unchecked.png</file>
+    <file>resources/icons/fluent/64/undo.png</file>
+    <file>resources/icons/fluent/64/visible.png</file>
+    <file>resources/icons/fluent/64/zoom-in.png</file>
+    <file>resources/icons/fluent/64/zoom-out.png</file>
   </qresource>
 </RCC>
