@@ -327,6 +327,7 @@ void window::switched_map(const map_id id, const core::map_document& document)
 {
   m_tilesetDock->selected_map(id);
   m_layerDock->selected_map(id, document);
+  m_propertiesDock->selected_map(document);
 }
 
 void window::enable_stamp_preview(const core::position& position)

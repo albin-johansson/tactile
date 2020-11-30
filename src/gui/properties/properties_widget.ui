@@ -130,14 +130,20 @@
         <bool>false</bool>
        </property>
        <property name="columnCount">
-        <number>3</number>
+        <number>2</number>
        </property>
+       <attribute name="headerMinimumSectionSize">
+        <number>55</number>
+       </attribute>
        <attribute name="headerHighlightSections">
         <bool>false</bool>
        </attribute>
        <column>
         <property name="text">
          <string>Property</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignLeading|AlignTop</set>
         </property>
         <property name="icon">
          <iconset resource="../../tactile.qrc">
@@ -151,15 +157,6 @@
         <property name="icon">
          <iconset resource="../../tactile.qrc">
           <normaloff>:/resources/icons/icons8/color/64/registry.png</normaloff>:/resources/icons/icons8/color/64/registry.png</iconset>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Type</string>
-        </property>
-        <property name="icon">
-         <iconset resource="../../tactile.qrc">
-          <normaloff>:/resources/icons/icons8/color/64/category.png</normaloff>:/resources/icons/icons8/color/64/category.png</iconset>
         </property>
        </column>
       </widget>

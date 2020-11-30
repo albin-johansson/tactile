@@ -1,6 +1,7 @@
 #include "properties_widget.hpp"
 
 #include "icons.hpp"
+#include "preferences.hpp"
 #include "ui_properties_widget.h"
 
 namespace tactile::gui {
@@ -30,6 +31,39 @@ properties_widget::properties_widget(QWidget* parent)
 
 void properties_widget::selected_map(const core::map_document& document)
 {
+  m_ui->treeWidget->clear();
+
+  auto* documentItem = new QTreeWidgetItem{m_ui->treeWidget};
+  documentItem->setIcon(nameColumn, icons::collapsed());
+  documentItem->setText(nameColumn, QStringLiteral(u"Document"));
+  documentItem->setFirstColumnSpanned(true);
+
+  auto* rows = new QTreeWidgetItem{documentItem};
+  rows->setText(nameColumn, QStringLiteral(u"Rows"));
+  rows->setText(valueColumn, QString::number(document.row_count().get()));
+  rows->setDisabled(true);
+
+  auto* cols = new QTreeWidgetItem{documentItem};
+  cols->setText(nameColumn, QStringLiteral(u"Columns"));
+  cols->setText(valueColumn, QString::number(document.col_count().get()));
+  cols->setDisabled(true);
+
+  auto* tileWidth = new QTreeWidgetItem{documentItem};
+  tileWidth->setText(nameColumn, QStringLiteral(u"Tile width"));
+  tileWidth->setText(valueColumn,
+                     QString::number(prefs::saves::tile_width().value()));
+  tileWidth->setDisabled(true);
+
+  auto* tileHeight = new QTreeWidgetItem{documentItem};
+  tileHeight->setText(nameColumn, QStringLiteral(u"Tile height"));
+  tileHeight->setText(valueColumn,
+                      QString::number(prefs::saves::tile_height().value()));
+  tileHeight->setDisabled(true);
+
+  auto* custom = new QTreeWidgetItem{m_ui->treeWidget};
+  custom->setIcon(nameColumn, icons::collapsed());
+  custom->setText(nameColumn, QStringLiteral(u"Custom"));
+  custom->setFirstColumnSpanned(true);
 }
 
 void properties_widget::select_layer(const core::layer& layer)
