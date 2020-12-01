@@ -1,9 +1,11 @@
 #pragma once
 
+#include <QTreeWidgetItem>
 #include <QWidget>
 
 #include "map_document.hpp"
 #include "property.hpp"
+#include "vector_map.hpp"
 
 namespace Ui {
 class properties_widget;
@@ -21,6 +23,7 @@ class properties_widget final : public QWidget
  signals:
   void ui_add_property(const QString& name, const core::property& property);
   void ui_remove_property(const QString& name);
+  void ui_update_property(const QString& name, const core::property& property);
   void ui_rename_property(const QString& oldName, const QString& newName);
 
  public slots:
@@ -36,6 +39,10 @@ class properties_widget final : public QWidget
 
  private:
   Ui::properties_widget* m_ui{};
+  vector_map<QString, core::property> m_props;
+
+ private slots:
+  void upon_item_changed(QTreeWidgetItem* item, int column);
 };
 
 }  // namespace tactile::gui
