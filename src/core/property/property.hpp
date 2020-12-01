@@ -28,8 +28,6 @@ class property final
   using value_type = std::variant<std::monostate, QString, int, double, bool>;
 
   /**
-   * \enum property::type
-   *
    * \brief Provides values for all different possible property types.
    *
    * \since 0.2.0
