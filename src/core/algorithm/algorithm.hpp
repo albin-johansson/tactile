@@ -1,6 +1,6 @@
 #pragma once
 
-#include <concepts>  // convertible_to, invocable
+#include <concepts>  // convertible_to, invocable, same_as
 
 namespace tactile {
 
@@ -12,7 +12,7 @@ concept ordered = requires (T t) {
 };
 
 template <typename T>
-concept arithmetic = std::is_arithmetic_v<T>;
+concept arithmetic = std::is_arithmetic_v<T> && !std::same_as<T, bool>;
 
 // clang-format on
 
