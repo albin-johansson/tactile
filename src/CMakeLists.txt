@@ -55,6 +55,8 @@ set(TACTILE_SOURCE_FILES
         gui/tab_bar.hpp
         gui/tab_widget.cpp
         gui/tab_widget.hpp
+        gui/tree_widget_utils.cpp
+        gui/tree_widget_utils.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp
