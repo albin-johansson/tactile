@@ -133,12 +133,6 @@ set(TACTILE_SOURCE_FILES
         gui/dialog/open_tileset/open_tileset_image.cpp
         gui/dialog/open_tileset/open_tileset_image.hpp
 
-        gui/toolbar/dynamic_tool_bar_widget.cpp
-        gui/toolbar/dynamic_tool_bar_widget.hpp
-        gui/toolbar/stamp_toolbar.cpp
-        gui/toolbar/stamp_toolbar.hpp
-        gui/toolbar/toolbar_stamp.ui
-
         gui/editor/map_scene.cpp
         gui/editor/map_scene.hpp
         gui/editor/map_editor.cpp
@@ -281,7 +275,6 @@ target_include_directories(libTactile
         PUBLIC core/aliases
         PUBLIC gui
         PUBLIC gui/startup
-        PUBLIC gui/toolbar
         PUBLIC gui/editor
         PUBLIC gui/theme
         PUBLIC gui/tileset
