@@ -10,8 +10,9 @@ auto make_tree_node(const QString& name, QTreeWidget* parent)
   auto* item = new QTreeWidgetItem{parent};
 
   item->setFirstColumnSpanned(true);
-  item->setIcon(0, icons::collapsed());
+  item->setIcon(0, icons::expanded());
   item->setText(0, name);
+  item->setExpanded(true);
 
   return item;
 }
