@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>401</width>
-    <height>200</height>
+    <width>397</width>
+    <height>270</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -95,6 +95,27 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="visibleButton">
+         <property name="toolTip">
+          <string>Toggle visibility</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/fluent/64/invisible.png</normaloff>
+           <normalon>:/resources/icons/fluent/64/visible.png</normalon>:/resources/icons/fluent/64/invisible.png</iconset>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -123,27 +144,6 @@
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="visibleButton">
-         <property name="toolTip">
-          <string>Toggle visibility</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset>
-           <normalon>:/resources/icons/fluent/64/visible.png</normalon>
-          </iconset>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="opacitySpinBox">
