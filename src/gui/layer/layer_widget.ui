@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>397</width>
-    <height>270</height>
+    <width>400</width>
+    <height>236</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -116,42 +116,15 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="bottomLayout">
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QDoubleSpinBox" name="opacitySpinBox">
          <property name="toolTip">
           <string>Layer opacity</string>
          </property>
          <property name="showGroupSeparator" stdset="0">
           <bool>false</bool>
+         </property>
+         <property name="decimals">
+          <number>1</number>
          </property>
          <property name="maximum">
           <double>1.000000000000000</double>
@@ -164,7 +137,23 @@
          </property>
         </widget>
        </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
       </layout>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="bottomLayout"/>
      </item>
      <item row="0" column="1">
       <widget class="QListWidget" name="layerList">
