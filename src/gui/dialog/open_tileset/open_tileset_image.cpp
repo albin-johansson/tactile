@@ -1,8 +1,6 @@
 #include "open_tileset_image.hpp"
 
-#include <QFileDialog>
-#include <QStandardPaths>
-#include <QTranslator>
+#include "tileset_image_file_dialog.hpp"
 
 namespace tactile::gui {
 
@@ -10,17 +8,9 @@ auto open_tileset_image(QWidget* parent) -> maybe<QString>
 {
   static QString cachedPath;
 
-  QFileDialog dialog{parent};
-  dialog.setFileMode(QFileDialog::ExistingFile);
-  dialog.setViewMode(QFileDialog::Detail);
+  tileset_image_file_dialog dialog{parent};
 
-  dialog.setNameFilter(QTranslator::tr("Images (*.png *.jpg)"));
-  dialog.setWindowTitle(QTranslator::tr("Open tileset"));
-
-  if (cachedPath.isEmpty()) {
-    dialog.setDirectory(
-        QStandardPaths::writableLocation(QStandardPaths::PicturesLocation));
-  } else {
+  if (!cachedPath.isEmpty()) {
     dialog.setDirectory(cachedPath);
   }
 
