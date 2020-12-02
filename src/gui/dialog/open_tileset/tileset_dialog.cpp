@@ -4,7 +4,6 @@
 
 #include "open_tileset_image.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 #include "ui_tileset_dialog.h"
 
 namespace tactile::gui {
@@ -39,7 +38,7 @@ void tileset_dialog::on_imageButton_pressed()
 
     if (m_image.isNull()) {
       m_ui->imageLabel->setPixmap(m_defaultImageIcon);
-      m_ui->sourceEdit->setText(TACTILE_QSTRING(u"Failed to open image!"));
+      m_ui->sourceEdit->setText(tr("Failed to open image!"));
     } else {
       m_ui->imageLabel->setPixmap(QPixmap{absoluteFile}.scaledToHeight(100));
       m_ui->sourceEdit->setText(absoluteFile);
