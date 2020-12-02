@@ -130,6 +130,8 @@ set(TACTILE_SOURCE_FILES
         gui/dialog/open_tileset/tileset_dialog.cpp
         gui/dialog/open_tileset/tileset_dialog.hpp
         gui/dialog/open_tileset/tileset_dialog.ui
+        gui/dialog/open_tileset/tileset_image_file_dialog.hpp
+        gui/dialog/open_tileset/tileset_image_file_dialog.cpp
         gui/dialog/open_tileset/open_tileset_image.cpp
         gui/dialog/open_tileset/open_tileset_image.hpp
 
