@@ -43,6 +43,8 @@ class properties_widget final : public QWidget
 
  private slots:
   void upon_item_changed(QTreeWidgetItem* item, int column);
+
+  void upon_item_double_clicked(QTreeWidgetItem* item, int column);
 };
 
 }  // namespace tactile::gui

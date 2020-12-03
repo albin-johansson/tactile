@@ -34,6 +34,11 @@ properties_widget::properties_widget(QWidget* parent)
           &QTreeWidget::itemChanged,
           this,
           &properties_widget::upon_item_changed);
+
+  connect(m_ui->treeWidget,
+          &QTreeWidget::itemDoubleClicked,
+          this,
+          &properties_widget::upon_item_double_clicked);
 }
 
 void properties_widget::selected_map(const core::map_document& document)
@@ -82,6 +87,18 @@ void properties_widget::upon_item_changed(QTreeWidgetItem* item,
 //
 //    // emit ui_update_property(item->text(nameColumn));
 //  }
+
+void properties_widget::upon_item_double_clicked(QTreeWidgetItem* item,
+                                                 const int column)
+{
+  // TODO allow changing column 0 if custom item
+  if (column == 1 && !item->isDisabled()) {
+    const auto flags = item->flags();
+    item->setFlags(flags | Qt::ItemIsEditable);
+
+    m_ui->treeWidget->editItem(item, column);
+    item->setFlags(flags);
+  }
 }
 
 }  // namespace tactile::gui
