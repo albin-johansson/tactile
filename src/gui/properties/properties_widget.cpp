@@ -1,6 +1,7 @@
 #include "properties_widget.hpp"
 
 #include "icons.hpp"
+#include "map_tree_widget_item.hpp"
 #include "preferences.hpp"
 #include "tactile_qstring.hpp"
 #include "tree_widget_utils.hpp"
@@ -40,28 +41,8 @@ void properties_widget::selected_map(const core::map_document& document)
   m_props.clear();
   m_ui->treeWidget->clear();
 
-  auto* docItem =
-      make_tree_node(TACTILE_QSTRING(u"Document"), m_ui->treeWidget);
-
-  auto* rows = make_tree_item(TACTILE_QSTRING(u"Rows"),
-                              document.row_count().get(),
-                              docItem);
-  rows->setDisabled(true);
-
-  auto* cols = make_tree_item(TACTILE_QSTRING(u"Columns"),
-                              document.col_count().get(),
-                              docItem);
-  cols->setDisabled(true);
-
-  auto* tileWidth = make_tree_item(TACTILE_QSTRING(u"Tile width"),
-                                   prefs::saves::tile_width().value(),
-                                   docItem);
-  tileWidth->setDisabled(true);
-
-  auto* tileHeight = make_tree_item(TACTILE_QSTRING(u"Tile height"),
-                                    prefs::saves::tile_height().value(),
-                                    docItem);
-  tileHeight->setDisabled(true);
+  auto* mapItem = new map_tree_widget_item{m_ui->treeWidget};
+  mapItem->update(document);
 
   make_tree_node(TACTILE_QSTRING(u"Custom"), m_ui->treeWidget);
 }
