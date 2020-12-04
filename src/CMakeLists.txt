@@ -154,6 +154,9 @@ set(TACTILE_SOURCE_FILES
         gui/properties/properties_widget.ui
         gui/properties/map_tree_widget_item.cpp
         gui/properties/map_tree_widget_item.hpp
+        gui/properties/add_property_dialog.ui
+        gui/properties/add_property_dialog.hpp
+        gui/properties/add_property_dialog.cpp
 
         command/command_id.hpp
         command/command_stack.hpp
