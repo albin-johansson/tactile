@@ -29,6 +29,8 @@ class properties_widget final : public QWidget
  public slots:
   void selected_map(const core::map_document& document);
 
+  void updated_map(const core::map_document& document);
+
   void select_layer(const core::layer& layer);
 
   void added_property(const QString& name, const core::property& property);
@@ -40,11 +42,18 @@ class properties_widget final : public QWidget
  private:
   Ui::properties_widget* m_ui{};
   vector_map<QString, core::property> m_props;
+  QTreeWidgetItem* m_customRoot{};
+
+  void add_item(const QString& name, core::property::type type);
 
  private slots:
-  void upon_item_changed(QTreeWidgetItem* item, int column);
+  void when_new_property_button_clicked();
 
-  void upon_item_double_clicked(QTreeWidgetItem* item, int column);
+  void when_item_selection_changed();
+
+  void when_item_modified(QTreeWidgetItem* item, int column);
+
+  void when_item_double_clicked(QTreeWidgetItem* item, int column);
 };
 
 }  // namespace tactile::gui

@@ -1,6 +1,7 @@
 #include "tree_widget_utils.hpp"
 
 #include "icons.hpp"
+#include "property_tree_item.hpp"
 
 namespace tactile::gui {
 
@@ -13,18 +14,6 @@ auto make_tree_node(const QString& name, QTreeWidget* parent)
   item->setIcon(0, icons::expanded());
   item->setText(0, name);
   item->setExpanded(true);
-
-  return item;
-}
-
-auto make_tree_item(const QString& name,
-                    const QString& value,
-                    QTreeWidgetItem* parent) -> QTreeWidgetItem*
-{
-  auto* item = new QTreeWidgetItem{parent};
-
-  item->setText(0, name);
-  item->setText(1, value);
 
   return item;
 }
