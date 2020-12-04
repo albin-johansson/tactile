@@ -6,10 +6,10 @@
 
 namespace tactile::gui {
 
-class map_tree_widget_item final : public QTreeWidgetItem
+class property_map_root_item final : public QTreeWidgetItem
 {
  public:
-  explicit map_tree_widget_item(QTreeWidget* parent = nullptr);
+  explicit property_map_root_item(QTreeWidget* parent = nullptr);
 
   void update(const core::map_document& document);
 

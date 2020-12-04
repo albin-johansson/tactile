@@ -1,8 +1,8 @@
 #include "properties_widget.hpp"
 
 #include "icons.hpp"
-#include "map_tree_widget_item.hpp"
 #include "preferences.hpp"
+#include "property_map_root_item.hpp"
 #include "tactile_qstring.hpp"
 #include "tree_widget_utils.hpp"
 #include "ui_properties_widget.h"
@@ -46,7 +46,7 @@ void properties_widget::selected_map(const core::map_document& document)
   m_props.clear();
   m_ui->treeWidget->clear();
 
-  auto* mapItem = new map_tree_widget_item{m_ui->treeWidget};
+  auto* mapItem = new property_map_root_item{m_ui->treeWidget};
   mapItem->update(document);
 
   make_tree_node(TACTILE_QSTRING(u"Custom"), m_ui->treeWidget);
