@@ -115,8 +115,7 @@ property_tree_item::property_tree_item(const QString& name,
                                        const core::property::type type,
                                        QTreeWidgetItem* parent)
     : QTreeWidgetItem{parent},
-      m_isInlineProperty{type != core::property::object &&
-                         type != core::property::color}
+      m_isInlineProperty{type != core::property::color}
 {
   setText(0, name);
   setToolTip(0, tooltip_for_type(type));
@@ -134,33 +133,62 @@ property_tree_item::property_tree_item(const QString& name,
   } else {
     if (type == core::property::color) {
       add_color_items();
-    } else if (type == core::property::object) {
-      add_object_items();
     }
   }
 }
 
-void property_tree_item::add_object_items()
-{
-  add_child(TACTILE_QSTRING(u"X"), TACTILE_QSTRING(u"0"));
-  add_child(TACTILE_QSTRING(u"Y"), TACTILE_QSTRING(u"0"));
-  add_child(TACTILE_QSTRING(u"Width"), TACTILE_QSTRING(u"0"));
-  add_child(TACTILE_QSTRING(u"Height"), TACTILE_QSTRING(u"0"));
-  add_child(TACTILE_QSTRING(u"Visible"), TACTILE_QSTRING(u"true"));
-  add_child(TACTILE_QSTRING(u"Type"), TACTILE_QSTRING(u"object"));
-}
+//void property_tree_item::add_object_items()
+//{
+//  auto* tree = treeWidget();
+//  Q_ASSERT(tree);
+//
+//  const auto emplace = [this, tree](const QString& name,
+//                                    const QString& value,
+//                                    const core::property::type type) {
+//    auto* item = emplace_child(name, value);
+//    tree->setItemWidget(item, 1, inline_widget_for_type(type));
+//  };
+//
+//  emplace(TACTILE_QSTRING(u"X"),
+//          TACTILE_QSTRING(u"0"),
+//          core::property::floating);
+//
+//  emplace(TACTILE_QSTRING(u"X"),
+//          TACTILE_QSTRING(u"0"),
+//          core::property::floating);
+//
+//  emplace(TACTILE_QSTRING(u"Width"),
+//          TACTILE_QSTRING(u"0"),
+//          core::property::floating);
+//
+//  emplace(TACTILE_QSTRING(u"Height"),
+//          TACTILE_QSTRING(u"0"),
+//          core::property::floating);
+//
+//  emplace(TACTILE_QSTRING(u"Visible"),
+//          TACTILE_QSTRING(u"true"),
+//          core::property::boolean);
+//
+//  emplace(TACTILE_QSTRING(u"Type"),
+//          TACTILE_QSTRING(u"object"),
+//          core::property::string);
+//}
 
 void property_tree_item::add_color_items()
 {
-  add_child(TACTILE_QSTRING(u"Red"), TACTILE_QSTRING(u"0"));
-  add_child(TACTILE_QSTRING(u"Green"), TACTILE_QSTRING(u"0"));
-  add_child(TACTILE_QSTRING(u"Blue"), TACTILE_QSTRING(u"0"));
-  add_child(TACTILE_QSTRING(u"Alpha"), TACTILE_QSTRING(u"255"));
+  emplace_child(TACTILE_QSTRING(u"Red"), TACTILE_QSTRING(u"0"));
+  emplace_child(TACTILE_QSTRING(u"Green"), TACTILE_QSTRING(u"0"));
+  emplace_child(TACTILE_QSTRING(u"Blue"), TACTILE_QSTRING(u"0"));
+  emplace_child(TACTILE_QSTRING(u"Alpha"), TACTILE_QSTRING(u"255"));
 }
 
-void property_tree_item::add_child(const QString& name, const QString& value)
+auto property_tree_item::emplace_child(const QString& name,
+                                       const QString& value)
+    -> property_tree_item*
 {
-  addChild(new property_tree_item{name, value});
+  auto* item = new property_tree_item{name, value};
+  addChild(item);
+  return item;
 }
 
 void property_tree_item::set_name_editable(const bool editable) noexcept

@@ -54,11 +54,10 @@ class property_tree_item final : public QTreeWidgetItem
   bool m_nameEditable{false};
   bool m_isInlineProperty{true};
 
-  void add_object_items();
-
   void add_color_items();
 
-  void add_child(const QString& name, const QString& value);
+  auto emplace_child(const QString& name, const QString& value)
+      -> property_tree_item*;
 };
 
 }  // namespace tactile::gui
