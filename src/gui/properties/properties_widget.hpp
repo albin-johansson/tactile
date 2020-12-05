@@ -42,12 +42,15 @@ class properties_widget final : public QWidget
  private:
   Ui::properties_widget* m_ui{};
   vector_map<QString, core::property> m_props;
+  QTreeWidgetItem* m_predefinedRoot{};
   QTreeWidgetItem* m_customRoot{};
 
   void add_item(const QString& name, core::property::type type);
 
  private slots:
   void when_new_property_button_clicked();
+
+  void when_remove_property_button_clicked();
 
   void when_item_selection_changed();
 

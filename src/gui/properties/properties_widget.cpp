@@ -137,6 +137,7 @@ properties_widget::properties_widget(QWidget* parent)
   connect(m_ui->treeWidget, &QTreeWidget::itemDoubleClicked, this, &properties_widget::when_item_double_clicked);
   connect(m_ui->treeWidget, &QTreeWidget::itemSelectionChanged, this, &properties_widget::when_item_selection_changed);
   connect(m_ui->newPropertyButton, &QPushButton::clicked, this, &properties_widget::when_new_property_button_clicked);
+  connect(m_ui->removePropertyButton, &QPushButton::clicked, this, &properties_widget::when_remove_property_button_clicked);
   // clang-format on
 }
 
@@ -148,6 +149,11 @@ void properties_widget::selected_map(const core::map_document& document)
   auto* mapItem = new property_map_root_item{m_ui->treeWidget};
   mapItem->update(document);
 
+  Q_ASSERT((m_predefinedRoot && m_predefinedRoot->parent()) ||
+           !m_predefinedRoot);
+  m_predefinedRoot = mapItem;
+
+  Q_ASSERT((m_customRoot && m_customRoot->parent()) || !m_customRoot);
   m_customRoot = make_tree_node(TACTILE_QSTRING(u"Custom"), m_ui->treeWidget);
 
   m_ui->treeWidget->clearSelection();
@@ -201,16 +207,21 @@ void properties_widget::when_new_property_button_clicked()
       this);
 }
 
+void properties_widget::when_remove_property_button_clicked()
+{
+  // This looks dodgy but this is actually the way to remove items
+  for (auto* item : m_ui->treeWidget->selectedItems()) {
+    delete item;
+  }
+}
+
 void properties_widget::when_item_selection_changed()
 {
   const auto* item = m_ui->treeWidget->currentItem();
-  const auto isCustomSelected = item == m_customRoot;
+  Q_ASSERT(item);
 
-  m_ui->newPropertyButton->setEnabled(isCustomSelected);
-  m_ui->removePropertyButton->setEnabled(isCustomSelected);
-
-  m_ui->upButton->setEnabled(!m_ui->treeWidget->itemAbove(item));
-  m_ui->downButton->setEnabled(!m_ui->treeWidget->itemBelow(item));
+  m_ui->newPropertyButton->setEnabled(item == m_customRoot);
+  m_ui->removePropertyButton->setEnabled(item->parent() == m_customRoot);
 }
 
 void properties_widget::when_item_modified(QTreeWidgetItem* item,
