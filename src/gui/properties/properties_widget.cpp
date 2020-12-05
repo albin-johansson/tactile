@@ -209,9 +209,10 @@ void properties_widget::when_new_property_button_clicked()
 
 void properties_widget::when_remove_property_button_clicked()
 {
-  // This looks dodgy but this is actually the way to remove items
   for (auto* item : m_ui->treeWidget->selectedItems()) {
-    delete item;
+    const auto index = m_customRoot->indexOfChild(item);
+    Q_ASSERT(index >= 0 && index < m_customRoot->childCount());
+    delete m_customRoot->takeChild(index);
   }
 }
 
