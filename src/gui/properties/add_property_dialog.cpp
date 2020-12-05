@@ -90,6 +90,9 @@ void add_property_dialog::update_type()
   } else if (text == TACTILE_QSTRING(u"color")) {
     m_type = core::property::color;
 
+  } else if (text == TACTILE_QSTRING(u"object")) {
+    m_type = core::property::object;
+
   } else if (text == TACTILE_QSTRING(u"file")) {
     m_type = core::property::file;
 
