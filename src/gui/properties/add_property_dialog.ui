@@ -88,6 +88,11 @@
        </item>
        <item>
         <property name="text">
+         <string>object</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
          <string>color</string>
         </property>
        </item>
