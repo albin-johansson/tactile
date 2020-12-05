@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>172</height>
+    <height>247</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -54,6 +54,20 @@
          <property name="icon">
           <iconset resource="../../tactile.qrc">
            <normaloff>:/resources/icons/color/64/new-copy.png</normaloff>:/resources/icons/color/64/new-copy.png</iconset>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="renamePropertyButton">
+         <property name="toolTip">
+          <string>Rename property</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../tactile.qrc">
+           <normaloff>:/resources/icons/color/64/rename.png</normaloff>:/resources/icons/color/64/rename.png</iconset>
          </property>
         </widget>
        </item>

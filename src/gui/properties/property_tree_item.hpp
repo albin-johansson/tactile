@@ -3,6 +3,7 @@
 #include <QTreeWidgetItem>
 
 #include "algorithm.hpp"
+#include "property.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::gui {
@@ -25,10 +26,14 @@ class property_tree_item final : public QTreeWidgetItem
                      const QString& value,
                      QTreeWidgetItem* parent = nullptr);
 
-  template <arithmetic T>
   property_tree_item(const QString& name,
-                     T value,
-                     QTreeWidgetItem* parent = nullptr)
+                     core::property::type type,
+                     QTreeWidgetItem* parent = nullptr);
+
+  template <arithmetic T>
+  [[deprecated]] property_tree_item(const QString& name,
+                                    T value,
+                                    QTreeWidgetItem* parent = nullptr)
       : QTreeWidgetItem{parent}
   {
     const auto str = QString::number(value);
@@ -41,10 +46,19 @@ class property_tree_item final : public QTreeWidgetItem
 
   void set_name_editable(bool editable) noexcept;
 
+  [[nodiscard]] auto is_inline_property() const noexcept -> bool;
+
   [[nodiscard]] auto is_name_editable() const noexcept -> bool;
 
  private:
   bool m_nameEditable{false};
+  bool m_isInlineProperty{true};
+
+  void add_object_items();
+
+  void add_color_items();
+
+  void add_child(const QString& name, const QString& value);
 };
 
 }  // namespace tactile::gui
