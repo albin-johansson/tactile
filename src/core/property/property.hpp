@@ -40,7 +40,7 @@ class property final
     boolean,
     file,
     color,
-    object
+    object  // TODO consider renaming to "reference" or "object_ref"
   };
 
   /**
