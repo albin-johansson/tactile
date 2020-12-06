@@ -130,6 +130,7 @@ property_tree_item::property_tree_item(const QString& name,
 
   if (auto* widget = inline_widget_for_type(type)) {
     Q_ASSERT(treeWidget());
+    widget->setAutoFillBackground(true);
     treeWidget()->setItemWidget(this, 1, widget);
   } else if (type == core::property::color) {
     add_color_items();
