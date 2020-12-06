@@ -159,6 +159,8 @@ set(TACTILE_SOURCE_FILES
         gui/properties/add_property_dialog.ui
         gui/properties/add_property_dialog.hpp
         gui/properties/add_property_dialog.cpp
+        gui/properties/color_validator.cpp
+        gui/properties/color_validator.hpp
 
         command/command_id.hpp
         command/command_stack.hpp

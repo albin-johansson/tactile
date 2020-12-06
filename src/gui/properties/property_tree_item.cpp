@@ -3,6 +3,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 
+#include "color_validator.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::gui {
@@ -130,19 +131,28 @@ property_tree_item::property_tree_item(const QString& name,
   if (auto* widget = inline_widget_for_type(type)) {
     Q_ASSERT(treeWidget());
     treeWidget()->setItemWidget(this, 1, widget);
-  } else {
-    if (type == core::property::color) {
-      add_color_items();
-    }
+  } else if (type == core::property::color) {
+    add_color_items();
   }
 }
 
 void property_tree_item::add_color_items()
 {
-  emplace_child(TACTILE_QSTRING(u"Red"), TACTILE_QSTRING(u"0"));
-  emplace_child(TACTILE_QSTRING(u"Green"), TACTILE_QSTRING(u"0"));
-  emplace_child(TACTILE_QSTRING(u"Blue"), TACTILE_QSTRING(u"0"));
-  emplace_child(TACTILE_QSTRING(u"Alpha"), TACTILE_QSTRING(u"255"));
+  const auto addColor = [this](const QString& name, const int value) {
+    auto* item = new property_tree_item{name, TACTILE_QSTRING(u"N/A"), this};
+
+    auto* edit = new QLineEdit{};
+    edit->setFrame(false);
+    edit->setValidator(new color_validator{edit});
+    edit->setText(QString::number(value));
+
+    item->treeWidget()->setItemWidget(item, 1, edit);
+  };
+
+  addColor(TACTILE_QSTRING(u"Red"), 0);
+  addColor(TACTILE_QSTRING(u"Green"), 0);
+  addColor(TACTILE_QSTRING(u"Blue"), 0);
+  addColor(TACTILE_QSTRING(u"Alpha"), 255);
 }
 
 auto property_tree_item::emplace_child(const QString& name,
