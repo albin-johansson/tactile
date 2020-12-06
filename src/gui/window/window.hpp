@@ -233,8 +233,6 @@ class window final : public QMainWindow
 
   void on_actionOpenMap_triggered();
 
-  void on_actionRename_triggered();
-
   void on_actionAddRow_triggered();
 
   void on_actionAddCol_triggered();

@@ -100,8 +100,6 @@
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
     <addaction name="separator"/>
-    <addaction name="actionRename"/>
-    <addaction name="separator"/>
     <addaction name="actionSettings"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -213,7 +211,7 @@
   <action name="actionNewMap">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/file.png</normaloff>:/resources/icons/fluent/64/file.png</iconset>
+     <normaloff>:/resources/icons/color/64/file.png</normaloff>:/resources/icons/color/64/file.png</iconset>
    </property>
    <property name="text">
     <string>New map</string>
@@ -231,7 +229,7 @@
   <action name="actionOpenMap">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/opened-folder.png</normaloff>:/resources/icons/fluent/64/opened-folder.png</iconset>
+     <normaloff>:/resources/icons/color/64/opened-folder.png</normaloff>:/resources/icons/color/64/opened-folder.png</iconset>
    </property>
    <property name="text">
     <string>Open map...</string>
@@ -309,7 +307,7 @@
   <action name="actionSettings">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/settings.png</normaloff>:/resources/icons/fluent/64/settings.png</iconset>
+     <normaloff>:/resources/icons/color/64/settings.png</normaloff>:/resources/icons/color/64/settings.png</iconset>
    </property>
    <property name="text">
     <string>Settings...</string>
@@ -327,7 +325,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/exit.png</normaloff>:/resources/icons/fluent/64/exit.png</iconset>
+     <normaloff>:/resources/icons/color/64/exit.png</normaloff>:/resources/icons/color/64/exit.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -747,7 +745,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/resize.png</normaloff>:/resources/icons/fluent/64/resize.png</iconset>
+     <normaloff>:/resources/icons/color/64/resize.png</normaloff>:/resources/icons/color/64/resize.png</iconset>
    </property>
    <property name="text">
     <string>Resize map...</string>

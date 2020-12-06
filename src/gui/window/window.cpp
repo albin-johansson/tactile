@@ -68,14 +68,14 @@ void window::init_mouse_tool_group()
 
 void window::init_connections()
 {
-  const auto on_triggered = [this](auto&& sender, auto&& slot) {
+  const auto onTriggered = [this](auto&& sender, auto&& slot) {
     connect(sender, &QAction::triggered, this, slot);
   };
 
   // clang-format off
 
-  on_triggered(m_ui->actionNewMap, &window::ui_new_map);
-  on_triggered(m_ui->actionAddTileset, &window::ui_add_tileset);
+  onTriggered(m_ui->actionNewMap, &window::ui_new_map);
+  onTriggered(m_ui->actionAddTileset, &window::ui_add_tileset);
 
   connect(m_toolDock,    &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
@@ -189,7 +189,6 @@ void window::set_actions_enabled(const bool enabled)
   m_ui->actionCloseMap->setEnabled(enabled);
   m_ui->actionSave->setEnabled(enabled);
   m_ui->actionSaveAs->setEnabled(enabled);
-  //  m_ui->actionRename->setEnabled(enabled); // TODO uncomment when added
 
   // Edit
   m_ui->actionAddCol->setEnabled(enabled);
@@ -463,11 +462,6 @@ void window::on_actionOpenMap_triggered()
   open_map_dialog::spawn([this](const QString& path) {
     emit ui_open_map(path);
   });
-}
-
-void window::on_actionRename_triggered()
-{
-  // TODO
 }
 
 void window::on_actionAddRow_triggered()
