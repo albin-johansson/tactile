@@ -68,14 +68,9 @@ void window::init_mouse_tool_group()
 
 void window::init_connections()
 {
-  const auto onTriggered = [this](auto&& sender, auto&& slot) {
-    connect(sender, &QAction::triggered, this, slot);
-  };
-
   // clang-format off
-
-  onTriggered(m_ui->actionNewMap, &window::ui_new_map);
-  onTriggered(m_ui->actionAddTileset, &window::ui_add_tileset);
+  connect(m_ui->actionNewMap,     &QAction::triggered, this, &window::ui_new_map);
+  connect(m_ui->actionAddTileset, &QAction::triggered, this, &window::ui_add_tileset);
 
   connect(m_toolDock,    &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
