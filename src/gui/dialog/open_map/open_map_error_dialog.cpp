@@ -5,8 +5,8 @@
 namespace tactile::gui {
 
 open_map_error_dialog::open_map_error_dialog(QWidget* parent)
-    : QDialog{parent},
-      m_ui{new Ui::open_map_error_dialog{}}
+    : QDialog{parent}
+    , m_ui{new Ui::open_map_error_dialog{}}
 {
   m_ui->setupUi(this);
 }

@@ -13,8 +13,8 @@
 namespace tactile {
 
 tactile_app::tactile_app(int argc, char** argv)
-    : QApplication{argc, argv},
-      m_model{new core::model{}}
+    : QApplication{argc, argv}
+    , m_model{new core::model{}}
 {
   setup_app();
   m_window = std::make_unique<gui::window>();

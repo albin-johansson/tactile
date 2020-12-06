@@ -5,14 +5,14 @@
 namespace tactile::gui {
 
 layer_item_context_menu::layer_item_context_menu(QWidget* parent)
-    : QMenu{parent},
-      m_visibility{addAction(icons::visible(), tr("Toggle visibility"))},
-      m_sep0{addSeparator()},
-      m_moveUp{addAction(icons::move_up(), tr("Move layer up"))},
-      m_moveDown{addAction(icons::move_down(), tr("Move layer down"))},
-      m_sep1{addSeparator()},
-      m_duplicate{addAction(icons::duplicate(), tr("Duplicate layer"))},
-      m_remove{addAction(icons::remove(), tr("Remove layer"))}
+    : QMenu{parent}
+    , m_visibility{addAction(icons::visible(), tr("Toggle visibility"))}
+    , m_sep0{addSeparator()}
+    , m_moveUp{addAction(icons::move_up(), tr("Move layer up"))}
+    , m_moveDown{addAction(icons::move_down(), tr("Move layer down"))}
+    , m_sep1{addSeparator()}
+    , m_duplicate{addAction(icons::duplicate(), tr("Duplicate layer"))}
+    , m_remove{addAction(icons::remove(), tr("Remove layer"))}
 {
   // clang-format off
   connect(m_visibility, &QAction::triggered, this, &layer_item_context_menu::toggle_visibility);

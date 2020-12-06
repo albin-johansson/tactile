@@ -8,8 +8,8 @@
 namespace tactile::gui {
 
 map_editor::map_editor(QWidget* parent)
-    : QWidget{parent},
-      m_ui{new Ui::map_editor{}}
+    : QWidget{parent}
+    , m_ui{new Ui::map_editor{}}
 {
   m_ui->setupUi(this);
 

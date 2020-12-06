@@ -13,9 +13,9 @@ namespace tactile::gui {
 tileset_tab::tileset_tab(tileset_id id,
                          const core::tileset& tileset,
                          QWidget* parent)
-    : QWidget{parent},
-      m_id{id},
-      m_name{tileset.name()}
+    : QWidget{parent}
+    , m_id{id}
+    , m_name{tileset.name()}
 {
   setObjectName("tileset_tab");
 

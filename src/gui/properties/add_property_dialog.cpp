@@ -14,8 +14,8 @@ class property_name_validator final : public QValidator
  public:
   explicit property_name_validator(QTreeWidget* treeWidget,
                                    QObject* parent = nullptr)
-      : QValidator{parent},
-        m_treeWidget{treeWidget}
+      : QValidator{parent}
+      , m_treeWidget{treeWidget}
   {
     if (!m_treeWidget) {
       throw tactile_error{"Property validator requires non-null tree widget!"};
@@ -52,9 +52,9 @@ class property_name_validator final : public QValidator
 
 add_property_dialog::add_property_dialog(QTreeWidget* treeWidget,
                                          QWidget* parent)
-    : QDialog{parent},
-      m_ui{new Ui::add_property_dialog{}},
-      m_nameValidator{new property_name_validator{treeWidget, this}}
+    : QDialog{parent}
+    , m_ui{new Ui::add_property_dialog{}}
+    , m_nameValidator{new property_name_validator{treeWidget, this}}
 {
   m_ui->setupUi(this);
 

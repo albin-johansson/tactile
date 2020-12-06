@@ -81,8 +81,8 @@ class position final
    * \since 0.1.0
    */
   constexpr position(const row_t row, const col_t col) noexcept
-      : m_row{at_least(row.get(), 0)},
-        m_col{at_least(col.get(), 0)}
+      : m_row{at_least(row.get(), 0)}
+      , m_col{at_least(col.get(), 0)}
   {}
 
   /**

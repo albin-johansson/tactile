@@ -115,8 +115,8 @@ property_tree_item::property_tree_item(const QString& name,
 property_tree_item::property_tree_item(const QString& name,
                                        const core::property::type type,
                                        QTreeWidgetItem* parent)
-    : QTreeWidgetItem{parent},
-      m_isInlineProperty{type != core::property::color}
+    : QTreeWidgetItem{parent}
+    , m_isInlineProperty{type != core::property::color}
 {
   setText(0, name);
   setToolTip(0, tooltip_for_type(type));

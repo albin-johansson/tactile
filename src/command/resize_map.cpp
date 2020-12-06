@@ -7,9 +7,9 @@ using namespace tactile::core;
 namespace tactile::cmd {
 
 resize_map::resize_map(core::map* map, const row_t rows, const col_t cols)
-    : map_command{map, TACTILE_QSTRING(u"Resize Map")},
-      m_rows{rows},
-      m_cols{cols}
+    : map_command{map, TACTILE_QSTRING(u"Resize Map")}
+    , m_rows{rows}
+    , m_cols{cols}
 {}
 
 void resize_map::undo()

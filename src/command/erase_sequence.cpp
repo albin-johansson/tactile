@@ -9,9 +9,9 @@ namespace tactile::cmd {
 
 erase_sequence::erase_sequence(core::map* map,
                                vector_map<core::position, tile_id>&& oldState)
-    : QUndoCommand{TACTILE_QSTRING(u"Erase Tiles")},
-      m_map{map},
-      m_oldState{std::move(oldState)}
+    : QUndoCommand{TACTILE_QSTRING(u"Erase Tiles")}
+    , m_map{map}
+    , m_oldState{std::move(oldState)}
 {
   if (!m_map) {
     throw tactile_error{"Cannot create erase_sequence command from null map!"};

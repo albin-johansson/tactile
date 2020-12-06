@@ -39,10 +39,10 @@ tileset::tileset(const tile_id firstId,
                  const QImage& image,
                  const tile_width tileWidth,
                  const tile_height tileHeight)
-    : m_image{QPixmap::fromImage(image)},
-      m_firstId{firstId},
-      m_tileWidth{tileWidth},
-      m_tileHeight{tileHeight}
+    : m_image{QPixmap::fromImage(image)}
+    , m_firstId{firstId}
+    , m_tileWidth{tileWidth}
+    , m_tileHeight{tileHeight}
 {
   if (m_image.isNull()) {
     throw tactile_error{"Cannot create tileset from null image!"};

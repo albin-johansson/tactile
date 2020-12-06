@@ -29,7 +29,7 @@ namespace tactile {
  */
 template <typename Key, typename Value>
 class vector_map final
-{ // TODO "transparent" comparisons and lookup (e.g. QString == const char*)
+{  // TODO "transparent" comparisons and lookup (e.g. QString == const char*)
   using storage_type = std::vector<std::pair<Key, Value>>;
 
  public:

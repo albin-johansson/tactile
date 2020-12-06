@@ -18,10 +18,10 @@
 namespace tactile::core {
 
 map_document::map_document(QObject* parent)
-    : QObject{parent},
-      m_map{std::make_unique<map>()},
-      m_tilesets{std::make_unique<tileset_manager>()},
-      m_commands{new command_stack{this}}
+    : QObject{parent}
+    , m_map{std::make_unique<map>()}
+    , m_tilesets{std::make_unique<tileset_manager>()}
+    , m_commands{new command_stack{this}}
 {
   setup();
 }
@@ -29,10 +29,10 @@ map_document::map_document(QObject* parent)
 map_document::map_document(const row_t nRows,
                            const col_t nCols,
                            QObject* parent)
-    : QObject{parent},
-      m_map{std::make_unique<map>(nRows, nCols)},
-      m_tilesets{std::make_unique<tileset_manager>()},
-      m_commands{new command_stack{this}}
+    : QObject{parent}
+    , m_map{std::make_unique<map>(nRows, nCols)}
+    , m_tilesets{std::make_unique<tileset_manager>()}
+    , m_commands{new command_stack{this}}
 {
   setup();
 }

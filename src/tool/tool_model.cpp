@@ -8,9 +8,9 @@
 namespace tactile {
 
 tool_model::tool_model(core::model* model)
-    : m_stamp{std::make_unique<stamp_tool>(model)},
-      m_eraser{std::make_unique<eraser_tool>(model)},
-      m_bucket{std::make_unique<bucket_tool>(model)}
+    : m_stamp{std::make_unique<stamp_tool>(model)}
+    , m_eraser{std::make_unique<eraser_tool>(model)}
+    , m_bucket{std::make_unique<bucket_tool>(model)}
 {}
 
 void tool_model::switch_to(abstract_tool* tool)

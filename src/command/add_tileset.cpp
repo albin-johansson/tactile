@@ -10,10 +10,10 @@ namespace tactile::cmd {
 add_tileset::add_tileset(core::map_document* document,
                          std::shared_ptr<core::tileset> tileset,
                          const tileset_id id)
-    : QUndoCommand{TACTILE_QSTRING(u"Add Tileset")},
-      m_document{document},
-      m_tileset{std::move(tileset)},
-      m_id{id}
+    : QUndoCommand{TACTILE_QSTRING(u"Add Tileset")}
+    , m_document{document}
+    , m_tileset{std::move(tileset)}
+    , m_id{id}
 {
   if (!m_document) {
     throw tactile_error{

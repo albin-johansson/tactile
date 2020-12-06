@@ -10,10 +10,10 @@ namespace tactile::cmd {
 stamp_sequence::stamp_sequence(core::map* map,
                                vector_map<core::position, tile_id>&& oldState,
                                vector_map<core::position, tile_id>&& sequence)
-    : QUndoCommand{TACTILE_QSTRING(u"Stamp Sequence")},
-      m_map{map},
-      m_oldState{std::move(oldState)},
-      m_sequence{std::move(sequence)}
+    : QUndoCommand{TACTILE_QSTRING(u"Stamp Sequence")}
+    , m_map{map}
+    , m_oldState{std::move(oldState)}
+    , m_sequence{std::move(sequence)}
 {
   if (!m_map) {
     throw tactile_error{"Cannot create stamp_sequence command from null map!"};

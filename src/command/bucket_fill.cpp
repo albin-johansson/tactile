@@ -8,10 +8,10 @@ namespace tactile::cmd {
 bucket_fill::bucket_fill(core::map* map,
                          const core::position& position,
                          const tile_id replacement)
-    : QUndoCommand{TACTILE_QSTRING(u"Bucket Fill")},
-      m_map{map},
-      m_origin{position},
-      m_replacement{replacement}
+    : QUndoCommand{TACTILE_QSTRING(u"Bucket Fill")}
+    , m_map{map}
+    , m_origin{position}
+    , m_replacement{replacement}
 {
   if (!m_map) {
     throw tactile_error{"Cannot create bucket_fill command from null map!"};

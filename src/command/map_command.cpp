@@ -5,8 +5,8 @@
 namespace tactile::cmd {
 
 map_command::map_command(core::map* map, const QString& name)
-    : QUndoCommand{name},
-      m_map{map}
+    : QUndoCommand{name}
+    , m_map{map}
 {
   if (!m_map) {
     throw tactile_error{"Cannot create command from null map pointer!"};

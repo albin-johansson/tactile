@@ -11,10 +11,10 @@ namespace tactile::cmd {
 add_layer::add_layer(core::map_document* document,
                      std::shared_ptr<core::layer> layer,
                      const layer_id id)
-    : QUndoCommand{TACTILE_QSTRING(u"Add Layer")},
-      m_document{document},
-      m_layer{std::move(layer)},
-      m_id{id}
+    : QUndoCommand{TACTILE_QSTRING(u"Add Layer")}
+    , m_document{document}
+    , m_layer{std::move(layer)}
+    , m_id{id}
 {
   if (!m_document) {
     throw tactile_error{"Cannot create command from null map document!"};

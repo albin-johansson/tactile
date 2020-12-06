@@ -7,8 +7,8 @@ namespace tactile::gui {
 layer_item::layer_item(const QString& name,
                        const layer_id id,
                        QListWidget* parent)
-    : QListWidgetItem{name, parent},
-      m_layer{id}
+    : QListWidgetItem{name, parent}
+    , m_layer{id}
 {
   setIcon(icons::layer());
   setFlags(flags() | Qt::ItemIsEditable);

@@ -9,8 +9,8 @@
 namespace tactile::gui {
 
 tileset_dialog::tileset_dialog(QWidget* parent)
-    : QDialog{parent},
-      m_ui{new Ui::tileset_dialog{}}
+    : QDialog{parent}
+    , m_ui{new Ui::tileset_dialog{}}
 {
   m_ui->setupUi(this);
   m_validator = new QIntValidator{1, 1'000, this};

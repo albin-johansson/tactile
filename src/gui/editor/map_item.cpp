@@ -73,8 +73,8 @@ void draw_tile_background(QPainter& painter,
 }  // namespace
 
 map_item::map_item(core::map_document* map, QGraphicsItem* parent)
-    : QGraphicsItem{parent},
-      m_map{map}
+    : QGraphicsItem{parent}
+    , m_map{map}
 {
   if (!m_map) {
     throw tactile_error{"Cannot create map item based on null map document!"};

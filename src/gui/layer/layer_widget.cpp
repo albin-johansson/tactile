@@ -13,8 +13,8 @@
 namespace tactile::gui {
 
 layer_widget::layer_widget(QWidget* parent)
-    : QWidget{parent},
-      m_ui{new Ui::layer_widget{}}
+    : QWidget{parent}
+    , m_ui{new Ui::layer_widget{}}
 {
   m_ui->setupUi(this);
   m_ui->layerList->setContextMenuPolicy(Qt::CustomContextMenu);

@@ -7,10 +7,10 @@ using namespace tactile::core;
 namespace tactile::gui {
 
 resize_dialog::resize_dialog(QWidget* parent)
-    : QDialog{parent},
-      m_ui{new Ui::resize_dialog{}},
-      m_chosenWidth{std::nullopt},
-      m_chosenHeight{std::nullopt}
+    : QDialog{parent}
+    , m_ui{new Ui::resize_dialog{}}
+    , m_chosenWidth{std::nullopt}
+    , m_chosenHeight{std::nullopt}
 {
   m_ui->setupUi(this);
 

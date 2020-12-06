@@ -130,7 +130,6 @@ void map_view::wheelEvent(QWheelEvent* event)
         emit decrease_zoom();
       }
     }
-
   }
 }
 

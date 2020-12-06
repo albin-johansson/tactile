@@ -7,9 +7,9 @@
 namespace tactile::cmd {
 
 remove_layer::remove_layer(core::map_document* document, const layer_id id)
-    : QUndoCommand{TACTILE_QSTRING(u"Remove Layer")},
-      m_document{document},
-      m_id{id}
+    : QUndoCommand{TACTILE_QSTRING(u"Remove Layer")}
+    , m_document{document}
+    , m_id{id}
 {
   if (!m_document) {
     throw tactile_error{"Cannot create command from null map document!"};
