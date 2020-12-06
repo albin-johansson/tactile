@@ -137,43 +137,6 @@ property_tree_item::property_tree_item(const QString& name,
   }
 }
 
-//void property_tree_item::add_object_items()
-//{
-//  auto* tree = treeWidget();
-//  Q_ASSERT(tree);
-//
-//  const auto emplace = [this, tree](const QString& name,
-//                                    const QString& value,
-//                                    const core::property::type type) {
-//    auto* item = emplace_child(name, value);
-//    tree->setItemWidget(item, 1, inline_widget_for_type(type));
-//  };
-//
-//  emplace(TACTILE_QSTRING(u"X"),
-//          TACTILE_QSTRING(u"0"),
-//          core::property::floating);
-//
-//  emplace(TACTILE_QSTRING(u"X"),
-//          TACTILE_QSTRING(u"0"),
-//          core::property::floating);
-//
-//  emplace(TACTILE_QSTRING(u"Width"),
-//          TACTILE_QSTRING(u"0"),
-//          core::property::floating);
-//
-//  emplace(TACTILE_QSTRING(u"Height"),
-//          TACTILE_QSTRING(u"0"),
-//          core::property::floating);
-//
-//  emplace(TACTILE_QSTRING(u"Visible"),
-//          TACTILE_QSTRING(u"true"),
-//          core::property::boolean);
-//
-//  emplace(TACTILE_QSTRING(u"Type"),
-//          TACTILE_QSTRING(u"object"),
-//          core::property::string);
-//}
-
 void property_tree_item::add_color_items()
 {
   emplace_child(TACTILE_QSTRING(u"Red"), TACTILE_QSTRING(u"0"));
