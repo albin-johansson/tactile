@@ -511,7 +511,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/zoom-in.png</normaloff>:/resources/icons/fluent/64/zoom-in.png</iconset>
+     <normaloff>:/resources/icons/color/64/zoom-in.png</normaloff>:/resources/icons/color/64/zoom-in.png</iconset>
    </property>
    <property name="text">
     <string>Zoom in</string>
@@ -532,7 +532,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/zoom-out.png</normaloff>:/resources/icons/fluent/64/zoom-out.png</iconset>
+     <normaloff>:/resources/icons/color/64/zoom-out.png</normaloff>:/resources/icons/color/64/zoom-out.png</iconset>
    </property>
    <property name="text">
     <string>Zoom out</string>
@@ -655,7 +655,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/stamp.png</normaloff>:/resources/icons/fluent/64/stamp.png</iconset>
+     <normaloff>:/resources/icons/color/64/brush.png</normaloff>:/resources/icons/color/64/brush.png</iconset>
    </property>
    <property name="text">
     <string>Stamp</string>
@@ -679,7 +679,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/bucket.png</normaloff>:/resources/icons/fluent/64/bucket.png</iconset>
+     <normaloff>:/resources/icons/color/64/bucket.png</normaloff>:/resources/icons/color/64/bucket.png</iconset>
    </property>
    <property name="text">
     <string>Bucket</string>
@@ -724,7 +724,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../tactile.qrc">
-     <normaloff>:/resources/icons/fluent/64/image.png</normaloff>:/resources/icons/fluent/64/image.png</iconset>
+     <normaloff>:/resources/icons/color/64/image.png</normaloff>:/resources/icons/color/64/image.png</iconset>
    </property>
    <property name="text">
     <string>Add tileset...</string>
