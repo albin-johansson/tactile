@@ -154,7 +154,7 @@
        </attribute>
        <column>
         <property name="text">
-         <string>Property</string>
+         <string> Property</string>
         </property>
         <property name="textAlignment">
          <set>AlignLeading|AlignTop</set>
@@ -162,7 +162,7 @@
        </column>
        <column>
         <property name="text">
-         <string>Value</string>
+         <string> Value</string>
         </property>
        </column>
       </widget>
