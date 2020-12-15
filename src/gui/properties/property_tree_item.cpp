@@ -1,5 +1,6 @@
 #include "property_tree_item.hpp"
 
+#include <QCheckBox>
 #include <QColorDialog>
 #include <QComboBox>
 #include <QLineEdit>
@@ -10,14 +11,16 @@
 
 #include "color_preview_button.hpp"
 #include "color_validator.hpp"
+#include "maybe.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::gui {
 namespace {
 
-[[nodiscard]] auto inline_widget_for_type(const core::property::type type)
-    -> QWidget*
+[[nodiscard]] auto inline_widget_for_type(const core::property::type type,
+                                          const int index) -> QWidget*
 {
+  const auto role = (index % 2 == 0) ? QPalette::Base : QPalette::AlternateBase;
   switch (type) {
     case core::property::string:
     case core::property::file:  // TODO line edit with "browse" button?
@@ -32,20 +35,19 @@ namespace {
       auto* edit = new QLineEdit{};
       edit->setFrame(false);
       edit->setValidator(new QIntValidator{});
+      edit->setBackgroundRole(role);
       return edit;
     }
     case core::property::floating: {
       auto* edit = new QLineEdit{};
       edit->setFrame(false);
       edit->setValidator(new QDoubleValidator{});
+      edit->setBackgroundRole(role);
       return edit;
     }
     case core::property::boolean: {
-      auto* box = new QComboBox{};
-      box->addItem(TACTILE_QSTRING(u"false"));
-      box->addItem(TACTILE_QSTRING(u"true"));
-      box->setCurrentIndex(0);
-      box->setFrame(false);
+      auto* box = new QCheckBox{};
+      box->setBackgroundRole(role);
       return box;
     }
     default:
@@ -53,24 +55,23 @@ namespace {
   }
 }
 
-[[nodiscard]] auto value_for_type(const core::property::type type) -> QString
+[[nodiscard]] auto value_for_type(const core::property::type type)
+    -> maybe<QString>
 {
   switch (type) {
     case core::property::string:
     case core::property::file:
     case core::property::color:
+    case core::property::boolean:
       [[fallthrough]];
     case core::property::object:
-      return TACTILE_QSTRING(u"");
+      return std::nullopt;
 
     case core::property::integer:
       return TACTILE_QSTRING(u"0");
 
     case core::property::floating:
       return TACTILE_QSTRING(u"0.0");
-
-    case core::property::boolean:
-      return TACTILE_QSTRING(u"false");
 
     default:
       throw tactile_error{"Did not recognize property type for value string!"};
@@ -127,14 +128,17 @@ property_tree_item::property_tree_item(const QString& name,
     : QTreeWidgetItem{parent}
     , m_isInlineProperty{type != core::property::color}
 {
+  Q_ASSERT(parent);
+
   setText(0, name);
   setToolTip(0, tooltip_for_type(type));
 
-  if (m_isInlineProperty) {
-    setText(1, value_for_type(type));
+  if (const auto value = value_for_type(type)) {
+    setText(1, *value);
   }
 
-  if (auto* widget = inline_widget_for_type(type)) {
+  const auto index = parent->indexOfChild(this);
+  if (auto* widget = inline_widget_for_type(type, index)) {
     Q_ASSERT(treeWidget());
     widget->setAutoFillBackground(true);
     treeWidget()->setItemWidget(this, 1, widget);
