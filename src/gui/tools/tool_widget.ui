@@ -83,7 +83,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../tactile.qrc">
-         <normaloff>:/resources/icons/fluent/64/stamp.png</normaloff>:/resources/icons/fluent/64/stamp.png</iconset>
+         <normaloff>:/resources/icons/color/64/brush.png</normaloff>:/resources/icons/color/64/brush.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -124,7 +124,7 @@
        </property>
        <property name="icon">
         <iconset resource="../../tactile.qrc">
-         <normaloff>:/resources/icons/fluent/64/bucket.png</normaloff>:/resources/icons/fluent/64/bucket.png</iconset>
+         <normaloff>:/resources/icons/color/64/bucket.png</normaloff>:/resources/icons/color/64/bucket.png</iconset>
        </property>
        <property name="iconSize">
         <size>
