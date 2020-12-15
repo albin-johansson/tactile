@@ -16,15 +16,17 @@
 
 namespace tactile::gui {
 
-window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
+window::window(QWidget* parent)
+    : QMainWindow{parent}
+    , m_ui{new Ui::window{}}
+    , m_editor{new map_editor{this}}
+    , m_toolDock{new tool_dock{this}}
+    , m_layerDock{new layer_dock{this}}
+    , m_tilesetDock{new tileset_dock{this}}
+    , m_propertiesDock{new properties_dock{this}}
 {
   m_ui->setupUi(this);
 
-  m_editor = new map_editor{this};
-  m_toolDock = new tool_dock{this};
-  m_layerDock = new layer_dock{this};
-  m_tilesetDock = new tileset_dock{this};
-  m_propertiesDock = new properties_dock{this};
   setContentsMargins(0, 0, 0, 0);
 
   setCentralWidget(m_editor);
