@@ -79,7 +79,7 @@ auto move_down() -> const QIcon&
 auto expanded() -> const QIcon&
 {
   static const QIcon icon{
-      TACTILE_QSTRING(u":resources/icons/fluent/64/expanded.png")};
+      TACTILE_QSTRING(u":resources/icons/color/64/expanded.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
@@ -87,7 +87,7 @@ auto expanded() -> const QIcon&
 auto collapsed() -> const QIcon&
 {
   static const QIcon icon{
-      TACTILE_QSTRING(u":resources/icons/fluent/64/collapsed.png")};
+      TACTILE_QSTRING(u":resources/icons/color/64/collapsed.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }

@@ -69,6 +69,8 @@
     <file>resources/icons/color/64/expand.png</file>
     <file>resources/icons/color/64/collapse.png</file>
     <file>resources/icons/color/64/right_v_arrow.png</file>
+    <file>resources/icons/color/64/expanded.png</file>
+    <file>resources/icons/color/64/collapsed.png</file>
 
     <file>resources/icons/fluent/64/add.png</file>
     <file>resources/icons/fluent/64/arrow-down.png</file>
