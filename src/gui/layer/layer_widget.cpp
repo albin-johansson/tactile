@@ -15,10 +15,10 @@ namespace tactile::gui {
 layer_widget::layer_widget(QWidget* parent)
     : QWidget{parent}
     , m_ui{new Ui::layer_widget{}}
+    , m_contextMenu{new layer_item_context_menu{this}}
 {
   m_ui->setupUi(this);
   m_ui->layerList->setContextMenuPolicy(Qt::CustomContextMenu);
-  m_contextMenu = new layer_item_context_menu{this};
 
   // clang-format off
   connect(m_contextMenu, &layer_item_context_menu::toggle_visibility, m_ui->visibleButton, &QAbstractButton::toggle);
@@ -68,11 +68,12 @@ layer_widget::layer_widget(QWidget* parent)
             }
           });
 
-  connect(m_ui->opacitySpinBox,
-          &QDoubleSpinBox::valueChanged,
-          [this](double value) {
+  connect(m_ui->opacitySlider,
+          &QSlider::valueChanged,
+          [this](const int value) {
             if (auto* item = current_item()) {
-              emit ui_set_layer_opacity(item->layer(), value);
+              const auto dValue = static_cast<double>(value) / 100.0;
+              emit ui_set_layer_opacity(item->layer(), dValue);
             }
           });
 }
@@ -134,7 +135,7 @@ void layer_widget::selected_layer(const layer_id id, const core::layer& layer)
   m_ui->visibleButton->setChecked(layer.visible());
   m_ui->visibleButton->setIcon(layer.visible() ? icons::visible()
                                                : icons::invisible());
-  m_ui->opacitySpinBox->setValue(layer.opacity());
+  m_ui->opacitySlider->setValue(static_cast<int>(layer.opacity() * 100.0));
 }
 
 void layer_widget::selected_map(const map_id mapId,
@@ -151,7 +152,7 @@ void layer_widget::selected_map(const map_id mapId,
     add_layer(layerId, layer);
   });
 
-  if (const auto id = document.current_layer_id(); id) {
+  if (const auto id = document.current_layer_id()) {
     if (auto* item = item_for_layer_id(*id)) {
       selected_layer(*id, document.get_layer(*id));
       m_ui->layerList->setCurrentItem(item);
@@ -189,18 +190,19 @@ void layer_widget::moved_layer_forward(const layer_id id)
 
 void layer_widget::add_layer(const layer_id id, const core::layer& layer)
 {
-  if (!layer.name().isEmpty()) {
-    m_ui->layerList->addItem(new layer_item{layer.name(), id, m_ui->layerList});
-  } else {
+  QString name;
+  if (layer.name().isEmpty()) {
     auto& suffix = m_suffixes.at(m_currentMap.value());
-
-    m_ui->layerList->addItem(
-        new layer_item{TACTILE_QSTRING(u"Layer ") + QString::number(suffix),
-                       id,
-                       m_ui->layerList});
-
+    name = TACTILE_QSTRING(u"Layer ") + QString::number(suffix);
     ++suffix;
+  } else {
+    name = layer.name();
   }
+
+  auto* item = new layer_item{name, id, m_ui->layerList};
+
+
+  m_ui->layerList->addItem(item);
   update_possible_actions();
 }
 
