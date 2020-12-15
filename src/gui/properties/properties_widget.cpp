@@ -92,6 +92,7 @@ void properties_widget::add_item(const QString& name,
 {
   if (auto* item = m_ui->treeWidget->currentItem()) {
     auto* property = new property_tree_item{name, type, item};
+    property->set_name_editable(true);
     if (property->is_inline_property()) {
       when_item_double_clicked(property, valueColumn);
     }
