@@ -39,7 +39,7 @@ auto duplicate() -> const QIcon&
 auto layer() -> const QIcon&
 {
   static const QIcon icon{
-      TACTILE_QSTRING(u":resources/icons/color/64/layer.png")};
+      TACTILE_QSTRING(u":resources/icons/color/64/grid.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
