@@ -63,7 +63,6 @@ void properties_widget::selected_map(const core::map_document& document)
   m_customRoot = make_tree_node(TACTILE_QSTRING(u"Custom"), m_ui->treeWidget);
 
   m_ui->treeWidget->clearSelection();
-  m_ui->newPropertyButton->setEnabled(false);
   m_ui->removePropertyButton->setEnabled(false);
   m_ui->duplicatePropertyButton->setEnabled(false);
   m_ui->downButton->setEnabled(false);
@@ -90,7 +89,7 @@ void properties_widget::removed_property(const QString& name)
 void properties_widget::add_item(const QString& name,
                                  const core::property::type type)
 {
-  if (auto* item = m_ui->treeWidget->currentItem()) {
+  if (auto* item = m_customRoot) {
     auto* property = new property_tree_item{name, type, item};
     property->set_name_editable(true);
     if (property->is_inline_property()) {
@@ -121,7 +120,6 @@ void properties_widget::when_remove_property_button_clicked()
 void properties_widget::when_item_selection_changed()
 {
   if (const auto* item = m_ui->treeWidget->currentItem()) {
-    m_ui->newPropertyButton->setEnabled(item == m_customRoot);
     m_ui->removePropertyButton->setEnabled(item->parent() == m_customRoot);
   }
 }
