@@ -11,7 +11,7 @@ namespace tactile::gui {
 class property_tree_item final : public QTreeWidgetItem
 {
  public:
-  explicit property_tree_item(QTreeWidgetItem* parent = nullptr);
+  explicit property_tree_item(QTreeWidgetItem* parent);
 
   /**
    * \brief Creates and returns a tree widget item.
@@ -24,11 +24,11 @@ class property_tree_item final : public QTreeWidgetItem
    */
   property_tree_item(const QString& name,
                      const QString& value,
-                     QTreeWidgetItem* parent = nullptr);
+                     QTreeWidgetItem* parent);
 
   property_tree_item(const QString& name,
                      core::property::type type,
-                     QTreeWidgetItem* parent = nullptr);
+                     QTreeWidgetItem* parent);
 
   template <arithmetic T>
   [[deprecated]] property_tree_item(const QString& name,
