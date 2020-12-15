@@ -55,9 +55,6 @@ class property_tree_item final : public QTreeWidgetItem
   bool m_isInlineProperty{true};
 
   void add_color_items();
-
-  auto emplace_child(const QString& name, const QString& value)
-      -> property_tree_item*;
 };
 
 }  // namespace tactile::gui

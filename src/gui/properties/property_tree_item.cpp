@@ -215,15 +215,6 @@ void property_tree_item::add_color_items()
   }
 }
 
-auto property_tree_item::emplace_child(const QString& name,
-                                       const QString& value)
-    -> property_tree_item*
-{
-  auto* item = new property_tree_item{name, value};
-  addChild(item);
-  return item;
-}
-
 void property_tree_item::set_name_editable(const bool editable) noexcept
 {
   m_nameEditable = editable;
