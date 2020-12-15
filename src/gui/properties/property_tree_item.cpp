@@ -1,8 +1,14 @@
 #include "property_tree_item.hpp"
 
+#include <QColorDialog>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QPaintEvent>
+#include <QPainter>
+#include <QPushButton>
+#include <utility>  // move
 
+#include "color_preview_button.hpp"
 #include "color_validator.hpp"
 #include "tactile_qstring.hpp"
 
@@ -15,10 +21,13 @@ namespace {
   switch (type) {
     case core::property::string:
     case core::property::file:  // TODO line edit with "browse" button?
-    case core::property::object:
       [[fallthrough]];
-    case core::property::color:
+    case core::property::object:  // TODO RO line edit with browsing options
       return nullptr;
+
+    case core::property::color:
+      return new color_preview_button{Qt::black};
+
     case core::property::integer: {
       auto* edit = new QLineEdit{};
       edit->setFrame(false);
@@ -123,16 +132,15 @@ property_tree_item::property_tree_item(const QString& name,
 
   if (m_isInlineProperty) {
     setText(1, value_for_type(type));
-  } else {
-    setFirstColumnSpanned(true);
-    setExpanded(true);
   }
 
   if (auto* widget = inline_widget_for_type(type)) {
     Q_ASSERT(treeWidget());
     widget->setAutoFillBackground(true);
     treeWidget()->setItemWidget(this, 1, widget);
-  } else if (type == core::property::color) {
+  }
+
+  if (type == core::property::color) {
     add_color_items();
   }
 }
@@ -148,12 +156,63 @@ void property_tree_item::add_color_items()
     edit->setText(QString::number(value));
 
     item->treeWidget()->setItemWidget(item, 1, edit);
+    Q_ASSERT(edit->parent());  // ensure that there's no memory leak
+
+    return edit;
   };
 
-  addColor(TACTILE_QSTRING(u"Red"), 0);
-  addColor(TACTILE_QSTRING(u"Green"), 0);
-  addColor(TACTILE_QSTRING(u"Blue"), 0);
-  addColor(TACTILE_QSTRING(u"Alpha"), 255);
+  if (auto* button = qobject_cast<color_preview_button*>(
+          treeWidget()->itemWidget(this, 1))) {
+    auto* red = addColor(TACTILE_QSTRING(u"Red"), 0);
+    auto* green = addColor(TACTILE_QSTRING(u"Green"), 0);
+    auto* blue = addColor(TACTILE_QSTRING(u"Blue"), 0);
+    auto* alpha = addColor(TACTILE_QSTRING(u"Alpha"), 255);
+
+    QObject::connect(button,
+                     &color_preview_button::color_changed,
+                     [=](const QColor& color) {
+                       red->setText(QString::number(color.red()));
+                       green->setText(QString::number(color.green()));
+                       blue->setText(QString::number(color.blue()));
+                       alpha->setText(QString::number(color.alpha()));
+                     });
+
+    QObject::connect(red,
+                     &QLineEdit::textChanged,
+                     [button](const QString& text) {
+                       bool ok;
+                       if (const auto result = text.toInt(&ok); ok) {
+                         button->set_red(result);
+                       }
+                     });
+
+    QObject::connect(green,
+                     &QLineEdit::textChanged,
+                     [button](const QString& text) {
+                       bool ok;
+                       if (const auto result = text.toInt(&ok); ok) {
+                         button->set_green(result);
+                       }
+                     });
+
+    QObject::connect(blue,
+                     &QLineEdit::textChanged,
+                     [button](const QString& text) {
+                       bool ok;
+                       if (const auto result = text.toInt(&ok); ok) {
+                         button->set_blue(result);
+                       }
+                     });
+
+    QObject::connect(alpha,
+                     &QLineEdit::textChanged,
+                     [button](const QString& text) {
+                       bool ok;
+                       if (const auto result = text.toInt(&ok); ok) {
+                         button->set_alpha(result);
+                       }
+                     });
+  }
 }
 
 auto property_tree_item::emplace_child(const QString& name,
