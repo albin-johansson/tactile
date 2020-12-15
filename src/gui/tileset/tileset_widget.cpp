@@ -9,7 +9,6 @@ namespace tactile::gui {
 tileset_widget::tileset_widget(QWidget* parent)
     : QWidget{parent}
     , m_ui{new Ui::tileset_widget{}}
-
 {
   m_ui->setupUi(this);
 
