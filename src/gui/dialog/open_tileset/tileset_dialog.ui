@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>415</width>
-    <height>276</height>
+    <width>386</width>
+    <height>196</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,7 +25,7 @@
      <item>
       <widget class="QLabel" name="infoLabel">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -43,7 +43,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Select an image which contains the tile images, aligned in a grid.</string>
+        <string>Select an image which contains the tiles, aligned in a grid.</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
@@ -65,7 +65,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="../../../tactile.qrc">:/resources/icons/fluent/64/image.png</pixmap>
+        <pixmap resource="../../../tactile.qrc">:/resources/icons/color/64/image.png</pixmap>
        </property>
        <property name="scaledContents">
         <bool>false</bool>
