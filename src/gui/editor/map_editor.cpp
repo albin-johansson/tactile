@@ -19,6 +19,8 @@ map_editor::map_editor(QWidget* parent)
   m_editorID = m_ui->stackedWidget->addWidget(m_tabWidget);
 
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  setContentsMargins(0, 0, 0, 0);
+
   init_connections();
 }
 

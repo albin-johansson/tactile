@@ -12,8 +12,9 @@ tool_dock::tool_dock(QWidget* parent)
 {
   setObjectName(TACTILE_QSTRING(u"tool_dock"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-  setWidget(m_widget);
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+  setContentsMargins(0, 0, 0, 0);
+  setWidget(m_widget);
 
   // clang-format off
   connect(m_widget, &tool_widget::stamp_enabled, this, &tool_dock::enable_stamp);

@@ -25,6 +25,7 @@ window::window(QWidget* parent) : QMainWindow{parent}, m_ui{new Ui::window{}}
   m_layerDock = new layer_dock{this};
   m_tilesetDock = new tileset_dock{this};
   m_propertiesDock = new properties_dock{this};
+  setContentsMargins(0, 0, 0, 0);
 
   setCentralWidget(m_editor);
   addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);

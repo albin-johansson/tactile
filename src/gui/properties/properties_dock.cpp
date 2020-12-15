@@ -12,6 +12,7 @@ properties_dock::properties_dock(QWidget* parent)
   setObjectName(TACTILE_QSTRING(u"properties_dock"));
   setWindowTitle(tr("Properties"));
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  setContentsMargins(0, 0, 0, 0);
   setWidget(m_widget);
 }
 

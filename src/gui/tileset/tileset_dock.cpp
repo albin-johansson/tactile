@@ -13,6 +13,7 @@ tileset_dock::tileset_dock(QWidget* parent)
   setWindowTitle(tr("Tilesets"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  setContentsMargins(0, 0, 0, 0);
   setWidget(m_widget);
 
   using widget = tileset_widget;

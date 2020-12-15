@@ -12,6 +12,7 @@ layer_dock::layer_dock(QWidget* parent)
   setObjectName(TACTILE_QSTRING(u"layer_dock"));
   setWindowTitle(tr("Layers"));
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  setContentsMargins(0, 0, 0, 0);
   setWidget(m_widget);
 
   // clang-format off
