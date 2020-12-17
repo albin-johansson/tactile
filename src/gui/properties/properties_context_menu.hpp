@@ -15,7 +15,7 @@ class properties_context_menu final : public QMenu
  public:
   explicit properties_context_menu(QWidget* parent = nullptr);
 
-  void set_selected_item(const property_tree_item* item);
+  void set_current_type(core::property::type type);
 
   void set_up_enabled(bool enabled);
 
@@ -26,6 +26,10 @@ class properties_context_menu final : public QMenu
   void set_duplicate_enabled(bool enabled);
 
   void set_rename_enabled(bool enabled);
+
+  void set_copy_enabled(bool enabled);
+
+  void set_paste_enabled(bool enabled);
 
   void set_change_type_enabled(bool enabled);
 

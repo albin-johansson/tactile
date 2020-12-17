@@ -13,6 +13,8 @@ class properties_widget;
 
 namespace tactile::gui {
 
+class properties_context_menu;
+
 class properties_widget final : public QWidget
 {
   Q_OBJECT
@@ -44,8 +46,13 @@ class properties_widget final : public QWidget
   vector_map<QString, core::property> m_props;
   QTreeWidgetItem* m_predefinedRoot{};
   QTreeWidgetItem* m_customRoot{};
+  properties_context_menu* m_contextMenu{};
+
+  void update_actions();
 
   void add_item(const QString& name, core::property::type type);
+
+  void trigger_context_menu(const QPoint& pos);
 
  private slots:
   void when_new_property_button_clicked();

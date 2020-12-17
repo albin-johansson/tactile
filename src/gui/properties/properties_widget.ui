@@ -16,7 +16,7 @@
      <item row="0" column="0">
       <layout class="QVBoxLayout" name="leftButtonsLayout">
        <item>
-        <widget class="QPushButton" name="newPropertyButton">
+        <widget class="QPushButton" name="addButton">
          <property name="toolTip">
           <string>Add property</string>
          </property>
@@ -30,7 +30,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="removePropertyButton">
+        <widget class="QPushButton" name="removeButton">
          <property name="toolTip">
           <string>Remove property</string>
          </property>
@@ -44,7 +44,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="duplicatePropertyButton">
+        <widget class="QPushButton" name="duplicateButton">
          <property name="toolTip">
           <string>Duplicate property</string>
          </property>
@@ -58,7 +58,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="renamePropertyButton">
+        <widget class="QPushButton" name="renameButton">
          <property name="toolTip">
           <string>Rename property</string>
          </property>
@@ -122,6 +122,9 @@
        <property name="frameShadow">
         <enum>QFrame::Plain</enum>
        </property>
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
        <property name="midLineWidth">
         <number>1</number>
        </property>
@@ -137,6 +140,9 @@
        <property name="alternatingRowColors">
         <bool>true</bool>
        </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
        <property name="rootIsDecorated">
         <bool>false</bool>
        </property>
@@ -146,14 +152,20 @@
        <property name="animated">
         <bool>false</bool>
        </property>
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
        <property name="columnCount">
         <number>2</number>
        </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
        <attribute name="headerMinimumSectionSize">
         <number>55</number>
        </attribute>
        <attribute name="headerDefaultSectionSize">
-        <number>150</number>
+        <number>100</number>
        </attribute>
        <attribute name="headerHighlightSections">
         <bool>false</bool>
