@@ -16,6 +16,7 @@ color_preview_button::color_preview_button(QColor color, QWidget* parent)
 
   connect(this, &QPushButton::clicked, [this] {
     QColorDialog dialog{m_color, window()};
+    dialog.adjustSize();  // Silences setGeometry warnings
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     if (dialog.exec()) {
       update_color(dialog.selectedColor());
