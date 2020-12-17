@@ -232,7 +232,7 @@ class map_document final : public QObject
   /**
    * \copydoc map::take_layer()
    */
-  auto take_layer(layer_id id) -> std::shared_ptr<layer>;
+  auto take_layer(layer_id id) -> std::shared_ptr<tile_layer>;
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
