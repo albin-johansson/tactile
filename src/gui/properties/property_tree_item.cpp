@@ -133,6 +133,7 @@ property_tree_item::property_tree_item(const QString& name,
 
   setText(0, name);
   setToolTip(0, tooltip_for_type(m_type));
+  setFlags(flags() | Qt::ItemIsEditable);
 
   if (const auto value = value_for_type(m_type)) {
     setText(1, *value);

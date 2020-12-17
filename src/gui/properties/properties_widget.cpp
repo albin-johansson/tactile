@@ -134,12 +134,8 @@ void properties_widget::when_item_double_clicked(QTreeWidgetItem* item,
   if (auto* treeItem = dynamic_cast<property_tree_item*>(item)) {
     if (column == nameColumn && !treeItem->is_name_editable()) {
       return;  // Can't change name of predefined properties
-    } else {
-      const auto flags = treeItem->flags();
-      treeItem->setFlags(flags | Qt::ItemIsEditable);
-
+    } else if (treeItem->flags() & Qt::ItemIsEditable) {
       m_ui->treeWidget->editItem(treeItem, column);
-      treeItem->setFlags(flags);
     }
   }
 }
