@@ -2,8 +2,8 @@
 
 #include "icons.hpp"
 #include "preferences.hpp"
+#include "property_tree_item.hpp"
 #include "tactile_qstring.hpp"
-#include "tree_widget_utils.hpp"
 
 namespace tactile::gui {
 
