@@ -22,6 +22,7 @@
   "HighlightedText": "#FFFFFF",
 
   "Dark": "#232323",
+  "Light": "#444444",
 
   "disabled": {
     "WindowText": "#808080",
