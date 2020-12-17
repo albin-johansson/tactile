@@ -17,7 +17,7 @@ map::map(const row_t nRows, const col_t nCols)
   }
 
   m_layers.reserve(5);
-  m_layers.emplace(m_nextLayer, std::make_shared<layer>(nRows, nCols));
+  m_layers.emplace(m_nextLayer, std::make_shared<tile_layer>(nRows, nCols));
 
   m_activeLayer = m_nextLayer;
   ++m_nextLayer;
@@ -53,7 +53,7 @@ void map::remove_layer(const layer_id id)
   m_layers.erase(id);
 }
 
-auto map::take_layer(const layer_id id) -> std::shared_ptr<layer>
+auto map::take_layer(const layer_id id) -> std::shared_ptr<tile_layer>
 {
   Q_ASSERT(m_layers.contains(id));
 
@@ -81,7 +81,7 @@ auto map::add_layer() -> layer_id
   return id;
 }
 
-void map::add_layer(const layer_id id, std::shared_ptr<layer> layer)
+void map::add_layer(const layer_id id, std::shared_ptr<tile_layer> layer)
 {
   Q_ASSERT(!m_layers.contains(id));
   Q_ASSERT(layer);
@@ -89,7 +89,7 @@ void map::add_layer(const layer_id id, std::shared_ptr<layer> layer)
 }
 
 auto map::duplicate_layer(const layer_id id)
-    -> std::pair<layer_id, std::shared_ptr<layer>>&
+    -> std::pair<layer_id, std::shared_ptr<tile_layer>>&
 {
   Q_ASSERT(m_layers.contains(id));
   const auto& layer = m_layers.at(id);
@@ -202,13 +202,13 @@ void map::move_layer_forward(const layer_id id)
   m_layers.move_elem_forward(id);
 }
 
-auto map::make_layer() -> std::shared_ptr<layer>
+auto map::make_layer() -> std::shared_ptr<tile_layer>
 {
   ++m_nextLayer;
   if (!m_activeLayer) {
-    return std::make_shared<layer>(5_row, 5_col);
+    return std::make_shared<tile_layer>(5_row, 5_col);
   } else {
-    return std::make_shared<layer>(row_count(), col_count());
+    return std::make_shared<tile_layer>(row_count(), col_count());
   }
 }
 
@@ -275,17 +275,17 @@ auto map::height() const -> int
   return row_count().get() * m_tileSize.get();
 }
 
-auto map::current_layer() -> layer&
+auto map::current_layer() -> tile_layer&
 {
   return *m_layers.at(m_activeLayer.value());
 }
 
-auto map::current_layer() const -> const layer&
+auto map::current_layer() const -> const tile_layer&
 {
   return *m_layers.at(m_activeLayer.value());
 }
 
-auto map::find_layer(const layer_id id) -> layer*
+auto map::find_layer(const layer_id id) -> tile_layer*
 {
   if (const auto it = m_layers.find(id); it != m_layers.end()) {
     return it->second.get();
@@ -294,7 +294,7 @@ auto map::find_layer(const layer_id id) -> layer*
   }
 }
 
-auto map::find_layer(const layer_id id) const -> const layer*
+auto map::find_layer(const layer_id id) const -> const tile_layer*
 {
   if (const auto it = m_layers.find(id); it != m_layers.end()) {
     return it->second.get();

@@ -290,17 +290,17 @@ void window::removed_tileset(const tileset_id id)
   m_tilesetDock->removed_tileset(id);
 }
 
-void window::selected_layer(const layer_id id, const core::layer& layer)
+void window::selected_layer(const layer_id id, const core::tile_layer& layer)
 {
   m_layerDock->selected_layer(id, layer);
 }
 
-void window::added_layer(const layer_id id, const core::layer& layer)
+void window::added_layer(const layer_id id, const core::tile_layer& layer)
 {
   m_layerDock->added_layer(id, layer);
 }
 
-void window::added_duplicated_layer(const layer_id id, const core::layer& layer)
+void window::added_duplicated_layer(const layer_id id, const core::tile_layer& layer)
 {
   m_layerDock->added_duplicated_layer(id, layer);
 }

@@ -92,8 +92,7 @@ void save_layers(QDomDocument& document,
                  QDomElement& root,
                  const map_document& map)
 {
-  map.each_layer([&](const layer_id id, const layer& layer) {
-    auto node = document.createElement(TACTILE_QSTRING(u"layer"));
+  map.each_layer([&](const layer_id id, const tile_layer& layer) {
 
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());
     node.setAttribute(TACTILE_QSTRING(u"name"), layer.name());

@@ -137,11 +137,11 @@ class window final : public QMainWindow
 
   void removed_tileset(tileset_id id);
 
-  void selected_layer(layer_id id, const core::layer& layer);
+  void selected_layer(layer_id id, const core::tile_layer& layer);
 
-  void added_layer(layer_id id, const core::layer& layer);
+  void added_layer(layer_id id, const core::tile_layer& layer);
 
-  void added_duplicated_layer(layer_id id, const core::layer& layer);
+  void added_duplicated_layer(layer_id id, const core::tile_layer& layer);
 
   void removed_layer(layer_id id);
 

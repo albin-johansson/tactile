@@ -116,7 +116,7 @@ void map_item::draw_background(QPainter& painter,
 }
 
 void map_item::draw_layer(QPainter& painter,
-                          const layer& layer,
+                          const tile_layer& layer,
                           const render_settings& settings)
 {
   painter.setOpacity(layer.opacity());
@@ -216,7 +216,7 @@ void map_item::paint(QPainter* painter,
 
   const auto activeLayer = m_map->current_layer_id();
 
-  m_map->each_layer([&](const layer_id id, const layer& layer) {
+  m_map->each_layer([&](const layer_id id, const tile_layer& layer) {
     if (layer.visible()) {
       draw_layer(*painter, layer, settings);
     }

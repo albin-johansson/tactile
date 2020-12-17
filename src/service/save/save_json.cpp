@@ -180,7 +180,7 @@ void create_external_tileset_file(const tileset& tileset,
 {
   QJsonArray array;
 
-  map.each_layer([&](const layer_id id, const layer& layer) {
+  map.each_layer([&](const layer_id id, const tile_layer& layer) {
     QJsonObject object;
 
     object.insert(u"name", layer.name());

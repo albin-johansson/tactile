@@ -45,7 +45,7 @@ TEST_CASE("map::each_layer", "[map]")
   map.add_layer();
 
   int count{};
-  map.each_layer([&](layer_id id, const core::layer& layer) { ++count; });
+  map.each_layer([&](layer_id id, const core::tile_layer& layer) { ++count; });
 
   CHECK(count == 3);
 }

@@ -205,10 +205,10 @@ class map_document final : public QObject
   void select_layer(layer_id id);
 
   /**
-   * \copydoc map::add_layer(layer_id id, std::shared_ptr<layer> layer)
+   * \copydoc map::add_layer(layer_id id, std::shared_ptr<tile_layer> layer)
    * \signal `added_layer`
    */
-  void add_layer(layer_id id, const std::shared_ptr<layer>& layer);
+  void add_layer(layer_id id, const std::shared_ptr<tile_layer>& layer);
 
   /**
    * \copybrief map::add_layer()
@@ -353,11 +353,11 @@ class map_document final : public QObject
    *
    * \tparam T the type of the function object.
    *
-   * \param callable the function object that will be invoked for each layer.
+   * \param callable the function object that will be invoked for each tile_layer.
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const layer&> T>
+  template <std::invocable<layer_id, const tile_layer&> T>
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : *m_map) {
@@ -421,7 +421,7 @@ class map_document final : public QObject
   /**
    * \copydoc map::get_layer()
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&;
+  [[nodiscard]] auto get_layer(layer_id id) const -> const tile_layer&;
 
   /**
    * \copydoc map::tile_count()
@@ -496,9 +496,9 @@ class map_document final : public QObject
   void added_tileset(tileset_id);
   void removed_tileset(tileset_id);
 
-  void added_layer(layer_id, const layer&);
-  void added_duplicated_layer(layer_id, const layer&);
-  void selected_layer(layer_id, const layer&);
+  void added_layer(layer_id, const tile_layer&);
+  void added_duplicated_layer(layer_id, const tile_layer&);
+  void selected_layer(layer_id, const tile_layer&);
   void removed_layer(layer_id);
   void moved_layer_back(layer_id);
   void moved_layer_forward(layer_id);

@@ -94,13 +94,13 @@ layer_widget::~layer_widget() noexcept
   delete m_ui;
 }
 
-void layer_widget::added_layer(const layer_id id, const core::layer& layer)
+void layer_widget::added_layer(const layer_id id, const core::tile_layer& layer)
 {
   add_layer(id, layer);
 }
 
 void layer_widget::added_duplicated_layer(const layer_id id,
-                                          const core::layer& layer)
+                                          const core::tile_layer& layer)
 {
   add_layer(id, layer);
   auto* item = item_for_layer_id(id);
@@ -128,7 +128,7 @@ void layer_widget::removed_layer(layer_id id)
   update_possible_actions();
 }
 
-void layer_widget::selected_layer(const layer_id id, const core::layer& layer)
+void layer_widget::selected_layer(const layer_id id, const core::tile_layer& layer)
 {
   Q_ASSERT(item_for_layer_id(id) != nullptr);
 
@@ -148,7 +148,7 @@ void layer_widget::selected_map(const map_id mapId,
     m_suffixes.emplace(mapId, 1);
   }
 
-  document.each_layer([this](const layer_id layerId, const core::layer& layer) {
+  document.each_layer([this](const layer_id layerId, const core::tile_layer& layer) {
     add_layer(layerId, layer);
   });
 
@@ -188,7 +188,7 @@ void layer_widget::moved_layer_forward(const layer_id id)
   }
 }
 
-void layer_widget::add_layer(const layer_id id, const core::layer& layer)
+void layer_widget::add_layer(const layer_id id, const core::tile_layer& layer)
 {
   QString name;
   if (layer.name().isEmpty()) {

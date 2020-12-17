@@ -1,9 +1,9 @@
 #pragma once
 
 #include "dock_widget.hpp"
-#include "layer.hpp"
 #include "map_document.hpp"
 #include "map_id.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile::gui {
 
@@ -28,13 +28,13 @@ class layer_dock final : public dock_widget
   void ui_duplicate_layer(layer_id id);
 
  public slots:
-  void added_layer(layer_id id, const core::layer& layer);
+  void added_layer(layer_id id, const core::tile_layer& layer);
 
-  void added_duplicated_layer(layer_id id, const core::layer& layer);
+  void added_duplicated_layer(layer_id id, const core::tile_layer& layer);
 
   void removed_layer(layer_id id);
 
-  void selected_layer(layer_id id, const core::layer& layer);
+  void selected_layer(layer_id id, const core::tile_layer& layer);
 
   void selected_map(map_id id, const core::map_document& document);
 

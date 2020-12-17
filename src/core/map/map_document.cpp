@@ -182,7 +182,7 @@ void map_document::select_layer(const layer_id id)
 }
 
 void map_document::add_layer(const layer_id id,
-                             const std::shared_ptr<layer>& layer)
+                             const std::shared_ptr<tile_layer>& layer)
 {
   Q_ASSERT(layer);
   m_map->add_layer(id, layer);
@@ -200,7 +200,7 @@ void map_document::remove_layer(const layer_id id)
   m_commands->push<cmd::remove_layer>(this, id);
 }
 
-auto map_document::take_layer(const layer_id id) -> std::shared_ptr<layer>
+auto map_document::take_layer(const layer_id id) -> std::shared_ptr<tile_layer>
 {
   return m_map->take_layer(id);
 }
@@ -318,7 +318,7 @@ auto map_document::tile_at(const position& position) const -> maybe<tile_id>
   return m_map->tile_at(position);
 }
 
-auto map_document::get_layer(const layer_id id) const -> const layer&
+auto map_document::get_layer(const layer_id id) const -> const tile_layer&
 {
   return m_map->get_layer(id);
 }

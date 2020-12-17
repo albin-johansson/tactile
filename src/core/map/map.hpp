@@ -5,9 +5,9 @@
 #include <memory>    // shared_ptr
 #include <utility>   // pair
 
-#include "layer.hpp"
 #include "layer_id.hpp"
 #include "maybe.hpp"
+#include "tile_layer.hpp"
 #include "tile_size.hpp"
 #include "vector_map.hpp"
 
@@ -20,7 +20,7 @@ namespace tactile::core {
  *
  * \details Tilemaps are composed by multiple tile layers.
  *
- * \see `layer`
+ * \see `tile_layer`
  *
  * \since 0.1.0
  *
@@ -29,8 +29,8 @@ namespace tactile::core {
 class map final
 {
  public:
-  using layer_pair = std::pair<layer_id, std::shared_ptr<layer>>;
-  using layer_map = vector_map<layer_id, std::shared_ptr<layer>>;
+  using layer_pair = std::pair<layer_id, std::shared_ptr<tile_layer>>;
+  using layer_map = vector_map<layer_id, std::shared_ptr<tile_layer>>;
   using const_iterator = layer_map::const_iterator;
 
   /**
@@ -61,7 +61,7 @@ class map final
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const layer&> T>
+  template <std::invocable<layer_id, const tile_layer&> T>
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : m_layers) {
@@ -160,7 +160,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto take_layer(layer_id id) -> std::shared_ptr<layer>;
+  [[nodiscard]] auto take_layer(layer_id id) -> std::shared_ptr<tile_layer>;
 
   /**
    * \brief Selects the tile layer associated with the specified ID.
@@ -344,7 +344,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto make_layer() -> std::shared_ptr<layer>;
+  [[nodiscard]] auto make_layer() -> std::shared_ptr<tile_layer>;
 
   /**
    * \brief Returns the ID of the tile at the specified position.
@@ -514,7 +514,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&
+  [[nodiscard]] auto get_layer(layer_id id) const -> const tile_layer&
   {
     return *m_layers.at(id);
   }
@@ -549,13 +549,13 @@ class map final
   layer_id m_nextLayer{1};
   tile_size m_tileSize;
 
-  [[nodiscard]] auto current_layer() -> layer&;
+  [[nodiscard]] auto current_layer() -> tile_layer&;
 
-  [[nodiscard]] auto current_layer() const -> const layer&;
+  [[nodiscard]] auto current_layer() const -> const tile_layer&;
 
-  [[nodiscard]] auto find_layer(layer_id id) -> layer*;
+  [[nodiscard]] auto find_layer(layer_id id) -> tile_layer*;
 
-  [[nodiscard]] auto find_layer(layer_id id) const -> const layer*;
+  [[nodiscard]] auto find_layer(layer_id id) const -> const tile_layer*;
 };
 
 }  // namespace tactile::core

@@ -1,4 +1,4 @@
-#include "layer.hpp"
+#include "tile_layer.hpp"
 
 #include <algorithm>  // clamp
 #include <cassert>    // assert
@@ -22,10 +22,10 @@ namespace {
 
 }  // namespace
 
-layer::layer(const row_t nRows, const col_t nCols)
+tile_layer::tile_layer(const row_t nRows, const col_t nCols)
 {
   if (nRows < 1_row || nCols < 1_col) {
-    throw tactile_error{"Invalid layer dimensions!"};
+    throw tactile_error{"Invalid tile_layer dimensions!"};
   }
 
   m_tiles.reserve(nRows.get());
@@ -35,14 +35,14 @@ layer::layer(const row_t nRows, const col_t nCols)
   assert(col_count() == nCols);
 }
 
-void layer::flood(const position& origin,
+void tile_layer::flood(const position& origin,
                   const tile_id replacement,
                   std::vector<position>& positions)
 {
   flood_fill(*this, origin, replacement, positions);
 }
 
-void layer::remove_all(const tile_id id)
+void tile_layer::remove_all(const tile_id id)
 {
   const auto nRows = row_count().get();
   const auto nCols = col_count().get();
@@ -55,26 +55,26 @@ void layer::remove_all(const tile_id id)
   }
 }
 
-void layer::add_row(const tile_id id)
+void tile_layer::add_row(const tile_id id)
 {
   m_tiles.push_back(create_row(col_count(), id));
 }
 
-void layer::add_col(const tile_id id)
+void tile_layer::add_col(const tile_id id)
 {
   for (auto& row : m_tiles) {
     row.push_back(id);
   }
 }
 
-void layer::remove_row() noexcept
+void tile_layer::remove_row() noexcept
 {
   if (m_tiles.size() > 1) {
     m_tiles.pop_back();
   }
 }
 
-void layer::remove_col() noexcept
+void tile_layer::remove_col() noexcept
 {
   for (auto& row : m_tiles) {
     if (row.size() > 1) {
@@ -83,7 +83,7 @@ void layer::remove_col() noexcept
   }
 }
 
-void layer::set_rows(const row_t nRows)
+void tile_layer::set_rows(const row_t nRows)
 {
   assert(nRows >= 1_row);
 
@@ -106,7 +106,7 @@ void layer::set_rows(const row_t nRows)
   }
 }
 
-void layer::set_cols(const col_t nCols)
+void tile_layer::set_cols(const col_t nCols)
 {
   assert(nCols >= 1_col);
 
@@ -129,45 +129,45 @@ void layer::set_cols(const col_t nCols)
   }
 }
 
-void layer::set_tile(const position& pos, const tile_id id) noexcept
+void tile_layer::set_tile(const position& pos, const tile_id id) noexcept
 {
   if (in_bounds(pos)) {
     m_tiles[pos.row_index()][pos.col_index()] = id;
   }
 }
 
-void layer::set_opacity(const double opacity)
+void tile_layer::set_opacity(const double opacity)
 {
   m_opacity = std::clamp(opacity, 0.0, 1.0);
 }
 
-void layer::set_name(QString name)
+void tile_layer::set_name(QString name)
 {
   m_name = std::move(name);
 }
 
-void layer::set_visible(const bool visible) noexcept
+void tile_layer::set_visible(const bool visible) noexcept
 {
   m_visible = visible;
 }
 
-auto layer::row_count() const noexcept -> row_t
+auto tile_layer::row_count() const noexcept -> row_t
 {
   return row_t{static_cast<int>(m_tiles.size())};
 }
 
-auto layer::col_count() const noexcept -> col_t
+auto tile_layer::col_count() const noexcept -> col_t
 {
   assert(!m_tiles.empty());
   return col_t{static_cast<int>(m_tiles[0].size())};
 }
 
-auto layer::tile_count() const noexcept -> int
+auto tile_layer::tile_count() const noexcept -> int
 {
   return row_count().get() * col_count().get();
 }
 
-auto layer::tile_at(const position& pos) const -> maybe<tile_id>
+auto tile_layer::tile_at(const position& pos) const -> maybe<tile_id>
 {
   if (in_bounds(pos)) {
     return m_tiles[pos.row_index()][pos.col_index()];
@@ -176,7 +176,7 @@ auto layer::tile_at(const position& pos) const -> maybe<tile_id>
   }
 }
 
-auto layer::in_bounds(const position& pos) const noexcept -> bool
+auto tile_layer::in_bounds(const position& pos) const noexcept -> bool
 {
   const auto row = pos.row_index();
   return (row < m_tiles.size()) && (pos.col_index() < m_tiles[row].size());

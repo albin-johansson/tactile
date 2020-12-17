@@ -7,7 +7,7 @@ using namespace tactile;
 
 TEST_CASE("Correctness of flood fill algorithm", "[flood_fill]")
 {
-  core::layer layer{5_row, 5_col};
+  core::tile_layer layer{5_row, 5_col};
   for (int i = 0; i < 5; ++i) {
     layer.set_tile({row_t{i}, col_t{i}}, 1_t);
   }
@@ -80,7 +80,7 @@ TEST_CASE("Correctness of flood fill algorithm", "[flood_fill]")
 
 TEST_CASE("Out-of-bounds position", "[flood_fill]")
 {
-  core::layer layer{5_row, 5_col};
+  core::tile_layer layer{5_row, 5_col};
 
   std::vector<core::position> positions;
   CHECK_NOTHROW(layer.flood({5_row, 5_col}, empty, positions));

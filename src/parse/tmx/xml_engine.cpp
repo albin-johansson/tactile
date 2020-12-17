@@ -12,7 +12,7 @@ auto xml_engine::from_file(const QFileInfo& path) -> maybe<document_type>
   return xml::from_file(path);
 }
 
-auto xml_engine::add_tiles(core::layer& layer,
+auto xml_engine::add_tiles(core::tile_layer& layer,
                            const object_type& element,
                            parse_error& error) -> bool
 {

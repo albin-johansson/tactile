@@ -11,7 +11,7 @@
 namespace tactile::core {
 
 /**
- * \class layer
+ * \class tile_layer
  *
  * \brief Represents a layer of tiles in a map.
  *
@@ -19,9 +19,9 @@ namespace tactile::core {
  *
  * \see `map`
  *
- * \headerfile layer.hpp
+ * \headerfile tile_layer.hpp
  */
-class layer final
+class tile_layer final
 {
   using tile_row = std::vector<tile_id>;
   using tile_matrix = std::vector<tile_row>;
@@ -40,14 +40,14 @@ class layer final
    *
    * \since 0.1.0
    */
-  layer(row_t nRows, col_t nCols);
+  tile_layer(row_t nRows, col_t nCols);
 
   /**
    * \brief Creates a tile layer.
    *
    * \since 0.1.0
    */
-  layer() : layer{5_row, 5_col}
+  tile_layer() : tile_layer{5_row, 5_col}
   {}
 
   /**

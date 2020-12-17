@@ -29,7 +29,7 @@ void map_command::restore_tiles()
 
 void map_command::save_tiles(row_range rows, col_range cols)
 {
-  m_map->each_layer([&](layer_id id, const core::layer& layer) {
+  m_map->each_layer([&](layer_id id, const core::tile_layer& layer) {
     auto& tiles = tile_data(id);
     for (auto row = rows.first; row < rows.second; ++row) {
       for (auto col = cols.first; col < cols.second; ++col) {

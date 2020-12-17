@@ -32,7 +32,7 @@ concept is_parser = is_object<Object> &&
                     requires(Parser parser,
                              const Document& document,
                              const Object& object,
-                             core::layer& layer,
+                             core::tile_layer& layer,
                              parse_error& error,
                              const QFileInfo& path)
 {
@@ -320,7 +320,7 @@ class map_parser final
           return;
         }
 
-        auto layer = std::make_shared<core::layer>(row_t{*rows}, col_t{*cols});
+        auto layer = std::make_shared<core::tile_layer>(row_t{*rows}, col_t{*cols});
 
         layer->set_visible(elem.integer(element_id::visible, 1) == 1);
         layer->set_opacity(elem.floating(element_id::opacity, 1.0));

@@ -72,7 +72,7 @@ void properties_widget::selected_map(const core::map_document& document)
 void properties_widget::updated_map(const core::map_document& document)
 {}
 
-void properties_widget::select_layer(const core::layer& layer)
+void properties_widget::select_layer(const core::tile_layer& layer)
 {}
 
 void properties_widget::added_property(const QString& name,

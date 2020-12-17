@@ -31,7 +31,7 @@ class properties_widget final : public QWidget
 
   void updated_map(const core::map_document& document);
 
-  void select_layer(const core::layer& layer);
+  void select_layer(const core::tile_layer& layer);
 
   void added_property(const QString& name, const core::property& property);
 

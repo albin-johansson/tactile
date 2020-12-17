@@ -7,9 +7,9 @@
 #include <concepts>  // invocable
 
 #include "json_element.hpp"
-#include "layer.hpp"
 #include "map_file_type.hpp"
 #include "parse_error.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile::tmx {
 
@@ -25,7 +25,7 @@ class json_engine final
   [[nodiscard]] static auto from_file(const QFileInfo& path)
       -> maybe<document_type>;
 
-  [[nodiscard]] static auto add_tiles(core::layer& layer,
+  [[nodiscard]] static auto add_tiles(core::tile_layer& layer,
                                       const object_type& element,
                                       parse_error& error) -> bool;
 

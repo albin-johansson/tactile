@@ -1,38 +1,37 @@
-#include "layer.hpp"
-
 #include <catch.hpp>
 
 #include "algorithm.hpp"
 #include "position.hpp"
 #include "tactile_error.hpp"
+#include "tile_layer.hpp"
 
 using namespace tactile;
 
-TEST_CASE("layer(row_t, col_t)", "[layer]")
+TEST_CASE("tile_layer(row_t, col_t)", "[tile_layer]")
 {
   SECTION("Invalid dimensions")
   {
-    CHECK_THROWS_AS(core::layer(0_row, 0_col), tactile_error);
-    CHECK_THROWS_AS(core::layer(1_row, 0_col), tactile_error);
-    CHECK_THROWS_AS(core::layer(0_row, 1_col), tactile_error);
-    CHECK_THROWS_AS(core::layer(-1_row, -1_col), tactile_error);
+    CHECK_THROWS_AS(core::tile_layer(0_row, 0_col), tactile_error);
+    CHECK_THROWS_AS(core::tile_layer(1_row, 0_col), tactile_error);
+    CHECK_THROWS_AS(core::tile_layer(0_row, 1_col), tactile_error);
+    CHECK_THROWS_AS(core::tile_layer(-1_row, -1_col), tactile_error);
   }
 
   SECTION("Valid dimensions")
   {
-    CHECK_NOTHROW(core::layer(1_row, 1_col));
+    CHECK_NOTHROW(core::tile_layer(1_row, 1_col));
 
     const auto rows = 18_row;
     const auto cols = 52_col;
-    const core::layer layer{rows, cols};
+    const core::tile_layer layer{rows, cols};
     CHECK(layer.row_count() == rows);
     CHECK(layer.col_count() == cols);
   }
 }
 
-TEST_CASE("layer::for_each", "[layer]")
+TEST_CASE("tile_layer::for_each", "[tile_layer]")
 {
-  core::layer layer;
+  core::tile_layer layer;
 
   int count{0};
   layer.for_each([&](tile_id id) {
@@ -42,9 +41,9 @@ TEST_CASE("layer::for_each", "[layer]")
   CHECK(count == layer.tile_count());
 }
 
-TEST_CASE("layer::remove_all", "[layer]")
+TEST_CASE("tile_layer::remove_all", "[tile_layer]")
 {
-  core::layer layer;
+  core::tile_layer layer;
   std::vector<core::position> positions;
 
   layer.flood({}, 1_t, positions);
@@ -58,12 +57,12 @@ TEST_CASE("layer::remove_all", "[layer]")
   });
 }
 
-TEST_CASE("layer::add_row", "[layer]")
+TEST_CASE("tile_layer::add_row", "[tile_layer]")
 {
   const auto nRows = 5_row;
   const tile_id tileID{84};
 
-  core::layer layer{nRows, 3_col};
+  core::tile_layer layer{nRows, 3_col};
   layer.add_row(tileID);
 
   CHECK(layer.row_count() == (nRows + 1_row));
@@ -74,12 +73,12 @@ TEST_CASE("layer::add_row", "[layer]")
   }
 }
 
-TEST_CASE("layer::add_col", "[layer]")
+TEST_CASE("tile_layer::add_col", "[tile_layer]")
 {
   const auto nCols = 7_col;
   const tile_id tileID{33};
 
-  core::layer layer{5_row, nCols};
+  core::tile_layer layer{5_row, nCols};
   layer.add_col(tileID);
 
   CHECK(layer.col_count() == (nCols + 1_col));
@@ -90,27 +89,27 @@ TEST_CASE("layer::add_col", "[layer]")
   }
 }
 
-TEST_CASE("layer::remove_row", "[layer]")
+TEST_CASE("tile_layer::remove_row", "[tile_layer]")
 {
-  core::layer layer{5_row, 5_col};
+  core::tile_layer layer{5_row, 5_col};
   for (int i = 0; i < 10; ++i) {
     layer.remove_row();  // shouldn't throw
   }
   CHECK(layer.row_count() == 1_row);
 }
 
-TEST_CASE("layer::remove_col", "[layer]")
+TEST_CASE("tile_layer::remove_col", "[tile_layer]")
 {
-  core::layer layer{5_row, 5_col};
+  core::tile_layer layer{5_row, 5_col};
   for (int i = 0; i < 10; ++i) {
     layer.remove_col();  // shouldn't throw
   }
   CHECK(layer.col_count() == 1_col);
 }
 
-TEST_CASE("layer::set_rows", "[layer]")
+TEST_CASE("tile_layer::set_rows", "[tile_layer]")
 {
-  core::layer layer{5_row, 5_col};
+  core::tile_layer layer{5_row, 5_col};
 
   CHECK(layer.row_count() == 5_row);
   CHECK(layer.col_count() == 5_col);
@@ -124,9 +123,9 @@ TEST_CASE("layer::set_rows", "[layer]")
   CHECK(layer.col_count() == 5_col);
 }
 
-TEST_CASE("layer::set_cols", "[layer]")
+TEST_CASE("tile_layer::set_cols", "[tile_layer]")
 {
-  core::layer layer{5_row, 5_col};
+  core::tile_layer layer{5_row, 5_col};
 
   CHECK(layer.row_count() == 5_row);
   CHECK(layer.col_count() == 5_col);
@@ -140,9 +139,9 @@ TEST_CASE("layer::set_cols", "[layer]")
   CHECK(layer.col_count() == 8_col);
 }
 
-TEST_CASE("layer::set_tile", "[layer]")
+TEST_CASE("tile_layer::set_tile", "[tile_layer]")
 {
-  core::layer layer;
+  core::tile_layer layer;
 
   const core::position pos{2_row, 2_col};
   CHECK(*layer.tile_at(pos) == empty);
@@ -160,9 +159,9 @@ TEST_CASE("layer::set_tile", "[layer]")
                        col_t{layer.col_count()}}) == std::nullopt);
 }
 
-TEST_CASE("layer::set_opacity", "[layer]")
+TEST_CASE("tile_layer::set_opacity", "[tile_layer]")
 {
-  core::layer layer;
+  core::tile_layer layer;
   CHECK(layer.opacity() == 1.0);
 
   SECTION("Valid opacity")
@@ -186,9 +185,9 @@ TEST_CASE("layer::set_opacity", "[layer]")
   }
 }
 
-TEST_CASE("layer::set_visible", "[layer]")
+TEST_CASE("tile_layer::set_visible", "[tile_layer]")
 {
-  core::layer layer;
+  core::tile_layer layer;
 
   CHECK(layer.visible());
 
@@ -199,42 +198,42 @@ TEST_CASE("layer::set_visible", "[layer]")
   CHECK(layer.visible());
 }
 
-TEST_CASE("layer::row_count", "[layer]")
+TEST_CASE("tile_layer::row_count", "[tile_layer]")
 {
-  const core::layer layer{5_row, 7_col};
+  const core::tile_layer layer{5_row, 7_col};
   CHECK(layer.row_count() == 5_row);
 }
 
-TEST_CASE("layer::col_count", "[layer]")
+TEST_CASE("tile_layer::col_count", "[tile_layer]")
 {
-  const core::layer layer{5_row, 7_col};
+  const core::tile_layer layer{5_row, 7_col};
   CHECK(layer.col_count() == 7_col);
 }
 
-TEST_CASE("layer::tile_count", "[layer]")
+TEST_CASE("tile_layer::tile_count", "[tile_layer]")
 {
-  const core::layer layer{4_row, 4_col};
+  const core::tile_layer layer{4_row, 4_col};
   CHECK(layer.tile_count() == 16);
 }
 
-TEST_CASE("layer::tile_at", "[layer]")
+TEST_CASE("tile_layer::tile_at", "[tile_layer]")
 {
-  const core::layer layer{5_row, 5_col};
+  const core::tile_layer layer{5_row, 5_col};
   CHECK(layer.tile_at({0_row, 0_col}) != std::nullopt);
   CHECK(layer.tile_at({4_row, 4_col}) != std::nullopt);
   CHECK(layer.tile_at({5_row, 5_col}) == std::nullopt);
 }
 
-TEST_CASE("layer::in_bounds", "[layer]")
+TEST_CASE("tile_layer::in_bounds", "[tile_layer]")
 {
-  const core::layer layer{5_row, 5_col};
+  const core::tile_layer layer{5_row, 5_col};
   CHECK(layer.in_bounds({0_row, 0_col}));
   CHECK(layer.in_bounds({4_row, 4_col}));
   CHECK(!layer.in_bounds({5_row, 5_col}));
 }
 
-TEST_CASE("layer::visible", "[layer]")
+TEST_CASE("tile_layer::visible", "[tile_layer]")
 {
-  const core::layer layer;
+  const core::tile_layer layer;
   CHECK(layer.visible());
 }
