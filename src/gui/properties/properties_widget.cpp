@@ -9,12 +9,6 @@
 #include "ui_properties_widget.h"
 
 namespace tactile::gui {
-namespace {
-
-inline constexpr int nameColumn = 0;
-inline constexpr int valueColumn = 1;
-
-}  // namespace
 
 properties_widget::properties_widget(QWidget* parent)
     : QWidget{parent}
@@ -162,7 +156,7 @@ void properties_widget::when_item_double_clicked(QTreeWidgetItem* item,
                                                  const int column)
 {
   if (auto* treeItem = dynamic_cast<property_tree_item*>(item)) {
-    if (column == nameColumn && !treeItem->is_name_editable()) {
+    if (column == 0 && !treeItem->is_name_editable()) {
       return;  // Can't change name of predefined properties
     } else if (treeItem->flags() & Qt::ItemIsEditable) {
       m_ui->treeWidget->editItem(treeItem, column);
