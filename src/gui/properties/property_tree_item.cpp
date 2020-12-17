@@ -126,25 +126,26 @@ property_tree_item::property_tree_item(const QString& name,
                                        const core::property::type type,
                                        QTreeWidgetItem* parent)
     : QTreeWidgetItem{parent}
+    , m_type{type}
     , m_isInlineProperty{type != core::property::color}
 {
   Q_ASSERT(parent);
 
   setText(0, name);
-  setToolTip(0, tooltip_for_type(type));
+  setToolTip(0, tooltip_for_type(m_type));
 
-  if (const auto value = value_for_type(type)) {
+  if (const auto value = value_for_type(m_type)) {
     setText(1, *value);
   }
 
   const auto index = parent->indexOfChild(this);
-  if (auto* widget = inline_widget_for_type(type, index)) {
+  if (auto* widget = inline_widget_for_type(m_type, index)) {
     Q_ASSERT(treeWidget());
     widget->setAutoFillBackground(true);
     treeWidget()->setItemWidget(this, 1, widget);
   }
 
-  if (type == core::property::color) {
+  if (m_type == core::property::color) {
     add_color_items();
   }
 }
@@ -222,6 +223,11 @@ void property_tree_item::add_color_items()
 void property_tree_item::set_name_editable(const bool editable) noexcept
 {
   m_nameEditable = editable;
+}
+
+auto property_tree_item::property_type() const noexcept -> core::property::type
+{
+  return m_type;
 }
 
 auto property_tree_item::is_inline_property() const noexcept -> bool

@@ -46,11 +46,14 @@ class property_tree_item final : public QTreeWidgetItem
 
   void set_name_editable(bool editable) noexcept;
 
+  [[nodiscard]] auto property_type() const noexcept -> core::property::type;
+
   [[nodiscard]] auto is_inline_property() const noexcept -> bool;
 
   [[nodiscard]] auto is_name_editable() const noexcept -> bool;
 
  private:
+  core::property::type m_type;
   bool m_nameEditable{false};
   bool m_isInlineProperty{true};
 
