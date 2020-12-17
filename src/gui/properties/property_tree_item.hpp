@@ -1,14 +1,13 @@
 #pragma once
 
-#include <QTreeWidgetItem>
-
 #include "algorithm.hpp"
 #include "property.hpp"
 #include "tactile_error.hpp"
+#include "tree_widget_item.hpp"
 
 namespace tactile::gui {
 
-class property_tree_item final : public QTreeWidgetItem
+class property_tree_item final : public tree_widget_item
 {
  public:
   explicit property_tree_item(QTreeWidgetItem* parent);
@@ -34,7 +33,7 @@ class property_tree_item final : public QTreeWidgetItem
   [[deprecated]] property_tree_item(const QString& name,
                                     T value,
                                     QTreeWidgetItem* parent = nullptr)
-      : QTreeWidgetItem{parent}
+      : tree_widget_item{parent}
   {
     const auto str = QString::number(value);
     if (str.isNull()) {

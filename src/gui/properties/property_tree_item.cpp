@@ -110,7 +110,7 @@ namespace {
 }  // namespace
 
 property_tree_item::property_tree_item(QTreeWidgetItem* parent)
-    : QTreeWidgetItem{parent}
+    : tree_widget_item{parent}
 {}
 
 property_tree_item::property_tree_item(const QString& name,
@@ -125,7 +125,7 @@ property_tree_item::property_tree_item(const QString& name,
 property_tree_item::property_tree_item(const QString& name,
                                        const core::property::type type,
                                        QTreeWidgetItem* parent)
-    : QTreeWidgetItem{parent}
+    : tree_widget_item{parent}
     , m_type{type}
     , m_isInlineProperty{type != core::property::color}
 {

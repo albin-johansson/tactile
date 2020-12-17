@@ -4,10 +4,12 @@
 
 namespace tactile::gui {
 
-class tree_widget_item final : public QTreeWidgetItem
+class tree_widget_item : public QTreeWidgetItem
 {
  public:
   explicit tree_widget_item(QTreeWidget* parent);
+
+  explicit tree_widget_item(QTreeWidgetItem* parent);
 
   /**
    * \brief Creates and returns a tree widget item that acts as a root node.

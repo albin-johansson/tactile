@@ -8,6 +8,10 @@ tree_widget_item::tree_widget_item(QTreeWidget* parent)
     : QTreeWidgetItem{parent}
 {}
 
+tree_widget_item::tree_widget_item(QTreeWidgetItem* parent)
+    : QTreeWidgetItem{parent}
+{}
+
 auto tree_widget_item::make_node(const QString& name, QTreeWidget* parent)
     -> tree_widget_item*
 {
