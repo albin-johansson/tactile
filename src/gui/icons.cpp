@@ -36,6 +36,22 @@ auto duplicate() -> const QIcon&
   return icon;
 }
 
+auto copy() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/copy.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
+auto paste() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/paste.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
 auto layer() -> const QIcon&
 {
   static const QIcon icon{
@@ -88,6 +104,14 @@ auto collapsed() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/collapsed.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
+auto object() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/object.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }

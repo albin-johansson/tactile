@@ -19,6 +19,10 @@ namespace tactile::gui::icons {
 
 [[nodiscard]] auto duplicate() -> const QIcon&;
 
+[[nodiscard]] auto copy() -> const QIcon&;
+
+[[nodiscard]] auto paste() -> const QIcon&;
+
 [[nodiscard]] auto layer() -> const QIcon&;
 
 [[nodiscard]] auto visible() -> const QIcon&;
@@ -32,5 +36,7 @@ namespace tactile::gui::icons {
 [[nodiscard]] auto collapsed() -> const QIcon&;
 
 [[nodiscard]] auto expanded() -> const QIcon&;
+
+[[nodiscard]] auto object() -> const QIcon&;
 
 }  // namespace tactile::gui::icons
