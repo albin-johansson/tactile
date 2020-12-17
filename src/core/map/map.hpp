@@ -122,7 +122,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void add_layer(layer_id id, std::shared_ptr<layer> layer);
+  void add_layer(layer_id id, std::shared_ptr<tile_layer> layer);
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
