@@ -24,6 +24,8 @@ properties_widget::properties_widget(QWidget* parent)
   m_ui->setupUi(this);
 
   setup_expand_collapse_icons(m_ui->treeWidget);
+  m_ui->treeWidget->header()->setSectionResizeMode(
+      QHeaderView::ResizeToContents);
 
   // clang-format off
   connect(m_ui->treeWidget, &QWidget::customContextMenuRequested, this, &properties_widget::trigger_context_menu);
