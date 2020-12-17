@@ -5,6 +5,7 @@
 
 #include "map_document.hpp"
 #include "property.hpp"
+#include "tree_widget_item.hpp"
 #include "vector_map.hpp"
 
 namespace Ui {
@@ -45,7 +46,7 @@ class properties_widget final : public QWidget
   Ui::properties_widget* m_ui{};
   vector_map<QString, core::property> m_props;
   QTreeWidgetItem* m_predefinedRoot{};
-  QTreeWidgetItem* m_customRoot{};
+  tree_widget_item* m_customRoot{};
   properties_context_menu* m_contextMenu{};
 
   void update_actions();

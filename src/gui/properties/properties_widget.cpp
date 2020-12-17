@@ -116,12 +116,11 @@ void properties_widget::update_actions()
 void properties_widget::add_item(const QString& name,
                                  const core::property::type type)
 {
-  if (auto* item = m_customRoot) {
-    auto* property = new property_tree_item{name, type, item};
-    property->set_name_editable(true);
-    if (property->is_inline_property()) {
-      when_item_double_clicked(property, valueColumn);
-    }
+  Q_ASSERT(m_customRoot);
+  auto* property = new property_tree_item{name, type, m_customRoot};
+  property->set_name_editable(true);
+  if (property->is_inline_property()) {
+    when_item_double_clicked(property, 1);
   }
 }
 
@@ -142,10 +141,9 @@ void properties_widget::when_new_property_button_clicked()
 
 void properties_widget::when_remove_property_button_clicked()
 {
-  for (auto* item : m_ui->treeWidget->selectedItems()) {
-    const auto index = m_customRoot->indexOfChild(item);
-    Q_ASSERT(index >= 0 && index < m_customRoot->childCount());
-    delete m_customRoot->takeChild(index);
+  if (auto* current = m_ui->treeWidget->currentItem()) {
+    Q_ASSERT(current->parent() == m_customRoot);
+    m_customRoot->erase(current);
   }
 }
 
