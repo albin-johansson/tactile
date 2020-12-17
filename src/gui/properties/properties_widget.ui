@@ -152,6 +152,9 @@
        <attribute name="headerMinimumSectionSize">
         <number>55</number>
        </attribute>
+       <attribute name="headerDefaultSectionSize">
+        <number>150</number>
+       </attribute>
        <attribute name="headerHighlightSections">
         <bool>false</bool>
        </attribute>
