@@ -1,7 +1,6 @@
 #include "properties_widget.hpp"
 
 #include "add_property_dialog.hpp"
-#include "icons.hpp"
 #include "property_map_root_item.hpp"
 #include "property_tree_item.hpp"
 #include "tactile_qstring.hpp"
@@ -22,21 +21,7 @@ properties_widget::properties_widget(QWidget* parent)
 {
   m_ui->setupUi(this);
 
-  connect(m_ui->treeWidget,
-          &QTreeWidget::itemCollapsed,
-          [](QTreeWidgetItem* item) {
-            if (!item->parent()) {
-              item->setIcon(nameColumn, icons::collapsed());
-            }
-          });
-
-  connect(m_ui->treeWidget,
-          &QTreeWidget::itemExpanded,
-          [](QTreeWidgetItem* item) {
-            if (!item->parent()) {
-              item->setIcon(nameColumn, icons::expanded());
-            }
-          });
+  setup_expand_collapse_icons(m_ui->treeWidget);
 
   // clang-format off
   connect(m_ui->treeWidget, &QTreeWidget::itemChanged, this, &properties_widget::when_item_modified);

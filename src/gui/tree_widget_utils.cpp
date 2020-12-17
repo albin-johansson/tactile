@@ -1,21 +1,26 @@
 #include "tree_widget_utils.hpp"
 
 #include "icons.hpp"
-#include "property_tree_item.hpp"
 
 namespace tactile::gui {
 
-auto make_tree_node(const QString& name, QTreeWidget* parent)
-    -> QTreeWidgetItem*
+void setup_expand_collapse_icons(QTreeWidget* widget)
 {
-  auto* item = new QTreeWidgetItem{parent};
+  QObject::connect(widget,
+                   &QTreeWidget::itemCollapsed,
+                   [](QTreeWidgetItem* item) {
+                     if (!item->parent()) {
+                       item->setIcon(0, icons::collapsed());
+                     }
+                   });
 
-  item->setFirstColumnSpanned(true);
-  item->setIcon(0, icons::expanded());
-  item->setText(0, name);
-  item->setExpanded(true);
-
-  return item;
+  QObject::connect(widget,
+                   &QTreeWidget::itemExpanded,
+                   [](QTreeWidgetItem* item) {
+                     if (!item->parent()) {
+                       item->setIcon(0, icons::expanded());
+                     }
+                   });
 }
 
 }  // namespace tactile::gui
