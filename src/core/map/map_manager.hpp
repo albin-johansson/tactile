@@ -165,6 +165,12 @@ class map_manager final : public QObject
   void moved_layer_back(layer_id id);
   void moved_layer_forward(layer_id id);
 
+  void added_property(const QString& name, const core::property& property);
+  void removed_property(const QString& name);
+  void moved_property_up(const QString& name);
+  void moved_property_down(const QString& name);
+  void duplicated_property(const QString& name);
+
  private:
   maybe<map_id> m_current;
   storage_type m_documents;

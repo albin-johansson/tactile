@@ -52,6 +52,11 @@ auto map_manager::add(map_document* document) -> map_id
   bind(&map_document::selected_layer,         &map_manager::selected_layer);
   bind(&map_document::moved_layer_back,       &map_manager::moved_layer_back);
   bind(&map_document::moved_layer_forward,    &map_manager::moved_layer_forward);
+  bind(&map_document::added_property,         &map_manager::added_property);
+  bind(&map_document::removed_property,       &map_manager::removed_property);
+  bind(&map_document::moved_property_up,      &map_manager::moved_property_up);
+  bind(&map_document::moved_property_down,    &map_manager::moved_property_down);
+  bind(&map_document::duplicated_property,    &map_manager::duplicated_property);
   // clang-format on
 
   const auto id = m_nextId;
