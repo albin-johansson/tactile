@@ -48,6 +48,8 @@ class properties_widget final : public QWidget
 
   void update_actions();
 
+  void enable_idle_views();
+
   void trigger_context_menu(const QPoint& pos);
 
  private slots:
@@ -57,9 +59,10 @@ class properties_widget final : public QWidget
 
   void when_item_selection_changed();
 
-  void when_item_modified(QTreeWidgetItem* item, int column);
+  void when_current_item_changed(QTreeWidgetItem* current,
+                                 QTreeWidgetItem* previous);
 
-  void when_item_double_clicked(QTreeWidgetItem* item, int column);
+  void when_item_modified(QTreeWidgetItem* item, int column);
 };
 
 }  // namespace tactile::gui

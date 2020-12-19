@@ -39,6 +39,12 @@ class property_tree_item : public tree_widget_item
    */
   void set_value_editable(bool editable);
 
+  virtual void enable_focus_view()
+  {}
+
+  virtual void enable_idle_view()
+  {}
+
   // clang-format off
 
   /**
@@ -111,7 +117,7 @@ class property_tree_item : public tree_widget_item
   // clang-format on
 
  protected:
-  using tree_widget_item::tree_widget_item;
+  explicit property_tree_item(QTreeWidgetItem* parent);
 
  private:
   bool m_isNameEditable{true};

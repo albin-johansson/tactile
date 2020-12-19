@@ -13,7 +13,7 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
+     <item row="1" column="0">
       <layout class="QVBoxLayout" name="leftButtonsLayout">
        <item>
         <widget class="QPushButton" name="addButton">
@@ -114,34 +114,22 @@
        </item>
       </layout>
      </item>
-     <item row="0" column="1">
-      <widget class="QTreeWidget" name="treeWidget">
+     <item row="1" column="1">
+      <widget class="QTreeWidget" name="tree">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
+       <property name="frameShape">
+        <enum>QFrame::HLine</enum>
+       </property>
        <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
-       </property>
-       <property name="lineWidth">
-        <number>0</number>
-       </property>
-       <property name="midLineWidth">
-        <number>1</number>
+        <enum>QFrame::Sunken</enum>
        </property>
        <property name="verticalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOn</enum>
        </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAsNeeded</enum>
-       </property>
-       <property name="tabKeyNavigation">
-        <bool>true</bool>
-       </property>
        <property name="alternatingRowColors">
         <bool>true</bool>
-       </property>
-       <property name="selectionBehavior">
-        <enum>QAbstractItemView::SelectRows</enum>
        </property>
        <property name="rootIsDecorated">
         <bool>false</bool>
@@ -149,38 +137,17 @@
        <property name="uniformRowHeights">
         <bool>true</bool>
        </property>
-       <property name="animated">
-        <bool>false</bool>
-       </property>
        <property name="headerHidden">
         <bool>true</bool>
        </property>
-       <property name="columnCount">
-        <number>2</number>
-       </property>
-       <attribute name="headerVisible">
-        <bool>false</bool>
-       </attribute>
-       <attribute name="headerMinimumSectionSize">
-        <number>55</number>
-       </attribute>
-       <attribute name="headerDefaultSectionSize">
-        <number>100</number>
-       </attribute>
-       <attribute name="headerHighlightSections">
-        <bool>false</bool>
-       </attribute>
        <column>
         <property name="text">
-         <string> Property</string>
-        </property>
-        <property name="textAlignment">
-         <set>AlignLeading|AlignTop</set>
+         <string>Property</string>
         </property>
        </column>
        <column>
         <property name="text">
-         <string> Value</string>
+         <string>Value</string>
         </property>
        </column>
       </widget>
