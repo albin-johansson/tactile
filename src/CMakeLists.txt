@@ -179,6 +179,9 @@ set(TACTILE_SOURCE_FILES
         gui/properties/item/property_bool_item.hpp
         gui/properties/item/property_file_item.cpp
         gui/properties/item/property_file_item.hpp
+        gui/properties/item/file_value_widget.cpp
+        gui/properties/item/file_value_widget.hpp
+        gui/properties/item/file_value_widget.ui
         gui/properties/item/property_file_dialog.cpp
         gui/properties/item/property_file_dialog.hpp
         gui/properties/item/property_color_item.cpp
