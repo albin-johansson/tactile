@@ -19,6 +19,11 @@ model::model() : m_maps{new map_manager{this}}, m_tools{this}
   connect(m_maps, &map_manager::moved_layer_back,       this, &model::moved_layer_back);
   connect(m_maps, &map_manager::moved_layer_forward,    this, &model::moved_layer_forward);
   connect(m_maps, &map_manager::removed_tileset,        this, &model::removed_tileset);
+  connect(m_maps, &map_manager::added_property,         this, &model::added_property);
+  connect(m_maps, &map_manager::removed_property,       this, &model::removed_property);
+  connect(m_maps, &map_manager::moved_property_up,      this, &model::moved_property_up);
+  connect(m_maps, &map_manager::moved_property_down,    this, &model::moved_property_down);
+  connect(m_maps, &map_manager::duplicated_property,    this, &model::duplicated_property);
 
   connect(m_maps, &map_manager::added_tileset, [this](tileset_id id) {
     const auto& tileset = current_document()->tilesets()->at(id);
@@ -254,6 +259,27 @@ void model::set_tileset_name(const tileset_id id, const QString& name)
 {
   if (auto* document = current_document()) {
     document->set_tileset_name(id, name);
+  }
+}
+
+void model::add_property(const QString& name, core::property::type type)
+{
+  if (auto* document = current_document()) {
+    document->add_property(name, type);
+  }
+}
+
+void model::remove_property(const QString& name)
+{
+  if (auto* document = current_document()) {
+    document->remove_property(name);
+  }
+}
+
+void model::rename_property(const QString& oldName, const QString& newName)
+{
+  if (auto* document = current_document()) {
+    document->rename_property(oldName, newName);
   }
 }
 

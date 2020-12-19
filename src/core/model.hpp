@@ -5,6 +5,7 @@
 #include "layer_id.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
+#include "property.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 #include "tool_id.hpp"
@@ -90,6 +91,13 @@ class model final : public QObject
 
   void added_tileset(map_id map, tileset_id id, const tileset& tileset);
   void removed_tileset(tileset_id id);
+
+  void added_property(const QString& name, const core::property& property);
+  void removed_property(const QString& name);
+  void renamed_property(const QString& oldName, const QString& newName);
+  void moved_property_up(const QString& name);
+  void moved_property_down(const QString& name);
+  void duplicated_property(const QString& name);
 
  public slots:
   /**
@@ -310,6 +318,12 @@ class model final : public QObject
    * \copydoc map_document::set_tileset_name()
    */
   void set_tileset_name(tileset_id id, const QString& name);
+
+  void add_property(const QString& name, core::property::type type);
+
+  void remove_property(const QString& name);
+
+  void rename_property(const QString& oldName, const QString& newName);
 
   /**
    * \copydoc map_manager::select()
