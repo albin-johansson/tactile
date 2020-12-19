@@ -4,9 +4,9 @@
 #include <QWidget>
 
 #include "map_document.hpp"
+#include "maybe.hpp"
 #include "property.hpp"
 #include "tree_widget_item.hpp"
-#include "vector_map.hpp"
 
 namespace Ui {
 class properties_widget;
@@ -24,34 +24,29 @@ class properties_widget final : public QWidget
   explicit properties_widget(QWidget* parent = nullptr);
 
  signals:
-  void ui_add_property(const QString& name, const core::property& property);
-  void ui_remove_property(const QString& name);
-  void ui_update_property(const QString& name, const core::property& property);
-  void ui_rename_property(const QString& oldName, const QString& newName);
+  void request_add_property(const QString& name, core::property::type type);
+  void request_remove_property(const QString& name);
+
+  void has_renamed_property(const QString& oldName, const QString& newName);
+  void has_set_property(const QString& name, const core::property& property);
 
  public slots:
   void selected_map(const core::map_document& document);
-
-  void updated_map(const core::map_document& document);
-
   void select_layer(const core::tile_layer& layer);
-
   void added_property(const QString& name, const core::property& property);
-
-  void updated_property(const QString& name, const core::property& property);
-
   void removed_property(const QString& name);
+  void moved_property_up(const QString& name);
+  void moved_property_down(const QString& name);
+  void duplicated_property(const QString& name);
 
  private:
   Ui::properties_widget* m_ui{};
-  vector_map<QString, core::property> m_props;
   QTreeWidgetItem* m_predefinedRoot{};
   tree_widget_item* m_customRoot{};
   properties_context_menu* m_contextMenu{};
+  maybe<QString> m_cachedName;
 
   void update_actions();
-
-  void add_item(const QString& name, core::property::type type);
 
   void trigger_context_menu(const QPoint& pos);
 

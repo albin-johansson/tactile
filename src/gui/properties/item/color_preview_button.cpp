@@ -24,6 +24,14 @@ color_preview_button::color_preview_button(QColor color, QWidget* parent)
   });
 }
 
+void color_preview_button::set_color(const QColor& color)
+{
+  set_red(color.red());
+  set_green(color.green());
+  set_blue(color.blue());
+  set_alpha(color.alpha());
+}
+
 void color_preview_button::set_red(const int red)
 {
   Q_ASSERT(red >= 0 && red <= 255);

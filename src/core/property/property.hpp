@@ -1,15 +1,25 @@
 #pragma once
 
+#include <QColor>
+#include <QFileInfo>
 #include <QString>
 #include <variant>  // variant, monostate
 
 #include "maybe.hpp"
+#include "nenya.hpp"
 
 namespace tactile::core {
+namespace detail {
+struct object_ref_t;
+}
+
+using object_ref = nenya::mirror_type<int, detail::object_ref_t>;
 
 template <typename T>
 concept property_type = std::same_as<T, QString> || std::same_as<T, int> ||
-                        std::same_as<T, double> || std::same_as<T, bool>;
+                        std::same_as<T, double> || std::same_as<T, bool> ||
+                        std::same_as<T, QColor> || std::same_as<T, QFileInfo> ||
+                        std::same_as<T, object_ref>;
 
 /**
  * \class property
@@ -22,10 +32,15 @@ concept property_type = std::same_as<T, QString> || std::same_as<T, int> ||
  */
 class property final
 {
-  // TODO types: string, int, float, object, file, bool, color
-
  public:
-  using value_type = std::variant<std::monostate, QString, int, double, bool>;
+  using value_type = std::variant<std::monostate,
+                                  QString,
+                                  QColor,
+                                  QFileInfo,
+                                  object_ref,
+                                  int,
+                                  double,
+                                  bool>;
 
   /**
    * \brief Provides values for all different possible property types.
@@ -40,7 +55,7 @@ class property final
     boolean,
     file,
     color,
-    object  // TODO consider renaming to "reference" or "object_ref"
+    object
   };
 
   /**
@@ -74,6 +89,8 @@ class property final
    */
   void reset();
 
+  void set_default(type t);
+
   /**
    * \brief Sets the value stored in the property.
    *
@@ -84,7 +101,7 @@ class property final
    * \since 0.2.0
    */
   template <property_type T>
-  void set_value(const T& value)
+  void set_value(const T& value = {})
   {
     m_value.emplace<T>(value);
   }

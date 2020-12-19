@@ -154,19 +154,37 @@ set(TACTILE_SOURCE_FILES
         gui/properties/properties_widget.cpp
         gui/properties/properties_widget.hpp
         gui/properties/properties_widget.ui
-        gui/properties/property_map_root_item.cpp
-        gui/properties/property_map_root_item.hpp
-        gui/properties/property_tree_item.cpp
-        gui/properties/property_tree_item.hpp
         gui/properties/add_property_dialog.ui
         gui/properties/add_property_dialog.hpp
         gui/properties/add_property_dialog.cpp
-        gui/properties/color_validator.cpp
-        gui/properties/color_validator.hpp
-        gui/properties/color_preview_button.cpp
-        gui/properties/color_preview_button.hpp
         gui/properties/properties_context_menu.cpp
         gui/properties/properties_context_menu.hpp
+
+        gui/properties/item/property_map_root_item.cpp
+        gui/properties/item/property_map_root_item.hpp
+        gui/properties/item/property_tree_item.cpp
+        gui/properties/item/property_tree_item.hpp
+        gui/properties/item/color_validator.cpp
+        gui/properties/item/color_validator.hpp
+        gui/properties/item/color_preview_button.cpp
+        gui/properties/item/color_preview_button.hpp
+        gui/properties/item/property_int_item.hpp
+        gui/properties/item/property_item_factory.cpp
+        gui/properties/item/property_item_factory.hpp
+        gui/properties/item/property_float_item.hpp
+        gui/properties/item/property_number_item.hpp
+        gui/properties/item/property_string_item.cpp
+        gui/properties/item/property_string_item.hpp
+        gui/properties/item/property_bool_item.cpp
+        gui/properties/item/property_bool_item.hpp
+        gui/properties/item/property_file_item.cpp
+        gui/properties/item/property_file_item.hpp
+        gui/properties/item/property_file_dialog.cpp
+        gui/properties/item/property_file_dialog.hpp
+        gui/properties/item/property_color_item.cpp
+        gui/properties/item/property_color_item.hpp
+        gui/properties/item/property_object_item.cpp
+        gui/properties/item/property_object_item.hpp
 
         command/command_id.hpp
         command/command_stack.hpp
@@ -301,6 +319,7 @@ target_include_directories(libTactile
         PUBLIC gui/tools
         PUBLIC gui/settings
         PUBLIC gui/properties
+        PUBLIC gui/properties/item
         PUBLIC gui/dialog
         PUBLIC gui/dialog/about
         PUBLIC gui/dialog/resize_map
