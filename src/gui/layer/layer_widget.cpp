@@ -68,14 +68,12 @@ layer_widget::layer_widget(QWidget* parent)
             }
           });
 
-  connect(m_ui->opacitySlider,
-          &QSlider::valueChanged,
-          [this](const int value) {
-            if (auto* item = current_item()) {
-              const auto dValue = static_cast<double>(value) / 100.0;
-              emit ui_set_layer_opacity(item->layer(), dValue);
-            }
-          });
+  connect(m_ui->opacitySlider, &QSlider::valueChanged, [this](const int value) {
+    if (auto* item = current_item()) {
+      const auto dValue = static_cast<double>(value) / 100.0;
+      emit ui_set_layer_opacity(item->layer(), dValue);
+    }
+  });
 }
 
 void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
@@ -128,7 +126,8 @@ void layer_widget::removed_layer(layer_id id)
   update_possible_actions();
 }
 
-void layer_widget::selected_layer(const layer_id id, const core::tile_layer& layer)
+void layer_widget::selected_layer(const layer_id id,
+                                  const core::tile_layer& layer)
 {
   Q_ASSERT(item_for_layer_id(id) != nullptr);
 
@@ -148,9 +147,10 @@ void layer_widget::selected_map(const map_id mapId,
     m_suffixes.emplace(mapId, 1);
   }
 
-  document.each_layer([this](const layer_id layerId, const core::tile_layer& layer) {
-    add_layer(layerId, layer);
-  });
+  document.each_layer(
+      [this](const layer_id layerId, const core::tile_layer& layer) {
+        add_layer(layerId, layer);
+      });
 
   if (const auto id = document.current_layer_id()) {
     if (auto* item = item_for_layer_id(*id)) {
@@ -200,7 +200,6 @@ void layer_widget::add_layer(const layer_id id, const core::tile_layer& layer)
   }
 
   auto* item = new layer_item{name, id, m_ui->layerList};
-
 
   m_ui->layerList->addItem(item);
   update_possible_actions();
