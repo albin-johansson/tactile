@@ -185,6 +185,7 @@ set(TACTILE_SOURCE_FILES
         gui/properties/item/property_color_item.hpp
         gui/properties/item/property_object_item.cpp
         gui/properties/item/property_object_item.hpp
+        gui/properties/item/property_item_type.hpp
 
         command/command_id.hpp
         command/command_stack.hpp
