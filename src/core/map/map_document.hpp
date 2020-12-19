@@ -12,6 +12,7 @@
 #include "map.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
+#include "property.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
 #include "vector_map.hpp"
@@ -275,6 +276,12 @@ class map_document final : public QObject
    */
   void mark_as_clean();
 
+  void add_property(const QString& name, property::type type);
+
+  void remove_property(const QString& name);
+
+  void rename_property(const QString& oldName, const QString& newName);
+
   /**
    * \copydoc map::set_visibility()
    */
@@ -353,7 +360,8 @@ class map_document final : public QObject
    *
    * \tparam T the type of the function object.
    *
-   * \param callable the function object that will be invoked for each tile_layer.
+   * \param callable the function object that will be invoked for each
+   * tile_layer.
    *
    * \since 0.1.0
    */
@@ -362,6 +370,14 @@ class map_document final : public QObject
   {
     for (const auto& [key, layer] : *m_map) {
       callable(key, *layer);
+    }
+  }
+
+  template <std::invocable<const QString&, const core::property&> T>
+  void each_property(T&& callable) const
+  {
+    for (const auto& [key, property] : m_properties) {
+      callable(key, property);
     }
   }
 
@@ -503,6 +519,12 @@ class map_document final : public QObject
   void moved_layer_back(layer_id);
   void moved_layer_forward(layer_id);
 
+  void added_property(const QString& name, const core::property& property);
+  void removed_property(const QString& name);
+  void moved_property_up(const QString& name);
+  void moved_property_down(const QString& name);
+  void duplicated_property(const QString& name);
+
  public slots:
   /**
    * \brief Adds a tileset to the document.
@@ -530,6 +552,7 @@ class map_document final : public QObject
  private:
   std::unique_ptr<map> m_map;
   std::unique_ptr<tileset_manager> m_tilesets;
+  vector_map<QString, core::property> m_properties;
   command_stack* m_commands{};
   QFileInfo m_path;
 

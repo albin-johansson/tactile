@@ -231,6 +231,33 @@ void map_document::mark_as_clean()
   m_commands->setClean();
 }
 
+void map_document::add_property(const QString& name, const property::type type)
+{
+  Q_ASSERT(!m_properties.contains(name));
+
+  core::property property;
+  property.set_default(type);
+  m_properties.emplace(name, property);
+
+  emit added_property(name, property);
+}
+
+void map_document::remove_property(const QString& name)
+{
+  m_properties.erase(name);
+  emit removed_property(name);
+}
+
+void map_document::rename_property(const QString& oldName,
+                                   const QString& newName)
+{
+  Q_ASSERT(m_properties.contains(oldName));
+
+  const auto prop = m_properties.at(oldName);
+  m_properties.erase(oldName);
+  m_properties.emplace(newName, prop);
+}
+
 void map_document::set_layer_visibility(const layer_id id, const bool visible)
 {
   m_map->set_visibility(id, visible);
