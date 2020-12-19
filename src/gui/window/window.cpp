@@ -109,6 +109,10 @@ void window::init_connections()
   connect(m_layerDock, &layer_dock::ui_move_layer_up,        this, &window::ui_move_layer_up);
   connect(m_layerDock, &layer_dock::ui_move_layer_down,      this, &window::ui_move_layer_down);
   connect(m_layerDock, &layer_dock::ui_duplicate_layer,      this, &window::ui_duplicate_layer);
+
+  connect(m_propertiesDock, &properties_dock::ui_add_property, this, &window::ui_add_property);
+  connect(m_propertiesDock, &properties_dock::ui_remove_property, this, &window::ui_remove_property);
+  connect(m_propertiesDock, &properties_dock::ui_rename_property, this, &window::ui_rename_property);
   // clang-format on
 }
 
@@ -300,7 +304,8 @@ void window::added_layer(const layer_id id, const core::tile_layer& layer)
   m_layerDock->added_layer(id, layer);
 }
 
-void window::added_duplicated_layer(const layer_id id, const core::tile_layer& layer)
+void window::added_duplicated_layer(const layer_id id,
+                                    const core::tile_layer& layer)
 {
   m_layerDock->added_duplicated_layer(id, layer);
 }
@@ -354,6 +359,31 @@ void window::handle_new_map(core::map_document* document,
   }
 
   m_ui->actionSave->setDisabled(document->is_clean());
+}
+
+void window::added_property(const QString& name, const core::property& property)
+{
+  m_propertiesDock->added_property(name, property);
+}
+
+void window::removed_property(const QString& name)
+{
+  m_propertiesDock->removed_property(name);
+}
+
+void window::moved_property_up(const QString& name)
+{
+  m_propertiesDock->moved_property_up(name);
+}
+
+void window::moved_property_down(const QString& name)
+{
+  m_propertiesDock->moved_property_down(name);
+}
+
+void window::duplicated_property(const QString& name)
+{
+  m_propertiesDock->duplicated_property(name);
 }
 
 void window::closeEvent(QCloseEvent* event)

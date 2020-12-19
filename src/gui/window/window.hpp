@@ -8,6 +8,7 @@
 #include "map_document.hpp"
 #include "map_id.hpp"
 #include "position.hpp"
+#include "property.hpp"
 #include "tactile_qstring.hpp"
 #include "tool_id.hpp"
 
@@ -101,6 +102,10 @@ class window final : public QMainWindow
   void ui_rename_tileset(tileset_id id, const QString& name);
   void ui_set_tileset_selection(const core::tileset::selection& selection);
 
+  void ui_add_property(const QString& name, core::property::type type);
+  void ui_remove_property(const QString& name);
+  void ui_rename_property(const QString& oldName, const QString& newName);
+
   void ui_resize_map();
 
   void ui_increase_zoom();
@@ -160,6 +165,16 @@ class window final : public QMainWindow
   void handle_new_map(core::map_document* document,
                       map_id id,
                       const QString& name = TACTILE_QSTRING(u"map"));
+
+  void added_property(const QString& name, const core::property& property);
+
+  void removed_property(const QString& name);
+
+  void moved_property_up(const QString& name);
+
+  void moved_property_down(const QString& name);
+
+  void duplicated_property(const QString& name);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
