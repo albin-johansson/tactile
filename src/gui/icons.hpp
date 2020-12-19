@@ -39,4 +39,6 @@ namespace tactile::gui::icons {
 
 [[nodiscard]] auto object() -> const QIcon&;
 
+[[nodiscard]] auto question_mark() -> const QIcon&;
+
 }  // namespace tactile::gui::icons

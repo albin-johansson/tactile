@@ -116,4 +116,12 @@ auto object() -> const QIcon&
   return icon;
 }
 
+auto question_mark() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/question-mark.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
 }  // namespace tactile::gui::icons
