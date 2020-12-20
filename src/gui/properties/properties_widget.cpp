@@ -19,6 +19,7 @@ properties_widget::properties_widget(QWidget* parent)
 {
   m_ui->setupUi(this);
   m_ui->tree->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
   setup_expand_collapse_icons(m_ui->tree);
 
   // clang-format off
