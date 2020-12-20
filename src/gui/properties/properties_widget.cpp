@@ -26,14 +26,14 @@ properties_widget::properties_widget(QWidget* parent)
   connect(m_ui->tree, &QWidget::customContextMenuRequested,
           this,       &properties_widget::trigger_context_menu);
 
-  connect(m_ui->tree, &QTreeWidget::itemChanged,
-          this,       &properties_widget::when_item_modified);
-
   connect(m_ui->tree, &QTreeWidget::itemSelectionChanged,
           this,       &properties_widget::when_item_selection_changed);
 
   connect(m_ui->tree, &QTreeWidget::currentItemChanged,
           this,       &properties_widget::when_current_item_changed);
+
+  connect(m_ui->tree, &QTreeWidget::itemChanged,
+          this,       &properties_widget::when_item_modified);
 
   connect(m_ui->addButton, &QPushButton::clicked,
           this,            &properties_widget::when_new_property_button_clicked);
