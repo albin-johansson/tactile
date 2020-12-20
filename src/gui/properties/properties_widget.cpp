@@ -32,6 +32,9 @@ properties_widget::properties_widget(QWidget* parent)
   connect(m_ui->tree, &QTreeWidget::currentItemChanged,
           this,       &properties_widget::when_current_item_changed);
 
+  connect(m_ui->tree, &QTreeWidget::itemDoubleClicked,
+          this,       &properties_widget::when_item_double_clicked);
+
   connect(m_ui->tree, &QTreeWidget::itemChanged,
           this,       &properties_widget::when_item_modified);
 
@@ -48,10 +51,11 @@ properties_widget::properties_widget(QWidget* parent)
           this,          &properties_widget::when_remove_property_button_clicked);
   // clang-format on
 
-  //  connect(m_contextMenu, &context_menu::rename, [this] {
-  //    Q_ASSERT(m_ui->tree->currentItem());
-  //    when_item_double_clicked(m_ui->tree->currentItem(), 0);
-  //  });
+  connect(m_contextMenu, &properties_context_menu::rename, [this] {
+    Q_ASSERT(m_ui->tree->currentItem());
+    m_cachedName.emplace(m_ui->tree->currentItem()->text(0));
+    m_ui->tree->editItem(m_ui->tree->currentItem(), 0);
+  });
 
   update_actions();
 }
@@ -177,6 +181,7 @@ void properties_widget::trigger_context_menu(const QPoint& pos)
 
 void properties_widget::when_new_property_button_clicked()
 {
+  m_cachedName.reset();
   add_property_dialog::spawn(
       [this](const QString& name, const core::property::type type) {
         emit request_add_property(name, type);
@@ -187,7 +192,7 @@ void properties_widget::when_new_property_button_clicked()
 
 void properties_widget::when_remove_property_button_clicked()
 {
-  if (auto* current = m_ui->tree->currentItem()) {
+  if (const auto* current = m_ui->tree->currentItem()) {
     emit request_remove_property(current->text(0));
   }
 }
@@ -213,16 +218,23 @@ void properties_widget::when_current_item_changed(QTreeWidgetItem* current,
   }
 }
 
+void properties_widget::when_item_double_clicked(QTreeWidgetItem* item,
+                                                 const int column)
+{
+  if (column == 0 && item->parent() == m_customRoot) {
+    m_cachedName.emplace(item->text(0));
+  } else {
+    m_cachedName.reset();
+  }
+}
+
 void properties_widget::when_item_modified(QTreeWidgetItem* item,
                                            const int column)
 {
-
-  //  if (column == 0 && m_cachedName) {
-  //    emit has_renamed_property(*m_cachedName, item->text(0));
-  //    m_cachedName.reset();
-  //  } else if (column == 1 && item->text(column).isEmpty()) {
-  //    item->setText(column, TACTILE_QSTRING(u"N/A"));
-  //  }
+  if (column == 0 && m_cachedName) {
+    emit has_renamed_property(*m_cachedName, item->text(0));
+    m_cachedName.reset();
+  }
 }
 
 }  // namespace tactile::gui
