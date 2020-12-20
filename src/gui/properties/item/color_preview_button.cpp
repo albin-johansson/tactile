@@ -60,6 +60,11 @@ void color_preview_button::set_alpha(const int alpha)
   update_color(m_color);
 }
 
+auto color_preview_button::current_color() const -> const QColor&
+{
+  return m_color;
+}
+
 void color_preview_button::update_color(const QColor& color)
 {
   static const auto fmt = TACTILE_QSTRING(u"background-color: %1");

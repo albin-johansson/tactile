@@ -21,6 +21,8 @@ class color_preview_button final : public QPushButton
 
   void set_alpha(int alpha);
 
+  [[nodiscard]] auto current_color() const -> const QColor&;
+
  signals:
   void color_changed(const QColor& color);
 
