@@ -68,16 +68,13 @@ class property_number_item final : public property_tree_item
     }
   }
 
-  [[nodiscard]] auto is_inline() const noexcept -> bool override
+  [[nodiscard]] auto get_value_widget() -> number_value_widget* override
   {
-    return true;
+    return nullptr;
   }
 
-  [[nodiscard]] auto get_value_widget() -> QLineEdit* override
-  {
-    Q_ASSERT(treeWidget());
-    return qobject_cast<QLineEdit*>(treeWidget()->itemWidget(this, 1));
-  }
+ private:
+  number_value_widget* m_edit{};
 };
 
 }  // namespace tactile::gui

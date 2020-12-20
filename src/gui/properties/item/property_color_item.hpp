@@ -21,8 +21,6 @@ class property_color_item final : public property_tree_item
   [[nodiscard]] auto property_type() const noexcept
       -> core::property::type override;
 
-  [[nodiscard]] auto is_inline() const noexcept -> bool override;
-
   [[nodiscard]] auto get_value_widget() -> QWidget* override;
 
  private:

@@ -32,11 +32,6 @@ auto property_bool_item::property_type() const noexcept -> core::property::type
   return core::property::boolean;
 }
 
-auto property_bool_item::is_inline() const noexcept -> bool
-{
-  return false;
-}
-
 auto property_bool_item::get_value_widget() -> QCheckBox*
 {
   Q_ASSERT(treeWidget());

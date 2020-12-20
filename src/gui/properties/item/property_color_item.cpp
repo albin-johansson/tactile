@@ -81,11 +81,6 @@ auto property_color_item::property_type() const noexcept -> core::property::type
   return core::property::color;
 }
 
-auto property_color_item::is_inline() const noexcept -> bool
-{
-  return false;
-}
-
 auto property_color_item::get_value_widget() -> QWidget*
 {
   return nullptr;

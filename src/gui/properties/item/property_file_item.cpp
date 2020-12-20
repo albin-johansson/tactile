@@ -59,11 +59,6 @@ auto property_file_item::property_type() const noexcept -> core::property::type
   return core::property::file;
 }
 
-auto property_file_item::is_inline() const noexcept -> bool
-{
-  return false;
-}
-
 auto property_file_item::get_value_widget() -> QLineEdit*
 {
   return nullptr;

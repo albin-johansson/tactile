@@ -24,8 +24,6 @@ class property_file_item final : public property_tree_item
   [[nodiscard]] auto property_type() const noexcept
       -> core::property::type override;
 
-  [[nodiscard]] auto is_inline() const noexcept -> bool override;
-
  protected:
   [[nodiscard]] auto get_value_widget() -> QLineEdit* override;
 

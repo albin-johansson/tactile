@@ -58,11 +58,6 @@ auto property_string_item::property_type() const noexcept
   return core::property::string;
 }
 
-auto property_string_item::is_inline() const noexcept -> bool
-{
-  return true;
-}
-
 auto property_string_item::get_value_widget() -> QLineEdit*
 {
   Q_ASSERT(treeWidget());

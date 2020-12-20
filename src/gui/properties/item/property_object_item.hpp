@@ -17,8 +17,6 @@ class property_object_item final : public property_tree_item
       -> core::property::type override;
 
   [[nodiscard]] auto get_value_widget() -> QWidget* override;
-
-  [[nodiscard]] auto is_inline() const noexcept -> bool override;
 };
 
 }  // namespace tactile::gui

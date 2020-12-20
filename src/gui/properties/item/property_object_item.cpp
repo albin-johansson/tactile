@@ -33,9 +33,4 @@ auto property_object_item::get_value_widget() -> QWidget*
   return nullptr;
 }
 
-auto property_object_item::is_inline() const noexcept -> bool
-{
-  return false;
-}
-
 }  // namespace tactile::gui

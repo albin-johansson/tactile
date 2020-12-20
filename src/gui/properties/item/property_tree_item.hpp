@@ -82,19 +82,6 @@ class property_tree_item : public tree_widget_item
   virtual auto get_value_widget() -> QWidget* = 0;
 
   /**
-   * \brief Indicates whether or not the item is an "inline" item.
-   *
-   * \details A property tree item is considered to be an inline item if it can
-   * be edited in the widget adjacent to the name widget.
-   *
-   * \return `true` if the property item is an "inline" item; `false` otherwise.
-   *
-   * \since 0.2.0
-   */
-  [[nodiscard]]
-  virtual auto is_inline() const noexcept -> bool = 0;
-
-  /**
    * \brief Indicates whether or not the name is editable.
    *
    * \return `true` if the name is editable; `false` otherwise.
