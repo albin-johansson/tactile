@@ -7,12 +7,10 @@ namespace tactile::gui {
 property_object_item::property_object_item(const QString& name,
                                            const core::property& property,
                                            QTreeWidgetItem* parent)
-    : property_tree_item{parent}
+    : property_tree_item{name, parent}
 {
-  Q_ASSERT(parent);
   Q_ASSERT(property.is<core::object_ref>());
 
-  setText(0, name);
   setToolTip(0, TACTILE_QSTRING(u"(object)"));
 
 //  Q_ASSERT(treeWidget());

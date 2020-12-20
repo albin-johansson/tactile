@@ -11,11 +11,9 @@ namespace tactile::gui {
 property_file_item::property_file_item(const QString& name,
                                        const core::property& property,
                                        QTreeWidgetItem* parent)
-    : property_tree_item{parent}
+    : property_tree_item{name, parent}
     , m_valueWidget{new file_value_widget{}}
 {
-  Q_ASSERT(parent);
-  setText(0, name);
   setToolTip(0, TACTILE_QSTRING(u"(file)"));
   setText(1, TACTILE_QSTRING(u"N/A"));
 

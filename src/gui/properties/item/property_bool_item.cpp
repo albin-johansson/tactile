@@ -7,10 +7,8 @@ namespace tactile::gui {
 property_bool_item::property_bool_item(const QString& name,
                                        const core::property& property,
                                        QTreeWidgetItem* parent)
-    : property_tree_item{parent}
+    : property_tree_item{name, parent}
 {
-  Q_ASSERT(parent);
-  setText(0, name);
   setToolTip(0, TACTILE_QSTRING(u"(bool)"));
 
   Q_ASSERT(treeWidget());

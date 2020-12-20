@@ -104,7 +104,7 @@ class property_tree_item : public tree_widget_item
   // clang-format on
 
  protected:
-  explicit property_tree_item(QTreeWidgetItem* parent);
+  explicit property_tree_item(const QString& name, QTreeWidgetItem* parent);
 
  private:
   bool m_isNameEditable{true};

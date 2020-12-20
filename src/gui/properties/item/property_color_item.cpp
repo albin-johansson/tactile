@@ -10,12 +10,9 @@ namespace tactile::gui {
 property_color_item::property_color_item(const QString& name,
                                          const core::property& property,
                                          QTreeWidgetItem* parent)
-    : property_tree_item{parent}
+    : property_tree_item{name, parent}
 {
-  Q_ASSERT(parent);
   Q_ASSERT(property.is<QColor>());
-
-  setText(0, name);
   setToolTip(0, TACTILE_QSTRING(u"(color)"));
 
   auto* preview = new color_preview_button{Qt::black};

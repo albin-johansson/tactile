@@ -2,10 +2,13 @@
 
 namespace tactile::gui {
 
-property_tree_item::property_tree_item(QTreeWidgetItem* parent)
+property_tree_item::property_tree_item(const QString& name,
+                                       QTreeWidgetItem* parent)
     : tree_widget_item{parent}
 {
   Q_ASSERT(treeWidget());
+  Q_ASSERT(parent);
+  setText(0, name);
 }
 
 void property_tree_item::set_name_editable(const bool editable)

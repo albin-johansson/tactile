@@ -36,11 +36,9 @@ string_value_widget::string_value_widget(QWidget* parent) : QLineEdit{parent}
 property_string_item::property_string_item(const QString& name,
                                            const core::property& property,
                                            QTreeWidgetItem* parent)
-    : property_tree_item{parent}
+    : property_tree_item{name, parent}
     , m_widget{new string_value_widget{}}
 {
-  Q_ASSERT(parent);
-  setText(0, name);
   setToolTip(0, TACTILE_QSTRING(u"(string)"));
 
   QObject::connect(m_widget,
