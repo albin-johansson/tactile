@@ -19,8 +19,6 @@ property_file_item::property_file_item(const QString& name,
   setToolTip(0, TACTILE_QSTRING(u"(file)"));
   setText(1, TACTILE_QSTRING(u"N/A"));
 
-  m_valueWidget->setAutoFillBackground(true);
-
   QObject::connect(m_valueWidget, &file_value_widget::spawn_dialog, [this] {
     spawn_dialog();
   });
