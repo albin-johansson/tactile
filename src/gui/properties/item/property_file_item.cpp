@@ -17,7 +17,7 @@ property_file_item::property_file_item(const QString& name,
   Q_ASSERT(parent);
   setText(0, name);
   setToolTip(0, TACTILE_QSTRING(u"(file)"));
-  setText(1, TACTILE_QSTRING(u"NOT SET"));
+  setText(1, TACTILE_QSTRING(u"N/A"));
 
   m_valueWidget->setAutoFillBackground(true);
 
