@@ -100,12 +100,7 @@ void properties_widget::added_property(const QString& name,
   item->set_name_editable(true);
   item->enable_idle_view();
 
-  m_ui->tree->show();
-  m_ui->tree->update();
-  m_ui->tree->repaint();
-
   update_actions();
-//  enable_idle_views();
 }
 
 void properties_widget::removed_property(const QString& name)
