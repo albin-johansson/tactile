@@ -18,9 +18,10 @@ properties_dock::properties_dock(QWidget* parent)
   // clang-format off
   using widget = properties_widget;
   using dock = properties_dock;
-  connect(m_widget, &widget::request_add_property, this, &dock::ui_add_property);
-  connect(m_widget, &widget::request_remove_property, this, &dock::ui_remove_property);
-  connect(m_widget, &widget::has_renamed_property, this, &dock::ui_rename_property);
+  connect(m_widget, &widget::request_add_property, this, &dock::request_add_property);
+  connect(m_widget, &widget::request_remove_property, this, &dock::request_remove_property);
+  connect(m_widget, &widget::has_renamed_property, this, &dock::has_renamed_property);
+  connect(m_widget, &widget::has_set_property, this, &dock::has_set_property);
   // clang-format on
 }
 

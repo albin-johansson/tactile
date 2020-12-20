@@ -16,10 +16,11 @@ class properties_dock final : public dock_widget
   explicit properties_dock(QWidget* parent = nullptr);
 
  signals:
-  void ui_add_property(const QString& name, core::property::type type);
-  void ui_remove_property(const QString& name);
+  void request_add_property(const QString& name, core::property::type type);
+  void request_remove_property(const QString& name);
   void ui_update_property(const QString& name, const core::property& property);
-  void ui_rename_property(const QString& oldName, const QString& newName);
+  void has_renamed_property(const QString& oldName, const QString& newName);
+  void has_set_property(const QString& name, const core::property& property);
 
  public slots:
   void selected_map(const core::map_document& document);

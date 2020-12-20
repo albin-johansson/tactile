@@ -282,6 +282,8 @@ class map_document final : public QObject
 
   void rename_property(const QString& oldName, const QString& newName);
 
+  void set_property(const QString& name, const core::property& property);
+
   /**
    * \copydoc map::set_visibility()
    */

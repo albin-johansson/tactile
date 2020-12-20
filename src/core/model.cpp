@@ -283,6 +283,13 @@ void model::rename_property(const QString& oldName, const QString& newName)
   }
 }
 
+void model::set_property(const QString& name, const core::property& property)
+{
+  if (auto* document = current_document()) {
+    document->set_property(name, property);
+  }
+}
+
 void model::select_map(const map_id id)
 {
   m_maps->select(id);

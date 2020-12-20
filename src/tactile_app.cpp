@@ -75,6 +75,7 @@ void tactile_app::init_connections()
   winToMod(&win::ui_add_property,          &mod::add_property);
   winToMod(&win::ui_remove_property,       &mod::remove_property);
   winToMod(&win::ui_rename_property,       &mod::rename_property);
+  winToMod(&win::has_set_property,         &mod::set_property);
 
   winToMod(&win::mouse_pressed,            &mod::mouse_pressed);
   winToMod(&win::mouse_moved,              &mod::mouse_moved);

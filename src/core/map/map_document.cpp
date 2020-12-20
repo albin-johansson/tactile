@@ -1,5 +1,6 @@
 #include "map_document.hpp"
 
+#include <QDebug>
 #include <utility>  // move
 
 #include "add_col.hpp"
@@ -239,12 +240,15 @@ void map_document::add_property(const QString& name, const property::type type)
   property.set_default(type);
   m_properties.emplace(name, property);
 
+  qDebug() << "Added property:" << name << "with type:" << type;
+
   emit added_property(name, property);
 }
 
 void map_document::remove_property(const QString& name)
 {
   m_properties.erase(name);
+  qDebug() << "Removed property:" << name;
   emit removed_property(name);
 }
 
@@ -256,6 +260,18 @@ void map_document::rename_property(const QString& oldName,
   const auto prop = m_properties.at(oldName);
   m_properties.erase(oldName);
   m_properties.emplace(newName, prop);
+
+  qDebug() << "Changed property name:" << oldName << "to:" << newName;
+}
+
+void map_document::set_property(const QString& name,
+                                const core::property& property)
+{
+  Q_ASSERT(m_properties.contains(name));
+
+  m_properties.at(name) = property;
+
+  qDebug() << "Set value of property:" << name;
 }
 
 void map_document::set_layer_visibility(const layer_id id, const bool visible)

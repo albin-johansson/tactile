@@ -110,9 +110,10 @@ void window::init_connections()
   connect(m_layerDock, &layer_dock::ui_move_layer_down,      this, &window::ui_move_layer_down);
   connect(m_layerDock, &layer_dock::ui_duplicate_layer,      this, &window::ui_duplicate_layer);
 
-  connect(m_propertiesDock, &properties_dock::ui_add_property, this, &window::ui_add_property);
-  connect(m_propertiesDock, &properties_dock::ui_remove_property, this, &window::ui_remove_property);
-  connect(m_propertiesDock, &properties_dock::ui_rename_property, this, &window::ui_rename_property);
+  connect(m_propertiesDock, &properties_dock::request_add_property, this, &window::ui_add_property);
+  connect(m_propertiesDock, &properties_dock::request_remove_property, this, &window::ui_remove_property);
+  connect(m_propertiesDock, &properties_dock::has_renamed_property, this, &window::ui_rename_property);
+  connect(m_propertiesDock, &properties_dock::has_set_property, this, &window::has_set_property);
   // clang-format on
 }
 
