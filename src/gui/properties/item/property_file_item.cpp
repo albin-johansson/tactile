@@ -25,20 +25,23 @@ property_file_item::property_file_item(const QString& name,
 
   Q_ASSERT(treeWidget());
   treeWidget()->setItemWidget(this, 1, m_valueWidget);
+
+  set_value(property);
 }
 
 void tactile::gui::property_file_item::spawn_dialog()
 {
   property_file_dialog::spawn([this](const QString& path) {
     const QFileInfo file{path};
-    m_valueWidget->set_path(file);
-    setText(1, file.fileName());
+    set_value(core::property{file});
   });
 }
 
 void property_file_item::enable_focus_view()
 {
-  m_valueWidget->set_visible(true);
+  if (is_value_editable()) {
+    m_valueWidget->set_visible(true);
+  }
 }
 
 void property_file_item::enable_idle_view()
@@ -48,8 +51,15 @@ void property_file_item::enable_idle_view()
 
 void property_file_item::set_value(const core::property& property)
 {
-  Q_ASSERT(property.is<QFileInfo>());
-  m_valueWidget->set_path(property.as<QFileInfo>());
+  if (property.has_value()) {
+    Q_ASSERT(property.is<QFileInfo>());
+
+    const auto& file = property.as<QFileInfo>();
+    m_valueWidget->set_path(file);
+    setText(1, file.fileName());
+  } else {
+    setText(1, TACTILE_QSTRING(u"N/A"));
+  }
 }
 
 auto property_file_item::property_type() const noexcept -> core::property::type
