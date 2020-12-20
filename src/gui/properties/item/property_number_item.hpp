@@ -10,6 +10,26 @@
 
 namespace tactile::gui {
 
+class number_value_widget final : public QLineEdit
+{
+ public:
+  explicit number_value_widget(QWidget* parent = nullptr) : QLineEdit{parent}
+  {
+    setFrame(false);
+    setAutoFillBackground(true);
+  }
+
+  void set_visible(const bool visible)
+  {
+    QLineEdit::setVisible(visible);
+  }
+
+  [[deprecated("See set_visible")]] void setVisible(bool visible) override
+  {
+    // This function does nothing by design as a workaround
+  }
+};
+
 // clang-format off
 
 template <typename T> requires(std::same_as<T, int> || std::same_as<T, double>)
@@ -21,6 +41,7 @@ class property_number_item final : public property_tree_item
                        const core::property& property,
                        QTreeWidgetItem* parent)
       : property_tree_item{parent}
+      , m_edit{new number_value_widget{}}
   {
     Q_ASSERT(parent);
     setText(0, name);
@@ -31,30 +52,43 @@ class property_number_item final : public property_tree_item
       setToolTip(0, TACTILE_QSTRING(u"(float)"));
     }
 
-    auto* edit = new QLineEdit{};
-    edit->setFrame(false);
     if constexpr (std::same_as<T, int>) {
-      edit->setValidator(new QIntValidator{});
+      m_edit->setValidator(new QIntValidator{});
     } else {
-      edit->setValidator(new QDoubleValidator{});
+      m_edit->setValidator(new QDoubleValidator{});
     }
-    edit->setAutoFillBackground(true);
+
+    QObject::connect(m_edit,
+                     &QLineEdit::textChanged,
+                     [this](const QString& text) {
+                       setText(1, text);
+                     });
 
     Q_ASSERT(treeWidget());
-    treeWidget()->setItemWidget(this, 1, edit);
+    treeWidget()->setItemWidget(this, 1, m_edit);
 
     set_value(property);
   }
 
+  void enable_focus_view() override
+  {
+    if (is_value_editable()) {
+      m_edit->set_visible(true);
+    }
+  }
+
+  void enable_idle_view() override
+  {
+    m_edit->set_visible(false);
+  }
+
   void set_value(const core::property& property) override
   {
-    if (auto* edit = get_value_widget()) {
-      if (property.has_value()) {
-        Q_ASSERT(property.is<T>());
-        edit->setText(QString::number(property.as<T>()));
-      } else {
-        edit->setText(TACTILE_QSTRING(u"N/A"));
-      }
+    if (property.has_value()) {
+      Q_ASSERT(property.is<T>());
+      m_edit->setText(QString::number(property.as<T>()));
+    } else {
+      m_edit->setText(TACTILE_QSTRING(u"N/A"));
     }
   }
 
