@@ -236,12 +236,12 @@ void properties_widget::when_item_double_clicked(QTreeWidgetItem* item,
     m_cachedName.reset();
   }
 
-  if (column == 1) {
-    if (auto* treeItem = dynamic_cast<property_tree_item*>(item)) {
-      enable_idle_views();
-      treeItem->enable_focus_view();
-    }
-  }
+//  if (column == 1) {
+//    if (auto* treeItem = dynamic_cast<property_tree_item*>(item)) {
+//      enable_idle_views();
+//      treeItem->enable_focus_view();
+//    }
+//  }
 }
 
 void properties_widget::when_item_modified(QTreeWidgetItem* item,
