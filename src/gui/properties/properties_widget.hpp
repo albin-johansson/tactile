@@ -62,6 +62,8 @@ class properties_widget final : public QWidget
   void when_current_item_changed(QTreeWidgetItem* current,
                                  QTreeWidgetItem* previous);
 
+  void when_item_clicked(QTreeWidgetItem* item, int column);
+
   void when_item_double_clicked(QTreeWidgetItem* item, int column);
 
   void when_item_modified(QTreeWidgetItem* item, int column);

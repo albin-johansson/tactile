@@ -32,6 +32,9 @@ properties_widget::properties_widget(QWidget* parent)
   connect(m_ui->tree, &QTreeWidget::currentItemChanged,
           this,       &properties_widget::when_current_item_changed);
 
+  connect(m_ui->tree, &QTreeWidget::itemClicked,
+          this,       &properties_widget::when_item_clicked);
+
   connect(m_ui->tree, &QTreeWidget::itemDoubleClicked,
           this,       &properties_widget::when_item_double_clicked);
 
@@ -213,6 +216,17 @@ void properties_widget::when_current_item_changed(QTreeWidgetItem* current,
   }
 }
 
+void properties_widget::when_item_clicked(QTreeWidgetItem* item,
+                                          const int column)
+{
+  if (column == 1) {
+    if (auto* treeItem = dynamic_cast<property_tree_item*>(item)) {
+      enable_idle_views();
+      treeItem->enable_focus_view();
+    }
+  }
+}
+
 void properties_widget::when_item_double_clicked(QTreeWidgetItem* item,
                                                  const int column)
 {
@@ -220,6 +234,13 @@ void properties_widget::when_item_double_clicked(QTreeWidgetItem* item,
     m_cachedName.emplace(item->text(0));
   } else {
     m_cachedName.reset();
+  }
+
+  if (column == 1) {
+    if (auto* treeItem = dynamic_cast<property_tree_item*>(item)) {
+      enable_idle_views();
+      treeItem->enable_focus_view();
+    }
   }
 }
 
