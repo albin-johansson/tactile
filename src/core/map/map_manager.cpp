@@ -70,7 +70,7 @@ auto map_manager::add(map_document* document) -> map_id
   return id;
 }
 
-void map_manager::close(map_id id)
+void map_manager::close(const map_id id)
 {
   Q_ASSERT(m_documents.contains(id));
 
@@ -88,7 +88,7 @@ void map_manager::close(map_id id)
   }
 }
 
-void map_manager::select(map_id id)
+void map_manager::select(const map_id id)
 {
   Q_ASSERT(m_documents.contains(id));
 
@@ -104,7 +104,7 @@ auto map_manager::has_active_map() const noexcept -> bool
   return m_current.has_value();
 }
 
-auto map_manager::at(map_id id) -> map_document*
+auto map_manager::at(const map_id id) -> map_document*
 {
   if (const auto it = m_documents.find(id); it != m_documents.end()) {
     return it->second;
@@ -113,7 +113,7 @@ auto map_manager::at(map_id id) -> map_document*
   }
 }
 
-auto map_manager::at(map_id id) const -> const map_document*
+auto map_manager::at(const map_id id) const -> const map_document*
 {
   if (const auto it = m_documents.find(id); it != m_documents.end()) {
     return it->second;
