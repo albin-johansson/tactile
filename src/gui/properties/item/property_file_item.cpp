@@ -49,13 +49,13 @@ void property_file_item::enable_idle_view()
 
 void property_file_item::set_value(const core::property& property)
 {
-  if (property.has_value()) {
-    Q_ASSERT(property.is<QFileInfo>());
-
+  Q_ASSERT(property.is<QFileInfo>());
+  if (property.has_value() && property.as<QFileInfo>().exists()) {
     const auto& file = property.as<QFileInfo>();
     m_valueWidget->set_path(file);
     setText(1, file.fileName());
   } else {
+    m_valueWidget->reset_path();
     setText(1, TACTILE_QSTRING(u"N/A"));
   }
 }
