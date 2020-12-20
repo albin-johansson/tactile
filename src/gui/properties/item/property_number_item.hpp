@@ -74,6 +74,7 @@ class property_number_item final : public property_tree_item
   {
     if (is_value_editable()) {
       m_edit->set_visible(true);
+      m_edit->setFocus();
     }
   }
 
