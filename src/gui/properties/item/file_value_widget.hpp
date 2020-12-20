@@ -1,7 +1,8 @@
 #pragma once
 
 #include <QFileInfo>
-#include <QWidget>
+
+#include "property_value_widget.hpp"
 
 namespace Ui {
 class file_value_widget;
@@ -9,21 +10,16 @@ class file_value_widget;
 
 namespace tactile::gui {
 
-class file_value_widget final : public QWidget
+class file_value_widget final : public property_value_widget
 {
   Q_OBJECT
 
  public:
   explicit file_value_widget(QWidget* parent = nullptr);
 
+  void reset_path();
+
   void set_path(const QFileInfo& path);
-
-  void set_visible(bool visible);
-
-  [[deprecated("See set_visible")]] void setVisible(bool visible) override
-  {
-    // This function does nothing by design as a workaround
-  }
 
  signals:
   void spawn_dialog();
