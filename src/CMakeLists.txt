@@ -41,6 +41,7 @@ set(TACTILE_SOURCE_FILES
 
         core/map/map.hpp
         core/map/map.cpp
+        core/map/layer.hpp
         core/map/tile_layer.cpp
         core/map/tile_layer.hpp
         core/map/map_document.cpp
