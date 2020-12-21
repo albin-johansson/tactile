@@ -75,7 +75,7 @@ class property final
    * \since 0.2.0
    */
   template <property_type T>
-  explicit property(const T& value)
+  /*implicit*/ property(const T& value)
   {
     m_value.emplace<T>(value);
   }
