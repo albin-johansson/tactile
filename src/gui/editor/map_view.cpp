@@ -63,7 +63,7 @@ void map_view::mousePressEvent(QMouseEvent* event)
 {
   QGraphicsView::mousePressEvent(event);
 
-  if (event->buttons() & Qt::MouseButton::MidButton) {
+  if (event->buttons() & Qt::MiddleButton) {
     m_lastMousePos = event->pos();
     QApplication::setOverrideCursor(Qt::ClosedHandCursor);
   }
@@ -78,7 +78,7 @@ void map_view::mouseMoveEvent(QMouseEvent* event)
   const auto pos = event->pos();
   const auto buttons = event->buttons();
 
-  if (buttons & Qt::MouseButton::MidButton) {
+  if (buttons & Qt::MiddleButton) {
     move_map(pos.x() - m_lastMousePos.x(), pos.y() - m_lastMousePos.y());
   }
 
@@ -91,7 +91,7 @@ void map_view::mouseReleaseEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseReleaseEvent(event);
 
-  if (event->button() == Qt::MouseButton::MidButton) {
+  if (event->button() == Qt::MiddleButton) {
     QApplication::restoreOverrideCursor();
   }
 
