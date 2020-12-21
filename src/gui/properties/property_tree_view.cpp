@@ -25,7 +25,7 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
   setAlternatingRowColors(true);
   setUniformRowHeights(true);
   setRootIsDecorated(false);
-  setIndentation(12);
+  setIndentation(22);
 
   setFirstColumnSpanned(0, rootIndex(), true);
   setFirstColumnSpanned(1, rootIndex(), true);
