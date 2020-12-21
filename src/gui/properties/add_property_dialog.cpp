@@ -5,6 +5,7 @@
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 #include "ui_add_property_dialog.h"
+#include "visit_items.hpp"
 
 namespace tactile::gui {
 namespace {
@@ -12,12 +13,13 @@ namespace {
 class property_name_validator final : public QValidator
 {
  public:
-  explicit property_name_validator(QTreeView* tree, QObject* parent = nullptr)
+  explicit property_name_validator(QStandardItemModel* model,
+                                   QObject* parent = nullptr)
       : QValidator{parent}
-      , m_tree{tree}
+      , m_model{model}
   {
-    if (!m_tree) {
-      throw tactile_error{"Property validator requires non-null tree widget!"};
+    if (!m_model) {
+      throw tactile_error{"Property validator requires non-null model!"};
     }
   }
 
@@ -27,33 +29,32 @@ class property_name_validator final : public QValidator
       return Invalid;
     }
 
-//    const auto topCount = m_tree->topLevelItemCount();
-//    for (auto topIndex = 0; topIndex < topCount; ++topIndex) {
-//      const auto* topLevelItem = m_treeWidget->topLevelItem(topIndex);
-//
-//      const auto subCount = topLevelItem->childCount();
-//      for (auto subIndex = 0; subIndex < subCount; ++subIndex) {
-//        const auto* child = topLevelItem->child(subIndex);
-//        if (child->text(0) == input) {
-//          return Invalid;
-//        }
-//      }
-//    }
+    bool invalid{};
 
-    return Acceptable;
+    viewmodel::visit_items(m_model, 0, [&](QStandardItem* item) {
+      if (item->text() == input) {
+        invalid = true;
+      }
+    });
+
+    if (invalid) {
+      return Invalid;
+    } else {
+      return Acceptable;
+    }
   }
 
  private:
-  QTreeView* m_tree{};
+  QStandardItemModel* m_model{};
 };
 
 }  // namespace
 
-add_property_dialog::add_property_dialog(QTreeView* tree,
+add_property_dialog::add_property_dialog(QStandardItemModel* model,
                                          QWidget* parent)
     : QDialog{parent}
     , m_ui{new Ui::add_property_dialog{}}
-    , m_nameValidator{new property_name_validator{tree, this}}
+    , m_nameValidator{new property_name_validator{model, this}}
 {
   m_ui->setupUi(this);
 

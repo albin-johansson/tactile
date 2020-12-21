@@ -48,12 +48,13 @@ set(TACTILE_SOURCE_FILES
         core/map/map_manager.cpp
         core/map/map_manager.hpp
 
-        core/viewmodel/property/property_tree_view.cpp
-        core/viewmodel/property/property_tree_view.hpp
+        core/viewmodel/visit_items.hpp
+
         core/viewmodel/property/property_viewmodel.cpp
         core/viewmodel/property/property_viewmodel.hpp
         core/viewmodel/property/property_items.hpp
         core/viewmodel/property/property_item_role.hpp
+        core/viewmodel/property/item_type.hpp
 
         gui/icons.cpp
         gui/icons.hpp
@@ -167,7 +168,8 @@ set(TACTILE_SOURCE_FILES
         gui/properties/add_property_dialog.cpp
         gui/properties/properties_context_menu.cpp
         gui/properties/properties_context_menu.hpp
-
+        gui/properties/property_tree_view.cpp
+        gui/properties/property_tree_view.hpp
         gui/properties/color_validator.cpp
         gui/properties/color_validator.hpp
         gui/properties/color_preview_button.cpp
@@ -177,7 +179,6 @@ set(TACTILE_SOURCE_FILES
         gui/properties/file_value_widget.ui
         gui/properties/property_file_dialog.cpp
         gui/properties/property_file_dialog.hpp
-        core/viewmodel/property/item_type.hpp
         gui/properties/property_value_widget.hpp
 
         command/command_id.hpp

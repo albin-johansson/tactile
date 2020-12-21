@@ -11,29 +11,9 @@
 #include "property_file_dialog.hpp"
 #include "property_items.hpp"
 #include "tactile_qstring.hpp"
+#include "visit_items.hpp"
 
 namespace tactile::gui {
-namespace {
-
-template <std::invocable<QStandardItem*> T>
-void visit_value_items(QStandardItemModel* model, T&& callable)
-{
-  const auto topLevelRows = model->rowCount();
-  const auto* root = model->invisibleRootItem();
-
-  for (auto row = 0; row < topLevelRows; ++row) {
-    const auto* topLevelItem = root->child(row);
-
-    for (auto subRow = 0; subRow < topLevelItem->rowCount(); ++subRow) {
-      auto* item = dynamic_cast<QStandardItem*>(topLevelItem->child(subRow, 1));
-      if (item) {
-        callable(item);
-      }
-    }
-  }
-}
-
-}  // namespace
 
 property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
 {
@@ -53,7 +33,7 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
 
 void property_tree_view::add_item_widgets()
 {
-  visit_value_items(get_model(), [this](QStandardItem* item) {
+  viewmodel::visit_items(get_model(), 1, [this](QStandardItem* item) {
     const auto itemType = static_cast<viewmodel::item_type>(item->type());
 
     if (itemType == viewmodel::item_type::color) {
@@ -98,7 +78,6 @@ void property_tree_view::when_file_added(const QModelIndex& index)
 
   connect(widget, &file_value_widget::spawn_dialog, [=, this] {
     property_file_dialog::spawn([id, this](const QString& path) {
-
       auto* item = m_widgetItems.at(id);
       item->setData(path, viewmodel::property_item_role::path);
 

@@ -62,7 +62,7 @@ void properties_widget::new_property_requested()
       [&](const QString& name, const core::property::type type) {
         m_model->add(name, type);
       },
-      m_treeView,
+      m_model,
       this);
 }
 
