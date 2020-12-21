@@ -2,7 +2,7 @@
 
 #include <QDebug>
 #include <QHeaderView>
-#include <QShowEvent>
+#include <QMouseEvent>
 #include <concepts>  // invocable
 
 #include "color_preview_button.hpp"
@@ -25,7 +25,7 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
   setAlternatingRowColors(true);
   setUniformRowHeights(true);
   setRootIsDecorated(false);
-  setIndentation(22);
+  setIndentation(25);
 
   setFirstColumnSpanned(0, rootIndex(), true);
   setFirstColumnSpanned(1, rootIndex(), true);
