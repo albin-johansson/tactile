@@ -10,15 +10,11 @@ class property_value_widget : public QWidget
   explicit property_value_widget(QWidget* parent = nullptr) : QWidget{parent}
   {}
 
-  void set_visible(const bool visible)
-  {
-    QWidget::setVisible(visible);
-  }
+  virtual void enter_active_mode()
+  {}
 
-  [[deprecated("See set_visible")]] void setVisible(bool visible) final
-  {
-    // This function does nothing by design as a workaround
-  }
+  virtual void enter_idle_mode()
+  {}
 };
 
 }  // namespace tactile::gui

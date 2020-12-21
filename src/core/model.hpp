@@ -11,6 +11,10 @@
 #include "tool_id.hpp"
 #include "tool_model.hpp"
 
+namespace tactile::viewmodel {
+class property_viewmodel;
+}
+
 namespace tactile::core {
 
 class map_document;

@@ -16,6 +16,7 @@ set(TACTILE_SOURCE_FILES
 
         core/property/property.cpp
         core/property/property.hpp
+        core/property/property_manager.hpp
 
         core/aliases/czstring.hpp
         core/aliases/tile_id.hpp
@@ -46,6 +47,13 @@ set(TACTILE_SOURCE_FILES
         core/map/map_document.hpp
         core/map/map_manager.cpp
         core/map/map_manager.hpp
+
+        core/viewmodel/property/property_tree_view.cpp
+        core/viewmodel/property/property_tree_view.hpp
+        core/viewmodel/property/property_viewmodel.cpp
+        core/viewmodel/property/property_viewmodel.hpp
+        core/viewmodel/property/property_items.hpp
+        core/viewmodel/property/property_item_role.hpp
 
         gui/icons.cpp
         gui/icons.hpp
@@ -160,37 +168,17 @@ set(TACTILE_SOURCE_FILES
         gui/properties/properties_context_menu.cpp
         gui/properties/properties_context_menu.hpp
 
-        gui/properties/item/property_map_root_item.cpp
-        gui/properties/item/property_map_root_item.hpp
-        gui/properties/item/property_tree_item.cpp
-        gui/properties/item/property_tree_item.hpp
-        gui/properties/item/color_validator.cpp
-        gui/properties/item/color_validator.hpp
-        gui/properties/item/color_preview_button.cpp
-        gui/properties/item/color_preview_button.hpp
-        gui/properties/item/property_int_item.hpp
-        gui/properties/item/property_item_factory.cpp
-        gui/properties/item/property_item_factory.hpp
-        gui/properties/item/property_float_item.hpp
-        gui/properties/item/property_number_item.hpp
-        gui/properties/item/property_string_item.cpp
-        gui/properties/item/property_string_item.hpp
-        gui/properties/item/property_bool_item.cpp
-        gui/properties/item/property_bool_item.hpp
-        gui/properties/item/property_file_item.cpp
-        gui/properties/item/property_file_item.hpp
-        gui/properties/item/file_value_widget.cpp
-        gui/properties/item/file_value_widget.hpp
-        gui/properties/item/file_value_widget.ui
-        gui/properties/item/property_file_dialog.cpp
-        gui/properties/item/property_file_dialog.hpp
-        gui/properties/item/property_color_item.cpp
-        gui/properties/item/property_color_item.hpp
-        gui/properties/item/property_object_item.cpp
-        gui/properties/item/property_object_item.hpp
-        gui/properties/item/property_item_type.hpp
-        gui/properties/item/property_value_widget.cpp
-        gui/properties/item/property_value_widget.hpp
+        gui/properties/color_validator.cpp
+        gui/properties/color_validator.hpp
+        gui/properties/color_preview_button.cpp
+        gui/properties/color_preview_button.hpp
+        gui/properties/file_value_widget.cpp
+        gui/properties/file_value_widget.hpp
+        gui/properties/file_value_widget.ui
+        gui/properties/property_file_dialog.cpp
+        gui/properties/property_file_dialog.hpp
+        core/viewmodel/property/item_type.hpp
+        gui/properties/property_value_widget.hpp
 
         command/command_id.hpp
         command/command_stack.hpp
@@ -314,6 +302,8 @@ target_include_directories(libTactile
         PUBLIC core/tileset
         PUBLIC core/algorithm
         PUBLIC core/aliases
+        PUBLIC core/viewmodel
+        PUBLIC core/viewmodel/property
         PUBLIC gui
         PUBLIC gui/startup
         PUBLIC gui/editor
@@ -326,6 +316,7 @@ target_include_directories(libTactile
         PUBLIC gui/settings
         PUBLIC gui/properties
         PUBLIC gui/properties/item
+        PUBLIC gui/properties/view
         PUBLIC gui/dialog
         PUBLIC gui/dialog/about
         PUBLIC gui/dialog/resize_map

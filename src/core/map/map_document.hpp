@@ -13,9 +13,14 @@
 #include "maybe.hpp"
 #include "position.hpp"
 #include "property.hpp"
+#include "property_manager.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
 #include "vector_map.hpp"
+
+namespace tactile::viewmodel {
+class property_viewmodel;
+}
 
 namespace tactile::core {
 
@@ -33,7 +38,7 @@ namespace tactile::core {
  *
  * \headerfile map_document.hpp
  */
-class map_document final : public QObject
+class map_document final : public QObject, public property_manager
 {
   Q_OBJECT
 
@@ -46,6 +51,8 @@ class map_document final : public QObject
    * \since 0.1.0
    */
   explicit map_document(QObject* parent = nullptr);
+
+  ~map_document() noexcept override = default;
 
   /**
    * \brief Creates a map document with a map that contains one layer.
@@ -276,13 +283,22 @@ class map_document final : public QObject
    */
   void mark_as_clean();
 
-  void add_property(const QString& name, property::type type);
+  void add_property(const QString& name, property::type type) override;
 
-  void remove_property(const QString& name);
+  void remove_property(const QString& name) override;
 
-  void rename_property(const QString& oldName, const QString& newName);
+  void rename_property(const QString& oldName, const QString& newName) override;
 
-  void set_property(const QString& name, const core::property& property);
+  void set_property(const QString& name,
+                    const core::property& property) override;
+
+  [[nodiscard]] auto get_property(const QString& name) const
+      -> const core::property& override;
+
+  [[nodiscard]] auto get_property(const QString& name)
+      -> core::property& override;
+
+  [[nodiscard]] auto property_count() const -> int override;
 
   /**
    * \copydoc map::set_visibility()
@@ -495,6 +511,9 @@ class map_document final : public QObject
    */
   [[nodiscard]] auto current_layer_id() const noexcept -> maybe<layer_id>;
 
+  [[nodiscard]] auto property_viewmodel() const noexcept
+      -> viewmodel::property_viewmodel*;
+
   /**
    * \brief Returns the file path associated with the map document.
    *
@@ -556,6 +575,7 @@ class map_document final : public QObject
   std::unique_ptr<tileset_manager> m_tilesets;
   vector_map<QString, core::property> m_properties;
   command_stack* m_commands{};
+  viewmodel::property_viewmodel* m_propertyModel{};
   QFileInfo m_path;
 
   void setup();

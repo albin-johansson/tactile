@@ -9,6 +9,7 @@
 #include "add_tileset.hpp"
 #include "bucket_fill.hpp"
 #include "erase_sequence.hpp"
+#include "property_viewmodel.hpp"
 #include "remove_col.hpp"
 #include "remove_layer.hpp"
 #include "remove_row.hpp"
@@ -23,6 +24,7 @@ map_document::map_document(QObject* parent)
     , m_map{std::make_unique<map>()}
     , m_tilesets{std::make_unique<tileset_manager>()}
     , m_commands{new command_stack{this}}
+    , m_propertyModel{new viewmodel::property_viewmodel{this, this}}
 {
   setup();
 }
@@ -34,6 +36,7 @@ map_document::map_document(const row_t nRows,
     , m_map{std::make_unique<map>(nRows, nCols)}
     , m_tilesets{std::make_unique<tileset_manager>()}
     , m_commands{new command_stack{this}}
+    , m_propertyModel{new viewmodel::property_viewmodel{this, this}}
 {
   setup();
 }
@@ -274,6 +277,22 @@ void map_document::set_property(const QString& name,
   qDebug() << "Set value of property:" << name;
 }
 
+auto map_document::get_property(const QString& name) const
+    -> const core::property&
+{
+  return m_properties.at(name);
+}
+
+auto map_document::get_property(const QString& name) -> core::property&
+{
+  return m_properties.at(name);
+}
+
+auto map_document::property_count() const -> int
+{
+  return static_cast<int>(m_properties.size());
+}
+
 void map_document::set_layer_visibility(const layer_id id, const bool visible)
 {
   m_map->set_visibility(id, visible);
@@ -414,6 +433,12 @@ auto map_document::tilesets() const noexcept -> const tileset_manager*
 auto map_document::current_layer_id() const noexcept -> maybe<layer_id>
 {
   return m_map->active_layer_id();
+}
+
+auto map_document::property_viewmodel() const noexcept
+    -> viewmodel::property_viewmodel*
+{
+  return m_propertyModel;
 }
 
 auto map_document::path() const -> const QFileInfo&

@@ -1,5 +1,7 @@
 #include "file_value_widget.hpp"
 
+#include <QMouseEvent>
+
 #include "tactile_qstring.hpp"
 #include "ui_file_value_widget.h"
 
@@ -18,16 +20,34 @@ file_value_widget::file_value_widget(QWidget* parent)
   connect(m_ui->selectFileButton, &QToolButton::pressed,
           this,                   &file_value_widget::spawn_dialog);
   // clang-format on
+
+  m_ui->idlePage->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+}
+
+void file_value_widget::enter_active_mode()
+{
+  m_ui->stackedWidget->setCurrentWidget(m_ui->activePage);
+}
+
+void file_value_widget::enter_idle_mode()
+{
+  m_ui->stackedWidget->setCurrentWidget(m_ui->idlePage);
 }
 
 void file_value_widget::reset_path()
 {
-  m_ui->pathEdit->setText(TACTILE_QSTRING(u"N/A"));
+  m_ui->activePathEdit->setText(TACTILE_QSTRING(u"N/A"));
 }
 
 void file_value_widget::set_path(const QFileInfo& path)
 {
-  m_ui->pathEdit->setText(path.filePath());
+  m_ui->activePathEdit->setText(path.filePath());
+  m_ui->idlePathEdit->setText(path.fileName());
+}
+
+auto file_value_widget::current_path() const -> QFileInfo
+{
+  return m_ui->activePathEdit->text();
 }
 
 }  // namespace tactile::gui

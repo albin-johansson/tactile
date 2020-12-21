@@ -11,7 +11,7 @@ property_file_dialog::property_file_dialog(QWidget* parent)
   setViewMode(Detail);
   setWindowTitle(tr("Select file"));
   setDirectory(
-      QStandardPaths::writableLocation(QStandardPaths::PicturesLocation));
+      QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
 }
 
 }  // namespace tactile::gui

@@ -25,11 +25,10 @@ class map_manager final : public QObject
 {
   Q_OBJECT
 
-  using storage_type = vector_map<map_id, map_document*>;
-
  public:
-  using iterator = typename storage_type::iterator;
-  using const_iterator = typename storage_type::const_iterator;
+  using document_map = vector_map<map_id, map_document*>;
+  using iterator = typename document_map::iterator;
+  using const_iterator = typename document_map::const_iterator;
 
   explicit map_manager(QObject* parent = nullptr);
 
@@ -173,7 +172,7 @@ class map_manager final : public QObject
 
  private:
   maybe<map_id> m_current;
-  storage_type m_documents;
+  document_map m_documents;
   map_id m_nextId{1};
 
   void emit_undo_redo_update();

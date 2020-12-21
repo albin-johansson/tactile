@@ -2,11 +2,12 @@
 
 #include <QStandardItem>
 
-namespace tactile::gui {
+namespace tactile::viewmodel {
 
-enum class property_item_type
+enum class item_type
 {
   name = QStandardItem::UserType,
+  string,
   integer,
   floating,
   boolean,
@@ -15,4 +16,4 @@ enum class property_item_type
   color
 };
 
-}
+}  // namespace tactile::viewmodel

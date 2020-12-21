@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QDialog>
-#include <QTreeWidget>
+#include <QTreeView>
 #include <QValidator>
 #include <concepts>  // invocable
 
@@ -19,17 +19,16 @@ class add_property_dialog final : public QDialog
   Q_OBJECT
 
  public:
-  explicit add_property_dialog(QTreeWidget* treeWidget,
-                               QWidget* parent = nullptr);
+  explicit add_property_dialog(QTreeView* tree, QWidget* parent = nullptr);
 
   ~add_property_dialog() noexcept override;
 
   template <std::invocable<const QString&, core::property::type> T>
   static void spawn(T&& callable,
-                    QTreeWidget* treeWidget,
+                    QTreeView* tree,
                     QWidget* parent = nullptr)
   {
-    add_property_dialog dialog{treeWidget, parent};
+    add_property_dialog dialog{tree, parent};
     if (dialog.exec()) {
       Q_ASSERT(dialog.m_name);
       Q_ASSERT(dialog.m_type);

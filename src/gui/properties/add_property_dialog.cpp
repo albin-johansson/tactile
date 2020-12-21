@@ -12,12 +12,11 @@ namespace {
 class property_name_validator final : public QValidator
 {
  public:
-  explicit property_name_validator(QTreeWidget* treeWidget,
-                                   QObject* parent = nullptr)
+  explicit property_name_validator(QTreeView* tree, QObject* parent = nullptr)
       : QValidator{parent}
-      , m_treeWidget{treeWidget}
+      , m_tree{tree}
   {
-    if (!m_treeWidget) {
+    if (!m_tree) {
       throw tactile_error{"Property validator requires non-null tree widget!"};
     }
   }
@@ -28,33 +27,33 @@ class property_name_validator final : public QValidator
       return Invalid;
     }
 
-    const auto topCount = m_treeWidget->topLevelItemCount();
-    for (auto topIndex = 0; topIndex < topCount; ++topIndex) {
-      const auto* topLevelItem = m_treeWidget->topLevelItem(topIndex);
-
-      const auto subCount = topLevelItem->childCount();
-      for (auto subIndex = 0; subIndex < subCount; ++subIndex) {
-        const auto* child = topLevelItem->child(subIndex);
-        if (child->text(0) == input) {
-          return Invalid;
-        }
-      }
-    }
+//    const auto topCount = m_tree->topLevelItemCount();
+//    for (auto topIndex = 0; topIndex < topCount; ++topIndex) {
+//      const auto* topLevelItem = m_treeWidget->topLevelItem(topIndex);
+//
+//      const auto subCount = topLevelItem->childCount();
+//      for (auto subIndex = 0; subIndex < subCount; ++subIndex) {
+//        const auto* child = topLevelItem->child(subIndex);
+//        if (child->text(0) == input) {
+//          return Invalid;
+//        }
+//      }
+//    }
 
     return Acceptable;
   }
 
  private:
-  QTreeWidget* m_treeWidget{};
+  QTreeView* m_tree{};
 };
 
 }  // namespace
 
-add_property_dialog::add_property_dialog(QTreeWidget* treeWidget,
+add_property_dialog::add_property_dialog(QTreeView* tree,
                                          QWidget* parent)
     : QDialog{parent}
     , m_ui{new Ui::add_property_dialog{}}
-    , m_nameValidator{new property_name_validator{treeWidget, this}}
+    , m_nameValidator{new property_name_validator{tree, this}}
 {
   m_ui->setupUi(this);
 

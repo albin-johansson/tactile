@@ -1,7 +1,6 @@
 #include "properties_context_menu.hpp"
 
 #include "icons.hpp"
-#include "property_tree_item.hpp"
 
 namespace tactile::gui {
 

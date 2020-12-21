@@ -6,8 +6,6 @@
 
 namespace tactile::gui {
 
-class property_tree_item;
-
 class properties_context_menu final : public QMenu
 {
   Q_OBJECT
