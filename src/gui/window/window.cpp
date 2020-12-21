@@ -30,13 +30,9 @@ window::window(QWidget* parent)
   setContentsMargins(0, 0, 0, 0);
 
   setCentralWidget(m_editor);
-  addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);
+  addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
   addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
-  addDockWidget(Qt::RightDockWidgetArea, m_propertiesDock);
-
-  tabifyDockWidget(m_layerDock, m_propertiesDock);
-  m_layerDock->raise();  // Layer dock is initially of greater interest
 
   init_mouse_tool_group();
   init_connections();
