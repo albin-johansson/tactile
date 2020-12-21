@@ -2,6 +2,7 @@
 
 #include <QStandardItemModel>
 #include <QTreeView>
+
 #include "vector_map.hpp"
 
 namespace tactile::gui {
@@ -19,8 +20,6 @@ class property_tree_view final : public QTreeView
   void when_color_added(const QModelIndex& index);
 
   void when_file_added(const QModelIndex& index);
-
-
 
  protected:
   void selectionChanged(const QItemSelection& selected,
