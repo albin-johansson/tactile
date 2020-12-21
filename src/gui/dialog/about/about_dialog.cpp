@@ -16,4 +16,10 @@ about_dialog::~about_dialog() noexcept
   delete m_ui;
 }
 
+void about_dialog::spawn(QWidget* parent)
+{
+  about_dialog dialog{parent};
+  dialog.exec();
+}
+
 }  // namespace tactile::gui

@@ -613,8 +613,7 @@ void window::on_actionExit_triggered()
 
 void window::on_actionAbout_triggered()
 {
-  about_dialog about;
-  about.exec();
+  about_dialog::spawn();
 }
 
 }  // namespace tactile::gui

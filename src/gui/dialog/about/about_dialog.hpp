@@ -27,6 +27,8 @@ class about_dialog final : public QDialog
 
   ~about_dialog() noexcept override;
 
+  static void spawn(QWidget* parent = nullptr);
+
  private:
   Ui::about_dialog* m_ui;
 };
