@@ -76,6 +76,11 @@ layer_widget::layer_widget(QWidget* parent)
   });
 }
 
+layer_widget::~layer_widget() noexcept
+{
+  delete m_ui;
+}
+
 void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
 {
   if (m_ui->layerList->itemAt(pos)) {
@@ -85,11 +90,6 @@ void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
     m_contextMenu->set_remove_enabled(m_ui->removeLayerButton->isEnabled());
     m_contextMenu->exec(mapToGlobal(pos));
   }
-}
-
-layer_widget::~layer_widget() noexcept
-{
-  delete m_ui;
 }
 
 void layer_widget::added_layer(const layer_id id, const core::tile_layer& layer)
