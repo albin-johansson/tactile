@@ -32,7 +32,6 @@ property_viewmodel::property_viewmodel(core::property_manager* manager,
   m_predefinedRoot->setEditable(false);
   m_predefinedRoot->setSelectable(false);
   m_predefinedRoot->setColumnCount(1);
-
   setItem(0, m_predefinedRoot);
 
   m_customRoot = new QStandardItem{tr("Custom")};

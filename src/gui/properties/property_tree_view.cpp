@@ -7,6 +7,7 @@
 
 #include "color_preview_button.hpp"
 #include "file_value_widget.hpp"
+#include "icons.hpp"
 #include "item_type.hpp"
 #include "property_file_dialog.hpp"
 #include "property_items.hpp"
@@ -18,17 +19,37 @@ namespace tactile::gui {
 property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
 {
   setObjectName(TACTILE_QSTRING(u"property_tree_view"));
+
   setSelectionBehavior(SelectItems);
   setSelectionMode(SingleSelection);
   setAlternatingRowColors(true);
   setUniformRowHeights(true);
+  setRootIsDecorated(false);
+  setIndentation(12);
 
   setFirstColumnSpanned(0, rootIndex(), true);
   setFirstColumnSpanned(1, rootIndex(), true);
 
-  header()->setSectionResizeMode(QHeaderView::ResizeToContents);
-  header()->setHidden(true);
-  header()->setSectionsMovable(false);
+  auto* h = header();
+  h->setSectionResizeMode(QHeaderView::ResizeToContents);
+  h->setHidden(true);
+  h->setSectionsMovable(false);
+
+  connect(this,
+          &property_tree_view::expanded,
+          [this](const QModelIndex& index) {
+            if (!index.parent().isValid()) {
+              get_model()->itemFromIndex(index)->setIcon(icons::expanded());
+            }
+          });
+
+  connect(this,
+          &property_tree_view::collapsed,
+          [this](const QModelIndex& index) {
+            if (!index.parent().isValid()) {
+              get_model()->itemFromIndex(index)->setIcon(icons::collapsed());
+            }
+          });
 }
 
 void property_tree_view::add_item_widgets()

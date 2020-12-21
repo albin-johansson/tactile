@@ -20,6 +20,8 @@ class property_tree_view final : public QTreeView
 
   void when_file_added(const QModelIndex& index);
 
+
+
  protected:
   void selectionChanged(const QItemSelection& selected,
                         const QItemSelection& deselected) override;
