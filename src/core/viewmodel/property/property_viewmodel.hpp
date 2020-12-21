@@ -16,9 +16,11 @@ class property_viewmodel final : public QStandardItemModel
 
   void clear_predefined();
 
-  void add_predefined(const QString& name, const core::property& property);
+  auto add_predefined(const QString& name,
+                      const core::property& property,
+                      bool readOnly = true) -> QModelIndex;
 
-  void add(const QString& name, core::property::type type);
+  auto add(const QString& name, core::property::type type) -> QModelIndex;
 
   void set_predefined_name(const QString& name);
 
@@ -36,37 +38,37 @@ class property_viewmodel final : public QStandardItemModel
   QStandardItem* m_predefinedRoot{};
   QStandardItem* m_customRoot{};
 
-  void add_property(const QString& name,
+  auto add_property(const QString& name,
                     const core::property& property,
-                    QStandardItem* root);
+                    QStandardItem* root) -> QModelIndex;
 
-  void add_string(const QString& name,
+  auto add_string(const QString& name,
                   const core::property& property,
-                  QStandardItem* root);
+                  QStandardItem* root) -> QModelIndex;
 
-  void add_int(const QString& name,
+  auto add_int(const QString& name,
                const core::property& property,
-               QStandardItem* root);
+               QStandardItem* root) -> QModelIndex;
 
-  void add_float(const QString& name,
+  auto add_float(const QString& name,
                  const core::property& property,
-                 QStandardItem* root);
+                 QStandardItem* root) -> QModelIndex;
 
-  void add_bool(const QString& name,
+  auto add_bool(const QString& name,
                 const core::property& property,
-                QStandardItem* root);
+                QStandardItem* root) -> QModelIndex;
 
-  void add_object(const QString& name,
+  auto add_object(const QString& name,
                   const core::property& property,
-                  QStandardItem* root);
+                  QStandardItem* root) -> QModelIndex;
 
-  void add_color(const QString& name,
+  auto add_color(const QString& name,
                  const core::property& property,
-                 QStandardItem* root);
+                 QStandardItem* root) -> QModelIndex;
 
-  void add_file(const QString& name,
+  auto add_file(const QString& name,
                 const core::property& property,
-                QStandardItem* root);
+                QStandardItem* root) -> QModelIndex;
 
  private slots:
   void when_item_changed(QStandardItem* item);

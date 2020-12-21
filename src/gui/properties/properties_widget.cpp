@@ -51,9 +51,11 @@ void properties_widget::selected_map(const core::map_document& document)
   m_model->add_predefined(TACTILE_QSTRING(u"Height"),
                           document.row_count().get());
   m_model->add_predefined(TACTILE_QSTRING(u"Tile width"),
-                          prefs::saves::tile_width().value());
+                          prefs::saves::tile_width().value(),
+                          false);
   m_model->add_predefined(TACTILE_QSTRING(u"Tile height"),
-                          prefs::saves::tile_height().value());
+                          prefs::saves::tile_height().value(),
+                          false);
 }
 
 void properties_widget::new_property_requested()
