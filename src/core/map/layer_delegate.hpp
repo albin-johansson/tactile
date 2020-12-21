@@ -4,6 +4,15 @@
 
 namespace tactile::core {
 
+/**
+ * \class layer_delegate
+ *
+ * \brief A delegate meant to be used to implement the basic layer API.
+ *
+ * \since 0.2.0
+ *
+ * \headerfile layer_delegate.hpp
+ */
 class layer_delegate final
 {
  public:
