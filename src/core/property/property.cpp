@@ -18,7 +18,7 @@ void property::set_default(const type t)
   } else if (t == core::property::string) {
     set_value<QString>();
   } else if (t == core::property::color) {
-    set_value<QColor>();
+    set_value<QColor>(Qt::black);
   } else if (t == core::property::object) {
     set_value<object_ref>();
   } else if (t == core::property::file) {
