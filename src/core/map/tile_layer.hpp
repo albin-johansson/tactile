@@ -4,6 +4,7 @@
 #include <concepts>  // invocable
 #include <vector>    // vector
 
+#include "layer_delegate.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
 #include "tile_id.hpp"
@@ -262,10 +263,7 @@ class tile_layer final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto name() const -> const QString&
-  {
-    return m_name;
-  }
+  [[nodiscard]] auto name() const -> const QString&;
 
   /**
    * \brief Returns the opacity of the layer.
@@ -274,10 +272,7 @@ class tile_layer final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto opacity() const noexcept -> double
-  {
-    return m_opacity;
-  }
+  [[nodiscard]] auto opacity() const noexcept -> double;
 
   /**
    * \brief Indicates whether or not the tile layer is visible.
@@ -288,16 +283,11 @@ class tile_layer final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto visible() const noexcept -> bool
-  {
-    return m_visible;
-  }
+  [[nodiscard]] auto visible() const noexcept -> bool;
 
  private:
   tile_matrix m_tiles;
-  QString m_name;
-  double m_opacity{1};
-  bool m_visible{true};
+  layer_delegate m_delegate;
 };
 
 }  // namespace tactile::core

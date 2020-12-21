@@ -1,8 +1,8 @@
 #include "tile_layer.hpp"
 
-#include <algorithm>  // clamp
-#include <cassert>    // assert
-#include <cmath>      // abs
+#include <cassert>  // assert
+#include <cmath>    // abs
+#include <utility>  // move
 
 #include "algorithm.hpp"
 #include "flood_fill.hpp"
@@ -36,8 +36,8 @@ tile_layer::tile_layer(const row_t nRows, const col_t nCols)
 }
 
 void tile_layer::flood(const position& origin,
-                  const tile_id replacement,
-                  std::vector<position>& positions)
+                       const tile_id replacement,
+                       std::vector<position>& positions)
 {
   flood_fill(*this, origin, replacement, positions);
 }
@@ -138,17 +138,17 @@ void tile_layer::set_tile(const position& pos, const tile_id id) noexcept
 
 void tile_layer::set_opacity(const double opacity)
 {
-  m_opacity = std::clamp(opacity, 0.0, 1.0);
+  m_delegate.set_opacity(opacity);
 }
 
 void tile_layer::set_name(QString name)
 {
-  m_name = std::move(name);
+  m_delegate.set_name(std::move(name));
 }
 
 void tile_layer::set_visible(const bool visible) noexcept
 {
-  m_visible = visible;
+  m_delegate.set_visible(visible);
 }
 
 auto tile_layer::row_count() const noexcept -> row_t
@@ -180,6 +180,21 @@ auto tile_layer::in_bounds(const position& pos) const noexcept -> bool
 {
   const auto row = pos.row_index();
   return (row < m_tiles.size()) && (pos.col_index() < m_tiles[row].size());
+}
+
+auto tile_layer::name() const -> const QString&
+{
+  return m_delegate.name();
+}
+
+auto tile_layer::opacity() const noexcept -> double
+{
+  return m_delegate.opacity();
+}
+
+auto tile_layer::visible() const noexcept -> bool
+{
+  return m_delegate.visible();
 }
 
 }  // namespace tactile::core
