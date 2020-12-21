@@ -5,7 +5,6 @@
 #include "map_document.hpp"
 #include "property.hpp"
 #include "property_viewmodel.hpp"
-#include "tree_widget_item.hpp"
 
 namespace Ui {
 class properties_widget;
