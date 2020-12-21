@@ -57,6 +57,8 @@ add_property_dialog::add_property_dialog(QStandardItemModel* model,
     , m_nameValidator{new property_name_validator{model, this}}
 {
   m_ui->setupUi(this);
+  
+  setObjectName(TACTILE_QSTRING(u"add_property_dialog"));
 
   // clang-format off
   connect(m_ui->typeComboBox, &QComboBox::currentTextChanged, this, &add_property_dialog::when_type_changed);
