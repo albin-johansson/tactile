@@ -189,9 +189,42 @@ void property_viewmodel::add_file(const QString& name,
 void property_viewmodel::when_item_changed(QStandardItem* item)
 {
   if (item->parent() == m_customRoot) {
-    const auto row = item->row();
-    const auto name = m_customRoot->child(row, 0)->text();
-    qDebug() << "Changed value of" << name << "property...";
+    const auto name = m_customRoot->child(item->row(), 0)->text();
+
+    switch (static_cast<viewmodel::item_type>(item->type())) {
+      case item_type::string: {
+        m_manager->set_property(name,
+                                item->data(Qt::EditRole).value<QString>());
+        break;
+      }
+      case item_type::integer: {
+        m_manager->set_property(name, item->data(Qt::EditRole).value<int>());
+        break;
+      }
+      case item_type::floating: {
+        m_manager->set_property(name, item->data(Qt::EditRole).value<double>());
+        break;
+      }
+      case item_type::boolean: {
+        m_manager->set_property(name,
+                                item->data(Qt::CheckStateRole).value<bool>());
+        break;
+      }
+      case item_type::file: {
+        const auto path =
+            item->data(viewmodel::property_item_role::path).value<QString>();
+        m_manager->set_property(name, QFileInfo{path});
+        break;
+      }
+      case item_type::color: {
+        const auto color =
+            item->data(viewmodel::property_item_role::color).value<QColor>();
+        m_manager->set_property(name, color);
+        break;
+      }
+      case item_type::object:
+        break;  // TODO
+    }
   }
 }
 
