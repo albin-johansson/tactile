@@ -17,6 +17,8 @@ class file_value_widget final : public property_value_widget
  public:
   explicit file_value_widget(QWidget* parent = nullptr);
 
+  ~file_value_widget() noexcept override;
+
   void enter_active_mode() override;
 
   void enter_idle_mode() override;

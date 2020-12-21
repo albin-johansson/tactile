@@ -21,6 +21,8 @@ class properties_widget final : public QWidget
  public:
   explicit properties_widget(QWidget* parent = nullptr);
 
+  ~properties_widget() noexcept override;
+
  public slots:
   void selected_map(const core::map_document& document);
 

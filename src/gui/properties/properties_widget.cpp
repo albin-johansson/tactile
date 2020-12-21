@@ -24,6 +24,11 @@ properties_widget::properties_widget(QWidget* parent)
   // clang-format on
 }
 
+properties_widget::~properties_widget() noexcept
+{
+  delete m_ui;
+}
+
 void properties_widget::selected_map(const core::map_document& document)
 {
   if (m_model) {
