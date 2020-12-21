@@ -80,7 +80,7 @@
      <x>0</x>
      <y>0</y>
      <width>897</width>
-     <height>23</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="font">
@@ -142,6 +142,7 @@
      <addaction name="actionToolsVisibility"/>
      <addaction name="actionTilesetsVisibility"/>
      <addaction name="actionLayersVisibility"/>
+     <addaction name="actionPropertiesVisibility"/>
     </widget>
     <addaction name="menuAppearance"/>
     <addaction name="separator"/>
@@ -867,6 +868,22 @@
    </property>
    <property name="text">
     <string>Layers</string>
+   </property>
+  </action>
+  <action name="actionPropertiesVisibility">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="../../tactile.qrc">
+     <normaloff>:/resources/icons/fluent/64/unchecked.png</normaloff>
+     <normalon>:/resources/icons/fluent/64/checked.png</normalon>:/resources/icons/fluent/64/unchecked.png</iconset>
+   </property>
+   <property name="text">
+    <string>Properties</string>
    </property>
   </action>
  </widget>

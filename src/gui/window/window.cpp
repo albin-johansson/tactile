@@ -468,6 +468,13 @@ void window::on_actionLayersVisibility_triggered()
   prefs::graphics::layer_widget_visible().set(visible);
 }
 
+void window::on_actionPropertiesVisibility_triggered()
+{
+  const auto visible = m_ui->actionPropertiesVisibility->isChecked();
+  m_propertiesDock->setVisible(visible);
+  prefs::graphics::properties_widget_visible().set(visible);
+}
+
 void window::on_actionSave_triggered()
 {
   emit ui_save();
