@@ -185,6 +185,9 @@ set(TACTILE_SOURCE_FILES
         gui/properties/property_file_dialog.cpp
         gui/properties/property_file_dialog.hpp
         gui/properties/property_value_widget.hpp
+        gui/properties/change_property_name_dialog.ui
+        gui/properties/change_property_name_dialog.cpp
+        gui/properties/change_property_name_dialog.hpp
         gui/properties/property_name_validator.cpp
         gui/properties/property_name_validator.hpp
 
