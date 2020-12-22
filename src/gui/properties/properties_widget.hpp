@@ -33,6 +33,8 @@ class properties_widget final : public QWidget
 
  private slots:
   void new_property_requested();
+
+  void rename_property_requested(const QModelIndex& index);
 };
 
 }  // namespace tactile::gui

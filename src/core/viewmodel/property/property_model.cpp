@@ -4,6 +4,7 @@
 
 #include "file_value_widget.hpp"
 #include "icons.hpp"
+#include "item_model_utils.hpp"
 #include "property_items.hpp"
 #include "tactile_error.hpp"
 
@@ -64,17 +65,25 @@ auto property_model::add(const QString& name, core::property::type type)
     -> QModelIndex
 {
   m_manager->add_property(name, type);
-  return add_property(name, m_manager->get_property(name), m_customRoot);
+
+  const auto index =
+      add_property(name, m_manager->get_property(name), m_customRoot);
+  itemFromIndex(index.siblingAtColumn(0))->setEditable(false);
+
+  return index;
+}
+
+void property_model::rename(const QString& oldName, const QString& newName)
+{
+  if (auto* item = find_item(this, oldName, 0)) {
+    item->setText(newName);
+  }
+  m_manager->rename_property(oldName, newName);
 }
 
 void property_model::set_predefined_name(const QString& name)
 {
   m_predefinedRoot->setText(name);
-}
-
-void property_model::set_cached_name(const QString& name)
-{
-  m_cachedName = name;
 }
 
 auto property_model::add_property(const QString& name,
@@ -253,15 +262,9 @@ void property_model::set_value(const QString& name, QStandardItem* item)
 
 void property_model::when_item_changed(QStandardItem* item)
 {
-  if (item->parent() == m_customRoot) {
+  if (item->parent() == m_customRoot && item->column() == 1) {
     const auto name = m_customRoot->child(item->row(), 0)->text();
-    if (item->column() == 0 && m_cachedName) {
-      update_name(*m_cachedName, name);
-      m_cachedName.reset();
-
-    } else {
-      set_value(name, item);
-    }
+    set_value(name, item);
   }
 }
 

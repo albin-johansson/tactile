@@ -129,12 +129,9 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
 {
   QTreeView::selectionChanged(selected, deselected);
 
-  for (const auto index : selected.indexes()) {
-    if (index.column() == 0) {
-      auto* item = get_model()->itemFromIndex(index);
-      get_model()->set_cached_name(item->text());
-    }
+  Q_ASSERT(selected.size() == 1 || selected.empty());
 
+  for (const auto index : selected.indexes()) {
     if (auto* widget =
             qobject_cast<property_value_widget*>(indexWidget(index))) {
       widget->enter_active_mode();
@@ -155,17 +152,6 @@ void property_tree_view::mousePressEvent(QMouseEvent* event)
   if (!childAt(event->pos())) {
     clearSelection();
   }
-}
-
-auto property_tree_view::edit(const QModelIndex& index,
-                              const EditTrigger trigger,
-                              QEvent* event) -> bool
-{
-  if (index.column() == 0 && trigger == EditTrigger::DoubleClicked) {
-    const auto* item = get_model()->itemFromIndex(index);
-    get_model()->set_cached_name(item->text());
-  }
-  return QAbstractItemView::edit(index, trigger, event);
 }
 
 auto property_tree_view::get_model() -> vm::property_model*

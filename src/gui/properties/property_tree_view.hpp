@@ -33,9 +33,6 @@ class property_tree_view final : public QTreeView
 
   void mousePressEvent(QMouseEvent* event) override;
 
-  auto edit(const QModelIndex& index, EditTrigger trigger, QEvent* event)
-      -> bool override;
-
  private:
   vector_map<int, QStandardItem*> m_widgetItems;
   int m_nextWidgetId{1};

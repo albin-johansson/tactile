@@ -3,6 +3,7 @@
 #include <QDebug>
 
 #include "add_property_dialog.hpp"
+#include "change_property_name_dialog.hpp"
 #include "file_value_widget.hpp"
 #include "preferences.hpp"
 #include "properties_context_menu.hpp"
@@ -21,6 +22,7 @@ properties_widget::properties_widget(QWidget* parent)
 
   // clang-format off
   connect(m_ui->addButton, &QPushButton::pressed, this, &properties_widget::new_property_requested);
+  connect(m_treeView, &QTreeView::doubleClicked, this, &properties_widget::rename_property_requested);
   // clang-format on
 }
 
@@ -71,6 +73,17 @@ void properties_widget::new_property_requested()
       },
       m_model,
       this);
+}
+
+void properties_widget::rename_property_requested(const QModelIndex& index)
+{
+  auto* item = m_model->itemFromIndex(index);
+  if (index.column() == 0 && index.parent().isValid() && item->isEnabled()) {
+    const auto oldName = item->text();
+    if (const auto newName = change_property_name_dialog::spawn(m_model)) {
+      m_model->rename(oldName, *newName);
+    }
+  }
 }
 
 }  // namespace tactile::gui

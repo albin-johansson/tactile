@@ -2,7 +2,6 @@
 
 #include <QStandardItemModel>
 
-#include "maybe.hpp"
 #include "property_manager.hpp"
 
 namespace tactile::viewmodel {
@@ -23,9 +22,9 @@ class property_model final : public QStandardItemModel
 
   auto add(const QString& name, core::property::type type) -> QModelIndex;
 
-  void set_predefined_name(const QString& name);
+  void rename(const QString& oldName, const QString& newName);
 
-  void set_cached_name(const QString& name);
+  void set_predefined_name(const QString& name);
 
  signals:
   void added_string(const QModelIndex& valueIndex);
@@ -40,7 +39,6 @@ class property_model final : public QStandardItemModel
   core::property_manager* m_manager{};
   QStandardItem* m_predefinedRoot{};
   QStandardItem* m_customRoot{};
-  maybe<QString> m_cachedName;
 
   auto add_property(const QString& name,
                     const core::property& property,
