@@ -113,8 +113,8 @@ void property_tree_view::when_file_added(const QModelIndex& index)
       auto* item = m_widgetItems.at(id);
       item->setData(path, vm::property_item_role::path);
 
-      if (auto* widget =
-              qobject_cast<file_value_widget*>(indexWidget(item->index()))) {
+      auto* itemWidget = indexWidget(item->index());
+      if (auto* widget = qobject_cast<file_value_widget*>(itemWidget)) {
         const QFileInfo file{path};
         widget->set_path(file);
       }
