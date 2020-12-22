@@ -22,7 +22,7 @@ namespace tactile::core {
 class layer : public property_manager
 {
  public:
-  ~layer() override noexcept = default;
+  ~layer() noexcept override = default;
 
   /**
    * \brief Sets whether or not the layer is visible.
