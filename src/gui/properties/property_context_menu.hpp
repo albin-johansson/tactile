@@ -6,12 +6,12 @@
 
 namespace tactile::gui {
 
-class properties_context_menu final : public QMenu
+class property_context_menu final : public QMenu
 {
   Q_OBJECT
 
  public:
-  explicit properties_context_menu(QWidget* parent = nullptr);
+  explicit property_context_menu(QWidget* parent = nullptr);
 
   void set_current_type(core::property::type type);
 

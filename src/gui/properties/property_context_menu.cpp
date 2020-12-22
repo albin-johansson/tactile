@@ -1,10 +1,10 @@
-#include "properties_context_menu.hpp"
+#include "property_context_menu.hpp"
 
 #include "icons.hpp"
 
 namespace tactile::gui {
 
-properties_context_menu::properties_context_menu(QWidget* parent)
+property_context_menu::property_context_menu(QWidget* parent)
     : QMenu{parent}
     , m_add{addAction(icons::add(), tr("Add property..."))}
     , m_sep0{addSeparator()}
@@ -29,7 +29,7 @@ properties_context_menu::properties_context_menu(QWidget* parent)
   m_typeColor = m_changeType->addAction(tr("color"));
   m_typeFile = m_changeType->addAction(tr("file"));
 
-  using context_menu = properties_context_menu;
+  using context_menu = property_context_menu;
   connect(m_add, &QAction::triggered, this, &context_menu::add);
   connect(m_remove, &QAction::triggered, this, &context_menu::remove);
   connect(m_rename, &QAction::triggered, this, &context_menu::rename);
@@ -68,7 +68,7 @@ properties_context_menu::properties_context_menu(QWidget* parent)
   });
 }
 
-void properties_context_menu::set_current_type(const core::property::type type)
+void property_context_menu::set_current_type(const core::property::type type)
 {
   for (auto* elem : m_changeType->actions()) {
     if (!elem->isSeparator()) {
@@ -108,42 +108,42 @@ void properties_context_menu::set_current_type(const core::property::type type)
   }
 }
 
-void properties_context_menu::set_up_enabled(const bool enabled)
+void property_context_menu::set_up_enabled(const bool enabled)
 {
   m_moveUp->setEnabled(enabled);
 }
 
-void properties_context_menu::set_down_enabled(const bool enabled)
+void property_context_menu::set_down_enabled(const bool enabled)
 {
   m_moveDown->setEnabled(enabled);
 }
 
-void properties_context_menu::set_remove_enabled(const bool enabled)
+void property_context_menu::set_remove_enabled(const bool enabled)
 {
   m_remove->setEnabled(enabled);
 }
 
-void properties_context_menu::set_duplicate_enabled(const bool enabled)
+void property_context_menu::set_duplicate_enabled(const bool enabled)
 {
   m_duplicate->setEnabled(enabled);
 }
 
-void properties_context_menu::set_rename_enabled(const bool enabled)
+void property_context_menu::set_rename_enabled(const bool enabled)
 {
   m_rename->setEnabled(enabled);
 }
 
-void properties_context_menu::set_copy_enabled(const bool enabled)
+void property_context_menu::set_copy_enabled(const bool enabled)
 {
   m_copy->setEnabled(enabled);
 }
 
-void properties_context_menu::set_paste_enabled(const bool enabled)
+void property_context_menu::set_paste_enabled(const bool enabled)
 {
   m_paste->setEnabled(enabled);
 }
 
-void properties_context_menu::set_change_type_enabled(const bool enabled)
+void property_context_menu::set_change_type_enabled(const bool enabled)
 {
   m_changeType->setEnabled(enabled);
 }

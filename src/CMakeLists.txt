@@ -171,8 +171,8 @@ set(TACTILE_SOURCE_FILES
         gui/properties/add_property_dialog.ui
         gui/properties/add_property_dialog.hpp
         gui/properties/add_property_dialog.cpp
-        gui/properties/properties_context_menu.cpp
-        gui/properties/properties_context_menu.hpp
+        gui/properties/property_context_menu.cpp
+        gui/properties/property_context_menu.hpp
         gui/properties/property_tree_view.cpp
         gui/properties/property_tree_view.hpp
         gui/properties/color_validator.cpp

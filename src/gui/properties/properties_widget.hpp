@@ -13,6 +13,7 @@ class properties_widget;
 namespace tactile::gui {
 
 class property_tree_view;
+class property_context_menu;
 
 class properties_widget final : public QWidget
 {
@@ -29,6 +30,7 @@ class properties_widget final : public QWidget
  private:
   Ui::properties_widget* m_ui{};
   property_tree_view* m_treeView{};
+  property_context_menu* m_contextMenu{};
   viewmodel::property_model* m_model{};
 
  private slots:

@@ -6,7 +6,7 @@
 #include "change_property_name_dialog.hpp"
 #include "file_value_widget.hpp"
 #include "preferences.hpp"
-#include "properties_context_menu.hpp"
+#include "property_context_menu.hpp"
 #include "property_tree_view.hpp"
 #include "ui_properties_widget.h"
 
@@ -15,6 +15,7 @@ namespace tactile::gui {
 properties_widget::properties_widget(QWidget* parent)
     : QWidget{parent}
     , m_ui{new Ui::properties_widget{}}
+    , m_contextMenu{new property_context_menu{this}}
 {
   m_ui->setupUi(this);
   m_treeView = new property_tree_view{this};
