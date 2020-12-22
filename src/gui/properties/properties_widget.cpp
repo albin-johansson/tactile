@@ -4,7 +4,7 @@
 
 #include "add_property_dialog.hpp"
 #include "change_property_name_dialog.hpp"
-#include "file_value_widget.hpp"
+#include "init_ui.hpp"
 #include "preferences.hpp"
 #include "property_context_menu.hpp"
 #include "property_tree_view.hpp"
@@ -14,11 +14,10 @@ namespace tactile::gui {
 
 properties_widget::properties_widget(QWidget* parent)
     : QWidget{parent}
-    , m_ui{new Ui::properties_widget{}}
+    , m_ui{init_ui<Ui::properties_widget>(this)}
     , m_contextMenu{new property_context_menu{this}}
+    , m_treeView{new property_tree_view{this}}
 {
-  m_ui->setupUi(this);
-  m_treeView = new property_tree_view{this};
   m_ui->gridLayout->addWidget(m_treeView, 1, 1);
 
   // clang-format off
