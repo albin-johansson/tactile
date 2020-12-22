@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QValidator>
 
+#include "init_ui.hpp"
 #include "maybe.hpp"
 #include "preferences.hpp"
 #include "setting.hpp"
@@ -32,10 +33,8 @@ using namespace prefs;
 
 settings_dialog::settings_dialog(QWidget* parent)
     : QDialog{parent}
-    , m_ui{new Ui::settings_dialog{}}
+    , m_ui{init_ui<Ui::settings_dialog>(this)}
 {
-  m_ui->setupUi(this);
-
   auto* validator = new QIntValidator{0, 9'999, this};
   m_ui->tileWidthEdit->setValidator(validator);
   m_ui->tileHeightEdit->setValidator(validator);

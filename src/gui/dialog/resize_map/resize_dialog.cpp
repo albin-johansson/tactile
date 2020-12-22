@@ -1,5 +1,6 @@
 #include "resize_dialog.hpp"
 
+#include "init_ui.hpp"
 #include "ui_resize_dialog.h"
 
 using namespace tactile::core;
@@ -8,13 +9,9 @@ namespace tactile::gui {
 
 resize_dialog::resize_dialog(QWidget* parent)
     : QDialog{parent}
-    , m_ui{new Ui::resize_dialog{}}
-    , m_chosenWidth{std::nullopt}
-    , m_chosenHeight{std::nullopt}
+    , m_ui{init_ui<Ui::resize_dialog>(this)}
+    , m_validator{new QIntValidator{1, 20'000, this}}
 {
-  m_ui->setupUi(this);
-
-  m_validator = new QIntValidator{1, 20'000, this};
   m_ui->widthEdit->setValidator(m_validator);
   m_ui->heightEdit->setValidator(m_validator);
 

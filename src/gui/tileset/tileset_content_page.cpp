@@ -7,6 +7,7 @@
 #include <QTabBar>
 
 #include "icons.hpp"
+#include "init_ui.hpp"
 #include "signal_blocker.hpp"
 #include "tab_widget.hpp"
 #include "tileset_tab.hpp"
@@ -17,16 +18,14 @@ namespace tactile::gui {
 
 tileset_content_page::tileset_content_page(QWidget* parent)
     : QWidget{parent}
-    , m_ui{new Ui::tileset_content_page{}}
+    , m_ui{init_ui<Ui::tileset_content_page>(this)}
+    , m_tabWidget{new tab_widget{this}}
+    , m_contextMenu{new tileset_tab_context_menu{this}}
 {
-  m_ui->setupUi(this);
-
-  m_tabWidget = new tab_widget{this};
   m_tabWidget->setTabsClosable(false);
   m_tabWidget->setContextMenuPolicy(Qt::CustomContextMenu);
   add_corner_button();
 
-  m_contextMenu = new tileset_tab_context_menu{this};
   m_ui->gridLayout->addWidget(m_tabWidget);
 
   connect(m_tabWidget,

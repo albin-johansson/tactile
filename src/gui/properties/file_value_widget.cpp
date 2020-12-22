@@ -1,15 +1,14 @@
 #include "file_value_widget.hpp"
 
+#include "init_ui.hpp"
 #include "ui_file_value_widget.h"
 
 namespace tactile::gui {
 
 file_value_widget::file_value_widget(QWidget* parent)
     : property_value_widget{parent}
-    , m_ui{new Ui::file_value_widget{}}
+    , m_ui{init_ui<Ui::file_value_widget>(this)}
 {
-  m_ui->setupUi(this);
-
   setAutoFillBackground(true);
   layout()->setContentsMargins(0, 0, 0, 0);
 

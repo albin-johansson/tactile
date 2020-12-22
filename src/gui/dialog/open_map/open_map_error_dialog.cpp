@@ -1,15 +1,14 @@
 #include "open_map_error_dialog.hpp"
 
+#include "init_ui.hpp"
 #include "ui_open_map_error_dialog.h"
 
 namespace tactile::gui {
 
 open_map_error_dialog::open_map_error_dialog(QWidget* parent)
     : QDialog{parent}
-    , m_ui{new Ui::open_map_error_dialog{}}
-{
-  m_ui->setupUi(this);
-}
+    , m_ui{init_ui<Ui::open_map_error_dialog>(this)}
+{}
 
 open_map_error_dialog::~open_map_error_dialog() noexcept
 {

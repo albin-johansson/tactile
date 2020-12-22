@@ -2,6 +2,7 @@
 
 #include <QPushButton>
 
+#include "init_ui.hpp"
 #include "property_name_validator.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
@@ -12,11 +13,9 @@ namespace tactile::gui {
 add_property_dialog::add_property_dialog(QStandardItemModel* model,
                                          QWidget* parent)
     : QDialog{parent}
-    , m_ui{new Ui::add_property_dialog{}}
+    , m_ui{init_ui<Ui::add_property_dialog>(this)}
     , m_nameValidator{new property_name_validator{model, this}}
 {
-  m_ui->setupUi(this);
-
   setObjectName(TACTILE_QSTRING(u"add_property_dialog"));
 
   // clang-format off

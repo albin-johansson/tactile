@@ -2,6 +2,7 @@
 
 #include <QPushButton>
 
+#include "init_ui.hpp"
 #include "property_name_validator.hpp"
 #include "ui_change_property_name_dialog.h"
 
@@ -11,11 +12,9 @@ change_property_name_dialog::change_property_name_dialog(
     QStandardItemModel* model,
     QWidget* parent)
     : QDialog{parent}
-    , m_ui{new Ui::change_property_name_dialog{}}
+    , m_ui{init_ui<Ui::change_property_name_dialog>(this)}
     , m_validator{new property_name_validator{model, this}}
 {
-  m_ui->setupUi(this);
-
   // clang-format off
   connect(m_ui->nameEdit, &QLineEdit::textChanged, this, &change_property_name_dialog::when_name_changed);
   // clang-format on

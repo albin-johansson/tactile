@@ -1,5 +1,6 @@
 #include "map_editor.hpp"
 
+#include "init_ui.hpp"
 #include "map_document.hpp"
 #include "map_tab_widget.hpp"
 #include "startup_widget.hpp"
@@ -9,12 +10,9 @@ namespace tactile::gui {
 
 map_editor::map_editor(QWidget* parent)
     : QWidget{parent}
-    , m_ui{new Ui::map_editor{}}
+    , m_ui{init_ui<Ui::map_editor>(this)}
+    , m_tabWidget{new map_tab_widget{this}}
 {
-  m_ui->setupUi(this);
-
-  m_tabWidget = new map_tab_widget{this};
-
   m_startupID = m_ui->stackedWidget->addWidget(new startup_widget{this});
   m_editorID = m_ui->stackedWidget->addWidget(m_tabWidget);
 

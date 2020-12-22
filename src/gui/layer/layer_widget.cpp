@@ -5,6 +5,7 @@
 #include <QRadioButton>
 
 #include "icons.hpp"
+#include "init_ui.hpp"
 #include "layer_item.hpp"
 #include "layer_item_context_menu.hpp"
 #include "tactile_qstring.hpp"
@@ -14,10 +15,9 @@ namespace tactile::gui {
 
 layer_widget::layer_widget(QWidget* parent)
     : QWidget{parent}
-    , m_ui{new Ui::layer_widget{}}
+    , m_ui{init_ui<Ui::layer_widget>(this)}
     , m_contextMenu{new layer_item_context_menu{this}}
 {
-  m_ui->setupUi(this);
   m_ui->layerList->setContextMenuPolicy(Qt::CustomContextMenu);
 
   // clang-format off

@@ -1,15 +1,15 @@
 #include "tool_widget.hpp"
 
+#include "init_ui.hpp"
 #include "ui_tool_widget.h"
 
 namespace tactile::gui {
 
 tool_widget::tool_widget(QWidget* parent)
     : QWidget{parent}
-    , m_ui{new Ui::tool_widget{}}
+    , m_ui{init_ui<Ui::tool_widget>(this)}
+    , m_group{new QButtonGroup{this}}
 {
-  m_ui->setupUi(this);
-
   const auto on_pressed = [this](auto* sender, auto handler) {
     connect(sender, &QPushButton::pressed, this, handler);
   };
@@ -18,7 +18,6 @@ tool_widget::tool_widget(QWidget* parent)
   on_pressed(m_ui->bucketButton, &tool_widget::bucket_enabled);
   on_pressed(m_ui->eraserButton, &tool_widget::eraser_enabled);
 
-  m_group = new QButtonGroup{this};
   m_group->setExclusive(true);
   m_group->addButton(m_ui->stampButton);
   m_group->addButton(m_ui->bucketButton);

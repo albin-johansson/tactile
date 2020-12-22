@@ -2,6 +2,7 @@
 
 #include <QFileInfo>
 
+#include "init_ui.hpp"
 #include "open_tileset_image.hpp"
 #include "tactile_error.hpp"
 #include "ui_tileset_dialog.h"
@@ -10,11 +11,9 @@ namespace tactile::gui {
 
 tileset_dialog::tileset_dialog(QWidget* parent)
     : QDialog{parent}
-    , m_ui{new Ui::tileset_dialog{}}
+    , m_ui{init_ui<Ui::tileset_dialog>(this)}
+    , m_validator{new QIntValidator{1, 1'000, this}}
 {
-  m_ui->setupUi(this);
-  m_validator = new QIntValidator{1, 1'000, this};
-
   m_defaultImageIcon = m_ui->imageLabel->pixmap(Qt::ReturnByValueConstant{});
   if (m_defaultImageIcon.isNull()) {
     throw tactile_error{"Could not create default pixmap!"};
