@@ -146,10 +146,9 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
 
 void property_tree_view::mousePressEvent(QMouseEvent* event)
 {
+  // This is done to be able to deselect properties by pressing outside of items
+  clearSelection();
   QTreeView::mousePressEvent(event);
-  if (!childAt(event->pos())) {
-    clearSelection();
-  }
 }
 
 auto property_tree_view::get_model() -> vm::property_model*
