@@ -6,6 +6,8 @@ namespace tactile::gui {
 
 class property_value_widget : public QWidget
 {
+  Q_OBJECT
+
  public:
   explicit property_value_widget(QWidget* parent = nullptr) : QWidget{parent}
   {}
