@@ -55,7 +55,7 @@ set(TACTILE_SOURCE_FILES
         core/map/map_manager.cpp
         core/map/map_manager.hpp
 
-        core/viewmodel/visit_items.hpp
+        core/viewmodel/item_model_utils.hpp
 
         core/viewmodel/property/property_model.cpp
         core/viewmodel/property/property_model.hpp
