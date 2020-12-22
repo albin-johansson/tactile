@@ -5,6 +5,10 @@
 
 #include "vector_map.hpp"
 
+namespace tactile::viewmodel {
+class property_model;
+}
+
 namespace tactile::gui {
 
 class property_tree_view final : public QTreeView
@@ -13,6 +17,8 @@ class property_tree_view final : public QTreeView
 
  public:
   explicit property_tree_view(QWidget* parent = nullptr);
+
+  void setModel(QAbstractItemModel* model) override;
 
   void add_item_widgets();
 
@@ -27,13 +33,16 @@ class property_tree_view final : public QTreeView
 
   void mousePressEvent(QMouseEvent* event) override;
 
+  auto edit(const QModelIndex& index, EditTrigger trigger, QEvent* event)
+      -> bool override;
+
  private:
   vector_map<int, QStandardItem*> m_widgetItems;
   int m_nextWidgetId{1};
 
-  [[nodiscard]] auto get_model() -> QStandardItemModel*;
+  [[nodiscard]] auto get_model() -> viewmodel::property_model*;
 
-  [[nodiscard]] auto get_model() const -> const QStandardItemModel*;
+  [[nodiscard]] auto get_model() const -> const viewmodel::property_model*;
 
   [[nodiscard]] auto new_widget_id() noexcept -> int
   {

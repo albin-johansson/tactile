@@ -12,7 +12,7 @@
 #include "tool_model.hpp"
 
 namespace tactile::viewmodel {
-class property_viewmodel;
+class property_model;
 }
 
 namespace tactile::core {

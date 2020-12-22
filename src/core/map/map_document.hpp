@@ -20,7 +20,7 @@
 #include "vector_map.hpp"
 
 namespace tactile::viewmodel {
-class property_viewmodel;
+class property_model;
 }
 
 namespace tactile::core {
@@ -513,7 +513,7 @@ class map_document final : public QObject, public property_manager
   [[nodiscard]] auto current_layer_id() const noexcept -> maybe<layer_id>;
 
   [[nodiscard]] auto property_viewmodel() const noexcept
-      -> viewmodel::property_viewmodel*;
+      -> viewmodel::property_model*;
 
   /**
    * \brief Returns the file path associated with the map document.
@@ -576,7 +576,7 @@ class map_document final : public QObject, public property_manager
   std::unique_ptr<tileset_manager> m_tilesets;
   command_stack* m_commands{};
   property_delegate m_propertyDelegate;
-  viewmodel::property_viewmodel* m_propertyModel{};
+  viewmodel::property_model* m_propertyModel{};
   QFileInfo m_path;
 
   void setup();

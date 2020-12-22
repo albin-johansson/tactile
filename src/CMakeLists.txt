@@ -57,8 +57,8 @@ set(TACTILE_SOURCE_FILES
 
         core/viewmodel/visit_items.hpp
 
-        core/viewmodel/property/property_viewmodel.cpp
-        core/viewmodel/property/property_viewmodel.hpp
+        core/viewmodel/property/property_model.cpp
+        core/viewmodel/property/property_model.hpp
         core/viewmodel/property/property_items.hpp
         core/viewmodel/property/property_item_role.hpp
         core/viewmodel/property/item_type.hpp

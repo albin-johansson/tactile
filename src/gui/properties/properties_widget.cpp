@@ -43,8 +43,8 @@ void properties_widget::selected_map(const core::map_document& document)
   m_treeView->expandAll();
 
   // clang-format off
-  connect(m_model, &viewmodel::property_viewmodel::added_file, m_treeView, &property_tree_view::when_file_added);
-  connect(m_model, &viewmodel::property_viewmodel::added_color, m_treeView, &property_tree_view::when_color_added);
+  connect(m_model, &viewmodel::property_model::added_file, m_treeView, &property_tree_view::when_file_added);
+  connect(m_model, &viewmodel::property_model::added_color, m_treeView, &property_tree_view::when_color_added);
   // clang-format on
 
   m_model->set_predefined_name(TACTILE_QSTRING(u"Map"));

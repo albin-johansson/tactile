@@ -4,7 +4,7 @@
 
 #include "map_document.hpp"
 #include "property.hpp"
-#include "property_viewmodel.hpp"
+#include "property_model.hpp"
 
 namespace Ui {
 class properties_widget;
@@ -29,7 +29,7 @@ class properties_widget final : public QWidget
  private:
   Ui::properties_widget* m_ui{};
   property_tree_view* m_treeView{};
-  viewmodel::property_viewmodel* m_model{};
+  viewmodel::property_model* m_model{};
 
  private slots:
   void new_property_requested();

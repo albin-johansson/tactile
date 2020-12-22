@@ -1,4 +1,4 @@
-#include "property_viewmodel.hpp"
+#include "property_model.hpp"
 
 #include <QDebug>
 
@@ -21,8 +21,7 @@ void add_entry(const QString& name,
 
 }  // namespace
 
-property_viewmodel::property_viewmodel(core::property_manager* manager,
-                                       QObject* parent)
+property_model::property_model(core::property_manager* manager, QObject* parent)
     : QStandardItemModel{parent}
     , m_manager{manager}
 {
@@ -41,19 +40,19 @@ property_viewmodel::property_viewmodel(core::property_manager* manager,
   setItem(1, m_customRoot);
 
   connect(this,
-          &property_viewmodel::itemChanged,
+          &property_model::itemChanged,
           this,
-          &property_viewmodel::when_item_changed);
+          &property_model::when_item_changed);
 }
 
-void property_viewmodel::clear_predefined()
+void property_model::clear_predefined()
 {
   removeRows(0, m_predefinedRoot->rowCount(), m_predefinedRoot->index());
 }
 
-auto property_viewmodel::add_predefined(const QString& name,
-                                        const core::property& property,
-                                        bool readOnly) -> QModelIndex
+auto property_model::add_predefined(const QString& name,
+                                    const core::property& property,
+                                    bool readOnly) -> QModelIndex
 {
   const auto index = add_property(name, property, m_predefinedRoot);
   itemFromIndex(index)->setEnabled(!readOnly);
@@ -61,21 +60,26 @@ auto property_viewmodel::add_predefined(const QString& name,
   return index;
 }
 
-auto property_viewmodel::add(const QString& name, core::property::type type)
+auto property_model::add(const QString& name, core::property::type type)
     -> QModelIndex
 {
   m_manager->add_property(name, type);
   return add_property(name, m_manager->get_property(name), m_customRoot);
 }
 
-void property_viewmodel::set_predefined_name(const QString& name)
+void property_model::set_predefined_name(const QString& name)
 {
   m_predefinedRoot->setText(name);
 }
 
-auto property_viewmodel::add_property(const QString& name,
-                                      const core::property& property,
-                                      QStandardItem* root) -> QModelIndex
+void property_model::set_cached_name(const QString& name)
+{
+  m_cachedName = name;
+}
+
+auto property_model::add_property(const QString& name,
+                                  const core::property& property,
+                                  QStandardItem* root) -> QModelIndex
 {
   switch (property.get_type().value()) {
     case core::property::string:
@@ -104,9 +108,9 @@ auto property_viewmodel::add_property(const QString& name,
   }
 }
 
-auto property_viewmodel::add_string(const QString& name,
-                                    const core::property& property,
-                                    QStandardItem* root) -> QModelIndex
+auto property_model::add_string(const QString& name,
+                                const core::property& property,
+                                QStandardItem* root) -> QModelIndex
 {
   auto* valueItem = new string_item{};
   valueItem->setData(property.as<QString>(), Qt::EditRole);
@@ -118,9 +122,9 @@ auto property_viewmodel::add_string(const QString& name,
   return index;
 }
 
-auto property_viewmodel::add_int(const QString& name,
-                                 const core::property& property,
-                                 QStandardItem* root) -> QModelIndex
+auto property_model::add_int(const QString& name,
+                             const core::property& property,
+                             QStandardItem* root) -> QModelIndex
 {
   auto* valueItem = new int_item{};
   valueItem->setData(property.as<int>(), Qt::EditRole);
@@ -132,9 +136,9 @@ auto property_viewmodel::add_int(const QString& name,
   return index;
 }
 
-auto property_viewmodel::add_float(const QString& name,
-                                   const core::property& property,
-                                   QStandardItem* root) -> QModelIndex
+auto property_model::add_float(const QString& name,
+                               const core::property& property,
+                               QStandardItem* root) -> QModelIndex
 {
   auto* valueItem = new float_item{};
   valueItem->setData(property.as<double>(), Qt::EditRole);
@@ -146,9 +150,9 @@ auto property_viewmodel::add_float(const QString& name,
   return index;
 }
 
-auto property_viewmodel::add_bool(const QString& name,
-                                  const core::property& property,
-                                  QStandardItem* root) -> QModelIndex
+auto property_model::add_bool(const QString& name,
+                              const core::property& property,
+                              QStandardItem* root) -> QModelIndex
 {
   auto* valueItem = new bool_item{};
   valueItem->setData(property.as<bool>() ? Qt::Checked : Qt::Unchecked,
@@ -161,9 +165,9 @@ auto property_viewmodel::add_bool(const QString& name,
   return index;
 }
 
-auto property_viewmodel::add_object(const QString& name,
-                                    const core::property& property,
-                                    QStandardItem* root) -> QModelIndex
+auto property_model::add_object(const QString& name,
+                                const core::property& property,
+                                QStandardItem* root) -> QModelIndex
 {
   auto* valueItem = new object_item{};
 
@@ -174,9 +178,9 @@ auto property_viewmodel::add_object(const QString& name,
   return index;
 }
 
-auto property_viewmodel::add_color(const QString& name,
-                                   const core::property& property,
-                                   QStandardItem* root) -> QModelIndex
+auto property_model::add_color(const QString& name,
+                               const core::property& property,
+                               QStandardItem* root) -> QModelIndex
 {
   Q_ASSERT(property.is<QColor>());
 
@@ -190,9 +194,9 @@ auto property_viewmodel::add_color(const QString& name,
   return index;
 }
 
-auto property_viewmodel::add_file(const QString& name,
-                                  const core::property& property,
-                                  QStandardItem* root) -> QModelIndex
+auto property_model::add_file(const QString& name,
+                              const core::property& property,
+                              QStandardItem* root) -> QModelIndex
 {
   auto* valueItem = new file_item{};
   valueItem->setEditable(false);
@@ -205,44 +209,58 @@ auto property_viewmodel::add_file(const QString& name,
   return index;
 }
 
-void property_viewmodel::when_item_changed(QStandardItem* item)
+void property_model::update_name(const QString& oldName, const QString& newName)
+{
+  m_manager->rename_property(oldName, newName);
+}
+
+void property_model::set_value(const QString& name, QStandardItem* item)
+{
+  switch (static_cast<viewmodel::item_type>(item->type())) {
+    case item_type::string: {
+      m_manager->set_property(name, item->data(Qt::EditRole).value<QString>());
+      break;
+    }
+    case item_type::integer: {
+      m_manager->set_property(name, item->data(Qt::EditRole).value<int>());
+      break;
+    }
+    case item_type::floating: {
+      m_manager->set_property(name, item->data(Qt::EditRole).value<double>());
+      break;
+    }
+    case item_type::boolean: {
+      m_manager->set_property(name,
+                              item->data(Qt::CheckStateRole).value<bool>());
+      break;
+    }
+    case item_type::file: {
+      const auto path =
+          item->data(viewmodel::property_item_role::path).value<QString>();
+      m_manager->set_property(name, QFileInfo{path});
+      break;
+    }
+    case item_type::color: {
+      const auto color =
+          item->data(viewmodel::property_item_role::color).value<QColor>();
+      m_manager->set_property(name, color);
+      break;
+    }
+    case item_type::object:
+      break;  // TODO
+  }
+}
+
+void property_model::when_item_changed(QStandardItem* item)
 {
   if (item->parent() == m_customRoot) {
     const auto name = m_customRoot->child(item->row(), 0)->text();
+    if (item->column() == 0 && m_cachedName) {
+      update_name(*m_cachedName, name);
+      m_cachedName.reset();
 
-    switch (static_cast<viewmodel::item_type>(item->type())) {
-      case item_type::string: {
-        m_manager->set_property(name,
-                                item->data(Qt::EditRole).value<QString>());
-        break;
-      }
-      case item_type::integer: {
-        m_manager->set_property(name, item->data(Qt::EditRole).value<int>());
-        break;
-      }
-      case item_type::floating: {
-        m_manager->set_property(name, item->data(Qt::EditRole).value<double>());
-        break;
-      }
-      case item_type::boolean: {
-        m_manager->set_property(name,
-                                item->data(Qt::CheckStateRole).value<bool>());
-        break;
-      }
-      case item_type::file: {
-        const auto path =
-            item->data(viewmodel::property_item_role::path).value<QString>();
-        m_manager->set_property(name, QFileInfo{path});
-        break;
-      }
-      case item_type::color: {
-        const auto color =
-            item->data(viewmodel::property_item_role::color).value<QColor>();
-        m_manager->set_property(name, color);
-        break;
-      }
-      case item_type::object:
-        break;  // TODO
+    } else {
+      set_value(name, item);
     }
   }
 }

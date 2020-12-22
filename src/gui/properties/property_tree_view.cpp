@@ -11,10 +11,14 @@
 #include "item_type.hpp"
 #include "property_file_dialog.hpp"
 #include "property_items.hpp"
+#include "property_model.hpp"
+#include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 #include "visit_items.hpp"
 
 namespace tactile::gui {
+
+namespace vm = viewmodel;
 
 property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
 {
@@ -52,15 +56,23 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
           });
 }
 
+void property_tree_view::setModel(QAbstractItemModel* model)
+{
+  QTreeView::setModel(model);
+  if (auto* ptr = qobject_cast<vm::property_model*>(model); !ptr) {
+    throw tactile_error{"property_tree_view must have property viewmodel!"};
+  }
+}
+
 void property_tree_view::add_item_widgets()
 {
-  viewmodel::visit_items(get_model(), 1, [this](QStandardItem* item) {
-    const auto itemType = static_cast<viewmodel::item_type>(item->type());
+  vm::visit_items(get_model(), 1, [this](QStandardItem* item) {
+    const auto itemType = static_cast<vm::item_type>(item->type());
 
-    if (itemType == viewmodel::item_type::color) {
+    if (itemType == vm::item_type::color) {
       when_color_added(item->index());
 
-    } else if (itemType == viewmodel::item_type::file) {
+    } else if (itemType == vm::item_type::file) {
       when_file_added(item->index());
     }
   });
@@ -68,19 +80,19 @@ void property_tree_view::add_item_widgets()
 
 void property_tree_view::when_color_added(const QModelIndex& index)
 {
-  const auto color =
-      index.data(viewmodel::property_item_role::color).value<QColor>();
+  const auto color = index.data(vm::property_item_role::color).value<QColor>();
   Q_ASSERT(color.isValid());
 
   auto* button = new color_preview_button{color};
 
+  // TODO use m_widgetItems instead of raw index capture
   connect(button,
           &color_preview_button::color_changed,
           [this, index](const QColor& color) {
             Q_ASSERT(index.isValid());
             if (auto* model = get_model()) {
               if (auto* item = model->itemFromIndex(index)) {
-                item->setData(color, viewmodel::property_item_role::color);
+                item->setData(color, vm::property_item_role::color);
               }
             }
           });
@@ -91,8 +103,7 @@ void property_tree_view::when_color_added(const QModelIndex& index)
 void property_tree_view::when_file_added(const QModelIndex& index)
 {
   auto* widget = new file_value_widget{};
-  widget->set_path(
-      index.data(viewmodel::property_item_role::path).value<QString>());
+  widget->set_path(index.data(vm::property_item_role::path).value<QString>());
 
   const auto id = new_widget_id();
   m_widgetItems.emplace(id, get_model()->itemFromIndex(index));
@@ -100,10 +111,10 @@ void property_tree_view::when_file_added(const QModelIndex& index)
   connect(widget, &file_value_widget::spawn_dialog, [=, this] {
     property_file_dialog::spawn([id, this](const QString& path) {
       auto* item = m_widgetItems.at(id);
-      item->setData(path, viewmodel::property_item_role::path);
+      item->setData(path, vm::property_item_role::path);
 
       if (auto* widget =
-              dynamic_cast<file_value_widget*>(indexWidget(item->index()))) {
+              qobject_cast<file_value_widget*>(indexWidget(item->index()))) {
         const QFileInfo file{path};
         widget->set_path(file);
       }
@@ -119,15 +130,20 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
   QTreeView::selectionChanged(selected, deselected);
 
   for (const auto index : selected.indexes()) {
+    if (index.column() == 0) {
+      auto* item = get_model()->itemFromIndex(index);
+      get_model()->set_cached_name(item->text());
+    }
+
     if (auto* widget =
-            dynamic_cast<property_value_widget*>(indexWidget(index))) {
+            qobject_cast<property_value_widget*>(indexWidget(index))) {
       widget->enter_active_mode();
     }
   }
 
   for (const auto index : deselected.indexes()) {
     if (auto* widget =
-            dynamic_cast<property_value_widget*>(indexWidget(index))) {
+            qobject_cast<property_value_widget*>(indexWidget(index))) {
       widget->enter_idle_mode();
     }
   }
@@ -141,16 +157,27 @@ void property_tree_view::mousePressEvent(QMouseEvent* event)
   }
 }
 
-auto property_tree_view::get_model() -> QStandardItemModel*
+auto property_tree_view::edit(const QModelIndex& index,
+                              const EditTrigger trigger,
+                              QEvent* event) -> bool
 {
-  auto* ptr = qobject_cast<QStandardItemModel*>(model());
+  if (index.column() == 0 && trigger == EditTrigger::DoubleClicked) {
+    const auto* item = get_model()->itemFromIndex(index);
+    get_model()->set_cached_name(item->text());
+  }
+  return QAbstractItemView::edit(index, trigger, event);
+}
+
+auto property_tree_view::get_model() -> vm::property_model*
+{
+  auto* ptr = qobject_cast<vm::property_model*>(model());
   Q_ASSERT(ptr);
   return ptr;
 }
 
-auto property_tree_view::get_model() const -> const QStandardItemModel*
+auto property_tree_view::get_model() const -> const vm::property_model*
 {
-  const auto* ptr = qobject_cast<const QStandardItemModel*>(model());
+  const auto* ptr = qobject_cast<const vm::property_model*>(model());
   Q_ASSERT(ptr);
   return ptr;
 }
