@@ -40,6 +40,7 @@ void property_delegate::rename_property(const QString& oldName,
   Q_ASSERT(!m_properties.contains(newName));
 
   auto property = m_properties.at(oldName);
+  m_properties.erase(oldName);
   m_properties.emplace(newName, std::move(property));
 
 #ifdef QT_DEBUG
