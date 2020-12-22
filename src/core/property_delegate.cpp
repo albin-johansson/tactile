@@ -2,6 +2,9 @@
 
 #include <utility>  // move
 
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif  // QT_DEBUG
 
 namespace tactile::core {
 
@@ -15,6 +18,9 @@ void property_delegate::add_property(const QString& name,
 
   m_properties.emplace(name, std::move(p));
 
+#ifdef QT_DEBUG
+  qDebug() << "Added property:" << name << "with type:" << type;
+#endif  // QT_DEBUG
 }
 
 void property_delegate::remove_property(const QString& name)
@@ -22,6 +28,9 @@ void property_delegate::remove_property(const QString& name)
   Q_ASSERT(m_properties.contains(name));
   m_properties.erase(name);
 
+#ifdef QT_DEBUG
+  qDebug() << "Removed property:" << name;
+#endif  // QT_DEBUG
 }
 
 void property_delegate::rename_property(const QString& oldName,
@@ -33,6 +42,9 @@ void property_delegate::rename_property(const QString& oldName,
   auto property = m_properties.at(oldName);
   m_properties.emplace(newName, std::move(property));
 
+#ifdef QT_DEBUG
+  qDebug() << "Renamed property:" << oldName << "->" << newName;
+#endif  // QT_DEBUG
 }
 
 void property_delegate::set_property(const QString& name,
@@ -41,6 +53,9 @@ void property_delegate::set_property(const QString& name,
   Q_ASSERT(m_properties.contains(name));
   m_properties.at(name) = property;
 
+#ifdef QT_DEBUG
+  qDebug() << "Set value of property:" << name;
+#endif  // QT_DEBUG
 }
 
 auto property_delegate::get_property(const QString& name) const
