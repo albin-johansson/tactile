@@ -85,16 +85,14 @@ void property_tree_view::when_color_added(const QModelIndex& index)
 
   auto* button = new color_preview_button{color};
 
-  // TODO use m_widgetItems instead of raw index capture
+  const auto id = new_widget_id();
+  m_widgetItems.emplace(id, get_model()->itemFromIndex(index));
+
   connect(button,
           &color_preview_button::color_changed,
-          [this, index](const QColor& color) {
-            Q_ASSERT(index.isValid());
-            if (auto* model = get_model()) {
-              if (auto* item = model->itemFromIndex(index)) {
-                item->setData(color, vm::property_item_role::color);
-              }
-            }
+          [this, id](const QColor& color) {
+            auto* item = m_widgetItems.at(id);
+            item->setData(color, vm::property_item_role::color);
           });
 
   setIndexWidget(index, button);
@@ -108,8 +106,8 @@ void property_tree_view::when_file_added(const QModelIndex& index)
   const auto id = new_widget_id();
   m_widgetItems.emplace(id, get_model()->itemFromIndex(index));
 
-  connect(widget, &file_value_widget::spawn_dialog, [id, this] {
-    property_file_dialog::spawn([id, this](const QString& path) {
+  connect(widget, &file_value_widget::spawn_dialog, [this, id] {
+    property_file_dialog::spawn([this, id](const QString& path) {
       auto* item = m_widgetItems.at(id);
       item->setData(path, vm::property_item_role::path);
 
