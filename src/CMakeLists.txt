@@ -73,6 +73,7 @@ set(TACTILE_SOURCE_FILES
         gui/tab_widget.hpp
         gui/tree_widget_item.cpp
         gui/tree_widget_item.hpp
+        gui/init_ui.hpp
 
         gui/startup/startup_widget.cpp
         gui/startup/startup_widget.hpp
