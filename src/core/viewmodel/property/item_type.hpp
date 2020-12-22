@@ -6,8 +6,7 @@ namespace tactile::viewmodel {
 
 enum class item_type
 {
-  name = QStandardItem::UserType,
-  string,
+  string = QStandardItem::UserType,
   integer,
   floating,
   boolean,
