@@ -8,13 +8,13 @@
 #include "color_preview_button.hpp"
 #include "file_value_widget.hpp"
 #include "icons.hpp"
+#include "item_model_utils.hpp"
 #include "item_type.hpp"
 #include "property_file_dialog.hpp"
 #include "property_items.hpp"
 #include "property_model.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
-#include "visit_items.hpp"
 
 namespace tactile::gui {
 
