@@ -130,7 +130,6 @@
     <widget class="QMenu" name="menuAppearance">
      <property name="font">
       <font>
-       <family>Segoe UI</family>
        <pointsize>10</pointsize>
       </font>
      </property>
@@ -852,6 +851,12 @@
    </property>
    <property name="text">
     <string>About Qt...</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
   </action>
   <action name="actionLayersVisibility">
