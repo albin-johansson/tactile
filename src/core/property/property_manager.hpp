@@ -26,7 +26,7 @@ class property_manager
 
   [[nodiscard]] virtual auto get_property(const QString& name) -> property& = 0;
 
-  [[nodiscard]] virtual auto property_count() const -> int = 0;
+  [[nodiscard]] virtual auto property_count() const noexcept -> int = 0;
 };
 
 }  // namespace tactile::core

@@ -13,6 +13,7 @@
 #include "maybe.hpp"
 #include "position.hpp"
 #include "property.hpp"
+#include "property_delegate.hpp"
 #include "property_manager.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
@@ -298,7 +299,7 @@ class map_document final : public QObject, public property_manager
   [[nodiscard]] auto get_property(const QString& name)
       -> core::property& override;
 
-  [[nodiscard]] auto property_count() const -> int override;
+  [[nodiscard]] auto property_count() const noexcept -> int override;
 
   /**
    * \copydoc map::set_visibility()
@@ -394,7 +395,7 @@ class map_document final : public QObject, public property_manager
   template <std::invocable<const QString&, const core::property&> T>
   void each_property(T&& callable) const
   {
-    for (const auto& [key, property] : m_properties) {
+    for (const auto& [key, property] : m_propertyDelegate) {
       callable(key, property);
     }
   }
@@ -573,8 +574,8 @@ class map_document final : public QObject, public property_manager
  private:
   std::unique_ptr<map> m_map;
   std::unique_ptr<tileset_manager> m_tilesets;
-  vector_map<QString, core::property> m_properties;
   command_stack* m_commands{};
+  property_delegate m_propertyDelegate;
   viewmodel::property_viewmodel* m_propertyModel{};
   QFileInfo m_path;
 

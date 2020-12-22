@@ -13,6 +13,8 @@ set(TACTILE_SOURCE_FILES
         core/model.cpp
         core/tactile_error.hpp
         core/position.hpp
+        core/property_delegate.cpp
+        core/property_delegate.hpp
 
         core/property/property.cpp
         core/property/property.hpp

@@ -237,60 +237,42 @@ void map_document::mark_as_clean()
 
 void map_document::add_property(const QString& name, const property::type type)
 {
-  Q_ASSERT(!m_properties.contains(name));
-
-  core::property property;
-  property.set_default(type);
-  m_properties.emplace(name, property);
-
-  qDebug() << "Added property:" << name << "with type:" << type;
-
-  emit added_property(name, property);
+  m_propertyDelegate.add_property(name, type);
+  emit added_property(name, get_property(name));
 }
 
 void map_document::remove_property(const QString& name)
 {
-  m_properties.erase(name);
-  qDebug() << "Removed property:" << name;
+  m_propertyDelegate.remove_property(name);
   emit removed_property(name);
 }
 
 void map_document::rename_property(const QString& oldName,
                                    const QString& newName)
 {
-  Q_ASSERT(m_properties.contains(oldName));
-
-  const auto prop = m_properties.at(oldName);
-  m_properties.erase(oldName);
-  m_properties.emplace(newName, prop);
-
-  qDebug() << "Changed property name:" << oldName << "to:" << newName;
+  m_propertyDelegate.rename_property(oldName, newName);
 }
 
 void map_document::set_property(const QString& name,
                                 const core::property& property)
 {
-  Q_ASSERT(m_properties.contains(name));
-
-  m_properties.at(name) = property;
-
-  qDebug() << "Set value of property:" << name;
+  m_propertyDelegate.set_property(name, property);
 }
 
 auto map_document::get_property(const QString& name) const
     -> const core::property&
 {
-  return m_properties.at(name);
+  return m_propertyDelegate.get_property(name);
 }
 
 auto map_document::get_property(const QString& name) -> core::property&
 {
-  return m_properties.at(name);
+  return m_propertyDelegate.get_property(name);
 }
 
-auto map_document::property_count() const -> int
+auto map_document::property_count() const noexcept -> int
 {
-  return static_cast<int>(m_properties.size());
+  return m_propertyDelegate.property_count();
 }
 
 void map_document::set_layer_visibility(const layer_id id, const bool visible)
