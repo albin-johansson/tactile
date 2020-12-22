@@ -46,8 +46,8 @@ class add_property_dialog final : public QDialog
   void update_type();
 
  private slots:
+  void when_name_changed(const QString& name);
   void when_type_changed(const QString& type);
-  void when_property_name_changed(const QString& name);
 };
 
 }  // namespace tactile::gui

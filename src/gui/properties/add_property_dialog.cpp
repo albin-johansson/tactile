@@ -2,53 +2,12 @@
 
 #include <QPushButton>
 
+#include "property_name_validator.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 #include "ui_add_property_dialog.h"
-#include "visit_items.hpp"
 
 namespace tactile::gui {
-namespace {
-
-class property_name_validator final : public QValidator
-{
- public:
-  explicit property_name_validator(QStandardItemModel* model,
-                                   QObject* parent = nullptr)
-      : QValidator{parent}
-      , m_model{model}
-  {
-    if (!m_model) {
-      throw tactile_error{"Property validator requires non-null model!"};
-    }
-  }
-
-  [[nodiscard]] auto validate(QString& input, int&) const -> State override
-  {
-    if (input.isEmpty()) {
-      return Invalid;
-    }
-
-    bool invalid{};
-
-    viewmodel::visit_items(m_model, 0, [&](QStandardItem* item) {
-      if (item->text() == input) {
-        invalid = true;
-      }
-    });
-
-    if (invalid) {
-      return Invalid;
-    } else {
-      return Acceptable;
-    }
-  }
-
- private:
-  QStandardItemModel* m_model{};
-};
-
-}  // namespace
 
 add_property_dialog::add_property_dialog(QStandardItemModel* model,
                                          QWidget* parent)
@@ -57,12 +16,12 @@ add_property_dialog::add_property_dialog(QStandardItemModel* model,
     , m_nameValidator{new property_name_validator{model, this}}
 {
   m_ui->setupUi(this);
-  
+
   setObjectName(TACTILE_QSTRING(u"add_property_dialog"));
 
   // clang-format off
+  connect(m_ui->nameEdit, &QLineEdit::textChanged, this, &add_property_dialog::when_name_changed);
   connect(m_ui->typeComboBox, &QComboBox::currentTextChanged, this, &add_property_dialog::when_type_changed);
-  connect(m_ui->nameEdit, &QLineEdit::textChanged, this, &add_property_dialog::when_property_name_changed);
   // clang-format on
 
   update_type();
@@ -103,12 +62,7 @@ void add_property_dialog::update_type()
   }
 }
 
-void add_property_dialog::when_type_changed(const QString&)
-{
-  update_type();
-}
-
-void add_property_dialog::when_property_name_changed(const QString& name)
+void add_property_dialog::when_name_changed(const QString& name)
 {
   auto result = name;
   auto unused = 0;
@@ -119,6 +73,11 @@ void add_property_dialog::when_property_name_changed(const QString& name)
   okButton->setEnabled(isOk);
 
   m_name = result;
+}
+
+void add_property_dialog::when_type_changed(const QString&)
+{
+  update_type();
 }
 
 }  // namespace tactile::gui
