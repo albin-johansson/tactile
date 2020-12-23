@@ -22,6 +22,11 @@ class property_tree_view final : public QTreeView
 
   void add_item_widgets();
 
+ signals:
+  void spawn_context_menu(const QPoint& pos);
+
+  void selection_changed(const QModelIndex& index);
+
  public slots:
   void when_color_added(const QModelIndex& index);
 
@@ -30,6 +35,10 @@ class property_tree_view final : public QTreeView
  protected:
   void selectionChanged(const QItemSelection& selected,
                         const QItemSelection& deselected) override;
+
+  void rowsAboutToBeRemoved(const QModelIndex& parent,
+                            int start,
+                            int end) override;
 
   void mousePressEvent(QMouseEvent* event) override;
 

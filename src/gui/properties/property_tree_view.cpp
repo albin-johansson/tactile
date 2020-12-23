@@ -24,12 +24,12 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
 {
   setObjectName(TACTILE_QSTRING(u"property_tree_view"));
 
-  setSelectionBehavior(SelectItems);
+  setSelectionBehavior(SelectRows);
   setSelectionMode(SingleSelection);
   setAlternatingRowColors(true);
   setUniformRowHeights(true);
   setRootIsDecorated(false);
-  setIndentation(25);
+  setIndentation(6);
 
   setFirstColumnSpanned(0, rootIndex(), true);
   setFirstColumnSpanned(1, rootIndex(), true);
@@ -129,7 +129,9 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
 
   Q_ASSERT(selected.size() == 1 || selected.empty());
 
+  QModelIndex selectedIndex;
   for (const auto index : selected.indexes()) {
+    selectedIndex = index;
     if (auto* widget =
             qobject_cast<property_value_widget*>(indexWidget(index))) {
       widget->enter_active_mode();
@@ -142,13 +144,35 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
       widget->enter_idle_mode();
     }
   }
+
+  emit selection_changed(selectedIndex);
+}
+
+void property_tree_view::rowsAboutToBeRemoved(const QModelIndex& parent,
+                                              const int start,
+                                              const int end)
+{
+  QTreeView::rowsAboutToBeRemoved(parent, start, end);
+
+  // Yes, this range is inclusive: [start, end]
+  for (auto row = start; row <= end; ++row) {
+    if (const auto* item = get_model()->item(row, 1)) {
+      if (auto* widget = indexWidget(item->index())) {
+        widget->hide();
+      }
+    }
+  }
 }
 
 void property_tree_view::mousePressEvent(QMouseEvent* event)
 {
   // This is done to be able to deselect properties by pressing outside of items
-  clearSelection();
+  selectionModel()->clear();
   QTreeView::mousePressEvent(event);
+
+  if (event->button() == Qt::RightButton) {
+    emit spawn_context_menu(event->globalPos());
+  }
 }
 
 auto property_tree_view::get_model() -> vm::property_model*
