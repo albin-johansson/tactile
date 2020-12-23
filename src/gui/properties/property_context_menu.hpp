@@ -17,15 +17,9 @@ class property_context_menu final : public QMenu
 
   void set_current_type(core::property::type type);
 
-  void set_up_enabled(bool enabled);
-
-  void set_down_enabled(bool enabled);
-
   void set_add_enabled(bool enabled);
 
   void set_remove_enabled(bool enabled);
-
-  void set_duplicate_enabled(bool enabled);
 
   void set_rename_enabled(bool enabled);
 
@@ -39,9 +33,6 @@ class property_context_menu final : public QMenu
   void add();
   void remove();
   void rename();
-  void move_up();
-  void move_down();
-  void duplicate();
   void change_type(core::property::type type);
   void copy();
   void paste();
@@ -49,7 +40,6 @@ class property_context_menu final : public QMenu
  private:
   QAction* m_copy{};
   QAction* m_paste{};
-  QAction* m_duplicate{};
   [[maybe_unused]] QAction* m_sep0;
   QAction* m_rename{};
   QMenu* m_changeType{};
@@ -64,6 +54,8 @@ class property_context_menu final : public QMenu
   QAction* m_typeObject{};
   QAction* m_typeColor{};
   QAction* m_typeFile{};
+
+  void add_actions(QWidget* widget);
 };
 
 }  // namespace tactile::gui
