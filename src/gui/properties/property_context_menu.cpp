@@ -17,13 +17,13 @@ property_context_menu::property_context_menu(QWidget* parent)
     , m_add{addAction(icons::add(), tr("Add new property..."))}
     , m_remove{addAction(icons::remove(), tr("Remove"))}
 {
-  m_copy->setShortcut(QKeySequence::Copy);
-  m_paste->setShortcut(QKeySequence::Paste);
-  m_duplicate->setShortcut(
-      QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+D")));
-  m_rename->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+R")));
-  m_add->setShortcut(QKeySequence::New);
-  m_remove->setShortcut(QKeySequence::Delete);
+//  m_copy->setShortcut(QKeySequence::Copy);
+//  m_paste->setShortcut(QKeySequence::Paste);
+//  m_duplicate->setShortcut(
+//      QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+D")));
+//  m_rename->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+R")));
+//  m_add->setShortcut(QKeySequence::New);
+//  m_remove->setShortcut(QKeySequence::Delete);
 
   m_typeString = m_changeType->addAction(tr("string"));
   m_typeInt = m_changeType->addAction(tr("int"));
