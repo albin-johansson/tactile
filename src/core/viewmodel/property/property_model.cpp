@@ -40,10 +40,10 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
   m_customRoot->setColumnCount(1);
   setItem(1, m_customRoot);
 
-  connect(this,
-          &property_model::itemChanged,
-          this,
-          &property_model::when_item_changed);
+  // clang-format off
+  connect(this, &property_model::itemChanged,
+          this, &property_model::when_item_changed);
+  // clang-format on
 }
 
 void property_model::clear_predefined()
