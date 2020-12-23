@@ -28,6 +28,9 @@ properties_widget::properties_widget(QWidget* parent)
   connect(m_ui->removeButton, &QPushButton::pressed,
           this, &properties_widget::remove_property_requested);
 
+  connect(m_ui->renameButton, &QPushButton::pressed,
+          this, &properties_widget::rename_property_requested);
+
   connect(m_treeView, &property_tree_view::spawn_context_menu,
           this, &properties_widget::spawn_context_menu);
 
@@ -35,7 +38,7 @@ properties_widget::properties_widget(QWidget* parent)
           this, &properties_widget::selection_changed);
 
   connect(m_treeView, &QTreeView::doubleClicked,
-          this, &properties_widget::rename_property_requested);
+          this, &properties_widget::when_double_clicked);
 
   connect(m_contextMenu, &property_context_menu::add,
           this, &properties_widget::new_property_requested);
@@ -46,6 +49,9 @@ properties_widget::properties_widget(QWidget* parent)
   connect(m_contextMenu, &property_context_menu::rename,
           this, &properties_widget::rename_property_requested);
   // clang-format on
+
+  m_contextMenu->disable_all();
+  m_contextMenu->set_add_enabled(true);
 }
 
 properties_widget::~properties_widget() noexcept
@@ -89,6 +95,9 @@ void properties_widget::selected_map(const core::map_document& document)
   m_model->add_predefined(TACTILE_QSTRING(u"Tile height"),
                           prefs::saves::tile_height().value(),
                           false);
+
+  m_contextMenu->disable_all();
+  m_contextMenu->set_add_enabled(true);
 }
 
 void properties_widget::selection_changed(const QModelIndex& index)
@@ -103,7 +112,15 @@ void properties_widget::selection_changed(const QModelIndex& index)
 
   const auto isCustom = m_model->is_custom_property(index);
   m_ui->removeButton->setEnabled(isCustom);
-  m_ui->renameButton->setEnabled(isCustom && index.column() == 0);
+  m_ui->renameButton->setEnabled(isCustom);
+
+  m_contextMenu->disable_all();
+  m_contextMenu->set_add_enabled(m_ui->addButton->isEnabled());
+  m_contextMenu->set_remove_enabled(m_ui->removeButton->isEnabled());
+  m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
+
+  m_contextMenu->set_copy_enabled(isCustom);
+  m_contextMenu->set_duplicate_enabled(isCustom);
 }
 
 void properties_widget::new_property_requested()
@@ -135,6 +152,24 @@ void properties_widget::rename_property_requested()
 {
   const auto index = m_treeView->currentIndex();
   const auto* item = m_model->itemFromIndex(index);
+
+  QString oldName;
+  if (item->column() == 0) {
+    oldName = item->text();
+  } else {
+    const auto sibling = m_model->sibling(item->row(), 0, index);
+    oldName = m_model->itemFromIndex(sibling)->text();
+  }
+
+  if (const auto newName = change_property_name_dialog::spawn(m_model)) {
+    m_model->rename(oldName, *newName);
+  }
+}
+
+void properties_widget::when_double_clicked()
+{
+  const auto index = m_treeView->currentIndex();
+  const auto* item = m_model->itemFromIndex(index);
   if (index.column() == 0 && index.parent().isValid() && item->isEnabled()) {
     const auto oldName = item->text();
     if (const auto newName = change_property_name_dialog::spawn(m_model)) {
@@ -145,11 +180,11 @@ void properties_widget::rename_property_requested()
 
 void properties_widget::spawn_context_menu(const QPoint& pos)
 {
-  m_contextMenu->disable_all();
-
-  m_contextMenu->set_add_enabled(m_ui->addButton->isEnabled());
-  m_contextMenu->set_remove_enabled(m_ui->removeButton->isEnabled());
-  m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
+  //  m_contextMenu->disable_all();
+  //
+  //  m_contextMenu->set_add_enabled(m_ui->addButton->isEnabled());
+  //  m_contextMenu->set_remove_enabled(m_ui->removeButton->isEnabled());
+  //  m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
   //  m_contextMenu->set_duplicate_enabled(m_ui->duplicateButton->isEnabled());
 
   m_contextMenu->exec(pos);

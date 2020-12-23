@@ -42,6 +42,8 @@ class properties_widget final : public QWidget
 
   void rename_property_requested();
 
+  void when_double_clicked();
+
   void spawn_context_menu(const QPoint& pos);
 };
 
