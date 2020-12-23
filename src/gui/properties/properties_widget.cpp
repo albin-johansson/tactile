@@ -152,8 +152,8 @@ void properties_widget::copy_property_requested()
 
 void properties_widget::paste_property_requested()
 {
-  if (!m_model->contains_property(*m_nameCopy)) {
-    m_model->add(m_nameCopy.value(), m_propertyCopy.value());
+  if (!m_model->contains_property(m_nameCopy.value())) {
+    m_model->add(*m_nameCopy, m_propertyCopy.value());
   }
 }
 
