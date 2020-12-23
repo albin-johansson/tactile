@@ -135,7 +135,6 @@ void properties_widget::selection_changed(const maybe<QModelIndex> index)
   m_contextMenu->set_remove_enabled(m_ui->removeButton->isEnabled());
   m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
   m_contextMenu->set_copy_enabled(isCustom);
-  m_contextMenu->set_duplicate_enabled(isCustom);
   m_contextMenu->set_change_type_enabled(isCustom);
   if (isCustom) {
     const auto& property = m_model->get_property(property_name(*index));
