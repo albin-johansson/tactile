@@ -22,6 +22,8 @@ class property_model final : public QStandardItemModel
 
   auto add(const QString& name, core::property::type type) -> QModelIndex;
 
+  void change_type(const QString& name, core::property::type type);
+
   void rename(const QString& oldName, const QString& newName);
 
   void remove(const QString& name);
@@ -41,6 +43,7 @@ class property_model final : public QStandardItemModel
   void added_object(const QModelIndex& valueIndex);
   void added_color(const QModelIndex& valueIndex);
   void added_file(const QModelIndex& valueIndex);
+  void changed_type(const QModelIndex& valueIndex, core::property::type type);
 
  private:
   core::property_manager* m_manager{};
@@ -82,6 +85,9 @@ class property_model final : public QStandardItemModel
   void update_name(const QString& oldName, const QString& newName);
 
   void set_value(const QString& name, QStandardItem* item);
+
+  [[nodiscard]] static auto make_item(const core::property& property)
+      -> QStandardItem*;
 
  private slots:
   void when_item_changed(QStandardItem* item);

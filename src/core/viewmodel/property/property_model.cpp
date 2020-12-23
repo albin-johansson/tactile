@@ -1,7 +1,5 @@
 #include "property_model.hpp"
 
-#include <QDebug>
-
 #include "file_value_widget.hpp"
 #include "icons.hpp"
 #include "item_model_utils.hpp"
@@ -75,6 +73,27 @@ auto property_model::add(const QString& name, core::property::type type)
   return index;
 }
 
+void property_model::change_type(const QString& name,
+                                 const core::property::type type)
+{
+  if (auto* item = find_item(this, name, 0)) {
+    const auto row = item->row();
+
+    m_manager->remove_property(name);
+    m_manager->add_property(name, type);
+
+    auto& property = m_manager->get_property(name);
+    property.set_default(type);
+
+    removeRow(row, m_customRoot->index());
+
+    auto* valueItem = make_item(property);
+    m_customRoot->insertRow(row, {new QStandardItem{name}, valueItem});
+
+    emit changed_type(indexFromItem(valueItem), type);
+  }
+}
+
 void property_model::rename(const QString& oldName, const QString& newName)
 {
   if (auto* item = find_item(this, oldName, 0)) {
@@ -142,8 +161,8 @@ auto property_model::add_string(const QString& name,
                                 const core::property& property,
                                 QStandardItem* root) -> QModelIndex
 {
-  auto* valueItem = new string_item{};
-  valueItem->setData(property.as<QString>(), Qt::EditRole);
+  Q_ASSERT(property.is_string());
+  auto* valueItem = make_item(property);
 
   add_entry(name, valueItem, root);
   const auto index = indexFromItem(valueItem);
@@ -156,8 +175,8 @@ auto property_model::add_int(const QString& name,
                              const core::property& property,
                              QStandardItem* root) -> QModelIndex
 {
-  auto* valueItem = new int_item{};
-  valueItem->setData(property.as<int>(), Qt::EditRole);
+  Q_ASSERT(property.is_integer());
+  auto* valueItem = make_item(property);
 
   add_entry(name, valueItem, root);
   const auto index = indexFromItem(valueItem);
@@ -170,8 +189,8 @@ auto property_model::add_float(const QString& name,
                                const core::property& property,
                                QStandardItem* root) -> QModelIndex
 {
-  auto* valueItem = new float_item{};
-  valueItem->setData(property.as<double>(), Qt::EditRole);
+  Q_ASSERT(property.is_floating());
+  auto* valueItem = make_item(property);
 
   add_entry(name, valueItem, root);
   const auto index = indexFromItem(valueItem);
@@ -184,9 +203,8 @@ auto property_model::add_bool(const QString& name,
                               const core::property& property,
                               QStandardItem* root) -> QModelIndex
 {
-  auto* valueItem = new bool_item{};
-  valueItem->setData(property.as<bool>() ? Qt::Checked : Qt::Unchecked,
-                     Qt::CheckStateRole);
+  Q_ASSERT(property.is_boolean());
+  auto* valueItem = make_item(property);
 
   add_entry(name, valueItem, root);
   const auto index = indexFromItem(valueItem);
@@ -199,7 +217,8 @@ auto property_model::add_object(const QString& name,
                                 const core::property& property,
                                 QStandardItem* root) -> QModelIndex
 {
-  auto* valueItem = new object_item{};
+  Q_ASSERT(property.is<core::object_ref>());
+  auto* valueItem = make_item(property);
 
   add_entry(name, valueItem, root);
   const auto index = indexFromItem(valueItem);
@@ -213,9 +232,7 @@ auto property_model::add_color(const QString& name,
                                QStandardItem* root) -> QModelIndex
 {
   Q_ASSERT(property.is<QColor>());
-
-  auto* valueItem = new color_item{};
-  valueItem->setData(property.as<QColor>(), property_item_role::color);
+  auto* valueItem = make_item(property);
 
   add_entry(name, valueItem, root);
   const auto index = indexFromItem(valueItem);
@@ -228,9 +245,9 @@ auto property_model::add_file(const QString& name,
                               const core::property& property,
                               QStandardItem* root) -> QModelIndex
 {
-  auto* valueItem = new file_item{};
-  valueItem->setEditable(false);
-  valueItem->setData(gui::icons::copy(), Qt::DecorationRole);
+  Q_ASSERT(property.is<QFileInfo>());
+
+  auto* valueItem = make_item(property);
 
   add_entry(name, valueItem, root);
   const auto index = indexFromItem(valueItem);
@@ -278,6 +295,48 @@ void property_model::set_value(const QString& name, QStandardItem* item)
     }
     case item_type::object:
       break;  // TODO
+  }
+}
+
+auto property_model::make_item(const core::property& property) -> QStandardItem*
+{
+  switch (property.get_type().value()) {
+    case core::property::string: {
+      auto* item = new string_item{};
+      item->setData(property.as<QString>(), Qt::EditRole);
+      return item;
+    }
+    case core::property::integer: {
+      auto* item = new int_item{};
+      item->setData(property.as<int>(), Qt::EditRole);
+      return item;
+    }
+    case core::property::floating: {
+      auto* item = new float_item{};
+      item->setData(property.as<double>(), Qt::EditRole);
+      return item;
+    }
+    case core::property::boolean: {
+      auto* item = new bool_item{};
+      item->setData(property.as<bool>() ? Qt::Checked : Qt::Unchecked,
+                    Qt::CheckStateRole);
+      return item;
+    }
+    case core::property::file: {
+      auto* item = new file_item{};
+      item->setData(gui::icons::copy(), Qt::DecorationRole);
+      return item;
+    }
+    case core::property::color: {
+      auto* item = new color_item{};
+      item->setData(property.as<QColor>(), property_item_role::color);
+      return item;
+    }
+    case core::property::object:
+      return new object_item{};
+
+    default:
+      throw tactile_error{"Did not recognize property type!"};
   }
 }
 

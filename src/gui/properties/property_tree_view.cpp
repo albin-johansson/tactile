@@ -1,9 +1,7 @@
 #include "property_tree_view.hpp"
 
-#include <QDebug>
 #include <QHeaderView>
 #include <QMouseEvent>
-#include <concepts>  // invocable
 
 #include "color_preview_button.hpp"
 #include "file_value_widget.hpp"
@@ -34,26 +32,20 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
   setFirstColumnSpanned(0, rootIndex(), true);
   setFirstColumnSpanned(1, rootIndex(), true);
 
-  auto* h = header();
-  h->setSectionResizeMode(QHeaderView::ResizeToContents);
-  h->setHidden(true);
-  h->setSectionsMovable(false);
+  {
+    auto* h = header();
+    h->setSectionResizeMode(QHeaderView::ResizeToContents);
+    h->setHidden(true);
+    h->setSectionsMovable(false);
+  }
 
-  connect(this,
-          &property_tree_view::expanded,
-          [this](const QModelIndex& index) {
-            if (!index.parent().isValid()) {
-              get_model()->itemFromIndex(index)->setIcon(icons::expanded());
-            }
-          });
+  // clang-format off
+  connect(this, &property_tree_view::expanded,
+          this, &property_tree_view::when_item_expanded);
 
-  connect(this,
-          &property_tree_view::collapsed,
-          [this](const QModelIndex& index) {
-            if (!index.parent().isValid()) {
-              get_model()->itemFromIndex(index)->setIcon(icons::collapsed());
-            }
-          });
+  connect(this, &property_tree_view::collapsed,
+          this, &property_tree_view::when_item_collapsed);
+  // clang-format on
 }
 
 void property_tree_view::setModel(QAbstractItemModel* model)
@@ -78,15 +70,16 @@ void property_tree_view::add_item_widgets()
   });
 }
 
-void property_tree_view::when_color_added(const QModelIndex& index)
+void property_tree_view::when_color_added(const QModelIndex& valueIndex)
 {
-  const auto color = index.data(vm::property_item_role::color).value<QColor>();
+  const auto color =
+      valueIndex.data(vm::property_item_role::color).value<QColor>();
   Q_ASSERT(color.isValid());
 
   auto* button = new color_preview_button{color};
 
   const auto id = new_widget_id();
-  m_widgetItems.emplace(id, get_model()->itemFromIndex(index));
+  m_widgetItems.emplace(id, get_model()->itemFromIndex(valueIndex));
 
   connect(button,
           &color_preview_button::color_changed,
@@ -95,16 +88,17 @@ void property_tree_view::when_color_added(const QModelIndex& index)
             item->setData(color, vm::property_item_role::color);
           });
 
-  setIndexWidget(index, button);
+  setIndexWidget(valueIndex, button);
 }
 
-void property_tree_view::when_file_added(const QModelIndex& index)
+void property_tree_view::when_file_added(const QModelIndex& valueIndex)
 {
   auto* widget = new file_value_widget{};
-  widget->set_path(index.data(vm::property_item_role::path).value<QString>());
+  widget->set_path(
+      valueIndex.data(vm::property_item_role::path).value<QString>());
 
   const auto id = new_widget_id();
-  m_widgetItems.emplace(id, get_model()->itemFromIndex(index));
+  m_widgetItems.emplace(id, get_model()->itemFromIndex(valueIndex));
 
   connect(widget, &file_value_widget::spawn_dialog, [this, id] {
     property_file_dialog::spawn([this, id](const QString& path) {
@@ -119,7 +113,20 @@ void property_tree_view::when_file_added(const QModelIndex& index)
     });
   });
 
-  setIndexWidget(index, widget);
+  setIndexWidget(valueIndex, widget);
+}
+
+void property_tree_view::when_changed_type(const QModelIndex& valueIndex,
+                                           const core::property::type type)
+{
+  if (type == core::property::file) {
+    when_file_added(valueIndex);
+
+  } else if (type == core::property::color) {
+    when_color_added(valueIndex);
+  }
+
+  setCurrentIndex(valueIndex);
 }
 
 void property_tree_view::selectionChanged(const QItemSelection& selected,
@@ -129,7 +136,7 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
 
   Q_ASSERT(selected.size() == 1 || selected.empty());
 
-  QModelIndex selectedIndex;
+  maybe<QModelIndex> selectedIndex;
   for (const auto index : selected.indexes()) {
     selectedIndex = index;
     if (auto* widget =
@@ -187,6 +194,27 @@ auto property_tree_view::get_model() const -> const vm::property_model*
   const auto* ptr = qobject_cast<const vm::property_model*>(model());
   Q_ASSERT(ptr);
   return ptr;
+}
+
+auto property_tree_view::new_widget_id() noexcept -> int
+{
+  const auto next = m_nextWidgetId;
+  ++m_nextWidgetId;
+  return next;
+}
+
+void property_tree_view::when_item_expanded(const QModelIndex& index)
+{
+  if (!index.parent().isValid()) {
+    get_model()->itemFromIndex(index)->setIcon(icons::expanded());
+  }
+}
+
+void property_tree_view::when_item_collapsed(const QModelIndex& index)
+{
+  if (!index.parent().isValid()) {
+    get_model()->itemFromIndex(index)->setIcon(icons::collapsed());
+  }
 }
 
 }  // namespace tactile::gui

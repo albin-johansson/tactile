@@ -103,6 +103,7 @@ class file_item final : public QStandardItem
   file_item() : QStandardItem{}
   {
     setToolTip(TACTILE_QSTRING(u"(file)"));
+    setEditable(false);
   }
 
   [[nodiscard]] auto type() const -> int override

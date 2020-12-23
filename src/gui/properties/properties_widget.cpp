@@ -20,6 +20,10 @@ properties_widget::properties_widget(QWidget* parent)
     , m_treeView{new property_tree_view{this}}
 {
   m_ui->gridLayout->addWidget(m_treeView);
+  m_ui->removeButton->setEnabled(false);
+  m_ui->renameButton->setEnabled(false);
+  m_contextMenu->disable_all();
+  m_contextMenu->set_add_enabled(true);
 
   // clang-format off
   connect(m_ui->addButton, &QPushButton::pressed,
@@ -48,10 +52,10 @@ properties_widget::properties_widget(QWidget* parent)
 
   connect(m_contextMenu, &property_context_menu::rename,
           this, &properties_widget::rename_property_requested);
-  // clang-format on
 
-  m_contextMenu->disable_all();
-  m_contextMenu->set_add_enabled(true);
+  connect(m_contextMenu, &property_context_menu::change_type,
+          this, &properties_widget::change_type_requested);
+  // clang-format on
 }
 
 properties_widget::~properties_widget() noexcept
@@ -78,6 +82,9 @@ void properties_widget::selected_map(const core::map_document& document)
 
   connect(m_model, &viewmodel::property_model::added_color,
           m_treeView, &property_tree_view::when_color_added);
+
+  connect(m_model, &viewmodel::property_model::changed_type,
+          m_treeView, &property_tree_view::when_changed_type);
   // clang-format on
 
   m_model->set_predefined_name(TACTILE_QSTRING(u"Map"));
@@ -100,27 +107,33 @@ void properties_widget::selected_map(const core::map_document& document)
   m_contextMenu->set_add_enabled(true);
 }
 
-void properties_widget::selection_changed(const QModelIndex& index)
+void properties_widget::selection_changed(const maybe<QModelIndex> index)
 {
-  if (const auto* item = m_model->itemFromIndex(index); !item) {
-    m_ui->removeButton->setEnabled(false);
-    m_ui->renameButton->setEnabled(false);
+  m_contextMenu->disable_all();
+  m_ui->addButton->setEnabled(true);
+  m_contextMenu->set_add_enabled(m_ui->addButton->isEnabled());
+
+  if (!index) {
     return;
   }
 
-  m_ui->addButton->setEnabled(true);
+  if (const auto* item = m_model->itemFromIndex(*index); !item) {
+    return;
+  }
 
-  const auto isCustom = m_model->is_custom_property(index);
+  const auto isCustom = m_model->is_custom_property(*index);
   m_ui->removeButton->setEnabled(isCustom);
   m_ui->renameButton->setEnabled(isCustom);
 
-  m_contextMenu->disable_all();
-  m_contextMenu->set_add_enabled(m_ui->addButton->isEnabled());
   m_contextMenu->set_remove_enabled(m_ui->removeButton->isEnabled());
   m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
-
   m_contextMenu->set_copy_enabled(isCustom);
   m_contextMenu->set_duplicate_enabled(isCustom);
+  m_contextMenu->set_change_type_enabled(isCustom);
+  if (isCustom) {
+    const auto& property = m_model->get_property(property_name(*index));
+    m_contextMenu->set_current_type(property.get_type().value());
+  }
 }
 
 void properties_widget::new_property_requested()
@@ -135,35 +148,25 @@ void properties_widget::new_property_requested()
 
 void properties_widget::remove_property_requested()
 {
+#ifdef QT_DEBUG
   const auto index = m_treeView->currentIndex();
   Q_ASSERT(m_model->is_custom_property(index));
+#endif  // QT_DEBUG
 
-  const auto* item = m_model->itemFromIndex(index);
-  if (item->column() == 0) {
-    m_model->remove(item->text());
-
-  } else {
-    const auto sibling = m_model->sibling(item->row(), 0, index);
-    m_model->remove(m_model->itemFromIndex(sibling)->text());
-  }
+  m_model->remove(current_property_name());
 }
 
 void properties_widget::rename_property_requested()
 {
-  const auto index = m_treeView->currentIndex();
-  const auto* item = m_model->itemFromIndex(index);
-
-  QString oldName;
-  if (item->column() == 0) {
-    oldName = item->text();
-  } else {
-    const auto sibling = m_model->sibling(item->row(), 0, index);
-    oldName = m_model->itemFromIndex(sibling)->text();
-  }
-
+  const auto oldName = current_property_name();
   if (const auto newName = change_property_name_dialog::spawn(m_model)) {
     m_model->rename(oldName, *newName);
   }
+}
+
+void properties_widget::change_type_requested(const core::property::type type)
+{
+  m_model->change_type(current_property_name(), type);
 }
 
 void properties_widget::when_double_clicked()
@@ -180,14 +183,27 @@ void properties_widget::when_double_clicked()
 
 void properties_widget::spawn_context_menu(const QPoint& pos)
 {
-  //  m_contextMenu->disable_all();
-  //
-  //  m_contextMenu->set_add_enabled(m_ui->addButton->isEnabled());
-  //  m_contextMenu->set_remove_enabled(m_ui->removeButton->isEnabled());
-  //  m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
-  //  m_contextMenu->set_duplicate_enabled(m_ui->duplicateButton->isEnabled());
-
   m_contextMenu->exec(pos);
+}
+
+auto properties_widget::property_name(const QModelIndex& index) const -> QString
+{
+  const auto* item = m_model->itemFromIndex(index);
+  Q_ASSERT(item);
+
+  if (item->column() == 0) {
+    return item->text();
+  } else {
+    const auto sibling = m_model->sibling(item->row(), 0, index);
+    return m_model->itemFromIndex(sibling)->text();
+  }
+}
+
+auto properties_widget::current_property_name() const -> QString
+{
+  const auto index = m_treeView->currentIndex();
+  Q_ASSERT(index.isValid());
+  return property_name(index);
 }
 
 }  // namespace tactile::gui

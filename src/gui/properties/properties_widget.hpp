@@ -33,14 +33,20 @@ class properties_widget final : public QWidget
   property_context_menu* m_contextMenu{};
   viewmodel::property_model* m_model{};
 
+  [[nodiscard]] auto property_name(const QModelIndex& index) const -> QString;
+
+  [[nodiscard]] auto current_property_name() const -> QString;
+
  private slots:
-  void selection_changed(const QModelIndex& index);
+  void selection_changed(maybe<QModelIndex> index);
 
   void new_property_requested();
 
   void remove_property_requested();
 
   void rename_property_requested();
+
+  void change_type_requested(core::property::type type);
 
   void when_double_clicked();
 

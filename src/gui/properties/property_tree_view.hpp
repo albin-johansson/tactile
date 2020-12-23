@@ -3,6 +3,8 @@
 #include <QStandardItemModel>
 #include <QTreeView>
 
+#include "maybe.hpp"
+#include "property.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::viewmodel {
@@ -25,12 +27,15 @@ class property_tree_view final : public QTreeView
  signals:
   void spawn_context_menu(const QPoint& pos);
 
-  void selection_changed(const QModelIndex& index);
+  void selection_changed(maybe<QModelIndex> index);
 
  public slots:
-  void when_color_added(const QModelIndex& index);
+  void when_color_added(const QModelIndex& valueIndex);
 
-  void when_file_added(const QModelIndex& index);
+  void when_file_added(const QModelIndex& valueIndex);
+
+  void when_changed_type(const QModelIndex& valueIndex,
+                         core::property::type type);
 
  protected:
   void selectionChanged(const QItemSelection& selected,
@@ -50,12 +55,12 @@ class property_tree_view final : public QTreeView
 
   [[nodiscard]] auto get_model() const -> const viewmodel::property_model*;
 
-  [[nodiscard]] auto new_widget_id() noexcept -> int
-  {
-    const auto next = m_nextWidgetId;
-    ++m_nextWidgetId;
-    return next;
-  }
+  [[nodiscard]] auto new_widget_id() noexcept -> int;
+
+ private slots:
+  void when_item_expanded(const QModelIndex& index);
+
+  void when_item_collapsed(const QModelIndex& index);
 };
 
 }  // namespace tactile::gui
