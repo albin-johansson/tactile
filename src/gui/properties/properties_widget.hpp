@@ -34,9 +34,15 @@ class properties_widget final : public QWidget
   viewmodel::property_model* m_model{};
 
  private slots:
+  void selection_changed(const QModelIndex& index);
+
   void new_property_requested();
 
-  void rename_property_requested(const QModelIndex& index);
+  void remove_property_requested();
+
+  void rename_property_requested();
+
+  void spawn_context_menu(const QPoint& pos);
 };
 
 }  // namespace tactile::gui

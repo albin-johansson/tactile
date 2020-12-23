@@ -1,26 +1,30 @@
 #include "property_context_menu.hpp"
 
 #include "icons.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::gui {
 
 property_context_menu::property_context_menu(QWidget* parent)
     : QMenu{parent}
-    , m_add{addAction(icons::add(), tr("Add property..."))}
-    , m_sep0{addSeparator()}
-    , m_rename{addAction(icons::rename(), tr("Rename"))}
-    , m_sep1{addSeparator()}
     , m_copy{addAction(icons::copy(), tr("Copy"))}
     , m_paste{addAction(icons::paste(), tr("Paste"))}
     , m_duplicate{addAction(icons::duplicate(), tr("Duplicate"))}
-    , m_sep2{addSeparator()}
-    , m_moveUp{addAction(icons::move_up(), tr("Move up"))}
-    , m_moveDown{addAction(icons::move_down(), tr("Move down"))}
-    , m_sep3{addSeparator()}
+    , m_sep0{addSeparator()}
+    , m_rename{addAction(icons::rename(), tr("Rename"))}
     , m_changeType{addMenu(icons::object(), tr("Change type"))}
-    , m_sep4{addSeparator()}
+    , m_sep1{addSeparator()}
+    , m_add{addAction(icons::add(), tr("Add new property..."))}
     , m_remove{addAction(icons::remove(), tr("Remove"))}
 {
+  m_copy->setShortcut(QKeySequence::Copy);
+  m_paste->setShortcut(QKeySequence::Paste);
+  m_duplicate->setShortcut(
+      QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+D")));
+  m_rename->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+R")));
+  m_add->setShortcut(QKeySequence::New);
+  m_remove->setShortcut(QKeySequence::Delete);
+
   m_typeString = m_changeType->addAction(tr("string"));
   m_typeInt = m_changeType->addAction(tr("int"));
   m_typeFloat = m_changeType->addAction(tr("float"));
@@ -30,14 +34,12 @@ property_context_menu::property_context_menu(QWidget* parent)
   m_typeFile = m_changeType->addAction(tr("file"));
 
   using context_menu = property_context_menu;
-  connect(m_add, &QAction::triggered, this, &context_menu::add);
-  connect(m_remove, &QAction::triggered, this, &context_menu::remove);
-  connect(m_rename, &QAction::triggered, this, &context_menu::rename);
-  connect(m_moveUp, &QAction::triggered, this, &context_menu::move_up);
-  connect(m_moveDown, &QAction::triggered, this, &context_menu::move_down);
-  connect(m_duplicate, &QAction::triggered, this, &context_menu::duplicate);
   connect(m_copy, &QAction::triggered, this, &context_menu::copy);
   connect(m_paste, &QAction::triggered, this, &context_menu::paste);
+  connect(m_duplicate, &QAction::triggered, this, &context_menu::duplicate);
+  connect(m_rename, &QAction::triggered, this, &context_menu::rename);
+  connect(m_add, &QAction::triggered, this, &context_menu::add);
+  connect(m_remove, &QAction::triggered, this, &context_menu::remove);
 
   connect(m_typeString, &QAction::triggered, [this] {
     emit change_type(core::property::string);
@@ -66,6 +68,17 @@ property_context_menu::property_context_menu(QWidget* parent)
   connect(m_typeColor, &QAction::triggered, [this] {
     emit change_type(core::property::color);
   });
+}
+
+void property_context_menu::disable_all()
+{
+  m_copy->setEnabled(false);
+  m_paste->setEnabled(false);
+  m_duplicate->setEnabled(false);
+  m_rename->setEnabled(false);
+  m_changeType->setEnabled(false);
+  m_add->setEnabled(false);
+  m_remove->setEnabled(false);
 }
 
 void property_context_menu::set_current_type(const core::property::type type)
@@ -110,12 +123,17 @@ void property_context_menu::set_current_type(const core::property::type type)
 
 void property_context_menu::set_up_enabled(const bool enabled)
 {
-  m_moveUp->setEnabled(enabled);
+  //  m_moveUp->setEnabled(enabled);
 }
 
 void property_context_menu::set_down_enabled(const bool enabled)
 {
-  m_moveDown->setEnabled(enabled);
+  //  m_moveDown->setEnabled(enabled);
+}
+
+void property_context_menu::set_add_enabled(const bool enabled)
+{
+  m_add->setEnabled(enabled);
 }
 
 void property_context_menu::set_remove_enabled(const bool enabled)

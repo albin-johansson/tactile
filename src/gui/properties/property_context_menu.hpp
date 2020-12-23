@@ -13,11 +13,15 @@ class property_context_menu final : public QMenu
  public:
   explicit property_context_menu(QWidget* parent = nullptr);
 
+  void disable_all();
+
   void set_current_type(core::property::type type);
 
   void set_up_enabled(bool enabled);
 
   void set_down_enabled(bool enabled);
+
+  void set_add_enabled(bool enabled);
 
   void set_remove_enabled(bool enabled);
 
@@ -43,19 +47,14 @@ class property_context_menu final : public QMenu
   void paste();
 
  private:
-  QAction* m_add{};
-  [[maybe_unused]] QAction* m_sep0;
-  QAction* m_rename{};
-  QAction* m_duplicate{};
-  [[maybe_unused]] QAction* m_sep1;
   QAction* m_copy{};
   QAction* m_paste{};
-  [[maybe_unused]] QAction* m_sep2;
-  QAction* m_moveUp{};
-  QAction* m_moveDown{};
-  [[maybe_unused]] QAction* m_sep3;
+  QAction* m_duplicate{};
+  [[maybe_unused]] QAction* m_sep0;
+  QAction* m_rename{};
   QMenu* m_changeType{};
-  [[maybe_unused]] QAction* m_sep4;
+  [[maybe_unused]] QAction* m_sep1;
+  QAction* m_add{};
   QAction* m_remove{};
 
   QAction* m_typeString{};
