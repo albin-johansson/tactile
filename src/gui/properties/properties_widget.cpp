@@ -194,8 +194,7 @@ auto properties_widget::property_name(const QModelIndex& index) const -> QString
   if (item->column() == 0) {
     return item->text();
   } else {
-    const auto sibling = m_model->sibling(item->row(), 0, index);
-    return m_model->itemFromIndex(sibling)->text();
+    return m_model->itemFromIndex(index.siblingAtColumn(0))->text();
   }
 }
 
