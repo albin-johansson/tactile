@@ -44,6 +44,12 @@ properties_widget::properties_widget(QWidget* parent)
   connect(m_treeView, &QTreeView::doubleClicked,
           this, &properties_widget::when_double_clicked);
 
+  connect(m_contextMenu, &property_context_menu::copy,
+          this, &properties_widget::copy_property_requested);
+
+  connect(m_contextMenu, &property_context_menu::paste,
+          this, &properties_widget::paste_property_requested);
+
   connect(m_contextMenu, &property_context_menu::add,
           this, &properties_widget::new_property_requested);
 
@@ -111,6 +117,7 @@ void properties_widget::selection_changed(const maybe<QModelIndex> index)
 {
   m_contextMenu->disable_all();
   m_ui->addButton->setEnabled(true);
+
   m_contextMenu->set_add_enabled(m_ui->addButton->isEnabled());
 
   if (!index) {
@@ -133,6 +140,20 @@ void properties_widget::selection_changed(const maybe<QModelIndex> index)
   if (isCustom) {
     const auto& property = m_model->get_property(property_name(*index));
     m_contextMenu->set_current_type(property.get_type().value());
+  }
+}
+
+void properties_widget::copy_property_requested()
+{
+  const auto currentName = current_property_name();
+  m_nameCopy = currentName;
+  m_propertyCopy = m_model->get_property(currentName);
+}
+
+void properties_widget::paste_property_requested()
+{
+  if (!m_model->contains_property(*m_nameCopy)) {
+    m_model->add(m_nameCopy.value(), m_propertyCopy.value());
   }
 }
 
@@ -183,6 +204,8 @@ void properties_widget::when_double_clicked()
 
 void properties_widget::spawn_context_menu(const QPoint& pos)
 {
+  m_contextMenu->set_paste_enabled(m_nameCopy && m_propertyCopy &&
+                                   !m_model->contains_property(*m_nameCopy));
   m_contextMenu->exec(pos);
 }
 

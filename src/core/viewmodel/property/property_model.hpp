@@ -22,6 +22,8 @@ class property_model final : public QStandardItemModel
 
   auto add(const QString& name, core::property::type type) -> QModelIndex;
 
+  auto add(const QString& name, const core::property& property) -> QModelIndex;
+
   void change_type(const QString& name, core::property::type type);
 
   void rename(const QString& oldName, const QString& newName);
@@ -29,6 +31,8 @@ class property_model final : public QStandardItemModel
   void remove(const QString& name);
 
   void set_predefined_name(const QString& name);
+
+  [[nodiscard]] auto contains_property(const QString& name) const -> bool;
 
   [[nodiscard]] auto is_custom_property(const QModelIndex& index) const -> bool;
 

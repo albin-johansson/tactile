@@ -24,7 +24,7 @@ void visit_items(QStandardItemModel* model, const int column, T&& callable)
   }
 }
 
-[[nodiscard]] inline auto find_item(QStandardItemModel* model,
+[[nodiscard]] inline auto find_item(const QStandardItemModel* model,
                                     const QString& name,
                                     const int column) -> QStandardItem*
 {

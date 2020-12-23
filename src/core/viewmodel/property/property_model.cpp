@@ -73,6 +73,21 @@ auto property_model::add(const QString& name, core::property::type type)
   return index;
 }
 
+auto property_model::add(const QString& name, const core::property& property)
+    -> QModelIndex
+{
+  Q_ASSERT(!contains_property(name));
+
+  m_manager->add_property(name, property.get_type().value());
+  m_manager->set_property(name, property);
+
+  const auto index =
+      add_property(name, m_manager->get_property(name), m_customRoot);
+  itemFromIndex(index.siblingAtColumn(0))->setEditable(false);
+
+  return index;
+}
+
 void property_model::change_type(const QString& name,
                                  const core::property::type type)
 {
@@ -113,6 +128,11 @@ void property_model::remove(const QString& name)
 void property_model::set_predefined_name(const QString& name)
 {
   m_predefinedRoot->setText(name);
+}
+
+auto property_model::contains_property(const QString& name) const -> bool
+{
+  return find_item(this, name, 0) != nullptr;
 }
 
 auto property_model::is_custom_property(const QModelIndex& index) const -> bool
@@ -325,6 +345,8 @@ auto property_model::make_item(const core::property& property) -> QStandardItem*
     case core::property::file: {
       auto* item = new file_item{};
       item->setData(gui::icons::copy(), Qt::DecorationRole);
+      item->setData(property.as<QFileInfo>().filePath(),
+                    viewmodel::property_item_role::path);
       return item;
     }
     case core::property::color: {

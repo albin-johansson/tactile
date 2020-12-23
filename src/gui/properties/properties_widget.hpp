@@ -5,6 +5,7 @@
 #include "map_document.hpp"
 #include "property.hpp"
 #include "property_model.hpp"
+#include "maybe.hpp"
 
 namespace Ui {
 class properties_widget;
@@ -32,6 +33,8 @@ class properties_widget final : public QWidget
   property_tree_view* m_treeView{};
   property_context_menu* m_contextMenu{};
   viewmodel::property_model* m_model{};
+  maybe<QString> m_nameCopy;
+  maybe<core::property> m_propertyCopy;
 
   [[nodiscard]] auto property_name(const QModelIndex& index) const -> QString;
 
@@ -39,6 +42,10 @@ class properties_widget final : public QWidget
 
  private slots:
   void selection_changed(maybe<QModelIndex> index);
+
+  void copy_property_requested();
+
+  void paste_property_requested();
 
   void new_property_requested();
 
