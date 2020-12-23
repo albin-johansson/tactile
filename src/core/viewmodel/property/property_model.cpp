@@ -56,8 +56,10 @@ auto property_model::add_predefined(const QString& name,
                                     bool readOnly) -> QModelIndex
 {
   const auto index = add_property(name, property, m_predefinedRoot);
+
   itemFromIndex(index)->setEnabled(!readOnly);
   itemFromIndex(index.siblingAtColumn(0))->setEnabled(false);
+
   return index;
 }
 
