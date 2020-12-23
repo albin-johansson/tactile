@@ -81,9 +81,28 @@ void property_model::rename(const QString& oldName, const QString& newName)
   m_manager->rename_property(oldName, newName);
 }
 
+void property_model::remove(const QString& name)
+{
+  if (auto* item = find_item(this, name, 0)) {
+    removeRow(item->row(), item->parent()->index());
+  }
+  m_manager->remove_property(name);
+}
+
 void property_model::set_predefined_name(const QString& name)
 {
   m_predefinedRoot->setText(name);
+}
+
+auto property_model::is_custom_property(const QModelIndex& index) const -> bool
+{
+  return parent(index) == indexFromItem(m_customRoot);
+}
+
+auto property_model::get_property(const QString& name) const
+    -> const core::property&
+{
+  return m_manager->get_property(name);
 }
 
 auto property_model::add_property(const QString& name,

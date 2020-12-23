@@ -24,7 +24,14 @@ class property_model final : public QStandardItemModel
 
   void rename(const QString& oldName, const QString& newName);
 
+  void remove(const QString& name);
+
   void set_predefined_name(const QString& name);
+
+  [[nodiscard]] auto is_custom_property(const QModelIndex& index) const -> bool;
+
+  [[nodiscard]] auto get_property(const QString& name) const
+      -> const core::property&;
 
  signals:
   void added_string(const QModelIndex& valueIndex);
