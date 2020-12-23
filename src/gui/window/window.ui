@@ -130,6 +130,7 @@
     <widget class="QMenu" name="menuAppearance">
      <property name="font">
       <font>
+       <family>Segoe UI</family>
        <pointsize>10</pointsize>
       </font>
      </property>
