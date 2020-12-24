@@ -16,8 +16,6 @@
 
 namespace tactile::gui {
 
-namespace vm = viewmodel;
-
 property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
 {
   setObjectName(TACTILE_QSTRING(u"property_tree_view"));

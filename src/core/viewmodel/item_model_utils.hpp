@@ -3,7 +3,7 @@
 #include <QStandardItem>  // QStandardItem
 #include <concepts>       // invocable
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 
 template <std::invocable<QStandardItem*> T>
 void visit_items(QStandardItemModel* model, const int column, T&& callable)
@@ -47,4 +47,4 @@ void visit_items(QStandardItemModel* model, const int column, T&& callable)
   return nullptr;
 }
 
-}  // namespace tactile::viewmodel
+}  // namespace tactile::vm

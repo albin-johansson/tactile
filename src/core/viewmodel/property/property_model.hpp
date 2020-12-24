@@ -4,7 +4,7 @@
 
 #include "property_manager.hpp"
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 
 class property_model final : public QStandardItemModel
 {
@@ -97,4 +97,4 @@ class property_model final : public QStandardItemModel
   void when_item_changed(QStandardItem* item);
 };
 
-}  // namespace tactile::viewmodel
+}  // namespace tactile::vm

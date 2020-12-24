@@ -6,7 +6,7 @@
 #include "property_item_role.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 
 class string_item final : public QStandardItem
 {
@@ -112,4 +112,4 @@ class file_item final : public QStandardItem
   }
 };
 
-}  // namespace tactile::viewmodel
+}  // namespace tactile::vm

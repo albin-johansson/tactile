@@ -9,6 +9,7 @@
 #include <utility>   // move
 
 #include "command_stack.hpp"
+#include "document.hpp"
 #include "map.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
@@ -17,9 +18,10 @@
 #include "property_manager.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
+#include "document_delegate.hpp"
 #include "vector_map.hpp"
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 class property_model;
 }
 
@@ -39,7 +41,7 @@ namespace tactile::core {
  *
  * \headerfile map_document.hpp
  */
-class map_document final : public QObject, public property_manager
+class map_document final : public QObject, public document
 {
   Q_OBJECT
 
@@ -68,25 +70,54 @@ class map_document final : public QObject, public property_manager
    */
   explicit map_document(row_t nRows, col_t nCols, QObject* parent = nullptr);
 
-  /**
-   * \brief Reverts the effects of the most recent command.
-   *
-   * \note This function has no effect if there is no undoable command.
-   *
-   * \since 0.1.0
-   *
-   * \signal `clean_changed`
-   */
-  void undo();
+  /// \name Document API
+  /// \{
 
-  /**
-   * \brief Executes the most recently reverted command.
-   *
-   * \note This function has no effect if there is no redoable command.
-   *
-   * \since 0.1.0
-   */
-  void redo();
+  void undo() override;
+
+  void redo() override;
+
+  void mark_as_clean() override;
+
+  void set_path(QFileInfo path) override;
+
+  [[nodiscard]] auto can_undo() const -> bool override;
+
+  [[nodiscard]] auto can_redo() const -> bool override;
+
+  [[nodiscard]] auto is_clean() const -> bool override;
+
+  [[nodiscard]] auto get_undo_text() const -> QString override;
+
+  [[nodiscard]] auto get_redo_text() const -> QString override;
+
+  [[nodiscard]] auto path() const -> const QFileInfo& override;
+
+  [[nodiscard]] auto property_model() const -> vm::property_model* override;
+
+  /// \}
+
+  /// \name Property API
+  /// \{
+
+  void add_property(const QString& name, property::type type) override;
+
+  void remove_property(const QString& name) override;
+
+  void rename_property(const QString& oldName, const QString& newName) override;
+
+  void set_property(const QString& name,
+                    const core::property& property) override;
+
+  [[nodiscard]] auto get_property(const QString& name) const
+      -> const core::property& override;
+
+  [[nodiscard]] auto get_property(const QString& name)
+      -> core::property& override;
+
+  [[nodiscard]] auto property_count() const noexcept -> int override;
+
+  /// \}
 
   /**
    * \brief Performs a flood-fill at the specified position.
@@ -272,36 +303,6 @@ class map_document final : public QObject, public property_manager
   void reset_tile_size();
 
   /**
-   * \brief Marks the command stack state as "clean".
-   *
-   * \details Marking the state of the document as "clean" means that this is
-   * the default state, used to prevent saving a document unnecessarily when no
-   * effective change has been made to it.
-   *
-   * \note This function should be called every time the document is saved.
-   *
-   * \since 0.1.0
-   */
-  void mark_as_clean();
-
-  void add_property(const QString& name, property::type type) override;
-
-  void remove_property(const QString& name) override;
-
-  void rename_property(const QString& oldName, const QString& newName) override;
-
-  void set_property(const QString& name,
-                    const core::property& property) override;
-
-  [[nodiscard]] auto get_property(const QString& name) const
-      -> const core::property& override;
-
-  [[nodiscard]] auto get_property(const QString& name)
-      -> core::property& override;
-
-  [[nodiscard]] auto property_count() const noexcept -> int override;
-
-  /**
    * \copydoc map::set_visibility()
    */
   void set_layer_visibility(layer_id id, bool visible);
@@ -315,15 +316,6 @@ class map_document final : public QObject, public property_manager
    * \copydoc map::set_name()
    */
   void set_layer_name(layer_id id, const QString& name);
-
-  /**
-   * \brief Sets the file path associated with the map document.
-   *
-   * \param path the file path of the map document.
-   *
-   * \since 0.1.0
-   */
-  void set_path(QFileInfo path);
 
   /**
    * \copydoc map::move_layer_back()
@@ -386,52 +378,6 @@ class map_document final : public QObject, public property_manager
       callable(key, layer);
     }
   }
-
-  template <std::invocable<const QString&, const core::property&> T>
-  void each_property(T&& callable) const
-  {
-    for (const auto& [key, property] : m_propertyDelegate) {
-      callable(key, property);
-    }
-  }
-
-  [[nodiscard]] auto is_clean() const -> bool;
-
-  /**
-   * \brief Indicates whether or not there is an undoable command.
-   *
-   * \return `true` if there is an undoable command; `false` otherwise.
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto can_undo() const -> bool;
-
-  /**
-   * \brief Indicates whether or not there is an redoable command.
-   *
-   * \return `true` if there is an redoable command; `false` otherwise.
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto can_redo() const -> bool;
-
-  /**
-   * \brief Returns the text associated with the currently undoable command.
-   *
-   * \return the text associated with the currently undoable command.
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto undo_text() const -> QString;
-
-  /**
-   * \brief Returns the text associated with the currently redoable command.
-   *
-   * \return the text associated with the currently redoable command.
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto redo_text() const -> QString;
 
   /**
    * \copydoc map::index_of()
@@ -501,18 +447,6 @@ class map_document final : public QObject, public property_manager
    */
   [[nodiscard]] auto current_layer_id() const noexcept -> maybe<layer_id>;
 
-  [[nodiscard]] auto property_viewmodel() const noexcept
-      -> viewmodel::property_model*;
-
-  /**
-   * \brief Returns the file path associated with the map document.
-   *
-   * \return the file path associated with the map document.
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto path() const -> const QFileInfo&;
-
  signals:
   void undo_state_updated(bool canUndo);
   void redo_state_updated(bool canRedo);
@@ -563,10 +497,7 @@ class map_document final : public QObject, public property_manager
  private:
   std::unique_ptr<map> m_map;                   ///< The associated map.
   std::unique_ptr<tileset_manager> m_tilesets;  ///< The associated tilesets.
-  command_stack* m_commands{};           ///< The associated command history.
-  property_delegate m_propertyDelegate;  // TODO this is for the map really
-  viewmodel::property_model* m_propertyModel{};
-  QFileInfo m_path;  ///< The absolute file path associated with the document.
+  document_delegate m_delegate;
 
   void setup();
 };

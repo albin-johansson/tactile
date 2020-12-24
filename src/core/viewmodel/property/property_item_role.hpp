@@ -2,7 +2,7 @@
 
 #include <Qt>
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 
 class property_item_role final
 {
@@ -14,4 +14,4 @@ class property_item_role final
   };
 };
 
-}  // namespace tactile::viewmodel
+}  // namespace tactile::vm

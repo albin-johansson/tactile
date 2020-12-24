@@ -32,7 +32,7 @@ class properties_widget final : public QWidget
   Ui::properties_widget* m_ui{};
   property_tree_view* m_treeView{};
   property_context_menu* m_contextMenu{};
-  viewmodel::property_model* m_model{};
+  vm::property_model* m_model{};
   maybe<QString> m_nameCopy;
   maybe<core::property> m_propertyCopy;
 

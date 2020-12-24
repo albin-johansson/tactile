@@ -24,7 +24,7 @@ auto property_name_validator::validate(QString& input, int&) const
 
   bool invalid{};
 
-  viewmodel::visit_items(m_model, 0, [&](QStandardItem* item) {
+  vm::visit_items(m_model, 0, [&](QStandardItem* item) {
     if (item->text() == input) {
       invalid = true;
     }

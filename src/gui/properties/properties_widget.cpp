@@ -76,20 +76,20 @@ void properties_widget::selected_map(const core::map_document& document)
     m_model->clear_predefined();
   }
 
-  m_model = document.property_viewmodel();
+  m_model = document.property_model();
 
   m_treeView->setModel(m_model);
   m_treeView->add_item_widgets();
   m_treeView->expandAll();
 
   // clang-format off
-  connect(m_model, &viewmodel::property_model::added_file,
+  connect(m_model, &vm::property_model::added_file,
           m_treeView, &property_tree_view::when_file_added);
 
-  connect(m_model, &viewmodel::property_model::added_color,
+  connect(m_model, &vm::property_model::added_color,
           m_treeView, &property_tree_view::when_color_added);
 
-  connect(m_model, &viewmodel::property_model::changed_type,
+  connect(m_model, &vm::property_model::changed_type,
           m_treeView, &property_tree_view::when_changed_type);
   // clang-format on
 

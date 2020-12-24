@@ -2,7 +2,7 @@
 
 #include <QStandardItem>
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 
 enum class item_type
 {
@@ -15,4 +15,4 @@ enum class item_type
   color
 };
 
-}  // namespace tactile::viewmodel
+}  // namespace tactile::vm

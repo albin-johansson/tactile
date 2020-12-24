@@ -9,16 +9,19 @@ set(TACTILE_SOURCE_FILES
         tactile_app.hpp
         version.hpp
 
-        core/model.hpp
-        core/model.cpp
         core/tactile_error.hpp
         core/position.hpp
-        core/property_delegate.cpp
-        core/property_delegate.hpp
+        core/model.hpp
+        core/model.cpp
+        core/document.hpp
+        core/document_delegate.cpp
+        core/document_delegate.hpp
 
         core/property/property.cpp
         core/property/property.hpp
         core/property/property_manager.hpp
+        core/property/property_delegate.cpp
+        core/property/property_delegate.hpp
 
         core/aliases/czstring.hpp
         core/aliases/tile_id.hpp
@@ -52,8 +55,8 @@ set(TACTILE_SOURCE_FILES
         core/map/layer_delegate.hpp
         core/map/map_document.cpp
         core/map/map_document.hpp
-        core/map/map_manager.cpp
-        core/map/map_manager.hpp
+        core/map/map_document_manager.cpp
+        core/map/map_document_manager.hpp
 
         core/viewmodel/item_model_utils.hpp
 

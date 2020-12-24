@@ -7,7 +7,7 @@
 #include "property.hpp"
 #include "vector_map.hpp"
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 class property_model;
 }
 
@@ -51,9 +51,9 @@ class property_tree_view final : public QTreeView
   vector_map<int, QStandardItem*> m_widgetItems;
   int m_nextWidgetId{1};
 
-  [[nodiscard]] auto get_model() -> viewmodel::property_model*;
+  [[nodiscard]] auto get_model() -> vm::property_model*;
 
-  [[nodiscard]] auto get_model() const -> const viewmodel::property_model*;
+  [[nodiscard]] auto get_model() const -> const vm::property_model*;
 
   [[nodiscard]] auto new_widget_id() noexcept -> int;
 

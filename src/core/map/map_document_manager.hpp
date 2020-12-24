@@ -13,15 +13,15 @@
 namespace tactile::core {
 
 /**
- * \class map_manager
+ * \class map_document_manager
  *
  * \brief Manages multiple map documents.
  *
  * \since 0.1.0
  *
- * \headerfile map_manager.hpp
+ * \headerfile map_document_manager.hpp
  */
-class map_manager final : public QObject
+class map_document_manager final : public QObject
 {
   Q_OBJECT
 
@@ -30,7 +30,7 @@ class map_manager final : public QObject
   using iterator = typename document_map::iterator;
   using const_iterator = typename document_map::const_iterator;
 
-  explicit map_manager(QObject* parent = nullptr);
+  explicit map_document_manager(QObject* parent = nullptr);
 
   /**
    * \brief Adds a new map document.

@@ -12,14 +12,14 @@
 #include "tool_id.hpp"
 #include "tool_model.hpp"
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 class property_model;
 }
 
 namespace tactile::core {
 
 class map_document;
-class map_manager;
+class map_document_manager;
 class tile_layer;
 
 /**
@@ -39,32 +39,32 @@ class model final : public QObject
   model();
 
   /**
-   * \copydoc map_manager::add()
+   * \copydoc map_document_manager::add()
    */
   [[nodiscard]] auto add_map() -> map_id;
 
   /**
-   * \copydoc map_manager::add(map_document* document)
+   * \copydoc map_document_manager::add(map_document* document)
    */
   [[nodiscard]] auto add_map(map_document* document) -> map_id;
 
   /**
-   * \copydoc map_manager::has_active_map()
+   * \copydoc map_document_manager::has_active_map()
    */
   [[nodiscard]] auto has_active_map() const noexcept -> bool;
 
   /**
-   * \copydoc map_manager::at()
+   * \copydoc map_document_manager::at()
    */
   [[nodiscard]] auto get_document(map_id id) -> map_document*;
 
   /**
-   * \copydoc map_manager::current_map_id()
+   * \copydoc map_document_manager::current_map_id()
    */
   [[nodiscard]] auto current_map_id() const -> maybe<map_id>;
 
   /**
-   * \copydoc map_manager::current_document()
+   * \copydoc map_document_manager::current_document()
    */
   [[nodiscard]] auto current_document() -> map_document*;
 
@@ -333,13 +333,13 @@ class model final : public QObject
   void set_property(const QString& name, const core::property& property);
 
   /**
-   * \copydoc map_manager::select()
+   * \copydoc map_document_manager::select()
    * \signal `switched_map`
    */
   void select_map(map_id id);
 
   /**
-   * \copydoc map_manager::close()
+   * \copydoc map_document_manager::close()
    */
   void close_map(map_id id);
 
@@ -369,7 +369,7 @@ class model final : public QObject
   void mouse_exited(QEvent* event);
 
  private:
-  map_manager* m_maps{};
+  map_document_manager* m_mapDocuments{};
   tool_model m_tools;
 };
 

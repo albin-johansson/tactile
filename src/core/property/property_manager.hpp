@@ -6,6 +6,15 @@
 
 namespace tactile::core {
 
+/**
+ * \interface property_manager
+ *
+ * \brief An interface for objects that support properties.
+ *
+ * \since 0.2.0
+ *
+ * \headerfile property_manager.hpp
+ */
 class property_manager
 {
  public:

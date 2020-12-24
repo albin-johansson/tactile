@@ -6,7 +6,7 @@
 #include "property_items.hpp"
 #include "tactile_error.hpp"
 
-namespace tactile::viewmodel {
+namespace tactile::vm {
 namespace {
 
 void add_entry(const QString& name,
@@ -283,7 +283,7 @@ void property_model::update_name(const QString& oldName, const QString& newName)
 
 void property_model::set_value(const QString& name, QStandardItem* item)
 {
-  switch (static_cast<viewmodel::item_type>(item->type())) {
+  switch (static_cast<vm::item_type>(item->type())) {
     case item_type::string: {
       m_manager->set_property(name, item->data(Qt::EditRole).value<QString>());
       break;
@@ -303,13 +303,13 @@ void property_model::set_value(const QString& name, QStandardItem* item)
     }
     case item_type::file: {
       const auto path =
-          item->data(viewmodel::property_item_role::path).value<QString>();
+          item->data(vm::property_item_role::path).value<QString>();
       m_manager->set_property(name, QFileInfo{path});
       break;
     }
     case item_type::color: {
       const auto color =
-          item->data(viewmodel::property_item_role::color).value<QColor>();
+          item->data(vm::property_item_role::color).value<QColor>();
       m_manager->set_property(name, color);
       break;
     }
@@ -346,7 +346,7 @@ auto property_model::make_item(const core::property& property) -> QStandardItem*
       auto* item = new file_item{};
       item->setData(gui::icons::copy(), Qt::DecorationRole);
       item->setData(property.as<QFileInfo>().filePath(),
-                    viewmodel::property_item_role::path);
+                    vm::property_item_role::path);
       return item;
     }
     case core::property::color: {
@@ -370,4 +370,4 @@ void property_model::when_item_changed(QStandardItem* item)
   }
 }
 
-}  // namespace tactile::viewmodel
+}  // namespace tactile::vm
