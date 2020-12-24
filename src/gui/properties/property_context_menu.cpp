@@ -37,6 +37,7 @@ property_context_menu::property_context_menu(QWidget* parent)
   connect(m_copy, &QAction::triggered, this, &property_context_menu::copy);
   connect(m_paste, &QAction::triggered, this, &property_context_menu::paste);
   connect(m_rename, &QAction::triggered, this, &property_context_menu::rename);
+  connect(m_add, &QAction::triggered, this, &property_context_menu::add);
   connect(m_remove, &QAction::triggered, this, &property_context_menu::remove);
 
   connect(m_typeString, &QAction::triggered, [this] {
