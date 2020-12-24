@@ -16,6 +16,8 @@ status_bar::status_bar(QWidget* parent)
     , m_mxValueLabel{new QLabel{}}
     , m_myValueLabel{new QLabel{}}
 {
+  m_layerBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+
   addWidget(m_mxLabel);
   addWidget(m_myLabel);
   addWidget(m_mxValueLabel);
