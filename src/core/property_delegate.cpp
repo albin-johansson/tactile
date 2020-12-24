@@ -52,6 +52,7 @@ void property_delegate::set_property(const QString& name,
                                      const property& property)
 {
   Q_ASSERT(m_properties.contains(name));
+  Q_ASSERT(m_properties.at(name).get_type() == property.get_type());
   m_properties.at(name) = property;
 
 #ifdef QT_DEBUG
