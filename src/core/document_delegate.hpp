@@ -10,7 +10,7 @@ namespace tactile::core {
 class document_delegate final : public document
 {
  public:
-  explicit document_delegate(vm::property_model* propertyModel);
+  document_delegate();
 
   /// \name Document API
   /// \{
@@ -35,8 +35,6 @@ class document_delegate final : public document
 
   [[nodiscard]] auto path() const -> const QFileInfo& override;
 
-  [[nodiscard]] auto property_model() const -> vm::property_model* override;
-
   /// \}
 
   /// \name Property API
@@ -57,6 +55,8 @@ class document_delegate final : public document
 
   [[nodiscard]] auto property_count() const noexcept -> int override;
 
+  [[nodiscard]] auto properties() const -> const property_map& override;
+
   /// \}
 
   [[nodiscard]] auto get_commands() noexcept -> command_stack*;
@@ -64,7 +64,6 @@ class document_delegate final : public document
  private:
   std::unique_ptr<command_stack> m_commandStack;
   std::unique_ptr<property_manager> m_propertyManager;
-  vm::property_model* m_propertyModel;
   QFileInfo m_path;
 };
 

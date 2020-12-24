@@ -2,6 +2,7 @@
 
 #include <QFileInfo>
 #include <QString>
+#include <memory>  // unique_ptr
 
 #include "property_manager.hpp"
 #include "property_model.hpp"
@@ -117,17 +118,6 @@ class document : public property_manager
    * \since 0.2.0
    */
   [[nodiscard]] virtual auto path() const -> const QFileInfo& = 0;
-
-  /**
-   * \brief Returns the property model associated with the document.
-   *
-   * \warning Do not claim ownership of the returned pointer!
-   *
-   * \return the associated property model.
-   *
-   * \since 0.2.0
-   */
-  [[nodiscard]] virtual auto property_model() const -> vm::property_model* = 0;
 };
 
 }  // namespace tactile::core

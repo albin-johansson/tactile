@@ -24,6 +24,10 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
     : QStandardItemModel{parent}
     , m_manager{manager}
 {
+  if (!m_manager) {
+    throw tactile_error{"property_model requires non-null property manager!"};
+  }
+
   setColumnCount(2);
 
   m_predefinedRoot = new QStandardItem{tr("Predefined")};
@@ -42,6 +46,11 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
   connect(this, &property_model::itemChanged,
           this, &property_model::when_item_changed);
   // clang-format on
+
+  for (const auto& [name, property] : manager->properties()) {
+    const auto index = add_property(name, property, m_customRoot);
+    itemFromIndex(index.siblingAtColumn(0))->setEditable(false);
+  }
 }
 
 void property_model::clear_predefined()
@@ -150,135 +159,45 @@ auto property_model::add_property(const QString& name,
                                   const core::property& property,
                                   QStandardItem* root) -> QModelIndex
 {
+  auto* valueItem = make_item(property);
+
+  add_entry(name, valueItem, root);
+  const auto index = indexFromItem(valueItem);
+
   switch (property.get_type().value()) {
-    case core::property::string:
-      return add_string(name, property, root);
-
-    case core::property::integer:
-      return add_int(name, property, root);
-
-    case core::property::floating:
-      return add_float(name, property, root);
-
-    case core::property::boolean:
-      return add_bool(name, property, root);
-
-    case core::property::file:
-      return add_file(name, property, root);
-
-    case core::property::color:
-      return add_color(name, property, root);
-
-    case core::property::object:
-      return add_object(name, property, root);
-
+    case core::property::string: {
+      emit added_string(index);
+      break;
+    }
+    case core::property::integer: {
+      emit added_int(index);
+      break;
+    }
+    case core::property::floating: {
+      emit added_float(index);
+      break;
+    }
+    case core::property::boolean: {
+      emit added_bool(index);
+      break;
+    }
+    case core::property::file: {
+      emit added_file(index);
+      break;
+    }
+    case core::property::color: {
+      emit added_color(index);
+      break;
+    }
+    case core::property::object: {
+      emit added_object(index);
+      break;
+    }
     default:
       throw tactile_error{"Did not recognize property type!"};
   }
-}
 
-auto property_model::add_string(const QString& name,
-                                const core::property& property,
-                                QStandardItem* root) -> QModelIndex
-{
-  Q_ASSERT(property.is_string());
-  auto* valueItem = make_item(property);
-
-  add_entry(name, valueItem, root);
-  const auto index = indexFromItem(valueItem);
-
-  emit added_string(index);
   return index;
-}
-
-auto property_model::add_int(const QString& name,
-                             const core::property& property,
-                             QStandardItem* root) -> QModelIndex
-{
-  Q_ASSERT(property.is_integer());
-  auto* valueItem = make_item(property);
-
-  add_entry(name, valueItem, root);
-  const auto index = indexFromItem(valueItem);
-
-  emit added_int(index);
-  return index;
-}
-
-auto property_model::add_float(const QString& name,
-                               const core::property& property,
-                               QStandardItem* root) -> QModelIndex
-{
-  Q_ASSERT(property.is_floating());
-  auto* valueItem = make_item(property);
-
-  add_entry(name, valueItem, root);
-  const auto index = indexFromItem(valueItem);
-
-  emit added_float(index);
-  return index;
-}
-
-auto property_model::add_bool(const QString& name,
-                              const core::property& property,
-                              QStandardItem* root) -> QModelIndex
-{
-  Q_ASSERT(property.is_boolean());
-  auto* valueItem = make_item(property);
-
-  add_entry(name, valueItem, root);
-  const auto index = indexFromItem(valueItem);
-
-  emit added_bool(index);
-  return index;
-}
-
-auto property_model::add_object(const QString& name,
-                                const core::property& property,
-                                QStandardItem* root) -> QModelIndex
-{
-  Q_ASSERT(property.is<core::object_ref>());
-  auto* valueItem = make_item(property);
-
-  add_entry(name, valueItem, root);
-  const auto index = indexFromItem(valueItem);
-
-  emit added_object(index);
-  return index;
-}
-
-auto property_model::add_color(const QString& name,
-                               const core::property& property,
-                               QStandardItem* root) -> QModelIndex
-{
-  Q_ASSERT(property.is<QColor>());
-  auto* valueItem = make_item(property);
-
-  add_entry(name, valueItem, root);
-  const auto index = indexFromItem(valueItem);
-
-  emit added_color(index);
-  return index;
-}
-
-auto property_model::add_file(const QString& name,
-                              const core::property& property,
-                              QStandardItem* root) -> QModelIndex
-{
-  Q_ASSERT(property.is<QFileInfo>());
-
-  auto* valueItem = make_item(property);
-
-  add_entry(name, valueItem, root);
-  const auto index = indexFromItem(valueItem);
-
-  emit added_file(index);
-  return index;
-}
-
-void property_model::update_name(const QString& oldName, const QString& newName)
-{
-  m_manager->rename_property(oldName, newName);
 }
 
 void property_model::set_value(const QString& name, QStandardItem* item)

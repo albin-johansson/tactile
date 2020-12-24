@@ -23,7 +23,6 @@ map_document::map_document(QObject* parent)
     : QObject{parent}
     , m_map{std::make_unique<map>()}
     , m_tilesets{std::make_unique<tileset_manager>()}
-    , m_delegate{new vm::property_model{this, this}}
 {
   setup();
 }
@@ -34,7 +33,6 @@ map_document::map_document(const row_t nRows,
     : QObject{parent}
     , m_map{std::make_unique<map>(nRows, nCols)}
     , m_tilesets{std::make_unique<tileset_manager>()}
-    , m_delegate{new vm::property_model{this, this}}
 {
   setup();
 }
@@ -106,11 +104,6 @@ auto map_document::path() const -> const QFileInfo&
   return m_delegate.path();
 }
 
-auto map_document::property_model() const -> vm::property_model*
-{
-  return m_delegate.property_model();
-}
-
 void map_document::add_property(const QString& name, const property::type type)
 {
   m_delegate.add_property(name, type);
@@ -149,6 +142,11 @@ auto map_document::get_property(const QString& name) -> core::property&
 auto map_document::property_count() const noexcept -> int
 {
   return m_delegate.property_count();
+}
+
+auto map_document::properties() const -> const property_map&
+{
+  return m_delegate.properties();
 }
 
 void map_document::flood(const position& position, const tile_id replacement)

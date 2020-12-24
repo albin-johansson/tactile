@@ -3,9 +3,9 @@
 #include <QWidget>
 
 #include "map_document.hpp"
+#include "maybe.hpp"
 #include "property.hpp"
 #include "property_model.hpp"
-#include "maybe.hpp"
 
 namespace Ui {
 class properties_widget;
@@ -26,13 +26,14 @@ class properties_widget final : public QWidget
   ~properties_widget() noexcept override;
 
  public slots:
-  void selected_map(const core::map_document& document);
+  void selected_map(const core::map_document& document,
+                    const vm::shared_property_model& propertyModel);
 
  private:
   Ui::properties_widget* m_ui{};
   property_tree_view* m_treeView{};
   property_context_menu* m_contextMenu{};
-  vm::property_model* m_model{};
+  vm::shared_property_model m_model;
   maybe<QString> m_nameCopy;
   maybe<core::property> m_propertyCopy;
 

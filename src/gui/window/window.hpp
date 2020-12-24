@@ -103,11 +103,6 @@ class window final : public QMainWindow
   void ui_rename_tileset(tileset_id id, const QString& name);
   void ui_set_tileset_selection(const core::tileset::selection& selection);
 
-  void ui_add_property(const QString& name, core::property::type type);
-  void ui_remove_property(const QString& name);
-  void ui_rename_property(const QString& oldName, const QString& newName);
-  void has_set_property(const QString& name, const core::property& property);
-
   void ui_resize_map();
 
   void ui_increase_zoom();
@@ -156,7 +151,9 @@ class window final : public QMainWindow
 
   void moved_layer_down(layer_id id);
 
-  void switched_map(map_id map, const core::map_document& document);
+  void switched_map(map_id map,
+                    const core::map_document& document,
+                    const vm::shared_property_model& propertyModel);
 
   void enable_stamp_preview(const core::position& position);
 
@@ -167,16 +164,6 @@ class window final : public QMainWindow
   void handle_new_map(core::map_document* document,
                       map_id id,
                       const QString& name = TACTILE_QSTRING(u"map"));
-
-  void added_property(const QString& name, const core::property& property);
-
-  void removed_property(const QString& name);
-
-  void moved_property_up(const QString& name);
-
-  void moved_property_down(const QString& name);
-
-  void duplicated_property(const QString& name);
 
  protected:
   void closeEvent(QCloseEvent* event) override;
@@ -233,69 +220,69 @@ class window final : public QMainWindow
 
   void eraser_enabled();
 
-  void on_actionUndo_triggered();
+  [[maybe_unused]] void on_actionUndo_triggered();
 
-  void on_actionRedo_triggered();
+  [[maybe_unused]] void on_actionRedo_triggered();
 
-  void on_actionCloseMap_triggered();
+  [[maybe_unused]] void on_actionCloseMap_triggered();
 
-  void on_actionTilesetsVisibility_triggered();
+  [[maybe_unused]] void on_actionTilesetsVisibility_triggered();
 
-  void on_actionToolsVisibility_triggered();
+  [[maybe_unused]] void on_actionToolsVisibility_triggered();
 
-  void on_actionLayersVisibility_triggered();
+  [[maybe_unused]] void on_actionLayersVisibility_triggered();
 
-  void on_actionPropertiesVisibility_triggered();
+  [[maybe_unused]] void on_actionPropertiesVisibility_triggered();
 
-  void on_actionSave_triggered();
+  [[maybe_unused]] void on_actionSave_triggered();
 
-  void on_actionSaveAs_triggered();
+  [[maybe_unused]] void on_actionSaveAs_triggered();
 
-  void on_actionOpenMap_triggered();
+  [[maybe_unused]] void on_actionOpenMap_triggered();
 
-  void on_actionAddRow_triggered();
+  [[maybe_unused]] void on_actionAddRow_triggered();
 
-  void on_actionAddCol_triggered();
+  [[maybe_unused]] void on_actionAddCol_triggered();
 
-  void on_actionRemoveRow_triggered();
+  [[maybe_unused]] void on_actionRemoveRow_triggered();
 
-  void on_actionRemoveCol_triggered();
+  [[maybe_unused]] void on_actionRemoveCol_triggered();
 
-  void on_actionResizeMap_triggered();
+  [[maybe_unused]] void on_actionResizeMap_triggered();
 
-  void on_actionToggleGrid_triggered();
+  [[maybe_unused]] void on_actionToggleGrid_triggered();
 
-  void on_actionPanUp_triggered();
+  [[maybe_unused]] void on_actionPanUp_triggered();
 
-  void on_actionPanDown_triggered();
+  [[maybe_unused]] void on_actionPanDown_triggered();
 
-  void on_actionPanRight_triggered();
+  [[maybe_unused]] void on_actionPanRight_triggered();
 
-  void on_actionPanLeft_triggered();
+  [[maybe_unused]] void on_actionPanLeft_triggered();
 
-  void on_actionZoomIn_triggered();
+  [[maybe_unused]] void on_actionZoomIn_triggered();
 
-  void on_actionZoomOut_triggered();
+  [[maybe_unused]] void on_actionZoomOut_triggered();
 
-  void on_actionResetZoom_triggered();
+  [[maybe_unused]] void on_actionResetZoom_triggered();
 
-  void on_actionCenterCamera_triggered();
+  [[maybe_unused]] void on_actionCenterCamera_triggered();
 
-  void on_actionResetLayout_triggered();
+  [[maybe_unused]] void on_actionResetLayout_triggered();
 
-  void on_actionStampTool_triggered();
+  [[maybe_unused]] void on_actionStampTool_triggered();
 
-  void on_actionBucketTool_triggered();
+  [[maybe_unused]] void on_actionBucketTool_triggered();
 
-  void on_actionEraserTool_triggered();
+  [[maybe_unused]] void on_actionEraserTool_triggered();
 
-  void on_actionSettings_triggered();
+  [[maybe_unused]] void on_actionSettings_triggered();
 
-  static void on_actionAboutQt_triggered();
+  [[maybe_unused]] static void on_actionAboutQt_triggered();
 
-  static void on_actionExit_triggered();
+  [[maybe_unused]] static void on_actionExit_triggered();
 
-  static void on_actionAbout_triggered();
+  [[maybe_unused]] static void on_actionAbout_triggered();
 };
 
 }  // namespace tactile::gui

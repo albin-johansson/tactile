@@ -126,11 +126,6 @@ void window::init_connections()
             emit ui_set_layer_name(id, name);
             m_statusBar->set_layer_name(id, name);
           });
-
-  connect(m_propertiesDock, &properties_dock::request_add_property, this, &window::ui_add_property);
-  connect(m_propertiesDock, &properties_dock::request_remove_property, this, &window::ui_remove_property);
-  connect(m_propertiesDock, &properties_dock::has_renamed_property, this, &window::ui_rename_property);
-  connect(m_propertiesDock, &properties_dock::has_set_property, this, &window::has_set_property);
   // clang-format on
 }
 
@@ -350,11 +345,13 @@ void window::moved_layer_down(const layer_id id)
   m_layerDock->moved_layer_forward(id);
 }
 
-void window::switched_map(const map_id id, const core::map_document& document)
+void window::switched_map(const map_id id,
+                          const core::map_document& document,
+                          const vm::shared_property_model& propertyModel)
 {
   m_tilesetDock->selected_map(id);
   m_layerDock->selected_map(id, document);
-  m_propertiesDock->selected_map(document);
+  m_propertiesDock->selected_map(document, propertyModel);
   m_statusBar->switched_map(document);
 }
 
@@ -388,31 +385,6 @@ void window::handle_new_map(core::map_document* document,
 
   m_ui->actionSave->setDisabled(document->is_clean());
   m_statusBar->switched_map(*document);
-}
-
-void window::added_property(const QString& name, const core::property& property)
-{
-  m_propertiesDock->added_property(name, property);
-}
-
-void window::removed_property(const QString& name)
-{
-  m_propertiesDock->removed_property(name);
-}
-
-void window::moved_property_up(const QString& name)
-{
-  m_propertiesDock->moved_property_up(name);
-}
-
-void window::moved_property_down(const QString& name)
-{
-  m_propertiesDock->moved_property_down(name);
-}
-
-void window::duplicated_property(const QString& name)
-{
-  m_propertiesDock->duplicated_property(name);
 }
 
 void window::closeEvent(QCloseEvent* event)

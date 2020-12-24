@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QStandardItemModel>
+#include <memory>  // unique_ptr, shared_ptr
 
 #include "property_manager.hpp"
 
@@ -58,36 +59,6 @@ class property_model final : public QStandardItemModel
                     const core::property& property,
                     QStandardItem* root) -> QModelIndex;
 
-  auto add_string(const QString& name,
-                  const core::property& property,
-                  QStandardItem* root) -> QModelIndex;
-
-  auto add_int(const QString& name,
-               const core::property& property,
-               QStandardItem* root) -> QModelIndex;
-
-  auto add_float(const QString& name,
-                 const core::property& property,
-                 QStandardItem* root) -> QModelIndex;
-
-  auto add_bool(const QString& name,
-                const core::property& property,
-                QStandardItem* root) -> QModelIndex;
-
-  auto add_object(const QString& name,
-                  const core::property& property,
-                  QStandardItem* root) -> QModelIndex;
-
-  auto add_color(const QString& name,
-                 const core::property& property,
-                 QStandardItem* root) -> QModelIndex;
-
-  auto add_file(const QString& name,
-                const core::property& property,
-                QStandardItem* root) -> QModelIndex;
-
-  void update_name(const QString& oldName, const QString& newName);
-
   void set_value(const QString& name, QStandardItem* item);
 
   [[nodiscard]] static auto make_item(const core::property& property)
@@ -96,5 +67,8 @@ class property_model final : public QStandardItemModel
  private slots:
   void when_item_changed(QStandardItem* item);
 };
+
+using unique_property_model = std::unique_ptr<property_model>;
+using shared_property_model = std::shared_ptr<property_model>;
 
 }  // namespace tactile::vm

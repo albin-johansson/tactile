@@ -240,4 +240,9 @@ auto tile_layer::property_count() const noexcept -> int
   return m_propertyDelegate.property_count();
 }
 
+auto tile_layer::properties() const -> const property_map&
+{
+  return m_propertyDelegate.properties();
+}
+
 }  // namespace tactile::core

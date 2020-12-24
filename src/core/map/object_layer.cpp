@@ -47,6 +47,11 @@ auto object_layer::property_count() const noexcept -> int
   return m_propertyDelegate.property_count();
 }
 
+auto object_layer::properties() const -> const property_map&
+{
+  return m_propertyDelegate.properties();
+}
+
 void object_layer::set_visible(const bool visible) noexcept
 {
   m_layerDelegate.set_visible(visible);

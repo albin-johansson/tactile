@@ -7,14 +7,10 @@
 
 namespace tactile::core {
 
-document_delegate::document_delegate(vm::property_model* propertyModel)
+document_delegate::document_delegate()
     : m_commandStack{std::make_unique<command_stack>()}
     , m_propertyManager{std::make_unique<property_delegate>()}
-    , m_propertyModel{propertyModel}
 {
-  if (!m_propertyModel) {
-    throw tactile_error{"Can't create delegate from null property model"};
-  }
   m_commandStack->setUndoLimit(100);
 }
 
@@ -68,11 +64,6 @@ auto document_delegate::path() const -> const QFileInfo&
   return m_path;
 }
 
-auto document_delegate::property_model() const -> vm::property_model*
-{
-  return m_propertyModel;
-}
-
 void document_delegate::add_property(const QString& name,
                                      const property::type type)
 {
@@ -110,6 +101,11 @@ auto document_delegate::get_property(const QString& name) -> property&
 auto document_delegate::property_count() const noexcept -> int
 {
   return m_propertyManager->property_count();
+}
+
+auto document_delegate::properties() const -> const property_map&
+{
+  return m_propertyManager->properties();
 }
 
 auto document_delegate::get_commands() noexcept -> command_stack*

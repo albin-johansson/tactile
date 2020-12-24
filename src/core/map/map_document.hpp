@@ -10,6 +10,7 @@
 
 #include "command_stack.hpp"
 #include "document.hpp"
+#include "document_delegate.hpp"
 #include "map.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
@@ -18,7 +19,6 @@
 #include "property_manager.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
-#include "document_delegate.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::vm {
@@ -93,7 +93,7 @@ class map_document final : public QObject, public document
 
   [[nodiscard]] auto path() const -> const QFileInfo& override;
 
-  [[nodiscard]] auto property_model() const -> vm::property_model* override;
+  [[nodiscard]] auto properties() const -> const property_map& override;
 
   /// \}
 

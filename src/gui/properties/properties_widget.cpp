@@ -69,28 +69,36 @@ properties_widget::~properties_widget() noexcept
   delete m_ui;
 }
 
-void properties_widget::selected_map(const core::map_document& document)
+void properties_widget::selected_map(
+    const core::map_document& document,
+    const vm::shared_property_model& propertyModel)
 {
   if (m_model) {
     m_model->disconnect(m_treeView);
     m_model->clear_predefined();
   }
 
-  m_model = document.property_model();
+  Q_ASSERT(!propertyModel->parent());
 
-  m_treeView->setModel(m_model);
+  auto* selectionModel = m_treeView->selectionModel();
+  m_treeView->setModel(propertyModel.get());
+  m_model = propertyModel;
+  selectionModel->deleteLater();
+
+  Q_ASSERT(!m_model->parent());
+
   m_treeView->add_item_widgets();
   m_treeView->expandAll();
 
   // clang-format off
-  connect(m_model, &vm::property_model::added_file,
-          m_treeView, &property_tree_view::when_file_added);
+  connect(m_model.get(), &vm::property_model::added_file,
+          m_treeView,    &property_tree_view::when_file_added);
 
-  connect(m_model, &vm::property_model::added_color,
-          m_treeView, &property_tree_view::when_color_added);
+  connect(m_model.get(), &vm::property_model::added_color,
+          m_treeView,    &property_tree_view::when_color_added);
 
-  connect(m_model, &vm::property_model::changed_type,
-          m_treeView, &property_tree_view::when_changed_type);
+  connect(m_model.get(), &vm::property_model::changed_type,
+          m_treeView,    &property_tree_view::when_changed_type);
   // clang-format on
 
   m_model->set_predefined_name(TACTILE_QSTRING(u"Map"));
@@ -162,7 +170,7 @@ void properties_widget::new_property_requested()
       [this](const QString& name, const core::property::type type) {
         m_model->add(name, type);
       },
-      m_model,
+      m_model.get(),
       this);
 }
 
@@ -179,7 +187,7 @@ void properties_widget::remove_property_requested()
 void properties_widget::rename_property_requested()
 {
   const auto oldName = current_property_name();
-  if (const auto newName = change_property_name_dialog::spawn(m_model)) {
+  if (const auto newName = change_property_name_dialog::spawn(m_model.get())) {
     m_model->rename(oldName, *newName);
   }
 }
@@ -195,7 +203,8 @@ void properties_widget::when_double_clicked()
   const auto* item = m_model->itemFromIndex(index);
   if (index.column() == 0 && index.parent().isValid() && item->isEnabled()) {
     const auto oldName = item->text();
-    if (const auto newName = change_property_name_dialog::spawn(m_model)) {
+    if (const auto newName =
+            change_property_name_dialog::spawn(m_model.get())) {
       m_model->rename(oldName, *newName);
     }
   }

@@ -1,6 +1,7 @@
 #include "model.hpp"
 
 #include "map_document_manager.hpp"
+#include "property_model.hpp"
 
 namespace tactile::core {
 
@@ -297,7 +298,9 @@ void model::select_map(const map_id id)
   auto* document = m_mapDocuments->current_document();
   Q_ASSERT(document);
 
-  emit switched_map(id, *document);
+  emit switched_map(id,
+                    *document,
+                    std::make_shared<vm::property_model>(document));
 }
 
 void model::close_map(const map_id id)

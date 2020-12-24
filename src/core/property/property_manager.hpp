@@ -3,6 +3,7 @@
 #include <QString>
 
 #include "property.hpp"
+#include "vector_map.hpp"
 
 namespace tactile::core {
 
@@ -18,6 +19,9 @@ namespace tactile::core {
 class property_manager
 {
  public:
+  using property_map = vector_map<QString, property>;
+  using const_iterator = property_map::const_iterator;
+
   virtual ~property_manager() noexcept = default;
 
   /**
@@ -106,6 +110,8 @@ class property_manager
    * \since 0.2.0
    */
   [[nodiscard]] virtual auto property_count() const noexcept -> int = 0;
+
+  [[nodiscard]] virtual auto properties() const -> const property_map& = 0;
 };
 
 }  // namespace tactile::core

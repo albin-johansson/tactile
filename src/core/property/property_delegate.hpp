@@ -33,16 +33,7 @@ class property_delegate final : public property_manager
   auto property_count() const noexcept -> int override;
 
   [[nodiscard]]
-  auto begin() const noexcept
-  {
-    return m_properties.begin();
-  }
-
-  [[nodiscard]]
-  auto end() const noexcept
-  {
-    return m_properties.end();
-  }
+  auto properties() const -> const property_map& override;
 
   // clang-format on
 

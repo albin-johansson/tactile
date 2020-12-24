@@ -76,4 +76,9 @@ auto property_delegate::property_count() const noexcept -> int
   return static_cast<int>(m_properties.size());
 }
 
+auto property_delegate::properties() const -> const property_map&
+{
+  return m_properties;
+}
+
 }  // namespace tactile::core

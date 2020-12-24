@@ -93,6 +93,8 @@ class tile_layer final : public layer
 
   [[nodiscard]] auto property_count() const noexcept -> int override;
 
+  [[nodiscard]] auto properties() const -> const property_map& override;
+
   /// \}
 
   /// \name Tile layer API
