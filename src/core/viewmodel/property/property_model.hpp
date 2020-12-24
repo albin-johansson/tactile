@@ -41,11 +41,6 @@ class property_model final : public QStandardItemModel
       -> const core::property&;
 
  signals:
-  void added_string(const QModelIndex& valueIndex);
-  void added_int(const QModelIndex& valueIndex);
-  void added_float(const QModelIndex& valueIndex);
-  void added_bool(const QModelIndex& valueIndex);
-  void added_object(const QModelIndex& valueIndex);
   void added_color(const QModelIndex& valueIndex);
   void added_file(const QModelIndex& valueIndex);
   void changed_type(const QModelIndex& valueIndex, core::property::type type);

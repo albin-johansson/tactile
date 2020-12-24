@@ -164,37 +164,11 @@ auto property_model::add_property(const QString& name,
   add_entry(name, valueItem, root);
   const auto index = indexFromItem(valueItem);
 
-  switch (property.get_type().value()) {
-    case core::property::string: {
-      emit added_string(index);
-      break;
-    }
-    case core::property::integer: {
-      emit added_int(index);
-      break;
-    }
-    case core::property::floating: {
-      emit added_float(index);
-      break;
-    }
-    case core::property::boolean: {
-      emit added_bool(index);
-      break;
-    }
-    case core::property::file: {
-      emit added_file(index);
-      break;
-    }
-    case core::property::color: {
-      emit added_color(index);
-      break;
-    }
-    case core::property::object: {
-      emit added_object(index);
-      break;
-    }
-    default:
-      throw tactile_error{"Did not recognize property type!"};
+  if (const auto type = property.get_type().value();
+      type == core::property::file) {
+    emit added_file(index);
+  } else if (type == core::property::color) {
+    emit added_color(index);
   }
 
   return index;
