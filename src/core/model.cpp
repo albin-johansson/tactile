@@ -20,11 +20,6 @@ model::model() : m_mapDocuments{new map_document_manager{this}}, m_tools{this}
   connect(m_mapDocuments, &map_document_manager::moved_layer_back,       this, &model::moved_layer_back);
   connect(m_mapDocuments, &map_document_manager::moved_layer_forward,    this, &model::moved_layer_forward);
   connect(m_mapDocuments, &map_document_manager::removed_tileset,        this, &model::removed_tileset);
-  connect(m_mapDocuments, &map_document_manager::added_property,         this, &model::added_property);
-  connect(m_mapDocuments, &map_document_manager::removed_property,       this, &model::removed_property);
-  connect(m_mapDocuments, &map_document_manager::moved_property_up,      this, &model::moved_property_up);
-  connect(m_mapDocuments, &map_document_manager::moved_property_down,    this, &model::moved_property_down);
-  connect(m_mapDocuments, &map_document_manager::duplicated_property,    this, &model::duplicated_property);
 
   connect(m_mapDocuments, &map_document_manager::added_tileset, [this](tileset_id id) {
     const auto& tileset = current_document()->tilesets()->at(id);

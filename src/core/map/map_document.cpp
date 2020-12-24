@@ -107,13 +107,11 @@ auto map_document::path() const -> const QFileInfo&
 void map_document::add_property(const QString& name, const property::type type)
 {
   m_delegate.add_property(name, type);
-  emit added_property(name, get_property(name));
 }
 
 void map_document::remove_property(const QString& name)
 {
   m_delegate.remove_property(name);
-  emit removed_property(name);
 }
 
 void map_document::rename_property(const QString& oldName,

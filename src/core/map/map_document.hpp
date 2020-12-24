@@ -464,12 +464,6 @@ class map_document final : public QObject, public document
   void moved_layer_back(layer_id);
   void moved_layer_forward(layer_id);
 
-  void added_property(const QString& name, const core::property& property);
-  void removed_property(const QString& name);
-  void moved_property_up(const QString& name);
-  void moved_property_down(const QString& name);
-  void duplicated_property(const QString& name);
-
  public slots:
   /**
    * \brief Adds a tileset to the document.
