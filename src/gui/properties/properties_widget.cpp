@@ -1,6 +1,9 @@
 #include "properties_widget.hpp"
 
+#ifdef QT_DEBUG
 #include <QDebug>
+#endif  // QT_DEBUG
+
 #include <QMouseEvent>
 
 #include "add_property_dialog.hpp"
