@@ -2,11 +2,14 @@
 
 #include <QString>
 #include <concepts>  // invocable
+#include <memory>    // shared_ptr
 #include <vector>    // vector
 
+#include "layer.hpp"
 #include "layer_delegate.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
+#include "property_delegate.hpp"
 #include "tile_id.hpp"
 
 namespace tactile::core {
@@ -22,7 +25,7 @@ namespace tactile::core {
  *
  * \headerfile tile_layer.hpp
  */
-class tile_layer final
+class tile_layer final : public layer
 {
   using tile_row = std::vector<tile_id>;
   using tile_matrix = std::vector<tile_row>;
@@ -50,6 +53,50 @@ class tile_layer final
    */
   tile_layer() : tile_layer{5_row, 5_col}
   {}
+
+  ~tile_layer() noexcept override = default;
+
+  /// \name Layer API
+  /// \{
+
+  void set_opacity(double opacity) override;
+
+  void set_name(QString name) override;
+
+  void set_visible(bool visible) noexcept override;
+
+  [[nodiscard]] auto name() const -> const QString& override;
+
+  [[nodiscard]] auto opacity() const noexcept -> double override;
+
+  [[nodiscard]] auto visible() const noexcept -> bool override;
+
+  [[nodiscard]] auto clone() const -> shared_layer override;
+
+  /// \}
+
+  /// \name Properties
+  /// \{
+
+  void add_property(const QString& name, property::type type) override;
+
+  void remove_property(const QString& name) override;
+
+  void rename_property(const QString& oldName, const QString& newName) override;
+
+  void set_property(const QString& name, const property& property) override;
+
+  [[nodiscard]] auto get_property(const QString& name) const
+      -> const property& override;
+
+  [[nodiscard]] auto get_property(const QString& name) -> property& override;
+
+  [[nodiscard]] auto property_count() const noexcept -> int override;
+
+  /// \}
+
+  /// \name Tile layer API
+  /// \{
 
   /**
    * \brief Iterates each tile in the layer.
@@ -169,34 +216,6 @@ class tile_layer final
   void set_tile(const position& pos, tile_id id) noexcept;
 
   /**
-   * \brief Sets the opacity of the layer.
-   *
-   * \param opacity the new opacity of the layer, will be clamped to [0, 1].
-   *
-   * \since 0.1.0
-   */
-  void set_opacity(double opacity);
-
-  /**
-   * \brief Sets the name of the layer.
-   *
-   * \param name the new name of the layer.
-   *
-   * \since 0.1.0
-   */
-  void set_name(QString name);
-
-  /**
-   * \brief Sets whether or not the tile layer is visible.
-   *
-   * \param visible `true` if the tile layer should be visible; `false`
-   * otherwise.
-   *
-   * \since 0.1.0
-   */
-  void set_visible(bool visible) noexcept;
-
-  /**
    * \brief Returns the number of rows in the tile layer.
    *
    * \note A tile layer always contains at least one row.
@@ -254,40 +273,14 @@ class tile_layer final
    */
   [[nodiscard]] auto in_bounds(const position& pos) const noexcept -> bool;
 
-  /**
-   * \brief Returns the name associated with the layer.
-   *
-   * \note By default, layers have no name assigned to them.
-   *
-   * \return the name of the layer.
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto name() const -> const QString&;
-
-  /**
-   * \brief Returns the opacity of the layer.
-   *
-   * \return the opacity of the layer, in the range [0, 1].
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto opacity() const noexcept -> double;
-
-  /**
-   * \brief Indicates whether or not the tile layer is visible.
-   *
-   * \note Tile layers are visible by default.
-   *
-   * \return `true` if the tile layer is visible; `false` otherwise.
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto visible() const noexcept -> bool;
+  /// \}
 
  private:
   tile_matrix m_tiles;
-  layer_delegate m_delegate;
+  layer_delegate m_layerDelegate;
+  property_delegate m_propertyDelegate;
 };
+
+using shared_tile_layer = std::shared_ptr<tile_layer>;
 
 }  // namespace tactile::core

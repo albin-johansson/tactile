@@ -262,7 +262,7 @@ void model::set_tileset_name(const tileset_id id, const QString& name)
   }
 }
 
-void model::add_property(const QString& name, core::property::type type)
+void model::add_property(const QString& name, const core::property::type type)
 {
   if (auto* document = current_document()) {
     document->add_property(name, type);

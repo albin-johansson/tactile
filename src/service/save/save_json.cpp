@@ -180,16 +180,21 @@ void create_external_tileset_file(const tileset& tileset,
 {
   QJsonArray array;
 
-  map.each_layer([&](const layer_id id, const tile_layer& layer) {
+  map.each_layer([&](const layer_id id, const shared_layer& layer) {
     QJsonObject object;
 
-    object.insert(u"name", layer.name());
-    object.insert(u"width", layer.col_count().get());
-    object.insert(u"height", layer.row_count().get());
+    object.insert(u"name", layer->name());
+
+    if (const auto* tileLayer =
+            dynamic_cast<const core::tile_layer*>(layer.get())) {
+      object.insert(u"width", tileLayer->col_count().get());
+      object.insert(u"height", tileLayer->row_count().get());
+    }
+
     object.insert(u"id", id.get());
-    object.insert(u"opacity", layer.opacity());
+    object.insert(u"opacity", layer->opacity());
     object.insert(u"type", TACTILE_QSTRING(u"tilelayer"));
-    object.insert(u"visible", layer.visible());
+    object.insert(u"visible", layer->visible());
     object.insert(u"x", 0);
     object.insert(u"y", 0);
 
@@ -201,13 +206,17 @@ void create_external_tileset_file(const tileset& tileset,
       object.insert(u"offsety", 0.0);
     }
 
-    QJsonArray data;
-    layer.for_each([&](const tile_id tile) {
-      data.append(tile.get());
-    });
-    object.insert(u"data", data);
+    // FIXME
+    if (const auto* tileLayer =
+            dynamic_cast<const core::tile_layer*>(layer.get())) {
+      QJsonArray data;
+      tileLayer->for_each([&](const tile_id tile) {
+        data.append(tile.get());
+      });
+      object.insert(u"data", data);
 
-    array.append(object);
+      array.append(object);
+    }
   });
 
   return array;

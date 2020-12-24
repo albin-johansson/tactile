@@ -92,39 +92,51 @@ void save_layers(QDomDocument& document,
                  QDomElement& root,
                  const map_document& map)
 {
-  map.each_layer([&](const layer_id id, const tile_layer& layer) {
+  map.each_layer([&](const layer_id id, const shared_layer& layer) {
     auto node = document.createElement(TACTILE_QSTRING(u"layer"));
 
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());
-    node.setAttribute(TACTILE_QSTRING(u"name"), layer.name());
-    node.setAttribute(TACTILE_QSTRING(u"width"), layer.col_count().get());
-    node.setAttribute(TACTILE_QSTRING(u"height"), layer.row_count().get());
+    node.setAttribute(TACTILE_QSTRING(u"name"), layer->name());
 
-    if (layer.opacity() != 1.0) {
-      node.setAttribute(TACTILE_QSTRING(u"opacity"), layer.opacity());
+    if (const auto* tileLayer =
+            dynamic_cast<const core::tile_layer*>(layer.get())) {
+      node.setAttribute(TACTILE_QSTRING(u"width"),
+                        tileLayer->col_count().get());
+      node.setAttribute(TACTILE_QSTRING(u"height"),
+                        tileLayer->row_count().get());
     }
 
-    if (!layer.visible()) {
+    if (layer->opacity() != 1.0) {
+      node.setAttribute(TACTILE_QSTRING(u"opacity"), layer->opacity());
+    }
+
+    if (!layer->visible()) {
       node.setAttribute(TACTILE_QSTRING(u"visible"), 0);
     }
 
     auto data = document.createElement(TACTILE_QSTRING(u"data"));
     data.setAttribute(TACTILE_QSTRING(u"encoding"), TACTILE_QSTRING(u"csv"));
 
-    QString buffer;
-    buffer.reserve(map.tile_count() * 2);  // include the separating comma
+    // FIXME
+    if (const auto* tileLayer =
+            dynamic_cast<const core::tile_layer*>(layer.get())) {
+      QString buffer;
 
-    bool first{true};
-    layer.for_each([&](const tile_id tile) {
-      if (first) {
-        first = false;
-      } else {
-        buffer += TACTILE_QSTRING(u",");
-      }
-      buffer += QString::number(tile.get());
-    });
+      // include the separating comma
+      buffer.reserve(tileLayer->tile_count() * 2);
 
-    data.appendChild(document.createTextNode(buffer));
+      bool first{true};
+      tileLayer->for_each([&](const tile_id tile) {
+        if (first) {
+          first = false;
+        } else {
+          buffer += TACTILE_QSTRING(u",");
+        }
+        buffer += QString::number(tile.get());
+      });
+      data.appendChild(document.createTextNode(buffer));
+    }
+
     node.appendChild(data);
     root.appendChild(node);
   });

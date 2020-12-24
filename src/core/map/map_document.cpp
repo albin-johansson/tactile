@@ -134,14 +134,13 @@ void map_document::add_tileset(const QImage& image,
   }
 }
 
-void map_document::add_tileset(const tileset_id id,
-                               std::shared_ptr<tileset> tileset)
+void map_document::add_tileset(const tileset_id id, shared_tileset tileset)
 {
   m_tilesets->add(id, std::move(tileset));
   emit added_tileset(id);
 }
 
-void map_document::add_tileset(std::shared_ptr<tileset> tileset)
+void map_document::add_tileset(shared_tileset tileset)
 {
   const auto id = m_tilesets->add(std::move(tileset));
   emit added_tileset(id);
@@ -182,11 +181,10 @@ void map_document::set_tileset_selection(const tileset::selection& selection)
 void map_document::select_layer(const layer_id id)
 {
   m_map->select_layer(id);
-  emit selected_layer(id, m_map->get_layer(id));
+  emit selected_layer(id, *m_map->get_layer(id));
 }
 
-void map_document::add_layer(const layer_id id,
-                             const std::shared_ptr<tile_layer>& layer)
+void map_document::add_layer(const layer_id id, const shared_layer& layer)
 {
   Q_ASSERT(layer);
   m_map->add_layer(id, layer);
@@ -195,8 +193,9 @@ void map_document::add_layer(const layer_id id,
 
 void map_document::add_layer()
 {
-  const auto id = m_map->next_layer_id();  // must be before make_layer call
-  m_commands->push<cmd::add_layer>(this, m_map->make_layer(), id);
+  const auto id =
+      m_map->next_layer_id();  // must be before make_tile_layer call
+  m_commands->push<cmd::add_layer>(this, m_map->make_tile_layer(), id);
 }
 
 void map_document::remove_layer(const layer_id id)
@@ -204,7 +203,7 @@ void map_document::remove_layer(const layer_id id)
   m_commands->push<cmd::remove_layer>(this, id);
 }
 
-auto map_document::take_layer(const layer_id id) -> std::shared_ptr<tile_layer>
+auto map_document::take_layer(const layer_id id) -> shared_layer
 {
   return m_map->take_layer(id);
 }
@@ -317,11 +316,6 @@ void map_document::set_next_layer_id(const layer_id id) noexcept
   m_map->set_next_layer_id(id);
 }
 
-void map_document::set_tile(const position& pos, const tile_id id)
-{
-  m_map->set_tile(pos, id);
-}
-
 auto map_document::is_clean() const -> bool
 {
   return m_commands->isClean() && m_path.exists();
@@ -357,19 +351,19 @@ auto map_document::in_bounds(const position& pos) const -> bool
   return m_map->in_bounds(pos);
 }
 
-auto map_document::tile_at(const position& position) const -> maybe<tile_id>
+auto map_document::get_layer(const layer_id id) const -> const layer&
 {
-  return m_map->tile_at(position);
+  return *m_map->get_layer(id);
 }
 
-auto map_document::get_layer(const layer_id id) const -> const tile_layer&
+auto map_document::get_tile_layer(const layer_id id) -> tile_layer*
 {
-  return m_map->get_layer(id);
+  return m_map->get_tile_layer(id);
 }
 
-auto map_document::tile_count() const -> int
+auto map_document::get_tile_layer(const layer_id id) const -> const tile_layer*
 {
-  return m_map->tile_count();
+  return m_map->get_tile_layer(id);
 }
 
 auto map_document::layer_count() const noexcept -> int

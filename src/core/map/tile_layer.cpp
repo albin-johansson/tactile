@@ -138,17 +138,23 @@ void tile_layer::set_tile(const position& pos, const tile_id id) noexcept
 
 void tile_layer::set_opacity(const double opacity)
 {
-  m_delegate.set_opacity(opacity);
+  m_layerDelegate.set_opacity(opacity);
 }
 
 void tile_layer::set_name(QString name)
 {
-  m_delegate.set_name(std::move(name));
+  m_layerDelegate.set_name(std::move(name));
 }
 
 void tile_layer::set_visible(const bool visible) noexcept
 {
-  m_delegate.set_visible(visible);
+  m_layerDelegate.set_visible(visible);
+}
+
+auto tile_layer::clone() const -> shared_layer
+{
+  auto copy = *this;
+  return std::make_shared<tile_layer>(std::move(copy));
 }
 
 auto tile_layer::row_count() const noexcept -> row_t
@@ -184,17 +190,52 @@ auto tile_layer::in_bounds(const position& pos) const noexcept -> bool
 
 auto tile_layer::name() const -> const QString&
 {
-  return m_delegate.name();
+  return m_layerDelegate.name();
 }
 
 auto tile_layer::opacity() const noexcept -> double
 {
-  return m_delegate.opacity();
+  return m_layerDelegate.opacity();
 }
 
 auto tile_layer::visible() const noexcept -> bool
 {
-  return m_delegate.visible();
+  return m_layerDelegate.visible();
+}
+
+void tile_layer::add_property(const QString& name, const property::type type)
+{
+  m_propertyDelegate.add_property(name, type);
+}
+
+void tile_layer::remove_property(const QString& name)
+{
+  m_propertyDelegate.remove_property(name);
+}
+
+void tile_layer::rename_property(const QString& oldName, const QString& newName)
+{
+  m_propertyDelegate.rename_property(oldName, newName);
+}
+
+void tile_layer::set_property(const QString& name, const property& property)
+{
+  m_propertyDelegate.set_property(name, property);
+}
+
+auto tile_layer::get_property(const QString& name) const -> const property&
+{
+  return m_propertyDelegate.get_property(name);
+}
+
+auto tile_layer::get_property(const QString& name) -> property&
+{
+  return m_propertyDelegate.get_property(name);
+}
+
+auto tile_layer::property_count() const noexcept -> int
+{
+  return m_propertyDelegate.property_count();
 }
 
 }  // namespace tactile::core

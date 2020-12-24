@@ -3,10 +3,10 @@
 #include <QListWidgetItem>
 #include <QWidget>
 
+#include "layer.hpp"
 #include "map_document.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
-#include "tile_layer.hpp"
 #include "vector_map.hpp"
 
 namespace Ui {
@@ -39,13 +39,13 @@ class layer_widget final : public QWidget
   void ui_duplicate_layer(layer_id id);
 
  public slots:
-  void added_layer(layer_id id, const core::tile_layer& layer);
+  void added_layer(layer_id id, const core::layer& layer);
 
-  void added_duplicated_layer(layer_id id, const core::tile_layer& layer);
+  void added_duplicated_layer(layer_id id, const core::layer& layer);
 
   void removed_layer(layer_id id);
 
-  void selected_layer(layer_id id, const core::tile_layer& layer);
+  void selected_layer(layer_id id, const core::layer& layer);
 
   void selected_map(map_id mapId, const core::map_document& document);
 
@@ -62,7 +62,7 @@ class layer_widget final : public QWidget
 
   void trigger_layer_item_context_menu(const QPoint& pos);
 
-  void add_layer(layer_id id, const core::tile_layer& layer);
+  void add_layer(layer_id id, const core::layer& layer);
 
   [[nodiscard]] auto item_for_layer_id(layer_id id) -> layer_item*;
 

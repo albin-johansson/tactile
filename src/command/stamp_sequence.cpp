@@ -27,8 +27,12 @@ void stamp_sequence::undo()
   const auto layer = m_map->active_layer_id().value();
 
   m_map->select_layer(m_layer);
+
+  auto* tileLayer = m_map->get_tile_layer(m_layer);
+  Q_ASSERT(tileLayer);
+
   for (const auto& [position, tile] : m_oldState) {
-    m_map->set_tile(position, tile);
+    tileLayer->set_tile(position, tile);
   }
 
   m_map->select_layer(layer);
@@ -48,9 +52,14 @@ void stamp_sequence::redo()
 
   const auto layer = m_map->active_layer_id().value();
   m_map->select_layer(m_layer);
+
+  auto* tileLayer = m_map->get_tile_layer(m_layer);
+  Q_ASSERT(tileLayer);
+
   for (const auto& [position, tile] : m_sequence) {
-    m_map->set_tile(position, tile);
+    tileLayer->set_tile(position, tile);
   }
+
   m_map->select_layer(layer);
 }
 

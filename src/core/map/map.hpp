@@ -5,8 +5,12 @@
 #include <memory>    // shared_ptr
 #include <utility>   // pair
 
+#include "layer.hpp"
 #include "layer_id.hpp"
 #include "maybe.hpp"
+#include "object_layer.hpp"
+#include "position.hpp"
+#include "tile_id.hpp"
 #include "tile_layer.hpp"
 #include "tile_size.hpp"
 #include "vector_map.hpp"
@@ -28,9 +32,10 @@ namespace tactile::core {
  */
 class map final
 {
+  using layer_pair = std::pair<layer_id, std::shared_ptr<layer>>;
+  using layer_map = vector_map<layer_id, std::shared_ptr<layer>>;
+
  public:
-  using layer_pair = std::pair<layer_id, std::shared_ptr<tile_layer>>;
-  using layer_map = vector_map<layer_id, std::shared_ptr<tile_layer>>;
   using const_iterator = layer_map::const_iterator;
 
   /**
@@ -41,7 +46,7 @@ class map final
   map() = default;
 
   /**
-   * \brief Creates a map with one layer.
+   * \brief Creates a map with one tile layer.
    *
    * \param nRows the initial number of rows in the map.
    * \param nCols the initial number of columns in the map.
@@ -61,38 +66,13 @@ class map final
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const tile_layer&> T>
+  template <std::invocable<layer_id, const shared_layer&> T>
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : m_layers) {
-      callable(key, *layer);
+      callable(key, layer);
     }
   }
-
-  /**
-   * \brief Runs a flood fill in the currently active layer.
-   *
-   * \param origin the starting position of the flood fill.
-   * \param replacement the tile type that will be used as the replacement.
-   * \param[out] positions the vector that the affected positions will be added
-   * to.
-   *
-   * \since 0.1.0
-   */
-  void flood(const position& origin,
-             tile_id replacement,
-             std::vector<position>& positions);
-
-  /**
-   * \brief Sets the value of the tile at the specified position in the
-   * currently active layer.
-   *
-   * \param pos the position of the tile that will be modified.
-   * \param id the new value of the tile.
-   *
-   * \since 0.1.0
-   */
-  void set_tile(const position& pos, tile_id id);
 
   /**
    * \brief Removes all occurrences of the specified ID in all layers.
@@ -104,13 +84,22 @@ class map final
   void remove_occurrences(tile_id id);
 
   /**
-   * \brief Adds an empty layer to the map.
+   * \brief Adds an empty tile layer to the map.
    *
    * \note The added layer will *not* be made the active layer.
    *
    * \since 0.1.0
    */
-  auto add_layer() -> layer_id;
+  auto add_tile_layer() -> layer_id;
+
+  /**
+   * \brief Adds an empty object layer to the map.
+   *
+   * \note The added layer will *not* be made the active layer.
+   *
+   * \since 0.2.0
+   */
+  auto add_object_layer() -> layer_id;
 
   /**
    * \brief Adds a layer to the map.
@@ -122,7 +111,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void add_layer(layer_id id, std::shared_ptr<tile_layer> layer);
+  void add_layer(layer_id id, shared_layer layer);
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -160,7 +149,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto take_layer(layer_id id) -> std::shared_ptr<tile_layer>;
+  [[nodiscard]] auto take_layer(layer_id id) -> shared_layer;
 
   /**
    * \brief Selects the tile layer associated with the specified ID.
@@ -239,8 +228,8 @@ class map final
    * \pre There mustn't be a layer associated with `id`.
    *
    * \details This property is automatically incremented when calling
-   * `add_layer()`. This function is meant to be used when parsing maps from
-   * save files.
+   * `add_tile_layer()`. This function is meant to be used when parsing maps
+   * from save files.
    *
    * \param id the ID that will be used by the next layer.
    *
@@ -336,7 +325,8 @@ class map final
   void move_layer_forward(layer_id id);
 
   /**
-   * \brief Creates and returns an empty layer but doesn't add it to the map.
+   * \brief Creates and returns an empty tile layer but doesn't add it to the
+   * map.
    *
    * \note This function *does* increment the next layer ID property.
    *
@@ -344,19 +334,19 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto make_layer() -> std::shared_ptr<tile_layer>;
+  [[nodiscard]] auto make_tile_layer() -> shared_tile_layer;
 
   /**
-   * \brief Returns the ID of the tile at the specified position.
+   * \brief Creates and returns an empty object layer but doesn't add it to the
+   * map.
    *
-   * \param position the position of the tile to query.
+   * \note This function *does* increment the next layer ID property.
    *
-   * \return the ID of the tile at the specified position; `std::nullopt` if the
-   * position is out-of-bounds.
+   * \return the created layer.
    *
-   * \since 0.1.0
+   * \since 0.2.0
    */
-  [[nodiscard]] auto tile_at(const position& position) const -> maybe<tile_id>;
+  [[nodiscard]] auto make_object_layer() -> shared_object_layer;
 
   /**
    * \brief Returns the index associated with the specified layer.
@@ -440,15 +430,6 @@ class map final
   [[nodiscard]] auto col_count() const -> col_t;
 
   /**
-   * \brief Returns the amount of tiles in the map.
-   *
-   * \return the number of tiles in the map.
-   *
-   * \since 0.1.0
-   */
-  [[nodiscard]] auto tile_count() const -> int;
-
-  /**
    * \brief Returns the pixel width of the map.
    *
    * \return the pixel width of the map.
@@ -465,6 +446,10 @@ class map final
    * \since 0.1.0
    */
   [[nodiscard]] auto height() const -> int;
+
+  [[nodiscard]] auto current_layer() -> layer&;
+
+  [[nodiscard]] auto current_layer() const -> const layer&;
 
   /**
    * \brief Returns the ID of the currently active layer.
@@ -514,9 +499,25 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const tile_layer&
+  [[nodiscard]] auto get_layer(const layer_id id) const -> const shared_layer&
   {
-    return *m_layers.at(id);
+    return m_layers.at(id);
+  }
+
+  [[nodiscard]] auto get_layer(const layer_id id) -> shared_layer&
+  {
+    return m_layers.at(id);
+  }
+
+  [[nodiscard]] auto get_tile_layer(const layer_id id) -> tile_layer*
+  {
+    return dynamic_cast<tile_layer*>(get_layer(id).get());
+  }
+
+  [[nodiscard]] auto get_tile_layer(const layer_id id) const
+      -> const tile_layer*
+  {
+    return dynamic_cast<const tile_layer*>(get_layer(id).get());
   }
 
   /**
@@ -546,16 +547,14 @@ class map final
  private:
   layer_map m_layers;
   maybe<layer_id> m_activeLayer;
-  layer_id m_nextLayer{1};
   tile_size m_tileSize;
+  row_t m_rows;
+  col_t m_cols;
+  layer_id m_nextLayer{1};
 
-  [[nodiscard]] auto current_layer() -> tile_layer&;
+  [[nodiscard]] auto find_layer(layer_id id) -> layer*;
 
-  [[nodiscard]] auto current_layer() const -> const tile_layer&;
-
-  [[nodiscard]] auto find_layer(layer_id id) -> tile_layer*;
-
-  [[nodiscard]] auto find_layer(layer_id id) const -> const tile_layer*;
+  [[nodiscard]] auto find_layer(layer_id id) const -> const layer*;
 };
 
 }  // namespace tactile::core

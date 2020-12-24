@@ -70,4 +70,10 @@ auto object_layer::name() const -> const QString&
   return m_layerDelegate.name();
 }
 
+auto object_layer::clone() const -> shared_layer
+{
+  auto copy = *this;
+  return std::make_shared<object_layer>(std::move(copy));
+}
+
 }  // namespace tactile::core

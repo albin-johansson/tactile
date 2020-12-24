@@ -157,9 +157,9 @@ class map_manager final : public QObject
   void added_tileset(tileset_id id);
   void removed_tileset(tileset_id id);
 
-  void added_layer(layer_id id, const tile_layer& layer);
-  void added_duplicated_layer(layer_id id, const tile_layer& layer);
-  void selected_layer(layer_id id, const tile_layer& layer);
+  void added_layer(layer_id id, const layer& layer);
+  void added_duplicated_layer(layer_id id, const layer& layer);
+  void selected_layer(layer_id id, const layer& layer);
   void removed_layer(layer_id id);
   void moved_layer_back(layer_id id);
   void moved_layer_forward(layer_id id);

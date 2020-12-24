@@ -19,8 +19,12 @@ void map_command::restore_tiles()
 
   for (const auto& [layer, data] : m_layerData) {
     m_map->select_layer(layer);
+
+    auto* tileLayer = m_map->get_tile_layer(layer);
+    Q_ASSERT(tileLayer);
+
     for (const auto& [pos, tile] : data) {
-      m_map->set_tile(pos, tile);
+      tileLayer->set_tile(pos, tile);
     }
   }
 
@@ -29,12 +33,16 @@ void map_command::restore_tiles()
 
 void map_command::save_tiles(row_range rows, col_range cols)
 {
-  m_map->each_layer([&](layer_id id, const core::tile_layer& layer) {
+  m_map->each_layer([&](const layer_id id, const core::shared_layer& layer) {
     auto& tiles = tile_data(id);
+
+    auto* tileLayer = m_map->get_tile_layer(id);
+    Q_ASSERT(tileLayer);
+
     for (auto row = rows.first; row < rows.second; ++row) {
       for (auto col = cols.first; col < cols.second; ++col) {
         const core::position pos{row, col};
-        if (const auto tile = layer.tile_at(pos); tile) {
+        if (const auto tile = tileLayer->tile_at(pos); tile) {
           tiles.emplace(pos, *tile);
         }
       }

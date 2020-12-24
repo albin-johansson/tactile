@@ -71,9 +71,10 @@ void status_bar::switched_map(const core::map_document& document)
   signal_blocker blocker{m_layerBox};  // avoids switch layer requests
 
   m_layerBox->clear();
-  document.each_layer([this](const layer_id id, const core::tile_layer& layer) {
-    m_layerBox->addItem(layer.name(), id.get());
-  });
+  document.each_layer(
+      [this](const layer_id id, const core::shared_layer& layer) {
+        m_layerBox->addItem(layer->name(), id.get());
+      });
   set_layer_combo_box_visible(true);
 
   const auto currentId = document.current_layer_id().value();

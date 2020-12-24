@@ -26,8 +26,12 @@ void bucket_fill::undo()
   const auto layer = m_map->active_layer_id().value();
 
   m_map->select_layer(m_layer);
+
+  auto* tileLayer = m_map->get_tile_layer(m_layer);
+  Q_ASSERT(tileLayer);
+
   for (const auto& position : m_positions) {
-    m_map->set_tile(position, m_target);
+    tileLayer->set_tile(position, m_target);
   }
 
   m_map->select_layer(layer);
@@ -40,8 +44,12 @@ void bucket_fill::redo()
   m_positions.clear();
 
   m_layer = m_map->active_layer_id().value();
-  m_target = m_map->tile_at(m_origin).value();
-  m_map->flood(m_origin, m_replacement, m_positions);
+
+  auto* tileLayer = m_map->get_tile_layer(m_layer);
+  Q_ASSERT(tileLayer);
+
+  m_target = tileLayer->tile_at(m_origin).value();
+  tileLayer->flood(m_origin, m_replacement, m_positions);
 }
 
 }  // namespace tactile::cmd

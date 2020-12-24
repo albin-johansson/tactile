@@ -115,21 +115,21 @@ void map_item::draw_background(QPainter& painter,
   });
 }
 
-void map_item::draw_layer(QPainter& painter,
-                          const tile_layer& layer,
-                          const render_settings& settings)
+void map_item::draw_tile_layer(QPainter& painter,
+                               const tile_layer& layer,
+                               const render_settings& bounds)
 {
   painter.setOpacity(layer.opacity());
-  each_tile(painter, settings.bounds, [&, this](const position position) {
-    const auto x = position.col_to_x(settings.tileSize);
-    const auto y = position.row_to_y(settings.tileSize);
+  each_tile(painter, bounds.bounds, [&, this](const position position) {
+    const auto x = position.col_to_x(bounds.tileSize);
+    const auto y = position.row_to_y(bounds.tileSize);
 
     if (const auto tile = layer.tile_at(position); tile && tile != empty) {
-      draw_tile(painter, *tile, x, y, settings.tileSize);
+      draw_tile(painter, *tile, x, y, bounds.tileSize);
     }
 
-    if (settings.drawGrid) {
-      painter.drawRect(x, y, settings.tileSize, settings.tileSize);
+    if (bounds.drawGrid) {
+      painter.drawRect(x, y, bounds.tileSize, bounds.tileSize);
     }
   });
   painter.setOpacity(1);
@@ -216,9 +216,14 @@ void map_item::paint(QPainter* painter,
 
   const auto activeLayer = m_map->current_layer_id();
 
-  m_map->each_layer([&](const layer_id id, const tile_layer& layer) {
-    if (layer.visible()) {
-      draw_layer(*painter, layer, settings);
+  m_map->each_layer([&](const layer_id id, const shared_layer& layer) {
+    if (layer->visible()) {
+      if (const auto* tileLayer =
+              dynamic_cast<const core::tile_layer*>(layer.get())) {
+        draw_tile_layer(*painter, *tileLayer, settings);
+      } else {
+        // TODO render object layer
+      }
     }
 
     if (m_mousePosition && activeLayer == id) {

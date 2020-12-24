@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QString>
+#include <memory>  // shared_ptr
 
 #include "property_manager.hpp"
 
@@ -54,6 +55,8 @@ class layer : public property_manager
   /**
    * \brief Indicates whether or not the layer is visible.
    *
+   * \note Layers are visible by default.
+   *
    * \return `true` if the layer is visible; `false` otherwise.
    *
    * \since 0.2.0
@@ -79,6 +82,10 @@ class layer : public property_manager
    * \since 0.2.0
    */
   [[nodiscard]] virtual auto name() const -> const QString& = 0;
+
+  [[nodiscard]] virtual auto clone() const -> std::shared_ptr<layer> = 0;
 };
+
+using shared_layer = std::shared_ptr<layer>;
 
 }  // namespace tactile::core

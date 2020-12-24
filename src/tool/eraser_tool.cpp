@@ -13,14 +13,18 @@ eraser_tool::eraser_tool(core::model* model) : abstract_tool{model}
 void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (auto* document = get_model()->current_document()) {
+    const auto id = document->current_layer_id().value();
+    auto* tileLayer = document->get_tile_layer(id);
+    Q_ASSERT(tileLayer);
+
     if (event->buttons() & Qt::MouseButton::LeftButton) {
       const auto pos = translate_mouse_position(event->pos(), mapPosition);
       if (pos) {
         if (!m_oldState.contains(*pos)) {
-          m_oldState.emplace(*pos, document->tile_at(*pos).value());
+          m_oldState.emplace(*pos, tileLayer->tile_at(*pos).value());
         }
 
-        document->set_tile(*pos, empty);
+        tileLayer->set_tile(*pos, empty);
         emit get_model()->redraw();
       }
     }

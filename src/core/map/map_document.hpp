@@ -178,13 +178,13 @@ class map_document final : public QObject, public property_manager
    * \copydoc tileset_manager::add(tileset_id, std::shared_ptr<tileset>)
    * \signal `added_tileset`
    */
-  void add_tileset(tileset_id id, std::shared_ptr<tileset> tileset);
+  void add_tileset(tileset_id id, shared_tileset tileset);
 
   /**
    * \copybrief tileset_manager::add(std::shared_ptr<tileset>)
    * \signal `added_tileset`
    */
-  void add_tileset(std::shared_ptr<tileset> tileset);
+  void add_tileset(shared_tileset tileset);
 
   /**
    * \brief Removes a tileset from the document.
@@ -214,13 +214,13 @@ class map_document final : public QObject, public property_manager
   void select_layer(layer_id id);
 
   /**
-   * \copydoc map::add_layer(layer_id id, std::shared_ptr<tile_layer> layer)
+   * \copydoc map::add_tile_layer(layer_id id, std::shared_ptr<layer> layer)
    * \signal `added_layer`
    */
-  void add_layer(layer_id id, const std::shared_ptr<tile_layer>& layer);
+  void add_layer(layer_id id, const shared_layer& layer);
 
   /**
-   * \copybrief map::add_layer()
+   * \copybrief map::add_tile_layer()
    * \signal `added_layer`
    */
   void add_layer();
@@ -241,7 +241,7 @@ class map_document final : public QObject, public property_manager
   /**
    * \copydoc map::take_layer()
    */
-  auto take_layer(layer_id id) -> std::shared_ptr<tile_layer>;
+  auto take_layer(layer_id id) -> shared_layer;
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -353,11 +353,6 @@ class map_document final : public QObject, public property_manager
   void set_next_layer_id(layer_id id) noexcept;
 
   /**
-   * \copydoc map::set_tile()
-   */
-  void set_tile(const position& pos, tile_id id);
-
-  /**
    * \brief Iterates each tileset associated with the document.
    *
    * \tparam T the type of the function object.
@@ -384,11 +379,11 @@ class map_document final : public QObject, public property_manager
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const tile_layer&> T>
+  template <std::invocable<layer_id, const shared_layer&> T>
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : *m_map) {
-      callable(key, *layer);
+      callable(key, layer);
     }
   }
 
@@ -449,19 +444,13 @@ class map_document final : public QObject, public property_manager
   [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
 
   /**
-   * \copydoc map::tile_at()
-   */
-  [[nodiscard]] auto tile_at(const position& position) const -> maybe<tile_id>;
-
-  /**
    * \copydoc map::get_layer()
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const tile_layer&;
+  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&;
 
-  /**
-   * \copydoc map::tile_count()
-   */
-  [[nodiscard]] auto tile_count() const -> int;
+  [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
+
+  [[nodiscard]] auto get_tile_layer(layer_id id) const -> const tile_layer*;
 
   /**
    * \copydoc map::layer_count()
@@ -534,9 +523,9 @@ class map_document final : public QObject, public property_manager
   void added_tileset(tileset_id);
   void removed_tileset(tileset_id);
 
-  void added_layer(layer_id, const tile_layer&);
-  void added_duplicated_layer(layer_id, const tile_layer&);
-  void selected_layer(layer_id, const tile_layer&);
+  void added_layer(layer_id, const layer&);
+  void added_duplicated_layer(layer_id, const layer&);
+  void selected_layer(layer_id, const layer&);
   void removed_layer(layer_id);
   void moved_layer_back(layer_id);
   void moved_layer_forward(layer_id);
@@ -572,12 +561,12 @@ class map_document final : public QObject, public property_manager
   void ui_remove_tileset(tileset_id id);
 
  private:
-  std::unique_ptr<map> m_map;
-  std::unique_ptr<tileset_manager> m_tilesets;
-  command_stack* m_commands{};
-  property_delegate m_propertyDelegate;
+  std::unique_ptr<map> m_map;                   ///< The associated map.
+  std::unique_ptr<tileset_manager> m_tilesets;  ///< The associated tilesets.
+  command_stack* m_commands{};           ///< The associated command history.
+  property_delegate m_propertyDelegate;  // TODO this is for the map really
   viewmodel::property_model* m_propertyModel{};
-  QFileInfo m_path;
+  QFileInfo m_path;  ///< The absolute file path associated with the document.
 
   void setup();
 };

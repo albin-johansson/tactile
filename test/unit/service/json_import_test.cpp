@@ -24,31 +24,32 @@ TEST_CASE("Import JSON with embedded tilesets", "[import_json]")
 
     SECTION("First layer")
     {
-      auto& layer = document->get_layer(1_layer);
-      REQUIRE(layer.row_count() == 5_row);
-      REQUIRE(layer.col_count() == 7_col);
-      CHECK(layer.visible());
-      CHECK(layer.opacity() == 1.0);
+      auto* layer = document->get_tile_layer(1_layer);
+      REQUIRE(layer);
+      REQUIRE(layer->row_count() == 5_row);
+      REQUIRE(layer->col_count() == 7_col);
+      CHECK(layer->visible());
+      CHECK(layer->opacity() == 1.0);
 
-      CHECK(layer.tile_at({0_row, 0_col}).value() == 360_t);
-      CHECK(layer.tile_at({3_row, 0_col}).value() == 360_t);
-      CHECK(layer.tile_at({0_row, 6_col}).value() == 354_t);
-      CHECK(layer.tile_at({3_row, 6_col}).value() == 354_t);
+      CHECK(layer->tile_at({0_row, 0_col}).value() == 360_t);
+      CHECK(layer->tile_at({3_row, 0_col}).value() == 360_t);
+      CHECK(layer->tile_at({0_row, 6_col}).value() == 354_t);
+      CHECK(layer->tile_at({3_row, 6_col}).value() == 354_t);
     }
 
     SECTION("Second layer")
     {
-      auto& layer = document->get_layer(2_layer);
-      REQUIRE(layer.row_count() == 5_row);
-      REQUIRE(layer.col_count() == 7_col);
-      CHECK(layer.visible());
-      CHECK(layer.opacity() == 0.8);
+      auto* layer = document->get_tile_layer(2_layer);
+      REQUIRE(layer->row_count() == 5_row);
+      REQUIRE(layer->col_count() == 7_col);
+      CHECK(layer->visible());
+      CHECK(layer->opacity() == 0.8);
 
-      CHECK(layer.tile_at({0_row, 0_col}).value() == empty);
-      CHECK(layer.tile_at({3_row, 0_col}).value() == empty);
-      CHECK(layer.tile_at({0_row, 6_col}).value() == 297_t);
-      CHECK(layer.tile_at({3_row, 4_col}).value() == 328_t);
-      CHECK(layer.tile_at({3_row, 6_col}).value() == empty);
+      CHECK(layer->tile_at({0_row, 0_col}).value() == empty);
+      CHECK(layer->tile_at({3_row, 0_col}).value() == empty);
+      CHECK(layer->tile_at({0_row, 6_col}).value() == 297_t);
+      CHECK(layer->tile_at({3_row, 4_col}).value() == 328_t);
+      CHECK(layer->tile_at({3_row, 6_col}).value() == empty);
     }
   }
 
@@ -96,31 +97,31 @@ TEST_CASE("Import JSON with external tilesets", "[import_json]")
 
     SECTION("First layer")
     {
-      auto& layer = document->get_layer(1_layer);
-      REQUIRE(layer.row_count() == 6_row);
-      REQUIRE(layer.col_count() == 8_col);
-      CHECK(layer.visible());
-      CHECK(layer.opacity() == 0.2);
+      auto* layer = document->get_tile_layer(1_layer);
+      REQUIRE(layer->row_count() == 6_row);
+      REQUIRE(layer->col_count() == 8_col);
+      CHECK(layer->visible());
+      CHECK(layer->opacity() == 0.2);
 
-      CHECK(layer.tile_at({0_row, 0_col}).value() == 107_t);
-      CHECK(layer.tile_at({5_row, 0_col}).value() == 107_t);
-      CHECK(layer.tile_at({0_row, 7_col}).value() == 372_t);
-      CHECK(layer.tile_at({5_row, 7_col}).value() == 372_t);
+      CHECK(layer->tile_at({0_row, 0_col}).value() == 107_t);
+      CHECK(layer->tile_at({5_row, 0_col}).value() == 107_t);
+      CHECK(layer->tile_at({0_row, 7_col}).value() == 372_t);
+      CHECK(layer->tile_at({5_row, 7_col}).value() == 372_t);
     }
 
     SECTION("Second layer")
     {
-      auto& layer = document->get_layer(2_layer);
-      REQUIRE(layer.row_count() == 6_row);
-      REQUIRE(layer.col_count() == 8_col);
-      CHECK(layer.visible());
-      CHECK(layer.opacity() == 1.0);
+      auto* layer = document->get_tile_layer(2_layer);
+      REQUIRE(layer->row_count() == 6_row);
+      REQUIRE(layer->col_count() == 8_col);
+      CHECK(layer->visible());
+      CHECK(layer->opacity() == 1.0);
 
-      CHECK(layer.tile_at({0_row, 0_col}).value() == 1293_t);
-      CHECK(layer.tile_at({0_row, 7_col}).value() == empty);
-      CHECK(layer.tile_at({5_row, 0_col}).value() == empty);
-      CHECK(layer.tile_at({2_row, 2_col}).value() == 1359_t);
-      CHECK(layer.tile_at({5_row, 7_col}).value() == empty);
+      CHECK(layer->tile_at({0_row, 0_col}).value() == 1293_t);
+      CHECK(layer->tile_at({0_row, 7_col}).value() == empty);
+      CHECK(layer->tile_at({5_row, 0_col}).value() == empty);
+      CHECK(layer->tile_at({2_row, 2_col}).value() == 1359_t);
+      CHECK(layer->tile_at({5_row, 7_col}).value() == empty);
     }
   }
 

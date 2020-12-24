@@ -6,6 +6,7 @@
 #include <QRect>
 #include <QString>
 #include <concepts>       // invocable
+#include <memory>         // shared_ptr
 #include <unordered_map>  // unordered_map
 
 #include "maybe.hpp"
@@ -428,6 +429,8 @@ class tileset final
   QFileInfo m_path{};
   QString m_name{TACTILE_QSTRING(u"Untitled")};
 };
+
+using shared_tileset = std::shared_ptr<tileset>;
 
 static_assert(std::is_final_v<tileset>);
 
