@@ -192,6 +192,8 @@ set(TACTILE_SOURCE_FILES
         gui/properties/property_name_validator.cpp
         gui/properties/property_name_validator.hpp
 
+        gui/status/status_bar.cpp
+        gui/status/status_bar.hpp
         command/command_id.hpp
         command/command_stack.hpp
         command/add_row.cpp
@@ -326,6 +328,7 @@ target_include_directories(libTactile
         PUBLIC gui/util
         PUBLIC gui/tools
         PUBLIC gui/settings
+        PUBLIC gui/status
         PUBLIC gui/properties
         PUBLIC gui/properties/item
         PUBLIC gui/properties/view

@@ -8,6 +8,7 @@
 #include "init_ui.hpp"
 #include "layer_item.hpp"
 #include "layer_item_context_menu.hpp"
+#include "signal_blocker.hpp"
 #include "tactile_qstring.hpp"
 #include "ui_layer_widget.h"
 
@@ -135,6 +136,9 @@ void layer_widget::selected_layer(const layer_id id,
   m_ui->visibleButton->setIcon(layer.visible() ? icons::visible()
                                                : icons::invisible());
   m_ui->opacitySlider->setValue(static_cast<int>(layer.opacity() * 100.0));
+
+  signal_blocker blocker{m_ui->layerList};
+  m_ui->layerList->setCurrentItem(item_for_layer_id(id));
 }
 
 void layer_widget::selected_map(const map_id mapId,

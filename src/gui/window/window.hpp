@@ -23,6 +23,7 @@ class tool_dock;
 class layer_dock;
 class tileset_dock;
 class properties_dock;
+class status_bar;
 
 /**
  * \class window
@@ -187,6 +188,7 @@ class window final : public QMainWindow
   layer_dock* m_layerDock{};
   tileset_dock* m_tilesetDock{};
   properties_dock* m_propertiesDock{};
+  status_bar* m_statusBar{};
   QActionGroup* m_toolGroup{};
 
   void init_mouse_tool_group();

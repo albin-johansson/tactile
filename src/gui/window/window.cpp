@@ -11,6 +11,7 @@
 #include "save_service.hpp"
 #include "setting.hpp"
 #include "settings_dialog.hpp"
+#include "status_bar.hpp"
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"
 #include "ui_window.h"
@@ -25,6 +26,7 @@ window::window(QWidget* parent)
     , m_layerDock{new layer_dock{this}}
     , m_tilesetDock{new tileset_dock{this}}
     , m_propertiesDock{new properties_dock{this}}
+    , m_statusBar{new status_bar{this}}
 {
   setContentsMargins(0, 0, 0, 0);
 
@@ -32,6 +34,7 @@ window::window(QWidget* parent)
   addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
   addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
+  setStatusBar(m_statusBar);
 
   init_mouse_tool_group();
   init_connections();
@@ -70,6 +73,8 @@ void window::init_connections()
   connect(m_ui->actionNewMap,     &QAction::triggered, this, &window::ui_new_map);
   connect(m_ui->actionAddTileset, &QAction::triggered, this, &window::ui_add_tileset);
 
+  connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
+
   connect(m_toolDock,    &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
   connect(m_layerDock,   &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
@@ -84,10 +89,23 @@ void window::init_connections()
   connect(m_editor, &map_editor::increase_zoom,  this, &window::ui_increase_zoom);
   connect(m_editor, &map_editor::decrease_zoom,  this, &window::ui_decrease_zoom);
   connect(m_editor, &map_editor::mouse_pressed,  this, &window::mouse_pressed);
-  connect(m_editor, &map_editor::mouse_moved,    this, &window::mouse_moved);
   connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
-  connect(m_editor, &map_editor::mouse_entered,  this, &window::mouse_entered);
-  connect(m_editor, &map_editor::mouse_exited,   this, &window::mouse_exited);
+
+  connect(m_editor, &map_editor::mouse_entered, [this](QEvent* e) {
+    m_statusBar->set_mouse_info_visible(true);
+    emit mouse_entered(e);
+  });
+
+  connect(m_editor, &map_editor::mouse_exited, [this](QEvent* e) {
+    m_statusBar->set_mouse_info_visible(false);
+    emit mouse_exited(e);
+  });
+
+  connect(m_editor, &map_editor::mouse_moved,
+          [this](QMouseEvent* e, const QPointF mapPos) {
+            m_statusBar->mouse_moved( e->pos() - mapPos);
+            emit mouse_moved(e, mapPos);
+          });
 
   connect(m_tilesetDock, &tileset_dock::ui_add_tileset,           this, &window::ui_add_tileset);
   connect(m_tilesetDock, &tileset_dock::ui_select_tileset,        this, &window::ui_select_tileset);
@@ -227,6 +245,8 @@ void window::enter_no_content_view()
 
   set_actions_enabled(false);
   hide_all_docks();
+
+  m_statusBar->set_layer_combo_box_visible(false);
 }
 
 void window::enter_content_view()
@@ -236,6 +256,8 @@ void window::enter_content_view()
 
   set_actions_enabled(true);
   restore_dock_visibility();
+
+  m_statusBar->set_layer_combo_box_visible(true);
 }
 
 void window::trigger_save_as()
@@ -293,11 +315,13 @@ void window::removed_tileset(const tileset_id id)
 void window::selected_layer(const layer_id id, const core::tile_layer& layer)
 {
   m_layerDock->selected_layer(id, layer);
+  m_statusBar->set_current_layer(id);
 }
 
 void window::added_layer(const layer_id id, const core::tile_layer& layer)
 {
   m_layerDock->added_layer(id, layer);
+  m_statusBar->added_layer(id, layer.name());
 }
 
 void window::added_duplicated_layer(const layer_id id,
@@ -309,6 +333,7 @@ void window::added_duplicated_layer(const layer_id id,
 void window::removed_layer(const layer_id id)
 {
   m_layerDock->removed_layer(id);
+  m_statusBar->removed_layer(id);
 }
 
 void window::moved_layer_up(const layer_id id)
@@ -326,6 +351,7 @@ void window::switched_map(const map_id id, const core::map_document& document)
   m_tilesetDock->selected_map(id);
   m_layerDock->selected_map(id, document);
   m_propertiesDock->selected_map(document);
+  m_statusBar->switched_map(document);
 }
 
 void window::enable_stamp_preview(const core::position& position)
@@ -347,6 +373,8 @@ void window::handle_new_map(core::map_document* document,
                             const map_id id,
                             const QString& name)
 {
+  Q_ASSERT(document);
+
   m_editor->add_map_tab(document, id, name);
   m_editor->select_tab(id);
   if (!in_editor_mode()) {
@@ -355,6 +383,7 @@ void window::handle_new_map(core::map_document* document,
   }
 
   m_ui->actionSave->setDisabled(document->is_clean());
+  m_statusBar->switched_map(*document);
 }
 
 void window::added_property(const QString& name, const core::property& property)
