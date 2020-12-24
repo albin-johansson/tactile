@@ -1,6 +1,6 @@
 #pragma once
 
-#include "czstring.hpp"
+#include <QString>
 
 namespace tactile {
 
@@ -13,9 +13,9 @@ namespace tactile {
  *
  * \since 0.1.0
  */
-[[nodiscard]] constexpr auto version() noexcept -> czstring
+[[nodiscard]] inline auto version() noexcept -> QString
 {
-  return "0.2.0";
+  return TACTILE_QSTRING(u"0.2.0");
 }
 
 }  // namespace tactile
