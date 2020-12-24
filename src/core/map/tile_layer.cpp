@@ -7,6 +7,7 @@
 #include "algorithm.hpp"
 #include "flood_fill.hpp"
 #include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::core {
 namespace {
@@ -27,6 +28,7 @@ tile_layer::tile_layer(const row_t nRows, const col_t nCols)
   if (nRows < 1_row || nCols < 1_col) {
     throw tactile_error{"Invalid tile_layer dimensions!"};
   }
+  m_layerDelegate.set_name(TACTILE_QSTRING(u"Tile layer"));
 
   m_tiles.reserve(nRows.get());
   m_tiles.assign(nRows.get(), create_row(nCols));

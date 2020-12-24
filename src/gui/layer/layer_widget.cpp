@@ -194,12 +194,12 @@ void layer_widget::moved_layer_forward(const layer_id id)
 void layer_widget::add_layer(const layer_id id, const core::layer& layer)
 {
   QString name;
-  if (layer.name().isEmpty()) {
-    auto& suffix = m_suffixes.at(m_currentMap.value());
-    name = TACTILE_QSTRING(u"Layer ") + QString::number(suffix);
-    ++suffix;
-  } else {
+  if (m_ui->layerList->findItems(layer.name(), Qt::MatchExactly).empty()) {
     name = layer.name();
+  } else {
+    auto& suffix = m_suffixes.at(m_currentMap.value());
+    name = layer.name() + TACTILE_QSTRING(u" ") + QString::number(suffix);
+    ++suffix;
   }
 
   auto* item = new layer_item{name, id, m_ui->layerList};

@@ -19,6 +19,8 @@ namespace tactile::core {
 class object_layer final : public layer
 {
  public:
+  object_layer();
+
   ~object_layer() noexcept override = default;
 
   /// \name Layer API

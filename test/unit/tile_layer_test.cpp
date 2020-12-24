@@ -1,9 +1,11 @@
+#include "tile_layer.hpp"
+
 #include <catch.hpp>
 
 #include "algorithm.hpp"
 #include "position.hpp"
 #include "tactile_error.hpp"
-#include "tile_layer.hpp"
+#include "tactile_qstring.hpp"
 
 using namespace tactile;
 
@@ -152,11 +154,11 @@ TEST_CASE("tile_layer::set_tile", "[tile_layer]")
   CHECK(*layer.tile_at(pos) == tileID);
 
   CHECK_NOTHROW(layer.set_tile({-1_row, -1_col}, tile_id{5}));
-  CHECK_NOTHROW(layer.set_tile(
-      {row_t{layer.row_count()}, col_t{layer.col_count()}},
-      tile_id{7}));
-  CHECK(layer.tile_at({row_t{layer.row_count()},
-                       col_t{layer.col_count()}}) == std::nullopt);
+  CHECK_NOTHROW(
+      layer.set_tile({row_t{layer.row_count()}, col_t{layer.col_count()}},
+                     tile_id{7}));
+  CHECK(layer.tile_at({row_t{layer.row_count()}, col_t{layer.col_count()}}) ==
+        std::nullopt);
 }
 
 TEST_CASE("tile_layer::set_opacity", "[tile_layer]")
@@ -236,4 +238,10 @@ TEST_CASE("tile_layer::visible", "[tile_layer]")
 {
   const core::tile_layer layer;
   CHECK(layer.visible());
+}
+
+TEST_CASE("tile_layer::name", "[tile_layer]")
+{
+  const core::tile_layer layer;
+  CHECK(layer.name() == TACTILE_QSTRING(u"Tile layer"));
 }

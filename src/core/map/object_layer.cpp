@@ -2,7 +2,14 @@
 
 #include <utility>  // move
 
+#include "tactile_qstring.hpp"
+
 namespace tactile::core {
+
+object_layer::object_layer()
+{
+  m_layerDelegate.set_name(TACTILE_QSTRING(u"Object layer"));
+}
 
 void object_layer::add_property(const QString& name, const property::type type)
 {

@@ -75,8 +75,6 @@ class layer : public property_manager
   /**
    * \brief Returns the name associated with the layer.
    *
-   * \note By default, layers have no name assigned to them.
-   *
    * \return the name of the layer.
    *
    * \since 0.2.0
