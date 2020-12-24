@@ -59,8 +59,7 @@ class layer_widget final : public QWidget
   vector_map<map_id, int> m_suffixes;
   maybe<map_id> m_currentMap;
   maybe<int> m_duplicateTargetRow;
-
-  void trigger_layer_item_context_menu(const QPoint& pos);
+  maybe<QString> m_cachedName;
 
   void add_layer(layer_id id, const core::layer& layer);
 
@@ -71,10 +70,30 @@ class layer_widget final : public QWidget
   void update_possible_actions();
 
  private slots:
-  void current_item_changed(QListWidgetItem* current,
-                            QListWidgetItem* previous);
+  [[maybe_unused]] void on_layerList_currentTextChanged(const QString& text);
 
-  void item_changed(QListWidgetItem* item);
+  [[maybe_unused]] void on_layerList_itemChanged(QListWidgetItem *item);
+
+  [[maybe_unused]] void on_newLayerButton_pressed();
+
+  [[maybe_unused]] void on_layerList_customContextMenuRequested(
+      const QPoint& pos);
+
+  [[maybe_unused]] void on_layerList_currentItemChanged(
+      QListWidgetItem* current,
+      QListWidgetItem* previous);
+
+  [[maybe_unused]] void on_removeLayerButton_pressed();
+
+  [[maybe_unused]] void on_upButton_pressed();
+
+  [[maybe_unused]] void on_downButton_pressed();
+
+  [[maybe_unused]] void on_duplicateButton_pressed();
+
+  [[maybe_unused]] void on_visibleButton_toggled(bool visible);
+
+  [[maybe_unused]] void on_opacitySlider_valueChanged(int value);
 };
 
 }  // namespace tactile::gui

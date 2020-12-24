@@ -116,12 +116,16 @@ void window::init_connections()
   connect(m_layerDock, &layer_dock::ui_add_layer,            this, &window::ui_add_layer);
   connect(m_layerDock, &layer_dock::ui_remove_layer,         this, &window::ui_remove_layer);
   connect(m_layerDock, &layer_dock::ui_select_layer,         this, &window::ui_select_layer);
-  connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
-  connect(m_layerDock, &layer_dock::ui_set_layer_opacity,    this, &window::ui_set_layer_opacity);
-  connect(m_layerDock, &layer_dock::ui_set_layer_name,       this, &window::ui_set_layer_name);
   connect(m_layerDock, &layer_dock::ui_move_layer_up,        this, &window::ui_move_layer_up);
   connect(m_layerDock, &layer_dock::ui_move_layer_down,      this, &window::ui_move_layer_down);
   connect(m_layerDock, &layer_dock::ui_duplicate_layer,      this, &window::ui_duplicate_layer);
+  connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
+  connect(m_layerDock, &layer_dock::ui_set_layer_opacity,    this, &window::ui_set_layer_opacity);
+  connect(m_layerDock, &layer_dock::ui_set_layer_name,
+          [this](const layer_id id, const QString& name) {
+            emit ui_set_layer_name(id, name);
+            m_statusBar->set_layer_name(id, name);
+          });
 
   connect(m_propertiesDock, &properties_dock::request_add_property, this, &window::ui_add_property);
   connect(m_propertiesDock, &properties_dock::request_remove_property, this, &window::ui_remove_property);
@@ -324,10 +328,10 @@ void window::added_layer(const layer_id id, const core::layer& layer)
   m_statusBar->added_layer(id, layer.name());
 }
 
-void window::added_duplicated_layer(const layer_id id,
-                                    const core::layer& layer)
+void window::added_duplicated_layer(const layer_id id, const core::layer& layer)
 {
   m_layerDock->added_duplicated_layer(id, layer);
+  m_statusBar->added_layer(id, layer.name());
 }
 
 void window::removed_layer(const layer_id id)
@@ -452,17 +456,17 @@ void window::eraser_enabled()
   emit ui_selected_tool(tool_id::eraser);
 }
 
-void window::on_actionUndo_triggered()
+[[maybe_unused]] void window::on_actionUndo_triggered()
 {
   emit ui_undo();
 }
 
-void window::on_actionRedo_triggered()
+[[maybe_unused]] void window::on_actionRedo_triggered()
 {
   emit ui_redo();
 }
 
-void window::on_actionCloseMap_triggered()
+[[maybe_unused]] void window::on_actionCloseMap_triggered()
 {
   // TODO save current state of open map (exit saves?)
   const auto id = m_editor->active_tab_id().value();
@@ -475,40 +479,40 @@ void window::on_actionCloseMap_triggered()
   }
 }
 
-void window::on_actionTilesetsVisibility_triggered()
+[[maybe_unused]] void window::on_actionTilesetsVisibility_triggered()
 {
   const auto visible = m_ui->actionTilesetsVisibility->isChecked();
   m_tilesetDock->setVisible(visible);
   prefs::graphics::tileset_widget_visible().set(visible);
 }
 
-void window::on_actionToolsVisibility_triggered()
+[[maybe_unused]] void window::on_actionToolsVisibility_triggered()
 {
   const auto visible = m_ui->actionToolsVisibility->isChecked();
   m_toolDock->setVisible(visible);
   prefs::graphics::tool_widget_visible().set(visible);
 }
 
-void window::on_actionLayersVisibility_triggered()
+[[maybe_unused]] void window::on_actionLayersVisibility_triggered()
 {
   const auto visible = m_ui->actionLayersVisibility->isChecked();
   m_layerDock->setVisible(visible);
   prefs::graphics::layer_widget_visible().set(visible);
 }
 
-void window::on_actionPropertiesVisibility_triggered()
+[[maybe_unused]] void window::on_actionPropertiesVisibility_triggered()
 {
   const auto visible = m_ui->actionPropertiesVisibility->isChecked();
   m_propertiesDock->setVisible(visible);
   prefs::graphics::properties_widget_visible().set(visible);
 }
 
-void window::on_actionSave_triggered()
+[[maybe_unused]] void window::on_actionSave_triggered()
 {
   emit ui_save();
 }
 
-void window::on_actionSaveAs_triggered()
+[[maybe_unused]] void window::on_actionSaveAs_triggered()
 {
   save_as_dialog::spawn(
       [this](const QString& path) {
@@ -517,39 +521,39 @@ void window::on_actionSaveAs_triggered()
       m_editor->active_tab_name().value_or(TACTILE_QSTRING(u"map")));
 }
 
-void window::on_actionOpenMap_triggered()
+[[maybe_unused]] void window::on_actionOpenMap_triggered()
 {
   open_map_dialog::spawn([this](const QString& path) {
     emit ui_open_map(path);
   });
 }
 
-void window::on_actionAddRow_triggered()
+[[maybe_unused]] void window::on_actionAddRow_triggered()
 {
   emit ui_add_row();
 }
 
-void window::on_actionAddCol_triggered()
+[[maybe_unused]] void window::on_actionAddCol_triggered()
 {
   emit ui_add_col();
 }
 
-void window::on_actionRemoveRow_triggered()
+[[maybe_unused]] void window::on_actionRemoveRow_triggered()
 {
   emit ui_remove_row();
 }
 
-void window::on_actionRemoveCol_triggered()
+[[maybe_unused]] void window::on_actionRemoveCol_triggered()
 {
   emit ui_remove_col();
 }
 
-void window::on_actionResizeMap_triggered()
+[[maybe_unused]] void window::on_actionResizeMap_triggered()
 {
   emit ui_resize_map();
 }
 
-void window::on_actionToggleGrid_triggered()
+[[maybe_unused]] void window::on_actionToggleGrid_triggered()
 {
   auto grid = prefs::graphics::render_grid();
   grid.with([&, this](bool value) {
@@ -558,88 +562,89 @@ void window::on_actionToggleGrid_triggered()
   });
 }
 
-void window::on_actionPanUp_triggered()
+[[maybe_unused]] void window::on_actionPanUp_triggered()
 {
   emit ui_pan_up();
 }
 
-void window::on_actionPanDown_triggered()
+[[maybe_unused]] void window::on_actionPanDown_triggered()
 {
   emit ui_pan_down();
 }
 
-void window::on_actionPanRight_triggered()
+[[maybe_unused]] void window::on_actionPanRight_triggered()
 {
   emit ui_pan_right();
 }
 
-void window::on_actionPanLeft_triggered()
+[[maybe_unused]] void window::on_actionPanLeft_triggered()
 {
   emit ui_pan_left();
 }
 
-void window::on_actionZoomIn_triggered()
+[[maybe_unused]] void window::on_actionZoomIn_triggered()
 {
   emit ui_increase_zoom();
 }
 
-void window::on_actionZoomOut_triggered()
+[[maybe_unused]] void window::on_actionZoomOut_triggered()
 {
   emit ui_decrease_zoom();
 }
 
-void window::on_actionResetZoom_triggered()
+[[maybe_unused]] void window::on_actionResetZoom_triggered()
 {
   emit ui_reset_tile_size();
 }
 
-void window::on_actionCenterCamera_triggered()
+[[maybe_unused]] void window::on_actionCenterCamera_triggered()
 {
   center_viewport();
 }
 
-void window::on_actionResetLayout_triggered()
+[[maybe_unused]] void window::on_actionResetLayout_triggered()
 {
   reset_dock_layout();
 }
 
-void window::on_actionStampTool_triggered()
+[[maybe_unused]] void window::on_actionStampTool_triggered()
 {
   m_toolDock->stamp_enabled();
 }
 
-void window::on_actionBucketTool_triggered()
+[[maybe_unused]] void window::on_actionBucketTool_triggered()
 {
   m_toolDock->bucket_enabled();
 }
 
-void window::on_actionEraserTool_triggered()
+[[maybe_unused]] void window::on_actionEraserTool_triggered()
 {
   m_toolDock->eraser_enabled();
 }
 
-void window::on_actionSettings_triggered()  // NOLINT
+[[maybe_unused]] void window::on_actionSettings_triggered()  // NOLINT
 {
   settings_dialog settings;
 
   // clang-format off
-  connect(&settings, &settings_dialog::reload_theme, this, &window::handle_theme_changed);
+  connect(&settings, &settings_dialog::reload_theme,
+          this, &window::handle_theme_changed);
   // clang-format on
 
   settings.exec();
 }
 
-void window::on_actionAboutQt_triggered()
+[[maybe_unused]] void window::on_actionAboutQt_triggered()
 {
   QApplication::aboutQt();
 }
 
-void window::on_actionExit_triggered()
+[[maybe_unused]] void window::on_actionExit_triggered()
 {
   QApplication::exit();
 }
 
-void window::on_actionAbout_triggered()
+[[maybe_unused]] void window::on_actionAbout_triggered()
 {
   about_dialog::spawn();
 }

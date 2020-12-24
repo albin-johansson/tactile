@@ -30,6 +30,8 @@ class status_bar final : public QStatusBar
 
   void added_layer(layer_id id, const QString& name);
 
+  void set_layer_name(layer_id id, const QString& name);
+
   void removed_layer(layer_id id);
 
   void mouse_moved(const QPointF& pos);

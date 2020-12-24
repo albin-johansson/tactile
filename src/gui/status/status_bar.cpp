@@ -90,6 +90,16 @@ void status_bar::added_layer(const layer_id id, const QString& name)
   m_layerBox->addItem(name, id.get());
 }
 
+void status_bar::set_layer_name(const layer_id id, const QString& name)
+{
+  signal_blocker blocker{m_layerBox};  // avoids switch layer requests
+
+  const auto index = m_layerBox->findData(id.get());
+  Q_ASSERT(index != -1);
+
+  m_layerBox->setItemText(index, name);
+}
+
 void status_bar::removed_layer(const layer_id id)
 {
   signal_blocker blocker{m_layerBox};  // avoids switch layer requests

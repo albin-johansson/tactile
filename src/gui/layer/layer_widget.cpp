@@ -14,6 +14,9 @@
 
 namespace tactile::gui {
 
+// FIXME status bar layer combobox is not updated directly when layer name is
+// changed
+
 layer_widget::layer_widget(QWidget* parent)
     : QWidget{parent}
     , m_ui{init_ui<Ui::layer_widget>(this)}
@@ -22,75 +25,26 @@ layer_widget::layer_widget(QWidget* parent)
   m_ui->layerList->setContextMenuPolicy(Qt::CustomContextMenu);
 
   // clang-format off
-  connect(m_contextMenu, &layer_item_context_menu::toggle_visibility, m_ui->visibleButton, &QAbstractButton::toggle);
-  connect(m_contextMenu, &layer_item_context_menu::move_layer_up, m_ui->upButton, &QAbstractButton::click);
-  connect(m_contextMenu, &layer_item_context_menu::move_layer_down, m_ui->downButton, &QAbstractButton::click);
-  connect(m_contextMenu, &layer_item_context_menu::duplicate_layer, m_ui->duplicateButton, &QAbstractButton::click);
-  connect(m_contextMenu, &layer_item_context_menu::remove_layer, m_ui->removeLayerButton, &QAbstractButton::click);
+  connect(m_contextMenu, &layer_item_context_menu::toggle_visibility,
+          m_ui->visibleButton, &QAbstractButton::toggle);
 
-  connect(m_ui->layerList, &QListWidget::customContextMenuRequested, this, &layer_widget::trigger_layer_item_context_menu);
-  connect(m_ui->newLayerButton, &QPushButton::pressed, this, &layer_widget::ui_add_layer);
-  connect(m_ui->layerList, &QListWidget::currentItemChanged, this, &layer_widget::current_item_changed);
-  connect(m_ui->layerList, &QListWidget::itemChanged, this, &layer_widget::item_changed);
+  connect(m_contextMenu, &layer_item_context_menu::move_layer_up,
+          m_ui->upButton, &QAbstractButton::click);
+
+  connect(m_contextMenu, &layer_item_context_menu::move_layer_down,
+          m_ui->downButton, &QAbstractButton::click);
+
+  connect(m_contextMenu, &layer_item_context_menu::duplicate_layer,
+          m_ui->duplicateButton, &QAbstractButton::click);
+
+  connect(m_contextMenu, &layer_item_context_menu::remove_layer,
+          m_ui->removeLayerButton, &QAbstractButton::click);
   // clang-format on
-
-  connect(m_ui->removeLayerButton, &QPushButton::pressed, [this] {
-    if (auto* item = current_item()) {
-      emit ui_remove_layer(item->layer());
-    }
-  });
-
-  connect(m_ui->upButton, &QPushButton::pressed, [this] {
-    if (auto* item = current_item()) {
-      emit ui_move_layer_up(item->layer());
-    }
-  });
-
-  connect(m_ui->downButton, &QPushButton::pressed, [this] {
-    if (auto* item = current_item()) {
-      emit ui_move_layer_down(item->layer());
-    }
-  });
-
-  connect(m_ui->duplicateButton, &QPushButton::pressed, [this] {
-    if (auto* item = current_item()) {
-      m_duplicateTargetRow = m_ui->layerList->row(item) + 1;
-      emit ui_duplicate_layer(item->layer());
-    }
-  });
-
-  connect(m_ui->visibleButton,
-          &QPushButton::toggled,
-          [this](const bool visible) {
-            if (auto* item = current_item()) {
-              emit ui_set_layer_visibility(item->layer(), visible);
-              m_ui->visibleButton->setIcon(visible ? icons::visible()
-                                                   : icons::invisible());
-            }
-          });
-
-  connect(m_ui->opacitySlider, &QSlider::valueChanged, [this](const int value) {
-    if (auto* item = current_item()) {
-      const auto dValue = static_cast<double>(value) / 100.0;
-      emit ui_set_layer_opacity(item->layer(), dValue);
-    }
-  });
 }
 
 layer_widget::~layer_widget() noexcept
 {
   delete m_ui;
-}
-
-void layer_widget::trigger_layer_item_context_menu(const QPoint& pos)
-{
-  if (m_ui->layerList->itemAt(pos)) {
-    m_contextMenu->set_visibility_enabled(m_ui->visibleButton->isEnabled());
-    m_contextMenu->set_move_up_enabled(m_ui->upButton->isEnabled());
-    m_contextMenu->set_move_down_enabled(m_ui->downButton->isEnabled());
-    m_contextMenu->set_remove_enabled(m_ui->removeLayerButton->isEnabled());
-    m_contextMenu->exec(mapToGlobal(pos));
-  }
 }
 
 void layer_widget::added_layer(const layer_id id, const core::layer& layer)
@@ -118,7 +72,7 @@ void layer_widget::added_duplicated_layer(const layer_id id,
   m_duplicateTargetRow.reset();
 }
 
-void layer_widget::removed_layer(layer_id id)
+void layer_widget::removed_layer(const layer_id id)
 {
   if (auto* item = item_for_layer_id(id)) {
     m_ui->layerList->removeItemWidget(item);
@@ -203,7 +157,6 @@ void layer_widget::add_layer(const layer_id id, const core::layer& layer)
   }
 
   auto* item = new layer_item{name, id, m_ui->layerList};
-
   m_ui->layerList->addItem(item);
   update_possible_actions();
 }
@@ -236,21 +189,104 @@ void layer_widget::update_possible_actions()
   m_ui->downButton->setEnabled(itemCount > 1 && (currentRow != itemCount - 1));
 }
 
-void layer_widget::current_item_changed(QListWidgetItem* current,
-                                        QListWidgetItem* previous)
+[[maybe_unused]] void layer_widget::on_layerList_currentTextChanged(
+    const QString& text)
+{
+  if (text.isValidUtf16()) {
+    if (const auto* item = current_item()) {
+      emit ui_set_layer_name(item->layer(), text);
+    }
+  }
+}
+
+[[maybe_unused]] void layer_widget::on_layerList_itemChanged(
+    QListWidgetItem* item)
+{
+  if (m_cachedName) {
+    if (const auto* layerItem = dynamic_cast<layer_item*>(item)) {
+      if (m_cachedName != layerItem->text()) {
+        emit ui_set_layer_name(layerItem->layer(), layerItem->text());
+      }
+    }
+  }
+}
+
+[[maybe_unused]] void layer_widget::on_newLayerButton_pressed()
+{
+  emit ui_add_layer();
+}
+
+[[maybe_unused]] void layer_widget::on_layerList_customContextMenuRequested(
+    const QPoint& pos)
+{
+  if (m_ui->layerList->itemAt(pos)) {
+    m_contextMenu->set_visibility_enabled(m_ui->visibleButton->isEnabled());
+    m_contextMenu->set_move_up_enabled(m_ui->upButton->isEnabled());
+    m_contextMenu->set_move_down_enabled(m_ui->downButton->isEnabled());
+    m_contextMenu->set_remove_enabled(m_ui->removeLayerButton->isEnabled());
+    m_contextMenu->exec(mapToGlobal(pos));
+  }
+}
+
+[[maybe_unused]] void layer_widget::on_layerList_currentItemChanged(
+    QListWidgetItem* current,
+    QListWidgetItem* previous)
 {
   if (current != previous) {
     if (auto* item = dynamic_cast<layer_item*>(current)) {
+      m_cachedName = current->text();
       emit ui_select_layer(item->layer());
+    } else {
+      m_cachedName.reset();
     }
   }
   update_possible_actions();
 }
 
-void layer_widget::item_changed(QListWidgetItem* item)
+[[maybe_unused]] void layer_widget::on_removeLayerButton_pressed()
 {
-  if (auto* layerItem = dynamic_cast<layer_item*>(item)) {
-    emit ui_set_layer_name(layerItem->layer(), item->text());
+  if (auto* item = current_item()) {
+    emit ui_remove_layer(item->layer());
+  }
+}
+
+[[maybe_unused]] void layer_widget::on_upButton_pressed()
+{
+  if (auto* item = current_item()) {
+    emit ui_move_layer_up(item->layer());
+  }
+}
+
+[[maybe_unused]] void layer_widget::on_downButton_pressed()
+{
+  if (auto* item = current_item()) {
+    emit ui_move_layer_down(item->layer());
+  }
+}
+
+[[maybe_unused]] void layer_widget::on_duplicateButton_pressed()
+{
+  if (auto* item = current_item()) {
+    m_duplicateTargetRow = m_ui->layerList->row(item) + 1;
+    emit ui_duplicate_layer(item->layer());
+  }
+}
+
+[[maybe_unused]] void layer_widget::on_visibleButton_toggled(const bool visible)
+{
+  if (auto* item = current_item()) {
+    emit ui_set_layer_visibility(item->layer(), visible);
+    m_ui->visibleButton->setIcon(visible ? icons::visible()
+                                         : icons::invisible());
+  }
+}
+
+[[maybe_unused]] void layer_widget::on_opacitySlider_valueChanged(
+    const int value)
+{
+  if (auto* item = current_item()) {
+    const auto dValue = static_cast<double>(value) / 100.0;
+    emit ui_set_layer_opacity(item->layer(), dValue);
   }
 }
 
