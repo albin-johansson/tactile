@@ -48,7 +48,9 @@ auto map_scene::map_position() const -> QPointF
 void map_scene::drawBackground(QPainter* painter, const QRectF& rect)
 {
   QGraphicsScene::drawBackground(painter, rect);
-  painter->fillRect(rect, Qt::black);
+
+  // TODO introduce setting for the background color
+  painter->fillRect(rect, QColor{Qt::darkGray}.darker());
 }
 
 }  // namespace tactile::gui
