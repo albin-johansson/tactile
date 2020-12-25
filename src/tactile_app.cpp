@@ -62,15 +62,6 @@ void tactile_app::init_connections()
   winToMod(&win::ui_select_tileset,        &mod::select_tileset);
   winToMod(&win::ui_rename_tileset,        &mod::set_tileset_name);
   winToMod(&win::ui_set_tileset_selection, &mod::set_tileset_selection);
-  winToMod(&win::ui_add_layer,             &mod::add_layer);
-  winToMod(&win::ui_remove_layer,          &mod::remove_layer);
-  winToMod(&win::ui_select_layer,          &mod::select_layer);
-  winToMod(&win::ui_set_layer_visibility,  &mod::set_layer_visibility);
-  winToMod(&win::ui_set_layer_opacity,     &mod::set_layer_opacity);
-  winToMod(&win::ui_set_layer_name,        &mod::set_layer_name);
-  winToMod(&win::ui_move_layer_down,       &mod::move_layer_back);
-  winToMod(&win::ui_move_layer_up,         &mod::move_layer_forward);
-  winToMod(&win::ui_duplicate_layer,       &mod::duplicate_layer);
 
   winToMod(&win::mouse_pressed,            &mod::mouse_pressed);
   winToMod(&win::mouse_moved,              &mod::mouse_moved);
@@ -93,8 +84,6 @@ void tactile_app::init_connections()
   modToWin(&mod::added_duplicated_layer, &win::added_duplicated_layer);
   modToWin(&mod::removed_layer,          &win::removed_layer);
   modToWin(&mod::selected_layer,         &win::selected_layer);
-  modToWin(&mod::moved_layer_back,       &win::moved_layer_up);
-  modToWin(&mod::moved_layer_forward,    &win::moved_layer_down);
 
   fromWindow(&win::ui_add_tileset, &tactile_app::handle_new_tileset);
   fromWindow(&win::ui_resize_map,  &tactile_app::handle_resize_map);

@@ -4,10 +4,12 @@
 
 #include "layer.hpp"
 #include "layer_id.hpp"
+#include "layer_model.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
 #include "property.hpp"
 #include "property_model.hpp"
+#include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 #include "tool_id.hpp"
@@ -75,7 +77,8 @@ class model final : public QObject
 
   void switched_map(map_id id,
                     const map_document& document,
-                    const vm::shared_property_model& propertyModel);
+                    const shared<vm::property_model>& propertyModel,
+                    const shared<vm::layer_model>& layerModel);
 
   void added_layer(layer_id id, const layer& layer);
   void added_duplicated_layer(layer_id id, const layer& layer);

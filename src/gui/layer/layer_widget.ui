@@ -35,7 +35,7 @@
    <property name="horizontalSpacing">
     <number>2</number>
    </property>
-   <item row="0" column="2">
+   <item row="0" column="1">
     <widget class="QSlider" name="opacitySlider">
      <property name="toolTip">
       <string>Change opacity</string>
@@ -59,22 +59,6 @@
       <enum>Qt::Vertical</enum>
      </property>
      <property name="invertedAppearance">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QListWidget" name="layerList">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOn</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAsNeeded</enum>
-     </property>
-     <property name="alternatingRowColors">
       <bool>false</bool>
      </property>
     </widget>

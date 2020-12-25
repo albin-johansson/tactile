@@ -18,7 +18,7 @@ properties_dock::properties_dock(QWidget* parent)
 
 void properties_dock::selected_map(
     const core::map_document& document,
-    const vm::shared_property_model& propertyModel)
+    const shared<vm::property_model>& propertyModel)
 {
   m_widget->selected_map(document, propertyModel);
 }

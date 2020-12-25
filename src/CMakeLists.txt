@@ -68,6 +68,10 @@ set(TACTILE_SOURCE_FILES
         core/viewmodel/property/property_item_role.hpp
         core/viewmodel/property/property_item_type.hpp
 
+        core/viewmodel/layer/layer_model.cpp
+        core/viewmodel/layer/layer_model.hpp
+        core/viewmodel/layer/layer_item_role.hpp
+
         gui/icons.cpp
         gui/icons.hpp
         gui/dock_widget.cpp
@@ -127,6 +131,10 @@ set(TACTILE_SOURCE_FILES
         gui/layer/layer_item.hpp
         gui/layer/layer_item_context_menu.cpp
         gui/layer/layer_item_context_menu.hpp
+        gui/layer/layer_widget_context_menu.cpp
+        gui/layer/layer_widget_context_menu.hpp
+        gui/layer/layer_list_view.cpp
+        gui/layer/layer_list_view.hpp
 
         gui/settings/settings_dialog.hpp
         gui/settings/settings_dialog.cpp
@@ -202,6 +210,7 @@ set(TACTILE_SOURCE_FILES
 
         gui/status/status_bar.cpp
         gui/status/status_bar.hpp
+
         command/command_id.hpp
         command/command_stack.hpp
         command/add_row.cpp
@@ -326,6 +335,7 @@ target_include_directories(libTactile
         PUBLIC core/aliases
         PUBLIC core/viewmodel
         PUBLIC core/viewmodel/property
+        PUBLIC core/viewmodel/layer
         PUBLIC gui
         PUBLIC gui/startup
         PUBLIC gui/editor

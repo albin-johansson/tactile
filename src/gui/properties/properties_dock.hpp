@@ -3,6 +3,7 @@
 #include "dock_widget.hpp"
 #include "map_document.hpp"
 #include "property.hpp"
+#include "smart_pointers.hpp"
 
 namespace tactile::gui {
 
@@ -17,7 +18,7 @@ class properties_dock final : public dock_widget
 
  public slots:
   void selected_map(const core::map_document& document,
-                    const vm::shared_property_model& propertyModel);
+                    const shared<vm::property_model>& propertyModel);
 
  private:
   properties_widget* m_widget{};

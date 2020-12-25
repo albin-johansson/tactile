@@ -5,10 +5,13 @@
 #include <QString>
 #include <QWidget>
 
+#include "layer_model.hpp"
 #include "map_document.hpp"
 #include "map_id.hpp"
 #include "position.hpp"
 #include "property.hpp"
+#include "property_model.hpp"
+#include "smart_pointers.hpp"
 #include "tactile_qstring.hpp"
 #include "tool_id.hpp"
 
@@ -87,16 +90,6 @@ class window final : public QMainWindow
 
   void ui_selected_tool(tool_id tool);
 
-  void ui_add_layer();
-  void ui_remove_layer(layer_id id);
-  void ui_select_layer(layer_id id);
-  void ui_set_layer_visibility(layer_id id, bool visible);
-  void ui_set_layer_opacity(layer_id id, double opacity);
-  void ui_set_layer_name(layer_id id, const QString& name);
-  void ui_move_layer_down(layer_id id);
-  void ui_move_layer_up(layer_id id);
-  void ui_duplicate_layer(layer_id id);
-
   void ui_add_tileset();
   void ui_remove_tileset(tileset_id id);
   void ui_select_tileset(tileset_id id);
@@ -147,13 +140,10 @@ class window final : public QMainWindow
 
   void removed_layer(layer_id id);
 
-  void moved_layer_up(layer_id id);
-
-  void moved_layer_down(layer_id id);
-
   void switched_map(map_id map,
                     const core::map_document& document,
-                    const vm::shared_property_model& propertyModel);
+                    const shared<vm::property_model>& propertyModel,
+                    const shared<vm::layer_model>& layerModel);
 
   void enable_stamp_preview(const core::position& position);
 

@@ -122,7 +122,7 @@ void model::remove_col()
 void model::add_layer()
 {
   if (auto* document = current_document()) {
-    document->add_layer();
+    document->add_tile_layer();
   }
 }
 
@@ -295,7 +295,8 @@ void model::select_map(const map_id id)
 
   emit switched_map(id,
                     *document,
-                    std::make_shared<vm::property_model>(document));
+                    std::make_shared<vm::property_model>(document),
+                    std::make_shared<vm::layer_model>(document));
 }
 
 void model::close_map(const map_id id)

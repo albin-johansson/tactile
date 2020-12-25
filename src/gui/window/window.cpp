@@ -73,7 +73,7 @@ void window::init_connections()
   connect(m_ui->actionNewMap,     &QAction::triggered, this, &window::ui_new_map);
   connect(m_ui->actionAddTileset, &QAction::triggered, this, &window::ui_add_tileset);
 
-  connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
+//  connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
 
   connect(m_toolDock,    &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
@@ -112,20 +112,6 @@ void window::init_connections()
   connect(m_tilesetDock, &tileset_dock::ui_remove_tileset,        this, &window::ui_remove_tileset);
   connect(m_tilesetDock, &tileset_dock::ui_rename_tileset,        this, &window::ui_rename_tileset);
   connect(m_tilesetDock, &tileset_dock::ui_set_tileset_selection, this, &window::ui_set_tileset_selection);
-
-  connect(m_layerDock, &layer_dock::ui_add_layer,            this, &window::ui_add_layer);
-  connect(m_layerDock, &layer_dock::ui_remove_layer,         this, &window::ui_remove_layer);
-  connect(m_layerDock, &layer_dock::ui_select_layer,         this, &window::ui_select_layer);
-  connect(m_layerDock, &layer_dock::ui_move_layer_up,        this, &window::ui_move_layer_up);
-  connect(m_layerDock, &layer_dock::ui_move_layer_down,      this, &window::ui_move_layer_down);
-  connect(m_layerDock, &layer_dock::ui_duplicate_layer,      this, &window::ui_duplicate_layer);
-  connect(m_layerDock, &layer_dock::ui_set_layer_visibility, this, &window::ui_set_layer_visibility);
-  connect(m_layerDock, &layer_dock::ui_set_layer_opacity,    this, &window::ui_set_layer_opacity);
-  connect(m_layerDock, &layer_dock::ui_set_layer_name,
-          [this](const layer_id id, const QString& name) {
-            emit ui_set_layer_name(id, name);
-            m_statusBar->set_layer_name(id, name);
-          });
   // clang-format on
 }
 
@@ -313,44 +299,31 @@ void window::removed_tileset(const tileset_id id)
 
 void window::selected_layer(const layer_id id, const core::layer& layer)
 {
-  m_layerDock->selected_layer(id, layer);
   m_statusBar->set_current_layer(id);
 }
 
 void window::added_layer(const layer_id id, const core::layer& layer)
 {
-  m_layerDock->added_layer(id, layer);
   m_statusBar->added_layer(id, layer.name());
 }
 
 void window::added_duplicated_layer(const layer_id id, const core::layer& layer)
 {
-  m_layerDock->added_duplicated_layer(id, layer);
   m_statusBar->added_layer(id, layer.name());
 }
 
 void window::removed_layer(const layer_id id)
 {
-  m_layerDock->removed_layer(id);
   m_statusBar->removed_layer(id);
-}
-
-void window::moved_layer_up(const layer_id id)
-{
-  m_layerDock->moved_layer_back(id);
-}
-
-void window::moved_layer_down(const layer_id id)
-{
-  m_layerDock->moved_layer_forward(id);
 }
 
 void window::switched_map(const map_id id,
                           const core::map_document& document,
-                          const vm::shared_property_model& propertyModel)
+                          const shared<vm::property_model>& propertyModel,
+                          const shared<vm::layer_model>& layerModel)
 {
   m_tilesetDock->selected_map(id);
-  m_layerDock->selected_map(id, document);
+  m_layerDock->selected_map(id, document, layerModel);
   m_propertiesDock->selected_map(document, propertyModel);
   m_statusBar->switched_map(document);
 }

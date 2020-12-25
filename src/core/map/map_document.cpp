@@ -273,12 +273,30 @@ void map_document::add_layer(const layer_id id, const shared_layer& layer)
   emit added_layer(id, *layer);
 }
 
-void map_document::add_layer()
+auto map_document::add_tile_layer() -> layer_id
 {
   const auto id = m_map->next_layer_id();  // must be before make_tile_layer
-  m_delegate.get_commands()->push<cmd::add_layer>(this,
-                                                  m_map->make_tile_layer(),
-                                                  id);
+  auto layer = m_map->make_tile_layer();
+
+  layer->set_name(layer->name() + TACTILE_QSTRING(u" ") +
+                  QString::number(m_tileLayerSuffix));
+  ++m_tileLayerSuffix;
+
+  m_delegate.get_commands()->push<cmd::add_layer>(this, std::move(layer), id);
+  return id;
+}
+
+auto map_document::add_object_layer() -> layer_id
+{
+  const auto id = m_map->next_layer_id();  // must be before make_object_layer
+  auto layer = m_map->make_object_layer();
+
+  layer->set_name(layer->name() + TACTILE_QSTRING(u" ") +
+                  QString::number(m_objectLayerSuffix));
+  ++m_objectLayerSuffix;
+
+  m_delegate.get_commands()->push<cmd::add_layer>(this, std::move(layer), id);
+  return id;
 }
 
 void map_document::remove_layer(const layer_id id)
@@ -359,9 +377,9 @@ auto map_document::in_bounds(const position& pos) const -> bool
   return m_map->in_bounds(pos);
 }
 
-auto map_document::get_layer(const layer_id id) const -> const layer&
+auto map_document::get_layer(const layer_id id) const -> const layer*
 {
-  return *m_map->get_layer(id);
+  return m_map->get_layer(id).get();
 }
 
 auto map_document::get_tile_layer(const layer_id id) -> tile_layer*

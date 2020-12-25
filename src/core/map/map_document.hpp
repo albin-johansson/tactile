@@ -238,6 +238,9 @@ class map_document final : public QObject, public document
    */
   void set_tileset_selection(const tileset::selection& selection);
 
+  /// \name Layer API
+  /// \{
+
   /**
    * \copydoc map::select_layer()
    * \signal `selected_layer`
@@ -245,7 +248,7 @@ class map_document final : public QObject, public document
   void select_layer(layer_id id);
 
   /**
-   * \copydoc map::add_tile_layer(layer_id id, std::shared_ptr<layer> layer)
+   * \copydoc map::add_tile_layer(layer_id id, shared_layer layer)
    * \signal `added_layer`
    */
   void add_layer(layer_id id, const shared_layer& layer);
@@ -254,7 +257,9 @@ class map_document final : public QObject, public document
    * \copybrief map::add_tile_layer()
    * \signal `added_layer`
    */
-  void add_layer();
+  auto add_tile_layer() -> layer_id;
+
+  auto add_object_layer() -> layer_id;
 
   /**
    * \brief Removes the specified layer from the document.
@@ -288,21 +293,6 @@ class map_document final : public QObject, public document
   void duplicate_layer(layer_id id);
 
   /**
-   * \copydoc map::increase_tile_size()
-   */
-  void increase_tile_size();
-
-  /**
-   * \copydoc map::decrease_tile_size()
-   */
-  void decrease_tile_size();
-
-  /**
-   * \copydoc map::reset_tile_size()
-   */
-  void reset_tile_size();
-
-  /**
    * \copydoc map::set_visibility()
    */
   void set_layer_visibility(layer_id id, bool visible);
@@ -330,36 +320,9 @@ class map_document final : public QObject, public document
   void move_layer_forward(layer_id id);
 
   /**
-   * \brief Sets the name of the tileset associated with the specified ID.
-   *
-   * \param id the ID associated with the tileset that will be renamed.
-   * \param name the new name of the tileset.
-   *
-   * \since 0.1.0
-   */
-  void set_tileset_name(tileset_id id, const QString& name);
-
-  /**
    * \copydoc map::set_next_layer_id()
    */
   void set_next_layer_id(layer_id id) noexcept;
-
-  /**
-   * \brief Iterates each tileset associated with the document.
-   *
-   * \tparam T the type of the function object.
-   *
-   * \param callable the function object that will be invoked for each tileset.
-   *
-   * \since 0.1.0
-   */
-  template <std::invocable<tileset_id, const tileset&> T>
-  void each_tileset(T&& callable) const
-  {
-    for (const auto& [id, tileset] : *m_tilesets) {
-      callable(id, *tileset);
-    }
-  }
 
   /**
    * \brief Iterates each layer associated with the document.
@@ -380,28 +343,77 @@ class map_document final : public QObject, public document
   }
 
   /**
-   * \copydoc map::index_of()
-   */
-  [[nodiscard]] auto index_of_layer(layer_id id) const -> maybe<int>;
-
-  /**
-   * \copydoc map::in_bounds()
-   */
-  [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
-
-  /**
    * \copydoc map::get_layer()
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const layer&;
+  [[nodiscard]] auto get_layer(layer_id id) const -> const layer*;
 
   [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
 
   [[nodiscard]] auto get_tile_layer(layer_id id) const -> const tile_layer*;
 
   /**
+   * \copydoc map::index_of()
+   */
+  [[nodiscard]] auto index_of_layer(layer_id id) const -> maybe<int>;
+
+  /**
    * \copydoc map::layer_count()
    */
   [[nodiscard]] auto layer_count() const noexcept -> int;
+
+  /**
+   * \copydoc map::active_layer_id()
+   */
+  [[nodiscard]] auto current_layer_id() const noexcept -> maybe<layer_id>;
+
+  /// \}
+
+  /**
+   * \copydoc map::increase_tile_size()
+   */
+  void increase_tile_size();
+
+  /**
+   * \copydoc map::decrease_tile_size()
+   */
+  void decrease_tile_size();
+
+  /**
+   * \copydoc map::reset_tile_size()
+   */
+  void reset_tile_size();
+
+  /**
+   * \brief Sets the name of the tileset associated with the specified ID.
+   *
+   * \param id the ID associated with the tileset that will be renamed.
+   * \param name the new name of the tileset.
+   *
+   * \since 0.1.0
+   */
+  void set_tileset_name(tileset_id id, const QString& name);
+
+  /**
+   * \brief Iterates each tileset associated with the document.
+   *
+   * \tparam T the type of the function object.
+   *
+   * \param callable the function object that will be invoked for each tileset.
+   *
+   * \since 0.1.0
+   */
+  template <std::invocable<tileset_id, const tileset&> T>
+  void each_tileset(T&& callable) const
+  {
+    for (const auto& [id, tileset] : *m_tilesets) {
+      callable(id, *tileset);
+    }
+  }
+
+  /**
+   * \copydoc map::in_bounds()
+   */
+  [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
 
   /**
    * \copydoc map::row_count()
@@ -441,11 +453,6 @@ class map_document final : public QObject, public document
    * \since 0.1.0
    */
   [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*;
-
-  /**
-   * \copydoc map::active_layer_id()
-   */
-  [[nodiscard]] auto current_layer_id() const noexcept -> maybe<layer_id>;
 
  signals:
   void undo_state_updated(bool canUndo);
@@ -491,7 +498,9 @@ class map_document final : public QObject, public document
  private:
   std::unique_ptr<map> m_map;                   ///< The associated map.
   std::unique_ptr<tileset_manager> m_tilesets;  ///< The associated tilesets.
-  document_delegate m_delegate;
+  document_delegate m_delegate;                 ///< Delegate for document API.
+  int m_tileLayerSuffix{1};    ///< Incrementing tile layer suffix.
+  int m_objectLayerSuffix{1};  ///< Incrementing object layer suffix.
 
   void setup();
 };

@@ -4,9 +4,11 @@
 #include <QWidget>
 
 #include "layer.hpp"
+#include "layer_model.hpp"
 #include "map_document.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
+#include "smart_pointers.hpp"
 #include "vector_map.hpp"
 
 namespace Ui {
@@ -15,8 +17,10 @@ class layer_widget;
 
 namespace tactile::gui {
 
+class layer_list_view;
 class layer_item;
 class layer_item_context_menu;
+class layer_widget_context_menu;
 
 class layer_widget final : public QWidget
 {
@@ -27,61 +31,31 @@ class layer_widget final : public QWidget
 
   ~layer_widget() noexcept override;
 
- signals:
-  void ui_add_layer();
-  void ui_remove_layer(layer_id id);
-  void ui_select_layer(layer_id id);
-  void ui_set_layer_opacity(layer_id id, double opacity);
-  void ui_set_layer_visibility(layer_id id, bool visible);
-  void ui_set_layer_name(layer_id id, const QString& name);
-  void ui_move_layer_down(layer_id id);
-  void ui_move_layer_up(layer_id id);
-  void ui_duplicate_layer(layer_id id);
-
  public slots:
-  void added_layer(layer_id id, const core::layer& layer);
-
-  void added_duplicated_layer(layer_id id, const core::layer& layer);
-
-  void removed_layer(layer_id id);
-
-  void selected_layer(layer_id id, const core::layer& layer);
-
-  void selected_map(map_id mapId, const core::map_document& document);
-
-  void moved_layer_back(layer_id id);
-
-  void moved_layer_forward(layer_id id);
+  void selected_map(map_id id,
+                    const core::map_document& document,
+                    const shared<vm::layer_model>& model);
 
  private:
   Ui::layer_widget* m_ui{};
-  layer_item_context_menu* m_contextMenu{};
+  layer_list_view* m_listView{};
+
+  layer_item_context_menu* m_itemContextMenu{};
+  layer_widget_context_menu* m_widgetContextMenu{};
+
+  shared<vm::layer_model> m_model;
+
   vector_map<map_id, int> m_suffixes;
   maybe<map_id> m_currentMap;
   maybe<int> m_duplicateTargetRow;
   maybe<QString> m_cachedName;
 
-  void add_layer(layer_id id, const core::layer& layer);
-
-  [[nodiscard]] auto item_for_layer_id(layer_id id) -> layer_item*;
-
-  [[nodiscard]] auto current_item() const -> const layer_item*;
-
-  void update_possible_actions();
-
  private slots:
-  [[maybe_unused]] void on_layerList_currentTextChanged(const QString& text);
+  [[maybe_unused]] void new_tile_layer_requested();
 
-  [[maybe_unused]] void on_layerList_itemChanged(QListWidgetItem *item);
+  [[maybe_unused]] void new_object_layer_requested();
 
   [[maybe_unused]] void on_newLayerButton_pressed();
-
-  [[maybe_unused]] void on_layerList_customContextMenuRequested(
-      const QPoint& pos);
-
-  [[maybe_unused]] void on_layerList_currentItemChanged(
-      QListWidgetItem* current,
-      QListWidgetItem* previous);
 
   [[maybe_unused]] void on_removeLayerButton_pressed();
 
