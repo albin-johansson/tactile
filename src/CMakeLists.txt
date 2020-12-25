@@ -155,6 +155,10 @@ set(TACTILE_SOURCE_FILES
         gui/dialog/open_tileset/open_tileset_image.cpp
         gui/dialog/open_tileset/open_tileset_image.hpp
 
+        gui/dialog/add_property/add_property_dialog.ui
+        gui/dialog/add_property/add_property_dialog.hpp
+        gui/dialog/add_property/add_property_dialog.cpp
+
         gui/editor/map_scene.cpp
         gui/editor/map_scene.hpp
         gui/editor/map_editor.cpp
@@ -172,9 +176,6 @@ set(TACTILE_SOURCE_FILES
         gui/properties/properties_widget.cpp
         gui/properties/properties_widget.hpp
         gui/properties/properties_widget.ui
-        gui/properties/add_property_dialog.ui
-        gui/properties/add_property_dialog.hpp
-        gui/properties/add_property_dialog.cpp
         gui/properties/property_context_menu.cpp
         gui/properties/property_context_menu.hpp
         gui/properties/property_tree_view.cpp
@@ -341,6 +342,7 @@ target_include_directories(libTactile
         PUBLIC gui/dialog/save
         PUBLIC gui/dialog/open_map
         PUBLIC gui/dialog/open_tileset
+        PUBLIC gui/dialog/add_property
         PUBLIC service
         PUBLIC service/save
         PUBLIC service/open
