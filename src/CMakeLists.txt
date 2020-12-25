@@ -71,6 +71,8 @@ set(TACTILE_SOURCE_FILES
         core/viewmodel/layer/layer_model.cpp
         core/viewmodel/layer/layer_model.hpp
         core/viewmodel/layer/layer_item_role.hpp
+        core/viewmodel/layer/layer_item.cpp
+        core/viewmodel/layer/layer_item.hpp
 
         gui/icons.cpp
         gui/icons.hpp
