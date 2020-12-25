@@ -323,7 +323,7 @@ void window::switched_map(const map_id id,
                           const shared<vm::layer_model>& layerModel)
 {
   m_tilesetDock->selected_map(id);
-  m_layerDock->selected_map(id, document, layerModel);
+  m_layerDock->selected_map(document, layerModel);
   m_propertiesDock->selected_map(document, propertyModel);
   m_statusBar->switched_map(document);
 }
