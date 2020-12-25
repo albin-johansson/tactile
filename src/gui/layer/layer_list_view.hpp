@@ -2,6 +2,8 @@
 
 #include <QListView>
 
+#include "maybe.hpp"
+
 namespace tactile::gui {
 
 class layer_list_view final : public QListView
@@ -11,6 +13,10 @@ class layer_list_view final : public QListView
  public:
   explicit layer_list_view(QWidget* parent = nullptr);
 
+ signals:
+  void selection_changed(const maybe<QModelIndex>& selected,
+                         const maybe<QModelIndex>& deselected);
+
  protected:
   void selectionChanged(const QItemSelection& selected,
                         const QItemSelection& deselected) override;
@@ -18,4 +24,4 @@ class layer_list_view final : public QListView
   void mousePressEvent(QMouseEvent* event) override;
 };
 
-}
+}  // namespace tactile::gui
