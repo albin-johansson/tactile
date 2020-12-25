@@ -74,7 +74,6 @@ void layer_widget::spawn_context_menu(const QPoint& pos)
   }
 }
 
-[[maybe_unused]] //
 void layer_widget::when_selection_changed(const maybe<QModelIndex>& selected,
                                           const maybe<QModelIndex>& deselected)
 {
