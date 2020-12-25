@@ -159,6 +159,10 @@ set(TACTILE_SOURCE_FILES
         gui/dialog/add_property/add_property_dialog.hpp
         gui/dialog/add_property/add_property_dialog.cpp
 
+        gui/dialog/change_property_name/change_property_name_dialog.ui
+        gui/dialog/change_property_name/change_property_name_dialog.cpp
+        gui/dialog/change_property_name/change_property_name_dialog.hpp
+
         gui/editor/map_scene.cpp
         gui/editor/map_scene.hpp
         gui/editor/map_editor.cpp
@@ -190,9 +194,6 @@ set(TACTILE_SOURCE_FILES
         gui/properties/property_file_dialog.cpp
         gui/properties/property_file_dialog.hpp
         gui/properties/property_value_widget.hpp
-        gui/properties/change_property_name_dialog.ui
-        gui/properties/change_property_name_dialog.cpp
-        gui/properties/change_property_name_dialog.hpp
         gui/properties/property_name_validator.cpp
         gui/properties/property_name_validator.hpp
 
@@ -343,6 +344,7 @@ target_include_directories(libTactile
         PUBLIC gui/dialog/open_map
         PUBLIC gui/dialog/open_tileset
         PUBLIC gui/dialog/add_property
+        PUBLIC gui/dialog/change_property_name
         PUBLIC service
         PUBLIC service/save
         PUBLIC service/open
