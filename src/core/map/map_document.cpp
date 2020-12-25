@@ -320,7 +320,8 @@ auto map_document::take_layer(const layer_id id) -> shared_layer
 
 void map_document::duplicate_layer(const layer_id id)
 {
-  const auto& [newId, layer] = m_map->duplicate_layer(id);
+  auto& [newId, layer] = m_map->duplicate_layer(id);
+  layer->set_name(layer->name() + tr(" (Copy)"));
   emit added_duplicated_layer(newId, *layer);
   emit redraw();
 }
