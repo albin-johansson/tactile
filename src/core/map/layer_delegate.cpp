@@ -5,6 +5,9 @@
 
 namespace tactile::core {
 
+layer_delegate::layer_delegate(const layer_type type) noexcept : m_type{type}
+{}
+
 void layer_delegate::set_visible(const bool visible) noexcept
 {
   m_visible = visible;
@@ -18,6 +21,11 @@ void layer_delegate::set_opacity(const double opacity)
 void layer_delegate::set_name(QString name)
 {
   m_name = std::move(name);
+}
+
+auto layer_delegate::type() const noexcept -> layer_type
+{
+  return m_type;
 }
 
 auto layer_delegate::visible() const noexcept -> bool

@@ -6,7 +6,7 @@
 
 namespace tactile::core {
 
-object_layer::object_layer()
+object_layer::object_layer() : m_layerDelegate{layer_type::object_layer}
 {
   m_layerDelegate.set_name(TACTILE_QSTRING(u"Object layer"));
 }
@@ -65,6 +65,11 @@ void object_layer::set_opacity(const double opacity)
 void object_layer::set_name(QString name)
 {
   m_layerDelegate.set_name(std::move(name));
+}
+
+auto object_layer::type() const -> layer_type
+{
+  return m_layerDelegate.type();
 }
 
 auto object_layer::visible() const noexcept -> bool

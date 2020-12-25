@@ -65,6 +65,8 @@ class tile_layer final : public layer
 
   void set_visible(bool visible) noexcept override;
 
+  [[nodiscard]] auto type() const -> layer_type override;
+
   [[nodiscard]] auto name() const -> const QString& override;
 
   [[nodiscard]] auto opacity() const noexcept -> double override;

@@ -3,6 +3,7 @@
 #include <QString>
 #include <memory>  // shared_ptr
 
+#include "layer_type.hpp"
 #include "property_manager.hpp"
 
 namespace tactile::core {
@@ -81,7 +82,23 @@ class layer : public property_manager
    */
   [[nodiscard]] virtual auto name() const -> const QString& = 0;
 
+  /**
+   * \brief Returns a copy of the layer.
+   *
+   * \return a copy of the layer.
+   *
+   * \since 0.2.0
+   */
   [[nodiscard]] virtual auto clone() const -> std::shared_ptr<layer> = 0;
+
+  /**
+   * \brief Returns the type of the layer.
+   *
+   * \return the type of with the layer.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] virtual auto type() const -> layer_type = 0;
 };
 
 using shared_layer = std::shared_ptr<layer>;

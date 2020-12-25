@@ -2,6 +2,8 @@
 
 #include <QString>
 
+#include "layer_type.hpp"
+
 namespace tactile::core {
 
 /**
@@ -16,11 +18,15 @@ namespace tactile::core {
 class layer_delegate final
 {
  public:
+  explicit layer_delegate(layer_type type) noexcept;
+
   void set_visible(bool visible) noexcept;
 
   void set_opacity(double opacity);
 
   void set_name(QString name);
+
+  [[nodiscard]] auto type() const noexcept -> layer_type;
 
   [[nodiscard]] auto visible() const noexcept -> bool;
 
@@ -29,6 +35,7 @@ class layer_delegate final
   [[nodiscard]] auto name() const -> const QString&;
 
  private:
+  layer_type m_type;
   QString m_name;
   double m_opacity{1};
   bool m_visible{true};

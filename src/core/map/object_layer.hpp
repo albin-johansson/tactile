@@ -31,6 +31,8 @@ class object_layer final : public layer
 
   void set_name(QString name) override;
 
+  [[nodiscard]] auto type() const -> layer_type override;
+
   [[nodiscard]] auto visible() const noexcept -> bool override;
 
   [[nodiscard]] auto opacity() const noexcept -> double override;

@@ -58,6 +58,7 @@ set(TACTILE_SOURCE_FILES
         core/map/map_document.hpp
         core/map/map_document_manager.cpp
         core/map/map_document_manager.hpp
+        core/map/layer_type.hpp
 
         core/viewmodel/item_model_utils.hpp
 

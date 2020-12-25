@@ -24,6 +24,7 @@ namespace {
 }  // namespace
 
 tile_layer::tile_layer(const row_t nRows, const col_t nCols)
+    : m_layerDelegate{layer_type::tile_layer}
 {
   if (nRows < 1_row || nCols < 1_col) {
     throw tactile_error{"Invalid tile_layer dimensions!"};
@@ -151,6 +152,11 @@ void tile_layer::set_name(QString name)
 void tile_layer::set_visible(const bool visible) noexcept
 {
   m_layerDelegate.set_visible(visible);
+}
+
+auto tile_layer::type() const -> layer_type
+{
+  return m_layerDelegate.type();
 }
 
 auto tile_layer::clone() const -> shared_layer
