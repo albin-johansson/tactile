@@ -9,7 +9,7 @@
  *
  * \since 0.1.0
  */
-namespace tactile::gui::icons {
+namespace tactile::icons {
 
 [[nodiscard]] auto add() -> const QIcon&;
 
@@ -25,6 +25,8 @@ namespace tactile::gui::icons {
 
 [[nodiscard]] auto tile_layer() -> const QIcon&;
 
+[[nodiscard]] auto object_layer() -> const QIcon&;
+
 [[nodiscard]] auto visible() -> const QIcon&;
 
 [[nodiscard]] auto invisible() -> const QIcon&;
@@ -37,8 +39,6 @@ namespace tactile::gui::icons {
 
 [[nodiscard]] auto expanded() -> const QIcon&;
 
-[[nodiscard]] auto object() -> const QIcon&;
-
 [[nodiscard]] auto question_mark() -> const QIcon&;
 
-}  // namespace tactile::gui::icons
+}  // namespace tactile::icons

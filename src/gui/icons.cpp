@@ -2,7 +2,7 @@
 
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui::icons {
+namespace tactile::icons {
 
 auto add() -> const QIcon&
 {
@@ -60,6 +60,14 @@ auto tile_layer() -> const QIcon&
   return icon;
 }
 
+auto object_layer() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/object.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
 auto visible() -> const QIcon&
 {
   static const QIcon icon{
@@ -108,14 +116,6 @@ auto collapsed() -> const QIcon&
   return icon;
 }
 
-auto object() -> const QIcon&
-{
-  static const QIcon icon{
-      TACTILE_QSTRING(u":resources/icons/color/64/object.png")};
-  Q_ASSERT(!icon.isNull());
-  return icon;
-}
-
 auto question_mark() -> const QIcon&
 {
   static const QIcon icon{
@@ -124,4 +124,4 @@ auto question_mark() -> const QIcon&
   return icon;
 }
 
-}  // namespace tactile::gui::icons
+}  // namespace tactile::icons

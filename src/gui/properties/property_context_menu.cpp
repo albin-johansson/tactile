@@ -11,7 +11,7 @@ property_context_menu::property_context_menu(QWidget* parent)
     , m_paste{addAction(icons::paste(), tr("Paste"))}
     , m_sep0{addSeparator()}
     , m_rename{addAction(icons::rename(), tr("Rename"))}
-    , m_changeType{addMenu(icons::object(), tr("Change type"))}
+    , m_changeType{addMenu(icons::object_layer(), tr("Change type"))}
     , m_sep1{addSeparator()}
     , m_add{addAction(icons::add(), tr("Add new property..."))}
     , m_remove{addAction(icons::remove(), tr("Remove"))}
