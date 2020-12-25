@@ -8,9 +8,9 @@
 #include "icons.hpp"
 #include "item_model_utils.hpp"
 #include "item_type.hpp"
-#include "property_file_dialog.hpp"
 #include "property_items.hpp"
 #include "property_model.hpp"
+#include "select_file_dialog.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 
@@ -99,7 +99,7 @@ void property_tree_view::when_file_added(const QModelIndex& valueIndex)
   m_widgetItems.emplace(id, get_model()->itemFromIndex(valueIndex));
 
   connect(widget, &file_value_widget::spawn_dialog, [this, id] {
-    property_file_dialog::spawn([this, id](const QString& path) {
+    select_file_dialog::spawn([this, id](const QString& path) {
       auto* item = m_widgetItems.at(id);
       item->setData(path, vm::property_item_role::path);
 

@@ -1,10 +1,10 @@
-#include "property_file_dialog.hpp"
+#include "select_file_dialog.hpp"
 
 #include <QStandardPaths>
 
 namespace tactile::gui {
 
-property_file_dialog::property_file_dialog(QWidget* parent)
+select_file_dialog::select_file_dialog(QWidget* parent)
     : QFileDialog{parent}
 {
   setFileMode(ExistingFile);
