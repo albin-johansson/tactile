@@ -23,7 +23,7 @@ namespace tactile::gui::icons {
 
 [[nodiscard]] auto paste() -> const QIcon&;
 
-[[nodiscard]] auto layer() -> const QIcon&;
+[[nodiscard]] auto tile_layer() -> const QIcon&;
 
 [[nodiscard]] auto visible() -> const QIcon&;
 

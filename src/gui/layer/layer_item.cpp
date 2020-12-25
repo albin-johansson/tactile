@@ -10,7 +10,7 @@ layer_item::layer_item(const QString& name,
     : QListWidgetItem{name, parent}
     , m_layer{id}
 {
-  setIcon(icons::layer());
+  setIcon(icons::tile_layer());
   setFlags(flags() | Qt::ItemIsEditable);
 }
 

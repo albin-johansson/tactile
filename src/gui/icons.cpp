@@ -52,7 +52,7 @@ auto paste() -> const QIcon&
   return icon;
 }
 
-auto layer() -> const QIcon&
+auto tile_layer() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/grid.png")};
