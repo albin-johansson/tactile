@@ -64,7 +64,7 @@ set(TACTILE_SOURCE_FILES
         core/viewmodel/property/property_model.hpp
         core/viewmodel/property/property_items.hpp
         core/viewmodel/property/property_item_role.hpp
-        core/viewmodel/property/item_type.hpp
+        core/viewmodel/property/property_item_type.hpp
 
         gui/icons.cpp
         gui/icons.hpp

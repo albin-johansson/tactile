@@ -176,37 +176,37 @@ auto property_model::add_property(const QString& name,
 
 void property_model::set_value(const QString& name, QStandardItem* item)
 {
-  switch (static_cast<vm::item_type>(item->type())) {
-    case item_type::string: {
+  switch (static_cast<vm::property_item_type>(item->type())) {
+    case property_item_type::string: {
       m_manager->set_property(name, item->data(Qt::EditRole).value<QString>());
       break;
     }
-    case item_type::integer: {
+    case property_item_type::integer: {
       m_manager->set_property(name, item->data(Qt::EditRole).value<int>());
       break;
     }
-    case item_type::floating: {
+    case property_item_type::floating: {
       m_manager->set_property(name, item->data(Qt::EditRole).value<double>());
       break;
     }
-    case item_type::boolean: {
+    case property_item_type::boolean: {
       m_manager->set_property(name,
                               item->data(Qt::CheckStateRole).value<bool>());
       break;
     }
-    case item_type::file: {
+    case property_item_type::file: {
       const auto path =
           item->data(vm::property_item_role::path).value<QString>();
       m_manager->set_property(name, QFileInfo{path});
       break;
     }
-    case item_type::color: {
+    case property_item_type::color: {
       const auto color =
           item->data(vm::property_item_role::color).value<QColor>();
       m_manager->set_property(name, color);
       break;
     }
-    case item_type::object:
+    case property_item_type::object:
       break;  // TODO
   }
 }

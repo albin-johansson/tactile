@@ -4,7 +4,7 @@
 
 namespace tactile::vm {
 
-enum class item_type
+enum class property_item_type
 {
   string = QStandardItem::UserType,
   integer,

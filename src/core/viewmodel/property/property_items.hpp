@@ -2,8 +2,8 @@
 
 #include <QStandardItem>
 
-#include "item_type.hpp"
 #include "property_item_role.hpp"
+#include "property_item_type.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::vm {
@@ -19,7 +19,7 @@ class string_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(item_type::string);
+    return static_cast<int>(property_item_type::string);
   }
 };
 
@@ -33,7 +33,7 @@ class int_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(item_type::integer);
+    return static_cast<int>(property_item_type::integer);
   }
 };
 
@@ -47,7 +47,7 @@ class float_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(item_type::floating);
+    return static_cast<int>(property_item_type::floating);
   }
 };
 
@@ -63,7 +63,7 @@ class bool_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(item_type::boolean);
+    return static_cast<int>(property_item_type::boolean);
   }
 };
 
@@ -78,7 +78,7 @@ class object_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(item_type::object);
+    return static_cast<int>(property_item_type::object);
   }
 };
 
@@ -93,7 +93,7 @@ class color_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(item_type::color);
+    return static_cast<int>(property_item_type::color);
   }
 };
 
@@ -108,7 +108,7 @@ class file_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(item_type::file);
+    return static_cast<int>(property_item_type::file);
   }
 };
 

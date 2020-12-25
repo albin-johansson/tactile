@@ -7,7 +7,7 @@
 #include "file_value_widget.hpp"
 #include "icons.hpp"
 #include "item_model_utils.hpp"
-#include "item_type.hpp"
+#include "property_item_type.hpp"
 #include "property_items.hpp"
 #include "property_model.hpp"
 #include "select_file_dialog.hpp"
@@ -57,12 +57,12 @@ void property_tree_view::setModel(QAbstractItemModel* model)
 void property_tree_view::add_item_widgets()
 {
   vm::visit_items(get_model(), 1, [this](QStandardItem* item) {
-    const auto itemType = static_cast<vm::item_type>(item->type());
+    const auto itemType = static_cast<vm::property_item_type>(item->type());
 
-    if (itemType == vm::item_type::color) {
+    if (itemType == vm::property_item_type::color) {
       when_color_added(item->index());
 
-    } else if (itemType == vm::item_type::file) {
+    } else if (itemType == vm::property_item_type::file) {
       when_file_added(item->index());
     }
   });
