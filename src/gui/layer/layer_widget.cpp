@@ -43,6 +43,21 @@ layer_widget::layer_widget(QWidget* parent)
 
   connect(m_addLayerMenu, &add_layer_context_menu::add_object_layer,
           this, &layer_widget::new_object_layer_requested);
+
+  connect(m_itemMenu, &layer_item_context_menu::toggle_visibility,
+          m_ui->visibleButton, &QPushButton::toggle);
+
+  connect(m_itemMenu, &layer_item_context_menu::move_layer_up,
+          m_ui->upButton, &QPushButton::click);
+
+  connect(m_itemMenu, &layer_item_context_menu::move_layer_down,
+          m_ui->downButton, &QPushButton::click);
+
+  connect(m_itemMenu, &layer_item_context_menu::duplicate_layer,
+          m_ui->duplicateButton, &QPushButton::click);
+
+  connect(m_itemMenu, &layer_item_context_menu::remove_layer,
+          m_ui->removeLayerButton, &QPushButton::click);
   // clang-format on
 }
 
@@ -101,6 +116,11 @@ void layer_widget::when_selection_changed(const maybe<QModelIndex>& selected,
 
     m_model->select(*selected);
   }
+
+  m_itemMenu->set_visibility_enabled(m_ui->visibleButton->isEnabled());
+  m_itemMenu->set_remove_enabled(m_ui->removeLayerButton->isEnabled());
+  m_itemMenu->set_move_up_enabled(m_ui->upButton->isEnabled());
+  m_itemMenu->set_move_down_enabled(m_ui->downButton->isEnabled());
 }
 
 void layer_widget::new_tile_layer_requested()
