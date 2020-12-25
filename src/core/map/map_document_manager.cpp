@@ -39,6 +39,7 @@ auto map_document_manager::add(map_document* document) -> map_id
   };
 
   // clang-format off
+  bind(&map_document::redraw,                 &map_document_manager::redraw);
   bind(&map_document::undo_state_updated,     &map_document_manager::undo_state_updated);
   bind(&map_document::redo_state_updated,     &map_document_manager::redo_state_updated);
   bind(&map_document::undo_text_updated,      &map_document_manager::undo_text_updated);

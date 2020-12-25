@@ -148,6 +148,7 @@ class map_document_manager final : public QObject
   [[nodiscard]] auto current_tileset() const -> const tileset*;
 
  signals:
+  void redraw();
   void undo_state_updated(bool canUndo);
   void redo_state_updated(bool canRedo);
   void undo_text_updated(const QString& text);

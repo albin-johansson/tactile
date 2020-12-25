@@ -455,6 +455,7 @@ class map_document final : public QObject, public document
   [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*;
 
  signals:
+  void redraw();
   void undo_state_updated(bool canUndo);
   void redo_state_updated(bool canRedo);
   void undo_text_updated(const QString& text);

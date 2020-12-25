@@ -53,6 +53,7 @@ void map_document::undo()
 {
   m_delegate.undo();
 
+  emit redraw();
   /* Emit clean_changed once more, because we need to take into account that the
      document might not feature an associated file path yet (that is what
      is_clean does) */
@@ -62,6 +63,7 @@ void map_document::undo()
 void map_document::redo()
 {
   m_delegate.redo();
+  emit redraw();
 }
 
 void map_document::mark_as_clean()
@@ -171,21 +173,25 @@ void map_document::add_erase_sequence(vector_map<position, tile_id>&& oldState)
 void map_document::add_row()
 {
   m_delegate.get_commands()->push<cmd::add_row>(m_map.get());
+  emit redraw();
 }
 
 void map_document::add_column()
 {
   m_delegate.get_commands()->push<cmd::add_col>(m_map.get());
+  emit redraw();
 }
 
 void map_document::remove_row()
 {
   m_delegate.get_commands()->push<cmd::remove_row>(m_map.get());
+  emit redraw();
 }
 
 void map_document::remove_column()
 {
   m_delegate.get_commands()->push<cmd::remove_col>(m_map.get());
+  emit redraw();
 }
 
 void map_document::resize(const row_t nRows, const col_t nCols)
@@ -193,6 +199,7 @@ void map_document::resize(const row_t nRows, const col_t nCols)
   Q_ASSERT(nRows > 0_row);
   Q_ASSERT(nCols > 0_col);
   m_delegate.get_commands()->push<cmd::resize_map>(m_map.get(), nRows, nCols);
+  emit redraw();
 }
 
 void map_document::add_tileset(const QImage& image,
@@ -248,6 +255,7 @@ void map_document::ui_remove_tileset(const tileset_id id)
       this,
       m_tilesets->get_tileset_pointer(id),
       id);
+  emit redraw();
 }
 
 void map_document::select_tileset(const tileset_id id)
@@ -264,6 +272,7 @@ void map_document::select_layer(const layer_id id)
 {
   m_map->select_layer(id);
   emit selected_layer(id, *m_map->get_layer(id));
+  emit redraw();
 }
 
 void map_document::add_layer(const layer_id id, const shared_layer& layer)
@@ -313,48 +322,58 @@ void map_document::duplicate_layer(const layer_id id)
 {
   const auto& [newId, layer] = m_map->duplicate_layer(id);
   emit added_duplicated_layer(newId, *layer);
+  emit redraw();
 }
 
 void map_document::increase_tile_size()
 {
   m_map->increase_tile_size();
+  emit redraw();
 }
 
 void map_document::decrease_tile_size()
 {
   m_map->decrease_tile_size();
+  emit redraw();
 }
 
 void map_document::reset_tile_size()
 {
   m_map->reset_tile_size();
+  emit redraw();
 }
 
 void map_document::set_layer_visibility(const layer_id id, const bool visible)
 {
   m_map->set_visibility(id, visible);
+  emit redraw();
 }
 
 void map_document::set_layer_opacity(const layer_id id, const double opacity)
 {
+  // TODO add undo/redo for change opacity
   m_map->set_opacity(id, opacity);
+  emit redraw();
 }
 
 void map_document::set_layer_name(const layer_id id, const QString& name)
 {
   m_map->set_name(id, name);
+  emit redraw();
 }
 
 void map_document::move_layer_back(const layer_id id)
 {
   m_map->move_layer_back(id);
   emit moved_layer_back(id);
+  emit redraw();
 }
 
 void map_document::move_layer_forward(const layer_id id)
 {
   m_map->move_layer_forward(id);
   emit moved_layer_forward(id);
+  emit redraw();
 }
 
 void map_document::set_tileset_name(const tileset_id id, const QString& name)
