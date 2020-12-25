@@ -76,22 +76,20 @@ void properties_widget::selected_map(
     const core::map_document& document,
     const vm::shared_property_model& propertyModel)
 {
+  m_treeView->collapseAll();
+
   if (m_model) {
     m_model->disconnect(m_treeView);
     m_model->clear_predefined();
   }
 
   Q_ASSERT(!propertyModel->parent());
-
-  auto* selectionModel = m_treeView->selectionModel();
   m_treeView->setModel(propertyModel.get());
   m_model = propertyModel;
-  selectionModel->deleteLater();
 
   Q_ASSERT(!m_model->parent());
-
-  m_treeView->add_item_widgets();
   m_treeView->expandAll();
+  m_treeView->add_item_widgets();
 
   // clang-format off
   connect(m_model.get(), &vm::property_model::added_file,
