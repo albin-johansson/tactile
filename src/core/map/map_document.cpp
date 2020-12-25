@@ -73,7 +73,7 @@ void map_document::mark_as_clean()
 
 void map_document::set_path(QFileInfo path)
 {
-  m_delegate.set_path(std::move(path));
+  m_delegate.set_path(path);
 }
 
 auto map_document::can_undo() const -> bool
