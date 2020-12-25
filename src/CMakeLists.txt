@@ -31,6 +31,7 @@ set(TACTILE_SOURCE_FILES
         core/aliases/map_id.hpp
         core/aliases/tileset_id.hpp
         core/aliases/maybe.hpp
+        core/aliases/smart_pointers.hpp
 
         core/algorithm/flood_fill.hpp
         core/algorithm/flood_fill.cpp
