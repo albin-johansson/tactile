@@ -9,7 +9,7 @@ class layer_item_context_menu final : public QMenu
   Q_OBJECT
 
  public:
-  explicit layer_item_context_menu(QWidget* parent = nullptr);
+  explicit layer_item_context_menu(QWidget* parent);
 
   void set_visibility_enabled(bool enabled);
 
