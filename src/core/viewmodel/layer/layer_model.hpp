@@ -3,6 +3,7 @@
 #include <QStandardItemModel>
 
 #include "map_document.hpp"
+#include "maybe.hpp"
 
 namespace tactile::vm {
 
@@ -39,6 +40,7 @@ class layer_model final : public QStandardItemModel
 
  private:
   core::map_document* m_document{};
+  maybe<int> m_duplicateTargetRow;
 
   void add_item(layer_id id, const core::layer& layer);
 

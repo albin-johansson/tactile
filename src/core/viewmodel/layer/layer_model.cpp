@@ -53,6 +53,7 @@ void layer_model::remove(const QModelIndex& index)
 
 void layer_model::duplicate(const QModelIndex& index)
 {
+  m_duplicateTargetRow = itemFromIndex(index)->row() + 1;
   m_document->duplicate_layer(id_from_index(index));
 }
 
@@ -102,7 +103,12 @@ auto layer_model::visible(const QModelIndex& index) const -> bool
 
 void layer_model::add_item(const layer_id id, const core::layer& layer)
 {
-  appendRow(layer_item::make(id, layer));
+  if (m_duplicateTargetRow) {
+    insertRow(*m_duplicateTargetRow, layer_item::make(id, layer));
+    m_duplicateTargetRow.reset();
+  } else {
+    appendRow(layer_item::make(id, layer));
+  }
 }
 
 void layer_model::remove_item(const layer_id id)
