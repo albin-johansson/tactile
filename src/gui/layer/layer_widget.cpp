@@ -150,6 +150,7 @@ void layer_widget::on_newLayerButton_pressed()
 void layer_widget::on_removeLayerButton_pressed()
 {
   m_model->remove(m_listView->currentIndex());
+  m_ui->removeLayerButton->setEnabled(m_model->rowCount() != 1);
 }
 
 [[maybe_unused]] //
