@@ -155,13 +155,15 @@ void layer_widget::on_removeLayerButton_pressed()
 [[maybe_unused]] //
 void layer_widget::on_upButton_pressed()
 {
-  m_model->move_up(m_listView->currentIndex());
+  const auto index = m_model->move_up(m_listView->currentIndex());
+  m_listView->setCurrentIndex(index);
 }
 
 [[maybe_unused]] //
 void layer_widget::on_downButton_pressed()
 {
-  m_model->move_down(m_listView->currentIndex());
+  const auto index = m_model->move_down(m_listView->currentIndex());
+  m_listView->setCurrentIndex(index);
 }
 
 [[maybe_unused]] //
