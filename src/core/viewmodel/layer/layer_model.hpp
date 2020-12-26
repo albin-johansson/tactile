@@ -25,9 +25,9 @@ class layer_model final : public QStandardItemModel
 
   void duplicate(const QModelIndex& index);
 
-  void move_up(const QModelIndex& index);
+  auto move_up(const QModelIndex& index) -> QModelIndex;
 
-  void move_down(const QModelIndex& index);
+  auto move_down(const QModelIndex& index) -> QModelIndex;
 
   void set_opacity(const QModelIndex& index, double opacity);
 
@@ -43,6 +43,8 @@ class layer_model final : public QStandardItemModel
   void add_item(layer_id id, const core::layer& layer);
 
   void remove_item(layer_id id);
+
+  [[nodiscard]] auto get_item(const QModelIndex& index) -> layer_item*;
 
   [[nodiscard]] auto get_item(const QModelIndex& index) const
       -> const layer_item*;

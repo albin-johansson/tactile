@@ -56,14 +56,28 @@ void layer_model::duplicate(const QModelIndex& index)
   m_document->duplicate_layer(id_from_index(index));
 }
 
-void layer_model::move_up(const QModelIndex& index)
-{
-  m_document->move_layer_back(id_from_index(index));
-}
-
-void layer_model::move_down(const QModelIndex& index)
+auto layer_model::move_up(const QModelIndex& index) -> QModelIndex
 {
   m_document->move_layer_forward(id_from_index(index));
+
+  const auto row = index.row();
+  const auto newRow = row - 1;
+
+  insertRow(newRow, takeRow(row));
+
+  return item(newRow)->index();
+}
+
+auto layer_model::move_down(const QModelIndex& index) -> QModelIndex
+{
+  m_document->move_layer_back(id_from_index(index));
+
+  const auto row = index.row();
+  const auto newRow = row + 1;
+
+  insertRow(newRow, takeRow(row));
+
+  return item(newRow)->index();
 }
 
 void layer_model::set_opacity(const QModelIndex& index, const double opacity)
@@ -102,6 +116,11 @@ void layer_model::remove_item(const layer_id id)
       }
     }
   }
+}
+
+auto layer_model::get_item(const QModelIndex& index) -> layer_item*
+{
+  return dynamic_cast<layer_item*>(itemFromIndex(index));
 }
 
 auto layer_model::get_item(const QModelIndex& index) const -> const layer_item*
