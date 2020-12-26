@@ -28,6 +28,9 @@ layer_model::layer_model(core::map_document* document)
 
   connect(m_document, &core::map_document::removed_layer,
           this, &layer_model::remove_item);
+
+  connect(this, &layer_model::itemChanged,
+          this, &layer_model::item_changed);
   // clang-format on
 }
 
@@ -139,6 +142,13 @@ auto layer_model::id_from_index(const QModelIndex& index) const -> layer_id
   const auto* item = get_item(index);
   Q_ASSERT(item);
   return item->get_id();
+}
+
+void layer_model::item_changed(QStandardItem* item)
+{
+  if (const auto* layerItem = dynamic_cast<const vm::layer_item*>(item)) {
+    m_document->set_layer_name(layerItem->get_id(), item->text());
+  }
 }
 
 }  // namespace tactile::vm

@@ -52,6 +52,9 @@ class layer_model final : public QStandardItemModel
       -> const layer_item*;
 
   [[nodiscard]] auto id_from_index(const QModelIndex& index) const -> layer_id;
+
+ private slots:
+  void item_changed(QStandardItem* item);
 };
 
 }  // namespace tactile::vm
