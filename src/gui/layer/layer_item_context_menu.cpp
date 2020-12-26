@@ -29,6 +29,11 @@ layer_item_context_menu::layer_item_context_menu(QWidget* parent)
   m_moveDown->setShortcut(
       QKeySequence::fromString(TACTILE_QSTRING(u"SHIFT+DOWN")));
 
+  m_duplicate->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+  m_remove->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+  m_moveUp->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+  m_moveDown->setShortcutContext(Qt::WidgetWithChildrenShortcut);
+
   Q_ASSERT(parent);
   parent->addAction(m_duplicate);
   parent->addAction(m_remove);
