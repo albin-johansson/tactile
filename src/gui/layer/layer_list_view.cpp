@@ -35,11 +35,4 @@ void layer_list_view::selectionChanged(const QItemSelection& selected,
   emit selection_changed(selectedIndex, deselectedIndex);
 }
 
-void layer_list_view::mousePressEvent(QMouseEvent* event)
-{
-  // This is done to be able to deselect layers by pressing outside of items
-  selectionModel()->clear();
-  QListView::mousePressEvent(event);
-}
-
 }  // namespace tactile::gui

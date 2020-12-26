@@ -20,8 +20,6 @@ class layer_list_view final : public QListView
  protected:
   void selectionChanged(const QItemSelection& selected,
                         const QItemSelection& deselected) override;
-
-  void mousePressEvent(QMouseEvent* event) override;
 };
 
 }  // namespace tactile::gui
