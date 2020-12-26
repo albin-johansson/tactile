@@ -23,12 +23,14 @@ layer_item_context_menu::layer_item_context_menu(QWidget* parent)
   connect(m_remove, &QAction::triggered, this, &layer_item_context_menu::remove_layer);
   // clang-format on
 
+  m_duplicate->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+D")));
   m_remove->setShortcut(QKeySequence::Delete);
   m_moveUp->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"SHIFT+UP")));
   m_moveDown->setShortcut(
       QKeySequence::fromString(TACTILE_QSTRING(u"SHIFT+DOWN")));
 
   Q_ASSERT(parent);
+  parent->addAction(m_duplicate);
   parent->addAction(m_remove);
   parent->addAction(m_moveUp);
   parent->addAction(m_moveDown);
