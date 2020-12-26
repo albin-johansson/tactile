@@ -40,6 +40,8 @@ class layer_widget final : public QWidget
   layer_item_context_menu* m_itemMenu{};
   shared<vm::layer_model> m_model;
 
+  void update_actions(const maybe<QModelIndex>& selected);
+
  private slots:
   [[maybe_unused]] void spawn_context_menu(const QPoint& pos);
 

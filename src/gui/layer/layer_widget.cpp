@@ -80,17 +80,7 @@ void layer_widget::selected_map(const core::map_document& document,
   m_model = model;
 }
 
-void layer_widget::spawn_context_menu(const QPoint& pos)
-{
-  if (m_listView->selectionModel()->selection().empty()) {
-    m_widgetMenu->exec(mapToGlobal(pos));
-  } else {
-    m_itemMenu->exec(mapToGlobal(pos));
-  }
-}
-
-void layer_widget::when_selection_changed(const maybe<QModelIndex>& selected,
-                                          const maybe<QModelIndex>& deselected)
+void layer_widget::update_actions(const maybe<QModelIndex>& selected)
 {
   if (!m_model) {
     return;
@@ -123,6 +113,21 @@ void layer_widget::when_selection_changed(const maybe<QModelIndex>& selected,
   m_itemMenu->set_move_down_enabled(m_ui->downButton->isEnabled());
 }
 
+void layer_widget::spawn_context_menu(const QPoint& pos)
+{
+  if (m_listView->selectionModel()->selection().empty()) {
+    m_widgetMenu->exec(mapToGlobal(pos));
+  } else {
+    m_itemMenu->exec(mapToGlobal(pos));
+  }
+}
+
+void layer_widget::when_selection_changed(const maybe<QModelIndex>& selected,
+                                          const maybe<QModelIndex>&)
+{
+  update_actions(selected);
+}
+
 void layer_widget::new_tile_layer_requested()
 {
   Q_ASSERT(m_model);
@@ -150,7 +155,7 @@ void layer_widget::on_newLayerButton_pressed()
 void layer_widget::on_removeLayerButton_pressed()
 {
   m_model->remove(m_listView->currentIndex());
-  m_ui->removeLayerButton->setEnabled(m_model->rowCount() != 1);
+  update_actions(m_listView->currentIndex());
 }
 
 [[maybe_unused]] //
