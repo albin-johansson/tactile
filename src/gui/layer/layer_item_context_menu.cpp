@@ -1,6 +1,7 @@
 #include "layer_item_context_menu.hpp"
 
 #include "icons.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::gui {
 
@@ -21,6 +22,16 @@ layer_item_context_menu::layer_item_context_menu(QWidget* parent)
   connect(m_duplicate, &QAction::triggered, this, &layer_item_context_menu::duplicate_layer);
   connect(m_remove, &QAction::triggered, this, &layer_item_context_menu::remove_layer);
   // clang-format on
+
+  m_remove->setShortcut(QKeySequence::Delete);
+  m_moveUp->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"SHIFT+UP")));
+  m_moveDown->setShortcut(
+      QKeySequence::fromString(TACTILE_QSTRING(u"SHIFT+DOWN")));
+
+  Q_ASSERT(parent);
+  parent->addAction(m_remove);
+  parent->addAction(m_moveUp);
+  parent->addAction(m_moveDown);
 }
 
 void layer_item_context_menu::set_visibility_enabled(const bool enabled)
