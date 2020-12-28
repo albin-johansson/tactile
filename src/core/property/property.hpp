@@ -149,6 +149,83 @@ class property final
   }
 
   /**
+   * \brief Returns the stored string value.
+   *
+   * \note This function throws if the stored value isn't a color.
+   *
+   * \return the stored color.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto as_string() const -> const QString&;
+
+  /**
+   * \brief Returns the stored integer value.
+   *
+   * \note This function throws if the stored value isn't an integer.
+   *
+   * \return the stored integer.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto as_integer() const -> int;
+
+  /**
+   * \brief Returns the stored float value.
+   *
+   * \note This function throws if the stored value isn't a float.
+   *
+   * \return the stored floating-point value.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto as_floating() const -> double;
+
+  /**
+   * \brief Returns the stored boolean value.
+   *
+   * \note This function throws if the stored value isn't a boolean.
+   *
+   * \return the stored boolean value.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto as_boolean() const -> bool;
+
+  /**
+   * \brief Returns the stored file path value.
+   *
+   * \note This function throws if the stored value isn't a file path.
+   *
+   * \return the stored file path value.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto as_file() const -> const QFileInfo&;
+
+  /**
+   * \brief Returns the stored object ID value.
+   *
+   * \note This function throws if the stored value isn't an object ID.
+   *
+   * \return the stored object ID value.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto as_object() const -> object_ref;
+
+  /**
+   * \brief Returns the stored color value.
+   *
+   * \note This function throws if the stored value isn't a color.
+   *
+   * \return the stored color value.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto as_color() const -> const QColor&;
+
+  /**
    * \brief Returns a pointer to the stored value.
    *
    * \tparam T the type of the stored value.
@@ -203,6 +280,33 @@ class property final
   [[nodiscard]] auto is_boolean() const noexcept -> bool;
 
   /**
+   * \brief Indicates whether or not the stored value is a file path.
+   *
+   * \return `true` if the stored value is a file path; `false` otherwise.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto is_file() const noexcept -> bool;
+
+  /**
+   * \brief Indicates whether or not the stored value is an object ID.
+   *
+   * \return `true` if the stored value is an object ID; `false` otherwise.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto is_object() const noexcept -> bool;
+
+  /**
+   * \brief Indicates whether or not the stored value is a color.
+   *
+   * \return `true` if the stored value is a color; `false` otherwise.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto is_color() const noexcept -> bool;
+
+  /**
    * \brief Returns the type of the stored value.
    *
    * \return the type of the stored value; `std::nullopt` if there is no value.
@@ -216,35 +320,14 @@ class property final
 };
 
 /**
- * \brief Indicates whether or not two properties are equal.
+ * \brief Returns the save file name associated with a property type.
  *
- * \param lhs the left-hand side property.
- * \param rhs the right-hand side property.
+ * \param type the property type that will be stringified.
  *
- * \return `true` if the properties are equal; `false` otherwise.
- *
- * \since 0.2.0
- */
-[[nodiscard]] inline auto operator==(const property& lhs, const property& rhs)
-    -> bool
-{
-  return lhs.get_type() == rhs.get_type();
-}
-
-/**
- * \brief Indicates whether or not two properties aren't equal.
- *
- * \param lhs the left-hand side property.
- * \param rhs the right-hand side property.
- *
- * \return `true` if the properties aren't equal; `false` otherwise.
+ * \return the name of the property type used in save files.
  *
  * \since 0.2.0
  */
-[[nodiscard]] inline auto operator!=(const property& lhs, const property& rhs)
-    -> bool
-{
-  return !(lhs == rhs);
-}
+[[nodiscard]] auto stringify(property::type type) -> QString;
 
 }  // namespace tactile::core

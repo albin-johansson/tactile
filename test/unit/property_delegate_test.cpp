@@ -17,7 +17,7 @@ TEST_CASE("property_delegate::add_property", "[property_delegate]")
 
   const auto& property = delegate.get_property(name);
   CHECK(property.is_integer());
-  CHECK(property.as<int>() == 0);
+  CHECK(property.as_integer() == 0);
 }
 
 TEST_CASE("property_delegate::remove_property", "[property_delegate]")
@@ -58,10 +58,10 @@ TEST_CASE("property_delegate::set_property", "[property_delegate]")
   const auto name = TACTILE_QSTRING(u"foo");
 
   delegate.add_property(name, core::property::integer);
-  CHECK(delegate.get_property(name).as<int>() == 0);
+  CHECK(delegate.get_property(name).as_integer() == 0);
 
   delegate.set_property(name, 123);
-  CHECK(delegate.get_property(name).as<int>() == 123);
+  CHECK(delegate.get_property(name).as_integer() == 123);
 }
 
 TEST_CASE("property_delegate::get_property", "[property_delegate]")
