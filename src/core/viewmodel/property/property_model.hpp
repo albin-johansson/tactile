@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QStandardItemModel>
-#include <memory>  // unique_ptr, shared_ptr
 
 #include "property_manager.hpp"
 
@@ -56,14 +55,8 @@ class property_model final : public QStandardItemModel
 
   void set_value(const QString& name, QStandardItem* item);
 
-  [[nodiscard]] static auto make_item(const core::property& property)
-      -> QStandardItem*;
-
  private slots:
   void when_item_changed(QStandardItem* item);
 };
-
-using unique_property_model = std::unique_ptr<property_model>;
-using shared_property_model = std::shared_ptr<property_model>;
 
 }  // namespace tactile::vm
