@@ -1,9 +1,12 @@
 #pragma once
 
-#include <memory>  // unique_ptr
+#include <QUndoCommand>  // QUndoCommand
+#include <concepts>      // derived_from
+#include <utility>       // forward
 
 #include "command_stack.hpp"
 #include "document.hpp"
+#include "smart_pointers.hpp"
 
 namespace tactile::core {
 
@@ -61,10 +64,16 @@ class document_delegate final : public document
 
   [[nodiscard]] auto get_commands() noexcept -> command_stack*;
 
+  template <std::derived_from<QUndoCommand> T, typename... Args>
+  void execute(Args&&... args)
+  {
+    m_commandStack->template push<T>(std::forward<Args>(args)...);
+  }
+
  private:
-  std::unique_ptr<command_stack> m_commandStack;
-  std::unique_ptr<property_manager> m_propertyManager;
-  QFileInfo m_path;
+  unique<command_stack> m_commandStack;
+  unique<property_manager> m_propertyManager;
+  QFileInfo m_path;  // TODO make optional? Might improve safety and clarity
 };
 
 }  // namespace tactile::core
