@@ -39,7 +39,7 @@ map_document::map_document(const row_t nRows,
 
 void map_document::setup()
 {
-  auto* commands = m_delegate.get_commands();
+  auto* commands = m_delegate->get_commands();
   // clang-format off
   connect(commands, &command_stack::cleanChanged,    this, &map_document::clean_changed);
   connect(commands, &command_stack::canUndoChanged,  this, &map_document::undo_state_updated);
@@ -51,7 +51,7 @@ void map_document::setup()
 
 void map_document::undo()
 {
-  m_delegate.undo();
+  m_delegate->undo();
 
   emit redraw();
   /* Emit clean_changed once more, because we need to take into account that the
@@ -62,135 +62,137 @@ void map_document::undo()
 
 void map_document::redo()
 {
-  m_delegate.redo();
+  m_delegate->redo();
   emit redraw();
 }
 
 void map_document::mark_as_clean()
 {
-  m_delegate.mark_as_clean();
+  m_delegate->mark_as_clean();
 }
 
 void map_document::set_path(QFileInfo path)
 {
-  m_delegate.set_path(path);
+  m_delegate->set_path(path);
 }
 
 auto map_document::can_undo() const -> bool
 {
-  return m_delegate.can_undo();
+  return m_delegate->can_undo();
 }
 
 auto map_document::can_redo() const -> bool
 {
-  return m_delegate.can_redo();
+  return m_delegate->can_redo();
 }
 
 auto map_document::is_clean() const -> bool
 {
-  return m_delegate.is_clean();
+  return m_delegate->is_clean();
 }
 
 auto map_document::get_undo_text() const -> QString
 {
-  return m_delegate.get_undo_text();
+  return m_delegate->get_undo_text();
 }
 
 auto map_document::get_redo_text() const -> QString
 {
-  return m_delegate.get_redo_text();
+  return m_delegate->get_redo_text();
 }
 
 auto map_document::path() const -> const QFileInfo&
 {
-  return m_delegate.path();
+  return m_delegate->path();
 }
 
 void map_document::add_property(const QString& name, const property::type type)
 {
-  m_delegate.add_property(name, type);
+  m_delegate->get_commands()->push<cmd::add_property>(m_delegate.get(),
+                                                      name,
+                                                      type);
 }
 
 void map_document::remove_property(const QString& name)
 {
-  m_delegate.remove_property(name);
+  m_delegate->remove_property(name);
 }
 
 void map_document::rename_property(const QString& oldName,
                                    const QString& newName)
 {
-  m_delegate.rename_property(oldName, newName);
+  m_delegate->rename_property(oldName, newName);
 }
 
 void map_document::set_property(const QString& name,
                                 const core::property& property)
 {
-  m_delegate.set_property(name, property);
+  m_delegate->set_property(name, property);
 }
 
 auto map_document::get_property(const QString& name) const
     -> const core::property&
 {
-  return m_delegate.get_property(name);
+  return m_delegate->get_property(name);
 }
 
 auto map_document::get_property(const QString& name) -> core::property&
 {
-  return m_delegate.get_property(name);
+  return m_delegate->get_property(name);
 }
 
 auto map_document::property_count() const noexcept -> int
 {
-  return m_delegate.property_count();
+  return m_delegate->property_count();
 }
 
 auto map_document::properties() const -> const property_map&
 {
-  return m_delegate.properties();
+  return m_delegate->properties();
 }
 
 void map_document::flood(const position& position, const tile_id replacement)
 {
-  m_delegate.get_commands()->push<cmd::bucket_fill>(m_map.get(),
-                                                    position,
-                                                    replacement);
+  m_delegate->get_commands()->push<cmd::bucket_fill>(m_map.get(),
+                                                     position,
+                                                     replacement);
 }
 
 void map_document::add_stamp_sequence(vector_map<position, tile_id>&& oldState,
                                       vector_map<position, tile_id>&& sequence)
 {
-  m_delegate.get_commands()->push<cmd::stamp_sequence>(m_map.get(),
-                                                       std::move(oldState),
-                                                       std::move(sequence));
+  m_delegate->get_commands()->push<cmd::stamp_sequence>(m_map.get(),
+                                                        std::move(oldState),
+                                                        std::move(sequence));
 }
 
 void map_document::add_erase_sequence(vector_map<position, tile_id>&& oldState)
 {
-  m_delegate.get_commands()->push<cmd::erase_sequence>(m_map.get(),
-                                                       std::move(oldState));
+  m_delegate->get_commands()->push<cmd::erase_sequence>(m_map.get(),
+                                                        std::move(oldState));
 }
 
 void map_document::add_row()
 {
-  m_delegate.get_commands()->push<cmd::add_row>(m_map.get());
+  m_delegate->get_commands()->push<cmd::add_row>(m_map.get());
   emit redraw();
 }
 
 void map_document::add_column()
 {
-  m_delegate.get_commands()->push<cmd::add_col>(m_map.get());
+  m_delegate->get_commands()->push<cmd::add_col>(m_map.get());
   emit redraw();
 }
 
 void map_document::remove_row()
 {
-  m_delegate.get_commands()->push<cmd::remove_row>(m_map.get());
+  m_delegate->get_commands()->push<cmd::remove_row>(m_map.get());
   emit redraw();
 }
 
 void map_document::remove_column()
 {
-  m_delegate.get_commands()->push<cmd::remove_col>(m_map.get());
+  m_delegate->get_commands()->push<cmd::remove_col>(m_map.get());
   emit redraw();
 }
 
@@ -198,7 +200,7 @@ void map_document::resize(const row_t nRows, const col_t nCols)
 {
   Q_ASSERT(nRows > 0_row);
   Q_ASSERT(nCols > 0_col);
-  m_delegate.get_commands()->push<cmd::resize_map>(m_map.get(), nRows, nCols);
+  m_delegate->get_commands()->push<cmd::resize_map>(m_map.get(), nRows, nCols);
   emit redraw();
 }
 
@@ -217,7 +219,7 @@ void map_document::add_tileset(const QImage& image,
     ts->set_path(path);
 
     // This will cause an `added_tileset` signal to be emitted
-    m_delegate.get_commands()->push<cmd::add_tileset>(this, std::move(ts), id);
+    m_delegate->get_commands()->push<cmd::add_tileset>(this, std::move(ts), id);
     m_tilesets->increment_next_tileset_id();
   }
 }
@@ -251,7 +253,7 @@ void map_document::remove_tileset(const tileset_id id)
 
 void map_document::ui_remove_tileset(const tileset_id id)
 {
-  m_delegate.get_commands()->push<cmd::remove_tileset>(
+  m_delegate->get_commands()->push<cmd::remove_tileset>(
       this,
       m_tilesets->get_tileset_pointer(id),
       id);
@@ -291,7 +293,7 @@ auto map_document::add_tile_layer() -> layer_id
                   QString::number(m_tileLayerSuffix));
   ++m_tileLayerSuffix;
 
-  m_delegate.get_commands()->push<cmd::add_layer>(this, std::move(layer), id);
+  m_delegate->get_commands()->push<cmd::add_layer>(this, std::move(layer), id);
   return id;
 }
 
@@ -304,13 +306,13 @@ auto map_document::add_object_layer() -> layer_id
                   QString::number(m_objectLayerSuffix));
   ++m_objectLayerSuffix;
 
-  m_delegate.get_commands()->push<cmd::add_layer>(this, std::move(layer), id);
+  m_delegate->get_commands()->push<cmd::add_layer>(this, std::move(layer), id);
   return id;
 }
 
 void map_document::remove_layer(const layer_id id)
 {
-  m_delegate.get_commands()->push<cmd::remove_layer>(this, id);
+  m_delegate->get_commands()->push<cmd::remove_layer>(this, id);
 }
 
 auto map_document::take_layer(const layer_id id) -> shared_layer

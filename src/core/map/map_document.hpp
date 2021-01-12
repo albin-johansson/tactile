@@ -17,6 +17,7 @@
 #include "property.hpp"
 #include "property_delegate.hpp"
 #include "property_manager.hpp"
+#include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
 #include "vector_map.hpp"
@@ -497,11 +498,11 @@ class map_document final : public QObject, public document
   void ui_remove_tileset(tileset_id id);
 
  private:
-  std::unique_ptr<map> m_map;                   ///< The associated map.
-  std::unique_ptr<tileset_manager> m_tilesets;  ///< The associated tilesets.
-  document_delegate m_delegate;                 ///< Delegate for document API.
-  int m_tileLayerSuffix{1};    ///< Incrementing tile layer suffix.
-  int m_objectLayerSuffix{1};  ///< Incrementing object layer suffix.
+  unique<map> m_map;                     ///< The associated map.
+  unique<tileset_manager> m_tilesets;    ///< The associated tilesets.
+  unique<document_delegate> m_delegate;  ///< Delegate for document API.
+  int m_tileLayerSuffix{1};              ///< Incrementing tile layer suffix.
+  int m_objectLayerSuffix{1};            ///< Incrementing object layer suffix.
 
   void setup();
 };
