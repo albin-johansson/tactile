@@ -24,6 +24,7 @@ map_document::map_document(QObject* parent)
     : QObject{parent}
     , m_map{std::make_unique<map>()}
     , m_tilesets{std::make_unique<tileset_manager>()}
+    , m_delegate{std::make_unique<document_delegate>()}
 {
   setup();
 }
@@ -34,6 +35,7 @@ map_document::map_document(const row_t nRows,
     : QObject{parent}
     , m_map{std::make_unique<map>(nRows, nCols)}
     , m_tilesets{std::make_unique<tileset_manager>()}
+    , m_delegate{std::make_unique<document_delegate>()}
 {
   setup();
 }
