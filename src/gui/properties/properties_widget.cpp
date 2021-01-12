@@ -74,7 +74,7 @@ properties_widget::~properties_widget() noexcept
 
 void properties_widget::selected_map(
     const core::map_document& document,
-    const vm::shared_property_model& propertyModel)
+    const shared<vm::property_model>& propertyModel)
 {
   m_treeView->collapseAll();
 

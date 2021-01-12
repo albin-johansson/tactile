@@ -6,6 +6,7 @@
 #include "maybe.hpp"
 #include "property.hpp"
 #include "property_model.hpp"
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class properties_widget;
@@ -27,13 +28,13 @@ class properties_widget final : public QWidget
 
  public slots:
   void selected_map(const core::map_document& document,
-                    const vm::shared_property_model& propertyModel);
+                    const shared<vm::property_model>& propertyModel);
 
  private:
   Ui::properties_widget* m_ui{};
   property_tree_view* m_treeView{};
   property_context_menu* m_contextMenu{};
-  vm::shared_property_model m_model;
+  shared<vm::property_model> m_model;
   maybe<QString> m_nameCopy;
   maybe<core::property> m_propertyCopy;
 
