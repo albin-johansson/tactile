@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QObject>       // QObject
 #include <QUndoCommand>  // QUndoCommand
 #include <concepts>      // derived_from
 #include <utility>       // forward
@@ -12,6 +13,8 @@ namespace tactile::core {
 
 class document_delegate final : public document
 {
+  Q_OBJECT
+
  public:
   document_delegate();
 

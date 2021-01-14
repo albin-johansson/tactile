@@ -82,18 +82,18 @@ void document_delegate::rename_property(const QString& oldName,
 }
 
 void document_delegate::set_property(const QString& name,
-                                     const property& property)
+                                     const core::property& property)
 {
   m_propertyManager->set_property(name, property);
 }
 
 auto document_delegate::get_property(const QString& name) const
-    -> const property&
+    -> const core::property&
 {
   return m_propertyManager->get_property(name);
 }
 
-auto document_delegate::get_property(const QString& name) -> property&
+auto document_delegate::get_property(const QString& name) -> core::property&
 {
   return m_propertyManager->get_property(name);
 }

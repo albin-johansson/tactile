@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QFileInfo>
+#include <QObject>
 #include <QString>
 #include <memory>  // unique_ptr
 
@@ -10,9 +11,9 @@
 namespace tactile::core {
 
 /**
- * \interface document
+ * \class document
  *
- * \brief An interface for objects that represent a persistent document.
+ * \brief Represents a persistent document, e.g. for tilemaps.
  *
  * \see map_document
  *
@@ -20,9 +21,14 @@ namespace tactile::core {
  *
  * \headerfile document.hpp
  */
-class document : public property_manager
+class document : public QObject, public property_manager
 {
+  Q_OBJECT
+
  public:
+  explicit document(QObject* parent = nullptr) : QObject{parent}
+  {}
+
   ~document() noexcept override = default;
 
   /**

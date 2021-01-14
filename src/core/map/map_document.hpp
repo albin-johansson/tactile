@@ -42,7 +42,7 @@ namespace tactile::core {
  *
  * \headerfile map_document.hpp
  */
-class map_document final : public QObject, public document
+class map_document final : public document
 {
   Q_OBJECT
 
