@@ -238,42 +238,6 @@ class model final : public QObject
   void set_tileset_selection(const tileset::selection& selection);
 
   /**
-   * \copydoc map_document::set_layer_visibility()
-   * \signal `redraw`
-   */
-  void set_layer_visibility(layer_id id, bool visible);
-
-  /**
-   * \copydoc map_document::set_layer_opacity()
-   * \signal `redraw`
-   */
-  void set_layer_opacity(layer_id id, double opacity);
-
-  /**
-   * \copydoc map_document::set_layer_name()
-   * \signal `redraw`
-   */
-  void set_layer_name(layer_id id, const QString& name);
-
-  /**
-   * \copydoc map_document::move_layer_back()
-   * \signal `redraw`
-   */
-  void move_layer_back(layer_id id);
-
-  /**
-   * \copydoc map_document::move_layer_forward()
-   * \signal `redraw`
-   */
-  void move_layer_forward(layer_id id);
-
-  /**
-   * \copydoc map_document::duplicate_layer()
-   * \signal `redraw`
-   */
-  void duplicate_layer(layer_id id);
-
-  /**
    * \brief Increases the tile size that is being used by the currently active
    * map.
    *
@@ -318,14 +282,6 @@ class model final : public QObject
    * \copydoc map_document::set_tileset_name()
    */
   void set_tileset_name(tileset_id id, const QString& name);
-
-  void add_property(const QString& name, core::property::type type);
-
-  void remove_property(const QString& name);
-
-  void rename_property(const QString& oldName, const QString& newName);
-
-  void set_property(const QString& name, const core::property& property);
 
   /**
    * \copydoc map_document_manager::select()

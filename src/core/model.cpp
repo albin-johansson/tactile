@@ -9,31 +9,49 @@ model::model() : m_mapDocuments{new map_document_manager{this}}, m_tools{this}
 {
   // clang-format off
   connect(m_mapDocuments, &map_document_manager::redraw,
-          this, &model::redraw);
+          this,           &model::redraw);
+
   connect(m_mapDocuments, &map_document_manager::undo_state_updated,
-          this, &model::undo_state_updated);
+          this,           &model::undo_state_updated);
+
   connect(m_mapDocuments, &map_document_manager::redo_state_updated,
-          this, &model::redo_state_updated);
+          this,           &model::redo_state_updated);
+
   connect(m_mapDocuments, &map_document_manager::undo_text_updated,
-          this, &model::undo_text_updated);
+          this,           &model::undo_text_updated);
+
   connect(m_mapDocuments, &map_document_manager::redo_text_updated,
-          this, &model::redo_text_updated);
+          this,           &model::redo_text_updated);
+
   connect(m_mapDocuments, &map_document_manager::clean_changed,
-          this, &model::clean_changed);
+          this,           &model::clean_changed);
+
   connect(m_mapDocuments, &map_document_manager::added_layer,
-          this, &model::added_layer);
+          this,           &model::added_layer);
+
   connect(m_mapDocuments, &map_document_manager::added_duplicated_layer,
-          this, &model::added_duplicated_layer);
+          this,           &model::added_duplicated_layer);
+
   connect(m_mapDocuments, &map_document_manager::removed_layer,
-          this, &model::removed_layer);
+          this,           &model::removed_layer);
+
   connect(m_mapDocuments, &map_document_manager::selected_layer,
-          this, &model::selected_layer);
+          this,           &model::selected_layer);
+
   connect(m_mapDocuments, &map_document_manager::moved_layer_back,
-          this, &model::moved_layer_back);
+          this,           &model::moved_layer_back);
+
   connect(m_mapDocuments, &map_document_manager::moved_layer_forward,
-          this, &model::moved_layer_forward);
+          this,           &model::moved_layer_forward);
+
   connect(m_mapDocuments, &map_document_manager::removed_tileset,
-          this, &model::removed_tileset);
+          this,           &model::removed_tileset);
+
+  connect(m_mapDocuments, &map_document_manager::added_property,
+          this,           &model::added_property);
+
+  connect(m_mapDocuments, &map_document_manager::removed_property,
+          this,           &model::removed_property);
   // clang-format on
 
   connect(m_mapDocuments,
@@ -180,54 +198,6 @@ void model::set_tileset_selection(const tileset::selection& selection)
   document->set_tileset_selection(selection);
 }
 
-void model::set_layer_visibility(const layer_id id, const bool visible)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->set_layer_visibility(id, visible);
-}
-
-void model::set_layer_opacity(const layer_id id, const double opacity)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->set_layer_opacity(id, opacity);
-}
-
-void model::set_layer_name(const layer_id id, const QString& name)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->set_layer_name(id, name);
-}
-
-void model::move_layer_back(const layer_id id)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->move_layer_back(id);
-}
-
-void model::move_layer_forward(const layer_id id)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->move_layer_forward(id);
-}
-
-void model::duplicate_layer(const layer_id id)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->duplicate_layer(id);
-}
-
 void model::increase_tile_size()
 {
   auto* document = current_document();
@@ -278,38 +248,6 @@ void model::set_tileset_name(const tileset_id id, const QString& name)
   Q_ASSERT(document);
 
   document->set_tileset_name(id, name);
-}
-
-void model::add_property(const QString& name, const core::property::type type)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->add_property(name, type);
-}
-
-void model::remove_property(const QString& name)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->remove_property(name);
-}
-
-void model::rename_property(const QString& oldName, const QString& newName)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->rename_property(oldName, newName);
-}
-
-void model::set_property(const QString& name, const core::property& property)
-{
-  auto* document = current_document();
-  Q_ASSERT(document);
-
-  document->set_property(name, property);
 }
 
 void model::select_map(const map_id id)
