@@ -18,6 +18,17 @@ void add_entry(const QString& name,
   root->setChild(rows, 1, valueItem);
 }
 
+[[nodiscard]] auto make_root_item(const QString& name)
+{
+  auto* item = new QStandardItem{name};
+
+  item->setEditable(false);
+  item->setSelectable(false);
+  item->setColumnCount(1);
+
+  return item;
+}
+
 }  // namespace
 
 property_model::property_model(core::property_manager* manager, QObject* parent)
@@ -30,16 +41,10 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
 
   setColumnCount(2);
 
-  m_predefinedRoot = new QStandardItem{tr("Predefined")};
-  m_predefinedRoot->setEditable(false);
-  m_predefinedRoot->setSelectable(false);
-  m_predefinedRoot->setColumnCount(1);
+  m_predefinedRoot = make_root_item(tr("Predefined"));
   setItem(0, m_predefinedRoot);
 
-  m_customRoot = new QStandardItem{tr("Custom")};
-  m_customRoot->setEditable(false);
-  m_customRoot->setSelectable(false);
-  m_customRoot->setColumnCount(1);
+  m_customRoot = make_root_item(tr("Custom"));
   setItem(1, m_customRoot);
 
   // clang-format off
