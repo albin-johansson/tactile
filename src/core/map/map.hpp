@@ -2,14 +2,14 @@
 
 #include <QString>
 #include <concepts>  // invocable
-#include <memory>    // shared_ptr
-#include <utility>   // pair
+#include <utility>   // pair, move
 
 #include "layer.hpp"
 #include "layer_id.hpp"
 #include "maybe.hpp"
 #include "object_layer.hpp"
 #include "position.hpp"
+#include "smart_pointers.hpp"
 #include "tile_id.hpp"
 #include "tile_layer.hpp"
 #include "tile_size.hpp"
@@ -32,8 +32,8 @@ namespace tactile::core {
  */
 class map final
 {
-  using layer_pair = std::pair<layer_id, std::shared_ptr<layer>>;
-  using layer_map = vector_map<layer_id, std::shared_ptr<layer>>;
+  using layer_pair = std::pair<layer_id, shared<layer>>;
+  using layer_map = vector_map<layer_id, shared<layer>>;
 
  public:
   using const_iterator = layer_map::const_iterator;
@@ -66,7 +66,7 @@ class map final
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const shared_layer&> T>
+  template <std::invocable<layer_id, const shared<layer>&> T>
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : m_layers) {
@@ -111,7 +111,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void add_layer(layer_id id, shared_layer layer);
+  void add_layer(layer_id id, shared<layer> layer);
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -149,7 +149,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto take_layer(layer_id id) -> shared_layer;
+  [[nodiscard]] auto take_layer(layer_id id) -> shared<layer>;
 
   /**
    * \brief Selects the tile layer associated with the specified ID.
@@ -334,7 +334,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto make_tile_layer() -> shared_tile_layer;
+  [[nodiscard]] auto make_tile_layer() -> shared<tile_layer>;
 
   /**
    * \brief Creates and returns an empty object layer but doesn't add it to the
@@ -346,7 +346,7 @@ class map final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto make_object_layer() -> shared_object_layer;
+  [[nodiscard]] auto make_object_layer() -> shared<object_layer>;
 
   /**
    * \brief Returns the index associated with the specified layer.
@@ -447,10 +447,6 @@ class map final
    */
   [[nodiscard]] auto height() const -> int;
 
-  [[nodiscard]] auto current_layer() -> layer&;
-
-  [[nodiscard]] auto current_layer() const -> const layer&;
-
   /**
    * \brief Returns the ID of the currently active layer.
    *
@@ -499,26 +495,19 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_layer(const layer_id id) const -> const shared_layer&
+  [[nodiscard]] auto get_layer(const layer_id id) const -> const shared<layer>&
   {
     return m_layers.at(id);
   }
 
-  [[nodiscard]] auto get_layer(const layer_id id) -> shared_layer&
+  [[nodiscard]] auto get_layer(const layer_id id) -> shared<layer>&
   {
     return m_layers.at(id);
   }
 
-  [[nodiscard]] auto get_tile_layer(const layer_id id) -> tile_layer*
-  {
-    return dynamic_cast<tile_layer*>(get_layer(id).get());
-  }
+  [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
 
-  [[nodiscard]] auto get_tile_layer(const layer_id id) const
-      -> const tile_layer*
-  {
-    return dynamic_cast<const tile_layer*>(get_layer(id).get());
-  }
+  [[nodiscard]] auto get_tile_layer(layer_id id) const -> const tile_layer*;
 
   /**
    * \brief Returns an iterator to the first layer.
