@@ -20,7 +20,6 @@ class property_manager
 {
  public:
   using property_map = vector_map<QString, property>;
-  using const_iterator = property_map::const_iterator;
 
   virtual ~property_manager() noexcept = default;
 
