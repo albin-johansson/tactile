@@ -20,6 +20,10 @@ class properties_dock final : public dock_widget
   void selected_map(const core::map_document& document,
                     const shared<vm::property_model>& propertyModel);
 
+  void added_property(const QString& name);
+
+  void removed_property(const QString& name);
+
  private:
   properties_widget* m_widget{};
 };

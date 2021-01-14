@@ -3,7 +3,7 @@
 #include "layer.hpp"
 #include "layer_delegate.hpp"
 #include "property_delegate.hpp"
-#include <memory>    // shared_ptr
+#include "smart_pointers.hpp"
 
 namespace tactile::core {
 
@@ -39,12 +39,16 @@ class object_layer final : public layer
 
   [[nodiscard]] auto name() const -> const QString& override;
 
-  [[nodiscard]] auto clone() const -> shared_layer override;
+  [[nodiscard]] auto clone() const -> shared<layer> override;
 
   /// \}
 
   /// \name Properties
   /// \{
+
+  void notify_property_added(const QString& name) override;
+
+  void notify_property_removed(const QString& name) override;
 
   void add_property(const QString& name, property::type type) override;
 
@@ -70,7 +74,5 @@ class object_layer final : public layer
   layer_delegate m_layerDelegate;
   property_delegate m_propertyDelegate;
 };
-
-using shared_object_layer = std::shared_ptr<object_layer>;
 
 }  // namespace tactile::core

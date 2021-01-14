@@ -95,9 +95,7 @@ auto property_model::add(const QString& name, const core::property& property)
   m_manager->add_property(name, property.get_type().value());
   m_manager->set_property(name, property);
 
-  const auto index =
-      add_property(name, m_manager->get_property(name), m_customRoot);
-  itemFromIndex(index.siblingAtColumn(0))->setEditable(false);
+  const auto index = add_existing_property_to_gui(name);
 
   return index;
 }
@@ -133,9 +131,7 @@ void property_model::rename(const QString& oldName, const QString& newName)
 
 void property_model::remove(const QString& name)
 {
-  if (auto* item = find_item(this, name, 0)) {
-    removeRow(item->row(), item->parent()->index());
-  }
+  remove_property_from_gui(name);
   m_manager->remove_property(name);
 }
 
@@ -158,6 +154,34 @@ auto property_model::get_property(const QString& name) const
     -> const core::property&
 {
   return m_manager->get_property(name);
+}
+
+void property_model::added_property(const QString& name)
+{
+  add_existing_property_to_gui(name);
+}
+
+void property_model::removed_property(const QString& name)
+{
+  remove_property_from_gui(name);
+}
+
+auto property_model::add_existing_property_to_gui(const QString& name)
+    -> QModelIndex
+{
+  const auto index =
+      add_property(name, m_manager->get_property(name), m_customRoot);
+
+  itemFromIndex(index.siblingAtColumn(0))->setEditable(false);
+
+  return index;
+}
+
+void property_model::remove_property_from_gui(const QString& name)
+{
+  if (auto* item = find_item(this, name, 0)) {
+    removeRow(item->row(), item->parent()->index());
+  }
 }
 
 auto property_model::add_property(const QString& name,

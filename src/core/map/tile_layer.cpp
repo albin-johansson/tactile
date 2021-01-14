@@ -211,6 +211,12 @@ auto tile_layer::visible() const noexcept -> bool
   return m_layerDelegate.visible();
 }
 
+void tile_layer::notify_property_added(const QString& name)
+{}
+
+void tile_layer::notify_property_removed(const QString& name)
+{}
+
 void tile_layer::add_property(const QString& name, const property::type type)
 {
   m_propertyDelegate.add_property(name, type);

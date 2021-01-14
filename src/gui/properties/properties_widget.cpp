@@ -122,6 +122,16 @@ void properties_widget::selected_map(
   m_contextMenu->set_add_enabled(true);
 }
 
+void properties_widget::added_property(const QString& name)
+{
+  m_model->added_property(name);
+}
+
+void properties_widget::removed_property(const QString& name)
+{
+  m_model->removed_property(name);
+}
+
 void properties_widget::selection_changed(const maybe<QModelIndex> index)
 {
   m_contextMenu->disable_all();

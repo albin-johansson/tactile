@@ -64,6 +64,16 @@ auto document_delegate::path() const -> const QFileInfo&
   return m_path;
 }
 
+void document_delegate::notify_property_added(const QString& name)
+{
+  emit added_property(name);
+}
+
+void document_delegate::notify_property_removed(const QString& name)
+{
+  emit removed_property(name);
+}
+
 void document_delegate::add_property(const QString& name,
                                      const property::type type)
 {

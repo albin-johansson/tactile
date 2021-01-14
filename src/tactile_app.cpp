@@ -84,6 +84,8 @@ void tactile_app::init_connections()
   modToWin(&mod::added_duplicated_layer, &win::added_duplicated_layer);
   modToWin(&mod::removed_layer,          &win::removed_layer);
   modToWin(&mod::selected_layer,         &win::selected_layer);
+  modToWin(&mod::added_property,         &win::added_property);
+  modToWin(&mod::removed_property,       &win::removed_property);
 
   fromWindow(&win::ui_add_tileset, &tactile_app::handle_new_tileset);
   fromWindow(&win::ui_resize_map,  &tactile_app::handle_resize_map);

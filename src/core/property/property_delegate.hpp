@@ -13,6 +13,10 @@ class property_delegate final : public property_manager
  public:
   ~property_delegate() noexcept override = default;
 
+  void notify_property_added(const QString& name) override;
+
+  void notify_property_removed(const QString& name) override;
+
   void add_property(const QString& name, property::type type) override;
 
   void remove_property(const QString& name) override;

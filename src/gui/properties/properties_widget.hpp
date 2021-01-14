@@ -30,6 +30,10 @@ class properties_widget final : public QWidget
   void selected_map(const core::map_document& document,
                     const shared<vm::property_model>& propertyModel);
 
+  void added_property(const QString& name);
+
+  void removed_property(const QString& name);
+
  private:
   Ui::properties_widget* m_ui{};
   property_tree_view* m_treeView{};

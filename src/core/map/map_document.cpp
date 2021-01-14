@@ -10,9 +10,9 @@
 #include "add_tileset.hpp"
 #include "bucket_fill.hpp"
 #include "erase_sequence.hpp"
-#include "property_model.hpp"
 #include "remove_col.hpp"
 #include "remove_layer.hpp"
+#include "remove_property.hpp"
 #include "remove_row.hpp"
 #include "remove_tileset.hpp"
 #include "resize_map.hpp"
@@ -44,11 +44,14 @@ void map_document::setup()
 {
   auto* commands = m_delegate->get_commands();
   // clang-format off
-  connect(commands, &command_stack::cleanChanged,    this, &map_document::clean_changed);
-  connect(commands, &command_stack::canUndoChanged,  this, &map_document::undo_state_updated);
-  connect(commands, &command_stack::canRedoChanged,  this, &map_document::redo_state_updated);
+  connect(commands, &command_stack::cleanChanged, this, &map_document::clean_changed);
+  connect(commands, &command_stack::canUndoChanged, this, &map_document::undo_state_updated);
+  connect(commands, &command_stack::canRedoChanged, this, &map_document::redo_state_updated);
   connect(commands, &command_stack::undoTextChanged, this, &map_document::undo_text_updated);
   connect(commands, &command_stack::redoTextChanged, this, &map_document::redo_text_updated);
+
+  connect(m_delegate.get(), &document_delegate::added_property, this, &map_document::added_property);
+  connect(m_delegate.get(), &document_delegate::removed_property, this, &map_document::removed_property);
   // clang-format on
 }
 
@@ -109,6 +112,16 @@ auto map_document::path() const -> const QFileInfo&
   return m_delegate->path();
 }
 
+void map_document::notify_property_added(const QString& name)
+{
+  m_delegate->notify_property_added(name);
+}
+
+void map_document::notify_property_removed(const QString& name)
+{
+  m_delegate->notify_property_removed(name);
+}
+
 void map_document::add_property(const QString& name, const property::type type)
 {
   m_delegate->execute<cmd::add_property>(m_delegate.get(), name, type);
@@ -116,7 +129,7 @@ void map_document::add_property(const QString& name, const property::type type)
 
 void map_document::remove_property(const QString& name)
 {
-  m_delegate->remove_property(name);
+  m_delegate->execute<cmd::remove_property>(m_delegate.get(), name);
 }
 
 void map_document::rename_property(const QString& oldName,
@@ -222,13 +235,13 @@ void map_document::add_tileset(const QImage& image,
   }
 }
 
-void map_document::add_tileset(const tileset_id id, shared_tileset tileset)
+void map_document::add_tileset(const tileset_id id, shared<tileset> tileset)
 {
   m_tilesets->add(id, std::move(tileset));
   emit added_tileset(id);
 }
 
-void map_document::add_tileset(shared_tileset tileset)
+void map_document::add_tileset(shared<tileset> tileset)
 {
   const auto id = m_tilesets->add(std::move(tileset));
   emit added_tileset(id);
@@ -274,7 +287,7 @@ void map_document::select_layer(const layer_id id)
   emit redraw();
 }
 
-void map_document::add_layer(const layer_id id, const shared_layer& layer)
+void map_document::add_layer(const layer_id id, const shared<layer>& layer)
 {
   Q_ASSERT(layer);
   m_map->add_layer(id, layer);
@@ -312,7 +325,7 @@ void map_document::remove_layer(const layer_id id)
   m_delegate->execute<cmd::remove_layer>(this, id);
 }
 
-auto map_document::take_layer(const layer_id id) -> shared_layer
+auto map_document::take_layer(const layer_id id) -> shared<layer>
 {
   return m_map->take_layer(id);
 }

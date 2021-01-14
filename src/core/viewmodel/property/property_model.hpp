@@ -44,10 +44,20 @@ class property_model final : public QStandardItemModel
   void added_file(const QModelIndex& valueIndex);
   void changed_type(const QModelIndex& valueIndex, core::property::type type);
 
+ public slots:
+  // Meant to be called as a result of undo/redo
+  void added_property(const QString& name);
+  void removed_property(const QString& name);
+
  private:
   core::property_manager* m_manager{};
   QStandardItem* m_predefinedRoot{};
   QStandardItem* m_customRoot{};
+
+  auto add_existing_property_to_gui(const QString& name)
+      -> QModelIndex;
+
+  void remove_property_from_gui(const QString& name);
 
   auto add_property(const QString& name,
                     const core::property& property,

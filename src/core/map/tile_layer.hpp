@@ -80,6 +80,10 @@ class tile_layer final : public layer
   /// \name Properties
   /// \{
 
+  void notify_property_added(const QString& name) override;
+
+  void notify_property_removed(const QString& name) override;
+
   void add_property(const QString& name, property::type type) override;
 
   void remove_property(const QString& name) override;

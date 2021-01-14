@@ -23,4 +23,14 @@ void properties_dock::selected_map(
   m_widget->selected_map(document, propertyModel);
 }
 
+void properties_dock::added_property(const QString& name)
+{
+  m_widget->added_property(name);
+}
+
+void properties_dock::removed_property(const QString& name)
+{
+  m_widget->removed_property(name);
+}
+
 }  // namespace tactile::gui

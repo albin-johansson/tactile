@@ -99,6 +99,9 @@ class model final : public QObject
   void added_tileset(map_id map, tileset_id id, const tileset& tileset);
   void removed_tileset(tileset_id id);
 
+  void added_property(const QString& name);
+  void removed_property(const QString& name);
+
  public slots:
   /**
    * \brief Reverts the effects of the last performed command.

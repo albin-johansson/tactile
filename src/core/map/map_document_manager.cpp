@@ -53,6 +53,8 @@ auto map_document_manager::add(map_document* document) -> map_id
   bind(&map_document::selected_layer,         &map_document_manager::selected_layer);
   bind(&map_document::moved_layer_back,       &map_document_manager::moved_layer_back);
   bind(&map_document::moved_layer_forward,    &map_document_manager::moved_layer_forward);
+  bind(&map_document::added_property,         &map_document_manager::added_property);
+  bind(&map_document::removed_property,       &map_document_manager::removed_property);
   // clang-format on
 
   const auto id = m_nextId;

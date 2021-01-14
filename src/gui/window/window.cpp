@@ -328,6 +328,16 @@ void window::switched_map(const map_id id,
   m_statusBar->switched_map(document);
 }
 
+void window::added_property(const QString& name)
+{
+  m_propertiesDock->added_property(name);
+}
+
+void window::removed_property(const QString& name)
+{
+  m_propertiesDock->removed_property(name);
+}
+
 void window::enable_stamp_preview(const core::position& position)
 {
   m_editor->enable_stamp_preview(position);

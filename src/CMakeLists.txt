@@ -247,6 +247,10 @@ set(TACTILE_SOURCE_FILES
     command/remove_layer.hpp
     command/add_layer.cpp
     command/add_layer.hpp
+    command/add_property.cpp
+    command/add_property.hpp
+    command/remove_property.cpp
+    command/remove_property.hpp
 
     prefs/setting.hpp
     prefs/theme.cpp

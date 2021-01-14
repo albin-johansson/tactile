@@ -165,6 +165,9 @@ class map_document_manager final : public QObject
   void moved_layer_back(layer_id id);
   void moved_layer_forward(layer_id id);
 
+  void added_property(const QString& name);
+  void removed_property(const QString& name);
+
  private:
   maybe<map_id> m_current;
   document_map m_documents;

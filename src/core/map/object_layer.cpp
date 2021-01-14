@@ -11,6 +11,12 @@ object_layer::object_layer() : m_layerDelegate{layer_type::object_layer}
   m_layerDelegate.set_name(TACTILE_QSTRING(u"Object layer"));
 }
 
+void object_layer::notify_property_added(const QString& name)
+{}
+
+void object_layer::notify_property_removed(const QString& name)
+{}
+
 void object_layer::add_property(const QString& name, const property::type type)
 {
   m_propertyDelegate.add_property(name, type);
@@ -87,7 +93,7 @@ auto object_layer::name() const -> const QString&
   return m_layerDelegate.name();
 }
 
-auto object_layer::clone() const -> shared_layer
+auto object_layer::clone() const -> shared<layer>
 {
   auto copy = *this;
   return std::make_shared<object_layer>(std::move(copy));

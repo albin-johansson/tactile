@@ -145,6 +145,10 @@ class window final : public QMainWindow
                     const shared<vm::property_model>& propertyModel,
                     const shared<vm::layer_model>& layerModel);
 
+  void added_property(const QString& name);
+
+  void removed_property(const QString& name);
+
   void enable_stamp_preview(const core::position& position);
 
   void disable_stamp_preview();

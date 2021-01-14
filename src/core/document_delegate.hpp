@@ -46,6 +46,10 @@ class document_delegate final : public document
   /// \name Property API
   /// \{
 
+  void notify_property_added(const QString& name) override;
+
+  void notify_property_removed(const QString& name) override;
+
   void add_property(const QString& name, property::type type) override;
 
   void remove_property(const QString& name) override;
@@ -74,6 +78,10 @@ class document_delegate final : public document
   {
     m_commandStack->template push<T>(std::forward<Args>(args)...);
   }
+
+  signals:
+   void added_property(const QString& name);
+   void removed_property(const QString& name);
 
  private:
   unique<command_stack> m_commandStack;

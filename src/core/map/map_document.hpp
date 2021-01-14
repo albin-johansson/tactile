@@ -5,7 +5,6 @@
 #include <QObject>
 #include <QString>
 #include <concepts>  // invocable
-#include <memory>    // unique_ptr, shared_ptr
 #include <utility>   // move
 
 #include "command_stack.hpp"
@@ -100,6 +99,10 @@ class map_document final : public document
 
   /// \name Property API
   /// \{
+
+  void notify_property_added(const QString& name) override;
+
+  void notify_property_removed(const QString& name) override;
 
   void add_property(const QString& name, property::type type) override;
 
@@ -210,13 +213,13 @@ class map_document final : public document
    * \copydoc tileset_manager::add(tileset_id, std::shared_ptr<tileset>)
    * \signal `added_tileset`
    */
-  void add_tileset(tileset_id id, shared_tileset tileset);
+  void add_tileset(tileset_id id, shared<tileset> tileset);
 
   /**
    * \copybrief tileset_manager::add(std::shared_ptr<tileset>)
    * \signal `added_tileset`
    */
-  void add_tileset(shared_tileset tileset);
+  void add_tileset(shared<tileset> tileset);
 
   /**
    * \brief Removes a tileset from the document.
@@ -252,7 +255,7 @@ class map_document final : public document
    * \copydoc map::add_tile_layer(layer_id id, shared_layer layer)
    * \signal `added_layer`
    */
-  void add_layer(layer_id id, const shared_layer& layer);
+  void add_layer(layer_id id, const shared<layer>& layer);
 
   /**
    * \copybrief map::add_tile_layer()
@@ -278,7 +281,7 @@ class map_document final : public document
   /**
    * \copydoc map::take_layer()
    */
-  auto take_layer(layer_id id) -> shared_layer;
+  auto take_layer(layer_id id) -> shared<layer>;
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -335,7 +338,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const shared_layer&> T>
+  template <std::invocable<layer_id, const shared<layer>&> T>
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : *m_map) {
@@ -472,6 +475,9 @@ class map_document final : public document
   void removed_layer(layer_id);
   void moved_layer_back(layer_id);
   void moved_layer_forward(layer_id);
+
+  void added_property(const QString& name);
+  void removed_property(const QString& name);
 
  public slots:
   /**
