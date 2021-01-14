@@ -52,12 +52,14 @@ class document_delegate final : public document
 
   void rename_property(const QString& oldName, const QString& newName) override;
 
-  void set_property(const QString& name, const property& property) override;
+  void set_property(const QString& name,
+                    const core::property& property) override;
 
   [[nodiscard]] auto get_property(const QString& name) const
-      -> const property& override;
+      -> const core::property& override;
 
-  [[nodiscard]] auto get_property(const QString& name) -> property& override;
+  [[nodiscard]] auto get_property(const QString& name)
+      -> core::property& override;
 
   [[nodiscard]] auto property_count() const noexcept -> int override;
 
