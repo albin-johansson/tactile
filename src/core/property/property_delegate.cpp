@@ -8,12 +8,6 @@
 
 namespace tactile::core {
 
-void property_delegate::notify_property_added(const QString& name)
-{}
-
-void property_delegate::notify_property_removed(const QString& name)
-{}
-
 void property_delegate::add_property(const QString& name,
                                      const property::type type)
 {
@@ -26,6 +20,20 @@ void property_delegate::add_property(const QString& name,
 
 #ifdef QT_DEBUG
   qDebug() << "Added property:" << name << "with type:" << type;
+#endif  // QT_DEBUG
+}
+
+void property_delegate::add_property(const QString& name,
+                                     const property& property)
+{
+  Q_ASSERT(!m_properties.contains(name));
+  Q_ASSERT(property.get_type());
+
+  m_properties.emplace(name, property);
+
+#ifdef QT_DEBUG
+  qDebug() << "Added property:" << name
+           << "with type:" << property.get_type().value();
 #endif  // QT_DEBUG
 }
 

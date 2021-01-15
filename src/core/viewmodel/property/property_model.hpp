@@ -47,26 +47,35 @@ class property_model final : public QStandardItemModel
  public slots:
   // Meant to be called as a result of undo/redo
   void added_property(const QString& name);
-  void removed_property(const QString& name);
+
+  void about_to_remove_property(const QString& name);
+
+  void updated_property(const QString& name);
+
+  void renamed_property(const QString& oldName, const QString& newName);
 
  private:
   core::property_manager* m_manager{};
   QStandardItem* m_predefinedRoot{};
   QStandardItem* m_customRoot{};
+  bool m_blockDataChangedSlot{};
 
-  auto add_existing_property_to_gui(const QString& name)
-      -> QModelIndex;
+  auto add_existing_property_to_gui(const QString& name) -> QModelIndex;
 
   void remove_property_from_gui(const QString& name);
 
-  auto add_property(const QString& name,
-                    const core::property& property,
-                    QStandardItem* root) -> QModelIndex;
+  auto add_property_to_gui(const QString& name,
+                           const core::property& property,
+                           QStandardItem* root) -> QModelIndex;
+
+  void rename_property_in_gui(const QString& oldName, const QString& newName);
 
   void set_value(const QString& name, QStandardItem* item);
 
  private slots:
-  void when_item_changed(QStandardItem* item);
+  void when_data_changed(const QModelIndex& topLeft,
+                         const QModelIndex& bottomRight,
+                         const QVector<int>& roles);
 };
 
 }  // namespace tactile::vm

@@ -16,6 +16,7 @@
 #include "property.hpp"
 #include "property_delegate.hpp"
 #include "property_manager.hpp"
+#include "property_model.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_manager.hpp"
@@ -95,16 +96,17 @@ class map_document final : public document
 
   [[nodiscard]] auto properties() const -> const property_map& override;
 
+  [[nodiscard]] auto property_model() const -> shared<vm::property_model>;
+
   /// \}
 
   /// \name Property API
   /// \{
 
-  void notify_property_added(const QString& name) override;
+  void add_property(const QString& name, core::property::type type) override;
 
-  void notify_property_removed(const QString& name) override;
-
-  void add_property(const QString& name, property::type type) override;
+  void add_property(const QString& name,
+                    const core::property& property) override;
 
   void remove_property(const QString& name) override;
 
@@ -477,7 +479,9 @@ class map_document final : public document
   void moved_layer_forward(layer_id);
 
   void added_property(const QString& name);
-  void removed_property(const QString& name);
+  void about_to_remove_property(const QString& name);
+  void updated_property(const QString& name);
+  void renamed_property(const QString& oldName, const QString& newName);
 
  public slots:
   /**
@@ -507,8 +511,9 @@ class map_document final : public document
   unique<map> m_map;                     ///< The associated map.
   unique<tileset_manager> m_tilesets;    ///< The associated tilesets.
   unique<document_delegate> m_delegate;  ///< Delegate for document API.
-  int m_tileLayerSuffix{1};              ///< Incrementing tile layer suffix.
-  int m_objectLayerSuffix{1};            ///< Incrementing object layer suffix.
+  shared<vm::property_model> m_properties;
+  int m_tileLayerSuffix{1};    ///< Incrementing tile layer suffix.
+  int m_objectLayerSuffix{1};  ///< Incrementing object layer suffix.
 
   void setup();
 };

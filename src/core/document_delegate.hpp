@@ -7,6 +7,8 @@
 
 #include "command_stack.hpp"
 #include "document.hpp"
+#include "maybe.hpp"
+#include "property_model.hpp"
 #include "smart_pointers.hpp"
 
 namespace tactile::core {
@@ -46,11 +48,10 @@ class document_delegate final : public document
   /// \name Property API
   /// \{
 
-  void notify_property_added(const QString& name) override;
+  void add_property(const QString& name, core::property::type type) override;
 
-  void notify_property_removed(const QString& name) override;
-
-  void add_property(const QString& name, property::type type) override;
+  void add_property(const QString& name,
+                    const core::property& property) override;
 
   void remove_property(const QString& name) override;
 
@@ -79,14 +80,16 @@ class document_delegate final : public document
     m_commandStack->template push<T>(std::forward<Args>(args)...);
   }
 
-  signals:
-   void added_property(const QString& name);
-   void removed_property(const QString& name);
+ signals:
+  void added_property(const QString& name);
+  void about_to_remove_property(const QString& name);
+  void updated_property(const QString& name);
+  void renamed_property(const QString& oldName, const QString& newName);
 
  private:
   unique<command_stack> m_commandStack;
   unique<property_manager> m_propertyManager;
-  QFileInfo m_path;  // TODO make optional? Might improve safety and clarity
+  maybe<QFileInfo> m_path;
 };
 
 }  // namespace tactile::core

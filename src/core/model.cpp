@@ -50,8 +50,14 @@ model::model() : m_mapDocuments{new map_document_manager{this}}, m_tools{this}
   connect(m_mapDocuments, &map_document_manager::added_property,
           this,           &model::added_property);
 
-  connect(m_mapDocuments, &map_document_manager::removed_property,
-          this,           &model::removed_property);
+  connect(m_mapDocuments, &map_document_manager::about_to_remove_property,
+          this,           &model::about_to_remove_property);
+
+  connect(m_mapDocuments, &map_document_manager::updated_property,
+          this,           &model::updated_property);
+
+  connect(m_mapDocuments, &map_document_manager::renamed_property,
+          this,           &model::renamed_property);
   // clang-format on
 
   connect(m_mapDocuments,
@@ -259,7 +265,7 @@ void model::select_map(const map_id id)
 
   emit switched_map(id,
                     *document,
-                    std::make_shared<vm::property_model>(document),
+                    document->property_model(),
                     std::make_shared<vm::layer_model>(document));
 }
 

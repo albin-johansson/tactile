@@ -22,7 +22,11 @@ class properties_dock final : public dock_widget
 
   void added_property(const QString& name);
 
-  void removed_property(const QString& name);
+  void about_to_remove_property(const QString& name);
+
+  void updated_property(const QString& name);
+
+  void renamed_property(const QString& oldName, const QString& newName);
 
  private:
   properties_widget* m_widget{};

@@ -3,17 +3,16 @@
 #include <QString>       // QString
 #include <QUndoCommand>  // QUndoCommand
 
-#include "property.hpp"
 #include "property_manager.hpp"
 
 namespace tactile::cmd {
 
-class add_property final : public QUndoCommand
+class rename_property final : public QUndoCommand
 {
  public:
-  explicit add_property(core::property_manager* manager,
-                        QString name,
-                        core::property::type type);
+  rename_property(core::property_manager* manager,
+                  QString oldName,
+                  QString newName);
 
   void undo() override;
 
@@ -21,8 +20,8 @@ class add_property final : public QUndoCommand
 
  private:
   core::property_manager* m_manager{};
-  core::property::type m_type;
-  QString m_name;
+  QString m_oldName;
+  QString m_newName;
 };
 
 }  // namespace tactile::cmd

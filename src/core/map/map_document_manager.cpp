@@ -39,22 +39,24 @@ auto map_document_manager::add(map_document* document) -> map_id
   };
 
   // clang-format off
-  bind(&map_document::redraw,                 &map_document_manager::redraw);
-  bind(&map_document::undo_state_updated,     &map_document_manager::undo_state_updated);
-  bind(&map_document::redo_state_updated,     &map_document_manager::redo_state_updated);
-  bind(&map_document::undo_text_updated,      &map_document_manager::undo_text_updated);
-  bind(&map_document::redo_text_updated,      &map_document_manager::redo_text_updated);
-  bind(&map_document::clean_changed,          &map_document_manager::clean_changed);
-  bind(&map_document::added_tileset,          &map_document_manager::added_tileset);
-  bind(&map_document::removed_tileset,        &map_document_manager::removed_tileset);
-  bind(&map_document::added_layer,            &map_document_manager::added_layer);
-  bind(&map_document::added_duplicated_layer, &map_document_manager::added_duplicated_layer);
-  bind(&map_document::removed_layer,          &map_document_manager::removed_layer);
-  bind(&map_document::selected_layer,         &map_document_manager::selected_layer);
-  bind(&map_document::moved_layer_back,       &map_document_manager::moved_layer_back);
-  bind(&map_document::moved_layer_forward,    &map_document_manager::moved_layer_forward);
-  bind(&map_document::added_property,         &map_document_manager::added_property);
-  bind(&map_document::removed_property,       &map_document_manager::removed_property);
+  bind(&map_document::redraw,                   &map_document_manager::redraw);
+  bind(&map_document::undo_state_updated,       &map_document_manager::undo_state_updated);
+  bind(&map_document::redo_state_updated,       &map_document_manager::redo_state_updated);
+  bind(&map_document::undo_text_updated,        &map_document_manager::undo_text_updated);
+  bind(&map_document::redo_text_updated,        &map_document_manager::redo_text_updated);
+  bind(&map_document::clean_changed,            &map_document_manager::clean_changed);
+  bind(&map_document::added_tileset,            &map_document_manager::added_tileset);
+  bind(&map_document::removed_tileset,          &map_document_manager::removed_tileset);
+  bind(&map_document::added_layer,              &map_document_manager::added_layer);
+  bind(&map_document::added_duplicated_layer,   &map_document_manager::added_duplicated_layer);
+  bind(&map_document::removed_layer,            &map_document_manager::removed_layer);
+  bind(&map_document::selected_layer,           &map_document_manager::selected_layer);
+  bind(&map_document::moved_layer_back,         &map_document_manager::moved_layer_back);
+  bind(&map_document::moved_layer_forward,      &map_document_manager::moved_layer_forward);
+  bind(&map_document::added_property,           &map_document_manager::added_property);
+  bind(&map_document::about_to_remove_property, &map_document_manager::about_to_remove_property);
+  bind(&map_document::updated_property,         &map_document_manager::updated_property);
+  bind(&map_document::renamed_property,         &map_document_manager::renamed_property);
   // clang-format on
 
   const auto id = m_nextId;

@@ -11,15 +11,14 @@ object_layer::object_layer() : m_layerDelegate{layer_type::object_layer}
   m_layerDelegate.set_name(TACTILE_QSTRING(u"Object layer"));
 }
 
-void object_layer::notify_property_added(const QString& name)
-{}
-
-void object_layer::notify_property_removed(const QString& name)
-{}
-
 void object_layer::add_property(const QString& name, const property::type type)
 {
   m_propertyDelegate.add_property(name, type);
+}
+
+void object_layer::add_property(const QString& name, const property& property)
+{
+  m_propertyDelegate.add_property(name, property);
 }
 
 void object_layer::remove_property(const QString& name)

@@ -3,10 +3,9 @@
 #include <QFileInfo>
 #include <QObject>
 #include <QString>
-#include <memory>  // unique_ptr
 
 #include "property_manager.hpp"
-#include "property_model.hpp"
+#include "smart_pointers.hpp"
 
 namespace tactile::core {
 

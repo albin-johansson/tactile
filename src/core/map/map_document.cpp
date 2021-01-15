@@ -1,6 +1,5 @@
 #include "map_document.hpp"
 
-#include <QDebug>
 #include <utility>  // move
 
 #include "add_col.hpp"
@@ -15,7 +14,9 @@
 #include "remove_property.hpp"
 #include "remove_row.hpp"
 #include "remove_tileset.hpp"
+#include "rename_property.hpp"
 #include "resize_map.hpp"
+#include "set_property.hpp"
 #include "stamp_sequence.hpp"
 
 namespace tactile::core {
@@ -25,6 +26,7 @@ map_document::map_document(QObject* parent)
     , m_map{std::make_unique<map>()}
     , m_tilesets{std::make_unique<tileset_manager>()}
     , m_delegate{std::make_unique<document_delegate>()}
+    , m_properties{std::make_shared<vm::property_model>(this)}
 {
   setup();
 }
@@ -36,6 +38,7 @@ map_document::map_document(const row_t nRows,
     , m_map{std::make_unique<map>(nRows, nCols)}
     , m_tilesets{std::make_unique<tileset_manager>()}
     , m_delegate{std::make_unique<document_delegate>()}
+    , m_properties{std::make_shared<vm::property_model>(this)}
 {
   setup();
 }
@@ -43,6 +46,7 @@ map_document::map_document(const row_t nRows,
 void map_document::setup()
 {
   auto* commands = m_delegate->get_commands();
+
   // clang-format off
   connect(commands, &command_stack::cleanChanged, this, &map_document::clean_changed);
   connect(commands, &command_stack::canUndoChanged, this, &map_document::undo_state_updated);
@@ -51,7 +55,9 @@ void map_document::setup()
   connect(commands, &command_stack::redoTextChanged, this, &map_document::redo_text_updated);
 
   connect(m_delegate.get(), &document_delegate::added_property, this, &map_document::added_property);
-  connect(m_delegate.get(), &document_delegate::removed_property, this, &map_document::removed_property);
+  connect(m_delegate.get(), &document_delegate::about_to_remove_property, this, &map_document::about_to_remove_property);
+  connect(m_delegate.get(), &document_delegate::updated_property, this, &map_document::updated_property);
+  connect(m_delegate.get(), &document_delegate::renamed_property, this, &map_document::renamed_property);
   // clang-format on
 }
 
@@ -112,36 +118,37 @@ auto map_document::path() const -> const QFileInfo&
   return m_delegate->path();
 }
 
-void map_document::notify_property_added(const QString& name)
+void map_document::add_property(const QString& name,
+                                const core::property::type type)
 {
-  m_delegate->notify_property_added(name);
-}
-
-void map_document::notify_property_removed(const QString& name)
-{
-  m_delegate->notify_property_removed(name);
-}
-
-void map_document::add_property(const QString& name, const property::type type)
-{
+  const QSignalBlocker blocker{m_delegate.get()};
   m_delegate->execute<cmd::add_property>(m_delegate.get(), name, type);
+}
+
+void map_document::add_property(const QString& name,
+                                const core::property& property)
+{
+  // TODO
 }
 
 void map_document::remove_property(const QString& name)
 {
+  const QSignalBlocker blocker{m_delegate.get()};
   m_delegate->execute<cmd::remove_property>(m_delegate.get(), name);
 }
 
 void map_document::rename_property(const QString& oldName,
                                    const QString& newName)
 {
-  m_delegate->rename_property(oldName, newName);
+  const QSignalBlocker blocker{m_delegate.get()};
+  m_delegate->execute<cmd::rename_property>(m_delegate.get(), oldName, newName);
 }
 
 void map_document::set_property(const QString& name,
                                 const core::property& property)
 {
-  m_delegate->set_property(name, property);
+  const QSignalBlocker blocker{m_delegate.get()};
+  m_delegate->execute<cmd::set_property>(m_delegate.get(), name, property);
 }
 
 auto map_document::get_property(const QString& name) const
@@ -163,6 +170,11 @@ auto map_document::property_count() const noexcept -> int
 auto map_document::properties() const -> const property_map&
 {
   return m_delegate->properties();
+}
+
+auto map_document::property_model() const -> shared<vm::property_model>
+{
+  return m_properties;
 }
 
 void map_document::flood(const position& position, const tile_id replacement)

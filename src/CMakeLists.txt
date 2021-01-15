@@ -251,6 +251,10 @@ set(TACTILE_SOURCE_FILES
     command/add_property.hpp
     command/remove_property.cpp
     command/remove_property.hpp
+    command/set_property.cpp
+    command/set_property.hpp
+    command/rename_property.cpp
+    command/rename_property.hpp
 
     prefs/setting.hpp
     prefs/theme.cpp

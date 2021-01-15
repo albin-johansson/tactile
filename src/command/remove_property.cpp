@@ -8,7 +8,8 @@
 namespace tactile::cmd {
 
 remove_property::remove_property(core::property_manager* manager, QString name)
-    : QUndoCommand{TACTILE_QSTRING(u"Remove Property")}
+    : QUndoCommand{TACTILE_QSTRING(u"Remove Property \"") + name +
+                   TACTILE_QSTRING(u"\"")}
     , m_manager{manager}
     , m_name{std::move(name)}
 {
@@ -24,7 +25,6 @@ void remove_property::undo()
   const auto& property = m_property.value();
   m_manager->add_property(m_name, property.get_type().value());
   m_manager->set_property(m_name, property);
-  m_manager->notify_property_added(m_name);
 
   m_property.reset();
 }
@@ -35,11 +35,6 @@ void remove_property::redo()
 
   m_property = m_manager->get_property(m_name);
   m_manager->remove_property(m_name);
-  if (!m_first) {
-    m_manager->notify_property_removed(m_name);
-  } else {
-    m_first = false;
-  }
 }
 
 }  // namespace tactile::cmd

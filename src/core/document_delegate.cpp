@@ -3,7 +3,6 @@
 #include <utility>  // move
 
 #include "property_delegate.hpp"
-#include "tactile_error.hpp"
 
 namespace tactile::core {
 
@@ -61,27 +60,26 @@ auto document_delegate::get_redo_text() const -> QString
 
 auto document_delegate::path() const -> const QFileInfo&
 {
-  return m_path;
-}
-
-void document_delegate::notify_property_added(const QString& name)
-{
-  emit added_property(name);
-}
-
-void document_delegate::notify_property_removed(const QString& name)
-{
-  emit removed_property(name);
+  return m_path.value();
 }
 
 void document_delegate::add_property(const QString& name,
-                                     const property::type type)
+                                     const core::property::type type)
 {
   m_propertyManager->add_property(name, type);
+  emit added_property(name);
+}
+
+void document_delegate::add_property(const QString& name,
+                                     const core::property& property)
+{
+  m_propertyManager->add_property(name, property);
+  emit added_property(name);
 }
 
 void document_delegate::remove_property(const QString& name)
 {
+  emit about_to_remove_property(name);
   m_propertyManager->remove_property(name);
 }
 
@@ -89,12 +87,14 @@ void document_delegate::rename_property(const QString& oldName,
                                         const QString& newName)
 {
   m_propertyManager->rename_property(oldName, newName);
+  emit renamed_property(oldName, newName);
 }
 
 void document_delegate::set_property(const QString& name,
                                      const core::property& property)
 {
   m_propertyManager->set_property(name, property);
+  emit updated_property(name);
 }
 
 auto document_delegate::get_property(const QString& name) const

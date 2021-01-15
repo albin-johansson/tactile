@@ -333,9 +333,19 @@ void window::added_property(const QString& name)
   m_propertiesDock->added_property(name);
 }
 
-void window::removed_property(const QString& name)
+void window::about_to_remove_property(const QString& name)
 {
-  m_propertiesDock->removed_property(name);
+  m_propertiesDock->about_to_remove_property(name);
+}
+
+void window::updated_property(const QString& name)
+{
+  m_propertiesDock->updated_property(name);
+}
+
+void window::renamed_property(const QString& oldName, const QString& newName)
+{
+  m_propertiesDock->renamed_property(oldName, newName);
 }
 
 void window::enable_stamp_preview(const core::position& position)

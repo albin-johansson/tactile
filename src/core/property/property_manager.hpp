@@ -23,10 +23,6 @@ class property_manager
 
   virtual ~property_manager() noexcept = default;
 
-  virtual void notify_property_added(const QString& name) = 0;
-
-  virtual void notify_property_removed(const QString& name) = 0;
-
   /**
    * \brief Adds a property with the specified name and type.
    *
@@ -42,6 +38,7 @@ class property_manager
    */
   virtual void add_property(const QString& name, property::type type) = 0;
 
+  virtual void add_property(const QString& name, const property& property) = 0;
   /**
    * \brief Removes the property associated with the specified name.
    *

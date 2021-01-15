@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QString>
-#include <QUndoCommand>
+#include <QString>       // QString
+#include <QUndoCommand>  // QUndoCommand
 
 #include "maybe.hpp"
 #include "property.hpp"
@@ -22,7 +22,6 @@ class remove_property final : public QUndoCommand
   core::property_manager* m_manager{};
   QString m_name;
   maybe<core::property> m_property;
-  bool m_first{true};
 };
 
 }  // namespace tactile::cmd

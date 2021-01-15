@@ -127,9 +127,20 @@ void properties_widget::added_property(const QString& name)
   m_model->added_property(name);
 }
 
-void properties_widget::removed_property(const QString& name)
+void properties_widget::about_to_remove_property(const QString& name)
 {
-  m_model->removed_property(name);
+  m_model->about_to_remove_property(name);
+}
+
+void properties_widget::updated_property(const QString& name)
+{
+  m_model->updated_property(name);
+}
+
+void properties_widget::renamed_property(const QString& oldName,
+                                         const QString& newName)
+{
+  m_model->renamed_property(oldName, newName);
 }
 
 void properties_widget::selection_changed(const maybe<QModelIndex> index)

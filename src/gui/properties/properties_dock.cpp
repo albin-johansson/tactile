@@ -28,9 +28,20 @@ void properties_dock::added_property(const QString& name)
   m_widget->added_property(name);
 }
 
-void properties_dock::removed_property(const QString& name)
+void properties_dock::about_to_remove_property(const QString& name)
 {
-  m_widget->removed_property(name);
+  m_widget->about_to_remove_property(name);
+}
+
+void properties_dock::updated_property(const QString& name)
+{
+  m_widget->updated_property(name);
+}
+
+void properties_dock::renamed_property(const QString& oldName,
+                                       const QString& newName)
+{
+  m_widget->renamed_property(oldName, newName);
 }
 
 }  // namespace tactile::gui
