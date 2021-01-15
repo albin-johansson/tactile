@@ -193,7 +193,9 @@ void property_model::updated_property(const QString& name)
         break;
       }
       case property_item_type::boolean: {
-        siblingItem->setData(property.as_boolean(), Qt::CheckStateRole);
+        siblingItem->setData(
+            property.as_boolean() ? Qt::Checked : Qt::Unchecked,
+            Qt::CheckStateRole);
         break;
       }
       case property_item_type::file: {
