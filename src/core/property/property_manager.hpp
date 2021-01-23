@@ -39,6 +39,9 @@ class property_manager
   virtual void add_property(const QString& name, property::type type) = 0;
 
   virtual void add_property(const QString& name, const property& property) = 0;
+
+  // TODO change_property_type
+
   /**
    * \brief Removes the property associated with the specified name.
    *
