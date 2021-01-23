@@ -1,8 +1,7 @@
 #pragma once
 
-#include <QString>
+#include <QString>   // QString
 #include <concepts>  // invocable
-#include <memory>    // shared_ptr
 #include <vector>    // vector
 
 #include "layer.hpp"
@@ -286,7 +285,5 @@ class tile_layer final : public layer
   layer_delegate m_layerDelegate;
   property_delegate m_propertyDelegate;
 };
-
-using shared_tile_layer = std::shared_ptr<tile_layer>;
 
 }  // namespace tactile::core
