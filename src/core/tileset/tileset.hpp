@@ -320,7 +320,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto rows() const noexcept -> row_t
+  [[nodiscard]] auto row_count() const noexcept -> row_t
   {
     return m_nRows;
   }
@@ -429,8 +429,6 @@ class tileset final
   QFileInfo m_path{};
   QString m_name{TACTILE_QSTRING(u"Untitled")};
 };
-
-using shared_tileset = std::shared_ptr<tileset>;
 
 static_assert(std::is_final_v<tileset>);
 
