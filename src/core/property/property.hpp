@@ -49,13 +49,13 @@ class property final
    */
   enum type
   {
-    string,
-    integer,
-    floating,
-    boolean,
-    file,
-    color,
-    object
+    string,    ///< A string property.
+    integer,   ///< An integer property.
+    floating,  ///< A floating-point property.
+    boolean,   ///< A boolean property.
+    file,      ///< A file path property.
+    color,     ///< A color property.
+    object     ///< An integer ID property, that refers to a map object.
   };
 
   /**
@@ -107,22 +107,6 @@ class property final
   }
 
   /**
-   * \brief Indicates if the type of the value matches the specified type.
-   *
-   * \tparam T the type that will be checked.
-   *
-   * \return `true` if the property stores a value of the specified type;
-   * `false` otherwise.
-   *
-   * \since 0.2.0
-   */
-  template <property_type T>
-  [[nodiscard]] auto is() const noexcept -> bool
-  {
-    return std::holds_alternative<T>(m_value);
-  }
-
-  /**
    * \brief Indicates whether or not the property holds a value.
    *
    * \return `true` if the property holds a value; `false` otherwise.
@@ -130,23 +114,6 @@ class property final
    * \since 0.2.0
    */
   [[nodiscard]] auto has_value() const noexcept -> bool;
-
-  /**
-   * \brief Returns the property value.
-   *
-   * \note This function throws if there is a type mismatch.
-   *
-   * \tparam T the type of the value, must match the actual underlying value.
-   *
-   * \return the stored value.
-   *
-   * \since 0.2.0
-   */
-  template <property_type T>
-  [[nodiscard]] auto as() const -> const T&
-  {
-    return std::get<T>(m_value);
-  }
 
   /**
    * \brief Returns the stored string value.
@@ -225,20 +192,39 @@ class property final
    */
   [[nodiscard]] auto as_color() const -> const QColor&;
 
-  /**
-   * \brief Returns a pointer to the stored value.
-   *
-   * \tparam T the type of the stored value.
-   *
-   * \return a pointer to the stored value; a null pointer is returned if there
-   * is a type mismatch.
-   *
-   * \since 0.2.0
-   */
-  template <property_type T>
-  [[nodiscard]] auto try_as() const noexcept -> const T*
+  [[nodiscard]] auto try_as_string() const noexcept -> const QString*
   {
-    return std::get_if<T>(&m_value);
+    return try_as<QString>();
+  }
+
+  [[nodiscard]] auto try_as_integer() const noexcept -> const int*
+  {
+    return try_as<int>();
+  }
+
+  [[nodiscard]] auto try_as_floating() const noexcept -> const double*
+  {
+    return try_as<double>();
+  }
+
+  [[nodiscard]] auto try_as_boolean() const noexcept -> const bool*
+  {
+    return try_as<bool>();
+  }
+
+  [[nodiscard]] auto try_as_file() const noexcept -> const QFileInfo*
+  {
+    return try_as<QFileInfo>();
+  }
+
+  [[nodiscard]] auto try_as_object() const noexcept -> const object_ref*
+  {
+    return try_as<object_ref>();
+  }
+
+  [[nodiscard]] auto try_as_color() const noexcept -> const QColor*
+  {
+    return try_as<QColor>();
   }
 
   /**
@@ -317,6 +303,55 @@ class property final
 
  private:
   value_type m_value;
+
+  /**
+   * \brief Indicates if the type of the value matches the specified type.
+   *
+   * \tparam T the type that will be checked.
+   *
+   * \return `true` if the property stores a value of the specified type;
+   * `false` otherwise.
+   *
+   * \since 0.2.0
+   */
+  template <property_type T>
+  [[nodiscard]] auto is() const noexcept -> bool
+  {
+    return std::holds_alternative<T>(m_value);
+  }
+
+  /**
+   * \brief Returns the property value.
+   *
+   * \note This function throws if there is a type mismatch.
+   *
+   * \tparam T the type of the value, must match the actual underlying value.
+   *
+   * \return the stored value.
+   *
+   * \since 0.2.0
+   */
+  template <property_type T>
+  [[nodiscard]] auto as() const -> const T&
+  {
+    return std::get<T>(m_value);
+  }
+
+  /**
+   * \brief Returns a pointer to the stored value.
+   *
+   * \tparam T the type of the stored value.
+   *
+   * \return a pointer to the stored value; a null pointer is returned if there
+   * is a type mismatch.
+   *
+   * \since 0.2.0
+   */
+  template <property_type T>
+  [[nodiscard]] auto try_as() const noexcept -> const T*
+  {
+    return std::get_if<T>(&m_value);
+  }
 };
 
 /**
