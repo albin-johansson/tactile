@@ -11,10 +11,10 @@ using namespace tactile;
 using path_error_pair = std::pair<QStringView, tmx::parse_error>;
 using error = tmx::parse_error;
 
-class JsonParserTest : public testing::TestWithParam<path_error_pair>
+class JsonMapParserTest : public testing::TestWithParam<path_error_pair>
 {};
 
-TEST_P(JsonParserTest, Parse)
+TEST_P(JsonMapParserTest, Parse)
 {
   const auto [path, code] = GetParam();
 
@@ -59,4 +59,4 @@ inline const auto values = testing::Values(
   as_pair(u"json/invalid/could_not_read_external_tileset.json", error::could_not_read_external_tileset));
 // clang-format on
 
-INSTANTIATE_TEST_SUITE_P(JsonParserTests, JsonParserTest, values);
+INSTANTIATE_TEST_SUITE_P(JsonMapParserTests, JsonMapParserTest, values);
