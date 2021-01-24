@@ -8,7 +8,6 @@
 
 #include "json_element.hpp"
 #include "map_file_type.hpp"
-#include "map_parser_engine.hpp"
 #include "parse_error.hpp"
 #include "tile_layer.hpp"
 
