@@ -19,6 +19,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
 
 set(TACTILE_TEST_FILES
+    unit/gtest_macros.hpp
     unit/test_main.cpp
 
     unit/core/flood_fill_test.cpp
@@ -49,6 +50,7 @@ add_library(libCatch INTERFACE)
 target_include_directories(libCatch INTERFACE catch)
 
 target_include_directories(testTactile
+    PUBLIC unit
     PUBLIC ${TACTILE_ROOT_DIR}/src
     PUBLIC ${TACTILE_ROOT_DIR}/src/core
     PUBLIC ${TACTILE_ROOT_DIR}/src/core/util
