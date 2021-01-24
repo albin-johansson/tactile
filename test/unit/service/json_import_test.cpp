@@ -17,10 +17,10 @@ TEST(ImportJsonMap, Embedded)
 
   document->setParent(&object);  // Avoid memory leak
 
-  constexpr auto rows = 5_row;
-  constexpr auto cols = 7_col;
-
   {  // Layers
+    constexpr auto rows = 5_row;
+    constexpr auto cols = 7_col;
+
     ASSERT_EQ(2, document->layer_count());
     ASSERT_EQ(rows, document->row_count());
     ASSERT_EQ(cols, document->col_count());
