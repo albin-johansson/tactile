@@ -1,11 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "target":"."
-        }
-    },
  "height":10,
  "infinite":false,
  "layers":[
@@ -26,7 +19,7 @@
          "height":10,
          "id":2,
          "name":"T0",
-         "opacity":1,
+         "opacity":0.75,
          "type":"tilelayer",
          "visible":true,
          "width":15,
