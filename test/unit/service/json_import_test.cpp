@@ -29,12 +29,12 @@ TEST(ImportJsonMap, Embedded)
       constexpr auto id = 1_layer;
       ASSERT_TRUE(document->has_layer(id));
 
-      auto* layer = document->get_layer(id);
+      const auto* layer = document->get_layer(id);
       ASSERT_EQ(core::layer_type::tile_layer, layer->type());
       EXPECT_TRUE(layer->visible());
       EXPECT_EQ(1.0, layer->opacity());
 
-      auto* tileLayer = document->get_tile_layer(id);
+      const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
 
       EXPECT_EQ(rows, tileLayer->row_count());
@@ -49,12 +49,12 @@ TEST(ImportJsonMap, Embedded)
       constexpr auto id = 2_layer;
       ASSERT_TRUE(document->has_layer(id));
 
-      auto* layer = document->get_layer(id);
+      const auto* layer = document->get_layer(id);
       ASSERT_EQ(core::layer_type::tile_layer, layer->type());
       EXPECT_TRUE(layer->visible());
       EXPECT_EQ(0.8, layer->opacity());
 
-      auto* tileLayer = document->get_tile_layer(id);
+      const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
 
       EXPECT_EQ(empty, tileLayer->tile_at({0_row, 0_col}));
@@ -89,6 +89,7 @@ TEST(ImportJsonMap, Embedded)
   }
 }
 
+// TODO move this to map_import_test.cpp
 TEST(ImportJsonMap, External)
 {
   const auto path = TACTILE_QSTRING(u"json/external.json");
@@ -113,12 +114,12 @@ TEST(ImportJsonMap, External)
       constexpr auto id = 1_layer;
       ASSERT_TRUE(document->has_layer(id));
 
-      auto* layer = document->get_layer(id);
+      const auto* layer = document->get_layer(id);
       ASSERT_EQ(core::layer_type::tile_layer, layer->type());
       EXPECT_TRUE(layer->visible());
       EXPECT_EQ(0.2, layer->opacity());
 
-      auto* tileLayer = document->get_tile_layer(id);
+      const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
 
       EXPECT_EQ(rows, tileLayer->row_count());
@@ -133,12 +134,12 @@ TEST(ImportJsonMap, External)
       constexpr auto id = 2_layer;
       ASSERT_TRUE(document->has_layer(id));
 
-      auto* layer = document->get_layer(id);
+      const auto* layer = document->get_layer(id);
       ASSERT_EQ(core::layer_type::tile_layer, layer->type());
       EXPECT_TRUE(layer->visible());
       EXPECT_EQ(1.0, layer->opacity());
 
-      auto* tileLayer = document->get_tile_layer(id);
+      const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
       EXPECT_EQ(1'293_t, tileLayer->tile_at({0_row, 0_col}));
       EXPECT_EQ(1'359_t, tileLayer->tile_at({2_row, 2_col}));
