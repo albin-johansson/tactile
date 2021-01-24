@@ -372,6 +372,11 @@ class map_document final : public document
    */
   [[nodiscard]] auto current_layer_id() const noexcept -> maybe<layer_id>;
 
+  /**
+   * \copydoc map::has_layer()
+   */
+  [[nodiscard]] auto has_layer(layer_id id) const -> bool;
+
   /// \}
 
   /**

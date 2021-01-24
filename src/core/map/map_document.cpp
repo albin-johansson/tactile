@@ -483,4 +483,9 @@ auto map_document::current_layer_id() const noexcept -> maybe<layer_id>
   return m_map->active_layer_id();
 }
 
+auto map_document::has_layer(const layer_id id) const -> bool
+{
+  return m_map->has_layer(id);
+}
+
 }  // namespace tactile::core
