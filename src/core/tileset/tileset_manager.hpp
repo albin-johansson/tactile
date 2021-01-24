@@ -6,6 +6,7 @@
 
 #include "maybe.hpp"
 #include "position.hpp"
+#include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 #include "vector_map.hpp"
@@ -27,7 +28,7 @@ class tileset_manager final
 {
  public:
   using tile_range = std::pair<tile_id, tile_id>;
-  using tileset_map = vector_map<tileset_id, std::shared_ptr<tileset>>;
+  using tileset_map = vector_map<tileset_id, shared<tileset>>;
   using const_iterator = tileset_map::const_iterator;
 
   /**
@@ -40,6 +41,8 @@ class tileset_manager final
   /**
    * \brief Adds a tileset to the manager.
    *
+   * \note The added tileset will be made the active tileset.
+   *
    * \pre `id` must not be associated with an existing tileset.
    * \pre `tileset` cannot be null.
    *
@@ -49,10 +52,12 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void add(tileset_id id, std::shared_ptr<tileset> tileset);
+  void add(tileset_id id, shared<tileset> tileset);
 
   /**
    * \brief Adds a tileset to the manager.
+   *
+   * \note The added tileset will be made the active tileset.
    *
    * \pre `tileset` can't be null.
    *
@@ -62,7 +67,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto add(std::shared_ptr<tileset> tileset) -> tileset_id;
+  [[nodiscard]] auto add(shared<tileset> tileset) -> tileset_id;
 
   /**
    * \brief Removes a tileset from the manager.
@@ -80,7 +85,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void remove_all() noexcept;
+  void remove_all() noexcept; // TODO rename to clear
 
   /**
    * \brief Sets the name of a tileset.
@@ -113,7 +118,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void set_selection(const tileset::selection& selection);
+  [[deprecated]] void set_selection(const tileset::selection& selection);
 
   /**
    * \brief Increments the next tileset ID value.
@@ -253,8 +258,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_tileset_pointer(tileset_id id)
-      -> std::shared_ptr<tileset>
+  [[nodiscard]] auto get_tileset_pointer(tileset_id id) -> shared<tileset>
   {
     return m_tilesets.at(id);
   }
