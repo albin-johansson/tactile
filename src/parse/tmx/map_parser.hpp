@@ -342,7 +342,7 @@ class map_parser final
       return false;
     }
 
-    layer->set_visible(object.integer(element_id::visible, 1) == 1);
+    layer->set_visible(object.boolean(element_id::visible).value_or(true));
     layer->set_opacity(object.floating(element_id::opacity, 1.0));
     layer->set_name(object.string(element_id::name, TACTILE_QSTRING(u"Layer")));
 
