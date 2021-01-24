@@ -31,13 +31,11 @@ set(TACTILE_TEST_FILES
     unit/core/tileset_manager_test.cpp
     unit/core/tileset_test.cpp
 
-    unit/core/viewmodel/property/property_model_test.cpp
-
     unit/parse/json_utils_test.cpp
     unit/parse/map_parser_test.cpp
     unit/parse/json_map_parser_test.cpp
     unit/parse/xml_map_parser_test.cpp
-    #unit/parse/xml_utils_test.cpp
+    unit/parse/xml_utils_test.cpp
 
     #unit/service/tmx_import_test.cpp
     #unit/service/json_import_test.cpp
