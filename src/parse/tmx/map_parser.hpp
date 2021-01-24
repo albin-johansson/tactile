@@ -3,7 +3,9 @@
 #include <QDir>
 #include <QFileInfo>
 #include <concepts>  // same_as
+#include <ranges>    // all_of
 #include <utility>   // exchange
+#include <vector>    // vector
 
 #include "element_id.hpp"
 #include "map_document.hpp"
@@ -36,26 +38,30 @@ concept is_parser = is_object<Object> &&
                              parse_error& error,
                              const QFileInfo& path)
 {
-  { parser.root(document) } -> std::same_as<Object>;
-  { parser.from_file(path) } -> std::same_as<maybe<Document>>;
-  { parser.add_tiles(layer, object, error) } -> std::same_as<bool>;
-  { parser.each_tileset(object, [](const Object&) {}) };
-  { parser.each_layer(object, [](const Object&) {}) };
+  { parser.root(document)                      } -> std::same_as<Object>;
+  { parser.layers(object)                      } -> std::same_as<std::vector<Object>>;
+  { parser.tilesets(object)                    } -> std::same_as<std::vector<Object>>;
+  { parser.from_file(path)                     } -> std::same_as<maybe<Document>>;
+  { parser.add_tiles(layer, object, error)     } -> std::same_as<bool>;
+  { parser.contains_layers(object)             } -> std::same_as<bool>;
+  { parser.contains_tilesets(object)           } -> std::same_as<bool>;
+  { parser.validate_layer_type(object)         } -> std::same_as<bool>;
+  { parser.tileset_image_relative_path(object) } -> std::same_as<maybe<QString>>;
 };
 
 // clang-format on
 
 template <typename Parser>
 class map_parser final
-{  // TODO avoid if constexpr blocks for handling the different file types
-
+{
  public:
   using parser_type = Parser;
   using document_type = typename parser_type::document_type;
   using object_type = typename parser_type::object_type;
-  inline constexpr static map_file_type type = Parser::fileType;
+  inline constexpr static map_file_type type = parser_type::fileType;
 
-  static_assert(is_parser<parser_type, document_type, object_type>);
+  static_assert(is_parser<parser_type, document_type, object_type>,
+                "The supplied type isn't a parser engine!");
 
   explicit map_parser(const QFileInfo& path)
   {
@@ -135,7 +141,7 @@ class map_parser final
   parse_error m_error{parse_error::none};
   parser_type m_parser;
 
-  [[nodiscard]] auto set_error(const parse_error error) noexcept -> bool
+  [[nodiscard]] auto with_error(const parse_error error) noexcept -> bool
   {
     m_error = error;
     return false;
@@ -164,36 +170,33 @@ class map_parser final
       m_document->set_next_layer_id(layer_id{*id});
       return true;
     } else {
-      return set_error(parse_error::map_missing_next_layer_id);
+      return with_error(parse_error::map_missing_next_layer_id);
+    }
+  }
+
+  [[nodiscard]] auto parse_tileset(const object_type& object,
+                                   const QFileInfo& path) -> bool
+  {
+    if (const auto first = parse_tileset_first_gid(object)) {
+      return object.contains(element_id::source)
+                 ? parse_external_tileset(object, path, *first)
+                 : parse_tileset_common(object, path, *first);
+    } else {
+      return false;
     }
   }
 
   [[nodiscard]] auto parse_tilesets(const object_type& root,
                                     const QFileInfo& path) -> bool
   {
-    if constexpr (type == map_file_type::json) {
-      if (!root.contains(element_id::tilesets)) {
-        return set_error(parse_error::map_missing_tilesets);
-      }
+    if (!m_parser.contains_tilesets(root)) {
+      return with_error(parse_error::map_missing_tilesets);
     }
 
-    bool ok{true};
-    m_parser.each_tileset(root, [&](const object_type& elem) {
-      if (ok) {
-        const auto firstGid = parse_tileset_first_gid(elem);
-        ok = firstGid.has_value();
-
-        if (ok) {
-          ok = elem.contains(element_id::source)
-                   ? parse_external_tileset(elem, path, *firstGid)
-                   : parse_tileset_common(elem, path, *firstGid);
-        }
-      }
-
-      return ok;
-    });
-
-    return ok;
+    return std::ranges::all_of(m_parser.tilesets(root),
+                               [&](const object_type& ts) {
+                                 return parse_tileset(ts, path);
+                               });
   }
 
   [[nodiscard]] auto parse_tileset_first_gid(const object_type& object)
@@ -218,7 +221,7 @@ class map_parser final
     if (external) {
       return parse_tileset_common(m_parser.root(*external), path, firstGid);
     } else {
-      return set_error(parse_error::could_not_read_external_tileset);
+      return with_error(parse_error::could_not_read_external_tileset);
     }
   }
 
@@ -228,32 +231,22 @@ class map_parser final
   {
     const auto tw = object.integer(element_id::tile_width);
     if (!tw) {
-      return set_error(parse_error::tileset_missing_tile_width);
+      return with_error(parse_error::tileset_missing_tile_width);
     }
 
     const auto th = object.integer(element_id::tile_height);
     if (!th) {
-      return set_error(parse_error::tileset_missing_tile_height);
+      return with_error(parse_error::tileset_missing_tile_height);
     }
 
-    maybe<QString> relativePath;
-    if constexpr (type == map_file_type::tmx) {
-      const auto imageElem =
-          object->firstChildElement(TACTILE_QSTRING(u"image"));
-      relativePath = imageElem.attribute(TACTILE_QSTRING(u"source"));
-      if (relativePath->isNull()) {
-        return set_error(parse_error::tileset_missing_image_path);
-      }
-    } else {
-      relativePath = object.string(element_id::image);
-      if (!relativePath) {
-        return set_error(parse_error::tileset_missing_image_path);
-      }
+    const auto relativePath = m_parser.tileset_image_relative_path(object);
+    if (!relativePath) {
+      return with_error(parse_error::tileset_missing_image_path);
     }
 
     const auto absolutePath = path.dir().absoluteFilePath(*relativePath);
     if (!QFileInfo{absolutePath}.exists()) {
-      return set_error(parse_error::external_tileset_does_not_exist);
+      return with_error(parse_error::external_tileset_does_not_exist);
     }
 
     try {
@@ -264,7 +257,7 @@ class map_parser final
 
       const auto name = object.string(element_id::name);
       if (!name) {
-        return set_error(parse_error::tileset_missing_name);
+        return with_error(parse_error::tileset_missing_name);
       }
 
       tileset->set_name(*name);
@@ -272,7 +265,49 @@ class map_parser final
 
       m_document->add_tileset(std::move(tileset));
     } catch (...) {
-      return set_error(parse_error::could_not_create_tileset);
+      return with_error(parse_error::could_not_create_tileset);
+    }
+
+    return true;
+  }
+
+  [[nodiscard]] auto parse_layer(const object_type& object, const bool isFirst)
+      -> bool
+  {
+    if (!m_parser.validate_layer_type(object)) {
+      return with_error(parse_error::layer_missing_type);
+    }
+
+    const auto id = object.integer(element_id::id);
+    if (!id) {
+      return with_error(parse_error::layer_missing_id);
+    }
+
+    const auto rows = object.integer(element_id::height);
+    if (!rows) {
+      return with_error(parse_error::layer_missing_height);
+    }
+
+    const auto cols = object.integer(element_id::width);
+    if (!cols) {
+      return with_error(parse_error::layer_missing_width);
+    }
+
+    auto layer = std::make_shared<core::tile_layer>(row_t{*rows}, col_t{*cols});
+
+    layer->set_visible(object.integer(element_id::visible, 1) == 1);
+    layer->set_opacity(object.floating(element_id::opacity, 1.0));
+    layer->set_name(object.string(element_id::name, TACTILE_QSTRING(u"Layer")));
+
+    if (!m_parser.add_tiles(*layer, object, m_error)) {
+      return false;
+    }
+
+    const layer_id layerId{*id};
+    m_document->add_layer(layerId, layer);
+
+    if (isFirst) {
+      m_document->select_layer(layerId);
     }
 
     return true;
@@ -280,68 +315,17 @@ class map_parser final
 
   [[nodiscard]] auto parse_layers(const object_type& root) -> bool
   {
-    bool first{true};
-    bool ok{true};
-
-    if constexpr (type == map_file_type::json) {
-      if (!root->contains(u"layers")) {
-        return set_error(parse_error::map_missing_layers);
-      }
+    if (!m_parser.contains_layers(root)) {
+      return with_error(parse_error::map_missing_layers);
     }
 
-    m_parser.each_layer(root, [&, this](const object_type& elem) {
-      if (ok) {
-        if constexpr (type == map_file_type::json) {
-          if (!elem->contains(u"type")) {
-            ok = set_error(parse_error::layer_missing_type);
-            return;
-          }
-
-          if (elem->value(u"type").toString() != QStringView{u"tilelayer"}) {
-            qWarning("Skipping layer in file because it was not a tile layer!");
-            return;
-          }
-        }
-
-        const auto id = elem.integer(element_id::id);
-        if (!id) {
-          ok = set_error(parse_error::layer_missing_id);
-          return;
-        }
-
-        const auto rows = elem.integer(element_id::height);
-        if (!rows) {
-          ok = set_error(parse_error::layer_missing_height);
-          return;
-        }
-
-        const auto cols = elem.integer(element_id::width);
-        if (!cols) {
-          ok = set_error(parse_error::layer_missing_width);
-          return;
-        }
-
-        auto layer = std::make_shared<core::tile_layer>(row_t{*rows}, col_t{*cols});
-
-        layer->set_visible(elem.integer(element_id::visible, 1) == 1);
-        layer->set_opacity(elem.floating(element_id::opacity, 1.0));
-        layer->set_name(
-            elem.string(element_id::name, TACTILE_QSTRING(u"Layer")));
-
-        if (!m_parser.add_tiles(*layer, elem, m_error)) {
-          ok = false;
-          return;
-        }
-
-        const layer_id layerId{*id};
-        m_document->add_layer(layerId, layer);
-
-        if (first) {
-          first = false;
-          m_document->select_layer(layerId);
-        }
+    bool first = true;
+    for (const auto& layer : m_parser.layers(root)) {
+      if (!parse_layer(layer, first)) {
+        return false;
       }
-    });
+      first = false;
+    }
 
     return true;
   }

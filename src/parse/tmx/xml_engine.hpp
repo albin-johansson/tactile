@@ -1,13 +1,13 @@
 #pragma once
 
-#include <QtXml>
-#include <concepts>  // invocable
+#include <QString>  // QString
+#include <QtXml>    // QDomDocument
+#include <vector>   // vector
 
 #include "element_id.hpp"
 #include "map_file_type.hpp"
 #include "maybe.hpp"
 #include "parse_error.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 #include "xml_element.hpp"
 #include "xml_utils.hpp"
@@ -19,50 +19,55 @@ class xml_engine final
  public:
   using document_type = QDomDocument;
   using object_type = xml_element;
-  inline constexpr static map_file_type fileType = map_file_type::tmx;
 
-  [[nodiscard]] static auto root(const document_type& document) -> object_type;
+  inline constexpr static auto fileType = map_file_type::tmx;
 
-  [[nodiscard]] static auto from_file(const QFileInfo& path)
-      -> maybe<document_type>;
+  // clang-format off
 
-  [[nodiscard]] static auto add_tiles(core::tile_layer& layer,
-                                      const object_type& element,
-                                      parse_error& error) -> bool;
+  [[nodiscard]]
+  static auto root(const document_type& document) -> object_type;
 
-  template <std::invocable<const object_type&> T>
-  void each_tileset(const object_type& root, T&& callable)
+  [[nodiscard]]
+  static auto from_file(const QFileInfo& path) -> maybe<document_type>;
+
+  [[nodiscard]]
+  static auto tilesets(const object_type& root) -> std::vector<object_type>;
+
+  [[nodiscard]]
+  static auto layers(const object_type& root) -> std::vector<object_type>;
+
+  [[nodiscard]]
+  static auto add_tiles(core::tile_layer& layer,
+                        const object_type& element,
+                        parse_error& error) -> bool;
+
+  [[nodiscard]]
+  static auto contains_tilesets(const object_type& object) -> bool
   {
-    const auto elements = root->elementsByTagName(TACTILE_QSTRING(u"tileset"));
-    const auto count = elements.count();
-    for (auto i = 0; i < count; ++i) {
-      const auto& node = elements.at(i);
-      Q_ASSERT(node.isElement());
-
-      const object_type elem{node.toElement()};
-      Q_ASSERT(elem->tagName() == QStringView{u"tileset"});
-
-      if (!callable(elem)) {
-        return;
-      }
-    }
+    return true;
   }
 
-  template <std::invocable<const object_type&> T>
-  void each_layer(const object_type& root, T&& callable)
+  [[nodiscard]]
+  static auto tileset_image_relative_path(const object_type& object)
+      -> maybe<QString>;
+
+  [[nodiscard]]
+  static auto validate_layer_type(const object_type& object) -> bool
   {
-    const auto elements = root->elementsByTagName(TACTILE_QSTRING(u"layer"));
-    const auto count = elements.count();
-    for (auto i = 0; i < count; ++i) {
-      const auto& node = elements.at(i);
-      Q_ASSERT(node.isElement());
-
-      const object_type elem{node.toElement()};
-      Q_ASSERT(elem->tagName() == TACTILE_QSTRING(u"layer"));
-
-      callable(elem);
-    }
+    return true;
   }
+
+  [[nodiscard]]
+  static auto contains_layers(const object_type& object) -> bool
+  {
+    return true;
+  }
+
+  // clang-format on
+
+ private:
+  static auto collect(const object_type& root, const QString& key)
+      -> std::vector<object_type>;
 };
 
 }  // namespace tactile::tmx

@@ -1,5 +1,7 @@
 #include "json_engine.hpp"
 
+#include <cstddef>  // size_t
+
 #include "json_utils.hpp"
 
 namespace tactile::tmx {
@@ -21,6 +23,16 @@ auto json_engine::root(const document_type& document) -> object_type
 auto json_engine::from_file(const QFileInfo& path) -> maybe<document_type>
 {
   return json::from_file(path);
+}
+
+auto json_engine::tilesets(const object_type& root) -> std::vector<object_type>
+{
+  return collect(root, u"tilesets");
+}
+
+auto json_engine::layers(const object_type& root) -> std::vector<object_type>
+{
+  return collect(root, u"layers");
 }
 
 auto json_engine::add_tiles(core::tile_layer& layer,
@@ -45,6 +57,42 @@ auto json_engine::add_tiles(core::tile_layer& layer,
   }
 
   return true;
+}
+
+auto json_engine::contains_tilesets(const object_type& object) -> bool
+{
+  return object.contains(element_id::tilesets);
+}
+
+auto json_engine::tileset_image_relative_path(const object_type& object)
+    -> maybe<QString>
+{
+  return object.string(element_id::image);
+}
+
+auto json_engine::validate_layer_type(const object_type& object) -> bool
+{
+  return object->contains(u"type");
+}
+
+auto json_engine::contains_layers(const object_type& object) -> bool
+{
+  return object->contains(u"layers");
+}
+
+auto json_engine::collect(const object_type& root, const QStringView key)
+    -> std::vector<object_type>
+{
+  const auto array = root->value(key).toArray();
+
+  std::vector<object_type> vector;
+  vector.reserve(static_cast<std::size_t>(array.size()));
+
+  for (const auto& elem : array) {
+    vector.emplace_back(elem.toObject());
+  }
+
+  return vector;
 }
 
 }  // namespace tactile::tmx

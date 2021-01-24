@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QFileInfo>
-#include <QJsonArray>
-#include <QJsonDocument>
-#include <QJsonValue>
-#include <concepts>  // invocable
+#include <QFileInfo>      // QFileInfo
+#include <QJsonArray>     // QJsonArray
+#include <QJsonDocument>  // QJsonDocument
+#include <QJsonValue>     // QJsonValue
+#include <vector>         // vector
 
 #include "json_element.hpp"
 #include "map_file_type.hpp"
@@ -18,36 +18,48 @@ class json_engine final
  public:
   using document_type = QJsonDocument;
   using object_type = json_element;
-  inline constexpr static map_file_type fileType = map_file_type::json;
 
-  [[nodiscard]] static auto root(const document_type& document) -> object_type;
+  inline constexpr static auto fileType = map_file_type::json;
 
-  [[nodiscard]] static auto from_file(const QFileInfo& path)
-      -> maybe<document_type>;
+  // clang-format off
 
-  [[nodiscard]] static auto add_tiles(core::tile_layer& layer,
-                                      const object_type& element,
-                                      parse_error& error) -> bool;
+  [[nodiscard]]
+  static auto root(const document_type& document) -> object_type;
 
-  template <std::invocable<const object_type&> T>
-  void each_tileset(const object_type& root, T&& callable)
-  {
-    const auto array = root->value(u"tilesets").toArray();
-    for (const auto& elem : array) {
-      const object_type obj{elem.toObject()};
-      callable(obj);
-    }
-  }
+  [[nodiscard]]
+  static auto from_file(const QFileInfo& path) -> maybe<document_type>;
 
-  template <std::invocable<const object_type&> T>
-  void each_layer(const object_type& root, T&& callable)
-  {
-    const auto array = root->value(u"layers").toArray();
-    for (const auto& elem : array) {
-      const object_type object{elem.toObject()};
-      callable(object);
-    }
-  }
+  [[nodiscard]]
+  static auto tilesets(const object_type& root) -> std::vector<object_type>;
+
+  [[nodiscard]]
+  static auto layers(const object_type& root) -> std::vector<object_type>;
+
+  [[nodiscard]]
+  static auto add_tiles(core::tile_layer& layer,
+                        const object_type& element,
+                        parse_error& error) -> bool;
+
+  [[nodiscard]]
+  static auto contains_tilesets(const object_type& object) -> bool;
+
+  [[nodiscard]]
+  static auto tileset_image_relative_path(const object_type& object)
+      -> maybe<QString>;
+
+  [[nodiscard]]
+  static auto validate_layer_type(const object_type& object) -> bool;
+
+  [[nodiscard]]
+  static auto contains_layers(const object_type& object) -> bool;
+
+  // clang-format on
+
+ private:
+  static auto collect(const object_type& root, QStringView key)
+      -> std::vector<object_type>;
+};
+
 };
 
 }  // namespace tactile::tmx
