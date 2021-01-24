@@ -80,6 +80,7 @@ class map_parser final
 
   ~map_parser() noexcept
   {
+    // The pointer will be null if the client code claims the document
     delete m_document;
   }
 
