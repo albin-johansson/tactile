@@ -16,12 +16,10 @@ using namespace tactile;
 
 TACTILE_DEFINE_TEST_P(MapImportEmbeddedTest, QString)
 {
-  const auto path = GetParam();
-
   QObject parent;
   tmx::parse_error error;
 
-  auto* document = service::open_map(path, &error);
+  auto* document = service::open_map(GetParam(), &error);
   ASSERT_TRUE(document);
 
   document->setParent(&parent);  // Avoid memory leak
