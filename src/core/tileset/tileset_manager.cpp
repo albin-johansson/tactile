@@ -11,7 +11,7 @@ tileset_manager::tileset_manager()
   m_tilesets.reserve(5);
 }
 
-void tileset_manager::add(const tileset_id id, std::shared_ptr<tileset> tileset)
+void tileset_manager::add(const tileset_id id, shared<tileset> tileset)
 {
   Q_ASSERT(!contains(id));
   Q_ASSERT(tileset);
@@ -21,7 +21,7 @@ void tileset_manager::add(const tileset_id id, std::shared_ptr<tileset> tileset)
   m_activeId = id;
 }
 
-auto tileset_manager::add(std::shared_ptr<tileset> tileset) -> tileset_id
+auto tileset_manager::add(shared<tileset> tileset) -> tileset_id
 {
   Q_ASSERT(tileset);
 
