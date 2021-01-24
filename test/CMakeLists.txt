@@ -19,26 +19,30 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR})
 
 set(TACTILE_TEST_FILES
-        unit/test_main.cpp
-        unit/tile_layer_test.cpp
-        unit/position_test.cpp
-        unit/map_test.cpp
-        unit/flood_fill_test.cpp
-        unit/tileset_test.cpp
-        unit/tile_size_test.cpp
-        unit/tileset_manager_test.cpp
-        unit/nenya_test.cpp
-        unit/vector_map_test.cpp
-        unit/property_test.cpp
-        unit/property_delegate_test.cpp
+    unit/test_main.cpp
 
-        unit/service/tmx_import_test.cpp
-        unit/service/json_import_test.cpp
+    unit/core/flood_fill_test.cpp
+    unit/core/map_test.cpp
+    unit/core/position_test.cpp
+    unit/core/property_delegate_test.cpp
+    unit/core/property_test.cpp
+    unit/core/tile_layer_test.cpp
+    unit/core/tile_size_test.cpp
+    unit/core/tileset_manager_test.cpp
+    unit/core/tileset_test.cpp
 
-        unit/parse/xml_utils_test.cpp
-        unit/parse/json_utils_test.cpp
-        unit/parse/tiled_json_parser_test.cpp
-        unit/parse/map_parser_test.cpp)
+    unit/core/viewmodel/property/property_model_test.cpp
+
+    unit/parse/json_utils_test.cpp
+    unit/parse/map_parser_test.cpp
+    unit/parse/json_map_parser_test.cpp
+    #unit/parse/xml_utils_test.cpp
+
+    #unit/service/tmx_import_test.cpp
+    #unit/service/json_import_test.cpp
+
+    unit/util/nenya_test.cpp
+    unit/util/vector_map_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 

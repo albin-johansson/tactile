@@ -33,18 +33,3 @@ TEST(TMXParser, InvalidMap)
   EXPECT_FALSE(parser);
   EXPECT_EQ(tmx::parse_error::map_file_not_found, parser.error_code());
 }
-
-TEST(JSONParser, ValidMap)
-{
-  const json_parser parser{TACTILE_QSTRING(u"json/external.json")};
-  EXPECT_TRUE(parser);
-  EXPECT_EQ(tmx::parse_error::none, parser.error_code());
-}
-
-TEST(JSONParser, InvalidMap)
-{
-  const auto path = TACTILE_QSTRING(u"json/invalid/layer_missing_height.json");
-  const json_parser parser{path};
-  EXPECT_FALSE(parser);
-  EXPECT_EQ(tmx::parse_error::layer_missing_height, parser.error_code());
-}

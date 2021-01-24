@@ -1,10 +1,12 @@
 #include "json_utils.hpp"
 
-#include <catch.hpp>
+#include <gtest/gtest.h>
+
+#include "tactile_qstring.hpp"
 
 using namespace tactile;
 
-TEST_CASE("json::from_file", "[json_utils]")
+TEST(JSONUtils, FromFile)
 {
-  CHECK_NOTHROW(json::from_file(QStringLiteral(u"json/terrain.json")));
+  EXPECT_NO_THROW(json::from_file(TACTILE_QSTRING(u"json/terrain.json")));
 }
