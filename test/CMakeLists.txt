@@ -36,6 +36,7 @@ set(TACTILE_TEST_FILES
     unit/parse/json_utils_test.cpp
     unit/parse/map_parser_test.cpp
     unit/parse/json_map_parser_test.cpp
+    unit/parse/xml_map_parser_test.cpp
     #unit/parse/xml_utils_test.cpp
 
     #unit/service/tmx_import_test.cpp
