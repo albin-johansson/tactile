@@ -17,7 +17,9 @@ enum class element_id
   width,
   height,
   visible,
-  opacity
+  opacity,
+  type,
+  value
 };
 
 }

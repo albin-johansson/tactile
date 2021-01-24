@@ -8,6 +8,7 @@
 
 #include "json_element.hpp"
 #include "map_file_type.hpp"
+#include "map_parser_engine.hpp"
 #include "parse_error.hpp"
 #include "tile_layer.hpp"
 
@@ -36,6 +37,9 @@ class json_engine final
   static auto layers(const object_type& root) -> std::vector<object_type>;
 
   [[nodiscard]]
+  static auto properties(const object_type& object) -> std::vector<object_type>;
+
+  [[nodiscard]]
   static auto add_tiles(core::tile_layer& layer,
                         const object_type& element,
                         parse_error& error) -> bool;
@@ -53,13 +57,20 @@ class json_engine final
   [[nodiscard]]
   static auto contains_layers(const object_type& object) -> bool;
 
+  [[nodiscard]]
+  static auto assume_string_property(const object_type& object) -> bool;
+
+  [[nodiscard]]
+  static auto is_tile_layer(const object_type& object) -> bool;
+
+  [[nodiscard]]
+  static auto is_object_layer(const object_type& object) -> bool;
+
   // clang-format on
 
  private:
   static auto collect(const object_type& root, QStringView key)
       -> std::vector<object_type>;
-};
-
 };
 
 }  // namespace tactile::tmx

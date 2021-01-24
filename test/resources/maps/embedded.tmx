@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="2">
+ <properties>
+  <property name="color" type="color" value="#ff550000"/>
+  <property name="f" type="float" value="12.3"/>
+  <property name="i" type="int" value="123"/>
+  <property name="isCool" type="bool" value="true"/>
+  <property name="obj" type="object" value="1"/>
+  <property name="path" type="file" value="../terrain.png"/>
+  <property name="str" value="foobar"/>
+ </properties>
+ <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
+  <image source="../terrain.png" width="1024" height="1024"/>
+ </tileset>
+ <tileset firstgid="1025" name="outside" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
+  <image source="../outside.png" width="1024" height="1024"/>
+ </tileset>
+ <layer id="1" name="G0" width="15" height="10">
+  <data encoding="csv">
+361,361,361,360,360,359,359,360,361,360,359,360,361,360,359,
+360,361,360,361,361,359,360,361,361,359,361,359,360,359,359,
+359,359,361,360,359,360,360,360,361,361,359,361,359,359,359,
+360,361,360,361,361,361,360,360,359,359,359,359,359,359,360,
+361,360,359,359,359,359,360,359,360,360,359,361,359,360,361,
+360,361,359,359,360,359,360,361,359,360,361,360,359,359,360,
+360,361,361,360,360,361,360,360,359,359,361,360,360,360,359,
+359,359,360,360,361,360,359,359,359,361,359,359,360,359,359,
+359,360,359,361,360,359,359,359,360,361,361,361,359,360,361,
+359,361,359,361,360,359,361,360,360,361,361,361,361,360,361
+</data>
+ </layer>
+ <layer id="2" name="T0" width="15" height="10">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,736,0,0,0,0,1127,1128,1129,0,0,0,0,0,0,
+0,0,0,0,0,0,1159,1160,1161,0,736,1293,1294,1295,0,
+0,647,648,0,0,0,1191,1192,1193,0,0,1325,1326,1327,0,
+0,679,680,0,0,0,0,0,0,0,0,1357,1358,1359,0,
+0,0,0,0,736,0,0,0,0,0,0,0,0,0,0,
+0,0,0,1127,1128,1129,736,0,0,0,0,946,947,0,0,
+1488,1489,0,1159,1160,1161,0,1863,1864,1865,0,978,979,0,0,
+1520,1521,0,1191,1192,1193,0,1895,1896,1897,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,736,0
+</data>
+ </layer>
+ <objectgroup id="3" name="O1">
+  <object id="1" name="Point" x="128" y="96">
+   <point/>
+  </object>
+ </objectgroup>
+</map>

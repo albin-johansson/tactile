@@ -128,7 +128,8 @@ void map_document::add_property(const QString& name,
 void map_document::add_property(const QString& name,
                                 const core::property& property)
 {
-  // TODO
+  // TODO this is used by the map parser, might not need to undo/redo
+  m_delegate->add_property(name, property);
 }
 
 void map_document::remove_property(const QString& name)

@@ -45,6 +45,16 @@ auto json_element::integer(const element_id id, const int def) const
   return integer(id).value_or(def);
 }
 
+auto json_element::floating(const element_id id) const -> maybe<double>
+{
+  if (const auto result = m_object.value(stringify_element_id(id)).toDouble(-1);
+      result != -1) {
+    return result;
+  } else {
+    return std::nullopt;
+  }
+}
+
 auto json_element::floating(const QString& str, const double def) const
     -> double
 {
@@ -58,12 +68,7 @@ auto json_element::floating(const QString& str, const double def) const
 auto json_element::floating(const element_id id, const double def) const
     -> double
 {
-  if (const auto result = m_object.value(stringify_element_id(id)).toDouble(-1);
-      result != -1) {
-    return result;
-  } else {
-    return def;
-  }
+  return floating(id).value_or(def);
 }
 
 auto json_element::string(const QString& str) const -> maybe<QString>
@@ -96,6 +101,16 @@ auto json_element::string(const element_id id, const QString& def) const
     -> QString
 {
   return string(id).value_or(def);
+}
+
+auto json_element::boolean(const element_id id) const -> maybe<bool>
+{
+  const auto value = m_object.value(stringify_element_id(id));
+  if (value.isBool()) {
+    return value.toBool();
+  } else {
+    return std::nullopt;
+  }
 }
 
 auto json_element::stringify_element_id(const element_id type) -> QStringView
@@ -142,6 +157,12 @@ auto json_element::stringify_element_id(const element_id type) -> QStringView
 
     case element_id::opacity:
       return u"opacity";
+
+    case element_id::type:
+      return u"type";
+
+    case element_id::value:
+      return u"value";
 
     default:
       throw tactile_error{"Reached end of switch statement!"};

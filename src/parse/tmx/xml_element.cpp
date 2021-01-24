@@ -32,8 +32,7 @@ auto xml_element::integer(const element_id id, const int def) const
   return integer(id).value_or(def);
 }
 
-auto xml_element::floating(const element_id id, const double def) const
-    -> double
+auto xml_element::floating(const element_id id) const -> maybe<double>
 {
   bool ok;
   const auto result =
@@ -41,8 +40,14 @@ auto xml_element::floating(const element_id id, const double def) const
   if (ok) {
     return result;
   } else {
-    return def;
+    return std::nullopt;
   }
+}
+
+auto xml_element::floating(const element_id id, const double def) const
+    -> double
+{
+  return floating(id).value_or(def);
 }
 
 auto xml_element::string(const element_id id) const -> maybe<QString>
@@ -59,6 +64,15 @@ auto xml_element::string(const element_id id, const QString& def) const
     -> QString
 {
   return string(id).value_or(def);
+}
+
+auto xml_element::boolean(const element_id id) const -> maybe<bool>
+{
+  if (const auto value = string(id)) {
+    return value == TACTILE_QSTRING(u"true");
+  } else {
+    return std::nullopt;
+  }
 }
 
 auto xml_element::stringify_element_id(const element_id type) -> QString
@@ -105,6 +119,12 @@ auto xml_element::stringify_element_id(const element_id type) -> QString
 
     case element_id::opacity:
       return TACTILE_QSTRING(u"opacity");
+
+    case element_id::type:
+      return TACTILE_QSTRING(u"type");
+
+    case element_id::value:
+      return TACTILE_QSTRING(u"value");
 
     default:
       throw tactile_error{"Reached end of switch statement!"};

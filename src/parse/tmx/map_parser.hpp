@@ -24,9 +24,11 @@ concept is_object = requires(T t, element_id id, const QString& str)
   { t.contains(id)      } -> std::same_as<bool>;
   { t.integer(id)       } -> std::same_as<maybe<int>>;
   { t.integer(id, 1)    } -> std::same_as<maybe<int>>;
+  { t.floating(id)      } -> std::same_as<maybe<double>>;
   { t.floating(id, 1.0) } -> std::same_as<double>;
   { t.string(id)        } -> std::same_as<maybe<QString>>;
   { t.string(id, str)   } -> std::same_as<QString>;
+  { t.boolean(id)       } -> std::same_as<maybe<bool>>;
 };
 
 template <typename Parser, typename Document, typename Object>
@@ -41,12 +43,16 @@ concept is_parser = is_object<Object> &&
   { parser.root(document)                      } -> std::same_as<Object>;
   { parser.layers(object)                      } -> std::same_as<std::vector<Object>>;
   { parser.tilesets(object)                    } -> std::same_as<std::vector<Object>>;
+  { parser.properties(object)                  } -> std::same_as<std::vector<Object>>;
   { parser.from_file(path)                     } -> std::same_as<maybe<Document>>;
   { parser.add_tiles(layer, object, error)     } -> std::same_as<bool>;
   { parser.contains_layers(object)             } -> std::same_as<bool>;
   { parser.contains_tilesets(object)           } -> std::same_as<bool>;
   { parser.validate_layer_type(object)         } -> std::same_as<bool>;
   { parser.tileset_image_relative_path(object) } -> std::same_as<maybe<QString>>;
+  { parser.assume_string_property(object)      } -> std::same_as<bool>;
+  { parser.is_tile_layer(object)               } -> std::same_as<bool>;
+  { parser.is_object_layer(object)             } -> std::same_as<bool>;
 };
 
 // clang-format on
@@ -79,6 +85,10 @@ class map_parser final
       }
 
       if (!parse_layers(root)) {
+        return;
+      }
+
+      if (!parse_map_properties(root)) {
         return;
       }
     }
@@ -271,6 +281,40 @@ class map_parser final
     return true;
   }
 
+  [[nodiscard]] auto parse_tile_layer(const object_type& object)
+      -> shared<core::layer>
+  {
+    const auto rows = object.integer(element_id::height);
+    if (!rows) {
+      m_error = parse_error::layer_missing_height;
+      return nullptr;
+    }
+
+    const auto cols = object.integer(element_id::width);
+    if (!cols) {
+      m_error = parse_error::layer_missing_width;
+      return nullptr;
+    }
+
+    auto layer = std::make_shared<core::tile_layer>(row_t{*rows}, col_t{*cols});
+
+    if (!m_parser.add_tiles(*layer, object, m_error)) {
+      return nullptr;
+    }
+
+    return layer;
+  }
+
+  [[nodiscard]] auto parse_object_layer(const object_type& object)
+      -> shared<core::layer>
+  {
+    auto layer = std::make_shared<core::object_layer>();
+
+    // TODO parse array of objects
+
+    return layer;
+  }
+
   [[nodiscard]] auto parse_layer(const object_type& object, const bool isFirst)
       -> bool
   {
@@ -283,25 +327,24 @@ class map_parser final
       return with_error(parse_error::layer_missing_id);
     }
 
-    const auto rows = object.integer(element_id::height);
-    if (!rows) {
-      return with_error(parse_error::layer_missing_height);
+    shared<core::layer> layer;
+    if (m_parser.is_tile_layer(object)) {
+      layer = parse_tile_layer(object);
+
+    } else if (m_parser.is_object_layer(object)) {
+      layer = parse_object_layer(object);
+
+    } else {
+      return with_error(parse_error::unknown_layer_type);
     }
 
-    const auto cols = object.integer(element_id::width);
-    if (!cols) {
-      return with_error(parse_error::layer_missing_width);
+    if (!layer) {
+      return false;
     }
-
-    auto layer = std::make_shared<core::tile_layer>(row_t{*rows}, col_t{*cols});
 
     layer->set_visible(object.integer(element_id::visible, 1) == 1);
     layer->set_opacity(object.floating(element_id::opacity, 1.0));
     layer->set_name(object.string(element_id::name, TACTILE_QSTRING(u"Layer")));
-
-    if (!m_parser.add_tiles(*layer, object, m_error)) {
-      return false;
-    }
 
     const layer_id layerId{*id};
     m_document->add_layer(layerId, layer);
@@ -328,6 +371,62 @@ class map_parser final
     }
 
     return true;
+  }
+
+  [[nodiscard]] auto parse_map_property(const object_type& object) -> bool
+  {
+    const auto propName = object.string(element_id::name).value();
+
+    // The following is a quirk due to the fact that the type attribute can be
+    // omitted for string properties in the XML-format
+    QString propType;
+    if (m_parser.assume_string_property(object)) {
+      propType = TACTILE_QSTRING(u"string");
+    } else {
+      propType = object.string(element_id::type).value();
+    }
+
+    core::property prop;
+
+    if (propType == TACTILE_QSTRING(u"string")) {
+      prop.set_value(object.string(element_id::value).value());
+
+    } else if (propType == TACTILE_QSTRING(u"int")) {
+      prop.set_value(object.integer(element_id::value).value());
+
+    } else if (propType == TACTILE_QSTRING(u"float")) {
+      prop.set_value(object.floating(element_id::value).value());
+
+    } else if (propType == TACTILE_QSTRING(u"bool")) {
+      prop.set_value(object.boolean(element_id::value).value());
+
+    } else if (propType == TACTILE_QSTRING(u"file")) {
+      const auto file = object.string(element_id::value).value();
+      prop.set_value(QFileInfo{file});
+
+    } else if (propType == TACTILE_QSTRING(u"object")) {
+      const auto obj = object.integer(element_id::value).value();
+      prop.set_value(core::object_ref{obj});
+
+    } else if (propType == TACTILE_QSTRING(u"color")) {
+      const auto color = object.string(element_id::value).value();
+      prop.set_value(QColor{color});
+
+    } else {
+      return with_error(parse_error::unknown_property_type);
+    }
+
+    m_document->add_property(propName, prop);
+
+    return true;
+  }
+
+  [[nodiscard]] auto parse_map_properties(const object_type& root) -> bool
+  {
+    return std::ranges::all_of(m_parser.properties(root),
+                               [this](const object_type& prop) {
+                                 return parse_map_property(prop);
+                               });
   }
 };
 

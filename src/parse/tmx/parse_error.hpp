@@ -35,7 +35,10 @@ enum class parse_error
   tileset_missing_name,             ///< Tileset did not feature "name".
   could_not_create_tileset,         ///< Couldn't create `tileset` object.
   could_not_read_external_tileset,  ///< Could not read external tileset file.
-  external_tileset_does_not_exist   ///< External tileset file does not exist.
+  external_tileset_does_not_exist,  ///< External tileset file does not exist.
+
+  unknown_property_type,  ///< Did not recognize property type.
+  unknown_layer_type      ///< Did not recognize layer type.
 };
 
 [[nodiscard]] auto to_message(parse_error error) -> QString;

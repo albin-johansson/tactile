@@ -3,6 +3,7 @@
 #include <cstddef>  // size_t
 
 #include "json_utils.hpp"
+#include "tactile_qstring.hpp"
 
 namespace tactile::tmx {
 namespace {
@@ -33,6 +34,12 @@ auto json_engine::tilesets(const object_type& root) -> std::vector<object_type>
 auto json_engine::layers(const object_type& root) -> std::vector<object_type>
 {
   return collect(root, u"layers");
+}
+
+auto json_engine::properties(const object_type& object)
+    -> std::vector<object_type>
+{
+  return collect(object, u"properties");
 }
 
 auto json_engine::add_tiles(core::tile_layer& layer,
@@ -78,6 +85,21 @@ auto json_engine::validate_layer_type(const object_type& object) -> bool
 auto json_engine::contains_layers(const object_type& object) -> bool
 {
   return object->contains(u"layers");
+}
+
+auto json_engine::assume_string_property(const object_type& object) -> bool
+{
+  return false;
+}
+
+auto json_engine::is_tile_layer(const object_type& object) -> bool
+{
+  return object->value(u"type").toString() == TACTILE_QSTRING(u"tilelayer");
+}
+
+auto json_engine::is_object_layer(const object_type& object) -> bool
+{
+  return object->value(u"type").toString() == TACTILE_QSTRING(u"objectgroup");
 }
 
 auto json_engine::collect(const object_type& root, const QStringView key)

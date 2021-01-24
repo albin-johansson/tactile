@@ -105,6 +105,8 @@ class property_manager
    */
   [[nodiscard]] virtual auto get_property(const QString& name) -> property& = 0;
 
+  // TODO has_property would be handy
+
   /**
    * \brief Returns the amount of properties handled by the manager.
    *

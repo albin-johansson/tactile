@@ -37,6 +37,9 @@ class xml_engine final
   static auto layers(const object_type& root) -> std::vector<object_type>;
 
   [[nodiscard]]
+  static auto properties(const object_type& object) -> std::vector<object_type>;
+
+  [[nodiscard]]
   static auto add_tiles(core::tile_layer& layer,
                         const object_type& element,
                         parse_error& error) -> bool;
@@ -62,6 +65,15 @@ class xml_engine final
   {
     return true;
   }
+
+  [[nodiscard]]
+  static auto assume_string_property(const object_type& object) -> bool;
+
+  [[nodiscard]]
+  static auto is_tile_layer(const object_type& object) -> bool;
+
+  [[nodiscard]]
+  static auto is_object_layer(const object_type& object) -> bool;
 
   // clang-format on
 

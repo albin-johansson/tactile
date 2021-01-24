@@ -22,6 +22,8 @@ class json_element final
 
   [[nodiscard]] auto integer(const QString& str, int def) const -> int;
 
+  [[nodiscard]] auto floating(element_id id) const -> maybe<double>;
+
   [[nodiscard]] auto floating(const QString& str, double def) const -> double;
 
   [[nodiscard]] auto floating(element_id id, double def) const -> double;
@@ -34,6 +36,8 @@ class json_element final
   [[nodiscard]] auto string(element_id id) const -> maybe<QString>;
 
   [[nodiscard]] auto string(element_id id, const QString& def) const -> QString;
+
+  [[nodiscard]] auto boolean(element_id id) const -> maybe<bool>;
 
   auto operator->() noexcept -> QJsonObject*
   {

@@ -1,6 +1,7 @@
 #include "xml_engine.hpp"
 
-#include <cstddef>  // size_t
+#include <cstddef>   // size_t
+#include <iterator>  // make_move_iterator
 
 #include "tactile_qstring.hpp"
 
@@ -13,7 +14,32 @@ auto xml_engine::tilesets(const object_type& root) -> std::vector<object_type>
 
 auto xml_engine::layers(const object_type& root) -> std::vector<object_type>
 {
-  return collect(root, TACTILE_QSTRING(u"layer"));
+  auto layers = collect(root, TACTILE_QSTRING(u"layer"));
+  auto objectLayers = collect(root, TACTILE_QSTRING(u"objectgroup"));
+
+  // Move all object layers into the vector with tile layers
+  layers.insert(layers.end(),
+                std::make_move_iterator(objectLayers.begin()),
+                std::make_move_iterator(objectLayers.end()));
+
+  return layers;
+}
+
+auto xml_engine::properties(const object_type& object)
+    -> std::vector<object_type>
+{
+  const auto top = object->elementsByTagName(TACTILE_QSTRING(u"properties"));
+
+  const auto count = top.count();
+  if (count == 0) {
+    return std::vector<object_type>{};
+  }
+
+  const auto topNode = top.at(0);
+  Q_ASSERT(topNode.isElement());
+
+  return collect(object_type{topNode.toElement()},
+                 TACTILE_QSTRING(u"property"));
 }
 
 auto xml_engine::root(const document_type& document) -> object_type
@@ -62,6 +88,21 @@ auto xml_engine::tileset_image_relative_path(const object_type& object)
   } else {
     return std::nullopt;
   }
+}
+
+auto xml_engine::assume_string_property(const object_type& object) -> bool
+{
+  return !object->hasAttribute(TACTILE_QSTRING(u"type"));
+}
+
+auto xml_engine::is_tile_layer(const object_type& object) -> bool
+{
+  return object->tagName() == TACTILE_QSTRING(u"layer");
+}
+
+auto xml_engine::is_object_layer(const object_type& object) -> bool
+{
+  return object->tagName() == TACTILE_QSTRING(u"objectgroup");
 }
 
 auto xml_engine::collect(const object_type& root, const QString& key)

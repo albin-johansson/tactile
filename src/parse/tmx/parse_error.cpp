@@ -64,6 +64,12 @@ auto to_message(const parse_error error) -> QString
     case parse_error::external_tileset_does_not_exist:
       return TACTILE_QSTRING(u"External tileset file does not exist!");
 
+    case parse_error::unknown_property_type:
+      return TACTILE_QSTRING(u"Could not recognize property type!");
+
+    case parse_error::unknown_layer_type:
+      return TACTILE_QSTRING(u"Could not recognize layer type!");
+
     default:
       return TACTILE_QSTRING(u"Unknown!");
   }
