@@ -38,7 +38,7 @@ set(TACTILE_TEST_FILES
     unit/parse/xml_utils_test.cpp
 
     #unit/service/tmx_import_test.cpp
-    #unit/service/json_import_test.cpp
+    unit/service/json_import_test.cpp
 
     unit/util/nenya_test.cpp
     unit/util/vector_map_test.cpp)
