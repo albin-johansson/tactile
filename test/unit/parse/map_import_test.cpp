@@ -11,10 +11,21 @@
 #include <QDebug>
 
 #include "gtest_macros.hpp"
+#include "json_engine.hpp"
+#include "map_parser.hpp"
 #include "open_map.hpp"
 #include "tactile_qstring.hpp"
+#include "xml_engine.hpp"
 
 using namespace tactile;
+
+static_assert(tmx::is_object<tmx::xml_element>);
+static_assert(tmx::is_object<tmx::json_element>);
+
+// clang-format off
+static_assert(tmx::is_parser<tmx::xml_engine, QDomDocument, tmx::xml_element>);
+static_assert(tmx::is_parser<tmx::json_engine, QJsonDocument, tmx::json_element>);
+// clang-format on
 
 TACTILE_DEFINE_TEST_P(MapImportEmbeddedTest, QString)
 {
