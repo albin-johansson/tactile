@@ -19,12 +19,12 @@ namespace tactile::tmx {
 template <typename T>
 concept is_object = requires(T t, element_id id, const QString& str)
 {
-  { t.contains(id) } -> std::same_as<bool>;
-  { t.integer(id) } -> std::same_as<maybe<int>>;
-  { t.integer(id, 1) } -> std::same_as<maybe<int>>;
+  { t.contains(id)      } -> std::same_as<bool>;
+  { t.integer(id)       } -> std::same_as<maybe<int>>;
+  { t.integer(id, 1)    } -> std::same_as<maybe<int>>;
   { t.floating(id, 1.0) } -> std::same_as<double>;
-  { t.string(id) } -> std::same_as<maybe<QString>>;
-  { t.string(id, str) } -> std::same_as<QString>;
+  { t.string(id)        } -> std::same_as<maybe<QString>>;
+  { t.string(id, str)   } -> std::same_as<QString>;
 };
 
 template <typename Parser, typename Document, typename Object>
