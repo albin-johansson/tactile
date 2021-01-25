@@ -375,7 +375,7 @@ class map_parser final
 
   [[nodiscard]] auto to_property(const object_type& object,
                                  const QString& propType)
-      -> std::optional<core::property>
+      -> maybe<core::property>
   {
     core::property prop;
 
