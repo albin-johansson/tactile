@@ -373,19 +373,10 @@ class map_parser final
     return true;
   }
 
-  [[nodiscard]] auto parse_map_property(const object_type& object) -> bool
+  [[nodiscard]] auto to_property(const object_type& object,
+                                 const QString& propType)
+      -> std::optional<core::property>
   {
-    const auto propName = object.string(element_id::name).value();
-
-    // The following is a quirk due to the fact that the type attribute can be
-    // omitted for string properties in the XML-format
-    QString propType;
-    if (m_parser.assume_string_property(object)) {
-      propType = TACTILE_QSTRING(u"string");
-    } else {
-      propType = object.string(element_id::type).value();
-    }
-
     core::property prop;
 
     if (propType == TACTILE_QSTRING(u"string")) {
@@ -413,12 +404,32 @@ class map_parser final
       prop.set_value(QColor{color});
 
     } else {
-      return with_error(parse_error::unknown_property_type);
+      m_error = parse_error::unknown_property_type;
+      return std::nullopt;
     }
 
-    m_document->add_property(propName, prop);
+    return prop;
+  }
 
-    return true;
+  [[nodiscard]] auto parse_map_property(const object_type& object) -> bool
+  {
+    const auto propName = object.string(element_id::name).value();
+
+    // The following is a quirk due to the fact that the type attribute can be
+    // omitted for string properties in the XML-format
+    QString propType;
+    if (m_parser.assume_string_property(object)) {
+      propType = TACTILE_QSTRING(u"string");
+    } else {
+      propType = object.string(element_id::type).value();
+    }
+
+    if (auto prop = to_property(object, propType)) {
+      m_document->add_property(propName, *prop);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   [[nodiscard]] auto parse_map_properties(const object_type& root) -> bool
