@@ -443,4 +443,4 @@ class map_parser final
   }
 };
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

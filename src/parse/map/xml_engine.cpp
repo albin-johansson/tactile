@@ -124,4 +124,4 @@ auto xml_engine::collect(const object_type& root, const QString& key)
   return vector;
 }
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

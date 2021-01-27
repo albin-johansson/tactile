@@ -131,4 +131,4 @@ auto xml_element::stringify_element_id(const element_id type) -> QString
   }
 }
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

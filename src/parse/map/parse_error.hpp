@@ -43,4 +43,4 @@ enum class parse_error
 
 [[nodiscard]] auto to_message(parse_error error) -> QString;
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

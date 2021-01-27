@@ -44,4 +44,4 @@ class xml_element final
   [[nodiscard]] static auto stringify_element_id(element_id type) -> QString;
 };
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

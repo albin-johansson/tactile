@@ -75,4 +75,4 @@ auto to_message(const parse_error error) -> QString
   }
 }
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

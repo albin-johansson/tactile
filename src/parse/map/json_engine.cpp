@@ -8,6 +8,7 @@
 namespace tactile::tmx {
 namespace {
 
+// TODO move this elsewhere?
 [[nodiscard]] auto index_to_position(const int index, const int nCols)
     -> core::position
 {
@@ -117,4 +118,4 @@ auto json_engine::collect(const object_type& root, const QStringView key)
   return vector;
 }
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

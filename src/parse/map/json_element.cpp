@@ -169,4 +169,4 @@ auto json_element::stringify_element_id(const element_id type) -> QStringView
   }
 }
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

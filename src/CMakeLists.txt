@@ -260,22 +260,22 @@ set(TACTILE_SOURCE_FILES
     parse/json/json_utils.cpp
     parse/json/json_utils.hpp
 
+    parse/map/element_id.hpp
+    parse/map/json_element.cpp
+    parse/map/json_element.hpp
+    parse/map/json_engine.cpp
+    parse/map/json_engine.hpp
+    parse/map/map_file_type.hpp
+    parse/map/map_parser.hpp
+    parse/map/parse_error.cpp
+    parse/map/parse_error.hpp
+    parse/map/xml_element.cpp
+    parse/map/xml_element.hpp
+    parse/map/xml_engine.cpp
+    parse/map/xml_engine.hpp
+
     parse/palette/parse_palette.cpp
     parse/palette/parse_palette.hpp
-
-    parse/tmx/element_id.hpp
-    parse/tmx/json_element.cpp
-    parse/tmx/json_element.hpp
-    parse/tmx/json_engine.cpp
-    parse/tmx/json_engine.hpp
-    parse/tmx/map_file_type.hpp
-    parse/tmx/map_parser.hpp
-    parse/tmx/parse_error.cpp
-    parse/tmx/parse_error.hpp
-    parse/tmx/xml_element.cpp
-    parse/tmx/xml_element.hpp
-    parse/tmx/xml_engine.cpp
-    parse/tmx/xml_engine.hpp
 
     parse/xml/xml_utils.cpp
     parse/xml/xml_utils.hpp
@@ -332,7 +332,7 @@ target_include_directories(libTactile
     PUBLIC command
     PUBLIC prefs
     PUBLIC parse
-    PUBLIC parse/tmx
+    PUBLIC parse/map
     PUBLIC parse/xml
     PUBLIC parse/json
     PUBLIC parse/palette

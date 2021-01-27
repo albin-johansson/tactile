@@ -56,4 +56,4 @@ class json_element final
       -> QStringView;
 };
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map

@@ -82,4 +82,4 @@ class xml_engine final
       -> std::vector<object_type>;
 };
 
-}  // namespace tactile::tmx
+}  // namespace tactile::map
