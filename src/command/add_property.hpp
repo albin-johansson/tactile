@@ -2,7 +2,9 @@
 
 #include <QString>       // QString
 #include <QUndoCommand>  // QUndoCommand
+#include <variant>       // variant, get_if, get
 
+#include "not_null.hpp"
 #include "property.hpp"
 #include "property_manager.hpp"
 
@@ -10,10 +12,16 @@ namespace tactile::cmd {
 
 class add_property final : public QUndoCommand
 {
+  using data_type = std::variant<core::property::type, core::property>;
+
  public:
-  explicit add_property(core::property_manager* manager,
-                        QString name,
-                        core::property::type type);
+  add_property(not_null<core::property_manager*> manager,
+               QString name,
+               const core::property& property);
+
+  add_property(not_null<core::property_manager*> manager,
+               QString name,
+               core::property::type type);
 
   void undo() override;
 
@@ -21,8 +29,12 @@ class add_property final : public QUndoCommand
 
  private:
   core::property_manager* m_manager{};
-  core::property::type m_type;
+  data_type m_data;
   QString m_name;
+
+  add_property(not_null<core::property_manager*> manager,
+               QString name,
+               data_type data);
 };
 
 }  // namespace tactile::cmd

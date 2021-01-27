@@ -133,8 +133,8 @@ void map_document::add_property(const QString& name,
 void map_document::add_property(const QString& name,
                                 const core::property& property)
 {
-  // TODO this is used by the map parser, might not need to undo/redo
-  m_delegate->add_property(name, property);
+  const QSignalBlocker blocker{m_delegate.get()};
+  m_delegate->execute<cmd::add_property>(m_delegate.get(), name, property);
 }
 
 void map_document::remove_property(const QString& name)
