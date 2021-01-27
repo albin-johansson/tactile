@@ -142,7 +142,6 @@ class window final : public QMainWindow
 
   void switched_map(map_id map,
                     const core::map_document& document,
-                    const shared<vm::property_model>& propertyModel,
                     const shared<vm::layer_model>& layerModel);
 
   void added_property(const QString& name);

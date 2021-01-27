@@ -17,8 +17,7 @@ class properties_dock final : public dock_widget
   explicit properties_dock(QWidget* parent = nullptr);
 
  public slots:
-  void selected_map(const core::map_document& document,
-                    const shared<vm::property_model>& propertyModel);
+  void switched_map(const core::map_document& document);
 
   void added_property(const QString& name);
 

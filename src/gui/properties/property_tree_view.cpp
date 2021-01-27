@@ -1,7 +1,8 @@
 #include "property_tree_view.hpp"
 
-#include <QHeaderView>
-#include <QMouseEvent>
+#include <QHeaderView>    // QHeaderView
+#include <QMouseEvent>    // QMouseEvent
+#include <QStandardItem>  // QStandardItem
 
 #include "color_preview_button.hpp"
 #include "file_value_widget.hpp"
@@ -11,7 +12,6 @@
 #include "property_items.hpp"
 #include "property_model.hpp"
 #include "select_file_dialog.hpp"
-#include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::gui {
@@ -26,9 +26,6 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
   setUniformRowHeights(true);
   setRootIsDecorated(false);
   setIndentation(6);
-
-  setFirstColumnSpanned(0, rootIndex(), true);
-  setFirstColumnSpanned(1, rootIndex(), true);
 
   {
     auto* h = header();
@@ -46,15 +43,7 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
   // clang-format on
 }
 
-void property_tree_view::setModel(QAbstractItemModel* model)
-{
-  QTreeView::setModel(model);
-  if (auto* ptr = qobject_cast<vm::property_model*>(model); !ptr) {
-    throw tactile_error{"property_tree_view must have property viewmodel!"};
-  }
-}
-
-void property_tree_view::add_item_widgets()
+void property_tree_view::restore_item_widgets()
 {
   vm::visit_items(get_model(), 1, [this](QStandardItem* item) {
     const auto itemType = static_cast<vm::property_item_type>(item->type());
@@ -125,6 +114,21 @@ void property_tree_view::when_changed_type(const QModelIndex& valueIndex,
   }
 
   setCurrentIndex(valueIndex);
+}
+
+void property_tree_view::when_file_updated(const QModelIndex& index)
+{
+  if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index))) {
+    widget->set_path(index.data(vm::property_item_role::path).value<QString>());
+  }
+}
+
+void property_tree_view::when_color_updated(const QModelIndex& index)
+{
+  if (auto* button = qobject_cast<color_preview_button*>(indexWidget(index))) {
+    button->set_color(
+        index.data(vm::property_item_role::color).value<QColor>());
+  }
 }
 
 void property_tree_view::selectionChanged(const QItemSelection& selected,

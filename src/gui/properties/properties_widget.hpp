@@ -27,8 +27,7 @@ class properties_widget final : public QWidget
   ~properties_widget() noexcept override;
 
  public slots:
-  void selected_map(const core::map_document& document,
-                    const shared<vm::property_model>& propertyModel);
+  void selected_map(const core::map_document& document);
 
   void added_property(const QString& name);
 
@@ -40,7 +39,7 @@ class properties_widget final : public QWidget
 
  private:
   Ui::properties_widget* m_ui{};
-  property_tree_view* m_treeView{};
+  property_tree_view* m_view{};
   property_context_menu* m_contextMenu{};
   shared<vm::property_model> m_model;
   maybe<QString> m_nameCopy;

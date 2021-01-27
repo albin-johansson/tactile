@@ -73,7 +73,7 @@ void window::init_connections()
   connect(m_ui->actionNewMap,     &QAction::triggered, this, &window::ui_new_map);
   connect(m_ui->actionAddTileset, &QAction::triggered, this, &window::ui_add_tileset);
 
-//  connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
+// FIXME connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
 
   connect(m_toolDock,    &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
@@ -133,23 +133,21 @@ void window::reset_dock_layout()
   removeDockWidget(m_layerDock);
   removeDockWidget(m_propertiesDock);
 
-  addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, m_toolDock);
-  prefs::graphics::reset_tool_widget_visible();
-  m_toolDock->setVisible(prefs::graphics::tool_widget_visible().value());
-
-  addDockWidget(Qt::DockWidgetArea::RightDockWidgetArea, m_tilesetDock);
-  prefs::graphics::reset_tileset_widget_visible();
-  m_tilesetDock->setVisible(prefs::graphics::tileset_widget_visible().value());
-
+  addDockWidget(Qt::LeftDockWidgetArea, m_toolDock);
+  addDockWidget(Qt::RightDockWidgetArea, m_tilesetDock);
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
-  prefs::graphics::reset_layer_widget_visible();
-  m_layerDock->setVisible(prefs::graphics::layer_widget_visible().value());
+  addDockWidget(Qt::LeftDockWidgetArea, m_propertiesDock);
 
-  addDockWidget(Qt::RightDockWidgetArea, m_propertiesDock);
+  prefs::graphics::reset_tool_widget_visible();
+  prefs::graphics::reset_tileset_widget_visible();
+  prefs::graphics::reset_layer_widget_visible();
   prefs::graphics::reset_properties_widget_visible();
+
+  m_toolDock->setVisible(prefs::graphics::tool_widget_visible().value());
+  m_tilesetDock->setVisible(prefs::graphics::tileset_widget_visible().value());
+  m_layerDock->setVisible(prefs::graphics::layer_widget_visible().value());
   m_propertiesDock->setVisible(
       prefs::graphics::properties_widget_visible().value());
-  tabifyDockWidget(m_layerDock, m_propertiesDock);
 }
 
 void window::hide_all_docks()
@@ -319,12 +317,11 @@ void window::removed_layer(const layer_id id)
 
 void window::switched_map(const map_id id,
                           const core::map_document& document,
-                          const shared<vm::property_model>& propertyModel,
                           const shared<vm::layer_model>& layerModel)
 {
   m_tilesetDock->selected_map(id);
   m_layerDock->selected_map(document, layerModel);
-  m_propertiesDock->selected_map(document, propertyModel);
+  m_propertiesDock->switched_map(document);
   m_statusBar->switched_map(document);
 }
 
@@ -377,6 +374,15 @@ void window::handle_new_map(core::map_document* document,
   }
 
   m_ui->actionSave->setDisabled(document->is_clean());
+  m_statusBar->switched_map(*document);
+
+  // TODO m_tilesetDock->switched_map(document, id);
+  document->each_tileset(
+      [&](const tileset_id tilesetId, const core::tileset& tileset) {
+        added_tileset(id, tilesetId, tileset);
+      });
+
+  m_propertiesDock->switched_map(*document);
   m_statusBar->switched_map(*document);
 }
 

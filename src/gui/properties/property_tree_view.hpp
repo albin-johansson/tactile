@@ -1,11 +1,12 @@
 #pragma once
 
-#include <QStandardItemModel>
-#include <QTreeView>
+#include <QTreeView>  // QTreeView
 
 #include "maybe.hpp"
 #include "property.hpp"
 #include "vector_map.hpp"
+
+class QStandardItem;
 
 namespace tactile::vm {
 class property_model;
@@ -20,9 +21,7 @@ class property_tree_view final : public QTreeView
  public:
   explicit property_tree_view(QWidget* parent = nullptr);
 
-  void setModel(QAbstractItemModel* model) override;
-
-  void add_item_widgets();
+  void restore_item_widgets();
 
  signals:
   void spawn_context_menu(const QPoint& pos);
@@ -36,6 +35,10 @@ class property_tree_view final : public QTreeView
 
   void when_changed_type(const QModelIndex& valueIndex,
                          core::property::type type);
+
+  void when_file_updated(const QModelIndex& index);
+
+  void when_color_updated(const QModelIndex& index);
 
  protected:
   void selectionChanged(const QItemSelection& selected,

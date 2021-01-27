@@ -130,12 +130,8 @@ void tactile_app::open_map(const QString& path)
 {
   tmx::parse_error error;
   if (auto* document = service::open_map(path, &error)) {
-    const auto mapId = m_model->add_map(document);
-    m_window->handle_new_map(document, mapId, QFileInfo{path}.baseName());
-    document->each_tileset(
-        [&](const tileset_id id, const core::tileset& tileset) {
-          m_window->added_tileset(mapId, id, tileset);
-        });
+    const auto id = m_model->add_map(document);
+    m_window->handle_new_map(document, id, QFileInfo{path}.baseName());
   } else {
     gui::open_map_error_dialog dialog{m_window.get()};
     dialog.set_file(path);

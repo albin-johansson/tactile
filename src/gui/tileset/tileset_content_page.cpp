@@ -1,6 +1,5 @@
 #include "tileset_content_page.hpp"
 
-#include <QDebug>
 #include <QGridLayout>
 #include <QLineEdit>
 #include <QPushButton>

@@ -16,11 +16,9 @@ properties_dock::properties_dock(QWidget* parent)
   setWidget(m_widget);
 }
 
-void properties_dock::selected_map(
-    const core::map_document& document,
-    const shared<vm::property_model>& propertyModel)
+void properties_dock::switched_map(const core::map_document& document)
 {
-  m_widget->selected_map(document, propertyModel);
+  m_widget->selected_map(document);
 }
 
 void properties_dock::added_property(const QString& name)

@@ -1,12 +1,25 @@
 #pragma once
 
-#include <QStandardItem>
+#include <QStandardItem>  // QStandardItem
 
+#include "not_null.hpp"
+#include "property.hpp"
 #include "property_item_role.hpp"
 #include "property_item_type.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::vm {
+
+class root_item final : public QStandardItem
+{
+ public:
+  explicit root_item(const QString& name) : QStandardItem{name}
+  {
+    setEditable(false);
+    setSelectable(false);
+    setColumnCount(1);
+  }
+};
 
 class string_item final : public QStandardItem
 {
@@ -111,5 +124,34 @@ class file_item final : public QStandardItem
     return static_cast<int>(property_item_type::file);
   }
 };
+
+/**
+ * \brief Updates the data of a property item.
+ *
+ * \pre `item` cannot be null.
+ * \pre `item` and `p` must be associated with the same property type.
+ *
+ * \param item a pointer to the property that will be updated.
+ * \param p the property which will be used as the new item data.
+ *
+ * \throws tactile_error if the supplied item isn't a property item.
+ *
+ * \since 0.2.0
+ */
+void update_item_data(not_null<QStandardItem*> item, const core::property& p);
+
+/**
+ * \brief Returns the property value of an item.
+ *
+ * \pre `item` cannot be null.
+ *
+ * \param item a pointer to the property item to obtain the property value of.
+ *
+ * \return the property value associated with an item.
+ *
+ * \since 0.2.0
+ */
+[[nodiscard]] auto item_to_property(not_null<const QStandardItem*> item)
+    -> core::property;
 
 }  // namespace tactile::vm

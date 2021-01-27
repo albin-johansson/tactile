@@ -263,10 +263,7 @@ void model::select_map(const map_id id)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  emit switched_map(id,
-                    *document,
-                    document->property_model(),
-                    std::make_shared<vm::layer_model>(document));
+  emit switched_map(id, *document, std::make_shared<vm::layer_model>(document));
 }
 
 void model::close_map(const map_id id)

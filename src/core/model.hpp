@@ -77,7 +77,6 @@ class model final : public QObject
 
   void switched_map(map_id id,
                     const map_document& document,
-                    const shared<vm::property_model>& propertyModel,
                     const shared<vm::layer_model>& layerModel);
 
   void added_layer(layer_id id, const layer& layer);
