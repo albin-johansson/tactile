@@ -62,6 +62,13 @@ class document : public QObject, public property_manager
   virtual void mark_as_clean() = 0;
 
   /**
+   * \brief Clears the entire undo/redo history associated with the document.
+   *
+   * \since 0.2.0
+   */
+  virtual void reset_history() = 0;
+
+  /**
    * \brief Sets the file path associated with the document.
    *
    * \param path the file path of the map document.

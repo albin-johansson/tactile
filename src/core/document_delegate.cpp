@@ -28,6 +28,11 @@ void document_delegate::mark_as_clean()
   m_commandStack->setClean();
 }
 
+void document_delegate::reset_history()
+{
+  m_commandStack->clear();
+}
+
 void document_delegate::set_path(QFileInfo path)
 {
   m_path = std::move(path);

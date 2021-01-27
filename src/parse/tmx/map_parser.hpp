@@ -91,6 +91,8 @@ class map_parser final
       if (!parse_map_properties(root)) {
         return;
       }
+
+      m_document->reset_history();
     }
   }
 

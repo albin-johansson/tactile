@@ -80,6 +80,8 @@ class map_document final : public document
 
   void mark_as_clean() override;
 
+  void reset_history() override;
+
   void set_path(QFileInfo path) override;
 
   [[nodiscard]] auto can_undo() const -> bool override;

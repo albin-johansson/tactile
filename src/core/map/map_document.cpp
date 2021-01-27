@@ -83,6 +83,11 @@ void map_document::mark_as_clean()
   m_delegate->mark_as_clean();
 }
 
+void map_document::reset_history()
+{
+  m_delegate->reset_history();
+}
+
 void map_document::set_path(QFileInfo path)
 {
   m_delegate->set_path(path);
