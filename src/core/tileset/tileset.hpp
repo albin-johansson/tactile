@@ -411,6 +411,19 @@ class tileset final
     return m_path.filePath();
   }
 
+  /**
+   * \brief Returns the absolute file path of the file associated with the
+   * tileset.
+   *
+   * \return the absolute file path associated with the tileset.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto absolute_path() const -> QString
+  {
+    return m_path.absoluteFilePath();
+  }
+
  private:
   QPixmap m_image;
 
