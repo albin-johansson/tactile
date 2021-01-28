@@ -1,6 +1,6 @@
 #include "open_map.hpp"
 
-#include <QFileInfo>
+#include <QFileInfo>  // QFileInfo
 
 #include "json_engine.hpp"
 #include "map_parser.hpp"
