@@ -311,6 +311,7 @@ set(TACTILE_SOURCE_FILES
     tool/tool_model.cpp
     tool/tool_model.hpp
 
+    util/index_to_position.hpp
     util/nenya.hpp
     util/set_style_sheet.cpp
     util/set_style_sheet.hpp
