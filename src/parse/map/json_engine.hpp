@@ -7,7 +7,6 @@
 #include <vector>         // vector
 
 #include "json_element.hpp"
-#include "map_file_type.hpp"
 #include "map_parse_data.hpp"
 #include "parse_error.hpp"
 #include "tile_layer.hpp"
@@ -19,8 +18,6 @@ class json_engine final
  public:
   using document_type = QJsonDocument;
   using object_type = json_element;
-
-  inline constexpr static auto fileType = map_file_type::json;
 
   // clang-format off
 

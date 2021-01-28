@@ -8,7 +8,6 @@
 
 #include "element_id.hpp"
 #include "map_document.hpp"
-#include "map_file_type.hpp"
 #include "map_parse_data.hpp"
 #include "maybe.hpp"
 #include "object_id.hpp"

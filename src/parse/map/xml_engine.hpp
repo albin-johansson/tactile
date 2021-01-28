@@ -5,7 +5,6 @@
 #include <vector>   // vector
 
 #include "element_id.hpp"
-#include "map_file_type.hpp"
 #include "map_parse_data.hpp"
 #include "maybe.hpp"
 #include "parse_error.hpp"
@@ -20,8 +19,6 @@ class xml_engine final
  public:
   using document_type = QDomDocument;
   using object_type = xml_element;
-
-  inline constexpr static auto fileType = map_file_type::tmx;
 
   // clang-format off
 
