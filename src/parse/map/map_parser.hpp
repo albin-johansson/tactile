@@ -71,7 +71,7 @@ class map_parser final
 
   explicit map_parser(const QFileInfo& path)
   {
-    if (const auto file = open_file(path); file) {
+    if (const auto file = open_file(path)) {
       m_document = new core::map_document{};
       m_document->set_path(path);
 
