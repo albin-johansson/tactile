@@ -419,6 +419,11 @@ void map_document::set_next_layer_id(const layer_id id) noexcept
   m_map->set_next_layer_id(id);
 }
 
+void map_document::set_next_object_id(const object_id id) noexcept
+{
+  m_map->set_next_object_id(id);
+}
+
 auto map_document::index_of_layer(const layer_id id) const -> maybe<int>
 {
   return m_map->index_of(id);

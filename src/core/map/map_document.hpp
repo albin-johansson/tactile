@@ -12,6 +12,7 @@
 #include "document_delegate.hpp"
 #include "map.hpp"
 #include "maybe.hpp"
+#include "object_id.hpp"
 #include "position.hpp"
 #include "property.hpp"
 #include "property_delegate.hpp"
@@ -331,6 +332,8 @@ class map_document final : public document
    * \copydoc map::set_next_layer_id()
    */
   void set_next_layer_id(layer_id id) noexcept;
+
+  void set_next_object_id(object_id id) noexcept;
 
   /**
    * \brief Iterates each layer associated with the document.

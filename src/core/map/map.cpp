@@ -175,6 +175,11 @@ void map::set_next_layer_id(const layer_id id) noexcept
   m_nextLayer = id;
 }
 
+void map::set_next_object_id(const object_id id) noexcept
+{
+  m_nextObject = id;
+}
+
 void map::set_row_count(row_t nRows)
 {
   nRows = at_least(nRows, 1_row);

@@ -7,6 +7,7 @@
 #include "layer.hpp"
 #include "layer_id.hpp"
 #include "maybe.hpp"
+#include "object_id.hpp"
 #include "object_layer.hpp"
 #include "position.hpp"
 #include "smart_pointers.hpp"
@@ -236,6 +237,8 @@ class map final
    * \since 0.1.0
    */
   void set_next_layer_id(layer_id id) noexcept;
+
+  void set_next_object_id(object_id id) noexcept;
 
   /**
    * \brief Sets the total number of rows in the map.
@@ -540,6 +543,7 @@ class map final
   row_t m_rows;
   col_t m_cols;
   layer_id m_nextLayer{1};
+  object_id m_nextObject{1};
 
   [[nodiscard]] auto find_layer(layer_id id) -> layer*;
 
