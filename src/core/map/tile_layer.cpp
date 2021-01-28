@@ -10,9 +10,8 @@
 #include "tactile_qstring.hpp"
 
 namespace tactile::core {
-namespace {
 
-[[nodiscard]] auto create_row(const col_t nCols, const tile_id value = empty)
+[[nodiscard]] auto make_tile_row(const col_t nCols, const tile_id value)
     -> std::vector<tile_id>
 {
   std::vector<tile_id> row;
@@ -20,8 +19,6 @@ namespace {
   row.assign(nCols.get(), value);
   return row;
 }
-
-}  // namespace
 
 tile_layer::tile_layer(const row_t nRows, const col_t nCols)
     : m_layerDelegate{layer_type::tile_layer}
@@ -32,7 +29,7 @@ tile_layer::tile_layer(const row_t nRows, const col_t nCols)
   m_layerDelegate.set_name(TACTILE_QSTRING(u"Tile layer"));
 
   m_tiles.reserve(nRows.get());
-  m_tiles.assign(nRows.get(), create_row(nCols));
+  m_tiles.assign(nRows.get(), make_tile_row(nCols));
 
   assert(row_count() == nRows);
   assert(col_count() == nCols);
@@ -60,7 +57,7 @@ void tile_layer::remove_all(const tile_id id)
 
 void tile_layer::add_row(const tile_id id)
 {
-  m_tiles.push_back(create_row(col_count(), id));
+  m_tiles.push_back(make_tile_row(col_count(), id));
 }
 
 void tile_layer::add_col(const tile_id id)

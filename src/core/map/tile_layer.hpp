@@ -286,4 +286,7 @@ class tile_layer final : public layer
   property_delegate m_propertyDelegate;
 };
 
+[[nodiscard]] auto make_tile_row(col_t nCols, tile_id value = empty)
+    -> std::vector<tile_id>;
+
 }  // namespace tactile::core
