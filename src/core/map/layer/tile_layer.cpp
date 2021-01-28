@@ -156,10 +156,9 @@ auto tile_layer::type() const -> layer_type
   return m_layerDelegate.type();
 }
 
-auto tile_layer::clone() const -> shared_layer
+auto tile_layer::clone() const -> shared<layer>
 {
-  auto copy = *this;
-  return std::make_shared<tile_layer>(std::move(copy));
+  return std::make_shared<tile_layer>(*this);
 }
 
 auto tile_layer::row_count() const noexcept -> row_t

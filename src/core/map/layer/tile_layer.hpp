@@ -9,6 +9,7 @@
 #include "maybe.hpp"
 #include "position.hpp"
 #include "property_delegate.hpp"
+#include "smart_pointers.hpp"
 #include "tile_id.hpp"
 
 namespace tactile::core {
@@ -72,7 +73,7 @@ class tile_layer final : public layer
 
   [[nodiscard]] auto visible() const noexcept -> bool override;
 
-  [[nodiscard]] auto clone() const -> shared_layer override;
+  [[nodiscard]] auto clone() const -> shared<layer> override;
 
   /// \}
 
