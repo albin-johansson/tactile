@@ -268,6 +268,7 @@ set(TACTILE_SOURCE_FILES
     parse/map/json_engine.hpp
     parse/map/map_file_type.hpp
     parse/map/map_parser.hpp
+    parse/map/map_parse_data.hpp
     parse/map/parse_error.cpp
     parse/map/parse_error.hpp
     parse/map/xml_element.cpp
