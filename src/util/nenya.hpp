@@ -159,6 +159,8 @@ class mirror_type
   inline constexpr static bool nothrowMove = std::is_nothrow_copy_constructible_v<Rep>;
 
  public:
+  using value_type = Rep;
+
   constexpr mirror_type() = default;
 
   constexpr explicit mirror_type(const Rep& value) noexcept(nothrowCopy)
