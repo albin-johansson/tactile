@@ -21,7 +21,7 @@ namespace tactile::service {
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto open_map(const QString& path, tmx::parse_error* error)
+[[nodiscard]] auto open_map(const QString& path, parse::parse_error* error)
     -> core::map_document*;
 
 }  // namespace tactile::service

@@ -5,7 +5,7 @@
 #include "element_id.hpp"
 #include "maybe.hpp"
 
-namespace tactile::tmx {
+namespace tactile::parse {
 
 class json_element final
 {
@@ -56,4 +56,4 @@ class json_element final
       -> QStringView;
 };
 
-}  // namespace tactile::map
+}  // namespace tactile::parse

@@ -5,7 +5,7 @@
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::tmx {
+namespace tactile::parse {
 
 xml_element::xml_element(const QDomElement& element) : m_element{element}
 {}
@@ -131,4 +131,4 @@ auto xml_element::stringify_element_id(const element_id type) -> QString
   }
 }
 
-}  // namespace tactile::map
+}  // namespace tactile::parse

@@ -3,23 +3,23 @@
 #include <QStringView>  // QStringView
 #include <utility>      // pair, make_pair
 
+#include "gtest_macros.hpp"
 #include "json_engine.hpp"
 #include "map_parser.hpp"
-#include "gtest_macros.hpp"
 
 using namespace tactile;
 
-using path_error_pair = std::pair<QStringView, tmx::parse_error>;
-using error = tmx::parse_error;
+using path_error_pair = std::pair<QStringView, parse::parse_error>;
+using error = parse::parse_error;
 
 TACTILE_DEFINE_TEST_P(JsonMapParser, path_error_pair)
 {
   const auto [path, code] = GetParam();
 
   const QFileInfo file{path.toString()};
-  const tmx::map_parser<tmx::json_engine> parser{file};
+  parse::map_parser<parse::json_engine> parser{file};
 
-  if (code != tmx::parse_error::none) {
+  if (code != parse::parse_error::none) {
     EXPECT_FALSE(parser);
   } else {
     EXPECT_TRUE(parser);

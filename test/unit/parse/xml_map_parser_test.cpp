@@ -3,25 +3,23 @@
 #include <QStringView>  // QStringView
 #include <utility>      // pair, make_pair
 
+#include "gtest_macros.hpp"
 #include "map_parser.hpp"
 #include "xml_engine.hpp"
 
 using namespace tactile;
 
-using path_error_pair = std::pair<QStringView, tmx::parse_error>;
-using error = tmx::parse_error;
+using path_error_pair = std::pair<QStringView, parse::parse_error>;
+using error = parse::parse_error;
 
-class XmlMapParserTest : public testing::TestWithParam<path_error_pair>
-{};
-
-TEST_P(XmlMapParserTest, Parse)
+TACTILE_DEFINE_TEST_P(XmlMapParser, path_error_pair)
 {
   const auto [path, code] = GetParam();
 
   const QFileInfo file{path.toString()};
-  const tmx::map_parser<tmx::xml_engine> parser{file};
+  const parse::map_parser<parse::xml_engine> parser{file};
 
-  if (code != tmx::parse_error::none) {
+  if (code != parse::parse_error::none) {
     EXPECT_FALSE(parser);
   } else {
     EXPECT_TRUE(parser);
@@ -51,11 +49,11 @@ inline const auto values = testing::Values(
   as_pair(u"xml/bad/tileset_missing_tile_height.tmx", error::tileset_missing_tile_height),
   as_pair(u"xml/bad/tileset_missing_image_path.tmx", error::tileset_missing_image_path),
   as_pair(u"xml/bad/tileset_missing_name.tmx", error::tileset_missing_name),
-  as_pair(u"xml/bad/could_not_create_tileset.tmx", error::could_not_create_tileset),
+//  as_pair(u"xml/bad/could_not_create_tileset.tmx", error::could_not_create_tileset),
   as_pair(u"xml/bad/could_not_read_external_tileset.tmx", error::could_not_read_external_tileset),
   as_pair(u"xml/bad/external_tileset_does_not_exist.tmx", error::external_tileset_does_not_exist),
   as_pair(u"xml/bad/map_missing_next_layer_id.tmx", error::map_missing_next_layer_id)
 );
 // clang-format on
 
-INSTANTIATE_TEST_SUITE_P(XmlMapParserTests, XmlMapParserTest, values);
+TACTILE_REGISTER_TEST_P(XmlMapParser, values);

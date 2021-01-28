@@ -8,10 +8,11 @@
 
 #include "json_element.hpp"
 #include "map_file_type.hpp"
+#include "map_parse_data.hpp"
 #include "parse_error.hpp"
 #include "tile_layer.hpp"
 
-namespace tactile::tmx {
+namespace tactile::parse {
 
 class json_engine final
 {
@@ -39,7 +40,7 @@ class json_engine final
   static auto properties(const object_type& object) -> std::vector<object_type>;
 
   [[nodiscard]]
-  static auto add_tiles(core::tile_layer& layer,
+  static auto add_tiles(tile_layer_data& layer,
                         const object_type& element,
                         parse_error& error) -> bool;
 
@@ -72,4 +73,4 @@ class json_engine final
       -> std::vector<object_type>;
 };
 
-}  // namespace tactile::map
+}  // namespace tactile::parse

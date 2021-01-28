@@ -5,7 +5,7 @@
 
 #include "tactile_error.hpp"
 
-namespace tactile::tmx {
+namespace tactile::parse {
 
 json_element::json_element(QJsonObject object) : m_object{std::move(object)}
 {}
@@ -169,4 +169,4 @@ auto json_element::stringify_element_id(const element_id type) -> QStringView
   }
 }
 
-}  // namespace tactile::map
+}  // namespace tactile::parse

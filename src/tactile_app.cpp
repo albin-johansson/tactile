@@ -128,7 +128,7 @@ void tactile_app::save_as(const QString& path)
 
 void tactile_app::open_map(const QString& path)
 {
-  tmx::parse_error error;
+  parse::parse_error error;
   if (auto* document = service::open_map(path, &error)) {
     const auto id = m_model->add_map(document);
     m_window->handle_new_map(document, id, QFileInfo{path}.baseName());

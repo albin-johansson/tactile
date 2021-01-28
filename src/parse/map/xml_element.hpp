@@ -5,7 +5,7 @@
 #include "element_id.hpp"
 #include "maybe.hpp"
 
-namespace tactile::tmx {
+namespace tactile::parse {
 
 class xml_element final
 {
@@ -44,4 +44,4 @@ class xml_element final
   [[nodiscard]] static auto stringify_element_id(element_id type) -> QString;
 };
 
-}  // namespace tactile::map
+}  // namespace tactile::parse

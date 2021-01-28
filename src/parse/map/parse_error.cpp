@@ -2,7 +2,7 @@
 
 #include "tactile_qstring.hpp"
 
-namespace tactile::tmx {
+namespace tactile::parse {
 
 auto to_message(const parse_error error) -> QString
 {
@@ -75,4 +75,4 @@ auto to_message(const parse_error error) -> QString
   }
 }
 
-}  // namespace tactile::map
+}  // namespace tactile::parse

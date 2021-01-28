@@ -10,7 +10,7 @@ TEST(ImportJsonMap, Embedded)
   const auto path = TACTILE_QSTRING(u"json/embedded.json");
 
   QObject object;
-  tmx::parse_error error;
+  parse::parse_error error;
 
   auto* document = service::open_map(path, &error);
   ASSERT_TRUE(document);
@@ -95,7 +95,7 @@ TEST(ImportJsonMap, External)
   const auto path = TACTILE_QSTRING(u"json/external.json");
 
   QObject object;
-  tmx::parse_error error;
+  parse::parse_error error;
 
   auto* document = service::open_map(path, &error);
   ASSERT_TRUE(document);

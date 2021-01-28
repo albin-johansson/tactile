@@ -2,20 +2,12 @@
 
 #include <cstddef>  // size_t
 
+#include "index_to_position.hpp"
 #include "json_utils.hpp"
 #include "tactile_qstring.hpp"
+#include "tile_layer.hpp"
 
-namespace tactile::tmx {
-namespace {
-
-// TODO move this elsewhere?
-[[nodiscard]] auto index_to_position(const int index, const int nCols)
-    -> core::position
-{
-  return core::position{row_t{index / nCols}, col_t{index % nCols}};
-}
-
-}  // namespace
+namespace tactile::parse {
 
 auto json_engine::root(const document_type& document) -> object_type
 {
@@ -43,22 +35,26 @@ auto json_engine::properties(const object_type& object)
   return collect(object, u"properties");
 }
 
-auto json_engine::add_tiles(core::tile_layer& layer,
+auto json_engine::add_tiles(tile_layer_data& layer,
                             const object_type& element,
                             parse_error& error) -> bool
 {
-  const auto nCols = layer.col_count().get();
   const auto data = element->value(u"data").toArray();
+
+  layer.tiles.reserve(layer.nRows.get());
+  layer.tiles.assign(layer.nRows.get(), core::make_tile_row(layer.nCols));
 
   int index{0};
   for (const auto value : data) {
     const tile_id id{value.toInt(-1)};
 
-    if (id == -1_t) {
+    if (id != -1_t) {
+      const auto pos = index_to_position(index, layer.nCols);
+      layer.tiles.at(pos.row_index()).at(pos.col_index()) = id;
+
+    } else {
       error = parse_error::layer_could_not_parse_tile;
       return false;
-    } else {
-      layer.set_tile(index_to_position(index, nCols), id);
     }
 
     ++index;
@@ -118,4 +114,4 @@ auto json_engine::collect(const object_type& root, const QStringView key)
   return vector;
 }
 
-}  // namespace tactile::map
+}  // namespace tactile::parse

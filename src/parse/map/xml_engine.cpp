@@ -3,9 +3,11 @@
 #include <cstddef>   // size_t
 #include <iterator>  // make_move_iterator
 
+#include "index_to_position.hpp"
 #include "tactile_qstring.hpp"
+#include "tile_layer.hpp"
 
-namespace tactile::tmx {
+namespace tactile::parse {
 
 auto xml_engine::tilesets(const object_type& root) -> std::vector<object_type>
 {
@@ -52,13 +54,15 @@ auto xml_engine::from_file(const QFileInfo& path) -> maybe<document_type>
   return xml::from_file(path);
 }
 
-auto xml_engine::add_tiles(core::tile_layer& layer,
-                           const object_type& element,
+auto xml_engine::add_tiles(tile_layer_data& layer,
+                           const xml_engine::object_type& element,
                            parse_error& error) -> bool
 {
   const auto data = element->firstChildElement(TACTILE_QSTRING(u"data"));
   const auto tiles = data.text().split(u',');
-  const auto nCols = layer.col_count().get();
+
+  layer.tiles.reserve(layer.nRows.get());
+  layer.tiles.assign(layer.nRows.get(), core::make_tile_row(layer.nCols));
 
   int index{0};
   for (const auto& value : tiles) {
@@ -66,12 +70,13 @@ auto xml_engine::add_tiles(core::tile_layer& layer,
     const tile_id id{value.toInt(&ok)};
 
     if (!ok) {
-      error = parse_error::layer_could_not_parse_tile;
+      error = parse::parse_error::layer_could_not_parse_tile;
       return false;
     }
 
-    const core::position pos{row_t{index / nCols}, col_t{index % nCols}};
-    layer.set_tile(pos, id);
+    const auto pos = index_to_position(index, layer.nCols);
+    layer.tiles.at(pos.row_index()).at(pos.col_index()) = id;
+
     ++index;
   }
 
@@ -124,4 +129,4 @@ auto xml_engine::collect(const object_type& root, const QString& key)
   return vector;
 }
 
-}  // namespace tactile::map
+}  // namespace tactile::parse
