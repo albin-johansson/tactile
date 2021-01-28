@@ -73,20 +73,21 @@ set(TACTILE_SOURCE_FILES
     core/aliases/tile_width.hpp
     core/aliases/tileset_id.hpp
 
-    core/map/layer.hpp
-    core/map/layer_delegate.cpp
-    core/map/layer_delegate.hpp
-    core/map/layer_type.hpp
     core/map/map.cpp
     core/map/map.hpp
     core/map/map_document.cpp
     core/map/map_document.hpp
     core/map/map_document_manager.cpp
     core/map/map_document_manager.hpp
-    core/map/object_layer.cpp
-    core/map/object_layer.hpp
-    core/map/tile_layer.cpp
-    core/map/tile_layer.hpp
+
+    core/map/layer/layer.hpp
+    core/map/layer/layer_delegate.cpp
+    core/map/layer/layer_delegate.hpp
+    core/map/layer/layer_type.hpp
+    core/map/layer/object_layer.cpp
+    core/map/layer/object_layer.hpp
+    core/map/layer/tile_layer.cpp
+    core/map/layer/tile_layer.hpp
 
     core/property/property.cpp
     core/property/property.hpp
@@ -334,52 +335,49 @@ add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
 target_include_directories(libTactile
     PUBLIC ${TACTILE_ROOT_DIR}/src
     PUBLIC command
-    PUBLIC prefs
-    PUBLIC parse
-    PUBLIC parse/map
-    PUBLIC parse/xml
-    PUBLIC parse/json
-    PUBLIC parse/palette
-    PUBLIC tool
-    PUBLIC util
     PUBLIC core
-    PUBLIC core/util
-    PUBLIC core/property
-    PUBLIC core/tile
-    PUBLIC core/map
-    PUBLIC core/tileset
     PUBLIC core/algorithm
     PUBLIC core/aliases
+    PUBLIC core/map
+    PUBLIC core/map/layer
+    PUBLIC core/property
+    PUBLIC core/tile
+    PUBLIC core/tileset
     PUBLIC core/viewmodel
-    PUBLIC core/viewmodel/property
     PUBLIC core/viewmodel/layer
+    PUBLIC core/viewmodel/property
     PUBLIC gui
-    PUBLIC gui/startup
+    PUBLIC gui/dialog
+    PUBLIC gui/dialog/about
+    PUBLIC gui/dialog/add_property
+    PUBLIC gui/dialog/change_property_name
+    PUBLIC gui/dialog/open_map
+    PUBLIC gui/dialog/open_tileset
+    PUBLIC gui/dialog/resize_map
+    PUBLIC gui/dialog/save
+    PUBLIC gui/dialog/select_file
     PUBLIC gui/editor
-    PUBLIC gui/theme
-    PUBLIC gui/tileset
     PUBLIC gui/layer
-    PUBLIC gui/window
-    PUBLIC gui/util
-    PUBLIC gui/tools
-    PUBLIC gui/settings
-    PUBLIC gui/status
     PUBLIC gui/properties
     PUBLIC gui/properties/item
     PUBLIC gui/properties/view
-    PUBLIC gui/dialog
-    PUBLIC gui/dialog/about
-    PUBLIC gui/dialog/resize_map
-    PUBLIC gui/dialog/save
-    PUBLIC gui/dialog/open_map
-    PUBLIC gui/dialog/open_tileset
-    PUBLIC gui/dialog/add_property
-    PUBLIC gui/dialog/change_property_name
-    PUBLIC gui/dialog/select_file
+    PUBLIC gui/settings
+    PUBLIC gui/startup
+    PUBLIC gui/status
+    PUBLIC gui/tileset
+    PUBLIC gui/tools
+    PUBLIC gui/window
+    PUBLIC parse
+    PUBLIC parse/json
+    PUBLIC parse/map
+    PUBLIC parse/palette
+    PUBLIC parse/xml
+    PUBLIC prefs
     PUBLIC service
-    PUBLIC service/save
     PUBLIC service/open
-    PUBLIC ${Boost_INCLUDE_DIRS})
+    PUBLIC service/save
+    PUBLIC tool
+    PUBLIC util)
 
 target_link_libraries(libTactile
     PUBLIC Qt5::Core
