@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QString>
+#include <QString>  // QString
 
 #include "map_document.hpp"
 #include "parse_error.hpp"
@@ -8,7 +8,7 @@
 namespace tactile::service {
 
 /**
- * \brief Creates and returns a tilemap based on a save file.
+ * \brief Creates and returns a map document based on a save file.
  *
  * \warning You must claim ownership of the returned map document. The map
  * document has no parent, so you should set the parent as quickly as possible
