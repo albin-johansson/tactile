@@ -73,9 +73,9 @@ class tile_layer final : public layer
 
   [[nodiscard]] auto clone() const -> shared<layer> override;
 
-  /// \}
+  /// \} End of layer API
 
-  /// \name Properties
+  /// \name Property API
   /// \{
 
   void add_property(const QString& name, property::type type) override;
@@ -97,7 +97,7 @@ class tile_layer final : public layer
 
   [[nodiscard]] auto properties() const -> const property_map& override;
 
-  /// \}
+  /// \} End of property API
 
   /// \name Tile layer API
   /// \{
@@ -277,7 +277,7 @@ class tile_layer final : public layer
    */
   [[nodiscard]] auto in_bounds(const position& pos) const noexcept -> bool;
 
-  /// \}
+  /// \} End of tile layer API
 
  private:
   tile_matrix m_tiles;
