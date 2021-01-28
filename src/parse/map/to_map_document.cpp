@@ -43,6 +43,8 @@ namespace {
 
 auto to_map_document(const map_data& data) -> core::map_document*
 {
+  Q_ASSERT(!data.layers.empty());
+
   auto* document = new core::map_document{};
   document->set_next_layer_id(data.nextLayerId);
   document->set_next_object_id(data.nextObjectId);
@@ -73,6 +75,7 @@ auto to_map_document(const map_data& data) -> core::map_document*
     document->add_property(propertyData.name, propertyData.property);
   }
 
+  document->select_layer(data.layers.front().id);
   document->reset_history();  // Make sure there is no undo/redo history
   return document;
 }
