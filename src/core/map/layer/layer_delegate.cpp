@@ -43,4 +43,51 @@ auto layer_delegate::name() const -> const QString&
   return m_name;
 }
 
+void layer_delegate::add_property(const QString& name,
+                                  const property::type type)
+{
+  m_properties.add_property(name, type);
+}
+
+void layer_delegate::add_property(const QString& name, const property& property)
+{
+  m_properties.add_property(name, property);
+}
+
+void layer_delegate::remove_property(const QString& name)
+{
+  m_properties.remove_property(name);
+}
+
+void layer_delegate::rename_property(const QString& oldName,
+                                     const QString& newName)
+{
+  m_properties.rename_property(oldName, newName);
+}
+
+void layer_delegate::set_property(const QString& name, const property& property)
+{
+  m_properties.set_property(name, property);
+}
+
+auto layer_delegate::get_property(const QString& name) const -> const property&
+{
+  return m_properties.get_property(name);
+}
+
+auto layer_delegate::get_property(const QString& name) -> property&
+{
+  return m_properties.get_property(name);
+}
+
+auto layer_delegate::property_count() const noexcept -> int
+{
+  return m_properties.property_count();
+}
+
+auto layer_delegate::properties() const -> const property_manager::property_map&
+{
+  return m_properties.properties();
+}
+
 }  // namespace tactile::core

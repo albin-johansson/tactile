@@ -8,7 +8,6 @@
 #include "layer_delegate.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
-#include "property_delegate.hpp"
 #include "smart_pointers.hpp"
 #include "tile_id.hpp"
 
@@ -281,8 +280,7 @@ class tile_layer final : public layer
 
  private:
   tile_matrix m_tiles;
-  layer_delegate m_layerDelegate;
-  property_delegate m_propertyDelegate;
+  layer_delegate m_delegate;
 };
 
 [[nodiscard]] auto make_tile_row(col_t nCols, tile_id value = empty)

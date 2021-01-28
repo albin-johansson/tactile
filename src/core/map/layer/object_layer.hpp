@@ -2,8 +2,11 @@
 
 #include "layer.hpp"
 #include "layer_delegate.hpp"
+#include "object.hpp"
+#include "object_id.hpp"
 #include "property_delegate.hpp"
 #include "smart_pointers.hpp"
+#include "vector_map.hpp"
 
 namespace tactile::core {
 
@@ -21,7 +24,13 @@ class object_layer final : public layer
  public:
   object_layer();
 
-  ~object_layer() noexcept override = default;
+  object_layer(const object_layer& other);  // Deep copy
+
+  object_layer(object_layer&& other) noexcept = default;
+
+  auto operator=(const object_layer& other) -> object_layer&;  // Deep copy
+
+  auto operator=(object_layer&& other) noexcept -> object_layer& = default;
 
   /// \name Layer API
 
@@ -43,7 +52,7 @@ class object_layer final : public layer
 
   /// \}
 
-  /// \name Properties
+  /// \name Property API
   /// \{
 
   void add_property(const QString& name, property::type type) override;
@@ -68,9 +77,10 @@ class object_layer final : public layer
   /// \}
 
  private:
-  // TODO m_objects
-  layer_delegate m_layerDelegate;
-  property_delegate m_propertyDelegate;
+  vector_map<object_id, unique<object>> m_objects;
+  layer_delegate m_delegate;
+
+  void copy_objects(const object_layer& other);
 };
 
 }  // namespace tactile::core
