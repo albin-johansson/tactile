@@ -54,8 +54,6 @@ class tile_layer final : public layer
   tile_layer() : tile_layer{5_row, 5_col}
   {}
 
-  ~tile_layer() noexcept override = default;
-
   /// \name Layer API
   /// \{
 
