@@ -23,8 +23,8 @@ static_assert(parse::is_object<parse::xml_element>);
 static_assert(parse::is_object<parse::json_element>);
 
 // clang-format off
-static_assert(parse::is_parser<parse::xml_engine, QDomDocument, parse::xml_element>);
-static_assert(parse::is_parser<parse::json_engine, QJsonDocument, parse::json_element>);
+static_assert(parse::is_engine<parse::xml_engine, QDomDocument, parse::xml_element>);
+static_assert(parse::is_engine<parse::json_engine, QJsonDocument, parse::json_element>);
 // clang-format on
 
 TACTILE_DEFINE_TEST_P(MapImportEmbeddedTest, QString)

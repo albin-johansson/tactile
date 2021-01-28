@@ -32,9 +32,9 @@ concept is_object = requires(T t, element_id id, const QString& str)
   { t.boolean(id)       } -> std::same_as<maybe<bool>>;
 };
 
-template <typename Parser, typename Document, typename Object>
-concept is_parser = is_object<Object> &&
-                    requires(Parser parser,
+template <typename Engine, typename Document, typename Object>
+concept is_engine = is_object<Object> &&
+                    requires(Engine e,
                              const Document& document,
                              const Object& object,
                              core::tile_layer& layer,
@@ -42,38 +42,38 @@ concept is_parser = is_object<Object> &&
                              parse_error& error,
                              const QFileInfo& path)
 {
-  { parser.root(document)                      } -> std::same_as<Object>;
-  { parser.layers(object)                      } -> std::same_as<std::vector<Object>>;
-  { parser.tilesets(object)                    } -> std::same_as<std::vector<Object>>;
-  { parser.properties(object)                  } -> std::same_as<std::vector<Object>>;
-  { parser.from_file(path)                     } -> std::same_as<maybe<Document>>;
-  { parser.add_tiles(layerData, object, error) } -> std::same_as<bool>;
-  { parser.contains_layers(object)             } -> std::same_as<bool>;
-  { parser.contains_tilesets(object)           } -> std::same_as<bool>;
-  { parser.validate_layer_type(object)         } -> std::same_as<bool>;
-  { parser.tileset_image_relative_path(object) } -> std::same_as<maybe<QString>>;
-  { parser.assume_string_property(object)      } -> std::same_as<bool>;
-  { parser.is_tile_layer(object)               } -> std::same_as<bool>;
-  { parser.is_object_layer(object)             } -> std::same_as<bool>;
+  { e.root(document)                      } -> std::same_as<Object>;
+  { e.layers(object)                      } -> std::same_as<std::vector<Object>>;
+  { e.tilesets(object)                    } -> std::same_as<std::vector<Object>>;
+  { e.properties(object)                  } -> std::same_as<std::vector<Object>>;
+  { e.from_file(path)                     } -> std::same_as<maybe<Document>>;
+  { e.add_tiles(layerData, object, error) } -> std::same_as<bool>;
+  { e.contains_layers(object)             } -> std::same_as<bool>;
+  { e.contains_tilesets(object)           } -> std::same_as<bool>;
+  { e.validate_layer_type(object)         } -> std::same_as<bool>;
+  { e.tileset_image_relative_path(object) } -> std::same_as<maybe<QString>>;
+  { e.assume_string_property(object)      } -> std::same_as<bool>;
+  { e.is_tile_layer(object)               } -> std::same_as<bool>;
+  { e.is_object_layer(object)             } -> std::same_as<bool>;
 };
 
 // clang-format on
 
-template <typename Parser>
+template <typename Engine>
 class map_parser final
 {
  public:
-  using parser_type = Parser;
-  using document_type = typename parser_type::document_type;
-  using object_type = typename parser_type::object_type;
+  using engine_type = Engine;
+  using document_type = typename engine_type::document_type;
+  using object_type = typename engine_type::object_type;
 
-  static_assert(is_parser<parser_type, document_type, object_type>,
+  static_assert(is_engine<engine_type, document_type, object_type>,
                 "The supplied type isn't a parser engine!");
 
   explicit map_parser(const QFileInfo& path)
   {
     if (const auto file = open_file(path)) {
-      const auto root = m_parser.root(*file);
+      const auto root = m_engine.root(*file);
       if (!parse_next_layer_id(root)) {
         return;
       }
@@ -137,7 +137,7 @@ class map_parser final
   }
 
  private:
-  parser_type m_parser;
+  engine_type m_engine;
   parse_error m_error{parse_error::none};
   map_data m_data;
 
@@ -160,7 +160,7 @@ class map_parser final
       return with_error<document_type>(parse_error::map_file_not_found);
     }
 
-    if (auto contents = m_parser.from_file(path)) {
+    if (auto contents = m_engine.from_file(path)) {
       return contents;
     } else {
       return with_error<document_type>(parse_error::could_not_parse_file);
@@ -206,7 +206,7 @@ class map_parser final
       return with_error(parse_error::tileset_missing_tile_height);
     }
 
-    const auto relativePath = m_parser.tileset_image_relative_path(object);
+    const auto relativePath = m_engine.tileset_image_relative_path(object);
     if (!relativePath) {
       return with_error(parse_error::tileset_missing_image_path);
     }
@@ -234,9 +234,9 @@ class map_parser final
   {
     const auto source = object.string(element_id::source);
     const auto external =
-        m_parser.from_file(path.dir().absoluteFilePath(*source));
+        m_engine.from_file(path.dir().absoluteFilePath(*source));
     if (external) {
-      return parse_tileset_common(m_parser.root(*external), path, firstGid);
+      return parse_tileset_common(m_engine.root(*external), path, firstGid);
     } else {
       return with_error(parse_error::could_not_read_external_tileset);
     }
@@ -245,10 +245,10 @@ class map_parser final
   [[nodiscard]] auto parse_tileset(const object_type& object,
                                    const QFileInfo& path) -> bool
   {
-    if (const auto first = parse_tileset_first_gid(object)) {
-      return object.contains(element_id::source)
-                 ? parse_external_tileset(object, path, *first)
-                 : parse_tileset_common(object, path, *first);
+    if (const auto gid = parse_tileset_first_gid(object)) {
+      const auto hasSource = object.contains(element_id::source);
+      return hasSource ? parse_external_tileset(object, path, *gid)
+                       : parse_tileset_common(object, path, *gid);
     } else {
       return false;
     }
@@ -257,11 +257,11 @@ class map_parser final
   [[nodiscard]] auto parse_tilesets(const object_type& root,
                                     const QFileInfo& path) -> bool
   {
-    if (!m_parser.contains_tilesets(root)) {
+    if (!m_engine.contains_tilesets(root)) {
       return with_error(parse_error::map_missing_tilesets);
     }
 
-    return std::ranges::all_of(m_parser.tilesets(root),
+    return std::ranges::all_of(m_engine.tilesets(root),
                                [&](const object_type& ts) {
                                  return parse_tileset(ts, path);
                                });
@@ -284,7 +284,7 @@ class map_parser final
       return with_error(parse_error::layer_missing_width);
     }
 
-    if (!m_parser.add_tiles(tileLayer, object, m_error)) {
+    if (!m_engine.add_tiles(tileLayer, object, m_error)) {
       return false;
     }
 
@@ -303,10 +303,9 @@ class map_parser final
     return true;
   }
 
-  [[nodiscard]] auto parse_layer(const object_type& object, const bool isFirst)
-      -> bool
+  [[nodiscard]] auto parse_layer(const object_type& object) -> bool
   {
-    if (!m_parser.validate_layer_type(object)) {
+    if (!m_engine.validate_layer_type(object)) {
       return with_error(parse_error::layer_missing_type);
     }
 
@@ -322,13 +321,13 @@ class map_parser final
     layer.opacity = object.floating(element_id::opacity, 1.0);
     layer.visible = object.boolean(element_id::visible).value_or(true);
 
-    if (m_parser.is_tile_layer(object)) {
+    if (m_engine.is_tile_layer(object)) {
       layer.type = core::layer_type::tile_layer;
       if (!parse_tile_layer(layer, object)) {
         return false;
       }
 
-    } else if (m_parser.is_object_layer(object)) {
+    } else if (m_engine.is_object_layer(object)) {
       layer.type = core::layer_type::object_layer;
       if (!parse_object_layer(layer, object)) {
         return false;
@@ -344,19 +343,14 @@ class map_parser final
 
   [[nodiscard]] auto parse_layers(const object_type& root) -> bool
   {
-    if (!m_parser.contains_layers(root)) {
+    if (!m_engine.contains_layers(root)) {
       return with_error(parse_error::map_missing_layers);
     }
 
-    bool first = true;
-    for (const auto& layer : m_parser.layers(root)) {
-      if (!parse_layer(layer, first)) {
-        return false;
-      }
-      first = false;
-    }
-
-    return true;
+    return std::ranges::all_of(m_engine.layers(root),
+                               [this](const object_type& layer) {
+                                 return parse_layer(layer);
+                               });
   }
 
   [[nodiscard]] auto to_property(const object_type& object,
@@ -404,7 +398,7 @@ class map_parser final
     QString type;
     // The following is a quirk due to the fact that the type attribute can be
     // omitted for string properties in the XML-format
-    if (m_parser.assume_string_property(object)) {
+    if (m_engine.assume_string_property(object)) {
       type = TACTILE_QSTRING(u"string");
     } else {
       type = object.string(element_id::type).value();
@@ -421,7 +415,7 @@ class map_parser final
 
   [[nodiscard]] auto parse_map_properties(const object_type& root) -> bool
   {
-    return std::ranges::all_of(m_parser.properties(root),
+    return std::ranges::all_of(m_engine.properties(root),
                                [this](const object_type& prop) {
                                  return parse_map_property(prop);
                                });
