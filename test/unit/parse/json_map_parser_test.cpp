@@ -5,16 +5,14 @@
 
 #include "json_engine.hpp"
 #include "map_parser.hpp"
+#include "gtest_macros.hpp"
 
 using namespace tactile;
 
 using path_error_pair = std::pair<QStringView, tmx::parse_error>;
 using error = tmx::parse_error;
 
-class JsonMapParserTest : public testing::TestWithParam<path_error_pair>
-{};
-
-TEST_P(JsonMapParserTest, Parse)
+TACTILE_DEFINE_TEST_P(JsonMapParser, path_error_pair)
 {
   const auto [path, code] = GetParam();
 
@@ -59,4 +57,4 @@ inline const auto values = testing::Values(
   as_pair(u"json/invalid/could_not_read_external_tileset.json", error::could_not_read_external_tileset));
 // clang-format on
 
-INSTANTIATE_TEST_SUITE_P(JsonMapParserTests, JsonMapParserTest, values);
+TACTILE_REGISTER_TEST_P(JsonMapParser, values);
