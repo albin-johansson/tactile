@@ -85,6 +85,11 @@ auto property_delegate::get_property(const QString& name) -> property&
   return m_properties.at(name);
 }
 
+auto property_delegate::has_property(const QString& name) const -> bool
+{
+  return m_properties.contains(name);
+}
+
 auto property_delegate::property_count() const noexcept -> int
 {
   return static_cast<int>(m_properties.size());
