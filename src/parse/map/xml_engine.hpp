@@ -43,29 +43,26 @@ class xml_engine final
                         parse_error& error) -> bool;
 
   [[nodiscard]]
-  static auto contains_tilesets(const object_type& object) -> bool
-  {
-    return true;
-  }
+  static auto add_objects(object_layer_data& layer,
+                          const object_type& element,
+                          parse_error& error) -> bool;
+
+  [[nodiscard]]
+  static auto parse_property(const object_type& prop,
+                             parse_error& error) -> maybe<property_data>;
+
+  [[nodiscard]]
+  static auto contains_tilesets(const object_type& object) -> bool;
 
   [[nodiscard]]
   static auto tileset_image_relative_path(const object_type& object)
       -> maybe<QString>;
 
   [[nodiscard]]
-  static auto validate_layer_type(const object_type& object) -> bool
-  {
-    return true;
-  }
+  static auto validate_layer_type(const object_type& object) -> bool;
 
   [[nodiscard]]
-  static auto contains_layers(const object_type& object) -> bool
-  {
-    return true;
-  }
-
-  [[nodiscard]]
-  static auto assume_string_property(const object_type& object) -> bool;
+  static auto contains_layers(const object_type& object) -> bool;
 
   [[nodiscard]]
   static auto is_tile_layer(const object_type& object) -> bool;
@@ -78,6 +75,11 @@ class xml_engine final
  private:
   static auto collect(const object_type& root, const QString& key)
       -> std::vector<object_type>;
+
+  static auto has_child(const object_type& obj, const QString& tag) -> bool;
+
+  [[nodiscard]] static auto assume_string_property(const object_type& object)
+      -> bool;
 };
 
 }  // namespace tactile::parse

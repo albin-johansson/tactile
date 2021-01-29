@@ -126,6 +126,15 @@ auto xml_element::stringify_element_id(const element_id type) -> QString
     case element_id::value:
       return TACTILE_QSTRING(u"value");
 
+    case element_id::x:
+      return TACTILE_QSTRING(u"x");
+
+    case element_id::y:
+      return TACTILE_QSTRING(u"y");
+
+    case element_id::point:
+      return TACTILE_QSTRING(u"point");
+
     default:
       throw tactile_error{"Reached end of switch statement!"};
   }

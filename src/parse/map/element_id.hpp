@@ -19,7 +19,10 @@ enum class element_id
   visible,
   opacity,
   type,
-  value
+  value,
+  x,
+  y,
+  point
 };
 
 }  // namespace tactile::parse

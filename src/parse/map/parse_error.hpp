@@ -9,6 +9,9 @@ namespace tactile::parse {
  *
  * \brief Provides values for with potential map parsing errors.
  *
+ * \note Remember to add an error message for each new enumerator in
+ * `to_message()`!
+ *
  * \since 0.1.0
  */
 enum class parse_error
@@ -38,9 +41,20 @@ enum class parse_error
   external_tileset_does_not_exist,  ///< External tileset file does not exist.
 
   unknown_property_type,  ///< Did not recognize property type.
-  unknown_layer_type      ///< Did not recognize layer type.
+  unknown_layer_type,     ///< Did not recognize layer type.
+
+  object_missing_id  ///< Object did not feature ID attribute.
 };
 
+/**
+ * \brief Returns an error message for an error code, intended for the user.
+ *
+ * \param error the error code to obtain an error message for.
+ *
+ * \return an error message that explains the error.
+ *
+ * \since 0.2.0
+ */
 [[nodiscard]] auto to_message(parse_error error) -> QString;
 
 }  // namespace tactile::parse

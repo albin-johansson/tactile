@@ -6,6 +6,7 @@
 #include "json_utils.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
+#include "to_property.hpp"
 
 namespace tactile::parse {
 
@@ -63,6 +64,65 @@ auto json_engine::add_tiles(tile_layer_data& layer,
   return true;
 }
 
+auto json_engine::add_objects(object_layer_data& layer,
+                              const json_engine::object_type& element,
+                              parse_error& error) -> bool
+{
+  const auto data = element->value(u"objects").toArray();
+  const auto emptyString = TACTILE_QSTRING(u"");
+
+  layer.objects.reserve(data.size());
+
+  for (const auto& value : data) {
+    Q_ASSERT(value.isObject());
+    const object_type elem{value.toObject()};
+
+    auto& object = layer.objects.emplace_back();
+
+    if (const auto id = elem.integer(element_id::id)) {
+      object.id = object_id{*id};
+    } else {
+      error = parse_error::object_missing_id;
+      return false;
+    }
+
+    object.x = elem.floating(element_id::x, 0);
+    object.y = elem.floating(element_id::y, 0);
+    object.width = elem.floating(element_id::width, 0);
+    object.height = elem.floating(element_id::height, 0);
+    object.name = elem.string(element_id::name, emptyString);
+    object.customType = elem.string(element_id::type, emptyString);
+    object.visible = elem.boolean(element_id::visible).value_or(true);
+    object.isPoint = elem.boolean(element_id::point).value_or(false);
+
+    for (const auto& p : properties(elem)) {
+      if (auto prop = parse_property(p, error)) {
+        object.properties.emplace_back(*prop);
+      } else {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+auto json_engine::parse_property(const object_type& prop, parse_error& error)
+    -> maybe<property_data>
+{
+  property_data data;
+  data.name = prop.string(element_id::name).value();
+
+  const auto type = prop.string(element_id::type).value();
+
+  if (auto p = to_property(prop, type, error)) {
+    data.property = std::move(*p);
+    return data;
+  } else {
+    return std::nullopt;
+  }
+}
+
 auto json_engine::contains_tilesets(const object_type& object) -> bool
 {
   return object.contains(element_id::tilesets);
@@ -82,11 +142,6 @@ auto json_engine::validate_layer_type(const object_type& object) -> bool
 auto json_engine::contains_layers(const object_type& object) -> bool
 {
   return object->contains(u"layers");
-}
-
-auto json_engine::assume_string_property(const object_type& object) -> bool
-{
-  return false;
 }
 
 auto json_engine::is_tile_layer(const object_type& object) -> bool

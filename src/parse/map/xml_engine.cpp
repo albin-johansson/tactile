@@ -6,6 +6,7 @@
 #include "index_to_position.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
+#include "to_property.hpp"
 
 namespace tactile::parse {
 
@@ -83,6 +84,68 @@ auto xml_engine::add_tiles(tile_layer_data& layer,
   return true;
 }
 
+auto xml_engine::add_objects(object_layer_data& layer,
+                             const xml_engine::object_type& element,
+                             parse_error& error) -> bool
+{
+  const auto objects = collect(element, TACTILE_QSTRING(u"object"));
+  const auto emptyString = TACTILE_QSTRING(u"");
+
+  for (const auto& obj : objects) {
+    auto& object = layer.objects.emplace_back();
+
+    if (const auto id = obj.integer(element_id::id)) {
+      object.id = object_id{*id};
+    } else {
+      error = parse_error::object_missing_id;
+      return false;
+    }
+
+    object.x = obj.floating(element_id::x).value_or(0);
+    object.y = obj.floating(element_id::y).value_or(0);
+    object.width = obj.floating(element_id::width).value_or(0);
+    object.height = obj.floating(element_id::height).value_or(0);
+    object.name = obj.string(element_id::name).value_or(emptyString);
+    object.customType = obj.string(element_id::type).value_or(emptyString);
+    object.visible = obj.boolean(element_id::visible).value_or(true);
+    object.isPoint = has_child(obj, TACTILE_QSTRING(u"point"));
+
+    for (const auto& p : properties(obj)) {
+      if (auto prop = parse_property(p, error)) {
+        object.properties.emplace_back(*prop);
+      } else {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
+auto xml_engine::parse_property(const object_type& prop, parse_error& error)
+    -> maybe<property_data>
+{
+  property_data data;
+  data.name = prop.string(element_id::name).value();
+
+  QString type;
+
+  // The following is a quirk due to the fact that the type attribute can be
+  // omitted for string properties
+  if (assume_string_property(prop)) {
+    type = TACTILE_QSTRING(u"string");
+  } else {
+    type = prop.string(element_id::type).value();
+  }
+
+  if (auto p = to_property(prop, type, error)) {
+    data.property = std::move(*p);
+    return data;
+  } else {
+    return std::nullopt;
+  }
+}
+
 auto xml_engine::tileset_image_relative_path(const object_type& object)
     -> maybe<QString>
 {
@@ -93,6 +156,21 @@ auto xml_engine::tileset_image_relative_path(const object_type& object)
   } else {
     return std::nullopt;
   }
+}
+
+auto xml_engine::contains_tilesets(const object_type& object) -> bool
+{
+  return true;
+}
+
+auto xml_engine::validate_layer_type(const object_type& object) -> bool
+{
+  return true;
+}
+
+auto xml_engine::contains_layers(const object_type& object) -> bool
+{
+  return true;
 }
 
 auto xml_engine::assume_string_property(const object_type& object) -> bool
@@ -127,6 +205,11 @@ auto xml_engine::collect(const object_type& root, const QString& key)
   }
 
   return vector;
+}
+
+auto xml_engine::has_child(const object_type& obj, const QString& tag) -> bool
+{
+  return !obj->firstChildElement(tag).isNull();
 }
 
 }  // namespace tactile::parse

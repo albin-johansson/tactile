@@ -8,56 +8,16 @@
 
 #include "element_id.hpp"
 #include "map_document.hpp"
+#include "map_parse_concepts.hpp"
 #include "map_parse_data.hpp"
 #include "maybe.hpp"
 #include "object_id.hpp"
 #include "parse_error.hpp"
 #include "tactile_qstring.hpp"
 #include "to_map_document.hpp"
+#include "to_property.hpp"
 
 namespace tactile::parse {
-
-// clang-format off
-
-template <typename T>
-concept is_object = requires(T t, element_id id, const QString& str)
-{
-  { t.contains(id)      } -> std::same_as<bool>;
-  { t.integer(id)       } -> std::same_as<maybe<int>>;
-  { t.integer(id, 1)    } -> std::same_as<maybe<int>>;
-  { t.floating(id)      } -> std::same_as<maybe<double>>;
-  { t.floating(id, 1.0) } -> std::same_as<double>;
-  { t.string(id)        } -> std::same_as<maybe<QString>>;
-  { t.string(id, str)   } -> std::same_as<QString>;
-  { t.boolean(id)       } -> std::same_as<maybe<bool>>;
-};
-
-template <typename Engine, typename Document, typename Object>
-concept is_engine = is_object<Object> &&
-                    requires(Engine e,
-                             const Document& document,
-                             const Object& object,
-                             core::tile_layer& layer,
-                             tile_layer_data& layerData,
-                             parse_error& error,
-                             const QFileInfo& path)
-{
-  { e.root(document)                      } -> std::same_as<Object>;
-  { e.layers(object)                      } -> std::same_as<std::vector<Object>>;
-  { e.tilesets(object)                    } -> std::same_as<std::vector<Object>>;
-  { e.properties(object)                  } -> std::same_as<std::vector<Object>>;
-  { e.from_file(path)                     } -> std::same_as<maybe<Document>>;
-  { e.add_tiles(layerData, object, error) } -> std::same_as<bool>;
-  { e.contains_layers(object)             } -> std::same_as<bool>;
-  { e.contains_tilesets(object)           } -> std::same_as<bool>;
-  { e.validate_layer_type(object)         } -> std::same_as<bool>;
-  { e.tileset_image_relative_path(object) } -> std::same_as<maybe<QString>>;
-  { e.assume_string_property(object)      } -> std::same_as<bool>;
-  { e.is_tile_layer(object)               } -> std::same_as<bool>;
-  { e.is_object_layer(object)             } -> std::same_as<bool>;
-};
-
-// clang-format on
 
 template <typename Engine>
 class map_parser final
@@ -86,7 +46,7 @@ class map_parser final
         return;
       }
 
-      if (!parse_map_properties(root)) {
+      if (!parse_properties(root, m_data.properties)) {
         return;
       }
     }
@@ -297,7 +257,9 @@ class map_parser final
   {
     object_layer_data objectLayer;
 
-    // TODO parse array of objects
+    if (!m_engine.add_objects(objectLayer, object, m_error)) {
+      return false;
+    }
 
     layer.data = std::move(objectLayer);
     return true;
@@ -323,18 +285,22 @@ class map_parser final
 
     if (m_engine.is_tile_layer(object)) {
       layer.type = core::layer_type::tile_layer;
+
       if (!parse_tile_layer(layer, object)) {
         return false;
       }
-
     } else if (m_engine.is_object_layer(object)) {
       layer.type = core::layer_type::object_layer;
+
       if (!parse_object_layer(layer, object)) {
         return false;
       }
-
     } else {
       return with_error(parse_error::unknown_layer_type);
+    }
+
+    if (!parse_properties(object, layer.properties)) {
+      return false;
     }
 
     m_data.layers.emplace_back(std::move(layer));
@@ -353,72 +319,18 @@ class map_parser final
                                });
   }
 
-  [[nodiscard]] auto to_property(const object_type& object,
-                                 const QString& propType)
-      -> maybe<core::property>
+  [[nodiscard]] auto parse_properties(const object_type& obj,
+                                      std::vector<property_data>& out) -> bool
   {
-    core::property prop;
-
-    if (propType == TACTILE_QSTRING(u"string")) {
-      prop.set_value(object.string(element_id::value).value());
-
-    } else if (propType == TACTILE_QSTRING(u"int")) {
-      prop.set_value(object.integer(element_id::value).value());
-
-    } else if (propType == TACTILE_QSTRING(u"float")) {
-      prop.set_value(object.floating(element_id::value).value());
-
-    } else if (propType == TACTILE_QSTRING(u"bool")) {
-      prop.set_value(object.boolean(element_id::value).value());
-
-    } else if (propType == TACTILE_QSTRING(u"file")) {
-      const auto file = object.string(element_id::value).value();
-      prop.set_value(QFileInfo{file});
-
-    } else if (propType == TACTILE_QSTRING(u"object")) {
-      const auto obj = object.integer(element_id::value).value();
-      prop.set_value(core::object_ref{obj});
-
-    } else if (propType == TACTILE_QSTRING(u"color")) {
-      const auto color = object.string(element_id::value).value();
-      prop.set_value(QColor{color});
-
-    } else {
-      return with_error<core::property>(parse_error::unknown_property_type);
-    }
-
-    return prop;
-  }
-
-  [[nodiscard]] auto parse_map_property(const object_type& object) -> bool
-  {
-    property_data data;
-    data.name = object.string(element_id::name).value();
-
-    QString type;
-    // The following is a quirk due to the fact that the type attribute can be
-    // omitted for string properties in the XML-format
-    if (m_engine.assume_string_property(object)) {
-      type = TACTILE_QSTRING(u"string");
-    } else {
-      type = object.string(element_id::type).value();
-    }
-
-    if (auto prop = to_property(object, type)) {
-      data.property = std::move(*prop);
-      m_data.properties.emplace_back(std::move(data));
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  [[nodiscard]] auto parse_map_properties(const object_type& root) -> bool
-  {
-    return std::ranges::all_of(m_engine.properties(root),
-                               [this](const object_type& prop) {
-                                 return parse_map_property(prop);
-                               });
+    const auto parseProperty = [this, &out](const object_type& prop) {
+      if (auto p = m_engine.parse_property(prop, m_error)) {
+        out.emplace_back(std::move(*p));
+        return true;
+      } else {
+        return false;
+      }
+    };
+    return std::ranges::all_of(m_engine.properties(obj), parseProperty);
   }
 };
 

@@ -39,17 +39,17 @@ struct tile_layer_data final
 
 struct object_data final
 {
-  object_id id;   ///< Unique ID associated with the object.
-  double x;       ///< The x-coordinate of the object.
-  double y;       ///< The y-coordinate of the object.
-  double width;   ///< The width of the object.
-  double height;  ///< The height of the object.
-  QString type;   ///< The type of the object.
-  QString name;   ///< The name of the object.
-  bool isPoint;   ///< Indicates whether or not the object is a point.
-  bool visible;   ///< Indicates whether or not the object is visible.
-
-  // TODO more attributes
+  object_id id;        ///< Unique ID associated with the object.
+  double x;            ///< The x-coordinate of the object.
+  double y;            ///< The y-coordinate of the object.
+  double width;        ///< The width of the object.
+  double height;       ///< The height of the object.
+  QString customType;  ///< The custom type of the object.
+  QString name;        ///< The name of the object.
+  std::vector<property_data> properties;  ///< List of properties.
+  bool visible;      ///< Indicates whether or not the object is visible.
+  bool isPoint;      ///< Indicates whether or not the object is a point.
+  bool isRectangle;  ///< Indicates whether or not the object is a rectangle.
 };
 
 struct object_layer_data final
@@ -61,12 +61,13 @@ struct layer_data final
 {
   using layer_content_data = std::variant<tile_layer_data, object_layer_data>;
 
-  layer_id id;              ///< Unique ID of the layer.
-  core::layer_type type;    ///< The type of the layer.
-  layer_content_data data;  ///< Type specific data.
-  QString name;             ///< The name of the layer.
-  double opacity;           ///< The opacity of the layer.
-  bool visible;             ///< Indicates whether or not the layer is visible.
+  layer_id id;                            ///< Unique ID of the layer.
+  core::layer_type type;                  ///< The type of the layer.
+  layer_content_data data;                ///< Type specific data.
+  QString name;                           ///< The name of the layer.
+  std::vector<property_data> properties;  ///< The list of properties.
+  double opacity;                         ///< The opacity of the layer.
+  bool visible;  ///< Indicates whether or not the layer is visible.
 };
 
 struct map_data final

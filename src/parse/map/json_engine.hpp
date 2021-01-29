@@ -42,6 +42,15 @@ class json_engine final
                         parse_error& error) -> bool;
 
   [[nodiscard]]
+  static auto add_objects(object_layer_data& layer,
+                          const object_type& element,
+                          parse_error& error) -> bool;
+
+  [[nodiscard]]
+  static auto parse_property(const object_type& prop,
+                             parse_error& error) -> maybe<property_data>;
+
+  [[nodiscard]]
   static auto contains_tilesets(const object_type& object) -> bool;
 
   [[nodiscard]]
@@ -53,9 +62,6 @@ class json_engine final
 
   [[nodiscard]]
   static auto contains_layers(const object_type& object) -> bool;
-
-  [[nodiscard]]
-  static auto assume_string_property(const object_type& object) -> bool;
 
   [[nodiscard]]
   static auto is_tile_layer(const object_type& object) -> bool;

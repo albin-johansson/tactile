@@ -164,6 +164,15 @@ auto json_element::stringify_element_id(const element_id type) -> QStringView
     case element_id::value:
       return u"value";
 
+    case element_id::x:
+      return u"x";
+
+    case element_id::y:
+      return u"y";
+
+    case element_id::point:
+      return u"point";
+
     default:
       throw tactile_error{"Reached end of switch statement!"};
   }

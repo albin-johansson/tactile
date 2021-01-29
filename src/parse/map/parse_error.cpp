@@ -70,6 +70,9 @@ auto to_message(const parse_error error) -> QString
     case parse_error::unknown_layer_type:
       return TACTILE_QSTRING(u"Couldn't recognize layer type!");
 
+    case parse_error::object_missing_id:
+      return TACTILE_QSTRING(u"Object was missing ID!");
+
     default:
       return TACTILE_QSTRING(u"Unknown!");
   }
