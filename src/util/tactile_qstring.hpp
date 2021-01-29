@@ -1,6 +1,9 @@
 #pragma once
 
-#include <QStringLiteral>
+#include <QString>         // QString
+#include <QStringLiteral>  // QStringLiteral
+#include <ostream>         // ostream
+#include <string>          // string
 
 // This macro is an improved version of the QStringLiteral macro
 #define TACTILE_QSTRING(str)                                       \
@@ -16,3 +19,15 @@
                                                                    \
     return tmp;                                                    \
   }())
+
+#ifdef QT_DEBUG
+
+// This is mainly used for better messages in unit tests
+inline auto operator<<(std::ostream& stream, const QString& string)
+    -> std::ostream&
+{
+  stream << string.toStdString();
+  return stream;
+}
+
+#endif  // QT_DEBUG
