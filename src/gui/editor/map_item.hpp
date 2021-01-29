@@ -77,8 +77,8 @@ class map_item final : public QGraphicsItem
   void draw_background(QPainter& painter, const render_settings& bounds);
 
   void draw_tile_layer(QPainter& painter,
-                  const core::tile_layer& layer,
-                  const render_settings& bounds);
+                       const core::tile_layer& layer,
+                       const render_settings& bounds);
 
   void draw_tile(QPainter& painter, tile_id tile, int x, int y, int tileSize);
 

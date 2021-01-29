@@ -85,7 +85,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void remove_all() noexcept; // TODO rename to clear
+  void remove_all() noexcept;  // TODO rename to clear
 
   /**
    * \brief Sets the name of a tileset.

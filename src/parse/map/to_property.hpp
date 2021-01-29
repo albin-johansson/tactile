@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QColor>     // QColor
+#include <QColor>  // QColor
+#include <QDebug>
 #include <QFileInfo>  // QFileInfo
 #include <QString>    // QString
-#include <QDebug>
 
 #include "element_id.hpp"
 #include "map_parse_concepts.hpp"
@@ -20,7 +20,6 @@ template <is_object T>
                                parse_error& error) -> maybe<core::property>
 {
   core::property prop;
-
 
   if (propType == TACTILE_QSTRING(u"string")) {
     prop.set_value(object.string(element_id::value).value());

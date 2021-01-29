@@ -4,8 +4,7 @@
 
 namespace tactile::gui {
 
-select_file_dialog::select_file_dialog(QWidget* parent)
-    : QFileDialog{parent}
+select_file_dialog::select_file_dialog(QWidget* parent) : QFileDialog{parent}
 {
   setFileMode(ExistingFile);
   setViewMode(Detail);
