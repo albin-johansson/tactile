@@ -11,6 +11,9 @@
 
 namespace tactile::parse {
 
+static_assert(is_object<json_element>);
+static_assert(is_engine<json_engine, QJsonDocument, json_element>);
+
 auto json_engine::root(const document_type& document) -> object_type
 {
   return object_type{document.object()};

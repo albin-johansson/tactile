@@ -18,14 +18,6 @@
 
 using namespace tactile;
 
-static_assert(parse::is_object<parse::xml_element>);
-static_assert(parse::is_object<parse::json_element>);
-
-// clang-format off
-static_assert(parse::is_engine<parse::xml_engine, QDomDocument, parse::xml_element>);
-static_assert(parse::is_engine<parse::json_engine, QJsonDocument, parse::json_element>);
-// clang-format on
-
 namespace {
 
 inline constexpr auto rows = 10_row;
