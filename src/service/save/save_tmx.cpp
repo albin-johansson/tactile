@@ -9,6 +9,7 @@
 #include "tactile_qstring.hpp"
 #include "tiled_version.hpp"
 #include "xml_utils.hpp"
+#include "tile_layer.hpp"
 
 using namespace tactile::core;
 

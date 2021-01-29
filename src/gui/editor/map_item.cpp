@@ -10,6 +10,7 @@
 #include "position.hpp"
 #include "preferences.hpp"
 #include "tactile_error.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile::gui {
 

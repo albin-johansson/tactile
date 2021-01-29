@@ -3,7 +3,9 @@
 #include <qdebug.h>
 
 #include "algorithm.hpp"
+#include "object_layer.hpp"
 #include "tactile_error.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile::core {
 namespace {
@@ -179,6 +181,21 @@ void map::remove_col()
   --m_cols;
 }
 
+void map::increase_tile_size()
+{
+  m_tileSize.increase();
+}
+
+void map::decrease_tile_size() noexcept
+{
+  m_tileSize.decrease();
+}
+
+void map::reset_tile_size() noexcept
+{
+  m_tileSize.reset();
+}
+
 void map::set_next_layer_id(const layer_id id) noexcept
 {
   Q_ASSERT(!has_layer(id));
@@ -320,6 +337,31 @@ auto map::width() const -> int
 auto map::height() const -> int
 {
   return m_rows.get() * m_tileSize.get();
+}
+
+auto map::active_layer_id() const noexcept -> maybe<layer_id>
+{
+  return m_activeLayer;
+}
+
+auto map::next_layer_id() const noexcept -> layer_id
+{
+  return m_nextLayer;
+}
+
+auto map::current_tile_size() const noexcept -> int
+{
+  return m_tileSize.get();
+}
+
+auto map::get_layer(const layer_id id) const -> const shared<layer>&
+{
+  return m_layers.at(id);
+}
+
+auto map::get_layer(const layer_id id) -> shared<layer>&
+{
+  return m_layers.at(id);
 }
 
 auto map::get_tile_layer(const layer_id id) -> tile_layer*

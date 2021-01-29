@@ -8,8 +8,10 @@
 
 #include "export_options.hpp"
 #include "json_utils.hpp"
+#include "object_layer.hpp"
 #include "preferences.hpp"
 #include "tactile_qstring.hpp"
+#include "tile_layer.hpp"
 #include "tiled_version.hpp"
 
 using namespace tactile::core;

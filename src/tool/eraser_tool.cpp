@@ -2,6 +2,7 @@
 
 #include "map_document.hpp"
 #include "model.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile {
 

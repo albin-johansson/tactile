@@ -2,6 +2,7 @@
 
 #include "open_map.hpp"
 #include "tactile_qstring.hpp"
+#include "tile_layer.hpp"
 
 using namespace tactile;
 

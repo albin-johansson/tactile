@@ -1,6 +1,7 @@
 #include "map_command.hpp"
 
 #include "tactile_error.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile::cmd {
 

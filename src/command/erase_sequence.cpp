@@ -4,6 +4,7 @@
 
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile::cmd {
 

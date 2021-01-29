@@ -11,6 +11,7 @@
 #include "gtest_macros.hpp"
 #include "json_engine.hpp"
 #include "map_parser.hpp"
+#include "object_layer.hpp"
 #include "open_map.hpp"
 #include "tactile_qstring.hpp"
 #include "xml_engine.hpp"
