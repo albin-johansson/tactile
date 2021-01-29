@@ -16,7 +16,7 @@ TEST(PropertyDelegate, AddProperty)
   EXPECT_EQ(1, delegate.property_count());
 
   const auto& property = delegate.get_property(name);
-  EXPECT_TRUE(property.is_integer());
+  ASSERT_TRUE(property.is_integer());
   EXPECT_EQ(0, property.as_integer());
 }
 

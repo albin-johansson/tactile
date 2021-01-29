@@ -25,14 +25,16 @@ set(TACTILE_TEST_FILES
     unit/core/flood_fill_test.cpp
     unit/core/map_test.cpp
     unit/core/position_test.cpp
-    unit/core/property_delegate_test.cpp
-    unit/core/property_test.cpp
     unit/core/tile_layer_test.cpp
     unit/core/tile_size_test.cpp
     unit/core/tileset_manager_test.cpp
     unit/core/tileset_test.cpp
 
     unit/core/map/layer/object_layer_test.cpp
+
+    unit/core/property/property_delegate_test.cpp
+    unit/core/property/property_test.cpp
+
     unit/core/viewmodel/property/property_items_test.cpp
 
     unit/parse/json_utils_test.cpp
