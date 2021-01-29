@@ -454,6 +454,17 @@ auto map_document::get_tile_layer(const layer_id id) const -> const tile_layer*
   return m_map->get_tile_layer(id);
 }
 
+auto map_document::get_object_layer(const layer_id id) -> object_layer*
+{
+  return m_map->get_object_layer(id);
+}
+
+auto map_document::get_object_layer(const layer_id id) const
+    -> const object_layer*
+{
+  return m_map->get_object_layer(id);
+}
+
 auto map_document::layer_count() const noexcept -> int
 {
   return m_map->layer_count();

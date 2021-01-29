@@ -10,9 +10,19 @@ namespace {
 
 [[nodiscard]] auto as_tile_layer(layer* ptr) -> tile_layer*
 {
-  // Small optimization, still do dynamic cast, but only if actually tile layer
+  // Small optimization, only dynamic cast if actually tile layer
   if (ptr && ptr->type() == layer_type::tile_layer) {
     return dynamic_cast<tile_layer*>(ptr);
+  } else {
+    return nullptr;
+  }
+}
+
+[[nodiscard]] auto as_object_layer(layer* ptr) -> object_layer*
+{
+  // Small optimization, only dynamic cast if actually object layer
+  if (ptr && ptr->type() == layer_type::object_layer) {
+    return dynamic_cast<object_layer*>(ptr);
   } else {
     return nullptr;
   }
@@ -320,6 +330,16 @@ auto map::get_tile_layer(const layer_id id) -> tile_layer*
 auto map::get_tile_layer(const layer_id id) const -> const tile_layer*
 {
   return as_tile_layer(get_layer(id).get());
+}
+
+auto map::get_object_layer(layer_id id) -> object_layer*
+{
+  return as_object_layer(get_layer(id).get());
+}
+
+auto map::get_object_layer(layer_id id) const -> const object_layer*
+{
+  return as_object_layer(get_layer(id).get());
 }
 
 auto map::find_layer(const layer_id id) -> layer*

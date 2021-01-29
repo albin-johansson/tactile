@@ -512,6 +512,10 @@ class map final
 
   [[nodiscard]] auto get_tile_layer(layer_id id) const -> const tile_layer*;
 
+  [[nodiscard]] auto get_object_layer(layer_id id) -> object_layer*;
+
+  [[nodiscard]] auto get_object_layer(layer_id id) const -> const object_layer*;
+
   /**
    * \brief Returns an iterator to the first layer.
    *
