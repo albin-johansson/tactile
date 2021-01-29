@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QFileInfo>
-#include <QObject>
-#include <QString>
+#include <QFileInfo>  // QFileInfo
+#include <QObject>    // QObject
+#include <QString>    // QString
 
 #include "property_manager.hpp"
 #include "smart_pointers.hpp"
