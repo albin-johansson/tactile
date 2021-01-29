@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QPixmap>
-#include <QRect>
+#include <QPixmap>  // QPixmap
+#include <QRect>    // QRect
 #include <utility>  // forward, move, pair
 
 #include "maybe.hpp"
