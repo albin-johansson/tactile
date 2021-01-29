@@ -3,6 +3,7 @@
 #include <QDir>       // QDir
 #include <QFileInfo>  // QFileInfo
 #include <concepts>   // same_as
+#include <cstddef>    // size_t
 #include <ranges>     // all_of
 #include <vector>     // vector
 
@@ -46,7 +47,9 @@ class map_parser final
         return;
       }
 
-      if (!parse_properties(root, m_data.properties)) {
+      if (auto properties = parse_properties(root)) {
+        m_data.properties = std::move(*properties);
+      } else {
         return;
       }
     }
@@ -244,7 +247,9 @@ class map_parser final
       return with_error(parse_error::layer_missing_width);
     }
 
-    if (!m_engine.add_tiles(tileLayer, object, m_error)) {
+    tileLayer.tiles =
+        m_engine.tiles(object, tileLayer.nRows, tileLayer.nCols, m_error);
+    if (m_error != parse_error::none) {
       return false;
     }
 
@@ -253,12 +258,35 @@ class map_parser final
   }
 
   [[nodiscard]] auto parse_object_layer(layer_data& layer,
-                                        const object_type& object) -> bool
+                                        const object_type& root) -> bool
   {
     object_layer_data objectLayer;
 
-    if (!m_engine.add_objects(objectLayer, object, m_error)) {
-      return false;
+    const auto emptyString = TACTILE_QSTRING(u"");
+
+    for (const auto& elem : m_engine.objects(root)) {
+      auto& object = objectLayer.objects.emplace_back();
+
+      if (const auto id = elem.integer(element_id::id)) {
+        object.id = object_id{*id};
+      } else {
+        return with_error(parse_error::object_missing_id);
+      }
+
+      object.x = elem.floating(element_id::x, 0);
+      object.y = elem.floating(element_id::y, 0);
+      object.width = elem.floating(element_id::width, 0);
+      object.height = elem.floating(element_id::height, 0);
+      object.name = elem.string(element_id::name, emptyString);
+      object.customType = elem.string(element_id::type, emptyString);
+      object.visible = elem.boolean(element_id::visible).value_or(true);
+      object.isPoint = m_engine.is_point(elem);
+
+      if (auto properties = parse_properties(elem)) {
+        object.properties = std::move(*properties);
+      } else {
+        return false;
+      }
     }
 
     layer.data = std::move(objectLayer);
@@ -299,7 +327,9 @@ class map_parser final
       return with_error(parse_error::unknown_layer_type);
     }
 
-    if (!parse_properties(object, layer.properties)) {
+    if (auto properties = parse_properties(object)) {
+      layer.properties = std::move(*properties);
+    } else {
       return false;
     }
 
@@ -319,18 +349,38 @@ class map_parser final
                                });
   }
 
-  [[nodiscard]] auto parse_properties(const object_type& obj,
-                                      std::vector<property_data>& out) -> bool
+  [[nodiscard]] auto parse_property(const object_type& prop)
+      -> maybe<property_data>
   {
-    const auto parseProperty = [this, &out](const object_type& prop) {
-      if (auto p = m_engine.parse_property(prop, m_error)) {
-        out.emplace_back(std::move(*p));
-        return true;
+    property_data data;
+    data.name = prop.string(element_id::name).value();
+
+    const auto type = m_engine.property_type(prop);
+    if (auto property = to_property(prop, type, m_error)) {
+      data.property = std::move(*property);
+      return data;
+    } else {
+      return std::nullopt;
+    }
+  }
+
+  [[nodiscard]] auto parse_properties(const object_type& obj)
+      -> maybe<std::vector<property_data>>
+  {
+    const auto props = m_engine.properties(obj);
+
+    std::vector<property_data> result;
+    result.reserve(static_cast<std::size_t>(props.size()));
+
+    for (const auto& elem : props) {
+      if (auto property = parse_property(elem)) {
+        result.emplace_back(*property);
       } else {
-        return false;
+        return std::nullopt;
       }
-    };
-    return std::ranges::all_of(m_engine.properties(obj), parseProperty);
+    }
+
+    return result;
   }
 };
 

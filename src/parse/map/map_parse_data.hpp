@@ -11,6 +11,7 @@
 #include "property.hpp"
 #include "tile_height.hpp"
 #include "tile_id.hpp"
+#include "tile_layer.hpp"
 #include "tile_width.hpp"
 
 namespace tactile::parse {
@@ -32,9 +33,9 @@ struct tileset_data final
 
 struct tile_layer_data final
 {
-  row_t nRows;                              ///< Number of rows.
-  col_t nCols;                              ///< Number of columns.
-  std::vector<std::vector<tile_id>> tiles;  ///< The tile data.
+  row_t nRows;              ///< Number of rows.
+  col_t nCols;              ///< Number of columns.
+  core::tile_matrix tiles;  ///< The tile data.
 };
 
 struct object_data final

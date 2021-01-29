@@ -37,18 +37,14 @@ class json_engine final
   static auto properties(const object_type& object) -> std::vector<object_type>;
 
   [[nodiscard]]
-  static auto add_tiles(tile_layer_data& layer,
-                        const object_type& element,
-                        parse_error& error) -> bool;
+  static auto objects(const object_type& object) -> std::vector<object_type>;
 
   [[nodiscard]]
-  static auto add_objects(object_layer_data& layer,
-                          const object_type& element,
-                          parse_error& error) -> bool;
+  static auto tiles(const object_type& object, row_t nRows, col_t nCols, parse_error& error)
+      -> core::tile_matrix;
 
   [[nodiscard]]
-  static auto parse_property(const object_type& prop,
-                             parse_error& error) -> maybe<property_data>;
+  static auto property_type(const object_type& object) -> QString;
 
   [[nodiscard]]
   static auto contains_tilesets(const object_type& object) -> bool;
@@ -68,6 +64,9 @@ class json_engine final
 
   [[nodiscard]]
   static auto is_object_layer(const object_type& object) -> bool;
+
+  [[nodiscard]]
+  static auto is_point(const object_type& object) -> bool;
 
   // clang-format on
 

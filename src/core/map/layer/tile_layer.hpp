@@ -13,6 +13,9 @@
 
 namespace tactile::core {
 
+using tile_row = std::vector<tile_id>;
+using tile_matrix = std::vector<tile_row>;
+
 /**
  * \class tile_layer
  *
@@ -26,9 +29,6 @@ namespace tactile::core {
  */
 class tile_layer final : public layer
 {
-  using tile_row = std::vector<tile_id>;
-  using tile_matrix = std::vector<tile_row>;
-
  public:
   /**
    * \brief Creates a tile layer with the specified dimensions.
@@ -286,6 +286,8 @@ class tile_layer final : public layer
 };
 
 [[nodiscard]] auto make_tile_row(col_t nCols, tile_id value = empty)
-    -> std::vector<tile_id>;
+    -> tile_row;
+
+[[nodiscard]] auto make_tile_matrix(row_t nRows, col_t nCols) -> tile_matrix;
 
 }  // namespace tactile::core

@@ -1,6 +1,7 @@
 #include "json_engine.hpp"
 
 #include <cstddef>  // size_t
+#include <utility>  // move
 
 #include "index_to_position.hpp"
 #include "json_utils.hpp"
@@ -36,91 +37,42 @@ auto json_engine::properties(const object_type& object)
   return collect(object, u"properties");
 }
 
-auto json_engine::add_tiles(tile_layer_data& layer,
-                            const object_type& element,
-                            parse_error& error) -> bool
+auto json_engine::objects(const object_type& object) -> std::vector<object_type>
 {
-  const auto data = element->value(u"data").toArray();
+  return collect(object, u"objects");
+}
 
-  layer.tiles.reserve(layer.nRows.get());
-  layer.tiles.assign(layer.nRows.get(), core::make_tile_row(layer.nCols));
+auto json_engine::tiles(const object_type& object,
+                        const row_t nRows,
+                        const col_t nCols,
+                        parse_error& error) -> core::tile_matrix
+{
+  auto matrix = core::make_tile_matrix(nRows, nCols);
 
+  const auto data = object->value(u"data").toArray();
   int index{0};
-  for (const auto value : data) {
+
+  for (const auto& value : data) {
     const tile_id id{value.toInt(-1)};
 
     if (id != -1_t) {
-      const auto pos = index_to_position(index, layer.nCols);
-      layer.tiles.at(pos.row_index()).at(pos.col_index()) = id;
+      const auto pos = index_to_position(index, nCols);
+      matrix.at(pos.row_index()).at(pos.col_index()) = id;
 
     } else {
       error = parse_error::layer_could_not_parse_tile;
-      return false;
+      return matrix;
     }
 
     ++index;
   }
 
-  return true;
+  return matrix;
 }
 
-auto json_engine::add_objects(object_layer_data& layer,
-                              const json_engine::object_type& element,
-                              parse_error& error) -> bool
+auto json_engine::property_type(const object_type& object) -> QString
 {
-  const auto data = element->value(u"objects").toArray();
-  const auto emptyString = TACTILE_QSTRING(u"");
-
-  layer.objects.reserve(data.size());
-
-  for (const auto& value : data) {
-    Q_ASSERT(value.isObject());
-    const object_type elem{value.toObject()};
-
-    auto& object = layer.objects.emplace_back();
-
-    if (const auto id = elem.integer(element_id::id)) {
-      object.id = object_id{*id};
-    } else {
-      error = parse_error::object_missing_id;
-      return false;
-    }
-
-    object.x = elem.floating(element_id::x, 0);
-    object.y = elem.floating(element_id::y, 0);
-    object.width = elem.floating(element_id::width, 0);
-    object.height = elem.floating(element_id::height, 0);
-    object.name = elem.string(element_id::name, emptyString);
-    object.customType = elem.string(element_id::type, emptyString);
-    object.visible = elem.boolean(element_id::visible).value_or(true);
-    object.isPoint = elem.boolean(element_id::point).value_or(false);
-
-    for (const auto& p : properties(elem)) {
-      if (auto prop = parse_property(p, error)) {
-        object.properties.emplace_back(*prop);
-      } else {
-        return false;
-      }
-    }
-  }
-
-  return true;
-}
-
-auto json_engine::parse_property(const object_type& prop, parse_error& error)
-    -> maybe<property_data>
-{
-  property_data data;
-  data.name = prop.string(element_id::name).value();
-
-  const auto type = prop.string(element_id::type).value();
-
-  if (auto p = to_property(prop, type, error)) {
-    data.property = std::move(*p);
-    return data;
-  } else {
-    return std::nullopt;
-  }
+  return object.string(element_id::type).value();
 }
 
 auto json_engine::contains_tilesets(const object_type& object) -> bool
@@ -154,6 +106,11 @@ auto json_engine::is_object_layer(const object_type& object) -> bool
   return object->value(u"type").toString() == TACTILE_QSTRING(u"objectgroup");
 }
 
+auto json_engine::is_point(const object_type& object) -> bool
+{
+  return object.boolean(element_id::point).value_or(false);
+}
+
 auto json_engine::collect(const object_type& root, const QStringView key)
     -> std::vector<object_type>
 {
@@ -163,6 +120,7 @@ auto json_engine::collect(const object_type& root, const QStringView key)
   vector.reserve(static_cast<std::size_t>(array.size()));
 
   for (const auto& elem : array) {
+    Q_ASSERT(elem.isObject());
     vector.emplace_back(elem.toObject());
   }
 

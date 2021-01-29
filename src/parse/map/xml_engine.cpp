@@ -45,25 +45,20 @@ auto xml_engine::properties(const object_type& object)
                  TACTILE_QSTRING(u"property"));
 }
 
-auto xml_engine::root(const document_type& document) -> object_type
+auto xml_engine::objects(const object_type& object) -> std::vector<object_type>
 {
-  return object_type{document.documentElement()};
+  return collect(object, TACTILE_QSTRING(u"object"));
 }
 
-auto xml_engine::from_file(const QFileInfo& path) -> maybe<document_type>
+auto xml_engine::tiles(const object_type& object,
+                       const row_t nRows,
+                       const col_t nCols,
+                       parse_error& error) -> core::tile_matrix
 {
-  return xml::from_file(path);
-}
+  auto matrix = core::make_tile_matrix(nRows, nCols);
 
-auto xml_engine::add_tiles(tile_layer_data& layer,
-                           const xml_engine::object_type& element,
-                           parse_error& error) -> bool
-{
-  const auto data = element->firstChildElement(TACTILE_QSTRING(u"data"));
+  const auto data = object->firstChildElement(TACTILE_QSTRING(u"data"));
   const auto tiles = data.text().split(u',');
-
-  layer.tiles.reserve(layer.nRows.get());
-  layer.tiles.assign(layer.nRows.get(), core::make_tile_row(layer.nCols));
 
   int index{0};
   for (const auto& value : tiles) {
@@ -72,78 +67,37 @@ auto xml_engine::add_tiles(tile_layer_data& layer,
 
     if (!ok) {
       error = parse::parse_error::layer_could_not_parse_tile;
-      return false;
+      return matrix;
     }
 
-    const auto pos = index_to_position(index, layer.nCols);
-    layer.tiles.at(pos.row_index()).at(pos.col_index()) = id;
+    const auto pos = index_to_position(index, nCols);
+    matrix.at(pos.row_index()).at(pos.col_index()) = id;
 
     ++index;
   }
 
-  return true;
+  return matrix;
 }
 
-auto xml_engine::add_objects(object_layer_data& layer,
-                             const xml_engine::object_type& element,
-                             parse_error& error) -> bool
+auto xml_engine::property_type(const object_type& object) -> QString
 {
-  const auto objects = collect(element, TACTILE_QSTRING(u"object"));
-  const auto emptyString = TACTILE_QSTRING(u"");
-
-  for (const auto& obj : objects) {
-    auto& object = layer.objects.emplace_back();
-
-    if (const auto id = obj.integer(element_id::id)) {
-      object.id = object_id{*id};
-    } else {
-      error = parse_error::object_missing_id;
-      return false;
-    }
-
-    object.x = obj.floating(element_id::x).value_or(0);
-    object.y = obj.floating(element_id::y).value_or(0);
-    object.width = obj.floating(element_id::width).value_or(0);
-    object.height = obj.floating(element_id::height).value_or(0);
-    object.name = obj.string(element_id::name).value_or(emptyString);
-    object.customType = obj.string(element_id::type).value_or(emptyString);
-    object.visible = obj.boolean(element_id::visible).value_or(true);
-    object.isPoint = has_child(obj, TACTILE_QSTRING(u"point"));
-
-    for (const auto& p : properties(obj)) {
-      if (auto prop = parse_property(p, error)) {
-        object.properties.emplace_back(*prop);
-      } else {
-        return false;
-      }
-    }
-  }
-
-  return true;
-}
-
-auto xml_engine::parse_property(const object_type& prop, parse_error& error)
-    -> maybe<property_data>
-{
-  property_data data;
-  data.name = prop.string(element_id::name).value();
-
-  QString type;
-
   // The following is a quirk due to the fact that the type attribute can be
   // omitted for string properties
-  if (assume_string_property(prop)) {
-    type = TACTILE_QSTRING(u"string");
+  if (assume_string_property(object)) {
+    return TACTILE_QSTRING(u"string");
   } else {
-    type = prop.string(element_id::type).value();
+    return object.string(element_id::type).value();
   }
+}
 
-  if (auto p = to_property(prop, type, error)) {
-    data.property = std::move(*p);
-    return data;
-  } else {
-    return std::nullopt;
-  }
+auto xml_engine::root(const document_type& document) -> object_type
+{
+  return object_type{document.documentElement()};
+}
+
+auto xml_engine::from_file(const QFileInfo& path) -> maybe<document_type>
+{
+  return xml::from_file(path);
 }
 
 auto xml_engine::tileset_image_relative_path(const object_type& object)
@@ -188,23 +142,28 @@ auto xml_engine::is_object_layer(const object_type& object) -> bool
   return object->tagName() == TACTILE_QSTRING(u"objectgroup");
 }
 
+auto xml_engine::is_point(const object_type& object) -> bool
+{
+  return has_child(object, TACTILE_QSTRING(u"point"));
+}
+
 auto xml_engine::collect(const object_type& root, const QString& key)
     -> std::vector<object_type>
 {
   const auto elements = root->elementsByTagName(key);
   const auto count = elements.count();
 
-  std::vector<object_type> vector;
-  vector.reserve(static_cast<std::size_t>(count));
+  std::vector<object_type> result;
+  result.reserve(static_cast<std::size_t>(count));
 
   for (auto i = 0; i < count; ++i) {
     const auto& node = elements.at(i);
-    Q_ASSERT(node.isElement());
 
-    vector.emplace_back(node.toElement());
+    Q_ASSERT(node.isElement());
+    result.emplace_back(node.toElement());
   }
 
-  return vector;
+  return result;
 }
 
 auto xml_engine::has_child(const object_type& obj, const QString& tag) -> bool

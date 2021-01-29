@@ -12,12 +12,21 @@
 namespace tactile::core {
 
 [[nodiscard]] auto make_tile_row(const col_t nCols, const tile_id value)
-    -> std::vector<tile_id>
+    -> tile_row
 {
-  std::vector<tile_id> row;
+  tile_row row;
   row.reserve(nCols.get());
   row.assign(nCols.get(), value);
   return row;
+}
+
+[[nodiscard]] auto make_tile_matrix(const row_t nRows, const col_t nCols)
+    -> tile_matrix
+{
+  tile_matrix tiles;
+  tiles.reserve(nRows.get());
+  tiles.assign(nRows.get(), make_tile_row(nCols));
+  return tiles;
 }
 
 tile_layer::tile_layer(const row_t nRows, const col_t nCols)
@@ -28,9 +37,7 @@ tile_layer::tile_layer(const row_t nRows, const col_t nCols)
   }
   m_delegate.set_name(TACTILE_QSTRING(u"Tile layer"));
 
-  m_tiles.reserve(nRows.get());
-  m_tiles.assign(nRows.get(), make_tile_row(nCols));
-
+  m_tiles = make_tile_matrix(nRows, nCols);
   assert(row_count() == nRows);
   assert(col_count() == nCols);
 }

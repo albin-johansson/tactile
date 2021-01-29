@@ -32,26 +32,28 @@ concept is_engine = is_object<Object> &&
                     requires(Engine e,
                              const Document& document,
                              const Object& object,
-                             core::tile_layer& layer,
-                             tile_layer_data& tileLayerData,
-                             object_layer_data& objectLayerData,
+                             const QFileInfo& path,
                              parse_error& error,
-                             const QFileInfo& path)
+                             row_t nRows,
+                             col_t nCols)
 {
-  { e.add_tiles(tileLayerData, object, error)     } -> std::same_as<bool>;
-  { e.add_objects(objectLayerData, object, error) } -> std::same_as<bool>;
-  { e.root(document)                      } -> std::same_as<Object>;
-  { e.layers(object)                      } -> std::same_as<std::vector<Object>>;
-  { e.tilesets(object)                    } -> std::same_as<std::vector<Object>>;
-  { e.properties(object)                  } -> std::same_as<std::vector<Object>>;
-  { e.from_file(path)                     } -> std::same_as<maybe<Document>>;
-  { e.parse_property(object, error)       } -> std::same_as<maybe<property_data>>;
+  { e.from_file(path) } -> std::same_as<maybe<Document>>;
+  { e.root(document)  } -> std::same_as<Object>;
+
+  { e.layers(object)                     } -> std::same_as<std::vector<Object>>;
+  { e.tilesets(object)                   } -> std::same_as<std::vector<Object>>;
+  { e.properties(object)                 } -> std::same_as<std::vector<Object>>;
+  { e.objects(object)                    } -> std::same_as<std::vector<Object>>;
+  { e.tiles(object, nRows, nCols, error) } -> std::same_as<core::tile_matrix>;
+
   { e.contains_layers(object)             } -> std::same_as<bool>;
   { e.contains_tilesets(object)           } -> std::same_as<bool>;
   { e.validate_layer_type(object)         } -> std::same_as<bool>;
   { e.tileset_image_relative_path(object) } -> std::same_as<maybe<QString>>;
-  { e.is_tile_layer(object)               } -> std::same_as<bool>;
-  { e.is_object_layer(object)             } -> std::same_as<bool>;
+
+  { e.is_object_layer(object) } -> std::same_as<bool>;
+  { e.is_tile_layer(object)   } -> std::same_as<bool>;
+  { e.is_point(object)        } -> std::same_as<bool>;
 };
 
 // clang-format on
