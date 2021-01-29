@@ -217,7 +217,7 @@ void map_item::paint(QPainter* painter,
 
   const auto activeLayer = m_map->current_layer_id();
 
-  m_map->each_layer([&](const layer_id id, const shared_layer& layer) {
+  m_map->each_layer([&](const layer_id id, const shared<core::layer>& layer) {
     if (layer->visible()) {
       if (const auto* tileLayer =
               dynamic_cast<const core::tile_layer*>(layer.get())) {

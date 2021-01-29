@@ -217,7 +217,7 @@ void create_external_tileset_file(const tileset& tileset,
 }
 
 void save_tile_layer(QJsonObject& object,
-                     const shared_layer& layer,
+                     const shared<core::layer>& layer,
                      const export_options& options)
 {
   Q_ASSERT(layer->type() == core::layer_type::tile_layer);
@@ -241,7 +241,7 @@ void save_tile_layer(QJsonObject& object,
 }
 
 void save_object_layer(QJsonObject& object,
-                       const shared_layer& layer,
+                       const shared<core::layer>& layer,
                        const export_options& options)
 {
   Q_ASSERT(layer->type() == core::layer_type::object_layer);
@@ -275,7 +275,7 @@ void save_object_layer(QJsonObject& object,
 {
   QJsonArray array;
 
-  map.each_layer([&](const layer_id id, const shared_layer& layer) {
+  map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
     QJsonObject object;
 
     object.insert(u"id", id.get());
