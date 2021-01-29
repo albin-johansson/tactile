@@ -57,6 +57,8 @@ class layer_delegate final
 
   [[nodiscard]] auto get_property(const QString& name) -> property&;
 
+  [[nodiscard]] auto has_property(const QString& name) const -> bool;
+
   [[nodiscard]] auto property_count() const noexcept -> int;
 
   [[nodiscard]] auto properties() const

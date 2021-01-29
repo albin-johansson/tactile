@@ -80,6 +80,11 @@ auto layer_delegate::get_property(const QString& name) -> property&
   return m_properties.get_property(name);
 }
 
+auto layer_delegate::has_property(const QString& name) const -> bool
+{
+  return m_properties.has_property(name);
+}
+
 auto layer_delegate::property_count() const noexcept -> int
 {
   return m_properties.property_count();

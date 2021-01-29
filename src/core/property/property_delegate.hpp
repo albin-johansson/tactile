@@ -32,6 +32,9 @@ class property_delegate final : public property_manager
   auto get_property(const QString& name) -> property& override;
 
   [[nodiscard]]
+  auto has_property(const QString & name) const -> bool override;
+
+  [[nodiscard]]
   auto property_count() const noexcept -> int override;
 
   [[nodiscard]]

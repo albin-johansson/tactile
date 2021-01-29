@@ -242,6 +242,11 @@ auto tile_layer::get_property(const QString& name) -> property&
   return m_delegate.get_property(name);
 }
 
+auto tile_layer::has_property(const QString& name) const -> bool
+{
+  return m_delegate.has_property(name);
+}
+
 auto tile_layer::property_count() const noexcept -> int
 {
   return m_delegate.property_count();

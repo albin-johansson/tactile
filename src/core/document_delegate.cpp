@@ -113,6 +113,11 @@ auto document_delegate::get_property(const QString& name) -> core::property&
   return m_propertyManager->get_property(name);
 }
 
+auto document_delegate::has_property(const QString& name) const -> bool
+{
+  return m_propertyManager->has_property(name);
+}
+
 auto document_delegate::property_count() const noexcept -> int
 {
   return m_propertyManager->property_count();

@@ -105,7 +105,19 @@ class property_manager
    */
   [[nodiscard]] virtual auto get_property(const QString& name) -> property& = 0;
 
-  // TODO has_property would be handy
+  /**
+   * \brief Indicates whether or not there is a property associated with the
+   * specified name.
+   *
+   * \param name the name of the property to look for.
+   *
+   * \return `true` if there is a property associated with the specified name;
+   * `false` otherwise.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] virtual auto has_property(const QString& name) const
+      -> bool = 0;
 
   /**
    * \brief Returns the amount of properties handled by the manager.

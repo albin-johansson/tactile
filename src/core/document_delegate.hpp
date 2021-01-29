@@ -68,6 +68,8 @@ class document_delegate final : public document
   [[nodiscard]] auto get_property(const QString& name)
       -> core::property& override;
 
+  [[nodiscard]] auto has_property(const QString& name) const -> bool override;
+
   [[nodiscard]] auto property_count() const noexcept -> int override;
 
   [[nodiscard]] auto properties() const -> const property_map& override;

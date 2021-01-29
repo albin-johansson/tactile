@@ -168,6 +168,11 @@ auto map_document::get_property(const QString& name) -> core::property&
   return m_delegate->get_property(name);
 }
 
+auto map_document::has_property(const QString& name) const -> bool
+{
+  return m_delegate->has_property(name);
+}
+
 auto map_document::property_count() const noexcept -> int
 {
   return m_delegate->property_count();
