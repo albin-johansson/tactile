@@ -1,44 +1,14 @@
 #include "object_layer.hpp"
 
-#include <type_traits>  // is_copy_constructible_v, is_copy_assignable_v, ...
-#include <utility>      // move
+#include <utility>  // move
 
-#include "point_object.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::core {
 
-static_assert(std::is_nothrow_move_constructible_v<object_layer>);
-static_assert(std::is_nothrow_move_assignable_v<object_layer>);
-static_assert(std::is_copy_constructible_v<object_layer>);
-static_assert(std::is_copy_assignable_v<object_layer>);
-
 object_layer::object_layer() : m_delegate{layer_type::object_layer}
 {
   m_delegate.set_name(TACTILE_QSTRING(u"Object layer"));
-}
-
-object_layer::object_layer(const object_layer& other)
-    : m_delegate{other.m_delegate}
-{
-  copy_objects(other);
-}
-
-auto object_layer::operator=(const object_layer& other) -> object_layer&
-{
-  if (this != &other) {
-    m_delegate = other.m_delegate;
-    copy_objects(other);
-  }
-  return *this;
-}
-
-void object_layer::copy_objects(const object_layer& other)
-{
-  m_objects.reserve(other.m_objects.size());
-  for (const auto& [id, object] : other.m_objects) {
-    m_objects.emplace(id, object->clone());
-  }
 }
 
 void object_layer::add_property(const QString& name, const property::type type)
@@ -131,6 +101,59 @@ auto object_layer::clone() const -> shared<layer>
 {
   return std::make_shared<object_layer>(*this);
 }
+
+void object_layer::add_object(const object_id id, object obj)
+{
+  Q_ASSERT(!has_object(id));
+  m_objects.emplace(id, std::move(obj));
+}
+
+void object_layer::add_point(const object_id id, const double x, const double y)
+{
+  Q_ASSERT(!has_object(id));
+  auto& [key, point] = m_objects.emplace(id, object{object_type::point});
+  point.set_x(x);
+  point.set_y(y);
+}
+
+void object_layer::add_rectangle(const object_id id,
+                                 const double x,
+                                 const double y,
+                                 const double width,
+                                 const double height)
+{
+  Q_ASSERT(!has_object(id));
+  auto& [key, rect] = m_objects.emplace(id, object{object_type::rectangle});
+  rect.set_x(x);
+  rect.set_y(y);
+  rect.set_width(width);
+  rect.set_height(height);
+}
+
+void object_layer::remove_object(const object_id id)
+{
+  Q_ASSERT(has_object(id));
+  m_objects.erase(id);
+}
+
+auto object_layer::has_object(const object_id id) const -> bool
+{
+  return m_objects.contains(id);
+}
+
+auto object_layer::get_object(const object_id id) -> object&
+{
+  return m_objects.at(id);
+}
+
+auto object_layer::get_object(const object_id id) const -> const object&
+{
+  return m_objects.at(id);
+}
+
+auto object_layer::object_count() const noexcept -> int
+{
+  return static_cast<int>(m_objects.size());
 }
 
 }  // namespace tactile::core
