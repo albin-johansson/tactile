@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QFileInfo>
-#include <QImage>
-#include <QPixmap>
-#include <QRect>
-#include <QString>
+#include <QFileInfo>      // QFileInfo
+#include <QImage>         // QImage
+#include <QPixmap>        // QPixmap
+#include <QRect>          // QRect
+#include <QString>        // QString
 #include <concepts>       // invocable
 #include <memory>         // shared_ptr
 #include <unordered_map>  // unordered_map
@@ -442,13 +442,5 @@ class tileset final
   QFileInfo m_path{};
   QString m_name{TACTILE_QSTRING(u"Untitled")};
 };
-
-static_assert(std::is_final_v<tileset>);
-
-static_assert(std::is_move_constructible_v<tileset>);
-static_assert(std::is_move_assignable_v<tileset>);
-
-static_assert(std::is_copy_constructible_v<tileset>);
-static_assert(std::is_copy_assignable_v<tileset>);
 
 }  // namespace tactile::core

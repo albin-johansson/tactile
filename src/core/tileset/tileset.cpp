@@ -1,11 +1,21 @@
 
 #include "tileset.hpp"
 
+#include <type_traits>  // is_final_v, is_move_constructible_v, ...
+
 #include "algorithm.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::core {
 namespace {
+
+static_assert(std::is_final_v<tileset>);
+
+static_assert(std::is_move_constructible_v<tileset>);
+static_assert(std::is_move_assignable_v<tileset>);
+
+static_assert(std::is_copy_constructible_v<tileset>);
+static_assert(std::is_copy_assignable_v<tileset>);
 
 auto create_source_rect_cache(const tile_id first,
                               const tile_id last,
