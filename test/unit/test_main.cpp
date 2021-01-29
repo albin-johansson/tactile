@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <QApplication>
+#include <QApplication>  // QApplication
 
 auto main(int argc, char** argv) -> int
 {
