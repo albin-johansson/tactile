@@ -8,6 +8,7 @@
 #include "add_row.hpp"
 #include "add_tileset.hpp"
 #include "bucket_fill.hpp"
+#include "document_delegate.hpp"
 #include "erase_sequence.hpp"
 #include "remove_col.hpp"
 #include "remove_layer.hpp"
