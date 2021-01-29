@@ -77,8 +77,6 @@ set(TACTILE_SOURCE_FILES
     core/map/map.hpp
     core/map/map_document.cpp
     core/map/map_document.hpp
-    core/map/map_document_manager.cpp
-    core/map/map_document_manager.hpp
 
     core/map/layer/layer.hpp
     core/map/layer/layer_delegate.cpp
