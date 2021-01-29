@@ -88,6 +88,7 @@ set(TACTILE_SOURCE_FILES
     core/map/layer/object.hpp
     core/map/layer/object_layer.cpp
     core/map/layer/object_layer.hpp
+    core/map/layer/object_type.hpp
     core/map/layer/tile_layer.cpp
     core/map/layer/tile_layer.hpp
 
