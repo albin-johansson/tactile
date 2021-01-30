@@ -183,6 +183,8 @@ set(TACTILE_SOURCE_FILES
     gui/editor/map_tab_widget.hpp
     gui/editor/map_view.cpp
     gui/editor/map_view.hpp
+    gui/editor/render_map.cpp
+    gui/editor/render_map.hpp
     gui/editor/map_editor.ui
 
     gui/layer/layer_dock.cpp
