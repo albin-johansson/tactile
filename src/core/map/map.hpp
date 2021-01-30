@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QString>
+#include <QString>   // QString
 #include <concepts>  // invocable
 #include <utility>   // pair, move
 
@@ -8,15 +8,16 @@
 #include "layer_id.hpp"
 #include "maybe.hpp"
 #include "object_id.hpp"
-#include "object_layer.hpp"
 #include "position.hpp"
 #include "smart_pointers.hpp"
 #include "tile_id.hpp"
-#include "tile_layer.hpp"
 #include "tile_size.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::core {
+
+class tile_layer;
+class object_layer;
 
 /**
  * \class map
@@ -202,26 +203,17 @@ class map final
   /**
    * \copydoc tile_size::increase()
    */
-  void increase_tile_size()
-  {
-    m_tileSize.increase();
-  }
+  void increase_tile_size();
 
   /**
    * \copydoc tile_size::decrease()
    */
-  void decrease_tile_size() noexcept
-  {
-    m_tileSize.decrease();
-  }
+  void decrease_tile_size() noexcept;
 
   /**
    * \copydoc tile_size::reset()
    */
-  void reset_tile_size() noexcept
-  {
-    m_tileSize.reset();
-  }
+  void reset_tile_size() noexcept;
 
   /**
    * \brief Sets the next available layer ID.
@@ -458,10 +450,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto active_layer_id() const noexcept -> maybe<layer_id>
-  {
-    return m_activeLayer;
-  }
+  [[nodiscard]] auto active_layer_id() const noexcept -> maybe<layer_id>;
 
   /**
    * \brief Returns the ID that will be used by the next layer.
@@ -470,10 +459,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto next_layer_id() const noexcept -> layer_id
-  {
-    return m_nextLayer;
-  }
+  [[nodiscard]] auto next_layer_id() const noexcept -> layer_id;
 
   /**
    * \brief Returns the current tile size value.
@@ -482,10 +468,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto current_tile_size() const noexcept -> int
-  {
-    return m_tileSize.get();
-  }
+  [[nodiscard]] auto current_tile_size() const noexcept -> int;
 
   /**
    * \brief Returns the layer associated with the specified ID.
@@ -498,15 +481,9 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_layer(const layer_id id) const -> const shared<layer>&
-  {
-    return m_layers.at(id);
-  }
+  [[nodiscard]] auto get_layer(layer_id id) const -> const shared<layer>&;
 
-  [[nodiscard]] auto get_layer(const layer_id id) -> shared<layer>&
-  {
-    return m_layers.at(id);
-  }
+  [[nodiscard]] auto get_layer(layer_id id) -> shared<layer>&;
 
   [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
 

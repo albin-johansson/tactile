@@ -14,7 +14,7 @@ layer_model::layer_model(core::map_document* document)
   }
 
   document->each_layer(
-      [this](const layer_id id, const core::shared_layer& layer) {
+      [this](const layer_id id, const shared<core::layer>& layer) {
         Q_ASSERT(layer);
         this->appendRow(layer_item::make(id, *layer.get()));
       });

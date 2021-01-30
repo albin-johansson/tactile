@@ -8,7 +8,9 @@
 #include "add_row.hpp"
 #include "add_tileset.hpp"
 #include "bucket_fill.hpp"
+#include "document_delegate.hpp"
 #include "erase_sequence.hpp"
+#include "object_layer.hpp"
 #include "remove_col.hpp"
 #include "remove_layer.hpp"
 #include "remove_property.hpp"
@@ -18,6 +20,7 @@
 #include "resize_map.hpp"
 #include "set_property.hpp"
 #include "stamp_sequence.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile::core {
 

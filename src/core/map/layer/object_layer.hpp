@@ -6,7 +6,6 @@
 #include "layer_delegate.hpp"
 #include "object.hpp"
 #include "object_id.hpp"
-#include "property_delegate.hpp"
 #include "smart_pointers.hpp"
 #include "vector_map.hpp"
 

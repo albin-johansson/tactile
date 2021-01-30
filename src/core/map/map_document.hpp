@@ -1,33 +1,31 @@
 #pragma once
 
-#include <QFileInfo>
-#include <QImage>
-#include <QObject>
-#include <QString>
-#include <concepts>  // invocable
-#include <utility>   // move
+#include <QFileInfo>  // QFileInfo
+#include <QImage>     // QImage
+#include <QString>    // QString
+#include <concepts>   // invocable
 
-#include "command_stack.hpp"
 #include "document.hpp"
-#include "document_delegate.hpp"
+#include "layer_id.hpp"
 #include "map.hpp"
-#include "maybe.hpp"
 #include "object_id.hpp"
 #include "position.hpp"
-#include "property.hpp"
-#include "property_delegate.hpp"
-#include "property_manager.hpp"
-#include "property_model.hpp"
 #include "smart_pointers.hpp"
+#include "tile_id.hpp"
 #include "tileset.hpp"
+#include "tileset_id.hpp"
 #include "tileset_manager.hpp"
-#include "vector_map.hpp"
 
 namespace tactile::vm {
 class property_model;
 }
 
 namespace tactile::core {
+
+class layer;
+class tile_layer;
+class object_layer;
+class document_delegate;
 
 /**
  * \class map_document

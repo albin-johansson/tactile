@@ -1,25 +1,30 @@
 #pragma once
 
-#include <QObject>
+#include <QFileInfo>  // QFileInfo
+#include <QImage>     // QImage
+#include <QObject>    // QObject
 
-#include "layer.hpp"
 #include "layer_id.hpp"
-#include "layer_model.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
-#include "property.hpp"
-#include "property_model.hpp"
 #include "smart_pointers.hpp"
+#include "tile_height.hpp"
+#include "tile_width.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 #include "tool_id.hpp"
 #include "tool_model.hpp"
+#include "vector_map.hpp"
+
+namespace tactile::vm {
+class property_model;
+class layer_model;
+}  // namespace tactile::vm
 
 namespace tactile::core {
 
 class map_document;
-class map_document_manager;
-class tile_layer;
+class layer;
 
 /**
  * \class model
@@ -324,8 +329,12 @@ class model final : public QObject
   void mouse_exited(QEvent* event);
 
  private:
-  map_document_manager* m_mapDocuments{};
+  vector_map<map_id, map_document*> m_documents;
+  maybe<map_id> m_currentMap;
+  map_id m_nextId{1};
   tool_model m_tools;
+
+  void emit_undo_redo_update();
 };
 
 }  // namespace tactile::core

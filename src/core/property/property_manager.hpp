@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QString>
+#include <QString>  // QString
 
 #include "property.hpp"
 #include "vector_map.hpp"

@@ -8,7 +8,6 @@
 #include "layer_delegate.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
-#include "smart_pointers.hpp"
 #include "tile_id.hpp"
 
 namespace tactile::core {

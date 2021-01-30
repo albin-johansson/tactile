@@ -2,6 +2,9 @@
 
 #include <utility>  // move
 
+#include "object_layer.hpp"
+#include "tile_layer.hpp"
+
 namespace tactile::parse {
 namespace {
 

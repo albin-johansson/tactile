@@ -8,6 +8,7 @@
 #include "layer_utils.hpp"
 #include "preferences.hpp"
 #include "tactile_qstring.hpp"
+#include "tile_layer.hpp"
 #include "tiled_version.hpp"
 #include "xml_utils.hpp"
 
@@ -93,7 +94,7 @@ void save_layers(QDomDocument& document,
                  QDomElement& root,
                  const map_document& map)
 {
-  map.each_layer([&](const layer_id id, const shared_layer& layer) {
+  map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
     auto node = document.createElement(TACTILE_QSTRING(u"layer"));
 
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());

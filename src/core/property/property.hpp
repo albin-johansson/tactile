@@ -1,9 +1,10 @@
 #pragma once
 
-#include <QColor>
-#include <QFileInfo>
-#include <QString>
-#include <variant>  // variant, monostate
+#include <QColor>     // QColor
+#include <QFileInfo>  // QFileInfo
+#include <QString>    // QString
+#include <concepts>   // same_as
+#include <variant>    // variant, monostate
 
 #include "maybe.hpp"
 #include "nenya.hpp"

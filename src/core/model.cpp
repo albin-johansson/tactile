@@ -1,106 +1,89 @@
 #include "model.hpp"
 
-#include "map_document_manager.hpp"
+#include "layer_model.hpp"
+#include "map_document.hpp"
 #include "property_model.hpp"
 
 namespace tactile::core {
 
-model::model() : m_mapDocuments{new map_document_manager{this}}, m_tools{this}
-{
-  // clang-format off
-  connect(m_mapDocuments, &map_document_manager::redraw,
-          this,           &model::redraw);
-
-  connect(m_mapDocuments, &map_document_manager::undo_state_updated,
-          this,           &model::undo_state_updated);
-
-  connect(m_mapDocuments, &map_document_manager::redo_state_updated,
-          this,           &model::redo_state_updated);
-
-  connect(m_mapDocuments, &map_document_manager::undo_text_updated,
-          this,           &model::undo_text_updated);
-
-  connect(m_mapDocuments, &map_document_manager::redo_text_updated,
-          this,           &model::redo_text_updated);
-
-  connect(m_mapDocuments, &map_document_manager::clean_changed,
-          this,           &model::clean_changed);
-
-  connect(m_mapDocuments, &map_document_manager::added_layer,
-          this,           &model::added_layer);
-
-  connect(m_mapDocuments, &map_document_manager::added_duplicated_layer,
-          this,           &model::added_duplicated_layer);
-
-  connect(m_mapDocuments, &map_document_manager::removed_layer,
-          this,           &model::removed_layer);
-
-  connect(m_mapDocuments, &map_document_manager::selected_layer,
-          this,           &model::selected_layer);
-
-  connect(m_mapDocuments, &map_document_manager::moved_layer_back,
-          this,           &model::moved_layer_back);
-
-  connect(m_mapDocuments, &map_document_manager::moved_layer_forward,
-          this,           &model::moved_layer_forward);
-
-  connect(m_mapDocuments, &map_document_manager::removed_tileset,
-          this,           &model::removed_tileset);
-
-  connect(m_mapDocuments, &map_document_manager::added_property,
-          this,           &model::added_property);
-
-  connect(m_mapDocuments, &map_document_manager::about_to_remove_property,
-          this,           &model::about_to_remove_property);
-
-  connect(m_mapDocuments, &map_document_manager::updated_property,
-          this,           &model::updated_property);
-
-  connect(m_mapDocuments, &map_document_manager::renamed_property,
-          this,           &model::renamed_property);
-  // clang-format on
-
-  connect(m_mapDocuments,
-          &map_document_manager::added_tileset,
-          [this](const tileset_id id) {
-            const auto& tileset = current_document()->tilesets()->at(id);
-            emit added_tileset(current_map_id().value(), id, tileset);
-          });
-}
+model::model() : m_tools{this}
+{}
 
 auto model::add_map() -> map_id
 {
-  return m_mapDocuments->add();
+  return add_map(new map_document{5_row, 5_col, this});
 }
 
 auto model::add_map(map_document* document) -> map_id
 {
-  return m_mapDocuments->add(document);
+  Q_ASSERT(document);
+  Q_ASSERT(!m_documents.contains(m_nextId));
+
+  document->setParent(this);
+
+  const auto bind = [document, this](auto&& signal, auto&& slot) {
+    QObject::connect(document, signal, this, slot);
+  };
+
+  // clang-format off
+  bind(&map_document::redraw,                   &model::redraw);
+  bind(&map_document::undo_state_updated,       &model::undo_state_updated);
+  bind(&map_document::redo_state_updated,       &model::redo_state_updated);
+  bind(&map_document::undo_text_updated,        &model::undo_text_updated);
+  bind(&map_document::redo_text_updated,        &model::redo_text_updated);
+  bind(&map_document::clean_changed,            &model::clean_changed);
+  bind(&map_document::removed_tileset,          &model::removed_tileset);
+  bind(&map_document::added_layer,              &model::added_layer);
+  bind(&map_document::added_duplicated_layer,   &model::added_duplicated_layer);
+  bind(&map_document::removed_layer,            &model::removed_layer);
+  bind(&map_document::selected_layer,           &model::selected_layer);
+  bind(&map_document::moved_layer_back,         &model::moved_layer_back);
+  bind(&map_document::moved_layer_forward,      &model::moved_layer_forward);
+  bind(&map_document::added_property,           &model::added_property);
+  bind(&map_document::about_to_remove_property, &model::about_to_remove_property);
+  bind(&map_document::updated_property,         &model::updated_property);
+  bind(&map_document::renamed_property,         &model::renamed_property);
+  // clang-format on
+
+  bind(&map_document::added_tileset, [this](const tileset_id id) {
+    const auto& tileset = current_document()->tilesets()->at(id);
+    emit added_tileset(current_map_id().value(), id, tileset);
+  });
+
+  const auto id = m_nextId;
+  m_documents.emplace(id, document);
+  m_currentMap = id;
+
+  ++m_nextId;
+
+  emit_undo_redo_update();
+
+  return id;
 }
 
 auto model::has_active_map() const noexcept -> bool
 {
-  return m_mapDocuments->has_active_map();
+  return m_currentMap.has_value();
 }
 
 auto model::get_document(const map_id id) -> map_document*
 {
-  return m_mapDocuments->at(id);
+  return m_documents.at(id);
 }
 
 auto model::current_map_id() const -> maybe<map_id>
 {
-  return m_mapDocuments->current_map_id();
+  return m_currentMap;
 }
 
 auto model::current_document() -> map_document*
 {
-  return m_mapDocuments->current_document();
+  return m_currentMap ? m_documents.at(m_currentMap.value()) : nullptr;
 }
 
 auto model::current_document() const -> const map_document*
 {
-  return m_mapDocuments->current_document();
+  return m_currentMap ? m_documents.at(m_currentMap.value()) : nullptr;
 }
 
 void model::undo()
@@ -258,7 +241,13 @@ void model::set_tileset_name(const tileset_id id, const QString& name)
 
 void model::select_map(const map_id id)
 {
-  m_mapDocuments->select(id);
+  Q_ASSERT(m_documents.contains(id));
+
+  if (m_currentMap != id) {
+    m_currentMap = id;
+    emit_undo_redo_update();
+    emit clean_changed(current_document()->is_clean());
+  }
 
   auto* document = current_document();
   Q_ASSERT(document);
@@ -268,7 +257,20 @@ void model::select_map(const map_id id)
 
 void model::close_map(const map_id id)
 {
-  m_mapDocuments->close(id);
+  Q_ASSERT(m_documents.contains(id));
+
+  m_documents.at(id)->disconnect();
+  m_documents.erase(id);
+
+  if (m_currentMap && (m_currentMap->get() == id.get())) {
+    m_currentMap = std::nullopt;
+    emit_undo_redo_update();
+  }
+
+  if (!m_documents.empty()) {
+    m_currentMap = m_documents.begin()->first;
+    emit_undo_redo_update();
+  }
 }
 
 void model::mouse_pressed(QMouseEvent* event, const QPointF& mapPosition)
@@ -294,6 +296,21 @@ void model::mouse_entered(QEvent* event)
 void model::mouse_exited(QEvent* event)
 {
   m_tools.exited(event);
+}
+
+void model::emit_undo_redo_update()
+{
+  if (const auto* document = current_document()) {
+    emit undo_state_updated(document->can_undo());
+    emit redo_state_updated(document->can_redo());
+    emit undo_text_updated(document->get_undo_text());
+    emit redo_text_updated(document->get_redo_text());
+  } else {
+    emit undo_state_updated(false);
+    emit redo_state_updated(false);
+    emit undo_text_updated(TACTILE_QSTRING(u""));
+    emit redo_text_updated(TACTILE_QSTRING(u""));
+  }
 }
 
 }  // namespace tactile::core

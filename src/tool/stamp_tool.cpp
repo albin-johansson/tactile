@@ -1,6 +1,7 @@
 #include "stamp_tool.hpp"
 
 #include "model.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile {
 

@@ -10,6 +10,9 @@
 
 namespace tactile::parse {
 
+static_assert(is_object<xml_element>);
+static_assert(is_engine<xml_engine, QDomDocument, xml_element>);
+
 auto xml_engine::tilesets(const object_type& root) -> std::vector<object_type>
 {
   return collect(root, TACTILE_QSTRING(u"tileset"));

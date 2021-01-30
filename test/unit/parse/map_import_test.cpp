@@ -11,19 +11,12 @@
 #include "gtest_macros.hpp"
 #include "json_engine.hpp"
 #include "map_parser.hpp"
+#include "object_layer.hpp"
 #include "open_map.hpp"
 #include "tactile_qstring.hpp"
 #include "xml_engine.hpp"
 
 using namespace tactile;
-
-static_assert(parse::is_object<parse::xml_element>);
-static_assert(parse::is_object<parse::json_element>);
-
-// clang-format off
-static_assert(parse::is_engine<parse::xml_engine, QDomDocument, parse::xml_element>);
-static_assert(parse::is_engine<parse::json_engine, QJsonDocument, parse::json_element>);
-// clang-format on
 
 namespace {
 

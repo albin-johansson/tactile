@@ -1,6 +1,7 @@
 #include "map_command.hpp"
 
 #include "tactile_error.hpp"
+#include "tile_layer.hpp"
 
 namespace tactile::cmd {
 
@@ -33,7 +34,7 @@ void map_command::restore_tiles()
 
 void map_command::save_tiles(row_range rows, col_range cols)
 {
-  m_map->each_layer([&](const layer_id id, const core::shared_layer& layer) {
+  m_map->each_layer([&](const layer_id id, const shared<core::layer>& layer) {
     auto& tiles = tile_data(id);
 
     auto* tileLayer = m_map->get_tile_layer(id);

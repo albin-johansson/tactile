@@ -215,7 +215,6 @@ class object final : public property_manager
   [[nodiscard]] auto property_count() const noexcept -> int override;
 
   [[nodiscard]] auto properties() const -> const property_map& override;
-  ~object() noexcept override = default;
 
   /// \} End of property API
 

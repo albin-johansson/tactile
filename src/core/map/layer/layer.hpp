@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QString>
-#include <memory>  // shared_ptr
+#include <QString>  // QString
 
 #include "layer_type.hpp"
 #include "property_manager.hpp"
+#include "smart_pointers.hpp"
 
 namespace tactile::core {
 
@@ -87,7 +87,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto clone() const -> std::shared_ptr<layer> = 0;
+  [[nodiscard]] virtual auto clone() const -> shared<layer> = 0;
 
   /**
    * \brief Returns the type of the layer.
@@ -98,7 +98,5 @@ class layer : public property_manager
    */
   [[nodiscard]] virtual auto type() const -> layer_type = 0;
 };
-
-using shared_layer = std::shared_ptr<layer>;
 
 }  // namespace tactile::core

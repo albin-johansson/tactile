@@ -9,8 +9,10 @@
 #include "export_options.hpp"
 #include "json_utils.hpp"
 #include "layer_utils.hpp"
+#include "object_layer.hpp"
 #include "preferences.hpp"
 #include "tactile_qstring.hpp"
+#include "tile_layer.hpp"
 #include "tiled_version.hpp"
 
 using namespace tactile::core;
@@ -274,7 +276,7 @@ void save_object_layer(QJsonObject& object,
 {
   QJsonArray array;
 
-  map.each_layer([&](const layer_id id, const shared_layer& layer) {
+  map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
     QJsonObject object;
 
     object.insert(u"id", id.get());

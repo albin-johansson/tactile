@@ -166,7 +166,7 @@ void properties_widget::paste_property_requested()
 {
   const auto& name = m_nameCopy.value();
   if (!m_model->contains_property(name)) {
-//    m_model->add(name, core::property::string);
+    //    m_model->add(name, core::property::string);
 
     m_model->add(name, m_propertyCopy.value());
     m_contextMenu->set_paste_enabled(false);
