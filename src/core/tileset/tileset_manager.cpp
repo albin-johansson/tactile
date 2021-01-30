@@ -97,7 +97,7 @@ auto tileset_manager::image(const tile_id id) const -> const QPixmap&
 auto tileset_manager::image_source(const tile_id id) const -> QRect
 {
   for (const auto& [key, tileset] : m_tilesets) {
-    if (const auto rect = tileset->image_source(id); rect) {
+    if (const auto rect = tileset->image_source(id)) {
       return *rect;
     }
   }
