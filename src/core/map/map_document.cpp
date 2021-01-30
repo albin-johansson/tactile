@@ -500,6 +500,11 @@ auto map_document::current_tileset() const -> const tileset*
   return m_tilesets->current_tileset();
 }
 
+auto map_document::get_map() const noexcept -> const map*
+{
+  return m_map.get();
+}
+
 auto map_document::tilesets() const noexcept -> const tileset_manager*
 {
   return m_tilesets.get();

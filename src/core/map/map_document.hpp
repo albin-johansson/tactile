@@ -467,6 +467,8 @@ class map_document final : public document
    */
   [[nodiscard]] auto current_tileset() const -> const tileset*;
 
+  [[nodiscard]] auto get_map() const noexcept -> const map*;
+
   /**
    * \brief Returns a pointer to the associated tileset manager.
    *
