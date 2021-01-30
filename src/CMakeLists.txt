@@ -84,6 +84,8 @@ set(TACTILE_SOURCE_FILES
     core/map/layer/layer_delegate.cpp
     core/map/layer/layer_delegate.hpp
     core/map/layer/layer_type.hpp
+    core/map/layer/layer_utils.cpp
+    core/map/layer/layer_utils.hpp
     core/map/layer/object.cpp
     core/map/layer/object.hpp
     core/map/layer/object_layer.cpp

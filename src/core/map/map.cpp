@@ -3,32 +3,10 @@
 #include <qdebug.h>
 
 #include "algorithm.hpp"
+#include "layer_utils.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::core {
-namespace {
-
-[[nodiscard]] auto as_tile_layer(layer* ptr) -> tile_layer*
-{
-  // Small optimization, only dynamic cast if actually tile layer
-  if (ptr && ptr->type() == layer_type::tile_layer) {
-    return dynamic_cast<tile_layer*>(ptr);
-  } else {
-    return nullptr;
-  }
-}
-
-[[nodiscard]] auto as_object_layer(layer* ptr) -> object_layer*
-{
-  // Small optimization, only dynamic cast if actually object layer
-  if (ptr && ptr->type() == layer_type::object_layer) {
-    return dynamic_cast<object_layer*>(ptr);
-  } else {
-    return nullptr;
-  }
-}
-
-}  // namespace
 
 map::map(const row_t nRows, const col_t nCols) : m_rows{nRows}, m_cols{nCols}
 {
@@ -46,7 +24,7 @@ map::map(const row_t nRows, const col_t nCols) : m_rows{nRows}, m_cols{nCols}
 void map::remove_occurrences(const tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer.get())) {
+    if (auto* tileLayer = as_tile_layer(layer)) {
       tileLayer->remove_all(id);
     }
   }
@@ -106,7 +84,7 @@ void map::add_layer(const layer_id id, shared<layer> layer)
   Q_ASSERT(layer);
 
   if (m_layers.empty()) {
-    if (const auto* tileLayer = as_tile_layer(layer.get())) {
+    if (const auto* tileLayer = as_tile_layer(layer)) {
       m_rows = tileLayer->row_count();
       m_cols = tileLayer->col_count();
     }
@@ -132,7 +110,7 @@ auto map::duplicate_layer(const layer_id id) -> layer_pair&
 void map::add_row(const tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer.get())) {
+    if (auto* tileLayer = as_tile_layer(layer)) {
       tileLayer->add_row(id);
     }
   }
@@ -142,7 +120,7 @@ void map::add_row(const tile_id id)
 void map::add_col(const tile_id id)
 {
   for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer.get())) {
+    if (auto* tileLayer = as_tile_layer(layer)) {
       tileLayer->add_col(id);
     }
   }
@@ -156,7 +134,7 @@ void map::remove_row()
   }
 
   for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer.get())) {
+    if (auto* tileLayer = as_tile_layer(layer)) {
       tileLayer->remove_row();
     }
   }
@@ -171,7 +149,7 @@ void map::remove_col()
   }
 
   for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer.get())) {
+    if (auto* tileLayer = as_tile_layer(layer)) {
       tileLayer->remove_col();
     }
   }
@@ -200,7 +178,7 @@ void map::set_row_count(row_t nRows)
 
   m_rows = nRows;
   for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer.get())) {
+    if (auto* tileLayer = as_tile_layer(layer)) {
       tileLayer->set_rows(m_rows);
     }
   }
@@ -216,7 +194,7 @@ void map::set_col_count(col_t nCols)
 
   m_cols = nCols;
   for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer.get())) {
+    if (auto* tileLayer = as_tile_layer(layer)) {
       tileLayer->set_cols(m_cols);
     }
   }
@@ -324,22 +302,22 @@ auto map::height() const -> int
 
 auto map::get_tile_layer(const layer_id id) -> tile_layer*
 {
-  return as_tile_layer(get_layer(id).get());
+  return as_tile_layer(get_layer(id));
 }
 
 auto map::get_tile_layer(const layer_id id) const -> const tile_layer*
 {
-  return as_tile_layer(get_layer(id).get());
+  return as_tile_layer(get_layer(id));
 }
 
 auto map::get_object_layer(layer_id id) -> object_layer*
 {
-  return as_object_layer(get_layer(id).get());
+  return as_object_layer(get_layer(id));
 }
 
 auto map::get_object_layer(layer_id id) const -> const object_layer*
 {
-  return as_object_layer(get_layer(id).get());
+  return as_object_layer(get_layer(id));
 }
 
 auto map::find_layer(const layer_id id) -> layer*

@@ -8,6 +8,7 @@
 
 #include "export_options.hpp"
 #include "json_utils.hpp"
+#include "layer_utils.hpp"
 #include "preferences.hpp"
 #include "tactile_qstring.hpp"
 #include "tiled_version.hpp"
@@ -215,12 +216,12 @@ void create_external_tileset_file(const tileset& tileset,
 }
 
 void save_tile_layer(QJsonObject& object,
-                     const shared_layer& layer,
+                     const shared<core::layer>& layer,
                      const export_options& options)
 {
   Q_ASSERT(layer->type() == core::layer_type::tile_layer);
 
-  const auto* tileLayer = dynamic_cast<const core::tile_layer*>(layer.get());
+  const auto* tileLayer = core::as_tile_layer(layer);
   Q_ASSERT(tileLayer);
 
   object.insert(u"type", TACTILE_QSTRING(u"tilelayer"));
@@ -239,12 +240,12 @@ void save_tile_layer(QJsonObject& object,
 }
 
 void save_object_layer(QJsonObject& object,
-                       const shared_layer& layer,
+                       const shared<core::layer>& layer,
                        const export_options& options)
 {
   Q_ASSERT(layer->type() == core::layer_type::object_layer);
 
-  const auto* objLayer = dynamic_cast<const core::object_layer*>(layer.get());
+  const auto* objLayer = core::as_object_layer(layer);
   Q_ASSERT(objLayer);
 
   object.insert(u"type", TACTILE_QSTRING(u"objectgroup"));

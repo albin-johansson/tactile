@@ -5,6 +5,7 @@
 #include <QtXml>
 
 #include "export_options.hpp"
+#include "layer_utils.hpp"
 #include "preferences.hpp"
 #include "tactile_qstring.hpp"
 #include "tiled_version.hpp"
@@ -98,8 +99,7 @@ void save_layers(QDomDocument& document,
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());
     node.setAttribute(TACTILE_QSTRING(u"name"), layer->name());
 
-    if (const auto* tileLayer =
-            dynamic_cast<const core::tile_layer*>(layer.get())) {
+    if (const auto* tileLayer = core::as_tile_layer(layer)) {
       node.setAttribute(TACTILE_QSTRING(u"width"),
                         tileLayer->col_count().get());
       node.setAttribute(TACTILE_QSTRING(u"height"),
@@ -118,8 +118,7 @@ void save_layers(QDomDocument& document,
     data.setAttribute(TACTILE_QSTRING(u"encoding"), TACTILE_QSTRING(u"csv"));
 
     // FIXME
-    if (const auto* tileLayer =
-            dynamic_cast<const core::tile_layer*>(layer.get())) {
+    if (const auto* tileLayer = core::as_tile_layer(layer)) {
       QString buffer;
 
       // include the separating comma
