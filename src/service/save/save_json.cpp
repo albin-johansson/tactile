@@ -15,8 +15,6 @@
 #include "tile_layer.hpp"
 #include "tiled_version.hpp"
 
-using namespace tactile::core;
-
 namespace tactile::service {
 namespace {
 
@@ -31,31 +29,31 @@ namespace {
 
   QJsonValue value;
   switch (property.get_type().value()) {
-    case property::string: {
+    case core::property::string: {
       value = property.as_string();
       break;
     }
-    case property::integer: {
+    case core::property::integer: {
       value = property.as_integer();
       break;
     }
-    case property::floating: {
+    case core::property::floating: {
       value = property.as_floating();
       break;
     }
-    case property::boolean: {
+    case core::property::boolean: {
       value = property.as_boolean();
       break;
     }
-    case property::file: {
+    case core::property::file: {
       value = targetDir.relativeFilePath(property.as_file().filePath());
       break;
     }
-    case property::color: {
+    case core::property::color: {
       value = property.as_color().name(QColor::HexArgb);
       break;
     }
-    case property::object: {
+    case core::property::object: {
       value = property.as_object().get();
       break;
     }
@@ -89,7 +87,7 @@ namespace {
  * \since 0.1.0
  */
 void add_common_attributes(QJsonObject& object,
-                           const tileset& tileset,
+                           const core::tileset& tileset,
                            const QDir& targetDir,
                            const export_options& options)
 {
@@ -121,7 +119,7 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto make_embedded_tileset_object(const tileset& tileset,
+[[nodiscard]] auto make_embedded_tileset_object(const core::tileset& tileset,
                                                 const QDir& targetDir,
                                                 const export_options& options)
     -> QJsonObject
@@ -146,7 +144,7 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto make_external_tileset_object(const tileset& tileset)
+[[nodiscard]] auto make_external_tileset_object(const core::tileset& tileset)
     -> QJsonObject
 {
   QJsonObject object{};
@@ -169,7 +167,7 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-void create_external_tileset_file(const tileset& tileset,
+void create_external_tileset_file(const core::tileset& tileset,
                                   const QDir& targetDir,
                                   const export_options& options)
 {
@@ -199,13 +197,13 @@ void create_external_tileset_file(const tileset& tileset,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto save_tilesets(const map_document& map,
+[[nodiscard]] auto save_tilesets(const core::map_document& map,
                                  const QDir& targetDir,
                                  const export_options& options) -> QJsonArray
 {
   QJsonArray array;
 
-  map.each_tileset([&](tileset_id id, const tileset& tileset) {
+  map.each_tileset([&](tileset_id id, const core::tileset& tileset) {
     if (options.embedTilesets) {
       array.append(make_embedded_tileset_object(tileset, targetDir, options));
     } else {
@@ -296,7 +294,7 @@ void save_object_layer(QJsonObject& element,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto save_layers(const map_document& map,
+[[nodiscard]] auto save_layers(const core::map_document& map,
                                const QDir& targetDir,
                                const export_options& options) -> QJsonArray
 {
@@ -346,7 +344,7 @@ void save_object_layer(QJsonObject& element,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto create_root(const map_document& map,
+[[nodiscard]] auto create_root(const core::map_document& map,
                                const QDir& targetDir,
                                const export_options& options) -> QJsonObject
 {
