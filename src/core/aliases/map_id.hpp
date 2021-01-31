@@ -14,7 +14,7 @@ using map_id = nenya::mirror_type<int, detail::map_id_t>;
 
 constexpr auto operator""_map(unsigned long long value) noexcept -> map_id
 {
-  return map_id{static_cast<int>(value)};
+  return map_id{static_cast<map_id::value_type>(value)};
 }
 
 }  // namespace tactile

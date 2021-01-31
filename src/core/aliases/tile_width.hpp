@@ -14,7 +14,7 @@ using tile_width = nenya::mirror_type<int, detail::tile_width_t>;
 
 constexpr auto operator""_tw(unsigned long long value) noexcept -> tile_width
 {
-  return tile_width{static_cast<int>(value)};
+  return tile_width{static_cast<tile_width::value_type>(value)};
 }
 
 }  // namespace tactile

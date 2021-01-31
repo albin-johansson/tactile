@@ -14,7 +14,7 @@ using tile_id = nenya::mirror_type<int, detail::tile_id_t>;
 
 constexpr auto operator""_t(unsigned long long value) noexcept -> tile_id
 {
-  return tile_id{static_cast<int>(value)};
+  return tile_id{static_cast<tile_id::value_type>(value)};
 }
 
 inline constexpr tile_id empty{0};
