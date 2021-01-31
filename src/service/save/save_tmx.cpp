@@ -6,26 +6,25 @@
 
 #include "export_options.hpp"
 #include "layer_utils.hpp"
+#include "object_layer.hpp"
 #include "preferences.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 #include "tiled_version.hpp"
 #include "xml_utils.hpp"
 
-using namespace tactile::core;
-
 namespace tactile::service {
 namespace {
 
 void add_image_node(QDomDocument& document,
                     QDomElement& parent,
-                    const tileset& tileset,
-                    const QFileInfo& mapInfo)
+                    const core::tileset& tileset,
+                    const QDir& targetDir)
 {
   auto image = document.createElement(TACTILE_QSTRING(u"image"));
 
   image.setAttribute(TACTILE_QSTRING(u"source"),
-                     mapInfo.dir().relativeFilePath(tileset.file_path()));
+                     targetDir.relativeFilePath(tileset.file_path()));
   image.setAttribute(TACTILE_QSTRING(u"width"), tileset.width());
   image.setAttribute(TACTILE_QSTRING(u"height"), tileset.height());
 
@@ -34,8 +33,8 @@ void add_image_node(QDomDocument& document,
 
 void add_common_attributes(QDomDocument& document,
                            QDomElement& node,
-                           const tileset& tileset,
-                           const QFileInfo& mapInfo)
+                           const core::tileset& tileset,
+                           const QDir& targetDir)
 {
   node.setAttribute(TACTILE_QSTRING(u"version"), g_tiledXmlVersion);
   node.setAttribute(TACTILE_QSTRING(u"tiledversion"), g_tiledVersion);
@@ -47,65 +46,187 @@ void add_common_attributes(QDomDocument& document,
   node.setAttribute(TACTILE_QSTRING(u"tilecount"), tileset.tile_count());
   node.setAttribute(TACTILE_QSTRING(u"columns"), tileset.col_count().get());
 
-  add_image_node(document, node, tileset, mapInfo);
+  add_image_node(document, node, tileset, targetDir);
 }
 
-void create_external_tileset_file(const tileset& tileset,
-                                  const QFileInfo& mapInfo,
+void create_external_tileset_file(const core::tileset& tileset,
+                                  const QDir& targetDir,
                                   const export_options& options)
 {
   QDomDocument document{};
 
   auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
-  add_common_attributes(document, node, tileset, mapInfo);
+  add_common_attributes(document, node, tileset, targetDir);
 
   document.appendChild(node);
 
-  xml::write_file(mapInfo.absoluteDir().absoluteFilePath(
-                      tileset.name() + TACTILE_QSTRING(u".tsx")),
-                  document);
+  xml::write_file(
+      targetDir.absoluteFilePath(tileset.name() + TACTILE_QSTRING(u".tsx")),
+      document);
+}
+
+void save_property(QDomDocument& document,
+                   QDomElement& element,
+                   const QString& name,
+                   const core::property& property,
+                   const QDir& targetDir)
+{
+  auto node = document.createElement(TACTILE_QSTRING(u"property"));
+
+  node.setAttribute(TACTILE_QSTRING(u"name"), name);
+  node.setAttribute(TACTILE_QSTRING(u"type"),
+                    core::stringify(property.get_type().value()));
+
+  switch (property.get_type().value()) {
+    case core::property::string: {
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_string());
+      break;
+    }
+    case core::property::integer: {
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_integer());
+      break;
+    }
+    case core::property::floating: {
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_floating());
+      break;
+    }
+    case core::property::boolean: {
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_boolean());
+      break;
+    }
+    case core::property::file: {
+      node.setAttribute(
+          TACTILE_QSTRING(u"value"),
+          targetDir.relativeFilePath(property.as_file().filePath()));
+      break;
+    }
+    case core::property::color: {
+      node.setAttribute(TACTILE_QSTRING(u"value"),
+                        property.as_color().name(QColor::HexArgb));
+      break;
+    }
+    case core::property::object: {
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_object().get());
+      break;
+    }
+  }
+
+  element.appendChild(node);
+}
+
+void save_properties(QDomDocument& document,
+                     QDomElement& element,
+                     const core::property_manager& manager,
+                     const QDir& targetDir)
+{
+  if (manager.property_count() > 0) {
+    auto node = document.createElement(TACTILE_QSTRING(u"properties"));
+
+    for (const auto& [name, property] : manager.properties()) {
+      save_property(document, node, name, property, targetDir);
+    }
+
+    element.appendChild(node);
+  }
 }
 
 void save_tilesets(QDomDocument& document,
                    QDomElement& root,
                    const core::map_document& map,
-                   const QFileInfo& mapInfo,
+                   const QDir& targetDir,
                    const export_options& options)
 {
-  map.each_tileset([&](tileset_id id, const tileset& tileset) {
+  map.each_tileset([&](tileset_id id, const core::tileset& tileset) {
     auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
 
     node.setAttribute(TACTILE_QSTRING(u"firstgid"), tileset.first_id().get());
 
     if (options.embedTilesets) {
-      add_common_attributes(document, node, tileset, mapInfo);
+      add_common_attributes(document, node, tileset, targetDir);
     } else {
-      const auto source = mapInfo.dir().relativeFilePath(
-          tileset.name() + TACTILE_QSTRING(u".tsx"));
+      const auto source =
+          targetDir.relativeFilePath(tileset.name() + TACTILE_QSTRING(u".tsx"));
       node.setAttribute(TACTILE_QSTRING(u"source"), source);
-      create_external_tileset_file(tileset, mapInfo, options);
+      create_external_tileset_file(tileset, targetDir, options);
     }
 
     root.appendChild(node);
   });
 }
 
+void save_tile_layer(QDomDocument& document,
+                     QDomElement& element,
+                     const core::tile_layer& layer)
+{
+  element.setAttribute(TACTILE_QSTRING(u"width"), layer.col_count().get());
+  element.setAttribute(TACTILE_QSTRING(u"height"), layer.row_count().get());
+
+  auto data = document.createElement(TACTILE_QSTRING(u"data"));
+  data.setAttribute(TACTILE_QSTRING(u"encoding"), TACTILE_QSTRING(u"csv"));
+
+  QString buffer;
+
+  // include the separating comma
+  buffer.reserve(layer.tile_count() * 2);
+
+  bool first{true};
+  layer.for_each([&](const tile_id tile) {
+    if (first) {
+      first = false;
+    } else {
+      buffer += TACTILE_QSTRING(u",");
+    }
+    buffer += QString::number(tile.get());
+  });
+
+  data.appendChild(document.createTextNode(buffer));
+  element.appendChild(data);
+}
+
+void save_object_layer(QDomDocument& document,
+                       QDomElement& element,
+                       const core::object_layer& layer,
+                       const QDir& targetDir)
+{
+  layer.each_object([&](const object_id id, const core::object& object) {
+    auto node = document.createElement(TACTILE_QSTRING(u"object"));
+
+    node.setAttribute(TACTILE_QSTRING(u"id"), id.get());
+    node.setAttribute(TACTILE_QSTRING(u"name"), object.name());
+    node.setAttribute(TACTILE_QSTRING(u"x"), object.x());
+    node.setAttribute(TACTILE_QSTRING(u"y"), object.y());
+    node.setAttribute(TACTILE_QSTRING(u"width"), object.width());
+    node.setAttribute(TACTILE_QSTRING(u"height"), object.height());
+    node.setAttribute(TACTILE_QSTRING(u"visible"), object.visible());
+    node.setAttribute(TACTILE_QSTRING(u"type"),
+                      object.custom_type().value_or(""));
+
+    if (object.is_point()) {
+      auto point = document.createElement(TACTILE_QSTRING(u"point"));
+      node.appendChild(point);
+    }
+
+    save_properties(document, node, object, targetDir);
+
+    element.appendChild(node);
+  });
+}
+
 void save_layers(QDomDocument& document,
                  QDomElement& root,
-                 const map_document& map)
+                 const core::map_document& map,
+                 const QDir& targetDir)
 {
   map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
-    auto node = document.createElement(TACTILE_QSTRING(u"layer"));
+    QDomElement node;
+    if (layer->type() == core::layer_type::tile_layer) {
+      node = document.createElement(TACTILE_QSTRING(u"layer"));
+    } else {
+      node = document.createElement(TACTILE_QSTRING(u"objectgroup"));
+    }
 
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());
     node.setAttribute(TACTILE_QSTRING(u"name"), layer->name());
-
-    if (const auto* tileLayer = core::as_tile_layer(layer)) {
-      node.setAttribute(TACTILE_QSTRING(u"width"),
-                        tileLayer->col_count().get());
-      node.setAttribute(TACTILE_QSTRING(u"height"),
-                        tileLayer->row_count().get());
-    }
 
     if (layer->opacity() != 1.0) {
       node.setAttribute(TACTILE_QSTRING(u"opacity"), layer->opacity());
@@ -115,36 +236,23 @@ void save_layers(QDomDocument& document,
       node.setAttribute(TACTILE_QSTRING(u"visible"), 0);
     }
 
-    auto data = document.createElement(TACTILE_QSTRING(u"data"));
-    data.setAttribute(TACTILE_QSTRING(u"encoding"), TACTILE_QSTRING(u"csv"));
-
-    // FIXME
     if (const auto* tileLayer = core::as_tile_layer(layer)) {
-      QString buffer;
-
-      // include the separating comma
-      buffer.reserve(tileLayer->tile_count() * 2);
-
-      bool first{true};
-      tileLayer->for_each([&](const tile_id tile) {
-        if (first) {
-          first = false;
-        } else {
-          buffer += TACTILE_QSTRING(u",");
-        }
-        buffer += QString::number(tile.get());
-      });
-      data.appendChild(document.createTextNode(buffer));
+      save_tile_layer(document, node, *tileLayer);
     }
 
-    node.appendChild(data);
+    if (const auto* objectLayer = core::as_object_layer(layer)) {
+      save_object_layer(document, node, *objectLayer, targetDir);
+    }
+
+    save_properties(document, node, *layer, targetDir);
+
     root.appendChild(node);
   });
 }
 
 void create_root(QDomDocument& document,
                  const core::map_document& map,
-                 const QFileInfo& mapInfo,
+                 const QDir& targetDir,
                  const export_options& options)
 {
   auto root = document.createElement(TACTILE_QSTRING(u"map"));
@@ -171,8 +279,9 @@ void create_root(QDomDocument& document,
                       TACTILE_QSTRING(u"#00000000"));
   }
 
-  save_tilesets(document, root, map, mapInfo, options);
-  save_layers(document, root, map);
+  save_tilesets(document, root, map, targetDir, options);
+  save_layers(document, root, map, targetDir);
+  save_properties(document, root, map, targetDir);
 
   document.appendChild(root);
 }
@@ -182,10 +291,12 @@ void create_root(QDomDocument& document,
 void save_tmx(const QString& path, const core::map_document& map)
 {
   const auto options = make_export_options();
+
   const QFileInfo info{path};
+  const auto targetDir = info.dir();
 
   QDomDocument document{};
-  create_root(document, map, info, options);
+  create_root(document, map, targetDir, options);
 
   xml::write_file(path, document);
 }
