@@ -17,70 +17,70 @@ auto window::last_layout_state() -> setting<QByteArray>
   return setting<QByteArray>{str};
 }
 
-auto graphics::render_grid() -> setting<bool>
+auto gfx::render_grid() -> setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/grid");
   return setting<bool>{str};
 }
 
-auto graphics::theme() -> setting<QPalette>
+auto gfx::theme() -> setting<QPalette>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/theme");
   return setting<QPalette>{str};
 }
 
-auto graphics::theme_name() -> setting<QString>
+auto gfx::theme_name() -> setting<QString>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/themeName");
   return setting<QString>{str};
 }
 
-auto graphics::theme_name_def() -> const QString&
+auto gfx::theme_name_def() -> const QString&
 {
   static const auto name = theme::get_default_name().toString();
   return name;
 }
 
-auto graphics::tool_widget_visible() -> setting<bool>
+auto gfx::tool_widget_visible() -> setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/toolWidgetVisible");
   return setting<bool>{str};
 }
 
-auto graphics::layer_widget_visible() -> setting<bool>
+auto gfx::layer_widget_visible() -> setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/layerWidgetVisible");
   return setting<bool>{str};
 }
 
-auto graphics::tileset_widget_visible() -> setting<bool>
+auto gfx::tileset_widget_visible() -> setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/tilesetWidgetVisible");
   return setting<bool>{str};
 }
 
-auto graphics::properties_widget_visible() -> setting<bool>
+auto gfx::properties_widget_visible() -> setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/propertiesWidgetVisible");
   return setting<bool>{str};
 }
 
-void graphics::reset_tool_widget_visible()
+void gfx::reset_tool_widget_visible()
 {
   tool_widget_visible().set(tool_widget_visible_def());
 }
 
-void graphics::reset_layer_widget_visible()
+void gfx::reset_layer_widget_visible()
 {
   layer_widget_visible().set(layer_widget_visible_def());
 }
 
-void graphics::reset_tileset_widget_visible()
+void gfx::reset_tileset_widget_visible()
 {
   tileset_widget_visible().set(tileset_widget_visible_def());
 }
 
-void graphics::reset_properties_widget_visible()
+void gfx::reset_properties_widget_visible()
 {
   properties_widget_visible().set(properties_widget_visible_def());
 }
@@ -129,16 +129,15 @@ auto saves::default_format_def() -> const QString&
 
 void validate()
 {
-  {
-    using namespace graphics;
-    theme().set_if_missing(theme::get_default());
-    theme_name().set_if_missing(theme::get_default_name().toString());
-    render_grid().set_if_missing(render_grid_def());
-    tool_widget_visible().set_if_missing(tool_widget_visible_def());
-    tileset_widget_visible().set_if_missing(tileset_widget_visible_def());
-    layer_widget_visible().set_if_missing(layer_widget_visible_def());
-    properties_widget_visible().set_if_missing(properties_widget_visible_def());
-  }
+  // clang-format off
+  gfx::theme().set_if_missing(theme::get_default());
+  gfx::theme_name().set_if_missing(theme::get_default_name().toString());
+  gfx::render_grid().set_if_missing(gfx::render_grid_def());
+  gfx::tool_widget_visible().set_if_missing(gfx::tool_widget_visible_def());
+  gfx::tileset_widget_visible().set_if_missing(gfx::tileset_widget_visible_def());
+  gfx::layer_widget_visible().set_if_missing(gfx::layer_widget_visible_def());
+  gfx::properties_widget_visible().set_if_missing(gfx::properties_widget_visible_def());
+  // clang-format on
 
   saves::embed_tilesets().set_if_missing(saves::embed_tilesets_def());
   saves::generate_defaults().set_if_missing(saves::generate_defaults_def());

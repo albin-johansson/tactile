@@ -49,8 +49,8 @@ void set_theme(const QString& name)
       return;
     }
 
-    prefs::graphics::theme().set(*palette);
-    prefs::graphics::theme_name().set(name);
+    prefs::gfx::theme().set(*palette);
+    prefs::gfx::theme_name().set(name);
     QApplication::setPalette(*palette);
 
   } else {

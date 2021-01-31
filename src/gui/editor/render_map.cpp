@@ -83,7 +83,7 @@ struct render_info final
           .bounds = make_bounds(exposed, nRows, nCols, tileSize),
           .mousePosition = mousePosition,
           .tileSize = tileSize,
-          .drawGrid = prefs::graphics::render_grid().value_or(false)};
+          .drawGrid = prefs::gfx::render_grid().value_or(false)};
 }
 
 void render_cell(QPainter& painter,

@@ -44,7 +44,7 @@ void setup_app()
 
   prefs::validate();
 
-  if (const auto name = prefs::graphics::theme_name(); name) {
+  if (const auto name = prefs::gfx::theme_name()) {
     theme::set_theme(*name);
   } else {
     theme::reset();

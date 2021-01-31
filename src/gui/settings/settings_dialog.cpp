@@ -42,10 +42,17 @@ settings_dialog::settings_dialog(QWidget* parent)
   fetch_current_settings();
 
   // clang-format off
-  connect(this, &QDialog::accepted, this, &settings_dialog::handle_accept);
-  connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &settings_dialog::apply);
-  connect(m_ui->exportRestoreDefaults, &QPushButton::clicked, this, &settings_dialog::restore_export_defaults);
-  connect(m_ui->appearanceRestoreDefaults, &QPushButton::clicked, this, &settings_dialog::restore_appearance_defaults);
+  connect(this, &QDialog::accepted,
+          this, &settings_dialog::handle_accept);
+
+  connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked,
+          this, &settings_dialog::apply);
+
+  connect(m_ui->exportRestoreDefaults, &QPushButton::clicked,
+          this, &settings_dialog::restore_export_defaults);
+
+  connect(m_ui->appearanceRestoreDefaults, &QPushButton::clicked,
+          this, &settings_dialog::restore_appearance_defaults);
   // clang-format on
 
   update_general_components();
@@ -130,7 +137,7 @@ void settings_dialog::restore_export_defaults()
 
 void settings_dialog::restore_appearance_defaults()
 {
-  m_ui->themeComboBox->setCurrentText(graphics::theme_name_def());
+  m_ui->themeComboBox->setCurrentText(gfx::theme_name_def());
 }
 
 void settings_dialog::fetch_current_settings()
@@ -147,7 +154,7 @@ void settings_dialog::fetch_current_settings()
   m_tileHeight = saves::tile_height().value();
 
   // Appearance
-  m_theme = graphics::theme_name().value();
+  m_theme = gfx::theme_name().value();
 }
 
 }  // namespace tactile::gui

@@ -47,13 +47,13 @@ namespace window {
 }  // namespace window
 
 /**
- * \namespace tactile::prefs::graphics
+ * \namespace tactile::prefs::gfx
  *
  * \brief Contains graphics-related settings.
  *
  * \since 0.1.0
  */
-namespace graphics {
+namespace gfx {
 
 /**
  * \brief Returns a setting that indicates whether or not a grid should be
