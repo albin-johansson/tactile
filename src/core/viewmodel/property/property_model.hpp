@@ -160,6 +160,8 @@ class property_model final : public QStandardItemModel
 
   void updated_property(const QString& name);
 
+  void changed_property_type(const QString& name);
+
   void renamed_property(const QString& oldName, const QString& newName);
 
  private:

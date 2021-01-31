@@ -36,6 +36,8 @@ class properties_widget final : public QWidget
 
   void updated_property(const QString& name);
 
+  void changed_property_type(const QString& name);
+
   void renamed_property(const QString& oldName, const QString& newName);
 
  private:

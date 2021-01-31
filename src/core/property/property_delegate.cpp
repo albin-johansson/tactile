@@ -74,6 +74,24 @@ void property_delegate::set_property(const QString& name,
 #endif  // QT_DEBUG
 }
 
+void property_delegate::change_property_type(const QString& name,
+                                             const core::property::type type)
+{
+  Q_ASSERT(m_properties.contains(name));
+  Q_ASSERT(get_property(name).get_type() != type);
+
+  m_properties.erase(name);
+
+  property p;
+  p.set_default(type);
+
+  m_properties.emplace(name, std::move(p));
+
+#ifdef QT_DEBUG
+  qDebug() << "Changed type of property:" << name << "to" << type;
+#endif  // QT_DEBUG
+}
+
 auto property_delegate::get_property(const QString& name) const
     -> const property&
 {

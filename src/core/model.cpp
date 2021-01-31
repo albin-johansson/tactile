@@ -43,6 +43,7 @@ auto model::add_map(map_document* document) -> map_id
   bind(&map_document::about_to_remove_property, &model::about_to_remove_property);
   bind(&map_document::updated_property,         &model::updated_property);
   bind(&map_document::renamed_property,         &model::renamed_property);
+  bind(&map_document::changed_property_type,    &model::changed_property_type);
   // clang-format on
 
   bind(&map_document::added_tileset, [this](const tileset_id id) {

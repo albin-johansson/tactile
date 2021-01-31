@@ -20,6 +20,8 @@ set(TACTILE_SOURCE_FILES
     command/add_tileset.hpp
     command/bucket_fill.cpp
     command/bucket_fill.hpp
+    command/change_property_type.cpp
+    command/change_property_type.hpp
     command/command_id.hpp
     command/command_stack.hpp
     command/erase_sequence.cpp

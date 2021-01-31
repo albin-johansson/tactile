@@ -8,6 +8,7 @@
 #include "add_row.hpp"
 #include "add_tileset.hpp"
 #include "bucket_fill.hpp"
+#include "change_property_type.hpp"
 #include "document_delegate.hpp"
 #include "erase_sequence.hpp"
 #include "object_layer.hpp"
@@ -55,10 +56,20 @@ void map_document::setup()
   connect(commands, &command_stack::undoTextChanged, this, &map_document::undo_text_updated);
   connect(commands, &command_stack::redoTextChanged, this, &map_document::redo_text_updated);
 
-  connect(m_delegate.get(), &document_delegate::added_property, this, &map_document::added_property);
-  connect(m_delegate.get(), &document_delegate::about_to_remove_property, this, &map_document::about_to_remove_property);
-  connect(m_delegate.get(), &document_delegate::updated_property, this, &map_document::updated_property);
-  connect(m_delegate.get(), &document_delegate::renamed_property, this, &map_document::renamed_property);
+  connect(m_delegate.get(), &document_delegate::added_property,
+          this, &map_document::added_property);
+
+  connect(m_delegate.get(), &document_delegate::about_to_remove_property,
+          this, &map_document::about_to_remove_property);
+
+  connect(m_delegate.get(), &document_delegate::updated_property,
+          this, &map_document::updated_property);
+
+  connect(m_delegate.get(), &document_delegate::renamed_property,
+          this, &map_document::renamed_property);
+
+  connect(m_delegate.get(), &document_delegate::changed_property_type,
+          this, &map_document::changed_property_type);
   // clang-format on
 }
 
@@ -156,6 +167,13 @@ void map_document::set_property(const QString& name,
 {
   const QSignalBlocker blocker{m_delegate.get()};
   m_delegate->execute<cmd::set_property>(m_delegate.get(), name, property);
+}
+
+void map_document::change_property_type(const QString& name,
+                                        const core::property::type type)
+{
+  const QSignalBlocker blocker{m_delegate.get()};
+  m_delegate->execute<cmd::change_property_type>(m_delegate.get(), name, type);
 }
 
 auto map_document::get_property(const QString& name) const

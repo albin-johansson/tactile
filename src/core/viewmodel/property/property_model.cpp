@@ -49,16 +49,12 @@ void property_model::change_type(const QString& name,
 {
   if (auto* item = find_item(this, name, 0)) {
     const auto row = item->row();
-
-    m_manager->remove_property(name);
-    m_manager->add_property(name, type);
-
-    auto& property = m_manager->get_property(name);
-    property.set_default(type);
-
     removeRow(row, m_customRoot->index());
 
-    auto* valueItem = make_property_item(property);
+    m_manager->change_property_type(name, type);
+    const auto& property = m_manager->get_property(name);
+
+    auto* valueItem = make_property_item(m_manager->get_property(name));
     m_customRoot->insertRow(row, {new QStandardItem{name}, valueItem});
 
     emit changed_type(indexFromItem(valueItem), type);
@@ -128,6 +124,12 @@ void property_model::updated_property(const QString& name)
   }
 
   m_blockDataChanged = false;
+}
+
+void property_model::changed_property_type(const QString& name)
+{
+  remove_property_from_gui(name);
+  add_existing_property_to_gui(name);
 }
 
 void property_model::renamed_property(const QString& oldName,

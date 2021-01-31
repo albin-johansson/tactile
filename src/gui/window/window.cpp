@@ -329,6 +329,11 @@ void window::updated_property(const QString& name)
   m_propertiesDock->updated_property(name);
 }
 
+void window::changed_property_type(const QString& name)
+{
+  m_propertiesDock->changed_property_type(name);
+}
+
 void window::renamed_property(const QString& oldName, const QString& newName)
 {
   m_propertiesDock->renamed_property(oldName, newName);

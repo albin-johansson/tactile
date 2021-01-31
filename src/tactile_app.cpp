@@ -88,6 +88,7 @@ void tactile_app::init_connections()
   modToWin(&model::about_to_remove_property, &win::about_to_remove_property);
   modToWin(&model::updated_property,         &win::updated_property);
   modToWin(&model::renamed_property,         &win::renamed_property);
+  modToWin(&model::changed_property_type,    &win::changed_property_type);
 
   fromWindow(&win::ui_add_tileset, &tactile_app::handle_new_tileset);
   fromWindow(&win::ui_resize_map,  &tactile_app::handle_resize_map);

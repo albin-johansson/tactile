@@ -110,6 +110,9 @@ class map_document final : public document
   void set_property(const QString& name,
                     const core::property& property) override;
 
+  void change_property_type(const QString& name,
+                            core::property::type type) override;
+
   [[nodiscard]] auto get_property(const QString& name) const
       -> const core::property& override;
 
@@ -491,6 +494,7 @@ class map_document final : public document
   void added_property(const QString& name);
   void about_to_remove_property(const QString& name);
   void updated_property(const QString& name);
+  void changed_property_type(const QString& name);
   void renamed_property(const QString& oldName, const QString& newName);
 
  public slots:

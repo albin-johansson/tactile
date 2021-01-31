@@ -102,6 +102,13 @@ void document_delegate::set_property(const QString& name,
   emit updated_property(name);
 }
 
+void document_delegate::change_property_type(const QString& name,
+                                             const core::property::type type)
+{
+  m_propertyManager->change_property_type(name, type);
+  emit changed_property_type(name);
+}
+
 auto document_delegate::get_property(const QString& name) const
     -> const core::property&
 {

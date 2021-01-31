@@ -36,6 +36,11 @@ void properties_dock::updated_property(const QString& name)
   m_widget->updated_property(name);
 }
 
+void properties_dock::changed_property_type(const QString& name)
+{
+  m_widget->changed_property_type(name);
+}
+
 void properties_dock::renamed_property(const QString& oldName,
                                        const QString& newName)
 {

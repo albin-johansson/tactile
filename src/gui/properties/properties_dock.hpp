@@ -27,6 +27,8 @@ class properties_dock final : public dock_widget
 
   void updated_property(const QString& name);
 
+  void changed_property_type(const QString& name);
+
   void renamed_property(const QString& oldName, const QString& newName);
 
  private:

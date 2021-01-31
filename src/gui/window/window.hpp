@@ -146,6 +146,8 @@ class window final : public QMainWindow
 
   void updated_property(const QString& name);
 
+  void changed_property_type(const QString& name);
+
   void renamed_property(const QString& oldName, const QString& newName);
 
   void enable_stamp_preview(const core::position& position);

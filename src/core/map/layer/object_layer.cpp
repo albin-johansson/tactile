@@ -37,6 +37,12 @@ void object_layer::set_property(const QString& name, const property& property)
   m_delegate.set_property(name, property);
 }
 
+void object_layer::change_property_type(const QString& name,
+                                        const core::property::type type)
+{
+  m_delegate.change_property_type(name, type);
+}
+
 auto object_layer::get_property(const QString& name) const -> const property&
 {
   return m_delegate.get_property(name);

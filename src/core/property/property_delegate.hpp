@@ -23,6 +23,9 @@ class property_delegate final : public property_manager
 
   void set_property(const QString& name, const property& property) override;
 
+  void change_property_type(const QString& name,
+                            core::property::type type) override;
+
   // clang-format off
 
   [[nodiscard]]

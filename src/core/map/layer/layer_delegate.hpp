@@ -53,6 +53,8 @@ class layer_delegate final
 
   void set_property(const QString& name, const property& property);
 
+  void change_property_type(const QString& name, property::type type);
+
   [[nodiscard]] auto get_property(const QString& name) const -> const property&;
 
   [[nodiscard]] auto get_property(const QString& name) -> property&;

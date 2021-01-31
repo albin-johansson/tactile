@@ -58,6 +58,9 @@ class object_layer final : public layer
 
   void set_property(const QString& name, const property& property) override;
 
+  void change_property_type(const QString& name,
+                            core::property::type type) override;
+
   [[nodiscard]] auto get_property(const QString& name) const
       -> const property& override;
 

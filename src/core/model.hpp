@@ -105,6 +105,7 @@ class model final : public QObject
   void added_property(const QString& name);
   void about_to_remove_property(const QString& name);
   void updated_property(const QString& name);
+  void changed_property_type(const QString& name);
   void renamed_property(const QString& oldName, const QString& newName);
 
  public slots:

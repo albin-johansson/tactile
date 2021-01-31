@@ -127,6 +127,11 @@ void properties_widget::renamed_property(const QString& oldName,
   m_model->renamed_property(oldName, newName);
 }
 
+void properties_widget::changed_property_type(const QString& name)
+{
+  m_model->changed_property_type(name);
+}
+
 void properties_widget::selection_changed(const maybe<QModelIndex> index)
 {
   m_contextMenu->disable_all();

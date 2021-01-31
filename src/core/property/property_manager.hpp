@@ -26,8 +26,7 @@ class property_manager
   /**
    * \brief Adds a property with the specified name and type.
    *
-   * \pre there must not be a property associated with `name` when this function
-   * is invoked.
+   * \pre `name` must not be associated with a property.
    *
    * \details The added property will use its default value.
    *
@@ -38,15 +37,22 @@ class property_manager
    */
   virtual void add_property(const QString& name, property::type type) = 0;
 
+  /**
+   * \brief Adds a property with the specified name and value.
+   *
+   * \pre `name` must not be associated with a property.
+   *
+   * \param name the name that will be associated with the property.
+   * \param type the value of the property.
+   *
+   * \since 0.2.0
+   */
   virtual void add_property(const QString& name, const property& property) = 0;
-
-  // TODO change_property_type
 
   /**
    * \brief Removes the property associated with the specified name.
    *
-   * \pre there must be a property associated with `name` when this function is
-   * invoked.
+   * \pre `name` must be associated with a property.
    *
    * \param name the name of the property that will be removed.
    *
@@ -57,10 +63,8 @@ class property_manager
   /**
    * \brief Changes the name associated with a property.
    *
-   * \pre there must be a property associated with `oldName` when this function
-   * is invoked.
-   * \pre there must not be a property associated with `newName` when this
-   * function is invoked.
+   * \pre `oldName` must be associated with a property.
+   * \pre `newName` must not be associated with a property.
    *
    * \param oldName the name that used to be associated with the property.
    * \param newName the new name that will be associated with the property.
@@ -73,8 +77,7 @@ class property_manager
   /**
    * \brief Sets the value of a property.
    *
-   * \pre there must be a property associated with `name` when this function
-   * is invoked.
+   * \pre `name` must be associated with a property.
    * \pre `property` must be of the same type as the previous value.
    *
    * \param name the name of the property that will be changed.
@@ -84,6 +87,24 @@ class property_manager
    */
   virtual void set_property(const QString& name,
                             const core::property& property) = 0;
+
+  /**
+   * \brief Changes the type of an existing property.
+   *
+   * \details The changed property will assume the default value for the new
+   * type.
+   *
+   * \pre `name` must be associated with a property.
+   * \pre The supplied type must be different to the current type of the
+   * property.
+   *
+   * \param name the name associated with the property that will be changed.
+   * \param type the new type of the property.
+   *
+   * \since 0.2.0
+   */
+  virtual void change_property_type(const QString& name,
+                                    core::property::type type) = 0;
 
   /**
    * \brief Returns the property associated with the specified name.

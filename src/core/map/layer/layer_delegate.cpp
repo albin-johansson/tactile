@@ -70,6 +70,12 @@ void layer_delegate::set_property(const QString& name, const property& property)
   m_properties.set_property(name, property);
 }
 
+void layer_delegate::change_property_type(const QString& name,
+                                          const property::type type)
+{
+  m_properties.change_property_type(name, type);
+}
+
 auto layer_delegate::get_property(const QString& name) const -> const property&
 {
   return m_properties.get_property(name);
