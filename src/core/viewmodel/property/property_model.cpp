@@ -101,8 +101,6 @@ void property_model::about_to_remove_property(const QString& name)
 
 void property_model::updated_property(const QString& name)
 {
-  // TODO fix file and color properties being updated
-
   m_blockDataChanged = true;
 
   if (auto* item = find_item(this, name, 0)) {
