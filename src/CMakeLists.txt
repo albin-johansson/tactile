@@ -124,17 +124,18 @@ set(TACTILE_SOURCE_FILES
     core/viewmodel/property/property_model.cpp
     core/viewmodel/property/property_model.hpp
 
-    gui/dock_widget.cpp
-    gui/dock_widget.hpp
     gui/icons.cpp
     gui/icons.hpp
     gui/init_ui.hpp
-    gui/tab_bar.cpp
-    gui/tab_bar.hpp
-    gui/tab_widget.cpp
-    gui/tab_widget.hpp
-    gui/tree_widget_item.cpp
-    gui/tree_widget_item.hpp
+
+    gui/base/dock_widget.cpp
+    gui/base/dock_widget.hpp
+    gui/base/tab_bar.cpp
+    gui/base/tab_bar.hpp
+    gui/base/tab_widget.cpp
+    gui/base/tab_widget.hpp
+    gui/base/tree_widget_item.cpp
+    gui/base/tree_widget_item.hpp
 
     gui/dialog/about/about_dialog.cpp
     gui/dialog/about/about_dialog.hpp
@@ -355,6 +356,7 @@ target_include_directories(libTactile
     PUBLIC core/viewmodel/layer
     PUBLIC core/viewmodel/property
     PUBLIC gui
+    PUBLIC gui/base
     PUBLIC gui/dialog
     PUBLIC gui/dialog/about
     PUBLIC gui/dialog/add_property
