@@ -307,8 +307,8 @@ set(TACTILE_SOURCE_FILES
     service/save/export_options.hpp
     service/save/save_json.cpp
     service/save/save_json.hpp
-    service/save/save_tmx.cpp
-    service/save/save_tmx.hpp
+    service/save/save_xml.cpp
+    service/save/save_xml.hpp
     service/save/save_service.cpp
     service/save/save_service.hpp
     service/save/tiled_version.hpp

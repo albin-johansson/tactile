@@ -1,4 +1,4 @@
-#include "save_tmx.hpp"
+#include "save_xml.hpp"
 
 #include <QDir>
 #include <QFileInfo>

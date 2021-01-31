@@ -3,7 +3,7 @@
 #include <QFileInfo>
 
 #include "save_json.hpp"
-#include "save_tmx.hpp"
+#include "save_xml.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 
