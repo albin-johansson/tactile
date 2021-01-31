@@ -67,6 +67,7 @@ set(TACTILE_SOURCE_FILES
     core/aliases/maybe.hpp
     core/aliases/not_null.hpp
     core/aliases/object_id.hpp
+    core/aliases/property_id.hpp
     core/aliases/smart_pointers.hpp
     core/aliases/tile_height.hpp
     core/aliases/tile_id.hpp
