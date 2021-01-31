@@ -52,7 +52,7 @@ void tactile_app::init_connections()
   winToMod(&win::ui_add_col,               &mod::add_col);
   winToMod(&win::ui_remove_row,            &mod::remove_row);
   winToMod(&win::ui_remove_col,            &mod::remove_col);
-  winToMod(&win::ui_close_map,             &mod::close_map);
+  winToMod(&win::ui_about_to_close_map,    &mod::close_map);
   winToMod(&win::ui_select_map,            &mod::select_map);
   winToMod(&win::ui_increase_zoom,         &mod::increase_tile_size);
   winToMod(&win::ui_decrease_zoom,         &mod::decrease_tile_size);

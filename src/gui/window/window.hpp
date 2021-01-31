@@ -77,7 +77,7 @@ class window final : public QMainWindow
   void ui_open_map(const QString& path);
 
   void ui_new_map();
-  void ui_close_map(map_id id);
+  void ui_about_to_close_map(map_id id);
 
   void ui_undo();
   void ui_redo();
@@ -205,7 +205,7 @@ class window final : public QMainWindow
   [[nodiscard]] auto in_editor_mode() const -> bool;
 
  private slots:
-  void handle_remove_map(map_id tabID);
+  void when_about_to_close_map(const map_id id);
 
   void handle_theme_changed();
 

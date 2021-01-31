@@ -85,7 +85,7 @@ void window::init_connections()
   connect(m_propertiesDock, &tool_dock::closed, [] { prefs::graphics::properties_widget_visible().set(false); });
 
   connect(m_editor, &map_editor::ui_select_map,  this, &window::ui_select_map);
-  connect(m_editor, &map_editor::ui_remove_map,  this, &window::handle_remove_map);
+  connect(m_editor, &map_editor::ui_remove_map,  this, &window::when_about_to_close_map);
   connect(m_editor, &map_editor::increase_zoom,  this, &window::ui_increase_zoom);
   connect(m_editor, &map_editor::decrease_zoom,  this, &window::ui_decrease_zoom);
   connect(m_editor, &map_editor::mouse_pressed,  this, &window::mouse_pressed);
@@ -386,12 +386,9 @@ void window::closeEvent(QCloseEvent* event)
   prefs::window::last_layout_state().set(saveState());
 }
 
-void window::handle_remove_map(const map_id tabID)
+void window::when_about_to_close_map(const map_id id)
 {
-  emit ui_close_map(tabID);
-
-  // The tab isn't actually removed yet, this checks if there will be
-  // no open tabs
+  emit ui_about_to_close_map(id);
   if (m_editor->tab_count() == 1) {
     enter_no_content_view();
   }
@@ -436,7 +433,7 @@ void window::eraser_enabled()
   const auto id = m_editor->active_tab_id().value();
 
   m_editor->close_tab(id);
-  emit ui_close_map(id);
+  emit ui_about_to_close_map(id);
 
   if (m_editor->tab_count() == 0) {
     enter_no_content_view();
