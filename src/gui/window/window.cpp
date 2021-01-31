@@ -374,6 +374,7 @@ void window::when_new_map_added(not_null<core::map_document*> document,
 
   m_ui->actionSave->setDisabled(document->is_clean());
   m_tilesetDock->added_map(id, *document);
+  m_layerDock->switched_map(document);
   m_propertiesDock->switched_map(document);
   m_statusBar->switched_map(*document);
 }
