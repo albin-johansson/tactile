@@ -205,7 +205,7 @@ class window final : public QMainWindow
   [[nodiscard]] auto in_editor_mode() const -> bool;
 
  private slots:
-  void when_about_to_close_map(const map_id id);
+  void when_about_to_close_map(map_id id);
 
   void handle_theme_changed();
 
