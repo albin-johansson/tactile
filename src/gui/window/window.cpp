@@ -373,14 +373,7 @@ void window::when_new_map_added(not_null<core::map_document*> document,
   }
 
   m_ui->actionSave->setDisabled(document->is_clean());
-  m_statusBar->switched_map(*document);
-
-  // TODO m_tilesetDock->switched_map(document, id);
-  document->each_tileset(
-      [&](const tileset_id tilesetId, const core::tileset& tileset) {
-        added_tileset(id, tilesetId, tileset);
-      });
-
+  m_tilesetDock->added_map(id, *document);
   m_propertiesDock->switched_map(document);
   m_statusBar->switched_map(*document);
 }

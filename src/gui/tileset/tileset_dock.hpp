@@ -6,6 +6,10 @@
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
+namespace tactile::core {
+class map_document;
+}
+
 namespace tactile::gui {
 
 class tileset_widget;
@@ -25,6 +29,8 @@ class tileset_dock final : public dock_widget
   void ui_set_tileset_selection(const core::tileset::selection& selection);
 
  public slots:
+  void added_map(map_id id, const core::map_document& document);
+
   void switched_map(map_id id);
 
   void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);

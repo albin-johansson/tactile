@@ -1,5 +1,6 @@
 #include "tileset_dock.hpp"
 
+#include "map_document.hpp"
 #include "tactile_qstring.hpp"
 #include "tileset_widget.hpp"
 
@@ -25,6 +26,15 @@ tileset_dock::tileset_dock(QWidget* parent)
   connect(m_widget, &widget::ui_rename_tileset, this, &dock::ui_rename_tileset);
   connect(m_widget, &widget::ui_set_tileset_selection, this, &dock::ui_set_tileset_selection);
   // clang-format on
+}
+
+void tileset_dock::added_map(const map_id id,
+                             const core::map_document& document)
+{
+  document.each_tileset(
+      [this, id](const tileset_id tilesetId, const core::tileset& tileset) {
+        added_tileset(id, tilesetId, tileset);
+      });
 }
 
 void tileset_dock::switched_map(map_id id)
