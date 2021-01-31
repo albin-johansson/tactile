@@ -110,11 +110,13 @@ void settings_dialog::handle_accept()
     saves::readable_output().set(readable);
   }
 
-  if (const auto value = text_as_int(m_ui->tileWidthEdit); value) {
+  if (const auto value = text_as_int(m_ui->tileWidthEdit);
+      value != m_tileWidth) {
     saves::tile_width().set(*value);
   }
 
-  if (const auto value = text_as_int(m_ui->tileHeightEdit); value) {
+  if (const auto value = text_as_int(m_ui->tileHeightEdit);
+      value != m_tileHeight) {
     saves::tile_height().set(*value);
   }
 }
