@@ -42,9 +42,11 @@ auto make_property_item(const core::property& property) -> QStandardItem*
       item->setData(property.as_color(), property_item_role::color);
       return item;
     }
-    case core::property::object:
-      return new object_item{};
-
+    case core::property::object: {
+      auto* item = new object_item{};
+      item->setData(property.as_object().get(), Qt::EditRole);
+      return item;
+    }
     default:
       throw tactile_error{"Did not recognize property type!"};
   }

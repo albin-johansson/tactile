@@ -35,7 +35,8 @@ void update_item_data(not_null<QStandardItem*> item, const core::property& p)
       break;
     }
     case property_item_type::object: {
-      [[fallthrough]];  // FIXME
+      item->setData(p.as_object().get(), Qt::EditRole);
+      break;
     }
     default: {
       throw tactile_error{"Not a property item!"};
@@ -68,7 +69,7 @@ auto item_to_property(not_null<const QStandardItem*> item) -> core::property
       return item->data(vm::property_item_role::color).value<QColor>();
 
     case property_item_type::object:
-      [[fallthrough]];  // FIXME
+      return core::object_ref{item->data(Qt::EditRole).value<int>()};
 
     default:
       throw tactile_error{"Not a property item!"};
