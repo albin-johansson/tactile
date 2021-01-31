@@ -3,7 +3,9 @@
 #include "dock_widget.hpp"
 #include "map_document.hpp"
 #include "property.hpp"
+#include "property_model.hpp"
 #include "smart_pointers.hpp"
+#include "not_null.hpp"
 
 namespace tactile::gui {
 
@@ -17,7 +19,7 @@ class properties_dock final : public dock_widget
   explicit properties_dock(QWidget* parent = nullptr);
 
  public slots:
-  void switched_map(const core::map_document& document);
+  void switched_map(not_null<core::map_document*> document);
 
   void added_property(const QString& name);
 

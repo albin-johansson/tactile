@@ -140,10 +140,6 @@ class window final : public QMainWindow
 
   void removed_layer(layer_id id);
 
-  void switched_map(map_id map,
-                    const core::map_document& document,
-                    const shared<vm::layer_model>& layerModel);
-
   void added_property(const QString& name);
 
   void about_to_remove_property(const QString& name);
@@ -158,9 +154,11 @@ class window final : public QMainWindow
 
   void handle_move_camera(int dx, int dy);
 
-  void handle_new_map(core::map_document* document,
-                      map_id id,
-                      const QString& name = TACTILE_QSTRING(u"map"));
+  void switched_map(map_id map, not_null<core::map_document*> document);
+
+  void when_new_map_added(not_null<core::map_document*> document,
+                          map_id id,
+                          const QString& name = TACTILE_QSTRING(u"map"));
 
  protected:
   void closeEvent(QCloseEvent* event) override;

@@ -29,7 +29,6 @@ map_document::map_document(QObject* parent)
     , m_map{std::make_unique<map>()}
     , m_tilesets{std::make_unique<tileset_manager>()}
     , m_delegate{std::make_unique<document_delegate>()}
-    , m_properties{std::make_shared<vm::property_model>(this)}
 {
   setup();
 }
@@ -41,7 +40,6 @@ map_document::map_document(const row_t nRows,
     , m_map{std::make_unique<map>(nRows, nCols)}
     , m_tilesets{std::make_unique<tileset_manager>()}
     , m_delegate{std::make_unique<document_delegate>()}
-    , m_properties{std::make_shared<vm::property_model>(this)}
 {
   setup();
 }
@@ -184,11 +182,6 @@ auto map_document::property_count() const noexcept -> int
 auto map_document::properties() const -> const property_map&
 {
   return m_delegate->properties();
-}
-
-auto map_document::property_model() const -> shared<vm::property_model>
-{
-  return m_properties;
 }
 
 void map_document::flood(const position& position, const tile_id replacement)

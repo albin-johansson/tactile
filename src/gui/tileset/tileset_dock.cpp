@@ -27,7 +27,7 @@ tileset_dock::tileset_dock(QWidget* parent)
   // clang-format on
 }
 
-void tileset_dock::selected_map(const map_id id)
+void tileset_dock::switched_map(map_id id)
 {
   m_widget->selected_map(id);
 }

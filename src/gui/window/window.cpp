@@ -315,16 +315,6 @@ void window::removed_layer(const layer_id id)
   m_statusBar->removed_layer(id);
 }
 
-void window::switched_map(const map_id id,
-                          const core::map_document& document,
-                          const shared<vm::layer_model>& layerModel)
-{
-  m_tilesetDock->selected_map(id);
-  m_layerDock->selected_map(document, layerModel);
-  m_propertiesDock->switched_map(document);
-  m_statusBar->switched_map(document);
-}
-
 void window::added_property(const QString& name)
 {
   m_propertiesDock->added_property(name);
@@ -360,9 +350,18 @@ void window::handle_move_camera(const int dx, const int dy)
   m_editor->move_map(dx, dy);
 }
 
-void window::handle_new_map(core::map_document* document,
-                            const map_id id,
-                            const QString& name)
+void window::switched_map(const map_id id,
+                          not_null<core::map_document*> document)
+{
+  m_tilesetDock->switched_map(id);
+  m_layerDock->switched_map(document);
+  m_propertiesDock->switched_map(document);
+  m_statusBar->switched_map(*document);
+}
+
+void window::when_new_map_added(not_null<core::map_document*> document,
+                                const map_id id,
+                                const QString& name)
 {
   Q_ASSERT(document);
 
@@ -382,7 +381,7 @@ void window::handle_new_map(core::map_document* document,
         added_tileset(id, tilesetId, tileset);
       });
 
-  m_propertiesDock->switched_map(*document);
+  m_propertiesDock->switched_map(document);
   m_statusBar->switched_map(*document);
 }
 

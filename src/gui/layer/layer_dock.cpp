@@ -16,10 +16,9 @@ layer_dock::layer_dock(QWidget* parent)
   setWidget(m_widget);
 }
 
-void layer_dock::selected_map(const core::map_document& document,
-                              const shared<vm::layer_model>& model)
+void layer_dock::switched_map(not_null<core::map_document*> document)
 {
-  m_widget->selected_map(document, model);
+  m_widget->selected_map(document);
 }
 
 }  // namespace tactile::gui

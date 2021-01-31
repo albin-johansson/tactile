@@ -131,7 +131,7 @@ void tactile_app::open_map(const QString& path)
   parse::parse_error error;
   if (auto* document = service::open_map(path, &error)) {
     const auto id = m_model->add_map(document);
-    m_window->handle_new_map(document, id, QFileInfo{path}.baseName());
+    m_window->when_new_map_added(document, id, QFileInfo{path}.baseName());
   } else {
     gui::open_map_error_dialog dialog{m_window.get()};
     dialog.set_file(path);
@@ -191,7 +191,7 @@ void tactile_app::handle_new_tileset()
 void tactile_app::handle_new_map()
 {
   const auto id = m_model->add_map();
-  m_window->handle_new_map(m_model->get_document(id), id);
+  m_window->when_new_map_added(m_model->get_document(id), id);
 }
 
 }  // namespace tactile

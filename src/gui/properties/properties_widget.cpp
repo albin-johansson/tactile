@@ -68,14 +68,15 @@ properties_widget::~properties_widget() noexcept
   delete m_ui;
 }
 
-void properties_widget::selected_map(const core::map_document& document)
+void properties_widget::selected_map(not_null<core::map_document*> document)
 {
+  Q_ASSERT(document);
+
   m_view->collapseAll();
 
-  m_model = document.property_model();
-  Q_ASSERT(m_model);
-
+  m_model = std::make_unique<vm::property_model>(document);
   Q_ASSERT(!m_model->parent());
+
   m_view->setModel(m_model.get());
   Q_ASSERT(!m_model->parent());
 
@@ -166,8 +167,6 @@ void properties_widget::paste_property_requested()
 {
   const auto& name = m_nameCopy.value();
   if (!m_model->contains_property(name)) {
-    //    m_model->add(name, core::property::string);
-
     m_model->add(name, m_propertyCopy.value());
     m_contextMenu->set_paste_enabled(false);
   }

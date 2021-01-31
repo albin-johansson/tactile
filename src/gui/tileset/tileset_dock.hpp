@@ -25,7 +25,7 @@ class tileset_dock final : public dock_widget
   void ui_set_tileset_selection(const core::tileset::selection& selection);
 
  public slots:
-  void selected_map(map_id id);
+  void switched_map(map_id id);
 
   void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
 

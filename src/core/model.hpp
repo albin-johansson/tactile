@@ -7,6 +7,7 @@
 #include "layer_id.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
+#include "not_null.hpp"
 #include "smart_pointers.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
@@ -80,9 +81,7 @@ class model final : public QObject
  signals:
   void redraw();
 
-  void switched_map(map_id id,
-                    const map_document& document,
-                    const shared<vm::layer_model>& layerModel);
+  void switched_map(map_id id, not_null<map_document*> document);
 
   void added_layer(layer_id id, const layer& layer);
   void added_duplicated_layer(layer_id id, const layer& layer);

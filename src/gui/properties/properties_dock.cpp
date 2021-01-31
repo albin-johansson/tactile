@@ -16,7 +16,7 @@ properties_dock::properties_dock(QWidget* parent)
   setWidget(m_widget);
 }
 
-void properties_dock::switched_map(const core::map_document& document)
+void properties_dock::switched_map(not_null<core::map_document*> document)
 {
   m_widget->selected_map(document);
 }

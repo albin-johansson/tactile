@@ -16,10 +16,6 @@
 #include "tileset_id.hpp"
 #include "tileset_manager.hpp"
 
-namespace tactile::vm {
-class property_model;
-}
-
 namespace tactile::core {
 
 class layer;
@@ -96,8 +92,6 @@ class map_document final : public document
   [[nodiscard]] auto path() const -> const QFileInfo& override;
 
   [[nodiscard]] auto properties() const -> const property_map& override;
-
-  [[nodiscard]] auto property_model() const -> shared<vm::property_model>;
 
   /// \}
 
@@ -527,9 +521,8 @@ class map_document final : public document
   unique<map> m_map;                     ///< The associated map.
   unique<tileset_manager> m_tilesets;    ///< The associated tilesets.
   unique<document_delegate> m_delegate;  ///< Delegate for document API.
-  shared<vm::property_model> m_properties;
-  int m_tileLayerSuffix{1};    ///< Incrementing tile layer suffix.
-  int m_objectLayerSuffix{1};  ///< Incrementing object layer suffix.
+  int m_tileLayerSuffix{1};              ///< Incrementing tile layer suffix.
+  int m_objectLayerSuffix{1};            ///< Incrementing object layer suffix.
 
   void setup();
 };

@@ -5,6 +5,7 @@
 #include "layer_model.hpp"
 #include "map_document.hpp"
 #include "maybe.hpp"
+#include "not_null.hpp"
 #include "smart_pointers.hpp"
 
 namespace Ui {
@@ -29,8 +30,7 @@ class layer_widget final : public QWidget
   ~layer_widget() noexcept override;
 
  public slots:
-  void selected_map(const core::map_document& document,
-                    const shared<vm::layer_model>& model);
+  void selected_map(not_null<core::map_document*> document);
 
  private:
   Ui::layer_widget* m_ui{};
@@ -38,7 +38,7 @@ class layer_widget final : public QWidget
   add_layer_context_menu* m_addLayerMenu{};
   layer_widget_context_menu* m_widgetMenu{};
   layer_item_context_menu* m_itemMenu{};
-  shared<vm::layer_model> m_model;
+  unique<vm::layer_model> m_model;
 
   void update_actions(const maybe<QModelIndex>& selected);
 

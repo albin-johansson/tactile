@@ -4,6 +4,7 @@
 #include "layer.hpp"
 #include "layer_model.hpp"
 #include "map_document.hpp"
+#include "not_null.hpp"
 #include "smart_pointers.hpp"
 
 namespace tactile::gui {
@@ -18,8 +19,7 @@ class layer_dock final : public dock_widget
   explicit layer_dock(QWidget* parent = nullptr);
 
  public slots:
-  void selected_map(const core::map_document& document,
-                    const shared<vm::layer_model>& model);
+  void switched_map(not_null<core::map_document*> document);
 
  private:
   layer_widget* m_widget{};

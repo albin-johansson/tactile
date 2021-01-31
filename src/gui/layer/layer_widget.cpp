@@ -66,18 +66,15 @@ layer_widget::~layer_widget() noexcept
   delete m_ui;
 }
 
-void layer_widget::selected_map(const core::map_document& document,
-                                const shared<vm::layer_model>& model)
+void layer_widget::selected_map(not_null<core::map_document*> document)
 {
-  if (m_model) {
-    m_model->disconnect(m_listView);
-  }
+  Q_ASSERT(document);
 
-  Q_ASSERT(!model->parent());
-  m_listView->setModel(model.get());
-  Q_ASSERT(!model->parent());
+  m_model = std::make_unique<vm::layer_model>(document);
+  Q_ASSERT(!m_model->parent());
 
-  m_model = model;
+  m_listView->setModel(m_model.get());
+  Q_ASSERT(!m_model->parent());
 }
 
 void layer_widget::update_actions(const maybe<QModelIndex>& selected)
