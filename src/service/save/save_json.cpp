@@ -241,22 +241,48 @@ void save_tile_layer(QJsonObject& object,
   object.insert(u"data", data);
 }
 
-void save_object_layer(QJsonObject& object,
+void save_object_layer(QJsonObject& element,
                        const shared<core::layer>& layer,
+                       const QDir& targetDir,
                        const export_options& options)
 {
   Q_ASSERT(layer->type() == core::layer_type::object_layer);
 
-  const auto* objLayer = core::as_object_layer(layer);
-  Q_ASSERT(objLayer);
+  const auto* objectLayer = core::as_object_layer(layer);
+  Q_ASSERT(objectLayer);
 
-  object.insert(u"type", TACTILE_QSTRING(u"objectgroup"));
+  element.insert(u"type", TACTILE_QSTRING(u"objectgroup"));
 
   if (options.generateDefaults) {
-    object.insert(u"draworder", TACTILE_QSTRING(u"topdown"));
+    element.insert(u"draworder", TACTILE_QSTRING(u"topdown"));
   }
 
-  // TODO "objects" : array of objects
+  QJsonArray objects;
+  objectLayer->each_object([&](const object_id id, const core::object& object) {
+    QJsonObject jsonObject;
+
+    jsonObject.insert(u"id", id.get());
+    jsonObject.insert(u"name", object.name());
+    jsonObject.insert(u"x", object.x());
+    jsonObject.insert(u"y", object.y());
+    jsonObject.insert(u"width", object.width());
+    jsonObject.insert(u"height", object.height());
+    jsonObject.insert(u"visible", object.visible());
+    jsonObject.insert(u"type", object.custom_type().value_or(""));
+    jsonObject.insert(u"rotation", 0);
+
+    if (object.is_point()) {
+      jsonObject.insert(u"point", true);
+    }
+
+    if (object.property_count() > 0) {
+      jsonObject.insert(u"properties", save_properties(object, targetDir));
+    }
+
+    objects.append(jsonObject);
+  });
+
+  element.insert(u"objects", objects);
 }
 
 /**
@@ -291,7 +317,7 @@ void save_object_layer(QJsonObject& object,
       object.insert(u"height", map.row_count().get());
       save_tile_layer(object, layer, options);
     } else {
-      save_object_layer(object, layer, options);
+      save_object_layer(object, layer, targetDir, options);
     }
 
     if (options.generateDefaults) {
