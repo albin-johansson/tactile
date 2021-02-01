@@ -29,7 +29,7 @@ tactile_app::~tactile_app() noexcept
 
 void tactile_app::init_connections()
 {
-  using win = gui::window;
+  using window = gui::window;
   using model = core::model;
 
   const auto modToWin = [this](auto&& sender, auto&& receiver) {
@@ -46,60 +46,60 @@ void tactile_app::init_connections()
 
   // clang-format off
 
-  winToMod(&win::ui_undo,                  &model::undo);
-  winToMod(&win::ui_redo,                  &model::redo);
-  winToMod(&win::ui_add_row,               &model::add_row);
-  winToMod(&win::ui_add_col,               &model::add_col);
-  winToMod(&win::ui_remove_row,            &model::remove_row);
-  winToMod(&win::ui_remove_col,            &model::remove_col);
-  winToMod(&win::ui_about_to_close_map,    &model::close_map);
-  winToMod(&win::ui_select_map,            &model::select_map);
-  winToMod(&win::ui_increase_zoom,         &model::increase_tile_size);
-  winToMod(&win::ui_decrease_zoom,         &model::decrease_tile_size);
-  winToMod(&win::ui_reset_tile_size,       &model::reset_tile_size);
-  winToMod(&win::ui_selected_tool,         &model::select_tool);
-  winToMod(&win::ui_remove_tileset,        &model::remove_tileset);
-  winToMod(&win::ui_select_tileset,        &model::select_tileset);
-  winToMod(&win::ui_rename_tileset,        &model::set_tileset_name);
-  winToMod(&win::ui_set_tileset_selection, &model::set_tileset_selection);
+  winToMod(&window::ui_undo,                  &model::undo);
+  winToMod(&window::ui_redo,                  &model::redo);
+  winToMod(&window::ui_add_row,               &model::add_row);
+  winToMod(&window::ui_add_col,               &model::add_col);
+  winToMod(&window::ui_remove_row,            &model::remove_row);
+  winToMod(&window::ui_remove_col,            &model::remove_col);
+  winToMod(&window::ui_about_to_close_map,    &model::close_map);
+  winToMod(&window::ui_select_map,            &model::select_map);
+  winToMod(&window::ui_increase_zoom,         &model::increase_tile_size);
+  winToMod(&window::ui_decrease_zoom,         &model::decrease_tile_size);
+  winToMod(&window::ui_reset_tile_size,       &model::reset_tile_size);
+  winToMod(&window::ui_selected_tool,         &model::select_tool);
+  winToMod(&window::ui_remove_tileset,        &model::remove_tileset);
+  winToMod(&window::ui_select_tileset,        &model::select_tileset);
+  winToMod(&window::ui_rename_tileset,        &model::set_tileset_name);
+  winToMod(&window::ui_set_tileset_selection, &model::set_tileset_selection);
 
-  winToMod(&win::mouse_pressed,            &model::mouse_pressed);
-  winToMod(&win::mouse_moved,              &model::mouse_moved);
-  winToMod(&win::mouse_released,           &model::mouse_released);
-  winToMod(&win::mouse_entered,            &model::mouse_entered);
-  winToMod(&win::mouse_exited,             &model::mouse_exited);
+  winToMod(&window::mouse_pressed,  &model::mouse_pressed);
+  winToMod(&window::mouse_moved,    &model::mouse_moved);
+  winToMod(&window::mouse_released, &model::mouse_released);
+  winToMod(&window::mouse_entered,  &model::mouse_entered);
+  winToMod(&window::mouse_exited,   &model::mouse_exited);
 
-  modToWin(&model::redraw,                   &win::force_redraw);
-  modToWin(&model::enable_stamp_preview,     &win::enable_stamp_preview);
-  modToWin(&model::disable_stamp_preview,    &win::disable_stamp_preview);
-  modToWin(&model::undo_state_updated,       &win::undo_state_updated);
-  modToWin(&model::redo_state_updated,       &win::redo_state_updated);
-  modToWin(&model::undo_text_updated,        &win::undo_text_updated);
-  modToWin(&model::redo_text_updated,        &win::redo_text_updated);
-  modToWin(&model::clean_changed,            &win::clean_changed);
-  modToWin(&model::switched_map,             &win::switched_map);
-  modToWin(&model::added_tileset,            &win::added_tileset);
-  modToWin(&model::removed_tileset,          &win::removed_tileset);
-  modToWin(&model::added_layer,              &win::added_layer);
-  modToWin(&model::added_duplicated_layer,   &win::added_duplicated_layer);
-  modToWin(&model::removed_layer,            &win::removed_layer);
-  modToWin(&model::selected_layer,           &win::selected_layer);
-  modToWin(&model::added_property,           &win::added_property);
-  modToWin(&model::about_to_remove_property, &win::about_to_remove_property);
-  modToWin(&model::updated_property,         &win::updated_property);
-  modToWin(&model::renamed_property,         &win::renamed_property);
-  modToWin(&model::changed_property_type,    &win::changed_property_type);
+  modToWin(&model::redraw,                   &window::force_redraw);
+  modToWin(&model::enable_stamp_preview,     &window::enable_stamp_preview);
+  modToWin(&model::disable_stamp_preview,    &window::disable_stamp_preview);
+  modToWin(&model::undo_state_updated,       &window::undo_state_updated);
+  modToWin(&model::redo_state_updated,       &window::redo_state_updated);
+  modToWin(&model::undo_text_updated,        &window::undo_text_updated);
+  modToWin(&model::redo_text_updated,        &window::redo_text_updated);
+  modToWin(&model::clean_changed,            &window::clean_changed);
+  modToWin(&model::switched_map,             &window::switched_map);
+  modToWin(&model::added_tileset,            &window::added_tileset);
+  modToWin(&model::removed_tileset,          &window::removed_tileset);
+  modToWin(&model::added_layer,              &window::added_layer);
+  modToWin(&model::added_duplicated_layer,   &window::added_duplicated_layer);
+  modToWin(&model::removed_layer,            &window::removed_layer);
+  modToWin(&model::selected_layer,           &window::selected_layer);
+  modToWin(&model::added_property,           &window::added_property);
+  modToWin(&model::about_to_remove_property, &window::about_to_remove_property);
+  modToWin(&model::updated_property,         &window::updated_property);
+  modToWin(&model::renamed_property,         &window::renamed_property);
+  modToWin(&model::changed_property_type,    &window::changed_property_type);
 
-  fromWindow(&win::ui_add_tileset, &tactile_app::handle_new_tileset);
-  fromWindow(&win::ui_resize_map,  &tactile_app::handle_resize_map);
-  fromWindow(&win::ui_pan_up,      &tactile_app::handle_pan_up);
-  fromWindow(&win::ui_pan_down,    &tactile_app::handle_pan_down);
-  fromWindow(&win::ui_pan_right,   &tactile_app::handle_pan_right);
-  fromWindow(&win::ui_pan_left,    &tactile_app::handle_pan_left);
-  fromWindow(&win::ui_new_map,     &tactile_app::handle_new_map);
-  fromWindow(&win::ui_save,        &tactile_app::save);
-  fromWindow(&win::ui_save_as,     &tactile_app::save_as);
-  fromWindow(&win::ui_open_map,    &tactile_app::open_map);
+  fromWindow(&window::ui_add_tileset, &tactile_app::handle_new_tileset);
+  fromWindow(&window::ui_resize_map,  &tactile_app::handle_resize_map);
+  fromWindow(&window::ui_pan_up,      &tactile_app::handle_pan_up);
+  fromWindow(&window::ui_pan_down,    &tactile_app::handle_pan_down);
+  fromWindow(&window::ui_pan_right,   &tactile_app::handle_pan_right);
+  fromWindow(&window::ui_pan_left,    &tactile_app::handle_pan_left);
+  fromWindow(&window::ui_new_map,     &tactile_app::handle_new_map);
+  fromWindow(&window::ui_save,        &tactile_app::save);
+  fromWindow(&window::ui_save_as,     &tactile_app::save_as);
+  fromWindow(&window::ui_open_map,    &tactile_app::open_map);
 
   // clang-format on
 }
