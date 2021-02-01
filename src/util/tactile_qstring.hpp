@@ -15,9 +15,8 @@
         QT_UNICODE_LITERAL(str)};                                  \
                                                                    \
     QStringDataPtr holder{literal.data_ptr()};                     \
-    QString tmp{holder};                                           \
                                                                    \
-    return tmp;                                                    \
+    return QString{holder};                                        \
   }())
 
 #ifdef QT_DEBUG
