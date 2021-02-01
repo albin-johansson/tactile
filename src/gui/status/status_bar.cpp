@@ -3,7 +3,6 @@
 #include <QComboBox>
 #include <QLabel>
 
-#include "signal_blocker.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::gui {
@@ -62,7 +61,7 @@ void status_bar::set_mouse_info_visible(const bool visible)
 
 void status_bar::set_current_layer(const layer_id id)
 {
-  signal_blocker blocker{m_layerBox};  // avoids switch layer requests
+  QSignalBlocker blocker{m_layerBox};  // avoids switch layer requests
 
   const auto index = m_layerBox->findData(id.get());
   m_layerBox->setCurrentIndex(index);
@@ -70,7 +69,7 @@ void status_bar::set_current_layer(const layer_id id)
 
 void status_bar::switched_map(const core::map_document& document)
 {
-  signal_blocker blocker{m_layerBox};  // avoids switch layer requests
+  QSignalBlocker blocker{m_layerBox};  // avoids switch layer requests
 
   m_layerBox->clear();
   document.each_layer(
@@ -86,13 +85,13 @@ void status_bar::switched_map(const core::map_document& document)
 
 void status_bar::added_layer(const layer_id id, const QString& name)
 {
-  signal_blocker blocker{m_layerBox};  // avoids switch layer requests
+  QSignalBlocker blocker{m_layerBox};  // avoids switch layer requests
   m_layerBox->addItem(name, id.get());
 }
 
 void status_bar::set_layer_name(const layer_id id, const QString& name)
 {
-  signal_blocker blocker{m_layerBox};  // avoids switch layer requests
+  QSignalBlocker blocker{m_layerBox};  // avoids switch layer requests
 
   const auto index = m_layerBox->findData(id.get());
   Q_ASSERT(index != -1);
@@ -102,7 +101,7 @@ void status_bar::set_layer_name(const layer_id id, const QString& name)
 
 void status_bar::removed_layer(const layer_id id)
 {
-  signal_blocker blocker{m_layerBox};  // avoids switch layer requests
+  QSignalBlocker blocker{m_layerBox};  // avoids switch layer requests
 
   const auto index = m_layerBox->findData(id.get());
   Q_ASSERT(index != -1);

@@ -7,7 +7,6 @@
 
 #include "icons.hpp"
 #include "init_ui.hpp"
-#include "signal_blocker.hpp"
 #include "tab_widget.hpp"
 #include "tileset_tab.hpp"
 #include "tileset_tab_context_menu.hpp"
@@ -101,7 +100,7 @@ void tileset_content_page::trigger_context_menu(const QPoint& pos)
 void tileset_content_page::selected_map(const map_id map)
 {
   {
-    signal_blocker blocker{m_tabWidget};  // avoid `ui_select_tileset`
+    QSignalBlocker blocker{m_tabWidget};  // avoid `ui_select_tileset`
 
     if (m_currentMap) {
       m_tabWidget->clear();

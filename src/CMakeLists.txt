@@ -331,7 +331,6 @@ set(TACTILE_SOURCE_FILES
     util/set_style_sheet.hpp
     util/setup_app.cpp
     util/setup_app.hpp
-    util/signal_blocker.hpp
     util/tactile_qstring.hpp
     util/vector_map.hpp)
 
