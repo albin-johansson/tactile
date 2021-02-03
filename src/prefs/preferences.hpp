@@ -126,7 +126,7 @@ void reset_properties_widget_visible();
   return true;
 }
 
-}  // namespace graphics
+}  // namespace gfx
 
 namespace saves {
 
