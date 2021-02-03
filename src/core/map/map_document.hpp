@@ -212,13 +212,13 @@ class map_document final : public document
   void resize(row_t nRows, col_t nCols);
 
   /**
-   * \copydoc tileset_manager::add(tileset_id, std::shared_ptr<tileset>)
+   * \copydoc tileset_manager::add(tileset_id, shared<tileset>)
    * \signal `added_tileset`
    */
   void add_tileset(tileset_id id, shared<tileset> tileset);
 
   /**
-   * \copybrief tileset_manager::add(std::shared_ptr<tileset>)
+   * \copybrief tileset_manager::add(shared<tileset>)
    * \signal `added_tileset`
    */
   void add_tileset(shared<tileset> tileset);
