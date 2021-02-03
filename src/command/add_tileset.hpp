@@ -1,10 +1,10 @@
 #pragma once
 
 #include <QUndoCommand>
-#include <memory>  // shared_ptr
 
 #include "command_id.hpp"
 #include "map_document.hpp"
+#include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
@@ -14,7 +14,7 @@ class add_tileset final : public QUndoCommand
 {
  public:
   add_tileset(core::map_document* document,
-              std::shared_ptr<core::tileset> tileset,
+              shared<core::tileset> tileset,
               tileset_id id);
 
   void undo() override;
@@ -28,7 +28,7 @@ class add_tileset final : public QUndoCommand
 
  private:
   core::map_document* m_document;
-  std::shared_ptr<core::tileset> m_tileset;
+  shared<core::tileset> m_tileset;
   tileset_id m_id;
 };
 

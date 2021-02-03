@@ -1,8 +1,7 @@
 #pragma once
 
-#include <memory>  // unique_ptr
-
 #include "abstract_tool.hpp"
+#include "smart_pointers.hpp"
 #include "tool_id.hpp"
 
 namespace tactile {
@@ -85,9 +84,9 @@ class tool_model final
 
  private:
   abstract_tool* m_current{};
-  std::unique_ptr<abstract_tool> m_stamp;
-  std::unique_ptr<abstract_tool> m_eraser;
-  std::unique_ptr<abstract_tool> m_bucket;
+  unique<abstract_tool> m_stamp;
+  unique<abstract_tool> m_eraser;
+  unique<abstract_tool> m_bucket;
 
   /**
    * \brief Switches to the specified tool as the active tool.

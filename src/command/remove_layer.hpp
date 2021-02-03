@@ -1,10 +1,10 @@
 #pragma once
 
 #include <QUndoCommand>
-#include <memory>  // shared_ptr
 
 #include "layer.hpp"
 #include "layer_id.hpp"
+#include "smart_pointers.hpp"
 
 namespace tactile {
 namespace core {
@@ -24,7 +24,7 @@ class remove_layer final : public QUndoCommand
 
  private:
   core::map_document* m_document{};
-  std::shared_ptr<core::layer> m_layer;
+  shared<core::layer> m_layer;
   layer_id m_id;
   int m_index{};
 };

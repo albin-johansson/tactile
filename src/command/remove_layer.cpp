@@ -12,7 +12,7 @@ remove_layer::remove_layer(core::map_document* document, const layer_id id)
     , m_id{id}
 {
   if (!m_document) {
-    throw tactile_error{"Cannot create command from null map document!"};
+    throw tactile_error{"Null map document!"};
   }
 }
 

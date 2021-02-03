@@ -6,7 +6,6 @@
 #include <QRect>          // QRect
 #include <QString>        // QString
 #include <concepts>       // invocable
-#include <memory>         // shared_ptr
 #include <unordered_map>  // unordered_map
 
 #include "maybe.hpp"
