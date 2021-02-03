@@ -9,12 +9,12 @@
 
 namespace tactile::cmd {
 
-class set_property final : public QUndoCommand
+class update_property final : public QUndoCommand
 {
  public:
-  set_property(core::property_manager* manager,
-               QString name,
-               core::property property);
+  update_property(core::property_manager* manager,
+                  QString name,
+                  core::property property);
 
   void undo() override;
 
@@ -22,7 +22,7 @@ class set_property final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(command_id::set_property);
+    return static_cast<int>(command_id::update_property);
   }
 
  private:

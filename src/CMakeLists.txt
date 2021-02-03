@@ -46,10 +46,10 @@ set(TACTILE_SOURCE_FILES
     command/repeated_map_command.cpp
     command/resize_map.cpp
     command/resize_map.hpp
-    command/set_property.cpp
-    command/set_property.hpp
     command/stamp_sequence.cpp
     command/stamp_sequence.hpp
+    command/update_property.cpp
+    command/update_property.hpp
 
     core/document.hpp
     core/document_delegate.cpp

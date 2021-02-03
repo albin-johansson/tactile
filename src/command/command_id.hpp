@@ -19,8 +19,8 @@ enum class command_id
   remove_tileset,
   rename_property,
   resize_map,
-  set_property,
-  stamp
+  stamp,
+  update_property
 };
 
 }  // namespace tactile::cmd

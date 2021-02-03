@@ -19,9 +19,9 @@
 #include "remove_tileset.hpp"
 #include "rename_property.hpp"
 #include "resize_map.hpp"
-#include "set_property.hpp"
 #include "stamp_sequence.hpp"
 #include "tile_layer.hpp"
+#include "update_property.hpp"
 
 namespace tactile::core {
 
@@ -166,7 +166,7 @@ void map_document::set_property(const QString& name,
                                 const core::property& property)
 {
   const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::set_property>(m_delegate.get(), name, property);
+  m_delegate->execute<cmd::update_property>(m_delegate.get(), name, property);
 }
 
 void map_document::change_property_type(const QString& name,

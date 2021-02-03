@@ -1,4 +1,4 @@
-#include "set_property.hpp"
+#include "update_property.hpp"
 
 #include <utility>  // move
 
@@ -7,9 +7,9 @@
 
 namespace tactile::cmd {
 
-set_property::set_property(core::property_manager* manager,
-                           QString name,
-                           core::property property)
+update_property::update_property(core::property_manager* manager,
+                                 QString name,
+                                 core::property property)
     : QUndoCommand{TACTILE_QSTRING(u"Update Property \"") + name +
                    TACTILE_QSTRING(u"\"")}
     , m_manager{manager}
@@ -21,7 +21,7 @@ set_property::set_property(core::property_manager* manager,
   }
 }
 
-void set_property::undo()
+void update_property::undo()
 {
   QUndoCommand::undo();
 
@@ -29,7 +29,7 @@ void set_property::undo()
   m_prevProperty.reset();
 }
 
-void set_property::redo()
+void update_property::redo()
 {
   QUndoCommand::redo();
 
