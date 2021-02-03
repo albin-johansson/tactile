@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>453</width>
-    <height>343</height>
+    <width>531</width>
+    <height>303</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -43,11 +43,14 @@
        <height>9999</height>
       </size>
      </property>
+     <property name="tabPosition">
+      <enum>QTabWidget::North</enum>
+     </property>
      <property name="tabShape">
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="generalTab">
       <property name="sizePolicy">
@@ -142,6 +145,96 @@
          </property>
          <property name="toolTip">
           <string>Restore general settings to the default values</string>
+         </property>
+         <property name="text">
+          <string>Restore defaults</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="apperanceTab">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <attribute name="title">
+       <string>Appearance</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QGroupBox" name="renderingGroup">
+         <property name="title">
+          <string>Rendering</string>
+         </property>
+         <layout class="QFormLayout" name="formLayout_5">
+          <item row="0" column="0" colspan="2">
+           <widget class="QCheckBox" name="acceleratedRenderingCheck">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Use OpenGL (may crash on resize)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="gridColorLabel">
+            <property name="text">
+             <string>Grid color:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QPushButton" name="gridColorButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Pick color...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="appearanceSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Maximum</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="appearanceRestoreDefaults">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <property name="text">
           <string>Restore defaults</string>
@@ -344,136 +437,698 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="apperanceTab">
-      <property name="enabled">
-       <bool>true</bool>
-      </property>
+     <widget class="QWidget" name="themeTab">
       <attribute name="title">
-       <string>Appearance</string>
+       <string>Theme</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <widget class="QGroupBox" name="editorGroup">
-         <property name="title">
-          <string>Editor</string>
-         </property>
-         <layout class="QFormLayout" name="formLayout">
-          <item row="0" column="0">
-           <widget class="QLabel" name="themeLabel">
+        <layout class="QHBoxLayout" name="horizontalLayout_22">
+         <item>
+          <widget class="QLabel" name="themeLabel">
+           <property name="text">
+            <string>Theme:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="themeComboBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <item>
             <property name="text">
-             <string>Theme:</string>
+             <string>Dark</string>
             </property>
-            <property name="alignment">
-             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </item>
+           <item>
+            <property name="text">
+             <string>Atom One Dark</string>
             </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="themeComboBox">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           </item>
+           <item>
+            <property name="text">
+             <string>Light</string>
             </property>
-            <item>
-             <property name="text">
-              <string>Dark</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Atom One Dark</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Light</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </widget>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="toolButton">
+           <property name="text">
+            <string>...</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
        <item>
-        <widget class="QGroupBox" name="renderingGroup">
-         <property name="title">
-          <string>Rendering</string>
+        <widget class="QScrollArea" name="themeScrollArea">
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
          </property>
-         <layout class="QFormLayout" name="formLayout_5">
-          <item row="0" column="0" colspan="2">
-           <widget class="QCheckBox" name="acceleratedRenderingCheck">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Use OpenGL (may crash on resize)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="gridColorLabel">
-            <property name="text">
-             <string>Grid color:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="gridColorButton">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="autoFillBackground">
-             <bool>false</bool>
-            </property>
-            <property name="text">
-             <string>Pick color...</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="appearanceSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Maximum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="appearanceRestoreDefaults">
-         <property name="enabled">
+         <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Restore defaults</string>
-         </property>
+         <widget class="QWidget" name="themeScrollAreaContents">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>470</width>
+            <height>1238</height>
+           </rect>
+          </property>
+          <layout class="QGridLayout" name="gridLayout">
+           <item row="2" column="0">
+            <widget class="QGroupBox" name="disabledGroup">
+             <property name="title">
+              <string>Disabled</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+             <layout class="QFormLayout" name="formLayout">
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="disabledBaseLabel">
+                <property name="text">
+                 <string>Base</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="disabledBaseButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="disabledWindowLabel">
+                <property name="text">
+                 <string>Window</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="disabledWindowButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="disabledWindowTextLabel">
+                <property name="text">
+                 <string>Window Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="disabledWindowTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="disabledButtonLabel">
+                <property name="text">
+                 <string>Button</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="disabledButtonButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="disabledLightLabel">
+                <property name="text">
+                 <string>Light</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QPushButton" name="disabledLightButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="disabledMidLightLabel">
+                <property name="text">
+                 <string>Mid Light</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QPushButton" name="disabledMidLightButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="disabledDarkLabel">
+                <property name="text">
+                 <string>Dark</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QPushButton" name="disabledDarkButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="disabledMidLabel">
+                <property name="text">
+                 <string>Mid</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QPushButton" name="disabledMidButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="disabledTextLabel">
+                <property name="text">
+                 <string>Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QPushButton" name="disabledTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QLabel" name="disabledBrightTextLabel">
+                <property name="text">
+                 <string>Bright Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1">
+               <widget class="QPushButton" name="disabledBrightTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="0">
+               <widget class="QLabel" name="disabledButtonTextLabel">
+                <property name="text">
+                 <string>Button Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="1">
+               <widget class="QPushButton" name="disabledButtonTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="disabledShadowLabel">
+                <property name="text">
+                 <string>Shadow</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="1">
+               <widget class="QPushButton" name="disabledShadowButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0">
+               <widget class="QLabel" name="disabledHighlightLabel">
+                <property name="text">
+                 <string>Highlight</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="1">
+               <widget class="QPushButton" name="disabledHighlightButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="0">
+               <widget class="QLabel" name="disabledHighlightedTextLabel">
+                <property name="text">
+                 <string>Highlighted Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="1">
+               <widget class="QPushButton" name="disabledHighlightedTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="14" column="0">
+               <widget class="QLabel" name="disabledLinkLabel">
+                <property name="text">
+                 <string>Link</string>
+                </property>
+               </widget>
+              </item>
+              <item row="14" column="1">
+               <widget class="QPushButton" name="disabledLinkButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="0">
+               <widget class="QLabel" name="disabledLinkVisitedLabel">
+                <property name="text">
+                 <string>Link (Visited)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="1">
+               <widget class="QPushButton" name="disabledLinkVisitedButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="16" column="0">
+               <widget class="QLabel" name="disabledAlternateBaseLabel">
+                <property name="text">
+                 <string>Alternate Base</string>
+                </property>
+               </widget>
+              </item>
+              <item row="16" column="1">
+               <widget class="QPushButton" name="disabledAlternateBaseButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="17" column="0">
+               <widget class="QLabel" name="disabledToolTipBaseLabel">
+                <property name="text">
+                 <string>Tooltip Base</string>
+                </property>
+               </widget>
+              </item>
+              <item row="17" column="1">
+               <widget class="QPushButton" name="disabledToolTipBaseButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="18" column="0">
+               <widget class="QLabel" name="disabledToolTipTextLabel">
+                <property name="text">
+                 <string>Tooltip Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="18" column="1">
+               <widget class="QPushButton" name="disabledToolTipTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="0">
+               <widget class="QLabel" name="disabledPlaceholderTextLabel">
+                <property name="text">
+                 <string>Placeholder Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="1">
+               <widget class="QPushButton" name="disabledPlaceholderTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QGroupBox" name="basicGroup">
+             <property name="title">
+              <string>Basic</string>
+             </property>
+             <layout class="QFormLayout" name="formLayout_6">
+              <property name="labelAlignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <item row="0" column="0">
+               <widget class="QLabel" name="basicBaseLabel">
+                <property name="text">
+                 <string>Base</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QPushButton" name="basicBaseButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="basicWindowLabel">
+                <property name="text">
+                 <string>Window</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="basicWindowButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="basicWindowTextLabel">
+                <property name="text">
+                 <string>Window Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QPushButton" name="basicWindowTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="basicButtonLabel">
+                <property name="text">
+                 <string>Button</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QPushButton" name="basicButtonButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="basicLightLabel">
+                <property name="text">
+                 <string>Light</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QPushButton" name="basicLightButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="basicMidLightLabel">
+                <property name="text">
+                 <string>Mid Light</string>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="1">
+               <widget class="QPushButton" name="basicMidLightButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="basicDarkLabel">
+                <property name="text">
+                 <string>Dark</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QPushButton" name="basicDarkButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="basicMidLabel">
+                <property name="text">
+                 <string>Mid</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QPushButton" name="basicMidButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="basicTextLabel">
+                <property name="text">
+                 <string>Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QPushButton" name="basicTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QLabel" name="basicBrightTextLabel">
+                <property name="text">
+                 <string>Bright Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1">
+               <widget class="QPushButton" name="basicBrightTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="0">
+               <widget class="QLabel" name="basicButtonTextLabel">
+                <property name="text">
+                 <string>Button Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="1">
+               <widget class="QPushButton" name="basicButtonTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="basicShadowLabel">
+                <property name="text">
+                 <string>Shadow</string>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="1">
+               <widget class="QPushButton" name="basicShadowButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0">
+               <widget class="QLabel" name="basicHighlightLabel">
+                <property name="text">
+                 <string>Highlight</string>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="1">
+               <widget class="QPushButton" name="basicHighlightButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="0">
+               <widget class="QLabel" name="basicHighlightedTextLabel">
+                <property name="text">
+                 <string>Highlighted Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="1">
+               <widget class="QPushButton" name="basicHighlightedTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="14" column="0">
+               <widget class="QLabel" name="basicLinkLabel">
+                <property name="text">
+                 <string>Link</string>
+                </property>
+               </widget>
+              </item>
+              <item row="14" column="1">
+               <widget class="QPushButton" name="basicLinkButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="0">
+               <widget class="QLabel" name="basicLinkVisitedLabel">
+                <property name="text">
+                 <string>Link (Visited)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="1">
+               <widget class="QPushButton" name="basicLinkVisitedButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="16" column="0">
+               <widget class="QLabel" name="basicAlternateBaseLabel">
+                <property name="text">
+                 <string>Alternate Base</string>
+                </property>
+               </widget>
+              </item>
+              <item row="16" column="1">
+               <widget class="QPushButton" name="basicAlternateBaseButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="17" column="0">
+               <widget class="QLabel" name="basicToolTipBaseLabel">
+                <property name="text">
+                 <string>Tooltip Base</string>
+                </property>
+               </widget>
+              </item>
+              <item row="17" column="1">
+               <widget class="QPushButton" name="basicToolTipBaseButton">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="18" column="0">
+               <widget class="QLabel" name="basicToolTipTextLabel">
+                <property name="text">
+                 <string>Tooltip Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="18" column="1">
+               <widget class="QPushButton" name="basicToolTipTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="0">
+               <widget class="QLabel" name="basicPlaceholderTextLabel">
+                <property name="text">
+                 <string>Placeholder Text</string>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="1">
+               <widget class="QPushButton" name="basicPlaceholderTextButton">
+                <property name="text">
+                 <string>AABBCC</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
