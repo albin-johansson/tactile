@@ -105,6 +105,17 @@ class document : public QObject, public property_manager
   [[nodiscard]] virtual auto is_clean() const -> bool = 0;
 
   /**
+   * \brief Indicates whether or not there is a file path associated with the
+   * document.
+   *
+   * \return `true` if there is a file path associated with the document;
+   * `false` otherwise.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] virtual auto has_path() const -> bool = 0;
+
+  /**
    * \brief Returns the text associated with the currently undoable command.
    *
    * \return the text associated with the currently undoable command.
@@ -130,6 +141,17 @@ class document : public QObject, public property_manager
    * \since 0.2.0
    */
   [[nodiscard]] virtual auto path() const -> const QFileInfo& = 0;
+
+  /**
+   * \brief Returns the absolute file path associated with the document.
+   *
+   * \pre There must be a file path associated with the document.
+   *
+   * \return the absolute file path associated with the document.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] virtual auto absolute_path() const -> QString = 0;
 };
 
 }  // namespace tactile::core

@@ -107,12 +107,11 @@ void tactile_app::init_connections()
 void tactile_app::save()
 {
   if (auto* document = m_model->current_document()) {
-    if (!document->path().exists()) {  // Documents don't have a path initially
-      m_window->trigger_save_as();
-    } else {
-      // TODO document->absolute_path()
-      save_map_document(document->path().absoluteFilePath(), *document);
+    if (document->has_path()) {
+      save_map_document(document->absolute_path(), *document);
       document->mark_as_clean();
+    } else {
+      m_window->trigger_save_as();
     }
   }
 }

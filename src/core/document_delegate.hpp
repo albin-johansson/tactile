@@ -39,11 +39,15 @@ class document_delegate final : public document
 
   [[nodiscard]] auto is_clean() const -> bool override;
 
+  [[nodiscard]] auto has_path() const -> bool override;
+
   [[nodiscard]] auto get_undo_text() const -> QString override;
 
   [[nodiscard]] auto get_redo_text() const -> QString override;
 
   [[nodiscard]] auto path() const -> const QFileInfo& override;
+
+  [[nodiscard]] auto absolute_path() const -> QString override;
 
   /// \}
 

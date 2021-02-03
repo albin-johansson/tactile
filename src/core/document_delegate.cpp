@@ -53,6 +53,11 @@ auto document_delegate::is_clean() const -> bool
   return m_commandStack->isClean();
 }
 
+auto document_delegate::has_path() const -> bool
+{
+  return m_path && m_path->exists();
+}
+
 auto document_delegate::get_undo_text() const -> QString
 {
   return m_commandStack->undoText();
@@ -65,7 +70,14 @@ auto document_delegate::get_redo_text() const -> QString
 
 auto document_delegate::path() const -> const QFileInfo&
 {
+  Q_ASSERT(has_path());
   return m_path.value();
+}
+
+auto document_delegate::absolute_path() const -> QString
+{
+  Q_ASSERT(has_path());
+  return m_path->absoluteFilePath();
 }
 
 void document_delegate::add_property(const QString& name,

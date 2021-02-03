@@ -120,6 +120,11 @@ auto map_document::is_clean() const -> bool
   return m_delegate->is_clean();
 }
 
+auto map_document::has_path() const -> bool
+{
+  return m_delegate->has_path();
+}
+
 auto map_document::get_undo_text() const -> QString
 {
   return m_delegate->get_undo_text();
@@ -133,6 +138,11 @@ auto map_document::get_redo_text() const -> QString
 auto map_document::path() const -> const QFileInfo&
 {
   return m_delegate->path();
+}
+
+auto map_document::absolute_path() const -> QString
+{
+  return m_delegate->absolute_path();
 }
 
 void map_document::add_property(const QString& name,
