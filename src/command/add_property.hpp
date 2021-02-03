@@ -4,6 +4,7 @@
 #include <QUndoCommand>  // QUndoCommand
 #include <variant>       // variant, get_if, get
 
+#include "command_id.hpp"
 #include "not_null.hpp"
 #include "property.hpp"
 #include "property_manager.hpp"
@@ -26,6 +27,11 @@ class add_property final : public QUndoCommand
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(command_id::add_property);
+  }
 
  private:
   core::property_manager* m_manager{};

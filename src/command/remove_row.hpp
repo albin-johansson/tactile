@@ -27,7 +27,7 @@ class remove_row final : public repeated_map_command
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(id::remove_row);
+    return static_cast<int>(command_id::remove_row);
   }
 };
 

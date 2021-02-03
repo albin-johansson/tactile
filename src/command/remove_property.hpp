@@ -3,6 +3,7 @@
 #include <QString>       // QString
 #include <QUndoCommand>  // QUndoCommand
 
+#include "command_id.hpp"
 #include "maybe.hpp"
 #include "property.hpp"
 #include "property_manager.hpp"
@@ -17,6 +18,11 @@ class remove_property final : public QUndoCommand
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(command_id::remove_property);
+  }
 
  private:
   core::property_manager* m_manager{};

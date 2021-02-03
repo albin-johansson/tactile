@@ -26,7 +26,7 @@ class add_row final : public repeated_command
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(id::add_row);
+    return static_cast<int>(command_id::add_row);
   }
 
  private:

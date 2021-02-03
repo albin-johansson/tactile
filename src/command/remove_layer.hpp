@@ -4,6 +4,7 @@
 
 #include "layer.hpp"
 #include "layer_id.hpp"
+#include "remove_layer.hpp"
 #include "smart_pointers.hpp"
 
 namespace tactile {
@@ -21,6 +22,11 @@ class remove_layer final : public QUndoCommand
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(command_id::remove_layer);
+  }
 
  private:
   core::map_document* m_document{};

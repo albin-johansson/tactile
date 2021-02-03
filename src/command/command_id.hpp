@@ -2,18 +2,25 @@
 
 namespace tactile::cmd {
 
-enum class id
+enum class command_id
 {
-  add_row = 1,
-  remove_row,
-  add_column,
-  remove_column,
-  bucket_fill,
-  eraser,
-  stamp,
-  resize_map,
+  add_column = 1,
+  add_layer,
+  add_property,
+  add_row,
   add_tileset,
-  remove_tileset
+  bucket_fill,
+  change_property_type,
+  eraser,
+  remove_column,
+  remove_layer,
+  remove_property,
+  remove_row,
+  remove_tileset,
+  rename_property,
+  resize_map,
+  set_property,
+  stamp
 };
 
 }  // namespace tactile::cmd

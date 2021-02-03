@@ -25,7 +25,7 @@ class stamp_sequence final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(id::stamp);
+    return static_cast<int>(command_id::stamp);
   }
 
  private:

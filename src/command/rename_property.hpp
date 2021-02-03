@@ -3,6 +3,7 @@
 #include <QString>       // QString
 #include <QUndoCommand>  // QUndoCommand
 
+#include "command_id.hpp"
 #include "property_manager.hpp"
 
 namespace tactile::cmd {
@@ -17,6 +18,11 @@ class rename_property final : public QUndoCommand
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(command_id::rename_property);
+  }
 
  private:
   core::property_manager* m_manager{};

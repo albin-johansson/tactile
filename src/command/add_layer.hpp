@@ -2,6 +2,7 @@
 
 #include <QUndoCommand>
 
+#include "command_id.hpp"
 #include "layer.hpp"
 #include "layer_id.hpp"
 #include "smart_pointers.hpp"
@@ -22,6 +23,11 @@ class add_layer final : public QUndoCommand
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(command_id::add_layer);
+  }
 
  private:
   core::map_document* m_document{};

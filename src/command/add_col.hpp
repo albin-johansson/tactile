@@ -33,7 +33,7 @@ class add_col final : public repeated_command
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(id::add_column);
+    return static_cast<int>(command_id::add_column);
   }
 
  private:

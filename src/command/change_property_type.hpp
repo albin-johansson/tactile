@@ -3,6 +3,7 @@
 #include <QString>       // QString
 #include <QUndoCommand>  // QUndoCommand
 
+#include "command_id.hpp"
 #include "maybe.hpp"
 #include "not_null.hpp"
 #include "property.hpp"
@@ -20,6 +21,11 @@ class change_property_type final : public QUndoCommand
   void undo() override;
 
   void redo() override;
+
+  [[nodiscard]] auto id() const noexcept -> int override
+  {
+    return static_cast<int>(command_id::change_property_type);
+  }
 
  private:
   core::property_manager* m_manager{};

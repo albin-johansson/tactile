@@ -22,7 +22,7 @@ class erase_sequence final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(id::eraser);
+    return static_cast<int>(command_id::eraser);
   }
 
  private:
