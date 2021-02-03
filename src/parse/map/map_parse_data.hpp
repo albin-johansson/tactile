@@ -78,6 +78,7 @@ struct map_data final
   std::vector<tileset_data> tilesets;     ///< The tilesets used by the map.
   std::vector<layer_data> layers;         ///< The layers in the map.
   std::vector<property_data> properties;  ///< The map properties.
+  QString path;                           ///< Absolute file path.
 };
 
 }  // namespace tactile::parse

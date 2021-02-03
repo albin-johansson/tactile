@@ -33,6 +33,7 @@ class map_parser final
 
   explicit map_parser(const QFileInfo& path)
   {
+    m_data.path = path.absoluteFilePath();
     if (const auto file = open_file(path)) {
       const auto root = m_engine.root(*file);
       if (!parse_next_layer_id(root)) {
