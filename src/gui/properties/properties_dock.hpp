@@ -2,10 +2,10 @@
 
 #include "dock_widget.hpp"
 #include "map_document.hpp"
+#include "not_null.hpp"
 #include "property.hpp"
 #include "property_model.hpp"
 #include "smart_pointers.hpp"
-#include "not_null.hpp"
 
 namespace tactile::gui {
 
