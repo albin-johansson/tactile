@@ -13,7 +13,8 @@ void save_map_document(const QString& path, const core::map_document& document)
 {
   const QFileInfo info{path};
 
-  if (const auto suffix = info.suffix(); suffix == TACTILE_QSTRING(u"tmx")) {
+  const auto suffix = info.suffix();
+  if (suffix == TACTILE_QSTRING(u"tmx")) {
     save_map_document_as_xml(path, document);
 
   } else if (suffix == TACTILE_QSTRING(u"json")) {
