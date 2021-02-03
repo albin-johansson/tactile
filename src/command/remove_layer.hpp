@@ -2,6 +2,7 @@
 
 #include <QUndoCommand>
 
+#include "command_id.hpp"
 #include "layer.hpp"
 #include "layer_id.hpp"
 #include "remove_layer.hpp"
