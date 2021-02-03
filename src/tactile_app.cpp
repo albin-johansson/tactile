@@ -1,11 +1,11 @@
 #include "tactile_app.hpp"
 
 #include "model.hpp"
-#include "open_map.hpp"
+#include "open_map_document.hpp"
 #include "open_map_error_dialog.hpp"
 #include "parse_error.hpp"
 #include "resize_dialog.hpp"
-#include "save_service.hpp"
+#include "save_map_document.hpp"
 #include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "window.hpp"
@@ -110,7 +110,8 @@ void tactile_app::save()
     if (!document->path().exists()) {  // Documents don't have a path initially
       m_window->trigger_save_as();
     } else {
-      service::save(document->path().absoluteFilePath(), *document);
+      // TODO document->absolute_path()
+      save_map_document(document->path().absoluteFilePath(), *document);
       document->mark_as_clean();
     }
   }
@@ -119,10 +120,12 @@ void tactile_app::save()
 void tactile_app::save_as(const QString& path)
 {
   if (auto* document = m_model->current_document()) {
-    service::save(path, *document);
+    save_map_document(path, *document);
+
     const QFileInfo file{path};
     document->mark_as_clean();
     document->set_path(file);
+
     m_window->set_active_tab_name(file.baseName());
   }
 }
@@ -130,7 +133,7 @@ void tactile_app::save_as(const QString& path)
 void tactile_app::open_map(const QString& path)
 {
   parse::parse_error error;
-  if (auto* document = service::open_map(path, &error)) {
+  if (auto* document = open_map_document(path, error)) {
     const auto id = m_model->add_map(document);
     m_window->when_new_map_added(document, id, QFileInfo{path}.baseName());
   } else {

@@ -1,4 +1,4 @@
-#include "save_json.hpp"
+#include "save_map_document_as_json.hpp"
 
 #include <QDir>           // QDir
 #include <QFileInfo>      // QFileInfo
@@ -15,7 +15,7 @@
 #include "tile_layer.hpp"
 #include "tiled_version.hpp"
 
-namespace tactile::service {
+namespace tactile {
 namespace {
 
 [[nodiscard]] auto save_property(const QString& name,
@@ -372,7 +372,8 @@ void save_object_layer(QJsonObject& element,
 
 }  // namespace
 
-void save_json(const QString& path, const core::map_document& map)
+void save_map_document_as_json(const QString& path,
+                               const core::map_document& map)
 {
   QJsonDocument document{};
 
@@ -383,4 +384,4 @@ void save_json(const QString& path, const core::map_document& map)
   json::write_file(path, document);
 }
 
-}  // namespace tactile::service
+}  // namespace tactile

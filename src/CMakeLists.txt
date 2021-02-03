@@ -126,6 +126,16 @@ set(TACTILE_SOURCE_FILES
     core/viewmodel/property/property_model.cpp
     core/viewmodel/property/property_model.hpp
 
+    export/export_options.cpp
+    export/export_options.hpp
+    export/save_map_document.cpp
+    export/save_map_document.hpp
+    export/save_map_document_as_json.cpp
+    export/save_map_document_as_json.hpp
+    export/save_map_document_as_xml.cpp
+    export/save_map_document_as_xml.hpp
+    export/tiled_version.hpp
+
     gui/icons.cpp
     gui/icons.hpp
     gui/init_ui.hpp
@@ -277,8 +287,10 @@ set(TACTILE_SOURCE_FILES
     parse/map/json_engine.cpp
     parse/map/json_engine.hpp
     parse/map/map_parse_concepts.hpp
-    parse/map/map_parser.hpp
     parse/map/map_parse_data.hpp
+    parse/map/map_parser.hpp
+    parse/map/open_map_document.cpp
+    parse/map/open_map_document.hpp
     parse/map/parse_error.cpp
     parse/map/parse_error.hpp
     parse/map/to_map_document.cpp
@@ -300,18 +312,6 @@ set(TACTILE_SOURCE_FILES
     prefs/setting.hpp
     prefs/theme.cpp
     prefs/theme.hpp
-
-    service/open/open_map.cpp
-    service/open/open_map.hpp
-
-    service/save/export_options.hpp
-    service/save/save_json.cpp
-    service/save/save_json.hpp
-    service/save/save_service.cpp
-    service/save/save_service.hpp
-    service/save/save_xml.cpp
-    service/save/save_xml.hpp
-    service/save/tiled_version.hpp
 
     tool/abstract_tool.cpp
     tool/abstract_tool.hpp
@@ -356,6 +356,7 @@ target_include_directories(libTactile
     PUBLIC core/viewmodel
     PUBLIC core/viewmodel/layer
     PUBLIC core/viewmodel/property
+    PUBLIC export
     PUBLIC gui
     PUBLIC gui/base
     PUBLIC gui/dialog
@@ -384,9 +385,6 @@ target_include_directories(libTactile
     PUBLIC parse/palette
     PUBLIC parse/xml
     PUBLIC prefs
-    PUBLIC service
-    PUBLIC service/open
-    PUBLIC service/save
     PUBLIC tool
     PUBLIC util)
 

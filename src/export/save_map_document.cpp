@@ -1,0 +1,27 @@
+#include "save_map_document.hpp"
+
+#include <QFileInfo>
+
+#include "save_map_document_as_json.hpp"
+#include "save_map_document_as_xml.hpp"
+#include "tactile_error.hpp"
+#include "tactile_qstring.hpp"
+
+namespace tactile {
+
+void save_map_document(const QString& path, const core::map_document& document)
+{
+  const QFileInfo info{path};
+
+  if (const auto suffix = info.suffix(); suffix == TACTILE_QSTRING(u"tmx")) {
+    save_map_document_as_xml(path, document);
+
+  } else if (suffix == TACTILE_QSTRING(u"json")) {
+    save_map_document_as_json(path, document);
+
+  } else {
+    throw tactile_error{"Did not recognize save format!"};
+  }
+}
+
+}  // namespace tactile

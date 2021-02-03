@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "open_map.hpp"
+#include "open_map_document.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 
@@ -13,7 +13,7 @@ TEST(ImportJsonMap, Embedded)
   QObject object;
   parse::parse_error error;
 
-  auto* document = service::open_map(path, &error);
+  auto* document = open_map_document(path, error);
   ASSERT_TRUE(document);
 
   document->setParent(&object);  // Avoid memory leak
@@ -98,7 +98,7 @@ TEST(ImportJsonMap, External)
   QObject object;
   parse::parse_error error;
 
-  auto* document = service::open_map(path, &error);
+  auto* document = open_map_document(path, error);
   ASSERT_TRUE(document);
 
   document->setParent(&object);  // Avoid memory leak

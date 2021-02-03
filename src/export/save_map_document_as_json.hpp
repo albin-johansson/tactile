@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QString>
+#include <QString>  // QString
 
 #include "map_document.hpp"
 
-namespace tactile::service {
+namespace tactile {
 
 /**
  * \brief Saves a map using the Tiled JSON format.
@@ -14,6 +14,7 @@ namespace tactile::service {
  *
  * \since 0.1.0
  */
-void save_json(const QString& path, const core::map_document& map);
+void save_map_document_as_json(const QString& path,
+                               const core::map_document& map);
 
-}  // namespace tactile::service
+}  // namespace tactile

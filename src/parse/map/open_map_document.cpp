@@ -1,4 +1,4 @@
-#include "open_map.hpp"
+#include "open_map_document.hpp"
 
 #include <QFileInfo>  // QFileInfo
 
@@ -8,15 +8,15 @@
 #include "tactile_qstring.hpp"
 #include "xml_engine.hpp"
 
-namespace tactile::service {
+namespace tactile {
 namespace {
 
 template <typename T>
-auto open_using(const QFileInfo& file, parse::parse_error* error)
+auto open_using(const QFileInfo& file, parse::parse_error& error)
     -> core::map_document*
 {
   parse::map_parser<T> parser{file};
-  *error = parser.error_code();
+  error = parser.error_code();
   if (parser) {
     return parser.make_document();
   } else {
@@ -26,7 +26,7 @@ auto open_using(const QFileInfo& file, parse::parse_error* error)
 
 }  // namespace
 
-auto open_map(const QString& path, parse::parse_error* error)
+auto open_map_document(const QString& path, parse::parse_error& error)
     -> core::map_document*
 {
   const QFileInfo info{path};
@@ -42,4 +42,4 @@ auto open_map(const QString& path, parse::parse_error* error)
   }
 }
 
-}  // namespace tactile::service
+}  // namespace tactile

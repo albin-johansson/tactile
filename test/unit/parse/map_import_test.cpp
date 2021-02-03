@@ -12,7 +12,7 @@
 #include "json_engine.hpp"
 #include "map_parser.hpp"
 #include "object_layer.hpp"
-#include "open_map.hpp"
+#include "open_map_document.hpp"
 #include "tactile_qstring.hpp"
 #include "xml_engine.hpp"
 
@@ -188,7 +188,7 @@ TACTILE_DEFINE_TEST_P(MapImportTest, QString)
   QObject parent;
 
   parse::parse_error error;
-  auto* document = service::open_map(GetParam(), &error);
+  auto* document = open_map_document(GetParam(), error);
 
   ASSERT_TRUE(document);
   document->setParent(&parent);  // Avoid memory leak

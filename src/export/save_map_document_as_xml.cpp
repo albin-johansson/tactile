@@ -1,4 +1,4 @@
-#include "save_xml.hpp"
+#include "save_map_document_as_xml.hpp"
 
 #include <QDir>
 #include <QFileInfo>
@@ -13,7 +13,7 @@
 #include "tiled_version.hpp"
 #include "xml_utils.hpp"
 
-namespace tactile::service {
+namespace tactile {
 namespace {
 
 void add_image_node(QDomDocument& document,
@@ -288,7 +288,8 @@ void create_root(QDomDocument& document,
 
 }  // namespace
 
-void save_tmx(const QString& path, const core::map_document& map)
+void save_map_document_as_xml(const QString& path,
+                              const core::map_document& map)
 {
   const auto options = make_export_options();
 
@@ -301,4 +302,4 @@ void save_tmx(const QString& path, const core::map_document& map)
   xml::write_file(path, document);
 }
 
-}  // namespace tactile::service
+}  // namespace tactile

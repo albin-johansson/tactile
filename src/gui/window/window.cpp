@@ -1,6 +1,7 @@
 #include "window.hpp"
 
 #include "about_dialog.hpp"
+#include "export/save_map_document.hpp"
 #include "init_ui.hpp"
 #include "layer_dock.hpp"
 #include "map_editor.hpp"
@@ -8,7 +9,6 @@
 #include "preferences.hpp"
 #include "properties_dock.hpp"
 #include "save_as_dialog.hpp"
-#include "save_service.hpp"
 #include "setting.hpp"
 #include "settings_dialog.hpp"
 #include "status_bar.hpp"

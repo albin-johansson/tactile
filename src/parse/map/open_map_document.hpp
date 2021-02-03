@@ -5,7 +5,7 @@
 #include "map_document.hpp"
 #include "parse_error.hpp"
 
-namespace tactile::service {
+namespace tactile {
 
 /**
  * \brief Creates and returns a map document based on a save file.
@@ -19,9 +19,12 @@ namespace tactile::service {
  *
  * \return a pointer to the created map document; null if something went wrong.
  *
+ * \throw tactile_error if the file extension isn't recognized.
+ *
  * \since 0.1.0
  */
-[[nodiscard]] auto open_map(const QString& path, parse::parse_error* error)
+[[nodiscard]] auto open_map_document(const QString& path,
+                                     parse::parse_error& error)
     -> core::map_document*;
 
-}  // namespace tactile::service
+}  // namespace tactile
