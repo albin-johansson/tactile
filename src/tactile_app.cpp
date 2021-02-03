@@ -14,18 +14,18 @@ namespace tactile {
 
 tactile_app::tactile_app(int argc, char** argv)
     : QApplication{argc, argv}
-    , m_model{new core::model{}}
+    , m_model{std::make_unique<core::model>()}
 {
   setup_app();
+
+  // It is necessary to create the window after calling the setup_app-function
   m_window = std::make_unique<gui::window>();
   init_connections();
+
   m_window->show();
 }
 
-tactile_app::~tactile_app() noexcept
-{
-  delete m_model;
-}
+tactile_app::~tactile_app() noexcept = default;
 
 void tactile_app::init_connections()
 {
@@ -33,11 +33,11 @@ void tactile_app::init_connections()
   using model = core::model;
 
   const auto modToWin = [this](auto&& sender, auto&& receiver) {
-    connect(m_model, sender, m_window.get(), receiver);
+    connect(m_model.get(), sender, m_window.get(), receiver);
   };
 
   const auto winToMod = [this](auto&& sender, auto&& receiver) {
-    connect(m_window.get(), sender, m_model, receiver);
+    connect(m_window.get(), sender, m_model.get(), receiver);
   };
 
   const auto fromWindow = [this](auto&& sender, auto&& receiver) {

@@ -3,10 +3,10 @@
 #include <QApplication>
 #include <QString>
 #include <QUrl>
-#include <memory>  // unique_ptr
 
 #include "czstring.hpp"
 #include "position.hpp"
+#include "smart_pointers.hpp"
 #include "tileset.hpp"
 
 namespace tactile {
@@ -45,8 +45,8 @@ class tactile_app final : public QApplication
   ~tactile_app() noexcept override;
 
  private:
-  std::unique_ptr<gui::window> m_window;
-  core::model* m_model{};
+  unique<gui::window> m_window;
+  unique<core::model> m_model;
 
   void init_connections();
 
