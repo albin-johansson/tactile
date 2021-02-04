@@ -72,17 +72,17 @@ void color_preview_button::update_color(const QColor& color)
   static const auto white = TACTILE_QSTRING(u"#FFFFFF");
 
   m_color = color;
-  const auto name = m_color.name(QColor::HexArgb);
 
   const auto intensity = (m_color.red() * 0.299) + (m_color.green() * 0.587) +
                          (m_color.blue() * 0.114);
   if (intensity > 186) {
-    setStyleSheet(fmt.arg(name).arg(black));
+    setStyleSheet(fmt.arg(m_color.name(QColor::HexArgb)).arg(black));
   } else {
-    setStyleSheet(fmt.arg(name).arg(white));
+    setStyleSheet(fmt.arg(m_color.name(QColor::HexArgb)).arg(white));
   }
 
-  setText(name.toUpper());
+  // The RGB name is easier to read
+  setText(m_color.name(QColor::HexRgb).toUpper());
 
   emit color_changed(m_color);
 }
