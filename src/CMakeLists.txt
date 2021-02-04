@@ -199,8 +199,6 @@ set(TACTILE_SOURCE_FILES
 
     gui/layer/layer_dock.cpp
     gui/layer/layer_dock.hpp
-    gui/layer/layer_item.cpp
-    gui/layer/layer_item.hpp
     gui/layer/layer_item_context_menu.cpp
     gui/layer/layer_item_context_menu.hpp
     gui/layer/layer_list_view.cpp
