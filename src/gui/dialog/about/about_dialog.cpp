@@ -10,10 +10,7 @@ about_dialog::about_dialog(QWidget* parent)
     , m_ui{init_ui<Ui::about_dialog>(this)}
 {}
 
-about_dialog::~about_dialog() noexcept
-{
-  delete m_ui;
-}
+about_dialog::~about_dialog() noexcept = default;
 
 void about_dialog::spawn(QWidget* parent)
 {

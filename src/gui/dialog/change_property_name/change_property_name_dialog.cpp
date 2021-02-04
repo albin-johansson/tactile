@@ -22,10 +22,7 @@ change_property_name_dialog::change_property_name_dialog(
   m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 }
 
-change_property_name_dialog::~change_property_name_dialog() noexcept
-{
-  delete m_ui;
-}
+change_property_name_dialog::~change_property_name_dialog() noexcept = default;
 
 auto change_property_name_dialog::spawn(QStandardItemModel* model,
                                         QWidget* parent) -> maybe<QString>

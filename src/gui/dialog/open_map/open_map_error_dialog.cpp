@@ -10,10 +10,7 @@ open_map_error_dialog::open_map_error_dialog(QWidget* parent)
     , m_ui{init_ui<Ui::open_map_error_dialog>(this)}
 {}
 
-open_map_error_dialog::~open_map_error_dialog() noexcept
-{
-  delete m_ui;
-}
+open_map_error_dialog::~open_map_error_dialog() noexcept = default;
 
 void open_map_error_dialog::set_file(const QFileInfo& path)
 {

@@ -63,10 +63,7 @@ properties_widget::properties_widget(QWidget* parent)
   // clang-format on
 }
 
-properties_widget::~properties_widget() noexcept
-{
-  delete m_ui;
-}
+properties_widget::~properties_widget() noexcept = default;
 
 void properties_widget::selected_map(not_null<core::map_document*> document)
 {

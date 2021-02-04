@@ -22,10 +22,7 @@ file_value_widget::file_value_widget(QWidget* parent)
   m_ui->idlePage->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 }
 
-file_value_widget::~file_value_widget() noexcept
-{
-  delete m_ui;
-}
+file_value_widget::~file_value_widget() noexcept = default;
 
 void file_value_widget::enter_active_mode()
 {

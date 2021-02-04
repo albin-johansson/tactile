@@ -7,6 +7,7 @@
 
 #include "maybe.hpp"
 #include "property.hpp"
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class add_property_dialog;
@@ -38,7 +39,7 @@ class add_property_dialog final : public QDialog
   }
 
  private:
-  Ui::add_property_dialog* m_ui{};
+  unique<Ui::add_property_dialog> m_ui;
   QValidator* m_nameValidator{};
   maybe<QString> m_name;
   maybe<core::property::type> m_type;

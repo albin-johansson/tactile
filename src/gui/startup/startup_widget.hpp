@@ -2,6 +2,8 @@
 
 #include <QWidget>
 
+#include "smart_pointers.hpp"
+
 namespace Ui {
 class startup_widget;
 }
@@ -25,7 +27,7 @@ class startup_widget final : public QWidget
   ~startup_widget() noexcept override;
 
  private:
-  Ui::startup_widget* m_ui;
+  unique<Ui::startup_widget> m_ui;
 };
 
 }  // namespace tactile::gui

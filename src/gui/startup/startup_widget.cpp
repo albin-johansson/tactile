@@ -16,9 +16,6 @@ startup_widget::startup_widget(QWidget* parent)
   m_ui->openShortcutLabel->setText(openDocument.toString());
 }
 
-startup_widget::~startup_widget() noexcept
-{
-  delete m_ui;
-}
+startup_widget::~startup_widget() noexcept = default;
 
 }  // namespace tactile::gui

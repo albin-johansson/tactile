@@ -27,10 +27,7 @@ add_property_dialog::add_property_dialog(QStandardItemModel* model,
   m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 }
 
-add_property_dialog::~add_property_dialog() noexcept
-{
-  delete m_ui;
-}
+add_property_dialog::~add_property_dialog() noexcept = default;
 
 void add_property_dialog::update_type()
 {

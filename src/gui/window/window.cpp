@@ -45,10 +45,7 @@ window::window(QWidget* parent)
   enter_no_content_view();
 }
 
-window::~window() noexcept
-{
-  delete m_ui;
-}
+window::~window() noexcept = default;
 
 void window::init_mouse_tool_group()
 {

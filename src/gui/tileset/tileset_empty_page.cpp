@@ -15,9 +15,6 @@ tileset_empty_page::tileset_empty_page(QWidget* parent)
           &tileset_empty_page::ui_add_tileset);
 }
 
-tileset_empty_page::~tileset_empty_page() noexcept
-{
-  delete m_ui;
-}
+tileset_empty_page::~tileset_empty_page() noexcept = default;
 
 }  // namespace tactile::gui

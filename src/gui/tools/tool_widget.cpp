@@ -24,10 +24,7 @@ tool_widget::tool_widget(QWidget* parent)
   m_group->addButton(m_ui->eraserButton);
 }
 
-tool_widget::~tool_widget() noexcept
-{
-  delete m_ui;
-}
+tool_widget::~tool_widget() noexcept = default;
 
 void tool_widget::enable_tools()
 {

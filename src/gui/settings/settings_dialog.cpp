@@ -66,10 +66,7 @@ settings_dialog::settings_dialog(QWidget* parent)
   update_theme_components();
 }
 
-settings_dialog::~settings_dialog() noexcept
-{
-  delete m_ui;
-}
+settings_dialog::~settings_dialog() noexcept = default;
 
 void settings_dialog::update_general_components()
 {}

@@ -166,7 +166,7 @@ class window final : public QMainWindow
   void closeEvent(QCloseEvent* event) override;
 
  private:
-  Ui::window* m_ui{};
+  unique<Ui::window> m_ui;
   map_editor* m_editor{};
   tool_dock* m_toolDock{};
   layer_dock* m_layerDock{};

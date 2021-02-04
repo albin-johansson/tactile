@@ -8,6 +8,7 @@
 
 #include "maybe.hpp"
 #include "position.hpp"
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class resize_dialog;
@@ -67,7 +68,7 @@ class resize_dialog final : public QDialog
   }
 
  private:
-  Ui::resize_dialog* m_ui;
+  unique<Ui::resize_dialog> m_ui;
   QIntValidator* m_validator;
   maybe<col_t> m_chosenWidth;
   maybe<row_t> m_chosenHeight;

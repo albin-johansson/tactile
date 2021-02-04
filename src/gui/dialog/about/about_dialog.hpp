@@ -5,6 +5,7 @@
 namespace Ui {
 class about_dialog;
 }
+#include "smart_pointers.hpp"
 
 namespace tactile::gui {
 
@@ -30,7 +31,7 @@ class about_dialog final : public QDialog
   static void spawn(QWidget* parent = nullptr);
 
  private:
-  Ui::about_dialog* m_ui;
+  unique<Ui::about_dialog> m_ui;
 };
 
 }  // namespace tactile::gui

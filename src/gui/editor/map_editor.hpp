@@ -6,6 +6,7 @@
 #include "map_id.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class map_editor;
@@ -100,7 +101,7 @@ class map_editor final : public QWidget
   void mouse_exited(QEvent* event);
 
  private:
-  Ui::map_editor* m_ui{};
+  unique<Ui::map_editor> m_ui;
   map_tab_widget* m_tabWidget{};
   int m_editorID{};
   int m_startupID{};

@@ -22,10 +22,7 @@ tileset_dialog::tileset_dialog(QWidget* parent)
   ok_button()->setEnabled(false);
 }
 
-tileset_dialog::~tileset_dialog() noexcept
-{
-  delete m_ui;
-}
+tileset_dialog::~tileset_dialog() noexcept = default;
 
 void tileset_dialog::on_imageButton_pressed()
 {

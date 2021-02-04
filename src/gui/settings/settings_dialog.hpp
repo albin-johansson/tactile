@@ -1,8 +1,9 @@
 #pragma once
 
-#include <QDialog>
-#include <QString>
-#include <QWidget>
+#include <QDialog>  // QDialog
+#include <QString>  // QString
+
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class settings_dialog;
@@ -23,7 +24,7 @@ class settings_dialog final : public QDialog
   void reload_theme();
 
  private:
-  Ui::settings_dialog* m_ui;
+  unique<Ui::settings_dialog> m_ui;
   QString m_theme;
   QString m_defaultFormat;
   int m_tileWidth{};

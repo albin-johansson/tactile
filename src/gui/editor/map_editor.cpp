@@ -22,10 +22,7 @@ map_editor::map_editor(QWidget* parent)
   init_connections();
 }
 
-map_editor::~map_editor() noexcept
-{
-  delete m_ui;
-}
+map_editor::~map_editor() noexcept = default;
 
 void map_editor::init_connections()
 {

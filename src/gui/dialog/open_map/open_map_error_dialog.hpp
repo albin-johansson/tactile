@@ -3,6 +3,8 @@
 #include <QDialog>
 #include <QFileInfo>
 
+#include "smart_pointers.hpp"
+
 namespace Ui {
 class open_map_error_dialog;
 }
@@ -23,7 +25,7 @@ class open_map_error_dialog final : public QDialog
   void set_error_message(const QString& message);
 
  private:
-  Ui::open_map_error_dialog* m_ui{};
+  unique<Ui::open_map_error_dialog> m_ui;
 };
 
 }  // namespace tactile::gui

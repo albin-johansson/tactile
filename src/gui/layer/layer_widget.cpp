@@ -61,10 +61,7 @@ layer_widget::layer_widget(QWidget* parent)
   // clang-format on
 }
 
-layer_widget::~layer_widget() noexcept
-{
-  delete m_ui;
-}
+layer_widget::~layer_widget() noexcept = default;
 
 void layer_widget::selected_map(not_null<core::map_document*> document)
 {

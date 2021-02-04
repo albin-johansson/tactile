@@ -21,10 +21,7 @@ resize_dialog::resize_dialog(QWidget* parent)
   ok_button()->setEnabled(false);
 }
 
-resize_dialog::~resize_dialog() noexcept
-{
-  delete m_ui;
-}
+resize_dialog::~resize_dialog() noexcept = default;
 
 void resize_dialog::connect_line_edit(QLineEdit* edit)
 {

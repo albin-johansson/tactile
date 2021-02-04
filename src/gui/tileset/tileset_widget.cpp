@@ -35,10 +35,7 @@ tileset_widget::tileset_widget(QWidget* parent)
   });
 }
 
-tileset_widget::~tileset_widget() noexcept
-{
-  delete m_ui;
-}
+tileset_widget::~tileset_widget() noexcept = default;
 
 void tileset_widget::added_tileset(const map_id map,
                                    const tileset_id id,

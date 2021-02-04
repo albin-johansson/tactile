@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QWidget>
+#include <QWidget>  // QWidget
 
 #include "map_document.hpp"
 #include "maybe.hpp"
@@ -41,7 +41,7 @@ class properties_widget final : public QWidget
   void renamed_property(const QString& oldName, const QString& newName);
 
  private:
-  Ui::properties_widget* m_ui{};
+  unique<Ui::properties_widget> m_ui;
   property_tree_view* m_view{};
   property_context_menu* m_contextMenu{};
   unique<vm::property_model> m_model;

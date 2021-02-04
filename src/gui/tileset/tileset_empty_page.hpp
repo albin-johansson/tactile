@@ -2,6 +2,8 @@
 
 #include <QWidget>
 
+#include "smart_pointers.hpp"
+
 namespace Ui {
 class tileset_empty_page;
 }
@@ -21,7 +23,7 @@ class tileset_empty_page final : public QWidget
   void ui_add_tileset();
 
  private:
-  Ui::tileset_empty_page* m_ui{};
+  unique<Ui::tileset_empty_page> m_ui;
 };
 
 }  // namespace tactile::gui

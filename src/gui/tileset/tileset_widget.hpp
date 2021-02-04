@@ -3,6 +3,7 @@
 #include <QWidget>
 
 #include "map_id.hpp"
+#include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
@@ -39,7 +40,7 @@ class tileset_widget final : public QWidget
   void selected_map(map_id id);
 
  private:
-  Ui::tileset_widget* m_ui;
+  unique<Ui::tileset_widget> m_ui;
   tileset_content_page* m_contentPage{};
   tileset_empty_page* m_emptyPage{};
   int m_emptyIndex{};

@@ -3,6 +3,7 @@
 #include <QFileInfo>
 
 #include "property_value_widget.hpp"
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class file_value_widget;
@@ -33,7 +34,7 @@ class file_value_widget final : public property_value_widget
   void spawn_dialog();
 
  private:
-  Ui::file_value_widget* m_ui{};
+  unique<Ui::file_value_widget> m_ui;
 };
 
 }  // namespace tactile::gui

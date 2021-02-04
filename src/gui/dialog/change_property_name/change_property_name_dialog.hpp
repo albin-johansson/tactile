@@ -5,6 +5,7 @@
 #include <QValidator>
 
 #include "maybe.hpp"
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class change_property_name_dialog;
@@ -24,7 +25,7 @@ class change_property_name_dialog final : public QDialog
                                   QWidget* parent = nullptr) -> maybe<QString>;
 
  private:
-  Ui::change_property_name_dialog* m_ui{};
+  unique<Ui::change_property_name_dialog> m_ui;
   QValidator* m_validator{};
 
  private slots:

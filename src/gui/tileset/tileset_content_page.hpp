@@ -1,11 +1,12 @@
 #pragma once
 
-#include <QWidget>
-#include <map>  // map
+#include <QWidget>  // QWidget
+#include <map>      // map
 
 #include "map_id.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
+#include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_tab_manager.hpp"
 
@@ -94,7 +95,7 @@ class tileset_content_page final : public QWidget
   void removed_tileset(tileset_id id);
 
  private:
-  Ui::tileset_content_page* m_ui{};
+  unique<Ui::tileset_content_page> m_ui;
   tab_widget* m_tabWidget{};
   tileset_tab_context_menu* m_contextMenu{};
   maybe<map_id> m_currentMap;

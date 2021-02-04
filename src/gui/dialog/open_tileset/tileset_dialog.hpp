@@ -9,6 +9,7 @@
 #include <concepts>  // invocable
 
 #include "maybe.hpp"
+#include "smart_pointers.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
@@ -68,7 +69,7 @@ class tileset_dialog final : public QDialog
   }
 
  private:
-  Ui::tileset_dialog* m_ui{};
+  unique<Ui::tileset_dialog> m_ui;
   QImage m_image{};
   QString m_path{};
   maybe<tile_width> m_tileWidth;

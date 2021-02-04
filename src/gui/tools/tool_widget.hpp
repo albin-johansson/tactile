@@ -4,6 +4,7 @@
 #include <QWidget>
 
 #include "czstring.hpp"
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class tool_widget;
@@ -39,7 +40,7 @@ class tool_widget final : public QWidget
   void handle_enable_eraser();
 
  private:
-  Ui::tool_widget* m_ui{};
+  unique<Ui::tool_widget> m_ui;
   QButtonGroup* m_group{};
 
   void set_tools_enabled(bool enabled);

@@ -71,10 +71,7 @@ tileset_content_page::tileset_content_page(QWidget* parent)
   });
 }
 
-tileset_content_page::~tileset_content_page() noexcept
-{
-  delete m_ui;
-}
+tileset_content_page::~tileset_content_page() noexcept = default;
 
 void tileset_content_page::add_corner_button()
 {
