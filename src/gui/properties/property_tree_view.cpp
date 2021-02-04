@@ -141,15 +141,13 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
   maybe<QModelIndex> selectedIndex;
   for (const auto index : selected.indexes()) {
     selectedIndex = index;
-    if (auto* widget =
-            qobject_cast<property_value_widget*>(indexWidget(index))) {
+    if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index))) {
       widget->enter_active_mode();
     }
   }
 
   for (const auto index : deselected.indexes()) {
-    if (auto* widget =
-            qobject_cast<property_value_widget*>(indexWidget(index))) {
+    if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index))) {
       widget->enter_idle_mode();
     }
   }

@@ -1,16 +1,16 @@
 #pragma once
 
 #include <QFileInfo>  // QFileInfo
+#include <QWidget>    // QWidget
 
 #include "forward_declare.hpp"
-#include "property_value_widget.hpp"
 #include "smart_pointers.hpp"
 
 TACTILE_FORWARD_DECLARE(Ui, file_value_widget)
 
 namespace tactile::gui {
 
-class file_value_widget final : public property_value_widget
+class file_value_widget final : public QWidget
 {
   Q_OBJECT
 
@@ -19,9 +19,9 @@ class file_value_widget final : public property_value_widget
 
   ~file_value_widget() noexcept override;
 
-  void enter_active_mode() override;
+  void enter_active_mode();
 
-  void enter_idle_mode() override;
+  void enter_idle_mode();
 
   void reset_path();
 

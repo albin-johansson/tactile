@@ -225,7 +225,6 @@ set(TACTILE_SOURCE_FILES
     gui/properties/property_name_validator.hpp
     gui/properties/property_tree_view.cpp
     gui/properties/property_tree_view.hpp
-    gui/properties/property_value_widget.hpp
     gui/properties/file_value_widget.ui
     gui/properties/properties_widget.ui
 

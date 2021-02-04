@@ -6,7 +6,7 @@
 namespace tactile::gui {
 
 file_value_widget::file_value_widget(QWidget* parent)
-    : property_value_widget{parent}
+    : QWidget{parent}
     , m_ui{init_ui<Ui::file_value_widget>(this)}
 {
   setAutoFillBackground(true);
