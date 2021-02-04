@@ -1,6 +1,8 @@
 #pragma once
 
-#include <QWidget>
+#include <QWidget>  // QWidget
+
+#include "smart_pointers.hpp"
 
 namespace tactile::gui {
 
@@ -14,8 +16,6 @@ concept ui_class = requires(T t, U* self)
 /**
  * \brief Initializes the external UI for a class.
  *
- * \note The returned pointer must be deleted.
- *
  * \pre `self` cannot be null.
  *
  * \tparam T the type of the UI-class, e.g. `Ui::foo`.
@@ -23,14 +23,14 @@ concept ui_class = requires(T t, U* self)
  *
  * \param self should be the `this` pointer.
  *
- * \return a pointer to the created UI-class instance, must be deleted.
+ * \return the created UI-class instance.
  */
 template <typename T, typename Self> requires ui_class<T, Self>
-[[nodiscard]] auto init_ui(Self* self) -> T*
+[[nodiscard]] auto init_ui(Self* self) -> unique<T>
 {
   Q_ASSERT(self);
 
-  auto* ui = new T{};
+  auto ui = std::make_unique<T>();
   ui->setupUi(self);
 
   return ui;
