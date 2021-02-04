@@ -54,6 +54,7 @@ settings_dialog::settings_dialog(QWidget* parent)
     , m_basicTooltipTextPreview{new color_preview_button{Qt::black, this}}
     , m_basicTextPreview{new color_preview_button{Qt::black, this}}
     , m_basicShadowPreview{new color_preview_button{Qt::black, this}}
+    , m_themeOptionsContextMenu{new theme_options_context_menu{this}}
 {
   auto* validator = new QIntValidator{0, 9'999, this};
   m_ui->tileWidthEdit->setValidator(validator);
@@ -89,11 +90,26 @@ settings_dialog::settings_dialog(QWidget* parent)
   connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked,
           this, &settings_dialog::apply);
 
+  connect(m_ui->themeOptionsButton, &QPushButton::pressed,
+          this, &settings_dialog::pressed_theme_options_button);
+
   connect(m_ui->exportRestoreDefaults, &QPushButton::clicked,
           this, &settings_dialog::restore_export_defaults);
 
   connect(m_ui->appearanceRestoreDefaults, &QPushButton::clicked,
           this, &settings_dialog::restore_appearance_defaults);
+
+  connect(m_themeOptionsContextMenu, &theme_options_context_menu::duplicate_theme,
+          this, &settings_dialog::duplicate_current_theme);
+
+  connect(m_themeOptionsContextMenu, &theme_options_context_menu::import_theme,
+          this, &settings_dialog::import_new_theme);
+
+  connect(m_themeOptionsContextMenu, &theme_options_context_menu::export_theme,
+          this, &settings_dialog::export_current_theme);
+
+  connect(m_themeOptionsContextMenu, &theme_options_context_menu::reset_theme,
+          this, &settings_dialog::reset_current_theme);
 
   connect(m_ui->themeComboBox, &QComboBox::currentTextChanged,
           [this](const QString& str) {
@@ -225,6 +241,27 @@ void settings_dialog::fetch_current_settings()
 
   // Appearance
   m_theme = gfx::theme_name().value();
+}
+
+void settings_dialog::pressed_theme_options_button()
+{
+  m_themeOptionsContextMenu->exec(mapToGlobal(m_ui->themeOptionsButton->pos()));
+}
+
+void settings_dialog::duplicate_current_theme()
+{
+}
+
+void settings_dialog::import_new_theme()
+{
+}
+
+void settings_dialog::export_current_theme()
+{
+}
+
+void settings_dialog::reset_current_theme()
+{
 }
 
 }  // namespace tactile::gui

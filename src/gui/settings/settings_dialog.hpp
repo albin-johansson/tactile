@@ -8,6 +8,7 @@
 
 TACTILE_FORWARD_DECLARE(Ui, settings_dialog)
 TACTILE_FORWARD_DECLARE(tactile::gui, color_preview_button)
+TACTILE_FORWARD_DECLARE(tactile::gui, theme_options_context_menu)
 
 namespace tactile::gui {
 
@@ -43,6 +44,7 @@ class settings_dialog final : public QDialog
   color_preview_button* m_basicTooltipTextPreview{};
   color_preview_button* m_basicTextPreview{};
   color_preview_button* m_basicShadowPreview{};
+  theme_options_context_menu* m_themeOptionsContextMenu{};
 
   QString m_theme;
   QString m_defaultFormat;
@@ -70,6 +72,16 @@ class settings_dialog final : public QDialog
   void restore_appearance_defaults();
 
   void fetch_current_settings();
+
+  void pressed_theme_options_button();
+
+  void duplicate_current_theme();
+
+  void import_new_theme();
+
+  void export_current_theme();
+
+  void reset_current_theme();
 };
 
 }  // namespace tactile::gui
