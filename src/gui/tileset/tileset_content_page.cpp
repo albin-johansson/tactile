@@ -87,7 +87,8 @@ void tileset_content_page::add_corner_button()
 
 void tileset_content_page::trigger_context_menu(const QPoint& pos)
 {
-  if (const auto index = m_tabWidget->tabBar()->tabAt(pos); index != -1) {
+  const auto index = m_tabWidget->tabBar()->tabAt(pos);
+  if (index != -1) {
     m_contextMenu->set_tab_index(index);
     m_contextMenu->exec(mapToGlobal(pos));
   }
