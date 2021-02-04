@@ -67,12 +67,21 @@ auto color_preview_button::current_color() const -> const QColor&
 
 void color_preview_button::update_color(const QColor& color)
 {
-  static const auto fmt = TACTILE_QSTRING(u"background-color: %1");
+  static const auto fmt = TACTILE_QSTRING(u"background-color: %1; color: %2;");
+  static const auto black = TACTILE_QSTRING(u"#000000");
+  static const auto white = TACTILE_QSTRING(u"#FFFFFF");
 
   m_color = color;
-
   const auto name = m_color.name(QColor::HexArgb);
-  setStyleSheet(fmt.arg(name));
+
+  const auto intensity = (m_color.red() * 0.299) + (m_color.green() * 0.587) +
+                         (m_color.blue() * 0.114);
+  if (intensity > 186) {
+    setStyleSheet(fmt.arg(name).arg(black));
+  } else {
+    setStyleSheet(fmt.arg(name).arg(white));
+  }
+
   setText(name.toUpper());
 
   emit color_changed(m_color);
