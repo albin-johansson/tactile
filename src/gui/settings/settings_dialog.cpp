@@ -9,6 +9,7 @@
 #include "maybe.hpp"
 #include "preferences.hpp"
 #include "setting.hpp"
+#include "tactile_qstring.hpp"
 #include "theme.hpp"
 #include "ui_settings_dialog.h"
 
@@ -53,11 +54,16 @@ settings_dialog::settings_dialog(QWidget* parent)
 
   connect(m_ui->appearanceRestoreDefaults, &QPushButton::clicked,
           this, &settings_dialog::restore_appearance_defaults);
+
+  connect(m_ui->themeComboBox, &QComboBox::currentTextChanged,
+          [this](const QString& str) {
+            update_theme_preview();
+          });
   // clang-format on
 
   update_general_components();
   update_export_components();
-  update_appearance_components();
+  update_theme_components();
 }
 
 settings_dialog::~settings_dialog() noexcept
@@ -78,9 +84,47 @@ void settings_dialog::update_export_components()
   m_ui->tileHeightEdit->setText(QString::number(m_tileHeight));
 }
 
-void settings_dialog::update_appearance_components()
+void settings_dialog::update_theme_components()
 {
   m_ui->themeComboBox->setCurrentText(m_theme);
+  update_theme_preview();
+}
+
+void settings_dialog::update_theme_preview()
+{
+  if (const auto theme = theme::from_name(m_ui->themeComboBox->currentText())) {
+    static const auto fmt = TACTILE_QSTRING(u"background-color: %1");
+
+    const auto update =
+        [](QPushButton* button, QLineEdit* edit, const QBrush& brush) {
+          const auto name = brush.color().name(QColor::HexArgb);
+          edit->setText(name);
+          button->setStyleSheet(fmt.arg(name));
+        };
+
+    // clang-format off
+    update(m_ui->basicBasePreview, m_ui->basicBaseEdit, theme->base());
+    update(m_ui->basicAlternateBasePreview, m_ui->basicAlternateBaseEdit, theme->alternateBase());
+    update(m_ui->basicWindowPreview, m_ui->basicWindowEdit, theme->window());
+    update(m_ui->basicWindowTextPreview, m_ui->basicWindowTextEdit, theme->windowText());
+    update(m_ui->basicLightPreview, m_ui->basicLightEdit, theme->light());
+    update(m_ui->basicMidLightPreview, m_ui->basicMidLightEdit, theme->midlight());
+    update(m_ui->basicMidPreview, m_ui->basicMidEdit, theme->mid());
+    update(m_ui->basicDarkPreview, m_ui->basicDarkEdit, theme->dark());
+    update(m_ui->basicLinkPreview, m_ui->basicLinkEdit, theme->link());
+    update(m_ui->basicLinkVisitedPreview, m_ui->basicLinkVisitedEdit, theme->linkVisited());
+    update(m_ui->basicButtonPreview, m_ui->basicButtonEdit, theme->button());
+    update(m_ui->basicButtonTextPreview, m_ui->basicButtonTextEdit, theme->buttonText());
+    update(m_ui->basicHighlightPreview, m_ui->basicHighlightEdit, theme->highlight());
+    update(m_ui->basicHighlightedTextPreview, m_ui->basicHighlightedTextEdit, theme->highlightedText());
+    update(m_ui->basicPlaceholderTextPreview, m_ui->basicPlaceholderTextEdit, theme->placeholderText());
+    update(m_ui->basicTooltipBasePreview, m_ui->basicTooltipBaseEdit, theme->toolTipBase());
+    update(m_ui->basicTooltipTextPreview, m_ui->basicTooltipTextEdit, theme->toolTipText());
+    update(m_ui->basicBrightTextPreview, m_ui->basicBrightTextEdit, theme->brightText());
+    update(m_ui->basicTextPreview, m_ui->basicTextEdit, theme->text());
+    update(m_ui->basicShadowPreview, m_ui->basicShadowEdit, theme->shadow());
+    // clang-format on
+  }
 }
 
 void settings_dialog::handle_accept()

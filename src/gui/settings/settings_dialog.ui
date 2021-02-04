@@ -462,6 +462,9 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="toolTip">
+            <string>The currently active theme</string>
+           </property>
            <item>
             <property name="text">
              <string>Dark</string>
@@ -469,18 +472,21 @@
            </item>
            <item>
             <property name="text">
-             <string>Atom One Dark</string>
+             <string>Light</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Light</string>
+             <string>Atom One Dark</string>
             </property>
            </item>
           </widget>
          </item>
          <item>
           <widget class="QToolButton" name="toolButton">
+           <property name="toolTip">
+            <string>Theme options</string>
+           </property>
            <property name="text">
             <string>...</string>
            </property>
@@ -513,7 +519,7 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
+            <y>-522</y>
             <width>336</width>
             <height>1020</height>
            </rect>
@@ -1141,7 +1147,7 @@
                </widget>
               </item>
               <item row="6" column="1">
-               <widget class="QWidget" name="widget_6" native="true">
+               <widget class="QWidget" name="basicDarkWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1156,7 +1162,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_7">
+                  <widget class="QPushButton" name="basicDarkPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1169,7 +1175,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_7">
+                  <widget class="QLineEdit" name="basicDarkEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1188,7 +1194,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_7">
+                  <spacer name="basicDarkSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1211,7 +1217,7 @@
                </widget>
               </item>
               <item row="7" column="1">
-               <widget class="QWidget" name="widget_7" native="true">
+               <widget class="QWidget" name="basicMidWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_8">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1226,7 +1232,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_8">
+                  <widget class="QPushButton" name="basicMidPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1239,7 +1245,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_8">
+                  <widget class="QLineEdit" name="basicMidEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1258,7 +1264,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_8">
+                  <spacer name="basicMidSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1281,7 +1287,7 @@
                </widget>
               </item>
               <item row="8" column="1">
-               <widget class="QWidget" name="widget_8" native="true">
+               <widget class="QWidget" name="basicTextWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_9">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1296,7 +1302,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_9">
+                  <widget class="QPushButton" name="basicTextPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1309,7 +1315,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_9">
+                  <widget class="QLineEdit" name="basicTextEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1328,7 +1334,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_9">
+                  <spacer name="basicTextSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1351,7 +1357,7 @@
                </widget>
               </item>
               <item row="9" column="1">
-               <widget class="QWidget" name="widget_9" native="true">
+               <widget class="QWidget" name="basicBrightTextWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_10">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1366,7 +1372,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_10">
+                  <widget class="QPushButton" name="basicBrightTextPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1379,7 +1385,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_10">
+                  <widget class="QLineEdit" name="basicBrightTextEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1398,7 +1404,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_10">
+                  <spacer name="basicBrightTextSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1442,7 +1448,7 @@
                </widget>
               </item>
               <item row="15" column="1">
-               <widget class="QWidget" name="widget_14" native="true">
+               <widget class="QWidget" name="basicLinkWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_25">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1457,7 +1463,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_24">
+                  <widget class="QPushButton" name="basicLinkPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1470,7 +1476,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_24">
+                  <widget class="QLineEdit" name="basicLinkEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1489,7 +1495,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_24">
+                  <spacer name="basicLinkSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1519,7 +1525,7 @@
                </widget>
               </item>
               <item row="17" column="1">
-               <widget class="QWidget" name="widget_13" native="true">
+               <widget class="QWidget" name="basicAlternateBaseWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_24">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1534,7 +1540,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_23">
+                  <widget class="QPushButton" name="basicAlternateBasePreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1547,7 +1553,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_23">
+                  <widget class="QLineEdit" name="basicAlternateBaseEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1566,7 +1572,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_23">
+                  <spacer name="basicAlternateBaseSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1589,7 +1595,7 @@
                </widget>
               </item>
               <item row="18" column="1">
-               <widget class="QWidget" name="widget_12" native="true">
+               <widget class="QWidget" name="basicTooltipBaseWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_23">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1604,7 +1610,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_22">
+                  <widget class="QPushButton" name="basicTooltipBasePreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1617,7 +1623,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_22">
+                  <widget class="QLineEdit" name="basicTooltipBaseEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1636,7 +1642,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_22">
+                  <spacer name="basicTooltipBaseSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1659,7 +1665,7 @@
                </widget>
               </item>
               <item row="19" column="1">
-               <widget class="QWidget" name="widget_11" native="true">
+               <widget class="QWidget" name="basicTooltipTextWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_21">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1674,7 +1680,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_21">
+                  <widget class="QPushButton" name="basicTooltipTextPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1687,7 +1693,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_21">
+                  <widget class="QLineEdit" name="basicTooltipTextEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1706,7 +1712,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_21">
+                  <spacer name="basicTooltipTextSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1729,7 +1735,7 @@
                </widget>
               </item>
               <item row="16" column="1">
-               <widget class="QWidget" name="widget_15" native="true">
+               <widget class="QWidget" name="basicLinkVisitedWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_26">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1744,7 +1750,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_25">
+                  <widget class="QPushButton" name="basicLinkVisitedPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1757,7 +1763,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_25">
+                  <widget class="QLineEdit" name="basicLinkVisitedEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1776,7 +1782,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_25">
+                  <spacer name="basicLinkVisitedSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1792,7 +1798,7 @@
                </widget>
               </item>
               <item row="12" column="1">
-               <widget class="QWidget" name="widget_16" native="true">
+               <widget class="QWidget" name="basicHighlightWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_28">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1807,7 +1813,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_27">
+                  <widget class="QPushButton" name="basicHighlightPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1820,7 +1826,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_27">
+                  <widget class="QLineEdit" name="basicHighlightEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1839,7 +1845,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_27">
+                  <spacer name="basicHighlightSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1855,7 +1861,7 @@
                </widget>
               </item>
               <item row="11" column="1">
-               <widget class="QWidget" name="widget_17" native="true">
+               <widget class="QWidget" name="basicShadowWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_29">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1870,7 +1876,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_28">
+                  <widget class="QPushButton" name="basicShadowPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1883,7 +1889,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_28">
+                  <widget class="QLineEdit" name="basicShadowEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1902,7 +1908,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_28">
+                  <spacer name="basicShadowSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1918,7 +1924,7 @@
                </widget>
               </item>
               <item row="10" column="1">
-               <widget class="QWidget" name="widget_18" native="true">
+               <widget class="QWidget" name="basicButtonTextWidget" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_30">
                  <property name="leftMargin">
                   <number>0</number>
@@ -1933,7 +1939,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_29">
+                  <widget class="QPushButton" name="basicButtonTextPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1946,7 +1952,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_29">
+                  <widget class="QLineEdit" name="basicButtonTextEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -1965,7 +1971,7 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_29">
+                  <spacer name="basicButtonTextSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>
@@ -1980,87 +1986,6 @@
                 </layout>
                </widget>
               </item>
-              <item row="14" column="1">
-               <widget class="QWidget" name="widget_19" native="true">
-                <layout class="QHBoxLayout" name="horizontalLayout_31">
-                 <property name="leftMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="topMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="rightMargin">
-                  <number>0</number>
-                 </property>
-                 <property name="bottomMargin">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <widget class="QWidget" name="widget_20" native="true">
-                   <layout class="QHBoxLayout" name="horizontalLayout_32">
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
-                    <item>
-                     <widget class="QPushButton" name="basicBasePreview_30">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string/>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLineEdit" name="basicBaseEdit_30">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="text">
-                       <string>AABBCC</string>
-                      </property>
-                      <property name="maxLength">
-                       <number>8</number>
-                      </property>
-                      <property name="readOnly">
-                       <bool>false</bool>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="basicBaseSpacer_30">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>150</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </item>
               <item row="14" column="0">
                <widget class="QLabel" name="basicHighlightedTextLabel">
                 <property name="text">
@@ -2068,9 +1993,9 @@
                 </property>
                </widget>
               </item>
-              <item row="20" column="1">
-               <widget class="QWidget" name="widget_10" native="true">
-                <layout class="QHBoxLayout" name="horizontalLayout_20">
+              <item row="14" column="1">
+               <widget class="QWidget" name="HighlightedTextWidget" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_27">
                  <property name="leftMargin">
                   <number>0</number>
                  </property>
@@ -2084,7 +2009,7 @@
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QPushButton" name="basicBasePreview_20">
+                  <widget class="QPushButton" name="basicHighlightedTextPreview">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -2097,7 +2022,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLineEdit" name="basicBaseEdit_20">
+                  <widget class="QLineEdit" name="basicHighlightedTextEdit">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -2116,7 +2041,70 @@
                   </widget>
                  </item>
                  <item>
-                  <spacer name="basicBaseSpacer_20">
+                  <spacer name="basicHighlightedTextSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>150</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item row="20" column="1">
+               <widget class="QWidget" name="basicPlaceholderTextWidget" native="true">
+                <layout class="QHBoxLayout" name="horizontalLayout_20">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QPushButton" name="basicPlaceholderTextPreview">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="basicPlaceholderTextEdit">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="text">
+                    <string>AABBCC</string>
+                   </property>
+                   <property name="maxLength">
+                    <number>8</number>
+                   </property>
+                   <property name="readOnly">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="basicPlaceholderTextSpacer">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
                    </property>

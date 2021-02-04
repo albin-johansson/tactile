@@ -36,7 +36,9 @@ class settings_dialog final : public QDialog
 
   void update_export_components();
 
-  void update_appearance_components();
+  void update_theme_components();
+
+  void update_theme_preview();
 
  private slots:
   void handle_accept();
