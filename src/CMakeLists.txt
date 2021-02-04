@@ -230,6 +230,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/settings/settings_dialog.cpp
     gui/settings/settings_dialog.hpp
+    gui/settings/theme_options_context_menu.cpp
+    gui/settings/theme_options_context_menu.hpp
     gui/settings/settings_dialog.ui
 
     gui/startup/startup_widget.cpp
