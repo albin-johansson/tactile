@@ -325,6 +325,8 @@ set(TACTILE_SOURCE_FILES
     tool/tool_model.cpp
     tool/tool_model.hpp
 
+    util/file_handle.cpp
+    util/file_handle.hpp
     util/index_to_position.hpp
     util/nenya.hpp
     util/set_style_sheet.cpp
@@ -332,7 +334,8 @@ set(TACTILE_SOURCE_FILES
     util/setup_app.cpp
     util/setup_app.hpp
     util/tactile_qstring.hpp
-    util/vector_map.hpp)
+    util/vector_map.hpp
+    )
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
