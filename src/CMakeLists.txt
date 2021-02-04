@@ -146,8 +146,6 @@ set(TACTILE_SOURCE_FILES
     gui/base/tab_bar.hpp
     gui/base/tab_widget.cpp
     gui/base/tab_widget.hpp
-    gui/base/tree_widget_item.cpp
-    gui/base/tree_widget_item.hpp
 
     gui/dialog/about/about_dialog.cpp
     gui/dialog/about/about_dialog.hpp
