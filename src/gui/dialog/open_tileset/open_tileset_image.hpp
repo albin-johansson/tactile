@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QString>
-#include <QWidget>
+#include <QString>  // QString
+#include <QWidget>  // QWidget
 
 #include "maybe.hpp"
 

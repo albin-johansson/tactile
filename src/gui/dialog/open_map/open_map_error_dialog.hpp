@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QDialog>
-#include <QFileInfo>
+#include <QDialog>    // QDialog
+#include <QFileInfo>  // QFileInfo
 
 #include "smart_pointers.hpp"
 

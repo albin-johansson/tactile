@@ -1,12 +1,13 @@
 #pragma once
 
+#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "tileset_id.hpp"
 #include "vector_map.hpp"
 
-namespace tactile::gui {
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_tab)
 
-class tileset_tab;
+namespace tactile::gui {
 
 class tileset_tab_manager final
 {

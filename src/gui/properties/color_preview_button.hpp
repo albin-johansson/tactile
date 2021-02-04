@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QPushButton>
+#include <QColor>       // QColor
+#include <QPushButton>  // QPushButton
 
 namespace tactile::gui {
 

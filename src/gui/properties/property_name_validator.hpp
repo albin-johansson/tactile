@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QStandardItemModel>
-#include <QValidator>
+#include <QStandardItemModel>  // QStandardItemModel
+#include <QValidator>          // QValidator
 
 namespace tactile::gui {
 

@@ -1,15 +1,13 @@
 #pragma once
 
 #include "dock_widget.hpp"
-#include "layer.hpp"
-#include "layer_model.hpp"
+#include "forward_declare.hpp"
 #include "map_document.hpp"
 #include "not_null.hpp"
-#include "smart_pointers.hpp"
+
+TACTILE_FORWARD_DECLARE(tactile::gui, layer_widget)
 
 namespace tactile::gui {
-
-class layer_widget;
 
 class layer_dock final : public dock_widget
 {

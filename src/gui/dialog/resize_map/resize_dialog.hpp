@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QDialog>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QValidator>
-#include <concepts>  // invocable
+#include <QDialog>      // QDialog
+#include <QLineEdit>    // QLineEdit
+#include <QPushButton>  // QPushButton
+#include <QValidator>   // QValidator
+#include <concepts>     // invocable
 
 #include "maybe.hpp"
 #include "position.hpp"

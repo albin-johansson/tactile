@@ -1,11 +1,12 @@
 #pragma once
 
-#include <QDialog>
+#include <QDialog>  // QDialog
+
+#include "smart_pointers.hpp"
 
 namespace Ui {
 class about_dialog;
 }
-#include "smart_pointers.hpp"
 
 namespace tactile::gui {
 

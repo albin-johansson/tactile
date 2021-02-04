@@ -1,11 +1,13 @@
 #pragma once
 
-#include <QComboBox>
-#include <QLabel>
-#include <QStatusBar>
+#include <QComboBox>   // QComboBox
+#include <QLabel>      // QLabel
+#include <QStatusBar>  // QStatusBar
 
+#include "forward_declare.hpp"
 #include "layer_id.hpp"
-#include "map_document.hpp"
+
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::gui {
 

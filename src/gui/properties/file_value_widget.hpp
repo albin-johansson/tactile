@@ -1,13 +1,12 @@
 #pragma once
 
-#include <QFileInfo>
+#include <QFileInfo>  // QFileInfo
 
+#include "forward_declare.hpp"
 #include "property_value_widget.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class file_value_widget;
-}
+TACTILE_FORWARD_DECLARE(Ui, file_value_widget)
 
 namespace tactile::gui {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QMenu>
+#include <QMenu>  // QMenu
 
 namespace tactile::gui {
 

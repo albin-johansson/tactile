@@ -4,7 +4,9 @@
 #include "init_ui.hpp"
 #include "layer_item_context_menu.hpp"
 #include "layer_list_view.hpp"
+#include "layer_model.hpp"
 #include "layer_widget_context_menu.hpp"
+#include "map_document.hpp"
 #include "ui_layer_widget.h"
 
 namespace tactile::gui {
@@ -116,8 +118,8 @@ void layer_widget::spawn_context_menu(const QPoint& pos)
   }
 }
 
-void layer_widget::when_selection_changed(const maybe<QModelIndex>& selected,
-                                          const maybe<QModelIndex>&)
+void layer_widget::when_selection_changed(maybe<QModelIndex> selected,
+                                          maybe<QModelIndex>)
 {
   update_actions(selected);
 }

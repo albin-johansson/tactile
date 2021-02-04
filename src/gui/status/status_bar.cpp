@@ -1,8 +1,6 @@
 #include "status_bar.hpp"
 
-#include <QComboBox>
-#include <QLabel>
-
+#include "map_document.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::gui {

@@ -3,11 +3,10 @@
 #include <QDialog>  // QDialog
 #include <QString>  // QString
 
+#include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class settings_dialog;
-}
+TACTILE_FORWARD_DECLARE(Ui, settings_dialog)
 
 namespace tactile::gui {
 

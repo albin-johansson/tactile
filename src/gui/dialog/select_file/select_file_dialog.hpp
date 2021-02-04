@@ -1,7 +1,8 @@
 #pragma once
 
-#include <QFileDialog>
-#include <concepts>  // invocable
+#include <QFileDialog>  // QFileDialog
+#include <QString>      // QString
+#include <concepts>     // invocable
 
 namespace tactile::gui {
 

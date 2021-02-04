@@ -1,14 +1,15 @@
 #pragma once
 
-#include <QLabel>
-#include <QPoint>
-#include <QWidget>
+#include <QLabel>   // QLabel
+#include <QPoint>   // QPoint
+#include <QWidget>  // QWidget
 
+#include "forward_declare.hpp"
 #include "tileset.hpp"
 
-namespace tactile::gui {
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_rubber_band)
 
-class tileset_rubber_band;
+namespace tactile::gui {
 
 class tileset_image_widget final : public QWidget
 {

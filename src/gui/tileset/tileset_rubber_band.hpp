@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QRubberBand>
+#include <QRubberBand>  // QRubberBand
 
 #include "tile_height.hpp"
 #include "tile_width.hpp"

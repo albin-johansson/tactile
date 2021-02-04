@@ -1,24 +1,23 @@
 #pragma once
 
-#include <QWidget>
+#include <QWidget>  // QWidget
 
-#include "layer_model.hpp"
-#include "map_document.hpp"
+#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class layer_widget;
-}
+TACTILE_FORWARD_DECLARE(Ui, layer_widget)
+
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::vm, layer_model)
+TACTILE_FORWARD_DECLARE(tactile::gui, layer_list_view)
+TACTILE_FORWARD_DECLARE(tactile::gui, layer_item)
+TACTILE_FORWARD_DECLARE(tactile::gui, add_layer_context_menu)
+TACTILE_FORWARD_DECLARE(tactile::gui, layer_item_context_menu)
+TACTILE_FORWARD_DECLARE(tactile::gui, layer_widget_context_menu)
 
 namespace tactile::gui {
-
-class layer_list_view;
-class layer_item;
-class add_layer_context_menu;
-class layer_item_context_menu;
-class layer_widget_context_menu;
 
 class layer_widget final : public QWidget
 {
@@ -45,9 +44,8 @@ class layer_widget final : public QWidget
  private slots:
   [[maybe_unused]] void spawn_context_menu(const QPoint& pos);
 
-  [[maybe_unused]] void when_selection_changed(
-      const maybe<QModelIndex>& selected,
-      const maybe<QModelIndex>& deselected);
+  [[maybe_unused]] void when_selection_changed(maybe<QModelIndex> selected,
+                                               maybe<QModelIndex> deselected);
 
   [[maybe_unused]] void new_tile_layer_requested();
 

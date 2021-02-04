@@ -327,6 +327,7 @@ set(TACTILE_SOURCE_FILES
 
     util/file_handle.cpp
     util/file_handle.hpp
+    util/forward_declare.hpp
     util/index_to_position.hpp
     util/nenya.hpp
     util/set_style_sheet.cpp

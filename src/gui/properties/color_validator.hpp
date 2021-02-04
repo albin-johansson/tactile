@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QIntValidator>
+#include <QIntValidator>  // QIntValidator
 
 namespace tactile::gui {
 

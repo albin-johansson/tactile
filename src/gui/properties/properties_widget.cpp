@@ -5,8 +5,10 @@
 #include "add_property_dialog.hpp"
 #include "change_property_name_dialog.hpp"
 #include "init_ui.hpp"
+#include "map_document.hpp"
 #include "preferences.hpp"
 #include "property_context_menu.hpp"
+#include "property_model.hpp"
 #include "property_tree_view.hpp"
 #include "ui_properties_widget.h"
 

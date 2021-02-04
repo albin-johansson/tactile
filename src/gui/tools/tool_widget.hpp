@@ -1,14 +1,13 @@
 #pragma once
 
-#include <QButtonGroup>
-#include <QWidget>
+#include <QButtonGroup>  // QButtonGroup
+#include <QWidget>       // QWidget
 
 #include "czstring.hpp"
+#include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class tool_widget;
-}
+TACTILE_FORWARD_DECLARE(Ui, tool_widget)
 
 namespace tactile::gui {
 

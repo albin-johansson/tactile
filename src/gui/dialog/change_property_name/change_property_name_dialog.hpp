@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QDialog>
-#include <QStandardItemModel>
-#include <QValidator>
+#include <QDialog>             // QDialog
+#include <QStandardItemModel>  // QStandardItemModel
+#include <QValidator>          // QValidator
 
 #include "maybe.hpp"
 #include "smart_pointers.hpp"

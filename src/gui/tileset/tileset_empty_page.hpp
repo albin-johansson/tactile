@@ -1,12 +1,11 @@
 #pragma once
 
-#include <QWidget>
+#include <QWidget>  // QWidget
 
+#include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class tileset_empty_page;
-}
+TACTILE_FORWARD_DECLARE(Ui, tileset_empty_page)
 
 namespace tactile::gui {
 

@@ -1,9 +1,8 @@
 #include "tileset_content_page.hpp"
 
-#include <QGridLayout>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QTabBar>
+#include <QLineEdit>    // QLineEdit
+#include <QPushButton>  // QPushButton
+#include <QTabBar>      // QTabBar
 
 #include "icons.hpp"
 #include "init_ui.hpp"

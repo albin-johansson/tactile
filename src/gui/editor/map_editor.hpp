@@ -1,8 +1,9 @@
 #pragma once
 
-#include <QMouseEvent>
-#include <QWidget>
+#include <QMouseEvent>  // QMouseEvent
+#include <QWidget>      // QWidget
 
+#include "forward_declare.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
@@ -12,15 +13,10 @@ namespace Ui {
 class map_editor;
 }
 
-namespace tactile {
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::gui, map_tab_widget)
 
-namespace core {
-class map_document;
-}
-
-namespace gui {
-
-class map_tab_widget;
+namespace tactile::gui {
 
 /**
  * \class map_editor
@@ -112,5 +108,4 @@ class map_editor final : public QWidget
   void tab_changed(int index);
 };
 
-}  // namespace gui
-}  // namespace tactile
+}  // namespace tactile::gui

@@ -1,16 +1,14 @@
 #pragma once
 
-#include <QTreeView>  // QTreeView
+#include <QStandardItem>  // QStandardItem
+#include <QTreeView>      // QTreeView
 
+#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "property.hpp"
 #include "vector_map.hpp"
 
-class QStandardItem;
-
-namespace tactile::vm {
-class property_model;
-}
+TACTILE_FORWARD_DECLARE(tactile::vm, property_model)
 
 namespace tactile::gui {
 

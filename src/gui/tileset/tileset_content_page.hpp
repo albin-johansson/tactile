@@ -1,24 +1,22 @@
 #pragma once
 
 #include <QWidget>  // QWidget
-#include <map>      // map
 
+#include "forward_declare.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_tab_manager.hpp"
+#include "vector_map.hpp"
 
-namespace Ui {
-class tileset_content_page;
-}
+TACTILE_FORWARD_DECLARE(Ui, tileset_content_page)
+TACTILE_FORWARD_DECLARE(tactile::gui, tab_widget)
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_tab)
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_tab_context_menu)
 
 namespace tactile::gui {
-
-class tab_widget;
-class tileset_tab;
-class tileset_tab_context_menu;
 
 /**
  * \class tileset_content_page
@@ -99,7 +97,7 @@ class tileset_content_page final : public QWidget
   tab_widget* m_tabWidget{};
   tileset_tab_context_menu* m_contextMenu{};
   maybe<map_id> m_currentMap;
-  std::map<map_id, tileset_tab_manager> m_tabManagers;
+  vector_map<map_id, tileset_tab_manager> m_tabManagers;
 
   /**
    * \brief Switches to the tileset tabs associated with the specified map.

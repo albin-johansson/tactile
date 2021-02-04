@@ -1,20 +1,18 @@
 #pragma once
 
-#include <QWidget>
+#include <QWidget>  // QWidget
 
+#include "forward_declare.hpp"
 #include "map_id.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-namespace Ui {
-class tileset_widget;
-}
+TACTILE_FORWARD_DECLARE(Ui, tileset_widget)
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_content_page)
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_empty_page)
 
 namespace tactile::gui {
-
-class tileset_content_page;
-class tileset_empty_page;
 
 class tileset_widget final : public QWidget
 {

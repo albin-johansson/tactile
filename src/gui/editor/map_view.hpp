@@ -1,21 +1,17 @@
 #pragma once
 
-#include <QGraphicsView>
-#include <QMouseEvent>
-#include <QRect>
+#include <QGraphicsView>  // QGraphicsView
+#include <QMouseEvent>    // QMouseEvent
+#include <QRect>          // QRect
 
+#include "forward_declare.hpp"
 #include "map_id.hpp"
 #include "position.hpp"
 
-namespace tactile {
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::gui, map_scene)
 
-namespace core {
-class map_document;
-}
-
-namespace gui {
-
-class map_scene;
+namespace tactile::gui {
 
 /**
  * \class map_view
@@ -80,5 +76,4 @@ class map_view final : public QGraphicsView
   [[nodiscard]] auto get_map_scene() const -> const map_scene*;
 };
 
-}  // namespace gui
-}  // namespace tactile
+}  // namespace tactile::gui

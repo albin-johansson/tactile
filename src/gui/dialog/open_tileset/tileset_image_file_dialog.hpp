@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QFileDialog>
+#include <QFileDialog>  // QFileDialog
 
 namespace tactile::gui {
 

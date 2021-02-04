@@ -1,17 +1,17 @@
 #pragma once
 
-#include <QPoint>
-#include <QString>
-#include <QWidget>
+#include <QPoint>       // QPoint
+#include <QScrollArea>  // QScrollArea
+#include <QString>      // QString
+#include <QWidget>      // QWidget
 
+#include "forward_declare.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-class QScrollArea;
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_image_widget)
 
 namespace tactile::gui {
-
-class tileset_image_widget;
 
 class tileset_tab final : public QWidget
 {

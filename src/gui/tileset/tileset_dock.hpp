@@ -1,18 +1,16 @@
 #pragma once
 
 #include "dock_widget.hpp"
+#include "forward_declare.hpp"
 #include "map_id.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-namespace tactile::core {
-class map_document;
-}
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_widget)
 
 namespace tactile::gui {
-
-class tileset_widget;
 
 class tileset_dock final : public dock_widget
 {

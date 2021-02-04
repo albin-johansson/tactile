@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QDockWidget>
+#include <QDockWidget>  // QDockWidget
 
 namespace tactile::gui {
 

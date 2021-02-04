@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QTabWidget>
+#include <QTabWidget>  // QTabWidget
 
 namespace tactile::gui {
 

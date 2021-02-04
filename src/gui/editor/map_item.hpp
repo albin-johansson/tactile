@@ -2,17 +2,14 @@
 
 #include <QGraphicsItem>  // QGraphicsItem
 
+#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
 #include "tile_id.hpp"
 
-namespace tactile {
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
-namespace core {
-class map_document;
-}  // namespace core
-
-namespace gui {
+namespace tactile::gui {
 
 /**
  * \class map_item
@@ -53,5 +50,4 @@ class map_item final : public QGraphicsItem
   maybe<core::position> m_mousePosition;
 };
 
-}  // namespace gui
-}  // namespace tactile
+}  // namespace tactile::gui

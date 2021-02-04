@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QDialog>
-#include <QStandardItemModel>
-#include <QValidator>
-#include <concepts>  // invocable
+#include <QDialog>             // QDialog
+#include <QStandardItemModel>  // QStandardItemModel
+#include <QValidator>          // QValidator
+#include <concepts>            // invocable
 
 #include "maybe.hpp"
 #include "property.hpp"

@@ -1,6 +1,5 @@
 #include "render_map.hpp"
 
-#include <QPainter>   // QPainter
 #include <algorithm>  // min, max
 
 #include "layer_utils.hpp"

@@ -1,15 +1,14 @@
 #pragma once
 
 #include "dock_widget.hpp"
-#include "map_document.hpp"
+#include "forward_declare.hpp"
 #include "not_null.hpp"
-#include "property.hpp"
-#include "property_model.hpp"
 #include "smart_pointers.hpp"
 
-namespace tactile::gui {
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::gui, properties_widget)
 
-class properties_widget;
+namespace tactile::gui {
 
 class properties_dock final : public dock_widget
 {

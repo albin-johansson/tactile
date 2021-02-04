@@ -1,21 +1,17 @@
 #pragma once
 
-#include <QGraphicsScene>
-#include <QPainter>
-#include <QRect>
+#include <QGraphicsScene>  // QGraphicsScene
+#include <QPainter>        // QPainter
+#include <QRect>           // QRect
 
+#include "forward_declare.hpp"
 #include "map_id.hpp"
 #include "position.hpp"
 
-namespace tactile {
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::gui, map_item)
 
-namespace core {
-class map_document;
-}
-
-namespace gui {
-
-class map_item;
+namespace tactile::gui {
 
 class map_scene final : public QGraphicsScene
 {
@@ -49,5 +45,4 @@ class map_scene final : public QGraphicsScene
   map_id m_id;
 };
 
-}  // namespace gui
-}  // namespace tactile
+}  // namespace tactile::gui

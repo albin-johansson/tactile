@@ -1,32 +1,32 @@
 #pragma once
 
-#include <QActionGroup>
-#include <QMainWindow>
-#include <QString>
-#include <QWidget>
+#include <QActionGroup>  // QActionGroup
+#include <QMainWindow>   // QMainWindow
+#include <QString>       // QString
+#include <QWidget>       // QWidget
 
-#include "layer_model.hpp"
-#include "map_document.hpp"
+#include "forward_declare.hpp"
+#include "layer_id.hpp"
 #include "map_id.hpp"
+#include "not_null.hpp"
 #include "position.hpp"
 #include "property.hpp"
-#include "property_model.hpp"
 #include "smart_pointers.hpp"
-#include "tactile_qstring.hpp"
+#include "tileset.hpp"
+#include "tileset_id.hpp"
 #include "tool_id.hpp"
 
-namespace Ui {
-class window;
-}
+TACTILE_FORWARD_DECLARE(Ui, window)
+TACTILE_FORWARD_DECLARE(tactile::core, layer)
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::gui, map_editor)
+TACTILE_FORWARD_DECLARE(tactile::gui, tool_dock)
+TACTILE_FORWARD_DECLARE(tactile::gui, layer_dock)
+TACTILE_FORWARD_DECLARE(tactile::gui, tileset_dock)
+TACTILE_FORWARD_DECLARE(tactile::gui, properties_dock)
+TACTILE_FORWARD_DECLARE(tactile::gui, status_bar)
 
 namespace tactile::gui {
-
-class map_editor;
-class tool_dock;
-class layer_dock;
-class tileset_dock;
-class properties_dock;
-class status_bar;
 
 /**
  * \class window

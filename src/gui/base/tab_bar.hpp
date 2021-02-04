@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QLineEdit>
-#include <QTabBar>
+#include <QLineEdit>  // QLineEdit
+#include <QTabBar>    // QTabBar
 
 #include "maybe.hpp"
 

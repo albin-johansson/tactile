@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QDialog>
-#include <QFileInfo>
-#include <QImage>
-#include <QLineEdit>
-#include <QPixmap>
-#include <QValidator>
-#include <concepts>  // invocable
+#include <QDialog>     // QDialog
+#include <QFileInfo>   // QFileInfo
+#include <QImage>      // QImage
+#include <QLineEdit>   // QLineEdit
+#include <QPixmap>     // QPixmap
+#include <QValidator>  // QValidator
+#include <concepts>    // invocable
 
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
