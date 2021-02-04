@@ -159,6 +159,10 @@ set(TACTILE_SOURCE_FILES
     gui/dialog/change_property_name/change_property_name_dialog.hpp
     gui/dialog/change_property_name/change_property_name_dialog.ui
 
+
+    gui/dialog/import_theme/import_theme_dialog.cpp
+    gui/dialog/import_theme/import_theme_dialog.hpp
+
     gui/dialog/open_map/open_map_dialog.cpp
     gui/dialog/open_map/open_map_dialog.hpp
     gui/dialog/open_map/open_map_error_dialog.cpp
@@ -366,6 +370,7 @@ target_include_directories(libTactile
     PUBLIC gui/dialog/about
     PUBLIC gui/dialog/add_property
     PUBLIC gui/dialog/change_property_name
+    PUBLIC gui/dialog/import_theme
     PUBLIC gui/dialog/open_map
     PUBLIC gui/dialog/open_tileset
     PUBLIC gui/dialog/resize_map
