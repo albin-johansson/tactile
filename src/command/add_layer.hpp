@@ -1,15 +1,14 @@
 #pragma once
 
-#include <QUndoCommand>
+#include <QUndoCommand>  // QUndoCommand
 
 #include "command_id.hpp"
+#include "forward_declare.hpp"
 #include "layer.hpp"
 #include "layer_id.hpp"
 #include "smart_pointers.hpp"
 
-namespace tactile::core {
-class map_document;
-}
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 

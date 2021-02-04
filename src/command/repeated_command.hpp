@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QUndoCommand>
+#include <QUndoCommand>  // QUndoCommand
 
 #include "map.hpp"
 

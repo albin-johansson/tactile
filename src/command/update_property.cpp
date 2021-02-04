@@ -2,6 +2,7 @@
 
 #include <utility>  // move
 
+#include "property_manager.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 

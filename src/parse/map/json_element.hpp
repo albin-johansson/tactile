@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QJsonObject>
+#include <QJsonObject>  // QJsonObject
 
 #include "element_id.hpp"
 #include "maybe.hpp"

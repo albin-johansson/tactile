@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QPalette>
-#include <QString>
-#include <QStringView>
+#include <QPalette>     // QPalette
+#include <QString>      // QString
+#include <QStringView>  // QStringView
 
 #include "czstring.hpp"
 #include "maybe.hpp"

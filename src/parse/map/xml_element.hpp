@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QtXml>
+#include <QDomElement>  // QDomElement
 
 #include "element_id.hpp"
 #include "maybe.hpp"

@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QColor>  // QColor
-#include <QDebug>
+#include <QColor>     // QColor
 #include <QFileInfo>  // QFileInfo
 #include <QString>    // QString
 

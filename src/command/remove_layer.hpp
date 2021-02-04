@@ -1,19 +1,17 @@
 #pragma once
 
-#include <QUndoCommand>
+#include <QUndoCommand>  // QUndoCommand
 
 #include "command_id.hpp"
+#include "forward_declare.hpp"
 #include "layer.hpp"
 #include "layer_id.hpp"
 #include "remove_layer.hpp"
 #include "smart_pointers.hpp"
 
-namespace tactile {
-namespace core {
-class map_document;
-}
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
-namespace cmd {
+namespace tactile::cmd {
 
 class remove_layer final : public QUndoCommand
 {
@@ -36,5 +34,4 @@ class remove_layer final : public QUndoCommand
   int m_index{};
 };
 
-}  // namespace cmd
-}  // namespace tactile
+}  // namespace tactile::cmd

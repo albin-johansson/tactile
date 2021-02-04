@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QFileInfo>
-#include <QJsonDocument>
+#include <QFileInfo>      // QFileInfo
+#include <QJsonDocument>  // QJsonDocument
 
 #include "maybe.hpp"
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QPalette>
-#include <QString>
+#include <QPalette>  // QPalette
+#include <QString>   // QString
 
 #include "czstring.hpp"
 

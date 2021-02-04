@@ -1,6 +1,8 @@
 #pragma once
 
-#include <QString>
+#include <QString>  // QString
+
+#include "tactile_qstring.hpp"
 
 namespace tactile {
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QUndoCommand>
-#include <map>      // map
-#include <utility>  // pair
+#include <QUndoCommand>  // QUndoCommand
+#include <map>           // map
+#include <utility>       // pair
 
 #include "map.hpp"
 #include "position.hpp"

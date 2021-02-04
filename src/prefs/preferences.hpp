@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QByteArray>
-#include <QPalette>
-#include <QString>
+#include <QByteArray>  // QByteArray
+#include <QPalette>    // QPalette
+#include <QString>     // QString
 
 #include "setting.hpp"
 

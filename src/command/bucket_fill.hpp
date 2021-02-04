@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QUndoCommand>
-#include <vector>  // vector
+#include <QUndoCommand>  // QUndoCommand
+#include <vector>        // vector
 
 #include "command_id.hpp"
 #include "map.hpp"

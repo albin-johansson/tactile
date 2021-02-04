@@ -1,22 +1,19 @@
 #pragma once
 
-#include <QApplication>
-#include <QString>
-#include <QUrl>
+#include <QApplication>  // QApplication
+#include <QString>       // QString
+#include <QUrl>          // QUrl
 
 #include "czstring.hpp"
+#include "forward_declare.hpp"
 #include "position.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 
-namespace tactile {
+TACTILE_FORWARD_DECLARE(tactile::core, model)
+TACTILE_FORWARD_DECLARE(tactile::gui, window)
 
-namespace core {
-class model;
-}
-namespace gui {
-class window;
-}
+namespace tactile {
 
 /**
  * \class tactile_app

@@ -1,11 +1,10 @@
 #pragma once
 
-#include <QFileInfo>
-#include <QtXml>
-#include <concepts>  // constructible_from, invocable
+#include <QDomElement>  // QDomElement, QDomDocument
+#include <QFileInfo>    // QFileInfo
+#include <concepts>     // constructible_from, invocable
 
 #include "maybe.hpp"
-#include "tactile_error.hpp"
 
 namespace tactile::xml {
 

@@ -1,15 +1,15 @@
 #pragma once
 
-#include <QMouseEvent>
-#include <QPoint>
+#include <QMouseEvent>  // QMouseEvent
+#include <QPoint>       // QPoint
 
+#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
 
+TACTILE_FORWARD_DECLARE(tactile::core, model)
+
 namespace tactile {
-namespace core {
-class model;
-}
 
 /**
  * \class abstract_tool

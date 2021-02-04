@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QUndoStack>
-#include <concepts>  // derived_from
-#include <utility>   // forward
+#include <QUndoStack>  // QUndoStack
+#include <concepts>    // derived_from
+#include <utility>     // forward
 
 namespace tactile {
 

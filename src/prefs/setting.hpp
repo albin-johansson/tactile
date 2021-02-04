@@ -1,9 +1,9 @@
 #pragma once
 
-#include <QSettings>
-#include <QString>
-#include <concepts>  // invocable, same_as
-#include <utility>   // forward
+#include <QSettings>  // QSettings
+#include <QString>    // QString
+#include <concepts>   // invocable, same_as
+#include <utility>    // forward
 
 #include "maybe.hpp"
 

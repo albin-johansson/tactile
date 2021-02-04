@@ -1,8 +1,8 @@
 #pragma once
 
-#include <QString>  // QString
-#include <QtXml>    // QDomDocument
-#include <vector>   // vector
+#include <QDomDocument>  // QDomDocument
+#include <QString>       // QString
+#include <vector>        // vector
 
 #include "element_id.hpp"
 #include "map_parse_data.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QUndoCommand>
+#include <QUndoCommand>  // QUndoCommand
 
 #include "command_id.hpp"
 #include "czstring.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QString>
+#include <QString>  // QString
 
 namespace tactile::parse {
 
