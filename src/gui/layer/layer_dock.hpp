@@ -2,9 +2,9 @@
 
 #include "dock_widget.hpp"
 #include "forward_declare.hpp"
-#include "map_document.hpp"
 #include "not_null.hpp"
 
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 TACTILE_FORWARD_DECLARE(tactile::gui, layer_widget)
 
 namespace tactile::gui {
