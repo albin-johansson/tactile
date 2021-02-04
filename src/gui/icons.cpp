@@ -44,6 +44,30 @@ auto copy() -> const QIcon&
   return icon;
 }
 
+auto open() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/opened-folder.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
+auto save_as() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/save-as.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
+auto reset() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/reset.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
 auto paste() -> const QIcon&
 {
   static const QIcon icon{

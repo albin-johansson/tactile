@@ -21,6 +21,12 @@ namespace tactile::icons {
 
 [[nodiscard]] auto copy() -> const QIcon&;
 
+[[nodiscard]] auto open() -> const QIcon&;
+
+[[nodiscard]] auto save_as() -> const QIcon&;
+
+[[nodiscard]] auto reset() -> const QIcon&;
+
 [[nodiscard]] auto paste() -> const QIcon&;
 
 [[nodiscard]] auto tile_layer() -> const QIcon&;
