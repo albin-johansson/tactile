@@ -7,6 +7,7 @@
 #include "smart_pointers.hpp"
 
 TACTILE_FORWARD_DECLARE(Ui, settings_dialog)
+TACTILE_FORWARD_DECLARE(tactile::gui, color_preview_button)
 
 namespace tactile::gui {
 
@@ -24,6 +25,25 @@ class settings_dialog final : public QDialog
 
  private:
   unique<Ui::settings_dialog> m_ui;
+  color_preview_button* m_basicBasePreview{};
+  color_preview_button* m_basicAlternateBasePreview{};
+  color_preview_button* m_basicWindowPreview{};
+  color_preview_button* m_basicWindowTextPreview{};
+  color_preview_button* m_basicLightPreview{};
+  color_preview_button* m_basicMidLightPreview{};
+  color_preview_button* m_basicDarkPreview{};
+  color_preview_button* m_basicLinkPreview{};
+  color_preview_button* m_basicLinkVisitedPreview{};
+  color_preview_button* m_basicButtonPreview{};
+  color_preview_button* m_basicButtonTextPreview{};
+  color_preview_button* m_basicHighlightPreview{};
+  color_preview_button* m_basicHighlightedTextPreview{};
+  color_preview_button* m_basicPlaceholderTextPreview{};
+  color_preview_button* m_basicTooltipBasePreview{};
+  color_preview_button* m_basicTooltipTextPreview{};
+  color_preview_button* m_basicTextPreview{};
+  color_preview_button* m_basicShadowPreview{};
+
   QString m_theme;
   QString m_defaultFormat;
   int m_tileWidth{};

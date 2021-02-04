@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QValidator>
 
+#include "color_preview_button.hpp"
 #include "init_ui.hpp"
 #include "maybe.hpp"
 #include "preferences.hpp"
@@ -35,10 +36,49 @@ using namespace prefs;
 settings_dialog::settings_dialog(QWidget* parent)
     : QDialog{parent}
     , m_ui{init_ui<Ui::settings_dialog>(this)}
+    , m_basicBasePreview{new color_preview_button{Qt::black, this}}
+    , m_basicAlternateBasePreview{new color_preview_button{Qt::black, this}}
+    , m_basicWindowPreview{new color_preview_button{Qt::black, this}}
+    , m_basicWindowTextPreview{new color_preview_button{Qt::black, this}}
+    , m_basicLightPreview{new color_preview_button{Qt::black, this}}
+    , m_basicMidLightPreview{new color_preview_button{Qt::black, this}}
+    , m_basicDarkPreview{new color_preview_button{Qt::black, this}}
+    , m_basicLinkPreview{new color_preview_button{Qt::black, this}}
+    , m_basicLinkVisitedPreview{new color_preview_button{Qt::black, this}}
+    , m_basicButtonPreview{new color_preview_button{Qt::black, this}}
+    , m_basicButtonTextPreview{new color_preview_button{Qt::black, this}}
+    , m_basicHighlightPreview{new color_preview_button{Qt::black, this}}
+    , m_basicHighlightedTextPreview{new color_preview_button{Qt::black, this}}
+    , m_basicPlaceholderTextPreview{new color_preview_button{Qt::black, this}}
+    , m_basicTooltipBasePreview{new color_preview_button{Qt::black, this}}
+    , m_basicTooltipTextPreview{new color_preview_button{Qt::black, this}}
+    , m_basicTextPreview{new color_preview_button{Qt::black, this}}
+    , m_basicShadowPreview{new color_preview_button{Qt::black, this}}
 {
   auto* validator = new QIntValidator{0, 9'999, this};
   m_ui->tileWidthEdit->setValidator(validator);
   m_ui->tileHeightEdit->setValidator(validator);
+
+  // clang-format off
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Base"), m_basicBasePreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Alternate Base"), m_basicAlternateBasePreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Window"), m_basicWindowPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Window Text"), m_basicWindowTextPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Light"), m_basicLightPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Mid Light"), m_basicMidLightPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Dark"), m_basicDarkPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Link"), m_basicLinkPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Link (visited)"), m_basicLinkVisitedPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Button"), m_basicButtonPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Button Text"), m_basicButtonTextPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Highlight"), m_basicHighlightPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Highlighted Text"), m_basicHighlightedTextPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Placeholder Text"), m_basicPlaceholderTextPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Tooltip Base"), m_basicTooltipBasePreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Tooltip Text"), m_basicTooltipTextPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Text"), m_basicTextPreview);
+  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Shadow"), m_basicShadowPreview);
+  // clang-format on
 
   fetch_current_settings();
 
@@ -90,37 +130,24 @@ void settings_dialog::update_theme_components()
 void settings_dialog::update_theme_preview()
 {
   if (const auto theme = theme::from_name(m_ui->themeComboBox->currentText())) {
-    static const auto fmt = TACTILE_QSTRING(u"background-color: %1");
-
-    const auto update =
-        [](QPushButton* button, QLineEdit* edit, const QBrush& brush) {
-          const auto name = brush.color().name(QColor::HexArgb);
-          edit->setText(name);
-          button->setStyleSheet(fmt.arg(name));
-        };
-
-    // clang-format off
-    update(m_ui->basicBasePreview, m_ui->basicBaseEdit, theme->base());
-    update(m_ui->basicAlternateBasePreview, m_ui->basicAlternateBaseEdit, theme->alternateBase());
-    update(m_ui->basicWindowPreview, m_ui->basicWindowEdit, theme->window());
-    update(m_ui->basicWindowTextPreview, m_ui->basicWindowTextEdit, theme->windowText());
-    update(m_ui->basicLightPreview, m_ui->basicLightEdit, theme->light());
-    update(m_ui->basicMidLightPreview, m_ui->basicMidLightEdit, theme->midlight());
-    update(m_ui->basicMidPreview, m_ui->basicMidEdit, theme->mid());
-    update(m_ui->basicDarkPreview, m_ui->basicDarkEdit, theme->dark());
-    update(m_ui->basicLinkPreview, m_ui->basicLinkEdit, theme->link());
-    update(m_ui->basicLinkVisitedPreview, m_ui->basicLinkVisitedEdit, theme->linkVisited());
-    update(m_ui->basicButtonPreview, m_ui->basicButtonEdit, theme->button());
-    update(m_ui->basicButtonTextPreview, m_ui->basicButtonTextEdit, theme->buttonText());
-    update(m_ui->basicHighlightPreview, m_ui->basicHighlightEdit, theme->highlight());
-    update(m_ui->basicHighlightedTextPreview, m_ui->basicHighlightedTextEdit, theme->highlightedText());
-    update(m_ui->basicPlaceholderTextPreview, m_ui->basicPlaceholderTextEdit, theme->placeholderText());
-    update(m_ui->basicTooltipBasePreview, m_ui->basicTooltipBaseEdit, theme->toolTipBase());
-    update(m_ui->basicTooltipTextPreview, m_ui->basicTooltipTextEdit, theme->toolTipText());
-    update(m_ui->basicBrightTextPreview, m_ui->basicBrightTextEdit, theme->brightText());
-    update(m_ui->basicTextPreview, m_ui->basicTextEdit, theme->text());
-    update(m_ui->basicShadowPreview, m_ui->basicShadowEdit, theme->shadow());
-    // clang-format on
+    m_basicBasePreview->set_color(theme->base().color());
+    m_basicAlternateBasePreview->set_color(theme->alternateBase().color());
+    m_basicWindowPreview->set_color(theme->window().color());
+    m_basicWindowTextPreview->set_color(theme->windowText().color());
+    m_basicLightPreview->set_color(theme->light().color());
+    m_basicMidLightPreview->set_color(theme->midlight().color());
+    m_basicDarkPreview->set_color(theme->dark().color());
+    m_basicLinkPreview->set_color(theme->link().color());
+    m_basicLinkVisitedPreview->set_color(theme->linkVisited().color());
+    m_basicButtonPreview->set_color(theme->button().color());
+    m_basicButtonTextPreview->set_color(theme->buttonText().color());
+    m_basicHighlightPreview->set_color(theme->highlight().color());
+    m_basicHighlightedTextPreview->set_color(theme->highlightedText().color());
+    m_basicPlaceholderTextPreview->set_color(theme->placeholderText().color());
+    m_basicTooltipBasePreview->set_color(theme->toolTipBase().color());
+    m_basicTooltipTextPreview->set_color(theme->toolTipText().color());
+    m_basicTextPreview->set_color(theme->text().color());
+    m_basicShadowPreview->set_color(theme->shadow().color());
   }
 }
 
