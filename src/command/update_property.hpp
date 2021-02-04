@@ -6,6 +6,7 @@
 #include "command_id.hpp"
 #include "forward_declare.hpp"
 #include "maybe.hpp"
+#include "property.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
 
