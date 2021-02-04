@@ -239,7 +239,7 @@ void settings_dialog::fetch_current_settings()
   m_tileWidth = saves::tile_width().value();
   m_tileHeight = saves::tile_height().value();
 
-  // Appearance
+  // Theme
   m_theme = gfx::theme_name().value();
 }
 
