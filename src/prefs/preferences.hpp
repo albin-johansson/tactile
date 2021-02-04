@@ -1,8 +1,9 @@
 #pragma once
 
-#include <QByteArray>  // QByteArray
-#include <QPalette>    // QPalette
-#include <QString>     // QString
+#include <QByteArray>   // QByteArray
+#include <QPalette>     // QPalette
+#include <QString>      // QString
+#include <QStringList>  // QStringList
 
 #include "setting.hpp"
 
@@ -78,6 +79,11 @@ namespace gfx {
  * \since 0.1.0
  */
 [[nodiscard]] auto theme() -> setting<QPalette>;
+
+// A list of names of user-defined themes, located in the settings folder
+[[nodiscard]] auto user_themes() -> setting<QStringList>;
+
+[[nodiscard]] auto user_themes_def() -> QStringList;
 
 /**
  * \brief Returns a setting that represents the name of the application theme.

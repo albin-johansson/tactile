@@ -29,6 +29,17 @@ auto gfx::theme() -> setting<QPalette>
   return setting<QPalette>{str};
 }
 
+auto gfx::user_themes() -> setting<QStringList>
+{
+  static const auto str = TACTILE_QSTRING(u"graphics/userThemes");
+  return setting<QStringList>{str};
+}
+
+auto gfx::user_themes_def() -> QStringList
+{
+  return QStringList{};
+}
+
 auto gfx::theme_name() -> setting<QString>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/themeName");
@@ -137,6 +148,7 @@ void validate()
   gfx::tileset_widget_visible().set_if_missing(gfx::tileset_widget_visible_def());
   gfx::layer_widget_visible().set_if_missing(gfx::layer_widget_visible_def());
   gfx::properties_widget_visible().set_if_missing(gfx::properties_widget_visible_def());
+  gfx::user_themes().set_if_missing(gfx::user_themes_def());
   // clang-format on
 
   saves::embed_tilesets().set_if_missing(saves::embed_tilesets_def());
