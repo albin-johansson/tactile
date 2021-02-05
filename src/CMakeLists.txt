@@ -126,15 +126,15 @@ set(TACTILE_SOURCE_FILES
     core/viewmodel/property/property_model.cpp
     core/viewmodel/property/property_model.hpp
 
-    export/export_options.cpp
-    export/export_options.hpp
-    export/save_map_document.cpp
-    export/save_map_document.hpp
-    export/save_map_document_as_json.cpp
-    export/save_map_document_as_json.hpp
-    export/save_map_document_as_xml.cpp
-    export/save_map_document_as_xml.hpp
-    export/tiled_version.hpp
+    export/map/export_options.cpp
+    export/map/export_options.hpp
+    export/map/save_map_document.cpp
+    export/map/save_map_document.hpp
+    export/map/save_map_document_as_json.cpp
+    export/map/save_map_document_as_json.hpp
+    export/map/save_map_document_as_xml.cpp
+    export/map/save_map_document_as_xml.hpp
+    export/map/tiled_version.hpp
 
     gui/icons.cpp
     gui/icons.hpp
@@ -370,6 +370,7 @@ target_include_directories(libTactile
     PUBLIC core/viewmodel/layer
     PUBLIC core/viewmodel/property
     PUBLIC export
+    PUBLIC export/map
     PUBLIC gui
     PUBLIC gui/base
     PUBLIC gui/dialog
