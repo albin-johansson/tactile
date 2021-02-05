@@ -234,6 +234,8 @@ set(TACTILE_SOURCE_FILES
     gui/properties/file_value_widget.ui
     gui/properties/properties_widget.ui
 
+    gui/settings/color_preview_manager.cpp
+    gui/settings/color_preview_manager.hpp
     gui/settings/settings_dialog.cpp
     gui/settings/settings_dialog.hpp
     gui/settings/theme_options_context_menu.cpp
