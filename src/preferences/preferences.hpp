@@ -1,9 +1,11 @@
 #pragma once
 
 #include <QByteArray>   // QByteArray
+#include <QMap>         // QMap
 #include <QPalette>     // QPalette
 #include <QString>      // QString
 #include <QStringList>  // QStringList
+#include <QVariant>     // QVariant
 
 #include "setting.hpp"
 
@@ -80,10 +82,12 @@ namespace gfx {
  */
 [[nodiscard]] auto theme() -> setting<QPalette>;
 
-// A list of names of user-defined themes, located in the settings folder
-[[nodiscard]] auto user_themes() -> setting<QStringList>;
+// A map with user-defined names and an associated QPalette
+using theme_map = QMap<QString, QVariant>;
 
-[[nodiscard]] auto user_themes_def() -> QStringList;
+[[nodiscard]] auto user_themes() -> setting<theme_map>;
+
+[[nodiscard]] auto user_themes_def() -> theme_map;
 
 /**
  * \brief Returns a setting that represents the name of the application theme.
@@ -94,7 +98,7 @@ namespace gfx {
  */
 [[nodiscard]] auto theme_name() -> setting<QString>;
 
-[[nodiscard]] auto theme_name_def() -> const QString&;
+//[[nodiscard]] auto theme_name_def() -> const QString&;
 
 [[nodiscard]] auto tool_widget_visible() -> setting<bool>;
 

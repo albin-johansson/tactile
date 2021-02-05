@@ -3,9 +3,11 @@
 #include <QPalette>     // QPalette
 #include <QString>      // QString
 #include <QStringView>  // QStringView
+#include <vector>       // vector
 
 #include "czstring.hpp"
 #include "maybe.hpp"
+#include "vector_map.hpp"
 
 /**
  * \namespace tactile::theme
@@ -14,14 +16,18 @@
  *
  * \since 0.1.0
  */
-namespace tactile::theme {
+namespace tactile {
+
+void validate_themes();
 
 /**
  * \brief Resets the currently active theme to the default theme.
  *
  * \since 0.1.0
  */
-void reset();
+void reset_theme();
+
+auto register_theme(const QString& name, const QPalette& palette) -> bool;
 
 /**
  * \brief Sets the currently active theme.
@@ -33,9 +39,11 @@ void reset();
  *
  * \param name the name of the desired theme.
  *
+ * \return `true` if the theme was successfully set; `false` otherwise.
+ *
  * \since 0.1.0
  */
-void set_theme(const QString& name);
+auto set_theme(const QString& name) -> bool;
 
 /**
  * \brief Returns the palette associated with the specified name.
@@ -47,34 +55,11 @@ void set_theme(const QString& name);
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto from_name(QStringView name) -> maybe<QPalette>;
+[[nodiscard]] auto get_theme(const QString& name) -> maybe<QPalette>;
 
-/**
- * \brief Returns the palette of the dark theme.
- *
- * \return the palette of the dark theme.
- *
- * \since 0.1.0
- */
-[[nodiscard]] auto get_dark() -> const QPalette&;
+[[nodiscard]] auto get_standard_themes() -> vector_map<QString, QPalette>;
 
-/**
- * \brief Returns the palette of the light theme.
- *
- * \return the palette of the light theme.
- *
- * \since 0.1.0
- */
-[[nodiscard]] auto get_light() -> const QPalette&;
-
-/**
- * \brief Returns the palette of the Atom One Dark theme.
- *
- * \return the palette of the Atom One Dark theme.
- *
- * \since 0.1.0
- */
-[[nodiscard]] auto get_atom_one_dark() -> const QPalette&;
+[[nodiscard]] auto get_all_theme_names() -> std::vector<QString>;
 
 /**
  * \brief Returns the palette of the default theme.
@@ -83,15 +68,8 @@ void set_theme(const QString& name);
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto get_default() -> const QPalette&;
+[[nodiscard]] auto get_default_theme() -> const QPalette&;
 
-/**
- * \brief Returns the name of the default theme.
- *
- * \return the name of the default theme.
- *
- * \since 0.1.0
- */
-[[nodiscard]] auto get_default_name() -> QStringView;
+[[nodiscard]] auto get_default_theme_name() -> QStringView;
 
-}  // namespace tactile::theme
+}  // namespace tactile

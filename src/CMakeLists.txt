@@ -312,11 +312,11 @@ set(TACTILE_SOURCE_FILES
     parse/xml/xml_utils.cpp
     parse/xml/xml_utils.hpp
 
-    prefs/preferences.cpp
-    prefs/preferences.hpp
-    prefs/setting.hpp
-    prefs/theme.cpp
-    prefs/theme.hpp
+    preferences/preferences.cpp
+    preferences/preferences.hpp
+    preferences/setting.hpp
+    preferences/theme.cpp
+    preferences/theme.hpp
 
     tool/abstract_tool.cpp
     tool/abstract_tool.hpp
@@ -399,7 +399,7 @@ target_include_directories(libTactile
     PUBLIC parse/map
     PUBLIC parse/palette
     PUBLIC parse/xml
-    PUBLIC prefs
+    PUBLIC preferences
     PUBLIC tool
     PUBLIC util)
 

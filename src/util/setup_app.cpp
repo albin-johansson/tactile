@@ -43,11 +43,12 @@ void setup_app()
   QApplication::setApplicationName(TACTILE_QSTRING(u"tactile"));
 
   prefs::validate();
+  validate_themes();
 
   if (const auto name = prefs::gfx::theme_name()) {
-    theme::set_theme(*name);
+    set_theme(*name);
   } else {
-    theme::reset();
+    reset_theme();
   }
 }
 

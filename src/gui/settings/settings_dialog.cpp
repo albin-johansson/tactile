@@ -1,85 +1,38 @@
 #include "settings_dialog.hpp"
 
-#include <QComboBox>
-#include <QLineEdit>
-#include <QPushButton>
-#include <QValidator>
+#include <QComboBox>    // QComboBox
+#include <QPushButton>  // QPushButton
 
 #include "color_preview_button.hpp"
+#include "export_theme_dialog.hpp"
+#include "import_theme_dialog.hpp"
 #include "init_ui.hpp"
 #include "maybe.hpp"
+#include "parse_palette.hpp"
 #include "preferences.hpp"
-#include "setting.hpp"
-#include "tactile_qstring.hpp"
+#include "string_utils.hpp"
 #include "theme.hpp"
+#include "theme_options_context_menu.hpp"
 #include "ui_settings_dialog.h"
 
 namespace tactile::gui {
-namespace {
-
-[[nodiscard]] auto text_as_int(const QLineEdit* edit) -> maybe<int>
-{
-  Q_ASSERT(edit);
-  const auto text = edit->text();
-  bool ok{};
-  if (const auto value = text.toInt(&ok); ok) {
-    return value;
-  } else {
-    return std::nullopt;
-  }
-}
-
-}  // namespace
 
 using namespace prefs;
 
 settings_dialog::settings_dialog(QWidget* parent)
     : QDialog{parent}
     , m_ui{init_ui<Ui::settings_dialog>(this)}
-    , m_basicBasePreview{new color_preview_button{Qt::black, this}}
-    , m_basicAlternateBasePreview{new color_preview_button{Qt::black, this}}
-    , m_basicWindowPreview{new color_preview_button{Qt::black, this}}
-    , m_basicWindowTextPreview{new color_preview_button{Qt::black, this}}
-    , m_basicLightPreview{new color_preview_button{Qt::black, this}}
-    , m_basicMidLightPreview{new color_preview_button{Qt::black, this}}
-    , m_basicDarkPreview{new color_preview_button{Qt::black, this}}
-    , m_basicLinkPreview{new color_preview_button{Qt::black, this}}
-    , m_basicLinkVisitedPreview{new color_preview_button{Qt::black, this}}
-    , m_basicButtonPreview{new color_preview_button{Qt::black, this}}
-    , m_basicButtonTextPreview{new color_preview_button{Qt::black, this}}
-    , m_basicHighlightPreview{new color_preview_button{Qt::black, this}}
-    , m_basicHighlightedTextPreview{new color_preview_button{Qt::black, this}}
-    , m_basicPlaceholderTextPreview{new color_preview_button{Qt::black, this}}
-    , m_basicTooltipBasePreview{new color_preview_button{Qt::black, this}}
-    , m_basicTooltipTextPreview{new color_preview_button{Qt::black, this}}
-    , m_basicTextPreview{new color_preview_button{Qt::black, this}}
-    , m_basicShadowPreview{new color_preview_button{Qt::black, this}}
     , m_themeOptionsContextMenu{new theme_options_context_menu{this}}
+    , m_basicPreview{m_ui->basicGroupLayout}
 {
   auto* validator = new QIntValidator{0, 9'999, this};
   m_ui->tileWidthEdit->setValidator(validator);
   m_ui->tileHeightEdit->setValidator(validator);
 
-  // clang-format off
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Base"), m_basicBasePreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Alternate Base"), m_basicAlternateBasePreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Window"), m_basicWindowPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Window Text"), m_basicWindowTextPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Light"), m_basicLightPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Mid Light"), m_basicMidLightPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Dark"), m_basicDarkPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Link"), m_basicLinkPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Link (visited)"), m_basicLinkVisitedPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Button"), m_basicButtonPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Button Text"), m_basicButtonTextPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Highlight"), m_basicHighlightPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Highlighted Text"), m_basicHighlightedTextPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Placeholder Text"), m_basicPlaceholderTextPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Tooltip Base"), m_basicTooltipBasePreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Tooltip Text"), m_basicTooltipTextPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Text"), m_basicTextPreview);
-  m_ui->basicGroupLayout->addRow(TACTILE_QSTRING(u"Shadow"), m_basicShadowPreview);
-  // clang-format on
+  m_ui->themeComboBox->clear();
+  for (const auto& name : get_all_theme_names()) {
+    m_ui->themeComboBox->addItem(name);
+  }
 
   fetch_current_settings();
 
@@ -145,33 +98,18 @@ void settings_dialog::update_theme_components()
 
 void settings_dialog::update_theme_preview()
 {
-  if (const auto theme = theme::from_name(m_ui->themeComboBox->currentText())) {
-    m_basicBasePreview->set_color(theme->base().color());
-    m_basicAlternateBasePreview->set_color(theme->alternateBase().color());
-    m_basicWindowPreview->set_color(theme->window().color());
-    m_basicWindowTextPreview->set_color(theme->windowText().color());
-    m_basicLightPreview->set_color(theme->light().color());
-    m_basicMidLightPreview->set_color(theme->midlight().color());
-    m_basicDarkPreview->set_color(theme->dark().color());
-    m_basicLinkPreview->set_color(theme->link().color());
-    m_basicLinkVisitedPreview->set_color(theme->linkVisited().color());
-    m_basicButtonPreview->set_color(theme->button().color());
-    m_basicButtonTextPreview->set_color(theme->buttonText().color());
-    m_basicHighlightPreview->set_color(theme->highlight().color());
-    m_basicHighlightedTextPreview->set_color(theme->highlightedText().color());
-    m_basicPlaceholderTextPreview->set_color(theme->placeholderText().color());
-    m_basicTooltipBasePreview->set_color(theme->toolTipBase().color());
-    m_basicTooltipTextPreview->set_color(theme->toolTipText().color());
-    m_basicTextPreview->set_color(theme->text().color());
-    m_basicShadowPreview->set_color(theme->shadow().color());
+  if (const auto palette = get_theme(m_ui->themeComboBox->currentText())) {
+    m_basicPreview.update_preview(*palette);
   }
 }
 
 void settings_dialog::handle_accept()
 {
   if (const auto theme = m_ui->themeComboBox->currentText(); theme != m_theme) {
-    theme::set_theme(theme);
-    emit reload_theme();
+    if (set_theme(theme)) {
+      // Only emit signal if we successfully changed the current theme
+      emit reload_theme();
+    }
   }
 
   if (const auto defaultFormat = m_ui->defaultFormatCombo->currentText();
@@ -194,12 +132,12 @@ void settings_dialog::handle_accept()
     saves::readable_output().set(readable);
   }
 
-  if (const auto value = text_as_int(m_ui->tileWidthEdit);
+  if (const auto value = to_integer(m_ui->tileWidthEdit->text());
       value != m_tileWidth) {
     saves::tile_width().set(*value);
   }
 
-  if (const auto value = text_as_int(m_ui->tileHeightEdit);
+  if (const auto value = to_integer(m_ui->tileHeightEdit->text());
       value != m_tileHeight) {
     saves::tile_height().set(*value);
   }
@@ -223,7 +161,7 @@ void settings_dialog::restore_export_defaults()
 
 void settings_dialog::restore_appearance_defaults()
 {
-  m_ui->themeComboBox->setCurrentText(gfx::theme_name_def());
+  //  m_ui->themeComboBox->setCurrentText(gfx::theme_name_def());
 }
 
 void settings_dialog::fetch_current_settings()
@@ -241,6 +179,11 @@ void settings_dialog::fetch_current_settings()
 
   // Theme
   m_theme = gfx::theme_name().value();
+  for (const auto& name : gfx::user_themes().value().keys()) {
+    if (!m_ui->themeComboBox->findText(name)) {
+      m_ui->themeComboBox->addItem(name);
+    }
+  }
 }
 
 void settings_dialog::pressed_theme_options_button()
@@ -250,18 +193,37 @@ void settings_dialog::pressed_theme_options_button()
 
 void settings_dialog::duplicate_current_theme()
 {
+  // TODO
 }
 
 void settings_dialog::import_new_theme()
 {
+  import_theme_dialog::spawn(
+      [this](const QString& path) {
+        const auto name = QFileInfo{path}.baseName();
+        if (const auto palette = parse_palette(path)) {
+          if (register_theme(name, *palette)) {
+            m_ui->themeComboBox->addItem(name);
+          }
+        } else {
+          // TODO error message dialog
+        }
+      },
+      this);
 }
 
 void settings_dialog::export_current_theme()
 {
+  export_theme_dialog::spawn(
+      [this](const QString& path) {
+        // TODO
+      },
+      this);
 }
 
 void settings_dialog::reset_current_theme()
 {
+  // TODO
 }
 
 }  // namespace tactile::gui

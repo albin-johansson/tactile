@@ -50,20 +50,19 @@ void parse_group(const QJsonObject& json,
   setIfExists(QPalette::ColorRole::LinkVisited, u"LinkVisited");
 }
 
-[[nodiscard]] auto get_json_object(const QString& file) -> QJsonObject
+[[nodiscard]] auto get_json_object(const QString& file) -> maybe<QJsonObject>
 {
   QFile themeFile{file};
 
   if (!themeFile.exists()) {
-    throw tactile_error{"File doesn't exist!"};
+    return std::nullopt;
   }
 
   themeFile.open(QFile::ReadOnly | QFile::Text);
 
-  QJsonParseError error{};
-  const auto document = QJsonDocument::fromJson(themeFile.readAll(), &error);
+  const auto document = QJsonDocument::fromJson(themeFile.readAll());
   if (document.isNull()) {
-    throw tactile_error{"Couldn't open/find JSON theme file"};
+    return std::nullopt;
   }
 
   Q_ASSERT(document.isObject());
@@ -72,15 +71,18 @@ void parse_group(const QJsonObject& json,
 
 }  // namespace
 
-auto parse_palette(const QString& file) -> QPalette
+auto parse_palette(const QString& file) -> maybe<QPalette>
 {
   QPalette palette;
 
   const auto json = get_json_object(file);
+  if (!json) {
+    return std::nullopt;
+  }
 
-  parse_group(json, palette);
+  parse_group(*json, palette);
 
-  if (const auto it = json.find(u"disabled"); it != json.end()) {
+  if (const auto it = json->find(u"disabled"); it != json->end()) {
     const auto item = it.value();
     Q_ASSERT(item.isObject());
 

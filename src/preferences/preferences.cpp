@@ -1,7 +1,6 @@
 #include "preferences.hpp"
 
 #include "tactile_qstring.hpp"
-#include "theme.hpp"
 
 namespace tactile::prefs {
 
@@ -29,15 +28,15 @@ auto gfx::theme() -> setting<QPalette>
   return setting<QPalette>{str};
 }
 
-auto gfx::user_themes() -> setting<QStringList>
+auto gfx::user_themes() -> setting<theme_map>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/userThemes");
-  return setting<QStringList>{str};
+  return setting<theme_map>{str};
 }
 
-auto gfx::user_themes_def() -> QStringList
+auto gfx::user_themes_def() -> theme_map
 {
-  return QStringList{};
+  return theme_map{};
 }
 
 auto gfx::theme_name() -> setting<QString>
@@ -46,11 +45,11 @@ auto gfx::theme_name() -> setting<QString>
   return setting<QString>{str};
 }
 
-auto gfx::theme_name_def() -> const QString&
-{
-  static const auto name = theme::get_default_name().toString();
-  return name;
-}
+// auto gfx::theme_name_def() -> const QString&
+//{
+//  static const auto name = get_default_name().toString();
+//  return name;
+//}
 
 auto gfx::tool_widget_visible() -> setting<bool>
 {
@@ -141,13 +140,13 @@ auto saves::default_format_def() -> const QString&
 void validate()
 {
   // clang-format off
-  gfx::theme().set_if_missing(theme::get_default());
-  gfx::theme_name().set_if_missing(theme::get_default_name().toString());
   gfx::render_grid().set_if_missing(gfx::render_grid_def());
   gfx::tool_widget_visible().set_if_missing(gfx::tool_widget_visible_def());
   gfx::tileset_widget_visible().set_if_missing(gfx::tileset_widget_visible_def());
   gfx::layer_widget_visible().set_if_missing(gfx::layer_widget_visible_def());
   gfx::properties_widget_visible().set_if_missing(gfx::properties_widget_visible_def());
+
+  // Note, the current theme is validated by the validate_themes-function
   gfx::user_themes().set_if_missing(gfx::user_themes_def());
   // clang-format on
 
