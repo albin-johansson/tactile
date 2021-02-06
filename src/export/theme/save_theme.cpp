@@ -1,7 +1,5 @@
 #include "save_theme.hpp"
 
-#include <QDir>           // QDir
-#include <QFileInfo>      // QFileInfo
 #include <QJsonDocument>  // QJsonDocument
 #include <QJsonObject>    // QJsonObject
 
@@ -54,9 +52,6 @@ void save_group(QJsonObject& object,
 void save_theme(const QString& path, const QPalette& theme)
 {
   QJsonDocument document{};
-
-  const QFileInfo info{path};
-  const auto targetDir = info.dir();
 
   document.setObject(create_theme_root(theme));
   json::write_file(path, document);
