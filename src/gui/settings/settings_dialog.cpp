@@ -27,10 +27,10 @@ settings_dialog::settings_dialog(QWidget* parent)
     , m_themeOptionsContextMenu{new theme_options_context_menu{this}}
     , m_basicPreview{new color_preview_manager{m_ui->basicGroupLayout,
                                                QPalette::Active,
-                                               this}}
+                                               m_ui->themeTab}}
     , m_disabledPreview{new color_preview_manager{m_ui->disabledGroupLayout,
                                                   QPalette::Disabled,
-                                                  this}}
+                                                  m_ui->themeTab}}
 {
   auto* validator = new QIntValidator{0, 9'999, this};
   m_ui->tileWidthEdit->setValidator(validator);
