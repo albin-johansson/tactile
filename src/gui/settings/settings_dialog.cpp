@@ -72,9 +72,6 @@ settings_dialog::settings_dialog(QWidget* parent)
   connect(m_themeOptionsContextMenu, &theme_options_context_menu::duplicate_theme,
           this, &settings_dialog::duplicate_current_theme);
 
-  connect(m_themeOptionsContextMenu, &theme_options_context_menu::import_theme,
-          this, &settings_dialog::import_new_theme);
-
   connect(m_ui->addThemeButton, &QPushButton::pressed,
           this, &settings_dialog::import_new_theme);
 

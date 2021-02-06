@@ -20,7 +20,6 @@ class theme_options_context_menu final : public QMenu
  signals:
   void rename_theme();
   void duplicate_theme();
-  void import_theme();
   void export_theme();
   void reset_theme();
   void remove_theme();
@@ -29,7 +28,6 @@ class theme_options_context_menu final : public QMenu
   QAction* m_rename{};
   QAction* m_duplicate{};
   [[maybe_unused]] QAction* m_sep0{};
-  QAction* m_import{};
   QAction* m_export{};
   [[maybe_unused]] QAction* m_sep1{};
   QAction* m_reset{};
