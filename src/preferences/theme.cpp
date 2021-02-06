@@ -1,14 +1,13 @@
 #include "theme.hpp"
 
-#include <QApplication>
-#include <array>   // array
-#include <map>     // map
-#include <ranges>  // any_of, find
+#include <QApplication>  // QApplication
+#include <array>         // array
+#include <map>           // map
+#include <ranges>        // any_of, find
+#include <utility>       // make_pair
 
 #include "parse_palette.hpp"
 #include "preferences.hpp"
-#include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 namespace {
