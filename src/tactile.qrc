@@ -2,7 +2,7 @@
   <qresource prefix="theme/">
     <file alias="dark">resources/theme/dark.json</file>
     <file alias="light">resources/theme/light.json</file>
-    <file alias="atomOneDark">resources/theme/atom_one_dark.json</file>
+    <file alias="atom">resources/theme/atom.json</file>
   </qresource>
 
   <qresource prefix="logo/">
