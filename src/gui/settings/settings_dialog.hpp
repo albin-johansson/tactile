@@ -12,6 +12,17 @@ TACTILE_FORWARD_DECLARE(tactile::gui, theme_options_context_menu)
 
 namespace tactile::gui {
 
+struct settings_snapshot final
+{
+  QString theme;
+  QString defaultFormat;
+  int tileWidth;
+  int tileHeight;
+  bool embedTilesets;
+  bool generateDefaults;
+  bool readableOutput;
+};
+
 class settings_dialog final : public QDialog
 {
   Q_OBJECT
@@ -27,16 +38,9 @@ class settings_dialog final : public QDialog
  private:
   unique<Ui::settings_dialog> m_ui;
   theme_options_context_menu* m_themeOptionsContextMenu;
-  color_preview_manager m_basicPreview;
-//  color_preview_manager m_disabledPreview;
-
-  QString m_theme;
-  QString m_defaultFormat;
-  int m_tileWidth{};
-  int m_tileHeight{};
-  bool m_embedTilesets{};
-  bool m_generateDefaults{};
-  bool m_readableOutput{};
+  color_preview_manager* m_basicPreview;
+  color_preview_manager* m_disabledPreview;
+  settings_snapshot m_snapshot;
 
   void update_general_components();
 
@@ -59,6 +63,8 @@ class settings_dialog final : public QDialog
 
   void pressed_theme_options_button();
 
+  void rename_current_theme();
+
   void duplicate_current_theme();
 
   void import_new_theme();
@@ -66,6 +72,14 @@ class settings_dialog final : public QDialog
   void export_current_theme();
 
   void reset_current_theme();
+
+  void remove_current_theme();
+
+  void when_current_theme_changed(const QString& name);
+
+  void theme_changed(QPalette::ColorGroup group,
+                     QPalette::ColorRole role,
+                     const QColor& color);
 };
 
 }  // namespace tactile::gui

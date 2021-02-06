@@ -514,6 +514,17 @@
            </property>
           </spacer>
          </item>
+         <item>
+          <widget class="QPushButton" name="addThemeButton">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../../tactile.qrc">
+             <normaloff>:/resources/icons/fluent/64/add.png</normaloff>:/resources/icons/fluent/64/add.png</iconset>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
        <item>
@@ -527,7 +538,7 @@
             <x>0</x>
             <y>0</y>
             <width>421</width>
-            <height>182</height>
+            <height>178</height>
            </rect>
           </property>
           <layout class="QGridLayout" name="gridLayout">
@@ -563,11 +574,12 @@
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
              <property name="checkable">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="checked">
               <bool>false</bool>
              </property>
+             <layout class="QFormLayout" name="disabledGroupLayout"/>
             </widget>
            </item>
            <item row="3" column="0">

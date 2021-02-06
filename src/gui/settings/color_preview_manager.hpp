@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QFormLayout>  // QFormLayout
+#include <QPalette>     // QPalette
 #include <QWidget>      // QWidget
 
 #include "forward_declare.hpp"
@@ -9,14 +10,22 @@ TACTILE_FORWARD_DECLARE(tactile::gui, color_preview_button)
 
 namespace tactile::gui {
 
-class color_preview_manager final : private QWidget
+class color_preview_manager final : public QWidget
 {
+  Q_OBJECT
+
  public:
-  explicit color_preview_manager(QFormLayout* layout);
+  explicit color_preview_manager(QFormLayout* layout,
+                                 QPalette::ColorGroup group,
+                                 QWidget* parent = nullptr);
 
   void update_preview(const QPalette& palette);
 
+ signals:
+  void color_changed(QPalette::ColorRole role, const QColor& color);
+
  private:
+  QPalette::ColorGroup m_group;
   color_preview_button* m_basePreview;
   color_preview_button* m_alternateBasePreview;
   color_preview_button* m_windowPreview;

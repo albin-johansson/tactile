@@ -45,6 +45,13 @@ auto register_theme(const QString& name, const QPalette& palette) -> bool;
  */
 auto set_theme(const QString& name) -> bool;
 
+void update_theme(const QString& name,
+                  QPalette::ColorRole role,
+                  const QColor& color,
+                  QPalette::ColorGroup group = QPalette::All);
+
+void remove_theme(const QString& name);
+
 /**
  * \brief Returns the palette associated with the specified name.
  *
@@ -57,9 +64,24 @@ auto set_theme(const QString& name) -> bool;
  */
 [[nodiscard]] auto get_theme(const QString& name) -> maybe<QPalette>;
 
+/**
+ * \brief Indicates whether or not the supplied name is one of the
+ * pre-defined themes.
+ *
+ * \param name the name of the theme that will be checked.
+ *
+ * \return `true` if the supplied name is associated with a standard theme;
+ * `false` otherwise.
+ *
+ * \since 0.1.0
+ */
+[[nodiscard]] auto is_standard_theme(QStringView name) -> bool;
+
 [[nodiscard]] auto get_standard_themes() -> vector_map<QString, QPalette>;
 
-[[nodiscard]] auto get_all_theme_names() -> std::vector<QString>;
+[[nodiscard]] auto get_standard_theme_names() -> std::vector<QString>;
+
+[[nodiscard]] auto get_user_theme_names() -> std::vector<QString>;
 
 /**
  * \brief Returns the palette of the default theme.

@@ -4,8 +4,11 @@
 
 namespace tactile::gui {
 
-color_preview_manager::color_preview_manager(QFormLayout* layout)
-    : QWidget{}
+color_preview_manager::color_preview_manager(QFormLayout* layout,
+                                             const QPalette::ColorGroup group,
+                                             QWidget* parent)
+    : QWidget{parent}
+    , m_group{group}
     , m_basePreview{new color_preview_button{Qt::black, this}}
     , m_alternateBasePreview{new color_preview_button{Qt::black, this}}
     , m_windowPreview{new color_preview_button{Qt::black, this}}
@@ -44,28 +47,57 @@ color_preview_manager::color_preview_manager(QFormLayout* layout)
   layout->addRow(tr("Tooltip Text"), m_tooltipTextPreview);
   layout->addRow(tr("Text"), m_textPreview);
   layout->addRow(tr("Shadow"), m_shadowPreview);
+
+  const auto connectPreview = [this](color_preview_button* button,
+                                     const QPalette::ColorRole role) {
+    connect(button,
+            &color_preview_button::color_changed,
+            this,
+            [this, role](const QColor& color) {
+              emit color_changed(role, color);
+            });
+  };
+
+  connectPreview(m_basePreview, QPalette::Base);
+  connectPreview(m_alternateBasePreview, QPalette::AlternateBase);
+  connectPreview(m_windowPreview, QPalette::Window);
+  connectPreview(m_windowTextPreview, QPalette::WindowText);
+  connectPreview(m_lightPreview, QPalette::Light);
+  connectPreview(m_midLightPreview, QPalette::Midlight);
+  connectPreview(m_darkPreview, QPalette::Dark);
+  connectPreview(m_linkPreview, QPalette::Link);
+  connectPreview(m_linkVisitedPreview, QPalette::LinkVisited);
+  connectPreview(m_buttonPreview, QPalette::Button);
+  connectPreview(m_buttonTextPreview, QPalette::ButtonText);
+  connectPreview(m_highlightPreview, QPalette::Highlight);
+  connectPreview(m_highlightedTextPreview, QPalette::HighlightedText);
+  connectPreview(m_placeholderTextPreview, QPalette::PlaceholderText);
+  connectPreview(m_tooltipBasePreview, QPalette::ToolTipBase);
+  connectPreview(m_tooltipTextPreview, QPalette::ToolTipText);
+  connectPreview(m_textPreview, QPalette::Text);
+  connectPreview(m_shadowPreview, QPalette::Shadow);
 }
 
 void color_preview_manager::update_preview(const QPalette& palette)
 {
-  m_basePreview->set_color(palette.base().color());
-  m_alternateBasePreview->set_color(palette.alternateBase().color());
-  m_windowPreview->set_color(palette.window().color());
-  m_windowTextPreview->set_color(palette.windowText().color());
-  m_lightPreview->set_color(palette.light().color());
-  m_midLightPreview->set_color(palette.midlight().color());
-  m_darkPreview->set_color(palette.dark().color());
-  m_linkPreview->set_color(palette.link().color());
-  m_linkVisitedPreview->set_color(palette.linkVisited().color());
-  m_buttonPreview->set_color(palette.button().color());
-  m_buttonTextPreview->set_color(palette.buttonText().color());
-  m_highlightPreview->set_color(palette.highlight().color());
-  m_highlightedTextPreview->set_color(palette.highlightedText().color());
-  m_placeholderTextPreview->set_color(palette.placeholderText().color());
-  m_tooltipBasePreview->set_color(palette.toolTipBase().color());
-  m_tooltipTextPreview->set_color(palette.toolTipText().color());
-  m_textPreview->set_color(palette.text().color());
-  m_shadowPreview->set_color(palette.shadow().color());
+  m_basePreview->set_color(palette.color(m_group, QPalette::Base));
+  m_alternateBasePreview->set_color(palette.color(m_group, QPalette::AlternateBase));
+  m_windowPreview->set_color(palette.color(m_group, QPalette::Window));
+  m_windowTextPreview->set_color(palette.color(m_group, QPalette::WindowText));
+  m_lightPreview->set_color(palette.color(m_group, QPalette::Light));
+  m_midLightPreview->set_color(palette.color(m_group, QPalette::Midlight));
+  m_darkPreview->set_color(palette.color(m_group, QPalette::Dark));
+  m_linkPreview->set_color(palette.color(m_group, QPalette::Link));
+  m_linkVisitedPreview->set_color(palette.color(m_group, QPalette::LinkVisited));
+  m_buttonPreview->set_color(palette.color(m_group, QPalette::Button));
+  m_buttonTextPreview->set_color(palette.color(m_group, QPalette::ButtonText));
+  m_highlightPreview->set_color(palette.color(m_group, QPalette::Highlight));
+  m_highlightedTextPreview->set_color(palette.color(m_group, QPalette::HighlightedText));
+  m_placeholderTextPreview->set_color(palette.color(m_group, QPalette::PlaceholderText));
+  m_tooltipBasePreview->set_color(palette.color(m_group, QPalette::ToolTipBase));
+  m_tooltipTextPreview->set_color(palette.color(m_group, QPalette::ToolTipText));
+  m_textPreview->set_color(palette.color(m_group, QPalette::Text));
+  m_shadowPreview->set_color(palette.color(m_group, QPalette::Shadow));
 }
 
 }  // namespace tactile::gui

@@ -136,6 +136,9 @@ set(TACTILE_SOURCE_FILES
     export/map/save_map_document_as_xml.hpp
     export/map/tiled_version.hpp
 
+    export/theme/save_theme.cpp
+    export/theme/save_theme.hpp
+
     gui/icons.cpp
     gui/icons.hpp
     gui/init_ui.hpp
@@ -371,6 +374,7 @@ target_include_directories(libTactile
     PUBLIC core/viewmodel/property
     PUBLIC export
     PUBLIC export/map
+    PUBLIC export/theme
     PUBLIC gui
     PUBLIC gui/base
     PUBLIC gui/dialog

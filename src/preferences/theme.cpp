@@ -15,36 +15,18 @@ namespace {
 
 inline constexpr QStringView light{u"Light"};
 inline constexpr QStringView dark{u"Dark"};
-inline constexpr QStringView atomOneDark{u"Atom One Dark"};
+inline constexpr QStringView atom{u"Atom"};
 
 inline constexpr auto defaultTheme = dark;
 
 inline constexpr std::array themes{
     std::make_pair(light, QStringView{u":theme/light"}),
     std::make_pair(dark, QStringView{u":theme/dark"}),
-    std::make_pair(atomOneDark, QStringView{u":theme/atomOneDark"})};
+    std::make_pair(atom, QStringView{u":theme/atom"})};
 
 inline std::map<QStringView, QPalette> palettes;
 
-/**
- * \brief Indicates whether or not the supplied name is one of the
- * pre-defined themes.
- *
- * \param name the name of the theme that will be checked.
- *
- * \return `true` if the supplied name is associated with a standard theme;
- * `false` otherwise.
- *
- * \since 0.1.0
- */
-[[nodiscard]] auto is_standard_theme(const QStringView name) -> bool
-{
-  return std::ranges::any_of(themes, [name](const auto& pair) {
-    return pair.first == name;
-  });
-}
-
-void set_theme(const QString& name, const QPalette& palette)
+void set_current_theme(const QString& name, const QPalette& palette)
 {
   prefs::gfx::theme().set(palette);
   prefs::gfx::theme_name().set(name);
@@ -71,7 +53,7 @@ void reset_theme()
 
 auto register_theme(const QString& name, const QPalette& palette) -> bool
 {
-  // TODO avoid name collision with standard themes
+  // TODO disallow name collision with standard themes
 
   auto userThemes = prefs::gfx::user_themes().value();
   if (!userThemes.contains(name)) {
@@ -86,10 +68,40 @@ auto register_theme(const QString& name, const QPalette& palette) -> bool
 auto set_theme(const QString& name) -> bool
 {
   if (const auto palette = get_theme(name)) {
-    set_theme(name, *palette);
+    set_current_theme(name, *palette);
     return true;
   } else {
     return false;
+  }
+}
+
+void update_theme(const QString& name,
+                  const QPalette::ColorRole role,
+                  const QColor& color,
+                  const QPalette::ColorGroup group)
+{
+  // TODO don't allow updating a standard theme
+
+  if (auto palette = get_theme(name)) {
+    palette->setColor(group, role, color);
+
+    if (is_standard_theme(name)) {
+      palettes.at(name) = *palette;
+    } else {
+      auto userThemes = prefs::gfx::user_themes().value();
+      userThemes.insert(name, *palette);
+      prefs::gfx::user_themes().set(userThemes);
+    }
+  }
+}
+
+void remove_theme(const QString& name)
+{
+  Q_ASSERT(!is_standard_theme(name));
+  if (const auto userThemes = prefs::gfx::user_themes()) {
+    auto map = userThemes.value();
+    map.remove(name);
+    prefs::gfx::user_themes().set(map);
   }
 }
 
@@ -108,6 +120,13 @@ auto get_theme(const QString& name) -> maybe<QPalette>
   return std::nullopt;
 }
 
+auto is_standard_theme(const QStringView name) -> bool
+{
+  return std::ranges::any_of(themes, [name](const auto& pair) {
+    return pair.first == name;
+  });
+}
+
 auto get_standard_themes() -> vector_map<QString, QPalette>
 {
   vector_map<QString, QPalette> map;
@@ -120,19 +139,24 @@ auto get_standard_themes() -> vector_map<QString, QPalette>
   return map;
 }
 
-auto get_all_theme_names() -> std::vector<QString>
+auto get_standard_theme_names() -> std::vector<QString>
 {
   std::vector<QString> names;
-
-  const auto userThemes = prefs::gfx::user_themes();
-  names.reserve(userThemes ? palettes.size() + userThemes->size()
-                           : palettes.size());
+  names.reserve(palettes.size());
 
   for (const auto& [name, palette] : palettes) {
     names.emplace_back(name.toString());
   }
 
-  if (userThemes) {
+  return names;
+}
+
+auto get_user_theme_names() -> std::vector<QString>
+{
+  std::vector<QString> names;
+
+  if (const auto userThemes = prefs::gfx::user_themes()) {
+    names.reserve(userThemes->size());
     for (const auto& name : userThemes.value().keys()) {
       names.emplace_back(name);
     }
