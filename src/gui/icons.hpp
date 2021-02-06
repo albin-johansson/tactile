@@ -11,6 +11,8 @@
  */
 namespace tactile::icons {
 
+[[nodiscard]] auto tactile_logo() -> const QIcon&;
+
 [[nodiscard]] auto add() -> const QIcon&;
 
 [[nodiscard]] auto remove() -> const QIcon&;

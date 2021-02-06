@@ -4,6 +4,13 @@
 
 namespace tactile::icons {
 
+auto tactile_logo() -> const QIcon&
+{
+  static const QIcon icon{TACTILE_QSTRING(u":resources/icons/icon.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
 auto add() -> const QIcon&
 {
   static const QIcon icon{
