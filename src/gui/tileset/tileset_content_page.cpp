@@ -149,7 +149,7 @@ void tileset_content_page::switch_to(const map_id map)
   m_currentMap = map;
   const auto& manager = m_tabManagers[*m_currentMap];
 
-  for (const auto& [_, tab] : manager) {
+  for (const auto& [id, tab] : manager) {
     m_tabWidget->addTab(tab, tab->name());
   }
 
