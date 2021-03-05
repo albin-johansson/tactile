@@ -31,6 +31,7 @@ set(TACTILE_TEST_FILES
     unit/core/tileset_test.cpp
 
     unit/core/map/layer/object_layer_test.cpp
+    unit/core/map/layer/object_test.cpp
 
     unit/core/property/property_delegate_test.cpp
     unit/core/property/property_test.cpp
