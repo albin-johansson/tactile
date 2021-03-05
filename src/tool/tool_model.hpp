@@ -4,6 +4,7 @@
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 #include "tool_id.hpp"
+#include "vector_map.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, model)
 
@@ -84,9 +85,7 @@ class tool_model final
 
  private:
   abstract_tool* m_current{};
-  unique<abstract_tool> m_stamp;
-  unique<abstract_tool> m_eraser;
-  unique<abstract_tool> m_bucket;
+  vector_map<tool_id, unique<abstract_tool>> m_tools;
 
   /**
    * \brief Switches to the specified tool as the active tool.
