@@ -12,6 +12,9 @@ namespace tactile::core {
  *
  * \brief A delegate meant to be used to implement the basic layer API.
  *
+ * \note This class doesn't inherit from `layer` because it can't provide a
+ * meaningful `layer::clone()` implementation.
+ *
  * \since 0.2.0
  *
  * \headerfile layer_delegate.hpp
