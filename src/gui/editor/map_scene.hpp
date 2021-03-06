@@ -30,6 +30,8 @@ class map_scene final : public QGraphicsScene
 
   void disable_stamp_preview();
 
+  void show_properties();
+
   [[nodiscard]] auto map_position() const -> QPointF;
 
   [[nodiscard]] auto id() const noexcept -> map_id

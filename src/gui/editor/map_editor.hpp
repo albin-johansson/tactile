@@ -15,6 +15,7 @@ class map_editor;
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 TACTILE_FORWARD_DECLARE(tactile::gui, map_tab_widget)
+TACTILE_FORWARD_DECLARE(tactile::gui, map_editor_context_menu)
 
 namespace tactile::gui {
 
@@ -99,6 +100,7 @@ class map_editor final : public QWidget
  private:
   unique<Ui::map_editor> m_ui;
   map_tab_widget* m_tabWidget{};
+  map_editor_context_menu* m_contextMenu{};
   int m_editorID{};
   int m_startupID{};
 
@@ -106,6 +108,10 @@ class map_editor final : public QWidget
 
  private slots:
   void tab_changed(int index);
+
+  void spawn_context_menu(const QPoint& pos);
+
+  void show_map_properties();
 };
 
 }  // namespace tactile::gui

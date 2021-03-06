@@ -20,6 +20,8 @@ class layer_model final : public QStandardItemModel
 
   void add_object_layer();
 
+  void show_properties(const QModelIndex& index);
+
   void select(const QModelIndex& index);
 
   void remove(const QModelIndex& index);

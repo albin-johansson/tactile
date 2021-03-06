@@ -78,6 +78,7 @@ void map_tab_widget::add_map_tab(core::map_document* map,
   connect(view, &map_view::mouse_exited, this, &map_tab_widget::mouse_exited);
   connect(view, &map_view::increase_zoom, this, &map_tab_widget::increase_zoom);
   connect(view, &map_view::decrease_zoom, this, &map_tab_widget::decrease_zoom);
+  connect(view, &map_view::spawn_context_menu, this, &map_tab_widget::spawn_context_menu);
   // clang-format on
 
   if (title == TACTILE_QSTRING(u"map")) {
@@ -126,6 +127,13 @@ void map_tab_widget::disable_stamp_preview()
 {
   if (auto* view = current_view()) {
     view->disable_stamp_preview();
+  }
+}
+
+void map_tab_widget::show_properties()
+{
+  if (auto* view = current_view()) {
+    view->show_properties();
   }
 }
 

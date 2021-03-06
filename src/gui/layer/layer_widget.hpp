@@ -33,7 +33,7 @@ class layer_widget final : public QWidget
 
  private:
   unique<Ui::layer_widget> m_ui;
-  layer_list_view* m_listView{};
+  layer_list_view* m_view{};
   add_layer_context_menu* m_addLayerMenu{};
   layer_widget_context_menu* m_widgetMenu{};
   layer_item_context_menu* m_itemMenu{};

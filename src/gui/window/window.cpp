@@ -382,6 +382,16 @@ void window::when_new_map_added(not_null<core::map_document*> document,
   m_statusBar->switched_map(*document);
 }
 
+void window::show_map_properties(not_null<core::property_manager*> manager)
+{
+  m_propertiesDock->show_map_properties(manager);
+}
+
+void window::show_layer_properties(not_null<core::property_manager*> manager)
+{
+  m_propertiesDock->show_layer_properties(manager);
+}
+
 void window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);

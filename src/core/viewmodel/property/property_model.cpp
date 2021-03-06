@@ -73,6 +73,11 @@ void property_model::remove(const QString& name)
   m_manager->remove_property(name);
 }
 
+void property_model::set_root_name(const QString& name)
+{
+  m_customRoot->setText(name);
+}
+
 auto property_model::contains_property(const QString& name) const -> bool
 {
   return find_item(this, name, 0) != nullptr;

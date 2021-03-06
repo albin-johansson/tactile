@@ -8,6 +8,7 @@ namespace tactile::gui {
 layer_item_context_menu::layer_item_context_menu(QWidget* parent)
     : QMenu{parent}
     , m_visibility{addAction(icons::visible(), tr("Toggle visibility"))}
+    , m_showProperties{addAction(tr("Show properties..."))}
     , m_sep0{addSeparator()}
     , m_moveUp{addAction(icons::move_up(), tr("Move layer up"))}
     , m_moveDown{addAction(icons::move_down(), tr("Move layer down"))}
@@ -17,6 +18,7 @@ layer_item_context_menu::layer_item_context_menu(QWidget* parent)
 {
   // clang-format off
   connect(m_visibility, &QAction::triggered, this, &layer_item_context_menu::toggle_visibility);
+  connect(m_showProperties, &QAction::triggered, this, &layer_item_context_menu::show_properties);
   connect(m_moveUp, &QAction::triggered, this, &layer_item_context_menu::move_layer_up);
   connect(m_moveDown, &QAction::triggered, this, &layer_item_context_menu::move_layer_down);
   connect(m_duplicate, &QAction::triggered, this, &layer_item_context_menu::duplicate_layer);

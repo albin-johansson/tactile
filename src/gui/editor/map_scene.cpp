@@ -40,6 +40,11 @@ void map_scene::disable_stamp_preview()
   m_item->disable_stamp_preview();
 }
 
+void map_scene::show_properties()
+{
+  m_item->show_properties();
+}
+
 auto map_scene::map_position() const -> QPointF
 {
   return m_item->pos();

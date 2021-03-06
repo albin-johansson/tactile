@@ -194,6 +194,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/editor/map_editor.cpp
     gui/editor/map_editor.hpp
+    gui/editor/map_editor_context_menu.cpp
+    gui/editor/map_editor_context_menu.hpp
     gui/editor/map_item.cpp
     gui/editor/map_item.hpp
     gui/editor/map_scene.cpp

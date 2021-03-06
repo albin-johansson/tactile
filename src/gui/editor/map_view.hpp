@@ -44,6 +44,8 @@ class map_view final : public QGraphicsView
 
   void disable_stamp_preview();
 
+  void show_properties();
+
   [[nodiscard]] auto id() const -> map_id;
 
  signals:
@@ -54,6 +56,7 @@ class map_view final : public QGraphicsView
   void mouse_exited(QEvent* event);
   void increase_zoom();
   void decrease_zoom();
+  void spawn_context_menu(const QPoint& pos);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;

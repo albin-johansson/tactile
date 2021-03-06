@@ -21,6 +21,7 @@ class layer_item_context_menu final : public QMenu
 
  signals:
   void toggle_visibility();
+  void show_properties();
   void move_layer_up();
   void move_layer_down();
   void duplicate_layer();
@@ -28,6 +29,7 @@ class layer_item_context_menu final : public QMenu
 
  private:
   QAction* m_visibility{};
+  QAction* m_showProperties{};
   [[maybe_unused]] QAction* m_sep0{};
   QAction* m_moveUp{};
   QAction* m_moveDown{};

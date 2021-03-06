@@ -33,6 +33,11 @@ void map_item::enable_stamp_preview(const core::position& position)
   m_mousePosition = position;
 }
 
+void map_item::show_properties()
+{
+  emit m_document->show_properties();
+}
+
 void map_item::paint(QPainter* painter,
                      const QStyleOptionGraphicsItem* option,
                      QWidget*)

@@ -16,9 +16,21 @@ properties_dock::properties_dock(QWidget* parent)
   setWidget(m_widget);
 }
 
-void properties_dock::switched_map(not_null<core::map_document*> document)
+void properties_dock::switched_map(not_null<core::property_manager*> manager)
 {
-  m_widget->selected_map(document);
+  m_widget->show_map(manager);
+}
+
+void properties_dock::show_map_properties(
+    not_null<core::property_manager*> manager)
+{
+  m_widget->show_map(manager);
+}
+
+void properties_dock::show_layer_properties(
+    not_null<core::property_manager*> manager)
+{
+  m_widget->show_layer(manager);
 }
 
 void properties_dock::added_property(const QString& name)

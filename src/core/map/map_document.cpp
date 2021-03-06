@@ -463,6 +463,11 @@ auto map_document::in_bounds(const position& pos) const -> bool
   return m_map->in_bounds(pos);
 }
 
+auto map_document::get_layer(const layer_id id) -> layer*
+{
+  return m_map->get_layer(id).get();
+}
+
 auto map_document::get_layer(const layer_id id) const -> const layer*
 {
   return m_map->get_layer(id).get();

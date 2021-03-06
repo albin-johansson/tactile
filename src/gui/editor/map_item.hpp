@@ -43,6 +43,8 @@ class map_item final : public QGraphicsItem
 
   void enable_stamp_preview(const core::position& position);
 
+  void show_properties();
+
   [[nodiscard]] auto boundingRect() const -> QRectF override;
 
  private:

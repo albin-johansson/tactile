@@ -24,6 +24,7 @@ class layer_model;
 
 namespace tactile::core {
 
+class property_manager;
 class map_document;
 class layer;
 
@@ -107,6 +108,9 @@ class model final : public QObject
   void updated_property(const QString& name);
   void changed_property_type(const QString& name);
   void renamed_property(const QString& oldName, const QString& newName);
+
+  void show_map_properties(core::property_manager* manager);
+  void show_layer_properties(core::property_manager* manager);
 
  public slots:
   /**

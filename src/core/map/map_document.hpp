@@ -357,6 +357,11 @@ class map_document final : public document
   /**
    * \copydoc map::get_layer()
    */
+  [[nodiscard]] auto get_layer(layer_id id) -> layer*;
+
+  /**
+   * \copydoc map::get_layer()
+   */
   [[nodiscard]] auto get_layer(layer_id id) const -> const layer*;
 
   [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
@@ -500,6 +505,9 @@ class map_document final : public document
   void updated_property(const QString& name);
   void changed_property_type(const QString& name);
   void renamed_property(const QString& oldName, const QString& newName);
+
+  void show_properties();
+  void show_layer_properties(layer_id id);
 
  public slots:
   /**

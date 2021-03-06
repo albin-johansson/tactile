@@ -17,12 +17,12 @@ namespace tactile::gui {
 layer_widget::layer_widget(QWidget* parent)
     : QWidget{parent}
     , m_ui{init_ui<Ui::layer_widget>(this)}
-    , m_listView{new layer_list_view{this}}
+    , m_view{new layer_list_view{this}}
     , m_addLayerMenu{new add_layer_context_menu{this}}
     , m_widgetMenu{new layer_widget_context_menu{m_addLayerMenu, this}}
     , m_itemMenu{new layer_item_context_menu{this}}
 {
-  m_ui->gridLayout->addWidget(m_listView, 0, 1);
+  m_ui->gridLayout->addWidget(m_view, 0, 1);
   m_ui->gridLayout->removeWidget(m_ui->opacitySlider);
   m_ui->gridLayout->addWidget(m_ui->opacitySlider, 0, 2);
 
@@ -34,10 +34,10 @@ layer_widget::layer_widget(QWidget* parent)
   m_ui->opacitySlider->setEnabled(false);
 
   // clang-format off
-  connect(m_listView, &QWidget::customContextMenuRequested,
+  connect(m_view, &QWidget::customContextMenuRequested,
           this, &layer_widget::spawn_context_menu);
 
-  connect(m_listView, &layer_list_view::selection_changed,
+  connect(m_view, &layer_list_view::selection_changed,
           this, &layer_widget::when_selection_changed);
 
   connect(m_addLayerMenu, &add_layer_context_menu::add_tile_layer,
@@ -60,6 +60,9 @@ layer_widget::layer_widget(QWidget* parent)
 
   connect(m_itemMenu, &layer_item_context_menu::remove_layer,
           m_ui->removeLayerButton, &QPushButton::click);
+
+  connect(m_itemMenu, &layer_item_context_menu::show_properties,
+          [this] { m_model->show_properties(m_view->currentIndex()); });
   // clang-format on
 }
 
@@ -72,7 +75,7 @@ void layer_widget::selected_map(not_null<core::map_document*> document)
   m_model = std::make_unique<vm::layer_model>(document);
   Q_ASSERT(!m_model->parent());
 
-  m_listView->setModel(m_model.get());
+  m_view->setModel(m_model.get());
   Q_ASSERT(!m_model->parent());
 }
 
@@ -111,7 +114,7 @@ void layer_widget::update_actions(const maybe<QModelIndex>& selected)
 
 void layer_widget::spawn_context_menu(const QPoint& pos)
 {
-  if (m_listView->selectionModel()->selection().empty()) {
+  if (m_view->selectionModel()->selection().empty()) {
     m_widgetMenu->exec(mapToGlobal(pos));
   } else {
     m_itemMenu->exec(mapToGlobal(pos));
@@ -150,41 +153,41 @@ void layer_widget::on_newLayerButton_pressed()
 [[maybe_unused]] //
 void layer_widget::on_removeLayerButton_pressed()
 {
-  m_model->remove(m_listView->currentIndex());
-  update_actions(m_listView->currentIndex());
+  m_model->remove(m_view->currentIndex());
+  update_actions(m_view->currentIndex());
 }
 
 [[maybe_unused]] //
 void layer_widget::on_upButton_pressed()
 {
-  const auto index = m_model->move_up(m_listView->currentIndex());
-  m_listView->setCurrentIndex(index);
+  const auto index = m_model->move_up(m_view->currentIndex());
+  m_view->setCurrentIndex(index);
 }
 
 [[maybe_unused]] //
 void layer_widget::on_downButton_pressed()
 {
-  const auto index = m_model->move_down(m_listView->currentIndex());
-  m_listView->setCurrentIndex(index);
+  const auto index = m_model->move_down(m_view->currentIndex());
+  m_view->setCurrentIndex(index);
 }
 
 [[maybe_unused]] //
 void layer_widget::on_duplicateButton_pressed()
 {
-  m_model->duplicate(m_listView->currentIndex());
+  m_model->duplicate(m_view->currentIndex());
 }
 
 [[maybe_unused]] //
 void layer_widget::on_visibleButton_toggled(const bool visible)
 {
-  m_model->set_visible(m_listView->currentIndex(), visible);
+  m_model->set_visible(m_view->currentIndex(), visible);
   m_ui->visibleButton->setIcon(visible ? icons::visible() : icons::invisible());
 }
 
 [[maybe_unused]] //
 void layer_widget::on_opacitySlider_valueChanged(const int value)
 {
-  m_model->set_opacity(m_listView->currentIndex(),
+  m_model->set_opacity(m_view->currentIndex(),
                        static_cast<double>(value) / 100.0);
 }
 

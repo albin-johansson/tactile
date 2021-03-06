@@ -67,42 +67,16 @@ properties_widget::properties_widget(QWidget* parent)
 
 properties_widget::~properties_widget() noexcept = default;
 
-void properties_widget::selected_map(not_null<core::map_document*> document)
+void properties_widget::show_map(not_null<core::property_manager*> manager)
 {
-  Q_ASSERT(document);
+  change_model(manager);
+  m_model->set_root_name(tr("Map Properties"));
+}
 
-  m_view->collapseAll();
-
-  m_model = std::make_unique<vm::property_model>(document);
-  Q_ASSERT(!m_model->parent());
-
-  m_view->setModel(m_model.get());
-  Q_ASSERT(!m_model->parent());
-
-  // clang-format off
-  connect(m_model.get(), &vm::property_model::changed_type,
-          m_view,        &property_tree_view::when_changed_type);
-
-  connect(m_model.get(), &vm::property_model::added_file,
-          m_view,        &property_tree_view::when_file_added);
-
-  connect(m_model.get(), &vm::property_model::added_color,
-          m_view,        &property_tree_view::when_color_added);
-
-  connect(m_model.get(), &vm::property_model::updated_file,
-          m_view,        &property_tree_view::when_file_updated);
-
-  connect(m_model.get(), &vm::property_model::updated_color,
-          m_view,        &property_tree_view::when_color_updated);
-  // clang-format on
-
-  m_view->setFirstColumnSpanned(0, m_view->rootIndex(), true);
-  m_view->restore_item_widgets();
-
-  m_contextMenu->disable_all();
-  m_contextMenu->set_add_enabled(true);
-
-  m_view->expandAll();
+void properties_widget::show_layer(not_null<core::property_manager*> manager)
+{
+  change_model(manager);
+  m_model->set_root_name(tr("Layer Properties"));
 }
 
 void properties_widget::added_property(const QString& name)
@@ -224,6 +198,44 @@ void properties_widget::when_double_clicked()
 void properties_widget::spawn_context_menu(const QPoint& pos)
 {
   m_contextMenu->exec(pos);
+}
+
+void properties_widget::change_model(not_null<core::property_manager*> manager)
+{
+  Q_ASSERT(manager);
+
+  m_view->collapseAll();
+
+  m_model = std::make_unique<vm::property_model>(manager);
+  Q_ASSERT(!m_model->parent());
+
+  m_view->setModel(m_model.get());
+  Q_ASSERT(!m_model->parent());
+
+  // clang-format off
+  connect(m_model.get(), &vm::property_model::changed_type,
+          m_view,        &property_tree_view::when_changed_type);
+
+  connect(m_model.get(), &vm::property_model::added_file,
+          m_view,        &property_tree_view::when_file_added);
+
+  connect(m_model.get(), &vm::property_model::added_color,
+          m_view,        &property_tree_view::when_color_added);
+
+  connect(m_model.get(), &vm::property_model::updated_file,
+          m_view,        &property_tree_view::when_file_updated);
+
+  connect(m_model.get(), &vm::property_model::updated_color,
+          m_view,        &property_tree_view::when_color_updated);
+  // clang-format on
+
+  m_view->setFirstColumnSpanned(0, m_view->rootIndex(), true);
+  m_view->restore_item_widgets();
+
+  m_contextMenu->disable_all();
+  m_contextMenu->set_add_enabled(true);
+
+  m_view->expandAll();
 }
 
 auto properties_widget::property_name(const QModelIndex& index) const -> QString

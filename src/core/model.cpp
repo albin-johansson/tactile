@@ -51,6 +51,14 @@ auto model::add_map(map_document* document) -> map_id
     emit added_tileset(current_map_id().value(), id, tileset);
   });
 
+  bind(&map_document::show_properties, [this] {
+    emit show_map_properties(current_document());
+  });
+
+  bind(&map_document::show_layer_properties, [this](const layer_id id) {
+    emit show_layer_properties(current_document()->get_layer(id));
+  });
+
   const auto id = m_nextId;
   m_documents.emplace(id, document);
   m_currentMap = id;

@@ -107,6 +107,8 @@ class property_model final : public QStandardItemModel
    */
   void remove(const QString& name);
 
+  void set_root_name(const QString& name);
+
   /**
    * \brief Indicates whether or not the model contains a property.
    *

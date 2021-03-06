@@ -85,6 +85,8 @@ class map_tab_widget final : public QTabWidget
 
   void disable_stamp_preview();
 
+  void show_properties();
+
   /**
    * \brief Sets the name of the currently active tab.
    *
@@ -129,6 +131,7 @@ class map_tab_widget final : public QTabWidget
   void mouse_released(QMouseEvent* event, QPointF mapPosition);
   void mouse_entered(QEvent* event);
   void mouse_exited(QEvent* event);
+  void spawn_context_menu(const QPoint& pos);
 
  public slots:
   void theme_changed();

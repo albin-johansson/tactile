@@ -54,6 +54,11 @@ void map_view::disable_stamp_preview()
   get_map_scene()->disable_stamp_preview();
 }
 
+void map_view::show_properties()
+{
+  get_map_scene()->show_properties();
+}
+
 auto map_view::id() const -> map_id
 {
   return get_map_scene()->id();
@@ -91,8 +96,11 @@ void map_view::mouseReleaseEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseReleaseEvent(event);
 
-  if (event->button() == Qt::MiddleButton) {
+  if (const auto button = event->button(); button == Qt::MiddleButton) {
     QApplication::restoreOverrideCursor();
+
+  } else if (button == Qt::RightButton) {
+    emit spawn_context_menu(mapToGlobal(event->pos()));
   }
 
   emit mouse_released(event, mapFromScene(get_map_scene()->map_position()));

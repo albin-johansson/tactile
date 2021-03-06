@@ -19,6 +19,7 @@
 TACTILE_FORWARD_DECLARE(Ui, window)
 TACTILE_FORWARD_DECLARE(tactile::core, layer)
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
 TACTILE_FORWARD_DECLARE(tactile::gui, map_editor)
 TACTILE_FORWARD_DECLARE(tactile::gui, tool_dock)
 TACTILE_FORWARD_DECLARE(tactile::gui, layer_dock)
@@ -161,6 +162,9 @@ class window final : public QMainWindow
   void when_new_map_added(not_null<core::map_document*> document,
                           map_id id,
                           const QString& name = TACTILE_QSTRING(u"map"));
+
+  void show_map_properties(not_null<core::property_manager*> manager);
+  void show_layer_properties(not_null<core::property_manager*> manager);
 
  protected:
   void closeEvent(QCloseEvent* event) override;

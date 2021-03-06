@@ -2,6 +2,7 @@
 
 #include "init_ui.hpp"
 #include "map_document.hpp"
+#include "map_editor_context_menu.hpp"
 #include "map_tab_widget.hpp"
 #include "startup_widget.hpp"
 #include "ui_map_editor.h"
@@ -12,6 +13,7 @@ map_editor::map_editor(QWidget* parent)
     : QWidget{parent}
     , m_ui{init_ui<Ui::map_editor>(this)}
     , m_tabWidget{new map_tab_widget{this}}
+    , m_contextMenu{new map_editor_context_menu{this}}
 {
   m_startupID = m_ui->stackedWidget->addWidget(new startup_widget{this});
   m_editorID = m_ui->stackedWidget->addWidget(m_tabWidget);
@@ -37,6 +39,8 @@ void map_editor::init_connections()
   connect(m_tabWidget, &map_tab_widget::mouse_released, this, &map_editor::mouse_released);
   connect(m_tabWidget, &map_tab_widget::mouse_entered, this, &map_editor::mouse_entered);
   connect(m_tabWidget, &map_tab_widget::mouse_exited, this, &map_editor::mouse_exited);
+  connect(m_tabWidget, &map_tab_widget::spawn_context_menu, this, &map_editor::spawn_context_menu);
+  connect(m_contextMenu, &map_editor_context_menu::show_properties, this, &map_editor::show_map_properties);
   // clang-format on
 }
 
@@ -122,6 +126,16 @@ void map_editor::tab_changed(const int index)
   if (const auto id = m_tabWidget->id_from_index(index); id) {
     emit ui_select_map(*id);
   }
+}
+
+void map_editor::spawn_context_menu(const QPoint& pos)
+{
+  m_contextMenu->exec(pos);
+}
+
+void map_editor::show_map_properties()
+{
+  m_tabWidget->show_properties();
 }
 
 }  // namespace tactile::gui

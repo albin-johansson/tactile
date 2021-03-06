@@ -44,6 +44,11 @@ void layer_model::add_object_layer()
   m_document->add_object_layer();
 }
 
+void layer_model::show_properties(const QModelIndex& index)
+{
+  emit m_document->show_layer_properties(id_from_index(index));
+}
+
 void layer_model::select(const QModelIndex& index)
 {
   m_document->select_layer(id_from_index(index));
