@@ -70,13 +70,13 @@ properties_widget::~properties_widget() noexcept = default;
 void properties_widget::show_map(not_null<core::property_manager*> manager)
 {
   change_model(manager);
-  m_model->set_root_name(tr("Map Properties"));
+  m_model->set_root_name(tr("Map"));
 }
 
 void properties_widget::show_layer(not_null<core::property_manager*> manager)
 {
   change_model(manager);
-  m_model->set_root_name(tr("Layer Properties"));
+  m_model->set_root_name(tr("Layer"));
 }
 
 void properties_widget::added_property(const QString& name)
