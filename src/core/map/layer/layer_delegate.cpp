@@ -43,8 +43,7 @@ auto layer_delegate::name() const -> const QString&
   return m_name;
 }
 
-void layer_delegate::add_property(const QString& name,
-                                  const property_type type)
+void layer_delegate::add_property(const QString& name, const property_type type)
 {
   m_properties.add_property(name, type);
 }

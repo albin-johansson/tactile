@@ -81,21 +81,27 @@ color_preview_manager::color_preview_manager(QFormLayout* layout,
 void color_preview_manager::update_preview(const QPalette& palette)
 {
   m_basePreview->set_color(palette.color(m_group, QPalette::Base));
-  m_alternateBasePreview->set_color(palette.color(m_group, QPalette::AlternateBase));
+  m_alternateBasePreview->set_color(
+      palette.color(m_group, QPalette::AlternateBase));
   m_windowPreview->set_color(palette.color(m_group, QPalette::Window));
   m_windowTextPreview->set_color(palette.color(m_group, QPalette::WindowText));
   m_lightPreview->set_color(palette.color(m_group, QPalette::Light));
   m_midLightPreview->set_color(palette.color(m_group, QPalette::Midlight));
   m_darkPreview->set_color(palette.color(m_group, QPalette::Dark));
   m_linkPreview->set_color(palette.color(m_group, QPalette::Link));
-  m_linkVisitedPreview->set_color(palette.color(m_group, QPalette::LinkVisited));
+  m_linkVisitedPreview->set_color(
+      palette.color(m_group, QPalette::LinkVisited));
   m_buttonPreview->set_color(palette.color(m_group, QPalette::Button));
   m_buttonTextPreview->set_color(palette.color(m_group, QPalette::ButtonText));
   m_highlightPreview->set_color(palette.color(m_group, QPalette::Highlight));
-  m_highlightedTextPreview->set_color(palette.color(m_group, QPalette::HighlightedText));
-  m_placeholderTextPreview->set_color(palette.color(m_group, QPalette::PlaceholderText));
-  m_tooltipBasePreview->set_color(palette.color(m_group, QPalette::ToolTipBase));
-  m_tooltipTextPreview->set_color(palette.color(m_group, QPalette::ToolTipText));
+  m_highlightedTextPreview->set_color(
+      palette.color(m_group, QPalette::HighlightedText));
+  m_placeholderTextPreview->set_color(
+      palette.color(m_group, QPalette::PlaceholderText));
+  m_tooltipBasePreview->set_color(
+      palette.color(m_group, QPalette::ToolTipBase));
+  m_tooltipTextPreview->set_color(
+      palette.color(m_group, QPalette::ToolTipText));
   m_textPreview->set_color(palette.color(m_group, QPalette::Text));
   m_shadowPreview->set_color(palette.color(m_group, QPalette::Shadow));
 }
