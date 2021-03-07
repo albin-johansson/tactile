@@ -104,12 +104,12 @@ void property_tree_view::when_file_added(const QModelIndex& valueIndex)
 }
 
 void property_tree_view::when_changed_type(const QModelIndex& valueIndex,
-                                           const core::property::type type)
+                                           const core::property_type type)
 {
-  if (type == core::property::file) {
+  if (type == core::property_type::file) {
     when_file_added(valueIndex);
 
-  } else if (type == core::property::color) {
+  } else if (type == core::property_type::color) {
     when_color_added(valueIndex);
   }
 

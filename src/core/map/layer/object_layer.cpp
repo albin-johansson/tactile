@@ -11,7 +11,7 @@ object_layer::object_layer() : m_delegate{layer_type::object_layer}
   m_delegate.set_name(TACTILE_QSTRING(u"Object layer"));
 }
 
-void object_layer::add_property(const QString& name, const property::type type)
+void object_layer::add_property(const QString& name, const property_type type)
 {
   m_delegate.add_property(name, type);
 }
@@ -38,7 +38,7 @@ void object_layer::set_property(const QString& name, const property& property)
 }
 
 void object_layer::change_property_type(const QString& name,
-                                        const core::property::type type)
+                                        const core::property_type type)
 {
   m_delegate.change_property_type(name, type);
 }

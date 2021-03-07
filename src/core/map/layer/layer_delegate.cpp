@@ -44,7 +44,7 @@ auto layer_delegate::name() const -> const QString&
 }
 
 void layer_delegate::add_property(const QString& name,
-                                  const property::type type)
+                                  const property_type type)
 {
   m_properties.add_property(name, type);
 }
@@ -71,7 +71,7 @@ void layer_delegate::set_property(const QString& name, const property& property)
 }
 
 void layer_delegate::change_property_type(const QString& name,
-                                          const property::type type)
+                                          const property_type type)
 {
   m_properties.change_property_type(name, type);
 }

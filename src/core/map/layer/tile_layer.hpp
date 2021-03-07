@@ -76,7 +76,7 @@ class tile_layer final : public layer
   /// \name Property API
   /// \{
 
-  void add_property(const QString& name, property::type type) override;
+  void add_property(const QString& name, property_type type) override;
 
   void add_property(const QString& name, const property& property) override;
 
@@ -87,7 +87,7 @@ class tile_layer final : public layer
   void set_property(const QString& name, const property& property) override;
 
   void change_property_type(const QString& name,
-                            core::property::type type) override;
+                            core::property_type type) override;
 
   [[nodiscard]] auto get_property(const QString& name) const
       -> const property& override;

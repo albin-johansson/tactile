@@ -17,10 +17,27 @@ struct object_ref_t;
 using object_ref = nenya::mirror_type<int, detail::object_ref_t>;
 
 template <typename T>
-concept property_type = std::same_as<T, QString> || std::same_as<T, int> ||
-                        std::same_as<T, double> || std::same_as<T, bool> ||
-                        std::same_as<T, QColor> || std::same_as<T, QFileInfo> ||
-                        std::same_as<T, object_ref>;
+concept is_property_type =
+    std::same_as<T, QString> || std::same_as<T, int> ||
+    std::same_as<T, double> || std::same_as<T, bool> ||
+    std::same_as<T, QColor> || std::same_as<T, QFileInfo> ||
+    std::same_as<T, object_ref>;
+
+/**
+ * \brief Provides values for all different possible property types.
+ *
+ * \since 0.2.0
+ */
+enum class property_type
+{
+  string,    ///< A string property.
+  integer,   ///< An integer property.
+  floating,  ///< A floating-point property.
+  boolean,   ///< A boolean property.
+  file,      ///< A file path property.
+  color,     ///< A color property.
+  object     ///< An integer ID property, that refers to a map object.
+};
 
 /**
  * \class property
@@ -44,22 +61,6 @@ class property final
                                   bool>;
 
   /**
-   * \brief Provides values for all different possible property types.
-   *
-   * \since 0.2.0
-   */
-  enum type
-  {
-    string,    ///< A string property.
-    integer,   ///< An integer property.
-    floating,  ///< A floating-point property.
-    boolean,   ///< A boolean property.
-    file,      ///< A file path property.
-    color,     ///< A color property.
-    object     ///< An integer ID property, that refers to a map object.
-  };
-
-  /**
    * \brief Creates a property with no value.
    *
    * \since 0.2.0
@@ -75,7 +76,7 @@ class property final
    *
    * \since 0.2.0
    */
-  template <property_type T>
+  template <is_property_type T>
   /*implicit*/ property(const T& value)
   {
     m_value.emplace<T>(value);
@@ -90,7 +91,7 @@ class property final
    */
   void reset();
 
-  void set_default(type t);
+  void set_default(property_type type);
 
   /**
    * \brief Sets the value stored in the property.
@@ -101,7 +102,7 @@ class property final
    *
    * \since 0.2.0
    */
-  template <property_type T>
+  template <is_property_type T>
   void set_value(const T& value = {})
   {
     m_value.emplace<T>(value);
@@ -300,7 +301,7 @@ class property final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto get_type() const -> maybe<type>;
+  [[nodiscard]] auto type() const -> maybe<property_type>;
 
  private:
   value_type m_value;
@@ -315,7 +316,7 @@ class property final
    *
    * \since 0.2.0
    */
-  template <property_type T>
+  template <is_property_type T>
   [[nodiscard]] auto is() const noexcept -> bool
   {
     return std::holds_alternative<T>(m_value);
@@ -332,7 +333,7 @@ class property final
    *
    * \since 0.2.0
    */
-  template <property_type T>
+  template <is_property_type T>
   [[nodiscard]] auto as() const -> const T&
   {
     return std::get<T>(m_value);
@@ -348,7 +349,7 @@ class property final
    *
    * \since 0.2.0
    */
-  template <property_type T>
+  template <is_property_type T>
   [[nodiscard]] auto try_as() const noexcept -> const T*
   {
     return std::get_if<T>(&m_value);
@@ -364,6 +365,6 @@ class property final
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto stringify(property::type type) -> QString;
+[[nodiscard]] auto stringify(property_type type) -> QString;
 
 }  // namespace tactile::core

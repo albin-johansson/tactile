@@ -13,7 +13,7 @@ class property_delegate final : public property_manager
  public:
   ~property_delegate() noexcept override = default;
 
-  void add_property(const QString& name, property::type type) override;
+  void add_property(const QString& name, property_type type) override;
 
   void add_property(const QString& name, const property& property) override;
 
@@ -24,7 +24,7 @@ class property_delegate final : public property_manager
   void set_property(const QString& name, const property& property) override;
 
   void change_property_type(const QString& name,
-                            core::property::type type) override;
+                            core::property_type type) override;
 
   // clang-format off
 

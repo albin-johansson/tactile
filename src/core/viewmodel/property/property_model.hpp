@@ -49,7 +49,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  void add(const QString& name, core::property::type type);
+  void add(const QString& name, core::property_type type);
 
   /**
    * \brief Adds a property to the model.
@@ -77,7 +77,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  void change_type(const QString& name, core::property::type type);
+  void change_type(const QString& name, core::property_type type);
 
   /**
    * \brief Renames an existing property.
@@ -150,7 +150,7 @@ class property_model final : public QStandardItemModel
  signals:
   void added_color(const QModelIndex& valueIndex);
   void added_file(const QModelIndex& valueIndex);
-  void changed_type(const QModelIndex& valueIndex, core::property::type type);
+  void changed_type(const QModelIndex& valueIndex, core::property_type type);
   void updated_file(const QModelIndex& valueIndex);
   void updated_color(const QModelIndex& index);
 

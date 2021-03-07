@@ -9,7 +9,7 @@
 namespace tactile::core {
 
 void property_delegate::add_property(const QString& name,
-                                     const property::type type)
+                                     const property_type type)
 {
   Q_ASSERT(!m_properties.contains(name));
 
@@ -19,7 +19,8 @@ void property_delegate::add_property(const QString& name,
   m_properties.emplace(name, std::move(p));
 
 #ifdef QT_DEBUG
-  qDebug() << "Added property:" << name << "with type:" << type;
+  qDebug() << "Added property:" << name
+           << "with type:" << static_cast<int>(type);
 #endif  // QT_DEBUG
 }
 
@@ -27,13 +28,13 @@ void property_delegate::add_property(const QString& name,
                                      const property& property)
 {
   Q_ASSERT(!m_properties.contains(name));
-  Q_ASSERT(property.get_type());
+  Q_ASSERT(property.type());
 
   m_properties.emplace(name, property);
 
 #ifdef QT_DEBUG
   qDebug() << "Added property:" << name
-           << "with type:" << property.get_type().value();
+           << "with type:" << static_cast<int>(property.type().value());
 #endif  // QT_DEBUG
 }
 
@@ -66,7 +67,7 @@ void property_delegate::set_property(const QString& name,
                                      const property& property)
 {
   Q_ASSERT(m_properties.contains(name));
-  Q_ASSERT(m_properties.at(name).get_type() == property.get_type());
+  Q_ASSERT(m_properties.at(name).type() == property.type());
   m_properties.at(name) = property;
 
 #ifdef QT_DEBUG
@@ -75,10 +76,10 @@ void property_delegate::set_property(const QString& name,
 }
 
 void property_delegate::change_property_type(const QString& name,
-                                             const core::property::type type)
+                                             const core::property_type type)
 {
   Q_ASSERT(m_properties.contains(name));
-  Q_ASSERT(get_property(name).get_type() != type);
+  Q_ASSERT(get_property(name).type() != type);
 
   m_properties.erase(name);
 
@@ -88,7 +89,8 @@ void property_delegate::change_property_type(const QString& name,
   m_properties.emplace(name, std::move(p));
 
 #ifdef QT_DEBUG
-  qDebug() << "Changed type of property:" << name << "to" << type;
+  qDebug() << "Changed type of property:" << name << "to"
+           << static_cast<int>(type);
 #endif  // QT_DEBUG
 }
 

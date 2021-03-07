@@ -92,7 +92,7 @@ auto object::is_rectangle() const noexcept -> bool
   return type() == object_type::rectangle;
 }
 
-void object::add_property(const QString& name, const property::type type)
+void object::add_property(const QString& name, const property_type type)
 {
   m_properties.add_property(name, type);
 }
@@ -118,7 +118,7 @@ void object::set_property(const QString& name, const property& property)
 }
 
 void object::change_property_type(const QString& name,
-                                  const core::property::type type)
+                                  const core::property_type type)
 {
   m_properties.change_property_type(name, type);
 }

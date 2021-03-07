@@ -81,7 +81,7 @@ auto document_delegate::absolute_path() const -> QString
 }
 
 void document_delegate::add_property(const QString& name,
-                                     const core::property::type type)
+                                     const core::property_type type)
 {
   m_propertyManager->add_property(name, type);
   emit added_property(name);
@@ -115,7 +115,7 @@ void document_delegate::set_property(const QString& name,
 }
 
 void document_delegate::change_property_type(const QString& name,
-                                             const core::property::type type)
+                                             const core::property_type type)
 {
   m_propertyManager->change_property_type(name, type);
   emit changed_property_type(name);

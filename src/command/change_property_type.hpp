@@ -16,7 +16,7 @@ class change_property_type final : public QUndoCommand
  public:
   change_property_type(not_null<core::property_manager*> manager,
                        QString name,
-                       core::property::type type1);
+                       core::property_type type1);
 
   void undo() override;
 
@@ -30,7 +30,7 @@ class change_property_type final : public QUndoCommand
  private:
   core::property_manager* m_manager{};
   QString m_name;
-  core::property::type m_type;
+  core::property_type m_type;
   maybe<core::property> m_previousProperty;
 };
 

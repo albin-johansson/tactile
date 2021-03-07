@@ -32,7 +32,7 @@ class property_tree_view final : public QTreeView
   void when_file_added(const QModelIndex& valueIndex);
 
   void when_changed_type(const QModelIndex& valueIndex,
-                         core::property::type type);
+                         core::property_type type);
 
   void when_file_updated(const QModelIndex& index);
 

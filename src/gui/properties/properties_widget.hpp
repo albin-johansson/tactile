@@ -68,7 +68,7 @@ class properties_widget final : public QWidget
 
   void rename_property_requested();
 
-  void change_type_requested(core::property::type type);
+  void change_type_requested(core::property_type type);
 
   void when_double_clicked();
 

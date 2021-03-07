@@ -29,7 +29,7 @@ add_property::add_property(not_null<core::property_manager*> manager,
 
 add_property::add_property(not_null<core::property_manager*> manager,
                            QString name,
-                           const core::property::type type)
+                           const core::property_type type)
     : add_property{manager, std::move(name), data_type{type}}
 {}
 
@@ -43,7 +43,7 @@ void add_property::redo()
 {
   QUndoCommand::redo();
 
-  if (const auto* type = std::get_if<core::property::type>(&m_data)) {
+  if (const auto* type = std::get_if<core::property_type>(&m_data)) {
     m_manager->add_property(m_name, *type);
   } else {
     m_manager->add_property(m_name, std::get<core::property>(m_data));

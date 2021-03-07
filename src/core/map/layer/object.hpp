@@ -195,7 +195,7 @@ class object final : public property_manager
   /// \name Property API
   /// \{
 
-  void add_property(const QString& name, property::type type) override;
+  void add_property(const QString& name, property_type type) override;
 
   void add_property(const QString& name, const property& property) override;
 
@@ -206,7 +206,7 @@ class object final : public property_manager
   void set_property(const QString& name, const property& property) override;
 
   void change_property_type(const QString& name,
-                            core::property::type type) override;
+                            core::property_type type) override;
 
   [[nodiscard]] auto get_property(const QString& name) const
       -> const property& override;

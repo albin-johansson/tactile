@@ -33,25 +33,25 @@ void add_property_dialog::update_type()
 {
   const auto text = m_ui->typeComboBox->currentText();
   if (text == TACTILE_QSTRING(u"string")) {
-    m_type = core::property::string;
+    m_type = core::property_type::string;
 
   } else if (text == TACTILE_QSTRING(u"int")) {
-    m_type = core::property::integer;
+    m_type = core::property_type::integer;
 
   } else if (text == TACTILE_QSTRING(u"float")) {
-    m_type = core::property::floating;
+    m_type = core::property_type::floating;
 
   } else if (text == TACTILE_QSTRING(u"bool")) {
-    m_type = core::property::boolean;
+    m_type = core::property_type::boolean;
 
   } else if (text == TACTILE_QSTRING(u"color")) {
-    m_type = core::property::color;
+    m_type = core::property_type::color;
 
   } else if (text == TACTILE_QSTRING(u"object")) {
-    m_type = core::property::object;
+    m_type = core::property_type::object;
 
   } else if (text == TACTILE_QSTRING(u"file")) {
-    m_type = core::property::file;
+    m_type = core::property_type::file;
 
   } else {
     throw tactile_error{"Did not recognize property type!"};

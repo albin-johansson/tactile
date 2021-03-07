@@ -31,7 +31,7 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
   }
 }
 
-void property_model::add(const QString& name, const core::property::type type)
+void property_model::add(const QString& name, const core::property_type type)
 {
   m_manager->add_property(name, type);
   add_existing_property_to_gui(name);
@@ -45,7 +45,7 @@ auto property_model::add(const QString& name, const core::property& property)
 }
 
 void property_model::change_type(const QString& name,
-                                 const core::property::type type)
+                                 const core::property_type type)
 {
   if (auto* item = find_item(this, name, 0)) {
     const auto row = item->row();
@@ -117,11 +117,11 @@ void property_model::updated_property(const QString& name)
     update_item_data(itemFromIndex(sibling), property);
 
     // We need to notify the view index widget to update its contents
-    const auto type = property.get_type().value();
-    if (type == core::property::file) {
+    const auto type = property.type().value();
+    if (type == core::property_type::file) {
       emit updated_file(sibling);
 
-    } else if (type == core::property::color) {
+    } else if (type == core::property_type::color) {
       emit updated_color(sibling);
     }
   }
@@ -171,13 +171,13 @@ auto property_model::add_property_to_gui(const QString& name,
   root->appendRow({nameItem, valueItem});
 
   const auto index = indexFromItem(valueItem);
-  const auto type = property.get_type().value();
+  const auto type = property.type().value();
 
   // Notify view that it should add an index widget for the property
-  if (type == core::property::file) {
+  if (type == core::property_type::file) {
     emit added_file(index);
 
-  } else if (type == core::property::color) {
+  } else if (type == core::property_type::color) {
     emit added_color(index);
   }
 

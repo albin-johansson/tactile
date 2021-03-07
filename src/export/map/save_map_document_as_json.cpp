@@ -25,35 +25,35 @@ namespace {
   QJsonObject result;
 
   result.insert(u"name", name);
-  result.insert(u"type", core::stringify(property.get_type().value()));
+  result.insert(u"type", core::stringify(property.type().value()));
 
   QJsonValue value;
-  switch (property.get_type().value()) {
-    case core::property::string: {
+  switch (property.type().value()) {
+    case core::property_type::string: {
       value = property.as_string();
       break;
     }
-    case core::property::integer: {
+    case core::property_type::integer: {
       value = property.as_integer();
       break;
     }
-    case core::property::floating: {
+    case core::property_type::floating: {
       value = property.as_floating();
       break;
     }
-    case core::property::boolean: {
+    case core::property_type::boolean: {
       value = property.as_boolean();
       break;
     }
-    case core::property::file: {
+    case core::property_type::file: {
       value = targetDir.relativeFilePath(property.as_file().filePath());
       break;
     }
-    case core::property::color: {
+    case core::property_type::color: {
       value = property.as_color().name(QColor::HexArgb);
       break;
     }
-    case core::property::object: {
+    case core::property_type::object: {
       value = property.as_object().get();
       break;
     }

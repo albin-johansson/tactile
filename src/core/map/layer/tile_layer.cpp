@@ -214,7 +214,7 @@ auto tile_layer::visible() const noexcept -> bool
   return m_delegate.visible();
 }
 
-void tile_layer::add_property(const QString& name, const property::type type)
+void tile_layer::add_property(const QString& name, const property_type type)
 {
   m_delegate.add_property(name, type);
 }
@@ -240,7 +240,7 @@ void tile_layer::set_property(const QString& name, const property& property)
 }
 
 void tile_layer::change_property_type(const QString& name,
-                                      const core::property::type type)
+                                      const core::property_type type)
 {
   m_delegate.change_property_type(name, type);
 }

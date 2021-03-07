@@ -46,7 +46,7 @@ class layer_delegate final
   /// \name Property API
   /// \{
 
-  void add_property(const QString& name, property::type type);
+  void add_property(const QString& name, property_type type);
 
   void add_property(const QString& name, const property& property);
 
@@ -56,7 +56,7 @@ class layer_delegate final
 
   void set_property(const QString& name, const property& property);
 
-  void change_property_type(const QString& name, property::type type);
+  void change_property_type(const QString& name, property_type type);
 
   [[nodiscard]] auto get_property(const QString& name) const -> const property&;
 

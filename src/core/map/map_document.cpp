@@ -146,7 +146,7 @@ auto map_document::absolute_path() const -> QString
 }
 
 void map_document::add_property(const QString& name,
-                                const core::property::type type)
+                                const core::property_type type)
 {
   const QSignalBlocker blocker{m_delegate.get()};
   m_delegate->execute<cmd::add_property>(m_delegate.get(), name, type);
@@ -180,7 +180,7 @@ void map_document::set_property(const QString& name,
 }
 
 void map_document::change_property_type(const QString& name,
-                                        const core::property::type type)
+                                        const core::property_type type)
 {
   const QSignalBlocker blocker{m_delegate.get()};
   m_delegate->execute<cmd::change_property_type>(m_delegate.get(), name, type);

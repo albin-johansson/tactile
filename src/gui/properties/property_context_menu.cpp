@@ -41,31 +41,31 @@ property_context_menu::property_context_menu(QWidget* parent)
   connect(m_remove, &QAction::triggered, this, &property_context_menu::remove);
 
   connect(m_typeString, &QAction::triggered, [this] {
-    emit change_type(core::property::string);
+    emit change_type(core::property_type::string);
   });
 
   connect(m_typeInt, &QAction::triggered, [this] {
-    emit change_type(core::property::integer);
+    emit change_type(core::property_type::integer);
   });
 
   connect(m_typeFloat, &QAction::triggered, [this] {
-    emit change_type(core::property::floating);
+    emit change_type(core::property_type::floating);
   });
 
   connect(m_typeBool, &QAction::triggered, [this] {
-    emit change_type(core::property::boolean);
+    emit change_type(core::property_type::boolean);
   });
 
   connect(m_typeFile, &QAction::triggered, [this] {
-    emit change_type(core::property::file);
+    emit change_type(core::property_type::file);
   });
 
   connect(m_typeObject, &QAction::triggered, [this] {
-    emit change_type(core::property::object);
+    emit change_type(core::property_type::object);
   });
 
   connect(m_typeColor, &QAction::triggered, [this] {
-    emit change_type(core::property::color);
+    emit change_type(core::property_type::color);
   });
 
   add_actions(parent);
@@ -90,7 +90,7 @@ void property_context_menu::disable_all()
   m_remove->setEnabled(false);
 }
 
-void property_context_menu::set_current_type(const core::property::type type)
+void property_context_menu::set_current_type(const core::property_type type)
 {
   for (auto* elem : m_changeType->actions()) {
     if (!elem->isSeparator()) {
@@ -99,31 +99,31 @@ void property_context_menu::set_current_type(const core::property::type type)
   }
 
   switch (type) {
-    case core::property::string: {
+    case core::property_type::string: {
       m_typeString->setEnabled(false);
       break;
     }
-    case core::property::integer: {
+    case core::property_type::integer: {
       m_typeInt->setEnabled(false);
       break;
     }
-    case core::property::floating: {
+    case core::property_type::floating: {
       m_typeFloat->setEnabled(false);
       break;
     }
-    case core::property::boolean: {
+    case core::property_type::boolean: {
       m_typeBool->setEnabled(false);
       break;
     }
-    case core::property::file: {
+    case core::property_type::file: {
       m_typeFile->setEnabled(false);
       break;
     }
-    case core::property::color: {
+    case core::property_type::color: {
       m_typeColor->setEnabled(false);
       break;
     }
-    case core::property::object: {
+    case core::property_type::object: {
       m_typeObject->setEnabled(false);
       break;
     }

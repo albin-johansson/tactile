@@ -54,7 +54,7 @@ class document_delegate final : public document
   /// \name Property API
   /// \{
 
-  void add_property(const QString& name, core::property::type type) override;
+  void add_property(const QString& name, core::property_type type) override;
 
   void add_property(const QString& name,
                     const core::property& property) override;
@@ -67,7 +67,7 @@ class document_delegate final : public document
                     const core::property& property) override;
 
   void change_property_type(const QString& name,
-                            core::property::type type) override;
+                            core::property_type type) override;
 
   [[nodiscard]] auto get_property(const QString& name) const
       -> const core::property& override;

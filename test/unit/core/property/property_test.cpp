@@ -10,7 +10,7 @@ TEST(Property, Defaults)
 {
   const core::property property;
   EXPECT_FALSE(property.has_value());
-  EXPECT_FALSE(property.get_type());
+  EXPECT_FALSE(property.type());
 
   EXPECT_FALSE(property.is_string());
   EXPECT_FALSE(property.is_integer());
@@ -209,17 +209,17 @@ TEST(Property, TryAs)
 TEST(Property, GetType)
 {
   core::property property;
-  EXPECT_FALSE(property.get_type());
+  EXPECT_FALSE(property.type());
 
   property.set_value(123);
-  EXPECT_EQ(core::property::integer, property.get_type());
+  EXPECT_EQ(core::property::integer, property.type());
 
   property.set_value(12.3);
-  EXPECT_EQ(core::property::floating, property.get_type());
+  EXPECT_EQ(core::property::floating, property.type());
 
   property.set_value(TACTILE_QSTRING(u"foo"));
-  EXPECT_EQ(core::property::string, property.get_type());
+  EXPECT_EQ(core::property::string, property.type());
 
   property.reset();
-  EXPECT_FALSE(property.get_type());
+  EXPECT_FALSE(property.type());
 }

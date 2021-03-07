@@ -130,7 +130,7 @@ void properties_widget::selection_changed(const maybe<QModelIndex> index)
   m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
   if (isCustom) {
     const auto& property = m_model->get_property(property_name(*index));
-    m_contextMenu->set_current_type(property.get_type().value());
+    m_contextMenu->set_current_type(property.type().value());
   }
 }
 
@@ -153,7 +153,7 @@ void properties_widget::paste_property_requested()
 void properties_widget::new_property_requested()
 {
   add_property_dialog::spawn(
-      [this](const QString& name, const core::property::type type) {
+      [this](const QString& name, const core::property_type type) {
         m_model->add(name, type);
       },
       m_model.get(),
@@ -178,7 +178,7 @@ void properties_widget::rename_property_requested()
   }
 }
 
-void properties_widget::change_type_requested(const core::property::type type)
+void properties_widget::change_type_requested(const core::property_type type)
 {
   m_model->change_type(current_property_name(), type);
 }

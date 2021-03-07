@@ -35,7 +35,7 @@ class property_manager
    *
    * \since 0.2.0
    */
-  virtual void add_property(const QString& name, property::type type) = 0;
+  virtual void add_property(const QString& name, property_type type) = 0;
 
   /**
    * \brief Adds a property with the specified name and value.
@@ -104,7 +104,7 @@ class property_manager
    * \since 0.2.0
    */
   virtual void change_property_type(const QString& name,
-                                    core::property::type type) = 0;
+                                    core::property_type type) = 0;
 
   /**
    * \brief Returns the property associated with the specified name.
