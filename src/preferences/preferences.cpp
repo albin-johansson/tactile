@@ -45,6 +45,12 @@ auto gfx::theme_name() -> setting<QString>
   return setting<QString>{str};
 }
 
+auto gfx::accent_color() -> setting<QColor>
+{
+  static const auto str = TACTILE_QSTRING(u"graphics/accentColor");
+  return setting<QColor>{str};
+}
+
 // auto gfx::theme_name_def() -> const QString&
 //{
 //  static const auto name = get_default_name().toString();
@@ -145,6 +151,7 @@ void validate()
   gfx::tileset_widget_visible().set_if_missing(gfx::tileset_widget_visible_def());
   gfx::layer_widget_visible().set_if_missing(gfx::layer_widget_visible_def());
   gfx::properties_widget_visible().set_if_missing(gfx::properties_widget_visible_def());
+  gfx::accent_color().set_if_missing(gfx::accent_color_def());
 
   // Note, the current theme is validated by the validate_themes-function
   gfx::user_themes().set_if_missing(gfx::user_themes_def());

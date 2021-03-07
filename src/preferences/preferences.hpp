@@ -98,6 +98,8 @@ using theme_map = QMap<QString, QVariant>;
  */
 [[nodiscard]] auto theme_name() -> setting<QString>;
 
+[[nodiscard]] auto accent_color() -> setting<QColor>;
+
 //[[nodiscard]] auto theme_name_def() -> const QString&;
 
 [[nodiscard]] auto tool_widget_visible() -> setting<bool>;
@@ -115,6 +117,11 @@ void reset_layer_widget_visible();
 void reset_tileset_widget_visible();
 
 void reset_properties_widget_visible();
+
+[[nodiscard]] constexpr auto accent_color_def() noexcept -> QColor
+{
+  return QColor{84, 153, 199};  // #5499C7
+}
 
 [[nodiscard]] constexpr auto tool_widget_visible_def() noexcept -> bool
 {

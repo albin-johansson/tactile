@@ -34,6 +34,7 @@ class settings_dialog final : public QDialog
 
  signals:
   void reload_theme();
+  // TODO void reload_accent_color();
 
  private:
   unique<Ui::settings_dialog> m_ui;

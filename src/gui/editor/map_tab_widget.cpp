@@ -6,42 +6,15 @@
 #include "tactile_qstring.hpp"
 
 namespace tactile::gui {
-namespace {
 
-inline constexpr auto styling =
-    R"(QTabWidget {
-         border: 0;
-       }
-
-       QTabWidget::pane {
-         margin: 0;
-       }
-
-       QTabBar {
-         border-radius: 0;
-         border: none;
-         font-size: 12px;
-       }
-
-       QTabBar::tab:top {
-         margin: 0;
-         padding: 2px 8px;
-         border-bottom: 3px solid gray;
-       }
-
-       QTabBar::tab:top:selected {
-         border-bottom-color: #5499c7;
-       })";
-
-}  // namespace
-
-map_tab_widget::map_tab_widget(QWidget* parent) : QTabWidget{parent}
+map_tab_widget::map_tab_widget(QWidget* parent) : tab_widget{parent}
 {
   setTabsClosable(true);
+
   // clang-format off
-  connect(this, &QTabWidget::tabCloseRequested, this, &map_tab_widget::handle_tab_close);
+  connect(this, &QTabWidget::tabCloseRequested,
+          this, &map_tab_widget::handle_tab_close);
   // clang-format on
-  setStyleSheet(styling);
 }
 
 map_tab_widget::~map_tab_widget() noexcept = default;

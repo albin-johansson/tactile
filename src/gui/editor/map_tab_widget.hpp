@@ -1,11 +1,11 @@
 #pragma once
 
 #include <QString>     // QString
-#include <QTabWidget>  // QTabWidget
 
 #include "forward_declare.hpp"
 #include "map_view.hpp"
 #include "maybe.hpp"
+#include "tab_widget.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
@@ -18,7 +18,7 @@ namespace tactile::gui {
  *
  * \headerfile map_tab_widget.hpp
  */
-class map_tab_widget final : public QTabWidget
+class map_tab_widget final : public tab_widget
 {
   Q_OBJECT
 

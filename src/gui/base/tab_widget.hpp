@@ -4,7 +4,7 @@
 
 namespace tactile::gui {
 
-class tab_widget final : public QTabWidget
+class tab_widget : public QTabWidget
 {
   Q_OBJECT
 
