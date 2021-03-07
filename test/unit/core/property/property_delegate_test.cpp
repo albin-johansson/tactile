@@ -12,7 +12,7 @@ TEST(PropertyDelegate, AddProperty)
   EXPECT_EQ(0, delegate.property_count());
 
   const auto name = TACTILE_QSTRING(u"foo");
-  delegate.add_property(name, core::property::integer);
+  delegate.add_property(name, core::property_type::integer);
   EXPECT_EQ(1, delegate.property_count());
 
   const auto& property = delegate.get_property(name);
@@ -25,7 +25,7 @@ TEST(PropertyDelegate, RemoveProperty)
   core::property_delegate delegate;
   const auto name = TACTILE_QSTRING(u"foo");
 
-  delegate.add_property(name, core::property::integer);
+  delegate.add_property(name, core::property_type::integer);
   EXPECT_EQ(1, delegate.property_count());
   EXPECT_NO_THROW(delegate.get_property(name));
 
@@ -39,7 +39,7 @@ TEST(PropertyDelegate, RenameProperty)
   core::property_delegate delegate;
 
   const auto oldName = TACTILE_QSTRING(u"foo");
-  delegate.add_property(oldName, core::property::boolean);
+  delegate.add_property(oldName, core::property_type::boolean);
   EXPECT_NO_THROW(delegate.get_property(oldName));
 
   const auto newName = TACTILE_QSTRING(u"bar");
@@ -56,7 +56,7 @@ TEST(PropertyDelegate, SetProperty)
 
   const auto name = TACTILE_QSTRING(u"foo");
 
-  delegate.add_property(name, core::property::integer);
+  delegate.add_property(name, core::property_type::integer);
   EXPECT_EQ(0, delegate.get_property(name).as_integer());
 
   delegate.set_property(name, 123);
@@ -70,7 +70,7 @@ TEST(PropertyDelegate, GetProperty)
   const auto name = TACTILE_QSTRING(u"foo");
   EXPECT_ANY_THROW(delegate.get_property(name));
 
-  delegate.add_property(name, core::property::string);
+  delegate.add_property(name, core::property_type::string);
   EXPECT_NO_THROW(delegate.get_property(name));
 
   const auto& cDelegate = delegate;
@@ -82,10 +82,10 @@ TEST(PropertyDelegate, PropertyCount)
   core::property_delegate delegate;
   EXPECT_EQ(0, delegate.property_count());
 
-  delegate.add_property(TACTILE_QSTRING(u"foo"), core::property::string);
+  delegate.add_property(TACTILE_QSTRING(u"foo"), core::property_type::string);
   EXPECT_EQ(1, delegate.property_count());
 
-  delegate.add_property(TACTILE_QSTRING(u"bar"), core::property::integer);
+  delegate.add_property(TACTILE_QSTRING(u"bar"), core::property_type::integer);
   EXPECT_EQ(2, delegate.property_count());
 
   delegate.remove_property(TACTILE_QSTRING(u"bar"));

@@ -206,19 +206,19 @@ TEST(Property, TryAs)
   EXPECT_FALSE(property.try_as_boolean());
 }
 
-TEST(Property, GetType)
+TEST(Property, Type)
 {
   core::property property;
   EXPECT_FALSE(property.type());
 
   property.set_value(123);
-  EXPECT_EQ(core::property::integer, property.type());
+  EXPECT_EQ(core::property_type::integer, property.type());
 
   property.set_value(12.3);
-  EXPECT_EQ(core::property::floating, property.type());
+  EXPECT_EQ(core::property_type::floating, property.type());
 
   property.set_value(TACTILE_QSTRING(u"foo"));
-  EXPECT_EQ(core::property::string, property.type());
+  EXPECT_EQ(core::property_type::string, property.type());
 
   property.reset();
   EXPECT_FALSE(property.type());

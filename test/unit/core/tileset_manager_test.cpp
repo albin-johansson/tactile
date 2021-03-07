@@ -64,17 +64,17 @@ TEST_F(TilesetManagerTest, Remove)
   EXPECT_EQ(0, m_manager.count());
 }
 
-TEST_F(TilesetManagerTest, RemoveAll)
+TEST_F(TilesetManagerTest, Clear)
 {
   const auto a [[maybe_unused]] = m_manager.add(m_interior);
   const auto b [[maybe_unused]] = m_manager.add(m_exterior);
 
   EXPECT_EQ(2, m_manager.count());
 
-  m_manager.remove_all();
+  m_manager.clear();
   EXPECT_EQ(0, m_manager.count());
 
-  EXPECT_NO_THROW(m_manager.remove_all());
+  EXPECT_NO_THROW(m_manager.clear());
 }
 
 TEST_F(TilesetManagerTest, Rename)

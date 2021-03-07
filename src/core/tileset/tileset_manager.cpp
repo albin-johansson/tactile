@@ -42,7 +42,7 @@ void tileset_manager::remove(const tileset_id id) noexcept
   }
 }
 
-void tileset_manager::remove_all() noexcept
+void tileset_manager::clear() noexcept
 {
   m_tilesets.clear();
 }
