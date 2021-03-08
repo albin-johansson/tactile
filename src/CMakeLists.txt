@@ -335,6 +335,8 @@ set(TACTILE_SOURCE_FILES
     tool/tool_model.cpp
     tool/tool_model.hpp
 
+    util/color_utils.cpp
+    util/color_utils.hpp
     util/file_handle.cpp
     util/file_handle.hpp
     util/forward_declare.hpp
