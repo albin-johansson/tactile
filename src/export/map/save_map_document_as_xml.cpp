@@ -78,34 +78,41 @@ void save_property(QDomDocument& document,
                     core::stringify(property.type().value()));
 
   switch (property.type().value()) {
-    case core::property_type::string: {
+    case core::property_type::string:
+    {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.as_string());
       break;
     }
-    case core::property_type::integer: {
+    case core::property_type::integer:
+    {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.as_integer());
       break;
     }
-    case core::property_type::floating: {
+    case core::property_type::floating:
+    {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.as_floating());
       break;
     }
-    case core::property_type::boolean: {
+    case core::property_type::boolean:
+    {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.as_boolean());
       break;
     }
-    case core::property_type::file: {
+    case core::property_type::file:
+    {
       node.setAttribute(
           TACTILE_QSTRING(u"value"),
           targetDir.relativeFilePath(property.as_file().filePath()));
       break;
     }
-    case core::property_type::color: {
+    case core::property_type::color:
+    {
       node.setAttribute(TACTILE_QSTRING(u"value"),
                         property.as_color().name(QColor::HexArgb));
       break;
     }
-    case core::property_type::object: {
+    case core::property_type::object:
+    {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.as_object().get());
       break;
     }

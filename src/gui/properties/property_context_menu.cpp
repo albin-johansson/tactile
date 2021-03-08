@@ -99,31 +99,38 @@ void property_context_menu::set_current_type(const core::property_type type)
   }
 
   switch (type) {
-    case core::property_type::string: {
+    case core::property_type::string:
+    {
       m_typeString->setEnabled(false);
       break;
     }
-    case core::property_type::integer: {
+    case core::property_type::integer:
+    {
       m_typeInt->setEnabled(false);
       break;
     }
-    case core::property_type::floating: {
+    case core::property_type::floating:
+    {
       m_typeFloat->setEnabled(false);
       break;
     }
-    case core::property_type::boolean: {
+    case core::property_type::boolean:
+    {
       m_typeBool->setEnabled(false);
       break;
     }
-    case core::property_type::file: {
+    case core::property_type::file:
+    {
       m_typeFile->setEnabled(false);
       break;
     }
-    case core::property_type::color: {
+    case core::property_type::color:
+    {
       m_typeColor->setEnabled(false);
       break;
     }
-    case core::property_type::object: {
+    case core::property_type::object:
+    {
       m_typeObject->setEnabled(false);
       break;
     }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QString>     // QString
+#include <QString>  // QString
 
 #include "forward_declare.hpp"
 #include "map_view.hpp"
