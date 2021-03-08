@@ -8,48 +8,53 @@ set(TACTILE_SOURCE_FILES
     version.hpp
     tactile.qrc
 
-    command/add_col.cpp
-    command/add_col.hpp
-    command/add_layer.cpp
-    command/add_layer.hpp
-    command/add_property.cpp
-    command/add_property.hpp
-    command/add_row.cpp
-    command/add_row.hpp
-    command/add_tileset.cpp
-    command/add_tileset.hpp
-    command/bucket_fill.cpp
-    command/bucket_fill.hpp
-    command/change_property_type.cpp
-    command/change_property_type.hpp
-    command/command_id.hpp
-    command/command_stack.hpp
-    command/erase_sequence.cpp
-    command/erase_sequence.hpp
-    command/map_command.cpp
-    command/map_command.hpp
-    command/remove_col.cpp
-    command/remove_col.hpp
-    command/remove_layer.cpp
-    command/remove_layer.hpp
-    command/remove_property.cpp
-    command/remove_property.hpp
-    command/remove_row.cpp
-    command/remove_row.hpp
-    command/remove_tileset.cpp
-    command/remove_tileset.hpp
-    command/rename_property.cpp
-    command/rename_property.hpp
-    command/repeated_command.cpp
-    command/repeated_command.hpp
-    command/repeated_map_command.hpp
-    command/repeated_map_command.cpp
-    command/resize_map.cpp
-    command/resize_map.hpp
-    command/stamp_sequence.cpp
-    command/stamp_sequence.hpp
-    command/update_property.cpp
-    command/update_property.hpp
+    commands/layers/add_layer.cpp
+    commands/layers/add_layer.hpp
+    commands/layers/remove_layer.cpp
+    commands/layers/remove_layer.hpp
+
+    commands/maps/add_col.cpp
+    commands/maps/add_col.hpp
+    commands/maps/add_row.cpp
+    commands/maps/add_row.hpp
+    commands/maps/map_command.cpp
+    commands/maps/map_command.hpp
+    commands/maps/remove_col.cpp
+    commands/maps/remove_col.hpp
+    commands/maps/remove_row.cpp
+    commands/maps/remove_row.hpp
+    commands/maps/repeated_map_command.hpp
+    commands/maps/repeated_map_command.cpp
+    commands/maps/resize_map.cpp
+    commands/maps/resize_map.hpp
+
+    commands/properties/add_property.cpp
+    commands/properties/add_property.hpp
+    commands/properties/change_property_type.cpp
+    commands/properties/change_property_type.hpp
+    commands/properties/remove_property.cpp
+    commands/properties/remove_property.hpp
+    commands/properties/rename_property.cpp
+    commands/properties/rename_property.hpp
+    commands/properties/update_property.cpp
+    commands/properties/update_property.hpp
+
+    commands/tilesets/add_tileset.cpp
+    commands/tilesets/add_tileset.hpp
+    commands/tilesets/remove_tileset.cpp
+    commands/tilesets/remove_tileset.hpp
+
+    commands/tools/bucket_fill.cpp
+    commands/tools/bucket_fill.hpp
+    commands/tools/erase_sequence.cpp
+    commands/tools/erase_sequence.hpp
+    commands/tools/stamp_sequence.cpp
+    commands/tools/stamp_sequence.hpp
+
+    commands/command_id.hpp
+    commands/command_stack.hpp
+    commands/repeated_command.cpp
+    commands/repeated_command.hpp
 
     core/document.hpp
     core/document_delegate.cpp
@@ -364,7 +369,12 @@ add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
 
 target_include_directories(libTactile
     PUBLIC ${TACTILE_ROOT_DIR}/src
-    PUBLIC command
+    PUBLIC commands
+    PUBLIC commands/layers
+    PUBLIC commands/maps
+    PUBLIC commands/properties
+    PUBLIC commands/tilesets
+    PUBLIC commands/tools
     PUBLIC core
     PUBLIC core/algorithm
     PUBLIC core/aliases
