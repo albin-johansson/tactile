@@ -7,7 +7,7 @@ install:
   - ninja --version # expect >= 1.10
 
   - set QT_VERSION=6.0.2
-  - set Qt5_PATH=C:\Qt\%QT_VERSION%\msvc2019_64
+  - set Qt6_PATH=C:\Qt\%QT_VERSION%\msvc2019_64
   - set QT_QPA_PLATFORM_PLUGIN_PATH=%Qt5_PATH%\plugins\platforms
   - set PATH=%PATH%;%Qt5_PATH%\bin;%
   - set BOOST_ROOT=C:\Libraries\boost_1_73_0
