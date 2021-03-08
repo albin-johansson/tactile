@@ -147,7 +147,7 @@ auto document_delegate::properties() const -> const property_map&
   return m_propertyManager->properties();
 }
 
-auto document_delegate::get_commands() noexcept -> command_stack*
+auto document_delegate::history() noexcept -> command_stack*
 {
   return m_commandStack.get();
 }

@@ -83,7 +83,7 @@ class document_delegate final : public document
 
   /// \}
 
-  [[nodiscard]] auto get_commands() noexcept -> command_stack*;
+  [[nodiscard]] auto history() noexcept -> command_stack*;
 
   template <std::derived_from<QUndoCommand> T, typename... Args>
   void execute(Args&&... args)

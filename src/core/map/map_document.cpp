@@ -47,7 +47,7 @@ map_document::map_document(const row_t nRows,
 
 void map_document::setup()
 {
-  auto* commands = m_delegate->get_commands();
+  auto* commands = m_delegate->history();
 
   // clang-format off
   connect(commands, &command_stack::cleanChanged, this, &map_document::clean_changed);
