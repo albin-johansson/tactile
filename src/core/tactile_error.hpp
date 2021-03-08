@@ -9,7 +9,7 @@ namespace tactile {
 class tactile_error final : public std::exception
 {
  public:
-  tactile_error() = default;
+  tactile_error() noexcept = default;
 
   /**
    * \brief Creates an exception with the supplied message.
@@ -19,7 +19,8 @@ class tactile_error final : public std::exception
    *
    * \since 0.1.0
    */
-  explicit tactile_error(czstring what) : m_what{what ? what : "N/A"}
+  explicit tactile_error(const czstring what) noexcept
+      : m_what{what ? what : "N/A"}
   {}
 
   [[nodiscard]] auto what() const noexcept -> czstring override
