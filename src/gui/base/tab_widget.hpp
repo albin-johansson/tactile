@@ -11,6 +11,8 @@ class tab_widget : public QTabWidget
  public:
   explicit tab_widget(QWidget* parent = nullptr);
 
+  void apply_stylesheet();
+
   void edit_tab(int index);
 
  signals:

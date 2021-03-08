@@ -101,6 +101,11 @@ void map_editor::set_active_tab_name(const QString& name)
   m_tabWidget->set_active_tab_name(name);
 }
 
+void map_editor::set_opengl_enabled(const bool enabled)
+{
+  m_tabWidget->set_opengl_enabled(enabled);
+}
+
 auto map_editor::in_editor_mode() const -> bool
 {
   return m_ui->stackedWidget->currentIndex() == m_editorID;

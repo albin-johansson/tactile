@@ -98,6 +98,8 @@ class map_tab_widget final : public tab_widget
    */
   void set_active_tab_name(const QString& name);
 
+  void set_opengl_enabled(bool enabled);
+
   /**
    * \brief Returns the map ID associated with the currently active tab.
    *

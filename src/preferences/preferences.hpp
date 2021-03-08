@@ -110,6 +110,8 @@ using theme_map = QMap<QString, QVariant>;
 
 [[nodiscard]] auto properties_widget_visible() -> setting<bool>;
 
+[[nodiscard]] auto use_opengl() -> setting<bool>;
+
 void reset_tool_widget_visible();
 
 void reset_layer_widget_visible();
@@ -139,6 +141,11 @@ void reset_properties_widget_visible();
 }
 
 [[nodiscard]] constexpr auto properties_widget_visible_def() noexcept -> bool
+{
+  return true;
+}
+
+[[nodiscard]] constexpr auto use_opengl_def() noexcept -> bool
 {
   return true;
 }

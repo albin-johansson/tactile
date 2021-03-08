@@ -23,8 +23,7 @@ void init_surface_format() noexcept
 {
   QSurfaceFormat format;
   format.setDepthBufferSize(0);
-  //  format.setStencilBufferSize(8);
-  format.setVersion(3, 2);
+//  format.setVersion(3, 2);
   format.setRenderableType(QSurfaceFormat::OpenGL);
   format.setProfile(QSurfaceFormat::CoreProfile);
   QSurfaceFormat::setDefaultFormat(format);

@@ -37,8 +37,11 @@ tab_widget::tab_widget(QWidget* parent) : QTabWidget{parent}
   auto* bar = new tab_bar{this};
   connect(bar, &tab_bar::edited_tab, this, &tab_widget::edited_tab);
   setTabBar(bar);
+  apply_stylesheet();
+}
 
-  // TODO this needs to be reloaded, so subscribe to reload_accent_color signal
+void tab_widget::apply_stylesheet()
+{
   const auto accent = prefs::gfx::accent_color().value();
   setStyleSheet(QString{styling}.arg(accent.name(QColor::HexRgb)));
 }

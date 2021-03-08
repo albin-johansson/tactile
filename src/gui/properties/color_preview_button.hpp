@@ -12,6 +12,8 @@ class color_preview_button final : public QPushButton
  public:
   explicit color_preview_button(QColor color, QWidget* parent = nullptr);
 
+  static void update_color(QPushButton& button, const QColor& color);
+
   void set_color(const QColor& color);
 
   void set_red(int red);

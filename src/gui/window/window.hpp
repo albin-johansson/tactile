@@ -215,6 +215,8 @@ class window final : public QMainWindow
 
   void handle_theme_changed();
 
+  void handle_reload_opengl(bool enabled);
+
   void stamp_enabled();
 
   void bucket_enabled();

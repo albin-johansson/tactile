@@ -1,10 +1,13 @@
 #include "map_view.hpp"
 
 #include <QApplication>
+#include <QOpenGLWidget>
 #include <QScrollBar>
+#include <QSurfaceFormat>
 
 #include "map_document.hpp"
 #include "map_scene.hpp"
+#include "preferences.hpp"
 
 namespace tactile::gui {
 
@@ -14,14 +17,12 @@ map_view::map_view(core::map_document* map, const map_id id, QWidget* parent)
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);
   setAttribute(Qt::WA_StaticContents, true);
 
-  // register mouse events with no pressed buttons
-  setMouseTracking(true);
-
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
-  //  grabGesture(Qt::PinchGesture);
+  set_opengl_enabled(prefs::gfx::use_opengl().value());
 
+  //  grabGesture(Qt::PinchGesture);
   setScene(new map_scene{map, id, this});
 }
 
@@ -62,6 +63,24 @@ void map_view::show_properties()
 auto map_view::id() const -> map_id
 {
   return get_map_scene()->id();
+}
+
+void map_view::set_opengl_enabled(const bool enabled)
+{
+  if (enabled) {
+    if (!qobject_cast<QOpenGLWidget*>(viewport())) {
+      auto* viewport = new QOpenGLWidget{this};
+      viewport->setFormat(QSurfaceFormat::defaultFormat());
+      setViewport(viewport);
+    }
+
+    if (auto* widget = viewport()) {
+      // register mouse events with no pressed buttons
+      widget->setMouseTracking(true);
+    }
+  } else {
+    setViewport(nullptr);
+  }
 }
 
 void map_view::mousePressEvent(QMouseEvent* event)

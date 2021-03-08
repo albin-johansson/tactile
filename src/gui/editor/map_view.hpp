@@ -48,6 +48,9 @@ class map_view final : public QGraphicsView
 
   [[nodiscard]] auto id() const -> map_id;
 
+ public slots:
+  void set_opengl_enabled(bool enabled);
+
  signals:
   void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
   void mouse_moved(QMouseEvent* event, QPointF mapPosition);

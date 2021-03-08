@@ -74,6 +74,8 @@ class map_editor final : public QWidget
    */
   void set_active_tab_name(const QString& name);
 
+  void set_opengl_enabled(bool enabled);
+
   [[nodiscard]] auto in_editor_mode() const -> bool;
 
   [[nodiscard]] auto active_tab_id() const -> maybe<map_id>;

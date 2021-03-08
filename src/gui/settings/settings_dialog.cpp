@@ -60,11 +60,11 @@ settings_dialog::settings_dialog(QWidget* parent)
   connect(m_ui->themeOptionsButton, &QPushButton::pressed,
           this, &settings_dialog::pressed_theme_options_button);
 
+  connect(m_ui->generalRestoreDefaults, &QPushButton::clicked,
+          this, &settings_dialog::restore_general_defaults);
+
   connect(m_ui->exportRestoreDefaults, &QPushButton::clicked,
           this, &settings_dialog::restore_export_defaults);
-
-  connect(m_ui->appearanceRestoreDefaults, &QPushButton::clicked,
-          this, &settings_dialog::restore_appearance_defaults);
 
   connect(m_themeOptionsContextMenu, &theme_options_context_menu::rename_theme,
           this, &settings_dialog::rename_current_theme);
@@ -106,7 +106,9 @@ settings_dialog::settings_dialog(QWidget* parent)
 settings_dialog::~settings_dialog() noexcept = default;
 
 void settings_dialog::update_general_components()
-{}
+{
+  m_ui->openglCheck->setChecked(m_snapshot.useOpenGL);
+}
 
 void settings_dialog::update_export_components()
 {
@@ -121,6 +123,10 @@ void settings_dialog::update_export_components()
 void settings_dialog::update_theme_components()
 {
   m_ui->themeComboBox->setCurrentText(m_snapshot.theme);
+
+  color_preview_button::update_color(*m_ui->accentColorButton,
+                                     prefs::gfx::accent_color().value());
+
   update_theme_preview();
 }
 
@@ -136,6 +142,12 @@ void settings_dialog::handle_accept()
 {
   set_theme(m_ui->themeComboBox->currentText());
   emit reload_theme();
+
+  if (const auto useOpenGL = m_ui->openglCheck->isChecked();
+      useOpenGL != m_snapshot.useOpenGL) {
+    gfx::use_opengl().set(useOpenGL);
+    emit reload_opengl(useOpenGL);
+  }
 
   if (const auto defaultFormat = m_ui->defaultFormatCombo->currentText();
       defaultFormat != m_snapshot.defaultFormat) {
@@ -174,6 +186,11 @@ void settings_dialog::apply()
   fetch_current_settings();
 }
 
+void settings_dialog::restore_general_defaults()
+{
+  m_ui->openglCheck->setChecked(gfx::use_opengl_def());
+}
+
 void settings_dialog::restore_export_defaults()
 {
   m_ui->embedTilesetsCheck->setChecked(saves::embed_tilesets_def());
@@ -184,15 +201,10 @@ void settings_dialog::restore_export_defaults()
   m_ui->tileHeightEdit->setText(QString::number(saves::tile_height_def()));
 }
 
-void settings_dialog::restore_appearance_defaults()
-{
-  //  m_ui->themeComboBox->setCurrentText(gfx::theme_name_def());
-}
-
 void settings_dialog::fetch_current_settings()
 {
   // General
-  // TODO...
+  m_snapshot.useOpenGL = gfx::use_opengl().value();
 
   // Export
   m_snapshot.embedTilesets = saves::embed_tilesets().value();
@@ -228,7 +240,13 @@ void settings_dialog::rename_current_theme()
 
 void settings_dialog::duplicate_current_theme()
 {
-  // TODO
+  const auto name = m_ui->themeComboBox->currentText();
+  if (const auto theme = get_theme(name)) {
+    const auto newName = name + tr(" (Copy)");
+    if (register_theme(newName, *theme)) {
+      m_ui->themeComboBox->addItem(newName);
+    }
+  }
 }
 
 void settings_dialog::import_new_theme()

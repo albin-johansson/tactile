@@ -412,6 +412,11 @@ void window::handle_theme_changed()
   emit m_editor->theme_changed();
 }
 
+void window::handle_reload_opengl(const bool enabled)
+{
+  m_editor->set_opengl_enabled(enabled);
+}
+
 void window::stamp_enabled()
 {
   m_ui->actionStampTool->setChecked(true);
@@ -603,6 +608,9 @@ void window::eraser_enabled()
   // clang-format off
   connect(&settings, &settings_dialog::reload_theme,
           this, &window::handle_theme_changed);
+
+  connect(&settings, &settings_dialog::reload_opengl,
+          this, &window::handle_reload_opengl);
   // clang-format on
 
   settings.exec();

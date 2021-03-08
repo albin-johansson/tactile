@@ -81,6 +81,12 @@ auto gfx::properties_widget_visible() -> setting<bool>
   return setting<bool>{str};
 }
 
+auto gfx::use_opengl() -> setting<bool>
+{
+  static const auto str = TACTILE_QSTRING(u"graphics/useOpenGL");
+  return setting<bool>{str};
+}
+
 void gfx::reset_tool_widget_visible()
 {
   tool_widget_visible().set(tool_widget_visible_def());
@@ -152,6 +158,7 @@ void validate()
   gfx::layer_widget_visible().set_if_missing(gfx::layer_widget_visible_def());
   gfx::properties_widget_visible().set_if_missing(gfx::properties_widget_visible_def());
   gfx::accent_color().set_if_missing(gfx::accent_color_def());
+  gfx::use_opengl().set_if_missing(gfx::use_opengl_def());
 
   // Note, the current theme is validated by the validate_themes-function
   gfx::user_themes().set_if_missing(gfx::user_themes_def());

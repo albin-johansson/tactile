@@ -3,6 +3,7 @@
 #include <QColorDialog>
 #include <utility>  // move
 
+#include "color_utils.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::gui {
@@ -22,6 +23,23 @@ color_preview_button::color_preview_button(QColor color, QWidget* parent)
       update_color(dialog.selectedColor());
     }
   });
+}
+
+void color_preview_button::update_color(QPushButton& button,
+                                        const QColor& color)
+{
+  static const auto fmt = TACTILE_QSTRING(u"background-color: %1; color: %2;");
+  static const auto black = TACTILE_QSTRING(u"#000000");
+  static const auto white = TACTILE_QSTRING(u"#FFFFFF");
+
+  if (intensity_of(color) > color_intensity_threshold()) {
+    button.setStyleSheet(fmt.arg(color.name(QColor::HexArgb)).arg(black));
+  } else {
+    button.setStyleSheet(fmt.arg(color.name(QColor::HexArgb)).arg(white));
+  }
+
+  // The RGB name is easier to read
+  button.setText(color.name(QColor::HexRgb).toUpper());
 }
 
 void color_preview_button::set_color(const QColor& color)
@@ -67,23 +85,8 @@ auto color_preview_button::current_color() const -> const QColor&
 
 void color_preview_button::update_color(const QColor& color)
 {
-  static const auto fmt = TACTILE_QSTRING(u"background-color: %1; color: %2;");
-  static const auto black = TACTILE_QSTRING(u"#000000");
-  static const auto white = TACTILE_QSTRING(u"#FFFFFF");
-
   m_color = color;
-
-  const auto intensity = (m_color.red() * 0.299) + (m_color.green() * 0.587) +
-                         (m_color.blue() * 0.114);
-  if (intensity > 186) {
-    setStyleSheet(fmt.arg(m_color.name(QColor::HexArgb)).arg(black));
-  } else {
-    setStyleSheet(fmt.arg(m_color.name(QColor::HexArgb)).arg(white));
-  }
-
-  // The RGB name is easier to read
-  setText(m_color.name(QColor::HexRgb).toUpper());
-
+  update_color(*this, m_color);
   emit color_changed(m_color);
 }
 

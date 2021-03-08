@@ -18,6 +18,7 @@ struct settings_snapshot final
   QString defaultFormat;
   int tileWidth;
   int tileHeight;
+  bool useOpenGL;
   bool embedTilesets;
   bool generateDefaults;
   bool readableOutput;
@@ -34,7 +35,7 @@ class settings_dialog final : public QDialog
 
  signals:
   void reload_theme();
-  // TODO void reload_accent_color();
+  void reload_opengl(bool enabled);
 
  private:
   unique<Ui::settings_dialog> m_ui;
@@ -56,9 +57,9 @@ class settings_dialog final : public QDialog
 
   void apply();
 
-  void restore_export_defaults();
+  void restore_general_defaults();
 
-  void restore_appearance_defaults();
+  void restore_export_defaults();
 
   void fetch_current_settings();
 

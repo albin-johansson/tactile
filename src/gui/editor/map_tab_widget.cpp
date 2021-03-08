@@ -1,7 +1,5 @@
 #include "map_tab_widget.hpp"
 
-#include <QMouseEvent>
-
 #include "map_document.hpp"
 #include "tactile_qstring.hpp"
 
@@ -27,7 +25,7 @@ void map_tab_widget::handle_tab_close(const int index)
 
 void map_tab_widget::theme_changed()
 {
-  setStyleSheet(styling);
+  apply_stylesheet();
 }
 
 void map_tab_widget::force_redraw()
@@ -114,6 +112,13 @@ void map_tab_widget::set_active_tab_name(const QString& name)
 {
   if (const auto index = currentIndex(); index != -1) {
     setTabText(index, name);
+  }
+}
+
+void map_tab_widget::set_opengl_enabled(const bool enabled)
+{
+  if (auto* view = current_view()) {
+    view->set_opengl_enabled(enabled);
   }
 }
 
