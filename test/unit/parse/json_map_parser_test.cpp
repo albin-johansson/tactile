@@ -16,8 +16,7 @@ TACTILE_DEFINE_TEST_P(JsonMapParser, path_error_pair)
 {
   const auto [path, code] = GetParam();
 
-  const QFileInfo file{path.toString()};
-  parse::map_parser<parse::json_engine> parser{file};
+  parse::map_parser<parse::json_engine> parser{path.toString()};
 
   if (code != parse::parse_error::none) {
     EXPECT_FALSE(parser);

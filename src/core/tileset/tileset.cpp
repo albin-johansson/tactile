@@ -79,7 +79,7 @@ tileset::tileset(const tile_id firstID,
                  const tile_height tileHeight)
     : tileset{firstID, QImage{path}, tileWidth, tileHeight}
 {
-  m_path = path;
+  m_path = QFileInfo{path};
 }
 
 void tileset::set_selection(const selection& selection)

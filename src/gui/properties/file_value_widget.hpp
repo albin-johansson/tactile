@@ -25,9 +25,9 @@ class file_value_widget final : public QWidget
 
   void reset_path();
 
-  void set_path(const QFileInfo& path);
+  void set_path(const QString& path);
 
-  [[nodiscard]] auto current_path() const -> QFileInfo;
+  [[nodiscard]] auto current_path() const -> QString;
 
  signals:
   void spawn_dialog();

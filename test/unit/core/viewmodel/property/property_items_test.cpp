@@ -69,7 +69,7 @@ TEST(PropertyItems, UpdateItemData)
 
     const auto role = vm::property_item_role::path;
     ASSERT_TRUE(item.data(role).canConvert<QString>());
-    EXPECT_EQ(property.as_file(), item.data(role).value<QString>());
+    EXPECT_EQ(property.as_file().absoluteFilePath(), item.data(role).value<QString>());
   }
 
   // TODO object item

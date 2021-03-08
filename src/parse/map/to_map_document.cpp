@@ -118,7 +118,7 @@ auto to_map_document(const map_data& data) -> core::map_document*
     document->add_property(propertyData.name, propertyData.property);
   }
 
-  document->set_path(data.path);
+  document->set_path(QFileInfo{data.path});
   document->select_layer(data.layers.front().id);
   document->reset_history();  // Make sure there is no undo/redo history
 

@@ -1,5 +1,6 @@
 #include "json_utils.hpp"
 
+#include <QFileInfo>
 #include <QSaveFile>
 
 #include "file_handle.hpp"

@@ -31,16 +31,17 @@ class map_parser final
   static_assert(is_engine<engine_type, document_type, object_type>,
                 "The supplied type isn't a parser engine!");
 
-  explicit map_parser(const QFileInfo& path)
+  explicit map_parser(const QString& path)
   {
-    m_data.path = path.absoluteFilePath();
-    if (const auto file = open_file(path)) {
+    const QFileInfo info{path};
+    m_data.path = info.absoluteFilePath();
+    if (const auto file = open_file(info)) {
       const auto root = m_engine.root(*file);
       if (!parse_next_layer_id(root)) {
         return;
       }
 
-      if (!parse_tilesets(root, path)) {
+      if (!parse_tilesets(root, info)) {
         return;
       }
 
@@ -198,7 +199,7 @@ class map_parser final
   {
     const auto source = object.string(element_id::source);
     const auto external =
-        m_engine.from_file(path.dir().absoluteFilePath(*source));
+        m_engine.from_file(QFileInfo{path.dir().absoluteFilePath(*source)});
     if (external) {
       return parse_tileset_common(m_engine.root(*external), path, firstGid);
     } else {

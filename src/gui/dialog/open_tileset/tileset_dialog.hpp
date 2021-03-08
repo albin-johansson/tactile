@@ -62,7 +62,7 @@ class tileset_dialog final : public QDialog
             .name = name ? *name : TACTILE_QSTRING(u"Untitled"),
             .tileWidth = *tileWidth,
             .tileHeight = *tileHeight,
-            .path = dialog.m_path};
+            .path = QFileInfo{dialog.m_path}};
         callback(info);
       }
     }

@@ -413,10 +413,11 @@ target_include_directories(libTactile
     PUBLIC util)
 
 target_link_libraries(libTactile
-    PUBLIC Qt5::Core
-    PUBLIC Qt5::Widgets
-    PUBLIC Qt5::Gui
-    PUBLIC Qt5::Xml)
+    PUBLIC Qt6::Core
+    PUBLIC Qt6::Widgets
+    PUBLIC Qt6::OpenGLWidgets
+    PUBLIC Qt6::Gui
+    PUBLIC Qt6::Xml)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(libTactile PRIVATE

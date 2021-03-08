@@ -139,7 +139,7 @@ void tactile_app::open_map(const QString& path)
     m_window->when_new_map_added(document, id, QFileInfo{path}.baseName());
   } else {
     gui::open_map_error_dialog dialog{m_window.get()};
-    dialog.set_file(path);
+    dialog.set_file(QFileInfo{path});
     dialog.set_error_message(to_message(error));
     dialog.exec();
   }

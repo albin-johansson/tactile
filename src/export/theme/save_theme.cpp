@@ -54,7 +54,7 @@ void save_theme(const QString& path, const QPalette& theme)
   QJsonDocument document{};
 
   document.setObject(create_theme_root(theme));
-  json::write_file(path, document);
+  json::write_file(QFileInfo{path}, document);
 }
 
 }  // namespace tactile

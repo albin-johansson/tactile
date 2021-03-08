@@ -16,8 +16,7 @@ TACTILE_DEFINE_TEST_P(XmlMapParser, path_error_pair)
 {
   const auto [path, code] = GetParam();
 
-  const QFileInfo file{path.toString()};
-  const parse::map_parser<parse::xml_engine> parser{file};
+  const parse::map_parser<parse::xml_engine> parser{path.toString()};
 
   if (code != parse::parse_error::none) {
     EXPECT_FALSE(parser);

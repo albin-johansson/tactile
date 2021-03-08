@@ -8,5 +8,5 @@ using namespace tactile;
 
 TEST(JSONUtils, FromFile)
 {
-  EXPECT_NO_THROW(json::from_file(TACTILE_QSTRING(u"json/terrain.json")));
+  EXPECT_NO_THROW(json::from_file(QFileInfo{TACTILE_QSTRING(u"json/terrain.json")}));
 }

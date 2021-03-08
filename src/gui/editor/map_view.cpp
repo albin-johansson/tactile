@@ -125,7 +125,7 @@ void map_view::mouseReleaseEvent(QMouseEvent* event)
   emit mouse_released(event, mapFromScene(get_map_scene()->map_position()));
 }
 
-void map_view::enterEvent(QEvent* event)
+void map_view::enterEvent(QEnterEvent* event)
 {
   QWidget::enterEvent(event);
   emit mouse_entered(event);

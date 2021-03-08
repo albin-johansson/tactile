@@ -94,8 +94,7 @@ void property_tree_view::when_file_added(const QModelIndex& valueIndex)
 
       auto* itemWidget = indexWidget(item->index());
       if (auto* widget = qobject_cast<file_value_widget*>(itemWidget)) {
-        const QFileInfo file{path};
-        widget->set_path(file);
+        widget->set_path(path);
       }
     });
   });
@@ -178,7 +177,7 @@ void property_tree_view::mousePressEvent(QMouseEvent* event)
   QTreeView::mousePressEvent(event);
 
   if (event->button() == Qt::RightButton) {
-    emit spawn_context_menu(event->globalPos());
+    emit spawn_context_menu(mapToGlobal(event->pos()));
   }
 }
 

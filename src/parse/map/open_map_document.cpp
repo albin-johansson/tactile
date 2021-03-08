@@ -12,7 +12,7 @@ namespace tactile {
 namespace {
 
 template <typename T>
-auto open_using(const QFileInfo& file, parse::parse_error& error)
+auto open_using(const QString& file, parse::parse_error& error)
     -> core::map_document*
 {
   parse::map_parser<T> parser{file};
@@ -31,11 +31,12 @@ auto open_map_document(const QString& path, parse::parse_error& error)
 {
   const QFileInfo info{path};
   const auto suffix = info.suffix();
+
   if (suffix == TACTILE_QSTRING(u"json")) {
-    return open_using<parse::json_engine>(info, error);
+    return open_using<parse::json_engine>(path, error);
 
   } else if (suffix == TACTILE_QSTRING(u"tmx")) {
-    return open_using<parse::xml_engine>(info, error);
+    return open_using<parse::xml_engine>(path, error);
 
   } else {
     throw tactile_error{"Did not recognize map format to open!"};
