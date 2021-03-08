@@ -14,29 +14,6 @@ The following bullet points describe the goals that guide the design and develop
 * Keep things simple, hide advanced options that are rarely used.
 * Well documented and high-quality source code.
 
-## Implemented features
-
-* Work on multiple maps simultaneously.
-* Support for multiple layers.
-* Support for both embedded and external tilesets.
-* Smart undo/redo functionality to ensure a safe and encouraging workflow.
-* Open Tiled maps using the `.tmx` and `.json` formats.
-* Save tilemaps using the Tiled `.tmx` or `.json` format.
-* Stamp tool for "drawing" tiles to maps.
-* Bucket tool to fill areas with a specific tile.
-* Eraser tool that works like the stamp tool for removing content from layers.
-
-## Upcoming features
-
-* Animated tiles.
-* Minimap overview.
-* View external tileset files.
-* Object layers.
-* Layer properties.
-* Custom themes.
-* OpenGL-based rendering.
-* Maps with tiles that aren't square.
-
 ## Source code
 
 The Tactile application is written in C++20 using MSVC. At the time of writing, the code using features that are not yet available in stable releases of GCC and Clang, which means that Tactile is only available on Windows, for now. However, with time any C++20 compatible compiler should be able to build the sources.
