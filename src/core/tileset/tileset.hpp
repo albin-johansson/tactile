@@ -14,6 +14,7 @@
 #include "tile_height.hpp"
 #include "tile_id.hpp"
 #include "tile_width.hpp"
+#include "tileset_selection.hpp"
 
 namespace tactile::core {
 
@@ -37,23 +38,6 @@ class tileset final
 {
  public:
   using rect_map = std::unordered_map<tile_id, QRect>;
-
-  /**
-   * \struct tileset::selection
-   *
-   * \brief Represents the selection of tiles in a tileset.
-   *
-   * \details The two positions represent a rectangular selection.
-   *
-   * \since 0.1.0
-   *
-   * \headerfile tileset.hpp
-   */
-  struct selection final
-  {
-    position topLeft;      ///< The top-left corner position.
-    position bottomRight;  ///< The bottom-right corner position.
-  };
 
   /**
    * \brief Creates a tileset.
@@ -170,7 +154,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  void set_selection(const selection& selection);
+  void set_selection(const tileset_selection& selection);
 
   /**
    * \brief Clears any current selection.
@@ -307,7 +291,8 @@ class tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_selection() const noexcept -> const maybe<selection>&
+  [[nodiscard]] auto get_selection() const noexcept
+      -> const maybe<tileset_selection>&
   {
     return m_selection;
   }
@@ -429,7 +414,7 @@ class tileset final
   tile_id m_firstId{1};
   tile_id m_lastId;
 
-  maybe<selection> m_selection;
+  maybe<tileset_selection> m_selection;
   rect_map m_sourceRects;
 
   tile_width m_tileWidth{};

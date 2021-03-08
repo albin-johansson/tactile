@@ -26,7 +26,7 @@ class tileset_rubber_band final : public QRubberBand
   void set_tile_height(tile_height tileHeight) noexcept;
 
  signals:
-  void finished_selection(const core::tileset::selection& selection);
+  void finished_selection(const core::tileset_selection& selection);
 
  private:
   tile_width m_tileWidth{};
@@ -40,7 +40,7 @@ class tileset_rubber_band final : public QRubberBand
 
   [[nodiscard]] auto adjusted_geometry() const -> QRect;
 
-  [[nodiscard]] auto get_selection() const -> core::tileset::selection;
+  [[nodiscard]] auto get_selection() const -> core::tileset_selection;
 };
 
 }  // namespace tactile::gui

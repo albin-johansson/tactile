@@ -83,7 +83,7 @@ auto tileset_rubber_band::adjusted_geometry() const -> QRect
   return adjusted;
 }
 
-auto tileset_rubber_band::get_selection() const -> core::tileset::selection
+auto tileset_rubber_band::get_selection() const -> core::tileset_selection
 {
   const auto& geo = geometry();
   const auto tw = m_tileWidth.get();

@@ -248,7 +248,7 @@ class model final : public QObject
   /**
    * \copydoc map_document::set_tileset_selection()
    */
-  void set_tileset_selection(const tileset::selection& selection);
+  void set_tileset_selection(const tileset_selection& selection);
 
   /**
    * \brief Increases the tile size that is being used by the currently active

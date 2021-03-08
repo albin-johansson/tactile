@@ -118,7 +118,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[deprecated]] void set_selection(const tileset::selection& selection);
+  [[deprecated]] void set_selection(const tileset_selection& selection);
 
   /**
    * \brief Increments the next tileset ID value.

@@ -82,7 +82,7 @@ tileset::tileset(const tile_id firstID,
   m_path = QFileInfo{path};
 }
 
-void tileset::set_selection(const selection& selection)
+void tileset::set_selection(const tileset_selection& selection)
 {
   m_selection = selection;
 }

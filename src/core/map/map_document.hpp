@@ -246,7 +246,7 @@ class map_document final : public document
   /**
    * \copydoc tileset_manager::set_selection()
    */
-  void set_tileset_selection(const tileset::selection& selection);
+  void set_tileset_selection(const tileset_selection& selection);
 
   /// \name Layer API
   /// \{

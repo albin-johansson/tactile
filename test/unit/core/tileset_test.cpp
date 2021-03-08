@@ -92,7 +92,7 @@ TEST_F(TilesetTest, IterateSelection)
 
 TEST_F(TilesetTest, SetSelection)
 {
-  const core::tileset::selection selection{{1_row, 2_col}, {7_row, 8_col}};
+  const core::tileset_selection selection{{1_row, 2_col}, {7_row, 8_col}};
 
   m_tileset->set_selection(selection);
   ASSERT_TRUE(m_tileset->get_selection());
@@ -108,7 +108,7 @@ TEST_F(TilesetTest, ClearSelection)
   m_tileset->clear_selection();
   EXPECT_FALSE(m_tileset->get_selection());
 
-  const core::tileset::selection selection{{1_row, 2_col}, {7_row, 8_col}};
+  const core::tileset_selection selection{{1_row, 2_col}, {7_row, 8_col}};
   m_tileset->set_selection(selection);
   EXPECT_TRUE(m_tileset->get_selection());
 

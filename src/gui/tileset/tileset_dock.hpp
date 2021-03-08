@@ -24,7 +24,7 @@ class tileset_dock final : public dock_widget
   void ui_select_tileset(tileset_id id);
   void ui_remove_tileset(tileset_id id);
   void ui_rename_tileset(tileset_id id, const QString& name);
-  void ui_set_tileset_selection(const core::tileset::selection& selection);
+  void ui_set_tileset_selection(const core::tileset_selection& selection);
 
  public slots:
   void added_map(map_id id, const core::map_document& document);

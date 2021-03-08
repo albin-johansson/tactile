@@ -62,7 +62,7 @@ void tileset_manager::select(const maybe<tileset_id> id)
   }
 }
 
-void tileset_manager::set_selection(const tileset::selection& selection)
+void tileset_manager::set_selection(const tileset_selection& selection)
 {
   if (has_active_tileset()) {
     m_tilesets.at(*m_activeId)->set_selection(selection);
