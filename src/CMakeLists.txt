@@ -114,22 +114,22 @@ set(TACTILE_SOURCE_FILES
     core/tileset/tileset_manager.cpp
     core/tileset/tileset_manager.hpp
 
-    core/viewmodel/item_model_utils.hpp
+    core/viewmodels/item_model_utils.hpp
 
-    core/viewmodel/layer/layer_item.cpp
-    core/viewmodel/layer/layer_item.hpp
-    core/viewmodel/layer/layer_item_role.hpp
-    core/viewmodel/layer/layer_model.cpp
-    core/viewmodel/layer/layer_model.hpp
+    core/viewmodels/layer/layer_item.cpp
+    core/viewmodels/layer/layer_item.hpp
+    core/viewmodels/layer/layer_item_role.hpp
+    core/viewmodels/layer/layer_model.cpp
+    core/viewmodels/layer/layer_model.hpp
 
-    core/viewmodel/property/make_property_item.cpp
-    core/viewmodel/property/make_property_item.hpp
-    core/viewmodel/property/property_item_role.hpp
-    core/viewmodel/property/property_item_type.hpp
-    core/viewmodel/property/property_items.cpp
-    core/viewmodel/property/property_items.hpp
-    core/viewmodel/property/property_model.cpp
-    core/viewmodel/property/property_model.hpp
+    core/viewmodels/property/make_property_item.cpp
+    core/viewmodels/property/make_property_item.hpp
+    core/viewmodels/property/property_item_role.hpp
+    core/viewmodels/property/property_item_type.hpp
+    core/viewmodels/property/property_items.cpp
+    core/viewmodels/property/property_items.hpp
+    core/viewmodels/property/property_model.cpp
+    core/viewmodels/property/property_model.hpp
 
     export/map/export_options.cpp
     export/map/export_options.hpp
@@ -383,9 +383,9 @@ target_include_directories(libTactile
     PUBLIC core/property
     PUBLIC core/tile
     PUBLIC core/tileset
-    PUBLIC core/viewmodel
-    PUBLIC core/viewmodel/layer
-    PUBLIC core/viewmodel/property
+    PUBLIC core/viewmodels
+    PUBLIC core/viewmodels/layer
+    PUBLIC core/viewmodels/property
     PUBLIC export
     PUBLIC export/map
     PUBLIC export/theme
