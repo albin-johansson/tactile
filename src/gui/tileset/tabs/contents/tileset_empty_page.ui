@@ -36,7 +36,6 @@
           <font>
            <family>Segoe UI</family>
            <pointsize>12</pointsize>
-           <weight>50</weight>
            <italic>false</italic>
            <bold>false</bold>
            <underline>false</underline>
@@ -120,7 +119,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../tactile.qrc"/>
+  <include location="../../../../tactile.qrc"/>
  </resources>
  <connections/>
 </ui>

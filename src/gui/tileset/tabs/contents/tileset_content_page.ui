@@ -32,7 +32,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../../tactile.qrc"/>
+  <include location="../../../../tactile.qrc"/>
  </resources>
  <connections/>
 </ui>

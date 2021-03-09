@@ -260,29 +260,31 @@ set(TACTILE_SOURCE_FILES
     gui/status/status_bar.cpp
     gui/status/status_bar.hpp
 
-    gui/tileset/tileset_content_page.cpp
-    gui/tileset/tileset_content_page.hpp
     gui/tileset/tileset_dock.cpp
     gui/tileset/tileset_dock.hpp
-    gui/tileset/tileset_empty_page.cpp
-    gui/tileset/tileset_empty_page.hpp
-    gui/tileset/tileset_image_label.cpp
-    gui/tileset/tileset_image_label.hpp
-    gui/tileset/tileset_image_widget.cpp
-    gui/tileset/tileset_image_widget.hpp
-    gui/tileset/tileset_rubber_band.cpp
-    gui/tileset/tileset_rubber_band.hpp
-    gui/tileset/tileset_tab.cpp
-    gui/tileset/tileset_tab.hpp
-    gui/tileset/tileset_tab_context_menu.cpp
-    gui/tileset/tileset_tab_context_menu.hpp
-    gui/tileset/tileset_tab_manager.cpp
-    gui/tileset/tileset_tab_manager.hpp
     gui/tileset/tileset_widget.cpp
     gui/tileset/tileset_widget.hpp
-    gui/tileset/tileset_content_page.ui
-    gui/tileset/tileset_empty_page.ui
     gui/tileset/tileset_widget.ui
+
+    gui/tileset/tabs/tileset_tab.cpp
+    gui/tileset/tabs/tileset_tab.hpp
+    gui/tileset/tabs/tileset_tab_context_menu.cpp
+    gui/tileset/tabs/tileset_tab_context_menu.hpp
+    gui/tileset/tabs/tileset_tab_manager.cpp
+    gui/tileset/tabs/tileset_tab_manager.hpp
+
+    gui/tileset/tabs/contents/tileset_content_page.cpp
+    gui/tileset/tabs/contents/tileset_content_page.hpp
+    gui/tileset/tabs/contents/tileset_empty_page.cpp
+    gui/tileset/tabs/contents/tileset_empty_page.hpp
+    gui/tileset/tabs/contents/tileset_image_label.cpp
+    gui/tileset/tabs/contents/tileset_image_label.hpp
+    gui/tileset/tabs/contents/tileset_image_widget.cpp
+    gui/tileset/tabs/contents/tileset_image_widget.hpp
+    gui/tileset/tabs/contents/tileset_rubber_band.cpp
+    gui/tileset/tabs/contents/tileset_rubber_band.hpp
+    gui/tileset/tabs/contents/tileset_content_page.ui
+    gui/tileset/tabs/contents/tileset_empty_page.ui
 
     gui/tools/tool_dock.cpp
     gui/tools/tool_dock.hpp
@@ -412,6 +414,8 @@ target_include_directories(libTactile
     PUBLIC gui/startup
     PUBLIC gui/status
     PUBLIC gui/tileset
+    PUBLIC gui/tileset/tabs
+    PUBLIC gui/tileset/tabs/contents
     PUBLIC gui/tools
     PUBLIC gui/window
     PUBLIC parse
