@@ -1,9 +1,14 @@
 #pragma once
 
-#include <QStandardItemModel>
+#include <QStandardItemModel>  // QStandardItemModel
 
-#include "map_document.hpp"
+#include "forward_declare.hpp"
+#include "layer_id.hpp"
 #include "maybe.hpp"
+#include "not_null.hpp"
+
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, layer)
 
 namespace tactile::vm {
 
@@ -14,7 +19,7 @@ class layer_model final : public QStandardItemModel
   Q_OBJECT
 
  public:
-  explicit layer_model(core::map_document* document);
+  explicit layer_model(not_null<core::map_document*> document);
 
   void add_tile_layer();
 

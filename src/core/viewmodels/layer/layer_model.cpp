@@ -1,11 +1,12 @@
 #include "layer_model.hpp"
 
 #include "layer_item.hpp"
+#include "map_document.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::vm {
 
-layer_model::layer_model(core::map_document* document)
+layer_model::layer_model(not_null<core::map_document*> document)
     : QStandardItemModel{}
     , m_document{document}
 {
