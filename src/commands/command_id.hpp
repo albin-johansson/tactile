@@ -20,7 +20,8 @@ enum class command_id
   rename_property,
   resize_map,
   stamp,
-  update_property
+  update_property,
+  duplicate_layer
 };
 
 }  // namespace tactile::cmd

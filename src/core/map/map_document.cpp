@@ -10,6 +10,7 @@
 #include "bucket_fill.hpp"
 #include "change_property_type.hpp"
 #include "document_delegate.hpp"
+#include "duplicate_layer.hpp"
 #include "erase_sequence.hpp"
 #include "object_layer.hpp"
 #include "remove_col.hpp"
@@ -379,12 +380,18 @@ auto map_document::take_layer(const layer_id id) -> shared<layer>
 
 void map_document::duplicate_layer(const layer_id id)
 {
-  // TODO make this undoable
+  m_delegate->execute<cmd::duplicate_layer>(this, id);
+}
 
+auto map_document::duplicate_layer_impl(layer_id id) -> layer_id
+{
   auto& [newId, layer] = m_map->duplicate_layer(id);
+
   layer->set_name(layer->name() + tr(" (Copy)"));
   emit added_duplicated_layer(newId, *layer);
   emit redraw();
+
+  return newId;
 }
 
 void map_document::increase_tile_size()

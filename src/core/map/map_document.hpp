@@ -302,6 +302,8 @@ class map_document final : public document
    */
   void duplicate_layer(layer_id id);
 
+  [[nodiscard]] auto duplicate_layer_impl(layer_id id) -> layer_id;
+
   /**
    * \copydoc map::set_visibility()
    */

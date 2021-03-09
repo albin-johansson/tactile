@@ -10,6 +10,8 @@ set(TACTILE_SOURCE_FILES
 
     commands/layers/add_layer.cpp
     commands/layers/add_layer.hpp
+    commands/layers/duplicate_layer.cpp
+    commands/layers/duplicate_layer.hpp
     commands/layers/remove_layer.cpp
     commands/layers/remove_layer.hpp
 
