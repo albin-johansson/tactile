@@ -11,8 +11,8 @@
 #include "smart_pointers.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
-#include "tileset.hpp"
 #include "tileset_id.hpp"
+#include "tileset_selection.hpp"
 #include "tool_id.hpp"
 #include "tool_model.hpp"
 #include "vector_map.hpp"
@@ -27,6 +27,7 @@ namespace tactile::core {
 class property_manager;
 class map_document;
 class layer;
+class tileset;
 
 /**
  * \class model
