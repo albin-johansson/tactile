@@ -8,8 +8,8 @@ install:
 
   - set QT_VERSION=6.0.1
   - set Qt6_PATH=C:\Qt\%QT_VERSION%\msvc2019_64
-  - set QT_QPA_PLATFORM_PLUGIN_PATH=%Qt5_PATH%\plugins\platforms
-  - set PATH=%PATH%;%Qt5_PATH%\bin;%
+  - set QT_QPA_PLATFORM_PLUGIN_PATH=%Qt6_PATH%\plugins\platforms
+  - set PATH=%PATH%;%Qt6_PATH%\bin;%
   - set BOOST_ROOT=C:\Libraries\boost_1_73_0
 
   # Updates PATH to support command-line usage of compiler
