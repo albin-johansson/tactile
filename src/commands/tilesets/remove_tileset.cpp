@@ -34,6 +34,7 @@ void remove_tileset::redo()
 {
   QUndoCommand::redo();
   m_document->remove_tileset(m_id);
+  emit m_document->redraw();
 }
 
 }  // namespace tactile::cmd
