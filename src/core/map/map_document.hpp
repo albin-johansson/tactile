@@ -95,7 +95,7 @@ class map_document final : public document
 
   [[nodiscard]] auto absolute_path() const -> QString override;
 
-  /// \}
+  /// \} End of document API
 
   /// \name Property API
   /// \{
@@ -127,7 +127,7 @@ class map_document final : public document
 
   [[nodiscard]] auto properties() const -> const property_map& override;
 
-  /// \}
+  /// \} End of property API
 
   /**
    * \brief Performs a flood-fill at the specified position.
@@ -392,7 +392,7 @@ class map_document final : public document
    */
   [[nodiscard]] auto has_layer(layer_id id) const -> bool;
 
-  /// \}
+  /// \} End of layer API
 
   /**
    * \copydoc map::increase_tile_size()
@@ -486,14 +486,28 @@ class map_document final : public document
 
  signals:
   void redraw();
+
+  /// \name Undo/Redo signals
+  /// \{
+
   void undo_state_updated(bool canUndo);
   void redo_state_updated(bool canRedo);
   void undo_text_updated(const QString& text);
   void redo_text_updated(const QString& text);
   void clean_changed(bool clean);
 
+  /// \} End of Undo/Redo signals
+
+  /// \name Tileset signals
+  /// \{
+
   void added_tileset(tileset_id);
   void removed_tileset(tileset_id);
+
+  /// \} End of tileset signals
+
+  /// \name Layer signals
+  /// \{
 
   void added_layer(layer_id, const layer&);
   void added_duplicated_layer(layer_id, const layer&);
@@ -501,7 +515,14 @@ class map_document final : public document
   void removed_layer(layer_id);
   void moved_layer_back(layer_id);
   void moved_layer_forward(layer_id);
+  void changed_layer_opacity(layer_id, double opacity);
 
+  /// \} End of layer signals
+
+  /// \name Property signals
+  /// \{
+
+  void show_properties();
   void show_layer_properties(layer_id id);
   void added_property(const QString& name);
   void about_to_remove_property(const QString& name);
@@ -509,8 +530,7 @@ class map_document final : public document
   void changed_property_type(const QString& name);
   void renamed_property(const QString& oldName, const QString& newName);
 
-  void show_properties();
-  void show_layer_properties(layer_id id);
+  /// \} End of property signals
 
  public slots:
   /**
