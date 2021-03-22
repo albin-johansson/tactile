@@ -24,8 +24,10 @@ namespace {
 {
   auto layer = std::make_shared<core::tile_layer>(data.nRows, data.nCols);
 
-  for (auto row = 0_row; row < data.nRows; ++row) {
-    for (auto col = 0_col; col < data.nCols; ++col) {
+  for (auto row = 0_row; row < data.nRows; ++row)
+  {
+    for (auto col = 0_col; col < data.nCols; ++col)
+    {
       const core::position pos{row, col};
       layer->set_tile(pos, data.tiles.at(pos.row_index()).at(pos.col_index()));
     }
@@ -37,9 +39,12 @@ namespace {
 [[nodiscard]] auto make_object(const object_data& objectData) -> core::object
 {
   const auto getType = [](const object_data& objectData) {
-    if (objectData.isPoint) {
+    if (objectData.isPoint)
+    {
       return core::object_type::point;
-    } else {
+    }
+    else
+    {
       return core::object_type::rectangle;
     }
   };
@@ -53,7 +58,8 @@ namespace {
   object.set_name(objectData.name);
   object.set_visible(objectData.visible);
 
-  for (const auto& propertyData : objectData.properties) {
+  for (const auto& propertyData : objectData.properties)
+  {
     object.add_property(propertyData.name, propertyData.property);
   }
 
@@ -65,7 +71,8 @@ namespace {
 {
   auto layer = std::make_shared<core::object_layer>();
 
-  for (const auto& objectData : data.objects) {
+  for (const auto& objectData : data.objects)
+  {
     layer->add_object(objectData.id, make_object(objectData));
   }
 
@@ -76,10 +83,12 @@ namespace {
 {
   shared<core::layer> layer;
 
-  if (data.type == core::layer_type::tile_layer) {
+  if (data.type == core::layer_type::tile_layer)
+  {
     layer = make_tile_layer(std::get<tile_layer_data>(data.data));
-
-  } else if (data.type == core::layer_type::object_layer) {
+  }
+  else if (data.type == core::layer_type::object_layer)
+  {
     layer = make_object_layer(std::get<object_layer_data>(data.data));
   }
 
@@ -88,7 +97,8 @@ namespace {
   layer->set_opacity(data.opacity);
   layer->set_visible(data.visible);
 
-  for (const auto& propertyData : data.properties) {
+  for (const auto& propertyData : data.properties)
+  {
     layer->add_property(propertyData.name, propertyData.property);
   }
 
@@ -106,15 +116,18 @@ auto to_map_document(const map_data& data) -> core::map_document*
   document->set_next_layer_id(data.nextLayerId);
   document->set_next_object_id(data.nextObjectId);
 
-  for (const auto& tilesetData : data.tilesets) {
+  for (const auto& tilesetData : data.tilesets)
+  {
     document->add_tileset(make_tileset(tilesetData));
   }
 
-  for (const auto& layerData : data.layers) {
+  for (const auto& layerData : data.layers)
+  {
     document->add_layer(layerData.id, make_layer(layerData));
   }
 
-  for (const auto& propertyData : data.properties) {
+  for (const auto& propertyData : data.properties)
+  {
     document->add_property(propertyData.name, propertyData.property);
   }
 

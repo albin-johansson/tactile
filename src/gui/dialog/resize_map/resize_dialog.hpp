@@ -58,10 +58,12 @@ class resize_dialog final : public QDialog
   static void spawn(T&& callback)
   {
     resize_dialog dialog;
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
       const auto rows = dialog.m_chosenHeight;
       const auto cols = dialog.m_chosenWidth;
-      if (rows && cols) {
+      if (rows && cols)
+      {
         callback(*rows, *cols);
       }
     }

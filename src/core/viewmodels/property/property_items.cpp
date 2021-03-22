@@ -7,7 +7,8 @@ namespace tactile::vm {
 void update_item_data(not_null<QStandardItem*> item, const core::property& p)
 {
   Q_ASSERT(item);
-  switch (static_cast<vm::property_item_type>(item->type())) {
+  switch (static_cast<vm::property_item_type>(item->type()))
+  {
     case property_item_type::string:
     {
       item->setData(p.as_string(), Qt::EditRole);
@@ -53,7 +54,8 @@ void update_item_data(not_null<QStandardItem*> item, const core::property& p)
 auto item_to_property(not_null<const QStandardItem*> item) -> core::property
 {
   Q_ASSERT(item);
-  switch (static_cast<vm::property_item_type>(item->type())) {
+  switch (static_cast<vm::property_item_type>(item->type()))
+  {
     case property_item_type::string:
       return item->data(Qt::EditRole).value<QString>();
 

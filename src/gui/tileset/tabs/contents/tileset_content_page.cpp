@@ -35,36 +35,44 @@ tileset_content_page::tileset_content_page(QWidget* parent)
   });
 
   connect(m_contextMenu, &tileset_tab_context_menu::remove, [this](int index) {
-    if (auto* tab = tab_from_index(index)) {
+    if (auto* tab = tab_from_index(index))
+    {
       emit ui_remove_tileset(tab->id());
     }
   });
 
   connect(m_tabWidget, &tab_widget::edited_tab, [this](int index) {
-    if (auto* tab = tab_from_index(index)) {
+    if (auto* tab = tab_from_index(index))
+    {
       emit ui_rename_tileset(tab->id(), m_tabWidget->tabBar()->tabText(index));
     }
   });
 
   connect(m_tabWidget, &QTabWidget::tabCloseRequested, [this](int index) {
-    if (auto* tab = tab_from_index(index)) {
+    if (auto* tab = tab_from_index(index))
+    {
       emit ui_remove_tileset(tab->id());
     }
   });
 
   connect(m_tabWidget, &QTabWidget::tabBarClicked, [this](int index) {
-    if (auto* tab = tab_from_index(index)) {
+    if (auto* tab = tab_from_index(index))
+    {
       emit ui_select_tileset(tab->id());
     }
   });
 
   connect(m_tabWidget, &QTabWidget::currentChanged, [this](int index) {
-    if (index != -1) {
+    if (index != -1)
+    {
       current_manager().set_cached_index(index);
-      if (auto* item = tab_from_index(index)) {
+      if (auto* item = tab_from_index(index))
+      {
         emit ui_select_tileset(item->id());
       }
-    } else {
+    }
+    else
+    {
       emit switch_to_empty_page();
     }
   });
@@ -88,7 +96,8 @@ void tileset_content_page::add_corner_button()
 void tileset_content_page::trigger_context_menu(const QPoint& pos)
 {
   const auto index = m_tabWidget->tabBar()->tabAt(pos);
-  if (index != -1) {
+  if (index != -1)
+  {
     m_contextMenu->set_tab_index(index);
     m_contextMenu->exec(mapToGlobal(pos));
   }
@@ -99,16 +108,20 @@ void tileset_content_page::selected_map(const map_id map)
   {
     QSignalBlocker blocker{m_tabWidget};  // avoid `ui_select_tileset`
 
-    if (m_currentMap) {
+    if (m_currentMap)
+    {
       m_tabWidget->clear();
     }
 
     switch_to(map);
   }
 
-  if (current_manager().is_empty()) {
+  if (current_manager().is_empty())
+  {
     emit switch_to_empty_page();
-  } else {
+  }
+  else
+  {
     emit switch_to_content_page();
   }
 }
@@ -149,7 +162,8 @@ void tileset_content_page::switch_to(const map_id map)
   m_currentMap = map;
   const auto& manager = m_tabManagers[*m_currentMap];
 
-  for (const auto& [id, tab] : manager) {
+  for (const auto& [id, tab] : manager)
+  {
     m_tabWidget->addTab(tab, tab->name());
   }
 

@@ -14,7 +14,8 @@ void flood_fill(tile_layer& layer,
 {
   const auto target = layer.tile_at(origin);
 
-  if (!layer.in_bounds(origin) || (target == replacement)) {
+  if (!layer.in_bounds(origin) || (target == replacement))
+  {
     return;
   }
 
@@ -26,14 +27,16 @@ void flood_fill(tile_layer& layer,
   queue.push(origin);
 
   const auto update = [&](const position& pos) {
-    if (const auto tile = layer.tile_at(pos); tile && tile == target) {
+    if (const auto tile = layer.tile_at(pos); tile && tile == target)
+    {
       affected.push_back(pos);
       layer.set_tile(pos, replacement);
       queue.push(pos);
     }
   };
 
-  while (!queue.empty()) {
+  while (!queue.empty())
+  {
     const auto pos = queue.front();
     queue.pop();
 

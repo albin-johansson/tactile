@@ -13,7 +13,8 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
     , m_manager{manager}
     , m_customRoot{new root_item{tr("Properties")}}
 {
-  if (!m_manager) {
+  if (!m_manager)
+  {
     throw tactile_error{"property_model requires non-null property manager!"};
   }
 
@@ -25,7 +26,8 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
           this, &property_model::when_data_changed);
   // clang-format on
 
-  for (const auto& [name, property] : manager->properties()) {
+  for (const auto& [name, property] : manager->properties())
+  {
     const auto index = add_property_to_gui(name, property, m_customRoot);
     itemFromIndex(index.siblingAtColumn(0))->setEditable(false);
   }
@@ -47,7 +49,8 @@ auto property_model::add(const QString& name, const core::property& property)
 void property_model::change_type(const QString& name,
                                  const core::property_type type)
 {
-  if (auto* item = find_item(this, name, 0)) {
+  if (auto* item = find_item(this, name, 0))
+  {
     const auto row = item->row();
     removeRow(row, m_customRoot->index());
 
@@ -108,7 +111,8 @@ void property_model::updated_property(const QString& name)
 {
   m_blockDataChanged = true;
 
-  if (auto* item = find_item(this, name, 0)) {
+  if (auto* item = find_item(this, name, 0))
+  {
     const auto& property = m_manager->get_property(name);
 
     const auto sibling = item->index().siblingAtColumn(1);
@@ -118,10 +122,12 @@ void property_model::updated_property(const QString& name)
 
     // We need to notify the view index widget to update its contents
     const auto type = property.type().value();
-    if (type == core::property_type::file) {
+    if (type == core::property_type::file)
+    {
       emit updated_file(sibling);
-
-    } else if (type == core::property_type::color) {
+    }
+    else if (type == core::property_type::color)
+    {
       emit updated_color(sibling);
     }
   }
@@ -143,7 +149,8 @@ void property_model::renamed_property(const QString& oldName,
 
 void property_model::remove_property_from_gui(const QString& name)
 {
-  if (auto* item = find_item(this, name, 0)) {
+  if (auto* item = find_item(this, name, 0))
+  {
     const auto row = item->row();
     removeRow(row, item->parent()->index());
   }
@@ -174,10 +181,12 @@ auto property_model::add_property_to_gui(const QString& name,
   const auto type = property.type().value();
 
   // Notify view that it should add an index widget for the property
-  if (type == core::property_type::file) {
+  if (type == core::property_type::file)
+  {
     emit added_file(index);
-
-  } else if (type == core::property_type::color) {
+  }
+  else if (type == core::property_type::color)
+  {
     emit added_color(index);
   }
 
@@ -187,7 +196,8 @@ auto property_model::add_property_to_gui(const QString& name,
 void property_model::rename_property_in_gui(const QString& oldName,
                                             const QString& newName)
 {
-  if (auto* item = find_item(this, oldName, 0)) {
+  if (auto* item = find_item(this, oldName, 0))
+  {
     item->setText(newName);
   }
 }
@@ -201,13 +211,17 @@ void property_model::when_data_changed(const QModelIndex& topLeft,
                                        const QModelIndex& bottomRight,
                                        const QVector<int>& roles)
 {
-  if (m_blockDataChanged) {
+  if (m_blockDataChanged)
+  {
     return;
   }
 
-  if (topLeft.parent() == m_customRoot->index()) {
-    if (topLeft.column() == 1) {
-      if (auto* item = itemFromIndex(topLeft)) {
+  if (topLeft.parent() == m_customRoot->index())
+  {
+    if (topLeft.column() == 1)
+    {
+      if (auto* item = itemFromIndex(topLeft))
+      {
         const auto sibling = itemFromIndex(item->index().siblingAtColumn(0));
         Q_ASSERT(sibling);
 

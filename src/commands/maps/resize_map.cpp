@@ -21,7 +21,8 @@ void resize_map::undo()
   map->set_row_count(m_oldRows);
   map->set_col_count(m_oldCols);
 
-  if (lossy_resize()) {
+  if (lossy_resize())
+  {
     restore_tiles();
   }
 }
@@ -35,7 +36,8 @@ void resize_map::redo()
   m_oldRows = map->row_count();
   m_oldCols = map->col_count();
 
-  if (lossy_resize()) {
+  if (lossy_resize())
+  {
     const auto rows = map->row_count();
     const auto cols = map->col_count();
 

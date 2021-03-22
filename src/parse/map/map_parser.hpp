@@ -35,23 +35,30 @@ class map_parser final
   {
     const QFileInfo info{path};
     m_data.path = info.absoluteFilePath();
-    if (const auto file = open_file(info)) {
+    if (const auto file = open_file(info))
+    {
       const auto root = m_engine.root(*file);
-      if (!parse_next_layer_id(root)) {
+      if (!parse_next_layer_id(root))
+      {
         return;
       }
 
-      if (!parse_tilesets(root, info)) {
+      if (!parse_tilesets(root, info))
+      {
         return;
       }
 
-      if (!parse_layers(root)) {
+      if (!parse_layers(root))
+      {
         return;
       }
 
-      if (auto properties = parse_properties(root)) {
+      if (auto properties = parse_properties(root))
+      {
         m_data.properties = std::move(*properties);
-      } else {
+      }
+      else
+      {
         return;
       }
     }
@@ -121,23 +128,30 @@ class map_parser final
 
   [[nodiscard]] auto open_file(const QFileInfo& path) -> maybe<document_type>
   {
-    if (!path.exists()) {
+    if (!path.exists())
+    {
       return with_error<document_type>(parse_error::map_file_not_found);
     }
 
-    if (auto contents = m_engine.from_file(path)) {
+    if (auto contents = m_engine.from_file(path))
+    {
       return contents;
-    } else {
+    }
+    else
+    {
       return with_error<document_type>(parse_error::could_not_parse_file);
     }
   }
 
   [[nodiscard]] auto parse_next_layer_id(const object_type& root) -> bool
   {
-    if (const auto id = root.integer(element_id::next_layer_id)) {
+    if (const auto id = root.integer(element_id::next_layer_id))
+    {
       m_data.nextLayerId = layer_id{*id};
       return true;
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::map_missing_next_layer_id);
     }
   }
@@ -145,9 +159,12 @@ class map_parser final
   [[nodiscard]] auto parse_tileset_first_gid(const object_type& object)
       -> maybe<tile_id>
   {
-    if (const auto gid = object.integer(element_id::first_gid)) {
+    if (const auto gid = object.integer(element_id::first_gid))
+    {
       return tile_id{*gid};
-    } else {
+    }
+    else
+    {
       return with_error<tile_id>(parse_error::tileset_missing_first_gid);
     }
   }
@@ -159,33 +176,46 @@ class map_parser final
     tileset_data tileset;
     tileset.firstId = firstGid;
 
-    if (const auto tw = object.integer(element_id::tile_width)) {
+    if (const auto tw = object.integer(element_id::tile_width))
+    {
       tileset.tileWidth = tile_width{*tw};
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::tileset_missing_tile_width);
     }
 
-    if (const auto th = object.integer(element_id::tile_height)) {
+    if (const auto th = object.integer(element_id::tile_height))
+    {
       tileset.tileHeight = tile_height{*th};
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::tileset_missing_tile_height);
     }
 
     const auto relativePath = m_engine.tileset_image_relative_path(object);
-    if (!relativePath) {
+    if (!relativePath)
+    {
       return with_error(parse_error::tileset_missing_image_path);
     }
 
     const auto absolutePath = path.dir().absoluteFilePath(*relativePath);
-    if (QFileInfo{absolutePath}.exists()) {
+    if (QFileInfo{absolutePath}.exists())
+    {
       tileset.absolutePath = absolutePath;
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::external_tileset_does_not_exist);
     }
 
-    if (const auto name = object.string(element_id::name)) {
+    if (const auto name = object.string(element_id::name))
+    {
       tileset.name = *name;
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::tileset_missing_name);
     }
 
@@ -200,9 +230,12 @@ class map_parser final
     const auto source = object.string(element_id::source);
     const auto external =
         m_engine.from_file(QFileInfo{path.dir().absoluteFilePath(*source)});
-    if (external) {
+    if (external)
+    {
       return parse_tileset_common(m_engine.root(*external), path, firstGid);
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::could_not_read_external_tileset);
     }
   }
@@ -210,11 +243,14 @@ class map_parser final
   [[nodiscard]] auto parse_tileset(const object_type& object,
                                    const QFileInfo& path) -> bool
   {
-    if (const auto gid = parse_tileset_first_gid(object)) {
+    if (const auto gid = parse_tileset_first_gid(object))
+    {
       const auto hasSource = object.contains(element_id::source);
       return hasSource ? parse_external_tileset(object, path, *gid)
                        : parse_tileset_common(object, path, *gid);
-    } else {
+    }
+    else
+    {
       return false;
     }
   }
@@ -222,7 +258,8 @@ class map_parser final
   [[nodiscard]] auto parse_tilesets(const object_type& root,
                                     const QFileInfo& path) -> bool
   {
-    if (!m_engine.contains_tilesets(root)) {
+    if (!m_engine.contains_tilesets(root))
+    {
       return with_error(parse_error::map_missing_tilesets);
     }
 
@@ -237,21 +274,28 @@ class map_parser final
   {
     tile_layer_data tileLayer;
 
-    if (const auto rows = object.integer(element_id::height)) {
+    if (const auto rows = object.integer(element_id::height))
+    {
       tileLayer.nRows = row_t{*rows};
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::layer_missing_height);
     }
 
-    if (const auto cols = object.integer(element_id::width)) {
+    if (const auto cols = object.integer(element_id::width))
+    {
       tileLayer.nCols = col_t{*cols};
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::layer_missing_width);
     }
 
     tileLayer.tiles =
         m_engine.tiles(object, tileLayer.nRows, tileLayer.nCols, m_error);
-    if (m_error != parse_error::none) {
+    if (m_error != parse_error::none)
+    {
       return false;
     }
 
@@ -266,12 +310,16 @@ class map_parser final
 
     const auto emptyString = TACTILE_QSTRING(u"");
 
-    for (const auto& elem : m_engine.objects(root)) {
+    for (const auto& elem : m_engine.objects(root))
+    {
       auto& object = objectLayer.objects.emplace_back();
 
-      if (const auto id = elem.integer(element_id::id)) {
+      if (const auto id = elem.integer(element_id::id))
+      {
         object.id = object_id{*id};
-      } else {
+      }
+      else
+      {
         return with_error(parse_error::object_missing_id);
       }
 
@@ -284,9 +332,12 @@ class map_parser final
       object.visible = elem.boolean(element_id::visible).value_or(true);
       object.isPoint = m_engine.is_point(elem);
 
-      if (auto properties = parse_properties(elem)) {
+      if (auto properties = parse_properties(elem))
+      {
         object.properties = std::move(*properties);
-      } else {
+      }
+      else
+      {
         return false;
       }
     }
@@ -297,15 +348,19 @@ class map_parser final
 
   [[nodiscard]] auto parse_layer(const object_type& object) -> bool
   {
-    if (!m_engine.validate_layer_type(object)) {
+    if (!m_engine.validate_layer_type(object))
+    {
       return with_error(parse_error::layer_missing_type);
     }
 
     layer_data layer;
 
-    if (const auto id = object.integer(element_id::id)) {
+    if (const auto id = object.integer(element_id::id))
+    {
       layer.id = layer_id{*id};
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::layer_missing_id);
     }
 
@@ -313,25 +368,35 @@ class map_parser final
     layer.opacity = object.floating(element_id::opacity, 1.0);
     layer.visible = object.boolean(element_id::visible).value_or(true);
 
-    if (m_engine.is_tile_layer(object)) {
+    if (m_engine.is_tile_layer(object))
+    {
       layer.type = core::layer_type::tile_layer;
 
-      if (!parse_tile_layer(layer, object)) {
+      if (!parse_tile_layer(layer, object))
+      {
         return false;
       }
-    } else if (m_engine.is_object_layer(object)) {
+    }
+    else if (m_engine.is_object_layer(object))
+    {
       layer.type = core::layer_type::object_layer;
 
-      if (!parse_object_layer(layer, object)) {
+      if (!parse_object_layer(layer, object))
+      {
         return false;
       }
-    } else {
+    }
+    else
+    {
       return with_error(parse_error::unknown_layer_type);
     }
 
-    if (auto properties = parse_properties(object)) {
+    if (auto properties = parse_properties(object))
+    {
       layer.properties = std::move(*properties);
-    } else {
+    }
+    else
+    {
       return false;
     }
 
@@ -341,7 +406,8 @@ class map_parser final
 
   [[nodiscard]] auto parse_layers(const object_type& root) -> bool
   {
-    if (!m_engine.contains_layers(root)) {
+    if (!m_engine.contains_layers(root))
+    {
       return with_error(parse_error::map_missing_layers);
     }
 
@@ -358,10 +424,13 @@ class map_parser final
     data.name = prop.string(element_id::name).value();
 
     const auto type = m_engine.property_type(prop);
-    if (auto property = to_property(prop, type, m_error)) {
+    if (auto property = to_property(prop, type, m_error))
+    {
       data.property = std::move(*property);
       return data;
-    } else {
+    }
+    else
+    {
       return std::nullopt;
     }
   }
@@ -374,10 +443,14 @@ class map_parser final
     std::vector<property_data> result;
     result.reserve(static_cast<std::size_t>(props.size()));
 
-    for (const auto& elem : props) {
-      if (auto property = parse_property(elem)) {
+    for (const auto& elem : props)
+    {
+      if (auto property = parse_property(elem))
+      {
         result.emplace_back(*property);
-      } else {
+      }
+      else
+      {
         return std::nullopt;
       }
     }

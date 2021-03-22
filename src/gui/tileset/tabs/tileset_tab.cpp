@@ -47,7 +47,8 @@ void tileset_tab::mousePressEvent(QMouseEvent* event)
 
   m_lastMousePos = event->pos();
 
-  if (event->buttons() & Qt::MiddleButton) {
+  if (event->buttons() & Qt::MiddleButton)
+  {
     QApplication::setOverrideCursor(Qt::ClosedHandCursor);
   }
 }
@@ -58,7 +59,8 @@ void tileset_tab::mouseMoveEvent(QMouseEvent* event)
 
   const auto pos = event->pos();
 
-  if (event->buttons() & Qt::MiddleButton) {
+  if (event->buttons() & Qt::MiddleButton)
+  {
     auto* vbar = m_scrollArea->verticalScrollBar();
     auto* hbar = m_scrollArea->horizontalScrollBar();
     hbar->setValue(hbar->value() - pos.x() + m_lastMousePos.x());

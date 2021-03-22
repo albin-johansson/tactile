@@ -23,7 +23,7 @@ void init_surface_format() noexcept
 {
   QSurfaceFormat format;
   format.setDepthBufferSize(0);
-//  format.setVersion(3, 2);
+  //  format.setVersion(3, 2);
   format.setRenderableType(QSurfaceFormat::OpenGL);
   format.setProfile(QSurfaceFormat::CoreProfile);
   QSurfaceFormat::setDefaultFormat(format);
@@ -44,9 +44,12 @@ void setup_app()
   prefs::validate();
   validate_themes();
 
-  if (const auto name = prefs::gfx::theme_name()) {
+  if (const auto name = prefs::gfx::theme_name())
+  {
     set_theme(*name);
-  } else {
+  }
+  else
+  {
     reset_theme();
   }
 }

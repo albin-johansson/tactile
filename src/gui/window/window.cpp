@@ -370,7 +370,8 @@ void window::when_new_map_added(not_null<core::map_document*> document,
 
   m_editor->add_map_tab(document, id, name);
   m_editor->select_tab(id);
-  if (!in_editor_mode()) {
+  if (!in_editor_mode())
+  {
     enter_content_view();
     center_viewport();
   }
@@ -402,7 +403,8 @@ void window::closeEvent(QCloseEvent* event)
 void window::when_about_to_close_map(const map_id id)
 {
   emit ui_about_to_close_map(id);
-  if (m_editor->tab_count() == 1) {
+  if (m_editor->tab_count() == 1)
+  {
     enter_no_content_view();
   }
 }
@@ -453,7 +455,8 @@ void window::eraser_enabled()
   m_editor->close_tab(id);
   emit ui_about_to_close_map(id);
 
-  if (m_editor->tab_count() == 0) {
+  if (m_editor->tab_count() == 0)
+  {
     enter_no_content_view();
   }
 }

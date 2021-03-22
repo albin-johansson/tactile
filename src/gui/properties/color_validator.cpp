@@ -10,8 +10,10 @@ auto color_validator::validate(QString& string, int&) const -> State
 {
   bool ok;
 
-  if (const auto number = string.toInt(&ok); ok) {
-    if (number >= bottom() && number <= top()) {
+  if (const auto number = string.toInt(&ok); ok)
+  {
+    if (number >= bottom() && number <= top())
+    {
       return Acceptable;
     }
   }

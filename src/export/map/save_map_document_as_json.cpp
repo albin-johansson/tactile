@@ -28,7 +28,8 @@ namespace {
   result.insert(u"type", core::stringify(property.type().value()));
 
   QJsonValue value;
-  switch (property.type().value()) {
+  switch (property.type().value())
+  {
     case core::property_type::string:
     {
       value = property.as_string();
@@ -76,7 +77,8 @@ namespace {
 {
   QJsonArray props;
 
-  for (const auto& [name, property] : manager.properties()) {
+  for (const auto& [name, property] : manager.properties())
+  {
     props.append(save_property(name, property, targetDir));
   }
 
@@ -110,7 +112,8 @@ void add_common_attributes(QJsonObject& object,
   object.insert(u"tilewidth", tileset.get_tile_width().get());
   object.insert(u"tileheight", tileset.get_tile_height().get());
 
-  if (options.generateDefaults) {
+  if (options.generateDefaults)
+  {
     object.insert(u"objectalignment", TACTILE_QSTRING(u"unspecified"));
   }
 }
@@ -211,9 +214,12 @@ void create_external_tileset_file(const core::tileset& tileset,
   QJsonArray array;
 
   map.each_tileset([&](tileset_id id, const core::tileset& tileset) {
-    if (options.embedTilesets) {
+    if (options.embedTilesets)
+    {
       array.append(make_embedded_tileset_object(tileset, targetDir, options));
-    } else {
+    }
+    else
+    {
       array.append(make_external_tileset_object(tileset));
       create_external_tileset_file(tileset, targetDir, options);
     }
@@ -233,7 +239,8 @@ void save_tile_layer(QJsonObject& object,
 
   object.insert(u"type", TACTILE_QSTRING(u"tilelayer"));
 
-  if (options.generateDefaults) {
+  if (options.generateDefaults)
+  {
     object.insert(u"compression", TACTILE_QSTRING(u""));
     object.insert(u"encoding", TACTILE_QSTRING(u"csv"));
   }
@@ -258,7 +265,8 @@ void save_object_layer(QJsonObject& element,
 
   element.insert(u"type", TACTILE_QSTRING(u"objectgroup"));
 
-  if (options.generateDefaults) {
+  if (options.generateDefaults)
+  {
     element.insert(u"draworder", TACTILE_QSTRING(u"topdown"));
   }
 
@@ -276,11 +284,13 @@ void save_object_layer(QJsonObject& element,
     jsonObject.insert(u"type", object.custom_type().value_or(""));
     jsonObject.insert(u"rotation", 0);
 
-    if (object.is_point()) {
+    if (object.is_point())
+    {
       jsonObject.insert(u"point", true);
     }
 
-    if (object.property_count() > 0) {
+    if (object.property_count() > 0)
+    {
       jsonObject.insert(u"properties", save_properties(object, targetDir));
     }
 
@@ -317,20 +327,25 @@ void save_object_layer(QJsonObject& element,
     object.insert(u"x", 0);
     object.insert(u"y", 0);
 
-    if (layer->type() == core::layer_type::tile_layer) {
+    if (layer->type() == core::layer_type::tile_layer)
+    {
       object.insert(u"width", map.col_count().get());
       object.insert(u"height", map.row_count().get());
       save_tile_layer(object, layer, options);
-    } else {
+    }
+    else
+    {
       save_object_layer(object, layer, targetDir, options);
     }
 
-    if (options.generateDefaults) {
+    if (options.generateDefaults)
+    {
       object.insert(u"offsetx", 0.0);
       object.insert(u"offsety", 0.0);
     }
 
-    if (layer->property_count() > 0) {
+    if (layer->property_count() > 0)
+    {
       object.insert(u"properties", save_properties(*layer, targetDir));
     }
 

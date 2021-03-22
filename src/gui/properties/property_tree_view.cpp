@@ -48,10 +48,12 @@ void property_tree_view::restore_item_widgets()
   vm::visit_items(get_model(), 1, [this](QStandardItem* item) {
     const auto itemType = static_cast<vm::property_item_type>(item->type());
 
-    if (itemType == vm::property_item_type::color) {
+    if (itemType == vm::property_item_type::color)
+    {
       when_color_added(item->index());
-
-    } else if (itemType == vm::property_item_type::file) {
+    }
+    else if (itemType == vm::property_item_type::file)
+    {
       when_file_added(item->index());
     }
   });
@@ -93,7 +95,8 @@ void property_tree_view::when_file_added(const QModelIndex& valueIndex)
       item->setData(path, vm::property_item_role::path);
 
       auto* itemWidget = indexWidget(item->index());
-      if (auto* widget = qobject_cast<file_value_widget*>(itemWidget)) {
+      if (auto* widget = qobject_cast<file_value_widget*>(itemWidget))
+      {
         widget->set_path(path);
       }
     });
@@ -105,10 +108,12 @@ void property_tree_view::when_file_added(const QModelIndex& valueIndex)
 void property_tree_view::when_changed_type(const QModelIndex& valueIndex,
                                            const core::property_type type)
 {
-  if (type == core::property_type::file) {
+  if (type == core::property_type::file)
+  {
     when_file_added(valueIndex);
-
-  } else if (type == core::property_type::color) {
+  }
+  else if (type == core::property_type::color)
+  {
     when_color_added(valueIndex);
   }
 
@@ -117,14 +122,16 @@ void property_tree_view::when_changed_type(const QModelIndex& valueIndex,
 
 void property_tree_view::when_file_updated(const QModelIndex& index)
 {
-  if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index))) {
+  if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index)))
+  {
     widget->set_path(index.data(vm::property_item_role::path).value<QString>());
   }
 }
 
 void property_tree_view::when_color_updated(const QModelIndex& index)
 {
-  if (auto* button = qobject_cast<color_preview_button*>(indexWidget(index))) {
+  if (auto* button = qobject_cast<color_preview_button*>(indexWidget(index)))
+  {
     button->set_color(
         index.data(vm::property_item_role::color).value<QColor>());
   }
@@ -138,15 +145,19 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
   Q_ASSERT(selected.size() == 1 || selected.empty());
 
   maybe<QModelIndex> selectedIndex;
-  for (const auto index : selected.indexes()) {
+  for (const auto index : selected.indexes())
+  {
     selectedIndex = index;
-    if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index))) {
+    if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index)))
+    {
       widget->enter_active_mode();
     }
   }
 
-  for (const auto index : deselected.indexes()) {
-    if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index))) {
+  for (const auto index : deselected.indexes())
+  {
+    if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index)))
+    {
       widget->enter_idle_mode();
     }
   }
@@ -161,9 +172,12 @@ void property_tree_view::rowsAboutToBeRemoved(const QModelIndex& parent,
   QTreeView::rowsAboutToBeRemoved(parent, start, end);
 
   // Yes, this range is inclusive: [start, end]
-  for (auto row = start; row <= end; ++row) {
-    if (const auto* item = get_model()->item(row, 1)) {
-      if (auto* widget = indexWidget(item->index())) {
+  for (auto row = start; row <= end; ++row)
+  {
+    if (const auto* item = get_model()->item(row, 1))
+    {
+      if (auto* widget = indexWidget(item->index()))
+      {
         widget->hide();
       }
     }
@@ -176,7 +190,8 @@ void property_tree_view::mousePressEvent(QMouseEvent* event)
   selectionModel()->clear();
   QTreeView::mousePressEvent(event);
 
-  if (event->button() == Qt::RightButton) {
+  if (event->button() == Qt::RightButton)
+  {
     emit spawn_context_menu(mapToGlobal(event->pos()));
   }
 }
@@ -204,14 +219,16 @@ auto property_tree_view::new_widget_id() noexcept -> int
 
 void property_tree_view::when_item_expanded(const QModelIndex& index)
 {
-  if (!index.parent().isValid()) {
+  if (!index.parent().isValid())
+  {
     get_model()->itemFromIndex(index)->setIcon(icons::expanded());
   }
 }
 
 void property_tree_view::when_item_collapsed(const QModelIndex& index)
 {
-  if (!index.parent().isValid()) {
+  if (!index.parent().isValid())
+  {
     get_model()->itemFromIndex(index)->setIcon(icons::collapsed());
   }
 }

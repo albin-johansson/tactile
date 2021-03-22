@@ -19,9 +19,12 @@ auto xml_element::integer(const element_id id) const -> maybe<int>
 {
   bool ok;
   const auto result = m_element.attribute(stringify_element_id(id)).toInt(&ok);
-  if (ok) {
+  if (ok)
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -37,9 +40,12 @@ auto xml_element::floating(const element_id id) const -> maybe<double>
   bool ok;
   const auto result =
       m_element.attribute(stringify_element_id(id)).toDouble(&ok);
-  if (ok) {
+  if (ok)
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -53,9 +59,12 @@ auto xml_element::floating(const element_id id, const double def) const
 auto xml_element::string(const element_id id) const -> maybe<QString>
 {
   const auto result = m_element.attribute(stringify_element_id(id));
-  if (!result.isNull()) {
+  if (!result.isNull())
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -68,16 +77,20 @@ auto xml_element::string(const element_id id, const QString& def) const
 
 auto xml_element::boolean(const element_id id) const -> maybe<bool>
 {
-  if (const auto value = string(id)) {
+  if (const auto value = string(id))
+  {
     return value == TACTILE_QSTRING(u"true");
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
 
 auto xml_element::stringify_element_id(const element_id type) -> QString
 {
-  switch (type) {
+  switch (type)
+  {
     case element_id::tileset:
       return TACTILE_QSTRING(u"tileset");
 

@@ -10,7 +10,8 @@ add_row::add_row(core::map* map)
     : repeated_command{TACTILE_QSTRING(u"Add Row")}
     , m_map{map}
 {
-  if (!m_map) {
+  if (!m_map)
+  {
     throw tactile_error{"Cannot create command from null map!"};
   }
 }

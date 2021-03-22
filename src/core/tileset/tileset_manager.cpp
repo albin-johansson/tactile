@@ -37,7 +37,8 @@ void tileset_manager::remove(const tileset_id id) noexcept
   // TODO consider decrementing m_nextID and decreasing m_nextGlobalTileID
   m_tilesets.erase(id);
 
-  if (id == m_activeId) {
+  if (id == m_activeId)
+  {
     m_activeId = std::nullopt;
   }
 }
@@ -54,17 +55,21 @@ void tileset_manager::rename(const tileset_id id, const QString& name)
 
 void tileset_manager::select(const maybe<tileset_id> id)
 {
-  if (id) {
+  if (id)
+  {
     Q_ASSERT(m_tilesets.contains(*id));
     m_activeId = id;
-  } else {
+  }
+  else
+  {
     m_activeId = std::nullopt;
   }
 }
 
 void tileset_manager::set_selection(const tileset_selection& selection)
 {
-  if (has_active_tileset()) {
+  if (has_active_tileset())
+  {
     m_tilesets.at(*m_activeId)->set_selection(selection);
   }
 }
@@ -86,8 +91,10 @@ auto tileset_manager::at(const tileset_id id) const -> const tileset&
 
 auto tileset_manager::image(const tile_id id) const -> const QPixmap&
 {
-  for (const auto& [key, tileset] : m_tilesets) {
-    if (tileset->contains(id)) {
+  for (const auto& [key, tileset] : m_tilesets)
+  {
+    if (tileset->contains(id))
+    {
       return tileset->image();
     }
   }
@@ -96,8 +103,10 @@ auto tileset_manager::image(const tile_id id) const -> const QPixmap&
 
 auto tileset_manager::image_source(const tile_id id) const -> QRect
 {
-  for (const auto& [key, tileset] : m_tilesets) {
-    if (const auto rect = tileset->image_source(id)) {
+  for (const auto& [key, tileset] : m_tilesets)
+  {
+    if (const auto rect = tileset->image_source(id))
+    {
       return *rect;
     }
   }

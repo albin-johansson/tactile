@@ -13,9 +13,12 @@ template <std::constructible_from<int> T = int>
     -> maybe<T>
 {
   bool ok{};
-  if (const auto result = element.attribute(key).toInt(&ok); ok) {
+  if (const auto result = element.attribute(key).toInt(&ok); ok)
+  {
     return T{result};
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -26,9 +29,12 @@ template <std::constructible_from<int> T = int>
                             T fallback) -> T
 {
   bool ok{};
-  if (const auto result = element.attribute(key).toInt(&ok); ok) {
+  if (const auto result = element.attribute(key).toInt(&ok); ok)
+  {
     return T{result};
-  } else {
+  }
+  else
+  {
     return fallback;
   }
 }
@@ -39,9 +45,12 @@ template <std::constructible_from<double> T = double>
                                T fallback) -> T
 {
   bool ok{};
-  if (const auto result = element.attribute(key).toDouble(&ok); ok) {
+  if (const auto result = element.attribute(key).toDouble(&ok); ok)
+  {
     return T{result};
-  } else {
+  }
+  else
+  {
     return fallback;
   }
 }
@@ -51,7 +60,8 @@ void each_elem(const QDomElement& element, const QString& tag, T&& callable)
 {
   const auto elements = element.elementsByTagName(tag);
   const auto count = elements.count();
-  for (auto i = 0; i < count; ++i) {
+  for (auto i = 0; i < count; ++i)
+  {
     callable(elements.at(i));
   }
 }

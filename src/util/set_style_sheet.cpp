@@ -7,10 +7,13 @@ namespace tactile {
 void set_style_sheet(QApplication& app, const QString& file)
 {
   QFile styleSheet{file};
-  if (styleSheet.open(QFile::ReadOnly)) {
+  if (styleSheet.open(QFile::ReadOnly))
+  {
     const QString style{styleSheet.readAll()};
     app.setStyleSheet(style);
-  } else {
+  }
+  else
+  {
     qWarning("Failed to open stylesheet!");
   }
 }

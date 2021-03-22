@@ -10,7 +10,8 @@ property_name_validator::property_name_validator(QStandardItemModel* model,
     : QValidator{parent}
     , m_model{model}
 {
-  if (!m_model) {
+  if (!m_model)
+  {
     throw tactile_error{"Property validator requires non-null model!"};
   }
 }
@@ -18,21 +19,26 @@ property_name_validator::property_name_validator(QStandardItemModel* model,
 auto property_name_validator::validate(QString& input, int&) const
     -> QValidator::State
 {
-  if (input.isEmpty()) {
+  if (input.isEmpty())
+  {
     return Invalid;
   }
 
   bool invalid{};
 
   vm::visit_items(m_model, 0, [&](QStandardItem* item) {
-    if (item->text() == input) {
+    if (item->text() == input)
+    {
       invalid = true;
     }
   });
 
-  if (invalid) {
+  if (invalid)
+  {
     return Invalid;
-  } else {
+  }
+  else
+  {
     return Acceptable;
   }
 }

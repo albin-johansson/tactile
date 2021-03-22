@@ -31,7 +31,8 @@ template <std::invocable T>
 constexpr void invoke_n(const int n,
                         T&& callable) noexcept(noexcept(callable()))
 {
-  for (auto i = 0; i < n; ++i) {
+  for (auto i = 0; i < n; ++i)
+  {
     callable();
   }
 }

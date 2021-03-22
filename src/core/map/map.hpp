@@ -71,7 +71,8 @@ class map final
   template <std::invocable<layer_id, const shared<layer>&> T>
   void each_layer(T&& callable) const
   {
-    for (const auto& [key, layer] : m_layers) {
+    for (const auto& [key, layer] : m_layers)
+    {
       callable(key, layer);
     }
   }

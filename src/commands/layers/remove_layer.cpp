@@ -11,7 +11,8 @@ remove_layer::remove_layer(core::map_document* document, const layer_id id)
     , m_document{document}
     , m_id{id}
 {
-  if (!m_document) {
+  if (!m_document)
+  {
     throw tactile_error{"Null map document!"};
   }
 }
@@ -20,10 +21,14 @@ void remove_layer::undo()
 {
   QUndoCommand::undo();
   m_document->add_layer(m_id, m_layer);
-  while (m_document->index_of_layer(m_id).value() != m_index) {
-    if (m_document->index_of_layer(m_id).value() < m_index) {
+  while (m_document->index_of_layer(m_id).value() != m_index)
+  {
+    if (m_document->index_of_layer(m_id).value() < m_index)
+    {
       m_document->move_layer_back(m_id);
-    } else {
+    }
+    else
+    {
       m_document->move_layer_forward(m_id);
     }
   }

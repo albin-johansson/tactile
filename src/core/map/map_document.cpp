@@ -270,7 +270,8 @@ void map_document::add_tileset(const QImage& image,
                                const tile_width tileWidth,
                                const tile_height tileHeight)
 {
-  if (!image.isNull()) {
+  if (!image.isNull())
+  {
     const auto id = m_tilesets->next_tileset_id();
     const auto gid = m_tilesets->next_global_tile_id();
 
@@ -302,7 +303,8 @@ void map_document::remove_tileset(const tileset_id id)
 
   const auto [first, last] = m_tilesets->range_of(id);
 
-  for (auto i = first; i < last; ++i) {
+  for (auto i = first; i < last; ++i)
+  {
     m_map->remove_occurrences(i);
   }
 

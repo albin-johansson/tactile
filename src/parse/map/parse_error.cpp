@@ -6,7 +6,8 @@ namespace tactile::parse {
 
 auto to_message(const parse_error error) -> QString
 {
-  switch (error) {
+  switch (error)
+  {
     case parse_error::none:
       return TACTILE_QSTRING(u"No error!");
 

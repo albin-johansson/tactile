@@ -14,7 +14,8 @@ remove_property::remove_property(core::property_manager* manager, QString name)
     , m_manager{manager}
     , m_name{std::move(name)}
 {
-  if (!m_manager) {
+  if (!m_manager)
+  {
     throw tactile_error{"Cannot create remove_property from null manager!"};
   }
 }

@@ -8,7 +8,8 @@ namespace tactile::vm {
 
 auto make_property_item(const core::property& property) -> QStandardItem*
 {
-  switch (property.type().value()) {
+  switch (property.type().value())
+  {
     case core::property_type::string:
     {
       auto* item = new string_item{};

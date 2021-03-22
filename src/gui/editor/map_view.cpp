@@ -33,14 +33,16 @@ void map_view::force_redraw()
 
 void map_view::center_map()
 {
-  if (auto* scene = get_map_scene()) {
+  if (auto* scene = get_map_scene())
+  {
     scene->center_map();
   }
 }
 
 void map_view::move_map(const int dx, const int dy)
 {
-  if (auto* scene = get_map_scene()) {
+  if (auto* scene = get_map_scene())
+  {
     scene->move_map(dx, dy);
   }
 }
@@ -67,18 +69,23 @@ auto map_view::id() const -> map_id
 
 void map_view::set_opengl_enabled(const bool enabled)
 {
-  if (enabled) {
-    if (!qobject_cast<QOpenGLWidget*>(viewport())) {
+  if (enabled)
+  {
+    if (!qobject_cast<QOpenGLWidget*>(viewport()))
+    {
       auto* viewport = new QOpenGLWidget{this};
       viewport->setFormat(QSurfaceFormat::defaultFormat());
       setViewport(viewport);
     }
 
-    if (auto* widget = viewport()) {
+    if (auto* widget = viewport())
+    {
       // register mouse events with no pressed buttons
       widget->setMouseTracking(true);
     }
-  } else {
+  }
+  else
+  {
     setViewport(nullptr);
   }
 }
@@ -87,7 +94,8 @@ void map_view::mousePressEvent(QMouseEvent* event)
 {
   QGraphicsView::mousePressEvent(event);
 
-  if (event->buttons() & Qt::MiddleButton) {
+  if (event->buttons() & Qt::MiddleButton)
+  {
     m_lastMousePos = event->pos();
     QApplication::setOverrideCursor(Qt::ClosedHandCursor);
   }
@@ -102,7 +110,8 @@ void map_view::mouseMoveEvent(QMouseEvent* event)
   const auto pos = event->pos();
   const auto buttons = event->buttons();
 
-  if (buttons & Qt::MiddleButton) {
+  if (buttons & Qt::MiddleButton)
+  {
     move_map(pos.x() - m_lastMousePos.x(), pos.y() - m_lastMousePos.y());
   }
 
@@ -115,10 +124,12 @@ void map_view::mouseReleaseEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseReleaseEvent(event);
 
-  if (const auto button = event->button(); button == Qt::MiddleButton) {
+  if (const auto button = event->button(); button == Qt::MiddleButton)
+  {
     QApplication::restoreOverrideCursor();
-
-  } else if (button == Qt::RightButton) {
+  }
+  else if (button == Qt::RightButton)
+  {
     emit spawn_context_menu(mapToGlobal(event->pos()));
   }
 
@@ -139,21 +150,31 @@ void map_view::leaveEvent(QEvent* event)
 
 void map_view::wheelEvent(QWheelEvent* event)
 {
-  if (event->modifiers() & Qt::ControlModifier) {
+  if (event->modifiers() & Qt::ControlModifier)
+  {
     auto pixels = event->pixelDelta();
     const auto degrees = event->angleDelta() / 8;
 
-    if (!pixels.isNull()) {
-      if (pixels.y() > 0) {
+    if (!pixels.isNull())
+    {
+      if (pixels.y() > 0)
+      {
         emit increase_zoom();
-      } else {
+      }
+      else
+      {
         emit decrease_zoom();
       }
-    } else if (!degrees.isNull()) {
+    }
+    else if (!degrees.isNull())
+    {
       const auto numSteps = degrees / 15;
-      if (numSteps.y() > 0) {
+      if (numSteps.y() > 0)
+      {
         emit increase_zoom();
-      } else {
+      }
+      else
+      {
         emit decrease_zoom();
       }
     }

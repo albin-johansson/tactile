@@ -108,11 +108,15 @@ void tactile_app::init_connections()
 
 void tactile_app::save()
 {
-  if (auto* document = m_model->current_document()) {
-    if (document->has_path()) {
+  if (auto* document = m_model->current_document())
+  {
+    if (document->has_path())
+    {
       save_map_document(document->absolute_path(), *document);
       document->mark_as_clean();
-    } else {
+    }
+    else
+    {
       m_window->trigger_save_as();
     }
   }
@@ -120,7 +124,8 @@ void tactile_app::save()
 
 void tactile_app::save_as(const QString& path)
 {
-  if (auto* document = m_model->current_document()) {
+  if (auto* document = m_model->current_document())
+  {
     save_map_document(path, *document);
 
     const QFileInfo file{path};
@@ -134,10 +139,13 @@ void tactile_app::save_as(const QString& path)
 void tactile_app::open_map(const QString& path)
 {
   parse::parse_error error;
-  if (auto* document = open_map_document(path, error)) {
+  if (auto* document = open_map_document(path, error))
+  {
     const auto id = m_model->add_map(document);
     m_window->when_new_map_added(document, id, QFileInfo{path}.baseName());
-  } else {
+  }
+  else
+  {
     gui::open_map_error_dialog dialog{m_window.get()};
     dialog.set_file(QFileInfo{path});
     dialog.set_error_message(to_message(error));
@@ -147,7 +155,8 @@ void tactile_app::open_map(const QString& path)
 
 void tactile_app::handle_resize_map()
 {
-  if (m_model->has_active_map()) {
+  if (m_model->has_active_map())
+  {
     gui::resize_dialog::spawn([this](const row_t rows, const col_t cols) {
       m_model->resize_map(rows, cols);
     });
@@ -156,28 +165,32 @@ void tactile_app::handle_resize_map()
 
 void tactile_app::handle_pan_up()
 {
-  if (const auto* document = m_model->current_document()) {
+  if (const auto* document = m_model->current_document())
+  {
     m_window->handle_move_camera(0, document->current_tile_size());
   }
 }
 
 void tactile_app::handle_pan_down()
 {
-  if (const auto* document = m_model->current_document()) {
+  if (const auto* document = m_model->current_document())
+  {
     m_window->handle_move_camera(0, -document->current_tile_size());
   }
 }
 
 void tactile_app::handle_pan_right()
 {
-  if (const auto* document = m_model->current_document()) {
+  if (const auto* document = m_model->current_document())
+  {
     m_window->handle_move_camera(-document->current_tile_size(), 0);
   }
 }
 
 void tactile_app::handle_pan_left()
 {
-  if (const auto* document = m_model->current_document()) {
+  if (const auto* document = m_model->current_document())
+  {
     m_window->handle_move_camera(document->current_tile_size(), 0);
   }
 }

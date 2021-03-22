@@ -11,13 +11,15 @@ namespace tactile::json {
 auto from_file(const QFileInfo& path) -> maybe<QJsonDocument>
 {
   file_handle file{path.absoluteFilePath()};
-  if (!file.open(QFile::ReadOnly | QFile::Text)) {
+  if (!file.open(QFile::ReadOnly | QFile::Text))
+  {
     return std::nullopt;
   }
 
   auto json = QJsonDocument::fromJson(file.read());
 
-  if (json.isNull()) {
+  if (json.isNull())
+  {
     return std::nullopt;
   }
 
@@ -36,10 +38,13 @@ auto write_file(const QFileInfo& path, const QJsonDocument& document) -> bool
                           ? QJsonDocument::Indented
                           : QJsonDocument::Compact;
 
-  if (const auto result = file.write(document.toJson(format)); result == -1) {
+  if (const auto result = file.write(document.toJson(format)); result == -1)
+  {
     file.cancelWriting();
     return false;
-  } else {
+  }
+  else
+  {
     file.commit();
     return true;
   }

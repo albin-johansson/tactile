@@ -5,9 +5,12 @@ namespace tactile {
 auto to_integer(const QString& string) -> maybe<int>
 {
   bool ok{};
-  if (const auto value = string.toInt(&ok); ok) {
+  if (const auto value = string.toInt(&ok); ok)
+  {
     return value;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }

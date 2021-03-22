@@ -145,9 +145,12 @@ class vector_map final
    */
   [[nodiscard]] auto at(const key_type& key) -> mapped_type&
   {
-    if (auto it = find(key); it != m_data.end()) {
+    if (auto it = find(key); it != m_data.end())
+    {
       return it->second;
-    } else {
+    }
+    else
+    {
       throw std::out_of_range{"Couldn't find key!"};
     }
   }
@@ -157,9 +160,12 @@ class vector_map final
    */
   [[nodiscard]] auto at(const key_type& key) const -> const mapped_type&
   {
-    if (const auto it = find(key); it != m_data.end()) {
+    if (const auto it = find(key); it != m_data.end())
+    {
       return it->second;
-    } else {
+    }
+    else
+    {
       throw std::out_of_range{"Couldn't find key!"};
     }
   }
@@ -232,9 +238,12 @@ class vector_map final
   [[nodiscard]] auto index_of(const key_type& key) const
       -> std::optional<std::size_t>
   {
-    if (const auto it = find(key); it != end()) {
+    if (const auto it = find(key); it != end())
+    {
       return std::distance(begin(), it);
-    } else {
+    }
+    else
+    {
       return std::nullopt;
     }
   }
@@ -351,14 +360,20 @@ class vector_map final
 
   void move_elem(const key_type& key, const bool forward)
   {
-    if (const auto it = find(key); it != end()) {
+    if (const auto it = find(key); it != end())
+    {
       const auto index = std::distance(begin(), it);
-      if (forward) {
-        if (index != 0) {
+      if (forward)
+      {
+        if (index != 0)
+        {
           std::iter_swap(it, it - 1);
         }
-      } else {
-        if (index != size() - 1) {
+      }
+      else
+      {
+        if (index != size() - 1)
+        {
           std::iter_swap(it, it + 1);
         }
       }

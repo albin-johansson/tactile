@@ -349,7 +349,8 @@ class map_document final : public document
   template <std::invocable<layer_id, const shared<layer>&> T>
   void each_layer(T&& callable) const
   {
-    for (const auto& [key, layer] : *m_map) {
+    for (const auto& [key, layer] : *m_map)
+    {
       callable(key, layer);
     }
   }
@@ -431,7 +432,8 @@ class map_document final : public document
   template <std::invocable<tileset_id, const tileset&> T>
   void each_tileset(T&& callable) const
   {
-    for (const auto& [id, tileset] : *m_tilesets) {
+    for (const auto& [id, tileset] : *m_tilesets)
+    {
       callable(id, *tileset);
     }
   }

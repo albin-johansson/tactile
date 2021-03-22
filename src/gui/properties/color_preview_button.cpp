@@ -19,7 +19,8 @@ color_preview_button::color_preview_button(QColor color, QWidget* parent)
     QColorDialog dialog{m_color, window()};
     dialog.adjustSize();  // Silences setGeometry warnings
     dialog.setOption(QColorDialog::ShowAlphaChannel);
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
       update_color(dialog.selectedColor());
     }
   });
@@ -32,9 +33,12 @@ void color_preview_button::update_color(QPushButton& button,
   static const auto black = TACTILE_QSTRING(u"#000000");
   static const auto white = TACTILE_QSTRING(u"#FFFFFF");
 
-  if (intensity_of(color) > color_intensity_threshold()) {
+  if (intensity_of(color) > color_intensity_threshold())
+  {
     button.setStyleSheet(fmt.arg(color.name(QColor::HexArgb)).arg(black));
-  } else {
+  }
+  else
+  {
     button.setStyleSheet(fmt.arg(color.name(QColor::HexArgb)).arg(white));
   }
 

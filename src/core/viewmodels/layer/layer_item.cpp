@@ -9,7 +9,8 @@ namespace {
 
 [[nodiscard]] auto icon_for_layer(const core::layer_type type) -> const QIcon&
 {
-  switch (type) {
+  switch (type)
+  {
     case core::layer_type::tile_layer:
       return icons::tile_layer();
 

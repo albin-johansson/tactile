@@ -10,16 +10,20 @@ auto open_tileset_image(QWidget* parent) -> maybe<QString>
 
   tileset_image_file_dialog dialog{parent};
 
-  if (!cachedPath.isEmpty()) {
+  if (!cachedPath.isEmpty())
+  {
     dialog.setDirectory(cachedPath);
   }
 
   const auto success = dialog.exec();
   cachedPath = dialog.directory().path();
 
-  if (success) {
+  if (success)
+  {
     return dialog.selectedFiles().first();
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }

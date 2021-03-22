@@ -16,7 +16,8 @@ add_property::add_property(not_null<core::property_manager*> manager,
     , m_name{std::move(name)}
     , m_data{std::move(data)}
 {
-  if (!m_manager) {
+  if (!m_manager)
+  {
     throw tactile_error{"Null property manager!"};
   }
 }
@@ -43,9 +44,12 @@ void add_property::redo()
 {
   QUndoCommand::redo();
 
-  if (const auto* type = std::get_if<core::property_type>(&m_data)) {
+  if (const auto* type = std::get_if<core::property_type>(&m_data))
+  {
     m_manager->add_property(m_name, *type);
-  } else {
+  }
+  else
+  {
     m_manager->add_property(m_name, std::get<core::property>(m_data));
   }
 }

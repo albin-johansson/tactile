@@ -14,8 +14,10 @@ class open_map_dialog final : public QFileDialog
   static void spawn(T&& callback)
   {
     open_map_dialog dialog;
-    if (dialog.exec()) {
-      for (const auto& file : dialog.selectedFiles()) {
+    if (dialog.exec())
+    {
+      for (const auto& file : dialog.selectedFiles())
+      {
         callback(file);
       }
     }

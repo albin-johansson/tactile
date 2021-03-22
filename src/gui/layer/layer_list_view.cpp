@@ -23,12 +23,14 @@ void layer_list_view::selectionChanged(const QItemSelection& selected,
   Q_ASSERT(deselected.empty() || deselected.size() == 1);
 
   maybe<QModelIndex> selectedIndex;
-  for (const auto index : selected.indexes()) {
+  for (const auto index : selected.indexes())
+  {
     selectedIndex = index;
   }
 
   maybe<QModelIndex> deselectedIndex;
-  for (const auto index : deselected.indexes()) {
+  for (const auto index : deselected.indexes())
+  {
     deselectedIndex = index;
   }
 

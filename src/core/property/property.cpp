@@ -12,25 +12,32 @@ void property::reset()
 
 void property::set_default(const property_type type)
 {
-  if (type == property_type::integer) {
+  if (type == property_type::integer)
+  {
     set_value<int>();
-
-  } else if (type == property_type::floating) {
+  }
+  else if (type == property_type::floating)
+  {
     set_value<double>();
-
-  } else if (type == property_type::boolean) {
+  }
+  else if (type == property_type::boolean)
+  {
     set_value<bool>();
-
-  } else if (type == property_type::string) {
+  }
+  else if (type == property_type::string)
+  {
     set_value<QString>();
-
-  } else if (type == property_type::color) {
+  }
+  else if (type == property_type::color)
+  {
     set_value<QColor>(Qt::black);
-
-  } else if (type == property_type::object) {
+  }
+  else if (type == property_type::object)
+  {
     set_value<object_ref>();
-
-  } else if (type == property_type::file) {
+  }
+  else if (type == property_type::file)
+  {
     set_value<QFileInfo>();
   }
 }
@@ -42,28 +49,36 @@ auto property::has_value() const noexcept -> bool
 
 auto property::type() const -> maybe<property_type>
 {
-  if (is<int>()) {
+  if (is<int>())
+  {
     return property_type::integer;
-
-  } else if (is<double>()) {
+  }
+  else if (is<double>())
+  {
     return property_type::floating;
-
-  } else if (is<QString>()) {
+  }
+  else if (is<QString>())
+  {
     return property_type::string;
-
-  } else if (is<bool>()) {
+  }
+  else if (is<bool>())
+  {
     return property_type::boolean;
-
-  } else if (is<QFileInfo>()) {
+  }
+  else if (is<QFileInfo>())
+  {
     return property_type::file;
-
-  } else if (is<object_ref>()) {
+  }
+  else if (is<object_ref>())
+  {
     return property_type::object;
-
-  } else if (is<QColor>()) {
+  }
+  else if (is<QColor>())
+  {
     return property_type::color;
-
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -140,7 +155,8 @@ auto property::is_color() const noexcept -> bool
 
 auto stringify(const property_type type) -> QString
 {
-  switch (type) {
+  switch (type)
+  {
     case property_type::string:
       return TACTILE_QSTRING(u"string");
 

@@ -34,7 +34,8 @@ tileset_image_widget::~tileset_image_widget() noexcept = default;
 void tileset_image_widget::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
-  if (event->buttons() & Qt::MouseButton::LeftButton) {
+  if (event->buttons() & Qt::MouseButton::LeftButton)
+  {
     event->accept();
     m_rubberBand->mouse_pressed(event->pos());
   }
@@ -43,7 +44,8 @@ void tileset_image_widget::mousePressEvent(QMouseEvent* event)
 void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
-  if (event->buttons() & Qt::MouseButton::LeftButton) {
+  if (event->buttons() & Qt::MouseButton::LeftButton)
+  {
     event->accept();
     m_rubberBand->mouse_moved(event->pos());
   }
@@ -52,7 +54,8 @@ void tileset_image_widget::mouseMoveEvent(QMouseEvent* event)
 void tileset_image_widget::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
-  if (event->button() == Qt::MouseButton::LeftButton) {
+  if (event->button() == Qt::MouseButton::LeftButton)
+  {
     event->accept();
     m_rubberBand->mouse_released();
   }

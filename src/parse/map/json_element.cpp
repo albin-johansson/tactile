@@ -17,9 +17,12 @@ auto json_element::contains(const element_id id) const -> bool
 
 auto json_element::integer(const QString& str) const -> maybe<int>
 {
-  if (const auto result = m_object.value(str).toInt(-1); result != -1) {
+  if (const auto result = m_object.value(str).toInt(-1); result != -1)
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -32,9 +35,12 @@ auto json_element::integer(const QString& str, const int def) const -> int
 auto json_element::integer(const element_id id) const -> maybe<int>
 {
   if (const auto result = m_object.value(stringify_element_id(id)).toInt(-1);
-      result != -1) {
+      result != -1)
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -48,9 +54,12 @@ auto json_element::integer(const element_id id, const int def) const
 auto json_element::floating(const element_id id) const -> maybe<double>
 {
   if (const auto result = m_object.value(stringify_element_id(id)).toDouble(-1);
-      result != -1) {
+      result != -1)
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -58,9 +67,12 @@ auto json_element::floating(const element_id id) const -> maybe<double>
 auto json_element::floating(const QString& str, const double def) const
     -> double
 {
-  if (const auto result = m_object.value(str).toDouble(-1); result != -1) {
+  if (const auto result = m_object.value(str).toDouble(-1); result != -1)
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return def;
   }
 }
@@ -74,9 +86,12 @@ auto json_element::floating(const element_id id, const double def) const
 auto json_element::string(const QString& str) const -> maybe<QString>
 {
   const auto result = m_object.value(str).toString();
-  if (!result.isNull()) {
+  if (!result.isNull())
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -90,9 +105,12 @@ auto json_element::string(const QString& str, const QString& def) const
 auto json_element::string(const element_id id) const -> maybe<QString>
 {
   const auto result = m_object.value(stringify_element_id(id)).toString();
-  if (!result.isNull()) {
+  if (!result.isNull())
+  {
     return result;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -106,16 +124,20 @@ auto json_element::string(const element_id id, const QString& def) const
 auto json_element::boolean(const element_id id) const -> maybe<bool>
 {
   const auto value = m_object.value(stringify_element_id(id));
-  if (value.isBool()) {
+  if (value.isBool())
+  {
     return value.toBool();
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
 
 auto json_element::stringify_element_id(const element_id type) -> QStringView
 {
-  switch (type) {
+  switch (type)
+  {
     case element_id::tileset:
       return u"tileset";
 

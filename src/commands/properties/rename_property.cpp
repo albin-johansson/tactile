@@ -17,7 +17,8 @@ rename_property::rename_property(core::property_manager* manager,
     , m_oldName{std::move(oldName)}
     , m_newName{std::move(newName)}
 {
-  if (!m_manager) {
+  if (!m_manager)
+  {
     throw tactile_error{"Null property manager!"};
   }
 }

@@ -13,15 +13,19 @@ eraser_tool::eraser_tool(core::model* model) : abstract_tool{model}
 
 void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_document()) {
+  if (auto* document = get_model()->current_document())
+  {
     const auto id = document->current_layer_id().value();
     auto* tileLayer = document->get_tile_layer(id);
     Q_ASSERT(tileLayer);
 
-    if (event->buttons() & Qt::MouseButton::LeftButton) {
+    if (event->buttons() & Qt::MouseButton::LeftButton)
+    {
       const auto pos = translate_mouse_position(event->pos(), mapPosition);
-      if (pos) {
-        if (!m_oldState.contains(*pos)) {
+      if (pos)
+      {
+        if (!m_oldState.contains(*pos))
+        {
           m_oldState.emplace(*pos, tileLayer->tile_at(*pos).value());
         }
 
@@ -44,8 +48,10 @@ void eraser_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 
 void eraser_tool::released(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_document()) {
-    if (event->button() == Qt::MouseButton::LeftButton) {
+  if (auto* document = get_model()->current_document())
+  {
+    if (event->button() == Qt::MouseButton::LeftButton)
+    {
       document->add_erase_sequence(std::move(m_oldState));
       m_oldState.clear();
     }

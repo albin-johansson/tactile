@@ -15,7 +15,8 @@ change_opacity::change_opacity(not_null<core::map_document*> document,
     , m_id{id}
     , m_opacity{opacity}
 {
-  if (!m_document) {
+  if (!m_document)
+  {
     throw tactile_error{"Null map document for change opacity command!"};
   }
 }
@@ -46,8 +47,10 @@ void change_opacity::redo()
 
 auto change_opacity::mergeWith(const QUndoCommand* other) -> bool
 {
-  if (id() == other->id()) {
-    if (auto* otherCommand = dynamic_cast<const change_opacity*>(other)) {
+  if (id() == other->id())
+  {
+    if (auto* otherCommand = dynamic_cast<const change_opacity*>(other))
+    {
       m_opacity = otherCommand->m_opacity;
       return true;
     }

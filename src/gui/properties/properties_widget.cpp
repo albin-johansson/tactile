@@ -116,7 +116,8 @@ void properties_widget::selection_changed(const maybe<QModelIndex> index)
   m_ui->removeButton->setEnabled(false);
   m_ui->renameButton->setEnabled(false);
 
-  if (!index || !m_model->itemFromIndex(*index)) {
+  if (!index || !m_model->itemFromIndex(*index))
+  {
     return;
   }
 
@@ -128,7 +129,8 @@ void properties_widget::selection_changed(const maybe<QModelIndex> index)
   m_contextMenu->set_change_type_enabled(isCustom);
   m_contextMenu->set_remove_enabled(m_ui->removeButton->isEnabled());
   m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
-  if (isCustom) {
+  if (isCustom)
+  {
     const auto& property = m_model->get_property(property_name(*index));
     m_contextMenu->set_current_type(property.type().value());
   }
@@ -144,7 +146,8 @@ void properties_widget::copy_property_requested()
 void properties_widget::paste_property_requested()
 {
   const auto& name = m_nameCopy.value();
-  if (!m_model->contains_property(name)) {
+  if (!m_model->contains_property(name))
+  {
     m_model->add(name, m_propertyCopy.value());
     m_contextMenu->set_paste_enabled(false);
   }
@@ -173,7 +176,8 @@ void properties_widget::remove_property_requested()
 void properties_widget::rename_property_requested()
 {
   const auto oldName = current_property_name();
-  if (const auto newName = change_property_name_dialog::spawn(m_model.get())) {
+  if (const auto newName = change_property_name_dialog::spawn(m_model.get()))
+  {
     m_model->rename(oldName, *newName);
   }
 }
@@ -187,9 +191,11 @@ void properties_widget::when_double_clicked()
 {
   const auto index = m_view->currentIndex();
   const auto* item = m_model->itemFromIndex(index);
-  if (index.column() == 0 && index.parent().isValid() && item->isEnabled()) {
+  if (index.column() == 0 && index.parent().isValid() && item->isEnabled())
+  {
     const auto oldName = item->text();
-    if (const auto name = change_property_name_dialog::spawn(m_model.get())) {
+    if (const auto name = change_property_name_dialog::spawn(m_model.get()))
+    {
       m_model->rename(oldName, *name);
     }
   }
@@ -243,9 +249,12 @@ auto properties_widget::property_name(const QModelIndex& index) const -> QString
   const auto* item = m_model->itemFromIndex(index);
   Q_ASSERT(item);
 
-  if (item->column() == 0) {
+  if (item->column() == 0)
+  {
     return item->text();
-  } else {
+  }
+  else
+  {
     return m_model->itemFromIndex(index.siblingAtColumn(0))->text();
   }
 }

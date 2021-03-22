@@ -132,18 +132,23 @@ void render_tile_layer(QPainter& painter,
 {
   painter.setOpacity(layer.opacity());
 
-  for (auto row = info.bounds.rowBegin; row < info.bounds.rowEnd; ++row) {
-    for (auto col = info.bounds.colBegin; col < info.bounds.colEnd; ++col) {
+  for (auto row = info.bounds.rowBegin; row < info.bounds.rowEnd; ++row)
+  {
+    for (auto col = info.bounds.colBegin; col < info.bounds.colEnd; ++col)
+    {
       const core::position position{row, col};
       const auto x = position.col_to_x(info.tileSize);
       const auto y = position.row_to_y(info.tileSize);
 
-      if (const auto id = layer.tile_at(position); id && id != empty) {
+      if (const auto id = layer.tile_at(position); id && id != empty)
+      {
         const QPoint dst{x, y};
         render_tile(painter, *id, dst, info);
       }
 
-      if (info.drawGrid) {
+      if (info.drawGrid)
+      {  // FIXME don't render this as separate rects, draw
+         // lines once
         painter.drawRect(x, y, info.tileSize, info.tileSize);
       }
     }
@@ -166,8 +171,10 @@ void render_object_layer(QPainter& painter, const core::object_layer& layer)
 
 void render_background(QPainter& painter, const render_info& info)
 {
-  for (auto row = info.bounds.rowBegin; row < info.bounds.rowEnd; ++row) {
-    for (auto col = info.bounds.colBegin; col < info.bounds.colEnd; ++col) {
+  for (auto row = info.bounds.rowBegin; row < info.bounds.rowEnd; ++row)
+  {
+    for (auto col = info.bounds.colBegin; col < info.bounds.colEnd; ++col)
+    {
       const core::position position{row, col};
       render_cell(painter, position, info.tileSize);
     }
@@ -178,14 +185,17 @@ void render_layer(QPainter& painter,
                   const shared<core::layer>& layer,
                   const render_info& info)
 {
-  if (!layer->visible()) {
+  if (!layer->visible())
+  {
     return;
   }
 
-  if (auto* tileLayer = core::as_tile_layer(layer)) {
+  if (auto* tileLayer = core::as_tile_layer(layer))
+  {
     render_tile_layer(painter, *tileLayer, info);
-
-  } else if (auto* objectLayer = core::as_object_layer(layer)) {
+  }
+  else if (auto* objectLayer = core::as_object_layer(layer))
+  {
     render_object_layer(painter, *objectLayer);
   }
 }
@@ -203,7 +213,8 @@ void render_multi_preview(QPainter& painter, const render_info& info)
 
   tileset->iterate_selection([&](const core::position pos) {
     const auto tilePos = mousePos + pos - offset;
-    if (info.map->in_bounds(tilePos)) {
+    if (info.map->in_bounds(tilePos))
+    {
       render_tile(painter,
                   tileset->tile_at(selection.topLeft + pos),
                   tilePos,
@@ -221,12 +232,15 @@ void render_preview(QPainter& painter, const render_info& info)
   painter.setOpacity(previewOpacity);
 
   const auto [topLeft, bottomRight] = tileset->get_selection().value();
-  if (topLeft == bottomRight) {
+  if (topLeft == bottomRight)
+  {
     render_tile(painter,
                 tileset->tile_at(topLeft),
                 info.mousePosition.value(),
                 info);
-  } else {
+  }
+  else
+  {
     render_multi_preview(painter, info);
   }
 
@@ -240,7 +254,8 @@ void render_map(QPainter& painter,
                 const maybe<core::position> mousePosition,
                 const QRectF& exposed)
 {
-  if (exposed.isEmpty()) {
+  if (exposed.isEmpty())
+  {
     return;
   }
 
@@ -250,7 +265,8 @@ void render_map(QPainter& painter,
   document.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
     render_layer(painter, layer, info);
 
-    if (info.mousePosition && id == document.current_layer_id()) {
+    if (info.mousePosition && id == document.current_layer_id())
+    {
       render_preview(painter, info);
     }
   });

@@ -15,11 +15,13 @@ remove_tileset::remove_tileset(core::map_document* document,
     , m_tileset{std::move(tileset)}
     , m_id{id}
 {
-  if (!m_document) {
+  if (!m_document)
+  {
     throw tactile_error{"Null map document!"};
   }
 
-  if (!m_tileset) {
+  if (!m_tileset)
+  {
     throw tactile_error{"Null tileset!"};
   }
 }

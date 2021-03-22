@@ -14,7 +14,8 @@ bucket_fill::bucket_fill(core::map* map,
     , m_origin{position}
     , m_replacement{replacement}
 {
-  if (!m_map) {
+  if (!m_map)
+  {
     throw tactile_error{"Cannot create bucket_fill command from null map!"};
   }
   m_positions.reserve(64);
@@ -31,7 +32,8 @@ void bucket_fill::undo()
   auto* tileLayer = m_map->get_tile_layer(m_layer);
   Q_ASSERT(tileLayer);
 
-  for (const auto& position : m_positions) {
+  for (const auto& position : m_positions)
+  {
     tileLayer->set_tile(position, m_target);
   }
 

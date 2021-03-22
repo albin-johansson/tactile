@@ -17,7 +17,8 @@ update_property::update_property(core::property_manager* manager,
     , m_name{std::move(name)}
     , m_property{std::move(property)}
 {
-  if (!m_manager) {
+  if (!m_manager)
+  {
     throw tactile_error{"Null property manager!"};
   }
 }

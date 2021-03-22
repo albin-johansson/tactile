@@ -15,7 +15,8 @@ map_item::map_item(core::map_document* map, QGraphicsItem* parent)
     : QGraphicsItem{parent}
     , m_document{map}
 {
-  if (!m_document) {
+  if (!m_document)
+  {
     throw tactile_error{"Cannot create map item based on null map document!"};
   }
   // This is to be able to use exposedRect

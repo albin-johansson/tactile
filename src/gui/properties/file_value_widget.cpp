@@ -41,7 +41,7 @@ void file_value_widget::reset_path()
 
 void file_value_widget::set_path(const QString& path)
 {
-  const QFileInfo info {path};
+  const QFileInfo info{path};
   m_ui->activePathEdit->setText(info.filePath());
   m_ui->idlePathEdit->setText(info.fileName());
 }

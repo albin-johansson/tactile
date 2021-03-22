@@ -10,4 +10,4 @@ enum class layer_item_role
   type
 };
 
-}
+}  // namespace tactile::vm

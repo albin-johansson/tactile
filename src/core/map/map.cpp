@@ -12,7 +12,8 @@ namespace tactile::core {
 
 map::map(const row_t nRows, const col_t nCols) : m_rows{nRows}, m_cols{nCols}
 {
-  if (m_rows < 1_row || m_cols < 1_col) {
+  if (m_rows < 1_row || m_cols < 1_col)
+  {
     throw tactile_error{"Invalid map dimensions!"};
   }
 
@@ -25,8 +26,10 @@ map::map(const row_t nRows, const col_t nCols) : m_rows{nRows}, m_cols{nCols}
 
 void map::remove_occurrences(const tile_id id)
 {
-  for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer)) {
+  for (auto& [key, layer] : m_layers)
+  {
+    if (auto* tileLayer = as_tile_layer(layer))
+    {
       tileLayer->remove_all(id);
     }
   }
@@ -36,7 +39,8 @@ void map::remove_layer(const layer_id id)
 {
   Q_ASSERT(m_layers.contains(id));
 
-  if (m_activeLayer == id) {
+  if (m_activeLayer == id)
+  {
     m_activeLayer.reset();
   }
 
@@ -47,7 +51,8 @@ auto map::take_layer(const layer_id id) -> shared<layer>
 {
   Q_ASSERT(m_layers.contains(id));
 
-  if (m_activeLayer == id) {
+  if (m_activeLayer == id)
+  {
     m_activeLayer.reset();
   }
 
@@ -59,7 +64,8 @@ auto map::take_layer(const layer_id id) -> shared<layer>
 
 void map::select_layer(const layer_id id)
 {
-  if (m_layers.contains(id)) {
+  if (m_layers.contains(id))
+  {
     m_activeLayer = id;
   }
 }
@@ -85,8 +91,10 @@ void map::add_layer(const layer_id id, shared<layer> layer)
   Q_ASSERT(!m_layers.contains(id));
   Q_ASSERT(layer);
 
-  if (m_layers.empty()) {
-    if (const auto* tileLayer = as_tile_layer(layer)) {
+  if (m_layers.empty())
+  {
+    if (const auto* tileLayer = as_tile_layer(layer))
+    {
       m_rows = tileLayer->row_count();
       m_cols = tileLayer->col_count();
     }
@@ -111,8 +119,10 @@ auto map::duplicate_layer(const layer_id id) -> layer_pair&
 
 void map::add_row(const tile_id id)
 {
-  for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer)) {
+  for (auto& [key, layer] : m_layers)
+  {
+    if (auto* tileLayer = as_tile_layer(layer))
+    {
       tileLayer->add_row(id);
     }
   }
@@ -121,8 +131,10 @@ void map::add_row(const tile_id id)
 
 void map::add_col(const tile_id id)
 {
-  for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer)) {
+  for (auto& [key, layer] : m_layers)
+  {
+    if (auto* tileLayer = as_tile_layer(layer))
+    {
       tileLayer->add_col(id);
     }
   }
@@ -131,12 +143,15 @@ void map::add_col(const tile_id id)
 
 void map::remove_row()
 {
-  if (row_count() == 1_row) {
+  if (row_count() == 1_row)
+  {
     return;
   }
 
-  for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer)) {
+  for (auto& [key, layer] : m_layers)
+  {
+    if (auto* tileLayer = as_tile_layer(layer))
+    {
       tileLayer->remove_row();
     }
   }
@@ -146,12 +161,15 @@ void map::remove_row()
 
 void map::remove_col()
 {
-  if (col_count() == 1_col) {
+  if (col_count() == 1_col)
+  {
     return;
   }
 
-  for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer)) {
+  for (auto& [key, layer] : m_layers)
+  {
+    if (auto* tileLayer = as_tile_layer(layer))
+    {
       tileLayer->remove_col();
     }
   }
@@ -189,13 +207,16 @@ void map::set_row_count(row_t nRows)
 {
   nRows = at_least(nRows, 1_row);
 
-  if (nRows == row_count()) {
+  if (nRows == row_count())
+  {
     return;
   }
 
   m_rows = nRows;
-  for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer)) {
+  for (auto& [key, layer] : m_layers)
+  {
+    if (auto* tileLayer = as_tile_layer(layer))
+    {
       tileLayer->set_rows(m_rows);
     }
   }
@@ -205,13 +226,16 @@ void map::set_col_count(col_t nCols)
 {
   nCols = at_least(nCols, 1_col);
 
-  if (nCols == col_count()) {
+  if (nCols == col_count())
+  {
     return;
   }
 
   m_cols = nCols;
-  for (auto& [key, layer] : m_layers) {
-    if (auto* tileLayer = as_tile_layer(layer)) {
+  for (auto& [key, layer] : m_layers)
+  {
+    if (auto* tileLayer = as_tile_layer(layer))
+    {
       tileLayer->set_cols(m_cols);
     }
   }
@@ -219,21 +243,24 @@ void map::set_col_count(col_t nCols)
 
 void map::set_visibility(const layer_id id, const bool visible)
 {
-  if (auto* layer = find_layer(id)) {
+  if (auto* layer = find_layer(id))
+  {
     layer->set_visible(visible);
   }
 }
 
 void map::set_opacity(const layer_id id, const double opacity)
 {
-  if (auto* layer = find_layer(id)) {
+  if (auto* layer = find_layer(id))
+  {
     layer->set_opacity(opacity);
   }
 }
 
 void map::set_name(const layer_id id, const QString& name)
 {
-  if (auto* layer = find_layer(id)) {
+  if (auto* layer = find_layer(id))
+  {
     layer->set_name(name);
   }
 }
@@ -251,9 +278,12 @@ void map::move_layer_forward(const layer_id id)
 auto map::make_tile_layer() -> shared<tile_layer>
 {
   ++m_nextLayer;
-  if (!m_activeLayer) {
+  if (!m_activeLayer)
+  {
     return std::make_shared<tile_layer>(5_row, 5_col);
-  } else {
+  }
+  else
+  {
     return std::make_shared<tile_layer>(row_count(), col_count());
   }
 }
@@ -271,9 +301,12 @@ auto map::index_of(const layer_id id) const -> maybe<int>
 
 auto map::is_visible(const layer_id id) const -> bool
 {
-  if (const auto* layer = find_layer(id)) {
+  if (const auto* layer = find_layer(id))
+  {
     return layer->visible();
-  } else {
+  }
+  else
+  {
     return false;
   }
 }
@@ -364,18 +397,24 @@ auto map::get_object_layer(layer_id id) const -> const object_layer*
 
 auto map::find_layer(const layer_id id) -> layer*
 {
-  if (const auto it = m_layers.find(id); it != m_layers.end()) {
+  if (const auto it = m_layers.find(id); it != m_layers.end())
+  {
     return it->second.get();
-  } else {
+  }
+  else
+  {
     return nullptr;
   }
 }
 
 auto map::find_layer(const layer_id id) const -> const layer*
 {
-  if (const auto it = m_layers.find(id); it != m_layers.end()) {
+  if (const auto it = m_layers.find(id); it != m_layers.end())
+  {
     return it->second.get();
-  } else {
+  }
+  else
+  {
     return nullptr;
   }
 }

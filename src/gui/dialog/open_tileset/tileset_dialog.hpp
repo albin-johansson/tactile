@@ -51,11 +51,13 @@ class tileset_dialog final : public QDialog
   static void spawn(T&& callback)
   {
     tileset_dialog dialog;
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
       const auto& image = dialog.m_image;
       const auto tileWidth = dialog.m_tileWidth;
       const auto tileHeight = dialog.m_tileHeight;
-      if (!image.isNull() && tileWidth && tileHeight) {
+      if (!image.isNull() && tileWidth && tileHeight)
+      {
         const auto& name = dialog.m_imageName;
         const tileset_info info{
             .image = dialog.m_image,

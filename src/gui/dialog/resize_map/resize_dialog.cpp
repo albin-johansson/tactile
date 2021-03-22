@@ -25,7 +25,8 @@ resize_dialog::~resize_dialog() noexcept = default;
 
 void resize_dialog::connect_line_edit(QLineEdit* edit)
 {
-  if (edit) {
+  if (edit)
+  {
     connect(edit,
             &QLineEdit::textChanged,
             this,
@@ -39,14 +40,17 @@ void resize_dialog::validate_input()
   const auto heightState = is_valid(*m_ui->heightEdit);
   ok_button()->setEnabled(widthState == QValidator::Acceptable &&
                           heightState == QValidator::Acceptable);
-  if (ok_button()->isEnabled()) {
+  if (ok_button()->isEnabled())
+  {
     bool ok{};
 
-    if (const auto width = m_ui->widthEdit->displayText().toInt(&ok); ok) {
+    if (const auto width = m_ui->widthEdit->displayText().toInt(&ok); ok)
+    {
       m_chosenWidth = col_t{width};
     }
 
-    if (const auto height = m_ui->heightEdit->displayText().toInt(&ok); ok) {
+    if (const auto height = m_ui->heightEdit->displayText().toInt(&ok); ok)
+    {
       m_chosenHeight = row_t{height};
     }
   }

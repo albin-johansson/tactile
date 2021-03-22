@@ -80,7 +80,8 @@ class object_layer final : public layer
   template <std::invocable<object_id, const object&> T>
   void each_object(T&& callable) const
   {
-    for (const auto& [id, object] : m_objects) {
+    for (const auto& [id, object] : m_objects)
+    {
       callable(id, object);
     }
   }

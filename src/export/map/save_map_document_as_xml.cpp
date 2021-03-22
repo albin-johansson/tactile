@@ -77,7 +77,8 @@ void save_property(QDomDocument& document,
   node.setAttribute(TACTILE_QSTRING(u"type"),
                     core::stringify(property.type().value()));
 
-  switch (property.type().value()) {
+  switch (property.type().value())
+  {
     case core::property_type::string:
     {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.as_string());
@@ -126,10 +127,12 @@ void save_properties(QDomDocument& document,
                      const core::property_manager& manager,
                      const QDir& targetDir)
 {
-  if (manager.property_count() > 0) {
+  if (manager.property_count() > 0)
+  {
     auto node = document.createElement(TACTILE_QSTRING(u"properties"));
 
-    for (const auto& [name, property] : manager.properties()) {
+    for (const auto& [name, property] : manager.properties())
+    {
       save_property(document, node, name, property, targetDir);
     }
 
@@ -148,9 +151,12 @@ void save_tilesets(QDomDocument& document,
 
     node.setAttribute(TACTILE_QSTRING(u"firstgid"), tileset.first_id().get());
 
-    if (options.embedTilesets) {
+    if (options.embedTilesets)
+    {
       add_common_attributes(document, node, tileset, targetDir);
-    } else {
+    }
+    else
+    {
       const auto source =
           targetDir.relativeFilePath(tileset.name() + TACTILE_QSTRING(u".tsx"));
       node.setAttribute(TACTILE_QSTRING(u"source"), source);
@@ -178,9 +184,12 @@ void save_tile_layer(QDomDocument& document,
 
   bool first{true};
   layer.for_each([&](const tile_id tile) {
-    if (first) {
+    if (first)
+    {
       first = false;
-    } else {
+    }
+    else
+    {
       buffer += TACTILE_QSTRING(u",");
     }
     buffer += QString::number(tile.get());
@@ -208,7 +217,8 @@ void save_object_layer(QDomDocument& document,
     node.setAttribute(TACTILE_QSTRING(u"type"),
                       object.custom_type().value_or(""));
 
-    if (object.is_point()) {
+    if (object.is_point())
+    {
       auto point = document.createElement(TACTILE_QSTRING(u"point"));
       node.appendChild(point);
     }
@@ -226,28 +236,35 @@ void save_layers(QDomDocument& document,
 {
   map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
     QDomElement node;
-    if (layer->type() == core::layer_type::tile_layer) {
+    if (layer->type() == core::layer_type::tile_layer)
+    {
       node = document.createElement(TACTILE_QSTRING(u"layer"));
-    } else {
+    }
+    else
+    {
       node = document.createElement(TACTILE_QSTRING(u"objectgroup"));
     }
 
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());
     node.setAttribute(TACTILE_QSTRING(u"name"), layer->name());
 
-    if (layer->opacity() != 1.0) {
+    if (layer->opacity() != 1.0)
+    {
       node.setAttribute(TACTILE_QSTRING(u"opacity"), layer->opacity());
     }
 
-    if (!layer->visible()) {
+    if (!layer->visible())
+    {
       node.setAttribute(TACTILE_QSTRING(u"visible"), 0);
     }
 
-    if (const auto* tileLayer = core::as_tile_layer(layer)) {
+    if (const auto* tileLayer = core::as_tile_layer(layer))
+    {
       save_tile_layer(document, node, *tileLayer);
     }
 
-    if (const auto* objectLayer = core::as_object_layer(layer)) {
+    if (const auto* objectLayer = core::as_object_layer(layer))
+    {
       save_object_layer(document, node, *objectLayer, targetDir);
     }
 
@@ -280,7 +297,8 @@ void create_root(QDomDocument& document,
   root.setAttribute(TACTILE_QSTRING(u"nextlayerid"), map.layer_count() + 1);
   root.setAttribute(TACTILE_QSTRING(u"nextobjectid"), 1);
 
-  if (options.generateDefaults) {
+  if (options.generateDefaults)
+  {
     root.setAttribute(TACTILE_QSTRING(u"compressionlevel"), -1);
     root.setAttribute(TACTILE_QSTRING(u"backgroundcolor"),
                       TACTILE_QSTRING(u"#00000000"));

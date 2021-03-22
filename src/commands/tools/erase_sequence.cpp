@@ -14,7 +14,8 @@ erase_sequence::erase_sequence(core::map* map,
     , m_map{map}
     , m_oldState{std::move(oldState)}
 {
-  if (!m_map) {
+  if (!m_map)
+  {
     throw tactile_error{"Cannot create erase_sequence command from null map!"};
   }
 }
@@ -29,7 +30,8 @@ void erase_sequence::undo()
   auto* tileLayer = m_map->get_tile_layer(m_layer);
   Q_ASSERT(tileLayer);
 
-  for (const auto& [position, tile] : m_oldState) {
+  for (const auto& [position, tile] : m_oldState)
+  {
     tileLayer->set_tile(position, tile);
   }
   m_map->select_layer(layer);
@@ -37,7 +39,8 @@ void erase_sequence::undo()
 
 void erase_sequence::redo()
 {
-  if (m_first) {
+  if (m_first)
+  {
     m_layer = m_map->active_layer_id().value();
     m_first = false;
     return;
@@ -51,7 +54,8 @@ void erase_sequence::redo()
   auto* tileLayer = m_map->get_tile_layer(m_layer);
   Q_ASSERT(tileLayer);
 
-  for (const auto& [position, _] : m_oldState) {
+  for (const auto& [position, _] : m_oldState)
+  {
     tileLayer->set_tile(position, empty);
   }
   m_map->select_layer(layer);

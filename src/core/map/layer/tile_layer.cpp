@@ -32,7 +32,8 @@ namespace tactile::core {
 tile_layer::tile_layer(const row_t nRows, const col_t nCols)
     : m_delegate{layer_type::tile_layer}
 {
-  if (nRows < 1_row || nCols < 1_col) {
+  if (nRows < 1_row || nCols < 1_col)
+  {
     throw tactile_error{"Invalid tile_layer dimensions!"};
   }
   m_delegate.set_name(TACTILE_QSTRING(u"Tile layer"));
@@ -53,9 +54,12 @@ void tile_layer::remove_all(const tile_id id)
 {
   const auto nRows = row_count().get();
   const auto nCols = col_count().get();
-  for (auto r = 0; r < nRows; ++r) {
-    for (auto c = 0; c < nCols; ++c) {
-      if (m_tiles[r][c] == id) {
+  for (auto r = 0; r < nRows; ++r)
+  {
+    for (auto c = 0; c < nCols; ++c)
+    {
+      if (m_tiles[r][c] == id)
+      {
         m_tiles[r][c] = empty;
       }
     }
@@ -69,22 +73,26 @@ void tile_layer::add_row(const tile_id id)
 
 void tile_layer::add_col(const tile_id id)
 {
-  for (auto& row : m_tiles) {
+  for (auto& row : m_tiles)
+  {
     row.push_back(id);
   }
 }
 
 void tile_layer::remove_row() noexcept
 {
-  if (m_tiles.size() > 1) {
+  if (m_tiles.size() > 1)
+  {
     m_tiles.pop_back();
   }
 }
 
 void tile_layer::remove_col() noexcept
 {
-  for (auto& row : m_tiles) {
-    if (row.size() > 1) {
+  for (auto& row : m_tiles)
+  {
+    if (row.size() > 1)
+    {
       row.pop_back();
     }
   }
@@ -96,17 +104,21 @@ void tile_layer::set_rows(const row_t nRows)
 
   const auto current = row_count();
 
-  if (nRows == current) {
+  if (nRows == current)
+  {
     return;
   }
 
   const auto diff = std::abs(current.get() - nRows.get());
 
-  if (current < nRows) {
+  if (current < nRows)
+  {
     invoke_n(diff, [this] {
       add_row(empty);
     });
-  } else {
+  }
+  else
+  {
     invoke_n(diff, [this]() noexcept {
       remove_row();
     });
@@ -119,17 +131,21 @@ void tile_layer::set_cols(const col_t nCols)
 
   const auto current = col_count();
 
-  if (nCols == current) {
+  if (nCols == current)
+  {
     return;
   }
 
   const auto diff = std::abs(current.get() - nCols.get());
 
-  if (current < nCols) {
+  if (current < nCols)
+  {
     invoke_n(diff, [this] {
       add_col(empty);
     });
-  } else {
+  }
+  else
+  {
     invoke_n(diff, [this]() noexcept {
       remove_col();
     });
@@ -138,7 +154,8 @@ void tile_layer::set_cols(const col_t nCols)
 
 void tile_layer::set_tile(const position& pos, const tile_id id) noexcept
 {
-  if (in_bounds(pos)) {
+  if (in_bounds(pos))
+  {
     m_tiles[pos.row_index()][pos.col_index()] = id;
   }
 }
@@ -186,9 +203,12 @@ auto tile_layer::tile_count() const noexcept -> int
 
 auto tile_layer::tile_at(const position& pos) const -> maybe<tile_id>
 {
-  if (in_bounds(pos)) {
+  if (in_bounds(pos))
+  {
     return m_tiles[pos.row_index()][pos.col_index()];
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }

@@ -15,7 +15,8 @@ class select_file_dialog final : public QFileDialog
   static void spawn(T&& callable)
   {
     select_file_dialog dialog;
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
       Q_ASSERT(dialog.selectedFiles().size() == 1);
       callable(dialog.selectedFiles().front());
     }

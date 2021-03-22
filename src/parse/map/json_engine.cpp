@@ -55,14 +55,17 @@ auto json_engine::tiles(const object_type& object,
   const auto data = object->value(u"data").toArray();
   int index{0};
 
-  for (const auto& value : data) {
+  for (const auto& value : data)
+  {
     const tile_id id{value.toInt(-1)};
 
-    if (id != -1_t) {
+    if (id != -1_t)
+    {
       const auto pos = index_to_position(index, nCols);
       matrix.at(pos.row_index()).at(pos.col_index()) = id;
-
-    } else {
+    }
+    else
+    {
       error = parse_error::layer_could_not_parse_tile;
       return matrix;
     }
@@ -122,7 +125,8 @@ auto json_engine::collect(const object_type& root, const QStringView key)
   std::vector<object_type> vector;
   vector.reserve(static_cast<std::size_t>(array.size()));
 
-  for (const auto& elem : array) {
+  for (const auto& elem : array)
+  {
     Q_ASSERT(elem.isObject());
     vector.emplace_back(elem.toObject());
   }

@@ -14,13 +14,16 @@ void save_map_document(const QString& path, const core::map_document& document)
   const QFileInfo info{path};
 
   const auto suffix = info.suffix();
-  if (suffix == TACTILE_QSTRING(u"tmx")) {
+  if (suffix == TACTILE_QSTRING(u"tmx"))
+  {
     save_map_document_as_xml(path, document);
-
-  } else if (suffix == TACTILE_QSTRING(u"json")) {
+  }
+  else if (suffix == TACTILE_QSTRING(u"json"))
+  {
     save_map_document_as_json(path, document);
-
-  } else {
+  }
+  else
+  {
     throw tactile_error{"Did not recognize save format!"};
   }
 }

@@ -38,7 +38,8 @@ void validate_themes()
 {
   prefs::gfx::theme_name().set_if_missing(defaultTheme.toString());
 
-  for (const auto& [name, path] : themes) {
+  for (const auto& [name, path] : themes)
+  {
     const auto palette = parse_palette(path.toString());
     Q_ASSERT(palette);
     palettes.try_emplace(name, palette.value());
@@ -55,21 +56,27 @@ auto register_theme(const QString& name, const QPalette& palette) -> bool
   // TODO disallow name collision with standard themes
 
   auto userThemes = prefs::gfx::user_themes().value();
-  if (!userThemes.contains(name)) {
+  if (!userThemes.contains(name))
+  {
     userThemes.insert(name, palette);
     prefs::gfx::user_themes().set(userThemes);
     return true;
-  } else {
+  }
+  else
+  {
     return false;
   }
 }
 
 auto set_theme(const QString& name) -> bool
 {
-  if (const auto palette = get_theme(name)) {
+  if (const auto palette = get_theme(name))
+  {
     set_current_theme(name, *palette);
     return true;
-  } else {
+  }
+  else
+  {
     return false;
   }
 }
@@ -81,12 +88,16 @@ void update_theme(const QString& name,
 {
   // TODO don't allow updating a standard theme
 
-  if (auto palette = get_theme(name)) {
+  if (auto palette = get_theme(name))
+  {
     palette->setColor(group, role, color);
 
-    if (is_standard_theme(name)) {
+    if (is_standard_theme(name))
+    {
       palettes.at(name) = *palette;
-    } else {
+    }
+    else
+    {
       auto userThemes = prefs::gfx::user_themes().value();
       userThemes.insert(name, *palette);
       prefs::gfx::user_themes().set(userThemes);
@@ -97,7 +108,8 @@ void update_theme(const QString& name,
 void remove_theme(const QString& name)
 {
   Q_ASSERT(!is_standard_theme(name));
-  if (const auto userThemes = prefs::gfx::user_themes()) {
+  if (const auto userThemes = prefs::gfx::user_themes())
+  {
     auto map = userThemes.value();
     map.remove(name);
     prefs::gfx::user_themes().set(map);
@@ -106,11 +118,14 @@ void remove_theme(const QString& name)
 
 auto get_theme(const QString& name) -> maybe<QPalette>
 {
-  if (is_standard_theme(name)) {
+  if (is_standard_theme(name))
+  {
     return palettes.at(name);
-
-  } else if (const auto userThemes = prefs::gfx::user_themes()) {
-    if (const auto it = userThemes->find(name); it != userThemes->end()) {
+  }
+  else if (const auto userThemes = prefs::gfx::user_themes())
+  {
+    if (const auto it = userThemes->find(name); it != userThemes->end())
+    {
       Q_ASSERT(it->canConvert<QPalette>());
       return it->value<QPalette>();
     }
@@ -131,7 +146,8 @@ auto get_standard_themes() -> vector_map<QString, QPalette>
   vector_map<QString, QPalette> map;
   map.reserve(themes.size());
 
-  for (const auto& [name, palette] : palettes) {
+  for (const auto& [name, palette] : palettes)
+  {
     map.emplace(name.toString(), palette);
   }
 
@@ -143,7 +159,8 @@ auto get_standard_theme_names() -> std::vector<QString>
   std::vector<QString> names;
   names.reserve(palettes.size());
 
-  for (const auto& [name, palette] : palettes) {
+  for (const auto& [name, palette] : palettes)
+  {
     names.emplace_back(name.toString());
   }
 
@@ -154,9 +171,11 @@ auto get_user_theme_names() -> std::vector<QString>
 {
   std::vector<QString> names;
 
-  if (const auto userThemes = prefs::gfx::user_themes()) {
+  if (const auto userThemes = prefs::gfx::user_themes())
+  {
     names.reserve(userThemes->size());
-    for (const auto& name : userThemes.value().keys()) {
+    for (const auto& name : userThemes.value().keys())
+    {
       names.emplace_back(name);
     }
   }

@@ -16,11 +16,13 @@ add_layer::add_layer(core::map_document* document,
     , m_layer{std::move(layer)}
     , m_id{id}
 {
-  if (!m_document) {
+  if (!m_document)
+  {
     throw tactile_error{"Cannot create command from null map document!"};
   }
 
-  if (!m_layer) {
+  if (!m_layer)
+  {
     throw tactile_error{"Cannot create command from null tile_layer!"};
   }
 }

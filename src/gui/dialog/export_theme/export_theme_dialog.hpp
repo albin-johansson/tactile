@@ -14,7 +14,8 @@ class export_theme_dialog final : public QFileDialog
   static void spawn(T&& callable, QWidget* parent = nullptr)
   {
     export_theme_dialog dialog{parent};
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
       Q_ASSERT(dialog.selectedFiles().size() == 1);
       callable(dialog.selectedFiles().front());
     }

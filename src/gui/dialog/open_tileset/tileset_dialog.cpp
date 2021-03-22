@@ -15,7 +15,8 @@ tileset_dialog::tileset_dialog(QWidget* parent)
     , m_validator{new QIntValidator{1, 1'000, this}}
 {
   m_defaultImageIcon = m_ui->imageLabel->pixmap(Qt::ReturnByValueConstant{});
-  if (m_defaultImageIcon.isNull()) {
+  if (m_defaultImageIcon.isNull())
+  {
     throw tactile_error{"Could not create default pixmap!"};
   }
 
@@ -26,16 +27,20 @@ tileset_dialog::~tileset_dialog() noexcept = default;
 
 void tileset_dialog::on_imageButton_pressed()
 {
-  if (const auto path = open_tileset_image(this); path) {
+  if (const auto path = open_tileset_image(this); path)
+  {
     const QFileInfo file{*path};
     const auto absoluteFile = file.absoluteFilePath();
 
     m_image.load(file.absoluteFilePath());
 
-    if (m_image.isNull()) {
+    if (m_image.isNull())
+    {
       m_ui->imageLabel->setPixmap(m_defaultImageIcon);
       m_ui->sourceEdit->setText(tr("Failed to open image!"));
-    } else {
+    }
+    else
+    {
       m_ui->imageLabel->setPixmap(QPixmap{absoluteFile}.scaledToHeight(100));
       m_ui->sourceEdit->setText(absoluteFile);
       m_imageName = file.baseName();
@@ -66,14 +71,17 @@ auto tileset_dialog::is_valid() const -> bool
 void tileset_dialog::validate_input()
 {
   ok_button()->setEnabled(is_valid());
-  if (ok_button()->isEnabled()) {
+  if (ok_button()->isEnabled())
+  {
     bool ok{};
 
-    if (const auto width = m_ui->widthEdit->displayText().toInt(&ok); ok) {
+    if (const auto width = m_ui->widthEdit->displayText().toInt(&ok); ok)
+    {
       m_tileWidth = tile_width{width};
     }
 
-    if (const auto height = m_ui->heightEdit->displayText().toInt(&ok); ok) {
+    if (const auto height = m_ui->heightEdit->displayText().toInt(&ok); ok)
+    {
       m_tileHeight = tile_height{height};
     }
   }

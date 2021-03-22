@@ -128,7 +128,8 @@ auto map_editor::tab_count() const -> int
 
 void map_editor::tab_changed(const int index)
 {
-  if (const auto id = m_tabWidget->id_from_index(index); id) {
+  if (const auto id = m_tabWidget->id_from_index(index); id)
+  {
     emit ui_select_map(*id);
   }
 }

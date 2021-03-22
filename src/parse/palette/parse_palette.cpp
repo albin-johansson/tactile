@@ -14,7 +14,8 @@ void parse_group(const QJsonObject& json,
                  const QPalette::ColorGroup group = QPalette::ColorGroup::All)
 {
   const auto setIfExists = [&](const QPalette::ColorRole role, cz16string key) {
-    if (const auto it = json.find(key); it != json.end()) {
+    if (const auto it = json.find(key); it != json.end())
+    {
       const auto value = it.value();
       Q_ASSERT(value.isString());
 
@@ -54,14 +55,16 @@ void parse_group(const QJsonObject& json,
 {
   QFile themeFile{file};
 
-  if (!themeFile.exists()) {
+  if (!themeFile.exists())
+  {
     return std::nullopt;
   }
 
   themeFile.open(QFile::ReadOnly | QFile::Text);
 
   const auto document = QJsonDocument::fromJson(themeFile.readAll());
-  if (document.isNull()) {
+  if (document.isNull())
+  {
     return std::nullopt;
   }
 
@@ -76,13 +79,15 @@ auto parse_palette(const QString& file) -> maybe<QPalette>
   QPalette palette;
 
   const auto json = get_json_object(file);
-  if (!json) {
+  if (!json)
+  {
     return std::nullopt;
   }
 
   parse_group(*json, palette);
 
-  if (const auto it = json->find(u"disabled"); it != json->end()) {
+  if (const auto it = json->find(u"disabled"); it != json->end())
+  {
     const auto item = it.value();
     Q_ASSERT(item.isObject());
 

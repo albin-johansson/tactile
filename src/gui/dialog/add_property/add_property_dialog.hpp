@@ -31,7 +31,8 @@ class add_property_dialog final : public QDialog
                     QWidget* parent = nullptr)
   {
     add_property_dialog dialog{model, parent};
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
       Q_ASSERT(dialog.m_name);
       Q_ASSERT(dialog.m_type);
       callable(*dialog.m_name, *dialog.m_type);

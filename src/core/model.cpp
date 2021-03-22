@@ -252,7 +252,8 @@ void model::select_map(const map_id id)
 {
   Q_ASSERT(m_documents.contains(id));
 
-  if (m_currentMap != id) {
+  if (m_currentMap != id)
+  {
     m_currentMap = id;
     emit_undo_redo_update();
     emit clean_changed(current_document()->is_clean());
@@ -271,12 +272,14 @@ void model::close_map(const map_id id)
   m_documents.at(id)->disconnect();
   m_documents.erase(id);
 
-  if (m_currentMap && (m_currentMap->get() == id.get())) {
+  if (m_currentMap && (m_currentMap->get() == id.get()))
+  {
     m_currentMap = std::nullopt;
     emit_undo_redo_update();
   }
 
-  if (!m_documents.empty()) {
+  if (!m_documents.empty())
+  {
     m_currentMap = m_documents.begin()->first;
     emit_undo_redo_update();
   }
@@ -309,12 +312,15 @@ void model::mouse_exited(QEvent* event)
 
 void model::emit_undo_redo_update()
 {
-  if (const auto* document = current_document()) {
+  if (const auto* document = current_document())
+  {
     emit undo_state_updated(document->can_undo());
     emit redo_state_updated(document->can_redo());
     emit undo_text_updated(document->get_undo_text());
     emit redo_text_updated(document->get_redo_text());
-  } else {
+  }
+  else
+  {
     emit undo_state_updated(false);
     emit redo_state_updated(false);
     emit undo_text_updated(TACTILE_QSTRING(u""));

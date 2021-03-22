@@ -45,7 +45,8 @@ class setting final
     Q_ASSERT(settings.status() == QSettings::NoError);
 
     const auto val = settings.value(m_key);
-    if (!val.isNull() && val.isValid() && val.canConvert<T>()) {
+    if (!val.isNull() && val.isValid() && val.canConvert<T>())
+    {
       m_value.emplace(val.value<T>());
     }
   }
@@ -78,7 +79,8 @@ class setting final
     QSettings settings;
     Q_ASSERT(settings.status() == QSettings::NoError);
 
-    if (!settings.contains(m_key)) {
+    if (!settings.contains(m_key))
+    {
       settings.setValue(m_key, value);
       m_value = value;
     }
@@ -103,7 +105,8 @@ class setting final
   template <std::invocable<const T&> U>
   void with(U&& callable)
   {
-    if (m_value) {
+    if (m_value)
+    {
       callable(*m_value);
     }
   }
@@ -117,7 +120,8 @@ class setting final
    */
   void toggle() requires negatable<T>
   {
-    if (m_value) {
+    if (m_value)
+    {
       set(!*m_value);
     }
   }

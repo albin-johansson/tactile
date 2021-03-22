@@ -28,9 +28,12 @@ auto change_property_name_dialog::spawn(QStandardItemModel* model,
                                         QWidget* parent) -> maybe<QString>
 {
   change_property_name_dialog dialog{model, parent};
-  if (dialog.exec()) {
+  if (dialog.exec())
+  {
     return dialog.m_ui->nameEdit->text();
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }

@@ -71,12 +71,14 @@ auto tileset_rubber_band::adjusted_geometry() const -> QRect
   adjusted.setHeight(std::max(th, adjusted.height()));
 
   if (const row_t currentRow{m_lastMousePos.y() / th};
-      currentRow != m_originRow) {
+      currentRow != m_originRow)
+  {
     adjusted.setHeight(adjusted.height() + th);
   }
 
   if (const col_t currentCol{m_lastMousePos.x() / tw};
-      currentCol != m_originCol) {
+      currentCol != m_originCol)
+  {
     adjusted.setWidth(adjusted.width() + tw);
   }
 

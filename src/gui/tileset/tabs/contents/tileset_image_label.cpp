@@ -36,8 +36,10 @@ void tileset_image_label::paintEvent(QPaintEvent* event)
   const auto maxRow = ((region.y() + region.height()) / tileHeight) + 1;
   const auto maxCol = ((region.x() + region.width()) / tileWidth) + 1;
 
-  for (auto row = minRow; row < maxRow; ++row) {
-    for (auto col = minCol; col < maxCol; ++col) {
+  for (auto row = minRow; row < maxRow; ++row)
+  {
+    for (auto col = minCol; col < maxCol; ++col)
+    {
       const auto x = col * tileWidth;
       const auto y = row * tileHeight;
       painter.drawRect(x, y, m_width, m_height);

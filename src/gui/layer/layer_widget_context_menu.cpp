@@ -23,7 +23,8 @@ layer_widget_context_menu::layer_widget_context_menu(
     : QMenu{parent}
     , m_add{addMenu(icons::add(), tr("Add new layer..."))}
 {
-  for (auto* action : addLayerMenu->actions()) {
+  for (auto* action : addLayerMenu->actions())
+  {
     m_add->addAction(action);
   }
 }

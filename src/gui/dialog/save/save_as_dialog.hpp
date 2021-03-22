@@ -15,7 +15,8 @@ class save_as_dialog final : public QFileDialog
   static void spawn(T&& callback, const QString& fileName)
   {
     save_as_dialog dialog{fileName};
-    if (dialog.exec()) {
+    if (dialog.exec())
+    {
       callback(dialog.selectedFiles().first());
     }
   }

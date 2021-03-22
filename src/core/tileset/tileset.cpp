@@ -31,7 +31,8 @@ auto create_source_rect_cache(const tile_id first,
   const auto tileWidth = tw.get();
   const auto tileHeight = th.get();
 
-  for (tile_id id{first}; id <= last; ++id) {
+  for (tile_id id{first}; id <= last; ++id)
+  {
     const auto index = id - first;
 
     const auto x = (index.get() % tileCount.get()) * tileWidth;
@@ -54,11 +55,13 @@ tileset::tileset(const tile_id firstId,
     , m_tileWidth{tileWidth}
     , m_tileHeight{tileHeight}
 {
-  if (m_image.isNull()) {
+  if (m_image.isNull())
+  {
     throw tactile_error{"Cannot create tileset from null image!"};
   }
 
-  if (m_tileWidth < 1_tw || m_tileHeight < 1_th) {
+  if (m_tileWidth < 1_tw || m_tileHeight < 1_th)
+  {
     throw tactile_error{"Invalid tileset tile dimensions!"};
   }
 
@@ -119,10 +122,13 @@ auto tileset::tile_at(const position& position) const -> tile_id
   const auto endRow = row_t{row_count()};
   const auto endCol = col_t{col_count()};
 
-  if ((row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol)) {
+  if ((row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol))
+  {
     const auto index = row.get() * m_nCols.get() + col.get();
     return m_firstId + tile_id{index};
-  } else {
+  }
+  else
+  {
     return empty;
   }
 }
@@ -139,9 +145,12 @@ auto tileset::height() const -> int
 
 auto tileset::image_source(const tile_id id) const -> maybe<QRect>
 {
-  if (const auto it = m_sourceRects.find(id); it != m_sourceRects.end()) {
+  if (const auto it = m_sourceRects.find(id); it != m_sourceRects.end())
+  {
     return it->second;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }

@@ -13,10 +13,13 @@ auto from_file(const QFileInfo& path) -> maybe<QDomDocument>
 
   QString error;
   if (const auto success = document.setContent(file.readAll(), &error);
-      !success) {
+      !success)
+  {
     file.close();
     return std::nullopt;
-  } else {
+  }
+  else
+  {
     file.close();
   }
 
@@ -29,9 +32,12 @@ void write_file(const QFileInfo& path, const QDomDocument& document)
 
   file.setDirectWriteFallback(true);
   file.open(QFile::WriteOnly | QFile::Text);
-  if (const auto result = file.write(document.toByteArray()); result == -1) {
+  if (const auto result = file.write(document.toByteArray()); result == -1)
+  {
     file.cancelWriting();
-  } else {
+  }
+  else
+  {
     file.commit();
   }
 }

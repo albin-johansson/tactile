@@ -17,9 +17,12 @@ auto open_using(const QString& file, parse::parse_error& error)
 {
   parse::map_parser<T> parser{file};
   error = parser.error_code();
-  if (parser) {
+  if (parser)
+  {
     return parser.make_document();
-  } else {
+  }
+  else
+  {
     return nullptr;
   }
 }
@@ -32,13 +35,16 @@ auto open_map_document(const QString& path, parse::parse_error& error)
   const QFileInfo info{path};
   const auto suffix = info.suffix();
 
-  if (suffix == TACTILE_QSTRING(u"json")) {
+  if (suffix == TACTILE_QSTRING(u"json"))
+  {
     return open_using<parse::json_engine>(path, error);
-
-  } else if (suffix == TACTILE_QSTRING(u"tmx")) {
+  }
+  else if (suffix == TACTILE_QSTRING(u"tmx"))
+  {
     return open_using<parse::xml_engine>(path, error);
-
-  } else {
+  }
+  else
+  {
     throw tactile_error{"Did not recognize map format to open!"};
   }
 }

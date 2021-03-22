@@ -92,13 +92,16 @@ void property_context_menu::disable_all()
 
 void property_context_menu::set_current_type(const core::property_type type)
 {
-  for (auto* elem : m_changeType->actions()) {
-    if (!elem->isSeparator()) {
+  for (auto* elem : m_changeType->actions())
+  {
+    if (!elem->isSeparator())
+    {
       elem->setEnabled(true);
     }
   }
 
-  switch (type) {
+  switch (type)
+  {
     case core::property_type::string:
     {
       m_typeString->setEnabled(false);

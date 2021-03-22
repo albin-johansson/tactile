@@ -120,8 +120,10 @@ class tile_layer final : public layer
   {
     const auto endRow = row_count();
     const auto endCol = col_count();
-    for (row_t row{0}; row < endRow; ++row) {
-      for (col_t col{0}; col < endCol; ++col) {
+    for (row_t row{0}; row < endRow; ++row)
+    {
+      for (col_t col{0}; col < endCol; ++col)
+      {
         callable(m_tiles[row.get()][col.get()]);
       }
     }

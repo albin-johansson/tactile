@@ -37,7 +37,8 @@ auto xml_engine::properties(const object_type& object)
   const auto top = object->elementsByTagName(TACTILE_QSTRING(u"properties"));
 
   const auto count = top.count();
-  if (count == 0) {
+  if (count == 0)
+  {
     return std::vector<object_type>{};
   }
 
@@ -64,11 +65,13 @@ auto xml_engine::tiles(const object_type& object,
   const auto tiles = data.text().split(u',');
 
   int index{0};
-  for (const auto& value : tiles) {
+  for (const auto& value : tiles)
+  {
     bool ok{};
     const tile_id id{value.toInt(&ok)};
 
-    if (!ok) {
+    if (!ok)
+    {
       error = parse::parse_error::layer_could_not_parse_tile;
       return matrix;
     }
@@ -86,9 +89,12 @@ auto xml_engine::property_type(const object_type& object) -> QString
 {
   // The following is a quirk due to the fact that the type attribute can be
   // omitted for string properties
-  if (assume_string_property(object)) {
+  if (assume_string_property(object))
+  {
     return TACTILE_QSTRING(u"string");
-  } else {
+  }
+  else
+  {
     return object.string(element_id::type).value();
   }
 }
@@ -108,9 +114,12 @@ auto xml_engine::tileset_image_relative_path(const object_type& object)
 {
   const auto imageElem = object->firstChildElement(TACTILE_QSTRING(u"image"));
   const auto path = imageElem.attribute(TACTILE_QSTRING(u"source"));
-  if (!path.isNull()) {
+  if (!path.isNull())
+  {
     return path;
-  } else {
+  }
+  else
+  {
     return std::nullopt;
   }
 }
@@ -159,7 +168,8 @@ auto xml_engine::collect(const object_type& root, const QString& key)
   std::vector<object_type> result;
   result.reserve(static_cast<std::size_t>(count));
 
-  for (auto i = 0; i < count; ++i) {
+  for (auto i = 0; i < count; ++i)
+  {
     const auto& node = elements.at(i);
 
     Q_ASSERT(node.isElement());

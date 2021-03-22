@@ -29,17 +29,21 @@ status_bar::status_bar(QWidget* parent)
 
 void status_bar::set_layer_combo_box_visible(const bool visible)
 {
-  if (visible) {
+  if (visible)
+  {
     addPermanentWidget(m_layerBox);
     m_layerBox->show();
-  } else {
+  }
+  else
+  {
     removeWidget(m_layerBox);
   }
 }
 
 void status_bar::set_mouse_info_visible(const bool visible)
 {
-  if (visible) {
+  if (visible)
+  {
     addWidget(m_mxLabel);
     addWidget(m_mxValueLabel);
     addWidget(m_myLabel);
@@ -49,7 +53,9 @@ void status_bar::set_mouse_info_visible(const bool visible)
     m_mxValueLabel->show();
     m_myLabel->show();
     m_myValueLabel->show();
-  } else {
+  }
+  else
+  {
     removeWidget(m_mxLabel);
     removeWidget(m_mxValueLabel);
     removeWidget(m_myLabel);
