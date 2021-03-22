@@ -482,6 +482,8 @@ class map_document final : public document
    */
   [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*;
 
+  [[nodiscard]] auto raw() -> map&;
+
  signals:
   void redraw();
   void undo_state_updated(bool canUndo);
