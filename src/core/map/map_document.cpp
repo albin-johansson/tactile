@@ -316,7 +316,6 @@ void map_document::ui_remove_tileset(const tileset_id id)
   m_delegate->execute<cmd::remove_tileset>(this,
                                            m_tilesets->get_tileset_pointer(id),
                                            id);
-  emit redraw();
 }
 
 void map_document::select_tileset(const tileset_id id)
