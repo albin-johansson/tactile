@@ -215,7 +215,8 @@ void render_multi_preview(QPainter& painter, const render_info& info)
 void render_preview(QPainter& painter, const render_info& info)
 {
   auto* tileset = info.tilesets->current_tileset();
-  Q_ASSERT(tileset);
+  Q_ASSERT(tileset);  // FIXME this can fail sometimes upon undo/redo, maybe
+                      //  just return if there is no current tileset
 
   painter.setOpacity(previewOpacity);
 
