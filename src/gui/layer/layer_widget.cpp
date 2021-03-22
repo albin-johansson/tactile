@@ -77,11 +77,17 @@ void layer_widget::selected_map(not_null<core::map_document*> document)
 
   m_view->setModel(m_model.get());
   Q_ASSERT(!m_model->parent());
+
+  // clang-format off
+  connect(m_model.get(), &vm::layer_model::changed_opacity,
+          this, &layer_widget::changed_layer_opacity);
+  // clang-format on
 }
 
 void layer_widget::update_actions(const maybe<QModelIndex>& selected)
 {
-  if (!m_model) {
+  if (!m_model)
+  {
     return;
   }
 
@@ -95,7 +101,8 @@ void layer_widget::update_actions(const maybe<QModelIndex>& selected)
   m_ui->downButton->setEnabled(index && index != nLayers - 1);
   m_ui->removeLayerButton->setEnabled(nLayers != 1);
 
-  if (selected) {
+  if (selected)
+  {
     QSignalBlocker opacityBlocker{m_ui->opacitySlider};
     m_ui->opacitySlider->setValue(
         static_cast<int>(m_model->opacity(*selected) * 100.0));
@@ -114,9 +121,12 @@ void layer_widget::update_actions(const maybe<QModelIndex>& selected)
 
 void layer_widget::spawn_context_menu(const QPoint& pos)
 {
-  if (m_view->selectionModel()->selection().empty()) {
+  if (m_view->selectionModel()->selection().empty())
+  {
     m_widgetMenu->exec(mapToGlobal(pos));
-  } else {
+  }
+  else
+  {
     m_itemMenu->exec(mapToGlobal(pos));
   }
 }
@@ -137,6 +147,12 @@ void layer_widget::new_object_layer_requested()
 {
   Q_ASSERT(m_model);
   m_model->add_object_layer();
+}
+
+void layer_widget::changed_layer_opacity(const layer_id, const double opacity)
+{
+  QSignalBlocker blocker{m_ui->opacitySlider};  // Avoid cyclic signals
+  m_ui->opacitySlider->setValue(static_cast<int>(opacity * 100.0));
 }
 
 [[maybe_unused]] //

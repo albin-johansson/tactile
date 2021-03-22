@@ -10,7 +10,8 @@ layer_model::layer_model(not_null<core::map_document*> document)
     : QStandardItemModel{}
     , m_document{document}
 {
-  if (!m_document) {
+  if (!m_document)
+  {
     throw tactile_error{"layer_model requires non-null map document!"};
   }
 
@@ -29,6 +30,9 @@ layer_model::layer_model(not_null<core::map_document*> document)
 
   connect(m_document, &core::map_document::removed_layer,
           this, &layer_model::remove_item);
+
+  connect(m_document, &core::map_document::changed_layer_opacity,
+          this, &layer_model::changed_opacity);
 
   connect(this, &layer_model::itemChanged,
           this, &layer_model::item_changed);
@@ -112,10 +116,13 @@ auto layer_model::visible(const QModelIndex& index) const -> bool
 
 void layer_model::add_item(const layer_id id, const core::layer& layer)
 {
-  if (m_duplicateTargetRow) {
+  if (m_duplicateTargetRow)
+  {
     insertRow(*m_duplicateTargetRow, layer_item::make(id, layer));
     m_duplicateTargetRow.reset();
-  } else {
+  }
+  else
+  {
     appendRow(layer_item::make(id, layer));
   }
 }
@@ -124,9 +131,12 @@ void layer_model::remove_item(const layer_id id)
 {
   const auto* root = invisibleRootItem();
   const auto nRows = rowCount();
-  for (auto row = 0; row < nRows; ++row) {
-    if (const auto* item = dynamic_cast<const layer_item*>(root->child(row))) {
-      if (item->get_id() == id) {
+  for (auto row = 0; row < nRows; ++row)
+  {
+    if (const auto* item = dynamic_cast<const layer_item*>(root->child(row)))
+    {
+      if (item->get_id() == id)
+      {
         removeRow(item->row());
       }
     }
@@ -152,7 +162,8 @@ auto layer_model::id_from_index(const QModelIndex& index) const -> layer_id
 
 void layer_model::item_changed(QStandardItem* item)
 {
-  if (const auto* layerItem = dynamic_cast<const vm::layer_item*>(item)) {
+  if (const auto* layerItem = dynamic_cast<const vm::layer_item*>(item))
+  {
     m_document->set_layer_name(layerItem->get_id(), item->text());
   }
 }

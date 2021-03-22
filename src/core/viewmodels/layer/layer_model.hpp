@@ -45,6 +45,9 @@ class layer_model final : public QStandardItemModel
 
   [[nodiscard]] auto visible(const QModelIndex& index) const -> bool;
 
+ signals:
+  void changed_opacity(layer_id id, double opacity);
+
  private:
   core::map_document* m_document{};
   maybe<int> m_duplicateTargetRow;

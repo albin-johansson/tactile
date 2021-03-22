@@ -13,7 +13,8 @@ duplicate_layer::duplicate_layer(not_null<core::map_document*> document,
     , m_document{document}
     , m_id{id}
 {
-  if (!m_document) {
+  if (!m_document)
+  {
     throw tactile_error{"Null map document to duplicate layer command!"};
   }
 }
@@ -23,12 +24,12 @@ void duplicate_layer::undo()
   QUndoCommand::undo();
 
   const auto id = m_newId.value();
+
   m_document->take_layer(id);
   emit m_document->removed_layer(id);
 
   // We need to tell the document that it can safely reuse the layer ID
   m_document->set_next_layer_id(id);
-
   m_newId.reset();
 }
 
@@ -36,7 +37,12 @@ void duplicate_layer::redo()
 {
   QUndoCommand::redo();
 
-  m_newId = m_document->duplicate_layer_impl(m_id);
+  const auto [id, layer] = m_document->raw().duplicate_layer(m_id);
+
+  emit m_document->added_duplicated_layer(id, *m_document->get_layer(id));
+  emit m_document->redraw();
+
+  m_newId = id;
 }
 
 }  // namespace tactile::cmd

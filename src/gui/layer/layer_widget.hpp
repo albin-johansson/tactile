@@ -3,6 +3,7 @@
 #include <QWidget>  // QWidget
 
 #include "forward_declare.hpp"
+#include "layer_id.hpp"
 #include "maybe.hpp"
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
@@ -50,6 +51,8 @@ class layer_widget final : public QWidget
   [[maybe_unused]] void new_tile_layer_requested();
 
   [[maybe_unused]] void new_object_layer_requested();
+
+  [[maybe_unused]] void changed_layer_opacity(layer_id id, double opacity);
 
   [[maybe_unused]] void on_newLayerButton_pressed();
 

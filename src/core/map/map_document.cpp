@@ -8,6 +8,7 @@
 #include "add_row.hpp"
 #include "add_tileset.hpp"
 #include "bucket_fill.hpp"
+#include "change_opacity.hpp"
 #include "change_property_type.hpp"
 #include "document_delegate.hpp"
 #include "duplicate_layer.hpp"
@@ -383,17 +384,6 @@ void map_document::duplicate_layer(const layer_id id)
   m_delegate->execute<cmd::duplicate_layer>(this, id);
 }
 
-auto map_document::duplicate_layer_impl(layer_id id) -> layer_id
-{
-  auto& [newId, layer] = m_map->duplicate_layer(id);
-
-  layer->set_name(layer->name() + tr(" (Copy)"));
-  emit added_duplicated_layer(newId, *layer);
-  emit redraw();
-
-  return newId;
-}
-
 void map_document::increase_tile_size()
 {
   m_map->increase_tile_size();
@@ -420,9 +410,7 @@ void map_document::set_layer_visibility(const layer_id id, const bool visible)
 
 void map_document::set_layer_opacity(const layer_id id, const double opacity)
 {
-  // TODO add undo/redo for change opacity
-  m_map->set_opacity(id, opacity);
-  emit redraw();
+  m_delegate->execute<cmd::change_opacity>(this, id, opacity);
 }
 
 void map_document::set_layer_name(const layer_id id, const QString& name)
@@ -544,6 +532,11 @@ auto map_document::get_map() const noexcept -> const map*
 auto map_document::tilesets() const noexcept -> const tileset_manager*
 {
   return m_tilesets.get();
+}
+
+auto map_document::raw() -> map&
+{
+  return *m_map;
 }
 
 auto map_document::current_layer_id() const noexcept -> maybe<layer_id>

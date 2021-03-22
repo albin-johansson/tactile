@@ -302,8 +302,6 @@ class map_document final : public document
    */
   void duplicate_layer(layer_id id);
 
-  [[nodiscard]] auto duplicate_layer_impl(layer_id id) -> layer_id;
-
   /**
    * \copydoc map::set_visibility()
    */
@@ -502,6 +500,7 @@ class map_document final : public document
   void moved_layer_back(layer_id);
   void moved_layer_forward(layer_id);
 
+  void show_layer_properties(layer_id id);
   void added_property(const QString& name);
   void about_to_remove_property(const QString& name);
   void updated_property(const QString& name);
