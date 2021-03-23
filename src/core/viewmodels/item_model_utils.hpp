@@ -6,7 +6,9 @@
 namespace tactile::vm {
 
 template <std::invocable<QStandardItem*> T>
-void visit_items(QStandardItemModel* model, const int column, T&& callable)
+void visit_items(const QStandardItemModel* model,
+                 const int column,
+                 T&& callable)
 {
   const auto topLevelRows = model->rowCount();
   const auto* root = model->invisibleRootItem();
