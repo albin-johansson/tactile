@@ -60,8 +60,6 @@ class layer_model final : public QStandardItemModel
 
   auto move_down_in_gui(layer_id id) -> maybe<QModelIndex>;
 
-  [[nodiscard]] auto get_item(const QModelIndex& index) -> layer_item*;
-
   [[nodiscard]] auto get_item(const QModelIndex& index) const
       -> const layer_item*;
 

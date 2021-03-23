@@ -171,11 +171,6 @@ auto layer_model::move_down_in_gui(const layer_id id) -> maybe<QModelIndex>
   }
 }
 
-auto layer_model::get_item(const QModelIndex& index) -> layer_item*
-{
-  return dynamic_cast<layer_item*>(itemFromIndex(index));
-}
-
 auto layer_model::get_item(const QModelIndex& index) const -> const layer_item*
 {
   return dynamic_cast<const layer_item*>(itemFromIndex(index));
