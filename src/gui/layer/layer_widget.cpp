@@ -176,15 +176,21 @@ void layer_widget::on_removeLayerButton_pressed()
 [[maybe_unused]] //
 void layer_widget::on_upButton_pressed()
 {
-  const auto index = m_model->move_up(m_view->currentIndex());
-  m_view->setCurrentIndex(index);
+  const auto current = m_view->currentIndex();
+  const auto next = current.siblingAtRow(current.row() - 1);
+
+  m_model->move_up(current);
+  m_view->setCurrentIndex(next);
 }
 
 [[maybe_unused]] //
 void layer_widget::on_downButton_pressed()
 {
-  const auto index = m_model->move_down(m_view->currentIndex());
-  m_view->setCurrentIndex(index);
+  const auto current = m_view->currentIndex();
+  const auto next = current.siblingAtRow(current.row() + 1);
+
+  m_model->move_down(current);
+  m_view->setCurrentIndex(next);
 }
 
 [[maybe_unused]] //

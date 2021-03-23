@@ -33,9 +33,9 @@ class layer_model final : public QStandardItemModel
 
   void duplicate(const QModelIndex& index);
 
-  auto move_up(const QModelIndex& index) -> QModelIndex;
+  void move_up(const QModelIndex& index);
 
-  auto move_down(const QModelIndex& index) -> QModelIndex;
+  void move_down(const QModelIndex& index);
 
   void set_opacity(const QModelIndex& index, double opacity);
 
@@ -56,15 +56,25 @@ class layer_model final : public QStandardItemModel
 
   void remove_item(layer_id id);
 
+  auto move_up_in_gui(layer_id id) -> maybe<QModelIndex>;
+
+  auto move_down_in_gui(layer_id id) -> maybe<QModelIndex>;
+
   [[nodiscard]] auto get_item(const QModelIndex& index) -> layer_item*;
 
   [[nodiscard]] auto get_item(const QModelIndex& index) const
       -> const layer_item*;
 
+  [[nodiscard]] auto index_of(layer_id id) const -> maybe<QModelIndex>;
+
   [[nodiscard]] auto id_from_index(const QModelIndex& index) const -> layer_id;
 
  private slots:
   void item_changed(QStandardItem* item);
+
+  void moved_layer_forward(layer_id id);
+
+  void moved_layer_back(layer_id id);
 };
 
 }  // namespace tactile::vm

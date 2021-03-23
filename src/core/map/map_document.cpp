@@ -13,6 +13,7 @@
 #include "document_delegate.hpp"
 #include "duplicate_layer.hpp"
 #include "erase_sequence.hpp"
+#include "move_layer_back.hpp"
 #include "move_layer_forward.hpp"
 #include "object_layer.hpp"
 #include "remove_col.hpp"
@@ -420,19 +421,12 @@ void map_document::set_layer_name(const layer_id id, const QString& name)
 
 void map_document::move_layer_back(const layer_id id)
 {
-  // TODO make this a command
-
-  m_map->move_layer_back(id);
-  emit moved_layer_back(id);
-  emit redraw();
+  m_delegate->execute<cmd::move_layer_back>(this, id);
 }
 
 void map_document::move_layer_forward(const layer_id id)
 {
   m_delegate->execute<cmd::move_layer_forward>(this, id);
-  //  m_map->move_layer_forward(id);
-  //  emit moved_layer_forward(id);
-  //  emit redraw();
 }
 
 void map_document::set_tileset_name(const tileset_id id, const QString& name)
