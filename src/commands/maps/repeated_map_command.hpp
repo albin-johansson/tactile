@@ -1,15 +1,19 @@
 #pragma once
 
-#include "map.hpp"
+#include "forward_declare.hpp"
 #include "map_command.hpp"
+#include "not_null.hpp"
 #include "position.hpp"
+
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
 class repeated_map_command : public map_command
 {
  public:
-  repeated_map_command(core::map* map, const QString& name);
+  repeated_map_command(not_null<core::map_document*> document,
+                       const QString& name);
 
   auto mergeWith(const QUndoCommand* other) -> bool final;
 

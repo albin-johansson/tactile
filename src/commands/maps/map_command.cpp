@@ -1,29 +1,33 @@
 #include "map_command.hpp"
 
+#include "map_document.hpp"
 #include "tactile_error.hpp"
 #include "tile_layer.hpp"
 
 namespace tactile::cmd {
 
-map_command::map_command(core::map* map, const QString& name)
+map_command::map_command(not_null<core::map_document*> document,
+                         const QString& name)
     : QUndoCommand{name}
-    , m_map{map}
+    , m_document{document}
 {
-  if (!m_map)
+  if (!m_document)
   {
-    throw tactile_error{"Cannot create command from null map pointer!"};
+    throw tactile_error{"Cannot create command from null document!"};
   }
 }
 
 void map_command::restore_tiles()
 {
-  const auto activeLayer = m_map->active_layer_id().value();
+  auto& map = m_document->raw();
+
+  const auto activeLayer = map.active_layer_id().value();
 
   for (const auto& [layer, data] : m_layerData)
   {
-    m_map->select_layer(layer);
+    map.select_layer(layer);
 
-    auto* tileLayer = m_map->get_tile_layer(layer);
+    auto* tileLayer = map.get_tile_layer(layer);
     Q_ASSERT(tileLayer);
 
     for (const auto& [pos, tile] : data)
@@ -32,15 +36,17 @@ void map_command::restore_tiles()
     }
   }
 
-  m_map->select_layer(activeLayer);
+  map.select_layer(activeLayer);
 }
 
 void map_command::save_tiles(row_range rows, col_range cols)
 {
-  m_map->each_layer([&](const layer_id id, const shared<core::layer>& layer) {
+  auto& map = m_document->raw();
+
+  map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
     auto& tiles = tile_data(id);
 
-    auto* tileLayer = m_map->get_tile_layer(id);
+    auto* tileLayer = map.get_tile_layer(id);
     Q_ASSERT(tileLayer);
 
     for (auto row = rows.first; row < rows.second; ++row)
@@ -60,6 +66,16 @@ void map_command::save_tiles(row_range rows, col_range cols)
 void map_command::clear_cache()
 {
   m_layerData.clear();
+}
+
+void map_command::redraw()
+{
+  emit m_document->redraw();
+}
+
+auto map_command::get_map() noexcept -> core::map&
+{
+  return m_document->raw();
 }
 
 }  // namespace tactile::cmd

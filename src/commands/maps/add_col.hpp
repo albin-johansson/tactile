@@ -1,8 +1,11 @@
 #pragma once
 
 #include "command_id.hpp"
-#include "map.hpp"
+#include "forward_declare.hpp"
+#include "not_null.hpp"
 #include "repeated_command.hpp"
+
+TACTILE_FORWARD_DECLARE(tactile::core, map_document);
 
 namespace tactile::cmd {
 
@@ -21,11 +24,11 @@ class add_col final : public repeated_command
   /**
    * \brief Creates am `add_col` instance.
    *
-   * \param map the associated map.
+   * \param document the associated map document.
    *
    * \since 0.1.0
    */
-  explicit add_col(core::map* map);
+  explicit add_col(not_null<core::map_document*> document);
 
   void undo() override;
 
@@ -37,7 +40,7 @@ class add_col final : public repeated_command
   }
 
  private:
-  core::map* m_map{};
+  core::map_document* m_document{};
 };
 
 }  // namespace tactile::cmd

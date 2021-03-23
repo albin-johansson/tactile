@@ -27,6 +27,7 @@ void change_opacity::undo()
 
   const auto opacity = m_previousOpacity.value();
   m_document->raw().set_opacity(m_id, opacity);
+
   emit m_document->changed_layer_opacity(m_id, opacity);
   emit m_document->redraw();
 
@@ -41,6 +42,7 @@ void change_opacity::redo()
   m_previousOpacity = raw.get_layer(m_id)->opacity();
 
   raw.set_opacity(m_id, m_opacity);
+
   emit m_document->changed_layer_opacity(m_id, m_opacity);
   emit m_document->redraw();
 }

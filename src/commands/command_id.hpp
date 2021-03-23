@@ -22,7 +22,9 @@ enum class command_id
   stamp,
   update_property,
   duplicate_layer,
-  change_opacity
+  change_opacity,
+  move_layer_forward,
+  move_layer_back
 };
 
 }  // namespace tactile::cmd

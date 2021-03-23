@@ -31,13 +31,17 @@ void add_layer::undo()
 {
   QUndoCommand::undo();
   m_document->take_layer(m_id);
+
   emit m_document->removed_layer(m_id);
+  emit m_document->redraw();
 }
 
 void add_layer::redo()
 {
   QUndoCommand::redo();
   m_document->add_layer(m_id, m_layer);
+
+  emit m_document->redraw();
 }
 
 }  // namespace tactile::cmd

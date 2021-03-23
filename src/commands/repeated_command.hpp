@@ -2,8 +2,6 @@
 
 #include <QUndoCommand>  // QUndoCommand
 
-#include "map.hpp"
-
 namespace tactile::cmd {
 
 class repeated_command : public QUndoCommand

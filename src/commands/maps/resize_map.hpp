@@ -1,7 +1,11 @@
 #pragma once
 
 #include "command_id.hpp"
+#include "forward_declare.hpp"
 #include "map_command.hpp"
+#include "not_null.hpp"
+
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
@@ -20,13 +24,13 @@ class resize_map final : public map_command
   /**
    * \brief Creates a `resize_map` instance.
    *
-   * \param map a pointer to the associated map.
+   * \param document a pointer to the associated map document.
    * \param nRows the new number of rows for the active map.
    * \param nCols the new number of columns for the active map.
    *
    * \since 0.1.0
    */
-  resize_map(core::map* map, row_t nRows, col_t nCols);
+  resize_map(not_null<core::map_document*> document, row_t nRows, col_t nCols);
 
   void undo() override;
 

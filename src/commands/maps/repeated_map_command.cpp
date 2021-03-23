@@ -2,8 +2,10 @@
 
 namespace tactile::cmd {
 
-repeated_map_command::repeated_map_command(core::map* map, const QString& name)
-    : map_command{map, name}
+repeated_map_command::repeated_map_command(
+    not_null<core::map_document*> document,
+    const QString& name)
+    : map_command{document, name}
 {}
 
 auto repeated_map_command::mergeWith(const QUndoCommand* other) -> bool

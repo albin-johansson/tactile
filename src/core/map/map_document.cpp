@@ -13,6 +13,7 @@
 #include "document_delegate.hpp"
 #include "duplicate_layer.hpp"
 #include "erase_sequence.hpp"
+#include "move_layer_forward.hpp"
 #include "object_layer.hpp"
 #include "remove_col.hpp"
 #include "remove_layer.hpp"
@@ -79,7 +80,6 @@ void map_document::undo()
 {
   m_delegate->undo();
 
-  emit redraw();
   /* Emit clean_changed once more, because we need to take into account that the
      document might not feature an associated file path yet (that is what
      is_clean does) */
@@ -89,7 +89,6 @@ void map_document::undo()
 void map_document::redo()
 {
   m_delegate->redo();
-  emit redraw();
 }
 
 void map_document::mark_as_clean()
@@ -234,34 +233,29 @@ void map_document::add_erase_sequence(vector_map<position, tile_id>&& oldState)
 
 void map_document::add_row()
 {
-  m_delegate->execute<cmd::add_row>(m_map.get());
-  emit redraw();
+  m_delegate->execute<cmd::add_row>(this);
 }
 
 void map_document::add_column()
 {
-  m_delegate->execute<cmd::add_col>(m_map.get());
-  emit redraw();
+  m_delegate->execute<cmd::add_col>(this);
 }
 
 void map_document::remove_row()
 {
-  m_delegate->execute<cmd::remove_row>(m_map.get());
-  emit redraw();
+  m_delegate->execute<cmd::remove_row>(this);
 }
 
 void map_document::remove_column()
 {
-  m_delegate->execute<cmd::remove_col>(m_map.get());
-  emit redraw();
+  m_delegate->execute<cmd::remove_col>(this);
 }
 
 void map_document::resize(const row_t nRows, const col_t nCols)
 {
   Q_ASSERT(nRows > 0_row);
   Q_ASSERT(nCols > 0_col);
-  m_delegate->execute<cmd::resize_map>(m_map.get(), nRows, nCols);
-  emit redraw();
+  m_delegate->execute<cmd::resize_map>(this, nRows, nCols);
 }
 
 void map_document::add_tileset(const QImage& image,
@@ -405,6 +399,8 @@ void map_document::reset_tile_size()
 
 void map_document::set_layer_visibility(const layer_id id, const bool visible)
 {
+  // TODO make this a command
+
   m_map->set_visibility(id, visible);
   emit redraw();
 }
@@ -416,12 +412,16 @@ void map_document::set_layer_opacity(const layer_id id, const double opacity)
 
 void map_document::set_layer_name(const layer_id id, const QString& name)
 {
+  // TODO make this a command
+
   m_map->set_name(id, name);
   emit redraw();
 }
 
 void map_document::move_layer_back(const layer_id id)
 {
+  // TODO make this a command
+
   m_map->move_layer_back(id);
   emit moved_layer_back(id);
   emit redraw();
@@ -429,9 +429,10 @@ void map_document::move_layer_back(const layer_id id)
 
 void map_document::move_layer_forward(const layer_id id)
 {
-  m_map->move_layer_forward(id);
-  emit moved_layer_forward(id);
-  emit redraw();
+  m_delegate->execute<cmd::move_layer_forward>(this, id);
+  //  m_map->move_layer_forward(id);
+  //  emit moved_layer_forward(id);
+  //  emit redraw();
 }
 
 void map_document::set_tileset_name(const tileset_id id, const QString& name)

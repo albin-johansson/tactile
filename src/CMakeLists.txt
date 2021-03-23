@@ -14,6 +14,8 @@ set(TACTILE_SOURCE_FILES
     commands/layers/change_opacity.hpp
     commands/layers/duplicate_layer.cpp
     commands/layers/duplicate_layer.hpp
+    commands/layers/move_layer_forward.cpp
+    commands/layers/move_layer_forward.hpp
     commands/layers/remove_layer.cpp
     commands/layers/remove_layer.hpp
 

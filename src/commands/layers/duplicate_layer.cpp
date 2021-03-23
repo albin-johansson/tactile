@@ -24,9 +24,10 @@ void duplicate_layer::undo()
   QUndoCommand::undo();
 
   const auto id = m_newId.value();
-
   m_document->take_layer(id);
+
   emit m_document->removed_layer(id);
+  emit m_document->redraw();
 
   // We need to tell the document that it can safely reuse the layer ID
   m_document->set_next_layer_id(id);
