@@ -416,8 +416,6 @@ target_include_directories(libTactile
     PUBLIC gui/editor
     PUBLIC gui/layer
     PUBLIC gui/properties
-    PUBLIC gui/properties/item
-    PUBLIC gui/properties/view
     PUBLIC gui/settings
     PUBLIC gui/startup
     PUBLIC gui/status
