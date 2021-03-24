@@ -26,7 +26,8 @@ enum class command_id
   move_layer_forward,
   move_layer_back,
   select_layer,
-  set_layer_name
+  set_layer_name,
+  set_layer_visibility
 };
 
 }  // namespace tactile::cmd

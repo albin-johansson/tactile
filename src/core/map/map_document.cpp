@@ -25,6 +25,7 @@
 #include "resize_map.hpp"
 #include "select_layer.hpp"
 #include "set_layer_name.hpp"
+#include "set_layer_visibility.hpp"
 #include "stamp_sequence.hpp"
 #include "tile_layer.hpp"
 #include "update_property.hpp"
@@ -371,10 +372,7 @@ void map_document::reset_tile_size()
 
 void map_document::set_layer_visibility(const layer_id id, const bool visible)
 {
-  // TODO make this a command
-
-  m_map->set_visibility(id, visible);
-  emit redraw();
+  m_delegate->execute<cmd::set_layer_visibility>(this, id, visible);
 }
 
 void map_document::set_layer_opacity(const layer_id id, const double opacity)

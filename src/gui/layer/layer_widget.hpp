@@ -48,6 +48,8 @@ class layer_widget final : public QWidget
 
   void changed_layer_name(layer_id id, const QString& name);
 
+  void changed_layer_visibility(layer_id id, bool visible);
+
   void selected_layer(layer_id id, const core::layer& layer);
 
   void spawn_context_menu(const QPoint& pos);

@@ -37,6 +37,9 @@ layer_model::layer_model(not_null<core::map_document*> document)
   connect(m_document, &core::map_document::changed_layer_name,
           this, &layer_model::changed_name);
 
+  connect(m_document, &core::map_document::changed_layer_visibility,
+          this, &layer_model::changed_visibility);
+
   connect(m_document, &core::map_document::moved_layer_forward,
           this, &layer_model::moved_layer_forward);
 

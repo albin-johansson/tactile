@@ -511,6 +511,7 @@ class map_document final : public document
   void moved_layer_forward(layer_id);
   void changed_layer_opacity(layer_id, double opacity);
   void changed_layer_name(layer_id, const QString&);
+  void changed_layer_visibility(layer_id, bool visible);
 
   /// \} End of layer signals
 

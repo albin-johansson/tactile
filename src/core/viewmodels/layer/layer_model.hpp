@@ -52,6 +52,7 @@ class layer_model final : public QStandardItemModel
  signals:
   void changed_name(layer_id id, const QString& name);
   void changed_opacity(layer_id id, double opacity);
+  void changed_visibility(layer_id id, bool visible);
   void selected_layer(layer_id id, const core::layer& layer);
 
  private:

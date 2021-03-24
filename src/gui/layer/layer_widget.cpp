@@ -88,6 +88,9 @@ void layer_widget::selected_map(not_null<core::map_document*> document)
   connect(m_model.get(), &vm::layer_model::changed_name,
           this, &layer_widget::changed_layer_name);
 
+  connect(m_model.get(), &vm::layer_model::changed_visibility,
+          this, &layer_widget::changed_layer_visibility);
+
   connect(m_model.get(), &vm::layer_model::selected_layer,
           this, &layer_widget::selected_layer);
   // clang-format on
@@ -176,6 +179,12 @@ void layer_widget::changed_layer_name(const layer_id id, const QString& name)
 {
   QSignalBlocker blocker{m_view};
   m_model->itemFromIndex(m_model->index_of(id).value())->setText(name);
+}
+
+void layer_widget::changed_layer_visibility(const layer_id id,
+                                            const bool visible)
+{
+  m_ui->visibleButton->setIcon(visible ? icons::visible() : icons::invisible());
 }
 
 void layer_widget::selected_layer(const layer_id id, const core::layer& layer)
