@@ -14,6 +14,17 @@ layer_list_view::layer_list_view(QWidget* parent) : QListView{parent}
   setAlternatingRowColors(false);
 }
 
+void layer_list_view::select_quietly(const QModelIndex& index)
+{
+  m_quiet = true;
+
+  auto* selection = selectionModel();
+  selection->clearSelection();
+  selection->setCurrentIndex(index, QItemSelectionModel::Select);
+
+  m_quiet = false;
+}
+
 void layer_list_view::selectionChanged(const QItemSelection& selected,
                                        const QItemSelection& deselected)
 {
@@ -34,7 +45,10 @@ void layer_list_view::selectionChanged(const QItemSelection& selected,
     deselectedIndex = index;
   }
 
-  emit selection_changed(selectedIndex, deselectedIndex);
+  if (!m_quiet)
+  {
+    emit selection_changed(selectedIndex, deselectedIndex);
+  }
 }
 
 }  // namespace tactile::gui

@@ -24,7 +24,8 @@ enum class command_id
   duplicate_layer,
   change_opacity,
   move_layer_forward,
-  move_layer_back
+  move_layer_back,
+  select_layer
 };
 
 }  // namespace tactile::cmd

@@ -13,6 +13,8 @@ class layer_list_view final : public QListView
  public:
   explicit layer_list_view(QWidget* parent = nullptr);
 
+  void select_quietly(const QModelIndex& index);
+
  signals:
   void selection_changed(const maybe<QModelIndex>& selected,
                          const maybe<QModelIndex>& deselected);
@@ -20,6 +22,9 @@ class layer_list_view final : public QListView
  protected:
   void selectionChanged(const QItemSelection& selected,
                         const QItemSelection& deselected) override;
+
+ private:
+  bool m_quiet{};
 };
 
 }  // namespace tactile::gui

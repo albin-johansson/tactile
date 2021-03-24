@@ -23,6 +23,7 @@
 #include "remove_tileset.hpp"
 #include "rename_property.hpp"
 #include "resize_map.hpp"
+#include "select_layer.hpp"
 #include "stamp_sequence.hpp"
 #include "tile_layer.hpp"
 #include "update_property.hpp"
@@ -327,9 +328,7 @@ void map_document::set_tileset_selection(const tileset_selection& selection)
 
 void map_document::select_layer(const layer_id id)
 {
-  m_map->select_layer(id);
-  emit selected_layer(id, *m_map->get_layer(id));
-  emit redraw();
+  m_delegate->execute<cmd::select_layer>(this, id);
 }
 
 void map_document::add_layer(const layer_id id, const shared<layer>& layer)

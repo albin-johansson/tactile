@@ -11,6 +11,7 @@
 TACTILE_FORWARD_DECLARE(Ui, layer_widget)
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, layer)
 TACTILE_FORWARD_DECLARE(tactile::vm, layer_model)
 TACTILE_FORWARD_DECLARE(tactile::gui, layer_list_view)
 TACTILE_FORWARD_DECLARE(tactile::gui, layer_item)
@@ -43,16 +44,18 @@ class layer_widget final : public QWidget
   void update_actions(const maybe<QModelIndex>& selected);
 
  private slots:
-  [[maybe_unused]] void spawn_context_menu(const QPoint& pos);
+  void changed_layer_opacity(layer_id id, double opacity);
 
-  [[maybe_unused]] void when_selection_changed(maybe<QModelIndex> selected,
-                                               maybe<QModelIndex> deselected);
+  void selected_layer(layer_id id, const core::layer& layer);
 
-  [[maybe_unused]] void new_tile_layer_requested();
+  void spawn_context_menu(const QPoint& pos);
 
-  [[maybe_unused]] void new_object_layer_requested();
+  void when_selection_changed(maybe<QModelIndex> selected,
+                              maybe<QModelIndex> deselected);
 
-  [[maybe_unused]] void changed_layer_opacity(layer_id id, double opacity);
+  void new_tile_layer_requested();
+
+  void new_object_layer_requested();
 
   [[maybe_unused]] void on_newLayerButton_pressed();
 

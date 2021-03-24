@@ -40,6 +40,9 @@ layer_model::layer_model(not_null<core::map_document*> document)
   connect(m_document, &core::map_document::moved_layer_back,
           this, &layer_model::moved_layer_back);
 
+  connect(m_document, &core::map_document::selected_layer,
+          this, &layer_model::selected_layer);
+
   connect(this, &layer_model::itemChanged,
           this, &layer_model::item_changed);
   // clang-format on

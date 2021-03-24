@@ -45,8 +45,11 @@ class layer_model final : public QStandardItemModel
 
   [[nodiscard]] auto visible(const QModelIndex& index) const -> bool;
 
+  [[nodiscard]] auto index_of(layer_id id) const -> maybe<QModelIndex>;
+
  signals:
   void changed_opacity(layer_id id, double opacity);
+  void selected_layer(layer_id id, const core::layer& layer);
 
  private:
   core::map_document* m_document{};
@@ -62,8 +65,6 @@ class layer_model final : public QStandardItemModel
 
   [[nodiscard]] auto get_item(const QModelIndex& index) const
       -> const layer_item*;
-
-  [[nodiscard]] auto index_of(layer_id id) const -> maybe<QModelIndex>;
 
   [[nodiscard]] auto id_from_index(const QModelIndex& index) const -> layer_id;
 

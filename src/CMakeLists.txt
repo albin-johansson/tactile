@@ -20,6 +20,8 @@ set(TACTILE_SOURCE_FILES
     commands/layers/move_layer_forward.hpp
     commands/layers/remove_layer.cpp
     commands/layers/remove_layer.hpp
+    commands/layers/select_layer.cpp
+    commands/layers/select_layer.hpp
 
     commands/maps/add_col.cpp
     commands/maps/add_col.hpp
