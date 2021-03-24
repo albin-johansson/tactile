@@ -38,10 +38,10 @@ void change_opacity::redo()
 {
   QUndoCommand::redo();
 
-  auto& raw = m_document->raw();
-  m_previousOpacity = raw.get_layer(m_id)->opacity();
+  auto& map = m_document->raw();
 
-  raw.set_opacity(m_id, m_opacity);
+  m_previousOpacity = map.get_layer(m_id)->opacity();
+  map.set_opacity(m_id, m_opacity);
 
   emit m_document->changed_layer_opacity(m_id, m_opacity);
   emit m_document->redraw();
