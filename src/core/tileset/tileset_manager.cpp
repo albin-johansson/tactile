@@ -1,6 +1,7 @@
 #include "tileset_manager.hpp"
 
-#include <ranges>  // any_of
+#include <ranges>   // any_of
+#include <utility>  // move
 
 #include "tactile_error.hpp"
 
