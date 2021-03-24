@@ -25,7 +25,8 @@ enum class command_id
   change_opacity,
   move_layer_forward,
   move_layer_back,
-  select_layer
+  select_layer,
+  set_layer_name
 };
 
 }  // namespace tactile::cmd

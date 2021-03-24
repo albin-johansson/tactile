@@ -38,7 +38,10 @@ layer_widget::layer_widget(QWidget* parent)
           this, &layer_widget::spawn_context_menu);
 
   connect(m_view, &layer_list_view::selection_changed,
-          this, &layer_widget::when_selection_changed);
+          this, &layer_widget::when_view_changed_selection);
+
+  connect(m_view, &layer_list_view::changed_name,
+          this, &layer_widget::when_view_changed_name);
 
   connect(m_addLayerMenu, &add_layer_context_menu::add_tile_layer,
           this, &layer_widget::new_tile_layer_requested);
@@ -81,6 +84,9 @@ void layer_widget::selected_map(not_null<core::map_document*> document)
   // clang-format off
   connect(m_model.get(), &vm::layer_model::changed_opacity,
           this, &layer_widget::changed_layer_opacity);
+
+  connect(m_model.get(), &vm::layer_model::changed_name,
+          this, &layer_widget::changed_layer_name);
 
   connect(m_model.get(), &vm::layer_model::selected_layer,
           this, &layer_widget::selected_layer);
@@ -132,13 +138,20 @@ void layer_widget::spawn_context_menu(const QPoint& pos)
   }
 }
 
-void layer_widget::when_selection_changed(const maybe<QModelIndex> selected,
-                                          const maybe<QModelIndex>)
+void layer_widget::when_view_changed_selection(
+    const maybe<QModelIndex> selected,
+    const maybe<QModelIndex>)
 {
   if (selected)
   {
     m_model->select(*selected);
   }
+}
+
+void layer_widget::when_view_changed_name(const QModelIndex& index,
+                                          const QString& name)
+{
+  m_model->set_name(index, name);
 }
 
 void layer_widget::new_tile_layer_requested()
@@ -155,8 +168,14 @@ void layer_widget::new_object_layer_requested()
 
 void layer_widget::changed_layer_opacity(const layer_id, const double opacity)
 {
-  QSignalBlocker blocker{m_ui->opacitySlider};  // Avoid cyclic signals
+  QSignalBlocker blocker{m_ui->opacitySlider};
   m_ui->opacitySlider->setValue(static_cast<int>(opacity * 100.0));
+}
+
+void layer_widget::changed_layer_name(const layer_id id, const QString& name)
+{
+  QSignalBlocker blocker{m_view};
+  m_model->itemFromIndex(m_model->index_of(id).value())->setText(name);
 }
 
 void layer_widget::selected_layer(const layer_id id, const core::layer& layer)

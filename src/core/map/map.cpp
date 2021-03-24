@@ -310,6 +310,11 @@ auto map::index_of(const layer_id id) const -> maybe<std::size_t>
   return m_layers.index_of(id);
 }
 
+auto map::name(const layer_id id) const -> QString
+{
+  return get_layer(id)->name();
+}
+
 auto map::is_visible(const layer_id id) const -> bool
 {
   if (const auto* layer = find_layer(id))

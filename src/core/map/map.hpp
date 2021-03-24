@@ -369,6 +369,19 @@ class map final
   [[nodiscard]] auto index_of(layer_id id) const -> maybe<std::size_t>;
 
   /**
+   * \brief Returns the name of the specified layer.
+   *
+   * \param id the ID associated with the layer to get the name of.
+   *
+   * \pre `id` must be associated with an existing layer.
+   *
+   * \return the name of the specified layer.
+   *
+   * \since 0.2.0
+   */
+  [[nodiscard]] auto name(layer_id id) const -> QString;
+
+  /**
    * \brief Indicates whether or not the layer associated with the specified
    * ID is visible.
    *

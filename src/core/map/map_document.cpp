@@ -24,6 +24,7 @@
 #include "rename_property.hpp"
 #include "resize_map.hpp"
 #include "select_layer.hpp"
+#include "set_layer_name.hpp"
 #include "stamp_sequence.hpp"
 #include "tile_layer.hpp"
 #include "update_property.hpp"
@@ -383,10 +384,7 @@ void map_document::set_layer_opacity(const layer_id id, const double opacity)
 
 void map_document::set_layer_name(const layer_id id, const QString& name)
 {
-  // TODO make this a command
-
-  m_map->set_name(id, name);
-  emit redraw();
+  m_delegate->execute<cmd::set_layer_name>(this, id, name);
 }
 
 void map_document::move_layer_back(const layer_id id)

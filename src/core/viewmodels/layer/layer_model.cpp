@@ -18,7 +18,7 @@ layer_model::layer_model(not_null<core::map_document*> document)
   document->each_layer(
       [this](const layer_id id, const shared<core::layer>& layer) {
         Q_ASSERT(layer);
-        this->appendRow(layer_item::make(id, *layer.get()));
+        appendRow(layer_item::make(id, *layer.get()));
       });
 
   // clang-format off
@@ -34,6 +34,9 @@ layer_model::layer_model(not_null<core::map_document*> document)
   connect(m_document, &core::map_document::changed_layer_opacity,
           this, &layer_model::changed_opacity);
 
+  connect(m_document, &core::map_document::changed_layer_name,
+          this, &layer_model::changed_name);
+
   connect(m_document, &core::map_document::moved_layer_forward,
           this, &layer_model::moved_layer_forward);
 
@@ -42,9 +45,6 @@ layer_model::layer_model(not_null<core::map_document*> document)
 
   connect(m_document, &core::map_document::selected_layer,
           this, &layer_model::selected_layer);
-
-  connect(this, &layer_model::itemChanged,
-          this, &layer_model::item_changed);
   // clang-format on
 }
 
@@ -87,6 +87,11 @@ void layer_model::move_up(const QModelIndex& index)
 void layer_model::move_down(const QModelIndex& index)
 {
   m_document->move_layer_back(id_from_index(index));
+}
+
+void layer_model::set_name(const QModelIndex& index, const QString& name)
+{
+  m_document->set_layer_name(id_from_index(index), name);
 }
 
 void layer_model::set_opacity(const QModelIndex& index, const double opacity)
@@ -203,14 +208,6 @@ auto layer_model::id_from_index(const QModelIndex& index) const -> layer_id
   const auto* item = get_item(index);
   Q_ASSERT(item);
   return item->get_id();
-}
-
-void layer_model::item_changed(QStandardItem* item)
-{
-  if (const auto* layerItem = dynamic_cast<const vm::layer_item*>(item))
-  {
-    m_document->set_layer_name(layerItem->get_id(), item->text());
-  }
 }
 
 void layer_model::moved_layer_forward(const layer_id id)

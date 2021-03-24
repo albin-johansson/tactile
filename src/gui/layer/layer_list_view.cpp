@@ -51,4 +51,21 @@ void layer_list_view::selectionChanged(const QItemSelection& selected,
   }
 }
 
+void layer_list_view::dataChanged(const QModelIndex& topLeft,
+                                  const QModelIndex& bottomRight,
+                                  const QList<int>& roles)
+{
+  QListView::dataChanged(topLeft, bottomRight, roles);
+
+  Q_ASSERT(topLeft == bottomRight);
+  for (const auto role : roles)
+  {
+    if (role == Qt::ItemDataRole::EditRole)
+    {
+      const auto name = topLeft.data(Qt::EditRole).value<QString>();
+      emit changed_name(topLeft, name);
+    }
+  }
+}
+
 }  // namespace tactile::gui

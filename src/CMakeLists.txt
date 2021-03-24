@@ -22,6 +22,8 @@ set(TACTILE_SOURCE_FILES
     commands/layers/remove_layer.hpp
     commands/layers/select_layer.cpp
     commands/layers/select_layer.hpp
+    commands/layers/set_layer_name.cpp
+    commands/layers/set_layer_name.hpp
 
     commands/maps/add_col.cpp
     commands/maps/add_col.hpp

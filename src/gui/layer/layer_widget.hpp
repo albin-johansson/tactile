@@ -46,16 +46,22 @@ class layer_widget final : public QWidget
  private slots:
   void changed_layer_opacity(layer_id id, double opacity);
 
+  void changed_layer_name(layer_id id, const QString& name);
+
   void selected_layer(layer_id id, const core::layer& layer);
 
   void spawn_context_menu(const QPoint& pos);
 
-  void when_selection_changed(maybe<QModelIndex> selected,
-                              maybe<QModelIndex> deselected);
+  void when_view_changed_selection(const maybe<QModelIndex> selected,
+                                   const maybe<QModelIndex>);
+
+  void when_view_changed_name(const QModelIndex& index, const QString& name);
 
   void new_tile_layer_requested();
 
   void new_object_layer_requested();
+
+  [[maybe_unused]] void on_opacitySlider_valueChanged(int value);
 
   [[maybe_unused]] void on_newLayerButton_pressed();
 
@@ -68,8 +74,6 @@ class layer_widget final : public QWidget
   [[maybe_unused]] void on_duplicateButton_pressed();
 
   [[maybe_unused]] void on_visibleButton_toggled(bool visible);
-
-  [[maybe_unused]] void on_opacitySlider_valueChanged(int value);
 };
 
 }  // namespace tactile::gui

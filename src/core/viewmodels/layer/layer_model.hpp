@@ -37,6 +37,8 @@ class layer_model final : public QStandardItemModel
 
   void move_down(const QModelIndex& index);
 
+  void set_name(const QModelIndex& index, const QString& name);
+
   void set_opacity(const QModelIndex& index, double opacity);
 
   void set_visible(const QModelIndex& index, bool visible);
@@ -48,6 +50,7 @@ class layer_model final : public QStandardItemModel
   [[nodiscard]] auto index_of(layer_id id) const -> maybe<QModelIndex>;
 
  signals:
+  void changed_name(layer_id id, const QString& name);
   void changed_opacity(layer_id id, double opacity);
   void selected_layer(layer_id id, const core::layer& layer);
 
@@ -69,8 +72,6 @@ class layer_model final : public QStandardItemModel
   [[nodiscard]] auto id_from_index(const QModelIndex& index) const -> layer_id;
 
  private slots:
-  void item_changed(QStandardItem* item);
-
   void moved_layer_forward(layer_id id);
 
   void moved_layer_back(layer_id id);
