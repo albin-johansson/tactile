@@ -103,6 +103,7 @@ class model final : public QObject
 
   void added_tileset(map_id map, tileset_id id, const tileset& tileset);
   void removed_tileset(tileset_id id);
+  void renamed_tileset(tileset_id id, const QString& name);
 
   void added_property(const QString& name);
   void about_to_remove_property(const QString& name);

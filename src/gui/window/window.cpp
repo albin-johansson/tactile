@@ -293,6 +293,11 @@ void window::removed_tileset(const tileset_id id)
   m_tilesetDock->removed_tileset(id);
 }
 
+void window::renamed_tileset(const tileset_id id, const QString& name)
+{
+  m_tilesetDock->renamed_tileset(id, name);
+}
+
 void window::selected_layer(const layer_id id, const core::layer& layer)
 {
   m_statusBar->set_current_layer(id);

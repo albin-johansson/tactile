@@ -54,4 +54,9 @@ void tileset_dock::removed_tileset(const tileset_id id)
   m_widget->removed_tileset(id);
 }
 
+void tileset_dock::renamed_tileset(const tileset_id id, const QString& name)
+{
+  m_widget->renamed_tileset(id, name);
+}
+
 }  // namespace tactile::gui

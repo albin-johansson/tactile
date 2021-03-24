@@ -80,6 +80,7 @@ void tactile_app::init_connections()
   modToWin(&model::switched_map,             &window::switched_map);
   modToWin(&model::added_tileset,            &window::added_tileset);
   modToWin(&model::removed_tileset,          &window::removed_tileset);
+  modToWin(&model::renamed_tileset,          &window::renamed_tileset);
   modToWin(&model::added_layer,              &window::added_layer);
   modToWin(&model::added_duplicated_layer,   &window::added_duplicated_layer);
   modToWin(&model::removed_layer,            &window::removed_layer);

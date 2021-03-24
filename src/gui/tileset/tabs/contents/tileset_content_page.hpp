@@ -92,6 +92,8 @@ class tileset_content_page final : public QWidget
    */
   void removed_tileset(tileset_id id);
 
+  void renamed_tileset(tileset_id id, const QString& name);
+
  private:
   unique<Ui::tileset_content_page> m_ui;
   tab_widget* m_tabWidget{};

@@ -152,6 +152,15 @@ void tileset_content_page::removed_tileset(const tileset_id id)
   manager.remove(id);
 }
 
+void tileset_content_page::renamed_tileset(const tileset_id id,
+                                           const QString& name)
+{
+  auto& manager = current_manager();
+  Q_ASSERT(manager.contains(id));
+
+  m_tabWidget->tabBar()->setTabText(manager.index_of(id), name);
+}
+
 auto tileset_content_page::is_empty() const -> bool
 {
   return m_tabWidget->count() == 0;

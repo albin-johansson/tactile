@@ -35,6 +35,8 @@ class tileset_widget final : public QWidget
 
   void removed_tileset(tileset_id id);
 
+  void renamed_tileset(tileset_id id, const QString& name);
+
   void selected_map(map_id id);
 
  private:

@@ -33,6 +33,7 @@ auto model::add_map(map_document* document) -> map_id
   bind(&map_document::redo_text_updated,        &model::redo_text_updated);
   bind(&map_document::clean_changed,            &model::clean_changed);
   bind(&map_document::removed_tileset,          &model::removed_tileset);
+  bind(&map_document::renamed_tileset,          &model::renamed_tileset);
   bind(&map_document::added_layer,              &model::added_layer);
   bind(&map_document::added_duplicated_layer,   &model::added_duplicated_layer);
   bind(&map_document::removed_layer,            &model::removed_layer);

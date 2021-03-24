@@ -35,6 +35,8 @@ class tileset_dock final : public dock_widget
 
   void removed_tileset(tileset_id id);
 
+  void renamed_tileset(tileset_id id, const QString& name);
+
  private:
   tileset_widget* m_widget{};
 };

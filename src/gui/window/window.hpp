@@ -133,6 +133,8 @@ class window final : public QMainWindow
 
   void removed_tileset(tileset_id id);
 
+  void renamed_tileset(tileset_id id, const QString& name);
+
   void selected_layer(layer_id id, const core::layer& layer);
 
   void added_layer(layer_id id, const core::layer& layer);

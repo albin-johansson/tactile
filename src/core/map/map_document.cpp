@@ -26,6 +26,7 @@
 #include "select_layer.hpp"
 #include "set_layer_name.hpp"
 #include "set_layer_visibility.hpp"
+#include "set_tileset_name.hpp"
 #include "stamp_sequence.hpp"
 #include "tile_layer.hpp"
 #include "update_property.hpp"
@@ -397,7 +398,7 @@ void map_document::move_layer_forward(const layer_id id)
 
 void map_document::set_tileset_name(const tileset_id id, const QString& name)
 {
-  m_tilesets->rename(id, name);
+  m_delegate->execute<cmd::set_tileset_name>(this, id, name);
 }
 
 void map_document::set_next_layer_id(const layer_id id) noexcept

@@ -496,6 +496,7 @@ class map_document final : public document
 
   void added_tileset(tileset_id);
   void removed_tileset(tileset_id);
+  void renamed_tileset(tileset_id, const QString& name);
 
   /// \} End of tileset signals
 

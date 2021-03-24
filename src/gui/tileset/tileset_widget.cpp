@@ -54,6 +54,11 @@ void tileset_widget::removed_tileset(const tileset_id id)
   m_contentPage->removed_tileset(id);
 }
 
+void tileset_widget::renamed_tileset(const tileset_id id, const QString& name)
+{
+  m_contentPage->renamed_tileset(id, name);
+}
+
 void tileset_widget::selected_map(const map_id id)
 {
   m_contentPage->selected_map(id);

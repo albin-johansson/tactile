@@ -57,6 +57,8 @@ set(TACTILE_SOURCE_FILES
     commands/tilesets/add_tileset.hpp
     commands/tilesets/remove_tileset.cpp
     commands/tilesets/remove_tileset.hpp
+    commands/tilesets/set_tileset_name.cpp
+    commands/tilesets/set_tileset_name.hpp
 
     commands/tools/bucket_fill.cpp
     commands/tools/bucket_fill.hpp
