@@ -12,9 +12,9 @@ tileset_widget::tileset_widget(QWidget* parent)
     , m_ui{init_ui<Ui::tileset_widget>(this)}
     , m_contentPage{new tileset_content_page{this}}
     , m_emptyPage{new tileset_empty_page{this}}
+    , m_emptyIndex{m_ui->stackedWidget->addWidget(m_emptyPage)}
+    , m_contentIndex{m_ui->stackedWidget->addWidget(m_contentPage)}
 {
-  m_emptyIndex = m_ui->stackedWidget->addWidget(m_emptyPage);
-  m_contentIndex = m_ui->stackedWidget->addWidget(m_contentPage);
   m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
 
   // clang-format off
