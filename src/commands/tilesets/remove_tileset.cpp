@@ -29,13 +29,26 @@ remove_tileset::remove_tileset(core::map_document* document,
 void remove_tileset::undo()
 {
   QUndoCommand::undo();
-  m_document->add_tileset(m_id, m_tileset);
+
+  auto* tilesets = m_document->tilesets();
+  tilesets->add(m_id, m_tileset);
+
+  emit m_document->added_tileset(m_id);
 }
 
 void remove_tileset::redo()
 {
   QUndoCommand::redo();
-  m_document->remove_tileset(m_id);
+
+  auto& map = m_document->raw();
+  auto* tilesets = m_document->tilesets();
+
+  const auto [first, last] = tilesets->range_of(m_id);
+  map.remove_occurrences(first, last);
+
+  tilesets->remove(m_id);
+
+  emit m_document->removed_tileset(m_id);
   emit m_document->redraw();
 }
 

@@ -237,7 +237,7 @@ void model::remove_tileset(const tileset_id id)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->ui_remove_tileset(id);
+  document->remove_tileset(id);
 }
 
 void model::set_tileset_name(const tileset_id id, const QString& name)

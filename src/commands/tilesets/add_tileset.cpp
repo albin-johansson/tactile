@@ -29,13 +29,21 @@ add_tileset::add_tileset(core::map_document* document,
 void add_tileset::undo()
 {
   QUndoCommand::undo();
-  m_document->remove_tileset(m_id);
+
+  auto* tilesets = m_document->tilesets();
+  tilesets->remove(m_id);
+
+  emit m_document->removed_tileset(m_id);
 }
 
 void add_tileset::redo()
 {
   QUndoCommand::redo();
-  m_document->add_tileset(m_id, m_tileset);
+
+  auto* tilesets = m_document->tilesets();
+  tilesets->add(m_id, m_tileset);
+
+  emit m_document->added_tileset(m_id);
 }
 
 }  // namespace tactile::cmd

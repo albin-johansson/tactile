@@ -287,7 +287,7 @@ class model final : public QObject
   // clang-format on
 
   /**
-   * \copydoc map_document::ui_remove_tileset()
+   * \copydoc map_document::remove_tileset()
    * \signal `redraw`
    */
   void remove_tileset(tileset_id id);

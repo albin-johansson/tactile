@@ -116,9 +116,10 @@ auto to_map_document(const map_data& data) -> core::map_document*
   document->set_next_layer_id(data.nextLayerId);
   document->set_next_object_id(data.nextObjectId);
 
+  auto* tilesets = document->tilesets();
   for (const auto& tilesetData : data.tilesets)
   {
-    document->add_tileset(make_tileset(tilesetData));
+    const auto id [[maybe_unused]] = tilesets->add(make_tileset(tilesetData));
   }
 
   for (const auto& layerData : data.layers)

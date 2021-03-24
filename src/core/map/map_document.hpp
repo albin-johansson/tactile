@@ -130,125 +130,6 @@ class map_document final : public document
 
   /// \} End of property API
 
-  /**
-   * \brief Performs a flood-fill at the specified position.
-   *
-   * \param position the origin position of the flood-fill.
-   * \param replacement the tile ID that will be used instead of the target ID.
-   *
-   * \since 0.1.0
-   */
-  void flood(const position& position, tile_id replacement);
-
-  /**
-   * \brief Adds a stamp sequence to the command stack.
-   *
-   * \note Stamp sequence commands are not executed when first put onto the
-   * command stack, since they expect their effect to have been applied before
-   * the command was created.
-   *
-   * \param oldState the previous state of the tiles affected by the stamp
-   * sequence.
-   * \param sequence the stamp sequence with the positions and the new tile IDs.
-   *
-   * \since 0.1.0
-   */
-  void add_stamp_sequence(vector_map<position, tile_id>&& oldState,
-                          vector_map<position, tile_id>&& sequence);
-
-  /**
-   * \brief Adds an erase sequence to the command stack.
-   *
-   * \note Erase sequence commands are not executed when first put onto the
-   * command stack, since they expect their effect to have been applied before
-   * the command was created.
-   *
-   * \param oldState the positions of the affected tiles along with their old
-   * IDs.
-   *
-   * \since 0.1.0
-   */
-  void add_erase_sequence(vector_map<position, tile_id>&& oldState);
-
-  /**
-   * \brief Adds a row to the associated map.
-   *
-   * \note Consecutive add row commands will be merged into one command.
-   *
-   * \since 0.1.0
-   */
-  void add_row();
-
-  /**
-   * \brief Adds a column to the associated map.
-   *
-   * \note Consecutive add column commands will be merged into one command.
-   *
-   * \since 0.1.0
-   */
-  void add_column();
-
-  /**
-   * \brief Removes a row from the associated map.
-   *
-   * \note Consecutive remove row commands will be merged into one command.
-   *
-   * \since 0.1.0
-   */
-  void remove_row();
-
-  /**
-   * \brief Removes a column from the associated map.
-   *
-   * \note Consecutive remove column commands will be merged into one command.
-   *
-   * \since 0.1.0
-   */
-  void remove_column();
-
-  /**
-   * \brief Resizes the map.
-   *
-   * \param nRows the new amount of rows in the map.
-   * \param nCols the new amount of columns in the map.
-   *
-   * \since 0.1.0
-   */
-  void resize(row_t nRows, col_t nCols);
-
-  /**
-   * \copydoc tileset_manager::add(tileset_id, shared<tileset>)
-   * \signal `added_tileset`
-   */
-  void add_tileset(tileset_id id, shared<tileset> tileset);
-
-  /**
-   * \copybrief tileset_manager::add(shared<tileset>)
-   * \signal `added_tileset`
-   */
-  void add_tileset(shared<tileset> tileset);
-
-  /**
-   * \brief Removes a tileset from the document.
-   *
-   * \param id the ID associated with the tileset that will be removed.
-   *
-   * \since 0.1.0
-   *
-   * \signal `removed_tileset`
-   */
-  void remove_tileset(tileset_id id);
-
-  /**
-   * \copydoc tileset_manager::select()
-   */
-  void select_tileset(tileset_id id);
-
-  /**
-   * \copydoc tileset_manager::set_selection()
-   */
-  void set_tileset_selection(const tileset_selection& selection);
-
   /// \name Layer API
   /// \{
 
@@ -386,6 +267,125 @@ class map_document final : public document
   /// \} End of layer API
 
   /**
+   * \brief Performs a flood-fill at the specified position.
+   *
+   * \param position the origin position of the flood-fill.
+   * \param replacement the tile ID that will be used instead of the target ID.
+   *
+   * \since 0.1.0
+   */
+  void flood(const position& position, tile_id replacement);
+
+  /**
+   * \brief Adds a stamp sequence to the command stack.
+   *
+   * \note Stamp sequence commands are not executed when first put onto the
+   * command stack, since they expect their effect to have been applied before
+   * the command was created.
+   *
+   * \param oldState the previous state of the tiles affected by the stamp
+   * sequence.
+   * \param sequence the stamp sequence with the positions and the new tile IDs.
+   *
+   * \since 0.1.0
+   */
+  void add_stamp_sequence(vector_map<position, tile_id>&& oldState,
+                          vector_map<position, tile_id>&& sequence);
+
+  /**
+   * \brief Adds an erase sequence to the command stack.
+   *
+   * \note Erase sequence commands are not executed when first put onto the
+   * command stack, since they expect their effect to have been applied before
+   * the command was created.
+   *
+   * \param oldState the positions of the affected tiles along with their old
+   * IDs.
+   *
+   * \since 0.1.0
+   */
+  void add_erase_sequence(vector_map<position, tile_id>&& oldState);
+
+  /**
+   * \brief Adds a row to the associated map.
+   *
+   * \note Consecutive add row commands will be merged into one command.
+   *
+   * \since 0.1.0
+   */
+  void add_row();
+
+  /**
+   * \brief Adds a column to the associated map.
+   *
+   * \note Consecutive add column commands will be merged into one command.
+   *
+   * \since 0.1.0
+   */
+  void add_column();
+
+  /**
+   * \brief Removes a row from the associated map.
+   *
+   * \note Consecutive remove row commands will be merged into one command.
+   *
+   * \since 0.1.0
+   */
+  void remove_row();
+
+  /**
+   * \brief Removes a column from the associated map.
+   *
+   * \note Consecutive remove column commands will be merged into one command.
+   *
+   * \since 0.1.0
+   */
+  void remove_column();
+
+  /**
+   * \brief Resizes the map.
+   *
+   * \param nRows the new amount of rows in the map.
+   * \param nCols the new amount of columns in the map.
+   *
+   * \since 0.1.0
+   */
+  void resize(row_t nRows, col_t nCols);
+
+  /**
+   * \brief Adds a tileset to the document.
+   *
+   * \note This function has no effect if the tileset cannot be added.
+   *
+   * \param image the image that contains the tile images.
+   * \param path the file path of the tileset image.
+   * \param name the name associated with the tileset.
+   * \param tileWidth the width of the tiles in the tileset.
+   * \param tileHeight the height of the tiles in the tileset.
+   *
+   * \since 0.1.0
+   *
+   * \signal `added_tileset`
+   */
+  void add_tileset(const QImage& image,
+                   const QFileInfo& path,
+                   const QString& name,
+                   tile_width tileWidth,
+                   tile_height tileHeight);
+
+  void remove_tileset(tileset_id id);
+
+  /**
+   * \copydoc tileset_manager::select()
+   */
+  void select_tileset(tileset_id id);
+
+  /**
+   * \copydoc tileset_manager::set_selection()
+   */
+  void set_tileset_selection(const tileset_selection& selection);
+
+  /**
    * \copydoc map::increase_tile_size()
    */
   void increase_tile_size();
@@ -474,6 +474,8 @@ class map_document final : public document
    */
   [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*;
 
+  [[nodiscard]] auto tilesets() noexcept -> tileset_manager*;
+
   [[nodiscard]] auto raw() -> map&;
 
  signals:
@@ -523,30 +525,6 @@ class map_document final : public document
   void renamed_property(const QString& oldName, const QString& newName);
 
   /// \} End of property signals
-
- public slots:
-  /**
-   * \brief Adds a tileset to the document.
-   *
-   * \note This function has no effect if the tileset cannot be added.
-   *
-   * \param image the image that contains the tile images.
-   * \param path the file path of the tileset image.
-   * \param name the name associated with the tileset.
-   * \param tileWidth the width of the tiles in the tileset.
-   * \param tileHeight the height of the tiles in the tileset.
-   *
-   * \since 0.1.0
-   *
-   * \signal `added_tileset`
-   */
-  void add_tileset(const QImage& image,
-                   const QFileInfo& path,
-                   const QString& name,
-                   tile_width tileWidth,
-                   tile_height tileHeight);
-
-  void ui_remove_tileset(tileset_id id);
 
  private:
   unique<map> m_map;                     ///< The associated map.

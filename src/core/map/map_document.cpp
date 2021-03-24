@@ -281,28 +281,7 @@ void map_document::add_tileset(const QImage& image,
   }
 }
 
-void map_document::add_tileset(const tileset_id id, shared<tileset> tileset)
-{
-  m_tilesets->add(id, std::move(tileset));
-  emit added_tileset(id);
-}
-
-void map_document::add_tileset(shared<tileset> tileset)
-{
-  const auto id = m_tilesets->add(std::move(tileset));
-  emit added_tileset(id);
-}
-
-void map_document::remove_tileset(const tileset_id id)
-{
-  const auto [first, last] = m_tilesets->range_of(id);
-  m_map->remove_occurrences(first, last);
-
-  m_tilesets->remove(id);
-  emit removed_tileset(id);
-}
-
-void map_document::ui_remove_tileset(const tileset_id id)
+void map_document::remove_tileset(tileset_id id)
 {
   m_delegate->execute<cmd::remove_tileset>(this,
                                            m_tilesets->get_tileset_pointer(id),
@@ -507,6 +486,11 @@ auto map_document::get_map() const noexcept -> const map*
 }
 
 auto map_document::tilesets() const noexcept -> const tileset_manager*
+{
+  return m_tilesets.get();
+}
+
+auto map_document::tilesets() noexcept -> tileset_manager*
 {
   return m_tilesets.get();
 }
