@@ -335,7 +335,6 @@ void map_document::add_layer(const layer_id id, const shared<layer>& layer)
 {
   Q_ASSERT(layer);
   m_map->add_layer(id, layer);
-  emit added_layer(id, *layer);
 }
 
 auto map_document::add_tile_layer() -> layer_id
