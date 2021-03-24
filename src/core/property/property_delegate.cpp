@@ -2,10 +2,6 @@
 
 #include <utility>  // move
 
-#ifdef QT_DEBUG
-#include <QDebug>
-#endif  // QT_DEBUG
-
 namespace tactile::core {
 
 void property_delegate::add_property(const QString& name,
