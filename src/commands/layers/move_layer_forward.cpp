@@ -23,7 +23,8 @@ void move_layer_forward::undo()
 {
   QUndoCommand::undo();
 
-  m_document->raw().move_layer_back(m_id);
+  auto& map = m_document->raw();
+  map.move_layer_back(m_id);
 
   emit m_document->moved_layer_back(m_id);
   emit m_document->redraw();
@@ -33,7 +34,8 @@ void move_layer_forward::redo()
 {
   QUndoCommand::redo();
 
-  m_document->raw().move_layer_forward(m_id);
+  auto& map = m_document->raw();
+  map.move_layer_forward(m_id);
 
   emit m_document->moved_layer_forward(m_id);
   emit m_document->redraw();
