@@ -89,22 +89,22 @@ auto gfx::use_opengl() -> setting<bool>
 
 void gfx::reset_tool_widget_visible()
 {
-  tool_widget_visible().set(tool_widget_visible_def());
+  tool_widget_visible() = tool_widget_visible_def();
 }
 
 void gfx::reset_layer_widget_visible()
 {
-  layer_widget_visible().set(layer_widget_visible_def());
+  layer_widget_visible() = layer_widget_visible_def();
 }
 
 void gfx::reset_tileset_widget_visible()
 {
-  tileset_widget_visible().set(tileset_widget_visible_def());
+  tileset_widget_visible() = tileset_widget_visible_def();
 }
 
 void gfx::reset_properties_widget_visible()
 {
-  properties_widget_visible().set(properties_widget_visible_def());
+  properties_widget_visible() = properties_widget_visible_def();
 }
 
 auto saves::embed_tilesets() -> setting<bool>

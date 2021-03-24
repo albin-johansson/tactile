@@ -67,6 +67,12 @@ class setting final
     m_value = value;
   }
 
+  auto operator=(const T& value) -> setting&
+  {
+    set(value);
+    return *this;
+  }
+
   /**
    * \brief Sets the value of the setting, if there is no current value.
    *

@@ -27,8 +27,8 @@ inline std::map<QStringView, QPalette> palettes;
 
 void set_current_theme(const QString& name, const QPalette& palette)
 {
-  prefs::gfx::theme().set(palette);
-  prefs::gfx::theme_name().set(name);
+  prefs::gfx::theme() = palette;
+  prefs::gfx::theme_name() = name;
   QApplication::setPalette(palette);
 }
 
@@ -59,7 +59,7 @@ auto register_theme(const QString& name, const QPalette& palette) -> bool
   if (!userThemes.contains(name))
   {
     userThemes.insert(name, palette);
-    prefs::gfx::user_themes().set(userThemes);
+    prefs::gfx::user_themes() = userThemes;
     return true;
   }
   else
@@ -100,7 +100,7 @@ void update_theme(const QString& name,
     {
       auto userThemes = prefs::gfx::user_themes().value();
       userThemes.insert(name, *palette);
-      prefs::gfx::user_themes().set(userThemes);
+      prefs::gfx::user_themes() = userThemes;
     }
   }
 }
@@ -112,7 +112,7 @@ void remove_theme(const QString& name)
   {
     auto map = userThemes.value();
     map.remove(name);
-    prefs::gfx::user_themes().set(map);
+    prefs::gfx::user_themes() = map;
   }
 }
 

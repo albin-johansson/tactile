@@ -149,44 +149,44 @@ void settings_dialog::handle_accept()
   if (const auto useOpenGL = m_ui->openglCheck->isChecked();
       useOpenGL != m_snapshot.useOpenGL)
   {
-    gfx::use_opengl().set(useOpenGL);
+    gfx::use_opengl() = useOpenGL;
     emit reload_opengl(useOpenGL);
   }
 
   if (const auto defaultFormat = m_ui->defaultFormatCombo->currentText();
       defaultFormat != m_snapshot.defaultFormat)
   {
-    saves::default_format().set(defaultFormat);
+    saves::default_format() = defaultFormat;
   }
 
   if (const auto embedTilesets = m_ui->embedTilesetsCheck->isChecked();
       embedTilesets != m_snapshot.embedTilesets)
   {
-    saves::embed_tilesets().set(embedTilesets);
+    saves::embed_tilesets() = embedTilesets;
   }
 
   if (const auto genDefaults = m_ui->generateDefaultsCheck->isChecked();
       genDefaults != m_snapshot.generateDefaults)
   {
-    saves::generate_defaults().set(genDefaults);
+    saves::generate_defaults() = genDefaults;
   }
 
   if (const auto readable = m_ui->readableOutputCheck->isChecked();
       readable != m_snapshot.readableOutput)
   {
-    saves::readable_output().set(readable);
+    saves::readable_output() = readable;
   }
 
   if (const auto value = to_integer(m_ui->tileWidthEdit->text());
       value != m_snapshot.tileWidth)
   {
-    saves::tile_width().set(*value);
+    saves::tile_width() = *value;
   }
 
   if (const auto value = to_integer(m_ui->tileHeightEdit->text());
       value != m_snapshot.tileHeight)
   {
-    saves::tile_height().set(*value);
+    saves::tile_height() = *value;
   }
 }
 

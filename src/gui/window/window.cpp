@@ -78,10 +78,10 @@ void window::init_connections()
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
   connect(m_layerDock, &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
 
-  connect(m_toolDock, &tool_dock::closed, [] { prefs::gfx::tool_widget_visible().set(false); });
-  connect(m_layerDock, &tool_dock::closed, [] { prefs::gfx::layer_widget_visible().set(false); });
-  connect(m_tilesetDock, &tool_dock::closed, [] { prefs::gfx::tileset_widget_visible().set(false); });
-  connect(m_propertiesDock, &tool_dock::closed, [] { prefs::gfx::properties_widget_visible().set(false); });
+  connect(m_toolDock, &tool_dock::closed, [] { prefs::gfx::tool_widget_visible() = false; });
+  connect(m_layerDock, &tool_dock::closed, [] { prefs::gfx::layer_widget_visible() = false; });
+  connect(m_tilesetDock, &tool_dock::closed, [] { prefs::gfx::tileset_widget_visible() = false; });
+  connect(m_propertiesDock, &tool_dock::closed, [] { prefs::gfx::properties_widget_visible() = false; });
 
   connect(m_editor, &map_editor::ui_select_map, this, &window::ui_select_map);
   connect(m_editor, &map_editor::ui_remove_map, this, &window::when_about_to_close_map);
@@ -396,8 +396,8 @@ void window::show_layer_properties(not_null<core::property_manager*> manager)
 void window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);
-  prefs::window::last_layout_geometry().set(saveGeometry());
-  prefs::window::last_layout_state().set(saveState());
+  prefs::window::last_layout_geometry() = saveGeometry();
+  prefs::window::last_layout_state() = saveState();
 }
 
 void window::when_about_to_close_map(const map_id id)
@@ -465,28 +465,28 @@ void window::eraser_enabled()
 {
   const auto visible = m_ui->actionTilesetsVisibility->isChecked();
   m_tilesetDock->setVisible(visible);
-  prefs::gfx::tileset_widget_visible().set(visible);
+  prefs::gfx::tileset_widget_visible() = visible;
 }
 
 [[maybe_unused]] void window::on_actionToolsVisibility_triggered()
 {
   const auto visible = m_ui->actionToolsVisibility->isChecked();
   m_toolDock->setVisible(visible);
-  prefs::gfx::tool_widget_visible().set(visible);
+  prefs::gfx::tool_widget_visible() = visible;
 }
 
 [[maybe_unused]] void window::on_actionLayersVisibility_triggered()
 {
   const auto visible = m_ui->actionLayersVisibility->isChecked();
   m_layerDock->setVisible(visible);
-  prefs::gfx::layer_widget_visible().set(visible);
+  prefs::gfx::layer_widget_visible() = visible;
 }
 
 [[maybe_unused]] void window::on_actionPropertiesVisibility_triggered()
 {
   const auto visible = m_ui->actionPropertiesVisibility->isChecked();
   m_propertiesDock->setVisible(visible);
-  prefs::gfx::properties_widget_visible().set(visible);
+  prefs::gfx::properties_widget_visible() = visible;
 }
 
 [[maybe_unused]] void window::on_actionSave_triggered()
@@ -539,7 +539,7 @@ void window::eraser_enabled()
 {
   auto grid = prefs::gfx::render_grid();
   grid.with([&, this](bool value) {
-    grid.set(!value);
+    grid = !value;
     force_redraw();
   });
 }
