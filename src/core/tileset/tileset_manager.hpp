@@ -174,6 +174,8 @@ class tileset_manager final
    * \brief Returns the range of tile identifiers associated with the specified
    * tileset.
    *
+   * \pre `id` must be associated with a tileset.
+   *
    * \param id the ID of the tileset that will be queried.
    *
    * \return the range of the specified tileset, as [first, last].
