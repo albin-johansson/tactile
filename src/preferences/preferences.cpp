@@ -51,12 +51,6 @@ auto gfx::accent_color() -> setting<QColor>
   return setting<QColor>{str};
 }
 
-// auto gfx::theme_name_def() -> const QString&
-//{
-//  static const auto name = get_default_name().toString();
-//  return name;
-//}
-
 auto gfx::tool_widget_visible() -> setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/toolWidgetVisible");
