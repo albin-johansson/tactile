@@ -435,11 +435,6 @@ void map_document::set_next_object_id(const object_id id) noexcept
   m_map->set_next_object_id(id);
 }
 
-auto map_document::index_of_layer(const layer_id id) const -> maybe<std::size_t>
-{
-  return m_map->index_of(id);
-}
-
 auto map_document::in_bounds(const position& pos) const -> bool
 {
   return m_map->in_bounds(pos);
@@ -463,11 +458,6 @@ auto map_document::get_tile_layer(const layer_id id) -> tile_layer*
 auto map_document::get_tile_layer(const layer_id id) const -> const tile_layer*
 {
   return m_map->get_tile_layer(id);
-}
-
-auto map_document::get_object_layer(const layer_id id) -> object_layer*
-{
-  return m_map->get_object_layer(id);
 }
 
 auto map_document::get_object_layer(const layer_id id) const

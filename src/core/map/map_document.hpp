@@ -366,14 +366,7 @@ class map_document final : public document
 
   [[nodiscard]] auto get_tile_layer(layer_id id) const -> const tile_layer*;
 
-  [[nodiscard]] auto get_object_layer(layer_id id) -> object_layer*;
-
   [[nodiscard]] auto get_object_layer(layer_id id) const -> const object_layer*;
-
-  /**
-   * \copydoc map::index_of()
-   */
-  [[nodiscard]] auto index_of_layer(layer_id id) const -> maybe<std::size_t>;
 
   /**
    * \copydoc map::layer_count()
