@@ -115,6 +115,8 @@ auto tileset_manager::image_source(const tile_id id) const -> QRect
 
 auto tileset_manager::range_of(const tileset_id id) const -> tile_range
 {
+  Q_ASSERT(contains(id));
+
   const auto& tileset = m_tilesets.at(id);
   return {tileset->first_id(), tileset->last_id()};
 }
