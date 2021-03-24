@@ -21,27 +21,33 @@ void remove_layer::undo()
 {
   QUndoCommand::undo();
 
-  m_document->add_layer(m_id, m_layer);
-  while (m_document->index_of_layer(m_id).value() != m_index)
+  auto& map = m_document->raw();
+
+  map.add_layer(m_id, m_layer);
+  while (map.index_of(m_id).value() != m_index)
   {
-    if (m_document->index_of_layer(m_id).value() < m_index)
+    if (map.index_of(m_id).value() < m_index)
     {
-      m_document->move_layer_back(m_id);
+      map.move_layer_back(m_id);
     }
     else
     {
-      m_document->move_layer_forward(m_id);
+      map.move_layer_forward(m_id);
     }
   }
 
+  emit m_document->added_layer(m_id, *m_layer);
   emit m_document->redraw();
 }
 
 void remove_layer::redo()
 {
   QUndoCommand::redo();
-  m_index = m_document->index_of_layer(m_id).value();
-  m_layer = m_document->take_layer(m_id);
+
+  auto& map = m_document->raw();
+
+  m_index = map.index_of(m_id).value();
+  m_layer = map.take_layer(m_id);
 
   emit m_document->removed_layer(m_id);
   emit m_document->redraw();
