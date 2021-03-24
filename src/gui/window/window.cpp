@@ -69,25 +69,25 @@ void window::init_mouse_tool_group()
 void window::init_connections()
 {
   // clang-format off
-  connect(m_ui->actionNewMap,     &QAction::triggered, this, &window::ui_new_map);
+  connect(m_ui->actionNewMap, &QAction::triggered, this, &window::ui_new_map);
   connect(m_ui->actionAddTileset, &QAction::triggered, this, &window::ui_add_tileset);
 
-// FIXME connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
+  // FIXME connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
 
-  connect(m_toolDock,    &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
+  connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
   connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
-  connect(m_layerDock,   &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
+  connect(m_layerDock, &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
 
-  connect(m_toolDock,       &tool_dock::closed, [] { prefs::gfx::tool_widget_visible().set(false); });
-  connect(m_layerDock,      &tool_dock::closed, [] { prefs::gfx::layer_widget_visible().set(false); });
-  connect(m_tilesetDock,    &tool_dock::closed, [] { prefs::gfx::tileset_widget_visible().set(false); });
+  connect(m_toolDock, &tool_dock::closed, [] { prefs::gfx::tool_widget_visible().set(false); });
+  connect(m_layerDock, &tool_dock::closed, [] { prefs::gfx::layer_widget_visible().set(false); });
+  connect(m_tilesetDock, &tool_dock::closed, [] { prefs::gfx::tileset_widget_visible().set(false); });
   connect(m_propertiesDock, &tool_dock::closed, [] { prefs::gfx::properties_widget_visible().set(false); });
 
-  connect(m_editor, &map_editor::ui_select_map,  this, &window::ui_select_map);
-  connect(m_editor, &map_editor::ui_remove_map,  this, &window::when_about_to_close_map);
-  connect(m_editor, &map_editor::increase_zoom,  this, &window::ui_increase_zoom);
-  connect(m_editor, &map_editor::decrease_zoom,  this, &window::ui_decrease_zoom);
-  connect(m_editor, &map_editor::mouse_pressed,  this, &window::mouse_pressed);
+  connect(m_editor, &map_editor::ui_select_map, this, &window::ui_select_map);
+  connect(m_editor, &map_editor::ui_remove_map, this, &window::when_about_to_close_map);
+  connect(m_editor, &map_editor::increase_zoom, this, &window::ui_increase_zoom);
+  connect(m_editor, &map_editor::decrease_zoom, this, &window::ui_decrease_zoom);
+  connect(m_editor, &map_editor::mouse_pressed, this, &window::mouse_pressed);
   connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
 
   connect(m_editor, &map_editor::mouse_entered, [this](QEvent* e) {
@@ -106,10 +106,10 @@ void window::init_connections()
             emit mouse_moved(e, mapPos);
           });
 
-  connect(m_tilesetDock, &tileset_dock::ui_add_tileset,           this, &window::ui_add_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_select_tileset,        this, &window::ui_select_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_remove_tileset,        this, &window::ui_remove_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_rename_tileset,        this, &window::ui_rename_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_add_tileset, this, &window::ui_add_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_select_tileset, this, &window::ui_select_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_remove_tileset, this, &window::ui_remove_tileset);
+  connect(m_tilesetDock, &tileset_dock::ui_rename_tileset, this, &window::ui_rename_tileset);
   connect(m_tilesetDock, &tileset_dock::ui_set_tileset_selection, this, &window::ui_set_tileset_selection);
   // clang-format on
 }
