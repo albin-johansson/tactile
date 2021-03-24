@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QUndoCommand>  // QUndoCommand
+#include <cstddef>       // size_t
 
 #include "command_id.hpp"
 #include "forward_declare.hpp"
@@ -31,7 +32,7 @@ class remove_layer final : public QUndoCommand
   core::map_document* m_document{};
   shared<core::layer> m_layer;
   layer_id m_id;
-  int m_index{};
+  std::size_t m_index{};
 };
 
 }  // namespace tactile::cmd

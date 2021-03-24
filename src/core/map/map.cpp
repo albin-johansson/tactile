@@ -294,7 +294,7 @@ auto map::make_object_layer() -> shared<object_layer>
   return std::make_shared<object_layer>();
 }
 
-auto map::index_of(const layer_id id) const -> maybe<int>
+auto map::index_of(const layer_id id) const -> maybe<std::size_t>
 {
   return m_layers.index_of(id);
 }

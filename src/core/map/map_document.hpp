@@ -4,6 +4,7 @@
 #include <QImage>     // QImage
 #include <QString>    // QString
 #include <concepts>   // invocable
+#include <cstddef>    // size_t
 
 #include "document.hpp"
 #include "layer_id.hpp"
@@ -376,7 +377,7 @@ class map_document final : public document
   /**
    * \copydoc map::index_of()
    */
-  [[nodiscard]] auto index_of_layer(layer_id id) const -> maybe<int>;
+  [[nodiscard]] auto index_of_layer(layer_id id) const -> maybe<std::size_t>;
 
   /**
    * \copydoc map::layer_count()

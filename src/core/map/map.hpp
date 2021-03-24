@@ -2,6 +2,7 @@
 
 #include <QString>   // QString
 #include <concepts>  // invocable
+#include <cstddef>   // size_t
 #include <utility>   // pair, move
 
 #include "layer.hpp"
@@ -354,7 +355,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto index_of(layer_id id) const -> maybe<int>;
+  [[nodiscard]] auto index_of(layer_id id) const -> maybe<std::size_t>;
 
   /**
    * \brief Indicates whether or not the layer associated with the specified
