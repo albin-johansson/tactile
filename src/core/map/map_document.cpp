@@ -295,17 +295,10 @@ void map_document::add_tileset(shared<tileset> tileset)
 
 void map_document::remove_tileset(const tileset_id id)
 {
-  Q_ASSERT(m_tilesets->contains(id));
-
   const auto [first, last] = m_tilesets->range_of(id);
-
-  for (auto i = first; i < last; ++i)
-  {
-    m_map->remove_occurrences(i);
-  }
+  m_map->remove_occurrences(first, last);
 
   m_tilesets->remove(id);
-
   emit removed_tileset(id);
 }
 

@@ -88,6 +88,17 @@ class map final
   void remove_occurrences(tile_id id);
 
   /**
+   * \brief Removes all occurrences of a range of tiles, in all tile layers.
+   * This function removes tiles in the range [first, last].
+   *
+   * \param first the first tile in the range that will be removed.
+   * \param last the last tile in the range that will be removed.
+   *
+   * \since 0.2.0
+   */
+  void remove_occurrences(tile_id first, tile_id last);
+
+  /**
    * \brief Adds an empty tile layer to the map.
    *
    * \note The added layer will *not* be made the active layer.

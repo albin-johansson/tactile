@@ -35,6 +35,17 @@ void map::remove_occurrences(const tile_id id)
   }
 }
 
+void map::remove_occurrences(tile_id first, tile_id last)
+{
+  for (auto& [key, layer] : m_layers)
+  {
+    if (auto* tileLayer = as_tile_layer(layer))
+    {
+      tileLayer->remove_all(first, last);
+    }
+  }
+}
+
 void map::remove_layer(const layer_id id)
 {
   Q_ASSERT(m_layers.contains(id));

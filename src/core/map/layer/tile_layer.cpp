@@ -66,6 +66,23 @@ void tile_layer::remove_all(const tile_id id)
   }
 }
 
+void tile_layer::remove_all(const tile_id first, const tile_id last)
+{
+  const auto nRows = row_count().get();
+  const auto nCols = col_count().get();
+  for (auto r = 0; r < nRows; ++r)
+  {
+    for (auto c = 0; c < nCols; ++c)
+    {
+      auto& id = m_tiles[r][c];
+      if (id >= first || id <= last)
+      {
+        id = empty;
+      }
+    }
+  }
+}
+
 void tile_layer::add_row(const tile_id id)
 {
   m_tiles.push_back(make_tile_row(col_count(), id));
