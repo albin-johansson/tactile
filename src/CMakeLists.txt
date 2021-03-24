@@ -93,24 +93,24 @@ set(TACTILE_SOURCE_FILES
     core/aliases/tile_width.hpp
     core/aliases/tileset_id.hpp
 
+    core/layers/layer.hpp
+    core/layers/layer_delegate.cpp
+    core/layers/layer_delegate.hpp
+    core/layers/layer_type.hpp
+    core/layers/layer_utils.cpp
+    core/layers/layer_utils.hpp
+    core/layers/object.cpp
+    core/layers/object.hpp
+    core/layers/object_layer.cpp
+    core/layers/object_layer.hpp
+    core/layers/object_type.hpp
+    core/layers/tile_layer.cpp
+    core/layers/tile_layer.hpp
+
     core/map/map.cpp
     core/map/map.hpp
     core/map/map_document.cpp
     core/map/map_document.hpp
-
-    core/map/layer/layer.hpp
-    core/map/layer/layer_delegate.cpp
-    core/map/layer/layer_delegate.hpp
-    core/map/layer/layer_type.hpp
-    core/map/layer/layer_utils.cpp
-    core/map/layer/layer_utils.hpp
-    core/map/layer/object.cpp
-    core/map/layer/object.hpp
-    core/map/layer/object_layer.cpp
-    core/map/layer/object_layer.hpp
-    core/map/layer/object_type.hpp
-    core/map/layer/tile_layer.cpp
-    core/map/layer/tile_layer.hpp
 
     core/property/property.cpp
     core/property/property.hpp
@@ -393,8 +393,8 @@ target_include_directories(libTactile
     PUBLIC core
     PUBLIC core/algorithm
     PUBLIC core/aliases
+    PUBLIC core/layers
     PUBLIC core/map
-    PUBLIC core/map/layer
     PUBLIC core/property
     PUBLIC core/tile
     PUBLIC core/tileset
