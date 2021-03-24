@@ -13,7 +13,6 @@
 #include "position.hpp"
 #include "smart_pointers.hpp"
 #include "tile_id.hpp"
-#include "tileset.hpp"
 #include "tileset_id.hpp"
 #include "tileset_manager.hpp"
 
