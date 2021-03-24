@@ -12,9 +12,9 @@ about_dialog::about_dialog(QWidget* parent)
 
 about_dialog::~about_dialog() noexcept = default;
 
-void about_dialog::spawn(QWidget* parent)
+void about_dialog::spawn()
 {
-  about_dialog dialog{parent};
+  about_dialog dialog;
   dialog.exec();
 }
 
