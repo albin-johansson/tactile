@@ -258,10 +258,6 @@ class map_document final : public document
    */
   void select_layer(layer_id id);
 
-  /**
-   * \copydoc map::add_tile_layer(layer_id id, shared_layer layer)
-   * \signal `added_layer`
-   */
   void add_layer(layer_id id, const shared<layer>& layer);
 
   /**

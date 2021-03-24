@@ -30,7 +30,9 @@ add_layer::add_layer(core::map_document* document,
 void add_layer::undo()
 {
   QUndoCommand::undo();
-  m_document->take_layer(m_id);
+
+  // We already have a shared pointer to the layer in question
+  auto layer [[maybe_unused]] = m_document->raw().take_layer(m_id);
 
   emit m_document->removed_layer(m_id);
   emit m_document->redraw();
@@ -39,8 +41,10 @@ void add_layer::undo()
 void add_layer::redo()
 {
   QUndoCommand::redo();
-  m_document->add_layer(m_id, m_layer);
 
+  m_document->raw().add_layer(m_id, m_layer);
+
+  emit m_document->added_layer(m_id, *m_layer);
   emit m_document->redraw();
 }
 
