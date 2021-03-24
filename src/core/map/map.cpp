@@ -1,7 +1,5 @@
 #include "map.hpp"
 
-#include <QDebug>  // Q_ASSERT
-
 #include "algorithm.hpp"
 #include "layer_utils.hpp"
 #include "object_layer.hpp"
