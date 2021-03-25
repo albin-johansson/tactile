@@ -34,6 +34,7 @@ void add_tileset::undo()
   tilesets->remove(m_id);
 
   emit m_document->removed_tileset(m_id);
+  emit m_document->redraw();
 }
 
 void add_tileset::redo()
