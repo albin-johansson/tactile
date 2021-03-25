@@ -44,6 +44,8 @@ class window final : public QMainWindow
 {
   Q_OBJECT
 
+  friend class window_connections;
+
  public:
   /**
    * \param parent a pointer to the parent widget, defaults to null.
@@ -166,6 +168,7 @@ class window final : public QMainWindow
                           const QString& name = TACTILE_QSTRING(u"map"));
 
   void show_map_properties(not_null<core::property_manager*> manager);
+
   void show_layer_properties(not_null<core::property_manager*> manager);
 
  protected:
@@ -181,25 +184,11 @@ class window final : public QMainWindow
   status_bar* m_statusBar{};
   QActionGroup* m_toolGroup{};
 
-  void init_mouse_tool_group();
-
-  /**
-   * \brief Initializes all of the connections related to the internal
-   * components of the window.
-   *
-   * \since 0.1.0
-   */
-  void init_connections();
-
   void restore_layout();
-
-  void reset_dock_layout();
 
   void hide_all_docks();
 
   void restore_dock_visibility();
-
-  void center_viewport();
 
   void set_actions_enabled(bool enabled);
 
@@ -213,6 +202,10 @@ class window final : public QMainWindow
   [[nodiscard]] auto in_editor_mode() const -> bool;
 
  private slots:
+  void save_as();
+
+  void reset_dock_layout();
+
   void when_about_to_close_map(map_id id);
 
   void handle_theme_changed();
@@ -225,55 +218,27 @@ class window final : public QMainWindow
 
   void eraser_enabled();
 
-  [[maybe_unused]] void on_actionUndo_triggered();
+  void center_viewport();
 
-  [[maybe_unused]] void on_actionRedo_triggered();
+  void closed_map();
 
-  [[maybe_unused]] void on_actionCloseMap_triggered();
+  void tileset_widget_visibility_changed();
 
-  [[maybe_unused]] void on_actionTilesetsVisibility_triggered();
+  void tool_widget_visibility_changed();
 
-  [[maybe_unused]] void on_actionToolsVisibility_triggered();
+  void layer_widget_visibility_changed();
 
-  [[maybe_unused]] void on_actionLayersVisibility_triggered();
+  void properties_widget_visibility_changed();
 
-  [[maybe_unused]] void on_actionPropertiesVisibility_triggered();
+  void when_mouse_entered(QEvent* event);
 
-  [[maybe_unused]] void on_actionSave_triggered();
+  void when_mouse_exited(QEvent* event);
 
-  [[maybe_unused]] void on_actionSaveAs_triggered();
+  void when_mouse_moved(QMouseEvent* event, QPointF mapPos);
 
   [[maybe_unused]] void on_actionOpenMap_triggered();
 
-  [[maybe_unused]] void on_actionAddRow_triggered();
-
-  [[maybe_unused]] void on_actionAddCol_triggered();
-
-  [[maybe_unused]] void on_actionRemoveRow_triggered();
-
-  [[maybe_unused]] void on_actionRemoveCol_triggered();
-
-  [[maybe_unused]] void on_actionResizeMap_triggered();
-
   [[maybe_unused]] void on_actionToggleGrid_triggered();
-
-  [[maybe_unused]] void on_actionPanUp_triggered();
-
-  [[maybe_unused]] void on_actionPanDown_triggered();
-
-  [[maybe_unused]] void on_actionPanRight_triggered();
-
-  [[maybe_unused]] void on_actionPanLeft_triggered();
-
-  [[maybe_unused]] void on_actionZoomIn_triggered();
-
-  [[maybe_unused]] void on_actionZoomOut_triggered();
-
-  [[maybe_unused]] void on_actionResetZoom_triggered();
-
-  [[maybe_unused]] void on_actionCenterCamera_triggered();
-
-  [[maybe_unused]] void on_actionResetLayout_triggered();
 
   [[maybe_unused]] void on_actionStampTool_triggered();
 
@@ -282,12 +247,6 @@ class window final : public QMainWindow
   [[maybe_unused]] void on_actionEraserTool_triggered();
 
   [[maybe_unused]] void on_actionSettings_triggered();
-
-  [[maybe_unused]] static void on_actionAboutQt_triggered();
-
-  [[maybe_unused]] static void on_actionExit_triggered();
-
-  [[maybe_unused]] static void on_actionAbout_triggered();
 };
 
 }  // namespace tactile::gui

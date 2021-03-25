@@ -310,6 +310,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/window/window.cpp
     gui/window/window.hpp
+    gui/window/window_connections.cpp
+    gui/window/window_connections.hpp
     gui/window/window.ui
 
     parse/json/json_utils.cpp

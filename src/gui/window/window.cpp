@@ -1,6 +1,5 @@
 #include "window.hpp"
 
-#include "about_dialog.hpp"
 #include "init_ui.hpp"
 #include "layer_dock.hpp"
 #include "map_document.hpp"
@@ -17,6 +16,7 @@
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"
 #include "ui_window.h"
+#include "window_connections.hpp"
 
 namespace tactile::gui {
 
@@ -29,6 +29,7 @@ window::window(QWidget* parent)
     , m_tilesetDock{new tileset_dock{this}}
     , m_propertiesDock{new properties_dock{this}}
     , m_statusBar{new status_bar{this}}
+    , m_toolGroup{new QActionGroup{this}}
 {
   setContentsMargins(0, 0, 0, 0);
 
@@ -38,8 +39,13 @@ window::window(QWidget* parent)
   addDockWidget(Qt::RightDockWidgetArea, m_layerDock);
   setStatusBar(m_statusBar);
 
-  init_mouse_tool_group();
-  init_connections();
+  m_toolGroup->setExclusive(true);
+  m_toolGroup->addAction(m_ui->actionStampTool);
+  m_toolGroup->addAction(m_ui->actionBucketTool);
+  m_toolGroup->addAction(m_ui->actionEraserTool);
+
+  window_connections connections;
+  connections.init(this);
 
   showMaximized();
 
@@ -48,71 +54,6 @@ window::window(QWidget* parent)
 }
 
 window::~window() noexcept = default;
-
-void window::init_mouse_tool_group()
-{
-  Q_ASSERT(!m_toolGroup);
-
-  m_toolGroup = new QActionGroup{this};
-  m_toolGroup->setExclusive(true);
-  m_toolGroup->addAction(m_ui->actionStampTool);
-  m_toolGroup->addAction(m_ui->actionBucketTool);
-  m_toolGroup->addAction(m_ui->actionEraserTool);
-
-  // clang-format off
-  connect(m_toolDock, &tool_dock::enable_stamp, this, &window::stamp_enabled);
-  connect(m_toolDock, &tool_dock::enable_bucket, this, &window::bucket_enabled);
-  connect(m_toolDock, &tool_dock::enable_eraser, this, &window::eraser_enabled);
-  // clang-format on
-}
-
-void window::init_connections()
-{
-  // clang-format off
-  connect(m_ui->actionNewMap, &QAction::triggered, this, &window::ui_new_map);
-  connect(m_ui->actionAddTileset, &QAction::triggered, this, &window::ui_add_tileset);
-
-  // FIXME connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
-
-  connect(m_toolDock, &QDockWidget::visibilityChanged, m_ui->actionToolsVisibility, &QAction::setChecked);
-  connect(m_tilesetDock, &QDockWidget::visibilityChanged, m_ui->actionTilesetsVisibility, &QAction::setChecked);
-  connect(m_layerDock, &QDockWidget::visibilityChanged, m_ui->actionLayersVisibility, &QAction::setChecked);
-
-  connect(m_toolDock, &tool_dock::closed, [] { prefs::gfx::tool_widget_visible() = false; });
-  connect(m_layerDock, &tool_dock::closed, [] { prefs::gfx::layer_widget_visible() = false; });
-  connect(m_tilesetDock, &tool_dock::closed, [] { prefs::gfx::tileset_widget_visible() = false; });
-  connect(m_propertiesDock, &tool_dock::closed, [] { prefs::gfx::properties_widget_visible() = false; });
-
-  connect(m_editor, &map_editor::ui_select_map, this, &window::ui_select_map);
-  connect(m_editor, &map_editor::ui_remove_map, this, &window::when_about_to_close_map);
-  connect(m_editor, &map_editor::increase_zoom, this, &window::ui_increase_zoom);
-  connect(m_editor, &map_editor::decrease_zoom, this, &window::ui_decrease_zoom);
-  connect(m_editor, &map_editor::mouse_pressed, this, &window::mouse_pressed);
-  connect(m_editor, &map_editor::mouse_released, this, &window::mouse_released);
-
-  connect(m_editor, &map_editor::mouse_entered, [this](QEvent* e) {
-    m_statusBar->set_mouse_info_visible(true);
-    emit mouse_entered(e);
-  });
-
-  connect(m_editor, &map_editor::mouse_exited, [this](QEvent* e) {
-    m_statusBar->set_mouse_info_visible(false);
-    emit mouse_exited(e);
-  });
-
-  connect(m_editor, &map_editor::mouse_moved,
-          [this](QMouseEvent* e, const QPointF mapPos) {
-            m_statusBar->mouse_moved(e->pos() - mapPos);
-            emit mouse_moved(e, mapPos);
-          });
-
-  connect(m_tilesetDock, &tileset_dock::ui_add_tileset, this, &window::ui_add_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_select_tileset, this, &window::ui_select_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_remove_tileset, this, &window::ui_remove_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_rename_tileset, this, &window::ui_rename_tileset);
-  connect(m_tilesetDock, &tileset_dock::ui_set_tileset_selection, this, &window::ui_set_tileset_selection);
-  // clang-format on
-}
 
 void window::restore_layout()
 {
@@ -123,6 +64,15 @@ void window::restore_layout()
   prefs::window::last_layout_state().with([this](const QByteArray& state) {
     restoreState(state);
   });
+}
+
+void window::save_as()
+{
+  save_as_dialog::spawn(
+      [this](const QString& path) {
+        emit ui_save_as(path);
+      },
+      m_editor->active_tab_name().value_or(TACTILE_QSTRING(u"map")));
 }
 
 void window::reset_dock_layout()
@@ -243,7 +193,7 @@ void window::enter_content_view()
 
 void window::trigger_save_as()
 {
-  on_actionSaveAs_triggered();
+  save_as();
 }
 
 void window::set_active_tab_name(const QString& name)
@@ -442,17 +392,7 @@ void window::eraser_enabled()
   emit ui_selected_tool(tool_id::eraser);
 }
 
-[[maybe_unused]] void window::on_actionUndo_triggered()
-{
-  emit ui_undo();
-}
-
-[[maybe_unused]] void window::on_actionRedo_triggered()
-{
-  emit ui_redo();
-}
-
-[[maybe_unused]] void window::on_actionCloseMap_triggered()
+void window::closed_map()
 {
   // TODO save current state of open map (exit saves?)
   const auto id = m_editor->active_tab_id().value();
@@ -466,46 +406,50 @@ void window::eraser_enabled()
   }
 }
 
-[[maybe_unused]] void window::on_actionTilesetsVisibility_triggered()
+void window::tileset_widget_visibility_changed()
 {
   const auto visible = m_ui->actionTilesetsVisibility->isChecked();
   m_tilesetDock->setVisible(visible);
   prefs::gfx::tileset_widget_visible() = visible;
 }
 
-[[maybe_unused]] void window::on_actionToolsVisibility_triggered()
+void window::tool_widget_visibility_changed()
 {
   const auto visible = m_ui->actionToolsVisibility->isChecked();
   m_toolDock->setVisible(visible);
   prefs::gfx::tool_widget_visible() = visible;
 }
 
-[[maybe_unused]] void window::on_actionLayersVisibility_triggered()
+void window::layer_widget_visibility_changed()
 {
   const auto visible = m_ui->actionLayersVisibility->isChecked();
   m_layerDock->setVisible(visible);
   prefs::gfx::layer_widget_visible() = visible;
 }
 
-[[maybe_unused]] void window::on_actionPropertiesVisibility_triggered()
+void window::properties_widget_visibility_changed()
 {
   const auto visible = m_ui->actionPropertiesVisibility->isChecked();
   m_propertiesDock->setVisible(visible);
   prefs::gfx::properties_widget_visible() = visible;
 }
 
-[[maybe_unused]] void window::on_actionSave_triggered()
+void window::when_mouse_entered(QEvent* event)
 {
-  emit ui_save();
+  m_statusBar->set_mouse_info_visible(true);
+  emit mouse_entered(event);
 }
 
-[[maybe_unused]] void window::on_actionSaveAs_triggered()
+void window::when_mouse_exited(QEvent* event)
 {
-  save_as_dialog::spawn(
-      [this](const QString& path) {
-        emit ui_save_as(path);
-      },
-      m_editor->active_tab_name().value_or(TACTILE_QSTRING(u"map")));
+  m_statusBar->set_mouse_info_visible(false);
+  emit mouse_exited(event);
+}
+
+void window::when_mouse_moved(QMouseEvent* event, const QPointF mapPos)
+{
+  m_statusBar->mouse_moved(event->pos() - mapPos);
+  emit mouse_moved(event, mapPos);
 }
 
 [[maybe_unused]] void window::on_actionOpenMap_triggered()
@@ -515,31 +459,6 @@ void window::eraser_enabled()
   });
 }
 
-[[maybe_unused]] void window::on_actionAddRow_triggered()
-{
-  emit ui_add_row();
-}
-
-[[maybe_unused]] void window::on_actionAddCol_triggered()
-{
-  emit ui_add_col();
-}
-
-[[maybe_unused]] void window::on_actionRemoveRow_triggered()
-{
-  emit ui_remove_row();
-}
-
-[[maybe_unused]] void window::on_actionRemoveCol_triggered()
-{
-  emit ui_remove_col();
-}
-
-[[maybe_unused]] void window::on_actionResizeMap_triggered()
-{
-  emit ui_resize_map();
-}
-
 [[maybe_unused]] void window::on_actionToggleGrid_triggered()
 {
   auto grid = prefs::gfx::render_grid();
@@ -547,51 +466,6 @@ void window::eraser_enabled()
     grid = !value;
     force_redraw();
   });
-}
-
-[[maybe_unused]] void window::on_actionPanUp_triggered()
-{
-  emit ui_pan_up();
-}
-
-[[maybe_unused]] void window::on_actionPanDown_triggered()
-{
-  emit ui_pan_down();
-}
-
-[[maybe_unused]] void window::on_actionPanRight_triggered()
-{
-  emit ui_pan_right();
-}
-
-[[maybe_unused]] void window::on_actionPanLeft_triggered()
-{
-  emit ui_pan_left();
-}
-
-[[maybe_unused]] void window::on_actionZoomIn_triggered()
-{
-  emit ui_increase_zoom();
-}
-
-[[maybe_unused]] void window::on_actionZoomOut_triggered()
-{
-  emit ui_decrease_zoom();
-}
-
-[[maybe_unused]] void window::on_actionResetZoom_triggered()
-{
-  emit ui_reset_tile_size();
-}
-
-[[maybe_unused]] void window::on_actionCenterCamera_triggered()
-{
-  center_viewport();
-}
-
-[[maybe_unused]] void window::on_actionResetLayout_triggered()
-{
-  reset_dock_layout();
 }
 
 [[maybe_unused]] void window::on_actionStampTool_triggered()
@@ -609,9 +483,9 @@ void window::eraser_enabled()
   m_toolDock->eraser_enabled();
 }
 
-[[maybe_unused]] void window::on_actionSettings_triggered()  // NOLINT
+[[maybe_unused]] void window::on_actionSettings_triggered()
 {
-  settings_dialog settings;
+  settings_dialog settings{this};
 
   // clang-format off
   connect(&settings, &settings_dialog::reload_theme,
@@ -622,21 +496,6 @@ void window::eraser_enabled()
   // clang-format on
 
   settings.exec();
-}
-
-[[maybe_unused]] void window::on_actionAboutQt_triggered()
-{
-  QApplication::aboutQt();
-}
-
-[[maybe_unused]] void window::on_actionExit_triggered()
-{
-  QApplication::exit();
-}
-
-[[maybe_unused]] void window::on_actionAbout_triggered()
-{
-  about_dialog::spawn();
 }
 
 }  // namespace tactile::gui
