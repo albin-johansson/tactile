@@ -3,19 +3,21 @@
 #include <QUndoCommand>  // QUndoCommand
 
 #include "command_id.hpp"
-#include "czstring.hpp"
-#include "map.hpp"
+#include "forward_declare.hpp"
+#include "layer_id.hpp"
+#include "not_null.hpp"
 #include "position.hpp"
-#include "tileset.hpp"
-#include "tileset_manager.hpp"
+#include "tile_id.hpp"
 #include "vector_map.hpp"
+
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
 class stamp_sequence final : public QUndoCommand
 {
  public:
-  stamp_sequence(core::map* map,
+  stamp_sequence(not_null<core::map_document*> document,
                  vector_map<core::position, tile_id>&& oldState,
                  vector_map<core::position, tile_id>&& sequence);
 
@@ -29,7 +31,7 @@ class stamp_sequence final : public QUndoCommand
   }
 
  private:
-  core::map* m_map{};
+  core::map_document* m_document{};
   vector_map<core::position, tile_id> m_oldState;
   vector_map<core::position, tile_id> m_sequence;
   layer_id m_layer{};

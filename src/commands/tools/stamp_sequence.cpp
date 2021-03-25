@@ -2,21 +2,22 @@
 
 #include <utility>  // move
 
+#include "map_document.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 
 namespace tactile::cmd {
 
-stamp_sequence::stamp_sequence(core::map* map,
+stamp_sequence::stamp_sequence(not_null<core::map_document*> document,
                                vector_map<core::position, tile_id>&& oldState,
                                vector_map<core::position, tile_id>&& sequence)
     : QUndoCommand{TACTILE_QSTRING(u"Stamp Sequence")}
-    , m_map{map}
+    , m_document{document}
     , m_oldState{std::move(oldState)}
     , m_sequence{std::move(sequence)}
 {
-  if (!m_map)
+  if (!m_document)
   {
     throw tactile_error{"Cannot create stamp_sequence command from null map!"};
   }
@@ -26,11 +27,12 @@ void stamp_sequence::undo()
 {
   QUndoCommand::undo();
 
-  const auto layer = m_map->active_layer_id().value();
+  auto& map = m_document->raw();
+  const auto layer = map.active_layer_id().value();
 
-  m_map->select_layer(m_layer);
+  map.select_layer(m_layer);
 
-  auto* tileLayer = m_map->get_tile_layer(m_layer);
+  auto* tileLayer = map.get_tile_layer(m_layer);
   Q_ASSERT(tileLayer);
 
   for (const auto& [position, tile] : m_oldState)
@@ -38,7 +40,9 @@ void stamp_sequence::undo()
     tileLayer->set_tile(position, tile);
   }
 
-  m_map->select_layer(layer);
+  map.select_layer(layer);
+
+  emit m_document->redraw();
 }
 
 void stamp_sequence::redo()
@@ -47,17 +51,19 @@ void stamp_sequence::redo()
   // the command is executed when first inserted into the command stack.
   if (m_first)
   {
-    m_layer = m_map->active_layer_id().value();
+    m_layer = m_document->current_layer_id().value();
     m_first = false;
     return;
   }
 
   QUndoCommand::redo();
 
-  const auto layer = m_map->active_layer_id().value();
-  m_map->select_layer(m_layer);
+  auto& map = m_document->raw();
+  const auto layer = map.active_layer_id().value();
 
-  auto* tileLayer = m_map->get_tile_layer(m_layer);
+  map.select_layer(m_layer);
+
+  auto* tileLayer = map.get_tile_layer(m_layer);
   Q_ASSERT(tileLayer);
 
   for (const auto& [position, tile] : m_sequence)
@@ -65,7 +71,9 @@ void stamp_sequence::redo()
     tileLayer->set_tile(position, tile);
   }
 
-  m_map->select_layer(layer);
+  map.select_layer(layer);
+
+  emit m_document->redraw();
 }
 
 }  // namespace tactile::cmd

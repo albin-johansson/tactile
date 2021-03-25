@@ -4,7 +4,13 @@
 #include <vector>        // vector
 
 #include "command_id.hpp"
-#include "map.hpp"
+#include "forward_declare.hpp"
+#include "layer_id.hpp"
+#include "not_null.hpp"
+#include "position.hpp"
+#include "tile_id.hpp"
+
+TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
@@ -14,13 +20,13 @@ class bucket_fill final : public QUndoCommand
   /**
    * \brief Creates a `bucket_fill` instance.
    *
-   * \param map the associated map.
+   * \param document the associated map document.
    * \param position the origin position of the flood fill.
    * \param replacement the tile ID that will be used to replace target tiles.
    *
    * \since 0.1.0
    */
-  explicit bucket_fill(core::map* map,
+  explicit bucket_fill(not_null<core::map_document*> document,
                        const core::position& position,
                        tile_id replacement);
 
@@ -34,7 +40,7 @@ class bucket_fill final : public QUndoCommand
   }
 
  private:
-  core::map* m_map{};
+  core::map_document* m_document{};
   core::position m_origin;
   tile_id m_replacement;
   tile_id m_target{};

@@ -220,20 +220,20 @@ auto map_document::properties() const -> const property_map&
 
 void map_document::flood(const position& position, const tile_id replacement)
 {
-  m_delegate->execute<cmd::bucket_fill>(m_map.get(), position, replacement);
+  m_delegate->execute<cmd::bucket_fill>(this, position, replacement);
 }
 
 void map_document::add_stamp_sequence(vector_map<position, tile_id>&& oldState,
                                       vector_map<position, tile_id>&& sequence)
 {
-  m_delegate->execute<cmd::stamp_sequence>(m_map.get(),
+  m_delegate->execute<cmd::stamp_sequence>(this,
                                            std::move(oldState),
                                            std::move(sequence));
 }
 
 void map_document::add_erase_sequence(vector_map<position, tile_id>&& oldState)
 {
-  m_delegate->execute<cmd::erase_sequence>(m_map.get(), std::move(oldState));
+  m_delegate->execute<cmd::erase_sequence>(this, std::move(oldState));
 }
 
 void map_document::add_row()
