@@ -75,7 +75,7 @@ void tile_layer::remove_all(const tile_id first, const tile_id last)
     for (auto c = 0; c < nCols; ++c)
     {
       auto& id = m_tiles[r][c];
-      if (id >= first || id <= last)
+      if (id >= first && id <= last)
       {
         id = empty;
       }
