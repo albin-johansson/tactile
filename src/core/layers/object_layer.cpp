@@ -117,7 +117,7 @@ void object_layer::add_object(const object_id id, object obj)
 void object_layer::add_point(const object_id id, const double x, const double y)
 {
   Q_ASSERT(!has_object(id));
-  auto& [key, point] = m_objects.emplace(id, object{object_type::point});
+  auto& [key, point] = m_objects.emplace(id, object_type::point);
   point.set_x(x);
   point.set_y(y);
 }
@@ -129,7 +129,7 @@ void object_layer::add_rectangle(const object_id id,
                                  const double height)
 {
   Q_ASSERT(!has_object(id));
-  auto& [key, rect] = m_objects.emplace(id, object{object_type::rectangle});
+  auto& [key, rect] = m_objects.emplace(id, object_type::rectangle);
   rect.set_x(x);
   rect.set_y(y);
   rect.set_width(width);
