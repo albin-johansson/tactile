@@ -226,8 +226,6 @@ set(TACTILE_SOURCE_FILES
     gui/editor/map_tab_widget.hpp
     gui/editor/map_view.cpp
     gui/editor/map_view.hpp
-    gui/editor/render_map.cpp
-    gui/editor/render_map.hpp
     gui/editor/map_editor.ui
 
     gui/layer/layer_dock.cpp
@@ -260,6 +258,9 @@ set(TACTILE_SOURCE_FILES
     gui/properties/property_tree_view.hpp
     gui/properties/file_value_widget.ui
     gui/properties/properties_widget.ui
+
+    gui/rendering/render_map.cpp
+    gui/rendering/render_map.hpp
 
     gui/settings/color_preview_manager.cpp
     gui/settings/color_preview_manager.hpp
@@ -426,6 +427,7 @@ target_include_directories(libTactile
     PUBLIC gui/editor
     PUBLIC gui/layer
     PUBLIC gui/properties
+    PUBLIC gui/rendering
     PUBLIC gui/settings
     PUBLIC gui/startup
     PUBLIC gui/status

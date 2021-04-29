@@ -157,16 +157,27 @@ void render_tile_layer(QPainter& painter,
   painter.setOpacity(1);
 }
 
-void render_object_layer(QPainter& painter, const core::object_layer& layer)
+void render_object_layer(QPainter& painter,
+                         const core::object_layer& layer,
+                         const render_info& info)
 {
-  // TODO
+  painter.setOpacity(layer.opacity());
 
-  //  layer.each_object([&](const object_id id, const core::object& object) {
-  //    painter.setPen(Qt::red);
-  //    painter.drawRect(QRectF{object.x(), object.y(), 10, 10});
-  //  });
-  //
-  //  painter.setOpacity(1);
+  layer.each_object([&](const object_id, const core::object& object) {
+    painter.setPen(Qt::red);
+
+    if (object.is_rectangle())
+    {
+      painter.drawRect(
+          QRectF{object.x(), object.y(), object.width(), object.height()});
+    }
+    else if (object.is_point())
+    {
+      painter.drawEllipse(QPointF{object.x(), object.y()}, 2, 2);
+    }
+  });
+
+  painter.setOpacity(1);
 }
 
 void render_background(QPainter& painter, const render_info& info)
@@ -196,7 +207,7 @@ void render_layer(QPainter& painter,
   }
   else if (auto* objectLayer = core::as_object_layer(layer))
   {
-    render_object_layer(painter, *objectLayer);
+    render_object_layer(painter, *objectLayer, info);
   }
 }
 
@@ -204,6 +215,8 @@ void render_multi_preview(QPainter& painter, const render_info& info)
 {
   auto* tileset = info.tilesets->current_tileset();
   Q_ASSERT(tileset);
+
+  // TODO take scale into consideration
 
   const auto selection = tileset->get_selection().value();
   const auto mousePos = info.mousePosition.value();
@@ -226,8 +239,11 @@ void render_multi_preview(QPainter& painter, const render_info& info)
 void render_preview(QPainter& painter, const render_info& info)
 {
   auto* tileset = info.tilesets->current_tileset();
-  Q_ASSERT(tileset);  // FIXME this can fail sometimes upon undo/redo, maybe
-                      //  just return if there is no current tileset
+
+  if (!tileset)
+  {
+    return;
+  }
 
   painter.setOpacity(previewOpacity);
 
