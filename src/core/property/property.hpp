@@ -14,7 +14,7 @@ namespace detail {
 struct object_ref_t;
 }
 
-using object_ref = nenya::mirror_type<int, detail::object_ref_t>;
+using object_ref = nenya::strong_type<int, detail::object_ref_t>;
 
 template <typename T>
 concept is_property_type =

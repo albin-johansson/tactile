@@ -369,7 +369,6 @@ set(TACTILE_SOURCE_FILES
     util/file_handle.hpp
     util/forward_declare.hpp
     util/index_to_position.hpp
-    util/nenya.hpp
     util/set_style_sheet.cpp
     util/set_style_sheet.hpp
     util/setup_app.cpp
@@ -451,7 +450,8 @@ target_link_libraries(libTactile
     PUBLIC Qt6::Widgets
     PUBLIC Qt6::OpenGLWidgets
     PUBLIC Qt6::Gui
-    PUBLIC Qt6::Xml)
+    PUBLIC Qt6::Xml
+    PUBLIC libNenya)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(libTactile PRIVATE

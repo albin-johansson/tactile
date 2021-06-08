@@ -17,6 +17,8 @@ set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
 find_package(Qt6 COMPONENTS Core Widgets OpenGLWidgets Gui Xml REQUIRED)
 
+add_header_only_lib(libNenya ${LIBRARY_DIR}/nenya ${LIBRARY_DIR}/nenya/nenya.hpp)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)

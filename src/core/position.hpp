@@ -1,24 +1,20 @@
 #pragma once
 
-#include <cstddef>  // size_t
-#include <utility>  // pair
+#include <nenya.hpp>  // strong_type
+#include <utility>    // pair
 
 #include "algorithm.hpp"
-#include "nenya.hpp"
+#include "ints.hpp"
 
 namespace tactile {
-namespace detail {
 
-struct row_tag final
-{};
+namespace tags {
+struct row_tag;
+struct col_tag;
+}  // namespace tags
 
-struct col_tag final
-{};
-
-}  // namespace detail
-
-using row_t = nenya::mirror_type<int, detail::row_tag>;
-using col_t = nenya::mirror_type<int, detail::col_tag>;
+using row_t = nenya::strong_type<int, tags::row_tag>;
+using col_t = nenya::strong_type<int, tags::col_tag>;
 
 /**
  * \brief Creates a row value.
@@ -29,10 +25,10 @@ using col_t = nenya::mirror_type<int, detail::col_tag>;
  *
  * \since 0.1.0
  */
-[[nodiscard]] constexpr auto operator"" _row(unsigned long long value) noexcept
+[[nodiscard]] constexpr auto operator"" _row(const ulonglong value) noexcept
     -> row_t
 {
-  return row_t{static_cast<int>(value)};
+  return row_t{static_cast<row_t::value_type>(value)};
 }
 
 /**
@@ -44,10 +40,10 @@ using col_t = nenya::mirror_type<int, detail::col_tag>;
  *
  * \since 0.1.0
  */
-[[nodiscard]] constexpr auto operator"" _col(unsigned long long value) noexcept
+[[nodiscard]] constexpr auto operator"" _col(const ulonglong value) noexcept
     -> col_t
 {
-  return col_t{static_cast<int>(value)};
+  return col_t{static_cast<col_t::value_type>(value)};
 }
 
 namespace core {
@@ -231,9 +227,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto row_index() const noexcept -> std::size_t
+  [[nodiscard]] constexpr auto row_index() const noexcept -> usize
   {
-    return static_cast<std::size_t>(m_row);
+    return static_cast<usize>(m_row);
   }
 
   /**
@@ -245,9 +241,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto col_index() const noexcept -> std::size_t
+  [[nodiscard]] constexpr auto col_index() const noexcept -> usize
   {
-    return static_cast<std::size_t>(m_col);
+    return static_cast<usize>(m_col);
   }
 
   /**

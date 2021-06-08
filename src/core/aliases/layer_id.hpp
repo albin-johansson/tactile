@@ -1,18 +1,19 @@
 #pragma once
 
-#include "nenya.hpp"
+#include <nenya.hpp>  // strong_type
+
+#include "ints.hpp"
 
 namespace tactile {
-namespace detail {
 
-struct layer_id_t final
-{};
+namespace tags {
+struct layer_id_tag;
+}  // namespace tags
 
-}  // namespace detail
+using layer_id = nenya::strong_type<int, tags::layer_id_tag>;
 
-using layer_id = nenya::mirror_type<int, detail::layer_id_t>;
-
-constexpr auto operator""_layer(unsigned long long value) noexcept -> layer_id
+[[nodiscard]] constexpr auto operator""_layer(const ulonglong value) noexcept
+    -> layer_id
 {
   return layer_id{static_cast<layer_id::value_type>(value)};
 }
