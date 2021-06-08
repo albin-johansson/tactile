@@ -87,8 +87,8 @@ auto xml_engine::tiles(const object_type& object,
 
 auto xml_engine::property_type(const object_type& object) -> QString
 {
-  // The following is a quirk due to the fact that the type attribute can be
-  // omitted for string properties
+  /* The following is a quirk due to the fact that the type attribute can be
+     omitted for string properties */
   if (assume_string_property(object))
   {
     return TACTILE_QSTRING(u"string");
