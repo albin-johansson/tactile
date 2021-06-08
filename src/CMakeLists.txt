@@ -85,6 +85,7 @@ set(TACTILE_SOURCE_FILES
     core/algorithm/flood_fill.hpp
 
     core/aliases/czstring.hpp
+    core/aliases/ints.hpp
     core/aliases/layer_id.hpp
     core/aliases/map_id.hpp
     core/aliases/maybe.hpp
