@@ -3,11 +3,11 @@
 #include <QDir>       // QDir
 #include <QFileInfo>  // QFileInfo
 #include <concepts>   // same_as
-#include <cstddef>    // size_t
 #include <ranges>     // all_of
 #include <vector>     // vector
 
 #include "element_id.hpp"
+#include "ints.hpp"
 #include "map_document.hpp"
 #include "map_parse_concepts.hpp"
 #include "map_parse_data.hpp"
@@ -441,7 +441,7 @@ class map_parser final
     const auto props = m_engine.properties(obj);
 
     std::vector<property_data> result;
-    result.reserve(static_cast<std::size_t>(props.size()));
+    result.reserve(static_cast<usize>(props.size()));
 
     for (const auto& elem : props)
     {

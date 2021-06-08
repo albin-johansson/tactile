@@ -1,9 +1,9 @@
 #include "json_engine.hpp"
 
-#include <cstddef>  // size_t
 #include <utility>  // move
 
 #include "index_to_position.hpp"
+#include "ints.hpp"
 #include "json_utils.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
@@ -123,7 +123,7 @@ auto json_engine::collect(const object_type& root, const QStringView key)
   const auto array = root->value(key).toArray();
 
   std::vector<object_type> vector;
-  vector.reserve(static_cast<std::size_t>(array.size()));
+  vector.reserve(static_cast<usize>(array.size()));
 
   for (const auto& elem : array)
   {

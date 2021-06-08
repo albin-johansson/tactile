@@ -1,9 +1,9 @@
 #include "xml_engine.hpp"
 
-#include <cstddef>   // size_t
 #include <iterator>  // make_move_iterator
 
 #include "index_to_position.hpp"
+#include "ints.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 #include "to_property.hpp"
@@ -166,7 +166,7 @@ auto xml_engine::collect(const object_type& root, const QString& key)
   const auto count = elements.count();
 
   std::vector<object_type> result;
-  result.reserve(static_cast<std::size_t>(count));
+  result.reserve(static_cast<usize>(count));
 
   for (auto i = 0; i < count; ++i)
   {

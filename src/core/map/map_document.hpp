@@ -4,7 +4,6 @@
 #include <QImage>     // QImage
 #include <QString>    // QString
 #include <concepts>   // invocable
-#include <cstddef>    // size_t
 
 #include "document.hpp"
 #include "layer_id.hpp"

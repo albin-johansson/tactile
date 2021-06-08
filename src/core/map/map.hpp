@@ -2,7 +2,6 @@
 
 #include <QString>   // QString
 #include <concepts>  // invocable
-#include <cstddef>   // size_t
 #include <utility>   // pair, move
 
 #include "layer.hpp"
