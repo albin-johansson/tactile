@@ -50,9 +50,6 @@ set(TACTILE_TEST_FILES
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 
-add_library(libCatch INTERFACE)
-target_include_directories(libCatch INTERFACE catch)
-
 target_include_directories(testTactile
     PUBLIC unit
     PUBLIC ${TACTILE_ROOT_DIR}/src
@@ -66,7 +63,6 @@ target_include_directories(testTactile
 
 target_link_libraries(testTactile
     PUBLIC libTactile
-    PUBLIC libCatch
     PUBLIC gtest
     PUBLIC gmock)
 
