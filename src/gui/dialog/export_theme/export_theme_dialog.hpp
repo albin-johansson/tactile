@@ -5,15 +5,15 @@
 
 namespace tactile::gui {
 
-class export_theme_dialog final : public QFileDialog
+class ExportThemeDialog final : public QFileDialog
 {
  public:
-  explicit export_theme_dialog(QWidget* parent = nullptr);
+  explicit ExportThemeDialog(QWidget* parent = nullptr);
 
   template <std::invocable<const QString&> T>
-  static void spawn(T&& callable, QWidget* parent = nullptr)
+  static void Spawn(T&& callable, QWidget* parent = nullptr)
   {
-    export_theme_dialog dialog{parent};
+    ExportThemeDialog dialog{parent};
     if (dialog.exec())
     {
       Q_ASSERT(dialog.selectedFiles().size() == 1);

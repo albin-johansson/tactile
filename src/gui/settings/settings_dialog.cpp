@@ -285,7 +285,7 @@ void settings_dialog::import_new_theme()
 
 void settings_dialog::export_current_theme()
 {
-  export_theme_dialog::spawn(
+  ExportThemeDialog::Spawn(
       [this](const QString& path) {
         if (const auto theme = get_theme(m_ui->themeComboBox->currentText()))
         {

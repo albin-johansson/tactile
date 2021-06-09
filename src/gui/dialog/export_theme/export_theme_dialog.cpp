@@ -4,7 +4,7 @@
 
 namespace tactile::gui {
 
-export_theme_dialog::export_theme_dialog(QWidget* parent) : QFileDialog{parent}
+ExportThemeDialog::ExportThemeDialog(QWidget* parent) : QFileDialog{parent}
 {
   setWindowTitle(tr("Export theme as..."));
   setNameFilter(tr("Tactile theme file (*.json)"));
