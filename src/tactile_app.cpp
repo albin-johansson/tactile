@@ -197,7 +197,7 @@ void tactile_app::handle_pan_left()
 
 void tactile_app::handle_new_tileset()
 {
-  gui::tileset_dialog::spawn([this](const gui::tileset_info& info) {
+  TilesetDialog::Spawn([this](const TilesetInfo& info) {
     m_model->create_tileset(info.image,
                             info.path,
                             info.name,

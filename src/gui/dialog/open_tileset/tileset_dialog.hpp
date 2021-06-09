@@ -8,19 +8,18 @@
 #include <QValidator>  // QValidator
 #include <concepts>    // invocable
 
+#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
 
-namespace Ui {
-class tileset_dialog;
-}
+TACTILE_FORWARD_DECLARE_UI(TilesetDialog)
 
-namespace tactile::gui {
+namespace tactile {
 
-struct tileset_info final
+struct TilesetInfo final
 {
   QImage image;
   QString name;
@@ -30,7 +29,7 @@ struct tileset_info final
 };
 
 /**
- * \class tileset_dialog
+ * \class TilesetDialog
  *
  * \brief Represents the dialog used to add new tilesets.
  *
@@ -38,51 +37,51 @@ struct tileset_info final
  *
  * \headerfile tileset_dialog.hpp
  */
-class tileset_dialog final : public QDialog
+class TilesetDialog final : public QDialog
 {
   Q_OBJECT
 
  public:
-  explicit tileset_dialog(QWidget* parent = nullptr);
+  explicit TilesetDialog(QWidget* parent = nullptr);
 
-  ~tileset_dialog() noexcept override;
+  ~TilesetDialog() noexcept override;
 
-  template <std::invocable<const tileset_info&> T>
-  static void spawn(T&& callback)
+  template <std::invocable<const TilesetInfo&> T>
+  static void Spawn(T&& callback)
   {
-    tileset_dialog dialog;
+    TilesetDialog dialog;
     if (dialog.exec())
     {
-      const auto& image = dialog.m_image;
-      const auto tileWidth = dialog.m_tileWidth;
-      const auto tileHeight = dialog.m_tileHeight;
+      const auto& image = dialog.mImage;
+      const auto tileWidth = dialog.mTileWidth;
+      const auto tileHeight = dialog.mTileHeight;
       if (!image.isNull() && tileWidth && tileHeight)
       {
-        const auto& name = dialog.m_imageName;
-        const tileset_info info{
-            .image = dialog.m_image,
+        const auto& name = dialog.mImageName;
+        const TilesetInfo info{
+            .image = dialog.mImage,
             .name = name ? *name : TACTILE_QSTRING(u"Untitled"),
             .tileWidth = *tileWidth,
             .tileHeight = *tileHeight,
-            .path = QFileInfo{dialog.m_path}};
+            .path = QFileInfo{dialog.mPath}};
         callback(info);
       }
     }
   }
 
  private:
-  unique<Ui::tileset_dialog> m_ui;
-  QImage m_image{};
-  QString m_path{};
-  maybe<tile_width> m_tileWidth;
-  maybe<tile_height> m_tileHeight;
-  maybe<QString> m_imageName;
-  QIntValidator* m_validator;
-  QPixmap m_defaultImageIcon;
+  unique<Ui::TilesetDialog> mUi;
+  QImage mImage;
+  QString mPath;
+  maybe<tile_width> mTileWidth;
+  maybe<tile_height> mTileHeight;
+  maybe<QString> mImageName;
+  QIntValidator* mValidator;
+  QPixmap mDefaultImageIcon;
 
-  void validate_input();
+  void ValidateInput();
 
-  [[nodiscard]] auto is_valid() const -> bool;
+  [[nodiscard]] auto IsValid() const -> bool;
 
   /**
    * Returns a pointer to the "OK" button.
@@ -90,7 +89,7 @@ class tileset_dialog final : public QDialog
    * \return a pointer to the "OK" button.
    * \since 0.1.0
    */
-  [[nodiscard]] auto ok_button() -> QPushButton*;
+  [[nodiscard]] auto OkButton() -> QPushButton*;
 
   /**
    * Indicates whether or not the supplied line edit widget has valid input.
@@ -99,7 +98,7 @@ class tileset_dialog final : public QDialog
    * \return true if the line edit widget is valid; false otherwise.
    * \since 0.1.0
    */
-  [[nodiscard]] auto validate(const QLineEdit& edit) const -> QValidator::State;
+  [[nodiscard]] auto Validate(const QLineEdit& edit) const -> QValidator::State;
 
  private slots:
   void on_imageButton_pressed();
@@ -109,4 +108,4 @@ class tileset_dialog final : public QDialog
   void on_heightEdit_textChanged();
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

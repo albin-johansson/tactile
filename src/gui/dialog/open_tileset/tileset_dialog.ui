@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>tileset_dialog</class>
- <widget class="QDialog" name="tileset_dialog">
+ <class>TilesetDialog</class>
+ <widget class="QDialog" name="TilesetDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -206,7 +206,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>tileset_dialog</receiver>
+   <receiver>TilesetDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -222,7 +222,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>tileset_dialog</receiver>
+   <receiver>TilesetDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

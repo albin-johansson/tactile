@@ -2,13 +2,13 @@
 
 #include "tileset_image_file_dialog.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-auto open_tileset_image(QWidget* parent) -> maybe<QString>
+auto OpenTilesetImage(QWidget* parent) -> maybe<QString>
 {
   static QString cachedPath;
 
-  tileset_image_file_dialog dialog{parent};
+  TilesetImageFileDialog dialog{parent};
 
   if (!cachedPath.isEmpty())
   {
@@ -28,4 +28,4 @@ auto open_tileset_image(QWidget* parent) -> maybe<QString>
   }
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

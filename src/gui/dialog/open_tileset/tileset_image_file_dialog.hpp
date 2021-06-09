@@ -2,10 +2,10 @@
 
 #include <QFileDialog>  // QFileDialog
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
- * \class tileset_image_file_dialog
+ * \class TilesetImageFileDialog
  *
  * \brief Represents the file dialog used to locate tileset images.
  *
@@ -13,7 +13,7 @@ namespace tactile::gui {
  *
  * \headerfile tileset_image_file_dialog.hpp
  */
-class tileset_image_file_dialog final : public QFileDialog
+class TilesetImageFileDialog final : public QFileDialog
 {
  public:
   /**
@@ -26,7 +26,7 @@ class tileset_image_file_dialog final : public QFileDialog
    *
    * \since 0.2.0
    */
-  explicit tileset_image_file_dialog(QWidget* parent = nullptr);
+  explicit TilesetImageFileDialog(QWidget* parent = nullptr);
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

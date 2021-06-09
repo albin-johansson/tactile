@@ -7,96 +7,96 @@
 #include "tactile_error.hpp"
 #include "ui_tileset_dialog.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_dialog::tileset_dialog(QWidget* parent)
+TilesetDialog::TilesetDialog(QWidget* parent)
     : QDialog{parent}
-    , m_ui{init_ui<Ui::tileset_dialog>(this)}
-    , m_validator{new QIntValidator{1, 1'000, this}}
+    , mUi{init_ui<Ui::TilesetDialog>(this)}
+    , mValidator{new QIntValidator{1, 1'000, this}}
 {
-  m_defaultImageIcon = m_ui->imageLabel->pixmap(Qt::ReturnByValueConstant{});
-  if (m_defaultImageIcon.isNull())
+  mDefaultImageIcon = mUi->imageLabel->pixmap(Qt::ReturnByValueConstant{});
+  if (mDefaultImageIcon.isNull())
   {
     throw tactile_error{"Could not create default pixmap!"};
   }
 
-  ok_button()->setEnabled(false);
+  OkButton()->setEnabled(false);
 }
 
-tileset_dialog::~tileset_dialog() noexcept = default;
+TilesetDialog::~TilesetDialog() noexcept = default;
 
-void tileset_dialog::on_imageButton_pressed()
+void TilesetDialog::on_imageButton_pressed()
 {
-  if (const auto path = open_tileset_image(this); path)
+  if (const auto path = OpenTilesetImage(this); path)
   {
     const QFileInfo file{*path};
     const auto absoluteFile = file.absoluteFilePath();
 
-    m_image.load(file.absoluteFilePath());
+    mImage.load(file.absoluteFilePath());
 
-    if (m_image.isNull())
+    if (mImage.isNull())
     {
-      m_ui->imageLabel->setPixmap(m_defaultImageIcon);
-      m_ui->sourceEdit->setText(tr("Failed to open image!"));
+      mUi->imageLabel->setPixmap(mDefaultImageIcon);
+      mUi->sourceEdit->setText(tr("Failed to open image!"));
     }
     else
     {
-      m_ui->imageLabel->setPixmap(QPixmap{absoluteFile}.scaledToHeight(100));
-      m_ui->sourceEdit->setText(absoluteFile);
-      m_imageName = file.baseName();
-      m_path = absoluteFile;
+      mUi->imageLabel->setPixmap(QPixmap{absoluteFile}.scaledToHeight(100));
+      mUi->sourceEdit->setText(absoluteFile);
+      mImageName = file.baseName();
+      mPath = absoluteFile;
     }
 
-    ok_button()->setEnabled(is_valid());
+    OkButton()->setEnabled(IsValid());
   }
 }
 
-void tileset_dialog::on_widthEdit_textChanged()
+void TilesetDialog::on_widthEdit_textChanged()
 {
-  validate_input();
+  ValidateInput();
 }
 
-void tileset_dialog::on_heightEdit_textChanged()
+void TilesetDialog::on_heightEdit_textChanged()
 {
-  validate_input();
+  ValidateInput();
 }
 
-auto tileset_dialog::is_valid() const -> bool
+auto TilesetDialog::IsValid() const -> bool
 {
-  return validate(*m_ui->widthEdit) == QValidator::Acceptable &&
-         validate(*m_ui->heightEdit) == QValidator::Acceptable &&
-         !m_image.isNull();
+  return Validate(*mUi->widthEdit) == QValidator::Acceptable &&
+         Validate(*mUi->heightEdit) == QValidator::Acceptable &&
+         !mImage.isNull();
 }
 
-void tileset_dialog::validate_input()
+void TilesetDialog::ValidateInput()
 {
-  ok_button()->setEnabled(is_valid());
-  if (ok_button()->isEnabled())
+  OkButton()->setEnabled(IsValid());
+  if (OkButton()->isEnabled())
   {
     bool ok{};
 
-    if (const auto width = m_ui->widthEdit->displayText().toInt(&ok); ok)
+    if (const auto width = mUi->widthEdit->displayText().toInt(&ok); ok)
     {
-      m_tileWidth = tile_width{width};
+      mTileWidth = tile_width{width};
     }
 
-    if (const auto height = m_ui->heightEdit->displayText().toInt(&ok); ok)
+    if (const auto height = mUi->heightEdit->displayText().toInt(&ok); ok)
     {
-      m_tileHeight = tile_height{height};
+      mTileHeight = tile_height{height};
     }
   }
 }
 
-auto tileset_dialog::ok_button() -> QPushButton*
+auto TilesetDialog::OkButton() -> QPushButton*
 {
-  return m_ui->buttonBox->button(QDialogButtonBox::Ok);
+  return mUi->buttonBox->button(QDialogButtonBox::Ok);
 }
 
-auto tileset_dialog::validate(const QLineEdit& edit) const -> QValidator::State
+auto TilesetDialog::Validate(const QLineEdit& edit) const -> QValidator::State
 {
   auto unused = 0;
   auto txt = edit.displayText();
-  return m_validator->validate(txt, unused);
+  return mValidator->validate(txt, unused);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

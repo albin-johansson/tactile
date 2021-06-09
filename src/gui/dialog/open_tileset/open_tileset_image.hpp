@@ -5,7 +5,7 @@
 
 #include "maybe.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
  * \brief Spawns a dialog for selecting a tileset image and returns
@@ -17,7 +17,7 @@ namespace tactile::gui {
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto open_tileset_image(QWidget* parent = nullptr)
+[[nodiscard]] auto OpenTilesetImage(QWidget* parent = nullptr)
     -> maybe<QString>;
 
-}  // namespace tactile::gui
+}  // namespace tactile
