@@ -3,17 +3,17 @@
 #include <QFileDialog>  // QFileDialog
 #include <concepts>     // invocable
 
-namespace tactile::gui {
+namespace tactile {
 
-class open_map_dialog final : public QFileDialog
+class OpenMapDialog final : public QFileDialog
 {
  public:
-  explicit open_map_dialog(QWidget* parent = nullptr);
+  explicit OpenMapDialog(QWidget* parent = nullptr);
 
   template <std::invocable<const QString&> T>
-  static void spawn(T&& callback)
+  static void Spawn(T&& callback)
   {
-    open_map_dialog dialog;
+    OpenMapDialog dialog;
     if (dialog.exec())
     {
       for (const auto& file : dialog.selectedFiles())
@@ -24,4 +24,4 @@ class open_map_dialog final : public QFileDialog
   }
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

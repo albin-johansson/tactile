@@ -3,11 +3,12 @@
 #include <QStandardPaths>
 
 #include "preferences.hpp"
+#include "standard_paths.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-open_map_dialog::open_map_dialog(QWidget* parent) : QFileDialog{parent}
+OpenMapDialog::OpenMapDialog(QWidget* parent) : QFileDialog{parent}
 {
   setAcceptMode(QFileDialog::AcceptOpen);
   setFileMode(QFileDialog::ExistingFiles);
@@ -23,8 +24,7 @@ open_map_dialog::open_map_dialog(QWidget* parent) : QFileDialog{parent}
   }
 
   setWindowTitle(tr("Open..."));
-  setDirectory(
-      QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+  setDirectory(get_documents_location());
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

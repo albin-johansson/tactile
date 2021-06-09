@@ -409,7 +409,7 @@ void Window::OnAboutToCloseMap(const map_id id)
 
 void Window::OnOpenMapAction()
 {
-  open_map_dialog::spawn([this](const QString& path) {
+  OpenMapDialog::Spawn([this](const QString& path) {
     emit S_OpenMap(path);
   });
 }
