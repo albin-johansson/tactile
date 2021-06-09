@@ -2,21 +2,21 @@
 
 #include <QTabWidget>  // QTabWidget
 
-namespace tactile::gui {
+namespace tactile {
 
-class tab_widget : public QTabWidget
+class TabWidget : public QTabWidget
 {
   Q_OBJECT
 
  public:
-  explicit tab_widget(QWidget* parent = nullptr);
+  explicit TabWidget(QWidget* parent = nullptr);
 
-  void apply_stylesheet();
+  void ApplyStylesheet();
 
-  void edit_tab(int index);
+  void EditTab(int index);
 
  signals:
-  void edited_tab(int index);
+  void S_EditedTab(int index);
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

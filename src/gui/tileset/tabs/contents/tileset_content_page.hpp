@@ -12,7 +12,7 @@
 #include "tileset_tab_manager.hpp"
 
 TACTILE_FORWARD_DECLARE(Ui, tileset_content_page)
-TACTILE_FORWARD_DECLARE(tactile::gui, tab_widget)
+TACTILE_FORWARD_DECLARE(tactile, TabWidget)
 TACTILE_FORWARD_DECLARE(tactile::gui, tileset_tab)
 TACTILE_FORWARD_DECLARE(tactile::gui, tileset_tab_context_menu)
 
@@ -96,7 +96,7 @@ class tileset_content_page final : public QWidget
 
  private:
   unique<Ui::tileset_content_page> m_ui;
-  tab_widget* m_tabWidget{};
+  TabWidget* m_tabWidget{};
   tileset_tab_context_menu* m_contextMenu{};
   maybe<map_id> m_currentMap;
   std::map<map_id, tileset_tab_manager> m_tabManagers;

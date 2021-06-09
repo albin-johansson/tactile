@@ -5,7 +5,7 @@
 
 namespace tactile::gui {
 
-map_tab_widget::map_tab_widget(QWidget* parent) : tab_widget{parent}
+map_tab_widget::map_tab_widget(QWidget* parent) : TabWidget{parent}
 {
   setTabsClosable(true);
 
@@ -25,7 +25,7 @@ void map_tab_widget::handle_tab_close(const int index)
 
 void map_tab_widget::theme_changed()
 {
-  apply_stylesheet();
+  ApplyStylesheet();
 }
 
 void map_tab_widget::force_redraw()

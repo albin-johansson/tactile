@@ -18,7 +18,7 @@ namespace tactile::gui {
  *
  * \headerfile map_tab_widget.hpp
  */
-class map_tab_widget final : public tab_widget
+class map_tab_widget final : public TabWidget
 {
   Q_OBJECT
 

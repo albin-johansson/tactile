@@ -3,7 +3,7 @@
 #include "preferences.hpp"
 #include "tab_bar.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 namespace {
 
 inline constexpr auto styling =
@@ -32,23 +32,23 @@ inline constexpr auto styling =
 
 }  // namespace
 
-tab_widget::tab_widget(QWidget* parent) : QTabWidget{parent}
+TabWidget::TabWidget(QWidget* parent) : QTabWidget{parent}
 {
   auto* bar = new TabBar{this};
-  connect(bar, &TabBar::S_EditedTab, this, &tab_widget::edited_tab);
+  connect(bar, &TabBar::S_EditedTab, this, &TabWidget::S_EditedTab);
   setTabBar(bar);
-  apply_stylesheet();
+  ApplyStylesheet();
 }
 
-void tab_widget::apply_stylesheet()
+void TabWidget::ApplyStylesheet()
 {
   const auto accent = prefs::gfx::accent_color().value();
   setStyleSheet(QString{styling}.arg(accent.name(QColor::HexRgb)));
 }
 
-void tab_widget::edit_tab(const int index)
+void TabWidget::EditTab(const int index)
 {
   qobject_cast<TabBar*>(tabBar())->EditTab(index);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

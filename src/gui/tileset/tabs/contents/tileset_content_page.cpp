@@ -16,7 +16,7 @@ namespace tactile::gui {
 tileset_content_page::tileset_content_page(QWidget* parent)
     : QWidget{parent}
     , m_ui{init_ui<Ui::tileset_content_page>(this)}
-    , m_tabWidget{new tab_widget{this}}
+    , m_tabWidget{new TabWidget{this}}
     , m_contextMenu{new tileset_tab_context_menu{this}}
 {
   m_tabWidget->setTabsClosable(false);
@@ -31,7 +31,7 @@ tileset_content_page::tileset_content_page(QWidget* parent)
           &tileset_content_page::trigger_context_menu);
 
   connect(m_contextMenu, &tileset_tab_context_menu::rename, [this](int index) {
-    m_tabWidget->edit_tab(index);
+    m_tabWidget->EditTab(index);
   });
 
   connect(m_contextMenu, &tileset_tab_context_menu::remove, [this](int index) {
@@ -41,7 +41,7 @@ tileset_content_page::tileset_content_page(QWidget* parent)
     }
   });
 
-  connect(m_tabWidget, &tab_widget::edited_tab, [this](int index) {
+  connect(m_tabWidget, &TabWidget::S_EditedTab, [this](int index) {
     if (auto* tab = tab_from_index(index))
     {
       emit ui_rename_tileset(tab->id(), m_tabWidget->tabBar()->tabText(index));
