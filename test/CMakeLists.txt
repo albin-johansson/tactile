@@ -46,7 +46,6 @@ set(TACTILE_TEST_FILES
 
     unit/service/json_import_test.cpp
 
-    unit/util/nenya_test.cpp
     unit/util/vector_map_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})

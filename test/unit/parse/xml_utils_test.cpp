@@ -44,7 +44,7 @@ TEST(XmlUtils, DoubleAttr)
   const auto value = 27.6;
   EXPECT_EQ(value, xml::double_attr(elem, TACTILE_QSTRING(u"xyz"), value));
 
-  using mana_type = nenya::mirror_type<double, struct mana_t>;
+  using mana_type = nenya::strong_type<double, struct mana_t>;
   const mana_type mana{9.2};
   EXPECT_EQ(mana,
             xml::double_attr<mana_type>(elem, TACTILE_QSTRING(u"xyz"), mana));
