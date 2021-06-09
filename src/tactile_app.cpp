@@ -146,9 +146,9 @@ void tactile_app::open_map(const QString& path)
   }
   else
   {
-    gui::open_map_error_dialog dialog{m_window.get()};
-    dialog.set_file(QFileInfo{path});
-    dialog.set_error_message(to_message(error));
+    OpenMapErrorDialog dialog{m_window.get()};
+    dialog.SetFile(QFileInfo{path});
+    dialog.SetErrorMessage(to_message(error));
     dialog.exec();
   }
 }

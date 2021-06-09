@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>open_map_error_dialog</class>
- <widget class="QDialog" name="open_map_error_dialog">
+ <class>OpenMapErrorDialog</class>
+ <widget class="QDialog" name="OpenMapErrorDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -154,7 +154,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>open_map_error_dialog</receiver>
+   <receiver>OpenMapErrorDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -170,7 +170,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>open_map_error_dialog</receiver>
+   <receiver>OpenMapErrorDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

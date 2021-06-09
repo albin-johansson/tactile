@@ -3,29 +3,28 @@
 #include <QDialog>    // QDialog
 #include <QFileInfo>  // QFileInfo
 
+#include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class open_map_error_dialog;
-}
+TACTILE_FORWARD_DECLARE_UI(OpenMapErrorDialog)
 
-namespace tactile::gui {
+namespace tactile {
 
-class open_map_error_dialog final : public QDialog
+class OpenMapErrorDialog final : public QDialog
 {
   Q_OBJECT
 
  public:
-  explicit open_map_error_dialog(QWidget* parent = nullptr);
+  explicit OpenMapErrorDialog(QWidget* parent = nullptr);
 
-  ~open_map_error_dialog() noexcept override;
+  ~OpenMapErrorDialog() noexcept override;
 
-  void set_file(const QFileInfo& path);
+  void SetFile(const QFileInfo& path);
 
-  void set_error_message(const QString& message);
+  void SetErrorMessage(const QString& message);
 
  private:
-  unique<Ui::open_map_error_dialog> m_ui;
+  unique<Ui::OpenMapErrorDialog> mUi;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile
