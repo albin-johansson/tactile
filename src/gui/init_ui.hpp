@@ -4,7 +4,7 @@
 
 #include "smart_pointers.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
 // clang-format off
 template <typename T, typename U>
@@ -38,4 +38,4 @@ template <typename T, typename Self> requires ui_class<T, Self>
 
 // clang-format on
 
-}  // namespace tactile::gui
+}  // namespace tactile
