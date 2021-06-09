@@ -20,7 +20,7 @@ layer_widget::layer_widget(QWidget* parent)
     , m_view{new LayerListView{this}}
     , m_addLayerMenu{new add_layer_context_menu{this}}
     , m_widgetMenu{new layer_widget_context_menu{m_addLayerMenu, this}}
-    , m_itemMenu{new layer_item_context_menu{this}}
+    , m_itemMenu{new LayerItemContextMenu{this}}
 {
   m_ui->gridLayout->addWidget(m_view, 0, 1);
   m_ui->gridLayout->removeWidget(m_ui->opacitySlider);
@@ -49,22 +49,22 @@ layer_widget::layer_widget(QWidget* parent)
   connect(m_addLayerMenu, &add_layer_context_menu::add_object_layer,
           this, &layer_widget::new_object_layer_requested);
 
-  connect(m_itemMenu, &layer_item_context_menu::toggle_visibility,
+  connect(m_itemMenu, &LayerItemContextMenu::S_ToggleVisibility,
           m_ui->visibleButton, &QPushButton::toggle);
 
-  connect(m_itemMenu, &layer_item_context_menu::move_layer_up,
+  connect(m_itemMenu, &LayerItemContextMenu::S_MoveLayerUp,
           m_ui->upButton, &QPushButton::click);
 
-  connect(m_itemMenu, &layer_item_context_menu::move_layer_down,
+  connect(m_itemMenu, &LayerItemContextMenu::S_MoveLayerDown,
           m_ui->downButton, &QPushButton::click);
 
-  connect(m_itemMenu, &layer_item_context_menu::duplicate_layer,
+  connect(m_itemMenu, &LayerItemContextMenu::S_DuplicateLayer,
           m_ui->duplicateButton, &QPushButton::click);
 
-  connect(m_itemMenu, &layer_item_context_menu::remove_layer,
+  connect(m_itemMenu, &LayerItemContextMenu::S_RemoveLayer,
           m_ui->removeLayerButton, &QPushButton::click);
 
-  connect(m_itemMenu, &layer_item_context_menu::show_properties,
+  connect(m_itemMenu, &LayerItemContextMenu::S_ShowProperties,
           [this] { m_model->show_properties(m_view->currentIndex()); });
   // clang-format on
 }

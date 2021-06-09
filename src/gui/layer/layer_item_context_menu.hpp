@@ -2,40 +2,40 @@
 
 #include <QMenu>  // QMenu
 
-namespace tactile::gui {
+namespace tactile {
 
-class layer_item_context_menu final : public QMenu
+class LayerItemContextMenu final : public QMenu
 {
   Q_OBJECT
 
  public:
-  explicit layer_item_context_menu(QWidget* parent);
+  explicit LayerItemContextMenu(QWidget* parent);
 
-  void set_visibility_enabled(bool enabled);
+  void SetVisibilityEnabled(bool enabled);
 
-  void set_remove_enabled(bool enabled);
+  void SetRemoveEnabled(bool enabled);
 
-  void set_move_up_enabled(bool enabled);
+  void SetMoveUpEnabled(bool enabled);
 
-  void set_move_down_enabled(bool enabled);
+  void SetMoveDownEnabled(bool enabled);
 
  signals:
-  void toggle_visibility();
-  void show_properties();
-  void move_layer_up();
-  void move_layer_down();
-  void duplicate_layer();
-  void remove_layer();
+  void S_ToggleVisibility();
+  void S_ShowProperties();
+  void S_MoveLayerUp();
+  void S_MoveLayerDown();
+  void S_DuplicateLayer();
+  void S_RemoveLayer();
 
  private:
-  QAction* m_visibility{};
-  QAction* m_showProperties{};
-  [[maybe_unused]] QAction* m_sep0{};
-  QAction* m_moveUp{};
-  QAction* m_moveDown{};
-  [[maybe_unused]] QAction* m_sep1{};
-  QAction* m_duplicate{};
-  QAction* m_remove{};
+  QAction* mVisibility{};
+  QAction* mShowProperties{};
+  [[maybe_unused]] QAction* mSep0{};
+  QAction* mMoveUp{};
+  QAction* mMoveDown{};
+  [[maybe_unused]] QAction* mSep1{};
+  QAction* mDuplicate{};
+  QAction* mRemove{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile
