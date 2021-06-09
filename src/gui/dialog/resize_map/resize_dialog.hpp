@@ -6,18 +6,17 @@
 #include <QValidator>   // QValidator
 #include <concepts>     // invocable
 
+#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "position.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class resize_dialog;
-}
+TACTILE_FORWARD_DECLARE_UI(ResizeDialog)
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
- * \class resize_dialog
+ * \class ResizeDialog
  *
  * \brief Represents the dialog that is used to select the new size of the
  * current map.
@@ -26,7 +25,7 @@ namespace tactile::gui {
  *
  * \headerfile resize_dialog.hpp
  */
-class resize_dialog final : public QDialog
+class ResizeDialog final : public QDialog
 {
   Q_OBJECT
 
@@ -36,9 +35,9 @@ class resize_dialog final : public QDialog
    *
    * \since 0.1.0
    */
-  explicit resize_dialog(QWidget* parent = nullptr);
+  explicit ResizeDialog(QWidget* parent = nullptr);
 
-  ~resize_dialog() noexcept override;
+  ~ResizeDialog() noexcept override;
 
   /**
    * \brief Spawns a resize dialog and blocks the invoking thread.
@@ -55,13 +54,13 @@ class resize_dialog final : public QDialog
    * \since 0.1.0
    */
   template <std::invocable<row_t, col_t> T>
-  static void spawn(T&& callback)
+  static void Spawn(T&& callback)
   {
-    resize_dialog dialog;
+    ResizeDialog dialog;
     if (dialog.exec())
     {
-      const auto rows = dialog.m_chosenHeight;
-      const auto cols = dialog.m_chosenWidth;
+      const auto rows = dialog.mChosenHeight;
+      const auto cols = dialog.mChosenWidth;
       if (rows && cols)
       {
         callback(*rows, *cols);
@@ -70,10 +69,10 @@ class resize_dialog final : public QDialog
   }
 
  private:
-  unique<Ui::resize_dialog> m_ui;
-  QIntValidator* m_validator;
-  maybe<col_t> m_chosenWidth;
-  maybe<row_t> m_chosenHeight;
+  unique<Ui::ResizeDialog> mUi;
+  QIntValidator* mValidator;
+  maybe<col_t> mChosenWidth;
+  maybe<row_t> mChosenHeight;
 
   /**
    * \brief Connects a line edit widget to the dialog.
@@ -84,7 +83,7 @@ class resize_dialog final : public QDialog
    *
    * \since 0.1.0
    */
-  void connect_line_edit(QLineEdit* edit);
+  void ConnectLineEdit(QLineEdit* edit);
 
   /**
    * \brief Returns a pointer to the "OK" button.
@@ -93,7 +92,7 @@ class resize_dialog final : public QDialog
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto ok_button() const -> QPushButton*;
+  [[nodiscard]] auto OkButton() const -> QPushButton*;
 
   /**
    * \brief Indicates whether or not the supplied line edit widget has valid
@@ -105,7 +104,7 @@ class resize_dialog final : public QDialog
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto is_valid(const QLineEdit& edit) const -> QValidator::State;
+  [[nodiscard]] auto IsValid(const QLineEdit& edit) const -> QValidator::State;
 
  private slots:
   /**
@@ -113,7 +112,7 @@ class resize_dialog final : public QDialog
    *
    * \since 0.1.0
    */
-  void validate_input();
+  void ValidateInput();
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

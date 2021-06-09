@@ -144,7 +144,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>resize_dialog</receiver>
+   <receiver>ResizeDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -160,7 +160,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>resize_dialog</receiver>
+   <receiver>ResizeDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

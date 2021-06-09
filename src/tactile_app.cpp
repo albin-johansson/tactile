@@ -157,7 +157,7 @@ void tactile_app::handle_resize_map()
 {
   if (m_model->has_active_map())
   {
-    gui::resize_dialog::spawn([this](const row_t rows, const col_t cols) {
+    ResizeDialog::Spawn([this](const row_t rows, const col_t cols) {
       m_model->resize_map(rows, cols);
     });
   }
