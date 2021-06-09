@@ -33,7 +33,7 @@ auto write_file(const QFileInfo& path, const QJsonDocument& document) -> bool
   file.setDirectWriteFallback(true);
   file.open(QFile::WriteOnly | QFile::Text);
 
-  constexpr auto def = prefs::saves::readable_output_def();
+  constexpr auto def = prefs::saves::readable_output_def;
   const auto format = prefs::saves::readable_output().value_or(def)
                           ? QJsonDocument::Indented
                           : QJsonDocument::Compact;

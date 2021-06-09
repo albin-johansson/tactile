@@ -58,6 +58,17 @@ namespace window {
  */
 namespace gfx {
 
+// A map with user-defined names and an associated QPalette
+using theme_map = QMap<QString, QVariant>;
+
+inline constexpr QColor accent_color_def{84, 153, 199};  // #5499C7
+inline constexpr bool render_grid_def = false;
+inline constexpr bool tool_widget_visible_def = false;
+inline constexpr bool layer_widget_visible_def = true;
+inline constexpr bool tileset_widget_visible_def = true;
+inline constexpr bool properties_widget_visible_def = true;
+inline constexpr bool use_opengl_def = true;
+
 /**
  * \brief Returns a setting that indicates whether or not a grid should be
  * rendered on maps.
@@ -68,11 +79,6 @@ namespace gfx {
  */
 [[nodiscard]] auto render_grid() -> setting<bool>;
 
-[[nodiscard]] constexpr auto render_grid_def() noexcept -> bool
-{
-  return false;
-}
-
 /**
  * \brief Returns a setting that represents the theme of the application.
  *
@@ -81,9 +87,6 @@ namespace gfx {
  * \since 0.1.0
  */
 [[nodiscard]] auto theme() -> setting<QPalette>;
-
-// A map with user-defined names and an associated QPalette
-using theme_map = QMap<QString, QVariant>;
 
 [[nodiscard]] auto user_themes() -> setting<theme_map>;
 
@@ -99,8 +102,6 @@ using theme_map = QMap<QString, QVariant>;
 [[nodiscard]] auto theme_name() -> setting<QString>;
 
 [[nodiscard]] auto accent_color() -> setting<QColor>;
-
-//[[nodiscard]] auto theme_name_def() -> const QString&;
 
 [[nodiscard]] auto tool_widget_visible() -> setting<bool>;
 
@@ -120,74 +121,25 @@ void reset_tileset_widget_visible();
 
 void reset_properties_widget_visible();
 
-[[nodiscard]] constexpr auto accent_color_def() noexcept -> QColor
-{
-  return QColor{84, 153, 199};  // #5499C7
-}
-
-[[nodiscard]] constexpr auto tool_widget_visible_def() noexcept -> bool
-{
-  return false;
-}
-
-[[nodiscard]] constexpr auto layer_widget_visible_def() noexcept -> bool
-{
-  return true;
-}
-
-[[nodiscard]] constexpr auto tileset_widget_visible_def() noexcept -> bool
-{
-  return true;
-}
-
-[[nodiscard]] constexpr auto properties_widget_visible_def() noexcept -> bool
-{
-  return true;
-}
-
-[[nodiscard]] constexpr auto use_opengl_def() noexcept -> bool
-{
-  return true;
-}
-
 }  // namespace gfx
 
 namespace saves {
 
-[[nodiscard]] auto embed_tilesets() -> setting<bool>;
+inline constexpr bool embed_tilesets_def = false;
+inline constexpr bool generate_defaults_def = false;
+inline constexpr bool readable_output_def = true;
+inline constexpr int tile_width_def = 32;
+inline constexpr int tile_height_def = 32;
 
-[[nodiscard]] constexpr auto embed_tilesets_def() noexcept -> bool
-{
-  return false;
-}
+[[nodiscard]] auto embed_tilesets() -> setting<bool>;
 
 [[nodiscard]] auto generate_defaults() -> setting<bool>;
 
-[[nodiscard]] constexpr auto generate_defaults_def() noexcept -> bool
-{
-  return false;
-}
-
 [[nodiscard]] auto readable_output() -> setting<bool>;
-
-[[nodiscard]] constexpr auto readable_output_def() noexcept -> bool
-{
-  return true;
-}
 
 [[nodiscard]] auto tile_width() -> setting<int>;
 
-[[nodiscard]] constexpr auto tile_width_def() noexcept -> int
-{
-  return 32;
-}
-
 [[nodiscard]] auto tile_height() -> setting<int>;
-
-[[nodiscard]] constexpr auto tile_height_def() noexcept -> int
-{
-  return 32;
-}
 
 [[nodiscard]] auto default_format() -> setting<QString>;
 

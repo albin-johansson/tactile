@@ -198,17 +198,17 @@ void settings_dialog::apply()
 
 void settings_dialog::restore_general_defaults()
 {
-  m_ui->openglCheck->setChecked(gfx::use_opengl_def());
+  m_ui->openglCheck->setChecked(gfx::use_opengl_def);
 }
 
 void settings_dialog::restore_export_defaults()
 {
-  m_ui->embedTilesetsCheck->setChecked(saves::embed_tilesets_def());
-  m_ui->readableOutputCheck->setChecked(saves::readable_output_def());
+  m_ui->embedTilesetsCheck->setChecked(saves::embed_tilesets_def);
+  m_ui->readableOutputCheck->setChecked(saves::readable_output_def);
   m_ui->defaultFormatCombo->setCurrentText(saves::default_format_def());
-  m_ui->generateDefaultsCheck->setChecked(saves::generate_defaults_def());
-  m_ui->tileWidthEdit->setText(QString::number(saves::tile_width_def()));
-  m_ui->tileHeightEdit->setText(QString::number(saves::tile_height_def()));
+  m_ui->generateDefaultsCheck->setChecked(saves::generate_defaults_def);
+  m_ui->tileWidthEdit->setText(QString::number(saves::tile_width_def));
+  m_ui->tileHeightEdit->setText(QString::number(saves::tile_height_def));
 }
 
 void settings_dialog::fetch_current_settings()

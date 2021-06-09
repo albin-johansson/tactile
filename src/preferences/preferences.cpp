@@ -83,22 +83,22 @@ auto gfx::use_opengl() -> setting<bool>
 
 void gfx::reset_tool_widget_visible()
 {
-  tool_widget_visible() = tool_widget_visible_def();
+  tool_widget_visible() = tool_widget_visible_def;
 }
 
 void gfx::reset_layer_widget_visible()
 {
-  layer_widget_visible() = layer_widget_visible_def();
+  layer_widget_visible() = layer_widget_visible_def;
 }
 
 void gfx::reset_tileset_widget_visible()
 {
-  tileset_widget_visible() = tileset_widget_visible_def();
+  tileset_widget_visible() = tileset_widget_visible_def;
 }
 
 void gfx::reset_properties_widget_visible()
 {
-  properties_widget_visible() = properties_widget_visible_def();
+  properties_widget_visible() = properties_widget_visible_def;
 }
 
 auto saves::embed_tilesets() -> setting<bool>
@@ -146,23 +146,23 @@ auto saves::default_format_def() -> const QString&
 void validate()
 {
   // clang-format off
-  gfx::render_grid().set_if_missing(gfx::render_grid_def());
-  gfx::tool_widget_visible().set_if_missing(gfx::tool_widget_visible_def());
-  gfx::tileset_widget_visible().set_if_missing(gfx::tileset_widget_visible_def());
-  gfx::layer_widget_visible().set_if_missing(gfx::layer_widget_visible_def());
-  gfx::properties_widget_visible().set_if_missing(gfx::properties_widget_visible_def());
-  gfx::accent_color().set_if_missing(gfx::accent_color_def());
-  gfx::use_opengl().set_if_missing(gfx::use_opengl_def());
+  gfx::render_grid().set_if_missing(gfx::render_grid_def);
+  gfx::tool_widget_visible().set_if_missing(gfx::tool_widget_visible_def);
+  gfx::tileset_widget_visible().set_if_missing(gfx::tileset_widget_visible_def);
+  gfx::layer_widget_visible().set_if_missing(gfx::layer_widget_visible_def);
+  gfx::properties_widget_visible().set_if_missing(gfx::properties_widget_visible_def);
+  gfx::accent_color().set_if_missing(gfx::accent_color_def);
+  gfx::use_opengl().set_if_missing(gfx::use_opengl_def);
 
   // Note, the current theme is validated by the validate_themes-function
   gfx::user_themes().set_if_missing(gfx::user_themes_def());
   // clang-format on
 
-  saves::embed_tilesets().set_if_missing(saves::embed_tilesets_def());
-  saves::generate_defaults().set_if_missing(saves::generate_defaults_def());
-  saves::readable_output().set_if_missing(saves::readable_output_def());
-  saves::tile_width().set_if_missing(saves::tile_width_def());
-  saves::tile_height().set_if_missing(saves::tile_height_def());
+  saves::embed_tilesets().set_if_missing(saves::embed_tilesets_def);
+  saves::generate_defaults().set_if_missing(saves::generate_defaults_def);
+  saves::readable_output().set_if_missing(saves::readable_output_def);
+  saves::tile_width().set_if_missing(saves::tile_width_def);
+  saves::tile_height().set_if_missing(saves::tile_height_def);
   saves::default_format().set_if_missing(saves::default_format_def());
 }
 
