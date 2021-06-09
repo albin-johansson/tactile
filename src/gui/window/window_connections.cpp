@@ -68,7 +68,7 @@ void window_connections::init_actions()
   bind(m_ui->actionEraserTool,           &Window::OnToggleEraserAction);
   bind(m_ui->actionBucketTool,           &Window::OnToggleBucketAction);
 
-  bind(m_ui->actionAbout,   &about_dialog::spawn);
+  bind(m_ui->actionAbout,   &AboutDialog::Spawn);
   bind(m_ui->actionAboutQt, &QApplication::aboutQt);
 
   bind(m_ui->actionExit, &QApplication::exit);

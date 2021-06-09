@@ -3,19 +3,19 @@
 #include "init_ui.hpp"
 #include "ui_about_dialog.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-about_dialog::about_dialog(QWidget* parent)
+AboutDialog::AboutDialog(QWidget* parent)
     : QDialog{parent}
-    , m_ui{init_ui<Ui::about_dialog>(this)}
+    , mUi{init_ui<Ui::AboutDialog>(this)}
 {}
 
-about_dialog::~about_dialog() noexcept = default;
+AboutDialog::~AboutDialog() noexcept = default;
 
-void about_dialog::spawn()
+void AboutDialog::Spawn()
 {
-  about_dialog dialog;
+  AboutDialog dialog;
   dialog.exec();
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

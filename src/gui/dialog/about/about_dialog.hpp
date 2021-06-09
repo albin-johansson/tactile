@@ -2,16 +2,15 @@
 
 #include <QDialog>  // QDialog
 
+#include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class about_dialog;
-}
+TACTILE_FORWARD_DECLARE_UI(AboutDialog)
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
- * \class about_dialog
+ * \class AboutDialog
  *
  * \brief Represents the "About Tactile" dialog window that displays
  * information about the application.
@@ -22,17 +21,17 @@ namespace tactile::gui {
  *
  * \headerfile about_dialog.hpp
  */
-class about_dialog final : public QDialog
+class AboutDialog final : public QDialog
 {
  public:
-  explicit about_dialog(QWidget* parent = nullptr);
+  explicit AboutDialog(QWidget* parent = nullptr);
 
-  ~about_dialog() noexcept override;
+  ~AboutDialog() noexcept override;
 
-  static void spawn();
+  static void Spawn();
 
  private:
-  unique<Ui::about_dialog> m_ui;
+  [[maybe_unused]] unique<Ui::AboutDialog> mUi;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile
