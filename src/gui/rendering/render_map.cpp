@@ -265,10 +265,10 @@ void render_preview(QPainter& painter, const render_info& info)
 
 }  // namespace
 
-void render_map(QPainter& painter,
-                const core::map_document& document,
-                const maybe<core::position> mousePosition,
-                const QRectF& exposed)
+void RenderMap(QPainter& painter,
+               const core::map_document& document,
+               const maybe<core::position> mousePosition,
+               const QRectF& exposed)
 {
   if (exposed.isEmpty())
   {

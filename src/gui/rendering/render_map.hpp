@@ -11,9 +11,9 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile {
 
-void render_map(QPainter& painter,
-                const core::map_document& document,
-                maybe<core::position>,
-                const QRectF& exposed);
+void RenderMap(QPainter& painter,
+               const core::map_document& document,
+               maybe<core::position> mousePosition,
+               const QRectF& exposed);
 
 }  // namespace tactile

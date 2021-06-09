@@ -47,7 +47,7 @@ void MapItem::paint(QPainter* painter,
   Q_ASSERT(option);
   Q_ASSERT(mDocument);
 
-  render_map(*painter, *mDocument, mMousePosition, option->exposedRect);
+  RenderMap(*painter, *mDocument, mMousePosition, option->exposedRect);
 
   painter->setPen(Qt::red);
   painter->setPen(Qt::DashLine);
