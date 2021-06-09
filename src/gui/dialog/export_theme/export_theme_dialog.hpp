@@ -3,7 +3,7 @@
 #include <QFileDialog>  // QFileDialog
 #include <concepts>     // invocable
 
-namespace tactile::gui {
+namespace tactile {
 
 class ExportThemeDialog final : public QFileDialog
 {
@@ -22,4 +22,4 @@ class ExportThemeDialog final : public QFileDialog
   }
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

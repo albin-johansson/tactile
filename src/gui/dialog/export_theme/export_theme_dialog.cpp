@@ -2,7 +2,7 @@
 
 #include "standard_paths.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
 ExportThemeDialog::ExportThemeDialog(QWidget* parent) : QFileDialog{parent}
 {
@@ -12,4 +12,4 @@ ExportThemeDialog::ExportThemeDialog(QWidget* parent) : QFileDialog{parent}
   setDirectory(get_documents_location());
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
