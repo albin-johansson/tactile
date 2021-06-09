@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>resize_dialog</class>
- <widget class="QDialog" name="resize_dialog">
+ <class>ResizeDialog</class>
+ <widget class="QDialog" name="ResizeDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
