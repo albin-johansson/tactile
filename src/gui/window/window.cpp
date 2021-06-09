@@ -68,7 +68,7 @@ void Window::RestoreLayout()
 
 void Window::SaveAs()
 {
-  save_as_dialog::spawn(
+  SaveAsDialog::Spawn(
       [this](const QString& path) {
         emit S_SaveAs(path);
       },

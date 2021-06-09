@@ -1,13 +1,12 @@
 #include "save_as_dialog.hpp"
 
-#include <QStandardPaths>
-
 #include "preferences.hpp"
+#include "standard_paths.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-save_as_dialog::save_as_dialog(const QString& fileName, QWidget* parent)
+SaveAsDialog::SaveAsDialog(const QString& fileName, QWidget* parent)
     : QFileDialog{parent}
 {
   setAcceptMode(QFileDialog::AcceptSave);
@@ -23,9 +22,8 @@ save_as_dialog::save_as_dialog(const QString& fileName, QWidget* parent)
   }
 
   setWindowTitle(tr("Save As..."));
-  setDirectory(
-      QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+  setDirectory(get_documents_location());
   selectFile(fileName);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
