@@ -7,81 +7,82 @@
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, settings_dialog)
-TACTILE_FORWARD_DECLARE(tactile::gui, theme_options_context_menu)
+TACTILE_FORWARD_DECLARE_UI(SettingsDialog)
 
-namespace tactile::gui {
+TACTILE_FORWARD_DECLARE(tactile, ThemeOptionsContextMenu)
 
-struct settings_snapshot final
+namespace tactile {
+
+struct SettingsSnapshot final
 {
   QString theme;
   QString defaultFormat;
-  int tileWidth;
-  int tileHeight;
-  bool useOpenGL;
-  bool embedTilesets;
-  bool generateDefaults;
-  bool readableOutput;
+  int tileWidth{};
+  int tileHeight{};
+  bool useOpenGL{};
+  bool embedTilesets{};
+  bool generateDefaults{};
+  bool readableOutput{};
 };
 
-class settings_dialog final : public QDialog
+class SettingsDialog final : public QDialog
 {
   Q_OBJECT
 
  public:
-  explicit settings_dialog(QWidget* parent = nullptr);
+  explicit SettingsDialog(QWidget* parent = nullptr);
 
-  ~settings_dialog() noexcept override;
+  ~SettingsDialog() noexcept override;
 
  signals:
-  void reload_theme();
-  void reload_opengl(bool enabled);
+  void S_ReloadTheme();
+  void S_ReloadOpenGl(bool enabled);
 
  private:
-  unique<Ui::settings_dialog> m_ui;
-  theme_options_context_menu* m_themeOptionsContextMenu;
-  ColorPreviewManager* m_basicPreview;
-  ColorPreviewManager* m_disabledPreview;
-  settings_snapshot m_snapshot;
+  unique<Ui::SettingsDialog> mUi;
+  ThemeOptionsContextMenu* mThemeOptionsContextMenu{};
+  ColorPreviewManager* mBasicPreview{};
+  ColorPreviewManager* mDisabledPreview{};
+  SettingsSnapshot mSnapshot;
 
-  void update_general_components();
+  void UpdateGeneralComponents();
 
-  void update_export_components();
+  void UpdateExportComponents();
 
-  void update_theme_components();
+  void UpdateThemeComponents();
 
-  void update_theme_preview();
+  void UpdateThemePreview();
 
  private slots:
-  void handle_accept();
+  void FetchCurrentSettings();
 
-  void apply();
+  void OnAccept();
 
-  void restore_general_defaults();
+  void OnApply();
 
-  void restore_export_defaults();
+  void OnRestoreGeneralDefaults();
 
-  void fetch_current_settings();
+  void OnRestoreExportDefaults();
 
-  void pressed_theme_options_button();
+  void OnThemeOptionsButtonPressed();
 
-  void rename_current_theme();
+  void OnRenameCurrentTheme();
 
-  void duplicate_current_theme();
+  void OnDuplicateCurrentTheme();
 
-  void import_new_theme();
+  void OnImportNewTheme();
 
-  void export_current_theme();
+  void OnExportCurrentTheme();
 
-  void reset_current_theme();
+  void OnResetCurrentTheme();
 
-  void remove_current_theme();
+  void OnRemoveCurrentTheme();
 
-  void when_current_theme_changed(const QString& name);
+  void OnCurrentThemeChanged(const QString& name);
 
-  void theme_changed(QPalette::ColorGroup group,
-                     QPalette::ColorRole role,
-                     const QColor& color);
+  void OnThemeChanged(QPalette::ColorGroup group,
+                      QPalette::ColorRole role,
+                      const QColor& color);
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

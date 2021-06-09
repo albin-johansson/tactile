@@ -2,50 +2,50 @@
 
 #include "icons.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-theme_options_context_menu::theme_options_context_menu(QWidget* parent)
+ThemeOptionsContextMenu::ThemeOptionsContextMenu(QWidget* parent)
     : QMenu{parent}
-    , m_rename{addAction(icons::rename(), tr("Rename..."))}
-    , m_duplicate{addAction(icons::duplicate(), tr("Duplicate..."))}
-    , m_sep0{addSeparator()}
-    , m_export{addAction(icons::save_as(), tr("Export theme..."))}
-    , m_sep1{addSeparator()}
-    , m_reset{addAction(icons::reset(), tr("Reset"))}
-    , m_sep2{addSeparator()}
-    , m_remove{addAction(icons::remove(), tr("Remove"))}
+    , mRename{addAction(icons::rename(), tr("Rename..."))}
+    , mDuplicate{addAction(icons::duplicate(), tr("Duplicate..."))}
+    , mSep0{addSeparator()}
+    , mExport{addAction(icons::save_as(), tr("Export theme..."))}
+    , mSep1{addSeparator()}
+    , mReset{addAction(icons::reset(), tr("Reset"))}
+    , mSep2{addSeparator()}
+    , mRemove{addAction(icons::remove(), tr("Remove"))}
 {
   // clang-format off
-  connect(m_rename, &QAction::triggered,
-          this, &theme_options_context_menu::rename_theme);
+  connect(mRename, &QAction::triggered,
+          this, &ThemeOptionsContextMenu::S_RenameTheme);
 
-  connect(m_duplicate, &QAction::triggered,
-          this, &theme_options_context_menu::duplicate_theme);
+  connect(mDuplicate, &QAction::triggered,
+          this, &ThemeOptionsContextMenu::S_DuplicateTheme);
 
-  connect(m_export, &QAction::triggered,
-          this, &theme_options_context_menu::export_theme);
+  connect(mExport, &QAction::triggered,
+          this, &ThemeOptionsContextMenu::S_ExportTheme);
 
-  connect(m_reset, &QAction::triggered,
-          this, &theme_options_context_menu::reset_theme);
+  connect(mReset, &QAction::triggered,
+          this, &ThemeOptionsContextMenu::S_ResetTheme);
 
-  connect(m_remove, &QAction::triggered,
-          this, &theme_options_context_menu::remove_theme);
+  connect(mRemove, &QAction::triggered,
+          this, &ThemeOptionsContextMenu::S_RemoveTheme);
   // clang-format on
 }
 
-void theme_options_context_menu::set_rename_enabled(const bool enabled)
+void ThemeOptionsContextMenu::SetRenameEnabled(const bool enabled)
 {
-  m_rename->setEnabled(enabled);
+  mRename->setEnabled(enabled);
 }
 
-void theme_options_context_menu::set_reset_enabled(const bool enabled)
+void ThemeOptionsContextMenu::SetResetEnabled(const bool enabled)
 {
-  m_reset->setEnabled(enabled);
+  mReset->setEnabled(enabled);
 }
 
-void theme_options_context_menu::set_remove_enabled(const bool enabled)
+void ThemeOptionsContextMenu::SetRemoveEnabled(const bool enabled)
 {
-  m_remove->setEnabled(enabled);
+  mRemove->setEnabled(enabled);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

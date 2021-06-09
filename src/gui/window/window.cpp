@@ -485,13 +485,13 @@ void Window::OnToggleGridAction()
 
 void Window::OnOpenSettingsAction()
 {
-  settings_dialog settings{this};
+  SettingsDialog settings{this};
 
   // clang-format off
-  connect(&settings, &settings_dialog::reload_theme,
+  connect(&settings, &SettingsDialog::S_ReloadTheme,
           this, &Window::OnThemeChanged);
 
-  connect(&settings, &settings_dialog::reload_opengl,
+  connect(&settings, &SettingsDialog::S_ReloadOpenGl,
           this, &Window::OnReloadOpenGL);
   // clang-format on
 

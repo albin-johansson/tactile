@@ -2,37 +2,37 @@
 
 #include <QMenu>  // QMenu
 
-namespace tactile::gui {
+namespace tactile {
 
-class theme_options_context_menu final : public QMenu
+class ThemeOptionsContextMenu final : public QMenu
 {
   Q_OBJECT
 
  public:
-  explicit theme_options_context_menu(QWidget* parent = nullptr);
+  explicit ThemeOptionsContextMenu(QWidget* parent = nullptr);
 
-  void set_rename_enabled(bool enabled);
+  void SetRenameEnabled(bool enabled);
 
-  void set_reset_enabled(bool enabled);
+  void SetResetEnabled(bool enabled);
 
-  void set_remove_enabled(bool enabled);
+  void SetRemoveEnabled(bool enabled);
 
  signals:
-  void rename_theme();
-  void duplicate_theme();
-  void export_theme();
-  void reset_theme();
-  void remove_theme();
+  void S_RenameTheme();
+  void S_DuplicateTheme();
+  void S_ExportTheme();
+  void S_ResetTheme();
+  void S_RemoveTheme();
 
  private:
-  QAction* m_rename{};
-  QAction* m_duplicate{};
-  [[maybe_unused]] QAction* m_sep0{};
-  QAction* m_export{};
-  [[maybe_unused]] QAction* m_sep1{};
-  QAction* m_reset{};
-  [[maybe_unused]] QAction* m_sep2{};
-  QAction* m_remove{};
+  QAction* mRename{};
+  QAction* mDuplicate{};
+  [[maybe_unused]] QAction* mSep0{};
+  QAction* mExport{};
+  [[maybe_unused]] QAction* mSep1{};
+  QAction* mReset{};
+  [[maybe_unused]] QAction* mSep2{};
+  QAction* mRemove{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

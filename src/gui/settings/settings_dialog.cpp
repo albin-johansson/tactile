@@ -17,253 +17,258 @@
 #include "theme_options_context_menu.hpp"
 #include "ui_settings_dialog.h"
 
-namespace tactile::gui {
+namespace tactile {
 
 using namespace prefs;
 
-settings_dialog::settings_dialog(QWidget* parent)
+SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog{parent}
-    , m_ui{init_ui<Ui::settings_dialog>(this)}
-    , m_themeOptionsContextMenu{new theme_options_context_menu{this}}
-    , m_basicPreview{new ColorPreviewManager{m_ui->basicGroupLayout,
-                                               QPalette::Active,
-                                               m_ui->themeTab}}
-    , m_disabledPreview{new ColorPreviewManager{m_ui->disabledGroupLayout,
-                                                  QPalette::Disabled,
-                                                  m_ui->themeTab}}
+    , mUi{init_ui<Ui::SettingsDialog>(this)}
+    , mThemeOptionsContextMenu{new ThemeOptionsContextMenu{this}}
+    , mBasicPreview{new ColorPreviewManager{mUi->basicGroupLayout,
+                                            QPalette::Active,
+                                            mUi->themeTab}}
+    , mDisabledPreview{new ColorPreviewManager{mUi->disabledGroupLayout,
+                                               QPalette::Disabled,
+                                               mUi->themeTab}}
 {
   auto* validator = new QIntValidator{0, 9'999, this};
-  m_ui->tileWidthEdit->setValidator(validator);
-  m_ui->tileHeightEdit->setValidator(validator);
+  mUi->tileWidthEdit->setValidator(validator);
+  mUi->tileHeightEdit->setValidator(validator);
 
-  m_ui->themeComboBox->clear();
+  mUi->themeComboBox->clear();
 
   for (const auto& name : get_standard_theme_names())
   {
-    m_ui->themeComboBox->addItem(icons::tactile_logo(), name);
+    mUi->themeComboBox->addItem(icons::tactile_logo(), name);
   }
 
-  m_ui->themeComboBox->insertSeparator(m_ui->themeComboBox->count());
+  mUi->themeComboBox->insertSeparator(mUi->themeComboBox->count());
 
   for (const auto& name : get_user_theme_names())
   {
-    m_ui->themeComboBox->addItem(name);
+    mUi->themeComboBox->addItem(name);
   }
 
-  fetch_current_settings();
+  FetchCurrentSettings();
 
   // clang-format off
   connect(this, &QDialog::accepted,
-          this, &settings_dialog::handle_accept);
+          this, &SettingsDialog::OnAccept);
 
-  connect(m_ui->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked,
-          this, &settings_dialog::apply);
+  connect(mUi->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked,
+          this, &SettingsDialog::OnApply);
 
-  connect(m_ui->themeOptionsButton, &QPushButton::pressed,
-          this, &settings_dialog::pressed_theme_options_button);
+  connect(mUi->themeOptionsButton, &QPushButton::pressed,
+          this, &SettingsDialog::OnThemeOptionsButtonPressed);
 
-  connect(m_ui->generalRestoreDefaults, &QPushButton::clicked,
-          this, &settings_dialog::restore_general_defaults);
+  connect(mUi->generalRestoreDefaults, &QPushButton::clicked,
+          this, &SettingsDialog::OnRestoreGeneralDefaults);
 
-  connect(m_ui->exportRestoreDefaults, &QPushButton::clicked,
-          this, &settings_dialog::restore_export_defaults);
+  connect(mUi->exportRestoreDefaults, &QPushButton::clicked,
+          this, &SettingsDialog::OnRestoreExportDefaults);
 
-  connect(m_themeOptionsContextMenu, &theme_options_context_menu::rename_theme,
-          this, &settings_dialog::rename_current_theme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_RenameTheme,
+          this, &SettingsDialog::OnRenameCurrentTheme);
 
-  connect(m_themeOptionsContextMenu, &theme_options_context_menu::duplicate_theme,
-          this, &settings_dialog::duplicate_current_theme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_DuplicateTheme,
+          this, &SettingsDialog::OnDuplicateCurrentTheme);
 
-  connect(m_ui->addThemeButton, &QPushButton::pressed,
-          this, &settings_dialog::import_new_theme);
+  connect(mUi->addThemeButton, &QPushButton::pressed,
+          this, &SettingsDialog::OnImportNewTheme);
 
-  connect(m_themeOptionsContextMenu, &theme_options_context_menu::export_theme,
-          this, &settings_dialog::export_current_theme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_ExportTheme,
+          this, &SettingsDialog::OnExportCurrentTheme);
 
-  connect(m_themeOptionsContextMenu, &theme_options_context_menu::reset_theme,
-          this, &settings_dialog::reset_current_theme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_ResetTheme,
+          this, &SettingsDialog::OnResetCurrentTheme);
 
-  connect(m_themeOptionsContextMenu, &theme_options_context_menu::remove_theme,
-          this, &settings_dialog::remove_current_theme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_RemoveTheme,
+          this, &SettingsDialog::OnRemoveCurrentTheme);
 
-  connect(m_basicPreview, &ColorPreviewManager::S_ColorChanged,
+  connect(mBasicPreview, &ColorPreviewManager::S_ColorChanged,
           [this](const QPalette::ColorRole role, const QColor& color) {
-            theme_changed(QPalette::Active, role, color);
+            OnThemeChanged(QPalette::Active, role, color);
           });
 
-  connect(m_disabledPreview, &ColorPreviewManager::S_ColorChanged,
+  connect(mDisabledPreview, &ColorPreviewManager::S_ColorChanged,
           [this](const QPalette::ColorRole role, const QColor& color) {
-            theme_changed(QPalette::Disabled, role, color);
+            OnThemeChanged(QPalette::Disabled, role, color);
           });
 
-  connect(m_ui->themeComboBox, &QComboBox::currentTextChanged,
-          this, &settings_dialog::when_current_theme_changed);
+  connect(mUi->themeComboBox, &QComboBox::currentTextChanged,
+          this, &SettingsDialog::OnCurrentThemeChanged);
   // clang-format on
 
-  update_general_components();
-  update_export_components();
-  update_theme_components();
+  UpdateGeneralComponents();
+  UpdateExportComponents();
+  UpdateThemeComponents();
 }
 
-settings_dialog::~settings_dialog() noexcept = default;
+SettingsDialog::~SettingsDialog() noexcept = default;
 
-void settings_dialog::update_general_components()
+void SettingsDialog::UpdateGeneralComponents()
 {
-  m_ui->openglCheck->setChecked(m_snapshot.useOpenGL);
+  mUi->openglCheck->setChecked(mSnapshot.useOpenGL);
 }
 
-void settings_dialog::update_export_components()
+void SettingsDialog::UpdateExportComponents()
 {
-  m_ui->embedTilesetsCheck->setChecked(m_snapshot.embedTilesets);
-  m_ui->readableOutputCheck->setChecked(m_snapshot.readableOutput);
-  m_ui->defaultFormatCombo->setCurrentText(m_snapshot.defaultFormat);
-  m_ui->generateDefaultsCheck->setChecked(m_snapshot.generateDefaults);
-  m_ui->tileWidthEdit->setText(QString::number(m_snapshot.tileWidth));
-  m_ui->tileHeightEdit->setText(QString::number(m_snapshot.tileHeight));
+  mUi->embedTilesetsCheck->setChecked(mSnapshot.embedTilesets);
+  mUi->readableOutputCheck->setChecked(mSnapshot.readableOutput);
+  mUi->defaultFormatCombo->setCurrentText(mSnapshot.defaultFormat);
+  mUi->generateDefaultsCheck->setChecked(mSnapshot.generateDefaults);
+  mUi->tileWidthEdit->setText(QString::number(mSnapshot.tileWidth));
+  mUi->tileHeightEdit->setText(QString::number(mSnapshot.tileHeight));
 }
 
-void settings_dialog::update_theme_components()
+void SettingsDialog::UpdateThemeComponents()
 {
-  m_ui->themeComboBox->setCurrentText(m_snapshot.theme);
+  mUi->themeComboBox->setCurrentText(mSnapshot.theme);
 
-  ColorPreviewButton::UpdateColor(*m_ui->accentColorButton,
+  ColorPreviewButton::UpdateColor(*mUi->accentColorButton,
                                   prefs::gfx::accent_color().value());
 
-  update_theme_preview();
+  UpdateThemePreview();
 }
 
-void settings_dialog::update_theme_preview()
+void SettingsDialog::UpdateThemePreview()
 {
-  if (const auto palette = get_theme(m_ui->themeComboBox->currentText()))
+  if (const auto palette = get_theme(mUi->themeComboBox->currentText()))
   {
-    m_basicPreview->UpdatePreview(*palette);
-    m_disabledPreview->UpdatePreview(*palette);
+    mBasicPreview->UpdatePreview(*palette);
+    mDisabledPreview->UpdatePreview(*palette);
   }
 }
 
-void settings_dialog::handle_accept()
+void SettingsDialog::FetchCurrentSettings()
 {
-  set_theme(m_ui->themeComboBox->currentText());
-  emit reload_theme();
+  // General
+  mSnapshot.useOpenGL = gfx::use_opengl().value();
 
-  if (const auto useOpenGL = m_ui->openglCheck->isChecked();
-      useOpenGL != m_snapshot.useOpenGL)
+  // Export
+  mSnapshot.embedTilesets = saves::embed_tilesets().value();
+  mSnapshot.readableOutput = saves::readable_output().value();
+  mSnapshot.defaultFormat = saves::default_format().value();
+  mSnapshot.generateDefaults = saves::generate_defaults().value();
+  mSnapshot.tileWidth = saves::tile_width().value();
+  mSnapshot.tileHeight = saves::tile_height().value();
+
+  // Theme
+  mSnapshot.theme = gfx::theme_name().value();
+
+  QMapIterator iterator{gfx::user_themes().value()};
+  while (iterator.hasNext())
+  {
+    iterator.next();
+
+    const auto& name = iterator.key();
+    if (!mUi->themeComboBox->findText(name))
+    {
+      mUi->themeComboBox->addItem(name);
+    }
+  }
+}
+
+void SettingsDialog::OnAccept()
+{
+  set_theme(mUi->themeComboBox->currentText());
+  emit S_ReloadTheme();
+
+  if (const auto useOpenGL = mUi->openglCheck->isChecked();
+      useOpenGL != mSnapshot.useOpenGL)
   {
     gfx::use_opengl() = useOpenGL;
-    emit reload_opengl(useOpenGL);
+    emit S_ReloadOpenGl(useOpenGL);
   }
 
-  if (const auto defaultFormat = m_ui->defaultFormatCombo->currentText();
-      defaultFormat != m_snapshot.defaultFormat)
+  if (const auto defaultFormat = mUi->defaultFormatCombo->currentText();
+      defaultFormat != mSnapshot.defaultFormat)
   {
     saves::default_format() = defaultFormat;
   }
 
-  if (const auto embedTilesets = m_ui->embedTilesetsCheck->isChecked();
-      embedTilesets != m_snapshot.embedTilesets)
+  if (const auto embedTilesets = mUi->embedTilesetsCheck->isChecked();
+      embedTilesets != mSnapshot.embedTilesets)
   {
     saves::embed_tilesets() = embedTilesets;
   }
 
-  if (const auto genDefaults = m_ui->generateDefaultsCheck->isChecked();
-      genDefaults != m_snapshot.generateDefaults)
+  if (const auto genDefaults = mUi->generateDefaultsCheck->isChecked();
+      genDefaults != mSnapshot.generateDefaults)
   {
     saves::generate_defaults() = genDefaults;
   }
 
-  if (const auto readable = m_ui->readableOutputCheck->isChecked();
-      readable != m_snapshot.readableOutput)
+  if (const auto readable = mUi->readableOutputCheck->isChecked();
+      readable != mSnapshot.readableOutput)
   {
     saves::readable_output() = readable;
   }
 
-  if (const auto value = to_integer(m_ui->tileWidthEdit->text());
-      value != m_snapshot.tileWidth)
+  if (const auto value = to_integer(mUi->tileWidthEdit->text());
+      value != mSnapshot.tileWidth)
   {
     saves::tile_width() = *value;
   }
 
-  if (const auto value = to_integer(m_ui->tileHeightEdit->text());
-      value != m_snapshot.tileHeight)
+  if (const auto value = to_integer(mUi->tileHeightEdit->text());
+      value != mSnapshot.tileHeight)
   {
     saves::tile_height() = *value;
   }
 }
 
-void settings_dialog::apply()
+void SettingsDialog::OnApply()
 {
-  handle_accept();
-  fetch_current_settings();
+  OnAccept();
+  FetchCurrentSettings();
 }
 
-void settings_dialog::restore_general_defaults()
+void SettingsDialog::OnRestoreGeneralDefaults()
 {
-  m_ui->openglCheck->setChecked(gfx::use_opengl_def);
+  mUi->openglCheck->setChecked(gfx::use_opengl_def);
 }
 
-void settings_dialog::restore_export_defaults()
+void SettingsDialog::OnRestoreExportDefaults()
 {
-  m_ui->embedTilesetsCheck->setChecked(saves::embed_tilesets_def);
-  m_ui->readableOutputCheck->setChecked(saves::readable_output_def);
-  m_ui->defaultFormatCombo->setCurrentText(saves::default_format_def());
-  m_ui->generateDefaultsCheck->setChecked(saves::generate_defaults_def);
-  m_ui->tileWidthEdit->setText(QString::number(saves::tile_width_def));
-  m_ui->tileHeightEdit->setText(QString::number(saves::tile_height_def));
+  mUi->embedTilesetsCheck->setChecked(saves::embed_tilesets_def);
+  mUi->readableOutputCheck->setChecked(saves::readable_output_def);
+  mUi->defaultFormatCombo->setCurrentText(saves::default_format_def());
+  mUi->generateDefaultsCheck->setChecked(saves::generate_defaults_def);
+  mUi->tileWidthEdit->setText(QString::number(saves::tile_width_def));
+  mUi->tileHeightEdit->setText(QString::number(saves::tile_height_def));
 }
 
-void settings_dialog::fetch_current_settings()
+void SettingsDialog::OnThemeOptionsButtonPressed()
 {
-  // General
-  m_snapshot.useOpenGL = gfx::use_opengl().value();
+  auto pos = mUi->themeOptionsButton->pos();
 
-  // Export
-  m_snapshot.embedTilesets = saves::embed_tilesets().value();
-  m_snapshot.readableOutput = saves::readable_output().value();
-  m_snapshot.defaultFormat = saves::default_format().value();
-  m_snapshot.generateDefaults = saves::generate_defaults().value();
-  m_snapshot.tileWidth = saves::tile_width().value();
-  m_snapshot.tileHeight = saves::tile_height().value();
-
-  // Theme
-  m_snapshot.theme = gfx::theme_name().value();
-  for (const auto& name : gfx::user_themes().value().keys())
-  {
-    if (!m_ui->themeComboBox->findText(name))
-    {
-      m_ui->themeComboBox->addItem(name);
-    }
-  }
-}
-
-void settings_dialog::pressed_theme_options_button()
-{
-  auto pos = m_ui->themeOptionsButton->pos();
-
-  const auto size = m_ui->themeOptionsButton->size() / 2.0;
+  const auto size = mUi->themeOptionsButton->size() / 2.0;
   pos += QPoint{size.width(), size.height()};
 
-  m_themeOptionsContextMenu->exec(mapToGlobal(pos));
+  mThemeOptionsContextMenu->exec(mapToGlobal(pos));
 }
 
-void settings_dialog::rename_current_theme()
+void SettingsDialog::OnRenameCurrentTheme()
 {
   // TODO
 }
 
-void settings_dialog::duplicate_current_theme()
+void SettingsDialog::OnDuplicateCurrentTheme()
 {
-  const auto name = m_ui->themeComboBox->currentText();
+  const auto name = mUi->themeComboBox->currentText();
   if (const auto theme = get_theme(name))
   {
     const auto newName = name + tr(" (Copy)");
     if (register_theme(newName, *theme))
     {
-      m_ui->themeComboBox->addItem(newName);
+      mUi->themeComboBox->addItem(newName);
     }
   }
 }
 
-void settings_dialog::import_new_theme()
+void SettingsDialog::OnImportNewTheme()
 {
   ImportThemeDialog::Spawn(
       [this](const QString& path) {
@@ -272,7 +277,7 @@ void settings_dialog::import_new_theme()
         {
           if (register_theme(name, *palette))
           {
-            m_ui->themeComboBox->addItem(name);
+            mUi->themeComboBox->addItem(name);
           }
         }
         else
@@ -283,11 +288,11 @@ void settings_dialog::import_new_theme()
       this);
 }
 
-void settings_dialog::export_current_theme()
+void SettingsDialog::OnExportCurrentTheme()
 {
   ExportThemeDialog::Spawn(
       [this](const QString& path) {
-        if (const auto theme = get_theme(m_ui->themeComboBox->currentText()))
+        if (const auto theme = get_theme(mUi->themeComboBox->currentText()))
         {
           save_theme(path, *theme);
         }
@@ -295,34 +300,34 @@ void settings_dialog::export_current_theme()
       this);
 }
 
-void settings_dialog::reset_current_theme()
+void SettingsDialog::OnResetCurrentTheme()
 {
   // TODO
 }
 
-void settings_dialog::remove_current_theme()
+void SettingsDialog::OnRemoveCurrentTheme()
 {
-  remove_theme(m_ui->themeComboBox->currentText());
-  m_ui->themeComboBox->removeItem(m_ui->themeComboBox->currentIndex());
+  remove_theme(mUi->themeComboBox->currentText());
+  mUi->themeComboBox->removeItem(mUi->themeComboBox->currentIndex());
 }
 
-void settings_dialog::when_current_theme_changed(const QString& name)
+void SettingsDialog::OnCurrentThemeChanged(const QString& name)
 {
-  update_theme_preview();
+  UpdateThemePreview();
 
   const auto isStandardTheme = is_standard_theme(name);
-  m_themeOptionsContextMenu->set_reset_enabled(isStandardTheme);
-  m_themeOptionsContextMenu->set_rename_enabled(!isStandardTheme);
-  m_themeOptionsContextMenu->set_remove_enabled(!isStandardTheme);
+  mThemeOptionsContextMenu->SetResetEnabled(isStandardTheme);
+  mThemeOptionsContextMenu->SetRenameEnabled(!isStandardTheme);
+  mThemeOptionsContextMenu->SetRemoveEnabled(!isStandardTheme);
 }
 
-void settings_dialog::theme_changed(const QPalette::ColorGroup group,
-                                    const QPalette::ColorRole role,
+void SettingsDialog::OnThemeChanged(QPalette::ColorGroup group,
+                                    QPalette::ColorRole role,
                                     const QColor& color)
 {
   //  qDebug("theme_changed");
-  update_theme(m_ui->themeComboBox->currentText(), role, color, group);
+  update_theme(mUi->themeComboBox->currentText(), role, color, group);
   //  emit reload_theme();
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
