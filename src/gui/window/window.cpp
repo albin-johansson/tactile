@@ -25,7 +25,7 @@ Window::Window(QWidget* parent)
     , mUi{init_ui<Ui::window>(this)}
     , mEditor{new MapEditor{this}}
     , mToolDock{new tool_dock{this}}
-    , mLayerDock{new layer_dock{this}}
+    , mLayerDock{new LayerDock{this}}
     , mTilesetDock{new tileset_dock{this}}
     , mPropertiesDock{new properties_dock{this}}
     , mStatusBar{new status_bar{this}}
@@ -235,7 +235,7 @@ void Window::OnSwitchedMap(const map_id map,
                            not_null<core::map_document*> document)
 {
   mTilesetDock->switched_map(map);
-  mLayerDock->switched_map(document);
+  mLayerDock->OnSwitchedMap(document);
   mPropertiesDock->switched_map(document);
   mStatusBar->switched_map(*document);
 }
@@ -256,7 +256,7 @@ void Window::OnNewMapAdded(not_null<core::map_document*> document,
 
   mUi->actionSave->setDisabled(document->is_clean());
   mTilesetDock->added_map(id, *document);
-  mLayerDock->switched_map(document);
+  mLayerDock->OnSwitchedMap(document);
   mPropertiesDock->switched_map(document);
   mStatusBar->switched_map(*document);
 }

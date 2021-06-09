@@ -8,74 +8,65 @@
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, layer_widget)
-
+TACTILE_FORWARD_DECLARE_UI(LayerWidget)
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 TACTILE_FORWARD_DECLARE(tactile::core, layer)
 TACTILE_FORWARD_DECLARE(tactile::vm, layer_model)
-TACTILE_FORWARD_DECLARE(tactile::gui, layer_list_view)
-TACTILE_FORWARD_DECLARE(tactile::gui, layer_item)
-TACTILE_FORWARD_DECLARE(tactile::gui, add_layer_context_menu)
-TACTILE_FORWARD_DECLARE(tactile::gui, layer_item_context_menu)
-TACTILE_FORWARD_DECLARE(tactile::gui, layer_widget_context_menu)
+TACTILE_FORWARD_DECLARE(tactile, LayerListView)
+TACTILE_FORWARD_DECLARE(tactile, LayerItem)
+TACTILE_FORWARD_DECLARE(tactile, AddLayerContextMenu)
+TACTILE_FORWARD_DECLARE(tactile, LayerItemContextMenu)
+TACTILE_FORWARD_DECLARE(tactile, LayerWidgetContextMenu)
 
-namespace tactile::gui {
+namespace tactile {
 
-class layer_widget final : public QWidget
+class LayerWidget final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit layer_widget(QWidget* visible = nullptr);
+  explicit LayerWidget(QWidget* visible = nullptr);
 
-  ~layer_widget() noexcept override;
+  ~LayerWidget() noexcept override;
 
  public slots:
-  void selected_map(not_null<core::map_document*> document);
+  void OnSwitchedMap(not_null<core::map_document*> document);
 
  private:
-  unique<Ui::layer_widget> m_ui;
-  layer_list_view* m_view{};
-  add_layer_context_menu* m_addLayerMenu{};
-  layer_widget_context_menu* m_widgetMenu{};
-  layer_item_context_menu* m_itemMenu{};
-  unique<vm::layer_model> m_model;
+  unique<Ui::LayerWidget> mUi;
+  LayerListView* mView{};
+  AddLayerContextMenu* mAddLayerMenu{};
+  LayerWidgetContextMenu* mWidgetMenu{};
+  LayerItemContextMenu* mItemMenu{};
+  unique<vm::layer_model> mModel;
 
-  void update_actions(const maybe<QModelIndex>& selected);
+  void UpdateActions(const maybe<QModelIndex>& selected);
 
  private slots:
-  void changed_layer_opacity(layer_id id, double opacity);
+  void OnChangedLayerOpacity(layer_id id, double opacity);
+  void OnChangedLayerName(layer_id id, const QString& name);
+  void OnChangedLayerVisibility(layer_id id, bool visible);
+  void OnSelectedLayer(layer_id id, const core::layer& layer);
 
-  void changed_layer_name(layer_id id, const QString& name);
+  void OnSpawnContextMenu(const QPoint& pos);
 
-  void changed_layer_visibility(layer_id id, bool visible);
+  void OnViewChangedSelection(maybe<QModelIndex> selected, maybe<QModelIndex>);
+  void OnViewChangedName(const QModelIndex& index, const QString& name);
 
-  void selected_layer(layer_id id, const core::layer& layer);
+  void OnNewTileLayerRequested();
+  void OnNewObjectLayerRequested();
 
-  void spawn_context_menu(const QPoint& pos);
+  void OnOpacitySliderValueChanged(int value);
 
-  void when_view_changed_selection(maybe<QModelIndex> selected,
-                                   maybe<QModelIndex>);
+  void OnNewLayerButtonPressed();
+  void OnRemoveLayerButtonPressed();
 
-  void when_view_changed_name(const QModelIndex& index, const QString& name);
+  void OnUpButtonPressed();
+  void OnDownButtonPressed();
 
-  void new_tile_layer_requested();
+  void OnDuplicateButtonPressed();
 
-  void new_object_layer_requested();
-
-  [[maybe_unused]] void on_opacitySlider_valueChanged(int value);
-
-  [[maybe_unused]] void on_newLayerButton_pressed();
-
-  [[maybe_unused]] void on_removeLayerButton_pressed();
-
-  [[maybe_unused]] void on_upButton_pressed();
-
-  [[maybe_unused]] void on_downButton_pressed();
-
-  [[maybe_unused]] void on_duplicateButton_pressed();
-
-  [[maybe_unused]] void on_visibleButton_toggled(bool visible);
+  void OnVisibleButtonToggled(bool visible);
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

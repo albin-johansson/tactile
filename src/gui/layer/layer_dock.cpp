@@ -3,22 +3,22 @@
 #include "layer_widget.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-layer_dock::layer_dock(QWidget* parent)
+LayerDock::LayerDock(QWidget* parent)
     : DockWidget{parent}
-    , m_widget{new layer_widget{this}}
+    , mWidget{new LayerWidget{this}}
 {
   setObjectName(TACTILE_QSTRING(u"layer_dock"));
   setWindowTitle(tr("Layers"));
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setContentsMargins(0, 0, 0, 0);
-  setWidget(m_widget);
+  setWidget(mWidget);
 }
 
-void layer_dock::switched_map(not_null<core::map_document*> document)
+void LayerDock::OnSwitchedMap(not_null<core::map_document*> document)
 {
-  m_widget->selected_map(document);
+  mWidget->OnSwitchedMap(document);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

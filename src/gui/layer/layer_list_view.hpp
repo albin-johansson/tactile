@@ -13,7 +13,7 @@ class LayerListView final : public QListView
  public:
   explicit LayerListView(QWidget* parent = nullptr);
 
-  void SelectQuietly(const QModelIndex& index);  // TODO remove?
+  void SelectQuietly(const QModelIndex& index);
 
  signals:
   void S_SelectionChanged(const maybe<QModelIndex>& selected,
