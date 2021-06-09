@@ -15,10 +15,10 @@
 
 namespace tactile::gui {
 
-void window_connections::init(window* window)
+void window_connections::init(Window* window)
 {
   m_window = window;
-  m_ui = m_window->m_ui.get();
+  m_ui = m_window->mUi.get();
 
   init_actions();
   init_dock_connections();
@@ -36,32 +36,41 @@ void window_connections::init_actions()
 
   // FIXME connect(m_statusBar, &status_bar::select_layer_request, this, &window::ui_select_layer);
 
-  bind(m_ui->actionUndo, &window::ui_undo);
-  bind(m_ui->actionRedo, &window::ui_redo);
-  bind(m_ui->actionSave, &window::ui_save);
-  bind(m_ui->actionNewMap, &window::ui_new_map);
-  bind(m_ui->actionAddTileset, &window::ui_add_tileset);
-  bind(m_ui->actionAddRow, &window::ui_add_row);
-  bind(m_ui->actionAddCol, &window::ui_add_col);
-  bind(m_ui->actionRemoveRow, &window::ui_remove_row);
-  bind(m_ui->actionRemoveCol, &window::ui_remove_col);
-  bind(m_ui->actionResizeMap, &window::ui_resize_map);
-  bind(m_ui->actionPanUp, &window::ui_pan_up);
-  bind(m_ui->actionPanDown, &window::ui_pan_down);
-  bind(m_ui->actionPanRight, &window::ui_pan_right);
-  bind(m_ui->actionPanLeft, &window::ui_pan_left);
-  bind(m_ui->actionZoomIn, &window::ui_increase_zoom);
-  bind(m_ui->actionZoomOut, &window::ui_decrease_zoom);
-  bind(m_ui->actionResetZoom, &window::ui_reset_tile_size);
-  bind(m_ui->actionCenterCamera, &window::center_viewport);
-  bind(m_ui->actionResetLayout, &window::reset_dock_layout);
-  bind(m_ui->actionCloseMap, &window::closed_map);
-  bind(m_ui->actionTilesetsVisibility, &window::tileset_widget_visibility_changed);
-  bind(m_ui->actionToolsVisibility, &window::tool_widget_visibility_changed);
-  bind(m_ui->actionLayersVisibility, &window::layer_widget_visibility_changed);
-  bind(m_ui->actionPropertiesVisibility, &window::properties_widget_visibility_changed);
-  bind(m_ui->actionAbout, &about_dialog::spawn);
+  bind(m_ui->actionUndo,       &Window::S_Undo);
+  bind(m_ui->actionRedo,       &Window::S_Redo);
+  bind(m_ui->actionSave,       &Window::S_Save);
+  bind(m_ui->actionNewMap,     &Window::S_NewMap);
+  bind(m_ui->actionAddTileset, &Window::S_AddTileset);
+  bind(m_ui->actionAddRow,     &Window::S_AddRow);
+  bind(m_ui->actionAddCol,     &Window::S_AddCol);
+  bind(m_ui->actionRemoveRow,  &Window::S_RemoveRow);
+  bind(m_ui->actionRemoveCol,  &Window::S_RemoveCol);
+  bind(m_ui->actionResizeMap,  &Window::S_ResizeMap);
+  bind(m_ui->actionPanUp,      &Window::S_PanUp);
+  bind(m_ui->actionPanDown,    &Window::S_PanDown);
+  bind(m_ui->actionPanRight,   &Window::S_PanRight);
+  bind(m_ui->actionPanLeft,    &Window::S_PanLeft);
+  bind(m_ui->actionZoomIn,     &Window::S_ZoomIn);
+  bind(m_ui->actionZoomOut,    &Window::S_ZoomOut);
+  bind(m_ui->actionResetZoom,  &Window::S_ResetZoom);
+
+  bind(m_ui->actionCenterCamera,         &Window::CenterViewport);
+  bind(m_ui->actionResetLayout,          &Window::OnResetLayoutAction);
+  bind(m_ui->actionOpenMap,              &Window::OnOpenMapAction);
+  bind(m_ui->actionCloseMap,             &Window::OnCloseMapAction);
+  bind(m_ui->actionTilesetsVisibility,   &Window::OnTilesetWidgetVisibilityChanged);
+  bind(m_ui->actionToolsVisibility,      &Window::OnToolWidgetVisibilityChanged);
+  bind(m_ui->actionLayersVisibility,     &Window::OnLayerWidgetVisibilityChanged);
+  bind(m_ui->actionPropertiesVisibility, &Window::OnPropertiesWidgetVisibilityChanged);
+  bind(m_ui->actionSettings,             &Window::OnOpenSettingsAction);
+  bind(m_ui->actionToggleGrid,           &Window::OnToggleGridAction);
+  bind(m_ui->actionStampTool,            &Window::OnToggleStampAction);
+  bind(m_ui->actionEraserTool,           &Window::OnToggleEraserAction);
+  bind(m_ui->actionBucketTool,           &Window::OnToggleBucketAction);
+
+  bind(m_ui->actionAbout,   &about_dialog::spawn);
   bind(m_ui->actionAboutQt, &QApplication::aboutQt);
+
   bind(m_ui->actionExit, &QApplication::exit);
   // clang-format on
 }
@@ -73,56 +82,57 @@ void window_connections::init_dock_connections()
     connect(dock, &QDockWidget::visibilityChanged, action, &QAction::setChecked);
   };
 
-  bindVisibility(m_window->m_toolDock, m_ui->actionToolsVisibility);
-  bindVisibility(m_window->m_tilesetDock, m_ui->actionTilesetsVisibility);
-  bindVisibility(m_window->m_layerDock, m_ui->actionLayersVisibility);
+  bindVisibility(m_window->mToolDock, m_ui->actionToolsVisibility);
+  bindVisibility(m_window->mTilesetDock, m_ui->actionTilesetsVisibility);
+  bindVisibility(m_window->mLayerDock, m_ui->actionLayersVisibility);
 
   const auto bindClosed = [](auto&& dock, auto&& callable) {
     connect(dock, &tool_dock::closed, callable);
   };
 
-  bindClosed(m_window->m_toolDock, [] { prefs::gfx::tool_widget_visible() = false; });
-  bindClosed(m_window->m_layerDock, [] { prefs::gfx::layer_widget_visible() = false; });
-  bindClosed(m_window->m_tilesetDock, [] { prefs::gfx::tileset_widget_visible() = false; });
-  bindClosed(m_window->m_propertiesDock, [] { prefs::gfx::properties_widget_visible() = false; });
+  bindClosed(m_window->mToolDock, [] { prefs::gfx::tool_widget_visible() = false; });
+  bindClosed(m_window->mLayerDock, [] { prefs::gfx::layer_widget_visible() = false; });
+  bindClosed(m_window->mTilesetDock, [] { prefs::gfx::tileset_widget_visible() = false; });
+  bindClosed(m_window->mPropertiesDock, [] { prefs::gfx::properties_widget_visible() = false; });
   // clang-format on
 }
 
 void window_connections::init_map_editor()
 {
   // clang-format off
-  auto* editor = m_window->m_editor;
-  connect(editor, &map_editor::ui_select_map, m_window, &window::ui_select_map);
-  connect(editor, &map_editor::ui_remove_map, m_window, &window::when_about_to_close_map);
-  connect(editor, &map_editor::increase_zoom, m_window, &window::ui_increase_zoom);
-  connect(editor, &map_editor::decrease_zoom, m_window, &window::ui_decrease_zoom);
-  connect(editor, &map_editor::mouse_pressed, m_window, &window::mouse_pressed);
-  connect(editor, &map_editor::mouse_released, m_window, &window::mouse_released);
-  connect(editor, &map_editor::mouse_entered, m_window, &window::when_mouse_entered);
-  connect(editor, &map_editor::mouse_exited, m_window, &window::when_mouse_exited);
-  connect(editor, &map_editor::mouse_moved, m_window, &window::when_mouse_moved);
+  auto* editor = m_window->mEditor;
+  connect(editor, &map_editor::ui_select_map, m_window, &Window::S_SelectMap);
+  connect(editor, &map_editor::increase_zoom, m_window, &Window::S_ZoomIn);
+  connect(editor, &map_editor::decrease_zoom, m_window, &Window::S_ZoomOut);
+  connect(editor, &map_editor::mouse_pressed, m_window, &Window::S_MousePressed);
+  connect(editor, &map_editor::mouse_released, m_window, &Window::S_MouseReleased);
+
+  connect(editor, &map_editor::ui_remove_map, m_window, &Window::OnAboutToCloseMap);
+  connect(editor, &map_editor::mouse_entered, m_window, &Window::OnMouseEntered);
+  connect(editor, &map_editor::mouse_exited, m_window, &Window::OnMouseExited);
+  connect(editor, &map_editor::mouse_moved, m_window, &Window::OnMouseMoved);
   // clang-format on
 }
 
 void window_connections::init_tileset_dock()
 {
   // clang-format off
-  auto* dock = m_window->m_tilesetDock;
-  connect(dock, &tileset_dock::ui_add_tileset, m_window, &window::ui_add_tileset);
-  connect(dock, &tileset_dock::ui_select_tileset, m_window, &window::ui_select_tileset);
-  connect(dock, &tileset_dock::ui_remove_tileset, m_window, &window::ui_remove_tileset);
-  connect(dock, &tileset_dock::ui_rename_tileset, m_window, &window::ui_rename_tileset);
-  connect(dock, &tileset_dock::ui_set_tileset_selection, m_window, &window::ui_set_tileset_selection);
+  auto* dock = m_window->mTilesetDock;
+  connect(dock, &tileset_dock::ui_add_tileset, m_window, &Window::S_AddTileset);
+  connect(dock, &tileset_dock::ui_select_tileset, m_window, &Window::S_SelectTileset);
+  connect(dock, &tileset_dock::ui_remove_tileset, m_window, &Window::S_RemoveTileset);
+  connect(dock, &tileset_dock::ui_rename_tileset, m_window, &Window::S_RenameTileset);
+  connect(dock, &tileset_dock::ui_set_tileset_selection, m_window, &Window::S_SetTilesetSelection);
   // clang-format on
 }
 
 void window_connections::init_tool_dock()
 {
   // clang-format off
-  auto* dock = m_window->m_toolDock;
-  connect(dock, &tool_dock::enable_stamp, m_window, &window::stamp_enabled);
-  connect(dock, &tool_dock::enable_bucket, m_window, &window::bucket_enabled);
-  connect(dock, &tool_dock::enable_eraser, m_window, &window::eraser_enabled);
+  auto* dock = m_window->mToolDock;
+  connect(dock, &tool_dock::enable_stamp, m_window, &Window::OnStampEnabled);
+  connect(dock, &tool_dock::enable_bucket, m_window, &Window::OnBucketEnabled);
+  connect(dock, &tool_dock::enable_eraser, m_window, &Window::OnEraserEnabled);
   // clang-format on
 }
 

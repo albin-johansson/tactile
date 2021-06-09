@@ -30,7 +30,7 @@ TACTILE_FORWARD_DECLARE(tactile::gui, status_bar)
 namespace tactile::gui {
 
 /**
- * \class window
+ * \class Window
  *
  * \brief Represents the main window used in the application.
  *
@@ -40,7 +40,7 @@ namespace tactile::gui {
  *
  * \headerfile window.hpp
  */
-class window final : public QMainWindow
+class Window final : public QMainWindow
 {
   Q_OBJECT
 
@@ -52,145 +52,150 @@ class window final : public QMainWindow
    *
    * \since 0.1.0
    */
-  explicit window(QWidget* parent = nullptr);
+  explicit Window(QWidget* parent = nullptr);
 
-  ~window() noexcept override;
+  ~Window() noexcept override;
 
   /**
    * \brief Enables the view that is shown when no maps are active.
    *
    * \since 0.1.0
    */
-  void enter_no_content_view();
+  void EnterNoContentView();
 
   /**
    * \brief Enables the main editor view.
    *
    * \since 0.1.0
    */
-  void enter_content_view();
+  void EnterContentView();
 
-  void trigger_save_as();
+  void TriggerSaveAs();
 
-  void set_active_tab_name(const QString& name);
+  void SetActiveTabName(const QString& name);
+
+  void MoveViewport(int dx, int dy);
 
  signals:
-  void ui_save();
-  void ui_save_as(const QString& path);
-  void ui_open_map(const QString& path);
+  void S_Save();
+  void S_SaveAs(const QString& path);
+  void S_OpenMap(const QString& path);
 
-  void ui_new_map();
-  void ui_about_to_close_map(map_id id);
+  void S_NewMap();
+  void S_AboutToCloseMap(map_id id);
 
-  void ui_undo();
-  void ui_redo();
+  void S_Undo();
+  void S_Redo();
 
-  void ui_add_row();
-  void ui_add_col();
+  void S_AddRow();
+  void S_AddCol();
 
-  void ui_remove_row();
-  void ui_remove_col();
+  void S_RemoveRow();
+  void S_RemoveCol();
 
-  void ui_selected_tool(tool_id tool);
+  void S_SelectedTool(tool_id tool);
 
-  void ui_add_tileset();
-  void ui_remove_tileset(tileset_id id);
-  void ui_select_tileset(tileset_id id);
-  void ui_rename_tileset(tileset_id id, const QString& name);
-  void ui_set_tileset_selection(const core::tileset_selection& selection);
+  void S_AddTileset();
+  void S_RemoveTileset(tileset_id id);
+  void S_SelectTileset(tileset_id id);
+  void S_RenameTileset(tileset_id id, const QString& name);
+  void S_SetTilesetSelection(const core::tileset_selection& selection);
 
-  void ui_resize_map();
+  void S_ResizeMap();
 
-  void ui_increase_zoom();
-  void ui_decrease_zoom();
-  void ui_reset_tile_size();
+  void S_ZoomIn();
+  void S_ZoomOut();
+  void S_ResetZoom();
 
-  void ui_pan_right();
-  void ui_pan_down();
-  void ui_pan_left();
-  void ui_pan_up();
+  void S_PanRight();
+  void S_PanDown();
+  void S_PanLeft();
+  void S_PanUp();
 
-  void ui_select_map(map_id id);
+  void S_SelectMap(map_id id);
 
-  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
-  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
-  void mouse_released(QMouseEvent* event, QPointF mapPosition);
-  void mouse_entered(QEvent* event);
-  void mouse_exited(QEvent* event);
+  void S_MousePressed(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseMoved(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseReleased(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseEntered(QEvent* event);
+  void S_MouseExited(QEvent* event);
 
  public slots:
-  void force_redraw();
+  void ForceRedraw();
 
-  void undo_state_updated(bool canUndo);
+  void ShowMapProperties(not_null<core::property_manager*> manager);
+  void ShowLayerProperties(not_null<core::property_manager*> manager);
 
-  void redo_state_updated(bool canRedo);
+  void EnableStampPreview(const core::position& position);
+  void DisableStampPreview();
 
-  void undo_text_updated(const QString& text);
+  void OnSwitchedMap(map_id map, not_null<core::map_document*> document);
 
-  void redo_text_updated(const QString& text);
+  void OnNewMapAdded(not_null<core::map_document*> document,
+                     map_id id,
+                     const QString& name = TACTILE_QSTRING(u"map"));
 
-  void clean_changed(bool clean);
+  /// \name Undo/Redo slots
+  /// \{
 
-  void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
+  void OnUndoStateUpdated(bool canUndo);
+  void OnRedoStateUpdated(bool canRedo);
+  void OnUndoTextUpdated(const QString& text);
+  void OnRedoTextUpdated(const QString& text);
+  void OnCleanChanged(bool clean);
 
-  void removed_tileset(tileset_id id);
+  /// \} End of undo/redo slots
 
-  void renamed_tileset(tileset_id id, const QString& name);
+  /// \name Tileset slots
+  /// \{
 
-  void selected_layer(layer_id id, const core::layer& layer);
+  void OnAddedTileset(map_id map, tileset_id id, const core::tileset& tileset);
+  void OnRemovedTileset(tileset_id id);
+  void OnRenamedTileset(tileset_id id, const QString& name);
 
-  void added_layer(layer_id id, const core::layer& layer);
+  /// \} End of tileset slots
 
-  void added_duplicated_layer(layer_id id, const core::layer& layer);
+  /// \name Layer slots
+  /// \{
 
-  void removed_layer(layer_id id);
+  void OnSelectedLayer(layer_id id, const core::layer& layer);
+  void OnAddedLayer(layer_id id, const core::layer& layer);
+  void OnAddedDuplicatedLayer(layer_id id, const core::layer& layer);
+  void OnRemovedLayer(layer_id id);
 
-  void added_property(const QString& name);
+  /// \} End of layer slots
 
-  void about_to_remove_property(const QString& name);
+  /// \name Property slots
+  /// \{
 
-  void updated_property(const QString& name);
+  void OnAddedProperty(const QString& name);
+  void OnAboutToRemoveProperty(const QString& name);
+  void OnUpdatedProperty(const QString& name);
+  void OnChangedPropertyType(const QString& name);
+  void OnRenamedProperty(const QString& oldName, const QString& newName);
 
-  void changed_property_type(const QString& name);
-
-  void renamed_property(const QString& oldName, const QString& newName);
-
-  void enable_stamp_preview(const core::position& position);
-
-  void disable_stamp_preview();
-
-  void handle_move_camera(int dx, int dy);
-
-  void switched_map(map_id map, not_null<core::map_document*> document);
-
-  void when_new_map_added(not_null<core::map_document*> document,
-                          map_id id,
-                          const QString& name = TACTILE_QSTRING(u"map"));
-
-  void show_map_properties(not_null<core::property_manager*> manager);
-
-  void show_layer_properties(not_null<core::property_manager*> manager);
+  /// \} End of property slots
 
  protected:
   void closeEvent(QCloseEvent* event) override;
 
  private:
-  unique<Ui::window> m_ui;
-  map_editor* m_editor{};
-  tool_dock* m_toolDock{};
-  layer_dock* m_layerDock{};
-  tileset_dock* m_tilesetDock{};
-  properties_dock* m_propertiesDock{};
-  status_bar* m_statusBar{};
-  QActionGroup* m_toolGroup{};
+  unique<Ui::window> mUi;
+  map_editor* mEditor{};
+  tool_dock* mToolDock{};
+  layer_dock* mLayerDock{};
+  tileset_dock* mTilesetDock{};
+  properties_dock* mPropertiesDock{};
+  status_bar* mStatusBar{};
+  QActionGroup* mToolGroup{};
 
-  void restore_layout();
+  void RestoreLayout();
 
-  void hide_all_docks();
+  void HideAllDocks();
 
-  void restore_dock_visibility();
+  void RestoreDockVisibility();
 
-  void set_actions_enabled(bool enabled);
+  void SetActionsEnabled(bool enabled);
 
   /**
    * \brief Indicates whether or not the editor view is enabled.
@@ -199,54 +204,43 @@ class window final : public QMainWindow
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto in_editor_mode() const -> bool;
+  [[nodiscard]] auto InEditorMode() const -> bool;
 
  private slots:
-  void save_as();
+  void SaveAs();
 
-  void reset_dock_layout();
+  void CenterViewport();
 
-  void when_about_to_close_map(map_id id);
+  void OnResetLayoutAction();
 
-  void handle_theme_changed();
+  void OnThemeChanged();
 
-  void handle_reload_opengl(bool enabled);
+  void OnReloadOpenGL(bool enabled);
 
-  void stamp_enabled();
+  void OnStampEnabled();
+  void OnBucketEnabled();
+  void OnEraserEnabled();
 
-  void bucket_enabled();
+  void OnToggleStampAction();
+  void OnToggleBucketAction();
+  void OnToggleEraserAction();
 
-  void eraser_enabled();
+  void OnAboutToCloseMap(map_id id);
+  void OnOpenMapAction();
+  void OnCloseMapAction();
 
-  void center_viewport();
+  void OnTilesetWidgetVisibilityChanged();
+  void OnToolWidgetVisibilityChanged();
+  void OnLayerWidgetVisibilityChanged();
+  void OnPropertiesWidgetVisibilityChanged();
 
-  void closed_map();
+  void OnMouseEntered(QEvent* event);
+  void OnMouseExited(QEvent* event);
+  void OnMouseMoved(QMouseEvent* event, QPointF mapPos);
 
-  void tileset_widget_visibility_changed();
+  void OnToggleGridAction();
 
-  void tool_widget_visibility_changed();
-
-  void layer_widget_visibility_changed();
-
-  void properties_widget_visibility_changed();
-
-  void when_mouse_entered(QEvent* event);
-
-  void when_mouse_exited(QEvent* event);
-
-  void when_mouse_moved(QMouseEvent* event, QPointF mapPos);
-
-  [[maybe_unused]] void on_actionOpenMap_triggered();
-
-  [[maybe_unused]] void on_actionToggleGrid_triggered();
-
-  [[maybe_unused]] void on_actionStampTool_triggered();
-
-  [[maybe_unused]] void on_actionBucketTool_triggered();
-
-  [[maybe_unused]] void on_actionEraserTool_triggered();
-
-  [[maybe_unused]] void on_actionSettings_triggered();
+  void OnOpenSettingsAction();
 };
 
 }  // namespace tactile::gui

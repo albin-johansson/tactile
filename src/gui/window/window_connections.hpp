@@ -8,17 +8,17 @@ TACTILE_FORWARD_DECLARE(Ui, window)
 
 namespace tactile::gui {
 
-class window;
+class Window;
 
 class window_connections final : public QObject
 {
   Q_OBJECT
 
  public:
-  void init(window* window);
+  void init(Window* window);
 
  private:
-  window* m_window{};
+  Window* m_window{};
   Ui::window* m_ui{};
 
   void init_actions();
