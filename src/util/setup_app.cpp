@@ -1,9 +1,9 @@
 #include "setup_app.hpp"
 
-#include <QApplication>
-#include <QIcon>
-#include <QStyleFactory>
-#include <QSurfaceFormat>
+#include <QApplication>    // QApplication
+#include <QIcon>           // QIcon
+#include <QStyleFactory>   // QStyleFactory
+#include <QSurfaceFormat>  // QSurfaceFormat
 
 #include "preferences.hpp"
 #include "tactile_app.hpp"
@@ -14,16 +14,10 @@
 namespace tactile {
 namespace {
 
-/**
- * \brief Initialises the surface format used by the application.
- *
- * \since 0.1.0
- */
-void init_surface_format() noexcept
+void init_surface_format()
 {
   QSurfaceFormat format;
   format.setDepthBufferSize(0);
-  //  format.setVersion(3, 2);
   format.setRenderableType(QSurfaceFormat::OpenGL);
   format.setProfile(QSurfaceFormat::CoreProfile);
   QSurfaceFormat::setDefaultFormat(format);
