@@ -9,10 +9,10 @@
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
- * \class map_item
+ * \class MapItem
  *
  * \brief Responsible for the visual representation of maps.
  *
@@ -20,7 +20,7 @@ namespace tactile::gui {
  *
  * \headerfile map_item.hpp
  */
-class map_item final : public QGraphicsItem
+class MapItem final : public QGraphicsItem
 {
  public:
   /**
@@ -33,23 +33,23 @@ class map_item final : public QGraphicsItem
    *
    * \since 0.1.0
    */
-  explicit map_item(core::map_document* map, QGraphicsItem* parent = nullptr);
+  explicit MapItem(core::map_document* map, QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
              const QStyleOptionGraphicsItem* option,
              QWidget* widget) override;
 
-  void disable_stamp_preview();
+  void EnableStampPreview(const core::position& position);
 
-  void enable_stamp_preview(const core::position& position);
+  void DisableStampPreview();
 
-  void show_properties();
+  void ShowMapProperties();
 
   [[nodiscard]] auto boundingRect() const -> QRectF override;
 
  private:
-  core::map_document* m_document{};
-  maybe<core::position> m_mousePosition;
+  core::map_document* mDocument{};
+  maybe<core::position> mMousePosition;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

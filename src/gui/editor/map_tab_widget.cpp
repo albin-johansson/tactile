@@ -3,54 +3,54 @@
 #include "map_document.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-map_tab_widget::map_tab_widget(QWidget* parent) : TabWidget{parent}
+MapTabWidget::MapTabWidget(QWidget* parent) : TabWidget{parent}
 {
   setTabsClosable(true);
 
   // clang-format off
   connect(this, &QTabWidget::tabCloseRequested,
-          this, &map_tab_widget::handle_tab_close);
+          this, &MapTabWidget::OnTabCloseRequested);
   // clang-format on
 }
 
-map_tab_widget::~map_tab_widget() noexcept = default;
+MapTabWidget::~MapTabWidget() noexcept = default;
 
-void map_tab_widget::handle_tab_close(const int index)
+void MapTabWidget::OnTabCloseRequested(const int index)
 {
-  emit ui_remove_map(get_view(index)->id());
+  emit S_RemoveMap(GetView(index)->Id());
   removeTab(index);
 }
 
-void map_tab_widget::theme_changed()
+void MapTabWidget::OnThemeChanged()
 {
   ApplyStylesheet();
 }
 
-void map_tab_widget::force_redraw()
+void MapTabWidget::ForceRedraw()
 {
-  if (auto* view = current_view())
+  if (auto* view = CurrentView())
   {
-    view->force_redraw();
+    view->ForceRedraw();
   }
 }
 
-void map_tab_widget::add_map_tab(core::map_document* map,
-                                 const map_id id,
-                                 const QString& title)
+void MapTabWidget::AddTab(core::map_document* map,
+                          map_id id,
+                          const QString& title)
 {
-  auto* view = new map_view{map, id, this};
+  auto* view = new MapView{map, id, this};
 
   // clang-format off
-  connect(view, &map_view::mouse_pressed, this, &map_tab_widget::mouse_pressed);
-  connect(view, &map_view::mouse_moved, this, &map_tab_widget::mouse_moved);
-  connect(view, &map_view::mouse_released, this, &map_tab_widget::mouse_released);
-  connect(view, &map_view::mouse_entered, this, &map_tab_widget::mouse_entered);
-  connect(view, &map_view::mouse_exited, this, &map_tab_widget::mouse_exited);
-  connect(view, &map_view::increase_zoom, this, &map_tab_widget::increase_zoom);
-  connect(view, &map_view::decrease_zoom, this, &map_tab_widget::decrease_zoom);
-  connect(view, &map_view::spawn_context_menu, this, &map_tab_widget::spawn_context_menu);
+  connect(view, &MapView::S_MousePressed, this, &MapTabWidget::S_MousePressed);
+  connect(view, &MapView::S_MouseMoved, this, &MapTabWidget::S_MouseMoved);
+  connect(view, &MapView::S_MouseReleased, this, &MapTabWidget::S_MouseReleased);
+  connect(view, &MapView::S_MouseEntered, this, &MapTabWidget::S_MouseEntered);
+  connect(view, &MapView::S_MouseExited, this, &MapTabWidget::S_MouseExited);
+  connect(view, &MapView::S_ZoomIn, this, &MapTabWidget::S_ZoomIn);
+  connect(view, &MapView::S_ZoomOut, this, &MapTabWidget::S_ZoomOut);
+  connect(view, &MapView::S_SpawnContextMenu, this, &MapTabWidget::S_SpawnContextMenu);
   // clang-format on
 
   if (title == TACTILE_QSTRING(u"map"))
@@ -63,63 +63,63 @@ void map_tab_widget::add_map_tab(core::map_document* map,
   }
 }
 
-void map_tab_widget::remove_map_tab(const map_id id)
+void MapTabWidget::RemoveTab(map_id id)
 {
-  if (auto* view = view_from_id(id))
+  if (auto* view = ViewFromId(id))
   {
     removeTab(indexOf(view));
   }
 }
 
-void map_tab_widget::select_tab(const map_id id)
+void MapTabWidget::SelectTab(map_id id)
 {
-  if (auto* view = view_from_id(id))
+  if (auto* view = ViewFromId(id))
   {
     setCurrentWidget(view);
   }
 }
 
-void map_tab_widget::center_map()
+void MapTabWidget::CenterViewport()
 {
-  if (auto* view = current_view())
+  if (auto* view = CurrentView())
   {
-    view->center_map();
+    view->CenterViewport();
   }
 }
 
-void map_tab_widget::move_map(const int dx, const int dy)
+void MapTabWidget::MoveViewport(const int dx, const int dy)
 {
-  if (auto* view = current_view())
+  if (auto* view = CurrentView())
   {
-    view->move_map(dx, dy);
+    view->MoveViewport(dx, dy);
   }
 }
 
-void map_tab_widget::enable_stamp_preview(const core::position& position)
+void MapTabWidget::EnableStampPreview(const core::position& position)
 {
-  if (auto* view = current_view())
+  if (auto* view = CurrentView())
   {
-    view->enable_stamp_preview(position);
+    view->EnableStampPreview(position);
   }
 }
 
-void map_tab_widget::disable_stamp_preview()
+void MapTabWidget::DisableStampPreview()
 {
-  if (auto* view = current_view())
+  if (auto* view = CurrentView())
   {
-    view->disable_stamp_preview();
+    view->DisableStampPreview();
   }
 }
 
-void map_tab_widget::show_properties()
+void MapTabWidget::ShowMapProperties()
 {
-  if (auto* view = current_view())
+  if (auto* view = CurrentView())
   {
-    view->show_properties();
+    view->ShowMapProperties();
   }
 }
 
-void map_tab_widget::set_active_tab_name(const QString& name)
+void MapTabWidget::SetActiveTabName(const QString& name)
 {
   if (const auto index = currentIndex(); index != -1)
   {
@@ -127,24 +127,24 @@ void map_tab_widget::set_active_tab_name(const QString& name)
   }
 }
 
-void map_tab_widget::set_opengl_enabled(const bool enabled)
+void MapTabWidget::SetOpenGlEnabled(const bool enabled)
 {
-  if (auto* view = current_view())
+  if (auto* view = CurrentView())
   {
-    view->set_opengl_enabled(enabled);
+    view->SetOpenGlEnabled(enabled);
   }
 }
 
-auto map_tab_widget::active_tab_id() const -> maybe<map_id>
+auto MapTabWidget::ActiveTabId() const -> maybe<map_id>
 {
-  return id_from_index(currentIndex());
+  return IdFromIndex(currentIndex());
 }
 
-auto map_tab_widget::id_from_index(const int index) const -> maybe<map_id>
+auto MapTabWidget::IdFromIndex(const int index) const -> maybe<map_id>
 {
-  if (const auto* view = get_view(index))
+  if (const auto* view = GetView(index))
   {
-    return view->id();
+    return view->Id();
   }
   else
   {
@@ -152,7 +152,7 @@ auto map_tab_widget::id_from_index(const int index) const -> maybe<map_id>
   }
 }
 
-auto map_tab_widget::active_tab_name() const -> maybe<QString>
+auto MapTabWidget::ActiveTabName() const -> maybe<QString>
 {
   const auto index = currentIndex();
   if (index != -1)
@@ -165,27 +165,27 @@ auto map_tab_widget::active_tab_name() const -> maybe<QString>
   }
 }
 
-auto map_tab_widget::current_view() -> map_view*
+auto MapTabWidget::CurrentView() -> MapView*
 {
-  return get_view(currentIndex());
+  return GetView(currentIndex());
 }
 
-auto map_tab_widget::get_view(const int index) -> map_view*
+auto MapTabWidget::GetView(const int index) -> MapView*
 {
-  return qobject_cast<map_view*>(widget(index));
+  return qobject_cast<MapView*>(widget(index));
 }
 
-auto map_tab_widget::get_view(const int index) const -> const map_view*
+auto MapTabWidget::GetView(const int index) const -> const MapView*
 {
-  return qobject_cast<map_view*>(widget(index));
+  return qobject_cast<MapView*>(widget(index));
 }
 
-auto map_tab_widget::view_from_id(const map_id id) -> map_view*
+auto MapTabWidget::ViewFromId(map_id id) -> MapView*
 {
   const auto amount = count();
   for (auto i = 0; i < amount; ++i)
   {
-    if (auto* pane = get_view(i); pane && pane->id() == id)
+    if (auto* pane = GetView(i); pane && pane->Id() == id)
     {
       return pane;
     }
@@ -193,4 +193,4 @@ auto map_tab_widget::view_from_id(const map_id id) -> map_view*
   return nullptr;
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

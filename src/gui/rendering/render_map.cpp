@@ -10,7 +10,7 @@
 #include "tile_layer.hpp"
 #include "tileset_manager.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 namespace {
 
 inline constexpr double previewOpacity = 0.5;
@@ -288,4 +288,4 @@ void render_map(QPainter& painter,
   });
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

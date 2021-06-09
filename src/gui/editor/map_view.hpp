@@ -9,12 +9,12 @@
 #include "position.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
-TACTILE_FORWARD_DECLARE(tactile::gui, map_scene)
+TACTILE_FORWARD_DECLARE(tactile, MapScene)
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
- * \class map_view
+ * \class MapView
  *
  * \brief Represents the UI component that presents a map.
  *
@@ -25,41 +25,41 @@ namespace tactile::gui {
  *
  * \headerfile map_view.hpp
  */
-class map_view final : public QGraphicsView
+class MapView final : public QGraphicsView
 {
   Q_OBJECT
 
  public:
-  explicit map_view(core::map_document* map,
-                    map_id id,
-                    QWidget* parent = nullptr);
+  explicit MapView(core::map_document* map,
+                   map_id id,
+                   QWidget* parent = nullptr);
 
-  void force_redraw();
+  void ForceRedraw();
 
-  void center_map();
+  void CenterViewport();
 
-  void move_map(int dx, int dy);
+  void MoveViewport(int dx, int dy);
 
-  void enable_stamp_preview(const core::position& position);
+  void EnableStampPreview(const core::position& position);
 
-  void disable_stamp_preview();
+  void DisableStampPreview();
 
-  void show_properties();
+  void ShowMapProperties();
 
-  [[nodiscard]] auto id() const -> map_id;
+  [[nodiscard]] auto Id() const -> map_id;
 
  public slots:
-  void set_opengl_enabled(bool enabled);
+  void SetOpenGlEnabled(bool enabled);
 
  signals:
-  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
-  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
-  void mouse_released(QMouseEvent* event, QPointF mapPosition);
-  void mouse_entered(QEvent* event);
-  void mouse_exited(QEvent* event);
-  void increase_zoom();
-  void decrease_zoom();
-  void spawn_context_menu(const QPoint& pos);
+  void S_MousePressed(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseMoved(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseReleased(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseEntered(QEvent* event);
+  void S_MouseExited(QEvent* event);
+  void S_ZoomIn();
+  void S_ZoomOut();
+  void S_SpawnContextMenu(const QPoint& pos);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;
@@ -75,11 +75,11 @@ class map_view final : public QGraphicsView
   void wheelEvent(QWheelEvent* event) override;
 
  private:
-  QPoint m_lastMousePos{};
+  QPoint mLastMousePos{};
 
-  [[nodiscard]] auto get_map_scene() -> map_scene*;
+  [[nodiscard]] auto GetMapScene() -> MapScene*;
 
-  [[nodiscard]] auto get_map_scene() const -> const map_scene*;
+  [[nodiscard]] auto GetMapScene() const -> const MapScene*;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

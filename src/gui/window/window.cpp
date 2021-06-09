@@ -23,7 +23,7 @@ namespace tactile::gui {
 Window::Window(QWidget* parent)
     : QMainWindow{parent}
     , mUi{init_ui<Ui::window>(this)}
-    , mEditor{new map_editor{this}}
+    , mEditor{new MapEditor{this}}
     , mToolDock{new tool_dock{this}}
     , mLayerDock{new layer_dock{this}}
     , mTilesetDock{new tileset_dock{this}}
@@ -72,12 +72,12 @@ void Window::SaveAs()
       [this](const QString& path) {
         emit S_SaveAs(path);
       },
-      mEditor->active_tab_name().value_or(TACTILE_QSTRING(u"map")));
+      mEditor->ActiveTabName().value_or(TACTILE_QSTRING(u"map")));
 }
 
 void Window::CenterViewport()
 {
-  mEditor->center_viewport();
+  mEditor->CenterViewport();
 }
 
 void Window::OnResetLayoutAction()
@@ -166,12 +166,12 @@ void Window::SetActionsEnabled(const bool enabled)
 
 auto Window::InEditorMode() const -> bool
 {
-  return mEditor->in_editor_mode();
+  return mEditor->InEditorMode();
 }
 
 void Window::EnterNoContentView()
 {
-  mEditor->enable_startup_view();
+  mEditor->EnableStartupView();
   mToolDock->disable_tools();
 
   SetActionsEnabled(false);
@@ -182,7 +182,7 @@ void Window::EnterNoContentView()
 
 void Window::EnterContentView()
 {
-  mEditor->enable_editor_view();
+  mEditor->EnableEditorView();
   mToolDock->enable_tools();
 
   SetActionsEnabled(true);
@@ -198,17 +198,17 @@ void Window::TriggerSaveAs()
 
 void Window::SetActiveTabName(const QString& name)
 {
-  mEditor->set_active_tab_name(name);
+  mEditor->SetActiveTabName(name);
 }
 
 void Window::MoveViewport(const int dx, const int dy)
 {
-  mEditor->move_map(dx, dy);
+  mEditor->MoveViewport(dx, dy);
 }
 
 void Window::ForceRedraw()
 {
-  mEditor->force_redraw();
+  mEditor->ForceRedraw();
 }
 
 void Window::ShowMapProperties(not_null<core::property_manager*> manager)
@@ -223,12 +223,12 @@ void Window::ShowLayerProperties(not_null<core::property_manager*> manager)
 
 void Window::EnableStampPreview(const core::position& position)
 {
-  mEditor->enable_stamp_preview(position);
+  mEditor->EnableStampPreview(position);
 }
 
 void Window::DisableStampPreview()
 {
-  mEditor->disable_stamp_preview();
+  mEditor->DisableStampPreview();
 }
 
 void Window::OnSwitchedMap(const map_id map,
@@ -246,8 +246,8 @@ void Window::OnNewMapAdded(not_null<core::map_document*> document,
 {
   Q_ASSERT(document);
 
-  mEditor->add_map_tab(document, id, name);
-  mEditor->select_tab(id);
+  mEditor->AddMapTab(document, id, name);
+  mEditor->SelectTab(id);
   if (!InEditorMode())
   {
     EnterContentView();
@@ -357,12 +357,12 @@ void Window::closeEvent(QCloseEvent* event)
 
 void Window::OnThemeChanged()
 {
-  emit mEditor->theme_changed();
+  emit mEditor->S_ThemeChanged();
 }
 
 void Window::OnReloadOpenGL(const bool enabled)
 {
-  mEditor->set_opengl_enabled(enabled);
+  mEditor->SetOpenGlEnabled(enabled);
 }
 
 void Window::OnStampEnabled()
@@ -401,7 +401,7 @@ void Window::OnToggleEraserAction()
 void Window::OnAboutToCloseMap(const map_id id)
 {
   emit S_AboutToCloseMap(id);
-  if (mEditor->tab_count() == 1)
+  if (mEditor->TabCount() == 1)
   {
     EnterNoContentView();
   }
@@ -417,12 +417,12 @@ void Window::OnOpenMapAction()
 void Window::OnCloseMapAction()
 {
   // TODO save current state of open map (exit saves?)
-  const auto id = mEditor->active_tab_id().value();
+  const auto id = mEditor->ActiveTabID().value();
 
-  mEditor->close_tab(id);
+  mEditor->CloseTab(id);
   emit S_AboutToCloseMap(id);
 
-  if (mEditor->tab_count() == 0)
+  if (mEditor->TabCount() == 0)
   {
     EnterNoContentView();
   }

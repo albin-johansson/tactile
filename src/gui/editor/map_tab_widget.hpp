@@ -9,16 +9,16 @@
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
- * \class map_tab_widget
+ * \class MapTabWidget
  *
  * \brief Represents the tab widget that holds all of the map views.
  *
  * \headerfile map_tab_widget.hpp
  */
-class map_tab_widget final : public TabWidget
+class MapTabWidget final : public TabWidget
 {
   Q_OBJECT
 
@@ -30,9 +30,9 @@ class map_tab_widget final : public TabWidget
    *
    * \since 0.1.0
    */
-  explicit map_tab_widget(QWidget* parent = nullptr);
+  explicit MapTabWidget(QWidget* parent = nullptr);
 
-  ~map_tab_widget() noexcept override;
+  ~MapTabWidget() noexcept override;
 
   /**
    * \brief Adds a map tab.
@@ -44,7 +44,7 @@ class map_tab_widget final : public TabWidget
    *
    * \since 0.1.0
    */
-  void add_map_tab(core::map_document* map, map_id id, const QString& title);
+  void AddTab(core::map_document* map, map_id id, const QString& title);
 
   /**
    * \brief Removes the tab associated with the specified map.
@@ -53,7 +53,7 @@ class map_tab_widget final : public TabWidget
    *
    * \since 0.1.0
    */
-  void remove_map_tab(map_id id);
+  void RemoveTab(map_id id);
 
   /**
    * \brief Selects the tab associated with the specified map.
@@ -62,14 +62,14 @@ class map_tab_widget final : public TabWidget
    *
    * \since 0.1.0
    */
-  void select_tab(map_id id);
+  void SelectTab(map_id id);
 
   /**
    * \brief Centers the currently active map to fit the viewport.
    *
    * \since 0.1.0
    */
-  void center_map();
+  void CenterViewport();
 
   /**
    * \brief Moves the currently active map.
@@ -79,13 +79,13 @@ class map_tab_widget final : public TabWidget
    *
    * \since 0.1.0
    */
-  void move_map(int dx, int dy);
+  void MoveViewport(int dx, int dy);
 
-  void enable_stamp_preview(const core::position& position);
+  void EnableStampPreview(const core::position& position);
 
-  void disable_stamp_preview();
+  void DisableStampPreview();
 
-  void show_properties();
+  void ShowMapProperties();
 
   /**
    * \brief Sets the name of the currently active tab.
@@ -96,9 +96,9 @@ class map_tab_widget final : public TabWidget
    *
    * \since 0.1.0
    */
-  void set_active_tab_name(const QString& name);
+  void SetActiveTabName(const QString& name);
 
-  void set_opengl_enabled(bool enabled);
+  void SetOpenGlEnabled(bool enabled);
 
   /**
    * \brief Returns the map ID associated with the currently active tab.
@@ -108,7 +108,7 @@ class map_tab_widget final : public TabWidget
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto active_tab_id() const -> maybe<map_id>;
+  [[nodiscard]] auto ActiveTabId() const -> maybe<map_id>;
 
   /**
    * \brief Returns the map ID associated with the specified tab.
@@ -120,37 +120,37 @@ class map_tab_widget final : public TabWidget
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto id_from_index(int index) const -> maybe<map_id>;
+  [[nodiscard]] auto IdFromIndex(int index) const -> maybe<map_id>;
 
-  [[nodiscard]] auto active_tab_name() const -> maybe<QString>;
+  [[nodiscard]] auto ActiveTabName() const -> maybe<QString>;
 
  signals:
-  void ui_remove_map(map_id id);
-  void increase_zoom();
-  void decrease_zoom();
-  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
-  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
-  void mouse_released(QMouseEvent* event, QPointF mapPosition);
-  void mouse_entered(QEvent* event);
-  void mouse_exited(QEvent* event);
-  void spawn_context_menu(const QPoint& pos);
+  void S_RemoveMap(map_id id);
+  void S_ZoomIn();
+  void S_ZoomOut();
+  void S_MousePressed(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseMoved(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseReleased(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseEntered(QEvent* event);
+  void S_MouseExited(QEvent* event);
+  void S_SpawnContextMenu(const QPoint& pos);
 
  public slots:
-  void theme_changed();
+  void ForceRedraw();
 
-  void force_redraw();
+  void OnThemeChanged();
 
  private:
-  [[nodiscard]] auto current_view() -> map_view*;
+  [[nodiscard]] auto CurrentView() -> MapView*;
 
-  [[nodiscard]] auto get_view(int index) -> map_view*;
+  [[nodiscard]] auto GetView(int index) -> MapView*;
 
-  [[nodiscard]] auto get_view(int index) const -> const map_view*;
+  [[nodiscard]] auto GetView(int index) const -> const MapView*;
 
-  [[nodiscard]] auto view_from_id(map_id id) -> map_view*;
+  [[nodiscard]] auto ViewFromId(map_id id) -> MapView*;
 
  private slots:
-  void handle_tab_close(int index);
+  void OnTabCloseRequested(int index);
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

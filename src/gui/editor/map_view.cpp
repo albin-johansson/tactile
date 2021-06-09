@@ -9,65 +9,71 @@
 #include "map_scene.hpp"
 #include "preferences.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-map_view::map_view(core::map_document* map, const map_id id, QWidget* parent)
+MapView::MapView(core::map_document* map, const map_id id, QWidget* parent)
     : QGraphicsView{parent}
 {
   setTransformationAnchor(QGraphicsView::AnchorViewCenter);
   setAttribute(Qt::WA_StaticContents, true);
 
-  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  set_opengl_enabled(prefs::gfx::use_opengl().value());
+  SetOpenGlEnabled(prefs::gfx::use_opengl().value());
 
   //  grabGesture(Qt::PinchGesture);
-  setScene(new map_scene{map, id, this});
+  setScene(new MapScene{map, id, this});
 }
 
-void map_view::force_redraw()
+void MapView::ForceRedraw()
 {
   scene()->update();
 }
 
-void map_view::center_map()
+void MapView::CenterViewport()
 {
-  if (auto* scene = get_map_scene())
+  if (auto* scene = GetMapScene())
   {
-    scene->center_map();
+    const auto bounds = scene->MapBounds();
+
+    const auto scale =
+        std::min(width() / bounds.width(), height() / bounds.height()) * 0.95;
+
+    centerOn(bounds.center());
+    scene->SetScale(scale);
   }
 }
 
-void map_view::move_map(const int dx, const int dy)
+void MapView::MoveViewport(const int dx, const int dy)
 {
-  if (auto* scene = get_map_scene())
+  if (auto* scene = GetMapScene())
   {
-    scene->move_map(dx, dy);
+    scene->MoveViewport(dx, dy);
   }
 }
 
-void map_view::enable_stamp_preview(const core::position& position)
+void MapView::EnableStampPreview(const core::position& position)
 {
-  get_map_scene()->enable_stamp_preview(position);
+  GetMapScene()->EnableStampPreview(position);
 }
 
-void map_view::disable_stamp_preview()
+void MapView::DisableStampPreview()
 {
-  get_map_scene()->disable_stamp_preview();
+  GetMapScene()->DisableStampPreview();
 }
 
-void map_view::show_properties()
+void MapView::ShowMapProperties()
 {
-  get_map_scene()->show_properties();
+  GetMapScene()->ShowMapProperties();
 }
 
-auto map_view::id() const -> map_id
+auto MapView::Id() const -> map_id
 {
-  return get_map_scene()->id();
+  return GetMapScene()->Id();
 }
 
-void map_view::set_opengl_enabled(const bool enabled)
+void MapView::SetOpenGlEnabled(const bool enabled)
 {
   if (enabled)
   {
@@ -90,20 +96,20 @@ void map_view::set_opengl_enabled(const bool enabled)
   }
 }
 
-void map_view::mousePressEvent(QMouseEvent* event)
+void MapView::mousePressEvent(QMouseEvent* event)
 {
   QGraphicsView::mousePressEvent(event);
 
   if (event->buttons() & Qt::MiddleButton)
   {
-    m_lastMousePos = event->pos();
+    mLastMousePos = event->pos();
     QApplication::setOverrideCursor(Qt::ClosedHandCursor);
   }
 
-  emit mouse_pressed(event, mapFromScene(get_map_scene()->map_position()));
+  emit S_MousePressed(event, mapFromScene(GetMapScene()->CurrentMapPosition()));
 }
 
-void map_view::mouseMoveEvent(QMouseEvent* event)
+void MapView::mouseMoveEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseMoveEvent(event);
 
@@ -112,15 +118,15 @@ void map_view::mouseMoveEvent(QMouseEvent* event)
 
   if (buttons & Qt::MiddleButton)
   {
-    move_map(pos.x() - m_lastMousePos.x(), pos.y() - m_lastMousePos.y());
+    MoveViewport(pos.x() - mLastMousePos.x(), pos.y() - mLastMousePos.y());
   }
 
-  m_lastMousePos = pos;
+  mLastMousePos = pos;
 
-  emit mouse_moved(event, mapFromScene(get_map_scene()->map_position()));
+  emit S_MouseMoved(event, mapFromScene(GetMapScene()->CurrentMapPosition()));
 }
 
-void map_view::mouseReleaseEvent(QMouseEvent* event)
+void MapView::mouseReleaseEvent(QMouseEvent* event)
 {
   QGraphicsView::mouseReleaseEvent(event);
 
@@ -130,25 +136,26 @@ void map_view::mouseReleaseEvent(QMouseEvent* event)
   }
   else if (button == Qt::RightButton)
   {
-    emit spawn_context_menu(mapToGlobal(event->pos()));
+    emit S_SpawnContextMenu(mapToGlobal(event->pos()));
   }
 
-  emit mouse_released(event, mapFromScene(get_map_scene()->map_position()));
+  emit S_MouseReleased(event,
+                       mapFromScene(GetMapScene()->CurrentMapPosition()));
 }
 
-void map_view::enterEvent(QEnterEvent* event)
+void MapView::enterEvent(QEnterEvent* event)
 {
   QWidget::enterEvent(event);
-  emit mouse_entered(event);
+  emit S_MouseEntered(event);
 }
 
-void map_view::leaveEvent(QEvent* event)
+void MapView::leaveEvent(QEvent* event)
 {
   QWidget::leaveEvent(event);
-  emit mouse_exited(event);
+  emit S_MouseExited(event);
 }
 
-void map_view::wheelEvent(QWheelEvent* event)
+void MapView::wheelEvent(QWheelEvent* event)
 {
   if (event->modifiers() & Qt::ControlModifier)
   {
@@ -159,11 +166,11 @@ void map_view::wheelEvent(QWheelEvent* event)
     {
       if (pixels.y() > 0)
       {
-        emit increase_zoom();
+        emit S_ZoomIn();
       }
       else
       {
-        emit decrease_zoom();
+        emit S_ZoomOut();
       }
     }
     else if (!degrees.isNull())
@@ -171,24 +178,24 @@ void map_view::wheelEvent(QWheelEvent* event)
       const auto numSteps = degrees / 15;
       if (numSteps.y() > 0)
       {
-        emit increase_zoom();
+        GetMapScene()->IncreaseScale();
       }
       else
       {
-        emit decrease_zoom();
+        GetMapScene()->DecreaseScale();
       }
     }
   }
 }
 
-auto map_view::get_map_scene() -> map_scene*
+auto MapView::GetMapScene() -> MapScene*
 {
-  return qobject_cast<map_scene*>(scene());
+  return qobject_cast<MapScene*>(scene());
 }
 
-auto map_view::get_map_scene() const -> const map_scene*
+auto MapView::GetMapScene() const -> const MapScene*
 {
-  return qobject_cast<const map_scene*>(scene());
+  return qobject_cast<const MapScene*>(scene());
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

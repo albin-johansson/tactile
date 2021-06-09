@@ -1,14 +1,14 @@
 #include "map_editor_context_menu.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-map_editor_context_menu::map_editor_context_menu(QWidget* parent)
+MapEditorContextMenu::MapEditorContextMenu(QWidget* parent)
     : QMenu{parent}
-    , m_showProperties{addAction(tr("Show properties..."))}
+    , mShowProperties{addAction(tr("Show properties..."))}
 {
   // clang-format off
-  connect(m_showProperties, &QAction::triggered, this, &map_editor_context_menu::show_properties);
+  connect(mShowProperties, &QAction::triggered, this, &MapEditorContextMenu::S_ShowMapProperties);
   // clang-format on
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

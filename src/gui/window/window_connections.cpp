@@ -101,16 +101,16 @@ void window_connections::init_map_editor()
 {
   // clang-format off
   auto* editor = m_window->mEditor;
-  connect(editor, &map_editor::ui_select_map, m_window, &Window::S_SelectMap);
-  connect(editor, &map_editor::increase_zoom, m_window, &Window::S_ZoomIn);
-  connect(editor, &map_editor::decrease_zoom, m_window, &Window::S_ZoomOut);
-  connect(editor, &map_editor::mouse_pressed, m_window, &Window::S_MousePressed);
-  connect(editor, &map_editor::mouse_released, m_window, &Window::S_MouseReleased);
+  connect(editor, &MapEditor::S_SelectMap, m_window, &Window::S_SelectMap);
+  connect(editor, &MapEditor::S_ZoomIn, m_window, &Window::S_ZoomIn);
+  connect(editor, &MapEditor::S_ZoomOut, m_window, &Window::S_ZoomOut);
+  connect(editor, &MapEditor::S_MousePressed, m_window, &Window::S_MousePressed);
+  connect(editor, &MapEditor::S_MouseReleased, m_window, &Window::S_MouseReleased);
 
-  connect(editor, &map_editor::ui_remove_map, m_window, &Window::OnAboutToCloseMap);
-  connect(editor, &map_editor::mouse_entered, m_window, &Window::OnMouseEntered);
-  connect(editor, &map_editor::mouse_exited, m_window, &Window::OnMouseExited);
-  connect(editor, &map_editor::mouse_moved, m_window, &Window::OnMouseMoved);
+  connect(editor, &MapEditor::S_RemoveMap, m_window, &Window::OnAboutToCloseMap);
+  connect(editor, &MapEditor::S_MouseEntered, m_window, &Window::OnMouseEntered);
+  connect(editor, &MapEditor::S_MouseExited, m_window, &Window::OnMouseExited);
+  connect(editor, &MapEditor::S_MouseMoved, m_window, &Window::OnMouseMoved);
   // clang-format on
 }
 

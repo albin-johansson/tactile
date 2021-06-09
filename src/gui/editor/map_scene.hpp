@@ -9,42 +9,59 @@
 #include "position.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
-TACTILE_FORWARD_DECLARE(tactile::gui, map_item)
+TACTILE_FORWARD_DECLARE(tactile, MapItem)
 
-namespace tactile::gui {
+namespace tactile {
 
-class map_scene final : public QGraphicsScene
+class MapScene final : public QGraphicsScene
 {
   Q_OBJECT
 
  public:
-  explicit map_scene(core::map_document* map,
-                     map_id id,
-                     QObject* parent = nullptr);
+  explicit MapScene(core::map_document* map,
+                    map_id id,
+                    QObject* parent = nullptr);
 
-  void move_map(int dx, int dy);
+  /// Moves the viewport by the specified amount.
+  void MoveViewport(int dx, int dy);
 
-  void center_map();
+  /// Enables the stamp tool preview at the specified position.
+  void EnableStampPreview(const core::position& position);
 
-  void enable_stamp_preview(const core::position& position);
+  /// Disables the stamp tool preview.
+  void DisableStampPreview();
 
-  void disable_stamp_preview();
+  /// Makes the properties widget show information about the associated map.
+  void ShowMapProperties();
 
-  void show_properties();
+  /// Resets the viewport scale to its default value
+  void ResetScale();
 
-  [[nodiscard]] auto map_position() const -> QPointF;
+  /// Increases the viewport scale by 10%
+  void IncreaseScale();
 
-  [[nodiscard]] auto id() const noexcept -> map_id
+  /// Decreases the viewport scale by 10%
+  void DecreaseScale();
+
+  void SetScale(qreal scale);
+
+  /// Returns the current position of the associated map
+  [[nodiscard]] auto CurrentMapPosition() const -> QPointF;
+
+  [[nodiscard]] auto MapBounds() const -> QRectF;
+
+  /// Returns the ID of the associated map
+  [[nodiscard]] auto Id() const noexcept -> map_id
   {
-    return m_id;
+    return mId;
   }
 
  protected:
   void drawBackground(QPainter* painter, const QRectF& rect) override;
 
  private:
-  map_item* m_item;
-  map_id m_id;
+  MapItem* mItem{};
+  map_id mId;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

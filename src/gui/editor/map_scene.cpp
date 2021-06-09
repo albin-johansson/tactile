@@ -6,51 +6,67 @@
 
 #include "map_item.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-map_scene::map_scene(core::map_document* map, const map_id id, QObject* parent)
+MapScene::MapScene(core::map_document* map, const map_id id, QObject* parent)
     : QGraphicsScene{parent}
-    , m_item{new map_item{map}}
-    , m_id{id}
+    , mItem{new MapItem{map}}
+    , mId{id}
 {
-  addItem(m_item);
+  addItem(mItem);
 }
 
-void map_scene::move_map(const int dx, const int dy)
+void MapScene::MoveViewport(const int dx, const int dy)
 {
-  m_item->moveBy(dx, dy);
+  mItem->moveBy(dx, dy);
 }
 
-void map_scene::center_map()
+void MapScene::EnableStampPreview(const core::position& position)
 {
-  const auto rect = sceneRect();
-  const auto bounds = m_item->boundingRect();
-
-  m_item->setX(rect.x() + (rect.width() - bounds.width()) / 2.0);
-  m_item->setY(rect.y() + (rect.height() - bounds.height()) / 2.0);
+  mItem->EnableStampPreview(position);
 }
 
-void map_scene::enable_stamp_preview(const core::position& position)
+void MapScene::DisableStampPreview()
 {
-  m_item->enable_stamp_preview(position);
+  mItem->DisableStampPreview();
 }
 
-void map_scene::disable_stamp_preview()
+void MapScene::ShowMapProperties()
 {
-  m_item->disable_stamp_preview();
+  mItem->ShowMapProperties();
 }
 
-void map_scene::show_properties()
+void MapScene::ResetScale()
 {
-  m_item->show_properties();
+  mItem->setScale(1.0);
 }
 
-auto map_scene::map_position() const -> QPointF
+void MapScene::IncreaseScale()
 {
-  return m_item->pos();
+  mItem->setScale(mItem->scale() * 1.1);
 }
 
-void map_scene::drawBackground(QPainter* painter, const QRectF& rect)
+void MapScene::DecreaseScale()
+{
+  mItem->setScale(mItem->scale() * 0.9);
+}
+
+void MapScene::SetScale(qreal scale)
+{
+  mItem->setScale(scale);
+}
+
+auto MapScene::CurrentMapPosition() const -> QPointF
+{
+  return mItem->pos();
+}
+
+auto MapScene::MapBounds() const -> QRectF
+{
+  return mItem->boundingRect();
+}
+
+void MapScene::drawBackground(QPainter* painter, const QRectF& rect)
 {
   QGraphicsScene::drawBackground(painter, rect);
 
@@ -58,4 +74,4 @@ void map_scene::drawBackground(QPainter* painter, const QRectF& rect)
   painter->fillRect(rect, QColor{Qt::darkGray}.darker());
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

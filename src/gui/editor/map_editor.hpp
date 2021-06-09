@@ -9,18 +9,15 @@
 #include "position.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class map_editor;
-}
-
+TACTILE_FORWARD_DECLARE_UI(MapEditor)
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
-TACTILE_FORWARD_DECLARE(tactile::gui, map_tab_widget)
-TACTILE_FORWARD_DECLARE(tactile::gui, map_editor_context_menu)
+TACTILE_FORWARD_DECLARE(tactile, MapTabWidget)
+TACTILE_FORWARD_DECLARE(tactile, MapEditorContextMenu)
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
- * \class map_editor
+ * \class MapEditor
  *
  * \brief Represents the center stage of the editor and contains the main
  * map editor pane.
@@ -29,28 +26,28 @@ namespace tactile::gui {
  *
  * \headerfile map_editor.hpp
  */
-class map_editor final : public QWidget
+class MapEditor final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit map_editor(QWidget* parent = nullptr);
+  explicit MapEditor(QWidget* parent = nullptr);
 
-  ~map_editor() noexcept override;
+  ~MapEditor() noexcept override;
 
-  void enable_stamp_preview(const core::position& position);
+  void EnableStampPreview(const core::position& position);
 
-  void disable_stamp_preview();
+  void DisableStampPreview();
 
-  void add_map_tab(core::map_document* map, map_id id, const QString& title);
+  void AddMapTab(core::map_document* map, map_id id, const QString& title);
 
-  void select_tab(map_id id);
+  void SelectTab(map_id id);
 
-  void close_tab(map_id id) noexcept;
+  void CloseTab(map_id id) noexcept;
 
-  void center_viewport();
+  void CenterViewport();
 
-  void move_map(int dx, int dy) noexcept;
+  void MoveViewport(int dx, int dy) noexcept;
 
   /**
    * \brief Enables the startup view.
@@ -60,60 +57,57 @@ class map_editor final : public QWidget
    *
    * \since 0.1.0
    */
-  void enable_startup_view() noexcept;
+  void EnableStartupView() noexcept;
 
   /**
    * \brief Enables the main editor view.
    *
    * \since 0.1.0
    */
-  void enable_editor_view() noexcept;
+  void EnableEditorView() noexcept;
 
   /**
-   * \copydoc map_tab_widget::set_active_tab_name()
+   * \copydoc map_tab_widget::SetActiveTabName()
    */
-  void set_active_tab_name(const QString& name);
+  void SetActiveTabName(const QString& name);
 
-  void set_opengl_enabled(bool enabled);
+  [[nodiscard]] auto InEditorMode() const -> bool;
 
-  [[nodiscard]] auto in_editor_mode() const -> bool;
+  [[nodiscard]] auto ActiveTabID() const -> maybe<map_id>;
 
-  [[nodiscard]] auto active_tab_id() const -> maybe<map_id>;
+  [[nodiscard]] auto ActiveTabName() const -> maybe<QString>;
 
-  [[nodiscard]] auto active_tab_name() const -> maybe<QString>;
-
-  [[nodiscard]] auto tab_count() const -> int;
+  [[nodiscard]] auto TabCount() const -> int;
 
  public slots:
-  void force_redraw();
+  void ForceRedraw();
+  void SetOpenGlEnabled(bool enabled);
 
  signals:
-  void ui_remove_map(map_id id);
-  void ui_select_map(map_id id);
-  void increase_zoom();
-  void decrease_zoom();
-  void theme_changed();
-  void mouse_pressed(QMouseEvent* event, QPointF mapPosition);
-  void mouse_moved(QMouseEvent* event, QPointF mapPosition);
-  void mouse_released(QMouseEvent* event, QPointF mapPosition);
-  void mouse_entered(QEvent* event);
-  void mouse_exited(QEvent* event);
+  void S_RemoveMap(map_id id);
+  void S_SelectMap(map_id id);
+  void S_ZoomIn();
+  void S_ZoomOut();
+  void S_ThemeChanged();
+  void S_MousePressed(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseMoved(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseReleased(QMouseEvent* event, QPointF mapPosition);
+  void S_MouseEntered(QEvent* event);
+  void S_MouseExited(QEvent* event);
 
  private:
-  unique<Ui::map_editor> m_ui;
-  map_tab_widget* m_tabWidget{};
-  map_editor_context_menu* m_contextMenu{};
-  int m_startupID{};
-  int m_editorID{};
+  unique<Ui::MapEditor> mUi;
+  MapTabWidget* mTabWidget{};
+  MapEditorContextMenu* mContextMenu{};
+  int mStartupID{};
+  int mEditorID{};
 
-  void init_connections();
+  void InitConnections();
 
  private slots:
-  void tab_changed(int index);
-
-  void spawn_context_menu(const QPoint& pos);
-
-  void show_map_properties();
+  void OnTabChanged(int index);
+  void OnSpawnContextMenu(const QPoint& pos);
+  void OnShowMapProperties();
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile
