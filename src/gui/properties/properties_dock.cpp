@@ -3,60 +3,60 @@
 #include "properties_widget.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-properties_dock::properties_dock(QWidget* parent)
+PropertiesDock::PropertiesDock(QWidget* parent)
     : DockWidget{parent}
-    , m_widget{new properties_widget{this}}
+    , mWidget{new PropertiesWidget{this}}
 {
   setObjectName(TACTILE_QSTRING(u"properties_dock"));
   setWindowTitle(tr("Properties"));
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setContentsMargins(0, 0, 0, 0);
-  setWidget(m_widget);
+  setWidget(mWidget);
 }
 
-void properties_dock::switched_map(not_null<core::property_manager*> manager)
+void PropertiesDock::OnSwitchedMap(not_null<core::property_manager*> manager)
 {
-  m_widget->show_map(manager);
+  mWidget->ShowMap(manager);
 }
 
-void properties_dock::show_map_properties(
+void PropertiesDock::ShowMapProperties(
     not_null<core::property_manager*> manager)
 {
-  m_widget->show_map(manager);
+  mWidget->ShowMap(manager);
 }
 
-void properties_dock::show_layer_properties(
+void PropertiesDock::ShowLayerProperties(
     not_null<core::property_manager*> manager)
 {
-  m_widget->show_layer(manager);
+  mWidget->ShowLayer(manager);
 }
 
-void properties_dock::added_property(const QString& name)
+void PropertiesDock::OnAddedProperty(const QString& name)
 {
-  m_widget->added_property(name);
+  mWidget->OnAddedProperty(name);
 }
 
-void properties_dock::about_to_remove_property(const QString& name)
+void PropertiesDock::OnAboutToRemoveProperty(const QString& name)
 {
-  m_widget->about_to_remove_property(name);
+  mWidget->OnAboutToRemoveProperty(name);
 }
 
-void properties_dock::updated_property(const QString& name)
+void PropertiesDock::OnUpdatedProperty(const QString& name)
 {
-  m_widget->updated_property(name);
+  mWidget->OnUpdatedProperty(name);
 }
 
-void properties_dock::changed_property_type(const QString& name)
+void PropertiesDock::OnChangedPropertyType(const QString& name)
 {
-  m_widget->changed_property_type(name);
+  mWidget->OnChangedPropertyType(name);
 }
 
-void properties_dock::renamed_property(const QString& oldName,
+void PropertiesDock::OnRenamedProperty(const QString& oldName,
                                        const QString& newName)
 {
-  m_widget->renamed_property(oldName, newName);
+  mWidget->OnRenamedProperty(oldName, newName);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

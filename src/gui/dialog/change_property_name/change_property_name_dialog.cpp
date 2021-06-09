@@ -12,7 +12,7 @@ ChangePropertyNameDialog::ChangePropertyNameDialog(QStandardItemModel* model,
                                                    QWidget* parent)
     : QDialog{parent}
     , mUi{init_ui<Ui::ChangePropertyNameDialog>(this)}
-    , mValidator{new gui::property_name_validator{model, this}}
+    , mValidator{new PropertyNameValidator{model, this}}
 {
   // clang-format off
   connect(mUi->nameEdit, &QLineEdit::textChanged, this, &ChangePropertyNameDialog::OnNameChanged);

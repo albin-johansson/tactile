@@ -87,7 +87,7 @@ void window_connections::init_dock_connections()
   bindVisibility(m_window->mLayerDock, m_ui->actionLayersVisibility);
 
   const auto bindClosed = [](auto&& dock, auto&& callable) {
-    connect(dock, &tool_dock::S_Closed, callable);
+    connect(dock, &DockWidget::S_Closed, callable);
   };
 
   bindClosed(m_window->mToolDock, [] { prefs::gfx::tool_widget_visible() = false; });

@@ -8,36 +8,36 @@
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
-TACTILE_FORWARD_DECLARE(tactile::gui, properties_widget)
+TACTILE_FORWARD_DECLARE(tactile, PropertiesWidget)
 
-namespace tactile::gui {
+namespace tactile {
 
-class properties_dock final : public DockWidget
+class PropertiesDock final : public DockWidget
 {
   Q_OBJECT
 
  public:
-  explicit properties_dock(QWidget* parent = nullptr);
+  explicit PropertiesDock(QWidget* parent = nullptr);
 
-  void show_map_properties(not_null<core::property_manager*> manager);
+  void ShowMapProperties(not_null<core::property_manager*> manager);
 
-  void show_layer_properties(not_null<core::property_manager*> manager);
+  void ShowLayerProperties(not_null<core::property_manager*> manager);
 
  public slots:
-  void switched_map(not_null<core::property_manager*> manager);
+  void OnSwitchedMap(not_null<core::property_manager*> manager);
 
-  void added_property(const QString& name);
+  void OnAddedProperty(const QString& name);
 
-  void about_to_remove_property(const QString& name);
+  void OnAboutToRemoveProperty(const QString& name);
 
-  void updated_property(const QString& name);
+  void OnUpdatedProperty(const QString& name);
 
-  void changed_property_type(const QString& name);
+  void OnChangedPropertyType(const QString& name);
 
-  void renamed_property(const QString& oldName, const QString& newName);
+  void OnRenamedProperty(const QString& oldName, const QString& newName);
 
  private:
-  properties_widget* m_widget{};
+  PropertiesWidget* mWidget{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

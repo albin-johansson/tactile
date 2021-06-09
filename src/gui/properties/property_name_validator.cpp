@@ -3,20 +3,20 @@
 #include "item_model_utils.hpp"
 #include "tactile_error.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-property_name_validator::property_name_validator(QStandardItemModel* model,
-                                                 QObject* parent)
+PropertyNameValidator::PropertyNameValidator(QStandardItemModel* model,
+                                             QObject* parent)
     : QValidator{parent}
-    , m_model{model}
+    , mModel{model}
 {
-  if (!m_model)
+  if (!mModel)
   {
     throw tactile_error{"Property validator requires non-null model!"};
   }
 }
 
-auto property_name_validator::validate(QString& input, int&) const
+auto PropertyNameValidator::validate(QString& input, int&) const
     -> QValidator::State
 {
   if (input.isEmpty())
@@ -26,7 +26,7 @@ auto property_name_validator::validate(QString& input, int&) const
 
   bool invalid{};
 
-  vm::visit_items(m_model, 0, [&](QStandardItem* item) {
+  vm::visit_items(mModel, 0, [&](QStandardItem* item) {
     if (item->text() == input)
     {
       invalid = true;
@@ -43,4 +43,4 @@ auto property_name_validator::validate(QString& input, int&) const
   }
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

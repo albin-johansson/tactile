@@ -27,7 +27,7 @@ Window::Window(QWidget* parent)
     , mToolDock{new tool_dock{this}}
     , mLayerDock{new LayerDock{this}}
     , mTilesetDock{new tileset_dock{this}}
-    , mPropertiesDock{new properties_dock{this}}
+    , mPropertiesDock{new PropertiesDock{this}}
     , mStatusBar{new status_bar{this}}
     , mToolGroup{new QActionGroup{this}}
 {
@@ -213,12 +213,12 @@ void Window::ForceRedraw()
 
 void Window::ShowMapProperties(not_null<core::property_manager*> manager)
 {
-  mPropertiesDock->show_map_properties(manager);
+  mPropertiesDock->ShowMapProperties(manager);
 }
 
 void Window::ShowLayerProperties(not_null<core::property_manager*> manager)
 {
-  mPropertiesDock->show_layer_properties(manager);
+  mPropertiesDock->ShowLayerProperties(manager);
 }
 
 void Window::EnableStampPreview(const core::position& position)
@@ -236,7 +236,7 @@ void Window::OnSwitchedMap(const map_id map,
 {
   mTilesetDock->switched_map(map);
   mLayerDock->OnSwitchedMap(document);
-  mPropertiesDock->switched_map(document);
+  mPropertiesDock->OnSwitchedMap(document);
   mStatusBar->switched_map(*document);
 }
 
@@ -257,7 +257,7 @@ void Window::OnNewMapAdded(not_null<core::map_document*> document,
   mUi->actionSave->setDisabled(document->is_clean());
   mTilesetDock->added_map(id, *document);
   mLayerDock->OnSwitchedMap(document);
-  mPropertiesDock->switched_map(document);
+  mPropertiesDock->OnSwitchedMap(document);
   mStatusBar->switched_map(*document);
 }
 
@@ -325,27 +325,27 @@ void Window::OnRemovedLayer(const layer_id id)
 
 void Window::OnAddedProperty(const QString& name)
 {
-  mPropertiesDock->added_property(name);
+  mPropertiesDock->OnAddedProperty(name);
 }
 
 void Window::OnAboutToRemoveProperty(const QString& name)
 {
-  mPropertiesDock->about_to_remove_property(name);
+  mPropertiesDock->OnAboutToRemoveProperty(name);
 }
 
 void Window::OnUpdatedProperty(const QString& name)
 {
-  mPropertiesDock->updated_property(name);
+  mPropertiesDock->OnUpdatedProperty(name);
 }
 
 void Window::OnChangedPropertyType(const QString& name)
 {
-  mPropertiesDock->changed_property_type(name);
+  mPropertiesDock->OnChangedPropertyType(name);
 }
 
 void Window::OnRenamedProperty(const QString& oldName, const QString& newName)
 {
-  mPropertiesDock->renamed_property(oldName, newName);
+  mPropertiesDock->OnRenamedProperty(oldName, newName);
 }
 
 void Window::closeEvent(QCloseEvent* event)

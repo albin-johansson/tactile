@@ -12,241 +12,241 @@
 #include "property_tree_view.hpp"
 #include "ui_properties_widget.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-properties_widget::properties_widget(QWidget* parent)
+PropertiesWidget::PropertiesWidget(QWidget* parent)
     : QWidget{parent}
-    , m_ui{init_ui<Ui::properties_widget>(this)}
-    , m_contextMenu{new property_context_menu{this}}
-    , m_view{new property_tree_view{this}}
+    , mUi{init_ui<Ui::PropertiesWidget>(this)}
+    , mContextMenu{new PropertyContextMenu{this}}
+    , mView{new PropertyTreeView{this}}
 {
-  m_ui->gridLayout->addWidget(m_view);
-  m_ui->removeButton->setEnabled(false);
-  m_ui->renameButton->setEnabled(false);
-  m_contextMenu->disable_all();
-  m_contextMenu->set_add_enabled(true);
+  mUi->gridLayout->addWidget(mView);
+  mUi->removeButton->setEnabled(false);
+  mUi->renameButton->setEnabled(false);
+  mContextMenu->DisableAll();
+  mContextMenu->SetAddEnabled(true);
 
   // clang-format off
-  connect(m_ui->addButton, &QPushButton::pressed,
-          this, &properties_widget::new_property_requested);
+  connect(mUi->addButton, &QPushButton::pressed,
+          this, &PropertiesWidget::OnNewPropertyRequested);
 
-  connect(m_ui->removeButton, &QPushButton::pressed,
-          this, &properties_widget::remove_property_requested);
+  connect(mUi->removeButton, &QPushButton::pressed,
+          this, &PropertiesWidget::OnRemovePropertyRequested);
 
-  connect(m_ui->renameButton, &QPushButton::pressed,
-          this, &properties_widget::rename_property_requested);
+  connect(mUi->renameButton, &QPushButton::pressed,
+          this, &PropertiesWidget::OnRenamePropertyRequested);
 
-  connect(m_view, &property_tree_view::spawn_context_menu,
-          this, &properties_widget::spawn_context_menu);
+  connect(mView, &PropertyTreeView::S_SpawnContextMenu,
+          this, &PropertiesWidget::OnSpawnContextMenu);
 
-  connect(m_view, &property_tree_view::selection_changed,
-          this, &properties_widget::selection_changed);
+  connect(mView, &PropertyTreeView::S_SelectionChanged,
+          this, &PropertiesWidget::OnSelectionChanged);
 
-  connect(m_view, &QTreeView::doubleClicked,
-          this, &properties_widget::when_double_clicked);
+  connect(mView, &QTreeView::doubleClicked,
+          this, &PropertiesWidget::OnDoubleClicked);
 
-  connect(m_contextMenu, &property_context_menu::copy,
-          this, &properties_widget::copy_property_requested);
+  connect(mContextMenu, &PropertyContextMenu::S_Copy,
+          this, &PropertiesWidget::OnCopyPropertyRequested);
 
-  connect(m_contextMenu, &property_context_menu::paste,
-          this, &properties_widget::paste_property_requested);
+  connect(mContextMenu, &PropertyContextMenu::S_Paste,
+          this, &PropertiesWidget::OnPastePropertyRequested);
 
-  connect(m_contextMenu, &property_context_menu::add,
-          this, &properties_widget::new_property_requested);
+  connect(mContextMenu, &PropertyContextMenu::S_Add,
+          this, &PropertiesWidget::OnNewPropertyRequested);
 
-  connect(m_contextMenu, &property_context_menu::remove,
-          this, &properties_widget::remove_property_requested);
+  connect(mContextMenu, &PropertyContextMenu::S_Remove,
+          this, &PropertiesWidget::OnRemovePropertyRequested);
 
-  connect(m_contextMenu, &property_context_menu::rename,
-          this, &properties_widget::rename_property_requested);
+  connect(mContextMenu, &PropertyContextMenu::S_Rename,
+          this, &PropertiesWidget::OnRenamePropertyRequested);
 
-  connect(m_contextMenu, &property_context_menu::change_type,
-          this, &properties_widget::change_type_requested);
+  connect(mContextMenu, &PropertyContextMenu::S_ChangeType,
+          this, &PropertiesWidget::OnChangeTypeRequested);
   // clang-format on
 }
 
-properties_widget::~properties_widget() noexcept = default;
+PropertiesWidget::~PropertiesWidget() noexcept = default;
 
-void properties_widget::show_map(not_null<core::property_manager*> manager)
+void PropertiesWidget::ShowMap(not_null<core::property_manager*> manager)
 {
-  change_model(manager);
-  m_model->set_root_name(tr("Map"));
+  ChangeModel(manager);
+  mModel->set_root_name(tr("Map"));
 }
 
-void properties_widget::show_layer(not_null<core::property_manager*> manager)
+void PropertiesWidget::ShowLayer(not_null<core::property_manager*> manager)
 {
-  change_model(manager);
-  m_model->set_root_name(tr("Layer"));
+  ChangeModel(manager);
+  mModel->set_root_name(tr("Layer"));
 }
 
-void properties_widget::added_property(const QString& name)
+void PropertiesWidget::OnAddedProperty(const QString& name)
 {
-  m_model->added_property(name);
+  mModel->added_property(name);
 }
 
-void properties_widget::about_to_remove_property(const QString& name)
+void PropertiesWidget::OnAboutToRemoveProperty(const QString& name)
 {
-  m_model->about_to_remove_property(name);
+  mModel->about_to_remove_property(name);
 }
 
-void properties_widget::updated_property(const QString& name)
+void PropertiesWidget::OnUpdatedProperty(const QString& name)
 {
-  m_model->updated_property(name);
+  mModel->updated_property(name);
 }
 
-void properties_widget::renamed_property(const QString& oldName,
+void PropertiesWidget::OnRenamedProperty(const QString& oldName,
                                          const QString& newName)
 {
-  m_model->renamed_property(oldName, newName);
+  mModel->renamed_property(oldName, newName);
 }
 
-void properties_widget::changed_property_type(const QString& name)
+void PropertiesWidget::OnChangedPropertyType(const QString& name)
 {
-  m_model->changed_property_type(name);
+  mModel->changed_property_type(name);
 }
 
-void properties_widget::selection_changed(const maybe<QModelIndex> index)
+void PropertiesWidget::OnSelectionChanged(maybe<QModelIndex> index)
 {
-  m_contextMenu->disable_all();
+  mContextMenu->DisableAll();
 
-  m_contextMenu->set_add_enabled(true);
-  m_contextMenu->set_paste_enabled(m_nameCopy.has_value());
+  mContextMenu->SetAddEnabled(true);
+  mContextMenu->SetPasteEnabled(mNameCopy.has_value());
 
-  m_ui->addButton->setEnabled(true);
-  m_ui->removeButton->setEnabled(false);
-  m_ui->renameButton->setEnabled(false);
+  mUi->addButton->setEnabled(true);
+  mUi->removeButton->setEnabled(false);
+  mUi->renameButton->setEnabled(false);
 
-  if (!index || !m_model->itemFromIndex(*index))
+  if (!index || !mModel->itemFromIndex(*index))
   {
     return;
   }
 
-  const auto isCustom = m_model->is_custom_property(*index);
-  m_ui->removeButton->setEnabled(isCustom);
-  m_ui->renameButton->setEnabled(isCustom);
+  const auto isCustom = mModel->is_custom_property(*index);
+  mUi->removeButton->setEnabled(isCustom);
+  mUi->renameButton->setEnabled(isCustom);
 
-  m_contextMenu->set_copy_enabled(isCustom);
-  m_contextMenu->set_change_type_enabled(isCustom);
-  m_contextMenu->set_remove_enabled(m_ui->removeButton->isEnabled());
-  m_contextMenu->set_rename_enabled(m_ui->renameButton->isEnabled());
+  mContextMenu->SetCopyEnabled(isCustom);
+  mContextMenu->SetChangeTypeEnabled(isCustom);
+  mContextMenu->SetRemoveEnabled(mUi->removeButton->isEnabled());
+  mContextMenu->SetRenameEnabled(mUi->renameButton->isEnabled());
   if (isCustom)
   {
-    const auto& property = m_model->get_property(property_name(*index));
-    m_contextMenu->set_current_type(property.type().value());
+    const auto& property = mModel->get_property(PropertyName(*index));
+    mContextMenu->SetCurrentType(property.type().value());
   }
 }
 
-void properties_widget::copy_property_requested()
+void PropertiesWidget::OnCopyPropertyRequested()
 {
-  const auto currentName = current_property_name();
-  m_nameCopy = currentName;
-  m_propertyCopy = m_model->get_property(currentName);
+  const auto currentName = CurrentPropertyName();
+  mNameCopy = currentName;
+  mPropertyCopy = mModel->get_property(currentName);
 }
 
-void properties_widget::paste_property_requested()
+void PropertiesWidget::OnPastePropertyRequested()
 {
-  const auto& name = m_nameCopy.value();
-  if (!m_model->contains_property(name))
+  const auto& name = mNameCopy.value();
+  if (!mModel->contains_property(name))
   {
-    m_model->add(name, m_propertyCopy.value());
-    m_contextMenu->set_paste_enabled(false);
+    mModel->add(name, mPropertyCopy.value());
+    mContextMenu->SetPasteEnabled(false);
   }
 }
 
-void properties_widget::new_property_requested()
+void PropertiesWidget::OnNewPropertyRequested()
 {
   AddPropertyDialog::Spawn(
       [this](const QString& name, const core::property_type type) {
-        m_model->add(name, type);
+        mModel->add(name, type);
       },
-      m_model.get(),
+      mModel.get(),
       this);
 }
 
-void properties_widget::remove_property_requested()
+void PropertiesWidget::OnRemovePropertyRequested()
 {
 #ifdef QT_DEBUG
-  const auto index = m_view->currentIndex();
-  Q_ASSERT(m_model->is_custom_property(index));
+  const auto index = mView->currentIndex();
+  Q_ASSERT(mModel->is_custom_property(index));
 #endif  // QT_DEBUG
 
-  m_model->remove(current_property_name());
+  mModel->remove(CurrentPropertyName());
 }
 
-void properties_widget::rename_property_requested()
+void PropertiesWidget::OnRenamePropertyRequested()
 {
-  const auto oldName = current_property_name();
-  if (const auto newName = ChangePropertyNameDialog::Spawn(m_model.get()))
+  const auto oldName = CurrentPropertyName();
+  if (const auto newName = ChangePropertyNameDialog::Spawn(mModel.get()))
   {
-    m_model->rename(oldName, *newName);
+    mModel->rename(oldName, *newName);
   }
 }
 
-void properties_widget::change_type_requested(const core::property_type type)
+void PropertiesWidget::OnChangeTypeRequested(core::property_type type)
 {
-  m_model->change_type(current_property_name(), type);
+  mModel->change_type(CurrentPropertyName(), type);
 }
 
-void properties_widget::when_double_clicked()
+void PropertiesWidget::OnDoubleClicked()
 {
-  const auto index = m_view->currentIndex();
-  const auto* item = m_model->itemFromIndex(index);
+  const auto index = mView->currentIndex();
+  const auto* item = mModel->itemFromIndex(index);
   if (index.column() == 0 && index.parent().isValid() && item->isEnabled())
   {
     const auto oldName = item->text();
-    if (const auto name = ChangePropertyNameDialog::Spawn(m_model.get()))
+    if (const auto name = ChangePropertyNameDialog::Spawn(mModel.get()))
     {
-      m_model->rename(oldName, *name);
+      mModel->rename(oldName, *name);
     }
   }
 }
 
-void properties_widget::spawn_context_menu(const QPoint& pos)
+void PropertiesWidget::OnSpawnContextMenu(const QPoint& pos)
 {
-  m_contextMenu->exec(pos);
+  mContextMenu->exec(pos);
 }
 
-void properties_widget::change_model(not_null<core::property_manager*> manager)
+void PropertiesWidget::ChangeModel(not_null<core::property_manager*> manager)
 {
   Q_ASSERT(manager);
 
-  m_view->collapseAll();
+  mView->collapseAll();
 
-  m_model = std::make_unique<vm::property_model>(manager);
-  Q_ASSERT(!m_model->parent());
+  mModel = std::make_unique<vm::property_model>(manager);
+  Q_ASSERT(!mModel->parent());
 
-  m_view->setModel(m_model.get());
-  Q_ASSERT(!m_model->parent());
+  mView->setModel(mModel.get());
+  Q_ASSERT(!mModel->parent());
 
   // clang-format off
-  connect(m_model.get(), &vm::property_model::changed_type,
-          m_view,        &property_tree_view::when_changed_type);
+  connect(mModel.get(), &vm::property_model::changed_type,
+          mView,        &PropertyTreeView::OnChangedType);
 
-  connect(m_model.get(), &vm::property_model::added_file,
-          m_view,        &property_tree_view::when_file_added);
+  connect(mModel.get(), &vm::property_model::added_file,
+          mView,        &PropertyTreeView::OnFileAdded);
 
-  connect(m_model.get(), &vm::property_model::added_color,
-          m_view,        &property_tree_view::when_color_added);
+  connect(mModel.get(), &vm::property_model::added_color,
+          mView,        &PropertyTreeView::OnColorAdded);
 
-  connect(m_model.get(), &vm::property_model::updated_file,
-          m_view,        &property_tree_view::when_file_updated);
+  connect(mModel.get(), &vm::property_model::updated_file,
+          mView,        &PropertyTreeView::OnFileUpdated);
 
-  connect(m_model.get(), &vm::property_model::updated_color,
-          m_view,        &property_tree_view::when_color_updated);
+  connect(mModel.get(), &vm::property_model::updated_color,
+          mView,        &PropertyTreeView::OnColorUpdated);
   // clang-format on
 
-  m_view->setFirstColumnSpanned(0, m_view->rootIndex(), true);
-  m_view->restore_item_widgets();
+  mView->setFirstColumnSpanned(0, mView->rootIndex(), true);
+  mView->RestoreItemWidgets();
 
-  m_contextMenu->disable_all();
-  m_contextMenu->set_add_enabled(true);
+  mContextMenu->DisableAll();
+  mContextMenu->SetAddEnabled(true);
 
-  m_view->expandAll();
+  mView->expandAll();
 }
 
-auto properties_widget::property_name(const QModelIndex& index) const -> QString
+auto PropertiesWidget::PropertyName(const QModelIndex& index) const -> QString
 {
-  const auto* item = m_model->itemFromIndex(index);
+  const auto* item = mModel->itemFromIndex(index);
   Q_ASSERT(item);
 
   if (item->column() == 0)
@@ -255,15 +255,15 @@ auto properties_widget::property_name(const QModelIndex& index) const -> QString
   }
   else
   {
-    return m_model->itemFromIndex(index.siblingAtColumn(0))->text();
+    return mModel->itemFromIndex(index.siblingAtColumn(0))->text();
   }
 }
 
-auto properties_widget::current_property_name() const -> QString
+auto PropertiesWidget::CurrentPropertyName() const -> QString
 {
-  const auto index = m_view->currentIndex();
+  const auto index = mView->currentIndex();
   Q_ASSERT(index.isValid());
-  return property_name(index);
+  return PropertyName(index);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -24,7 +24,7 @@ TACTILE_FORWARD_DECLARE(tactile, MapEditor)
 TACTILE_FORWARD_DECLARE(tactile::gui, tool_dock)
 TACTILE_FORWARD_DECLARE(tactile, LayerDock)
 TACTILE_FORWARD_DECLARE(tactile::gui, tileset_dock)
-TACTILE_FORWARD_DECLARE(tactile::gui, properties_dock)
+TACTILE_FORWARD_DECLARE(tactile, PropertiesDock)
 TACTILE_FORWARD_DECLARE(tactile::gui, status_bar)
 
 namespace tactile::gui {
@@ -177,7 +177,7 @@ class Window final : public QMainWindow
   tool_dock* mToolDock{};
   LayerDock* mLayerDock{};
   tileset_dock* mTilesetDock{};
-  properties_dock* mPropertiesDock{};
+  PropertiesDock* mPropertiesDock{};
   status_bar* mStatusBar{};
   QActionGroup* mToolGroup{};
 

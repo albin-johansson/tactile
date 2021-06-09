@@ -14,9 +14,9 @@
 #include "select_file_dialog.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
+PropertyTreeView::PropertyTreeView(QWidget* parent) : QTreeView{parent}
 {
   setObjectName(TACTILE_QSTRING(u"property_tree_view"));
 
@@ -35,31 +35,31 @@ property_tree_view::property_tree_view(QWidget* parent) : QTreeView{parent}
   }
 
   // clang-format off
-  connect(this, &property_tree_view::expanded,
-          this, &property_tree_view::when_item_expanded);
+  connect(this, &PropertyTreeView::expanded,
+          this, &PropertyTreeView::OnItemExpanded);
 
-  connect(this, &property_tree_view::collapsed,
-          this, &property_tree_view::when_item_collapsed);
+  connect(this, &PropertyTreeView::collapsed,
+          this, &PropertyTreeView::OnItemCollapsed);
   // clang-format on
 }
 
-void property_tree_view::restore_item_widgets()
+void PropertyTreeView::RestoreItemWidgets()
 {
-  vm::visit_items(get_model(), 1, [this](QStandardItem* item) {
+  vm::visit_items(GetModel(), 1, [this](QStandardItem* item) {
     const auto itemType = static_cast<vm::property_item_type>(item->type());
 
     if (itemType == vm::property_item_type::color)
     {
-      when_color_added(item->index());
+      OnColorAdded(item->index());
     }
     else if (itemType == vm::property_item_type::file)
     {
-      when_file_added(item->index());
+      OnFileAdded(item->index());
     }
   });
 }
 
-void property_tree_view::when_color_added(const QModelIndex& valueIndex)
+void PropertyTreeView::OnColorAdded(const QModelIndex& valueIndex)
 {
   const auto color =
       valueIndex.data(vm::property_item_role::color).value<QColor>();
@@ -67,31 +67,31 @@ void property_tree_view::when_color_added(const QModelIndex& valueIndex)
 
   auto* button = new ColorPreviewButton{color};
 
-  const auto id = new_widget_id();
-  m_widgetItems.emplace(id, get_model()->itemFromIndex(valueIndex));
+  const auto id = NewWidgetId();
+  mWidgetItems.emplace(id, GetModel()->itemFromIndex(valueIndex));
 
   connect(button,
           &ColorPreviewButton::S_ColorChanged,
           [this, id](const QColor& color) {
-            auto* item = m_widgetItems.at(id);
+            auto* item = mWidgetItems.at(id);
             item->setData(color, vm::property_item_role::color);
           });
 
   setIndexWidget(valueIndex, button);
 }
 
-void property_tree_view::when_file_added(const QModelIndex& valueIndex)
+void PropertyTreeView::OnFileAdded(const QModelIndex& valueIndex)
 {
   auto* widget = new FileValueWidget{};
   widget->SetPath(
       valueIndex.data(vm::property_item_role::path).value<QString>());
 
-  const auto id = new_widget_id();
-  m_widgetItems.emplace(id, get_model()->itemFromIndex(valueIndex));
+  const auto id = NewWidgetId();
+  mWidgetItems.emplace(id, GetModel()->itemFromIndex(valueIndex));
 
   connect(widget, &FileValueWidget::S_SpawnDialog, [this, id] {
     SelectFileDialog::Spawn([this, id](const QString& path) {
-      auto* item = m_widgetItems.at(id);
+      auto* item = mWidgetItems.at(id);
       item->setData(path, vm::property_item_role::path);
 
       auto* itemWidget = indexWidget(item->index());
@@ -105,22 +105,22 @@ void property_tree_view::when_file_added(const QModelIndex& valueIndex)
   setIndexWidget(valueIndex, widget);
 }
 
-void property_tree_view::when_changed_type(const QModelIndex& valueIndex,
-                                           const core::property_type type)
+void PropertyTreeView::OnChangedType(const QModelIndex& valueIndex,
+                                     core::property_type type)
 {
   if (type == core::property_type::file)
   {
-    when_file_added(valueIndex);
+    OnFileAdded(valueIndex);
   }
   else if (type == core::property_type::color)
   {
-    when_color_added(valueIndex);
+    OnColorAdded(valueIndex);
   }
 
   setCurrentIndex(valueIndex);
 }
 
-void property_tree_view::when_file_updated(const QModelIndex& index)
+void PropertyTreeView::OnFileUpdated(const QModelIndex& index)
 {
   if (auto* widget = qobject_cast<FileValueWidget*>(indexWidget(index)))
   {
@@ -128,7 +128,7 @@ void property_tree_view::when_file_updated(const QModelIndex& index)
   }
 }
 
-void property_tree_view::when_color_updated(const QModelIndex& index)
+void PropertyTreeView::OnColorUpdated(const QModelIndex& index)
 {
   if (auto* button = qobject_cast<ColorPreviewButton*>(indexWidget(index)))
   {
@@ -136,8 +136,8 @@ void property_tree_view::when_color_updated(const QModelIndex& index)
   }
 }
 
-void property_tree_view::selectionChanged(const QItemSelection& selected,
-                                          const QItemSelection& deselected)
+void PropertyTreeView::selectionChanged(const QItemSelection& selected,
+                                        const QItemSelection& deselected)
 {
   QTreeView::selectionChanged(selected, deselected);
 
@@ -161,19 +161,19 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
     }
   }
 
-  emit selection_changed(selectedIndex);
+  emit S_SelectionChanged(selectedIndex);
 }
 
-void property_tree_view::rowsAboutToBeRemoved(const QModelIndex& parent,
-                                              const int start,
-                                              const int end)
+void PropertyTreeView::rowsAboutToBeRemoved(const QModelIndex& parent,
+                                            const int start,
+                                            const int end)
 {
   QTreeView::rowsAboutToBeRemoved(parent, start, end);
 
   // Yes, this range is inclusive: [start, end]
   for (auto row = start; row <= end; ++row)
   {
-    if (const auto* item = get_model()->item(row, 1))
+    if (const auto* item = GetModel()->item(row, 1))
     {
       if (auto* widget = indexWidget(item->index()))
       {
@@ -183,7 +183,7 @@ void property_tree_view::rowsAboutToBeRemoved(const QModelIndex& parent,
   }
 }
 
-void property_tree_view::mousePressEvent(QMouseEvent* event)
+void PropertyTreeView::mousePressEvent(QMouseEvent* event)
 {
   // This is done to be able to deselect properties by pressing outside of items
   selectionModel()->clear();
@@ -191,45 +191,45 @@ void property_tree_view::mousePressEvent(QMouseEvent* event)
 
   if (event->button() == Qt::RightButton)
   {
-    emit spawn_context_menu(mapToGlobal(event->pos()));
+    emit S_SpawnContextMenu(mapToGlobal(event->pos()));
   }
 }
 
-auto property_tree_view::get_model() -> vm::property_model*
+auto PropertyTreeView::GetModel() -> vm::property_model*
 {
   auto* ptr = qobject_cast<vm::property_model*>(model());
   Q_ASSERT(ptr);
   return ptr;
 }
 
-auto property_tree_view::get_model() const -> const vm::property_model*
+auto PropertyTreeView::GetModel() const -> const vm::property_model*
 {
   const auto* ptr = qobject_cast<const vm::property_model*>(model());
   Q_ASSERT(ptr);
   return ptr;
 }
 
-auto property_tree_view::new_widget_id() noexcept -> int
+auto PropertyTreeView::NewWidgetId() noexcept -> int
 {
-  const auto next = m_nextWidgetId;
-  ++m_nextWidgetId;
+  const auto next = mNextWidgetId;
+  ++mNextWidgetId;
   return next;
 }
 
-void property_tree_view::when_item_expanded(const QModelIndex& index)
+void PropertyTreeView::OnItemExpanded(const QModelIndex& index)
 {
   if (!index.parent().isValid())
   {
-    get_model()->itemFromIndex(index)->setIcon(icons::expanded());
+    GetModel()->itemFromIndex(index)->setIcon(icons::expanded());
   }
 }
 
-void property_tree_view::when_item_collapsed(const QModelIndex& index)
+void PropertyTreeView::OnItemCollapsed(const QModelIndex& index)
 {
   if (!index.parent().isValid())
   {
-    get_model()->itemFromIndex(index)->setIcon(icons::collapsed());
+    GetModel()->itemFromIndex(index)->setIcon(icons::collapsed());
   }
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

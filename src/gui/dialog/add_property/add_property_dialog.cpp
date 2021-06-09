@@ -13,7 +13,7 @@ namespace tactile {
 AddPropertyDialog::AddPropertyDialog(QStandardItemModel* model, QWidget* parent)
     : QDialog{parent}
     , mUi{init_ui<Ui::AddPropertyDialog>(this)}
-    , mNameValidator{new gui::property_name_validator{model, this}}
+    , mNameValidator{new PropertyNameValidator{model, this}}
 {
   setObjectName(TACTILE_QSTRING(u"add_property_dialog"));
 

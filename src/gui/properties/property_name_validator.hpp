@@ -3,18 +3,18 @@
 #include <QStandardItemModel>  // QStandardItemModel
 #include <QValidator>          // QValidator
 
-namespace tactile::gui {
+namespace tactile {
 
-class property_name_validator final : public QValidator
+class PropertyNameValidator final : public QValidator
 {
  public:
-  explicit property_name_validator(QStandardItemModel* model,
-                                   QObject* parent = nullptr);
+  explicit PropertyNameValidator(QStandardItemModel* model,
+                                 QObject* parent = nullptr);
 
   [[nodiscard]] auto validate(QString& input, int&) const -> State override;
 
  private:
-  QStandardItemModel* m_model{};
+  QStandardItemModel* mModel{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile
