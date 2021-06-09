@@ -1,16 +1,15 @@
 #include "color_validator.hpp"
 
-namespace tactile::gui {
+#include "string_utils.hpp"
 
-color_validator::color_validator(QObject* parent)
-    : QIntValidator{0, 255, parent}
+namespace tactile {
+
+ColorValidator::ColorValidator(QObject* parent) : QIntValidator{0, 255, parent}
 {}
 
-auto color_validator::validate(QString& string, int&) const -> State
+auto ColorValidator::validate(QString& string, int&) const -> State
 {
-  bool ok;
-
-  if (const auto number = string.toInt(&ok); ok)
+  if (const auto number = to_integer(string))
   {
     if (number >= bottom() && number <= top())
     {
@@ -21,4 +20,4 @@ auto color_validator::validate(QString& string, int&) const -> State
   return Invalid;
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
