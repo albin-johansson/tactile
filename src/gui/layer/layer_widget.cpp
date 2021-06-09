@@ -18,8 +18,8 @@ layer_widget::layer_widget(QWidget* parent)
     : QWidget{parent}
     , m_ui{init_ui<Ui::layer_widget>(this)}
     , m_view{new LayerListView{this}}
-    , m_addLayerMenu{new add_layer_context_menu{this}}
-    , m_widgetMenu{new layer_widget_context_menu{m_addLayerMenu, this}}
+    , m_addLayerMenu{new AddLayerContextMenu{this}}
+    , m_widgetMenu{new LayerWidgetContextMenu{m_addLayerMenu, this}}
     , m_itemMenu{new LayerItemContextMenu{this}}
 {
   m_ui->gridLayout->addWidget(m_view, 0, 1);
@@ -43,10 +43,10 @@ layer_widget::layer_widget(QWidget* parent)
   connect(m_view, &LayerListView::S_ChangedName,
           this, &layer_widget::when_view_changed_name);
 
-  connect(m_addLayerMenu, &add_layer_context_menu::add_tile_layer,
+  connect(m_addLayerMenu, &AddLayerContextMenu::S_AddTileLayer,
           this, &layer_widget::new_tile_layer_requested);
 
-  connect(m_addLayerMenu, &add_layer_context_menu::add_object_layer,
+  connect(m_addLayerMenu, &AddLayerContextMenu::S_AddObjectLayer,
           this, &layer_widget::new_object_layer_requested);
 
   connect(m_itemMenu, &LayerItemContextMenu::S_ToggleVisibility,

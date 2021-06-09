@@ -2,31 +2,30 @@
 
 #include "icons.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-add_layer_context_menu::add_layer_context_menu(QWidget* parent)
+AddLayerContextMenu::AddLayerContextMenu(QWidget* parent)
     : QMenu{parent}
-    , m_tileLayer{addAction(icons::tile_layer(), tr("Tile layer"))}
-    , m_objectLayer{addAction(icons::object_layer(), tr("Object layer"))}
+    , mTileLayer{addAction(icons::tile_layer(), tr("Tile layer"))}
+    , mObjectLayer{addAction(icons::object_layer(), tr("Object layer"))}
 {
   // clang-format off
-  connect(m_tileLayer, &QAction::triggered,
-          this, &add_layer_context_menu::add_tile_layer);
-  connect(m_objectLayer, &QAction::triggered,
-          this, &add_layer_context_menu::add_object_layer);
+  connect(mTileLayer, &QAction::triggered,
+          this, &AddLayerContextMenu::S_AddTileLayer);
+  connect(mObjectLayer, &QAction::triggered,
+          this, &AddLayerContextMenu::S_AddObjectLayer);
   // clang-format on
 }
 
-layer_widget_context_menu::layer_widget_context_menu(
-    add_layer_context_menu* addLayerMenu,
-    QWidget* parent)
+LayerWidgetContextMenu::LayerWidgetContextMenu(AddLayerContextMenu* menu,
+                                               QWidget* parent)
     : QMenu{parent}
-    , m_add{addMenu(icons::add(), tr("Add new layer..."))}
+    , mAdd{addMenu(icons::add(), tr("Add new layer..."))}
 {
-  for (auto* action : addLayerMenu->actions())
+  for (auto* action : menu->actions())
   {
-    m_add->addAction(action);
+    mAdd->addAction(action);
   }
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
