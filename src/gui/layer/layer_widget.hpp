@@ -54,8 +54,8 @@ class layer_widget final : public QWidget
 
   void spawn_context_menu(const QPoint& pos);
 
-  void when_view_changed_selection(const maybe<QModelIndex> selected,
-                                   const maybe<QModelIndex>);
+  void when_view_changed_selection(maybe<QModelIndex> selected,
+                                   maybe<QModelIndex>);
 
   void when_view_changed_name(const QModelIndex& index, const QString& name);
 

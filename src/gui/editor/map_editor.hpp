@@ -103,8 +103,8 @@ class map_editor final : public QWidget
   unique<Ui::map_editor> m_ui;
   map_tab_widget* m_tabWidget{};
   map_editor_context_menu* m_contextMenu{};
-  int m_editorID{};
   int m_startupID{};
+  int m_editorID{};
 
   void init_connections();
 

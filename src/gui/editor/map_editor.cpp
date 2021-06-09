@@ -14,10 +14,9 @@ map_editor::map_editor(QWidget* parent)
     , m_ui{init_ui<Ui::map_editor>(this)}
     , m_tabWidget{new map_tab_widget{this}}
     , m_contextMenu{new map_editor_context_menu{this}}
+    , m_startupID{m_ui->stackedWidget->addWidget(new startup_widget{this})}
+    , m_editorID{m_ui->stackedWidget->addWidget(m_tabWidget)}
 {
-  m_startupID = m_ui->stackedWidget->addWidget(new startup_widget{this});
-  m_editorID = m_ui->stackedWidget->addWidget(m_tabWidget);
-
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setContentsMargins(0, 0, 0, 0);
 

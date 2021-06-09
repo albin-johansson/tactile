@@ -33,7 +33,7 @@ void tab_bar::edit_tab(const int index)
 
 void tab_bar::mouseDoubleClickEvent(QMouseEvent* event)
 {
-  QWidget::mouseDoubleClickEvent(event);
+  QTabBar::mouseDoubleClickEvent(event);
   if (const auto index = tabAt(event->pos()); index != -1)
   {
     edit_tab(index);

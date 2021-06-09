@@ -108,7 +108,13 @@ void layer_widget::update_actions(const maybe<QModelIndex>& selected)
   m_ui->visibleButton->setEnabled(selected.has_value());
 
   const auto nLayers = m_model->rowCount();
-  const maybe<int> index = selected ? selected->row() : maybe<int>{};
+
+  maybe<int> index;
+  if (selected)
+  {
+    index = selected->row();
+  }
+
   m_ui->upButton->setEnabled(index && index != 0);
   m_ui->downButton->setEnabled(index && index != nLayers - 1);
   m_ui->removeLayerButton->setEnabled(nLayers != 1);
