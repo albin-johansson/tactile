@@ -56,18 +56,10 @@ class Window final : public QMainWindow
 
   ~Window() noexcept override;
 
-  /**
-   * \brief Enables the view that is shown when no maps are active.
-   *
-   * \since 0.1.0
-   */
+  /// Enables the view that is shown when no maps are active.
   void EnterNoContentView();
 
-  /**
-   * \brief Enables the main editor view.
-   *
-   * \since 0.1.0
-   */
+  /// Enables the main editor view.
   void EnterContentView();
 
   void TriggerSaveAs();
