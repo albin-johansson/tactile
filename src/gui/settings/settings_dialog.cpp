@@ -265,7 +265,7 @@ void settings_dialog::duplicate_current_theme()
 
 void settings_dialog::import_new_theme()
 {
-  import_theme_dialog::spawn(
+  ImportThemeDialog::Spawn(
       [this](const QString& path) {
         const auto name = QFileInfo{path}.baseName();
         if (const auto palette = parse_palette(path))

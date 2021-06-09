@@ -3,17 +3,17 @@
 #include <QFileDialog>  // QFileDialog
 #include <concepts>     // invocable
 
-namespace tactile::gui {
+namespace tactile {
 
-class import_theme_dialog final : public QFileDialog
+class ImportThemeDialog final : public QFileDialog
 {
  public:
-  explicit import_theme_dialog(QWidget* parent = nullptr);
+  explicit ImportThemeDialog(QWidget* parent = nullptr);
 
   template <std::invocable<const QString&> T>
-  static void spawn(T&& callable, QWidget* parent = nullptr)
+  static void Spawn(T&& callable, QWidget* parent = nullptr)
   {
-    import_theme_dialog dialog{parent};
+    ImportThemeDialog dialog{parent};
     if (dialog.exec())
     {
       Q_ASSERT(dialog.selectedFiles().size() == 1);
@@ -22,4 +22,4 @@ class import_theme_dialog final : public QFileDialog
   }
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

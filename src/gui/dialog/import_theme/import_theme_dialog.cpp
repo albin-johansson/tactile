@@ -2,9 +2,9 @@
 
 #include "standard_paths.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-import_theme_dialog::import_theme_dialog(QWidget* parent) : QFileDialog{parent}
+ImportThemeDialog::ImportThemeDialog(QWidget* parent) : QFileDialog{parent}
 {
   setWindowTitle(tr("Import theme..."));
   setNameFilter(tr("Tactile theme file (*.json)"));
@@ -12,4 +12,4 @@ import_theme_dialog::import_theme_dialog(QWidget* parent) : QFileDialog{parent}
   setDirectory(get_documents_location());
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
