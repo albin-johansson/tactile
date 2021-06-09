@@ -28,7 +28,7 @@ Window::Window(QWidget* parent)
     , mLayerDock{new LayerDock{this}}
     , mTilesetDock{new tileset_dock{this}}
     , mPropertiesDock{new PropertiesDock{this}}
-    , mStatusBar{new status_bar{this}}
+    , mStatusBar{new StatusBar{this}}
     , mToolGroup{new QActionGroup{this}}
 {
   setContentsMargins(0, 0, 0, 0);
@@ -177,7 +177,7 @@ void Window::EnterNoContentView()
   SetActionsEnabled(false);
   HideAllDocks();
 
-  mStatusBar->set_layer_combo_box_visible(false);
+  mStatusBar->SetLayerComboBoxVisible(false);
 }
 
 void Window::EnterContentView()
@@ -188,7 +188,7 @@ void Window::EnterContentView()
   SetActionsEnabled(true);
   RestoreDockVisibility();
 
-  mStatusBar->set_layer_combo_box_visible(true);
+  mStatusBar->SetLayerComboBoxVisible(true);
 }
 
 void Window::TriggerSaveAs()
@@ -237,7 +237,7 @@ void Window::OnSwitchedMap(const map_id map,
   mTilesetDock->switched_map(map);
   mLayerDock->OnSwitchedMap(document);
   mPropertiesDock->OnSwitchedMap(document);
-  mStatusBar->switched_map(*document);
+  mStatusBar->OnSwitchedMap(*document);
 }
 
 void Window::OnNewMapAdded(not_null<core::map_document*> document,
@@ -258,7 +258,7 @@ void Window::OnNewMapAdded(not_null<core::map_document*> document,
   mTilesetDock->added_map(id, *document);
   mLayerDock->OnSwitchedMap(document);
   mPropertiesDock->OnSwitchedMap(document);
-  mStatusBar->switched_map(*document);
+  mStatusBar->OnSwitchedMap(*document);
 }
 
 void Window::OnUndoStateUpdated(const bool canUndo)
@@ -305,22 +305,22 @@ void Window::OnRenamedTileset(const tileset_id id, const QString& name)
 
 void Window::OnSelectedLayer(const layer_id id, const core::layer& layer)
 {
-  mStatusBar->set_current_layer(id);
+  mStatusBar->SetCurrentLayer(id);
 }
 
 void Window::OnAddedLayer(const layer_id id, const core::layer& layer)
 {
-  mStatusBar->added_layer(id, layer.name());
+  mStatusBar->OnAddedLayer(id, layer.name());
 }
 
 void Window::OnAddedDuplicatedLayer(const layer_id id, const core::layer& layer)
 {
-  mStatusBar->added_layer(id, layer.name());
+  mStatusBar->OnAddedLayer(id, layer.name());
 }
 
 void Window::OnRemovedLayer(const layer_id id)
 {
-  mStatusBar->removed_layer(id);
+  mStatusBar->OnRemovedLayer(id);
 }
 
 void Window::OnAddedProperty(const QString& name)
@@ -458,19 +458,19 @@ void Window::OnPropertiesWidgetVisibilityChanged()
 
 void Window::OnMouseEntered(QEvent* event)
 {
-  mStatusBar->set_mouse_info_visible(true);
+  mStatusBar->SetMouseInfoVisible(true);
   emit S_MouseEntered(event);
 }
 
 void Window::OnMouseExited(QEvent* event)
 {
-  mStatusBar->set_mouse_info_visible(false);
+  mStatusBar->SetMouseInfoVisible(false);
   emit S_MouseExited(event);
 }
 
 void Window::OnMouseMoved(QMouseEvent* event, QPointF mapPos)
 {
-  mStatusBar->mouse_moved(event->pos() - mapPos);
+  mStatusBar->OnMouseMoved(event->pos() - mapPos);
   emit S_MouseMoved(event, mapPos);
 }
 
