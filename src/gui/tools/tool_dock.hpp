@@ -5,7 +5,7 @@
 
 namespace tactile::gui {
 
-class tool_dock final : public dock_widget
+class tool_dock final : public DockWidget
 {
   Q_OBJECT
 

@@ -9,7 +9,7 @@ TACTILE_FORWARD_DECLARE(tactile::gui, layer_widget)
 
 namespace tactile::gui {
 
-class layer_dock final : public dock_widget
+class layer_dock final : public DockWidget
 {
   Q_OBJECT
 

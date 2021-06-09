@@ -12,7 +12,7 @@ TACTILE_FORWARD_DECLARE(tactile::gui, tileset_widget)
 
 namespace tactile::gui {
 
-class tileset_dock final : public dock_widget
+class tileset_dock final : public DockWidget
 {
   Q_OBJECT
 

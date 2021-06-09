@@ -6,7 +6,7 @@
 namespace tactile::gui {
 
 layer_dock::layer_dock(QWidget* parent)
-    : dock_widget{parent}
+    : DockWidget{parent}
     , m_widget{new layer_widget{this}}
 {
   setObjectName(TACTILE_QSTRING(u"layer_dock"));

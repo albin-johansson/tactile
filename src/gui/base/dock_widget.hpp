@@ -2,19 +2,19 @@
 
 #include <QDockWidget>  // QDockWidget
 
-namespace tactile::gui {
+namespace tactile {
 
-class dock_widget : public QDockWidget
+class DockWidget : public QDockWidget
 {
   Q_OBJECT
 
  protected:
-  explicit dock_widget(QWidget* parent = nullptr);
+  explicit DockWidget(QWidget* parent = nullptr);
 
   void closeEvent(QCloseEvent* event) override;
 
  signals:
-  void closed();
+  void S_Closed();
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

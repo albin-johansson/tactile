@@ -1,14 +1,14 @@
 #include "dock_widget.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-dock_widget::dock_widget(QWidget* parent) : QDockWidget{parent}
+DockWidget::DockWidget(QWidget* parent) : QDockWidget{parent}
 {}
 
-void dock_widget::closeEvent(QCloseEvent* event)
+void DockWidget::closeEvent(QCloseEvent* event)
 {
   QDockWidget::closeEvent(event);
-  emit closed();
+  emit S_Closed();
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
