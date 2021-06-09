@@ -15,4 +15,9 @@ auto intensity_of(const QColor& color) -> double
          (color.blue() * blue_factor);
 }
 
+auto is_bright(const QColor& color) -> bool
+{
+  return intensity_of(color) > color_intensity_threshold;
+}
+
 }  // namespace tactile

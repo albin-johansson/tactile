@@ -1,16 +1,15 @@
 #include "color_preview_button.hpp"
 
 #include <QColorDialog>
-#include <utility>  // move
 
 #include "color_utils.hpp"
 #include "tactile_qstring.hpp"
 
 namespace tactile::gui {
 
-color_preview_button::color_preview_button(QColor color, QWidget* parent)
+color_preview_button::color_preview_button(const QColor color, QWidget* parent)
     : QPushButton{parent}
-    , m_color{std::move(color)}
+    , m_color{color}
 {
   setObjectName(TACTILE_QSTRING(u"color_preview_dialog"));
   update_color(m_color);
@@ -29,18 +28,12 @@ color_preview_button::color_preview_button(QColor color, QWidget* parent)
 void color_preview_button::update_color(QPushButton& button,
                                         const QColor& color)
 {
-  static const auto fmt = TACTILE_QSTRING(u"background-color: %1; color: %2;");
   static const auto black = TACTILE_QSTRING(u"#000000");
   static const auto white = TACTILE_QSTRING(u"#FFFFFF");
 
-  if (intensity_of(color) > color_intensity_threshold)
-  {
-    button.setStyleSheet(fmt.arg(color.name(QColor::HexArgb)).arg(black));
-  }
-  else
-  {
-    button.setStyleSheet(fmt.arg(color.name(QColor::HexArgb)).arg(white));
-  }
+  static const auto fmt = TACTILE_QSTRING(u"background-color: %1; color: %2;");
+  button.setStyleSheet(
+      fmt.arg(color.name(QColor::HexArgb), is_bright(color) ? black : white));
 
   // The RGB name is easier to read
   button.setText(color.name(QColor::HexRgb).toUpper());
