@@ -155,7 +155,7 @@ void properties_widget::paste_property_requested()
 
 void properties_widget::new_property_requested()
 {
-  add_property_dialog::spawn(
+  AddPropertyDialog::Spawn(
       [this](const QString& name, const core::property_type type) {
         m_model->add(name, type);
       },
