@@ -82,22 +82,22 @@ void property_tree_view::when_color_added(const QModelIndex& valueIndex)
 
 void property_tree_view::when_file_added(const QModelIndex& valueIndex)
 {
-  auto* widget = new file_value_widget{};
-  widget->set_path(
+  auto* widget = new FileValueWidget{};
+  widget->SetPath(
       valueIndex.data(vm::property_item_role::path).value<QString>());
 
   const auto id = new_widget_id();
   m_widgetItems.emplace(id, get_model()->itemFromIndex(valueIndex));
 
-  connect(widget, &file_value_widget::spawn_dialog, [this, id] {
+  connect(widget, &FileValueWidget::S_SpawnDialog, [this, id] {
     SelectFileDialog::Spawn([this, id](const QString& path) {
       auto* item = m_widgetItems.at(id);
       item->setData(path, vm::property_item_role::path);
 
       auto* itemWidget = indexWidget(item->index());
-      if (auto* widget = qobject_cast<file_value_widget*>(itemWidget))
+      if (auto* widget = qobject_cast<FileValueWidget*>(itemWidget))
       {
-        widget->set_path(path);
+        widget->SetPath(path);
       }
     });
   });
@@ -122,9 +122,9 @@ void property_tree_view::when_changed_type(const QModelIndex& valueIndex,
 
 void property_tree_view::when_file_updated(const QModelIndex& index)
 {
-  if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index)))
+  if (auto* widget = qobject_cast<FileValueWidget*>(indexWidget(index)))
   {
-    widget->set_path(index.data(vm::property_item_role::path).value<QString>());
+    widget->SetPath(index.data(vm::property_item_role::path).value<QString>());
   }
 }
 
@@ -147,17 +147,17 @@ void property_tree_view::selectionChanged(const QItemSelection& selected,
   for (const auto index : selected.indexes())
   {
     selectedIndex = index;
-    if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index)))
+    if (auto* widget = qobject_cast<FileValueWidget*>(indexWidget(index)))
     {
-      widget->enter_active_mode();
+      widget->EnterActiveMode();
     }
   }
 
   for (const auto index : deselected.indexes())
   {
-    if (auto* widget = qobject_cast<file_value_widget*>(indexWidget(index)))
+    if (auto* widget = qobject_cast<FileValueWidget*>(indexWidget(index)))
     {
-      widget->enter_idle_mode();
+      widget->EnterIdleMode();
     }
   }
 

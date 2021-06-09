@@ -8,32 +8,32 @@
 
 TACTILE_FORWARD_DECLARE(Ui, file_value_widget)
 
-namespace tactile::gui {
+namespace tactile {
 
-class file_value_widget final : public QWidget
+class FileValueWidget final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit file_value_widget(QWidget* parent = nullptr);
+  explicit FileValueWidget(QWidget* parent = nullptr);
 
-  ~file_value_widget() noexcept override;
+  ~FileValueWidget() noexcept override;
 
-  void enter_active_mode();
+  void EnterActiveMode();
 
-  void enter_idle_mode();
+  void EnterIdleMode();
 
-  void reset_path();
+  void ResetPath();
 
-  void set_path(const QString& path);
+  void SetPath(const QString& path);
 
-  [[nodiscard]] auto current_path() const -> QString;
+  [[nodiscard]] auto CurrentPath() const -> QString;
 
  signals:
-  void spawn_dialog();
+  void S_SpawnDialog();
 
  private:
-  unique<Ui::file_value_widget> m_ui;
+  unique<Ui::file_value_widget> mUi;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

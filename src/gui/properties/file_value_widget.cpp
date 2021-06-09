@@ -3,52 +3,52 @@
 #include "init_ui.hpp"
 #include "ui_file_value_widget.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-file_value_widget::file_value_widget(QWidget* parent)
+FileValueWidget::FileValueWidget(QWidget* parent)
     : QWidget{parent}
-    , m_ui{init_ui<Ui::file_value_widget>(this)}
+    , mUi{init_ui<Ui::file_value_widget>(this)}
 {
   setAutoFillBackground(true);
   layout()->setContentsMargins(0, 0, 0, 0);
 
   // clang-format off
-  connect(m_ui->selectFileButton, &QToolButton::pressed,
-          this,                   &file_value_widget::spawn_dialog);
+  connect(mUi->selectFileButton, &QToolButton::pressed,
+          this, &FileValueWidget::S_SpawnDialog);
   // clang-format on
 
-  // This is to avoid the idle page preventing the active page from being
-  // activated after being pressed
-  m_ui->idlePage->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+  /* This is to avoid the idle page preventing the active page from being
+     activated after being pressed */
+  mUi->idlePage->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 }
 
-file_value_widget::~file_value_widget() noexcept = default;
+FileValueWidget::~FileValueWidget() noexcept = default;
 
-void file_value_widget::enter_active_mode()
+void FileValueWidget::EnterActiveMode()
 {
-  m_ui->stackedWidget->setCurrentWidget(m_ui->activePage);
+  mUi->stackedWidget->setCurrentWidget(mUi->activePage);
 }
 
-void file_value_widget::enter_idle_mode()
+void FileValueWidget::EnterIdleMode()
 {
-  m_ui->stackedWidget->setCurrentWidget(m_ui->idlePage);
+  mUi->stackedWidget->setCurrentWidget(mUi->idlePage);
 }
 
-void file_value_widget::reset_path()
+void FileValueWidget::ResetPath()
 {
-  m_ui->activePathEdit->clear();
+  mUi->activePathEdit->clear();
 }
 
-void file_value_widget::set_path(const QString& path)
+void FileValueWidget::SetPath(const QString& path)
 {
   const QFileInfo info{path};
-  m_ui->activePathEdit->setText(info.filePath());
-  m_ui->idlePathEdit->setText(info.fileName());
+  mUi->activePathEdit->setText(info.filePath());
+  mUi->idlePathEdit->setText(info.fileName());
 }
 
-auto file_value_widget::current_path() const -> QString
+auto FileValueWidget::CurrentPath() const -> QString
 {
-  return m_ui->activePathEdit->text();
+  return mUi->activePathEdit->text();
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
