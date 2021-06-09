@@ -17,7 +17,7 @@ namespace tactile::gui {
 layer_widget::layer_widget(QWidget* parent)
     : QWidget{parent}
     , m_ui{init_ui<Ui::layer_widget>(this)}
-    , m_view{new layer_list_view{this}}
+    , m_view{new LayerListView{this}}
     , m_addLayerMenu{new add_layer_context_menu{this}}
     , m_widgetMenu{new layer_widget_context_menu{m_addLayerMenu, this}}
     , m_itemMenu{new layer_item_context_menu{this}}
@@ -37,10 +37,10 @@ layer_widget::layer_widget(QWidget* parent)
   connect(m_view, &QWidget::customContextMenuRequested,
           this, &layer_widget::spawn_context_menu);
 
-  connect(m_view, &layer_list_view::selection_changed,
+  connect(m_view, &LayerListView::S_SelectionChanged,
           this, &layer_widget::when_view_changed_selection);
 
-  connect(m_view, &layer_list_view::changed_name,
+  connect(m_view, &LayerListView::S_ChangedName,
           this, &layer_widget::when_view_changed_name);
 
   connect(m_addLayerMenu, &add_layer_context_menu::add_tile_layer,

@@ -4,22 +4,22 @@
 
 #include "maybe.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-class layer_list_view final : public QListView
+class LayerListView final : public QListView
 {
   Q_OBJECT
 
  public:
-  explicit layer_list_view(QWidget* parent = nullptr);
+  explicit LayerListView(QWidget* parent = nullptr);
 
-  void select_quietly(const QModelIndex& index);
+  void SelectQuietly(const QModelIndex& index);  // TODO remove?
 
  signals:
-  void selection_changed(const maybe<QModelIndex>& selected,
-                         const maybe<QModelIndex>& deselected);
+  void S_SelectionChanged(const maybe<QModelIndex>& selected,
+                          const maybe<QModelIndex>& deselected);
 
-  void changed_name(const QModelIndex& index, const QString& name);
+  void S_ChangedName(const QModelIndex& index, const QString& name);
 
  protected:
   void selectionChanged(const QItemSelection& selected,
@@ -30,7 +30,7 @@ class layer_list_view final : public QListView
                    const QList<int>& roles) override;
 
  private:
-  bool m_quiet{};
+  bool mQuiet{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

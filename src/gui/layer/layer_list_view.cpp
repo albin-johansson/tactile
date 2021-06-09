@@ -2,9 +2,9 @@
 
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-layer_list_view::layer_list_view(QWidget* parent) : QListView{parent}
+LayerListView::LayerListView(QWidget* parent) : QListView{parent}
 {
   setObjectName(TACTILE_QSTRING(u"layer_list_view"));
 
@@ -14,19 +14,19 @@ layer_list_view::layer_list_view(QWidget* parent) : QListView{parent}
   setAlternatingRowColors(false);
 }
 
-void layer_list_view::select_quietly(const QModelIndex& index)
+void LayerListView::SelectQuietly(const QModelIndex& index)
 {
-  m_quiet = true;
+  mQuiet = true;
 
   auto* selection = selectionModel();
   selection->clearSelection();
   selection->setCurrentIndex(index, QItemSelectionModel::Select);
 
-  m_quiet = false;
+  mQuiet = false;
 }
 
-void layer_list_view::selectionChanged(const QItemSelection& selected,
-                                       const QItemSelection& deselected)
+void LayerListView::selectionChanged(const QItemSelection& selected,
+                                     const QItemSelection& deselected)
 {
   QListView::selectionChanged(selected, deselected);
 
@@ -45,15 +45,15 @@ void layer_list_view::selectionChanged(const QItemSelection& selected,
     deselectedIndex = index;
   }
 
-  if (!m_quiet)
+  if (!mQuiet)
   {
-    emit selection_changed(selectedIndex, deselectedIndex);
+    emit S_SelectionChanged(selectedIndex, deselectedIndex);
   }
 }
 
-void layer_list_view::dataChanged(const QModelIndex& topLeft,
-                                  const QModelIndex& bottomRight,
-                                  const QList<int>& roles)
+void LayerListView::dataChanged(const QModelIndex& topLeft,
+                                const QModelIndex& bottomRight,
+                                const QList<int>& roles)
 {
   QListView::dataChanged(topLeft, bottomRight, roles);
 
@@ -63,9 +63,9 @@ void layer_list_view::dataChanged(const QModelIndex& topLeft,
     if (role == Qt::ItemDataRole::EditRole)
     {
       const auto name = topLeft.data(Qt::EditRole).value<QString>();
-      emit changed_name(topLeft, name);
+      emit S_ChangedName(topLeft, name);
     }
   }
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
