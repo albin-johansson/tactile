@@ -3,36 +3,36 @@
 #include <QColor>       // QColor
 #include <QPushButton>  // QPushButton
 
-namespace tactile::gui {
+namespace tactile {
 
-class color_preview_button final : public QPushButton
+class ColorPreviewButton final : public QPushButton
 {
   Q_OBJECT
 
  public:
-  explicit color_preview_button(QColor color, QWidget* parent = nullptr);
+  explicit ColorPreviewButton(QColor color, QWidget* parent = nullptr);
 
-  static void update_color(QPushButton& button, const QColor& color);
+  static void UpdateColor(QPushButton& button, const QColor& color);
 
-  void set_color(const QColor& color);
+  void SetColor(const QColor& color);
 
-  void set_red(int red);
+  void SetRed(int red);
 
-  void set_green(int green);
+  void SetGreen(int green);
 
-  void set_blue(int blue);
+  void SetBlue(int blue);
 
-  void set_alpha(int alpha);
+  void SetAlpha(int alpha);
 
-  [[nodiscard]] auto current_color() const -> const QColor&;
+  [[nodiscard]] auto CurrentColor() const -> const QColor&;
 
  signals:
-  void color_changed(const QColor& color);
+  void S_ColorChanged(const QColor& color);
 
  private:
-  QColor m_color;
+  QColor mColor;
 
-  void update_color(const QColor& color);
+  void UpdateColor(const QColor& color);
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -5,28 +5,27 @@
 #include "color_utils.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-color_preview_button::color_preview_button(const QColor color, QWidget* parent)
+ColorPreviewButton::ColorPreviewButton(const QColor color, QWidget* parent)
     : QPushButton{parent}
-    , m_color{color}
+    , mColor{color}
 {
   setObjectName(TACTILE_QSTRING(u"color_preview_dialog"));
-  update_color(m_color);
+  UpdateColor(mColor);
 
   connect(this, &QPushButton::clicked, [this] {
-    QColorDialog dialog{m_color, window()};
+    QColorDialog dialog{mColor, window()};
     dialog.adjustSize();  // Silences setGeometry warnings
     dialog.setOption(QColorDialog::ShowAlphaChannel);
     if (dialog.exec())
     {
-      update_color(dialog.selectedColor());
+      UpdateColor(dialog.selectedColor());
     }
   });
 }
 
-void color_preview_button::update_color(QPushButton& button,
-                                        const QColor& color)
+void ColorPreviewButton::UpdateColor(QPushButton& button, const QColor& color)
 {
   static const auto black = TACTILE_QSTRING(u"#000000");
   static const auto white = TACTILE_QSTRING(u"#FFFFFF");
@@ -39,52 +38,52 @@ void color_preview_button::update_color(QPushButton& button,
   button.setText(color.name(QColor::HexRgb).toUpper());
 }
 
-void color_preview_button::set_color(const QColor& color)
+void ColorPreviewButton::SetColor(const QColor& color)
 {
-  set_red(color.red());
-  set_green(color.green());
-  set_blue(color.blue());
-  set_alpha(color.alpha());
+  SetRed(color.red());
+  SetGreen(color.green());
+  SetBlue(color.blue());
+  SetAlpha(color.alpha());
 }
 
-void color_preview_button::set_red(const int red)
+void ColorPreviewButton::SetRed(const int red)
 {
   Q_ASSERT(red >= 0 && red <= 255);
-  m_color.setRed(red);
-  update_color(m_color);
+  mColor.setRed(red);
+  UpdateColor(mColor);
 }
 
-void color_preview_button::set_green(const int green)
+void ColorPreviewButton::SetGreen(const int green)
 {
   Q_ASSERT(green >= 0 && green <= 255);
-  m_color.setGreen(green);
-  update_color(m_color);
+  mColor.setGreen(green);
+  UpdateColor(mColor);
 }
 
-void color_preview_button::set_blue(const int blue)
+void ColorPreviewButton::SetBlue(const int blue)
 {
   Q_ASSERT(blue >= 0 && blue <= 255);
-  m_color.setBlue(blue);
-  update_color(m_color);
+  mColor.setBlue(blue);
+  UpdateColor(mColor);
 }
 
-void color_preview_button::set_alpha(const int alpha)
+void ColorPreviewButton::SetAlpha(const int alpha)
 {
   Q_ASSERT(alpha >= 0 && alpha <= 255);
-  m_color.setAlpha(alpha);
-  update_color(m_color);
+  mColor.setAlpha(alpha);
+  UpdateColor(mColor);
 }
 
-auto color_preview_button::current_color() const -> const QColor&
+auto ColorPreviewButton::CurrentColor() const -> const QColor&
 {
-  return m_color;
+  return mColor;
 }
 
-void color_preview_button::update_color(const QColor& color)
+void ColorPreviewButton::UpdateColor(const QColor& color)
 {
-  m_color = color;
-  update_color(*this, m_color);
-  emit color_changed(m_color);
+  mColor = color;
+  UpdateColor(*this, mColor);
+  emit S_ColorChanged(mColor);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

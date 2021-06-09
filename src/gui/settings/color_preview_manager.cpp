@@ -9,24 +9,24 @@ color_preview_manager::color_preview_manager(QFormLayout* layout,
                                              QWidget* parent)
     : QWidget{parent}
     , m_group{group}
-    , m_basePreview{new color_preview_button{Qt::black, this}}
-    , m_alternateBasePreview{new color_preview_button{Qt::black, this}}
-    , m_windowPreview{new color_preview_button{Qt::black, this}}
-    , m_windowTextPreview{new color_preview_button{Qt::black, this}}
-    , m_lightPreview{new color_preview_button{Qt::black, this}}
-    , m_midLightPreview{new color_preview_button{Qt::black, this}}
-    , m_darkPreview{new color_preview_button{Qt::black, this}}
-    , m_linkPreview{new color_preview_button{Qt::black, this}}
-    , m_linkVisitedPreview{new color_preview_button{Qt::black, this}}
-    , m_buttonPreview{new color_preview_button{Qt::black, this}}
-    , m_buttonTextPreview{new color_preview_button{Qt::black, this}}
-    , m_highlightPreview{new color_preview_button{Qt::black, this}}
-    , m_highlightedTextPreview{new color_preview_button{Qt::black, this}}
-    , m_placeholderTextPreview{new color_preview_button{Qt::black, this}}
-    , m_tooltipBasePreview{new color_preview_button{Qt::black, this}}
-    , m_tooltipTextPreview{new color_preview_button{Qt::black, this}}
-    , m_textPreview{new color_preview_button{Qt::black, this}}
-    , m_shadowPreview{new color_preview_button{Qt::black, this}}
+    , m_basePreview{new ColorPreviewButton{Qt::black, this}}
+    , m_alternateBasePreview{new ColorPreviewButton{Qt::black, this}}
+    , m_windowPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_windowTextPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_lightPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_midLightPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_darkPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_linkPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_linkVisitedPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_buttonPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_buttonTextPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_highlightPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_highlightedTextPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_placeholderTextPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_tooltipBasePreview{new ColorPreviewButton{Qt::black, this}}
+    , m_tooltipTextPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_textPreview{new ColorPreviewButton{Qt::black, this}}
+    , m_shadowPreview{new ColorPreviewButton{Qt::black, this}}
 {
   Q_ASSERT(layout);
   layout->addRow(tr("Base"), m_basePreview);
@@ -48,10 +48,10 @@ color_preview_manager::color_preview_manager(QFormLayout* layout,
   layout->addRow(tr("Text"), m_textPreview);
   layout->addRow(tr("Shadow"), m_shadowPreview);
 
-  const auto connectPreview = [this](color_preview_button* button,
+  const auto connectPreview = [this](ColorPreviewButton* button,
                                      const QPalette::ColorRole role) {
     connect(button,
-            &color_preview_button::color_changed,
+            &ColorPreviewButton::S_ColorChanged,
             this,
             [this, role](const QColor& color) {
               emit color_changed(role, color);
@@ -80,30 +80,27 @@ color_preview_manager::color_preview_manager(QFormLayout* layout,
 
 void color_preview_manager::update_preview(const QPalette& palette)
 {
-  m_basePreview->set_color(palette.color(m_group, QPalette::Base));
-  m_alternateBasePreview->set_color(
+  m_basePreview->SetColor(palette.color(m_group, QPalette::Base));
+  m_alternateBasePreview->SetColor(
       palette.color(m_group, QPalette::AlternateBase));
-  m_windowPreview->set_color(palette.color(m_group, QPalette::Window));
-  m_windowTextPreview->set_color(palette.color(m_group, QPalette::WindowText));
-  m_lightPreview->set_color(palette.color(m_group, QPalette::Light));
-  m_midLightPreview->set_color(palette.color(m_group, QPalette::Midlight));
-  m_darkPreview->set_color(palette.color(m_group, QPalette::Dark));
-  m_linkPreview->set_color(palette.color(m_group, QPalette::Link));
-  m_linkVisitedPreview->set_color(
-      palette.color(m_group, QPalette::LinkVisited));
-  m_buttonPreview->set_color(palette.color(m_group, QPalette::Button));
-  m_buttonTextPreview->set_color(palette.color(m_group, QPalette::ButtonText));
-  m_highlightPreview->set_color(palette.color(m_group, QPalette::Highlight));
-  m_highlightedTextPreview->set_color(
+  m_windowPreview->SetColor(palette.color(m_group, QPalette::Window));
+  m_windowTextPreview->SetColor(palette.color(m_group, QPalette::WindowText));
+  m_lightPreview->SetColor(palette.color(m_group, QPalette::Light));
+  m_midLightPreview->SetColor(palette.color(m_group, QPalette::Midlight));
+  m_darkPreview->SetColor(palette.color(m_group, QPalette::Dark));
+  m_linkPreview->SetColor(palette.color(m_group, QPalette::Link));
+  m_linkVisitedPreview->SetColor(palette.color(m_group, QPalette::LinkVisited));
+  m_buttonPreview->SetColor(palette.color(m_group, QPalette::Button));
+  m_buttonTextPreview->SetColor(palette.color(m_group, QPalette::ButtonText));
+  m_highlightPreview->SetColor(palette.color(m_group, QPalette::Highlight));
+  m_highlightedTextPreview->SetColor(
       palette.color(m_group, QPalette::HighlightedText));
-  m_placeholderTextPreview->set_color(
+  m_placeholderTextPreview->SetColor(
       palette.color(m_group, QPalette::PlaceholderText));
-  m_tooltipBasePreview->set_color(
-      palette.color(m_group, QPalette::ToolTipBase));
-  m_tooltipTextPreview->set_color(
-      palette.color(m_group, QPalette::ToolTipText));
-  m_textPreview->set_color(palette.color(m_group, QPalette::Text));
-  m_shadowPreview->set_color(palette.color(m_group, QPalette::Shadow));
+  m_tooltipBasePreview->SetColor(palette.color(m_group, QPalette::ToolTipBase));
+  m_tooltipTextPreview->SetColor(palette.color(m_group, QPalette::ToolTipText));
+  m_textPreview->SetColor(palette.color(m_group, QPalette::Text));
+  m_shadowPreview->SetColor(palette.color(m_group, QPalette::Shadow));
 }
 
 }  // namespace tactile::gui

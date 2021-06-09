@@ -126,8 +126,8 @@ void settings_dialog::update_theme_components()
 {
   m_ui->themeComboBox->setCurrentText(m_snapshot.theme);
 
-  color_preview_button::update_color(*m_ui->accentColorButton,
-                                     prefs::gfx::accent_color().value());
+  ColorPreviewButton::UpdateColor(*m_ui->accentColorButton,
+                                  prefs::gfx::accent_color().value());
 
   update_theme_preview();
 }

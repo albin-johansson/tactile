@@ -65,13 +65,13 @@ void property_tree_view::when_color_added(const QModelIndex& valueIndex)
       valueIndex.data(vm::property_item_role::color).value<QColor>();
   Q_ASSERT(color.isValid());
 
-  auto* button = new color_preview_button{color};
+  auto* button = new ColorPreviewButton{color};
 
   const auto id = new_widget_id();
   m_widgetItems.emplace(id, get_model()->itemFromIndex(valueIndex));
 
   connect(button,
-          &color_preview_button::color_changed,
+          &ColorPreviewButton::S_ColorChanged,
           [this, id](const QColor& color) {
             auto* item = m_widgetItems.at(id);
             item->setData(color, vm::property_item_role::color);
@@ -130,10 +130,9 @@ void property_tree_view::when_file_updated(const QModelIndex& index)
 
 void property_tree_view::when_color_updated(const QModelIndex& index)
 {
-  if (auto* button = qobject_cast<color_preview_button*>(indexWidget(index)))
+  if (auto* button = qobject_cast<ColorPreviewButton*>(indexWidget(index)))
   {
-    button->set_color(
-        index.data(vm::property_item_role::color).value<QColor>());
+    button->SetColor(index.data(vm::property_item_role::color).value<QColor>());
   }
 }
 
