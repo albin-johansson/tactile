@@ -33,7 +33,7 @@ void color_preview_button::update_color(QPushButton& button,
   static const auto black = TACTILE_QSTRING(u"#000000");
   static const auto white = TACTILE_QSTRING(u"#FFFFFF");
 
-  if (intensity_of(color) > color_intensity_threshold())
+  if (intensity_of(color) > color_intensity_threshold)
   {
     button.setStyleSheet(fmt.arg(color.name(QColor::HexArgb)).arg(black));
   }

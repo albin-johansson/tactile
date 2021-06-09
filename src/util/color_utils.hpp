@@ -17,16 +17,11 @@ namespace tactile {
 [[nodiscard]] auto intensity_of(const QColor& color) -> double;
 
 /**
- * \brief Returns an intensity threshold used to determine whether or not black
- * text is required when using the color as a backdrop.
- *
- * \return an intensity threshold.
+ * \brief The intensity threshold used to determine whether or not black text is
+ * required when using the color as a backdrop.
  *
  * \see `intensity_of(const QColor&)`
  */
-[[nodiscard]] constexpr auto color_intensity_threshold() noexcept -> double
-{
-  return 186;
-}
+inline constexpr double color_intensity_threshold = 186;
 
 }  // namespace tactile

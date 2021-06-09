@@ -1,11 +1,18 @@
 #include "color_utils.hpp"
 
 namespace tactile {
+namespace {
+
+inline constexpr double red_factor = 0.299;
+inline constexpr double green_factor = 0.587;
+inline constexpr double blue_factor = 0.114;
+
+}  // namespace
 
 auto intensity_of(const QColor& color) -> double
 {
-  return (color.red() * 0.299) + (color.green() * 0.587) +
-         (color.blue() * 0.114);
+  return (color.red() * red_factor) + (color.green() * green_factor) +
+         (color.blue() * blue_factor);
 }
 
 }  // namespace tactile
