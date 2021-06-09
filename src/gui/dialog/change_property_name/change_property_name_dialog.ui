@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>change_property_name_dialog</class>
- <widget class="QDialog" name="change_property_name_dialog">
+ <class>ChangePropertyNameDialog</class>
+ <widget class="QDialog" name="ChangePropertyNameDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -55,7 +55,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>change_property_name_dialog</receiver>
+   <receiver>ChangePropertyNameDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -71,7 +71,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>change_property_name_dialog</receiver>
+   <receiver>ChangePropertyNameDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

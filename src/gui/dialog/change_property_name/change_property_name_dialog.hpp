@@ -4,32 +4,31 @@
 #include <QStandardItemModel>  // QStandardItemModel
 #include <QValidator>          // QValidator
 
+#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
 
-namespace Ui {
-class change_property_name_dialog;
-}
+TACTILE_FORWARD_DECLARE_UI(ChangePropertyNameDialog)
 
-namespace tactile::gui {
+namespace tactile {
 
-class change_property_name_dialog final : public QDialog
+class ChangePropertyNameDialog final : public QDialog
 {
  public:
-  explicit change_property_name_dialog(QStandardItemModel* model,
-                                       QWidget* parent = nullptr);
+  explicit ChangePropertyNameDialog(QStandardItemModel* model,
+                                    QWidget* parent = nullptr);
 
-  ~change_property_name_dialog() noexcept override;
+  ~ChangePropertyNameDialog() noexcept override;
 
-  [[nodiscard]] static auto spawn(QStandardItemModel* model,
+  [[nodiscard]] static auto Spawn(QStandardItemModel* model,
                                   QWidget* parent = nullptr) -> maybe<QString>;
 
  private:
-  unique<Ui::change_property_name_dialog> m_ui;
-  QValidator* m_validator{};
+  unique<Ui::ChangePropertyNameDialog> mUi;
+  QValidator* mValidator{};
 
  private slots:
-  void when_name_changed(const QString& name);
+  void OnNameChanged(const QString& name);
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -176,7 +176,7 @@ void properties_widget::remove_property_requested()
 void properties_widget::rename_property_requested()
 {
   const auto oldName = current_property_name();
-  if (const auto newName = change_property_name_dialog::spawn(m_model.get()))
+  if (const auto newName = ChangePropertyNameDialog::Spawn(m_model.get()))
   {
     m_model->rename(oldName, *newName);
   }
@@ -194,7 +194,7 @@ void properties_widget::when_double_clicked()
   if (index.column() == 0 && index.parent().isValid() && item->isEnabled())
   {
     const auto oldName = item->text();
-    if (const auto name = change_property_name_dialog::spawn(m_model.get()))
+    if (const auto name = ChangePropertyNameDialog::Spawn(m_model.get()))
     {
       m_model->rename(oldName, *name);
     }
