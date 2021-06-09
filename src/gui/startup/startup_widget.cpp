@@ -3,19 +3,19 @@
 #include "init_ui.hpp"
 #include "ui_startup_widget.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-startup_widget::startup_widget(QWidget* parent)
+StartupWidget::StartupWidget(QWidget* parent)
     : QWidget{parent}
-    , m_ui{init_ui<Ui::startup_widget>(this)}
+    , mUi{init_ui<Ui::StartupWidget>(this)}
 {
   const QKeySequence newDocument{QKeySequence::New};
-  m_ui->newShortcutLabel->setText(newDocument.toString());
+  mUi->newShortcutLabel->setText(newDocument.toString());
 
   const QKeySequence openDocument{QKeySequence::Open};
-  m_ui->openShortcutLabel->setText(openDocument.toString());
+  mUi->openShortcutLabel->setText(openDocument.toString());
 }
 
-startup_widget::~startup_widget() noexcept = default;
+StartupWidget::~StartupWidget() noexcept = default;
 
-}  // namespace tactile::gui
+}  // namespace tactile

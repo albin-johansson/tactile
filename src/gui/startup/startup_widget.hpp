@@ -5,12 +5,12 @@
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, startup_widget)
+TACTILE_FORWARD_DECLARE_UI(StartupWidget)
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
- * \class startup_widget
+ * \class StartupWidget
  *
  * \brief Represents the widget that is displayed when no map is active.
  *
@@ -18,15 +18,15 @@ namespace tactile::gui {
  *
  * \headerfile startup_widget.hpp
  */
-class startup_widget final : public QWidget
+class StartupWidget final : public QWidget
 {
  public:
-  explicit startup_widget(QWidget* parent = nullptr);
+  explicit StartupWidget(QWidget* parent = nullptr);
 
-  ~startup_widget() noexcept override;
+  ~StartupWidget() noexcept override;
 
  private:
-  unique<Ui::startup_widget> m_ui;
+  unique<Ui::StartupWidget> mUi;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

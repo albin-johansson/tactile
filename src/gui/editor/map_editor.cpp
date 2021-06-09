@@ -14,7 +14,7 @@ MapEditor::MapEditor(QWidget* parent)
     , mUi{init_ui<Ui::MapEditor>(this)}
     , mTabWidget{new MapTabWidget{this}}
     , mContextMenu{new MapEditorContextMenu{this}}
-    , mStartupID{mUi->stackedWidget->addWidget(new gui::startup_widget{this})}
+    , mStartupID{mUi->stackedWidget->addWidget(new StartupWidget{this})}
     , mEditorID{mUi->stackedWidget->addWidget(mTabWidget)}
 {
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
