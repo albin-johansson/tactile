@@ -40,8 +40,8 @@ class settings_dialog final : public QDialog
  private:
   unique<Ui::settings_dialog> m_ui;
   theme_options_context_menu* m_themeOptionsContextMenu;
-  color_preview_manager* m_basicPreview;
-  color_preview_manager* m_disabledPreview;
+  ColorPreviewManager* m_basicPreview;
+  ColorPreviewManager* m_disabledPreview;
   settings_snapshot m_snapshot;
 
   void update_general_components();

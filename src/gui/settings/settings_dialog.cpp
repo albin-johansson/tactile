@@ -25,10 +25,10 @@ settings_dialog::settings_dialog(QWidget* parent)
     : QDialog{parent}
     , m_ui{init_ui<Ui::settings_dialog>(this)}
     , m_themeOptionsContextMenu{new theme_options_context_menu{this}}
-    , m_basicPreview{new color_preview_manager{m_ui->basicGroupLayout,
+    , m_basicPreview{new ColorPreviewManager{m_ui->basicGroupLayout,
                                                QPalette::Active,
                                                m_ui->themeTab}}
-    , m_disabledPreview{new color_preview_manager{m_ui->disabledGroupLayout,
+    , m_disabledPreview{new ColorPreviewManager{m_ui->disabledGroupLayout,
                                                   QPalette::Disabled,
                                                   m_ui->themeTab}}
 {
@@ -86,12 +86,12 @@ settings_dialog::settings_dialog(QWidget* parent)
   connect(m_themeOptionsContextMenu, &theme_options_context_menu::remove_theme,
           this, &settings_dialog::remove_current_theme);
 
-  connect(m_basicPreview, &color_preview_manager::color_changed,
+  connect(m_basicPreview, &ColorPreviewManager::S_ColorChanged,
           [this](const QPalette::ColorRole role, const QColor& color) {
             theme_changed(QPalette::Active, role, color);
           });
 
-  connect(m_disabledPreview, &color_preview_manager::color_changed,
+  connect(m_disabledPreview, &ColorPreviewManager::S_ColorChanged,
           [this](const QPalette::ColorRole role, const QColor& color) {
             theme_changed(QPalette::Disabled, role, color);
           });
@@ -136,8 +136,8 @@ void settings_dialog::update_theme_preview()
 {
   if (const auto palette = get_theme(m_ui->themeComboBox->currentText()))
   {
-    m_basicPreview->update_preview(*palette);
-    m_disabledPreview->update_preview(*palette);
+    m_basicPreview->UpdatePreview(*palette);
+    m_disabledPreview->UpdatePreview(*palette);
   }
 }
 

@@ -8,42 +8,42 @@
 
 TACTILE_FORWARD_DECLARE(tactile, ColorPreviewButton)
 
-namespace tactile::gui {
+namespace tactile {
 
-class color_preview_manager final : public QWidget
+class ColorPreviewManager final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit color_preview_manager(QFormLayout* layout,
-                                 QPalette::ColorGroup group,
-                                 QWidget* parent = nullptr);
+  explicit ColorPreviewManager(QFormLayout* layout,
+                               QPalette::ColorGroup group,
+                               QWidget* parent = nullptr);
 
-  void update_preview(const QPalette& palette);
+  void UpdatePreview(const QPalette& palette);
 
  signals:
-  void color_changed(QPalette::ColorRole role, const QColor& color);
+  void S_ColorChanged(QPalette::ColorRole role, const QColor& color);
 
  private:
-  QPalette::ColorGroup m_group;
-  ColorPreviewButton* m_basePreview;
-  ColorPreviewButton* m_alternateBasePreview;
-  ColorPreviewButton* m_windowPreview;
-  ColorPreviewButton* m_windowTextPreview;
-  ColorPreviewButton* m_lightPreview;
-  ColorPreviewButton* m_midLightPreview;
-  ColorPreviewButton* m_darkPreview;
-  ColorPreviewButton* m_linkPreview;
-  ColorPreviewButton* m_linkVisitedPreview;
-  ColorPreviewButton* m_buttonPreview;
-  ColorPreviewButton* m_buttonTextPreview;
-  ColorPreviewButton* m_highlightPreview;
-  ColorPreviewButton* m_highlightedTextPreview;
-  ColorPreviewButton* m_placeholderTextPreview;
-  ColorPreviewButton* m_tooltipBasePreview;
-  ColorPreviewButton* m_tooltipTextPreview;
-  ColorPreviewButton* m_textPreview;
-  ColorPreviewButton* m_shadowPreview;
+  QPalette::ColorGroup mGroup;
+  ColorPreviewButton* mBasePreview;
+  ColorPreviewButton* mAlternateBasePreview;
+  ColorPreviewButton* mWindowPreview;
+  ColorPreviewButton* mWindowTextPreview;
+  ColorPreviewButton* mLightPreview;
+  ColorPreviewButton* mMidLightPreview;
+  ColorPreviewButton* mDarkPreview;
+  ColorPreviewButton* mLinkPreview;
+  ColorPreviewButton* mLinkVisitedPreview;
+  ColorPreviewButton* mButtonPreview;
+  ColorPreviewButton* mButtonTextPreview;
+  ColorPreviewButton* mHighlightPreview;
+  ColorPreviewButton* mHighlightedTextPreview;
+  ColorPreviewButton* mPlaceholderTextPreview;
+  ColorPreviewButton* mTooltipBasePreview;
+  ColorPreviewButton* mTooltipTextPreview;
+  ColorPreviewButton* mTextPreview;
+  ColorPreviewButton* mShadowPreview;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile
