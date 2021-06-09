@@ -5,26 +5,26 @@
 
 #include "maybe.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-class tab_bar final : public QTabBar
+class TabBar final : public QTabBar
 {
   Q_OBJECT
 
  public:
-  explicit tab_bar(QWidget* parent = nullptr);
+  explicit TabBar(QWidget* parent = nullptr);
 
-  void edit_tab(int index);
+  void EditTab(int index);
 
  signals:
-  void edited_tab(int index);
+  void S_EditedTab(int index);
 
  protected:
   void mouseDoubleClickEvent(QMouseEvent* event) override;
 
  private:
-  QLineEdit* m_edit{};
-  maybe<int> m_renameIndex;
+  QLineEdit* mEdit{};
+  maybe<int> mRenameIndex;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

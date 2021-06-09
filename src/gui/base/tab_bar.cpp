@@ -2,43 +2,43 @@
 
 #include <QMouseEvent>
 
-namespace tactile::gui {
+namespace tactile {
 
-tab_bar::tab_bar(QWidget* parent) : QTabBar{parent}, m_edit{new QLineEdit{this}}
+TabBar::TabBar(QWidget* parent) : QTabBar{parent}, mEdit{new QLineEdit{this}}
 {
-  m_edit->hide();
-  connect(m_edit, &QLineEdit::editingFinished, [this] {
-    const auto index = m_renameIndex.value();
-    setTabText(index, m_edit->text());
-    m_edit->hide();
-    m_renameIndex.reset();
-    emit edited_tab(index);
+  mEdit->hide();
+  connect(mEdit, &QLineEdit::editingFinished, [this] {
+    const auto index = mRenameIndex.value();
+    setTabText(index, mEdit->text());
+    mEdit->hide();
+    mRenameIndex.reset();
+    emit S_EditedTab(index);
   });
 }
 
-void tab_bar::edit_tab(const int index)
+void TabBar::EditTab(const int index)
 {
-  m_renameIndex = index;
+  mRenameIndex = index;
 
   const auto rect = tabRect(index);
   const auto topMargin = 3;
   const auto leftMargin = 6;
-  m_edit->show();
-  m_edit->move(rect.left() + leftMargin, rect.top() + topMargin);
-  m_edit->resize(rect.width() - 2 * leftMargin, rect.height() - 2 * topMargin);
-  m_edit->setText(tabText(index));
-  m_edit->selectAll();
-  m_edit->setFocus();
+  mEdit->show();
+  mEdit->move(rect.left() + leftMargin, rect.top() + topMargin);
+  mEdit->resize(rect.width() - 2 * leftMargin, rect.height() - 2 * topMargin);
+  mEdit->setText(tabText(index));
+  mEdit->selectAll();
+  mEdit->setFocus();
 }
 
-void tab_bar::mouseDoubleClickEvent(QMouseEvent* event)
+void TabBar::mouseDoubleClickEvent(QMouseEvent* event)
 {
   QTabBar::mouseDoubleClickEvent(event);
   if (const auto index = tabAt(event->pos()); index != -1)
   {
-    edit_tab(index);
+    EditTab(index);
     event->accept();
   }
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
