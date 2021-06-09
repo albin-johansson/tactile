@@ -90,7 +90,7 @@ void property_tree_view::when_file_added(const QModelIndex& valueIndex)
   m_widgetItems.emplace(id, get_model()->itemFromIndex(valueIndex));
 
   connect(widget, &file_value_widget::spawn_dialog, [this, id] {
-    select_file_dialog::spawn([this, id](const QString& path) {
+    SelectFileDialog::Spawn([this, id](const QString& path) {
       auto* item = m_widgetItems.at(id);
       item->setData(path, vm::property_item_role::path);
 

@@ -4,17 +4,17 @@
 #include <QString>      // QString
 #include <concepts>     // invocable
 
-namespace tactile::gui {
+namespace tactile {
 
-class select_file_dialog final : public QFileDialog
+class SelectFileDialog final : public QFileDialog
 {
  public:
-  explicit select_file_dialog(QWidget* parent = nullptr);
+  explicit SelectFileDialog(QWidget* parent = nullptr);
 
   template <std::invocable<const QString&> T>
-  static void spawn(T&& callable)
+  static void Spawn(T&& callable)
   {
-    select_file_dialog dialog;
+    SelectFileDialog dialog;
     if (dialog.exec())
     {
       Q_ASSERT(dialog.selectedFiles().size() == 1);
@@ -23,4 +23,4 @@ class select_file_dialog final : public QFileDialog
   }
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile
