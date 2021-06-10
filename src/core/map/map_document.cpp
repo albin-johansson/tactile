@@ -393,7 +393,7 @@ void map_document::move_layer_back(const layer_id id)
 
 void map_document::move_layer_forward(const layer_id id)
 {
-  m_delegate->execute<cmd::move_layer_forward>(this, id);
+  m_delegate->execute<cmd::MoveLayerForward>(this, id);
 }
 
 void map_document::set_tileset_name(const tileset_id id, const QString& name)
