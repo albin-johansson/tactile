@@ -437,7 +437,7 @@ auto map_document::get_tile_layer(const layer_id id) const -> const TileLayer*
 }
 
 auto map_document::get_object_layer(const layer_id id) const
-    -> const object_layer*
+    -> const ObjectLayer*
 {
   return m_map->get_object_layer(id);
 }

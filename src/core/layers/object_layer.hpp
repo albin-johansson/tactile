@@ -12,7 +12,7 @@
 namespace tactile::core {
 
 /**
- * \class object_layer
+ * \class ObjectLayer
  *
  * \brief Represents a layer that only contains map objects.
  *
@@ -20,10 +20,10 @@ namespace tactile::core {
  *
  * \headerfile object_layer.hpp
  */
-class object_layer final : public ILayer
+class ObjectLayer final : public ILayer
 {
  public:
-  object_layer();
+  ObjectLayer();
 
   /// \name Layer API
 
@@ -78,9 +78,9 @@ class object_layer final : public ILayer
   /// \{
 
   template <std::invocable<object_id, const object&> T>
-  void each_object(T&& callable) const
+  void Each(T&& callable) const
   {
-    for (const auto& [id, object] : m_objects)
+    for (const auto& [id, object] : mObjects)
     {
       callable(id, object);
     }
@@ -96,7 +96,7 @@ class object_layer final : public ILayer
    *
    * \since 0.2.0
    */
-  void add_object(object_id id, object obj);
+  void AddObject(object_id id, object obj);
 
   /**
    * \brief Adds a point object to the layer.
@@ -109,7 +109,7 @@ class object_layer final : public ILayer
    *
    * \since 0.2.0
    */
-  void add_point(object_id id, double x, double y);
+  void AddPoint(object_id id, double x, double y);
 
   /**
    * \brief Adds a rectangle object to the layer.
@@ -124,11 +124,11 @@ class object_layer final : public ILayer
    *
    * \since 0.2.0
    */
-  void add_rectangle(object_id id,
-                     double x,
-                     double y,
-                     double width,
-                     double height);
+  void AddRectangle(object_id id,
+                    double x,
+                    double y,
+                    double width,
+                    double height);
 
   /**
    * \brief Removes an object from the layer.
@@ -139,7 +139,7 @@ class object_layer final : public ILayer
    *
    * \since 0.2.0
    */
-  void remove_object(object_id id);
+  void RemoveObject(object_id id);
 
   /**
    * \brief Indicates whether or not the layer contains the specified object.
@@ -151,7 +151,7 @@ class object_layer final : public ILayer
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto has_object(object_id id) const -> bool;
+  [[nodiscard]] auto HasObject(object_id id) const -> bool;
 
   /**
    * \brief Returns the object associated with the specified ID.
@@ -165,12 +165,12 @@ class object_layer final : public ILayer
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto get_object(object_id id) -> object&;
+  [[nodiscard]] auto GetObject(object_id id) -> object&;
 
   /**
-   * \copydoc get_object()
+   * \copydoc GetObject()
    */
-  [[nodiscard]] auto get_object(object_id id) const -> const object&;
+  [[nodiscard]] auto GetObject(object_id id) const -> const object&;
 
   /**
    * \brief Returns the current amount of objects in the layer.
@@ -179,13 +179,13 @@ class object_layer final : public ILayer
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto object_count() const noexcept -> int;
+  [[nodiscard]] auto ObjectCount() const noexcept -> int;
 
   /// \}
 
  private:
-  vector_map<object_id, object> m_objects;
-  LayerDelegate m_delegate;
+  vector_map<object_id, object> mObjects;
+  LayerDelegate mDelegate;
 };
 
 }  // namespace tactile::core

@@ -69,11 +69,11 @@ namespace {
 [[nodiscard]] auto make_object_layer(const object_layer_data& data)
     -> shared<core::ILayer>
 {
-  auto layer = std::make_shared<core::object_layer>();
+  auto layer = std::make_shared<core::ObjectLayer>();
 
   for (const auto& objectData : data.objects)
   {
-    layer->add_object(objectData.id, make_object(objectData));
+    layer->AddObject(objectData.id, make_object(objectData));
   }
 
   return layer;

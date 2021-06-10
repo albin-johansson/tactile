@@ -6,160 +6,160 @@
 
 namespace tactile::core {
 
-object_layer::object_layer() : m_delegate{LayerType::object_layer}
+ObjectLayer::ObjectLayer() : mDelegate{LayerType::object_layer}
 {
-  m_delegate.SetName(TACTILE_QSTRING(u"Object layer"));
+  mDelegate.SetName(TACTILE_QSTRING(u"Object layer"));
 }
 
-void object_layer::add_property(const QString& name, const property_type type)
+void ObjectLayer::add_property(const QString& name, const property_type type)
 {
-  m_delegate.AddProperty(name, type);
+  mDelegate.AddProperty(name, type);
 }
 
-void object_layer::add_property(const QString& name, const property& property)
+void ObjectLayer::add_property(const QString& name, const property& property)
 {
-  m_delegate.AddProperty(name, property);
+  mDelegate.AddProperty(name, property);
 }
 
-void object_layer::remove_property(const QString& name)
+void ObjectLayer::remove_property(const QString& name)
 {
-  m_delegate.RemoveProperty(name);
+  mDelegate.RemoveProperty(name);
 }
 
-void object_layer::rename_property(const QString& oldName,
-                                   const QString& newName)
+void ObjectLayer::rename_property(const QString& oldName,
+                                  const QString& newName)
 {
-  m_delegate.RenameProperty(oldName, newName);
+  mDelegate.RenameProperty(oldName, newName);
 }
 
-void object_layer::set_property(const QString& name, const property& property)
+void ObjectLayer::set_property(const QString& name, const property& property)
 {
-  m_delegate.SetProperty(name, property);
+  mDelegate.SetProperty(name, property);
 }
 
-void object_layer::change_property_type(const QString& name,
-                                        const core::property_type type)
+void ObjectLayer::change_property_type(const QString& name,
+                                       const core::property_type type)
 {
-  m_delegate.ChangePropertyType(name, type);
+  mDelegate.ChangePropertyType(name, type);
 }
 
-auto object_layer::get_property(const QString& name) const -> const property&
+auto ObjectLayer::get_property(const QString& name) const -> const property&
 {
-  return m_delegate.GetProperty(name);
+  return mDelegate.GetProperty(name);
 }
 
-auto object_layer::get_property(const QString& name) -> property&
+auto ObjectLayer::get_property(const QString& name) -> property&
 {
-  return m_delegate.GetProperty(name);
+  return mDelegate.GetProperty(name);
 }
 
-auto object_layer::has_property(const QString& name) const -> bool
+auto ObjectLayer::has_property(const QString& name) const -> bool
 {
-  return m_delegate.HasProperty(name);
+  return mDelegate.HasProperty(name);
 }
 
-auto object_layer::property_count() const noexcept -> int
+auto ObjectLayer::property_count() const noexcept -> int
 {
-  return m_delegate.PropertyCount();
+  return mDelegate.PropertyCount();
 }
 
-auto object_layer::properties() const -> const property_map&
+auto ObjectLayer::properties() const -> const property_map&
 {
-  return m_delegate.Properties();
+  return mDelegate.Properties();
 }
 
-void object_layer::SetVisible(const bool visible) noexcept
+void ObjectLayer::SetVisible(const bool visible) noexcept
 {
-  m_delegate.SetVisible(visible);
+  mDelegate.SetVisible(visible);
 }
 
-void object_layer::SetOpacity(const double opacity)
+void ObjectLayer::SetOpacity(const double opacity)
 {
-  m_delegate.SetOpacity(opacity);
+  mDelegate.SetOpacity(opacity);
 }
 
-void object_layer::SetName(QString name)
+void ObjectLayer::SetName(QString name)
 {
-  m_delegate.SetName(std::move(name));
+  mDelegate.SetName(std::move(name));
 }
 
-auto object_layer::Type() const -> LayerType
+auto ObjectLayer::Type() const -> LayerType
 {
-  return m_delegate.Type();
+  return mDelegate.Type();
 }
 
-auto object_layer::IsVisible() const noexcept -> bool
+auto ObjectLayer::IsVisible() const noexcept -> bool
 {
-  return m_delegate.Visible();
+  return mDelegate.Visible();
 }
 
-auto object_layer::Opacity() const noexcept -> double
+auto ObjectLayer::Opacity() const noexcept -> double
 {
-  return m_delegate.Opacity();
+  return mDelegate.Opacity();
 }
 
-auto object_layer::Name() const -> const QString&
+auto ObjectLayer::Name() const -> const QString&
 {
-  return m_delegate.Name();
+  return mDelegate.Name();
 }
 
-auto object_layer::Clone() const -> shared<ILayer>
+auto ObjectLayer::Clone() const -> shared<ILayer>
 {
-  return std::make_shared<object_layer>(*this);
+  return std::make_shared<ObjectLayer>(*this);
 }
 
-void object_layer::add_object(const object_id id, object obj)
+void ObjectLayer::AddObject(const object_id id, object obj)
 {
-  Q_ASSERT(!has_object(id));
-  m_objects.emplace(id, std::move(obj));
+  Q_ASSERT(!HasObject(id));
+  mObjects.emplace(id, std::move(obj));
 }
 
-void object_layer::add_point(const object_id id, const double x, const double y)
+void ObjectLayer::AddPoint(const object_id id, const double x, const double y)
 {
-  Q_ASSERT(!has_object(id));
-  auto& [key, point] = m_objects.emplace(id, object_type::point);
+  Q_ASSERT(!HasObject(id));
+  auto& [key, point] = mObjects.emplace(id, object_type::point);
   point.set_x(x);
   point.set_y(y);
 }
 
-void object_layer::add_rectangle(const object_id id,
-                                 const double x,
-                                 const double y,
-                                 const double width,
-                                 const double height)
+void ObjectLayer::AddRectangle(const object_id id,
+                               const double x,
+                               const double y,
+                               const double width,
+                               const double height)
 {
-  Q_ASSERT(!has_object(id));
-  auto& [key, rect] = m_objects.emplace(id, object_type::rectangle);
+  Q_ASSERT(!HasObject(id));
+  auto& [key, rect] = mObjects.emplace(id, object_type::rectangle);
   rect.set_x(x);
   rect.set_y(y);
   rect.set_width(width);
   rect.set_height(height);
 }
 
-void object_layer::remove_object(const object_id id)
+void ObjectLayer::RemoveObject(const object_id id)
 {
-  Q_ASSERT(has_object(id));
-  m_objects.erase(id);
+  Q_ASSERT(HasObject(id));
+  mObjects.erase(id);
 }
 
-auto object_layer::has_object(const object_id id) const -> bool
+auto ObjectLayer::HasObject(const object_id id) const -> bool
 {
-  return m_objects.contains(id);
+  return mObjects.contains(id);
 }
 
-auto object_layer::get_object(const object_id id) -> object&
+auto ObjectLayer::GetObject(const object_id id) -> object&
 {
-  return m_objects.at(id);
+  return mObjects.at(id);
 }
 
-auto object_layer::get_object(const object_id id) const -> const object&
+auto ObjectLayer::GetObject(const object_id id) const -> const object&
 {
-  return m_objects.at(id);
+  return mObjects.at(id);
 }
 
-auto object_layer::object_count() const noexcept -> int
+auto ObjectLayer::ObjectCount() const noexcept -> int
 {
-  return static_cast<int>(m_objects.size());
+  return static_cast<int>(mObjects.size());
 }
 
 }  // namespace tactile::core

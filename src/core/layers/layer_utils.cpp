@@ -29,7 +29,7 @@ auto as_tile_layer(const shared<ILayer>& layer) -> const TileLayer*
   }
 }
 
-auto as_object_layer(shared<ILayer>& layer) -> object_layer*
+auto as_object_layer(shared<ILayer>& layer) -> ObjectLayer*
 {
   if (layer->Type() != LayerType::object_layer)
   {
@@ -37,11 +37,11 @@ auto as_object_layer(shared<ILayer>& layer) -> object_layer*
   }
   else
   {
-    return dynamic_cast<object_layer*>(layer.get());
+    return dynamic_cast<ObjectLayer*>(layer.get());
   }
 }
 
-auto as_object_layer(const shared<ILayer>& layer) -> const object_layer*
+auto as_object_layer(const shared<ILayer>& layer) -> const ObjectLayer*
 {
   if (layer->Type() != LayerType::object_layer)
   {
@@ -49,7 +49,7 @@ auto as_object_layer(const shared<ILayer>& layer) -> const object_layer*
   }
   else
   {
-    return dynamic_cast<const object_layer*>(layer.get());
+    return dynamic_cast<const ObjectLayer*>(layer.get());
   }
 }
 

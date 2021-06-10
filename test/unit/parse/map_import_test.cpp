@@ -83,12 +83,12 @@ void validate_layers(const core::map_document& document)
     const auto* objectLayer = document.get_object_layer(3_layer);
     ASSERT_TRUE(objectLayer);
 
-    ASSERT_EQ(1, objectLayer->object_count());
+    ASSERT_EQ(1, objectLayer->ObjectCount());
     ASSERT_TRUE(objectLayer->has_property(ground));
     EXPECT_FALSE(objectLayer->get_property(ground).as_boolean());
 
-    ASSERT_TRUE(objectLayer->has_object(1_obj));
-    const auto& object = objectLayer->get_object(1_obj);
+    ASSERT_TRUE(objectLayer->HasObject(1_obj));
+    const auto& object = objectLayer->GetObject(1_obj);
 
     EXPECT_EQ(128, object.x());
     EXPECT_EQ(96, object.y());

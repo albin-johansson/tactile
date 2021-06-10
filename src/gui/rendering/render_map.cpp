@@ -158,12 +158,12 @@ void render_tile_layer(QPainter& painter,
 }
 
 void render_object_layer(QPainter& painter,
-                         const core::object_layer& layer,
+                         const core::ObjectLayer& layer,
                          const render_info& info)
 {
   painter.setOpacity(layer.Opacity());
 
-  layer.each_object([&](const object_id, const core::object& object) {
+  layer.Each([&](const object_id, const core::object& object) {
     painter.setPen(Qt::red);
 
     if (object.is_rectangle())

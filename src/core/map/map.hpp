@@ -17,7 +17,7 @@
 namespace tactile::core {
 
 class TileLayer;
-class object_layer;
+class ObjectLayer;
 
 /**
  * \class map
@@ -353,7 +353,7 @@ class map final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto make_object_layer() -> shared<object_layer>;
+  [[nodiscard]] auto make_object_layer() -> shared<ObjectLayer>;
 
   /**
    * \brief Returns the index associated with the specified layer.
@@ -514,9 +514,9 @@ class map final
 
   [[nodiscard]] auto get_tile_layer(layer_id id) const -> const TileLayer*;
 
-  [[nodiscard]] auto get_object_layer(layer_id id) -> object_layer*;
+  [[nodiscard]] auto get_object_layer(layer_id id) -> ObjectLayer*;
 
-  [[nodiscard]] auto get_object_layer(layer_id id) const -> const object_layer*;
+  [[nodiscard]] auto get_object_layer(layer_id id) const -> const ObjectLayer*;
 
   /**
    * \brief Returns an iterator to the first layer.

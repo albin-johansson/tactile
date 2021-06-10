@@ -201,10 +201,10 @@ void save_tile_layer(QDomDocument& document,
 
 void save_object_layer(QDomDocument& document,
                        QDomElement& element,
-                       const core::object_layer& layer,
+                       const core::ObjectLayer& layer,
                        const QDir& targetDir)
 {
-  layer.each_object([&](const object_id id, const core::object& object) {
+  layer.Each([&](const object_id id, const core::object& object) {
     auto node = document.createElement(TACTILE_QSTRING(u"object"));
 
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());

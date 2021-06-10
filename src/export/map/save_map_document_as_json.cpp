@@ -269,7 +269,7 @@ void save_object_layer(QJsonObject& element,
   }
 
   QJsonArray objects;
-  objectLayer->each_object([&](const object_id id, const core::object& object) {
+  objectLayer->Each([&](const object_id id, const core::object& object) {
     QJsonObject jsonObject;
 
     jsonObject.insert(u"id", id.get());

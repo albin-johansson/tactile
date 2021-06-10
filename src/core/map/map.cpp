@@ -297,10 +297,10 @@ auto map::make_tile_layer() -> shared<TileLayer>
   }
 }
 
-auto map::make_object_layer() -> shared<object_layer>
+auto map::make_object_layer() -> shared<ObjectLayer>
 {
   ++m_nextLayer;
-  return std::make_shared<object_layer>();
+  return std::make_shared<ObjectLayer>();
 }
 
 auto map::index_of(const layer_id id) const -> maybe<std::size_t>
@@ -399,12 +399,12 @@ auto map::get_tile_layer(const layer_id id) const -> const TileLayer*
   return as_tile_layer(get_layer(id));
 }
 
-auto map::get_object_layer(layer_id id) -> object_layer*
+auto map::get_object_layer(layer_id id) -> ObjectLayer*
 {
   return as_object_layer(get_layer(id));
 }
 
-auto map::get_object_layer(layer_id id) const -> const object_layer*
+auto map::get_object_layer(layer_id id) const -> const ObjectLayer*
 {
   return as_object_layer(get_layer(id));
 }
