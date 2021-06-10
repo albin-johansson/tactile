@@ -8,44 +8,44 @@
 
 namespace tactile::cmd {
 
-set_layer_name::set_layer_name(not_null<core::map_document*> document,
-                               const layer_id id,
-                               QString name)
+SetLayerName::SetLayerName(not_null<core::map_document*> document,
+                           const layer_id id,
+                           QString name)
     : QUndoCommand{QTranslator::tr("Set Layer Name")}
-    , m_document{document}
-    , m_id{id}
-    , m_name{std::move(name)}
+    , mDocument{document}
+    , mId{id}
+    , mName{std::move(name)}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Cannot create command from null document!"};
   }
 }
 
-void set_layer_name::undo()
+void SetLayerName::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = m_document->raw();
-  map.set_name(m_id, m_previous.value());
+  auto& map = mDocument->raw();
+  map.set_name(mId, mPrevious.value());
 
-  emit m_document->changed_layer_name(m_id, m_previous.value());
-  emit m_document->redraw();
+  emit mDocument->changed_layer_name(mId, mPrevious.value());
+  emit mDocument->redraw();
 
-  m_previous.reset();
+  mPrevious.reset();
 }
 
-void set_layer_name::redo()
+void SetLayerName::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
 
-  m_previous = map.name(m_id);
-  map.set_name(m_id, m_name);
+  mPrevious = map.name(mId);
+  map.set_name(mId, mName);
 
-  emit m_document->changed_layer_name(m_id, m_name);
-  emit m_document->redraw();
+  emit mDocument->changed_layer_name(mId, mName);
+  emit mDocument->redraw();
 }
 
 }  // namespace tactile::cmd

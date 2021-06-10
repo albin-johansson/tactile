@@ -13,12 +13,12 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class set_layer_name final : public QUndoCommand
+class SetLayerName final : public QUndoCommand
 {
  public:
-  set_layer_name(not_null<core::map_document*> document,
-                 layer_id id,
-                 QString name);
+  SetLayerName(not_null<core::map_document*> document,
+               layer_id id,
+               QString name);
 
   void undo() override;
 
@@ -30,10 +30,10 @@ class set_layer_name final : public QUndoCommand
   }
 
  private:
-  not_null<core::map_document*> m_document{};
-  layer_id m_id;
-  QString m_name;
-  maybe<QString> m_previous;
+  not_null<core::map_document*> mDocument{};
+  layer_id mId;
+  QString mName;
+  maybe<QString> mPrevious;
 };
 
 }  // namespace tactile::cmd
