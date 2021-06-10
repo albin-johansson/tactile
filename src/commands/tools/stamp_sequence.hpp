@@ -14,12 +14,12 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class stamp_sequence final : public QUndoCommand
+class StampSequence final : public QUndoCommand
 {
  public:
-  stamp_sequence(not_null<core::map_document*> document,
-                 vector_map<core::position, tile_id>&& oldState,
-                 vector_map<core::position, tile_id>&& sequence);
+  StampSequence(not_null<core::map_document*> document,
+                vector_map<core::position, tile_id>&& oldState,
+                vector_map<core::position, tile_id>&& sequence);
 
   void undo() override;
 
@@ -31,11 +31,11 @@ class stamp_sequence final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document{};
-  vector_map<core::position, tile_id> m_oldState;
-  vector_map<core::position, tile_id> m_sequence;
-  layer_id m_layer{};
-  bool m_first{true};
+  core::map_document* mDocument{};
+  vector_map<core::position, tile_id> mOldState;
+  vector_map<core::position, tile_id> mSequence;
+  layer_id mLayer;
+  bool mFirst{true};
 };
 
 }  // namespace tactile::cmd

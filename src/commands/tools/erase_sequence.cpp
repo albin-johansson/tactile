@@ -9,67 +9,67 @@
 
 namespace tactile::cmd {
 
-erase_sequence::erase_sequence(not_null<core::map_document*> document,
-                               vector_map<core::position, tile_id>&& oldState)
+EraseSequence::EraseSequence(not_null<core::map_document*> document,
+                             vector_map<core::position, tile_id>&& oldState)
     : QUndoCommand{TACTILE_QSTRING(u"Erase Tiles")}
-    , m_document{document}
-    , m_oldState{std::move(oldState)}
+    , mDocument{document}
+    , mOldState{std::move(oldState)}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Cannot create erase_sequence command from null map!"};
   }
 }
 
-void erase_sequence::undo()
+void EraseSequence::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
   const auto layer = map.active_layer_id().value();
 
-  map.select_layer(m_layer);
+  map.select_layer(mLayer);
 
-  auto* tileLayer = map.get_tile_layer(m_layer);
+  auto* tileLayer = map.get_tile_layer(mLayer);
   Q_ASSERT(tileLayer);
 
-  for (const auto& [position, tile] : m_oldState)
+  for (const auto& [position, tile] : mOldState)
   {
     tileLayer->set_tile(position, tile);
   }
 
   map.select_layer(layer);
 
-  emit m_document->redraw();
+  emit mDocument->redraw();
 }
 
-void erase_sequence::redo()
+void EraseSequence::redo()
 {
-  if (m_first)
+  if (mFirst)
   {
-    m_layer = m_document->current_layer_id().value();
-    m_first = false;
+    mLayer = mDocument->current_layer_id().value();
+    mFirst = false;
     return;
   }
 
   QUndoCommand::redo();
 
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
   const auto layer = map.active_layer_id().value();
 
-  map.select_layer(m_layer);
+  map.select_layer(mLayer);
 
-  auto* tileLayer = map.get_tile_layer(m_layer);
+  auto* tileLayer = map.get_tile_layer(mLayer);
   Q_ASSERT(tileLayer);
 
-  for (const auto& [position, _] : m_oldState)
+  for (const auto& [position, _] : mOldState)
   {
     tileLayer->set_tile(position, empty);
   }
 
   map.select_layer(layer);
 
-  emit m_document->redraw();
+  emit mDocument->redraw();
 }
 
 }  // namespace tactile::cmd

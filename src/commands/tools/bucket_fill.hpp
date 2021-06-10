@@ -14,11 +14,11 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class bucket_fill final : public QUndoCommand
+class BucketFill final : public QUndoCommand
 {
  public:
   /**
-   * \brief Creates a `bucket_fill` instance.
+   * \brief Creates a bucket fill command.
    *
    * \param document the associated map document.
    * \param position the origin position of the flood fill.
@@ -26,9 +26,9 @@ class bucket_fill final : public QUndoCommand
    *
    * \since 0.1.0
    */
-  explicit bucket_fill(not_null<core::map_document*> document,
-                       const core::position& position,
-                       tile_id replacement);
+  explicit BucketFill(not_null<core::map_document*> document,
+                      const core::position& position,
+                      tile_id replacement);
 
   void undo() override;
 
@@ -40,12 +40,12 @@ class bucket_fill final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document{};
-  core::position m_origin;
-  tile_id m_replacement;
-  tile_id m_target{};
-  layer_id m_layer{};
-  std::vector<core::position> m_positions;
+  core::map_document* mDocument{};
+  core::position mOrigin;
+  tile_id mReplacement;
+  tile_id mTarget{};
+  layer_id mLayer{};
+  std::vector<core::position> mPositions;
 };
 
 }  // namespace tactile::cmd

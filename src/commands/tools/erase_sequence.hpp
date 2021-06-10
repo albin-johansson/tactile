@@ -14,11 +14,11 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class erase_sequence final : public QUndoCommand
+class EraseSequence final : public QUndoCommand
 {
  public:
-  erase_sequence(not_null<core::map_document*> document,
-                 vector_map<core::position, tile_id>&& oldState);
+  EraseSequence(not_null<core::map_document*> document,
+                vector_map<core::position, tile_id>&& oldState);
 
   void undo() override;
 
@@ -30,10 +30,10 @@ class erase_sequence final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document{};
-  vector_map<core::position, tile_id> m_oldState;
-  layer_id m_layer{};
-  bool m_first{true};
+  core::map_document* mDocument{};
+  vector_map<core::position, tile_id> mOldState;
+  layer_id mLayer;
+  bool mFirst{true};
 };
 
 }  // namespace tactile::cmd

@@ -7,58 +7,58 @@
 
 namespace tactile::cmd {
 
-bucket_fill::bucket_fill(not_null<core::map_document*> document,
-                         const core::position& position,
-                         const tile_id replacement)
+BucketFill::BucketFill(not_null<core::map_document*> document,
+                       const core::position& position,
+                       const tile_id replacement)
     : QUndoCommand{TACTILE_QSTRING(u"Bucket Fill")}
-    , m_document{document}
-    , m_origin{position}
-    , m_replacement{replacement}
+    , mDocument{document}
+    , mOrigin{position}
+    , mReplacement{replacement}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Cannot create command from null document!"};
   }
-  m_positions.reserve(64);
+  mPositions.reserve(64);
 }
 
-void bucket_fill::undo()
+void BucketFill::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
   const auto layer = map.active_layer_id().value();
 
-  map.select_layer(m_layer);
+  map.select_layer(mLayer);
 
-  auto* tileLayer = map.get_tile_layer(m_layer);
+  auto* tileLayer = map.get_tile_layer(mLayer);
   Q_ASSERT(tileLayer);
 
-  for (const auto& position : m_positions)
+  for (const auto& position : mPositions)
   {
-    tileLayer->set_tile(position, m_target);
+    tileLayer->set_tile(position, mTarget);
   }
 
   map.select_layer(layer);
-  emit m_document->redraw();
+  emit mDocument->redraw();
 }
 
-void bucket_fill::redo()
+void BucketFill::redo()
 {
   QUndoCommand::redo();
 
-  m_positions.clear();
+  mPositions.clear();
 
-  auto& map = m_document->raw();
-  m_layer = map.active_layer_id().value();
+  auto& map = mDocument->raw();
+  mLayer = map.active_layer_id().value();
 
-  auto* tileLayer = map.get_tile_layer(m_layer);
+  auto* tileLayer = map.get_tile_layer(mLayer);
   Q_ASSERT(tileLayer);
 
-  m_target = tileLayer->tile_at(m_origin).value();
-  tileLayer->flood(m_origin, m_replacement, m_positions);
+  mTarget = tileLayer->tile_at(mOrigin).value();
+  tileLayer->flood(mOrigin, mReplacement, mPositions);
 
-  emit m_document->redraw();
+  emit mDocument->redraw();
 }
 
 }  // namespace tactile::cmd
