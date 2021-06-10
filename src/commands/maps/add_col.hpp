@@ -10,7 +10,7 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document);
 namespace tactile::cmd {
 
 /**
- * \class add_col
+ * \class AddCol
  *
  * \brief Represents the dialog of adding a column to the active map.
  *
@@ -18,7 +18,7 @@ namespace tactile::cmd {
  *
  * \headerfile add_col.hpp
  */
-class add_col final : public repeated_command
+class AddCol final : public repeated_command
 {
  public:
   /**
@@ -28,7 +28,7 @@ class add_col final : public repeated_command
    *
    * \since 0.1.0
    */
-  explicit add_col(not_null<core::map_document*> document);
+  explicit AddCol(not_null<core::map_document*> document);
 
   void undo() override;
 
@@ -40,7 +40,7 @@ class add_col final : public repeated_command
   }
 
  private:
-  core::map_document* m_document{};
+  core::map_document* mDocument{};
 };
 
 }  // namespace tactile::cmd

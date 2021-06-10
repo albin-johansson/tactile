@@ -243,7 +243,7 @@ void map_document::add_row()
 
 void map_document::add_column()
 {
-  m_delegate->execute<cmd::add_col>(this);
+  m_delegate->execute<cmd::AddCol>(this);
 }
 
 void map_document::remove_row()
