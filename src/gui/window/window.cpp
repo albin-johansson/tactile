@@ -18,11 +18,11 @@
 #include "ui_window.h"
 #include "window_connections.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
 Window::Window(QWidget* parent)
     : QMainWindow{parent}
-    , mUi{init_ui<Ui::window>(this)}
+    , mUi{init_ui<Ui::Window>(this)}
     , mEditor{new MapEditor{this}}
     , mToolDock{new ToolDock{this}}
     , mLayerDock{new LayerDock{this}}
@@ -44,8 +44,8 @@ Window::Window(QWidget* parent)
   mToolGroup->addAction(mUi->actionBucketTool);
   mToolGroup->addAction(mUi->actionEraserTool);
 
-  window_connections connections;
-  connections.init(this);
+  WindowConnections connections;
+  connections.Init(this);
 
   showMaximized();
 
@@ -57,21 +57,17 @@ Window::~Window() noexcept = default;
 
 void Window::RestoreLayout()
 {
-  prefs::window::last_layout_geometry().with([this](const QByteArray& geom) {
-    restoreGeometry(geom);
-  });
+  prefs::window::last_layout_geometry().with(
+      [this](const QByteArray& geom) { restoreGeometry(geom); });
 
-  prefs::window::last_layout_state().with([this](const QByteArray& state) {
-    restoreState(state);
-  });
+  prefs::window::last_layout_state().with(
+      [this](const QByteArray& state) { restoreState(state); });
 }
 
 void Window::SaveAs()
 {
   SaveAsDialog::Spawn(
-      [this](const QString& path) {
-        emit S_SaveAs(path);
-      },
+      [this](const QString& path) { emit S_SaveAs(path); },
       mEditor->ActiveTabName().value_or(TACTILE_QSTRING(u"map")));
 }
 
@@ -113,21 +109,17 @@ void Window::HideAllDocks()
 
 void Window::RestoreDockVisibility()
 {
-  prefs::gfx::tool_widget_visible().with([this](const bool value) {
-    mToolDock->setVisible(value);
-  });
+  prefs::gfx::tool_widget_visible().with(
+      [this](const bool value) { mToolDock->setVisible(value); });
 
-  prefs::gfx::tileset_widget_visible().with([this](const bool value) {
-    mTilesetDock->setVisible(value);
-  });
+  prefs::gfx::tileset_widget_visible().with(
+      [this](const bool value) { mTilesetDock->setVisible(value); });
 
-  prefs::gfx::layer_widget_visible().with([this](const bool value) {
-    mLayerDock->setVisible(value);
-  });
+  prefs::gfx::layer_widget_visible().with(
+      [this](const bool value) { mLayerDock->setVisible(value); });
 
-  prefs::gfx::properties_widget_visible().with([this](const bool value) {
-    mPropertiesDock->setVisible(value);
-  });
+  prefs::gfx::properties_widget_visible().with(
+      [this](const bool value) { mPropertiesDock->setVisible(value); });
 }
 
 void Window::SetActionsEnabled(const bool enabled)
@@ -409,9 +401,7 @@ void Window::OnAboutToCloseMap(const map_id id)
 
 void Window::OnOpenMapAction()
 {
-  OpenMapDialog::Spawn([this](const QString& path) {
-    emit S_OpenMap(path);
-  });
+  OpenMapDialog::Spawn([this](const QString& path) { emit S_OpenMap(path); });
 }
 
 void Window::OnCloseMapAction()
@@ -498,4 +488,4 @@ void Window::OnOpenSettingsAction()
   settings.exec();
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

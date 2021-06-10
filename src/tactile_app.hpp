@@ -11,7 +11,7 @@
 #include "tileset.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, model)
-TACTILE_FORWARD_DECLARE(tactile::gui, Window)
+TACTILE_FORWARD_DECLARE(tactile, Window)
 
 namespace tactile {
 
@@ -42,7 +42,7 @@ class tactile_app final : public QApplication
   ~tactile_app() noexcept override;
 
  private:
-  unique<gui::Window> m_window;
+  unique<Window> m_window;
   unique<core::model> m_model;
 
   void init_connections();

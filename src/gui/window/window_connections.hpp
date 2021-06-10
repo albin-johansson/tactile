@@ -4,32 +4,32 @@
 
 #include "forward_declare.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, window)
+TACTILE_FORWARD_DECLARE_UI(Window)
 
-namespace tactile::gui {
+namespace tactile {
 
 class Window;
 
-class window_connections final : public QObject
+class WindowConnections final : public QObject
 {
   Q_OBJECT
 
  public:
-  void init(Window* window);
+  void Init(Window* window);
 
  private:
-  Window* m_window{};
-  Ui::window* m_ui{};
+  Window* mWindow{};
+  Ui::Window* mUi{};
 
-  void init_actions();
+  void InitActions();
 
-  void init_dock_connections();
+  void InitDockConnections();
 
-  void init_map_editor();
+  void InitMapEditor();
 
-  void init_tileset_dock();
+  void InitTilesetDock();
 
-  void init_tool_dock();
+  void InitToolDock();
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

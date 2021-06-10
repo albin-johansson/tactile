@@ -16,7 +16,8 @@
 #include "tileset_id.hpp"
 #include "tool_id.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, window)
+TACTILE_FORWARD_DECLARE_UI(Window)
+
 TACTILE_FORWARD_DECLARE(tactile::core, layer)
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
@@ -27,7 +28,7 @@ TACTILE_FORWARD_DECLARE(tactile, TilesetDock)
 TACTILE_FORWARD_DECLARE(tactile, PropertiesDock)
 TACTILE_FORWARD_DECLARE(tactile, StatusBar)
 
-namespace tactile::gui {
+namespace tactile {
 
 /**
  * \class Window
@@ -44,7 +45,7 @@ class Window final : public QMainWindow
 {
   Q_OBJECT
 
-  friend class window_connections;
+  friend class WindowConnections;
 
  public:
   /**
@@ -172,7 +173,7 @@ class Window final : public QMainWindow
   void closeEvent(QCloseEvent* event) override;
 
  private:
-  unique<Ui::window> mUi;
+  unique<Ui::Window> mUi;
   MapEditor* mEditor{};
   ToolDock* mToolDock{};
   LayerDock* mLayerDock{};
@@ -235,4 +236,4 @@ class Window final : public QMainWindow
   void OnOpenSettingsAction();
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -19,7 +19,7 @@ tactile_app::tactile_app(int argc, char** argv)
   setup_app();
 
   // It is necessary to create the window after calling the setup_app-function
-  m_window = std::make_unique<gui::Window>();
+  m_window = std::make_unique<Window>();
   init_connections();
 
   m_window->show();
@@ -29,7 +29,6 @@ tactile_app::~tactile_app() noexcept = default;
 
 void tactile_app::init_connections()
 {
-  using window = gui::Window;
   using model = core::model;
 
   const auto modToWin = [this](auto&& sender, auto&& receiver) {
@@ -46,63 +45,63 @@ void tactile_app::init_connections()
 
   // clang-format off
 
-  winToMod(&window::S_Undo,                &model::undo);
-  winToMod(&window::S_Redo,                &model::redo);
-  winToMod(&window::S_AddRow,              &model::add_row);
-  winToMod(&window::S_AddCol,              &model::add_col);
-  winToMod(&window::S_RemoveRow,           &model::remove_row);
-  winToMod(&window::S_RemoveCol,           &model::remove_col);
-  winToMod(&window::S_AboutToCloseMap,     &model::close_map);
-  winToMod(&window::S_SelectMap,           &model::select_map);
-  winToMod(&window::S_ZoomIn,              &model::increase_tile_size);
-  winToMod(&window::S_ZoomOut,             &model::decrease_tile_size);
-  winToMod(&window::S_ResetZoom,           &model::reset_tile_size);
-  winToMod(&window::S_SelectedTool,        &model::select_tool);
-  winToMod(&window::S_RemoveTileset,       &model::remove_tileset);
-  winToMod(&window::S_SelectTileset,       &model::select_tileset);
-  winToMod(&window::S_RenameTileset,       &model::set_tileset_name);
-  winToMod(&window::S_SetTilesetSelection, &model::set_tileset_selection);
+  winToMod(&Window::S_Undo,                &model::undo);
+  winToMod(&Window::S_Redo,                &model::redo);
+  winToMod(&Window::S_AddRow,              &model::add_row);
+  winToMod(&Window::S_AddCol,              &model::add_col);
+  winToMod(&Window::S_RemoveRow,           &model::remove_row);
+  winToMod(&Window::S_RemoveCol,           &model::remove_col);
+  winToMod(&Window::S_AboutToCloseMap,     &model::close_map);
+  winToMod(&Window::S_SelectMap,           &model::select_map);
+  winToMod(&Window::S_ZoomIn,              &model::increase_tile_size);
+  winToMod(&Window::S_ZoomOut,             &model::decrease_tile_size);
+  winToMod(&Window::S_ResetZoom,           &model::reset_tile_size);
+  winToMod(&Window::S_SelectedTool,        &model::select_tool);
+  winToMod(&Window::S_RemoveTileset,       &model::remove_tileset);
+  winToMod(&Window::S_SelectTileset,       &model::select_tileset);
+  winToMod(&Window::S_RenameTileset,       &model::set_tileset_name);
+  winToMod(&Window::S_SetTilesetSelection, &model::set_tileset_selection);
 
-  winToMod(&window::S_MousePressed,  &model::mouse_pressed);
-  winToMod(&window::S_MouseMoved,    &model::mouse_moved);
-  winToMod(&window::S_MouseReleased, &model::mouse_released);
-  winToMod(&window::S_MouseEntered,  &model::mouse_entered);
-  winToMod(&window::S_MouseExited,   &model::mouse_exited);
+  winToMod(&Window::S_MousePressed,  &model::mouse_pressed);
+  winToMod(&Window::S_MouseMoved,    &model::mouse_moved);
+  winToMod(&Window::S_MouseReleased, &model::mouse_released);
+  winToMod(&Window::S_MouseEntered,  &model::mouse_entered);
+  winToMod(&Window::S_MouseExited,   &model::mouse_exited);
 
-  modToWin(&model::redraw,                   &window::ForceRedraw);
-  modToWin(&model::enable_stamp_preview,     &window::EnableStampPreview);
-  modToWin(&model::disable_stamp_preview,    &window::DisableStampPreview);
-  modToWin(&model::undo_state_updated,       &window::OnUndoStateUpdated);
-  modToWin(&model::redo_state_updated,       &window::OnRedoStateUpdated);
-  modToWin(&model::undo_text_updated,        &window::OnUndoTextUpdated);
-  modToWin(&model::redo_text_updated,        &window::OnRedoTextUpdated);
-  modToWin(&model::clean_changed,            &window::OnCleanChanged);
-  modToWin(&model::switched_map,             &window::OnSwitchedMap);
-  modToWin(&model::added_tileset,            &window::OnAddedTileset);
-  modToWin(&model::removed_tileset,          &window::OnRemovedTileset);
-  modToWin(&model::renamed_tileset,          &window::OnRenamedTileset);
-  modToWin(&model::added_layer,              &window::OnAddedLayer);
-  modToWin(&model::added_duplicated_layer,   &window::OnAddedDuplicatedLayer);
-  modToWin(&model::removed_layer,            &window::OnRemovedLayer);
-  modToWin(&model::selected_layer,           &window::OnSelectedLayer);
-  modToWin(&model::added_property,           &window::OnAddedProperty);
-  modToWin(&model::about_to_remove_property, &window::OnAboutToRemoveProperty);
-  modToWin(&model::updated_property,         &window::OnUpdatedProperty);
-  modToWin(&model::renamed_property,         &window::OnRenamedProperty);
-  modToWin(&model::changed_property_type,    &window::OnChangedPropertyType);
-  modToWin(&model::show_map_properties,      &window::ShowMapProperties);
-  modToWin(&model::show_layer_properties,    &window::ShowLayerProperties);
+  modToWin(&model::redraw,                   &Window::ForceRedraw);
+  modToWin(&model::enable_stamp_preview,     &Window::EnableStampPreview);
+  modToWin(&model::disable_stamp_preview,    &Window::DisableStampPreview);
+  modToWin(&model::undo_state_updated,       &Window::OnUndoStateUpdated);
+  modToWin(&model::redo_state_updated,       &Window::OnRedoStateUpdated);
+  modToWin(&model::undo_text_updated,        &Window::OnUndoTextUpdated);
+  modToWin(&model::redo_text_updated,        &Window::OnRedoTextUpdated);
+  modToWin(&model::clean_changed,            &Window::OnCleanChanged);
+  modToWin(&model::switched_map,             &Window::OnSwitchedMap);
+  modToWin(&model::added_tileset,            &Window::OnAddedTileset);
+  modToWin(&model::removed_tileset,          &Window::OnRemovedTileset);
+  modToWin(&model::renamed_tileset,          &Window::OnRenamedTileset);
+  modToWin(&model::added_layer,              &Window::OnAddedLayer);
+  modToWin(&model::added_duplicated_layer,   &Window::OnAddedDuplicatedLayer);
+  modToWin(&model::removed_layer,            &Window::OnRemovedLayer);
+  modToWin(&model::selected_layer,           &Window::OnSelectedLayer);
+  modToWin(&model::added_property,           &Window::OnAddedProperty);
+  modToWin(&model::about_to_remove_property, &Window::OnAboutToRemoveProperty);
+  modToWin(&model::updated_property,         &Window::OnUpdatedProperty);
+  modToWin(&model::renamed_property,         &Window::OnRenamedProperty);
+  modToWin(&model::changed_property_type,    &Window::OnChangedPropertyType);
+  modToWin(&model::show_map_properties,      &Window::ShowMapProperties);
+  modToWin(&model::show_layer_properties,    &Window::ShowLayerProperties);
 
-  fromWindow(&window::S_AddTileset, &tactile_app::handle_new_tileset);
-  fromWindow(&window::S_ResizeMap,  &tactile_app::handle_resize_map);
-  fromWindow(&window::S_PanUp,      &tactile_app::handle_pan_up);
-  fromWindow(&window::S_PanDown,    &tactile_app::handle_pan_down);
-  fromWindow(&window::S_PanRight,   &tactile_app::handle_pan_right);
-  fromWindow(&window::S_PanLeft,    &tactile_app::handle_pan_left);
-  fromWindow(&window::S_NewMap,     &tactile_app::handle_new_map);
-  fromWindow(&window::S_Save,       &tactile_app::save);
-  fromWindow(&window::S_SaveAs,     &tactile_app::save_as);
-  fromWindow(&window::S_OpenMap,    &tactile_app::open_map);
+  fromWindow(&Window::S_AddTileset, &tactile_app::handle_new_tileset);
+  fromWindow(&Window::S_ResizeMap,  &tactile_app::handle_resize_map);
+  fromWindow(&Window::S_PanUp,      &tactile_app::handle_pan_up);
+  fromWindow(&Window::S_PanDown,    &tactile_app::handle_pan_down);
+  fromWindow(&Window::S_PanRight,   &tactile_app::handle_pan_right);
+  fromWindow(&Window::S_PanLeft,    &tactile_app::handle_pan_left);
+  fromWindow(&Window::S_NewMap,     &tactile_app::handle_new_map);
+  fromWindow(&Window::S_Save,       &tactile_app::save);
+  fromWindow(&Window::S_SaveAs,     &tactile_app::save_as);
+  fromWindow(&Window::S_OpenMap,    &tactile_app::open_map);
   // clang-format on
 }
 
