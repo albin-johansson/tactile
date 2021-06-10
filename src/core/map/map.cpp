@@ -26,7 +26,7 @@ void map::remove_occurrences(const tile_id id)
 {
   for (auto& [key, layer] : m_layers)
   {
-    if (auto* tileLayer = as_tile_layer(layer))
+    if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->RemoveAll(id);
     }
@@ -37,7 +37,7 @@ void map::remove_occurrences(tile_id first, tile_id last)
 {
   for (auto& [key, layer] : m_layers)
   {
-    if (auto* tileLayer = as_tile_layer(layer))
+    if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->RemoveAll(first, last);
     }
@@ -102,7 +102,7 @@ void map::add_layer(const layer_id id, shared<ILayer> layer)
 
   if (m_layers.empty())
   {
-    if (const auto* tileLayer = as_tile_layer(layer))
+    if (const auto* tileLayer = AsTileLayer(layer))
     {
       m_rows = tileLayer->RowCount();
       m_cols = tileLayer->ColumnCount();
@@ -130,7 +130,7 @@ void map::add_row(const tile_id id)
 {
   for (auto& [key, layer] : m_layers)
   {
-    if (auto* tileLayer = as_tile_layer(layer))
+    if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->AddRow(id);
     }
@@ -142,7 +142,7 @@ void map::add_col(const tile_id id)
 {
   for (auto& [key, layer] : m_layers)
   {
-    if (auto* tileLayer = as_tile_layer(layer))
+    if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->AddColumn(id);
     }
@@ -159,7 +159,7 @@ void map::remove_row()
 
   for (auto& [key, layer] : m_layers)
   {
-    if (auto* tileLayer = as_tile_layer(layer))
+    if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->RemoveRow();
     }
@@ -177,7 +177,7 @@ void map::remove_col()
 
   for (auto& [key, layer] : m_layers)
   {
-    if (auto* tileLayer = as_tile_layer(layer))
+    if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->RemoveColumn();
     }
@@ -224,7 +224,7 @@ void map::set_row_count(row_t nRows)
   m_rows = nRows;
   for (auto& [key, layer] : m_layers)
   {
-    if (auto* tileLayer = as_tile_layer(layer))
+    if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->SetRows(m_rows);
     }
@@ -243,7 +243,7 @@ void map::set_col_count(col_t nCols)
   m_cols = nCols;
   for (auto& [key, layer] : m_layers)
   {
-    if (auto* tileLayer = as_tile_layer(layer))
+    if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->SetColumns(m_cols);
     }
@@ -391,22 +391,22 @@ auto map::get_layer(const layer_id id) -> shared<ILayer>&
 
 auto map::get_tile_layer(const layer_id id) -> TileLayer*
 {
-  return as_tile_layer(get_layer(id));
+  return AsTileLayer(get_layer(id));
 }
 
 auto map::get_tile_layer(const layer_id id) const -> const TileLayer*
 {
-  return as_tile_layer(get_layer(id));
+  return AsTileLayer(get_layer(id));
 }
 
 auto map::get_object_layer(layer_id id) -> ObjectLayer*
 {
-  return as_object_layer(get_layer(id));
+  return AsObjectLayer(get_layer(id));
 }
 
 auto map::get_object_layer(layer_id id) const -> const ObjectLayer*
 {
-  return as_object_layer(get_layer(id));
+  return AsObjectLayer(get_layer(id));
 }
 
 auto map::find_layer(const layer_id id) -> ILayer*

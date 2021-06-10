@@ -234,7 +234,7 @@ void save_tile_layer(QJsonObject& object,
 {
   Q_ASSERT(layer->Type() == core::LayerType::tile_layer);
 
-  const auto* tileLayer = core::as_tile_layer(layer);
+  const auto* tileLayer = core::AsTileLayer(layer);
   Q_ASSERT(tileLayer);
 
   object.insert(u"type", TACTILE_QSTRING(u"tilelayer"));
@@ -258,7 +258,7 @@ void save_object_layer(QJsonObject& element,
 {
   Q_ASSERT(layer->Type() == core::LayerType::object_layer);
 
-  const auto* objectLayer = core::as_object_layer(layer);
+  const auto* objectLayer = core::AsObjectLayer(layer);
   Q_ASSERT(objectLayer);
 
   element.insert(u"type", TACTILE_QSTRING(u"objectgroup"));

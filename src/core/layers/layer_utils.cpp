@@ -5,7 +5,7 @@
 
 namespace tactile::core {
 
-auto as_tile_layer(shared<ILayer>& layer) -> TileLayer*
+auto AsTileLayer(shared<ILayer>& layer) -> TileLayer*
 {
   if (layer->Type() != LayerType::tile_layer)
   {
@@ -17,7 +17,7 @@ auto as_tile_layer(shared<ILayer>& layer) -> TileLayer*
   }
 }
 
-auto as_tile_layer(const shared<ILayer>& layer) -> const TileLayer*
+auto AsTileLayer(const shared<ILayer>& layer) -> const TileLayer*
 {
   if (layer->Type() != LayerType::tile_layer)
   {
@@ -29,7 +29,7 @@ auto as_tile_layer(const shared<ILayer>& layer) -> const TileLayer*
   }
 }
 
-auto as_object_layer(shared<ILayer>& layer) -> ObjectLayer*
+auto AsObjectLayer(shared<ILayer>& layer) -> ObjectLayer*
 {
   if (layer->Type() != LayerType::object_layer)
   {
@@ -41,7 +41,7 @@ auto as_object_layer(shared<ILayer>& layer) -> ObjectLayer*
   }
 }
 
-auto as_object_layer(const shared<ILayer>& layer) -> const ObjectLayer*
+auto AsObjectLayer(const shared<ILayer>& layer) -> const ObjectLayer*
 {
   if (layer->Type() != LayerType::object_layer)
   {

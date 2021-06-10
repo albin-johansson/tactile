@@ -201,11 +201,11 @@ void render_layer(QPainter& painter,
     return;
   }
 
-  if (auto* tileLayer = core::as_tile_layer(layer))
+  if (auto* tileLayer = core::AsTileLayer(layer))
   {
     render_tile_layer(painter, *tileLayer, info);
   }
-  else if (auto* objectLayer = core::as_object_layer(layer))
+  else if (auto* objectLayer = core::AsObjectLayer(layer))
   {
     render_object_layer(painter, *objectLayer, info);
   }

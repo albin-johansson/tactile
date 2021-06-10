@@ -258,12 +258,12 @@ void save_layers(QDomDocument& document,
       node.setAttribute(TACTILE_QSTRING(u"visible"), 0);
     }
 
-    if (const auto* tileLayer = core::as_tile_layer(layer))
+    if (const auto* tileLayer = core::AsTileLayer(layer))
     {
       save_tile_layer(document, node, *tileLayer);
     }
 
-    if (const auto* objectLayer = core::as_object_layer(layer))
+    if (const auto* objectLayer = core::AsObjectLayer(layer))
     {
       save_object_layer(document, node, *objectLayer, targetDir);
     }
