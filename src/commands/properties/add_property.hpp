@@ -28,7 +28,7 @@ class AddProperty final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(command_id::add_property);
+    return static_cast<int>(CommandId::add_property);
   }
 
  private:

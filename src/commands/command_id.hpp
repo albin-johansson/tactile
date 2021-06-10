@@ -2,7 +2,7 @@
 
 namespace tactile::cmd {
 
-enum class command_id
+enum class CommandId
 {
   add_column = 1,
   add_layer,

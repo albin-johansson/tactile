@@ -38,7 +38,7 @@ class ResizeMap final : public MapCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(command_id::resize_map);
+    return static_cast<int>(CommandId::resize_map);
   }
 
  private:

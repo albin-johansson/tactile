@@ -29,7 +29,7 @@ class RemoveColumn final : public RepeatedMapCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(command_id::remove_column);
+    return static_cast<int>(CommandId::remove_column);
   }
 };
 

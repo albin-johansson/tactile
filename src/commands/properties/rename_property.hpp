@@ -21,7 +21,7 @@ class RenameProperty final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(command_id::rename_property);
+    return static_cast<int>(CommandId::rename_property);
   }
 
  private:

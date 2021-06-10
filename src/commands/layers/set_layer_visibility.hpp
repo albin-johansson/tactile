@@ -24,7 +24,7 @@ class SetLayerVisibility final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(command_id::set_layer_visibility);
+    return static_cast<int>(CommandId::set_layer_visibility);
   }
 
  private:

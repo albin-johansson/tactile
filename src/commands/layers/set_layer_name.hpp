@@ -26,7 +26,7 @@ class SetLayerName final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(command_id::set_layer_name);
+    return static_cast<int>(CommandId::set_layer_name);
   }
 
  private:
