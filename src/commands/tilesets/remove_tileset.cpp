@@ -7,49 +7,49 @@
 
 namespace tactile::cmd {
 
-remove_tileset::remove_tileset(core::map_document* document,
-                               shared<core::tileset> tileset,
-                               const tileset_id id)
+RemoveTileset::RemoveTileset(not_null<core::map_document*> document,
+                             shared<core::tileset> tileset,
+                             const tileset_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Remove Tileset")}
-    , m_document{document}
-    , m_tileset{std::move(tileset)}
-    , m_id{id}
+    , mDocument{document}
+    , mTileset{std::move(tileset)}
+    , mId{id}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Null map document!"};
   }
 
-  if (!m_tileset)
+  if (!mTileset)
   {
     throw tactile_error{"Null tileset!"};
   }
 }
 
-void remove_tileset::undo()
+void RemoveTileset::undo()
 {
   QUndoCommand::undo();
 
-  auto* tilesets = m_document->tilesets();
-  tilesets->add(m_id, m_tileset);
+  auto* tilesets = mDocument->tilesets();
+  tilesets->add(mId, mTileset);
 
-  emit m_document->added_tileset(m_id);
+  emit mDocument->added_tileset(mId);
 }
 
-void remove_tileset::redo()
+void RemoveTileset::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = m_document->raw();
-  auto* tilesets = m_document->tilesets();
+  auto& map = mDocument->raw();
+  auto* tilesets = mDocument->tilesets();
 
-  const auto [first, last] = tilesets->range_of(m_id);
+  const auto [first, last] = tilesets->range_of(mId);
   map.remove_occurrences(first, last);
 
-  tilesets->remove(m_id);
+  tilesets->remove(mId);
 
-  emit m_document->removed_tileset(m_id);
-  emit m_document->redraw();
+  emit mDocument->removed_tileset(mId);
+  emit mDocument->redraw();
 }
 
 }  // namespace tactile::cmd

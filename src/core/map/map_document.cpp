@@ -279,16 +279,16 @@ void map_document::add_tileset(const QImage& image,
     ts->set_path(path);
 
     // This will cause an `added_tileset` signal to be emitted
-    m_delegate->execute<cmd::add_tileset>(this, std::move(ts), id);
+    m_delegate->execute<cmd::AddTileset>(this, std::move(ts), id);
     m_tilesets->increment_next_tileset_id();
   }
 }
 
 void map_document::remove_tileset(tileset_id id)
 {
-  m_delegate->execute<cmd::remove_tileset>(this,
-                                           m_tilesets->get_tileset_pointer(id),
-                                           id);
+  m_delegate->execute<cmd::RemoveTileset>(this,
+                                          m_tilesets->get_tileset_pointer(id),
+                                          id);
 }
 
 void map_document::select_tileset(const tileset_id id)
@@ -398,7 +398,7 @@ void map_document::move_layer_forward(const layer_id id)
 
 void map_document::set_tileset_name(const tileset_id id, const QString& name)
 {
-  m_delegate->execute<cmd::set_tileset_name>(this, id, name);
+  m_delegate->execute<cmd::SetTilesetName>(this, id, name);
 }
 
 void map_document::set_next_layer_id(const layer_id id) noexcept

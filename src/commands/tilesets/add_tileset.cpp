@@ -7,44 +7,44 @@
 
 namespace tactile::cmd {
 
-add_tileset::add_tileset(core::map_document* document,
-                         shared<core::tileset> tileset,
-                         const tileset_id id)
+AddTileset::AddTileset(not_null<core::map_document*> document,
+                       shared<core::tileset> tileset,
+                       const tileset_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Add Tileset")}
-    , m_document{document}
-    , m_tileset{std::move(tileset)}
-    , m_id{id}
+    , mDocument{document}
+    , mTileset{std::move(tileset)}
+    , mId{id}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Null map document!"};
   }
 
-  if (!m_tileset)
+  if (!mTileset)
   {
     throw tactile_error{"Null tileset!"};
   }
 }
 
-void add_tileset::undo()
+void AddTileset::undo()
 {
   QUndoCommand::undo();
 
-  auto* tilesets = m_document->tilesets();
-  tilesets->remove(m_id);
+  auto* tilesets = mDocument->tilesets();
+  tilesets->remove(mId);
 
-  emit m_document->removed_tileset(m_id);
-  emit m_document->redraw();
+  emit mDocument->removed_tileset(mId);
+  emit mDocument->redraw();
 }
 
-void add_tileset::redo()
+void AddTileset::redo()
 {
   QUndoCommand::redo();
 
-  auto* tilesets = m_document->tilesets();
-  tilesets->add(m_id, m_tileset);
+  auto* tilesets = mDocument->tilesets();
+  tilesets->add(mId, mTileset);
 
-  emit m_document->added_tileset(m_id);
+  emit mDocument->added_tileset(mId);
 }
 
 }  // namespace tactile::cmd

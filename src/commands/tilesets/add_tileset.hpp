@@ -4,18 +4,19 @@
 
 #include "command_id.hpp"
 #include "map_document.hpp"
+#include "not_null.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
 namespace tactile::cmd {
 
-class add_tileset final : public QUndoCommand
+class AddTileset final : public QUndoCommand
 {
  public:
-  add_tileset(core::map_document* document,
-              shared<core::tileset> tileset,
-              tileset_id id);
+  AddTileset(not_null<core::map_document*> document,
+             shared<core::tileset> tileset,
+             tileset_id id);
 
   void undo() override;
 
@@ -27,9 +28,9 @@ class add_tileset final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document;
-  shared<core::tileset> m_tileset;
-  tileset_id m_id;
+  core::map_document* mDocument{};
+  shared<core::tileset> mTileset;
+  tileset_id mId;
 };
 
 }  // namespace tactile::cmd

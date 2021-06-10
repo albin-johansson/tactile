@@ -4,16 +4,17 @@
 
 #include "command_id.hpp"
 #include "map_document.hpp"
+#include "not_null.hpp"
 #include "smart_pointers.hpp"
 
 namespace tactile::cmd {
 
-class remove_tileset final : public QUndoCommand
+class RemoveTileset final : public QUndoCommand
 {
  public:
-  remove_tileset(core::map_document* document,
-                 shared<core::tileset> tileset,
-                 tileset_id id);
+  RemoveTileset(not_null<core::map_document*> document,
+                shared<core::tileset> tileset,
+                tileset_id id);
 
   void undo() override;
 
@@ -25,10 +26,10 @@ class remove_tileset final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document;
-  shared<core::tileset> m_tileset;
-  tileset_id m_id;
-  bool m_first{true};  ///< Used to determine when to notify UI
+  core::map_document* mDocument{};
+  shared<core::tileset> mTileset;
+  tileset_id mId;
+  bool mFirst{true};  ///< Used to determine when to notify UI
 };
 
 }  // namespace tactile::cmd

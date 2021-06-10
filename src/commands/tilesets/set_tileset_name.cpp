@@ -8,43 +8,43 @@
 
 namespace tactile::cmd {
 
-set_tileset_name::set_tileset_name(not_null<core::map_document*> document,
-                                   const tileset_id id,
-                                   QString name)
+SetTilesetName::SetTilesetName(not_null<core::map_document*> document,
+                               const tileset_id id,
+                               QString name)
     : QUndoCommand{QTranslator::tr("Set Tileset Name")}
-    , m_document{document}
-    , m_id{id}
-    , m_name{std::move(name)}
+    , mDocument{document}
+    , mId{id}
+    , mName{std::move(name)}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Cannot create command from null document!"};
   }
 }
 
-void set_tileset_name::undo()
+void SetTilesetName::undo()
 {
   QUndoCommand::undo();
 
-  const auto name = m_previous.value();
+  const auto name = mPrevious.value();
 
-  auto* tilesets = m_document->tilesets();
-  tilesets->rename(m_id, name);
+  auto* tilesets = mDocument->tilesets();
+  tilesets->rename(mId, name);
 
-  emit m_document->renamed_tileset(m_id, name);
-  m_previous.reset();
+  emit mDocument->renamed_tileset(mId, name);
+  mPrevious.reset();
 }
 
-void set_tileset_name::redo()
+void SetTilesetName::redo()
 {
   QUndoCommand::redo();
 
-  auto* tilesets = m_document->tilesets();
+  auto* tilesets = mDocument->tilesets();
 
-  m_previous = tilesets->at(m_id).name();
-  tilesets->rename(m_id, m_name);
+  mPrevious = tilesets->at(mId).name();
+  tilesets->rename(mId, mName);
 
-  emit m_document->renamed_tileset(m_id, m_name);
+  emit mDocument->renamed_tileset(mId, mName);
 }
 
 }  // namespace tactile::cmd
