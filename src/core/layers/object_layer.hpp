@@ -77,7 +77,7 @@ class ObjectLayer final : public ILayer
   /// \name Object layer API
   /// \{
 
-  template <std::invocable<object_id, const object&> T>
+  template <std::invocable<object_id, const Object&> T>
   void Each(T&& callable) const
   {
     for (const auto& [id, object] : mObjects)
@@ -96,7 +96,7 @@ class ObjectLayer final : public ILayer
    *
    * \since 0.2.0
    */
-  void AddObject(object_id id, object obj);
+  void AddObject(object_id id, Object obj);
 
   /**
    * \brief Adds a point object to the layer.
@@ -165,12 +165,12 @@ class ObjectLayer final : public ILayer
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto GetObject(object_id id) -> object&;
+  [[nodiscard]] auto GetObject(object_id id) -> Object&;
 
   /**
    * \copydoc GetObject()
    */
-  [[nodiscard]] auto GetObject(object_id id) const -> const object&;
+  [[nodiscard]] auto GetObject(object_id id) const -> const Object&;
 
   /**
    * \brief Returns the current amount of objects in the layer.
@@ -184,7 +184,7 @@ class ObjectLayer final : public ILayer
   /// \}
 
  private:
-  vector_map<object_id, object> mObjects;
+  vector_map<object_id, Object> mObjects;
   LayerDelegate mDelegate;
 };
 

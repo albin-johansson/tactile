@@ -22,7 +22,7 @@ namespace tactile::core {
  *
  * \headerfile object.hpp
  */
-class object final : public property_manager
+class Object final : public property_manager
 {
  public:
   /**
@@ -32,7 +32,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  explicit object(object_type type);
+  explicit Object(object_type type);
 
   /**
    * \brief Sets the x-coordinate of the object.
@@ -41,7 +41,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  void set_x(double x) noexcept;
+  void SetX(double x) noexcept;
 
   /**
    * \brief Sets the y-coordinate of the object.
@@ -50,7 +50,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  void set_y(double y) noexcept;
+  void SetY(double y) noexcept;
 
   /**
    * \brief Sets the width of the object.
@@ -59,7 +59,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  void set_width(double width) noexcept;
+  void SetWidth(double width) noexcept;
 
   /**
    * \brief Sets the height of the object.
@@ -68,7 +68,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  void set_height(double height) noexcept;
+  void SetHeight(double height) noexcept;
 
   /**
    * \brief Sets whether or not the object is visible.
@@ -77,7 +77,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  void set_visible(bool visible) noexcept;
+  void SetVisible(bool visible) noexcept;
 
   /**
    * \brief Sets the name of the object.
@@ -86,7 +86,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  void set_name(const QString& name);
+  void SetName(const QString& name);
 
   /**
    * \brief Sets the custom user-defined type associated with the object.
@@ -96,7 +96,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  void set_custom_type(maybe<QString> type);
+  void SetCustomType(maybe<QString> type);
 
   /**
    * \brief Returns the current x-coordinate of the object.
@@ -105,7 +105,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto x() const noexcept -> double;
+  [[nodiscard]] auto X() const noexcept -> double;
 
   /**
    * \brief Returns the current y-coordinate of the object.
@@ -114,7 +114,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto y() const noexcept -> double;
+  [[nodiscard]] auto Y() const noexcept -> double;
 
   /**
    * \brief Returns the current width of the object.
@@ -123,7 +123,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto width() const noexcept -> double;
+  [[nodiscard]] auto Width() const noexcept -> double;
 
   /**
    * \brief Returns the current height of the object.
@@ -132,7 +132,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto height() const noexcept -> double;
+  [[nodiscard]] auto Height() const noexcept -> double;
 
   /**
    * \brief Indicates whether or not the object is visible.
@@ -141,7 +141,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto visible() const noexcept -> bool;
+  [[nodiscard]] auto IsVisible() const noexcept -> bool;
 
   /**
    * \brief Returns the current name of the object.
@@ -150,7 +150,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto name() const -> QString;
+  [[nodiscard]] auto Name() const -> QString;
 
   /**
    * \brief Returns the type associated with the object.
@@ -159,7 +159,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto type() const noexcept -> object_type;
+  [[nodiscard]] auto Type() const noexcept -> object_type;
 
   /**
    * \brief Returns the custom user-defined type of the object, if present.
@@ -168,7 +168,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto custom_type() const -> maybe<QString>;
+  [[nodiscard]] auto CustomType() const -> maybe<QString>;
 
   /**
    * \brief Indicates whether or not the object is represented by a point.
@@ -179,7 +179,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto is_point() const noexcept -> bool;
+  [[nodiscard]] auto IsPoint() const noexcept -> bool;
 
   /**
    * \brief Indicates whether or not the object is represented by a rectangle.
@@ -190,7 +190,7 @@ class object final : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto is_rectangle() const noexcept -> bool;
+  [[nodiscard]] auto IsRectangle() const noexcept -> bool;
 
   /// \name Property API
   /// \{
@@ -222,15 +222,15 @@ class object final : public property_manager
   /// \} End of property API
 
  private:
-  double m_x{};
-  double m_y{};
-  double m_width{};
-  double m_height{};
-  object_type m_type;
-  maybe<QString> m_customType;
-  QString m_name;
-  property_delegate m_properties;
-  bool m_visible{true};
+  double mX{};
+  double mY{};
+  double mWidth{};
+  double mHeight{};
+  object_type mType;
+  maybe<QString> mCustomType;
+  QString mName;
+  property_delegate mProperties;
+  bool mVisible{true};
 };
 
 }  // namespace tactile::core

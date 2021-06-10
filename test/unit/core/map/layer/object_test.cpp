@@ -8,11 +8,11 @@ using namespace tactile;
 
 TEST(Object, Defaults)
 {
-  const core::object rect{core::object_type::rectangle};
-  EXPECT_TRUE(rect.is_rectangle());
+  const core::Object rect{core::object_type::rectangle};
+  EXPECT_TRUE(rect.IsRectangle());
   EXPECT_TRUE(rect.name().isEmpty());
   EXPECT_TRUE(rect.visible());
-  EXPECT_FALSE(rect.is_point());
+  EXPECT_FALSE(rect.IsPoint());
   EXPECT_FALSE(rect.custom_type());
   EXPECT_EQ(core::object_type::rectangle, rect.type());
   EXPECT_EQ(0, rect.x());
@@ -20,11 +20,11 @@ TEST(Object, Defaults)
   EXPECT_EQ(0, rect.width());
   EXPECT_EQ(0, rect.height());
 
-  const core::object point{core::object_type::point};
-  EXPECT_TRUE(point.is_point());
+  const core::Object point{core::object_type::point};
+  EXPECT_TRUE(point.IsPoint());
   EXPECT_TRUE(point.name().isEmpty());
   EXPECT_TRUE(point.visible());
-  EXPECT_FALSE(point.is_rectangle());
+  EXPECT_FALSE(point.IsRectangle());
   EXPECT_FALSE(point.custom_type());
   EXPECT_EQ(core::object_type::point, point.type());
   EXPECT_EQ(0, point.x());
@@ -35,70 +35,70 @@ TEST(Object, Defaults)
 
 TEST(Object, SetX)
 {
-  core::object object{core::object_type::point};
+  core::Object object{core::object_type::point};
 
   const auto x = 12.3;
-  object.set_x(x);
+  object.SetX(x);
 
   EXPECT_EQ(x, object.x());
 }
 
 TEST(Object, SetY)
 {
-  core::object object{core::object_type::point};
+  core::Object object{core::object_type::point};
 
   const auto y = 47.8;
-  object.set_y(y);
+  object.SetY(y);
 
   EXPECT_EQ(y, object.y());
 }
 
 TEST(Object, SetWidth)
 {
-  core::object object{core::object_type::rectangle};
+  core::Object object{core::object_type::rectangle};
 
   const auto width = 72.3;
-  object.set_width(width);
+  object.SetWidth(width);
 
   EXPECT_EQ(width, object.width());
 }
 
 TEST(Object, SetHeight)
 {
-  core::object object{core::object_type::rectangle};
+  core::Object object{core::object_type::rectangle};
 
   const auto height = 59.5;
-  object.set_height(height);
+  object.SetHeight(height);
 
   EXPECT_EQ(height, object.height());
 }
 
 TEST(Object, SetVisible)
 {
-  core::object object{core::object_type::point};
+  core::Object object{core::object_type::point};
 
-  object.set_visible(false);
+  object.SetVisible(false);
   EXPECT_FALSE(object.visible());
 
-  object.set_visible(true);
+  object.SetVisible(true);
   EXPECT_TRUE(object.visible());
 }
 
 TEST(Object, SetName)
 {
-  core::object object{core::object_type::point};
+  core::Object object{core::object_type::point};
 
-  object.set_name(TACTILE_QSTRING(u"foo"));
+  object.SetName(TACTILE_QSTRING(u"foo"));
   EXPECT_EQ(TACTILE_QSTRING(u"foo"), object.name());
 }
 
 TEST(Object, SetCustomType)
 {
-  core::object object{core::object_type::point};
+  core::Object object{core::object_type::point};
 
-  object.set_custom_type(TACTILE_QSTRING(u"foobar"));
+  object.SetCustomType(TACTILE_QSTRING(u"foobar"));
   EXPECT_EQ(TACTILE_QSTRING(u"foobar"), object.custom_type());
 
-  object.set_custom_type(std::nullopt);
+  object.SetCustomType(std::nullopt);
   EXPECT_FALSE(object.custom_type());
 }

@@ -204,20 +204,20 @@ void save_object_layer(QDomDocument& document,
                        const core::ObjectLayer& layer,
                        const QDir& targetDir)
 {
-  layer.Each([&](const object_id id, const core::object& object) {
+  layer.Each([&](const object_id id, const core::Object& object) {
     auto node = document.createElement(TACTILE_QSTRING(u"object"));
 
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());
-    node.setAttribute(TACTILE_QSTRING(u"name"), object.name());
-    node.setAttribute(TACTILE_QSTRING(u"x"), object.x());
-    node.setAttribute(TACTILE_QSTRING(u"y"), object.y());
-    node.setAttribute(TACTILE_QSTRING(u"width"), object.width());
-    node.setAttribute(TACTILE_QSTRING(u"height"), object.height());
-    node.setAttribute(TACTILE_QSTRING(u"visible"), object.visible());
+    node.setAttribute(TACTILE_QSTRING(u"name"), object.Name());
+    node.setAttribute(TACTILE_QSTRING(u"x"), object.X());
+    node.setAttribute(TACTILE_QSTRING(u"y"), object.Y());
+    node.setAttribute(TACTILE_QSTRING(u"width"), object.Width());
+    node.setAttribute(TACTILE_QSTRING(u"height"), object.Height());
+    node.setAttribute(TACTILE_QSTRING(u"visible"), object.IsVisible());
     node.setAttribute(TACTILE_QSTRING(u"type"),
-                      object.custom_type().value_or(""));
+                      object.CustomType().value_or(""));
 
-    if (object.is_point())
+    if (object.IsPoint())
     {
       auto point = document.createElement(TACTILE_QSTRING(u"point"));
       node.appendChild(point);

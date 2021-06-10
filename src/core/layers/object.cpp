@@ -4,148 +4,148 @@
 
 namespace tactile::core {
 
-object::object(const object_type type) : m_type{type}
+Object::Object(const object_type type) : mType{type}
 {}
 
-void object::set_x(const double x) noexcept
+void Object::SetX(const double x) noexcept
 {
-  m_x = x;
+  mX = x;
 }
 
-void object::set_y(const double y) noexcept
+void Object::SetY(const double y) noexcept
 {
-  m_y = y;
+  mY = y;
 }
 
-void object::set_width(const double width) noexcept
+void Object::SetWidth(const double width) noexcept
 {
-  m_width = width;
+  mWidth = width;
 }
 
-void object::set_height(const double height) noexcept
+void Object::SetHeight(const double height) noexcept
 {
-  m_height = height;
+  mHeight = height;
 }
 
-void object::set_visible(const bool visible) noexcept
+void Object::SetVisible(const bool visible) noexcept
 {
-  m_visible = visible;
+  mVisible = visible;
 }
 
-void object::set_name(const QString& name)
+void Object::SetName(const QString& name)
 {
-  m_name = name;
+  mName = name;
 }
 
-void object::set_custom_type(maybe<QString> type)
+void Object::SetCustomType(maybe<QString> type)
 {
-  m_customType = std::move(type);
+  mCustomType = std::move(type);
 }
 
-auto object::x() const noexcept -> double
+auto Object::X() const noexcept -> double
 {
-  return m_x;
+  return mX;
 }
 
-auto object::y() const noexcept -> double
+auto Object::Y() const noexcept -> double
 {
-  return m_y;
+  return mY;
 }
 
-auto object::width() const noexcept -> double
+auto Object::Width() const noexcept -> double
 {
-  return m_width;
+  return mWidth;
 }
 
-auto object::height() const noexcept -> double
+auto Object::Height() const noexcept -> double
 {
-  return m_height;
+  return mHeight;
 }
 
-auto object::visible() const noexcept -> bool
+auto Object::IsVisible() const noexcept -> bool
 {
-  return m_visible;
+  return mVisible;
 }
 
-auto object::name() const -> QString
+auto Object::Name() const -> QString
 {
-  return m_name;
+  return mName;
 }
 
-auto object::type() const noexcept -> object_type
+auto Object::Type() const noexcept -> object_type
 {
-  return m_type;
+  return mType;
 }
 
-auto object::custom_type() const -> maybe<QString>
+auto Object::CustomType() const -> maybe<QString>
 {
-  return m_customType;
+  return mCustomType;
 }
 
-auto object::is_point() const noexcept -> bool
+auto Object::IsPoint() const noexcept -> bool
 {
-  return type() == object_type::point;
+  return Type() == object_type::point;
 }
 
-auto object::is_rectangle() const noexcept -> bool
+auto Object::IsRectangle() const noexcept -> bool
 {
-  return type() == object_type::rectangle;
+  return Type() == object_type::rectangle;
 }
 
-void object::add_property(const QString& name, const property_type type)
+void Object::add_property(const QString& name, const property_type type)
 {
-  m_properties.add_property(name, type);
+  mProperties.add_property(name, type);
 }
 
-void object::add_property(const QString& name, const property& property)
+void Object::add_property(const QString& name, const property& property)
 {
-  m_properties.add_property(name, property);
+  mProperties.add_property(name, property);
 }
 
-void object::remove_property(const QString& name)
+void Object::remove_property(const QString& name)
 {
-  m_properties.remove_property(name);
+  mProperties.remove_property(name);
 }
 
-void object::rename_property(const QString& oldName, const QString& newName)
+void Object::rename_property(const QString& oldName, const QString& newName)
 {
-  m_properties.rename_property(oldName, newName);
+  mProperties.rename_property(oldName, newName);
 }
 
-void object::set_property(const QString& name, const property& property)
+void Object::set_property(const QString& name, const property& property)
 {
-  m_properties.set_property(name, property);
+  mProperties.set_property(name, property);
 }
 
-void object::change_property_type(const QString& name,
+void Object::change_property_type(const QString& name,
                                   const core::property_type type)
 {
-  m_properties.change_property_type(name, type);
+  mProperties.change_property_type(name, type);
 }
 
-auto object::get_property(const QString& name) const -> const property&
+auto Object::get_property(const QString& name) const -> const property&
 {
-  return m_properties.get_property(name);
+  return mProperties.get_property(name);
 }
 
-auto object::get_property(const QString& name) -> property&
+auto Object::get_property(const QString& name) -> property&
 {
-  return m_properties.get_property(name);
+  return mProperties.get_property(name);
 }
 
-auto object::has_property(const QString& name) const -> bool
+auto Object::has_property(const QString& name) const -> bool
 {
-  return m_properties.has_property(name);
+  return mProperties.has_property(name);
 }
 
-auto object::property_count() const noexcept -> int
+auto Object::property_count() const noexcept -> int
 {
-  return m_properties.property_count();
+  return mProperties.property_count();
 }
 
-auto object::properties() const -> const property_map&
+auto Object::properties() const -> const property_map&
 {
-  return m_properties.properties();
+  return mProperties.properties();
 }
 
 }  // namespace tactile::core

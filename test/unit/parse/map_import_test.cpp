@@ -96,7 +96,7 @@ void validate_layers(const core::map_document& document)
     EXPECT_EQ(0, object.height());
     EXPECT_EQ(core::object_type::point, object.type());
     EXPECT_TRUE(object.visible());
-    EXPECT_TRUE(object.is_point());
+    EXPECT_TRUE(object.IsPoint());
     EXPECT_FALSE(object.custom_type());
     EXPECT_EQ(TACTILE_QSTRING(u"Point"), object.name());
 

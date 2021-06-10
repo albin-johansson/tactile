@@ -36,7 +36,7 @@ namespace {
   return layer;
 }
 
-[[nodiscard]] auto make_object(const object_data& objectData) -> core::object
+[[nodiscard]] auto make_object(const object_data& objectData) -> core::Object
 {
   const auto getType = [](const object_data& objectData) {
     if (objectData.isPoint)
@@ -49,14 +49,14 @@ namespace {
     }
   };
 
-  core::object object{getType(objectData)};
+  core::Object object{getType(objectData)};
 
-  object.set_x(objectData.x);
-  object.set_y(objectData.y);
-  object.set_width(objectData.width);
-  object.set_height(objectData.height);
-  object.set_name(objectData.name);
-  object.set_visible(objectData.visible);
+  object.SetX(objectData.x);
+  object.SetY(objectData.y);
+  object.SetWidth(objectData.width);
+  object.SetHeight(objectData.height);
+  object.SetName(objectData.name);
+  object.SetVisible(objectData.visible);
 
   for (const auto& propertyData : objectData.properties)
   {

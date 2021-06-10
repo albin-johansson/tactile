@@ -269,20 +269,20 @@ void save_object_layer(QJsonObject& element,
   }
 
   QJsonArray objects;
-  objectLayer->Each([&](const object_id id, const core::object& object) {
+  objectLayer->Each([&](const object_id id, const core::Object& object) {
     QJsonObject jsonObject;
 
     jsonObject.insert(u"id", id.get());
-    jsonObject.insert(u"name", object.name());
-    jsonObject.insert(u"x", object.x());
-    jsonObject.insert(u"y", object.y());
-    jsonObject.insert(u"width", object.width());
-    jsonObject.insert(u"height", object.height());
-    jsonObject.insert(u"visible", object.visible());
-    jsonObject.insert(u"type", object.custom_type().value_or(""));
+    jsonObject.insert(u"name", object.Name());
+    jsonObject.insert(u"x", object.X());
+    jsonObject.insert(u"y", object.Y());
+    jsonObject.insert(u"width", object.Width());
+    jsonObject.insert(u"height", object.Height());
+    jsonObject.insert(u"visible", object.IsVisible());
+    jsonObject.insert(u"type", object.CustomType().value_or(""));
     jsonObject.insert(u"rotation", 0);
 
-    if (object.is_point())
+    if (object.IsPoint())
     {
       jsonObject.insert(u"point", true);
     }

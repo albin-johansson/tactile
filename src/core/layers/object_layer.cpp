@@ -108,7 +108,7 @@ auto ObjectLayer::Clone() const -> shared<ILayer>
   return std::make_shared<ObjectLayer>(*this);
 }
 
-void ObjectLayer::AddObject(const object_id id, object obj)
+void ObjectLayer::AddObject(const object_id id, Object obj)
 {
   Q_ASSERT(!HasObject(id));
   mObjects.emplace(id, std::move(obj));
@@ -118,8 +118,8 @@ void ObjectLayer::AddPoint(const object_id id, const double x, const double y)
 {
   Q_ASSERT(!HasObject(id));
   auto& [key, point] = mObjects.emplace(id, object_type::point);
-  point.set_x(x);
-  point.set_y(y);
+  point.SetX(x);
+  point.SetY(y);
 }
 
 void ObjectLayer::AddRectangle(const object_id id,
@@ -130,10 +130,10 @@ void ObjectLayer::AddRectangle(const object_id id,
 {
   Q_ASSERT(!HasObject(id));
   auto& [key, rect] = mObjects.emplace(id, object_type::rectangle);
-  rect.set_x(x);
-  rect.set_y(y);
-  rect.set_width(width);
-  rect.set_height(height);
+  rect.SetX(x);
+  rect.SetY(y);
+  rect.SetWidth(width);
+  rect.SetHeight(height);
 }
 
 void ObjectLayer::RemoveObject(const object_id id)
@@ -147,12 +147,12 @@ auto ObjectLayer::HasObject(const object_id id) const -> bool
   return mObjects.contains(id);
 }
 
-auto ObjectLayer::GetObject(const object_id id) -> object&
+auto ObjectLayer::GetObject(const object_id id) -> Object&
 {
   return mObjects.at(id);
 }
 
-auto ObjectLayer::GetObject(const object_id id) const -> const object&
+auto ObjectLayer::GetObject(const object_id id) const -> const Object&
 {
   return mObjects.at(id);
 }

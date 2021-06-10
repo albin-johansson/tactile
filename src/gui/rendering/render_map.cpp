@@ -163,17 +163,17 @@ void render_object_layer(QPainter& painter,
 {
   painter.setOpacity(layer.Opacity());
 
-  layer.Each([&](const object_id, const core::object& object) {
+  layer.Each([&](const object_id, const core::Object& object) {
     painter.setPen(Qt::red);
 
-    if (object.is_rectangle())
+    if (object.IsRectangle())
     {
       painter.drawRect(
-          QRectF{object.x(), object.y(), object.width(), object.height()});
+          QRectF{object.X(), object.Y(), object.Width(), object.Height()});
     }
-    else if (object.is_point())
+    else if (object.IsPoint())
     {
-      painter.drawEllipse(QPointF{object.x(), object.y()}, 2, 2);
+      painter.drawEllipse(QPointF{object.X(), object.Y()}, 2, 2);
     }
   });
 
