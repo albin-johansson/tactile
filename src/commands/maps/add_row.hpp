@@ -10,7 +10,7 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 namespace tactile::cmd {
 
 /**
- * \class add_row
+ * \class AddRow
  *
  * \brief Represents the dialog of adding a row to the active map.
  *
@@ -18,10 +18,10 @@ namespace tactile::cmd {
  *
  * \headerfile add_row.hpp
  */
-class add_row final : public repeated_command
+class AddRow final : public repeated_command
 {
  public:
-  explicit add_row(not_null<core::map_document*> document);
+  explicit AddRow(not_null<core::map_document*> document);
 
   void undo() override;
 
@@ -33,7 +33,7 @@ class add_row final : public repeated_command
   }
 
  private:
-  core::map_document* m_document{};
+  core::map_document* mDocument{};
 };
 
 }  // namespace tactile::cmd

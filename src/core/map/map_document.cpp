@@ -238,7 +238,7 @@ void map_document::add_erase_sequence(vector_map<position, tile_id>&& oldState)
 
 void map_document::add_row()
 {
-  m_delegate->execute<cmd::add_row>(this);
+  m_delegate->execute<cmd::AddRow>(this);
 }
 
 void map_document::add_column()
