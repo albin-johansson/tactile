@@ -12,12 +12,12 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class add_layer final : public QUndoCommand
+class AddLayer final : public QUndoCommand
 {
  public:
-  add_layer(core::map_document* document,
-            shared<core::layer> layer,
-            layer_id id);
+  AddLayer(core::map_document* document,
+           shared<core::layer> layer,
+           layer_id id);
 
   void undo() override;
 
@@ -29,9 +29,9 @@ class add_layer final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document{};
-  shared<core::layer> m_layer;
-  layer_id m_id;
+  core::map_document* mDocument{};
+  shared<core::layer> mLayer;
+  layer_id mId;
 };
 
 }  // namespace tactile::cmd

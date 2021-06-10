@@ -321,7 +321,7 @@ auto map_document::add_tile_layer() -> layer_id
                   QString::number(m_tileLayerSuffix));
   ++m_tileLayerSuffix;
 
-  m_delegate->execute<cmd::add_layer>(this, std::move(layer), id);
+  m_delegate->execute<cmd::AddLayer>(this, std::move(layer), id);
   return id;
 }
 
@@ -334,7 +334,7 @@ auto map_document::add_object_layer() -> layer_id
                   QString::number(m_objectLayerSuffix));
   ++m_objectLayerSuffix;
 
-  m_delegate->execute<cmd::add_layer>(this, std::move(layer), id);
+  m_delegate->execute<cmd::AddLayer>(this, std::move(layer), id);
   return id;
 }
 

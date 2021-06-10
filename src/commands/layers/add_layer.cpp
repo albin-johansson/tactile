@@ -8,44 +8,44 @@
 
 namespace tactile::cmd {
 
-add_layer::add_layer(core::map_document* document,
-                     shared<core::layer> layer,
-                     const layer_id id)
+AddLayer::AddLayer(core::map_document* document,
+                   shared<core::layer> layer,
+                   const layer_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Add Layer")}
-    , m_document{document}
-    , m_layer{std::move(layer)}
-    , m_id{id}
+    , mDocument{document}
+    , mLayer{std::move(layer)}
+    , mId{id}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Cannot create command from null map document!"};
   }
 
-  if (!m_layer)
+  if (!mLayer)
   {
     throw tactile_error{"Cannot create command from null tile_layer!"};
   }
 }
 
-void add_layer::undo()
+void AddLayer::undo()
 {
   QUndoCommand::undo();
 
   // We already have a shared pointer to the layer in question
-  auto layer [[maybe_unused]] = m_document->raw().take_layer(m_id);
+  auto layer [[maybe_unused]] = mDocument->raw().take_layer(mId);
 
-  emit m_document->removed_layer(m_id);
-  emit m_document->redraw();
+  emit mDocument->removed_layer(mId);
+  emit mDocument->redraw();
 }
 
-void add_layer::redo()
+void AddLayer::redo()
 {
   QUndoCommand::redo();
 
-  m_document->raw().add_layer(m_id, m_layer);
+  mDocument->raw().add_layer(mId, mLayer);
 
-  emit m_document->added_layer(m_id, *m_layer);
-  emit m_document->redraw();
+  emit mDocument->added_layer(mId, *mLayer);
+  emit mDocument->redraw();
 }
 
 }  // namespace tactile::cmd
