@@ -263,10 +263,9 @@ class map_parser final
       return with_error(parse_error::map_missing_tilesets);
     }
 
-    return std::ranges::all_of(m_engine.tilesets(root),
-                               [&](const object_type& ts) {
-                                 return parse_tileset(ts, path);
-                               });
+    return std::ranges::all_of(
+        m_engine.tilesets(root),
+        [&](const object_type& ts) { return parse_tileset(ts, path); });
   }
 
   [[nodiscard]] auto parse_tile_layer(layer_data& layer,
@@ -411,10 +410,9 @@ class map_parser final
       return with_error(parse_error::map_missing_layers);
     }
 
-    return std::ranges::all_of(m_engine.layers(root),
-                               [this](const object_type& layer) {
-                                 return parse_layer(layer);
-                               });
+    return std::ranges::all_of(
+        m_engine.layers(root),
+        [this](const object_type& layer) { return parse_layer(layer); });
   }
 
   [[nodiscard]] auto parse_property(const object_type& prop)

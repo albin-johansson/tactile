@@ -25,9 +25,7 @@ void ResizeDialog::ConnectLineEdit(QLineEdit* edit)
 {
   if (edit)
   {
-    connect(edit,
-            &QLineEdit::textChanged,
-            this, &ResizeDialog::ValidateInput);
+    connect(edit, &QLineEdit::textChanged, this, &ResizeDialog::ValidateInput);
   }
 }
 
@@ -36,7 +34,7 @@ void ResizeDialog::ValidateInput()
   const auto widthState = IsValid(*mUi->widthEdit);
   const auto heightState = IsValid(*mUi->heightEdit);
   OkButton()->setEnabled(widthState == QValidator::Acceptable &&
-                          heightState == QValidator::Acceptable);
+                         heightState == QValidator::Acceptable);
   if (OkButton()->isEnabled())
   {
     bool ok{};

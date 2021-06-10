@@ -152,7 +152,8 @@ void TilesetContentPage::OnRemovedTileset(const tileset_id id)
   manager.Remove(id);
 }
 
-void TilesetContentPage::OnRenamedTileset(const tileset_id id, const QString& name)
+void TilesetContentPage::OnRenamedTileset(const tileset_id id,
+                                          const QString& name)
 {
   auto& manager = CurrentManager();
   Q_ASSERT(manager.Contains(id));

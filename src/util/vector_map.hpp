@@ -117,9 +117,8 @@ class vector_map final
    */
   void erase(const key_type& key)
   {
-    std::erase_if(m_data, [&key](const pair_type& pair) {
-      return pair.first == key;
-    });
+    std::erase_if(m_data,
+                  [&key](const pair_type& pair) { return pair.first == key; });
   }
 
   [[nodiscard]] auto at_index(const std::size_t index) -> pair_type&

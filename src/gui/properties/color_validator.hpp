@@ -12,4 +12,4 @@ class ColorValidator final : public QIntValidator
   [[nodiscard]] auto validate(QString& string, int&) const -> State override;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile
