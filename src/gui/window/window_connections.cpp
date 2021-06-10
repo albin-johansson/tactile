@@ -130,9 +130,9 @@ void window_connections::init_tool_dock()
 {
   // clang-format off
   auto* dock = m_window->mToolDock;
-  connect(dock, &tool_dock::enable_stamp, m_window, &Window::OnStampEnabled);
-  connect(dock, &tool_dock::enable_bucket, m_window, &Window::OnBucketEnabled);
-  connect(dock, &tool_dock::enable_eraser, m_window, &Window::OnEraserEnabled);
+  connect(dock, &ToolDock::S_EnabledStamp, m_window, &Window::OnStampEnabled);
+  connect(dock, &ToolDock::S_EnabledBucket, m_window, &Window::OnBucketEnabled);
+  connect(dock, &ToolDock::S_EnabledEraser, m_window, &Window::OnEraserEnabled);
   // clang-format on
 }
 

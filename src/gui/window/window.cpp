@@ -24,7 +24,7 @@ Window::Window(QWidget* parent)
     : QMainWindow{parent}
     , mUi{init_ui<Ui::window>(this)}
     , mEditor{new MapEditor{this}}
-    , mToolDock{new tool_dock{this}}
+    , mToolDock{new ToolDock{this}}
     , mLayerDock{new LayerDock{this}}
     , mTilesetDock{new TilesetDock{this}}
     , mPropertiesDock{new PropertiesDock{this}}
@@ -172,7 +172,7 @@ auto Window::InEditorMode() const -> bool
 void Window::EnterNoContentView()
 {
   mEditor->EnableStartupView();
-  mToolDock->disable_tools();
+  mToolDock->DisableTools();
 
   SetActionsEnabled(false);
   HideAllDocks();
@@ -183,7 +183,7 @@ void Window::EnterNoContentView()
 void Window::EnterContentView()
 {
   mEditor->EnableEditorView();
-  mToolDock->enable_tools();
+  mToolDock->EnableTools();
 
   SetActionsEnabled(true);
   RestoreDockVisibility();
@@ -385,17 +385,17 @@ void Window::OnEraserEnabled()
 
 void Window::OnToggleStampAction()
 {
-  mToolDock->stamp_enabled();
+  mToolDock->OnEnableStamp();
 }
 
 void Window::OnToggleBucketAction()
 {
-  mToolDock->bucket_enabled();
+  mToolDock->OnEnableBucket();
 }
 
 void Window::OnToggleEraserAction()
 {
-  mToolDock->eraser_enabled();
+  mToolDock->OnEnableEraser();
 }
 
 void Window::OnAboutToCloseMap(const map_id id)

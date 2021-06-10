@@ -3,46 +3,41 @@
 #include <QButtonGroup>  // QButtonGroup
 #include <QWidget>       // QWidget
 
-#include "czstring.hpp"
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, tool_widget)
+TACTILE_FORWARD_DECLARE(Ui, ToolWidget)
 
-namespace tactile::gui {
+namespace tactile {
 
-class tool_widget final : public QWidget
+class ToolWidget final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit tool_widget(QWidget* parent = nullptr);
+  explicit ToolWidget(QWidget* parent = nullptr);
 
-  ~tool_widget() noexcept override;
+  ~ToolWidget() noexcept override;
 
-  void enable_tools();
+  void EnableTools();
 
-  void disable_tools();
+  void DisableTools();
 
  signals:
-  void stamp_enabled();
-
-  void bucket_enabled();
-
-  void eraser_enabled();
+  void S_StampEnabled();
+  void S_BucketEnabled();
+  void S_EraserEnabled();
 
  public slots:
-  void handle_enable_stamp();
-
-  void handle_enable_bucket();
-
-  void handle_enable_eraser();
+  void OnEnableStamp();
+  void OnEnableEraser();
+  void OnEnableBucket();
 
  private:
-  unique<Ui::tool_widget> m_ui;
-  QButtonGroup* m_group{};
+  unique<Ui::ToolWidget> mUi;
+  QButtonGroup* mGroup{};
 
-  void set_tools_enabled(bool enabled);
+  void SetToolsEnabled(bool enabled);
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

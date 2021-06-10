@@ -3,62 +3,62 @@
 #include "init_ui.hpp"
 #include "ui_tool_widget.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-tool_widget::tool_widget(QWidget* parent)
+ToolWidget::ToolWidget(QWidget* parent)
     : QWidget{parent}
-    , m_ui{init_ui<Ui::tool_widget>(this)}
-    , m_group{new QButtonGroup{this}}
+    , mUi{init_ui<Ui::ToolWidget>(this)}
+    , mGroup{new QButtonGroup{this}}
 {
-  const auto on_pressed = [this](auto* sender, auto handler) {
+  const auto onPressed = [this](auto* sender, auto handler) {
     connect(sender, &QPushButton::pressed, this, handler);
   };
 
-  on_pressed(m_ui->stampButton, &tool_widget::stamp_enabled);
-  on_pressed(m_ui->bucketButton, &tool_widget::bucket_enabled);
-  on_pressed(m_ui->eraserButton, &tool_widget::eraser_enabled);
+  onPressed(mUi->stampButton, &ToolWidget::S_StampEnabled);
+  onPressed(mUi->bucketButton, &ToolWidget::S_BucketEnabled);
+  onPressed(mUi->eraserButton, &ToolWidget::S_EraserEnabled);
 
-  m_group->setExclusive(true);
-  m_group->addButton(m_ui->stampButton);
-  m_group->addButton(m_ui->bucketButton);
-  m_group->addButton(m_ui->eraserButton);
+  mGroup->setExclusive(true);
+  mGroup->addButton(mUi->stampButton);
+  mGroup->addButton(mUi->bucketButton);
+  mGroup->addButton(mUi->eraserButton);
 }
 
-tool_widget::~tool_widget() noexcept = default;
+ToolWidget::~ToolWidget() noexcept = default;
 
-void tool_widget::enable_tools()
+void ToolWidget::EnableTools()
 {
-  set_tools_enabled(true);
+  SetToolsEnabled(true);
 }
 
-void tool_widget::disable_tools()
+void ToolWidget::DisableTools()
 {
-  set_tools_enabled(false);
+  SetToolsEnabled(false);
 }
 
-void tool_widget::handle_enable_stamp()
+void ToolWidget::OnEnableStamp()
 {
-  m_ui->stampButton->setChecked(true);
-  emit stamp_enabled();
+  mUi->stampButton->setChecked(true);
+  emit S_StampEnabled();
 }
 
-void tool_widget::handle_enable_bucket()
+void ToolWidget::OnEnableBucket()
 {
-  m_ui->bucketButton->setChecked(true);
-  emit bucket_enabled();
+  mUi->bucketButton->setChecked(true);
+  emit S_BucketEnabled();
 }
 
-void tool_widget::handle_enable_eraser()
+void ToolWidget::OnEnableEraser()
 {
-  m_ui->eraserButton->setChecked(true);
-  emit eraser_enabled();
+  mUi->eraserButton->setChecked(true);
+  emit S_EraserEnabled();
 }
 
-void tool_widget::set_tools_enabled(const bool enabled)
+void ToolWidget::SetToolsEnabled(const bool enabled)
 {
-  m_ui->stampButton->setEnabled(enabled);
-  m_ui->bucketButton->setEnabled(enabled);
-  m_ui->eraserButton->setEnabled(enabled);
+  mUi->stampButton->setEnabled(enabled);
+  mUi->bucketButton->setEnabled(enabled);
+  mUi->eraserButton->setEnabled(enabled);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

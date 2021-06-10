@@ -3,24 +3,50 @@
 #include <QLayout>
 
 #include "tactile_qstring.hpp"
+#include "tool_widget.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-tool_dock::tool_dock(QWidget* parent)
+ToolDock::ToolDock(QWidget* parent)
     : DockWidget{parent}
-    , m_widget{new tool_widget{this}}
+    , mWidget{new ToolWidget{this}}
 {
   setObjectName(TACTILE_QSTRING(u"tool_dock"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
   setContentsMargins(0, 0, 0, 0);
-  setWidget(m_widget);
+  setWidget(mWidget);
 
   // clang-format off
-  connect(m_widget, &tool_widget::stamp_enabled, this, &tool_dock::enable_stamp);
-  connect(m_widget, &tool_widget::bucket_enabled, this, &tool_dock::enable_bucket);
-  connect(m_widget, &tool_widget::eraser_enabled, this, &tool_dock::enable_eraser);
+  connect(mWidget, &ToolWidget::S_StampEnabled, this, &ToolDock::S_EnabledStamp);
+  connect(mWidget, &ToolWidget::S_BucketEnabled, this, &ToolDock::S_EnabledBucket);
+  connect(mWidget, &ToolWidget::S_EraserEnabled, this, &ToolDock::S_EnabledEraser);
   // clang-format on
 }
 
-}  // namespace tactile::gui
+void ToolDock::EnableTools()
+{
+  mWidget->EnableTools();
+}
+
+void ToolDock::DisableTools()
+{
+  mWidget->DisableTools();
+}
+
+void ToolDock::OnEnableStamp()
+{
+  mWidget->OnEnableStamp();
+}
+
+void ToolDock::OnEnableEraser()
+{
+  mWidget->OnEnableEraser();
+}
+
+void ToolDock::OnEnableBucket()
+{
+  mWidget->OnEnableBucket();
+}
+
+}  // namespace tactile

@@ -1,49 +1,35 @@
 #pragma once
 
 #include "dock_widget.hpp"
-#include "tool_widget.hpp"
+#include "forward_declare.hpp"
 
-namespace tactile::gui {
+TACTILE_FORWARD_DECLARE(tactile, ToolWidget)
 
-class tool_dock final : public DockWidget
+namespace tactile {
+
+class ToolDock final : public DockWidget
 {
   Q_OBJECT
 
  public:
-  explicit tool_dock(QWidget* parent = nullptr);
+  explicit ToolDock(QWidget* parent = nullptr);
 
-  void enable_tools()
-  {
-    m_widget->enable_tools();
-  }
+  void EnableTools();
 
-  void disable_tools()
-  {
-    m_widget->disable_tools();
-  }
+  void DisableTools();
 
-  void stamp_enabled()
-  {
-    m_widget->handle_enable_stamp();
-  }
-
-  void eraser_enabled()
-  {
-    m_widget->handle_enable_eraser();
-  }
-
-  void bucket_enabled()
-  {
-    m_widget->handle_enable_bucket();
-  }
+ public slots:
+  void OnEnableStamp();
+  void OnEnableEraser();
+  void OnEnableBucket();
 
  signals:
-  void enable_stamp();
-  void enable_bucket();
-  void enable_eraser();
+  void S_EnabledStamp();
+  void S_EnabledBucket();
+  void S_EnabledEraser();
 
  private:
-  tool_widget* m_widget{};
+  ToolWidget* mWidget{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>tool_widget</class>
- <widget class="QWidget" name="tool_widget">
+ <class>ToolWidget</class>
+ <widget class="QWidget" name="ToolWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
