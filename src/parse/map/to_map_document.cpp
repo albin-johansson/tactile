@@ -28,8 +28,8 @@ namespace {
   {
     for (auto col = 0_col; col < data.nCols; ++col)
     {
-      const core::position pos{row, col};
-      layer->SetTile(pos, data.tiles.at(pos.row_index()).at(pos.col_index()));
+      const core::Position pos{row, col};
+      layer->SetTile(pos, data.tiles.at(pos.RowIndex()).at(pos.ColumnIndex()));
     }
   }
 

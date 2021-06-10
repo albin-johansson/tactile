@@ -8,9 +8,9 @@
 namespace tactile::core {
 
 void FloodFill(TileLayer& layer,
-               const position& origin,
+               const Position& origin,
                tile_id replacement,
-               std::vector<position>& affected)
+               std::vector<Position>& affected)
 {
   const auto target = layer.TileAt(origin);
 
@@ -21,12 +21,12 @@ void FloodFill(TileLayer& layer,
 
   layer.SetTile(origin, replacement);
 
-  std::queue<position> queue;
+  std::queue<Position> queue;
 
   affected.push_back(origin);
   queue.push(origin);
 
-  const auto update = [&](const position& pos) {
+  const auto update = [&](const Position& pos) {
     if (const auto tile = layer.TileAt(pos); tile && tile == target)
     {
       affected.push_back(pos);
@@ -40,10 +40,10 @@ void FloodFill(TileLayer& layer,
     const auto pos = queue.front();
     queue.pop();
 
-    update(pos.west());
-    update(pos.east());
-    update(pos.south());
-    update(pos.north());
+    update(pos.West());
+    update(pos.East());
+    update(pos.South());
+    update(pos.North());
   }
 }
 

@@ -87,15 +87,15 @@ class tileset final
    *
    * \since 0.1.0
    */
-  template <std::invocable<position> T>
+  template <std::invocable<Position> T>
   void iterate_selection(T&& callable) const
   {
     if (m_selection)
     {
       const auto& [topLeft, bottomRight] = *m_selection;
 
-      const auto nRows = 1_row + (bottomRight.row() - topLeft.row());
-      const auto nCols = 1_col + (bottomRight.col() - topLeft.col());
+      const auto nRows = 1_row + (bottomRight.Row() - topLeft.Row());
+      const auto nCols = 1_col + (bottomRight.Column() - topLeft.Column());
 
       for (row_t row{0}; row < nRows; ++row)
       {
@@ -125,8 +125,8 @@ class tileset final
    *
    * \since 0.1.0
    */
-  template <std::invocable<const position&, const position&> T>
-  void iterate_selection(const position& mapOrigin, T&& callable) const
+  template <std::invocable<const Position&, const Position&> T>
+  void iterate_selection(const Position& mapOrigin, T&& callable) const
   {
     if (m_selection)
     {
@@ -139,16 +139,16 @@ class tileset final
       else
       {
         const auto diff = bottomRight - topLeft;
-        const position offset{diff.row() / 2_row, diff.col() / 2_col};
+        const Position offset{diff.Row() / 2_row, diff.Column() / 2_col};
 
-        const auto endRow = 1_row + diff.row();
-        const auto endCol = 1_col + diff.col();
+        const auto endRow = 1_row + diff.Row();
+        const auto endCol = 1_col + diff.Column();
         for (row_t row{0}; row < endRow; ++row)
         {
           for (col_t col{0}; col < endCol; ++col)
           {
-            const auto tilePos = mapOrigin.offset_by(row, col) - offset;
-            const auto tilesetPos = topLeft.offset_by(row, col);
+            const auto tilePos = mapOrigin.OffsetBy(row, col) - offset;
+            const auto tilesetPos = topLeft.OffsetBy(row, col);
             callable(tilePos, tilesetPos);
           }
         }
@@ -220,7 +220,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tile_at(const position& position) const -> tile_id;
+  [[nodiscard]] auto tile_at(const Position& position) const -> tile_id;
 
   /**
    * \brief Returns the width of the tileset image.

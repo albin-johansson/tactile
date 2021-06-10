@@ -77,7 +77,7 @@ auto xml_engine::tiles(const object_type& object,
     }
 
     const auto pos = index_to_position(index, nCols);
-    matrix.at(pos.row_index()).at(pos.col_index()) = id;
+    matrix.at(pos.RowIndex()).at(pos.ColumnIndex()) = id;
 
     ++index;
   }

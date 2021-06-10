@@ -39,7 +39,7 @@ class eraser_tool final : public abstract_tool
   void released(QMouseEvent* event, const QPointF& mapPosition) override;
 
  private:
-  vector_map<core::position, tile_id> m_oldState;
+  vector_map<core::Position, tile_id> m_oldState;
 
   /**
    * \brief Updates the state of the eraser, by erasing the tile at the mouse

@@ -150,7 +150,7 @@ class abstract_tool
    */
   [[nodiscard]] auto translate_mouse_position(const QPoint& mousePosition,
                                               const QPointF& mapPosition) const
-      -> maybe<core::position>;
+      -> maybe<core::Position>;
 
  private:
   core::model* m_model{};

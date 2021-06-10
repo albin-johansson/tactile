@@ -56,7 +56,7 @@ TEST(Map, RemoveOccurrences)
   const auto id = map.NextLayerId();
   auto layer = map.MakeTileLayer();
 
-  std::vector<core::position> positions;
+  std::vector<core::Position> positions;
   layer->Flood({}, 1_t, positions);
 
   map.AddLayer(id, layer);

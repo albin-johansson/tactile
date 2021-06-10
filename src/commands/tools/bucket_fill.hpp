@@ -27,7 +27,7 @@ class BucketFill final : public QUndoCommand
    * \since 0.1.0
    */
   explicit BucketFill(not_null<core::MapDocument*> document,
-                      const core::position& position,
+                      const core::Position& position,
                       tile_id replacement);
 
   void undo() override;
@@ -41,11 +41,11 @@ class BucketFill final : public QUndoCommand
 
  private:
   core::MapDocument* mDocument{};
-  core::position mOrigin;
+  core::Position mOrigin;
   tile_id mReplacement;
   tile_id mTarget{};
   layer_id mLayer{};
-  std::vector<core::position> mPositions;
+  std::vector<core::Position> mPositions;
 };
 
 }  // namespace tactile::cmd

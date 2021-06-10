@@ -17,8 +17,8 @@ namespace tactile::core {
  */
 struct tileset_selection final
 {
-  position topLeft;      ///< The top-left corner position.
-  position bottomRight;  ///< The bottom-right corner position.
+  Position topLeft;      ///< The top-left corner position.
+  Position bottomRight;  ///< The bottom-right corner position.
 };
 
 }  // namespace tactile::core

@@ -26,7 +26,7 @@ class MapScene final : public QGraphicsScene
   void MoveViewport(int dx, int dy);
 
   /// Enables the stamp tool preview at the specified position.
-  void EnableStampPreview(const core::position& position);
+  void EnableStampPreview(const core::Position& position);
 
   /// Disables the stamp tool preview.
   void DisableStampPreview();

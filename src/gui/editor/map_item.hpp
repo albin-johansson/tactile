@@ -39,7 +39,7 @@ class MapItem final : public QGraphicsItem
              const QStyleOptionGraphicsItem* option,
              QWidget* widget) override;
 
-  void EnableStampPreview(const core::position& position);
+  void EnableStampPreview(const core::Position& position);
 
   void DisableStampPreview();
 
@@ -49,7 +49,7 @@ class MapItem final : public QGraphicsItem
 
  private:
   core::MapDocument* mDocument{};
-  maybe<core::position> mMousePosition;
+  maybe<core::Position> mMousePosition;
 };
 
 }  // namespace tactile

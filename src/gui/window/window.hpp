@@ -119,7 +119,7 @@ class Window final : public QMainWindow
   void ShowMapProperties(not_null<core::property_manager*> manager);
   void ShowLayerProperties(not_null<core::property_manager*> manager);
 
-  void EnableStampPreview(const core::position& position);
+  void EnableStampPreview(const core::Position& position);
   void DisableStampPreview();
 
   void OnSwitchedMap(map_id map, not_null<core::MapDocument*> document);

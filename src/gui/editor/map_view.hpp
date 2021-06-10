@@ -40,7 +40,7 @@ class MapView final : public QGraphicsView
 
   void MoveViewport(int dx, int dy);
 
-  void EnableStampPreview(const core::position& position);
+  void EnableStampPreview(const core::Position& position);
 
   void DisableStampPreview();
 

@@ -43,9 +43,9 @@ TileLayer::TileLayer(const row_t nRows, const col_t nCols)
   assert(ColumnCount() == nCols);
 }
 
-void TileLayer::Flood(const position& origin,
+void TileLayer::Flood(const Position& origin,
                       const tile_id replacement,
-                      std::vector<position>& positions)
+                      std::vector<Position>& positions)
 {
   FloodFill(*this, origin, replacement, positions);
 }
@@ -161,11 +161,11 @@ void TileLayer::SetColumns(const col_t nCols)
   }
 }
 
-void TileLayer::SetTile(const position& pos, const tile_id id) noexcept
+void TileLayer::SetTile(const Position& pos, const tile_id id) noexcept
 {
   if (InBounds(pos))
   {
-    mTiles[pos.row_index()][pos.col_index()] = id;
+    mTiles[pos.RowIndex()][pos.ColumnIndex()] = id;
   }
 }
 
@@ -210,11 +210,11 @@ auto TileLayer::TileCount() const noexcept -> int
   return RowCount().get() * ColumnCount().get();
 }
 
-auto TileLayer::TileAt(const position& pos) const -> maybe<tile_id>
+auto TileLayer::TileAt(const Position& pos) const -> maybe<tile_id>
 {
   if (InBounds(pos))
   {
-    return mTiles[pos.row_index()][pos.col_index()];
+    return mTiles[pos.RowIndex()][pos.ColumnIndex()];
   }
   else
   {
@@ -222,10 +222,10 @@ auto TileLayer::TileAt(const position& pos) const -> maybe<tile_id>
   }
 }
 
-auto TileLayer::InBounds(const position& pos) const noexcept -> bool
+auto TileLayer::InBounds(const Position& pos) const noexcept -> bool
 {
-  const auto row = pos.row_index();
-  return (row < mTiles.size()) && (pos.col_index() < mTiles[row].size());
+  const auto row = pos.RowIndex();
+  return (row < mTiles.size()) && (pos.ColumnIndex() < mTiles[row].size());
 }
 
 auto TileLayer::Name() const -> const QString&

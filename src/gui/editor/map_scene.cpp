@@ -21,7 +21,7 @@ void MapScene::MoveViewport(const int dx, const int dy)
   mItem->moveBy(dx, dy);
 }
 
-void MapScene::EnableStampPreview(const core::position& position)
+void MapScene::EnableStampPreview(const core::Position& position)
 {
   mItem->EnableStampPreview(position);
 }

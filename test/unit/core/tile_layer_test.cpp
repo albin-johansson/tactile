@@ -53,7 +53,7 @@ TEST(TileLayer, Each)
 TEST(TileLayer, RemoveAll)
 {
   core::TileLayer layer;
-  std::vector<core::position> positions;
+  std::vector<core::Position> positions;
 
   layer.Flood({}, 1_t, positions);
   layer.Each([](const tile_id id) { EXPECT_EQ(1_t, id); });
@@ -150,7 +150,7 @@ TEST(TileLayer, SetTile)
 {
   core::TileLayer layer;
 
-  const core::position pos{2_row, 2_col};
+  const core::Position pos{2_row, 2_col};
   EXPECT_EQ(empty, layer.TileAt(pos));
 
   layer.SetTile(pos, 24_t);

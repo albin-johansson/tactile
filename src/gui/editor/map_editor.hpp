@@ -35,7 +35,7 @@ class MapEditor final : public QWidget
 
   ~MapEditor() noexcept override;
 
-  void EnableStampPreview(const core::position& position);
+  void EnableStampPreview(const core::Position& position);
 
   void DisableStampPreview();
 

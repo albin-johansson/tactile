@@ -430,7 +430,7 @@ class Map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto InBounds(const position& pos) const -> bool;
+  [[nodiscard]] auto InBounds(const Position& pos) const -> bool;
 
   /**
    * \brief Returns the total number of rows in the map.

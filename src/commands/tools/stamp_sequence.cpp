@@ -10,8 +10,8 @@
 namespace tactile::cmd {
 
 StampSequence::StampSequence(not_null<core::MapDocument*> document,
-                             vector_map<core::position, tile_id>&& oldState,
-                             vector_map<core::position, tile_id>&& sequence)
+                             vector_map<core::Position, tile_id>&& oldState,
+                             vector_map<core::Position, tile_id>&& sequence)
     : QUndoCommand{TACTILE_QSTRING(u"Stamp Sequence")}
     , mDocument{document}
     , mOldState{std::move(oldState)}

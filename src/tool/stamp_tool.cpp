@@ -15,10 +15,10 @@ stamp_tool::stamp_tool(model* model) : abstract_tool{model}
 
 void stamp_tool::update_stamp_sequence(MapDocument& map,
                                        const tileset& ts,
-                                       const position& origin)
+                                       const Position& origin)
 {
-  const auto callable = [&](const position& mapPos,
-                            const position& tilesetPos) {
+  const auto callable = [&](const Position& mapPos,
+                            const Position& tilesetPos) {
     if (map.InBounds(mapPos))
     {
       const auto newID = ts.tile_at(tilesetPos);

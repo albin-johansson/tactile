@@ -45,12 +45,12 @@ class stamp_tool final : public abstract_tool
   void disable() override;
 
  private:
-  vector_map<core::position, tile_id> m_oldState;
-  vector_map<core::position, tile_id> m_sequence;
+  vector_map<core::Position, tile_id> m_oldState;
+  vector_map<core::Position, tile_id> m_sequence;
 
   void update_stamp_sequence(core::MapDocument& map,
                              const core::tileset& tileset,
-                             const core::position& origin);
+                             const core::Position& origin);
 };
 
 }  // namespace tactile

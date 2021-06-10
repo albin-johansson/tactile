@@ -53,7 +53,7 @@ void MapCommand::SaveTiles(const row_range rows, const col_range cols)
     {
       for (auto col = cols.first; col < cols.second; ++col)
       {
-        const core::position pos{row, col};
+        const core::Position pos{row, col};
         if (const auto tile = tileLayer->TileAt(pos); tile)
         {
           tiles.emplace(pos, *tile);

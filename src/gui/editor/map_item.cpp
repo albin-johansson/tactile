@@ -29,7 +29,7 @@ void MapItem::DisableStampPreview()
   update();
 }
 
-void MapItem::EnableStampPreview(const core::position& position)
+void MapItem::EnableStampPreview(const core::Position& position)
 {
   mMousePosition = position;
 }

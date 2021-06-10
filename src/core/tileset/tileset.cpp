@@ -115,9 +115,9 @@ auto tileset::is_single_tile_selected() const noexcept -> bool
   return m_selection && (m_selection->topLeft == m_selection->bottomRight);
 }
 
-auto tileset::tile_at(const position& position) const -> tile_id
+auto tileset::tile_at(const Position& position) const -> tile_id
 {
-  const auto [row, col] = position.unpack();
+  const auto [row, col] = position.Unpack();
 
   const auto endRow = row_t{row_count()};
   const auto endCol = col_t{col_count()};

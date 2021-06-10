@@ -53,7 +53,7 @@ void MapView::MoveViewport(const int dx, const int dy)
   }
 }
 
-void MapView::EnableStampPreview(const core::position& position)
+void MapView::EnableStampPreview(const core::Position& position)
 {
   GetMapScene()->EnableStampPreview(position);
 }

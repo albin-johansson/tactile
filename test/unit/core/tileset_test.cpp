@@ -56,7 +56,7 @@ TEST_F(TilesetTest, IterateSelection)
     m_tileset->clear_selection();
 
     auto count = 0;
-    m_tileset->iterate_selection([&](const core::position) {
+    m_tileset->iterate_selection([&](const core::Position) {
       ++count;
     });
 
@@ -64,8 +64,8 @@ TEST_F(TilesetTest, IterateSelection)
   }
 
   {  // Non-empty selection
-    constexpr core::position topLeft{1_row, 2_col};
-    constexpr core::position bottomRight{4_row, 5_col};
+    constexpr core::Position topLeft{1_row, 2_col};
+    constexpr core::Position bottomRight{4_row, 5_col};
     m_tileset->set_selection({topLeft, bottomRight});
 
     /*  0 1 2 3 4 5 6 7
@@ -80,7 +80,7 @@ TEST_F(TilesetTest, IterateSelection)
      */
 
     auto count = 0;
-    m_tileset->iterate_selection([&](const core::position) {
+    m_tileset->iterate_selection([&](const core::Position) {
       ++count;
     });
 

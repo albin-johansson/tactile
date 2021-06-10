@@ -93,7 +93,7 @@ class model final : public QObject
   void moved_layer_forward(layer_id id);
 
   void disable_stamp_preview();
-  void enable_stamp_preview(const position& position);
+  void enable_stamp_preview(const Position& position);
 
   void undo_state_updated(bool canUndo);
   void redo_state_updated(bool canRedo);

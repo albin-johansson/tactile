@@ -335,12 +335,12 @@ auto Map::HasLayer(const layer_id id) const -> bool
   return mLayers.contains(id);
 }
 
-auto Map::InBounds(const position& pos) const -> bool
+auto Map::InBounds(const Position& pos) const -> bool
 {
   const auto endRow = mRows;
   const auto endCol = mCols;
 
-  const auto [row, col] = pos.unpack();
+  const auto [row, col] = pos.Unpack();
   return (row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol);
 }
 

@@ -13,7 +13,7 @@ namespace tactile {
 
 void RenderMap(QPainter& painter,
                const core::MapDocument& document,
-               maybe<core::position> mousePosition,
+               maybe<core::Position> mousePosition,
                const QRectF& exposed);
 
 }  // namespace tactile

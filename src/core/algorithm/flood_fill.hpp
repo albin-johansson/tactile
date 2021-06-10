@@ -18,8 +18,8 @@ namespace tactile::core {
  * \since 0.1.0
  */
 void FloodFill(TileLayer& layer,
-               const position& origin,
+               const Position& origin,
                tile_id replacement,
-               std::vector<position>& affected);
+               std::vector<Position>& affected);
 
 }  // namespace tactile::core

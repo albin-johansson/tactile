@@ -57,7 +57,7 @@ namespace core {
  *
  * \headerfile position.hpp
  */
-class position final
+class Position final
 {
  public:
   /**
@@ -65,7 +65,7 @@ class position final
    *
    * \since 0.1.0
    */
-  constexpr position() noexcept = default;
+  constexpr Position() noexcept = default;
 
   /**
    * \brief Creates a map position.
@@ -76,9 +76,9 @@ class position final
    *
    * \since 0.1.0
    */
-  constexpr position(const row_t row, const col_t col) noexcept
-      : m_row{AtLeast(row.get(), 0)}
-      , m_col{AtLeast(col.get(), 0)}
+  constexpr Position(const row_t row, const col_t col) noexcept
+      : mRow{AtLeast(row.get(), 0)}
+      , mColumn{AtLeast(col.get(), 0)}
   {}
 
   /**
@@ -89,9 +89,9 @@ class position final
    *
    * \since 0.1.0
    */
-  constexpr void set_row(const row_t row) noexcept
+  constexpr void SetRow(const row_t row) noexcept
   {
-    m_row = AtLeast(row.get(), 0);
+    mRow = AtLeast(row.get(), 0);
   }
 
   /**
@@ -102,9 +102,9 @@ class position final
    *
    * \since 0.1.0
    */
-  constexpr void set_col(const col_t col) noexcept
+  constexpr void SetColumn(const col_t column) noexcept
   {
-    m_col = AtLeast(col.get(), 0);
+    mColumn = AtLeast(column.get(), 0);
   }
 
   /**
@@ -117,11 +117,11 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto offset_by(const row_t row,
-                                         const col_t col) const noexcept
-      -> position
+  [[nodiscard]] constexpr auto OffsetBy(const row_t row,
+                                        const col_t col) const noexcept
+      -> Position
   {
-    return {row_t{m_row} + row, col_t{m_col} + col};
+    return {row_t{mRow} + row, col_t{mColumn} + col};
   }
 
   /**
@@ -131,9 +131,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto north() const noexcept -> position
+  [[nodiscard]] constexpr auto North() const noexcept -> Position
   {
-    return {row_t{m_row - 1}, col_t{m_col}};
+    return {row_t{mRow - 1}, col_t{mColumn}};
   }
 
   /**
@@ -144,9 +144,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto east() const noexcept -> position
+  [[nodiscard]] constexpr auto East() const noexcept -> Position
   {
-    return {row_t{m_row}, col_t{m_col + 1}};
+    return {row_t{mRow}, col_t{mColumn + 1}};
   }
 
   /**
@@ -156,9 +156,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto south() const noexcept -> position
+  [[nodiscard]] constexpr auto South() const noexcept -> Position
   {
-    return {row_t{m_row + 1}, col_t{m_col}};
+    return {row_t{mRow + 1}, col_t{mColumn}};
   }
 
   /**
@@ -169,9 +169,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto west() const noexcept -> position
+  [[nodiscard]] constexpr auto West() const noexcept -> Position
   {
-    return {row_t{m_row}, col_t{m_col - 1}};
+    return {row_t{mRow}, col_t{mColumn - 1}};
   }
 
   /**
@@ -184,10 +184,10 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto unpack() const noexcept
+  [[nodiscard]] constexpr auto Unpack() const noexcept
       -> std::pair<row_t, col_t>
   {
-    return {row(), col()};
+    return {Row(), Column()};
   }
 
   /**
@@ -199,9 +199,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto row() const noexcept -> row_t
+  [[nodiscard]] constexpr auto Row() const noexcept -> row_t
   {
-    return row_t{m_row};
+    return row_t{mRow};
   }
 
   /**
@@ -213,9 +213,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto col() const noexcept -> col_t
+  [[nodiscard]] constexpr auto Column() const noexcept -> col_t
   {
-    return col_t{m_col};
+    return col_t{mColumn};
   }
 
   /**
@@ -227,9 +227,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto row_index() const noexcept -> usize
+  [[nodiscard]] constexpr auto RowIndex() const noexcept -> usize
   {
-    return static_cast<usize>(m_row);
+    return static_cast<usize>(mRow);
   }
 
   /**
@@ -241,9 +241,9 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto col_index() const noexcept -> usize
+  [[nodiscard]] constexpr auto ColumnIndex() const noexcept -> usize
   {
-    return static_cast<usize>(m_col);
+    return static_cast<usize>(mColumn);
   }
 
   /**
@@ -255,10 +255,10 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto col_to_x(const int tileSize) const noexcept
+  [[nodiscard]] constexpr auto ColumnToX(const int tileSize) const noexcept
       -> int
   {
-    return m_col * tileSize;
+    return mColumn * tileSize;
   }
 
   /**
@@ -270,18 +270,17 @@ class position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto row_to_y(const int tileSize) const noexcept
-      -> int
+  [[nodiscard]] constexpr auto RowToY(const int tileSize) const noexcept -> int
   {
-    return m_row * tileSize;
+    return mRow * tileSize;
   }
 
-  [[nodiscard]] auto operator<=>(const position&) const noexcept = default;
+  [[nodiscard]] auto operator<=>(const Position&) const noexcept = default;
 
  private:
-  // not using the row and col types in order to default the spaceship operator
-  int m_row{};
-  int m_col{};
+  // Not using the row and col types in order to default the spaceship operator
+  int mRow{};
+  int mColumn{};
 };
 
 /**
@@ -294,10 +293,10 @@ class position final
  *
  * \since 0.1.0
  */
-[[nodiscard]] constexpr auto operator+(const position& lhs,
-                                       const position& rhs) noexcept -> position
+[[nodiscard]] constexpr auto operator+(const Position& lhs,
+                                       const Position& rhs) noexcept -> Position
 {
-  return position{lhs.row() + rhs.row(), lhs.col() + rhs.col()};
+  return Position{lhs.Row() + rhs.Row(), lhs.Column() + rhs.Column()};
 }
 
 /**
@@ -310,10 +309,10 @@ class position final
  *
  * \since 0.1.0
  */
-[[nodiscard]] constexpr auto operator-(const position& lhs,
-                                       const position& rhs) noexcept -> position
+[[nodiscard]] constexpr auto operator-(const Position& lhs,
+                                       const Position& rhs) noexcept -> Position
 {
-  return position{lhs.row() - rhs.row(), lhs.col() - rhs.col()};
+  return Position{lhs.Row() - rhs.Row(), lhs.Column() - rhs.Column()};
 }
 
 }  // namespace core

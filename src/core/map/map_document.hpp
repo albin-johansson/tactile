@@ -272,7 +272,7 @@ class MapDocument final : public ADocument
    *
    * \since 0.1.0
    */
-  void Flood(const position& position, tile_id replacement);
+  void Flood(const Position& position, tile_id replacement);
 
   /**
    * \brief Adds a stamp sequence to the command stack.
@@ -287,8 +287,8 @@ class MapDocument final : public ADocument
    *
    * \since 0.1.0
    */
-  void AddStampSequence(vector_map<position, tile_id>&& oldState,
-                        vector_map<position, tile_id>&& sequence);
+  void AddStampSequence(vector_map<Position, tile_id>&& oldState,
+                        vector_map<Position, tile_id>&& sequence);
 
   /**
    * \brief Adds an erase sequence to the command stack.
@@ -302,7 +302,7 @@ class MapDocument final : public ADocument
    *
    * \since 0.1.0
    */
-  void AddEraseSequence(vector_map<position, tile_id>&& oldState);
+  void AddEraseSequence(vector_map<Position, tile_id>&& oldState);
 
   /**
    * \brief Adds a row to the associated map.
@@ -429,7 +429,7 @@ class MapDocument final : public ADocument
   /**
    * \copydoc map::InBounds()
    */
-  [[nodiscard]] auto InBounds(const position& pos) const -> bool;
+  [[nodiscard]] auto InBounds(const Position& pos) const -> bool;
 
   /**
    * \copydoc map::RowCount()

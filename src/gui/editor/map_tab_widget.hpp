@@ -81,7 +81,7 @@ class MapTabWidget final : public TabWidget
    */
   void MoveViewport(int dx, int dy);
 
-  void EnableStampPreview(const core::position& position);
+  void EnableStampPreview(const core::Position& position);
 
   void DisableStampPreview();
 

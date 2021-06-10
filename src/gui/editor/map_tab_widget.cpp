@@ -95,7 +95,7 @@ void MapTabWidget::MoveViewport(const int dx, const int dy)
   }
 }
 
-void MapTabWidget::EnableStampPreview(const core::position& position)
+void MapTabWidget::EnableStampPreview(const core::Position& position)
 {
   if (auto* view = CurrentView())
   {
