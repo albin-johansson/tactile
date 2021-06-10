@@ -77,8 +77,8 @@ class position final
    * \since 0.1.0
    */
   constexpr position(const row_t row, const col_t col) noexcept
-      : m_row{at_least(row.get(), 0)}
-      , m_col{at_least(col.get(), 0)}
+      : m_row{AtLeast(row.get(), 0)}
+      , m_col{AtLeast(col.get(), 0)}
   {}
 
   /**
@@ -91,7 +91,7 @@ class position final
    */
   constexpr void set_row(const row_t row) noexcept
   {
-    m_row = at_least(row.get(), 0);
+    m_row = AtLeast(row.get(), 0);
   }
 
   /**
@@ -104,7 +104,7 @@ class position final
    */
   constexpr void set_col(const col_t col) noexcept
   {
-    m_col = at_least(col.get(), 0);
+    m_col = AtLeast(col.get(), 0);
   }
 
   /**

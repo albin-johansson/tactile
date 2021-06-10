@@ -140,9 +140,7 @@ TEST(Map, RemoveRow)
   map.remove_row();
   EXPECT_EQ(initialRows - 1_row, map.row_count());
 
-  invoke_n(20, [&map] {
-    map.remove_row();
-  });
+  InvokeN(20, [&map] { map.remove_row(); });
 
   EXPECT_EQ(1_row, map.row_count());
 }
@@ -155,9 +153,7 @@ TEST(Map, RemoveCol)
   map.remove_col();
   EXPECT_EQ(initialCols - 1_col, map.col_count());
 
-  invoke_n(20, [&map] {
-    map.remove_col();
-  });
+  InvokeN(20, [&map] { map.remove_col(); });
 
   EXPECT_EQ(1_col, map.col_count());
 }

@@ -19,12 +19,12 @@ void tile_size::increase()
 void tile_size::decrease() noexcept
 {
   const auto size = static_cast<int>(static_cast<double>(m_size) * 0.9);
-  m_size = at_least(size, min_size());
+  m_size = AtLeast(size, min_size());
 }
 
 void tile_size::set_size(const int size) noexcept
 {
-  m_size = at_least(size, min_size());
+  m_size = AtLeast(size, min_size());
 }
 
 }  // namespace tactile::core

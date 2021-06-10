@@ -1,18 +1,20 @@
 #pragma once
 
-#include <concepts>  // convertible_to, invocable, same_as
+#include <concepts>     // convertible_to, invocable, same_as
+#include <type_traits>  // is_arithmetic_v
 
 namespace tactile {
 
 // clang-format off
 
 template <typename T>
-concept ordered = requires (T t) {
+concept Ordered = requires (T t)
+{
   { t < t } -> std::convertible_to<bool>;
 };
 
 template <typename T>
-concept arithmetic = std::is_arithmetic_v<T> && !std::same_as<T, bool>;
+concept Arithmetic = std::is_arithmetic_v<T> && !std::same_as<T, bool>;
 
 // clang-format on
 
@@ -28,8 +30,7 @@ concept arithmetic = std::is_arithmetic_v<T> && !std::same_as<T, bool>;
  * \since 0.1.0
  */
 template <std::invocable T>
-constexpr void invoke_n(const int n,
-                        T&& callable) noexcept(noexcept(callable()))
+constexpr void InvokeN(const int n, T&& callable) noexcept(noexcept(callable()))
 {
   for (auto i = 0; i < n; ++i)
   {
@@ -50,9 +51,8 @@ constexpr void invoke_n(const int n,
  *
  * \since 0.1.0
  */
-template <ordered T>
-[[nodiscard]] constexpr auto at_least(const T value, const T least) noexcept
-    -> T
+template <Ordered T>
+[[nodiscard]] constexpr auto AtLeast(const T value, const T least) noexcept -> T
 {
   return (value < least) ? least : value;
 }

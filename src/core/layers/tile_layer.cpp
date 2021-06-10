@@ -130,11 +130,11 @@ void tile_layer::set_rows(const row_t nRows)
 
   if (current < nRows)
   {
-    invoke_n(diff, [this] { add_row(empty); });
+    InvokeN(diff, [this] { add_row(empty); });
   }
   else
   {
-    invoke_n(diff, [this]() noexcept { remove_row(); });
+    InvokeN(diff, [this]() noexcept { remove_row(); });
   }
 }
 
@@ -153,11 +153,11 @@ void tile_layer::set_cols(const col_t nCols)
 
   if (current < nCols)
   {
-    invoke_n(diff, [this] { add_col(empty); });
+    InvokeN(diff, [this] { add_col(empty); });
   }
   else
   {
-    invoke_n(diff, [this]() noexcept { remove_col(); });
+    InvokeN(diff, [this]() noexcept { remove_col(); });
   }
 }
 

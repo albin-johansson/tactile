@@ -14,7 +14,7 @@ void RemoveColumn::undo()
 {
   QUndoCommand::undo();
 
-  invoke_n(Times(), [&] { GetMap().add_col(empty); });
+  InvokeN(Times(), [&] { GetMap().add_col(empty); });
 
   RestoreTiles();
   Redraw();
@@ -33,7 +33,7 @@ void RemoveColumn::redo()
   ClearCache();
   SaveTiles({0_row, endRow}, {beginCol, endCol});
 
-  invoke_n(Times(), [&] { GetMap().remove_col(); });
+  InvokeN(Times(), [&] { GetMap().remove_col(); });
 
   Redraw();
 }

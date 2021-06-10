@@ -214,7 +214,7 @@ void map::set_next_object_id(const object_id id) noexcept
 
 void map::set_row_count(row_t nRows)
 {
-  nRows = at_least(nRows, 1_row);
+  nRows = AtLeast(nRows, 1_row);
 
   if (nRows == row_count())
   {
@@ -233,7 +233,7 @@ void map::set_row_count(row_t nRows)
 
 void map::set_col_count(col_t nCols)
 {
-  nCols = at_least(nCols, 1_col);
+  nCols = AtLeast(nCols, 1_col);
 
   if (nCols == col_count())
   {

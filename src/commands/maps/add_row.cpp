@@ -21,7 +21,7 @@ void AddRow::undo()
 {
   QUndoCommand::undo();
 
-  invoke_n(Amount(), [this] { mDocument->raw().remove_row(); });
+  InvokeN(Amount(), [this] { mDocument->raw().remove_row(); });
 
   emit mDocument->redraw();
 }
@@ -30,7 +30,7 @@ void AddRow::redo()
 {
   QUndoCommand::redo();
 
-  invoke_n(Amount(), [this] { mDocument->raw().add_row(empty); });
+  InvokeN(Amount(), [this] { mDocument->raw().add_row(empty); });
 
   emit mDocument->redraw();
 }
