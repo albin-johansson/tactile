@@ -36,7 +36,7 @@ void validate_layers(const core::map_document& document)
   {  // First layer
     const auto* layer = document.get_layer(1_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::layer_type::tile_layer, layer->type());
+    ASSERT_EQ(core::LayerType::tile_layer, layer->type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"G0"), layer->Name());
     EXPECT_EQ(1.0, layer->Opacity());
@@ -55,7 +55,7 @@ void validate_layers(const core::map_document& document)
   {  // Second layer
     const auto* layer = document.get_layer(2_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::layer_type::tile_layer, layer->type());
+    ASSERT_EQ(core::LayerType::tile_layer, layer->type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"T0"), layer->Name());
     EXPECT_EQ(0.75, layer->Opacity());
@@ -74,7 +74,7 @@ void validate_layers(const core::map_document& document)
   {  // Third layer
     const auto* layer = document.get_layer(3_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::layer_type::object_layer, layer->type());
+    ASSERT_EQ(core::LayerType::object_layer, layer->type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"O1"), layer->Name());
     EXPECT_EQ(1.0, layer->Opacity());

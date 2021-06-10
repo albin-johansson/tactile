@@ -232,7 +232,7 @@ void save_tile_layer(QJsonObject& object,
                      const shared<core::ILayer>& layer,
                      const export_options& options)
 {
-  Q_ASSERT(layer->Type() == core::layer_type::tile_layer);
+  Q_ASSERT(layer->Type() == core::LayerType::tile_layer);
 
   const auto* tileLayer = core::as_tile_layer(layer);
   Q_ASSERT(tileLayer);
@@ -256,7 +256,7 @@ void save_object_layer(QJsonObject& element,
                        const QDir& targetDir,
                        const export_options& options)
 {
-  Q_ASSERT(layer->Type() == core::layer_type::object_layer);
+  Q_ASSERT(layer->Type() == core::LayerType::object_layer);
 
   const auto* objectLayer = core::as_object_layer(layer);
   Q_ASSERT(objectLayer);
@@ -325,7 +325,7 @@ void save_object_layer(QJsonObject& element,
     object.insert(u"x", 0);
     object.insert(u"y", 0);
 
-    if (layer->Type() == core::layer_type::tile_layer)
+    if (layer->Type() == core::LayerType::tile_layer)
     {
       object.insert(u"width", map.col_count().get());
       object.insert(u"height", map.row_count().get());

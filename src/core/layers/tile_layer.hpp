@@ -61,7 +61,7 @@ class tile_layer final : public ILayer
 
   void SetVisible(bool visible) noexcept override;
 
-  [[nodiscard]] auto Type() const -> layer_type override;
+  [[nodiscard]] auto Type() const -> LayerType override;
 
   [[nodiscard]] auto Name() const -> const QString& override;
 

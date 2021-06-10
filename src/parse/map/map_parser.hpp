@@ -369,7 +369,7 @@ class map_parser final
 
     if (m_engine.is_tile_layer(object))
     {
-      layer.type = core::layer_type::tile_layer;
+      layer.type = core::LayerType::tile_layer;
 
       if (!parse_tile_layer(layer, object))
       {
@@ -378,7 +378,7 @@ class map_parser final
     }
     else if (m_engine.is_object_layer(object))
     {
-      layer.type = core::layer_type::object_layer;
+      layer.type = core::LayerType::object_layer;
 
       if (!parse_object_layer(layer, object))
       {

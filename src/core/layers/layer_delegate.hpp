@@ -22,57 +22,57 @@ namespace tactile::core {
 class LayerDelegate final
 {
  public:
-  explicit LayerDelegate(layer_type type) noexcept;
+  explicit LayerDelegate(LayerType type) noexcept;
 
   /// \name Layer API
   /// \{
 
-  void set_visible(bool visible) noexcept;
+  void SetVisible(bool visible) noexcept;
 
-  void set_opacity(double opacity);
+  void SetOpacity(double opacity);
 
-  void set_name(QString name);
+  void SetName(QString name);
 
-  [[nodiscard]] auto type() const noexcept -> layer_type;
+  [[nodiscard]] auto Type() const noexcept -> LayerType;
 
-  [[nodiscard]] auto visible() const noexcept -> bool;
+  [[nodiscard]] auto Visible() const noexcept -> bool;
 
-  [[nodiscard]] auto opacity() const noexcept -> double;
+  [[nodiscard]] auto Opacity() const noexcept -> double;
 
-  [[nodiscard]] auto name() const -> const QString&;
+  [[nodiscard]] auto Name() const -> const QString&;
 
   /// \} End of layer API
 
   /// \name Property API
   /// \{
 
-  void add_property(const QString& name, property_type type);
+  void AddProperty(const QString& name, property_type type);
 
-  void add_property(const QString& name, const property& property);
+  void AddProperty(const QString& name, const property& property);
 
-  void remove_property(const QString& name);
+  void RemoveProperty(const QString& name);
 
-  void rename_property(const QString& oldName, const QString& newName);
+  void RenameProperty(const QString& oldName, const QString& newName);
 
-  void set_property(const QString& name, const property& property);
+  void SetProperty(const QString& name, const property& property);
 
-  void change_property_type(const QString& name, property_type type);
+  void ChangePropertyType(const QString& name, property_type type);
 
-  [[nodiscard]] auto get_property(const QString& name) const -> const property&;
+  [[nodiscard]] auto GetProperty(const QString& name) const -> const property&;
 
-  [[nodiscard]] auto get_property(const QString& name) -> property&;
+  [[nodiscard]] auto GetProperty(const QString& name) -> property&;
 
-  [[nodiscard]] auto has_property(const QString& name) const -> bool;
+  [[nodiscard]] auto HasProperty(const QString& name) const -> bool;
 
-  [[nodiscard]] auto property_count() const noexcept -> int;
+  [[nodiscard]] auto PropertyCount() const noexcept -> int;
 
-  [[nodiscard]] auto properties() const
+  [[nodiscard]] auto Properties() const
       -> const property_manager::property_map&;
 
   /// \} End of property API
 
  private:
-  layer_type mType;
+  LayerType mType;
   QString mName;
   property_delegate mProperties;
   double mOpacity{1};

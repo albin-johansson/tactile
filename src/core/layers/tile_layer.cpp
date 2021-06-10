@@ -30,13 +30,13 @@ namespace tactile::core {
 }
 
 tile_layer::tile_layer(const row_t nRows, const col_t nCols)
-    : m_delegate{layer_type::tile_layer}
+    : m_delegate{LayerType::tile_layer}
 {
   if (nRows < 1_row || nCols < 1_col)
   {
     throw tactile_error{"Invalid tile_layer dimensions!"};
   }
-  m_delegate.set_name(TACTILE_QSTRING(u"Tile layer"));
+  m_delegate.SetName(TACTILE_QSTRING(u"Tile layer"));
 
   m_tiles = make_tile_matrix(nRows, nCols);
   assert(row_count() == nRows);
@@ -171,22 +171,22 @@ void tile_layer::set_tile(const position& pos, const tile_id id) noexcept
 
 void tile_layer::SetOpacity(const double opacity)
 {
-  m_delegate.set_opacity(opacity);
+  m_delegate.SetOpacity(opacity);
 }
 
 void tile_layer::SetName(QString name)
 {
-  m_delegate.set_name(std::move(name));
+  m_delegate.SetName(std::move(name));
 }
 
 void tile_layer::SetVisible(const bool visible) noexcept
 {
-  m_delegate.set_visible(visible);
+  m_delegate.SetVisible(visible);
 }
 
-auto tile_layer::Type() const -> layer_type
+auto tile_layer::Type() const -> LayerType
 {
-  return m_delegate.type();
+  return m_delegate.Type();
 }
 
 auto tile_layer::Clone() const -> shared<ILayer>
@@ -230,73 +230,73 @@ auto tile_layer::in_bounds(const position& pos) const noexcept -> bool
 
 auto tile_layer::Name() const -> const QString&
 {
-  return m_delegate.name();
+  return m_delegate.Name();
 }
 
 auto tile_layer::Opacity() const noexcept -> double
 {
-  return m_delegate.opacity();
+  return m_delegate.Opacity();
 }
 
 auto tile_layer::IsVisible() const noexcept -> bool
 {
-  return m_delegate.visible();
+  return m_delegate.Visible();
 }
 
 void tile_layer::add_property(const QString& name, const property_type type)
 {
-  m_delegate.add_property(name, type);
+  m_delegate.AddProperty(name, type);
 }
 
 void tile_layer::add_property(const QString& name, const property& property)
 {
-  m_delegate.add_property(name, property);
+  m_delegate.AddProperty(name, property);
 }
 
 void tile_layer::remove_property(const QString& name)
 {
-  m_delegate.remove_property(name);
+  m_delegate.RemoveProperty(name);
 }
 
 void tile_layer::rename_property(const QString& oldName, const QString& newName)
 {
-  m_delegate.rename_property(oldName, newName);
+  m_delegate.RenameProperty(oldName, newName);
 }
 
 void tile_layer::set_property(const QString& name, const property& property)
 {
-  m_delegate.set_property(name, property);
+  m_delegate.SetProperty(name, property);
 }
 
 void tile_layer::change_property_type(const QString& name,
                                       const core::property_type type)
 {
-  m_delegate.change_property_type(name, type);
+  m_delegate.ChangePropertyType(name, type);
 }
 
 auto tile_layer::get_property(const QString& name) const -> const property&
 {
-  return m_delegate.get_property(name);
+  return m_delegate.GetProperty(name);
 }
 
 auto tile_layer::get_property(const QString& name) -> property&
 {
-  return m_delegate.get_property(name);
+  return m_delegate.GetProperty(name);
 }
 
 auto tile_layer::has_property(const QString& name) const -> bool
 {
-  return m_delegate.has_property(name);
+  return m_delegate.HasProperty(name);
 }
 
 auto tile_layer::property_count() const noexcept -> int
 {
-  return m_delegate.property_count();
+  return m_delegate.PropertyCount();
 }
 
 auto tile_layer::properties() const -> const property_map&
 {
-  return m_delegate.properties();
+  return m_delegate.Properties();
 }
 
 }  // namespace tactile::core

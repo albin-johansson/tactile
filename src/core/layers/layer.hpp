@@ -96,7 +96,7 @@ class ILayer : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto Type() const -> layer_type = 0;
+  [[nodiscard]] virtual auto Type() const -> LayerType = 0;
 };
 
 }  // namespace tactile::core

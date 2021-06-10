@@ -18,11 +18,11 @@ class layer_item final : public QStandardItem
 
   void set_id(layer_id id);
 
-  void set_type(core::layer_type type);
+  void set_type(core::LayerType type);
 
   [[nodiscard]] auto get_id() const -> layer_id;
 
-  [[nodiscard]] auto get_layer_type() const -> core::layer_type;
+  [[nodiscard]] auto get_layer_type() const -> core::LayerType;
 };
 
 }  // namespace tactile::vm

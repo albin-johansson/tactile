@@ -7,14 +7,14 @@
 namespace tactile::vm {
 namespace {
 
-[[nodiscard]] auto icon_for_layer(const core::layer_type type) -> const QIcon&
+[[nodiscard]] auto icon_for_layer(const core::LayerType type) -> const QIcon&
 {
   switch (type)
   {
-    case core::layer_type::tile_layer:
+    case core::LayerType::tile_layer:
       return IconTileLayer();
 
-    case core::layer_type::object_layer:
+    case core::LayerType::object_layer:
       return IconObjectLayer();
 
     default:
@@ -44,7 +44,7 @@ void layer_item::set_id(layer_id id)
   setData(id.get(), static_cast<int>(layer_item_role::id));
 }
 
-void layer_item::set_type(core::layer_type type)
+void layer_item::set_type(core::LayerType type)
 {
   setData(static_cast<int>(type), static_cast<int>(layer_item_role::type));
 }
@@ -56,11 +56,11 @@ auto layer_item::get_id() const -> layer_id
   return layer_id{id};
 }
 
-auto layer_item::get_layer_type() const -> core::layer_type
+auto layer_item::get_layer_type() const -> core::LayerType
 {
   const auto role = static_cast<int>(layer_item_role::type);
   const auto type = data(role).value<int>();
-  return core::layer_type{type};
+  return core::LayerType{type};
 }
 
 }  // namespace tactile::vm

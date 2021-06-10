@@ -236,7 +236,7 @@ void save_layers(QDomDocument& document,
 {
   map.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
     QDomElement node;
-    if (layer->Type() == core::layer_type::tile_layer)
+    if (layer->Type() == core::LayerType::tile_layer)
     {
       node = document.createElement(TACTILE_QSTRING(u"layer"));
     }

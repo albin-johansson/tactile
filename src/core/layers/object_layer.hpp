@@ -33,7 +33,7 @@ class object_layer final : public ILayer
 
   void SetName(QString name) override;
 
-  [[nodiscard]] auto Type() const -> layer_type override;
+  [[nodiscard]] auto Type() const -> LayerType override;
 
   [[nodiscard]] auto IsVisible() const noexcept -> bool override;
 
