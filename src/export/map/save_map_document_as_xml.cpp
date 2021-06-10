@@ -124,14 +124,14 @@ void save_property(QDomDocument& document,
 
 void save_properties(QDomDocument& document,
                      QDomElement& element,
-                     const core::property_manager& manager,
+                     const core::IPropertyManager& manager,
                      const QDir& targetDir)
 {
-  if (manager.property_count() > 0)
+  if (manager.PropertyCount() > 0)
   {
     auto node = document.createElement(TACTILE_QSTRING(u"properties"));
 
-    for (const auto& [name, property] : manager.properties())
+    for (const auto& [name, property] : manager.GetProperties())
     {
       save_property(document, node, name, property, targetDir);
     }

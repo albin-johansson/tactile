@@ -16,19 +16,19 @@ PropertiesDock::PropertiesDock(QWidget* parent)
   setWidget(mWidget);
 }
 
-void PropertiesDock::OnSwitchedMap(not_null<core::property_manager*> manager)
+void PropertiesDock::OnSwitchedMap(not_null<core::IPropertyManager*> manager)
 {
   mWidget->ShowMap(manager);
 }
 
 void PropertiesDock::ShowMapProperties(
-    not_null<core::property_manager*> manager)
+    not_null<core::IPropertyManager*> manager)
 {
   mWidget->ShowMap(manager);
 }
 
 void PropertiesDock::ShowLayerProperties(
-    not_null<core::property_manager*> manager)
+    not_null<core::IPropertyManager*> manager)
 {
   mWidget->ShowLayer(manager);
 }

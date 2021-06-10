@@ -8,40 +8,40 @@
 
 namespace tactile::core {
 
-class property_delegate final : public property_manager
+class property_delegate final : public IPropertyManager
 {
  public:
   ~property_delegate() noexcept override = default;
 
-  void add_property(const QString& name, property_type type) override;
+  void AddProperty(const QString& name, property_type type) override;
 
-  void add_property(const QString& name, const property& property) override;
+  void AddProperty(const QString& name, const property& property) override;
 
-  void remove_property(const QString& name) override;
+  void RemoveProperty(const QString& name) override;
 
-  void rename_property(const QString& oldName, const QString& newName) override;
+  void RenameProperty(const QString& oldName, const QString& newName) override;
 
-  void set_property(const QString& name, const property& property) override;
+  void SetProperty(const QString& name, const property& property) override;
 
-  void change_property_type(const QString& name,
+  void ChangePropertyType(const QString& name,
                             core::property_type type) override;
 
   // clang-format off
 
   [[nodiscard]]
-  auto get_property(const QString& name) const -> const property& override;
+  auto GetProperty(const QString& name) const -> const property& override;
 
   [[nodiscard]]
-  auto get_property(const QString& name) -> property& override;
+  auto GetProperty(const QString& name) -> property& override;
 
   [[nodiscard]]
-  auto has_property(const QString & name) const -> bool override;
+  auto HasProperty(const QString & name) const -> bool override;
 
   [[nodiscard]]
-  auto property_count() const noexcept -> int override;
+  auto PropertyCount() const noexcept -> int override;
 
   [[nodiscard]]
-  auto properties() const -> const property_map& override;
+  auto GetProperties() const -> const property_map& override;
 
   // clang-format on
 

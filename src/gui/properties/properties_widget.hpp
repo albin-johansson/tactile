@@ -11,7 +11,7 @@
 TACTILE_FORWARD_DECLARE_UI(PropertiesWidget)
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
+TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 TACTILE_FORWARD_DECLARE(tactile::vm, property_model)
 TACTILE_FORWARD_DECLARE(tactile, PropertyTreeView)
 TACTILE_FORWARD_DECLARE(tactile, PropertyContextMenu)
@@ -28,9 +28,9 @@ class PropertiesWidget final : public QWidget
   ~PropertiesWidget() noexcept override;
 
  public slots:
-  void ShowMap(not_null<core::property_manager*> manager);
+  void ShowMap(not_null<core::IPropertyManager*> manager);
 
-  void ShowLayer(not_null<core::property_manager*> manager);
+  void ShowLayer(not_null<core::IPropertyManager*> manager);
 
   void OnAddedProperty(const QString& name);
 
@@ -50,7 +50,7 @@ class PropertiesWidget final : public QWidget
   maybe<QString> mNameCopy;
   maybe<core::property> mPropertyCopy;
 
-  void ChangeModel(not_null<core::property_manager*> manager);
+  void ChangeModel(not_null<core::IPropertyManager*> manager);
 
   [[nodiscard]] auto PropertyName(const QModelIndex& index) const -> QString;
 

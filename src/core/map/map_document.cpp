@@ -149,71 +149,69 @@ auto MapDocument::AbsolutePath() const -> QString
   return mDelegate->AbsolutePath();
 }
 
-void MapDocument::add_property(const QString& name,
-                               const core::property_type type)
+void MapDocument::AddProperty(const QString& name, property_type type)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::AddProperty>(mDelegate.get(), name, type);
 }
 
-void MapDocument::add_property(const QString& name,
+void MapDocument::AddProperty(const QString& name,
                                const core::property& property)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::AddProperty>(mDelegate.get(), name, property);
 }
 
-void MapDocument::remove_property(const QString& name)
+void MapDocument::RemoveProperty(const QString& name)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::RemoveProperty>(mDelegate.get(), name);
 }
 
-void MapDocument::rename_property(const QString& oldName,
+void MapDocument::RenameProperty(const QString& oldName,
                                   const QString& newName)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::RenameProperty>(mDelegate.get(), oldName, newName);
 }
 
-void MapDocument::set_property(const QString& name,
+void MapDocument::SetProperty(const QString& name,
                                const core::property& property)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::UpdateProperty>(mDelegate.get(), name, property);
 }
 
-void MapDocument::change_property_type(const QString& name,
-                                       const core::property_type type)
+void MapDocument::ChangePropertyType(const QString& name, property_type type)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::ChangePropertyType>(mDelegate.get(), name, type);
 }
 
-auto MapDocument::get_property(const QString& name) const
+auto MapDocument::GetProperty(const QString& name) const
     -> const core::property&
 {
-  return mDelegate->get_property(name);
+  return mDelegate->GetProperty(name);
 }
 
-auto MapDocument::get_property(const QString& name) -> core::property&
+auto MapDocument::GetProperty(const QString& name) -> core::property&
 {
-  return mDelegate->get_property(name);
+  return mDelegate->GetProperty(name);
 }
 
-auto MapDocument::has_property(const QString& name) const -> bool
+auto MapDocument::HasProperty(const QString& name) const -> bool
 {
-  return mDelegate->has_property(name);
+  return mDelegate->HasProperty(name);
 }
 
-auto MapDocument::property_count() const noexcept -> int
+auto MapDocument::PropertyCount() const noexcept -> int
 {
-  return mDelegate->property_count();
+  return mDelegate->PropertyCount();
 }
 
-auto MapDocument::properties() const -> const property_map&
+auto MapDocument::GetProperties() const -> const property_map&
 {
-  return mDelegate->properties();
+  return mDelegate->GetProperties();
 }
 
 void MapDocument::Flood(const Position& position, const tile_id replacement)

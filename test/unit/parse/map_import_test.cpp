@@ -48,8 +48,8 @@ void validate_layers(const core::MapDocument& document)
     EXPECT_EQ(rows, tileLayer->RowCount());
     EXPECT_EQ(cols, tileLayer->ColumnCount());
 
-    ASSERT_TRUE(layer->has_property(ground));
-    EXPECT_TRUE(layer->get_property(ground).as_boolean());
+    ASSERT_TRUE(layer->HasProperty(ground));
+    EXPECT_TRUE(layer->GetProperty(ground).as_boolean());
   }
 
   {  // Second layer
@@ -67,8 +67,8 @@ void validate_layers(const core::MapDocument& document)
     EXPECT_EQ(rows, tileLayer->RowCount());
     EXPECT_EQ(cols, tileLayer->ColumnCount());
 
-    ASSERT_TRUE(layer->has_property(ground));
-    EXPECT_FALSE(layer->get_property(ground).as_boolean());
+    ASSERT_TRUE(layer->HasProperty(ground));
+    EXPECT_FALSE(layer->GetProperty(ground).as_boolean());
   }
 
   {  // Third layer
@@ -84,8 +84,8 @@ void validate_layers(const core::MapDocument& document)
     ASSERT_TRUE(objectLayer);
 
     ASSERT_EQ(1, objectLayer->ObjectCount());
-    ASSERT_TRUE(objectLayer->has_property(ground));
-    EXPECT_FALSE(objectLayer->get_property(ground).as_boolean());
+    ASSERT_TRUE(objectLayer->HasProperty(ground));
+    EXPECT_FALSE(objectLayer->GetProperty(ground).as_boolean());
 
     ASSERT_TRUE(objectLayer->HasObject(1_obj));
     const auto& object = objectLayer->GetObject(1_obj);
@@ -100,10 +100,10 @@ void validate_layers(const core::MapDocument& document)
     EXPECT_FALSE(object.custom_type());
     EXPECT_EQ(TACTILE_QSTRING(u"Point"), object.name());
 
-    ASSERT_EQ(1, object.property_count());
-    ASSERT_TRUE(object.has_property(TACTILE_QSTRING(u"foo")));
+    ASSERT_EQ(1, object.PropertyCount());
+    ASSERT_TRUE(object.HasProperty(TACTILE_QSTRING(u"foo")));
     EXPECT_EQ(TACTILE_QSTRING(u"bar"),
-              object.get_property(TACTILE_QSTRING(u"foo")).as_string());
+              object.GetProperty(TACTILE_QSTRING(u"foo")).as_string());
   }
 }
 
@@ -146,7 +146,7 @@ void validate_tilesets(const core::MapDocument& document)
 
 void validate_properties(const core::MapDocument& document)
 {
-  ASSERT_EQ(7, document.property_count());
+  ASSERT_EQ(7, document.PropertyCount());
   const auto string = TACTILE_QSTRING(u"str");
   const auto color = TACTILE_QSTRING(u"color");
   const auto integer = TACTILE_QSTRING(u"i");
@@ -155,30 +155,30 @@ void validate_properties(const core::MapDocument& document)
   const auto object = TACTILE_QSTRING(u"obj");
   const auto file = TACTILE_QSTRING(u"path");
 
-  ASSERT_TRUE(document.has_property(string));
+  ASSERT_TRUE(document.HasProperty(string));
   EXPECT_EQ(TACTILE_QSTRING(u"foobar"),
-            document.get_property(string).as_string());
+            document.GetProperty(string).as_string());
 
-  ASSERT_TRUE(document.has_property(color));
+  ASSERT_TRUE(document.HasProperty(color));
   EXPECT_EQ(QColor{TACTILE_QSTRING(u"#ff550000")},
-            document.get_property(color).as_color());
+            document.GetProperty(color).as_color());
 
-  ASSERT_TRUE(document.has_property(integer));
-  EXPECT_EQ(123, document.get_property(integer).as_integer());
+  ASSERT_TRUE(document.HasProperty(integer));
+  EXPECT_EQ(123, document.GetProperty(integer).as_integer());
 
-  ASSERT_TRUE(document.has_property(floating));
-  EXPECT_EQ(12.3, document.get_property(floating).as_floating());
+  ASSERT_TRUE(document.HasProperty(floating));
+  EXPECT_EQ(12.3, document.GetProperty(floating).as_floating());
 
-  ASSERT_TRUE(document.has_property(boolean));
-  EXPECT_TRUE(document.get_property(boolean).as_boolean());
+  ASSERT_TRUE(document.HasProperty(boolean));
+  EXPECT_TRUE(document.GetProperty(boolean).as_boolean());
 
-  ASSERT_TRUE(document.has_property(object));
-  EXPECT_EQ(core::object_ref{1}, document.get_property(object).as_object());
+  ASSERT_TRUE(document.HasProperty(object));
+  EXPECT_EQ(core::object_ref{1}, document.GetProperty(object).as_object());
 
   const QFileInfo path{TACTILE_QSTRING(u"../terrain.png")};
-  ASSERT_TRUE(document.has_property(file));
+  ASSERT_TRUE(document.HasProperty(file));
   EXPECT_EQ(path.absoluteFilePath(),
-            document.get_property(file).as_file().absoluteFilePath());
+            document.GetProperty(file).as_file().absoluteFilePath());
 }
 
 }  // namespace

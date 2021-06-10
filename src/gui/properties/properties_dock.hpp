@@ -7,7 +7,7 @@
 #include "smart_pointers.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
+TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 TACTILE_FORWARD_DECLARE(tactile, PropertiesWidget)
 
 namespace tactile {
@@ -19,12 +19,12 @@ class PropertiesDock final : public DockWidget
  public:
   explicit PropertiesDock(QWidget* parent = nullptr);
 
-  void ShowMapProperties(not_null<core::property_manager*> manager);
+  void ShowMapProperties(not_null<core::IPropertyManager*> manager);
 
-  void ShowLayerProperties(not_null<core::property_manager*> manager);
+  void ShowLayerProperties(not_null<core::IPropertyManager*> manager);
 
  public slots:
-  void OnSwitchedMap(not_null<core::property_manager*> manager);
+  void OnSwitchedMap(not_null<core::IPropertyManager*> manager);
 
   void OnAddedProperty(const QString& name);
 

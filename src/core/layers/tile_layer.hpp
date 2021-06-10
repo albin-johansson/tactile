@@ -76,29 +76,29 @@ class TileLayer final : public ILayer
   /// \name Property API
   /// \{
 
-  void add_property(const QString& name, property_type type) override;
+  void AddProperty(const QString& name, property_type type) override;
 
-  void add_property(const QString& name, const property& property) override;
+  void AddProperty(const QString& name, const property& property) override;
 
-  void remove_property(const QString& name) override;
+  void RemoveProperty(const QString& name) override;
 
-  void rename_property(const QString& oldName, const QString& newName) override;
+  void RenameProperty(const QString& oldName, const QString& newName) override;
 
-  void set_property(const QString& name, const property& property) override;
+  void SetProperty(const QString& name, const property& property) override;
 
-  void change_property_type(const QString& name,
+  void ChangePropertyType(const QString& name,
                             core::property_type type) override;
 
-  [[nodiscard]] auto get_property(const QString& name) const
+  [[nodiscard]] auto GetProperty(const QString& name) const
       -> const property& override;
 
-  [[nodiscard]] auto get_property(const QString& name) -> property& override;
+  [[nodiscard]] auto GetProperty(const QString& name) -> property& override;
 
-  [[nodiscard]] auto has_property(const QString& name) const -> bool override;
+  [[nodiscard]] auto HasProperty(const QString& name) const -> bool override;
 
-  [[nodiscard]] auto property_count() const noexcept -> int override;
+  [[nodiscard]] auto PropertyCount() const noexcept -> int override;
 
-  [[nodiscard]] auto properties() const -> const property_map& override;
+  [[nodiscard]] auto GetProperties() const -> const property_map& override;
 
   /// \} End of property API
 

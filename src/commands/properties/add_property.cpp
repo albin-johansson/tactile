@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-AddProperty::AddProperty(not_null<core::property_manager*> manager,
+AddProperty::AddProperty(not_null<core::IPropertyManager*> manager,
                          QString name,
                          data_type data)
     : QUndoCommand{TACTILE_QSTRING(u"Add Property \"") + name +
@@ -22,13 +22,13 @@ AddProperty::AddProperty(not_null<core::property_manager*> manager,
   }
 }
 
-AddProperty::AddProperty(not_null<core::property_manager*> manager,
+AddProperty::AddProperty(not_null<core::IPropertyManager*> manager,
                          QString name,
                          const core::property& property)
     : AddProperty{manager, std::move(name), data_type{property}}
 {}
 
-AddProperty::AddProperty(not_null<core::property_manager*> manager,
+AddProperty::AddProperty(not_null<core::IPropertyManager*> manager,
                          QString name,
                          const core::property_type type)
     : AddProperty{manager, std::move(name), data_type{type}}
@@ -37,7 +37,7 @@ AddProperty::AddProperty(not_null<core::property_manager*> manager,
 void AddProperty::undo()
 {
   QUndoCommand::undo();
-  mManager->remove_property(mName);
+  mManager->RemoveProperty(mName);
 }
 
 void AddProperty::redo()
@@ -46,11 +46,11 @@ void AddProperty::redo()
 
   if (const auto* type = std::get_if<core::property_type>(&mData))
   {
-    mManager->add_property(mName, *type);
+    mManager->AddProperty(mName, *type);
   }
   else
   {
-    mManager->add_property(mName, std::get<core::property>(mData));
+    mManager->AddProperty(mName, std::get<core::property>(mData));
   }
 }
 

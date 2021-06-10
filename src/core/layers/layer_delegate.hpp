@@ -67,7 +67,7 @@ class LayerDelegate final
   [[nodiscard]] auto PropertyCount() const noexcept -> int;
 
   [[nodiscard]] auto Properties() const
-      -> const property_manager::property_map&;
+      -> const IPropertyManager::property_map&;
 
   /// \} End of property API
 

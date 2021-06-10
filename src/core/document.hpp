@@ -20,7 +20,7 @@ namespace tactile::core {
  *
  * \headerfile document.hpp
  */
-class ADocument : public QObject, public property_manager
+class ADocument : public QObject, public IPropertyManager
 {
   Q_OBJECT
 

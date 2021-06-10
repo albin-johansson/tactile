@@ -80,71 +80,70 @@ auto DocumentDelegate::AbsolutePath() const -> QString
   return mPath->absoluteFilePath();
 }
 
-void DocumentDelegate::add_property(const QString& name,
-                                    const core::property_type type)
+void DocumentDelegate::AddProperty(const QString& name, property_type type)
 {
-  mPropertyManager->add_property(name, type);
+  mPropertyManager->AddProperty(name, type);
   emit S_AddedProperty(name);
 }
 
-void DocumentDelegate::add_property(const QString& name,
+void DocumentDelegate::AddProperty(const QString& name,
                                     const core::property& property)
 {
-  mPropertyManager->add_property(name, property);
+  mPropertyManager->AddProperty(name, property);
   emit S_AddedProperty(name);
 }
 
-void DocumentDelegate::remove_property(const QString& name)
+void DocumentDelegate::RemoveProperty(const QString& name)
 {
   emit S_AboutToRemoveProperty(name);
-  mPropertyManager->remove_property(name);
+  mPropertyManager->RemoveProperty(name);
 }
 
-void DocumentDelegate::rename_property(const QString& oldName,
+void DocumentDelegate::RenameProperty(const QString& oldName,
                                        const QString& newName)
 {
-  mPropertyManager->rename_property(oldName, newName);
+  mPropertyManager->RenameProperty(oldName, newName);
   emit S_RenamedProperty(oldName, newName);
 }
 
-void DocumentDelegate::set_property(const QString& name,
+void DocumentDelegate::SetProperty(const QString& name,
                                     const core::property& property)
 {
-  mPropertyManager->set_property(name, property);
+  mPropertyManager->SetProperty(name, property);
   emit S_UpdatedProperty(name);
 }
 
-void DocumentDelegate::change_property_type(const QString& name,
-                                            const core::property_type type)
+void DocumentDelegate::ChangePropertyType(const QString& name,
+                                          property_type type)
 {
-  mPropertyManager->change_property_type(name, type);
+  mPropertyManager->ChangePropertyType(name, type);
   emit S_ChangedPropertyType(name);
 }
 
-auto DocumentDelegate::get_property(const QString& name) const
+auto DocumentDelegate::GetProperty(const QString& name) const
     -> const core::property&
 {
-  return mPropertyManager->get_property(name);
+  return mPropertyManager->GetProperty(name);
 }
 
-auto DocumentDelegate::get_property(const QString& name) -> core::property&
+auto DocumentDelegate::GetProperty(const QString& name) -> core::property&
 {
-  return mPropertyManager->get_property(name);
+  return mPropertyManager->GetProperty(name);
 }
 
-auto DocumentDelegate::has_property(const QString& name) const -> bool
+auto DocumentDelegate::HasProperty(const QString& name) const -> bool
 {
-  return mPropertyManager->has_property(name);
+  return mPropertyManager->HasProperty(name);
 }
 
-auto DocumentDelegate::property_count() const noexcept -> int
+auto DocumentDelegate::PropertyCount() const noexcept -> int
 {
-  return mPropertyManager->property_count();
+  return mPropertyManager->PropertyCount();
 }
 
-auto DocumentDelegate::properties() const -> const property_map&
+auto DocumentDelegate::GetProperties() const -> const property_map&
 {
-  return mPropertyManager->properties();
+  return mPropertyManager->GetProperties();
 }
 
 auto DocumentDelegate::History() noexcept -> CommandStack*

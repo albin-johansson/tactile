@@ -11,59 +11,58 @@ ObjectLayer::ObjectLayer() : mDelegate{LayerType::object_layer}
   mDelegate.SetName(TACTILE_QSTRING(u"Object layer"));
 }
 
-void ObjectLayer::add_property(const QString& name, const property_type type)
+void ObjectLayer::AddProperty(const QString& name, property_type type)
 {
   mDelegate.AddProperty(name, type);
 }
 
-void ObjectLayer::add_property(const QString& name, const property& property)
+void ObjectLayer::AddProperty(const QString& name, const property& property)
 {
   mDelegate.AddProperty(name, property);
 }
 
-void ObjectLayer::remove_property(const QString& name)
+void ObjectLayer::RemoveProperty(const QString& name)
 {
   mDelegate.RemoveProperty(name);
 }
 
-void ObjectLayer::rename_property(const QString& oldName,
+void ObjectLayer::RenameProperty(const QString& oldName,
                                   const QString& newName)
 {
   mDelegate.RenameProperty(oldName, newName);
 }
 
-void ObjectLayer::set_property(const QString& name, const property& property)
+void ObjectLayer::SetProperty(const QString& name, const property& property)
 {
   mDelegate.SetProperty(name, property);
 }
 
-void ObjectLayer::change_property_type(const QString& name,
-                                       const core::property_type type)
+void ObjectLayer::ChangePropertyType(const QString& name, property_type type)
 {
   mDelegate.ChangePropertyType(name, type);
 }
 
-auto ObjectLayer::get_property(const QString& name) const -> const property&
+auto ObjectLayer::GetProperty(const QString& name) const -> const property&
 {
   return mDelegate.GetProperty(name);
 }
 
-auto ObjectLayer::get_property(const QString& name) -> property&
+auto ObjectLayer::GetProperty(const QString& name) -> property&
 {
   return mDelegate.GetProperty(name);
 }
 
-auto ObjectLayer::has_property(const QString& name) const -> bool
+auto ObjectLayer::HasProperty(const QString& name) const -> bool
 {
   return mDelegate.HasProperty(name);
 }
 
-auto ObjectLayer::property_count() const noexcept -> int
+auto ObjectLayer::PropertyCount() const noexcept -> int
 {
   return mDelegate.PropertyCount();
 }
 
-auto ObjectLayer::properties() const -> const property_map&
+auto ObjectLayer::GetProperties() const -> const property_map&
 {
   return mDelegate.Properties();
 }

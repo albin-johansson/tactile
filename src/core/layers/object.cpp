@@ -92,60 +92,59 @@ auto Object::IsRectangle() const noexcept -> bool
   return Type() == object_type::rectangle;
 }
 
-void Object::add_property(const QString& name, const property_type type)
+void Object::AddProperty(const QString& name, property_type type)
 {
-  mProperties.add_property(name, type);
+  mProperties.AddProperty(name, type);
 }
 
-void Object::add_property(const QString& name, const property& property)
+void Object::AddProperty(const QString& name, const property& property)
 {
-  mProperties.add_property(name, property);
+  mProperties.AddProperty(name, property);
 }
 
-void Object::remove_property(const QString& name)
+void Object::RemoveProperty(const QString& name)
 {
-  mProperties.remove_property(name);
+  mProperties.RemoveProperty(name);
 }
 
-void Object::rename_property(const QString& oldName, const QString& newName)
+void Object::RenameProperty(const QString& oldName, const QString& newName)
 {
-  mProperties.rename_property(oldName, newName);
+  mProperties.RenameProperty(oldName, newName);
 }
 
-void Object::set_property(const QString& name, const property& property)
+void Object::SetProperty(const QString& name, const property& property)
 {
-  mProperties.set_property(name, property);
+  mProperties.SetProperty(name, property);
 }
 
-void Object::change_property_type(const QString& name,
-                                  const core::property_type type)
+void Object::ChangePropertyType(const QString& name, property_type type)
 {
-  mProperties.change_property_type(name, type);
+  mProperties.ChangePropertyType(name, type);
 }
 
-auto Object::get_property(const QString& name) const -> const property&
+auto Object::GetProperty(const QString& name) const -> const property&
 {
-  return mProperties.get_property(name);
+  return mProperties.GetProperty(name);
 }
 
-auto Object::get_property(const QString& name) -> property&
+auto Object::GetProperty(const QString& name) -> property&
 {
-  return mProperties.get_property(name);
+  return mProperties.GetProperty(name);
 }
 
-auto Object::has_property(const QString& name) const -> bool
+auto Object::HasProperty(const QString& name) const -> bool
 {
-  return mProperties.has_property(name);
+  return mProperties.HasProperty(name);
 }
 
-auto Object::property_count() const noexcept -> int
+auto Object::PropertyCount() const noexcept -> int
 {
-  return mProperties.property_count();
+  return mProperties.PropertyCount();
 }
 
-auto Object::properties() const -> const property_map&
+auto Object::GetProperties() const -> const property_map&
 {
-  return mProperties.properties();
+  return mProperties.GetProperties();
 }
 
 }  // namespace tactile::core

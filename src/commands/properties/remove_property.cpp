@@ -8,7 +8,7 @@
 
 namespace tactile::cmd {
 
-RemoveProperty::RemoveProperty(core::property_manager* manager, QString name)
+RemoveProperty::RemoveProperty(core::IPropertyManager* manager, QString name)
     : QUndoCommand{TACTILE_QSTRING(u"Remove Property \"") + name +
                    TACTILE_QSTRING(u"\"")}
     , mManager{manager}
@@ -16,7 +16,7 @@ RemoveProperty::RemoveProperty(core::property_manager* manager, QString name)
 {
   if (!mManager)
   {
-    throw TactileError{"Cannot create remove_property from null manager!"};
+    throw TactileError{"Cannot create RemoveProperty from null manager!"};
   }
 }
 
@@ -25,8 +25,8 @@ void RemoveProperty::undo()
   QUndoCommand::undo();
 
   const auto& property = mProperty.value();
-  mManager->add_property(mName, property.type().value());
-  mManager->set_property(mName, property);
+  mManager->AddProperty(mName, property.type().value());
+  mManager->SetProperty(mName, property);
 
   mProperty.reset();
 }
@@ -35,8 +35,8 @@ void RemoveProperty::redo()
 {
   QUndoCommand::redo();
 
-  mProperty = mManager->get_property(mName);
-  mManager->remove_property(mName);
+  mProperty = mManager->GetProperty(mName);
+  mManager->RemoveProperty(mName);
 }
 
 }  // namespace tactile::cmd

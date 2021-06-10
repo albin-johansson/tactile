@@ -11,7 +11,7 @@ namespace tactile::cmd {
 class RenameProperty final : public QUndoCommand
 {
  public:
-  RenameProperty(core::property_manager* manager,
+  RenameProperty(core::IPropertyManager* manager,
                  QString oldName,
                  QString newName);
 
@@ -25,7 +25,7 @@ class RenameProperty final : public QUndoCommand
   }
 
  private:
-  core::property_manager* mManager{};
+  core::IPropertyManager* mManager{};
   QString mOldName;
   QString mNewName;
 };

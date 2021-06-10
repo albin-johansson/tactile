@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-RenameProperty::RenameProperty(core::property_manager* manager,
+RenameProperty::RenameProperty(core::IPropertyManager* manager,
                                QString oldName,
                                QString newName)
     : QUndoCommand{TACTILE_QSTRING(u"Rename Property \"") + oldName +
@@ -26,13 +26,13 @@ RenameProperty::RenameProperty(core::property_manager* manager,
 void RenameProperty::undo()
 {
   QUndoCommand::undo();
-  mManager->rename_property(mNewName, mOldName);
+  mManager->RenameProperty(mNewName, mOldName);
 }
 
 void RenameProperty::redo()
 {
   QUndoCommand::redo();
-  mManager->rename_property(mOldName, mNewName);
+  mManager->RenameProperty(mOldName, mNewName);
 }
 
 }  // namespace tactile::cmd

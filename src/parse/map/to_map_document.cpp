@@ -60,7 +60,7 @@ namespace {
 
   for (const auto& propertyData : objectData.properties)
   {
-    object.add_property(propertyData.name, propertyData.property);
+    object.AddProperty(propertyData.name, propertyData.property);
   }
 
   return object;
@@ -99,7 +99,7 @@ namespace {
 
   for (const auto& propertyData : data.properties)
   {
-    layer->add_property(propertyData.name, propertyData.property);
+    layer->AddProperty(propertyData.name, propertyData.property);
   }
 
   return layer;
@@ -129,7 +129,7 @@ auto to_map_document(const map_data& data) -> core::MapDocument*
 
   for (const auto& propertyData : data.properties)
   {
-    document->add_property(propertyData.name, propertyData.property);
+    document->AddProperty(propertyData.name, propertyData.property);
   }
 
   document->SetPath(QFileInfo{data.path});

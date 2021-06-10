@@ -9,7 +9,7 @@ namespace tactile::cmd {
 
 // clang-format off
 
-ChangePropertyType::ChangePropertyType(not_null<core::property_manager*> manager,
+ChangePropertyType::ChangePropertyType(not_null<core::IPropertyManager*> manager,
                                        QString name,
                                        const core::property_type type)
     : QUndoCommand{TACTILE_QSTRING(u"Change Property Type")}
@@ -29,8 +29,8 @@ void ChangePropertyType::undo()
   QUndoCommand::undo();
 
   const auto& prev = mPreviousProperty.value();
-  mManager->change_property_type(mName, prev.type().value());
-  mManager->set_property(mName, prev);
+  mManager->ChangePropertyType(mName, prev.type().value());
+  mManager->SetProperty(mName, prev);
   mPreviousProperty.reset();
 }
 
@@ -38,8 +38,8 @@ void ChangePropertyType::redo()
 {
   QUndoCommand::redo();
 
-  mPreviousProperty = mManager->get_property(mName);
-  mManager->change_property_type(mName, mType);
+  mPreviousProperty = mManager->GetProperty(mName);
+  mManager->ChangePropertyType(mName, mType);
 }
 
 }  // namespace tactile::cmd

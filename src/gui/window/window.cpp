@@ -203,12 +203,12 @@ void Window::ForceRedraw()
   mEditor->ForceRedraw();
 }
 
-void Window::ShowMapProperties(not_null<core::property_manager*> manager)
+void Window::ShowMapProperties(not_null<core::IPropertyManager*> manager)
 {
   mPropertiesDock->ShowMapProperties(manager);
 }
 
-void Window::ShowLayerProperties(not_null<core::property_manager*> manager)
+void Window::ShowLayerProperties(not_null<core::IPropertyManager*> manager)
 {
   mPropertiesDock->ShowLayerProperties(manager);
 }

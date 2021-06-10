@@ -45,58 +45,58 @@ auto LayerDelegate::Name() const -> const QString&
 
 void LayerDelegate::AddProperty(const QString& name, property_type type)
 {
-  mProperties.add_property(name, type);
+  mProperties.AddProperty(name, type);
 }
 
 void LayerDelegate::AddProperty(const QString& name, const property& property)
 {
-  mProperties.add_property(name, property);
+  mProperties.AddProperty(name, property);
 }
 
 void LayerDelegate::RemoveProperty(const QString& name)
 {
-  mProperties.remove_property(name);
+  mProperties.RemoveProperty(name);
 }
 
 void LayerDelegate::RenameProperty(const QString& oldName,
                                    const QString& newName)
 {
-  mProperties.rename_property(oldName, newName);
+  mProperties.RenameProperty(oldName, newName);
 }
 
 void LayerDelegate::SetProperty(const QString& name, const property& property)
 {
-  mProperties.set_property(name, property);
+  mProperties.SetProperty(name, property);
 }
 
 void LayerDelegate::ChangePropertyType(const QString& name, property_type type)
 {
-  mProperties.change_property_type(name, type);
+  mProperties.ChangePropertyType(name, type);
 }
 
 auto LayerDelegate::GetProperty(const QString& name) const -> const property&
 {
-  return mProperties.get_property(name);
+  return mProperties.GetProperty(name);
 }
 
 auto LayerDelegate::GetProperty(const QString& name) -> property&
 {
-  return mProperties.get_property(name);
+  return mProperties.GetProperty(name);
 }
 
 auto LayerDelegate::HasProperty(const QString& name) const -> bool
 {
-  return mProperties.has_property(name);
+  return mProperties.HasProperty(name);
 }
 
 auto LayerDelegate::PropertyCount() const noexcept -> int
 {
-  return mProperties.property_count();
+  return mProperties.PropertyCount();
 }
 
-auto LayerDelegate::Properties() const -> const property_manager::property_map&
+auto LayerDelegate::Properties() const -> const IPropertyManager::property_map&
 {
-  return mProperties.properties();
+  return mProperties.GetProperties();
 }
 
 }  // namespace tactile::core

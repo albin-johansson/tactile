@@ -20,7 +20,7 @@ TACTILE_FORWARD_DECLARE_UI(Window)
 
 TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
+TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 TACTILE_FORWARD_DECLARE(tactile, MapEditor)
 TACTILE_FORWARD_DECLARE(tactile, ToolDock)
 TACTILE_FORWARD_DECLARE(tactile, LayerDock)
@@ -116,8 +116,8 @@ class Window final : public QMainWindow
  public slots:
   void ForceRedraw();
 
-  void ShowMapProperties(not_null<core::property_manager*> manager);
-  void ShowLayerProperties(not_null<core::property_manager*> manager);
+  void ShowMapProperties(not_null<core::IPropertyManager*> manager);
+  void ShowLayerProperties(not_null<core::IPropertyManager*> manager);
 
   void EnableStampPreview(const core::Position& position);
   void DisableStampPreview();

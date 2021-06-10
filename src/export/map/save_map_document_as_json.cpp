@@ -72,12 +72,12 @@ namespace {
   return result;
 }
 
-[[nodiscard]] auto save_properties(const core::property_manager& manager,
+[[nodiscard]] auto save_properties(const core::IPropertyManager& manager,
                                    const QDir& targetDir) -> QJsonArray
 {
   QJsonArray props;
 
-  for (const auto& [name, property] : manager.properties())
+  for (const auto& [name, property] : manager.GetProperties())
   {
     props.append(save_property(name, property, targetDir));
   }
@@ -287,7 +287,7 @@ void save_object_layer(QJsonObject& element,
       jsonObject.insert(u"point", true);
     }
 
-    if (object.property_count() > 0)
+    if (object.PropertyCount() > 0)
     {
       jsonObject.insert(u"properties", save_properties(object, targetDir));
     }
@@ -342,7 +342,7 @@ void save_object_layer(QJsonObject& element,
       object.insert(u"offsety", 0.0);
     }
 
-    if (layer->property_count() > 0)
+    if (layer->PropertyCount() > 0)
     {
       object.insert(u"properties", save_properties(*layer, targetDir));
     }

@@ -36,7 +36,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  explicit property_model(not_null<core::property_manager*> manager,
+  explicit property_model(not_null<core::IPropertyManager*> manager,
                           QObject* parent = nullptr);
 
   /**
@@ -167,7 +167,7 @@ class property_model final : public QStandardItemModel
   void renamed_property(const QString& oldName, const QString& newName);
 
  private:
-  core::property_manager* m_manager{};
+  core::IPropertyManager* m_manager{};
   QStandardItem* m_customRoot{};
   bool m_blockDataChanged{};
 

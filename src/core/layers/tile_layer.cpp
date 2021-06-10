@@ -243,58 +243,57 @@ auto TileLayer::IsVisible() const noexcept -> bool
   return mDelegate.Visible();
 }
 
-void TileLayer::add_property(const QString& name, const property_type type)
+void TileLayer::AddProperty(const QString& name, property_type type)
 {
   mDelegate.AddProperty(name, type);
 }
 
-void TileLayer::add_property(const QString& name, const property& property)
+void TileLayer::AddProperty(const QString& name, const property& property)
 {
   mDelegate.AddProperty(name, property);
 }
 
-void TileLayer::remove_property(const QString& name)
+void TileLayer::RemoveProperty(const QString& name)
 {
   mDelegate.RemoveProperty(name);
 }
 
-void TileLayer::rename_property(const QString& oldName, const QString& newName)
+void TileLayer::RenameProperty(const QString& oldName, const QString& newName)
 {
   mDelegate.RenameProperty(oldName, newName);
 }
 
-void TileLayer::set_property(const QString& name, const property& property)
+void TileLayer::SetProperty(const QString& name, const property& property)
 {
   mDelegate.SetProperty(name, property);
 }
 
-void TileLayer::change_property_type(const QString& name,
-                                     const core::property_type type)
+void TileLayer::ChangePropertyType(const QString& name, property_type type)
 {
   mDelegate.ChangePropertyType(name, type);
 }
 
-auto TileLayer::get_property(const QString& name) const -> const property&
+auto TileLayer::GetProperty(const QString& name) const -> const property&
 {
   return mDelegate.GetProperty(name);
 }
 
-auto TileLayer::get_property(const QString& name) -> property&
+auto TileLayer::GetProperty(const QString& name) -> property&
 {
   return mDelegate.GetProperty(name);
 }
 
-auto TileLayer::has_property(const QString& name) const -> bool
+auto TileLayer::HasProperty(const QString& name) const -> bool
 {
   return mDelegate.HasProperty(name);
 }
 
-auto TileLayer::property_count() const noexcept -> int
+auto TileLayer::PropertyCount() const noexcept -> int
 {
   return mDelegate.PropertyCount();
 }
 
-auto TileLayer::properties() const -> const property_map&
+auto TileLayer::GetProperties() const -> const property_map&
 {
   return mDelegate.Properties();
 }

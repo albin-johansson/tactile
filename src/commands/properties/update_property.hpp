@@ -8,14 +8,14 @@
 #include "maybe.hpp"
 #include "property.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
+TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 
 namespace tactile::cmd {
 
 class UpdateProperty final : public QUndoCommand
 {
  public:
-  UpdateProperty(core::property_manager* manager,
+  UpdateProperty(core::IPropertyManager* manager,
                  QString name,
                  core::property property);
 
@@ -29,7 +29,7 @@ class UpdateProperty final : public QUndoCommand
   }
 
  private:
-  core::property_manager* mManager{};
+  core::IPropertyManager* mManager{};
   QString mName;
   core::property mProperty;
   maybe<core::property> mPrevProperty;

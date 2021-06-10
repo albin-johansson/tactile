@@ -67,13 +67,13 @@ PropertiesWidget::PropertiesWidget(QWidget* parent)
 
 PropertiesWidget::~PropertiesWidget() noexcept = default;
 
-void PropertiesWidget::ShowMap(not_null<core::property_manager*> manager)
+void PropertiesWidget::ShowMap(not_null<core::IPropertyManager*> manager)
 {
   ChangeModel(manager);
   mModel->set_root_name(tr("Map"));
 }
 
-void PropertiesWidget::ShowLayer(not_null<core::property_manager*> manager)
+void PropertiesWidget::ShowLayer(not_null<core::IPropertyManager*> manager)
 {
   ChangeModel(manager);
   mModel->set_root_name(tr("Layer"));
@@ -206,7 +206,7 @@ void PropertiesWidget::OnSpawnContextMenu(const QPoint& pos)
   mContextMenu->exec(pos);
 }
 
-void PropertiesWidget::ChangeModel(not_null<core::property_manager*> manager)
+void PropertiesWidget::ChangeModel(not_null<core::IPropertyManager*> manager)
 {
   Q_ASSERT(manager);
 

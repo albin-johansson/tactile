@@ -8,14 +8,14 @@
 #include "maybe.hpp"
 #include "property.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
+TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 
 namespace tactile::cmd {
 
 class RemoveProperty final : public QUndoCommand
 {
  public:
-  explicit RemoveProperty(core::property_manager* manager, QString name);
+  explicit RemoveProperty(core::IPropertyManager* manager, QString name);
 
   void undo() override;
 
@@ -27,7 +27,7 @@ class RemoveProperty final : public QUndoCommand
   }
 
  private:
-  core::property_manager* mManager{};
+  core::IPropertyManager* mManager{};
   QString mName;
   maybe<core::property> mProperty;
 };

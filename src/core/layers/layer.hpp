@@ -21,7 +21,7 @@ namespace tactile::core {
  *
  * \headerfile layer.hpp
  */
-class ILayer : public property_manager
+class ILayer : public IPropertyManager
 {
  public:
   /**

@@ -8,7 +8,7 @@
 
 namespace tactile::vm {
 
-property_model::property_model(core::property_manager* manager, QObject* parent)
+property_model::property_model(core::IPropertyManager* manager, QObject* parent)
     : QStandardItemModel{parent}
     , m_manager{manager}
     , m_customRoot{new root_item{tr("Properties")}}
@@ -26,7 +26,7 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
           this, &property_model::when_data_changed);
   // clang-format on
 
-  for (const auto& [name, property] : manager->properties())
+  for (const auto& [name, property] : manager->GetProperties())
   {
     const auto index = add_property_to_gui(name, property, m_customRoot);
     itemFromIndex(index.siblingAtColumn(0))->setEditable(false);
@@ -35,14 +35,14 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
 
 void property_model::add(const QString& name, const core::property_type type)
 {
-  m_manager->add_property(name, type);
+  m_manager->AddProperty(name, type);
   add_existing_property_to_gui(name);
 }
 
 auto property_model::add(const QString& name, const core::property& property)
     -> QModelIndex
 {
-  m_manager->add_property(name, property);
+  m_manager->AddProperty(name, property);
   return add_existing_property_to_gui(name);
 }
 
@@ -54,10 +54,10 @@ void property_model::change_type(const QString& name,
     const auto row = item->row();
     removeRow(row, m_customRoot->index());
 
-    m_manager->change_property_type(name, type);
-    const auto& property = m_manager->get_property(name);
+    m_manager->ChangePropertyType(name, type);
+    const auto& property = m_manager->GetProperty(name);
 
-    auto* valueItem = make_property_item(m_manager->get_property(name));
+    auto* valueItem = make_property_item(m_manager->GetProperty(name));
     m_customRoot->insertRow(row, {new QStandardItem{name}, valueItem});
 
     emit changed_type(indexFromItem(valueItem), type);
@@ -67,13 +67,13 @@ void property_model::change_type(const QString& name,
 void property_model::rename(const QString& oldName, const QString& newName)
 {
   rename_property_in_gui(oldName, newName);
-  m_manager->rename_property(oldName, newName);
+  m_manager->RenameProperty(oldName, newName);
 }
 
 void property_model::remove(const QString& name)
 {
   remove_property_from_gui(name);
-  m_manager->remove_property(name);
+  m_manager->RemoveProperty(name);
 }
 
 void property_model::set_root_name(const QString& name)
@@ -94,7 +94,7 @@ auto property_model::is_custom_property(const QModelIndex& index) const -> bool
 auto property_model::get_property(const QString& name) const
     -> const core::property&
 {
-  return m_manager->get_property(name);
+  return m_manager->GetProperty(name);
 }
 
 void property_model::added_property(const QString& name)
@@ -113,7 +113,7 @@ void property_model::updated_property(const QString& name)
 
   if (auto* item = find_item(this, name, 0))
   {
-    const auto& property = m_manager->get_property(name);
+    const auto& property = m_manager->GetProperty(name);
 
     const auto sibling = item->index().siblingAtColumn(1);
     Q_ASSERT(sibling.isValid());
@@ -159,7 +159,7 @@ void property_model::remove_property_from_gui(const QString& name)
 auto property_model::add_existing_property_to_gui(const QString& name)
     -> QModelIndex
 {
-  const auto& prop = m_manager->get_property(name);
+  const auto& prop = m_manager->GetProperty(name);
   const auto index = add_property_to_gui(name, prop, m_customRoot);
 
   auto* sibling = itemFromIndex(index.siblingAtColumn(0));
@@ -204,7 +204,7 @@ void property_model::rename_property_in_gui(const QString& oldName,
 
 void property_model::set_value(const QString& name, QStandardItem* item)
 {
-  m_manager->set_property(name, item_to_property(item));
+  m_manager->SetProperty(name, item_to_property(item));
 }
 
 void property_model::when_data_changed(const QModelIndex& topLeft,

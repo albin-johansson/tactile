@@ -8,20 +8,20 @@
 namespace tactile::core {
 
 /**
- * \interface property_manager
+ * \interface IPropertyManager
  *
- * \brief An interface for objects that support properties.
+ * \brief An interface for objects that support GetProperties.
  *
  * \since 0.2.0
  *
  * \headerfile property_manager.hpp
  */
-class property_manager
+class IPropertyManager
 {
  public:
   using property_map = vector_map<QString, property>;
 
-  virtual ~property_manager() noexcept = default;
+  virtual ~IPropertyManager() noexcept = default;
 
   /**
    * \brief Adds a property with the specified name and type.
@@ -35,7 +35,7 @@ class property_manager
    *
    * \since 0.2.0
    */
-  virtual void add_property(const QString& name, property_type type) = 0;
+  virtual void AddProperty(const QString& name, property_type type) = 0;
 
   /**
    * \brief Adds a property with the specified name and value.
@@ -47,7 +47,7 @@ class property_manager
    *
    * \since 0.2.0
    */
-  virtual void add_property(const QString& name, const property& property) = 0;
+  virtual void AddProperty(const QString& name, const property& property) = 0;
 
   /**
    * \brief Removes the property associated with the specified name.
@@ -58,7 +58,7 @@ class property_manager
    *
    * \since 0.2.0
    */
-  virtual void remove_property(const QString& name) = 0;
+  virtual void RemoveProperty(const QString& name) = 0;
 
   /**
    * \brief Changes the name associated with a property.
@@ -71,8 +71,8 @@ class property_manager
    *
    * \since 0.2.0
    */
-  virtual void rename_property(const QString& oldName,
-                               const QString& newName) = 0;
+  virtual void RenameProperty(const QString& oldName,
+                              const QString& newName) = 0;
 
   /**
    * \brief Sets the value of a property.
@@ -85,8 +85,8 @@ class property_manager
    *
    * \since 0.2.0
    */
-  virtual void set_property(const QString& name,
-                            const core::property& property) = 0;
+  virtual void SetProperty(const QString& name,
+                           const core::property& property) = 0;
 
   /**
    * \brief Changes the type of an existing property.
@@ -103,8 +103,8 @@ class property_manager
    *
    * \since 0.2.0
    */
-  virtual void change_property_type(const QString& name,
-                                    core::property_type type) = 0;
+  virtual void ChangePropertyType(const QString& name,
+                                  core::property_type type) = 0;
 
   /**
    * \brief Returns the property associated with the specified name.
@@ -118,13 +118,13 @@ class property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto get_property(const QString& name) const
+  [[nodiscard]] virtual auto GetProperty(const QString& name) const
       -> const property& = 0;
 
   /**
-   * \copydoc property_manager::get_property
+   * \copydoc property_manager::GetProperty
    */
-  [[nodiscard]] virtual auto get_property(const QString& name) -> property& = 0;
+  [[nodiscard]] virtual auto GetProperty(const QString& name) -> property& = 0;
 
   /**
    * \brief Indicates whether or not there is a property associated with the
@@ -137,19 +137,18 @@ class property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto has_property(const QString& name) const
-      -> bool = 0;
+  [[nodiscard]] virtual auto HasProperty(const QString& name) const -> bool = 0;
 
   /**
-   * \brief Returns the amount of properties handled by the manager.
+   * \brief Returns the amount of GetProperties handled by the manager.
    *
-   * \return the current amount of properties.
+   * \return the current amount of GetProperties.
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto property_count() const noexcept -> int = 0;
+  [[nodiscard]] virtual auto PropertyCount() const noexcept -> int = 0;
 
-  [[nodiscard]] virtual auto properties() const -> const property_map& = 0;
+  [[nodiscard]] virtual auto GetProperties() const -> const property_map& = 0;
 };
 
 }  // namespace tactile::core
