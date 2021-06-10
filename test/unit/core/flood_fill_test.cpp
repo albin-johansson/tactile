@@ -84,5 +84,5 @@ TEST(FloodFill, OutOfBounds)
   EXPECT_NO_THROW(layer.flood({6_row, 6_col}, empty, positions));
 
   positions.clear();
-  EXPECT_NO_THROW(core::flood_fill(layer, {6_row, 6_col}, empty, positions));
+  EXPECT_NO_THROW(core::FloodFill(layer, {6_row, 6_col}, empty, positions));
 }

@@ -47,7 +47,7 @@ void tile_layer::flood(const position& origin,
                        const tile_id replacement,
                        std::vector<position>& positions)
 {
-  flood_fill(*this, origin, replacement, positions);
+  FloodFill(*this, origin, replacement, positions);
 }
 
 void tile_layer::remove_all(const tile_id id)
