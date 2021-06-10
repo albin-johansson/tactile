@@ -6,51 +6,52 @@
 
 namespace tactile::cmd {
 
-remove_layer::remove_layer(core::map_document* document, const layer_id id)
+RemoveLayer::RemoveLayer(not_null<core::map_document*> document,
+                         const layer_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Remove Layer")}
-    , m_document{document}
-    , m_id{id}
+    , mDocument{document}
+    , mId{id}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Null map document!"};
   }
 }
 
-void remove_layer::undo()
+void RemoveLayer::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
 
-  map.add_layer(m_id, m_layer);
-  while (map.index_of(m_id).value() != m_index)
+  map.add_layer(mId, mLayer);
+  while (map.index_of(mId).value() != mIndex)
   {
-    if (map.index_of(m_id).value() < m_index)
+    if (map.index_of(mId).value() < mIndex)
     {
-      map.move_layer_back(m_id);
+      map.move_layer_back(mId);
     }
     else
     {
-      map.move_layer_forward(m_id);
+      map.move_layer_forward(mId);
     }
   }
 
-  emit m_document->added_layer(m_id, *m_layer);
-  emit m_document->redraw();
+  emit mDocument->added_layer(mId, *mLayer);
+  emit mDocument->redraw();
 }
 
-void remove_layer::redo()
+void RemoveLayer::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
 
-  m_index = map.index_of(m_id).value();
-  m_layer = map.take_layer(m_id);
+  mIndex = map.index_of(mId).value();
+  mLayer = map.take_layer(mId);
 
-  emit m_document->removed_layer(m_id);
-  emit m_document->redraw();
+  emit mDocument->removed_layer(mId);
+  emit mDocument->redraw();
 }
 
 }  // namespace tactile::cmd

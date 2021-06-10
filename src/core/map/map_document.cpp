@@ -340,7 +340,7 @@ auto map_document::add_object_layer() -> layer_id
 
 void map_document::remove_layer(const layer_id id)
 {
-  m_delegate->execute<cmd::remove_layer>(this, id);
+  m_delegate->execute<cmd::RemoveLayer>(this, id);
 }
 
 auto map_document::take_layer(const layer_id id) -> shared<layer>

@@ -7,6 +7,7 @@
 #include "ints.hpp"
 #include "layer.hpp"
 #include "layer_id.hpp"
+#include "not_null.hpp"
 #include "remove_layer.hpp"
 #include "smart_pointers.hpp"
 
@@ -14,10 +15,10 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class remove_layer final : public QUndoCommand
+class RemoveLayer final : public QUndoCommand
 {
  public:
-  remove_layer(core::map_document* document, layer_id id);
+  RemoveLayer(not_null<core::map_document*> document, layer_id id);
 
   void undo() override;
 
@@ -29,10 +30,10 @@ class remove_layer final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document{};
-  shared<core::layer> m_layer;
-  layer_id m_id;
-  usize m_index{};
+  core::map_document* mDocument{};
+  shared<core::layer> mLayer;
+  layer_id mId;
+  usize mIndex{};
 };
 
 }  // namespace tactile::cmd
