@@ -7,14 +7,14 @@ namespace tactile {
 
 PropertyContextMenu::PropertyContextMenu(QWidget* parent)
     : QMenu{parent}
-    , mCopy{addAction(icons::copy(), tr("Copy"))}
-    , mPaste{addAction(icons::paste(), tr("Paste"))}
+    , mCopy{addAction(IconCopy(), tr("Copy"))}
+    , mPaste{addAction(IconPaste(), tr("Paste"))}
     , mSep0{addSeparator()}
-    , mRename{addAction(icons::rename(), tr("Rename"))}
-    , mChangeType{addMenu(icons::object_layer(), tr("Change type"))}
+    , mRename{addAction(IconRename(), tr("Rename"))}
+    , mChangeType{addMenu(IconObjectLayer(), tr("Change type"))}
     , mSep1{addSeparator()}
-    , mAdd{addAction(icons::add(), tr("Add new property..."))}
-    , mRemove{addAction(icons::remove(), tr("Remove"))}
+    , mAdd{addAction(IconAdd(), tr("IconAdd new property..."))}
+    , mRemove{addAction(IconRemove(), tr("Remove"))}
 {
   mCopy->setShortcut(QKeySequence::Copy);
   mPaste->setShortcut(QKeySequence::Paste);

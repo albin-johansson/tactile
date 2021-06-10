@@ -40,7 +40,7 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
   for (const auto& name : get_standard_theme_names())
   {
-    mUi->themeComboBox->addItem(icons::tactile_logo(), name);
+    mUi->themeComboBox->addItem(TactileLogo(), name);
   }
 
   mUi->themeComboBox->insertSeparator(mUi->themeComboBox->count());

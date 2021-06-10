@@ -2,16 +2,16 @@
 
 #include "tactile_qstring.hpp"
 
-namespace tactile::icons {
+namespace tactile {
 
-auto tactile_logo() -> const QIcon&
+auto TactileLogo() -> const QIcon&
 {
   static const QIcon icon{TACTILE_QSTRING(u":resources/icons/icon.png")};
   Q_ASSERT(!icon.isNull());
   return icon;
 }
 
-auto add() -> const QIcon&
+auto IconAdd() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/fluent/64/add.png")};
@@ -19,7 +19,7 @@ auto add() -> const QIcon&
   return icon;
 }
 
-auto remove() -> const QIcon&
+auto IconRemove() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/fluent/64/remove.png")};
@@ -27,7 +27,7 @@ auto remove() -> const QIcon&
   return icon;
 }
 
-auto rename() -> const QIcon&
+auto IconRename() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/rename.png")};
@@ -35,7 +35,7 @@ auto rename() -> const QIcon&
   return icon;
 }
 
-auto duplicate() -> const QIcon&
+auto IconDuplicate() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/new-copy.png")};
@@ -43,7 +43,7 @@ auto duplicate() -> const QIcon&
   return icon;
 }
 
-auto copy() -> const QIcon&
+auto IconCopy() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/copy.png")};
@@ -51,7 +51,7 @@ auto copy() -> const QIcon&
   return icon;
 }
 
-auto open() -> const QIcon&
+auto IconOpen() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/opened-folder.png")};
@@ -59,7 +59,7 @@ auto open() -> const QIcon&
   return icon;
 }
 
-auto save_as() -> const QIcon&
+auto IconSaveAs() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/save-as.png")};
@@ -67,7 +67,7 @@ auto save_as() -> const QIcon&
   return icon;
 }
 
-auto reset() -> const QIcon&
+auto IconReset() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/reset.png")};
@@ -75,7 +75,7 @@ auto reset() -> const QIcon&
   return icon;
 }
 
-auto paste() -> const QIcon&
+auto IconPaste() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/paste.png")};
@@ -83,7 +83,7 @@ auto paste() -> const QIcon&
   return icon;
 }
 
-auto tile_layer() -> const QIcon&
+auto IconTileLayer() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/grid.png")};
@@ -91,7 +91,7 @@ auto tile_layer() -> const QIcon&
   return icon;
 }
 
-auto object_layer() -> const QIcon&
+auto IconObjectLayer() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/object.png")};
@@ -99,7 +99,7 @@ auto object_layer() -> const QIcon&
   return icon;
 }
 
-auto visible() -> const QIcon&
+auto IconVisible() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/fluent/64/visible.png")};
@@ -107,7 +107,7 @@ auto visible() -> const QIcon&
   return icon;
 }
 
-auto invisible() -> const QIcon&
+auto IconInvisible() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/fluent/64/invisible.png")};
@@ -115,7 +115,7 @@ auto invisible() -> const QIcon&
   return icon;
 }
 
-auto move_up() -> const QIcon&
+auto IconMoveUp() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/fluent/64/arrow-up.png")};
@@ -123,7 +123,7 @@ auto move_up() -> const QIcon&
   return icon;
 }
 
-auto move_down() -> const QIcon&
+auto IconMoveDown() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/fluent/64/arrow-down.png")};
@@ -131,7 +131,7 @@ auto move_down() -> const QIcon&
   return icon;
 }
 
-auto expanded() -> const QIcon&
+auto IconExpanded() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/expanded.png")};
@@ -139,7 +139,7 @@ auto expanded() -> const QIcon&
   return icon;
 }
 
-auto collapsed() -> const QIcon&
+auto IconCollapsed() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/collapsed.png")};
@@ -147,7 +147,7 @@ auto collapsed() -> const QIcon&
   return icon;
 }
 
-auto question_mark() -> const QIcon&
+auto IconQuestionMark() -> const QIcon&
 {
   static const QIcon icon{
       TACTILE_QSTRING(u":resources/icons/color/64/question-mark.png")};
@@ -155,4 +155,4 @@ auto question_mark() -> const QIcon&
   return icon;
 }
 
-}  // namespace tactile::icons
+}  // namespace tactile

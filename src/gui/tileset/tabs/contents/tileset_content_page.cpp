@@ -83,7 +83,7 @@ TilesetContentPage::~TilesetContentPage() noexcept = default;
 void TilesetContentPage::AddCornerButton()
 {
   auto* button = new QPushButton{mTabWidget};
-  button->setIcon(icons::add());
+  button->setIcon(IconAdd());
 
   connect(button,
           &QPushButton::pressed,

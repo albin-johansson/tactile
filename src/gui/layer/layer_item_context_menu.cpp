@@ -7,14 +7,14 @@ namespace tactile {
 
 LayerItemContextMenu::LayerItemContextMenu(QWidget* parent)
     : QMenu{parent}
-    , mVisibility{addAction(icons::visible(), tr("Toggle visibility"))}
+    , mVisibility{addAction(IconVisible(), tr("Toggle visibility"))}
     , mShowProperties{addAction(tr("Show properties..."))}
     , mSep0{addSeparator()}
-    , mMoveUp{addAction(icons::move_up(), tr("Move layer up"))}
-    , mMoveDown{addAction(icons::move_down(), tr("Move layer down"))}
+    , mMoveUp{addAction(IconMoveUp(), tr("Move layer up"))}
+    , mMoveDown{addAction(IconMoveDown(), tr("Move layer down"))}
     , mSep1{addSeparator()}
-    , mDuplicate{addAction(icons::duplicate(), tr("Duplicate layer"))}
-    , mRemove{addAction(icons::remove(), tr("Remove layer"))}
+    , mDuplicate{addAction(IconDuplicate(), tr("Duplicate layer"))}
+    , mRemove{addAction(IconRemove(), tr("Remove layer"))}
 {
   // clang-format off
   connect(mVisibility, &QAction::triggered, this, &LayerItemContextMenu::S_ToggleVisibility);

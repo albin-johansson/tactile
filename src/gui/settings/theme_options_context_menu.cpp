@@ -6,14 +6,14 @@ namespace tactile {
 
 ThemeOptionsContextMenu::ThemeOptionsContextMenu(QWidget* parent)
     : QMenu{parent}
-    , mRename{addAction(icons::rename(), tr("Rename..."))}
-    , mDuplicate{addAction(icons::duplicate(), tr("Duplicate..."))}
+    , mRename{addAction(IconRename(), tr("Rename..."))}
+    , mDuplicate{addAction(IconDuplicate(), tr("Duplicate..."))}
     , mSep0{addSeparator()}
-    , mExport{addAction(icons::save_as(), tr("Export theme..."))}
+    , mExport{addAction(IconSaveAs(), tr("Export theme..."))}
     , mSep1{addSeparator()}
-    , mReset{addAction(icons::reset(), tr("Reset"))}
+    , mReset{addAction(IconReset(), tr("Reset"))}
     , mSep2{addSeparator()}
-    , mRemove{addAction(icons::remove(), tr("Remove"))}
+    , mRemove{addAction(IconRemove(), tr("Remove"))}
 {
   // clang-format off
   connect(mRename, &QAction::triggered,

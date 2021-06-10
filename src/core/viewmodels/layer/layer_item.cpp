@@ -12,10 +12,10 @@ namespace {
   switch (type)
   {
     case core::layer_type::tile_layer:
-      return icons::tile_layer();
+      return IconTileLayer();
 
     case core::layer_type::object_layer:
-      return icons::object_layer();
+      return IconObjectLayer();
 
     default:
       throw tactile_error{"Did not recognize layer type!"};

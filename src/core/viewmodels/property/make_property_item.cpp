@@ -38,7 +38,7 @@ auto make_property_item(const core::property& property) -> QStandardItem*
     case core::property_type::file:
     {
       auto* item = new file_item{};
-      item->setData(icons::copy(), Qt::DecorationRole);
+      item->setData(IconCopy(), Qt::DecorationRole);
       item->setData(property.as_file().filePath(),
                     vm::property_item_role::path);
       return item;

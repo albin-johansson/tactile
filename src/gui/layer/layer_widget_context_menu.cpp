@@ -6,8 +6,8 @@ namespace tactile {
 
 AddLayerContextMenu::AddLayerContextMenu(QWidget* parent)
     : QMenu{parent}
-    , mTileLayer{addAction(icons::tile_layer(), tr("Tile layer"))}
-    , mObjectLayer{addAction(icons::object_layer(), tr("Object layer"))}
+    , mTileLayer{addAction(IconTileLayer(), tr("Tile layer"))}
+    , mObjectLayer{addAction(IconObjectLayer(), tr("Object layer"))}
 {
   // clang-format off
   connect(mTileLayer, &QAction::triggered,
@@ -20,7 +20,7 @@ AddLayerContextMenu::AddLayerContextMenu(QWidget* parent)
 LayerWidgetContextMenu::LayerWidgetContextMenu(AddLayerContextMenu* menu,
                                                QWidget* parent)
     : QMenu{parent}
-    , mAdd{addMenu(icons::add(), tr("Add new layer..."))}
+    , mAdd{addMenu(IconAdd(), tr("Add new layer..."))}
 {
   for (auto* action : menu->actions())
   {

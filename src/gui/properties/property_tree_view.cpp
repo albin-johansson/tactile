@@ -220,7 +220,7 @@ void PropertyTreeView::OnItemExpanded(const QModelIndex& index)
 {
   if (!index.parent().isValid())
   {
-    GetModel()->itemFromIndex(index)->setIcon(icons::expanded());
+    GetModel()->itemFromIndex(index)->setIcon(IconExpanded());
   }
 }
 
@@ -228,7 +228,7 @@ void PropertyTreeView::OnItemCollapsed(const QModelIndex& index)
 {
   if (!index.parent().isValid())
   {
-    GetModel()->itemFromIndex(index)->setIcon(icons::collapsed());
+    GetModel()->itemFromIndex(index)->setIcon(IconCollapsed());
   }
 }
 

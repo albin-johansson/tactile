@@ -1,52 +1,45 @@
 #pragma once
 
-#include <QIcon>
+#include <QIcon>  // QIcon
 
-/**
- * \namespace tactile::icons
- *
- * \brief Contains a collection of functions used to obtain icons.
- *
- * \since 0.1.0
- */
-namespace tactile::icons {
+namespace tactile {
 
-[[nodiscard]] auto tactile_logo() -> const QIcon&;
+[[nodiscard]] auto TactileLogo() -> const QIcon&;
 
-[[nodiscard]] auto add() -> const QIcon&;
+[[nodiscard]] auto IconAdd() -> const QIcon&;
 
-[[nodiscard]] auto remove() -> const QIcon&;
+[[nodiscard]] auto IconRemove() -> const QIcon&;
 
-[[nodiscard]] auto rename() -> const QIcon&;
+[[nodiscard]] auto IconRename() -> const QIcon&;
 
-[[nodiscard]] auto duplicate() -> const QIcon&;
+[[nodiscard]] auto IconDuplicate() -> const QIcon&;
 
-[[nodiscard]] auto copy() -> const QIcon&;
+[[nodiscard]] auto IconCopy() -> const QIcon&;
 
-[[nodiscard]] auto open() -> const QIcon&;
+[[nodiscard]] auto IconOpen() -> const QIcon&;
 
-[[nodiscard]] auto save_as() -> const QIcon&;
+[[nodiscard]] auto IconSaveAs() -> const QIcon&;
 
-[[nodiscard]] auto reset() -> const QIcon&;
+[[nodiscard]] auto IconReset() -> const QIcon&;
 
-[[nodiscard]] auto paste() -> const QIcon&;
+[[nodiscard]] auto IconPaste() -> const QIcon&;
 
-[[nodiscard]] auto tile_layer() -> const QIcon&;
+[[nodiscard]] auto IconTileLayer() -> const QIcon&;
 
-[[nodiscard]] auto object_layer() -> const QIcon&;
+[[nodiscard]] auto IconObjectLayer() -> const QIcon&;
 
-[[nodiscard]] auto visible() -> const QIcon&;
+[[nodiscard]] auto IconVisible() -> const QIcon&;
 
-[[nodiscard]] auto invisible() -> const QIcon&;
+[[nodiscard]] auto IconInvisible() -> const QIcon&;
 
-[[nodiscard]] auto move_up() -> const QIcon&;
+[[nodiscard]] auto IconMoveUp() -> const QIcon&;
 
-[[nodiscard]] auto move_down() -> const QIcon&;
+[[nodiscard]] auto IconMoveDown() -> const QIcon&;
 
-[[nodiscard]] auto collapsed() -> const QIcon&;
+[[nodiscard]] auto IconCollapsed() -> const QIcon&;
 
-[[nodiscard]] auto expanded() -> const QIcon&;
+[[nodiscard]] auto IconExpanded() -> const QIcon&;
 
-[[nodiscard]] auto question_mark() -> const QIcon&;
+[[nodiscard]] auto IconQuestionMark() -> const QIcon&;
 
-}  // namespace tactile::icons
+}  // namespace tactile

@@ -147,8 +147,8 @@ void LayerWidget::UpdateActions(const maybe<QModelIndex>& selected)
     mUi->opacitySlider->setValue(
         static_cast<int>(mModel->opacity(*selected) * 100.0));
 
-    mUi->visibleButton->setIcon(
-        mModel->visible(*selected) ? icons::visible() : icons::invisible());
+    mUi->visibleButton->setIcon(mModel->visible(*selected) ? IconVisible()
+                                                           : IconInvisible());
   }
 
   mItemMenu->SetVisibilityEnabled(mUi->visibleButton->isEnabled());
@@ -210,7 +210,7 @@ void LayerWidget::OnChangedLayerName(const layer_id id, const QString& name)
 
 void LayerWidget::OnChangedLayerVisibility(const layer_id id, bool visible)
 {
-  mUi->visibleButton->setIcon(visible ? icons::visible() : icons::invisible());
+  mUi->visibleButton->setIcon(visible ? IconVisible() : IconInvisible());
 }
 
 void LayerWidget::OnSelectedLayer(const layer_id id, const core::layer& layer)
@@ -269,7 +269,7 @@ void LayerWidget::OnDuplicateButtonPressed()
 void LayerWidget::OnVisibleButtonToggled(const bool visible)
 {
   mModel->set_visible(mView->currentIndex(), visible);
-  mUi->visibleButton->setIcon(visible ? icons::visible() : icons::invisible());
+  mUi->visibleButton->setIcon(visible ? IconVisible() : IconInvisible());
 }
 
 }  // namespace tactile
