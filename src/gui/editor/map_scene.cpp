@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-MapScene::MapScene(core::map_document* map, const map_id id, QObject* parent)
+MapScene::MapScene(core::MapDocument* map, const map_id id, QObject* parent)
     : QGraphicsScene{parent}
     , mItem{new MapItem{map}}
     , mId{id}

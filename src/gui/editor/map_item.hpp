@@ -7,7 +7,7 @@
 #include "position.hpp"
 #include "tile_id.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile {
 
@@ -33,7 +33,7 @@ class MapItem final : public QGraphicsItem
    *
    * \since 0.1.0
    */
-  explicit MapItem(core::map_document* map, QGraphicsItem* parent = nullptr);
+  explicit MapItem(core::MapDocument* map, QGraphicsItem* parent = nullptr);
 
   void paint(QPainter* painter,
              const QStyleOptionGraphicsItem* option,
@@ -48,7 +48,7 @@ class MapItem final : public QGraphicsItem
   [[nodiscard]] auto boundingRect() const -> QRectF override;
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   maybe<core::position> mMousePosition;
 };
 

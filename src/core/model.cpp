@@ -11,10 +11,10 @@ model::model() : m_tools{this}
 
 auto model::add_map() -> map_id
 {
-  return add_map(new map_document{5_row, 5_col, this});
+  return add_map(new MapDocument{5_row, 5_col, this});
 }
 
-auto model::add_map(map_document* document) -> map_id
+auto model::add_map(MapDocument* document) -> map_id
 {
   Q_ASSERT(document);
   Q_ASSERT(!m_documents.contains(m_nextId));
@@ -26,37 +26,37 @@ auto model::add_map(map_document* document) -> map_id
   };
 
   // clang-format off
-  bind(&map_document::redraw,                   &model::redraw);
-  bind(&map_document::undo_state_updated,       &model::undo_state_updated);
-  bind(&map_document::redo_state_updated,       &model::redo_state_updated);
-  bind(&map_document::undo_text_updated,        &model::undo_text_updated);
-  bind(&map_document::redo_text_updated,        &model::redo_text_updated);
-  bind(&map_document::clean_changed,            &model::clean_changed);
-  bind(&map_document::removed_tileset,          &model::removed_tileset);
-  bind(&map_document::renamed_tileset,          &model::renamed_tileset);
-  bind(&map_document::added_layer,              &model::added_layer);
-  bind(&map_document::added_duplicated_layer,   &model::added_duplicated_layer);
-  bind(&map_document::removed_layer,            &model::removed_layer);
-  bind(&map_document::selected_layer,           &model::selected_layer);
-  bind(&map_document::moved_layer_back,         &model::moved_layer_back);
-  bind(&map_document::moved_layer_forward,      &model::moved_layer_forward);
-  bind(&map_document::added_property,           &model::added_property);
-  bind(&map_document::about_to_remove_property, &model::about_to_remove_property);
-  bind(&map_document::updated_property,         &model::updated_property);
-  bind(&map_document::renamed_property,         &model::renamed_property);
-  bind(&map_document::changed_property_type,    &model::changed_property_type);
+  bind(&MapDocument::S_Redraw,                   &model::redraw);
+  bind(&MapDocument::S_UndoStateUpdated,       &model::undo_state_updated);
+  bind(&MapDocument::S_RedoStateUpdated,       &model::redo_state_updated);
+  bind(&MapDocument::S_UndoTextUpdated,        &model::undo_text_updated);
+  bind(&MapDocument::S_RedoTextUpdated,        &model::redo_text_updated);
+  bind(&MapDocument::S_CleanChanged,            &model::clean_changed);
+  bind(&MapDocument::S_RemovedTileset,          &model::removed_tileset);
+  bind(&MapDocument::S_RenamedTileset,          &model::renamed_tileset);
+  bind(&MapDocument::S_AddedLayer,              &model::added_layer);
+  bind(&MapDocument::S_AddedDuplicatedLayer,   &model::added_duplicated_layer);
+  bind(&MapDocument::S_RemovedLayer,            &model::removed_layer);
+  bind(&MapDocument::S_SelectedLayer,           &model::selected_layer);
+  bind(&MapDocument::S_MovedLayerBack,         &model::moved_layer_back);
+  bind(&MapDocument::S_MovedLayerForward,      &model::moved_layer_forward);
+  bind(&MapDocument::S_AddedProperty,           &model::added_property);
+  bind(&MapDocument::S_AboutToRemoveProperty, &model::about_to_remove_property);
+  bind(&MapDocument::S_UpdatedProperty,         &model::updated_property);
+  bind(&MapDocument::S_RenamedProperty,         &model::renamed_property);
+  bind(&MapDocument::S_ChangedPropertyType,    &model::changed_property_type);
   // clang-format on
 
-  bind(&map_document::added_tileset, [this](const tileset_id id) {
-    const auto& tileset = current_document()->tilesets()->at(id);
+  bind(&MapDocument::S_AddedTileset, [this](const tileset_id id) {
+    const auto& tileset = current_document()->GetTilesets()->at(id);
     emit added_tileset(current_map_id().value(), id, tileset);
   });
 
-  bind(&map_document::show_properties,
+  bind(&MapDocument::S_ShowProperties,
        [this] { emit show_map_properties(current_document()); });
 
-  bind(&map_document::show_layer_properties, [this](const layer_id id) {
-    emit show_layer_properties(current_document()->get_layer(id));
+  bind(&MapDocument::S_ShowLayerProperties, [this](const layer_id id) {
+    emit show_layer_properties(current_document()->GetLayer(id));
   });
 
   const auto id = m_nextId;
@@ -75,7 +75,7 @@ auto model::has_active_map() const noexcept -> bool
   return m_currentMap.has_value();
 }
 
-auto model::get_document(const map_id id) -> map_document*
+auto model::get_document(const map_id id) -> MapDocument*
 {
   return m_documents.at(id);
 }
@@ -85,12 +85,12 @@ auto model::current_map_id() const -> maybe<map_id>
   return m_currentMap;
 }
 
-auto model::current_document() -> map_document*
+auto model::current_document() -> MapDocument*
 {
   return m_currentMap ? m_documents.at(m_currentMap.value()) : nullptr;
 }
 
-auto model::current_document() const -> const map_document*
+auto model::current_document() const -> const MapDocument*
 {
   return m_currentMap ? m_documents.at(m_currentMap.value()) : nullptr;
 }
@@ -116,7 +116,7 @@ void model::resize_map(const row_t nRows, const col_t nCols)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->resize(nRows, nCols);
+  document->Resize(nRows, nCols);
 }
 
 void model::add_row()
@@ -124,7 +124,7 @@ void model::add_row()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->add_row();
+  document->AddRow();
 }
 
 void model::add_col()
@@ -132,7 +132,7 @@ void model::add_col()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->add_column();
+  document->AddColumn();
 }
 
 void model::remove_row()
@@ -140,7 +140,7 @@ void model::remove_row()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->remove_row();
+  document->RemoveRow();
 }
 
 void model::remove_col()
@@ -148,7 +148,7 @@ void model::remove_col()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->remove_column();
+  document->RemoveColumn();
 }
 
 void model::add_layer()
@@ -156,7 +156,7 @@ void model::add_layer()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->add_tile_layer();
+  document->AddTileLayer();
 }
 
 void model::remove_layer(const layer_id id)
@@ -164,7 +164,7 @@ void model::remove_layer(const layer_id id)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->remove_layer(id);
+  document->RemoveLayer(id);
 }
 
 void model::select_layer(const layer_id id)
@@ -172,7 +172,7 @@ void model::select_layer(const layer_id id)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->select_layer(id);
+  document->SelectLayer(id);
 }
 
 void model::select_tool(const tool_id id)
@@ -185,7 +185,7 @@ void model::select_tileset(const tileset_id id)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->select_tileset(id);
+  document->SelectTileset(id);
 }
 
 void model::set_tileset_selection(const tileset_selection& selection)
@@ -193,7 +193,7 @@ void model::set_tileset_selection(const tileset_selection& selection)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->set_tileset_selection(selection);
+  document->SetTilesetSelection(selection);
 }
 
 void model::increase_tile_size()
@@ -201,7 +201,7 @@ void model::increase_tile_size()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->increase_tile_size();
+  document->IncreaseTileSize();
 }
 
 void model::decrease_tile_size()
@@ -209,7 +209,7 @@ void model::decrease_tile_size()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->decrease_tile_size();
+  document->DecreaseTileSize();
 }
 
 void model::reset_tile_size()
@@ -217,7 +217,7 @@ void model::reset_tile_size()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->reset_tile_size();
+  document->ResetTileSize();
 }
 
 void model::create_tileset(const QImage& image,
@@ -229,7 +229,7 @@ void model::create_tileset(const QImage& image,
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->add_tileset(image, path, name, tileWidth, tileHeight);
+  document->AddTileset(image, path, name, tileWidth, tileHeight);
 }
 
 void model::remove_tileset(const tileset_id id)
@@ -237,7 +237,7 @@ void model::remove_tileset(const tileset_id id)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->remove_tileset(id);
+  document->RemoveTileset(id);
 }
 
 void model::set_tileset_name(const tileset_id id, const QString& name)
@@ -245,7 +245,7 @@ void model::set_tileset_name(const tileset_id id, const QString& name)
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->set_tileset_name(id, name);
+  document->SetTilesetName(id, name);
 }
 
 void model::select_map(const map_id id)

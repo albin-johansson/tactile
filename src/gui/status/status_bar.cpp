@@ -71,18 +71,18 @@ void StatusBar::SetCurrentLayer(layer_id id)
   mLayerBox->setCurrentIndex(index);
 }
 
-void StatusBar::OnSwitchedMap(const core::map_document& document)
+void StatusBar::OnSwitchedMap(const core::MapDocument& document)
 {
   QSignalBlocker blocker{mLayerBox};  // avoids switch layer requests
 
   mLayerBox->clear();
-  document.each_layer(
+  document.EachLayer(
       [this](const layer_id id, const shared<core::ILayer>& layer) {
         mLayerBox->addItem(layer->Name(), id.get());
       });
   SetLayerComboBoxVisible(true);
 
-  const auto currentId = document.current_layer_id().value();
+  const auto currentId = document.CurrentLayerId().value();
   const auto index = mLayerBox->findData(currentId.get());
   mLayerBox->setCurrentIndex(index);
 }

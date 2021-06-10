@@ -207,13 +207,13 @@ void create_external_tileset_file(const core::tileset& tileset,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto save_tilesets(const core::map_document& map,
+[[nodiscard]] auto save_tilesets(const core::MapDocument& map,
                                  const QDir& targetDir,
                                  const export_options& options) -> QJsonArray
 {
   QJsonArray array;
 
-  map.each_tileset([&](tileset_id id, const core::tileset& tileset) {
+  map.EachTileset([&](tileset_id id, const core::tileset& tileset) {
     if (options.embedTilesets)
     {
       array.append(make_embedded_tileset_object(tileset, targetDir, options));
@@ -309,13 +309,13 @@ void save_object_layer(QJsonObject& element,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto save_layers(const core::map_document& map,
+[[nodiscard]] auto save_layers(const core::MapDocument& map,
                                const QDir& targetDir,
                                const export_options& options) -> QJsonArray
 {
   QJsonArray array;
 
-  map.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
+  map.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
     QJsonObject object;
 
     object.insert(u"id", id.get());
@@ -327,8 +327,8 @@ void save_object_layer(QJsonObject& element,
 
     if (layer->Type() == core::LayerType::tile_layer)
     {
-      object.insert(u"width", map.col_count().get());
-      object.insert(u"height", map.row_count().get());
+      object.insert(u"width", map.ColumnCount().get());
+      object.insert(u"height", map.RowCount().get());
       save_tile_layer(object, layer, options);
     }
     else
@@ -364,7 +364,7 @@ void save_object_layer(QJsonObject& element,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto create_root(const core::map_document& map,
+[[nodiscard]] auto create_root(const core::MapDocument& map,
                                const QDir& targetDir,
                                const export_options& options) -> QJsonObject
 {
@@ -373,8 +373,8 @@ void save_object_layer(QJsonObject& element,
   root.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   root.insert(u"orientation", TACTILE_QSTRING(u"orthogonal"));
   root.insert(u"renderorder", TACTILE_QSTRING(u"right-down"));
-  root.insert(u"width", map.col_count().get());
-  root.insert(u"height", map.row_count().get());
+  root.insert(u"width", map.ColumnCount().get());
+  root.insert(u"height", map.RowCount().get());
   root.insert(u"compressionlevel", -1);
   root.insert(u"infinite", false);
   root.insert(u"type", TACTILE_QSTRING(u"map"));
@@ -382,7 +382,7 @@ void save_object_layer(QJsonObject& element,
   root.insert(u"tilewidth", prefs::saves::tile_width().value());
   root.insert(u"tileheight", prefs::saves::tile_height().value());
   root.insert(u"nextobjectid", 1);
-  root.insert(u"nextlayerid", map.layer_count() + 1);
+  root.insert(u"nextlayerid", map.LayerCount() + 1);
   root.insert(u"tilesets", save_tilesets(map, targetDir, options));
   root.insert(u"layers", save_layers(map, targetDir, options));
   root.insert(u"properties", save_properties(map, targetDir));
@@ -393,7 +393,7 @@ void save_object_layer(QJsonObject& element,
 }  // namespace
 
 void save_map_document_as_json(const QString& path,
-                               const core::map_document& map)
+                               const core::MapDocument& map)
 {
   QJsonDocument document{};
 

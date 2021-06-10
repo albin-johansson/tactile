@@ -7,7 +7,7 @@
 #include "maybe.hpp"
 #include "not_null.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 
 namespace tactile::vm {
@@ -19,7 +19,7 @@ class layer_model final : public QStandardItemModel
   Q_OBJECT
 
  public:
-  explicit layer_model(not_null<core::map_document*> document);
+  explicit layer_model(not_null<core::MapDocument*> document);
 
   void add_tile_layer();
 
@@ -56,7 +56,7 @@ class layer_model final : public QStandardItemModel
   void selected_layer(layer_id id, const core::ILayer& layer);
 
  private:
-  core::map_document* m_document{};
+  core::MapDocument* m_document{};
   maybe<int> m_duplicateTargetRow;
 
   void add_item(layer_id id, const core::ILayer& layer);

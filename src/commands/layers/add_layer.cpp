@@ -8,7 +8,7 @@
 
 namespace tactile::cmd {
 
-AddLayer::AddLayer(core::map_document* document,
+AddLayer::AddLayer(core::MapDocument* document,
                    shared<core::ILayer> layer,
                    const layer_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Add Layer")}
@@ -32,20 +32,20 @@ void AddLayer::undo()
   QUndoCommand::undo();
 
   // We already have a shared pointer to the layer in question
-  auto layer [[maybe_unused]] = mDocument->raw().take_layer(mId);
+  auto layer [[maybe_unused]] = mDocument->Raw().TakeLayer(mId);
 
-  emit mDocument->removed_layer(mId);
-  emit mDocument->redraw();
+  emit mDocument->S_RemovedLayer(mId);
+  emit mDocument->S_Redraw();
 }
 
 void AddLayer::redo()
 {
   QUndoCommand::redo();
 
-  mDocument->raw().add_layer(mId, mLayer);
+  mDocument->Raw().AddLayer(mId, mLayer);
 
-  emit mDocument->added_layer(mId, *mLayer);
-  emit mDocument->redraw();
+  emit mDocument->S_AddedLayer(mId, *mLayer);
+  emit mDocument->S_Redraw();
 }
 
 }  // namespace tactile::cmd

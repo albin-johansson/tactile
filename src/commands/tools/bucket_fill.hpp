@@ -10,7 +10,7 @@
 #include "position.hpp"
 #include "tile_id.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
@@ -26,7 +26,7 @@ class BucketFill final : public QUndoCommand
    *
    * \since 0.1.0
    */
-  explicit BucketFill(not_null<core::map_document*> document,
+  explicit BucketFill(not_null<core::MapDocument*> document,
                       const core::position& position,
                       tile_id replacement);
 
@@ -40,7 +40,7 @@ class BucketFill final : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   core::position mOrigin;
   tile_id mReplacement;
   tile_id mTarget{};

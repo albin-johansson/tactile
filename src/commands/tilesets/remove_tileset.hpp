@@ -12,7 +12,7 @@ namespace tactile::cmd {
 class RemoveTileset final : public QUndoCommand
 {
  public:
-  RemoveTileset(not_null<core::map_document*> document,
+  RemoveTileset(not_null<core::MapDocument*> document,
                 shared<core::tileset> tileset,
                 tileset_id id);
 
@@ -26,7 +26,7 @@ class RemoveTileset final : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   shared<core::tileset> mTileset;
   tileset_id mId;
   bool mFirst{true};  ///< Used to determine when to notify UI

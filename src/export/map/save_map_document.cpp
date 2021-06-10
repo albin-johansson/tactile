@@ -9,7 +9,7 @@
 
 namespace tactile {
 
-void save_map_document(const QString& path, const core::map_document& document)
+void save_map_document(const QString& path, const core::MapDocument& document)
 {
   const QFileInfo info{path};
 

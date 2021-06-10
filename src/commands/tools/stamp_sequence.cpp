@@ -9,7 +9,7 @@
 
 namespace tactile::cmd {
 
-StampSequence::StampSequence(not_null<core::map_document*> document,
+StampSequence::StampSequence(not_null<core::MapDocument*> document,
                              vector_map<core::position, tile_id>&& oldState,
                              vector_map<core::position, tile_id>&& sequence)
     : QUndoCommand{TACTILE_QSTRING(u"Stamp Sequence")}
@@ -27,12 +27,12 @@ void StampSequence::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = mDocument->raw();
-  const auto layer = map.active_layer_id().value();
+  auto& map = mDocument->Raw();
+  const auto layer = map.ActiveLayerId().value();
 
-  map.select_layer(mLayer);
+  map.SelectLayer(mLayer);
 
-  auto* tileLayer = map.get_tile_layer(mLayer);
+  auto* tileLayer = map.GetTileLayer(mLayer);
   Q_ASSERT(tileLayer);
 
   for (const auto& [position, tile] : mOldState)
@@ -40,9 +40,9 @@ void StampSequence::undo()
     tileLayer->SetTile(position, tile);
   }
 
-  map.select_layer(layer);
+  map.SelectLayer(layer);
 
-  emit mDocument->redraw();
+  emit mDocument->S_Redraw();
 }
 
 void StampSequence::redo()
@@ -51,19 +51,19 @@ void StampSequence::redo()
      the command is executed when first inserted into the command stack. */
   if (mFirst)
   {
-    mLayer = mDocument->current_layer_id().value();
+    mLayer = mDocument->CurrentLayerId().value();
     mFirst = false;
     return;
   }
 
   QUndoCommand::redo();
 
-  auto& map = mDocument->raw();
-  const auto layer = map.active_layer_id().value();
+  auto& map = mDocument->Raw();
+  const auto layer = map.ActiveLayerId().value();
 
-  map.select_layer(mLayer);
+  map.SelectLayer(mLayer);
 
-  auto* tileLayer = map.get_tile_layer(mLayer);
+  auto* tileLayer = map.GetTileLayer(mLayer);
   Q_ASSERT(tileLayer);
 
   for (const auto& [position, tile] : mSequence)
@@ -71,9 +71,9 @@ void StampSequence::redo()
     tileLayer->SetTile(position, tile);
   }
 
-  map.select_layer(layer);
+  map.SelectLayer(layer);
 
-  emit mDocument->redraw();
+  emit mDocument->S_Redraw();
 }
 
 }  // namespace tactile::cmd

@@ -25,16 +25,16 @@ inline constexpr auto cols = 15_col;
 inline constexpr auto tileWidth = 32_tw;
 inline constexpr auto tileHeight = 32_th;
 
-void validate_layers(const core::map_document& document)
+void validate_layers(const core::MapDocument& document)
 {
-  ASSERT_EQ(3, document.layer_count());
+  ASSERT_EQ(3, document.LayerCount());
 
-  ASSERT_TRUE(document.has_layer(1_layer));
+  ASSERT_TRUE(document.HasLayer(1_layer));
 
   const auto ground = TACTILE_QSTRING(u"ground");
 
   {  // First layer
-    const auto* layer = document.get_layer(1_layer);
+    const auto* layer = document.GetLayer(1_layer);
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::tile_layer, layer->type());
 
@@ -42,7 +42,7 @@ void validate_layers(const core::map_document& document)
     EXPECT_EQ(1.0, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 
-    const auto* tileLayer = document.get_tile_layer(1_layer);
+    const auto* tileLayer = document.GetTileLayer(1_layer);
     ASSERT_TRUE(tileLayer);
 
     EXPECT_EQ(rows, tileLayer->RowCount());
@@ -53,7 +53,7 @@ void validate_layers(const core::map_document& document)
   }
 
   {  // Second layer
-    const auto* layer = document.get_layer(2_layer);
+    const auto* layer = document.GetLayer(2_layer);
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::tile_layer, layer->type());
 
@@ -61,7 +61,7 @@ void validate_layers(const core::map_document& document)
     EXPECT_EQ(0.75, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 
-    const auto* tileLayer = document.get_tile_layer(2_layer);
+    const auto* tileLayer = document.GetTileLayer(2_layer);
     ASSERT_TRUE(tileLayer);
 
     EXPECT_EQ(rows, tileLayer->RowCount());
@@ -72,7 +72,7 @@ void validate_layers(const core::map_document& document)
   }
 
   {  // Third layer
-    const auto* layer = document.get_layer(3_layer);
+    const auto* layer = document.GetLayer(3_layer);
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::object_layer, layer->type());
 
@@ -80,7 +80,7 @@ void validate_layers(const core::map_document& document)
     EXPECT_EQ(1.0, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 
-    const auto* objectLayer = document.get_object_layer(3_layer);
+    const auto* objectLayer = document.GetObjectLayer(3_layer);
     ASSERT_TRUE(objectLayer);
 
     ASSERT_EQ(1, objectLayer->ObjectCount());
@@ -107,7 +107,7 @@ void validate_layers(const core::map_document& document)
   }
 }
 
-void validate_tilesets(const core::map_document& document)
+void validate_tilesets(const core::MapDocument& document)
 {
   const auto* tilesets = document.tilesets();
   ASSERT_TRUE(tilesets);
@@ -144,7 +144,7 @@ void validate_tilesets(const core::map_document& document)
   EXPECT_EQ(32_th, outside.get_tile_height());
 }
 
-void validate_properties(const core::map_document& document)
+void validate_properties(const core::MapDocument& document)
 {
   ASSERT_EQ(7, document.property_count());
   const auto string = TACTILE_QSTRING(u"str");
@@ -193,8 +193,8 @@ TACTILE_DEFINE_TEST_P(MapImportTest, QString)
   ASSERT_TRUE(document);
   document->setParent(&parent);  // Avoid memory leak
 
-  EXPECT_EQ(rows, document->row_count());
-  EXPECT_EQ(cols, document->col_count());
+  EXPECT_EQ(rows, document->RowCount());
+  EXPECT_EQ(cols, document->ColumnCount());
 
   validate_layers(*document);
   validate_tilesets(*document);

@@ -33,478 +33,475 @@
 
 namespace tactile::core {
 
-map_document::map_document(QObject* parent)
+MapDocument::MapDocument(QObject* parent)
     : document{parent}
-    , m_map{std::make_unique<map>()}
-    , m_tilesets{std::make_unique<tileset_manager>()}
-    , m_delegate{std::make_unique<document_delegate>()}
+    , mMap{std::make_unique<Map>()}
+    , mTilesets{std::make_unique<tileset_manager>()}
+    , mDelegate{std::make_unique<document_delegate>()}
 {
-  setup();
+  SetUp();
 }
 
-map_document::map_document(const row_t nRows,
-                           const col_t nCols,
-                           QObject* parent)
+MapDocument::MapDocument(const row_t nRows, const col_t nCols, QObject* parent)
     : document{parent}
-    , m_map{std::make_unique<map>(nRows, nCols)}
-    , m_tilesets{std::make_unique<tileset_manager>()}
-    , m_delegate{std::make_unique<document_delegate>()}
+    , mMap{std::make_unique<Map>(nRows, nCols)}
+    , mTilesets{std::make_unique<tileset_manager>()}
+    , mDelegate{std::make_unique<document_delegate>()}
 {
-  setup();
+  SetUp();
 }
 
-void map_document::setup()
+void MapDocument::SetUp()
 {
-  auto* commands = m_delegate->history();
+  auto* commands = mDelegate->history();
 
   // clang-format off
-  connect(commands, &CommandStack::cleanChanged, this, &map_document::clean_changed);
-  connect(commands, &CommandStack::canUndoChanged, this, &map_document::undo_state_updated);
-  connect(commands, &CommandStack::canRedoChanged, this, &map_document::redo_state_updated);
-  connect(commands, &CommandStack::undoTextChanged, this, &map_document::undo_text_updated);
-  connect(commands, &CommandStack::redoTextChanged, this, &map_document::redo_text_updated);
+  connect(commands, &CommandStack::cleanChanged, this, &MapDocument::S_CleanChanged);
+  connect(commands, &CommandStack::canUndoChanged, this, &MapDocument::S_UndoStateUpdated);
+  connect(commands, &CommandStack::canRedoChanged, this, &MapDocument::S_RedoStateUpdated);
+  connect(commands, &CommandStack::undoTextChanged, this, &MapDocument::S_UndoTextUpdated);
+  connect(commands, &CommandStack::redoTextChanged, this, &MapDocument::S_RedoTextUpdated);
 
-  connect(m_delegate.get(), &document_delegate::added_property,
-          this, &map_document::added_property);
+  connect(mDelegate.get(), &document_delegate::added_property,
+          this, &MapDocument::S_AddedProperty);
 
-  connect(m_delegate.get(), &document_delegate::about_to_remove_property,
-          this, &map_document::about_to_remove_property);
+  connect(mDelegate.get(), &document_delegate::about_to_remove_property,
+          this, &MapDocument::S_AboutToRemoveProperty);
 
-  connect(m_delegate.get(), &document_delegate::updated_property,
-          this, &map_document::updated_property);
+  connect(mDelegate.get(), &document_delegate::updated_property,
+          this, &MapDocument::S_UpdatedProperty);
 
-  connect(m_delegate.get(), &document_delegate::renamed_property,
-          this, &map_document::renamed_property);
+  connect(mDelegate.get(), &document_delegate::renamed_property,
+          this, &MapDocument::S_RenamedProperty);
 
-  connect(m_delegate.get(), &document_delegate::changed_property_type,
-          this, &map_document::changed_property_type);
+  connect(mDelegate.get(), &document_delegate::changed_property_type,
+          this, &MapDocument::S_ChangedPropertyType);
   // clang-format on
 }
 
-void map_document::undo()
+void MapDocument::undo()
 {
-  m_delegate->undo();
+  mDelegate->undo();
 
   /* Emit clean_changed once more, because we need to take into account that the
      document might not feature an associated file path yet (that is what
      is_clean does) */
-  emit clean_changed(is_clean());
+  emit S_CleanChanged(is_clean());
 }
 
-void map_document::redo()
+void MapDocument::redo()
 {
-  m_delegate->redo();
+  mDelegate->redo();
 }
 
-void map_document::mark_as_clean()
+void MapDocument::mark_as_clean()
 {
-  m_delegate->mark_as_clean();
+  mDelegate->mark_as_clean();
 }
 
-void map_document::reset_history()
+void MapDocument::reset_history()
 {
-  m_delegate->reset_history();
+  mDelegate->reset_history();
 }
 
-void map_document::set_path(QFileInfo path)
+void MapDocument::set_path(QFileInfo path)
 {
-  m_delegate->set_path(path);
+  mDelegate->set_path(path);
 }
 
-auto map_document::can_undo() const -> bool
+auto MapDocument::can_undo() const -> bool
 {
-  return m_delegate->can_undo();
+  return mDelegate->can_undo();
 }
 
-auto map_document::can_redo() const -> bool
+auto MapDocument::can_redo() const -> bool
 {
-  return m_delegate->can_redo();
+  return mDelegate->can_redo();
 }
 
-auto map_document::is_clean() const -> bool
+auto MapDocument::is_clean() const -> bool
 {
-  return m_delegate->is_clean();
+  return mDelegate->is_clean();
 }
 
-auto map_document::has_path() const -> bool
+auto MapDocument::has_path() const -> bool
 {
-  return m_delegate->has_path();
+  return mDelegate->has_path();
 }
 
-auto map_document::get_undo_text() const -> QString
+auto MapDocument::get_undo_text() const -> QString
 {
-  return m_delegate->get_undo_text();
+  return mDelegate->get_undo_text();
 }
 
-auto map_document::get_redo_text() const -> QString
+auto MapDocument::get_redo_text() const -> QString
 {
-  return m_delegate->get_redo_text();
+  return mDelegate->get_redo_text();
 }
 
-auto map_document::path() const -> const QFileInfo&
+auto MapDocument::path() const -> const QFileInfo&
 {
-  return m_delegate->path();
+  return mDelegate->path();
 }
 
-auto map_document::absolute_path() const -> QString
+auto MapDocument::absolute_path() const -> QString
 {
-  return m_delegate->absolute_path();
+  return mDelegate->absolute_path();
 }
 
-void map_document::add_property(const QString& name,
-                                const core::property_type type)
+void MapDocument::add_property(const QString& name,
+                               const core::property_type type)
 {
-  const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::AddProperty>(m_delegate.get(), name, type);
+  const QSignalBlocker blocker{mDelegate.get()};
+  mDelegate->execute<cmd::AddProperty>(mDelegate.get(), name, type);
 }
 
-void map_document::add_property(const QString& name,
-                                const core::property& property)
+void MapDocument::add_property(const QString& name,
+                               const core::property& property)
 {
-  const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::AddProperty>(m_delegate.get(), name, property);
+  const QSignalBlocker blocker{mDelegate.get()};
+  mDelegate->execute<cmd::AddProperty>(mDelegate.get(), name, property);
 }
 
-void map_document::remove_property(const QString& name)
+void MapDocument::remove_property(const QString& name)
 {
-  const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::RemoveProperty>(m_delegate.get(), name);
+  const QSignalBlocker blocker{mDelegate.get()};
+  mDelegate->execute<cmd::RemoveProperty>(mDelegate.get(), name);
 }
 
-void map_document::rename_property(const QString& oldName,
-                                   const QString& newName)
+void MapDocument::rename_property(const QString& oldName,
+                                  const QString& newName)
 {
-  const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::RenameProperty>(m_delegate.get(), oldName, newName);
+  const QSignalBlocker blocker{mDelegate.get()};
+  mDelegate->execute<cmd::RenameProperty>(mDelegate.get(), oldName, newName);
 }
 
-void map_document::set_property(const QString& name,
-                                const core::property& property)
+void MapDocument::set_property(const QString& name,
+                               const core::property& property)
 {
-  const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::UpdateProperty>(m_delegate.get(), name, property);
+  const QSignalBlocker blocker{mDelegate.get()};
+  mDelegate->execute<cmd::UpdateProperty>(mDelegate.get(), name, property);
 }
 
-void map_document::change_property_type(const QString& name,
-                                        const core::property_type type)
+void MapDocument::change_property_type(const QString& name,
+                                       const core::property_type type)
 {
-  const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::ChangePropertyType>(m_delegate.get(), name, type);
+  const QSignalBlocker blocker{mDelegate.get()};
+  mDelegate->execute<cmd::ChangePropertyType>(mDelegate.get(), name, type);
 }
 
-auto map_document::get_property(const QString& name) const
+auto MapDocument::get_property(const QString& name) const
     -> const core::property&
 {
-  return m_delegate->get_property(name);
+  return mDelegate->get_property(name);
 }
 
-auto map_document::get_property(const QString& name) -> core::property&
+auto MapDocument::get_property(const QString& name) -> core::property&
 {
-  return m_delegate->get_property(name);
+  return mDelegate->get_property(name);
 }
 
-auto map_document::has_property(const QString& name) const -> bool
+auto MapDocument::has_property(const QString& name) const -> bool
 {
-  return m_delegate->has_property(name);
+  return mDelegate->has_property(name);
 }
 
-auto map_document::property_count() const noexcept -> int
+auto MapDocument::property_count() const noexcept -> int
 {
-  return m_delegate->property_count();
+  return mDelegate->property_count();
 }
 
-auto map_document::properties() const -> const property_map&
+auto MapDocument::properties() const -> const property_map&
 {
-  return m_delegate->properties();
+  return mDelegate->properties();
 }
 
-void map_document::flood(const position& position, const tile_id replacement)
+void MapDocument::Flood(const position& position, const tile_id replacement)
 {
-  m_delegate->execute<cmd::BucketFill>(this, position, replacement);
+  mDelegate->execute<cmd::BucketFill>(this, position, replacement);
 }
 
-void map_document::add_stamp_sequence(vector_map<position, tile_id>&& oldState,
-                                      vector_map<position, tile_id>&& sequence)
+void MapDocument::AddStampSequence(vector_map<position, tile_id>&& oldState,
+                                   vector_map<position, tile_id>&& sequence)
 {
-  m_delegate->execute<cmd::StampSequence>(this,
-                                          std::move(oldState),
-                                          std::move(sequence));
+  mDelegate->execute<cmd::StampSequence>(this,
+                                         std::move(oldState),
+                                         std::move(sequence));
 }
 
-void map_document::add_erase_sequence(vector_map<position, tile_id>&& oldState)
+void MapDocument::AddEraseSequence(vector_map<position, tile_id>&& oldState)
 {
-  m_delegate->execute<cmd::EraseSequence>(this, std::move(oldState));
+  mDelegate->execute<cmd::EraseSequence>(this, std::move(oldState));
 }
 
-void map_document::add_row()
+void MapDocument::AddRow()
 {
-  m_delegate->execute<cmd::AddRow>(this);
+  mDelegate->execute<cmd::AddRow>(this);
 }
 
-void map_document::add_column()
+void MapDocument::AddColumn()
 {
-  m_delegate->execute<cmd::AddColumn>(this);
+  mDelegate->execute<cmd::AddColumn>(this);
 }
 
-void map_document::remove_row()
+void MapDocument::RemoveRow()
 {
-  m_delegate->execute<cmd::RemoveRow>(this);
+  mDelegate->execute<cmd::RemoveRow>(this);
 }
 
-void map_document::remove_column()
+void MapDocument::RemoveColumn()
 {
-  m_delegate->execute<cmd::RemoveColumn>(this);
+  mDelegate->execute<cmd::RemoveColumn>(this);
 }
 
-void map_document::resize(const row_t nRows, const col_t nCols)
+void MapDocument::Resize(const row_t nRows, const col_t nCols)
 {
   Q_ASSERT(nRows > 0_row);
   Q_ASSERT(nCols > 0_col);
-  m_delegate->execute<cmd::ResizeMap>(this, nRows, nCols);
+  mDelegate->execute<cmd::ResizeMap>(this, nRows, nCols);
 }
 
-void map_document::add_tileset(const QImage& image,
-                               const QFileInfo& path,
-                               const QString& name,
-                               const tile_width tileWidth,
-                               const tile_height tileHeight)
+void MapDocument::AddTileset(const QImage& image,
+                             const QFileInfo& path,
+                             const QString& name,
+                             const tile_width tileWidth,
+                             const tile_height tileHeight)
 {
   if (!image.isNull())
   {
-    const auto id = m_tilesets->next_tileset_id();
-    const auto gid = m_tilesets->next_global_tile_id();
+    const auto id = mTilesets->next_tileset_id();
+    const auto gid = mTilesets->next_global_tile_id();
 
     auto ts = std::make_shared<tileset>(gid, image, tileWidth, tileHeight);
     ts->set_name(name);
     ts->set_path(path);
 
     // This will cause an `added_tileset` signal to be emitted
-    m_delegate->execute<cmd::AddTileset>(this, std::move(ts), id);
-    m_tilesets->increment_next_tileset_id();
+    mDelegate->execute<cmd::AddTileset>(this, std::move(ts), id);
+    mTilesets->increment_next_tileset_id();
   }
 }
 
-void map_document::remove_tileset(tileset_id id)
+void MapDocument::RemoveTileset(const tileset_id id)
 {
-  m_delegate->execute<cmd::RemoveTileset>(this,
-                                          m_tilesets->get_tileset_pointer(id),
-                                          id);
+  mDelegate->execute<cmd::RemoveTileset>(this,
+                                         mTilesets->get_tileset_pointer(id),
+                                         id);
 }
 
-void map_document::select_tileset(const tileset_id id)
+void MapDocument::SelectTileset(const tileset_id id)
 {
-  m_tilesets->select(id);
+  mTilesets->select(id);
 }
 
-void map_document::set_tileset_selection(const tileset_selection& selection)
+void MapDocument::SetTilesetSelection(const tileset_selection& selection)
 {
-  m_tilesets->set_selection(selection);
+  mTilesets->set_selection(selection);
 }
 
-void map_document::select_layer(const layer_id id)
+void MapDocument::SelectLayer(const layer_id id)
 {
-  m_delegate->execute<cmd::SelectLayer>(this, id);
+  mDelegate->execute<cmd::SelectLayer>(this, id);
 }
 
-void map_document::add_layer(const layer_id id, const shared<ILayer>& layer)
+void MapDocument::AddLayer(const layer_id id, const shared<ILayer>& layer)
 {
   Q_ASSERT(layer);
-  m_map->add_layer(id, layer);
+  mMap->AddLayer(id, layer);
 }
 
-auto map_document::add_tile_layer() -> layer_id
+auto MapDocument::AddTileLayer() -> layer_id
 {
-  const auto id = m_map->next_layer_id();  // must be before make_tile_layer
-  auto layer = m_map->make_tile_layer();
+  const auto id = mMap->NextLayerId();  // must be before make_tile_layer
+  auto layer = mMap->MakeTileLayer();
 
   layer->SetName(layer->Name() + TACTILE_QSTRING(u" ") +
-                 QString::number(m_tileLayerSuffix));
-  ++m_tileLayerSuffix;
+                 QString::number(mTileLayerSuffix));
+  ++mTileLayerSuffix;
 
-  m_delegate->execute<cmd::AddLayer>(this, std::move(layer), id);
+  mDelegate->execute<cmd::AddLayer>(this, std::move(layer), id);
   return id;
 }
 
-auto map_document::add_object_layer() -> layer_id
+auto MapDocument::AddObjectLayer() -> layer_id
 {
-  const auto id = m_map->next_layer_id();  // must be before make_object_layer
-  auto layer = m_map->make_object_layer();
+  const auto id = mMap->NextLayerId();  // must be before make_object_layer
+  auto layer = mMap->MakeObjectLayer();
 
   layer->SetName(layer->Name() + TACTILE_QSTRING(u" ") +
-                 QString::number(m_objectLayerSuffix));
-  ++m_objectLayerSuffix;
+                 QString::number(mObjectLayerSuffix));
+  ++mObjectLayerSuffix;
 
-  m_delegate->execute<cmd::AddLayer>(this, std::move(layer), id);
+  mDelegate->execute<cmd::AddLayer>(this, std::move(layer), id);
   return id;
 }
 
-void map_document::remove_layer(const layer_id id)
+void MapDocument::RemoveLayer(const layer_id id)
 {
-  m_delegate->execute<cmd::RemoveLayer>(this, id);
+  mDelegate->execute<cmd::RemoveLayer>(this, id);
 }
 
-auto map_document::take_layer(const layer_id id) -> shared<ILayer>
+auto MapDocument::TakeLayer(const layer_id id) -> shared<ILayer>
 {
-  return m_map->take_layer(id);
+  return mMap->TakeLayer(id);
 }
 
-void map_document::duplicate_layer(const layer_id id)
+void MapDocument::DuplicateLayer(const layer_id id)
 {
-  m_delegate->execute<cmd::DuplicateLayer>(this, id);
+  mDelegate->execute<cmd::DuplicateLayer>(this, id);
 }
 
-void map_document::increase_tile_size()
+void MapDocument::IncreaseTileSize()
 {
-  m_map->increase_tile_size();
-  emit redraw();
+  mMap->IncreaseTileSize();
+  emit S_Redraw();
 }
 
-void map_document::decrease_tile_size()
+void MapDocument::DecreaseTileSize()
 {
-  m_map->decrease_tile_size();
-  emit redraw();
+  mMap->DecreaseTileSize();
+  emit S_Redraw();
 }
 
-void map_document::reset_tile_size()
+void MapDocument::ResetTileSize()
 {
-  m_map->reset_tile_size();
-  emit redraw();
+  mMap->ResetTileSize();
+  emit S_Redraw();
 }
 
-void map_document::set_layer_visibility(const layer_id id, const bool visible)
+void MapDocument::SetLayerVisibility(const layer_id id, const bool visible)
 {
-  m_delegate->execute<cmd::SetLayerVisibility>(this, id, visible);
+  mDelegate->execute<cmd::SetLayerVisibility>(this, id, visible);
 }
 
-void map_document::set_layer_opacity(const layer_id id, const double opacity)
+void MapDocument::SetLayerOpacity(const layer_id id, const double opacity)
 {
-  m_delegate->execute<cmd::ChangeOpacity>(this, id, opacity);
+  mDelegate->execute<cmd::ChangeOpacity>(this, id, opacity);
 }
 
-void map_document::set_layer_name(const layer_id id, const QString& name)
+void MapDocument::SetLayerName(const layer_id id, const QString& name)
 {
-  m_delegate->execute<cmd::SetLayerName>(this, id, name);
+  mDelegate->execute<cmd::SetLayerName>(this, id, name);
 }
 
-void map_document::move_layer_back(const layer_id id)
+void MapDocument::MoveLayerBack(const layer_id id)
 {
-  m_delegate->execute<cmd::MoveLayerBack>(this, id);
+  mDelegate->execute<cmd::MoveLayerBack>(this, id);
 }
 
-void map_document::move_layer_forward(const layer_id id)
+void MapDocument::MoveLayerForward(const layer_id id)
 {
-  m_delegate->execute<cmd::MoveLayerForward>(this, id);
+  mDelegate->execute<cmd::MoveLayerForward>(this, id);
 }
 
-void map_document::set_tileset_name(const tileset_id id, const QString& name)
+void MapDocument::SetTilesetName(const tileset_id id, const QString& name)
 {
-  m_delegate->execute<cmd::SetTilesetName>(this, id, name);
+  mDelegate->execute<cmd::SetTilesetName>(this, id, name);
 }
 
-void map_document::set_next_layer_id(const layer_id id) noexcept
+void MapDocument::SetNextLayerId(const layer_id id) noexcept
 {
-  m_map->set_next_layer_id(id);
+  mMap->SetNextLayerId(id);
 }
 
-void map_document::set_next_object_id(const object_id id) noexcept
+void MapDocument::SetNextObjectId(const object_id id) noexcept
 {
-  m_map->set_next_object_id(id);
+  mMap->SetNextObjectId(id);
 }
 
-auto map_document::in_bounds(const position& pos) const -> bool
+auto MapDocument::InBounds(const position& pos) const -> bool
 {
-  return m_map->in_bounds(pos);
+  return mMap->InBounds(pos);
 }
 
-auto map_document::get_layer(const layer_id id) -> ILayer*
+auto MapDocument::GetLayer(const layer_id id) -> ILayer*
 {
-  return m_map->get_layer(id).get();
+  return mMap->GetLayer(id).get();
 }
 
-auto map_document::get_layer(const layer_id id) const -> const ILayer*
+auto MapDocument::GetLayer(const layer_id id) const -> const ILayer*
 {
-  return m_map->get_layer(id).get();
+  return mMap->GetLayer(id).get();
 }
 
-auto map_document::get_tile_layer(const layer_id id) -> TileLayer*
+auto MapDocument::GetTileLayer(const layer_id id) -> TileLayer*
 {
-  return m_map->get_tile_layer(id);
+  return mMap->GetTileLayer(id);
 }
 
-auto map_document::get_tile_layer(const layer_id id) const -> const TileLayer*
+auto MapDocument::GetTileLayer(const layer_id id) const -> const TileLayer*
 {
-  return m_map->get_tile_layer(id);
+  return mMap->GetTileLayer(id);
 }
 
-auto map_document::get_object_layer(const layer_id id) const
-    -> const ObjectLayer*
+auto MapDocument::GetObjectLayer(const layer_id id) const -> const ObjectLayer*
 {
-  return m_map->get_object_layer(id);
+  return mMap->GetObjectLayer(id);
 }
 
-auto map_document::layer_count() const noexcept -> int
+auto MapDocument::LayerCount() const noexcept -> int
 {
-  return m_map->layer_count();
+  return mMap->LayerCount();
 }
 
-auto map_document::row_count() const -> row_t
+auto MapDocument::RowCount() const -> row_t
 {
-  return m_map->row_count();
+  return mMap->RowCount();
 }
 
-auto map_document::col_count() const -> col_t
+auto MapDocument::ColumnCount() const -> col_t
 {
-  return m_map->col_count();
+  return mMap->ColumnCount();
 }
 
-auto map_document::width() const -> int
+auto MapDocument::Width() const -> int
 {
-  return m_map->width();
+  return mMap->Width();
 }
 
-auto map_document::height() const -> int
+auto MapDocument::Height() const -> int
 {
-  return m_map->height();
+  return mMap->Height();
 }
 
-auto map_document::current_tile_size() const noexcept -> int
+auto MapDocument::CurrentTileSize() const noexcept -> int
 {
-  return m_map->current_tile_size();
+  return mMap->CurrentTileSize();
 }
 
-auto map_document::current_tileset() const -> const tileset*
+auto MapDocument::CurrentTileset() const -> const tileset*
 {
-  return m_tilesets->current_tileset();
+  return mTilesets->current_tileset();
 }
 
-auto map_document::get_map() const noexcept -> const map*
+auto MapDocument::Data() const noexcept -> const Map*
 {
-  return m_map.get();
+  return mMap.get();
 }
 
-auto map_document::tilesets() const noexcept -> const tileset_manager*
+auto MapDocument::GetTilesets() const noexcept -> const tileset_manager*
 {
-  return m_tilesets.get();
+  return mTilesets.get();
 }
 
-auto map_document::tilesets() noexcept -> tileset_manager*
+auto MapDocument::GetTilesets() noexcept -> tileset_manager*
 {
-  return m_tilesets.get();
+  return mTilesets.get();
 }
 
-auto map_document::raw() -> map&
+auto MapDocument::Raw() -> Map&
 {
-  return *m_map;
+  return *mMap;
 }
 
-auto map_document::current_layer_id() const noexcept -> maybe<layer_id>
+auto MapDocument::CurrentLayerId() const noexcept -> maybe<layer_id>
 {
-  return m_map->active_layer_id();
+  return mMap->ActiveLayerId();
 }
 
-auto map_document::has_layer(const layer_id id) const -> bool
+auto MapDocument::HasLayer(const layer_id id) const -> bool
 {
-  return m_map->has_layer(id);
+  return mMap->HasLayer(id);
 }
 
 }  // namespace tactile::core

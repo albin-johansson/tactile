@@ -76,7 +76,7 @@ class map_parser final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto make_document() -> core::map_document*
+  [[nodiscard]] auto make_document() -> core::MapDocument*
   {
     Q_ASSERT(m_error == parse_error::none);
     return to_map_document(m_data);

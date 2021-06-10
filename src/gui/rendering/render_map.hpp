@@ -7,12 +7,12 @@
 #include "maybe.hpp"
 #include "position.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile {
 
 void RenderMap(QPainter& painter,
-               const core::map_document& document,
+               const core::MapDocument& document,
                maybe<core::position> mousePosition,
                const QRectF& exposed);
 

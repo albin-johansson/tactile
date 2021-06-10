@@ -166,7 +166,7 @@ void tactile_app::handle_pan_up()
 {
   if (const auto* document = m_model->current_document())
   {
-    m_window->MoveViewport(0, document->current_tile_size());
+    m_window->MoveViewport(0, document->CurrentTileSize());
   }
 }
 
@@ -174,7 +174,7 @@ void tactile_app::handle_pan_down()
 {
   if (const auto* document = m_model->current_document())
   {
-    m_window->MoveViewport(0, -document->current_tile_size());
+    m_window->MoveViewport(0, -document->CurrentTileSize());
   }
 }
 
@@ -182,7 +182,7 @@ void tactile_app::handle_pan_right()
 {
   if (const auto* document = m_model->current_document())
   {
-    m_window->MoveViewport(-document->current_tile_size(), 0);
+    m_window->MoveViewport(-document->CurrentTileSize(), 0);
   }
 }
 
@@ -190,7 +190,7 @@ void tactile_app::handle_pan_left()
 {
   if (const auto* document = m_model->current_document())
   {
-    m_window->MoveViewport(document->current_tile_size(), 0);
+    m_window->MoveViewport(document->CurrentTileSize(), 0);
   }
 }
 

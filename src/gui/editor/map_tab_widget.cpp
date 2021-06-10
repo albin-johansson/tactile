@@ -36,7 +36,7 @@ void MapTabWidget::ForceRedraw()
   }
 }
 
-void MapTabWidget::AddTab(core::map_document* map,
+void MapTabWidget::AddTab(core::MapDocument* map,
                           map_id id,
                           const QString& title)
 {

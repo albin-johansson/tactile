@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-BucketFill::BucketFill(not_null<core::map_document*> document,
+BucketFill::BucketFill(not_null<core::MapDocument*> document,
                        const core::position& position,
                        const tile_id replacement)
     : QUndoCommand{TACTILE_QSTRING(u"Bucket Fill")}
@@ -26,12 +26,12 @@ void BucketFill::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = mDocument->raw();
-  const auto layer = map.active_layer_id().value();
+  auto& map = mDocument->Raw();
+  const auto layer = map.ActiveLayerId().value();
 
-  map.select_layer(mLayer);
+  map.SelectLayer(mLayer);
 
-  auto* tileLayer = map.get_tile_layer(mLayer);
+  auto* tileLayer = map.GetTileLayer(mLayer);
   Q_ASSERT(tileLayer);
 
   for (const auto& position : mPositions)
@@ -39,8 +39,8 @@ void BucketFill::undo()
     tileLayer->SetTile(position, mTarget);
   }
 
-  map.select_layer(layer);
-  emit mDocument->redraw();
+  map.SelectLayer(layer);
+  emit mDocument->S_Redraw();
 }
 
 void BucketFill::redo()
@@ -49,16 +49,16 @@ void BucketFill::redo()
 
   mPositions.clear();
 
-  auto& map = mDocument->raw();
-  mLayer = map.active_layer_id().value();
+  auto& map = mDocument->Raw();
+  mLayer = map.ActiveLayerId().value();
 
-  auto* tileLayer = map.get_tile_layer(mLayer);
+  auto* tileLayer = map.GetTileLayer(mLayer);
   Q_ASSERT(tileLayer);
 
   mTarget = tileLayer->TileAt(mOrigin).value();
   tileLayer->Flood(mOrigin, mReplacement, mPositions);
 
-  emit mDocument->redraw();
+  emit mDocument->S_Redraw();
 }
 
 }  // namespace tactile::cmd

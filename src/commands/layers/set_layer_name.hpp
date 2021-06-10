@@ -9,14 +9,14 @@
 #include "maybe.hpp"
 #include "not_null.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class SetLayerName final : public QUndoCommand
 {
  public:
-  SetLayerName(not_null<core::map_document*> document,
+  SetLayerName(not_null<core::MapDocument*> document,
                layer_id id,
                QString name);
 
@@ -30,7 +30,7 @@ class SetLayerName final : public QUndoCommand
   }
 
  private:
-  not_null<core::map_document*> mDocument{};
+  not_null<core::MapDocument*> mDocument{};
   layer_id mId;
   QString mName;
   maybe<QString> mPrevious;

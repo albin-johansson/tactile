@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-RemoveTileset::RemoveTileset(not_null<core::map_document*> document,
+RemoveTileset::RemoveTileset(not_null<core::MapDocument*> document,
                              shared<core::tileset> tileset,
                              const tileset_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Remove Tileset")}
@@ -30,26 +30,26 @@ void RemoveTileset::undo()
 {
   QUndoCommand::undo();
 
-  auto* tilesets = mDocument->tilesets();
+  auto* tilesets = mDocument->GetTilesets();
   tilesets->add(mId, mTileset);
 
-  emit mDocument->added_tileset(mId);
+  emit mDocument->S_AddedTileset(mId);
 }
 
 void RemoveTileset::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = mDocument->raw();
-  auto* tilesets = mDocument->tilesets();
+  auto& map = mDocument->Raw();
+  auto* tilesets = mDocument->GetTilesets();
 
   const auto [first, last] = tilesets->range_of(mId);
-  map.remove_occurrences(first, last);
+  map.RemoveOccurrences(first, last);
 
   tilesets->remove(mId);
 
-  emit mDocument->removed_tileset(mId);
-  emit mDocument->redraw();
+  emit mDocument->S_RemovedTileset(mId);
+  emit mDocument->S_Redraw();
 }
 
 }  // namespace tactile::cmd

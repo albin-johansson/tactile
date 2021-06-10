@@ -25,7 +25,7 @@ class layer_model;
 namespace tactile::core {
 
 class property_manager;
-class map_document;
+class MapDocument;
 class ILayer;
 class tileset;
 
@@ -53,7 +53,7 @@ class model final : public QObject
   /**
    * \copydoc map_document_manager::add(map_document* document)
    */
-  [[nodiscard]] auto add_map(map_document* document) -> map_id;
+  [[nodiscard]] auto add_map(MapDocument* document) -> map_id;
 
   /**
    * \copydoc map_document_manager::has_active_map()
@@ -63,7 +63,7 @@ class model final : public QObject
   /**
    * \copydoc map_document_manager::at()
    */
-  [[nodiscard]] auto get_document(map_id id) -> map_document*;
+  [[nodiscard]] auto get_document(map_id id) -> MapDocument*;
 
   /**
    * \copydoc map_document_manager::current_map_id()
@@ -73,17 +73,17 @@ class model final : public QObject
   /**
    * \copydoc map_document_manager::current_document()
    */
-  [[nodiscard]] auto current_document() -> map_document*;
+  [[nodiscard]] auto current_document() -> MapDocument*;
 
   /**
    * \copydoc current_document()
    */
-  [[nodiscard]] auto current_document() const -> const map_document*;
+  [[nodiscard]] auto current_document() const -> const MapDocument*;
 
  signals:
   void redraw();
 
-  void switched_map(map_id id, not_null<map_document*> document);
+  void switched_map(map_id id, not_null<MapDocument*> document);
 
   void added_layer(layer_id id, const ILayer& layer);
   void added_duplicated_layer(layer_id id, const ILayer& layer);
@@ -335,7 +335,7 @@ class model final : public QObject
   void mouse_exited(QEvent* event);
 
  private:
-  vector_map<map_id, map_document*> m_documents;
+  vector_map<map_id, MapDocument*> m_documents;
   maybe<map_id> m_currentMap;
   map_id m_nextId{1};
   tool_model m_tools;

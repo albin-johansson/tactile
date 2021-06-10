@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-AddTileset::AddTileset(not_null<core::map_document*> document,
+AddTileset::AddTileset(not_null<core::MapDocument*> document,
                        shared<core::tileset> tileset,
                        const tileset_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Add Tileset")}
@@ -30,21 +30,21 @@ void AddTileset::undo()
 {
   QUndoCommand::undo();
 
-  auto* tilesets = mDocument->tilesets();
+  auto* tilesets = mDocument->GetTilesets();
   tilesets->remove(mId);
 
-  emit mDocument->removed_tileset(mId);
-  emit mDocument->redraw();
+  emit mDocument->S_RemovedTileset(mId);
+  emit mDocument->S_Redraw();
 }
 
 void AddTileset::redo()
 {
   QUndoCommand::redo();
 
-  auto* tilesets = mDocument->tilesets();
+  auto* tilesets = mDocument->GetTilesets();
   tilesets->add(mId, mTileset);
 
-  emit mDocument->added_tileset(mId);
+  emit mDocument->S_AddedTileset(mId);
 }
 
 }  // namespace tactile::cmd

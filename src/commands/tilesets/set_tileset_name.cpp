@@ -8,7 +8,7 @@
 
 namespace tactile::cmd {
 
-SetTilesetName::SetTilesetName(not_null<core::map_document*> document,
+SetTilesetName::SetTilesetName(not_null<core::MapDocument*> document,
                                const tileset_id id,
                                QString name)
     : QUndoCommand{QTranslator::tr("Set Tileset Name")}
@@ -28,10 +28,10 @@ void SetTilesetName::undo()
 
   const auto name = mPrevious.value();
 
-  auto* tilesets = mDocument->tilesets();
+  auto* tilesets = mDocument->GetTilesets();
   tilesets->rename(mId, name);
 
-  emit mDocument->renamed_tileset(mId, name);
+  emit mDocument->S_RenamedTileset(mId, name);
   mPrevious.reset();
 }
 
@@ -39,12 +39,12 @@ void SetTilesetName::redo()
 {
   QUndoCommand::redo();
 
-  auto* tilesets = mDocument->tilesets();
+  auto* tilesets = mDocument->GetTilesets();
 
   mPrevious = tilesets->at(mId).name();
   tilesets->rename(mId, mName);
 
-  emit mDocument->renamed_tileset(mId, mName);
+  emit mDocument->S_RenamedTileset(mId, mName);
 }
 
 }  // namespace tactile::cmd

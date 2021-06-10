@@ -22,20 +22,20 @@ TEST(ImportJsonMap, Embedded)
     constexpr auto rows = 5_row;
     constexpr auto cols = 7_col;
 
-    ASSERT_EQ(2, document->layer_count());
-    ASSERT_EQ(rows, document->row_count());
-    ASSERT_EQ(cols, document->col_count());
+    ASSERT_EQ(2, document->LayerCount());
+    ASSERT_EQ(rows, document->RowCount());
+    ASSERT_EQ(cols, document->ColumnCount());
 
     {  // First layer
       constexpr auto id = 1_layer;
-      ASSERT_TRUE(document->has_layer(id));
+      ASSERT_TRUE(document->HasLayer(id));
 
-      const auto* layer = document->get_layer(id);
+      const auto* layer = document->GetLayer(id);
       ASSERT_EQ(core::LayerType::tile_layer, layer->type());
       EXPECT_TRUE(layer->IsVisible());
       EXPECT_EQ(1.0, layer->Opacity());
 
-      const auto* tileLayer = document->get_tile_layer(id);
+      const auto* tileLayer = document->GetTileLayer(id);
       ASSERT_TRUE(tileLayer);
 
       EXPECT_EQ(rows, tileLayer->RowCount());
@@ -48,14 +48,14 @@ TEST(ImportJsonMap, Embedded)
 
     {  // Second layer
       constexpr auto id = 2_layer;
-      ASSERT_TRUE(document->has_layer(id));
+      ASSERT_TRUE(document->HasLayer(id));
 
-      const auto* layer = document->get_layer(id);
+      const auto* layer = document->GetLayer(id);
       ASSERT_EQ(core::LayerType::tile_layer, layer->type());
       EXPECT_TRUE(layer->IsVisible());
       EXPECT_EQ(0.8, layer->Opacity());
 
-      const auto* tileLayer = document->get_tile_layer(id);
+      const auto* tileLayer = document->GetTileLayer(id);
       ASSERT_TRUE(tileLayer);
 
       EXPECT_EQ(empty, tileLayer->TileAt({0_row, 0_col}));
@@ -107,20 +107,20 @@ TEST(ImportJsonMap, External)
   constexpr auto cols = 8_col;
 
   {  // Layers
-    ASSERT_EQ(2, document->layer_count());
-    ASSERT_EQ(rows, document->row_count());
-    ASSERT_EQ(cols, document->col_count());
+    ASSERT_EQ(2, document->LayerCount());
+    ASSERT_EQ(rows, document->RowCount());
+    ASSERT_EQ(cols, document->ColumnCount());
 
     {  // First layer
       constexpr auto id = 1_layer;
-      ASSERT_TRUE(document->has_layer(id));
+      ASSERT_TRUE(document->HasLayer(id));
 
-      const auto* layer = document->get_layer(id);
+      const auto* layer = document->GetLayer(id);
       ASSERT_EQ(core::LayerType::tile_layer, layer->type());
       EXPECT_TRUE(layer->IsVisible());
       EXPECT_EQ(0.2, layer->Opacity());
 
-      const auto* tileLayer = document->get_tile_layer(id);
+      const auto* tileLayer = document->GetTileLayer(id);
       ASSERT_TRUE(tileLayer);
 
       EXPECT_EQ(rows, tileLayer->RowCount());
@@ -133,14 +133,14 @@ TEST(ImportJsonMap, External)
 
     {  // Second layer
       constexpr auto id = 2_layer;
-      ASSERT_TRUE(document->has_layer(id));
+      ASSERT_TRUE(document->HasLayer(id));
 
-      const auto* layer = document->get_layer(id);
+      const auto* layer = document->GetLayer(id);
       ASSERT_EQ(core::LayerType::tile_layer, layer->type());
       EXPECT_TRUE(layer->IsVisible());
       EXPECT_EQ(1.0, layer->Opacity());
 
-      const auto* tileLayer = document->get_tile_layer(id);
+      const auto* tileLayer = document->GetTileLayer(id);
       ASSERT_TRUE(tileLayer);
       EXPECT_EQ(1'293_t, tileLayer->TileAt({0_row, 0_col}));
       EXPECT_EQ(1'359_t, tileLayer->TileAt({2_row, 2_col}));

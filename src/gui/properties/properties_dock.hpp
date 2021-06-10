@@ -6,7 +6,7 @@
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
 TACTILE_FORWARD_DECLARE(tactile, PropertiesWidget)
 

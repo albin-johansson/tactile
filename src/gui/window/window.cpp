@@ -224,7 +224,7 @@ void Window::DisableStampPreview()
 }
 
 void Window::OnSwitchedMap(const map_id map,
-                           not_null<core::map_document*> document)
+                           not_null<core::MapDocument*> document)
 {
   mTilesetDock->OnSwitchedMap(map);
   mLayerDock->OnSwitchedMap(document);
@@ -232,7 +232,7 @@ void Window::OnSwitchedMap(const map_id map,
   mStatusBar->OnSwitchedMap(*document);
 }
 
-void Window::OnNewMapAdded(not_null<core::map_document*> document,
+void Window::OnNewMapAdded(not_null<core::MapDocument*> document,
                            const map_id id,
                            const QString& name)
 {

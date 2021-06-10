@@ -7,14 +7,14 @@
 #include "layer_id.hpp"
 #include "not_null.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class SetLayerVisibility final : public QUndoCommand
 {
  public:
-  SetLayerVisibility(not_null<core::map_document*> document,
+  SetLayerVisibility(not_null<core::MapDocument*> document,
                      layer_id id,
                      bool visible);
 
@@ -28,7 +28,7 @@ class SetLayerVisibility final : public QUndoCommand
   }
 
  private:
-  not_null<core::map_document*> mDocument{};
+  not_null<core::MapDocument*> mDocument{};
   layer_id mId;
   bool mVisible;
 };

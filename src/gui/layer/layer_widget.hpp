@@ -9,7 +9,7 @@
 #include "smart_pointers.hpp"
 
 TACTILE_FORWARD_DECLARE_UI(LayerWidget)
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 TACTILE_FORWARD_DECLARE(tactile::vm, layer_model)
 TACTILE_FORWARD_DECLARE(tactile, LayerListView)
@@ -30,7 +30,7 @@ class LayerWidget final : public QWidget
   ~LayerWidget() noexcept override;
 
  public slots:
-  void OnSwitchedMap(not_null<core::map_document*> document);
+  void OnSwitchedMap(not_null<core::MapDocument*> document);
 
  private:
   unique<Ui::LayerWidget> mUi;

@@ -5,7 +5,7 @@
 #include "not_null.hpp"
 #include "repeated_command.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
@@ -21,7 +21,7 @@ namespace tactile::cmd {
 class AddRow final : public RepeatedCommand
 {
  public:
-  explicit AddRow(not_null<core::map_document*> document);
+  explicit AddRow(not_null<core::MapDocument*> document);
 
   void undo() override;
 
@@ -33,7 +33,7 @@ class AddRow final : public RepeatedCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
 };
 
 }  // namespace tactile::cmd

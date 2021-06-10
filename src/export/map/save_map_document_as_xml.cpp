@@ -142,11 +142,11 @@ void save_properties(QDomDocument& document,
 
 void save_tilesets(QDomDocument& document,
                    QDomElement& root,
-                   const core::map_document& map,
+                   const core::MapDocument& map,
                    const QDir& targetDir,
                    const export_options& options)
 {
-  map.each_tileset([&](tileset_id id, const core::tileset& tileset) {
+  map.EachTileset([&](tileset_id id, const core::tileset& tileset) {
     auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
 
     node.setAttribute(TACTILE_QSTRING(u"firstgid"), tileset.first_id().get());
@@ -231,10 +231,10 @@ void save_object_layer(QDomDocument& document,
 
 void save_layers(QDomDocument& document,
                  QDomElement& root,
-                 const core::map_document& map,
+                 const core::MapDocument& map,
                  const QDir& targetDir)
 {
-  map.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
+  map.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
     QDomElement node;
     if (layer->Type() == core::LayerType::tile_layer)
     {
@@ -275,7 +275,7 @@ void save_layers(QDomDocument& document,
 }
 
 void create_root(QDomDocument& document,
-                 const core::map_document& map,
+                 const core::MapDocument& map,
                  const QDir& targetDir,
                  const export_options& options)
 {
@@ -287,14 +287,14 @@ void create_root(QDomDocument& document,
                     TACTILE_QSTRING(u"orthogonal"));
   root.setAttribute(TACTILE_QSTRING(u"renderorder"),
                     TACTILE_QSTRING(u"right-down"));
-  root.setAttribute(TACTILE_QSTRING(u"width"), map.col_count().get());
-  root.setAttribute(TACTILE_QSTRING(u"height"), map.row_count().get());
+  root.setAttribute(TACTILE_QSTRING(u"width"), map.ColumnCount().get());
+  root.setAttribute(TACTILE_QSTRING(u"height"), map.RowCount().get());
   root.setAttribute(TACTILE_QSTRING(u"tilewidth"),
                     prefs::saves::tile_width().value());
   root.setAttribute(TACTILE_QSTRING(u"tileheight"),
                     prefs::saves::tile_height().value());
   root.setAttribute(TACTILE_QSTRING(u"infinite"), 0);
-  root.setAttribute(TACTILE_QSTRING(u"nextlayerid"), map.layer_count() + 1);
+  root.setAttribute(TACTILE_QSTRING(u"nextlayerid"), map.LayerCount() + 1);
   root.setAttribute(TACTILE_QSTRING(u"nextobjectid"), 1);
 
   if (options.generateDefaults)
@@ -314,7 +314,7 @@ void create_root(QDomDocument& document,
 }  // namespace
 
 void save_map_document_as_xml(const QString& path,
-                              const core::map_document& map)
+                              const core::MapDocument& map)
 {
   const auto options = make_export_options();
 

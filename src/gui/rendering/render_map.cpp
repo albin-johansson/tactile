@@ -25,7 +25,7 @@ struct render_bounds final
 
 struct render_info final
 {
-  const core::map* map;
+  const core::Map* map;
   const core::tileset_manager* tilesets;
   render_bounds bounds;
   maybe<core::position> mousePosition;
@@ -68,17 +68,17 @@ struct render_info final
   return bounds;
 }
 
-[[nodiscard]] auto make_render_info(const core::map_document& document,
+[[nodiscard]] auto make_render_info(const core::MapDocument& document,
                                     const QRectF& exposed,
                                     maybe<core::position> mousePosition)
     -> render_info
 {
-  const auto tileSize = document.current_tile_size();
-  const auto nRows = document.row_count();
-  const auto nCols = document.col_count();
+  const auto tileSize = document.CurrentTileSize();
+  const auto nRows = document.RowCount();
+  const auto nCols = document.ColumnCount();
 
-  return {.map = document.get_map(),
-          .tilesets = document.tilesets(),
+  return {.map = document.Data(),
+          .tilesets = document.GetTilesets(),
           .bounds = make_bounds(exposed, nRows, nCols, tileSize),
           .mousePosition = mousePosition,
           .tileSize = tileSize,
@@ -226,7 +226,7 @@ void render_multi_preview(QPainter& painter, const render_info& info)
 
   tileset->iterate_selection([&](const core::position pos) {
     const auto tilePos = mousePos + pos - offset;
-    if (info.map->in_bounds(tilePos))
+    if (info.map->InBounds(tilePos))
     {
       render_tile(painter,
                   tileset->tile_at(selection.topLeft + pos),
@@ -266,7 +266,7 @@ void render_preview(QPainter& painter, const render_info& info)
 }  // namespace
 
 void RenderMap(QPainter& painter,
-               const core::map_document& document,
+               const core::MapDocument& document,
                const maybe<core::position> mousePosition,
                const QRectF& exposed)
 {
@@ -278,10 +278,10 @@ void RenderMap(QPainter& painter,
   const auto info = make_render_info(document, exposed, mousePosition);
   render_background(painter, info);
 
-  document.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
+  document.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
     render_layer(painter, layer, info);
 
-    if (info.mousePosition && id == document.current_layer_id())
+    if (info.mousePosition && id == document.CurrentLayerId())
     {
       render_preview(painter, info);
     }

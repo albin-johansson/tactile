@@ -8,14 +8,14 @@
 #include "maybe.hpp"
 #include "not_null.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class ChangeOpacity final : public QUndoCommand
 {
  public:
-  ChangeOpacity(not_null<core::map_document*> document,
+  ChangeOpacity(not_null<core::MapDocument*> document,
                 layer_id id,
                 double opacity);
 
@@ -31,7 +31,7 @@ class ChangeOpacity final : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   layer_id mId;
   double mOpacity;
   maybe<double> mPreviousOpacity;

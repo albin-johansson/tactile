@@ -19,7 +19,7 @@
 TACTILE_FORWARD_DECLARE_UI(Window)
 
 TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
 TACTILE_FORWARD_DECLARE(tactile, MapEditor)
 TACTILE_FORWARD_DECLARE(tactile, ToolDock)
@@ -122,9 +122,9 @@ class Window final : public QMainWindow
   void EnableStampPreview(const core::position& position);
   void DisableStampPreview();
 
-  void OnSwitchedMap(map_id map, not_null<core::map_document*> document);
+  void OnSwitchedMap(map_id map, not_null<core::MapDocument*> document);
 
-  void OnNewMapAdded(not_null<core::map_document*> document,
+  void OnNewMapAdded(not_null<core::MapDocument*> document,
                      map_id id,
                      const QString& name = TACTILE_QSTRING(u"map"));
 

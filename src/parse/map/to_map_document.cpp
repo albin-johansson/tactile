@@ -107,16 +107,16 @@ namespace {
 
 }  // namespace
 
-auto to_map_document(const map_data& data) -> core::map_document*
+auto to_map_document(const map_data& data) -> core::MapDocument*
 {
   Q_ASSERT(!data.layers.empty());
 
-  auto* document = new core::map_document{};
+  auto* document = new core::MapDocument{};
 
-  document->set_next_layer_id(data.nextLayerId);
-  document->set_next_object_id(data.nextObjectId);
+  document->SetNextLayerId(data.nextLayerId);
+  document->SetNextObjectId(data.nextObjectId);
 
-  auto* tilesets = document->tilesets();
+  auto* tilesets = document->GetTilesets();
   for (const auto& tilesetData : data.tilesets)
   {
     const auto id [[maybe_unused]] = tilesets->add(make_tileset(tilesetData));
@@ -124,7 +124,7 @@ auto to_map_document(const map_data& data) -> core::map_document*
 
   for (const auto& layerData : data.layers)
   {
-    document->add_layer(layerData.id, make_layer(layerData));
+    document->AddLayer(layerData.id, make_layer(layerData));
   }
 
   for (const auto& propertyData : data.properties)
@@ -133,7 +133,7 @@ auto to_map_document(const map_data& data) -> core::map_document*
   }
 
   document->set_path(QFileInfo{data.path});
-  document->select_layer(data.layers.front().id);
+  document->SelectLayer(data.layers.front().id);
   document->reset_history();  // Make sure there is no undo/redo history
 
   return document;

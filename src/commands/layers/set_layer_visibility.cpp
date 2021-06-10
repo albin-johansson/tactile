@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-SetLayerVisibility::SetLayerVisibility(not_null<core::map_document*> document,
+SetLayerVisibility::SetLayerVisibility(not_null<core::MapDocument*> document,
                                        const layer_id id,
                                        const bool visible)
     : QUndoCommand{QTranslator::tr("Set Layer Visibility")}
@@ -24,22 +24,22 @@ void SetLayerVisibility::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = mDocument->raw();
-  map.set_visibility(mId, !mVisible);
+  auto& map = mDocument->Raw();
+  map.SetVisibility(mId, !mVisible);
 
-  emit mDocument->changed_layer_visibility(mId, !mVisible);
-  emit mDocument->redraw();
+  emit mDocument->S_ChangedLayerVisibility(mId, !mVisible);
+  emit mDocument->S_Redraw();
 }
 
 void SetLayerVisibility::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = mDocument->raw();
-  map.set_visibility(mId, mVisible);
+  auto& map = mDocument->Raw();
+  map.SetVisibility(mId, mVisible);
 
-  emit mDocument->changed_layer_visibility(mId, mVisible);
-  emit mDocument->redraw();
+  emit mDocument->S_ChangedLayerVisibility(mId, mVisible);
+  emit mDocument->S_Redraw();
 }
 
 }  // namespace tactile::cmd

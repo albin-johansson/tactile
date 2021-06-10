@@ -11,7 +11,7 @@
 
 namespace tactile {
 
-MapItem::MapItem(core::map_document* map, QGraphicsItem* parent)
+MapItem::MapItem(core::MapDocument* map, QGraphicsItem* parent)
     : QGraphicsItem{parent}
     , mDocument{map}
 {
@@ -36,7 +36,7 @@ void MapItem::EnableStampPreview(const core::position& position)
 
 void MapItem::ShowMapProperties()
 {
-  emit mDocument->show_properties();
+  emit mDocument->S_ShowProperties();
 }
 
 void MapItem::paint(QPainter* painter,
@@ -56,8 +56,8 @@ void MapItem::paint(QPainter* painter,
 
 auto MapItem::boundingRect() const -> QRectF
 {
-  const auto width = static_cast<double>(mDocument->width());
-  const auto height = static_cast<double>(mDocument->height());
+  const auto width = static_cast<double>(mDocument->Width());
+  const auto height = static_cast<double>(mDocument->Height());
   return {0, 0, width, height};
 }
 

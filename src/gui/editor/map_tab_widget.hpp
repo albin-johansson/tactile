@@ -7,7 +7,7 @@
 #include "maybe.hpp"
 #include "tab_widget.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile {
 
@@ -44,7 +44,7 @@ class MapTabWidget final : public TabWidget
    *
    * \since 0.1.0
    */
-  void AddTab(core::map_document* map, map_id id, const QString& title);
+  void AddTab(core::MapDocument* map, map_id id, const QString& title);
 
   /**
    * \brief Removes the tab associated with the specified map.

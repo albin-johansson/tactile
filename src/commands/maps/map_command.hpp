@@ -10,8 +10,8 @@
 #include "position.hpp"
 #include "tile_id.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map)
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, Map)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
@@ -23,7 +23,7 @@ class MapCommand : public QUndoCommand
   using tile_data = std::map<core::position, tile_id>;
   using layer_data = std::map<layer_id, tile_data>;
 
-  MapCommand(not_null<core::map_document*> document, const QString& name);
+  MapCommand(not_null<core::MapDocument*> document, const QString& name);
 
  protected:
   void RestoreTiles();
@@ -34,7 +34,7 @@ class MapCommand : public QUndoCommand
 
   void Redraw();
 
-  [[nodiscard]] auto GetMap() noexcept -> core::map&;
+  [[nodiscard]] auto GetMap() noexcept -> core::Map&;
 
   [[nodiscard]] auto TileData(const layer_id id) -> tile_data&
   {
@@ -48,7 +48,7 @@ class MapCommand : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   layer_data mLayerData;
 };
 

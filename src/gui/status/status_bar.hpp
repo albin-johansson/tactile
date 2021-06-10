@@ -7,7 +7,7 @@
 #include "forward_declare.hpp"
 #include "layer_id.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile {
 
@@ -28,7 +28,7 @@ class StatusBar final : public QStatusBar
   void S_SelectLayerRequest(layer_id id);
 
  public slots:
-  void OnSwitchedMap(const core::map_document& document);
+  void OnSwitchedMap(const core::MapDocument& document);
 
   void OnAddedLayer(layer_id id, const QString& name);
 

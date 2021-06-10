@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-SelectLayer::SelectLayer(not_null<core::map_document*> document,
+SelectLayer::SelectLayer(not_null<core::MapDocument*> document,
                          const layer_id id)
     : QUndoCommand{QTranslator::tr("Select Layer")}
     , mDocument{document}
@@ -25,13 +25,13 @@ void SelectLayer::undo()
 
   if (mPrevious)
   {
-    auto& map = mDocument->raw();
-    map.select_layer(*mPrevious);
+    auto& map = mDocument->Raw();
+    map.SelectLayer(*mPrevious);
 
-    const auto& layer = map.get_layer(mId);
+    const auto& layer = map.GetLayer(mId);
     Q_ASSERT(layer);
 
-    emit mDocument->selected_layer(*mPrevious, *layer);
+    emit mDocument->S_SelectedLayer(*mPrevious, *layer);
 
     mPrevious.reset();
   }
@@ -41,15 +41,15 @@ void SelectLayer::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = mDocument->raw();
+  auto& map = mDocument->Raw();
 
-  mPrevious = map.active_layer_id();
-  map.select_layer(mId);
+  mPrevious = map.ActiveLayerId();
+  map.SelectLayer(mId);
 
-  const auto& layer = map.get_layer(mId);
+  const auto& layer = map.GetLayer(mId);
   Q_ASSERT(layer);
 
-  emit mDocument->selected_layer(mId, *layer);
+  emit mDocument->S_SelectedLayer(mId, *layer);
 }
 
 }  // namespace tactile::cmd

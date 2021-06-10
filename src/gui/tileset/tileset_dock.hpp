@@ -7,7 +7,7 @@
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile, TilesetWidget)
 
 namespace tactile {
@@ -27,7 +27,7 @@ class TilesetDock final : public DockWidget
   void S_SetTilesetSelection(const core::tileset_selection& selection);
 
  public slots:
-  void OnAddedMap(map_id id, const core::map_document& document);
+  void OnAddedMap(map_id id, const core::MapDocument& document);
 
   void OnSwitchedMap(map_id id);
 

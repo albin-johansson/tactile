@@ -5,7 +5,7 @@
 #include "map_command.hpp"
 #include "not_null.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
@@ -30,7 +30,7 @@ class ResizeMap final : public MapCommand
    *
    * \since 0.1.0
    */
-  ResizeMap(not_null<core::map_document*> document, row_t nRows, col_t nCols);
+  ResizeMap(not_null<core::MapDocument*> document, row_t nRows, col_t nCols);
 
   void undo() override;
 

@@ -7,7 +7,7 @@ using namespace tactile::core;
 
 namespace tactile::cmd {
 
-ResizeMap::ResizeMap(not_null<core::map_document*> document,
+ResizeMap::ResizeMap(not_null<core::MapDocument*> document,
                      const row_t rows,
                      const col_t cols)
     : MapCommand{document, TACTILE_QSTRING(u"Resize Map")}
@@ -21,8 +21,8 @@ void ResizeMap::undo()
 
   auto& map = GetMap();
 
-  map.set_row_count(mOldRows);
-  map.set_col_count(mOldCols);
+  map.SetRowCount(mOldRows);
+  map.SetColumnCount(mOldCols);
 
   if (IsLossyResize())
   {
@@ -38,21 +38,21 @@ void ResizeMap::redo()
 
   auto& map = GetMap();
 
-  mOldRows = map.row_count();
-  mOldCols = map.col_count();
+  mOldRows = map.RowCount();
+  mOldCols = map.ColumnCount();
 
   if (IsLossyResize())
   {
-    const auto rows = map.row_count();
-    const auto cols = map.col_count();
+    const auto rows = map.RowCount();
+    const auto cols = map.ColumnCount();
 
     ClearCache();
     SaveTiles({rows - mOldRows - mRows, rows}, {0_col, cols});
     SaveTiles({0_row, rows}, {cols - mOldCols - mCols, cols});
   }
 
-  map.set_row_count(mRows);
-  map.set_col_count(mCols);
+  map.SetRowCount(mRows);
+  map.SetColumnCount(mCols);
 
   Redraw();
 }

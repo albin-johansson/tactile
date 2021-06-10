@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-AddColumn::AddColumn(not_null<core::map_document*> document)
+AddColumn::AddColumn(not_null<core::MapDocument*> document)
     : RepeatedCommand{TACTILE_QSTRING(u"Add Column")}
     , mDocument{document}
 {
@@ -21,18 +21,18 @@ void AddColumn::undo()
 {
   QUndoCommand::undo();
 
-  InvokeN(Amount(), [this] { mDocument->raw().remove_col(); });
+  InvokeN(Amount(), [this] { mDocument->Raw().RemoveColumn(); });
 
-  emit mDocument->redraw();
+  emit mDocument->S_Redraw();
 }
 
 void AddColumn::redo()
 {
   QUndoCommand::redo();
 
-  InvokeN(Amount(), [this] { mDocument->raw().add_col(empty); });
+  InvokeN(Amount(), [this] { mDocument->Raw().AddColumn(empty); });
 
-  emit mDocument->redraw();
+  emit mDocument->S_Redraw();
 }
 
 }  // namespace tactile::cmd

@@ -7,14 +7,14 @@
 #include "layer_id.hpp"
 #include "not_null.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class MoveLayerForward final : public QUndoCommand
 {
  public:
-  MoveLayerForward(not_null<core::map_document*> document, layer_id id);
+  MoveLayerForward(not_null<core::MapDocument*> document, layer_id id);
 
   void undo() override;
 
@@ -26,7 +26,7 @@ class MoveLayerForward final : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   layer_id mId;
 };
 

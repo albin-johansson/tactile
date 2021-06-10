@@ -13,7 +13,7 @@ namespace {
 
 template <typename T>
 auto open_using(const QString& file, parse::parse_error& error)
-    -> core::map_document*
+    -> core::MapDocument*
 {
   parse::map_parser<T> parser{file};
   error = parser.error_code();
@@ -30,7 +30,7 @@ auto open_using(const QString& file, parse::parse_error& error)
 }  // namespace
 
 auto open_map_document(const QString& path, parse::parse_error& error)
-    -> core::map_document*
+    -> core::MapDocument*
 {
   const QFileInfo info{path};
   const auto suffix = info.suffix();

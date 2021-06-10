@@ -25,6 +25,6 @@ namespace tactile {
  */
 [[nodiscard]] auto open_map_document(const QString& path,
                                      parse::parse_error& error)
-    -> core::map_document*;
+    -> core::MapDocument*;
 
 }  // namespace tactile

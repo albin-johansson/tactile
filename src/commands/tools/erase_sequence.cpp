@@ -9,7 +9,7 @@
 
 namespace tactile::cmd {
 
-EraseSequence::EraseSequence(not_null<core::map_document*> document,
+EraseSequence::EraseSequence(not_null<core::MapDocument*> document,
                              vector_map<core::position, tile_id>&& oldState)
     : QUndoCommand{TACTILE_QSTRING(u"Erase Tiles")}
     , mDocument{document}
@@ -25,12 +25,12 @@ void EraseSequence::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = mDocument->raw();
-  const auto layer = map.active_layer_id().value();
+  auto& map = mDocument->Raw();
+  const auto layer = map.ActiveLayerId().value();
 
-  map.select_layer(mLayer);
+  map.SelectLayer(mLayer);
 
-  auto* tileLayer = map.get_tile_layer(mLayer);
+  auto* tileLayer = map.GetTileLayer(mLayer);
   Q_ASSERT(tileLayer);
 
   for (const auto& [position, tile] : mOldState)
@@ -38,28 +38,28 @@ void EraseSequence::undo()
     tileLayer->SetTile(position, tile);
   }
 
-  map.select_layer(layer);
+  map.SelectLayer(layer);
 
-  emit mDocument->redraw();
+  emit mDocument->S_Redraw();
 }
 
 void EraseSequence::redo()
 {
   if (mFirst)
   {
-    mLayer = mDocument->current_layer_id().value();
+    mLayer = mDocument->CurrentLayerId().value();
     mFirst = false;
     return;
   }
 
   QUndoCommand::redo();
 
-  auto& map = mDocument->raw();
-  const auto layer = map.active_layer_id().value();
+  auto& map = mDocument->Raw();
+  const auto layer = map.ActiveLayerId().value();
 
-  map.select_layer(mLayer);
+  map.SelectLayer(mLayer);
 
-  auto* tileLayer = map.get_tile_layer(mLayer);
+  auto* tileLayer = map.GetTileLayer(mLayer);
   Q_ASSERT(tileLayer);
 
   for (const auto& [position, _] : mOldState)
@@ -67,9 +67,9 @@ void EraseSequence::redo()
     tileLayer->SetTile(position, empty);
   }
 
-  map.select_layer(layer);
+  map.SelectLayer(layer);
 
-  emit mDocument->redraw();
+  emit mDocument->S_Redraw();
 }
 
 }  // namespace tactile::cmd

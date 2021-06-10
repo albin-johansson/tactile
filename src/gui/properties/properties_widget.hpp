@@ -10,7 +10,7 @@
 
 TACTILE_FORWARD_DECLARE_UI(PropertiesWidget)
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
 TACTILE_FORWARD_DECLARE(tactile::vm, property_model)
 TACTILE_FORWARD_DECLARE(tactile, PropertyTreeView)

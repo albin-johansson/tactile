@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-MoveLayerBack::MoveLayerBack(not_null<core::map_document*> document,
+MoveLayerBack::MoveLayerBack(not_null<core::MapDocument*> document,
                              const layer_id id)
     : QUndoCommand{QTranslator::tr("Move Layer Back")}
     , mDocument{document}
@@ -23,22 +23,22 @@ void MoveLayerBack::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = mDocument->raw();
-  map.move_layer_forward(mId);
+  auto& map = mDocument->Raw();
+  map.MoveLayerForward(mId);
 
-  emit mDocument->moved_layer_forward(mId);
-  emit mDocument->redraw();
+  emit mDocument->S_MovedLayerForward(mId);
+  emit mDocument->S_Redraw();
 }
 
 void MoveLayerBack::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = mDocument->raw();
-  map.move_layer_back(mId);
+  auto& map = mDocument->Raw();
+  map.MoveLayerBack(mId);
 
-  emit mDocument->moved_layer_back(mId);
-  emit mDocument->redraw();
+  emit mDocument->S_MovedLayerBack(mId);
+  emit mDocument->S_Redraw();
 }
 
 }  // namespace tactile::cmd

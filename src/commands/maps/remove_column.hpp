@@ -5,7 +5,7 @@
 #include "not_null.hpp"
 #include "repeated_map_command.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
@@ -21,7 +21,7 @@ namespace tactile::cmd {
 class RemoveColumn final : public RepeatedMapCommand
 {
  public:
-  explicit RemoveColumn(not_null<core::map_document*> document);
+  explicit RemoveColumn(not_null<core::MapDocument*> document);
 
   void undo() override;
 

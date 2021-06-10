@@ -10,7 +10,7 @@
 #include "smart_pointers.hpp"
 
 TACTILE_FORWARD_DECLARE_UI(MapEditor)
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile, MapTabWidget)
 TACTILE_FORWARD_DECLARE(tactile, MapEditorContextMenu)
 
@@ -39,7 +39,7 @@ class MapEditor final : public QWidget
 
   void DisableStampPreview();
 
-  void AddMapTab(core::map_document* map, map_id id, const QString& title);
+  void AddMapTab(core::MapDocument* map, map_id id, const QString& title);
 
   void SelectTab(map_id id);
 

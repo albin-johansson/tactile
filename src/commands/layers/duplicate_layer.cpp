@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-DuplicateLayer::DuplicateLayer(not_null<core::map_document*> document,
+DuplicateLayer::DuplicateLayer(not_null<core::MapDocument*> document,
                                const layer_id id)
     : QUndoCommand{QTranslator::tr("Duplicate Layer")}
     , mDocument{document}
@@ -24,13 +24,13 @@ void DuplicateLayer::undo()
   QUndoCommand::undo();
 
   const auto id = mNewId.value();
-  mDocument->take_layer(id);
+  mDocument->TakeLayer(id);
 
-  emit mDocument->removed_layer(id);
-  emit mDocument->redraw();
+  emit mDocument->S_RemovedLayer(id);
+  emit mDocument->S_Redraw();
 
   // We need to tell the document that it can safely reuse the layer ID
-  mDocument->set_next_layer_id(id);
+  mDocument->SetNextLayerId(id);
   mNewId.reset();
 }
 
@@ -38,11 +38,11 @@ void DuplicateLayer::redo()
 {
   QUndoCommand::redo();
 
-  auto& [id, layer] = mDocument->raw().duplicate_layer(mId);
+  auto& [id, layer] = mDocument->Raw().DuplicateLayer(mId);
   layer->SetName(layer->Name() + QTranslator::tr(" (Copy)"));
 
-  emit mDocument->added_duplicated_layer(id, *mDocument->get_layer(id));
-  emit mDocument->redraw();
+  emit mDocument->S_AddedDuplicatedLayer(id, *mDocument->GetLayer(id));
+  emit mDocument->S_Redraw();
 
   mNewId = id;
 }

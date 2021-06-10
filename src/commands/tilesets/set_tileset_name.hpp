@@ -9,14 +9,14 @@
 #include "not_null.hpp"
 #include "tileset_id.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class SetTilesetName final : public QUndoCommand
 {
  public:
-  SetTilesetName(not_null<core::map_document*> document,
+  SetTilesetName(not_null<core::MapDocument*> document,
                  tileset_id id,
                  QString name);
 
@@ -30,7 +30,7 @@ class SetTilesetName final : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   tileset_id mId;
   QString mName;
   maybe<QString> mPrevious;

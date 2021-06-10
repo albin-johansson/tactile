@@ -40,12 +40,12 @@ auto abstract_tool::translate_mouse_position(const QPoint& mousePosition,
       return std::nullopt;
     }
 
-    const auto tileSize = document->current_tile_size();
+    const auto tileSize = document->CurrentTileSize();
 
     const position position{row_t{static_cast<int>(y) / tileSize},
                             col_t{static_cast<int>(x) / tileSize}};
 
-    if (document->in_bounds(position))
+    if (document->InBounds(position))
     {
       return position;
     }

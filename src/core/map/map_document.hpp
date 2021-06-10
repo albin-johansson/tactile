@@ -36,7 +36,7 @@ class document_delegate;
  *
  * \headerfile map_document.hpp
  */
-class map_document final : public document
+class MapDocument final : public document
 {
   Q_OBJECT
 
@@ -48,9 +48,9 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  explicit map_document(QObject* parent = nullptr);
+  explicit MapDocument(QObject* parent = nullptr);
 
-  ~map_document() noexcept override = default;
+  ~MapDocument() noexcept override = default;
 
   /**
    * \brief Creates a map document with a map that contains one layer.
@@ -63,7 +63,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  explicit map_document(row_t nRows, col_t nCols, QObject* parent = nullptr);
+  explicit MapDocument(row_t nRows, col_t nCols, QObject* parent = nullptr);
 
   /// \name Document API
   /// \{
@@ -132,20 +132,20 @@ class map_document final : public document
   /// \{
 
   /**
-   * \copydoc map::select_layer()
-   * \signal `selected_layer`
+   * \copydoc map::SelectLayer()
+   * \signal `S_SelectedLayer`
    */
-  void select_layer(layer_id id);
+  void SelectLayer(layer_id id);
 
-  void add_layer(layer_id id, const shared<ILayer>& layer);
+  void AddLayer(layer_id id, const shared<ILayer>& layer);
 
   /**
-   * \copybrief map::add_tile_layer()
-   * \signal `added_layer`
+   * \copybrief map::AddTileLayer()
+   * \signal `S_AddedLayer`
    */
-  auto add_tile_layer() -> layer_id;
+  auto AddTileLayer() -> layer_id;
 
-  auto add_object_layer() -> layer_id;
+  auto AddObjectLayer() -> layer_id;
 
   /**
    * \brief Removes the specified layer from the document.
@@ -156,14 +156,14 @@ class map_document final : public document
    *
    * \since 0.1.0
    *
-   * \signal `removed_layer`
+   * \signal `S_RemovedLayer`
    */
-  void remove_layer(layer_id id);
+  void RemoveLayer(layer_id id);
 
   /**
-   * \copydoc map::take_layer()
+   * \copydoc map::TakeLayer()
    */
-  auto take_layer(layer_id id) -> shared<ILayer>;
+  auto TakeLayer(layer_id id) -> shared<ILayer>;
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -174,43 +174,43 @@ class map_document final : public document
    *
    * \since 0.1.0
    *
-   * \signal `added_duplicated_layer`
+   * \signal `S_AddedDuplicatedLayer`
    */
-  void duplicate_layer(layer_id id);
+  void DuplicateLayer(layer_id id);
 
   /**
-   * \copydoc map::set_visibility()
+   * \copydoc map::SetVisibility()
    */
-  void set_layer_visibility(layer_id id, bool visible);
+  void SetLayerVisibility(layer_id id, bool visible);
 
   /**
-   * \copydoc map::set_opacity()
+   * \copydoc map::SetOpacity()
    */
-  void set_layer_opacity(layer_id id, double opacity);
+  void SetLayerOpacity(layer_id id, double opacity);
 
   /**
-   * \copydoc map::set_name()
+   * \copydoc map::SetName()
    */
-  void set_layer_name(layer_id id, const QString& name);
+  void SetLayerName(layer_id id, const QString& name);
 
   /**
-   * \copydoc map::move_layer_back()
-   * \signal `moved_layer_back`
+   * \copydoc map::MoveLayerBack()
+   * \signal `S_MovedLayerBack`
    */
-  void move_layer_back(layer_id id);
+  void MoveLayerBack(layer_id id);
 
   /**
-   * \copydoc map::move_layer_forward()
-   * \signal `moved_layer_forward`
+   * \copydoc map::MoveLayerForward()
+   * \signal `S_MovedLayerForward`
    */
-  void move_layer_forward(layer_id id);
+  void MoveLayerForward(layer_id id);
 
   /**
-   * \copydoc map::set_next_layer_id()
+   * \copydoc map::SetNextLayerId()
    */
-  void set_next_layer_id(layer_id id) noexcept;
+  void SetNextLayerId(layer_id id) noexcept;
 
-  void set_next_object_id(object_id id) noexcept;
+  void SetNextObjectId(object_id id) noexcept;
 
   /**
    * \brief Iterates each layer associated with the document.
@@ -223,56 +223,56 @@ class map_document final : public document
    * \since 0.1.0
    */
   template <std::invocable<layer_id, const shared<ILayer>&> T>
-  void each_layer(T&& callable) const
+  void EachLayer(T&& callable) const
   {
-    for (const auto& [key, layer] : *m_map)
+    for (const auto& [key, layer] : *mMap)
     {
       callable(key, layer);
     }
   }
 
   /**
-   * \copydoc map::get_layer()
+   * \copydoc map::GetLayer()
    */
-  [[nodiscard]] auto get_layer(layer_id id) -> ILayer*;
+  [[nodiscard]] auto GetLayer(layer_id id) -> ILayer*;
 
   /**
-   * \copydoc map::get_layer()
+   * \copydoc map::GetLayer()
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const ILayer*;
+  [[nodiscard]] auto GetLayer(layer_id id) const -> const ILayer*;
 
-  [[nodiscard]] auto get_tile_layer(layer_id id) -> TileLayer*;
+  [[nodiscard]] auto GetTileLayer(layer_id id) -> TileLayer*;
 
-  [[nodiscard]] auto get_tile_layer(layer_id id) const -> const TileLayer*;
+  [[nodiscard]] auto GetTileLayer(layer_id id) const -> const TileLayer*;
 
-  [[nodiscard]] auto get_object_layer(layer_id id) const -> const ObjectLayer*;
+  [[nodiscard]] auto GetObjectLayer(layer_id id) const -> const ObjectLayer*;
 
   /**
-   * \copydoc map::layer_count()
+   * \copydoc map::LayerCount()
    */
-  [[nodiscard]] auto layer_count() const noexcept -> int;
+  [[nodiscard]] auto LayerCount() const noexcept -> int;
 
   /**
-   * \copydoc map::active_layer_id()
+   * \copydoc map::ActiveLayerId()
    */
-  [[nodiscard]] auto current_layer_id() const noexcept -> maybe<layer_id>;
+  [[nodiscard]] auto CurrentLayerId() const noexcept -> maybe<layer_id>;
 
   /**
-   * \copydoc map::has_layer()
+   * \copydoc map::HasLayer()
    */
-  [[nodiscard]] auto has_layer(layer_id id) const -> bool;
+  [[nodiscard]] auto HasLayer(layer_id id) const -> bool;
 
   /// \} End of layer API
 
   /**
-   * \brief Performs a flood-fill at the specified position.
+   * \brief Performs a Flood-fill at the specified position.
    *
-   * \param position the origin position of the flood-fill.
+   * \param position the origin position of the Flood-fill.
    * \param replacement the tile ID that will be used instead of the target ID.
    *
    * \since 0.1.0
    */
-  void flood(const position& position, tile_id replacement);
+  void Flood(const position& position, tile_id replacement);
 
   /**
    * \brief Adds a stamp sequence to the command stack.
@@ -287,8 +287,8 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  void add_stamp_sequence(vector_map<position, tile_id>&& oldState,
-                          vector_map<position, tile_id>&& sequence);
+  void AddStampSequence(vector_map<position, tile_id>&& oldState,
+                        vector_map<position, tile_id>&& sequence);
 
   /**
    * \brief Adds an erase sequence to the command stack.
@@ -302,7 +302,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  void add_erase_sequence(vector_map<position, tile_id>&& oldState);
+  void AddEraseSequence(vector_map<position, tile_id>&& oldState);
 
   /**
    * \brief Adds a row to the associated map.
@@ -311,7 +311,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  void add_row();
+  void AddRow();
 
   /**
    * \brief Adds a column to the associated map.
@@ -320,7 +320,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  void add_column();
+  void AddColumn();
 
   /**
    * \brief Removes a row from the associated map.
@@ -329,7 +329,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  void remove_row();
+  void RemoveRow();
 
   /**
    * \brief Removes a column from the associated map.
@@ -338,7 +338,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  void remove_column();
+  void RemoveColumn();
 
   /**
    * \brief Resizes the map.
@@ -348,7 +348,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  void resize(row_t nRows, col_t nCols);
+  void Resize(row_t nRows, col_t nCols);
 
   /**
    * \brief Adds a tileset to the document.
@@ -363,40 +363,40 @@ class map_document final : public document
    *
    * \since 0.1.0
    *
-   * \signal `added_tileset`
+   * \signal `S_AddedTileset`
    */
-  void add_tileset(const QImage& image,
-                   const QFileInfo& path,
-                   const QString& name,
-                   tile_width tileWidth,
-                   tile_height tileHeight);
+  void AddTileset(const QImage& image,
+                  const QFileInfo& path,
+                  const QString& name,
+                  tile_width tileWidth,
+                  tile_height tileHeight);
 
-  void remove_tileset(tileset_id id);
+  void RemoveTileset(tileset_id id);
 
   /**
    * \copydoc tileset_manager::select()
    */
-  void select_tileset(tileset_id id);
+  void SelectTileset(tileset_id id);
 
   /**
    * \copydoc tileset_manager::set_selection()
    */
-  void set_tileset_selection(const tileset_selection& selection);
+  void SetTilesetSelection(const tileset_selection& selection);
 
   /**
-   * \copydoc map::increase_tile_size()
+   * \copydoc map::IncreaseTileSize()
    */
-  void increase_tile_size();
+  void IncreaseTileSize();
 
   /**
-   * \copydoc map::decrease_tile_size()
+   * \copydoc map::DecreaseTileSize()
    */
-  void decrease_tile_size();
+  void DecreaseTileSize();
 
   /**
-   * \copydoc map::reset_tile_size()
+   * \copydoc map::ResetTileSize()
    */
-  void reset_tile_size();
+  void ResetTileSize();
 
   /**
    * \brief Sets the name of the tileset associated with the specified ID.
@@ -406,7 +406,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  void set_tileset_name(tileset_id id, const QString& name);
+  void SetTilesetName(tileset_id id, const QString& name);
 
   /**
    * \brief Iterates each tileset associated with the document.
@@ -418,48 +418,48 @@ class map_document final : public document
    * \since 0.1.0
    */
   template <std::invocable<tileset_id, const tileset&> T>
-  void each_tileset(T&& callable) const
+  void EachTileset(T&& callable) const
   {
-    for (const auto& [id, tileset] : *m_tilesets)
+    for (const auto& [id, tileset] : *mTilesets)
     {
       callable(id, *tileset);
     }
   }
 
   /**
-   * \copydoc map::in_bounds()
+   * \copydoc map::InBounds()
    */
-  [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
+  [[nodiscard]] auto InBounds(const position& pos) const -> bool;
 
   /**
-   * \copydoc map::row_count()
+   * \copydoc map::RowCount()
    */
-  [[nodiscard]] auto row_count() const -> row_t;
+  [[nodiscard]] auto RowCount() const -> row_t;
 
   /**
-   * \copydoc map::col_count()
+   * \copydoc map::ColumnCount()
    */
-  [[nodiscard]] auto col_count() const -> col_t;
+  [[nodiscard]] auto ColumnCount() const -> col_t;
 
   /**
    * \copydoc map::width()
    */
-  [[nodiscard]] auto width() const -> int;
+  [[nodiscard]] auto Width() const -> int;
 
   /**
    * \copydoc map::height()
    */
-  [[nodiscard]] auto height() const -> int;
+  [[nodiscard]] auto Height() const -> int;
 
   /**
-   * \copydoc map::current_tile_size()
+   * \copydoc map::CurrentTileSize()
    */
-  [[nodiscard]] auto current_tile_size() const noexcept -> int;
+  [[nodiscard]] auto CurrentTileSize() const noexcept -> int;
 
   /**
-   * \copydoc tileset_manager::current_tileset()
+   * \copydoc tileset_manager::CurrentTileset()
    */
-  [[nodiscard]] auto current_tileset() const -> const tileset*;
+  [[nodiscard]] auto CurrentTileset() const -> const tileset*;
 
   /**
    * \brief Returns a pointer to the associated tileset manager.
@@ -468,73 +468,73 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tilesets() const noexcept -> const tileset_manager*;
+  [[nodiscard]] auto GetTilesets() const noexcept -> const tileset_manager*;
 
-  [[nodiscard]] auto tilesets() noexcept -> tileset_manager*;
+  [[nodiscard]] auto GetTilesets() noexcept -> tileset_manager*;
 
-  [[nodiscard]] auto raw() -> map&;
+  [[nodiscard]] auto Raw() -> Map&;
 
-  [[nodiscard]] auto get_map() const noexcept -> const map*;
+  [[nodiscard]] auto Data() const noexcept -> const Map*;
 
  signals:
-  void redraw();
+  void S_Redraw();
 
   /// \name Undo/Redo signals
   /// \{
 
-  void undo_state_updated(bool canUndo);
-  void redo_state_updated(bool canRedo);
-  void undo_text_updated(const QString& text);
-  void redo_text_updated(const QString& text);
-  void clean_changed(bool clean);
+  void S_UndoStateUpdated(bool canUndo);
+  void S_RedoStateUpdated(bool canRedo);
+  void S_UndoTextUpdated(const QString& text);
+  void S_RedoTextUpdated(const QString& text);
+  void S_CleanChanged(bool clean);
 
   /// \} End of Undo/Redo signals
 
   /// \name Tileset signals
   /// \{
 
-  void added_tileset(tileset_id);
-  void removed_tileset(tileset_id);
-  void renamed_tileset(tileset_id, const QString& name);
+  void S_AddedTileset(tileset_id);
+  void S_RemovedTileset(tileset_id);
+  void S_RenamedTileset(tileset_id, const QString& name);
 
   /// \} End of tileset signals
 
   /// \name Layer signals
   /// \{
 
-  void added_layer(layer_id, const ILayer&);
-  void added_duplicated_layer(layer_id, const ILayer&);
-  void selected_layer(layer_id, const ILayer&);
-  void removed_layer(layer_id);
-  void moved_layer_back(layer_id);
-  void moved_layer_forward(layer_id);
-  void changed_layer_opacity(layer_id, double opacity);
-  void changed_layer_name(layer_id, const QString&);
-  void changed_layer_visibility(layer_id, bool visible);
+  void S_AddedLayer(layer_id, const ILayer&);
+  void S_AddedDuplicatedLayer(layer_id, const ILayer&);
+  void S_SelectedLayer(layer_id, const ILayer&);
+  void S_RemovedLayer(layer_id);
+  void S_MovedLayerBack(layer_id);
+  void S_MovedLayerForward(layer_id);
+  void S_ChangedLayerOpacity(layer_id, double opacity);
+  void S_ChangedLayerName(layer_id, const QString&);
+  void S_ChangedLayerVisibility(layer_id, bool visible);
 
   /// \} End of layer signals
 
   /// \name Property signals
   /// \{
 
-  void show_properties();
-  void show_layer_properties(layer_id id);
-  void added_property(const QString& name);
-  void about_to_remove_property(const QString& name);
-  void updated_property(const QString& name);
-  void changed_property_type(const QString& name);
-  void renamed_property(const QString& oldName, const QString& newName);
+  void S_ShowProperties();
+  void S_ShowLayerProperties(layer_id id);
+  void S_AddedProperty(const QString& name);
+  void S_AboutToRemoveProperty(const QString& name);
+  void S_UpdatedProperty(const QString& name);
+  void S_ChangedPropertyType(const QString& name);
+  void S_RenamedProperty(const QString& oldName, const QString& newName);
 
   /// \} End of property signals
 
  private:
-  unique<map> m_map;                     ///< The associated map.
-  unique<tileset_manager> m_tilesets;    ///< The associated tilesets.
-  unique<document_delegate> m_delegate;  ///< Delegate for document API.
-  int m_tileLayerSuffix{1};              ///< Incrementing tile layer suffix.
-  int m_objectLayerSuffix{1};            ///< Incrementing object layer suffix.
+  unique<Map> mMap;                     ///< The associated map.
+  unique<tileset_manager> mTilesets;    ///< The associated tilesets.
+  unique<document_delegate> mDelegate;  ///< Delegate for document API.
+  int mTileLayerSuffix{1};              ///< Incrementing tile layer suffix.
+  int mObjectLayerSuffix{1};            ///< Incrementing object layer suffix.
 
-  void setup();
+  void SetUp();
 };
 
 }  // namespace tactile::core

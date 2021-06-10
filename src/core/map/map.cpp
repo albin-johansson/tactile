@@ -8,23 +8,23 @@
 
 namespace tactile::core {
 
-map::map(const row_t nRows, const col_t nCols) : m_rows{nRows}, m_cols{nCols}
+Map::Map(const row_t nRows, const col_t nCols) : mRows{nRows}, mCols{nCols}
 {
-  if (m_rows < 1_row || m_cols < 1_col)
+  if (mRows < 1_row || mCols < 1_col)
   {
     throw tactile_error{"Invalid map dimensions!"};
   }
 
-  m_layers.reserve(5);
-  m_layers.emplace(m_nextLayer, std::make_shared<TileLayer>(m_rows, m_cols));
+  mLayers.reserve(5);
+  mLayers.emplace(mNextLayer, std::make_shared<TileLayer>(mRows, mCols));
 
-  m_activeLayer = m_nextLayer;
-  ++m_nextLayer;
+  mActiveLayer = mNextLayer;
+  ++mNextLayer;
 }
 
-void map::remove_occurrences(const tile_id id)
+void Map::RemoveOccurrences(const tile_id id)
 {
-  for (auto& [key, layer] : m_layers)
+  for (auto& [key, layer] : mLayers)
   {
     if (auto* tileLayer = AsTileLayer(layer))
     {
@@ -33,9 +33,9 @@ void map::remove_occurrences(const tile_id id)
   }
 }
 
-void map::remove_occurrences(tile_id first, tile_id last)
+void Map::RemoveOccurrences(const tile_id first, const tile_id last)
 {
-  for (auto& [key, layer] : m_layers)
+  for (auto& [key, layer] : mLayers)
   {
     if (auto* tileLayer = AsTileLayer(layer))
     {
@@ -44,120 +44,120 @@ void map::remove_occurrences(tile_id first, tile_id last)
   }
 }
 
-void map::remove_layer(const layer_id id)
+void Map::RemoveLayer(const layer_id id)
 {
-  Q_ASSERT(m_layers.contains(id));
+  Q_ASSERT(mLayers.contains(id));
 
-  if (m_activeLayer == id)
+  if (mActiveLayer == id)
   {
-    m_activeLayer.reset();
+    mActiveLayer.reset();
   }
 
-  m_layers.erase(id);
+  mLayers.erase(id);
 }
 
-auto map::take_layer(const layer_id id) -> shared<ILayer>
+auto Map::TakeLayer(const layer_id id) -> shared<ILayer>
 {
-  Q_ASSERT(m_layers.contains(id));
+  Q_ASSERT(mLayers.contains(id));
 
-  if (m_activeLayer == id)
+  if (mActiveLayer == id)
   {
-    m_activeLayer.reset();
+    mActiveLayer.reset();
   }
 
-  auto layer = m_layers.at(id);
-  m_layers.erase(id);
+  auto layer = mLayers.at(id);
+  mLayers.erase(id);
 
   return layer;
 }
 
-void map::select_layer(const layer_id id)
+void Map::SelectLayer(const layer_id id)
 {
-  if (m_layers.contains(id))
+  if (mLayers.contains(id))
   {
-    m_activeLayer = id;
+    mActiveLayer = id;
   }
 }
 
-auto map::add_tile_layer() -> layer_id
+auto Map::AddTileLayer() -> layer_id
 {
-  const auto id = m_nextLayer;
-  add_layer(id, make_tile_layer());
+  const auto id = mNextLayer;
+  AddLayer(id, MakeTileLayer());
   return id;
 }
 
-auto map::add_object_layer() -> layer_id
+auto Map::AddObjectLayer() -> layer_id
 {
-  const auto id = m_nextLayer;
-  add_layer(id, make_object_layer());
+  const auto id = mNextLayer;
+  AddLayer(id, MakeObjectLayer());
   return id;
 }
 
-void map::add_layer(const layer_id id, shared<ILayer> layer)
+void Map::AddLayer(const layer_id id, shared<ILayer> layer)
 {
   // TODO what happens if dimensions mismatch?
 
-  Q_ASSERT(!m_layers.contains(id));
+  Q_ASSERT(!mLayers.contains(id));
   Q_ASSERT(layer);
 
-  if (m_layers.empty())
+  if (mLayers.empty())
   {
     if (const auto* tileLayer = AsTileLayer(layer))
     {
-      m_rows = tileLayer->RowCount();
-      m_cols = tileLayer->ColumnCount();
+      mRows = tileLayer->RowCount();
+      mCols = tileLayer->ColumnCount();
     }
   }
 
-  m_layers.emplace(id, std::move(layer));
+  mLayers.emplace(id, std::move(layer));
 }
 
-auto map::duplicate_layer(const layer_id id) -> layer_pair&
+auto Map::DuplicateLayer(const layer_id id) -> layer_pair&
 {
-  Q_ASSERT(m_layers.contains(id));
-  const auto& layer = m_layers.at(id);
+  Q_ASSERT(mLayers.contains(id));
+  const auto& layer = mLayers.at(id);
 
-  const auto newId = m_nextLayer;
+  const auto newId = mNextLayer;
   auto copy = layer->Clone();
 
-  auto& pair = m_layers.emplace(newId, std::move(copy));
+  auto& pair = mLayers.emplace(newId, std::move(copy));
 
-  ++m_nextLayer;
+  ++mNextLayer;
   return pair;
 }
 
-void map::add_row(const tile_id id)
+void Map::AddRow(const tile_id id)
 {
-  for (auto& [key, layer] : m_layers)
+  for (auto& [key, layer] : mLayers)
   {
     if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->AddRow(id);
     }
   }
-  ++m_rows;
+  ++mRows;
 }
 
-void map::add_col(const tile_id id)
+void Map::AddColumn(const tile_id id)
 {
-  for (auto& [key, layer] : m_layers)
+  for (auto& [key, layer] : mLayers)
   {
     if (auto* tileLayer = AsTileLayer(layer))
     {
       tileLayer->AddColumn(id);
     }
   }
-  ++m_cols;
+  ++mCols;
 }
 
-void map::remove_row()
+void Map::RemoveRow()
 {
-  if (row_count() == 1_row)
+  if (RowCount() == 1_row)
   {
     return;
   }
 
-  for (auto& [key, layer] : m_layers)
+  for (auto& [key, layer] : mLayers)
   {
     if (auto* tileLayer = AsTileLayer(layer))
     {
@@ -165,17 +165,17 @@ void map::remove_row()
     }
   }
 
-  --m_rows;
+  --mRows;
 }
 
-void map::remove_col()
+void Map::RemoveColumn()
 {
-  if (col_count() == 1_col)
+  if (ColumnCount() == 1_col)
   {
     return;
   }
 
-  for (auto& [key, layer] : m_layers)
+  for (auto& [key, layer] : mLayers)
   {
     if (auto* tileLayer = AsTileLayer(layer))
     {
@@ -183,139 +183,139 @@ void map::remove_col()
     }
   }
 
-  --m_cols;
+  --mCols;
 }
 
-void map::increase_tile_size()
+void Map::IncreaseTileSize()
 {
-  m_tileSize.increase();
+  mTileSize.increase();
 }
 
-void map::decrease_tile_size() noexcept
+void Map::DecreaseTileSize() noexcept
 {
-  m_tileSize.decrease();
+  mTileSize.decrease();
 }
 
-void map::reset_tile_size() noexcept
+void Map::ResetTileSize() noexcept
 {
-  m_tileSize.reset();
+  mTileSize.reset();
 }
 
-void map::set_next_layer_id(const layer_id id) noexcept
+void Map::SetNextLayerId(const layer_id id) noexcept
 {
-  Q_ASSERT(!has_layer(id));
-  m_nextLayer = id;
+  Q_ASSERT(!HasLayer(id));
+  mNextLayer = id;
 }
 
-void map::set_next_object_id(const object_id id) noexcept
+void Map::SetNextObjectId(const object_id id) noexcept
 {
-  m_nextObject = id;
+  mNextObject = id;
 }
 
-void map::set_row_count(row_t nRows)
+void Map::SetRowCount(row_t nRows)
 {
   nRows = AtLeast(nRows, 1_row);
 
-  if (nRows == row_count())
+  if (nRows == RowCount())
   {
     return;
   }
 
-  m_rows = nRows;
-  for (auto& [key, layer] : m_layers)
+  mRows = nRows;
+  for (auto& [key, layer] : mLayers)
   {
     if (auto* tileLayer = AsTileLayer(layer))
     {
-      tileLayer->SetRows(m_rows);
+      tileLayer->SetRows(mRows);
     }
   }
 }
 
-void map::set_col_count(col_t nCols)
+void Map::SetColumnCount(col_t nCols)
 {
   nCols = AtLeast(nCols, 1_col);
 
-  if (nCols == col_count())
+  if (nCols == ColumnCount())
   {
     return;
   }
 
-  m_cols = nCols;
-  for (auto& [key, layer] : m_layers)
+  mCols = nCols;
+  for (auto& [key, layer] : mLayers)
   {
     if (auto* tileLayer = AsTileLayer(layer))
     {
-      tileLayer->SetColumns(m_cols);
+      tileLayer->SetColumns(mCols);
     }
   }
 }
 
-void map::set_visibility(const layer_id id, const bool visible)
+void Map::SetVisibility(const layer_id id, const bool visible)
 {
-  if (auto* layer = find_layer(id))
+  if (auto* layer = FindLayer(id))
   {
     layer->SetVisible(visible);
   }
 }
 
-void map::set_opacity(const layer_id id, const double opacity)
+void Map::SetOpacity(const layer_id id, const double opacity)
 {
-  if (auto* layer = find_layer(id))
+  if (auto* layer = FindLayer(id))
   {
     layer->SetOpacity(opacity);
   }
 }
 
-void map::set_name(const layer_id id, const QString& name)
+void Map::SetName(const layer_id id, const QString& name)
 {
-  if (auto* layer = find_layer(id))
+  if (auto* layer = FindLayer(id))
   {
     layer->SetName(name);
   }
 }
 
-void map::move_layer_back(const layer_id id)
+void Map::MoveLayerBack(const layer_id id)
 {
-  m_layers.move_elem_back(id);
+  mLayers.move_elem_back(id);
 }
 
-void map::move_layer_forward(const layer_id id)
+void Map::MoveLayerForward(const layer_id id)
 {
-  m_layers.move_elem_forward(id);
+  mLayers.move_elem_forward(id);
 }
 
-auto map::make_tile_layer() -> shared<TileLayer>
+auto Map::MakeTileLayer() -> shared<TileLayer>
 {
-  ++m_nextLayer;
-  if (!m_activeLayer)
+  ++mNextLayer;
+  if (!mActiveLayer)
   {
     return std::make_shared<TileLayer>(5_row, 5_col);
   }
   else
   {
-    return std::make_shared<TileLayer>(row_count(), col_count());
+    return std::make_shared<TileLayer>(RowCount(), ColumnCount());
   }
 }
 
-auto map::make_object_layer() -> shared<ObjectLayer>
+auto Map::MakeObjectLayer() -> shared<ObjectLayer>
 {
-  ++m_nextLayer;
+  ++mNextLayer;
   return std::make_shared<ObjectLayer>();
 }
 
-auto map::index_of(const layer_id id) const -> maybe<std::size_t>
+auto Map::IndexOf(const layer_id id) const -> maybe<std::size_t>
 {
-  return m_layers.index_of(id);
+  return mLayers.index_of(id);
 }
 
-auto map::name(const layer_id id) const -> QString
+auto Map::Name(const layer_id id) const -> QString
 {
-  return get_layer(id)->Name();
+  return GetLayer(id)->Name();
 }
 
-auto map::is_visible(const layer_id id) const -> bool
+auto Map::IsVisible(const layer_id id) const -> bool
 {
-  if (const auto* layer = find_layer(id))
+  if (const auto* layer = FindLayer(id))
   {
     return layer->IsVisible();
   }
@@ -325,93 +325,93 @@ auto map::is_visible(const layer_id id) const -> bool
   }
 }
 
-auto map::layer_count() const noexcept -> int
+auto Map::LayerCount() const noexcept -> int
 {
-  return static_cast<int>(m_layers.size());
+  return static_cast<int>(mLayers.size());
 }
 
-auto map::has_layer(const layer_id id) const -> bool
+auto Map::HasLayer(const layer_id id) const -> bool
 {
-  return m_layers.contains(id);
+  return mLayers.contains(id);
 }
 
-auto map::in_bounds(const position& pos) const -> bool
+auto Map::InBounds(const position& pos) const -> bool
 {
-  const auto endRow = m_rows;
-  const auto endCol = m_cols;
+  const auto endRow = mRows;
+  const auto endCol = mCols;
 
   const auto [row, col] = pos.unpack();
   return (row >= 0_row) && (col >= 0_col) && (row < endRow) && (col < endCol);
 }
 
-auto map::row_count() const -> row_t
+auto Map::RowCount() const -> row_t
 {
-  return m_rows;
+  return mRows;
 }
 
-auto map::col_count() const -> col_t
+auto Map::ColumnCount() const -> col_t
 {
-  return m_cols;
+  return mCols;
 }
 
-auto map::width() const -> int
+auto Map::Width() const -> int
 {
-  return m_cols.get() * m_tileSize.get();
+  return mCols.get() * mTileSize.get();
 }
 
-auto map::height() const -> int
+auto Map::Height() const -> int
 {
-  return m_rows.get() * m_tileSize.get();
+  return mRows.get() * mTileSize.get();
 }
 
-auto map::active_layer_id() const noexcept -> maybe<layer_id>
+auto Map::ActiveLayerId() const noexcept -> maybe<layer_id>
 {
-  return m_activeLayer;
+  return mActiveLayer;
 }
 
-auto map::next_layer_id() const noexcept -> layer_id
+auto Map::NextLayerId() const noexcept -> layer_id
 {
-  return m_nextLayer;
+  return mNextLayer;
 }
 
-auto map::current_tile_size() const noexcept -> int
+auto Map::CurrentTileSize() const noexcept -> int
 {
-  return m_tileSize.get();
+  return mTileSize.get();
 }
 
-auto map::get_layer(const layer_id id) const -> const shared<ILayer>&
+auto Map::GetLayer(const layer_id id) const -> const shared<ILayer>&
 {
-  return m_layers.at(id);
+  return mLayers.at(id);
 }
 
-auto map::get_layer(const layer_id id) -> shared<ILayer>&
+auto Map::GetLayer(const layer_id id) -> shared<ILayer>&
 {
-  return m_layers.at(id);
+  return mLayers.at(id);
 }
 
-auto map::get_tile_layer(const layer_id id) -> TileLayer*
+auto Map::GetTileLayer(const layer_id id) -> TileLayer*
 {
-  return AsTileLayer(get_layer(id));
+  return AsTileLayer(GetLayer(id));
 }
 
-auto map::get_tile_layer(const layer_id id) const -> const TileLayer*
+auto Map::GetTileLayer(const layer_id id) const -> const TileLayer*
 {
-  return AsTileLayer(get_layer(id));
+  return AsTileLayer(GetLayer(id));
 }
 
-auto map::get_object_layer(layer_id id) -> ObjectLayer*
+auto Map::GetObjectLayer(const layer_id id) -> ObjectLayer*
 {
-  return AsObjectLayer(get_layer(id));
+  return AsObjectLayer(GetLayer(id));
 }
 
-auto map::get_object_layer(layer_id id) const -> const ObjectLayer*
+auto Map::GetObjectLayer(const layer_id id) const -> const ObjectLayer*
 {
-  return AsObjectLayer(get_layer(id));
+  return AsObjectLayer(GetLayer(id));
 }
 
-auto map::find_layer(const layer_id id) -> ILayer*
+auto Map::FindLayer(const layer_id id) -> ILayer*
 {
-  if (const auto it = m_layers.find(id); it != m_layers.end())
+  if (const auto it = mLayers.find(id); it != mLayers.end())
   {
     return it->second.get();
   }
@@ -421,9 +421,9 @@ auto map::find_layer(const layer_id id) -> ILayer*
   }
 }
 
-auto map::find_layer(const layer_id id) const -> const ILayer*
+auto Map::FindLayer(const layer_id id) const -> const ILayer*
 {
-  if (const auto it = m_layers.find(id); it != m_layers.end())
+  if (const auto it = mLayers.find(id); it != mLayers.end())
   {
     return it->second.get();
   }

@@ -6,7 +6,7 @@
 
 namespace tactile::cmd {
 
-MapCommand::MapCommand(not_null<core::map_document*> document,
+MapCommand::MapCommand(not_null<core::MapDocument*> document,
                        const QString& name)
     : QUndoCommand{name}
     , mDocument{document}
@@ -19,15 +19,15 @@ MapCommand::MapCommand(not_null<core::map_document*> document,
 
 void MapCommand::RestoreTiles()
 {
-  auto& map = mDocument->raw();
+  auto& map = mDocument->Raw();
 
-  const auto activeLayer = map.active_layer_id().value();
+  const auto activeLayer = map.ActiveLayerId().value();
 
   for (const auto& [layer, data] : mLayerData)
   {
-    map.select_layer(layer);
+    map.SelectLayer(layer);
 
-    auto* tileLayer = map.get_tile_layer(layer);
+    auto* tileLayer = map.GetTileLayer(layer);
     Q_ASSERT(tileLayer);
 
     for (const auto& [pos, tile] : data)
@@ -36,17 +36,17 @@ void MapCommand::RestoreTiles()
     }
   }
 
-  map.select_layer(activeLayer);
+  map.SelectLayer(activeLayer);
 }
 
 void MapCommand::SaveTiles(const row_range rows, const col_range cols)
 {
-  auto& map = mDocument->raw();
+  auto& map = mDocument->Raw();
 
-  map.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
+  map.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
     auto& tiles = TileData(id);
 
-    auto* tileLayer = map.get_tile_layer(id);
+    auto* tileLayer = map.GetTileLayer(id);
     Q_ASSERT(tileLayer);
 
     for (auto row = rows.first; row < rows.second; ++row)
@@ -70,12 +70,12 @@ void MapCommand::ClearCache()
 
 void MapCommand::Redraw()
 {
-  emit mDocument->redraw();
+  emit mDocument->S_Redraw();
 }
 
-auto MapCommand::GetMap() noexcept -> core::map&
+auto MapCommand::GetMap() noexcept -> core::Map&
 {
-  return mDocument->raw();
+  return mDocument->Raw();
 }
 
 }  // namespace tactile::cmd

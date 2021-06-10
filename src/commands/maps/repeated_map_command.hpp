@@ -5,14 +5,14 @@
 #include "not_null.hpp"
 #include "position.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class RepeatedMapCommand : public MapCommand
 {
  public:
-  RepeatedMapCommand(not_null<core::map_document*> document,
+  RepeatedMapCommand(not_null<core::MapDocument*> document,
                      const QString& name);
 
   auto mergeWith(const QUndoCommand* other) -> bool final;

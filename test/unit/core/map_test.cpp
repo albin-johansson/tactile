@@ -10,330 +10,328 @@ using namespace tactile;
 
 TEST(Map, Defaults)
 {
-  const core::map map;
-  EXPECT_EQ(0, map.layer_count());
-  EXPECT_FALSE(map.active_layer_id());
+  const core::Map map;
+  EXPECT_EQ(0, map.LayerCount());
+  EXPECT_FALSE(map.ActiveLayerId());
 }
 
 TEST(Map, DimensionConstructor)
 {
   {  // Invalid dimensions
-    EXPECT_THROW(core::map(0_row, 1_col), tactile_error);
-    EXPECT_THROW(core::map(1_row, 0_col), tactile_error);
-    EXPECT_THROW(core::map(0_row, 0_col), tactile_error);
-    EXPECT_THROW(core::map(-1_row, -1_col), tactile_error);
+    EXPECT_THROW(core::Map(0_row, 1_col), tactile_error);
+    EXPECT_THROW(core::Map(1_row, 0_col), tactile_error);
+    EXPECT_THROW(core::Map(0_row, 0_col), tactile_error);
+    EXPECT_THROW(core::Map(-1_row, -1_col), tactile_error);
   }
 
   {  // Valid dimensions
-    EXPECT_NO_THROW((core::map{1_row, 1_col}));
+    EXPECT_NO_THROW((core::Map{1_row, 1_col}));
 
     const auto rows = 7_row;
     const auto cols = 5_col;
-    const core::map map{rows, cols};
-    EXPECT_EQ(rows, map.row_count());
-    EXPECT_EQ(cols, map.col_count());
+    const core::Map map{rows, cols};
+    EXPECT_EQ(rows, map.RowCount());
+    EXPECT_EQ(cols, map.ColumnCount());
   }
 }
 
 TEST(Map, EachLayer)
 {
-  core::map map;
+  core::Map map;
 
-  map.add_tile_layer();
-  map.add_tile_layer();
-  map.add_tile_layer();
+  map.AddTileLayer();
+  map.AddTileLayer();
+  map.AddTileLayer();
 
   int count{};
-  map.each_layer([&](const layer_id, const shared<core::ILayer>&) {
-    ++count;
-  });
+  map.EachLayer([&](const layer_id, const shared<core::ILayer>&) { ++count; });
 
   EXPECT_EQ(3, count);
 }
 
 TEST(Map, RemoveOccurrences)
 {
-  core::map map{4_row, 4_col};
+  core::Map map{4_row, 4_col};
 
-  const auto id = map.next_layer_id();
-  auto layer = map.make_tile_layer();
+  const auto id = map.NextLayerId();
+  auto layer = map.MakeTileLayer();
 
   std::vector<core::position> positions;
   layer->Flood({}, 1_t, positions);
 
-  map.add_layer(id, layer);
-  map.select_layer(id);
-  map.remove_occurrences(1_t);
+  map.AddLayer(id, layer);
+  map.SelectLayer(id);
+  map.RemoveOccurrences(1_t);
 
   layer->Each([](const tile_id tile) { EXPECT_EQ(empty, tile); });
 }
 
 TEST(Map, AddTileLayer)
 {
-  core::map map{5_row, 5_col};
-  const auto count = map.layer_count();
+  core::Map map{5_row, 5_col};
+  const auto count = map.LayerCount();
 
-  const auto id = map.add_tile_layer();
-  EXPECT_NE(id, map.active_layer_id());  // new layer isn't active
+  const auto id = map.AddTileLayer();
+  EXPECT_NE(id, map.ActiveLayerId());  // new layer isn't active
 
-  EXPECT_EQ(count + 1, map.layer_count());
+  EXPECT_EQ(count + 1, map.LayerCount());
 }
 
 TEST(Map, RemoveLayer)
 {
-  core::map map;
+  core::Map map;
 
-  const auto fst = map.add_tile_layer();
-  const auto snd = map.add_tile_layer();
-  EXPECT_EQ(2, map.layer_count());
+  const auto fst = map.AddTileLayer();
+  const auto snd = map.AddTileLayer();
+  EXPECT_EQ(2, map.LayerCount());
 
-  EXPECT_NO_THROW(map.remove_layer(snd));
-  EXPECT_EQ(1, map.layer_count());
+  EXPECT_NO_THROW(map.RemoveLayer(snd));
+  EXPECT_EQ(1, map.LayerCount());
 
-  map.select_layer(fst);
-  map.remove_layer(fst);
-  EXPECT_EQ(0, map.layer_count());
-  EXPECT_FALSE(map.active_layer_id());
+  map.SelectLayer(fst);
+  map.RemoveLayer(fst);
+  EXPECT_EQ(0, map.LayerCount());
+  EXPECT_FALSE(map.ActiveLayerId());
 }
 
 TEST(Map, SelectLayer)
 {
-  core::map map{4_row, 4_col};
-  EXPECT_EQ(1_layer, map.active_layer_id());
+  core::Map map{4_row, 4_col};
+  EXPECT_EQ(1_layer, map.ActiveLayerId());
 
-  EXPECT_NO_THROW(map.select_layer(-1_layer));
-  EXPECT_EQ(1_layer, map.active_layer_id());
+  EXPECT_NO_THROW(map.SelectLayer(-1_layer));
+  EXPECT_EQ(1_layer, map.ActiveLayerId());
 
-  map.add_tile_layer();
-  map.select_layer(1_layer);
-  EXPECT_EQ(1_layer, map.active_layer_id());
+  map.AddTileLayer();
+  map.SelectLayer(1_layer);
+  EXPECT_EQ(1_layer, map.ActiveLayerId());
 
-  EXPECT_NO_THROW(map.select_layer(2_layer));
-  EXPECT_EQ(2_layer, map.active_layer_id());
+  EXPECT_NO_THROW(map.SelectLayer(2_layer));
+  EXPECT_EQ(2_layer, map.ActiveLayerId());
 }
 
 TEST(Map, AddRow)
 {
   const auto row = 4_row;
-  core::map map{row, 4_col};
+  core::Map map{row, 4_col};
 
-  map.add_row(empty);
-  EXPECT_EQ(row + 1_row, map.row_count());
+  map.AddRow(empty);
+  EXPECT_EQ(row + 1_row, map.RowCount());
 }
 
 TEST(Map, AddCol)
 {
   const auto col = 7_col;
-  core::map map{1_row, col};
+  core::Map map{1_row, col};
 
-  map.add_col(empty);
-  EXPECT_EQ(col + 1_col, map.col_count());
+  map.AddColumn(empty);
+  EXPECT_EQ(col + 1_col, map.ColumnCount());
 }
 
 TEST(Map, RemoveRow)
 {
   const auto initialRows = 4_row;
-  core::map map{initialRows, 10_col};
+  core::Map map{initialRows, 10_col};
 
-  map.remove_row();
-  EXPECT_EQ(initialRows - 1_row, map.row_count());
+  map.RemoveRow();
+  EXPECT_EQ(initialRows - 1_row, map.RowCount());
 
-  InvokeN(20, [&map] { map.remove_row(); });
+  InvokeN(20, [&map] { map.RemoveRow(); });
 
-  EXPECT_EQ(1_row, map.row_count());
+  EXPECT_EQ(1_row, map.RowCount());
 }
 
 TEST(Map, RemoveCol)
 {
   const auto initialCols = 9_col;
-  core::map map{7_row, initialCols};
+  core::Map map{7_row, initialCols};
 
-  map.remove_col();
-  EXPECT_EQ(initialCols - 1_col, map.col_count());
+  map.RemoveColumn();
+  EXPECT_EQ(initialCols - 1_col, map.ColumnCount());
 
-  InvokeN(20, [&map] { map.remove_col(); });
+  InvokeN(20, [&map] { map.RemoveColumn(); });
 
-  EXPECT_EQ(1_col, map.col_count());
+  EXPECT_EQ(1_col, map.ColumnCount());
 }
 
 TEST(Map, IncreaseTileSize)
 {
-  core::map map;
+  core::Map map;
 
-  const auto before = map.current_tile_size();
-  map.increase_tile_size();
+  const auto before = map.CurrentTileSize();
+  map.IncreaseTileSize();
 
-  const auto after = map.current_tile_size();
+  const auto after = map.CurrentTileSize();
   EXPECT_GT(after, before);
 }
 
 TEST(Map, DecreaseTileSize)
 {
-  core::map map;
+  core::Map map;
 
-  const auto before = map.current_tile_size();
-  map.decrease_tile_size();
+  const auto before = map.CurrentTileSize();
+  map.DecreaseTileSize();
 
-  const auto after = map.current_tile_size();
+  const auto after = map.CurrentTileSize();
   EXPECT_LT(after, before);
 }
 
 TEST(Map, ResetTileSize)
 {
-  core::map map;
+  core::Map map;
 
   for (int i = 0; i < 10; ++i) {
-    map.increase_tile_size();
+    map.IncreaseTileSize();
   }
 
-  map.reset_tile_size();
-  EXPECT_EQ(core::tile_size::default_size(), map.current_tile_size());
+  map.ResetTileSize();
+  EXPECT_EQ(core::tile_size::default_size(), map.CurrentTileSize());
 }
 
 TEST(Map, SetNextLayerID)
 {
-  core::map map;
-  map.set_next_layer_id(7_layer);
-  EXPECT_EQ(7_layer, map.next_layer_id());
+  core::Map map;
+  map.SetNextLayerId(7_layer);
+  EXPECT_EQ(7_layer, map.NextLayerId());
 }
 
 TEST(Map, SetRowCount)
 {
-  core::map map{3_row, 3_col};
+  core::Map map{3_row, 3_col};
 
   const auto nRows = 12_row;
-  map.set_row_count(nRows);
+  map.SetRowCount(nRows);
 
-  EXPECT_EQ(3_col, map.col_count());
-  EXPECT_EQ(nRows, map.row_count());
+  EXPECT_EQ(3_col, map.ColumnCount());
+  EXPECT_EQ(nRows, map.RowCount());
 
-  map.set_row_count(0_row);
-  EXPECT_EQ(1_row, map.row_count());
+  map.SetRowCount(0_row);
+  EXPECT_EQ(1_row, map.RowCount());
 
-  map.set_row_count(-1_row);
-  EXPECT_EQ(1_row, map.row_count());
+  map.SetRowCount(-1_row);
+  EXPECT_EQ(1_row, map.RowCount());
 }
 
 TEST(Map, SetColCount)
 {
-  core::map map{3_row, 3_col};
+  core::Map map{3_row, 3_col};
 
   const auto nCols = 9_col;
-  map.set_col_count(nCols);
+  map.SetColumnCount(nCols);
 
-  EXPECT_EQ(3_row, map.row_count());
-  EXPECT_EQ(nCols, map.col_count());
+  EXPECT_EQ(3_row, map.RowCount());
+  EXPECT_EQ(nCols, map.ColumnCount());
 
-  map.set_col_count(0_col);
-  EXPECT_EQ(1_col, map.col_count());
+  map.SetColumnCount(0_col);
+  EXPECT_EQ(1_col, map.ColumnCount());
 
-  map.set_col_count(-1_col);
-  EXPECT_EQ(1_col, map.col_count());
+  map.SetColumnCount(-1_col);
+  EXPECT_EQ(1_col, map.ColumnCount());
 }
 
 TEST(Map, SetVisibility)
 {
-  core::map map{5_row, 5_col};
+  core::Map map{5_row, 5_col};
 
-  EXPECT_FALSE(map.is_visible(-1_layer));  // invalid index
-  EXPECT_FALSE(map.is_visible(0_layer));   // invalid index
-  EXPECT_TRUE(map.is_visible(1_layer));    // valid index, should be true
+  EXPECT_FALSE(map.IsVisible(-1_layer));  // invalid index
+  EXPECT_FALSE(map.IsVisible(0_layer));   // invalid index
+  EXPECT_TRUE(map.IsVisible(1_layer));    // valid index, should be true
 
-  map.set_visibility(1_layer, false);
-  EXPECT_FALSE(map.is_visible(1_layer));
+  map.SetVisibility(1_layer, false);
+  EXPECT_FALSE(map.IsVisible(1_layer));
 
-  map.set_visibility(1_layer, true);
-  EXPECT_TRUE(map.is_visible(1_layer));
+  map.SetVisibility(1_layer, true);
+  EXPECT_TRUE(map.IsVisible(1_layer));
 }
 
 TEST(Map, IsVisible)
 {
-  const core::map map{5_row, 5_col};
+  const core::Map map{5_row, 5_col};
 
-  EXPECT_FALSE(map.is_visible(-1_layer));
-  EXPECT_FALSE(map.is_visible(0_layer));
-  EXPECT_TRUE(map.is_visible(1_layer));
+  EXPECT_FALSE(map.IsVisible(-1_layer));
+  EXPECT_FALSE(map.IsVisible(0_layer));
+  EXPECT_TRUE(map.IsVisible(1_layer));
 }
 
 TEST(Map, LayerCount)
 {
-  core::map map{5_row, 5_col};
-  EXPECT_EQ(1, map.layer_count());
+  core::Map map{5_row, 5_col};
+  EXPECT_EQ(1, map.LayerCount());
 
-  map.add_tile_layer();
-  EXPECT_EQ(2, map.layer_count());
+  map.AddTileLayer();
+  EXPECT_EQ(2, map.LayerCount());
 }
 
 TEST(Map, HasLayer)
 {
-  core::map map{5_row, 5_col};
+  core::Map map{5_row, 5_col};
 
-  EXPECT_TRUE(map.has_layer(1_layer));
-  EXPECT_FALSE(map.has_layer(-1_layer));
-  EXPECT_FALSE(map.has_layer(2_layer));
+  EXPECT_TRUE(map.HasLayer(1_layer));
+  EXPECT_FALSE(map.HasLayer(-1_layer));
+  EXPECT_FALSE(map.HasLayer(2_layer));
 
-  map.add_tile_layer();
-  EXPECT_TRUE(map.has_layer(2_layer));
-  EXPECT_FALSE(map.has_layer(3_layer));
+  map.AddTileLayer();
+  EXPECT_TRUE(map.HasLayer(2_layer));
+  EXPECT_FALSE(map.HasLayer(3_layer));
 }
 
 TEST(Map, InBounds)
 {
-  const core::map map{4_row, 4_col};
+  const core::Map map{4_row, 4_col};
 
-  EXPECT_TRUE(map.in_bounds({0_row, 0_col}));
-  EXPECT_TRUE(map.in_bounds({3_row, 3_col}));
-  EXPECT_FALSE(map.in_bounds({4_row, 3_col}));
-  EXPECT_FALSE(map.in_bounds({3_row, 4_col}));
-  EXPECT_FALSE(map.in_bounds({4_row, 4_col}));
+  EXPECT_TRUE(map.InBounds({0_row, 0_col}));
+  EXPECT_TRUE(map.InBounds({3_row, 3_col}));
+  EXPECT_FALSE(map.InBounds({4_row, 3_col}));
+  EXPECT_FALSE(map.InBounds({3_row, 4_col}));
+  EXPECT_FALSE(map.InBounds({4_row, 4_col}));
 }
 
 TEST(Map, RowCount)
 {
-  const core::map map{7_row, 3_col};
-  EXPECT_EQ(7_row, map.row_count());
+  const core::Map map{7_row, 3_col};
+  EXPECT_EQ(7_row, map.RowCount());
 }
 
 TEST(Map, ColCount)
 {
-  const core::map map{2_row, 12_col};
-  EXPECT_EQ(12_col, map.col_count());
+  const core::Map map{2_row, 12_col};
+  EXPECT_EQ(12_col, map.ColumnCount());
 }
 
 TEST(Map, Width)
 {
-  const core::map map;
-  EXPECT_EQ(map.col_count().get() * map.current_tile_size(), map.width());
+  const core::Map map;
+  EXPECT_EQ(map.ColumnCount().get() * map.CurrentTileSize(), map.width());
 }
 
 TEST(Map, Height)
 {
-  const core::map map;
-  EXPECT_EQ(map.row_count().get() * map.current_tile_size(), map.height());
+  const core::Map map;
+  EXPECT_EQ(map.RowCount().get() * map.CurrentTileSize(), map.height());
 }
 
 TEST(Map, ActiveLayerID)
 {
-  core::map map{5_row, 5_col};
-  EXPECT_EQ(1_layer, map.active_layer_id());
+  core::Map map{5_row, 5_col};
+  EXPECT_EQ(1_layer, map.ActiveLayerId());
 
-  map.add_tile_layer();
+  map.AddTileLayer();
 
-  map.select_layer(2_layer);
-  EXPECT_EQ(2_layer, map.active_layer_id());
+  map.SelectLayer(2_layer);
+  EXPECT_EQ(2_layer, map.ActiveLayerId());
 }
 
 TEST(Map, CurrentTileSize)
 {
-  const core::map map;
-  EXPECT_EQ(core::tile_size::default_size(), map.current_tile_size());
+  const core::Map map;
+  EXPECT_EQ(core::tile_size::default_size(), map.CurrentTileSize());
 }
 
 TEST(Map, GetLayer)
 {
-  core::map map;
-  EXPECT_ANY_THROW(map.get_layer(1_layer));
+  core::Map map;
+  EXPECT_ANY_THROW(map.GetLayer(1_layer));
 
-  const auto id = map.add_tile_layer();
-  EXPECT_NO_THROW(map.get_layer(id));
+  const auto id = map.AddTileLayer();
+  EXPECT_NO_THROW(map.GetLayer(id));
 }

@@ -6,7 +6,7 @@
 
 namespace tactile::cmd {
 
-RemoveRow::RemoveRow(not_null<core::map_document*> document)
+RemoveRow::RemoveRow(not_null<core::MapDocument*> document)
     : RepeatedMapCommand{document, TACTILE_QSTRING(u"Remove Row")}
 {}
 
@@ -14,7 +14,7 @@ void RemoveRow::undo()
 {
   QUndoCommand::undo();
 
-  InvokeN(Times(), [this] { GetMap().add_row(empty); });
+  InvokeN(Times(), [this] { GetMap().AddRow(empty); });
 
   RestoreTiles();
   Redraw();
@@ -26,14 +26,14 @@ void RemoveRow::redo()
 
   auto& map = GetMap();
 
-  const auto endCol = map.col_count();
-  const auto endRow = map.row_count();
+  const auto endCol = map.ColumnCount();
+  const auto endRow = map.RowCount();
   const auto beginRow = endRow - 1_row - row_t{Times()};
 
   ClearCache();
   SaveTiles({beginRow, endRow}, {0_col, endCol});
 
-  InvokeN(Times(), [this] { GetMap().remove_row(); });
+  InvokeN(Times(), [this] { GetMap().RemoveRow(); });
 
   Redraw();
 }

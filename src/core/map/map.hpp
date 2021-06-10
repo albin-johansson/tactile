@@ -20,19 +20,20 @@ class TileLayer;
 class ObjectLayer;
 
 /**
- * \class map
+ * \class Map
  *
  * \brief Represents the main tilemaps in the application.
  *
  * \details Tilemaps are composed by multiple tile layers.
  *
- * \see `tile_layer`
+ * \see `TileLayer`
+ * \see `ObjectLayer`
  *
  * \since 0.1.0
  *
  * \headerfile map.hpp
  */
-class map final
+class Map final
 {
   using layer_pair = std::pair<layer_id, shared<ILayer>>;
   using layer_map = vector_map<layer_id, shared<ILayer>>;
@@ -45,7 +46,7 @@ class map final
    *
    * \since 0.1.0
    */
-  map() = default;
+  Map() = default;
 
   /**
    * \brief Creates a map with one tile layer.
@@ -57,7 +58,7 @@ class map final
    *
    * \since 0.1.0
    */
-  map(row_t nRows, col_t nCols);
+  Map(row_t nRows, col_t nCols);
 
   /**
    * \brief Visits each layer in the map.
@@ -69,9 +70,9 @@ class map final
    * \since 0.1.0
    */
   template <std::invocable<layer_id, const shared<ILayer>&> T>
-  void each_layer(T&& callable) const
+  void EachLayer(T&& callable) const
   {
-    for (const auto& [key, layer] : m_layers)
+    for (const auto& [key, layer] : mLayers)
     {
       callable(key, layer);
     }
@@ -84,7 +85,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void remove_occurrences(tile_id id);
+  void RemoveOccurrences(tile_id id);
 
   /**
    * \brief Removes all occurrences of a range of tiles, in all tile layers.
@@ -95,7 +96,7 @@ class map final
    *
    * \since 0.2.0
    */
-  void remove_occurrences(tile_id first, tile_id last);
+  void RemoveOccurrences(tile_id first, tile_id last);
 
   /**
    * \brief Adds an empty tile layer to the map.
@@ -104,7 +105,7 @@ class map final
    *
    * \since 0.1.0
    */
-  auto add_tile_layer() -> layer_id;
+  auto AddTileLayer() -> layer_id;
 
   /**
    * \brief Adds an empty object layer to the map.
@@ -113,7 +114,7 @@ class map final
    *
    * \since 0.2.0
    */
-  auto add_object_layer() -> layer_id;
+  auto AddObjectLayer() -> layer_id;
 
   /**
    * \brief Adds a layer to the map.
@@ -125,7 +126,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void add_layer(layer_id id, shared<ILayer> layer);
+  void AddLayer(layer_id id, shared<ILayer> layer);
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -138,7 +139,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto duplicate_layer(layer_id id) -> layer_pair&;
+  [[nodiscard]] auto DuplicateLayer(layer_id id) -> layer_pair&;
 
   /**
    * \brief Removes the specified layer from the map.
@@ -150,7 +151,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void remove_layer(layer_id id);
+  void RemoveLayer(layer_id id);
 
   /**
    * \brief Removes a layer from the map and returns it.
@@ -163,7 +164,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto take_layer(layer_id id) -> shared<ILayer>;
+  [[nodiscard]] auto TakeLayer(layer_id id) -> shared<ILayer>;
 
   /**
    * \brief Selects the tile layer associated with the specified ID.
@@ -174,7 +175,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void select_layer(layer_id id);
+  void SelectLayer(layer_id id);
 
   /**
    * \brief Adds a row to the map.
@@ -183,7 +184,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void add_row(tile_id id);
+  void AddRow(tile_id id);
 
   /**
    * \brief Adds a column to the map.
@@ -192,7 +193,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void add_col(tile_id id);
+  void AddColumn(tile_id id);
 
   /**
    * \brief Removes a row from the map.
@@ -201,7 +202,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void remove_row();
+  void RemoveRow();
 
   /**
    * \brief Removes a column from the map.
@@ -210,22 +211,22 @@ class map final
    *
    * \since 0.1.0
    */
-  void remove_col();
+  void RemoveColumn();
 
   /**
    * \copydoc tile_size::increase()
    */
-  void increase_tile_size();
+  void IncreaseTileSize();
 
   /**
    * \copydoc tile_size::decrease()
    */
-  void decrease_tile_size() noexcept;
+  void DecreaseTileSize() noexcept;
 
   /**
    * \copydoc tile_size::reset()
    */
-  void reset_tile_size() noexcept;
+  void ResetTileSize() noexcept;
 
   /**
    * \brief Sets the next available layer ID.
@@ -233,16 +234,16 @@ class map final
    * \pre There mustn't be a layer associated with `id`.
    *
    * \details This property is automatically incremented when calling
-   * `add_tile_layer()`. This function is meant to be used when parsing maps
+   * `AddTileLayer()`. This function is meant to be used when parsing maps
    * from save files.
    *
    * \param id the ID that will be used by the next layer.
    *
    * \since 0.1.0
    */
-  void set_next_layer_id(layer_id id) noexcept;
+  void SetNextLayerId(layer_id id) noexcept;
 
-  void set_next_object_id(object_id id) noexcept;
+  void SetNextObjectId(object_id id) noexcept;
 
   /**
    * \brief Sets the total number of rows in the map.
@@ -252,7 +253,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void set_row_count(row_t nRows);
+  void SetRowCount(row_t nRows);
 
   /**
    * \brief Sets the total number of columns in the map.
@@ -262,7 +263,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void set_col_count(col_t nCols);
+  void SetColumnCount(col_t nCols);
 
   /**
    * \brief Sets the visibility of a tile layer.
@@ -275,7 +276,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void set_visibility(layer_id id, bool visible);
+  void SetVisibility(layer_id id, bool visible);
 
   /**
    * \brief Sets the opacity of a layer.
@@ -288,7 +289,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void set_opacity(layer_id id, double opacity);
+  void SetOpacity(layer_id id, double opacity);
 
   /**
    * \brief Sets the name of the specified layer.
@@ -301,7 +302,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void set_name(layer_id id, const QString& name);
+  void SetName(layer_id id, const QString& name);
 
   /**
    * \brief Moves the specified layer back one step in the render order.
@@ -315,7 +316,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void move_layer_back(layer_id id);
+  void MoveLayerBack(layer_id id);
 
   /**
    * \brief Moves the specified layer forwards one step in the render order.
@@ -329,7 +330,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void move_layer_forward(layer_id id);
+  void MoveLayerForward(layer_id id);
 
   /**
    * \brief Creates and returns an empty tile layer but doesn't add it to the
@@ -341,7 +342,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto make_tile_layer() -> shared<TileLayer>;
+  [[nodiscard]] auto MakeTileLayer() -> shared<TileLayer>;
 
   /**
    * \brief Creates and returns an empty object layer but doesn't add it to the
@@ -353,7 +354,7 @@ class map final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto make_object_layer() -> shared<ObjectLayer>;
+  [[nodiscard]] auto MakeObjectLayer() -> shared<ObjectLayer>;
 
   /**
    * \brief Returns the index associated with the specified layer.
@@ -365,7 +366,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto index_of(layer_id id) const -> maybe<std::size_t>;
+  [[nodiscard]] auto IndexOf(layer_id id) const -> maybe<std::size_t>;
 
   /**
    * \brief Returns the name of the specified layer.
@@ -378,7 +379,7 @@ class map final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto name(layer_id id) const -> QString;
+  [[nodiscard]] auto Name(layer_id id) const -> QString;
 
   /**
    * \brief Indicates whether or not the layer associated with the specified
@@ -393,7 +394,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto is_visible(layer_id id) const -> bool;
+  [[nodiscard]] auto IsVisible(layer_id id) const -> bool;
 
   /**
    * \brief Returns the amount of layers present in the map.
@@ -404,7 +405,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto layer_count() const noexcept -> int;
+  [[nodiscard]] auto LayerCount() const noexcept -> int;
 
   /**
    * \brief Indicates whether or not the specified layer ID is associated
@@ -417,7 +418,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto has_layer(layer_id id) const -> bool;
+  [[nodiscard]] auto HasLayer(layer_id id) const -> bool;
 
   /**
    * \brief Indicates whether or not the supplied position is within the bounds
@@ -429,7 +430,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto in_bounds(const position& pos) const -> bool;
+  [[nodiscard]] auto InBounds(const position& pos) const -> bool;
 
   /**
    * \brief Returns the total number of rows in the map.
@@ -438,7 +439,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto row_count() const -> row_t;
+  [[nodiscard]] auto RowCount() const -> row_t;
 
   /**
    * \brief Returns the total number of columns in the map.
@@ -447,7 +448,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto col_count() const -> col_t;
+  [[nodiscard]] auto ColumnCount() const -> col_t;
 
   /**
    * \brief Returns the pixel width of the map.
@@ -456,7 +457,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto width() const -> int;
+  [[nodiscard]] auto Width() const -> int;
 
   /**
    * \brief Returns the pixel height of the map.
@@ -465,7 +466,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto height() const -> int;
+  [[nodiscard]] auto Height() const -> int;
 
   /**
    * \brief Returns the ID of the currently active layer.
@@ -475,7 +476,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto active_layer_id() const noexcept -> maybe<layer_id>;
+  [[nodiscard]] auto ActiveLayerId() const noexcept -> maybe<layer_id>;
 
   /**
    * \brief Returns the ID that will be used by the next layer.
@@ -484,7 +485,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto next_layer_id() const noexcept -> layer_id;
+  [[nodiscard]] auto NextLayerId() const noexcept -> layer_id;
 
   /**
    * \brief Returns the current tile size value.
@@ -493,7 +494,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto current_tile_size() const noexcept -> int;
+  [[nodiscard]] auto CurrentTileSize() const noexcept -> int;
 
   /**
    * \brief Returns the layer associated with the specified ID.
@@ -506,17 +507,17 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const shared<ILayer>&;
+  [[nodiscard]] auto GetLayer(layer_id id) const -> const shared<ILayer>&;
 
-  [[nodiscard]] auto get_layer(layer_id id) -> shared<ILayer>&;
+  [[nodiscard]] auto GetLayer(layer_id id) -> shared<ILayer>&;
 
-  [[nodiscard]] auto get_tile_layer(layer_id id) -> TileLayer*;
+  [[nodiscard]] auto GetTileLayer(layer_id id) -> TileLayer*;
 
-  [[nodiscard]] auto get_tile_layer(layer_id id) const -> const TileLayer*;
+  [[nodiscard]] auto GetTileLayer(layer_id id) const -> const TileLayer*;
 
-  [[nodiscard]] auto get_object_layer(layer_id id) -> ObjectLayer*;
+  [[nodiscard]] auto GetObjectLayer(layer_id id) -> ObjectLayer*;
 
-  [[nodiscard]] auto get_object_layer(layer_id id) const -> const ObjectLayer*;
+  [[nodiscard]] auto GetObjectLayer(layer_id id) const -> const ObjectLayer*;
 
   /**
    * \brief Returns an iterator to the first layer.
@@ -527,7 +528,7 @@ class map final
    */
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
-    return m_layers.begin();
+    return mLayers.begin();
   }
 
   /**
@@ -539,21 +540,21 @@ class map final
    */
   [[nodiscard]] auto end() const noexcept -> const_iterator
   {
-    return m_layers.end();
+    return mLayers.end();
   }
 
  private:
-  layer_map m_layers;
-  maybe<layer_id> m_activeLayer;
-  tile_size m_tileSize;
-  row_t m_rows;
-  col_t m_cols;
-  layer_id m_nextLayer{1};
-  object_id m_nextObject{1};
+  layer_map mLayers;
+  maybe<layer_id> mActiveLayer;
+  tile_size mTileSize;
+  row_t mRows;
+  col_t mCols;
+  layer_id mNextLayer{1};
+  object_id mNextObject{1};
 
-  [[nodiscard]] auto find_layer(layer_id id) -> ILayer*;
+  [[nodiscard]] auto FindLayer(layer_id id) -> ILayer*;
 
-  [[nodiscard]] auto find_layer(layer_id id) const -> const ILayer*;
+  [[nodiscard]] auto FindLayer(layer_id id) const -> const ILayer*;
 };
 
 }  // namespace tactile::core

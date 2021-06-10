@@ -8,14 +8,14 @@
 #include "layer_id.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class AddLayer final : public QUndoCommand
 {
  public:
-  AddLayer(core::map_document* document,
+  AddLayer(core::MapDocument* document,
            shared<core::ILayer> layer,
            layer_id id);
 
@@ -29,7 +29,7 @@ class AddLayer final : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   shared<core::ILayer> mLayer;
   layer_id mId;
 };

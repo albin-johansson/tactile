@@ -13,17 +13,17 @@ stamp_tool::stamp_tool(model* model) : abstract_tool{model}
   m_sequence.reserve(20);
 }
 
-void stamp_tool::update_stamp_sequence(map_document& map,
+void stamp_tool::update_stamp_sequence(MapDocument& map,
                                        const tileset& ts,
                                        const position& origin)
 {
   const auto callable = [&](const position& mapPos,
                             const position& tilesetPos) {
-    if (map.in_bounds(mapPos))
+    if (map.InBounds(mapPos))
     {
       const auto newID = ts.tile_at(tilesetPos);
 
-      auto* tileLayer = map.get_tile_layer(map.current_layer_id().value());
+      auto* tileLayer = map.GetTileLayer(map.CurrentLayerId().value());
       Q_ASSERT(tileLayer);
 
       if (!m_oldState.contains(mapPos))
@@ -43,7 +43,7 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (auto* document = get_model()->current_document())
   {
-    auto* tileset = document->current_tileset();
+    auto* tileset = document->CurrentTileset();
     if (!tileset || !tileset->get_selection().has_value())
     {
       return;
@@ -65,7 +65,7 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (auto* document = get_model()->current_document())
   {
-    const auto* tileset = document->current_tileset();
+    const auto* tileset = document->CurrentTileset();
     if (!tileset || !tileset->get_selection())
     {
       return;
@@ -95,7 +95,7 @@ void stamp_tool::released(QMouseEvent* event, const QPointF&)
 {
   if (auto* document = get_model()->current_document())
   {
-    auto* tileset = document->current_tileset();
+    auto* tileset = document->CurrentTileset();
     if (!tileset || !tileset->get_selection())
     {
       return;
@@ -103,8 +103,7 @@ void stamp_tool::released(QMouseEvent* event, const QPointF&)
 
     if (event->button() == Qt::MouseButton::LeftButton)
     {
-      document->add_stamp_sequence(std::move(m_oldState),
-                                   std::move(m_sequence));
+      document->AddStampSequence(std::move(m_oldState), std::move(m_sequence));
 
       // Clearing the maps allows for them to be used after being moved from
       m_oldState.clear();

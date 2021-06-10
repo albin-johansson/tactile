@@ -10,14 +10,14 @@
 #include "tile_id.hpp"
 #include "vector_map.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class StampSequence final : public QUndoCommand
 {
  public:
-  StampSequence(not_null<core::map_document*> document,
+  StampSequence(not_null<core::MapDocument*> document,
                 vector_map<core::position, tile_id>&& oldState,
                 vector_map<core::position, tile_id>&& sequence);
 
@@ -31,7 +31,7 @@ class StampSequence final : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   vector_map<core::position, tile_id> mOldState;
   vector_map<core::position, tile_id> mSequence;
   layer_id mLayer;

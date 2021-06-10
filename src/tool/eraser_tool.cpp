@@ -15,8 +15,8 @@ void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (auto* document = get_model()->current_document())
   {
-    const auto id = document->current_layer_id().value();
-    auto* tileLayer = document->get_tile_layer(id);
+    const auto id = document->CurrentLayerId().value();
+    auto* tileLayer = document->GetTileLayer(id);
     Q_ASSERT(tileLayer);
 
     if (event->buttons() & Qt::MouseButton::LeftButton)
@@ -52,7 +52,7 @@ void eraser_tool::released(QMouseEvent* event, const QPointF& mapPosition)
   {
     if (event->button() == Qt::MouseButton::LeftButton)
     {
-      document->add_erase_sequence(std::move(m_oldState));
+      document->AddEraseSequence(std::move(m_oldState));
       m_oldState.clear();
     }
   }

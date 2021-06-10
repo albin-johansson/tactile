@@ -54,7 +54,7 @@ void MapEditor::DisableStampPreview()
   mTabWidget->DisableStampPreview();
 }
 
-void MapEditor::AddMapTab(core::map_document* map,
+void MapEditor::AddMapTab(core::MapDocument* map,
                           const map_id id,
                           const QString& title)
 {

@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-ChangeOpacity::ChangeOpacity(not_null<core::map_document*> document,
+ChangeOpacity::ChangeOpacity(not_null<core::MapDocument*> document,
                              const layer_id id,
                              const double opacity)
     : QUndoCommand{QTranslator::tr("Change Layer Opacity")}
@@ -26,10 +26,10 @@ void ChangeOpacity::undo()
   QUndoCommand::undo();
 
   const auto opacity = mPreviousOpacity.value();
-  mDocument->raw().set_opacity(mId, opacity);
+  mDocument->Raw().SetOpacity(mId, opacity);
 
-  emit mDocument->changed_layer_opacity(mId, opacity);
-  emit mDocument->redraw();
+  emit mDocument->S_ChangedLayerOpacity(mId, opacity);
+  emit mDocument->S_Redraw();
 
   mPreviousOpacity.reset();
 }
@@ -38,13 +38,13 @@ void ChangeOpacity::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = mDocument->raw();
+  auto& map = mDocument->Raw();
 
-  mPreviousOpacity = map.get_layer(mId)->Opacity();
-  map.set_opacity(mId, mOpacity);
+  mPreviousOpacity = map.GetLayer(mId)->Opacity();
+  map.SetOpacity(mId, mOpacity);
 
-  emit mDocument->changed_layer_opacity(mId, mOpacity);
-  emit mDocument->redraw();
+  emit mDocument->S_ChangedLayerOpacity(mId, mOpacity);
+  emit mDocument->S_Redraw();
 }
 
 auto ChangeOpacity::mergeWith(const QUndoCommand* other) -> bool

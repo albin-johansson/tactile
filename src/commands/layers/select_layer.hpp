@@ -8,14 +8,14 @@
 #include "maybe.hpp"
 #include "not_null.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 
 class SelectLayer final : public QUndoCommand
 {
  public:
-  SelectLayer(not_null<core::map_document*> document, layer_id id);
+  SelectLayer(not_null<core::MapDocument*> document, layer_id id);
 
   void undo() override;
 
@@ -27,7 +27,7 @@ class SelectLayer final : public QUndoCommand
   }
 
  private:
-  core::map_document* mDocument{};
+  core::MapDocument* mDocument{};
   layer_id mId;
   maybe<layer_id> mPrevious;
 };

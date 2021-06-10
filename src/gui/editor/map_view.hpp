@@ -8,7 +8,7 @@
 #include "map_id.hpp"
 #include "position.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, map_document)
+TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile, MapScene)
 
 namespace tactile {
@@ -30,7 +30,7 @@ class MapView final : public QGraphicsView
   Q_OBJECT
 
  public:
-  explicit MapView(core::map_document* map,
+  explicit MapView(core::MapDocument* map,
                    map_id id,
                    QWidget* parent = nullptr);
 
