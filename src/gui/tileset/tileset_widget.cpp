@@ -9,7 +9,7 @@ namespace tactile {
 
 TilesetWidget::TilesetWidget(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::TilesetWidget>(this)}
+    , mUi{InitUi<Ui::TilesetWidget>(this)}
     , mContentPage{new TilesetContentPage{this}}
     , mEmptyPage{new TilesetEmptyPage{this}}
     , mEmptyIndex{mUi->stackedWidget->addWidget(mEmptyPage)}

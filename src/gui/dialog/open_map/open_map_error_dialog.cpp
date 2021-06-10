@@ -7,7 +7,7 @@ namespace tactile {
 
 OpenMapErrorDialog::OpenMapErrorDialog(QWidget* parent)
     : QDialog{parent}
-    , mUi{init_ui<Ui::OpenMapErrorDialog>(this)}
+    , mUi{InitUi<Ui::OpenMapErrorDialog>(this)}
 {}
 
 OpenMapErrorDialog::~OpenMapErrorDialog() noexcept = default;

@@ -16,7 +16,7 @@ namespace tactile {
 
 PropertiesWidget::PropertiesWidget(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::PropertiesWidget>(this)}
+    , mUi{InitUi<Ui::PropertiesWidget>(this)}
     , mContextMenu{new PropertyContextMenu{this}}
     , mView{new PropertyTreeView{this}}
 {

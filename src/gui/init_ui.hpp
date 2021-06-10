@@ -8,7 +8,7 @@ namespace tactile {
 
 // clang-format off
 template <typename T, typename U>
-concept ui_class = requires(T t, U* self)
+concept UiClass = requires(T t, U* self)
 {
   { t.setupUi(self) };
 };
@@ -25,8 +25,8 @@ concept ui_class = requires(T t, U* self)
  *
  * \return the created UI-class instance.
  */
-template <typename T, typename Self> requires ui_class<T, Self>
-[[nodiscard]] auto init_ui(Self* self) -> unique<T>
+template <typename T, typename Self> requires UiClass<T, Self>
+[[nodiscard]] auto InitUi(Self* self) -> unique<T>
 {
   Q_ASSERT(self);
 

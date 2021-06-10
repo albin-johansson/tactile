@@ -15,7 +15,7 @@ namespace tactile {
 
 TilesetContentPage::TilesetContentPage(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::TilesetContentPage>(this)}
+    , mUi{InitUi<Ui::TilesetContentPage>(this)}
     , mTabWidget{new TabWidget{this}}
     , mContextMenu{new TilesetTabContextMenu{this}}
 {

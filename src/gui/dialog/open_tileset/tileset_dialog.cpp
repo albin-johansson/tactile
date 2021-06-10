@@ -11,7 +11,7 @@ namespace tactile {
 
 TilesetDialog::TilesetDialog(QWidget* parent)
     : QDialog{parent}
-    , mUi{init_ui<Ui::TilesetDialog>(this)}
+    , mUi{InitUi<Ui::TilesetDialog>(this)}
     , mValidator{new QIntValidator{1, 1'000, this}}
 {
   mDefaultImageIcon = mUi->imageLabel->pixmap(Qt::ReturnByValueConstant{});

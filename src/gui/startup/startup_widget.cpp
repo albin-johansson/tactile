@@ -7,7 +7,7 @@ namespace tactile {
 
 StartupWidget::StartupWidget(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::StartupWidget>(this)}
+    , mUi{InitUi<Ui::StartupWidget>(this)}
 {
   const QKeySequence newDocument{QKeySequence::New};
   mUi->newShortcutLabel->setText(newDocument.toString());

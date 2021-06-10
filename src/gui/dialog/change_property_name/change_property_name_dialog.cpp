@@ -11,7 +11,7 @@ namespace tactile {
 ChangePropertyNameDialog::ChangePropertyNameDialog(QStandardItemModel* model,
                                                    QWidget* parent)
     : QDialog{parent}
-    , mUi{init_ui<Ui::ChangePropertyNameDialog>(this)}
+    , mUi{InitUi<Ui::ChangePropertyNameDialog>(this)}
     , mValidator{new PropertyNameValidator{model, this}}
 {
   // clang-format off

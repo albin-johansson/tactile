@@ -7,7 +7,7 @@ namespace tactile {
 
 ResizeDialog::ResizeDialog(QWidget* parent)
     : QDialog{parent}
-    , mUi{init_ui<Ui::ResizeDialog>(this)}
+    , mUi{InitUi<Ui::ResizeDialog>(this)}
     , mValidator{new QIntValidator{1, 20'000, this}}
 {
   mUi->widthEdit->setValidator(mValidator);

@@ -16,7 +16,7 @@ namespace tactile {
 
 LayerWidget::LayerWidget(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::LayerWidget>(this)}
+    , mUi{InitUi<Ui::LayerWidget>(this)}
     , mView{new LayerListView{this}}
     , mAddLayerMenu{new AddLayerContextMenu{this}}
     , mWidgetMenu{new LayerWidgetContextMenu{mAddLayerMenu, this}}

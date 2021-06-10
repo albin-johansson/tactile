@@ -7,7 +7,7 @@ namespace tactile {
 
 AboutDialog::AboutDialog(QWidget* parent)
     : QDialog{parent}
-    , mUi{init_ui<Ui::AboutDialog>(this)}
+    , mUi{InitUi<Ui::AboutDialog>(this)}
 {}
 
 AboutDialog::~AboutDialog() noexcept = default;

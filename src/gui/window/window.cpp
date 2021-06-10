@@ -22,7 +22,7 @@ namespace tactile {
 
 Window::Window(QWidget* parent)
     : QMainWindow{parent}
-    , mUi{init_ui<Ui::Window>(this)}
+    , mUi{InitUi<Ui::Window>(this)}
     , mEditor{new MapEditor{this}}
     , mToolDock{new ToolDock{this}}
     , mLayerDock{new LayerDock{this}}

@@ -7,7 +7,7 @@ namespace tactile {
 
 FileValueWidget::FileValueWidget(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::file_value_widget>(this)}
+    , mUi{InitUi<Ui::file_value_widget>(this)}
 {
   setAutoFillBackground(true);
   layout()->setContentsMargins(0, 0, 0, 0);

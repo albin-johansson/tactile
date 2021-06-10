@@ -7,7 +7,7 @@ namespace tactile {
 
 TilesetEmptyPage::TilesetEmptyPage(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::TilesetEmptyPage>(this)}
+    , mUi{InitUi<Ui::TilesetEmptyPage>(this)}
 {
   connect(mUi->addSheetButton,
           &QPushButton::clicked,

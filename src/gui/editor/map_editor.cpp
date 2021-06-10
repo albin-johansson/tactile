@@ -11,7 +11,7 @@ namespace tactile {
 
 MapEditor::MapEditor(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::MapEditor>(this)}
+    , mUi{InitUi<Ui::MapEditor>(this)}
     , mTabWidget{new MapTabWidget{this}}
     , mContextMenu{new MapEditorContextMenu{this}}
     , mStartupID{mUi->stackedWidget->addWidget(new StartupWidget{this})}

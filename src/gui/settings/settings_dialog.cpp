@@ -23,7 +23,7 @@ using namespace prefs;
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog{parent}
-    , mUi{init_ui<Ui::SettingsDialog>(this)}
+    , mUi{InitUi<Ui::SettingsDialog>(this)}
     , mThemeOptionsContextMenu{new ThemeOptionsContextMenu{this}}
     , mBasicPreview{new ColorPreviewManager{mUi->basicGroupLayout,
                                             QPalette::Active,

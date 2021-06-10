@@ -7,7 +7,7 @@ namespace tactile {
 
 ToolWidget::ToolWidget(QWidget* parent)
     : QWidget{parent}
-    , mUi{init_ui<Ui::ToolWidget>(this)}
+    , mUi{InitUi<Ui::ToolWidget>(this)}
     , mGroup{new QButtonGroup{this}}
 {
   const auto onPressed = [this](auto* sender, auto handler) {
