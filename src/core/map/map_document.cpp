@@ -350,7 +350,7 @@ auto map_document::take_layer(const layer_id id) -> shared<layer>
 
 void map_document::duplicate_layer(const layer_id id)
 {
-  m_delegate->execute<cmd::duplicate_layer>(this, id);
+  m_delegate->execute<cmd::DuplicateLayer>(this, id);
 }
 
 void map_document::increase_tile_size()

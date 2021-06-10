@@ -12,10 +12,10 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class duplicate_layer final : public QUndoCommand
+class DuplicateLayer final : public QUndoCommand
 {
  public:
-  duplicate_layer(not_null<core::map_document*> document, layer_id id);
+  DuplicateLayer(not_null<core::map_document*> document, layer_id id);
 
   void undo() override;
 
@@ -27,9 +27,9 @@ class duplicate_layer final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document{};
-  layer_id m_id;
-  maybe<layer_id> m_newId;
+  core::map_document* mDocument{};
+  layer_id mId;
+  maybe<layer_id> mNewId;
 };
 
 }  // namespace tactile::cmd
