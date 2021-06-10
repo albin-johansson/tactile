@@ -12,10 +12,10 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class select_layer final : public QUndoCommand
+class SelectLayer final : public QUndoCommand
 {
  public:
-  select_layer(not_null<core::map_document*> document, layer_id id);
+  SelectLayer(not_null<core::map_document*> document, layer_id id);
 
   void undo() override;
 
@@ -27,9 +27,9 @@ class select_layer final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document{};
-  layer_id m_id;
-  maybe<layer_id> m_previous;
+  core::map_document* mDocument{};
+  layer_id mId;
+  maybe<layer_id> mPrevious;
 };
 
 }  // namespace tactile::cmd

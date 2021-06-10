@@ -303,7 +303,7 @@ void map_document::set_tileset_selection(const tileset_selection& selection)
 
 void map_document::select_layer(const layer_id id)
 {
-  m_delegate->execute<cmd::select_layer>(this, id);
+  m_delegate->execute<cmd::SelectLayer>(this, id);
 }
 
 void map_document::add_layer(const layer_id id, const shared<layer>& layer)

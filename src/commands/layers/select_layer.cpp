@@ -7,49 +7,49 @@
 
 namespace tactile::cmd {
 
-select_layer::select_layer(not_null<core::map_document*> document,
-                           const layer_id id)
+SelectLayer::SelectLayer(not_null<core::map_document*> document,
+                         const layer_id id)
     : QUndoCommand{QTranslator::tr("Select Layer")}
-    , m_document{document}
-    , m_id{id}
+    , mDocument{document}
+    , mId{id}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Cannot create command from null document!"};
   }
 }
 
-void select_layer::undo()
+void SelectLayer::undo()
 {
   QUndoCommand::undo();
 
-  if (m_previous)
+  if (mPrevious)
   {
-    auto& map = m_document->raw();
-    map.select_layer(*m_previous);
+    auto& map = mDocument->raw();
+    map.select_layer(*mPrevious);
 
-    const auto& layer = map.get_layer(m_id);
+    const auto& layer = map.get_layer(mId);
     Q_ASSERT(layer);
 
-    emit m_document->selected_layer(*m_previous, *layer);
+    emit mDocument->selected_layer(*mPrevious, *layer);
 
-    m_previous.reset();
+    mPrevious.reset();
   }
 }
 
-void select_layer::redo()
+void SelectLayer::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
 
-  m_previous = map.active_layer_id();
-  map.select_layer(m_id);
+  mPrevious = map.active_layer_id();
+  map.select_layer(mId);
 
-  const auto& layer = map.get_layer(m_id);
+  const auto& layer = map.get_layer(mId);
   Q_ASSERT(layer);
 
-  emit m_document->selected_layer(m_id, *layer);
+  emit mDocument->selected_layer(mId, *layer);
 }
 
 }  // namespace tactile::cmd
