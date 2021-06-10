@@ -2,13 +2,13 @@
 
 namespace tactile::cmd {
 
-auto repeated_command::mergeWith(const QUndoCommand* other) -> bool
+auto RepeatedCommand::mergeWith(const QUndoCommand* other) -> bool
 {
   if (other->id() == id())
   {
-    if (auto* ptr = dynamic_cast<const repeated_command*>(other))
+    if (auto* ptr = dynamic_cast<const RepeatedCommand*>(other))
     {
-      m_amount += ptr->m_amount;
+      mAmount += ptr->mAmount;
       return true;
     }
   }

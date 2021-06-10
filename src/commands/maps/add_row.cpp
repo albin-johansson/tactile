@@ -8,7 +8,7 @@
 namespace tactile::cmd {
 
 AddRow::AddRow(not_null<core::map_document*> document)
-    : repeated_command{TACTILE_QSTRING(u"Add Row")}
+    : RepeatedCommand{TACTILE_QSTRING(u"Add Row")}
     , mDocument{document}
 {
   if (!mDocument)
@@ -21,7 +21,7 @@ void AddRow::undo()
 {
   QUndoCommand::undo();
 
-  invoke_n(amount(), [this] { mDocument->raw().remove_row(); });
+  invoke_n(Amount(), [this] { mDocument->raw().remove_row(); });
 
   emit mDocument->redraw();
 }
@@ -30,7 +30,7 @@ void AddRow::redo()
 {
   QUndoCommand::redo();
 
-  invoke_n(amount(), [this] { mDocument->raw().add_row(empty); });
+  invoke_n(Amount(), [this] { mDocument->raw().add_row(empty); });
 
   emit mDocument->redraw();
 }

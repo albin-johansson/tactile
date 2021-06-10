@@ -4,22 +4,22 @@
 
 namespace tactile::cmd {
 
-class repeated_command : public QUndoCommand
+class RepeatedCommand : public QUndoCommand
 {
  public:
-  explicit repeated_command(const QString& name) : QUndoCommand{name}
+  explicit RepeatedCommand(const QString& name) : QUndoCommand{name}
   {}
 
   auto mergeWith(const QUndoCommand* other) -> bool final;
 
  protected:
-  [[nodiscard]] auto amount() const noexcept -> int
+  [[nodiscard]] auto Amount() const noexcept -> int
   {
-    return m_amount;
+    return mAmount;
   }
 
  private:
-  int m_amount{1};
+  int mAmount{1};
 };
 
 }  // namespace tactile::cmd

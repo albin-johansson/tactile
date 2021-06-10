@@ -18,7 +18,7 @@ namespace tactile::cmd {
  *
  * \headerfile add_column.hpp
  */
-class AddColumn final : public repeated_command
+class AddColumn final : public RepeatedCommand
 {
  public:
   explicit AddColumn(not_null<core::map_document*> document);

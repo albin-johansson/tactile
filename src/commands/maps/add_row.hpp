@@ -18,7 +18,7 @@ namespace tactile::cmd {
  *
  * \headerfile add_row.hpp
  */
-class AddRow final : public repeated_command
+class AddRow final : public RepeatedCommand
 {
  public:
   explicit AddRow(not_null<core::map_document*> document);
