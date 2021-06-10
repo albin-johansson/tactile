@@ -28,7 +28,7 @@ class tileset_manager final
 {
  public:
   using tile_range = std::pair<tile_id, tile_id>;
-  using tileset_map = vector_map<tileset_id, shared<tileset>>;
+  using tileset_map = vector_map<tileset_id, shared<Tileset>>;
   using const_iterator = tileset_map::const_iterator;
 
   /**
@@ -141,12 +141,12 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto at(tileset_id id) -> tileset&;
+  [[nodiscard]] auto at(tileset_id id) -> Tileset&;
 
   /**
    * \copydoc at(tileset_id)
    */
-  [[nodiscard]] auto at(tileset_id id) const -> const tileset&;
+  [[nodiscard]] auto at(tileset_id id) const -> const Tileset&;
 
   /**
    * \brief Returns the image associated with the specified tile.
@@ -212,7 +212,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto current_tileset() const -> const tileset*;
+  [[nodiscard]] auto current_tileset() const -> const Tileset*;
 
   /**
    * \brief Returns the ID associated with the active tileset.
@@ -260,7 +260,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_tileset_pointer(tileset_id id) -> shared<tileset>
+  [[nodiscard]] auto get_tileset_pointer(tileset_id id) -> shared<Tileset>
   {
     return m_tilesets.at(id);
   }

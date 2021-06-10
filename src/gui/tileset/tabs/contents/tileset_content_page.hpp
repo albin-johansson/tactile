@@ -80,7 +80,7 @@ class TilesetContentPage final : public QWidget
    *
    * \since 0.1.0
    */
-  void OnAddedTileset(map_id map, tileset_id id, const core::tileset& tileset);
+  void OnAddedTileset(map_id map, tileset_id id, const core::Tileset& tileset);
 
   /**
    * \brief Removes the tileset tab associated with the specified tileset.

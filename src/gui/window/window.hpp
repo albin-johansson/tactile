@@ -142,7 +142,7 @@ class Window final : public QMainWindow
   /// \name Tileset slots
   /// \{
 
-  void OnAddedTileset(map_id map, tileset_id id, const core::tileset& tileset);
+  void OnAddedTileset(map_id map, tileset_id id, const core::Tileset& tileset);
   void OnRemovedTileset(tileset_id id);
   void OnRenamedTileset(tileset_id id, const QString& name);
 

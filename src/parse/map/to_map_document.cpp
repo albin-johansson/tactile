@@ -9,9 +9,9 @@ namespace tactile::parse {
 namespace {
 
 [[nodiscard]] auto make_tileset(const tileset_data& data)
-    -> shared<core::tileset>
+    -> shared<core::Tileset>
 {
-  auto tileset = std::make_shared<core::tileset>(data.firstId,
+  auto tileset = std::make_shared<core::Tileset>(data.firstId,
                                                  data.absolutePath,
                                                  data.tileWidth,
                                                  data.tileHeight);

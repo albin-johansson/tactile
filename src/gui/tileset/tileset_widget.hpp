@@ -32,7 +32,7 @@ class TilesetWidget final : public QWidget
   void S_SetTilesetSelection(const core::tileset_selection& selection);
 
  public slots:
-  void OnAddedTileset(map_id map, tileset_id id, const core::tileset& tileset);
+  void OnAddedTileset(map_id map, tileset_id id, const core::Tileset& tileset);
 
   void OnRemovedTileset(tileset_id id);
 

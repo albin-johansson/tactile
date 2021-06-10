@@ -12,7 +12,7 @@ tileset_manager::tileset_manager()
   m_tilesets.reserve(5);
 }
 
-void tileset_manager::add(const tileset_id id, shared<tileset> tileset)
+void tileset_manager::add(const tileset_id id, shared<Tileset> tileset)
 {
   Q_ASSERT(!contains(id));
   Q_ASSERT(tileset);
@@ -22,7 +22,7 @@ void tileset_manager::add(const tileset_id id, shared<tileset> tileset)
   m_activeId = id;
 }
 
-auto tileset_manager::add(shared<tileset> tileset) -> tileset_id
+auto tileset_manager::add(shared<Tileset> tileset) -> tileset_id
 {
   Q_ASSERT(tileset);
 
@@ -80,12 +80,12 @@ void tileset_manager::increment_next_tileset_id() noexcept
   ++m_nextId;
 }
 
-auto tileset_manager::at(const tileset_id id) -> tileset&
+auto tileset_manager::at(const tileset_id id) -> Tileset&
 {
   return *m_tilesets.at(id);
 }
 
-auto tileset_manager::at(const tileset_id id) const -> const tileset&
+auto tileset_manager::at(const tileset_id id) const -> const Tileset&
 {
   return *m_tilesets.at(id);
 }
@@ -132,7 +132,7 @@ auto tileset_manager::has_active_tileset() const noexcept -> bool
   return m_activeId.has_value();
 }
 
-auto tileset_manager::current_tileset() const -> const tileset*
+auto tileset_manager::current_tileset() const -> const Tileset*
 {
   return m_activeId ? m_tilesets.at(*m_activeId).get() : nullptr;
 }

@@ -19,7 +19,7 @@ class TilesetTab final : public QWidget
 
  public:
   explicit TilesetTab(tileset_id id,
-                      const core::tileset& tileset,
+                      const core::Tileset& tileset,
                       QWidget* parent = nullptr);
 
   ~TilesetTab() noexcept override;

@@ -15,7 +15,7 @@ class AddTileset final : public QUndoCommand
 {
  public:
   AddTileset(not_null<core::MapDocument*> document,
-             shared<core::tileset> tileset,
+             shared<core::Tileset> tileset,
              tileset_id id);
 
   void undo() override;
@@ -29,7 +29,7 @@ class AddTileset final : public QUndoCommand
 
  private:
   core::MapDocument* mDocument{};
-  shared<core::tileset> mTileset;
+  shared<core::Tileset> mTileset;
   tileset_id mId;
 };
 

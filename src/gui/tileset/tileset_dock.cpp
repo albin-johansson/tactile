@@ -30,7 +30,7 @@ void TilesetDock::OnAddedMap(const map_id id,
                              const core::MapDocument& document)
 {
   document.EachTileset(
-      [this, id](const tileset_id tilesetId, const core::tileset& tileset) {
+      [this, id](const tileset_id tilesetId, const core::Tileset& tileset) {
         OnAddedTileset(id, tilesetId, tileset);
       });
 }
@@ -42,7 +42,7 @@ void TilesetDock::OnSwitchedMap(const map_id id)
 
 void TilesetDock::OnAddedTileset(const map_id map,
                                  const tileset_id id,
-                                 const core::tileset& tileset)
+                                 const core::Tileset& tileset)
 {
   mWidget->OnAddedTileset(map, id, tileset);
 }

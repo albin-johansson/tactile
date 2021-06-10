@@ -9,7 +9,7 @@ namespace tactile {
 class TilesetImageLabel final : public QLabel
 {
  public:
-  explicit TilesetImageLabel(const core::tileset& tileset,
+  explicit TilesetImageLabel(const core::Tileset& tileset,
                              QWidget* parent = nullptr);
 
   ~TilesetImageLabel() noexcept override;

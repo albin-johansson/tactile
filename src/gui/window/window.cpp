@@ -280,7 +280,7 @@ void Window::OnCleanChanged(const bool clean)
 
 void Window::OnAddedTileset(const map_id map,
                             const tileset_id id,
-                            const core::tileset& tileset)
+                            const core::Tileset& tileset)
 {
   mTilesetDock->OnAddedTileset(map, id, tileset);
 }

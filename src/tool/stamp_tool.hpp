@@ -49,7 +49,7 @@ class stamp_tool final : public abstract_tool
   vector_map<core::Position, tile_id> m_sequence;
 
   void update_stamp_sequence(core::MapDocument& map,
-                             const core::tileset& tileset,
+                             const core::Tileset& tileset,
                              const core::Position& origin);
 };
 

@@ -34,7 +34,7 @@ namespace tactile::core {
  *
  * \headerfile tileset.hpp
  */
-class tileset final
+class Tileset final
 {
  public:
   using rect_map = std::unordered_map<tile_id, QRect>;
@@ -52,7 +52,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  tileset(tile_id firstId,
+  Tileset(tile_id firstId,
           const QImage& image,
           tile_width tileWidth,
           tile_height tileHeight);
@@ -70,7 +70,7 @@ class tileset final
    *
    * \since 0.1.0
    */
-  tileset(tile_id firstID,
+  Tileset(tile_id firstID,
           const QString& path,
           tile_width tileWidth,
           tile_height tileHeight);

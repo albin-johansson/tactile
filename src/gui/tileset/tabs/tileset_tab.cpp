@@ -11,7 +11,7 @@
 namespace tactile {
 
 TilesetTab::TilesetTab(tileset_id id,
-                       const core::tileset& tileset,
+                       const core::Tileset& tileset,
                        QWidget* parent)
     : QWidget{parent}
     , mId{id}

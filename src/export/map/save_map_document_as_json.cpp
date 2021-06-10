@@ -96,7 +96,7 @@ namespace {
  * \since 0.1.0
  */
 void add_common_attributes(QJsonObject& object,
-                           const core::tileset& tileset,
+                           const core::Tileset& tileset,
                            const QDir& targetDir,
                            const export_options& options)
 {
@@ -129,7 +129,7 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto make_embedded_tileset_object(const core::tileset& tileset,
+[[nodiscard]] auto make_embedded_tileset_object(const core::Tileset& tileset,
                                                 const QDir& targetDir,
                                                 const export_options& options)
     -> QJsonObject
@@ -154,7 +154,7 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto make_external_tileset_object(const core::tileset& tileset)
+[[nodiscard]] auto make_external_tileset_object(const core::Tileset& tileset)
     -> QJsonObject
 {
   QJsonObject object{};
@@ -177,7 +177,7 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-void create_external_tileset_file(const core::tileset& tileset,
+void create_external_tileset_file(const core::Tileset& tileset,
                                   const QDir& targetDir,
                                   const export_options& options)
 {
@@ -213,7 +213,7 @@ void create_external_tileset_file(const core::tileset& tileset,
 {
   QJsonArray array;
 
-  map.EachTileset([&](tileset_id id, const core::tileset& tileset) {
+  map.EachTileset([&](tileset_id id, const core::Tileset& tileset) {
     if (options.embedTilesets)
     {
       array.append(make_embedded_tileset_object(tileset, targetDir, options));

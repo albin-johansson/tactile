@@ -27,7 +27,7 @@ namespace tactile::core {
 class IPropertyManager;
 class MapDocument;
 class ILayer;
-class tileset;
+class Tileset;
 
 /**
  * \class model
@@ -101,7 +101,7 @@ class model final : public QObject
   void redo_text_updated(const QString& text);
   void clean_changed(bool clean);
 
-  void added_tileset(map_id map, tileset_id id, const tileset& tileset);
+  void added_tileset(map_id map, tileset_id id, const Tileset& tileset);
   void removed_tileset(tileset_id id);
   void renamed_tileset(tileset_id id, const QString& name);
 

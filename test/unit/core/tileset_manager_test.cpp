@@ -12,9 +12,9 @@ class TilesetManagerTest : public testing::Test
   [[maybe_unused]] static void SetUpTestSuite()
   {
     m_interior =
-        std::make_shared<core::tileset>(1_t, "terrain.png", 32_tw, 32_th);
+        std::make_shared<core::Tileset>(1_t, "terrain.png", 32_tw, 32_th);
     m_exterior =
-        std::make_shared<core::tileset>(1026_t, "exterior.png", 32_tw, 32_th);
+        std::make_shared<core::Tileset>(1026_t, "exterior.png", 32_tw, 32_th);
   }
 
   [[maybe_unused]] static void TearDownTestSuite()
@@ -25,8 +25,8 @@ class TilesetManagerTest : public testing::Test
 
   core::tileset_manager m_manager;
 
-  inline static shared<core::tileset> m_interior;
-  inline static shared<core::tileset> m_exterior;
+  inline static shared<core::Tileset> m_interior;
+  inline static shared<core::Tileset> m_exterior;
 };
 
 TEST_F(TilesetManagerTest, AddWithoutID)

@@ -128,7 +128,7 @@ void TilesetContentPage::OnSelectedMap(const map_id map)
 
 void TilesetContentPage::OnAddedTileset(const map_id map,
                                         const tileset_id id,
-                                        const core::tileset& tileset)
+                                        const core::Tileset& tileset)
 {
   Q_ASSERT(!CurrentManager().Contains(id));
 

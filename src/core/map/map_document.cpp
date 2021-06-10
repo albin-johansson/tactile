@@ -270,7 +270,7 @@ void MapDocument::AddTileset(const QImage& image,
     const auto id = mTilesets->next_tileset_id();
     const auto gid = mTilesets->next_global_tile_id();
 
-    auto ts = std::make_shared<tileset>(gid, image, tileWidth, tileHeight);
+    auto ts = std::make_shared<Tileset>(gid, image, tileWidth, tileHeight);
     ts->set_name(name);
     ts->set_path(path);
 
@@ -467,7 +467,7 @@ auto MapDocument::CurrentTileSize() const noexcept -> int
   return mMap->CurrentTileSize();
 }
 
-auto MapDocument::CurrentTileset() const -> const tileset*
+auto MapDocument::CurrentTileset() const -> const Tileset*
 {
   return mTilesets->current_tileset();
 }

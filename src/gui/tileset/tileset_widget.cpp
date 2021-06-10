@@ -39,7 +39,7 @@ TilesetWidget::~TilesetWidget() noexcept = default;
 
 void TilesetWidget::OnAddedTileset(const map_id map,
                                    const tileset_id id,
-                                   const core::tileset& tileset)
+                                   const core::Tileset& tileset)
 {
   const auto wasEmpty = mContentPage->IsEmpty();
   mContentPage->OnAddedTileset(map, id, tileset);

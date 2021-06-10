@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-TilesetImageLabel::TilesetImageLabel(const core::tileset& tileset,
+TilesetImageLabel::TilesetImageLabel(const core::Tileset& tileset,
                                      QWidget* parent)
     : QLabel{parent}
     , mTileWidth{tileset.get_tile_width()}

@@ -12,7 +12,7 @@ class TilesetTest : public testing::Test
  public:
   [[maybe_unused]] static void SetUpTestSuite()
   {
-    m_tileset = std::make_unique<core::tileset>(1_t,
+    m_tileset = std::make_unique<core::Tileset>(1_t,
                                                 TACTILE_QSTRING(u"terrain.png"),
                                                 32_tw,
                                                 32_th);
@@ -23,31 +23,31 @@ class TilesetTest : public testing::Test
     m_tileset.reset();
   }
 
-  inline static unique<core::tileset> m_tileset;
+  inline static unique<core::Tileset> m_tileset;
 };
 
 TEST_F(TilesetTest, ImageConstructor)
 {
   const QImage goodImage{TACTILE_QSTRING(u"terrain.png")};
-  EXPECT_NO_THROW((core::tileset{1_t, goodImage, 32_tw, 32_th}));
+  EXPECT_NO_THROW((core::Tileset{1_t, goodImage, 32_tw, 32_th}));
 
-  EXPECT_THROW((core::tileset{1_t, goodImage, 0_tw, 32_th}), TactileError);
-  EXPECT_THROW((core::tileset{1_t, goodImage, 32_tw, 0_th}), TactileError);
+  EXPECT_THROW((core::Tileset{1_t, goodImage, 0_tw, 32_th}), TactileError);
+  EXPECT_THROW((core::Tileset{1_t, goodImage, 32_tw, 0_th}), TactileError);
 
   const QImage badImage{TACTILE_QSTRING(u"dummy.png")};
-  EXPECT_THROW((core::tileset{1_t, badImage, 32_tw, 32_th}), TactileError);
+  EXPECT_THROW((core::Tileset{1_t, badImage, 32_tw, 32_th}), TactileError);
 }
 
 TEST_F(TilesetTest, PathConstructor)
 {
   const auto goodPath = TACTILE_QSTRING(u"terrain.png");
-  EXPECT_NO_THROW((core::tileset{1_t, goodPath, 32_tw, 32_th}));
+  EXPECT_NO_THROW((core::Tileset{1_t, goodPath, 32_tw, 32_th}));
 
-  EXPECT_THROW((core::tileset{1_t, goodPath, 0_tw, 32_th}), TactileError);
-  EXPECT_THROW((core::tileset{1_t, goodPath, 32_tw, 0_th}), TactileError);
+  EXPECT_THROW((core::Tileset{1_t, goodPath, 0_tw, 32_th}), TactileError);
+  EXPECT_THROW((core::Tileset{1_t, goodPath, 32_tw, 0_th}), TactileError);
 
   const auto badPath = TACTILE_QSTRING(u"dummy.png");
-  EXPECT_THROW((core::tileset{1_t, badPath, 32_tw, 32_th}), TactileError);
+  EXPECT_THROW((core::Tileset{1_t, badPath, 32_tw, 32_th}), TactileError);
 }
 
 TEST_F(TilesetTest, IterateSelection)

@@ -417,7 +417,7 @@ class MapDocument final : public ADocument
    *
    * \since 0.1.0
    */
-  template <std::invocable<tileset_id, const tileset&> T>
+  template <std::invocable<tileset_id, const Tileset&> T>
   void EachTileset(T&& callable) const
   {
     for (const auto& [id, tileset] : *mTilesets)
@@ -459,7 +459,7 @@ class MapDocument final : public ADocument
   /**
    * \copydoc tileset_manager::CurrentTileset()
    */
-  [[nodiscard]] auto CurrentTileset() const -> const tileset*;
+  [[nodiscard]] auto CurrentTileset() const -> const Tileset*;
 
   /**
    * \brief Returns a pointer to the associated tileset manager.

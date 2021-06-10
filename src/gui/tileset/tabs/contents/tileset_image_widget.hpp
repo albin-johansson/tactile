@@ -16,7 +16,7 @@ class TilesetImageWidget final : public QWidget
   Q_OBJECT
 
  public:
-  explicit TilesetImageWidget(const core::tileset& tileset,
+  explicit TilesetImageWidget(const core::Tileset& tileset,
                               QWidget* parent = nullptr);
 
   ~TilesetImageWidget() noexcept override;

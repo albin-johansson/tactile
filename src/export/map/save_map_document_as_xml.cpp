@@ -18,7 +18,7 @@ namespace {
 
 void add_image_node(QDomDocument& document,
                     QDomElement& parent,
-                    const core::tileset& tileset,
+                    const core::Tileset& tileset,
                     const QDir& targetDir)
 {
   auto image = document.createElement(TACTILE_QSTRING(u"image"));
@@ -33,7 +33,7 @@ void add_image_node(QDomDocument& document,
 
 void add_common_attributes(QDomDocument& document,
                            QDomElement& node,
-                           const core::tileset& tileset,
+                           const core::Tileset& tileset,
                            const QDir& targetDir)
 {
   node.setAttribute(TACTILE_QSTRING(u"version"), g_tiledXmlVersion);
@@ -49,7 +49,7 @@ void add_common_attributes(QDomDocument& document,
   add_image_node(document, node, tileset, targetDir);
 }
 
-void create_external_tileset_file(const core::tileset& tileset,
+void create_external_tileset_file(const core::Tileset& tileset,
                                   const QDir& targetDir,
                                   const export_options& options)
 {
@@ -146,7 +146,7 @@ void save_tilesets(QDomDocument& document,
                    const QDir& targetDir,
                    const export_options& options)
 {
-  map.EachTileset([&](tileset_id id, const core::tileset& tileset) {
+  map.EachTileset([&](tileset_id id, const core::Tileset& tileset) {
     auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
 
     node.setAttribute(TACTILE_QSTRING(u"firstgid"), tileset.first_id().get());

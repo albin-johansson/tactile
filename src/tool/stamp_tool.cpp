@@ -14,7 +14,7 @@ stamp_tool::stamp_tool(model* model) : abstract_tool{model}
 }
 
 void stamp_tool::update_stamp_sequence(MapDocument& map,
-                                       const tileset& ts,
+                                       const Tileset& ts,
                                        const Position& origin)
 {
   const auto callable = [&](const Position& mapPos,

@@ -8,7 +8,7 @@
 
 namespace tactile {
 
-TilesetImageWidget::TilesetImageWidget(const core::tileset& tileset,
+TilesetImageWidget::TilesetImageWidget(const core::Tileset& tileset,
                                        QWidget* parent)
     : QWidget{parent}
     , mLayout{new QGridLayout{this}}
