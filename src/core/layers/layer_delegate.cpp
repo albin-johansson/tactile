@@ -5,99 +5,99 @@
 
 namespace tactile::core {
 
-layer_delegate::layer_delegate(const layer_type type) noexcept : m_type{type}
+LayerDelegate::LayerDelegate(const layer_type type) noexcept : mType{type}
 {}
 
-void layer_delegate::set_visible(const bool visible) noexcept
+void LayerDelegate::set_visible(const bool visible) noexcept
 {
-  m_visible = visible;
+  mVisible = visible;
 }
 
-void layer_delegate::set_opacity(const double opacity)
+void LayerDelegate::set_opacity(const double opacity)
 {
-  m_opacity = std::clamp(opacity, 0.0, 1.0);
+  mOpacity = std::clamp(opacity, 0.0, 1.0);
 }
 
-void layer_delegate::set_name(QString name)
+void LayerDelegate::set_name(QString name)
 {
-  m_name = std::move(name);
+  mName = std::move(name);
 }
 
-auto layer_delegate::type() const noexcept -> layer_type
+auto LayerDelegate::type() const noexcept -> layer_type
 {
-  return m_type;
+  return mType;
 }
 
-auto layer_delegate::visible() const noexcept -> bool
+auto LayerDelegate::visible() const noexcept -> bool
 {
-  return m_visible;
+  return mVisible;
 }
 
-auto layer_delegate::opacity() const noexcept -> double
+auto LayerDelegate::opacity() const noexcept -> double
 {
-  return m_opacity;
+  return mOpacity;
 }
 
-auto layer_delegate::name() const -> const QString&
+auto LayerDelegate::name() const -> const QString&
 {
-  return m_name;
+  return mName;
 }
 
-void layer_delegate::add_property(const QString& name, const property_type type)
+void LayerDelegate::add_property(const QString& name, const property_type type)
 {
-  m_properties.add_property(name, type);
+  mProperties.add_property(name, type);
 }
 
-void layer_delegate::add_property(const QString& name, const property& property)
+void LayerDelegate::add_property(const QString& name, const property& property)
 {
-  m_properties.add_property(name, property);
+  mProperties.add_property(name, property);
 }
 
-void layer_delegate::remove_property(const QString& name)
+void LayerDelegate::remove_property(const QString& name)
 {
-  m_properties.remove_property(name);
+  mProperties.remove_property(name);
 }
 
-void layer_delegate::rename_property(const QString& oldName,
-                                     const QString& newName)
+void LayerDelegate::rename_property(const QString& oldName,
+                                    const QString& newName)
 {
-  m_properties.rename_property(oldName, newName);
+  mProperties.rename_property(oldName, newName);
 }
 
-void layer_delegate::set_property(const QString& name, const property& property)
+void LayerDelegate::set_property(const QString& name, const property& property)
 {
-  m_properties.set_property(name, property);
+  mProperties.set_property(name, property);
 }
 
-void layer_delegate::change_property_type(const QString& name,
-                                          const property_type type)
+void LayerDelegate::change_property_type(const QString& name,
+                                         const property_type type)
 {
-  m_properties.change_property_type(name, type);
+  mProperties.change_property_type(name, type);
 }
 
-auto layer_delegate::get_property(const QString& name) const -> const property&
+auto LayerDelegate::get_property(const QString& name) const -> const property&
 {
-  return m_properties.get_property(name);
+  return mProperties.get_property(name);
 }
 
-auto layer_delegate::get_property(const QString& name) -> property&
+auto LayerDelegate::get_property(const QString& name) -> property&
 {
-  return m_properties.get_property(name);
+  return mProperties.get_property(name);
 }
 
-auto layer_delegate::has_property(const QString& name) const -> bool
+auto LayerDelegate::has_property(const QString& name) const -> bool
 {
-  return m_properties.has_property(name);
+  return mProperties.has_property(name);
 }
 
-auto layer_delegate::property_count() const noexcept -> int
+auto LayerDelegate::property_count() const noexcept -> int
 {
-  return m_properties.property_count();
+  return mProperties.property_count();
 }
 
-auto layer_delegate::properties() const -> const property_manager::property_map&
+auto LayerDelegate::properties() const -> const property_manager::property_map&
 {
-  return m_properties.properties();
+  return mProperties.properties();
 }
 
 }  // namespace tactile::core

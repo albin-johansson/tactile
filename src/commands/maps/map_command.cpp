@@ -43,7 +43,7 @@ void MapCommand::SaveTiles(const row_range rows, const col_range cols)
 {
   auto& map = mDocument->raw();
 
-  map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
+  map.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
     auto& tiles = TileData(id);
 
     auto* tileLayer = map.get_tile_layer(id);

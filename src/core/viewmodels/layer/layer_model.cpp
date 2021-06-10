@@ -16,7 +16,7 @@ layer_model::layer_model(not_null<core::map_document*> document)
   }
 
   document->each_layer(
-      [this](const layer_id id, const shared<core::layer>& layer) {
+      [this](const layer_id id, const shared<core::ILayer>& layer) {
         Q_ASSERT(layer);
         appendRow(layer_item::make(id, *layer.get()));
       });
@@ -109,15 +109,15 @@ void layer_model::set_visible(const QModelIndex& index, const bool visible)
 
 auto layer_model::opacity(const QModelIndex& index) const -> double
 {
-  return m_document->get_layer(id_from_index(index))->opacity();
+  return m_document->get_layer(id_from_index(index))->Opacity();
 }
 
 auto layer_model::visible(const QModelIndex& index) const -> bool
 {
-  return m_document->get_layer(id_from_index(index))->visible();
+  return m_document->get_layer(id_from_index(index))->IsVisible();
 }
 
-void layer_model::add_item(const layer_id id, const core::layer& layer)
+void layer_model::add_item(const layer_id id, const core::ILayer& layer)
 {
   if (m_duplicateTargetRow)
   {

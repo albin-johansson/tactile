@@ -32,8 +32,8 @@ TEST(ImportJsonMap, Embedded)
 
       const auto* layer = document->get_layer(id);
       ASSERT_EQ(core::layer_type::tile_layer, layer->type());
-      EXPECT_TRUE(layer->visible());
-      EXPECT_EQ(1.0, layer->opacity());
+      EXPECT_TRUE(layer->IsVisible());
+      EXPECT_EQ(1.0, layer->Opacity());
 
       const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
@@ -52,8 +52,8 @@ TEST(ImportJsonMap, Embedded)
 
       const auto* layer = document->get_layer(id);
       ASSERT_EQ(core::layer_type::tile_layer, layer->type());
-      EXPECT_TRUE(layer->visible());
-      EXPECT_EQ(0.8, layer->opacity());
+      EXPECT_TRUE(layer->IsVisible());
+      EXPECT_EQ(0.8, layer->Opacity());
 
       const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
@@ -117,8 +117,8 @@ TEST(ImportJsonMap, External)
 
       const auto* layer = document->get_layer(id);
       ASSERT_EQ(core::layer_type::tile_layer, layer->type());
-      EXPECT_TRUE(layer->visible());
-      EXPECT_EQ(0.2, layer->opacity());
+      EXPECT_TRUE(layer->IsVisible());
+      EXPECT_EQ(0.2, layer->Opacity());
 
       const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
@@ -137,8 +137,8 @@ TEST(ImportJsonMap, External)
 
       const auto* layer = document->get_layer(id);
       ASSERT_EQ(core::layer_type::tile_layer, layer->type());
-      EXPECT_TRUE(layer->visible());
-      EXPECT_EQ(1.0, layer->opacity());
+      EXPECT_TRUE(layer->IsVisible());
+      EXPECT_EQ(1.0, layer->Opacity());
 
       const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);

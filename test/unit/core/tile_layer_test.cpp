@@ -15,9 +15,9 @@ TEST(TileLayer, Defaults)
   EXPECT_EQ(5_row, layer.row_count());
   EXPECT_EQ(5_col, layer.col_count());
   EXPECT_EQ(25, layer.tile_count());
-  EXPECT_EQ(1.0, layer.opacity());
-  EXPECT_EQ(TACTILE_QSTRING(u"Tile layer"), layer.name());
-  EXPECT_TRUE(layer.visible());
+  EXPECT_EQ(1.0, layer.Opacity());
+  EXPECT_EQ(TACTILE_QSTRING(u"Tile layer"), layer.Name());
+  EXPECT_TRUE(layer.IsVisible());
 }
 
 TEST(TileLayer, DimensionsConstructor)
@@ -171,21 +171,21 @@ TEST(TileLayer, SetTile)
 TEST(TileLayer, SetOpacity)
 {
   core::tile_layer layer;
-  EXPECT_EQ(1.0, layer.opacity());
+  EXPECT_EQ(1.0, layer.Opacity());
 
   {  // Valid opacity
-    layer.set_opacity(0.75);
-    EXPECT_EQ(0.75, layer.opacity());
+    layer.SetOpacity(0.75);
+    EXPECT_EQ(0.75, layer.Opacity());
   }
 
   {  // Underflow opacity
-    layer.set_opacity(-1);
-    EXPECT_EQ(0, layer.opacity());
+    layer.SetOpacity(-1);
+    EXPECT_EQ(0, layer.Opacity());
   }
 
   {  // Overflow opacity
-    layer.set_opacity(1.1);
-    EXPECT_EQ(1, layer.opacity());
+    layer.SetOpacity(1.1);
+    EXPECT_EQ(1, layer.Opacity());
   }
 }
 
@@ -193,13 +193,13 @@ TEST(TileLayer, SetVisible)
 {
   core::tile_layer layer;
 
-  EXPECT_TRUE(layer.visible());
+  EXPECT_TRUE(layer.IsVisible());
 
-  layer.set_visible(false);
-  EXPECT_FALSE(layer.visible());
+  layer.SetVisible(false);
+  EXPECT_FALSE(layer.IsVisible());
 
-  layer.set_visible(true);
-  EXPECT_TRUE(layer.visible());
+  layer.SetVisible(true);
+  EXPECT_TRUE(layer.IsVisible());
 }
 
 TEST(TileLayer, RowCount)

@@ -31,7 +31,7 @@ class RemoveLayer final : public QUndoCommand
 
  private:
   core::map_document* mDocument{};
-  shared<core::layer> mLayer;
+  shared<core::ILayer> mLayer;
   layer_id mId;
   usize mIndex{};
 };

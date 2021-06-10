@@ -130,7 +130,7 @@ void render_tile_layer(QPainter& painter,
                        const core::tile_layer& layer,
                        const render_info& info)
 {
-  painter.setOpacity(layer.opacity());
+  painter.setOpacity(layer.Opacity());
 
   for (auto row = info.bounds.rowBegin; row < info.bounds.rowEnd; ++row)
   {
@@ -161,7 +161,7 @@ void render_object_layer(QPainter& painter,
                          const core::object_layer& layer,
                          const render_info& info)
 {
-  painter.setOpacity(layer.opacity());
+  painter.setOpacity(layer.Opacity());
 
   layer.each_object([&](const object_id, const core::object& object) {
     painter.setPen(Qt::red);
@@ -193,10 +193,10 @@ void render_background(QPainter& painter, const render_info& info)
 }
 
 void render_layer(QPainter& painter,
-                  const shared<core::layer>& layer,
+                  const shared<core::ILayer>& layer,
                   const render_info& info)
 {
-  if (!layer->visible())
+  if (!layer->IsVisible())
   {
     return;
   }
@@ -278,7 +278,7 @@ void RenderMap(QPainter& painter,
   const auto info = make_render_info(document, exposed, mousePosition);
   render_background(painter, info);
 
-  document.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
+  document.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
     render_layer(painter, layer, info);
 
     if (info.mousePosition && id == document.current_layer_id())

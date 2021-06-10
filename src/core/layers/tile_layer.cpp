@@ -169,27 +169,27 @@ void tile_layer::set_tile(const position& pos, const tile_id id) noexcept
   }
 }
 
-void tile_layer::set_opacity(const double opacity)
+void tile_layer::SetOpacity(const double opacity)
 {
   m_delegate.set_opacity(opacity);
 }
 
-void tile_layer::set_name(QString name)
+void tile_layer::SetName(QString name)
 {
   m_delegate.set_name(std::move(name));
 }
 
-void tile_layer::set_visible(const bool visible) noexcept
+void tile_layer::SetVisible(const bool visible) noexcept
 {
   m_delegate.set_visible(visible);
 }
 
-auto tile_layer::type() const -> layer_type
+auto tile_layer::Type() const -> layer_type
 {
   return m_delegate.type();
 }
 
-auto tile_layer::clone() const -> shared<layer>
+auto tile_layer::Clone() const -> shared<ILayer>
 {
   return std::make_shared<tile_layer>(*this);
 }
@@ -228,17 +228,17 @@ auto tile_layer::in_bounds(const position& pos) const noexcept -> bool
   return (row < m_tiles.size()) && (pos.col_index() < m_tiles[row].size());
 }
 
-auto tile_layer::name() const -> const QString&
+auto tile_layer::Name() const -> const QString&
 {
   return m_delegate.name();
 }
 
-auto tile_layer::opacity() const noexcept -> double
+auto tile_layer::Opacity() const noexcept -> double
 {
   return m_delegate.opacity();
 }
 
-auto tile_layer::visible() const noexcept -> bool
+auto tile_layer::IsVisible() const noexcept -> bool
 {
   return m_delegate.visible();
 }

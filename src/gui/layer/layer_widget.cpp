@@ -213,7 +213,7 @@ void LayerWidget::OnChangedLayerVisibility(const layer_id id, bool visible)
   mUi->visibleButton->setIcon(visible ? IconVisible() : IconInvisible());
 }
 
-void LayerWidget::OnSelectedLayer(const layer_id id, const core::layer& layer)
+void LayerWidget::OnSelectedLayer(const layer_id id, const core::ILayer& layer)
 {
   const auto index = mModel->index_of(id).value();
 

@@ -56,7 +56,7 @@ void map::remove_layer(const layer_id id)
   m_layers.erase(id);
 }
 
-auto map::take_layer(const layer_id id) -> shared<layer>
+auto map::take_layer(const layer_id id) -> shared<ILayer>
 {
   Q_ASSERT(m_layers.contains(id));
 
@@ -93,7 +93,7 @@ auto map::add_object_layer() -> layer_id
   return id;
 }
 
-void map::add_layer(const layer_id id, shared<layer> layer)
+void map::add_layer(const layer_id id, shared<ILayer> layer)
 {
   // TODO what happens if dimensions mismatch?
 
@@ -118,7 +118,7 @@ auto map::duplicate_layer(const layer_id id) -> layer_pair&
   const auto& layer = m_layers.at(id);
 
   const auto newId = m_nextLayer;
-  auto copy = layer->clone();
+  auto copy = layer->Clone();
 
   auto& pair = m_layers.emplace(newId, std::move(copy));
 
@@ -254,7 +254,7 @@ void map::set_visibility(const layer_id id, const bool visible)
 {
   if (auto* layer = find_layer(id))
   {
-    layer->set_visible(visible);
+    layer->SetVisible(visible);
   }
 }
 
@@ -262,7 +262,7 @@ void map::set_opacity(const layer_id id, const double opacity)
 {
   if (auto* layer = find_layer(id))
   {
-    layer->set_opacity(opacity);
+    layer->SetOpacity(opacity);
   }
 }
 
@@ -270,7 +270,7 @@ void map::set_name(const layer_id id, const QString& name)
 {
   if (auto* layer = find_layer(id))
   {
-    layer->set_name(name);
+    layer->SetName(name);
   }
 }
 
@@ -310,14 +310,14 @@ auto map::index_of(const layer_id id) const -> maybe<std::size_t>
 
 auto map::name(const layer_id id) const -> QString
 {
-  return get_layer(id)->name();
+  return get_layer(id)->Name();
 }
 
 auto map::is_visible(const layer_id id) const -> bool
 {
   if (const auto* layer = find_layer(id))
   {
-    return layer->visible();
+    return layer->IsVisible();
   }
   else
   {
@@ -379,12 +379,12 @@ auto map::current_tile_size() const noexcept -> int
   return m_tileSize.get();
 }
 
-auto map::get_layer(const layer_id id) const -> const shared<layer>&
+auto map::get_layer(const layer_id id) const -> const shared<ILayer>&
 {
   return m_layers.at(id);
 }
 
-auto map::get_layer(const layer_id id) -> shared<layer>&
+auto map::get_layer(const layer_id id) -> shared<ILayer>&
 {
   return m_layers.at(id);
 }
@@ -409,7 +409,7 @@ auto map::get_object_layer(layer_id id) const -> const object_layer*
   return as_object_layer(get_layer(id));
 }
 
-auto map::find_layer(const layer_id id) -> layer*
+auto map::find_layer(const layer_id id) -> ILayer*
 {
   if (const auto it = m_layers.find(id); it != m_layers.end())
   {
@@ -421,7 +421,7 @@ auto map::find_layer(const layer_id id) -> layer*
   }
 }
 
-auto map::find_layer(const layer_id id) const -> const layer*
+auto map::find_layer(const layer_id id) const -> const ILayer*
 {
   if (const auto it = m_layers.find(id); it != m_layers.end())
   {

@@ -9,7 +9,7 @@
 namespace tactile::core {
 
 /**
- * \interface layer
+ * \interface ILayer
  *
  * \brief Represents a layer in a map.
  *
@@ -21,7 +21,7 @@ namespace tactile::core {
  *
  * \headerfile layer.hpp
  */
-class layer : public property_manager
+class ILayer : public property_manager
 {
  public:
   /**
@@ -31,7 +31,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  virtual void set_visible(bool visible) noexcept = 0;
+  virtual void SetVisible(bool visible) noexcept = 0;
 
   /**
    * \brief Sets the opacity of the layer.
@@ -40,7 +40,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  virtual void set_opacity(double opacity) = 0;
+  virtual void SetOpacity(double opacity) = 0;
 
   /**
    * \brief Sets the name of the layer.
@@ -49,7 +49,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  virtual void set_name(QString name) = 0;
+  virtual void SetName(QString name) = 0;
 
   /**
    * \brief Indicates whether or not the layer is visible.
@@ -60,7 +60,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto visible() const noexcept -> bool = 0;
+  [[nodiscard]] virtual auto IsVisible() const noexcept -> bool = 0;
 
   /**
    * \brief Returns the opacity of the layer.
@@ -69,7 +69,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto opacity() const noexcept -> double = 0;
+  [[nodiscard]] virtual auto Opacity() const noexcept -> double = 0;
 
   /**
    * \brief Returns the name associated with the layer.
@@ -78,7 +78,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto name() const -> const QString& = 0;
+  [[nodiscard]] virtual auto Name() const -> const QString& = 0;
 
   /**
    * \brief Returns a copy of the layer.
@@ -87,7 +87,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto clone() const -> shared<layer> = 0;
+  [[nodiscard]] virtual auto Clone() const -> shared<ILayer> = 0;
 
   /**
    * \brief Returns the type of the layer.
@@ -96,7 +96,7 @@ class layer : public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto type() const -> layer_type = 0;
+  [[nodiscard]] virtual auto Type() const -> layer_type = 0;
 };
 
 }  // namespace tactile::core

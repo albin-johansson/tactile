@@ -9,7 +9,7 @@
 namespace tactile::cmd {
 
 AddLayer::AddLayer(core::map_document* document,
-                   shared<core::layer> layer,
+                   shared<core::ILayer> layer,
                    const layer_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Add Layer")}
     , mDocument{document}

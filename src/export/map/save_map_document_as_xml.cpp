@@ -234,9 +234,9 @@ void save_layers(QDomDocument& document,
                  const core::map_document& map,
                  const QDir& targetDir)
 {
-  map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
+  map.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
     QDomElement node;
-    if (layer->type() == core::layer_type::tile_layer)
+    if (layer->Type() == core::layer_type::tile_layer)
     {
       node = document.createElement(TACTILE_QSTRING(u"layer"));
     }
@@ -246,14 +246,14 @@ void save_layers(QDomDocument& document,
     }
 
     node.setAttribute(TACTILE_QSTRING(u"id"), id.get());
-    node.setAttribute(TACTILE_QSTRING(u"name"), layer->name());
+    node.setAttribute(TACTILE_QSTRING(u"name"), layer->Name());
 
-    if (layer->opacity() != 1.0)
+    if (layer->Opacity() != 1.0)
     {
-      node.setAttribute(TACTILE_QSTRING(u"opacity"), layer->opacity());
+      node.setAttribute(TACTILE_QSTRING(u"opacity"), layer->Opacity());
     }
 
-    if (!layer->visible())
+    if (!layer->IsVisible())
     {
       node.setAttribute(TACTILE_QSTRING(u"visible"), 0);
     }

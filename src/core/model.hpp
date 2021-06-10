@@ -26,7 +26,7 @@ namespace tactile::core {
 
 class property_manager;
 class map_document;
-class layer;
+class ILayer;
 class tileset;
 
 /**
@@ -85,9 +85,9 @@ class model final : public QObject
 
   void switched_map(map_id id, not_null<map_document*> document);
 
-  void added_layer(layer_id id, const layer& layer);
-  void added_duplicated_layer(layer_id id, const layer& layer);
-  void selected_layer(layer_id id, const layer& layer);
+  void added_layer(layer_id id, const ILayer& layer);
+  void added_duplicated_layer(layer_id id, const ILayer& layer);
+  void selected_layer(layer_id id, const ILayer& layer);
   void removed_layer(layer_id id);
   void moved_layer_back(layer_id id);
   void moved_layer_forward(layer_id id);

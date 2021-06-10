@@ -13,7 +13,7 @@ class layer_item final : public QStandardItem
  public:
   explicit layer_item(const QString& name);
 
-  [[nodiscard]] static auto make(layer_id id, const core::layer& layer)
+  [[nodiscard]] static auto make(layer_id id, const core::ILayer& layer)
       -> layer_item*;
 
   void set_id(layer_id id);

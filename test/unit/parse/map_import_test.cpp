@@ -38,9 +38,9 @@ void validate_layers(const core::map_document& document)
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::layer_type::tile_layer, layer->type());
 
-    EXPECT_EQ(TACTILE_QSTRING(u"G0"), layer->name());
-    EXPECT_EQ(1.0, layer->opacity());
-    EXPECT_TRUE(layer->visible());
+    EXPECT_EQ(TACTILE_QSTRING(u"G0"), layer->Name());
+    EXPECT_EQ(1.0, layer->Opacity());
+    EXPECT_TRUE(layer->IsVisible());
 
     const auto* tileLayer = document.get_tile_layer(1_layer);
     ASSERT_TRUE(tileLayer);
@@ -57,9 +57,9 @@ void validate_layers(const core::map_document& document)
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::layer_type::tile_layer, layer->type());
 
-    EXPECT_EQ(TACTILE_QSTRING(u"T0"), layer->name());
-    EXPECT_EQ(0.75, layer->opacity());
-    EXPECT_TRUE(layer->visible());
+    EXPECT_EQ(TACTILE_QSTRING(u"T0"), layer->Name());
+    EXPECT_EQ(0.75, layer->Opacity());
+    EXPECT_TRUE(layer->IsVisible());
 
     const auto* tileLayer = document.get_tile_layer(2_layer);
     ASSERT_TRUE(tileLayer);
@@ -76,9 +76,9 @@ void validate_layers(const core::map_document& document)
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::layer_type::object_layer, layer->type());
 
-    EXPECT_EQ(TACTILE_QSTRING(u"O1"), layer->name());
-    EXPECT_EQ(1.0, layer->opacity());
-    EXPECT_TRUE(layer->visible());
+    EXPECT_EQ(TACTILE_QSTRING(u"O1"), layer->Name());
+    EXPECT_EQ(1.0, layer->Opacity());
+    EXPECT_TRUE(layer->IsVisible());
 
     const auto* objectLayer = document.get_object_layer(3_layer);
     ASSERT_TRUE(objectLayer);

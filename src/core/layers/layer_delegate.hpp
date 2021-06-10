@@ -8,21 +8,21 @@
 namespace tactile::core {
 
 /**
- * \class layer_delegate
+ * \class LayerDelegate
  *
  * \brief A delegate meant to be used to implement the basic layer API.
  *
- * \note This class doesn't inherit from `layer` because it can't provide a
- * meaningful `layer::clone()` implementation.
+ * \note This class doesn't inherit from `ILayer` because it can't provide a
+ * meaningful `ILayer::Clone()` implementation.
  *
  * \since 0.2.0
  *
  * \headerfile layer_delegate.hpp
  */
-class layer_delegate final
+class LayerDelegate final
 {
  public:
-  explicit layer_delegate(layer_type type) noexcept;
+  explicit LayerDelegate(layer_type type) noexcept;
 
   /// \name Layer API
   /// \{
@@ -72,11 +72,11 @@ class layer_delegate final
   /// \} End of property API
 
  private:
-  layer_type m_type;
-  QString m_name;
-  property_delegate m_properties;
-  double m_opacity{1};
-  bool m_visible{true};
+  layer_type mType;
+  QString mName;
+  property_delegate mProperties;
+  double mOpacity{1};
+  bool mVisible{true};
 };
 
 }  // namespace tactile::core

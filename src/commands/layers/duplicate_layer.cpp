@@ -39,7 +39,7 @@ void DuplicateLayer::redo()
   QUndoCommand::redo();
 
   auto& [id, layer] = mDocument->raw().duplicate_layer(mId);
-  layer->set_name(layer->name() + QTranslator::tr(" (Copy)"));
+  layer->SetName(layer->Name() + QTranslator::tr(" (Copy)"));
 
   emit mDocument->added_duplicated_layer(id, *mDocument->get_layer(id));
   emit mDocument->redraw();

@@ -44,7 +44,7 @@ TEST(Map, EachLayer)
   map.add_tile_layer();
 
   int count{};
-  map.each_layer([&](const layer_id, const shared<core::layer>&) {
+  map.each_layer([&](const layer_id, const shared<core::ILayer>&) {
     ++count;
   });
 

@@ -27,14 +27,14 @@ namespace {
 layer_item::layer_item(const QString& name) : QStandardItem{name}
 {}
 
-auto layer_item::make(const layer_id id, const core::layer& layer)
+auto layer_item::make(const layer_id id, const core::ILayer& layer)
     -> layer_item*
 {
-  auto* item = new layer_item{layer.name()};
+  auto* item = new layer_item{layer.Name()};
 
   item->set_id(id);
-  item->set_type(layer.type());
-  item->setIcon(icon_for_layer(layer.type()));
+  item->set_type(layer.Type());
+  item->setIcon(icon_for_layer(layer.Type()));
 
   return item;
 }

@@ -8,7 +8,7 @@
 #include "not_null.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
-TACTILE_FORWARD_DECLARE(tactile::core, layer)
+TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 
 namespace tactile::vm {
 
@@ -53,13 +53,13 @@ class layer_model final : public QStandardItemModel
   void changed_name(layer_id id, const QString& name);
   void changed_opacity(layer_id id, double opacity);
   void changed_visibility(layer_id id, bool visible);
-  void selected_layer(layer_id id, const core::layer& layer);
+  void selected_layer(layer_id id, const core::ILayer& layer);
 
  private:
   core::map_document* m_document{};
   maybe<int> m_duplicateTargetRow;
 
-  void add_item(layer_id id, const core::layer& layer);
+  void add_item(layer_id id, const core::ILayer& layer);
 
   void remove_item(layer_id id);
 

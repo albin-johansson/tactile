@@ -295,19 +295,19 @@ void Window::OnRenamedTileset(const tileset_id id, const QString& name)
   mTilesetDock->OnRenamedTileset(id, name);
 }
 
-void Window::OnSelectedLayer(const layer_id id, const core::layer& layer)
+void Window::OnSelectedLayer(const layer_id id, const core::ILayer& layer)
 {
   mStatusBar->SetCurrentLayer(id);
 }
 
-void Window::OnAddedLayer(const layer_id id, const core::layer& layer)
+void Window::OnAddedLayer(const layer_id id, const core::ILayer& layer)
 {
-  mStatusBar->OnAddedLayer(id, layer.name());
+  mStatusBar->OnAddedLayer(id, layer.Name());
 }
 
-void Window::OnAddedDuplicatedLayer(const layer_id id, const core::layer& layer)
+void Window::OnAddedDuplicatedLayer(const layer_id id, const core::ILayer& layer)
 {
-  mStatusBar->OnAddedLayer(id, layer.name());
+  mStatusBar->OnAddedLayer(id, layer.Name());
 }
 
 void Window::OnRemovedLayer(const layer_id id)

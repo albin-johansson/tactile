@@ -20,7 +20,7 @@ namespace {
 }
 
 [[nodiscard]] auto make_tile_layer(const tile_layer_data& data)
-    -> shared<core::layer>
+    -> shared<core::ILayer>
 {
   auto layer = std::make_shared<core::tile_layer>(data.nRows, data.nCols);
 
@@ -67,7 +67,7 @@ namespace {
 }
 
 [[nodiscard]] auto make_object_layer(const object_layer_data& data)
-    -> shared<core::layer>
+    -> shared<core::ILayer>
 {
   auto layer = std::make_shared<core::object_layer>();
 
@@ -79,9 +79,9 @@ namespace {
   return layer;
 }
 
-[[nodiscard]] auto make_layer(const layer_data& data) -> shared<core::layer>
+[[nodiscard]] auto make_layer(const layer_data& data) -> shared<core::ILayer>
 {
-  shared<core::layer> layer;
+  shared<core::ILayer> layer;
 
   if (data.type == core::layer_type::tile_layer)
   {
@@ -93,9 +93,9 @@ namespace {
   }
 
   Q_ASSERT(layer);
-  layer->set_name(data.name);
-  layer->set_opacity(data.opacity);
-  layer->set_visible(data.visible);
+  layer->SetName(data.name);
+  layer->SetOpacity(data.opacity);
+  layer->SetVisible(data.visible);
 
   for (const auto& propertyData : data.properties)
   {

@@ -17,7 +17,7 @@
 
 namespace tactile::core {
 
-class layer;
+class ILayer;
 class tile_layer;
 class object_layer;
 class document_delegate;
@@ -137,7 +137,7 @@ class map_document final : public document
    */
   void select_layer(layer_id id);
 
-  void add_layer(layer_id id, const shared<layer>& layer);
+  void add_layer(layer_id id, const shared<ILayer>& layer);
 
   /**
    * \copybrief map::add_tile_layer()
@@ -163,7 +163,7 @@ class map_document final : public document
   /**
    * \copydoc map::take_layer()
    */
-  auto take_layer(layer_id id) -> shared<layer>;
+  auto take_layer(layer_id id) -> shared<ILayer>;
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -222,7 +222,7 @@ class map_document final : public document
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const shared<layer>&> T>
+  template <std::invocable<layer_id, const shared<ILayer>&> T>
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : *m_map)
@@ -234,12 +234,12 @@ class map_document final : public document
   /**
    * \copydoc map::get_layer()
    */
-  [[nodiscard]] auto get_layer(layer_id id) -> layer*;
+  [[nodiscard]] auto get_layer(layer_id id) -> ILayer*;
 
   /**
    * \copydoc map::get_layer()
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const layer*;
+  [[nodiscard]] auto get_layer(layer_id id) const -> const ILayer*;
 
   [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
 
@@ -502,9 +502,9 @@ class map_document final : public document
   /// \name Layer signals
   /// \{
 
-  void added_layer(layer_id, const layer&);
-  void added_duplicated_layer(layer_id, const layer&);
-  void selected_layer(layer_id, const layer&);
+  void added_layer(layer_id, const ILayer&);
+  void added_duplicated_layer(layer_id, const ILayer&);
+  void selected_layer(layer_id, const ILayer&);
   void removed_layer(layer_id);
   void moved_layer_back(layer_id);
   void moved_layer_forward(layer_id);

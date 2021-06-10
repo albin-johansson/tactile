@@ -18,7 +18,7 @@
 
 TACTILE_FORWARD_DECLARE_UI(Window)
 
-TACTILE_FORWARD_DECLARE(tactile::core, layer)
+TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
 TACTILE_FORWARD_DECLARE(tactile, MapEditor)
@@ -151,9 +151,9 @@ class Window final : public QMainWindow
   /// \name Layer slots
   /// \{
 
-  void OnSelectedLayer(layer_id id, const core::layer& layer);
-  void OnAddedLayer(layer_id id, const core::layer& layer);
-  void OnAddedDuplicatedLayer(layer_id id, const core::layer& layer);
+  void OnSelectedLayer(layer_id id, const core::ILayer& layer);
+  void OnAddedLayer(layer_id id, const core::ILayer& layer);
+  void OnAddedDuplicatedLayer(layer_id id, const core::ILayer& layer);
   void OnRemovedLayer(layer_id id);
 
   /// \} End of layer slots

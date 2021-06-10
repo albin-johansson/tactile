@@ -40,7 +40,7 @@ void ChangeOpacity::redo()
 
   auto& map = mDocument->raw();
 
-  mPreviousOpacity = map.get_layer(mId)->opacity();
+  mPreviousOpacity = map.get_layer(mId)->Opacity();
   map.set_opacity(mId, mOpacity);
 
   emit mDocument->changed_layer_opacity(mId, mOpacity);

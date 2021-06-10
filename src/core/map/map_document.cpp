@@ -306,7 +306,7 @@ void map_document::select_layer(const layer_id id)
   m_delegate->execute<cmd::SelectLayer>(this, id);
 }
 
-void map_document::add_layer(const layer_id id, const shared<layer>& layer)
+void map_document::add_layer(const layer_id id, const shared<ILayer>& layer)
 {
   Q_ASSERT(layer);
   m_map->add_layer(id, layer);
@@ -317,8 +317,8 @@ auto map_document::add_tile_layer() -> layer_id
   const auto id = m_map->next_layer_id();  // must be before make_tile_layer
   auto layer = m_map->make_tile_layer();
 
-  layer->set_name(layer->name() + TACTILE_QSTRING(u" ") +
-                  QString::number(m_tileLayerSuffix));
+  layer->SetName(layer->Name() + TACTILE_QSTRING(u" ") +
+                 QString::number(m_tileLayerSuffix));
   ++m_tileLayerSuffix;
 
   m_delegate->execute<cmd::AddLayer>(this, std::move(layer), id);
@@ -330,8 +330,8 @@ auto map_document::add_object_layer() -> layer_id
   const auto id = m_map->next_layer_id();  // must be before make_object_layer
   auto layer = m_map->make_object_layer();
 
-  layer->set_name(layer->name() + TACTILE_QSTRING(u" ") +
-                  QString::number(m_objectLayerSuffix));
+  layer->SetName(layer->Name() + TACTILE_QSTRING(u" ") +
+                 QString::number(m_objectLayerSuffix));
   ++m_objectLayerSuffix;
 
   m_delegate->execute<cmd::AddLayer>(this, std::move(layer), id);
@@ -343,7 +343,7 @@ void map_document::remove_layer(const layer_id id)
   m_delegate->execute<cmd::RemoveLayer>(this, id);
 }
 
-auto map_document::take_layer(const layer_id id) -> shared<layer>
+auto map_document::take_layer(const layer_id id) -> shared<ILayer>
 {
   return m_map->take_layer(id);
 }
@@ -416,12 +416,12 @@ auto map_document::in_bounds(const position& pos) const -> bool
   return m_map->in_bounds(pos);
 }
 
-auto map_document::get_layer(const layer_id id) -> layer*
+auto map_document::get_layer(const layer_id id) -> ILayer*
 {
   return m_map->get_layer(id).get();
 }
 
-auto map_document::get_layer(const layer_id id) const -> const layer*
+auto map_document::get_layer(const layer_id id) const -> const ILayer*
 {
   return m_map->get_layer(id).get();
 }

@@ -68,42 +68,42 @@ auto object_layer::properties() const -> const property_map&
   return m_delegate.properties();
 }
 
-void object_layer::set_visible(const bool visible) noexcept
+void object_layer::SetVisible(const bool visible) noexcept
 {
   m_delegate.set_visible(visible);
 }
 
-void object_layer::set_opacity(const double opacity)
+void object_layer::SetOpacity(const double opacity)
 {
   m_delegate.set_opacity(opacity);
 }
 
-void object_layer::set_name(QString name)
+void object_layer::SetName(QString name)
 {
   m_delegate.set_name(std::move(name));
 }
 
-auto object_layer::type() const -> layer_type
+auto object_layer::Type() const -> layer_type
 {
   return m_delegate.type();
 }
 
-auto object_layer::visible() const noexcept -> bool
+auto object_layer::IsVisible() const noexcept -> bool
 {
   return m_delegate.visible();
 }
 
-auto object_layer::opacity() const noexcept -> double
+auto object_layer::Opacity() const noexcept -> double
 {
   return m_delegate.opacity();
 }
 
-auto object_layer::name() const -> const QString&
+auto object_layer::Name() const -> const QString&
 {
   return m_delegate.name();
 }
 
-auto object_layer::clone() const -> shared<layer>
+auto object_layer::Clone() const -> shared<ILayer>
 {
   return std::make_shared<object_layer>(*this);
 }

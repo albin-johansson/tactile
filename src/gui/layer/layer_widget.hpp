@@ -10,7 +10,7 @@
 
 TACTILE_FORWARD_DECLARE_UI(LayerWidget)
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
-TACTILE_FORWARD_DECLARE(tactile::core, layer)
+TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 TACTILE_FORWARD_DECLARE(tactile::vm, layer_model)
 TACTILE_FORWARD_DECLARE(tactile, LayerListView)
 TACTILE_FORWARD_DECLARE(tactile, LayerItem)
@@ -46,7 +46,7 @@ class LayerWidget final : public QWidget
   void OnChangedLayerOpacity(layer_id id, double opacity);
   void OnChangedLayerName(layer_id id, const QString& name);
   void OnChangedLayerVisibility(layer_id id, bool visible);
-  void OnSelectedLayer(layer_id id, const core::layer& layer);
+  void OnSelectedLayer(layer_id id, const core::ILayer& layer);
 
   void OnSpawnContextMenu(const QPoint& pos);
 

@@ -229,10 +229,10 @@ void create_external_tileset_file(const core::tileset& tileset,
 }
 
 void save_tile_layer(QJsonObject& object,
-                     const shared<core::layer>& layer,
+                     const shared<core::ILayer>& layer,
                      const export_options& options)
 {
-  Q_ASSERT(layer->type() == core::layer_type::tile_layer);
+  Q_ASSERT(layer->Type() == core::layer_type::tile_layer);
 
   const auto* tileLayer = core::as_tile_layer(layer);
   Q_ASSERT(tileLayer);
@@ -252,11 +252,11 @@ void save_tile_layer(QJsonObject& object,
 }
 
 void save_object_layer(QJsonObject& element,
-                       const shared<core::layer>& layer,
+                       const shared<core::ILayer>& layer,
                        const QDir& targetDir,
                        const export_options& options)
 {
-  Q_ASSERT(layer->type() == core::layer_type::object_layer);
+  Q_ASSERT(layer->Type() == core::layer_type::object_layer);
 
   const auto* objectLayer = core::as_object_layer(layer);
   Q_ASSERT(objectLayer);
@@ -315,17 +315,17 @@ void save_object_layer(QJsonObject& element,
 {
   QJsonArray array;
 
-  map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
+  map.each_layer([&](const layer_id id, const shared<core::ILayer>& layer) {
     QJsonObject object;
 
     object.insert(u"id", id.get());
-    object.insert(u"name", layer->name());
-    object.insert(u"opacity", layer->opacity());
-    object.insert(u"visible", layer->visible());
+    object.insert(u"name", layer->Name());
+    object.insert(u"opacity", layer->Opacity());
+    object.insert(u"visible", layer->IsVisible());
     object.insert(u"x", 0);
     object.insert(u"y", 0);
 
-    if (layer->type() == core::layer_type::tile_layer)
+    if (layer->Type() == core::layer_type::tile_layer)
     {
       object.insert(u"width", map.col_count().get());
       object.insert(u"height", map.row_count().get());

@@ -77,8 +77,8 @@ void StatusBar::OnSwitchedMap(const core::map_document& document)
 
   mLayerBox->clear();
   document.each_layer(
-      [this](const layer_id id, const shared<core::layer>& layer) {
-        mLayerBox->addItem(layer->name(), id.get());
+      [this](const layer_id id, const shared<core::ILayer>& layer) {
+        mLayerBox->addItem(layer->Name(), id.get());
       });
   SetLayerComboBoxVisible(true);
 

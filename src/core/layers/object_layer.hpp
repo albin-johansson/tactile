@@ -20,28 +20,28 @@ namespace tactile::core {
  *
  * \headerfile object_layer.hpp
  */
-class object_layer final : public layer
+class object_layer final : public ILayer
 {
  public:
   object_layer();
 
   /// \name Layer API
 
-  void set_visible(bool visible) noexcept override;
+  void SetVisible(bool visible) noexcept override;
 
-  void set_opacity(double opacity) override;
+  void SetOpacity(double opacity) override;
 
-  void set_name(QString name) override;
+  void SetName(QString name) override;
 
-  [[nodiscard]] auto type() const -> layer_type override;
+  [[nodiscard]] auto Type() const -> layer_type override;
 
-  [[nodiscard]] auto visible() const noexcept -> bool override;
+  [[nodiscard]] auto IsVisible() const noexcept -> bool override;
 
-  [[nodiscard]] auto opacity() const noexcept -> double override;
+  [[nodiscard]] auto Opacity() const noexcept -> double override;
 
-  [[nodiscard]] auto name() const -> const QString& override;
+  [[nodiscard]] auto Name() const -> const QString& override;
 
-  [[nodiscard]] auto clone() const -> shared<layer> override;
+  [[nodiscard]] auto Clone() const -> shared<ILayer> override;
 
   /// \}
 
@@ -185,7 +185,7 @@ class object_layer final : public layer
 
  private:
   vector_map<object_id, object> m_objects;
-  layer_delegate m_delegate;
+  LayerDelegate m_delegate;
 };
 
 }  // namespace tactile::core

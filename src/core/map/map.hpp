@@ -34,8 +34,8 @@ class object_layer;
  */
 class map final
 {
-  using layer_pair = std::pair<layer_id, shared<layer>>;
-  using layer_map = vector_map<layer_id, shared<layer>>;
+  using layer_pair = std::pair<layer_id, shared<ILayer>>;
+  using layer_map = vector_map<layer_id, shared<ILayer>>;
 
  public:
   using const_iterator = layer_map::const_iterator;
@@ -68,7 +68,7 @@ class map final
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const shared<layer>&> T>
+  template <std::invocable<layer_id, const shared<ILayer>&> T>
   void each_layer(T&& callable) const
   {
     for (const auto& [key, layer] : m_layers)
@@ -125,7 +125,7 @@ class map final
    *
    * \since 0.1.0
    */
-  void add_layer(layer_id id, shared<layer> layer);
+  void add_layer(layer_id id, shared<ILayer> layer);
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -163,7 +163,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto take_layer(layer_id id) -> shared<layer>;
+  [[nodiscard]] auto take_layer(layer_id id) -> shared<ILayer>;
 
   /**
    * \brief Selects the tile layer associated with the specified ID.
@@ -506,9 +506,9 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_layer(layer_id id) const -> const shared<layer>&;
+  [[nodiscard]] auto get_layer(layer_id id) const -> const shared<ILayer>&;
 
-  [[nodiscard]] auto get_layer(layer_id id) -> shared<layer>&;
+  [[nodiscard]] auto get_layer(layer_id id) -> shared<ILayer>&;
 
   [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
 
@@ -551,9 +551,9 @@ class map final
   layer_id m_nextLayer{1};
   object_id m_nextObject{1};
 
-  [[nodiscard]] auto find_layer(layer_id id) -> layer*;
+  [[nodiscard]] auto find_layer(layer_id id) -> ILayer*;
 
-  [[nodiscard]] auto find_layer(layer_id id) const -> const layer*;
+  [[nodiscard]] auto find_layer(layer_id id) const -> const ILayer*;
 };
 
 }  // namespace tactile::core
