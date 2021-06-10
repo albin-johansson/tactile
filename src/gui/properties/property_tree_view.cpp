@@ -106,13 +106,13 @@ void PropertyTreeView::OnFileAdded(const QModelIndex& valueIndex)
 }
 
 void PropertyTreeView::OnChangedType(const QModelIndex& valueIndex,
-                                     core::property_type type)
+                                     const core::PropertyType type)
 {
-  if (type == core::property_type::file)
+  if (type == core::PropertyType::file)
   {
     OnFileAdded(valueIndex);
   }
-  else if (type == core::property_type::color)
+  else if (type == core::PropertyType::color)
   {
     OnColorAdded(valueIndex);
   }

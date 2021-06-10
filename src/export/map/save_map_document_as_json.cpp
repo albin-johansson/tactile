@@ -19,50 +19,50 @@ namespace tactile {
 namespace {
 
 [[nodiscard]] auto save_property(const QString& name,
-                                 const core::property& property,
+                                 const core::Property& property,
                                  const QDir& targetDir) -> QJsonObject
 {
   QJsonObject result;
 
   result.insert(u"name", name);
-  result.insert(u"type", core::stringify(property.type().value()));
+  result.insert(u"type", core::Stringify(property.Type().value()));
 
   QJsonValue value;
-  switch (property.type().value())
+  switch (property.Type().value())
   {
-    case core::property_type::string:
+    case core::PropertyType::string:
     {
-      value = property.as_string();
+      value = property.AsString();
       break;
     }
-    case core::property_type::integer:
+    case core::PropertyType::integer:
     {
-      value = property.as_integer();
+      value = property.AsInteger();
       break;
     }
-    case core::property_type::floating:
+    case core::PropertyType::floating:
     {
-      value = property.as_floating();
+      value = property.AsFloating();
       break;
     }
-    case core::property_type::boolean:
+    case core::PropertyType::boolean:
     {
-      value = property.as_boolean();
+      value = property.AsBoolean();
       break;
     }
-    case core::property_type::file:
+    case core::PropertyType::file:
     {
-      value = targetDir.relativeFilePath(property.as_file().filePath());
+      value = targetDir.relativeFilePath(property.AsFile().filePath());
       break;
     }
-    case core::property_type::color:
+    case core::PropertyType::color:
     {
-      value = property.as_color().name(QColor::HexArgb);
+      value = property.AsColor().name(QColor::HexArgb);
       break;
     }
-    case core::property_type::object:
+    case core::PropertyType::object:
     {
-      value = property.as_object().get();
+      value = property.AsObject().get();
       break;
     }
   }

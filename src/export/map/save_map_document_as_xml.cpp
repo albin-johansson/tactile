@@ -68,53 +68,53 @@ void create_external_tileset_file(const core::tileset& tileset,
 void save_property(QDomDocument& document,
                    QDomElement& element,
                    const QString& name,
-                   const core::property& property,
+                   const core::Property& property,
                    const QDir& targetDir)
 {
   auto node = document.createElement(TACTILE_QSTRING(u"property"));
 
   node.setAttribute(TACTILE_QSTRING(u"name"), name);
   node.setAttribute(TACTILE_QSTRING(u"type"),
-                    core::stringify(property.type().value()));
+                    core::Stringify(property.Type().value()));
 
-  switch (property.type().value())
+  switch (property.Type().value())
   {
-    case core::property_type::string:
+    case core::PropertyType::string:
     {
-      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_string());
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.AsString());
       break;
     }
-    case core::property_type::integer:
+    case core::PropertyType::integer:
     {
-      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_integer());
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.AsInteger());
       break;
     }
-    case core::property_type::floating:
+    case core::PropertyType::floating:
     {
-      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_floating());
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.AsFloating());
       break;
     }
-    case core::property_type::boolean:
+    case core::PropertyType::boolean:
     {
-      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_boolean());
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.AsBoolean());
       break;
     }
-    case core::property_type::file:
+    case core::PropertyType::file:
     {
       node.setAttribute(
           TACTILE_QSTRING(u"value"),
-          targetDir.relativeFilePath(property.as_file().filePath()));
+          targetDir.relativeFilePath(property.AsFile().filePath()));
       break;
     }
-    case core::property_type::color:
+    case core::PropertyType::color:
     {
       node.setAttribute(TACTILE_QSTRING(u"value"),
-                        property.as_color().name(QColor::HexArgb));
+                        property.AsColor().name(QColor::HexArgb));
       break;
     }
-    case core::property_type::object:
+    case core::PropertyType::object:
     {
-      node.setAttribute(TACTILE_QSTRING(u"value"), property.as_object().get());
+      node.setAttribute(TACTILE_QSTRING(u"value"), property.AsObject().get());
       break;
     }
   }

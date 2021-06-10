@@ -15,7 +15,7 @@ class PropertyContextMenu final : public QMenu
 
   void DisableAll();
 
-  void SetCurrentType(core::property_type type);
+  void SetCurrentType(core::PropertyType type);
 
   void SetAddEnabled(bool enabled);
 
@@ -33,7 +33,7 @@ class PropertyContextMenu final : public QMenu
   void S_Add();
   void S_Remove();
   void S_Rename();
-  void S_ChangeType(core::property_type type);
+  void S_ChangeType(core::PropertyType type);
   void S_Copy();
   void S_Paste();
 

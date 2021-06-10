@@ -16,40 +16,40 @@ namespace tactile::parse {
 template <is_object T>
 [[nodiscard]] auto to_property(const T& object,
                                const QString& propType,
-                               parse_error& error) -> maybe<core::property>
+                               parse_error& error) -> maybe<core::Property>
 {
-  core::property prop;
+  core::Property property;
 
   if (propType == TACTILE_QSTRING(u"string"))
   {
-    prop.set_value(object.string(element_id::value).value());
+    property.SetValue(object.string(element_id::value).value());
   }
   else if (propType == TACTILE_QSTRING(u"int"))
   {
-    prop.set_value(object.integer(element_id::value).value());
+    property.SetValue(object.integer(element_id::value).value());
   }
   else if (propType == TACTILE_QSTRING(u"float"))
   {
-    prop.set_value(object.floating(element_id::value).value());
+    property.SetValue(object.floating(element_id::value).value());
   }
   else if (propType == TACTILE_QSTRING(u"bool"))
   {
-    prop.set_value(object.boolean(element_id::value).value());
+    property.SetValue(object.boolean(element_id::value).value());
   }
   else if (propType == TACTILE_QSTRING(u"file"))
   {
     const auto file = object.string(element_id::value).value();
-    prop.set_value(QFileInfo{file});
+    property.SetValue(QFileInfo{file});
   }
   else if (propType == TACTILE_QSTRING(u"object"))
   {
     const auto obj = object.integer(element_id::value).value();
-    prop.set_value(core::object_ref{obj});
+    property.SetValue(core::object_ref{obj});
   }
   else if (propType == TACTILE_QSTRING(u"color"))
   {
     const auto color = object.string(element_id::value).value();
-    prop.set_value(QColor{color});
+    property.SetValue(QColor{color});
   }
   else
   {
@@ -57,7 +57,7 @@ template <is_object T>
     return std::nullopt;
   }
 
-  return prop;
+  return property;
 }
 
 }  // namespace tactile::parse

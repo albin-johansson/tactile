@@ -19,7 +19,7 @@ namespace tactile::parse {
 struct property_data final
 {
   QString name;             ///< The name associated with the property.
-  core::property property;  ///< The property value.
+  core::Property property;  ///< The property value.
 };
 
 struct tileset_data final

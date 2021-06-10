@@ -11,12 +11,12 @@ ObjectLayer::ObjectLayer() : mDelegate{LayerType::object_layer}
   mDelegate.SetName(TACTILE_QSTRING(u"Object layer"));
 }
 
-void ObjectLayer::AddProperty(const QString& name, property_type type)
+void ObjectLayer::AddProperty(const QString& name, const PropertyType type)
 {
   mDelegate.AddProperty(name, type);
 }
 
-void ObjectLayer::AddProperty(const QString& name, const property& property)
+void ObjectLayer::AddProperty(const QString& name, const Property& property)
 {
   mDelegate.AddProperty(name, property);
 }
@@ -26,28 +26,28 @@ void ObjectLayer::RemoveProperty(const QString& name)
   mDelegate.RemoveProperty(name);
 }
 
-void ObjectLayer::RenameProperty(const QString& oldName,
-                                  const QString& newName)
+void ObjectLayer::RenameProperty(const QString& oldName, const QString& newName)
 {
   mDelegate.RenameProperty(oldName, newName);
 }
 
-void ObjectLayer::SetProperty(const QString& name, const property& property)
+void ObjectLayer::SetProperty(const QString& name, const Property& property)
 {
   mDelegate.SetProperty(name, property);
 }
 
-void ObjectLayer::ChangePropertyType(const QString& name, property_type type)
+void ObjectLayer::ChangePropertyType(const QString& name,
+                                     const PropertyType type)
 {
   mDelegate.ChangePropertyType(name, type);
 }
 
-auto ObjectLayer::GetProperty(const QString& name) const -> const property&
+auto ObjectLayer::GetProperty(const QString& name) const -> const Property&
 {
   return mDelegate.GetProperty(name);
 }
 
-auto ObjectLayer::GetProperty(const QString& name) -> property&
+auto ObjectLayer::GetProperty(const QString& name) -> Property&
 {
   return mDelegate.GetProperty(name);
 }

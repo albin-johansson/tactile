@@ -16,11 +16,11 @@ class AddProperty final : public QUndoCommand
  public:
   AddProperty(not_null<core::IPropertyManager*> manager,
               QString name,
-              const core::property& property);
+              const core::Property& property);
 
   AddProperty(not_null<core::IPropertyManager*> manager,
               QString name,
-              core::property_type type);
+              core::PropertyType type);
 
   void undo() override;
 
@@ -32,7 +32,7 @@ class AddProperty final : public QUndoCommand
   }
 
  private:
-  using data_type = std::variant<core::property_type, core::property>;
+  using data_type = std::variant<core::PropertyType, core::Property>;
 
   core::IPropertyManager* mManager{};
   data_type mData;

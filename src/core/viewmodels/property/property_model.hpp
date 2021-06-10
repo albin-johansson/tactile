@@ -49,7 +49,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  void add(const QString& name, core::property_type type);
+  void add(const QString& name, core::PropertyType type);
 
   /**
    * \brief Adds a property to the model.
@@ -63,7 +63,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  auto add(const QString& name, const core::property& property) -> QModelIndex;
+  auto add(const QString& name, const core::Property& property) -> QModelIndex;
 
   /**
    * \brief Changes the type of an existing property.
@@ -77,7 +77,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  void change_type(const QString& name, core::property_type type);
+  void change_type(const QString& name, core::PropertyType type);
 
   /**
    * \brief Renames an existing property.
@@ -145,12 +145,12 @@ class property_model final : public QStandardItemModel
    * \since 0.2.0
    */
   [[nodiscard]] auto get_property(const QString& name) const
-      -> const core::property&;
+      -> const core::Property&;
 
  signals:
   void added_color(const QModelIndex& valueIndex);
   void added_file(const QModelIndex& valueIndex);
-  void changed_type(const QModelIndex& valueIndex, core::property_type type);
+  void changed_type(const QModelIndex& valueIndex, core::PropertyType type);
   void updated_file(const QModelIndex& valueIndex);
   void updated_color(const QModelIndex& index);
 
@@ -176,7 +176,7 @@ class property_model final : public QStandardItemModel
   auto add_existing_property_to_gui(const QString& name) -> QModelIndex;
 
   auto add_property_to_gui(const QString& name,
-                           const core::property& property,
+                           const core::Property& property,
                            QStandardItem* root) -> QModelIndex;
 
   void rename_property_in_gui(const QString& oldName, const QString& newName);

@@ -46,21 +46,21 @@ class LayerDelegate final
   /// \name Property API
   /// \{
 
-  void AddProperty(const QString& name, property_type type);
+  void AddProperty(const QString& name, PropertyType type);
 
-  void AddProperty(const QString& name, const property& property);
+  void AddProperty(const QString& name, const Property& property);
 
   void RemoveProperty(const QString& name);
 
   void RenameProperty(const QString& oldName, const QString& newName);
 
-  void SetProperty(const QString& name, const property& property);
+  void SetProperty(const QString& name, const Property& property);
 
-  void ChangePropertyType(const QString& name, property_type type);
+  void ChangePropertyType(const QString& name, PropertyType type);
 
-  [[nodiscard]] auto GetProperty(const QString& name) const -> const property&;
+  [[nodiscard]] auto GetProperty(const QString& name) const -> const Property&;
 
-  [[nodiscard]] auto GetProperty(const QString& name) -> property&;
+  [[nodiscard]] auto GetProperty(const QString& name) -> Property&;
 
   [[nodiscard]] auto HasProperty(const QString& name) const -> bool;
 

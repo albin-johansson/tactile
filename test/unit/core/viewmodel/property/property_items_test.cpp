@@ -16,7 +16,7 @@ TEST(PropertyItems, UpdateItemData)
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
 
     ASSERT_TRUE(item.data(Qt::EditRole).canConvert<int>());
-    EXPECT_EQ(property.as_integer(), item.data(Qt::EditRole).value<int>());
+    EXPECT_EQ(property.AsInteger(), item.data(Qt::EditRole).value<int>());
   }
 
   {  // Floating item
@@ -26,7 +26,7 @@ TEST(PropertyItems, UpdateItemData)
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
 
     ASSERT_TRUE(item.data(Qt::EditRole).canConvert<double>());
-    EXPECT_EQ(property.as_floating(), item.data(Qt::EditRole).value<double>());
+    EXPECT_EQ(property.AsFloating(), item.data(Qt::EditRole).value<double>());
   }
 
   {  // Boolean item
@@ -36,7 +36,7 @@ TEST(PropertyItems, UpdateItemData)
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
 
     ASSERT_TRUE(item.data(Qt::CheckStateRole).canConvert<bool>());
-    EXPECT_EQ(property.as_boolean(),
+    EXPECT_EQ(property.AsBoolean(),
               item.data(Qt::CheckStateRole).value<bool>());
   }
 
@@ -47,7 +47,7 @@ TEST(PropertyItems, UpdateItemData)
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
 
     ASSERT_TRUE(item.data(Qt::EditRole).canConvert<QString>());
-    EXPECT_EQ(property.as_string(), item.data(Qt::EditRole).value<QString>());
+    EXPECT_EQ(property.AsString(), item.data(Qt::EditRole).value<QString>());
   }
 
   {  // Color item
@@ -58,7 +58,7 @@ TEST(PropertyItems, UpdateItemData)
 
     const auto role = vm::property_item_role::color;
     ASSERT_TRUE(item.data(role).canConvert<QColor>());
-    EXPECT_EQ(property.as_color(), item.data(role).value<QColor>());
+    EXPECT_EQ(property.AsColor(), item.data(role).value<QColor>());
   }
 
   {  // File item
@@ -69,7 +69,7 @@ TEST(PropertyItems, UpdateItemData)
 
     const auto role = vm::property_item_role::path;
     ASSERT_TRUE(item.data(role).canConvert<QString>());
-    EXPECT_EQ(property.as_file().absoluteFilePath(), item.data(role).value<QString>());
+    EXPECT_EQ(property.AsFile().absoluteFilePath(), item.data(role).value<QString>());
   }
 
   // TODO object item
@@ -82,8 +82,8 @@ TEST(PropertyItems, ItemToProperty)
     item.setData(123, Qt::EditRole);
 
     const auto property = vm::item_to_property(&item);
-    ASSERT_TRUE(property.is_integer());
-    EXPECT_EQ(123, property.as_integer());
+    ASSERT_TRUE(property.IsInteger());
+    EXPECT_EQ(123, property.AsInteger());
   }
 
   {  // Floating item
@@ -91,8 +91,8 @@ TEST(PropertyItems, ItemToProperty)
     item.setData(12.3, Qt::EditRole);
 
     const auto property = vm::item_to_property(&item);
-    ASSERT_TRUE(property.is_floating());
-    EXPECT_EQ(12.3, property.as_floating());
+    ASSERT_TRUE(property.IsFloating());
+    EXPECT_EQ(12.3, property.AsFloating());
   }
 
   {  // Boolean item
@@ -100,8 +100,8 @@ TEST(PropertyItems, ItemToProperty)
     item.setData(Qt::Checked, Qt::CheckStateRole);
 
     const auto property = vm::item_to_property(&item);
-    ASSERT_TRUE(property.is_boolean());
-    EXPECT_TRUE(property.as_boolean());
+    ASSERT_TRUE(property.IsBoolean());
+    EXPECT_TRUE(property.AsBoolean());
   }
 
   {  // String item
@@ -109,8 +109,8 @@ TEST(PropertyItems, ItemToProperty)
     item.setData(TACTILE_QSTRING(u"foo"), Qt::EditRole);
 
     const auto property = vm::item_to_property(&item);
-    ASSERT_TRUE(property.is_string());
-    EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.as_string());
+    ASSERT_TRUE(property.IsString());
+    EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.AsString());
   }
 
   {  // Color item
@@ -118,8 +118,8 @@ TEST(PropertyItems, ItemToProperty)
     item.setData(QColor{Qt::magenta}, vm::property_item_role::color);
 
     const auto property = vm::item_to_property(&item);
-    ASSERT_TRUE(property.is_color());
-    EXPECT_EQ(QColor{Qt::magenta}, property.as_color());
+    ASSERT_TRUE(property.IsColor());
+    EXPECT_EQ(QColor{Qt::magenta}, property.AsColor());
   }
 
   {  // File item
@@ -129,8 +129,8 @@ TEST(PropertyItems, ItemToProperty)
     item.setData(file, vm::property_item_role::path);
 
     const auto property = vm::item_to_property(&item);
-    ASSERT_TRUE(property.is_file());
-    EXPECT_EQ(QFileInfo{file}.path(), property.as_file().path());
+    ASSERT_TRUE(property.IsFile());
+    EXPECT_EQ(QFileInfo{file}.path(), property.AsFile().path());
   }
 
   // TODO object item

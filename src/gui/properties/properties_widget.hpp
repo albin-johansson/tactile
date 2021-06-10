@@ -48,7 +48,7 @@ class PropertiesWidget final : public QWidget
   PropertyContextMenu* mContextMenu{};
   unique<vm::property_model> mModel;
   maybe<QString> mNameCopy;
-  maybe<core::property> mPropertyCopy;
+  maybe<core::Property> mPropertyCopy;
 
   void ChangeModel(not_null<core::IPropertyManager*> manager);
 
@@ -69,7 +69,7 @@ class PropertiesWidget final : public QWidget
 
   void OnRenamePropertyRequested();
 
-  void OnChangeTypeRequested(core::property_type type);
+  void OnChangeTypeRequested(core::PropertyType type);
 
   void OnDoubleClicked();
 

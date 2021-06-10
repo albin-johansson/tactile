@@ -6,53 +6,52 @@
 
 namespace tactile::vm {
 
-auto make_property_item(const core::property& property) -> QStandardItem*
+auto make_property_item(const core::Property& property) -> QStandardItem*
 {
-  switch (property.type().value())
+  switch (property.Type().value())
   {
-    case core::property_type::string:
+    case core::PropertyType::string:
     {
       auto* item = new string_item{};
-      item->setData(property.as_string(), Qt::EditRole);
+      item->setData(property.AsString(), Qt::EditRole);
       return item;
     }
-    case core::property_type::integer:
+    case core::PropertyType::integer:
     {
       auto* item = new int_item{};
-      item->setData(property.as_integer(), Qt::EditRole);
+      item->setData(property.AsInteger(), Qt::EditRole);
       return item;
     }
-    case core::property_type::floating:
+    case core::PropertyType::floating:
     {
       auto* item = new float_item{};
-      item->setData(property.as_floating(), Qt::EditRole);
+      item->setData(property.AsFloating(), Qt::EditRole);
       return item;
     }
-    case core::property_type::boolean:
+    case core::PropertyType::boolean:
     {
       auto* item = new bool_item{};
-      item->setData(property.as_boolean() ? Qt::Checked : Qt::Unchecked,
+      item->setData(property.AsBoolean() ? Qt::Checked : Qt::Unchecked,
                     Qt::CheckStateRole);
       return item;
     }
-    case core::property_type::file:
+    case core::PropertyType::file:
     {
       auto* item = new file_item{};
       item->setData(IconCopy(), Qt::DecorationRole);
-      item->setData(property.as_file().filePath(),
-                    vm::property_item_role::path);
+      item->setData(property.AsFile().filePath(), vm::property_item_role::path);
       return item;
     }
-    case core::property_type::color:
+    case core::PropertyType::color:
     {
       auto* item = new color_item{};
-      item->setData(property.as_color(), property_item_role::color);
+      item->setData(property.AsColor(), property_item_role::color);
       return item;
     }
-    case core::property_type::object:
+    case core::PropertyType::object:
     {
       auto* item = new object_item{};
-      item->setData(property.as_object().get(), Qt::EditRole);
+      item->setData(property.AsObject().get(), Qt::EditRole);
       return item;
     }
     default:

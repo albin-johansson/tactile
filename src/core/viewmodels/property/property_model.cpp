@@ -33,13 +33,13 @@ property_model::property_model(core::IPropertyManager* manager, QObject* parent)
   }
 }
 
-void property_model::add(const QString& name, const core::property_type type)
+void property_model::add(const QString& name, const core::PropertyType type)
 {
   m_manager->AddProperty(name, type);
   add_existing_property_to_gui(name);
 }
 
-auto property_model::add(const QString& name, const core::property& property)
+auto property_model::add(const QString& name, const core::Property& property)
     -> QModelIndex
 {
   m_manager->AddProperty(name, property);
@@ -47,7 +47,7 @@ auto property_model::add(const QString& name, const core::property& property)
 }
 
 void property_model::change_type(const QString& name,
-                                 const core::property_type type)
+                                 const core::PropertyType type)
 {
   if (auto* item = find_item(this, name, 0))
   {
@@ -92,7 +92,7 @@ auto property_model::is_custom_property(const QModelIndex& index) const -> bool
 }
 
 auto property_model::get_property(const QString& name) const
-    -> const core::property&
+    -> const core::Property&
 {
   return m_manager->GetProperty(name);
 }
@@ -121,12 +121,12 @@ void property_model::updated_property(const QString& name)
     update_item_data(itemFromIndex(sibling), property);
 
     // We need to notify the view index widget to update its contents
-    const auto type = property.type().value();
-    if (type == core::property_type::file)
+    const auto type = property.Type().value();
+    if (type == core::PropertyType::file)
     {
       emit updated_file(sibling);
     }
-    else if (type == core::property_type::color)
+    else if (type == core::PropertyType::color)
     {
       emit updated_color(sibling);
     }
@@ -169,7 +169,7 @@ auto property_model::add_existing_property_to_gui(const QString& name)
 }
 
 auto property_model::add_property_to_gui(const QString& name,
-                                         const core::property& property,
+                                         const core::Property& property,
                                          QStandardItem* root) -> QModelIndex
 {
   auto* nameItem = new QStandardItem{name};
@@ -178,14 +178,14 @@ auto property_model::add_property_to_gui(const QString& name,
   root->appendRow({nameItem, valueItem});
 
   const auto index = indexFromItem(valueItem);
-  const auto type = property.type().value();
+  const auto type = property.Type().value();
 
   // Notify view that it should add an index widget for the property
-  if (type == core::property_type::file)
+  if (type == core::PropertyType::file)
   {
     emit added_file(index);
   }
-  else if (type == core::property_type::color)
+  else if (type == core::PropertyType::color)
   {
     emit added_color(index);
   }

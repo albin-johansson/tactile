@@ -195,23 +195,23 @@ class Object final : public IPropertyManager
   /// \name Property API
   /// \{
 
-  void AddProperty(const QString& name, property_type type) override;
+  void AddProperty(const QString& name, PropertyType type) override;
 
-  void AddProperty(const QString& name, const property& property) override;
+  void AddProperty(const QString& name, const Property& property) override;
 
   void RemoveProperty(const QString& name) override;
 
   void RenameProperty(const QString& oldName, const QString& newName) override;
 
-  void SetProperty(const QString& name, const property& property) override;
+  void SetProperty(const QString& name, const Property& property) override;
 
   void ChangePropertyType(const QString& name,
-                            core::property_type type) override;
+                          core::PropertyType type) override;
 
   [[nodiscard]] auto GetProperty(const QString& name) const
-      -> const property& override;
+      -> const Property& override;
 
-  [[nodiscard]] auto GetProperty(const QString& name) -> property& override;
+  [[nodiscard]] auto GetProperty(const QString& name) -> Property& override;
 
   [[nodiscard]] auto HasProperty(const QString& name) const -> bool override;
 

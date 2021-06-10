@@ -24,7 +24,7 @@ class AddPropertyDialog final : public QDialog
 
   ~AddPropertyDialog() noexcept override;
 
-  template <std::invocable<const QString&, core::property_type> T>
+  template <std::invocable<const QString&, core::PropertyType> T>
   static void Spawn(T&& callable,
                     QStandardItemModel* model,
                     QWidget* parent = nullptr)
@@ -42,7 +42,7 @@ class AddPropertyDialog final : public QDialog
   unique<Ui::AddPropertyDialog> mUi;
   QValidator* mNameValidator{};
   maybe<QString> mName;
-  maybe<core::property_type> mType;
+  maybe<core::PropertyType> mType;
 
   void UpdateType();
 

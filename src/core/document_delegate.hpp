@@ -54,26 +54,26 @@ class DocumentDelegate final : public ADocument
   /// \name Property API
   /// \{
 
-  void AddProperty(const QString& name, core::property_type type) override;
+  void AddProperty(const QString& name, core::PropertyType type) override;
 
   void AddProperty(const QString& name,
-                    const core::property& property) override;
+                   const core::Property& property) override;
 
   void RemoveProperty(const QString& name) override;
 
   void RenameProperty(const QString& oldName, const QString& newName) override;
 
   void SetProperty(const QString& name,
-                    const core::property& property) override;
+                   const core::Property& property) override;
 
   void ChangePropertyType(const QString& name,
-                            core::property_type type) override;
+                          core::PropertyType type) override;
 
   [[nodiscard]] auto GetProperty(const QString& name) const
-      -> const core::property& override;
+      -> const core::Property& override;
 
   [[nodiscard]] auto GetProperty(const QString& name)
-      -> core::property& override;
+      -> core::Property& override;
 
   [[nodiscard]] auto HasProperty(const QString& name) const -> bool override;
 

@@ -43,12 +43,12 @@ auto LayerDelegate::Name() const -> const QString&
   return mName;
 }
 
-void LayerDelegate::AddProperty(const QString& name, property_type type)
+void LayerDelegate::AddProperty(const QString& name, const PropertyType type)
 {
   mProperties.AddProperty(name, type);
 }
 
-void LayerDelegate::AddProperty(const QString& name, const property& property)
+void LayerDelegate::AddProperty(const QString& name, const Property& property)
 {
   mProperties.AddProperty(name, property);
 }
@@ -64,22 +64,23 @@ void LayerDelegate::RenameProperty(const QString& oldName,
   mProperties.RenameProperty(oldName, newName);
 }
 
-void LayerDelegate::SetProperty(const QString& name, const property& property)
+void LayerDelegate::SetProperty(const QString& name, const Property& property)
 {
   mProperties.SetProperty(name, property);
 }
 
-void LayerDelegate::ChangePropertyType(const QString& name, property_type type)
+void LayerDelegate::ChangePropertyType(const QString& name,
+                                       const PropertyType type)
 {
   mProperties.ChangePropertyType(name, type);
 }
 
-auto LayerDelegate::GetProperty(const QString& name) const -> const property&
+auto LayerDelegate::GetProperty(const QString& name) const -> const Property&
 {
   return mProperties.GetProperty(name);
 }
 
-auto LayerDelegate::GetProperty(const QString& name) -> property&
+auto LayerDelegate::GetProperty(const QString& name) -> Property&
 {
   return mProperties.GetProperty(name);
 }

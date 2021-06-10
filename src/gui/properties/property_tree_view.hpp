@@ -28,7 +28,7 @@ class PropertyTreeView final : public QTreeView
  public slots:
   void OnColorAdded(const QModelIndex& valueIndex);
   void OnFileAdded(const QModelIndex& valueIndex);
-  void OnChangedType(const QModelIndex& valueIndex, core::property_type type);
+  void OnChangedType(const QModelIndex& valueIndex, core::PropertyType type);
   void OnFileUpdated(const QModelIndex& index);
   void OnColorUpdated(const QModelIndex& index);
 

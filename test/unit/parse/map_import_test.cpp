@@ -49,7 +49,7 @@ void validate_layers(const core::MapDocument& document)
     EXPECT_EQ(cols, tileLayer->ColumnCount());
 
     ASSERT_TRUE(layer->HasProperty(ground));
-    EXPECT_TRUE(layer->GetProperty(ground).as_boolean());
+    EXPECT_TRUE(layer->GetProperty(ground).AsBoolean());
   }
 
   {  // Second layer
@@ -68,7 +68,7 @@ void validate_layers(const core::MapDocument& document)
     EXPECT_EQ(cols, tileLayer->ColumnCount());
 
     ASSERT_TRUE(layer->HasProperty(ground));
-    EXPECT_FALSE(layer->GetProperty(ground).as_boolean());
+    EXPECT_FALSE(layer->GetProperty(ground).AsBoolean());
   }
 
   {  // Third layer
@@ -85,7 +85,7 @@ void validate_layers(const core::MapDocument& document)
 
     ASSERT_EQ(1, objectLayer->ObjectCount());
     ASSERT_TRUE(objectLayer->HasProperty(ground));
-    EXPECT_FALSE(objectLayer->GetProperty(ground).as_boolean());
+    EXPECT_FALSE(objectLayer->GetProperty(ground).AsBoolean());
 
     ASSERT_TRUE(objectLayer->HasObject(1_obj));
     const auto& object = objectLayer->GetObject(1_obj);
@@ -103,7 +103,7 @@ void validate_layers(const core::MapDocument& document)
     ASSERT_EQ(1, object.PropertyCount());
     ASSERT_TRUE(object.HasProperty(TACTILE_QSTRING(u"foo")));
     EXPECT_EQ(TACTILE_QSTRING(u"bar"),
-              object.GetProperty(TACTILE_QSTRING(u"foo")).as_string());
+              object.GetProperty(TACTILE_QSTRING(u"foo")).AsString());
   }
 }
 
@@ -157,28 +157,28 @@ void validate_properties(const core::MapDocument& document)
 
   ASSERT_TRUE(document.HasProperty(string));
   EXPECT_EQ(TACTILE_QSTRING(u"foobar"),
-            document.GetProperty(string).as_string());
+            document.GetProperty(string).AsString());
 
   ASSERT_TRUE(document.HasProperty(color));
   EXPECT_EQ(QColor{TACTILE_QSTRING(u"#ff550000")},
-            document.GetProperty(color).as_color());
+            document.GetProperty(color).AsColor());
 
   ASSERT_TRUE(document.HasProperty(integer));
-  EXPECT_EQ(123, document.GetProperty(integer).as_integer());
+  EXPECT_EQ(123, document.GetProperty(integer).AsInteger());
 
   ASSERT_TRUE(document.HasProperty(floating));
-  EXPECT_EQ(12.3, document.GetProperty(floating).as_floating());
+  EXPECT_EQ(12.3, document.GetProperty(floating).AsFloating());
 
   ASSERT_TRUE(document.HasProperty(boolean));
-  EXPECT_TRUE(document.GetProperty(boolean).as_boolean());
+  EXPECT_TRUE(document.GetProperty(boolean).AsBoolean());
 
   ASSERT_TRUE(document.HasProperty(object));
-  EXPECT_EQ(core::object_ref{1}, document.GetProperty(object).as_object());
+  EXPECT_EQ(core::object_ref{1}, document.GetProperty(object).AsObject());
 
   const QFileInfo path{TACTILE_QSTRING(u"../terrain.png")};
   ASSERT_TRUE(document.HasProperty(file));
   EXPECT_EQ(path.absoluteFilePath(),
-            document.GetProperty(file).as_file().absoluteFilePath());
+            document.GetProperty(file).AsFile().absoluteFilePath());
 }
 
 }  // namespace

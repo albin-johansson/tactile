@@ -4,14 +4,15 @@
 
 namespace tactile::core {
 
-void property_delegate::AddProperty(const QString& name, property_type type)
+void property_delegate::AddProperty(const QString& name,
+                                    const PropertyType type)
 {
-  Q_ASSERT(!m_properties.contains(name));
+  Q_ASSERT(!mProperties.contains(name));
 
-  property p;
-  p.set_default(type);
+  Property property;
+  property.SetDefault(type);
 
-  m_properties.emplace(name, std::move(p));
+  mProperties.emplace(name, std::move(property));
 
 #ifdef QT_DEBUG
   qDebug() << "Added property:" << name
@@ -20,23 +21,23 @@ void property_delegate::AddProperty(const QString& name, property_type type)
 }
 
 void property_delegate::AddProperty(const QString& name,
-                                     const property& property)
+                                    const Property& property)
 {
-  Q_ASSERT(!m_properties.contains(name));
-  Q_ASSERT(property.type());
+  Q_ASSERT(!mProperties.contains(name));
+  Q_ASSERT(property.Type());
 
-  m_properties.emplace(name, property);
+  mProperties.emplace(name, property);
 
 #ifdef QT_DEBUG
   qDebug() << "Added property:" << name
-           << "with type:" << static_cast<int>(property.type().value());
+           << "with type:" << static_cast<int>(property.Type().value());
 #endif  // QT_DEBUG
 }
 
 void property_delegate::RemoveProperty(const QString& name)
 {
-  Q_ASSERT(m_properties.contains(name));
-  m_properties.erase(name);
+  Q_ASSERT(mProperties.contains(name));
+  mProperties.erase(name);
 
 #ifdef QT_DEBUG
   qDebug() << "Removed property:" << name;
@@ -44,14 +45,14 @@ void property_delegate::RemoveProperty(const QString& name)
 }
 
 void property_delegate::RenameProperty(const QString& oldName,
-                                        const QString& newName)
+                                       const QString& newName)
 {
-  Q_ASSERT(m_properties.contains(oldName));
-  Q_ASSERT(!m_properties.contains(newName));
+  Q_ASSERT(mProperties.contains(oldName));
+  Q_ASSERT(!mProperties.contains(newName));
 
-  auto property = m_properties.at(oldName);
-  m_properties.erase(oldName);
-  m_properties.emplace(newName, std::move(property));
+  auto property = mProperties.at(oldName);
+  mProperties.erase(oldName);
+  mProperties.emplace(newName, std::move(property));
 
 #ifdef QT_DEBUG
   qDebug() << "Renamed property:" << oldName << "->" << newName;
@@ -59,11 +60,11 @@ void property_delegate::RenameProperty(const QString& oldName,
 }
 
 void property_delegate::SetProperty(const QString& name,
-                                     const property& property)
+                                    const Property& property)
 {
-  Q_ASSERT(m_properties.contains(name));
-  Q_ASSERT(m_properties.at(name).type() == property.type());
-  m_properties.at(name) = property;
+  Q_ASSERT(mProperties.contains(name));
+  Q_ASSERT(mProperties.at(name).Type() == property.Type());
+  mProperties.at(name) = property;
 
 #ifdef QT_DEBUG
   qDebug() << "Set value of property:" << name;
@@ -71,17 +72,17 @@ void property_delegate::SetProperty(const QString& name,
 }
 
 void property_delegate::ChangePropertyType(const QString& name,
-                                           property_type type)
+                                           const PropertyType type)
 {
-  Q_ASSERT(m_properties.contains(name));
-  Q_ASSERT(GetProperty(name).type() != type);
+  Q_ASSERT(mProperties.contains(name));
+  Q_ASSERT(GetProperty(name).Type() != type);
 
-  m_properties.erase(name);
+  mProperties.erase(name);
 
-  property p;
-  p.set_default(type);
+  Property property;
+  property.SetDefault(type);
 
-  m_properties.emplace(name, std::move(p));
+  mProperties.emplace(name, std::move(property));
 
 #ifdef QT_DEBUG
   qDebug() << "Changed type of property:" << name << "to"
@@ -90,29 +91,29 @@ void property_delegate::ChangePropertyType(const QString& name,
 }
 
 auto property_delegate::GetProperty(const QString& name) const
-    -> const property&
+    -> const Property&
 {
-  return m_properties.at(name);
+  return mProperties.at(name);
 }
 
-auto property_delegate::GetProperty(const QString& name) -> property&
+auto property_delegate::GetProperty(const QString& name) -> Property&
 {
-  return m_properties.at(name);
+  return mProperties.at(name);
 }
 
 auto property_delegate::HasProperty(const QString& name) const -> bool
 {
-  return m_properties.contains(name);
+  return mProperties.contains(name);
 }
 
 auto property_delegate::PropertyCount() const noexcept -> int
 {
-  return static_cast<int>(m_properties.size());
+  return static_cast<int>(mProperties.size());
 }
 
 auto property_delegate::GetProperties() const -> const property_map&
 {
-  return m_properties;
+  return mProperties;
 }
 
 }  // namespace tactile::core

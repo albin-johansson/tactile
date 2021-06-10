@@ -25,7 +25,7 @@ void RemoveProperty::undo()
   QUndoCommand::undo();
 
   const auto& property = mProperty.value();
-  mManager->AddProperty(mName, property.type().value());
+  mManager->AddProperty(mName, property.Type().value());
   mManager->SetProperty(mName, property);
 
   mProperty.reset();

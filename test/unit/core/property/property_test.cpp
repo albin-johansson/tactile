@@ -9,201 +9,201 @@ using namespace tactile;
 TEST(Property, Defaults)
 {
   const core::property property;
-  EXPECT_FALSE(property.has_value());
+  EXPECT_FALSE(property.HasValue());
   EXPECT_FALSE(property.type());
 
-  EXPECT_FALSE(property.is_string());
-  EXPECT_FALSE(property.is_integer());
-  EXPECT_FALSE(property.is_floating());
-  EXPECT_FALSE(property.is_boolean());
-  EXPECT_FALSE(property.is_color());
-  EXPECT_FALSE(property.is_file());
-  EXPECT_FALSE(property.is_object());
+  EXPECT_FALSE(property.IsString());
+  EXPECT_FALSE(property.IsInteger());
+  EXPECT_FALSE(property.IsFloating());
+  EXPECT_FALSE(property.IsBoolean());
+  EXPECT_FALSE(property.IsColor());
+  EXPECT_FALSE(property.IsFile());
+  EXPECT_FALSE(property.IsObject());
 }
 
 TEST(Property, IntProperty)
 {
   const core::property property{123};
-  ASSERT_TRUE(property.has_value());
-  ASSERT_TRUE(property.is_integer());
-  EXPECT_TRUE(property.try_as_integer());
-  EXPECT_EQ(123, property.as_integer());
+  ASSERT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.IsInteger());
+  EXPECT_TRUE(property.TryAsInteger());
+  EXPECT_EQ(123, property.AsInteger());
 
-  EXPECT_FALSE(property.is_string());
-  EXPECT_FALSE(property.is_floating());
-  EXPECT_FALSE(property.is_boolean());
-  EXPECT_FALSE(property.is_color());
-  EXPECT_FALSE(property.is_file());
-  EXPECT_FALSE(property.is_object());
+  EXPECT_FALSE(property.IsString());
+  EXPECT_FALSE(property.IsFloating());
+  EXPECT_FALSE(property.IsBoolean());
+  EXPECT_FALSE(property.IsColor());
+  EXPECT_FALSE(property.IsFile());
+  EXPECT_FALSE(property.IsObject());
 }
 
 TEST(Property, FloatProperty)
 {
   const core::property property{12.3};
-  ASSERT_TRUE(property.has_value());
-  ASSERT_TRUE(property.is_floating());
-  EXPECT_TRUE(property.try_as_floating());
-  EXPECT_EQ(12.3, property.as_floating());
+  ASSERT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.IsFloating());
+  EXPECT_TRUE(property.TryAsFloating());
+  EXPECT_EQ(12.3, property.AsFloating());
 
-  EXPECT_FALSE(property.is_string());
-  EXPECT_FALSE(property.is_integer());
-  EXPECT_FALSE(property.is_boolean());
-  EXPECT_FALSE(property.is_color());
-  EXPECT_FALSE(property.is_file());
-  EXPECT_FALSE(property.is_object());
+  EXPECT_FALSE(property.IsString());
+  EXPECT_FALSE(property.IsInteger());
+  EXPECT_FALSE(property.IsBoolean());
+  EXPECT_FALSE(property.IsColor());
+  EXPECT_FALSE(property.IsFile());
+  EXPECT_FALSE(property.IsObject());
 }
 
 TEST(Property, StringProperty)
 {
   const core::property property{TACTILE_QSTRING(u"foo")};
-  ASSERT_TRUE(property.has_value());
-  ASSERT_TRUE(property.is_string());
-  EXPECT_TRUE(property.try_as_string());
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.as_string());
+  ASSERT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.IsString());
+  EXPECT_TRUE(property.TryAsString());
+  EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.AsString());
 
-  EXPECT_FALSE(property.is_integer());
-  EXPECT_FALSE(property.is_floating());
-  EXPECT_FALSE(property.is_boolean());
-  EXPECT_FALSE(property.is_color());
-  EXPECT_FALSE(property.is_file());
-  EXPECT_FALSE(property.is_object());
+  EXPECT_FALSE(property.IsInteger());
+  EXPECT_FALSE(property.IsFloating());
+  EXPECT_FALSE(property.IsBoolean());
+  EXPECT_FALSE(property.IsColor());
+  EXPECT_FALSE(property.IsFile());
+  EXPECT_FALSE(property.IsObject());
 }
 
 TEST(Property, BoolProperty)
 {
   const core::property property{false};
-  ASSERT_TRUE(property.has_value());
-  ASSERT_TRUE(property.is_boolean());
-  EXPECT_TRUE(property.try_as_boolean());
-  EXPECT_FALSE(property.as_boolean());
+  ASSERT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.IsBoolean());
+  EXPECT_TRUE(property.TryAsBoolean());
+  EXPECT_FALSE(property.AsBoolean());
 
-  EXPECT_FALSE(property.is_string());
-  EXPECT_FALSE(property.is_integer());
-  EXPECT_FALSE(property.is_floating());
-  EXPECT_FALSE(property.is_color());
-  EXPECT_FALSE(property.is_file());
-  EXPECT_FALSE(property.is_object());
+  EXPECT_FALSE(property.IsString());
+  EXPECT_FALSE(property.IsInteger());
+  EXPECT_FALSE(property.IsFloating());
+  EXPECT_FALSE(property.IsColor());
+  EXPECT_FALSE(property.IsFile());
+  EXPECT_FALSE(property.IsObject());
 }
 
 TEST(Property, FileProperty)
 {
   const QFileInfo file{TACTILE_QSTRING(u"resources/foo.txt")};
   const core::property property{file};
-  ASSERT_TRUE(property.has_value());
-  ASSERT_TRUE(property.is_file());
-  EXPECT_TRUE(property.try_as_file());
+  ASSERT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.IsFile());
+  EXPECT_TRUE(property.TryAsFile());
 
-  EXPECT_FALSE(property.is_string());
-  EXPECT_FALSE(property.is_integer());
-  EXPECT_FALSE(property.is_floating());
-  EXPECT_FALSE(property.is_boolean());
-  EXPECT_FALSE(property.is_color());
-  EXPECT_FALSE(property.is_object());
+  EXPECT_FALSE(property.IsString());
+  EXPECT_FALSE(property.IsInteger());
+  EXPECT_FALSE(property.IsFloating());
+  EXPECT_FALSE(property.IsBoolean());
+  EXPECT_FALSE(property.IsColor());
+  EXPECT_FALSE(property.IsObject());
 }
 
 TEST(Property, ObjectProperty)
 {
   const core::property property{core::object_ref{7}};
-  ASSERT_TRUE(property.has_value());
-  ASSERT_TRUE(property.is_object());
-  EXPECT_TRUE(property.try_as_object());
+  ASSERT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.IsObject());
+  EXPECT_TRUE(property.TryAsObject());
 
-  EXPECT_FALSE(property.is_string());
-  EXPECT_FALSE(property.is_integer());
-  EXPECT_FALSE(property.is_floating());
-  EXPECT_FALSE(property.is_boolean());
-  EXPECT_FALSE(property.is_color());
-  EXPECT_FALSE(property.is_file());
+  EXPECT_FALSE(property.IsString());
+  EXPECT_FALSE(property.IsInteger());
+  EXPECT_FALSE(property.IsFloating());
+  EXPECT_FALSE(property.IsBoolean());
+  EXPECT_FALSE(property.IsColor());
+  EXPECT_FALSE(property.IsFile());
 }
 
 TEST(Property, ColorProperty)
 {
   const QColor color{Qt::red};
   const core::property property{color};
-  ASSERT_TRUE(property.has_value());
-  ASSERT_TRUE(property.is_color());
-  EXPECT_TRUE(property.try_as_color());
+  ASSERT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.IsColor());
+  EXPECT_TRUE(property.TryAsColor());
 
-  EXPECT_FALSE(property.is_string());
-  EXPECT_FALSE(property.is_integer());
-  EXPECT_FALSE(property.is_floating());
-  EXPECT_FALSE(property.is_boolean());
-  EXPECT_FALSE(property.is_file());
-  EXPECT_FALSE(property.is_object());
+  EXPECT_FALSE(property.IsString());
+  EXPECT_FALSE(property.IsInteger());
+  EXPECT_FALSE(property.IsFloating());
+  EXPECT_FALSE(property.IsBoolean());
+  EXPECT_FALSE(property.IsFile());
+  EXPECT_FALSE(property.IsObject());
 }
 
 TEST(Property, Reset)
 {
   core::property property;
-  ASSERT_FALSE(property.has_value());
+  ASSERT_FALSE(property.HasValue());
 
-  property.set_value(123);
-  EXPECT_TRUE(property.has_value());
+  property.SetValue(123);
+  EXPECT_TRUE(property.HasValue());
 
-  property.reset();
-  EXPECT_FALSE(property.has_value());
+  property.Reset();
+  EXPECT_FALSE(property.HasValue());
 
-  EXPECT_NO_THROW(property.reset());
-  EXPECT_NO_THROW(property.reset());
+  EXPECT_NO_THROW(property.Reset());
+  EXPECT_NO_THROW(property.Reset());
 }
 
 TEST(Property, SetValue)
 {
   core::property property;
 
-  property.set_value(10);
-  ASSERT_TRUE(property.is_integer());
-  EXPECT_EQ(10, property.as_integer());
+  property.SetValue(10);
+  ASSERT_TRUE(property.IsInteger());
+  EXPECT_EQ(10, property.AsInteger());
 
-  property.set_value(93.2);
-  ASSERT_TRUE(property.is_floating());
-  EXPECT_EQ(93.2, property.as_floating());
+  property.SetValue(93.2);
+  ASSERT_TRUE(property.IsFloating());
+  EXPECT_EQ(93.2, property.AsFloating());
 
-  property.set_value(true);
-  ASSERT_TRUE(property.is_boolean());
-  EXPECT_TRUE(property.as_boolean());
+  property.SetValue(true);
+  ASSERT_TRUE(property.IsBoolean());
+  EXPECT_TRUE(property.AsBoolean());
 
-  property.set_value(TACTILE_QSTRING(u"foo"));
-  ASSERT_TRUE(property.is_string());
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.as_string());
+  property.SetValue(TACTILE_QSTRING(u"foo"));
+  ASSERT_TRUE(property.IsString());
+  EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.AsString());
 }
 
 TEST(Property, HasValue)
 {
   core::property property;
-  EXPECT_FALSE(property.has_value());
+  EXPECT_FALSE(property.HasValue());
 
-  property.set_value(924);
-  EXPECT_TRUE(property.has_value());
+  property.SetValue(924);
+  EXPECT_TRUE(property.HasValue());
 }
 
 TEST(Property, As)
 {
   const core::property property{123};
 
-  EXPECT_NO_THROW(property.as_integer());
-  EXPECT_ANY_THROW(property.as_floating());
-  EXPECT_ANY_THROW(property.as_string());
-  EXPECT_ANY_THROW(property.as_boolean());
-  EXPECT_ANY_THROW(property.as_object());
-  EXPECT_ANY_THROW(property.as_file());
-  EXPECT_ANY_THROW(property.as_color());
+  EXPECT_NO_THROW(property.AsInteger());
+  EXPECT_ANY_THROW(property.AsFloating());
+  EXPECT_ANY_THROW(property.AsString());
+  EXPECT_ANY_THROW(property.AsBoolean());
+  EXPECT_ANY_THROW(property.AsObject());
+  EXPECT_ANY_THROW(property.AsFile());
+  EXPECT_ANY_THROW(property.AsColor());
 }
 
 TEST(Property, TryAs)
 {
   core::property property;
 
-  EXPECT_FALSE(property.try_as_integer());
-  EXPECT_FALSE(property.try_as_floating());
-  EXPECT_FALSE(property.try_as_string());
-  EXPECT_FALSE(property.try_as_boolean());
+  EXPECT_FALSE(property.TryAsInteger());
+  EXPECT_FALSE(property.TryAsFloating());
+  EXPECT_FALSE(property.TryAsString());
+  EXPECT_FALSE(property.TryAsBoolean());
 
-  property.set_value(123);
-  EXPECT_TRUE(property.try_as_integer());
-  EXPECT_FALSE(property.try_as_floating());
-  EXPECT_FALSE(property.try_as_string());
-  EXPECT_FALSE(property.try_as_boolean());
+  property.SetValue(123);
+  EXPECT_TRUE(property.TryAsInteger());
+  EXPECT_FALSE(property.TryAsFloating());
+  EXPECT_FALSE(property.TryAsString());
+  EXPECT_FALSE(property.TryAsBoolean());
 }
 
 TEST(Property, Type)
@@ -211,15 +211,15 @@ TEST(Property, Type)
   core::property property;
   EXPECT_FALSE(property.type());
 
-  property.set_value(123);
-  EXPECT_EQ(core::property_type::integer, property.type());
+  property.SetValue(123);
+  EXPECT_EQ(core::PropertyType::integer, property.type());
 
-  property.set_value(12.3);
-  EXPECT_EQ(core::property_type::floating, property.type());
+  property.SetValue(12.3);
+  EXPECT_EQ(core::PropertyType::floating, property.type());
 
-  property.set_value(TACTILE_QSTRING(u"foo"));
-  EXPECT_EQ(core::property_type::string, property.type());
+  property.SetValue(TACTILE_QSTRING(u"foo"));
+  EXPECT_EQ(core::PropertyType::string, property.type());
 
-  property.reset();
+  property.Reset();
   EXPECT_FALSE(property.type());
 }

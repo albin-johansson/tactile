@@ -149,14 +149,14 @@ auto MapDocument::AbsolutePath() const -> QString
   return mDelegate->AbsolutePath();
 }
 
-void MapDocument::AddProperty(const QString& name, property_type type)
+void MapDocument::AddProperty(const QString& name, const PropertyType type)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::AddProperty>(mDelegate.get(), name, type);
 }
 
 void MapDocument::AddProperty(const QString& name,
-                               const core::property& property)
+                              const core::Property& property)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::AddProperty>(mDelegate.get(), name, property);
@@ -168,33 +168,33 @@ void MapDocument::RemoveProperty(const QString& name)
   mDelegate->Execute<cmd::RemoveProperty>(mDelegate.get(), name);
 }
 
-void MapDocument::RenameProperty(const QString& oldName,
-                                  const QString& newName)
+void MapDocument::RenameProperty(const QString& oldName, const QString& newName)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::RenameProperty>(mDelegate.get(), oldName, newName);
 }
 
 void MapDocument::SetProperty(const QString& name,
-                               const core::property& property)
+                              const core::Property& property)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::UpdateProperty>(mDelegate.get(), name, property);
 }
 
-void MapDocument::ChangePropertyType(const QString& name, property_type type)
+void MapDocument::ChangePropertyType(const QString& name,
+                                     const PropertyType type)
 {
   const QSignalBlocker blocker{mDelegate.get()};
   mDelegate->Execute<cmd::ChangePropertyType>(mDelegate.get(), name, type);
 }
 
 auto MapDocument::GetProperty(const QString& name) const
-    -> const core::property&
+    -> const core::Property&
 {
   return mDelegate->GetProperty(name);
 }
 
-auto MapDocument::GetProperty(const QString& name) -> core::property&
+auto MapDocument::GetProperty(const QString& name) -> core::Property&
 {
   return mDelegate->GetProperty(name);
 }

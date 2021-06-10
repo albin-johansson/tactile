@@ -12,12 +12,12 @@ TEST(PropertyDelegate, AddProperty)
   EXPECT_EQ(0, delegate.PropertyCount());
 
   const auto name = TACTILE_QSTRING(u"foo");
-  delegate.AddProperty(name, core::property_type::integer);
+  delegate.AddProperty(name, core::PropertyType::integer);
   EXPECT_EQ(1, delegate.PropertyCount());
 
   const auto& property = delegate.GetProperty(name);
-  ASSERT_TRUE(property.is_integer());
-  EXPECT_EQ(0, property.as_integer());
+  ASSERT_TRUE(property.IsInteger());
+  EXPECT_EQ(0, property.AsInteger());
 }
 
 TEST(PropertyDelegate, RemoveProperty)
@@ -25,7 +25,7 @@ TEST(PropertyDelegate, RemoveProperty)
   core::property_delegate delegate;
   const auto name = TACTILE_QSTRING(u"foo");
 
-  delegate.AddProperty(name, core::property_type::integer);
+  delegate.AddProperty(name, core::PropertyType::integer);
   EXPECT_EQ(1, delegate.PropertyCount());
   EXPECT_NO_THROW(delegate.GetProperty(name));
 
@@ -39,7 +39,7 @@ TEST(PropertyDelegate, RenameProperty)
   core::property_delegate delegate;
 
   const auto oldName = TACTILE_QSTRING(u"foo");
-  delegate.AddProperty(oldName, core::property_type::boolean);
+  delegate.AddProperty(oldName, core::PropertyType::boolean);
   EXPECT_NO_THROW(delegate.GetProperty(oldName));
 
   const auto newName = TACTILE_QSTRING(u"bar");
@@ -47,7 +47,7 @@ TEST(PropertyDelegate, RenameProperty)
   EXPECT_ANY_THROW(delegate.GetProperty(oldName));
 
   const auto& property = delegate.GetProperty(newName);
-  EXPECT_TRUE(property.is_boolean());
+  EXPECT_TRUE(property.IsBoolean());
 }
 
 TEST(PropertyDelegate, SetProperty)
@@ -56,11 +56,11 @@ TEST(PropertyDelegate, SetProperty)
 
   const auto name = TACTILE_QSTRING(u"foo");
 
-  delegate.AddProperty(name, core::property_type::integer);
-  EXPECT_EQ(0, delegate.GetProperty(name).as_integer());
+  delegate.AddProperty(name, core::PropertyType::integer);
+  EXPECT_EQ(0, delegate.GetProperty(name).AsInteger());
 
   delegate.SetProperty(name, 123);
-  EXPECT_EQ(123, delegate.GetProperty(name).as_integer());
+  EXPECT_EQ(123, delegate.GetProperty(name).AsInteger());
 }
 
 TEST(PropertyDelegate, GetProperty)
@@ -70,7 +70,7 @@ TEST(PropertyDelegate, GetProperty)
   const auto name = TACTILE_QSTRING(u"foo");
   EXPECT_ANY_THROW(delegate.GetProperty(name));
 
-  delegate.AddProperty(name, core::property_type::string);
+  delegate.AddProperty(name, core::PropertyType::string);
   EXPECT_NO_THROW(delegate.GetProperty(name));
 
   const auto& cDelegate = delegate;
@@ -82,10 +82,10 @@ TEST(PropertyDelegate, PropertyCount)
   core::property_delegate delegate;
   EXPECT_EQ(0, delegate.PropertyCount());
 
-  delegate.AddProperty(TACTILE_QSTRING(u"foo"), core::property_type::string);
+  delegate.AddProperty(TACTILE_QSTRING(u"foo"), core::PropertyType::string);
   EXPECT_EQ(1, delegate.PropertyCount());
 
-  delegate.AddProperty(TACTILE_QSTRING(u"bar"), core::property_type::integer);
+  delegate.AddProperty(TACTILE_QSTRING(u"bar"), core::PropertyType::integer);
   EXPECT_EQ(2, delegate.PropertyCount());
 
   delegate.RemoveProperty(TACTILE_QSTRING(u"bar"));

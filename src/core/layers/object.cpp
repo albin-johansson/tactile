@@ -92,12 +92,12 @@ auto Object::IsRectangle() const noexcept -> bool
   return Type() == object_type::rectangle;
 }
 
-void Object::AddProperty(const QString& name, property_type type)
+void Object::AddProperty(const QString& name, const PropertyType type)
 {
   mProperties.AddProperty(name, type);
 }
 
-void Object::AddProperty(const QString& name, const property& property)
+void Object::AddProperty(const QString& name, const Property& property)
 {
   mProperties.AddProperty(name, property);
 }
@@ -112,22 +112,22 @@ void Object::RenameProperty(const QString& oldName, const QString& newName)
   mProperties.RenameProperty(oldName, newName);
 }
 
-void Object::SetProperty(const QString& name, const property& property)
+void Object::SetProperty(const QString& name, const Property& property)
 {
   mProperties.SetProperty(name, property);
 }
 
-void Object::ChangePropertyType(const QString& name, property_type type)
+void Object::ChangePropertyType(const QString& name, const PropertyType type)
 {
   mProperties.ChangePropertyType(name, type);
 }
 
-auto Object::GetProperty(const QString& name) const -> const property&
+auto Object::GetProperty(const QString& name) const -> const Property&
 {
   return mProperties.GetProperty(name);
 }
 
-auto Object::GetProperty(const QString& name) -> property&
+auto Object::GetProperty(const QString& name) -> Property&
 {
   return mProperties.GetProperty(name);
 }

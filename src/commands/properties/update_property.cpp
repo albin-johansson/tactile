@@ -10,7 +10,7 @@ namespace tactile::cmd {
 
 UpdateProperty::UpdateProperty(core::IPropertyManager* manager,
                                QString name,
-                               core::property property)
+                               core::Property property)
     : QUndoCommand{TACTILE_QSTRING(u"Update Property \"") + name +
                    TACTILE_QSTRING(u"\"")}
     , mManager{manager}

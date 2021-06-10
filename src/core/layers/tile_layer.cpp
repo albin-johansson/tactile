@@ -243,12 +243,12 @@ auto TileLayer::IsVisible() const noexcept -> bool
   return mDelegate.Visible();
 }
 
-void TileLayer::AddProperty(const QString& name, property_type type)
+void TileLayer::AddProperty(const QString& name, const PropertyType type)
 {
   mDelegate.AddProperty(name, type);
 }
 
-void TileLayer::AddProperty(const QString& name, const property& property)
+void TileLayer::AddProperty(const QString& name, const Property& property)
 {
   mDelegate.AddProperty(name, property);
 }
@@ -263,22 +263,22 @@ void TileLayer::RenameProperty(const QString& oldName, const QString& newName)
   mDelegate.RenameProperty(oldName, newName);
 }
 
-void TileLayer::SetProperty(const QString& name, const property& property)
+void TileLayer::SetProperty(const QString& name, const Property& property)
 {
   mDelegate.SetProperty(name, property);
 }
 
-void TileLayer::ChangePropertyType(const QString& name, property_type type)
+void TileLayer::ChangePropertyType(const QString& name, const PropertyType type)
 {
   mDelegate.ChangePropertyType(name, type);
 }
 
-auto TileLayer::GetProperty(const QString& name) const -> const property&
+auto TileLayer::GetProperty(const QString& name) const -> const Property&
 {
   return mDelegate.GetProperty(name);
 }
 
-auto TileLayer::GetProperty(const QString& name) -> property&
+auto TileLayer::GetProperty(const QString& name) -> Property&
 {
   return mDelegate.GetProperty(name);
 }

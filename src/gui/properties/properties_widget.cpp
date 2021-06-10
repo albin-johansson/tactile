@@ -132,7 +132,7 @@ void PropertiesWidget::OnSelectionChanged(maybe<QModelIndex> index)
   if (isCustom)
   {
     const auto& property = mModel->get_property(PropertyName(*index));
-    mContextMenu->SetCurrentType(property.type().value());
+    mContextMenu->SetCurrentType(property.Type().value());
   }
 }
 
@@ -156,7 +156,7 @@ void PropertiesWidget::OnPastePropertyRequested()
 void PropertiesWidget::OnNewPropertyRequested()
 {
   AddPropertyDialog::Spawn(
-      [this](const QString& name, const core::property_type type) {
+      [this](const QString& name, const core::PropertyType type) {
         mModel->add(name, type);
       },
       mModel.get(),
@@ -182,7 +182,7 @@ void PropertiesWidget::OnRenamePropertyRequested()
   }
 }
 
-void PropertiesWidget::OnChangeTypeRequested(core::property_type type)
+void PropertiesWidget::OnChangeTypeRequested(const core::PropertyType type)
 {
   mModel->change_type(CurrentPropertyName(), type);
 }

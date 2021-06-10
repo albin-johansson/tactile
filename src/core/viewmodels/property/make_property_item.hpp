@@ -6,7 +6,7 @@
 
 namespace tactile::vm {
 
-[[nodiscard]] auto make_property_item(const core::property& property)
+[[nodiscard]] auto make_property_item(const core::Property& property)
     -> QStandardItem*;
 
 }

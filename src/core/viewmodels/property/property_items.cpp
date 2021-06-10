@@ -4,46 +4,47 @@
 
 namespace tactile::vm {
 
-void update_item_data(not_null<QStandardItem*> item, const core::property& p)
+void update_item_data(not_null<QStandardItem*> item,
+                      const core::Property& property)
 {
   Q_ASSERT(item);
   switch (static_cast<vm::property_item_type>(item->type()))
   {
     case property_item_type::string:
     {
-      item->setData(p.as_string(), Qt::EditRole);
+      item->setData(property.AsString(), Qt::EditRole);
       break;
     }
     case property_item_type::integer:
     {
-      item->setData(p.as_integer(), Qt::EditRole);
+      item->setData(property.AsInteger(), Qt::EditRole);
       break;
     }
     case property_item_type::floating:
     {
-      item->setData(p.as_floating(), Qt::EditRole);
+      item->setData(property.AsFloating(), Qt::EditRole);
       break;
     }
     case property_item_type::boolean:
     {
-      item->setData(p.as_boolean() ? Qt::Checked : Qt::Unchecked,
+      item->setData(property.AsBoolean() ? Qt::Checked : Qt::Unchecked,
                     Qt::CheckStateRole);
       break;
     }
     case property_item_type::file:
     {
-      item->setData(p.as_file().absoluteFilePath(),
+      item->setData(property.AsFile().absoluteFilePath(),
                     vm::property_item_role::path);
       break;
     }
     case property_item_type::color:
     {
-      item->setData(p.as_color(), vm::property_item_role::color);
+      item->setData(property.AsColor(), vm::property_item_role::color);
       break;
     }
     case property_item_type::object:
     {
-      item->setData(p.as_object().get(), Qt::EditRole);
+      item->setData(property.AsObject().get(), Qt::EditRole);
       break;
     }
     default:
@@ -51,7 +52,7 @@ void update_item_data(not_null<QStandardItem*> item, const core::property& p)
   }
 }
 
-auto item_to_property(not_null<const QStandardItem*> item) -> core::property
+auto item_to_property(not_null<const QStandardItem*> item) -> core::Property
 {
   Q_ASSERT(item);
   switch (static_cast<vm::property_item_type>(item->type()))

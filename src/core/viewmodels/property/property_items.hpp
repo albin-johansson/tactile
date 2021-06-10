@@ -132,13 +132,14 @@ class file_item final : public QStandardItem
  * \pre `item` and `p` must be associated with the same property type.
  *
  * \param item a pointer to the property that will be updated.
- * \param p the property which will be used as the new item data.
+ * \param property the property which will be used as the new item data.
  *
  * \throws tactile_error if the supplied item isn't a property item.
  *
  * \since 0.2.0
  */
-void update_item_data(not_null<QStandardItem*> item, const core::property& p);
+void update_item_data(not_null<QStandardItem*> item,
+                      const core::Property& property);
 
 /**
  * \brief Returns the property value of an item.
@@ -152,6 +153,6 @@ void update_item_data(not_null<QStandardItem*> item, const core::property& p);
  * \since 0.2.0
  */
 [[nodiscard]] auto item_to_property(not_null<const QStandardItem*> item)
-    -> core::property;
+    -> core::Property;
 
 }  // namespace tactile::vm

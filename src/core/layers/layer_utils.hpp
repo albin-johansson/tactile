@@ -10,8 +10,7 @@ class ObjectLayer;
 
 [[nodiscard]] auto AsTileLayer(shared<ILayer>& layer) -> TileLayer*;
 
-[[nodiscard]] auto AsTileLayer(const shared<ILayer>& layer)
-    -> const TileLayer*;
+[[nodiscard]] auto AsTileLayer(const shared<ILayer>& layer) -> const TileLayer*;
 
 [[nodiscard]] auto AsObjectLayer(shared<ILayer>& layer) -> ObjectLayer*;
 

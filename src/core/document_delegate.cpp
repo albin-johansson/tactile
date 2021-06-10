@@ -80,14 +80,14 @@ auto DocumentDelegate::AbsolutePath() const -> QString
   return mPath->absoluteFilePath();
 }
 
-void DocumentDelegate::AddProperty(const QString& name, property_type type)
+void DocumentDelegate::AddProperty(const QString& name, const PropertyType type)
 {
   mPropertyManager->AddProperty(name, type);
   emit S_AddedProperty(name);
 }
 
 void DocumentDelegate::AddProperty(const QString& name,
-                                    const core::property& property)
+                                   const core::Property& property)
 {
   mPropertyManager->AddProperty(name, property);
   emit S_AddedProperty(name);
@@ -100,33 +100,33 @@ void DocumentDelegate::RemoveProperty(const QString& name)
 }
 
 void DocumentDelegate::RenameProperty(const QString& oldName,
-                                       const QString& newName)
+                                      const QString& newName)
 {
   mPropertyManager->RenameProperty(oldName, newName);
   emit S_RenamedProperty(oldName, newName);
 }
 
 void DocumentDelegate::SetProperty(const QString& name,
-                                    const core::property& property)
+                                   const core::Property& property)
 {
   mPropertyManager->SetProperty(name, property);
   emit S_UpdatedProperty(name);
 }
 
 void DocumentDelegate::ChangePropertyType(const QString& name,
-                                          property_type type)
+                                          const PropertyType type)
 {
   mPropertyManager->ChangePropertyType(name, type);
   emit S_ChangedPropertyType(name);
 }
 
 auto DocumentDelegate::GetProperty(const QString& name) const
-    -> const core::property&
+    -> const core::Property&
 {
   return mPropertyManager->GetProperty(name);
 }
 
-auto DocumentDelegate::GetProperty(const QString& name) -> core::property&
+auto DocumentDelegate::GetProperty(const QString& name) -> core::Property&
 {
   return mPropertyManager->GetProperty(name);
 }

@@ -17,7 +17,7 @@ class UpdateProperty final : public QUndoCommand
  public:
   UpdateProperty(core::IPropertyManager* manager,
                  QString name,
-                 core::property property);
+                 core::Property property);
 
   void undo() override;
 
@@ -31,8 +31,8 @@ class UpdateProperty final : public QUndoCommand
  private:
   core::IPropertyManager* mManager{};
   QString mName;
-  core::property mProperty;
-  maybe<core::property> mPrevProperty;
+  core::Property mProperty;
+  maybe<core::Property> mPrevProperty;
 };
 
 }  // namespace tactile::cmd
