@@ -10,25 +10,25 @@
 namespace tactile::core {
 
 /**
- * \class document
+ * \class ADocument
  *
  * \brief Represents a persistent document, e.g. for tilemaps.
  *
- * \see map_document
+ * \see MapDocument
  *
  * \since 0.2.0
  *
  * \headerfile document.hpp
  */
-class document : public QObject, public property_manager
+class ADocument : public QObject, public property_manager
 {
   Q_OBJECT
 
  public:
-  explicit document(QObject* parent = nullptr) : QObject{parent}
+  explicit ADocument(QObject* parent = nullptr) : QObject{parent}
   {}
 
-  ~document() noexcept override = default;
+  ~ADocument() noexcept override = default;
 
   /**
    * \brief Reverts the effects of the most recent command.
@@ -37,7 +37,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  virtual void undo() = 0;
+  virtual void Undo() = 0;
 
   /**
    * \brief Executes the most recently reverted command.
@@ -46,7 +46,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  virtual void redo() = 0;
+  virtual void Redo() = 0;
 
   /**
    * \brief Marks the command stack state as "clean".
@@ -59,14 +59,13 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  virtual void mark_as_clean() = 0;
 
   /**
    * \brief Clears the entire undo/redo history associated with the document.
    *
    * \since 0.2.0
    */
-  virtual void reset_history() = 0;
+  virtual void ResetHistory() = 0;
 
   /**
    * \brief Sets the file path associated with the document.
@@ -75,7 +74,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  virtual void set_path(QFileInfo path) = 0;
+  virtual void SetPath(QFileInfo path) = 0;
 
   /**
    * \brief Indicates whether or not there is an undoable command.
@@ -84,7 +83,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto can_undo() const -> bool = 0;
+  [[nodiscard]] virtual auto CanUndo() const -> bool = 0;
 
   /**
    * \brief Indicates whether or not there is an redoable command.
@@ -93,7 +92,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto can_redo() const -> bool = 0;
+  [[nodiscard]] virtual auto CanRedo() const -> bool = 0;
 
   /**
    * \brief Indicates whether or not the command state is clean.
@@ -102,7 +101,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto is_clean() const -> bool = 0;
+  [[nodiscard]] virtual auto IsClean() const -> bool = 0;
 
   /**
    * \brief Indicates whether or not there is a file path associated with the
@@ -113,7 +112,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto has_path() const -> bool = 0;
+  [[nodiscard]] virtual auto HasPath() const -> bool = 0;
 
   /**
    * \brief Returns the text associated with the currently undoable command.
@@ -122,7 +121,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto get_undo_text() const -> QString = 0;
+  [[nodiscard]] virtual auto GetUndoText() const -> QString = 0;
 
   /**
    * \brief Returns the text associated with the currently redoable command.
@@ -131,7 +130,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto get_redo_text() const -> QString = 0;
+  [[nodiscard]] virtual auto GetRedoText() const -> QString = 0;
 
   /**
    * \brief Returns the file path associated with the document.
@@ -140,7 +139,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto path() const -> const QFileInfo& = 0;
+  [[nodiscard]] virtual auto Path() const -> const QFileInfo& = 0;
 
   /**
    * \brief Returns the absolute file path associated with the document.
@@ -151,7 +150,7 @@ class document : public QObject, public property_manager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto absolute_path() const -> QString = 0;
+  [[nodiscard]] virtual auto AbsolutePath() const -> QString = 0;
 };
 
 }  // namespace tactile::core

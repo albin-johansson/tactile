@@ -132,9 +132,9 @@ auto to_map_document(const map_data& data) -> core::MapDocument*
     document->add_property(propertyData.name, propertyData.property);
   }
 
-  document->set_path(QFileInfo{data.path});
+  document->SetPath(QFileInfo{data.path});
   document->SelectLayer(data.layers.front().id);
-  document->reset_history();  // Make sure there is no undo/redo history
+  document->ResetHistory();  // Make sure there is no undo/redo history
 
   return document;
 }

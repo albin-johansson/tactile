@@ -13,41 +13,41 @@
 
 namespace tactile::core {
 
-class document_delegate final : public document
+class DocumentDelegate final : public ADocument
 {
   Q_OBJECT
 
  public:
-  document_delegate();
+  DocumentDelegate();
 
   /// \name Document API
   /// \{
 
-  void undo() override;
+  void Undo() override;
 
-  void redo() override;
+  void Redo() override;
 
-  void mark_as_clean() override;
+  void MarkAsClean() override;
 
-  void reset_history() override;
+  void ResetHistory() override;
 
-  void set_path(QFileInfo path) override;
+  void SetPath(QFileInfo path) override;
 
-  [[nodiscard]] auto can_undo() const -> bool override;
+  [[nodiscard]] auto CanUndo() const -> bool override;
 
-  [[nodiscard]] auto can_redo() const -> bool override;
+  [[nodiscard]] auto CanRedo() const -> bool override;
 
-  [[nodiscard]] auto is_clean() const -> bool override;
+  [[nodiscard]] auto IsClean() const -> bool override;
 
-  [[nodiscard]] auto has_path() const -> bool override;
+  [[nodiscard]] auto HasPath() const -> bool override;
 
-  [[nodiscard]] auto get_undo_text() const -> QString override;
+  [[nodiscard]] auto GetUndoText() const -> QString override;
 
-  [[nodiscard]] auto get_redo_text() const -> QString override;
+  [[nodiscard]] auto GetRedoText() const -> QString override;
 
-  [[nodiscard]] auto path() const -> const QFileInfo& override;
+  [[nodiscard]] auto Path() const -> const QFileInfo& override;
 
-  [[nodiscard]] auto absolute_path() const -> QString override;
+  [[nodiscard]] auto AbsolutePath() const -> QString override;
 
   /// \}
 
@@ -83,25 +83,25 @@ class document_delegate final : public document
 
   /// \}
 
-  [[nodiscard]] auto history() noexcept -> CommandStack*;
+  [[nodiscard]] auto History() noexcept -> CommandStack*;
 
   template <std::derived_from<QUndoCommand> T, typename... Args>
-  void execute(Args&&... args)
+  void Execute(Args&&... args)
   {
-    m_commandStack->template Push<T>(std::forward<Args>(args)...);
+    mCommandStack->template Push<T>(std::forward<Args>(args)...);
   }
 
  signals:
-  void added_property(const QString& name);
-  void about_to_remove_property(const QString& name);
-  void updated_property(const QString& name);
-  void changed_property_type(const QString& name);
-  void renamed_property(const QString& oldName, const QString& newName);
+  void S_AddedProperty(const QString& name);
+  void S_AboutToRemoveProperty(const QString& name);
+  void S_UpdatedProperty(const QString& name);
+  void S_ChangedPropertyType(const QString& name);
+  void S_RenamedProperty(const QString& oldName, const QString& newName);
 
  private:
-  unique<CommandStack> m_commandStack;
-  unique<property_manager> m_propertyManager;
-  maybe<QFileInfo> m_path;
+  unique<CommandStack> mCommandStack;
+  unique<property_manager> mPropertyManager;
+  maybe<QFileInfo> mPath;
 };
 
 }  // namespace tactile::core

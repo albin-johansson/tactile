@@ -20,7 +20,7 @@ namespace tactile::core {
 class ILayer;
 class TileLayer;
 class ObjectLayer;
-class document_delegate;
+class DocumentDelegate;
 
 /**
  * \class map_document
@@ -36,7 +36,7 @@ class document_delegate;
  *
  * \headerfile map_document.hpp
  */
-class MapDocument final : public document
+class MapDocument final : public ADocument
 {
   Q_OBJECT
 
@@ -68,31 +68,31 @@ class MapDocument final : public document
   /// \name Document API
   /// \{
 
-  void undo() override;
+  void Undo() override;
 
-  void redo() override;
+  void Redo() override;
 
-  void mark_as_clean() override;
+  void MarkAsClean() override;
 
-  void reset_history() override;
+  void ResetHistory() override;
 
-  void set_path(QFileInfo path) override;
+  void SetPath(QFileInfo path) override;
 
-  [[nodiscard]] auto can_undo() const -> bool override;
+  [[nodiscard]] auto CanUndo() const -> bool override;
 
-  [[nodiscard]] auto can_redo() const -> bool override;
+  [[nodiscard]] auto CanRedo() const -> bool override;
 
-  [[nodiscard]] auto is_clean() const -> bool override;
+  [[nodiscard]] auto IsClean() const -> bool override;
 
-  [[nodiscard]] auto has_path() const -> bool override;
+  [[nodiscard]] auto HasPath() const -> bool override;
 
-  [[nodiscard]] auto get_undo_text() const -> QString override;
+  [[nodiscard]] auto GetUndoText() const -> QString override;
 
-  [[nodiscard]] auto get_redo_text() const -> QString override;
+  [[nodiscard]] auto GetRedoText() const -> QString override;
 
-  [[nodiscard]] auto path() const -> const QFileInfo& override;
+  [[nodiscard]] auto Path() const -> const QFileInfo& override;
 
-  [[nodiscard]] auto absolute_path() const -> QString override;
+  [[nodiscard]] auto AbsolutePath() const -> QString override;
 
   /// \} End of document API
 
@@ -528,11 +528,11 @@ class MapDocument final : public document
   /// \} End of property signals
 
  private:
-  unique<Map> mMap;                     ///< The associated map.
-  unique<tileset_manager> mTilesets;    ///< The associated tilesets.
-  unique<document_delegate> mDelegate;  ///< Delegate for document API.
-  int mTileLayerSuffix{1};              ///< Incrementing tile layer suffix.
-  int mObjectLayerSuffix{1};            ///< Incrementing object layer suffix.
+  unique<Map> mMap;                    ///< The associated map.
+  unique<tileset_manager> mTilesets;   ///< The associated tilesets.
+  unique<DocumentDelegate> mDelegate;  ///< Delegate for document API.
+  int mTileLayerSuffix{1};             ///< Incrementing tile layer suffix.
+  int mObjectLayerSuffix{1};           ///< Incrementing object layer suffix.
 
   void SetUp();
 };

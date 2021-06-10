@@ -100,7 +100,7 @@ void model::undo()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->undo();
+  document->Undo();
 }
 
 void model::redo()
@@ -108,7 +108,7 @@ void model::redo()
   auto* document = current_document();
   Q_ASSERT(document);
 
-  document->redo();
+  document->Redo();
 }
 
 void model::resize_map(const row_t nRows, const col_t nCols)
@@ -256,7 +256,7 @@ void model::select_map(const map_id id)
   {
     m_currentMap = id;
     emit_undo_redo_update();
-    emit clean_changed(current_document()->is_clean());
+    emit clean_changed(current_document()->IsClean());
   }
 
   auto* document = current_document();
@@ -314,10 +314,10 @@ void model::emit_undo_redo_update()
 {
   if (const auto* document = current_document())
   {
-    emit undo_state_updated(document->can_undo());
-    emit redo_state_updated(document->can_redo());
-    emit undo_text_updated(document->get_undo_text());
-    emit redo_text_updated(document->get_redo_text());
+    emit undo_state_updated(document->CanUndo());
+    emit redo_state_updated(document->CanRedo());
+    emit undo_text_updated(document->GetUndoText());
+    emit redo_text_updated(document->GetRedoText());
   }
   else
   {

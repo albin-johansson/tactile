@@ -6,150 +6,150 @@
 
 namespace tactile::core {
 
-document_delegate::document_delegate()
-    : m_commandStack{std::make_unique<CommandStack>()}
-    , m_propertyManager{std::make_unique<property_delegate>()}
+DocumentDelegate::DocumentDelegate()
+    : mCommandStack{std::make_unique<CommandStack>()}
+    , mPropertyManager{std::make_unique<property_delegate>()}
 {
-  m_commandStack->setUndoLimit(100);
+  mCommandStack->setUndoLimit(100);
 }
 
-void document_delegate::undo()
+void DocumentDelegate::Undo()
 {
-  m_commandStack->undo();
+  mCommandStack->undo();
 }
 
-void document_delegate::redo()
+void DocumentDelegate::Redo()
 {
-  m_commandStack->redo();
+  mCommandStack->redo();
 }
 
-void document_delegate::mark_as_clean()
+void DocumentDelegate::MarkAsClean()
 {
-  m_commandStack->setClean();
+  mCommandStack->setClean();
 }
 
-void document_delegate::reset_history()
+void DocumentDelegate::ResetHistory()
 {
-  m_commandStack->clear();
+  mCommandStack->clear();
 }
 
-void document_delegate::set_path(QFileInfo path)
+void DocumentDelegate::SetPath(QFileInfo path)
 {
-  m_path = std::move(path);
+  mPath = std::move(path);
 }
 
-auto document_delegate::can_undo() const -> bool
+auto DocumentDelegate::CanUndo() const -> bool
 {
-  return m_commandStack->canUndo();
+  return mCommandStack->canUndo();
 }
 
-auto document_delegate::can_redo() const -> bool
+auto DocumentDelegate::CanRedo() const -> bool
 {
-  return m_commandStack->canRedo();
+  return mCommandStack->canRedo();
 }
 
-auto document_delegate::is_clean() const -> bool
+auto DocumentDelegate::IsClean() const -> bool
 {
-  return m_commandStack->isClean();
+  return mCommandStack->isClean();
 }
 
-auto document_delegate::has_path() const -> bool
+auto DocumentDelegate::HasPath() const -> bool
 {
-  return m_path && m_path->exists();
+  return mPath && mPath->exists();
 }
 
-auto document_delegate::get_undo_text() const -> QString
+auto DocumentDelegate::GetUndoText() const -> QString
 {
-  return m_commandStack->undoText();
+  return mCommandStack->undoText();
 }
 
-auto document_delegate::get_redo_text() const -> QString
+auto DocumentDelegate::GetRedoText() const -> QString
 {
-  return m_commandStack->redoText();
+  return mCommandStack->redoText();
 }
 
-auto document_delegate::path() const -> const QFileInfo&
+auto DocumentDelegate::Path() const -> const QFileInfo&
 {
-  Q_ASSERT(has_path());
-  return m_path.value();
+  Q_ASSERT(HasPath());
+  return mPath.value();
 }
 
-auto document_delegate::absolute_path() const -> QString
+auto DocumentDelegate::AbsolutePath() const -> QString
 {
-  Q_ASSERT(has_path());
-  return m_path->absoluteFilePath();
+  Q_ASSERT(HasPath());
+  return mPath->absoluteFilePath();
 }
 
-void document_delegate::add_property(const QString& name,
-                                     const core::property_type type)
+void DocumentDelegate::add_property(const QString& name,
+                                    const core::property_type type)
 {
-  m_propertyManager->add_property(name, type);
-  emit added_property(name);
+  mPropertyManager->add_property(name, type);
+  emit S_AddedProperty(name);
 }
 
-void document_delegate::add_property(const QString& name,
-                                     const core::property& property)
+void DocumentDelegate::add_property(const QString& name,
+                                    const core::property& property)
 {
-  m_propertyManager->add_property(name, property);
-  emit added_property(name);
+  mPropertyManager->add_property(name, property);
+  emit S_AddedProperty(name);
 }
 
-void document_delegate::remove_property(const QString& name)
+void DocumentDelegate::remove_property(const QString& name)
 {
-  emit about_to_remove_property(name);
-  m_propertyManager->remove_property(name);
+  emit S_AboutToRemoveProperty(name);
+  mPropertyManager->remove_property(name);
 }
 
-void document_delegate::rename_property(const QString& oldName,
-                                        const QString& newName)
+void DocumentDelegate::rename_property(const QString& oldName,
+                                       const QString& newName)
 {
-  m_propertyManager->rename_property(oldName, newName);
-  emit renamed_property(oldName, newName);
+  mPropertyManager->rename_property(oldName, newName);
+  emit S_RenamedProperty(oldName, newName);
 }
 
-void document_delegate::set_property(const QString& name,
-                                     const core::property& property)
+void DocumentDelegate::set_property(const QString& name,
+                                    const core::property& property)
 {
-  m_propertyManager->set_property(name, property);
-  emit updated_property(name);
+  mPropertyManager->set_property(name, property);
+  emit S_UpdatedProperty(name);
 }
 
-void document_delegate::change_property_type(const QString& name,
-                                             const core::property_type type)
+void DocumentDelegate::change_property_type(const QString& name,
+                                            const core::property_type type)
 {
-  m_propertyManager->change_property_type(name, type);
-  emit changed_property_type(name);
+  mPropertyManager->change_property_type(name, type);
+  emit S_ChangedPropertyType(name);
 }
 
-auto document_delegate::get_property(const QString& name) const
+auto DocumentDelegate::get_property(const QString& name) const
     -> const core::property&
 {
-  return m_propertyManager->get_property(name);
+  return mPropertyManager->get_property(name);
 }
 
-auto document_delegate::get_property(const QString& name) -> core::property&
+auto DocumentDelegate::get_property(const QString& name) -> core::property&
 {
-  return m_propertyManager->get_property(name);
+  return mPropertyManager->get_property(name);
 }
 
-auto document_delegate::has_property(const QString& name) const -> bool
+auto DocumentDelegate::has_property(const QString& name) const -> bool
 {
-  return m_propertyManager->has_property(name);
+  return mPropertyManager->has_property(name);
 }
 
-auto document_delegate::property_count() const noexcept -> int
+auto DocumentDelegate::property_count() const noexcept -> int
 {
-  return m_propertyManager->property_count();
+  return mPropertyManager->property_count();
 }
 
-auto document_delegate::properties() const -> const property_map&
+auto DocumentDelegate::properties() const -> const property_map&
 {
-  return m_propertyManager->properties();
+  return mPropertyManager->properties();
 }
 
-auto document_delegate::history() noexcept -> CommandStack*
+auto DocumentDelegate::History() noexcept -> CommandStack*
 {
-  return m_commandStack.get();
+  return mCommandStack.get();
 }
 
 }  // namespace tactile::core

@@ -109,10 +109,10 @@ void tactile_app::save()
 {
   if (auto* document = m_model->current_document())
   {
-    if (document->has_path())
+    if (document->HasPath())
     {
-      save_map_document(document->absolute_path(), *document);
-      document->mark_as_clean();
+      save_map_document(document->AbsolutePath(), *document);
+      document->MarkAsClean();
     }
     else
     {
@@ -128,8 +128,8 @@ void tactile_app::save_as(const QString& path)
     save_map_document(path, *document);
 
     const QFileInfo file{path};
-    document->mark_as_clean();
-    document->set_path(file);
+    document->MarkAsClean();
+    document->SetPath(file);
 
     m_window->SetActiveTabName(file.baseName());
   }

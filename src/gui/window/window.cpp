@@ -246,7 +246,7 @@ void Window::OnNewMapAdded(not_null<core::MapDocument*> document,
     CenterViewport();
   }
 
-  mUi->actionSave->setDisabled(document->is_clean());
+  mUi->actionSave->setDisabled(document->IsClean());
   mTilesetDock->OnAddedMap(id, *document);
   mLayerDock->OnSwitchedMap(document);
   mPropertiesDock->OnSwitchedMap(document);
