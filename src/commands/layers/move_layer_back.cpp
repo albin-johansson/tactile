@@ -7,38 +7,38 @@
 
 namespace tactile::cmd {
 
-move_layer_back::move_layer_back(not_null<core::map_document*> document,
-                                 const layer_id id)
+MoveLayerBack::MoveLayerBack(not_null<core::map_document*> document,
+                             const layer_id id)
     : QUndoCommand{QTranslator::tr("Move Layer Back")}
-    , m_document{document}
-    , m_id{id}
+    , mDocument{document}
+    , mId{id}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Cannot create command from null document!"};
   }
 }
 
-void move_layer_back::undo()
+void MoveLayerBack::undo()
 {
   QUndoCommand::undo();
 
-  auto& map = m_document->raw();
-  map.move_layer_forward(m_id);
+  auto& map = mDocument->raw();
+  map.move_layer_forward(mId);
 
-  emit m_document->moved_layer_forward(m_id);
-  emit m_document->redraw();
+  emit mDocument->moved_layer_forward(mId);
+  emit mDocument->redraw();
 }
 
-void move_layer_back::redo()
+void MoveLayerBack::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = m_document->raw();
-  map.move_layer_back(m_id);
+  auto& map = mDocument->raw();
+  map.move_layer_back(mId);
 
-  emit m_document->moved_layer_back(m_id);
-  emit m_document->redraw();
+  emit mDocument->moved_layer_back(mId);
+  emit mDocument->redraw();
 }
 
 }  // namespace tactile::cmd

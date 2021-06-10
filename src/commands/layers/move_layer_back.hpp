@@ -11,10 +11,10 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class move_layer_back final : public QUndoCommand
+class MoveLayerBack final : public QUndoCommand
 {
  public:
-  move_layer_back(not_null<core::map_document*> document, layer_id id);
+  MoveLayerBack(not_null<core::map_document*> document, layer_id id);
 
   void undo() override;
 
@@ -26,8 +26,8 @@ class move_layer_back final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document;
-  layer_id m_id;
+  core::map_document* mDocument{};
+  layer_id mId;
 };
 
 }  // namespace tactile::cmd

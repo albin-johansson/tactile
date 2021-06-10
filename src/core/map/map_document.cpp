@@ -388,7 +388,7 @@ void map_document::set_layer_name(const layer_id id, const QString& name)
 
 void map_document::move_layer_back(const layer_id id)
 {
-  m_delegate->execute<cmd::move_layer_back>(this, id);
+  m_delegate->execute<cmd::MoveLayerBack>(this, id);
 }
 
 void map_document::move_layer_forward(const layer_id id)
