@@ -3,7 +3,7 @@
 #include <QIcon>
 
 /**
- * \namespace tactile::gui::icons
+ * \namespace tactile::icons
  *
  * \brief Contains a collection of functions used to obtain icons.
  *
