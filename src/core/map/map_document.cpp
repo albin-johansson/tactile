@@ -373,7 +373,7 @@ void map_document::reset_tile_size()
 
 void map_document::set_layer_visibility(const layer_id id, const bool visible)
 {
-  m_delegate->execute<cmd::set_layer_visibility>(this, id, visible);
+  m_delegate->execute<cmd::SetLayerVisibility>(this, id, visible);
 }
 
 void map_document::set_layer_opacity(const layer_id id, const double opacity)
