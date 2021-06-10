@@ -17,7 +17,7 @@ namespace tactile::core {
  *
  * \since 0.1.0
  */
-void FloodFill(tile_layer& layer,
+void FloodFill(TileLayer& layer,
                const position& origin,
                tile_id replacement,
                std::vector<position>& affected);

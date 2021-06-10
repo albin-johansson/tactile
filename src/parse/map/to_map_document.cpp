@@ -22,14 +22,14 @@ namespace {
 [[nodiscard]] auto make_tile_layer(const tile_layer_data& data)
     -> shared<core::ILayer>
 {
-  auto layer = std::make_shared<core::tile_layer>(data.nRows, data.nCols);
+  auto layer = std::make_shared<core::TileLayer>(data.nRows, data.nCols);
 
   for (auto row = 0_row; row < data.nRows; ++row)
   {
     for (auto col = 0_col; col < data.nCols; ++col)
     {
       const core::position pos{row, col};
-      layer->set_tile(pos, data.tiles.at(pos.row_index()).at(pos.col_index()));
+      layer->SetTile(pos, data.tiles.at(pos.row_index()).at(pos.col_index()));
     }
   }
 

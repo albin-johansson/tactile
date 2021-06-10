@@ -45,8 +45,8 @@ void validate_layers(const core::map_document& document)
     const auto* tileLayer = document.get_tile_layer(1_layer);
     ASSERT_TRUE(tileLayer);
 
-    EXPECT_EQ(rows, tileLayer->row_count());
-    EXPECT_EQ(cols, tileLayer->col_count());
+    EXPECT_EQ(rows, tileLayer->RowCount());
+    EXPECT_EQ(cols, tileLayer->ColumnCount());
 
     ASSERT_TRUE(layer->has_property(ground));
     EXPECT_TRUE(layer->get_property(ground).as_boolean());
@@ -64,8 +64,8 @@ void validate_layers(const core::map_document& document)
     const auto* tileLayer = document.get_tile_layer(2_layer);
     ASSERT_TRUE(tileLayer);
 
-    EXPECT_EQ(rows, tileLayer->row_count());
-    EXPECT_EQ(cols, tileLayer->col_count());
+    EXPECT_EQ(rows, tileLayer->RowCount());
+    EXPECT_EQ(cols, tileLayer->ColumnCount());
 
     ASSERT_TRUE(layer->has_property(ground));
     EXPECT_FALSE(layer->get_property(ground).as_boolean());

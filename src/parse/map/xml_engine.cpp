@@ -59,7 +59,7 @@ auto xml_engine::tiles(const object_type& object,
                        const col_t nCols,
                        parse_error& error) -> core::tile_matrix
 {
-  auto matrix = core::make_tile_matrix(nRows, nCols);
+  auto matrix = core::MakeTileMatrix(nRows, nCols);
 
   const auto data = object->firstChildElement(TACTILE_QSTRING(u"data"));
   const auto tiles = data.text().split(u',');

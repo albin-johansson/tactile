@@ -26,10 +26,10 @@ void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
       {
         if (!m_oldState.contains(*pos))
         {
-          m_oldState.emplace(*pos, tileLayer->tile_at(*pos).value());
+          m_oldState.emplace(*pos, tileLayer->TileAt(*pos).value());
         }
 
-        tileLayer->set_tile(*pos, empty);
+        tileLayer->SetTile(*pos, empty);
         emit get_model()->redraw();
       }
     }

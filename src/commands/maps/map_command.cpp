@@ -32,7 +32,7 @@ void MapCommand::RestoreTiles()
 
     for (const auto& [pos, tile] : data)
     {
-      tileLayer->set_tile(pos, tile);
+      tileLayer->SetTile(pos, tile);
     }
   }
 
@@ -54,7 +54,7 @@ void MapCommand::SaveTiles(const row_range rows, const col_range cols)
       for (auto col = cols.first; col < cols.second; ++col)
       {
         const core::position pos{row, col};
-        if (const auto tile = tileLayer->tile_at(pos); tile)
+        if (const auto tile = tileLayer->TileAt(pos); tile)
         {
           tiles.emplace(pos, *tile);
         }

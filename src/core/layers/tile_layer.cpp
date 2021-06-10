@@ -11,70 +11,70 @@
 
 namespace tactile::core {
 
-[[nodiscard]] auto make_tile_row(const col_t nCols, const tile_id value)
+[[nodiscard]] auto MakeTileRow(const col_t nCols, const tile_id value)
     -> tile_row
 {
   tile_row row;
-  row.reserve(nCols.get());
-  row.assign(nCols.get(), value);
+  row.reserve(nCols);
+  row.assign(nCols, value);
   return row;
 }
 
-[[nodiscard]] auto make_tile_matrix(const row_t nRows, const col_t nCols)
+[[nodiscard]] auto MakeTileMatrix(const row_t nRows, const col_t nCols)
     -> tile_matrix
 {
   tile_matrix tiles;
-  tiles.reserve(nRows.get());
-  tiles.assign(nRows.get(), make_tile_row(nCols));
+  tiles.reserve(nRows);
+  tiles.assign(nRows, MakeTileRow(nCols));
   return tiles;
 }
 
-tile_layer::tile_layer(const row_t nRows, const col_t nCols)
-    : m_delegate{LayerType::tile_layer}
+TileLayer::TileLayer(const row_t nRows, const col_t nCols)
+    : mDelegate{LayerType::tile_layer}
 {
   if (nRows < 1_row || nCols < 1_col)
   {
     throw tactile_error{"Invalid tile_layer dimensions!"};
   }
-  m_delegate.SetName(TACTILE_QSTRING(u"Tile layer"));
+  mDelegate.SetName(TACTILE_QSTRING(u"Tile layer"));
 
-  m_tiles = make_tile_matrix(nRows, nCols);
-  assert(row_count() == nRows);
-  assert(col_count() == nCols);
+  mTiles = MakeTileMatrix(nRows, nCols);
+  assert(RowCount() == nRows);
+  assert(ColumnCount() == nCols);
 }
 
-void tile_layer::flood(const position& origin,
-                       const tile_id replacement,
-                       std::vector<position>& positions)
+void TileLayer::Flood(const position& origin,
+                      const tile_id replacement,
+                      std::vector<position>& positions)
 {
   FloodFill(*this, origin, replacement, positions);
 }
 
-void tile_layer::remove_all(const tile_id id)
+void TileLayer::RemoveAll(const tile_id id)
 {
-  const auto nRows = row_count().get();
-  const auto nCols = col_count().get();
+  const auto nRows = RowCount().get();
+  const auto nCols = ColumnCount().get();
   for (auto r = 0; r < nRows; ++r)
   {
     for (auto c = 0; c < nCols; ++c)
     {
-      if (m_tiles[r][c] == id)
+      if (mTiles[r][c] == id)
       {
-        m_tiles[r][c] = empty;
+        mTiles[r][c] = empty;
       }
     }
   }
 }
 
-void tile_layer::remove_all(const tile_id first, const tile_id last)
+void TileLayer::RemoveAll(const tile_id first, const tile_id last)
 {
-  const auto nRows = row_count().get();
-  const auto nCols = col_count().get();
+  const auto nRows = RowCount().get();
+  const auto nCols = ColumnCount().get();
   for (auto r = 0; r < nRows; ++r)
   {
     for (auto c = 0; c < nCols; ++c)
     {
-      auto& id = m_tiles[r][c];
+      auto& id = mTiles[r][c];
       if (id >= first && id <= last)
       {
         id = empty;
@@ -83,30 +83,30 @@ void tile_layer::remove_all(const tile_id first, const tile_id last)
   }
 }
 
-void tile_layer::add_row(const tile_id id)
+void TileLayer::AddRow(const tile_id id)
 {
-  m_tiles.push_back(make_tile_row(col_count(), id));
+  mTiles.push_back(MakeTileRow(ColumnCount(), id));
 }
 
-void tile_layer::add_col(const tile_id id)
+void TileLayer::AddColumn(const tile_id id)
 {
-  for (auto& row : m_tiles)
+  for (auto& row : mTiles)
   {
     row.push_back(id);
   }
 }
 
-void tile_layer::remove_row() noexcept
+void TileLayer::RemoveRow() noexcept
 {
-  if (m_tiles.size() > 1)
+  if (mTiles.size() > 1)
   {
-    m_tiles.pop_back();
+    mTiles.pop_back();
   }
 }
 
-void tile_layer::remove_col() noexcept
+void TileLayer::RemoveColumn() noexcept
 {
-  for (auto& row : m_tiles)
+  for (auto& row : mTiles)
   {
     if (row.size() > 1)
     {
@@ -115,106 +115,106 @@ void tile_layer::remove_col() noexcept
   }
 }
 
-void tile_layer::set_rows(const row_t nRows)
+void TileLayer::SetRows(const row_t nRows)
 {
   assert(nRows >= 1_row);
 
-  const auto current = row_count();
+  const auto current = RowCount();
 
   if (nRows == current)
   {
     return;
   }
 
-  const auto diff = std::abs(current.get() - nRows.get());
+  const auto diff = std::abs(current - nRows);
 
   if (current < nRows)
   {
-    InvokeN(diff, [this] { add_row(empty); });
+    InvokeN(diff, [this] { AddRow(empty); });
   }
   else
   {
-    InvokeN(diff, [this]() noexcept { remove_row(); });
+    InvokeN(diff, [this]() noexcept { RemoveRow(); });
   }
 }
 
-void tile_layer::set_cols(const col_t nCols)
+void TileLayer::SetColumns(const col_t nCols)
 {
   assert(nCols >= 1_col);
 
-  const auto current = col_count();
+  const auto current = ColumnCount();
 
   if (nCols == current)
   {
     return;
   }
 
-  const auto diff = std::abs(current.get() - nCols.get());
+  const auto diff = std::abs(current - nCols);
 
   if (current < nCols)
   {
-    InvokeN(diff, [this] { add_col(empty); });
+    InvokeN(diff, [this] { AddColumn(empty); });
   }
   else
   {
-    InvokeN(diff, [this]() noexcept { remove_col(); });
+    InvokeN(diff, [this]() noexcept { RemoveColumn(); });
   }
 }
 
-void tile_layer::set_tile(const position& pos, const tile_id id) noexcept
+void TileLayer::SetTile(const position& pos, const tile_id id) noexcept
 {
-  if (in_bounds(pos))
+  if (InBounds(pos))
   {
-    m_tiles[pos.row_index()][pos.col_index()] = id;
+    mTiles[pos.row_index()][pos.col_index()] = id;
   }
 }
 
-void tile_layer::SetOpacity(const double opacity)
+void TileLayer::SetOpacity(const double opacity)
 {
-  m_delegate.SetOpacity(opacity);
+  mDelegate.SetOpacity(opacity);
 }
 
-void tile_layer::SetName(QString name)
+void TileLayer::SetName(QString name)
 {
-  m_delegate.SetName(std::move(name));
+  mDelegate.SetName(std::move(name));
 }
 
-void tile_layer::SetVisible(const bool visible) noexcept
+void TileLayer::SetVisible(const bool visible) noexcept
 {
-  m_delegate.SetVisible(visible);
+  mDelegate.SetVisible(visible);
 }
 
-auto tile_layer::Type() const -> LayerType
+auto TileLayer::Type() const -> LayerType
 {
-  return m_delegate.Type();
+  return mDelegate.Type();
 }
 
-auto tile_layer::Clone() const -> shared<ILayer>
+auto TileLayer::Clone() const -> shared<ILayer>
 {
-  return std::make_shared<tile_layer>(*this);
+  return std::make_shared<TileLayer>(*this);
 }
 
-auto tile_layer::row_count() const noexcept -> row_t
+auto TileLayer::RowCount() const noexcept -> row_t
 {
-  return row_t{static_cast<int>(m_tiles.size())};
+  return row_t{static_cast<int>(mTiles.size())};
 }
 
-auto tile_layer::col_count() const noexcept -> col_t
+auto TileLayer::ColumnCount() const noexcept -> col_t
 {
-  assert(!m_tiles.empty());
-  return col_t{static_cast<int>(m_tiles[0].size())};
+  assert(!mTiles.empty());
+  return col_t{static_cast<int>(mTiles[0].size())};
 }
 
-auto tile_layer::tile_count() const noexcept -> int
+auto TileLayer::TileCount() const noexcept -> int
 {
-  return row_count().get() * col_count().get();
+  return RowCount().get() * ColumnCount().get();
 }
 
-auto tile_layer::tile_at(const position& pos) const -> maybe<tile_id>
+auto TileLayer::TileAt(const position& pos) const -> maybe<tile_id>
 {
-  if (in_bounds(pos))
+  if (InBounds(pos))
   {
-    return m_tiles[pos.row_index()][pos.col_index()];
+    return mTiles[pos.row_index()][pos.col_index()];
   }
   else
   {
@@ -222,81 +222,81 @@ auto tile_layer::tile_at(const position& pos) const -> maybe<tile_id>
   }
 }
 
-auto tile_layer::in_bounds(const position& pos) const noexcept -> bool
+auto TileLayer::InBounds(const position& pos) const noexcept -> bool
 {
   const auto row = pos.row_index();
-  return (row < m_tiles.size()) && (pos.col_index() < m_tiles[row].size());
+  return (row < mTiles.size()) && (pos.col_index() < mTiles[row].size());
 }
 
-auto tile_layer::Name() const -> const QString&
+auto TileLayer::Name() const -> const QString&
 {
-  return m_delegate.Name();
+  return mDelegate.Name();
 }
 
-auto tile_layer::Opacity() const noexcept -> double
+auto TileLayer::Opacity() const noexcept -> double
 {
-  return m_delegate.Opacity();
+  return mDelegate.Opacity();
 }
 
-auto tile_layer::IsVisible() const noexcept -> bool
+auto TileLayer::IsVisible() const noexcept -> bool
 {
-  return m_delegate.Visible();
+  return mDelegate.Visible();
 }
 
-void tile_layer::add_property(const QString& name, const property_type type)
+void TileLayer::add_property(const QString& name, const property_type type)
 {
-  m_delegate.AddProperty(name, type);
+  mDelegate.AddProperty(name, type);
 }
 
-void tile_layer::add_property(const QString& name, const property& property)
+void TileLayer::add_property(const QString& name, const property& property)
 {
-  m_delegate.AddProperty(name, property);
+  mDelegate.AddProperty(name, property);
 }
 
-void tile_layer::remove_property(const QString& name)
+void TileLayer::remove_property(const QString& name)
 {
-  m_delegate.RemoveProperty(name);
+  mDelegate.RemoveProperty(name);
 }
 
-void tile_layer::rename_property(const QString& oldName, const QString& newName)
+void TileLayer::rename_property(const QString& oldName, const QString& newName)
 {
-  m_delegate.RenameProperty(oldName, newName);
+  mDelegate.RenameProperty(oldName, newName);
 }
 
-void tile_layer::set_property(const QString& name, const property& property)
+void TileLayer::set_property(const QString& name, const property& property)
 {
-  m_delegate.SetProperty(name, property);
+  mDelegate.SetProperty(name, property);
 }
 
-void tile_layer::change_property_type(const QString& name,
-                                      const core::property_type type)
+void TileLayer::change_property_type(const QString& name,
+                                     const core::property_type type)
 {
-  m_delegate.ChangePropertyType(name, type);
+  mDelegate.ChangePropertyType(name, type);
 }
 
-auto tile_layer::get_property(const QString& name) const -> const property&
+auto TileLayer::get_property(const QString& name) const -> const property&
 {
-  return m_delegate.GetProperty(name);
+  return mDelegate.GetProperty(name);
 }
 
-auto tile_layer::get_property(const QString& name) -> property&
+auto TileLayer::get_property(const QString& name) -> property&
 {
-  return m_delegate.GetProperty(name);
+  return mDelegate.GetProperty(name);
 }
 
-auto tile_layer::has_property(const QString& name) const -> bool
+auto TileLayer::has_property(const QString& name) const -> bool
 {
-  return m_delegate.HasProperty(name);
+  return mDelegate.HasProperty(name);
 }
 
-auto tile_layer::property_count() const noexcept -> int
+auto TileLayer::property_count() const noexcept -> int
 {
-  return m_delegate.PropertyCount();
+  return mDelegate.PropertyCount();
 }
 
-auto tile_layer::properties() const -> const property_map&
+auto TileLayer::properties() const -> const property_map&
 {
-  return m_delegate.Properties();
+  return mDelegate.Properties();
 }
 
 }  // namespace tactile::core

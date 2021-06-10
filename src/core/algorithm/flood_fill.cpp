@@ -7,19 +7,19 @@
 
 namespace tactile::core {
 
-void FloodFill(tile_layer& layer,
+void FloodFill(TileLayer& layer,
                const position& origin,
                tile_id replacement,
                std::vector<position>& affected)
 {
-  const auto target = layer.tile_at(origin);
+  const auto target = layer.TileAt(origin);
 
-  if (!layer.in_bounds(origin) || (target == replacement))
+  if (!layer.InBounds(origin) || (target == replacement))
   {
     return;
   }
 
-  layer.set_tile(origin, replacement);
+  layer.SetTile(origin, replacement);
 
   std::queue<position> queue;
 
@@ -27,10 +27,10 @@ void FloodFill(tile_layer& layer,
   queue.push(origin);
 
   const auto update = [&](const position& pos) {
-    if (const auto tile = layer.tile_at(pos); tile && tile == target)
+    if (const auto tile = layer.TileAt(pos); tile && tile == target)
     {
       affected.push_back(pos);
-      layer.set_tile(pos, replacement);
+      layer.SetTile(pos, replacement);
       queue.push(pos);
     }
   };

@@ -5,13 +5,13 @@
 
 namespace tactile::core {
 
-class tile_layer;
+class TileLayer;
 class object_layer;
 
-[[nodiscard]] auto as_tile_layer(shared<ILayer>& layer) -> tile_layer*;
+[[nodiscard]] auto as_tile_layer(shared<ILayer>& layer) -> TileLayer*;
 
 [[nodiscard]] auto as_tile_layer(const shared<ILayer>& layer)
-    -> const tile_layer*;
+    -> const TileLayer*;
 
 [[nodiscard]] auto as_object_layer(shared<ILayer>& layer) -> object_layer*;
 

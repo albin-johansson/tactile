@@ -11,10 +11,10 @@ using namespace tactile;
 
 TEST(TileLayer, Defaults)
 {
-  core::tile_layer layer;
-  EXPECT_EQ(5_row, layer.row_count());
-  EXPECT_EQ(5_col, layer.col_count());
-  EXPECT_EQ(25, layer.tile_count());
+  core::TileLayer layer;
+  EXPECT_EQ(5_row, layer.RowCount());
+  EXPECT_EQ(5_col, layer.ColumnCount());
+  EXPECT_EQ(25, layer.TileCount());
   EXPECT_EQ(1.0, layer.Opacity());
   EXPECT_EQ(TACTILE_QSTRING(u"Tile layer"), layer.Name());
   EXPECT_TRUE(layer.IsVisible());
@@ -23,49 +23,43 @@ TEST(TileLayer, Defaults)
 TEST(TileLayer, DimensionsConstructor)
 {
   {  // Invalid dimensions
-    EXPECT_THROW(core::tile_layer(0_row, 0_col), tactile_error);
-    EXPECT_THROW(core::tile_layer(1_row, 0_col), tactile_error);
-    EXPECT_THROW(core::tile_layer(0_row, 1_col), tactile_error);
-    EXPECT_THROW(core::tile_layer(-1_row, -1_col), tactile_error);
+    EXPECT_THROW(core::TileLayer(0_row, 0_col), tactile_error);
+    EXPECT_THROW(core::TileLayer(1_row, 0_col), tactile_error);
+    EXPECT_THROW(core::TileLayer(0_row, 1_col), tactile_error);
+    EXPECT_THROW(core::TileLayer(-1_row, -1_col), tactile_error);
   }
 
   {  // Valid dimensions
-    EXPECT_NO_THROW(core::tile_layer(1_row, 1_col));
+    EXPECT_NO_THROW(core::TileLayer(1_row, 1_col));
 
     constexpr auto rows = 18_row;
     constexpr auto cols = 52_col;
-    const core::tile_layer layer{rows, cols};
-    EXPECT_EQ(rows, layer.row_count());
-    EXPECT_EQ(cols, layer.col_count());
+    const core::TileLayer layer{rows, cols};
+    EXPECT_EQ(rows, layer.RowCount());
+    EXPECT_EQ(cols, layer.ColumnCount());
   }
 }
 
-TEST(TileLayer, ForEach)
+TEST(TileLayer, Each)
 {
-  core::tile_layer layer;
+  core::TileLayer layer;
   auto count = 0;
 
-  layer.for_each([&](const tile_id) {
-    ++count;
-  });
+  layer.Each([&](const tile_id) { ++count; });
 
-  EXPECT_EQ(count, layer.tile_count());
+  EXPECT_EQ(count, layer.TileCount());
 }
 
 TEST(TileLayer, RemoveAll)
 {
-  core::tile_layer layer;
+  core::TileLayer layer;
   std::vector<core::position> positions;
 
-  layer.flood({}, 1_t, positions);
-  layer.for_each([](const tile_id id) {
-    EXPECT_EQ(1_t, id);
-  });
+  layer.Flood({}, 1_t, positions);
+  layer.Each([](const tile_id id) { EXPECT_EQ(1_t, id); });
 
-  layer.remove_all(1_t);
-  layer.for_each([](const tile_id id) {
-    EXPECT_EQ(empty, id);
-  });
+  layer.RemoveAll(1_t);
+  layer.Each([](const tile_id id) { EXPECT_EQ(empty, id); });
 }
 
 TEST(TileLayer, AddRow)
@@ -73,14 +67,14 @@ TEST(TileLayer, AddRow)
   const auto nRows = 5_row;
   const auto id = 84_t;
 
-  core::tile_layer layer{nRows, 3_col};
-  layer.add_row(id);
+  core::TileLayer layer{nRows, 3_col};
+  layer.AddRow(id);
 
-  EXPECT_EQ(nRows + 1_row, layer.row_count());
+  EXPECT_EQ(nRows + 1_row, layer.RowCount());
 
-  for (auto col = 0_col; col < layer.col_count(); ++col) {
-    EXPECT_EQ(empty, layer.tile_at({nRows - 1_row, col}));
-    EXPECT_EQ(id, layer.tile_at({nRows, col}));
+  for (auto col = 0_col; col < layer.ColumnCount(); ++col) {
+    EXPECT_EQ(empty, layer.TileAt({nRows - 1_row, col}));
+    EXPECT_EQ(id, layer.TileAt({nRows, col}));
   }
 }
 
@@ -89,88 +83,88 @@ TEST(TileLayer, AddCol)
   const auto nCols = 7_col;
   const auto id = 33_t;
 
-  core::tile_layer layer{5_row, nCols};
-  layer.add_col(id);
+  core::TileLayer layer{5_row, nCols};
+  layer.AddColumn(id);
 
-  EXPECT_EQ(nCols + 1_col, layer.col_count());
+  EXPECT_EQ(nCols + 1_col, layer.ColumnCount());
 
-  for (auto row = 0_row; row < layer.row_count(); ++row) {
-    EXPECT_EQ(empty, layer.tile_at({row, nCols - 1_col}));
-    EXPECT_EQ(id, layer.tile_at({row, nCols}));
+  for (auto row = 0_row; row < layer.RowCount(); ++row) {
+    EXPECT_EQ(empty, layer.TileAt({row, nCols - 1_col}));
+    EXPECT_EQ(id, layer.TileAt({row, nCols}));
   }
 }
 
 TEST(TileLayer, RemoveRow)
 {
-  core::tile_layer layer{5_row, 5_col};
+  core::TileLayer layer{5_row, 5_col};
 
   for (int i = 0; i < 10; ++i) {
-    EXPECT_NO_THROW(layer.remove_row());
+    EXPECT_NO_THROW(layer.RemoveRow());
   }
 
-  EXPECT_EQ(1_row, layer.row_count());
+  EXPECT_EQ(1_row, layer.RowCount());
 }
 
 TEST(TileLayer, RemoveCol)
 {
-  core::tile_layer layer{5_row, 5_col};
+  core::TileLayer layer{5_row, 5_col};
 
   for (int i = 0; i < 10; ++i) {
-    EXPECT_NO_THROW(layer.remove_col());
+    EXPECT_NO_THROW(layer.RemoveColumn());
   }
 
-  EXPECT_EQ(1_col, layer.col_count());
+  EXPECT_EQ(1_col, layer.ColumnCount());
 }
 
 TEST(TileLayer, SetRows)
 {
-  core::tile_layer layer;
-  EXPECT_EQ(5_row, layer.row_count());
-  EXPECT_EQ(5_col, layer.col_count());
+  core::TileLayer layer;
+  EXPECT_EQ(5_row, layer.RowCount());
+  EXPECT_EQ(5_col, layer.ColumnCount());
 
-  layer.set_rows(32_row);
-  EXPECT_EQ(32_row, layer.row_count());
-  EXPECT_EQ(5_col, layer.col_count());
+  layer.SetRows(32_row);
+  EXPECT_EQ(32_row, layer.RowCount());
+  EXPECT_EQ(5_col, layer.ColumnCount());
 
-  layer.set_rows(15_row);
-  EXPECT_EQ(15_row, layer.row_count());
-  EXPECT_EQ(5_col, layer.col_count());
+  layer.SetRows(15_row);
+  EXPECT_EQ(15_row, layer.RowCount());
+  EXPECT_EQ(5_col, layer.ColumnCount());
 }
 
 TEST(TileLayer, SetCols)
 {
-  core::tile_layer layer;
-  EXPECT_EQ(5_row, layer.row_count());
-  EXPECT_EQ(5_col, layer.col_count());
+  core::TileLayer layer;
+  EXPECT_EQ(5_row, layer.RowCount());
+  EXPECT_EQ(5_col, layer.ColumnCount());
 
-  layer.set_cols(41_col);
-  EXPECT_EQ(5_row, layer.row_count());
-  EXPECT_EQ(41_col, layer.col_count());
+  layer.SetColumns(41_col);
+  EXPECT_EQ(5_row, layer.RowCount());
+  EXPECT_EQ(41_col, layer.ColumnCount());
 
-  layer.set_cols(8_col);
-  EXPECT_EQ(5_row, layer.row_count());
-  EXPECT_EQ(8_col, layer.col_count());
+  layer.SetColumns(8_col);
+  EXPECT_EQ(5_row, layer.RowCount());
+  EXPECT_EQ(8_col, layer.ColumnCount());
 }
 
 TEST(TileLayer, SetTile)
 {
-  core::tile_layer layer;
+  core::TileLayer layer;
 
   const core::position pos{2_row, 2_col};
-  EXPECT_EQ(empty, layer.tile_at(pos));
+  EXPECT_EQ(empty, layer.TileAt(pos));
 
-  layer.set_tile(pos, 24_t);
-  EXPECT_EQ(24_t, layer.tile_at(pos));
+  layer.SetTile(pos, 24_t);
+  EXPECT_EQ(24_t, layer.TileAt(pos));
 
-  EXPECT_NO_THROW(layer.set_tile({-1_row, -1_col}, 5_t));
-  EXPECT_NO_THROW(layer.set_tile({layer.row_count(), layer.col_count()}, 7_t));
+  EXPECT_NO_THROW(layer.SetTile({-1_row, -1_col}, 5_t));
+  EXPECT_NO_THROW(layer.SetTile({layer.RowCount(), layer.ColumnCount()}, 7_t));
 
-  EXPECT_FALSE(layer.tile_at({layer.row_count(), layer.col_count()}));
+  EXPECT_FALSE(layer.TileAt({layer.RowCount(), layer.ColumnCount()}));
 }
 
 TEST(TileLayer, SetOpacity)
 {
-  core::tile_layer layer;
+  core::TileLayer layer;
   EXPECT_EQ(1.0, layer.Opacity());
 
   {  // Valid opacity
@@ -191,7 +185,7 @@ TEST(TileLayer, SetOpacity)
 
 TEST(TileLayer, SetVisible)
 {
-  core::tile_layer layer;
+  core::TileLayer layer;
 
   EXPECT_TRUE(layer.IsVisible());
 
@@ -204,38 +198,38 @@ TEST(TileLayer, SetVisible)
 
 TEST(TileLayer, RowCount)
 {
-  const core::tile_layer layer{7_row, 12_col};
-  EXPECT_EQ(7_row, layer.row_count());
+  const core::TileLayer layer{7_row, 12_col};
+  EXPECT_EQ(7_row, layer.RowCount());
 }
 
 TEST(TileLayer, ColCount)
 {
-  const core::tile_layer layer{7_row, 12_col};
-  EXPECT_EQ(12_col, layer.col_count());
+  const core::TileLayer layer{7_row, 12_col};
+  EXPECT_EQ(12_col, layer.ColumnCount());
 }
 
 TEST(TileLayer, TileCount)
 {
-  const core::tile_layer layer{4_row, 5_col};
-  EXPECT_EQ(20, layer.tile_count());
+  const core::TileLayer layer{4_row, 5_col};
+  EXPECT_EQ(20, layer.TileCount());
 }
 
 TEST(TileLayer, TileAt)
 {
-  const core::tile_layer layer;
-  EXPECT_TRUE(layer.tile_at({0_row, 0_col}));
-  EXPECT_TRUE(layer.tile_at({4_row, 4_col}));
-  EXPECT_FALSE(layer.tile_at({4_row, 5_col}));
-  EXPECT_FALSE(layer.tile_at({5_row, 4_col}));
-  EXPECT_FALSE(layer.tile_at({5_row, 5_col}));
+  const core::TileLayer layer;
+  EXPECT_TRUE(layer.TileAt({0_row, 0_col}));
+  EXPECT_TRUE(layer.TileAt({4_row, 4_col}));
+  EXPECT_FALSE(layer.TileAt({4_row, 5_col}));
+  EXPECT_FALSE(layer.TileAt({5_row, 4_col}));
+  EXPECT_FALSE(layer.TileAt({5_row, 5_col}));
 }
 
 TEST(TileLayer, InBounds)
 {
-  const core::tile_layer layer;
-  EXPECT_TRUE(layer.in_bounds({0_row, 0_col}));
-  EXPECT_TRUE(layer.in_bounds({4_row, 4_col}));
-  EXPECT_FALSE(layer.in_bounds({4_row, 5_col}));
-  EXPECT_FALSE(layer.in_bounds({5_row, 4_col}));
-  EXPECT_FALSE(layer.in_bounds({5_row, 5_col}));
+  const core::TileLayer layer;
+  EXPECT_TRUE(layer.InBounds({0_row, 0_col}));
+  EXPECT_TRUE(layer.InBounds({4_row, 4_col}));
+  EXPECT_FALSE(layer.InBounds({4_row, 5_col}));
+  EXPECT_FALSE(layer.InBounds({5_row, 4_col}));
+  EXPECT_FALSE(layer.InBounds({5_row, 5_col}));
 }

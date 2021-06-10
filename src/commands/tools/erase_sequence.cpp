@@ -35,7 +35,7 @@ void EraseSequence::undo()
 
   for (const auto& [position, tile] : mOldState)
   {
-    tileLayer->set_tile(position, tile);
+    tileLayer->SetTile(position, tile);
   }
 
   map.select_layer(layer);
@@ -64,7 +64,7 @@ void EraseSequence::redo()
 
   for (const auto& [position, _] : mOldState)
   {
-    tileLayer->set_tile(position, empty);
+    tileLayer->SetTile(position, empty);
   }
 
   map.select_layer(layer);

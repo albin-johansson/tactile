@@ -169,10 +169,10 @@ void save_tilesets(QDomDocument& document,
 
 void save_tile_layer(QDomDocument& document,
                      QDomElement& element,
-                     const core::tile_layer& layer)
+                     const core::TileLayer& layer)
 {
-  element.setAttribute(TACTILE_QSTRING(u"width"), layer.col_count().get());
-  element.setAttribute(TACTILE_QSTRING(u"height"), layer.row_count().get());
+  element.setAttribute(TACTILE_QSTRING(u"width"), layer.ColumnCount().get());
+  element.setAttribute(TACTILE_QSTRING(u"height"), layer.RowCount().get());
 
   auto data = document.createElement(TACTILE_QSTRING(u"data"));
   data.setAttribute(TACTILE_QSTRING(u"encoding"), TACTILE_QSTRING(u"csv"));
@@ -180,10 +180,10 @@ void save_tile_layer(QDomDocument& document,
   QString buffer;
 
   // include the separating comma
-  buffer.reserve(layer.tile_count() * 2);
+  buffer.reserve(layer.TileCount() * 2);
 
   bool first{true};
-  layer.for_each([&](const tile_id tile) {
+  layer.Each([&](const tile_id tile) {
     if (first)
     {
       first = false;

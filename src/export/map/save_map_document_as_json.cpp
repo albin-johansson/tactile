@@ -246,7 +246,7 @@ void save_tile_layer(QJsonObject& object,
   }
 
   QJsonArray data;
-  tileLayer->for_each([&](const tile_id tile) { data.append(tile.get()); });
+  tileLayer->Each([&](const tile_id tile) { data.append(tile.get()); });
 
   object.insert(u"data", data);
 }

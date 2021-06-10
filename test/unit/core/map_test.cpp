@@ -59,15 +59,13 @@ TEST(Map, RemoveOccurrences)
   auto layer = map.make_tile_layer();
 
   std::vector<core::position> positions;
-  layer->flood({}, 1_t, positions);
+  layer->Flood({}, 1_t, positions);
 
   map.add_layer(id, layer);
   map.select_layer(id);
   map.remove_occurrences(1_t);
 
-  layer->for_each([](const tile_id tile) {
-    EXPECT_EQ(empty, tile);
-  });
+  layer->Each([](const tile_id tile) { EXPECT_EQ(empty, tile); });
 }
 
 TEST(Map, AddTileLayer)

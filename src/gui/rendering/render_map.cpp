@@ -127,7 +127,7 @@ void render_tile(QPainter& painter,
 }
 
 void render_tile_layer(QPainter& painter,
-                       const core::tile_layer& layer,
+                       const core::TileLayer& layer,
                        const render_info& info)
 {
   painter.setOpacity(layer.Opacity());
@@ -140,7 +140,7 @@ void render_tile_layer(QPainter& painter,
       const auto x = position.col_to_x(info.tileSize);
       const auto y = position.row_to_y(info.tileSize);
 
-      if (const auto id = layer.tile_at(position); id && id != empty)
+      if (const auto id = layer.TileAt(position); id && id != empty)
       {
         const QPoint dst{x, y};
         render_tile(painter, *id, dst, info);

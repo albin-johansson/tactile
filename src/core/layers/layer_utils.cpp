@@ -5,7 +5,7 @@
 
 namespace tactile::core {
 
-auto as_tile_layer(shared<ILayer>& layer) -> tile_layer*
+auto as_tile_layer(shared<ILayer>& layer) -> TileLayer*
 {
   if (layer->Type() != LayerType::tile_layer)
   {
@@ -13,11 +13,11 @@ auto as_tile_layer(shared<ILayer>& layer) -> tile_layer*
   }
   else
   {
-    return dynamic_cast<tile_layer*>(layer.get());
+    return dynamic_cast<TileLayer*>(layer.get());
   }
 }
 
-auto as_tile_layer(const shared<ILayer>& layer) -> const tile_layer*
+auto as_tile_layer(const shared<ILayer>& layer) -> const TileLayer*
 {
   if (layer->Type() != LayerType::tile_layer)
   {
@@ -25,7 +25,7 @@ auto as_tile_layer(const shared<ILayer>& layer) -> const tile_layer*
   }
   else
   {
-    return dynamic_cast<const tile_layer*>(layer.get());
+    return dynamic_cast<const TileLayer*>(layer.get());
   }
 }
 

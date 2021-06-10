@@ -16,7 +16,7 @@
 
 namespace tactile::core {
 
-class tile_layer;
+class TileLayer;
 class object_layer;
 
 /**
@@ -341,7 +341,7 @@ class map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto make_tile_layer() -> shared<tile_layer>;
+  [[nodiscard]] auto make_tile_layer() -> shared<TileLayer>;
 
   /**
    * \brief Creates and returns an empty object layer but doesn't add it to the
@@ -510,9 +510,9 @@ class map final
 
   [[nodiscard]] auto get_layer(layer_id id) -> shared<ILayer>&;
 
-  [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
+  [[nodiscard]] auto get_tile_layer(layer_id id) -> TileLayer*;
 
-  [[nodiscard]] auto get_tile_layer(layer_id id) const -> const tile_layer*;
+  [[nodiscard]] auto get_tile_layer(layer_id id) const -> const TileLayer*;
 
   [[nodiscard]] auto get_object_layer(layer_id id) -> object_layer*;
 

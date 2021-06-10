@@ -16,7 +16,7 @@ map::map(const row_t nRows, const col_t nCols) : m_rows{nRows}, m_cols{nCols}
   }
 
   m_layers.reserve(5);
-  m_layers.emplace(m_nextLayer, std::make_shared<tile_layer>(m_rows, m_cols));
+  m_layers.emplace(m_nextLayer, std::make_shared<TileLayer>(m_rows, m_cols));
 
   m_activeLayer = m_nextLayer;
   ++m_nextLayer;
@@ -28,7 +28,7 @@ void map::remove_occurrences(const tile_id id)
   {
     if (auto* tileLayer = as_tile_layer(layer))
     {
-      tileLayer->remove_all(id);
+      tileLayer->RemoveAll(id);
     }
   }
 }
@@ -39,7 +39,7 @@ void map::remove_occurrences(tile_id first, tile_id last)
   {
     if (auto* tileLayer = as_tile_layer(layer))
     {
-      tileLayer->remove_all(first, last);
+      tileLayer->RemoveAll(first, last);
     }
   }
 }
@@ -104,8 +104,8 @@ void map::add_layer(const layer_id id, shared<ILayer> layer)
   {
     if (const auto* tileLayer = as_tile_layer(layer))
     {
-      m_rows = tileLayer->row_count();
-      m_cols = tileLayer->col_count();
+      m_rows = tileLayer->RowCount();
+      m_cols = tileLayer->ColumnCount();
     }
   }
 
@@ -132,7 +132,7 @@ void map::add_row(const tile_id id)
   {
     if (auto* tileLayer = as_tile_layer(layer))
     {
-      tileLayer->add_row(id);
+      tileLayer->AddRow(id);
     }
   }
   ++m_rows;
@@ -144,7 +144,7 @@ void map::add_col(const tile_id id)
   {
     if (auto* tileLayer = as_tile_layer(layer))
     {
-      tileLayer->add_col(id);
+      tileLayer->AddColumn(id);
     }
   }
   ++m_cols;
@@ -161,7 +161,7 @@ void map::remove_row()
   {
     if (auto* tileLayer = as_tile_layer(layer))
     {
-      tileLayer->remove_row();
+      tileLayer->RemoveRow();
     }
   }
 
@@ -179,7 +179,7 @@ void map::remove_col()
   {
     if (auto* tileLayer = as_tile_layer(layer))
     {
-      tileLayer->remove_col();
+      tileLayer->RemoveColumn();
     }
   }
 
@@ -226,7 +226,7 @@ void map::set_row_count(row_t nRows)
   {
     if (auto* tileLayer = as_tile_layer(layer))
     {
-      tileLayer->set_rows(m_rows);
+      tileLayer->SetRows(m_rows);
     }
   }
 }
@@ -245,7 +245,7 @@ void map::set_col_count(col_t nCols)
   {
     if (auto* tileLayer = as_tile_layer(layer))
     {
-      tileLayer->set_cols(m_cols);
+      tileLayer->SetColumns(m_cols);
     }
   }
 }
@@ -284,16 +284,16 @@ void map::move_layer_forward(const layer_id id)
   m_layers.move_elem_forward(id);
 }
 
-auto map::make_tile_layer() -> shared<tile_layer>
+auto map::make_tile_layer() -> shared<TileLayer>
 {
   ++m_nextLayer;
   if (!m_activeLayer)
   {
-    return std::make_shared<tile_layer>(5_row, 5_col);
+    return std::make_shared<TileLayer>(5_row, 5_col);
   }
   else
   {
-    return std::make_shared<tile_layer>(row_count(), col_count());
+    return std::make_shared<TileLayer>(row_count(), col_count());
   }
 }
 
@@ -389,12 +389,12 @@ auto map::get_layer(const layer_id id) -> shared<ILayer>&
   return m_layers.at(id);
 }
 
-auto map::get_tile_layer(const layer_id id) -> tile_layer*
+auto map::get_tile_layer(const layer_id id) -> TileLayer*
 {
   return as_tile_layer(get_layer(id));
 }
 
-auto map::get_tile_layer(const layer_id id) const -> const tile_layer*
+auto map::get_tile_layer(const layer_id id) const -> const TileLayer*
 {
   return as_tile_layer(get_layer(id));
 }

@@ -18,7 +18,7 @@
 namespace tactile::core {
 
 class ILayer;
-class tile_layer;
+class TileLayer;
 class object_layer;
 class document_delegate;
 
@@ -241,9 +241,9 @@ class map_document final : public document
    */
   [[nodiscard]] auto get_layer(layer_id id) const -> const ILayer*;
 
-  [[nodiscard]] auto get_tile_layer(layer_id id) -> tile_layer*;
+  [[nodiscard]] auto get_tile_layer(layer_id id) -> TileLayer*;
 
-  [[nodiscard]] auto get_tile_layer(layer_id id) const -> const tile_layer*;
+  [[nodiscard]] auto get_tile_layer(layer_id id) const -> const TileLayer*;
 
   [[nodiscard]] auto get_object_layer(layer_id id) const -> const object_layer*;
 

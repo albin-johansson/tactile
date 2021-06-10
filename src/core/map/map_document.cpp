@@ -426,12 +426,12 @@ auto map_document::get_layer(const layer_id id) const -> const ILayer*
   return m_map->get_layer(id).get();
 }
 
-auto map_document::get_tile_layer(const layer_id id) -> tile_layer*
+auto map_document::get_tile_layer(const layer_id id) -> TileLayer*
 {
   return m_map->get_tile_layer(id);
 }
 
-auto map_document::get_tile_layer(const layer_id id) const -> const tile_layer*
+auto map_document::get_tile_layer(const layer_id id) const -> const TileLayer*
 {
   return m_map->get_tile_layer(id);
 }

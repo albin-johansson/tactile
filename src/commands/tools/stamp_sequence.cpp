@@ -37,7 +37,7 @@ void StampSequence::undo()
 
   for (const auto& [position, tile] : mOldState)
   {
-    tileLayer->set_tile(position, tile);
+    tileLayer->SetTile(position, tile);
   }
 
   map.select_layer(layer);
@@ -68,7 +68,7 @@ void StampSequence::redo()
 
   for (const auto& [position, tile] : mSequence)
   {
-    tileLayer->set_tile(position, tile);
+    tileLayer->SetTile(position, tile);
   }
 
   map.select_layer(layer);

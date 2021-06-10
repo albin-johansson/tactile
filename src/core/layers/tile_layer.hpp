@@ -16,7 +16,7 @@ using tile_row = std::vector<tile_id>;
 using tile_matrix = std::vector<tile_row>;
 
 /**
- * \class tile_layer
+ * \class TileLayer
  *
  * \brief Represents a layer of tiles in a map.
  *
@@ -26,7 +26,7 @@ using tile_matrix = std::vector<tile_row>;
  *
  * \headerfile tile_layer.hpp
  */
-class tile_layer final : public ILayer
+class TileLayer final : public ILayer
 {
  public:
   /**
@@ -42,14 +42,14 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  tile_layer(row_t nRows, col_t nCols);
+  TileLayer(row_t nRows, col_t nCols);
 
   /**
    * \brief Creates a tile layer.
    *
    * \since 0.1.0
    */
-  tile_layer() : tile_layer{5_row, 5_col}
+  TileLayer() : TileLayer{5_row, 5_col}
   {}
 
   /// \name Layer API
@@ -116,15 +116,15 @@ class tile_layer final : public ILayer
    * \since 0.1.0
    */
   template <std::invocable<tile_id> T>
-  void for_each(T&& callable) const
+  void Each(T&& callable) const
   {
-    const auto endRow = row_count();
-    const auto endCol = col_count();
+    const auto endRow = RowCount();
+    const auto endCol = ColumnCount();
     for (row_t row{0}; row < endRow; ++row)
     {
       for (col_t col{0}; col < endCol; ++col)
       {
-        callable(m_tiles[row.get()][col.get()]);
+        callable(mTiles[row][col]);
       }
     }
   }
@@ -139,7 +139,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void flood(const position& origin,
+  void Flood(const position& origin,
              tile_id replacement,
              std::vector<position>& positions);
 
@@ -150,7 +150,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void remove_all(tile_id id);
+  void RemoveAll(tile_id id);
 
   /**
    * \brief Removes all occurrences of a range of tiles. This function removes
@@ -161,7 +161,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.2.0
    */
-  void remove_all(tile_id first, tile_id last);
+  void RemoveAll(tile_id first, tile_id last);
 
   /**
    * \brief Adds a row to the tile layer.
@@ -170,7 +170,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void add_row(tile_id id);
+  void AddRow(tile_id id);
 
   /**
    * \brief Adds a column to the tile layer.
@@ -179,7 +179,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void add_col(tile_id id);
+  void AddColumn(tile_id id);
 
   /**
    * \brief Removes a row from the tile layer.
@@ -189,7 +189,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void remove_row() noexcept;
+  void RemoveRow() noexcept;
 
   /**
    * \brief Removes a column from the tile layer.
@@ -199,7 +199,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void remove_col() noexcept;
+  void RemoveColumn() noexcept;
 
   /**
    * \brief Sets the total number of rows in the layer.
@@ -210,7 +210,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void set_rows(row_t nRows);
+  void SetRows(row_t nRows);
 
   /**
    * \brief Sets the total number of columns in the layer.
@@ -221,7 +221,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void set_cols(col_t nCols);
+  void SetColumns(col_t nCols);
 
   /**
    * \brief Sets the tile ID of a tile in the tile layer.
@@ -233,7 +233,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  void set_tile(const position& pos, tile_id id) noexcept;
+  void SetTile(const position& pos, tile_id id) noexcept;
 
   /**
    * \brief Returns the number of rows in the tile layer.
@@ -244,7 +244,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto row_count() const noexcept -> row_t;
+  [[nodiscard]] auto RowCount() const noexcept -> row_t;
 
   /**
    * \brief Returns the number of columns in the tile layer.
@@ -255,7 +255,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto col_count() const noexcept -> col_t;
+  [[nodiscard]] auto ColumnCount() const noexcept -> col_t;
 
   /**
    * \brief Returns the total amount of tiles in the layer.
@@ -264,7 +264,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tile_count() const noexcept -> int;
+  [[nodiscard]] auto TileCount() const noexcept -> int;
 
   /**
    * \brief Returns the ID of the tile at the specified position.
@@ -279,7 +279,7 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tile_at(const position& pos) const -> maybe<tile_id>;
+  [[nodiscard]] auto TileAt(const position& pos) const -> maybe<tile_id>;
 
   /**
    * \brief Indicates whether or not the specified position is in bounds of the
@@ -291,18 +291,17 @@ class tile_layer final : public ILayer
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto in_bounds(const position& pos) const noexcept -> bool;
+  [[nodiscard]] auto InBounds(const position& pos) const noexcept -> bool;
 
   /// \} End of tile layer API
 
  private:
-  tile_matrix m_tiles;
-  LayerDelegate m_delegate;
+  tile_matrix mTiles;
+  LayerDelegate mDelegate;
 };
 
-[[nodiscard]] auto make_tile_row(col_t nCols, tile_id value = empty)
-    -> tile_row;
+[[nodiscard]] auto MakeTileRow(col_t nCols, tile_id value = empty) -> tile_row;
 
-[[nodiscard]] auto make_tile_matrix(row_t nRows, col_t nCols) -> tile_matrix;
+[[nodiscard]] auto MakeTileMatrix(row_t nRows, col_t nCols) -> tile_matrix;
 
 }  // namespace tactile::core

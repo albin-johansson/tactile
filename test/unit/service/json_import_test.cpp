@@ -38,12 +38,12 @@ TEST(ImportJsonMap, Embedded)
       const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
 
-      EXPECT_EQ(rows, tileLayer->row_count());
-      EXPECT_EQ(cols, tileLayer->col_count());
-      EXPECT_EQ(360_t, tileLayer->tile_at({0_row, 0_col}));
-      EXPECT_EQ(360_t, tileLayer->tile_at({3_row, 0_col}));
-      EXPECT_EQ(354_t, tileLayer->tile_at({0_row, 6_col}));
-      EXPECT_EQ(354_t, tileLayer->tile_at({3_row, 6_col}));
+      EXPECT_EQ(rows, tileLayer->RowCount());
+      EXPECT_EQ(cols, tileLayer->ColumnCount());
+      EXPECT_EQ(360_t, tileLayer->TileAt({0_row, 0_col}));
+      EXPECT_EQ(360_t, tileLayer->TileAt({3_row, 0_col}));
+      EXPECT_EQ(354_t, tileLayer->TileAt({0_row, 6_col}));
+      EXPECT_EQ(354_t, tileLayer->TileAt({3_row, 6_col}));
     }
 
     {  // Second layer
@@ -58,11 +58,11 @@ TEST(ImportJsonMap, Embedded)
       const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
 
-      EXPECT_EQ(empty, tileLayer->tile_at({0_row, 0_col}));
-      EXPECT_EQ(empty, tileLayer->tile_at({3_row, 0_col}));
-      EXPECT_EQ(297_t, tileLayer->tile_at({0_row, 6_col}));
-      EXPECT_EQ(328_t, tileLayer->tile_at({3_row, 4_col}));
-      EXPECT_EQ(empty, tileLayer->tile_at({3_row, 6_col}));
+      EXPECT_EQ(empty, tileLayer->TileAt({0_row, 0_col}));
+      EXPECT_EQ(empty, tileLayer->TileAt({3_row, 0_col}));
+      EXPECT_EQ(297_t, tileLayer->TileAt({0_row, 6_col}));
+      EXPECT_EQ(328_t, tileLayer->TileAt({3_row, 4_col}));
+      EXPECT_EQ(empty, tileLayer->TileAt({3_row, 6_col}));
     }
   }
 
@@ -123,12 +123,12 @@ TEST(ImportJsonMap, External)
       const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
 
-      EXPECT_EQ(rows, tileLayer->row_count());
-      EXPECT_EQ(cols, tileLayer->col_count());
-      EXPECT_EQ(107_t, tileLayer->tile_at({0_row, 0_col}));
-      EXPECT_EQ(107_t, tileLayer->tile_at({5_row, 0_col}));
-      EXPECT_EQ(372_t, tileLayer->tile_at({0_row, 7_col}));
-      EXPECT_EQ(372_t, tileLayer->tile_at({5_row, 7_col}));
+      EXPECT_EQ(rows, tileLayer->RowCount());
+      EXPECT_EQ(cols, tileLayer->ColumnCount());
+      EXPECT_EQ(107_t, tileLayer->TileAt({0_row, 0_col}));
+      EXPECT_EQ(107_t, tileLayer->TileAt({5_row, 0_col}));
+      EXPECT_EQ(372_t, tileLayer->TileAt({0_row, 7_col}));
+      EXPECT_EQ(372_t, tileLayer->TileAt({5_row, 7_col}));
     }
 
     {  // Second layer
@@ -142,11 +142,11 @@ TEST(ImportJsonMap, External)
 
       const auto* tileLayer = document->get_tile_layer(id);
       ASSERT_TRUE(tileLayer);
-      EXPECT_EQ(1'293_t, tileLayer->tile_at({0_row, 0_col}));
-      EXPECT_EQ(1'359_t, tileLayer->tile_at({2_row, 2_col}));
-      EXPECT_EQ(empty, tileLayer->tile_at({0_row, 7_col}));
-      EXPECT_EQ(empty, tileLayer->tile_at({5_row, 0_col}));
-      EXPECT_EQ(empty, tileLayer->tile_at({5_row, 7_col}));
+      EXPECT_EQ(1'293_t, tileLayer->TileAt({0_row, 0_col}));
+      EXPECT_EQ(1'359_t, tileLayer->TileAt({2_row, 2_col}));
+      EXPECT_EQ(empty, tileLayer->TileAt({0_row, 7_col}));
+      EXPECT_EQ(empty, tileLayer->TileAt({5_row, 0_col}));
+      EXPECT_EQ(empty, tileLayer->TileAt({5_row, 7_col}));
     }
   }
 

@@ -158,7 +158,7 @@ class model final : public QObject
    *
    * \note This function has no effect if there is no active map document.
    *
-   * \see cmd::add_row
+   * \see cmd::AddRow
    *
    * \since 0.1.0
    *
@@ -171,7 +171,7 @@ class model final : public QObject
    *
    * \note This function has no effect if there is no active map document.
    *
-   * \see cmd::add_col
+   * \see cmd::AddColumn
    *
    * \since 0.1.0
    *
@@ -184,7 +184,7 @@ class model final : public QObject
    *
    * \note This function has no effect if there is no active map document.
    *
-   * \see cmd::remove_row
+   * \see cmd::RemoveRow
    *
    * \since 0.1.0
    */
@@ -195,7 +195,7 @@ class model final : public QObject
    *
    * \note This function has no effect if there is no active map document.
    *
-   * \see cmd::remove_col
+   * \see cmd::RemoveColumn
    *
    * \since 0.1.0
    */

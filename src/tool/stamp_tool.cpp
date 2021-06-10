@@ -28,11 +28,11 @@ void stamp_tool::update_stamp_sequence(map_document& map,
 
       if (!m_oldState.contains(mapPos))
       {
-        m_oldState.emplace(mapPos, tileLayer->tile_at(mapPos).value());
+        m_oldState.emplace(mapPos, tileLayer->TileAt(mapPos).value());
       }
       m_sequence.emplace(mapPos, newID);
 
-      tileLayer->set_tile(mapPos, newID);
+      tileLayer->SetTile(mapPos, newID);
     }
   };
 

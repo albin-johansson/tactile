@@ -36,7 +36,7 @@ void BucketFill::undo()
 
   for (const auto& position : mPositions)
   {
-    tileLayer->set_tile(position, mTarget);
+    tileLayer->SetTile(position, mTarget);
   }
 
   map.select_layer(layer);
@@ -55,8 +55,8 @@ void BucketFill::redo()
   auto* tileLayer = map.get_tile_layer(mLayer);
   Q_ASSERT(tileLayer);
 
-  mTarget = tileLayer->tile_at(mOrigin).value();
-  tileLayer->flood(mOrigin, mReplacement, mPositions);
+  mTarget = tileLayer->TileAt(mOrigin).value();
+  tileLayer->Flood(mOrigin, mReplacement, mPositions);
 
   emit mDocument->redraw();
 }
