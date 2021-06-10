@@ -61,7 +61,7 @@ void AddPropertyDialog::UpdateType()
   }
   else
   {
-    throw tactile_error{"Did not recognize property type!"};
+    throw TactileError{"Did not recognize property type!"};
   }
 }
 

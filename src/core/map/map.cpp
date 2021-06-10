@@ -12,7 +12,7 @@ Map::Map(const row_t nRows, const col_t nCols) : mRows{nRows}, mCols{nCols}
 {
   if (mRows < 1_row || mCols < 1_col)
   {
-    throw tactile_error{"Invalid map dimensions!"};
+    throw TactileError{"Invalid map dimensions!"};
   }
 
   mLayers.reserve(5);

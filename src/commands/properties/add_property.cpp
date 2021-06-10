@@ -18,7 +18,7 @@ AddProperty::AddProperty(not_null<core::property_manager*> manager,
 {
   if (!mManager)
   {
-    throw tactile_error{"Null property manager!"};
+    throw TactileError{"Null property manager!"};
   }
 }
 

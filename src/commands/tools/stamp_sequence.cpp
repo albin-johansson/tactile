@@ -19,7 +19,7 @@ StampSequence::StampSequence(not_null<core::MapDocument*> document,
 {
   if (!mDocument)
   {
-    throw tactile_error{"Cannot create stamp sequence command from null map!"};
+    throw TactileError{"Cannot create stamp sequence command from null map!"};
   }
 }
 

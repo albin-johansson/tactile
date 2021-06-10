@@ -196,7 +196,7 @@ auto json_element::stringify_element_id(const element_id type) -> QStringView
       return u"point";
 
     default:
-      throw tactile_error{"Reached end of switch statement!"};
+      throw TactileError{"Reached end of switch statement!"};
   }
 }
 

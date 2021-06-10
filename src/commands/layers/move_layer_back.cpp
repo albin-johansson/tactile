@@ -15,7 +15,7 @@ MoveLayerBack::MoveLayerBack(not_null<core::MapDocument*> document,
 {
   if (!mDocument)
   {
-    throw tactile_error{"Cannot create command from null document!"};
+    throw TactileError{"Cannot create command from null document!"};
   }
 }
 

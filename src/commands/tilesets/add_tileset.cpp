@@ -17,12 +17,12 @@ AddTileset::AddTileset(not_null<core::MapDocument*> document,
 {
   if (!mDocument)
   {
-    throw tactile_error{"Null map document!"};
+    throw TactileError{"Null map document!"};
   }
 
   if (!mTileset)
   {
-    throw tactile_error{"Null tileset!"};
+    throw TactileError{"Null tileset!"};
   }
 }
 

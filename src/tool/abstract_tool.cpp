@@ -12,7 +12,7 @@ abstract_tool::abstract_tool(core::model* model) : m_model{model}
 {
   if (!m_model)
   {
-    throw tactile_error{"Cannot create tool from null model!"};
+    throw TactileError{"Cannot create tool from null model!"};
   }
 }
 

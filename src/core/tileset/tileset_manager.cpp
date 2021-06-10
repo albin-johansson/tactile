@@ -99,7 +99,7 @@ auto tileset_manager::image(const tile_id id) const -> const QPixmap&
       return tileset->image();
     }
   }
-  throw tactile_error{"tileset_manager > failed to find image for tile ID!"};
+  throw TactileError{"tileset_manager > failed to find image for tile ID!"};
 }
 
 auto tileset_manager::image_source(const tile_id id) const -> QRect
@@ -111,7 +111,7 @@ auto tileset_manager::image_source(const tile_id id) const -> QRect
       return *rect;
     }
   }
-  throw tactile_error{"tileset_manager > failed to obtain source rectangle!"};
+  throw TactileError{"tileset_manager > failed to obtain source rectangle!"};
 }
 
 auto tileset_manager::range_of(const tileset_id id) const -> tile_range

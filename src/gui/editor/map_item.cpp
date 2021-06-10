@@ -17,7 +17,7 @@ MapItem::MapItem(core::MapDocument* map, QGraphicsItem* parent)
 {
   if (!mDocument)
   {
-    throw tactile_error{"Cannot create map item based on null map document!"};
+    throw TactileError{"Cannot create map item based on null map document!"};
   }
   // This is to be able to use exposedRect
   setFlags(QGraphicsItem::ItemUsesExtendedStyleOption);

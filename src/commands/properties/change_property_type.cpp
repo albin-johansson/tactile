@@ -18,7 +18,7 @@ ChangePropertyType::ChangePropertyType(not_null<core::property_manager*> manager
     , mType{type}
 {
   if (!mManager) {
-    throw tactile_error{"Null property manager!"};
+    throw TactileError{"Null property manager!"};
   }
 }
 

@@ -45,7 +45,7 @@ auto open_map_document(const QString& path, parse::parse_error& error)
   }
   else
   {
-    throw tactile_error{"Did not recognize map format to open!"};
+    throw TactileError{"Did not recognize map format to open!"};
   }
 }
 

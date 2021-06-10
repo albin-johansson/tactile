@@ -56,7 +56,7 @@ auto make_property_item(const core::property& property) -> QStandardItem*
       return item;
     }
     default:
-      throw tactile_error{"Did not recognize property type!"};
+      throw TactileError{"Did not recognize property type!"};
   }
 }
 

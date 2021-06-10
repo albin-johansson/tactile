@@ -57,12 +57,12 @@ tileset::tileset(const tile_id firstId,
 {
   if (m_image.isNull())
   {
-    throw tactile_error{"Cannot create tileset from null image!"};
+    throw TactileError{"Cannot create tileset from null image!"};
   }
 
   if (m_tileWidth < 1_tw || m_tileHeight < 1_th)
   {
-    throw tactile_error{"Invalid tileset tile dimensions!"};
+    throw TactileError{"Invalid tileset tile dimensions!"};
   }
 
   m_nRows = row_t{height() / m_tileHeight.get()};

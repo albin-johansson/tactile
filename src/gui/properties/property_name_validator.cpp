@@ -12,7 +12,7 @@ PropertyNameValidator::PropertyNameValidator(QStandardItemModel* model,
 {
   if (!mModel)
   {
-    throw tactile_error{"Property validator requires non-null model!"};
+    throw TactileError{"Property validator requires non-null model!"};
   }
 }
 

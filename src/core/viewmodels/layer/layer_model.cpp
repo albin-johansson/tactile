@@ -12,7 +12,7 @@ layer_model::layer_model(not_null<core::MapDocument*> document)
 {
   if (!m_document)
   {
-    throw tactile_error{"layer_model requires non-null map document!"};
+    throw TactileError{"layer_model requires non-null map document!"};
   }
 
   document->EachLayer(

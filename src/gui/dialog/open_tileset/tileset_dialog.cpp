@@ -17,7 +17,7 @@ TilesetDialog::TilesetDialog(QWidget* parent)
   mDefaultImageIcon = mUi->imageLabel->pixmap(Qt::ReturnByValueConstant{});
   if (mDefaultImageIcon.isNull())
   {
-    throw tactile_error{"Could not create default pixmap!"};
+    throw TactileError{"Could not create default pixmap!"};
   }
 
   OkButton()->setEnabled(false);

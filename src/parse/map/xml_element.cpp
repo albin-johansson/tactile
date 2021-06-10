@@ -95,7 +95,7 @@ auto xml_element::stringify_element_id(const element_id type) -> QString
       return TACTILE_QSTRING(u"tileset");
 
     case element_id::tilesets:
-      throw tactile_error{"TMX format does not feature \"tilesets\"!"};
+      throw TactileError{"TMX format does not feature \"tilesets\"!"};
 
     case element_id::next_layer_id:
       return TACTILE_QSTRING(u"nextlayerid");
@@ -149,7 +149,7 @@ auto xml_element::stringify_element_id(const element_id type) -> QString
       return TACTILE_QSTRING(u"point");
 
     default:
-      throw tactile_error{"Reached end of switch statement!"};
+      throw TactileError{"Reached end of switch statement!"};
   }
 }
 

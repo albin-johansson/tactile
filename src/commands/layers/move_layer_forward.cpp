@@ -15,7 +15,7 @@ MoveLayerForward::MoveLayerForward(not_null<core::MapDocument*> document,
 {
   if (!mDocument)
   {
-    throw tactile_error{"Null map document!"};
+    throw TactileError{"Null map document!"};
   }
 }
 

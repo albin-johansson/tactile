@@ -18,10 +18,10 @@ TEST(Map, Defaults)
 TEST(Map, DimensionConstructor)
 {
   {  // Invalid dimensions
-    EXPECT_THROW(core::Map(0_row, 1_col), tactile_error);
-    EXPECT_THROW(core::Map(1_row, 0_col), tactile_error);
-    EXPECT_THROW(core::Map(0_row, 0_col), tactile_error);
-    EXPECT_THROW(core::Map(-1_row, -1_col), tactile_error);
+    EXPECT_THROW(core::Map(0_row, 1_col), TactileError);
+    EXPECT_THROW(core::Map(1_row, 0_col), TactileError);
+    EXPECT_THROW(core::Map(0_row, 0_col), TactileError);
+    EXPECT_THROW(core::Map(-1_row, -1_col), TactileError);
   }
 
   {  // Valid dimensions

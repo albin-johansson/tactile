@@ -16,7 +16,7 @@ RemoveProperty::RemoveProperty(core::property_manager* manager, QString name)
 {
   if (!mManager)
   {
-    throw tactile_error{"Cannot create remove_property from null manager!"};
+    throw TactileError{"Cannot create remove_property from null manager!"};
   }
 }
 

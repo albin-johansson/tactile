@@ -34,7 +34,7 @@ TileLayer::TileLayer(const row_t nRows, const col_t nCols)
 {
   if (nRows < 1_row || nCols < 1_col)
   {
-    throw tactile_error{"Invalid tile_layer dimensions!"};
+    throw TactileError{"Invalid tile_layer dimensions!"};
   }
   mDelegate.SetName(TACTILE_QSTRING(u"Tile layer"));
 

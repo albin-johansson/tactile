@@ -24,7 +24,7 @@ void save_map_document(const QString& path, const core::MapDocument& document)
   }
   else
   {
-    throw tactile_error{"Did not recognize save format!"};
+    throw TactileError{"Did not recognize save format!"};
   }
 }
 

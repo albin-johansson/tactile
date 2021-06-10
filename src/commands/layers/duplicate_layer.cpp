@@ -15,7 +15,7 @@ DuplicateLayer::DuplicateLayer(not_null<core::MapDocument*> document,
 {
   if (!mDocument)
   {
-    throw tactile_error{"Null map document to duplicate layer command!"};
+    throw TactileError{"Null map document to duplicate layer command!"};
   }
 }
 

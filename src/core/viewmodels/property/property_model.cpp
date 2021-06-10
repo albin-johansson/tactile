@@ -15,7 +15,7 @@ property_model::property_model(core::property_manager* manager, QObject* parent)
 {
   if (!m_manager)
   {
-    throw tactile_error{"property_model requires non-null property manager!"};
+    throw TactileError{"property_model requires non-null property manager!"};
   }
 
   setColumnCount(2);

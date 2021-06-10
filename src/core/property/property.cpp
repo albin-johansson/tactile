@@ -179,7 +179,7 @@ auto stringify(const property_type type) -> QString
       return TACTILE_QSTRING(u"object");
 
     default:
-      throw tactile_error{"Did not recognize property type!"};
+      throw TactileError{"Did not recognize property type!"};
   }
 }
 

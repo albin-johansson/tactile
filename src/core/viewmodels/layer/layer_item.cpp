@@ -18,7 +18,7 @@ namespace {
       return IconObjectLayer();
 
     default:
-      throw tactile_error{"Did not recognize layer type!"};
+      throw TactileError{"Did not recognize layer type!"};
   }
 }
 

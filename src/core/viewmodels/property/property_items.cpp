@@ -47,7 +47,7 @@ void update_item_data(not_null<QStandardItem*> item, const core::property& p)
       break;
     }
     default:
-      throw tactile_error{"Not a property item!"};
+      throw TactileError{"Not a property item!"};
   }
 }
 
@@ -80,7 +80,7 @@ auto item_to_property(not_null<const QStandardItem*> item) -> core::property
       return core::object_ref{item->data(Qt::EditRole).value<int>()};
 
     default:
-      throw tactile_error{"Not a property item!"};
+      throw TactileError{"Not a property item!"};
   }
 }
 
