@@ -5,24 +5,24 @@
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, tileset_empty_page)
+TACTILE_FORWARD_DECLARE_UI(TilesetEmptyPage)
 
-namespace tactile::gui {
+namespace tactile {
 
-class tileset_empty_page final : public QWidget
+class TilesetEmptyPage final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit tileset_empty_page(QWidget* parent = nullptr);
+  explicit TilesetEmptyPage(QWidget* parent = nullptr);
 
-  ~tileset_empty_page() noexcept override;
+  ~TilesetEmptyPage() noexcept override;
 
  signals:
-  void ui_add_tileset();
+  void S_AddTileset();
 
  private:
-  unique<Ui::tileset_empty_page> m_ui;
+  unique<Ui::TilesetEmptyPage> mUi;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

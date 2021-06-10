@@ -2,25 +2,21 @@
 
 #include "icons.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_tab_context_menu::tileset_tab_context_menu(QWidget* parent)
+TilesetTabContextMenu::TilesetTabContextMenu(QWidget* parent)
     : QMenu{parent}
-    , m_rename{addAction(icons::rename(), tr("Rename tileset"))}
-    , m_sep0{addSeparator()}
-    , m_remove{addAction(icons::remove(), tr("Remove tileset"))}
+    , mRename{addAction(icons::rename(), tr("Rename tileset"))}
+    , mSep0{addSeparator()}
+    , mRemove{addAction(icons::remove(), tr("Remove tileset"))}
 {
-  connect(m_rename, &QAction::triggered, [this] {
-    emit rename(m_index);
-  });
-  connect(m_remove, &QAction::triggered, [this] {
-    emit remove(m_index);
-  });
+  connect(mRename, &QAction::triggered, [this] { emit S_Rename(mIndex); });
+  connect(mRemove, &QAction::triggered, [this] { emit S_Remove(mIndex); });
 }
 
-void tileset_tab_context_menu::set_tab_index(const int index)
+void TilesetTabContextMenu::SetTabIndex(const int index)
 {
-  m_index = index;
+  mIndex = index;
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

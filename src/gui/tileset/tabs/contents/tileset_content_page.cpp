@@ -11,182 +11,181 @@
 #include "tileset_tab_context_menu.hpp"
 #include "ui_tileset_content_page.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_content_page::tileset_content_page(QWidget* parent)
+TilesetContentPage::TilesetContentPage(QWidget* parent)
     : QWidget{parent}
-    , m_ui{init_ui<Ui::tileset_content_page>(this)}
-    , m_tabWidget{new TabWidget{this}}
-    , m_contextMenu{new tileset_tab_context_menu{this}}
+    , mUi{init_ui<Ui::TilesetContentPage>(this)}
+    , mTabWidget{new TabWidget{this}}
+    , mContextMenu{new TilesetTabContextMenu{this}}
 {
-  m_tabWidget->setTabsClosable(false);
-  m_tabWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-  add_corner_button();
+  mTabWidget->setTabsClosable(false);
+  mTabWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+  AddCornerButton();
 
-  m_ui->gridLayout->addWidget(m_tabWidget);
+  mUi->gridLayout->addWidget(mTabWidget);
 
-  connect(m_tabWidget,
+  connect(mTabWidget,
           &QTabWidget::customContextMenuRequested,
           this,
-          &tileset_content_page::trigger_context_menu);
+          &TilesetContentPage::TriggerContextMenu);
 
-  connect(m_contextMenu, &tileset_tab_context_menu::rename, [this](int index) {
-    m_tabWidget->EditTab(index);
+  connect(mContextMenu, &TilesetTabContextMenu::S_Rename, [this](int index) {
+    mTabWidget->EditTab(index);
   });
 
-  connect(m_contextMenu, &tileset_tab_context_menu::remove, [this](int index) {
-    if (auto* tab = tab_from_index(index))
+  connect(mContextMenu, &TilesetTabContextMenu::S_Remove, [this](int index) {
+    if (auto* tab = TabFromIndex(index))
     {
-      emit ui_remove_tileset(tab->id());
+      emit S_RemoveTileset(tab->Id());
     }
   });
 
-  connect(m_tabWidget, &TabWidget::S_EditedTab, [this](int index) {
-    if (auto* tab = tab_from_index(index))
+  connect(mTabWidget, &TabWidget::S_EditedTab, [this](int index) {
+    if (auto* tab = TabFromIndex(index))
     {
-      emit ui_rename_tileset(tab->id(), m_tabWidget->tabBar()->tabText(index));
+      emit S_RenameTileset(tab->Id(), mTabWidget->tabBar()->tabText(index));
     }
   });
 
-  connect(m_tabWidget, &QTabWidget::tabCloseRequested, [this](int index) {
-    if (auto* tab = tab_from_index(index))
+  connect(mTabWidget, &QTabWidget::tabCloseRequested, [this](int index) {
+    if (auto* tab = TabFromIndex(index))
     {
-      emit ui_remove_tileset(tab->id());
+      emit S_RemoveTileset(tab->Id());
     }
   });
 
-  connect(m_tabWidget, &QTabWidget::tabBarClicked, [this](int index) {
-    if (auto* tab = tab_from_index(index))
+  connect(mTabWidget, &QTabWidget::tabBarClicked, [this](int index) {
+    if (auto* tab = TabFromIndex(index))
     {
-      emit ui_select_tileset(tab->id());
+      emit S_SelectTileset(tab->Id());
     }
   });
 
-  connect(m_tabWidget, &QTabWidget::currentChanged, [this](int index) {
+  connect(mTabWidget, &QTabWidget::currentChanged, [this](int index) {
     if (index != -1)
     {
-      current_manager().set_cached_index(index);
-      if (auto* item = tab_from_index(index))
+      CurrentManager().SetCachedIndex(index);
+      if (auto* item = TabFromIndex(index))
       {
-        emit ui_select_tileset(item->id());
+        emit S_SelectTileset(item->Id());
       }
     }
     else
     {
-      emit switch_to_empty_page();
+      emit S_SwitchToEmptyPage();
     }
   });
 }
 
-tileset_content_page::~tileset_content_page() noexcept = default;
+TilesetContentPage::~TilesetContentPage() noexcept = default;
 
-void tileset_content_page::add_corner_button()
+void TilesetContentPage::AddCornerButton()
 {
-  auto* button = new QPushButton{m_tabWidget};
+  auto* button = new QPushButton{mTabWidget};
   button->setIcon(icons::add());
 
   connect(button,
           &QPushButton::pressed,
           this,
-          &tileset_content_page::ui_add_tileset);
+          &TilesetContentPage::S_AddTileset);
 
-  m_tabWidget->setCornerWidget(button, Qt::Corner::TopRightCorner);
+  mTabWidget->setCornerWidget(button, Qt::Corner::TopRightCorner);
 }
 
-void tileset_content_page::trigger_context_menu(const QPoint& pos)
+void TilesetContentPage::TriggerContextMenu(const QPoint& pos)
 {
-  const auto index = m_tabWidget->tabBar()->tabAt(pos);
+  const auto index = mTabWidget->tabBar()->tabAt(pos);
   if (index != -1)
   {
-    m_contextMenu->set_tab_index(index);
-    m_contextMenu->exec(mapToGlobal(pos));
+    mContextMenu->SetTabIndex(index);
+    mContextMenu->exec(mapToGlobal(pos));
   }
 }
 
-void tileset_content_page::selected_map(const map_id map)
+void TilesetContentPage::OnSelectedMap(const map_id map)
 {
   {
-    QSignalBlocker blocker{m_tabWidget};  // avoid `ui_select_tileset`
+    QSignalBlocker blocker{mTabWidget};  // avoid `S_SelectTileset`
 
-    if (m_currentMap)
+    if (mCurrentMap)
     {
-      m_tabWidget->clear();
+      mTabWidget->clear();
     }
 
-    switch_to(map);
+    SwitchTo(map);
   }
 
-  if (current_manager().is_empty())
+  if (CurrentManager().IsEmpty())
   {
-    emit switch_to_empty_page();
+    emit S_SwitchToEmptyPage();
   }
   else
   {
-    emit switch_to_content_page();
+    emit S_SwitchToContentPage();
   }
 }
 
-void tileset_content_page::added_tileset(const map_id map,
-                                         const tileset_id id,
-                                         const core::tileset& tileset)
+void TilesetContentPage::OnAddedTileset(const map_id map,
+                                        const tileset_id id,
+                                        const core::tileset& tileset)
 {
-  Q_ASSERT(!current_manager().contains(id));
+  Q_ASSERT(!CurrentManager().Contains(id));
 
-  auto* tab = new tileset_tab{id, tileset, m_tabWidget};
+  auto* tab = new TilesetTab{id, tileset, mTabWidget};
   connect(tab,
-          &tileset_tab::set_tileset_selection,
+          &TilesetTab::S_SetTilesetSelection,
           this,
-          &tileset_content_page::ui_set_tileset_selection);
-  m_tabManagers.at(map).add(id, tab);
+          &TilesetContentPage::S_SetTilesetSelection);
+  mTabManagers.at(map).Add(id, tab);
 
-  const auto index = m_tabWidget->addTab(tab, tileset.name());
-  m_tabWidget->setCurrentIndex(index);
+  const auto index = mTabWidget->addTab(tab, tileset.name());
+  mTabWidget->setCurrentIndex(index);
 }
 
-void tileset_content_page::removed_tileset(const tileset_id id)
+void TilesetContentPage::OnRemovedTileset(const tileset_id id)
 {
-  auto& manager = current_manager();
-  Q_ASSERT(manager.contains(id));
+  auto& manager = CurrentManager();
+  Q_ASSERT(manager.Contains(id));
 
-  m_tabWidget->removeTab(manager.index_of(id));
-  manager.remove(id);
+  mTabWidget->removeTab(manager.IndexOf(id));
+  manager.Remove(id);
 }
 
-void tileset_content_page::renamed_tileset(const tileset_id id,
-                                           const QString& name)
+void TilesetContentPage::OnRenamedTileset(const tileset_id id, const QString& name)
 {
-  auto& manager = current_manager();
-  Q_ASSERT(manager.contains(id));
+  auto& manager = CurrentManager();
+  Q_ASSERT(manager.Contains(id));
 
-  m_tabWidget->tabBar()->setTabText(manager.index_of(id), name);
+  mTabWidget->tabBar()->setTabText(manager.IndexOf(id), name);
 }
 
-auto tileset_content_page::is_empty() const -> bool
+auto TilesetContentPage::IsEmpty() const -> bool
 {
-  return m_tabWidget->count() == 0;
+  return mTabWidget->count() == 0;
 }
 
-void tileset_content_page::switch_to(const map_id map)
+void TilesetContentPage::SwitchTo(const map_id map)
 {
-  m_currentMap = map;
-  const auto& manager = m_tabManagers[*m_currentMap];
+  mCurrentMap = map;
+  const auto& manager = mTabManagers[*mCurrentMap];
 
   for (const auto& [id, tab] : manager)
   {
-    m_tabWidget->addTab(tab, tab->name());
+    mTabWidget->addTab(tab, tab->Name());
   }
 
-  m_tabWidget->setCurrentIndex(manager.cached_index().value_or(0));
+  mTabWidget->setCurrentIndex(manager.CachedIndex().value_or(0));
 }
 
-auto tileset_content_page::tab_from_index(const int index) -> tileset_tab*
+auto TilesetContentPage::TabFromIndex(const int index) -> TilesetTab*
 {
-  return qobject_cast<tileset_tab*>(m_tabWidget->widget(index));
+  return qobject_cast<TilesetTab*>(mTabWidget->widget(index));
 }
 
-auto tileset_content_page::current_manager() -> tileset_tab_manager&
+auto TilesetContentPage::CurrentManager() -> TilesetTabManager&
 {
-  return m_tabManagers.at(m_currentMap.value());
+  return mTabManagers.at(mCurrentMap.value());
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

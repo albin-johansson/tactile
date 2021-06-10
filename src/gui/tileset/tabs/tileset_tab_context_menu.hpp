@@ -2,26 +2,26 @@
 
 #include <QMenu>  // QMenu
 
-namespace tactile::gui {
+namespace tactile {
 
-class tileset_tab_context_menu final : public QMenu
+class TilesetTabContextMenu final : public QMenu
 {
   Q_OBJECT
 
  public:
-  explicit tileset_tab_context_menu(QWidget* parent = nullptr);
+  explicit TilesetTabContextMenu(QWidget* parent = nullptr);
 
-  void set_tab_index(int index);
+  void SetTabIndex(int index);
 
  signals:
-  void rename(int index);
-  void remove(int index);
+  void S_Rename(int index);
+  void S_Remove(int index);
 
  private:
-  QAction* m_rename{};
-  [[maybe_unused]] QAction* m_sep0{};
-  QAction* m_remove{};
-  int m_index{-1};
+  QAction* mRename{};
+  [[maybe_unused]] QAction* mSep0{};
+  QAction* mRemove{};
+  int mIndex{-1};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -2,62 +2,59 @@
 
 #include <algorithm>  // max
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_rubber_band::tileset_rubber_band(QWidget* parent)
+TilesetRubberBand::TilesetRubberBand(QWidget* parent)
     : QRubberBand{QRubberBand::Rectangle, parent}
 {}
 
-void tileset_rubber_band::mouse_pressed(const QPoint& pos)
+void TilesetRubberBand::SetTileWidth(const tile_width tileWidth) noexcept
 {
-  m_origin = pos;
+  mTileWidth = tileWidth;
+}
 
-  m_originRow = row_t{m_origin.y() / m_tileHeight.get()};
-  m_originCol = col_t{m_origin.x() / m_tileWidth.get()};
+void TilesetRubberBand::SetTileHeight(const tile_height tileHeight) noexcept
+{
+  mTileHeight = tileHeight;
+}
 
-  m_lastMousePos = m_origin;
+void TilesetRubberBand::MousePressed(const QPoint& pos)
+{
+  mOrigin = pos;
 
-  setGeometry(m_origin.x(),
-              m_origin.y(),
-              m_tileWidth.get(),
-              m_tileHeight.get());
+  mOriginRow = row_t{mOrigin.y() / mTileHeight.get()};
+  mOriginCol = col_t{mOrigin.x() / mTileWidth.get()};
 
-  fit_geometry();
+  mLastMousePos = mOrigin;
+
+  setGeometry(mOrigin.x(), mOrigin.y(), mTileWidth.get(), mTileHeight.get());
+
+  FitGeometry();
   show();
 }
 
-void tileset_rubber_band::mouse_moved(const QPoint& pos)
+void TilesetRubberBand::MouseMoved(const QPoint& pos)
 {
-  m_lastMousePos = pos;
-  setGeometry(QRect{m_origin, pos}.normalized());
-  fit_geometry();
+  mLastMousePos = pos;
+  setGeometry(QRect{mOrigin, pos}.normalized());
+  FitGeometry();
 }
 
-void tileset_rubber_band::mouse_released()
+void TilesetRubberBand::MouseReleased()
 {
-  emit finished_selection(get_selection());
+  emit S_FinishedSelection(GetSelection());
 }
 
-void tileset_rubber_band::set_tile_width(const tile_width tileWidth) noexcept
+void TilesetRubberBand::FitGeometry()
 {
-  m_tileWidth = tileWidth;
+  setGeometry(GetAdjustedGeometry());
 }
 
-void tileset_rubber_band::set_tile_height(const tile_height tileHeight) noexcept
-{
-  m_tileHeight = tileHeight;
-}
-
-void tileset_rubber_band::fit_geometry()
-{
-  setGeometry(adjusted_geometry());
-}
-
-auto tileset_rubber_band::adjusted_geometry() const -> QRect
+auto TilesetRubberBand::GetAdjustedGeometry() const -> QRect
 {
   const auto& current = geometry();
-  const auto tw = m_tileWidth.get();
-  const auto th = m_tileHeight.get();
+  const auto tw = mTileWidth.get();
+  const auto th = mTileHeight.get();
 
   QRect adjusted;
   adjusted.setX(current.x() - (current.x() % tw));
@@ -70,14 +67,12 @@ auto tileset_rubber_band::adjusted_geometry() const -> QRect
   adjusted.setWidth(std::max(tw, adjusted.width()));
   adjusted.setHeight(std::max(th, adjusted.height()));
 
-  if (const row_t currentRow{m_lastMousePos.y() / th};
-      currentRow != m_originRow)
+  if (const row_t currentRow{mLastMousePos.y() / th}; currentRow != mOriginRow)
   {
     adjusted.setHeight(adjusted.height() + th);
   }
 
-  if (const col_t currentCol{m_lastMousePos.x() / tw};
-      currentCol != m_originCol)
+  if (const col_t currentCol{mLastMousePos.x() / tw}; currentCol != mOriginCol)
   {
     adjusted.setWidth(adjusted.width() + tw);
   }
@@ -85,11 +80,11 @@ auto tileset_rubber_band::adjusted_geometry() const -> QRect
   return adjusted;
 }
 
-auto tileset_rubber_band::get_selection() const -> core::tileset_selection
+auto TilesetRubberBand::GetSelection() const -> core::tileset_selection
 {
   const auto& geo = geometry();
-  const auto tw = m_tileWidth.get();
-  const auto th = m_tileHeight.get();
+  const auto tw = mTileWidth.get();
+  const auto th = mTileHeight.get();
 
   const core::position tl{row_t{geo.y() / th}, col_t{geo.x() / tw}};
   const core::position br{std::max(row_t{geo.bottom() / th}, tl.row()),
@@ -97,4 +92,4 @@ auto tileset_rubber_band::get_selection() const -> core::tileset_selection
   return {tl, br};
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -4,59 +4,57 @@
 #include "tactile_qstring.hpp"
 #include "tileset_widget.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_dock::tileset_dock(QWidget* parent)
+TilesetDock::TilesetDock(QWidget* parent)
     : DockWidget{parent}
-    , m_widget{new tileset_widget{this}}
+    , mWidget{new TilesetWidget{this}}
 {
   setObjectName(TACTILE_QSTRING(u"tileset_dock"));
   setWindowTitle(tr("Tilesets"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setContentsMargins(0, 0, 0, 0);
-  setWidget(m_widget);
+  setWidget(mWidget);
 
-  using widget = tileset_widget;
-  using dock = tileset_dock;
   // clang-format off
-  connect(m_widget, &widget::ui_add_tileset, this, &dock::ui_add_tileset);
-  connect(m_widget, &widget::ui_select_tileset, this, &dock::ui_select_tileset);
-  connect(m_widget, &widget::ui_remove_tileset, this, &dock::ui_remove_tileset);
-  connect(m_widget, &widget::ui_rename_tileset, this, &dock::ui_rename_tileset);
-  connect(m_widget, &widget::ui_set_tileset_selection, this, &dock::ui_set_tileset_selection);
+  connect(mWidget, &TilesetWidget::S_AddTileset, this, &TilesetDock::S_AddTileset);
+  connect(mWidget, &TilesetWidget::S_SelectTileset, this, &TilesetDock::S_SelectTileset);
+  connect(mWidget, &TilesetWidget::S_RemoveTileset, this, &TilesetDock::S_RemoveTileset);
+  connect(mWidget, &TilesetWidget::S_RenameTileset, this, &TilesetDock::S_RenameTileset);
+  connect(mWidget, &TilesetWidget::S_SetTilesetSelection, this, &TilesetDock::S_SetTilesetSelection);
   // clang-format on
 }
 
-void tileset_dock::added_map(const map_id id,
+void TilesetDock::OnAddedMap(const map_id id,
                              const core::map_document& document)
 {
   document.each_tileset(
       [this, id](const tileset_id tilesetId, const core::tileset& tileset) {
-        added_tileset(id, tilesetId, tileset);
+        OnAddedTileset(id, tilesetId, tileset);
       });
 }
 
-void tileset_dock::switched_map(map_id id)
+void TilesetDock::OnSwitchedMap(const map_id id)
 {
-  m_widget->selected_map(id);
+  mWidget->OnSwitchedMap(id);
 }
 
-void tileset_dock::added_tileset(const map_id map,
+void TilesetDock::OnAddedTileset(const map_id map,
                                  const tileset_id id,
                                  const core::tileset& tileset)
 {
-  m_widget->added_tileset(map, id, tileset);
+  mWidget->OnAddedTileset(map, id, tileset);
 }
 
-void tileset_dock::removed_tileset(const tileset_id id)
+void TilesetDock::OnRemovedTileset(const tileset_id id)
 {
-  m_widget->removed_tileset(id);
+  mWidget->OnRemovedTileset(id);
 }
 
-void tileset_dock::renamed_tileset(const tileset_id id, const QString& name)
+void TilesetDock::OnRenamedTileset(const tileset_id id, const QString& name)
 {
-  m_widget->renamed_tileset(id, name);
+  mWidget->OnRenamedTileset(id, name);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>tileset_empty_page</class>
- <widget class="QWidget" name="tileset_empty_page">
+ <class>TilesetEmptyPage</class>
+ <widget class="QWidget" name="TilesetEmptyPage">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -11,15 +11,16 @@
 #include "tileset.hpp"
 #include "tileset_tab_manager.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, tileset_content_page)
-TACTILE_FORWARD_DECLARE(tactile, TabWidget)
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_tab)
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_tab_context_menu)
+TACTILE_FORWARD_DECLARE_UI(TilesetContentPage)
 
-namespace tactile::gui {
+TACTILE_FORWARD_DECLARE(tactile, TabWidget)
+TACTILE_FORWARD_DECLARE(tactile, TilesetTab)
+TACTILE_FORWARD_DECLARE(tactile, TilesetTabContextMenu)
+
+namespace tactile {
 
 /**
- * \class tileset_content_page
+ * \class TilesetContentPage
  *
  * \brief Represents the page with the tilesets associated with a map.
  *
@@ -30,14 +31,14 @@ namespace tactile::gui {
  *
  * \headerfile tileset_content_page.hpp
  */
-class tileset_content_page final : public QWidget
+class TilesetContentPage final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit tileset_content_page(QWidget* parent = nullptr);
+  explicit TilesetContentPage(QWidget* parent = nullptr);
 
-  ~tileset_content_page() noexcept override;
+  ~TilesetContentPage() noexcept override;
 
   /**
    * \brief Indicates whether or not there are any tileset tabs.
@@ -46,16 +47,16 @@ class tileset_content_page final : public QWidget
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto is_empty() const -> bool;
+  [[nodiscard]] auto IsEmpty() const -> bool;
 
  signals:
-  void switch_to_empty_page();
-  void switch_to_content_page();
-  void ui_add_tileset();
-  void ui_select_tileset(tileset_id id);
-  void ui_remove_tileset(tileset_id id);
-  void ui_rename_tileset(tileset_id id, const QString& name);
-  void ui_set_tileset_selection(const core::tileset_selection& selection);
+  void S_SwitchToEmptyPage();
+  void S_SwitchToContentPage();
+  void S_AddTileset();
+  void S_SelectTileset(tileset_id id);
+  void S_RemoveTileset(tileset_id id);
+  void S_RenameTileset(tileset_id id, const QString& name);
+  void S_SetTilesetSelection(const core::tileset_selection& selection);
 
  public slots:
   /**
@@ -66,12 +67,12 @@ class tileset_content_page final : public QWidget
    *
    * \since 0.1.0
    */
-  void selected_map(map_id map);
+  void OnSelectedMap(map_id map);
 
   /**
    * \brief Adds a tileset tab that represents the supplied tileset.
    *
-   * \pre `id` must not have been added before.
+   * \pre `Id` must not have been added before.
    *
    * \param map the ID associated with the map that owns the tileset.
    * \param id the ID associated with the tileset that will be added.
@@ -79,27 +80,27 @@ class tileset_content_page final : public QWidget
    *
    * \since 0.1.0
    */
-  void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
+  void OnAddedTileset(map_id map, tileset_id id, const core::tileset& tileset);
 
   /**
    * \brief Removes the tileset tab associated with the specified tileset.
    *
-   * \pre `id` must be associated with an existing tileset tab.
+   * \pre `Id` must be associated with an existing tileset tab.
    *
    * \param id the ID associated with the tileset tab which will be removed.
    *
    * \since 0.1.0
    */
-  void removed_tileset(tileset_id id);
+  void OnRemovedTileset(tileset_id id);
 
-  void renamed_tileset(tileset_id id, const QString& name);
+  void OnRenamedTileset(tileset_id id, const QString& name);
 
  private:
-  unique<Ui::tileset_content_page> m_ui;
-  TabWidget* m_tabWidget{};
-  tileset_tab_context_menu* m_contextMenu{};
-  maybe<map_id> m_currentMap;
-  std::map<map_id, tileset_tab_manager> m_tabManagers;
+  unique<Ui::TilesetContentPage> mUi;
+  TabWidget* mTabWidget{};
+  TilesetTabContextMenu* mContextMenu{};
+  maybe<map_id> mCurrentMap;
+  std::map<map_id, TilesetTabManager> mTabManagers;
 
   /**
    * \brief Switches to the tileset tabs associated with the specified map.
@@ -108,19 +109,19 @@ class tileset_content_page final : public QWidget
    *
    * \since 0.1.0
    *
-   * \signal `ui_select_tileset`
+   * \signal `S_SelectTileset`
    */
-  void switch_to(map_id map);
+  void SwitchTo(map_id map);
 
   /**
-   * \brief Adds the corner button to the tab widget, which is used to add
+   * \brief Adds the corner button to the tab widget, which is used to Add
    * tilesets.
    *
    * \since 0.1.0
    */
-  void add_corner_button();
+  void AddCornerButton();
 
-  void trigger_context_menu(const QPoint& pos);
+  void TriggerContextMenu(const QPoint& pos);
 
   /**
    * \brief Returns the tab associated with the specified index.
@@ -131,7 +132,7 @@ class tileset_content_page final : public QWidget
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tab_from_index(int index) -> tileset_tab*;
+  [[nodiscard]] auto TabFromIndex(int index) -> TilesetTab*;
 
   /**
    * \brief Returns the tab manager associated with the current map.
@@ -143,7 +144,7 @@ class tileset_content_page final : public QWidget
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto current_manager() -> tileset_tab_manager&;
+  [[nodiscard]] auto CurrentManager() -> TilesetTabManager&;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

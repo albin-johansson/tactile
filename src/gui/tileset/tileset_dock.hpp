@@ -8,37 +8,37 @@
 #include "tileset_id.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, map_document)
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_widget)
+TACTILE_FORWARD_DECLARE(tactile, TilesetWidget)
 
-namespace tactile::gui {
+namespace tactile {
 
-class tileset_dock final : public DockWidget
+class TilesetDock final : public DockWidget
 {
   Q_OBJECT
 
  public:
-  explicit tileset_dock(QWidget* parent = nullptr);
+  explicit TilesetDock(QWidget* parent = nullptr);
 
  signals:
-  void ui_add_tileset();
-  void ui_select_tileset(tileset_id id);
-  void ui_remove_tileset(tileset_id id);
-  void ui_rename_tileset(tileset_id id, const QString& name);
-  void ui_set_tileset_selection(const core::tileset_selection& selection);
+  void S_AddTileset();
+  void S_SelectTileset(tileset_id id);
+  void S_RemoveTileset(tileset_id id);
+  void S_RenameTileset(tileset_id id, const QString& name);
+  void S_SetTilesetSelection(const core::tileset_selection& selection);
 
  public slots:
-  void added_map(map_id id, const core::map_document& document);
+  void OnAddedMap(map_id id, const core::map_document& document);
 
-  void switched_map(map_id id);
+  void OnSwitchedMap(map_id id);
 
-  void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
+  void OnAddedTileset(map_id map, tileset_id id, const core::tileset& tileset);
 
-  void removed_tileset(tileset_id id);
+  void OnRemovedTileset(tileset_id id);
 
-  void renamed_tileset(tileset_id id, const QString& name);
+  void OnRenamedTileset(tileset_id id, const QString& name);
 
  private:
-  tileset_widget* m_widget{};
+  TilesetWidget* mWidget{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

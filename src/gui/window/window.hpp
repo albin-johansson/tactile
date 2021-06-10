@@ -23,7 +23,7 @@ TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
 TACTILE_FORWARD_DECLARE(tactile, MapEditor)
 TACTILE_FORWARD_DECLARE(tactile::gui, tool_dock)
 TACTILE_FORWARD_DECLARE(tactile, LayerDock)
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_dock)
+TACTILE_FORWARD_DECLARE(tactile, TilesetDock)
 TACTILE_FORWARD_DECLARE(tactile, PropertiesDock)
 TACTILE_FORWARD_DECLARE(tactile, StatusBar)
 
@@ -176,7 +176,7 @@ class Window final : public QMainWindow
   MapEditor* mEditor{};
   tool_dock* mToolDock{};
   LayerDock* mLayerDock{};
-  tileset_dock* mTilesetDock{};
+  TilesetDock* mTilesetDock{};
   PropertiesDock* mPropertiesDock{};
   StatusBar* mStatusBar{};
   QActionGroup* mToolGroup{};

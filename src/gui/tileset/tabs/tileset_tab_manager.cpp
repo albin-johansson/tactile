@@ -2,48 +2,48 @@
 
 #include "tileset_tab.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-void tileset_tab_manager::add(const tileset_id id, tileset_tab* tab)
+void TilesetTabManager::Add(tileset_id id, TilesetTab* tab)
 {
   Q_ASSERT(tab);
   Q_ASSERT(tab->parent());  // require that the tab has an owner
-  m_tabs.emplace(id, tab);
+  mTabs.emplace(id, tab);
 }
 
-void tileset_tab_manager::remove(const tileset_id id)
+void TilesetTabManager::Remove(tileset_id id)
 {
-  m_tabs.erase(id);
+  mTabs.erase(id);
 }
 
-void tileset_tab_manager::clear() noexcept
+void TilesetTabManager::Clear() noexcept
 {
-  m_tabs.clear();
+  mTabs.clear();
 }
 
-void tileset_tab_manager::set_cached_index(const int index)
+void TilesetTabManager::SetCachedIndex(const int index)
 {
-  m_cachedIndex = index;
+  mCachedIndex = index;
 }
 
-auto tileset_tab_manager::at(const tileset_id id) const -> const tileset_tab*
+auto TilesetTabManager::At(const tileset_id id) const -> const TilesetTab*
 {
-  return m_tabs.at(id);
+  return mTabs.at(id);
 }
 
-auto tileset_tab_manager::index_of(const tileset_id id) const -> int
+auto TilesetTabManager::IndexOf(const tileset_id id) const -> int
 {
-  return static_cast<int>(m_tabs.index_of(id).value());
+  return static_cast<int>(mTabs.index_of(id).value());
 }
 
-auto tileset_tab_manager::contains(const tileset_id id) const -> bool
+auto TilesetTabManager::Contains(const tileset_id id) const -> bool
 {
-  return m_tabs.contains(id);
+  return mTabs.contains(id);
 }
 
-auto tileset_tab_manager::is_empty() const -> bool
+auto TilesetTabManager::IsEmpty() const -> bool
 {
-  return m_tabs.empty();
+  return mTabs.empty();
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

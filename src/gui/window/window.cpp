@@ -26,7 +26,7 @@ Window::Window(QWidget* parent)
     , mEditor{new MapEditor{this}}
     , mToolDock{new tool_dock{this}}
     , mLayerDock{new LayerDock{this}}
-    , mTilesetDock{new tileset_dock{this}}
+    , mTilesetDock{new TilesetDock{this}}
     , mPropertiesDock{new PropertiesDock{this}}
     , mStatusBar{new StatusBar{this}}
     , mToolGroup{new QActionGroup{this}}
@@ -234,7 +234,7 @@ void Window::DisableStampPreview()
 void Window::OnSwitchedMap(const map_id map,
                            not_null<core::map_document*> document)
 {
-  mTilesetDock->switched_map(map);
+  mTilesetDock->OnSwitchedMap(map);
   mLayerDock->OnSwitchedMap(document);
   mPropertiesDock->OnSwitchedMap(document);
   mStatusBar->OnSwitchedMap(*document);
@@ -255,7 +255,7 @@ void Window::OnNewMapAdded(not_null<core::map_document*> document,
   }
 
   mUi->actionSave->setDisabled(document->is_clean());
-  mTilesetDock->added_map(id, *document);
+  mTilesetDock->OnAddedMap(id, *document);
   mLayerDock->OnSwitchedMap(document);
   mPropertiesDock->OnSwitchedMap(document);
   mStatusBar->OnSwitchedMap(*document);
@@ -290,17 +290,17 @@ void Window::OnAddedTileset(const map_id map,
                             const tileset_id id,
                             const core::tileset& tileset)
 {
-  mTilesetDock->added_tileset(map, id, tileset);
+  mTilesetDock->OnAddedTileset(map, id, tileset);
 }
 
 void Window::OnRemovedTileset(const tileset_id id)
 {
-  mTilesetDock->removed_tileset(id);
+  mTilesetDock->OnRemovedTileset(id);
 }
 
 void Window::OnRenamedTileset(const tileset_id id, const QString& name)
 {
-  mTilesetDock->renamed_tileset(id, name);
+  mTilesetDock->OnRenamedTileset(id, name);
 }
 
 void Window::OnSelectedLayer(const layer_id id, const core::layer& layer)

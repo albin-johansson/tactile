@@ -5,57 +5,57 @@
 #include "tileset_id.hpp"
 #include "vector_map.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_tab)
+TACTILE_FORWARD_DECLARE(tactile, TilesetTab)
 
-namespace tactile::gui {
+namespace tactile {
 
-class tileset_tab_manager final
+class TilesetTabManager final
 {
  public:
-  void add(tileset_id id, tileset_tab* tab);
+  void Add(tileset_id id, TilesetTab* tab);
 
-  void remove(tileset_id id);
+  void Remove(tileset_id id);
 
-  void clear() noexcept;
+  void Clear() noexcept;
 
-  void set_cached_index(int index);
+  void SetCachedIndex(int index);
 
-  [[nodiscard]] auto at(tileset_id id) const -> const tileset_tab*;
+  [[nodiscard]] auto At(tileset_id id) const -> const TilesetTab*;
 
-  [[nodiscard]] auto index_of(tileset_id id) const -> int;
+  [[nodiscard]] auto IndexOf(tileset_id id) const -> int;
 
-  [[nodiscard]] auto contains(tileset_id id) const -> bool;
+  [[nodiscard]] auto Contains(tileset_id id) const -> bool;
 
-  [[nodiscard]] auto is_empty() const -> bool;
+  [[nodiscard]] auto IsEmpty() const -> bool;
 
-  [[nodiscard]] auto cached_index() const -> maybe<int>
+  [[nodiscard]] auto CachedIndex() const -> maybe<int>
   {
-    return m_cachedIndex;
+    return mCachedIndex;
   }
 
   [[nodiscard]] auto begin() noexcept
   {
-    return m_tabs.begin();
+    return mTabs.begin();
   }
 
   [[nodiscard]] auto begin() const noexcept
   {
-    return m_tabs.begin();
+    return mTabs.begin();
   }
 
   [[nodiscard]] auto end() noexcept
   {
-    return m_tabs.end();
+    return mTabs.end();
   }
 
   [[nodiscard]] auto end() const noexcept
   {
-    return m_tabs.end();
+    return mTabs.end();
   }
 
  private:
-  vector_map<tileset_id, tileset_tab*> m_tabs;
-  maybe<int> m_cachedIndex;
+  vector_map<tileset_id, TilesetTab*> mTabs;
+  maybe<int> mCachedIndex;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

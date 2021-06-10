@@ -2,24 +2,24 @@
 
 #include <QPainter>
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_image_label::tileset_image_label(const core::tileset& tileset,
-                                         QWidget* parent)
+TilesetImageLabel::TilesetImageLabel(const core::tileset& tileset,
+                                     QWidget* parent)
     : QLabel{parent}
-    , m_tileWidth{tileset.get_tile_width()}
-    , m_tileHeight{tileset.get_tile_height()}
-    , m_width{tileset.width()}
-    , m_height{tileset.height()}
-    , m_maxX{m_width - 1}
-    , m_maxY{m_height - 1}
+    , mTileWidth{tileset.get_tile_width()}
+    , mTileHeight{tileset.get_tile_height()}
+    , mWidth{tileset.width()}
+    , mHeight{tileset.height()}
+    , mMaxX{mWidth - 1}
+    , mMaxY{mHeight - 1}
 {
   setPixmap(tileset.image());
 }
 
-tileset_image_label::~tileset_image_label() noexcept = default;
+TilesetImageLabel::~TilesetImageLabel() noexcept = default;
 
-void tileset_image_label::paintEvent(QPaintEvent* event)
+void TilesetImageLabel::paintEvent(QPaintEvent* event)
 {
   QLabel::paintEvent(event);
 
@@ -28,8 +28,8 @@ void tileset_image_label::paintEvent(QPaintEvent* event)
 
   const auto region = visibleRegion().boundingRect();
 
-  const auto tileWidth = m_tileWidth.get();
-  const auto tileHeight = m_tileHeight.get();
+  const auto tileWidth = mTileWidth.get();
+  const auto tileHeight = mTileHeight.get();
 
   const auto minRow = region.y() / tileHeight;
   const auto minCol = region.x() / tileWidth;
@@ -42,15 +42,15 @@ void tileset_image_label::paintEvent(QPaintEvent* event)
     {
       const auto x = col * tileWidth;
       const auto y = row * tileHeight;
-      painter.drawRect(x, y, m_width, m_height);
+      painter.drawRect(x, y, mWidth, mHeight);
     }
   }
 
   {
     // renders the bottom and right-hand end lines
-    painter.drawLine(0, m_maxY, m_width, m_maxY);
-    painter.drawLine(m_maxX, 0, m_maxX, m_height);
+    painter.drawLine(0, mMaxY, mWidth, mMaxY);
+    painter.drawLine(mMaxX, 0, mMaxX, mHeight);
   }
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

@@ -3,18 +3,18 @@
 #include "init_ui.hpp"
 #include "ui_tileset_empty_page.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_empty_page::tileset_empty_page(QWidget* parent)
+TilesetEmptyPage::TilesetEmptyPage(QWidget* parent)
     : QWidget{parent}
-    , m_ui{init_ui<Ui::tileset_empty_page>(this)}
+    , mUi{init_ui<Ui::TilesetEmptyPage>(this)}
 {
-  connect(m_ui->addSheetButton,
+  connect(mUi->addSheetButton,
           &QPushButton::clicked,
           this,
-          &tileset_empty_page::ui_add_tileset);
+          &TilesetEmptyPage::S_AddTileset);
 }
 
-tileset_empty_page::~tileset_empty_page() noexcept = default;
+TilesetEmptyPage::~TilesetEmptyPage() noexcept = default;
 
-}  // namespace tactile::gui
+}  // namespace tactile

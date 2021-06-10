@@ -118,11 +118,11 @@ void window_connections::init_tileset_dock()
 {
   // clang-format off
   auto* dock = m_window->mTilesetDock;
-  connect(dock, &tileset_dock::ui_add_tileset, m_window, &Window::S_AddTileset);
-  connect(dock, &tileset_dock::ui_select_tileset, m_window, &Window::S_SelectTileset);
-  connect(dock, &tileset_dock::ui_remove_tileset, m_window, &Window::S_RemoveTileset);
-  connect(dock, &tileset_dock::ui_rename_tileset, m_window, &Window::S_RenameTileset);
-  connect(dock, &tileset_dock::ui_set_tileset_selection, m_window, &Window::S_SetTilesetSelection);
+  connect(dock, &TilesetDock::S_AddTileset, m_window, &Window::S_AddTileset);
+  connect(dock, &TilesetDock::S_SelectTileset, m_window, &Window::S_SelectTileset);
+  connect(dock, &TilesetDock::S_RemoveTileset, m_window, &Window::S_RemoveTileset);
+  connect(dock, &TilesetDock::S_RenameTileset, m_window, &Window::S_RenameTileset);
+  connect(dock, &TilesetDock::S_SetTilesetSelection, m_window, &Window::S_SetTilesetSelection);
   // clang-format on
 }
 

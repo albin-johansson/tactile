@@ -7,22 +7,22 @@
 #include "forward_declare.hpp"
 #include "tileset.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_rubber_band)
+TACTILE_FORWARD_DECLARE(tactile, TilesetRubberBand)
 
-namespace tactile::gui {
+namespace tactile {
 
-class tileset_image_widget final : public QWidget
+class TilesetImageWidget final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit tileset_image_widget(const core::tileset& tileset,
-                                QWidget* parent = nullptr);
+  explicit TilesetImageWidget(const core::tileset& tileset,
+                              QWidget* parent = nullptr);
 
-  ~tileset_image_widget() noexcept override;
+  ~TilesetImageWidget() noexcept override;
 
  signals:
-  void ui_set_tileset_selection(const core::tileset_selection& selection);
+  void S_SetTilesetSelection(const core::tileset_selection& selection);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;
@@ -32,9 +32,9 @@ class tileset_image_widget final : public QWidget
   void mouseMoveEvent(QMouseEvent* event) override;
 
  private:
-  QLayout* m_layout{};
-  QLabel* m_imageLabel{};
-  tileset_rubber_band* m_rubberBand{};
+  QLayout* mLayout{};
+  QLabel* mImageLabel{};
+  TilesetRubberBand* mRubberBand{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

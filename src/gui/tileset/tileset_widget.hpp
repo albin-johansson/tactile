@@ -8,43 +8,44 @@
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, tileset_widget)
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_content_page)
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_empty_page)
+TACTILE_FORWARD_DECLARE_UI(TilesetWidget)
 
-namespace tactile::gui {
+TACTILE_FORWARD_DECLARE(tactile, TilesetContentPage)
+TACTILE_FORWARD_DECLARE(tactile, TilesetEmptyPage)
 
-class tileset_widget final : public QWidget
+namespace tactile {
+
+class TilesetWidget final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit tileset_widget(QWidget* parent = nullptr);
+  explicit TilesetWidget(QWidget* parent = nullptr);
 
-  ~tileset_widget() noexcept override;
+  ~TilesetWidget() noexcept override;
 
  signals:
-  void ui_add_tileset();
-  void ui_remove_tileset(tileset_id id);
-  void ui_select_tileset(tileset_id id);
-  void ui_rename_tileset(tileset_id id, const QString& name);
-  void ui_set_tileset_selection(const core::tileset_selection& selection);
+  void S_AddTileset();
+  void S_RemoveTileset(tileset_id id);
+  void S_SelectTileset(tileset_id id);
+  void S_RenameTileset(tileset_id id, const QString& name);
+  void S_SetTilesetSelection(const core::tileset_selection& selection);
 
  public slots:
-  void added_tileset(map_id map, tileset_id id, const core::tileset& tileset);
+  void OnAddedTileset(map_id map, tileset_id id, const core::tileset& tileset);
 
-  void removed_tileset(tileset_id id);
+  void OnRemovedTileset(tileset_id id);
 
-  void renamed_tileset(tileset_id id, const QString& name);
+  void OnRenamedTileset(tileset_id id, const QString& name);
 
-  void selected_map(map_id id);
+  void OnSwitchedMap(map_id id);
 
  private:
-  unique<Ui::tileset_widget> m_ui;
-  tileset_content_page* m_contentPage{};
-  tileset_empty_page* m_emptyPage{};
-  int m_emptyIndex{};
-  int m_contentIndex{};
+  unique<Ui::TilesetWidget> mUi;
+  TilesetContentPage* mContentPage{};
+  TilesetEmptyPage* mEmptyPage{};
+  int mEmptyIndex{};
+  int mContentIndex{};
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

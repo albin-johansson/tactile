@@ -5,63 +5,63 @@
 #include "tileset_empty_page.hpp"
 #include "ui_tileset_widget.h"
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_widget::tileset_widget(QWidget* parent)
+TilesetWidget::TilesetWidget(QWidget* parent)
     : QWidget{parent}
-    , m_ui{init_ui<Ui::tileset_widget>(this)}
-    , m_contentPage{new tileset_content_page{this}}
-    , m_emptyPage{new tileset_empty_page{this}}
-    , m_emptyIndex{m_ui->stackedWidget->addWidget(m_emptyPage)}
-    , m_contentIndex{m_ui->stackedWidget->addWidget(m_contentPage)}
+    , mUi{init_ui<Ui::TilesetWidget>(this)}
+    , mContentPage{new TilesetContentPage{this}}
+    , mEmptyPage{new TilesetEmptyPage{this}}
+    , mEmptyIndex{mUi->stackedWidget->addWidget(mEmptyPage)}
+    , mContentIndex{mUi->stackedWidget->addWidget(mContentPage)}
 {
-  m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
+  mUi->stackedWidget->setCurrentIndex(mEmptyIndex);
 
   // clang-format off
-  connect(m_emptyPage, &tileset_empty_page::ui_add_tileset, this, &tileset_widget::ui_add_tileset);
-  connect(m_contentPage, &tileset_content_page::ui_add_tileset, this, &tileset_widget::ui_add_tileset);
-  connect(m_contentPage, &tileset_content_page::ui_select_tileset, this, &tileset_widget::ui_select_tileset);
-  connect(m_contentPage, &tileset_content_page::ui_remove_tileset, this, &tileset_widget::ui_remove_tileset);
-  connect(m_contentPage, &tileset_content_page::ui_rename_tileset, this, &tileset_widget::ui_rename_tileset);
-  connect(m_contentPage, &tileset_content_page::ui_set_tileset_selection, this, &tileset_widget::ui_set_tileset_selection);
+  connect(mEmptyPage, &TilesetEmptyPage::S_AddTileset, this, &TilesetWidget::S_AddTileset);
+  connect(mContentPage, &TilesetContentPage::S_AddTileset, this, &TilesetWidget::S_AddTileset);
+  connect(mContentPage, &TilesetContentPage::S_SelectTileset, this, &TilesetWidget::S_SelectTileset);
+  connect(mContentPage, &TilesetContentPage::S_RemoveTileset, this, &TilesetWidget::S_RemoveTileset);
+  connect(mContentPage, &TilesetContentPage::S_RenameTileset, this, &TilesetWidget::S_RenameTileset);
+  connect(mContentPage, &TilesetContentPage::S_SetTilesetSelection, this, &TilesetWidget::S_SetTilesetSelection);
   // clang-format on
 
-  connect(m_contentPage, &tileset_content_page::switch_to_empty_page, [this] {
-    m_ui->stackedWidget->setCurrentIndex(m_emptyIndex);
+  connect(mContentPage, &TilesetContentPage::S_SwitchToEmptyPage, [this] {
+    mUi->stackedWidget->setCurrentIndex(mEmptyIndex);
   });
 
-  connect(m_contentPage, &tileset_content_page::switch_to_content_page, [this] {
-    m_ui->stackedWidget->setCurrentIndex(m_contentIndex);
+  connect(mContentPage, &TilesetContentPage::S_SwitchToContentPage, [this] {
+    mUi->stackedWidget->setCurrentIndex(mContentIndex);
   });
 }
 
-tileset_widget::~tileset_widget() noexcept = default;
+TilesetWidget::~TilesetWidget() noexcept = default;
 
-void tileset_widget::added_tileset(const map_id map,
+void TilesetWidget::OnAddedTileset(const map_id map,
                                    const tileset_id id,
                                    const core::tileset& tileset)
 {
-  const auto wasEmpty = m_contentPage->is_empty();
-  m_contentPage->added_tileset(map, id, tileset);
+  const auto wasEmpty = mContentPage->IsEmpty();
+  mContentPage->OnAddedTileset(map, id, tileset);
   if (wasEmpty)
   {
-    m_ui->stackedWidget->setCurrentIndex(m_contentIndex);
+    mUi->stackedWidget->setCurrentIndex(mContentIndex);
   }
 }
 
-void tileset_widget::removed_tileset(const tileset_id id)
+void TilesetWidget::OnRemovedTileset(const tileset_id id)
 {
-  m_contentPage->removed_tileset(id);
+  mContentPage->OnRemovedTileset(id);
 }
 
-void tileset_widget::renamed_tileset(const tileset_id id, const QString& name)
+void TilesetWidget::OnRenamedTileset(const tileset_id id, const QString& name)
 {
-  m_contentPage->renamed_tileset(id, name);
+  mContentPage->OnRenamedTileset(id, name);
 }
 
-void tileset_widget::selected_map(const map_id id)
+void TilesetWidget::OnSwitchedMap(const map_id id)
 {
-  m_contentPage->selected_map(id);
+  mContentPage->OnSelectedMap(id);
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile

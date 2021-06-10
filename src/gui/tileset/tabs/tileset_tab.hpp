@@ -9,33 +9,33 @@
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::gui, tileset_image_widget)
+TACTILE_FORWARD_DECLARE(tactile, TilesetImageWidget)
 
-namespace tactile::gui {
+namespace tactile {
 
-class tileset_tab final : public QWidget
+class TilesetTab final : public QWidget
 {
   Q_OBJECT
 
  public:
-  explicit tileset_tab(tileset_id id,
-                       const core::tileset& tileset,
-                       QWidget* parent = nullptr);
+  explicit TilesetTab(tileset_id id,
+                      const core::tileset& tileset,
+                      QWidget* parent = nullptr);
 
-  ~tileset_tab() noexcept override;
+  ~TilesetTab() noexcept override;
 
-  [[nodiscard]] auto id() const noexcept -> tileset_id
+  [[nodiscard]] auto Id() const noexcept -> tileset_id
   {
-    return m_id;
+    return mId;
   }
 
-  [[nodiscard]] auto name() const -> const QString&
+  [[nodiscard]] auto Name() const -> const QString&
   {
-    return m_name;
+    return mName;
   }
 
  signals:
-  void set_tileset_selection(const core::tileset_selection& selection);
+  void S_SetTilesetSelection(const core::tileset_selection& selection);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;
@@ -45,12 +45,12 @@ class tileset_tab final : public QWidget
   void mouseMoveEvent(QMouseEvent* event) override;
 
  private:
-  tileset_id m_id;
-  QString m_name;
-  QLayout* m_layout;
-  QScrollArea* m_scrollArea;
-  tileset_image_widget* m_imageWidget;
-  QPoint m_lastMousePos;
+  tileset_id mId;
+  QString mName;
+  QLayout* mLayout{};
+  QScrollArea* mScrollArea{};
+  TilesetImageWidget* mImageWidget{};
+  QPoint mLastMousePos;
 };
 
-}  // namespace tactile::gui
+}  // namespace tactile

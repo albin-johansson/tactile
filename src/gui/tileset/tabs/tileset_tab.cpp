@@ -8,44 +8,44 @@
 
 #include "tileset_image_widget.hpp"
 
-namespace tactile::gui {
+namespace tactile {
 
-tileset_tab::tileset_tab(tileset_id id,
-                         const core::tileset& tileset,
-                         QWidget* parent)
+TilesetTab::TilesetTab(tileset_id id,
+                       const core::tileset& tileset,
+                       QWidget* parent)
     : QWidget{parent}
-    , m_id{id}
-    , m_name{tileset.name()}
+    , mId{id}
+    , mName{tileset.name()}
 {
   setObjectName("tileset_tab");
 
-  m_layout = new QGridLayout{this};
-  m_layout->setContentsMargins(0, 0, 0, 0);
+  mLayout = new QGridLayout{this};
+  mLayout->setContentsMargins(0, 0, 0, 0);
 
-  m_scrollArea = new QScrollArea{this};
-  m_scrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
+  mScrollArea = new QScrollArea{this};
+  mScrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
 
-  m_imageWidget = new tileset_image_widget{tileset, this};
-  m_scrollArea->setWidget(m_imageWidget);
+  mImageWidget = new TilesetImageWidget{tileset, this};
+  mScrollArea->setWidget(mImageWidget);
 
-  m_layout->addWidget(m_scrollArea);
+  mLayout->addWidget(mScrollArea);
 
-  setLayout(m_layout);
+  setLayout(mLayout);
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  connect(m_imageWidget,
-          &tileset_image_widget::ui_set_tileset_selection,
+  connect(mImageWidget,
+          &TilesetImageWidget::S_SetTilesetSelection,
           this,
-          &tileset_tab::set_tileset_selection);
+          &TilesetTab::S_SetTilesetSelection);
 }
 
-tileset_tab::~tileset_tab() noexcept = default;
+TilesetTab::~TilesetTab() noexcept = default;
 
-void tileset_tab::mousePressEvent(QMouseEvent* event)
+void TilesetTab::mousePressEvent(QMouseEvent* event)
 {
   QWidget::mousePressEvent(event);
 
-  m_lastMousePos = event->pos();
+  mLastMousePos = event->pos();
 
   if (event->buttons() & Qt::MiddleButton)
   {
@@ -53,7 +53,7 @@ void tileset_tab::mousePressEvent(QMouseEvent* event)
   }
 }
 
-void tileset_tab::mouseMoveEvent(QMouseEvent* event)
+void TilesetTab::mouseMoveEvent(QMouseEvent* event)
 {
   QWidget::mouseMoveEvent(event);
 
@@ -61,19 +61,19 @@ void tileset_tab::mouseMoveEvent(QMouseEvent* event)
 
   if (event->buttons() & Qt::MiddleButton)
   {
-    auto* vbar = m_scrollArea->verticalScrollBar();
-    auto* hbar = m_scrollArea->horizontalScrollBar();
-    hbar->setValue(hbar->value() - pos.x() + m_lastMousePos.x());
-    vbar->setValue(vbar->value() - pos.y() + m_lastMousePos.y());
+    auto* vbar = mScrollArea->verticalScrollBar();
+    auto* hbar = mScrollArea->horizontalScrollBar();
+    hbar->setValue(hbar->value() - pos.x() + mLastMousePos.x());
+    vbar->setValue(vbar->value() - pos.y() + mLastMousePos.y());
   }
 
-  m_lastMousePos = pos;
+  mLastMousePos = pos;
 }
 
-void tileset_tab::mouseReleaseEvent(QMouseEvent* event)
+void TilesetTab::mouseReleaseEvent(QMouseEvent* event)
 {
   QWidget::mouseReleaseEvent(event);
   QApplication::restoreOverrideCursor();
 }
 
-}  // namespace tactile::gui
+}  // namespace tactile
