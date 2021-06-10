@@ -58,11 +58,11 @@ void map_document::setup()
   auto* commands = m_delegate->history();
 
   // clang-format off
-  connect(commands, &command_stack::cleanChanged, this, &map_document::clean_changed);
-  connect(commands, &command_stack::canUndoChanged, this, &map_document::undo_state_updated);
-  connect(commands, &command_stack::canRedoChanged, this, &map_document::redo_state_updated);
-  connect(commands, &command_stack::undoTextChanged, this, &map_document::undo_text_updated);
-  connect(commands, &command_stack::redoTextChanged, this, &map_document::redo_text_updated);
+  connect(commands, &CommandStack::cleanChanged, this, &map_document::clean_changed);
+  connect(commands, &CommandStack::canUndoChanged, this, &map_document::undo_state_updated);
+  connect(commands, &CommandStack::canRedoChanged, this, &map_document::redo_state_updated);
+  connect(commands, &CommandStack::undoTextChanged, this, &map_document::undo_text_updated);
+  connect(commands, &CommandStack::redoTextChanged, this, &map_document::redo_text_updated);
 
   connect(m_delegate.get(), &document_delegate::added_property,
           this, &map_document::added_property);

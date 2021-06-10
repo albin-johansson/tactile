@@ -7,7 +7,7 @@
 namespace tactile {
 
 /**
- * \class command_stack
+ * \class CommandStack
  *
  * \brief Represents a stack of commands.
  *
@@ -15,10 +15,10 @@ namespace tactile {
  *
  * \headerfile command_stack.hpp
  */
-class command_stack final : public QUndoStack
+class CommandStack final : public QUndoStack
 {
  public:
-  explicit command_stack(QObject* parent = nullptr) : QUndoStack{parent}
+  explicit CommandStack(QObject* parent = nullptr) : QUndoStack{parent}
   {}
 
   /**
@@ -33,7 +33,7 @@ class command_stack final : public QUndoStack
    * \since 0.1.0
    */
   template <std::derived_from<QUndoCommand> T, typename... Args>
-  void push(Args&&... args)
+  void Push(Args&&... args)
   {
     QUndoStack::push(new T{std::forward<Args>(args)...});
   }

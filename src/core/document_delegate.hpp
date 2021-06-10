@@ -83,12 +83,12 @@ class document_delegate final : public document
 
   /// \}
 
-  [[nodiscard]] auto history() noexcept -> command_stack*;
+  [[nodiscard]] auto history() noexcept -> CommandStack*;
 
   template <std::derived_from<QUndoCommand> T, typename... Args>
   void execute(Args&&... args)
   {
-    m_commandStack->template push<T>(std::forward<Args>(args)...);
+    m_commandStack->template Push<T>(std::forward<Args>(args)...);
   }
 
  signals:
@@ -99,7 +99,7 @@ class document_delegate final : public document
   void renamed_property(const QString& oldName, const QString& newName);
 
  private:
-  unique<command_stack> m_commandStack;
+  unique<CommandStack> m_commandStack;
   unique<property_manager> m_propertyManager;
   maybe<QFileInfo> m_path;
 };

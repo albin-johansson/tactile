@@ -7,7 +7,7 @@
 namespace tactile::core {
 
 document_delegate::document_delegate()
-    : m_commandStack{std::make_unique<command_stack>()}
+    : m_commandStack{std::make_unique<CommandStack>()}
     , m_propertyManager{std::make_unique<property_delegate>()}
 {
   m_commandStack->setUndoLimit(100);
@@ -147,7 +147,7 @@ auto document_delegate::properties() const -> const property_map&
   return m_propertyManager->properties();
 }
 
-auto document_delegate::history() noexcept -> command_stack*
+auto document_delegate::history() noexcept -> CommandStack*
 {
   return m_commandStack.get();
 }
