@@ -1,4 +1,4 @@
-#include "remove_col.hpp"
+#include "remove_column.hpp"
 
 #include "algorithm.hpp"
 #include "map.hpp"
@@ -6,21 +6,21 @@
 
 namespace tactile::cmd {
 
-remove_col::remove_col(not_null<core::map_document*> document)
-    : repeated_map_command{document, TACTILE_QSTRING(u"Remove Column")}
+RemoveColumn::RemoveColumn(not_null<core::map_document*> document)
+    : RepeatedMapCommand{document, TACTILE_QSTRING(u"Remove Column")}
 {}
 
-void remove_col::undo()
+void RemoveColumn::undo()
 {
   QUndoCommand::undo();
 
-  invoke_n(times(), [&] { GetMap().add_col(empty); });
+  invoke_n(Times(), [&] { GetMap().add_col(empty); });
 
   RestoreTiles();
   Redraw();
 }
 
-void remove_col::redo()
+void RemoveColumn::redo()
 {
   QUndoCommand::redo();
 
@@ -28,12 +28,12 @@ void remove_col::redo()
 
   const auto endRow = map.row_count();
   const auto endCol = map.col_count();
-  const auto beginCol = endCol - 1_col - col_t{times()};
+  const auto beginCol = endCol - 1_col - col_t{Times()};
 
   ClearCache();
   SaveTiles({0_row, endRow}, {beginCol, endCol});
 
-  invoke_n(times(), [&] { GetMap().remove_col(); });
+  invoke_n(Times(), [&] { GetMap().remove_col(); });
 
   Redraw();
 }

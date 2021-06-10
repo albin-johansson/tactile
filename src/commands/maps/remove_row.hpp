@@ -11,7 +11,7 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 namespace tactile::cmd {
 
 /**
- * \class remove_row
+ * \class RemoveRow
  *
  * \brief Represents the dialog of removing a row from the active map.
  *
@@ -19,10 +19,10 @@ namespace tactile::cmd {
  *
  * \headerfile remove_row.hpp
  */
-class remove_row final : public repeated_map_command
+class RemoveRow final : public RepeatedMapCommand
 {
  public:
-  explicit remove_row(not_null<core::map_document*> document);
+  explicit RemoveRow(not_null<core::map_document*> document);
 
   void undo() override;
 

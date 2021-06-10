@@ -27,14 +27,14 @@ set(TACTILE_SOURCE_FILES
     commands/layers/set_layer_visibility.cpp
     commands/layers/set_layer_visibility.hpp
 
-    commands/maps/add_col.cpp
-    commands/maps/add_col.hpp
+    commands/maps/add_column.cpp
+    commands/maps/add_column.hpp
     commands/maps/add_row.cpp
     commands/maps/add_row.hpp
     commands/maps/map_command.cpp
     commands/maps/map_command.hpp
-    commands/maps/remove_col.cpp
-    commands/maps/remove_col.hpp
+    commands/maps/remove_column.cpp
+    commands/maps/remove_column.hpp
     commands/maps/remove_row.cpp
     commands/maps/remove_row.hpp
     commands/maps/repeated_map_command.hpp

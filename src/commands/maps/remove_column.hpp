@@ -10,18 +10,18 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 namespace tactile::cmd {
 
 /**
- * \class remove_col
+ * \class RemoveColumn
  *
  * \brief Represents the dialog of removing a column from the active map.
  *
  * \since 0.1.0
  *
- * \headerfile remove_col.hpp
+ * \headerfile remove_column.hpp
  */
-class remove_col final : public repeated_map_command
+class RemoveColumn final : public RepeatedMapCommand
 {
  public:
-  explicit remove_col(not_null<core::map_document*> document);
+  explicit RemoveColumn(not_null<core::map_document*> document);
 
   void undo() override;
 

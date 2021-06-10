@@ -2,7 +2,7 @@
 
 #include <utility>  // move
 
-#include "add_col.hpp"
+#include "add_column.hpp"
 #include "add_layer.hpp"
 #include "add_property.hpp"
 #include "add_row.hpp"
@@ -16,7 +16,7 @@
 #include "move_layer_back.hpp"
 #include "move_layer_forward.hpp"
 #include "object_layer.hpp"
-#include "remove_col.hpp"
+#include "remove_column.hpp"
 #include "remove_layer.hpp"
 #include "remove_property.hpp"
 #include "remove_row.hpp"
@@ -243,24 +243,24 @@ void map_document::add_row()
 
 void map_document::add_column()
 {
-  m_delegate->execute<cmd::AddCol>(this);
+  m_delegate->execute<cmd::AddColumn>(this);
 }
 
 void map_document::remove_row()
 {
-  m_delegate->execute<cmd::remove_row>(this);
+  m_delegate->execute<cmd::RemoveRow>(this);
 }
 
 void map_document::remove_column()
 {
-  m_delegate->execute<cmd::remove_col>(this);
+  m_delegate->execute<cmd::RemoveColumn>(this);
 }
 
 void map_document::resize(const row_t nRows, const col_t nCols)
 {
   Q_ASSERT(nRows > 0_row);
   Q_ASSERT(nCols > 0_col);
-  m_delegate->execute<cmd::resize_map>(this, nRows, nCols);
+  m_delegate->execute<cmd::ResizeMap>(this, nRows, nCols);
 }
 
 void map_document::add_tileset(const QImage& image,

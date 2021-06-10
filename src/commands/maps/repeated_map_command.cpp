@@ -2,19 +2,18 @@
 
 namespace tactile::cmd {
 
-repeated_map_command::repeated_map_command(
-    not_null<core::map_document*> document,
-    const QString& name)
+RepeatedMapCommand::RepeatedMapCommand(not_null<core::map_document*> document,
+                                       const QString& name)
     : MapCommand{document, name}
 {}
 
-auto repeated_map_command::mergeWith(const QUndoCommand* other) -> bool
+auto RepeatedMapCommand::mergeWith(const QUndoCommand* other) -> bool
 {
   if (id() == other->id())
   {
-    if (auto* ptr = dynamic_cast<const repeated_map_command*>(other))
+    if (auto* ptr = dynamic_cast<const RepeatedMapCommand*>(other))
     {
-      m_times += ptr->m_times;
+      mTimes += ptr->mTimes;
 
       for (const auto& [layer, data] : ptr->LayerData())
       {

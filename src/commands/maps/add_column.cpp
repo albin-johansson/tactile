@@ -1,4 +1,4 @@
-#include "add_col.hpp"
+#include "add_column.hpp"
 
 #include "algorithm.hpp"
 #include "map_document.hpp"
@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-AddCol::AddCol(not_null<core::map_document*> document)
+AddColumn::AddColumn(not_null<core::map_document*> document)
     : repeated_command{TACTILE_QSTRING(u"Add Column")}
     , mDocument{document}
 {
@@ -17,7 +17,7 @@ AddCol::AddCol(not_null<core::map_document*> document)
   }
 }
 
-void AddCol::undo()
+void AddColumn::undo()
 {
   QUndoCommand::undo();
 
@@ -26,7 +26,7 @@ void AddCol::undo()
   emit mDocument->redraw();
 }
 
-void AddCol::redo()
+void AddColumn::redo()
 {
   QUndoCommand::redo();
 

@@ -10,7 +10,7 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 namespace tactile::cmd {
 
 /**
- * \class resize_map
+ * \class ResizeMap
  *
  * \brief Represents the dialog of resizing the active map.
  *
@@ -18,11 +18,11 @@ namespace tactile::cmd {
  *
  * \headerfile resize_map.hpp
  */
-class resize_map final : public MapCommand
+class ResizeMap final : public MapCommand
 {
  public:
   /**
-   * \brief Creates a `resize_map` instance.
+   * \brief Creates a resize map command.
    *
    * \param document a pointer to the associated map document.
    * \param nRows the new number of rows for the active map.
@@ -30,7 +30,7 @@ class resize_map final : public MapCommand
    *
    * \since 0.1.0
    */
-  resize_map(not_null<core::map_document*> document, row_t nRows, col_t nCols);
+  ResizeMap(not_null<core::map_document*> document, row_t nRows, col_t nCols);
 
   void undo() override;
 
@@ -42,10 +42,10 @@ class resize_map final : public MapCommand
   }
 
  private:
-  row_t m_rows;
-  col_t m_cols;
-  row_t m_oldRows{1};
-  col_t m_oldCols{1};
+  row_t mRows;
+  col_t mCols;
+  row_t mOldRows{1};
+  col_t mOldCols{1};
 
   /**
    * \brief Indicates whether or not the command will result in some tiles being
@@ -58,9 +58,9 @@ class resize_map final : public MapCommand
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto lossy_resize() const noexcept -> bool
+  [[nodiscard]] auto IsLossyResize() const noexcept -> bool
   {
-    return m_oldRows > m_rows || m_oldCols > m_cols;
+    return mOldRows > mRows || mOldCols > mCols;
   }
 };
 

@@ -9,22 +9,22 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class repeated_map_command : public MapCommand
+class RepeatedMapCommand : public MapCommand
 {
  public:
-  repeated_map_command(not_null<core::map_document*> document,
-                       const QString& name);
+  RepeatedMapCommand(not_null<core::map_document*> document,
+                     const QString& name);
 
   auto mergeWith(const QUndoCommand* other) -> bool final;
 
  protected:
-  [[nodiscard]] auto times() const noexcept -> int
+  [[nodiscard]] auto Times() const noexcept -> int
   {
-    return m_times;
+    return mTimes;
   }
 
  private:
-  int m_times{1};
+  int mTimes{1};
 };
 
 }  // namespace tactile::cmd

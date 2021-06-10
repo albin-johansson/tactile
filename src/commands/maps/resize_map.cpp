@@ -7,24 +7,24 @@ using namespace tactile::core;
 
 namespace tactile::cmd {
 
-resize_map::resize_map(not_null<core::map_document*> document,
-                       const row_t rows,
-                       const col_t cols)
+ResizeMap::ResizeMap(not_null<core::map_document*> document,
+                     const row_t rows,
+                     const col_t cols)
     : MapCommand{document, TACTILE_QSTRING(u"Resize Map")}
-    , m_rows{rows}
-    , m_cols{cols}
+    , mRows{rows}
+    , mCols{cols}
 {}
 
-void resize_map::undo()
+void ResizeMap::undo()
 {
   QUndoCommand::undo();
 
   auto& map = GetMap();
 
-  map.set_row_count(m_oldRows);
-  map.set_col_count(m_oldCols);
+  map.set_row_count(mOldRows);
+  map.set_col_count(mOldCols);
 
-  if (lossy_resize())
+  if (IsLossyResize())
   {
     RestoreTiles();
   }
@@ -32,27 +32,27 @@ void resize_map::undo()
   Redraw();
 }
 
-void resize_map::redo()
+void ResizeMap::redo()
 {
   QUndoCommand::redo();
 
   auto& map = GetMap();
 
-  m_oldRows = map.row_count();
-  m_oldCols = map.col_count();
+  mOldRows = map.row_count();
+  mOldCols = map.col_count();
 
-  if (lossy_resize())
+  if (IsLossyResize())
   {
     const auto rows = map.row_count();
     const auto cols = map.col_count();
 
     ClearCache();
-    SaveTiles({rows - m_oldRows - m_rows, rows}, {0_col, cols});
-    SaveTiles({0_row, rows}, {cols - m_oldCols - m_cols, cols});
+    SaveTiles({rows - mOldRows - mRows, rows}, {0_col, cols});
+    SaveTiles({0_row, rows}, {cols - mOldCols - mCols, cols});
   }
 
-  map.set_row_count(m_rows);
-  map.set_col_count(m_cols);
+  map.set_row_count(mRows);
+  map.set_col_count(mCols);
 
   Redraw();
 }
