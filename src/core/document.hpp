@@ -59,6 +59,7 @@ class ADocument : public QObject, public property_manager
    *
    * \since 0.2.0
    */
+  virtual void MarkAsClean() = 0;
 
   /**
    * \brief Clears the entire undo/redo history associated with the document.
