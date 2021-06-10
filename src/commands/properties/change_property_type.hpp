@@ -11,12 +11,12 @@
 
 namespace tactile::cmd {
 
-class change_property_type final : public QUndoCommand
+class ChangePropertyType final : public QUndoCommand
 {
  public:
-  change_property_type(not_null<core::property_manager*> manager,
-                       QString name,
-                       core::property_type type1);
+  ChangePropertyType(not_null<core::property_manager*> manager,
+                     QString name,
+                     core::property_type type1);
 
   void undo() override;
 
@@ -28,10 +28,10 @@ class change_property_type final : public QUndoCommand
   }
 
  private:
-  core::property_manager* m_manager{};
-  QString m_name;
-  core::property_type m_type;
-  maybe<core::property> m_previousProperty;
+  core::property_manager* mManager{};
+  QString mName;
+  core::property_type mType;
+  maybe<core::property> mPreviousProperty;
 };
 
 }  // namespace tactile::cmd

@@ -155,41 +155,41 @@ void map_document::add_property(const QString& name,
                                 const core::property_type type)
 {
   const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::add_property>(m_delegate.get(), name, type);
+  m_delegate->execute<cmd::AddProperty>(m_delegate.get(), name, type);
 }
 
 void map_document::add_property(const QString& name,
                                 const core::property& property)
 {
   const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::add_property>(m_delegate.get(), name, property);
+  m_delegate->execute<cmd::AddProperty>(m_delegate.get(), name, property);
 }
 
 void map_document::remove_property(const QString& name)
 {
   const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::remove_property>(m_delegate.get(), name);
+  m_delegate->execute<cmd::RemoveProperty>(m_delegate.get(), name);
 }
 
 void map_document::rename_property(const QString& oldName,
                                    const QString& newName)
 {
   const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::rename_property>(m_delegate.get(), oldName, newName);
+  m_delegate->execute<cmd::RenameProperty>(m_delegate.get(), oldName, newName);
 }
 
 void map_document::set_property(const QString& name,
                                 const core::property& property)
 {
   const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::update_property>(m_delegate.get(), name, property);
+  m_delegate->execute<cmd::UpdateProperty>(m_delegate.get(), name, property);
 }
 
 void map_document::change_property_type(const QString& name,
                                         const core::property_type type)
 {
   const QSignalBlocker blocker{m_delegate.get()};
-  m_delegate->execute<cmd::change_property_type>(m_delegate.get(), name, type);
+  m_delegate->execute<cmd::ChangePropertyType>(m_delegate.get(), name, type);
 }
 
 auto map_document::get_property(const QString& name) const

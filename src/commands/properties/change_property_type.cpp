@@ -9,37 +9,37 @@ namespace tactile::cmd {
 
 // clang-format off
 
-change_property_type::change_property_type(not_null<core::property_manager*> manager,
-                                           QString name,
-                                           const core::property_type type)
+ChangePropertyType::ChangePropertyType(not_null<core::property_manager*> manager,
+                                       QString name,
+                                       const core::property_type type)
     : QUndoCommand{TACTILE_QSTRING(u"Change Property Type")}
-    , m_manager{manager}
-    , m_name{std::move(name)}
-    , m_type{type}
+    , mManager{manager}
+    , mName{std::move(name)}
+    , mType{type}
 {
-  if (!m_manager) {
+  if (!mManager) {
     throw tactile_error{"Null property manager!"};
   }
 }
 
 // clang-format on
 
-void change_property_type::undo()
+void ChangePropertyType::undo()
 {
   QUndoCommand::undo();
 
-  const auto& prev = m_previousProperty.value();
-  m_manager->change_property_type(m_name, prev.type().value());
-  m_manager->set_property(m_name, prev);
-  m_previousProperty.reset();
+  const auto& prev = mPreviousProperty.value();
+  mManager->change_property_type(mName, prev.type().value());
+  mManager->set_property(mName, prev);
+  mPreviousProperty.reset();
 }
 
-void change_property_type::redo()
+void ChangePropertyType::redo()
 {
   QUndoCommand::redo();
 
-  m_previousProperty = m_manager->get_property(m_name);
-  m_manager->change_property_type(m_name, m_type);
+  mPreviousProperty = mManager->get_property(mName);
+  mManager->change_property_type(mName, mType);
 }
 
 }  // namespace tactile::cmd

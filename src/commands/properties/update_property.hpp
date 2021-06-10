@@ -12,12 +12,12 @@ TACTILE_FORWARD_DECLARE(tactile::core, property_manager)
 
 namespace tactile::cmd {
 
-class update_property final : public QUndoCommand
+class UpdateProperty final : public QUndoCommand
 {
  public:
-  update_property(core::property_manager* manager,
-                  QString name,
-                  core::property property);
+  UpdateProperty(core::property_manager* manager,
+                 QString name,
+                 core::property property);
 
   void undo() override;
 
@@ -29,10 +29,10 @@ class update_property final : public QUndoCommand
   }
 
  private:
-  core::property_manager* m_manager{};
-  QString m_name;
-  core::property m_property;
-  maybe<core::property> m_prevProperty;
+  core::property_manager* mManager{};
+  QString mName;
+  core::property mProperty;
+  maybe<core::property> mPrevProperty;
 };
 
 }  // namespace tactile::cmd

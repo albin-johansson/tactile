@@ -7,50 +7,50 @@
 
 namespace tactile::cmd {
 
-add_property::add_property(not_null<core::property_manager*> manager,
-                           QString name,
-                           data_type data)
+AddProperty::AddProperty(not_null<core::property_manager*> manager,
+                         QString name,
+                         data_type data)
     : QUndoCommand{TACTILE_QSTRING(u"Add Property \"") + name +
                    TACTILE_QSTRING(u"\"")}
-    , m_manager{manager}
-    , m_name{std::move(name)}
-    , m_data{std::move(data)}
+    , mManager{manager}
+    , mName{std::move(name)}
+    , mData{std::move(data)}
 {
-  if (!m_manager)
+  if (!mManager)
   {
     throw tactile_error{"Null property manager!"};
   }
 }
 
-add_property::add_property(not_null<core::property_manager*> manager,
-                           QString name,
-                           const core::property& property)
-    : add_property{manager, std::move(name), data_type{property}}
+AddProperty::AddProperty(not_null<core::property_manager*> manager,
+                         QString name,
+                         const core::property& property)
+    : AddProperty{manager, std::move(name), data_type{property}}
 {}
 
-add_property::add_property(not_null<core::property_manager*> manager,
-                           QString name,
-                           const core::property_type type)
-    : add_property{manager, std::move(name), data_type{type}}
+AddProperty::AddProperty(not_null<core::property_manager*> manager,
+                         QString name,
+                         const core::property_type type)
+    : AddProperty{manager, std::move(name), data_type{type}}
 {}
 
-void add_property::undo()
+void AddProperty::undo()
 {
   QUndoCommand::undo();
-  m_manager->remove_property(m_name);
+  mManager->remove_property(mName);
 }
 
-void add_property::redo()
+void AddProperty::redo()
 {
   QUndoCommand::redo();
 
-  if (const auto* type = std::get_if<core::property_type>(&m_data))
+  if (const auto* type = std::get_if<core::property_type>(&mData))
   {
-    m_manager->add_property(m_name, *type);
+    mManager->add_property(mName, *type);
   }
   else
   {
-    m_manager->add_property(m_name, std::get<core::property>(m_data));
+    mManager->add_property(mName, std::get<core::property>(mData));
   }
 }
 
