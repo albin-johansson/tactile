@@ -36,7 +36,7 @@ void validate_layers(const core::MapDocument& document)
   {  // First layer
     const auto* layer = document.GetLayer(1_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::tile_layer, layer->type());
+    ASSERT_EQ(core::LayerType::tile_layer, layer->Type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"G0"), layer->Name());
     EXPECT_EQ(1.0, layer->Opacity());
@@ -55,7 +55,7 @@ void validate_layers(const core::MapDocument& document)
   {  // Second layer
     const auto* layer = document.GetLayer(2_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::tile_layer, layer->type());
+    ASSERT_EQ(core::LayerType::tile_layer, layer->Type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"T0"), layer->Name());
     EXPECT_EQ(0.75, layer->Opacity());
@@ -74,7 +74,7 @@ void validate_layers(const core::MapDocument& document)
   {  // Third layer
     const auto* layer = document.GetLayer(3_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::object_layer, layer->type());
+    ASSERT_EQ(core::LayerType::object_layer, layer->Type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"O1"), layer->Name());
     EXPECT_EQ(1.0, layer->Opacity());
@@ -90,15 +90,15 @@ void validate_layers(const core::MapDocument& document)
     ASSERT_TRUE(objectLayer->HasObject(1_obj));
     const auto& object = objectLayer->GetObject(1_obj);
 
-    EXPECT_EQ(128, object.x());
-    EXPECT_EQ(96, object.y());
-    EXPECT_EQ(0, object.width());
-    EXPECT_EQ(0, object.height());
-    EXPECT_EQ(core::object_type::point, object.type());
-    EXPECT_TRUE(object.visible());
+    EXPECT_EQ(128, object.X());
+    EXPECT_EQ(96, object.Y());
+    EXPECT_EQ(0, object.Width());
+    EXPECT_EQ(0, object.Height());
+    EXPECT_EQ(core::object_type::point, object.Type());
+    EXPECT_TRUE(object.IsVisible());
     EXPECT_TRUE(object.IsPoint());
-    EXPECT_FALSE(object.custom_type());
-    EXPECT_EQ(TACTILE_QSTRING(u"Point"), object.name());
+    EXPECT_FALSE(object.CustomType());
+    EXPECT_EQ(TACTILE_QSTRING(u"Point"), object.Name());
 
     ASSERT_EQ(1, object.PropertyCount());
     ASSERT_TRUE(object.HasProperty(TACTILE_QSTRING(u"foo")));
@@ -109,7 +109,7 @@ void validate_layers(const core::MapDocument& document)
 
 void validate_tilesets(const core::MapDocument& document)
 {
-  const auto* tilesets = document.tilesets();
+  const auto* tilesets = document.GetTilesets();
   ASSERT_TRUE(tilesets);
   ASSERT_EQ(2, tilesets->count());
 

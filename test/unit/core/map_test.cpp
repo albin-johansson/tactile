@@ -301,13 +301,13 @@ TEST(Map, ColCount)
 TEST(Map, Width)
 {
   const core::Map map;
-  EXPECT_EQ(map.ColumnCount().get() * map.CurrentTileSize(), map.width());
+  EXPECT_EQ(map.ColumnCount().get() * map.CurrentTileSize(), map.Width());
 }
 
 TEST(Map, Height)
 {
   const core::Map map;
-  EXPECT_EQ(map.RowCount().get() * map.CurrentTileSize(), map.height());
+  EXPECT_EQ(map.RowCount().get() * map.CurrentTileSize(), map.Height());
 }
 
 TEST(Map, ActiveLayerID)

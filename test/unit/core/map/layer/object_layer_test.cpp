@@ -17,9 +17,9 @@ TEST(ObjectLayer, AddPoint)
   ASSERT_TRUE(layer.HasObject(id));
 
   auto& point = layer.GetObject(id);
-  EXPECT_EQ(core::object_type::point, point.type());
-  EXPECT_EQ(x, point.x());
-  EXPECT_EQ(y, point.y());
+  EXPECT_EQ(core::object_type::point, point.Type());
+  EXPECT_EQ(x, point.X());
+  EXPECT_EQ(y, point.Y());
 }
 
 TEST(ObjectLayer, AddRectangle)
@@ -37,11 +37,11 @@ TEST(ObjectLayer, AddRectangle)
   ASSERT_TRUE(layer.HasObject(id));
 
   auto& rect = layer.GetObject(id);
-  EXPECT_EQ(core::object_type::rectangle, rect.type());
-  EXPECT_EQ(x, rect.x());
-  EXPECT_EQ(y, rect.y());
-  EXPECT_EQ(width, rect.width());
-  EXPECT_EQ(height, rect.height());
+  EXPECT_EQ(core::object_type::rectangle, rect.Type());
+  EXPECT_EQ(x, rect.X());
+  EXPECT_EQ(y, rect.Y());
+  EXPECT_EQ(width, rect.Width());
+  EXPECT_EQ(height, rect.Height());
 }
 
 TEST(ObjectLayer, RemoveObject)

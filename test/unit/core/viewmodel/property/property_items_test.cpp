@@ -10,7 +10,7 @@ using namespace tactile;
 TEST(PropertyItems, UpdateItemData)
 {
   {  // Integer item
-    const core::property property{123};
+    const core::Property property{123};
 
     vm::int_item item;
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
@@ -20,7 +20,7 @@ TEST(PropertyItems, UpdateItemData)
   }
 
   {  // Floating item
-    const core::property property{12.3};
+    const core::Property property{12.3};
 
     vm::float_item item;
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
@@ -30,7 +30,7 @@ TEST(PropertyItems, UpdateItemData)
   }
 
   {  // Boolean item
-    const core::property property{true};
+    const core::Property property{true};
 
     vm::bool_item item;
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
@@ -41,7 +41,7 @@ TEST(PropertyItems, UpdateItemData)
   }
 
   {  // String item
-    const core::property property{TACTILE_QSTRING(u"foo")};
+    const core::Property property{TACTILE_QSTRING(u"foo")};
 
     vm::string_item item;
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
@@ -51,7 +51,7 @@ TEST(PropertyItems, UpdateItemData)
   }
 
   {  // Color item
-    const core::property property{QColor{Qt::cyan}};
+    const core::Property property{QColor{Qt::cyan}};
 
     vm::color_item item;
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
@@ -62,7 +62,7 @@ TEST(PropertyItems, UpdateItemData)
   }
 
   {  // File item
-    const core::property property{QFileInfo{TACTILE_QSTRING("foo/bar")}};
+    const core::Property property{QFileInfo{TACTILE_QSTRING("foo/bar")}};
 
     vm::file_item item;
     EXPECT_NO_THROW(vm::update_item_data(&item, property));

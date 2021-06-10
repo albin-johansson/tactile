@@ -10,27 +10,27 @@ TEST(Object, Defaults)
 {
   const core::Object rect{core::object_type::rectangle};
   EXPECT_TRUE(rect.IsRectangle());
-  EXPECT_TRUE(rect.name().isEmpty());
-  EXPECT_TRUE(rect.visible());
+  EXPECT_TRUE(rect.Name().isEmpty());
+  EXPECT_TRUE(rect.IsVisible());
   EXPECT_FALSE(rect.IsPoint());
-  EXPECT_FALSE(rect.custom_type());
-  EXPECT_EQ(core::object_type::rectangle, rect.type());
-  EXPECT_EQ(0, rect.x());
-  EXPECT_EQ(0, rect.y());
-  EXPECT_EQ(0, rect.width());
-  EXPECT_EQ(0, rect.height());
+  EXPECT_FALSE(rect.CustomType());
+  EXPECT_EQ(core::object_type::rectangle, rect.Type());
+  EXPECT_EQ(0, rect.X());
+  EXPECT_EQ(0, rect.Y());
+  EXPECT_EQ(0, rect.Width());
+  EXPECT_EQ(0, rect.Height());
 
   const core::Object point{core::object_type::point};
   EXPECT_TRUE(point.IsPoint());
-  EXPECT_TRUE(point.name().isEmpty());
-  EXPECT_TRUE(point.visible());
+  EXPECT_TRUE(point.Name().isEmpty());
+  EXPECT_TRUE(point.IsVisible());
   EXPECT_FALSE(point.IsRectangle());
-  EXPECT_FALSE(point.custom_type());
-  EXPECT_EQ(core::object_type::point, point.type());
-  EXPECT_EQ(0, point.x());
-  EXPECT_EQ(0, point.y());
-  EXPECT_EQ(0, point.width());
-  EXPECT_EQ(0, point.height());
+  EXPECT_FALSE(point.CustomType());
+  EXPECT_EQ(core::object_type::point, point.Type());
+  EXPECT_EQ(0, point.X());
+  EXPECT_EQ(0, point.Y());
+  EXPECT_EQ(0, point.Width());
+  EXPECT_EQ(0, point.Height());
 }
 
 TEST(Object, SetX)
@@ -40,7 +40,7 @@ TEST(Object, SetX)
   const auto x = 12.3;
   object.SetX(x);
 
-  EXPECT_EQ(x, object.x());
+  EXPECT_EQ(x, object.X());
 }
 
 TEST(Object, SetY)
@@ -50,7 +50,7 @@ TEST(Object, SetY)
   const auto y = 47.8;
   object.SetY(y);
 
-  EXPECT_EQ(y, object.y());
+  EXPECT_EQ(y, object.Y());
 }
 
 TEST(Object, SetWidth)
@@ -60,7 +60,7 @@ TEST(Object, SetWidth)
   const auto width = 72.3;
   object.SetWidth(width);
 
-  EXPECT_EQ(width, object.width());
+  EXPECT_EQ(width, object.Width());
 }
 
 TEST(Object, SetHeight)
@@ -70,7 +70,7 @@ TEST(Object, SetHeight)
   const auto height = 59.5;
   object.SetHeight(height);
 
-  EXPECT_EQ(height, object.height());
+  EXPECT_EQ(height, object.Height());
 }
 
 TEST(Object, SetVisible)
@@ -78,10 +78,10 @@ TEST(Object, SetVisible)
   core::Object object{core::object_type::point};
 
   object.SetVisible(false);
-  EXPECT_FALSE(object.visible());
+  EXPECT_FALSE(object.IsVisible());
 
   object.SetVisible(true);
-  EXPECT_TRUE(object.visible());
+  EXPECT_TRUE(object.IsVisible());
 }
 
 TEST(Object, SetName)
@@ -89,7 +89,7 @@ TEST(Object, SetName)
   core::Object object{core::object_type::point};
 
   object.SetName(TACTILE_QSTRING(u"foo"));
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), object.name());
+  EXPECT_EQ(TACTILE_QSTRING(u"foo"), object.Name());
 }
 
 TEST(Object, SetCustomType)
@@ -97,8 +97,8 @@ TEST(Object, SetCustomType)
   core::Object object{core::object_type::point};
 
   object.SetCustomType(TACTILE_QSTRING(u"foobar"));
-  EXPECT_EQ(TACTILE_QSTRING(u"foobar"), object.custom_type());
+  EXPECT_EQ(TACTILE_QSTRING(u"foobar"), object.CustomType());
 
   object.SetCustomType(std::nullopt);
-  EXPECT_FALSE(object.custom_type());
+  EXPECT_FALSE(object.CustomType());
 }
