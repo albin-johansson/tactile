@@ -313,8 +313,7 @@ void create_root(QDomDocument& document,
 
 }  // namespace
 
-void save_map_document_as_xml(const QString& path,
-                              const core::MapDocument& map)
+void save_map_document_as_xml(const QString& path, const core::MapDocument& map)
 {
   const auto options = make_export_options();
 

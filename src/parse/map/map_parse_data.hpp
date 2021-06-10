@@ -63,7 +63,7 @@ struct layer_data final
   using layer_content_data = std::variant<tile_layer_data, object_layer_data>;
 
   layer_id id;                            ///< Unique ID of the layer.
-  core::LayerType type;                  ///< The type of the layer.
+  core::LayerType type;                   ///< The type of the layer.
   layer_content_data data;                ///< Type specific data.
   QString name;                           ///< The name of the layer.
   std::vector<property_data> properties;  ///< The list of properties.

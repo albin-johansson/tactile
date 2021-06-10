@@ -26,8 +26,7 @@ TilesetDock::TilesetDock(QWidget* parent)
   // clang-format on
 }
 
-void TilesetDock::OnAddedMap(const map_id id,
-                             const core::MapDocument& document)
+void TilesetDock::OnAddedMap(const map_id id, const core::MapDocument& document)
 {
   document.EachTileset(
       [this, id](const tileset_id tilesetId, const core::Tileset& tileset) {

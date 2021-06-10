@@ -305,7 +305,8 @@ void Window::OnAddedLayer(const layer_id id, const core::ILayer& layer)
   mStatusBar->OnAddedLayer(id, layer.Name());
 }
 
-void Window::OnAddedDuplicatedLayer(const layer_id id, const core::ILayer& layer)
+void Window::OnAddedDuplicatedLayer(const layer_id id,
+                                    const core::ILayer& layer)
 {
   mStatusBar->OnAddedLayer(id, layer.Name());
 }
