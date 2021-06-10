@@ -15,41 +15,41 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class map_command : public QUndoCommand
+class MapCommand : public QUndoCommand
 {
  public:
   using row_range = std::pair<row_t, row_t>;
   using col_range = std::pair<col_t, col_t>;
-  using tile_data_t = std::map<core::position, tile_id>;
-  using layer_data_t = std::map<layer_id, tile_data_t>;
+  using tile_data = std::map<core::position, tile_id>;
+  using layer_data = std::map<layer_id, tile_data>;
 
-  map_command(not_null<core::map_document*> document, const QString& name);
+  MapCommand(not_null<core::map_document*> document, const QString& name);
 
  protected:
-  void restore_tiles();
+  void RestoreTiles();
 
-  void save_tiles(row_range rows, col_range cols);
+  void SaveTiles(row_range rows, col_range cols);
 
-  void clear_cache();
+  void ClearCache();
 
-  void redraw();
+  void Redraw();
 
-  [[nodiscard]] auto get_map() noexcept -> core::map&;
+  [[nodiscard]] auto GetMap() noexcept -> core::map&;
 
-  [[nodiscard]] auto tile_data(layer_id id) -> tile_data_t&
+  [[nodiscard]] auto TileData(const layer_id id) -> tile_data&
   {
     // default constructs new map if layer wasn't present
-    return m_layerData[id];
+    return mLayerData[id];
   }
 
-  [[nodiscard]] auto layer_data() const -> const layer_data_t&
+  [[nodiscard]] auto LayerData() const -> const layer_data&
   {
-    return m_layerData;
+    return mLayerData;
   }
 
  private:
-  core::map_document* m_document{};
-  layer_data_t m_layerData;
+  core::map_document* mDocument{};
+  layer_data mLayerData;
 };
 
 }  // namespace tactile::cmd

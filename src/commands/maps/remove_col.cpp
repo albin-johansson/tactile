@@ -14,28 +14,28 @@ void remove_col::undo()
 {
   QUndoCommand::undo();
 
-  invoke_n(times(), [&] { get_map().add_col(empty); });
+  invoke_n(times(), [&] { GetMap().add_col(empty); });
 
-  restore_tiles();
-  redraw();
+  RestoreTiles();
+  Redraw();
 }
 
 void remove_col::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = get_map();
+  auto& map = GetMap();
 
   const auto endRow = map.row_count();
   const auto endCol = map.col_count();
   const auto beginCol = endCol - 1_col - col_t{times()};
 
-  clear_cache();
-  save_tiles({0_row, endRow}, {beginCol, endCol});
+  ClearCache();
+  SaveTiles({0_row, endRow}, {beginCol, endCol});
 
-  invoke_n(times(), [&] { get_map().remove_col(); });
+  invoke_n(times(), [&] { GetMap().remove_col(); });
 
-  redraw();
+  Redraw();
 }
 
 }  // namespace tactile::cmd

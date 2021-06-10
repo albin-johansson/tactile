@@ -18,7 +18,7 @@ namespace tactile::cmd {
  *
  * \headerfile resize_map.hpp
  */
-class resize_map final : public map_command
+class resize_map final : public MapCommand
 {
  public:
   /**

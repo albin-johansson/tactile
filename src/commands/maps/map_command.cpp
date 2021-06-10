@@ -6,24 +6,24 @@
 
 namespace tactile::cmd {
 
-map_command::map_command(not_null<core::map_document*> document,
-                         const QString& name)
+MapCommand::MapCommand(not_null<core::map_document*> document,
+                       const QString& name)
     : QUndoCommand{name}
-    , m_document{document}
+    , mDocument{document}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Cannot create command from null document!"};
   }
 }
 
-void map_command::restore_tiles()
+void MapCommand::RestoreTiles()
 {
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
 
   const auto activeLayer = map.active_layer_id().value();
 
-  for (const auto& [layer, data] : m_layerData)
+  for (const auto& [layer, data] : mLayerData)
   {
     map.select_layer(layer);
 
@@ -39,12 +39,12 @@ void map_command::restore_tiles()
   map.select_layer(activeLayer);
 }
 
-void map_command::save_tiles(row_range rows, col_range cols)
+void MapCommand::SaveTiles(const row_range rows, const col_range cols)
 {
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
 
   map.each_layer([&](const layer_id id, const shared<core::layer>& layer) {
-    auto& tiles = tile_data(id);
+    auto& tiles = TileData(id);
 
     auto* tileLayer = map.get_tile_layer(id);
     Q_ASSERT(tileLayer);
@@ -63,19 +63,19 @@ void map_command::save_tiles(row_range rows, col_range cols)
   });
 }
 
-void map_command::clear_cache()
+void MapCommand::ClearCache()
 {
-  m_layerData.clear();
+  mLayerData.clear();
 }
 
-void map_command::redraw()
+void MapCommand::Redraw()
 {
-  emit m_document->redraw();
+  emit mDocument->redraw();
 }
 
-auto map_command::get_map() noexcept -> core::map&
+auto MapCommand::GetMap() noexcept -> core::map&
 {
-  return m_document->raw();
+  return mDocument->raw();
 }
 
 }  // namespace tactile::cmd

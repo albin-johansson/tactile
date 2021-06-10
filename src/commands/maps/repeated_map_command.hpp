@@ -9,7 +9,7 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class repeated_map_command : public map_command
+class repeated_map_command : public MapCommand
 {
  public:
   repeated_map_command(not_null<core::map_document*> document,

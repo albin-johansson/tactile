@@ -5,7 +5,7 @@ namespace tactile::cmd {
 repeated_map_command::repeated_map_command(
     not_null<core::map_document*> document,
     const QString& name)
-    : map_command{document, name}
+    : MapCommand{document, name}
 {}
 
 auto repeated_map_command::mergeWith(const QUndoCommand* other) -> bool
@@ -16,9 +16,9 @@ auto repeated_map_command::mergeWith(const QUndoCommand* other) -> bool
     {
       m_times += ptr->m_times;
 
-      for (const auto& [layer, data] : ptr->layer_data())
+      for (const auto& [layer, data] : ptr->LayerData())
       {
-        auto& tiles = tile_data(layer);
+        auto& tiles = TileData(layer);
         for (const auto& [pos, tile] : data)
         {
           tiles.emplace(pos, tile);
