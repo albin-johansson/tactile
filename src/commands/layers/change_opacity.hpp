@@ -12,12 +12,12 @@ TACTILE_FORWARD_DECLARE(tactile::core, map_document)
 
 namespace tactile::cmd {
 
-class change_opacity final : public QUndoCommand
+class ChangeOpacity final : public QUndoCommand
 {
  public:
-  change_opacity(not_null<core::map_document*> document,
-                 layer_id id,
-                 double opacity);
+  ChangeOpacity(not_null<core::map_document*> document,
+                layer_id id,
+                double opacity);
 
   void undo() override;
 
@@ -31,10 +31,10 @@ class change_opacity final : public QUndoCommand
   }
 
  private:
-  core::map_document* m_document{};
-  layer_id m_id;
-  double m_opacity;
-  maybe<double> m_previousOpacity;
+  core::map_document* mDocument{};
+  layer_id mId;
+  double mOpacity;
+  maybe<double> mPreviousOpacity;
 };
 
 }  // namespace tactile::cmd

@@ -7,53 +7,53 @@
 
 namespace tactile::cmd {
 
-change_opacity::change_opacity(not_null<core::map_document*> document,
-                               const layer_id id,
-                               const double opacity)
+ChangeOpacity::ChangeOpacity(not_null<core::map_document*> document,
+                             const layer_id id,
+                             const double opacity)
     : QUndoCommand{QTranslator::tr("Change Layer Opacity")}
-    , m_document{document}
-    , m_id{id}
-    , m_opacity{opacity}
+    , mDocument{document}
+    , mId{id}
+    , mOpacity{opacity}
 {
-  if (!m_document)
+  if (!mDocument)
   {
     throw tactile_error{"Null map document for change opacity command!"};
   }
 }
 
-void change_opacity::undo()
+void ChangeOpacity::undo()
 {
   QUndoCommand::undo();
 
-  const auto opacity = m_previousOpacity.value();
-  m_document->raw().set_opacity(m_id, opacity);
+  const auto opacity = mPreviousOpacity.value();
+  mDocument->raw().set_opacity(mId, opacity);
 
-  emit m_document->changed_layer_opacity(m_id, opacity);
-  emit m_document->redraw();
+  emit mDocument->changed_layer_opacity(mId, opacity);
+  emit mDocument->redraw();
 
-  m_previousOpacity.reset();
+  mPreviousOpacity.reset();
 }
 
-void change_opacity::redo()
+void ChangeOpacity::redo()
 {
   QUndoCommand::redo();
 
-  auto& map = m_document->raw();
+  auto& map = mDocument->raw();
 
-  m_previousOpacity = map.get_layer(m_id)->opacity();
-  map.set_opacity(m_id, m_opacity);
+  mPreviousOpacity = map.get_layer(mId)->opacity();
+  map.set_opacity(mId, mOpacity);
 
-  emit m_document->changed_layer_opacity(m_id, m_opacity);
-  emit m_document->redraw();
+  emit mDocument->changed_layer_opacity(mId, mOpacity);
+  emit mDocument->redraw();
 }
 
-auto change_opacity::mergeWith(const QUndoCommand* other) -> bool
+auto ChangeOpacity::mergeWith(const QUndoCommand* other) -> bool
 {
   if (id() == other->id())
   {
-    if (auto* otherCommand = dynamic_cast<const change_opacity*>(other))
+    if (auto* otherCommand = dynamic_cast<const ChangeOpacity*>(other))
     {
-      m_opacity = otherCommand->m_opacity;
+      mOpacity = otherCommand->mOpacity;
       return true;
     }
   }

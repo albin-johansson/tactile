@@ -378,7 +378,7 @@ void map_document::set_layer_visibility(const layer_id id, const bool visible)
 
 void map_document::set_layer_opacity(const layer_id id, const double opacity)
 {
-  m_delegate->execute<cmd::change_opacity>(this, id, opacity);
+  m_delegate->execute<cmd::ChangeOpacity>(this, id, opacity);
 }
 
 void map_document::set_layer_name(const layer_id id, const QString& name)
