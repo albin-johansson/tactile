@@ -37,7 +37,7 @@ void TilesetImageWidget::mousePressEvent(QMouseEvent* event)
   if (event->buttons() & Qt::MouseButton::LeftButton)
   {
     event->accept();
-    mRubberBand->MousePressed(event->pos());
+    mRubberBand->OnMousePressed(event->pos());
   }
 }
 
@@ -47,7 +47,7 @@ void TilesetImageWidget::mouseMoveEvent(QMouseEvent* event)
   if (event->buttons() & Qt::MouseButton::LeftButton)
   {
     event->accept();
-    mRubberBand->MouseMoved(event->pos());
+    mRubberBand->OnMouseMoved(event->pos());
   }
 }
 
@@ -57,7 +57,7 @@ void TilesetImageWidget::mouseReleaseEvent(QMouseEvent* event)
   if (event->button() == Qt::MouseButton::LeftButton)
   {
     event->accept();
-    mRubberBand->MouseReleased();
+    mRubberBand->OnMouseReleased();
   }
 }
 

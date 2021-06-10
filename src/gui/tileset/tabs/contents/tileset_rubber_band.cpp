@@ -18,7 +18,7 @@ void TilesetRubberBand::SetTileHeight(const tile_height tileHeight) noexcept
   mTileHeight = tileHeight;
 }
 
-void TilesetRubberBand::MousePressed(const QPoint& pos)
+void TilesetRubberBand::OnMousePressed(const QPoint& pos)
 {
   mOrigin = pos;
 
@@ -33,14 +33,14 @@ void TilesetRubberBand::MousePressed(const QPoint& pos)
   show();
 }
 
-void TilesetRubberBand::MouseMoved(const QPoint& pos)
+void TilesetRubberBand::OnMouseMoved(const QPoint& pos)
 {
   mLastMousePos = pos;
   setGeometry(QRect{mOrigin, pos}.normalized());
   FitGeometry();
 }
 
-void TilesetRubberBand::MouseReleased()
+void TilesetRubberBand::OnMouseReleased()
 {
   emit S_FinishedSelection(GetSelection());
 }

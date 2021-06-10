@@ -23,11 +23,9 @@ class TilesetRubberBand final : public QRubberBand
   void S_FinishedSelection(const core::tileset_selection& selection);
 
  public slots:
-  void MousePressed(const QPoint& pos);
-
-  void MouseMoved(const QPoint& pos);
-
-  void MouseReleased();
+  void OnMousePressed(const QPoint& pos);
+  void OnMouseMoved(const QPoint& pos);
+  void OnMouseReleased();
 
  private:
   tile_width mTileWidth;
