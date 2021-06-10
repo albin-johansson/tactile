@@ -218,18 +218,18 @@ void render_multi_preview(QPainter& painter, const render_info& info)
 
   // TODO take scale into consideration
 
-  const auto selection = tileset->get_selection().value();
+  const auto selection = tileset->GetSelection().value();
   const auto mousePos = info.mousePosition.value();
 
   const auto diff = selection.bottomRight - selection.topLeft;
   const core::Position offset{diff.Row() / 2_row, diff.Column() / 2_col};
 
-  tileset->iterate_selection([&](const core::Position pos) {
+  tileset->VisitSelection([&](const core::Position pos) {
     const auto tilePos = mousePos + pos - offset;
     if (info.map->InBounds(tilePos))
     {
       render_tile(painter,
-                  tileset->tile_at(selection.topLeft + pos),
+                  tileset->TileAt(selection.topLeft + pos),
                   tilePos,
                   info);
     }
@@ -247,11 +247,11 @@ void render_preview(QPainter& painter, const render_info& info)
 
   painter.setOpacity(previewOpacity);
 
-  const auto [topLeft, bottomRight] = tileset->get_selection().value();
+  const auto [topLeft, bottomRight] = tileset->GetSelection().value();
   if (topLeft == bottomRight)
   {
     render_tile(painter,
-                tileset->tile_at(topLeft),
+                tileset->TileAt(topLeft),
                 info.mousePosition.value(),
                 info);
   }

@@ -52,7 +52,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void add(tileset_id id, shared<tileset> tileset);
+  void add(tileset_id id, shared<Tileset> tileset);
 
   /**
    * \brief Adds a tileset to the manager.
@@ -67,7 +67,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto add(shared<tileset> tileset) -> tileset_id;
+  [[nodiscard]] auto add(shared<Tileset> tileset) -> tileset_id;
 
   /**
    * \brief Removes a tileset from the manager.

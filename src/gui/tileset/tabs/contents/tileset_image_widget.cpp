@@ -17,8 +17,8 @@ TilesetImageWidget::TilesetImageWidget(const core::Tileset& tileset,
 
   mImageLabel = new TilesetImageLabel{tileset, this};
   mRubberBand = new TilesetRubberBand{mImageLabel};
-  mRubberBand->SetTileWidth(tileset.get_tile_width());
-  mRubberBand->SetTileHeight(tileset.get_tile_height());
+  mRubberBand->SetTileWidth(tileset.GetTileWidth());
+  mRubberBand->SetTileHeight(tileset.GetTileHeight());
 
   connect(mRubberBand,
           &TilesetRubberBand::S_FinishedSelection,

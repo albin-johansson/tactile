@@ -88,11 +88,11 @@ class Tileset final
    * \since 0.1.0
    */
   template <std::invocable<Position> T>
-  void iterate_selection(T&& callable) const
+  void VisitSelection(T&& callable) const
   {
-    if (m_selection)
+    if (mSelection)
     {
-      const auto& [topLeft, bottomRight] = *m_selection;
+      const auto& [topLeft, bottomRight] = *mSelection;
 
       const auto nRows = 1_row + (bottomRight.Row() - topLeft.Row());
       const auto nCols = 1_col + (bottomRight.Column() - topLeft.Column());
@@ -126,11 +126,11 @@ class Tileset final
    * \since 0.1.0
    */
   template <std::invocable<const Position&, const Position&> T>
-  void iterate_selection(const Position& mapOrigin, T&& callable) const
+  void VisitSelection(const Position& mapOrigin, T&& callable) const
   {
-    if (m_selection)
+    if (mSelection)
     {
-      const auto& [topLeft, bottomRight] = *m_selection;
+      const auto& [topLeft, bottomRight] = *mSelection;
 
       if (topLeft == bottomRight)
       {
@@ -163,14 +163,14 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  void set_selection(const tileset_selection& selection);
+  void SetSelection(const tileset_selection& selection);
 
   /**
    * \brief Clears any current selection.
    *
    * \since 0.1.0
    */
-  void clear_selection() noexcept;
+  void ClearSelection() noexcept;
 
   /**
    * \brief Sets the name of the tileset.
@@ -179,7 +179,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  void set_name(QString name);
+  void SetName(QString name);
 
   /**
    * \brief Sets the file path associated with the tileset.
@@ -188,7 +188,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  void set_path(QFileInfo path);
+  void SetPath(QFileInfo path);
 
   /**
    * \brief Indicates whether or not the tileset contains the specified tile ID.
@@ -199,7 +199,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto contains(tile_id id) const noexcept -> bool;
+  [[nodiscard]] auto Contains(tile_id id) const noexcept -> bool;
 
   /**
    * \brief Indicates whether or not a single tile is selected in the tileset.
@@ -208,7 +208,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto is_single_tile_selected() const noexcept -> bool;
+  [[nodiscard]] auto IsSingleTileSelected() const noexcept -> bool;
 
   /**
    * \brief Returns the ID of the tile at the specified position.
@@ -220,7 +220,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tile_at(const Position& position) const -> tile_id;
+  [[nodiscard]] auto TileAt(const Position& position) const -> tile_id;
 
   /**
    * \brief Returns the width of the tileset image.
@@ -229,7 +229,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto width() const -> int;
+  [[nodiscard]] auto Width() const -> int;
 
   /**
    * \brief Returns the height of the tileset image.
@@ -238,7 +238,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto height() const -> int;
+  [[nodiscard]] auto Height() const -> int;
 
   /**
    * \brief Returns the image source rectangle associated with the specified
@@ -251,7 +251,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto image_source(tile_id id) const -> maybe<QRect>;
+  [[nodiscard]] auto ImageSource(tile_id id) const -> maybe<QRect>;
 
   /**
    * \brief Returns the image associated with the tileset.
@@ -260,9 +260,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto image() const -> const QPixmap&
+  [[nodiscard]] auto Image() const -> const QPixmap&
   {
-    return m_image;
+    return mImage;
   }
 
   /**
@@ -274,9 +274,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_tile_width() const noexcept -> tile_width
+  [[nodiscard]] auto GetTileWidth() const noexcept -> tile_width
   {
-    return m_tileWidth;
+    return mTileWidth;
   }
 
   /**
@@ -288,9 +288,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_tile_height() const noexcept -> tile_height
+  [[nodiscard]] auto GetTileHeight() const noexcept -> tile_height
   {
-    return m_tileHeight;
+    return mTileHeight;
   }
 
   /**
@@ -300,10 +300,10 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_selection() const noexcept
+  [[nodiscard]] auto GetSelection() const noexcept
       -> const maybe<tileset_selection>&
   {
-    return m_selection;
+    return mSelection;
   }
 
   /**
@@ -313,9 +313,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto row_count() const noexcept -> row_t
+  [[nodiscard]] auto RowCount() const noexcept -> row_t
   {
-    return m_nRows;
+    return mRowCount;
   }
 
   /**
@@ -325,9 +325,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto col_count() const noexcept -> col_t
+  [[nodiscard]] auto ColumnCount() const noexcept -> col_t
   {
-    return m_nCols;
+    return mColumnCount;
   }
 
   /**
@@ -339,9 +339,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto first_id() const noexcept -> tile_id
+  [[nodiscard]] auto FirstId() const noexcept -> tile_id
   {
-    return m_firstId;
+    return mFirstId;
   }
 
   /**
@@ -351,9 +351,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto last_id() const noexcept -> tile_id
+  [[nodiscard]] auto LastId() const noexcept -> tile_id
   {
-    return m_lastId;
+    return mLastId;
   }
 
   /**
@@ -363,9 +363,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto tile_count() const noexcept -> int
+  [[nodiscard]] auto TileCount() const noexcept -> int
   {
-    return m_tileCount;
+    return mTileCount;
   }
 
   /**
@@ -375,9 +375,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto name() const -> const QString&
+  [[nodiscard]] auto Name() const -> const QString&
   {
-    return m_name;
+    return mName;
   }
 
   /**
@@ -387,9 +387,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto file() const -> const QFileInfo&
+  [[nodiscard]] auto File() const -> const QFileInfo&
   {
-    return m_path;
+    return mPath;
   }
 
   /**
@@ -399,9 +399,9 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto file_path() const -> QString
+  [[nodiscard]] auto FilePath() const -> QString
   {
-    return m_path.filePath();
+    return mPath.filePath();
   }
 
   /**
@@ -412,28 +412,24 @@ class Tileset final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto absolute_path() const -> QString
+  [[nodiscard]] auto AbsolutePath() const -> QString
   {
-    return m_path.absoluteFilePath();
+    return mPath.absoluteFilePath();
   }
 
  private:
-  QPixmap m_image;
-
-  tile_id m_firstId{1};
-  tile_id m_lastId;
-
-  maybe<tileset_selection> m_selection;
-  rect_map m_sourceRects;
-
-  tile_width m_tileWidth{};
-  tile_height m_tileHeight{};
-  row_t m_nRows{};
-  col_t m_nCols{};
-  int m_tileCount{};
-
-  QFileInfo m_path{};
-  QString m_name{TACTILE_QSTRING(u"Untitled")};
+  QPixmap mImage;
+  tile_id mFirstId{1};
+  tile_id mLastId;
+  maybe<tileset_selection> mSelection;
+  rect_map mSourceRects;
+  tile_width mTileWidth;
+  tile_height mTileHeight;
+  row_t mRowCount;
+  col_t mColumnCount;
+  int mTileCount{};
+  QFileInfo mPath;
+  QString mName{TACTILE_QSTRING(u"Untitled")};
 };
 
 }  // namespace tactile::core

@@ -50,15 +50,13 @@ TEST_F(TilesetTest, PathConstructor)
   EXPECT_THROW((core::Tileset{1_t, badPath, 32_tw, 32_th}), TactileError);
 }
 
-TEST_F(TilesetTest, IterateSelection)
+TEST_F(TilesetTest, VisitSelection)
 {
   {  // Empty selection
-    m_tileset->clear_selection();
+    m_tileset->ClearSelection();
 
     auto count = 0;
-    m_tileset->iterate_selection([&](const core::Position) {
-      ++count;
-    });
+    m_tileset->VisitSelection([&](const core::Position) { ++count; });
 
     EXPECT_EQ(0, count);
   }
@@ -66,7 +64,7 @@ TEST_F(TilesetTest, IterateSelection)
   {  // Non-empty selection
     constexpr core::Position topLeft{1_row, 2_col};
     constexpr core::Position bottomRight{4_row, 5_col};
-    m_tileset->set_selection({topLeft, bottomRight});
+    m_tileset->SetSelection({topLeft, bottomRight});
 
     /*  0 1 2 3 4 5 6 7
 
@@ -80,150 +78,148 @@ TEST_F(TilesetTest, IterateSelection)
      */
 
     auto count = 0;
-    m_tileset->iterate_selection([&](const core::Position) {
-      ++count;
-    });
+    m_tileset->VisitSelection([&](const core::Position) { ++count; });
 
     EXPECT_EQ(16, count);
   }
 
-  m_tileset->clear_selection();
+  m_tileset->ClearSelection();
 }
 
 TEST_F(TilesetTest, SetSelection)
 {
   const core::tileset_selection selection{{1_row, 2_col}, {7_row, 8_col}};
 
-  m_tileset->set_selection(selection);
-  ASSERT_TRUE(m_tileset->get_selection());
+  m_tileset->SetSelection(selection);
+  ASSERT_TRUE(m_tileset->GetSelection());
 
-  EXPECT_EQ(selection.topLeft, m_tileset->get_selection()->topLeft);
-  EXPECT_EQ(selection.bottomRight, m_tileset->get_selection()->bottomRight);
+  EXPECT_EQ(selection.topLeft, m_tileset->GetSelection()->topLeft);
+  EXPECT_EQ(selection.bottomRight, m_tileset->GetSelection()->bottomRight);
 
-  m_tileset->clear_selection();
+  m_tileset->ClearSelection();
 }
 
 TEST_F(TilesetTest, ClearSelection)
 {
-  m_tileset->clear_selection();
-  EXPECT_FALSE(m_tileset->get_selection());
+  m_tileset->ClearSelection();
+  EXPECT_FALSE(m_tileset->GetSelection());
 
   const core::tileset_selection selection{{1_row, 2_col}, {7_row, 8_col}};
-  m_tileset->set_selection(selection);
-  EXPECT_TRUE(m_tileset->get_selection());
+  m_tileset->SetSelection(selection);
+  EXPECT_TRUE(m_tileset->GetSelection());
 
-  m_tileset->clear_selection();
-  EXPECT_FALSE(m_tileset->get_selection());
+  m_tileset->ClearSelection();
+  EXPECT_FALSE(m_tileset->GetSelection());
 
-  EXPECT_NO_THROW(m_tileset->clear_selection());
-  EXPECT_FALSE(m_tileset->get_selection());
+  EXPECT_NO_THROW(m_tileset->ClearSelection());
+  EXPECT_FALSE(m_tileset->GetSelection());
 }
 
 TEST_F(TilesetTest, SetName)
 {
   const auto name = TACTILE_QSTRING(u"Gandalf");
 
-  m_tileset->set_name(name);
-  EXPECT_EQ(name, m_tileset->name());
+  m_tileset->SetName(name);
+  EXPECT_EQ(name, m_tileset->Name());
 }
 
 TEST_F(TilesetTest, SetPath)
 {
   const QFileInfo file{TACTILE_QSTRING(u"interior.png")};
 
-  m_tileset->set_path(file);
-  EXPECT_EQ(file, m_tileset->file());
+  m_tileset->SetPath(file);
+  EXPECT_EQ(file, m_tileset->File());
 }
 
 TEST_F(TilesetTest, Contains)
 {
-  const auto first = m_tileset->first_id();
-  const auto count = m_tileset->tile_count();
+  const auto first = m_tileset->FirstId();
+  const auto count = m_tileset->TileCount();
 
-  EXPECT_FALSE(m_tileset->contains(-1_t));
-  EXPECT_FALSE(m_tileset->contains(0_t));
+  EXPECT_FALSE(m_tileset->Contains(-1_t));
+  EXPECT_FALSE(m_tileset->Contains(0_t));
 
-  EXPECT_TRUE(m_tileset->contains(1_t));
-  EXPECT_TRUE(m_tileset->contains(first + tile_id{count}));
+  EXPECT_TRUE(m_tileset->Contains(1_t));
+  EXPECT_TRUE(m_tileset->Contains(first + tile_id{count}));
 
-  EXPECT_FALSE(m_tileset->contains(first + tile_id{count + 1}));
+  EXPECT_FALSE(m_tileset->Contains(first + tile_id{count + 1}));
 }
 
 TEST_F(TilesetTest, IsSingleTileSelected)
 {
-  EXPECT_FALSE(m_tileset->is_single_tile_selected());
+  EXPECT_FALSE(m_tileset->IsSingleTileSelected());
 
-  m_tileset->set_selection({{1_row, 1_col}, {1_row, 1_col}});
-  EXPECT_TRUE(m_tileset->is_single_tile_selected());
+  m_tileset->SetSelection({{1_row, 1_col}, {1_row, 1_col}});
+  EXPECT_TRUE(m_tileset->IsSingleTileSelected());
 
-  m_tileset->set_selection({{1_row, 1_col}, {2_row, 1_col}});
-  EXPECT_FALSE(m_tileset->is_single_tile_selected());
+  m_tileset->SetSelection({{1_row, 1_col}, {2_row, 1_col}});
+  EXPECT_FALSE(m_tileset->IsSingleTileSelected());
 
-  m_tileset->clear_selection();
+  m_tileset->ClearSelection();
 }
 
 TEST_F(TilesetTest, TileAt)
 {
-  EXPECT_NE(empty, m_tileset->tile_at({0_row, 0_col}));
-  EXPECT_NE(empty, m_tileset->tile_at({0_row, m_tileset->col_count() - 1_col}));
-  EXPECT_NE(empty, m_tileset->tile_at({m_tileset->row_count() - 1_row, 0_col}));
+  EXPECT_NE(empty, m_tileset->TileAt({0_row, 0_col}));
+  EXPECT_NE(empty, m_tileset->TileAt({0_row, m_tileset->ColumnCount() - 1_col}));
+  EXPECT_NE(empty, m_tileset->TileAt({m_tileset->RowCount() - 1_row, 0_col}));
 
-  EXPECT_EQ(empty, m_tileset->tile_at({0_row, m_tileset->col_count()}));
-  EXPECT_EQ(empty, m_tileset->tile_at({m_tileset->row_count(), 0_col}));
+  EXPECT_EQ(empty, m_tileset->TileAt({0_row, m_tileset->ColumnCount()}));
+  EXPECT_EQ(empty, m_tileset->TileAt({m_tileset->RowCount(), 0_col}));
 }
 
 TEST_F(TilesetTest, Width)
 {
-  EXPECT_EQ(m_tileset->col_count().get() * m_tileset->get_tile_width().get(),
-            m_tileset->width());
+  EXPECT_EQ(m_tileset->ColumnCount().get() * m_tileset->GetTileWidth().get(),
+            m_tileset->Width());
 }
 
 TEST_F(TilesetTest, Height)
 {
-  EXPECT_EQ(m_tileset->row_count().get() * m_tileset->get_tile_height().get(),
-            m_tileset->height());
+  EXPECT_EQ(m_tileset->RowCount().get() * m_tileset->GetTileHeight().get(),
+            m_tileset->Height());
 }
 
 TEST_F(TilesetTest, ImageSource)
 {
-  EXPECT_FALSE(m_tileset->image_source(0_t));
+  EXPECT_FALSE(m_tileset->ImageSource(0_t));
 
-  const auto source = m_tileset->image_source(2_t);
+  const auto source = m_tileset->ImageSource(2_t);
   ASSERT_TRUE(source);
 
   EXPECT_EQ(0, source->y());
-  EXPECT_EQ(m_tileset->get_tile_width().get(), source->x());
+  EXPECT_EQ(m_tileset->GetTileWidth().get(), source->x());
 }
 
 TEST_F(TilesetTest, GetTileWidth)
 {
-  EXPECT_EQ(32_tw, m_tileset->get_tile_width());
+  EXPECT_EQ(32_tw, m_tileset->GetTileWidth());
 }
 
 TEST_F(TilesetTest, GetTileHeight)
 {
-  EXPECT_EQ(32_th, m_tileset->get_tile_height());
+  EXPECT_EQ(32_th, m_tileset->GetTileHeight());
 }
 
 TEST_F(TilesetTest, FirstID)
 {
-  EXPECT_EQ(1_t, m_tileset->first_id());
+  EXPECT_EQ(1_t, m_tileset->FirstId());
 }
 
 TEST_F(TilesetTest, LastID)
 {
-  EXPECT_EQ(m_tileset->first_id() + tile_id{m_tileset->tile_count()},
-            m_tileset->last_id());
+  EXPECT_EQ(m_tileset->FirstId() + tile_id{m_tileset->TileCount()},
+            m_tileset->LastId());
 }
 
 TEST_F(TilesetTest, TileCount)
 {
-  EXPECT_EQ(1024, m_tileset->tile_count());
-  EXPECT_EQ(m_tileset->last_id().get() - m_tileset->first_id().get(),
-            m_tileset->tile_count());
+  EXPECT_EQ(1024, m_tileset->TileCount());
+  EXPECT_EQ(m_tileset->LastId().get() - m_tileset->FirstId().get(),
+            m_tileset->TileCount());
 }
 
 TEST_F(TilesetTest, FilePath)
 {
-  EXPECT_EQ(m_tileset->file().filePath(), m_tileset->file_path());
+  EXPECT_EQ(m_tileset->File().filePath(), m_tileset->FilePath());
 }

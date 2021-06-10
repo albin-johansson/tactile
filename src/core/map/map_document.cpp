@@ -271,8 +271,8 @@ void MapDocument::AddTileset(const QImage& image,
     const auto gid = mTilesets->next_global_tile_id();
 
     auto ts = std::make_shared<Tileset>(gid, image, tileWidth, tileHeight);
-    ts->set_name(name);
-    ts->set_path(path);
+    ts->SetName(name);
+    ts->SetPath(path);
 
     // This will cause an `added_tileset` signal to be emitted
     mDelegate->Execute<cmd::AddTileset>(this, std::move(ts), id);

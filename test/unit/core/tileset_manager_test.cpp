@@ -82,7 +82,7 @@ TEST_F(TilesetManagerTest, Rename)
   const auto id = m_manager.add(m_interior);
   m_manager.rename(id, TACTILE_QSTRING(u"foo"));
 
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), m_manager.at(id).name());
+  EXPECT_EQ(TACTILE_QSTRING(u"foo"), m_manager.at(id).Name());
 }
 
 TEST_F(TilesetManagerTest, Select)

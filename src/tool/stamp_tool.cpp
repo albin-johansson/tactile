@@ -21,7 +21,7 @@ void stamp_tool::update_stamp_sequence(MapDocument& map,
                             const Position& tilesetPos) {
     if (map.InBounds(mapPos))
     {
-      const auto newID = ts.tile_at(tilesetPos);
+      const auto newID = ts.TileAt(tilesetPos);
 
       auto* tileLayer = map.GetTileLayer(map.CurrentLayerId().value());
       Q_ASSERT(tileLayer);
@@ -36,7 +36,7 @@ void stamp_tool::update_stamp_sequence(MapDocument& map,
     }
   };
 
-  ts.iterate_selection(origin, callable);
+  ts.VisitSelection(origin, callable);
 }
 
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
@@ -44,7 +44,7 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
   if (auto* document = get_model()->current_document())
   {
     auto* tileset = document->CurrentTileset();
-    if (!tileset || !tileset->get_selection().has_value())
+    if (!tileset || !tileset->GetSelection().has_value())
     {
       return;
     }
@@ -66,7 +66,7 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
   if (auto* document = get_model()->current_document())
   {
     const auto* tileset = document->CurrentTileset();
-    if (!tileset || !tileset->get_selection())
+    if (!tileset || !tileset->GetSelection())
     {
       return;
     }
@@ -96,7 +96,7 @@ void stamp_tool::released(QMouseEvent* event, const QPointF&)
   if (auto* document = get_model()->current_document())
   {
     auto* tileset = document->CurrentTileset();
-    if (!tileset || !tileset->get_selection())
+    if (!tileset || !tileset->GetSelection())
     {
       return;
     }

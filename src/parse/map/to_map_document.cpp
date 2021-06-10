@@ -15,7 +15,7 @@ namespace {
                                                  data.absolutePath,
                                                  data.tileWidth,
                                                  data.tileHeight);
-  tileset->set_name(data.name);
+  tileset->SetName(data.name);
   return tileset;
 }
 

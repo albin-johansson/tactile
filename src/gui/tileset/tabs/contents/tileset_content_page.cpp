@@ -139,7 +139,7 @@ void TilesetContentPage::OnAddedTileset(const map_id map,
           &TilesetContentPage::S_SetTilesetSelection);
   mTabManagers.at(map).Add(id, tab);
 
-  const auto index = mTabWidget->addTab(tab, tileset.name());
+  const auto index = mTabWidget->addTab(tab, tileset.Name());
   mTabWidget->setCurrentIndex(index);
 }
 

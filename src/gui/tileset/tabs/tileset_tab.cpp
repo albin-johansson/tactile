@@ -15,7 +15,7 @@ TilesetTab::TilesetTab(tileset_id id,
                        QWidget* parent)
     : QWidget{parent}
     , mId{id}
-    , mName{tileset.name()}
+    , mName{tileset.Name()}
 {
   setObjectName("tileset_tab");
 

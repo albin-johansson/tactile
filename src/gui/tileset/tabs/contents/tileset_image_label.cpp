@@ -7,14 +7,14 @@ namespace tactile {
 TilesetImageLabel::TilesetImageLabel(const core::Tileset& tileset,
                                      QWidget* parent)
     : QLabel{parent}
-    , mTileWidth{tileset.get_tile_width()}
-    , mTileHeight{tileset.get_tile_height()}
-    , mWidth{tileset.width()}
-    , mHeight{tileset.height()}
+    , mTileWidth{tileset.GetTileWidth()}
+    , mTileHeight{tileset.GetTileHeight()}
+    , mWidth{tileset.Width()}
+    , mHeight{tileset.Height()}
     , mMaxX{mWidth - 1}
     , mMaxY{mHeight - 1}
 {
-  setPixmap(tileset.image());
+  setPixmap(tileset.Image());
 }
 
 TilesetImageLabel::~TilesetImageLabel() noexcept = default;

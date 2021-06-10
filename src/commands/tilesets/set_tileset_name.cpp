@@ -41,7 +41,7 @@ void SetTilesetName::redo()
 
   auto* tilesets = mDocument->GetTilesets();
 
-  mPrevious = tilesets->at(mId).name();
+  mPrevious = tilesets->at(mId).Name();
   tilesets->rename(mId, mName);
 
   emit mDocument->S_RenamedTileset(mId, mName);

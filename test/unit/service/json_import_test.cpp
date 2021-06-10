@@ -76,17 +76,17 @@ TEST(ImportJsonMap, Embedded)
     EXPECT_EQ(id, tilesets->current_tileset_id());
 
     const auto& tileset = tilesets->at(id);
-    EXPECT_EQ(1_t, tileset.first_id());
-    EXPECT_EQ(TACTILE_QSTRING(u"terrain"), tileset.name());
-    EXPECT_EQ(32_tw, tileset.get_tile_width());
-    EXPECT_EQ(32_th, tileset.get_tile_height());
-    EXPECT_EQ(1'024, tileset.tile_count());
-    EXPECT_EQ(1'024, tileset.width());
-    EXPECT_EQ(1'024, tileset.height());
-    EXPECT_EQ(32_col, tileset.col_count());
+    EXPECT_EQ(1_t, tileset.FirstId());
+    EXPECT_EQ(TACTILE_QSTRING(u"terrain"), tileset.Name());
+    EXPECT_EQ(32_tw, tileset.GetTileWidth());
+    EXPECT_EQ(32_th, tileset.GetTileHeight());
+    EXPECT_EQ(1'024, tileset.TileCount());
+    EXPECT_EQ(1'024, tileset.Width());
+    EXPECT_EQ(1'024, tileset.Height());
+    EXPECT_EQ(32_col, tileset.ColumnCount());
 
     const QFileInfo file{TACTILE_QSTRING(u"terrain.png")};
-    EXPECT_EQ(file.absoluteFilePath(), tileset.file().absoluteFilePath());
+    EXPECT_EQ(file.absoluteFilePath(), tileset.File().absoluteFilePath());
   }
 }
 
@@ -162,17 +162,17 @@ TEST(ImportJsonMap, External)
       ASSERT_TRUE(tilesets->contains(id));
 
       const auto& tileset = tilesets->at(id);
-      EXPECT_EQ(1_t, tileset.first_id());
-      EXPECT_EQ(TACTILE_QSTRING(u"terrain"), tileset.name());
-      EXPECT_EQ(32_tw, tileset.get_tile_width());
-      EXPECT_EQ(32_th, tileset.get_tile_height());
-      EXPECT_EQ(1'024, tileset.tile_count());
-      EXPECT_EQ(1'024, tileset.width());
-      EXPECT_EQ(1'024, tileset.height());
-      EXPECT_EQ(32_col, tileset.col_count());
+      EXPECT_EQ(1_t, tileset.FirstId());
+      EXPECT_EQ(TACTILE_QSTRING(u"terrain"), tileset.Name());
+      EXPECT_EQ(32_tw, tileset.GetTileWidth());
+      EXPECT_EQ(32_th, tileset.GetTileHeight());
+      EXPECT_EQ(1'024, tileset.TileCount());
+      EXPECT_EQ(1'024, tileset.Width());
+      EXPECT_EQ(1'024, tileset.Height());
+      EXPECT_EQ(32_col, tileset.ColumnCount());
 
       const QFileInfo file{TACTILE_QSTRING(u"terrain.png")};
-      EXPECT_EQ(file.absoluteFilePath(), tileset.file().absoluteFilePath());
+      EXPECT_EQ(file.absoluteFilePath(), tileset.File().absoluteFilePath());
     }
 
     {  // Second tileset
@@ -180,17 +180,17 @@ TEST(ImportJsonMap, External)
       ASSERT_TRUE(tilesets->contains(id));
 
       const auto& tileset = tilesets->at(id);
-      EXPECT_EQ(1025_t, tileset.first_id());
-      EXPECT_EQ(TACTILE_QSTRING(u"outside"), tileset.name());
-      EXPECT_EQ(32_tw, tileset.get_tile_width());
-      EXPECT_EQ(32_th, tileset.get_tile_height());
-      EXPECT_EQ(1'024, tileset.tile_count());
-      EXPECT_EQ(1'024, tileset.width());
-      EXPECT_EQ(1'024, tileset.height());
-      EXPECT_EQ(32_col, tileset.col_count());
+      EXPECT_EQ(1025_t, tileset.FirstId());
+      EXPECT_EQ(TACTILE_QSTRING(u"outside"), tileset.Name());
+      EXPECT_EQ(32_tw, tileset.GetTileWidth());
+      EXPECT_EQ(32_th, tileset.GetTileHeight());
+      EXPECT_EQ(1'024, tileset.TileCount());
+      EXPECT_EQ(1'024, tileset.Width());
+      EXPECT_EQ(1'024, tileset.Height());
+      EXPECT_EQ(32_col, tileset.ColumnCount());
 
       const QFileInfo file{TACTILE_QSTRING(u"outside.png")};
-      EXPECT_EQ(file.absoluteFilePath(), tileset.file().absoluteFilePath());
+      EXPECT_EQ(file.absoluteFilePath(), tileset.File().absoluteFilePath());
     }
   }
 }

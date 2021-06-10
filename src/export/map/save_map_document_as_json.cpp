@@ -100,17 +100,17 @@ void add_common_attributes(QJsonObject& object,
                            const QDir& targetDir,
                            const export_options& options)
 {
-  object.insert(u"columns", tileset.col_count().get());
+  object.insert(u"columns", tileset.ColumnCount().get());
 
-  object.insert(u"image", targetDir.relativeFilePath(tileset.absolute_path()));
-  object.insert(u"imagewidth", tileset.width());
-  object.insert(u"imageheight", tileset.height());
+  object.insert(u"image", targetDir.relativeFilePath(tileset.AbsolutePath()));
+  object.insert(u"imagewidth", tileset.Width());
+  object.insert(u"imageheight", tileset.Height());
   object.insert(u"margin", 0);
-  object.insert(u"name", tileset.name());
+  object.insert(u"name", tileset.Name());
   object.insert(u"spacing", 0);
-  object.insert(u"tilecount", tileset.tile_count());
-  object.insert(u"tilewidth", tileset.get_tile_width().get());
-  object.insert(u"tileheight", tileset.get_tile_height().get());
+  object.insert(u"tilecount", tileset.TileCount());
+  object.insert(u"tilewidth", tileset.GetTileWidth().get());
+  object.insert(u"tileheight", tileset.GetTileHeight().get());
 
   if (options.generateDefaults)
   {
@@ -137,7 +137,7 @@ void add_common_attributes(QJsonObject& object,
   QJsonObject object{};
 
   add_common_attributes(object, tileset, targetDir, options);
-  object.insert(u"firstgid", tileset.first_id().get());
+  object.insert(u"firstgid", tileset.FirstId().get());
 
   return object;
 }
@@ -159,8 +159,8 @@ void add_common_attributes(QJsonObject& object,
 {
   QJsonObject object{};
 
-  object.insert(u"firstgid", tileset.first_id().get());
-  object.insert(u"source", tileset.name() + TACTILE_QSTRING(u".json"));
+  object.insert(u"firstgid", tileset.FirstId().get());
+  object.insert(u"source", tileset.Name() + TACTILE_QSTRING(u".json"));
 
   return object;
 }
@@ -192,7 +192,7 @@ void create_external_tileset_file(const core::Tileset& tileset,
   document.setObject(object);
 
   json::write_file(QFileInfo{targetDir.absoluteFilePath(
-                       tileset.name() + TACTILE_QSTRING(u".json"))},
+                       tileset.Name() + TACTILE_QSTRING(u".json"))},
                    document);
 }
 

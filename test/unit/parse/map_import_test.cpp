@@ -117,31 +117,31 @@ void validate_tilesets(const core::MapDocument& document)
   const auto& terrain = tilesets->at(1_ts);
 
   const QFileInfo terrainPath{TACTILE_QSTRING(u"terrain.png")};
-  EXPECT_EQ(terrainPath.absoluteFilePath(), terrain.file().canonicalFilePath());
+  EXPECT_EQ(terrainPath.absoluteFilePath(), terrain.File().canonicalFilePath());
 
-  ASSERT_EQ(TACTILE_QSTRING(u"terrain"), terrain.name());
-  EXPECT_EQ(1_t, terrain.first_id());
-  EXPECT_EQ(32_col, terrain.col_count());
-  EXPECT_EQ(1'024, terrain.tile_count());
-  EXPECT_EQ(1'024, terrain.image().width());
-  EXPECT_EQ(1'024, terrain.image().height());
-  EXPECT_EQ(32_tw, terrain.get_tile_width());
-  EXPECT_EQ(32_th, terrain.get_tile_height());
+  ASSERT_EQ(TACTILE_QSTRING(u"terrain"), terrain.Name());
+  EXPECT_EQ(1_t, terrain.FirstId());
+  EXPECT_EQ(32_col, terrain.ColumnCount());
+  EXPECT_EQ(1'024, terrain.TileCount());
+  EXPECT_EQ(1'024, terrain.Image().width());
+  EXPECT_EQ(1'024, terrain.Image().height());
+  EXPECT_EQ(32_tw, terrain.GetTileWidth());
+  EXPECT_EQ(32_th, terrain.GetTileHeight());
 
   ASSERT_TRUE(tilesets->contains(2_ts));
   const auto& outside = tilesets->at(2_ts);
 
   const QFileInfo outsidePath{TACTILE_QSTRING(u"outside.png")};
-  EXPECT_EQ(outsidePath.absoluteFilePath(), outside.file().canonicalFilePath());
+  EXPECT_EQ(outsidePath.absoluteFilePath(), outside.File().canonicalFilePath());
 
-  ASSERT_EQ(TACTILE_QSTRING(u"outside"), outside.name());
-  EXPECT_EQ(1'025_t, outside.first_id());
-  EXPECT_EQ(32_col, outside.col_count());
-  EXPECT_EQ(1'024, outside.tile_count());
-  EXPECT_EQ(1'024, outside.image().width());
-  EXPECT_EQ(1'024, outside.image().height());
-  EXPECT_EQ(32_tw, outside.get_tile_width());
-  EXPECT_EQ(32_th, outside.get_tile_height());
+  ASSERT_EQ(TACTILE_QSTRING(u"outside"), outside.Name());
+  EXPECT_EQ(1'025_t, outside.FirstId());
+  EXPECT_EQ(32_col, outside.ColumnCount());
+  EXPECT_EQ(1'024, outside.TileCount());
+  EXPECT_EQ(1'024, outside.Image().width());
+  EXPECT_EQ(1'024, outside.Image().height());
+  EXPECT_EQ(32_tw, outside.GetTileWidth());
+  EXPECT_EQ(32_th, outside.GetTileHeight());
 }
 
 void validate_properties(const core::MapDocument& document)

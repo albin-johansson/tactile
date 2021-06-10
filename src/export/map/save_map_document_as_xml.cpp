@@ -24,9 +24,9 @@ void add_image_node(QDomDocument& document,
   auto image = document.createElement(TACTILE_QSTRING(u"image"));
 
   image.setAttribute(TACTILE_QSTRING(u"source"),
-                     targetDir.relativeFilePath(tileset.file_path()));
-  image.setAttribute(TACTILE_QSTRING(u"width"), tileset.width());
-  image.setAttribute(TACTILE_QSTRING(u"height"), tileset.height());
+                     targetDir.relativeFilePath(tileset.FilePath()));
+  image.setAttribute(TACTILE_QSTRING(u"width"), tileset.Width());
+  image.setAttribute(TACTILE_QSTRING(u"height"), tileset.Height());
 
   parent.appendChild(image);
 }
@@ -38,13 +38,13 @@ void add_common_attributes(QDomDocument& document,
 {
   node.setAttribute(TACTILE_QSTRING(u"version"), g_tiledXmlVersion);
   node.setAttribute(TACTILE_QSTRING(u"tiledversion"), g_tiledVersion);
-  node.setAttribute(TACTILE_QSTRING(u"name"), tileset.name());
+  node.setAttribute(TACTILE_QSTRING(u"name"), tileset.Name());
   node.setAttribute(TACTILE_QSTRING(u"tilewidth"),
-                    tileset.get_tile_width().get());
+                    tileset.GetTileWidth().get());
   node.setAttribute(TACTILE_QSTRING(u"tileheight"),
-                    tileset.get_tile_height().get());
-  node.setAttribute(TACTILE_QSTRING(u"tilecount"), tileset.tile_count());
-  node.setAttribute(TACTILE_QSTRING(u"columns"), tileset.col_count().get());
+                    tileset.GetTileHeight().get());
+  node.setAttribute(TACTILE_QSTRING(u"tilecount"), tileset.TileCount());
+  node.setAttribute(TACTILE_QSTRING(u"columns"), tileset.ColumnCount().get());
 
   add_image_node(document, node, tileset, targetDir);
 }
@@ -61,7 +61,7 @@ void create_external_tileset_file(const core::Tileset& tileset,
   document.appendChild(node);
 
   xml::write_file(QFileInfo{targetDir.absoluteFilePath(
-                      tileset.name() + TACTILE_QSTRING(u".tsx"))},
+                      tileset.Name() + TACTILE_QSTRING(u".tsx"))},
                   document);
 }
 
@@ -149,7 +149,7 @@ void save_tilesets(QDomDocument& document,
   map.EachTileset([&](tileset_id id, const core::Tileset& tileset) {
     auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
 
-    node.setAttribute(TACTILE_QSTRING(u"firstgid"), tileset.first_id().get());
+    node.setAttribute(TACTILE_QSTRING(u"firstgid"), tileset.FirstId().get());
 
     if (options.embedTilesets)
     {
@@ -158,7 +158,7 @@ void save_tilesets(QDomDocument& document,
     else
     {
       const auto source =
-          targetDir.relativeFilePath(tileset.name() + TACTILE_QSTRING(u".tsx"));
+          targetDir.relativeFilePath(tileset.Name() + TACTILE_QSTRING(u".tsx"));
       node.setAttribute(TACTILE_QSTRING(u"source"), source);
       create_external_tileset_file(tileset, targetDir, options);
     }
