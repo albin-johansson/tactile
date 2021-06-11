@@ -289,10 +289,9 @@ void create_root(QDomDocument& document,
                     TACTILE_QSTRING(u"right-down"));
   root.setAttribute(TACTILE_QSTRING(u"width"), map.ColumnCount().get());
   root.setAttribute(TACTILE_QSTRING(u"height"), map.RowCount().get());
-  root.setAttribute(TACTILE_QSTRING(u"tilewidth"),
-                    prefs::saves::tile_width().value());
+  root.setAttribute(TACTILE_QSTRING(u"tilewidth"), prefs::TileWidth().value());
   root.setAttribute(TACTILE_QSTRING(u"tileheight"),
-                    prefs::saves::tile_height().value());
+                    prefs::TileHeight().value());
   root.setAttribute(TACTILE_QSTRING(u"infinite"), 0);
   root.setAttribute(TACTILE_QSTRING(u"nextlayerid"), map.LayerCount() + 1);
   root.setAttribute(TACTILE_QSTRING(u"nextobjectid"), 1);

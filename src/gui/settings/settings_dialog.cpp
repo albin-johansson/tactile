@@ -19,8 +19,6 @@
 
 namespace tactile {
 
-using namespace prefs;
-
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog{parent}
     , mUi{InitUi<Ui::SettingsDialog>(this)}
@@ -127,7 +125,7 @@ void SettingsDialog::UpdateThemeComponents()
   mUi->themeComboBox->setCurrentText(mSnapshot.theme);
 
   ColorPreviewButton::UpdateColor(*mUi->accentColorButton,
-                                  prefs::gfx::accent_color().value());
+                                  prefs::AccentColor().value());
 
   UpdateThemePreview();
 }
@@ -144,20 +142,20 @@ void SettingsDialog::UpdateThemePreview()
 void SettingsDialog::FetchCurrentSettings()
 {
   // General
-  mSnapshot.useOpenGL = gfx::use_opengl().value();
+  mSnapshot.useOpenGL = prefs::UseOpenGl().value();
 
   // Export
-  mSnapshot.embedTilesets = saves::embed_tilesets().value();
-  mSnapshot.readableOutput = saves::readable_output().value();
-  mSnapshot.defaultFormat = saves::default_format().value();
-  mSnapshot.generateDefaults = saves::generate_defaults().value();
-  mSnapshot.tileWidth = saves::tile_width().value();
-  mSnapshot.tileHeight = saves::tile_height().value();
+  mSnapshot.embedTilesets = prefs::EmbedTilesets().value();
+  mSnapshot.readableOutput = prefs::UseReadableOutput().value();
+  mSnapshot.defaultFormat = prefs::DefaultFormat().value();
+  mSnapshot.generateDefaults = prefs::GenerateDefaults().value();
+  mSnapshot.tileWidth = prefs::TileWidth().value();
+  mSnapshot.tileHeight = prefs::TileHeight().value();
 
   // Theme
-  mSnapshot.theme = gfx::theme_name().value();
+  mSnapshot.theme = prefs::ThemeName().value();
 
-  QMapIterator iterator{gfx::user_themes().value()};
+  QMapIterator iterator{prefs::UserThemes().value()};
   while (iterator.hasNext())
   {
     iterator.next();
@@ -178,44 +176,44 @@ void SettingsDialog::OnAccept()
   if (const auto useOpenGL = mUi->openglCheck->isChecked();
       useOpenGL != mSnapshot.useOpenGL)
   {
-    gfx::use_opengl() = useOpenGL;
+    prefs::UseOpenGl() = useOpenGL;
     emit S_ReloadOpenGl(useOpenGL);
   }
 
   if (const auto defaultFormat = mUi->defaultFormatCombo->currentText();
       defaultFormat != mSnapshot.defaultFormat)
   {
-    saves::default_format() = defaultFormat;
+    prefs::DefaultFormat() = defaultFormat;
   }
 
   if (const auto embedTilesets = mUi->embedTilesetsCheck->isChecked();
       embedTilesets != mSnapshot.embedTilesets)
   {
-    saves::embed_tilesets() = embedTilesets;
+    prefs::EmbedTilesets() = embedTilesets;
   }
 
   if (const auto genDefaults = mUi->generateDefaultsCheck->isChecked();
       genDefaults != mSnapshot.generateDefaults)
   {
-    saves::generate_defaults() = genDefaults;
+    prefs::GenerateDefaults() = genDefaults;
   }
 
   if (const auto readable = mUi->readableOutputCheck->isChecked();
       readable != mSnapshot.readableOutput)
   {
-    saves::readable_output() = readable;
+    prefs::UseReadableOutput() = readable;
   }
 
   if (const auto value = to_integer(mUi->tileWidthEdit->text());
       value != mSnapshot.tileWidth)
   {
-    saves::tile_width() = *value;
+    prefs::TileWidth() = *value;
   }
 
   if (const auto value = to_integer(mUi->tileHeightEdit->text());
       value != mSnapshot.tileHeight)
   {
-    saves::tile_height() = *value;
+    prefs::TileHeight() = *value;
   }
 }
 
@@ -227,17 +225,17 @@ void SettingsDialog::OnApply()
 
 void SettingsDialog::OnRestoreGeneralDefaults()
 {
-  mUi->openglCheck->setChecked(gfx::use_opengl_def);
+  mUi->openglCheck->setChecked(prefs::use_opengl_def);
 }
 
 void SettingsDialog::OnRestoreExportDefaults()
 {
-  mUi->embedTilesetsCheck->setChecked(saves::embed_tilesets_def);
-  mUi->readableOutputCheck->setChecked(saves::readable_output_def);
-  mUi->defaultFormatCombo->setCurrentText(saves::default_format_def());
-  mUi->generateDefaultsCheck->setChecked(saves::generate_defaults_def);
-  mUi->tileWidthEdit->setText(QString::number(saves::tile_width_def));
-  mUi->tileHeightEdit->setText(QString::number(saves::tile_height_def));
+  mUi->embedTilesetsCheck->setChecked(prefs::embed_tilesets_def);
+  mUi->readableOutputCheck->setChecked(prefs::readable_output_def);
+  mUi->defaultFormatCombo->setCurrentText(prefs::DefaultFormatDefault());
+  mUi->generateDefaultsCheck->setChecked(prefs::generate_defaults_def);
+  mUi->tileWidthEdit->setText(QString::number(prefs::tile_width_def));
+  mUi->tileHeightEdit->setText(QString::number(prefs::tile_height_def));
 }
 
 void SettingsDialog::OnThemeOptionsButtonPressed()

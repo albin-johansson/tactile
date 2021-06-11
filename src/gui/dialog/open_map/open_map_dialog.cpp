@@ -13,7 +13,7 @@ OpenMapDialog::OpenMapDialog(QWidget* parent) : QFileDialog{parent}
   setAcceptMode(QFileDialog::AcceptOpen);
   setFileMode(QFileDialog::ExistingFiles);
 
-  if (const auto format = prefs::saves::default_format();
+  if (const auto format = prefs::DefaultFormat();
       format.value() == TACTILE_QSTRING(u"JSON"))
   {
     setNameFilter(tr("JSON files (*.json);;TMX files (*.tmx)"));

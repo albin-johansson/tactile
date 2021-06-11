@@ -379,8 +379,8 @@ void save_object_layer(QJsonObject& element,
   root.insert(u"infinite", false);
   root.insert(u"type", TACTILE_QSTRING(u"map"));
   root.insert(u"version", TACTILE_TILED_JSON_VERSION_LITERAL);
-  root.insert(u"tilewidth", prefs::saves::tile_width().value());
-  root.insert(u"tileheight", prefs::saves::tile_height().value());
+  root.insert(u"tilewidth", prefs::TileWidth().value());
+  root.insert(u"tileheight", prefs::TileHeight().value());
   root.insert(u"nextobjectid", 1);
   root.insert(u"nextlayerid", map.LayerCount() + 1);
   root.insert(u"tilesets", save_tilesets(map, targetDir, options));

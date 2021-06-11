@@ -57,10 +57,10 @@ Window::~Window() noexcept = default;
 
 void Window::RestoreLayout()
 {
-  prefs::window::last_layout_geometry().with(
+  prefs::LastLayoutGeometry().with(
       [this](const QByteArray& geom) { restoreGeometry(geom); });
 
-  prefs::window::last_layout_state().with(
+  prefs::LastLayoutState().with(
       [this](const QByteArray& state) { restoreState(state); });
 }
 
@@ -88,15 +88,15 @@ void Window::OnResetLayoutAction()
   addDockWidget(Qt::RightDockWidgetArea, mLayerDock);
   addDockWidget(Qt::LeftDockWidgetArea, mPropertiesDock);
 
-  prefs::gfx::reset_tool_widget_visible();
-  prefs::gfx::reset_tileset_widget_visible();
-  prefs::gfx::reset_layer_widget_visible();
-  prefs::gfx::reset_properties_widget_visible();
+  prefs::ResetToolWidgetVisibility();
+  prefs::ResetTilesetWidgetVisibility();
+  prefs::ResetLayerWidgetVisibility();
+  prefs::ResetPropertiesWidgetVisibility();
 
-  mToolDock->setVisible(prefs::gfx::tool_widget_visible().value());
-  mTilesetDock->setVisible(prefs::gfx::tileset_widget_visible().value());
-  mLayerDock->setVisible(prefs::gfx::layer_widget_visible().value());
-  mPropertiesDock->setVisible(prefs::gfx::properties_widget_visible().value());
+  mToolDock->setVisible(prefs::ToolWidgetVisibility().value());
+  mTilesetDock->setVisible(prefs::TilesetWidgetVisibility().value());
+  mLayerDock->setVisible(prefs::LayerWidgetVisibility().value());
+  mPropertiesDock->setVisible(prefs::PropertiesWidgetVisibility().value());
 }
 
 void Window::HideAllDocks()
@@ -109,16 +109,16 @@ void Window::HideAllDocks()
 
 void Window::RestoreDockVisibility()
 {
-  prefs::gfx::tool_widget_visible().with(
+  prefs::ToolWidgetVisibility().with(
       [this](const bool value) { mToolDock->setVisible(value); });
 
-  prefs::gfx::tileset_widget_visible().with(
+  prefs::TilesetWidgetVisibility().with(
       [this](const bool value) { mTilesetDock->setVisible(value); });
 
-  prefs::gfx::layer_widget_visible().with(
+  prefs::LayerWidgetVisibility().with(
       [this](const bool value) { mLayerDock->setVisible(value); });
 
-  prefs::gfx::properties_widget_visible().with(
+  prefs::PropertiesWidgetVisibility().with(
       [this](const bool value) { mPropertiesDock->setVisible(value); });
 }
 
@@ -344,8 +344,8 @@ void Window::OnRenamedProperty(const QString& oldName, const QString& newName)
 void Window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);
-  prefs::window::last_layout_geometry() = saveGeometry();
-  prefs::window::last_layout_state() = saveState();
+  prefs::LastLayoutGeometry() = saveGeometry();
+  prefs::LastLayoutState() = saveState();
 }
 
 void Window::OnThemeChanged()
@@ -423,28 +423,28 @@ void Window::OnTilesetWidgetVisibilityChanged()
 {
   const auto visible = mUi->actionTilesetsVisibility->isChecked();
   mTilesetDock->setVisible(visible);
-  prefs::gfx::tileset_widget_visible() = visible;
+  prefs::TilesetWidgetVisibility() = visible;
 }
 
 void Window::OnToolWidgetVisibilityChanged()
 {
   const auto visible = mUi->actionToolsVisibility->isChecked();
   mToolDock->setVisible(visible);
-  prefs::gfx::tool_widget_visible() = visible;
+  prefs::ToolWidgetVisibility() = visible;
 }
 
 void Window::OnLayerWidgetVisibilityChanged()
 {
   const auto visible = mUi->actionLayersVisibility->isChecked();
   mLayerDock->setVisible(visible);
-  prefs::gfx::layer_widget_visible() = visible;
+  prefs::LayerWidgetVisibility() = visible;
 }
 
 void Window::OnPropertiesWidgetVisibilityChanged()
 {
   const auto visible = mUi->actionPropertiesVisibility->isChecked();
   mPropertiesDock->setVisible(visible);
-  prefs::gfx::properties_widget_visible() = visible;
+  prefs::PropertiesWidgetVisibility() = visible;
 }
 
 void Window::OnMouseEntered(QEvent* event)
@@ -467,7 +467,7 @@ void Window::OnMouseMoved(QMouseEvent* event, QPointF mapPos)
 
 void Window::OnToggleGridAction()
 {
-  auto grid = prefs::gfx::render_grid();
+  auto grid = prefs::RenderGrid();
   grid.with([&, this](bool value) {
     grid = !value;
     ForceRedraw();

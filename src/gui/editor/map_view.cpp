@@ -20,7 +20,7 @@ MapView::MapView(core::MapDocument* map, const map_id id, QWidget* parent)
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-  SetOpenGlEnabled(prefs::gfx::use_opengl().value());
+  SetOpenGlEnabled(prefs::UseOpenGl().value());
 
   //  grabGesture(Qt::PinchGesture);
   setScene(new MapScene{map, id, this});

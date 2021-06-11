@@ -11,7 +11,7 @@ SaveAsDialog::SaveAsDialog(const QString& fileName, QWidget* parent)
 {
   setAcceptMode(QFileDialog::AcceptSave);
 
-  if (const auto format = prefs::saves::default_format();
+  if (const auto format = prefs::DefaultFormat();
       format.value() == TACTILE_QSTRING(u"JSON"))
   {
     setNameFilter(tr("JSON files (*.json);;TMX files (*.tmx)"));

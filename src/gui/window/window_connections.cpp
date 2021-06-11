@@ -90,10 +90,10 @@ void WindowConnections::InitDockConnections()
     connect(dock, &DockWidget::S_Closed, callable);
   };
 
-  bindClosed(mWindow->mToolDock, [] { prefs::gfx::tool_widget_visible() = false; });
-  bindClosed(mWindow->mLayerDock, [] { prefs::gfx::layer_widget_visible() = false; });
-  bindClosed(mWindow->mTilesetDock, [] { prefs::gfx::tileset_widget_visible() = false; });
-  bindClosed(mWindow->mPropertiesDock, [] { prefs::gfx::properties_widget_visible() = false; });
+  bindClosed(mWindow->mToolDock, [] { prefs::ToolWidgetVisibility() = false; });
+  bindClosed(mWindow->mLayerDock, [] { prefs::LayerWidgetVisibility() = false; });
+  bindClosed(mWindow->mTilesetDock, [] { prefs::TilesetWidgetVisibility() = false; });
+  bindClosed(mWindow->mPropertiesDock, [] { prefs::PropertiesWidgetVisibility() = false; });
   // clang-format on
 }
 

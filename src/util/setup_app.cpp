@@ -35,10 +35,10 @@ void setup_app()
   QApplication::setOrganizationName(TACTILE_QSTRING(u"albin-johansson"));
   QApplication::setApplicationName(TACTILE_QSTRING(u"tactile"));
 
-  prefs::validate();
+  prefs::ValidatePreferences();
   validate_themes();
 
-  if (const auto name = prefs::gfx::theme_name())
+  if (const auto name = prefs::ThemeName())
   {
     set_theme(*name);
   }

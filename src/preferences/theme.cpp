@@ -27,8 +27,8 @@ inline std::map<QStringView, QPalette> palettes;
 
 void set_current_theme(const QString& name, const QPalette& palette)
 {
-  prefs::gfx::theme() = palette;
-  prefs::gfx::theme_name() = name;
+  prefs::Theme() = palette;
+  prefs::ThemeName() = name;
   QApplication::setPalette(palette);
 }
 
@@ -36,7 +36,7 @@ void set_current_theme(const QString& name, const QPalette& palette)
 
 void validate_themes()
 {
-  prefs::gfx::theme_name().set_if_missing(defaultTheme.toString());
+  prefs::ThemeName().set_if_missing(defaultTheme.toString());
 
   for (const auto& [name, path] : themes)
   {
@@ -55,11 +55,11 @@ auto register_theme(const QString& name, const QPalette& palette) -> bool
 {
   // TODO disallow name collision with standard themes
 
-  auto userThemes = prefs::gfx::user_themes().value();
+  auto userThemes = prefs::UserThemes().value();
   if (!userThemes.contains(name))
   {
     userThemes.insert(name, palette);
-    prefs::gfx::user_themes() = userThemes;
+    prefs::UserThemes() = userThemes;
     return true;
   }
   else
@@ -98,9 +98,9 @@ void update_theme(const QString& name,
     }
     else
     {
-      auto userThemes = prefs::gfx::user_themes().value();
+      auto userThemes = prefs::UserThemes().value();
       userThemes.insert(name, *palette);
-      prefs::gfx::user_themes() = userThemes;
+      prefs::UserThemes() = userThemes;
     }
   }
 }
@@ -108,11 +108,11 @@ void update_theme(const QString& name,
 void remove_theme(const QString& name)
 {
   Q_ASSERT(!is_standard_theme(name));
-  if (const auto userThemes = prefs::gfx::user_themes())
+  if (const auto userThemes = prefs::UserThemes())
   {
     auto map = userThemes.value();
     map.remove(name);
-    prefs::gfx::user_themes() = map;
+    prefs::UserThemes() = map;
   }
 }
 
@@ -122,7 +122,7 @@ auto get_theme(const QString& name) -> maybe<QPalette>
   {
     return palettes.at(name);
   }
-  else if (const auto userThemes = prefs::gfx::user_themes())
+  else if (const auto userThemes = prefs::UserThemes())
   {
     if (const auto it = userThemes->find(name); it != userThemes->end())
     {
@@ -171,7 +171,7 @@ auto get_user_theme_names() -> std::vector<QString>
 {
   std::vector<QString> names;
 
-  if (const auto userThemes = prefs::gfx::user_themes())
+  if (const auto userThemes = prefs::UserThemes())
   {
     names.reserve(userThemes->size());
     for (const auto& name : userThemes.value().keys())
