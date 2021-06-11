@@ -50,8 +50,6 @@ class MapDocument final : public ADocument
    */
   explicit MapDocument(QObject* parent = nullptr);
 
-  ~MapDocument() noexcept override = default;
-
   /**
    * \brief Creates a map document with a map that contains one layer.
    *
@@ -64,6 +62,8 @@ class MapDocument final : public ADocument
    * \since 0.1.0
    */
   explicit MapDocument(row_t nRows, col_t nCols, QObject* parent = nullptr);
+
+  ~MapDocument() noexcept override = default;
 
   /// \name Document API
   /// \{
