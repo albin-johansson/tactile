@@ -241,7 +241,7 @@ void save_tile_layer(QJsonObject& object,
 
   if (options.generateDefaults)
   {
-    object.insert(u"compression", TACTILE_QSTRING(u""));
+    object.insert(u"compression", QString{});
     object.insert(u"encoding", TACTILE_QSTRING(u"csv"));
   }
 
