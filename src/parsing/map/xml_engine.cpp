@@ -10,18 +10,18 @@
 
 namespace tactile::parse {
 
-static_assert(is_object<xml_element>);
-static_assert(is_engine<xml_engine, QDomDocument, xml_element>);
+static_assert(IsObject<XmlElement>);
+static_assert(IsEngine<XmlEngine, QDomDocument, XmlElement>);
 
-auto xml_engine::tilesets(const object_type& root) -> std::vector<object_type>
+auto XmlEngine::Tilesets(const object_type& root) -> std::vector<object_type>
 {
-  return collect(root, TACTILE_QSTRING(u"tileset"));
+  return Collect(root, TACTILE_QSTRING(u"tileset"));
 }
 
-auto xml_engine::layers(const object_type& root) -> std::vector<object_type>
+auto XmlEngine::Layers(const object_type& root) -> std::vector<object_type>
 {
-  auto layers = collect(root, TACTILE_QSTRING(u"layer"));
-  auto objectLayers = collect(root, TACTILE_QSTRING(u"objectgroup"));
+  auto layers = Collect(root, TACTILE_QSTRING(u"layer"));
+  auto objectLayers = Collect(root, TACTILE_QSTRING(u"objectgroup"));
 
   // Move all object layers into the vector with tile layers
   layers.insert(layers.end(),
@@ -31,7 +31,7 @@ auto xml_engine::layers(const object_type& root) -> std::vector<object_type>
   return layers;
 }
 
-auto xml_engine::properties(const object_type& object)
+auto XmlEngine::Properties(const object_type& object)
     -> std::vector<object_type>
 {
   const auto top = object->elementsByTagName(TACTILE_QSTRING(u"properties"));
@@ -45,19 +45,19 @@ auto xml_engine::properties(const object_type& object)
   const auto topNode = top.at(0);
   Q_ASSERT(topNode.isElement());
 
-  return collect(object_type{topNode.toElement()},
+  return Collect(object_type{topNode.toElement()},
                  TACTILE_QSTRING(u"property"));
 }
 
-auto xml_engine::objects(const object_type& object) -> std::vector<object_type>
+auto XmlEngine::Objects(const object_type& object) -> std::vector<object_type>
 {
-  return collect(object, TACTILE_QSTRING(u"object"));
+  return Collect(object, TACTILE_QSTRING(u"object"));
 }
 
-auto xml_engine::tiles(const object_type& object,
-                       const row_t nRows,
-                       const col_t nCols,
-                       parse_error& error) -> core::tile_matrix
+auto XmlEngine::Tiles(const object_type& object,
+                      const row_t nRows,
+                      const col_t nCols,
+                      ParseError& error) -> core::tile_matrix
 {
   auto matrix = core::MakeTileMatrix(nRows, nCols);
 
@@ -72,7 +72,7 @@ auto xml_engine::tiles(const object_type& object,
 
     if (!ok)
     {
-      error = parse::parse_error::layer_could_not_parse_tile;
+      error = parse::ParseError::layer_could_not_parse_tile;
       return matrix;
     }
 
@@ -85,31 +85,31 @@ auto xml_engine::tiles(const object_type& object,
   return matrix;
 }
 
-auto xml_engine::property_type(const object_type& object) -> QString
+auto XmlEngine::PropertyType(const object_type& object) -> QString
 {
   /* The following is a quirk due to the fact that the type attribute can be
      omitted for string properties */
-  if (assume_string_property(object))
+  if (AssumeStringProperty(object))
   {
     return TACTILE_QSTRING(u"string");
   }
   else
   {
-    return object.string(ElementId::Type).value();
+    return object.String(ElementId::Type).value();
   }
 }
 
-auto xml_engine::root(const document_type& document) -> object_type
+auto XmlEngine::Root(const document_type& document) -> object_type
 {
   return object_type{document.documentElement()};
 }
 
-auto xml_engine::from_file(const QFileInfo& path) -> maybe<document_type>
+auto XmlEngine::FromFile(const QFileInfo& path) -> maybe<document_type>
 {
   return ReadXml(path);
 }
 
-auto xml_engine::tileset_image_relative_path(const object_type& object)
+auto XmlEngine::TilesetImageRelativePath(const object_type& object)
     -> maybe<QString>
 {
   const auto imageElem = object->firstChildElement(TACTILE_QSTRING(u"image"));
@@ -124,42 +124,42 @@ auto xml_engine::tileset_image_relative_path(const object_type& object)
   }
 }
 
-auto xml_engine::contains_tilesets(const object_type& object) -> bool
+auto XmlEngine::ContainsTilesets(const object_type& object) -> bool
 {
   return true;
 }
 
-auto xml_engine::validate_layer_type(const object_type& object) -> bool
+auto XmlEngine::ValidateLayerType(const object_type& object) -> bool
 {
   return true;
 }
 
-auto xml_engine::contains_layers(const object_type& object) -> bool
+auto XmlEngine::ContainsLayers(const object_type& object) -> bool
 {
   return true;
 }
 
-auto xml_engine::assume_string_property(const object_type& object) -> bool
+auto XmlEngine::AssumeStringProperty(const object_type& object) -> bool
 {
   return !object->hasAttribute(TACTILE_QSTRING(u"type"));
 }
 
-auto xml_engine::is_tile_layer(const object_type& object) -> bool
+auto XmlEngine::IsTileLayer(const object_type& object) -> bool
 {
   return object->tagName() == TACTILE_QSTRING(u"layer");
 }
 
-auto xml_engine::is_object_layer(const object_type& object) -> bool
+auto XmlEngine::IsObjectLayer(const object_type& object) -> bool
 {
   return object->tagName() == TACTILE_QSTRING(u"objectgroup");
 }
 
-auto xml_engine::is_point(const object_type& object) -> bool
+auto XmlEngine::IsPoint(const object_type& object) -> bool
 {
-  return has_child(object, TACTILE_QSTRING(u"point"));
+  return HasChild(object, TACTILE_QSTRING(u"point"));
 }
 
-auto xml_engine::collect(const object_type& root, const QString& key)
+auto XmlEngine::Collect(const object_type& root, const QString& key)
     -> std::vector<object_type>
 {
   const auto elements = root->elementsByTagName(key);
@@ -179,7 +179,7 @@ auto xml_engine::collect(const object_type& root, const QString& key)
   return result;
 }
 
-auto xml_engine::has_child(const object_type& obj, const QString& tag) -> bool
+auto XmlEngine::HasChild(const object_type& obj, const QString& tag) -> bool
 {
   return !obj->firstChildElement(tag).isNull();
 }

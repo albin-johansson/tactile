@@ -1,47 +1,47 @@
 #pragma once
 
 #include <QDomElement>  // QDomElement
+#include <optional>     // optional
 
 #include "element_id.hpp"
-#include "maybe.hpp"
 
 namespace tactile::parse {
 
-class xml_element final
+class XmlElement final
 {
  public:
-  explicit xml_element(const QDomElement& element);
+  explicit XmlElement(const QDomElement& element);
 
-  [[nodiscard]] auto contains(ElementId id) const -> bool;
+  [[nodiscard]] auto Contains(ElementId id) const -> bool;
 
-  [[nodiscard]] auto integer(ElementId id) const -> maybe<int>;
+  [[nodiscard]] auto Integer(ElementId id) const -> std::optional<int>;
 
-  [[nodiscard]] auto integer(ElementId id, int def) const -> maybe<int>;
+  [[nodiscard]] auto Integer(ElementId id, int def) const -> std::optional<int>;
 
-  [[nodiscard]] auto floating(ElementId id) const -> maybe<double>;
+  [[nodiscard]] auto Floating(ElementId id) const -> std::optional<double>;
 
-  [[nodiscard]] auto floating(ElementId id, double def) const -> double;
+  [[nodiscard]] auto Floating(ElementId id, double def) const -> double;
 
-  [[nodiscard]] auto string(ElementId id) const -> maybe<QString>;
+  [[nodiscard]] auto String(ElementId id) const -> std::optional<QString>;
 
-  [[nodiscard]] auto string(ElementId id, const QString& def) const -> QString;
+  [[nodiscard]] auto String(ElementId id, const QString& def) const -> QString;
 
-  [[nodiscard]] auto boolean(ElementId id) const -> maybe<bool>;
+  [[nodiscard]] auto Boolean(ElementId id) const -> std::optional<bool>;
 
   auto operator->() noexcept -> QDomElement*
   {
-    return &m_element;
+    return &mElement;
   }
 
   auto operator->() const noexcept -> const QDomElement*
   {
-    return &m_element;
+    return &mElement;
   }
 
  private:
-  QDomElement m_element;
+  QDomElement mElement;
 
-  [[nodiscard]] static auto stringify_element_id(ElementId type) -> QString;
+  [[nodiscard]] static auto StringifyElementId(ElementId type) -> QString;
 };
 
 }  // namespace tactile::parse

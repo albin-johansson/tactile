@@ -14,70 +14,70 @@
 
 namespace tactile::parse {
 
-class xml_engine final
+class XmlEngine final
 {
  public:
   using document_type = QDomDocument;
-  using object_type = xml_element;
+  using object_type = XmlElement;
 
   // clang-format off
 
   [[nodiscard]]
-  static auto root(const document_type& document) -> object_type;
+  static auto Root(const document_type& document) -> object_type;
 
   [[nodiscard]]
-  static auto from_file(const QFileInfo& path) -> maybe<document_type>;
+  static auto FromFile(const QFileInfo& path) -> maybe<document_type>;
 
   [[nodiscard]]
-  static auto tilesets(const object_type& root) -> std::vector<object_type>;
+  static auto Tilesets(const object_type& root) -> std::vector<object_type>;
 
   [[nodiscard]]
-  static auto layers(const object_type& root) -> std::vector<object_type>;
+  static auto Layers(const object_type& root) -> std::vector<object_type>;
 
   [[nodiscard]]
-  static auto properties(const object_type& object) -> std::vector<object_type>;
+  static auto Properties(const object_type& object) -> std::vector<object_type>;
 
   [[nodiscard]]
-  static auto objects(const object_type& object) -> std::vector<object_type>;
+  static auto Objects(const object_type& object) -> std::vector<object_type>;
 
   [[nodiscard]]
-  static auto tiles(const object_type& object, row_t nRows, col_t nCols, parse_error& error)
+  static auto Tiles(const object_type& object, row_t nRows, col_t nCols, ParseError& error)
       -> core::tile_matrix;
 
   [[nodiscard]]
-  static auto property_type(const object_type& object) -> QString;
+  static auto PropertyType(const object_type& object) -> QString;
 
   [[nodiscard]]
-  static auto contains_tilesets(const object_type& object) -> bool;
+  static auto ContainsTilesets(const object_type& object) -> bool;
 
   [[nodiscard]]
-  static auto tileset_image_relative_path(const object_type& object)
+  static auto TilesetImageRelativePath(const object_type& object)
       -> maybe<QString>;
 
   [[nodiscard]]
-  static auto validate_layer_type(const object_type& object) -> bool;
+  static auto ValidateLayerType(const object_type& object) -> bool;
 
   [[nodiscard]]
-  static auto contains_layers(const object_type& object) -> bool;
+  static auto ContainsLayers(const object_type& object) -> bool;
 
   [[nodiscard]]
-  static auto is_tile_layer(const object_type& object) -> bool;
+  static auto IsTileLayer(const object_type& object) -> bool;
 
   [[nodiscard]]
-  static auto is_object_layer(const object_type& object) -> bool;
+  static auto IsObjectLayer(const object_type& object) -> bool;
 
   [[nodiscard]]
-  static auto is_point(const object_type& object) -> bool;
+  static auto IsPoint(const object_type& object) -> bool;
 
   // clang-format on
 
  private:
-  static auto collect(const object_type& root, const QString& key)
+  static auto Collect(const object_type& root, const QString& key)
       -> std::vector<object_type>;
 
-  static auto has_child(const object_type& obj, const QString& tag) -> bool;
+  static auto HasChild(const object_type& obj, const QString& tag) -> bool;
 
-  [[nodiscard]] static auto assume_string_property(const object_type& object)
+  [[nodiscard]] static auto AssumeStringProperty(const object_type& object)
       -> bool;
 };
 

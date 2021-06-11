@@ -7,18 +7,18 @@
 
 namespace tactile::parse {
 
-xml_element::xml_element(const QDomElement& element) : m_element{element}
+XmlElement::XmlElement(const QDomElement& element) : mElement{element}
 {}
 
-auto xml_element::contains(const ElementId id) const -> bool
+auto XmlElement::Contains(const ElementId id) const -> bool
 {
-  return m_element.hasAttribute(stringify_element_id(id));
+  return mElement.hasAttribute(StringifyElementId(id));
 }
 
-auto xml_element::integer(const ElementId id) const -> maybe<int>
+auto XmlElement::Integer(const ElementId id) const -> std::optional<int>
 {
   bool ok;
-  const auto result = m_element.attribute(stringify_element_id(id)).toInt(&ok);
+  const auto result = mElement.attribute(StringifyElementId(id)).toInt(&ok);
   if (ok)
   {
     return result;
@@ -29,17 +29,16 @@ auto xml_element::integer(const ElementId id) const -> maybe<int>
   }
 }
 
-auto xml_element::integer(const ElementId id, const int def) const
-    -> maybe<int>
+auto XmlElement::Integer(const ElementId id, const int def) const
+    -> std::optional<int>
 {
-  return integer(id).value_or(def);
+  return Integer(id).value_or(def);
 }
 
-auto xml_element::floating(const ElementId id) const -> maybe<double>
+auto XmlElement::Floating(const ElementId id) const -> std::optional<double>
 {
   bool ok;
-  const auto result =
-      m_element.attribute(stringify_element_id(id)).toDouble(&ok);
+  const auto result = mElement.attribute(StringifyElementId(id)).toDouble(&ok);
   if (ok)
   {
     return result;
@@ -50,15 +49,14 @@ auto xml_element::floating(const ElementId id) const -> maybe<double>
   }
 }
 
-auto xml_element::floating(const ElementId id, const double def) const
-    -> double
+auto XmlElement::Floating(const ElementId id, const double def) const -> double
 {
-  return floating(id).value_or(def);
+  return Floating(id).value_or(def);
 }
 
-auto xml_element::string(const ElementId id) const -> maybe<QString>
+auto XmlElement::String(const ElementId id) const -> std::optional<QString>
 {
-  const auto result = m_element.attribute(stringify_element_id(id));
+  const auto result = mElement.attribute(StringifyElementId(id));
   if (!result.isNull())
   {
     return result;
@@ -69,15 +67,14 @@ auto xml_element::string(const ElementId id) const -> maybe<QString>
   }
 }
 
-auto xml_element::string(const ElementId id, const QString& def) const
-    -> QString
+auto XmlElement::String(const ElementId id, const QString& def) const -> QString
 {
-  return string(id).value_or(def);
+  return String(id).value_or(def);
 }
 
-auto xml_element::boolean(const ElementId id) const -> maybe<bool>
+auto XmlElement::Boolean(const ElementId id) const -> std::optional<bool>
 {
-  if (const auto value = string(id))
+  if (const auto value = String(id))
   {
     return value == TACTILE_QSTRING(u"true");
   }
@@ -87,7 +84,7 @@ auto xml_element::boolean(const ElementId id) const -> maybe<bool>
   }
 }
 
-auto xml_element::stringify_element_id(const ElementId type) -> QString
+auto XmlElement::StringifyElementId(const ElementId type) -> QString
 {
   switch (type)
   {

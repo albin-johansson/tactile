@@ -8,8 +8,7 @@
 namespace tactile::parse {
 namespace {
 
-[[nodiscard]] auto make_tileset(const tileset_data& data)
-    -> shared<core::Tileset>
+[[nodiscard]] auto MakeTileset(const TilesetData& data) -> shared<core::Tileset>
 {
   auto tileset = std::make_shared<core::Tileset>(data.firstId,
                                                  data.absolutePath,
@@ -19,7 +18,7 @@ namespace {
   return tileset;
 }
 
-[[nodiscard]] auto make_tile_layer(const tile_layer_data& data)
+[[nodiscard]] auto MakeTileLayer(const TileLayerData& data)
     -> shared<core::ILayer>
 {
   auto layer = std::make_shared<core::TileLayer>(data.nRows, data.nCols);
@@ -36,9 +35,9 @@ namespace {
   return layer;
 }
 
-[[nodiscard]] auto make_object(const object_data& objectData) -> core::Object
+[[nodiscard]] auto MakeObject(const ObjectData& objectData) -> core::Object
 {
-  const auto getType = [](const object_data& objectData) {
+  const auto getType = [](const ObjectData& objectData) {
     if (objectData.isPoint)
     {
       return core::object_type::point;
@@ -66,30 +65,30 @@ namespace {
   return object;
 }
 
-[[nodiscard]] auto make_object_layer(const object_layer_data& data)
+[[nodiscard]] auto MakeObjectLayer(const ObjectLayerData& data)
     -> shared<core::ILayer>
 {
   auto layer = std::make_shared<core::ObjectLayer>();
 
   for (const auto& objectData : data.objects)
   {
-    layer->AddObject(objectData.id, make_object(objectData));
+    layer->AddObject(objectData.id, MakeObject(objectData));
   }
 
   return layer;
 }
 
-[[nodiscard]] auto make_layer(const layer_data& data) -> shared<core::ILayer>
+[[nodiscard]] auto MakeLayer(const LayerData& data) -> shared<core::ILayer>
 {
   shared<core::ILayer> layer;
 
   if (data.type == core::LayerType::tile_layer)
   {
-    layer = make_tile_layer(std::get<tile_layer_data>(data.data));
+    layer = MakeTileLayer(std::get<TileLayerData>(data.data));
   }
   else if (data.type == core::LayerType::object_layer)
   {
-    layer = make_object_layer(std::get<object_layer_data>(data.data));
+    layer = MakeObjectLayer(std::get<ObjectLayerData>(data.data));
   }
 
   Q_ASSERT(layer);
@@ -107,7 +106,7 @@ namespace {
 
 }  // namespace
 
-auto to_map_document(const map_data& data) -> core::MapDocument*
+auto ToMapDocument(const MapData& data) -> core::MapDocument*
 {
   Q_ASSERT(!data.layers.empty());
 
@@ -119,12 +118,12 @@ auto to_map_document(const map_data& data) -> core::MapDocument*
   auto* tilesets = document->GetTilesets();
   for (const auto& tilesetData : data.tilesets)
   {
-    const auto id [[maybe_unused]] = tilesets->Add(make_tileset(tilesetData));
+    const auto id [[maybe_unused]] = tilesets->Add(MakeTileset(tilesetData));
   }
 
   for (const auto& layerData : data.layers)
   {
-    document->AddLayer(layerData.id, make_layer(layerData));
+    document->AddLayer(layerData.id, MakeLayer(layerData));
   }
 
   for (const auto& propertyData : data.properties)

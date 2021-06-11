@@ -137,8 +137,8 @@ void TactileApp::OnSaveAs(const QString& path)
 
 void TactileApp::OnOpenMap(const QString& path)
 {
-  parse::parse_error error;
-  if (auto* document = open_map_document(path, error))
+  parse::ParseError error;
+  if (auto* document = OpenMapDocument(path, error))
   {
     const auto id = mModel->AddMap(document);
     mWindow->OnNewMapAdded(document, id, QFileInfo{path}.baseName());
@@ -147,7 +147,7 @@ void TactileApp::OnOpenMap(const QString& path)
   {
     OpenMapErrorDialog dialog{mWindow.get()};
     dialog.SetFile(QFileInfo{path});
-    dialog.SetErrorMessage(to_message(error));
+    dialog.SetErrorMessage(ToMessage(error));
     dialog.exec();
   }
 }

@@ -187,8 +187,8 @@ TACTILE_DEFINE_TEST_P(MapImportTest, QString)
 {
   QObject parent;
 
-  parse::parse_error error;
-  auto* document = open_map_document(GetParam(), error);
+  parse::ParseError error;
+  auto* document = OpenMapDocument(GetParam(), error);
 
   ASSERT_TRUE(document);
   document->setParent(&parent);  // Avoid memory leak

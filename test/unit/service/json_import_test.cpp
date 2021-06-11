@@ -11,9 +11,9 @@ TEST(ImportJsonMap, Embedded)
   const auto path = TACTILE_QSTRING(u"json/embedded.json");
 
   QObject object;
-  parse::parse_error error;
+  parse::ParseError error;
 
-  auto* document = open_map_document(path, error);
+  auto* document = OpenMapDocument(path, error);
   ASSERT_TRUE(document);
 
   document->setParent(&object);  // Avoid memory leak
@@ -96,9 +96,9 @@ TEST(ImportJsonMap, External)
   const auto path = TACTILE_QSTRING(u"json/external.json");
 
   QObject object;
-  parse::parse_error error;
+  parse::ParseError error;
 
-  auto* document = open_map_document(path, error);
+  auto* document = OpenMapDocument(path, error);
   ASSERT_TRUE(document);
 
   document->setParent(&object);  // Avoid memory leak

@@ -7,17 +7,17 @@
 
 namespace tactile::parse {
 
-json_element::json_element(QJsonObject object) : m_object{std::move(object)}
+JsonElement::JsonElement(QJsonObject object) : mObject{std::move(object)}
 {}
 
-auto json_element::contains(const ElementId id) const -> bool
+auto JsonElement::Contains(const ElementId id) const -> bool
 {
-  return m_object.contains(stringify_element_id(id));
+  return mObject.contains(StringifyElementId(id));
 }
 
-auto json_element::integer(const QString& str) const -> maybe<int>
+auto JsonElement::Integer(const QString& str) const -> std::optional<int>
 {
-  if (const auto result = m_object.value(str).toInt(-1); result != -1)
+  if (const auto result = mObject.value(str).toInt(-1); result != -1)
   {
     return result;
   }
@@ -27,14 +27,14 @@ auto json_element::integer(const QString& str) const -> maybe<int>
   }
 }
 
-auto json_element::integer(const QString& str, const int def) const -> int
+auto JsonElement::Integer(const QString& str, const int def) const -> int
 {
-  return integer(str).value_or(def);
+  return Integer(str).value_or(def);
 }
 
-auto json_element::integer(const ElementId id) const -> maybe<int>
+auto JsonElement::Integer(const ElementId id) const -> std::optional<int>
 {
-  if (const auto result = m_object.value(stringify_element_id(id)).toInt(-1);
+  if (const auto result = mObject.value(StringifyElementId(id)).toInt(-1);
       result != -1)
   {
     return result;
@@ -45,15 +45,15 @@ auto json_element::integer(const ElementId id) const -> maybe<int>
   }
 }
 
-auto json_element::integer(const ElementId id, const int def) const
-    -> maybe<int>
+auto JsonElement::Integer(const ElementId id, const int def) const
+    -> std::optional<int>
 {
-  return integer(id).value_or(def);
+  return Integer(id).value_or(def);
 }
 
-auto json_element::floating(const ElementId id) const -> maybe<double>
+auto JsonElement::Floating(const ElementId id) const -> std::optional<double>
 {
-  if (const auto result = m_object.value(stringify_element_id(id)).toDouble(-1);
+  if (const auto result = mObject.value(StringifyElementId(id)).toDouble(-1);
       result != -1)
   {
     return result;
@@ -64,10 +64,9 @@ auto json_element::floating(const ElementId id) const -> maybe<double>
   }
 }
 
-auto json_element::floating(const QString& str, const double def) const
-    -> double
+auto JsonElement::Floating(const QString& str, const double def) const -> double
 {
-  if (const auto result = m_object.value(str).toDouble(-1); result != -1)
+  if (const auto result = mObject.value(str).toDouble(-1); result != -1)
   {
     return result;
   }
@@ -77,15 +76,14 @@ auto json_element::floating(const QString& str, const double def) const
   }
 }
 
-auto json_element::floating(const ElementId id, const double def) const
-    -> double
+auto JsonElement::Floating(const ElementId id, const double def) const -> double
 {
-  return floating(id).value_or(def);
+  return Floating(id).value_or(def);
 }
 
-auto json_element::string(const QString& str) const -> maybe<QString>
+auto JsonElement::String(const QString& str) const -> std::optional<QString>
 {
-  const auto result = m_object.value(str).toString();
+  const auto result = mObject.value(str).toString();
   if (!result.isNull())
   {
     return result;
@@ -96,15 +94,15 @@ auto json_element::string(const QString& str) const -> maybe<QString>
   }
 }
 
-auto json_element::string(const QString& str, const QString& def) const
+auto JsonElement::String(const QString& str, const QString& def) const
     -> QString
 {
-  return string(str).value_or(def);
+  return String(str).value_or(def);
 }
 
-auto json_element::string(const ElementId id) const -> maybe<QString>
+auto JsonElement::String(const ElementId id) const -> std::optional<QString>
 {
-  const auto result = m_object.value(stringify_element_id(id)).toString();
+  const auto result = mObject.value(StringifyElementId(id)).toString();
   if (!result.isNull())
   {
     return result;
@@ -115,15 +113,15 @@ auto json_element::string(const ElementId id) const -> maybe<QString>
   }
 }
 
-auto json_element::string(const ElementId id, const QString& def) const
+auto JsonElement::String(const ElementId id, const QString& def) const
     -> QString
 {
-  return string(id).value_or(def);
+  return String(id).value_or(def);
 }
 
-auto json_element::boolean(const ElementId id) const -> maybe<bool>
+auto JsonElement::Boolean(const ElementId id) const -> std::optional<bool>
 {
-  const auto value = m_object.value(stringify_element_id(id));
+  const auto value = mObject.value(StringifyElementId(id));
   if (value.isBool())
   {
     return value.toBool();
@@ -134,7 +132,7 @@ auto json_element::boolean(const ElementId id) const -> maybe<bool>
   }
 }
 
-auto json_element::stringify_element_id(const ElementId type) -> QStringView
+auto JsonElement::StringifyElementId(ElementId type) -> QStringView
 {
   switch (type)
   {

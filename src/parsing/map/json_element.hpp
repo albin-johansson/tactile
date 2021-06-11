@@ -7,53 +7,52 @@
 
 namespace tactile::parse {
 
-class json_element final
+class JsonElement final
 {
  public:
-  explicit json_element(QJsonObject object);
+  explicit JsonElement(QJsonObject object);
 
-  [[nodiscard]] auto contains(ElementId id) const -> bool;
+  [[nodiscard]] auto Contains(ElementId id) const -> bool;
 
-  [[nodiscard]] auto integer(const QString& str) const -> maybe<int>;
+  [[nodiscard]] auto Integer(const QString& str) const -> maybe<int>;
 
-  [[nodiscard]] auto integer(ElementId id) const -> maybe<int>;
+  [[nodiscard]] auto Integer(ElementId id) const -> maybe<int>;
 
-  [[nodiscard]] auto integer(ElementId id, int def) const -> maybe<int>;
+  [[nodiscard]] auto Integer(ElementId id, int def) const -> maybe<int>;
 
-  [[nodiscard]] auto integer(const QString& str, int def) const -> int;
+  [[nodiscard]] auto Integer(const QString& str, int def) const -> int;
 
-  [[nodiscard]] auto floating(ElementId id) const -> maybe<double>;
+  [[nodiscard]] auto Floating(ElementId id) const -> maybe<double>;
 
-  [[nodiscard]] auto floating(const QString& str, double def) const -> double;
+  [[nodiscard]] auto Floating(const QString& str, double def) const -> double;
 
-  [[nodiscard]] auto floating(ElementId id, double def) const -> double;
+  [[nodiscard]] auto Floating(ElementId id, double def) const -> double;
 
-  [[nodiscard]] auto string(const QString& str) const -> maybe<QString>;
+  [[nodiscard]] auto String(const QString& str) const -> maybe<QString>;
 
-  [[nodiscard]] auto string(const QString& str, const QString& def) const
+  [[nodiscard]] auto String(const QString& str, const QString& def) const
       -> QString;
 
-  [[nodiscard]] auto string(ElementId id) const -> maybe<QString>;
+  [[nodiscard]] auto String(ElementId id) const -> maybe<QString>;
 
-  [[nodiscard]] auto string(ElementId id, const QString& def) const -> QString;
+  [[nodiscard]] auto String(ElementId id, const QString& def) const -> QString;
 
-  [[nodiscard]] auto boolean(ElementId id) const -> maybe<bool>;
+  [[nodiscard]] auto Boolean(ElementId id) const -> maybe<bool>;
 
   auto operator->() noexcept -> QJsonObject*
   {
-    return &m_object;
+    return &mObject;
   }
 
   auto operator->() const noexcept -> const QJsonObject*
   {
-    return &m_object;
+    return &mObject;
   }
 
  private:
-  QJsonObject m_object;
+  QJsonObject mObject;
 
-  [[nodiscard]] static auto stringify_element_id(ElementId type)
-      -> QStringView;
+  [[nodiscard]] static auto StringifyElementId(ElementId type) -> QStringView;
 };
 
 }  // namespace tactile::parse

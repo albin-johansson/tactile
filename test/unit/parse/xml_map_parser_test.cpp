@@ -9,22 +9,22 @@
 
 using namespace tactile;
 
-using path_error_pair = std::pair<QStringView, parse::parse_error>;
-using error = parse::parse_error;
+using path_error_pair = std::pair<QStringView, parse::ParseError>;
+using error = parse::ParseError;
 
 TACTILE_DEFINE_TEST_P(XmlMapParser, path_error_pair)
 {
   const auto [path, code] = GetParam();
 
-  const parse::map_parser<parse::xml_engine> parser{path.toString()};
+  const parse::MapParser<parse::XmlEngine> parser{path.toString()};
 
-  if (code != parse::parse_error::none) {
+  if (code != parse::ParseError::none) {
     EXPECT_FALSE(parser);
   } else {
     EXPECT_TRUE(parser);
   }
 
-  EXPECT_EQ(code, parser.error_code());
+  EXPECT_EQ(code, parser.GetError());
 }
 
 [[nodiscard]] constexpr auto as_pair(const QStringView path, const error code)

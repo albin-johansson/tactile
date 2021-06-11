@@ -21,41 +21,41 @@
 namespace tactile::parse {
 
 template <typename Engine>
-class map_parser final
+class MapParser final
 {
  public:
   using engine_type = Engine;
   using document_type = typename engine_type::document_type;
   using object_type = typename engine_type::object_type;
 
-  static_assert(is_engine<engine_type, document_type, object_type>,
+  static_assert(IsEngine<engine_type, document_type, object_type>,
                 "The supplied type isn't a parser engine!");
 
-  explicit map_parser(const QString& path)
+  explicit MapParser(const QString& path)
   {
     const QFileInfo info{path};
-    m_data.path = info.absoluteFilePath();
-    if (const auto file = open_file(info))
+    mData.path = info.absoluteFilePath();
+    if (const auto file = OpenFile(info))
     {
-      const auto root = m_engine.root(*file);
-      if (!parse_next_layer_id(root))
+      const auto root = mEngine.Root(*file);
+      if (!ParseNextLayerId(root))
       {
         return;
       }
 
-      if (!parse_tilesets(root, info))
+      if (!ParseTilesets(root, info))
       {
         return;
       }
 
-      if (!parse_layers(root))
+      if (!ParseLayers(root))
       {
         return;
       }
 
-      if (auto properties = parse_properties(root))
+      if (auto properties = ParseProperties(root))
       {
-        m_data.properties = std::move(*properties);
+        mData.properties = std::move(*properties);
       }
       else
       {
@@ -76,10 +76,10 @@ class map_parser final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto make_document() -> core::MapDocument*
+  [[nodiscard]] auto MakeDocument() -> core::MapDocument*
   {
-    Q_ASSERT(m_error == parse_error::none);
-    return to_map_document(m_data);
+    Q_ASSERT(mError == ParseError::none);
+    return ToMapDocument(mData);
   }
 
   /**
@@ -92,7 +92,7 @@ class map_parser final
    */
   explicit operator bool() const noexcept
   {
-    return m_error == parse_error::none;
+    return mError == ParseError::none;
   }
 
   /**
@@ -103,101 +103,101 @@ class map_parser final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto error_code() const noexcept -> parse_error
+  [[nodiscard]] auto GetError() const noexcept -> ParseError
   {
-    return m_error;
+    return mError;
   }
 
  private:
-  engine_type m_engine;
-  parse_error m_error{parse_error::none};
-  map_data m_data;
+  engine_type mEngine;
+  ParseError mError{ParseError::none};
+  MapData mData;
 
-  [[nodiscard]] auto with_error(const parse_error error) noexcept -> bool
+  [[nodiscard]] auto WithError(const ParseError error) noexcept -> bool
   {
-    m_error = error;
+    mError = error;
     return false;
   }
 
   template <typename T>
-  [[nodiscard]] auto with_error(const parse_error error) noexcept -> maybe<T>
+  [[nodiscard]] auto WithError(const ParseError error) noexcept -> maybe<T>
   {
-    m_error = error;
+    mError = error;
     return std::nullopt;
   }
 
-  [[nodiscard]] auto open_file(const QFileInfo& path) -> maybe<document_type>
+  [[nodiscard]] auto OpenFile(const QFileInfo& path) -> maybe<document_type>
   {
     if (!path.exists())
     {
-      return with_error<document_type>(parse_error::map_file_not_found);
+      return WithError<document_type>(ParseError::map_file_not_found);
     }
 
-    if (auto contents = m_engine.from_file(path))
+    if (auto contents = mEngine.FromFile(path))
     {
       return contents;
     }
     else
     {
-      return with_error<document_type>(parse_error::could_not_parse_file);
+      return WithError<document_type>(ParseError::could_not_parse_file);
     }
   }
 
-  [[nodiscard]] auto parse_next_layer_id(const object_type& root) -> bool
+  [[nodiscard]] auto ParseNextLayerId(const object_type& root) -> bool
   {
-    if (const auto id = root.integer(ElementId::NextLayerId))
+    if (const auto id = root.Integer(ElementId::NextLayerId))
     {
-      m_data.nextLayerId = layer_id{*id};
+      mData.nextLayerId = layer_id{*id};
       return true;
     }
     else
     {
-      return with_error(parse_error::map_missing_next_layer_id);
+      return WithError(ParseError::map_missing_next_layer_id);
     }
   }
 
-  [[nodiscard]] auto parse_tileset_first_gid(const object_type& object)
+  [[nodiscard]] auto ParseTilesetFirstGid(const object_type& object)
       -> maybe<tile_id>
   {
-    if (const auto gid = object.integer(ElementId::FirstGid))
+    if (const auto gid = object.Integer(ElementId::FirstGid))
     {
       return tile_id{*gid};
     }
     else
     {
-      return with_error<tile_id>(parse_error::tileset_missing_first_gid);
+      return WithError<tile_id>(ParseError::tileset_missing_first_gid);
     }
   }
 
-  [[nodiscard]] auto parse_tileset_common(const object_type& object,
-                                          const QFileInfo& path,
-                                          const tile_id firstGid) -> bool
+  [[nodiscard]] auto ParseTilesetCommon(const object_type& object,
+                                        const QFileInfo& path,
+                                        const tile_id firstGid) -> bool
   {
-    tileset_data tileset;
+    TilesetData tileset;
     tileset.firstId = firstGid;
 
-    if (const auto tw = object.integer(ElementId::TileWidth))
+    if (const auto tw = object.Integer(ElementId::TileWidth))
     {
       tileset.tileWidth = tile_width{*tw};
     }
     else
     {
-      return with_error(parse_error::tileset_missing_tile_width);
+      return WithError(ParseError::tileset_missing_tile_width);
     }
 
-    if (const auto th = object.integer(ElementId::TileHeight))
+    if (const auto th = object.Integer(ElementId::TileHeight))
     {
       tileset.tileHeight = tile_height{*th};
     }
     else
     {
-      return with_error(parse_error::tileset_missing_tile_height);
+      return WithError(ParseError::tileset_missing_tile_height);
     }
 
-    const auto relativePath = m_engine.tileset_image_relative_path(object);
+    const auto relativePath = mEngine.TilesetImageRelativePath(object);
     if (!relativePath)
     {
-      return with_error(parse_error::tileset_missing_image_path);
+      return WithError(ParseError::tileset_missing_image_path);
     }
 
     const auto absolutePath = path.dir().absoluteFilePath(*relativePath);
@@ -207,47 +207,47 @@ class map_parser final
     }
     else
     {
-      return with_error(parse_error::external_tileset_does_not_exist);
+      return WithError(ParseError::external_tileset_does_not_exist);
     }
 
-    if (const auto name = object.string(ElementId::Name))
+    if (const auto name = object.String(ElementId::Name))
     {
       tileset.name = *name;
     }
     else
     {
-      return with_error(parse_error::tileset_missing_name);
+      return WithError(ParseError::tileset_missing_name);
     }
 
-    m_data.tilesets.emplace_back(std::move(tileset));
+    mData.tilesets.emplace_back(std::move(tileset));
     return true;
   }
 
-  [[nodiscard]] auto parse_external_tileset(const object_type& object,
-                                            const QFileInfo& path,
-                                            const tile_id firstGid) -> bool
+  [[nodiscard]] auto ParseExternalTileset(const object_type& object,
+                                          const QFileInfo& path,
+                                          const tile_id firstGid) -> bool
   {
-    const auto source = object.string(ElementId::Source);
+    const auto source = object.String(ElementId::Source);
     const auto external =
-        m_engine.from_file(QFileInfo{path.dir().absoluteFilePath(*source)});
+        mEngine.FromFile(QFileInfo{path.dir().absoluteFilePath(*source)});
     if (external)
     {
-      return parse_tileset_common(m_engine.root(*external), path, firstGid);
+      return ParseTilesetCommon(mEngine.Root(*external), path, firstGid);
     }
     else
     {
-      return with_error(parse_error::could_not_read_external_tileset);
+      return WithError(ParseError::could_not_read_external_tileset);
     }
   }
 
-  [[nodiscard]] auto parse_tileset(const object_type& object,
-                                   const QFileInfo& path) -> bool
+  [[nodiscard]] auto ParseTileset(const object_type& object,
+                                  const QFileInfo& path) -> bool
   {
-    if (const auto gid = parse_tileset_first_gid(object))
+    if (const auto gid = ParseTilesetFirstGid(object))
     {
-      const auto hasSource = object.contains(ElementId::Source);
-      return hasSource ? parse_external_tileset(object, path, *gid)
-                       : parse_tileset_common(object, path, *gid);
+      const auto hasSource = object.Contains(ElementId::Source);
+      return hasSource ? ParseExternalTileset(object, path, *gid)
+                       : ParseTilesetCommon(object, path, *gid);
     }
     else
     {
@@ -255,45 +255,45 @@ class map_parser final
     }
   }
 
-  [[nodiscard]] auto parse_tilesets(const object_type& root,
-                                    const QFileInfo& path) -> bool
+  [[nodiscard]] auto ParseTilesets(const object_type& root,
+                                   const QFileInfo& path) -> bool
   {
-    if (!m_engine.contains_tilesets(root))
+    if (!mEngine.ContainsTilesets(root))
     {
-      return with_error(parse_error::map_missing_tilesets);
+      return WithError(ParseError::map_missing_tilesets);
     }
 
     return std::ranges::all_of(
-        m_engine.tilesets(root),
-        [&](const object_type& ts) { return parse_tileset(ts, path); });
+        mEngine.Tilesets(root),
+        [&](const object_type& ts) { return ParseTileset(ts, path); });
   }
 
-  [[nodiscard]] auto parse_tile_layer(layer_data& layer,
-                                      const object_type& object) -> bool
+  [[nodiscard]] auto ParseTileLayer(LayerData& layer, const object_type& object)
+      -> bool
   {
-    tile_layer_data tileLayer;
+    TileLayerData tileLayer;
 
-    if (const auto rows = object.integer(ElementId::Height))
+    if (const auto rows = object.Integer(ElementId::Height))
     {
       tileLayer.nRows = row_t{*rows};
     }
     else
     {
-      return with_error(parse_error::layer_missing_height);
+      return WithError(ParseError::layer_missing_height);
     }
 
-    if (const auto cols = object.integer(ElementId::Width))
+    if (const auto cols = object.Integer(ElementId::Width))
     {
       tileLayer.nCols = col_t{*cols};
     }
     else
     {
-      return with_error(parse_error::layer_missing_width);
+      return WithError(ParseError::layer_missing_width);
     }
 
     tileLayer.tiles =
-        m_engine.tiles(object, tileLayer.nRows, tileLayer.nCols, m_error);
-    if (m_error != parse_error::none)
+        mEngine.Tiles(object, tileLayer.nRows, tileLayer.nCols, mError);
+    if (mError != ParseError::none)
     {
       return false;
     }
@@ -302,34 +302,34 @@ class map_parser final
     return true;
   }
 
-  [[nodiscard]] auto parse_object_layer(layer_data& layer,
-                                        const object_type& root) -> bool
+  [[nodiscard]] auto ParseObjectLayer(LayerData& layer, const object_type& root)
+      -> bool
   {
-    object_layer_data objectLayer;
+    ObjectLayerData objectLayer;
 
-    for (const auto& elem : m_engine.objects(root))
+    for (const auto& elem : mEngine.Objects(root))
     {
       auto& object = objectLayer.objects.emplace_back();
 
-      if (const auto id = elem.integer(ElementId::Id))
+      if (const auto id = elem.Integer(ElementId::Id))
       {
         object.id = object_id{*id};
       }
       else
       {
-        return with_error(parse_error::object_missing_id);
+        return WithError(ParseError::object_missing_id);
       }
 
-      object.x = elem.floating(ElementId::X, 0);
-      object.y = elem.floating(ElementId::Y, 0);
-      object.width = elem.floating(ElementId::Width, 0);
-      object.height = elem.floating(ElementId::Height, 0);
-      object.name = elem.string(ElementId::Name, QString{});
-      object.customType = elem.string(ElementId::Type, QString{});
-      object.visible = elem.boolean(ElementId::Visible).value_or(true);
-      object.isPoint = m_engine.is_point(elem);
+      object.x = elem.Floating(ElementId::X, 0);
+      object.y = elem.Floating(ElementId::Y, 0);
+      object.width = elem.Floating(ElementId::Width, 0);
+      object.height = elem.Floating(ElementId::Height, 0);
+      object.name = elem.String(ElementId::Name, QString{});
+      object.customType = elem.String(ElementId::Type, QString{});
+      object.visible = elem.Boolean(ElementId::Visible).value_or(true);
+      object.isPoint = mEngine.IsPoint(elem);
 
-      if (auto properties = parse_properties(elem))
+      if (auto properties = ParseProperties(elem))
       {
         object.properties = std::move(*properties);
       }
@@ -343,52 +343,52 @@ class map_parser final
     return true;
   }
 
-  [[nodiscard]] auto parse_layer(const object_type& object) -> bool
+  [[nodiscard]] auto ParseLayer(const object_type& object) -> bool
   {
-    if (!m_engine.validate_layer_type(object))
+    if (!mEngine.ValidateLayerType(object))
     {
-      return with_error(parse_error::layer_missing_type);
+      return WithError(ParseError::layer_missing_type);
     }
 
-    layer_data layer;
+    LayerData layer;
 
-    if (const auto id = object.integer(ElementId::Id))
+    if (const auto id = object.Integer(ElementId::Id))
     {
       layer.id = layer_id{*id};
     }
     else
     {
-      return with_error(parse_error::layer_missing_id);
+      return WithError(ParseError::layer_missing_id);
     }
 
-    layer.name = object.string(ElementId::Name, TACTILE_QSTRING(u"Layer"));
-    layer.opacity = object.floating(ElementId::Opacity, 1.0);
-    layer.visible = object.boolean(ElementId::Visible).value_or(true);
+    layer.name = object.String(ElementId::Name, TACTILE_QSTRING(u"Layer"));
+    layer.opacity = object.Floating(ElementId::Opacity, 1.0);
+    layer.visible = object.Boolean(ElementId::Visible).value_or(true);
 
-    if (m_engine.is_tile_layer(object))
+    if (mEngine.IsTileLayer(object))
     {
       layer.type = core::LayerType::tile_layer;
 
-      if (!parse_tile_layer(layer, object))
+      if (!ParseTileLayer(layer, object))
       {
         return false;
       }
     }
-    else if (m_engine.is_object_layer(object))
+    else if (mEngine.IsObjectLayer(object))
     {
       layer.type = core::LayerType::object_layer;
 
-      if (!parse_object_layer(layer, object))
+      if (!ParseObjectLayer(layer, object))
       {
         return false;
       }
     }
     else
     {
-      return with_error(parse_error::unknown_layer_type);
+      return WithError(ParseError::unknown_layer_type);
     }
 
-    if (auto properties = parse_properties(object))
+    if (auto properties = ParseProperties(object))
     {
       layer.properties = std::move(*properties);
     }
@@ -397,30 +397,30 @@ class map_parser final
       return false;
     }
 
-    m_data.layers.emplace_back(std::move(layer));
+    mData.layers.emplace_back(std::move(layer));
     return true;
   }
 
-  [[nodiscard]] auto parse_layers(const object_type& root) -> bool
+  [[nodiscard]] auto ParseLayers(const object_type& root) -> bool
   {
-    if (!m_engine.contains_layers(root))
+    if (!mEngine.ContainsLayers(root))
     {
-      return with_error(parse_error::map_missing_layers);
+      return WithError(ParseError::map_missing_layers);
     }
 
     return std::ranges::all_of(
-        m_engine.layers(root),
-        [this](const object_type& layer) { return parse_layer(layer); });
+        mEngine.Layers(root),
+        [this](const object_type& layer) { return ParseLayer(layer); });
   }
 
-  [[nodiscard]] auto parse_property(const object_type& prop)
-      -> maybe<property_data>
+  [[nodiscard]] auto ParseProperty(const object_type& prop)
+      -> maybe<PropertyData>
   {
-    property_data data;
-    data.name = prop.string(ElementId::Name).Value();
+    PropertyData data;
+    data.name = prop.String(ElementId::Name).value();
 
-    const auto type = m_engine.property_type(prop);
-    if (auto property = to_property(prop, type, m_error))
+    const auto type = mEngine.PropertyType(prop);
+    if (auto property = ToProperty(prop, type, mError))
     {
       data.property = std::move(*property);
       return data;
@@ -431,17 +431,17 @@ class map_parser final
     }
   }
 
-  [[nodiscard]] auto parse_properties(const object_type& obj)
-      -> maybe<std::vector<property_data>>
+  [[nodiscard]] auto ParseProperties(const object_type& obj)
+      -> maybe<std::vector<PropertyData>>
   {
-    const auto props = m_engine.properties(obj);
+    const auto props = mEngine.Properties(obj);
 
-    std::vector<property_data> result;
+    std::vector<PropertyData> result;
     result.reserve(static_cast<usize>(props.size()));
 
     for (const auto& elem : props)
     {
-      if (auto property = parse_property(elem))
+      if (auto property = ParseProperty(elem))
       {
         result.emplace_back(*property);
       }

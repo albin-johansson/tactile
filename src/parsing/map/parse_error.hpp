@@ -5,16 +5,16 @@
 namespace tactile::parse {
 
 /**
- * \enum parse_error
+ * \enum ParseError
  *
  * \brief Provides values for with potential map parsing errors.
  *
  * \note Remember to add an error message for each new enumerator in
- * `to_message()`!
+ * `ToMessage()`!
  *
  * \since 0.1.0
  */
-enum class parse_error
+enum class ParseError
 {
   none,  ///< No error occurred.
 
@@ -55,6 +55,6 @@ enum class parse_error
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto to_message(parse_error error) -> QString;
+[[nodiscard]] auto ToMessage(ParseError error) -> QString;
 
 }  // namespace tactile::parse

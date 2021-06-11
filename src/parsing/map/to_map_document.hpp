@@ -5,6 +5,6 @@
 
 namespace tactile::parse {
 
-[[nodiscard]] auto to_map_document(const map_data& data) -> core::MapDocument*;
+[[nodiscard]] auto ToMapDocument(const MapData& data) -> core::MapDocument*;
 
-}
+}  // namespace tactile::parse
