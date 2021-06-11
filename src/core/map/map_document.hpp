@@ -61,7 +61,7 @@ class MapDocument final : public ADocument
    *
    * \since 0.1.0
    */
-  explicit MapDocument(row_t nRows, col_t nCols, QObject* parent = nullptr);
+  MapDocument(row_t nRows, col_t nCols, QObject* parent = nullptr);
 
   ~MapDocument() noexcept override = default;
 
