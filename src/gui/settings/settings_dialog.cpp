@@ -204,13 +204,13 @@ void SettingsDialog::OnAccept()
     prefs::UseReadableOutput() = readable;
   }
 
-  if (const auto value = to_integer(mUi->tileWidthEdit->text());
+  if (const auto value = ToInteger(mUi->tileWidthEdit->text());
       value != mSnapshot.tileWidth)
   {
     prefs::TileWidth() = *value;
   }
 
-  if (const auto value = to_integer(mUi->tileHeightEdit->text());
+  if (const auto value = ToInteger(mUi->tileHeightEdit->text());
       value != mSnapshot.tileHeight)
   {
     prefs::TileHeight() = *value;

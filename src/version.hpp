@@ -15,7 +15,7 @@ namespace tactile {
  *
  * \since 0.1.0
  */
-[[nodiscard]] inline auto version() noexcept -> QString
+[[nodiscard]] inline auto Version() noexcept -> QString
 {
   return TACTILE_QSTRING(u"0.2.0");
 }

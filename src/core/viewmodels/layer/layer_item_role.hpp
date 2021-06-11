@@ -4,10 +4,13 @@
 
 namespace tactile::vm {
 
-enum class LayerItemRole
+struct LayerItemRole final
 {
-  Id = Qt::UserRole,
-  Type
+  enum Value
+  {
+    Id = Qt::UserRole,
+    Type
+  };
 };
 
 }  // namespace tactile::vm

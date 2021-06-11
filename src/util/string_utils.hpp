@@ -6,6 +6,6 @@
 
 namespace tactile {
 
-[[nodiscard]] auto to_integer(const QString& string) -> maybe<int>;
+[[nodiscard]] auto ToInteger(const QString& string) -> maybe<int>;
 
 }  // namespace tactile

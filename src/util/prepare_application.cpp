@@ -31,7 +31,7 @@ void PrepareApplication()
 
   QApplication::setWindowIcon(QIcon{TACTILE_QSTRING(u":logo/windowIcon")});
   QApplication::setStyle(QStyleFactory::create(TACTILE_QSTRING(u"Fusion")));
-  QApplication::setApplicationVersion(version());
+  QApplication::setApplicationVersion(Version());
   QApplication::setOrganizationName(TACTILE_QSTRING(u"albin-johansson"));
   QApplication::setApplicationName(TACTILE_QSTRING(u"tactile"));
 
