@@ -79,40 +79,40 @@ void SaveProperty(QDomDocument& document,
 
   switch (property.Type().value())
   {
-    case core::PropertyType::string:
+    case core::PropertyType::String:
     {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.AsString());
       break;
     }
-    case core::PropertyType::integer:
+    case core::PropertyType::Integer:
     {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.AsInteger());
       break;
     }
-    case core::PropertyType::floating:
+    case core::PropertyType::Floating:
     {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.AsFloating());
       break;
     }
-    case core::PropertyType::boolean:
+    case core::PropertyType::Boolean:
     {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.AsBoolean());
       break;
     }
-    case core::PropertyType::file:
+    case core::PropertyType::File:
     {
       node.setAttribute(
           TACTILE_QSTRING(u"value"),
           targetDir.relativeFilePath(property.AsFile().filePath()));
       break;
     }
-    case core::PropertyType::color:
+    case core::PropertyType::Color:
     {
       node.setAttribute(TACTILE_QSTRING(u"value"),
                         property.AsColor().name(QColor::HexArgb));
       break;
     }
-    case core::PropertyType::object:
+    case core::PropertyType::Object:
     {
       node.setAttribute(TACTILE_QSTRING(u"value"), property.AsObject().get());
       break;

@@ -30,13 +30,13 @@ concept IsPropertyType = std::same_as<T, QString> || std::same_as<T, int> ||
  */
 enum class PropertyType
 {
-  string,    ///< A string property.
-  integer,   ///< An integer property.
-  floating,  ///< A floating-point property.
-  boolean,   ///< A boolean property.
-  file,      ///< A file path property.
-  color,     ///< A color property.
-  object     ///< An integer ID property, that refers to a map object.
+  String,    ///< A string property.
+  Integer,   ///< An integer property.
+  Floating,  ///< A floating-point property.
+  Boolean,   ///< A boolean property.
+  File,      ///< A file path property.
+  Color,     ///< A color property.
+  Object     ///< An integer ID property, that refers to a map object.
 };
 
 /**

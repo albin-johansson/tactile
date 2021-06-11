@@ -121,11 +121,11 @@ void PropertyModel::OnUpdatedProperty(const QString& name)
 
     // We need to notify the view index widget to update its contents
     const auto type = property.Type().value();
-    if (type == core::PropertyType::file)
+    if (type == core::PropertyType::File)
     {
       emit S_UpdatedFile(sibling);
     }
-    else if (type == core::PropertyType::color)
+    else if (type == core::PropertyType::Color)
     {
       emit S_UpdatedColor(sibling);
     }
@@ -179,11 +179,11 @@ auto PropertyModel::AddPropertyToGui(const QString& name,
   const auto type = property.Type().value();
 
   // Notify view that it should add an index widget for the property
-  if (type == core::PropertyType::file)
+  if (type == core::PropertyType::File)
   {
     emit S_AddedFile(index);
   }
-  else if (type == core::PropertyType::color)
+  else if (type == core::PropertyType::Color)
   {
     emit S_AddedColor(index);
   }

@@ -12,31 +12,31 @@ void Property::Reset()
 
 void Property::SetDefault(const PropertyType type)
 {
-  if (type == PropertyType::integer)
+  if (type == PropertyType::Integer)
   {
     SetValue<int>();
   }
-  else if (type == PropertyType::floating)
+  else if (type == PropertyType::Floating)
   {
     SetValue<double>();
   }
-  else if (type == PropertyType::boolean)
+  else if (type == PropertyType::Boolean)
   {
     SetValue<bool>();
   }
-  else if (type == PropertyType::string)
+  else if (type == PropertyType::String)
   {
     SetValue<QString>();
   }
-  else if (type == PropertyType::color)
+  else if (type == PropertyType::Color)
   {
     SetValue<QColor>(Qt::black);
   }
-  else if (type == PropertyType::object)
+  else if (type == PropertyType::Object)
   {
     SetValue<object_ref>();
   }
-  else if (type == PropertyType::file)
+  else if (type == PropertyType::File)
   {
     SetValue<QFileInfo>();
   }
@@ -51,31 +51,31 @@ auto Property::Type() const -> maybe<PropertyType>
 {
   if (Is<int>())
   {
-    return PropertyType::integer;
+    return PropertyType::Integer;
   }
   else if (Is<double>())
   {
-    return PropertyType::floating;
+    return PropertyType::Floating;
   }
   else if (Is<QString>())
   {
-    return PropertyType::string;
+    return PropertyType::String;
   }
   else if (Is<bool>())
   {
-    return PropertyType::boolean;
+    return PropertyType::Boolean;
   }
   else if (Is<QFileInfo>())
   {
-    return PropertyType::file;
+    return PropertyType::File;
   }
   else if (Is<object_ref>())
   {
-    return PropertyType::object;
+    return PropertyType::Object;
   }
   else if (Is<QColor>())
   {
-    return PropertyType::color;
+    return PropertyType::Color;
   }
   else
   {
@@ -120,62 +120,62 @@ auto Property::AsColor() const -> const QColor&
 
 auto Property::IsString() const noexcept -> bool
 {
-  return Type() == PropertyType::string;
+  return Type() == PropertyType::String;
 }
 
 auto Property::IsInteger() const noexcept -> bool
 {
-  return Type() == PropertyType::integer;
+  return Type() == PropertyType::Integer;
 }
 
 auto Property::IsFloating() const noexcept -> bool
 {
-  return Type() == PropertyType::floating;
+  return Type() == PropertyType::Floating;
 }
 
 auto Property::IsBoolean() const noexcept -> bool
 {
-  return Type() == PropertyType::boolean;
+  return Type() == PropertyType::Boolean;
 }
 
 auto Property::IsFile() const noexcept -> bool
 {
-  return Type() == PropertyType::file;
+  return Type() == PropertyType::File;
 }
 
 auto Property::IsObject() const noexcept -> bool
 {
-  return Type() == PropertyType::object;
+  return Type() == PropertyType::Object;
 }
 
 auto Property::IsColor() const noexcept -> bool
 {
-  return Type() == PropertyType::color;
+  return Type() == PropertyType::Color;
 }
 
 auto Stringify(PropertyType type) -> QString
 {
   switch (type)
   {
-    case PropertyType::string:
+    case PropertyType::String:
       return TACTILE_QSTRING(u"string");
 
-    case PropertyType::integer:
+    case PropertyType::Integer:
       return TACTILE_QSTRING(u"int");
 
-    case PropertyType::floating:
+    case PropertyType::Floating:
       return TACTILE_QSTRING(u"float");
 
-    case PropertyType::boolean:
+    case PropertyType::Boolean:
       return TACTILE_QSTRING(u"bool");
 
-    case PropertyType::file:
+    case PropertyType::File:
       return TACTILE_QSTRING(u"file");
 
-    case PropertyType::color:
+    case PropertyType::Color:
       return TACTILE_QSTRING(u"color");
 
-    case PropertyType::object:
+    case PropertyType::Object:
       return TACTILE_QSTRING(u"object");
 
     default:

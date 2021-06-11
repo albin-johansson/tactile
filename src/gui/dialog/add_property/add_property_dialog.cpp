@@ -33,31 +33,31 @@ void AddPropertyDialog::UpdateType()
   const auto text = mUi->typeComboBox->currentText();
   if (text == TACTILE_QSTRING(u"string"))
   {
-    mType = core::PropertyType::string;
+    mType = core::PropertyType::String;
   }
   else if (text == TACTILE_QSTRING(u"int"))
   {
-    mType = core::PropertyType::integer;
+    mType = core::PropertyType::Integer;
   }
   else if (text == TACTILE_QSTRING(u"float"))
   {
-    mType = core::PropertyType::floating;
+    mType = core::PropertyType::Floating;
   }
   else if (text == TACTILE_QSTRING(u"bool"))
   {
-    mType = core::PropertyType::boolean;
+    mType = core::PropertyType::Boolean;
   }
   else if (text == TACTILE_QSTRING(u"color"))
   {
-    mType = core::PropertyType::color;
+    mType = core::PropertyType::Color;
   }
   else if (text == TACTILE_QSTRING(u"object"))
   {
-    mType = core::PropertyType::object;
+    mType = core::PropertyType::Object;
   }
   else if (text == TACTILE_QSTRING(u"file"))
   {
-    mType = core::PropertyType::file;
+    mType = core::PropertyType::File;
   }
   else
   {

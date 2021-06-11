@@ -41,31 +41,31 @@ PropertyContextMenu::PropertyContextMenu(QWidget* parent)
   connect(mRemove, &QAction::triggered, this, &PropertyContextMenu::S_Remove);
 
   connect(mTypeString, &QAction::triggered, [this] {
-    emit S_ChangeType(core::PropertyType::string);
+    emit S_ChangeType(core::PropertyType::String);
   });
 
   connect(mTypeInt, &QAction::triggered, [this] {
-    emit S_ChangeType(core::PropertyType::integer);
+    emit S_ChangeType(core::PropertyType::Integer);
   });
 
   connect(mTypeFloat, &QAction::triggered, [this] {
-    emit S_ChangeType(core::PropertyType::floating);
+    emit S_ChangeType(core::PropertyType::Floating);
   });
 
   connect(mTypeBool, &QAction::triggered, [this] {
-    emit S_ChangeType(core::PropertyType::boolean);
+    emit S_ChangeType(core::PropertyType::Boolean);
   });
 
   connect(mTypeFile, &QAction::triggered, [this] {
-    emit S_ChangeType(core::PropertyType::file);
+    emit S_ChangeType(core::PropertyType::File);
   });
 
   connect(mTypeObject, &QAction::triggered, [this] {
-    emit S_ChangeType(core::PropertyType::object);
+    emit S_ChangeType(core::PropertyType::Object);
   });
 
   connect(mTypeColor, &QAction::triggered, [this] {
-    emit S_ChangeType(core::PropertyType::color);
+    emit S_ChangeType(core::PropertyType::Color);
   });
 
   AddActions(parent);
@@ -102,37 +102,37 @@ void PropertyContextMenu::SetCurrentType(core::PropertyType type)
 
   switch (type)
   {
-    case core::PropertyType::string:
+    case core::PropertyType::String:
     {
       mTypeString->setEnabled(false);
       break;
     }
-    case core::PropertyType::integer:
+    case core::PropertyType::Integer:
     {
       mTypeInt->setEnabled(false);
       break;
     }
-    case core::PropertyType::floating:
+    case core::PropertyType::Floating:
     {
       mTypeFloat->setEnabled(false);
       break;
     }
-    case core::PropertyType::boolean:
+    case core::PropertyType::Boolean:
     {
       mTypeBool->setEnabled(false);
       break;
     }
-    case core::PropertyType::file:
+    case core::PropertyType::File:
     {
       mTypeFile->setEnabled(false);
       break;
     }
-    case core::PropertyType::color:
+    case core::PropertyType::Color:
     {
       mTypeColor->setEnabled(false);
       break;
     }
-    case core::PropertyType::object:
+    case core::PropertyType::Object:
     {
       mTypeObject->setEnabled(false);
       break;

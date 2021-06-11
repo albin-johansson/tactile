@@ -212,13 +212,13 @@ TEST(Property, Type)
   EXPECT_FALSE(property.Type());
 
   property.SetValue(123);
-  EXPECT_EQ(core::PropertyType::integer, property.Type());
+  EXPECT_EQ(core::PropertyType::Integer, property.Type());
 
   property.SetValue(12.3);
-  EXPECT_EQ(core::PropertyType::floating, property.Type());
+  EXPECT_EQ(core::PropertyType::Floating, property.Type());
 
   property.SetValue(TACTILE_QSTRING(u"foo"));
-  EXPECT_EQ(core::PropertyType::string, property.Type());
+  EXPECT_EQ(core::PropertyType::String, property.Type());
 
   property.Reset();
   EXPECT_FALSE(property.Type());

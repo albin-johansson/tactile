@@ -30,37 +30,37 @@ namespace {
   QJsonValue value;
   switch (property.Type().value())
   {
-    case core::PropertyType::string:
+    case core::PropertyType::String:
     {
       value = property.AsString();
       break;
     }
-    case core::PropertyType::integer:
+    case core::PropertyType::Integer:
     {
       value = property.AsInteger();
       break;
     }
-    case core::PropertyType::floating:
+    case core::PropertyType::Floating:
     {
       value = property.AsFloating();
       break;
     }
-    case core::PropertyType::boolean:
+    case core::PropertyType::Boolean:
     {
       value = property.AsBoolean();
       break;
     }
-    case core::PropertyType::file:
+    case core::PropertyType::File:
     {
       value = targetDir.relativeFilePath(property.AsFile().filePath());
       break;
     }
-    case core::PropertyType::color:
+    case core::PropertyType::Color:
     {
       value = property.AsColor().name(QColor::HexArgb);
       break;
     }
-    case core::PropertyType::object:
+    case core::PropertyType::Object:
     {
       value = property.AsObject().get();
       break;
