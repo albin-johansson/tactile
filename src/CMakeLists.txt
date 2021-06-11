@@ -316,6 +316,18 @@ set(TACTILE_SOURCE_FILES
     gui/window/window_connections.hpp
     gui/window/window.ui
 
+    mouse-tools/bucket_tool.cpp
+    mouse-tools/bucket_tool.hpp
+    mouse-tools/eraser_tool.cpp
+    mouse-tools/eraser_tool.hpp
+    mouse-tools/mouse_tool.cpp
+    mouse-tools/mouse_tool.hpp
+    mouse-tools/mouse_tool_model.cpp
+    mouse-tools/mouse_tool_model.hpp
+    mouse-tools/mouse_tool_type.hpp
+    mouse-tools/stamp_tool.cpp
+    mouse-tools/stamp_tool.hpp
+
     parse/json/json_utils.cpp
     parse/json/json_utils.hpp
 
@@ -350,18 +362,6 @@ set(TACTILE_SOURCE_FILES
     preferences/setting.hpp
     preferences/theme.cpp
     preferences/theme.hpp
-
-    tool/bucket_tool.cpp
-    tool/bucket_tool.hpp
-    tool/eraser_tool.cpp
-    tool/eraser_tool.hpp
-    tool/mouse_tool.cpp
-    tool/mouse_tool.hpp
-    tool/mouse_tool_model.cpp
-    tool/mouse_tool_model.hpp
-    tool/mouse_tool_type.hpp
-    tool/stamp_tool.cpp
-    tool/stamp_tool.hpp
 
     util/color_utils.cpp
     util/color_utils.hpp
@@ -442,7 +442,7 @@ target_include_directories(libTactile
     PUBLIC parse/palette
     PUBLIC parse/xml
     PUBLIC preferences
-    PUBLIC tool
+    PUBLIC mouse-tools
     PUBLIC util)
 
 target_link_libraries(libTactile
