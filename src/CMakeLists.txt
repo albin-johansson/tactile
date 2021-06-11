@@ -436,13 +436,13 @@ target_include_directories(libTactile
     PUBLIC gui/tileset/tabs/contents
     PUBLIC gui/tools
     PUBLIC gui/window
+    PUBLIC mouse-tools
     PUBLIC parse
     PUBLIC parse/json
     PUBLIC parse/map
     PUBLIC parse/palette
     PUBLIC parse/xml
     PUBLIC preferences
-    PUBLIC mouse-tools
     PUBLIC util)
 
 target_link_libraries(libTactile
