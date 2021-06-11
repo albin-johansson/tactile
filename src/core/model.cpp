@@ -323,8 +323,8 @@ void Model::EmitUndoRedoUpdate()
   {
     emit S_UndoStateUpdated(false);
     emit S_RedoStateUpdated(false);
-    emit S_UndoTextUpdated(TACTILE_QSTRING(u""));
-    emit S_RedoTextUpdated(TACTILE_QSTRING(u""));
+    emit S_UndoTextUpdated(QString{});
+    emit S_RedoTextUpdated(QString{});
   }
 }
 
