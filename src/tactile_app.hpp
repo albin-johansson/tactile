@@ -16,7 +16,7 @@ TACTILE_FORWARD_DECLARE(tactile, Window)
 namespace tactile {
 
 /**
- * \class tactile_app
+ * \class TactileApp
  *
  * \brief Represents the tactile application.
  *
@@ -26,7 +26,7 @@ namespace tactile {
  *
  * \headerfile tactile_app.hpp
  */
-class tactile_app final : public QApplication
+class TactileApp final : public QApplication
 {
   Q_OBJECT
 
@@ -37,36 +37,36 @@ class tactile_app final : public QApplication
    *
    * \since 0.1.0
    */
-  tactile_app(int argc, char** argv);
+  TactileApp(int argc, char** argv);
 
-  ~tactile_app() noexcept override;
+  ~TactileApp() noexcept override;
 
  private:
-  unique<Window> m_window;
-  unique<core::Model> m_model;
+  unique<Window> mWindow;
+  unique<core::Model> mModel;
 
-  void init_connections();
+  void InitConnections();
 
  private slots:
-  void save();
+  void OnSave();
 
-  void save_as(const QString& path);
+  void OnSaveAs(const QString& path);
 
-  void open_map(const QString& path);
+  void OnOpenMap(const QString& path);
 
-  void handle_resize_map();
+  void OnResizeMap();
 
-  void handle_pan_up();
+  void OnPanUp();
 
-  void handle_pan_down();
+  void OnPanDown();
 
-  void handle_pan_right();
+  void OnPanRight();
 
-  void handle_pan_left();
+  void OnPanLeft();
 
-  void handle_new_tileset();
+  void OnAddTileset();
 
-  void handle_new_map();
+  void OnNewMap();
 };
 
 }  // namespace tactile

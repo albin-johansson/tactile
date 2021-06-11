@@ -12,35 +12,35 @@
 
 namespace tactile {
 
-tactile_app::tactile_app(int argc, char** argv)
+TactileApp::TactileApp(int argc, char** argv)
     : QApplication{argc, argv}
-    , m_model{std::make_unique<core::Model>()}
+    , mModel{std::make_unique<core::Model>()}
 {
   setup_app();
 
   // It is necessary to create the window after calling the setup_app-function
-  m_window = std::make_unique<Window>();
-  init_connections();
+  mWindow = std::make_unique<Window>();
+  InitConnections();
 
-  m_window->show();
+  mWindow->show();
 }
 
-tactile_app::~tactile_app() noexcept = default;
+TactileApp::~TactileApp() noexcept = default;
 
-void tactile_app::init_connections()
+void TactileApp::InitConnections()
 {
   using Model = core::Model;
 
   const auto modToWin = [this](auto&& sender, auto&& receiver) {
-    connect(m_model.get(), sender, m_window.get(), receiver);
+    connect(mModel.get(), sender, mWindow.get(), receiver);
   };
 
   const auto winToMod = [this](auto&& sender, auto&& receiver) {
-    connect(m_window.get(), sender, m_model.get(), receiver);
+    connect(mWindow.get(), sender, mModel.get(), receiver);
   };
 
   const auto fromWindow = [this](auto&& sender, auto&& receiver) {
-    connect(m_window.get(), sender, this, receiver);
+    connect(mWindow.get(), sender, this, receiver);
   };
 
   // clang-format off
@@ -92,22 +92,22 @@ void tactile_app::init_connections()
   modToWin(&Model::S_ShowMapProperties,     &Window::OnShowMapProperties);
   modToWin(&Model::S_ShowLayerProperties,   &Window::OnShowLayerProperties);
 
-  fromWindow(&Window::S_AddTileset, &tactile_app::handle_new_tileset);
-  fromWindow(&Window::S_ResizeMap,  &tactile_app::handle_resize_map);
-  fromWindow(&Window::S_PanUp,      &tactile_app::handle_pan_up);
-  fromWindow(&Window::S_PanDown,    &tactile_app::handle_pan_down);
-  fromWindow(&Window::S_PanRight,   &tactile_app::handle_pan_right);
-  fromWindow(&Window::S_PanLeft,    &tactile_app::handle_pan_left);
-  fromWindow(&Window::S_NewMap,     &tactile_app::handle_new_map);
-  fromWindow(&Window::S_Save,       &tactile_app::save);
-  fromWindow(&Window::S_SaveAs,     &tactile_app::save_as);
-  fromWindow(&Window::S_OpenMap,    &tactile_app::open_map);
+  fromWindow(&Window::S_AddTileset, &TactileApp::OnAddTileset);
+  fromWindow(&Window::S_ResizeMap,  &TactileApp::OnResizeMap);
+  fromWindow(&Window::S_PanUp,      &TactileApp::OnPanUp);
+  fromWindow(&Window::S_PanDown,    &TactileApp::OnPanDown);
+  fromWindow(&Window::S_PanRight,   &TactileApp::OnPanRight);
+  fromWindow(&Window::S_PanLeft,    &TactileApp::OnPanLeft);
+  fromWindow(&Window::S_NewMap,     &TactileApp::OnNewMap);
+  fromWindow(&Window::S_Save,       &TactileApp::OnSave);
+  fromWindow(&Window::S_SaveAs,     &TactileApp::OnSaveAs);
+  fromWindow(&Window::S_OpenMap,    &TactileApp::OnOpenMap);
   // clang-format on
 }
 
-void tactile_app::save()
+void TactileApp::OnSave()
 {
-  if (auto* document = m_model->CurrentDocument())
+  if (auto* document = mModel->CurrentDocument())
   {
     if (document->HasPath())
     {
@@ -116,14 +116,14 @@ void tactile_app::save()
     }
     else
     {
-      m_window->TriggerSaveAs();
+      mWindow->TriggerSaveAs();
     }
   }
 }
 
-void tactile_app::save_as(const QString& path)
+void TactileApp::OnSaveAs(const QString& path)
 {
-  if (auto* document = m_model->CurrentDocument())
+  if (auto* document = mModel->CurrentDocument())
   {
     save_map_document(path, *document);
 
@@ -131,84 +131,84 @@ void tactile_app::save_as(const QString& path)
     document->MarkAsClean();
     document->SetPath(file);
 
-    m_window->SetActiveTabName(file.baseName());
+    mWindow->SetActiveTabName(file.baseName());
   }
 }
 
-void tactile_app::open_map(const QString& path)
+void TactileApp::OnOpenMap(const QString& path)
 {
   parse::parse_error error;
   if (auto* document = open_map_document(path, error))
   {
-    const auto id = m_model->AddMap(document);
-    m_window->OnNewMapAdded(document, id, QFileInfo{path}.baseName());
+    const auto id = mModel->AddMap(document);
+    mWindow->OnNewMapAdded(document, id, QFileInfo{path}.baseName());
   }
   else
   {
-    OpenMapErrorDialog dialog{m_window.get()};
+    OpenMapErrorDialog dialog{mWindow.get()};
     dialog.SetFile(QFileInfo{path});
     dialog.SetErrorMessage(to_message(error));
     dialog.exec();
   }
 }
 
-void tactile_app::handle_resize_map()
+void TactileApp::OnResizeMap()
 {
-  if (m_model->HasActiveMap())
+  if (mModel->HasActiveMap())
   {
     ResizeDialog::Spawn([this](const row_t rows, const col_t cols) {
-      m_model->ResizeMap(rows, cols);
+      mModel->ResizeMap(rows, cols);
     });
   }
 }
 
-void tactile_app::handle_pan_up()
+void TactileApp::OnPanUp()
 {
-  if (const auto* document = m_model->CurrentDocument())
+  if (const auto* document = mModel->CurrentDocument())
   {
-    m_window->MoveViewport(0, document->CurrentTileSize());
+    mWindow->MoveViewport(0, document->CurrentTileSize());
   }
 }
 
-void tactile_app::handle_pan_down()
+void TactileApp::OnPanDown()
 {
-  if (const auto* document = m_model->CurrentDocument())
+  if (const auto* document = mModel->CurrentDocument())
   {
-    m_window->MoveViewport(0, -document->CurrentTileSize());
+    mWindow->MoveViewport(0, -document->CurrentTileSize());
   }
 }
 
-void tactile_app::handle_pan_right()
+void TactileApp::OnPanRight()
 {
-  if (const auto* document = m_model->CurrentDocument())
+  if (const auto* document = mModel->CurrentDocument())
   {
-    m_window->MoveViewport(-document->CurrentTileSize(), 0);
+    mWindow->MoveViewport(-document->CurrentTileSize(), 0);
   }
 }
 
-void tactile_app::handle_pan_left()
+void TactileApp::OnPanLeft()
 {
-  if (const auto* document = m_model->CurrentDocument())
+  if (const auto* document = mModel->CurrentDocument())
   {
-    m_window->MoveViewport(document->CurrentTileSize(), 0);
+    mWindow->MoveViewport(document->CurrentTileSize(), 0);
   }
 }
 
-void tactile_app::handle_new_tileset()
+void TactileApp::OnAddTileset()
 {
   TilesetDialog::Spawn([this](const TilesetInfo& info) {
-    m_model->CreateTileset(info.image,
-                           info.path,
-                           info.name,
-                           info.tileWidth,
-                           info.tileHeight);
+    mModel->CreateTileset(info.image,
+                          info.path,
+                          info.name,
+                          info.tileWidth,
+                          info.tileHeight);
   });
 }
 
-void tactile_app::handle_new_map()
+void TactileApp::OnNewMap()
 {
-  const auto id = m_model->AddMap();
-  m_window->OnNewMapAdded(m_model->GetDocument(id), id);
+  const auto id = mModel->AddMap();
+  mWindow->OnNewMapAdded(mModel->GetDocument(id), id);
 }
 
 }  // namespace tactile
