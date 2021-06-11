@@ -6,6 +6,6 @@
 
 namespace tactile {
 
-void save_map_document(const QString& path, const core::MapDocument& document);
+void SaveMapDocument(const QString& path, const core::MapDocument& document);
 
-}
+}  // namespace tactile

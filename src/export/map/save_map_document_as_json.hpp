@@ -14,7 +14,6 @@ namespace tactile {
  *
  * \since 0.1.0
  */
-void save_map_document_as_json(const QString& path,
-                               const core::MapDocument& map);
+void SaveMapDocumentAsJson(const QString& path, const core::MapDocument& map);
 
 }  // namespace tactile

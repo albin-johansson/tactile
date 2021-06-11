@@ -9,18 +9,18 @@
 
 namespace tactile {
 
-void save_map_document(const QString& path, const core::MapDocument& document)
+void SaveMapDocument(const QString& path, const core::MapDocument& document)
 {
   const QFileInfo info{path};
 
   const auto suffix = info.suffix();
   if (suffix == TACTILE_QSTRING(u"tmx"))
   {
-    save_map_document_as_xml(path, document);
+    SaveMapDocumentAsXml(path, document);
   }
   else if (suffix == TACTILE_QSTRING(u"json"))
   {
-    save_map_document_as_json(path, document);
+    SaveMapDocumentAsJson(path, document);
   }
   else
   {

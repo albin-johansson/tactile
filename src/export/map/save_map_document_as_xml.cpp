@@ -16,10 +16,10 @@
 namespace tactile {
 namespace {
 
-void add_image_node(QDomDocument& document,
-                    QDomElement& parent,
-                    const core::Tileset& tileset,
-                    const QDir& targetDir)
+void AddImageNode(QDomDocument& document,
+                  QDomElement& parent,
+                  const core::Tileset& tileset,
+                  const QDir& targetDir)
 {
   auto image = document.createElement(TACTILE_QSTRING(u"image"));
 
@@ -31,13 +31,13 @@ void add_image_node(QDomDocument& document,
   parent.appendChild(image);
 }
 
-void add_common_attributes(QDomDocument& document,
-                           QDomElement& node,
-                           const core::Tileset& tileset,
-                           const QDir& targetDir)
+void AddCommonAttributes(QDomDocument& document,
+                         QDomElement& node,
+                         const core::Tileset& tileset,
+                         const QDir& targetDir)
 {
-  node.setAttribute(TACTILE_QSTRING(u"version"), g_tiledXmlVersion);
-  node.setAttribute(TACTILE_QSTRING(u"tiledversion"), g_tiledVersion);
+  node.setAttribute(TACTILE_QSTRING(u"version"), tiled_xml_version);
+  node.setAttribute(TACTILE_QSTRING(u"tiledversion"), tiled_version);
   node.setAttribute(TACTILE_QSTRING(u"name"), tileset.Name());
   node.setAttribute(TACTILE_QSTRING(u"tilewidth"),
                     tileset.GetTileWidth().get());
@@ -46,17 +46,17 @@ void add_common_attributes(QDomDocument& document,
   node.setAttribute(TACTILE_QSTRING(u"tilecount"), tileset.TileCount());
   node.setAttribute(TACTILE_QSTRING(u"columns"), tileset.ColumnCount().get());
 
-  add_image_node(document, node, tileset, targetDir);
+  AddImageNode(document, node, tileset, targetDir);
 }
 
-void create_external_tileset_file(const core::Tileset& tileset,
-                                  const QDir& targetDir,
-                                  const export_options& options)
+void CreateExternalTilesetFile(const core::Tileset& tileset,
+                               const QDir& targetDir,
+                               const ExportOptions& options)
 {
   QDomDocument document{};
 
   auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
-  add_common_attributes(document, node, tileset, targetDir);
+  AddCommonAttributes(document, node, tileset, targetDir);
 
   document.appendChild(node);
 
@@ -65,11 +65,11 @@ void create_external_tileset_file(const core::Tileset& tileset,
            document);
 }
 
-void save_property(QDomDocument& document,
-                   QDomElement& element,
-                   const QString& name,
-                   const core::Property& property,
-                   const QDir& targetDir)
+void SaveProperty(QDomDocument& document,
+                  QDomElement& element,
+                  const QString& name,
+                  const core::Property& property,
+                  const QDir& targetDir)
 {
   auto node = document.createElement(TACTILE_QSTRING(u"property"));
 
@@ -122,10 +122,10 @@ void save_property(QDomDocument& document,
   element.appendChild(node);
 }
 
-void save_properties(QDomDocument& document,
-                     QDomElement& element,
-                     const core::IPropertyManager& manager,
-                     const QDir& targetDir)
+void SaveProperties(QDomDocument& document,
+                    QDomElement& element,
+                    const core::IPropertyManager& manager,
+                    const QDir& targetDir)
 {
   if (manager.PropertyCount() > 0)
   {
@@ -133,18 +133,18 @@ void save_properties(QDomDocument& document,
 
     for (const auto& [name, property] : manager.GetProperties())
     {
-      save_property(document, node, name, property, targetDir);
+      SaveProperty(document, node, name, property, targetDir);
     }
 
     element.appendChild(node);
   }
 }
 
-void save_tilesets(QDomDocument& document,
-                   QDomElement& root,
-                   const core::MapDocument& map,
-                   const QDir& targetDir,
-                   const export_options& options)
+void SaveTilesets(QDomDocument& document,
+                  QDomElement& root,
+                  const core::MapDocument& map,
+                  const QDir& targetDir,
+                  const ExportOptions& options)
 {
   map.EachTileset([&](tileset_id id, const core::Tileset& tileset) {
     auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
@@ -153,23 +153,23 @@ void save_tilesets(QDomDocument& document,
 
     if (options.embedTilesets)
     {
-      add_common_attributes(document, node, tileset, targetDir);
+      AddCommonAttributes(document, node, tileset, targetDir);
     }
     else
     {
       const auto source =
           targetDir.relativeFilePath(tileset.Name() + TACTILE_QSTRING(u".tsx"));
       node.setAttribute(TACTILE_QSTRING(u"source"), source);
-      create_external_tileset_file(tileset, targetDir, options);
+      CreateExternalTilesetFile(tileset, targetDir, options);
     }
 
     root.appendChild(node);
   });
 }
 
-void save_tile_layer(QDomDocument& document,
-                     QDomElement& element,
-                     const core::TileLayer& layer)
+void SaveTileLayer(QDomDocument& document,
+                   QDomElement& element,
+                   const core::TileLayer& layer)
 {
   element.setAttribute(TACTILE_QSTRING(u"width"), layer.ColumnCount().get());
   element.setAttribute(TACTILE_QSTRING(u"height"), layer.RowCount().get());
@@ -199,10 +199,10 @@ void save_tile_layer(QDomDocument& document,
   element.appendChild(data);
 }
 
-void save_object_layer(QDomDocument& document,
-                       QDomElement& element,
-                       const core::ObjectLayer& layer,
-                       const QDir& targetDir)
+void SaveObjectLayer(QDomDocument& document,
+                     QDomElement& element,
+                     const core::ObjectLayer& layer,
+                     const QDir& targetDir)
 {
   layer.Each([&](const object_id id, const core::Object& object) {
     auto node = document.createElement(TACTILE_QSTRING(u"object"));
@@ -223,16 +223,16 @@ void save_object_layer(QDomDocument& document,
       node.appendChild(point);
     }
 
-    save_properties(document, node, object, targetDir);
+    SaveProperties(document, node, object, targetDir);
 
     element.appendChild(node);
   });
 }
 
-void save_layers(QDomDocument& document,
-                 QDomElement& root,
-                 const core::MapDocument& map,
-                 const QDir& targetDir)
+void SaveLayers(QDomDocument& document,
+                QDomElement& root,
+                const core::MapDocument& map,
+                const QDir& targetDir)
 {
   map.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
     QDomElement node;
@@ -260,29 +260,29 @@ void save_layers(QDomDocument& document,
 
     if (const auto* tileLayer = core::AsTileLayer(layer))
     {
-      save_tile_layer(document, node, *tileLayer);
+      SaveTileLayer(document, node, *tileLayer);
     }
 
     if (const auto* objectLayer = core::AsObjectLayer(layer))
     {
-      save_object_layer(document, node, *objectLayer, targetDir);
+      SaveObjectLayer(document, node, *objectLayer, targetDir);
     }
 
-    save_properties(document, node, *layer, targetDir);
+    SaveProperties(document, node, *layer, targetDir);
 
     root.appendChild(node);
   });
 }
 
-void create_root(QDomDocument& document,
-                 const core::MapDocument& map,
-                 const QDir& targetDir,
-                 const export_options& options)
+void CreateRoot(QDomDocument& document,
+                const core::MapDocument& map,
+                const QDir& targetDir,
+                const ExportOptions& options)
 {
   auto root = document.createElement(TACTILE_QSTRING(u"map"));
 
-  root.setAttribute(TACTILE_QSTRING(u"version"), g_tiledXmlVersion);
-  root.setAttribute(TACTILE_QSTRING(u"tiledversion"), g_tiledVersion);
+  root.setAttribute(TACTILE_QSTRING(u"version"), tiled_xml_version);
+  root.setAttribute(TACTILE_QSTRING(u"tiledversion"), tiled_version);
   root.setAttribute(TACTILE_QSTRING(u"orientation"),
                     TACTILE_QSTRING(u"orthogonal"));
   root.setAttribute(TACTILE_QSTRING(u"renderorder"),
@@ -303,24 +303,24 @@ void create_root(QDomDocument& document,
                       TACTILE_QSTRING(u"#00000000"));
   }
 
-  save_tilesets(document, root, map, targetDir, options);
-  save_layers(document, root, map, targetDir);
-  save_properties(document, root, map, targetDir);
+  SaveTilesets(document, root, map, targetDir, options);
+  SaveLayers(document, root, map, targetDir);
+  SaveProperties(document, root, map, targetDir);
 
   document.appendChild(root);
 }
 
 }  // namespace
 
-void save_map_document_as_xml(const QString& path, const core::MapDocument& map)
+void SaveMapDocumentAsXml(const QString& path, const core::MapDocument& map)
 {
-  const auto options = make_export_options();
+  const auto options = MakeExportOptions();
 
   const QFileInfo info{path};
   const auto targetDir = info.dir();
 
   QDomDocument document;
-  create_root(document, map, targetDir, options);
+  CreateRoot(document, map, targetDir, options);
 
   WriteXml(info, document);
 }

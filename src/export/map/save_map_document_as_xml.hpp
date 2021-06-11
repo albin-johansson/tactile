@@ -6,7 +6,7 @@
 
 namespace tactile {
 
-void save_map_document_as_xml(const QString& path,
-                              const core::MapDocument& document);
+void SaveMapDocumentAsXml(const QString& path,
+                          const core::MapDocument& document);
 
 }  // namespace tactile

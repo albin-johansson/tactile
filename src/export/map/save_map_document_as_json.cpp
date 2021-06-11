@@ -18,9 +18,9 @@
 namespace tactile {
 namespace {
 
-[[nodiscard]] auto save_property(const QString& name,
-                                 const core::Property& property,
-                                 const QDir& targetDir) -> QJsonObject
+[[nodiscard]] auto SaveProperty(const QString& name,
+                                const core::Property& property,
+                                const QDir& targetDir) -> QJsonObject
 {
   QJsonObject result;
 
@@ -72,14 +72,14 @@ namespace {
   return result;
 }
 
-[[nodiscard]] auto save_properties(const core::IPropertyManager& manager,
-                                   const QDir& targetDir) -> QJsonArray
+[[nodiscard]] auto SaveProperties(const core::IPropertyManager& manager,
+                                  const QDir& targetDir) -> QJsonArray
 {
   QJsonArray props;
 
   for (const auto& [name, property] : manager.GetProperties())
   {
-    props.append(save_property(name, property, targetDir));
+    props.append(SaveProperty(name, property, targetDir));
   }
 
   return props;
@@ -95,10 +95,10 @@ namespace {
  *
  * \since 0.1.0
  */
-void add_common_attributes(QJsonObject& object,
-                           const core::Tileset& tileset,
-                           const QDir& targetDir,
-                           const export_options& options)
+void AddCommonAttributes(QJsonObject& object,
+                         const core::Tileset& tileset,
+                         const QDir& targetDir,
+                         const ExportOptions& options)
 {
   object.insert(u"columns", tileset.ColumnCount().get());
 
@@ -129,14 +129,14 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto make_embedded_tileset_object(const core::Tileset& tileset,
-                                                const QDir& targetDir,
-                                                const export_options& options)
+[[nodiscard]] auto MakeEmbeddedTilesetObject(const core::Tileset& tileset,
+                                             const QDir& targetDir,
+                                             const ExportOptions& options)
     -> QJsonObject
 {
-  QJsonObject object{};
+  QJsonObject object;
 
-  add_common_attributes(object, tileset, targetDir, options);
+  AddCommonAttributes(object, tileset, targetDir, options);
   object.insert(u"firstgid", tileset.FirstId().get());
 
   return object;
@@ -154,7 +154,7 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto make_external_tileset_object(const core::Tileset& tileset)
+[[nodiscard]] auto MakeExternalTilesetObject(const core::Tileset& tileset)
     -> QJsonObject
 {
   QJsonObject object{};
@@ -177,23 +177,23 @@ void add_common_attributes(QJsonObject& object,
  *
  * \since 0.1.0
  */
-void create_external_tileset_file(const core::Tileset& tileset,
-                                  const QDir& targetDir,
-                                  const export_options& options)
+void CreateExternalTilesetFile(const core::Tileset& tileset,
+                               const QDir& targetDir,
+                               const ExportOptions& options)
 {
   QJsonDocument document{};
   QJsonObject object{};
 
-  add_common_attributes(object, tileset, targetDir, options);
+  AddCommonAttributes(object, tileset, targetDir, options);
   object.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   object.insert(u"version", TACTILE_TILED_JSON_VERSION_LITERAL);
   object.insert(u"type", TACTILE_QSTRING(u"tileset"));
 
   document.setObject(object);
 
-  WriteJson(QFileInfo{targetDir.absoluteFilePath(
-                      tileset.Name() + TACTILE_QSTRING(u".json"))},
-                  document);
+  WriteJson(QFileInfo{targetDir.absoluteFilePath(tileset.Name() +
+                                                 TACTILE_QSTRING(u".json"))},
+            document);
 }
 
 /**
@@ -207,30 +207,30 @@ void create_external_tileset_file(const core::Tileset& tileset,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto save_tilesets(const core::MapDocument& map,
-                                 const QDir& targetDir,
-                                 const export_options& options) -> QJsonArray
+[[nodiscard]] auto SaveTilesets(const core::MapDocument& map,
+                                const QDir& targetDir,
+                                const ExportOptions& options) -> QJsonArray
 {
   QJsonArray array;
 
   map.EachTileset([&](tileset_id id, const core::Tileset& tileset) {
     if (options.embedTilesets)
     {
-      array.append(make_embedded_tileset_object(tileset, targetDir, options));
+      array.append(MakeEmbeddedTilesetObject(tileset, targetDir, options));
     }
     else
     {
-      array.append(make_external_tileset_object(tileset));
-      create_external_tileset_file(tileset, targetDir, options);
+      array.append(MakeExternalTilesetObject(tileset));
+      CreateExternalTilesetFile(tileset, targetDir, options);
     }
   });
 
   return array;
 }
 
-void save_tile_layer(QJsonObject& object,
-                     const shared<core::ILayer>& layer,
-                     const export_options& options)
+void SaveTileLayer(QJsonObject& object,
+                   const shared<core::ILayer>& layer,
+                   const ExportOptions& options)
 {
   Q_ASSERT(layer->Type() == core::LayerType::tile_layer);
 
@@ -251,10 +251,10 @@ void save_tile_layer(QJsonObject& object,
   object.insert(u"data", data);
 }
 
-void save_object_layer(QJsonObject& element,
-                       const shared<core::ILayer>& layer,
-                       const QDir& targetDir,
-                       const export_options& options)
+void SaveObjectLayer(QJsonObject& element,
+                     const shared<core::ILayer>& layer,
+                     const QDir& targetDir,
+                     const ExportOptions& options)
 {
   Q_ASSERT(layer->Type() == core::LayerType::object_layer);
 
@@ -289,7 +289,7 @@ void save_object_layer(QJsonObject& element,
 
     if (object.PropertyCount() > 0)
     {
-      jsonObject.insert(u"properties", save_properties(object, targetDir));
+      jsonObject.insert(u"properties", SaveProperties(object, targetDir));
     }
 
     objects.append(jsonObject);
@@ -309,9 +309,9 @@ void save_object_layer(QJsonObject& element,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto save_layers(const core::MapDocument& map,
-                               const QDir& targetDir,
-                               const export_options& options) -> QJsonArray
+[[nodiscard]] auto SaveLayers(const core::MapDocument& map,
+                              const QDir& targetDir,
+                              const ExportOptions& options) -> QJsonArray
 {
   QJsonArray array;
 
@@ -329,11 +329,11 @@ void save_object_layer(QJsonObject& element,
     {
       object.insert(u"width", map.ColumnCount().get());
       object.insert(u"height", map.RowCount().get());
-      save_tile_layer(object, layer, options);
+      SaveTileLayer(object, layer, options);
     }
     else
     {
-      save_object_layer(object, layer, targetDir, options);
+      SaveObjectLayer(object, layer, targetDir, options);
     }
 
     if (options.generateDefaults)
@@ -344,7 +344,7 @@ void save_object_layer(QJsonObject& element,
 
     if (layer->PropertyCount() > 0)
     {
-      object.insert(u"properties", save_properties(*layer, targetDir));
+      object.insert(u"properties", SaveProperties(*layer, targetDir));
     }
 
     array.append(object);
@@ -364,9 +364,9 @@ void save_object_layer(QJsonObject& element,
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto create_root(const core::MapDocument& map,
-                               const QDir& targetDir,
-                               const export_options& options) -> QJsonObject
+[[nodiscard]] auto CreateRoot(const core::MapDocument& map,
+                              const QDir& targetDir,
+                              const ExportOptions& options) -> QJsonObject
 {
   QJsonObject root{};
 
@@ -383,24 +383,23 @@ void save_object_layer(QJsonObject& element,
   root.insert(u"tileheight", prefs::TileHeight().value());
   root.insert(u"nextobjectid", 1);
   root.insert(u"nextlayerid", map.LayerCount() + 1);
-  root.insert(u"tilesets", save_tilesets(map, targetDir, options));
-  root.insert(u"layers", save_layers(map, targetDir, options));
-  root.insert(u"properties", save_properties(map, targetDir));
+  root.insert(u"tilesets", SaveTilesets(map, targetDir, options));
+  root.insert(u"layers", SaveLayers(map, targetDir, options));
+  root.insert(u"properties", SaveProperties(map, targetDir));
 
   return root;
 }
 
 }  // namespace
 
-void save_map_document_as_json(const QString& path,
-                               const core::MapDocument& map)
+void SaveMapDocumentAsJson(const QString& path, const core::MapDocument& map)
 {
   QJsonDocument document{};
 
   const QFileInfo info{path};
   const auto targetDir = info.dir();
 
-  document.setObject(create_root(map, targetDir, make_export_options()));
+  document.setObject(CreateRoot(map, targetDir, MakeExportOptions()));
   WriteJson(QFileInfo{path}, document);
 }
 

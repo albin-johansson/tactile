@@ -4,9 +4,9 @@
 
 namespace tactile {
 
-auto make_export_options() -> export_options
+auto MakeExportOptions() -> ExportOptions
 {
-  export_options options{};
+  ExportOptions options{};
 
   options.generateDefaults =
       prefs::GenerateDefaults().value_or(prefs::generate_defaults_def);

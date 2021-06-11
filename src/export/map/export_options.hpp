@@ -2,12 +2,12 @@
 
 namespace tactile {
 
-struct export_options final
+struct ExportOptions final
 {
-  bool generateDefaults;
-  bool embedTilesets;
+  bool generateDefaults{};
+  bool embedTilesets{};
 };
 
-[[nodiscard]] auto make_export_options() -> export_options;
+[[nodiscard]] auto MakeExportOptions() -> ExportOptions;
 
 }  // namespace tactile

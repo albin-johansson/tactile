@@ -111,7 +111,7 @@ void TactileApp::OnSave()
   {
     if (document->HasPath())
     {
-      save_map_document(document->AbsolutePath(), *document);
+      SaveMapDocument(document->AbsolutePath(), *document);
       document->MarkAsClean();
     }
     else
@@ -125,7 +125,7 @@ void TactileApp::OnSaveAs(const QString& path)
 {
   if (auto* document = mModel->CurrentDocument())
   {
-    save_map_document(path, *document);
+    SaveMapDocument(path, *document);
 
     const QFileInfo file{path};
     document->MarkAsClean();
