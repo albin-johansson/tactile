@@ -292,7 +292,7 @@ void SettingsDialog::OnExportCurrentTheme()
       [this](const QString& path) {
         if (const auto theme = get_theme(mUi->themeComboBox->currentText()))
         {
-          save_theme(path, *theme);
+          SaveTheme(path, *theme);
         }
       },
       this);

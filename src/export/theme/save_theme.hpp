@@ -5,6 +5,6 @@
 
 namespace tactile {
 
-void save_theme(const QString& path, const QPalette& theme);
+void SaveTheme(const QString& path, const QPalette& theme);
 
-}
+}  // namespace tactile

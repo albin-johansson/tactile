@@ -8,9 +8,9 @@
 namespace tactile {
 namespace {
 
-void save_group(QJsonObject& object,
-                const QPalette& theme,
-                const QPalette::ColorGroup group)
+void SaveGroup(QJsonObject& object,
+               const QPalette& theme,
+               const QPalette::ColorGroup group)
 {
   const auto save = [&](const QStringView key, const QPalette::ColorRole role) {
     object.insert(key, theme.color(group, role).name(QColor::HexRgb));
@@ -34,13 +34,13 @@ void save_group(QJsonObject& object,
   save(u"Light", QPalette::Light);
 }
 
-[[nodiscard]] auto create_theme_root(const QPalette& theme) -> QJsonObject
+[[nodiscard]] auto CreateThemeRoot(const QPalette& theme) -> QJsonObject
 {
   QJsonObject root;
-  save_group(root, theme, QPalette::Active);
+  SaveGroup(root, theme, QPalette::Active);
 
   QJsonObject disabled;
-  save_group(disabled, theme, QPalette::Disabled);
+  SaveGroup(disabled, theme, QPalette::Disabled);
 
   root.insert(u"disabled", disabled);
 
@@ -49,11 +49,11 @@ void save_group(QJsonObject& object,
 
 }  // namespace
 
-void save_theme(const QString& path, const QPalette& theme)
+void SaveTheme(const QString& path, const QPalette& theme)
 {
   QJsonDocument document{};
 
-  document.setObject(create_theme_root(theme));
+  document.setObject(CreateThemeRoot(theme));
   WriteJson(QFileInfo{path}, document);
 }
 
