@@ -307,8 +307,6 @@ class map_parser final
   {
     object_layer_data objectLayer;
 
-    const auto emptyString = TACTILE_QSTRING(u"");
-
     for (const auto& elem : m_engine.objects(root))
     {
       auto& object = objectLayer.objects.emplace_back();
@@ -326,8 +324,8 @@ class map_parser final
       object.y = elem.floating(element_id::y, 0);
       object.width = elem.floating(element_id::width, 0);
       object.height = elem.floating(element_id::height, 0);
-      object.name = elem.string(element_id::name, emptyString);
-      object.customType = elem.string(element_id::type, emptyString);
+      object.name = elem.string(element_id::name, QString{});
+      object.customType = elem.string(element_id::type, QString{});
       object.visible = elem.boolean(element_id::visible).value_or(true);
       object.isPoint = m_engine.is_point(elem);
 
