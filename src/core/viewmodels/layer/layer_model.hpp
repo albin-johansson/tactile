@@ -12,7 +12,7 @@ TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 
 namespace tactile::vm {
 
-class layer_item;
+class LayerItem;
 
 class layer_model final : public QStandardItemModel
 {
@@ -68,7 +68,7 @@ class layer_model final : public QStandardItemModel
   auto move_down_in_gui(layer_id id) -> maybe<QModelIndex>;
 
   [[nodiscard]] auto get_item(const QModelIndex& index) const
-      -> const layer_item*;
+      -> const LayerItem*;
 
   [[nodiscard]] auto id_from_index(const QModelIndex& index) const -> layer_id;
 

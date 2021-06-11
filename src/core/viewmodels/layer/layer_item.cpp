@@ -7,7 +7,7 @@
 namespace tactile::vm {
 namespace {
 
-[[nodiscard]] auto icon_for_layer(const core::LayerType type) -> const QIcon&
+[[nodiscard]] auto GetIcon(const core::LayerType type) -> const QIcon&
 {
   switch (type)
   {
@@ -24,39 +24,32 @@ namespace {
 
 }  // namespace
 
-layer_item::layer_item(const QString& name) : QStandardItem{name}
-{}
-
-auto layer_item::make(const layer_id id, const core::ILayer& layer)
-    -> layer_item*
+LayerItem::LayerItem(const layer_id id, const core::ILayer& layer)
+    : QStandardItem{layer.Name()}
 {
-  auto* item = new layer_item{layer.Name()};
-
-  item->set_id(id);
-  item->set_type(layer.Type());
-  item->setIcon(icon_for_layer(layer.Type()));
-
-  return item;
+  SetId(id);
+  SetType(layer.Type());
+  setIcon(GetIcon(layer.Type()));
 }
 
-void layer_item::set_id(layer_id id)
+void LayerItem::SetId(const layer_id id)
 {
   setData(id.get(), static_cast<int>(layer_item_role::id));
 }
 
-void layer_item::set_type(core::LayerType type)
+void LayerItem::SetType(const core::LayerType type)
 {
   setData(static_cast<int>(type), static_cast<int>(layer_item_role::type));
 }
 
-auto layer_item::get_id() const -> layer_id
+auto LayerItem::GetId() const -> layer_id
 {
   const auto role = static_cast<int>(layer_item_role::id);
   const auto id = data(role).value<int>();
   return layer_id{id};
 }
 
-auto layer_item::get_layer_type() const -> core::LayerType
+auto LayerItem::GetLayerType() const -> core::LayerType
 {
   const auto role = static_cast<int>(layer_item_role::type);
   const auto type = data(role).value<int>();

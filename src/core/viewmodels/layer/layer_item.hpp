@@ -8,21 +8,18 @@
 
 namespace tactile::vm {
 
-class layer_item final : public QStandardItem
+class LayerItem final : public QStandardItem
 {
  public:
-  explicit layer_item(const QString& name);
+  LayerItem(layer_id id, const core::ILayer& layer);
 
-  [[nodiscard]] static auto make(layer_id id, const core::ILayer& layer)
-      -> layer_item*;
+  void SetId(layer_id id);
 
-  void set_id(layer_id id);
+  void SetType(core::LayerType type);
 
-  void set_type(core::LayerType type);
+  [[nodiscard]] auto GetId() const -> layer_id;
 
-  [[nodiscard]] auto get_id() const -> layer_id;
-
-  [[nodiscard]] auto get_layer_type() const -> core::LayerType;
+  [[nodiscard]] auto GetLayerType() const -> core::LayerType;
 };
 
 }  // namespace tactile::vm

@@ -18,7 +18,7 @@ layer_model::layer_model(not_null<core::MapDocument*> document)
   document->EachLayer(
       [this](const layer_id id, const shared<core::ILayer>& layer) {
         Q_ASSERT(layer);
-        appendRow(layer_item::make(id, *layer.get()));
+        appendRow(new LayerItem{id, *layer.get()});
       });
 
   // clang-format off
@@ -121,12 +121,12 @@ void layer_model::add_item(const layer_id id, const core::ILayer& layer)
 {
   if (m_duplicateTargetRow)
   {
-    insertRow(*m_duplicateTargetRow, layer_item::make(id, layer));
+    insertRow(*m_duplicateTargetRow, new LayerItem{id, layer});
     m_duplicateTargetRow.reset();
   }
   else
   {
-    appendRow(layer_item::make(id, layer));
+    appendRow(new LayerItem{id, layer});
   }
 }
 
@@ -136,9 +136,9 @@ void layer_model::remove_item(const layer_id id)
   const auto nRows = rowCount();
   for (auto row = 0; row < nRows; ++row)
   {
-    if (const auto* item = dynamic_cast<const layer_item*>(root->child(row)))
+    if (const auto* item = dynamic_cast<const LayerItem*>(root->child(row)))
     {
-      if (item->get_id() == id)
+      if (item->GetId() == id)
       {
         removeRow(item->row());
       }
@@ -182,9 +182,9 @@ auto layer_model::move_down_in_gui(const layer_id id) -> maybe<QModelIndex>
   }
 }
 
-auto layer_model::get_item(const QModelIndex& index) const -> const layer_item*
+auto layer_model::get_item(const QModelIndex& index) const -> const LayerItem*
 {
-  return dynamic_cast<const layer_item*>(itemFromIndex(index));
+  return dynamic_cast<const LayerItem*>(itemFromIndex(index));
 }
 
 auto layer_model::index_of(const layer_id id) const -> maybe<QModelIndex>
@@ -194,9 +194,9 @@ auto layer_model::index_of(const layer_id id) const -> maybe<QModelIndex>
 
   for (auto row = 0; row < topLevelRows; ++row)
   {
-    if (const auto* item = dynamic_cast<const layer_item*>(root->child(row, 0)))
+    if (const auto* item = dynamic_cast<const LayerItem*>(root->child(row, 0)))
     {
-      if (id == item->get_id())
+      if (id == item->GetId())
       {
         return item->index();
       }
@@ -210,7 +210,7 @@ auto layer_model::id_from_index(const QModelIndex& index) const -> layer_id
 {
   const auto* item = get_item(index);
   Q_ASSERT(item);
-  return item->get_id();
+  return item->GetId();
 }
 
 void layer_model::moved_layer_forward(const layer_id id)
