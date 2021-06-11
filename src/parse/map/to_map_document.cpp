@@ -119,7 +119,7 @@ auto to_map_document(const map_data& data) -> core::MapDocument*
   auto* tilesets = document->GetTilesets();
   for (const auto& tilesetData : data.tilesets)
   {
-    const auto id [[maybe_unused]] = tilesets->add(make_tileset(tilesetData));
+    const auto id [[maybe_unused]] = tilesets->Add(make_tileset(tilesetData));
   }
 
   for (const auto& layerData : data.layers)

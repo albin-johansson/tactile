@@ -111,10 +111,10 @@ void validate_tilesets(const core::MapDocument& document)
 {
   const auto* tilesets = document.GetTilesets();
   ASSERT_TRUE(tilesets);
-  ASSERT_EQ(2, tilesets->count());
+  ASSERT_EQ(2, tilesets->Count());
 
-  ASSERT_TRUE(tilesets->contains(1_ts));
-  const auto& terrain = tilesets->at(1_ts);
+  ASSERT_TRUE(tilesets->Contains(1_ts));
+  const auto& terrain = tilesets->At(1_ts);
 
   const QFileInfo terrainPath{TACTILE_QSTRING(u"terrain.png")};
   EXPECT_EQ(terrainPath.absoluteFilePath(), terrain.File().canonicalFilePath());
@@ -128,8 +128,8 @@ void validate_tilesets(const core::MapDocument& document)
   EXPECT_EQ(32_tw, terrain.GetTileWidth());
   EXPECT_EQ(32_th, terrain.GetTileHeight());
 
-  ASSERT_TRUE(tilesets->contains(2_ts));
-  const auto& outside = tilesets->at(2_ts);
+  ASSERT_TRUE(tilesets->Contains(2_ts));
+  const auto& outside = tilesets->At(2_ts);
 
   const QFileInfo outsidePath{TACTILE_QSTRING(u"outside.png")};
   EXPECT_EQ(outsidePath.absoluteFilePath(), outside.File().canonicalFilePath());

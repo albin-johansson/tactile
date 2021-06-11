@@ -31,7 +31,7 @@ void RemoveTileset::undo()
   QUndoCommand::undo();
 
   auto* tilesets = mDocument->GetTilesets();
-  tilesets->add(mId, mTileset);
+  tilesets->Add(mId, mTileset);
 
   emit mDocument->S_AddedTileset(mId);
 }
@@ -43,10 +43,10 @@ void RemoveTileset::redo()
   auto& map = mDocument->Raw();
   auto* tilesets = mDocument->GetTilesets();
 
-  const auto [first, last] = tilesets->range_of(mId);
+  const auto [first, last] = tilesets->RangeOf(mId);
   map.RemoveOccurrences(first, last);
 
-  tilesets->remove(mId);
+  tilesets->Remove(mId);
 
   emit mDocument->S_RemovedTileset(mId);
   emit mDocument->S_Redraw();

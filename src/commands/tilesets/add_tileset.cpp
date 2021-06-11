@@ -31,7 +31,7 @@ void AddTileset::undo()
   QUndoCommand::undo();
 
   auto* tilesets = mDocument->GetTilesets();
-  tilesets->remove(mId);
+  tilesets->Remove(mId);
 
   emit mDocument->S_RemovedTileset(mId);
   emit mDocument->S_Redraw();
@@ -42,7 +42,7 @@ void AddTileset::redo()
   QUndoCommand::redo();
 
   auto* tilesets = mDocument->GetTilesets();
-  tilesets->add(mId, mTileset);
+  tilesets->Add(mId, mTileset);
 
   emit mDocument->S_AddedTileset(mId);
 }

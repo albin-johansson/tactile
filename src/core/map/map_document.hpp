@@ -468,9 +468,9 @@ class MapDocument final : public ADocument
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto GetTilesets() const noexcept -> const tileset_manager*;
+  [[nodiscard]] auto GetTilesets() const noexcept -> const TilesetManager*;
 
-  [[nodiscard]] auto GetTilesets() noexcept -> tileset_manager*;
+  [[nodiscard]] auto GetTilesets() noexcept -> TilesetManager*;
 
   [[nodiscard]] auto Raw() -> Map&;
 
@@ -529,7 +529,7 @@ class MapDocument final : public ADocument
 
  private:
   unique<Map> mMap;                    ///< The associated map.
-  unique<tileset_manager> mTilesets;   ///< The associated tilesets.
+  unique<TilesetManager> mTilesets;    ///< The associated tilesets.
   unique<DocumentDelegate> mDelegate;  ///< Delegate for document API.
   int mTileLayerSuffix{1};             ///< Incrementing tile layer suffix.
   int mObjectLayerSuffix{1};           ///< Incrementing object layer suffix.

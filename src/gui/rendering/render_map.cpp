@@ -26,7 +26,7 @@ struct render_bounds final
 struct render_info final
 {
   const core::Map* map;
-  const core::tileset_manager* tilesets;
+  const core::TilesetManager* tilesets;
   render_bounds bounds;
   maybe<core::Position> mousePosition;
   int tileSize;
@@ -110,8 +110,8 @@ void render_tile(QPainter& painter,
                  const QPoint& position,
                  const render_info& info)
 {
-  const auto& image = info.tilesets->image(id);
-  const auto src = info.tilesets->image_source(id);
+  const auto& image = info.tilesets->Image(id);
+  const auto src = info.tilesets->ImageSource(id);
   const QRect dst{position.x(), position.y(), info.tileSize, info.tileSize};
   painter.drawPixmap(dst, image, src);
 }
@@ -213,7 +213,7 @@ void render_layer(QPainter& painter,
 
 void render_multi_preview(QPainter& painter, const render_info& info)
 {
-  auto* tileset = info.tilesets->current_tileset();
+  auto* tileset = info.tilesets->CurrentTileset();
   Q_ASSERT(tileset);
 
   // TODO take scale into consideration
@@ -238,7 +238,7 @@ void render_multi_preview(QPainter& painter, const render_info& info)
 
 void render_preview(QPainter& painter, const render_info& info)
 {
-  auto* tileset = info.tilesets->current_tileset();
+  auto* tileset = info.tilesets->CurrentTileset();
 
   if (!tileset)
   {

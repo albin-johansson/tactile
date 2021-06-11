@@ -23,7 +23,7 @@ class TilesetManagerTest : public testing::Test
     m_interior.reset();
   }
 
-  core::tileset_manager m_manager;
+  core::TilesetManager m_manager;
 
   inline static shared<core::Tileset> m_interior;
   inline static shared<core::Tileset> m_exterior;
@@ -31,97 +31,97 @@ class TilesetManagerTest : public testing::Test
 
 TEST_F(TilesetManagerTest, AddWithoutID)
 {
-  const auto a = m_manager.add(m_interior);
-  const auto b = m_manager.add(m_exterior);
+  const auto a = m_manager.Add(m_interior);
+  const auto b = m_manager.Add(m_exterior);
 
   EXPECT_LT(a, b);
-  EXPECT_EQ(2, m_manager.count());
-  EXPECT_TRUE(m_manager.contains(a));
-  EXPECT_TRUE(m_manager.contains(b));
+  EXPECT_EQ(2, m_manager.Count());
+  EXPECT_TRUE(m_manager.Contains(a));
+  EXPECT_TRUE(m_manager.Contains(b));
 }
 
 TEST_F(TilesetManagerTest, AddWithID)
 {
-  m_manager.add(42_ts, m_interior);
-  m_manager.add(123_ts, m_exterior);
+  m_manager.Add(42_ts, m_interior);
+  m_manager.Add(123_ts, m_exterior);
 
-  EXPECT_EQ(2, m_manager.count());
-  EXPECT_TRUE(m_manager.contains(42_ts));
-  EXPECT_TRUE(m_manager.contains(123_ts));
+  EXPECT_EQ(2, m_manager.Count());
+  EXPECT_TRUE(m_manager.Contains(42_ts));
+  EXPECT_TRUE(m_manager.Contains(123_ts));
 }
 
 TEST_F(TilesetManagerTest, Remove)
 {
   constexpr auto id = 7_ts;
 
-  m_manager.add(id, m_interior);
-  EXPECT_EQ(1, m_manager.count());
+  m_manager.Add(id, m_interior);
+  EXPECT_EQ(1, m_manager.Count());
 
-  EXPECT_NO_THROW(m_manager.remove(42_ts));  // Should have no effect
-  EXPECT_EQ(1, m_manager.count());
+  EXPECT_NO_THROW(m_manager.Remove(42_ts));  // Should have no effect
+  EXPECT_EQ(1, m_manager.Count());
 
-  m_manager.remove(id);
-  EXPECT_EQ(0, m_manager.count());
+  m_manager.Remove(id);
+  EXPECT_EQ(0, m_manager.Count());
 }
 
 TEST_F(TilesetManagerTest, Clear)
 {
-  const auto a [[maybe_unused]] = m_manager.add(m_interior);
-  const auto b [[maybe_unused]] = m_manager.add(m_exterior);
+  const auto a [[maybe_unused]] = m_manager.Add(m_interior);
+  const auto b [[maybe_unused]] = m_manager.Add(m_exterior);
 
-  EXPECT_EQ(2, m_manager.count());
+  EXPECT_EQ(2, m_manager.Count());
 
-  m_manager.clear();
-  EXPECT_EQ(0, m_manager.count());
+  m_manager.Clear();
+  EXPECT_EQ(0, m_manager.Count());
 
-  EXPECT_NO_THROW(m_manager.clear());
+  EXPECT_NO_THROW(m_manager.Clear());
 }
 
 TEST_F(TilesetManagerTest, Rename)
 {
-  const auto id = m_manager.add(m_interior);
-  m_manager.rename(id, TACTILE_QSTRING(u"foo"));
+  const auto id = m_manager.Add(m_interior);
+  m_manager.Rename(id, TACTILE_QSTRING(u"foo"));
 
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), m_manager.at(id).Name());
+  EXPECT_EQ(TACTILE_QSTRING(u"foo"), m_manager.At(id).Name());
 }
 
 TEST_F(TilesetManagerTest, Select)
 {
-  EXPECT_FALSE(m_manager.has_active_tileset());
+  EXPECT_FALSE(m_manager.HasActiveTileset());
 
-  const auto a = m_manager.add(m_interior);
-  EXPECT_EQ(a, m_manager.current_tileset_id());
-  EXPECT_TRUE(m_manager.has_active_tileset());
+  const auto a = m_manager.Add(m_interior);
+  EXPECT_EQ(a, m_manager.CurrentTilesetId());
+  EXPECT_TRUE(m_manager.HasActiveTileset());
 
-  const auto b = m_manager.add(m_exterior);
-  EXPECT_EQ(b, m_manager.current_tileset_id());
-  EXPECT_TRUE(m_manager.has_active_tileset());
+  const auto b = m_manager.Add(m_exterior);
+  EXPECT_EQ(b, m_manager.CurrentTilesetId());
+  EXPECT_TRUE(m_manager.HasActiveTileset());
 
-  m_manager.select(a);
-  EXPECT_EQ(a, m_manager.current_tileset_id());
-  EXPECT_TRUE(m_manager.has_active_tileset());
+  m_manager.Select(a);
+  EXPECT_EQ(a, m_manager.CurrentTilesetId());
+  EXPECT_TRUE(m_manager.HasActiveTileset());
 
-  m_manager.select(std::nullopt);
-  EXPECT_FALSE(m_manager.current_tileset_id());
-  EXPECT_FALSE(m_manager.has_active_tileset());
+  m_manager.Select(std::nullopt);
+  EXPECT_FALSE(m_manager.CurrentTilesetId());
+  EXPECT_FALSE(m_manager.HasActiveTileset());
 }
 
 TEST_F(TilesetManagerTest, IncrementNextTilesetID)
 {
-  EXPECT_EQ(1_ts, m_manager.next_tileset_id());
+  EXPECT_EQ(1_ts, m_manager.NextTilesetId());
 
-  m_manager.increment_next_tileset_id();
-  EXPECT_EQ(2_ts, m_manager.next_tileset_id());
+  m_manager.IncrementNextTilesetId();
+  EXPECT_EQ(2_ts, m_manager.NextTilesetId());
 }
 
 TEST_F(TilesetManagerTest, At)
 {
   const auto& c_manager = m_manager;
 
-  EXPECT_ANY_THROW(m_manager.at(0_ts));
-  EXPECT_ANY_THROW(c_manager.at(0_ts));
+  EXPECT_ANY_THROW(m_manager.At(0_ts));
+  EXPECT_ANY_THROW(c_manager.At(0_ts));
 
-  const auto id = m_manager.add(m_interior);
-  EXPECT_NO_THROW(m_manager.at(id));
-  EXPECT_NO_THROW(c_manager.at(id));
+  const auto id = m_manager.Add(m_interior);
+  EXPECT_NO_THROW(m_manager.At(id));
+  EXPECT_NO_THROW(c_manager.At(id));
 }

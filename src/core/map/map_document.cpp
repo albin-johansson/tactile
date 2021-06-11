@@ -36,7 +36,7 @@ namespace tactile::core {
 MapDocument::MapDocument(QObject* parent)
     : ADocument{parent}
     , mMap{std::make_unique<Map>()}
-    , mTilesets{std::make_unique<tileset_manager>()}
+    , mTilesets{std::make_unique<TilesetManager>()}
     , mDelegate{std::make_unique<DocumentDelegate>()}
 {
   SetUp();
@@ -45,7 +45,7 @@ MapDocument::MapDocument(QObject* parent)
 MapDocument::MapDocument(const row_t nRows, const col_t nCols, QObject* parent)
     : ADocument{parent}
     , mMap{std::make_unique<Map>(nRows, nCols)}
-    , mTilesets{std::make_unique<tileset_manager>()}
+    , mTilesets{std::make_unique<TilesetManager>()}
     , mDelegate{std::make_unique<DocumentDelegate>()}
 {
   SetUp();
@@ -267,8 +267,8 @@ void MapDocument::AddTileset(const QImage& image,
 {
   if (!image.isNull())
   {
-    const auto id = mTilesets->next_tileset_id();
-    const auto gid = mTilesets->next_global_tile_id();
+    const auto id = mTilesets->NextTilesetId();
+    const auto gid = mTilesets->NextGlobalTileId();
 
     auto ts = std::make_shared<Tileset>(gid, image, tileWidth, tileHeight);
     ts->SetName(name);
@@ -276,25 +276,25 @@ void MapDocument::AddTileset(const QImage& image,
 
     // This will cause an `added_tileset` signal to be emitted
     mDelegate->Execute<cmd::AddTileset>(this, std::move(ts), id);
-    mTilesets->increment_next_tileset_id();
+    mTilesets->IncrementNextTilesetId();
   }
 }
 
 void MapDocument::RemoveTileset(const tileset_id id)
 {
   mDelegate->Execute<cmd::RemoveTileset>(this,
-                                         mTilesets->get_tileset_pointer(id),
+                                         mTilesets->GetTilesetPointer(id),
                                          id);
 }
 
 void MapDocument::SelectTileset(const tileset_id id)
 {
-  mTilesets->select(id);
+  mTilesets->Select(id);
 }
 
 void MapDocument::SetTilesetSelection(const tileset_selection& selection)
 {
-  mTilesets->set_selection(selection);
+  mTilesets->SetSelection(selection);
 }
 
 void MapDocument::SelectLayer(const layer_id id)
@@ -469,7 +469,7 @@ auto MapDocument::CurrentTileSize() const noexcept -> int
 
 auto MapDocument::CurrentTileset() const -> const Tileset*
 {
-  return mTilesets->current_tileset();
+  return mTilesets->CurrentTileset();
 }
 
 auto MapDocument::Data() const noexcept -> const Map*
@@ -477,12 +477,12 @@ auto MapDocument::Data() const noexcept -> const Map*
   return mMap.get();
 }
 
-auto MapDocument::GetTilesets() const noexcept -> const tileset_manager*
+auto MapDocument::GetTilesets() const noexcept -> const TilesetManager*
 {
   return mTilesets.get();
 }
 
-auto MapDocument::GetTilesets() noexcept -> tileset_manager*
+auto MapDocument::GetTilesets() noexcept -> TilesetManager*
 {
   return mTilesets.get();
 }

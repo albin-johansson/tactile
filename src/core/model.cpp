@@ -48,7 +48,7 @@ auto model::add_map(MapDocument* document) -> map_id
   // clang-format on
 
   bind(&MapDocument::S_AddedTileset, [this](const tileset_id id) {
-    const auto& tileset = current_document()->GetTilesets()->at(id);
+    const auto& tileset = current_document()->GetTilesets()->At(id);
     emit added_tileset(current_map_id().value(), id, tileset);
   });
 

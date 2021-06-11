@@ -14,7 +14,7 @@
 namespace tactile::core {
 
 /**
- * \class tileset_manager
+ * \class TilesetManager
  *
  * \brief Handles multiple `tileset` instances.
  *
@@ -24,7 +24,7 @@ namespace tactile::core {
  *
  * \headerfile tileset_manager.hpp
  */
-class tileset_manager final
+class TilesetManager final
 {
  public:
   using tile_range = std::pair<tile_id, tile_id>;
@@ -36,7 +36,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  tileset_manager();
+  TilesetManager();
 
   /**
    * \brief Adds a tileset to the manager.
@@ -52,7 +52,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void add(tileset_id id, shared<Tileset> tileset);
+  void Add(tileset_id id, shared<Tileset> tileset);
 
   /**
    * \brief Adds a tileset to the manager.
@@ -67,7 +67,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto add(shared<Tileset> tileset) -> tileset_id;
+  [[nodiscard]] auto Add(shared<Tileset> tileset) -> tileset_id;
 
   /**
    * \brief Removes a tileset from the manager.
@@ -78,14 +78,14 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void remove(tileset_id id) noexcept;
+  void Remove(tileset_id id) noexcept;
 
   /**
    * \brief Removes all tilesets from the manager.
    *
    * \since 0.1.0
    */
-  void clear() noexcept;
+  void Clear() noexcept;
 
   /**
    * \brief Sets the name of a tileset.
@@ -97,7 +97,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void rename(tileset_id id, const QString& name);
+  void Rename(tileset_id id, const QString& name);
 
   /**
    * \brief Selects the tileset associated with the specified ID.
@@ -109,7 +109,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  void select(maybe<tileset_id> id);
+  void Select(maybe<tileset_id> id);
 
   /**
    * \brief Sets the current tileset selection of the active tileset.
@@ -118,14 +118,14 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[deprecated]] void set_selection(const tileset_selection& selection);
+  [[deprecated]] void SetSelection(const tileset_selection& selection);
 
   /**
    * \brief Increments the next tileset ID value.
    *
    * \since 0.1.0
    */
-  void increment_next_tileset_id() noexcept;
+  void IncrementNextTilesetId() noexcept;
 
   /**
    * \brief Returns the tileset associated with the specified ID.
@@ -141,12 +141,12 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto at(tileset_id id) -> Tileset&;
+  [[nodiscard]] auto At(tileset_id id) -> Tileset&;
 
   /**
    * \copydoc at(tileset_id)
    */
-  [[nodiscard]] auto at(tileset_id id) const -> const Tileset&;
+  [[nodiscard]] auto At(tileset_id id) const -> const Tileset&;
 
   /**
    * \brief Returns the image associated with the specified tile.
@@ -157,7 +157,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto image(tile_id id) const -> const QPixmap&;
+  [[nodiscard]] auto Image(tile_id id) const -> const QPixmap&;
 
   /**
    * \brief Returns the source rectangle associated with the specified tile.
@@ -168,7 +168,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto image_source(tile_id id) const -> QRect;
+  [[nodiscard]] auto ImageSource(tile_id id) const -> QRect;
 
   /**
    * \brief Returns the range of tile identifiers associated with the specified
@@ -182,7 +182,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto range_of(tileset_id id) const -> tile_range;
+  [[nodiscard]] auto RangeOf(tileset_id id) const -> tile_range;
 
   /**
    * \brief Returns the amount of tilesets handled by the manager.
@@ -191,7 +191,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto count() const noexcept -> int;
+  [[nodiscard]] auto Count() const noexcept -> int;
 
   /**
    * \brief Indicates whether or not the manager has an active tileset.
@@ -200,7 +200,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto has_active_tileset() const noexcept -> bool;
+  [[nodiscard]] auto HasActiveTileset() const noexcept -> bool;
 
   /**
    * \brief Returns a pointer to the currently active tileset.
@@ -212,7 +212,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto current_tileset() const -> const Tileset*;
+  [[nodiscard]] auto CurrentTileset() const -> const Tileset*;
 
   /**
    * \brief Returns the ID associated with the active tileset.
@@ -222,7 +222,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto current_tileset_id() const -> maybe<tileset_id>;
+  [[nodiscard]] auto CurrentTilesetId() const -> maybe<tileset_id>;
 
   /**
    * \brief Indicates whether or not any managed tileset contains a tile ID.
@@ -234,7 +234,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto contains(tile_id id) const -> bool;
+  [[nodiscard]] auto Contains(tile_id id) const -> bool;
 
   /**
    * \brief Indicates whether or not the manager contains a tileset.
@@ -246,7 +246,7 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto contains(tileset_id id) const -> bool;
+  [[nodiscard]] auto Contains(tileset_id id) const -> bool;
 
   /**
    * \brief Returns a pointer to the tileset associated with the specified ID.
@@ -260,9 +260,9 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_tileset_pointer(tileset_id id) -> shared<Tileset>
+  [[nodiscard]] auto GetTilesetPointer(const tileset_id id) -> shared<Tileset>
   {
-    return m_tilesets.at(id);
+    return mTilesets.at(id);
   }
 
   /**
@@ -272,9 +272,9 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto next_tileset_id() const noexcept -> tileset_id
+  [[nodiscard]] auto NextTilesetId() const noexcept -> tileset_id
   {
-    return m_nextId;
+    return mNextId;
   }
 
   /**
@@ -284,26 +284,26 @@ class tileset_manager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto next_global_tile_id() const noexcept -> tile_id
+  [[nodiscard]] auto NextGlobalTileId() const noexcept -> tile_id
   {
-    return m_nextGlobalTileId;
+    return mNextGlobalTileId;
   }
 
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
-    return m_tilesets.begin();
+    return mTilesets.begin();
   }
 
   [[nodiscard]] auto end() const noexcept -> const_iterator
   {
-    return m_tilesets.end();
+    return mTilesets.end();
   }
 
  private:
-  maybe<tileset_id> m_activeId;
-  tileset_map m_tilesets;
-  tileset_id m_nextId{1};
-  tile_id m_nextGlobalTileId{1};
+  maybe<tileset_id> mActiveId;
+  tileset_map mTilesets;
+  tileset_id mNextId{1};
+  tile_id mNextGlobalTileId{1};
 };
 
 }  // namespace tactile::core

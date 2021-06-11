@@ -29,7 +29,7 @@ void SetTilesetName::undo()
   const auto name = mPrevious.value();
 
   auto* tilesets = mDocument->GetTilesets();
-  tilesets->rename(mId, name);
+  tilesets->Rename(mId, name);
 
   emit mDocument->S_RenamedTileset(mId, name);
   mPrevious.reset();
@@ -41,8 +41,8 @@ void SetTilesetName::redo()
 
   auto* tilesets = mDocument->GetTilesets();
 
-  mPrevious = tilesets->at(mId).Name();
-  tilesets->rename(mId, mName);
+  mPrevious = tilesets->At(mId).Name();
+  tilesets->Rename(mId, mName);
 
   emit mDocument->S_RenamedTileset(mId, mName);
 }

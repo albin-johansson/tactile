@@ -69,13 +69,13 @@ TEST(ImportJsonMap, Embedded)
   {  // Tilesets
     const auto* tilesets = document->GetTilesets();
     ASSERT_TRUE(tilesets);
-    ASSERT_EQ(1, tilesets->count());
+    ASSERT_EQ(1, tilesets->Count());
 
     constexpr auto id = 1_ts;
-    ASSERT_TRUE(tilesets->contains(id));
-    EXPECT_EQ(id, tilesets->current_tileset_id());
+    ASSERT_TRUE(tilesets->Contains(id));
+    EXPECT_EQ(id, tilesets->CurrentTilesetId());
 
-    const auto& tileset = tilesets->at(id);
+    const auto& tileset = tilesets->At(id);
     EXPECT_EQ(1_t, tileset.FirstId());
     EXPECT_EQ(TACTILE_QSTRING(u"terrain"), tileset.Name());
     EXPECT_EQ(32_tw, tileset.GetTileWidth());
@@ -153,15 +153,15 @@ TEST(ImportJsonMap, External)
   {  // Tilesets
     const auto* tilesets = document->GetTilesets();
     ASSERT_TRUE(tilesets);
-    ASSERT_EQ(2, tilesets->count());
-    ASSERT_TRUE(tilesets->has_active_tileset());
-    ASSERT_EQ(2_ts, tilesets->current_tileset_id());
+    ASSERT_EQ(2, tilesets->Count());
+    ASSERT_TRUE(tilesets->HasActiveTileset());
+    ASSERT_EQ(2_ts, tilesets->CurrentTilesetId());
 
     {  // First tileset
       constexpr auto id = 1_ts;
-      ASSERT_TRUE(tilesets->contains(id));
+      ASSERT_TRUE(tilesets->Contains(id));
 
-      const auto& tileset = tilesets->at(id);
+      const auto& tileset = tilesets->At(id);
       EXPECT_EQ(1_t, tileset.FirstId());
       EXPECT_EQ(TACTILE_QSTRING(u"terrain"), tileset.Name());
       EXPECT_EQ(32_tw, tileset.GetTileWidth());
@@ -177,9 +177,9 @@ TEST(ImportJsonMap, External)
 
     {  // Second tileset
       constexpr auto id = 2_ts;
-      ASSERT_TRUE(tilesets->contains(id));
+      ASSERT_TRUE(tilesets->Contains(id));
 
-      const auto& tileset = tilesets->at(id);
+      const auto& tileset = tilesets->At(id);
       EXPECT_EQ(1025_t, tileset.FirstId());
       EXPECT_EQ(TACTILE_QSTRING(u"outside"), tileset.Name());
       EXPECT_EQ(32_tw, tileset.GetTileWidth());
