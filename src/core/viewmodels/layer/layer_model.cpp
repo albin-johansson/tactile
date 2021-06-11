@@ -6,13 +6,13 @@
 
 namespace tactile::vm {
 
-layer_model::layer_model(not_null<core::MapDocument*> document)
+LayerModel::LayerModel(not_null<core::MapDocument*> document)
     : QStandardItemModel{}
-    , m_document{document}
+    , mDocument{document}
 {
-  if (!m_document)
+  if (!mDocument)
   {
-    throw TactileError{"layer_model requires non-null map document!"};
+    throw TactileError{"Layer model requires non-null map document!"};
   }
 
   document->EachLayer(
@@ -22,107 +22,107 @@ layer_model::layer_model(not_null<core::MapDocument*> document)
       });
 
   // clang-format off
-  connect(m_document, &core::MapDocument::S_AddedLayer,
-          this, &layer_model::add_item);
+  connect(mDocument, &core::MapDocument::S_AddedLayer,
+          this,      &LayerModel::AddItem);
 
-  connect(m_document, &core::MapDocument::S_AddedDuplicatedLayer,
-          this, &layer_model::add_item);
+  connect(mDocument, &core::MapDocument::S_AddedDuplicatedLayer,
+          this,      &LayerModel::AddItem);
 
-  connect(m_document, &core::MapDocument::S_RemovedLayer,
-          this, &layer_model::remove_item);
+  connect(mDocument, &core::MapDocument::S_RemovedLayer,
+          this,      &LayerModel::RemoveItem);
 
-  connect(m_document, &core::MapDocument::S_ChangedLayerOpacity,
-          this, &layer_model::changed_opacity);
+  connect(mDocument, &core::MapDocument::S_ChangedLayerOpacity,
+          this,      &LayerModel::S_ChangedOpacity);
 
-  connect(m_document, &core::MapDocument::S_ChangedLayerName,
-          this, &layer_model::changed_name);
+  connect(mDocument, &core::MapDocument::S_ChangedLayerName,
+          this,      &LayerModel::S_ChangedName);
 
-  connect(m_document, &core::MapDocument::S_ChangedLayerVisibility,
-          this, &layer_model::changed_visibility);
+  connect(mDocument, &core::MapDocument::S_ChangedLayerVisibility,
+          this, &LayerModel::S_ChangedVisibility);
 
-  connect(m_document, &core::MapDocument::S_MovedLayerForward,
-          this, &layer_model::moved_layer_forward);
+  connect(mDocument, &core::MapDocument::S_SelectedLayer,
+          this,      &LayerModel::S_SelectedLayer);
 
-  connect(m_document, &core::MapDocument::S_MovedLayerBack,
-          this, &layer_model::moved_layer_back);
+  connect(mDocument, &core::MapDocument::S_MovedLayerForward,
+          this,      &LayerModel::OnMovedLayerForward);
 
-  connect(m_document, &core::MapDocument::S_SelectedLayer,
-          this, &layer_model::selected_layer);
+  connect(mDocument, &core::MapDocument::S_MovedLayerBack,
+          this,      &LayerModel::OnMovedLayerBack);
   // clang-format on
 }
 
-void layer_model::add_tile_layer()
+void LayerModel::AddTileLayer()
 {
-  m_document->AddTileLayer();
+  mDocument->AddTileLayer();
 }
 
-void layer_model::add_object_layer()
+void LayerModel::AddObjectLayer()
 {
-  m_document->AddObjectLayer();
+  mDocument->AddObjectLayer();
 }
 
-void layer_model::show_properties(const QModelIndex& index)
+void LayerModel::ShowProperties(const QModelIndex& index)
 {
-  emit m_document->S_ShowLayerProperties(id_from_index(index));
+  emit mDocument->S_ShowLayerProperties(IdFromIndex(index));
 }
 
-void layer_model::select(const QModelIndex& index)
+void LayerModel::Select(const QModelIndex& index)
 {
-  m_document->SelectLayer(id_from_index(index));
+  mDocument->SelectLayer(IdFromIndex(index));
 }
 
-void layer_model::remove(const QModelIndex& index)
+void LayerModel::Remove(const QModelIndex& index)
 {
-  m_document->RemoveLayer(id_from_index(index));
+  mDocument->RemoveLayer(IdFromIndex(index));
 }
 
-void layer_model::duplicate(const QModelIndex& index)
+void LayerModel::Duplicate(const QModelIndex& index)
 {
-  m_duplicateTargetRow = itemFromIndex(index)->row() + 1;
-  m_document->DuplicateLayer(id_from_index(index));
+  mDuplicateTargetRow = itemFromIndex(index)->row() + 1;
+  mDocument->DuplicateLayer(IdFromIndex(index));
 }
 
-void layer_model::move_up(const QModelIndex& index)
+void LayerModel::MoveUp(const QModelIndex& index)
 {
-  m_document->MoveLayerForward(id_from_index(index));
+  mDocument->MoveLayerForward(IdFromIndex(index));
 }
 
-void layer_model::move_down(const QModelIndex& index)
+void LayerModel::MoveDown(const QModelIndex& index)
 {
-  m_document->MoveLayerBack(id_from_index(index));
+  mDocument->MoveLayerBack(IdFromIndex(index));
 }
 
-void layer_model::set_name(const QModelIndex& index, const QString& name)
+void LayerModel::SetName(const QModelIndex& index, const QString& name)
 {
-  m_document->SetLayerName(id_from_index(index), name);
+  mDocument->SetLayerName(IdFromIndex(index), name);
 }
 
-void layer_model::set_opacity(const QModelIndex& index, const double opacity)
+void LayerModel::SetOpacity(const QModelIndex& index, double opacity)
 {
-  m_document->SetLayerOpacity(id_from_index(index), opacity);
+  mDocument->SetLayerOpacity(IdFromIndex(index), opacity);
 }
 
-void layer_model::set_visible(const QModelIndex& index, const bool visible)
+void LayerModel::SetVisible(const QModelIndex& index, bool visible)
 {
-  m_document->SetLayerVisibility(id_from_index(index), visible);
+  mDocument->SetLayerVisibility(IdFromIndex(index), visible);
 }
 
-auto layer_model::opacity(const QModelIndex& index) const -> double
+auto LayerModel::Opacity(const QModelIndex& index) const -> double
 {
-  return m_document->GetLayer(id_from_index(index))->Opacity();
+  return mDocument->GetLayer(IdFromIndex(index))->Opacity();
 }
 
-auto layer_model::visible(const QModelIndex& index) const -> bool
+auto LayerModel::IsVisible(const QModelIndex& index) const -> bool
 {
-  return m_document->GetLayer(id_from_index(index))->IsVisible();
+  return mDocument->GetLayer(IdFromIndex(index))->IsVisible();
 }
 
-void layer_model::add_item(const layer_id id, const core::ILayer& layer)
+void LayerModel::AddItem(const layer_id id, const core::ILayer& layer)
 {
-  if (m_duplicateTargetRow)
+  if (mDuplicateTargetRow)
   {
-    insertRow(*m_duplicateTargetRow, new LayerItem{id, layer});
-    m_duplicateTargetRow.reset();
+    insertRow(*mDuplicateTargetRow, new LayerItem{id, layer});
+    mDuplicateTargetRow.reset();
   }
   else
   {
@@ -130,7 +130,7 @@ void layer_model::add_item(const layer_id id, const core::ILayer& layer)
   }
 }
 
-void layer_model::remove_item(const layer_id id)
+void LayerModel::RemoveItem(const layer_id id)
 {
   const auto* root = invisibleRootItem();
   const auto nRows = rowCount();
@@ -146,9 +146,9 @@ void layer_model::remove_item(const layer_id id)
   }
 }
 
-auto layer_model::move_up_in_gui(const layer_id id) -> maybe<QModelIndex>
+auto LayerModel::MoveUpInGui(const layer_id id) -> maybe<QModelIndex>
 {
-  if (const auto index = index_of(id))
+  if (const auto index = IndexOf(id))
   {
     const auto row = index->row();
 
@@ -164,9 +164,9 @@ auto layer_model::move_up_in_gui(const layer_id id) -> maybe<QModelIndex>
   }
 }
 
-auto layer_model::move_down_in_gui(const layer_id id) -> maybe<QModelIndex>
+auto LayerModel::MoveDownInGui(const layer_id id) -> maybe<QModelIndex>
 {
-  if (const auto index = index_of(id))
+  if (const auto index = IndexOf(id))
   {
     const auto row = index->row();
 
@@ -182,12 +182,12 @@ auto layer_model::move_down_in_gui(const layer_id id) -> maybe<QModelIndex>
   }
 }
 
-auto layer_model::get_item(const QModelIndex& index) const -> const LayerItem*
+auto LayerModel::GetItem(const QModelIndex& index) const -> const LayerItem*
 {
   return dynamic_cast<const LayerItem*>(itemFromIndex(index));
 }
 
-auto layer_model::index_of(const layer_id id) const -> maybe<QModelIndex>
+auto LayerModel::IndexOf(const layer_id id) const -> maybe<QModelIndex>
 {
   const auto topLevelRows = rowCount();
   const auto* root = invisibleRootItem();
@@ -206,21 +206,21 @@ auto layer_model::index_of(const layer_id id) const -> maybe<QModelIndex>
   return std::nullopt;
 }
 
-auto layer_model::id_from_index(const QModelIndex& index) const -> layer_id
+auto LayerModel::IdFromIndex(const QModelIndex& index) const -> layer_id
 {
-  const auto* item = get_item(index);
+  const auto* item = GetItem(index);
   Q_ASSERT(item);
   return item->GetId();
 }
 
-void layer_model::moved_layer_forward(const layer_id id)
+void LayerModel::OnMovedLayerForward(const layer_id id)
 {
-  move_up_in_gui(id);
+  MoveUpInGui(id);
 }
 
-void layer_model::moved_layer_back(const layer_id id)
+void LayerModel::OnMovedLayerBack(const layer_id id)
 {
-  move_down_in_gui(id);
+  MoveDownInGui(id);
 }
 
 }  // namespace tactile::vm

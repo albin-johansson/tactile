@@ -11,7 +11,7 @@
 TACTILE_FORWARD_DECLARE_UI(LayerWidget)
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
-TACTILE_FORWARD_DECLARE(tactile::vm, layer_model)
+TACTILE_FORWARD_DECLARE(tactile::vm, LayerModel)
 TACTILE_FORWARD_DECLARE(tactile, LayerListView)
 TACTILE_FORWARD_DECLARE(tactile, LayerItem)
 TACTILE_FORWARD_DECLARE(tactile, AddLayerContextMenu)
@@ -38,7 +38,7 @@ class LayerWidget final : public QWidget
   AddLayerContextMenu* mAddLayerMenu{};
   LayerWidgetContextMenu* mWidgetMenu{};
   LayerItemContextMenu* mItemMenu{};
-  unique<vm::layer_model> mModel;
+  unique<vm::LayerModel> mModel;
 
   void UpdateActions(const maybe<QModelIndex>& selected);
 

@@ -86,7 +86,7 @@ LayerWidget::LayerWidget(QWidget* parent)
           mUi->removeLayerButton, &QPushButton::click);
 
   connect(mItemMenu, &LayerItemContextMenu::S_ShowProperties,
-          [this] { mModel->show_properties(mView->currentIndex()); });
+          [this] { mModel->ShowProperties(mView->currentIndex()); });
 
   // clang-format on
 }
@@ -97,23 +97,23 @@ void LayerWidget::OnSwitchedMap(not_null<core::MapDocument*> document)
 {
   Q_ASSERT(document);
 
-  mModel = std::make_unique<vm::layer_model>(document);
+  mModel = std::make_unique<vm::LayerModel>(document);
   Q_ASSERT(!mModel->parent());
 
   mView->setModel(mModel.get());
   Q_ASSERT(!mModel->parent());
 
   // clang-format off
-  connect(mModel.get(), &vm::layer_model::changed_opacity,
+  connect(mModel.get(), &vm::LayerModel::S_ChangedOpacity,
           this, &LayerWidget::OnChangedLayerOpacity);
 
-  connect(mModel.get(), &vm::layer_model::changed_name,
+  connect(mModel.get(), &vm::LayerModel::S_ChangedName,
           this, &LayerWidget::OnChangedLayerName);
 
-  connect(mModel.get(), &vm::layer_model::changed_visibility,
+  connect(mModel.get(), &vm::LayerModel::S_ChangedVisibility,
           this, &LayerWidget::OnChangedLayerVisibility);
 
-  connect(mModel.get(), &vm::layer_model::selected_layer,
+  connect(mModel.get(), &vm::LayerModel::S_SelectedLayer,
           this, &LayerWidget::OnSelectedLayer);
   // clang-format on
 }
@@ -145,10 +145,10 @@ void LayerWidget::UpdateActions(const maybe<QModelIndex>& selected)
   {
     QSignalBlocker opacityBlocker{mUi->opacitySlider};
     mUi->opacitySlider->setValue(
-        static_cast<int>(mModel->opacity(*selected) * 100.0));
+        static_cast<int>(mModel->Opacity(*selected) * 100.0));
 
-    mUi->visibleButton->setIcon(mModel->visible(*selected) ? IconVisible()
-                                                           : IconInvisible());
+    mUi->visibleButton->setIcon(mModel->IsVisible(*selected) ? IconVisible()
+                                                             : IconInvisible());
   }
 
   mItemMenu->SetVisibilityEnabled(mUi->visibleButton->isEnabled());
@@ -174,26 +174,26 @@ void LayerWidget::OnViewChangedSelection(const maybe<QModelIndex> selected,
 {
   if (selected)
   {
-    mModel->select(*selected);
+    mModel->Select(*selected);
   }
 }
 
 void LayerWidget::OnViewChangedName(const QModelIndex& index,
                                     const QString& name)
 {
-  mModel->set_name(index, name);
+  mModel->SetName(index, name);
 }
 
 void LayerWidget::OnNewTileLayerRequested()
 {
   Q_ASSERT(mModel);
-  mModel->add_tile_layer();
+  mModel->AddTileLayer();
 }
 
 void LayerWidget::OnNewObjectLayerRequested()
 {
   Q_ASSERT(mModel);
-  mModel->add_object_layer();
+  mModel->AddObjectLayer();
 }
 
 void LayerWidget::OnChangedLayerOpacity(const layer_id, double opacity)
@@ -205,7 +205,7 @@ void LayerWidget::OnChangedLayerOpacity(const layer_id, double opacity)
 void LayerWidget::OnChangedLayerName(const layer_id id, const QString& name)
 {
   QSignalBlocker blocker{mView};
-  mModel->itemFromIndex(mModel->index_of(id).value())->setText(name);
+  mModel->itemFromIndex(mModel->IndexOf(id).value())->setText(name);
 }
 
 void LayerWidget::OnChangedLayerVisibility(const layer_id id, bool visible)
@@ -215,7 +215,7 @@ void LayerWidget::OnChangedLayerVisibility(const layer_id id, bool visible)
 
 void LayerWidget::OnSelectedLayer(const layer_id id, const core::ILayer& layer)
 {
-  const auto index = mModel->index_of(id).value();
+  const auto index = mModel->IndexOf(id).value();
 
   mView->SelectQuietly(index);
   UpdateActions(index);
@@ -223,8 +223,7 @@ void LayerWidget::OnSelectedLayer(const layer_id id, const core::ILayer& layer)
 
 void LayerWidget::OnOpacitySliderValueChanged(const int value)
 {
-  mModel->set_opacity(mView->currentIndex(),
-                      static_cast<double>(value) / 100.0);
+  mModel->SetOpacity(mView->currentIndex(), static_cast<double>(value) / 100.0);
 }
 
 void LayerWidget::OnNewLayerButtonPressed()
@@ -239,7 +238,7 @@ void LayerWidget::OnNewLayerButtonPressed()
 
 void LayerWidget::OnRemoveLayerButtonPressed()
 {
-  mModel->remove(mView->currentIndex());
+  mModel->Remove(mView->currentIndex());
   UpdateActions(mView->currentIndex());
 }
 
@@ -248,7 +247,7 @@ void LayerWidget::OnUpButtonPressed()
   const auto current = mView->currentIndex();
   const auto next = current.siblingAtRow(current.row() - 1);
 
-  mModel->move_up(current);
+  mModel->MoveUp(current);
   mView->setCurrentIndex(next);
 }
 
@@ -257,18 +256,18 @@ void LayerWidget::OnDownButtonPressed()
   const auto current = mView->currentIndex();
   const auto next = current.siblingAtRow(current.row() + 1);
 
-  mModel->move_down(current);
+  mModel->MoveDown(current);
   mView->setCurrentIndex(next);
 }
 
 void LayerWidget::OnDuplicateButtonPressed()
 {
-  mModel->duplicate(mView->currentIndex());
+  mModel->Duplicate(mView->currentIndex());
 }
 
 void LayerWidget::OnVisibleButtonToggled(const bool visible)
 {
-  mModel->set_visible(mView->currentIndex(), visible);
+  mModel->SetVisible(mView->currentIndex(), visible);
   mUi->visibleButton->setIcon(visible ? IconVisible() : IconInvisible());
 }
 

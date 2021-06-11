@@ -19,7 +19,7 @@
 
 namespace tactile::vm {
 class property_model;
-class layer_model;
+class LayerModel;
 }  // namespace tactile::vm
 
 namespace tactile::core {
