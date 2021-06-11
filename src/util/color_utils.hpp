@@ -8,7 +8,7 @@ namespace tactile {
  * \brief The intensity threshold used to determine whether or not black text is
  * required when using the color as a backdrop.
  *
- * \see `intensity_of(const QColor&)`
+ * \see `IntensityOf(const QColor&)`
  */
 inline constexpr double color_intensity_threshold = 186;
 
@@ -22,7 +22,7 @@ inline constexpr double color_intensity_threshold = 186;
  *
  * \return the intensity of the color.
  */
-[[nodiscard]] auto intensity_of(const QColor& color) -> double;
+[[nodiscard]] auto IntensityOf(const QColor& color) -> double;
 
 /**
  * \brief Indicates whether or not a color is bright enough to warrant black
@@ -33,6 +33,6 @@ inline constexpr double color_intensity_threshold = 186;
  * \return `true` if the intensity of the color is greater than
  * `color_intensity_threshold`.
  */
-[[nodiscard]] auto is_bright(const QColor& color) -> bool;
+[[nodiscard]] auto IsBright(const QColor& color) -> bool;
 
 }  // namespace tactile

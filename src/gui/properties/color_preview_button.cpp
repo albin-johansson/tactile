@@ -32,7 +32,7 @@ void ColorPreviewButton::UpdateColor(QPushButton& button, const QColor& color)
 
   static const auto fmt = TACTILE_QSTRING(u"background-color: %1; color: %2;");
   button.setStyleSheet(
-      fmt.arg(color.name(QColor::HexArgb), is_bright(color) ? black : white));
+      fmt.arg(color.name(QColor::HexArgb), IsBright(color) ? black : white));
 
   // The RGB name is easier to read
   button.setText(color.name(QColor::HexRgb).toUpper());

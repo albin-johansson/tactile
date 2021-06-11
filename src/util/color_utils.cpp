@@ -9,15 +9,15 @@ inline constexpr double blue_factor = 0.114;
 
 }  // namespace
 
-auto intensity_of(const QColor& color) -> double
+auto IntensityOf(const QColor& color) -> double
 {
   return (color.red() * red_factor) + (color.green() * green_factor) +
          (color.blue() * blue_factor);
 }
 
-auto is_bright(const QColor& color) -> bool
+auto IsBright(const QColor& color) -> bool
 {
-  return intensity_of(color) > color_intensity_threshold;
+  return IntensityOf(color) > color_intensity_threshold;
 }
 
 }  // namespace tactile
