@@ -10,7 +10,7 @@ FileHandle::~FileHandle()
   mFile.close();
 }
 
-auto FileHandle::open(const QFile::OpenMode mode) -> bool
+auto FileHandle::Open(const QFile::OpenMode mode) -> bool
 {
   return mFile.open(mode);
 }

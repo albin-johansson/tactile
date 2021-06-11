@@ -61,9 +61,9 @@ void ParseGroup(const QJsonObject& json,
     return std::nullopt;
   }
 
-  themeFile.open(QFile::ReadOnly | QFile::Text);
+  themeFile.Open(QFile::ReadOnly | QFile::Text);
 
-  const auto document = QJsonDocument::fromJson(themeFile.read());
+  const auto document = QJsonDocument::fromJson(themeFile.Read());
   if (document.isNull())
   {
     return std::nullopt;

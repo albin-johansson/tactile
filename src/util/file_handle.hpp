@@ -12,7 +12,7 @@ class FileHandle final
 
   ~FileHandle();
 
-  auto open(QFile::OpenMode mode) -> bool;
+  auto Open(QFile::OpenMode mode) -> bool;
 
   [[nodiscard]] auto Read() -> QByteArray;
 

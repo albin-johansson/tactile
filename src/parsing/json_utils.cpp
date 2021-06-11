@@ -11,12 +11,12 @@ namespace tactile {
 auto ReadJson(const QFileInfo& path) -> maybe<QJsonDocument>
 {
   FileHandle file{path.absoluteFilePath()};
-  if (!file.open(QFile::ReadOnly | QFile::Text))
+  if (!file.Open(QFile::ReadOnly | QFile::Text))
   {
     return std::nullopt;
   }
 
-  auto json = QJsonDocument::fromJson(file.read());
+  auto json = QJsonDocument::fromJson(file.Read());
 
   if (json.isNull())
   {
