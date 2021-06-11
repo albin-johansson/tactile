@@ -13,7 +13,7 @@ PropertyContextMenu::PropertyContextMenu(QWidget* parent)
     , mRename{addAction(IconRename(), tr("Rename"))}
     , mChangeType{addMenu(IconObjectLayer(), tr("Change type"))}
     , mSep1{addSeparator()}
-    , mAdd{addAction(IconAdd(), tr("IconAdd new property..."))}
+    , mAdd{addAction(IconAdd(), tr("Add new property..."))}
     , mRemove{addAction(IconRemove(), tr("Remove"))}
 {
   mCopy->setShortcut(QKeySequence::Copy);
