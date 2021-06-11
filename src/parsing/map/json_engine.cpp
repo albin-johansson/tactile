@@ -66,7 +66,7 @@ auto json_engine::Tiles(const object_type& object,
     }
     else
     {
-      error = ParseError::layer_could_not_parse_tile;
+      error = ParseError::LayerCouldNotParseTile;
       return matrix;
     }
 

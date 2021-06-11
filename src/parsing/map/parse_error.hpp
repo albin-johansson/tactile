@@ -16,34 +16,34 @@ namespace tactile::parse {
  */
 enum class ParseError
 {
-  none,  ///< No error occurred.
+  None,  ///< No error occurred.
 
-  map_file_not_found,    ///< The main map file was not found.
-  could_not_parse_file,  ///< Couldn't parse the contents of the map file.
+  MapFileNotFound,    ///< The main map file was not found.
+  CouldNotParseFile,  ///< Couldn't parse the contents of the map file.
 
-  map_missing_next_layer_id,  ///< Map did not feature "nextlayerid".
-  map_missing_tilesets,       ///< Map did not feature "tilesets".
-  map_missing_layers,         ///< Map did not feature "layers".
+  MapMissingNextLayerId,  ///< Map did not feature "nextlayerid".
+  MapMissingTilesets,     ///< Map did not feature "tilesets".
+  MapMissingLayers,       ///< Map did not feature "layers".
 
-  layer_missing_width,         ///< Layer did not feature "width".
-  layer_missing_height,        ///< Layer did not feature "height".
-  layer_missing_type,          ///< Layer did not feature "type".
-  layer_missing_id,            ///< Layer did not feature "id".
-  layer_could_not_parse_tile,  ///< Failed to parse layer tile value.
+  LayerMissingWidth,       ///< Layer did not feature "width".
+  LayerMissingHeight,      ///< Layer did not feature "height".
+  LayerMissingType,        ///< Layer did not feature "type".
+  LayerMissingId,          ///< Layer did not feature "id".
+  LayerCouldNotParseTile,  ///< Failed to parse layer tile value.
 
-  tileset_missing_first_gid,        ///< Tileset did not feature "firstgid".
-  tileset_missing_tile_width,       ///< Tileset did not feature "tilewidth".
-  tileset_missing_tile_height,      ///< Tileset did not feature "tileheight".
-  tileset_missing_image_path,       ///< Tileset did not feature "image".
-  tileset_missing_name,             ///< Tileset did not feature "name".
-  could_not_create_tileset,         ///< Couldn't create `tileset` object.
-  could_not_read_external_tileset,  ///< Could not read external tileset file.
-  external_tileset_does_not_exist,  ///< External tileset file does not exist.
+  TilesetMissingFirstGid,       ///< Tileset did not feature "firstgid".
+  TilesetMissingTileWidth,      ///< Tileset did not feature "tilewidth".
+  TilesetMissingTileHeight,     ///< Tileset did not feature "tileheight".
+  TilesetMissingImagePath,      ///< Tileset did not feature "image".
+  TilesetMissingName,           ///< Tileset did not feature "name".
+  CouldNotCreateTileset,        ///< Couldn't create `tileset` object.
+  CouldNotReadExternalTileset,  ///< Could not read external tileset file.
+  ExternalTilesetDoesNotExist,  ///< External tileset file does not exist.
 
-  unknown_property_type,  ///< Did not recognize property type.
-  unknown_layer_type,     ///< Did not recognize layer type.
+  UnknownPropertyType,  ///< Did not recognize property type.
+  UnknownLayerType,     ///< Did not recognize layer type.
 
-  object_missing_id  ///< Object did not feature ID attribute.
+  ObjectMissingId  ///< Object did not feature ID attribute.
 };
 
 /**

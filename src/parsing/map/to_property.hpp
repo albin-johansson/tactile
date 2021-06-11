@@ -54,7 +54,7 @@ template <IsObject T>
   }
   else
   {
-    error = ParseError::unknown_property_type;
+    error = ParseError::UnknownPropertyType;
     return std::nullopt;
   }
 

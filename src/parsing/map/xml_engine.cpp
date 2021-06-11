@@ -72,7 +72,7 @@ auto XmlEngine::Tiles(const object_type& object,
 
     if (!ok)
     {
-      error = parse::ParseError::layer_could_not_parse_tile;
+      error = parse::ParseError::LayerCouldNotParseTile;
       return matrix;
     }
 

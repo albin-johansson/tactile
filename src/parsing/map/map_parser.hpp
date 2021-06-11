@@ -78,7 +78,7 @@ class MapParser final
    */
   [[nodiscard]] auto MakeDocument() -> core::MapDocument*
   {
-    Q_ASSERT(mError == ParseError::none);
+    Q_ASSERT(mError == ParseError::None);
     return ToMapDocument(mData);
   }
 
@@ -92,7 +92,7 @@ class MapParser final
    */
   explicit operator bool() const noexcept
   {
-    return mError == ParseError::none;
+    return mError == ParseError::None;
   }
 
   /**
@@ -110,7 +110,7 @@ class MapParser final
 
  private:
   engine_type mEngine;
-  ParseError mError{ParseError::none};
+  ParseError mError{ParseError::None};
   MapData mData;
 
   [[nodiscard]] auto WithError(const ParseError error) noexcept -> bool
@@ -130,7 +130,7 @@ class MapParser final
   {
     if (!path.exists())
     {
-      return WithError<document_type>(ParseError::map_file_not_found);
+      return WithError<document_type>(ParseError::MapFileNotFound);
     }
 
     if (auto contents = mEngine.FromFile(path))
@@ -139,7 +139,7 @@ class MapParser final
     }
     else
     {
-      return WithError<document_type>(ParseError::could_not_parse_file);
+      return WithError<document_type>(ParseError::CouldNotParseFile);
     }
   }
 
@@ -152,7 +152,7 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::map_missing_next_layer_id);
+      return WithError(ParseError::MapMissingNextLayerId);
     }
   }
 
@@ -165,7 +165,7 @@ class MapParser final
     }
     else
     {
-      return WithError<tile_id>(ParseError::tileset_missing_first_gid);
+      return WithError<tile_id>(ParseError::TilesetMissingFirstGid);
     }
   }
 
@@ -182,7 +182,7 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::tileset_missing_tile_width);
+      return WithError(ParseError::TilesetMissingTileWidth);
     }
 
     if (const auto th = object.Integer(ElementId::TileHeight))
@@ -191,13 +191,13 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::tileset_missing_tile_height);
+      return WithError(ParseError::TilesetMissingTileHeight);
     }
 
     const auto relativePath = mEngine.TilesetImageRelativePath(object);
     if (!relativePath)
     {
-      return WithError(ParseError::tileset_missing_image_path);
+      return WithError(ParseError::TilesetMissingImagePath);
     }
 
     const auto absolutePath = path.dir().absoluteFilePath(*relativePath);
@@ -207,7 +207,7 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::external_tileset_does_not_exist);
+      return WithError(ParseError::ExternalTilesetDoesNotExist);
     }
 
     if (const auto name = object.String(ElementId::Name))
@@ -216,7 +216,7 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::tileset_missing_name);
+      return WithError(ParseError::TilesetMissingName);
     }
 
     mData.tilesets.emplace_back(std::move(tileset));
@@ -236,7 +236,7 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::could_not_read_external_tileset);
+      return WithError(ParseError::CouldNotReadExternalTileset);
     }
   }
 
@@ -260,7 +260,7 @@ class MapParser final
   {
     if (!mEngine.ContainsTilesets(root))
     {
-      return WithError(ParseError::map_missing_tilesets);
+      return WithError(ParseError::MapMissingTilesets);
     }
 
     return std::ranges::all_of(
@@ -279,7 +279,7 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::layer_missing_height);
+      return WithError(ParseError::LayerMissingHeight);
     }
 
     if (const auto cols = object.Integer(ElementId::Width))
@@ -288,12 +288,12 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::layer_missing_width);
+      return WithError(ParseError::LayerMissingWidth);
     }
 
     tileLayer.tiles =
         mEngine.Tiles(object, tileLayer.nRows, tileLayer.nCols, mError);
-    if (mError != ParseError::none)
+    if (mError != ParseError::None)
     {
       return false;
     }
@@ -317,7 +317,7 @@ class MapParser final
       }
       else
       {
-        return WithError(ParseError::object_missing_id);
+        return WithError(ParseError::ObjectMissingId);
       }
 
       object.x = elem.Floating(ElementId::X, 0);
@@ -347,7 +347,7 @@ class MapParser final
   {
     if (!mEngine.ValidateLayerType(object))
     {
-      return WithError(ParseError::layer_missing_type);
+      return WithError(ParseError::LayerMissingType);
     }
 
     LayerData layer;
@@ -358,7 +358,7 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::layer_missing_id);
+      return WithError(ParseError::LayerMissingId);
     }
 
     layer.name = object.String(ElementId::Name, TACTILE_QSTRING(u"Layer"));
@@ -385,7 +385,7 @@ class MapParser final
     }
     else
     {
-      return WithError(ParseError::unknown_layer_type);
+      return WithError(ParseError::UnknownLayerType);
     }
 
     if (auto properties = ParseProperties(object))
@@ -405,7 +405,7 @@ class MapParser final
   {
     if (!mEngine.ContainsLayers(root))
     {
-      return WithError(ParseError::map_missing_layers);
+      return WithError(ParseError::MapMissingLayers);
     }
 
     return std::ranges::all_of(

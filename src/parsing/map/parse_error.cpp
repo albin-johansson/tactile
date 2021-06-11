@@ -8,70 +8,70 @@ auto ToMessage(ParseError error) -> QString
 {
   switch (error)
   {
-    case ParseError::none:
+    case ParseError::None:
       return TACTILE_QSTRING(u"No error!");
 
-    case ParseError::map_file_not_found:
+    case ParseError::MapFileNotFound:
       return TACTILE_QSTRING(u"Didn't find map file!");
 
-    case ParseError::could_not_parse_file:
+    case ParseError::CouldNotParseFile:
       return TACTILE_QSTRING(u"Couldn't parse file!");
 
-    case ParseError::map_missing_next_layer_id:
+    case ParseError::MapMissingNextLayerId:
       return TACTILE_QSTRING(u"Map didn't feature next layer ID property!");
 
-    case ParseError::map_missing_tilesets:
+    case ParseError::MapMissingTilesets:
       return TACTILE_QSTRING(u"Map didn't feature tilesets property!");
 
-    case ParseError::map_missing_layers:
+    case ParseError::MapMissingLayers:
       return TACTILE_QSTRING(u"Map didn't feature layers property!");
 
-    case ParseError::layer_missing_width:
+    case ParseError::LayerMissingWidth:
       return TACTILE_QSTRING(u"Layer object was missing width!");
 
-    case ParseError::layer_missing_height:
+    case ParseError::LayerMissingHeight:
       return TACTILE_QSTRING(u"Layer object was missing height!");
 
-    case ParseError::layer_missing_type:
+    case ParseError::LayerMissingType:
       return TACTILE_QSTRING(u"Layer object was missing type!");
 
-    case ParseError::layer_missing_id:
+    case ParseError::LayerMissingId:
       return TACTILE_QSTRING(u"Layer object was missing ID!");
 
-    case ParseError::layer_could_not_parse_tile:
+    case ParseError::LayerCouldNotParseTile:
       return TACTILE_QSTRING(u"Couldn't parse tile ID in layer!");
 
-    case ParseError::tileset_missing_first_gid:
+    case ParseError::TilesetMissingFirstGid:
       return TACTILE_QSTRING(u"Tileset didn't feature first GID property!");
 
-    case ParseError::tileset_missing_tile_width:
+    case ParseError::TilesetMissingTileWidth:
       return TACTILE_QSTRING(u"Tileset didn't feature tile width property!");
 
-    case ParseError::tileset_missing_tile_height:
+    case ParseError::TilesetMissingTileHeight:
       return TACTILE_QSTRING(u"Tileset didn't feature tile height property!");
 
-    case ParseError::tileset_missing_image_path:
+    case ParseError::TilesetMissingImagePath:
       return TACTILE_QSTRING(u"Tileset didn't feature image property!");
 
-    case ParseError::tileset_missing_name:
+    case ParseError::TilesetMissingName:
       return TACTILE_QSTRING(u"Tileset didn't feature name property!");
 
-    case ParseError::could_not_create_tileset:
+    case ParseError::CouldNotCreateTileset:
       return TACTILE_QSTRING(u"Couldn't create tileset object!");
 
-    case ParseError::could_not_read_external_tileset:
+    case ParseError::CouldNotReadExternalTileset:
       return TACTILE_QSTRING(u"Couldn't read external tileset file!");
 
-    case ParseError::external_tileset_does_not_exist:
+    case ParseError::ExternalTilesetDoesNotExist:
       return TACTILE_QSTRING(u"External tileset file doesn't exist!");
 
-    case ParseError::unknown_property_type:
+    case ParseError::UnknownPropertyType:
       return TACTILE_QSTRING(u"Couldn't recognize property type!");
 
-    case ParseError::unknown_layer_type:
+    case ParseError::UnknownLayerType:
       return TACTILE_QSTRING(u"Couldn't recognize layer type!");
 
-    case ParseError::object_missing_id:
+    case ParseError::ObjectMissingId:
       return TACTILE_QSTRING(u"Object was missing ID!");
 
     default:

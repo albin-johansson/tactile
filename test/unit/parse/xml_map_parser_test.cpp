@@ -18,7 +18,7 @@ TACTILE_DEFINE_TEST_P(XmlMapParser, path_error_pair)
 
   const parse::MapParser<parse::XmlEngine> parser{path.toString()};
 
-  if (code != parse::ParseError::none) {
+  if (code != parse::ParseError::None) {
     EXPECT_FALSE(parser);
   } else {
     EXPECT_TRUE(parser);
@@ -35,23 +35,23 @@ TACTILE_DEFINE_TEST_P(XmlMapParser, path_error_pair)
 
 // clang-format off
 inline const auto values = testing::Values(
-  as_pair(u"xml/embedded.tmx", error::none),
-  as_pair(u"xml/external.tmx", error::none),
-  as_pair(u"foo/bar/gandalf.tmx", error::map_file_not_found),
-  as_pair(u"xml/bad/could_not_parse_file.tmx", error::could_not_parse_file),
-  as_pair(u"xml/bad/layer_missing_width.tmx", error::layer_missing_width),
-  as_pair(u"xml/bad/layer_missing_height.tmx", error::layer_missing_height),
-  as_pair(u"xml/bad/layer_missing_id.tmx", error::layer_missing_id),
-  as_pair(u"xml/bad/layer_could_not_parse_tile.tmx", error::layer_could_not_parse_tile),
-  as_pair(u"xml/bad/tileset_missing_first_gid.tmx", error::tileset_missing_first_gid),
-  as_pair(u"xml/bad/tileset_missing_tile_width.tmx", error::tileset_missing_tile_width),
-  as_pair(u"xml/bad/tileset_missing_tile_height.tmx", error::tileset_missing_tile_height),
-  as_pair(u"xml/bad/tileset_missing_image_path.tmx", error::tileset_missing_image_path),
-  as_pair(u"xml/bad/tileset_missing_name.tmx", error::tileset_missing_name),
+  as_pair(u"xml/embedded.tmx", error::None),
+  as_pair(u"xml/external.tmx", error::None),
+  as_pair(u"foo/bar/gandalf.tmx", error::MapFileNotFound),
+  as_pair(u"xml/bad/could_not_parse_file.tmx", error::CouldNotParseFile),
+  as_pair(u"xml/bad/layer_missing_width.tmx", error::LayerMissingWidth),
+  as_pair(u"xml/bad/layer_missing_height.tmx", error::LayerMissingHeight),
+  as_pair(u"xml/bad/layer_missing_id.tmx", error::LayerMissingId),
+  as_pair(u"xml/bad/layer_could_not_parse_tile.tmx", error::LayerCouldNotParseTile),
+  as_pair(u"xml/bad/tileset_missing_first_gid.tmx", error::TilesetMissingFirstGid),
+  as_pair(u"xml/bad/tileset_missing_tile_width.tmx", error::TilesetMissingTileWidth),
+  as_pair(u"xml/bad/tileset_missing_tile_height.tmx", error::TilesetMissingTileHeight),
+  as_pair(u"xml/bad/tileset_missing_image_path.tmx", error::TilesetMissingImagePath),
+  as_pair(u"xml/bad/tileset_missing_name.tmx", error::TilesetMissingName),
 //  as_pair(u"xml/bad/could_not_create_tileset.tmx", error::could_not_create_tileset),
-  as_pair(u"xml/bad/could_not_read_external_tileset.tmx", error::could_not_read_external_tileset),
-  as_pair(u"xml/bad/external_tileset_does_not_exist.tmx", error::external_tileset_does_not_exist),
-  as_pair(u"xml/bad/map_missing_next_layer_id.tmx", error::map_missing_next_layer_id)
+  as_pair(u"xml/bad/could_not_read_external_tileset.tmx", error::CouldNotReadExternalTileset),
+  as_pair(u"xml/bad/external_tileset_does_not_exist.tmx", error::ExternalTilesetDoesNotExist),
+  as_pair(u"xml/bad/map_missing_next_layer_id.tmx", error::MapMissingNextLayerId)
 );
 // clang-format on
 
