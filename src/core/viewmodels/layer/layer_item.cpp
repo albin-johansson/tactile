@@ -34,24 +34,24 @@ LayerItem::LayerItem(const layer_id id, const core::ILayer& layer)
 
 void LayerItem::SetId(const layer_id id)
 {
-  setData(id.get(), static_cast<int>(layer_item_role::id));
+  setData(id.get(), static_cast<int>(LayerItemRole::Id));
 }
 
 void LayerItem::SetType(const core::LayerType type)
 {
-  setData(static_cast<int>(type), static_cast<int>(layer_item_role::type));
+  setData(static_cast<int>(type), static_cast<int>(LayerItemRole::Type));
 }
 
 auto LayerItem::GetId() const -> layer_id
 {
-  const auto role = static_cast<int>(layer_item_role::id);
+  const auto role = static_cast<int>(LayerItemRole::Id);
   const auto id = data(role).value<int>();
   return layer_id{id};
 }
 
 auto LayerItem::GetLayerType() const -> core::LayerType
 {
-  const auto role = static_cast<int>(layer_item_role::type);
+  const auto role = static_cast<int>(LayerItemRole::Type);
   const auto type = data(role).value<int>();
   return core::LayerType{type};
 }
