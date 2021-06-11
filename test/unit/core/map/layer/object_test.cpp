@@ -8,25 +8,25 @@ using namespace tactile;
 
 TEST(Object, Defaults)
 {
-  const core::Object rect{core::object_type::rectangle};
+  const core::Object rect{core::ObjectType::Rectangle};
   EXPECT_TRUE(rect.IsRectangle());
   EXPECT_TRUE(rect.Name().isEmpty());
   EXPECT_TRUE(rect.IsVisible());
   EXPECT_FALSE(rect.IsPoint());
   EXPECT_FALSE(rect.CustomType());
-  EXPECT_EQ(core::object_type::rectangle, rect.Type());
+  EXPECT_EQ(core::ObjectType::Rectangle, rect.Type());
   EXPECT_EQ(0, rect.X());
   EXPECT_EQ(0, rect.Y());
   EXPECT_EQ(0, rect.Width());
   EXPECT_EQ(0, rect.Height());
 
-  const core::Object point{core::object_type::point};
+  const core::Object point{core::ObjectType::Point};
   EXPECT_TRUE(point.IsPoint());
   EXPECT_TRUE(point.Name().isEmpty());
   EXPECT_TRUE(point.IsVisible());
   EXPECT_FALSE(point.IsRectangle());
   EXPECT_FALSE(point.CustomType());
-  EXPECT_EQ(core::object_type::point, point.Type());
+  EXPECT_EQ(core::ObjectType::Point, point.Type());
   EXPECT_EQ(0, point.X());
   EXPECT_EQ(0, point.Y());
   EXPECT_EQ(0, point.Width());
@@ -35,7 +35,7 @@ TEST(Object, Defaults)
 
 TEST(Object, SetX)
 {
-  core::Object object{core::object_type::point};
+  core::Object object{core::ObjectType::Point};
 
   const auto x = 12.3;
   object.SetX(x);
@@ -45,7 +45,7 @@ TEST(Object, SetX)
 
 TEST(Object, SetY)
 {
-  core::Object object{core::object_type::point};
+  core::Object object{core::ObjectType::Point};
 
   const auto y = 47.8;
   object.SetY(y);
@@ -55,7 +55,7 @@ TEST(Object, SetY)
 
 TEST(Object, SetWidth)
 {
-  core::Object object{core::object_type::rectangle};
+  core::Object object{core::ObjectType::Rectangle};
 
   const auto width = 72.3;
   object.SetWidth(width);
@@ -65,7 +65,7 @@ TEST(Object, SetWidth)
 
 TEST(Object, SetHeight)
 {
-  core::Object object{core::object_type::rectangle};
+  core::Object object{core::ObjectType::Rectangle};
 
   const auto height = 59.5;
   object.SetHeight(height);
@@ -75,7 +75,7 @@ TEST(Object, SetHeight)
 
 TEST(Object, SetVisible)
 {
-  core::Object object{core::object_type::point};
+  core::Object object{core::ObjectType::Point};
 
   object.SetVisible(false);
   EXPECT_FALSE(object.IsVisible());
@@ -86,7 +86,7 @@ TEST(Object, SetVisible)
 
 TEST(Object, SetName)
 {
-  core::Object object{core::object_type::point};
+  core::Object object{core::ObjectType::Point};
 
   object.SetName(TACTILE_QSTRING(u"foo"));
   EXPECT_EQ(TACTILE_QSTRING(u"foo"), object.Name());
@@ -94,7 +94,7 @@ TEST(Object, SetName)
 
 TEST(Object, SetCustomType)
 {
-  core::Object object{core::object_type::point};
+  core::Object object{core::ObjectType::Point};
 
   object.SetCustomType(TACTILE_QSTRING(u"foobar"));
   EXPECT_EQ(TACTILE_QSTRING(u"foobar"), object.CustomType());

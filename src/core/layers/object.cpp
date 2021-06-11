@@ -4,7 +4,7 @@
 
 namespace tactile::core {
 
-Object::Object(const object_type type) : mType{type}
+Object::Object(const ObjectType type) : mType{type}
 {}
 
 void Object::SetX(const double x) noexcept
@@ -72,7 +72,7 @@ auto Object::Name() const -> QString
   return mName;
 }
 
-auto Object::Type() const noexcept -> object_type
+auto Object::Type() const noexcept -> ObjectType
 {
   return mType;
 }
@@ -84,12 +84,12 @@ auto Object::CustomType() const -> maybe<QString>
 
 auto Object::IsPoint() const noexcept -> bool
 {
-  return Type() == object_type::point;
+  return Type() == ObjectType::Point;
 }
 
 auto Object::IsRectangle() const noexcept -> bool
 {
-  return Type() == object_type::rectangle;
+  return Type() == ObjectType::Rectangle;
 }
 
 void Object::AddProperty(const QString& name, const PropertyType type)

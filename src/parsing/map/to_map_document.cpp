@@ -40,11 +40,11 @@ namespace {
   const auto getType = [](const ObjectData& objectData) {
     if (objectData.isPoint)
     {
-      return core::object_type::point;
+      return core::ObjectType::Point;
     }
     else
     {
-      return core::object_type::rectangle;
+      return core::ObjectType::Rectangle;
     }
   };
 

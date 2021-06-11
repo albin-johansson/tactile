@@ -3,7 +3,7 @@
 namespace tactile::core {
 
 /**
- * \enum object_type
+ * \enum ObjectType
  *
  * \brief Provides values that represent the various kinds of possible objects.
  *
@@ -11,10 +11,10 @@ namespace tactile::core {
  *
  * \headerfile object_type.hpp
  */
-enum class object_type
+enum class ObjectType
 {
-  point,     ///< An object represented by a point.
-  rectangle  ///< An object represented by a rectangle.
+  Point,     ///< An object represented by a point.
+  Rectangle  ///< An object represented by a rectangle.
 };
 
 }  // namespace tactile::core

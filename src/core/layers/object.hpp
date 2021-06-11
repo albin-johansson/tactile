@@ -32,7 +32,7 @@ class Object final : public IPropertyManager
    *
    * \since 0.2.0
    */
-  explicit Object(object_type type);
+  explicit Object(ObjectType type);
 
   /**
    * \brief Sets the x-coordinate of the object.
@@ -159,7 +159,7 @@ class Object final : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto Type() const noexcept -> object_type;
+  [[nodiscard]] auto Type() const noexcept -> ObjectType;
 
   /**
    * \brief Returns the custom user-defined type of the object, if present.
@@ -226,7 +226,7 @@ class Object final : public IPropertyManager
   double mY{};
   double mWidth{};
   double mHeight{};
-  object_type mType;
+  ObjectType mType;
   maybe<QString> mCustomType;
   QString mName;
   property_delegate mProperties;

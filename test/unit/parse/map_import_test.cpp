@@ -94,7 +94,7 @@ void validate_layers(const core::MapDocument& document)
     EXPECT_EQ(96, object.Y());
     EXPECT_EQ(0, object.Width());
     EXPECT_EQ(0, object.Height());
-    EXPECT_EQ(core::object_type::point, object.Type());
+    EXPECT_EQ(core::ObjectType::Point, object.Type());
     EXPECT_TRUE(object.IsVisible());
     EXPECT_TRUE(object.IsPoint());
     EXPECT_FALSE(object.CustomType());

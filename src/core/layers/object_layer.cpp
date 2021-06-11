@@ -116,7 +116,7 @@ void ObjectLayer::AddObject(const object_id id, Object obj)
 void ObjectLayer::AddPoint(const object_id id, const double x, const double y)
 {
   Q_ASSERT(!HasObject(id));
-  auto& [key, point] = mObjects.emplace(id, object_type::point);
+  auto& [key, point] = mObjects.emplace(id, ObjectType::Point);
   point.SetX(x);
   point.SetY(y);
 }
@@ -128,7 +128,7 @@ void ObjectLayer::AddRectangle(const object_id id,
                                const double height)
 {
   Q_ASSERT(!HasObject(id));
-  auto& [key, rect] = mObjects.emplace(id, object_type::rectangle);
+  auto& [key, rect] = mObjects.emplace(id, ObjectType::Rectangle);
   rect.SetX(x);
   rect.SetY(y);
   rect.SetWidth(width);
