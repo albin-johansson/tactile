@@ -292,7 +292,7 @@ void MapDocument::SelectTileset(const tileset_id id)
   mTilesets->Select(id);
 }
 
-void MapDocument::SetTilesetSelection(const tileset_selection& selection)
+void MapDocument::SetTilesetSelection(const TilesetSelection& selection)
 {
   mTilesets->SetSelection(selection);
 }

@@ -35,7 +35,7 @@ class TilesetTab final : public QWidget
   }
 
  signals:
-  void S_SetTilesetSelection(const core::tileset_selection& selection);
+  void S_SetTilesetSelection(const core::TilesetSelection& selection);
 
  protected:
   void mousePressEvent(QMouseEvent* event) override;

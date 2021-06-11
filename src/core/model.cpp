@@ -188,7 +188,7 @@ void model::select_tileset(const tileset_id id)
   document->SelectTileset(id);
 }
 
-void model::set_tileset_selection(const tileset_selection& selection)
+void model::set_tileset_selection(const TilesetSelection& selection)
 {
   auto* document = current_document();
   Q_ASSERT(document);

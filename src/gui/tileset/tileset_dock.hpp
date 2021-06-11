@@ -24,7 +24,7 @@ class TilesetDock final : public DockWidget
   void S_SelectTileset(tileset_id id);
   void S_RemoveTileset(tileset_id id);
   void S_RenameTileset(tileset_id id, const QString& name);
-  void S_SetTilesetSelection(const core::tileset_selection& selection);
+  void S_SetTilesetSelection(const core::TilesetSelection& selection);
 
  public slots:
   void OnAddedMap(map_id id, const core::MapDocument& document);

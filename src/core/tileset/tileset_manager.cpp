@@ -67,7 +67,7 @@ void TilesetManager::Select(const maybe<tileset_id> id)
   }
 }
 
-void TilesetManager::SetSelection(const tileset_selection& selection)
+void TilesetManager::SetSelection(const TilesetSelection& selection)
 {
   if (HasActiveTileset())
   {

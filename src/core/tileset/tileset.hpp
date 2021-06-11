@@ -163,7 +163,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  void SetSelection(const tileset_selection& selection);
+  void SetSelection(const TilesetSelection& selection);
 
   /**
    * \brief Clears any current selection.
@@ -301,7 +301,7 @@ class Tileset final
    * \since 0.1.0
    */
   [[nodiscard]] auto GetSelection() const noexcept
-      -> const maybe<tileset_selection>&
+      -> const maybe<TilesetSelection>&
   {
     return mSelection;
   }
@@ -421,7 +421,7 @@ class Tileset final
   QPixmap mImage;
   tile_id mFirstId{1};
   tile_id mLastId;
-  maybe<tileset_selection> mSelection;
+  maybe<TilesetSelection> mSelection;
   rect_map mSourceRects;
   tile_width mTileWidth;
   tile_height mTileHeight;

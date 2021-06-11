@@ -381,7 +381,7 @@ class MapDocument final : public ADocument
   /**
    * \copydoc tileset_manager::set_selection()
    */
-  void SetTilesetSelection(const tileset_selection& selection);
+  void SetTilesetSelection(const TilesetSelection& selection);
 
   /**
    * \copydoc map::IncreaseTileSize()

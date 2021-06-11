@@ -20,7 +20,7 @@ class TilesetRubberBand final : public QRubberBand
   void SetTileHeight(tile_height tileHeight) noexcept;
 
  signals:
-  void S_FinishedSelection(const core::tileset_selection& selection);
+  void S_FinishedSelection(const core::TilesetSelection& selection);
 
  public slots:
   void OnMousePressed(const QPoint& pos);
@@ -39,7 +39,7 @@ class TilesetRubberBand final : public QRubberBand
 
   [[nodiscard]] auto GetAdjustedGeometry() const -> QRect;
 
-  [[nodiscard]] auto GetSelection() const -> core::tileset_selection;
+  [[nodiscard]] auto GetSelection() const -> core::TilesetSelection;
 };
 
 }  // namespace tactile

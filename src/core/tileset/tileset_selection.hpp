@@ -5,7 +5,7 @@
 namespace tactile::core {
 
 /**
- * \struct tileset_selection
+ * \struct TilesetSelection
  *
  * \brief Represents the selection of tiles in a tileset.
  *
@@ -15,7 +15,7 @@ namespace tactile::core {
  *
  * \headerfile tileset.hpp
  */
-struct tileset_selection final
+struct TilesetSelection final
 {
   Position topLeft;      ///< The top-left corner position.
   Position bottomRight;  ///< The bottom-right corner position.
