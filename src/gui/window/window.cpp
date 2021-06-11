@@ -361,19 +361,19 @@ void Window::OnReloadOpenGL(const bool enabled)
 void Window::OnStampEnabled()
 {
   mUi->actionStampTool->setChecked(true);
-  emit S_SelectedTool(tool_id::stamp);
+  emit S_SelectedTool(MouseToolType::Stamp);
 }
 
 void Window::OnBucketEnabled()
 {
   mUi->actionBucketTool->setChecked(true);
-  emit S_SelectedTool(tool_id::bucket);
+  emit S_SelectedTool(MouseToolType::Bucket);
 }
 
 void Window::OnEraserEnabled()
 {
   mUi->actionEraserTool->setChecked(true);
-  emit S_SelectedTool(tool_id::eraser);
+  emit S_SelectedTool(MouseToolType::Eraser);
 }
 
 void Window::OnToggleStampAction()

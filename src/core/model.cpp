@@ -175,9 +175,9 @@ void Model::SelectLayer(const layer_id id)
   document->SelectLayer(id);
 }
 
-void Model::SelectTool(const tool_id id)
+void Model::SelectTool(const MouseToolType id)
 {
-  mTools.select(id);
+  mTools.Select(id);
 }
 
 void Model::SelectTileset(const tileset_id id)
@@ -287,27 +287,27 @@ void Model::CloseMap(const map_id id)
 
 void Model::OnMousePressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  mTools.pressed(event, mapPosition);
+  mTools.OnMousePressed(event, mapPosition);
 }
 
 void Model::OnMouseMoved(QMouseEvent* event, const QPointF& mapPosition)
 {
-  mTools.moved(event, mapPosition);
+  mTools.OnMouseMoved(event, mapPosition);
 }
 
 void Model::OnMouseReleased(QMouseEvent* event, const QPointF& mapPosition)
 {
-  mTools.released(event, mapPosition);
+  mTools.OnMouseReleased(event, mapPosition);
 }
 
 void Model::OnMouseEntered(QEvent* event)
 {
-  mTools.entered(event);
+  mTools.OnMouseEntered(event);
 }
 
 void Model::OnMouseExited(QEvent* event)
 {
-  mTools.exited(event);
+  mTools.OnMouseExited(event);
 }
 
 void Model::EmitUndoRedoUpdate()

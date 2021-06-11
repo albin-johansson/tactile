@@ -7,15 +7,15 @@ namespace tactile {
 
 using namespace core;
 
-stamp_tool::stamp_tool(Model* model) : AMouseTool{model}
+StampTool::StampTool(Model* model) : AMouseTool{model}
 {
-  m_oldState.reserve(20);
-  m_sequence.reserve(20);
+  mOldState.reserve(32);
+  mSequence.reserve(32);
 }
 
-void stamp_tool::update_stamp_sequence(MapDocument& map,
-                                       const Tileset& ts,
-                                       const Position& origin)
+void StampTool::update_stamp_sequence(MapDocument& map,
+                                      const Tileset& ts,
+                                      const Position& origin)
 {
   const auto callable = [&](const Position& mapPos,
                             const Position& tilesetPos) {
@@ -26,11 +26,11 @@ void stamp_tool::update_stamp_sequence(MapDocument& map,
       auto* tileLayer = map.GetTileLayer(map.CurrentLayerId().value());
       Q_ASSERT(tileLayer);
 
-      if (!m_oldState.contains(mapPos))
+      if (!mOldState.contains(mapPos))
       {
-        m_oldState.emplace(mapPos, tileLayer->TileAt(mapPos).value());
+        mOldState.emplace(mapPos, tileLayer->TileAt(mapPos).value());
       }
-      m_sequence.emplace(mapPos, newID);
+      mSequence.emplace(mapPos, newID);
 
       tileLayer->SetTile(mapPos, newID);
     }
@@ -39,7 +39,7 @@ void stamp_tool::update_stamp_sequence(MapDocument& map,
   ts.VisitSelection(origin, callable);
 }
 
-void stamp_tool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
+void StampTool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (auto* document = GetModel()->CurrentDocument())
   {
@@ -61,7 +61,7 @@ void stamp_tool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
   }
 }
 
-void stamp_tool::OnMoved(QMouseEvent* event, const QPointF& mapPosition)
+void StampTool::OnMoved(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (auto* document = GetModel()->CurrentDocument())
   {
@@ -71,8 +71,7 @@ void stamp_tool::OnMoved(QMouseEvent* event, const QPointF& mapPosition)
       return;
     }
 
-    const auto pos = TranslateMousePosition(event->pos(), mapPosition);
-    if (pos)
+    if (const auto pos = TranslateMousePosition(event->pos(), mapPosition))
     {
       emit GetModel()->S_EnableStampPreview(*pos);
 
@@ -85,13 +84,13 @@ void stamp_tool::OnMoved(QMouseEvent* event, const QPointF& mapPosition)
     }
     else
     {
-      // mouse is outside of map, so disable preview
+      // Mouse is outside of map, so disable preview
       emit GetModel()->S_DisableStampPreview();
     }
   }
 }
 
-void stamp_tool::OnReleased(QMouseEvent* event, const QPointF&)
+void StampTool::OnReleased(QMouseEvent* event, const QPointF&)
 {
   if (auto* document = GetModel()->CurrentDocument())
   {
@@ -103,21 +102,21 @@ void stamp_tool::OnReleased(QMouseEvent* event, const QPointF&)
 
     if (event->button() == Qt::MouseButton::LeftButton)
     {
-      document->AddStampSequence(std::move(m_oldState), std::move(m_sequence));
+      document->AddStampSequence(std::move(mOldState), std::move(mSequence));
 
       // Clearing the maps allows for them to be used after being moved from
-      m_oldState.clear();
-      m_sequence.clear();
+      mOldState.clear();
+      mSequence.clear();
     }
   }
 }
 
-void stamp_tool::OnExited(QEvent*)
+void StampTool::OnExited(QEvent*)
 {
   emit GetModel()->S_DisableStampPreview();
 }
 
-void stamp_tool::Disable()
+void StampTool::Disable()
 {
   emit GetModel()->S_DisableStampPreview();
 }

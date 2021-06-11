@@ -9,7 +9,7 @@
 namespace tactile {
 
 /**
- * \class stamp_tool
+ * \class StampTool
  *
  * \brief Represents a "stamp" tool, which applies the current tileset selection
  * to the tiles in the map.
@@ -18,7 +18,7 @@ namespace tactile {
  *
  * \headerfile stamp_tool.hpp
  */
-class stamp_tool final : public AMouseTool
+class StampTool final : public AMouseTool
 {
  public:
   /**
@@ -30,9 +30,9 @@ class stamp_tool final : public AMouseTool
    *
    * \since 0.1.0
    */
-  explicit stamp_tool(core::Model* model);
+  explicit StampTool(core::Model* model);
 
-  ~stamp_tool() noexcept override = default;
+  ~StampTool() noexcept override = default;
 
   void OnPressed(QMouseEvent* event, const QPointF& mapPosition) override;
 
@@ -45,8 +45,8 @@ class stamp_tool final : public AMouseTool
   void Disable() override;
 
  private:
-  vector_map<core::Position, tile_id> m_oldState;
-  vector_map<core::Position, tile_id> m_sequence;
+  vector_map<core::Position, tile_id> mOldState;
+  vector_map<core::Position, tile_id> mSequence;
 
   void update_stamp_sequence(core::MapDocument& map,
                              const core::Tileset& tileset,

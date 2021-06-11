@@ -8,7 +8,7 @@
 namespace tactile {
 
 /**
- * \class eraser_tool
+ * \class EraserTool
  *
  * \brief Represents an "eraser" tool, which sets tiles to be empty.
  *
@@ -16,7 +16,7 @@ namespace tactile {
  *
  * \headerfile eraser_tool.hpp
  */
-class eraser_tool final : public AMouseTool
+class EraserTool final : public AMouseTool
 {
  public:
   /**
@@ -28,9 +28,9 @@ class eraser_tool final : public AMouseTool
    *
    * \since 0.1.0
    */
-  explicit eraser_tool(core::Model* model);
+  explicit EraserTool(core::Model* model);
 
-  ~eraser_tool() noexcept override = default;
+  ~EraserTool() noexcept override = default;
 
   void OnPressed(QMouseEvent* event, const QPointF& mapPosition) override;
 
@@ -39,7 +39,7 @@ class eraser_tool final : public AMouseTool
   void OnReleased(QMouseEvent* event, const QPointF& mapPosition) override;
 
  private:
-  vector_map<core::Position, tile_id> m_oldState;
+  vector_map<core::Position, tile_id> mOldState;
 
   /**
    * \brief Updates the state of the eraser, by erasing the tile at the mouse
@@ -53,7 +53,7 @@ class eraser_tool final : public AMouseTool
    *
    * \since 0.1.0
    */
-  void update_eraser(QMouseEvent* event, const QPointF& mapPosition);
+  void UpdateEraser(QMouseEvent* event, const QPointF& mapPosition);
 };
 
 }  // namespace tactile

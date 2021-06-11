@@ -7,14 +7,14 @@
 #include "layer_id.hpp"
 #include "map_id.hpp"
 #include "maybe.hpp"
+#include "mouse_tool_model.hpp"
+#include "mouse_tool_type.hpp"
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
 #include "tileset_id.hpp"
 #include "tileset_selection.hpp"
-#include "tool_id.hpp"
-#include "tool_model.hpp"
 #include "vector_map.hpp"
 
 namespace tactile::vm {
@@ -215,7 +215,7 @@ class Model final : public QObject
    */
   void SelectLayer(layer_id id);
 
-  void SelectTool(tool_id id);
+  void SelectTool(MouseToolType id);
 
   void SelectTileset(tileset_id id);
 
@@ -268,7 +268,7 @@ class Model final : public QObject
   vector_map<map_id, MapDocument*> mDocuments;
   maybe<map_id> mCurrentMap;
   map_id mNextId{1};
-  tool_model mTools;
+  MouseToolModel mTools;
 
   void EmitUndoRedoUpdate();
 };

@@ -5,7 +5,7 @@
 namespace tactile {
 
 /**
- * \class bucket_tool
+ * \class BucketTool
  *
  * \brief Represents a "bucket" tool, which uses a flood-fill algorithm to
  * set tiles.
@@ -14,7 +14,7 @@ namespace tactile {
  *
  * \headerfile bucket_tool.hpp
  */
-class bucket_tool final : public AMouseTool
+class BucketTool final : public AMouseTool
 {
  public:
   /**
@@ -26,7 +26,7 @@ class bucket_tool final : public AMouseTool
    *
    * \since 0.1.0
    */
-  explicit bucket_tool(core::Model* model);
+  explicit BucketTool(core::Model* model);
 
   void OnPressed(QMouseEvent* event, const QPointF& mapPosition) override;
 };

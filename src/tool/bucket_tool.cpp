@@ -5,10 +5,10 @@
 
 namespace tactile {
 
-bucket_tool::bucket_tool(core::Model* model) : AMouseTool{model}
+BucketTool::BucketTool(core::Model* model) : AMouseTool{model}
 {}
 
-void bucket_tool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
+void BucketTool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (auto* document = GetModel()->CurrentDocument())
   {

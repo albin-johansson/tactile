@@ -8,13 +8,13 @@
 #include "forward_declare.hpp"
 #include "layer_id.hpp"
 #include "map_id.hpp"
+#include "mouse_tool_type.hpp"
 #include "not_null.hpp"
 #include "position.hpp"
 #include "property.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
-#include "tool_id.hpp"
 
 TACTILE_FORWARD_DECLARE_UI(Window)
 
@@ -86,7 +86,7 @@ class Window final : public QMainWindow
   void S_RemoveRow();
   void S_RemoveCol();
 
-  void S_SelectedTool(tool_id tool);
+  void S_SelectedTool(MouseToolType tool);
 
   void S_AddTileset();
   void S_RemoveTileset(tileset_id id);

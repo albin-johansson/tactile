@@ -357,11 +357,11 @@ set(TACTILE_SOURCE_FILES
     tool/eraser_tool.hpp
     tool/mouse_tool.cpp
     tool/mouse_tool.hpp
+    tool/mouse_tool_model.cpp
+    tool/mouse_tool_model.hpp
+    tool/mouse_tool_type.hpp
     tool/stamp_tool.cpp
     tool/stamp_tool.hpp
-    tool/tool_id.hpp
-    tool/tool_model.cpp
-    tool/tool_model.hpp
 
     util/color_utils.cpp
     util/color_utils.hpp
