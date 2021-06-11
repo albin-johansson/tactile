@@ -17,7 +17,7 @@ EraseSequence::EraseSequence(not_null<core::MapDocument*> document,
 {
   if (!mDocument)
   {
-    throw TactileError{"Cannot create erase_sequence command from null map!"};
+    throw TactileError{"Cannot create erase sequence command from null map!"};
   }
 }
 
