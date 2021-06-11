@@ -328,32 +328,32 @@ set(TACTILE_SOURCE_FILES
     mouse-tools/stamp_tool.cpp
     mouse-tools/stamp_tool.hpp
 
-    parse/json_utils.cpp
-    parse/json_utils.hpp
-    parse/parse_palette.cpp
-    parse/parse_palette.hpp
-    parse/xml_utils.cpp
-    parse/xml_utils.hpp
+    parsing/json_utils.cpp
+    parsing/json_utils.hpp
+    parsing/parse_palette.cpp
+    parsing/parse_palette.hpp
+    parsing/xml_utils.cpp
+    parsing/xml_utils.hpp
 
-    parse/map/element_id.hpp
-    parse/map/json_element.cpp
-    parse/map/json_element.hpp
-    parse/map/json_engine.cpp
-    parse/map/json_engine.hpp
-    parse/map/map_parse_concepts.hpp
-    parse/map/map_parse_data.hpp
-    parse/map/map_parser.hpp
-    parse/map/open_map_document.cpp
-    parse/map/open_map_document.hpp
-    parse/map/parse_error.cpp
-    parse/map/parse_error.hpp
-    parse/map/to_map_document.cpp
-    parse/map/to_map_document.hpp
-    parse/map/to_property.hpp
-    parse/map/xml_element.cpp
-    parse/map/xml_element.hpp
-    parse/map/xml_engine.cpp
-    parse/map/xml_engine.hpp
+    parsing/map/element_id.hpp
+    parsing/map/json_element.cpp
+    parsing/map/json_element.hpp
+    parsing/map/json_engine.cpp
+    parsing/map/json_engine.hpp
+    parsing/map/map_parse_concepts.hpp
+    parsing/map/map_parse_data.hpp
+    parsing/map/map_parser.hpp
+    parsing/map/open_map_document.cpp
+    parsing/map/open_map_document.hpp
+    parsing/map/parse_error.cpp
+    parsing/map/parse_error.hpp
+    parsing/map/to_map_document.cpp
+    parsing/map/to_map_document.hpp
+    parsing/map/to_property.hpp
+    parsing/map/xml_element.cpp
+    parsing/map/xml_element.hpp
+    parsing/map/xml_engine.cpp
+    parsing/map/xml_engine.hpp
 
     preferences/preferences.cpp
     preferences/preferences.hpp
@@ -435,8 +435,8 @@ target_include_directories(libTactile
     PUBLIC gui/tools
     PUBLIC gui/window
     PUBLIC mouse-tools
-    PUBLIC parse
-    PUBLIC parse/map
+    PUBLIC parsing
+    PUBLIC parsing/map
     PUBLIC preferences
     PUBLIC util)
 
