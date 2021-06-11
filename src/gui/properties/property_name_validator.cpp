@@ -26,7 +26,7 @@ auto PropertyNameValidator::validate(QString& input, int&) const
 
   bool invalid{};
 
-  vm::visit_items(mModel, 0, [&](QStandardItem* item) {
+  vm::VisitItems(mModel, 0, [&](QStandardItem* item) {
     if (item->text() == input)
     {
       invalid = true;

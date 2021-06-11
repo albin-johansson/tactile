@@ -45,7 +45,7 @@ PropertyTreeView::PropertyTreeView(QWidget* parent) : QTreeView{parent}
 
 void PropertyTreeView::RestoreItemWidgets()
 {
-  vm::visit_items(GetModel(), 1, [this](QStandardItem* item) {
+  vm::VisitItems(GetModel(), 1, [this](QStandardItem* item) {
     const auto itemType = static_cast<vm::PropertyItemType>(item->type());
 
     if (itemType == vm::PropertyItemType::Color)

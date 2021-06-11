@@ -48,7 +48,7 @@ auto PropertyModel::Add(const QString& name, const core::Property& property)
 
 void PropertyModel::ChangeType(const QString& name, core::PropertyType type)
 {
-  if (auto* item = find_item(this, name, 0))
+  if (auto* item = FindItem(this, name))
   {
     const auto row = item->row();
     removeRow(row, mCustomRoot->index());
@@ -82,7 +82,7 @@ void PropertyModel::SetRootName(const QString& name)
 
 auto PropertyModel::ContainsProperty(const QString& name) const -> bool
 {
-  return find_item(this, name, 0) != nullptr;
+  return FindItem(this, name) != nullptr;
 }
 
 auto PropertyModel::IsCustomProperty(const QModelIndex& index) const -> bool
@@ -110,7 +110,7 @@ void PropertyModel::OnUpdatedProperty(const QString& name)
 {
   mBlockDataChanged = true;
 
-  if (auto* item = find_item(this, name, 0))
+  if (auto* item = FindItem(this, name))
   {
     const auto& property = mManager->GetProperty(name);
 
@@ -148,7 +148,7 @@ void PropertyModel::OnRenamedProperty(const QString& oldName,
 
 void PropertyModel::RemovePropertyFromGui(const QString& name)
 {
-  if (auto* item = find_item(this, name, 0))
+  if (auto* item = FindItem(this, name))
   {
     const auto row = item->row();
     removeRow(row, item->parent()->index());
@@ -194,7 +194,7 @@ auto PropertyModel::AddPropertyToGui(const QString& name,
 void PropertyModel::RenamePropertyInGui(const QString& oldName,
                                         const QString& newName)
 {
-  if (auto* item = find_item(this, oldName, 0))
+  if (auto* item = FindItem(this, oldName))
   {
     item->setText(newName);
   }

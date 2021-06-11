@@ -6,9 +6,7 @@
 namespace tactile::vm {
 
 template <std::invocable<QStandardItem*> T>
-void visit_items(const QStandardItemModel* model,
-                 const int column,
-                 T&& callable)
+void VisitItems(const QStandardItemModel* model, const int column, T&& callable)
 {
   const auto topLevelRows = model->rowCount();
   const auto* root = model->invisibleRootItem();
@@ -29,9 +27,9 @@ void visit_items(const QStandardItemModel* model,
   }
 }
 
-[[nodiscard]] inline auto find_item(const QStandardItemModel* model,
-                                    const QString& name,
-                                    const int column) -> QStandardItem*
+[[nodiscard]] inline auto FindItem(const QStandardItemModel* model,
+                                   const QString& name,
+                                   const int column = 0) -> QStandardItem*
 {
   const auto topLevelRows = model->rowCount();
   const auto* root = model->invisibleRootItem();
