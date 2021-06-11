@@ -1,4 +1,4 @@
-#include "setup_app.hpp"
+#include "prepare_application.hpp"
 
 #include <QApplication>    // QApplication
 #include <QIcon>           // QIcon
@@ -14,7 +14,7 @@
 namespace tactile {
 namespace {
 
-void init_surface_format()
+void ConfigureSurfaceFormat()
 {
   QSurfaceFormat format;
   format.setDepthBufferSize(0);
@@ -25,9 +25,9 @@ void init_surface_format()
 
 }  // namespace
 
-void setup_app()
+void PrepareApplication()
 {
-  init_surface_format();
+  ConfigureSurfaceFormat();
 
   QApplication::setWindowIcon(QIcon{TACTILE_QSTRING(u":logo/windowIcon")});
   QApplication::setStyle(QStyleFactory::create(TACTILE_QSTRING(u"Fusion")));

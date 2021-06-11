@@ -4,9 +4,9 @@
 #include "open_map_document.hpp"
 #include "open_map_error_dialog.hpp"
 #include "parse_error.hpp"
+#include "prepare_application.hpp"
 #include "resize_dialog.hpp"
 #include "save_map_document.hpp"
-#include "setup_app.hpp"
 #include "tileset_dialog.hpp"
 #include "window.hpp"
 
@@ -16,7 +16,7 @@ TactileApp::TactileApp(int argc, char** argv)
     : QApplication{argc, argv}
     , mModel{std::make_unique<core::Model>()}
 {
-  setup_app();
+  PrepareApplication();
 
   // It is necessary to create the window after calling the setup_app-function
   mWindow = std::make_unique<Window>();

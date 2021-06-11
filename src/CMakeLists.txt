@@ -367,8 +367,8 @@ set(TACTILE_SOURCE_FILES
     util/file_handle.hpp
     util/forward_declare.hpp
     util/index_to_position.hpp
-    util/setup_app.cpp
-    util/setup_app.hpp
+    util/prepare_application.cpp
+    util/prepare_application.hpp
     util/standard_paths.cpp
     util/standard_paths.hpp
     util/string_utils.cpp
