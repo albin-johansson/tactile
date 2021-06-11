@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-auto get_documents_location() -> QString
+auto GetDocumentsPath() -> QString
 {
   return QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 }

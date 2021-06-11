@@ -9,7 +9,7 @@ ExportThemeDialog::ExportThemeDialog(QWidget* parent) : QFileDialog{parent}
   setWindowTitle(tr("Export theme as..."));
   setNameFilter(tr("Tactile theme file (*.json)"));
   setAcceptMode(AcceptSave);
-  setDirectory(get_documents_location());
+  setDirectory(GetDocumentsPath());
 }
 
 }  // namespace tactile

@@ -22,7 +22,7 @@ SaveAsDialog::SaveAsDialog(const QString& fileName, QWidget* parent)
   }
 
   setWindowTitle(tr("Save As..."));
-  setDirectory(get_documents_location());
+  setDirectory(GetDocumentsPath());
   selectFile(fileName);
 }
 

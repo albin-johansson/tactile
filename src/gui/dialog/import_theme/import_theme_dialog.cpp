@@ -9,7 +9,7 @@ ImportThemeDialog::ImportThemeDialog(QWidget* parent) : QFileDialog{parent}
   setWindowTitle(tr("Import theme..."));
   setNameFilter(tr("Tactile theme file (*.json)"));
   setAcceptMode(AcceptOpen);
-  setDirectory(get_documents_location());
+  setDirectory(GetDocumentsPath());
 }
 
 }  // namespace tactile

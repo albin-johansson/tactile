@@ -24,7 +24,7 @@ OpenMapDialog::OpenMapDialog(QWidget* parent) : QFileDialog{parent}
   }
 
   setWindowTitle(tr("Open..."));
-  setDirectory(get_documents_location());
+  setDirectory(GetDocumentsPath());
 }
 
 }  // namespace tactile

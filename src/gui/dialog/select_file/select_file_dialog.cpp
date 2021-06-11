@@ -9,7 +9,7 @@ SelectFileDialog::SelectFileDialog(QWidget* parent) : QFileDialog{parent}
   setFileMode(ExistingFile);
   setViewMode(Detail);
   setWindowTitle(tr("Select file"));
-  setDirectory(get_documents_location());
+  setDirectory(GetDocumentsPath());
 }
 
 }  // namespace tactile

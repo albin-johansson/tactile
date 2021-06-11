@@ -4,6 +4,6 @@
 
 namespace tactile {
 
-[[nodiscard]] auto get_documents_location() -> QString;
+[[nodiscard]] auto GetDocumentsPath() -> QString;
 
-}
+}  // namespace tactile
