@@ -76,7 +76,7 @@ auto XmlEngine::Tiles(const object_type& object,
       return matrix;
     }
 
-    const auto pos = index_to_position(index, nCols);
+    const auto pos = IndexToPosition(index, nCols);
     matrix.at(pos.RowIndex()).at(pos.ColumnIndex()) = id;
 
     ++index;

@@ -61,7 +61,7 @@ auto json_engine::Tiles(const object_type& object,
 
     if (id != -1_t)
     {
-      const auto pos = index_to_position(index, nCols);
+      const auto pos = IndexToPosition(index, nCols);
       matrix.at(pos.RowIndex()).at(pos.ColumnIndex()) = id;
     }
     else
