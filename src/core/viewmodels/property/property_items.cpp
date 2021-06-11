@@ -8,41 +8,41 @@ void update_item_data(not_null<QStandardItem*> item,
                       const core::Property& property)
 {
   Q_ASSERT(item);
-  switch (static_cast<vm::property_item_type>(item->type()))
+  switch (static_cast<vm::PropertyItemType>(item->type()))
   {
-    case property_item_type::string:
+    case PropertyItemType::String:
     {
       item->setData(property.AsString(), Qt::EditRole);
       break;
     }
-    case property_item_type::integer:
+    case PropertyItemType::Integer:
     {
       item->setData(property.AsInteger(), Qt::EditRole);
       break;
     }
-    case property_item_type::floating:
+    case PropertyItemType::Floating:
     {
       item->setData(property.AsFloating(), Qt::EditRole);
       break;
     }
-    case property_item_type::boolean:
+    case PropertyItemType::Boolean:
     {
       item->setData(property.AsBoolean() ? Qt::Checked : Qt::Unchecked,
                     Qt::CheckStateRole);
       break;
     }
-    case property_item_type::file:
+    case PropertyItemType::File:
     {
       item->setData(property.AsFile().absoluteFilePath(),
-                    vm::property_item_role::path);
+                    vm::PropertyItemRole::Path);
       break;
     }
-    case property_item_type::color:
+    case PropertyItemType::Color:
     {
-      item->setData(property.AsColor(), vm::property_item_role::color);
+      item->setData(property.AsColor(), vm::PropertyItemRole::Color);
       break;
     }
-    case property_item_type::object:
+    case PropertyItemType::Object:
     {
       item->setData(property.AsObject().get(), Qt::EditRole);
       break;
@@ -55,29 +55,29 @@ void update_item_data(not_null<QStandardItem*> item,
 auto item_to_property(not_null<const QStandardItem*> item) -> core::Property
 {
   Q_ASSERT(item);
-  switch (static_cast<vm::property_item_type>(item->type()))
+  switch (static_cast<vm::PropertyItemType>(item->type()))
   {
-    case property_item_type::string:
+    case PropertyItemType::String:
       return item->data(Qt::EditRole).value<QString>();
 
-    case property_item_type::integer:
+    case PropertyItemType::Integer:
       return item->data(Qt::EditRole).value<int>();
 
-    case property_item_type::floating:
+    case PropertyItemType::Floating:
       return item->data(Qt::EditRole).value<double>();
 
-    case property_item_type::boolean:
+    case PropertyItemType::Boolean:
       return item->data(Qt::CheckStateRole).value<Qt::CheckState>() ==
              Qt::Checked;
 
-    case property_item_type::file:
+    case PropertyItemType::File:
       return QFileInfo{
-          item->data(vm::property_item_role::path).value<QString>()};
+          item->data(vm::PropertyItemRole::Path).value<QString>()};
 
-    case property_item_type::color:
-      return item->data(vm::property_item_role::color).value<QColor>();
+    case PropertyItemType::Color:
+      return item->data(vm::PropertyItemRole::Color).value<QColor>();
 
-    case property_item_type::object:
+    case PropertyItemType::Object:
       return core::object_ref{item->data(Qt::EditRole).value<int>()};
 
     default:

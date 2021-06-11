@@ -32,7 +32,7 @@ class string_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(property_item_type::string);
+    return static_cast<int>(PropertyItemType::String);
   }
 };
 
@@ -46,7 +46,7 @@ class int_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(property_item_type::integer);
+    return static_cast<int>(PropertyItemType::Integer);
   }
 };
 
@@ -60,7 +60,7 @@ class float_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(property_item_type::floating);
+    return static_cast<int>(PropertyItemType::Floating);
   }
 };
 
@@ -76,7 +76,7 @@ class bool_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(property_item_type::boolean);
+    return static_cast<int>(PropertyItemType::Boolean);
   }
 };
 
@@ -91,7 +91,7 @@ class object_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(property_item_type::object);
+    return static_cast<int>(PropertyItemType::Object);
   }
 };
 
@@ -106,7 +106,7 @@ class color_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(property_item_type::color);
+    return static_cast<int>(PropertyItemType::Color);
   }
 };
 
@@ -121,7 +121,7 @@ class file_item final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(property_item_type::file);
+    return static_cast<int>(PropertyItemType::File);
   }
 };
 

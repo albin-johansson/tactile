@@ -4,15 +4,15 @@
 
 namespace tactile::vm {
 
-enum class property_item_type
+enum class PropertyItemType
 {
-  string = QStandardItem::UserType,
-  integer,
-  floating,
-  boolean,
-  file,
-  object,
-  color
+  String = QStandardItem::UserType,
+  Integer,
+  Floating,
+  Boolean,
+  File,
+  Object,
+  Color
 };
 
 }  // namespace tactile::vm

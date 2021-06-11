@@ -18,7 +18,7 @@
 #include "vector_map.hpp"
 
 namespace tactile::vm {
-class property_model;
+class PropertyModel;
 class LayerModel;
 }  // namespace tactile::vm
 

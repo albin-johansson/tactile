@@ -70,39 +70,39 @@ PropertiesWidget::~PropertiesWidget() noexcept = default;
 void PropertiesWidget::ShowMap(not_null<core::IPropertyManager*> manager)
 {
   ChangeModel(manager);
-  mModel->set_root_name(tr("Map"));
+  mModel->SetRootName(tr("Map"));
 }
 
 void PropertiesWidget::ShowLayer(not_null<core::IPropertyManager*> manager)
 {
   ChangeModel(manager);
-  mModel->set_root_name(tr("Layer"));
+  mModel->SetRootName(tr("Layer"));
 }
 
 void PropertiesWidget::OnAddedProperty(const QString& name)
 {
-  mModel->added_property(name);
+  mModel->OnAddedProperty(name);
 }
 
 void PropertiesWidget::OnAboutToRemoveProperty(const QString& name)
 {
-  mModel->about_to_remove_property(name);
+  mModel->OnAboutToRemoveProperty(name);
 }
 
 void PropertiesWidget::OnUpdatedProperty(const QString& name)
 {
-  mModel->updated_property(name);
+  mModel->OnUpdatedProperty(name);
 }
 
 void PropertiesWidget::OnRenamedProperty(const QString& oldName,
                                          const QString& newName)
 {
-  mModel->renamed_property(oldName, newName);
+  mModel->OnRenamedProperty(oldName, newName);
 }
 
 void PropertiesWidget::OnChangedPropertyType(const QString& name)
 {
-  mModel->changed_property_type(name);
+  mModel->OnChangedPropertyType(name);
 }
 
 void PropertiesWidget::OnSelectionChanged(maybe<QModelIndex> index)
@@ -121,7 +121,7 @@ void PropertiesWidget::OnSelectionChanged(maybe<QModelIndex> index)
     return;
   }
 
-  const auto isCustom = mModel->is_custom_property(*index);
+  const auto isCustom = mModel->IsCustomProperty(*index);
   mUi->removeButton->setEnabled(isCustom);
   mUi->renameButton->setEnabled(isCustom);
 
@@ -131,7 +131,7 @@ void PropertiesWidget::OnSelectionChanged(maybe<QModelIndex> index)
   mContextMenu->SetRenameEnabled(mUi->renameButton->isEnabled());
   if (isCustom)
   {
-    const auto& property = mModel->get_property(PropertyName(*index));
+    const auto& property = mModel->GetProperty(PropertyName(*index));
     mContextMenu->SetCurrentType(property.Type().value());
   }
 }
@@ -140,15 +140,15 @@ void PropertiesWidget::OnCopyPropertyRequested()
 {
   const auto currentName = CurrentPropertyName();
   mNameCopy = currentName;
-  mPropertyCopy = mModel->get_property(currentName);
+  mPropertyCopy = mModel->GetProperty(currentName);
 }
 
 void PropertiesWidget::OnPastePropertyRequested()
 {
   const auto& name = mNameCopy.value();
-  if (!mModel->contains_property(name))
+  if (!mModel->ContainsProperty(name))
   {
-    mModel->add(name, mPropertyCopy.value());
+    mModel->Add(name, mPropertyCopy.value());
     mContextMenu->SetPasteEnabled(false);
   }
 }
@@ -157,7 +157,7 @@ void PropertiesWidget::OnNewPropertyRequested()
 {
   AddPropertyDialog::Spawn(
       [this](const QString& name, const core::PropertyType type) {
-        mModel->add(name, type);
+        mModel->Add(name, type);
       },
       mModel.get(),
       this);
@@ -167,10 +167,10 @@ void PropertiesWidget::OnRemovePropertyRequested()
 {
 #ifdef QT_DEBUG
   const auto index = mView->currentIndex();
-  Q_ASSERT(mModel->is_custom_property(index));
+  Q_ASSERT(mModel->IsCustomProperty(index));
 #endif  // QT_DEBUG
 
-  mModel->remove(CurrentPropertyName());
+  mModel->Remove(CurrentPropertyName());
 }
 
 void PropertiesWidget::OnRenamePropertyRequested()
@@ -178,13 +178,13 @@ void PropertiesWidget::OnRenamePropertyRequested()
   const auto oldName = CurrentPropertyName();
   if (const auto newName = ChangePropertyNameDialog::Spawn(mModel.get()))
   {
-    mModel->rename(oldName, *newName);
+    mModel->Rename(oldName, *newName);
   }
 }
 
 void PropertiesWidget::OnChangeTypeRequested(const core::PropertyType type)
 {
-  mModel->change_type(CurrentPropertyName(), type);
+  mModel->ChangeType(CurrentPropertyName(), type);
 }
 
 void PropertiesWidget::OnDoubleClicked()
@@ -196,7 +196,7 @@ void PropertiesWidget::OnDoubleClicked()
     const auto oldName = item->text();
     if (const auto name = ChangePropertyNameDialog::Spawn(mModel.get()))
     {
-      mModel->rename(oldName, *name);
+      mModel->Rename(oldName, *name);
     }
   }
 }
@@ -212,26 +212,26 @@ void PropertiesWidget::ChangeModel(not_null<core::IPropertyManager*> manager)
 
   mView->collapseAll();
 
-  mModel = std::make_unique<vm::property_model>(manager);
+  mModel = std::make_unique<vm::PropertyModel>(manager);
   Q_ASSERT(!mModel->parent());
 
   mView->setModel(mModel.get());
   Q_ASSERT(!mModel->parent());
 
   // clang-format off
-  connect(mModel.get(), &vm::property_model::changed_type,
+  connect(mModel.get(), &vm::PropertyModel::S_ChangedType,
           mView,        &PropertyTreeView::OnChangedType);
 
-  connect(mModel.get(), &vm::property_model::added_file,
+  connect(mModel.get(), &vm::PropertyModel::S_AddedFile,
           mView,        &PropertyTreeView::OnFileAdded);
 
-  connect(mModel.get(), &vm::property_model::added_color,
+  connect(mModel.get(), &vm::PropertyModel::S_AddedColor,
           mView,        &PropertyTreeView::OnColorAdded);
 
-  connect(mModel.get(), &vm::property_model::updated_file,
+  connect(mModel.get(), &vm::PropertyModel::S_UpdatedFile,
           mView,        &PropertyTreeView::OnFileUpdated);
 
-  connect(mModel.get(), &vm::property_model::updated_color,
+  connect(mModel.get(), &vm::PropertyModel::S_UpdatedColor,
           mView,        &PropertyTreeView::OnColorUpdated);
   // clang-format on
 

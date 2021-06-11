@@ -6,7 +6,7 @@
 
 namespace tactile::vm {
 
-auto make_property_item(const core::Property& property) -> QStandardItem*
+auto MakePropertyItem(const core::Property& property) -> QStandardItem*
 {
   switch (property.Type().value())
   {
@@ -39,13 +39,13 @@ auto make_property_item(const core::Property& property) -> QStandardItem*
     {
       auto* item = new file_item{};
       item->setData(IconCopy(), Qt::DecorationRole);
-      item->setData(property.AsFile().filePath(), vm::property_item_role::path);
+      item->setData(property.AsFile().filePath(), vm::PropertyItemRole::Path);
       return item;
     }
     case core::PropertyType::color:
     {
       auto* item = new color_item{};
-      item->setData(property.AsColor(), property_item_role::color);
+      item->setData(property.AsColor(), PropertyItemRole::Color);
       return item;
     }
     case core::PropertyType::object:

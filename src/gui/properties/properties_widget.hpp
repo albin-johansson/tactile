@@ -12,7 +12,7 @@ TACTILE_FORWARD_DECLARE_UI(PropertiesWidget)
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
-TACTILE_FORWARD_DECLARE(tactile::vm, property_model)
+TACTILE_FORWARD_DECLARE(tactile::vm, PropertyModel)
 TACTILE_FORWARD_DECLARE(tactile, PropertyTreeView)
 TACTILE_FORWARD_DECLARE(tactile, PropertyContextMenu)
 
@@ -46,7 +46,7 @@ class PropertiesWidget final : public QWidget
   unique<Ui::PropertiesWidget> mUi;
   PropertyTreeView* mView{};
   PropertyContextMenu* mContextMenu{};
-  unique<vm::property_model> mModel;
+  unique<vm::PropertyModel> mModel;
   maybe<QString> mNameCopy;
   maybe<core::Property> mPropertyCopy;
 

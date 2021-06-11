@@ -46,13 +46,13 @@ PropertyTreeView::PropertyTreeView(QWidget* parent) : QTreeView{parent}
 void PropertyTreeView::RestoreItemWidgets()
 {
   vm::visit_items(GetModel(), 1, [this](QStandardItem* item) {
-    const auto itemType = static_cast<vm::property_item_type>(item->type());
+    const auto itemType = static_cast<vm::PropertyItemType>(item->type());
 
-    if (itemType == vm::property_item_type::color)
+    if (itemType == vm::PropertyItemType::Color)
     {
       OnColorAdded(item->index());
     }
-    else if (itemType == vm::property_item_type::file)
+    else if (itemType == vm::PropertyItemType::File)
     {
       OnFileAdded(item->index());
     }
@@ -62,7 +62,7 @@ void PropertyTreeView::RestoreItemWidgets()
 void PropertyTreeView::OnColorAdded(const QModelIndex& valueIndex)
 {
   const auto color =
-      valueIndex.data(vm::property_item_role::color).value<QColor>();
+      valueIndex.data(vm::PropertyItemRole::Color).value<QColor>();
   Q_ASSERT(color.isValid());
 
   auto* button = new ColorPreviewButton{color};
@@ -74,7 +74,7 @@ void PropertyTreeView::OnColorAdded(const QModelIndex& valueIndex)
           &ColorPreviewButton::S_ColorChanged,
           [this, id](const QColor& color) {
             auto* item = mWidgetItems.at(id);
-            item->setData(color, vm::property_item_role::color);
+            item->setData(color, vm::PropertyItemRole::Color);
           });
 
   setIndexWidget(valueIndex, button);
@@ -84,7 +84,7 @@ void PropertyTreeView::OnFileAdded(const QModelIndex& valueIndex)
 {
   auto* widget = new FileValueWidget{};
   widget->SetPath(
-      valueIndex.data(vm::property_item_role::path).value<QString>());
+      valueIndex.data(vm::PropertyItemRole::Path).value<QString>());
 
   const auto id = NewWidgetId();
   mWidgetItems.emplace(id, GetModel()->itemFromIndex(valueIndex));
@@ -92,7 +92,7 @@ void PropertyTreeView::OnFileAdded(const QModelIndex& valueIndex)
   connect(widget, &FileValueWidget::S_SpawnDialog, [this, id] {
     SelectFileDialog::Spawn([this, id](const QString& path) {
       auto* item = mWidgetItems.at(id);
-      item->setData(path, vm::property_item_role::path);
+      item->setData(path, vm::PropertyItemRole::Path);
 
       auto* itemWidget = indexWidget(item->index());
       if (auto* widget = qobject_cast<FileValueWidget*>(itemWidget))
@@ -124,7 +124,7 @@ void PropertyTreeView::OnFileUpdated(const QModelIndex& index)
 {
   if (auto* widget = qobject_cast<FileValueWidget*>(indexWidget(index)))
   {
-    widget->SetPath(index.data(vm::property_item_role::path).value<QString>());
+    widget->SetPath(index.data(vm::PropertyItemRole::Path).value<QString>());
   }
 }
 
@@ -132,7 +132,7 @@ void PropertyTreeView::OnColorUpdated(const QModelIndex& index)
 {
   if (auto* button = qobject_cast<ColorPreviewButton*>(indexWidget(index)))
   {
-    button->SetColor(index.data(vm::property_item_role::color).value<QColor>());
+    button->SetColor(index.data(vm::PropertyItemRole::Color).value<QColor>());
   }
 }
 
@@ -195,16 +195,16 @@ void PropertyTreeView::mousePressEvent(QMouseEvent* event)
   }
 }
 
-auto PropertyTreeView::GetModel() -> vm::property_model*
+auto PropertyTreeView::GetModel() -> vm::PropertyModel*
 {
-  auto* ptr = qobject_cast<vm::property_model*>(model());
+  auto* ptr = qobject_cast<vm::PropertyModel*>(model());
   Q_ASSERT(ptr);
   return ptr;
 }
 
-auto PropertyTreeView::GetModel() const -> const vm::property_model*
+auto PropertyTreeView::GetModel() const -> const vm::PropertyModel*
 {
-  const auto* ptr = qobject_cast<const vm::property_model*>(model());
+  const auto* ptr = qobject_cast<const vm::PropertyModel*>(model());
   Q_ASSERT(ptr);
   return ptr;
 }

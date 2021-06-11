@@ -21,7 +21,7 @@ namespace tactile::vm {
  *
  * \headerfile property_model.hpp
  */
-class property_model final : public QStandardItemModel
+class PropertyModel final : public QStandardItemModel
 {
   Q_OBJECT
 
@@ -36,8 +36,8 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  explicit property_model(not_null<core::IPropertyManager*> manager,
-                          QObject* parent = nullptr);
+  explicit PropertyModel(not_null<core::IPropertyManager*> manager,
+                         QObject* parent = nullptr);
 
   /**
    * \brief Adds a property to the model.
@@ -49,7 +49,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  void add(const QString& name, core::PropertyType type);
+  void Add(const QString& name, core::PropertyType type);
 
   /**
    * \brief Adds a property to the model.
@@ -63,7 +63,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  auto add(const QString& name, const core::Property& property) -> QModelIndex;
+  auto Add(const QString& name, const core::Property& property) -> QModelIndex;
 
   /**
    * \brief Changes the type of an existing property.
@@ -73,11 +73,11 @@ class property_model final : public QStandardItemModel
    * \param name the name of the property that will be changed.
    * \param type the new type of the property.
    *
-   * \signal `changed_type`
+   * \signal `S_ChangedType`
    *
    * \since 0.2.0
    */
-  void change_type(const QString& name, core::PropertyType type);
+  void ChangeType(const QString& name, core::PropertyType type);
 
   /**
    * \brief Renames an existing property.
@@ -92,7 +92,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  void rename(const QString& oldName, const QString& newName);
+  void Rename(const QString& oldName, const QString& newName);
 
   /**
    * \brief Removes a property from the model.
@@ -105,9 +105,9 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  void remove(const QString& name);
+  void Remove(const QString& name);
 
-  void set_root_name(const QString& name);
+  void SetRootName(const QString& name);
 
   /**
    * \brief Indicates whether or not the model contains a property.
@@ -119,7 +119,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto contains_property(const QString& name) const -> bool;
+  [[nodiscard]] auto ContainsProperty(const QString& name) const -> bool;
 
   /**
    * \brief Indicates whether or not the specified property is a custom
@@ -131,7 +131,7 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto is_custom_property(const QModelIndex& index) const -> bool;
+  [[nodiscard]] auto IsCustomProperty(const QModelIndex& index) const -> bool;
 
   /**
    * \brief Returns the property associated with the specified name.
@@ -144,49 +144,45 @@ class property_model final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto get_property(const QString& name) const
+  [[nodiscard]] auto GetProperty(const QString& name) const
       -> const core::Property&;
 
  signals:
-  void added_color(const QModelIndex& valueIndex);
-  void added_file(const QModelIndex& valueIndex);
-  void changed_type(const QModelIndex& valueIndex, core::PropertyType type);
-  void updated_file(const QModelIndex& valueIndex);
-  void updated_color(const QModelIndex& index);
+  void S_AddedColor(const QModelIndex& valueIndex);
+  void S_AddedFile(const QModelIndex& valueIndex);
+  void S_ChangedType(const QModelIndex& valueIndex, core::PropertyType type);
+  void S_UpdatedFile(const QModelIndex& valueIndex);
+  void S_UpdatedColor(const QModelIndex& index);
 
  public slots:
   // Meant to be called as a result of undo/redo
-  void added_property(const QString& name);
-
-  void about_to_remove_property(const QString& name);
-
-  void updated_property(const QString& name);
-
-  void changed_property_type(const QString& name);
-
-  void renamed_property(const QString& oldName, const QString& newName);
+  void OnAddedProperty(const QString& name);
+  void OnAboutToRemoveProperty(const QString& name);
+  void OnUpdatedProperty(const QString& name);
+  void OnChangedPropertyType(const QString& name);
+  void OnRenamedProperty(const QString& oldName, const QString& newName);
 
  private:
-  core::IPropertyManager* m_manager{};
-  QStandardItem* m_customRoot{};
-  bool m_blockDataChanged{};
+  core::IPropertyManager* mManager{};
+  QStandardItem* mCustomRoot{};
+  bool mBlockDataChanged{};
 
-  void remove_property_from_gui(const QString& name);
+  void RemovePropertyFromGui(const QString& name);
 
-  auto add_existing_property_to_gui(const QString& name) -> QModelIndex;
+  auto AddExistingPropertyToGui(const QString& name) -> QModelIndex;
 
-  auto add_property_to_gui(const QString& name,
-                           const core::Property& property,
-                           QStandardItem* root) -> QModelIndex;
+  auto AddPropertyToGui(const QString& name,
+                        const core::Property& property,
+                        QStandardItem* root) -> QModelIndex;
 
-  void rename_property_in_gui(const QString& oldName, const QString& newName);
+  void RenamePropertyInGui(const QString& oldName, const QString& newName);
 
-  void set_value(const QString& name, QStandardItem* item);
+  void SetValue(const QString& name, QStandardItem* item);
 
  private slots:
-  void when_data_changed(const QModelIndex& topLeft,
-                         const QModelIndex& bottomRight,
-                         const QVector<int>& roles);
+  void OnDataChanged(const QModelIndex& topLeft,
+                     const QModelIndex& bottomRight,
+                     const QVector<int>& roles);
 };
 
 }  // namespace tactile::vm

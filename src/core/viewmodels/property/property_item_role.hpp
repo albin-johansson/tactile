@@ -4,13 +4,12 @@
 
 namespace tactile::vm {
 
-class property_item_role final
+struct PropertyItemRole final
 {
- public:
-  enum role
+  enum Value
   {
-    color = Qt::ItemDataRole::UserRole,
-    path
+    Color = Qt::ItemDataRole::UserRole,
+    Path
   };
 };
 

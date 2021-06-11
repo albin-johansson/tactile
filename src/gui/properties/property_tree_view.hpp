@@ -8,7 +8,7 @@
 #include "property.hpp"
 #include "vector_map.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::vm, property_model)
+TACTILE_FORWARD_DECLARE(tactile::vm, PropertyModel)
 
 namespace tactile {
 
@@ -46,8 +46,8 @@ class PropertyTreeView final : public QTreeView
   vector_map<int, QStandardItem*> mWidgetItems;
   int mNextWidgetId{1};
 
-  [[nodiscard]] auto GetModel() -> vm::property_model*;
-  [[nodiscard]] auto GetModel() const -> const vm::property_model*;
+  [[nodiscard]] auto GetModel() -> vm::PropertyModel*;
+  [[nodiscard]] auto GetModel() const -> const vm::PropertyModel*;
 
   [[nodiscard]] auto NewWidgetId() noexcept -> int;
 

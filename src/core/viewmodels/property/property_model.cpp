@@ -8,112 +8,111 @@
 
 namespace tactile::vm {
 
-property_model::property_model(core::IPropertyManager* manager, QObject* parent)
+PropertyModel::PropertyModel(core::IPropertyManager* manager, QObject* parent)
     : QStandardItemModel{parent}
-    , m_manager{manager}
-    , m_customRoot{new root_item{tr("Properties")}}
+    , mManager{manager}
+    , mCustomRoot{new root_item{tr("Properties")}}
 {
-  if (!m_manager)
+  if (!mManager)
   {
-    throw TactileError{"property_model requires non-null property manager!"};
+    throw TactileError{"Property model requires non-null property manager!"};
   }
 
   setColumnCount(2);
-  appendRow(m_customRoot);
+  appendRow(mCustomRoot);
 
   // clang-format off
-  connect(this, &property_model::dataChanged,
-          this, &property_model::when_data_changed);
+  connect(this, &PropertyModel::dataChanged, this, &PropertyModel::OnDataChanged);
   // clang-format on
 
   for (const auto& [name, property] : manager->GetProperties())
   {
-    const auto index = add_property_to_gui(name, property, m_customRoot);
-    itemFromIndex(index.siblingAtColumn(0))->setEditable(false);
+    const auto index = AddPropertyToGui(name, property, mCustomRoot);
+    const auto sibling = index.siblingAtColumn(0);
+    itemFromIndex(sibling)->setEditable(false);
   }
 }
 
-void property_model::add(const QString& name, const core::PropertyType type)
+void PropertyModel::Add(const QString& name, const core::PropertyType type)
 {
-  m_manager->AddProperty(name, type);
-  add_existing_property_to_gui(name);
+  mManager->AddProperty(name, type);
+  AddExistingPropertyToGui(name);
 }
 
-auto property_model::add(const QString& name, const core::Property& property)
+auto PropertyModel::Add(const QString& name, const core::Property& property)
     -> QModelIndex
 {
-  m_manager->AddProperty(name, property);
-  return add_existing_property_to_gui(name);
+  mManager->AddProperty(name, property);
+  return AddExistingPropertyToGui(name);
 }
 
-void property_model::change_type(const QString& name,
-                                 const core::PropertyType type)
+void PropertyModel::ChangeType(const QString& name, core::PropertyType type)
 {
   if (auto* item = find_item(this, name, 0))
   {
     const auto row = item->row();
-    removeRow(row, m_customRoot->index());
+    removeRow(row, mCustomRoot->index());
 
-    m_manager->ChangePropertyType(name, type);
-    const auto& property = m_manager->GetProperty(name);
+    mManager->ChangePropertyType(name, type);
+    const auto& property = mManager->GetProperty(name);
 
-    auto* valueItem = make_property_item(m_manager->GetProperty(name));
-    m_customRoot->insertRow(row, {new QStandardItem{name}, valueItem});
+    auto* valueItem = MakePropertyItem(mManager->GetProperty(name));
+    mCustomRoot->insertRow(row, {new QStandardItem{name}, valueItem});
 
-    emit changed_type(indexFromItem(valueItem), type);
+    emit S_ChangedType(indexFromItem(valueItem), type);
   }
 }
 
-void property_model::rename(const QString& oldName, const QString& newName)
+void PropertyModel::Rename(const QString& oldName, const QString& newName)
 {
-  rename_property_in_gui(oldName, newName);
-  m_manager->RenameProperty(oldName, newName);
+  RenamePropertyInGui(oldName, newName);
+  mManager->RenameProperty(oldName, newName);
 }
 
-void property_model::remove(const QString& name)
+void PropertyModel::Remove(const QString& name)
 {
-  remove_property_from_gui(name);
-  m_manager->RemoveProperty(name);
+  RemovePropertyFromGui(name);
+  mManager->RemoveProperty(name);
 }
 
-void property_model::set_root_name(const QString& name)
+void PropertyModel::SetRootName(const QString& name)
 {
-  m_customRoot->setText(name);
+  mCustomRoot->setText(name);
 }
 
-auto property_model::contains_property(const QString& name) const -> bool
+auto PropertyModel::ContainsProperty(const QString& name) const -> bool
 {
   return find_item(this, name, 0) != nullptr;
 }
 
-auto property_model::is_custom_property(const QModelIndex& index) const -> bool
+auto PropertyModel::IsCustomProperty(const QModelIndex& index) const -> bool
 {
-  return parent(index) == indexFromItem(m_customRoot);
+  return parent(index) == indexFromItem(mCustomRoot);
 }
 
-auto property_model::get_property(const QString& name) const
+auto PropertyModel::GetProperty(const QString& name) const
     -> const core::Property&
 {
-  return m_manager->GetProperty(name);
+  return mManager->GetProperty(name);
 }
 
-void property_model::added_property(const QString& name)
+void PropertyModel::OnAddedProperty(const QString& name)
 {
-  add_existing_property_to_gui(name);
+  AddExistingPropertyToGui(name);
 }
 
-void property_model::about_to_remove_property(const QString& name)
+void PropertyModel::OnAboutToRemoveProperty(const QString& name)
 {
-  remove_property_from_gui(name);
+  RemovePropertyFromGui(name);
 }
 
-void property_model::updated_property(const QString& name)
+void PropertyModel::OnUpdatedProperty(const QString& name)
 {
-  m_blockDataChanged = true;
+  mBlockDataChanged = true;
 
   if (auto* item = find_item(this, name, 0))
   {
-    const auto& property = m_manager->GetProperty(name);
+    const auto& property = mManager->GetProperty(name);
 
     const auto sibling = item->index().siblingAtColumn(1);
     Q_ASSERT(sibling.isValid());
@@ -124,30 +123,30 @@ void property_model::updated_property(const QString& name)
     const auto type = property.Type().value();
     if (type == core::PropertyType::file)
     {
-      emit updated_file(sibling);
+      emit S_UpdatedFile(sibling);
     }
     else if (type == core::PropertyType::color)
     {
-      emit updated_color(sibling);
+      emit S_UpdatedColor(sibling);
     }
   }
 
-  m_blockDataChanged = false;
+  mBlockDataChanged = false;
 }
 
-void property_model::changed_property_type(const QString& name)
+void PropertyModel::OnChangedPropertyType(const QString& name)
 {
-  remove_property_from_gui(name);
-  add_existing_property_to_gui(name);
+  RemovePropertyFromGui(name);
+  AddExistingPropertyToGui(name);
 }
 
-void property_model::renamed_property(const QString& oldName,
+void PropertyModel::OnRenamedProperty(const QString& oldName,
                                       const QString& newName)
 {
-  rename_property_in_gui(oldName, newName);
+  RenamePropertyInGui(oldName, newName);
 }
 
-void property_model::remove_property_from_gui(const QString& name)
+void PropertyModel::RemovePropertyFromGui(const QString& name)
 {
   if (auto* item = find_item(this, name, 0))
   {
@@ -156,11 +155,10 @@ void property_model::remove_property_from_gui(const QString& name)
   }
 }
 
-auto property_model::add_existing_property_to_gui(const QString& name)
-    -> QModelIndex
+auto PropertyModel::AddExistingPropertyToGui(const QString& name) -> QModelIndex
 {
-  const auto& prop = m_manager->GetProperty(name);
-  const auto index = add_property_to_gui(name, prop, m_customRoot);
+  const auto& prop = mManager->GetProperty(name);
+  const auto index = AddPropertyToGui(name, prop, mCustomRoot);
 
   auto* sibling = itemFromIndex(index.siblingAtColumn(0));
   sibling->setEditable(false);
@@ -168,12 +166,12 @@ auto property_model::add_existing_property_to_gui(const QString& name)
   return index;
 }
 
-auto property_model::add_property_to_gui(const QString& name,
-                                         const core::Property& property,
-                                         QStandardItem* root) -> QModelIndex
+auto PropertyModel::AddPropertyToGui(const QString& name,
+                                     const core::Property& property,
+                                     QStandardItem* root) -> QModelIndex
 {
   auto* nameItem = new QStandardItem{name};
-  auto* valueItem = make_property_item(property);
+  auto* valueItem = MakePropertyItem(property);
 
   root->appendRow({nameItem, valueItem});
 
@@ -183,18 +181,18 @@ auto property_model::add_property_to_gui(const QString& name,
   // Notify view that it should add an index widget for the property
   if (type == core::PropertyType::file)
   {
-    emit added_file(index);
+    emit S_AddedFile(index);
   }
   else if (type == core::PropertyType::color)
   {
-    emit added_color(index);
+    emit S_AddedColor(index);
   }
 
   return index;
 }
 
-void property_model::rename_property_in_gui(const QString& oldName,
-                                            const QString& newName)
+void PropertyModel::RenamePropertyInGui(const QString& oldName,
+                                        const QString& newName)
 {
   if (auto* item = find_item(this, oldName, 0))
   {
@@ -202,31 +200,28 @@ void property_model::rename_property_in_gui(const QString& oldName,
   }
 }
 
-void property_model::set_value(const QString& name, QStandardItem* item)
+void PropertyModel::SetValue(const QString& name, QStandardItem* item)
 {
-  m_manager->SetProperty(name, item_to_property(item));
+  mManager->SetProperty(name, item_to_property(item));
 }
 
-void property_model::when_data_changed(const QModelIndex& topLeft,
-                                       const QModelIndex& bottomRight,
-                                       const QVector<int>& roles)
+void PropertyModel::OnDataChanged(const QModelIndex& topLeft,
+                                  const QModelIndex& bottomRight,
+                                  const QVector<int>& roles)
 {
-  if (m_blockDataChanged)
+  if (mBlockDataChanged)
   {
     return;
   }
 
-  if (topLeft.parent() == m_customRoot->index())
+  if (topLeft.parent() == mCustomRoot->index() && topLeft.column() == 1)
   {
-    if (topLeft.column() == 1)
+    if (auto* item = itemFromIndex(topLeft))
     {
-      if (auto* item = itemFromIndex(topLeft))
-      {
-        const auto sibling = itemFromIndex(item->index().siblingAtColumn(0));
-        Q_ASSERT(sibling);
+      const auto sibling = itemFromIndex(item->index().siblingAtColumn(0));
+      Q_ASSERT(sibling);
 
-        set_value(sibling->text(), item);
-      }
+      SetValue(sibling->text(), item);
     }
   }
 }

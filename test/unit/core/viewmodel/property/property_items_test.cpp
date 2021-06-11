@@ -56,7 +56,7 @@ TEST(PropertyItems, UpdateItemData)
     vm::color_item item;
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
 
-    const auto role = vm::property_item_role::color;
+    const auto role = vm::PropertyItemRole::Color;
     ASSERT_TRUE(item.data(role).canConvert<QColor>());
     EXPECT_EQ(property.AsColor(), item.data(role).value<QColor>());
   }
@@ -67,7 +67,7 @@ TEST(PropertyItems, UpdateItemData)
     vm::file_item item;
     EXPECT_NO_THROW(vm::update_item_data(&item, property));
 
-    const auto role = vm::property_item_role::path;
+    const auto role = vm::PropertyItemRole::Path;
     ASSERT_TRUE(item.data(role).canConvert<QString>());
     EXPECT_EQ(property.AsFile().absoluteFilePath(), item.data(role).value<QString>());
   }
@@ -115,7 +115,7 @@ TEST(PropertyItems, ItemToProperty)
 
   {  // Color item
     vm::color_item item;
-    item.setData(QColor{Qt::magenta}, vm::property_item_role::color);
+    item.setData(QColor{Qt::magenta}, vm::PropertyItemRole::Color);
 
     const auto property = vm::item_to_property(&item);
     ASSERT_TRUE(property.IsColor());
@@ -126,7 +126,7 @@ TEST(PropertyItems, ItemToProperty)
     vm::file_item item;
 
     const auto file = TACTILE_QSTRING(u"foo/bar");
-    item.setData(file, vm::property_item_role::path);
+    item.setData(file, vm::PropertyItemRole::Path);
 
     const auto property = vm::item_to_property(&item);
     ASSERT_TRUE(property.IsFile());
