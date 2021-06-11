@@ -328,8 +328,10 @@ set(TACTILE_SOURCE_FILES
     mouse-tools/stamp_tool.cpp
     mouse-tools/stamp_tool.hpp
 
-    parse/json/json_utils.cpp
-    parse/json/json_utils.hpp
+    parse/json_utils.cpp
+    parse/json_utils.hpp
+    parse/xml_utils.cpp
+    parse/xml_utils.hpp
 
     parse/map/element_id.hpp
     parse/map/json_element.cpp
@@ -353,9 +355,6 @@ set(TACTILE_SOURCE_FILES
 
     parse/palette/parse_palette.cpp
     parse/palette/parse_palette.hpp
-
-    parse/xml/xml_utils.cpp
-    parse/xml/xml_utils.hpp
 
     preferences/preferences.cpp
     preferences/preferences.hpp
@@ -438,10 +437,8 @@ target_include_directories(libTactile
     PUBLIC gui/window
     PUBLIC mouse-tools
     PUBLIC parse
-    PUBLIC parse/json
     PUBLIC parse/map
     PUBLIC parse/palette
-    PUBLIC parse/xml
     PUBLIC preferences
     PUBLIC util)
 

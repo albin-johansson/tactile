@@ -60,9 +60,9 @@ void create_external_tileset_file(const core::Tileset& tileset,
 
   document.appendChild(node);
 
-  xml::write_file(QFileInfo{targetDir.absoluteFilePath(
-                      tileset.Name() + TACTILE_QSTRING(u".tsx"))},
-                  document);
+  WriteXml(QFileInfo{targetDir.absoluteFilePath(tileset.Name() +
+                                                TACTILE_QSTRING(u".tsx"))},
+           document);
 }
 
 void save_property(QDomDocument& document,
@@ -320,10 +320,10 @@ void save_map_document_as_xml(const QString& path, const core::MapDocument& map)
   const QFileInfo info{path};
   const auto targetDir = info.dir();
 
-  QDomDocument document{};
+  QDomDocument document;
   create_root(document, map, targetDir, options);
 
-  xml::write_file(info, document);
+  WriteXml(info, document);
 }
 
 }  // namespace tactile

@@ -6,10 +6,14 @@
 
 #include "maybe.hpp"
 
-namespace tactile::xml {
+namespace tactile {
+
+[[nodiscard]] auto ReadXml(const QFileInfo& path) -> maybe<QDomDocument>;
+
+void WriteXml(const QFileInfo& path, const QDomDocument& document);
 
 template <std::constructible_from<int> T = int>
-[[nodiscard]] auto int_attr(const QDomElement& element, const QString& key)
+[[nodiscard]] auto GetIntAttr(const QDomElement& element, const QString& key)
     -> maybe<T>
 {
   bool ok{};
@@ -24,9 +28,9 @@ template <std::constructible_from<int> T = int>
 }
 
 template <std::constructible_from<int> T = int>
-[[nodiscard]] auto int_attr(const QDomElement& element,
-                            const QString& key,
-                            T fallback) -> T
+[[nodiscard]] auto GetIntAttr(const QDomElement& element,
+                              const QString& key,
+                              T fallback) -> T
 {
   bool ok{};
   if (const auto result = element.attribute(key).toInt(&ok); ok)
@@ -40,9 +44,9 @@ template <std::constructible_from<int> T = int>
 }
 
 template <std::constructible_from<double> T = double>
-[[nodiscard]] auto double_attr(const QDomElement& element,
-                               const QString& key,
-                               T fallback) -> T
+[[nodiscard]] auto GetDoubleAttr(const QDomElement& element,
+                                 const QString& key,
+                                 T fallback) -> T
 {
   bool ok{};
   if (const auto result = element.attribute(key).toDouble(&ok); ok)
@@ -56,7 +60,7 @@ template <std::constructible_from<double> T = double>
 }
 
 template <std::invocable<const QDomNode&> T>
-void each_elem(const QDomElement& element, const QString& tag, T&& callable)
+void VisitElements(const QDomElement& element, const QString& tag, T&& callable)
 {
   const auto elements = element.elementsByTagName(tag);
   const auto count = elements.count();
@@ -66,8 +70,4 @@ void each_elem(const QDomElement& element, const QString& tag, T&& callable)
   }
 }
 
-[[nodiscard]] auto from_file(const QFileInfo& path) -> maybe<QDomDocument>;
-
-void write_file(const QFileInfo& path, const QDomDocument& document);
-
-}  // namespace tactile::xml
+}  // namespace tactile

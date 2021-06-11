@@ -191,9 +191,9 @@ void create_external_tileset_file(const core::Tileset& tileset,
 
   document.setObject(object);
 
-  json::write_file(QFileInfo{targetDir.absoluteFilePath(
-                       tileset.Name() + TACTILE_QSTRING(u".json"))},
-                   document);
+  WriteJson(QFileInfo{targetDir.absoluteFilePath(
+                      tileset.Name() + TACTILE_QSTRING(u".json"))},
+                  document);
 }
 
 /**
@@ -401,7 +401,7 @@ void save_map_document_as_json(const QString& path,
   const auto targetDir = info.dir();
 
   document.setObject(create_root(map, targetDir, make_export_options()));
-  json::write_file(QFileInfo{path}, document);
+  WriteJson(QFileInfo{path}, document);
 }
 
 }  // namespace tactile

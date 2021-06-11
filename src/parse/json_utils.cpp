@@ -6,9 +6,9 @@
 #include "file_handle.hpp"
 #include "preferences.hpp"
 
-namespace tactile::json {
+namespace tactile {
 
-auto from_file(const QFileInfo& path) -> maybe<QJsonDocument>
+auto ReadJson(const QFileInfo& path) -> maybe<QJsonDocument>
 {
   file_handle file{path.absoluteFilePath()};
   if (!file.open(QFile::ReadOnly | QFile::Text))
@@ -26,7 +26,7 @@ auto from_file(const QFileInfo& path) -> maybe<QJsonDocument>
   return json;
 }
 
-auto write_file(const QFileInfo& path, const QJsonDocument& document) -> bool
+auto WriteJson(const QFileInfo& path, const QJsonDocument& document) -> bool
 {
   QSaveFile file{path.absoluteFilePath()};
 
@@ -50,4 +50,4 @@ auto write_file(const QFileInfo& path, const QJsonDocument& document) -> bool
   }
 }
 
-}  // namespace tactile::json
+}  // namespace tactile

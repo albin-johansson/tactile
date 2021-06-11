@@ -6,7 +6,7 @@
 
 using namespace tactile;
 
-TEST(JSONUtils, FromFile)
+TEST(JSONUtils, ReadJson)
 {
-  EXPECT_NO_THROW(json::from_file(QFileInfo{TACTILE_QSTRING(u"json/terrain.json")}));
+  EXPECT_NO_THROW(ReadJson(QFileInfo{TACTILE_QSTRING(u"json/terrain.json")}));
 }

@@ -2,11 +2,11 @@
 
 #include <QSaveFile>  // QSaveFile
 
-namespace tactile::xml {
+namespace tactile {
 
-auto from_file(const QFileInfo& path) -> maybe<QDomDocument>
+auto ReadXml(const QFileInfo& path) -> maybe<QDomDocument>
 {
-  QDomDocument document{};
+  QDomDocument document;
 
   QFile file{path.absoluteFilePath()};
   file.open(QFile::ReadOnly | QFile::Text);
@@ -26,7 +26,7 @@ auto from_file(const QFileInfo& path) -> maybe<QDomDocument>
   return document;
 }
 
-void write_file(const QFileInfo& path, const QDomDocument& document)
+void WriteXml(const QFileInfo& path, const QDomDocument& document)
 {
   QSaveFile file{path.absoluteFilePath()};
 
@@ -42,4 +42,4 @@ void write_file(const QFileInfo& path, const QDomDocument& document)
   }
 }
 
-}  // namespace tactile::xml
+}  // namespace tactile

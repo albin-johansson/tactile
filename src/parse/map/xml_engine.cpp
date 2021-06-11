@@ -106,7 +106,7 @@ auto xml_engine::root(const document_type& document) -> object_type
 
 auto xml_engine::from_file(const QFileInfo& path) -> maybe<document_type>
 {
-  return xml::from_file(path);
+  return ReadXml(path);
 }
 
 auto xml_engine::tileset_image_relative_path(const object_type& object)

@@ -5,7 +5,7 @@
 
 #include "maybe.hpp"
 
-namespace tactile::json {
+namespace tactile {
 
 /**
  * \brief Opens and returns the JSON file at the specified path.
@@ -16,7 +16,7 @@ namespace tactile::json {
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto from_file(const QFileInfo& path) -> maybe<QJsonDocument>;
+[[nodiscard]] auto ReadJson(const QFileInfo& path) -> maybe<QJsonDocument>;
 
 /**
  * \brief Writes a JSON document to the specified file path.
@@ -28,6 +28,6 @@ namespace tactile::json {
  *
  * \since 0.1.0
  */
-auto write_file(const QFileInfo& path, const QJsonDocument& document) -> bool;
+auto WriteJson(const QFileInfo& path, const QJsonDocument& document) -> bool;
 
-}  // namespace tactile::json
+}  // namespace tactile

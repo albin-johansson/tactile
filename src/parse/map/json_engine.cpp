@@ -21,7 +21,7 @@ auto json_engine::root(const document_type& document) -> object_type
 
 auto json_engine::from_file(const QFileInfo& path) -> maybe<document_type>
 {
-  return json::from_file(path);
+  return ReadJson(path);
 }
 
 auto json_engine::tilesets(const object_type& root) -> std::vector<object_type>
