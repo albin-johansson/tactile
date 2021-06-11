@@ -367,7 +367,7 @@ class MapParser final
 
     if (mEngine.IsTileLayer(object))
     {
-      layer.type = core::LayerType::tile_layer;
+      layer.type = core::LayerType::TileLayer;
 
       if (!ParseTileLayer(layer, object))
       {
@@ -376,7 +376,7 @@ class MapParser final
     }
     else if (mEngine.IsObjectLayer(object))
     {
-      layer.type = core::LayerType::object_layer;
+      layer.type = core::LayerType::ObjectLayer;
 
       if (!ParseObjectLayer(layer, object))
       {

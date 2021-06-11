@@ -13,8 +13,8 @@ namespace tactile::core {
  */
 enum class LayerType
 {
-  tile_layer,   ///< A layer consisting of only tiles.
-  object_layer  ///< A layer consisting of map objects.
+  TileLayer,   ///< A layer consisting of only tiles.
+  ObjectLayer  ///< A layer consisting of map objects.
 };
 
 }  // namespace tactile::core

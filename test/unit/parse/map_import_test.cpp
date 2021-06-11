@@ -36,7 +36,7 @@ void validate_layers(const core::MapDocument& document)
   {  // First layer
     const auto* layer = document.GetLayer(1_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::tile_layer, layer->Type());
+    ASSERT_EQ(core::LayerType::TileLayer, layer->Type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"G0"), layer->Name());
     EXPECT_EQ(1.0, layer->Opacity());
@@ -55,7 +55,7 @@ void validate_layers(const core::MapDocument& document)
   {  // Second layer
     const auto* layer = document.GetLayer(2_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::tile_layer, layer->Type());
+    ASSERT_EQ(core::LayerType::TileLayer, layer->Type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"T0"), layer->Name());
     EXPECT_EQ(0.75, layer->Opacity());
@@ -74,7 +74,7 @@ void validate_layers(const core::MapDocument& document)
   {  // Third layer
     const auto* layer = document.GetLayer(3_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::object_layer, layer->Type());
+    ASSERT_EQ(core::LayerType::ObjectLayer, layer->Type());
 
     EXPECT_EQ(TACTILE_QSTRING(u"O1"), layer->Name());
     EXPECT_EQ(1.0, layer->Opacity());

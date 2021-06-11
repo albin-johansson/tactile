@@ -82,11 +82,11 @@ namespace {
 {
   shared<core::ILayer> layer;
 
-  if (data.type == core::LayerType::tile_layer)
+  if (data.type == core::LayerType::TileLayer)
   {
     layer = MakeTileLayer(std::get<TileLayerData>(data.data));
   }
-  else if (data.type == core::LayerType::object_layer)
+  else if (data.type == core::LayerType::ObjectLayer)
   {
     layer = MakeObjectLayer(std::get<ObjectLayerData>(data.data));
   }

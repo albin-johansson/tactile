@@ -6,7 +6,7 @@
 
 namespace tactile::core {
 
-ObjectLayer::ObjectLayer() : mDelegate{LayerType::object_layer}
+ObjectLayer::ObjectLayer() : mDelegate{LayerType::ObjectLayer}
 {
   mDelegate.SetName(TACTILE_QSTRING(u"Object layer"));
 }

@@ -30,7 +30,7 @@ namespace tactile::core {
 }
 
 TileLayer::TileLayer(const row_t nRows, const col_t nCols)
-    : mDelegate{LayerType::tile_layer}
+    : mDelegate{LayerType::TileLayer}
 {
   if (nRows < 1_row || nCols < 1_col)
   {

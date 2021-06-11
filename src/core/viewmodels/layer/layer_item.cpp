@@ -11,10 +11,10 @@ namespace {
 {
   switch (type)
   {
-    case core::LayerType::tile_layer:
+    case core::LayerType::TileLayer:
       return IconTileLayer();
 
-    case core::LayerType::object_layer:
+    case core::LayerType::ObjectLayer:
       return IconObjectLayer();
 
     default:
