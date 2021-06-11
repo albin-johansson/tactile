@@ -6,7 +6,7 @@ namespace tactile {
 
 LayerListView::LayerListView(QWidget* parent) : QListView{parent}
 {
-  setObjectName(TACTILE_QSTRING(u"layer_list_view"));
+  setObjectName(TACTILE_QSTRING(u"LayerListView"));
 
   setContextMenuPolicy(Qt::CustomContextMenu);
   setSelectionBehavior(SelectRows);
