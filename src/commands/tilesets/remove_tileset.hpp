@@ -22,7 +22,7 @@ class RemoveTileset final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::remove_tileset);
+    return static_cast<int>(CommandId::RemoveTileset);
   }
 
  private:

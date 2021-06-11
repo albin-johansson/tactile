@@ -30,7 +30,7 @@ class RemoveRow final : public RepeatedMapCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::remove_row);
+    return static_cast<int>(CommandId::RemoveRow);
   }
 };
 

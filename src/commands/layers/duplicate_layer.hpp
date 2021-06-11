@@ -23,7 +23,7 @@ class DuplicateLayer final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::duplicate_layer);
+    return static_cast<int>(CommandId::DuplicateLayer);
   }
 
  private:

@@ -27,7 +27,7 @@ class ChangeOpacity final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::change_opacity);
+    return static_cast<int>(CommandId::ChangeOpacity);
   }
 
  private:

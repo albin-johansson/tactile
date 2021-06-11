@@ -24,7 +24,7 @@ class ChangePropertyType final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::change_property_type);
+    return static_cast<int>(CommandId::ChangePropertyType);
   }
 
  private:

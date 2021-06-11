@@ -25,7 +25,7 @@ class AddLayer final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::add_layer);
+    return static_cast<int>(CommandId::AddLayer);
   }
 
  private:

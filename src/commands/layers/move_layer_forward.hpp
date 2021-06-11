@@ -22,7 +22,7 @@ class MoveLayerForward final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::move_layer_forward);
+    return static_cast<int>(CommandId::MoveLayerForward);
   }
 
  private:

@@ -23,7 +23,7 @@ class SelectLayer final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::select_layer);
+    return static_cast<int>(CommandId::SelectLayer);
   }
 
  private:

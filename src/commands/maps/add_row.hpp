@@ -29,7 +29,7 @@ class AddRow final : public RepeatedCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::add_row);
+    return static_cast<int>(CommandId::AddRow);
   }
 
  private:

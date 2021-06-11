@@ -24,7 +24,7 @@ class AddTileset final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::add_tileset);
+    return static_cast<int>(CommandId::AddTileset);
   }
 
  private:
