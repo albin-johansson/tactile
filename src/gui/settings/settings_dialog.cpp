@@ -273,7 +273,7 @@ void SettingsDialog::OnImportNewTheme()
   ImportThemeDialog::Spawn(
       [this](const QString& path) {
         const auto name = QFileInfo{path}.baseName();
-        if (const auto palette = parse_palette(path))
+        if (const auto palette = ParsePalette(path))
         {
           if (register_theme(name, *palette))
           {

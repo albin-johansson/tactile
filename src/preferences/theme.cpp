@@ -40,7 +40,7 @@ void validate_themes()
 
   for (const auto& [name, path] : themes)
   {
-    const auto palette = parse_palette(path.toString());
+    const auto palette = ParsePalette(path.toString());
     Q_ASSERT(palette);
     palettes.try_emplace(name, palette.value());
   }

@@ -4,14 +4,15 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+#include "file_handle.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile {
 namespace {
 
-void parse_group(const QJsonObject& json,
-                 QPalette& palette,
-                 const QPalette::ColorGroup group = QPalette::ColorGroup::All)
+void ParseGroup(const QJsonObject& json,
+                QPalette& palette,
+                const QPalette::ColorGroup group = QPalette::ColorGroup::All)
 {
   const auto setIfExists = [&](const QPalette::ColorRole role, cz16string key) {
     if (const auto it = json.find(key); it != json.end())
@@ -51,18 +52,18 @@ void parse_group(const QJsonObject& json,
   setIfExists(QPalette::ColorRole::LinkVisited, u"LinkVisited");
 }
 
-[[nodiscard]] auto get_json_object(const QString& file) -> maybe<QJsonObject>
+[[nodiscard]] auto GetJsonObject(const QString& file)
+    -> std::optional<QJsonObject>
 {
-  QFile themeFile{file};
-
-  if (!themeFile.exists())
+  FileHandle themeFile{file};
+  if (!themeFile.Exists())
   {
     return std::nullopt;
   }
 
   themeFile.open(QFile::ReadOnly | QFile::Text);
 
-  const auto document = QJsonDocument::fromJson(themeFile.readAll());
+  const auto document = QJsonDocument::fromJson(themeFile.read());
   if (document.isNull())
   {
     return std::nullopt;
@@ -74,17 +75,17 @@ void parse_group(const QJsonObject& json,
 
 }  // namespace
 
-auto parse_palette(const QString& file) -> maybe<QPalette>
+auto ParsePalette(const QString& file) -> std::optional<QPalette>
 {
   QPalette palette;
 
-  const auto json = get_json_object(file);
+  const auto json = GetJsonObject(file);
   if (!json)
   {
     return std::nullopt;
   }
 
-  parse_group(*json, palette);
+  ParseGroup(*json, palette);
 
   if (const auto it = json->find(u"disabled"); it != json->end())
   {
@@ -92,7 +93,7 @@ auto parse_palette(const QString& file) -> maybe<QPalette>
     Q_ASSERT(item.isObject());
 
     const auto obj = item.toObject();
-    parse_group(obj, palette, QPalette::ColorGroup::Disabled);
+    ParseGroup(obj, palette, QPalette::ColorGroup::Disabled);
   }
 
   return palette;

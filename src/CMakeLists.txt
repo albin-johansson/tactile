@@ -330,6 +330,8 @@ set(TACTILE_SOURCE_FILES
 
     parse/json_utils.cpp
     parse/json_utils.hpp
+    parse/parse_palette.cpp
+    parse/parse_palette.hpp
     parse/xml_utils.cpp
     parse/xml_utils.hpp
 
@@ -352,9 +354,6 @@ set(TACTILE_SOURCE_FILES
     parse/map/xml_element.hpp
     parse/map/xml_engine.cpp
     parse/map/xml_engine.hpp
-
-    parse/palette/parse_palette.cpp
-    parse/palette/parse_palette.hpp
 
     preferences/preferences.cpp
     preferences/preferences.hpp
@@ -438,7 +437,6 @@ target_include_directories(libTactile
     PUBLIC mouse-tools
     PUBLIC parse
     PUBLIC parse/map
-    PUBLIC parse/palette
     PUBLIC preferences
     PUBLIC util)
 

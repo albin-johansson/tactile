@@ -2,32 +2,37 @@
 
 namespace tactile {
 
-file_handle::file_handle(const QString& path) : m_file{path}
+FileHandle::FileHandle(const QString& path) : mFile{path}
 {}
 
-file_handle::~file_handle()
+FileHandle::~FileHandle()
 {
-  m_file.close();
+  mFile.close();
 }
 
-auto file_handle::open(const QFile::OpenMode mode) -> bool
+auto FileHandle::open(const QFile::OpenMode mode) -> bool
 {
-  return m_file.open(mode);
+  return mFile.open(mode);
 }
 
-auto file_handle::read() -> QByteArray
+auto FileHandle::Read() -> QByteArray
 {
-  return m_file.readAll();
+  return mFile.readAll();
 }
 
-auto file_handle::file() -> QFile&
+auto FileHandle::File() -> QFile&
 {
-  return m_file;
+  return mFile;
 }
 
-auto file_handle::file() const -> const QFile&
+auto FileHandle::File() const -> const QFile&
 {
-  return m_file;
+  return mFile;
+}
+
+auto FileHandle::Exists() const -> bool
+{
+  return mFile.exists();
 }
 
 }  // namespace tactile

@@ -5,23 +5,25 @@
 
 namespace tactile {
 
-class file_handle final
+class FileHandle final
 {
  public:
-  explicit file_handle(const QString& path);
+  explicit FileHandle(const QString& path);
 
-  ~file_handle();
+  ~FileHandle();
 
   auto open(QFile::OpenMode mode) -> bool;
 
-  [[nodiscard]] auto read() -> QByteArray;
+  [[nodiscard]] auto Read() -> QByteArray;
 
-  [[nodiscard]] auto file() -> QFile&;
+  [[nodiscard]] auto File() -> QFile&;
 
-  [[nodiscard]] auto file() const -> const QFile&;
+  [[nodiscard]] auto File() const -> const QFile&;
+
+  [[nodiscard]] auto Exists() const -> bool;
 
  private:
-  QFile m_file;
+  QFile mFile;
 };
 
 }  // namespace tactile

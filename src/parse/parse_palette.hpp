@@ -2,9 +2,9 @@
 
 #include <QPalette>  // QPalette
 #include <QString>   // QString
+#include <optional>  // optional
 
 #include "czstring.hpp"
-#include "maybe.hpp"
 
 namespace tactile {
 
@@ -18,6 +18,6 @@ namespace tactile {
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto parse_palette(const QString& file) -> maybe<QPalette>;
+[[nodiscard]] auto ParsePalette(const QString& file) -> std::optional<QPalette>;
 
 }  // namespace tactile
