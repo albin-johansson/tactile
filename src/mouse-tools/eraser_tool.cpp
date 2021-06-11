@@ -21,8 +21,7 @@ void EraserTool::UpdateEraser(QMouseEvent* event, const QPointF& mapPosition)
 
     if (event->buttons() & Qt::MouseButton::LeftButton)
     {
-      const auto pos = TranslateMousePosition(event->pos(), mapPosition);
-      if (pos)
+      if (const auto pos = TranslateMousePosition(event->pos(), mapPosition))
       {
         if (!mOldState.contains(*pos))
         {
