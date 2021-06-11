@@ -48,9 +48,9 @@ class StampTool final : public AMouseTool
   vector_map<core::Position, tile_id> mOldState;
   vector_map<core::Position, tile_id> mSequence;
 
-  void update_stamp_sequence(core::MapDocument& map,
-                             const core::Tileset& tileset,
-                             const core::Position& origin);
+  void UpdateStampSequence(core::MapDocument& map,
+                           const core::Tileset& tileset,
+                           const core::Position& origin);
 };
 
 }  // namespace tactile

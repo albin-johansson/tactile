@@ -13,15 +13,15 @@ StampTool::StampTool(Model* model) : AMouseTool{model}
   mSequence.reserve(32);
 }
 
-void StampTool::update_stamp_sequence(MapDocument& map,
-                                      const Tileset& ts,
-                                      const Position& origin)
+void StampTool::UpdateStampSequence(MapDocument& map,
+                                    const Tileset& tileset,
+                                    const Position& origin)
 {
   const auto callable = [&](const Position& mapPos,
                             const Position& tilesetPos) {
     if (map.InBounds(mapPos))
     {
-      const auto newID = ts.TileAt(tilesetPos);
+      const auto newID = tileset.TileAt(tilesetPos);
 
       auto* tileLayer = map.GetTileLayer(map.CurrentLayerId().value());
       Q_ASSERT(tileLayer);
@@ -36,7 +36,7 @@ void StampTool::update_stamp_sequence(MapDocument& map,
     }
   };
 
-  ts.VisitSelection(origin, callable);
+  tileset.VisitSelection(origin, callable);
 }
 
 void StampTool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
@@ -54,7 +54,7 @@ void StampTool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
       const auto pos = TranslateMousePosition(event->pos(), mapPosition);
       if (pos)
       {
-        update_stamp_sequence(*document, *tileset, *pos);
+        UpdateStampSequence(*document, *tileset, *pos);
         emit GetModel()->S_Redraw();
       }
     }
@@ -77,7 +77,7 @@ void StampTool::OnMoved(QMouseEvent* event, const QPointF& mapPosition)
 
       if (event->buttons() & Qt::MouseButton::LeftButton)
       {
-        update_stamp_sequence(*document, *tileset, *pos);
+        UpdateStampSequence(*document, *tileset, *pos);
       }
 
       emit GetModel()->S_Redraw();
