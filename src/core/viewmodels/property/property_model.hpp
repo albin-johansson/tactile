@@ -32,7 +32,7 @@ class PropertyModel final : public QStandardItemModel
    * \param manager the associated property manager.
    * \param parent the parent object.
    *
-   * \throws tactile_error if `manager` is null.
+   * \throws TactileError if `manager` is null.
    *
    * \since 0.2.0
    */

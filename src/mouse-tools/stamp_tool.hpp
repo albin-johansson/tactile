@@ -22,11 +22,11 @@ class StampTool final : public AMouseTool
 {
  public:
   /**
-   * \brief Creates an `stamp_tool` instance.
+   * \brief Creates a stamp tool.
    *
    * \param model a pointer to the associated model, cannot be null.
    *
-   * \throws tactile_error if the supplied pointer is null.
+   * \throws TactileError if the supplied pointer is null.
    *
    * \since 0.1.0
    */

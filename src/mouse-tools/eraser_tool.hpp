@@ -20,11 +20,11 @@ class EraserTool final : public AMouseTool
 {
  public:
   /**
-   * \brief Creates an `eraser_tool` instance.
+   * \brief Creates an eraser tool.
    *
    * \param model a pointer to the associated model, cannot be null.
    *
-   * \throws tactile_error if the supplied pointer is null.
+   * \throws TactileError if the supplied pointer is null.
    *
    * \since 0.1.0
    */
@@ -45,8 +45,8 @@ class EraserTool final : public AMouseTool
    * \brief Updates the state of the eraser, by erasing the tile at the mouse
    * position.
    *
-   * \details This function is meant to be called from the `pressed` and `moved`
-   * functions.
+   * \details This function is meant to be called from the `OnPressed` and
+   * `OnMoved` functions.
    *
    * \param event the associated event.
    * \param mapPosition the current position of the map.

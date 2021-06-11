@@ -134,7 +134,7 @@ class file_item final : public QStandardItem
  * \param item a pointer to the property that will be updated.
  * \param property the property which will be used as the new item data.
  *
- * \throws tactile_error if the supplied item isn't a property item.
+ * \throws TactileError if the supplied item isn't a property item.
  *
  * \since 0.2.0
  */

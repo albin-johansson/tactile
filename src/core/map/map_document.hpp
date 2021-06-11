@@ -57,7 +57,7 @@ class MapDocument final : public ADocument
    * \param nCols the initial number of columns in the map.
    * \param parent the parent object.
    *
-   * \throws tactile_error if `nRows` or `nCols` aren't greater than 0.
+   * \throws TactileError if `nRows` or `nCols` aren't greater than 0.
    *
    * \since 0.1.0
    */

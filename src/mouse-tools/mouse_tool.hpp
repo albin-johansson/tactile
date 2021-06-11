@@ -121,7 +121,7 @@ class AMouseTool
    *
    * \param model a pointer to the associated model, cannot be null.
    *
-   * \throws tactile_error if the supplied pointer is null.
+   * \throws TactileError if the supplied pointer is null.
    *
    * \since 0.1.0
    */

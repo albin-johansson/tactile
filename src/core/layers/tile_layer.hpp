@@ -38,7 +38,7 @@ class TileLayer final : public ILayer
    * \param nRows the initial number of rows in the layer.
    * \param nCols the initial number of columns in the layer.
    *
-   * \throws tactile_error if `nRows` or `nCols` aren't greater than 0.
+   * \throws TactileError if `nRows` or `nCols` aren't greater than 0.
    *
    * \since 0.1.0
    */

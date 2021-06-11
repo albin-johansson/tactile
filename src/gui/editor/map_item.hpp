@@ -29,7 +29,7 @@ class MapItem final : public QGraphicsItem
    * \param map the associated map document, cannot be null.
    * \param parent the parent item.
    *
-   * \throws tactile_error if the supplied map document is null.
+   * \throws TactileError if the supplied map document is null.
    *
    * \since 0.1.0
    */

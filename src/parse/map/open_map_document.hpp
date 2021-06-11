@@ -19,7 +19,7 @@ namespace tactile {
  *
  * \return a pointer to the created map document; null if something went wrong.
  *
- * \throw tactile_error if the file extension isn't recognized.
+ * \throw TactileError if the file extension isn't recognized.
  *
  * \since 0.1.0
  */

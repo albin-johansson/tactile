@@ -54,7 +54,7 @@ class Map final
    * \param nRows the initial number of rows in the map.
    * \param nCols the initial number of columns in the map.
    *
-   * \throws tactile_error if `nRows` or `nCols` aren't greater than 0.
+   * \throws TactileError if `nRows` or `nCols` aren't greater than 0.
    *
    * \since 0.1.0
    */

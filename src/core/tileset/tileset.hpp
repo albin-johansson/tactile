@@ -47,8 +47,8 @@ class Tileset final
    * \param tileWidth the width of the tiles in the tileset.
    * \param tileHeight the height of the tiles in the tileset.
    *
-   * \throws tactile_error if the supplied image is null.
-   * \throws tactile_error if the supplied tile width or height are less than 1.
+   * \throws TactileError if the supplied image is null.
+   * \throws TactileError if the supplied tile width or height are less than 1.
    *
    * \since 0.1.0
    */
@@ -65,8 +65,8 @@ class Tileset final
    * \param tileWidth the width of the tiles in the tileset.
    * \param tileHeight the height of the tiles in the tileset.
    *
-   * \throws tactile_error if the tileset cannot be created.
-   * \throws tactile_error if the supplied tile width or height are less than 1.
+   * \throws TactileError if the tileset cannot be created.
+   * \throws TactileError if the supplied tile width or height are less than 1.
    *
    * \since 0.1.0
    */

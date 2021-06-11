@@ -18,11 +18,11 @@ class BucketTool final : public AMouseTool
 {
  public:
   /**
-   * \brief Creates a `bucket_tool` instance.
+   * \brief Creates a bucket tool.
    *
    * \param model a pointer to the associated model, cannot be null.
    *
-   * \throws tactile_error if the supplied pointer is null.
+   * \throws TactileError if the supplied pointer is null.
    *
    * \since 0.1.0
    */
