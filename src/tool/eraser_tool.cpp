@@ -6,14 +6,14 @@
 
 namespace tactile {
 
-eraser_tool::eraser_tool(core::model* model) : abstract_tool{model}
+eraser_tool::eraser_tool(core::Model* model) : abstract_tool{model}
 {
   m_oldState.reserve(20);
 }
 
 void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_document())
+  if (auto* document = get_model()->CurrentDocument())
   {
     const auto id = document->CurrentLayerId().value();
     auto* tileLayer = document->GetTileLayer(id);
@@ -30,7 +30,7 @@ void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
         }
 
         tileLayer->SetTile(*pos, empty);
-        emit get_model()->redraw();
+        emit get_model()->S_Redraw();
       }
     }
   }
@@ -48,7 +48,7 @@ void eraser_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 
 void eraser_tool::released(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_document())
+  if (auto* document = get_model()->CurrentDocument())
   {
     if (event->button() == Qt::MouseButton::LeftButton)
     {

@@ -10,7 +10,7 @@
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, model)
+TACTILE_FORWARD_DECLARE(tactile::core, Model)
 TACTILE_FORWARD_DECLARE(tactile, Window)
 
 namespace tactile {
@@ -43,7 +43,7 @@ class tactile_app final : public QApplication
 
  private:
   unique<Window> m_window;
-  unique<core::model> m_model;
+  unique<core::Model> m_model;
 
   void init_connections();
 

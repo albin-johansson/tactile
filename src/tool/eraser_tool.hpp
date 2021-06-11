@@ -28,7 +28,7 @@ class eraser_tool final : public abstract_tool
    *
    * \since 0.1.0
    */
-  explicit eraser_tool(core::model* model);
+  explicit eraser_tool(core::Model* model);
 
   ~eraser_tool() noexcept override = default;
 

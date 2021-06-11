@@ -30,7 +30,7 @@ class stamp_tool final : public abstract_tool
    *
    * \since 0.1.0
    */
-  explicit stamp_tool(core::model* model);
+  explicit stamp_tool(core::Model* model);
 
   ~stamp_tool() noexcept override = default;
 

@@ -7,7 +7,7 @@ namespace tactile {
 
 using namespace core;
 
-stamp_tool::stamp_tool(model* model) : abstract_tool{model}
+stamp_tool::stamp_tool(Model* model) : abstract_tool{model}
 {
   m_oldState.reserve(20);
   m_sequence.reserve(20);
@@ -41,7 +41,7 @@ void stamp_tool::update_stamp_sequence(MapDocument& map,
 
 void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_document())
+  if (auto* document = get_model()->CurrentDocument())
   {
     auto* tileset = document->CurrentTileset();
     if (!tileset || !tileset->GetSelection().has_value())
@@ -55,7 +55,7 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
       if (pos)
       {
         update_stamp_sequence(*document, *tileset, *pos);
-        emit get_model()->redraw();
+        emit get_model()->S_Redraw();
       }
     }
   }
@@ -63,7 +63,7 @@ void stamp_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 
 void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->current_document())
+  if (auto* document = get_model()->CurrentDocument())
   {
     const auto* tileset = document->CurrentTileset();
     if (!tileset || !tileset->GetSelection())
@@ -74,26 +74,26 @@ void stamp_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
     const auto pos = translate_mouse_position(event->pos(), mapPosition);
     if (pos)
     {
-      emit get_model()->enable_stamp_preview(*pos);
+      emit get_model()->S_EnableStampPreview(*pos);
 
       if (event->buttons() & Qt::MouseButton::LeftButton)
       {
         update_stamp_sequence(*document, *tileset, *pos);
       }
 
-      emit get_model()->redraw();
+      emit get_model()->S_Redraw();
     }
     else
     {
       // mouse is outside of map, so disable preview
-      emit get_model()->disable_stamp_preview();
+      emit get_model()->S_DisableStampPreview();
     }
   }
 }
 
 void stamp_tool::released(QMouseEvent* event, const QPointF&)
 {
-  if (auto* document = get_model()->current_document())
+  if (auto* document = get_model()->CurrentDocument())
   {
     auto* tileset = document->CurrentTileset();
     if (!tileset || !tileset->GetSelection())
@@ -114,12 +114,12 @@ void stamp_tool::released(QMouseEvent* event, const QPointF&)
 
 void stamp_tool::exited(QEvent*)
 {
-  emit get_model()->disable_stamp_preview();
+  emit get_model()->S_DisableStampPreview();
 }
 
 void stamp_tool::disable()
 {
-  emit get_model()->disable_stamp_preview();
+  emit get_model()->S_DisableStampPreview();
 }
 
 }  // namespace tactile

@@ -7,7 +7,7 @@
 #include "maybe.hpp"
 #include "position.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, model)
+TACTILE_FORWARD_DECLARE(tactile::core, Model)
 
 namespace tactile {
 
@@ -118,7 +118,7 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  explicit abstract_tool(core::model* model);
+  explicit abstract_tool(core::Model* model);
 
   /**
    * \brief Returns a pointer to the associated model.
@@ -129,12 +129,12 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_model() noexcept -> core::model*;
+  [[nodiscard]] auto get_model() noexcept -> core::Model*;
 
   /**
    * \copydoc get_model()
    */
-  [[nodiscard]] auto get_model() const noexcept -> const core::model*;
+  [[nodiscard]] auto get_model() const noexcept -> const core::Model*;
 
   /**
    * \brief Translates a mouse position to a row/col map coordinate if the mouse
@@ -153,7 +153,7 @@ class abstract_tool
       -> maybe<core::Position>;
 
  private:
-  core::model* m_model{};
+  core::Model* m_model{};
 };
 
 }  // namespace tactile

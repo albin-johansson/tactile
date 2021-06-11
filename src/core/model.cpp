@@ -6,18 +6,18 @@
 
 namespace tactile::core {
 
-model::model() : m_tools{this}
+Model::Model() : mTools{this}
 {}
 
-auto model::add_map() -> map_id
+auto Model::AddMap() -> map_id
 {
-  return add_map(new MapDocument{5_row, 5_col, this});
+  return AddMap(new MapDocument{5_row, 5_col, this});
 }
 
-auto model::add_map(MapDocument* document) -> map_id
+auto Model::AddMap(MapDocument* document) -> map_id
 {
   Q_ASSERT(document);
-  Q_ASSERT(!m_documents.contains(m_nextId));
+  Q_ASSERT(!mDocuments.contains(mNextId));
 
   document->setParent(this);
 
@@ -26,305 +26,305 @@ auto model::add_map(MapDocument* document) -> map_id
   };
 
   // clang-format off
-  bind(&MapDocument::S_Redraw,                   &model::redraw);
-  bind(&MapDocument::S_UndoStateUpdated,       &model::undo_state_updated);
-  bind(&MapDocument::S_RedoStateUpdated,       &model::redo_state_updated);
-  bind(&MapDocument::S_UndoTextUpdated,        &model::undo_text_updated);
-  bind(&MapDocument::S_RedoTextUpdated,        &model::redo_text_updated);
-  bind(&MapDocument::S_CleanChanged,            &model::clean_changed);
-  bind(&MapDocument::S_RemovedTileset,          &model::removed_tileset);
-  bind(&MapDocument::S_RenamedTileset,          &model::renamed_tileset);
-  bind(&MapDocument::S_AddedLayer,              &model::added_layer);
-  bind(&MapDocument::S_AddedDuplicatedLayer,   &model::added_duplicated_layer);
-  bind(&MapDocument::S_RemovedLayer,            &model::removed_layer);
-  bind(&MapDocument::S_SelectedLayer,           &model::selected_layer);
-  bind(&MapDocument::S_MovedLayerBack,         &model::moved_layer_back);
-  bind(&MapDocument::S_MovedLayerForward,      &model::moved_layer_forward);
-  bind(&MapDocument::S_AddedProperty,           &model::added_property);
-  bind(&MapDocument::S_AboutToRemoveProperty, &model::about_to_remove_property);
-  bind(&MapDocument::S_UpdatedProperty,         &model::updated_property);
-  bind(&MapDocument::S_RenamedProperty,         &model::renamed_property);
-  bind(&MapDocument::S_ChangedPropertyType,    &model::changed_property_type);
+  bind(&MapDocument::S_Redraw,                &Model::S_Redraw);
+  bind(&MapDocument::S_UndoStateUpdated,      &Model::S_UndoStateUpdated);
+  bind(&MapDocument::S_RedoStateUpdated,      &Model::S_RedoStateUpdated);
+  bind(&MapDocument::S_UndoTextUpdated,       &Model::S_UndoTextUpdated);
+  bind(&MapDocument::S_RedoTextUpdated,       &Model::S_RedoTextUpdated);
+  bind(&MapDocument::S_CleanChanged,          &Model::S_CleanChanged);
+  bind(&MapDocument::S_RemovedTileset,        &Model::S_RemovedTileset);
+  bind(&MapDocument::S_RenamedTileset,        &Model::S_RenamedTileset);
+  bind(&MapDocument::S_AddedLayer,            &Model::S_AddedLayer);
+  bind(&MapDocument::S_AddedDuplicatedLayer,  &Model::S_AddedDuplicatedLayer);
+  bind(&MapDocument::S_RemovedLayer,          &Model::S_RemovedLayer);
+  bind(&MapDocument::S_SelectedLayer,         &Model::S_SelectedLayer);
+  bind(&MapDocument::S_MovedLayerBack,        &Model::S_MovedLayerBack);
+  bind(&MapDocument::S_MovedLayerForward,     &Model::S_MovedLayerForward);
+  bind(&MapDocument::S_AddedProperty,         &Model::S_AddedProperty);
+  bind(&MapDocument::S_AboutToRemoveProperty, &Model::S_AboutToRemoveProperty);
+  bind(&MapDocument::S_UpdatedProperty,       &Model::S_UpdatedProperty);
+  bind(&MapDocument::S_RenamedProperty,       &Model::S_RenamedProperty);
+  bind(&MapDocument::S_ChangedPropertyType,   &Model::S_ChangedPropertyType);
   // clang-format on
 
   bind(&MapDocument::S_AddedTileset, [this](const tileset_id id) {
-    const auto& tileset = current_document()->GetTilesets()->At(id);
-    emit added_tileset(current_map_id().value(), id, tileset);
+    const auto& tileset = CurrentDocument()->GetTilesets()->At(id);
+    emit S_AddedTileset(CurrentMapId().value(), id, tileset);
   });
 
   bind(&MapDocument::S_ShowProperties,
-       [this] { emit show_map_properties(current_document()); });
+       [this] { emit S_ShowMapProperties(CurrentDocument()); });
 
   bind(&MapDocument::S_ShowLayerProperties, [this](const layer_id id) {
-    emit show_layer_properties(current_document()->GetLayer(id));
+    emit S_ShowLayerProperties(CurrentDocument()->GetLayer(id));
   });
 
-  const auto id = m_nextId;
-  m_documents.emplace(id, document);
-  m_currentMap = id;
+  const auto id = mNextId;
+  mDocuments.emplace(id, document);
+  mCurrentMap = id;
 
-  ++m_nextId;
+  ++mNextId;
 
-  emit_undo_redo_update();
+  EmitUndoRedoUpdate();
 
   return id;
 }
 
-auto model::has_active_map() const noexcept -> bool
+auto Model::HasActiveMap() const noexcept -> bool
 {
-  return m_currentMap.has_value();
+  return mCurrentMap.has_value();
 }
 
-auto model::get_document(const map_id id) -> MapDocument*
+auto Model::GetDocument(const map_id id) -> MapDocument*
 {
-  return m_documents.at(id);
+  return mDocuments.at(id);
 }
 
-auto model::current_map_id() const -> maybe<map_id>
+auto Model::CurrentMapId() const -> maybe<map_id>
 {
-  return m_currentMap;
+  return mCurrentMap;
 }
 
-auto model::current_document() -> MapDocument*
+auto Model::CurrentDocument() -> MapDocument*
 {
-  return m_currentMap ? m_documents.at(m_currentMap.value()) : nullptr;
+  return mCurrentMap ? mDocuments.at(mCurrentMap.value()) : nullptr;
 }
 
-auto model::current_document() const -> const MapDocument*
+auto Model::CurrentDocument() const -> const MapDocument*
 {
-  return m_currentMap ? m_documents.at(m_currentMap.value()) : nullptr;
+  return mCurrentMap ? mDocuments.at(mCurrentMap.value()) : nullptr;
 }
 
-void model::undo()
+void Model::Undo()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->Undo();
 }
 
-void model::redo()
+void Model::Redo()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->Redo();
 }
 
-void model::resize_map(const row_t nRows, const col_t nCols)
+void Model::ResizeMap(const row_t nRows, const col_t nCols)
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->Resize(nRows, nCols);
 }
 
-void model::add_row()
+void Model::AddRow()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->AddRow();
 }
 
-void model::add_col()
+void Model::AddColumn()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->AddColumn();
 }
 
-void model::remove_row()
+void Model::RemoveRow()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->RemoveRow();
 }
 
-void model::remove_col()
+void Model::RemoveColumn()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->RemoveColumn();
 }
 
-void model::add_layer()
+void Model::AddLayer()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->AddTileLayer();
 }
 
-void model::remove_layer(const layer_id id)
+void Model::RemoveLayer(const layer_id id)
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->RemoveLayer(id);
 }
 
-void model::select_layer(const layer_id id)
+void Model::SelectLayer(const layer_id id)
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->SelectLayer(id);
 }
 
-void model::select_tool(const tool_id id)
+void Model::SelectTool(const tool_id id)
 {
-  m_tools.select(id);
+  mTools.select(id);
 }
 
-void model::select_tileset(const tileset_id id)
+void Model::SelectTileset(const tileset_id id)
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->SelectTileset(id);
 }
 
-void model::set_tileset_selection(const TilesetSelection& selection)
+void Model::SetTilesetSelection(const TilesetSelection& selection)
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->SetTilesetSelection(selection);
 }
 
-void model::increase_tile_size()
+void Model::IncreaseTileSize()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->IncreaseTileSize();
 }
 
-void model::decrease_tile_size()
+void Model::DecreaseTileSize()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->DecreaseTileSize();
 }
 
-void model::reset_tile_size()
+void Model::ResetTileSize()
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->ResetTileSize();
 }
 
-void model::create_tileset(const QImage& image,
-                           const QFileInfo& path,
-                           const QString& name,
-                           const tile_width tileWidth,
-                           const tile_height tileHeight)
+void Model::CreateTileset(const QImage& image,
+                          const QFileInfo& path,
+                          const QString& name,
+                          const tile_width tileWidth,
+                          const tile_height tileHeight)
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->AddTileset(image, path, name, tileWidth, tileHeight);
 }
 
-void model::remove_tileset(const tileset_id id)
+void Model::RemoveTileset(const tileset_id id)
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->RemoveTileset(id);
 }
 
-void model::set_tileset_name(const tileset_id id, const QString& name)
+void Model::SetTilesetName(const tileset_id id, const QString& name)
 {
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
   document->SetTilesetName(id, name);
 }
 
-void model::select_map(const map_id id)
+void Model::SelectMap(const map_id id)
 {
-  Q_ASSERT(m_documents.contains(id));
+  Q_ASSERT(mDocuments.contains(id));
 
-  if (m_currentMap != id)
+  if (mCurrentMap != id)
   {
-    m_currentMap = id;
-    emit_undo_redo_update();
-    emit clean_changed(current_document()->IsClean());
+    mCurrentMap = id;
+    EmitUndoRedoUpdate();
+    emit S_CleanChanged(CurrentDocument()->IsClean());
   }
 
-  auto* document = current_document();
+  auto* document = CurrentDocument();
   Q_ASSERT(document);
 
-  emit switched_map(id, document);
+  emit S_SwitchedMap(id, document);
 }
 
-void model::close_map(const map_id id)
+void Model::CloseMap(const map_id id)
 {
-  Q_ASSERT(m_documents.contains(id));
+  Q_ASSERT(mDocuments.contains(id));
 
-  m_documents.at(id)->disconnect();
-  m_documents.erase(id);
+  mDocuments.at(id)->disconnect();
+  mDocuments.erase(id);
 
-  if (m_currentMap && (m_currentMap->get() == id.get()))
+  if (mCurrentMap && (mCurrentMap->get() == id.get()))
   {
-    m_currentMap = std::nullopt;
-    emit_undo_redo_update();
+    mCurrentMap = std::nullopt;
+    EmitUndoRedoUpdate();
   }
 
-  if (!m_documents.empty())
+  if (!mDocuments.empty())
   {
-    m_currentMap = m_documents.begin()->first;
-    emit_undo_redo_update();
+    mCurrentMap = mDocuments.begin()->first;
+    EmitUndoRedoUpdate();
   }
 }
 
-void model::mouse_pressed(QMouseEvent* event, const QPointF& mapPosition)
+void Model::OnMousePressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  m_tools.pressed(event, mapPosition);
+  mTools.pressed(event, mapPosition);
 }
 
-void model::mouse_moved(QMouseEvent* event, const QPointF& mapPosition)
+void Model::OnMouseMoved(QMouseEvent* event, const QPointF& mapPosition)
 {
-  m_tools.moved(event, mapPosition);
+  mTools.moved(event, mapPosition);
 }
 
-void model::mouse_released(QMouseEvent* event, const QPointF& mapPosition)
+void Model::OnMouseReleased(QMouseEvent* event, const QPointF& mapPosition)
 {
-  m_tools.released(event, mapPosition);
+  mTools.released(event, mapPosition);
 }
 
-void model::mouse_entered(QEvent* event)
+void Model::OnMouseEntered(QEvent* event)
 {
-  m_tools.entered(event);
+  mTools.entered(event);
 }
 
-void model::mouse_exited(QEvent* event)
+void Model::OnMouseExited(QEvent* event)
 {
-  m_tools.exited(event);
+  mTools.exited(event);
 }
 
-void model::emit_undo_redo_update()
+void Model::EmitUndoRedoUpdate()
 {
-  if (const auto* document = current_document())
+  if (const auto* document = CurrentDocument())
   {
-    emit undo_state_updated(document->CanUndo());
-    emit redo_state_updated(document->CanRedo());
-    emit undo_text_updated(document->GetUndoText());
-    emit redo_text_updated(document->GetRedoText());
+    emit S_UndoStateUpdated(document->CanUndo());
+    emit S_RedoStateUpdated(document->CanRedo());
+    emit S_UndoTextUpdated(document->GetUndoText());
+    emit S_RedoTextUpdated(document->GetRedoText());
   }
   else
   {
-    emit undo_state_updated(false);
-    emit redo_state_updated(false);
-    emit undo_text_updated(TACTILE_QSTRING(u""));
-    emit redo_text_updated(TACTILE_QSTRING(u""));
+    emit S_UndoStateUpdated(false);
+    emit S_RedoStateUpdated(false);
+    emit S_UndoTextUpdated(TACTILE_QSTRING(u""));
+    emit S_RedoTextUpdated(TACTILE_QSTRING(u""));
   }
 }
 

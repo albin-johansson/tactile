@@ -203,22 +203,22 @@ void Window::ForceRedraw()
   mEditor->ForceRedraw();
 }
 
-void Window::ShowMapProperties(not_null<core::IPropertyManager*> manager)
+void Window::OnShowMapProperties(not_null<core::IPropertyManager*> manager)
 {
   mPropertiesDock->ShowMapProperties(manager);
 }
 
-void Window::ShowLayerProperties(not_null<core::IPropertyManager*> manager)
+void Window::OnShowLayerProperties(not_null<core::IPropertyManager*> manager)
 {
   mPropertiesDock->ShowLayerProperties(manager);
 }
 
-void Window::EnableStampPreview(const core::Position& position)
+void Window::OnEnableStampPreview(const core::Position& position)
 {
   mEditor->EnableStampPreview(position);
 }
 
-void Window::DisableStampPreview()
+void Window::OnDisableStampPreview()
 {
   mEditor->DisableStampPreview();
 }

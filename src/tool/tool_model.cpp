@@ -7,7 +7,7 @@
 
 namespace tactile {
 
-tool_model::tool_model(core::model* model)
+tool_model::tool_model(core::Model* model)
 {
   m_tools.emplace(tool_id::none, nullptr);
   m_tools.emplace(tool_id::stamp, std::make_unique<stamp_tool>(model));

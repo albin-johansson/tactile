@@ -26,7 +26,7 @@ class bucket_tool final : public abstract_tool
    *
    * \since 0.1.0
    */
-  explicit bucket_tool(core::model* model);
+  explicit bucket_tool(core::Model* model);
 
   void pressed(QMouseEvent* event, const QPointF& mapPosition) override;
 };

@@ -8,7 +8,7 @@ namespace tactile {
 
 using namespace core;
 
-abstract_tool::abstract_tool(core::model* model) : m_model{model}
+abstract_tool::abstract_tool(core::Model* model) : m_model{model}
 {
   if (!m_model)
   {
@@ -16,12 +16,12 @@ abstract_tool::abstract_tool(core::model* model) : m_model{model}
   }
 }
 
-auto abstract_tool::get_model() noexcept -> core::model*
+auto abstract_tool::get_model() noexcept -> core::Model*
 {
   return m_model;
 }
 
-auto abstract_tool::get_model() const noexcept -> const core::model*
+auto abstract_tool::get_model() const noexcept -> const core::Model*
 {
   return m_model;
 }
@@ -30,7 +30,7 @@ auto abstract_tool::translate_mouse_position(const QPoint& mousePosition,
                                              const QPointF& mapPosition) const
     -> maybe<core::Position>
 {
-  if (const auto* document = m_model->current_document())
+  if (const auto* document = m_model->CurrentDocument())
   {
     const auto x = mousePosition.x() - mapPosition.x();
     const auto y = mousePosition.y() - mapPosition.y();

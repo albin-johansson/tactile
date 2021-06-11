@@ -30,7 +30,7 @@ class ILayer;
 class Tileset;
 
 /**
- * \class model
+ * \class Model
  *
  * \brief Represents the main interface for the core of the application.
  *
@@ -38,81 +38,59 @@ class Tileset;
  *
  * \headerfile model.hpp
  */
-class model final : public QObject
+class Model final : public QObject
 {
   Q_OBJECT
 
  public:
-  model();
+  Model();
 
-  /**
-   * \copydoc map_document_manager::add()
-   */
-  [[nodiscard]] auto add_map() -> map_id;
+  [[nodiscard]] auto AddMap() -> map_id;
 
-  /**
-   * \copydoc map_document_manager::add(map_document* document)
-   */
-  [[nodiscard]] auto add_map(MapDocument* document) -> map_id;
+  [[nodiscard]] auto AddMap(MapDocument* document) -> map_id;
 
-  /**
-   * \copydoc map_document_manager::has_active_map()
-   */
-  [[nodiscard]] auto has_active_map() const noexcept -> bool;
+  [[nodiscard]] auto HasActiveMap() const noexcept -> bool;
 
-  /**
-   * \copydoc map_document_manager::at()
-   */
-  [[nodiscard]] auto get_document(map_id id) -> MapDocument*;
+  [[nodiscard]] auto GetDocument(map_id id) -> MapDocument*;
 
-  /**
-   * \copydoc map_document_manager::current_map_id()
-   */
-  [[nodiscard]] auto current_map_id() const -> maybe<map_id>;
+  [[nodiscard]] auto CurrentMapId() const -> maybe<map_id>;
 
-  /**
-   * \copydoc map_document_manager::current_document()
-   */
-  [[nodiscard]] auto current_document() -> MapDocument*;
+  [[nodiscard]] auto CurrentDocument() -> MapDocument*;
 
-  /**
-   * \copydoc current_document()
-   */
-  [[nodiscard]] auto current_document() const -> const MapDocument*;
+  [[nodiscard]] auto CurrentDocument() const -> const MapDocument*;
 
  signals:
-  void redraw();
+  void S_Redraw();
+  void S_SwitchedMap(map_id id, not_null<MapDocument*> document);
 
-  void switched_map(map_id id, not_null<MapDocument*> document);
+  void S_AddedLayer(layer_id id, const ILayer& layer);
+  void S_AddedDuplicatedLayer(layer_id id, const ILayer& layer);
+  void S_SelectedLayer(layer_id id, const ILayer& layer);
+  void S_RemovedLayer(layer_id id);
+  void S_MovedLayerBack(layer_id id);
+  void S_MovedLayerForward(layer_id id);
 
-  void added_layer(layer_id id, const ILayer& layer);
-  void added_duplicated_layer(layer_id id, const ILayer& layer);
-  void selected_layer(layer_id id, const ILayer& layer);
-  void removed_layer(layer_id id);
-  void moved_layer_back(layer_id id);
-  void moved_layer_forward(layer_id id);
+  void S_DisableStampPreview();
+  void S_EnableStampPreview(const Position& position);
 
-  void disable_stamp_preview();
-  void enable_stamp_preview(const Position& position);
+  void S_UndoStateUpdated(bool canUndo);
+  void S_RedoStateUpdated(bool canRedo);
+  void S_UndoTextUpdated(const QString& text);
+  void S_RedoTextUpdated(const QString& text);
+  void S_CleanChanged(bool clean);
 
-  void undo_state_updated(bool canUndo);
-  void redo_state_updated(bool canRedo);
-  void undo_text_updated(const QString& text);
-  void redo_text_updated(const QString& text);
-  void clean_changed(bool clean);
+  void S_AddedTileset(map_id map, tileset_id id, const Tileset& tileset);
+  void S_RemovedTileset(tileset_id id);
+  void S_RenamedTileset(tileset_id id, const QString& name);
 
-  void added_tileset(map_id map, tileset_id id, const Tileset& tileset);
-  void removed_tileset(tileset_id id);
-  void renamed_tileset(tileset_id id, const QString& name);
+  void S_AddedProperty(const QString& name);
+  void S_AboutToRemoveProperty(const QString& name);
+  void S_UpdatedProperty(const QString& name);
+  void S_ChangedPropertyType(const QString& name);
+  void S_RenamedProperty(const QString& oldName, const QString& newName);
 
-  void added_property(const QString& name);
-  void about_to_remove_property(const QString& name);
-  void updated_property(const QString& name);
-  void changed_property_type(const QString& name);
-  void renamed_property(const QString& oldName, const QString& newName);
-
-  void show_map_properties(core::IPropertyManager* manager);
-  void show_layer_properties(core::IPropertyManager* manager);
+  void S_ShowMapProperties(core::IPropertyManager* manager);
+  void S_ShowLayerProperties(core::IPropertyManager* manager);
 
  public slots:
   /**
@@ -122,9 +100,9 @@ class model final : public QObject
    *
    * \since 0.1.0
    *
-   * \signal `redraw`, `clean_changed`
+   * \signal `S_Redraw`, `S_CleanChanged`
    */
-  void undo();
+  void Undo();
 
   /**
    * \brief Restores the effects of the last undone command.
@@ -133,9 +111,9 @@ class model final : public QObject
    *
    * \since 0.1.0
    *
-   * \signal `redraw`
+   * \signal `S_Redraw`
    */
-  void redo();
+  void Redo();
 
   /**
    * \brief Resizes the currently active map.
@@ -145,13 +123,13 @@ class model final : public QObject
    * \param nRows the new number of rows, must be greater than 0.
    * \param nCols the new number of columns, must be greater than 0.
    *
-   * \see cmd::resize_map
+   * \see cmd::ResizeMap
    *
    * \since 0.1.0
    *
-   * \signal `redraw`
+   * \signal `S_Redraw`
    */
-  void resize_map(row_t nRows, col_t nCols);
+  void ResizeMap(row_t nRows, col_t nCols);
 
   /**
    * \brief Adds a row to the currently active map.
@@ -162,9 +140,9 @@ class model final : public QObject
    *
    * \since 0.1.0
    *
-   * \signal `redraw`
+   * \signal `S_Redraw`
    */
-  void add_row();
+  void AddRow();
 
   /**
    * \brief Adds a column to the currently active map.
@@ -175,9 +153,9 @@ class model final : public QObject
    *
    * \since 0.1.0
    *
-   * \signal `redraw`
+   * \signal `S_Redraw`
    */
-  void add_col();
+  void AddColumn();
 
   /**
    * \brief Removes a row from the currently active map.
@@ -188,7 +166,7 @@ class model final : public QObject
    *
    * \since 0.1.0
    */
-  void remove_row();
+  void RemoveRow();
 
   /**
    * \brief Removes a column from the currently active map.
@@ -199,7 +177,7 @@ class model final : public QObject
    *
    * \since 0.1.0
    */
-  void remove_col();
+  void RemoveColumn();
 
   /**
    * \brief Adds a layer to the currently active map.
@@ -208,9 +186,9 @@ class model final : public QObject
    *
    * \since 0.1.0
    *
-   * \signal `added_layer`
+   * \signal `S_AddedLayer`
    */
-  void add_layer();
+  void AddLayer();
 
   /**
    * \brief Removes the specified layer from the currently active map.
@@ -219,9 +197,9 @@ class model final : public QObject
    *
    * \since 0.1.0
    *
-   * \signal `removed_layer`.
+   * \signal `S_RemovedLayer`.
    */
-  void remove_layer(layer_id id);
+  void RemoveLayer(layer_id id);
 
   /**
    * \brief Selects the tile layer associated with the specified index.
@@ -233,24 +211,15 @@ class model final : public QObject
    *
    * \since 0.1.0
    *
-   * \signal `selected_layer`, `redraw`
+   * \signal `S_SelectedLayer`, `S_Redraw`
    */
-  void select_layer(layer_id id);
+  void SelectLayer(layer_id id);
 
-  /**
-   * \copydoc tool_model::select(tool_id)
-   */
-  void select_tool(tool_id id);
+  void SelectTool(tool_id id);
 
-  /**
-   * \copydoc map_document::select_tileset()
-   */
-  void select_tileset(tileset_id id);
+  void SelectTileset(tileset_id id);
 
-  /**
-   * \copydoc map_document::set_tileset_selection()
-   */
-  void set_tileset_selection(const TilesetSelection& selection);
+  void SetTilesetSelection(const TilesetSelection& selection);
 
   /**
    * \brief Increases the tile size that is being used by the currently active
@@ -258,7 +227,7 @@ class model final : public QObject
    *
    * \since 0.1.0
    */
-  void increase_tile_size();
+  void IncreaseTileSize();
 
   /**
    * \brief Decreases the tile size that is being used by the currently active
@@ -266,7 +235,7 @@ class model final : public QObject
    *
    * \since 0.1.0
    */
-  void decrease_tile_size();
+  void DecreaseTileSize();
 
   /**
    * \brief Resets the tile size that is being used by the currently active
@@ -274,73 +243,34 @@ class model final : public QObject
    *
    * \since 0.1.0
    */
-  void reset_tile_size();
+  void ResetTileSize();
 
-  // clang-format off
-  /**
-   * \copydoc map_document::add_tileset(const QImage&, const QFileInfo&, const QString&, tile_width, tile_height)
-   */
-  void create_tileset(const QImage& image,
-                      const QFileInfo& path,
-                      const QString& name,
-                      tile_width tileWidth,
-                      tile_height tileHeight);
-  // clang-format on
+  void CreateTileset(const QImage& image,
+                     const QFileInfo& path,
+                     const QString& name,
+                     tile_width tileWidth,
+                     tile_height tileHeight);
 
-  /**
-   * \copydoc map_document::remove_tileset()
-   * \signal `redraw`
-   */
-  void remove_tileset(tileset_id id);
+  void RemoveTileset(tileset_id id);
 
-  /**
-   * \copydoc map_document::set_tileset_name()
-   */
-  void set_tileset_name(tileset_id id, const QString& name);
+  void SetTilesetName(tileset_id id, const QString& name);
 
-  /**
-   * \copydoc map_document_manager::select()
-   * \signal `switched_map`
-   */
-  void select_map(map_id id);
+  void SelectMap(map_id id);
+  void CloseMap(map_id id);
 
-  /**
-   * \copydoc map_document_manager::close()
-   */
-  void close_map(map_id id);
-
-  /**
-   * \copydoc tool_model::pressed()
-   */
-  void mouse_pressed(QMouseEvent* event, const QPointF& mapPosition);
-
-  /**
-   * \copydoc tool_model::moved()
-   */
-  void mouse_moved(QMouseEvent* event, const QPointF& mapPosition);
-
-  /**
-   * \copydoc tool_model::released()
-   */
-  void mouse_released(QMouseEvent* event, const QPointF& mapPosition);
-
-  /**
-   * \copydoc tool_model::entered()
-   */
-  void mouse_entered(QEvent* event);
-
-  /**
-   * \copydoc tool_model::exited()
-   */
-  void mouse_exited(QEvent* event);
+  void OnMousePressed(QMouseEvent* event, const QPointF& mapPosition);
+  void OnMouseMoved(QMouseEvent* event, const QPointF& mapPosition);
+  void OnMouseReleased(QMouseEvent* event, const QPointF& mapPosition);
+  void OnMouseEntered(QEvent* event);
+  void OnMouseExited(QEvent* event);
 
  private:
-  vector_map<map_id, MapDocument*> m_documents;
-  maybe<map_id> m_currentMap;
-  map_id m_nextId{1};
-  tool_model m_tools;
+  vector_map<map_id, MapDocument*> mDocuments;
+  maybe<map_id> mCurrentMap;
+  map_id mNextId{1};
+  tool_model mTools;
 
-  void emit_undo_redo_update();
+  void EmitUndoRedoUpdate();
 };
 
 }  // namespace tactile::core

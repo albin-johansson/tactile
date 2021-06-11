@@ -6,7 +6,7 @@
 #include "tool_id.hpp"
 #include "vector_map.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, model)
+TACTILE_FORWARD_DECLARE(tactile::core, Model)
 
 namespace tactile {
 
@@ -22,7 +22,7 @@ class tool_model final
    *
    * \since 0.1.0
    */
-  explicit tool_model(core::model* model);
+  explicit tool_model(core::Model* model);
 
   /**
    * \brief Selects the specified tool.
