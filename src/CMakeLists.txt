@@ -351,12 +351,12 @@ set(TACTILE_SOURCE_FILES
     preferences/theme.cpp
     preferences/theme.hpp
 
-    tool/abstract_tool.cpp
-    tool/abstract_tool.hpp
     tool/bucket_tool.cpp
     tool/bucket_tool.hpp
     tool/eraser_tool.cpp
     tool/eraser_tool.hpp
+    tool/mouse_tool.cpp
+    tool/mouse_tool.hpp
     tool/stamp_tool.cpp
     tool/stamp_tool.hpp
     tool/tool_id.hpp

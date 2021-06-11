@@ -1,7 +1,7 @@
 #pragma once
 
-#include "abstract_tool.hpp"
 #include "map_document.hpp"
+#include "mouse_tool.hpp"
 #include "position.hpp"
 #include "tileset.hpp"
 #include "vector_map.hpp"
@@ -18,7 +18,7 @@ namespace tactile {
  *
  * \headerfile stamp_tool.hpp
  */
-class stamp_tool final : public abstract_tool
+class stamp_tool final : public AMouseTool
 {
  public:
   /**
@@ -34,15 +34,15 @@ class stamp_tool final : public abstract_tool
 
   ~stamp_tool() noexcept override = default;
 
-  void pressed(QMouseEvent* event, const QPointF& mapPosition) override;
+  void OnPressed(QMouseEvent* event, const QPointF& mapPosition) override;
 
-  void moved(QMouseEvent* event, const QPointF& mapPosition) override;
+  void OnMoved(QMouseEvent* event, const QPointF& mapPosition) override;
 
-  void released(QMouseEvent* event, const QPointF& mapPosition) override;
+  void OnReleased(QMouseEvent* event, const QPointF& mapPosition) override;
 
-  void exited(QEvent* event) override;
+  void OnExited(QEvent* event) override;
 
-  void disable() override;
+  void Disable() override;
 
  private:
   vector_map<core::Position, tile_id> m_oldState;

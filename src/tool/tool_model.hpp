@@ -1,7 +1,7 @@
 #pragma once
 
-#include "abstract_tool.hpp"
 #include "forward_declare.hpp"
+#include "mouse_tool.hpp"
 #include "smart_pointers.hpp"
 #include "tool_id.hpp"
 #include "vector_map.hpp"
@@ -84,8 +84,8 @@ class tool_model final
   void exited(QEvent* event);
 
  private:
-  abstract_tool* m_current{};
-  vector_map<tool_id, unique<abstract_tool>> m_tools;
+  AMouseTool* m_current{};
+  vector_map<tool_id, unique<AMouseTool>> m_tools;
 
   /**
    * \brief Switches to the specified tool as the active tool.
@@ -98,7 +98,7 @@ class tool_model final
    *
    * \since 0.1.0
    */
-  void switch_to(abstract_tool* tool);
+  void switch_to(AMouseTool* tool);
 };
 
 }  // namespace tactile

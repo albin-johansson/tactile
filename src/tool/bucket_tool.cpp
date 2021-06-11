@@ -5,12 +5,12 @@
 
 namespace tactile {
 
-bucket_tool::bucket_tool(core::Model* model) : abstract_tool{model}
+bucket_tool::bucket_tool(core::Model* model) : AMouseTool{model}
 {}
 
-void bucket_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
+void bucket_tool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->CurrentDocument())
+  if (auto* document = GetModel()->CurrentDocument())
   {
     auto* tileset = document->CurrentTileset();
     if (!tileset || !tileset->GetSelection())
@@ -20,12 +20,12 @@ void bucket_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
 
     if (event->buttons() & Qt::MouseButton::LeftButton)
     {
-      const auto pos = translate_mouse_position(event->pos(), mapPosition);
+      const auto pos = TranslateMousePosition(event->pos(), mapPosition);
       if (pos && tileset->IsSingleTileSelected())
       {
         document->Flood(*pos,
                         tileset->TileAt(tileset->GetSelection()->topLeft));
-        emit get_model()->S_Redraw();
+        emit GetModel()->S_Redraw();
       }
     }
   }

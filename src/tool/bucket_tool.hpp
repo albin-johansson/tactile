@@ -1,6 +1,6 @@
 #pragma once
 
-#include "abstract_tool.hpp"
+#include "mouse_tool.hpp"
 
 namespace tactile {
 
@@ -14,7 +14,7 @@ namespace tactile {
  *
  * \headerfile bucket_tool.hpp
  */
-class bucket_tool final : public abstract_tool
+class bucket_tool final : public AMouseTool
 {
  public:
   /**
@@ -28,7 +28,7 @@ class bucket_tool final : public abstract_tool
    */
   explicit bucket_tool(core::Model* model);
 
-  void pressed(QMouseEvent* event, const QPointF& mapPosition) override;
+  void OnPressed(QMouseEvent* event, const QPointF& mapPosition) override;
 };
 
 }  // namespace tactile

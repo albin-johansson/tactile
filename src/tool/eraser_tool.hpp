@@ -1,6 +1,6 @@
 #pragma once
 
-#include "abstract_tool.hpp"
+#include "mouse_tool.hpp"
 #include "position.hpp"
 #include "tile_id.hpp"
 #include "vector_map.hpp"
@@ -16,7 +16,7 @@ namespace tactile {
  *
  * \headerfile eraser_tool.hpp
  */
-class eraser_tool final : public abstract_tool
+class eraser_tool final : public AMouseTool
 {
  public:
   /**
@@ -32,11 +32,11 @@ class eraser_tool final : public abstract_tool
 
   ~eraser_tool() noexcept override = default;
 
-  void pressed(QMouseEvent* event, const QPointF& mapPosition) override;
+  void OnPressed(QMouseEvent* event, const QPointF& mapPosition) override;
 
-  void moved(QMouseEvent* event, const QPointF& mapPosition) override;
+  void OnMoved(QMouseEvent* event, const QPointF& mapPosition) override;
 
-  void released(QMouseEvent* event, const QPointF& mapPosition) override;
+  void OnReleased(QMouseEvent* event, const QPointF& mapPosition) override;
 
  private:
   vector_map<core::Position, tile_id> m_oldState;

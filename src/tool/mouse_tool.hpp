@@ -12,18 +12,18 @@ TACTILE_FORWARD_DECLARE(tactile::core, Model)
 namespace tactile {
 
 /**
- * \class abstract_tool
+ * \class AMouseTool
  *
  * \brief The ABC for mouse tool implementations.
  *
  * \since 0.1.0
  *
- * \headerfile abstract_tool.hpp
+ * \headerfile mouse_tool.hpp
  */
-class abstract_tool
+class AMouseTool
 {
  public:
-  virtual ~abstract_tool() noexcept = default;
+  virtual ~AMouseTool() noexcept = default;
 
   /**
    * \brief Handles a mouse pressed event.
@@ -35,7 +35,8 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  virtual void pressed(QMouseEvent* event, const QPointF& mapPosition){};
+  virtual void OnPressed(QMouseEvent* event, const QPointF& mapPosition)
+  {}
 
   /**
    * \brief Handles a mouse moved event.
@@ -47,7 +48,8 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  virtual void moved(QMouseEvent* event, const QPointF& mapPosition){};
+  virtual void OnMoved(QMouseEvent* event, const QPointF& mapPosition)
+  {}
 
   /**
    * \brief Handles a mouse released event.
@@ -59,7 +61,8 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  virtual void released(QMouseEvent* event, const QPointF& mapPosition){};
+  virtual void OnReleased(QMouseEvent* event, const QPointF& mapPosition)
+  {}
 
   /**
    * \brief Handles an "entered" event, which is when the mouse enters the map
@@ -71,7 +74,8 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  virtual void entered(QEvent* event){};
+  virtual void OnEntered(QEvent* event)
+  {}
 
   /**
    * \brief Handles an "exited" event, which is when the mouse exits the map
@@ -83,7 +87,8 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  virtual void exited(QEvent* event){};
+  virtual void OnExited(QEvent* event)
+  {}
 
   /**
    * \brief Enables the mouse tool.
@@ -95,7 +100,8 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  virtual void enable(){};
+  virtual void Enable()
+  {}
 
   /**
    * \brief Disables the mouse tool.
@@ -106,7 +112,8 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  virtual void disable(){};
+  virtual void Disable()
+  {}
 
  protected:
   /**
@@ -118,7 +125,7 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  explicit abstract_tool(core::Model* model);
+  explicit AMouseTool(core::Model* model);
 
   /**
    * \brief Returns a pointer to the associated model.
@@ -129,12 +136,10 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get_model() noexcept -> core::Model*;
+  [[nodiscard]] auto GetModel() noexcept -> core::Model*;
 
-  /**
-   * \copydoc get_model()
-   */
-  [[nodiscard]] auto get_model() const noexcept -> const core::Model*;
+  /// \copydoc GetModel()
+  [[nodiscard]] auto GetModel() const noexcept -> const core::Model*;
 
   /**
    * \brief Translates a mouse position to a row/col map coordinate if the mouse
@@ -148,12 +153,12 @@ class abstract_tool
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto translate_mouse_position(const QPoint& mousePosition,
-                                              const QPointF& mapPosition) const
+  [[nodiscard]] auto TranslateMousePosition(const QPoint& mousePosition,
+                                            const QPointF& mapPosition) const
       -> maybe<core::Position>;
 
  private:
-  core::Model* m_model{};
+  core::Model* mModel{};
 };
 
 }  // namespace tactile

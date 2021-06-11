@@ -15,7 +15,7 @@ tool_model::tool_model(core::Model* model)
   m_tools.emplace(tool_id::bucket, std::make_unique<bucket_tool>(model));
 }
 
-void tool_model::switch_to(abstract_tool* tool)
+void tool_model::switch_to(AMouseTool* tool)
 {
   if (m_current == tool)
   {
@@ -24,14 +24,14 @@ void tool_model::switch_to(abstract_tool* tool)
 
   if (m_current)
   {
-    m_current->disable();
+    m_current->Disable();
   }
 
   m_current = tool;
 
   if (m_current)
   {
-    m_current->enable();
+    m_current->Enable();
   }
 }
 
@@ -44,7 +44,7 @@ void tool_model::pressed(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (m_current)
   {
-    m_current->pressed(event, mapPosition);
+    m_current->OnPressed(event, mapPosition);
   }
 }
 
@@ -52,7 +52,7 @@ void tool_model::moved(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (m_current)
   {
-    m_current->moved(event, mapPosition);
+    m_current->OnMoved(event, mapPosition);
   }
 }
 
@@ -60,7 +60,7 @@ void tool_model::released(QMouseEvent* event, const QPointF& mapPosition)
 {
   if (m_current)
   {
-    m_current->released(event, mapPosition);
+    m_current->OnReleased(event, mapPosition);
   }
 }
 
@@ -68,7 +68,7 @@ void tool_model::entered(QEvent* event)
 {
   if (m_current)
   {
-    m_current->entered(event);
+    m_current->OnEntered(event);
   }
 }
 
@@ -76,7 +76,7 @@ void tool_model::exited(QEvent* event)
 {
   if (m_current)
   {
-    m_current->exited(event);
+    m_current->OnExited(event);
   }
 }
 

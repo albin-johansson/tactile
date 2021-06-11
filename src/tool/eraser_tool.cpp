@@ -6,14 +6,14 @@
 
 namespace tactile {
 
-eraser_tool::eraser_tool(core::Model* model) : abstract_tool{model}
+eraser_tool::eraser_tool(core::Model* model) : AMouseTool{model}
 {
   m_oldState.reserve(20);
 }
 
 void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->CurrentDocument())
+  if (auto* document = GetModel()->CurrentDocument())
   {
     const auto id = document->CurrentLayerId().value();
     auto* tileLayer = document->GetTileLayer(id);
@@ -21,7 +21,7 @@ void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
 
     if (event->buttons() & Qt::MouseButton::LeftButton)
     {
-      const auto pos = translate_mouse_position(event->pos(), mapPosition);
+      const auto pos = TranslateMousePosition(event->pos(), mapPosition);
       if (pos)
       {
         if (!m_oldState.contains(*pos))
@@ -30,25 +30,25 @@ void eraser_tool::update_eraser(QMouseEvent* event, const QPointF& mapPosition)
         }
 
         tileLayer->SetTile(*pos, empty);
-        emit get_model()->S_Redraw();
+        emit GetModel()->S_Redraw();
       }
     }
   }
 }
 
-void eraser_tool::pressed(QMouseEvent* event, const QPointF& mapPosition)
+void eraser_tool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
 {
   update_eraser(event, mapPosition);
 }
 
-void eraser_tool::moved(QMouseEvent* event, const QPointF& mapPosition)
+void eraser_tool::OnMoved(QMouseEvent* event, const QPointF& mapPosition)
 {
   update_eraser(event, mapPosition);
 }
 
-void eraser_tool::released(QMouseEvent* event, const QPointF& mapPosition)
+void eraser_tool::OnReleased(QMouseEvent* event, const QPointF& mapPosition)
 {
-  if (auto* document = get_model()->CurrentDocument())
+  if (auto* document = GetModel()->CurrentDocument())
   {
     if (event->button() == Qt::MouseButton::LeftButton)
     {
