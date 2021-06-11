@@ -10,12 +10,12 @@ namespace tactile::parse {
 xml_element::xml_element(const QDomElement& element) : m_element{element}
 {}
 
-auto xml_element::contains(const element_id id) const -> bool
+auto xml_element::contains(const ElementId id) const -> bool
 {
   return m_element.hasAttribute(stringify_element_id(id));
 }
 
-auto xml_element::integer(const element_id id) const -> maybe<int>
+auto xml_element::integer(const ElementId id) const -> maybe<int>
 {
   bool ok;
   const auto result = m_element.attribute(stringify_element_id(id)).toInt(&ok);
@@ -29,13 +29,13 @@ auto xml_element::integer(const element_id id) const -> maybe<int>
   }
 }
 
-auto xml_element::integer(const element_id id, const int def) const
+auto xml_element::integer(const ElementId id, const int def) const
     -> maybe<int>
 {
   return integer(id).value_or(def);
 }
 
-auto xml_element::floating(const element_id id) const -> maybe<double>
+auto xml_element::floating(const ElementId id) const -> maybe<double>
 {
   bool ok;
   const auto result =
@@ -50,13 +50,13 @@ auto xml_element::floating(const element_id id) const -> maybe<double>
   }
 }
 
-auto xml_element::floating(const element_id id, const double def) const
+auto xml_element::floating(const ElementId id, const double def) const
     -> double
 {
   return floating(id).value_or(def);
 }
 
-auto xml_element::string(const element_id id) const -> maybe<QString>
+auto xml_element::string(const ElementId id) const -> maybe<QString>
 {
   const auto result = m_element.attribute(stringify_element_id(id));
   if (!result.isNull())
@@ -69,13 +69,13 @@ auto xml_element::string(const element_id id) const -> maybe<QString>
   }
 }
 
-auto xml_element::string(const element_id id, const QString& def) const
+auto xml_element::string(const ElementId id, const QString& def) const
     -> QString
 {
   return string(id).value_or(def);
 }
 
-auto xml_element::boolean(const element_id id) const -> maybe<bool>
+auto xml_element::boolean(const ElementId id) const -> maybe<bool>
 {
   if (const auto value = string(id))
   {
@@ -87,65 +87,65 @@ auto xml_element::boolean(const element_id id) const -> maybe<bool>
   }
 }
 
-auto xml_element::stringify_element_id(const element_id type) -> QString
+auto xml_element::stringify_element_id(const ElementId type) -> QString
 {
   switch (type)
   {
-    case element_id::tileset:
+    case ElementId::Tileset:
       return TACTILE_QSTRING(u"tileset");
 
-    case element_id::tilesets:
+    case ElementId::Tilesets:
       throw TactileError{"TMX format does not feature \"tilesets\"!"};
 
-    case element_id::next_layer_id:
+    case ElementId::NextLayerId:
       return TACTILE_QSTRING(u"nextlayerid");
 
-    case element_id::source:
+    case ElementId::Source:
       return TACTILE_QSTRING(u"source");
 
-    case element_id::first_gid:
+    case ElementId::FirstGid:
       return TACTILE_QSTRING(u"firstgid");
 
-    case element_id::tile_width:
+    case ElementId::TileWidth:
       return TACTILE_QSTRING(u"tilewidth");
 
-    case element_id::tile_height:
+    case ElementId::TileHeight:
       return TACTILE_QSTRING(u"tileheight");
 
-    case element_id::image:
+    case ElementId::Image:
       return TACTILE_QSTRING(u"image");
 
-    case element_id::name:
+    case ElementId::Name:
       return TACTILE_QSTRING(u"name");
 
-    case element_id::id:
+    case ElementId::Id:
       return TACTILE_QSTRING(u"id");
 
-    case element_id::width:
+    case ElementId::Width:
       return TACTILE_QSTRING(u"width");
 
-    case element_id::height:
+    case ElementId::Height:
       return TACTILE_QSTRING(u"height");
 
-    case element_id::visible:
+    case ElementId::Visible:
       return TACTILE_QSTRING(u"visible");
 
-    case element_id::opacity:
+    case ElementId::Opacity:
       return TACTILE_QSTRING(u"opacity");
 
-    case element_id::type:
+    case ElementId::Type:
       return TACTILE_QSTRING(u"type");
 
-    case element_id::value:
+    case ElementId::Value:
       return TACTILE_QSTRING(u"value");
 
-    case element_id::x:
+    case ElementId::X:
       return TACTILE_QSTRING(u"x");
 
-    case element_id::y:
+    case ElementId::Y:
       return TACTILE_QSTRING(u"y");
 
-    case element_id::point:
+    case ElementId::Point:
       return TACTILE_QSTRING(u"point");
 
     default:

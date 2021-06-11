@@ -2,27 +2,27 @@
 
 namespace tactile::parse {
 
-enum class element_id
+enum class ElementId
 {
-  tileset,
-  tilesets,
-  next_layer_id,
-  source,
-  first_gid,
-  tile_width,
-  tile_height,
-  image,
-  name,
-  id,
-  width,
-  height,
-  visible,
-  opacity,
-  type,
-  value,
-  x,
-  y,
-  point
+  Tileset,
+  Tilesets,
+  NextLayerId,
+  Source,
+  FirstGid,
+  TileWidth,
+  TileHeight,
+  Image,
+  Name,
+  Id,
+  Width,
+  Height,
+  Visible,
+  Opacity,
+  Type,
+  Value,
+  X,
+  Y,
+  Point
 };
 
 }  // namespace tactile::parse

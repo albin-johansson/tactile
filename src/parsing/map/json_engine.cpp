@@ -78,18 +78,18 @@ auto json_engine::tiles(const object_type& object,
 
 auto json_engine::property_type(const object_type& object) -> QString
 {
-  return object.string(element_id::type).value();
+  return object.string(ElementId::Type).value();
 }
 
 auto json_engine::contains_tilesets(const object_type& object) -> bool
 {
-  return object.contains(element_id::tilesets);
+  return object.contains(ElementId::Tilesets);
 }
 
 auto json_engine::tileset_image_relative_path(const object_type& object)
     -> maybe<QString>
 {
-  return object.string(element_id::image);
+  return object.string(ElementId::Image);
 }
 
 auto json_engine::validate_layer_type(const object_type& object) -> bool
@@ -114,7 +114,7 @@ auto json_engine::is_object_layer(const object_type& object) -> bool
 
 auto json_engine::is_point(const object_type& object) -> bool
 {
-  return object.boolean(element_id::point).value_or(false);
+  return object.boolean(ElementId::Point).value_or(false);
 }
 
 auto json_engine::collect(const object_type& root, const QStringView key)

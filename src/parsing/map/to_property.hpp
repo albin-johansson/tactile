@@ -22,33 +22,33 @@ template <is_object T>
 
   if (propType == TACTILE_QSTRING(u"string"))
   {
-    property.SetValue(object.string(element_id::value).value());
+    property.SetValue(object.string(ElementId::Value).Value());
   }
   else if (propType == TACTILE_QSTRING(u"int"))
   {
-    property.SetValue(object.integer(element_id::value).value());
+    property.SetValue(object.integer(ElementId::Value).Value());
   }
   else if (propType == TACTILE_QSTRING(u"float"))
   {
-    property.SetValue(object.floating(element_id::value).value());
+    property.SetValue(object.floating(ElementId::Value).Value());
   }
   else if (propType == TACTILE_QSTRING(u"bool"))
   {
-    property.SetValue(object.boolean(element_id::value).value());
+    property.SetValue(object.boolean(ElementId::Value).Value());
   }
   else if (propType == TACTILE_QSTRING(u"file"))
   {
-    const auto file = object.string(element_id::value).value();
+    const auto file = object.string(ElementId::Value).Value();
     property.SetValue(QFileInfo{file});
   }
   else if (propType == TACTILE_QSTRING(u"object"))
   {
-    const auto obj = object.integer(element_id::value).value();
+    const auto obj = object.integer(ElementId::Value).Value();
     property.SetValue(core::object_ref{obj});
   }
   else if (propType == TACTILE_QSTRING(u"color"))
   {
-    const auto color = object.string(element_id::value).value();
+    const auto color = object.string(ElementId::Value).Value();
     property.SetValue(QColor{color});
   }
   else

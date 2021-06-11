@@ -95,7 +95,7 @@ auto xml_engine::property_type(const object_type& object) -> QString
   }
   else
   {
-    return object.string(element_id::type).value();
+    return object.string(ElementId::Type).value();
   }
 }
 

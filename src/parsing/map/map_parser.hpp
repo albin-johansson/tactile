@@ -145,7 +145,7 @@ class map_parser final
 
   [[nodiscard]] auto parse_next_layer_id(const object_type& root) -> bool
   {
-    if (const auto id = root.integer(element_id::next_layer_id))
+    if (const auto id = root.integer(ElementId::NextLayerId))
     {
       m_data.nextLayerId = layer_id{*id};
       return true;
@@ -159,7 +159,7 @@ class map_parser final
   [[nodiscard]] auto parse_tileset_first_gid(const object_type& object)
       -> maybe<tile_id>
   {
-    if (const auto gid = object.integer(element_id::first_gid))
+    if (const auto gid = object.integer(ElementId::FirstGid))
     {
       return tile_id{*gid};
     }
@@ -176,7 +176,7 @@ class map_parser final
     tileset_data tileset;
     tileset.firstId = firstGid;
 
-    if (const auto tw = object.integer(element_id::tile_width))
+    if (const auto tw = object.integer(ElementId::TileWidth))
     {
       tileset.tileWidth = tile_width{*tw};
     }
@@ -185,7 +185,7 @@ class map_parser final
       return with_error(parse_error::tileset_missing_tile_width);
     }
 
-    if (const auto th = object.integer(element_id::tile_height))
+    if (const auto th = object.integer(ElementId::TileHeight))
     {
       tileset.tileHeight = tile_height{*th};
     }
@@ -210,7 +210,7 @@ class map_parser final
       return with_error(parse_error::external_tileset_does_not_exist);
     }
 
-    if (const auto name = object.string(element_id::name))
+    if (const auto name = object.string(ElementId::Name))
     {
       tileset.name = *name;
     }
@@ -227,7 +227,7 @@ class map_parser final
                                             const QFileInfo& path,
                                             const tile_id firstGid) -> bool
   {
-    const auto source = object.string(element_id::source);
+    const auto source = object.string(ElementId::Source);
     const auto external =
         m_engine.from_file(QFileInfo{path.dir().absoluteFilePath(*source)});
     if (external)
@@ -245,7 +245,7 @@ class map_parser final
   {
     if (const auto gid = parse_tileset_first_gid(object))
     {
-      const auto hasSource = object.contains(element_id::source);
+      const auto hasSource = object.contains(ElementId::Source);
       return hasSource ? parse_external_tileset(object, path, *gid)
                        : parse_tileset_common(object, path, *gid);
     }
@@ -273,7 +273,7 @@ class map_parser final
   {
     tile_layer_data tileLayer;
 
-    if (const auto rows = object.integer(element_id::height))
+    if (const auto rows = object.integer(ElementId::Height))
     {
       tileLayer.nRows = row_t{*rows};
     }
@@ -282,7 +282,7 @@ class map_parser final
       return with_error(parse_error::layer_missing_height);
     }
 
-    if (const auto cols = object.integer(element_id::width))
+    if (const auto cols = object.integer(ElementId::Width))
     {
       tileLayer.nCols = col_t{*cols};
     }
@@ -311,7 +311,7 @@ class map_parser final
     {
       auto& object = objectLayer.objects.emplace_back();
 
-      if (const auto id = elem.integer(element_id::id))
+      if (const auto id = elem.integer(ElementId::Id))
       {
         object.id = object_id{*id};
       }
@@ -320,13 +320,13 @@ class map_parser final
         return with_error(parse_error::object_missing_id);
       }
 
-      object.x = elem.floating(element_id::x, 0);
-      object.y = elem.floating(element_id::y, 0);
-      object.width = elem.floating(element_id::width, 0);
-      object.height = elem.floating(element_id::height, 0);
-      object.name = elem.string(element_id::name, QString{});
-      object.customType = elem.string(element_id::type, QString{});
-      object.visible = elem.boolean(element_id::visible).value_or(true);
+      object.x = elem.floating(ElementId::X, 0);
+      object.y = elem.floating(ElementId::Y, 0);
+      object.width = elem.floating(ElementId::Width, 0);
+      object.height = elem.floating(ElementId::Height, 0);
+      object.name = elem.string(ElementId::Name, QString{});
+      object.customType = elem.string(ElementId::Type, QString{});
+      object.visible = elem.boolean(ElementId::Visible).value_or(true);
       object.isPoint = m_engine.is_point(elem);
 
       if (auto properties = parse_properties(elem))
@@ -352,7 +352,7 @@ class map_parser final
 
     layer_data layer;
 
-    if (const auto id = object.integer(element_id::id))
+    if (const auto id = object.integer(ElementId::Id))
     {
       layer.id = layer_id{*id};
     }
@@ -361,9 +361,9 @@ class map_parser final
       return with_error(parse_error::layer_missing_id);
     }
 
-    layer.name = object.string(element_id::name, TACTILE_QSTRING(u"Layer"));
-    layer.opacity = object.floating(element_id::opacity, 1.0);
-    layer.visible = object.boolean(element_id::visible).value_or(true);
+    layer.name = object.string(ElementId::Name, TACTILE_QSTRING(u"Layer"));
+    layer.opacity = object.floating(ElementId::Opacity, 1.0);
+    layer.visible = object.boolean(ElementId::Visible).value_or(true);
 
     if (m_engine.is_tile_layer(object))
     {
@@ -417,7 +417,7 @@ class map_parser final
       -> maybe<property_data>
   {
     property_data data;
-    data.name = prop.string(element_id::name).value();
+    data.name = prop.string(ElementId::Name).Value();
 
     const auto type = m_engine.property_type(prop);
     if (auto property = to_property(prop, type, m_error))

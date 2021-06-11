@@ -12,21 +12,21 @@ class xml_element final
  public:
   explicit xml_element(const QDomElement& element);
 
-  [[nodiscard]] auto contains(element_id id) const -> bool;
+  [[nodiscard]] auto contains(ElementId id) const -> bool;
 
-  [[nodiscard]] auto integer(element_id id) const -> maybe<int>;
+  [[nodiscard]] auto integer(ElementId id) const -> maybe<int>;
 
-  [[nodiscard]] auto integer(element_id id, int def) const -> maybe<int>;
+  [[nodiscard]] auto integer(ElementId id, int def) const -> maybe<int>;
 
-  [[nodiscard]] auto floating(element_id id) const -> maybe<double>;
+  [[nodiscard]] auto floating(ElementId id) const -> maybe<double>;
 
-  [[nodiscard]] auto floating(element_id id, double def) const -> double;
+  [[nodiscard]] auto floating(ElementId id, double def) const -> double;
 
-  [[nodiscard]] auto string(element_id id) const -> maybe<QString>;
+  [[nodiscard]] auto string(ElementId id) const -> maybe<QString>;
 
-  [[nodiscard]] auto string(element_id id, const QString& def) const -> QString;
+  [[nodiscard]] auto string(ElementId id, const QString& def) const -> QString;
 
-  [[nodiscard]] auto boolean(element_id id) const -> maybe<bool>;
+  [[nodiscard]] auto boolean(ElementId id) const -> maybe<bool>;
 
   auto operator->() noexcept -> QDomElement*
   {
@@ -41,7 +41,7 @@ class xml_element final
  private:
   QDomElement m_element;
 
-  [[nodiscard]] static auto stringify_element_id(element_id type) -> QString;
+  [[nodiscard]] static auto stringify_element_id(ElementId type) -> QString;
 };
 
 }  // namespace tactile::parse

@@ -15,7 +15,7 @@ namespace tactile::parse {
 // clang-format off
 
 template <typename T>
-concept is_object = requires(T t, element_id id, const QString& str)
+concept is_object = requires(T t, ElementId id, const QString& str)
 {
   { t.contains(id)      } -> std::same_as<bool>;
   { t.integer(id)       } -> std::same_as<maybe<int>>;
