@@ -186,7 +186,7 @@ TEST(Map, ResetTileSize)
   }
 
   map.ResetTileSize();
-  EXPECT_EQ(core::tile_size::default_size(), map.CurrentTileSize());
+  EXPECT_EQ(core::TileSize::DefaultSize(), map.CurrentTileSize());
 }
 
 TEST(Map, SetNextLayerID)
@@ -325,7 +325,7 @@ TEST(Map, ActiveLayerID)
 TEST(Map, CurrentTileSize)
 {
   const core::Map map;
-  EXPECT_EQ(core::tile_size::default_size(), map.CurrentTileSize());
+  EXPECT_EQ(core::TileSize::DefaultSize(), map.CurrentTileSize());
 }
 
 TEST(Map, GetLayer)

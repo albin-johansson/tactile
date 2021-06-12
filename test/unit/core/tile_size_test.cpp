@@ -6,48 +6,48 @@ using namespace tactile;
 
 TEST(TileSize, Reset)
 {
-  core::tile_size size;
+  core::TileSize size;
 
-  size.set_size(74);
-  size.reset();
+  size.SetSize(74);
+  size.Reset();
 
-  EXPECT_EQ(core::tile_size::default_size(), size.get());
+  EXPECT_EQ(core::TileSize::DefaultSize(), size.Get());
 }
 
 TEST(TileSize, Increase)
 {
-  core::tile_size size;
+  core::TileSize size;
 
-  size.set_size(100);
-  size.increase();  // Increases by 10 percent
+  size.SetSize(100);
+  size.Increase();  // Increases by 10 percent
 
-  EXPECT_EQ(110, size.get());
+  EXPECT_EQ(110, size.Get());
 }
 
 TEST(TileSize, Decrease)
 {
-  core::tile_size size;
+  core::TileSize size;
 
-  size.set_size(100);
-  size.decrease();  // Decreases by 10 percent
+  size.SetSize(100);
+  size.Decrease();  // Decreases by 10 percent
 
-  EXPECT_EQ(90, size.get());
+  EXPECT_EQ(90, size.Get());
 
   for (int i = 0; i < 30; ++i)
   {
-    size.decrease();
+    size.Decrease();
   }
 
-  EXPECT_EQ(core::tile_size::min_size(), size.get());
+  EXPECT_EQ(core::TileSize::MinimumSize(), size.Get());
 }
 
 TEST(TileSize, SetSize)
 {
-  core::tile_size size;
+  core::TileSize size;
 
-  size.set_size(83);
-  EXPECT_EQ(83, size.get());
+  size.SetSize(83);
+  EXPECT_EQ(83, size.Get());
 
-  size.set_size(core::tile_size::min_size() - 1);
-  EXPECT_EQ(core::tile_size::min_size(), size.get());
+  size.SetSize(core::TileSize::MinimumSize() - 1);
+  EXPECT_EQ(core::TileSize::MinimumSize(), size.Get());
 }

@@ -188,17 +188,17 @@ void Map::RemoveColumn()
 
 void Map::IncreaseTileSize()
 {
-  mTileSize.increase();
+  mTileSize.Increase();
 }
 
 void Map::DecreaseTileSize() noexcept
 {
-  mTileSize.decrease();
+  mTileSize.Decrease();
 }
 
 void Map::ResetTileSize() noexcept
 {
-  mTileSize.reset();
+  mTileSize.Reset();
 }
 
 void Map::SetNextLayerId(const layer_id id) noexcept
@@ -356,12 +356,12 @@ auto Map::ColumnCount() const -> col_t
 
 auto Map::Width() const -> int
 {
-  return mCols.get() * mTileSize.get();
+  return mCols.get() * mTileSize.Get();
 }
 
 auto Map::Height() const -> int
 {
-  return mRows.get() * mTileSize.get();
+  return mRows.get() * mTileSize.Get();
 }
 
 auto Map::ActiveLayerId() const noexcept -> maybe<layer_id>
@@ -376,7 +376,7 @@ auto Map::NextLayerId() const noexcept -> layer_id
 
 auto Map::CurrentTileSize() const noexcept -> int
 {
-  return mTileSize.get();
+  return mTileSize.Get();
 }
 
 auto Map::GetLayer(const layer_id id) const -> const shared<ILayer>&

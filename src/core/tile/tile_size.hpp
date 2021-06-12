@@ -3,7 +3,7 @@
 namespace tactile::core {
 
 /**
- * \class tile_size
+ * \class TileSize
  *
  * \brief Represents the size of the visual representation of tiles from
  * tilesets.
@@ -12,7 +12,7 @@ namespace tactile::core {
  *
  * \headerfile tile_size.hpp
  */
-class tile_size final
+class [[deprecated]] TileSize final
 {
  public:
   /**
@@ -20,43 +20,43 @@ class tile_size final
    *
    * \since 0.1.0
    */
-  void reset() noexcept;
+  void Reset() noexcept;
 
   /**
    * \brief Increases the tile size by 10 percent.
    *
    * \since 0.1.0
    */
-  void increase();
+  void Increase();
 
   /**
    * \brief Decreases the tile size by 10 percent. Note, the tile size will
-   * always be at least `min_size()`.
+   * always be at least `MinimumSize()`.
    *
    * \since 0.1.0
    */
-  void decrease() noexcept;
+  void Decrease() noexcept;
 
   /**
    * \brief Sets the tile size, the tile size will always be at least
-   * `min_size()`.
+   * `MinimumSize()`.
    *
    * \param size the new tile size.
    *
    * \since 0.1.0
    */
-  void set_size(int size) noexcept;
+  void SetSize(int size) noexcept;
 
   /**
    * \brief Returns the current tile size.
    *
-   * \return the current tile size, will always be at least `min_size()`.
+   * \return the current tile size, will always be at least `MinimumSize()`.
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto get() const noexcept -> int
+  [[nodiscard]] auto Get() const noexcept -> int
   {
-    return m_size;
+    return mSize;
   }
 
   /**
@@ -66,7 +66,7 @@ class tile_size final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr static auto default_size() noexcept -> int
+  [[nodiscard]] constexpr static auto DefaultSize() noexcept -> int
   {
     return 100;
   }
@@ -78,13 +78,13 @@ class tile_size final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr static auto min_size() noexcept -> int
+  [[nodiscard]] constexpr static auto MinimumSize() noexcept -> int
   {
     return 5;
   }
 
  private:
-  int m_size{default_size()};
+  int mSize{DefaultSize()};
 };
 
 }  // namespace tactile::core

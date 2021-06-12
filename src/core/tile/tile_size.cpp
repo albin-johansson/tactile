@@ -6,25 +6,25 @@
 
 namespace tactile::core {
 
-void tile_size::reset() noexcept
+void TileSize::Reset() noexcept
 {
-  m_size = default_size();
+  mSize = DefaultSize();
 }
 
-void tile_size::increase()
+void TileSize::Increase()
 {
-  m_size = static_cast<int>(std::round(static_cast<double>(m_size) * 1.1));
+  mSize = static_cast<int>(std::round(static_cast<double>(mSize) * 1.1));
 }
 
-void tile_size::decrease() noexcept
+void TileSize::Decrease() noexcept
 {
-  const auto size = static_cast<int>(static_cast<double>(m_size) * 0.9);
-  m_size = AtLeast(size, min_size());
+  const auto size = static_cast<int>(static_cast<double>(mSize) * 0.9);
+  mSize = AtLeast(size, MinimumSize());
 }
 
-void tile_size::set_size(const int size) noexcept
+void TileSize::SetSize(const int size) noexcept
 {
-  m_size = AtLeast(size, min_size());
+  mSize = AtLeast(size, MinimumSize());
 }
 
 }  // namespace tactile::core

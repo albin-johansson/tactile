@@ -540,7 +540,7 @@ class Map final
  private:
   layer_map mLayers;
   maybe<layer_id> mActiveLayer;
-  tile_size mTileSize;
+  TileSize mTileSize;
   row_t mRows;
   col_t mCols;
   layer_id mNextLayer{1};
