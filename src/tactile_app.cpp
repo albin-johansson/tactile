@@ -18,7 +18,7 @@ TactileApp::TactileApp(int argc, char** argv)
 {
   PrepareApplication();
 
-  // It is necessary to create the window after calling the setup_app-function
+  // It is necessary to create the window after calling PrepareApplication
   mWindow = std::make_unique<Window>();
   InitConnections();
 
