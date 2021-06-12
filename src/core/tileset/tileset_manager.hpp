@@ -16,9 +16,9 @@ namespace tactile::core {
 /**
  * \class TilesetManager
  *
- * \brief Handles multiple `tileset` instances.
+ * \brief Handles multiple `Tileset` instances.
  *
- * \see `tileset`
+ * \see `Tileset`
  *
  * \since 0.1.0
  *

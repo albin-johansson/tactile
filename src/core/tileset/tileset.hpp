@@ -19,7 +19,7 @@
 namespace tactile::core {
 
 /**
- * \class tileset
+ * \class Tileset
  *
  * \brief Represents a collection of tiles in a sprite sheet.
  *

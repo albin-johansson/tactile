@@ -49,7 +49,7 @@ using col_t = nenya::strong_type<int, tags::col_tag>;
 namespace core {
 
 /**
- * \class position
+ * \class Position
  *
  * \brief Represents a row- and column-based position.
  *

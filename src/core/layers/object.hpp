@@ -10,7 +10,7 @@
 namespace tactile::core {
 
 /**
- * \class object
+ * \class Object
  *
  * \brief Represents "objects" that are present in object layers, e.g. points
  * and rectangles.

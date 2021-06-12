@@ -23,7 +23,7 @@ class ObjectLayer;
 class DocumentDelegate;
 
 /**
- * \class map_document
+ * \class MapDocument
  *
  * \brief Represents a map and a history of changes to the map.
  *

@@ -8,16 +8,16 @@
 namespace tactile::vm {
 
 /**
- * \class property_model
+ * \class PropertyModel
  *
  * \brief Represents the viewmodel responsible for managing properties.
  *
- * \details This class handles a `property_manager` instance and serves as the
+ * \details This class handles a `IPropertyManager` instance and serves as the
  * layer between the GUI and the core model for handling properties.
  *
  * \since 0.2.0
  *
- * \see property_manager
+ * \see `IPropertyManager`
  *
  * \headerfile property_model.hpp
  */
