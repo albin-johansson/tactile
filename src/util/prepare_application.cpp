@@ -36,15 +36,15 @@ void PrepareApplication()
   QApplication::setApplicationName(TACTILE_QSTRING(u"tactile"));
 
   prefs::ValidatePreferences();
-  validate_themes();
+  ValidateThemes();
 
   if (const auto name = prefs::ThemeName())
   {
-    set_theme(*name);
+    SetTheme(*name);
   }
   else
   {
-    reset_theme();
+    ResetTheme();
   }
 }
 

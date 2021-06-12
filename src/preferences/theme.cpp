@@ -34,7 +34,7 @@ void set_current_theme(const QString& name, const QPalette& palette)
 
 }  // namespace
 
-void validate_themes()
+void ValidateThemes()
 {
   prefs::ThemeName().SetIfMissing(defaultTheme.toString());
 
@@ -46,12 +46,12 @@ void validate_themes()
   }
 }
 
-void reset_theme()
+void ResetTheme()
 {
-  set_theme(defaultTheme.toString());
+  SetTheme(defaultTheme.toString());
 }
 
-auto register_theme(const QString& name, const QPalette& palette) -> bool
+auto RegisterTheme(const QString& name, const QPalette& palette) -> bool
 {
   // TODO disallow name collision with standard themes
 
@@ -68,9 +68,9 @@ auto register_theme(const QString& name, const QPalette& palette) -> bool
   }
 }
 
-auto set_theme(const QString& name) -> bool
+auto SetTheme(const QString& name) -> bool
 {
-  if (const auto palette = get_theme(name))
+  if (const auto palette = GetTheme(name))
   {
     set_current_theme(name, *palette);
     return true;
@@ -81,18 +81,18 @@ auto set_theme(const QString& name) -> bool
   }
 }
 
-void update_theme(const QString& name,
-                  const QPalette::ColorRole role,
+void UpdateTheme(const QString& name,
+                 QPalette::ColorRole role,
                   const QColor& color,
-                  const QPalette::ColorGroup group)
+                 QPalette::ColorGroup group)
 {
   // TODO don't allow updating a standard theme
 
-  if (auto palette = get_theme(name))
+  if (auto palette = GetTheme(name))
   {
     palette->setColor(group, role, color);
 
-    if (is_standard_theme(name))
+    if (IsStandardTheme(name))
     {
       palettes.at(name) = *palette;
     }
@@ -105,9 +105,9 @@ void update_theme(const QString& name,
   }
 }
 
-void remove_theme(const QString& name)
+void RemoveTheme(const QString& name)
 {
-  Q_ASSERT(!is_standard_theme(name));
+  Q_ASSERT(!IsStandardTheme(name));
   if (const auto userThemes = prefs::UserThemes())
   {
     auto map = userThemes.Value();
@@ -116,9 +116,9 @@ void remove_theme(const QString& name)
   }
 }
 
-auto get_theme(const QString& name) -> Maybe<QPalette>
+auto GetTheme(const QString& name) -> Maybe<QPalette>
 {
-  if (is_standard_theme(name))
+  if (IsStandardTheme(name))
   {
     return palettes.at(name);
   }
@@ -134,14 +134,14 @@ auto get_theme(const QString& name) -> Maybe<QPalette>
   return nothing;
 }
 
-auto is_standard_theme(const QStringView name) -> bool
+auto IsStandardTheme(QStringView name) -> bool
 {
   return std::ranges::any_of(themes, [name](const auto& pair) {
     return pair.first == name;
   });
 }
 
-auto get_standard_themes() -> vector_map<QString, QPalette>
+auto GetStandardThemes() -> vector_map<QString, QPalette>
 {
   vector_map<QString, QPalette> map;
   map.reserve(themes.size());
@@ -154,7 +154,7 @@ auto get_standard_themes() -> vector_map<QString, QPalette>
   return map;
 }
 
-auto get_standard_theme_names() -> std::vector<QString>
+auto GetStandardThemeNames() -> std::vector<QString>
 {
   std::vector<QString> names;
   names.reserve(palettes.size());
@@ -167,7 +167,7 @@ auto get_standard_theme_names() -> std::vector<QString>
   return names;
 }
 
-auto get_user_theme_names() -> std::vector<QString>
+auto GetUserThemeNames() -> std::vector<QString>
 {
   std::vector<QString> names;
 
@@ -183,12 +183,12 @@ auto get_user_theme_names() -> std::vector<QString>
   return names;
 }
 
-auto get_default_theme() -> const QPalette&
+auto GetDefaultTheme() -> const QPalette&
 {
   return palettes.at(defaultTheme);
 }
 
-auto get_default_theme_name() -> QStringView
+auto GetDefaultThemeName() -> QStringView
 {
   return defaultTheme;
 }

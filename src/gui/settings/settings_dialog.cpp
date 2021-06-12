@@ -36,14 +36,14 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 
   mUi->themeComboBox->clear();
 
-  for (const auto& name : get_standard_theme_names())
+  for (const auto& name : GetStandardThemeNames())
   {
     mUi->themeComboBox->addItem(TactileLogo(), name);
   }
 
   mUi->themeComboBox->insertSeparator(mUi->themeComboBox->count());
 
-  for (const auto& name : get_user_theme_names())
+  for (const auto& name : GetUserThemeNames())
   {
     mUi->themeComboBox->addItem(name);
   }
@@ -132,7 +132,7 @@ void SettingsDialog::UpdateThemeComponents()
 
 void SettingsDialog::UpdateThemePreview()
 {
-  if (const auto palette = get_theme(mUi->themeComboBox->currentText()))
+  if (const auto palette = GetTheme(mUi->themeComboBox->currentText()))
   {
     mBasicPreview->UpdatePreview(*palette);
     mDisabledPreview->UpdatePreview(*palette);
@@ -170,7 +170,7 @@ void SettingsDialog::FetchCurrentSettings()
 
 void SettingsDialog::OnAccept()
 {
-  set_theme(mUi->themeComboBox->currentText());
+  SetTheme(mUi->themeComboBox->currentText());
   emit S_ReloadTheme();
 
   if (const auto useOpenGL = mUi->openglCheck->isChecked();
@@ -256,10 +256,10 @@ void SettingsDialog::OnRenameCurrentTheme()
 void SettingsDialog::OnDuplicateCurrentTheme()
 {
   const auto name = mUi->themeComboBox->currentText();
-  if (const auto theme = get_theme(name))
+  if (const auto theme = GetTheme(name))
   {
     const auto newName = name + tr(" (Copy)");
-    if (register_theme(newName, *theme))
+    if (RegisterTheme(newName, *theme))
     {
       mUi->themeComboBox->addItem(newName);
     }
@@ -273,7 +273,7 @@ void SettingsDialog::OnImportNewTheme()
         const auto name = QFileInfo{path}.baseName();
         if (const auto palette = ParsePalette(path))
         {
-          if (register_theme(name, *palette))
+          if (RegisterTheme(name, *palette))
           {
             mUi->themeComboBox->addItem(name);
           }
@@ -290,7 +290,7 @@ void SettingsDialog::OnExportCurrentTheme()
 {
   ExportThemeDialog::Spawn(
       [this](const QString& path) {
-        if (const auto theme = get_theme(mUi->themeComboBox->currentText()))
+        if (const auto theme = GetTheme(mUi->themeComboBox->currentText()))
         {
           SaveTheme(path, *theme);
         }
@@ -305,7 +305,7 @@ void SettingsDialog::OnResetCurrentTheme()
 
 void SettingsDialog::OnRemoveCurrentTheme()
 {
-  remove_theme(mUi->themeComboBox->currentText());
+  RemoveTheme(mUi->themeComboBox->currentText());
   mUi->themeComboBox->removeItem(mUi->themeComboBox->currentIndex());
 }
 
@@ -313,7 +313,7 @@ void SettingsDialog::OnCurrentThemeChanged(const QString& name)
 {
   UpdateThemePreview();
 
-  const auto isStandardTheme = is_standard_theme(name);
+  const auto isStandardTheme = IsStandardTheme(name);
   mThemeOptionsContextMenu->SetResetEnabled(isStandardTheme);
   mThemeOptionsContextMenu->SetRenameEnabled(!isStandardTheme);
   mThemeOptionsContextMenu->SetRemoveEnabled(!isStandardTheme);
@@ -324,7 +324,7 @@ void SettingsDialog::OnThemeChanged(QPalette::ColorGroup group,
                                     const QColor& color)
 {
   //  qDebug("theme_changed");
-  update_theme(mUi->themeComboBox->currentText(), role, color, group);
+  UpdateTheme(mUi->themeComboBox->currentText(), role, color, group);
   //  emit reload_theme();
 }
 

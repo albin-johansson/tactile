@@ -9,25 +9,18 @@
 #include "maybe.hpp"
 #include "vector_map.hpp"
 
-/**
- * \namespace tactile::theme
- *
- * \brief Provides functions for handling window themes.
- *
- * \since 0.1.0
- */
 namespace tactile {
 
-void validate_themes();
+void ValidateThemes();
 
 /**
  * \brief Resets the currently active theme to the default theme.
  *
  * \since 0.1.0
  */
-void reset_theme();
+void ResetTheme();
 
-auto register_theme(const QString& name, const QPalette& palette) -> bool;
+auto RegisterTheme(const QString& name, const QPalette& palette) -> bool;
 
 /**
  * \brief Sets the currently active theme.
@@ -43,14 +36,14 @@ auto register_theme(const QString& name, const QPalette& palette) -> bool;
  *
  * \since 0.1.0
  */
-auto set_theme(const QString& name) -> bool;
+auto SetTheme(const QString& name) -> bool;
 
-void update_theme(const QString& name,
-                  QPalette::ColorRole role,
-                  const QColor& color,
-                  QPalette::ColorGroup group = QPalette::All);
+void UpdateTheme(const QString& name,
+                 QPalette::ColorRole role,
+                 const QColor& color,
+                 QPalette::ColorGroup group = QPalette::All);
 
-void remove_theme(const QString& name);
+void RemoveTheme(const QString& name);
 
 /**
  * \brief Returns the palette associated with the specified name.
@@ -62,7 +55,7 @@ void remove_theme(const QString& name);
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto get_theme(const QString& name) -> Maybe<QPalette>;
+[[nodiscard]] auto GetTheme(const QString& name) -> Maybe<QPalette>;
 
 /**
  * \brief Indicates whether or not the supplied name is one of the
@@ -75,13 +68,13 @@ void remove_theme(const QString& name);
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto is_standard_theme(QStringView name) -> bool;
+[[nodiscard]] auto IsStandardTheme(QStringView name) -> bool;
 
-[[nodiscard]] auto get_standard_themes() -> vector_map<QString, QPalette>;
+[[nodiscard]] auto GetStandardThemes() -> vector_map<QString, QPalette>;
 
-[[nodiscard]] auto get_standard_theme_names() -> std::vector<QString>;
+[[nodiscard]] auto GetStandardThemeNames() -> std::vector<QString>;
 
-[[nodiscard]] auto get_user_theme_names() -> std::vector<QString>;
+[[nodiscard]] auto GetUserThemeNames() -> std::vector<QString>;
 
 /**
  * \brief Returns the palette of the default theme.
@@ -90,8 +83,8 @@ void remove_theme(const QString& name);
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto get_default_theme() -> const QPalette&;
+[[nodiscard]] auto GetDefaultTheme() -> const QPalette&;
 
-[[nodiscard]] auto get_default_theme_name() -> QStringView;
+[[nodiscard]] auto GetDefaultThemeName() -> QStringView;
 
 }  // namespace tactile
