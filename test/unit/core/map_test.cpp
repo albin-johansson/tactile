@@ -2,6 +2,7 @@
 
 #include <gtest/gtest.h>
 
+#include "invoke_n.hpp"
 #include "tactile_error.hpp"
 #include "tile_layer.hpp"
 
@@ -135,7 +136,7 @@ TEST(Map, RemoveRow)
   map.RemoveRow();
   EXPECT_EQ(initialRows - 1_row, map.RowCount());
 
-  InvokeN(20, [&map] { map.RemoveRow(); });
+  InvokeN(20, [&] { map.RemoveRow(); });
 
   EXPECT_EQ(1_row, map.RowCount());
 }
@@ -148,7 +149,7 @@ TEST(Map, RemoveCol)
   map.RemoveColumn();
   EXPECT_EQ(initialCols - 1_col, map.ColumnCount());
 
-  InvokeN(20, [&map] { map.RemoveColumn(); });
+  InvokeN(20, [&] { map.RemoveColumn(); });
 
   EXPECT_EQ(1_col, map.ColumnCount());
 }
