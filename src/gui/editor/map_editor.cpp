@@ -66,7 +66,7 @@ void MapEditor::SelectTab(const map_id id)
   mTabWidget->SelectTab(id);
 }
 
-void MapEditor::CloseTab(const map_id id) noexcept
+void MapEditor::CloseTab(const map_id id)
 {
   mTabWidget->RemoveTab(id);
 }
@@ -76,7 +76,7 @@ void MapEditor::CenterViewport()
   mTabWidget->CenterViewport();
 }
 
-void MapEditor::MoveViewport(const int dx, const int dy) noexcept
+void MapEditor::MoveViewport(const int dx, const int dy)
 {
   mTabWidget->MoveViewport(dx, dy);
 }
@@ -91,12 +91,12 @@ void MapEditor::SetOpenGlEnabled(const bool enabled)
   mTabWidget->SetOpenGlEnabled(enabled);
 }
 
-void MapEditor::EnableStartupView() noexcept
+void MapEditor::EnableStartupView()
 {
   mUi->stackedWidget->setCurrentIndex(mStartupID);
 }
 
-void MapEditor::EnableEditorView() noexcept
+void MapEditor::EnableEditorView()
 {
   mUi->stackedWidget->setCurrentIndex(mEditorID);
 }

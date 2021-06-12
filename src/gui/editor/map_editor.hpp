@@ -45,11 +45,11 @@ class MapEditor final : public QWidget
 
   void SelectTab(map_id id);
 
-  void CloseTab(map_id id) noexcept;
+  void CloseTab(map_id id);
 
   void CenterViewport();
 
-  void MoveViewport(int dx, int dy) noexcept;
+  void MoveViewport(int dx, int dy);
 
   /**
    * \brief Enables the startup view.
@@ -59,14 +59,14 @@ class MapEditor final : public QWidget
    *
    * \since 0.1.0
    */
-  void EnableStartupView() noexcept;
+  void EnableStartupView();
 
   /**
    * \brief Enables the main editor view.
    *
    * \since 0.1.0
    */
-  void EnableEditorView() noexcept;
+  void EnableEditorView();
 
   /// \copydoc MapTabWidget::SetActiveTabName()
   void SetActiveTabName(const QString& name);
