@@ -390,6 +390,8 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto GetTilesets() noexcept -> TilesetManager*;
 
+  [[nodiscard]] auto GetTileset(tileset_id id) -> Tileset*;
+
   [[nodiscard]] auto Raw() -> Map&;
 
   [[nodiscard]] auto Data() const noexcept -> const Map*;

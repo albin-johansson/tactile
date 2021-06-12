@@ -29,6 +29,7 @@ class TilesetWidget final : public QWidget
   void S_RemoveTileset(tileset_id id);
   void S_SelectTileset(tileset_id id);
   void S_RenameTileset(tileset_id id, const QString& name);
+  void S_ShowProperties(tileset_id id);
   void S_SetTilesetSelection(const core::TilesetSelection& selection);
 
  public slots:

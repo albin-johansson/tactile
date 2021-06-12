@@ -25,57 +25,17 @@ TilesetContentPage::TilesetContentPage(QWidget* parent)
 
   mUi->gridLayout->addWidget(mTabWidget);
 
-  connect(mTabWidget,
-          &QTabWidget::customContextMenuRequested,
-          this,
-          &TilesetContentPage::TriggerContextMenu);
+  // clang-format off
+  connect(mTabWidget, &TabWidget::S_EditedTab, this, &TilesetContentPage::OnEditedTab);
+  connect(mTabWidget, &QTabWidget::customContextMenuRequested, this, &TilesetContentPage::OnContextMenuRequested);
+  connect(mTabWidget, &QTabWidget::tabCloseRequested, this, &TilesetContentPage::OnTabCloseRequested);
+  connect(mTabWidget, &QTabWidget::tabBarClicked, this, &TilesetContentPage::OnTabBarClicked);
+  connect(mTabWidget, &QTabWidget::currentChanged, this, &TilesetContentPage::OnCurrentTabChanged);
 
-  connect(mContextMenu, &TilesetTabContextMenu::S_Rename, [this](int index) {
-    mTabWidget->EditTab(index);
-  });
-
-  connect(mContextMenu, &TilesetTabContextMenu::S_Remove, [this](int index) {
-    if (auto* tab = TabFromIndex(index))
-    {
-      emit S_RemoveTileset(tab->Id());
-    }
-  });
-
-  connect(mTabWidget, &TabWidget::S_EditedTab, [this](int index) {
-    if (auto* tab = TabFromIndex(index))
-    {
-      emit S_RenameTileset(tab->Id(), mTabWidget->tabBar()->tabText(index));
-    }
-  });
-
-  connect(mTabWidget, &QTabWidget::tabCloseRequested, [this](int index) {
-    if (auto* tab = TabFromIndex(index))
-    {
-      emit S_RemoveTileset(tab->Id());
-    }
-  });
-
-  connect(mTabWidget, &QTabWidget::tabBarClicked, [this](int index) {
-    if (auto* tab = TabFromIndex(index))
-    {
-      emit S_SelectTileset(tab->Id());
-    }
-  });
-
-  connect(mTabWidget, &QTabWidget::currentChanged, [this](int index) {
-    if (index != -1)
-    {
-      CurrentManager().SetCachedIndex(index);
-      if (auto* item = TabFromIndex(index))
-      {
-        emit S_SelectTileset(item->Id());
-      }
-    }
-    else
-    {
-      emit S_SwitchToEmptyPage();
-    }
-  });
+  connect(mContextMenu, &TilesetTabContextMenu::S_Rename, this, &TilesetContentPage::OnContextActionRename);
+  connect(mContextMenu, &TilesetTabContextMenu::S_Remove, this, &TilesetContentPage::OnContextActionRemove);
+  connect(mContextMenu, &TilesetTabContextMenu::S_ShowProperties, this, &TilesetContentPage::OnContextActionShowProperties);
+  // clang-format on
 }
 
 TilesetContentPage::~TilesetContentPage() noexcept = default;
@@ -91,16 +51,6 @@ void TilesetContentPage::AddCornerButton()
           &TilesetContentPage::S_AddTileset);
 
   mTabWidget->setCornerWidget(button, Qt::Corner::TopRightCorner);
-}
-
-void TilesetContentPage::TriggerContextMenu(const QPoint& pos)
-{
-  const auto index = mTabWidget->tabBar()->tabAt(pos);
-  if (index != -1)
-  {
-    mContextMenu->SetTabIndex(index);
-    mContextMenu->exec(mapToGlobal(pos));
-  }
 }
 
 void TilesetContentPage::OnSelectedMap(const map_id map)
@@ -187,6 +137,77 @@ auto TilesetContentPage::TabFromIndex(const int index) -> TilesetTab*
 auto TilesetContentPage::CurrentManager() -> TilesetTabManager&
 {
   return mTabManagers.at(mCurrentMap.value());
+}
+
+void TilesetContentPage::OnContextMenuRequested(const QPoint& pos)
+{
+  const auto index = mTabWidget->tabBar()->tabAt(pos);
+  if (index != -1)
+  {
+    mContextMenu->SetTabIndex(index);
+    mContextMenu->exec(mapToGlobal(pos));
+  }
+}
+
+void TilesetContentPage::OnContextActionRename(const int index)
+{
+  mTabWidget->EditTab(index);
+}
+
+void TilesetContentPage::OnContextActionRemove(const int index)
+{
+  if (auto* tab = TabFromIndex(index))
+  {
+    emit S_RemoveTileset(tab->Id());
+  }
+}
+
+void TilesetContentPage::OnContextActionShowProperties(const int index)
+{
+  if (auto* tab = TabFromIndex(index))
+  {
+    emit S_ShowProperties(tab->Id());
+  }
+}
+
+void TilesetContentPage::OnEditedTab(const int index)
+{
+  if (auto* tab = TabFromIndex(index))
+  {
+    emit S_RenameTileset(tab->Id(), mTabWidget->tabBar()->tabText(index));
+  }
+}
+
+void TilesetContentPage::OnTabCloseRequested(const int index)
+{
+  if (auto* tab = TabFromIndex(index))
+  {
+    emit S_RemoveTileset(tab->Id());
+  }
+}
+
+void TilesetContentPage::OnTabBarClicked(const int index)
+{
+  if (auto* tab = TabFromIndex(index))
+  {
+    emit S_SelectTileset(tab->Id());
+  }
+}
+
+void TilesetContentPage::OnCurrentTabChanged(const int index)
+{
+  if (index != -1)
+  {
+    CurrentManager().SetCachedIndex(index);
+    if (auto* item = TabFromIndex(index))
+    {
+      emit S_SelectTileset(item->Id());
+    }
+  }
+  else
+  {
+    emit S_SwitchToEmptyPage();
+  }
 }
 
 }  // namespace tactile

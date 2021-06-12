@@ -93,6 +93,7 @@ class Window final : public QMainWindow
   void S_RemoveTileset(tileset_id id);
   void S_SelectTileset(tileset_id id);
   void S_RenameTileset(tileset_id id, const QString& name);
+  void S_ShowTilesetProperties(tileset_id id);
   void S_SetTilesetSelection(const core::TilesetSelection& selection);
 
   void S_ResizeMap();
@@ -119,6 +120,7 @@ class Window final : public QMainWindow
 
   void OnShowMapProperties(not_null<core::IPropertyManager*> manager);
   void OnShowLayerProperties(not_null<core::IPropertyManager*> manager);
+  void OnShowTilesetProperties(not_null<core::IPropertyManager*> manager);
 
   void OnEnableStampPreview(const core::MapPosition& position);
   void OnDisableStampPreview();

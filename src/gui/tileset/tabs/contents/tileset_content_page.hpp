@@ -56,6 +56,7 @@ class TilesetContentPage final : public QWidget
   void S_SelectTileset(tileset_id id);
   void S_RemoveTileset(tileset_id id);
   void S_RenameTileset(tileset_id id, const QString& name);
+  void S_ShowProperties(tileset_id id);
   void S_SetTilesetSelection(const core::TilesetSelection& selection);
 
  public slots:
@@ -121,8 +122,6 @@ class TilesetContentPage final : public QWidget
    */
   void AddCornerButton();
 
-  void TriggerContextMenu(const QPoint& pos);
-
   /**
    * \brief Returns the tab associated with the specified index.
    *
@@ -145,6 +144,16 @@ class TilesetContentPage final : public QWidget
    * \since 0.1.0
    */
   [[nodiscard]] auto CurrentManager() -> TilesetTabManager&;
+
+ private slots:
+  void OnContextMenuRequested(const QPoint& pos);
+  void OnContextActionRename(int index);
+  void OnContextActionRemove(int index);
+  void OnContextActionShowProperties(int index);
+  void OnEditedTab(int index);
+  void OnTabCloseRequested(int index);
+  void OnTabBarClicked(int index);
+  void OnCurrentTabChanged(int index);
 };
 
 }  // namespace tactile

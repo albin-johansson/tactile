@@ -79,6 +79,12 @@ void PropertiesWidget::ShowLayer(not_null<core::IPropertyManager*> manager)
   mModel->SetRootName(tr("Layer"));
 }
 
+void PropertiesWidget::ShowTileset(not_null<core::IPropertyManager*> manager)
+{
+  ChangeModel(manager);
+  mModel->SetRootName(tr("Tileset"));
+}
+
 void PropertiesWidget::OnAddedProperty(const QString& name)
 {
   mModel->OnAddedProperty(name);

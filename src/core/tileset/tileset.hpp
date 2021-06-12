@@ -10,6 +10,8 @@
 
 #include "map_position.hpp"
 #include "maybe.hpp"
+#include "property_manager.hpp"
+#include "smart_pointers.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_height.hpp"
 #include "tile_id.hpp"
@@ -34,10 +36,13 @@ namespace tactile::core {
  *
  * \headerfile tileset.hpp
  */
-class Tileset final
+class Tileset final : public IPropertyManager
 {
  public:
   using rect_map = std::unordered_map<tile_id, QRect>;
+
+  /// \name Construction
+  /// \{
 
   /**
    * \brief Creates a tileset.
@@ -74,6 +79,11 @@ class Tileset final
           const QString& path,
           tile_width tileWidth,
           tile_height tileHeight);
+
+  /// \} End of construction
+
+  /// \name Tileset API
+  /// \{
 
   /**
    * \brief Iterates the current selection.
@@ -417,6 +427,36 @@ class Tileset final
     return mPath.absoluteFilePath();
   }
 
+  /// \} End of tileset
+
+  /// \name Property API
+  /// \{
+
+  void AddProperty(const QString& name, PropertyType type) override;
+
+  void AddProperty(const QString& name, const Property& property) override;
+
+  void RemoveProperty(const QString& name) override;
+
+  void RenameProperty(const QString& oldName, const QString& newName) override;
+
+  void SetProperty(const QString& name, const Property& property) override;
+
+  void ChangePropertyType(const QString& name, PropertyType type) override;
+
+  [[nodiscard]] auto GetProperty(const QString& name) const
+      -> const Property& override;
+
+  [[nodiscard]] auto GetProperty(const QString& name) -> Property& override;
+
+  [[nodiscard]] auto HasProperty(const QString& name) const -> bool override;
+
+  [[nodiscard]] auto PropertyCount() const noexcept -> int override;
+
+  [[nodiscard]] auto GetProperties() const -> const property_map& override;
+
+  /// \} End of property API
+
  private:
   QPixmap mImage;
   tile_id mFirstId{1};
@@ -430,6 +470,7 @@ class Tileset final
   int mTileCount{};
   QFileInfo mPath;
   QString mName{TACTILE_QSTRING(u"Untitled")};
+  Unique<IPropertyManager> mProperties;
 };
 
 }  // namespace tactile::core

@@ -23,6 +23,7 @@ TilesetWidget::TilesetWidget(QWidget* parent)
   connect(mContentPage, &TilesetContentPage::S_SelectTileset, this, &TilesetWidget::S_SelectTileset);
   connect(mContentPage, &TilesetContentPage::S_RemoveTileset, this, &TilesetWidget::S_RemoveTileset);
   connect(mContentPage, &TilesetContentPage::S_RenameTileset, this, &TilesetWidget::S_RenameTileset);
+  connect(mContentPage, &TilesetContentPage::S_ShowProperties, this, &TilesetWidget::S_ShowProperties);
   connect(mContentPage, &TilesetContentPage::S_SetTilesetSelection, this, &TilesetWidget::S_SetTilesetSelection);
   // clang-format on
 

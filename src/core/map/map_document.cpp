@@ -487,6 +487,11 @@ auto MapDocument::GetTilesets() noexcept -> TilesetManager*
   return mTilesets.get();
 }
 
+auto MapDocument::GetTileset(const tileset_id id) -> Tileset*
+{
+  return mTilesets->GetTilesetPointer(id).get();
+}
+
 auto MapDocument::Raw() -> Map&
 {
   return *mMap;

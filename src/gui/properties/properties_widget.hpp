@@ -33,6 +33,8 @@ class PropertiesWidget final : public QWidget
 
   void ShowLayer(not_null<core::IPropertyManager*> manager);
 
+  void ShowTileset(not_null<core::IPropertyManager*> manager);
+
   void OnAddedProperty(const QString& name);
 
   void OnAboutToRemoveProperty(const QString& name);

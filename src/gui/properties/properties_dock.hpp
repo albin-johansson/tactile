@@ -24,6 +24,8 @@ class PropertiesDock final : public DockWidget
 
   void ShowLayerProperties(not_null<core::IPropertyManager*> manager);
 
+  void ShowTilesetProperties(not_null<core::IPropertyManager*> manager);
+
  public slots:
   void OnSwitchedMap(not_null<core::IPropertyManager*> manager);
 

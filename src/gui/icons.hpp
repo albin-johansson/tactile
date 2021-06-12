@@ -42,4 +42,6 @@ namespace tactile {
 
 [[nodiscard]] auto IconQuestionMark() -> const QIcon&;
 
+[[nodiscard]] auto IconProperties() -> const QIcon&;
+
 }  // namespace tactile

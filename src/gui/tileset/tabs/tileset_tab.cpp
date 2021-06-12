@@ -16,13 +16,12 @@ TilesetTab::TilesetTab(tileset_id id,
     : QWidget{parent}
     , mId{id}
     , mName{tileset.Name()}
+    , mLayout{new QGridLayout{this}}
+    , mScrollArea{new QScrollArea{this}}
 {
-  setObjectName("tileset_tab");
+  setObjectName(QStringLiteral(u"TilesetTab"));
 
-  mLayout = new QGridLayout{this};
   mLayout->setContentsMargins(0, 0, 0, 0);
-
-  mScrollArea = new QScrollArea{this};
   mScrollArea->setBackgroundRole(QPalette::ColorRole::Dark);
 
   mImageWidget = new TilesetImageWidget{tileset, this};
@@ -33,10 +32,9 @@ TilesetTab::TilesetTab(tileset_id id,
   setLayout(mLayout);
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-  connect(mImageWidget,
-          &TilesetImageWidget::S_SetTilesetSelection,
-          this,
-          &TilesetTab::S_SetTilesetSelection);
+  // clang-format off
+  connect(mImageWidget, &TilesetImageWidget::S_SetTilesetSelection, this, &TilesetTab::S_SetTilesetSelection);
+  // clang-format on
 }
 
 TilesetTab::~TilesetTab() noexcept = default;

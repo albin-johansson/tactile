@@ -45,22 +45,23 @@ void TactileApp::InitConnections()
 
   // clang-format off
 
-  winToMod(&Window::S_Undo,                &Model::Undo);
-  winToMod(&Window::S_Redo,                &Model::Redo);
-  winToMod(&Window::S_AddRow,              &Model::AddRow);
-  winToMod(&Window::S_AddCol,              &Model::AddColumn);
-  winToMod(&Window::S_RemoveRow,           &Model::RemoveRow);
-  winToMod(&Window::S_RemoveCol,           &Model::RemoveColumn);
-  winToMod(&Window::S_AboutToCloseMap,     &Model::CloseMap);
-  winToMod(&Window::S_SelectMap,           &Model::SelectMap);
-  winToMod(&Window::S_ZoomIn,              &Model::IncreaseTileSize);
-  winToMod(&Window::S_ZoomOut,             &Model::DecreaseTileSize);
-  winToMod(&Window::S_ResetZoom,           &Model::ResetTileSize);
-  winToMod(&Window::S_SelectedTool,        &Model::SelectTool);
-  winToMod(&Window::S_RemoveTileset,       &Model::RemoveTileset);
-  winToMod(&Window::S_SelectTileset,       &Model::SelectTileset);
-  winToMod(&Window::S_RenameTileset,       &Model::SetTilesetName);
-  winToMod(&Window::S_SetTilesetSelection, &Model::SetTilesetSelection);
+  winToMod(&Window::S_Undo,                  &Model::Undo);
+  winToMod(&Window::S_Redo,                  &Model::Redo);
+  winToMod(&Window::S_AddRow,                &Model::AddRow);
+  winToMod(&Window::S_AddCol,                &Model::AddColumn);
+  winToMod(&Window::S_RemoveRow,             &Model::RemoveRow);
+  winToMod(&Window::S_RemoveCol,             &Model::RemoveColumn);
+  winToMod(&Window::S_AboutToCloseMap,       &Model::CloseMap);
+  winToMod(&Window::S_SelectMap,             &Model::SelectMap);
+  winToMod(&Window::S_ZoomIn,                &Model::IncreaseTileSize);
+  winToMod(&Window::S_ZoomOut,               &Model::DecreaseTileSize);
+  winToMod(&Window::S_ResetZoom,             &Model::ResetTileSize);
+  winToMod(&Window::S_SelectedTool,          &Model::SelectTool);
+  winToMod(&Window::S_RemoveTileset,         &Model::RemoveTileset);
+  winToMod(&Window::S_SelectTileset,         &Model::SelectTileset);
+  winToMod(&Window::S_RenameTileset,         &Model::SetTilesetName);
+  winToMod(&Window::S_SetTilesetSelection,   &Model::SetTilesetSelection);
+  winToMod(&Window::S_ShowTilesetProperties, &Model::OnShowTilesetProperties);
 
   winToMod(&Window::S_MousePressed,  &Model::OnMousePressed);
   winToMod(&Window::S_MouseMoved,    &Model::OnMouseMoved);
@@ -91,6 +92,7 @@ void TactileApp::InitConnections()
   modToWin(&Model::S_ChangedPropertyType,   &Window::OnChangedPropertyType);
   modToWin(&Model::S_ShowMapProperties,     &Window::OnShowMapProperties);
   modToWin(&Model::S_ShowLayerProperties,   &Window::OnShowLayerProperties);
+  modToWin(&Model::S_ShowTilesetProperties, &Window::OnShowTilesetProperties);
 
   fromWindow(&Window::S_AddTileset, &TactileApp::OnAddTileset);
   fromWindow(&Window::S_ResizeMap,  &TactileApp::OnResizeMap);

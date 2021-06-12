@@ -91,6 +91,7 @@ class Model final : public QObject
 
   void S_ShowMapProperties(core::IPropertyManager* manager);
   void S_ShowLayerProperties(core::IPropertyManager* manager);
+  void S_ShowTilesetProperties(core::IPropertyManager* manager);
 
  public slots:
   /**
@@ -263,6 +264,8 @@ class Model final : public QObject
   void OnMouseReleased(QMouseEvent* event, const QPointF& mapPosition);
   void OnMouseEntered(QEvent* event);
   void OnMouseExited(QEvent* event);
+
+  void OnShowTilesetProperties(tileset_id id);
 
  private:
   vector_map<map_id, MapDocument*> mDocuments;

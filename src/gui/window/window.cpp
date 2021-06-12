@@ -213,6 +213,11 @@ void Window::OnShowLayerProperties(not_null<core::IPropertyManager*> manager)
   mPropertiesDock->ShowLayerProperties(manager);
 }
 
+void Window::OnShowTilesetProperties(not_null<core::IPropertyManager*> manager)
+{
+  mPropertiesDock->ShowTilesetProperties(manager);
+}
+
 void Window::OnEnableStampPreview(const core::MapPosition& position)
 {
   mEditor->EnableStampPreview(position);

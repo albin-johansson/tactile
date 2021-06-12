@@ -22,6 +22,7 @@ TilesetDock::TilesetDock(QWidget* parent)
   connect(mWidget, &TilesetWidget::S_SelectTileset, this, &TilesetDock::S_SelectTileset);
   connect(mWidget, &TilesetWidget::S_RemoveTileset, this, &TilesetDock::S_RemoveTileset);
   connect(mWidget, &TilesetWidget::S_RenameTileset, this, &TilesetDock::S_RenameTileset);
+  connect(mWidget, &TilesetWidget::S_ShowProperties, this, &TilesetDock::S_ShowProperties);
   connect(mWidget, &TilesetWidget::S_SetTilesetSelection, this, &TilesetDock::S_SetTilesetSelection);
   // clang-format on
 }

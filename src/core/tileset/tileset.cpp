@@ -1,20 +1,11 @@
 
 #include "tileset.hpp"
 
-#include <type_traits>  // is_final_v, is_move_constructible_v, ...
-
+#include "property_delegate.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::core {
 namespace {
-
-static_assert(std::is_final_v<Tileset>);
-
-static_assert(std::is_move_constructible_v<Tileset>);
-static_assert(std::is_move_assignable_v<Tileset>);
-
-static_assert(std::is_copy_constructible_v<Tileset>);
-static_assert(std::is_copy_assignable_v<Tileset>);
 
 auto create_source_rect_cache(const tile_id first,
                               const tile_id last,
@@ -53,6 +44,7 @@ Tileset::Tileset(const tile_id firstId,
     , mFirstId{firstId}
     , mTileWidth{tileWidth}
     , mTileHeight{tileHeight}
+    , mProperties{std::make_unique<PropertyDelegate>()}
 {
   if (mImage.isNull())
   {
@@ -152,6 +144,61 @@ auto Tileset::ImageSource(const tile_id id) const -> Maybe<QRect>
   {
     return nothing;
   }
+}
+
+void Tileset::AddProperty(const QString& name, const PropertyType type)
+{
+  mProperties->AddProperty(name, type);
+}
+
+void Tileset::AddProperty(const QString& name, const Property& property)
+{
+  mProperties->AddProperty(name, property);
+}
+
+void Tileset::RemoveProperty(const QString& name)
+{
+  mProperties->RemoveProperty(name);
+}
+
+void Tileset::RenameProperty(const QString& oldName, const QString& newName)
+{
+  mProperties->RenameProperty(oldName, newName);
+}
+
+void Tileset::SetProperty(const QString& name, const Property& property)
+{
+  mProperties->SetProperty(name, property);
+}
+
+void Tileset::ChangePropertyType(const QString& name, const PropertyType type)
+{
+  mProperties->ChangePropertyType(name, type);
+}
+
+auto Tileset::GetProperty(const QString& name) const -> const Property&
+{
+  return mProperties->GetProperty(name);
+}
+
+auto Tileset::GetProperty(const QString& name) -> Property&
+{
+  return mProperties->GetProperty(name);
+}
+
+auto Tileset::HasProperty(const QString& name) const -> bool
+{
+  return mProperties->HasProperty(name);
+}
+
+auto Tileset::PropertyCount() const noexcept -> int
+{
+  return mProperties->PropertyCount();
+}
+
+auto Tileset::GetProperties() const -> const property_map&
+{
+  return mProperties->GetProperties();
 }
 
 }  // namespace tactile::core

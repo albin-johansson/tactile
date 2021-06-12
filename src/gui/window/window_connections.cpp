@@ -122,6 +122,7 @@ void WindowConnections::InitTilesetDock()
   connect(dock, &TilesetDock::S_SelectTileset, mWindow, &Window::S_SelectTileset);
   connect(dock, &TilesetDock::S_RemoveTileset, mWindow, &Window::S_RemoveTileset);
   connect(dock, &TilesetDock::S_RenameTileset, mWindow, &Window::S_RenameTileset);
+  connect(dock, &TilesetDock::S_ShowProperties, mWindow, &Window::S_ShowTilesetProperties);
   connect(dock, &TilesetDock::S_SetTilesetSelection, mWindow, &Window::S_SetTilesetSelection);
   // clang-format on
 }

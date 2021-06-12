@@ -155,4 +155,12 @@ auto IconQuestionMark() -> const QIcon&
   return icon;
 }
 
+auto IconProperties() -> const QIcon&
+{
+  static const QIcon icon{
+      TACTILE_QSTRING(u":resources/icons/color/64/registry.png")};
+  Q_ASSERT(!icon.isNull());
+  return icon;
+}
+
 }  // namespace tactile

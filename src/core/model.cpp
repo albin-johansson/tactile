@@ -310,6 +310,17 @@ void Model::OnMouseExited(QEvent* event)
   mTools.OnMouseExited(event);
 }
 
+void Model::OnShowTilesetProperties(const tileset_id id)
+{
+  auto* document = CurrentDocument();
+  Q_ASSERT(document);
+
+  auto* tileset = document->GetTileset(id);
+  Q_ASSERT(tileset);
+
+  emit S_ShowTilesetProperties(tileset);
+}
+
 void Model::EmitUndoRedoUpdate()
 {
   if (const auto* document = CurrentDocument())

@@ -33,6 +33,12 @@ void PropertiesDock::ShowLayerProperties(
   mWidget->ShowLayer(manager);
 }
 
+void PropertiesDock::ShowTilesetProperties(
+    not_null<core::IPropertyManager*> manager)
+{
+  mWidget->ShowTileset(manager);
+}
+
 void PropertiesDock::OnAddedProperty(const QString& name)
 {
   mWidget->OnAddedProperty(name);
