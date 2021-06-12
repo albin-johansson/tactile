@@ -8,10 +8,10 @@
 
 namespace tactile::core {
 
-class property_delegate final : public IPropertyManager
+class PropertyDelegate final : public IPropertyManager
 {
  public:
-  ~property_delegate() noexcept override = default;
+  ~PropertyDelegate() noexcept override = default;
 
   void AddProperty(const QString& name, PropertyType type) override;
 

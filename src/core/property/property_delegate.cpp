@@ -4,8 +4,7 @@
 
 namespace tactile::core {
 
-void property_delegate::AddProperty(const QString& name,
-                                    const PropertyType type)
+void PropertyDelegate::AddProperty(const QString& name, const PropertyType type)
 {
   Q_ASSERT(!mProperties.contains(name));
 
@@ -20,8 +19,8 @@ void property_delegate::AddProperty(const QString& name,
 #endif  // QT_DEBUG
 }
 
-void property_delegate::AddProperty(const QString& name,
-                                    const Property& property)
+void PropertyDelegate::AddProperty(const QString& name,
+                                   const Property& property)
 {
   Q_ASSERT(!mProperties.contains(name));
   Q_ASSERT(property.Type());
@@ -34,7 +33,7 @@ void property_delegate::AddProperty(const QString& name,
 #endif  // QT_DEBUG
 }
 
-void property_delegate::RemoveProperty(const QString& name)
+void PropertyDelegate::RemoveProperty(const QString& name)
 {
   Q_ASSERT(mProperties.contains(name));
   mProperties.erase(name);
@@ -44,8 +43,8 @@ void property_delegate::RemoveProperty(const QString& name)
 #endif  // QT_DEBUG
 }
 
-void property_delegate::RenameProperty(const QString& oldName,
-                                       const QString& newName)
+void PropertyDelegate::RenameProperty(const QString& oldName,
+                                      const QString& newName)
 {
   Q_ASSERT(mProperties.contains(oldName));
   Q_ASSERT(!mProperties.contains(newName));
@@ -59,8 +58,8 @@ void property_delegate::RenameProperty(const QString& oldName,
 #endif  // QT_DEBUG
 }
 
-void property_delegate::SetProperty(const QString& name,
-                                    const Property& property)
+void PropertyDelegate::SetProperty(const QString& name,
+                                   const Property& property)
 {
   Q_ASSERT(mProperties.contains(name));
   Q_ASSERT(mProperties.at(name).Type() == property.Type());
@@ -71,8 +70,8 @@ void property_delegate::SetProperty(const QString& name,
 #endif  // QT_DEBUG
 }
 
-void property_delegate::ChangePropertyType(const QString& name,
-                                           const PropertyType type)
+void PropertyDelegate::ChangePropertyType(const QString& name,
+                                          const PropertyType type)
 {
   Q_ASSERT(mProperties.contains(name));
   Q_ASSERT(GetProperty(name).Type() != type);
@@ -90,28 +89,27 @@ void property_delegate::ChangePropertyType(const QString& name,
 #endif  // QT_DEBUG
 }
 
-auto property_delegate::GetProperty(const QString& name) const
-    -> const Property&
+auto PropertyDelegate::GetProperty(const QString& name) const -> const Property&
 {
   return mProperties.at(name);
 }
 
-auto property_delegate::GetProperty(const QString& name) -> Property&
+auto PropertyDelegate::GetProperty(const QString& name) -> Property&
 {
   return mProperties.at(name);
 }
 
-auto property_delegate::HasProperty(const QString& name) const -> bool
+auto PropertyDelegate::HasProperty(const QString& name) const -> bool
 {
   return mProperties.contains(name);
 }
 
-auto property_delegate::PropertyCount() const noexcept -> int
+auto PropertyDelegate::PropertyCount() const noexcept -> int
 {
   return static_cast<int>(mProperties.size());
 }
 
-auto property_delegate::GetProperties() const -> const property_map&
+auto PropertyDelegate::GetProperties() const -> const property_map&
 {
   return mProperties;
 }

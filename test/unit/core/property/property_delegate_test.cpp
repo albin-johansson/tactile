@@ -8,7 +8,7 @@ using namespace tactile;
 
 TEST(PropertyDelegate, AddProperty)
 {
-  core::property_delegate delegate;
+  core::PropertyDelegate delegate;
   EXPECT_EQ(0, delegate.PropertyCount());
 
   const auto name = TACTILE_QSTRING(u"foo");
@@ -22,7 +22,7 @@ TEST(PropertyDelegate, AddProperty)
 
 TEST(PropertyDelegate, RemoveProperty)
 {
-  core::property_delegate delegate;
+  core::PropertyDelegate delegate;
   const auto name = TACTILE_QSTRING(u"foo");
 
   delegate.AddProperty(name, core::PropertyType::Integer);
@@ -36,7 +36,7 @@ TEST(PropertyDelegate, RemoveProperty)
 
 TEST(PropertyDelegate, RenameProperty)
 {
-  core::property_delegate delegate;
+  core::PropertyDelegate delegate;
 
   const auto oldName = TACTILE_QSTRING(u"foo");
   delegate.AddProperty(oldName, core::PropertyType::Boolean);
@@ -52,7 +52,7 @@ TEST(PropertyDelegate, RenameProperty)
 
 TEST(PropertyDelegate, SetProperty)
 {
-  core::property_delegate delegate;
+  core::PropertyDelegate delegate;
 
   const auto name = TACTILE_QSTRING(u"foo");
 
@@ -65,7 +65,7 @@ TEST(PropertyDelegate, SetProperty)
 
 TEST(PropertyDelegate, GetProperty)
 {
-  core::property_delegate delegate;
+  core::PropertyDelegate delegate;
 
   const auto name = TACTILE_QSTRING(u"foo");
   EXPECT_ANY_THROW(delegate.GetProperty(name));
@@ -79,7 +79,7 @@ TEST(PropertyDelegate, GetProperty)
 
 TEST(PropertyDelegate, PropertyCount)
 {
-  core::property_delegate delegate;
+  core::PropertyDelegate delegate;
   EXPECT_EQ(0, delegate.PropertyCount());
 
   delegate.AddProperty(TACTILE_QSTRING(u"foo"), core::PropertyType::String);

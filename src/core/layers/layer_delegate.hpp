@@ -74,7 +74,7 @@ class LayerDelegate final
  private:
   LayerType mType;
   QString mName;
-  property_delegate mProperties;
+  PropertyDelegate mProperties;
   double mOpacity{1};
   bool mVisible{true};
 };

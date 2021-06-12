@@ -229,7 +229,7 @@ class Object final : public IPropertyManager
   ObjectType mType;
   Maybe<QString> mCustomType;
   QString mName;
-  property_delegate mProperties;
+  PropertyDelegate mProperties;
   bool mVisible{true};
 };
 

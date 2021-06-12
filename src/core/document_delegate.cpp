@@ -8,7 +8,7 @@ namespace tactile::core {
 
 DocumentDelegate::DocumentDelegate()
     : mCommandStack{std::make_unique<CommandStack>()}
-    , mPropertyManager{std::make_unique<property_delegate>()}
+    , mPropertyManager{std::make_unique<PropertyDelegate>()}
 {
   mCommandStack->setUndoLimit(100);
 }
