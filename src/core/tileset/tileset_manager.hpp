@@ -104,8 +104,8 @@ class TilesetManager final
    *
    * \pre `id` must be associated with a tileset if it isn't `std::nullopt`.
    *
-   * \param id the key associated with the tileset that will be made
-   * active; `std::nullopt` indicates that no tileset should be selected.
+   * \param id the key associated with the tileset that will be made active;
+   * `std::nullopt` indicates that no tileset should be selected.
    *
    * \since 0.1.0
    */
@@ -143,9 +143,7 @@ class TilesetManager final
    */
   [[nodiscard]] auto At(tileset_id id) -> Tileset&;
 
-  /**
-   * \copydoc at(tileset_id)
-   */
+  /// \copydoc At(tileset_id)
   [[nodiscard]] auto At(tileset_id id) const -> const Tileset&;
 
   /**
