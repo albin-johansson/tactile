@@ -9,4 +9,9 @@ auto GetDocumentsPath() -> QString
   return QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 }
 
+auto GetPicturesPath() -> QString
+{
+  return QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+}
+
 }  // namespace tactile

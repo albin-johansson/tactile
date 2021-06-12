@@ -11,7 +11,7 @@ TilesetImageFileDialog::TilesetImageFileDialog(QWidget* parent)
   setViewMode(Detail);
   setNameFilter(tr("Images (*.png *.jpg)"));
   setWindowTitle(tr("Open tileset"));
-  setDirectory(GetDocumentsPath());
+  setDirectory(GetPicturesPath());
 }
 
 }  // namespace tactile
