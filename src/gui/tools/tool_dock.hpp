@@ -1,11 +1,10 @@
 #pragma once
 
 #include "dock_widget.hpp"
-#include "forward_declare.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile, ToolWidget)
 
 namespace tactile {
+
+class ToolWidget;
 
 class ToolDock final : public DockWidget
 {

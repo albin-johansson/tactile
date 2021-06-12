@@ -16,19 +16,20 @@
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(Window)
+TACTILE_DECLARE_UI(Window)
 
 TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
-TACTILE_FORWARD_DECLARE(tactile, MapEditor)
-TACTILE_FORWARD_DECLARE(tactile, ToolDock)
-TACTILE_FORWARD_DECLARE(tactile, LayerDock)
-TACTILE_FORWARD_DECLARE(tactile, TilesetDock)
-TACTILE_FORWARD_DECLARE(tactile, PropertiesDock)
-TACTILE_FORWARD_DECLARE(tactile, StatusBar)
 
 namespace tactile {
+
+class MapEditor;
+class ToolDock;
+class LayerDock;
+class TilesetDock;
+class PropertiesDock;
+class StatusBar;
 
 /**
  * \class Window

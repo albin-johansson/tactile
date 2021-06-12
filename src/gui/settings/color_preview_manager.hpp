@@ -4,11 +4,9 @@
 #include <QPalette>     // QPalette
 #include <QWidget>      // QWidget
 
-#include "forward_declare.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile, ColorPreviewButton)
-
 namespace tactile {
+
+class ColorPreviewButton;
 
 class ColorPreviewManager final : public QWidget
 {

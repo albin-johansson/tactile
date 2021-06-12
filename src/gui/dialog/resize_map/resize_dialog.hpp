@@ -11,7 +11,7 @@
 #include "position.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(ResizeDialog)
+TACTILE_DECLARE_UI(ResizeDialog)
 
 namespace tactile {
 

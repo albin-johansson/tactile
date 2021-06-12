@@ -7,11 +7,11 @@
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(SettingsDialog)
-
-TACTILE_FORWARD_DECLARE(tactile, ThemeOptionsContextMenu)
+TACTILE_DECLARE_UI(SettingsDialog)
 
 namespace tactile {
+
+class ThemeOptionsContextMenu;
 
 struct SettingsSnapshot final
 {

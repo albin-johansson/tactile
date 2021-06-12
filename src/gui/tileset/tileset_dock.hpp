@@ -8,9 +8,10 @@
 #include "tileset_id.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile, TilesetWidget)
 
 namespace tactile {
+
+class TilesetWidget;
 
 class TilesetDock final : public DockWidget
 {

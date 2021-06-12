@@ -5,7 +5,7 @@
   class clazz;                             \
   }
 
-#define TACTILE_FORWARD_DECLARE_UI(clazz) \
-  namespace Ui {                          \
-  class clazz;                            \
+#define TACTILE_DECLARE_UI(clazz) \
+  namespace Ui {                  \
+  class clazz;                    \
   }

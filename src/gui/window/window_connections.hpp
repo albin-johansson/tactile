@@ -4,7 +4,7 @@
 
 #include "forward_declare.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(Window)
+TACTILE_DECLARE_UI(Window)
 
 namespace tactile {
 

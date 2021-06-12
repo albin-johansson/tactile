@@ -11,9 +11,10 @@
 #include "tileset.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, Model)
-TACTILE_FORWARD_DECLARE(tactile, Window)
 
 namespace tactile {
+
+class Window;
 
 /**
  * \class TactileApp

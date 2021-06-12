@@ -8,17 +8,19 @@
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(LayerWidget)
+TACTILE_DECLARE_UI(LayerWidget)
+
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 TACTILE_FORWARD_DECLARE(tactile::vm, LayerModel)
-TACTILE_FORWARD_DECLARE(tactile, LayerListView)
-TACTILE_FORWARD_DECLARE(tactile, LayerItem)
-TACTILE_FORWARD_DECLARE(tactile, AddLayerContextMenu)
-TACTILE_FORWARD_DECLARE(tactile, LayerItemContextMenu)
-TACTILE_FORWARD_DECLARE(tactile, LayerWidgetContextMenu)
 
 namespace tactile {
+
+class LayerListView;
+class LayerItem;
+class LayerItemContextMenu;
+class LayerWidgetContextMenu;
+class AddLayerContextMenu;
 
 class LayerWidget final : public QWidget
 {

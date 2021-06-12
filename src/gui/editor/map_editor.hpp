@@ -9,12 +9,14 @@
 #include "position.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(MapEditor)
+TACTILE_DECLARE_UI(MapEditor)
+
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile, MapTabWidget)
-TACTILE_FORWARD_DECLARE(tactile, MapEditorContextMenu)
 
 namespace tactile {
+
+class MapTabWidget;
+class MapEditorContextMenu;
 
 /**
  * \class MapEditor

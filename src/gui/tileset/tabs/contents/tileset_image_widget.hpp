@@ -4,12 +4,11 @@
 #include <QPoint>   // QPoint
 #include <QWidget>  // QWidget
 
-#include "forward_declare.hpp"
 #include "tileset.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile, TilesetRubberBand)
-
 namespace tactile {
+
+class TilesetRubberBand;
 
 class TilesetImageWidget final : public QWidget
 {

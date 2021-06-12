@@ -9,9 +9,10 @@
 #include "position.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile, MapScene)
 
 namespace tactile {
+
+class MapScene;
 
 /**
  * \class MapView

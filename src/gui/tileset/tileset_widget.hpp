@@ -8,12 +8,12 @@
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(TilesetWidget)
-
-TACTILE_FORWARD_DECLARE(tactile, TilesetContentPage)
-TACTILE_FORWARD_DECLARE(tactile, TilesetEmptyPage)
+TACTILE_DECLARE_UI(TilesetWidget)
 
 namespace tactile {
+
+class TilesetContentPage;
+class TilesetEmptyPage;
 
 class TilesetWidget final : public QWidget
 {

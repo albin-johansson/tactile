@@ -8,15 +8,16 @@
 #include "property.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(PropertiesWidget)
+TACTILE_DECLARE_UI(PropertiesWidget)
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 TACTILE_FORWARD_DECLARE(tactile::vm, PropertyModel)
-TACTILE_FORWARD_DECLARE(tactile, PropertyTreeView)
-TACTILE_FORWARD_DECLARE(tactile, PropertyContextMenu)
 
 namespace tactile {
+
+class PropertyTreeView;
+class PropertyContextMenu;
 
 class PropertiesWidget final : public QWidget
 {

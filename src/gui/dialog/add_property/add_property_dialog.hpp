@@ -10,7 +10,7 @@
 #include "property.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(AddPropertyDialog)
+TACTILE_DECLARE_UI(AddPropertyDialog)
 
 namespace tactile {
 

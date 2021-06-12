@@ -15,7 +15,7 @@
 #include "tile_height.hpp"
 #include "tile_width.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(TilesetDialog)
+TACTILE_DECLARE_UI(TilesetDialog)
 
 namespace tactile {
 

@@ -5,13 +5,12 @@
 #include <QString>      // QString
 #include <QWidget>      // QWidget
 
-#include "forward_declare.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile, TilesetImageWidget)
-
 namespace tactile {
+
+class TilesetImageWidget;
 
 class TilesetTab final : public QWidget
 {

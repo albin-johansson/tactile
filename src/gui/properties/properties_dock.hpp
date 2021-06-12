@@ -8,9 +8,10 @@
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
-TACTILE_FORWARD_DECLARE(tactile, PropertiesWidget)
 
 namespace tactile {
+
+class PropertiesWidget;
 
 class PropertiesDock final : public DockWidget
 {

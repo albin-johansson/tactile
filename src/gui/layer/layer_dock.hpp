@@ -5,9 +5,10 @@
 #include "not_null.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile, LayerWidget)
 
 namespace tactile {
+
+class LayerWidget;
 
 class LayerDock final : public DockWidget
 {

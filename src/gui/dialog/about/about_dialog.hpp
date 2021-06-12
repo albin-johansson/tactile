@@ -5,7 +5,7 @@
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(AboutDialog)
+TACTILE_DECLARE_UI(AboutDialog)
 
 namespace tactile {
 

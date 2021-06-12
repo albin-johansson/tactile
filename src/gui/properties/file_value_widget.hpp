@@ -6,7 +6,7 @@
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE(Ui, file_value_widget)
+TACTILE_DECLARE_UI(FileValueWidget)
 
 namespace tactile {
 
@@ -33,7 +33,7 @@ class FileValueWidget final : public QWidget
   void S_SpawnDialog();
 
  private:
-  Unique<Ui::file_value_widget> mUi;
+  Unique<Ui::FileValueWidget> mUi;
 };
 
 }  // namespace tactile

@@ -11,13 +11,13 @@
 #include "tileset.hpp"
 #include "tileset_tab_manager.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(TilesetContentPage)
-
-TACTILE_FORWARD_DECLARE(tactile, TabWidget)
-TACTILE_FORWARD_DECLARE(tactile, TilesetTab)
-TACTILE_FORWARD_DECLARE(tactile, TilesetTabContextMenu)
+TACTILE_DECLARE_UI(TilesetContentPage)
 
 namespace tactile {
+
+class TabWidget;
+class TilesetTab;
+class TilesetTabContextMenu;
 
 /**
  * \class TilesetContentPage

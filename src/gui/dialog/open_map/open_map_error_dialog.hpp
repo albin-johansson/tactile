@@ -6,7 +6,7 @@
 #include "forward_declare.hpp"
 #include "smart_pointers.hpp"
 
-TACTILE_FORWARD_DECLARE_UI(OpenMapErrorDialog)
+TACTILE_DECLARE_UI(OpenMapErrorDialog)
 
 namespace tactile {
 
