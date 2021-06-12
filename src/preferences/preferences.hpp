@@ -55,7 +55,7 @@ void ResetPropertiesWidgetVisibility();
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto LastLayoutGeometry() -> setting<QByteArray>;
+[[nodiscard]] auto LastLayoutGeometry() -> Setting<QByteArray>;
 
 /**
  * \brief Returns a setting that represents the last layout state of the
@@ -65,7 +65,7 @@ void ResetPropertiesWidgetVisibility();
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto LastLayoutState() -> setting<QByteArray>;
+[[nodiscard]] auto LastLayoutState() -> Setting<QByteArray>;
 
 /**
  * \brief Returns a setting that indicates whether or not a grid should be
@@ -75,7 +75,7 @@ void ResetPropertiesWidgetVisibility();
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto RenderGrid() -> setting<bool>;
+[[nodiscard]] auto RenderGrid() -> Setting<bool>;
 
 /**
  * \brief Returns a setting that represents the Theme of the application.
@@ -84,9 +84,9 @@ void ResetPropertiesWidgetVisibility();
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto Theme() -> setting<QPalette>;
+[[nodiscard]] auto Theme() -> Setting<QPalette>;
 
-[[nodiscard]] auto UserThemes() -> setting<theme_map>;
+[[nodiscard]] auto UserThemes() -> Setting<theme_map>;
 
 [[nodiscard]] auto UserThemesDefault() -> theme_map;
 
@@ -97,31 +97,31 @@ void ResetPropertiesWidgetVisibility();
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto ThemeName() -> setting<QString>;
+[[nodiscard]] auto ThemeName() -> Setting<QString>;
 
-[[nodiscard]] auto AccentColor() -> setting<QColor>;
+[[nodiscard]] auto AccentColor() -> Setting<QColor>;
 
-[[nodiscard]] auto ToolWidgetVisibility() -> setting<bool>;
+[[nodiscard]] auto ToolWidgetVisibility() -> Setting<bool>;
 
-[[nodiscard]] auto LayerWidgetVisibility() -> setting<bool>;
+[[nodiscard]] auto LayerWidgetVisibility() -> Setting<bool>;
 
-[[nodiscard]] auto TilesetWidgetVisibility() -> setting<bool>;
+[[nodiscard]] auto TilesetWidgetVisibility() -> Setting<bool>;
 
-[[nodiscard]] auto PropertiesWidgetVisibility() -> setting<bool>;
+[[nodiscard]] auto PropertiesWidgetVisibility() -> Setting<bool>;
 
-[[nodiscard]] auto UseOpenGl() -> setting<bool>;
+[[nodiscard]] auto UseOpenGl() -> Setting<bool>;
 
-[[nodiscard]] auto EmbedTilesets() -> setting<bool>;
+[[nodiscard]] auto EmbedTilesets() -> Setting<bool>;
 
-[[nodiscard]] auto GenerateDefaults() -> setting<bool>;
+[[nodiscard]] auto GenerateDefaults() -> Setting<bool>;
 
-[[nodiscard]] auto UseReadableOutput() -> setting<bool>;
+[[nodiscard]] auto UseReadableOutput() -> Setting<bool>;
 
-[[nodiscard]] auto TileWidth() -> setting<int>;
+[[nodiscard]] auto TileWidth() -> Setting<int>;
 
-[[nodiscard]] auto TileHeight() -> setting<int>;
+[[nodiscard]] auto TileHeight() -> Setting<int>;
 
-[[nodiscard]] auto DefaultFormat() -> setting<QString>;
+[[nodiscard]] auto DefaultFormat() -> Setting<QString>;
 
 [[nodiscard]] auto DefaultFormatDefault() -> const QString&;
 

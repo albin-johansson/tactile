@@ -34,7 +34,7 @@ auto WriteJson(const QFileInfo& path, const QJsonDocument& document) -> bool
   file.open(QFile::WriteOnly | QFile::Text);
 
   constexpr auto def = prefs::readable_output_def;
-  const auto format = prefs::UseReadableOutput().value_or(def)
+  const auto format = prefs::UseReadableOutput().ValueOr(def)
                           ? QJsonDocument::Indented
                           : QJsonDocument::Compact;
 

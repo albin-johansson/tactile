@@ -5,20 +5,18 @@
 
 namespace tactile {
 
-using namespace core;
-
-StampTool::StampTool(Model* model) : AMouseTool{model}
+StampTool::StampTool(core::Model* model) : AMouseTool{model}
 {
   mOldState.reserve(32);
   mSequence.reserve(32);
 }
 
-void StampTool::UpdateStampSequence(MapDocument& map,
-                                    const Tileset& tileset,
-                                    const Position& origin)
+void StampTool::UpdateStampSequence(core::MapDocument& map,
+                                    const core::Tileset& tileset,
+                                    const core::Position& origin)
 {
-  const auto callable = [&](const Position& mapPos,
-                            const Position& tilesetPos) {
+  const auto callable = [&](const core::Position& mapPos,
+                            const core::Position& tilesetPos) {
     if (map.InBounds(mapPos))
     {
       const auto newID = tileset.TileAt(tilesetPos);

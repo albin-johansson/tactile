@@ -57,10 +57,10 @@ Window::~Window() noexcept = default;
 
 void Window::RestoreLayout()
 {
-  prefs::LastLayoutGeometry().with(
+  prefs::LastLayoutGeometry().With(
       [this](const QByteArray& geom) { restoreGeometry(geom); });
 
-  prefs::LastLayoutState().with(
+  prefs::LastLayoutState().With(
       [this](const QByteArray& state) { restoreState(state); });
 }
 
@@ -93,10 +93,10 @@ void Window::OnResetLayoutAction()
   prefs::ResetLayerWidgetVisibility();
   prefs::ResetPropertiesWidgetVisibility();
 
-  mToolDock->setVisible(prefs::ToolWidgetVisibility().value());
-  mTilesetDock->setVisible(prefs::TilesetWidgetVisibility().value());
-  mLayerDock->setVisible(prefs::LayerWidgetVisibility().value());
-  mPropertiesDock->setVisible(prefs::PropertiesWidgetVisibility().value());
+  mToolDock->setVisible(prefs::ToolWidgetVisibility().Value());
+  mTilesetDock->setVisible(prefs::TilesetWidgetVisibility().Value());
+  mLayerDock->setVisible(prefs::LayerWidgetVisibility().Value());
+  mPropertiesDock->setVisible(prefs::PropertiesWidgetVisibility().Value());
 }
 
 void Window::HideAllDocks()
@@ -109,16 +109,16 @@ void Window::HideAllDocks()
 
 void Window::RestoreDockVisibility()
 {
-  prefs::ToolWidgetVisibility().with(
+  prefs::ToolWidgetVisibility().With(
       [this](const bool value) { mToolDock->setVisible(value); });
 
-  prefs::TilesetWidgetVisibility().with(
+  prefs::TilesetWidgetVisibility().With(
       [this](const bool value) { mTilesetDock->setVisible(value); });
 
-  prefs::LayerWidgetVisibility().with(
+  prefs::LayerWidgetVisibility().With(
       [this](const bool value) { mLayerDock->setVisible(value); });
 
-  prefs::PropertiesWidgetVisibility().with(
+  prefs::PropertiesWidgetVisibility().With(
       [this](const bool value) { mPropertiesDock->setVisible(value); });
 }
 
@@ -468,7 +468,7 @@ void Window::OnMouseMoved(QMouseEvent* event, QPointF mapPos)
 void Window::OnToggleGridAction()
 {
   auto grid = prefs::RenderGrid();
-  grid.with([&, this](bool value) {
+  grid.With([&, this](bool value) {
     grid = !value;
     ForceRedraw();
   });

@@ -125,7 +125,7 @@ void SettingsDialog::UpdateThemeComponents()
   mUi->themeComboBox->setCurrentText(mSnapshot.theme);
 
   ColorPreviewButton::UpdateColor(*mUi->accentColorButton,
-                                  prefs::AccentColor().value());
+                                  prefs::AccentColor().Value());
 
   UpdateThemePreview();
 }
@@ -142,20 +142,20 @@ void SettingsDialog::UpdateThemePreview()
 void SettingsDialog::FetchCurrentSettings()
 {
   // General
-  mSnapshot.useOpenGL = prefs::UseOpenGl().value();
+  mSnapshot.useOpenGL = prefs::UseOpenGl().Value();
 
   // Export
-  mSnapshot.embedTilesets = prefs::EmbedTilesets().value();
-  mSnapshot.readableOutput = prefs::UseReadableOutput().value();
-  mSnapshot.defaultFormat = prefs::DefaultFormat().value();
-  mSnapshot.generateDefaults = prefs::GenerateDefaults().value();
-  mSnapshot.tileWidth = prefs::TileWidth().value();
-  mSnapshot.tileHeight = prefs::TileHeight().value();
+  mSnapshot.embedTilesets = prefs::EmbedTilesets().Value();
+  mSnapshot.readableOutput = prefs::UseReadableOutput().Value();
+  mSnapshot.defaultFormat = prefs::DefaultFormat().Value();
+  mSnapshot.generateDefaults = prefs::GenerateDefaults().Value();
+  mSnapshot.tileWidth = prefs::TileWidth().Value();
+  mSnapshot.tileHeight = prefs::TileHeight().Value();
 
   // Theme
-  mSnapshot.theme = prefs::ThemeName().value();
+  mSnapshot.theme = prefs::ThemeName().Value();
 
-  QMapIterator iterator{prefs::UserThemes().value()};
+  QMapIterator iterator{prefs::UserThemes().Value()};
   while (iterator.hasNext())
   {
     iterator.next();

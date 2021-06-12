@@ -3,8 +3,6 @@
 #include "map.hpp"
 #include "tactile_qstring.hpp"
 
-using namespace tactile::core;
-
 namespace tactile::cmd {
 
 ResizeMap::ResizeMap(not_null<core::MapDocument*> document,

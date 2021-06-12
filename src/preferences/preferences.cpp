@@ -4,34 +4,34 @@
 
 namespace tactile::prefs {
 
-auto LastLayoutGeometry() -> setting<QByteArray>
+auto LastLayoutGeometry() -> Setting<QByteArray>
 {
   static const auto str = TACTILE_QSTRING(u"window/lastLayoutGeometry");
-  return setting<QByteArray>{str};
+  return Setting<QByteArray>{str};
 }
 
-auto LastLayoutState() -> setting<QByteArray>
+auto LastLayoutState() -> Setting<QByteArray>
 {
   static const auto str = TACTILE_QSTRING(u"window/lastLayoutState");
-  return setting<QByteArray>{str};
+  return Setting<QByteArray>{str};
 }
 
-auto RenderGrid() -> setting<bool>
+auto RenderGrid() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/grid");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
-auto Theme() -> setting<QPalette>
+auto Theme() -> Setting<QPalette>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/theme");
-  return setting<QPalette>{str};
+  return Setting<QPalette>{str};
 }
 
-auto UserThemes() -> setting<theme_map>
+auto UserThemes() -> Setting<theme_map>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/userThemes");
-  return setting<theme_map>{str};
+  return Setting<theme_map>{str};
 }
 
 auto UserThemesDefault() -> theme_map
@@ -39,46 +39,46 @@ auto UserThemesDefault() -> theme_map
   return theme_map{};
 }
 
-auto ThemeName() -> setting<QString>
+auto ThemeName() -> Setting<QString>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/themeName");
-  return setting<QString>{str};
+  return Setting<QString>{str};
 }
 
-auto AccentColor() -> setting<QColor>
+auto AccentColor() -> Setting<QColor>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/accentColor");
-  return setting<QColor>{str};
+  return Setting<QColor>{str};
 }
 
-auto ToolWidgetVisibility() -> setting<bool>
+auto ToolWidgetVisibility() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/toolWidgetVisible");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
-auto LayerWidgetVisibility() -> setting<bool>
+auto LayerWidgetVisibility() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/layerWidgetVisible");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
-auto TilesetWidgetVisibility() -> setting<bool>
+auto TilesetWidgetVisibility() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/tilesetWidgetVisible");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
-auto PropertiesWidgetVisibility() -> setting<bool>
+auto PropertiesWidgetVisibility() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/propertiesWidgetVisible");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
-auto UseOpenGl() -> setting<bool>
+auto UseOpenGl() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"graphics/useOpenGL");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
 void ResetToolWidgetVisibility()
@@ -101,40 +101,40 @@ void ResetPropertiesWidgetVisibility()
   PropertiesWidgetVisibility() = properties_widget_visible_def;
 }
 
-auto EmbedTilesets() -> setting<bool>
+auto EmbedTilesets() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"saves/embedTilesets");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
-auto GenerateDefaults() -> setting<bool>
+auto GenerateDefaults() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"saves/generateDefaults");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
-auto UseReadableOutput() -> setting<bool>
+auto UseReadableOutput() -> Setting<bool>
 {
   static const auto str = TACTILE_QSTRING(u"saves/humanReadableOutput");
-  return setting<bool>{str};
+  return Setting<bool>{str};
 }
 
-auto TileWidth() -> setting<int>
+auto TileWidth() -> Setting<int>
 {
   static const auto str = TACTILE_QSTRING(u"saves/tileWidth");
-  return setting<int>{str};
+  return Setting<int>{str};
 }
 
-auto TileHeight() -> setting<int>
+auto TileHeight() -> Setting<int>
 {
   static const auto str = TACTILE_QSTRING(u"saves/tileHeight");
-  return setting<int>{str};
+  return Setting<int>{str};
 }
 
-auto DefaultFormat() -> setting<QString>
+auto DefaultFormat() -> Setting<QString>
 {
   static const auto str = TACTILE_QSTRING(u"saves/defaultFormat");
-  return setting<QString>{str};
+  return Setting<QString>{str};
 }
 
 auto DefaultFormatDefault() -> const QString&
@@ -145,23 +145,23 @@ auto DefaultFormatDefault() -> const QString&
 
 void ValidatePreferences()
 {
-  RenderGrid().set_if_missing(render_grid_def);
-  ToolWidgetVisibility().set_if_missing(tool_widget_visible_def);
-  TilesetWidgetVisibility().set_if_missing(tileset_widget_visible_def);
-  LayerWidgetVisibility().set_if_missing(layer_widget_visible_def);
-  PropertiesWidgetVisibility().set_if_missing(properties_widget_visible_def);
-  AccentColor().set_if_missing(accent_color_def);
-  UseOpenGl().set_if_missing(use_opengl_def);
+  RenderGrid().SetIfMissing(render_grid_def);
+  ToolWidgetVisibility().SetIfMissing(tool_widget_visible_def);
+  TilesetWidgetVisibility().SetIfMissing(tileset_widget_visible_def);
+  LayerWidgetVisibility().SetIfMissing(layer_widget_visible_def);
+  PropertiesWidgetVisibility().SetIfMissing(properties_widget_visible_def);
+  AccentColor().SetIfMissing(accent_color_def);
+  UseOpenGl().SetIfMissing(use_opengl_def);
 
   // Note, the current theme is validated by the validate_themes-function
-  UserThemes().set_if_missing(UserThemesDefault());
+  UserThemes().SetIfMissing(UserThemesDefault());
 
-  EmbedTilesets().set_if_missing(embed_tilesets_def);
-  GenerateDefaults().set_if_missing(generate_defaults_def);
-  UseReadableOutput().set_if_missing(readable_output_def);
-  DefaultFormat().set_if_missing(DefaultFormatDefault());
-  TileWidth().set_if_missing(tile_width_def);
-  TileHeight().set_if_missing(tile_height_def);
+  EmbedTilesets().SetIfMissing(embed_tilesets_def);
+  GenerateDefaults().SetIfMissing(generate_defaults_def);
+  UseReadableOutput().SetIfMissing(readable_output_def);
+  DefaultFormat().SetIfMissing(DefaultFormatDefault());
+  TileWidth().SetIfMissing(tile_width_def);
+  TileHeight().SetIfMissing(tile_height_def);
 }
 
 }  // namespace tactile::prefs

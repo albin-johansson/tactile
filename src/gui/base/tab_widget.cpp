@@ -42,7 +42,7 @@ TabWidget::TabWidget(QWidget* parent) : QTabWidget{parent}
 
 void TabWidget::ApplyStylesheet()
 {
-  const auto accent = prefs::AccentColor().value();
+  const auto accent = prefs::AccentColor().Value();
   setStyleSheet(QString{styling}.arg(accent.name(QColor::HexRgb)));
 }
 

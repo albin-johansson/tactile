@@ -9,9 +9,9 @@ auto MakeExportOptions() -> ExportOptions
   ExportOptions options{};
 
   options.generateDefaults =
-      prefs::GenerateDefaults().value_or(prefs::generate_defaults_def);
+      prefs::GenerateDefaults().ValueOr(prefs::generate_defaults_def);
   options.embedTilesets =
-      prefs::EmbedTilesets().value_or(prefs::embed_tilesets_def);
+      prefs::EmbedTilesets().ValueOr(prefs::embed_tilesets_def);
 
   return options;
 }

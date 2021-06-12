@@ -7,18 +7,20 @@
 
 #include "maybe.hpp"
 
-namespace tactile::prefs {
+namespace tactile {
 
 // clang-format off
+
 template <typename T>
-concept negatable = requires(T t)
+concept IsNegatable = requires (T t)
 {
   { !t } -> std::convertible_to<T>;
 };
+
 // clang-format on
 
 /**
- * \class setting
+ * \class Setting
  *
  * \brief Represents a persistent setting.
  *
@@ -29,7 +31,7 @@ concept negatable = requires(T t)
  * \headerfile setting.hpp
  */
 template <typename T>
-class setting final
+class Setting final
 {
  public:
   /**
@@ -39,15 +41,15 @@ class setting final
    *
    * \since 0.1.0
    */
-  explicit setting(QString key) : m_key{std::move(key)}
+  explicit Setting(QString key) : mKey{std::move(key)}
   {
     const QSettings settings;
     Q_ASSERT(settings.status() == QSettings::NoError);
 
-    const auto val = settings.value(m_key);
+    const auto val = settings.value(mKey);
     if (!val.isNull() && val.isValid() && val.canConvert<T>())
     {
-      m_value.emplace(val.value<T>());
+      mValue.emplace(val.value<T>());
     }
   }
 
@@ -58,18 +60,18 @@ class setting final
    *
    * \since 0.1.0
    */
-  void set(const T& value)
+  void Set(const T& value)
   {
     QSettings settings;
     Q_ASSERT(settings.status() == QSettings::NoError);
 
-    settings.setValue(m_key, value);
-    m_value = value;
+    settings.setValue(mKey, value);
+    mValue = value;
   }
 
-  auto operator=(const T& value) -> setting&
+  auto operator=(const T& value) -> Setting&
   {
-    set(value);
+    Set(value);
     return *this;
   }
 
@@ -80,15 +82,15 @@ class setting final
    *
    * \since 0.1.0
    */
-  void set_if_missing(const T& value)
+  void SetIfMissing(const T& value)
   {
     QSettings settings;
     Q_ASSERT(settings.status() == QSettings::NoError);
 
-    if (!settings.contains(m_key))
+    if (!settings.contains(mKey))
     {
-      settings.setValue(m_key, value);
-      m_value = value;
+      settings.setValue(mKey, value);
+      mValue = value;
     }
   }
 
@@ -109,11 +111,9 @@ class setting final
    * \since 0.1.0
    */
   template <std::invocable<const T&> U>
-  void with(U&& callable)
   {
-    if (m_value)
     {
-      callable(*m_value);
+      callable(*mValue);
     }
   }
 
@@ -124,11 +124,11 @@ class setting final
    *
    * \since 0.1.0
    */
-  void toggle() requires negatable<T>
+  void Toggle() requires IsNegatable<T>
   {
-    if (m_value)
+    if (mValue)
     {
-      set(!*m_value);
+      set(!*mValue);
     }
   }
 
@@ -141,7 +141,7 @@ class setting final
    */
   auto operator*() const -> const T&
   {
-    return *m_value;
+    return *mValue;
   }
 
   /**
@@ -153,12 +153,12 @@ class setting final
    */
   auto operator->() const -> const T*
   {
-    return m_value.operator->();
+    return mValue.operator->();
   }
 
-  [[nodiscard]] auto value() const -> const T&
+  [[nodiscard]] auto Value() const -> const T&
   {
-    return m_value.value();
+    return mValue.value();
   }
 
   /**
@@ -172,9 +172,9 @@ class setting final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto value_or(const T& fallback) const -> T
+  [[nodiscard]] auto ValueOr(const T& fallback) const -> T
   {
-    return m_value.value_or(fallback);
+    return mValue.value_or(fallback);
   }
 
   /**
@@ -186,12 +186,12 @@ class setting final
    */
   explicit operator bool() const noexcept
   {
-    return m_value.has_value();
+    return mValue.has_value();
   }
 
  private:
-  maybe<T> m_value;
-  QString m_key;
+  maybe<T> mValue;
+  QString mKey;
 };
 
-}  // namespace tactile::prefs
+}  // namespace tactile

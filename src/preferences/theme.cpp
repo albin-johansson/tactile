@@ -36,7 +36,7 @@ void set_current_theme(const QString& name, const QPalette& palette)
 
 void validate_themes()
 {
-  prefs::ThemeName().set_if_missing(defaultTheme.toString());
+  prefs::ThemeName().SetIfMissing(defaultTheme.toString());
 
   for (const auto& [name, path] : themes)
   {
@@ -55,7 +55,7 @@ auto register_theme(const QString& name, const QPalette& palette) -> bool
 {
   // TODO disallow name collision with standard themes
 
-  auto userThemes = prefs::UserThemes().value();
+  auto userThemes = prefs::UserThemes().Value();
   if (!userThemes.contains(name))
   {
     userThemes.insert(name, palette);
@@ -98,7 +98,7 @@ void update_theme(const QString& name,
     }
     else
     {
-      auto userThemes = prefs::UserThemes().value();
+      auto userThemes = prefs::UserThemes().Value();
       userThemes.insert(name, *palette);
       prefs::UserThemes() = userThemes;
     }
@@ -110,7 +110,7 @@ void remove_theme(const QString& name)
   Q_ASSERT(!is_standard_theme(name));
   if (const auto userThemes = prefs::UserThemes())
   {
-    auto map = userThemes.value();
+    auto map = userThemes.Value();
     map.remove(name);
     prefs::UserThemes() = map;
   }
@@ -174,7 +174,7 @@ auto get_user_theme_names() -> std::vector<QString>
   if (const auto userThemes = prefs::UserThemes())
   {
     names.reserve(userThemes->size());
-    for (const auto& name : userThemes.value().keys())
+    for (const auto& name : userThemes.Value().keys())
     {
       names.emplace_back(name);
     }
