@@ -5,7 +5,7 @@
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
 XmlElement::XmlElement(const QDomElement& element) : mElement{element}
 {}

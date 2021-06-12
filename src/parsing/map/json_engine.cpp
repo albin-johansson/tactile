@@ -9,10 +9,10 @@
 #include "tile_layer.hpp"
 #include "to_property.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
-static_assert(IsObject<JsonElement>);
-static_assert(IsEngine<JsonEngine, QJsonDocument, JsonElement>);
+static_assert(IsParserObject<JsonElement>);
+static_assert(IsParserEngine<JsonEngine, QJsonDocument, JsonElement>);
 
 auto JsonEngine::Root(const document_type& document) -> object_type
 {
@@ -134,4 +134,4 @@ auto JsonEngine::Collect(const object_type& root, const QStringView key)
   return vector;
 }
 
-}  // namespace tactile::parse
+}  // namespace tactile

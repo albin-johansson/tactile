@@ -8,10 +8,10 @@
 #include "tile_layer.hpp"
 #include "to_property.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
-static_assert(IsObject<XmlElement>);
-static_assert(IsEngine<XmlEngine, QDomDocument, XmlElement>);
+static_assert(IsParserObject<XmlElement>);
+static_assert(IsParserEngine<XmlEngine, QDomDocument, XmlElement>);
 
 auto XmlEngine::Tilesets(const object_type& root) -> std::vector<object_type>
 {
@@ -72,7 +72,7 @@ auto XmlEngine::Tiles(const object_type& object,
 
     if (!ok)
     {
-      error = parse::ParseError::LayerCouldNotParseTile;
+      error = ParseError::LayerCouldNotParseTile;
       return matrix;
     }
 

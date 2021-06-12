@@ -5,7 +5,7 @@
 #include "element_id.hpp"
 #include "maybe.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
 class JsonElement final
 {
@@ -55,4 +55,4 @@ class JsonElement final
   [[nodiscard]] static auto StringifyElementId(ElementId type) -> QStringView;
 };
 
-}  // namespace tactile::parse
+}  // namespace tactile

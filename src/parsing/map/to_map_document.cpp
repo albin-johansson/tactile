@@ -5,10 +5,11 @@
 #include "object_layer.hpp"
 #include "tile_layer.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 namespace {
 
-[[nodiscard]] auto MakeTileset(const TilesetData& data) -> shared<core::Tileset>
+[[nodiscard]] auto MakeTileset(const ir::TilesetData& data)
+    -> shared<core::Tileset>
 {
   auto tileset = std::make_shared<core::Tileset>(data.firstId,
                                                  data.absolutePath,
@@ -18,7 +19,7 @@ namespace {
   return tileset;
 }
 
-[[nodiscard]] auto MakeTileLayer(const TileLayerData& data)
+[[nodiscard]] auto MakeTileLayer(const ir::TileLayerData& data)
     -> shared<core::ILayer>
 {
   auto layer = std::make_shared<core::TileLayer>(data.nRows, data.nCols);
@@ -35,9 +36,9 @@ namespace {
   return layer;
 }
 
-[[nodiscard]] auto MakeObject(const ObjectData& objectData) -> core::Object
+[[nodiscard]] auto MakeObject(const ir::ObjectData& objectData) -> core::Object
 {
-  const auto getType = [](const ObjectData& objectData) {
+  const auto getType = [](const ir::ObjectData& objectData) {
     if (objectData.isPoint)
     {
       return core::ObjectType::Point;
@@ -65,7 +66,7 @@ namespace {
   return object;
 }
 
-[[nodiscard]] auto MakeObjectLayer(const ObjectLayerData& data)
+[[nodiscard]] auto MakeObjectLayer(const ir::ObjectLayerData& data)
     -> shared<core::ILayer>
 {
   auto layer = std::make_shared<core::ObjectLayer>();
@@ -78,17 +79,17 @@ namespace {
   return layer;
 }
 
-[[nodiscard]] auto MakeLayer(const LayerData& data) -> shared<core::ILayer>
+[[nodiscard]] auto MakeLayer(const ir::LayerData& data) -> shared<core::ILayer>
 {
   shared<core::ILayer> layer;
 
   if (data.type == core::LayerType::TileLayer)
   {
-    layer = MakeTileLayer(std::get<TileLayerData>(data.data));
+    layer = MakeTileLayer(std::get<ir::TileLayerData>(data.data));
   }
   else if (data.type == core::LayerType::ObjectLayer)
   {
-    layer = MakeObjectLayer(std::get<ObjectLayerData>(data.data));
+    layer = MakeObjectLayer(std::get<ir::ObjectLayerData>(data.data));
   }
 
   Q_ASSERT(layer);
@@ -106,7 +107,7 @@ namespace {
 
 }  // namespace
 
-auto ToMapDocument(const MapData& data) -> core::MapDocument*
+auto ToMapDocument(const ir::MapData& data) -> core::MapDocument*
 {
   Q_ASSERT(!data.layers.empty());
 
@@ -138,4 +139,4 @@ auto ToMapDocument(const MapData& data) -> core::MapDocument*
   return document;
 }
 
-}  // namespace tactile::parse
+}  // namespace tactile

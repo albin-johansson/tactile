@@ -11,9 +11,9 @@
 #include "property.hpp"
 #include "tactile_qstring.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
-template <IsObject T>
+template <IsParserObject T>
 [[nodiscard]] auto ToProperty(const T& object,
                               const QString& propType,
                               ParseError& error)
@@ -61,4 +61,4 @@ template <IsObject T>
   return property;
 }
 
-}  // namespace tactile::parse
+}  // namespace tactile

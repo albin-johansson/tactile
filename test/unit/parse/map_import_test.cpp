@@ -25,7 +25,7 @@ inline constexpr auto cols = 15_col;
 inline constexpr auto tileWidth = 32_tw;
 inline constexpr auto tileHeight = 32_th;
 
-void validate_layers(const core::MapDocument& document)
+void ValidateLayers(const core::MapDocument& document)
 {
   ASSERT_EQ(3, document.LayerCount());
 
@@ -107,7 +107,7 @@ void validate_layers(const core::MapDocument& document)
   }
 }
 
-void validate_tilesets(const core::MapDocument& document)
+void ValidateTilesets(const core::MapDocument& document)
 {
   const auto* tilesets = document.GetTilesets();
   ASSERT_TRUE(tilesets);
@@ -144,7 +144,7 @@ void validate_tilesets(const core::MapDocument& document)
   EXPECT_EQ(32_th, outside.GetTileHeight());
 }
 
-void validate_properties(const core::MapDocument& document)
+void ValidateProperties(const core::MapDocument& document)
 {
   ASSERT_EQ(7, document.PropertyCount());
   const auto string = TACTILE_QSTRING(u"str");
@@ -187,7 +187,7 @@ TACTILE_DEFINE_TEST_P(MapImportTest, QString)
 {
   QObject parent;
 
-  parse::ParseError error;
+  ParseError error;
   auto* document = OpenMapDocument(GetParam(), error);
 
   ASSERT_TRUE(document);
@@ -196,9 +196,9 @@ TACTILE_DEFINE_TEST_P(MapImportTest, QString)
   EXPECT_EQ(rows, document->RowCount());
   EXPECT_EQ(cols, document->ColumnCount());
 
-  validate_layers(*document);
-  validate_tilesets(*document);
-  validate_properties(*document);
+  ValidateLayers(*document);
+  ValidateTilesets(*document);
+  ValidateProperties(*document);
 }
 
 inline const auto embeddedValues =

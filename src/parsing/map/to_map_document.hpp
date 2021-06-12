@@ -3,8 +3,8 @@
 #include "map_document.hpp"
 #include "map_parse_data.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
-[[nodiscard]] auto ToMapDocument(const MapData& data) -> core::MapDocument*;
+[[nodiscard]] auto ToMapDocument(const ir::MapData& data) -> core::MapDocument*;
 
-}  // namespace tactile::parse
+}  // namespace tactile

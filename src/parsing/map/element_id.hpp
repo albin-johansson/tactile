@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tactile::parse {
+namespace tactile {
 
 enum class ElementId
 {
@@ -25,4 +25,4 @@ enum class ElementId
   Point
 };
 
-}  // namespace tactile::parse
+}  // namespace tactile

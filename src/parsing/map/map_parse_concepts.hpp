@@ -10,12 +10,12 @@
 #include "parse_error.hpp"
 #include "tile_layer.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
 // clang-format off
 
 template <typename T>
-concept IsObject = requires(T t, ElementId id, const QString& str)
+concept IsParserObject = requires(T t, ElementId id, const QString& str)
 {
   { t.Contains(id)      } -> std::same_as<bool>;
   { t.Integer(id)       } -> std::same_as<std::optional<int>>;
@@ -28,14 +28,14 @@ concept IsObject = requires(T t, ElementId id, const QString& str)
 };
 
 template <typename Engine, typename Document, typename Object>
-concept IsEngine = IsObject<Object> &&
-                   requires(Engine e,
-                            const Document& document,
-                            const Object& object,
-                            const QFileInfo& path,
-                            ParseError& error,
-                            row_t nRows,
-                            col_t nCols)
+concept IsParserEngine = IsParserObject<Object> &&
+                         requires(Engine e,
+                                  const Document& document,
+                                  const Object& object,
+                                  const QFileInfo& path,
+                                  ParseError& error,
+                                  row_t nRows,
+                                  col_t nCols)
 {
   { e.FromFile(path) } -> std::same_as<maybe<Document>>;
   { e.Root(document) } -> std::same_as<Object>;
@@ -58,4 +58,4 @@ concept IsEngine = IsObject<Object> &&
 
 // clang-format on
 
-}  // namespace tactile::parse
+}  // namespace tactile

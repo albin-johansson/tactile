@@ -14,7 +14,7 @@
 #include "tile_layer.hpp"
 #include "tile_width.hpp"
 
-namespace tactile::parse {
+namespace tactile::ir {
 
 struct PropertyData final
 {
@@ -81,4 +81,4 @@ struct MapData final
   QString path;                          ///< Absolute file path.
 };
 
-}  // namespace tactile::parse
+}  // namespace tactile::ir

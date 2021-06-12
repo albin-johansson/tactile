@@ -2,9 +2,9 @@
 
 #include "tactile_qstring.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
-auto ToMessage(ParseError error) -> QString
+auto ToMessage(const ParseError error) -> QString
 {
   switch (error)
   {
@@ -79,4 +79,4 @@ auto ToMessage(ParseError error) -> QString
   }
 }
 
-}  // namespace tactile::parse
+}  // namespace tactile

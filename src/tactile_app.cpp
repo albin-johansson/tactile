@@ -137,7 +137,7 @@ void TactileApp::OnSaveAs(const QString& path)
 
 void TactileApp::OnOpenMap(const QString& path)
 {
-  parse::ParseError error;
+  ParseError error;
   if (auto* document = OpenMapDocument(path, error))
   {
     const auto id = mModel->AddMap(document);

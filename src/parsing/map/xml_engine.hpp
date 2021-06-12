@@ -12,7 +12,7 @@
 #include "xml_element.hpp"
 #include "xml_utils.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
 class XmlEngine final
 {
@@ -81,4 +81,4 @@ class XmlEngine final
       -> bool;
 };
 
-}  // namespace tactile::parse
+}  // namespace tactile

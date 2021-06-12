@@ -5,7 +5,7 @@
 
 #include "element_id.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
 class XmlElement final
 {
@@ -44,4 +44,4 @@ class XmlElement final
   [[nodiscard]] static auto StringifyElementId(ElementId type) -> QString;
 };
 
-}  // namespace tactile::parse
+}  // namespace tactile

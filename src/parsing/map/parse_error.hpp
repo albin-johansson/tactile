@@ -2,7 +2,7 @@
 
 #include <QString>  // QString
 
-namespace tactile::parse {
+namespace tactile {
 
 /**
  * \enum ParseError
@@ -57,4 +57,4 @@ enum class ParseError
  */
 [[nodiscard]] auto ToMessage(ParseError error) -> QString;
 
-}  // namespace tactile::parse
+}  // namespace tactile

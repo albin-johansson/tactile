@@ -18,7 +18,7 @@
 #include "to_map_document.hpp"
 #include "to_property.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
 template <typename Engine>
 class MapParser final
@@ -28,7 +28,7 @@ class MapParser final
   using document_type = typename engine_type::document_type;
   using object_type = typename engine_type::object_type;
 
-  static_assert(IsEngine<engine_type, document_type, object_type>,
+  static_assert(IsParserEngine<engine_type, document_type, object_type>,
                 "The supplied type isn't a parser engine!");
 
   explicit MapParser(const QString& path)
@@ -111,7 +111,7 @@ class MapParser final
  private:
   engine_type mEngine;
   ParseError mError{ParseError::None};
-  MapData mData;
+  ir::MapData mData;
 
   [[nodiscard]] auto WithError(const ParseError error) noexcept -> bool
   {
@@ -173,7 +173,7 @@ class MapParser final
                                         const QFileInfo& path,
                                         const tile_id firstGid) -> bool
   {
-    TilesetData tileset;
+    ir::TilesetData tileset;
     tileset.firstId = firstGid;
 
     if (const auto tw = object.Integer(ElementId::TileWidth))
@@ -268,10 +268,10 @@ class MapParser final
         [&](const object_type& ts) { return ParseTileset(ts, path); });
   }
 
-  [[nodiscard]] auto ParseTileLayer(LayerData& layer, const object_type& object)
-      -> bool
+  [[nodiscard]] auto ParseTileLayer(ir::LayerData& layer,
+                                    const object_type& object) -> bool
   {
-    TileLayerData tileLayer;
+    ir::TileLayerData tileLayer;
 
     if (const auto rows = object.Integer(ElementId::Height))
     {
@@ -302,10 +302,10 @@ class MapParser final
     return true;
   }
 
-  [[nodiscard]] auto ParseObjectLayer(LayerData& layer, const object_type& root)
-      -> bool
+  [[nodiscard]] auto ParseObjectLayer(ir::LayerData& layer,
+                                      const object_type& root) -> bool
   {
-    ObjectLayerData objectLayer;
+    ir::ObjectLayerData objectLayer;
 
     for (const auto& elem : mEngine.Objects(root))
     {
@@ -350,7 +350,7 @@ class MapParser final
       return WithError(ParseError::LayerMissingType);
     }
 
-    LayerData layer;
+    ir::LayerData layer;
 
     if (const auto id = object.Integer(ElementId::Id))
     {
@@ -414,9 +414,9 @@ class MapParser final
   }
 
   [[nodiscard]] auto ParseProperty(const object_type& prop)
-      -> maybe<PropertyData>
+      -> maybe<ir::PropertyData>
   {
-    PropertyData data;
+    ir::PropertyData data;
     data.name = prop.String(ElementId::Name).value();
 
     const auto type = mEngine.PropertyType(prop);
@@ -432,11 +432,11 @@ class MapParser final
   }
 
   [[nodiscard]] auto ParseProperties(const object_type& obj)
-      -> maybe<std::vector<PropertyData>>
+      -> maybe<std::vector<ir::PropertyData>>
   {
     const auto props = mEngine.Properties(obj);
 
-    std::vector<PropertyData> result;
+    std::vector<ir::PropertyData> result;
     result.reserve(static_cast<usize>(props.size()));
 
     for (const auto& elem : props)
@@ -455,4 +455,4 @@ class MapParser final
   }
 };
 
-}  // namespace tactile::parse
+}  // namespace tactile

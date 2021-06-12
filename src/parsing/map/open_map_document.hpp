@@ -23,8 +23,7 @@ namespace tactile {
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto OpenMapDocument(const QString& path,
-                                   parse::ParseError& error)
+[[nodiscard]] auto OpenMapDocument(const QString& path, ParseError& error)
     -> core::MapDocument*;
 
 }  // namespace tactile

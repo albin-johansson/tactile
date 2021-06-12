@@ -11,7 +11,7 @@ TEST(ImportJsonMap, Embedded)
   const auto path = TACTILE_QSTRING(u"json/embedded.json");
 
   QObject object;
-  parse::ParseError error;
+  ParseError error;
 
   auto* document = OpenMapDocument(path, error);
   ASSERT_TRUE(document);
@@ -96,7 +96,7 @@ TEST(ImportJsonMap, External)
   const auto path = TACTILE_QSTRING(u"json/external.json");
 
   QObject object;
-  parse::ParseError error;
+  ParseError error;
 
   auto* document = OpenMapDocument(path, error);
   ASSERT_TRUE(document);

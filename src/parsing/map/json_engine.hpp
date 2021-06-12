@@ -11,7 +11,7 @@
 #include "parse_error.hpp"
 #include "tile_layer.hpp"
 
-namespace tactile::parse {
+namespace tactile {
 
 class JsonEngine final
 {
@@ -75,4 +75,4 @@ class JsonEngine final
       -> std::vector<object_type>;
 };
 
-}  // namespace tactile::parse
+}  // namespace tactile

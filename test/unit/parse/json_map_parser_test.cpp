@@ -9,51 +9,52 @@
 
 using namespace tactile;
 
-using path_error_pair = std::pair<QStringView, parse::ParseError>;
-using error = parse::ParseError;
+using path_error_pair = std::pair<QStringView, ParseError>;
 
 TACTILE_DEFINE_TEST_P(JsonMapParser, path_error_pair)
 {
   const auto [path, code] = GetParam();
 
-  parse::MapParser<parse::JsonEngine> parser{path.toString()};
+  MapParser<JsonEngine> parser{path.toString()};
 
-  if (code != parse::ParseError::None) {
+  if (code != ParseError::None)
+  {
     EXPECT_FALSE(parser);
-  } else {
+  }
+  else
+  {
     EXPECT_TRUE(parser);
   }
 
   EXPECT_EQ(code, parser.GetError());
 }
 
-[[nodiscard]] constexpr auto as_pair(const QStringView path, const error code)
-    -> path_error_pair
+[[nodiscard]] constexpr auto AsPair(const QStringView path,
+                                    const ParseError code) -> path_error_pair
 {
   return std::make_pair(path, code);
 }
 
 // clang-format off
 inline const auto values = testing::Values(
-  as_pair(u"json/embedded.json", error::None),
-  as_pair(u"json/external.json", error::None),
-
-  as_pair(u"json/invalid/does_not_exist.json", error::MapFileNotFound),
-  as_pair(u"json/invalid/could_not_parse.json", error::CouldNotParseFile),
-  as_pair(u"json/invalid/could_not_parse_tile.json", error::LayerCouldNotParseTile),
-  as_pair(u"json/invalid/missing_layers.json", error::MapMissingLayers),
-  as_pair(u"json/invalid/missing_next_layer_id.json", error::MapMissingNextLayerId),
-  as_pair(u"json/invalid/layer_missing_width.json", error::LayerMissingWidth),
-  as_pair(u"json/invalid/layer_missing_height.json", error::LayerMissingHeight),
-  as_pair(u"json/invalid/layer_missing_type.json", error::LayerMissingType),
-  as_pair(u"json/invalid/layer_missing_id.json", error::LayerMissingId),
-  as_pair(u"json/invalid/missing_tilesets.json", error::MapMissingTilesets),
-  as_pair(u"json/invalid/tileset_missing_first_gid.json", error::TilesetMissingFirstGid),
-  as_pair(u"json/invalid/tileset_missing_tile_width.json", error::TilesetMissingTileWidth),
-  as_pair(u"json/invalid/tileset_missing_tile_height.json", error::TilesetMissingTileHeight),
-  as_pair(u"json/invalid/tileset_missing_image_path.json", error::TilesetMissingImagePath),
-  as_pair(u"json/invalid/tileset_missing_name.json", error::TilesetMissingName),
-  as_pair(u"json/invalid/could_not_read_external_tileset.json", error::CouldNotReadExternalTileset));
+  AsPair(u"json/embedded.json", ParseError::None),
+  AsPair(u"json/external.json", ParseError::None),
+  AsPair(u"json/invalid/does_not_exist.json", ParseError::MapFileNotFound),
+  AsPair(u"json/invalid/could_not_parse.json", ParseError::CouldNotParseFile),
+  AsPair(u"json/invalid/could_not_parse_tile.json", ParseError::LayerCouldNotParseTile),
+  AsPair(u"json/invalid/missing_layers.json", ParseError::MapMissingLayers),
+  AsPair(u"json/invalid/missing_next_layer_id.json", ParseError::MapMissingNextLayerId),
+  AsPair(u"json/invalid/layer_missing_width.json", ParseError::LayerMissingWidth),
+  AsPair(u"json/invalid/layer_missing_height.json", ParseError::LayerMissingHeight),
+  AsPair(u"json/invalid/layer_missing_type.json", ParseError::LayerMissingType),
+  AsPair(u"json/invalid/layer_missing_id.json", ParseError::LayerMissingId),
+  AsPair(u"json/invalid/missing_tilesets.json", ParseError::MapMissingTilesets),
+  AsPair(u"json/invalid/tileset_missing_first_gid.json", ParseError::TilesetMissingFirstGid),
+  AsPair(u"json/invalid/tileset_missing_tile_width.json", ParseError::TilesetMissingTileWidth),
+  AsPair(u"json/invalid/tileset_missing_tile_height.json", ParseError::TilesetMissingTileHeight),
+  AsPair(u"json/invalid/tileset_missing_image_path.json", ParseError::TilesetMissingImagePath),
+  AsPair(u"json/invalid/tileset_missing_name.json", ParseError::TilesetMissingName),
+  AsPair(u"json/invalid/could_not_read_external_tileset.json", ParseError::CouldNotReadExternalTileset));
 // clang-format on
 
 TACTILE_REGISTER_TEST_P(JsonMapParser, values);

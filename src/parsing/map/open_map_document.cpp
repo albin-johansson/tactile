@@ -12,10 +12,10 @@ namespace tactile {
 namespace {
 
 template <typename T>
-[[nodiscard]] auto OpenUsing(const QString& file, parse::ParseError& error)
+[[nodiscard]] auto OpenUsing(const QString& file, ParseError& error)
     -> core::MapDocument*
 {
-  parse::MapParser<T> parser{file};
+  MapParser<T> parser{file};
   error = parser.GetError();
   if (parser)
   {
@@ -29,7 +29,7 @@ template <typename T>
 
 }  // namespace
 
-auto OpenMapDocument(const QString& path, parse::ParseError& error)
+auto OpenMapDocument(const QString& path, ParseError& error)
     -> core::MapDocument*
 {
   const QFileInfo info{path};
@@ -37,11 +37,11 @@ auto OpenMapDocument(const QString& path, parse::ParseError& error)
 
   if (suffix == TACTILE_QSTRING(u"json"))
   {
-    return OpenUsing<parse::JsonEngine>(path, error);
+    return OpenUsing<JsonEngine>(path, error);
   }
   else if (suffix == TACTILE_QSTRING(u"tmx"))
   {
-    return OpenUsing<parse::XmlEngine>(path, error);
+    return OpenUsing<XmlEngine>(path, error);
   }
   else
   {
