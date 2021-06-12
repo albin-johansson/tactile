@@ -49,8 +49,7 @@ void StampTool::OnPressed(QMouseEvent* event, const QPointF& mapPosition)
 
     if (event->buttons() & Qt::MouseButton::LeftButton)
     {
-      const auto pos = TranslateMousePosition(event->pos(), mapPosition);
-      if (pos)
+      if (const auto pos = TranslateMousePosition(event->pos(), mapPosition))
       {
         UpdateStampSequence(*document, *tileset, *pos);
         emit GetModel()->S_Redraw();
