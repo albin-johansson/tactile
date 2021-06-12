@@ -161,7 +161,8 @@ TEST_F(TilesetTest, IsSingleTileSelected)
 TEST_F(TilesetTest, TileAt)
 {
   EXPECT_NE(empty, m_tileset->TileAt({0_row, 0_col}));
-  EXPECT_NE(empty, m_tileset->TileAt({0_row, m_tileset->ColumnCount() - 1_col}));
+  EXPECT_NE(empty,
+            m_tileset->TileAt({0_row, m_tileset->ColumnCount() - 1_col}));
   EXPECT_NE(empty, m_tileset->TileAt({m_tileset->RowCount() - 1_row, 0_col}));
 
   EXPECT_EQ(empty, m_tileset->TileAt({0_row, m_tileset->ColumnCount()}));

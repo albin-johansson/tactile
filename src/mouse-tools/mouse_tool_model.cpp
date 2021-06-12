@@ -40,7 +40,8 @@ void MouseToolModel::Select(const MouseToolType id)
   SwitchTo(mTools.at(id).get());
 }
 
-void MouseToolModel::OnMousePressed(QMouseEvent* event, const QPointF& mapPosition)
+void MouseToolModel::OnMousePressed(QMouseEvent* event,
+                                    const QPointF& mapPosition)
 {
   if (mCurrent)
   {
@@ -48,7 +49,8 @@ void MouseToolModel::OnMousePressed(QMouseEvent* event, const QPointF& mapPositi
   }
 }
 
-void MouseToolModel::OnMouseMoved(QMouseEvent* event, const QPointF& mapPosition)
+void MouseToolModel::OnMouseMoved(QMouseEvent* event,
+                                  const QPointF& mapPosition)
 {
   if (mCurrent)
   {
@@ -56,7 +58,8 @@ void MouseToolModel::OnMouseMoved(QMouseEvent* event, const QPointF& mapPosition
   }
 }
 
-void MouseToolModel::OnMouseReleased(QMouseEvent* event, const QPointF& mapPosition)
+void MouseToolModel::OnMouseReleased(QMouseEvent* event,
+                                     const QPointF& mapPosition)
 {
   if (mCurrent)
   {

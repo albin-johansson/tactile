@@ -72,7 +72,8 @@ TEST(TileLayer, AddRow)
 
   EXPECT_EQ(nRows + 1_row, layer.RowCount());
 
-  for (auto col = 0_col; col < layer.ColumnCount(); ++col) {
+  for (auto col = 0_col; col < layer.ColumnCount(); ++col)
+  {
     EXPECT_EQ(empty, layer.TileAt({nRows - 1_row, col}));
     EXPECT_EQ(id, layer.TileAt({nRows, col}));
   }
@@ -88,7 +89,8 @@ TEST(TileLayer, AddCol)
 
   EXPECT_EQ(nCols + 1_col, layer.ColumnCount());
 
-  for (auto row = 0_row; row < layer.RowCount(); ++row) {
+  for (auto row = 0_row; row < layer.RowCount(); ++row)
+  {
     EXPECT_EQ(empty, layer.TileAt({row, nCols - 1_col}));
     EXPECT_EQ(id, layer.TileAt({row, nCols}));
   }
@@ -98,7 +100,8 @@ TEST(TileLayer, RemoveRow)
 {
   core::TileLayer layer{5_row, 5_col};
 
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i < 10; ++i)
+  {
     EXPECT_NO_THROW(layer.RemoveRow());
   }
 
@@ -109,7 +112,8 @@ TEST(TileLayer, RemoveCol)
 {
   core::TileLayer layer{5_row, 5_col};
 
-  for (int i = 0; i < 10; ++i) {
+  for (int i = 0; i < 10; ++i)
+  {
     EXPECT_NO_THROW(layer.RemoveColumn());
   }
 

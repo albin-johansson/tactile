@@ -7,7 +7,8 @@ using namespace tactile;
 TEST(FloodFill, Correctness)
 {
   core::TileLayer layer;
-  for (int i = 0; i < 5; ++i) {
+  for (int i = 0; i < 5; ++i)
+  {
     layer.SetTile({row_t{i}, col_t{i}}, 1_t);
   }
 

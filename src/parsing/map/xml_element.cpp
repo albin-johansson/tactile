@@ -150,4 +150,4 @@ auto XmlElement::StringifyElementId(const ElementId type) -> QString
   }
 }
 
-}  // namespace tactile::parse
+}  // namespace tactile

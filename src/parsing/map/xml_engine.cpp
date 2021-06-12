@@ -184,4 +184,4 @@ auto XmlEngine::HasChild(const object_type& obj, const QString& tag) -> bool
   return !obj->firstChildElement(tag).isNull();
 }
 
-}  // namespace tactile::parse
+}  // namespace tactile

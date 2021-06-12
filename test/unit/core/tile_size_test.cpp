@@ -33,7 +33,8 @@ TEST(TileSize, Decrease)
 
   EXPECT_EQ(90, size.get());
 
-  for (int i = 0; i < 30; ++i) {
+  for (int i = 0; i < 30; ++i)
+  {
     size.decrease();
   }
 

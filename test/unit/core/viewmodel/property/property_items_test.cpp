@@ -69,7 +69,8 @@ TEST(PropertyItems, UpdateItemData)
 
     const auto role = vm::PropertyItemRole::Path;
     ASSERT_TRUE(item.data(role).canConvert<QString>());
-    EXPECT_EQ(property.AsFile().absoluteFilePath(), item.data(role).value<QString>());
+    EXPECT_EQ(property.AsFile().absoluteFilePath(),
+              item.data(role).value<QString>());
   }
 
   // TODO object item

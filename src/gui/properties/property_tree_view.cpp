@@ -83,8 +83,7 @@ void PropertyTreeView::OnColorAdded(const QModelIndex& valueIndex)
 void PropertyTreeView::OnFileAdded(const QModelIndex& valueIndex)
 {
   auto* widget = new FileValueWidget{};
-  widget->SetPath(
-      valueIndex.data(vm::PropertyItemRole::Path).value<QString>());
+  widget->SetPath(valueIndex.data(vm::PropertyItemRole::Path).value<QString>());
 
   const auto id = NewWidgetId();
   mWidgetItems.emplace(id, GetModel()->itemFromIndex(valueIndex));
