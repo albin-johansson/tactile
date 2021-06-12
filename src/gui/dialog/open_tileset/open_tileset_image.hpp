@@ -13,11 +13,11 @@ namespace tactile {
  *
  * \param parent the parent widget.
  *
- * \return the path of the image; `std::nullopt`if no file was selected.
+ * \return the path of the image; `nothing`if no file was selected.
  *
  * \since 0.1.0
  */
 [[nodiscard]] auto OpenTilesetImage(QWidget* parent = nullptr)
-    -> maybe<QString>;
+    -> Maybe<QString>;
 
 }  // namespace tactile

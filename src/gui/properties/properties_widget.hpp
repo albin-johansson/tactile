@@ -47,8 +47,8 @@ class PropertiesWidget final : public QWidget
   PropertyTreeView* mView{};
   PropertyContextMenu* mContextMenu{};
   unique<vm::PropertyModel> mModel;
-  maybe<QString> mNameCopy;
-  maybe<core::Property> mPropertyCopy;
+  Maybe<QString> mNameCopy;
+  Maybe<core::Property> mPropertyCopy;
 
   void ChangeModel(not_null<core::IPropertyManager*> manager);
 
@@ -57,7 +57,7 @@ class PropertiesWidget final : public QWidget
   [[nodiscard]] auto CurrentPropertyName() const -> QString;
 
  private slots:
-  void OnSelectionChanged(maybe<QModelIndex> index);
+  void OnSelectionChanged(Maybe<QModelIndex> index);
 
   void OnCopyPropertyRequested();
 

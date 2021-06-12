@@ -303,7 +303,7 @@ auto Map::MakeObjectLayer() -> shared<ObjectLayer>
   return std::make_shared<ObjectLayer>();
 }
 
-auto Map::IndexOf(const layer_id id) const -> maybe<std::size_t>
+auto Map::IndexOf(const layer_id id) const -> Maybe<std::size_t>
 {
   return mLayers.index_of(id);
 }
@@ -364,7 +364,7 @@ auto Map::Height() const -> int
   return mRows.get() * mTileSize.Get();
 }
 
-auto Map::ActiveLayerId() const noexcept -> maybe<layer_id>
+auto Map::ActiveLayerId() const noexcept -> Maybe<layer_id>
 {
   return mActiveLayer;
 }

@@ -105,7 +105,7 @@ void PropertiesWidget::OnChangedPropertyType(const QString& name)
   mModel->OnChangedPropertyType(name);
 }
 
-void PropertiesWidget::OnSelectionChanged(maybe<QModelIndex> index)
+void PropertiesWidget::OnSelectionChanged(Maybe<QModelIndex> index)
 {
   mContextMenu->DisableAll();
 

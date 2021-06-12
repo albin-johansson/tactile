@@ -101,7 +101,7 @@ class DocumentDelegate final : public ADocument
  private:
   unique<CommandStack> mCommandStack;
   unique<IPropertyManager> mPropertyManager;
-  maybe<QFileInfo> mPath;
+  Maybe<QFileInfo> mPath;
 };
 
 }  // namespace tactile::core

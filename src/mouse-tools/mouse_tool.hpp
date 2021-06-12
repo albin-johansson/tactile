@@ -149,13 +149,13 @@ class AMouseTool
    * \param mapPosition the current position of the map.
    *
    * \return the mouse position translated as a map position, if the mouse is in
-   * bounds of the map; `std::nullopt` otherwise.
+   * bounds of the map; `nothing` otherwise.
    *
    * \since 0.1.0
    */
   [[nodiscard]] auto TranslateMousePosition(const QPoint& mousePosition,
                                             const QPointF& mapPosition) const
-      -> maybe<core::Position>;
+      -> Maybe<core::Position>;
 
  private:
   core::Model* mModel{};

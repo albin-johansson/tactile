@@ -355,12 +355,12 @@ class Map final
    *
    * \param id the ID associated with the layer to obtain the index of.
    *
-   * \return the index of the specified layer; `std::nullopt` if the layer
+   * \return the index of the specified layer; `nothing` if the layer
    * wasn't found.
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto IndexOf(layer_id id) const -> maybe<std::size_t>;
+  [[nodiscard]] auto IndexOf(layer_id id) const -> Maybe<std::size_t>;
 
   /**
    * \brief Returns the name of the specified layer.
@@ -465,12 +465,12 @@ class Map final
   /**
    * \brief Returns the ID of the currently active layer.
    *
-   * \return the ID of the active layer; `std::nullopt` if there is no active
+   * \return the ID of the active layer; `nothing` if there is no active
    * layer.
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto ActiveLayerId() const noexcept -> maybe<layer_id>;
+  [[nodiscard]] auto ActiveLayerId() const noexcept -> Maybe<layer_id>;
 
   /**
    * \brief Returns the ID that will be used by the next layer.
@@ -539,7 +539,7 @@ class Map final
 
  private:
   layer_map mLayers;
-  maybe<layer_id> mActiveLayer;
+  Maybe<layer_id> mActiveLayer;
   TileSize mTileSize;
   row_t mRows;
   col_t mCols;

@@ -116,7 +116,7 @@ void remove_theme(const QString& name)
   }
 }
 
-auto get_theme(const QString& name) -> maybe<QPalette>
+auto get_theme(const QString& name) -> Maybe<QPalette>
 {
   if (is_standard_theme(name))
   {
@@ -131,7 +131,7 @@ auto get_theme(const QString& name) -> maybe<QPalette>
     }
   }
 
-  return std::nullopt;
+  return nothing;
 }
 
 auto is_standard_theme(const QStringView name) -> bool

@@ -25,7 +25,7 @@ class JsonEngine final
   static auto Root(const document_type& document) -> object_type;
 
   [[nodiscard]]
-  static auto FromFile(const QFileInfo& path) -> maybe<document_type>;
+  static auto FromFile(const QFileInfo& path) -> Maybe<document_type>;
 
   [[nodiscard]]
   static auto Tilesets(const object_type& root) -> std::vector<object_type>;
@@ -51,7 +51,7 @@ class JsonEngine final
 
   [[nodiscard]]
   static auto TilesetImageRelativePath(const object_type& object)
-      -> maybe<QString>;
+      -> Maybe<QString>;
 
   [[nodiscard]]
   static auto ValidateLayerType(const object_type& object) -> bool;

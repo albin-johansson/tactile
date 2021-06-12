@@ -142,7 +142,7 @@ void PropertyTreeView::selectionChanged(const QItemSelection& selected,
 
   Q_ASSERT(selected.size() == 1 || selected.empty());
 
-  maybe<QModelIndex> selectedIndex;
+  Maybe<QModelIndex> selectedIndex;
   for (const auto index : selected.indexes())
   {
     selectedIndex = index;

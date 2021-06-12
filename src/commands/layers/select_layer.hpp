@@ -29,7 +29,7 @@ class SelectLayer final : public QUndoCommand
  private:
   core::MapDocument* mDocument{};
   layer_id mId;
-  maybe<layer_id> mPrevious;
+  Maybe<layer_id> mPrevious;
 };
 
 }  // namespace tactile::cmd

@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-auto OpenTilesetImage(QWidget* parent) -> maybe<QString>
+auto OpenTilesetImage(QWidget* parent) -> Maybe<QString>
 {
   static QString cachedPath;
 
@@ -24,7 +24,7 @@ auto OpenTilesetImage(QWidget* parent) -> maybe<QString>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

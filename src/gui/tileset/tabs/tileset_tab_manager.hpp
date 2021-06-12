@@ -28,7 +28,7 @@ class TilesetTabManager final
 
   [[nodiscard]] auto IsEmpty() const -> bool;
 
-  [[nodiscard]] auto CachedIndex() const -> maybe<int>
+  [[nodiscard]] auto CachedIndex() const -> Maybe<int>
   {
     return mCachedIndex;
   }
@@ -55,7 +55,7 @@ class TilesetTabManager final
 
  private:
   vector_map<tileset_id, TilesetTab*> mTabs;
-  maybe<int> mCachedIndex;
+  Maybe<int> mCachedIndex;
 };
 
 }  // namespace tactile

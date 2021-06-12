@@ -40,7 +40,7 @@ void TilesetManager::Remove(const tileset_id id) noexcept
 
   if (id == mActiveId)
   {
-    mActiveId = std::nullopt;
+    mActiveId = nothing;
   }
 }
 
@@ -54,7 +54,7 @@ void TilesetManager::Rename(const tileset_id id, const QString& name)
   mTilesets.at(id)->SetName(name);
 }
 
-void TilesetManager::Select(const maybe<tileset_id> id)
+void TilesetManager::Select(const Maybe<tileset_id> id)
 {
   if (id)
   {
@@ -63,7 +63,7 @@ void TilesetManager::Select(const maybe<tileset_id> id)
   }
   else
   {
-    mActiveId = std::nullopt;
+    mActiveId = nothing;
   }
 }
 
@@ -137,7 +137,7 @@ auto TilesetManager::CurrentTileset() const -> const Tileset*
   return mActiveId ? mTilesets.at(*mActiveId).get() : nullptr;
 }
 
-auto TilesetManager::CurrentTilesetId() const -> maybe<tileset_id>
+auto TilesetManager::CurrentTilesetId() const -> Maybe<tileset_id>
 {
   return mActiveId;
 }

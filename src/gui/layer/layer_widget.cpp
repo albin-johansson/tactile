@@ -118,7 +118,7 @@ void LayerWidget::OnSwitchedMap(not_null<core::MapDocument*> document)
   // clang-format on
 }
 
-void LayerWidget::UpdateActions(const maybe<QModelIndex>& selected)
+void LayerWidget::UpdateActions(const Maybe<QModelIndex>& selected)
 {
   if (!mModel)
   {
@@ -131,7 +131,7 @@ void LayerWidget::UpdateActions(const maybe<QModelIndex>& selected)
 
   const auto nLayers = mModel->rowCount();
 
-  maybe<int> index;
+  Maybe<int> index;
   if (selected)
   {
     index = selected->row();
@@ -169,8 +169,8 @@ void LayerWidget::OnSpawnContextMenu(const QPoint& pos)
   }
 }
 
-void LayerWidget::OnViewChangedSelection(const maybe<QModelIndex> selected,
-                                         const maybe<QModelIndex>)
+void LayerWidget::OnViewChangedSelection(const Maybe<QModelIndex> selected,
+                                         const Maybe<QModelIndex>)
 {
   if (selected)
   {

@@ -23,7 +23,7 @@ class PropertyTreeView final : public QTreeView
 
  signals:
   void S_SpawnContextMenu(const QPoint& pos);
-  void S_SelectionChanged(maybe<QModelIndex> index);
+  void S_SelectionChanged(Maybe<QModelIndex> index);
 
  public slots:
   void OnColorAdded(const QModelIndex& valueIndex);

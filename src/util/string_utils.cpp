@@ -2,7 +2,7 @@
 
 namespace tactile {
 
-auto ToInteger(const QString& string) -> maybe<int>
+auto ToInteger(const QString& string) -> Maybe<int>
 {
   bool ok{};
   if (const auto value = string.toInt(&ok); ok)
@@ -11,7 +11,7 @@ auto ToInteger(const QString& string) -> maybe<int>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

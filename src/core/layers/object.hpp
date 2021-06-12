@@ -91,12 +91,12 @@ class Object final : public IPropertyManager
   /**
    * \brief Sets the custom user-defined type associated with the object.
    *
-   * \param type the name of the custom user type; `std::nullopt` to remove the
+   * \param type the name of the custom user type; `nothing` to remove the
    * custom type.
    *
    * \since 0.2.0
    */
-  void SetCustomType(maybe<QString> type);
+  void SetCustomType(Maybe<QString> type);
 
   /**
    * \brief Returns the current x-coordinate of the object.
@@ -164,11 +164,11 @@ class Object final : public IPropertyManager
   /**
    * \brief Returns the custom user-defined type of the object, if present.
    *
-   * \return the name of the user-defined type; `std::nullopt` if there is none.
+   * \return the name of the user-defined type; `nothing` if there is none.
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto CustomType() const -> maybe<QString>;
+  [[nodiscard]] auto CustomType() const -> Maybe<QString>;
 
   /**
    * \brief Indicates whether or not the object is represented by a point.
@@ -227,7 +227,7 @@ class Object final : public IPropertyManager
   double mWidth{};
   double mHeight{};
   ObjectType mType;
-  maybe<QString> mCustomType;
+  Maybe<QString> mCustomType;
   QString mName;
   property_delegate mProperties;
   bool mVisible{true};

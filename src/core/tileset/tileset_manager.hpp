@@ -102,14 +102,14 @@ class TilesetManager final
   /**
    * \brief Selects the tileset associated with the specified ID.
    *
-   * \pre `id` must be associated with a tileset if it isn't `std::nullopt`.
+   * \pre `id` must be associated with a tileset if it isn't `nothing`.
    *
    * \param id the key associated with the tileset that will be made active;
-   * `std::nullopt` indicates that no tileset should be selected.
+   * `nothing` indicates that no tileset should be selected.
    *
    * \since 0.1.0
    */
-  void Select(maybe<tileset_id> id);
+  void Select(Maybe<tileset_id> id);
 
   /**
    * \brief Sets the current tileset selection of the active tileset.
@@ -215,12 +215,12 @@ class TilesetManager final
   /**
    * \brief Returns the ID associated with the active tileset.
    *
-   * \return the ID associated with the currently active tileset; `std::nullopt`
+   * \return the ID associated with the currently active tileset; `nothing`
    * if there is none.
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto CurrentTilesetId() const -> maybe<tileset_id>;
+  [[nodiscard]] auto CurrentTilesetId() const -> Maybe<tileset_id>;
 
   /**
    * \brief Indicates whether or not any managed tileset contains a tile ID.
@@ -298,7 +298,7 @@ class TilesetManager final
   }
 
  private:
-  maybe<tileset_id> mActiveId;
+  Maybe<tileset_id> mActiveId;
   tileset_map mTilesets;
   tileset_id mNextId{1};
   tile_id mNextGlobalTileId{1};

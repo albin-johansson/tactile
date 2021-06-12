@@ -34,7 +34,7 @@ class ChangeOpacity final : public QUndoCommand
   core::MapDocument* mDocument{};
   layer_id mId;
   double mOpacity;
-  maybe<double> mPreviousOpacity;
+  Maybe<double> mPreviousOpacity;
 };
 
 }  // namespace tactile::cmd

@@ -99,7 +99,7 @@ class TilesetContentPage final : public QWidget
   unique<Ui::TilesetContentPage> mUi;
   TabWidget* mTabWidget{};
   TilesetTabContextMenu* mContextMenu{};
-  maybe<map_id> mCurrentMap;
+  Maybe<map_id> mCurrentMap;
   std::map<map_id, TilesetTabManager> mTabManagers;
 
   /**

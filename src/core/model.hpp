@@ -53,7 +53,7 @@ class Model final : public QObject
 
   [[nodiscard]] auto GetDocument(map_id id) -> MapDocument*;
 
-  [[nodiscard]] auto CurrentMapId() const -> maybe<map_id>;
+  [[nodiscard]] auto CurrentMapId() const -> Maybe<map_id>;
 
   [[nodiscard]] auto CurrentDocument() -> MapDocument*;
 
@@ -266,7 +266,7 @@ class Model final : public QObject
 
  private:
   vector_map<map_id, MapDocument*> mDocuments;
-  maybe<map_id> mCurrentMap;
+  Maybe<map_id> mCurrentMap;
   map_id mNextId{1};
   MouseToolModel mTools;
 

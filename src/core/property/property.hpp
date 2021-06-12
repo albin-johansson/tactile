@@ -297,11 +297,11 @@ class Property final
   /**
    * \brief Returns the type of the stored value.
    *
-   * \return the type of the stored value; `std::nullopt` if there is no value.
+   * \return the type of the stored value; `nothing` if there is no value.
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto Type() const -> maybe<PropertyType>;
+  [[nodiscard]] auto Type() const -> Maybe<PropertyType>;
 
  private:
   value_type mValue;

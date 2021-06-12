@@ -32,7 +32,7 @@ class UpdateProperty final : public QUndoCommand
   core::IPropertyManager* mManager{};
   QString mName;
   core::Property mProperty;
-  maybe<core::Property> mPrevProperty;
+  Maybe<core::Property> mPrevProperty;
 };
 
 }  // namespace tactile::cmd

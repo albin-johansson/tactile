@@ -269,17 +269,17 @@ class TileLayer final : public ILayer
   /**
    * \brief Returns the ID of the tile at the specified position.
    *
-   * \note This method returns `std::nullopt` if the supplied position
+   * \note This method returns `nothing` if the supplied position
    * is out-of-bounds.
    *
    * \param pos the position to obtain the tile ID of.
    *
-   * \return the ID of the tile at the specified position; `std::nullopt` if the
+   * \return the ID of the tile at the specified position; `nothing` if the
    * position is out-of-bounds.
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto TileAt(const Position& pos) const -> maybe<tile_id>;
+  [[nodiscard]] auto TileAt(const Position& pos) const -> Maybe<tile_id>;
 
   /**
    * \brief Indicates whether or not the specified position is in bounds of the

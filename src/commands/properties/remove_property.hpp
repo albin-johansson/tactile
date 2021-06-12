@@ -29,7 +29,7 @@ class RemoveProperty final : public QUndoCommand
  private:
   core::IPropertyManager* mManager{};
   QString mName;
-  maybe<core::Property> mProperty;
+  Maybe<core::Property> mProperty;
 };
 
 }  // namespace tactile::cmd

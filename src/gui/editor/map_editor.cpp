@@ -111,12 +111,12 @@ auto MapEditor::InEditorMode() const -> bool
   return mUi->stackedWidget->currentIndex() == mEditorID;
 }
 
-auto MapEditor::ActiveTabID() const -> maybe<map_id>
+auto MapEditor::ActiveTabID() const -> Maybe<map_id>
 {
   return mTabWidget->ActiveTabId();
 }
 
-auto MapEditor::ActiveTabName() const -> maybe<QString>
+auto MapEditor::ActiveTabName() const -> Maybe<QString>
 {
   return mTabWidget->ActiveTabName();
 }

@@ -57,12 +57,12 @@ void remove_theme(const QString& name);
  *
  * \param name the name of the theme to obtain the palette of.
  *
- * \return the palette of the specified theme; `std::nullopt` if the theme
+ * \return the palette of the specified theme; `nothing` if the theme
  * wasn't recognized.
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto get_theme(const QString& name) -> maybe<QPalette>;
+[[nodiscard]] auto get_theme(const QString& name) -> Maybe<QPalette>;
 
 /**
  * \brief Indicates whether or not the supplied name is one of the

@@ -8,13 +8,13 @@
 
 namespace tactile {
 
-[[nodiscard]] auto ReadXml(const QFileInfo& path) -> maybe<QDomDocument>;
+[[nodiscard]] auto ReadXml(const QFileInfo& path) -> Maybe<QDomDocument>;
 
 void WriteXml(const QFileInfo& path, const QDomDocument& document);
 
 template <std::constructible_from<int> T = int>
 [[nodiscard]] auto GetIntAttr(const QDomElement& element, const QString& key)
-    -> maybe<T>
+    -> Maybe<T>
 {
   bool ok{};
   if (const auto result = element.attribute(key).toInt(&ok); ok)
@@ -23,7 +23,7 @@ template <std::constructible_from<int> T = int>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

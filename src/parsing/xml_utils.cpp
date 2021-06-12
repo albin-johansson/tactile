@@ -4,7 +4,7 @@
 
 namespace tactile {
 
-auto ReadXml(const QFileInfo& path) -> maybe<QDomDocument>
+auto ReadXml(const QFileInfo& path) -> Maybe<QDomDocument>
 {
   QDomDocument document;
 
@@ -16,7 +16,7 @@ auto ReadXml(const QFileInfo& path) -> maybe<QDomDocument>
       !success)
   {
     file.close();
-    return std::nullopt;
+    return nothing;
   }
   else
   {

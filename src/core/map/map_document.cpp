@@ -492,7 +492,7 @@ auto MapDocument::Raw() -> Map&
   return *mMap;
 }
 
-auto MapDocument::CurrentLayerId() const noexcept -> maybe<layer_id>
+auto MapDocument::CurrentLayerId() const noexcept -> Maybe<layer_id>
 {
   return mMap->ActiveLayerId();
 }

@@ -71,9 +71,9 @@ class MapEditor final : public QWidget
 
   [[nodiscard]] auto InEditorMode() const -> bool;
 
-  [[nodiscard]] auto ActiveTabID() const -> maybe<map_id>;
+  [[nodiscard]] auto ActiveTabID() const -> Maybe<map_id>;
 
-  [[nodiscard]] auto ActiveTabName() const -> maybe<QString>;
+  [[nodiscard]] auto ActiveTabName() const -> Maybe<QString>;
 
   [[nodiscard]] auto TabCount() const -> int;
 

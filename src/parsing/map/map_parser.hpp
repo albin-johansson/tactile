@@ -120,13 +120,13 @@ class MapParser final
   }
 
   template <typename T>
-  [[nodiscard]] auto WithError(const ParseError error) noexcept -> maybe<T>
+  [[nodiscard]] auto WithError(const ParseError error) noexcept -> Maybe<T>
   {
     mError = error;
-    return std::nullopt;
+    return nothing;
   }
 
-  [[nodiscard]] auto OpenFile(const QFileInfo& path) -> maybe<document_type>
+  [[nodiscard]] auto OpenFile(const QFileInfo& path) -> Maybe<document_type>
   {
     if (!path.exists())
     {
@@ -157,7 +157,7 @@ class MapParser final
   }
 
   [[nodiscard]] auto ParseTilesetFirstGid(const object_type& object)
-      -> maybe<tile_id>
+      -> Maybe<tile_id>
   {
     if (const auto gid = object.Integer(ElementId::FirstGid))
     {
@@ -414,7 +414,7 @@ class MapParser final
   }
 
   [[nodiscard]] auto ParseProperty(const object_type& prop)
-      -> maybe<ir::PropertyData>
+      -> Maybe<ir::PropertyData>
   {
     ir::PropertyData data;
     data.name = prop.String(ElementId::Name).value();
@@ -427,12 +427,12 @@ class MapParser final
     }
     else
     {
-      return std::nullopt;
+      return nothing;
     }
   }
 
   [[nodiscard]] auto ParseProperties(const object_type& obj)
-      -> maybe<std::vector<ir::PropertyData>>
+      -> Maybe<std::vector<ir::PropertyData>>
   {
     const auto props = mEngine.Properties(obj);
 
@@ -447,7 +447,7 @@ class MapParser final
       }
       else
       {
-        return std::nullopt;
+        return nothing;
       }
     }
 

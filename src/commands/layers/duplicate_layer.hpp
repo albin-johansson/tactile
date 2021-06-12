@@ -29,7 +29,7 @@ class DuplicateLayer final : public QUndoCommand
  private:
   core::MapDocument* mDocument{};
   layer_id mId;
-  maybe<layer_id> mNewId;
+  Maybe<layer_id> mNewId;
 };
 
 }  // namespace tactile::cmd

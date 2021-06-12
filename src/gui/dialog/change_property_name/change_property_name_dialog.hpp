@@ -21,7 +21,7 @@ class ChangePropertyNameDialog final : public QDialog
   ~ChangePropertyNameDialog() noexcept override;
 
   [[nodiscard]] static auto Spawn(QStandardItemModel* model,
-                                  QWidget* parent = nullptr) -> maybe<QString>;
+                                  QWidget* parent = nullptr) -> Maybe<QString>;
 
  private:
   unique<Ui::ChangePropertyNameDialog> mUi;

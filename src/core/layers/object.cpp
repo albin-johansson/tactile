@@ -37,7 +37,7 @@ void Object::SetName(const QString& name)
   mName = name;
 }
 
-void Object::SetCustomType(maybe<QString> type)
+void Object::SetCustomType(Maybe<QString> type)
 {
   mCustomType = std::move(type);
 }
@@ -77,7 +77,7 @@ auto Object::Type() const noexcept -> ObjectType
   return mType;
 }
 
-auto Object::CustomType() const -> maybe<QString>
+auto Object::CustomType() const -> Maybe<QString>
 {
   return mCustomType;
 }

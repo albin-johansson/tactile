@@ -212,7 +212,7 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto LayerCount() const noexcept -> int;
 
-  [[nodiscard]] auto CurrentLayerId() const noexcept -> maybe<layer_id>;
+  [[nodiscard]] auto CurrentLayerId() const noexcept -> Maybe<layer_id>;
 
   [[nodiscard]] auto HasLayer(layer_id id) const -> bool;
 

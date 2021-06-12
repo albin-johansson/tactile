@@ -47,7 +47,7 @@ auto Property::HasValue() const noexcept -> bool
   return !std::holds_alternative<std::monostate>(mValue);
 }
 
-auto Property::Type() const -> maybe<PropertyType>
+auto Property::Type() const -> Maybe<PropertyType>
 {
   if (Is<int>())
   {
@@ -79,7 +79,7 @@ auto Property::Type() const -> maybe<PropertyType>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

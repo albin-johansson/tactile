@@ -19,7 +19,7 @@ auto JsonEngine::Root(const document_type& document) -> object_type
   return object_type{document.object()};
 }
 
-auto JsonEngine::FromFile(const QFileInfo& path) -> maybe<document_type>
+auto JsonEngine::FromFile(const QFileInfo& path) -> Maybe<document_type>
 {
   return ReadJson(path);
 }
@@ -87,7 +87,7 @@ auto JsonEngine::ContainsTilesets(const object_type& object) -> bool
 }
 
 auto JsonEngine::TilesetImageRelativePath(const object_type& object)
-    -> maybe<QString>
+    -> Maybe<QString>
 {
   return object.String(ElementId::Image);
 }

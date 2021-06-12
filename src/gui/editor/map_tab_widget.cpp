@@ -135,12 +135,12 @@ void MapTabWidget::SetOpenGlEnabled(const bool enabled)
   }
 }
 
-auto MapTabWidget::ActiveTabId() const -> maybe<map_id>
+auto MapTabWidget::ActiveTabId() const -> Maybe<map_id>
 {
   return IdFromIndex(currentIndex());
 }
 
-auto MapTabWidget::IdFromIndex(const int index) const -> maybe<map_id>
+auto MapTabWidget::IdFromIndex(const int index) const -> Maybe<map_id>
 {
   if (const auto* view = GetView(index))
   {
@@ -148,11 +148,11 @@ auto MapTabWidget::IdFromIndex(const int index) const -> maybe<map_id>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
-auto MapTabWidget::ActiveTabName() const -> maybe<QString>
+auto MapTabWidget::ActiveTabName() const -> Maybe<QString>
 {
   const auto index = currentIndex();
   if (index != -1)
@@ -161,7 +161,7 @@ auto MapTabWidget::ActiveTabName() const -> maybe<QString>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

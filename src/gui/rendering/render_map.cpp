@@ -28,7 +28,7 @@ struct render_info final
   const core::Map* map;
   const core::TilesetManager* tilesets;
   render_bounds bounds;
-  maybe<core::Position> mousePosition;
+  Maybe<core::Position> mousePosition;
   int tileSize;
   bool drawGrid;
 };
@@ -70,7 +70,7 @@ struct render_info final
 
 [[nodiscard]] auto make_render_info(const core::MapDocument& document,
                                     const QRectF& exposed,
-                                    maybe<core::Position> mousePosition)
+                                    Maybe<core::Position> mousePosition)
     -> render_info
 {
   const auto tileSize = document.CurrentTileSize();
@@ -267,7 +267,7 @@ void render_preview(QPainter& painter, const render_info& info)
 
 void RenderMap(QPainter& painter,
                const core::MapDocument& document,
-               const maybe<core::Position> mousePosition,
+               const Maybe<core::Position> mousePosition,
                const QRectF& exposed)
 {
   if (exposed.isEmpty())

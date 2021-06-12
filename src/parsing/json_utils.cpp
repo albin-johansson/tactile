@@ -8,19 +8,19 @@
 
 namespace tactile {
 
-auto ReadJson(const QFileInfo& path) -> maybe<QJsonDocument>
+auto ReadJson(const QFileInfo& path) -> Maybe<QJsonDocument>
 {
   FileHandle file{path.absoluteFilePath()};
   if (!file.Open(QFile::ReadOnly | QFile::Text))
   {
-    return std::nullopt;
+    return nothing;
   }
 
   auto json = QJsonDocument::fromJson(file.Read());
 
   if (json.isNull())
   {
-    return std::nullopt;
+    return nothing;
   }
 
   return json;

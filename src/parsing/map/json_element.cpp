@@ -15,7 +15,7 @@ auto JsonElement::Contains(const ElementId id) const -> bool
   return mObject.contains(StringifyElementId(id));
 }
 
-auto JsonElement::Integer(const QString& str) const -> std::optional<int>
+auto JsonElement::Integer(const QString& str) const -> Maybe<int>
 {
   if (const auto result = mObject.value(str).toInt(-1); result != -1)
   {
@@ -23,7 +23,7 @@ auto JsonElement::Integer(const QString& str) const -> std::optional<int>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -32,7 +32,7 @@ auto JsonElement::Integer(const QString& str, const int def) const -> int
   return Integer(str).value_or(def);
 }
 
-auto JsonElement::Integer(const ElementId id) const -> std::optional<int>
+auto JsonElement::Integer(const ElementId id) const -> Maybe<int>
 {
   if (const auto result = mObject.value(StringifyElementId(id)).toInt(-1);
       result != -1)
@@ -41,17 +41,17 @@ auto JsonElement::Integer(const ElementId id) const -> std::optional<int>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
 auto JsonElement::Integer(const ElementId id, const int def) const
-    -> std::optional<int>
+    -> Maybe<int>
 {
   return Integer(id).value_or(def);
 }
 
-auto JsonElement::Floating(const ElementId id) const -> std::optional<double>
+auto JsonElement::Floating(const ElementId id) const -> Maybe<double>
 {
   if (const auto result = mObject.value(StringifyElementId(id)).toDouble(-1);
       result != -1)
@@ -60,7 +60,7 @@ auto JsonElement::Floating(const ElementId id) const -> std::optional<double>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -81,7 +81,7 @@ auto JsonElement::Floating(const ElementId id, const double def) const -> double
   return Floating(id).value_or(def);
 }
 
-auto JsonElement::String(const QString& str) const -> std::optional<QString>
+auto JsonElement::String(const QString& str) const -> Maybe<QString>
 {
   const auto result = mObject.value(str).toString();
   if (!result.isNull())
@@ -90,7 +90,7 @@ auto JsonElement::String(const QString& str) const -> std::optional<QString>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -100,7 +100,7 @@ auto JsonElement::String(const QString& str, const QString& def) const
   return String(str).value_or(def);
 }
 
-auto JsonElement::String(const ElementId id) const -> std::optional<QString>
+auto JsonElement::String(const ElementId id) const -> Maybe<QString>
 {
   const auto result = mObject.value(StringifyElementId(id)).toString();
   if (!result.isNull())
@@ -109,7 +109,7 @@ auto JsonElement::String(const ElementId id) const -> std::optional<QString>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -119,7 +119,7 @@ auto JsonElement::String(const ElementId id, const QString& def) const
   return String(id).value_or(def);
 }
 
-auto JsonElement::Boolean(const ElementId id) const -> std::optional<bool>
+auto JsonElement::Boolean(const ElementId id) const -> Maybe<bool>
 {
   const auto value = mObject.value(StringifyElementId(id));
   if (value.isBool())
@@ -128,7 +128,7 @@ auto JsonElement::Boolean(const ElementId id) const -> std::optional<bool>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

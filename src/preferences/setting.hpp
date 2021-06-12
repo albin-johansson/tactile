@@ -192,7 +192,7 @@ class Setting final
   }
 
  private:
-  maybe<T> mValue;
+  Maybe<T> mValue;
   QString mKey;
 };
 

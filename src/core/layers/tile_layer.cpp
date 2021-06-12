@@ -210,7 +210,7 @@ auto TileLayer::TileCount() const noexcept -> int
   return RowCount().get() * ColumnCount().get();
 }
 
-auto TileLayer::TileAt(const Position& pos) const -> maybe<tile_id>
+auto TileLayer::TileAt(const Position& pos) const -> Maybe<tile_id>
 {
   if (InBounds(pos))
   {
@@ -218,7 +218,7 @@ auto TileLayer::TileAt(const Position& pos) const -> maybe<tile_id>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

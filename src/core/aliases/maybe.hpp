@@ -5,6 +5,8 @@
 namespace tactile {
 
 template <typename T>
-using maybe = std::optional<T>;
+using Maybe = std::optional<T>;
 
-}
+inline constexpr std::nullopt_t nothing = std::nullopt;
+
+}  // namespace tactile

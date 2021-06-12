@@ -53,12 +53,12 @@ void ParseGroup(const QJsonObject& json,
 }
 
 [[nodiscard]] auto GetJsonObject(const QString& file)
-    -> std::optional<QJsonObject>
+    -> Maybe<QJsonObject>
 {
   FileHandle themeFile{file};
   if (!themeFile.Exists())
   {
-    return std::nullopt;
+    return nothing;
   }
 
   themeFile.Open(QFile::ReadOnly | QFile::Text);
@@ -66,7 +66,7 @@ void ParseGroup(const QJsonObject& json,
   const auto document = QJsonDocument::fromJson(themeFile.Read());
   if (document.isNull())
   {
-    return std::nullopt;
+    return nothing;
   }
 
   Q_ASSERT(document.isObject());
@@ -75,14 +75,14 @@ void ParseGroup(const QJsonObject& json,
 
 }  // namespace
 
-auto ParsePalette(const QString& file) -> std::optional<QPalette>
+auto ParsePalette(const QString& file) -> Maybe<QPalette>
 {
   QPalette palette;
 
   const auto json = GetJsonObject(file);
   if (!json)
   {
-    return std::nullopt;
+    return nothing;
   }
 
   ParseGroup(*json, palette);

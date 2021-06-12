@@ -3,10 +3,10 @@
 #include <QFileInfo>  // QFileInfo
 #include <QString>    // QString
 #include <concepts>   // same_as
-#include <optional>   // optional
 #include <vector>     // vector
 
 #include "map_parse_data.hpp"
+#include "maybe.hpp"
 #include "parse_error.hpp"
 #include "tile_layer.hpp"
 
@@ -18,13 +18,13 @@ template <typename T>
 concept IsParserObject = requires(T t, ElementId id, const QString& str)
 {
   { t.Contains(id)      } -> std::same_as<bool>;
-  { t.Integer(id)       } -> std::same_as<std::optional<int>>;
-  { t.Integer(id, 1)    } -> std::same_as<std::optional<int>>;
-  { t.Floating(id)      } -> std::same_as<std::optional<double>>;
+  { t.Integer(id)       } -> std::same_as<Maybe<int>>;
+  { t.Integer(id, 1)    } -> std::same_as<Maybe<int>>;
+  { t.Floating(id)      } -> std::same_as<Maybe<double>>;
   { t.Floating(id, 1.0) } -> std::same_as<double>;
-  { t.String(id)        } -> std::same_as<std::optional<QString>>;
+  { t.String(id)        } -> std::same_as<Maybe<QString>>;
   { t.String(id, str)   } -> std::same_as<QString>;
-  { t.Boolean(id)       } -> std::same_as<std::optional<bool>>;
+  { t.Boolean(id)       } -> std::same_as<Maybe<bool>>;
 };
 
 template <typename Engine, typename Document, typename Object>
@@ -37,7 +37,7 @@ concept IsParserEngine = IsParserObject<Object> &&
                                   row_t nRows,
                                   col_t nCols)
 {
-  { e.FromFile(path) } -> std::same_as<maybe<Document>>;
+  { e.FromFile(path) } -> std::same_as<Maybe<Document>>;
   { e.Root(document) } -> std::same_as<Object>;
 
   { e.Layers(object)                     } -> std::same_as<std::vector<Object>>;
@@ -49,7 +49,7 @@ concept IsParserEngine = IsParserObject<Object> &&
   { e.ContainsLayers(object)           } -> std::same_as<bool>;
   { e.ContainsTilesets(object)         } -> std::same_as<bool>;
   { e.ValidateLayerType(object)        } -> std::same_as<bool>;
-  { e.TilesetImageRelativePath(object) } -> std::same_as<std::optional<QString>>;
+  { e.TilesetImageRelativePath(object) } -> std::same_as<Maybe<QString>>;
 
   { e.IsObjectLayer(object) } -> std::same_as<bool>;
   { e.IsTileLayer(object)   } -> std::same_as<bool>;

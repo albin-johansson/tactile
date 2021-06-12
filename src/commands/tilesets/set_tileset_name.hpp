@@ -33,7 +33,7 @@ class SetTilesetName final : public QUndoCommand
   core::MapDocument* mDocument{};
   tileset_id mId;
   QString mName;
-  maybe<QString> mPrevious;
+  Maybe<QString> mPrevious;
 };
 
 }  // namespace tactile::cmd

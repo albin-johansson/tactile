@@ -33,13 +33,13 @@ void LayerListView::selectionChanged(const QItemSelection& selected,
   Q_ASSERT(selected.empty() || selected.size() == 1);
   Q_ASSERT(deselected.empty() || deselected.size() == 1);
 
-  maybe<QModelIndex> selectedIndex;
+  Maybe<QModelIndex> selectedIndex;
   for (const auto index : selected.indexes())
   {
     selectedIndex = index;
   }
 
-  maybe<QModelIndex> deselectedIndex;
+  Maybe<QModelIndex> deselectedIndex;
   for (const auto index : deselected.indexes())
   {
     deselectedIndex = index;

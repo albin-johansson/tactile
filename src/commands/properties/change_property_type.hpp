@@ -31,7 +31,7 @@ class ChangePropertyType final : public QUndoCommand
   core::IPropertyManager* mManager{};
   QString mName;
   core::PropertyType mType;
-  maybe<core::Property> mPreviousProperty;
+  Maybe<core::Property> mPreviousProperty;
 };
 
 }  // namespace tactile::cmd

@@ -146,7 +146,7 @@ void LayerModel::RemoveItem(const layer_id id)
   }
 }
 
-auto LayerModel::MoveUpInGui(const layer_id id) -> maybe<QModelIndex>
+auto LayerModel::MoveUpInGui(const layer_id id) -> Maybe<QModelIndex>
 {
   if (const auto index = IndexOf(id))
   {
@@ -160,11 +160,11 @@ auto LayerModel::MoveUpInGui(const layer_id id) -> maybe<QModelIndex>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
-auto LayerModel::MoveDownInGui(const layer_id id) -> maybe<QModelIndex>
+auto LayerModel::MoveDownInGui(const layer_id id) -> Maybe<QModelIndex>
 {
   if (const auto index = IndexOf(id))
   {
@@ -178,7 +178,7 @@ auto LayerModel::MoveDownInGui(const layer_id id) -> maybe<QModelIndex>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -187,7 +187,7 @@ auto LayerModel::GetItem(const QModelIndex& index) const -> const LayerItem*
   return dynamic_cast<const LayerItem*>(itemFromIndex(index));
 }
 
-auto LayerModel::IndexOf(const layer_id id) const -> maybe<QModelIndex>
+auto LayerModel::IndexOf(const layer_id id) const -> Maybe<QModelIndex>
 {
   const auto topLevelRows = rowCount();
   const auto* root = invisibleRootItem();
@@ -203,7 +203,7 @@ auto LayerModel::IndexOf(const layer_id id) const -> maybe<QModelIndex>
     }
   }
 
-  return std::nullopt;
+  return nothing;
 }
 
 auto LayerModel::IdFromIndex(const QModelIndex& index) const -> layer_id

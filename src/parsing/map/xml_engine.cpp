@@ -104,13 +104,13 @@ auto XmlEngine::Root(const document_type& document) -> object_type
   return object_type{document.documentElement()};
 }
 
-auto XmlEngine::FromFile(const QFileInfo& path) -> maybe<document_type>
+auto XmlEngine::FromFile(const QFileInfo& path) -> Maybe<document_type>
 {
   return ReadXml(path);
 }
 
 auto XmlEngine::TilesetImageRelativePath(const object_type& object)
-    -> maybe<QString>
+    -> Maybe<QString>
 {
   const auto imageElem = object->firstChildElement(TACTILE_QSTRING(u"image"));
   const auto path = imageElem.attribute(TACTILE_QSTRING(u"source"));
@@ -120,7 +120,7 @@ auto XmlEngine::TilesetImageRelativePath(const object_type& object)
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

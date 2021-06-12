@@ -40,7 +40,7 @@ class LayerWidget final : public QWidget
   LayerItemContextMenu* mItemMenu{};
   unique<vm::LayerModel> mModel;
 
-  void UpdateActions(const maybe<QModelIndex>& selected);
+  void UpdateActions(const Maybe<QModelIndex>& selected);
 
  private slots:
   void OnChangedLayerOpacity(layer_id id, double opacity);
@@ -50,7 +50,7 @@ class LayerWidget final : public QWidget
 
   void OnSpawnContextMenu(const QPoint& pos);
 
-  void OnViewChangedSelection(maybe<QModelIndex> selected, maybe<QModelIndex>);
+  void OnViewChangedSelection(Maybe<QModelIndex> selected, Maybe<QModelIndex>);
   void OnViewChangedName(const QModelIndex& index, const QString& name);
 
   void OnNewTileLayerRequested();

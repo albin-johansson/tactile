@@ -26,7 +26,7 @@ auto AMouseTool::GetModel() const noexcept -> const core::Model*
 
 auto AMouseTool::TranslateMousePosition(const QPoint& mousePosition,
                                         const QPointF& mapPosition) const
-    -> maybe<core::Position>
+    -> Maybe<core::Position>
 {
   if (const auto* document = mModel->CurrentDocument())
   {
@@ -35,7 +35,7 @@ auto AMouseTool::TranslateMousePosition(const QPoint& mousePosition,
 
     if (x < 0 || y < 0)
     {
-      return std::nullopt;
+      return nothing;
     }
 
     const auto tileSize = document->CurrentTileSize();
@@ -48,7 +48,7 @@ auto AMouseTool::TranslateMousePosition(const QPoint& mousePosition,
       return position;
     }
   }
-  return std::nullopt;
+  return nothing;
 }
 
 }  // namespace tactile

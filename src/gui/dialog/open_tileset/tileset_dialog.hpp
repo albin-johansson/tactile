@@ -73,9 +73,9 @@ class TilesetDialog final : public QDialog
   unique<Ui::TilesetDialog> mUi;
   QImage mImage;
   QString mPath;
-  maybe<tile_width> mTileWidth;
-  maybe<tile_height> mTileHeight;
-  maybe<QString> mImageName;
+  Maybe<tile_width> mTileWidth;
+  Maybe<tile_height> mTileHeight;
+  Maybe<QString> mImageName;
   QIntValidator* mValidator;
   QPixmap mDefaultImageIcon;
 

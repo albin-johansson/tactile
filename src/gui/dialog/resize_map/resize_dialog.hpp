@@ -71,8 +71,8 @@ class ResizeDialog final : public QDialog
  private:
   unique<Ui::ResizeDialog> mUi;
   QIntValidator* mValidator;
-  maybe<col_t> mChosenWidth;
-  maybe<row_t> mChosenHeight;
+  Maybe<col_t> mChosenWidth;
+  Maybe<row_t> mChosenHeight;
 
   /**
    * \brief Connects a line edit widget to the dialog.

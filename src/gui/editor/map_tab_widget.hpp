@@ -103,26 +103,26 @@ class MapTabWidget final : public TabWidget
   /**
    * \brief Returns the map ID associated with the currently active tab.
    *
-   * \return the map ID of the active tab; `std::nullopt` if there is no active
+   * \return the map ID of the active tab; `nothing` if there is no active
    * tab.
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto ActiveTabId() const -> maybe<map_id>;
+  [[nodiscard]] auto ActiveTabId() const -> Maybe<map_id>;
 
   /**
    * \brief Returns the map ID associated with the specified tab.
    *
    * \param index the index of the tab that will be queried.
    *
-   * \return the map ID of the specified tab; `std::nullopt` if no such ID
+   * \return the map ID of the specified tab; `nothing` if no such ID
    * exists.
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto IdFromIndex(int index) const -> maybe<map_id>;
+  [[nodiscard]] auto IdFromIndex(int index) const -> Maybe<map_id>;
 
-  [[nodiscard]] auto ActiveTabName() const -> maybe<QString>;
+  [[nodiscard]] auto ActiveTabName() const -> Maybe<QString>;
 
  signals:
   void S_RemoveMap(map_id id);

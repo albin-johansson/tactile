@@ -1,9 +1,9 @@
 #pragma once
 
 #include <QDomElement>  // QDomElement
-#include <optional>     // optional
 
 #include "element_id.hpp"
+#include "maybe.hpp"
 
 namespace tactile {
 
@@ -14,19 +14,19 @@ class XmlElement final
 
   [[nodiscard]] auto Contains(ElementId id) const -> bool;
 
-  [[nodiscard]] auto Integer(ElementId id) const -> std::optional<int>;
+  [[nodiscard]] auto Integer(ElementId id) const -> Maybe<int>;
 
-  [[nodiscard]] auto Integer(ElementId id, int def) const -> std::optional<int>;
+  [[nodiscard]] auto Integer(ElementId id, int def) const -> Maybe<int>;
 
-  [[nodiscard]] auto Floating(ElementId id) const -> std::optional<double>;
+  [[nodiscard]] auto Floating(ElementId id) const -> Maybe<double>;
 
   [[nodiscard]] auto Floating(ElementId id, double def) const -> double;
 
-  [[nodiscard]] auto String(ElementId id) const -> std::optional<QString>;
+  [[nodiscard]] auto String(ElementId id) const -> Maybe<QString>;
 
   [[nodiscard]] auto String(ElementId id, const QString& def) const -> QString;
 
-  [[nodiscard]] auto Boolean(ElementId id) const -> std::optional<bool>;
+  [[nodiscard]] auto Boolean(ElementId id) const -> Maybe<bool>;
 
   auto operator->() noexcept -> QDomElement*
   {

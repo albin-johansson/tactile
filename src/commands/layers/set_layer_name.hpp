@@ -33,7 +33,7 @@ class SetLayerName final : public QUndoCommand
   not_null<core::MapDocument*> mDocument{};
   layer_id mId;
   QString mName;
-  maybe<QString> mPrevious;
+  Maybe<QString> mPrevious;
 };
 
 }  // namespace tactile::cmd

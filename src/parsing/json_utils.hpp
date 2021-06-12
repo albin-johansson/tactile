@@ -12,11 +12,11 @@ namespace tactile {
  *
  * \param path the file path of the JSON file.
  *
- * \return a JSON document; `std::nullopt` if something went wrong.
+ * \return a JSON document; `nothing` if something went wrong.
  *
  * \since 0.1.0
  */
-[[nodiscard]] auto ReadJson(const QFileInfo& path) -> maybe<QJsonDocument>;
+[[nodiscard]] auto ReadJson(const QFileInfo& path) -> Maybe<QJsonDocument>;
 
 /**
  * \brief Writes a JSON document to the specified file path.

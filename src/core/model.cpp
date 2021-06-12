@@ -80,7 +80,7 @@ auto Model::GetDocument(const map_id id) -> MapDocument*
   return mDocuments.at(id);
 }
 
-auto Model::CurrentMapId() const -> maybe<map_id>
+auto Model::CurrentMapId() const -> Maybe<map_id>
 {
   return mCurrentMap;
 }
@@ -274,7 +274,7 @@ void Model::CloseMap(const map_id id)
 
   if (mCurrentMap && (mCurrentMap->get() == id.get()))
   {
-    mCurrentMap = std::nullopt;
+    mCurrentMap = nothing;
     EmitUndoRedoUpdate();
   }
 

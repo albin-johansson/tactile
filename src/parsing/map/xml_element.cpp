@@ -15,7 +15,7 @@ auto XmlElement::Contains(const ElementId id) const -> bool
   return mElement.hasAttribute(StringifyElementId(id));
 }
 
-auto XmlElement::Integer(const ElementId id) const -> std::optional<int>
+auto XmlElement::Integer(const ElementId id) const -> Maybe<int>
 {
   bool ok;
   const auto result = mElement.attribute(StringifyElementId(id)).toInt(&ok);
@@ -25,17 +25,16 @@ auto XmlElement::Integer(const ElementId id) const -> std::optional<int>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
-auto XmlElement::Integer(const ElementId id, const int def) const
-    -> std::optional<int>
+auto XmlElement::Integer(const ElementId id, const int def) const -> Maybe<int>
 {
   return Integer(id).value_or(def);
 }
 
-auto XmlElement::Floating(const ElementId id) const -> std::optional<double>
+auto XmlElement::Floating(const ElementId id) const -> Maybe<double>
 {
   bool ok;
   const auto result = mElement.attribute(StringifyElementId(id)).toDouble(&ok);
@@ -45,7 +44,7 @@ auto XmlElement::Floating(const ElementId id) const -> std::optional<double>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -54,7 +53,7 @@ auto XmlElement::Floating(const ElementId id, const double def) const -> double
   return Floating(id).value_or(def);
 }
 
-auto XmlElement::String(const ElementId id) const -> std::optional<QString>
+auto XmlElement::String(const ElementId id) const -> Maybe<QString>
 {
   const auto result = mElement.attribute(StringifyElementId(id));
   if (!result.isNull())
@@ -63,7 +62,7 @@ auto XmlElement::String(const ElementId id) const -> std::optional<QString>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 
@@ -72,7 +71,7 @@ auto XmlElement::String(const ElementId id, const QString& def) const -> QString
   return String(id).value_or(def);
 }
 
-auto XmlElement::Boolean(const ElementId id) const -> std::optional<bool>
+auto XmlElement::Boolean(const ElementId id) const -> Maybe<bool>
 {
   if (const auto value = String(id))
   {
@@ -80,7 +79,7 @@ auto XmlElement::Boolean(const ElementId id) const -> std::optional<bool>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

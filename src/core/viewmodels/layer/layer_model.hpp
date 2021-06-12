@@ -47,7 +47,7 @@ class LayerModel final : public QStandardItemModel
 
   [[nodiscard]] auto IsVisible(const QModelIndex& index) const -> bool;
 
-  [[nodiscard]] auto IndexOf(layer_id id) const -> maybe<QModelIndex>;
+  [[nodiscard]] auto IndexOf(layer_id id) const -> Maybe<QModelIndex>;
 
  signals:
   void S_ChangedName(layer_id id, const QString& name);
@@ -57,15 +57,15 @@ class LayerModel final : public QStandardItemModel
 
  private:
   core::MapDocument* mDocument{};
-  maybe<int> mDuplicateTargetRow;
+  Maybe<int> mDuplicateTargetRow;
 
   void AddItem(layer_id id, const core::ILayer& layer);
 
   void RemoveItem(layer_id id);
 
-  auto MoveUpInGui(layer_id id) -> maybe<QModelIndex>;
+  auto MoveUpInGui(layer_id id) -> Maybe<QModelIndex>;
 
-  auto MoveDownInGui(layer_id id) -> maybe<QModelIndex>;
+  auto MoveDownInGui(layer_id id) -> Maybe<QModelIndex>;
 
   [[nodiscard]] auto GetItem(const QModelIndex& index) const
       -> const LayerItem*;

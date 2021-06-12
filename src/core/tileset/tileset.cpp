@@ -143,7 +143,7 @@ auto Tileset::Height() const -> int
   return mImage.height();
 }
 
-auto Tileset::ImageSource(const tile_id id) const -> maybe<QRect>
+auto Tileset::ImageSource(const tile_id id) const -> Maybe<QRect>
 {
   if (const auto it = mSourceRects.find(id); it != mSourceRects.end())
   {
@@ -151,7 +151,7 @@ auto Tileset::ImageSource(const tile_id id) const -> maybe<QRect>
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

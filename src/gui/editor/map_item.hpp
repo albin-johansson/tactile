@@ -49,7 +49,7 @@ class MapItem final : public QGraphicsItem
 
  private:
   core::MapDocument* mDocument{};
-  maybe<core::Position> mMousePosition;
+  Maybe<core::Position> mMousePosition;
 };
 
 }  // namespace tactile

@@ -41,8 +41,8 @@ class AddPropertyDialog final : public QDialog
  private:
   unique<Ui::AddPropertyDialog> mUi;
   QValidator* mNameValidator{};
-  maybe<QString> mName;
-  maybe<core::PropertyType> mType;
+  Maybe<QString> mName;
+  Maybe<core::PropertyType> mType;
 
   void UpdateType();
 

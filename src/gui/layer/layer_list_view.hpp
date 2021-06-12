@@ -16,8 +16,8 @@ class LayerListView final : public QListView
   void SelectQuietly(const QModelIndex& index);
 
  signals:
-  void S_SelectionChanged(const maybe<QModelIndex>& selected,
-                          const maybe<QModelIndex>& deselected);
+  void S_SelectionChanged(const Maybe<QModelIndex>& selected,
+                          const Maybe<QModelIndex>& deselected);
 
   void S_ChangedName(const QModelIndex& index, const QString& name);
 

@@ -24,7 +24,7 @@ ChangePropertyNameDialog::ChangePropertyNameDialog(QStandardItemModel* model,
 ChangePropertyNameDialog::~ChangePropertyNameDialog() noexcept = default;
 
 auto ChangePropertyNameDialog::Spawn(QStandardItemModel* model, QWidget* parent)
-    -> maybe<QString>
+    -> Maybe<QString>
 {
   ChangePropertyNameDialog dialog{model, parent};
   if (dialog.exec())
@@ -33,7 +33,7 @@ auto ChangePropertyNameDialog::Spawn(QStandardItemModel* model, QWidget* parent)
   }
   else
   {
-    return std::nullopt;
+    return nothing;
   }
 }
 

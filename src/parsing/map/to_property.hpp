@@ -3,10 +3,10 @@
 #include <QColor>     // QColor
 #include <QFileInfo>  // QFileInfo
 #include <QString>    // QString
-#include <optional>   // optional
 
 #include "element_id.hpp"
 #include "map_parse_concepts.hpp"
+#include "maybe.hpp"
 #include "parse_error.hpp"
 #include "property.hpp"
 #include "tactile_qstring.hpp"
@@ -16,8 +16,7 @@ namespace tactile {
 template <IsParserObject T>
 [[nodiscard]] auto ToProperty(const T& object,
                               const QString& propType,
-                              ParseError& error)
-    -> std::optional<core::Property>
+                              ParseError& error) -> Maybe<core::Property>
 {
   core::Property property;
 
@@ -55,7 +54,7 @@ template <IsParserObject T>
   else
   {
     error = ParseError::UnknownPropertyType;
-    return std::nullopt;
+    return nothing;
   }
 
   return property;

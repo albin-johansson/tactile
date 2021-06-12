@@ -246,12 +246,12 @@ class Tileset final
    *
    * \param id the ID of the tile to obtain the source rectangle of.
    *
-   * \return the source rectangle associated with the tile; `std::nullopt` if
+   * \return the source rectangle associated with the tile; `nothing` if
    * no source rectangle was found.
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto ImageSource(tile_id id) const -> maybe<QRect>;
+  [[nodiscard]] auto ImageSource(tile_id id) const -> Maybe<QRect>;
 
   /**
    * \brief Returns the image associated with the tileset.
@@ -301,7 +301,7 @@ class Tileset final
    * \since 0.1.0
    */
   [[nodiscard]] auto GetSelection() const noexcept
-      -> const maybe<TilesetSelection>&
+      -> const Maybe<TilesetSelection>&
   {
     return mSelection;
   }
@@ -421,7 +421,7 @@ class Tileset final
   QPixmap mImage;
   tile_id mFirstId{1};
   tile_id mLastId;
-  maybe<TilesetSelection> mSelection;
+  Maybe<TilesetSelection> mSelection;
   rect_map mSourceRects;
   tile_width mTileWidth;
   tile_height mTileHeight;
