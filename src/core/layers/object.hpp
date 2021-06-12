@@ -15,8 +15,8 @@ namespace tactile::core {
  * \brief Represents "objects" that are present in object layers, e.g. points
  * and rectangles.
  *
- * \details Objects are useful for modelling triggers, level portals,
- * spawn points, etc.
+ * \details Objects are useful for modelling triggers, level portals, spawn
+ * points, etc.
  *
  * \since 0.2.0
  *
@@ -64,7 +64,7 @@ class Object final : public IPropertyManager
   /**
    * \brief Sets the height of the object.
    *
-   * \param width the new height of the object.
+   * \param height the new height of the object.
    *
    * \since 0.2.0
    */
@@ -173,7 +173,7 @@ class Object final : public IPropertyManager
   /**
    * \brief Indicates whether or not the object is represented by a point.
    *
-   * \note This is a convenience function that calls `type()` behind-the-scenes.
+   * \note This is a convenience function that calls `Type()` behind-the-scenes.
    *
    * \return `true` if the object is a point; `false` otherwise.
    *
@@ -184,7 +184,7 @@ class Object final : public IPropertyManager
   /**
    * \brief Indicates whether or not the object is represented by a rectangle.
    *
-   * \note This is a convenience function that calls `type()` behind-the-scenes.
+   * \note This is a convenience function that calls `Type()` behind-the-scenes.
    *
    * \return `true` if the object is a rectangle; `false` otherwise.
    *

@@ -168,9 +168,7 @@ class ObjectLayer final : public ILayer
    */
   [[nodiscard]] auto GetObject(object_id id) -> Object&;
 
-  /**
-   * \copydoc GetObject()
-   */
+  /// \copydoc GetObject()
   [[nodiscard]] auto GetObject(object_id id) const -> const Object&;
 
   /**

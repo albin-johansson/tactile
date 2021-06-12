@@ -19,8 +19,8 @@ namespace tactile {
 /**
  * \class MapEditor
  *
- * \brief Represents the center stage of the editor and contains the main
- * map editor pane.
+ * \brief Represents the center stage of the editor and contains the main map
+ * editor pane.
  *
  * \since 0.1.0
  *
@@ -66,9 +66,7 @@ class MapEditor final : public QWidget
    */
   void EnableEditorView() noexcept;
 
-  /**
-   * \copydoc map_tab_widget::SetActiveTabName()
-   */
+  /// \copydoc MapTabWidget::SetActiveTabName()
   void SetActiveTabName(const QString& name);
 
   [[nodiscard]] auto InEditorMode() const -> bool;

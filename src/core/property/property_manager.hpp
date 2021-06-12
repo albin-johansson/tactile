@@ -10,7 +10,7 @@ namespace tactile::core {
 /**
  * \interface IPropertyManager
  *
- * \brief An interface for objects that support GetProperties.
+ * \brief An interface for objects that support properties.
  *
  * \since 0.2.0
  *
@@ -43,7 +43,7 @@ class IPropertyManager
    * \pre `name` must not be associated with a property.
    *
    * \param name the name that will be associated with the property.
-   * \param type the value of the property.
+   * \param property the value of the property.
    *
    * \since 0.2.0
    */
@@ -121,9 +121,7 @@ class IPropertyManager
   [[nodiscard]] virtual auto GetProperty(const QString& name) const
       -> const Property& = 0;
 
-  /**
-   * \copydoc property_manager::GetProperty
-   */
+  /// \copydoc GetProperty()
   [[nodiscard]] virtual auto GetProperty(const QString& name) -> Property& = 0;
 
   /**
@@ -140,9 +138,9 @@ class IPropertyManager
   [[nodiscard]] virtual auto HasProperty(const QString& name) const -> bool = 0;
 
   /**
-   * \brief Returns the amount of GetProperties handled by the manager.
+   * \brief Returns the amount of properties handled by the manager.
    *
-   * \return the current amount of GetProperties.
+   * \return the current amount of properties.
    *
    * \since 0.2.0
    */

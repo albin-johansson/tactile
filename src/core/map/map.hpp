@@ -213,19 +213,13 @@ class Map final
    */
   void RemoveColumn();
 
-  /**
-   * \copydoc tile_size::increase()
-   */
+  /// \copydoc tile_size::increase()
   void IncreaseTileSize();
 
-  /**
-   * \copydoc tile_size::decrease()
-   */
+  /// \copydoc tile_size::decrease()
   void DecreaseTileSize() noexcept;
 
-  /**
-   * \copydoc tile_size::reset()
-   */
+  /// \copydoc tile_size::reset()
   void ResetTileSize() noexcept;
 
   /**

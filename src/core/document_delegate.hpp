@@ -49,7 +49,7 @@ class DocumentDelegate final : public ADocument
 
   [[nodiscard]] auto AbsolutePath() const -> QString override;
 
-  /// \}
+  /// \} End of document API
 
   /// \name Property API
   /// \{
@@ -81,7 +81,7 @@ class DocumentDelegate final : public ADocument
 
   [[nodiscard]] auto GetProperties() const -> const property_map& override;
 
-  /// \}
+  /// \} End of property API
 
   [[nodiscard]] auto History() noexcept -> CommandStack*;
 

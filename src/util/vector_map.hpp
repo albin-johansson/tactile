@@ -154,9 +154,7 @@ class vector_map final
     }
   }
 
-  /**
-   * \copydoc at(const key_type&)
-   */
+  /// \copydoc at(const key_type&)
   [[nodiscard]] auto at(const key_type& key) const -> const mapped_type&
   {
     if (const auto it = find(key); it != m_data.end())
@@ -169,17 +167,13 @@ class vector_map final
     }
   }
 
-  /**
-   * \copydoc at(const key_type&)
-   */
+  /// \copydoc at(const key_type&)
   [[nodiscard]] auto operator[](const key_type& key) -> mapped_type&
   {
     return at(key);
   }
 
-  /**
-   * \copydoc at(const key_type&)
-   */
+  /// \copydoc at(const key_type&)
   [[nodiscard]] auto operator[](const key_type& key) const -> const mapped_type&
   {
     return at(key);
@@ -201,9 +195,7 @@ class vector_map final
     });
   }
 
-  /**
-   * \copydoc find
-   */
+  /// \copydoc find
   [[nodiscard]] auto find(const key_type& key) const -> const_iterator
   {
     return std::ranges::find_if(m_data, [key](const auto& pair) {
@@ -328,9 +320,7 @@ class vector_map final
     return m_data.begin();
   }
 
-  /**
-   * \copydoc begin()
-   */
+  /// \copydoc begin()
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
     return m_data.begin();
@@ -346,9 +336,7 @@ class vector_map final
     return m_data.end();
   }
 
-  /**
-   * \copydoc end()
-   */
+  /// \copydoc end()
   [[nodiscard]] auto end() const noexcept -> const_iterator
   {
     return m_data.end();

@@ -97,7 +97,7 @@ class Position final
   /**
    * \brief Sets the column coordinate of the map position.
    *
-   * \param col the new column value of the map position, clamped to zero if
+   * \param column the new column value of the map position, clamped to zero if
    * negative.
    *
    * \since 0.1.0
@@ -111,17 +111,17 @@ class Position final
    * \brief Creates and returns a position that is offset from this position.
    *
    * \param row the offset that will be added to the row index.
-   * \param col the offset that will be added to the column index.
+   * \param column the offset that will be added to the column index.
    *
    * \return a position that is offset from this position.
    *
    * \since 0.1.0
    */
   [[nodiscard]] constexpr auto OffsetBy(const row_t row,
-                                        const col_t col) const noexcept
+                                        const col_t column) const noexcept
       -> Position
   {
-    return {row_t{mRow} + row, col_t{mColumn} + col};
+    return {row_t{mRow} + row, col_t{mColumn} + column};
   }
 
   /**
