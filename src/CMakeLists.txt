@@ -80,9 +80,10 @@ set(TACTILE_SOURCE_FILES
     core/position.hpp
     core/tactile_error.hpp
 
-    core/algorithms/algorithm.hpp
+    core/algorithms/at_least.hpp
     core/algorithms/flood_fill.cpp
     core/algorithms/flood_fill.hpp
+    core/algorithms/invoke_n.hpp
 
     core/aliases/czstring.hpp
     core/aliases/ints.hpp
@@ -97,6 +98,12 @@ set(TACTILE_SOURCE_FILES
     core/aliases/tile_id.hpp
     core/aliases/tile_width.hpp
     core/aliases/tileset_id.hpp
+
+    core/concepts/arithmetic.hpp
+    core/concepts/is_negatable.hpp
+    core/concepts/is_pointer.hpp
+    core/concepts/ordered.hpp
+    core/concepts/ui_class.hpp
 
     core/layers/layer.hpp
     core/layers/layer_delegate.cpp
@@ -396,6 +403,7 @@ target_include_directories(libTactile
     PUBLIC core
     PUBLIC core/algorithms
     PUBLIC core/aliases
+    PUBLIC core/concepts
     PUBLIC core/layers
     PUBLIC core/map
     PUBLIC core/property

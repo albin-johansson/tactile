@@ -1,11 +1,8 @@
 #pragma once
 
-#include <type_traits>  // is_pointer_v
+#include "is_pointer.hpp"
 
 namespace tactile {
-
-template <typename T>
-concept IsPointer = std::is_pointer_v<T>;
 
 template <IsPointer T>
 using not_null = T;

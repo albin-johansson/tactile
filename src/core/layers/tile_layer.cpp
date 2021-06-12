@@ -4,8 +4,8 @@
 #include <cmath>    // abs
 #include <utility>  // move
 
-#include "algorithm.hpp"
 #include "flood_fill.hpp"
+#include "invoke_n.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 

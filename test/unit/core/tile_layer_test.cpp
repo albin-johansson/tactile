@@ -2,7 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "algorithm.hpp"
 #include "position.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"

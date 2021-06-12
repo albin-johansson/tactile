@@ -2,7 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "algorithm.hpp"
 #include "tactile_error.hpp"
 #include "tile_layer.hpp"
 

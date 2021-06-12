@@ -1,6 +1,5 @@
 #include "map.hpp"
 
-#include "algorithm.hpp"
 #include "layer_utils.hpp"
 #include "object_layer.hpp"
 #include "tactile_error.hpp"

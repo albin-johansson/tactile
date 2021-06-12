@@ -3,7 +3,6 @@
 
 #include <type_traits>  // is_final_v, is_move_constructible_v, ...
 
-#include "algorithm.hpp"
 #include "tactile_error.hpp"
 
 namespace tactile::core {

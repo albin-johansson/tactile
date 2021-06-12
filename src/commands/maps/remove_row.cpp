@@ -1,6 +1,6 @@
 #include "remove_row.hpp"
 
-#include "algorithm.hpp"
+#include "invoke_n.hpp"
 #include "map.hpp"
 #include "tactile_qstring.hpp"
 

@@ -3,15 +3,11 @@
 #include <QWidget>  // QWidget
 
 #include "smart_pointers.hpp"
+#include "ui_class.hpp"
 
 namespace tactile {
 
 // clang-format off
-template <typename T, typename U>
-concept UiClass = requires(T t, U* self)
-{
-  { t.setupUi(self) };
-};
 
 /**
  * \brief Initializes the external UI for a class.

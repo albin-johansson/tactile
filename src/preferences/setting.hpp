@@ -5,19 +5,10 @@
 #include <concepts>   // invocable, same_as
 #include <utility>    // forward
 
+#include "is_negatable.hpp"
 #include "maybe.hpp"
 
 namespace tactile {
-
-// clang-format off
-
-template <typename T>
-concept IsNegatable = requires (T t)
-{
-  { !t } -> std::convertible_to<T>;
-};
-
-// clang-format on
 
 /**
  * \class Setting
