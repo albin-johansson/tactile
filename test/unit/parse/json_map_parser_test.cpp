@@ -16,7 +16,7 @@ TACTILE_DEFINE_TEST_P(JsonMapParser, path_error_pair)
 {
   const auto [path, code] = GetParam();
 
-  parse::MapParser<parse::json_engine> parser{path.toString()};
+  parse::MapParser<parse::JsonEngine> parser{path.toString()};
 
   if (code != parse::ParseError::None) {
     EXPECT_FALSE(parser);

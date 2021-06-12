@@ -37,7 +37,7 @@ auto OpenMapDocument(const QString& path, parse::ParseError& error)
 
   if (suffix == TACTILE_QSTRING(u"json"))
   {
-    return OpenUsing<parse::json_engine>(path, error);
+    return OpenUsing<parse::JsonEngine>(path, error);
   }
   else if (suffix == TACTILE_QSTRING(u"tmx"))
   {

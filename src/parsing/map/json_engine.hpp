@@ -13,7 +13,7 @@
 
 namespace tactile::parse {
 
-class json_engine final
+class JsonEngine final
 {
  public:
   using document_type = QJsonDocument;

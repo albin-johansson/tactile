@@ -12,43 +12,43 @@
 namespace tactile::parse {
 
 static_assert(IsObject<JsonElement>);
-static_assert(IsEngine<json_engine, QJsonDocument, JsonElement>);
+static_assert(IsEngine<JsonEngine, QJsonDocument, JsonElement>);
 
-auto json_engine::Root(const document_type& document) -> object_type
+auto JsonEngine::Root(const document_type& document) -> object_type
 {
   return object_type{document.object()};
 }
 
-auto json_engine::FromFile(const QFileInfo& path) -> maybe<document_type>
+auto JsonEngine::FromFile(const QFileInfo& path) -> maybe<document_type>
 {
   return ReadJson(path);
 }
 
-auto json_engine::Tilesets(const object_type& root) -> std::vector<object_type>
+auto JsonEngine::Tilesets(const object_type& root) -> std::vector<object_type>
 {
   return Collect(root, u"tilesets");
 }
 
-auto json_engine::Layers(const object_type& root) -> std::vector<object_type>
+auto JsonEngine::Layers(const object_type& root) -> std::vector<object_type>
 {
   return Collect(root, u"layers");
 }
 
-auto json_engine::Properties(const object_type& object)
+auto JsonEngine::Properties(const object_type& object)
     -> std::vector<object_type>
 {
   return Collect(object, u"properties");
 }
 
-auto json_engine::Objects(const object_type& object) -> std::vector<object_type>
+auto JsonEngine::Objects(const object_type& object) -> std::vector<object_type>
 {
   return Collect(object, u"objects");
 }
 
-auto json_engine::Tiles(const object_type& object,
-                        const row_t nRows,
-                        const col_t nCols,
-                        ParseError& error) -> core::tile_matrix
+auto JsonEngine::Tiles(const object_type& object,
+                       const row_t nRows,
+                       const col_t nCols,
+                       ParseError& error) -> core::tile_matrix
 {
   auto matrix = core::MakeTileMatrix(nRows, nCols);
 
@@ -76,48 +76,48 @@ auto json_engine::Tiles(const object_type& object,
   return matrix;
 }
 
-auto json_engine::PropertyType(const object_type& object) -> QString
+auto JsonEngine::PropertyType(const object_type& object) -> QString
 {
   return object.String(ElementId::Type).value();
 }
 
-auto json_engine::ContainsTilesets(const object_type& object) -> bool
+auto JsonEngine::ContainsTilesets(const object_type& object) -> bool
 {
   return object.Contains(ElementId::Tilesets);
 }
 
-auto json_engine::TilesetImageRelativePath(const object_type& object)
+auto JsonEngine::TilesetImageRelativePath(const object_type& object)
     -> maybe<QString>
 {
   return object.String(ElementId::Image);
 }
 
-auto json_engine::ValidateLayerType(const object_type& object) -> bool
+auto JsonEngine::ValidateLayerType(const object_type& object) -> bool
 {
   return object->contains(u"type");
 }
 
-auto json_engine::ContainsLayers(const object_type& object) -> bool
+auto JsonEngine::ContainsLayers(const object_type& object) -> bool
 {
   return object->contains(u"layers");
 }
 
-auto json_engine::IsTileLayer(const object_type& object) -> bool
+auto JsonEngine::IsTileLayer(const object_type& object) -> bool
 {
   return object->value(u"type").toString() == TACTILE_QSTRING(u"tilelayer");
 }
 
-auto json_engine::IsObjectLayer(const object_type& object) -> bool
+auto JsonEngine::IsObjectLayer(const object_type& object) -> bool
 {
   return object->value(u"type").toString() == TACTILE_QSTRING(u"objectgroup");
 }
 
-auto json_engine::IsPoint(const object_type& object) -> bool
+auto JsonEngine::IsPoint(const object_type& object) -> bool
 {
   return object.Boolean(ElementId::Point).value_or(false);
 }
 
-auto json_engine::Collect(const object_type& root, const QStringView key)
+auto JsonEngine::Collect(const object_type& root, const QStringView key)
     -> std::vector<object_type>
 {
   const auto array = root->value(key).toArray();
