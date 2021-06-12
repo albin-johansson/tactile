@@ -26,6 +26,7 @@ class ObjectLayer final : public ILayer
   ObjectLayer();
 
   /// \name Layer API
+  /// \{
 
   void SetVisible(bool visible) noexcept override;
 
@@ -43,7 +44,7 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto Clone() const -> shared<ILayer> override;
 
-  /// \}
+  /// \} End of layer API
 
   /// \name Property API
   /// \{
@@ -181,7 +182,7 @@ class ObjectLayer final : public ILayer
    */
   [[nodiscard]] auto ObjectCount() const noexcept -> int;
 
-  /// \}
+  /// \} End of object layer API
 
  private:
   vector_map<object_id, Object> mObjects;
