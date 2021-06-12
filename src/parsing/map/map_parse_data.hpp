@@ -29,6 +29,7 @@ struct TilesetData final
   tile_height tileHeight;  ///< Tile height used by the tileset.
   QString absolutePath;    ///< The absolute file path of the tileset.
   QString name;            ///< The name of the tileset.
+  std::vector<PropertyData> properties;  ///< List of properties.
 };
 
 struct TileLayerData final

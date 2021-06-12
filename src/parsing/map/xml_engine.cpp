@@ -34,12 +34,12 @@ auto XmlEngine::Layers(const object_type& root) -> std::vector<object_type>
 auto XmlEngine::Properties(const object_type& object)
     -> std::vector<object_type>
 {
+  // FIXME
   const auto top = object->elementsByTagName(TACTILE_QSTRING(u"properties"));
 
-  const auto count = top.count();
-  if (count == 0)
+  if (top.isEmpty())
   {
-    return std::vector<object_type>{};
+    return {};
   }
 
   const auto topNode = top.at(0);

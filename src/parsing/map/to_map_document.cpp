@@ -8,6 +8,15 @@
 namespace tactile {
 namespace {
 
+void AddProperties(core::IPropertyManager& manager,
+                   const std::vector<ir::PropertyData>& properties)
+{
+  for (const auto& propertyData : properties)
+  {
+    manager.AddProperty(propertyData.name, propertyData.property);
+  }
+}
+
 [[nodiscard]] auto MakeTileset(const ir::TilesetData& data)
     -> Shared<core::Tileset>
 {
@@ -16,6 +25,9 @@ namespace {
                                                  data.tileWidth,
                                                  data.tileHeight);
   tileset->SetName(data.name);
+
+  AddProperties(*tileset, data.properties);
+
   return tileset;
 }
 
@@ -58,10 +70,7 @@ namespace {
   object.SetName(objectData.name);
   object.SetVisible(objectData.visible);
 
-  for (const auto& propertyData : objectData.properties)
-  {
-    object.AddProperty(propertyData.name, propertyData.property);
-  }
+  AddProperties(object, objectData.properties);
 
   return object;
 }
@@ -97,10 +106,7 @@ namespace {
   layer->SetOpacity(data.opacity);
   layer->SetVisible(data.visible);
 
-  for (const auto& propertyData : data.properties)
-  {
-    layer->AddProperty(propertyData.name, propertyData.property);
-  }
+  AddProperties(*layer, data.properties);
 
   return layer;
 }
@@ -127,10 +133,7 @@ auto ToMapDocument(const ir::MapData& data) -> core::MapDocument*
     document->AddLayer(layerData.id, MakeLayer(layerData));
   }
 
-  for (const auto& propertyData : data.properties)
-  {
-    document->AddProperty(propertyData.name, propertyData.property);
-  }
+  AddProperties(*document, data.properties);
 
   document->SetPath(QFileInfo{data.path});
   document->SelectLayer(data.layers.front().id);

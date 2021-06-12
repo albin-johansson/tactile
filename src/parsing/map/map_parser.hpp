@@ -219,6 +219,15 @@ class MapParser final
       return WithError(ParseError::TilesetMissingName);
     }
 
+    if (const auto properties = ParseProperties(object))
+    {
+      tileset.properties = std::move(*properties);
+    }
+    else
+    {
+      return false;
+    }
+
     mData.tilesets.emplace_back(std::move(tileset));
     return true;
   }
@@ -434,12 +443,12 @@ class MapParser final
   [[nodiscard]] auto ParseProperties(const object_type& obj)
       -> Maybe<std::vector<ir::PropertyData>>
   {
-    const auto props = mEngine.Properties(obj);
+    const auto properties = mEngine.Properties(obj);
 
     std::vector<ir::PropertyData> result;
-    result.reserve(static_cast<usize>(props.size()));
+    result.reserve(static_cast<usize>(properties.size()));
 
-    for (const auto& elem : props)
+    for (const auto& elem : properties)
     {
       if (auto property = ParseProperty(elem))
       {

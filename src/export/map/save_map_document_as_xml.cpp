@@ -16,55 +16,6 @@
 namespace tactile {
 namespace {
 
-void AddImageNode(QDomDocument& document,
-                  QDomElement& parent,
-                  const core::Tileset& tileset,
-                  const QDir& targetDir)
-{
-  auto image = document.createElement(TACTILE_QSTRING(u"image"));
-
-  image.setAttribute(TACTILE_QSTRING(u"source"),
-                     targetDir.relativeFilePath(tileset.FilePath()));
-  image.setAttribute(TACTILE_QSTRING(u"width"), tileset.Width());
-  image.setAttribute(TACTILE_QSTRING(u"height"), tileset.Height());
-
-  parent.appendChild(image);
-}
-
-void AddCommonAttributes(QDomDocument& document,
-                         QDomElement& node,
-                         const core::Tileset& tileset,
-                         const QDir& targetDir)
-{
-  node.setAttribute(TACTILE_QSTRING(u"version"), tiled_xml_version);
-  node.setAttribute(TACTILE_QSTRING(u"tiledversion"), tiled_version);
-  node.setAttribute(TACTILE_QSTRING(u"name"), tileset.Name());
-  node.setAttribute(TACTILE_QSTRING(u"tilewidth"),
-                    tileset.GetTileWidth().get());
-  node.setAttribute(TACTILE_QSTRING(u"tileheight"),
-                    tileset.GetTileHeight().get());
-  node.setAttribute(TACTILE_QSTRING(u"tilecount"), tileset.TileCount());
-  node.setAttribute(TACTILE_QSTRING(u"columns"), tileset.ColumnCount().get());
-
-  AddImageNode(document, node, tileset, targetDir);
-}
-
-void CreateExternalTilesetFile(const core::Tileset& tileset,
-                               const QDir& targetDir,
-                               const ExportOptions& options)
-{
-  QDomDocument document{};
-
-  auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
-  AddCommonAttributes(document, node, tileset, targetDir);
-
-  document.appendChild(node);
-
-  WriteXml(QFileInfo{targetDir.absoluteFilePath(tileset.Name() +
-                                                TACTILE_QSTRING(u".tsx"))},
-           document);
-}
-
 void SaveProperty(QDomDocument& document,
                   QDomElement& element,
                   const QString& name,
@@ -138,6 +89,56 @@ void SaveProperties(QDomDocument& document,
 
     element.appendChild(node);
   }
+}
+
+void AddImageNode(QDomDocument& document,
+                  QDomElement& parent,
+                  const core::Tileset& tileset,
+                  const QDir& targetDir)
+{
+  auto image = document.createElement(TACTILE_QSTRING(u"image"));
+
+  image.setAttribute(TACTILE_QSTRING(u"source"),
+                     targetDir.relativeFilePath(tileset.FilePath()));
+  image.setAttribute(TACTILE_QSTRING(u"width"), tileset.Width());
+  image.setAttribute(TACTILE_QSTRING(u"height"), tileset.Height());
+
+  parent.appendChild(image);
+}
+
+void AddCommonAttributes(QDomDocument& document,
+                         QDomElement& node,
+                         const core::Tileset& tileset,
+                         const QDir& targetDir)
+{
+  node.setAttribute(TACTILE_QSTRING(u"version"), tiled_xml_version);
+  node.setAttribute(TACTILE_QSTRING(u"tiledversion"), tiled_version);
+  node.setAttribute(TACTILE_QSTRING(u"name"), tileset.Name());
+  node.setAttribute(TACTILE_QSTRING(u"tilewidth"),
+                    tileset.GetTileWidth().get());
+  node.setAttribute(TACTILE_QSTRING(u"tileheight"),
+                    tileset.GetTileHeight().get());
+  node.setAttribute(TACTILE_QSTRING(u"tilecount"), tileset.TileCount());
+  node.setAttribute(TACTILE_QSTRING(u"columns"), tileset.ColumnCount().get());
+
+  AddImageNode(document, node, tileset, targetDir);
+  SaveProperties(document, node, tileset, targetDir);
+}
+
+void CreateExternalTilesetFile(const core::Tileset& tileset,
+                               const QDir& targetDir,
+                               const ExportOptions& options)
+{
+  QDomDocument document{};
+
+  auto node = document.createElement(TACTILE_QSTRING(u"tileset"));
+  AddCommonAttributes(document, node, tileset, targetDir);
+
+  document.appendChild(node);
+
+  WriteXml(QFileInfo{targetDir.absoluteFilePath(tileset.Name() +
+                                                TACTILE_QSTRING(u".tsx"))},
+           document);
 }
 
 void SaveTilesets(QDomDocument& document,

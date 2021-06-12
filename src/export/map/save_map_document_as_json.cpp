@@ -116,6 +116,8 @@ void AddCommonAttributes(QJsonObject& object,
   {
     object.insert(u"objectalignment", TACTILE_QSTRING(u"unspecified"));
   }
+
+  object.insert(u"properties", SaveProperties(tileset, targetDir));
 }
 
 /**
