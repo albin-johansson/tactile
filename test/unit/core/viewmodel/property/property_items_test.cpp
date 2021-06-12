@@ -12,8 +12,8 @@ TEST(PropertyItems, UpdateItemData)
   {  // Integer item
     const core::Property property{123};
 
-    vm::int_item item;
-    EXPECT_NO_THROW(vm::update_item_data(&item, property));
+    vm::IntItem item;
+    EXPECT_NO_THROW(vm::UpdateItemData(&item, property));
 
     ASSERT_TRUE(item.data(Qt::EditRole).canConvert<int>());
     EXPECT_EQ(property.AsInteger(), item.data(Qt::EditRole).value<int>());
@@ -22,8 +22,8 @@ TEST(PropertyItems, UpdateItemData)
   {  // Floating item
     const core::Property property{12.3};
 
-    vm::float_item item;
-    EXPECT_NO_THROW(vm::update_item_data(&item, property));
+    vm::FloatItem item;
+    EXPECT_NO_THROW(vm::UpdateItemData(&item, property));
 
     ASSERT_TRUE(item.data(Qt::EditRole).canConvert<double>());
     EXPECT_EQ(property.AsFloating(), item.data(Qt::EditRole).value<double>());
@@ -32,8 +32,8 @@ TEST(PropertyItems, UpdateItemData)
   {  // Boolean item
     const core::Property property{true};
 
-    vm::bool_item item;
-    EXPECT_NO_THROW(vm::update_item_data(&item, property));
+    vm::BoolItem item;
+    EXPECT_NO_THROW(vm::UpdateItemData(&item, property));
 
     ASSERT_TRUE(item.data(Qt::CheckStateRole).canConvert<bool>());
     EXPECT_EQ(property.AsBoolean(),
@@ -43,8 +43,8 @@ TEST(PropertyItems, UpdateItemData)
   {  // String item
     const core::Property property{TACTILE_QSTRING(u"foo")};
 
-    vm::string_item item;
-    EXPECT_NO_THROW(vm::update_item_data(&item, property));
+    vm::StringItem item;
+    EXPECT_NO_THROW(vm::UpdateItemData(&item, property));
 
     ASSERT_TRUE(item.data(Qt::EditRole).canConvert<QString>());
     EXPECT_EQ(property.AsString(), item.data(Qt::EditRole).value<QString>());
@@ -53,8 +53,8 @@ TEST(PropertyItems, UpdateItemData)
   {  // Color item
     const core::Property property{QColor{Qt::cyan}};
 
-    vm::color_item item;
-    EXPECT_NO_THROW(vm::update_item_data(&item, property));
+    vm::ColorItem item;
+    EXPECT_NO_THROW(vm::UpdateItemData(&item, property));
 
     const auto role = vm::PropertyItemRole::Color;
     ASSERT_TRUE(item.data(role).canConvert<QColor>());
@@ -64,8 +64,8 @@ TEST(PropertyItems, UpdateItemData)
   {  // File item
     const core::Property property{QFileInfo{TACTILE_QSTRING("foo/bar")}};
 
-    vm::file_item item;
-    EXPECT_NO_THROW(vm::update_item_data(&item, property));
+    vm::FileItem item;
+    EXPECT_NO_THROW(vm::UpdateItemData(&item, property));
 
     const auto role = vm::PropertyItemRole::Path;
     ASSERT_TRUE(item.data(role).canConvert<QString>());
@@ -78,57 +78,57 @@ TEST(PropertyItems, UpdateItemData)
 TEST(PropertyItems, ItemToProperty)
 {
   {  // Integer item
-    vm::int_item item;
+    vm::IntItem item;
     item.setData(123, Qt::EditRole);
 
-    const auto property = vm::item_to_property(&item);
+    const auto property = vm::ItemToProperty(&item);
     ASSERT_TRUE(property.IsInteger());
     EXPECT_EQ(123, property.AsInteger());
   }
 
   {  // Floating item
-    vm::float_item item;
+    vm::FloatItem item;
     item.setData(12.3, Qt::EditRole);
 
-    const auto property = vm::item_to_property(&item);
+    const auto property = vm::ItemToProperty(&item);
     ASSERT_TRUE(property.IsFloating());
     EXPECT_EQ(12.3, property.AsFloating());
   }
 
   {  // Boolean item
-    vm::bool_item item;
+    vm::BoolItem item;
     item.setData(Qt::Checked, Qt::CheckStateRole);
 
-    const auto property = vm::item_to_property(&item);
+    const auto property = vm::ItemToProperty(&item);
     ASSERT_TRUE(property.IsBoolean());
     EXPECT_TRUE(property.AsBoolean());
   }
 
   {  // String item
-    vm::string_item item;
+    vm::StringItem item;
     item.setData(TACTILE_QSTRING(u"foo"), Qt::EditRole);
 
-    const auto property = vm::item_to_property(&item);
+    const auto property = vm::ItemToProperty(&item);
     ASSERT_TRUE(property.IsString());
     EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.AsString());
   }
 
   {  // Color item
-    vm::color_item item;
+    vm::ColorItem item;
     item.setData(QColor{Qt::magenta}, vm::PropertyItemRole::Color);
 
-    const auto property = vm::item_to_property(&item);
+    const auto property = vm::ItemToProperty(&item);
     ASSERT_TRUE(property.IsColor());
     EXPECT_EQ(QColor{Qt::magenta}, property.AsColor());
   }
 
   {  // File item
-    vm::file_item item;
+    vm::FileItem item;
 
     const auto file = TACTILE_QSTRING(u"foo/bar");
     item.setData(file, vm::PropertyItemRole::Path);
 
-    const auto property = vm::item_to_property(&item);
+    const auto property = vm::ItemToProperty(&item);
     ASSERT_TRUE(property.IsFile());
     EXPECT_EQ(QFileInfo{file}.path(), property.AsFile().path());
   }

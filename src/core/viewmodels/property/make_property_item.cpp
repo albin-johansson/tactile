@@ -12,45 +12,45 @@ auto MakePropertyItem(const core::Property& property) -> QStandardItem*
   {
     case core::PropertyType::String:
     {
-      auto* item = new string_item{};
+      auto* item = new StringItem{};
       item->setData(property.AsString(), Qt::EditRole);
       return item;
     }
     case core::PropertyType::Integer:
     {
-      auto* item = new int_item{};
+      auto* item = new IntItem{};
       item->setData(property.AsInteger(), Qt::EditRole);
       return item;
     }
     case core::PropertyType::Floating:
     {
-      auto* item = new float_item{};
+      auto* item = new FloatItem{};
       item->setData(property.AsFloating(), Qt::EditRole);
       return item;
     }
     case core::PropertyType::Boolean:
     {
-      auto* item = new bool_item{};
+      auto* item = new BoolItem{};
       item->setData(property.AsBoolean() ? Qt::Checked : Qt::Unchecked,
                     Qt::CheckStateRole);
       return item;
     }
     case core::PropertyType::File:
     {
-      auto* item = new file_item{};
+      auto* item = new FileItem{};
       item->setData(IconCopy(), Qt::DecorationRole);
       item->setData(property.AsFile().filePath(), vm::PropertyItemRole::Path);
       return item;
     }
     case core::PropertyType::Color:
     {
-      auto* item = new color_item{};
+      auto* item = new ColorItem{};
       item->setData(property.AsColor(), PropertyItemRole::Color);
       return item;
     }
     case core::PropertyType::Object:
     {
-      auto* item = new object_item{};
+      auto* item = new ObjectItem{};
       item->setData(property.AsObject().get(), Qt::EditRole);
       return item;
     }

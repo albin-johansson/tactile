@@ -11,7 +11,7 @@ namespace tactile::vm {
 PropertyModel::PropertyModel(core::IPropertyManager* manager, QObject* parent)
     : QStandardItemModel{parent}
     , mManager{manager}
-    , mCustomRoot{new root_item{tr("Properties")}}
+    , mCustomRoot{new RootItem{tr("Properties")}}
 {
   if (!mManager)
   {
@@ -117,7 +117,7 @@ void PropertyModel::OnUpdatedProperty(const QString& name)
     const auto sibling = item->index().siblingAtColumn(1);
     Q_ASSERT(sibling.isValid());
 
-    update_item_data(itemFromIndex(sibling), property);
+    UpdateItemData(itemFromIndex(sibling), property);
 
     // We need to notify the view index widget to update its contents
     const auto type = property.Type().value();
@@ -202,7 +202,7 @@ void PropertyModel::RenamePropertyInGui(const QString& oldName,
 
 void PropertyModel::SetValue(const QString& name, QStandardItem* item)
 {
-  mManager->SetProperty(name, item_to_property(item));
+  mManager->SetProperty(name, ItemToProperty(item));
 }
 
 void PropertyModel::OnDataChanged(const QModelIndex& topLeft,

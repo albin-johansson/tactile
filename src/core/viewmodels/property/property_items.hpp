@@ -10,10 +10,10 @@
 
 namespace tactile::vm {
 
-class root_item final : public QStandardItem
+class RootItem final : public QStandardItem
 {
  public:
-  explicit root_item(const QString& name) : QStandardItem{name}
+  explicit RootItem(const QString& name) : QStandardItem{name}
   {
     setEditable(false);
     setSelectable(false);
@@ -21,10 +21,10 @@ class root_item final : public QStandardItem
   }
 };
 
-class string_item final : public QStandardItem
+class StringItem final : public QStandardItem
 {
  public:
-  string_item() : QStandardItem{}
+  StringItem() : QStandardItem{}
   {
     setEditable(true);
     setToolTip(TACTILE_QSTRING(u"(string)"));
@@ -36,10 +36,10 @@ class string_item final : public QStandardItem
   }
 };
 
-class int_item final : public QStandardItem
+class IntItem final : public QStandardItem
 {
  public:
-  int_item() : QStandardItem{}
+  IntItem() : QStandardItem{}
   {
     setToolTip(TACTILE_QSTRING(u"(int)"));
   }
@@ -50,10 +50,10 @@ class int_item final : public QStandardItem
   }
 };
 
-class float_item final : public QStandardItem
+class FloatItem final : public QStandardItem
 {
  public:
-  float_item() : QStandardItem{}
+  FloatItem() : QStandardItem{}
   {
     setToolTip(TACTILE_QSTRING(u"(float)"));
   }
@@ -64,10 +64,10 @@ class float_item final : public QStandardItem
   }
 };
 
-class bool_item final : public QStandardItem
+class BoolItem final : public QStandardItem
 {
  public:
-  bool_item() : QStandardItem{}
+  BoolItem() : QStandardItem{}
   {
     setEditable(false);
     setCheckable(true);
@@ -80,10 +80,10 @@ class bool_item final : public QStandardItem
   }
 };
 
-class object_item final : public QStandardItem
+class ObjectItem final : public QStandardItem
 {
  public:
-  object_item() : QStandardItem{}
+  ObjectItem() : QStandardItem{}
   {
     setEditable(false);
     setToolTip(TACTILE_QSTRING(u"(object)"));
@@ -95,10 +95,10 @@ class object_item final : public QStandardItem
   }
 };
 
-class color_item final : public QStandardItem
+class ColorItem final : public QStandardItem
 {
  public:
-  color_item() : QStandardItem{}
+  ColorItem() : QStandardItem{}
   {
     setEditable(false);
     setToolTip(TACTILE_QSTRING(u"(color)"));
@@ -110,10 +110,10 @@ class color_item final : public QStandardItem
   }
 };
 
-class file_item final : public QStandardItem
+class FileItem final : public QStandardItem
 {
  public:
-  file_item() : QStandardItem{}
+  FileItem() : QStandardItem{}
   {
     setToolTip(TACTILE_QSTRING(u"(file)"));
     setEditable(false);
@@ -129,7 +129,7 @@ class file_item final : public QStandardItem
  * \brief Updates the data of a property item.
  *
  * \pre `item` cannot be null.
- * \pre `item` and `p` must be associated with the same property type.
+ * \pre `item` and `property` must be associated with the same property type.
  *
  * \param item a pointer to the property that will be updated.
  * \param property the property which will be used as the new item data.
@@ -138,8 +138,8 @@ class file_item final : public QStandardItem
  *
  * \since 0.2.0
  */
-void update_item_data(not_null<QStandardItem*> item,
-                      const core::Property& property);
+void UpdateItemData(not_null<QStandardItem*> item,
+                    const core::Property& property);
 
 /**
  * \brief Returns the property value of an item.
@@ -152,7 +152,7 @@ void update_item_data(not_null<QStandardItem*> item,
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto item_to_property(not_null<const QStandardItem*> item)
+[[nodiscard]] auto ItemToProperty(not_null<const QStandardItem*> item)
     -> core::Property;
 
 }  // namespace tactile::vm

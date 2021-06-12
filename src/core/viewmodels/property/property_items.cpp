@@ -4,8 +4,8 @@
 
 namespace tactile::vm {
 
-void update_item_data(not_null<QStandardItem*> item,
-                      const core::Property& property)
+void UpdateItemData(not_null<QStandardItem*> item,
+                    const core::Property& property)
 {
   Q_ASSERT(item);
   switch (static_cast<vm::PropertyItemType>(item->type()))
@@ -52,7 +52,7 @@ void update_item_data(not_null<QStandardItem*> item,
   }
 }
 
-auto item_to_property(not_null<const QStandardItem*> item) -> core::Property
+auto ItemToProperty(not_null<const QStandardItem*> item) -> core::Property
 {
   Q_ASSERT(item);
   switch (static_cast<vm::PropertyItemType>(item->type()))
@@ -71,8 +71,7 @@ auto item_to_property(not_null<const QStandardItem*> item) -> core::Property
              Qt::Checked;
 
     case PropertyItemType::File:
-      return QFileInfo{
-          item->data(vm::PropertyItemRole::Path).value<QString>()};
+      return QFileInfo{item->data(vm::PropertyItemRole::Path).value<QString>()};
 
     case PropertyItemType::Color:
       return item->data(vm::PropertyItemRole::Color).value<QColor>();
