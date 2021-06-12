@@ -111,7 +111,9 @@ class Setting final
    * \since 0.1.0
    */
   template <std::invocable<const T&> U>
+  void With(U&& callable)
   {
+    if (mValue)
     {
       callable(*mValue);
     }
