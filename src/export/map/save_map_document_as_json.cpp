@@ -229,7 +229,7 @@ void CreateExternalTilesetFile(const core::Tileset& tileset,
 }
 
 void SaveTileLayer(QJsonObject& object,
-                   const shared<core::ILayer>& layer,
+                   const Shared<core::ILayer>& layer,
                    const ExportOptions& options)
 {
   Q_ASSERT(layer->Type() == core::LayerType::TileLayer);
@@ -252,7 +252,7 @@ void SaveTileLayer(QJsonObject& object,
 }
 
 void SaveObjectLayer(QJsonObject& element,
-                     const shared<core::ILayer>& layer,
+                     const Shared<core::ILayer>& layer,
                      const QDir& targetDir,
                      const ExportOptions& options)
 {
@@ -315,7 +315,7 @@ void SaveObjectLayer(QJsonObject& element,
 {
   QJsonArray array;
 
-  map.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
+  map.EachLayer([&](const layer_id id, const Shared<core::ILayer>& layer) {
     QJsonObject object;
 
     object.insert(u"id", id.get());

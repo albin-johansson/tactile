@@ -8,7 +8,7 @@
 namespace tactile::cmd {
 
 RemoveTileset::RemoveTileset(not_null<core::MapDocument*> document,
-                             shared<core::Tileset> tileset,
+                             Shared<core::Tileset> tileset,
                              const tileset_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Remove Tileset")}
     , mDocument{document}

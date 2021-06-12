@@ -33,7 +33,7 @@ class FileValueWidget final : public QWidget
   void S_SpawnDialog();
 
  private:
-  unique<Ui::file_value_widget> mUi;
+  Unique<Ui::file_value_widget> mUi;
 };
 
 }  // namespace tactile

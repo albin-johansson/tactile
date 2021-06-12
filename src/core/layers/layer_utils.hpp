@@ -8,13 +8,13 @@ namespace tactile::core {
 class TileLayer;
 class ObjectLayer;
 
-[[nodiscard]] auto AsTileLayer(shared<ILayer>& layer) -> TileLayer*;
+[[nodiscard]] auto AsTileLayer(Shared<ILayer>& layer) -> TileLayer*;
 
-[[nodiscard]] auto AsTileLayer(const shared<ILayer>& layer) -> const TileLayer*;
+[[nodiscard]] auto AsTileLayer(const Shared<ILayer>& layer) -> const TileLayer*;
 
-[[nodiscard]] auto AsObjectLayer(shared<ILayer>& layer) -> ObjectLayer*;
+[[nodiscard]] auto AsObjectLayer(Shared<ILayer>& layer) -> ObjectLayer*;
 
-[[nodiscard]] auto AsObjectLayer(const shared<ILayer>& layer)
+[[nodiscard]] auto AsObjectLayer(const Shared<ILayer>& layer)
     -> const ObjectLayer*;
 
 }  // namespace tactile::core

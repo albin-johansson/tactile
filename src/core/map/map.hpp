@@ -35,8 +35,8 @@ class ObjectLayer;
  */
 class Map final
 {
-  using layer_pair = std::pair<layer_id, shared<ILayer>>;
-  using layer_map = vector_map<layer_id, shared<ILayer>>;
+  using layer_pair = std::pair<layer_id, Shared<ILayer>>;
+  using layer_map = vector_map<layer_id, Shared<ILayer>>;
 
  public:
   using const_iterator = layer_map::const_iterator;
@@ -69,7 +69,7 @@ class Map final
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const shared<ILayer>&> T>
+  template <std::invocable<layer_id, const Shared<ILayer>&> T>
   void EachLayer(T&& callable) const
   {
     for (const auto& [key, layer] : mLayers)
@@ -126,7 +126,7 @@ class Map final
    *
    * \since 0.1.0
    */
-  void AddLayer(layer_id id, shared<ILayer> layer);
+  void AddLayer(layer_id id, Shared<ILayer> layer);
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -164,7 +164,7 @@ class Map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto TakeLayer(layer_id id) -> shared<ILayer>;
+  [[nodiscard]] auto TakeLayer(layer_id id) -> Shared<ILayer>;
 
   /**
    * \brief Selects the tile layer associated with the specified ID.
@@ -336,7 +336,7 @@ class Map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto MakeTileLayer() -> shared<TileLayer>;
+  [[nodiscard]] auto MakeTileLayer() -> Shared<TileLayer>;
 
   /**
    * \brief Creates and returns an empty object layer but doesn't add it to the
@@ -348,7 +348,7 @@ class Map final
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto MakeObjectLayer() -> shared<ObjectLayer>;
+  [[nodiscard]] auto MakeObjectLayer() -> Shared<ObjectLayer>;
 
   /**
    * \brief Returns the index associated with the specified layer.
@@ -501,9 +501,9 @@ class Map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto GetLayer(layer_id id) const -> const shared<ILayer>&;
+  [[nodiscard]] auto GetLayer(layer_id id) const -> const Shared<ILayer>&;
 
-  [[nodiscard]] auto GetLayer(layer_id id) -> shared<ILayer>&;
+  [[nodiscard]] auto GetLayer(layer_id id) -> Shared<ILayer>&;
 
   [[nodiscard]] auto GetTileLayer(layer_id id) -> TileLayer*;
 

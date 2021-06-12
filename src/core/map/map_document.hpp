@@ -133,7 +133,7 @@ class MapDocument final : public ADocument
 
   void SelectLayer(layer_id id);
 
-  void AddLayer(layer_id id, const shared<ILayer>& layer);
+  void AddLayer(layer_id id, const Shared<ILayer>& layer);
 
   auto AddTileLayer() -> layer_id;
 
@@ -152,7 +152,7 @@ class MapDocument final : public ADocument
    */
   void RemoveLayer(layer_id id);
 
-  auto TakeLayer(layer_id id) -> shared<ILayer>;
+  auto TakeLayer(layer_id id) -> Shared<ILayer>;
 
   /**
    * \brief Duplicates the layer associated with the specified ID.
@@ -191,7 +191,7 @@ class MapDocument final : public ADocument
    *
    * \since 0.1.0
    */
-  template <std::invocable<layer_id, const shared<ILayer>&> T>
+  template <std::invocable<layer_id, const Shared<ILayer>&> T>
   void EachLayer(T&& callable) const
   {
     for (const auto& [key, layer] : *mMap)
@@ -446,9 +446,9 @@ class MapDocument final : public ADocument
   /// \} End of property signals
 
  private:
-  unique<Map> mMap;                    ///< The associated map.
-  unique<TilesetManager> mTilesets;    ///< The associated tilesets.
-  unique<DocumentDelegate> mDelegate;  ///< Delegate for document API.
+  Unique<Map> mMap;                    ///< The associated map.
+  Unique<TilesetManager> mTilesets;    ///< The associated tilesets.
+  Unique<DocumentDelegate> mDelegate;  ///< Delegate for document API.
   int mTileLayerSuffix{1};             ///< Incrementing tile layer suffix.
   int mObjectLayerSuffix{1};           ///< Incrementing object layer suffix.
 

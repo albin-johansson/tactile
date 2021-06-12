@@ -234,7 +234,7 @@ void SaveLayers(QDomDocument& document,
                 const core::MapDocument& map,
                 const QDir& targetDir)
 {
-  map.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
+  map.EachLayer([&](const layer_id id, const Shared<core::ILayer>& layer) {
     QDomElement node;
     if (layer->Type() == core::LayerType::TileLayer)
     {

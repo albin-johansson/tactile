@@ -31,7 +31,7 @@ class AboutDialog final : public QDialog
   static void Spawn();
 
  private:
-  [[maybe_unused]] unique<Ui::AboutDialog> mUi;
+  [[maybe_unused]] Unique<Ui::AboutDialog> mUi;
 };
 
 }  // namespace tactile

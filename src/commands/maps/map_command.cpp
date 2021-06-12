@@ -43,7 +43,7 @@ void MapCommand::SaveTiles(const row_range rows, const col_range cols)
 {
   auto& map = mDocument->Raw();
 
-  map.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
+  map.EachLayer([&](const layer_id id, const Shared<core::ILayer>& layer) {
     auto& tiles = TileData(id);
 
     auto* tileLayer = map.GetTileLayer(id);

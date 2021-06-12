@@ -43,10 +43,10 @@ class PropertiesWidget final : public QWidget
   void OnRenamedProperty(const QString& oldName, const QString& newName);
 
  private:
-  unique<Ui::PropertiesWidget> mUi;
+  Unique<Ui::PropertiesWidget> mUi;
   PropertyTreeView* mView{};
   PropertyContextMenu* mContextMenu{};
-  unique<vm::PropertyModel> mModel;
+  Unique<vm::PropertyModel> mModel;
   Maybe<QString> mNameCopy;
   Maybe<core::Property> mPropertyCopy;
 

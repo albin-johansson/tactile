@@ -69,7 +69,7 @@ class ResizeDialog final : public QDialog
   }
 
  private:
-  unique<Ui::ResizeDialog> mUi;
+  Unique<Ui::ResizeDialog> mUi;
   QIntValidator* mValidator;
   Maybe<col_t> mChosenWidth;
   Maybe<row_t> mChosenHeight;

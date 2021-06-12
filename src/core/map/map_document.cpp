@@ -302,7 +302,7 @@ void MapDocument::SelectLayer(const layer_id id)
   mDelegate->Execute<cmd::SelectLayer>(this, id);
 }
 
-void MapDocument::AddLayer(const layer_id id, const shared<ILayer>& layer)
+void MapDocument::AddLayer(const layer_id id, const Shared<ILayer>& layer)
 {
   Q_ASSERT(layer);
   mMap->AddLayer(id, layer);
@@ -339,7 +339,7 @@ void MapDocument::RemoveLayer(const layer_id id)
   mDelegate->Execute<cmd::RemoveLayer>(this, id);
 }
 
-auto MapDocument::TakeLayer(const layer_id id) -> shared<ILayer>
+auto MapDocument::TakeLayer(const layer_id id) -> Shared<ILayer>
 {
   return mMap->TakeLayer(id);
 }

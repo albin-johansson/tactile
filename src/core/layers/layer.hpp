@@ -87,7 +87,7 @@ class ILayer : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto Clone() const -> shared<ILayer> = 0;
+  [[nodiscard]] virtual auto Clone() const -> Shared<ILayer> = 0;
 
   /**
    * \brief Returns the type of the layer.

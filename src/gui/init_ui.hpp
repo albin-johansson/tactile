@@ -26,7 +26,7 @@ concept UiClass = requires(T t, U* self)
  * \return the created UI-class instance.
  */
 template <typename T, typename Self> requires UiClass<T, Self>
-[[nodiscard]] auto InitUi(Self* self) -> unique<T>
+[[nodiscard]] auto InitUi(Self* self) -> Unique<T>
 {
   Q_ASSERT(self);
 

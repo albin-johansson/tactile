@@ -12,7 +12,7 @@ TilesetManager::TilesetManager()
   mTilesets.reserve(5);
 }
 
-void TilesetManager::Add(const tileset_id id, shared<Tileset> tileset)
+void TilesetManager::Add(const tileset_id id, Shared<Tileset> tileset)
 {
   Q_ASSERT(!Contains(id));
   Q_ASSERT(tileset);
@@ -22,7 +22,7 @@ void TilesetManager::Add(const tileset_id id, shared<Tileset> tileset)
   mActiveId = id;
 }
 
-auto TilesetManager::Add(shared<Tileset> tileset) -> tileset_id
+auto TilesetManager::Add(Shared<Tileset> tileset) -> tileset_id
 {
   Q_ASSERT(tileset);
 

@@ -42,7 +42,7 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto Name() const -> const QString& override;
 
-  [[nodiscard]] auto Clone() const -> shared<ILayer> override;
+  [[nodiscard]] auto Clone() const -> Shared<ILayer> override;
 
   /// \} End of layer API
 

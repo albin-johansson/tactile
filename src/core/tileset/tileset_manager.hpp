@@ -28,7 +28,7 @@ class TilesetManager final
 {
  public:
   using tile_range = std::pair<tile_id, tile_id>;
-  using tileset_map = vector_map<tileset_id, shared<Tileset>>;
+  using tileset_map = vector_map<tileset_id, Shared<Tileset>>;
   using const_iterator = tileset_map::const_iterator;
 
   /**
@@ -52,7 +52,7 @@ class TilesetManager final
    *
    * \since 0.1.0
    */
-  void Add(tileset_id id, shared<Tileset> tileset);
+  void Add(tileset_id id, Shared<Tileset> tileset);
 
   /**
    * \brief Adds a tileset to the manager.
@@ -67,7 +67,7 @@ class TilesetManager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto Add(shared<Tileset> tileset) -> tileset_id;
+  [[nodiscard]] auto Add(Shared<Tileset> tileset) -> tileset_id;
 
   /**
    * \brief Removes a tileset from the manager.
@@ -258,7 +258,7 @@ class TilesetManager final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto GetTilesetPointer(const tileset_id id) -> shared<Tileset>
+  [[nodiscard]] auto GetTilesetPointer(const tileset_id id) -> Shared<Tileset>
   {
     return mTilesets.at(id);
   }

@@ -96,7 +96,7 @@ class TilesetContentPage final : public QWidget
   void OnRenamedTileset(tileset_id id, const QString& name);
 
  private:
-  unique<Ui::TilesetContentPage> mUi;
+  Unique<Ui::TilesetContentPage> mUi;
   TabWidget* mTabWidget{};
   TilesetTabContextMenu* mContextMenu{};
   Maybe<map_id> mCurrentMap;

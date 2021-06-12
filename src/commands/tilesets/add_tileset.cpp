@@ -8,7 +8,7 @@
 namespace tactile::cmd {
 
 AddTileset::AddTileset(not_null<core::MapDocument*> document,
-                       shared<core::Tileset> tileset,
+                       Shared<core::Tileset> tileset,
                        const tileset_id id)
     : QUndoCommand{TACTILE_QSTRING(u"Add Tileset")}
     , mDocument{document}

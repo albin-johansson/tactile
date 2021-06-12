@@ -16,7 +16,7 @@ LayerModel::LayerModel(not_null<core::MapDocument*> document)
   }
 
   document->EachLayer(
-      [this](const layer_id id, const shared<core::ILayer>& layer) {
+      [this](const layer_id id, const Shared<core::ILayer>& layer) {
         Q_ASSERT(layer);
         appendRow(new LayerItem{id, *layer.get()});
       });

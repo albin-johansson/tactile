@@ -42,8 +42,8 @@ class TactileApp final : public QApplication
   ~TactileApp() noexcept override;
 
  private:
-  unique<Window> mWindow;
-  unique<core::Model> mModel;
+  Unique<Window> mWindow;
+  Unique<core::Model> mModel;
 
   void InitConnections();
 

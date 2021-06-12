@@ -24,7 +24,7 @@ class OpenMapErrorDialog final : public QDialog
   void SetErrorMessage(const QString& message);
 
  private:
-  unique<Ui::OpenMapErrorDialog> mUi;
+  Unique<Ui::OpenMapErrorDialog> mUi;
 };
 
 }  // namespace tactile

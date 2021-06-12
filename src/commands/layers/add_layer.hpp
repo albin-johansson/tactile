@@ -16,7 +16,7 @@ class AddLayer final : public QUndoCommand
 {
  public:
   AddLayer(core::MapDocument* document,
-           shared<core::ILayer> layer,
+           Shared<core::ILayer> layer,
            layer_id id);
 
   void undo() override;
@@ -30,7 +30,7 @@ class AddLayer final : public QUndoCommand
 
  private:
   core::MapDocument* mDocument{};
-  shared<core::ILayer> mLayer;
+  Shared<core::ILayer> mLayer;
   layer_id mId;
 };
 

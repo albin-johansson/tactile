@@ -9,7 +9,7 @@ namespace tactile {
 namespace {
 
 [[nodiscard]] auto MakeTileset(const ir::TilesetData& data)
-    -> shared<core::Tileset>
+    -> Shared<core::Tileset>
 {
   auto tileset = std::make_shared<core::Tileset>(data.firstId,
                                                  data.absolutePath,
@@ -20,7 +20,7 @@ namespace {
 }
 
 [[nodiscard]] auto MakeTileLayer(const ir::TileLayerData& data)
-    -> shared<core::ILayer>
+    -> Shared<core::ILayer>
 {
   auto layer = std::make_shared<core::TileLayer>(data.nRows, data.nCols);
 
@@ -67,7 +67,7 @@ namespace {
 }
 
 [[nodiscard]] auto MakeObjectLayer(const ir::ObjectLayerData& data)
-    -> shared<core::ILayer>
+    -> Shared<core::ILayer>
 {
   auto layer = std::make_shared<core::ObjectLayer>();
 
@@ -79,9 +79,9 @@ namespace {
   return layer;
 }
 
-[[nodiscard]] auto MakeLayer(const ir::LayerData& data) -> shared<core::ILayer>
+[[nodiscard]] auto MakeLayer(const ir::LayerData& data) -> Shared<core::ILayer>
 {
-  shared<core::ILayer> layer;
+  Shared<core::ILayer> layer;
 
   if (data.type == core::LayerType::TileLayer)
   {

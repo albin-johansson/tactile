@@ -33,12 +33,12 @@ class LayerWidget final : public QWidget
   void OnSwitchedMap(not_null<core::MapDocument*> document);
 
  private:
-  unique<Ui::LayerWidget> mUi;
+  Unique<Ui::LayerWidget> mUi;
   LayerListView* mView{};
   AddLayerContextMenu* mAddLayerMenu{};
   LayerWidgetContextMenu* mWidgetMenu{};
   LayerItemContextMenu* mItemMenu{};
-  unique<vm::LayerModel> mModel;
+  Unique<vm::LayerModel> mModel;
 
   void UpdateActions(const Maybe<QModelIndex>& selected);
 

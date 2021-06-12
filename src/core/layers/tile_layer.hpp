@@ -69,7 +69,7 @@ class TileLayer final : public ILayer
 
   [[nodiscard]] auto IsVisible() const noexcept -> bool override;
 
-  [[nodiscard]] auto Clone() const -> shared<ILayer> override;
+  [[nodiscard]] auto Clone() const -> Shared<ILayer> override;
 
   /// \} End of layer API
 

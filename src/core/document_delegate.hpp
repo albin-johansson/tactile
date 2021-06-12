@@ -99,8 +99,8 @@ class DocumentDelegate final : public ADocument
   void S_RenamedProperty(const QString& oldName, const QString& newName);
 
  private:
-  unique<CommandStack> mCommandStack;
-  unique<IPropertyManager> mPropertyManager;
+  Unique<CommandStack> mCommandStack;
+  Unique<IPropertyManager> mPropertyManager;
   Maybe<QFileInfo> mPath;
 };
 

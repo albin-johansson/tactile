@@ -85,7 +85,7 @@ class MouseToolModel final
 
  private:
   AMouseTool* mCurrent{};
-  vector_map<MouseToolType, unique<AMouseTool>> mTools;
+  vector_map<MouseToolType, Unique<AMouseTool>> mTools;
 
   /**
    * \brief Switches to the specified tool as the active tool.

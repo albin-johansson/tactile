@@ -25,8 +25,8 @@ class TilesetManagerTest : public testing::Test
 
   core::TilesetManager m_manager;
 
-  inline static shared<core::Tileset> m_interior;
-  inline static shared<core::Tileset> m_exterior;
+  inline static Shared<core::Tileset> m_interior;
+  inline static Shared<core::Tileset> m_exterior;
 };
 
 TEST_F(TilesetManagerTest, AddWithoutID)

@@ -102,7 +102,7 @@ auto ObjectLayer::Name() const -> const QString&
   return mDelegate.Name();
 }
 
-auto ObjectLayer::Clone() const -> shared<ILayer>
+auto ObjectLayer::Clone() const -> Shared<ILayer>
 {
   return std::make_shared<ObjectLayer>(*this);
 }

@@ -193,7 +193,7 @@ void render_background(QPainter& painter, const render_info& info)
 }
 
 void render_layer(QPainter& painter,
-                  const shared<core::ILayer>& layer,
+                  const Shared<core::ILayer>& layer,
                   const render_info& info)
 {
   if (!layer->IsVisible())
@@ -278,7 +278,7 @@ void RenderMap(QPainter& painter,
   const auto info = make_render_info(document, exposed, mousePosition);
   render_background(painter, info);
 
-  document.EachLayer([&](const layer_id id, const shared<core::ILayer>& layer) {
+  document.EachLayer([&](const layer_id id, const Shared<core::ILayer>& layer) {
     render_layer(painter, layer, info);
 
     if (info.mousePosition && id == document.CurrentLayerId())

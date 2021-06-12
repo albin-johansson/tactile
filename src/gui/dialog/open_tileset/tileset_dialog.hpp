@@ -70,7 +70,7 @@ class TilesetDialog final : public QDialog
   }
 
  private:
-  unique<Ui::TilesetDialog> mUi;
+  Unique<Ui::TilesetDialog> mUi;
   QImage mImage;
   QString mPath;
   Maybe<tile_width> mTileWidth;

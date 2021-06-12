@@ -22,7 +22,7 @@ class TilesetEmptyPage final : public QWidget
   void S_AddTileset();
 
  private:
-  unique<Ui::TilesetEmptyPage> mUi;
+  Unique<Ui::TilesetEmptyPage> mUi;
 };
 
 }  // namespace tactile

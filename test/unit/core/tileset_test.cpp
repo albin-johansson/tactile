@@ -23,7 +23,7 @@ class TilesetTest : public testing::Test
     m_tileset.reset();
   }
 
-  inline static unique<core::Tileset> m_tileset;
+  inline static Unique<core::Tileset> m_tileset;
 };
 
 TEST_F(TilesetTest, ImageConstructor)

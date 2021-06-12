@@ -41,7 +41,7 @@ class TilesetWidget final : public QWidget
   void OnSwitchedMap(map_id id);
 
  private:
-  unique<Ui::TilesetWidget> mUi;
+  Unique<Ui::TilesetWidget> mUi;
   TilesetContentPage* mContentPage{};
   TilesetEmptyPage* mEmptyPage{};
   int mEmptyIndex{};

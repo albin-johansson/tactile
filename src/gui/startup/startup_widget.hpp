@@ -26,7 +26,7 @@ class StartupWidget final : public QWidget
   ~StartupWidget() noexcept override;
 
  private:
-  unique<Ui::StartupWidget> mUi;
+  Unique<Ui::StartupWidget> mUi;
 };
 
 }  // namespace tactile

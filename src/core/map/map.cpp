@@ -56,7 +56,7 @@ void Map::RemoveLayer(const layer_id id)
   mLayers.erase(id);
 }
 
-auto Map::TakeLayer(const layer_id id) -> shared<ILayer>
+auto Map::TakeLayer(const layer_id id) -> Shared<ILayer>
 {
   Q_ASSERT(mLayers.contains(id));
 
@@ -93,7 +93,7 @@ auto Map::AddObjectLayer() -> layer_id
   return id;
 }
 
-void Map::AddLayer(const layer_id id, shared<ILayer> layer)
+void Map::AddLayer(const layer_id id, Shared<ILayer> layer)
 {
   // TODO what happens if dimensions mismatch?
 
@@ -284,7 +284,7 @@ void Map::MoveLayerForward(const layer_id id)
   mLayers.move_elem_forward(id);
 }
 
-auto Map::MakeTileLayer() -> shared<TileLayer>
+auto Map::MakeTileLayer() -> Shared<TileLayer>
 {
   ++mNextLayer;
   if (!mActiveLayer)
@@ -297,7 +297,7 @@ auto Map::MakeTileLayer() -> shared<TileLayer>
   }
 }
 
-auto Map::MakeObjectLayer() -> shared<ObjectLayer>
+auto Map::MakeObjectLayer() -> Shared<ObjectLayer>
 {
   ++mNextLayer;
   return std::make_shared<ObjectLayer>();
@@ -379,12 +379,12 @@ auto Map::CurrentTileSize() const noexcept -> int
   return mTileSize.Get();
 }
 
-auto Map::GetLayer(const layer_id id) const -> const shared<ILayer>&
+auto Map::GetLayer(const layer_id id) const -> const Shared<ILayer>&
 {
   return mLayers.at(id);
 }
 
-auto Map::GetLayer(const layer_id id) -> shared<ILayer>&
+auto Map::GetLayer(const layer_id id) -> Shared<ILayer>&
 {
   return mLayers.at(id);
 }

@@ -5,9 +5,9 @@
 namespace tactile {
 
 template <typename T>
-concept is_pointer = std::is_pointer_v<T>;
+concept IsPointer = std::is_pointer_v<T>;
 
-template <is_pointer T>
+template <IsPointer T>
 using not_null = T;
 
 }  // namespace tactile

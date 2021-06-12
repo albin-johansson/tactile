@@ -189,7 +189,7 @@ auto TileLayer::Type() const -> LayerType
   return mDelegate.Type();
 }
 
-auto TileLayer::Clone() const -> shared<ILayer>
+auto TileLayer::Clone() const -> Shared<ILayer>
 {
   return std::make_shared<TileLayer>(*this);
 }

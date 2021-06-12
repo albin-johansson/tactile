@@ -13,7 +13,7 @@ class RemoveTileset final : public QUndoCommand
 {
  public:
   RemoveTileset(not_null<core::MapDocument*> document,
-                shared<core::Tileset> tileset,
+                Shared<core::Tileset> tileset,
                 tileset_id id);
 
   void undo() override;
@@ -27,7 +27,7 @@ class RemoveTileset final : public QUndoCommand
 
  private:
   core::MapDocument* mDocument{};
-  shared<core::Tileset> mTileset;
+  Shared<core::Tileset> mTileset;
   tileset_id mId;
   bool mFirst{true};  ///< Used to determine when to notify UI
 };

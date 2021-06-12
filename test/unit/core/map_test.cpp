@@ -44,7 +44,7 @@ TEST(Map, EachLayer)
   map.AddTileLayer();
 
   int count{};
-  map.EachLayer([&](const layer_id, const shared<core::ILayer>&) { ++count; });
+  map.EachLayer([&](const layer_id, const Shared<core::ILayer>&) { ++count; });
 
   EXPECT_EQ(3, count);
 }

@@ -24,7 +24,7 @@ class ChangePropertyNameDialog final : public QDialog
                                   QWidget* parent = nullptr) -> Maybe<QString>;
 
  private:
-  unique<Ui::ChangePropertyNameDialog> mUi;
+  Unique<Ui::ChangePropertyNameDialog> mUi;
   QValidator* mValidator{};
 
  private slots:

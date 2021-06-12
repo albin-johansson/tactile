@@ -34,7 +34,7 @@ class ToolWidget final : public QWidget
   void OnEnableBucket();
 
  private:
-  unique<Ui::ToolWidget> mUi;
+  Unique<Ui::ToolWidget> mUi;
   QButtonGroup* mGroup{};
 
   void SetToolsEnabled(bool enabled);

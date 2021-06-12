@@ -94,7 +94,7 @@ class MapEditor final : public QWidget
   void S_MouseExited(QEvent* event);
 
  private:
-  unique<Ui::MapEditor> mUi;
+  Unique<Ui::MapEditor> mUi;
   MapTabWidget* mTabWidget{};
   MapEditorContextMenu* mContextMenu{};
   int mStartupID{};

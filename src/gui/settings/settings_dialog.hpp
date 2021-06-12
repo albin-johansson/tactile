@@ -39,7 +39,7 @@ class SettingsDialog final : public QDialog
   void S_ReloadOpenGl(bool enabled);
 
  private:
-  unique<Ui::SettingsDialog> mUi;
+  Unique<Ui::SettingsDialog> mUi;
   ThemeOptionsContextMenu* mThemeOptionsContextMenu{};
   ColorPreviewManager* mBasicPreview{};
   ColorPreviewManager* mDisabledPreview{};
