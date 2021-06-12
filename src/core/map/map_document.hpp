@@ -131,18 +131,10 @@ class MapDocument final : public ADocument
   /// \name Layer API
   /// \{
 
-  /**
-   * \copydoc map::SelectLayer()
-   * \signal `S_SelectedLayer`
-   */
   void SelectLayer(layer_id id);
 
   void AddLayer(layer_id id, const shared<ILayer>& layer);
 
-  /**
-   * \copybrief map::AddTileLayer()
-   * \signal `S_AddedLayer`
-   */
   auto AddTileLayer() -> layer_id;
 
   auto AddObjectLayer() -> layer_id;
@@ -160,9 +152,6 @@ class MapDocument final : public ADocument
    */
   void RemoveLayer(layer_id id);
 
-  /**
-   * \copydoc map::TakeLayer()
-   */
   auto TakeLayer(layer_id id) -> shared<ILayer>;
 
   /**
@@ -178,36 +167,16 @@ class MapDocument final : public ADocument
    */
   void DuplicateLayer(layer_id id);
 
-  /**
-   * \copydoc map::SetVisibility()
-   */
   void SetLayerVisibility(layer_id id, bool visible);
 
-  /**
-   * \copydoc map::SetOpacity()
-   */
   void SetLayerOpacity(layer_id id, double opacity);
 
-  /**
-   * \copydoc map::SetName()
-   */
   void SetLayerName(layer_id id, const QString& name);
 
-  /**
-   * \copydoc map::MoveLayerBack()
-   * \signal `S_MovedLayerBack`
-   */
   void MoveLayerBack(layer_id id);
 
-  /**
-   * \copydoc map::MoveLayerForward()
-   * \signal `S_MovedLayerForward`
-   */
   void MoveLayerForward(layer_id id);
 
-  /**
-   * \copydoc map::SetNextLayerId()
-   */
   void SetNextLayerId(layer_id id) noexcept;
 
   void SetNextObjectId(object_id id) noexcept;
@@ -217,8 +186,8 @@ class MapDocument final : public ADocument
    *
    * \tparam T the type of the function object.
    *
-   * \param callable the function object that will be invoked for each
-   * tile_layer.
+   * \param callable the function object that will be invoked for each tile
+   * layer.
    *
    * \since 0.1.0
    */
@@ -231,14 +200,8 @@ class MapDocument final : public ADocument
     }
   }
 
-  /**
-   * \copydoc map::GetLayer()
-   */
   [[nodiscard]] auto GetLayer(layer_id id) -> ILayer*;
 
-  /**
-   * \copydoc map::GetLayer()
-   */
   [[nodiscard]] auto GetLayer(layer_id id) const -> const ILayer*;
 
   [[nodiscard]] auto GetTileLayer(layer_id id) -> TileLayer*;
@@ -247,19 +210,10 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto GetObjectLayer(layer_id id) const -> const ObjectLayer*;
 
-  /**
-   * \copydoc map::LayerCount()
-   */
   [[nodiscard]] auto LayerCount() const noexcept -> int;
 
-  /**
-   * \copydoc map::ActiveLayerId()
-   */
   [[nodiscard]] auto CurrentLayerId() const noexcept -> maybe<layer_id>;
 
-  /**
-   * \copydoc map::HasLayer()
-   */
   [[nodiscard]] auto HasLayer(layer_id id) const -> bool;
 
   /// \} End of layer API
@@ -373,29 +327,14 @@ class MapDocument final : public ADocument
 
   void RemoveTileset(tileset_id id);
 
-  /**
-   * \copydoc tileset_manager::select()
-   */
   void SelectTileset(tileset_id id);
 
-  /**
-   * \copydoc tileset_manager::set_selection()
-   */
   void SetTilesetSelection(const TilesetSelection& selection);
 
-  /**
-   * \copydoc map::IncreaseTileSize()
-   */
   void IncreaseTileSize();
 
-  /**
-   * \copydoc map::DecreaseTileSize()
-   */
   void DecreaseTileSize();
 
-  /**
-   * \copydoc map::ResetTileSize()
-   */
   void ResetTileSize();
 
   /**
@@ -426,39 +365,18 @@ class MapDocument final : public ADocument
     }
   }
 
-  /**
-   * \copydoc map::InBounds()
-   */
   [[nodiscard]] auto InBounds(const Position& pos) const -> bool;
 
-  /**
-   * \copydoc map::RowCount()
-   */
   [[nodiscard]] auto RowCount() const -> row_t;
 
-  /**
-   * \copydoc map::ColumnCount()
-   */
   [[nodiscard]] auto ColumnCount() const -> col_t;
 
-  /**
-   * \copydoc map::width()
-   */
   [[nodiscard]] auto Width() const -> int;
 
-  /**
-   * \copydoc map::height()
-   */
   [[nodiscard]] auto Height() const -> int;
 
-  /**
-   * \copydoc map::CurrentTileSize()
-   */
   [[nodiscard]] auto CurrentTileSize() const noexcept -> int;
 
-  /**
-   * \copydoc tileset_manager::CurrentTileset()
-   */
   [[nodiscard]] auto CurrentTileset() const -> const Tileset*;
 
   /**
