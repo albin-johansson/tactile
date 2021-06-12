@@ -1,7 +1,7 @@
 #pragma once
 
+#include "map_position.hpp"
 #include "mouse_tool.hpp"
-#include "position.hpp"
 #include "tile_id.hpp"
 #include "vector_map.hpp"
 
@@ -39,7 +39,7 @@ class EraserTool final : public AMouseTool
   void OnReleased(QMouseEvent* event, const QPointF& mapPosition) override;
 
  private:
-  vector_map<core::Position, tile_id> mOldState;
+  vector_map<core::MapPosition, tile_id> mOldState;
 
   /**
    * \brief Updates the state of the eraser, by erasing the tile at the mouse

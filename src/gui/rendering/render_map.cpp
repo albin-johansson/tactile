@@ -28,7 +28,7 @@ struct render_info final
   const core::Map* map;
   const core::TilesetManager* tilesets;
   render_bounds bounds;
-  Maybe<core::Position> mousePosition;
+  Maybe<core::MapPosition> mousePosition;
   int tileSize;
   bool drawGrid;
 };
@@ -70,7 +70,7 @@ struct render_info final
 
 [[nodiscard]] auto make_render_info(const core::MapDocument& document,
                                     const QRectF& exposed,
-                                    Maybe<core::Position> mousePosition)
+                                    Maybe<core::MapPosition> mousePosition)
     -> render_info
 {
   const auto tileSize = document.CurrentTileSize();
@@ -86,7 +86,7 @@ struct render_info final
 }
 
 void render_cell(QPainter& painter,
-                 const core::Position& position,
+                 const core::MapPosition& position,
                  const int tileSize)
 {
   constexpr QColor emptyLightGray{0x55, 0x55, 0x55};
@@ -118,7 +118,7 @@ void render_tile(QPainter& painter,
 
 void render_tile(QPainter& painter,
                  const tile_id id,
-                 const core::Position& position,
+                 const core::MapPosition& position,
                  const render_info& info)
 {
   const QPoint dst{position.ColumnToX(info.tileSize),
@@ -136,7 +136,7 @@ void render_tile_layer(QPainter& painter,
   {
     for (auto col = info.bounds.colBegin; col < info.bounds.colEnd; ++col)
     {
-      const core::Position position{row, col};
+      const core::MapPosition position{row, col};
       const auto x = position.ColumnToX(info.tileSize);
       const auto y = position.RowToY(info.tileSize);
 
@@ -186,7 +186,7 @@ void render_background(QPainter& painter, const render_info& info)
   {
     for (auto col = info.bounds.colBegin; col < info.bounds.colEnd; ++col)
     {
-      const core::Position position{row, col};
+      const core::MapPosition position{row, col};
       render_cell(painter, position, info.tileSize);
     }
   }
@@ -222,9 +222,9 @@ void render_multi_preview(QPainter& painter, const render_info& info)
   const auto mousePos = info.mousePosition.value();
 
   const auto diff = selection.bottomRight - selection.topLeft;
-  const core::Position offset{diff.Row() / 2_row, diff.Column() / 2_col};
+  const core::MapPosition offset{diff.Row() / 2_row, diff.Column() / 2_col};
 
-  tileset->VisitSelection([&](const core::Position pos) {
+  tileset->VisitSelection([&](const core::MapPosition pos) {
     const auto tilePos = mousePos + pos - offset;
     if (info.map->InBounds(tilePos))
     {
@@ -267,7 +267,7 @@ void render_preview(QPainter& painter, const render_info& info)
 
 void RenderMap(QPainter& painter,
                const core::MapDocument& document,
-               const Maybe<core::Position> mousePosition,
+               const Maybe<core::MapPosition> mousePosition,
                const QRectF& exposed)
 {
   if (exposed.isEmpty())

@@ -4,8 +4,8 @@
 #include <QRect>    // QRect
 #include <utility>  // forward, move, pair
 
+#include "map_position.hpp"
 #include "maybe.hpp"
-#include "position.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"

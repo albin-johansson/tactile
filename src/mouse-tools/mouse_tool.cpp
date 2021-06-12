@@ -26,7 +26,7 @@ auto AMouseTool::GetModel() const noexcept -> const core::Model*
 
 auto AMouseTool::TranslateMousePosition(const QPoint& mousePosition,
                                         const QPointF& mapPosition) const
-    -> Maybe<core::Position>
+    -> Maybe<core::MapPosition>
 {
   if (const auto* document = mModel->CurrentDocument())
   {
@@ -40,8 +40,8 @@ auto AMouseTool::TranslateMousePosition(const QPoint& mousePosition,
 
     const auto tileSize = document->CurrentTileSize();
 
-    const core::Position position{row_t{static_cast<int>(y) / tileSize},
-                                  col_t{static_cast<int>(x) / tileSize}};
+    const core::MapPosition position{row_t{static_cast<int>(y) / tileSize},
+                                     col_t{static_cast<int>(x) / tileSize}};
 
     if (document->InBounds(position))
     {

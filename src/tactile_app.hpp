@@ -6,7 +6,7 @@
 
 #include "czstring.hpp"
 #include "forward_declare.hpp"
-#include "position.hpp"
+#include "map_position.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 

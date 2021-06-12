@@ -43,9 +43,9 @@ TileLayer::TileLayer(const row_t nRows, const col_t nCols)
   assert(ColumnCount() == nCols);
 }
 
-void TileLayer::Flood(const Position& origin,
+void TileLayer::Flood(const MapPosition& origin,
                       const tile_id replacement,
-                      std::vector<Position>& positions)
+                      std::vector<MapPosition>& positions)
 {
   FloodFill(*this, origin, replacement, positions);
 }
@@ -161,7 +161,7 @@ void TileLayer::SetColumns(const col_t nCols)
   }
 }
 
-void TileLayer::SetTile(const Position& pos, const tile_id id) noexcept
+void TileLayer::SetTile(const MapPosition& pos, const tile_id id) noexcept
 {
   if (InBounds(pos))
   {
@@ -210,7 +210,7 @@ auto TileLayer::TileCount() const noexcept -> int
   return RowCount().get() * ColumnCount().get();
 }
 
-auto TileLayer::TileAt(const Position& pos) const -> Maybe<tile_id>
+auto TileLayer::TileAt(const MapPosition& pos) const -> Maybe<tile_id>
 {
   if (InBounds(pos))
   {
@@ -222,7 +222,7 @@ auto TileLayer::TileAt(const Position& pos) const -> Maybe<tile_id>
   }
 }
 
-auto TileLayer::InBounds(const Position& pos) const noexcept -> bool
+auto TileLayer::InBounds(const MapPosition& pos) const noexcept -> bool
 {
   const auto row = pos.RowIndex();
   return (row < mTiles.size()) && (pos.ColumnIndex() < mTiles[row].size());

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "position.hpp"
+#include "map_position.hpp"
 
 namespace tactile::core {
 
@@ -17,8 +17,8 @@ namespace tactile::core {
  */
 struct TilesetSelection final
 {
-  Position topLeft;      ///< The top-left corner position.
-  Position bottomRight;  ///< The bottom-right corner position.
+  MapPosition topLeft;      ///< The top-left corner position.
+  MapPosition bottomRight;  ///< The bottom-right corner position.
 };
 
 }  // namespace tactile::core

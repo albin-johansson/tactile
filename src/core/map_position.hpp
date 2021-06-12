@@ -49,15 +49,15 @@ using col_t = nenya::strong_type<int, tags::col_tag>;
 namespace core {
 
 /**
- * \class Position
+ * \class MapPosition
  *
  * \brief Represents a row- and column-based position.
  *
  * \since 0.1.0
  *
- * \headerfile position.hpp
+ * \headerfile map_position.hpp
  */
-class Position final
+class MapPosition final
 {
  public:
   /**
@@ -65,7 +65,7 @@ class Position final
    *
    * \since 0.1.0
    */
-  constexpr Position() noexcept = default;
+  constexpr MapPosition() noexcept = default;
 
   /**
    * \brief Creates a map position.
@@ -76,7 +76,7 @@ class Position final
    *
    * \since 0.1.0
    */
-  constexpr Position(const row_t row, const col_t col) noexcept
+  constexpr MapPosition(const row_t row, const col_t col) noexcept
       : mRow{AtLeast(row.get(), 0)}
       , mColumn{AtLeast(col.get(), 0)}
   {}
@@ -119,7 +119,7 @@ class Position final
    */
   [[nodiscard]] constexpr auto OffsetBy(const row_t row,
                                         const col_t column) const noexcept
-      -> Position
+      -> MapPosition
   {
     return {row_t{mRow} + row, col_t{mColumn} + column};
   }
@@ -131,7 +131,7 @@ class Position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto North() const noexcept -> Position
+  [[nodiscard]] constexpr auto North() const noexcept -> MapPosition
   {
     return {row_t{mRow - 1}, col_t{mColumn}};
   }
@@ -144,7 +144,7 @@ class Position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto East() const noexcept -> Position
+  [[nodiscard]] constexpr auto East() const noexcept -> MapPosition
   {
     return {row_t{mRow}, col_t{mColumn + 1}};
   }
@@ -156,7 +156,7 @@ class Position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto South() const noexcept -> Position
+  [[nodiscard]] constexpr auto South() const noexcept -> MapPosition
   {
     return {row_t{mRow + 1}, col_t{mColumn}};
   }
@@ -169,7 +169,7 @@ class Position final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] constexpr auto West() const noexcept -> Position
+  [[nodiscard]] constexpr auto West() const noexcept -> MapPosition
   {
     return {row_t{mRow}, col_t{mColumn - 1}};
   }
@@ -275,7 +275,7 @@ class Position final
     return mRow * tileSize;
   }
 
-  [[nodiscard]] auto operator<=>(const Position&) const noexcept = default;
+  [[nodiscard]] auto operator<=>(const MapPosition&) const noexcept = default;
 
  private:
   // Not using the row and col types in order to default the spaceship operator
@@ -293,10 +293,11 @@ class Position final
  *
  * \since 0.1.0
  */
-[[nodiscard]] constexpr auto operator+(const Position& lhs,
-                                       const Position& rhs) noexcept -> Position
+[[nodiscard]] constexpr auto operator+(const MapPosition& lhs,
+                                       const MapPosition& rhs) noexcept
+    -> MapPosition
 {
-  return Position{lhs.Row() + rhs.Row(), lhs.Column() + rhs.Column()};
+  return MapPosition{lhs.Row() + rhs.Row(), lhs.Column() + rhs.Column()};
 }
 
 /**
@@ -309,10 +310,11 @@ class Position final
  *
  * \since 0.1.0
  */
-[[nodiscard]] constexpr auto operator-(const Position& lhs,
-                                       const Position& rhs) noexcept -> Position
+[[nodiscard]] constexpr auto operator-(const MapPosition& lhs,
+                                       const MapPosition& rhs) noexcept
+    -> MapPosition
 {
-  return Position{lhs.Row() - rhs.Row(), lhs.Column() - rhs.Column()};
+  return MapPosition{lhs.Row() - rhs.Row(), lhs.Column() - rhs.Column()};
 }
 
 }  // namespace core

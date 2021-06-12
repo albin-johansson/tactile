@@ -213,7 +213,7 @@ void Window::OnShowLayerProperties(not_null<core::IPropertyManager*> manager)
   mPropertiesDock->ShowLayerProperties(manager);
 }
 
-void Window::OnEnableStampPreview(const core::Position& position)
+void Window::OnEnableStampPreview(const core::MapPosition& position)
 {
   mEditor->EnableStampPreview(position);
 }

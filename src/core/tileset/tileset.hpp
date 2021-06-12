@@ -8,8 +8,8 @@
 #include <concepts>       // invocable
 #include <unordered_map>  // unordered_map
 
+#include "map_position.hpp"
 #include "maybe.hpp"
-#include "position.hpp"
 #include "tactile_qstring.hpp"
 #include "tile_height.hpp"
 #include "tile_id.hpp"
@@ -87,7 +87,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  template <std::invocable<Position> T>
+  template <std::invocable<MapPosition> T>
   void VisitSelection(T&& callable) const
   {
     if (mSelection)
@@ -125,8 +125,8 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  template <std::invocable<const Position&, const Position&> T>
-  void VisitSelection(const Position& mapOrigin, T&& callable) const
+  template <std::invocable<const MapPosition&, const MapPosition&> T>
+  void VisitSelection(const MapPosition& mapOrigin, T&& callable) const
   {
     if (mSelection)
     {
@@ -139,7 +139,7 @@ class Tileset final
       else
       {
         const auto diff = bottomRight - topLeft;
-        const Position offset{diff.Row() / 2_row, diff.Column() / 2_col};
+        const MapPosition offset{diff.Row() / 2_row, diff.Column() / 2_col};
 
         const auto endRow = 1_row + diff.Row();
         const auto endCol = 1_col + diff.Column();
@@ -220,7 +220,7 @@ class Tileset final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto TileAt(const Position& position) const -> tile_id;
+  [[nodiscard]] auto TileAt(const MapPosition& position) const -> tile_id;
 
   /**
    * \brief Returns the width of the tileset image.

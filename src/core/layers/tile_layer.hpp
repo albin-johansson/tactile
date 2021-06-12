@@ -6,8 +6,8 @@
 
 #include "layer.hpp"
 #include "layer_delegate.hpp"
+#include "map_position.hpp"
 #include "maybe.hpp"
-#include "position.hpp"
 #include "tile_id.hpp"
 
 namespace tactile::core {
@@ -139,9 +139,9 @@ class TileLayer final : public ILayer
    *
    * \since 0.1.0
    */
-  void Flood(const Position& origin,
+  void Flood(const MapPosition& origin,
              tile_id replacement,
-             std::vector<Position>& positions);
+             std::vector<MapPosition>& positions);
 
   /**
    * \brief Removes all occurrences of the specified ID in the layer.
@@ -233,7 +233,7 @@ class TileLayer final : public ILayer
    *
    * \since 0.1.0
    */
-  void SetTile(const Position& pos, tile_id id) noexcept;
+  void SetTile(const MapPosition& pos, tile_id id) noexcept;
 
   /**
    * \brief Returns the number of rows in the tile layer.
@@ -279,7 +279,7 @@ class TileLayer final : public ILayer
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto TileAt(const Position& pos) const -> Maybe<tile_id>;
+  [[nodiscard]] auto TileAt(const MapPosition& pos) const -> Maybe<tile_id>;
 
   /**
    * \brief Indicates whether or not the specified position is in bounds of the
@@ -291,7 +291,7 @@ class TileLayer final : public ILayer
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto InBounds(const Position& pos) const noexcept -> bool;
+  [[nodiscard]] auto InBounds(const MapPosition& pos) const noexcept -> bool;
 
   /// \} End of tile layer API
 

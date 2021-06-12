@@ -2,8 +2,8 @@
 
 #include "forward_declare.hpp"
 #include "map_command.hpp"
+#include "map_position.hpp"
 #include "not_null.hpp"
-#include "position.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 

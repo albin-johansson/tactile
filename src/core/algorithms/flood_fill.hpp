@@ -2,7 +2,7 @@
 
 #include <vector>  // vector
 
-#include "position.hpp"
+#include "map_position.hpp"
 #include "tile_layer.hpp"
 
 namespace tactile::core {
@@ -18,8 +18,8 @@ namespace tactile::core {
  * \since 0.1.0
  */
 void FloodFill(TileLayer& layer,
-               const Position& origin,
+               const MapPosition& origin,
                tile_id replacement,
-               std::vector<Position>& affected);
+               std::vector<MapPosition>& affected);
 
 }  // namespace tactile::core

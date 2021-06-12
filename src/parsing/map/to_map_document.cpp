@@ -28,7 +28,7 @@ namespace {
   {
     for (auto col = 0_col; col < data.nCols; ++col)
     {
-      const core::Position pos{row, col};
+      const core::MapPosition pos{row, col};
       layer->SetTile(pos, data.tiles.at(pos.RowIndex()).at(pos.ColumnIndex()));
     }
   }

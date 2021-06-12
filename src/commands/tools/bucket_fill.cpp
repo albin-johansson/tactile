@@ -8,7 +8,7 @@
 namespace tactile::cmd {
 
 BucketFill::BucketFill(not_null<core::MapDocument*> document,
-                       const core::Position& position,
+                       const core::MapPosition& position,
                        const tile_id replacement)
     : QUndoCommand{TACTILE_QSTRING(u"Bucket Fill")}
     , mDocument{document}

@@ -6,7 +6,7 @@
 
 #include "forward_declare.hpp"
 #include "map_id.hpp"
-#include "position.hpp"
+#include "map_position.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -27,7 +27,7 @@ class MapScene final : public QGraphicsScene
   void MoveViewport(int dx, int dy);
 
   /// Enables the stamp tool preview at the specified position.
-  void EnableStampPreview(const core::Position& position);
+  void EnableStampPreview(const core::MapPosition& position);
 
   /// Disables the stamp tool preview.
   void DisableStampPreview();

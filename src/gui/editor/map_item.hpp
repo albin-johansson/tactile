@@ -3,8 +3,8 @@
 #include <QGraphicsItem>  // QGraphicsItem
 
 #include "forward_declare.hpp"
+#include "map_position.hpp"
 #include "maybe.hpp"
-#include "position.hpp"
 #include "tile_id.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
@@ -39,7 +39,7 @@ class MapItem final : public QGraphicsItem
              const QStyleOptionGraphicsItem* option,
              QWidget* widget) override;
 
-  void EnableStampPreview(const core::Position& position);
+  void EnableStampPreview(const core::MapPosition& position);
 
   void DisableStampPreview();
 
@@ -49,7 +49,7 @@ class MapItem final : public QGraphicsItem
 
  private:
   core::MapDocument* mDocument{};
-  Maybe<core::Position> mMousePosition;
+  Maybe<core::MapPosition> mMousePosition;
 };
 
 }  // namespace tactile

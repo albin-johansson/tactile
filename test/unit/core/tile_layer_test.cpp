@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include "position.hpp"
+#include "map_position.hpp"
 #include "tactile_error.hpp"
 #include "tactile_qstring.hpp"
 
@@ -52,7 +52,7 @@ TEST(TileLayer, Each)
 TEST(TileLayer, RemoveAll)
 {
   core::TileLayer layer;
-  std::vector<core::Position> positions;
+  std::vector<core::MapPosition> positions;
 
   layer.Flood({}, 1_t, positions);
   layer.Each([](const tile_id id) { EXPECT_EQ(1_t, id); });
@@ -153,7 +153,7 @@ TEST(TileLayer, SetTile)
 {
   core::TileLayer layer;
 
-  const core::Position pos{2_row, 2_col};
+  const core::MapPosition pos{2_row, 2_col};
   EXPECT_EQ(empty, layer.TileAt(pos));
 
   layer.SetTile(pos, 24_t);

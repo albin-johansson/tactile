@@ -6,7 +6,7 @@
 
 #include "forward_declare.hpp"
 #include "map_id.hpp"
-#include "position.hpp"
+#include "map_position.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -41,7 +41,7 @@ class MapView final : public QGraphicsView
 
   void MoveViewport(int dx, int dy);
 
-  void EnableStampPreview(const core::Position& position);
+  void EnableStampPreview(const core::MapPosition& position);
 
   void DisableStampPreview();
 

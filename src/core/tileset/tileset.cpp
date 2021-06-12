@@ -114,7 +114,7 @@ auto Tileset::IsSingleTileSelected() const noexcept -> bool
   return mSelection && (mSelection->topLeft == mSelection->bottomRight);
 }
 
-auto Tileset::TileAt(const Position& position) const -> tile_id
+auto Tileset::TileAt(const MapPosition& position) const -> tile_id
 {
   const auto [row, col] = position.Unpack();
 

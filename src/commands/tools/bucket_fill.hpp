@@ -6,8 +6,8 @@
 #include "command_id.hpp"
 #include "forward_declare.hpp"
 #include "layer_id.hpp"
+#include "map_position.hpp"
 #include "not_null.hpp"
-#include "position.hpp"
 #include "tile_id.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
@@ -27,7 +27,7 @@ class BucketFill final : public QUndoCommand
    * \since 0.1.0
    */
   explicit BucketFill(not_null<core::MapDocument*> document,
-                      const core::Position& position,
+                      const core::MapPosition& position,
                       tile_id replacement);
 
   void undo() override;
@@ -41,11 +41,11 @@ class BucketFill final : public QUndoCommand
 
  private:
   core::MapDocument* mDocument{};
-  core::Position mOrigin;
+  core::MapPosition mOrigin;
   tile_id mReplacement;
   tile_id mTarget{};
   layer_id mLayer{};
-  std::vector<core::Position> mPositions;
+  std::vector<core::MapPosition> mPositions;
 };
 
 }  // namespace tactile::cmd

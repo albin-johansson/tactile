@@ -4,7 +4,7 @@
 
 #include "map.hpp"
 #include "map_document.hpp"
-#include "position.hpp"
+#include "map_position.hpp"
 #include "render_map.hpp"
 #include "tactile_error.hpp"
 #include "tile_layer.hpp"
@@ -29,7 +29,7 @@ void MapItem::DisableStampPreview()
   update();
 }
 
-void MapItem::EnableStampPreview(const core::Position& position)
+void MapItem::EnableStampPreview(const core::MapPosition& position)
 {
   mMousePosition = position;
 }

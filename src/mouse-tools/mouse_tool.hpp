@@ -4,8 +4,8 @@
 #include <QPoint>       // QPoint
 
 #include "forward_declare.hpp"
+#include "map_position.hpp"
 #include "maybe.hpp"
-#include "position.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, Model)
 
@@ -155,7 +155,7 @@ class AMouseTool
    */
   [[nodiscard]] auto TranslateMousePosition(const QPoint& mousePosition,
                                             const QPointF& mapPosition) const
-      -> Maybe<core::Position>;
+      -> Maybe<core::MapPosition>;
 
  private:
   core::Model* mModel{};

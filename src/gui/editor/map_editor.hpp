@@ -5,8 +5,8 @@
 
 #include "forward_declare.hpp"
 #include "map_id.hpp"
+#include "map_position.hpp"
 #include "maybe.hpp"
-#include "position.hpp"
 #include "smart_pointers.hpp"
 
 TACTILE_DECLARE_UI(MapEditor)
@@ -37,7 +37,7 @@ class MapEditor final : public QWidget
 
   ~MapEditor() noexcept override;
 
-  void EnableStampPreview(const core::Position& position);
+  void EnableStampPreview(const core::MapPosition& position);
 
   void DisableStampPreview();
 

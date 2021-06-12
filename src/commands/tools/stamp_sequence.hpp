@@ -5,8 +5,8 @@
 #include "command_id.hpp"
 #include "forward_declare.hpp"
 #include "layer_id.hpp"
+#include "map_position.hpp"
 #include "not_null.hpp"
-#include "position.hpp"
 #include "tile_id.hpp"
 #include "vector_map.hpp"
 
@@ -18,8 +18,8 @@ class StampSequence final : public QUndoCommand
 {
  public:
   StampSequence(not_null<core::MapDocument*> document,
-                vector_map<core::Position, tile_id>&& oldState,
-                vector_map<core::Position, tile_id>&& sequence);
+                vector_map<core::MapPosition, tile_id>&& oldState,
+                vector_map<core::MapPosition, tile_id>&& sequence);
 
   void undo() override;
 
@@ -32,8 +32,8 @@ class StampSequence final : public QUndoCommand
 
  private:
   core::MapDocument* mDocument{};
-  vector_map<core::Position, tile_id> mOldState;
-  vector_map<core::Position, tile_id> mSequence;
+  vector_map<core::MapPosition, tile_id> mOldState;
+  vector_map<core::MapPosition, tile_id> mSequence;
   layer_id mLayer;
   bool mFirst{true};
 };

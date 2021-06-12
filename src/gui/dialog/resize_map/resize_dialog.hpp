@@ -7,8 +7,8 @@
 #include <concepts>     // invocable
 
 #include "forward_declare.hpp"
+#include "map_position.hpp"
 #include "maybe.hpp"
-#include "position.hpp"
 #include "smart_pointers.hpp"
 
 TACTILE_DECLARE_UI(ResizeDialog)

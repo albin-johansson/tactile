@@ -214,20 +214,20 @@ auto MapDocument::GetProperties() const -> const property_map&
   return mDelegate->GetProperties();
 }
 
-void MapDocument::Flood(const Position& position, const tile_id replacement)
+void MapDocument::Flood(const MapPosition& position, const tile_id replacement)
 {
   mDelegate->Execute<cmd::BucketFill>(this, position, replacement);
 }
 
-void MapDocument::AddStampSequence(vector_map<Position, tile_id>&& oldState,
-                                   vector_map<Position, tile_id>&& sequence)
+void MapDocument::AddStampSequence(vector_map<MapPosition, tile_id>&& oldState,
+                                   vector_map<MapPosition, tile_id>&& sequence)
 {
   mDelegate->Execute<cmd::StampSequence>(this,
                                          std::move(oldState),
                                          std::move(sequence));
 }
 
-void MapDocument::AddEraseSequence(vector_map<Position, tile_id>&& oldState)
+void MapDocument::AddEraseSequence(vector_map<MapPosition, tile_id>&& oldState)
 {
   mDelegate->Execute<cmd::EraseSequence>(this, std::move(oldState));
 }
@@ -407,7 +407,7 @@ void MapDocument::SetNextObjectId(const object_id id) noexcept
   mMap->SetNextObjectId(id);
 }
 
-auto MapDocument::InBounds(const Position& pos) const -> bool
+auto MapDocument::InBounds(const MapPosition& pos) const -> bool
 {
   return mMap->InBounds(pos);
 }

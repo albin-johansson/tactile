@@ -5,8 +5,8 @@
 
 #include "forward_declare.hpp"
 #include "map_id.hpp"
+#include "map_position.hpp"
 #include "maybe.hpp"
-#include "position.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_tab_manager.hpp"

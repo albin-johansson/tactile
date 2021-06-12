@@ -44,7 +44,7 @@ void MapEditor::InitConnections()
   // clang-format on
 }
 
-void MapEditor::EnableStampPreview(const core::Position& position)
+void MapEditor::EnableStampPreview(const core::MapPosition& position)
 {
   mTabWidget->EnableStampPreview(position);
 }

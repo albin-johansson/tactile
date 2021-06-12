@@ -8,9 +8,9 @@
 #include "forward_declare.hpp"
 #include "layer_id.hpp"
 #include "map_id.hpp"
+#include "map_position.hpp"
 #include "mouse_tool_type.hpp"
 #include "not_null.hpp"
-#include "position.hpp"
 #include "property.hpp"
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
@@ -120,7 +120,7 @@ class Window final : public QMainWindow
   void OnShowMapProperties(not_null<core::IPropertyManager*> manager);
   void OnShowLayerProperties(not_null<core::IPropertyManager*> manager);
 
-  void OnEnableStampPreview(const core::Position& position);
+  void OnEnableStampPreview(const core::MapPosition& position);
   void OnDisableStampPreview();
 
   void OnSwitchedMap(map_id map, not_null<core::MapDocument*> document);

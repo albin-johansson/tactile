@@ -6,9 +6,9 @@
 
 #include "layer.hpp"
 #include "layer_id.hpp"
+#include "map_position.hpp"
 #include "maybe.hpp"
 #include "object_id.hpp"
-#include "position.hpp"
 #include "smart_pointers.hpp"
 #include "tile_id.hpp"
 #include "tile_size.hpp"
@@ -421,7 +421,7 @@ class Map final
    *
    * \since 0.1.0
    */
-  [[nodiscard]] auto InBounds(const Position& pos) const -> bool;
+  [[nodiscard]] auto InBounds(const MapPosition& pos) const -> bool;
 
   /**
    * \brief Returns the total number of rows in the map.

@@ -3,7 +3,7 @@
 #include "dock_widget.hpp"
 #include "forward_declare.hpp"
 #include "map_id.hpp"
-#include "position.hpp"
+#include "map_position.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
 

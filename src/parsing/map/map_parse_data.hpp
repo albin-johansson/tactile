@@ -6,8 +6,8 @@
 
 #include "layer.hpp"
 #include "layer_id.hpp"
+#include "map_position.hpp"
 #include "object_id.hpp"
-#include "position.hpp"
 #include "property.hpp"
 #include "tile_height.hpp"
 #include "tile_id.hpp"

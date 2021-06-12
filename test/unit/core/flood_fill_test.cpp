@@ -21,7 +21,7 @@ TEST(FloodFill, Correctness)
    */
 
   const auto replacement = 2_t;
-  std::vector<core::Position> positions;
+  std::vector<core::MapPosition> positions;
   layer.Flood({1_row, 0_col}, replacement, positions);
 
   /*
@@ -78,7 +78,7 @@ TEST(FloodFill, OutOfBounds)
 {
   core::TileLayer layer;
 
-  std::vector<core::Position> positions;
+  std::vector<core::MapPosition> positions;
   EXPECT_NO_THROW(layer.Flood({5_row, 5_col}, empty, positions));
 
   positions.clear();

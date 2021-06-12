@@ -6,8 +6,8 @@
 
 #include "forward_declare.hpp"
 #include "layer_id.hpp"
+#include "map_position.hpp"
 #include "not_null.hpp"
-#include "position.hpp"
 #include "tile_id.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, Map)
@@ -20,7 +20,7 @@ class MapCommand : public QUndoCommand
  public:
   using row_range = std::pair<row_t, row_t>;
   using col_range = std::pair<col_t, col_t>;
-  using tile_data = std::map<core::Position, tile_id>;
+  using tile_data = std::map<core::MapPosition, tile_id>;
   using layer_data = std::map<layer_id, tile_data>;
 
   MapCommand(not_null<core::MapDocument*> document, const QString& name);

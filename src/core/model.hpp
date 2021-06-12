@@ -71,7 +71,7 @@ class Model final : public QObject
   void S_MovedLayerForward(layer_id id);
 
   void S_DisableStampPreview();
-  void S_EnableStampPreview(const Position& position);
+  void S_EnableStampPreview(const MapPosition& position);
 
   void S_UndoStateUpdated(bool canUndo);
   void S_RedoStateUpdated(bool canRedo);

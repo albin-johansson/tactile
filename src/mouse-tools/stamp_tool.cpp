@@ -13,10 +13,10 @@ StampTool::StampTool(core::Model* model) : AMouseTool{model}
 
 void StampTool::UpdateStampSequence(core::MapDocument& map,
                                     const core::Tileset& tileset,
-                                    const core::Position& origin)
+                                    const core::MapPosition& origin)
 {
-  const auto callable = [&](const core::Position& mapPos,
-                            const core::Position& tilesetPos) {
+  const auto callable = [&](const core::MapPosition& mapPos,
+                            const core::MapPosition& tilesetPos) {
     if (map.InBounds(mapPos))
     {
       const auto newID = tileset.TileAt(tilesetPos);

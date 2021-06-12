@@ -86,9 +86,9 @@ auto TilesetRubberBand::GetSelection() const -> core::TilesetSelection
   const auto tw = mTileWidth.get();
   const auto th = mTileHeight.get();
 
-  const core::Position tl{row_t{geo.y() / th}, col_t{geo.x() / tw}};
-  const core::Position br{std::max(row_t{geo.bottom() / th}, tl.Row()),
-                          std::max(col_t{geo.right() / tw}, tl.Column())};
+  const core::MapPosition tl{row_t{geo.y() / th}, col_t{geo.x() / tw}};
+  const core::MapPosition br{std::max(row_t{geo.bottom() / th}, tl.Row()),
+                             std::max(col_t{geo.right() / tw}, tl.Column())};
   return {tl, br};
 }
 

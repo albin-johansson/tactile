@@ -5,8 +5,8 @@
 #include "command_id.hpp"
 #include "forward_declare.hpp"
 #include "layer_id.hpp"
+#include "map_position.hpp"
 #include "not_null.hpp"
-#include "position.hpp"
 #include "tile_id.hpp"
 #include "vector_map.hpp"
 
@@ -18,7 +18,7 @@ class EraseSequence final : public QUndoCommand
 {
  public:
   EraseSequence(not_null<core::MapDocument*> document,
-                vector_map<core::Position, tile_id>&& oldState);
+                vector_map<core::MapPosition, tile_id>&& oldState);
 
   void undo() override;
 
@@ -31,7 +31,7 @@ class EraseSequence final : public QUndoCommand
 
  private:
   core::MapDocument* mDocument{};
-  vector_map<core::Position, tile_id> mOldState;
+  vector_map<core::MapPosition, tile_id> mOldState;
   layer_id mLayer;
   bool mFirst{true};
 };

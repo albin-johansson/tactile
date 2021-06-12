@@ -334,7 +334,7 @@ auto Map::HasLayer(const layer_id id) const -> bool
   return mLayers.contains(id);
 }
 
-auto Map::InBounds(const Position& pos) const -> bool
+auto Map::InBounds(const MapPosition& pos) const -> bool
 {
   const auto endRow = mRows;
   const auto endCol = mCols;

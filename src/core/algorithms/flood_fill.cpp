@@ -3,14 +3,14 @@
 #include <array>  // array
 #include <queue>  // queue
 
-#include "position.hpp"
+#include "map_position.hpp"
 
 namespace tactile::core {
 
 void FloodFill(TileLayer& layer,
-               const Position& origin,
+               const MapPosition& origin,
                tile_id replacement,
-               std::vector<Position>& affected)
+               std::vector<MapPosition>& affected)
 {
   const auto target = layer.TileAt(origin);
 
@@ -21,12 +21,12 @@ void FloodFill(TileLayer& layer,
 
   layer.SetTile(origin, replacement);
 
-  std::queue<Position> queue;
+  std::queue<MapPosition> queue;
 
   affected.push_back(origin);
   queue.push(origin);
 
-  const auto update = [&](const Position& pos) {
+  const auto update = [&](const MapPosition& pos) {
     if (const auto tile = layer.TileAt(pos); tile && tile == target)
     {
       affected.push_back(pos);

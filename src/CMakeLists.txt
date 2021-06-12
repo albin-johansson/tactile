@@ -75,9 +75,9 @@ set(TACTILE_SOURCE_FILES
     core/document.hpp
     core/document_delegate.cpp
     core/document_delegate.hpp
+    core/map_position.hpp
     core/model.cpp
     core/model.hpp
-    core/position.hpp
     core/tactile_error.hpp
 
     core/algorithms/at_least.hpp

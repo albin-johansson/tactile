@@ -1,8 +1,8 @@
 #pragma once
 
 #include "map_document.hpp"
+#include "map_position.hpp"
 #include "mouse_tool.hpp"
-#include "position.hpp"
 #include "tileset.hpp"
 #include "vector_map.hpp"
 
@@ -45,12 +45,12 @@ class StampTool final : public AMouseTool
   void Disable() override;
 
  private:
-  vector_map<core::Position, tile_id> mOldState;
-  vector_map<core::Position, tile_id> mSequence;
+  vector_map<core::MapPosition, tile_id> mOldState;
+  vector_map<core::MapPosition, tile_id> mSequence;
 
   void UpdateStampSequence(core::MapDocument& map,
                            const core::Tileset& tileset,
-                           const core::Position& origin);
+                           const core::MapPosition& origin);
 };
 
 }  // namespace tactile

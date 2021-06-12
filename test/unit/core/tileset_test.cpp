@@ -56,14 +56,14 @@ TEST_F(TilesetTest, VisitSelection)
     m_tileset->ClearSelection();
 
     auto count = 0;
-    m_tileset->VisitSelection([&](const core::Position) { ++count; });
+    m_tileset->VisitSelection([&](const core::MapPosition) { ++count; });
 
     EXPECT_EQ(0, count);
   }
 
   {  // Non-empty selection
-    constexpr core::Position topLeft{1_row, 2_col};
-    constexpr core::Position bottomRight{4_row, 5_col};
+    constexpr core::MapPosition topLeft{1_row, 2_col};
+    constexpr core::MapPosition bottomRight{4_row, 5_col};
     m_tileset->SetSelection({topLeft, bottomRight});
 
     /*  0 1 2 3 4 5 6 7
@@ -78,7 +78,7 @@ TEST_F(TilesetTest, VisitSelection)
      */
 
     auto count = 0;
-    m_tileset->VisitSelection([&](const core::Position) { ++count; });
+    m_tileset->VisitSelection([&](const core::MapPosition) { ++count; });
 
     EXPECT_EQ(16, count);
   }
