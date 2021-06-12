@@ -80,9 +80,9 @@ set(TACTILE_SOURCE_FILES
     core/position.hpp
     core/tactile_error.hpp
 
-    core/algorithm/algorithm.hpp
-    core/algorithm/flood_fill.cpp
-    core/algorithm/flood_fill.hpp
+    core/algorithms/algorithm.hpp
+    core/algorithms/flood_fill.cpp
+    core/algorithms/flood_fill.hpp
 
     core/aliases/czstring.hpp
     core/aliases/ints.hpp
@@ -394,7 +394,7 @@ target_include_directories(libTactile
     PUBLIC commands/tilesets
     PUBLIC commands/tools
     PUBLIC core
-    PUBLIC core/algorithm
+    PUBLIC core/algorithms
     PUBLIC core/aliases
     PUBLIC core/layers
     PUBLIC core/map
