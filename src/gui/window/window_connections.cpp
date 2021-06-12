@@ -39,6 +39,7 @@ void WindowConnections::InitActions()
   bind(mUi->actionUndo,       &Window::S_Undo);
   bind(mUi->actionRedo,       &Window::S_Redo);
   bind(mUi->actionSave,       &Window::S_Save);
+  bind(mUi->actionSaveAs,     &Window::SaveAs);
   bind(mUi->actionNewMap,     &Window::S_NewMap);
   bind(mUi->actionAddTileset, &Window::S_AddTileset);
   bind(mUi->actionAddRow,     &Window::S_AddRow);
