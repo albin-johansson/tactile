@@ -25,15 +25,9 @@ TilesetWidget::TilesetWidget(QWidget* parent)
   connect(mContentPage, &TilesetContentPage::S_RenameTileset, this, &TilesetWidget::S_RenameTileset);
   connect(mContentPage, &TilesetContentPage::S_ShowProperties, this, &TilesetWidget::S_ShowProperties);
   connect(mContentPage, &TilesetContentPage::S_SetTilesetSelection, this, &TilesetWidget::S_SetTilesetSelection);
+  connect(mContentPage, &TilesetContentPage::S_SwitchToEmptyPage, this, &TilesetWidget::OnSwitchToEmptyPage);
+  connect(mContentPage, &TilesetContentPage::S_SwitchToContentPage, this, &TilesetWidget::OnSwitchToContentPage);
   // clang-format on
-
-  connect(mContentPage, &TilesetContentPage::S_SwitchToEmptyPage, [this] {
-    mUi->stackedWidget->setCurrentIndex(mEmptyIndex);
-  });
-
-  connect(mContentPage, &TilesetContentPage::S_SwitchToContentPage, [this] {
-    mUi->stackedWidget->setCurrentIndex(mContentIndex);
-  });
 }
 
 TilesetWidget::~TilesetWidget() noexcept = default;
@@ -63,6 +57,16 @@ void TilesetWidget::OnRenamedTileset(const tileset_id id, const QString& name)
 void TilesetWidget::OnSwitchedMap(const map_id id)
 {
   mContentPage->OnSelectedMap(id);
+}
+
+void TilesetWidget::OnSwitchToEmptyPage()
+{
+  mUi->stackedWidget->setCurrentIndex(mEmptyIndex);
+}
+
+void TilesetWidget::OnSwitchToContentPage()
+{
+  mUi->stackedWidget->setCurrentIndex(mContentIndex);
 }
 
 }  // namespace tactile

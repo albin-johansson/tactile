@@ -47,6 +47,10 @@ class TilesetWidget final : public QWidget
   TilesetEmptyPage* mEmptyPage{};
   int mEmptyIndex{};
   int mContentIndex{};
+
+ private slots:
+  void OnSwitchToEmptyPage();
+  void OnSwitchToContentPage();
 };
 
 }  // namespace tactile
