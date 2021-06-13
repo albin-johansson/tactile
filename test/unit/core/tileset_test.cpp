@@ -13,7 +13,7 @@ class TilesetTest : public testing::Test
   [[maybe_unused]] static void SetUpTestSuite()
   {
     m_tileset = std::make_unique<core::Tileset>(1_t,
-                                                TACTILE_QSTRING(u"terrain.png"),
+                                                QStringLiteral(u"terrain.png"),
                                                 32_tw,
                                                 32_th);
   }
@@ -28,25 +28,25 @@ class TilesetTest : public testing::Test
 
 TEST_F(TilesetTest, ImageConstructor)
 {
-  const QImage goodImage{TACTILE_QSTRING(u"terrain.png")};
+  const QImage goodImage{QStringLiteral(u"terrain.png")};
   EXPECT_NO_THROW((core::Tileset{1_t, goodImage, 32_tw, 32_th}));
 
   EXPECT_THROW((core::Tileset{1_t, goodImage, 0_tw, 32_th}), TactileError);
   EXPECT_THROW((core::Tileset{1_t, goodImage, 32_tw, 0_th}), TactileError);
 
-  const QImage badImage{TACTILE_QSTRING(u"dummy.png")};
+  const QImage badImage{QStringLiteral(u"dummy.png")};
   EXPECT_THROW((core::Tileset{1_t, badImage, 32_tw, 32_th}), TactileError);
 }
 
 TEST_F(TilesetTest, PathConstructor)
 {
-  const auto goodPath = TACTILE_QSTRING(u"terrain.png");
+  const auto goodPath = QStringLiteral(u"terrain.png");
   EXPECT_NO_THROW((core::Tileset{1_t, goodPath, 32_tw, 32_th}));
 
   EXPECT_THROW((core::Tileset{1_t, goodPath, 0_tw, 32_th}), TactileError);
   EXPECT_THROW((core::Tileset{1_t, goodPath, 32_tw, 0_th}), TactileError);
 
-  const auto badPath = TACTILE_QSTRING(u"dummy.png");
+  const auto badPath = QStringLiteral(u"dummy.png");
   EXPECT_THROW((core::Tileset{1_t, badPath, 32_tw, 32_th}), TactileError);
 }
 
@@ -117,7 +117,7 @@ TEST_F(TilesetTest, ClearSelection)
 
 TEST_F(TilesetTest, SetName)
 {
-  const auto name = TACTILE_QSTRING(u"Gandalf");
+  const auto name = QStringLiteral(u"Gandalf");
 
   m_tileset->SetName(name);
   EXPECT_EQ(name, m_tileset->Name());
@@ -125,7 +125,7 @@ TEST_F(TilesetTest, SetName)
 
 TEST_F(TilesetTest, SetPath)
 {
-  const QFileInfo file{TACTILE_QSTRING(u"interior.png")};
+  const QFileInfo file{QStringLiteral(u"interior.png")};
 
   m_tileset->SetPath(file);
   EXPECT_EQ(file, m_tileset->File());

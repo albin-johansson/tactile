@@ -4,14 +4,13 @@
 
 #include "map_document.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 
 namespace tactile::cmd {
 
 EraseSequence::EraseSequence(not_null<core::MapDocument*> document,
                              vector_map<core::MapPosition, tile_id>&& oldState)
-    : QUndoCommand{TACTILE_QSTRING(u"Erase Tiles")}
+    : QUndoCommand{QStringLiteral(u"Erase Tiles")}
     , mDocument{document}
     , mOldState{std::move(oldState)}
 {

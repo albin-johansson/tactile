@@ -12,7 +12,6 @@
 #include "maybe.hpp"
 #include "property_manager.hpp"
 #include "smart_pointers.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_height.hpp"
 #include "tile_id.hpp"
 #include "tile_width.hpp"
@@ -469,7 +468,7 @@ class Tileset final : public IPropertyManager
   col_t mColumnCount;
   int mTileCount{};
   QFileInfo mPath;
-  QString mName{TACTILE_QSTRING(u"Untitled")};
+  QString mName{QStringLiteral(u"Untitled")};
   Unique<IPropertyManager> mProperties;
 };
 

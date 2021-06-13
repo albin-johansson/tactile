@@ -1,7 +1,6 @@
 #include "layer_dock.hpp"
 
 #include "layer_widget.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -9,7 +8,7 @@ LayerDock::LayerDock(QWidget* parent)
     : DockWidget{parent}
     , mWidget{new LayerWidget{this}}
 {
-  setObjectName(TACTILE_QSTRING(u"layer_dock"));
+  setObjectName(QStringLiteral(u"LayerDock"));
   setWindowTitle(tr("Layers"));
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setContentsMargins(0, 0, 0, 0);

@@ -3,7 +3,6 @@
 #include <cassert>  // assert
 
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -75,7 +74,7 @@ auto XmlElement::Boolean(const ElementId id) const -> Maybe<bool>
 {
   if (const auto value = String(id))
   {
-    return value == TACTILE_QSTRING(u"true");
+    return value == QStringLiteral(u"true");
   }
   else
   {
@@ -88,61 +87,61 @@ auto XmlElement::StringifyElementId(const ElementId type) -> QString
   switch (type)
   {
     case ElementId::Tileset:
-      return TACTILE_QSTRING(u"tileset");
+      return QStringLiteral(u"tileset");
 
     case ElementId::Tilesets:
       throw TactileError{"TMX format does not feature \"tilesets\"!"};
 
     case ElementId::NextLayerId:
-      return TACTILE_QSTRING(u"nextlayerid");
+      return QStringLiteral(u"nextlayerid");
 
     case ElementId::Source:
-      return TACTILE_QSTRING(u"source");
+      return QStringLiteral(u"source");
 
     case ElementId::FirstGid:
-      return TACTILE_QSTRING(u"firstgid");
+      return QStringLiteral(u"firstgid");
 
     case ElementId::TileWidth:
-      return TACTILE_QSTRING(u"tilewidth");
+      return QStringLiteral(u"tilewidth");
 
     case ElementId::TileHeight:
-      return TACTILE_QSTRING(u"tileheight");
+      return QStringLiteral(u"tileheight");
 
     case ElementId::Image:
-      return TACTILE_QSTRING(u"image");
+      return QStringLiteral(u"image");
 
     case ElementId::Name:
-      return TACTILE_QSTRING(u"name");
+      return QStringLiteral(u"name");
 
     case ElementId::Id:
-      return TACTILE_QSTRING(u"id");
+      return QStringLiteral(u"id");
 
     case ElementId::Width:
-      return TACTILE_QSTRING(u"width");
+      return QStringLiteral(u"width");
 
     case ElementId::Height:
-      return TACTILE_QSTRING(u"height");
+      return QStringLiteral(u"height");
 
     case ElementId::Visible:
-      return TACTILE_QSTRING(u"visible");
+      return QStringLiteral(u"visible");
 
     case ElementId::Opacity:
-      return TACTILE_QSTRING(u"opacity");
+      return QStringLiteral(u"opacity");
 
     case ElementId::Type:
-      return TACTILE_QSTRING(u"type");
+      return QStringLiteral(u"type");
 
     case ElementId::Value:
-      return TACTILE_QSTRING(u"value");
+      return QStringLiteral(u"value");
 
     case ElementId::X:
-      return TACTILE_QSTRING(u"x");
+      return QStringLiteral(u"x");
 
     case ElementId::Y:
-      return TACTILE_QSTRING(u"y");
+      return QStringLiteral(u"y");
 
     case ElementId::Point:
-      return TACTILE_QSTRING(u"point");
+      return QStringLiteral(u"point");
 
     default:
       throw TactileError{"Reached end of switch statement!"};

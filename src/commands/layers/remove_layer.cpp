@@ -2,13 +2,12 @@
 
 #include "map_document.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 RemoveLayer::RemoveLayer(not_null<core::MapDocument*> document,
                          const layer_id id)
-    : QUndoCommand{TACTILE_QSTRING(u"Remove Layer")}
+    : QUndoCommand{QStringLiteral(u"Remove Layer")}
     , mDocument{document}
     , mId{id}
 {

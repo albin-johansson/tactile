@@ -13,7 +13,6 @@
 #include "map_parser.hpp"
 #include "object_layer.hpp"
 #include "open_map_document.hpp"
-#include "tactile_qstring.hpp"
 #include "xml_engine.hpp"
 
 using namespace tactile;
@@ -31,14 +30,14 @@ void ValidateLayers(const core::MapDocument& document)
 
   ASSERT_TRUE(document.HasLayer(1_layer));
 
-  const auto ground = TACTILE_QSTRING(u"ground");
+  const auto ground = QStringLiteral(u"ground");
 
   {  // First layer
     const auto* layer = document.GetLayer(1_layer);
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::TileLayer, layer->Type());
 
-    EXPECT_EQ(TACTILE_QSTRING(u"G0"), layer->Name());
+    EXPECT_EQ(QStringLiteral(u"G0"), layer->Name());
     EXPECT_EQ(1.0, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 
@@ -57,7 +56,7 @@ void ValidateLayers(const core::MapDocument& document)
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::TileLayer, layer->Type());
 
-    EXPECT_EQ(TACTILE_QSTRING(u"T0"), layer->Name());
+    EXPECT_EQ(QStringLiteral(u"T0"), layer->Name());
     EXPECT_EQ(0.75, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 
@@ -76,7 +75,7 @@ void ValidateLayers(const core::MapDocument& document)
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::ObjectLayer, layer->Type());
 
-    EXPECT_EQ(TACTILE_QSTRING(u"O1"), layer->Name());
+    EXPECT_EQ(QStringLiteral(u"O1"), layer->Name());
     EXPECT_EQ(1.0, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 
@@ -98,12 +97,12 @@ void ValidateLayers(const core::MapDocument& document)
     EXPECT_TRUE(object.IsVisible());
     EXPECT_TRUE(object.IsPoint());
     EXPECT_FALSE(object.CustomType());
-    EXPECT_EQ(TACTILE_QSTRING(u"Point"), object.Name());
+    EXPECT_EQ(QStringLiteral(u"Point"), object.Name());
 
     ASSERT_EQ(1, object.PropertyCount());
-    ASSERT_TRUE(object.HasProperty(TACTILE_QSTRING(u"foo")));
-    EXPECT_EQ(TACTILE_QSTRING(u"bar"),
-              object.GetProperty(TACTILE_QSTRING(u"foo")).AsString());
+    ASSERT_TRUE(object.HasProperty(QStringLiteral(u"foo")));
+    EXPECT_EQ(QStringLiteral(u"bar"),
+              object.GetProperty(QStringLiteral(u"foo")).AsString());
   }
 }
 
@@ -116,10 +115,10 @@ void ValidateTilesets(const core::MapDocument& document)
   ASSERT_TRUE(tilesets->Contains(1_ts));
   const auto& terrain = tilesets->At(1_ts);
 
-  const QFileInfo terrainPath{TACTILE_QSTRING(u"terrain.png")};
+  const QFileInfo terrainPath{QStringLiteral(u"terrain.png")};
   EXPECT_EQ(terrainPath.absoluteFilePath(), terrain.File().canonicalFilePath());
 
-  ASSERT_EQ(TACTILE_QSTRING(u"terrain"), terrain.Name());
+  ASSERT_EQ(QStringLiteral(u"terrain"), terrain.Name());
   EXPECT_EQ(1_t, terrain.FirstId());
   EXPECT_EQ(32_col, terrain.ColumnCount());
   EXPECT_EQ(1'024, terrain.TileCount());
@@ -131,10 +130,10 @@ void ValidateTilesets(const core::MapDocument& document)
   ASSERT_TRUE(tilesets->Contains(2_ts));
   const auto& outside = tilesets->At(2_ts);
 
-  const QFileInfo outsidePath{TACTILE_QSTRING(u"outside.png")};
+  const QFileInfo outsidePath{QStringLiteral(u"outside.png")};
   EXPECT_EQ(outsidePath.absoluteFilePath(), outside.File().canonicalFilePath());
 
-  ASSERT_EQ(TACTILE_QSTRING(u"outside"), outside.Name());
+  ASSERT_EQ(QStringLiteral(u"outside"), outside.Name());
   EXPECT_EQ(1'025_t, outside.FirstId());
   EXPECT_EQ(32_col, outside.ColumnCount());
   EXPECT_EQ(1'024, outside.TileCount());
@@ -147,20 +146,19 @@ void ValidateTilesets(const core::MapDocument& document)
 void ValidateProperties(const core::MapDocument& document)
 {
   ASSERT_EQ(7, document.PropertyCount());
-  const auto string = TACTILE_QSTRING(u"str");
-  const auto color = TACTILE_QSTRING(u"color");
-  const auto integer = TACTILE_QSTRING(u"i");
-  const auto floating = TACTILE_QSTRING(u"f");
-  const auto boolean = TACTILE_QSTRING(u"isCool");
-  const auto object = TACTILE_QSTRING(u"obj");
-  const auto file = TACTILE_QSTRING(u"path");
+  const auto string = QStringLiteral(u"str");
+  const auto color = QStringLiteral(u"color");
+  const auto integer = QStringLiteral(u"i");
+  const auto floating = QStringLiteral(u"f");
+  const auto boolean = QStringLiteral(u"isCool");
+  const auto object = QStringLiteral(u"obj");
+  const auto file = QStringLiteral(u"path");
 
   ASSERT_TRUE(document.HasProperty(string));
-  EXPECT_EQ(TACTILE_QSTRING(u"foobar"),
-            document.GetProperty(string).AsString());
+  EXPECT_EQ(QStringLiteral(u"foobar"), document.GetProperty(string).AsString());
 
   ASSERT_TRUE(document.HasProperty(color));
-  EXPECT_EQ(QColor{TACTILE_QSTRING(u"#ff550000")},
+  EXPECT_EQ(QColor{QStringLiteral(u"#ff550000")},
             document.GetProperty(color).AsColor());
 
   ASSERT_TRUE(document.HasProperty(integer));
@@ -175,7 +173,7 @@ void ValidateProperties(const core::MapDocument& document)
   ASSERT_TRUE(document.HasProperty(object));
   EXPECT_EQ(core::object_ref{1}, document.GetProperty(object).AsObject());
 
-  const QFileInfo path{TACTILE_QSTRING(u"../terrain.png")};
+  const QFileInfo path{QStringLiteral(u"../terrain.png")};
   ASSERT_TRUE(document.HasProperty(file));
   EXPECT_EQ(path.absoluteFilePath(),
             document.GetProperty(file).AsFile().absoluteFilePath());
@@ -202,13 +200,13 @@ TACTILE_DEFINE_TEST_P(MapImportTest, QString)
 }
 
 inline const auto embeddedValues =
-    testing::Values(TACTILE_QSTRING(u"maps/embedded.tmx"),
-                    TACTILE_QSTRING(u"maps/embedded.json"));
+    testing::Values(QStringLiteral(u"maps/embedded.tmx"),
+                    QStringLiteral(u"maps/embedded.json"));
 
 TACTILE_REGISTER_TEST_P(MapImportTest, embeddedValues);
 
 // inline const auto externalValues =
-//    testing::Values(TACTILE_QSTRING(u"maps/external.tmx"),
-//                    TACTILE_QSTRING(u"maps/external.json"));
+//    testing::Values(QStringLiteral(u"maps/external.tmx"),
+//                    QStringLiteral(u"maps/external.json"));
 
 // TACTILE_REGISTER_TEST_P(MapImportExternalTest, externalValues);

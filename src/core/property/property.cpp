@@ -1,7 +1,6 @@
 #include "property.hpp"
 
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::core {
 
@@ -158,25 +157,25 @@ auto Stringify(PropertyType type) -> QString
   switch (type)
   {
     case PropertyType::String:
-      return TACTILE_QSTRING(u"string");
+      return QStringLiteral(u"string");
 
     case PropertyType::Integer:
-      return TACTILE_QSTRING(u"int");
+      return QStringLiteral(u"int");
 
     case PropertyType::Floating:
-      return TACTILE_QSTRING(u"float");
+      return QStringLiteral(u"float");
 
     case PropertyType::Boolean:
-      return TACTILE_QSTRING(u"bool");
+      return QStringLiteral(u"bool");
 
     case PropertyType::File:
-      return TACTILE_QSTRING(u"file");
+      return QStringLiteral(u"file");
 
     case PropertyType::Color:
-      return TACTILE_QSTRING(u"color");
+      return QStringLiteral(u"color");
 
     case PropertyType::Object:
-      return TACTILE_QSTRING(u"object");
+      return QStringLiteral(u"object");
 
     default:
       throw TactileError{"Did not recognize property type!"};

@@ -3,7 +3,6 @@
 #include <gtest/gtest.h>
 
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 using namespace tactile;
 
@@ -41,7 +40,7 @@ TEST(PropertyItems, UpdateItemData)
   }
 
   {  // String item
-    const core::Property property{TACTILE_QSTRING(u"foo")};
+    const core::Property property{QStringLiteral(u"foo")};
 
     vm::StringItem item;
     EXPECT_NO_THROW(vm::UpdateItemData(&item, property));
@@ -62,7 +61,7 @@ TEST(PropertyItems, UpdateItemData)
   }
 
   {  // File item
-    const core::Property property{QFileInfo{TACTILE_QSTRING("foo/bar")}};
+    const core::Property property{QFileInfo{QStringLiteral("foo/bar")}};
 
     vm::FileItem item;
     EXPECT_NO_THROW(vm::UpdateItemData(&item, property));
@@ -107,11 +106,11 @@ TEST(PropertyItems, ItemToProperty)
 
   {  // String item
     vm::StringItem item;
-    item.setData(TACTILE_QSTRING(u"foo"), Qt::EditRole);
+    item.setData(QStringLiteral(u"foo"), Qt::EditRole);
 
     const auto property = vm::ItemToProperty(&item);
     ASSERT_TRUE(property.IsString());
-    EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.AsString());
+    EXPECT_EQ(QStringLiteral(u"foo"), property.AsString());
   }
 
   {  // Color item
@@ -126,7 +125,7 @@ TEST(PropertyItems, ItemToProperty)
   {  // File item
     vm::FileItem item;
 
-    const auto file = TACTILE_QSTRING(u"foo/bar");
+    const auto file = QStringLiteral(u"foo/bar");
     item.setData(file, vm::PropertyItemRole::Path);
 
     const auto property = vm::ItemToProperty(&item);

@@ -2,7 +2,6 @@
 
 #include "preferences.hpp"
 #include "standard_paths.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -12,7 +11,7 @@ SaveAsDialog::SaveAsDialog(const QString& fileName, QWidget* parent)
   setAcceptMode(QFileDialog::AcceptSave);
 
   if (const auto format = prefs::DefaultFormat();
-      format.Value() == TACTILE_QSTRING(u"JSON"))
+      format.Value() == QStringLiteral(u"JSON"))
   {
     setNameFilter(tr("JSON files (*.json);;TMX files (*.tmx)"));
   }

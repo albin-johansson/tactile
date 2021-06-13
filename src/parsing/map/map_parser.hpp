@@ -14,7 +14,6 @@
 #include "maybe.hpp"
 #include "object_id.hpp"
 #include "parse_error.hpp"
-#include "tactile_qstring.hpp"
 #include "to_map_document.hpp"
 #include "to_property.hpp"
 
@@ -370,7 +369,7 @@ class MapParser final
       return WithError(ParseError::LayerMissingId);
     }
 
-    layer.name = object.String(ElementId::Name, TACTILE_QSTRING(u"Layer"));
+    layer.name = object.String(ElementId::Name, QStringLiteral(u"Layer"));
     layer.opacity = object.Floating(ElementId::Opacity, 1.0);
     layer.visible = object.Boolean(ElementId::Visible).value_or(true);
 

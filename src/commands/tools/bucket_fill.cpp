@@ -2,7 +2,6 @@
 
 #include "map_document.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 
 namespace tactile::cmd {
@@ -10,7 +9,7 @@ namespace tactile::cmd {
 BucketFill::BucketFill(not_null<core::MapDocument*> document,
                        const core::MapPosition& position,
                        const tile_id replacement)
-    : QUndoCommand{TACTILE_QSTRING(u"Bucket Fill")}
+    : QUndoCommand{QStringLiteral(u"Bucket Fill")}
     , mDocument{document}
     , mOrigin{position}
     , mReplacement{replacement}

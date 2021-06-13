@@ -2,12 +2,11 @@
 
 #include "invoke_n.hpp"
 #include "map.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 RemoveColumn::RemoveColumn(not_null<core::MapDocument*> document)
-    : RepeatedMapCommand{document, TACTILE_QSTRING(u"Remove Column")}
+    : RepeatedMapCommand{document, QStringLiteral(u"Remove Column")}
 {}
 
 void RemoveColumn::undo()

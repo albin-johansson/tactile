@@ -7,7 +7,6 @@
 #include "flood_fill.hpp"
 #include "invoke_n.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::core {
 
@@ -36,7 +35,7 @@ TileLayer::TileLayer(const row_t nRows, const col_t nCols)
   {
     throw TactileError{"Invalid tile_layer dimensions!"};
   }
-  mDelegate.SetName(TACTILE_QSTRING(u"Tile layer"));
+  mDelegate.SetName(QStringLiteral(u"Tile layer"));
 
   mTiles = MakeTileMatrix(nRows, nCols);
   assert(RowCount() == nRows);

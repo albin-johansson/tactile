@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile_qstring.hpp"
-
 using namespace tactile;
 
 TEST(Object, Defaults)
@@ -88,16 +86,16 @@ TEST(Object, SetName)
 {
   core::Object object{core::ObjectType::Point};
 
-  object.SetName(TACTILE_QSTRING(u"foo"));
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), object.Name());
+  object.SetName(QStringLiteral(u"foo"));
+  EXPECT_EQ(QStringLiteral(u"foo"), object.Name());
 }
 
 TEST(Object, SetCustomType)
 {
   core::Object object{core::ObjectType::Point};
 
-  object.SetCustomType(TACTILE_QSTRING(u"foobar"));
-  EXPECT_EQ(TACTILE_QSTRING(u"foobar"), object.CustomType());
+  object.SetCustomType(QStringLiteral(u"foobar"));
+  EXPECT_EQ(QStringLiteral(u"foobar"), object.CustomType());
 
   object.SetCustomType(std::nullopt);
   EXPECT_FALSE(object.CustomType());

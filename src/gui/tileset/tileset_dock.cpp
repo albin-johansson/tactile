@@ -1,7 +1,6 @@
 #include "tileset_dock.hpp"
 
 #include "map_document.hpp"
-#include "tactile_qstring.hpp"
 #include "tileset_widget.hpp"
 
 namespace tactile {
@@ -10,7 +9,7 @@ TilesetDock::TilesetDock(QWidget* parent)
     : DockWidget{parent}
     , mWidget{new TilesetWidget{this}}
 {
-  setObjectName(TACTILE_QSTRING(u"tileset_dock"));
+  setObjectName(QStringLiteral(u"TilesetDock"));
   setWindowTitle(tr("Tilesets"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

@@ -4,7 +4,6 @@
 
 #include "index_to_position.hpp"
 #include "ints.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 #include "to_property.hpp"
 
@@ -15,13 +14,13 @@ static_assert(IsParserEngine<XmlEngine, QDomDocument, XmlElement>);
 
 auto XmlEngine::Tilesets(const object_type& root) -> std::vector<object_type>
 {
-  return Collect(root, TACTILE_QSTRING(u"tileset"));
+  return Collect(root, QStringLiteral(u"tileset"));
 }
 
 auto XmlEngine::Layers(const object_type& root) -> std::vector<object_type>
 {
-  auto layers = Collect(root, TACTILE_QSTRING(u"layer"));
-  auto objectLayers = Collect(root, TACTILE_QSTRING(u"objectgroup"));
+  auto layers = Collect(root, QStringLiteral(u"layer"));
+  auto objectLayers = Collect(root, QStringLiteral(u"objectgroup"));
 
   // Move all object layers into the vector with tile layers
   layers.insert(layers.end(),
@@ -63,7 +62,7 @@ auto XmlEngine::Properties(const object_type& object)
 
 auto XmlEngine::Objects(const object_type& object) -> std::vector<object_type>
 {
-  return Collect(object, TACTILE_QSTRING(u"object"));
+  return Collect(object, QStringLiteral(u"object"));
 }
 
 auto XmlEngine::Tiles(const object_type& object,
@@ -73,7 +72,7 @@ auto XmlEngine::Tiles(const object_type& object,
 {
   auto matrix = core::MakeTileMatrix(nRows, nCols);
 
-  const auto data = object->firstChildElement(TACTILE_QSTRING(u"data"));
+  const auto data = object->firstChildElement(QStringLiteral(u"data"));
   const auto tiles = data.text().split(u',');
 
   int index{0};
@@ -103,7 +102,7 @@ auto XmlEngine::PropertyType(const object_type& object) -> QString
      omitted for string properties */
   if (AssumeStringProperty(object))
   {
-    return TACTILE_QSTRING(u"string");
+    return QStringLiteral(u"string");
   }
   else
   {
@@ -124,8 +123,8 @@ auto XmlEngine::FromFile(const QFileInfo& path) -> Maybe<document_type>
 auto XmlEngine::TilesetImageRelativePath(const object_type& object)
     -> Maybe<QString>
 {
-  const auto imageElem = object->firstChildElement(TACTILE_QSTRING(u"image"));
-  const auto path = imageElem.attribute(TACTILE_QSTRING(u"source"));
+  const auto imageElem = object->firstChildElement(QStringLiteral(u"image"));
+  const auto path = imageElem.attribute(QStringLiteral(u"source"));
   if (!path.isNull())
   {
     return path;
@@ -153,22 +152,22 @@ auto XmlEngine::ContainsLayers(const object_type& object) -> bool
 
 auto XmlEngine::AssumeStringProperty(const object_type& object) -> bool
 {
-  return !object->hasAttribute(TACTILE_QSTRING(u"type"));
+  return !object->hasAttribute(QStringLiteral(u"type"));
 }
 
 auto XmlEngine::IsTileLayer(const object_type& object) -> bool
 {
-  return object->tagName() == TACTILE_QSTRING(u"layer");
+  return object->tagName() == QStringLiteral(u"layer");
 }
 
 auto XmlEngine::IsObjectLayer(const object_type& object) -> bool
 {
-  return object->tagName() == TACTILE_QSTRING(u"objectgroup");
+  return object->tagName() == QStringLiteral(u"objectgroup");
 }
 
 auto XmlEngine::IsPoint(const object_type& object) -> bool
 {
-  return HasChild(object, TACTILE_QSTRING(u"point"));
+  return HasChild(object, QStringLiteral(u"point"));
 }
 
 auto XmlEngine::Collect(const object_type& root, const QString& key)

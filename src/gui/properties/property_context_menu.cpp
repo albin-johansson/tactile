@@ -1,7 +1,6 @@
 #include "property_context_menu.hpp"
 
 #include "icons.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -18,7 +17,7 @@ PropertyContextMenu::PropertyContextMenu(QWidget* parent)
 {
   mCopy->setShortcut(QKeySequence::Copy);
   mPaste->setShortcut(QKeySequence::Paste);
-  mRename->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+R")));
+  mRename->setShortcut(QKeySequence::fromString(QStringLiteral(u"CTRL+R")));
   mRemove->setShortcut(QKeySequence::Delete);
 
   mCopy->setShortcutContext(Qt::WidgetWithChildrenShortcut);

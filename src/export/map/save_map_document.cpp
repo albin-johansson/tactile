@@ -5,7 +5,6 @@
 #include "save_map_document_as_json.hpp"
 #include "save_map_document_as_xml.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -14,11 +13,11 @@ void SaveMapDocument(const QString& path, const core::MapDocument& document)
   const QFileInfo info{path};
 
   const auto suffix = info.suffix();
-  if (suffix == TACTILE_QSTRING(u"tmx"))
+  if (suffix == QStringLiteral(u"tmx"))
   {
     SaveMapDocumentAsXml(path, document);
   }
-  else if (suffix == TACTILE_QSTRING(u"json"))
+  else if (suffix == QStringLiteral(u"json"))
   {
     SaveMapDocumentAsJson(path, document);
   }

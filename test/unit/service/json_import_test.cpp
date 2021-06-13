@@ -1,14 +1,13 @@
 #include <gtest/gtest.h>
 
 #include "open_map_document.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 
 using namespace tactile;
 
 TEST(ImportJsonMap, Embedded)
 {
-  const auto path = TACTILE_QSTRING(u"json/embedded.json");
+  const auto path = QStringLiteral(u"json/embedded.json");
 
   QObject object;
   ParseError error;
@@ -77,7 +76,7 @@ TEST(ImportJsonMap, Embedded)
 
     const auto& tileset = tilesets->At(id);
     EXPECT_EQ(1_t, tileset.FirstId());
-    EXPECT_EQ(TACTILE_QSTRING(u"terrain"), tileset.Name());
+    EXPECT_EQ(QStringLiteral(u"terrain"), tileset.Name());
     EXPECT_EQ(32_tw, tileset.GetTileWidth());
     EXPECT_EQ(32_th, tileset.GetTileHeight());
     EXPECT_EQ(1'024, tileset.TileCount());
@@ -85,7 +84,7 @@ TEST(ImportJsonMap, Embedded)
     EXPECT_EQ(1'024, tileset.Height());
     EXPECT_EQ(32_col, tileset.ColumnCount());
 
-    const QFileInfo file{TACTILE_QSTRING(u"terrain.png")};
+    const QFileInfo file{QStringLiteral(u"terrain.png")};
     EXPECT_EQ(file.absoluteFilePath(), tileset.File().absoluteFilePath());
   }
 }
@@ -93,7 +92,7 @@ TEST(ImportJsonMap, Embedded)
 // TODO move this to map_import_test.cpp
 TEST(ImportJsonMap, External)
 {
-  const auto path = TACTILE_QSTRING(u"json/external.json");
+  const auto path = QStringLiteral(u"json/external.json");
 
   QObject object;
   ParseError error;
@@ -163,7 +162,7 @@ TEST(ImportJsonMap, External)
 
       const auto& tileset = tilesets->At(id);
       EXPECT_EQ(1_t, tileset.FirstId());
-      EXPECT_EQ(TACTILE_QSTRING(u"terrain"), tileset.Name());
+      EXPECT_EQ(QStringLiteral(u"terrain"), tileset.Name());
       EXPECT_EQ(32_tw, tileset.GetTileWidth());
       EXPECT_EQ(32_th, tileset.GetTileHeight());
       EXPECT_EQ(1'024, tileset.TileCount());
@@ -171,7 +170,7 @@ TEST(ImportJsonMap, External)
       EXPECT_EQ(1'024, tileset.Height());
       EXPECT_EQ(32_col, tileset.ColumnCount());
 
-      const QFileInfo file{TACTILE_QSTRING(u"terrain.png")};
+      const QFileInfo file{QStringLiteral(u"terrain.png")};
       EXPECT_EQ(file.absoluteFilePath(), tileset.File().absoluteFilePath());
     }
 
@@ -181,7 +180,7 @@ TEST(ImportJsonMap, External)
 
       const auto& tileset = tilesets->At(id);
       EXPECT_EQ(1025_t, tileset.FirstId());
-      EXPECT_EQ(TACTILE_QSTRING(u"outside"), tileset.Name());
+      EXPECT_EQ(QStringLiteral(u"outside"), tileset.Name());
       EXPECT_EQ(32_tw, tileset.GetTileWidth());
       EXPECT_EQ(32_th, tileset.GetTileHeight());
       EXPECT_EQ(1'024, tileset.TileCount());
@@ -189,7 +188,7 @@ TEST(ImportJsonMap, External)
       EXPECT_EQ(1'024, tileset.Height());
       EXPECT_EQ(32_col, tileset.ColumnCount());
 
-      const QFileInfo file{TACTILE_QSTRING(u"outside.png")};
+      const QFileInfo file{QStringLiteral(u"outside.png")};
       EXPECT_EQ(file.absoluteFilePath(), tileset.File().absoluteFilePath());
     }
   }

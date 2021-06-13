@@ -6,7 +6,6 @@
 #include "property.hpp"
 #include "property_item_role.hpp"
 #include "property_item_type.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::vm {
 
@@ -27,7 +26,7 @@ class StringItem final : public QStandardItem
   StringItem() : QStandardItem{}
   {
     setEditable(true);
-    setToolTip(TACTILE_QSTRING(u"(string)"));
+    setToolTip(QStringLiteral(u"(string)"));
   }
 
   [[nodiscard]] auto type() const -> int override
@@ -41,7 +40,7 @@ class IntItem final : public QStandardItem
  public:
   IntItem() : QStandardItem{}
   {
-    setToolTip(TACTILE_QSTRING(u"(int)"));
+    setToolTip(QStringLiteral(u"(int)"));
   }
 
   [[nodiscard]] auto type() const -> int override
@@ -55,7 +54,7 @@ class FloatItem final : public QStandardItem
  public:
   FloatItem() : QStandardItem{}
   {
-    setToolTip(TACTILE_QSTRING(u"(float)"));
+    setToolTip(QStringLiteral(u"(float)"));
   }
 
   [[nodiscard]] auto type() const -> int override
@@ -71,7 +70,7 @@ class BoolItem final : public QStandardItem
   {
     setEditable(false);
     setCheckable(true);
-    setToolTip(TACTILE_QSTRING(u"(bool)"));
+    setToolTip(QStringLiteral(u"(bool)"));
   }
 
   [[nodiscard]] auto type() const -> int override
@@ -86,7 +85,7 @@ class ObjectItem final : public QStandardItem
   ObjectItem() : QStandardItem{}
   {
     setEditable(false);
-    setToolTip(TACTILE_QSTRING(u"(object)"));
+    setToolTip(QStringLiteral(u"(object)"));
   }
 
   [[nodiscard]] auto type() const -> int override
@@ -101,7 +100,7 @@ class ColorItem final : public QStandardItem
   ColorItem() : QStandardItem{}
   {
     setEditable(false);
-    setToolTip(TACTILE_QSTRING(u"(color)"));
+    setToolTip(QStringLiteral(u"(color)"));
   }
 
   [[nodiscard]] auto type() const -> int override
@@ -115,7 +114,7 @@ class FileItem final : public QStandardItem
  public:
   FileItem() : QStandardItem{}
   {
-    setToolTip(TACTILE_QSTRING(u"(file)"));
+    setToolTip(QStringLiteral(u"(file)"));
     setEditable(false);
   }
 

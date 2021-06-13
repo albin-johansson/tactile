@@ -129,7 +129,7 @@ class Window final : public QMainWindow
 
   void OnNewMapAdded(not_null<core::MapDocument*> document,
                      map_id id,
-                     const QString& name = TACTILE_QSTRING(u"map"));
+                     const QString& name = QStringLiteral(u"map"));
 
   /// \name Undo/Redo slots
   /// \{

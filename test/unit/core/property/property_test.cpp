@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile_qstring.hpp"
-
 using namespace tactile;
 
 TEST(Property, Defaults)
@@ -55,11 +53,11 @@ TEST(Property, FloatProperty)
 
 TEST(Property, StringProperty)
 {
-  const core::Property property{TACTILE_QSTRING(u"foo")};
+  const core::Property property{QStringLiteral(u"foo")};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsString());
   EXPECT_TRUE(property.TryAsString());
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.AsString());
+  EXPECT_EQ(QStringLiteral(u"foo"), property.AsString());
 
   EXPECT_FALSE(property.IsInteger());
   EXPECT_FALSE(property.IsFloating());
@@ -87,7 +85,7 @@ TEST(Property, BoolProperty)
 
 TEST(Property, FileProperty)
 {
-  const QFileInfo file{TACTILE_QSTRING(u"resources/foo.txt")};
+  const QFileInfo file{QStringLiteral(u"resources/foo.txt")};
   const core::Property property{file};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsFile());
@@ -163,9 +161,9 @@ TEST(Property, SetValue)
   ASSERT_TRUE(property.IsBoolean());
   EXPECT_TRUE(property.AsBoolean());
 
-  property.SetValue(TACTILE_QSTRING(u"foo"));
+  property.SetValue(QStringLiteral(u"foo"));
   ASSERT_TRUE(property.IsString());
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), property.AsString());
+  EXPECT_EQ(QStringLiteral(u"foo"), property.AsString());
 }
 
 TEST(Property, HasValue)
@@ -217,7 +215,7 @@ TEST(Property, Type)
   property.SetValue(12.3);
   EXPECT_EQ(core::PropertyType::Floating, property.Type());
 
-  property.SetValue(TACTILE_QSTRING(u"foo"));
+  property.SetValue(QStringLiteral(u"foo"));
   EXPECT_EQ(core::PropertyType::String, property.Type());
 
   property.Reset();

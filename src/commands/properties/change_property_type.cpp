@@ -3,7 +3,6 @@
 #include <utility>  // move
 
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
@@ -12,7 +11,7 @@ namespace tactile::cmd {
 ChangePropertyType::ChangePropertyType(not_null<core::IPropertyManager*> manager,
                                        QString name,
                                        const core::PropertyType type)
-    : QUndoCommand{TACTILE_QSTRING(u"Change Property Type")}
+    : QUndoCommand{QStringLiteral(u"Change Property Type")}
     , mManager{manager}
     , mName{std::move(name)}
     , mType{type}

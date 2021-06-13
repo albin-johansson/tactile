@@ -52,8 +52,7 @@ void ParseGroup(const QJsonObject& json,
   setIfExists(QPalette::ColorRole::LinkVisited, u"LinkVisited");
 }
 
-[[nodiscard]] auto GetJsonObject(const QString& file)
-    -> Maybe<QJsonObject>
+[[nodiscard]] auto GetJsonObject(const QString& file) -> Maybe<QJsonObject>
 {
   FileHandle themeFile{file};
   if (!themeFile.Exists())

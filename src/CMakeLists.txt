@@ -380,7 +380,6 @@ set(TACTILE_SOURCE_FILES
     util/standard_paths.hpp
     util/string_utils.cpp
     util/string_utils.hpp
-    util/tactile_qstring.hpp
     util/vector_map.hpp
     )
 

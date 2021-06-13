@@ -11,7 +11,6 @@
 #include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
 
@@ -60,7 +59,7 @@ class TilesetDialog final : public QDialog
         const auto& name = dialog.mImageName;
         const TilesetInfo info{
             .image = dialog.mImage,
-            .name = name ? *name : TACTILE_QSTRING(u"Untitled"),
+            .name = name ? *name : QStringLiteral(u"Untitled"),
             .tileWidth = *tileWidth,
             .tileHeight = *tileHeight,
             .path = QFileInfo{dialog.mPath}};

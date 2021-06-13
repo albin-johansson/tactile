@@ -4,13 +4,12 @@
 
 #include "property_manager.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 RemoveProperty::RemoveProperty(core::IPropertyManager* manager, QString name)
-    : QUndoCommand{TACTILE_QSTRING(u"Remove Property \"") + name +
-                   TACTILE_QSTRING(u"\"")}
+    : QUndoCommand{QStringLiteral(u"Remove Property \"") + name +
+                   QStringLiteral(u"\"")}
     , mManager{manager}
     , mName{std::move(name)}
 {

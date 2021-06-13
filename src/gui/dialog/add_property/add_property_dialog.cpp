@@ -5,7 +5,6 @@
 #include "init_ui.hpp"
 #include "property_name_validator.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 #include "ui_add_property_dialog.h"
 
 namespace tactile {
@@ -15,7 +14,7 @@ AddPropertyDialog::AddPropertyDialog(QStandardItemModel* model, QWidget* parent)
     , mUi{InitUi<Ui::AddPropertyDialog>(this)}
     , mNameValidator{new PropertyNameValidator{model, this}}
 {
-  setObjectName(TACTILE_QSTRING(u"add_property_dialog"));
+  setObjectName(QStringLiteral(u"AddPropertyDialog"));
 
   // clang-format off
   connect(mUi->nameEdit, &QLineEdit::textChanged, this, &AddPropertyDialog::OnNameChanged);
@@ -31,31 +30,31 @@ AddPropertyDialog::~AddPropertyDialog() noexcept = default;
 void AddPropertyDialog::UpdateType()
 {
   const auto text = mUi->typeComboBox->currentText();
-  if (text == TACTILE_QSTRING(u"string"))
+  if (text == QStringLiteral(u"string"))
   {
     mType = core::PropertyType::String;
   }
-  else if (text == TACTILE_QSTRING(u"int"))
+  else if (text == QStringLiteral(u"int"))
   {
     mType = core::PropertyType::Integer;
   }
-  else if (text == TACTILE_QSTRING(u"float"))
+  else if (text == QStringLiteral(u"float"))
   {
     mType = core::PropertyType::Floating;
   }
-  else if (text == TACTILE_QSTRING(u"bool"))
+  else if (text == QStringLiteral(u"bool"))
   {
     mType = core::PropertyType::Boolean;
   }
-  else if (text == TACTILE_QSTRING(u"color"))
+  else if (text == QStringLiteral(u"color"))
   {
     mType = core::PropertyType::Color;
   }
-  else if (text == TACTILE_QSTRING(u"object"))
+  else if (text == QStringLiteral(u"object"))
   {
     mType = core::PropertyType::Object;
   }
-  else if (text == TACTILE_QSTRING(u"file"))
+  else if (text == QStringLiteral(u"file"))
   {
     mType = core::PropertyType::File;
   }

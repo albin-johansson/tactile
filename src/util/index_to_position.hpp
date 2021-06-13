@@ -8,7 +8,8 @@ namespace tactile {
                                              const col_t nCols) noexcept
     -> core::MapPosition
 {
-  return core::MapPosition{row_t{index / nCols.get()}, col_t{index % nCols.get()}};
+  return core::MapPosition{row_t{index / nCols.get()},
+                           col_t{index % nCols.get()}};
 }
 
 }  // namespace tactile

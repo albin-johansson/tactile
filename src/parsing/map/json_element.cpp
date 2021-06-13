@@ -45,8 +45,7 @@ auto JsonElement::Integer(const ElementId id) const -> Maybe<int>
   }
 }
 
-auto JsonElement::Integer(const ElementId id, const int def) const
-    -> Maybe<int>
+auto JsonElement::Integer(const ElementId id, const int def) const -> Maybe<int>
 {
   return Integer(id).value_or(def);
 }

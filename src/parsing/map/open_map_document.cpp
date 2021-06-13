@@ -5,7 +5,6 @@
 #include "json_engine.hpp"
 #include "map_parser.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 #include "xml_engine.hpp"
 
 namespace tactile {
@@ -35,11 +34,11 @@ auto OpenMapDocument(const QString& path, ParseError& error)
   const QFileInfo info{path};
   const auto suffix = info.suffix();
 
-  if (suffix == TACTILE_QSTRING(u"json"))
+  if (suffix == QStringLiteral(u"json"))
   {
     return OpenUsing<JsonEngine>(path, error);
   }
-  else if (suffix == TACTILE_QSTRING(u"tmx"))
+  else if (suffix == QStringLiteral(u"tmx"))
   {
     return OpenUsing<XmlEngine>(path, error);
   }

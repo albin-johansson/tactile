@@ -1,12 +1,10 @@
 #include "layer_list_view.hpp"
 
-#include "tactile_qstring.hpp"
-
 namespace tactile {
 
 LayerListView::LayerListView(QWidget* parent) : QListView{parent}
 {
-  setObjectName(TACTILE_QSTRING(u"LayerListView"));
+  setObjectName(QStringLiteral(u"LayerListView"));
 
   setContextMenuPolicy(Qt::CustomContextMenu);
   setSelectionBehavior(SelectRows);

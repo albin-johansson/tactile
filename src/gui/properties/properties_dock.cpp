@@ -1,7 +1,6 @@
 #include "properties_dock.hpp"
 
 #include "properties_widget.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -9,7 +8,7 @@ PropertiesDock::PropertiesDock(QWidget* parent)
     : DockWidget{parent}
     , mWidget{new PropertiesWidget{this}}
 {
-  setObjectName(TACTILE_QSTRING(u"properties_dock"));
+  setObjectName(QStringLiteral(u"PropertiesDock"));
   setWindowTitle(tr("Properties"));
   setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
   setContentsMargins(0, 0, 0, 0);

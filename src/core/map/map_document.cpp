@@ -313,7 +313,7 @@ auto MapDocument::AddTileLayer() -> layer_id
   const auto id = mMap->NextLayerId();  // must be before make_tile_layer
   auto layer = mMap->MakeTileLayer();
 
-  layer->SetName(layer->Name() + TACTILE_QSTRING(u" ") +
+  layer->SetName(layer->Name() + QStringLiteral(u" ") +
                  QString::number(mTileLayerSuffix));
   ++mTileLayerSuffix;
 
@@ -326,7 +326,7 @@ auto MapDocument::AddObjectLayer() -> layer_id
   const auto id = mMap->NextLayerId();  // must be before make_object_layer
   auto layer = mMap->MakeObjectLayer();
 
-  layer->SetName(layer->Name() + TACTILE_QSTRING(u" ") +
+  layer->SetName(layer->Name() + QStringLiteral(u" ") +
                  QString::number(mObjectLayerSuffix));
   ++mObjectLayerSuffix;
 

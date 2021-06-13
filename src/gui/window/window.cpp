@@ -12,7 +12,6 @@
 #include "setting.hpp"
 #include "settings_dialog.hpp"
 #include "status_bar.hpp"
-#include "tactile_qstring.hpp"
 #include "tileset_dock.hpp"
 #include "tool_dock.hpp"
 #include "ui_window.h"
@@ -68,7 +67,7 @@ void Window::SaveAs()
 {
   SaveAsDialog::Spawn(
       [this](const QString& path) { emit S_SaveAs(path); },
-      mEditor->ActiveTabName().value_or(TACTILE_QSTRING(u"map")));
+      mEditor->ActiveTabName().value_or(QStringLiteral(u"map")));
 }
 
 void Window::CenterViewport()
@@ -270,12 +269,12 @@ void Window::OnRedoStateUpdated(const bool canRedo)
 
 void Window::OnUndoTextUpdated(const QString& text)
 {
-  mUi->actionUndo->setText(TACTILE_QSTRING(u"Undo ") + text);
+  mUi->actionUndo->setText(QStringLiteral(u"Undo ") + text);
 }
 
 void Window::OnRedoTextUpdated(const QString& text)
 {
-  mUi->actionRedo->setText(TACTILE_QSTRING(u"Redo ") + text);
+  mUi->actionRedo->setText(QStringLiteral(u"Redo ") + text);
 }
 
 void Window::OnCleanChanged(const bool clean)

@@ -3,12 +3,11 @@
 #include "invoke_n.hpp"
 #include "map_document.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 AddRow::AddRow(not_null<core::MapDocument*> document)
-    : RepeatedCommand{TACTILE_QSTRING(u"Add Row")}
+    : RepeatedCommand{QStringLiteral(u"Add Row")}
     , mDocument{document}
 {
   if (!mDocument)

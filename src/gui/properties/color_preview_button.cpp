@@ -3,7 +3,6 @@
 #include <QColorDialog>
 
 #include "color_utils.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -11,7 +10,7 @@ ColorPreviewButton::ColorPreviewButton(const QColor color, QWidget* parent)
     : QPushButton{parent}
     , mColor{color}
 {
-  setObjectName(TACTILE_QSTRING(u"color_preview_dialog"));
+  setObjectName(QStringLiteral(u"ColorPreviewButton"));
   UpdateColor(mColor);
 
   connect(this, &QPushButton::clicked, [this] {
@@ -27,10 +26,10 @@ ColorPreviewButton::ColorPreviewButton(const QColor color, QWidget* parent)
 
 void ColorPreviewButton::UpdateColor(QPushButton& button, const QColor& color)
 {
-  static const auto black = TACTILE_QSTRING(u"#000000");
-  static const auto white = TACTILE_QSTRING(u"#FFFFFF");
+  static const auto black = QStringLiteral(u"#000000");
+  static const auto white = QStringLiteral(u"#FFFFFF");
 
-  static const auto fmt = TACTILE_QSTRING(u"background-color: %1; color: %2;");
+  static const auto fmt = QStringLiteral(u"background-color: %1; color: %2;");
   button.setStyleSheet(
       fmt.arg(color.name(QColor::HexArgb), IsBright(color) ? black : white));
 

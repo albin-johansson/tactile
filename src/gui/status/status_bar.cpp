@@ -1,15 +1,14 @@
 #include "status_bar.hpp"
 
 #include "map_document.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
 StatusBar::StatusBar(QWidget* parent)
     : QStatusBar{parent}
     , mLayerBox{new QComboBox{this}}
-    , mMouseXLabel{new QLabel{TACTILE_QSTRING(u"X:")}}
-    , mMouseYLabel{new QLabel{TACTILE_QSTRING(u"Y:")}}
+    , mMouseXLabel{new QLabel{QStringLiteral(u"X:")}}
+    , mMouseYLabel{new QLabel{QStringLiteral(u"Y:")}}
     , mMouseXValueLabel{new QLabel{}}
     , mMouseYValueLabel{new QLabel{}}
 {

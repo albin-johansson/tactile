@@ -3,16 +3,15 @@
 #include <utility>  // move
 
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 RenameProperty::RenameProperty(core::IPropertyManager* manager,
                                QString oldName,
                                QString newName)
-    : QUndoCommand{TACTILE_QSTRING(u"Rename Property \"") + oldName +
-                   TACTILE_QSTRING(u"\" to \"") + newName +
-                   TACTILE_QSTRING(u"\"")}
+    : QUndoCommand{QStringLiteral(u"Rename Property \"") + oldName +
+                   QStringLiteral(u"\" to \"") + newName +
+                   QStringLiteral(u"\"")}
     , mManager{manager}
     , mOldName{std::move(oldName)}
     , mNewName{std::move(newName)}

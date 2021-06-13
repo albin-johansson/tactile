@@ -5,7 +5,6 @@
 #include "index_to_position.hpp"
 #include "ints.hpp"
 #include "json_utils.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 #include "to_property.hpp"
 
@@ -104,12 +103,12 @@ auto JsonEngine::ContainsLayers(const object_type& object) -> bool
 
 auto JsonEngine::IsTileLayer(const object_type& object) -> bool
 {
-  return object->value(u"type").toString() == TACTILE_QSTRING(u"tilelayer");
+  return object->value(u"type").toString() == QStringLiteral(u"tilelayer");
 }
 
 auto JsonEngine::IsObjectLayer(const object_type& object) -> bool
 {
-  return object->value(u"type").toString() == TACTILE_QSTRING(u"objectgroup");
+  return object->value(u"type").toString() == QStringLiteral(u"objectgroup");
 }
 
 auto JsonEngine::IsPoint(const object_type& object) -> bool

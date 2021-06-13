@@ -12,13 +12,12 @@
 #include "property_items.hpp"
 #include "property_model.hpp"
 #include "select_file_dialog.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
 PropertyTreeView::PropertyTreeView(QWidget* parent) : QTreeView{parent}
 {
-  setObjectName(TACTILE_QSTRING(u"property_tree_view"));
+  setObjectName(QStringLiteral(u"PropertyTreeView"));
 
   setSelectionBehavior(SelectRows);
   setSelectionMode(SingleSelection);

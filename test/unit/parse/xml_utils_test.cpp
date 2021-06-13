@@ -2,7 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile_qstring.hpp"
 #include "tile_id.hpp"
 
 using namespace tactile;
@@ -10,11 +9,11 @@ using namespace tactile;
 TEST(XmlUtils, GetIntAttr)
 {
   QDomDocument document;
-  auto elem = document.createElement(TACTILE_QSTRING(u"foo"));
+  auto elem = document.createElement(QStringLiteral(u"foo"));
 
-  EXPECT_FALSE(GetIntAttr(elem, TACTILE_QSTRING(u"bar")));
+  EXPECT_FALSE(GetIntAttr(elem, QStringLiteral(u"bar")));
 
-  const auto name = TACTILE_QSTRING(u"Gandalf");
+  const auto name = QStringLiteral(u"Gandalf");
   const auto value = 1'337;
 
   elem.setAttribute(name, value);
@@ -25,38 +24,37 @@ TEST(XmlUtils, GetIntAttr)
 TEST(XmlUtils, GetIntAttrDefaultValue)
 {
   QDomDocument document;
-  auto elem = document.createElement(TACTILE_QSTRING(u"foo"));
+  auto elem = document.createElement(QStringLiteral(u"foo"));
 
-  EXPECT_NO_THROW(GetIntAttr(elem, TACTILE_QSTRING(u"random"), 0));
+  EXPECT_NO_THROW(GetIntAttr(elem, QStringLiteral(u"random"), 0));
 
   const auto value = 8'912;
-  EXPECT_EQ(value, GetIntAttr(elem, TACTILE_QSTRING(u"xyz"), value));
-  EXPECT_EQ(10_t, GetIntAttr<tile_id>(elem, TACTILE_QSTRING(u"xyz"), 10_t));
+  EXPECT_EQ(value, GetIntAttr(elem, QStringLiteral(u"xyz"), value));
+  EXPECT_EQ(10_t, GetIntAttr<tile_id>(elem, QStringLiteral(u"xyz"), 10_t));
 }
 
 TEST(XmlUtils, GetDoubleAttr)
 {
   QDomDocument document;
-  auto elem = document.createElement(TACTILE_QSTRING(u"foo"));
+  auto elem = document.createElement(QStringLiteral(u"foo"));
 
-  EXPECT_NO_THROW(GetDoubleAttr(elem, TACTILE_QSTRING(u"random"), 0.0));
+  EXPECT_NO_THROW(GetDoubleAttr(elem, QStringLiteral(u"random"), 0.0));
 
   const auto value = 27.6;
-  EXPECT_EQ(value, GetDoubleAttr(elem, TACTILE_QSTRING(u"xyz"), value));
+  EXPECT_EQ(value, GetDoubleAttr(elem, QStringLiteral(u"xyz"), value));
 
   using mana_type = nenya::strong_type<double, struct mana_t>;
   const mana_type mana{9.2};
-  EXPECT_EQ(mana,
-            GetDoubleAttr<mana_type>(elem, TACTILE_QSTRING(u"xyz"), mana));
+  EXPECT_EQ(mana, GetDoubleAttr<mana_type>(elem, QStringLiteral(u"xyz"), mana));
 }
 
 TEST(XmlUtils, VisitElements)
 {
   QDomDocument document{};
 
-  auto root = document.createElement(TACTILE_QSTRING(u"root"));
+  auto root = document.createElement(QStringLiteral(u"root"));
 
-  const auto tag = TACTILE_QSTRING(u"foo");
+  const auto tag = QStringLiteral(u"foo");
   root.appendChild(document.createElement(tag));
   root.appendChild(document.createElement(tag));
   root.appendChild(document.createElement(tag));

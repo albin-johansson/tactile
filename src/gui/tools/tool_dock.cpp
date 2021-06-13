@@ -2,7 +2,6 @@
 
 #include <QLayout>
 
-#include "tactile_qstring.hpp"
 #include "tool_widget.hpp"
 
 namespace tactile {
@@ -11,7 +10,7 @@ ToolDock::ToolDock(QWidget* parent)
     : DockWidget{parent}
     , mWidget{new ToolWidget{this}}
 {
-  setObjectName(TACTILE_QSTRING(u"tool_dock"));
+  setObjectName(QStringLiteral(u"ToolDock"));
   setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
   setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
   setContentsMargins(0, 0, 0, 0);

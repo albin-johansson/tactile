@@ -1,14 +1,13 @@
 #include "resize_map.hpp"
 
 #include "map.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 ResizeMap::ResizeMap(not_null<core::MapDocument*> document,
                      const row_t rows,
                      const col_t cols)
-    : MapCommand{document, TACTILE_QSTRING(u"Resize Map")}
+    : MapCommand{document, QStringLiteral(u"Resize Map")}
     , mRows{rows}
     , mCols{cols}
 {}

@@ -11,7 +11,6 @@
 #include "layer_utils.hpp"
 #include "object_layer.hpp"
 #include "preferences.hpp"
-#include "tactile_qstring.hpp"
 #include "tile_layer.hpp"
 #include "tiled_version.hpp"
 
@@ -114,7 +113,7 @@ void AddCommonAttributes(QJsonObject& object,
 
   if (options.generateDefaults)
   {
-    object.insert(u"objectalignment", TACTILE_QSTRING(u"unspecified"));
+    object.insert(u"objectalignment", QStringLiteral(u"unspecified"));
   }
 
   object.insert(u"properties", SaveProperties(tileset, targetDir));
@@ -162,7 +161,7 @@ void AddCommonAttributes(QJsonObject& object,
   QJsonObject object{};
 
   object.insert(u"firstgid", tileset.FirstId().get());
-  object.insert(u"source", tileset.Name() + TACTILE_QSTRING(u".json"));
+  object.insert(u"source", tileset.Name() + QStringLiteral(u".json"));
 
   return object;
 }
@@ -189,12 +188,12 @@ void CreateExternalTilesetFile(const core::Tileset& tileset,
   AddCommonAttributes(object, tileset, targetDir, options);
   object.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
   object.insert(u"version", TACTILE_TILED_JSON_VERSION_LITERAL);
-  object.insert(u"type", TACTILE_QSTRING(u"tileset"));
+  object.insert(u"type", QStringLiteral(u"tileset"));
 
   document.setObject(object);
 
   WriteJson(QFileInfo{targetDir.absoluteFilePath(tileset.Name() +
-                                                 TACTILE_QSTRING(u".json"))},
+                                                 QStringLiteral(u".json"))},
             document);
 }
 
@@ -239,12 +238,12 @@ void SaveTileLayer(QJsonObject& object,
   const auto* tileLayer = core::AsTileLayer(layer);
   Q_ASSERT(tileLayer);
 
-  object.insert(u"type", TACTILE_QSTRING(u"tilelayer"));
+  object.insert(u"type", QStringLiteral(u"tilelayer"));
 
   if (options.generateDefaults)
   {
     object.insert(u"compression", QString{});
-    object.insert(u"encoding", TACTILE_QSTRING(u"csv"));
+    object.insert(u"encoding", QStringLiteral(u"csv"));
   }
 
   QJsonArray data;
@@ -263,11 +262,11 @@ void SaveObjectLayer(QJsonObject& element,
   const auto* objectLayer = core::AsObjectLayer(layer);
   Q_ASSERT(objectLayer);
 
-  element.insert(u"type", TACTILE_QSTRING(u"objectgroup"));
+  element.insert(u"type", QStringLiteral(u"objectgroup"));
 
   if (options.generateDefaults)
   {
-    element.insert(u"draworder", TACTILE_QSTRING(u"topdown"));
+    element.insert(u"draworder", QStringLiteral(u"topdown"));
   }
 
   QJsonArray objects;
@@ -373,13 +372,13 @@ void SaveObjectLayer(QJsonObject& element,
   QJsonObject root{};
 
   root.insert(u"tiledversion", TACTILE_TILED_VERSION_LITERAL);
-  root.insert(u"orientation", TACTILE_QSTRING(u"orthogonal"));
-  root.insert(u"renderorder", TACTILE_QSTRING(u"right-down"));
+  root.insert(u"orientation", QStringLiteral(u"orthogonal"));
+  root.insert(u"renderorder", QStringLiteral(u"right-down"));
   root.insert(u"width", map.ColumnCount().get());
   root.insert(u"height", map.RowCount().get());
   root.insert(u"compressionlevel", -1);
   root.insert(u"infinite", false);
-  root.insert(u"type", TACTILE_QSTRING(u"map"));
+  root.insert(u"type", QStringLiteral(u"map"));
   root.insert(u"version", TACTILE_TILED_JSON_VERSION_LITERAL);
   root.insert(u"tilewidth", prefs::TileWidth().Value());
   root.insert(u"tileheight", prefs::TileHeight().Value());

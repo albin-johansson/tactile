@@ -1,7 +1,6 @@
 #include "map_tab_widget.hpp"
 
 #include "map_document.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -53,7 +52,7 @@ void MapTabWidget::AddTab(core::MapDocument* map,
   connect(view, &MapView::S_SpawnContextMenu, this, &MapTabWidget::S_SpawnContextMenu);
   // clang-format on
 
-  if (title == TACTILE_QSTRING(u"map"))
+  if (title == QStringLiteral(u"map"))
   {
     addTab(view, title + QString::number(id.get()));
   }

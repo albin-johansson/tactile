@@ -4,15 +4,14 @@
 
 #include "property_manager.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 UpdateProperty::UpdateProperty(core::IPropertyManager* manager,
                                QString name,
                                core::Property property)
-    : QUndoCommand{TACTILE_QSTRING(u"Update Property \"") + name +
-                   TACTILE_QSTRING(u"\"")}
+    : QUndoCommand{QStringLiteral(u"Update Property \"") + name +
+                   QStringLiteral(u"\"")}
     , mManager{manager}
     , mName{std::move(name)}
     , mProperty{std::move(property)}

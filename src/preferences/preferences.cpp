@@ -1,36 +1,34 @@
 #include "preferences.hpp"
 
-#include "tactile_qstring.hpp"
-
 namespace tactile::prefs {
 
 auto LastLayoutGeometry() -> Setting<QByteArray>
 {
-  static const auto str = TACTILE_QSTRING(u"window/lastLayoutGeometry");
+  static const auto str = QStringLiteral(u"window/lastLayoutGeometry");
   return Setting<QByteArray>{str};
 }
 
 auto LastLayoutState() -> Setting<QByteArray>
 {
-  static const auto str = TACTILE_QSTRING(u"window/lastLayoutState");
+  static const auto str = QStringLiteral(u"window/lastLayoutState");
   return Setting<QByteArray>{str};
 }
 
 auto RenderGrid() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/grid");
+  static const auto str = QStringLiteral(u"graphics/grid");
   return Setting<bool>{str};
 }
 
 auto Theme() -> Setting<QPalette>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/theme");
+  static const auto str = QStringLiteral(u"graphics/theme");
   return Setting<QPalette>{str};
 }
 
 auto UserThemes() -> Setting<theme_map>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/userThemes");
+  static const auto str = QStringLiteral(u"graphics/userThemes");
   return Setting<theme_map>{str};
 }
 
@@ -41,43 +39,43 @@ auto UserThemesDefault() -> theme_map
 
 auto ThemeName() -> Setting<QString>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/themeName");
+  static const auto str = QStringLiteral(u"graphics/themeName");
   return Setting<QString>{str};
 }
 
 auto AccentColor() -> Setting<QColor>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/accentColor");
+  static const auto str = QStringLiteral(u"graphics/accentColor");
   return Setting<QColor>{str};
 }
 
 auto ToolWidgetVisibility() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/toolWidgetVisible");
+  static const auto str = QStringLiteral(u"graphics/toolWidgetVisible");
   return Setting<bool>{str};
 }
 
 auto LayerWidgetVisibility() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/layerWidgetVisible");
+  static const auto str = QStringLiteral(u"graphics/layerWidgetVisible");
   return Setting<bool>{str};
 }
 
 auto TilesetWidgetVisibility() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/tilesetWidgetVisible");
+  static const auto str = QStringLiteral(u"graphics/tilesetWidgetVisible");
   return Setting<bool>{str};
 }
 
 auto PropertiesWidgetVisibility() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/propertiesWidgetVisible");
+  static const auto str = QStringLiteral(u"graphics/propertiesWidgetVisible");
   return Setting<bool>{str};
 }
 
 auto UseOpenGl() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"graphics/useOpenGL");
+  static const auto str = QStringLiteral(u"graphics/useOpenGL");
   return Setting<bool>{str};
 }
 
@@ -103,43 +101,43 @@ void ResetPropertiesWidgetVisibility()
 
 auto EmbedTilesets() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"saves/embedTilesets");
+  static const auto str = QStringLiteral(u"saves/embedTilesets");
   return Setting<bool>{str};
 }
 
 auto GenerateDefaults() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"saves/generateDefaults");
+  static const auto str = QStringLiteral(u"saves/generateDefaults");
   return Setting<bool>{str};
 }
 
 auto UseReadableOutput() -> Setting<bool>
 {
-  static const auto str = TACTILE_QSTRING(u"saves/humanReadableOutput");
+  static const auto str = QStringLiteral(u"saves/humanReadableOutput");
   return Setting<bool>{str};
 }
 
 auto TileWidth() -> Setting<int>
 {
-  static const auto str = TACTILE_QSTRING(u"saves/tileWidth");
+  static const auto str = QStringLiteral(u"saves/tileWidth");
   return Setting<int>{str};
 }
 
 auto TileHeight() -> Setting<int>
 {
-  static const auto str = TACTILE_QSTRING(u"saves/tileHeight");
+  static const auto str = QStringLiteral(u"saves/tileHeight");
   return Setting<int>{str};
 }
 
 auto DefaultFormat() -> Setting<QString>
 {
-  static const auto str = TACTILE_QSTRING(u"saves/defaultFormat");
+  static const auto str = QStringLiteral(u"saves/defaultFormat");
   return Setting<QString>{str};
 }
 
 auto DefaultFormatDefault() -> const QString&
 {
-  static const auto format = TACTILE_QSTRING(u"JSON");
+  static const auto format = QStringLiteral(u"JSON");
   return format;
 }
 

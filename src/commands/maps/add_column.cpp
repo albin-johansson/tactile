@@ -3,12 +3,11 @@
 #include "invoke_n.hpp"
 #include "map_document.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 AddColumn::AddColumn(not_null<core::MapDocument*> document)
-    : RepeatedCommand{TACTILE_QSTRING(u"Add Column")}
+    : RepeatedCommand{QStringLiteral(u"Add Column")}
     , mDocument{document}
 {
   if (!mDocument)

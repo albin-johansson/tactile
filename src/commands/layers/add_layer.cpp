@@ -4,14 +4,13 @@
 
 #include "map_document.hpp"
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 AddLayer::AddLayer(core::MapDocument* document,
                    Shared<core::ILayer> layer,
                    const layer_id id)
-    : QUndoCommand{TACTILE_QSTRING(u"Add Layer")}
+    : QUndoCommand{QStringLiteral(u"Add Layer")}
     , mDocument{document}
     , mLayer{std::move(layer)}
     , mId{id}

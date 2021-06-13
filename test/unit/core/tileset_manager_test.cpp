@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include "tactile_qstring.hpp"
-
 using namespace tactile;
 
 class TilesetManagerTest : public testing::Test
@@ -80,9 +78,9 @@ TEST_F(TilesetManagerTest, Clear)
 TEST_F(TilesetManagerTest, Rename)
 {
   const auto id = m_manager.Add(m_interior);
-  m_manager.Rename(id, TACTILE_QSTRING(u"foo"));
+  m_manager.Rename(id, QStringLiteral(u"foo"));
 
-  EXPECT_EQ(TACTILE_QSTRING(u"foo"), m_manager.At(id).Name());
+  EXPECT_EQ(QStringLiteral(u"foo"), m_manager.At(id).Name());
 }
 
 TEST_F(TilesetManagerTest, Select)

@@ -9,7 +9,6 @@
 #include "maybe.hpp"
 #include "parse_error.hpp"
 #include "property.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -20,33 +19,33 @@ template <IsParserObject T>
 {
   core::Property property;
 
-  if (propType == TACTILE_QSTRING(u"string"))
+  if (propType == QStringLiteral(u"string"))
   {
     property.SetValue(object.String(ElementId::Value).value());
   }
-  else if (propType == TACTILE_QSTRING(u"int"))
+  else if (propType == QStringLiteral(u"int"))
   {
     property.SetValue(object.Integer(ElementId::Value).value());
   }
-  else if (propType == TACTILE_QSTRING(u"float"))
+  else if (propType == QStringLiteral(u"float"))
   {
     property.SetValue(object.Floating(ElementId::Value).value());
   }
-  else if (propType == TACTILE_QSTRING(u"bool"))
+  else if (propType == QStringLiteral(u"bool"))
   {
     property.SetValue(object.Boolean(ElementId::Value).value());
   }
-  else if (propType == TACTILE_QSTRING(u"file"))
+  else if (propType == QStringLiteral(u"file"))
   {
     const auto file = object.String(ElementId::Value).value();
     property.SetValue(QFileInfo{file});
   }
-  else if (propType == TACTILE_QSTRING(u"object"))
+  else if (propType == QStringLiteral(u"object"))
   {
     const auto obj = object.Integer(ElementId::Value).value();
     property.SetValue(core::object_ref{obj});
   }
-  else if (propType == TACTILE_QSTRING(u"color"))
+  else if (propType == QStringLiteral(u"color"))
   {
     const auto color = object.String(ElementId::Value).value();
     property.SetValue(QColor{color});

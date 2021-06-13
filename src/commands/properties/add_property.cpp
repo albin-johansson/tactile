@@ -3,15 +3,14 @@
 #include <utility>  // move
 
 #include "tactile_error.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile::cmd {
 
 AddProperty::AddProperty(not_null<core::IPropertyManager*> manager,
                          QString name,
                          data_type data)
-    : QUndoCommand{TACTILE_QSTRING(u"Add Property \"") + name +
-                   TACTILE_QSTRING(u"\"")}
+    : QUndoCommand{QStringLiteral(u"Add Property \"") + name +
+                   QStringLiteral(u"\"")}
     , mManager{manager}
     , mName{std::move(name)}
     , mData{std::move(data)}

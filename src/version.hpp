@@ -2,8 +2,6 @@
 
 #include <QString>  // QString
 
-#include "tactile_qstring.hpp"
-
 namespace tactile {
 
 /**
@@ -17,7 +15,7 @@ namespace tactile {
  */
 [[nodiscard]] inline auto Version() noexcept -> QString
 {
-  return TACTILE_QSTRING(u"0.2.0");
+  return QStringLiteral(u"0.2.0");
 }
 
 }  // namespace tactile

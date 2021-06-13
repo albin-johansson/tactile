@@ -83,7 +83,7 @@ auto SetTheme(const QString& name) -> bool
 
 void UpdateTheme(const QString& name,
                  QPalette::ColorRole role,
-                  const QColor& color,
+                 const QColor& color,
                  QPalette::ColorGroup group)
 {
   // TODO don't allow updating a standard theme

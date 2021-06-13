@@ -1,7 +1,6 @@
 #include "layer_item_context_menu.hpp"
 
 #include "icons.hpp"
-#include "tactile_qstring.hpp"
 
 namespace tactile {
 
@@ -25,11 +24,11 @@ LayerItemContextMenu::LayerItemContextMenu(QWidget* parent)
   connect(mRemove, &QAction::triggered, this, &LayerItemContextMenu::S_RemoveLayer);
   // clang-format on
 
-  mDuplicate->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"CTRL+D")));
+  mDuplicate->setShortcut(QKeySequence::fromString(QStringLiteral(u"CTRL+D")));
   mRemove->setShortcut(QKeySequence::Delete);
-  mMoveUp->setShortcut(QKeySequence::fromString(TACTILE_QSTRING(u"SHIFT+UP")));
+  mMoveUp->setShortcut(QKeySequence::fromString(QStringLiteral(u"SHIFT+UP")));
   mMoveDown->setShortcut(
-      QKeySequence::fromString(TACTILE_QSTRING(u"SHIFT+DOWN")));
+      QKeySequence::fromString(QStringLiteral(u"SHIFT+DOWN")));
 
   mDuplicate->setShortcutContext(Qt::WidgetWithChildrenShortcut);
   mRemove->setShortcutContext(Qt::WidgetWithChildrenShortcut);
