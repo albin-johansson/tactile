@@ -22,10 +22,9 @@ StatusBar::StatusBar(QWidget* parent)
   addWidget(mMouseYValueLabel);
   addPermanentWidget(mLayerBox);
 
-  connect(mLayerBox, &QComboBox::currentIndexChanged, [this](const int index) {
-    const layer_id id{mLayerBox->itemData(index).value<int>()};
-    emit S_SelectLayerRequest(id);
-  });
+  // clang-format off
+  connect(mLayerBox, &QComboBox::currentIndexChanged, this, &StatusBar::OnCurrentIndexChanged);
+  // clang-format on
 }
 
 void StatusBar::SetLayerComboBoxVisible(const bool visible)
@@ -118,6 +117,12 @@ void StatusBar::OnMouseMoved(const QPointF& pos)
 {
   mMouseXValueLabel->setNum(pos.x());
   mMouseYValueLabel->setNum(pos.y());
+}
+
+void StatusBar::OnCurrentIndexChanged(const int index)
+{
+  const layer_id id{mLayerBox->itemData(index).value<int>()};
+  emit S_SelectLayerRequest(id);
 }
 
 }  // namespace tactile

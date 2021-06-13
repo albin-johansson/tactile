@@ -44,6 +44,9 @@ class StatusBar final : public QStatusBar
   QLabel* mMouseYLabel{};
   QLabel* mMouseXValueLabel{};
   QLabel* mMouseYValueLabel{};
+
+ private slots:
+  void OnCurrentIndexChanged(int index);
 };
 
 }  // namespace tactile
