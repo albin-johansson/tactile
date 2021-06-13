@@ -33,6 +33,9 @@ class ColorPreviewButton final : public QPushButton
   QColor mColor;
 
   void UpdateColor(const QColor& color);
+
+ private slots:
+  void OnClicked();
 };
 
 }  // namespace tactile

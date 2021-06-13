@@ -5,6 +5,15 @@
 #include "color_utils.hpp"
 
 namespace tactile {
+namespace {
+
+inline const auto fmt_style =
+    QStringLiteral(u"background-color: %1; color: %2;");
+
+inline const auto hex_black = QStringLiteral(u"#000000");
+inline const auto hex_white = QStringLiteral(u"#FFFFFF");
+
+}  // namespace
 
 ColorPreviewButton::ColorPreviewButton(const QColor color, QWidget* parent)
     : QPushButton{parent}
@@ -13,25 +22,13 @@ ColorPreviewButton::ColorPreviewButton(const QColor color, QWidget* parent)
   setObjectName(QStringLiteral(u"ColorPreviewButton"));
   UpdateColor(mColor);
 
-  connect(this, &QPushButton::clicked, [this] {
-    QColorDialog dialog{mColor, window()};
-    dialog.adjustSize();  // Silences setGeometry warnings
-    dialog.setOption(QColorDialog::ShowAlphaChannel);
-    if (dialog.exec())
-    {
-      UpdateColor(dialog.selectedColor());
-    }
-  });
+  connect(this, &QPushButton::clicked, this, &ColorPreviewButton::OnClicked);
 }
 
 void ColorPreviewButton::UpdateColor(QPushButton& button, const QColor& color)
 {
-  static const auto black = QStringLiteral(u"#000000");
-  static const auto white = QStringLiteral(u"#FFFFFF");
-
-  static const auto fmt = QStringLiteral(u"background-color: %1; color: %2;");
-  button.setStyleSheet(
-      fmt.arg(color.name(QColor::HexArgb), IsBright(color) ? black : white));
+  button.setStyleSheet(fmt_style.arg(color.name(QColor::HexArgb),
+                                     IsBright(color) ? hex_black : hex_white));
 
   // The RGB name is easier to read
   button.setText(color.name(QColor::HexRgb).toUpper());
@@ -83,6 +80,17 @@ void ColorPreviewButton::UpdateColor(const QColor& color)
   mColor = color;
   UpdateColor(*this, mColor);
   emit S_ColorChanged(mColor);
+}
+
+void ColorPreviewButton::OnClicked()
+{
+  QColorDialog dialog{mColor, window()};
+  dialog.adjustSize();  // Silences setGeometry warnings
+  dialog.setOption(QColorDialog::ShowAlphaChannel);
+  if (dialog.exec())
+  {
+    UpdateColor(dialog.selectedColor());
+  }
 }
 
 }  // namespace tactile
