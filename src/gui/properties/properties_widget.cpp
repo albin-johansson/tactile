@@ -204,20 +204,11 @@ void PropertiesWidget::ChangeModel(not_null<core::IPropertyManager*> manager)
   Q_ASSERT(!mModel->parent());
 
   // clang-format off
-  connect(mModel.get(), &vm::PropertyModel::S_ChangedType,
-          mView,        &PropertyTreeView::OnChangedType);
-
-  connect(mModel.get(), &vm::PropertyModel::S_AddedFile,
-          mView,        &PropertyTreeView::OnFileAdded);
-
-  connect(mModel.get(), &vm::PropertyModel::S_AddedColor,
-          mView,        &PropertyTreeView::OnColorAdded);
-
-  connect(mModel.get(), &vm::PropertyModel::S_UpdatedFile,
-          mView,        &PropertyTreeView::OnFileUpdated);
-
-  connect(mModel.get(), &vm::PropertyModel::S_UpdatedColor,
-          mView,        &PropertyTreeView::OnColorUpdated);
+  connect(mModel.get(), &vm::PropertyModel::S_ChangedType, mView, &PropertyTreeView::OnChangedType);
+  connect(mModel.get(), &vm::PropertyModel::S_AddedFile, mView, &PropertyTreeView::OnFileAdded);
+  connect(mModel.get(), &vm::PropertyModel::S_AddedColor, mView, &PropertyTreeView::OnColorAdded);
+  connect(mModel.get(), &vm::PropertyModel::S_UpdatedFile, mView, &PropertyTreeView::OnFileUpdated);
+  connect(mModel.get(), &vm::PropertyModel::S_UpdatedColor, mView, &PropertyTreeView::OnColorUpdated);
   // clang-format on
 
   mView->setFirstColumnSpanned(0, mView->rootIndex(), true);
