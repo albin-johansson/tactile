@@ -34,60 +34,27 @@ LayerWidget::LayerWidget(QWidget* parent)
   mUi->opacitySlider->setEnabled(false);
 
   // clang-format off
-  connect(mUi->opacitySlider, &QSlider::valueChanged,
-          this, &LayerWidget::OnOpacitySliderValueChanged);
+  connect(mUi->opacitySlider, &QSlider::valueChanged, this, &LayerWidget::OnOpacitySliderValueChanged);
+  connect(mUi->newLayerButton, &QPushButton::pressed, this, &LayerWidget::OnNewLayerButtonPressed);
+  connect(mUi->removeLayerButton, &QPushButton::pressed, this, &LayerWidget::OnRemoveLayerButtonPressed);
+  connect(mUi->upButton, &QPushButton::pressed, this, &LayerWidget::OnUpButtonPressed);
+  connect(mUi->downButton, &QPushButton::pressed, this, &LayerWidget::OnDownButtonPressed);
+  connect(mUi->duplicateButton, &QPushButton::pressed, this, &LayerWidget::OnDuplicateButtonPressed);
+  connect(mUi->visibleButton, &QPushButton::toggled, this, &LayerWidget::OnVisibleButtonToggled);
 
-  connect(mUi->newLayerButton, &QPushButton::pressed,
-          this, &LayerWidget::OnNewLayerButtonPressed);
+  connect(mView, &QWidget::customContextMenuRequested, this, &LayerWidget::OnSpawnContextMenu);
+  connect(mView, &LayerListView::S_SelectionChanged, this, &LayerWidget::OnViewChangedSelection);
+  connect(mView, &LayerListView::S_ChangedName, this, &LayerWidget::OnViewChangedName);
 
-  connect(mUi->removeLayerButton, &QPushButton::pressed,
-          this, &LayerWidget::OnRemoveLayerButtonPressed);
+  connect(mAddLayerMenu, &AddLayerContextMenu::S_AddTileLayer, this, &LayerWidget::OnNewTileLayerRequested);
+  connect(mAddLayerMenu, &AddLayerContextMenu::S_AddObjectLayer, this, &LayerWidget::OnNewObjectLayerRequested);
 
-  connect(mUi->upButton, &QPushButton::pressed,
-          this, &LayerWidget::OnUpButtonPressed);
-
-  connect(mUi->downButton, &QPushButton::pressed,
-          this, &LayerWidget::OnDownButtonPressed);
-
-  connect(mUi->duplicateButton, &QPushButton::pressed,
-          this, &LayerWidget::OnDuplicateButtonPressed);
-
-  connect(mUi->visibleButton, &QPushButton::toggled,
-          this, &LayerWidget::OnVisibleButtonToggled);
-
-  connect(mView, &QWidget::customContextMenuRequested,
-          this, &LayerWidget::OnSpawnContextMenu);
-
-  connect(mView, &LayerListView::S_SelectionChanged,
-          this, &LayerWidget::OnViewChangedSelection);
-
-  connect(mView, &LayerListView::S_ChangedName,
-          this, &LayerWidget::OnViewChangedName);
-
-  connect(mAddLayerMenu, &AddLayerContextMenu::S_AddTileLayer,
-          this, &LayerWidget::OnNewTileLayerRequested);
-
-  connect(mAddLayerMenu, &AddLayerContextMenu::S_AddObjectLayer,
-          this, &LayerWidget::OnNewObjectLayerRequested);
-
-  connect(mItemMenu, &LayerItemContextMenu::S_ToggleVisibility,
-          mUi->visibleButton, &QPushButton::toggle);
-
-  connect(mItemMenu, &LayerItemContextMenu::S_MoveLayerUp,
-          mUi->upButton, &QPushButton::click);
-
-  connect(mItemMenu, &LayerItemContextMenu::S_MoveLayerDown,
-          mUi->downButton, &QPushButton::click);
-
-  connect(mItemMenu, &LayerItemContextMenu::S_DuplicateLayer,
-          mUi->duplicateButton, &QPushButton::click);
-
-  connect(mItemMenu, &LayerItemContextMenu::S_RemoveLayer,
-          mUi->removeLayerButton, &QPushButton::click);
-
-  connect(mItemMenu, &LayerItemContextMenu::S_ShowProperties,
-          [this] { mModel->ShowProperties(mView->currentIndex()); });
-
+  connect(mItemMenu, &LayerItemContextMenu::S_ToggleVisibility, mUi->visibleButton, &QPushButton::toggle);
+  connect(mItemMenu, &LayerItemContextMenu::S_MoveLayerUp, mUi->upButton, &QPushButton::click);
+  connect(mItemMenu, &LayerItemContextMenu::S_MoveLayerDown, mUi->downButton, &QPushButton::click);
+  connect(mItemMenu, &LayerItemContextMenu::S_DuplicateLayer, mUi->duplicateButton, &QPushButton::click);
+  connect(mItemMenu, &LayerItemContextMenu::S_RemoveLayer, mUi->removeLayerButton, &QPushButton::click);
+  connect(mItemMenu, &LayerItemContextMenu::S_ShowProperties, this, &LayerWidget::OnShowLayerProperties);
   // clang-format on
 }
 
@@ -219,6 +186,11 @@ void LayerWidget::OnSelectedLayer(const layer_id id, const core::ILayer& layer)
 
   mView->SelectQuietly(index);
   UpdateActions(index);
+}
+
+void LayerWidget::OnShowLayerProperties()
+{
+  mModel->ShowProperties(mView->currentIndex());
 }
 
 void LayerWidget::OnOpacitySliderValueChanged(const int value)

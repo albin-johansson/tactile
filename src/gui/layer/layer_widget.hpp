@@ -50,6 +50,8 @@ class LayerWidget final : public QWidget
   void OnChangedLayerVisibility(layer_id id, bool visible);
   void OnSelectedLayer(layer_id id, const core::ILayer& layer);
 
+  void OnShowLayerProperties();
+
   void OnSpawnContextMenu(const QPoint& pos);
 
   void OnViewChangedSelection(Maybe<QModelIndex> selected, Maybe<QModelIndex>);
@@ -62,10 +64,8 @@ class LayerWidget final : public QWidget
 
   void OnNewLayerButtonPressed();
   void OnRemoveLayerButtonPressed();
-
   void OnUpButtonPressed();
   void OnDownButtonPressed();
-
   void OnDuplicateButtonPressed();
 
   void OnVisibleButtonToggled(bool visible);
