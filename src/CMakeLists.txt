@@ -184,43 +184,43 @@ set(TACTILE_SOURCE_FILES
     gui/dialog/about/about_dialog.hpp
     gui/dialog/about/about_dialog.ui
 
-    gui/dialog/add_property/add_property_dialog.cpp
-    gui/dialog/add_property/add_property_dialog.hpp
-    gui/dialog/add_property/add_property_dialog.ui
+    gui/dialog/add-property/add_property_dialog.cpp
+    gui/dialog/add-property/add_property_dialog.hpp
+    gui/dialog/add-property/add_property_dialog.ui
 
-    gui/dialog/change_property_name/change_property_name_dialog.cpp
-    gui/dialog/change_property_name/change_property_name_dialog.hpp
-    gui/dialog/change_property_name/change_property_name_dialog.ui
+    gui/dialog/change-property-name/change_property_name_dialog.cpp
+    gui/dialog/change-property-name/change_property_name_dialog.hpp
+    gui/dialog/change-property-name/change_property_name_dialog.ui
 
-    gui/dialog/export_theme/export_theme_dialog.cpp
-    gui/dialog/export_theme/export_theme_dialog.hpp
+    gui/dialog/export-theme/export_theme_dialog.cpp
+    gui/dialog/export-theme/export_theme_dialog.hpp
 
-    gui/dialog/import_theme/import_theme_dialog.cpp
-    gui/dialog/import_theme/import_theme_dialog.hpp
+    gui/dialog/import-theme/import_theme_dialog.cpp
+    gui/dialog/import-theme/import_theme_dialog.hpp
 
-    gui/dialog/open_map/open_map_dialog.cpp
-    gui/dialog/open_map/open_map_dialog.hpp
-    gui/dialog/open_map/open_map_error_dialog.cpp
-    gui/dialog/open_map/open_map_error_dialog.hpp
-    gui/dialog/open_map/open_map_error_dialog.ui
+    gui/dialog/open-map/open_map_dialog.cpp
+    gui/dialog/open-map/open_map_dialog.hpp
+    gui/dialog/open-map/open_map_error_dialog.cpp
+    gui/dialog/open-map/open_map_error_dialog.hpp
+    gui/dialog/open-map/open_map_error_dialog.ui
 
-    gui/dialog/open_tileset/open_tileset_image.cpp
-    gui/dialog/open_tileset/open_tileset_image.hpp
-    gui/dialog/open_tileset/tileset_dialog.cpp
-    gui/dialog/open_tileset/tileset_dialog.hpp
-    gui/dialog/open_tileset/tileset_image_file_dialog.hpp
-    gui/dialog/open_tileset/tileset_image_file_dialog.cpp
-    gui/dialog/open_tileset/tileset_dialog.ui
+    gui/dialog/open-tileset/open_tileset_image.cpp
+    gui/dialog/open-tileset/open_tileset_image.hpp
+    gui/dialog/open-tileset/tileset_dialog.cpp
+    gui/dialog/open-tileset/tileset_dialog.hpp
+    gui/dialog/open-tileset/tileset_image_file_dialog.hpp
+    gui/dialog/open-tileset/tileset_image_file_dialog.cpp
+    gui/dialog/open-tileset/tileset_dialog.ui
 
-    gui/dialog/resize_map/resize_dialog.cpp
-    gui/dialog/resize_map/resize_dialog.hpp
-    gui/dialog/resize_map/resize_dialog.ui
+    gui/dialog/resize-map/resize_dialog.cpp
+    gui/dialog/resize-map/resize_dialog.hpp
+    gui/dialog/resize-map/resize_dialog.ui
 
     gui/dialog/save/save_as_dialog.cpp
     gui/dialog/save/save_as_dialog.hpp
 
-    gui/dialog/select_file/select_file_dialog.cpp
-    gui/dialog/select_file/select_file_dialog.hpp
+    gui/dialog/select-file/select_file_dialog.cpp
+    gui/dialog/select-file/select_file_dialog.hpp
 
     gui/editor/map_editor.cpp
     gui/editor/map_editor.hpp
@@ -418,15 +418,15 @@ target_include_directories(libTactile
     PUBLIC gui/base
     PUBLIC gui/dialog
     PUBLIC gui/dialog/about
-    PUBLIC gui/dialog/add_property
-    PUBLIC gui/dialog/change_property_name
-    PUBLIC gui/dialog/export_theme
-    PUBLIC gui/dialog/import_theme
-    PUBLIC gui/dialog/open_map
-    PUBLIC gui/dialog/open_tileset
-    PUBLIC gui/dialog/resize_map
+    PUBLIC gui/dialog/add-property
+    PUBLIC gui/dialog/change-property-name
+    PUBLIC gui/dialog/export-theme
+    PUBLIC gui/dialog/import-theme
+    PUBLIC gui/dialog/open-map
+    PUBLIC gui/dialog/open-tileset
+    PUBLIC gui/dialog/resize-map
     PUBLIC gui/dialog/save
-    PUBLIC gui/dialog/select_file
+    PUBLIC gui/dialog/select-file
     PUBLIC gui/editor
     PUBLIC gui/layer
     PUBLIC gui/properties
