@@ -50,34 +50,24 @@ ColorPreviewManager::ColorPreviewManager(QFormLayout* layout,
   layout->addRow(tr("Text"), mTextPreview);
   layout->addRow(tr("Shadow"), mShadowPreview);
 
-  const auto connectPreview = [this](ColorPreviewButton* button,
-                                     const QPalette::ColorRole role) {
-    connect(button,
-            &ColorPreviewButton::S_ColorChanged,
-            this,
-            [this, role](const QColor& color) {
-              emit S_ColorChanged(role, color);
-            });
-  };
-
-  connectPreview(mBasePreview, QPalette::Base);
-  connectPreview(mAlternateBasePreview, QPalette::AlternateBase);
-  connectPreview(mWindowPreview, QPalette::Window);
-  connectPreview(mWindowTextPreview, QPalette::WindowText);
-  connectPreview(mLightPreview, QPalette::Light);
-  connectPreview(mMidLightPreview, QPalette::Midlight);
-  connectPreview(mDarkPreview, QPalette::Dark);
-  connectPreview(mLinkPreview, QPalette::Link);
-  connectPreview(mLinkVisitedPreview, QPalette::LinkVisited);
-  connectPreview(mButtonPreview, QPalette::Button);
-  connectPreview(mButtonTextPreview, QPalette::ButtonText);
-  connectPreview(mHighlightPreview, QPalette::Highlight);
-  connectPreview(mHighlightedTextPreview, QPalette::HighlightedText);
-  connectPreview(mPlaceholderTextPreview, QPalette::PlaceholderText);
-  connectPreview(mTooltipBasePreview, QPalette::ToolTipBase);
-  connectPreview(mTooltipTextPreview, QPalette::ToolTipText);
-  connectPreview(mTextPreview, QPalette::Text);
-  connectPreview(mShadowPreview, QPalette::Shadow);
+  ConnectPreview(mBasePreview, QPalette::Base);
+  ConnectPreview(mAlternateBasePreview, QPalette::AlternateBase);
+  ConnectPreview(mWindowPreview, QPalette::Window);
+  ConnectPreview(mWindowTextPreview, QPalette::WindowText);
+  ConnectPreview(mLightPreview, QPalette::Light);
+  ConnectPreview(mMidLightPreview, QPalette::Midlight);
+  ConnectPreview(mDarkPreview, QPalette::Dark);
+  ConnectPreview(mLinkPreview, QPalette::Link);
+  ConnectPreview(mLinkVisitedPreview, QPalette::LinkVisited);
+  ConnectPreview(mButtonPreview, QPalette::Button);
+  ConnectPreview(mButtonTextPreview, QPalette::ButtonText);
+  ConnectPreview(mHighlightPreview, QPalette::Highlight);
+  ConnectPreview(mHighlightedTextPreview, QPalette::HighlightedText);
+  ConnectPreview(mPlaceholderTextPreview, QPalette::PlaceholderText);
+  ConnectPreview(mTooltipBasePreview, QPalette::ToolTipBase);
+  ConnectPreview(mTooltipTextPreview, QPalette::ToolTipText);
+  ConnectPreview(mTextPreview, QPalette::Text);
+  ConnectPreview(mShadowPreview, QPalette::Shadow);
 }
 
 void ColorPreviewManager::UpdatePreview(const QPalette& palette)
@@ -103,6 +93,16 @@ void ColorPreviewManager::UpdatePreview(const QPalette& palette)
   mTooltipTextPreview->SetColor(palette.color(mGroup, QPalette::ToolTipText));
   mTextPreview->SetColor(palette.color(mGroup, QPalette::Text));
   mShadowPreview->SetColor(palette.color(mGroup, QPalette::Shadow));
+}
+
+void ColorPreviewManager::ConnectPreview(ColorPreviewButton* button,
+                                         const QPalette::ColorRole role)
+{
+  connect(
+      button,
+      &ColorPreviewButton::S_ColorChanged,
+      this,
+      [this, role](const QColor& color) { emit S_ColorChanged(role, color); });
 }
 
 }  // namespace tactile
