@@ -7,13 +7,7 @@ namespace tactile {
 TabBar::TabBar(QWidget* parent) : QTabBar{parent}, mEdit{new QLineEdit{this}}
 {
   mEdit->hide();
-  connect(mEdit, &QLineEdit::editingFinished, [this] {
-    const auto index = mRenameIndex.value();
-    setTabText(index, mEdit->text());
-    mEdit->hide();
-    mRenameIndex.reset();
-    emit S_EditedTab(index);
-  });
+  connect(mEdit, &QLineEdit::editingFinished, this, &TabBar::OnEditingFinished);
 }
 
 void TabBar::EditTab(const int index)
@@ -39,6 +33,17 @@ void TabBar::mouseDoubleClickEvent(QMouseEvent* event)
     EditTab(index);
     event->accept();
   }
+}
+
+void TabBar::OnEditingFinished()
+{
+  const auto index = mRenameIndex.value();
+  setTabText(index, mEdit->text());
+
+  mEdit->hide();
+  mRenameIndex.reset();
+
+  emit S_EditedTab(index);
 }
 
 }  // namespace tactile

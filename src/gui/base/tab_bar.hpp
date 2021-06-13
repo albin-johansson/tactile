@@ -25,6 +25,9 @@ class TabBar final : public QTabBar
  private:
   QLineEdit* mEdit{};
   Maybe<int> mRenameIndex;
+
+ private slots:
+  void OnEditingFinished();
 };
 
 }  // namespace tactile
