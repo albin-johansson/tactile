@@ -15,6 +15,8 @@ ThemeOptionsContextMenu::ThemeOptionsContextMenu(QWidget* parent)
     , mSep2{addSeparator()}
     , mRemove{addAction(IconRemove(), tr("Remove"))}
 {
+  setObjectName(QStringLiteral(u"ThemeOptionsContextMenu"));
+
   // clang-format off
   connect(mRename, &QAction::triggered,
           this, &ThemeOptionsContextMenu::S_RenameTheme);

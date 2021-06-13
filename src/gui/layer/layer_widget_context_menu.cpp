@@ -9,6 +9,8 @@ AddLayerContextMenu::AddLayerContextMenu(QWidget* parent)
     , mTileLayer{addAction(IconTileLayer(), tr("Tile layer"))}
     , mObjectLayer{addAction(IconObjectLayer(), tr("Object layer"))}
 {
+  setObjectName(QStringLiteral(u"AddLayerContextMenu"));
+
   // clang-format off
   connect(mTileLayer, &QAction::triggered,
           this, &AddLayerContextMenu::S_AddTileLayer);
@@ -22,6 +24,8 @@ LayerWidgetContextMenu::LayerWidgetContextMenu(AddLayerContextMenu* menu,
     : QMenu{parent}
     , mAdd{addMenu(IconAdd(), tr("Add new layer..."))}
 {
+  setObjectName(QStringLiteral(u"LayerWidgetContextMenu"));
+
   for (auto* action : menu->actions())
   {
     mAdd->addAction(action);

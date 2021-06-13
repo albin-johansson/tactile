@@ -9,6 +9,7 @@ FileValueWidget::FileValueWidget(QWidget* parent)
     : QWidget{parent}
     , mUi{InitUi<Ui::FileValueWidget>(this)}
 {
+  setObjectName(QStringLiteral(u"FileValueWidget"));
   setAutoFillBackground(true);
   layout()->setContentsMargins(0, 0, 0, 0);
 

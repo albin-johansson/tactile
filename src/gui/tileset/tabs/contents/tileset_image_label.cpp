@@ -14,6 +14,7 @@ TilesetImageLabel::TilesetImageLabel(const core::Tileset& tileset,
     , mMaxX{mWidth - 1}
     , mMaxY{mHeight - 1}
 {
+  setObjectName(QStringLiteral(u"TilesetImageLabel"));
   setPixmap(tileset.Image());
 }
 

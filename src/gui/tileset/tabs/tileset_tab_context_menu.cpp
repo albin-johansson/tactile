@@ -12,6 +12,8 @@ TilesetTabContextMenu::TilesetTabContextMenu(QWidget* parent)
     , mSep1{addSeparator()}
     , mShowProperties{addAction(IconProperties(), tr("Show properties"))}
 {
+  setObjectName(QStringLiteral(u"TilesetTabContextMenu"));
+
   // clang-format off
   connect(mRename, &QAction::triggered, [this] { emit S_Rename(mIndex); });
   connect(mRemove, &QAction::triggered, [this] { emit S_Remove(mIndex); });

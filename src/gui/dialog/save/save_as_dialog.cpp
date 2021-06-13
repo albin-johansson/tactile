@@ -8,6 +8,7 @@ namespace tactile {
 SaveAsDialog::SaveAsDialog(const QString& fileName, QWidget* parent)
     : QFileDialog{parent}
 {
+  setObjectName(QStringLiteral(u"SaveAsDialog"));
   setAcceptMode(QFileDialog::AcceptSave);
 
   if (const auto format = prefs::DefaultFormat();

@@ -13,6 +13,8 @@ TilesetImageWidget::TilesetImageWidget(const core::Tileset& tileset,
     : QWidget{parent}
     , mLayout{new QGridLayout{this}}
 {
+  setObjectName(QStringLiteral(u"TilesetImageWidget"));
+
   mLayout->setContentsMargins(0, 0, 0, 0);
 
   mImageLabel = new TilesetImageLabel{tileset, this};

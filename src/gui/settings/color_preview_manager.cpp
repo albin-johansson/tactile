@@ -28,6 +28,8 @@ ColorPreviewManager::ColorPreviewManager(QFormLayout* layout,
     , mTextPreview{new ColorPreviewButton{Qt::black, this}}
     , mShadowPreview{new ColorPreviewButton{Qt::black, this}}
 {
+  setObjectName(QStringLiteral(u"ColorPreviewManager"));
+
   Q_ASSERT(layout);
   layout->addRow(tr("Base"), mBasePreview);
   layout->addRow(tr("Alternate Base"), mAlternateBasePreview);

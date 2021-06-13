@@ -53,6 +53,8 @@ MapDocument::MapDocument(const row_t nRows, const col_t nCols, QObject* parent)
 
 void MapDocument::SetUp()
 {
+  setObjectName(QStringLiteral(u"MapDocument"));
+
   auto* commands = mDelegate->History();
 
   // clang-format off

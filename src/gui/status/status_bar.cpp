@@ -12,6 +12,8 @@ StatusBar::StatusBar(QWidget* parent)
     , mMouseXValueLabel{new QLabel{}}
     , mMouseYValueLabel{new QLabel{}}
 {
+  setObjectName(QStringLiteral(u"StatusBar"));
+
   mLayerBox->setSizeAdjustPolicy(QComboBox::AdjustToContents);
 
   addWidget(mMouseXLabel);

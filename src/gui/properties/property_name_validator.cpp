@@ -14,6 +14,8 @@ PropertyNameValidator::PropertyNameValidator(QStandardItemModel* model,
   {
     throw TactileError{"Property validator requires non-null model!"};
   }
+
+  setObjectName(QStringLiteral(u"PropertyNameValidator"));
 }
 
 auto PropertyNameValidator::validate(QString& input, int&) const

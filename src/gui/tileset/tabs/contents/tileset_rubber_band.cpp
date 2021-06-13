@@ -6,7 +6,9 @@ namespace tactile {
 
 TilesetRubberBand::TilesetRubberBand(QWidget* parent)
     : QRubberBand{QRubberBand::Rectangle, parent}
-{}
+{
+  setObjectName(QStringLiteral(u"TilesetRubberBand"));
+}
 
 void TilesetRubberBand::SetTileWidth(const tile_width tileWidth) noexcept
 {

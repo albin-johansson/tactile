@@ -5,7 +5,9 @@
 namespace tactile {
 
 ColorValidator::ColorValidator(QObject* parent) : QIntValidator{0, 255, parent}
-{}
+{
+  setObjectName(QStringLiteral(u"ColorValidator"));
+}
 
 auto ColorValidator::validate(QString& string, int&) const -> State
 {

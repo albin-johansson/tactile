@@ -6,6 +6,7 @@ namespace tactile {
 
 MapTabWidget::MapTabWidget(QWidget* parent) : TabWidget{parent}
 {
+  setObjectName(QStringLiteral(u"MapTabWidget"));
   setTabsClosable(true);
 
   // clang-format off

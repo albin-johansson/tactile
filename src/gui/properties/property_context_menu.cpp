@@ -15,6 +15,8 @@ PropertyContextMenu::PropertyContextMenu(QWidget* parent)
     , mAdd{addAction(IconAdd(), tr("Add new property..."))}
     , mRemove{addAction(IconRemove(), tr("Remove"))}
 {
+  setObjectName(QStringLiteral(u"PropertyContextMenu"));
+
   mCopy->setShortcut(QKeySequence::Copy);
   mPaste->setShortcut(QKeySequence::Paste);
   mRename->setShortcut(QKeySequence::fromString(QStringLiteral(u"CTRL+R")));

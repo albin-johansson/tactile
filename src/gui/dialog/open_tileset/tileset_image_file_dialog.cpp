@@ -7,6 +7,7 @@ namespace tactile {
 TilesetImageFileDialog::TilesetImageFileDialog(QWidget* parent)
     : QFileDialog{parent}
 {
+  setObjectName(QStringLiteral(u"TilesetImageFileDialog"));
   setFileMode(ExistingFile);
   setViewMode(Detail);
   setNameFilter(tr("Images (*.png *.jpg)"));

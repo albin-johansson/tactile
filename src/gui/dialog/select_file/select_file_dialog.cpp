@@ -6,6 +6,7 @@ namespace tactile {
 
 SelectFileDialog::SelectFileDialog(QWidget* parent) : QFileDialog{parent}
 {
+  setObjectName(QStringLiteral(u"SelectFileDialog"));
   setFileMode(ExistingFile);
   setViewMode(Detail);
   setWindowTitle(tr("Select file"));

@@ -15,6 +15,8 @@ LayerItemContextMenu::LayerItemContextMenu(QWidget* parent)
     , mDuplicate{addAction(IconDuplicate(), tr("Duplicate layer"))}
     , mRemove{addAction(IconRemove(), tr("Remove layer"))}
 {
+  setObjectName(QStringLiteral(u"LayerItemContextMenu"));
+
   // clang-format off
   connect(mVisibility, &QAction::triggered, this, &LayerItemContextMenu::S_ToggleVisibility);
   connect(mShowProperties, &QAction::triggered, this, &LayerItemContextMenu::S_ShowProperties);
