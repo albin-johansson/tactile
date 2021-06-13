@@ -7,11 +7,11 @@
 namespace tactile::core {
 namespace {
 
-auto create_source_rect_cache(const tile_id first,
-                              const tile_id last,
-                              const col_t tileCount,
-                              const tile_width tw,
-                              const tile_height th) -> Tileset::rect_map
+auto CreateSourceRectCache(const tile_id first,
+                           const tile_id last,
+                           const col_t tileCount,
+                           const tile_width tw,
+                           const tile_height th) -> Tileset::rect_map
 {
   Tileset::rect_map cache;
 
@@ -60,11 +60,11 @@ Tileset::Tileset(const tile_id firstId,
   mColumnCount = col_t{Width() / mTileWidth.get()};
   mTileCount = mRowCount.get() * mColumnCount.get();
   mLastId = mFirstId + tile_id{mTileCount};
-  mSourceRects = create_source_rect_cache(mFirstId,
-                                          mLastId,
-                                          mColumnCount,
-                                          mTileWidth,
-                                          mTileHeight);
+  mSourceRects = CreateSourceRectCache(mFirstId,
+                                       mLastId,
+                                       mColumnCount,
+                                       mTileWidth,
+                                       mTileHeight);
 }
 
 Tileset::Tileset(const tile_id firstID,
