@@ -34,19 +34,31 @@ auto XmlEngine::Layers(const object_type& root) -> std::vector<object_type>
 auto XmlEngine::Properties(const object_type& object)
     -> std::vector<object_type>
 {
-  // FIXME
-  const auto top = object->elementsByTagName(TACTILE_QSTRING(u"properties"));
+  const auto elems = object->elementsByTagName(QStringLiteral(u"properties"));
 
-  if (top.isEmpty())
+  if (elems.isEmpty())
   {
     return {};
   }
 
-  const auto topNode = top.at(0);
-  Q_ASSERT(topNode.isElement());
+  const auto size = elems.size();
+  for (int i = 0; i < size; ++i)
+  {
+    const auto node = elems.at(i);
+    Q_ASSERT(node.isElement());
 
-  return Collect(object_type{topNode.toElement()},
-                 TACTILE_QSTRING(u"property"));
+    const auto parent = node.parentNode();
+    Q_ASSERT(parent.isElement());
+
+    const auto parentElement = parent.toElement();
+    if (parentElement.tagName() == object->tagName())
+    {
+      const auto element = node.toElement();
+      return Collect(object_type{element}, QStringLiteral(u"property"));
+    }
+  }
+
+  return {};
 }
 
 auto XmlEngine::Objects(const object_type& object) -> std::vector<object_type>
