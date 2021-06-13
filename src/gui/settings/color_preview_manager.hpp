@@ -42,7 +42,7 @@ class ColorPreviewManager final : public QWidget
   ColorPreviewButton* mTooltipTextPreview;
   ColorPreviewButton* mTextPreview;
   ColorPreviewButton* mShadowPreview;
-  
+
   void ConnectPreview(ColorPreviewButton* button, QPalette::ColorRole role);
 };
 
