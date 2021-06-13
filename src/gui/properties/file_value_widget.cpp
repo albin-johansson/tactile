@@ -14,8 +14,7 @@ FileValueWidget::FileValueWidget(QWidget* parent)
   layout()->setContentsMargins(0, 0, 0, 0);
 
   // clang-format off
-  connect(mUi->selectFileButton, &QToolButton::pressed,
-          this, &FileValueWidget::S_SpawnDialog);
+  connect(mUi->selectFileButton, &QToolButton::pressed, this, &FileValueWidget::S_SpawnDialog);
   // clang-format on
 
   /* This is to avoid the idle page preventing the active page from being

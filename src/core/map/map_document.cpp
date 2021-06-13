@@ -64,20 +64,11 @@ void MapDocument::SetUp()
   connect(commands, &CommandStack::undoTextChanged, this, &MapDocument::S_UndoTextUpdated);
   connect(commands, &CommandStack::redoTextChanged, this, &MapDocument::S_RedoTextUpdated);
 
-  connect(mDelegate.get(), &DocumentDelegate::S_AddedProperty,
-          this, &MapDocument::S_AddedProperty);
-
-  connect(mDelegate.get(), &DocumentDelegate::S_AboutToRemoveProperty,
-          this, &MapDocument::S_AboutToRemoveProperty);
-
-  connect(mDelegate.get(), &DocumentDelegate::S_UpdatedProperty,
-          this, &MapDocument::S_UpdatedProperty);
-
-  connect(mDelegate.get(), &DocumentDelegate::S_RenamedProperty,
-          this, &MapDocument::S_RenamedProperty);
-
-  connect(mDelegate.get(), &DocumentDelegate::S_ChangedPropertyType,
-          this, &MapDocument::S_ChangedPropertyType);
+  connect(mDelegate.get(), &DocumentDelegate::S_AddedProperty, this, &MapDocument::S_AddedProperty);
+  connect(mDelegate.get(), &DocumentDelegate::S_AboutToRemoveProperty, this, &MapDocument::S_AboutToRemoveProperty);
+  connect(mDelegate.get(), &DocumentDelegate::S_UpdatedProperty, this, &MapDocument::S_UpdatedProperty);
+  connect(mDelegate.get(), &DocumentDelegate::S_RenamedProperty, this, &MapDocument::S_RenamedProperty);
+  connect(mDelegate.get(), &DocumentDelegate::S_ChangedPropertyType, this, &MapDocument::S_ChangedPropertyType);
   // clang-format on
 }
 

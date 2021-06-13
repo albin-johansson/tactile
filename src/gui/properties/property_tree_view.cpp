@@ -34,11 +34,8 @@ PropertyTreeView::PropertyTreeView(QWidget* parent) : QTreeView{parent}
   }
 
   // clang-format off
-  connect(this, &PropertyTreeView::expanded,
-          this, &PropertyTreeView::OnItemExpanded);
-
-  connect(this, &PropertyTreeView::collapsed,
-          this, &PropertyTreeView::OnItemCollapsed);
+  connect(this, &PropertyTreeView::expanded, this, &PropertyTreeView::OnItemExpanded);
+  connect(this, &PropertyTreeView::collapsed, this, &PropertyTreeView::OnItemCollapsed);
   // clang-format on
 }
 

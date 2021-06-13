@@ -9,10 +9,9 @@ TilesetEmptyPage::TilesetEmptyPage(QWidget* parent)
     : QWidget{parent}
     , mUi{InitUi<Ui::TilesetEmptyPage>(this)}
 {
-  connect(mUi->addSheetButton,
-          &QPushButton::clicked,
-          this,
-          &TilesetEmptyPage::S_AddTileset);
+  // clang-format off
+  connect(mUi->addSheetButton, &QPushButton::clicked, this, &TilesetEmptyPage::S_AddTileset);
+  // clang-format on
 }
 
 TilesetEmptyPage::~TilesetEmptyPage() noexcept = default;

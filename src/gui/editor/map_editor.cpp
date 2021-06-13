@@ -39,7 +39,6 @@ void MapEditor::InitConnections()
   connect(mTabWidget, &MapTabWidget::S_MouseEntered, this, &MapEditor::S_MouseEntered);
   connect(mTabWidget, &MapTabWidget::S_MouseExited, this, &MapEditor::S_MouseExited);
   connect(mTabWidget, &MapTabWidget::S_SpawnContextMenu, this, &MapEditor::OnSpawnContextMenu);
-
   connect(mTabWidget, &MapTabWidget::currentChanged, this, &MapEditor::OnTabChanged);
   // clang-format on
 }

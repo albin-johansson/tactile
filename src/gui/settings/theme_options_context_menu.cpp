@@ -18,20 +18,11 @@ ThemeOptionsContextMenu::ThemeOptionsContextMenu(QWidget* parent)
   setObjectName(QStringLiteral(u"ThemeOptionsContextMenu"));
 
   // clang-format off
-  connect(mRename, &QAction::triggered,
-          this, &ThemeOptionsContextMenu::S_RenameTheme);
-
-  connect(mDuplicate, &QAction::triggered,
-          this, &ThemeOptionsContextMenu::S_DuplicateTheme);
-
-  connect(mExport, &QAction::triggered,
-          this, &ThemeOptionsContextMenu::S_ExportTheme);
-
-  connect(mReset, &QAction::triggered,
-          this, &ThemeOptionsContextMenu::S_ResetTheme);
-
-  connect(mRemove, &QAction::triggered,
-          this, &ThemeOptionsContextMenu::S_RemoveTheme);
+  connect(mRename, &QAction::triggered, this, &ThemeOptionsContextMenu::S_RenameTheme);
+  connect(mDuplicate, &QAction::triggered, this, &ThemeOptionsContextMenu::S_DuplicateTheme);
+  connect(mExport, &QAction::triggered, this, &ThemeOptionsContextMenu::S_ExportTheme);
+  connect(mReset, &QAction::triggered, this, &ThemeOptionsContextMenu::S_ResetTheme);
+  connect(mRemove, &QAction::triggered, this, &ThemeOptionsContextMenu::S_RemoveTheme);
   // clang-format on
 }
 

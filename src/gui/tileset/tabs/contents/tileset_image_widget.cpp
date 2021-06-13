@@ -22,10 +22,9 @@ TilesetImageWidget::TilesetImageWidget(const core::Tileset& tileset,
   mRubberBand->SetTileWidth(tileset.GetTileWidth());
   mRubberBand->SetTileHeight(tileset.GetTileHeight());
 
-  connect(mRubberBand,
-          &TilesetRubberBand::S_FinishedSelection,
-          this,
-          &TilesetImageWidget::S_SetTilesetSelection);
+  // clang-format off
+  connect(mRubberBand, &TilesetRubberBand::S_FinishedSelection, this, &TilesetImageWidget::S_SetTilesetSelection);
+  // clang-format on
 
   mLayout->addWidget(mImageLabel);
   setLayout(mLayout);

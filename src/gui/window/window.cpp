@@ -483,11 +483,8 @@ void Window::OnOpenSettingsAction()
   SettingsDialog settings{this};
 
   // clang-format off
-  connect(&settings, &SettingsDialog::S_ReloadTheme,
-          this, &Window::OnThemeChanged);
-
-  connect(&settings, &SettingsDialog::S_ReloadOpenGl,
-          this, &Window::OnReloadOpenGL);
+  connect(&settings, &SettingsDialog::S_ReloadTheme, this, &Window::OnThemeChanged);
+  connect(&settings, &SettingsDialog::S_ReloadOpenGl, this, &Window::OnReloadOpenGL);
   // clang-format on
 
   settings.exec();

@@ -12,10 +12,8 @@ AddLayerContextMenu::AddLayerContextMenu(QWidget* parent)
   setObjectName(QStringLiteral(u"AddLayerContextMenu"));
 
   // clang-format off
-  connect(mTileLayer, &QAction::triggered,
-          this, &AddLayerContextMenu::S_AddTileLayer);
-  connect(mObjectLayer, &QAction::triggered,
-          this, &AddLayerContextMenu::S_AddObjectLayer);
+  connect(mTileLayer, &QAction::triggered, this, &AddLayerContextMenu::S_AddTileLayer);
+  connect(mObjectLayer, &QAction::triggered, this, &AddLayerContextMenu::S_AddObjectLayer);
   // clang-format on
 }
 

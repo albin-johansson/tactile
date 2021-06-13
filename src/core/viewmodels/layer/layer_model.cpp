@@ -15,39 +15,21 @@ LayerModel::LayerModel(not_null<core::MapDocument*> document)
     throw TactileError{"Layer model requires non-null map document!"};
   }
 
-  document->EachLayer(
-      [this](const layer_id id, const Shared<core::ILayer>& layer) {
-        Q_ASSERT(layer);
-        appendRow(new LayerItem{id, *layer.get()});
-      });
+  document->EachLayer([this](layer_id id, const Shared<core::ILayer>& layer) {
+    Q_ASSERT(layer);
+    appendRow(new LayerItem{id, *layer.get()});
+  });
 
   // clang-format off
-  connect(mDocument, &core::MapDocument::S_AddedLayer,
-          this,      &LayerModel::AddItem);
-
-  connect(mDocument, &core::MapDocument::S_AddedDuplicatedLayer,
-          this,      &LayerModel::AddItem);
-
-  connect(mDocument, &core::MapDocument::S_RemovedLayer,
-          this,      &LayerModel::RemoveItem);
-
-  connect(mDocument, &core::MapDocument::S_ChangedLayerOpacity,
-          this,      &LayerModel::S_ChangedOpacity);
-
-  connect(mDocument, &core::MapDocument::S_ChangedLayerName,
-          this,      &LayerModel::S_ChangedName);
-
-  connect(mDocument, &core::MapDocument::S_ChangedLayerVisibility,
-          this, &LayerModel::S_ChangedVisibility);
-
-  connect(mDocument, &core::MapDocument::S_SelectedLayer,
-          this,      &LayerModel::S_SelectedLayer);
-
-  connect(mDocument, &core::MapDocument::S_MovedLayerForward,
-          this,      &LayerModel::OnMovedLayerForward);
-
-  connect(mDocument, &core::MapDocument::S_MovedLayerBack,
-          this,      &LayerModel::OnMovedLayerBack);
+  connect(mDocument, &core::MapDocument::S_AddedLayer, this, &LayerModel::AddItem);
+  connect(mDocument, &core::MapDocument::S_AddedDuplicatedLayer, this, &LayerModel::AddItem);
+  connect(mDocument, &core::MapDocument::S_RemovedLayer, this, &LayerModel::RemoveItem);
+  connect(mDocument, &core::MapDocument::S_ChangedLayerOpacity, this, &LayerModel::S_ChangedOpacity);
+  connect(mDocument, &core::MapDocument::S_ChangedLayerName, this, &LayerModel::S_ChangedName);
+  connect(mDocument, &core::MapDocument::S_ChangedLayerVisibility, this, &LayerModel::S_ChangedVisibility);
+  connect(mDocument, &core::MapDocument::S_SelectedLayer, this, &LayerModel::S_SelectedLayer);
+  connect(mDocument, &core::MapDocument::S_MovedLayerForward, this, &LayerModel::OnMovedLayerForward);
+  connect(mDocument, &core::MapDocument::S_MovedLayerBack, this, &LayerModel::OnMovedLayerBack);
   // clang-format on
 }
 

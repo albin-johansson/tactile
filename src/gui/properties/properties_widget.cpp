@@ -27,41 +27,20 @@ PropertiesWidget::PropertiesWidget(QWidget* parent)
   mContextMenu->SetAddEnabled(true);
 
   // clang-format off
-  connect(mUi->addButton, &QPushButton::pressed,
-          this, &PropertiesWidget::OnNewPropertyRequested);
+  connect(mUi->addButton, &QPushButton::pressed, this, &PropertiesWidget::OnNewPropertyRequested);
+  connect(mUi->removeButton, &QPushButton::pressed, this, &PropertiesWidget::OnRemovePropertyRequested);
+  connect(mUi->renameButton, &QPushButton::pressed, this, &PropertiesWidget::OnRenamePropertyRequested);
 
-  connect(mUi->removeButton, &QPushButton::pressed,
-          this, &PropertiesWidget::OnRemovePropertyRequested);
+  connect(mView, &PropertyTreeView::S_SpawnContextMenu, this, &PropertiesWidget::OnSpawnContextMenu);
+  connect(mView, &PropertyTreeView::S_SelectionChanged, this, &PropertiesWidget::OnSelectionChanged);
+  connect(mView, &QTreeView::doubleClicked, this, &PropertiesWidget::OnDoubleClicked);
 
-  connect(mUi->renameButton, &QPushButton::pressed,
-          this, &PropertiesWidget::OnRenamePropertyRequested);
-
-  connect(mView, &PropertyTreeView::S_SpawnContextMenu,
-          this, &PropertiesWidget::OnSpawnContextMenu);
-
-  connect(mView, &PropertyTreeView::S_SelectionChanged,
-          this, &PropertiesWidget::OnSelectionChanged);
-
-  connect(mView, &QTreeView::doubleClicked,
-          this, &PropertiesWidget::OnDoubleClicked);
-
-  connect(mContextMenu, &PropertyContextMenu::S_Copy,
-          this, &PropertiesWidget::OnCopyPropertyRequested);
-
-  connect(mContextMenu, &PropertyContextMenu::S_Paste,
-          this, &PropertiesWidget::OnPastePropertyRequested);
-
-  connect(mContextMenu, &PropertyContextMenu::S_Add,
-          this, &PropertiesWidget::OnNewPropertyRequested);
-
-  connect(mContextMenu, &PropertyContextMenu::S_Remove,
-          this, &PropertiesWidget::OnRemovePropertyRequested);
-
-  connect(mContextMenu, &PropertyContextMenu::S_Rename,
-          this, &PropertiesWidget::OnRenamePropertyRequested);
-
-  connect(mContextMenu, &PropertyContextMenu::S_ChangeType,
-          this, &PropertiesWidget::OnChangeTypeRequested);
+  connect(mContextMenu, &PropertyContextMenu::S_Copy, this, &PropertiesWidget::OnCopyPropertyRequested);
+  connect(mContextMenu, &PropertyContextMenu::S_Paste, this, &PropertiesWidget::OnPastePropertyRequested);
+  connect(mContextMenu, &PropertyContextMenu::S_Add, this, &PropertiesWidget::OnNewPropertyRequested);
+  connect(mContextMenu, &PropertyContextMenu::S_Remove, this, &PropertiesWidget::OnRemovePropertyRequested);
+  connect(mContextMenu, &PropertyContextMenu::S_Rename, this, &PropertiesWidget::OnRenamePropertyRequested);
+  connect(mContextMenu, &PropertyContextMenu::S_ChangeType, this, &PropertiesWidget::OnChangeTypeRequested);
   // clang-format on
 }
 
