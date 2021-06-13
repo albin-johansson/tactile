@@ -83,6 +83,10 @@ class SettingsDialog final : public QDialog
   void OnThemeChanged(QPalette::ColorGroup group,
                       QPalette::ColorRole role,
                       const QColor& color);
+
+  void OnBasicColorChanged(QPalette::ColorRole role, const QColor& color);
+
+  void OnDisabledColorChanged(QPalette::ColorRole role, const QColor& color);
 };
 
 }  // namespace tactile

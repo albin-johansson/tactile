@@ -51,51 +51,22 @@ SettingsDialog::SettingsDialog(QWidget* parent)
   FetchCurrentSettings();
 
   // clang-format off
-  connect(this, &QDialog::accepted,
-          this, &SettingsDialog::OnAccept);
+  connect(this, &QDialog::accepted, this, &SettingsDialog::OnAccept);
+  connect(mUi->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked, this, &SettingsDialog::OnApply);
+  connect(mUi->themeOptionsButton, &QPushButton::pressed, this, &SettingsDialog::OnThemeOptionsButtonPressed);
+  connect(mUi->generalRestoreDefaults, &QPushButton::clicked, this, &SettingsDialog::OnRestoreGeneralDefaults);
+  connect(mUi->exportRestoreDefaults, &QPushButton::clicked, this, &SettingsDialog::OnRestoreExportDefaults);
+  connect(mUi->addThemeButton, &QPushButton::pressed, this, &SettingsDialog::OnImportNewTheme);
+  connect(mUi->themeComboBox, &QComboBox::currentTextChanged, this, &SettingsDialog::OnCurrentThemeChanged);
 
-  connect(mUi->buttonBox->button(QDialogButtonBox::Apply), &QPushButton::clicked,
-          this, &SettingsDialog::OnApply);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_RenameTheme, this, &SettingsDialog::OnRenameCurrentTheme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_DuplicateTheme, this, &SettingsDialog::OnDuplicateCurrentTheme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_ExportTheme, this, &SettingsDialog::OnExportCurrentTheme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_ResetTheme, this, &SettingsDialog::OnResetCurrentTheme);
+  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_RemoveTheme, this, &SettingsDialog::OnRemoveCurrentTheme);
 
-  connect(mUi->themeOptionsButton, &QPushButton::pressed,
-          this, &SettingsDialog::OnThemeOptionsButtonPressed);
-
-  connect(mUi->generalRestoreDefaults, &QPushButton::clicked,
-          this, &SettingsDialog::OnRestoreGeneralDefaults);
-
-  connect(mUi->exportRestoreDefaults, &QPushButton::clicked,
-          this, &SettingsDialog::OnRestoreExportDefaults);
-
-  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_RenameTheme,
-          this, &SettingsDialog::OnRenameCurrentTheme);
-
-  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_DuplicateTheme,
-          this, &SettingsDialog::OnDuplicateCurrentTheme);
-
-  connect(mUi->addThemeButton, &QPushButton::pressed,
-          this, &SettingsDialog::OnImportNewTheme);
-
-  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_ExportTheme,
-          this, &SettingsDialog::OnExportCurrentTheme);
-
-  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_ResetTheme,
-          this, &SettingsDialog::OnResetCurrentTheme);
-
-  connect(mThemeOptionsContextMenu, &ThemeOptionsContextMenu::S_RemoveTheme,
-          this, &SettingsDialog::OnRemoveCurrentTheme);
-
-  connect(mBasicPreview, &ColorPreviewManager::S_ColorChanged,
-          [this](const QPalette::ColorRole role, const QColor& color) {
-            OnThemeChanged(QPalette::Active, role, color);
-          });
-
-  connect(mDisabledPreview, &ColorPreviewManager::S_ColorChanged,
-          [this](const QPalette::ColorRole role, const QColor& color) {
-            OnThemeChanged(QPalette::Disabled, role, color);
-          });
-
-  connect(mUi->themeComboBox, &QComboBox::currentTextChanged,
-          this, &SettingsDialog::OnCurrentThemeChanged);
+  connect(mBasicPreview, &ColorPreviewManager::S_ColorChanged, this, &SettingsDialog::OnBasicColorChanged);
+  connect(mDisabledPreview, &ColorPreviewManager::S_ColorChanged, this, &SettingsDialog::OnDisabledColorChanged);
   // clang-format on
 
   UpdateGeneralComponents();
@@ -323,9 +294,19 @@ void SettingsDialog::OnThemeChanged(QPalette::ColorGroup group,
                                     QPalette::ColorRole role,
                                     const QColor& color)
 {
-  //  qDebug("theme_changed");
   UpdateTheme(mUi->themeComboBox->currentText(), role, color, group);
-  //  emit reload_theme();
+}
+
+void SettingsDialog::OnBasicColorChanged(const QPalette::ColorRole role,
+                                         const QColor& color)
+{
+  OnThemeChanged(QPalette::Active, role, color);
+}
+
+void SettingsDialog::OnDisabledColorChanged(const QPalette::ColorRole role,
+                                            const QColor& color)
+{
+  OnThemeChanged(QPalette::Disabled, role, color);
 }
 
 }  // namespace tactile
