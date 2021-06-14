@@ -141,6 +141,7 @@ set(TACTILE_SOURCE_FILES
     core/tileset/tileset_selection.hpp
 
     core/viewmodels/item_model_utils.hpp
+    core/viewmodels/vm_fwd.hpp
 
     core/viewmodels/layer/layer_item.cpp
     core/viewmodels/layer/layer_item.hpp
