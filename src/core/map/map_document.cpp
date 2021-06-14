@@ -102,6 +102,18 @@ void MapDocument::SetPath(QFileInfo path)
   mDelegate->SetPath(path);
 }
 
+void MapDocument::ResetPropertyContext()
+{
+  // TODO mDelegate->Execute<cmd::ResetPropertyContext>(mDelegate.get());
+  mDelegate->ResetPropertyContext();
+}
+
+void MapDocument::SetPropertyContext(not_null<IPropertyManager*> manager)
+{
+  // TODO mDelegate->Execute<cmd::SetPropertyContext>(mDelegate.get(), manager);
+  mDelegate->SetPropertyContext(manager);
+}
+
 auto MapDocument::CanUndo() const -> bool
 {
   return mDelegate->CanUndo();

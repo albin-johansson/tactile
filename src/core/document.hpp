@@ -4,6 +4,7 @@
 #include <QObject>    // QObject
 #include <QString>    // QString
 
+#include "not_null.hpp"
 #include "property_manager.hpp"
 #include "smart_pointers.hpp"
 
@@ -76,6 +77,10 @@ class ADocument : public QObject, public IPropertyManager
    * \since 0.2.0
    */
   virtual void SetPath(QFileInfo path) = 0;
+
+  virtual void ResetPropertyContext() = 0;
+
+  virtual void SetPropertyContext(not_null<IPropertyManager*> manager) = 0;
 
   /**
    * \brief Indicates whether or not there is an undoable command.

@@ -33,6 +33,10 @@ class DocumentDelegate final : public ADocument
 
   void SetPath(QFileInfo path) override;
 
+  void ResetPropertyContext() override;
+
+  void SetPropertyContext(IPropertyManager* manager) override;
+
   [[nodiscard]] auto CanUndo() const -> bool override;
 
   [[nodiscard]] auto CanRedo() const -> bool override;
@@ -101,6 +105,7 @@ class DocumentDelegate final : public ADocument
  private:
   Unique<CommandStack> mCommandStack;
   Unique<IPropertyManager> mPropertyManager;
+  IPropertyManager* mPropertyContext{};
   Maybe<QFileInfo> mPath;
 };
 

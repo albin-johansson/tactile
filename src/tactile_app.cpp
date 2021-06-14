@@ -61,6 +61,9 @@ void TactileApp::InitConnections()
   winToMod(&Window::S_SelectTileset,         &Model::SelectTileset);
   winToMod(&Window::S_RenameTileset,         &Model::SetTilesetName);
   winToMod(&Window::S_SetTilesetSelection,   &Model::SetTilesetSelection);
+
+  winToMod(&Window::S_ShowMapProperties,     &Model::OnShowMapProperties);
+  winToMod(&Window::S_ShowLayerProperties,   &Model::OnShowLayerProperties);
   winToMod(&Window::S_ShowTilesetProperties, &Model::OnShowTilesetProperties);
 
   winToMod(&Window::S_MousePressed,  &Model::OnMousePressed);

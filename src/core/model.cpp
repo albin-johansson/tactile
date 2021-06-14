@@ -25,27 +25,25 @@ auto Model::AddMap(MapDocument* document) -> map_id
     QObject::connect(document, signal, this, slot);
   };
 
-  // clang-format off
-  bind(&MapDocument::S_Redraw,                &Model::S_Redraw);
-  bind(&MapDocument::S_UndoStateUpdated,      &Model::S_UndoStateUpdated);
-  bind(&MapDocument::S_RedoStateUpdated,      &Model::S_RedoStateUpdated);
-  bind(&MapDocument::S_UndoTextUpdated,       &Model::S_UndoTextUpdated);
-  bind(&MapDocument::S_RedoTextUpdated,       &Model::S_RedoTextUpdated);
-  bind(&MapDocument::S_CleanChanged,          &Model::S_CleanChanged);
-  bind(&MapDocument::S_RemovedTileset,        &Model::S_RemovedTileset);
-  bind(&MapDocument::S_RenamedTileset,        &Model::S_RenamedTileset);
-  bind(&MapDocument::S_AddedLayer,            &Model::S_AddedLayer);
-  bind(&MapDocument::S_AddedDuplicatedLayer,  &Model::S_AddedDuplicatedLayer);
-  bind(&MapDocument::S_RemovedLayer,          &Model::S_RemovedLayer);
-  bind(&MapDocument::S_SelectedLayer,         &Model::S_SelectedLayer);
-  bind(&MapDocument::S_MovedLayerBack,        &Model::S_MovedLayerBack);
-  bind(&MapDocument::S_MovedLayerForward,     &Model::S_MovedLayerForward);
-  bind(&MapDocument::S_AddedProperty,         &Model::S_AddedProperty);
+  bind(&MapDocument::S_Redraw, &Model::S_Redraw);
+  bind(&MapDocument::S_UndoStateUpdated, &Model::S_UndoStateUpdated);
+  bind(&MapDocument::S_RedoStateUpdated, &Model::S_RedoStateUpdated);
+  bind(&MapDocument::S_UndoTextUpdated, &Model::S_UndoTextUpdated);
+  bind(&MapDocument::S_RedoTextUpdated, &Model::S_RedoTextUpdated);
+  bind(&MapDocument::S_CleanChanged, &Model::S_CleanChanged);
+  bind(&MapDocument::S_RemovedTileset, &Model::S_RemovedTileset);
+  bind(&MapDocument::S_RenamedTileset, &Model::S_RenamedTileset);
+  bind(&MapDocument::S_AddedLayer, &Model::S_AddedLayer);
+  bind(&MapDocument::S_AddedDuplicatedLayer, &Model::S_AddedDuplicatedLayer);
+  bind(&MapDocument::S_RemovedLayer, &Model::S_RemovedLayer);
+  bind(&MapDocument::S_SelectedLayer, &Model::S_SelectedLayer);
+  bind(&MapDocument::S_MovedLayerBack, &Model::S_MovedLayerBack);
+  bind(&MapDocument::S_MovedLayerForward, &Model::S_MovedLayerForward);
+  bind(&MapDocument::S_AddedProperty, &Model::S_AddedProperty);
   bind(&MapDocument::S_AboutToRemoveProperty, &Model::S_AboutToRemoveProperty);
-  bind(&MapDocument::S_UpdatedProperty,       &Model::S_UpdatedProperty);
-  bind(&MapDocument::S_RenamedProperty,       &Model::S_RenamedProperty);
-  bind(&MapDocument::S_ChangedPropertyType,   &Model::S_ChangedPropertyType);
-  // clang-format on
+  bind(&MapDocument::S_UpdatedProperty, &Model::S_UpdatedProperty);
+  bind(&MapDocument::S_RenamedProperty, &Model::S_RenamedProperty);
+  bind(&MapDocument::S_ChangedPropertyType, &Model::S_ChangedPropertyType);
 
   bind(&MapDocument::S_AddedTileset, [this](const tileset_id id) {
     const auto& tileset = CurrentDocument()->GetTilesets()->At(id);
@@ -53,11 +51,8 @@ auto Model::AddMap(MapDocument* document) -> map_id
   });
 
   bind(&MapDocument::S_ShowProperties,
-       [this] { emit S_ShowMapProperties(CurrentDocument()); });
-
-  bind(&MapDocument::S_ShowLayerProperties, [this](const layer_id id) {
-    emit S_ShowLayerProperties(CurrentDocument()->GetLayer(id));
-  });
+       [this] { OnShowMapProperties(CurrentMapId().value()); });
+  bind(&MapDocument::S_ShowLayerProperties, &Model::OnShowLayerProperties);
 
   const auto id = mNextId;
   mDocuments.emplace(id, document);
@@ -310,6 +305,27 @@ void Model::OnMouseExited(QEvent* event)
   mTools.OnMouseExited(event);
 }
 
+void Model::OnShowMapProperties(const map_id id)
+{
+  auto* document = CurrentDocument();
+  Q_ASSERT(document);
+
+  document->ResetPropertyContext();
+  emit S_ShowMapProperties(document);
+}
+
+void Model::OnShowLayerProperties(const layer_id id)
+{
+  auto* document = CurrentDocument();
+  Q_ASSERT(document);
+
+  auto* layer = document->GetLayer(id);
+  Q_ASSERT(layer);
+
+  document->SetPropertyContext(layer);
+  emit S_ShowLayerProperties(document);
+}
+
 void Model::OnShowTilesetProperties(const tileset_id id)
 {
   auto* document = CurrentDocument();
@@ -318,7 +334,8 @@ void Model::OnShowTilesetProperties(const tileset_id id)
   auto* tileset = document->GetTileset(id);
   Q_ASSERT(tileset);
 
-  emit S_ShowTilesetProperties(tileset);
+  document->SetPropertyContext(tileset);
+  emit S_ShowTilesetProperties(document);
 }
 
 void Model::EmitUndoRedoUpdate()

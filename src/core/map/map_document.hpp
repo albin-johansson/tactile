@@ -78,6 +78,10 @@ class MapDocument final : public ADocument
 
   void SetPath(QFileInfo path) override;
 
+  void ResetPropertyContext() override;
+
+  void SetPropertyContext(not_null<IPropertyManager*> manager) override;
+
   [[nodiscard]] auto CanUndo() const -> bool override;
 
   [[nodiscard]] auto CanRedo() const -> bool override;
@@ -448,11 +452,11 @@ class MapDocument final : public ADocument
   /// \} End of property signals
 
  private:
-  Unique<Map> mMap;                    ///< The associated map.
-  Unique<TilesetManager> mTilesets;    ///< The associated tilesets.
-  Unique<DocumentDelegate> mDelegate;  ///< Delegate for document API.
-  int mTileLayerSuffix{1};             ///< Incrementing tile layer suffix.
-  int mObjectLayerSuffix{1};           ///< Incrementing object layer suffix.
+  Unique<Map> mMap;                      ///< The associated map.
+  Unique<TilesetManager> mTilesets;      ///< The associated tilesets.
+  Unique<DocumentDelegate> mDelegate;    ///< Delegate for document API.
+  int mTileLayerSuffix{1};               ///< Incrementing tile layer suffix.
+  int mObjectLayerSuffix{1};             ///< Incrementing object layer suffix.
 
   void SetUp();
 };

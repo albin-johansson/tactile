@@ -9,6 +9,7 @@ namespace tactile::core {
 DocumentDelegate::DocumentDelegate()
     : mCommandStack{std::make_unique<CommandStack>()}
     , mPropertyManager{std::make_unique<PropertyDelegate>()}
+    , mPropertyContext{mPropertyManager.get()}
 {
   mCommandStack->setUndoLimit(100);
 }
@@ -36,6 +37,17 @@ void DocumentDelegate::ResetHistory()
 void DocumentDelegate::SetPath(QFileInfo path)
 {
   mPath = std::move(path);
+}
+
+void DocumentDelegate::ResetPropertyContext()
+{
+  mPropertyContext = mPropertyManager.get();
+}
+
+void DocumentDelegate::SetPropertyContext(not_null<IPropertyManager*> manager)
+{
+  Q_ASSERT(manager);
+  mPropertyContext = manager;
 }
 
 auto DocumentDelegate::CanUndo() const -> bool
@@ -82,68 +94,68 @@ auto DocumentDelegate::AbsolutePath() const -> QString
 
 void DocumentDelegate::AddProperty(const QString& name, const PropertyType type)
 {
-  mPropertyManager->AddProperty(name, type);
+  mPropertyContext->AddProperty(name, type);
   emit S_AddedProperty(name);
 }
 
 void DocumentDelegate::AddProperty(const QString& name,
                                    const core::Property& property)
 {
-  mPropertyManager->AddProperty(name, property);
+  mPropertyContext->AddProperty(name, property);
   emit S_AddedProperty(name);
 }
 
 void DocumentDelegate::RemoveProperty(const QString& name)
 {
   emit S_AboutToRemoveProperty(name);
-  mPropertyManager->RemoveProperty(name);
+  mPropertyContext->RemoveProperty(name);
 }
 
 void DocumentDelegate::RenameProperty(const QString& oldName,
                                       const QString& newName)
 {
-  mPropertyManager->RenameProperty(oldName, newName);
+  mPropertyContext->RenameProperty(oldName, newName);
   emit S_RenamedProperty(oldName, newName);
 }
 
 void DocumentDelegate::SetProperty(const QString& name,
                                    const core::Property& property)
 {
-  mPropertyManager->SetProperty(name, property);
+  mPropertyContext->SetProperty(name, property);
   emit S_UpdatedProperty(name);
 }
 
 void DocumentDelegate::ChangePropertyType(const QString& name,
                                           const PropertyType type)
 {
-  mPropertyManager->ChangePropertyType(name, type);
+  mPropertyContext->ChangePropertyType(name, type);
   emit S_ChangedPropertyType(name);
 }
 
 auto DocumentDelegate::GetProperty(const QString& name) const
     -> const core::Property&
 {
-  return mPropertyManager->GetProperty(name);
+  return mPropertyContext->GetProperty(name);
 }
 
 auto DocumentDelegate::GetProperty(const QString& name) -> core::Property&
 {
-  return mPropertyManager->GetProperty(name);
+  return mPropertyContext->GetProperty(name);
 }
 
 auto DocumentDelegate::HasProperty(const QString& name) const -> bool
 {
-  return mPropertyManager->HasProperty(name);
+  return mPropertyContext->HasProperty(name);
 }
 
 auto DocumentDelegate::PropertyCount() const noexcept -> int
 {
-  return mPropertyManager->PropertyCount();
+  return mPropertyContext->PropertyCount();
 }
 
 auto DocumentDelegate::GetProperties() const -> const property_map&
 {
-  return mPropertyManager->GetProperties();
+  return mPropertyContext->GetProperties();
 }
 
 auto DocumentDelegate::History() noexcept -> CommandStack*

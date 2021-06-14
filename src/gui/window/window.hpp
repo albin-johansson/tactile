@@ -93,8 +93,11 @@ class Window final : public QMainWindow
   void S_RemoveTileset(tileset_id id);
   void S_SelectTileset(tileset_id id);
   void S_RenameTileset(tileset_id id, const QString& name);
-  void S_ShowTilesetProperties(tileset_id id);
   void S_SetTilesetSelection(const core::TilesetSelection& selection);
+
+  void S_ShowMapProperties(map_id id);
+  void S_ShowLayerProperties(layer_id id);
+  void S_ShowTilesetProperties(tileset_id id);
 
   void S_ResizeMap();
 

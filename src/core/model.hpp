@@ -265,6 +265,8 @@ class Model final : public QObject
   void OnMouseEntered(QEvent* event);
   void OnMouseExited(QEvent* event);
 
+  void OnShowMapProperties(map_id id);
+  void OnShowLayerProperties(layer_id id);
   void OnShowTilesetProperties(tileset_id id);
 
  private:
