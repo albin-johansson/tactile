@@ -72,6 +72,7 @@ set(TACTILE_SOURCE_FILES
     commands/repeated_command.cpp
     commands/repeated_command.hpp
 
+    core/core_fwd.hpp
     core/document.hpp
     core/document_delegate.cpp
     core/document_delegate.hpp
