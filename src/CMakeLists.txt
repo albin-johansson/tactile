@@ -381,6 +381,7 @@ set(TACTILE_SOURCE_FILES
     util/string_utils.cpp
     util/string_utils.hpp
     util/vector_map.hpp
+    util/verify_not_null.hpp
     )
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
