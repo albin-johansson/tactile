@@ -7,6 +7,7 @@
 #include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "property.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 
@@ -23,7 +24,7 @@ class RemoveProperty final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::RemoveProperty);
+    return ToUnderlying(CommandId::RemoveProperty);
   }
 
  private:

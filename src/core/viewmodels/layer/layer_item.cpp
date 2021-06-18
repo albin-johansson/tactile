@@ -3,6 +3,7 @@
 #include "icons.hpp"
 #include "layer_item_role.hpp"
 #include "tactile_error.hpp"
+#include "to_underlying.hpp"
 
 namespace tactile::vm {
 namespace {
@@ -39,7 +40,7 @@ void LayerItem::SetId(const layer_id id)
 
 void LayerItem::SetType(const core::LayerType type)
 {
-  setData(static_cast<int>(type), LayerItemRole::Type);
+  setData(ToUnderlying(type), LayerItemRole::Type);
 }
 
 auto LayerItem::GetId() const -> layer_id

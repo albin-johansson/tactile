@@ -6,6 +6,7 @@
 #include "property.hpp"
 #include "property_item_role.hpp"
 #include "property_item_type.hpp"
+#include "to_underlying.hpp"
 
 namespace tactile::vm {
 
@@ -31,7 +32,7 @@ class StringItem final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(PropertyItemType::String);
+    return ToUnderlying(PropertyItemType::String);
   }
 };
 
@@ -45,7 +46,7 @@ class IntItem final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(PropertyItemType::Integer);
+    return ToUnderlying(PropertyItemType::Integer);
   }
 };
 
@@ -59,7 +60,7 @@ class FloatItem final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(PropertyItemType::Floating);
+    return ToUnderlying(PropertyItemType::Floating);
   }
 };
 
@@ -75,7 +76,7 @@ class BoolItem final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(PropertyItemType::Boolean);
+    return ToUnderlying(PropertyItemType::Boolean);
   }
 };
 
@@ -90,7 +91,7 @@ class ObjectItem final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(PropertyItemType::Object);
+    return ToUnderlying(PropertyItemType::Object);
   }
 };
 
@@ -105,7 +106,7 @@ class ColorItem final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(PropertyItemType::Color);
+    return ToUnderlying(PropertyItemType::Color);
   }
 };
 
@@ -120,7 +121,7 @@ class FileItem final : public QStandardItem
 
   [[nodiscard]] auto type() const -> int override
   {
-    return static_cast<int>(PropertyItemType::File);
+    return ToUnderlying(PropertyItemType::File);
   }
 };
 

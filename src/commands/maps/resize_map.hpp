@@ -4,6 +4,7 @@
 #include "forward_declare.hpp"
 #include "map_command.hpp"
 #include "not_null.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -38,7 +39,7 @@ class ResizeMap final : public MapCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::ResizeMap);
+    return ToUnderlying(CommandId::ResizeMap);
   }
 
  private:

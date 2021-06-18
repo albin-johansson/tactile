@@ -6,6 +6,7 @@
 #include "map_document.hpp"
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
+#include "to_underlying.hpp"
 
 namespace tactile::cmd {
 
@@ -22,7 +23,7 @@ class RemoveTileset final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::RemoveTileset);
+    return ToUnderlying(CommandId::RemoveTileset);
   }
 
  private:

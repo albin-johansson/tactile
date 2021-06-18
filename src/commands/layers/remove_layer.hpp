@@ -10,6 +10,7 @@
 #include "not_null.hpp"
 #include "remove_layer.hpp"
 #include "smart_pointers.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -26,7 +27,7 @@ class RemoveLayer final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::RemoveLayer);
+    return ToUnderlying(CommandId::RemoveLayer);
   }
 
  private:

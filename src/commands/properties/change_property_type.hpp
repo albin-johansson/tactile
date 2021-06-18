@@ -8,6 +8,7 @@
 #include "not_null.hpp"
 #include "property.hpp"
 #include "property_manager.hpp"
+#include "to_underlying.hpp"
 
 namespace tactile::cmd {
 
@@ -24,7 +25,7 @@ class ChangePropertyType final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::ChangePropertyType);
+    return ToUnderlying(CommandId::ChangePropertyType);
   }
 
  private:

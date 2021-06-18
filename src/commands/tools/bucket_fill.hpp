@@ -9,6 +9,7 @@
 #include "map_position.hpp"
 #include "not_null.hpp"
 #include "tile_id.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -36,7 +37,7 @@ class BucketFill final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::BucketFill);
+    return ToUnderlying(CommandId::BucketFill);
   }
 
  private:

@@ -5,6 +5,7 @@
 
 #include "command_id.hpp"
 #include "property_manager.hpp"
+#include "to_underlying.hpp"
 
 namespace tactile::cmd {
 
@@ -21,7 +22,7 @@ class RenameProperty final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::RenameProperty);
+    return ToUnderlying(CommandId::RenameProperty);
   }
 
  private:

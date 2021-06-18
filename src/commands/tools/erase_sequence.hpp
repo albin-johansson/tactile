@@ -8,6 +8,7 @@
 #include "map_position.hpp"
 #include "not_null.hpp"
 #include "tile_id.hpp"
+#include "to_underlying.hpp"
 #include "vector_map.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
@@ -26,7 +27,7 @@ class EraseSequence final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::Eraser);
+    return ToUnderlying(CommandId::Eraser);
   }
 
  private:

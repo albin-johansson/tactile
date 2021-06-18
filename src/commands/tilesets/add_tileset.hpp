@@ -8,6 +8,7 @@
 #include "smart_pointers.hpp"
 #include "tileset.hpp"
 #include "tileset_id.hpp"
+#include "to_underlying.hpp"
 
 namespace tactile::cmd {
 
@@ -24,7 +25,7 @@ class AddTileset final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::AddTileset);
+    return ToUnderlying(CommandId::AddTileset);
   }
 
  private:

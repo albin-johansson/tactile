@@ -8,6 +8,7 @@
 #include "maybe.hpp"
 #include "not_null.hpp"
 #include "tileset_id.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -26,7 +27,7 @@ class SetTilesetName final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::SetTilesetName);
+    return ToUnderlying(CommandId::SetTilesetName);
   }
 
  private:

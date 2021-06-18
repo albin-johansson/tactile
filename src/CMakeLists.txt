@@ -103,6 +103,7 @@ set(TACTILE_SOURCE_FILES
     core/aliases/tileset_id.hpp
 
     core/concepts/arithmetic.hpp
+    core/concepts/is_enum.hpp
     core/concepts/is_negatable.hpp
     core/concepts/is_pointer.hpp
     core/concepts/ordered.hpp
@@ -384,6 +385,7 @@ set(TACTILE_SOURCE_FILES
     util/standard_paths.hpp
     util/string_utils.cpp
     util/string_utils.hpp
+    util/to_underlying.hpp
     util/vector_map.hpp
     util/verify_not_null.hpp
     )

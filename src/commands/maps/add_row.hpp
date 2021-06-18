@@ -4,6 +4,7 @@
 #include "forward_declare.hpp"
 #include "not_null.hpp"
 #include "repeated_command.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -29,7 +30,7 @@ class AddRow final : public RepeatedCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::AddRow);
+    return ToUnderlying(CommandId::AddRow);
   }
 
  private:

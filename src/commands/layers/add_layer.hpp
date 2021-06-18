@@ -7,6 +7,7 @@
 #include "layer.hpp"
 #include "layer_id.hpp"
 #include "smart_pointers.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -25,7 +26,7 @@ class AddLayer final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::AddLayer);
+    return ToUnderlying(CommandId::AddLayer);
   }
 
  private:

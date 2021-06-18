@@ -2,6 +2,8 @@
 
 #include <utility>  // move
 
+#include "to_underlying.hpp"
+
 namespace tactile::core {
 
 PropertyDelegate::PropertyDelegate(const QStringView name) : mName{name}
@@ -18,7 +20,7 @@ void PropertyDelegate::AddProperty(const QString& name, const PropertyType type)
 
 #ifdef QT_DEBUG
   qDebug() << "PropertyDelegate::AddProperty: Added" << name
-           << "with type:" << static_cast<int>(type);
+           << "with type:" << ToUnderlying(type);
 #endif  // QT_DEBUG
 }
 
@@ -31,8 +33,8 @@ void PropertyDelegate::AddProperty(const QString& name,
   mProperties.emplace(name, property);
 
 #ifdef QT_DEBUG
-  qDebug() << "PropertyDelegate::AddProperty: Added" << name
-           << "with type" << static_cast<int>(property.Type().value());
+  qDebug() << "PropertyDelegate::AddProperty: Added" << name << "with type"
+           << ToUnderlying(property.Type().value());
 #endif  // QT_DEBUG
 }
 
@@ -88,7 +90,7 @@ void PropertyDelegate::ChangePropertyType(const QString& name,
 
 #ifdef QT_DEBUG
   qDebug() << "PropertyDelegate::ChangePropertyType: Changed type of" << name
-           << "to" << static_cast<int>(type);
+           << "to" << ToUnderlying(type);
 #endif  // QT_DEBUG
 }
 

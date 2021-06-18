@@ -5,6 +5,7 @@
 #include "map_position.hpp"
 #include "not_null.hpp"
 #include "repeated_map_command.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -30,7 +31,7 @@ class RemoveRow final : public RepeatedMapCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::RemoveRow);
+    return ToUnderlying(CommandId::RemoveRow);
   }
 };
 

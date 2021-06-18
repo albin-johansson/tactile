@@ -6,6 +6,7 @@
 #include "forward_declare.hpp"
 #include "layer_id.hpp"
 #include "not_null.hpp"
+#include "to_underlying.hpp"
 
 TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
@@ -24,7 +25,7 @@ class SetLayerVisibility final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::SetLayerVisibility);
+    return ToUnderlying(CommandId::SetLayerVisibility);
   }
 
  private:

@@ -5,6 +5,7 @@
 #include "command_id.hpp"
 #include "core_fwd.hpp"
 #include "not_null.hpp"
+#include "to_underlying.hpp"
 
 namespace tactile::cmd {
 
@@ -25,7 +26,7 @@ class SetPropertyContext final : public QUndoCommand
 
   [[nodiscard]] auto id() const noexcept -> int override
   {
-    return static_cast<int>(CommandId::SetPropertyContext);
+    return ToUnderlying(CommandId::SetPropertyContext);
   }
 
  private:
