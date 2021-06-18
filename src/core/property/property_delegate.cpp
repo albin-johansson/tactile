@@ -17,7 +17,7 @@ void PropertyDelegate::AddProperty(const QString& name, const PropertyType type)
   mProperties.emplace(name, std::move(property));
 
 #ifdef QT_DEBUG
-  qDebug() << "Added property:" << name
+  qDebug() << "PropertyDelegate::AddProperty: Added" << name
            << "with type:" << static_cast<int>(type);
 #endif  // QT_DEBUG
 }
@@ -31,8 +31,8 @@ void PropertyDelegate::AddProperty(const QString& name,
   mProperties.emplace(name, property);
 
 #ifdef QT_DEBUG
-  qDebug() << "Added property:" << name
-           << "with type:" << static_cast<int>(property.Type().value());
+  qDebug() << "PropertyDelegate::AddProperty: Added" << name
+           << "with type" << static_cast<int>(property.Type().value());
 #endif  // QT_DEBUG
 }
 
@@ -42,7 +42,7 @@ void PropertyDelegate::RemoveProperty(const QString& name)
   mProperties.erase(name);
 
 #ifdef QT_DEBUG
-  qDebug() << "Removed property:" << name;
+  qDebug() << "PropertyDelegate::RemoveProperty: Removed" << name;
 #endif  // QT_DEBUG
 }
 
@@ -57,7 +57,7 @@ void PropertyDelegate::RenameProperty(const QString& oldName,
   mProperties.emplace(newName, std::move(property));
 
 #ifdef QT_DEBUG
-  qDebug() << "Renamed property:" << oldName << "->" << newName;
+  qDebug() << "PropertyDelegate::RenameProperty:" << oldName << "->" << newName;
 #endif  // QT_DEBUG
 }
 
@@ -69,7 +69,7 @@ void PropertyDelegate::SetProperty(const QString& name,
   mProperties.at(name) = property;
 
 #ifdef QT_DEBUG
-  qDebug() << "Set value of property:" << name;
+  qDebug() << "PropertyDelegate::SetProperty: Updated" << name;
 #endif  // QT_DEBUG
 }
 
@@ -87,8 +87,8 @@ void PropertyDelegate::ChangePropertyType(const QString& name,
   mProperties.emplace(name, std::move(property));
 
 #ifdef QT_DEBUG
-  qDebug() << "Changed type of property:" << name << "to"
-           << static_cast<int>(type);
+  qDebug() << "PropertyDelegate::ChangePropertyType: Changed type of" << name
+           << "to" << static_cast<int>(type);
 #endif  // QT_DEBUG
 }
 
