@@ -345,6 +345,12 @@ void Window::OnRenamedProperty(const QString& oldName, const QString& newName)
   mPropertiesDock->OnRenamedProperty(oldName, newName);
 }
 
+void Window::OnUpdatedPropertyContext(core::IPropertyManager* context,
+                                      const QStringView name)
+{
+  mPropertiesDock->OnUpdatedPropertyContext(context, name);
+}
+
 void Window::closeEvent(QCloseEvent* event)
 {
   QWidget::closeEvent(event);

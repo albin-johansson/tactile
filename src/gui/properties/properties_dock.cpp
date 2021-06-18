@@ -64,4 +64,10 @@ void PropertiesDock::OnRenamedProperty(const QString& oldName,
   mWidget->OnRenamedProperty(oldName, newName);
 }
 
+void PropertiesDock::OnUpdatedPropertyContext(core::IPropertyManager* context,
+                                              const QStringView name)
+{
+  mWidget->OnUpdatedPropertyContext(context, name);
+}
+
 }  // namespace tactile

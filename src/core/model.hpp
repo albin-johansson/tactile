@@ -92,6 +92,7 @@ class Model final : public QObject
   void S_ShowMapProperties(core::IPropertyManager* manager);
   void S_ShowLayerProperties(core::IPropertyManager* manager);
   void S_ShowTilesetProperties(core::IPropertyManager* manager);
+  void S_UpdatedPropertyContext(IPropertyManager* context, QStringView name);
 
  public slots:
   /**

@@ -28,7 +28,8 @@ enum class CommandId
   SelectLayer,
   SetLayerName,
   SetLayerVisibility,
-  SetTilesetName
+  SetTilesetName,
+  SetPropertyContext
 };
 
 }  // namespace tactile::cmd

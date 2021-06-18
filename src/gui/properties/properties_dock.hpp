@@ -39,6 +39,9 @@ class PropertiesDock final : public DockWidget
 
   void OnRenamedProperty(const QString& oldName, const QString& newName);
 
+  void OnUpdatedPropertyContext(core::IPropertyManager* context,
+                                QStringView name);
+
  private:
   PropertiesWidget* mWidget{};
 };

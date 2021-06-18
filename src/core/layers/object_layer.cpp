@@ -65,6 +65,11 @@ auto ObjectLayer::GetProperties() const -> const property_map&
   return mDelegate.Properties();
 }
 
+auto ObjectLayer::GetName() const -> QStringView
+{
+  return mDelegate.Name();
+}
+
 void ObjectLayer::SetVisible(const bool visible) noexcept
 {
   mDelegate.SetVisible(visible);

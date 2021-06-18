@@ -50,6 +50,8 @@ set(TACTILE_SOURCE_FILES
     commands/properties/remove_property.hpp
     commands/properties/rename_property.cpp
     commands/properties/rename_property.hpp
+    commands/properties/set_property_context.cpp
+    commands/properties/set_property_context.hpp
     commands/properties/update_property.cpp
     commands/properties/update_property.hpp
 

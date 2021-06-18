@@ -82,6 +82,8 @@ class MapDocument final : public ADocument
 
   void SetPropertyContext(not_null<IPropertyManager*> manager) override;
 
+  [[nodiscard]] auto GetPropertyContext() -> IPropertyManager* override;
+
   [[nodiscard]] auto CanUndo() const -> bool override;
 
   [[nodiscard]] auto CanRedo() const -> bool override;
@@ -129,6 +131,8 @@ class MapDocument final : public ADocument
   [[nodiscard]] auto PropertyCount() const noexcept -> int override;
 
   [[nodiscard]] auto GetProperties() const -> const property_map& override;
+
+  [[nodiscard]] auto GetName() const -> QStringView override;
 
   /// \} End of property API
 
@@ -400,6 +404,8 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto Data() const noexcept -> const Map*;
 
+  [[nodiscard]] auto GetDelegate() -> DocumentDelegate&;
+
  signals:
   void S_Redraw();
 
@@ -448,15 +454,16 @@ class MapDocument final : public ADocument
   void S_UpdatedProperty(const QString& name);
   void S_ChangedPropertyType(const QString& name);
   void S_RenamedProperty(const QString& oldName, const QString& newName);
+  void S_UpdatedPropertyContext(IPropertyManager* context, QStringView name);
 
   /// \} End of property signals
 
  private:
-  Unique<Map> mMap;                      ///< The associated map.
-  Unique<TilesetManager> mTilesets;      ///< The associated tilesets.
-  Unique<DocumentDelegate> mDelegate;    ///< Delegate for document API.
-  int mTileLayerSuffix{1};               ///< Incrementing tile layer suffix.
-  int mObjectLayerSuffix{1};             ///< Incrementing object layer suffix.
+  Unique<Map> mMap;                    ///< The associated map.
+  Unique<TilesetManager> mTilesets;    ///< The associated tilesets.
+  Unique<DocumentDelegate> mDelegate;  ///< Delegate for document API.
+  int mTileLayerSuffix{1};             ///< Incrementing tile layer suffix.
+  int mObjectLayerSuffix{1};           ///< Incrementing object layer suffix.
 
   void SetUp();
 };

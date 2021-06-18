@@ -82,6 +82,8 @@ class ADocument : public QObject, public IPropertyManager
 
   virtual void SetPropertyContext(not_null<IPropertyManager*> manager) = 0;
 
+  [[nodiscard]] virtual auto GetPropertyContext() -> IPropertyManager* = 0;
+
   /**
    * \brief Indicates whether or not there is an undoable command.
    *

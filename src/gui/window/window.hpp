@@ -172,6 +172,8 @@ class Window final : public QMainWindow
   void OnUpdatedProperty(const QString& name);
   void OnChangedPropertyType(const QString& name);
   void OnRenamedProperty(const QString& oldName, const QString& newName);
+  void OnUpdatedPropertyContext(core::IPropertyManager* context,
+                                QStringView name);
 
   /// \} End of property slots
 

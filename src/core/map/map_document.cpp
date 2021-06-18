@@ -26,6 +26,7 @@
 #include "select_layer.hpp"
 #include "set_layer_name.hpp"
 #include "set_layer_visibility.hpp"
+#include "set_property_context.hpp"
 #include "set_tileset_name.hpp"
 #include "stamp_sequence.hpp"
 #include "tile_layer.hpp"
@@ -104,14 +105,17 @@ void MapDocument::SetPath(QFileInfo path)
 
 void MapDocument::ResetPropertyContext()
 {
-  // TODO mDelegate->Execute<cmd::ResetPropertyContext>(mDelegate.get());
-  mDelegate->ResetPropertyContext();
+  mDelegate->Execute<cmd::SetPropertyContext>(this, nullptr);
 }
 
 void MapDocument::SetPropertyContext(not_null<IPropertyManager*> manager)
 {
-  // TODO mDelegate->Execute<cmd::SetPropertyContext>(mDelegate.get(), manager);
-  mDelegate->SetPropertyContext(manager);
+  mDelegate->Execute<cmd::SetPropertyContext>(this, manager);
+}
+
+auto MapDocument::GetPropertyContext() -> IPropertyManager*
+{
+  return mDelegate->GetPropertyContext();
 }
 
 auto MapDocument::CanUndo() const -> bool
@@ -217,6 +221,11 @@ auto MapDocument::PropertyCount() const noexcept -> int
 auto MapDocument::GetProperties() const -> const property_map&
 {
   return mDelegate->GetProperties();
+}
+
+auto MapDocument::GetName() const -> QStringView
+{
+  return mDelegate->GetName();
 }
 
 void MapDocument::Flood(const MapPosition& position, const tile_id replacement)
@@ -480,6 +489,11 @@ auto MapDocument::CurrentTileset() const -> const Tileset*
 auto MapDocument::Data() const noexcept -> const Map*
 {
   return mMap.get();
+}
+
+auto MapDocument::GetDelegate() -> DocumentDelegate&
+{
+  return *mDelegate;
 }
 
 auto MapDocument::GetTilesets() const noexcept -> const TilesetManager*

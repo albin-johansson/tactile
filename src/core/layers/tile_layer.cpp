@@ -297,4 +297,9 @@ auto TileLayer::GetProperties() const -> const property_map&
   return mDelegate.Properties();
 }
 
+auto TileLayer::GetName() const -> QStringView
+{
+  return mDelegate.Name();
+}
+
 }  // namespace tactile::core

@@ -73,6 +73,8 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto GetProperties() const -> const property_map& override;
 
+  [[nodiscard]] auto GetName() const -> QStringView override;
+
   /// \} End of property API
 
   /// \name Object layer API

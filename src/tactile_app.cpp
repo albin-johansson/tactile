@@ -93,6 +93,7 @@ void TactileApp::InitConnections()
   modToWin(&Model::S_ShowMapProperties, &Window::OnShowMapProperties);
   modToWin(&Model::S_ShowLayerProperties, &Window::OnShowLayerProperties);
   modToWin(&Model::S_ShowTilesetProperties, &Window::OnShowTilesetProperties);
+  modToWin(&Model::S_UpdatedPropertyContext, &Window::OnUpdatedPropertyContext);
 
   fromWindow(&Window::S_AddTileset, &TactileApp::OnAddTileset);
   fromWindow(&Window::S_ResizeMap, &TactileApp::OnResizeMap);

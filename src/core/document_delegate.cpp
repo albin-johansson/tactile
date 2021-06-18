@@ -8,7 +8,7 @@ namespace tactile::core {
 
 DocumentDelegate::DocumentDelegate()
     : mCommandStack{std::make_unique<CommandStack>()}
-    , mPropertyManager{std::make_unique<PropertyDelegate>()}
+    , mPropertyManager{std::make_unique<PropertyDelegate>(u"Map")}
     , mPropertyContext{mPropertyManager.get()}
 {
   mCommandStack->setUndoLimit(100);
@@ -48,6 +48,11 @@ void DocumentDelegate::SetPropertyContext(not_null<IPropertyManager*> manager)
 {
   Q_ASSERT(manager);
   mPropertyContext = manager;
+}
+
+auto DocumentDelegate::GetPropertyContext() -> IPropertyManager*
+{
+  return mPropertyContext;
 }
 
 auto DocumentDelegate::CanUndo() const -> bool
@@ -156,6 +161,11 @@ auto DocumentDelegate::PropertyCount() const noexcept -> int
 auto DocumentDelegate::GetProperties() const -> const property_map&
 {
   return mPropertyContext->GetProperties();
+}
+
+auto DocumentDelegate::GetName() const -> QStringView
+{
+  return mPropertyContext->GetName();
 }
 
 auto DocumentDelegate::History() noexcept -> CommandStack*

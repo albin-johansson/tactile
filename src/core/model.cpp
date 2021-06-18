@@ -45,6 +45,20 @@ auto Model::AddMap(MapDocument* document) -> map_id
   bind(&MapDocument::S_RenamedProperty, &Model::S_RenamedProperty);
   bind(&MapDocument::S_ChangedPropertyType, &Model::S_ChangedPropertyType);
 
+  bind(&MapDocument::S_UpdatedPropertyContext,
+       [this](IPropertyManager* context, QStringView name) {
+         if (context)
+         {
+           emit S_UpdatedPropertyContext(context, name);
+         }
+         else
+         {
+           // "Reset" property context, i.e. switch to map document properties
+           auto* document = CurrentDocument();
+           emit S_UpdatedPropertyContext(document, name);
+         }
+       });
+
   bind(&MapDocument::S_AddedTileset, [this](const tileset_id id) {
     const auto& tileset = CurrentDocument()->GetTilesets()->At(id);
     emit S_AddedTileset(CurrentMapId().value(), id, tileset);

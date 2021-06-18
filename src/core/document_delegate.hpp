@@ -37,6 +37,8 @@ class DocumentDelegate final : public ADocument
 
   void SetPropertyContext(IPropertyManager* manager) override;
 
+  [[nodiscard]] auto GetPropertyContext() -> IPropertyManager* override;
+
   [[nodiscard]] auto CanUndo() const -> bool override;
 
   [[nodiscard]] auto CanRedo() const -> bool override;
@@ -84,6 +86,8 @@ class DocumentDelegate final : public ADocument
   [[nodiscard]] auto PropertyCount() const noexcept -> int override;
 
   [[nodiscard]] auto GetProperties() const -> const property_map& override;
+
+  [[nodiscard]] auto GetName() const -> QStringView override;
 
   /// \} End of property API
 

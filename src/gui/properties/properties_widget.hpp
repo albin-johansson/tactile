@@ -45,6 +45,9 @@ class PropertiesWidget final : public QWidget
 
   void OnRenamedProperty(const QString& oldName, const QString& newName);
 
+  void OnUpdatedPropertyContext(core::IPropertyManager* context,
+                                QStringView name);
+
  private:
   Unique<Ui::PropertiesWidget> mUi;
   PropertyTreeView* mView{};

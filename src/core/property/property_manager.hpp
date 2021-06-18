@@ -147,6 +147,8 @@ class IPropertyManager
   [[nodiscard]] virtual auto PropertyCount() const noexcept -> int = 0;
 
   [[nodiscard]] virtual auto GetProperties() const -> const property_map& = 0;
+
+  [[nodiscard]] virtual auto GetName() const -> QStringView = 0;
 };
 
 }  // namespace tactile::core
