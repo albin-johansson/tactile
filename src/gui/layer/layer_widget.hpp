@@ -2,25 +2,16 @@
 
 #include <QWidget>  // QWidget
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "layer_id.hpp"
 #include "maybe.hpp"
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
 
 TACTILE_DECLARE_UI(LayerWidget)
 
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
-TACTILE_FORWARD_DECLARE(tactile::vm, LayerModel)
-
 namespace tactile {
-
-class LayerListView;
-class LayerItem;
-class LayerItemContextMenu;
-class LayerWidgetContextMenu;
-class AddLayerContextMenu;
 
 class LayerWidget final : public QWidget
 {

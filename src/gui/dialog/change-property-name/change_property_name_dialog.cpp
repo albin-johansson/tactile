@@ -1,6 +1,8 @@
 #include "change_property_name_dialog.hpp"
 
-#include <QPushButton>
+#include <QPushButton>         // QPushButton
+#include <QStandardItemModel>  // QStandardItemModel
+#include <QValidator>          // QValidator
 
 #include "init_ui.hpp"
 #include "property_name_validator.hpp"

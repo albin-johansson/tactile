@@ -2,7 +2,7 @@
 
 #include <QMenu>  // QMenu
 
-#include "property.hpp"
+#include "property_type.hpp"
 
 namespace tactile {
 

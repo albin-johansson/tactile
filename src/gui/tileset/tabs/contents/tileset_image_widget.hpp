@@ -1,14 +1,13 @@
 #pragma once
 
-#include <QLabel>   // QLabel
-#include <QPoint>   // QPoint
 #include <QWidget>  // QWidget
 
-#include "tileset.hpp"
+#include "core_fwd.hpp"
+#include "gui_fwd.hpp"
+
+class QLabel;
 
 namespace tactile {
-
-class TilesetRubberBand;
 
 class TilesetImageWidget final : public QWidget
 {

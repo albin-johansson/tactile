@@ -1,6 +1,7 @@
 #include "property_context_menu.hpp"
 
 #include "icons.hpp"
+#include "property.hpp"
 
 namespace tactile {
 

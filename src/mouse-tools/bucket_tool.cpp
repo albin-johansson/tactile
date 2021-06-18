@@ -1,5 +1,7 @@
 #include "bucket_tool.hpp"
 
+#include <QMouseEvent>  // QMouseEvent
+
 #include "map_document.hpp"
 #include "model.hpp"
 

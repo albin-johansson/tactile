@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 project(tactile-src CXX)
 
 set(TACTILE_SOURCE_FILES
+    fwd.hpp
     tactile_app.cpp
     tactile_app.hpp
     version.hpp
@@ -133,6 +134,7 @@ set(TACTILE_SOURCE_FILES
     core/property/property_delegate.cpp
     core/property/property_delegate.hpp
     core/property/property_manager.hpp
+    core/property/property_type.hpp
 
     core/tile/tile_size.cpp
     core/tile/tile_size.hpp
@@ -174,6 +176,7 @@ set(TACTILE_SOURCE_FILES
     export/theme/save_theme.cpp
     export/theme/save_theme.hpp
 
+    gui/gui_fwd.hpp
     gui/icons.cpp
     gui/icons.hpp
     gui/init_ui.hpp
@@ -377,7 +380,6 @@ set(TACTILE_SOURCE_FILES
     util/color_utils.hpp
     util/file_handle.cpp
     util/file_handle.hpp
-    util/forward_declare.hpp
     util/index_to_position.hpp
     util/prepare_application.cpp
     util/prepare_application.hpp
@@ -385,6 +387,7 @@ set(TACTILE_SOURCE_FILES
     util/standard_paths.hpp
     util/string_utils.cpp
     util/string_utils.hpp
+    util/tactile_declare_ui.hpp
     util/to_underlying.hpp
     util/vector_map.hpp
     util/verify_not_null.hpp

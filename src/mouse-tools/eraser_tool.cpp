@@ -1,5 +1,7 @@
 #include "eraser_tool.hpp"
 
+#include <QMouseEvent>  // QMouseEvent
+
 #include "map_document.hpp"
 #include "model.hpp"
 #include "tile_layer.hpp"

@@ -4,14 +4,11 @@
 #include <map>           // map
 #include <utility>       // pair
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "layer_id.hpp"
 #include "map_position.hpp"
 #include "not_null.hpp"
 #include "tile_id.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, Map)
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 

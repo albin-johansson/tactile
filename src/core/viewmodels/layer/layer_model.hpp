@@ -2,13 +2,10 @@
 
 #include <QStandardItemModel>  // QStandardItemModel
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "layer_id.hpp"
 #include "maybe.hpp"
 #include "not_null.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
 
 namespace tactile::vm {
 

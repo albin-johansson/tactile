@@ -2,8 +2,8 @@
 
 #include <QDialog>  // QDialog
 
-#include "forward_declare.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
 
 TACTILE_DECLARE_UI(AboutDialog)
 

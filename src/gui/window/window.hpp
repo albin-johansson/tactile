@@ -5,22 +5,18 @@
 #include <QString>       // QString
 #include <QWidget>       // QWidget
 
-#include "forward_declare.hpp"
+#include "core_fwd.hpp"
 #include "layer_id.hpp"
 #include "map_id.hpp"
 #include "map_position.hpp"
 #include "mouse_tool_type.hpp"
 #include "not_null.hpp"
-#include "property.hpp"
 #include "smart_pointers.hpp"
-#include "tileset.hpp"
+#include "tactile_declare_ui.hpp"
 #include "tileset_id.hpp"
+#include "tileset_selection.hpp"
 
 TACTILE_DECLARE_UI(Window)
-
-TACTILE_FORWARD_DECLARE(tactile::core, ILayer)
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 
 namespace tactile {
 

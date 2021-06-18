@@ -1,6 +1,6 @@
 #include "add_property_dialog.hpp"
 
-#include <QPushButton>
+#include <QPushButton>  // QPushButton
 
 #include "init_ui.hpp"
 #include "property_name_validator.hpp"

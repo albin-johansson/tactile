@@ -1,5 +1,7 @@
 #include "stamp_tool.hpp"
 
+#include <QMouseEvent>  // QMouseEvent
+
 #include "model.hpp"
 #include "tile_layer.hpp"
 

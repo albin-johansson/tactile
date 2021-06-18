@@ -3,6 +3,7 @@
 #include <utility>  // move
 
 #include "property_delegate.hpp"
+#include "property_model.hpp"
 
 namespace tactile::core {
 

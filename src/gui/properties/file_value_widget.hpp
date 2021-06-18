@@ -1,10 +1,9 @@
 #pragma once
 
-#include <QFileInfo>  // QFileInfo
-#include <QWidget>    // QWidget
+#include <QWidget>  // QWidget
 
-#include "forward_declare.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
 
 TACTILE_DECLARE_UI(FileValueWidget)
 

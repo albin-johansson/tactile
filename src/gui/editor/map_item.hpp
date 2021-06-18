@@ -2,12 +2,11 @@
 
 #include <QGraphicsItem>  // QGraphicsItem
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "map_position.hpp"
 #include "maybe.hpp"
+#include "tactile_declare_ui.hpp"
 #include "tile_id.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile {
 

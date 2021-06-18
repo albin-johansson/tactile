@@ -1,7 +1,8 @@
 #pragma once
 
-#include <QStandardItemModel>  // QStandardItemModel
 #include <QValidator>          // QValidator
+
+class QStandardItemModel;
 
 namespace tactile {
 

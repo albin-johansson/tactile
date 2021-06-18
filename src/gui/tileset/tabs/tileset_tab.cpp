@@ -1,11 +1,12 @@
 #include "tileset_tab.hpp"
 
-#include <QApplication>
-#include <QGridLayout>
-#include <QMouseEvent>
-#include <QScrollArea>
-#include <QScrollBar>
+#include <QApplication>  // QApplication
+#include <QGridLayout>   // QGridLayout
+#include <QMouseEvent>   // QMouseEvent
+#include <QScrollArea>   // QScrollArea
+#include <QScrollBar>    // QScrollBar
 
+#include "tileset.hpp"
 #include "tileset_image_widget.hpp"
 
 namespace tactile {

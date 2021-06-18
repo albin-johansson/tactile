@@ -1,5 +1,7 @@
 #include "map_editor.hpp"
 
+#include <QMouseEvent>  // QMouseEvent
+
 #include "init_ui.hpp"
 #include "map_document.hpp"
 #include "map_editor_context_menu.hpp"

@@ -1,17 +1,13 @@
 #pragma once
 
 #include "dock_widget.hpp"
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "layer_id.hpp"
 #include "not_null.hpp"
 #include "smart_pointers.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
+#include "tactile_declare_ui.hpp"
 
 namespace tactile {
-
-class PropertiesWidget;
 
 class PropertiesDock final : public DockWidget
 {

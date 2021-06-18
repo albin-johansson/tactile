@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QFileDialog>  // QFileDialog
-#include <QString>      // QString
 #include <concepts>     // invocable
 
 namespace tactile {

@@ -1,10 +1,9 @@
 #pragma once
 
 #include "dock_widget.hpp"
+#include "gui_fwd.hpp"
 
 namespace tactile {
-
-class ToolWidget;
 
 class ToolDock final : public DockWidget
 {

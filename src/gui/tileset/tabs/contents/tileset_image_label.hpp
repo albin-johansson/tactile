@@ -2,7 +2,9 @@
 
 #include <QLabel>  // QLabel
 
-#include "tileset.hpp"
+#include "core_fwd.hpp"
+#include "tile_height.hpp"
+#include "tile_width.hpp"
 
 namespace tactile {
 

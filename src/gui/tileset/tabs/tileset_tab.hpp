@@ -1,16 +1,14 @@
 #pragma once
 
-#include <QPoint>       // QPoint
-#include <QScrollArea>  // QScrollArea
-#include <QString>      // QString
-#include <QWidget>      // QWidget
+#include <QWidget>  // QWidget
 
-#include "tileset.hpp"
+#include "core_fwd.hpp"
+#include "gui_fwd.hpp"
 #include "tileset_id.hpp"
 
-namespace tactile {
+class QScrollArea;
 
-class TilesetImageWidget;
+namespace tactile {
 
 class TilesetTab final : public QWidget
 {

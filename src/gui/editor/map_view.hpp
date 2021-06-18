@@ -1,18 +1,13 @@
 #pragma once
 
 #include <QGraphicsView>  // QGraphicsView
-#include <QMouseEvent>    // QMouseEvent
-#include <QRect>          // QRect
+#include <QPointF>        // QRect
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "map_id.hpp"
 #include "map_position.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-
 namespace tactile {
-
-class MapScene;
 
 /**
  * \class MapView

@@ -14,7 +14,7 @@ TEST(TileLayer, Defaults)
   EXPECT_EQ(5_col, layer.ColumnCount());
   EXPECT_EQ(25, layer.TileCount());
   EXPECT_EQ(1.0, layer.Opacity());
-  EXPECT_EQ(QStringLiteral(u"Tile layer"), layer.Name());
+  EXPECT_EQ(QStringLiteral(u"Tile layer"), layer.GetName());
   EXPECT_TRUE(layer.IsVisible());
 }
 

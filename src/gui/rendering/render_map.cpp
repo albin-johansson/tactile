@@ -1,5 +1,7 @@
 #include "render_map.hpp"
 
+#include <QPainter>   // QPainter
+#include <QRectF>     // QRectF
 #include <algorithm>  // min, max
 
 #include "layer_utils.hpp"

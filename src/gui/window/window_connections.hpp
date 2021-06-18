@@ -2,13 +2,12 @@
 
 #include <QObject>  // QObject
 
-#include "forward_declare.hpp"
+#include "gui_fwd.hpp"
+#include "tactile_declare_ui.hpp"
 
 TACTILE_DECLARE_UI(Window)
 
 namespace tactile {
-
-class Window;
 
 class WindowConnections final : public QObject
 {

@@ -1,13 +1,13 @@
 #pragma once
 
-#include <QComboBox>   // QComboBox
-#include <QLabel>      // QLabel
 #include <QStatusBar>  // QStatusBar
 
-#include "forward_declare.hpp"
+#include "core_fwd.hpp"
 #include "layer_id.hpp"
+#include "tactile_declare_ui.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
+class QComboBox;
+class QLabel;
 
 namespace tactile {
 

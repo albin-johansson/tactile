@@ -2,9 +2,10 @@
 
 #include <QRubberBand>  // QRubberBand
 
+#include "core_fwd.hpp"
+#include "map_position.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
-#include "tileset.hpp"
 
 namespace tactile {
 

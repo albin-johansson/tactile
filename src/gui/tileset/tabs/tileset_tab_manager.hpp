@@ -1,12 +1,11 @@
 #pragma once
 
+#include "gui_fwd.hpp"
 #include "maybe.hpp"
 #include "tileset_id.hpp"
 #include "vector_map.hpp"
 
 namespace tactile {
-
-class TilesetTab;
 
 class TilesetTabManager final
 {

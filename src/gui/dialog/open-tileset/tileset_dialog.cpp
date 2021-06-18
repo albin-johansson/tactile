@@ -14,6 +14,12 @@ TilesetDialog::TilesetDialog(QWidget* parent)
     , mUi{InitUi<Ui::TilesetDialog>(this)}
     , mValidator{new QIntValidator{1, 1'000, this}}
 {
+  // clang-format off
+  connect(mUi->imageButton, &QPushButton::pressed, this, &TilesetDialog::OnImageButtonPressed);
+  connect(mUi->widthEdit, &QLineEdit::textChanged, this, &TilesetDialog::OnWidthTextChanged);
+  connect(mUi->heightEdit, &QLineEdit::textChanged, this, &TilesetDialog::OnHeightTextChanged);
+  // clang-format on
+
   mDefaultImageIcon = mUi->imageLabel->pixmap(Qt::ReturnByValueConstant{});
   if (mDefaultImageIcon.isNull())
   {
@@ -25,7 +31,7 @@ TilesetDialog::TilesetDialog(QWidget* parent)
 
 TilesetDialog::~TilesetDialog() noexcept = default;
 
-void TilesetDialog::on_imageButton_pressed()
+void TilesetDialog::OnImageButtonPressed()
 {
   if (const auto path = OpenTilesetImage(this); path)
   {
@@ -51,12 +57,12 @@ void TilesetDialog::on_imageButton_pressed()
   }
 }
 
-void TilesetDialog::on_widthEdit_textChanged()
+void TilesetDialog::OnWidthTextChanged()
 {
   ValidateInput();
 }
 
-void TilesetDialog::on_heightEdit_textChanged()
+void TilesetDialog::OnHeightTextChanged()
 {
   ValidateInput();
 }

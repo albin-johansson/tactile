@@ -2,18 +2,16 @@
 
 #include <QWidget>  // QWidget
 
-#include "forward_declare.hpp"
+#include "core_fwd.hpp"
+#include "gui_fwd.hpp"
 #include "map_id.hpp"
 #include "smart_pointers.hpp"
-#include "tileset.hpp"
+#include "tactile_declare_ui.hpp"
 #include "tileset_id.hpp"
 
 TACTILE_DECLARE_UI(TilesetWidget)
 
 namespace tactile {
-
-class TilesetContentPage;
-class TilesetEmptyPage;
 
 class TilesetWidget final : public QWidget
 {

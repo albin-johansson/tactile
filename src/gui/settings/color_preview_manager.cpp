@@ -1,5 +1,7 @@
 #include "color_preview_manager.hpp"
 
+#include <QFormLayout>  // QFormLayout
+
 #include "color_preview_button.hpp"
 
 namespace tactile {

@@ -1,5 +1,8 @@
 #include "resize_dialog.hpp"
 
+#include <QLineEdit>    // QLineEdit
+#include <QPushButton>  // QPushButton
+
 #include "init_ui.hpp"
 #include "ui_resize_dialog.h"
 

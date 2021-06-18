@@ -1,5 +1,7 @@
 #include "tactile_app.hpp"
 
+#include <QMouseEvent>  // QMouseEvent
+
 #include "model.hpp"
 #include "open_map_document.hpp"
 #include "open_map_error_dialog.hpp"
@@ -29,7 +31,7 @@ TactileApp::~TactileApp() noexcept = default;
 
 void TactileApp::InitConnections()
 {
-  using Model = core::Model;
+  using core::Model;
 
   const auto modToWin = [this](auto&& sender, auto&& receiver) {
     connect(mModel.get(), sender, mWindow.get(), receiver);

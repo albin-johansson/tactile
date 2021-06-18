@@ -1,14 +1,15 @@
 #pragma once
 
-#include <QDialog>             // QDialog
-#include <QStandardItemModel>  // QStandardItemModel
-#include <QValidator>          // QValidator
-#include <concepts>            // invocable
+#include <QDialog>   // QDialog
+#include <concepts>  // invocable
 
-#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "property.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
+
+class QStandardItemModel;
+class QValidator;
 
 TACTILE_DECLARE_UI(AddPropertyDialog)
 

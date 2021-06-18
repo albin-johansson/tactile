@@ -1,14 +1,13 @@
 #pragma once
 
-#include <QObject>       // QObject
 #include <QUndoCommand>  // QUndoCommand
 #include <concepts>      // derived_from
 #include <utility>       // forward
 
 #include "command_stack.hpp"
 #include "document.hpp"
+#include "fwd.hpp"
 #include "maybe.hpp"
-#include "property_model.hpp"
 #include "smart_pointers.hpp"
 
 namespace tactile::core {

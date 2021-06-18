@@ -2,6 +2,8 @@
 
 #include <algorithm>  // max
 
+#include "tileset_selection.hpp"
+
 namespace tactile {
 
 TilesetRubberBand::TilesetRubberBand(QWidget* parent)

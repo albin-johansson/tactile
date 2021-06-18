@@ -1,9 +1,10 @@
 #include "map_view.hpp"
 
-#include <QApplication>
-#include <QOpenGLWidget>
-#include <QScrollBar>
-#include <QSurfaceFormat>
+#include <QApplication>    // QApplication
+#include <QMouseEvent>     // QMouseEvent
+#include <QOpenGLWidget>   // QOpenGLWidget
+#include <QScrollBar>      // QScrollBar
+#include <QSurfaceFormat>  // QSurfaceFormat
 
 #include "map_document.hpp"
 #include "map_scene.hpp"

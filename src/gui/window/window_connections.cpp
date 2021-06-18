@@ -1,6 +1,7 @@
 #include "window_connections.hpp"
 
 #include <QDockWidget>  // QDockWidget
+#include <QMouseEvent>  // QMouseEvent
 
 #include "about_dialog.hpp"
 #include "layer_dock.hpp"

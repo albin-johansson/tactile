@@ -4,12 +4,10 @@
 #include <QUndoCommand>  // QUndoCommand
 
 #include "command_id.hpp"
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "maybe.hpp"
 #include "property.hpp"
 #include "to_underlying.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
 
 namespace tactile::cmd {
 

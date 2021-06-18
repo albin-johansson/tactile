@@ -1,5 +1,7 @@
 #include "window.hpp"
 
+#include <QMouseEvent>  // QMouseEvent
+
 #include "init_ui.hpp"
 #include "layer_dock.hpp"
 #include "map_document.hpp"

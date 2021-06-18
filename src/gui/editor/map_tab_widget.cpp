@@ -1,5 +1,7 @@
 #include "map_tab_widget.hpp"
 
+#include <QMouseEvent>  // QMouseEvent
+
 #include "map_document.hpp"
 
 namespace tactile {
@@ -10,8 +12,7 @@ MapTabWidget::MapTabWidget(QWidget* parent) : TabWidget{parent}
   setTabsClosable(true);
 
   // clang-format off
-  connect(this, &QTabWidget::tabCloseRequested,
-          this, &MapTabWidget::OnTabCloseRequested);
+  connect(this, &QTabWidget::tabCloseRequested, this, &MapTabWidget::OnTabCloseRequested);
   // clang-format on
 }
 

@@ -3,16 +3,18 @@
 #include <QDialog>     // QDialog
 #include <QFileInfo>   // QFileInfo
 #include <QImage>      // QImage
-#include <QLineEdit>   // QLineEdit
 #include <QPixmap>     // QPixmap
+#include <QString>     // QString
 #include <QValidator>  // QValidator
 #include <concepts>    // invocable
 
-#include "forward_declare.hpp"
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
 #include "tile_height.hpp"
 #include "tile_width.hpp"
+
+class QLineEdit;
 
 TACTILE_DECLARE_UI(TilesetDialog)
 
@@ -100,11 +102,11 @@ class TilesetDialog final : public QDialog
   [[nodiscard]] auto Validate(const QLineEdit& edit) const -> QValidator::State;
 
  private slots:
-  void on_imageButton_pressed();
+  void OnImageButtonPressed();
 
-  void on_widthEdit_textChanged();
+  void OnWidthTextChanged();
 
-  void on_heightEdit_textChanged();
+  void OnHeightTextChanged();
 };
 
 }  // namespace tactile

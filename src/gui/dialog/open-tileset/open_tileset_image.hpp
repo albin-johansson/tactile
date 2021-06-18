@@ -1,9 +1,10 @@
 #pragma once
 
 #include <QString>  // QString
-#include <QWidget>  // QWidget
 
 #include "maybe.hpp"
+
+class QWidget;
 
 namespace tactile {
 

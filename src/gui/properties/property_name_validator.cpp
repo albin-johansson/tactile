@@ -1,5 +1,7 @@
 #include "property_name_validator.hpp"
 
+#include <QStandardItemModel>  // QStandardItemModel
+
 #include "item_model_utils.hpp"
 #include "tactile_error.hpp"
 

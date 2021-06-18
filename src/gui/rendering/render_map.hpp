@@ -1,13 +1,11 @@
 #pragma once
 
-#include <QPainter>  // QPainter
-#include <QRectF>    // QRectF
-
-#include "forward_declare.hpp"
+#include "core_fwd.hpp"
 #include "map_position.hpp"
 #include "maybe.hpp"
 
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
+class QPainter;
+class QRectF;
 
 namespace tactile {
 

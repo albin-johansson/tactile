@@ -1,14 +1,11 @@
 #pragma once
 
 #include "dock_widget.hpp"
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "not_null.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
+#include "tactile_declare_ui.hpp"
 
 namespace tactile {
-
-class LayerWidget;
 
 class LayerDock final : public DockWidget
 {

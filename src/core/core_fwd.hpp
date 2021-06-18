@@ -18,5 +18,8 @@ class Object;
 
 class Tileset;
 class TilesetManager;
+struct TilesetSelection;
+
+class Model;
 
 }  // namespace tactile::core

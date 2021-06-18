@@ -1,8 +1,8 @@
 #include "map_scene.hpp"
 
-#include <QApplication>
-#include <QGraphicsSceneEvent>
-#include <QPainter>
+#include <QApplication>         // QApplication
+#include <QGraphicsSceneEvent>  // QGraphicsSceneEvent
+#include <QPainter>             // QPainter
 
 #include "map_item.hpp"
 

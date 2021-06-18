@@ -2,12 +2,10 @@
 
 #include <QString>  // QString
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "map_view.hpp"
 #include "maybe.hpp"
 #include "tab_widget.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile {
 

@@ -3,21 +3,18 @@
 #include <QWidget>  // QWidget
 #include <map>      // map
 
-#include "forward_declare.hpp"
+#include "core_fwd.hpp"
+#include "gui_fwd.hpp"
 #include "map_id.hpp"
 #include "map_position.hpp"
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
-#include "tileset.hpp"
-#include "tileset_tab_manager.hpp"
+#include "tactile_declare_ui.hpp"
+#include "tileset_id.hpp"
 
 TACTILE_DECLARE_UI(TilesetContentPage)
 
 namespace tactile {
-
-class TabWidget;
-class TilesetTab;
-class TilesetTabContextMenu;
 
 /**
  * \class TilesetContentPage

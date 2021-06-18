@@ -1,12 +1,11 @@
 #pragma once
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "mouse_tool.hpp"
 #include "mouse_tool_type.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
 #include "vector_map.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, Model)
 
 namespace tactile {
 

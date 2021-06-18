@@ -1,5 +1,6 @@
 #include "map_item.hpp"
 
+#include <QPainter>      // QPainter
 #include <QStyleOption>  // QStyleOption
 
 #include "map.hpp"

@@ -1,6 +1,8 @@
 #include "tileset_image_label.hpp"
 
-#include <QPainter>
+#include <QPainter> // QPainter
+
+#include "tileset.hpp"
 
 namespace tactile {
 

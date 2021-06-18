@@ -1,12 +1,10 @@
 #pragma once
 
 #include "command_id.hpp"
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "not_null.hpp"
 #include "repeated_map_command.hpp"
 #include "to_underlying.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 

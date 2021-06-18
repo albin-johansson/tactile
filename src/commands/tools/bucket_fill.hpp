@@ -4,14 +4,12 @@
 #include <vector>        // vector
 
 #include "command_id.hpp"
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "layer_id.hpp"
 #include "map_position.hpp"
 #include "not_null.hpp"
 #include "tile_id.hpp"
 #include "to_underlying.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 

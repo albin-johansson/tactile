@@ -7,8 +7,10 @@
 #include "icons.hpp"
 #include "init_ui.hpp"
 #include "tab_widget.hpp"
+#include "tileset.hpp"
 #include "tileset_tab.hpp"
 #include "tileset_tab_context_menu.hpp"
+#include "tileset_tab_manager.hpp"
 #include "ui_tileset_content_page.h"
 
 namespace tactile {
@@ -83,10 +85,11 @@ void TilesetContentPage::OnAddedTileset(const map_id map,
   Q_ASSERT(!CurrentManager().Contains(id));
 
   auto* tab = new TilesetTab{id, tileset, mTabWidget};
-  connect(tab,
-          &TilesetTab::S_SetTilesetSelection,
-          this,
-          &TilesetContentPage::S_SetTilesetSelection);
+
+  // clang-format off
+  connect(tab, &TilesetTab::S_SetTilesetSelection, this, &TilesetContentPage::S_SetTilesetSelection);
+  // clang-format on
+
   mTabManagers.at(map).Add(id, tab);
 
   const auto index = mTabWidget->addTab(tab, tileset.Name());

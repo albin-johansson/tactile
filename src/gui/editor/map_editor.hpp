@@ -1,22 +1,17 @@
 #pragma once
 
-#include <QMouseEvent>  // QMouseEvent
-#include <QWidget>      // QWidget
+#include <QWidget>  // QWidget
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "map_id.hpp"
 #include "map_position.hpp"
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
 
 TACTILE_DECLARE_UI(MapEditor)
 
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-
 namespace tactile {
-
-class MapTabWidget;
-class MapEditorContextMenu;
 
 /**
  * \class MapEditor

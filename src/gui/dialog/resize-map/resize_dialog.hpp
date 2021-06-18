@@ -1,15 +1,15 @@
 #pragma once
 
-#include <QDialog>      // QDialog
-#include <QLineEdit>    // QLineEdit
-#include <QPushButton>  // QPushButton
-#include <QValidator>   // QValidator
-#include <concepts>     // invocable
+#include <QDialog>     // QDialog
+#include <QValidator>  // QValidator
+#include <concepts>    // invocable
 
-#include "forward_declare.hpp"
 #include "map_position.hpp"
 #include "maybe.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
+
+class QLineEdit;
 
 TACTILE_DECLARE_UI(ResizeDialog)
 

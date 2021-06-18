@@ -37,7 +37,7 @@ void ValidateLayers(const core::MapDocument& document)
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::TileLayer, layer->Type());
 
-    EXPECT_EQ(QStringLiteral(u"G0"), layer->Name());
+    EXPECT_EQ(QStringLiteral(u"G0"), layer->GetName());
     EXPECT_EQ(1.0, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 
@@ -56,7 +56,7 @@ void ValidateLayers(const core::MapDocument& document)
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::TileLayer, layer->Type());
 
-    EXPECT_EQ(QStringLiteral(u"T0"), layer->Name());
+    EXPECT_EQ(QStringLiteral(u"T0"), layer->GetName());
     EXPECT_EQ(0.75, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 
@@ -75,7 +75,7 @@ void ValidateLayers(const core::MapDocument& document)
     ASSERT_TRUE(layer);
     ASSERT_EQ(core::LayerType::ObjectLayer, layer->Type());
 
-    EXPECT_EQ(QStringLiteral(u"O1"), layer->Name());
+    EXPECT_EQ(QStringLiteral(u"O1"), layer->GetName());
     EXPECT_EQ(1.0, layer->Opacity());
     EXPECT_TRUE(layer->IsVisible());
 

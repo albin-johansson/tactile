@@ -8,6 +8,7 @@
 #include <variant>    // variant, monostate
 
 #include "maybe.hpp"
+#include "property_type.hpp"
 
 namespace tactile::core {
 
@@ -22,22 +23,6 @@ concept IsPropertyType = std::same_as<T, QString> || std::same_as<T, int> ||
     std::same_as<T, double> || std::same_as<T, bool> ||
     std::same_as<T, QColor> || std::same_as<T, QFileInfo> ||
     std::same_as<T, object_ref>;
-
-/**
- * \brief Provides values for all different possible property types.
- *
- * \since 0.2.0
- */
-enum class PropertyType
-{
-  String,    ///< A string property.
-  Integer,   ///< An integer property.
-  Floating,  ///< A floating-point property.
-  Boolean,   ///< A boolean property.
-  File,      ///< A file path property.
-  Color,     ///< A color property.
-  Object     ///< An integer ID property, that refers to a map object.
-};
 
 /**
  * \class Property

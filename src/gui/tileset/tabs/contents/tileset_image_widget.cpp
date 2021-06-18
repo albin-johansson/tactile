@@ -1,8 +1,11 @@
 #include "tileset_image_widget.hpp"
 
-#include <QGridLayout>
-#include <QMouseEvent>
+#include <QGridLayout>  // QGridLayout
+#include <QLabel>       // QLabel
+#include <QMouseEvent>  // QMouseEvent
+#include <QPoint>       // QPoint
 
+#include "tileset.hpp"
 #include "tileset_image_label.hpp"
 #include "tileset_rubber_band.hpp"
 

@@ -2,22 +2,16 @@
 
 #include <QWidget>  // QWidget
 
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "maybe.hpp"
 #include "not_null.hpp"
 #include "property.hpp"
 #include "smart_pointers.hpp"
+#include "tactile_declare_ui.hpp"
 
 TACTILE_DECLARE_UI(PropertiesWidget)
 
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
-TACTILE_FORWARD_DECLARE(tactile::core, IPropertyManager)
-TACTILE_FORWARD_DECLARE(tactile::vm, PropertyModel)
-
 namespace tactile {
-
-class PropertyTreeView;
-class PropertyContextMenu;
 
 class PropertiesWidget final : public QWidget
 {

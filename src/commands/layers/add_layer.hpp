@@ -3,13 +3,11 @@
 #include <QUndoCommand>  // QUndoCommand
 
 #include "command_id.hpp"
-#include "forward_declare.hpp"
+#include "fwd.hpp"
 #include "layer.hpp"
 #include "layer_id.hpp"
 #include "smart_pointers.hpp"
 #include "to_underlying.hpp"
-
-TACTILE_FORWARD_DECLARE(tactile::core, MapDocument)
 
 namespace tactile::cmd {
 

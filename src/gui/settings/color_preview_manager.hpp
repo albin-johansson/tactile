@@ -1,12 +1,12 @@
 #pragma once
 
-#include <QFormLayout>  // QFormLayout
-#include <QPalette>     // QPalette
-#include <QWidget>      // QWidget
+#include <QWidget>  // QWidget
+
+#include "gui_fwd.hpp"
+
+class QFormLayout;
 
 namespace tactile {
-
-class ColorPreviewButton;
 
 class ColorPreviewManager final : public QWidget
 {

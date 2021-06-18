@@ -1,5 +1,7 @@
 #include "file_value_widget.hpp"
 
+#include <QFileInfo>  // QFileInfo
+
 #include "init_ui.hpp"
 #include "ui_file_value_widget.h"
 
