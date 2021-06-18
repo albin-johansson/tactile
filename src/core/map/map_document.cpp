@@ -223,7 +223,7 @@ auto MapDocument::GetProperties() const -> const property_map&
   return mDelegate->GetProperties();
 }
 
-auto MapDocument::GetName() const -> QStringView
+auto MapDocument::GetName() const -> QString
 {
   return mDelegate->GetName();
 }
@@ -327,7 +327,7 @@ auto MapDocument::AddTileLayer() -> layer_id
   const auto id = mMap->NextLayerId();  // must be before make_tile_layer
   auto layer = mMap->MakeTileLayer();
 
-  layer->SetName(layer->Name() + QStringLiteral(u" ") +
+  layer->SetName(layer->GetName() + QStringLiteral(u" ") +
                  QString::number(mTileLayerSuffix));
   ++mTileLayerSuffix;
 
@@ -340,7 +340,7 @@ auto MapDocument::AddObjectLayer() -> layer_id
   const auto id = mMap->NextLayerId();  // must be before make_object_layer
   auto layer = mMap->MakeObjectLayer();
 
-  layer->SetName(layer->Name() + QStringLiteral(u" ") +
+  layer->SetName(layer->GetName() + QStringLiteral(u" ") +
                  QString::number(mObjectLayerSuffix));
   ++mObjectLayerSuffix;
 

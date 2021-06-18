@@ -88,7 +88,7 @@ class Model final : public QObject
   void S_UpdatedProperty(const QString& name);
   void S_ChangedPropertyType(const QString& name);
   void S_RenamedProperty(const QString& oldName, const QString& newName);
-  void S_UpdatedPropertyContext(IPropertyManager* context, QStringView name);
+  void S_UpdatedPropertyContext(IPropertyManager* context, const QString& name);
 
  public slots:
   /**

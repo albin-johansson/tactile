@@ -38,11 +38,6 @@ auto LayerDelegate::Opacity() const noexcept -> double
   return mOpacity;
 }
 
-auto LayerDelegate::Name() const -> const QString&
-{
-  return mName;
-}
-
 void LayerDelegate::AddProperty(const QString& name, const PropertyType type)
 {
   mProperties.AddProperty(name, type);
@@ -98,6 +93,11 @@ auto LayerDelegate::PropertyCount() const noexcept -> int
 auto LayerDelegate::Properties() const -> const IPropertyManager::property_map&
 {
   return mProperties.GetProperties();
+}
+
+auto LayerDelegate::GetName() const -> QString
+{
+  return mName;
 }
 
 }  // namespace tactile::core

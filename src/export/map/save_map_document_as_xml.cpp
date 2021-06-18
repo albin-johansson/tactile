@@ -245,7 +245,7 @@ void SaveLayers(QDomDocument& document,
     }
 
     node.setAttribute(QStringLiteral(u"id"), id.get());
-    node.setAttribute(QStringLiteral(u"name"), layer->Name());
+    node.setAttribute(QStringLiteral(u"name"), layer->GetName());
 
     if (layer->Opacity() != 1.0)
     {

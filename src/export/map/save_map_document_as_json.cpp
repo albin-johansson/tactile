@@ -320,7 +320,7 @@ void SaveObjectLayer(QJsonObject& element,
     QJsonObject object;
 
     object.insert(u"id", id.get());
-    object.insert(u"name", layer->Name());
+    object.insert(u"name", layer->GetName());
     object.insert(u"opacity", layer->Opacity());
     object.insert(u"visible", layer->IsVisible());
     object.insert(u"x", 0);

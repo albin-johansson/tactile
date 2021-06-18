@@ -39,8 +39,6 @@ class LayerDelegate final
 
   [[nodiscard]] auto Opacity() const noexcept -> double;
 
-  [[nodiscard]] auto Name() const -> const QString&;
-
   /// \} End of layer API
 
   /// \name Property API
@@ -68,6 +66,8 @@ class LayerDelegate final
 
   [[nodiscard]] auto Properties() const
       -> const IPropertyManager::property_map&;
+
+  [[nodiscard]] auto GetName() const -> QString;
 
   /// \} End of property API
 

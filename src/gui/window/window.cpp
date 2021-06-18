@@ -291,13 +291,13 @@ void Window::OnSelectedLayer(const layer_id id, const core::ILayer& layer)
 
 void Window::OnAddedLayer(const layer_id id, const core::ILayer& layer)
 {
-  mStatusBar->OnAddedLayer(id, layer.Name());
+  mStatusBar->OnAddedLayer(id, layer.GetName());
 }
 
 void Window::OnAddedDuplicatedLayer(const layer_id id,
                                     const core::ILayer& layer)
 {
-  mStatusBar->OnAddedLayer(id, layer.Name());
+  mStatusBar->OnAddedLayer(id, layer.GetName());
 }
 
 void Window::OnRemovedLayer(const layer_id id)
@@ -331,7 +331,7 @@ void Window::OnRenamedProperty(const QString& oldName, const QString& newName)
 }
 
 void Window::OnUpdatedPropertyContext(NotNull<core::IPropertyManager*> context,
-                                      const QStringView name)
+                                      const QString& name)
 {
   mPropertiesDock->OnUpdatedPropertyContext(context, name);
 }

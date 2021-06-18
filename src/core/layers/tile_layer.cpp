@@ -227,11 +227,6 @@ auto TileLayer::InBounds(const MapPosition& pos) const noexcept -> bool
   return (row < mTiles.size()) && (pos.ColumnIndex() < mTiles[row].size());
 }
 
-auto TileLayer::Name() const -> const QString&
-{
-  return mDelegate.Name();
-}
-
 auto TileLayer::Opacity() const noexcept -> double
 {
   return mDelegate.Opacity();
@@ -297,9 +292,9 @@ auto TileLayer::GetProperties() const -> const property_map&
   return mDelegate.Properties();
 }
 
-auto TileLayer::GetName() const -> QStringView
+auto TileLayer::GetName() const -> QString
 {
-  return mDelegate.Name();
+  return mDelegate.GetName();
 }
 
 }  // namespace tactile::core

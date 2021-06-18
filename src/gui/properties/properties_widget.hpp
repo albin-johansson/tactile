@@ -40,7 +40,7 @@ class PropertiesWidget final : public QWidget
   void OnRenamedProperty(const QString& oldName, const QString& newName);
 
   void OnUpdatedPropertyContext(NotNull<core::IPropertyManager*> context,
-                                QStringView name);
+                                const QString& name);
 
  private:
   Unique<Ui::PropertiesWidget> mUi;

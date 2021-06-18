@@ -6,7 +6,7 @@
 
 namespace tactile::core {
 
-PropertyDelegate::PropertyDelegate(const QStringView name) : mName{name}
+PropertyDelegate::PropertyDelegate(const QString& name) : mName{name}
 {}
 
 void PropertyDelegate::AddProperty(const QString& name, const PropertyType type)
@@ -119,7 +119,7 @@ auto PropertyDelegate::GetProperties() const -> const property_map&
   return mProperties;
 }
 
-auto PropertyDelegate::GetName() const -> QStringView
+auto PropertyDelegate::GetName() const -> QString
 {
   return mName;
 }

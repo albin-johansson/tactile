@@ -46,7 +46,7 @@ auto Model::AddMap(MapDocument* document) -> map_id
   bind(&MapDocument::S_ChangedPropertyType, &Model::S_ChangedPropertyType);
 
   bind(&MapDocument::S_UpdatedPropertyContext,
-       [this](IPropertyManager* context, QStringView name) {
+       [this](IPropertyManager* context, const QString& name) {
          if (context)
          {
            emit S_UpdatedPropertyContext(context, name);

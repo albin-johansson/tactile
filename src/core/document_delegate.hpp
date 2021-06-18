@@ -87,7 +87,7 @@ class DocumentDelegate final : public ADocument
 
   [[nodiscard]] auto GetProperties() const -> const property_map& override;
 
-  [[nodiscard]] auto GetName() const -> QStringView override;
+  [[nodiscard]] auto GetName() const -> QString override;
 
   /// \} End of property API
 

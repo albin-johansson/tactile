@@ -201,9 +201,9 @@ auto Tileset::GetProperties() const -> const property_map&
   return mProperties->GetProperties();
 }
 
-auto Tileset::GetName() const -> QStringView
+auto Tileset::GetName() const -> QString
 {
-  return u"Tileset";
+  return QStringLiteral(u"Tileset (%1)").arg(mPath.baseName());
 }
 
 }  // namespace tactile::core

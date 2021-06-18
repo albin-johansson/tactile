@@ -6,13 +6,17 @@
 
 namespace tactile::core {
 
+// clang-format off
+
 DocumentDelegate::DocumentDelegate()
     : mCommandStack{std::make_unique<CommandStack>()}
-    , mPropertyManager{std::make_unique<PropertyDelegate>(u"Map")}
+    , mPropertyManager{std::make_unique<PropertyDelegate>(QStringLiteral(u"Map"))}
     , mPropertyContext{mPropertyManager.get()}
 {
   mCommandStack->setUndoLimit(100);
 }
+
+// clang-format on
 
 void DocumentDelegate::Undo()
 {
@@ -163,7 +167,7 @@ auto DocumentDelegate::GetProperties() const -> const property_map&
   return mPropertyContext->GetProperties();
 }
 
-auto DocumentDelegate::GetName() const -> QStringView
+auto DocumentDelegate::GetName() const -> QString
 {
   return mPropertyContext->GetName();
 }

@@ -69,10 +69,10 @@ void PropertiesWidget::OnRenamedProperty(const QString& oldName,
 
 void PropertiesWidget::OnUpdatedPropertyContext(
     NotNull<core::IPropertyManager*> context,
-    const QStringView name)
+    const QString& name)
 {
   ChangeModel(context);
-  mModel->SetRootName(name.toString());
+  mModel->SetRootName(name);
 }
 
 void PropertiesWidget::OnChangedPropertyType(const QString& name)

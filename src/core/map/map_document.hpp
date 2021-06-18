@@ -132,7 +132,7 @@ class MapDocument final : public ADocument
 
   [[nodiscard]] auto GetProperties() const -> const property_map& override;
 
-  [[nodiscard]] auto GetName() const -> QStringView override;
+  [[nodiscard]] auto GetName() const -> QString override;
 
   /// \} End of property API
 
@@ -454,7 +454,7 @@ class MapDocument final : public ADocument
   void S_UpdatedProperty(const QString& name);
   void S_ChangedPropertyType(const QString& name);
   void S_RenamedProperty(const QString& oldName, const QString& newName);
-  void S_UpdatedPropertyContext(IPropertyManager* context, QStringView name);
+  void S_UpdatedPropertyContext(IPropertyManager* context, const QString& name);
 
   /// \} End of property signals
 

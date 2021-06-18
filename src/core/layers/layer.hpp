@@ -72,15 +72,6 @@ class ILayer : public IPropertyManager
   [[nodiscard]] virtual auto Opacity() const noexcept -> double = 0;
 
   /**
-   * \brief Returns the name associated with the layer.
-   *
-   * \return the name of the layer.
-   *
-   * \since 0.2.0
-   */
-  [[nodiscard]] virtual auto Name() const -> const QString& = 0;
-
-  /**
    * \brief Returns a copy of the layer.
    *
    * \return a copy of the layer.

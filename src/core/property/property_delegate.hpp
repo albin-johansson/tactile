@@ -13,7 +13,7 @@ class PropertyDelegate final : public IPropertyManager
  public:
   PropertyDelegate() = default;
 
-  explicit PropertyDelegate(QStringView name);
+  explicit PropertyDelegate(const QString& name);
 
   ~PropertyDelegate() noexcept override = default;
 
@@ -41,11 +41,11 @@ class PropertyDelegate final : public IPropertyManager
 
   [[nodiscard]] auto GetProperties() const -> const property_map& override;
 
-  [[nodiscard]] auto GetName() const -> QStringView override;
+  [[nodiscard]] auto GetName() const -> QString override;
 
  private:
   vector_map<QString, Property> mProperties;
-  QStringView mName;
+  QString mName;
 };
 
 }  // namespace tactile::core

@@ -147,7 +147,7 @@ auto Object::GetProperties() const -> const property_map&
   return mProperties.GetProperties();
 }
 
-auto Object::GetName() const -> QStringView
+auto Object::GetName() const -> QString
 {
   return mProperties.GetName();
 }

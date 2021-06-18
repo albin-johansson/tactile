@@ -63,8 +63,6 @@ class TileLayer final : public ILayer
 
   [[nodiscard]] auto Type() const -> LayerType override;
 
-  [[nodiscard]] auto Name() const -> const QString& override;
-
   [[nodiscard]] auto Opacity() const noexcept -> double override;
 
   [[nodiscard]] auto IsVisible() const noexcept -> bool override;
@@ -100,7 +98,7 @@ class TileLayer final : public ILayer
 
   [[nodiscard]] auto GetProperties() const -> const property_map& override;
 
-  [[nodiscard]] auto GetName() const -> QStringView override;
+  [[nodiscard]] auto GetName() const -> QString override;
 
   /// \} End of property API
 

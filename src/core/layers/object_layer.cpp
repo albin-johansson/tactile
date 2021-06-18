@@ -65,9 +65,9 @@ auto ObjectLayer::GetProperties() const -> const property_map&
   return mDelegate.Properties();
 }
 
-auto ObjectLayer::GetName() const -> QStringView
+auto ObjectLayer::GetName() const -> QString
 {
-  return mDelegate.Name();
+  return mDelegate.GetName();
 }
 
 void ObjectLayer::SetVisible(const bool visible) noexcept
@@ -98,11 +98,6 @@ auto ObjectLayer::IsVisible() const noexcept -> bool
 auto ObjectLayer::Opacity() const noexcept -> double
 {
   return mDelegate.Opacity();
-}
-
-auto ObjectLayer::Name() const -> const QString&
-{
-  return mDelegate.Name();
 }
 
 auto ObjectLayer::Clone() const -> Shared<ILayer>

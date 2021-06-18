@@ -309,7 +309,7 @@ auto Map::IndexOf(const layer_id id) const -> Maybe<std::size_t>
 
 auto Map::Name(const layer_id id) const -> QString
 {
-  return GetLayer(id)->Name();
+  return GetLayer(id)->GetName();
 }
 
 auto Map::IsVisible(const layer_id id) const -> bool

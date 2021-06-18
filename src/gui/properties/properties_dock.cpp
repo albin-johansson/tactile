@@ -49,7 +49,7 @@ void PropertiesDock::OnRenamedProperty(const QString& oldName,
 
 void PropertiesDock::OnUpdatedPropertyContext(
     NotNull<core::IPropertyManager*> context,
-    const QStringView name)
+    const QString& name)
 {
   mWidget->OnUpdatedPropertyContext(context, name);
 }

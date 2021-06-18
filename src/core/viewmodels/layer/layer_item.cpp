@@ -26,7 +26,7 @@ namespace {
 }  // namespace
 
 LayerItem::LayerItem(const layer_id id, const core::ILayer& layer)
-    : QStandardItem{layer.Name()}
+    : QStandardItem{layer.GetName()}
 {
   SetId(id);
   SetType(layer.Type());
