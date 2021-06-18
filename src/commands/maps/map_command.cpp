@@ -6,7 +6,7 @@
 
 namespace tactile::cmd {
 
-MapCommand::MapCommand(not_null<core::MapDocument*> document,
+MapCommand::MapCommand(NotNull<core::MapDocument*> document,
                        const QString& name)
     : QUndoCommand{name}
     , mDocument{document}

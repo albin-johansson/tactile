@@ -5,7 +5,7 @@
 
 namespace tactile::cmd {
 
-RemoveRow::RemoveRow(not_null<core::MapDocument*> document)
+RemoveRow::RemoveRow(NotNull<core::MapDocument*> document)
     : RepeatedMapCommand{document, QStringLiteral(u"Remove Row")}
 {}
 

@@ -15,25 +15,24 @@ PropertiesDock::PropertiesDock(QWidget* parent)
   setWidget(mWidget);
 }
 
-void PropertiesDock::OnSwitchedMap(not_null<core::IPropertyManager*> manager)
+void PropertiesDock::OnSwitchedMap(NotNull<core::IPropertyManager*> manager)
 {
   mWidget->ShowMap(manager);
 }
 
-void PropertiesDock::ShowMapProperties(
-    not_null<core::IPropertyManager*> manager)
+void PropertiesDock::ShowMapProperties(NotNull<core::IPropertyManager*> manager)
 {
   mWidget->ShowMap(manager);
 }
 
 void PropertiesDock::ShowLayerProperties(
-    not_null<core::IPropertyManager*> manager)
+    NotNull<core::IPropertyManager*> manager)
 {
   mWidget->ShowLayer(manager);
 }
 
 void PropertiesDock::ShowTilesetProperties(
-    not_null<core::IPropertyManager*> manager)
+    NotNull<core::IPropertyManager*> manager)
 {
   mWidget->ShowTileset(manager);
 }

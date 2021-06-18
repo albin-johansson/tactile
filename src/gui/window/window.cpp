@@ -202,17 +202,17 @@ void Window::ForceRedraw()
   mEditor->ForceRedraw();
 }
 
-void Window::OnShowMapProperties(not_null<core::IPropertyManager*> manager)
+void Window::OnShowMapProperties(NotNull<core::IPropertyManager*> manager)
 {
   mPropertiesDock->ShowMapProperties(manager);
 }
 
-void Window::OnShowLayerProperties(not_null<core::IPropertyManager*> manager)
+void Window::OnShowLayerProperties(NotNull<core::IPropertyManager*> manager)
 {
   mPropertiesDock->ShowLayerProperties(manager);
 }
 
-void Window::OnShowTilesetProperties(not_null<core::IPropertyManager*> manager)
+void Window::OnShowTilesetProperties(NotNull<core::IPropertyManager*> manager)
 {
   mPropertiesDock->ShowTilesetProperties(manager);
 }
@@ -228,7 +228,7 @@ void Window::OnDisableStampPreview()
 }
 
 void Window::OnSwitchedMap(const map_id map,
-                           not_null<core::MapDocument*> document)
+                           NotNull<core::MapDocument*> document)
 {
   mTilesetDock->OnSwitchedMap(map);
   mLayerDock->OnSwitchedMap(document);
@@ -236,7 +236,7 @@ void Window::OnSwitchedMap(const map_id map,
   mStatusBar->OnSwitchedMap(*document);
 }
 
-void Window::OnNewMapAdded(not_null<core::MapDocument*> document,
+void Window::OnNewMapAdded(NotNull<core::MapDocument*> document,
                            const map_id id,
                            const QString& name)
 {

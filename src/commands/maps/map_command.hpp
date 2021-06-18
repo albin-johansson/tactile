@@ -23,7 +23,7 @@ class MapCommand : public QUndoCommand
   using tile_data = std::map<core::MapPosition, tile_id>;
   using layer_data = std::map<layer_id, tile_data>;
 
-  MapCommand(not_null<core::MapDocument*> document, const QString& name);
+  MapCommand(NotNull<core::MapDocument*> document, const QString& name);
 
  protected:
   void RestoreTiles();

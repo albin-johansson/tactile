@@ -4,7 +4,7 @@
 
 namespace tactile::vm {
 
-void UpdateItemData(not_null<QStandardItem*> item,
+void UpdateItemData(NotNull<QStandardItem*> item,
                     const core::Property& property)
 {
   Q_ASSERT(item);
@@ -52,7 +52,7 @@ void UpdateItemData(not_null<QStandardItem*> item,
   }
 }
 
-auto ItemToProperty(not_null<const QStandardItem*> item) -> core::Property
+auto ItemToProperty(NotNull<const QStandardItem*> item) -> core::Property
 {
   Q_ASSERT(item);
   switch (static_cast<vm::PropertyItemType>(item->type()))

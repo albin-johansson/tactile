@@ -15,11 +15,11 @@ namespace tactile::cmd {
 class AddProperty final : public QUndoCommand
 {
  public:
-  AddProperty(not_null<core::IPropertyManager*> manager,
+  AddProperty(NotNull<core::IPropertyManager*> manager,
               QString name,
               const core::Property& property);
 
-  AddProperty(not_null<core::IPropertyManager*> manager,
+  AddProperty(NotNull<core::IPropertyManager*> manager,
               QString name,
               core::PropertyType type);
 
@@ -39,7 +39,7 @@ class AddProperty final : public QUndoCommand
   data_type mData;
   QString mName;
 
-  AddProperty(not_null<core::IPropertyManager*> manager,
+  AddProperty(NotNull<core::IPropertyManager*> manager,
               QString name,
               data_type data);
 };

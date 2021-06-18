@@ -48,17 +48,17 @@ PropertiesWidget::~PropertiesWidget() noexcept = default;
 
 // TODO ShowMap, ShowLayer and ShowTileset are not necessary anymore
 
-void PropertiesWidget::ShowMap(not_null<core::IPropertyManager*> manager)
+void PropertiesWidget::ShowMap(NotNull<core::IPropertyManager*> manager)
 {
   OnUpdatedPropertyContext(manager, manager->GetName());
 }
 
-void PropertiesWidget::ShowLayer(not_null<core::IPropertyManager*> manager)
+void PropertiesWidget::ShowLayer(NotNull<core::IPropertyManager*> manager)
 {
   OnUpdatedPropertyContext(manager, manager->GetName());
 }
 
-void PropertiesWidget::ShowTileset(not_null<core::IPropertyManager*> manager)
+void PropertiesWidget::ShowTileset(NotNull<core::IPropertyManager*> manager)
 {
   OnUpdatedPropertyContext(manager, manager->GetName());
 }
@@ -197,7 +197,7 @@ void PropertiesWidget::OnSpawnContextMenu(const QPoint& pos)
   mContextMenu->exec(pos);
 }
 
-void PropertiesWidget::ChangeModel(not_null<core::IPropertyManager*> manager)
+void PropertiesWidget::ChangeModel(NotNull<core::IPropertyManager*> manager)
 {
   Q_ASSERT(manager);
 

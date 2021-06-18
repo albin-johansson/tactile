@@ -13,7 +13,7 @@ namespace tactile::cmd {
 class RemoveTileset final : public QUndoCommand
 {
  public:
-  RemoveTileset(not_null<core::MapDocument*> document,
+  RemoveTileset(NotNull<core::MapDocument*> document,
                 Shared<core::Tileset> tileset,
                 tileset_id id);
 

@@ -36,7 +36,7 @@ class PropertyModel final : public QStandardItemModel
    *
    * \since 0.2.0
    */
-  explicit PropertyModel(not_null<core::IPropertyManager*> manager,
+  explicit PropertyModel(NotNull<core::IPropertyManager*> manager,
                          QObject* parent = nullptr);
 
   /**

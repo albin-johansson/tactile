@@ -5,7 +5,7 @@
 
 namespace tactile::cmd {
 
-RemoveLayer::RemoveLayer(not_null<core::MapDocument*> document,
+RemoveLayer::RemoveLayer(NotNull<core::MapDocument*> document,
                          const layer_id id)
     : QUndoCommand{QStringLiteral(u"Remove Layer")}
     , mDocument{document}

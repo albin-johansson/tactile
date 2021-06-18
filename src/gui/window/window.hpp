@@ -121,16 +121,16 @@ class Window final : public QMainWindow
  public slots:
   void ForceRedraw();
 
-  void OnShowMapProperties(not_null<core::IPropertyManager*> manager);
-  void OnShowLayerProperties(not_null<core::IPropertyManager*> manager);
-  void OnShowTilesetProperties(not_null<core::IPropertyManager*> manager);
+  void OnShowMapProperties(NotNull<core::IPropertyManager*> manager);
+  void OnShowLayerProperties(NotNull<core::IPropertyManager*> manager);
+  void OnShowTilesetProperties(NotNull<core::IPropertyManager*> manager);
 
   void OnEnableStampPreview(const core::MapPosition& position);
   void OnDisableStampPreview();
 
-  void OnSwitchedMap(map_id map, not_null<core::MapDocument*> document);
+  void OnSwitchedMap(map_id map, NotNull<core::MapDocument*> document);
 
-  void OnNewMapAdded(not_null<core::MapDocument*> document,
+  void OnNewMapAdded(NotNull<core::MapDocument*> document,
                      map_id id,
                      const QString& name = QStringLiteral(u"map"));
 

@@ -6,7 +6,7 @@
 
 namespace tactile::vm {
 
-LayerModel::LayerModel(not_null<core::MapDocument*> document)
+LayerModel::LayerModel(NotNull<core::MapDocument*> document)
     : QStandardItemModel{}
     , mDocument{document}
 {

@@ -80,7 +80,7 @@ class ADocument : public QObject, public IPropertyManager
 
   virtual void ResetPropertyContext() = 0;
 
-  virtual void SetPropertyContext(not_null<IPropertyManager*> manager) = 0;
+  virtual void SetPropertyContext(NotNull<IPropertyManager*> manager) = 0;
 
   [[nodiscard]] virtual auto GetPropertyContext() -> IPropertyManager* = 0;
 

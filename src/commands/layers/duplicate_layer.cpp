@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-DuplicateLayer::DuplicateLayer(not_null<core::MapDocument*> document,
+DuplicateLayer::DuplicateLayer(NotNull<core::MapDocument*> document,
                                const layer_id id)
     : QUndoCommand{QTranslator::tr("Duplicate Layer")}
     , mDocument{document}

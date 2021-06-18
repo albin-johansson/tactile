@@ -8,7 +8,7 @@ namespace tactile::cmd {
 
 // clang-format off
 
-ChangePropertyType::ChangePropertyType(not_null<core::IPropertyManager*> manager,
+ChangePropertyType::ChangePropertyType(NotNull<core::IPropertyManager*> manager,
                                        QString name,
                                        const core::PropertyType type)
     : QUndoCommand{QStringLiteral(u"Change Property Type")}

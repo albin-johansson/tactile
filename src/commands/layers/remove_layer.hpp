@@ -19,7 +19,7 @@ namespace tactile::cmd {
 class RemoveLayer final : public QUndoCommand
 {
  public:
-  RemoveLayer(not_null<core::MapDocument*> document, layer_id id);
+  RemoveLayer(NotNull<core::MapDocument*> document, layer_id id);
 
   void undo() override;
 

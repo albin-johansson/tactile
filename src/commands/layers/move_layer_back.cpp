@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-MoveLayerBack::MoveLayerBack(not_null<core::MapDocument*> document,
+MoveLayerBack::MoveLayerBack(NotNull<core::MapDocument*> document,
                              const layer_id id)
     : QUndoCommand{QTranslator::tr("Move Layer Back")}
     , mDocument{document}

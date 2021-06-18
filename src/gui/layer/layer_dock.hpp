@@ -18,7 +18,7 @@ class LayerDock final : public DockWidget
   explicit LayerDock(QWidget* parent = nullptr);
 
  public slots:
-  void OnSwitchedMap(not_null<core::MapDocument*> document);
+  void OnSwitchedMap(NotNull<core::MapDocument*> document);
 
  private:
   LayerWidget* mWidget{};

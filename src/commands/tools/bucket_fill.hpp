@@ -27,7 +27,7 @@ class BucketFill final : public QUndoCommand
    *
    * \since 0.1.0
    */
-  explicit BucketFill(not_null<core::MapDocument*> document,
+  explicit BucketFill(NotNull<core::MapDocument*> document,
                       const core::MapPosition& position,
                       tile_id replacement);
 

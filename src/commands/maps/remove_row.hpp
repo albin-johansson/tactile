@@ -23,7 +23,7 @@ namespace tactile::cmd {
 class RemoveRow final : public RepeatedMapCommand
 {
  public:
-  explicit RemoveRow(not_null<core::MapDocument*> document);
+  explicit RemoveRow(NotNull<core::MapDocument*> document);
 
   void undo() override;
 

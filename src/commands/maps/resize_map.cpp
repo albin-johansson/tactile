@@ -4,7 +4,7 @@
 
 namespace tactile::cmd {
 
-ResizeMap::ResizeMap(not_null<core::MapDocument*> document,
+ResizeMap::ResizeMap(NotNull<core::MapDocument*> document,
                      const row_t rows,
                      const col_t cols)
     : MapCommand{document, QStringLiteral(u"Resize Map")}

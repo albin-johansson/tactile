@@ -8,7 +8,7 @@
 
 namespace tactile::cmd {
 
-SetTilesetName::SetTilesetName(not_null<core::MapDocument*> document,
+SetTilesetName::SetTilesetName(NotNull<core::MapDocument*> document,
                                const tileset_id id,
                                QString name)
     : QUndoCommand{QTranslator::tr("Set Tileset Name")}

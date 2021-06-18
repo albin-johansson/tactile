@@ -31,7 +31,7 @@ class ResizeMap final : public MapCommand
    *
    * \since 0.1.0
    */
-  ResizeMap(not_null<core::MapDocument*> document, row_t nRows, col_t nCols);
+  ResizeMap(NotNull<core::MapDocument*> document, row_t nRows, col_t nCols);
 
   void undo() override;
 

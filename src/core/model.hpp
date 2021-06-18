@@ -61,7 +61,7 @@ class Model final : public QObject
 
  signals:
   void S_Redraw();
-  void S_SwitchedMap(map_id id, not_null<MapDocument*> document);
+  void S_SwitchedMap(map_id id, NotNull<MapDocument*> document);
 
   void S_AddedLayer(layer_id id, const ILayer& layer);
   void S_AddedDuplicatedLayer(layer_id id, const ILayer& layer);

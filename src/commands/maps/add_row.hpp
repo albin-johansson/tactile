@@ -22,7 +22,7 @@ namespace tactile::cmd {
 class AddRow final : public RepeatedCommand
 {
  public:
-  explicit AddRow(not_null<core::MapDocument*> document);
+  explicit AddRow(NotNull<core::MapDocument*> document);
 
   void undo() override;
 

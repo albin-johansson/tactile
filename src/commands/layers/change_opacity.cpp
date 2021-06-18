@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-ChangeOpacity::ChangeOpacity(not_null<core::MapDocument*> document,
+ChangeOpacity::ChangeOpacity(NotNull<core::MapDocument*> document,
                              const layer_id id,
                              const double opacity)
     : QUndoCommand{QTranslator::tr("Change Layer Opacity")}

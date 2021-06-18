@@ -5,7 +5,7 @@
 
 namespace tactile::cmd {
 
-RemoveColumn::RemoveColumn(not_null<core::MapDocument*> document)
+RemoveColumn::RemoveColumn(NotNull<core::MapDocument*> document)
     : RepeatedMapCommand{document, QStringLiteral(u"Remove Column")}
 {}
 

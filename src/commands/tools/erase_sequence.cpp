@@ -8,7 +8,7 @@
 
 namespace tactile::cmd {
 
-EraseSequence::EraseSequence(not_null<core::MapDocument*> document,
+EraseSequence::EraseSequence(NotNull<core::MapDocument*> document,
                              vector_map<core::MapPosition, tile_id>&& oldState)
     : QUndoCommand{QStringLiteral(u"Erase Tiles")}
     , mDocument{document}

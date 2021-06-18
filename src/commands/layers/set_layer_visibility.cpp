@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-SetLayerVisibility::SetLayerVisibility(not_null<core::MapDocument*> document,
+SetLayerVisibility::SetLayerVisibility(NotNull<core::MapDocument*> document,
                                        const layer_id id,
                                        const bool visible)
     : QUndoCommand{QTranslator::tr("Set Layer Visibility")}

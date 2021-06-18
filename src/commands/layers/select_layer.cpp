@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-SelectLayer::SelectLayer(not_null<core::MapDocument*> document,
+SelectLayer::SelectLayer(NotNull<core::MapDocument*> document,
                          const layer_id id)
     : QUndoCommand{QTranslator::tr("Select Layer")}
     , mDocument{document}

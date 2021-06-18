@@ -22,7 +22,7 @@ namespace tactile::cmd {
 class RemoveColumn final : public RepeatedMapCommand
 {
  public:
-  explicit RemoveColumn(not_null<core::MapDocument*> document);
+  explicit RemoveColumn(NotNull<core::MapDocument*> document);
 
   void undo() override;
 

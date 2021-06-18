@@ -6,7 +6,7 @@
 
 namespace tactile::cmd {
 
-AddRow::AddRow(not_null<core::MapDocument*> document)
+AddRow::AddRow(NotNull<core::MapDocument*> document)
     : RepeatedCommand{QStringLiteral(u"Add Row")}
     , mDocument{document}
 {

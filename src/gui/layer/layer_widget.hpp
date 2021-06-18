@@ -32,7 +32,7 @@ class LayerWidget final : public QWidget
   ~LayerWidget() noexcept override;
 
  public slots:
-  void OnSwitchedMap(not_null<core::MapDocument*> document);
+  void OnSwitchedMap(NotNull<core::MapDocument*> document);
 
  private:
   Unique<Ui::LayerWidget> mUi;

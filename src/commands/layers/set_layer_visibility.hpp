@@ -15,7 +15,7 @@ namespace tactile::cmd {
 class SetLayerVisibility final : public QUndoCommand
 {
  public:
-  SetLayerVisibility(not_null<core::MapDocument*> document,
+  SetLayerVisibility(NotNull<core::MapDocument*> document,
                      layer_id id,
                      bool visible);
 
@@ -29,7 +29,7 @@ class SetLayerVisibility final : public QUndoCommand
   }
 
  private:
-  not_null<core::MapDocument*> mDocument{};
+  NotNull<core::MapDocument*> mDocument{};
   layer_id mId;
   bool mVisible;
 };

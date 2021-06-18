@@ -60,7 +60,7 @@ LayerWidget::LayerWidget(QWidget* parent)
 
 LayerWidget::~LayerWidget() noexcept = default;
 
-void LayerWidget::OnSwitchedMap(not_null<core::MapDocument*> document)
+void LayerWidget::OnSwitchedMap(NotNull<core::MapDocument*> document)
 {
   Q_ASSERT(document);
 

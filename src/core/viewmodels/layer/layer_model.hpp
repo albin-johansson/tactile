@@ -19,7 +19,7 @@ class LayerModel final : public QStandardItemModel
   Q_OBJECT
 
  public:
-  explicit LayerModel(not_null<core::MapDocument*> document);
+  explicit LayerModel(NotNull<core::MapDocument*> document);
 
   void AddTileLayer();
 

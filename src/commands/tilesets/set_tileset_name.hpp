@@ -17,7 +17,7 @@ namespace tactile::cmd {
 class SetTilesetName final : public QUndoCommand
 {
  public:
-  SetTilesetName(not_null<core::MapDocument*> document,
+  SetTilesetName(NotNull<core::MapDocument*> document,
                  tileset_id id,
                  QString name);
 

@@ -7,7 +7,7 @@
 
 namespace tactile::cmd {
 
-MoveLayerForward::MoveLayerForward(not_null<core::MapDocument*> document,
+MoveLayerForward::MoveLayerForward(NotNull<core::MapDocument*> document,
                                    const layer_id id)
     : QUndoCommand{QTranslator::tr("Move Layer Up")}
     , mDocument{document}

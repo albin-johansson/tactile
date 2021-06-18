@@ -80,7 +80,7 @@ class MapDocument final : public ADocument
 
   void ResetPropertyContext() override;
 
-  void SetPropertyContext(not_null<IPropertyManager*> manager) override;
+  void SetPropertyContext(NotNull<IPropertyManager*> manager) override;
 
   [[nodiscard]] auto GetPropertyContext() -> IPropertyManager* override;
 

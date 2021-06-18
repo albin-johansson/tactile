@@ -15,7 +15,7 @@ namespace tactile::cmd {
 class ChangePropertyType final : public QUndoCommand
 {
  public:
-  ChangePropertyType(not_null<core::IPropertyManager*> manager,
+  ChangePropertyType(NotNull<core::IPropertyManager*> manager,
                      QString name,
                      core::PropertyType type1);
 

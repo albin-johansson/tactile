@@ -2,7 +2,7 @@
 
 namespace tactile::cmd {
 
-RepeatedMapCommand::RepeatedMapCommand(not_null<core::MapDocument*> document,
+RepeatedMapCommand::RepeatedMapCommand(NotNull<core::MapDocument*> document,
                                        const QString& name)
     : MapCommand{document, name}
 {}

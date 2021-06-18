@@ -16,7 +16,7 @@ namespace tactile::cmd {
 class DuplicateLayer final : public QUndoCommand
 {
  public:
-  DuplicateLayer(not_null<core::MapDocument*> document, layer_id id);
+  DuplicateLayer(NotNull<core::MapDocument*> document, layer_id id);
 
   void undo() override;
 

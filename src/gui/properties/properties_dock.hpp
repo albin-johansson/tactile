@@ -20,14 +20,14 @@ class PropertiesDock final : public DockWidget
  public:
   explicit PropertiesDock(QWidget* parent = nullptr);
 
-  void ShowMapProperties(not_null<core::IPropertyManager*> manager);
+  void ShowMapProperties(NotNull<core::IPropertyManager*> manager);
 
-  void ShowLayerProperties(not_null<core::IPropertyManager*> manager);
+  void ShowLayerProperties(NotNull<core::IPropertyManager*> manager);
 
-  void ShowTilesetProperties(not_null<core::IPropertyManager*> manager);
+  void ShowTilesetProperties(NotNull<core::IPropertyManager*> manager);
 
  public slots:
-  void OnSwitchedMap(not_null<core::IPropertyManager*> manager);
+  void OnSwitchedMap(NotNull<core::IPropertyManager*> manager);
 
   void OnAddedProperty(const QString& name);
 

@@ -16,7 +16,7 @@ namespace tactile::cmd {
 class ChangeOpacity final : public QUndoCommand
 {
  public:
-  ChangeOpacity(not_null<core::MapDocument*> document,
+  ChangeOpacity(NotNull<core::MapDocument*> document,
                 layer_id id,
                 double opacity);
 

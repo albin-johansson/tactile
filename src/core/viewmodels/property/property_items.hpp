@@ -138,7 +138,7 @@ class FileItem final : public QStandardItem
  *
  * \since 0.2.0
  */
-void UpdateItemData(not_null<QStandardItem*> item,
+void UpdateItemData(NotNull<QStandardItem*> item,
                     const core::Property& property);
 
 /**
@@ -152,7 +152,7 @@ void UpdateItemData(not_null<QStandardItem*> item,
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto ItemToProperty(not_null<const QStandardItem*> item)
+[[nodiscard]] auto ItemToProperty(NotNull<const QStandardItem*> item)
     -> core::Property;
 
 }  // namespace tactile::vm

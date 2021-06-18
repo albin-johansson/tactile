@@ -18,7 +18,7 @@ namespace tactile::cmd {
 class EraseSequence final : public QUndoCommand
 {
  public:
-  EraseSequence(not_null<core::MapDocument*> document,
+  EraseSequence(NotNull<core::MapDocument*> document,
                 vector_map<core::MapPosition, tile_id>&& oldState);
 
   void undo() override;

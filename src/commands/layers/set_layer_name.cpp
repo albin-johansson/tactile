@@ -8,7 +8,7 @@
 
 namespace tactile::cmd {
 
-SetLayerName::SetLayerName(not_null<core::MapDocument*> document,
+SetLayerName::SetLayerName(NotNull<core::MapDocument*> document,
                            const layer_id id,
                            QString name)
     : QUndoCommand{QTranslator::tr("Set Layer Name")}

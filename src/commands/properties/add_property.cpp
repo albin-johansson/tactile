@@ -6,7 +6,7 @@
 
 namespace tactile::cmd {
 
-AddProperty::AddProperty(not_null<core::IPropertyManager*> manager,
+AddProperty::AddProperty(NotNull<core::IPropertyManager*> manager,
                          QString name,
                          data_type data)
     : QUndoCommand{QStringLiteral(u"Add Property \"") + name +
@@ -21,13 +21,13 @@ AddProperty::AddProperty(not_null<core::IPropertyManager*> manager,
   }
 }
 
-AddProperty::AddProperty(not_null<core::IPropertyManager*> manager,
+AddProperty::AddProperty(NotNull<core::IPropertyManager*> manager,
                          QString name,
                          const core::Property& property)
     : AddProperty{manager, std::move(name), data_type{property}}
 {}
 
-AddProperty::AddProperty(not_null<core::IPropertyManager*> manager,
+AddProperty::AddProperty(NotNull<core::IPropertyManager*> manager,
                          QString name,
                          const core::PropertyType type)
     : AddProperty{manager, std::move(name), data_type{type}}

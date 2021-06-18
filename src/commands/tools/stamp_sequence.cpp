@@ -8,7 +8,7 @@
 
 namespace tactile::cmd {
 
-StampSequence::StampSequence(not_null<core::MapDocument*> document,
+StampSequence::StampSequence(NotNull<core::MapDocument*> document,
                              vector_map<core::MapPosition, tile_id>&& oldState,
                              vector_map<core::MapPosition, tile_id>&& sequence)
     : QUndoCommand{QStringLiteral(u"Stamp Sequence")}

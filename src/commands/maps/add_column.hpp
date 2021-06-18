@@ -22,7 +22,7 @@ namespace tactile::cmd {
 class AddColumn final : public RepeatedCommand
 {
  public:
-  explicit AddColumn(not_null<core::MapDocument*> document);
+  explicit AddColumn(NotNull<core::MapDocument*> document);
 
   void undo() override;
 

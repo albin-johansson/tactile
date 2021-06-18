@@ -15,7 +15,7 @@ namespace tactile::cmd {
 class AddTileset final : public QUndoCommand
 {
  public:
-  AddTileset(not_null<core::MapDocument*> document,
+  AddTileset(NotNull<core::MapDocument*> document,
              Shared<core::Tileset> tileset,
              tileset_id id);
 

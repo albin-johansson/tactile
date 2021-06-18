@@ -8,7 +8,7 @@
 
 namespace tactile::cmd {
 
-SetPropertyContext::SetPropertyContext(not_null<core::MapDocument*> document,
+SetPropertyContext::SetPropertyContext(NotNull<core::MapDocument*> document,
                                        core::IPropertyManager* context)
     : QUndoCommand{QStringLiteral(u"Set Property Context")}
     , mDocument{VerifyNotNull(document)}

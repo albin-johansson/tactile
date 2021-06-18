@@ -15,7 +15,7 @@ LayerDock::LayerDock(QWidget* parent)
   setWidget(mWidget);
 }
 
-void LayerDock::OnSwitchedMap(not_null<core::MapDocument*> document)
+void LayerDock::OnSwitchedMap(NotNull<core::MapDocument*> document)
 {
   mWidget->OnSwitchedMap(document);
 }

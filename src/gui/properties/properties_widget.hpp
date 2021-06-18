@@ -29,11 +29,11 @@ class PropertiesWidget final : public QWidget
   ~PropertiesWidget() noexcept override;
 
  public slots:
-  void ShowMap(not_null<core::IPropertyManager*> manager);
+  void ShowMap(NotNull<core::IPropertyManager*> manager);
 
-  void ShowLayer(not_null<core::IPropertyManager*> manager);
+  void ShowLayer(NotNull<core::IPropertyManager*> manager);
 
-  void ShowTileset(not_null<core::IPropertyManager*> manager);
+  void ShowTileset(NotNull<core::IPropertyManager*> manager);
 
   void OnAddedProperty(const QString& name);
 
@@ -56,7 +56,7 @@ class PropertiesWidget final : public QWidget
   Maybe<QString> mNameCopy;
   Maybe<core::Property> mPropertyCopy;
 
-  void ChangeModel(not_null<core::IPropertyManager*> manager);
+  void ChangeModel(NotNull<core::IPropertyManager*> manager);
 
   [[nodiscard]] auto PropertyName(const QModelIndex& index) const -> QString;
 

@@ -18,7 +18,7 @@ namespace tactile::cmd {
 class StampSequence final : public QUndoCommand
 {
  public:
-  StampSequence(not_null<core::MapDocument*> document,
+  StampSequence(NotNull<core::MapDocument*> document,
                 vector_map<core::MapPosition, tile_id>&& oldState,
                 vector_map<core::MapPosition, tile_id>&& sequence);
 

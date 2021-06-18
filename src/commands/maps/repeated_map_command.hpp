@@ -12,7 +12,7 @@ namespace tactile::cmd {
 class RepeatedMapCommand : public MapCommand
 {
  public:
-  RepeatedMapCommand(not_null<core::MapDocument*> document,
+  RepeatedMapCommand(NotNull<core::MapDocument*> document,
                      const QString& name);
 
   auto mergeWith(const QUndoCommand* other) -> bool final;

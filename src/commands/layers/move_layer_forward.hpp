@@ -15,7 +15,7 @@ namespace tactile::cmd {
 class MoveLayerForward final : public QUndoCommand
 {
  public:
-  MoveLayerForward(not_null<core::MapDocument*> document, layer_id id);
+  MoveLayerForward(NotNull<core::MapDocument*> document, layer_id id);
 
   void undo() override;
 

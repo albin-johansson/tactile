@@ -44,7 +44,7 @@ void DocumentDelegate::ResetPropertyContext()
   mPropertyContext = mPropertyManager.get();
 }
 
-void DocumentDelegate::SetPropertyContext(not_null<IPropertyManager*> manager)
+void DocumentDelegate::SetPropertyContext(NotNull<IPropertyManager*> manager)
 {
   Q_ASSERT(manager);
   mPropertyContext = manager;

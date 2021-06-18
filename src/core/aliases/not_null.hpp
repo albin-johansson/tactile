@@ -5,6 +5,6 @@
 namespace tactile {
 
 template <IsPointer T>
-using not_null = T;
+using NotNull = T;
 
 }  // namespace tactile

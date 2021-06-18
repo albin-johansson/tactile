@@ -6,7 +6,7 @@
 
 namespace tactile::cmd {
 
-AddColumn::AddColumn(not_null<core::MapDocument*> document)
+AddColumn::AddColumn(NotNull<core::MapDocument*> document)
     : RepeatedCommand{QStringLiteral(u"Add Column")}
     , mDocument{document}
 {

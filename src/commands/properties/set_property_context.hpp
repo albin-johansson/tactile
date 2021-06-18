@@ -17,7 +17,7 @@ class SetPropertyContext final : public QUndoCommand
    * \param context the property context that will be used, can be null to
    * indicate that the property context should be reset.
    */
-  SetPropertyContext(not_null<core::MapDocument*> document,
+  SetPropertyContext(NotNull<core::MapDocument*> document,
                      core::IPropertyManager* context);
 
   void undo() override;

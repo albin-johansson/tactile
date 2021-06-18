@@ -108,7 +108,7 @@ void MapDocument::ResetPropertyContext()
   mDelegate->Execute<cmd::SetPropertyContext>(this, nullptr);
 }
 
-void MapDocument::SetPropertyContext(not_null<IPropertyManager*> manager)
+void MapDocument::SetPropertyContext(NotNull<IPropertyManager*> manager)
 {
   mDelegate->Execute<cmd::SetPropertyContext>(this, manager);
 }

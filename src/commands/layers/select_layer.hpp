@@ -16,7 +16,7 @@ namespace tactile::cmd {
 class SelectLayer final : public QUndoCommand
 {
  public:
-  SelectLayer(not_null<core::MapDocument*> document, layer_id id);
+  SelectLayer(NotNull<core::MapDocument*> document, layer_id id);
 
   void undo() override;
 
