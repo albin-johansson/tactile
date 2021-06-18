@@ -78,10 +78,30 @@ class ADocument : public QObject, public IPropertyManager
    */
   virtual void SetPath(QFileInfo path) = 0;
 
+  /**
+   * \brief Resets the property context, i.e. makes the document itself the
+   * active property context.
+   */
   virtual void ResetPropertyContext() = 0;
 
+  /**
+   * \brief Sets the currently active property context.
+   *
+   * \param manager the new property context.
+   */
   virtual void SetPropertyContext(NotNull<IPropertyManager*> manager) = 0;
 
+  /**
+   * \brief Returns the currently active property context.
+   *
+   * \details Documents have associated properties, but they can also host
+   * associated components that also support properties. For example, tilemaps
+   * feature properties but so do the objects present in the tilemaps. The
+   * property "context" is simply the currently active property manager.
+   *
+   * \return the active property context, might be null if the document itself
+   * is the current property context.
+   */
   [[nodiscard]] virtual auto GetPropertyContext() -> IPropertyManager* = 0;
 
   /**
