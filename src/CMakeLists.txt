@@ -385,9 +385,9 @@ set(TACTILE_SOURCE_FILES
     util/prepare_application.hpp
     util/standard_paths.cpp
     util/standard_paths.hpp
-    util/string_utils.cpp
-    util/string_utils.hpp
     util/tactile_declare_ui.hpp
+    util/to_integer.cpp
+    util/to_integer.hpp
     util/to_underlying.hpp
     util/vector_map.hpp
     util/verify_not_null.hpp

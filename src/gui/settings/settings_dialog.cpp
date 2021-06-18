@@ -12,9 +12,9 @@
 #include "parse_palette.hpp"
 #include "preferences.hpp"
 #include "save_theme.hpp"
-#include "string_utils.hpp"
 #include "theme.hpp"
 #include "theme_options_context_menu.hpp"
+#include "to_integer.hpp"
 #include "ui_settings_dialog.h"
 
 namespace tactile {

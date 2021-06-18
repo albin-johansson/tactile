@@ -1,6 +1,6 @@
 #include "color_validator.hpp"
 
-#include "string_utils.hpp"
+#include "to_integer.hpp"
 
 namespace tactile {
 
