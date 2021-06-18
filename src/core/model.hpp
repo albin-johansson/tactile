@@ -88,10 +88,6 @@ class Model final : public QObject
   void S_UpdatedProperty(const QString& name);
   void S_ChangedPropertyType(const QString& name);
   void S_RenamedProperty(const QString& oldName, const QString& newName);
-
-  void S_ShowMapProperties(core::IPropertyManager* manager);
-  void S_ShowLayerProperties(core::IPropertyManager* manager);
-  void S_ShowTilesetProperties(core::IPropertyManager* manager);
   void S_UpdatedPropertyContext(IPropertyManager* context, QStringView name);
 
  public slots:

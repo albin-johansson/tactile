@@ -202,21 +202,6 @@ void Window::ForceRedraw()
   mEditor->ForceRedraw();
 }
 
-void Window::OnShowMapProperties(NotNull<core::IPropertyManager*> manager)
-{
-  mPropertiesDock->ShowMapProperties(manager);
-}
-
-void Window::OnShowLayerProperties(NotNull<core::IPropertyManager*> manager)
-{
-  mPropertiesDock->ShowLayerProperties(manager);
-}
-
-void Window::OnShowTilesetProperties(NotNull<core::IPropertyManager*> manager)
-{
-  mPropertiesDock->ShowTilesetProperties(manager);
-}
-
 void Window::OnEnableStampPreview(const core::MapPosition& position)
 {
   mEditor->EnableStampPreview(position);
@@ -345,7 +330,7 @@ void Window::OnRenamedProperty(const QString& oldName, const QString& newName)
   mPropertiesDock->OnRenamedProperty(oldName, newName);
 }
 
-void Window::OnUpdatedPropertyContext(core::IPropertyManager* context,
+void Window::OnUpdatedPropertyContext(NotNull<core::IPropertyManager*> context,
                                       const QStringView name)
 {
   mPropertiesDock->OnUpdatedPropertyContext(context, name);

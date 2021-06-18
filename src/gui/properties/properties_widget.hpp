@@ -29,12 +29,6 @@ class PropertiesWidget final : public QWidget
   ~PropertiesWidget() noexcept override;
 
  public slots:
-  void ShowMap(NotNull<core::IPropertyManager*> manager);
-
-  void ShowLayer(NotNull<core::IPropertyManager*> manager);
-
-  void ShowTileset(NotNull<core::IPropertyManager*> manager);
-
   void OnAddedProperty(const QString& name);
 
   void OnAboutToRemoveProperty(const QString& name);
@@ -45,7 +39,7 @@ class PropertiesWidget final : public QWidget
 
   void OnRenamedProperty(const QString& oldName, const QString& newName);
 
-  void OnUpdatedPropertyContext(core::IPropertyManager* context,
+  void OnUpdatedPropertyContext(NotNull<core::IPropertyManager*> context,
                                 QStringView name);
 
  private:

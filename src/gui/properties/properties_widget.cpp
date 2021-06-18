@@ -46,23 +46,6 @@ PropertiesWidget::PropertiesWidget(QWidget* parent)
 
 PropertiesWidget::~PropertiesWidget() noexcept = default;
 
-// TODO ShowMap, ShowLayer and ShowTileset are not necessary anymore
-
-void PropertiesWidget::ShowMap(NotNull<core::IPropertyManager*> manager)
-{
-  OnUpdatedPropertyContext(manager, manager->GetName());
-}
-
-void PropertiesWidget::ShowLayer(NotNull<core::IPropertyManager*> manager)
-{
-  OnUpdatedPropertyContext(manager, manager->GetName());
-}
-
-void PropertiesWidget::ShowTileset(NotNull<core::IPropertyManager*> manager)
-{
-  OnUpdatedPropertyContext(manager, manager->GetName());
-}
-
 void PropertiesWidget::OnAddedProperty(const QString& name)
 {
   mModel->OnAddedProperty(name);
@@ -84,8 +67,9 @@ void PropertiesWidget::OnRenamedProperty(const QString& oldName,
   mModel->OnRenamedProperty(oldName, newName);
 }
 
-void PropertiesWidget::OnUpdatedPropertyContext(core::IPropertyManager* context,
-                                                const QStringView name)
+void PropertiesWidget::OnUpdatedPropertyContext(
+    NotNull<core::IPropertyManager*> context,
+    const QStringView name)
 {
   ChangeModel(context);
   mModel->SetRootName(name.toString());

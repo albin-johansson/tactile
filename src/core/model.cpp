@@ -325,7 +325,7 @@ void Model::OnShowMapProperties(const map_id id)
   Q_ASSERT(document);
 
   document->ResetPropertyContext();
-  emit S_ShowMapProperties(document);
+  emit S_UpdatedPropertyContext(document, document->GetName());
 }
 
 void Model::OnShowLayerProperties(const layer_id id)
@@ -337,7 +337,7 @@ void Model::OnShowLayerProperties(const layer_id id)
   Q_ASSERT(layer);
 
   document->SetPropertyContext(layer);
-  emit S_ShowLayerProperties(document);
+  emit S_UpdatedPropertyContext(document, layer->GetName());
 }
 
 void Model::OnShowTilesetProperties(const tileset_id id)
@@ -349,7 +349,7 @@ void Model::OnShowTilesetProperties(const tileset_id id)
   Q_ASSERT(tileset);
 
   document->SetPropertyContext(tileset);
-  emit S_ShowTilesetProperties(document);
+  emit S_UpdatedPropertyContext(document, tileset->GetName());
 }
 
 void Model::EmitUndoRedoUpdate()

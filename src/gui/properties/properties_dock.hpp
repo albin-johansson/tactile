@@ -20,12 +20,6 @@ class PropertiesDock final : public DockWidget
  public:
   explicit PropertiesDock(QWidget* parent = nullptr);
 
-  void ShowMapProperties(NotNull<core::IPropertyManager*> manager);
-
-  void ShowLayerProperties(NotNull<core::IPropertyManager*> manager);
-
-  void ShowTilesetProperties(NotNull<core::IPropertyManager*> manager);
-
  public slots:
   void OnSwitchedMap(NotNull<core::IPropertyManager*> manager);
 
@@ -39,7 +33,7 @@ class PropertiesDock final : public DockWidget
 
   void OnRenamedProperty(const QString& oldName, const QString& newName);
 
-  void OnUpdatedPropertyContext(core::IPropertyManager* context,
+  void OnUpdatedPropertyContext(NotNull<core::IPropertyManager*> context,
                                 QStringView name);
 
  private:

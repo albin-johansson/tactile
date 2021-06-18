@@ -90,9 +90,6 @@ void TactileApp::InitConnections()
   modToWin(&Model::S_UpdatedProperty, &Window::OnUpdatedProperty);
   modToWin(&Model::S_RenamedProperty, &Window::OnRenamedProperty);
   modToWin(&Model::S_ChangedPropertyType, &Window::OnChangedPropertyType);
-  modToWin(&Model::S_ShowMapProperties, &Window::OnShowMapProperties);
-  modToWin(&Model::S_ShowLayerProperties, &Window::OnShowLayerProperties);
-  modToWin(&Model::S_ShowTilesetProperties, &Window::OnShowTilesetProperties);
   modToWin(&Model::S_UpdatedPropertyContext, &Window::OnUpdatedPropertyContext);
 
   fromWindow(&Window::S_AddTileset, &TactileApp::OnAddTileset);

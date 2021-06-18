@@ -1,6 +1,7 @@
 #include "properties_dock.hpp"
 
 #include "properties_widget.hpp"
+#include "property_manager.hpp"
 
 namespace tactile {
 
@@ -17,24 +18,7 @@ PropertiesDock::PropertiesDock(QWidget* parent)
 
 void PropertiesDock::OnSwitchedMap(NotNull<core::IPropertyManager*> manager)
 {
-  mWidget->ShowMap(manager);
-}
-
-void PropertiesDock::ShowMapProperties(NotNull<core::IPropertyManager*> manager)
-{
-  mWidget->ShowMap(manager);
-}
-
-void PropertiesDock::ShowLayerProperties(
-    NotNull<core::IPropertyManager*> manager)
-{
-  mWidget->ShowLayer(manager);
-}
-
-void PropertiesDock::ShowTilesetProperties(
-    NotNull<core::IPropertyManager*> manager)
-{
-  mWidget->ShowTileset(manager);
+  mWidget->OnUpdatedPropertyContext(manager, manager->GetName());
 }
 
 void PropertiesDock::OnAddedProperty(const QString& name)
@@ -63,8 +47,9 @@ void PropertiesDock::OnRenamedProperty(const QString& oldName,
   mWidget->OnRenamedProperty(oldName, newName);
 }
 
-void PropertiesDock::OnUpdatedPropertyContext(core::IPropertyManager* context,
-                                              const QStringView name)
+void PropertiesDock::OnUpdatedPropertyContext(
+    NotNull<core::IPropertyManager*> context,
+    const QStringView name)
 {
   mWidget->OnUpdatedPropertyContext(context, name);
 }

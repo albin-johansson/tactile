@@ -121,10 +121,6 @@ class Window final : public QMainWindow
  public slots:
   void ForceRedraw();
 
-  void OnShowMapProperties(NotNull<core::IPropertyManager*> manager);
-  void OnShowLayerProperties(NotNull<core::IPropertyManager*> manager);
-  void OnShowTilesetProperties(NotNull<core::IPropertyManager*> manager);
-
   void OnEnableStampPreview(const core::MapPosition& position);
   void OnDisableStampPreview();
 
@@ -172,7 +168,7 @@ class Window final : public QMainWindow
   void OnUpdatedProperty(const QString& name);
   void OnChangedPropertyType(const QString& name);
   void OnRenamedProperty(const QString& oldName, const QString& newName);
-  void OnUpdatedPropertyContext(core::IPropertyManager* context,
+  void OnUpdatedPropertyContext(NotNull<core::IPropertyManager*> context,
                                 QStringView name);
 
   /// \} End of property slots
