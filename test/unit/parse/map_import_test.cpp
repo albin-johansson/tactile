@@ -35,10 +35,10 @@ void ValidateLayers(const core::MapDocument& document)
   {  // First layer
     const auto* layer = document.GetLayer(1_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::TileLayer, layer->Type());
+    ASSERT_EQ(core::LayerType::TileLayer, layer->GetType());
 
     EXPECT_EQ(QStringLiteral(u"G0"), layer->GetName());
-    EXPECT_EQ(1.0, layer->Opacity());
+    EXPECT_EQ(1.0, layer->GetOpacity());
     EXPECT_TRUE(layer->IsVisible());
 
     const auto* tileLayer = document.GetTileLayer(1_layer);
@@ -54,10 +54,10 @@ void ValidateLayers(const core::MapDocument& document)
   {  // Second layer
     const auto* layer = document.GetLayer(2_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::TileLayer, layer->Type());
+    ASSERT_EQ(core::LayerType::TileLayer, layer->GetType());
 
     EXPECT_EQ(QStringLiteral(u"T0"), layer->GetName());
-    EXPECT_EQ(0.75, layer->Opacity());
+    EXPECT_EQ(0.75, layer->GetOpacity());
     EXPECT_TRUE(layer->IsVisible());
 
     const auto* tileLayer = document.GetTileLayer(2_layer);
@@ -73,10 +73,10 @@ void ValidateLayers(const core::MapDocument& document)
   {  // Third layer
     const auto* layer = document.GetLayer(3_layer);
     ASSERT_TRUE(layer);
-    ASSERT_EQ(core::LayerType::ObjectLayer, layer->Type());
+    ASSERT_EQ(core::LayerType::ObjectLayer, layer->GetType());
 
     EXPECT_EQ(QStringLiteral(u"O1"), layer->GetName());
-    EXPECT_EQ(1.0, layer->Opacity());
+    EXPECT_EQ(1.0, layer->GetOpacity());
     EXPECT_TRUE(layer->IsVisible());
 
     const auto* objectLayer = document.GetObjectLayer(3_layer);

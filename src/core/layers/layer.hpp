@@ -13,9 +13,9 @@ namespace tactile::core {
  *
  * \brief Represents a layer in a map.
  *
- * \see map
- * \see tile_layer
- * \see object_layer
+ * \see Map
+ * \see TileLayer
+ * \see ObjectLayer
  *
  * \since 0.2.0
  *
@@ -69,7 +69,7 @@ class ILayer : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto Opacity() const noexcept -> double = 0;
+  [[nodiscard]] virtual auto GetOpacity() const noexcept -> double = 0;
 
   /**
    * \brief Returns a copy of the layer.
@@ -87,7 +87,7 @@ class ILayer : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] virtual auto Type() const -> LayerType = 0;
+  [[nodiscard]] virtual auto GetType() const -> LayerType = 0;
 };
 
 }  // namespace tactile::core

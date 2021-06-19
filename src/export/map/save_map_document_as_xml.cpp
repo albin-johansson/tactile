@@ -235,7 +235,7 @@ void SaveLayers(QDomDocument& document,
 {
   map.EachLayer([&](const layer_id id, const Shared<core::ILayer>& layer) {
     QDomElement node;
-    if (layer->Type() == core::LayerType::TileLayer)
+    if (layer->GetType() == core::LayerType::TileLayer)
     {
       node = document.createElement(QStringLiteral(u"layer"));
     }
@@ -247,9 +247,9 @@ void SaveLayers(QDomDocument& document,
     node.setAttribute(QStringLiteral(u"id"), id.get());
     node.setAttribute(QStringLiteral(u"name"), layer->GetName());
 
-    if (layer->Opacity() != 1.0)
+    if (layer->GetOpacity() != 1.0)
     {
-      node.setAttribute(QStringLiteral(u"opacity"), layer->Opacity());
+      node.setAttribute(QStringLiteral(u"opacity"), layer->GetOpacity());
     }
 
     if (!layer->IsVisible())

@@ -61,9 +61,9 @@ class TileLayer final : public ILayer
 
   void SetVisible(bool visible) noexcept override;
 
-  [[nodiscard]] auto Type() const -> LayerType override;
+  [[nodiscard]] auto GetType() const -> LayerType override;
 
-  [[nodiscard]] auto Opacity() const noexcept -> double override;
+  [[nodiscard]] auto GetOpacity() const noexcept -> double override;
 
   [[nodiscard]] auto IsVisible() const noexcept -> bool override;
 

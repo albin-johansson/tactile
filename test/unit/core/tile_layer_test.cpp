@@ -13,7 +13,7 @@ TEST(TileLayer, Defaults)
   EXPECT_EQ(5_row, layer.RowCount());
   EXPECT_EQ(5_col, layer.ColumnCount());
   EXPECT_EQ(25, layer.TileCount());
-  EXPECT_EQ(1.0, layer.Opacity());
+  EXPECT_EQ(1.0, layer.GetOpacity());
   EXPECT_EQ(QStringLiteral(u"Tile layer"), layer.GetName());
   EXPECT_TRUE(layer.IsVisible());
 }
@@ -167,21 +167,21 @@ TEST(TileLayer, SetTile)
 TEST(TileLayer, SetOpacity)
 {
   core::TileLayer layer;
-  EXPECT_EQ(1.0, layer.Opacity());
+  EXPECT_EQ(1.0, layer.GetOpacity());
 
   {  // Valid opacity
     layer.SetOpacity(0.75);
-    EXPECT_EQ(0.75, layer.Opacity());
+    EXPECT_EQ(0.75, layer.GetOpacity());
   }
 
   {  // Underflow opacity
     layer.SetOpacity(-1);
-    EXPECT_EQ(0, layer.Opacity());
+    EXPECT_EQ(0, layer.GetOpacity());
   }
 
   {  // Overflow opacity
     layer.SetOpacity(1.1);
-    EXPECT_EQ(1, layer.Opacity());
+    EXPECT_EQ(1, layer.GetOpacity());
   }
 }
 

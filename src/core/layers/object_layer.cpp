@@ -85,7 +85,7 @@ void ObjectLayer::SetName(QString name)
   mDelegate.SetName(std::move(name));
 }
 
-auto ObjectLayer::Type() const -> LayerType
+auto ObjectLayer::GetType() const -> LayerType
 {
   return mDelegate.Type();
 }
@@ -95,7 +95,7 @@ auto ObjectLayer::IsVisible() const noexcept -> bool
   return mDelegate.Visible();
 }
 
-auto ObjectLayer::Opacity() const noexcept -> double
+auto ObjectLayer::GetOpacity() const noexcept -> double
 {
   return mDelegate.Opacity();
 }

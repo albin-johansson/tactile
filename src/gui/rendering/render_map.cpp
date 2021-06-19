@@ -132,7 +132,7 @@ void render_tile_layer(QPainter& painter,
                        const core::TileLayer& layer,
                        const render_info& info)
 {
-  painter.setOpacity(layer.Opacity());
+  painter.setOpacity(layer.GetOpacity());
 
   for (auto row = info.bounds.rowBegin; row < info.bounds.rowEnd; ++row)
   {
@@ -163,7 +163,7 @@ void render_object_layer(QPainter& painter,
                          const core::ObjectLayer& layer,
                          const render_info& info)
 {
-  painter.setOpacity(layer.Opacity());
+  painter.setOpacity(layer.GetOpacity());
 
   layer.Each([&](const object_id, const core::Object& object) {
     painter.setPen(Qt::red);

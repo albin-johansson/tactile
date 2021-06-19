@@ -40,7 +40,7 @@ void ChangeOpacity::redo()
 
   auto& map = mDocument->Raw();
 
-  mPreviousOpacity = map.GetLayer(mId)->Opacity();
+  mPreviousOpacity = map.GetLayer(mId)->GetOpacity();
   map.SetOpacity(mId, mOpacity);
 
   emit mDocument->S_ChangedLayerOpacity(mId, mOpacity);

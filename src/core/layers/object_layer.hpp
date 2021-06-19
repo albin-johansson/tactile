@@ -34,11 +34,11 @@ class ObjectLayer final : public ILayer
 
   void SetName(QString name) override;
 
-  [[nodiscard]] auto Type() const -> LayerType override;
+  [[nodiscard]] auto GetType() const -> LayerType override;
 
   [[nodiscard]] auto IsVisible() const noexcept -> bool override;
 
-  [[nodiscard]] auto Opacity() const noexcept -> double override;
+  [[nodiscard]] auto GetOpacity() const noexcept -> double override;
 
   [[nodiscard]] auto Clone() const -> Shared<ILayer> override;
 

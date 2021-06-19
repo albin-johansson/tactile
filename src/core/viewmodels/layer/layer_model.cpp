@@ -91,7 +91,7 @@ void LayerModel::SetVisible(const QModelIndex& index, bool visible)
 
 auto LayerModel::Opacity(const QModelIndex& index) const -> double
 {
-  return mDocument->GetLayer(IdFromIndex(index))->Opacity();
+  return mDocument->GetLayer(IdFromIndex(index))->GetOpacity();
 }
 
 auto LayerModel::IsVisible(const QModelIndex& index) const -> bool

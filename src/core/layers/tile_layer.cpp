@@ -183,7 +183,7 @@ void TileLayer::SetVisible(const bool visible) noexcept
   mDelegate.SetVisible(visible);
 }
 
-auto TileLayer::Type() const -> LayerType
+auto TileLayer::GetType() const -> LayerType
 {
   return mDelegate.Type();
 }
@@ -227,7 +227,7 @@ auto TileLayer::InBounds(const MapPosition& pos) const noexcept -> bool
   return (row < mTiles.size()) && (pos.ColumnIndex() < mTiles[row].size());
 }
 
-auto TileLayer::Opacity() const noexcept -> double
+auto TileLayer::GetOpacity() const noexcept -> double
 {
   return mDelegate.Opacity();
 }

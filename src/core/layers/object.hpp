@@ -173,7 +173,7 @@ class Object final : public IPropertyManager
   /**
    * \brief Indicates whether or not the object is represented by a point.
    *
-   * \note This is a convenience function that calls `Type()` behind-the-scenes.
+   * \note This is a convenience function that calls `GetType()` behind-the-scenes.
    *
    * \return `true` if the object is a point; `false` otherwise.
    *
@@ -184,7 +184,7 @@ class Object final : public IPropertyManager
   /**
    * \brief Indicates whether or not the object is represented by a rectangle.
    *
-   * \note This is a convenience function that calls `Type()` behind-the-scenes.
+   * \note This is a convenience function that calls `GetType()` behind-the-scenes.
    *
    * \return `true` if the object is a rectangle; `false` otherwise.
    *

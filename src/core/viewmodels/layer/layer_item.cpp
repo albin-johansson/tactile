@@ -29,8 +29,8 @@ LayerItem::LayerItem(const layer_id id, const core::ILayer& layer)
     : QStandardItem{layer.GetName()}
 {
   SetId(id);
-  SetType(layer.Type());
-  setIcon(GetIcon(layer.Type()));
+  SetType(layer.GetType());
+  setIcon(GetIcon(layer.GetType()));
 }
 
 void LayerItem::SetId(const layer_id id)
