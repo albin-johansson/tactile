@@ -7,7 +7,7 @@ namespace tactile {
 LayerItemContextMenu::LayerItemContextMenu(QWidget* parent)
     : QMenu{parent}
     , mVisibility{addAction(IconVisible(), tr("Toggle visibility"))}
-    , mShowProperties{addAction(tr("Show properties..."))}
+    , mShowProperties{addAction(IconProperties(), tr("Show properties..."))}
     , mSep0{addSeparator()}
     , mMoveUp{addAction(IconMoveUp(), tr("Move layer up"))}
     , mMoveDown{addAction(IconMoveDown(), tr("Move layer down"))}
