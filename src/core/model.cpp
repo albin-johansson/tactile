@@ -324,7 +324,7 @@ void Model::OnShowMapProperties(const map_id id)
   auto* document = CurrentDocument();
   Q_ASSERT(document);
 
-  document->ResetPropertyContext();
+  document->SetPropertyContext(nullptr);
   emit S_UpdatedPropertyContext(document, document->GetName());
 }
 

@@ -103,14 +103,9 @@ void MapDocument::SetPath(QFileInfo path)
   mDelegate->SetPath(path);
 }
 
-void MapDocument::ResetPropertyContext()
+void MapDocument::SetPropertyContext(IPropertyManager* context)
 {
-  mDelegate->Execute<cmd::SetPropertyContext>(this, nullptr);
-}
-
-void MapDocument::SetPropertyContext(NotNull<IPropertyManager*> manager)
-{
-  mDelegate->Execute<cmd::SetPropertyContext>(this, manager);
+  mDelegate->Execute<cmd::SetPropertyContext>(this, context);
 }
 
 auto MapDocument::GetPropertyContext() -> IPropertyManager*

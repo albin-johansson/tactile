@@ -20,18 +20,9 @@ void SetPropertyContext::undo()
   QUndoCommand::undo();
 
   auto& delegate = mDocument->GetDelegate();
-  if (mPrevious)
-  {
-    qDebug("SetPropertyContext::undo: Setting previous context as active");
-    delegate.SetPropertyContext(mPrevious);
-    emit mDocument->S_UpdatedPropertyContext(mPrevious, delegate.GetName());
-  }
-  else
-  {
-    qDebug("SetPropertyContext::undo: Resetting property context");
-    delegate.ResetPropertyContext();
-    emit mDocument->S_UpdatedPropertyContext(nullptr, delegate.GetName());
-  }
+  delegate.SetPropertyContext(mPrevious);
+
+  emit mDocument->S_UpdatedPropertyContext(mPrevious, delegate.GetName());
 }
 
 void SetPropertyContext::redo()
@@ -41,16 +32,7 @@ void SetPropertyContext::redo()
   mPrevious = mDocument->GetPropertyContext();
 
   auto& delegate = mDocument->GetDelegate();
-  if (mContext)
-  {
-    qDebug("SetPropertyContext::redo: Setting non-null property context");
-    delegate.SetPropertyContext(mContext);
-  }
-  else
-  {
-    qDebug("SetPropertyContext::redo: Resetting property context");
-    delegate.ResetPropertyContext();
-  }
+  delegate.SetPropertyContext(mContext);
 
   emit mDocument->S_UpdatedPropertyContext(mContext, delegate.GetName());
 }

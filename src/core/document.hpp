@@ -4,7 +4,6 @@
 #include <QObject>    // QObject
 #include <QString>    // QString
 
-#include "not_null.hpp"
 #include "property_manager.hpp"
 #include "smart_pointers.hpp"
 
@@ -79,17 +78,15 @@ class ADocument : public QObject, public IPropertyManager
   virtual void SetPath(QFileInfo path) = 0;
 
   /**
-   * \brief Resets the property context, i.e. makes the document itself the
-   * active property context.
-   */
-  virtual void ResetPropertyContext() = 0;
-
-  /**
    * \brief Sets the currently active property context.
    *
-   * \param manager the new property context.
+   * \details A null pointer can be supplied to this function to reset the
+   * property context, i.e. make the document itself the active property
+   * context.
+   *
+   * \param context the new property context.
    */
-  virtual void SetPropertyContext(NotNull<IPropertyManager*> manager) = 0;
+  virtual void SetPropertyContext(IPropertyManager* context) = 0;
 
   /**
    * \brief Returns the currently active property context.

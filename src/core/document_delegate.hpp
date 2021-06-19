@@ -32,9 +32,7 @@ class DocumentDelegate final : public ADocument
 
   void SetPath(QFileInfo path) override;
 
-  void ResetPropertyContext() override;
-
-  void SetPropertyContext(IPropertyManager* manager) override;
+  void SetPropertyContext(IPropertyManager* context) override;
 
   [[nodiscard]] auto GetPropertyContext() -> IPropertyManager* override;
 

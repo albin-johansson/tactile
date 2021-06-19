@@ -44,15 +44,9 @@ void DocumentDelegate::SetPath(QFileInfo path)
   mPath = std::move(path);
 }
 
-void DocumentDelegate::ResetPropertyContext()
+void DocumentDelegate::SetPropertyContext(IPropertyManager* context)
 {
-  mPropertyContext = mPropertyManager.get();
-}
-
-void DocumentDelegate::SetPropertyContext(NotNull<IPropertyManager*> manager)
-{
-  Q_ASSERT(manager);
-  mPropertyContext = manager;
+  mPropertyContext = context ? context : mPropertyManager.get();
 }
 
 auto DocumentDelegate::GetPropertyContext() -> IPropertyManager*

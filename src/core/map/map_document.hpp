@@ -78,9 +78,7 @@ class MapDocument final : public ADocument
 
   void SetPath(QFileInfo path) override;
 
-  void ResetPropertyContext() override;
-
-  void SetPropertyContext(NotNull<IPropertyManager*> manager) override;
+  void SetPropertyContext(IPropertyManager* context) override;
 
   [[nodiscard]] auto GetPropertyContext() -> IPropertyManager* override;
 
