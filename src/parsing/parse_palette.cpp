@@ -50,6 +50,8 @@ void ParseGroup(const QJsonObject& json,
 
   setIfExists(QPalette::ColorRole::Link, u"Link");
   setIfExists(QPalette::ColorRole::LinkVisited, u"LinkVisited");
+
+  setIfExists(QPalette::PlaceholderText, u"PlaceholderText");
 }
 
 [[nodiscard]] auto GetJsonObject(const QString& file) -> Maybe<QJsonObject>
