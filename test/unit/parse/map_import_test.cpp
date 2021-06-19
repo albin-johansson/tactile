@@ -89,15 +89,15 @@ void ValidateLayers(const core::MapDocument& document)
     ASSERT_TRUE(objectLayer->HasObject(1_obj));
     const auto& object = objectLayer->GetObject(1_obj);
 
-    EXPECT_EQ(128, object.X());
-    EXPECT_EQ(96, object.Y());
-    EXPECT_EQ(0, object.Width());
-    EXPECT_EQ(0, object.Height());
-    EXPECT_EQ(core::ObjectType::Point, object.Type());
+    EXPECT_EQ(128, object.GetX());
+    EXPECT_EQ(96, object.GetY());
+    EXPECT_EQ(0, object.GetWidth());
+    EXPECT_EQ(0, object.GetHeight());
+    EXPECT_EQ(core::ObjectType::Point, object.GetType());
     EXPECT_TRUE(object.IsVisible());
     EXPECT_TRUE(object.IsPoint());
-    EXPECT_FALSE(object.CustomType());
-    EXPECT_EQ(QStringLiteral(u"Point"), object.Name());
+    EXPECT_FALSE(object.GetCustomType());
+    EXPECT_EQ(QStringLiteral(u"Point"), object.GetName());
 
     ASSERT_EQ(1, object.PropertyCount());
     ASSERT_TRUE(object.HasProperty(QStringLiteral(u"foo")));

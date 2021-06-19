@@ -9,6 +9,11 @@ namespace tactile::core {
 PropertyDelegate::PropertyDelegate(const QString& name) : mName{name}
 {}
 
+void PropertyDelegate::SetName(const QString& name)
+{
+  mName = name;
+}
+
 void PropertyDelegate::AddProperty(const QString& name, const PropertyType type)
 {
   Q_ASSERT(!mProperties.contains(name));

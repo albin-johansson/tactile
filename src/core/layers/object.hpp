@@ -105,7 +105,7 @@ class Object final : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto X() const noexcept -> double;
+  [[nodiscard]] auto GetX() const noexcept -> double;
 
   /**
    * \brief Returns the current y-coordinate of the object.
@@ -114,7 +114,7 @@ class Object final : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto Y() const noexcept -> double;
+  [[nodiscard]] auto GetY() const noexcept -> double;
 
   /**
    * \brief Returns the current width of the object.
@@ -123,7 +123,7 @@ class Object final : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto Width() const noexcept -> double;
+  [[nodiscard]] auto GetWidth() const noexcept -> double;
 
   /**
    * \brief Returns the current height of the object.
@@ -132,7 +132,7 @@ class Object final : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto Height() const noexcept -> double;
+  [[nodiscard]] auto GetHeight() const noexcept -> double;
 
   /**
    * \brief Indicates whether or not the object is visible.
@@ -144,22 +144,13 @@ class Object final : public IPropertyManager
   [[nodiscard]] auto IsVisible() const noexcept -> bool;
 
   /**
-   * \brief Returns the current name of the object.
-   *
-   * \return the name of the object.
-   *
-   * \since 0.2.0
-   */
-  [[nodiscard]] auto Name() const -> QString;
-
-  /**
    * \brief Returns the type associated with the object.
    *
    * \return the type of the object.
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto Type() const noexcept -> ObjectType;
+  [[nodiscard]] auto GetType() const noexcept -> ObjectType;
 
   /**
    * \brief Returns the custom user-defined type of the object, if present.
@@ -168,7 +159,7 @@ class Object final : public IPropertyManager
    *
    * \since 0.2.0
    */
-  [[nodiscard]] auto CustomType() const -> Maybe<QString>;
+  [[nodiscard]] auto GetCustomType() const -> Maybe<QString>;
 
   /**
    * \brief Indicates whether or not the object is represented by a point.
@@ -230,7 +221,6 @@ class Object final : public IPropertyManager
   double mHeight{};
   ObjectType mType;
   Maybe<QString> mCustomType;
-  QString mName;
   PropertyDelegate mProperties;
   bool mVisible{true};
 };

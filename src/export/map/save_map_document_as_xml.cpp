@@ -207,14 +207,14 @@ void SaveObjectLayer(QDomDocument& document,
     auto node = document.createElement(QStringLiteral(u"object"));
 
     node.setAttribute(QStringLiteral(u"id"), id.get());
-    node.setAttribute(QStringLiteral(u"name"), object.Name());
-    node.setAttribute(QStringLiteral(u"x"), object.X());
-    node.setAttribute(QStringLiteral(u"y"), object.Y());
-    node.setAttribute(QStringLiteral(u"width"), object.Width());
-    node.setAttribute(QStringLiteral(u"height"), object.Height());
+    node.setAttribute(QStringLiteral(u"name"), object.GetName());
+    node.setAttribute(QStringLiteral(u"x"), object.GetX());
+    node.setAttribute(QStringLiteral(u"y"), object.GetY());
+    node.setAttribute(QStringLiteral(u"width"), object.GetWidth());
+    node.setAttribute(QStringLiteral(u"height"), object.GetHeight());
     node.setAttribute(QStringLiteral(u"visible"), object.IsVisible());
     node.setAttribute(QStringLiteral(u"type"),
-                      object.CustomType().value_or(""));
+                      object.GetCustomType().value_or(""));
 
     if (object.IsPoint())
     {

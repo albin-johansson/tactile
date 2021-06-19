@@ -34,7 +34,7 @@ void Object::SetVisible(const bool visible) noexcept
 
 void Object::SetName(const QString& name)
 {
-  mName = name;
+  mProperties.SetName(name);
 }
 
 void Object::SetCustomType(Maybe<QString> type)
@@ -42,22 +42,22 @@ void Object::SetCustomType(Maybe<QString> type)
   mCustomType = std::move(type);
 }
 
-auto Object::X() const noexcept -> double
+auto Object::GetX() const noexcept -> double
 {
   return mX;
 }
 
-auto Object::Y() const noexcept -> double
+auto Object::GetY() const noexcept -> double
 {
   return mY;
 }
 
-auto Object::Width() const noexcept -> double
+auto Object::GetWidth() const noexcept -> double
 {
   return mWidth;
 }
 
-auto Object::Height() const noexcept -> double
+auto Object::GetHeight() const noexcept -> double
 {
   return mHeight;
 }
@@ -67,29 +67,24 @@ auto Object::IsVisible() const noexcept -> bool
   return mVisible;
 }
 
-auto Object::Name() const -> QString
-{
-  return mName;
-}
-
-auto Object::Type() const noexcept -> ObjectType
+auto Object::GetType() const noexcept -> ObjectType
 {
   return mType;
 }
 
-auto Object::CustomType() const -> Maybe<QString>
+auto Object::GetCustomType() const -> Maybe<QString>
 {
   return mCustomType;
 }
 
 auto Object::IsPoint() const noexcept -> bool
 {
-  return Type() == ObjectType::Point;
+  return GetType() == ObjectType::Point;
 }
 
 auto Object::IsRectangle() const noexcept -> bool
 {
-  return Type() == ObjectType::Rectangle;
+  return GetType() == ObjectType::Rectangle;
 }
 
 void Object::AddProperty(const QString& name, const PropertyType type)

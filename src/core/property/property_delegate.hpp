@@ -17,6 +17,8 @@ class PropertyDelegate final : public IPropertyManager
 
   ~PropertyDelegate() noexcept override = default;
 
+  void SetName(const QString& name);
+
   void AddProperty(const QString& name, PropertyType type) override;
 
   void AddProperty(const QString& name, const Property& property) override;

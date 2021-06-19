@@ -274,13 +274,13 @@ void SaveObjectLayer(QJsonObject& element,
     QJsonObject jsonObject;
 
     jsonObject.insert(u"id", id.get());
-    jsonObject.insert(u"name", object.Name());
-    jsonObject.insert(u"x", object.X());
-    jsonObject.insert(u"y", object.Y());
-    jsonObject.insert(u"width", object.Width());
-    jsonObject.insert(u"height", object.Height());
+    jsonObject.insert(u"name", object.GetName());
+    jsonObject.insert(u"x", object.GetX());
+    jsonObject.insert(u"y", object.GetY());
+    jsonObject.insert(u"width", object.GetWidth());
+    jsonObject.insert(u"height", object.GetHeight());
     jsonObject.insert(u"visible", object.IsVisible());
-    jsonObject.insert(u"type", object.CustomType().value_or(""));
+    jsonObject.insert(u"type", object.GetCustomType().value_or(""));
     jsonObject.insert(u"rotation", 0);
 
     if (object.IsPoint())

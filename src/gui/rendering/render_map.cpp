@@ -170,12 +170,14 @@ void render_object_layer(QPainter& painter,
 
     if (object.IsRectangle())
     {
-      painter.drawRect(
-          QRectF{object.X(), object.Y(), object.Width(), object.Height()});
+      painter.drawRect(QRectF{object.GetX(),
+                              object.GetY(),
+                              object.GetWidth(),
+                              object.GetHeight()});
     }
     else if (object.IsPoint())
     {
-      painter.drawEllipse(QPointF{object.X(), object.Y()}, 2, 2);
+      painter.drawEllipse(QPointF{object.GetX(), object.GetY()}, 2, 2);
     }
   });
 
