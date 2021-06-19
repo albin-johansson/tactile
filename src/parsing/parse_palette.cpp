@@ -24,32 +24,32 @@ void ParseGroup(const QJsonObject& json,
     }
   };
 
-  setIfExists(QPalette::ColorRole::Window, u"Window");
-  setIfExists(QPalette::ColorRole::WindowText, u"WindowText");
+  setIfExists(QPalette::Window, u"Window");
+  setIfExists(QPalette::WindowText, u"WindowText");
 
-  setIfExists(QPalette::ColorRole::Base, u"Base");
-  setIfExists(QPalette::ColorRole::AlternateBase, u"AlternateBase");
+  setIfExists(QPalette::Base, u"Base");
+  setIfExists(QPalette::AlternateBase, u"AlternateBase");
 
-  setIfExists(QPalette::ColorRole::ToolTipBase, u"ToolTipBase");
-  setIfExists(QPalette::ColorRole::ToolTipText, u"ToolTipText");
+  setIfExists(QPalette::ToolTipBase, u"ToolTipBase");
+  setIfExists(QPalette::ToolTipText, u"ToolTipText");
 
-  setIfExists(QPalette::ColorRole::Text, u"Text");
-  setIfExists(QPalette::ColorRole::BrightText, u"BrightText");
+  setIfExists(QPalette::Text, u"Text");
+  setIfExists(QPalette::BrightText, u"BrightText");
 
-  setIfExists(QPalette::ColorRole::Button, u"Button");
-  setIfExists(QPalette::ColorRole::ButtonText, u"ButtonText");
+  setIfExists(QPalette::Button, u"Button");
+  setIfExists(QPalette::ButtonText, u"ButtonText");
 
-  setIfExists(QPalette::ColorRole::Light, u"Light");
-  setIfExists(QPalette::ColorRole::Midlight, u"Midlight");
-  setIfExists(QPalette::ColorRole::Dark, u"Dark");
-  setIfExists(QPalette::ColorRole::Mid, u"Mid");
-  setIfExists(QPalette::ColorRole::Shadow, u"Shadow");
+  setIfExists(QPalette::Light, u"Light");
+  setIfExists(QPalette::Midlight, u"Midlight");
+  setIfExists(QPalette::Dark, u"Dark");
+  setIfExists(QPalette::Mid, u"Mid");
+  setIfExists(QPalette::Shadow, u"Shadow");
 
-  setIfExists(QPalette::ColorRole::Highlight, u"Highlight");
-  setIfExists(QPalette::ColorRole::HighlightedText, u"HighlightedText");
+  setIfExists(QPalette::Highlight, u"Highlight");
+  setIfExists(QPalette::HighlightedText, u"HighlightedText");
 
-  setIfExists(QPalette::ColorRole::Link, u"Link");
-  setIfExists(QPalette::ColorRole::LinkVisited, u"LinkVisited");
+  setIfExists(QPalette::Link, u"Link");
+  setIfExists(QPalette::LinkVisited, u"LinkVisited");
 
   setIfExists(QPalette::PlaceholderText, u"PlaceholderText");
 }
