@@ -15,6 +15,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif ()
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
+add_definitions(-DQT_NO_FOREACH)
 add_definitions(-DCENTURION_NO_SDL_TTF)
 add_definitions(-DCENTURION_NO_SDL_MIXER)
 add_definitions(-DCENTURION_NO_SDL_IMAGE)
