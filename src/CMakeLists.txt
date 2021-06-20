@@ -15,6 +15,9 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif ()
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x060000)
+add_definitions(-DCENTURION_NO_SDL_TTF)
+add_definitions(-DCENTURION_NO_SDL_MIXER)
+add_definitions(-DCENTURION_NO_SDL_IMAGE)
 
 target_include_directories(libTactile
     PUBLIC ${TACTILE_ROOT_DIR}/src
@@ -73,9 +76,6 @@ target_include_directories(libTactile
     SYSTEM PUBLIC ${GLEW_INCLUDE_DIRS}
     SYSTEM PUBLIC ${OPENGL_INCLUDE_DIRS}
     SYSTEM PUBLIC ${SDL2_INCLUDE_DIR}
-    SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIR}
-    SYSTEM PUBLIC ${SDL2_MIXER_INCLUDE_DIR}
-    SYSTEM PUBLIC ${SDL2_TTF_INCLUDE_DIR}
     SYSTEM PUBLIC ${LIBRARY_DIR}/imgui
     )
 
@@ -89,9 +89,6 @@ target_link_libraries(libTactile
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${GLEW_LIBRARIES}
     PUBLIC ${SDL2_LIBRARY}
-    PUBLIC ${SDL2_IMAGE_LIBRARIES}
-    PUBLIC ${SDL2_TTF_LIBRARIES}
-    PUBLIC ${SDL2_MIXER_LIBRARIES}
     PUBLIC libCenturion
     )
 
