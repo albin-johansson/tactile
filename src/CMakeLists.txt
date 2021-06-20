@@ -4,6 +4,8 @@ project(tactile-src CXX)
 
 set(TACTILE_SOURCE_FILES
     main.cpp
+    imgui_wrapper.cpp
+    imgui_wrapper.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
