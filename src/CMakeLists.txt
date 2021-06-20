@@ -393,6 +393,8 @@ set(TACTILE_SOURCE_FILES
     util/verify_not_null.hpp
     )
 
+list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
+
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
 if (CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -453,7 +455,16 @@ target_include_directories(libTactile
     PUBLIC parsing
     PUBLIC parsing/map
     PUBLIC preferences
-    PUBLIC util)
+    PUBLIC util
+
+    SYSTEM PUBLIC ${GLEW_INCLUDE_DIRS}
+    SYSTEM PUBLIC ${OPENGL_INCLUDE_DIRS}
+    SYSTEM PUBLIC ${SDL2_INCLUDE_DIR}
+    SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIR}
+    SYSTEM PUBLIC ${SDL2_MIXER_INCLUDE_DIR}
+    SYSTEM PUBLIC ${SDL2_TTF_INCLUDE_DIR}
+    SYSTEM PUBLIC ${LIBRARY_DIR}/imgui
+    )
 
 target_link_libraries(libTactile
     PUBLIC Qt6::Core
@@ -461,7 +472,15 @@ target_link_libraries(libTactile
     PUBLIC Qt6::OpenGLWidgets
     PUBLIC Qt6::Gui
     PUBLIC Qt6::Xml
-    PUBLIC libNenya)
+    PUBLIC libNenya
+    PUBLIC ${OPENGL_LIBRARIES}
+    PUBLIC ${GLEW_LIBRARIES}
+    PUBLIC ${SDL2_LIBRARY}
+    PUBLIC ${SDL2_IMAGE_LIBRARIES}
+    PUBLIC ${SDL2_TTF_LIBRARIES}
+    PUBLIC ${SDL2_MIXER_LIBRARIES}
+    PUBLIC libCenturion
+    )
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(libTactile PRIVATE
