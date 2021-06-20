@@ -4,6 +4,8 @@ project(tactile-src CXX)
 
 set(TACTILE_SOURCE_FILES
     main.cpp
+    init_open_gl_attributes.cpp
+    init_open_gl_attributes.hpp
     imgui_wrapper.cpp
     imgui_wrapper.hpp
     )
