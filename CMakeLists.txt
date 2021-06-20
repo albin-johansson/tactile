@@ -3,14 +3,9 @@ cmake_minimum_required(VERSION 3.12)
 project(tactile CXX)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
-set(CMAKE_PREFIX_PATH "$ENV{Qt6_PATH}")
 set(CMAKE_CXX_STANDARD 20)
 
 include(Utilities)
-
-if (WIN32)
-  find_env_var(Qt6_PATH)
-endif ()
 
 set(LIBRARY_DIR ${PROJECT_SOURCE_DIR}/lib)
 set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
@@ -18,7 +13,6 @@ set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEW_INCLUDE_DIRS}")
 list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEW_LIBRARIES}")
 
-find_package(Qt6 COMPONENTS Core Widgets OpenGLWidgets Gui Xml REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(SDL2 REQUIRED)
@@ -43,10 +37,6 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imstb_truetype.h)
 
 add_header_only_lib(libCenturion ${LIBRARY_DIR}/centurion ${LIBRARY_DIR}/centurion/centurion.hpp)
-
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
 
 add_subdirectory(src)
 add_subdirectory(test)
