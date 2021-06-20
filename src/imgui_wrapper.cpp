@@ -11,7 +11,7 @@ inline constexpr auto glsl_version = "#version 130";
 
 }  // namespace
 
-ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl::context& context)
+ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
 {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
