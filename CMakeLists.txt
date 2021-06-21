@@ -36,8 +36,14 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imstb_textedit.h
     ${LIBRARY_DIR}/imgui/imstb_truetype.h)
 
+set(RUNE_SOURCES
+    ${LIBRARY_DIR}/rune/vector_map.hpp
+    ${LIBRARY_DIR}/rune/rune_error.hpp)
+add_header_only_lib(libRune ${LIBRARY_DIR}/rune ${RUNE_SOURCES})
+
 add_header_only_lib(libCenturion ${LIBRARY_DIR}/centurion ${LIBRARY_DIR}/centurion/centurion.hpp)
-add_header_only_lib(libVectorMap ${LIBRARY_DIR}/vector-map ${LIBRARY_DIR}/vector-map/vector_map.hpp)
+add_header_only_lib(libEntt ${LIBRARY_DIR}/entt ${LIBRARY_DIR}/entt/entt.hpp)
+add_header_only_lib(libJson ${LIBRARY_DIR}/json ${LIBRARY_DIR}/json/json.hpp)
 
 add_subdirectory(src)
 add_subdirectory(test)
