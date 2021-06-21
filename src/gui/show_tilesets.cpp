@@ -12,6 +12,13 @@ void ShowTilesets()
 
   if (ImGui::Begin("Tilesets"))
   {
+    if (ImGui::Button("New"))
+    {}
+
+    ImGui::SameLine();
+    if (ImGui::Button("Remove"))
+    {}
+
     const auto info = GetCanvasInfo();
 
     FillBackground(info);
