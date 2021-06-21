@@ -23,6 +23,10 @@ ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
 
   ImGui::StyleColorsDark();
 
+  auto& style = ImGui::GetStyle();
+  style.FrameRounding = 4;
+  style.WindowBorderSize = 0;
+
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
   ImGui_ImplOpenGL3_Init(glsl_version);
 }
