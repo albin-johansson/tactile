@@ -3,11 +3,24 @@ cmake_minimum_required(VERSION 3.12)
 project(tactile-src CXX)
 
 set(TACTILE_SOURCE_FILES
-    main.cpp
-    init_open_gl_attributes.cpp
-    init_open_gl_attributes.hpp
+    application.cpp
+    application.hpp
     imgui_wrapper.cpp
     imgui_wrapper.hpp
+    init_open_gl_attributes.cpp
+    init_open_gl_attributes.hpp
+    main.cpp
+
+    gui/show_grid.cpp
+    gui/show_grid.hpp
+    gui/show_gui.cpp
+    gui/show_gui.hpp
+    gui/show_map_viewport.cpp
+    gui/show_map_viewport.hpp
+    gui/show_properties.cpp
+    gui/show_properties.hpp
+    gui/show_tilesets.cpp
+    gui/show_tilesets.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
