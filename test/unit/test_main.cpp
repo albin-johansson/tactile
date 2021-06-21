@@ -1,10 +1,11 @@
 #include <gtest/gtest.h>
 
-#include <QApplication>  // QApplication
+#include <centurion.hpp>  // library
 
 auto main(int argc, char** argv) -> int
 {
-  QApplication app{argc, argv};
+  cen::library library;
+
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
