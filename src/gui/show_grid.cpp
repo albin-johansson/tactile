@@ -3,7 +3,7 @@
 namespace tactile {
 namespace {
 
-inline constexpr auto border_color = IM_COL32(255, 255, 255, 255);
+inline constexpr auto border_color = IM_COL32(255, 255, 255, 100);
 inline constexpr auto background_color = IM_COL32(50, 50, 50, 255);
 inline constexpr auto line_color = IM_COL32(200, 200, 200, 40);
 
