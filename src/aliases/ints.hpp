@@ -1,9 +1,11 @@
 #pragma once
 
+#include <cstddef>  // size_t
 #include <cstdint>  // uint{}_t, int{}_t
 
 namespace tactile {
 
+using usize = std::size_t;
 using uint = unsigned int;
 using ulonglong = unsigned long long;
 
