@@ -1,5 +1,7 @@
 #include "show_layers.hpp"
 
+#include <limits>  // numeric_limits
+
 #include "imgui.h"
 
 namespace tactile {
@@ -14,20 +16,26 @@ void ShowLayers()
 {
   if (ImGui::Begin("Layers"))
   {
-    ImGui::SetNextItemOpen(layer_tree_open);
-    layer_tree_open = ImGui::TreeNode("##LayerTreeNode");
+    ImGui::Button("New");
 
-    if (layer_tree_open)
+    ImGui::SameLine();
+    ImGui::Button("Remove");
+
+    const ImVec2 size{
+        std::numeric_limits<float>::min(),
+        ImGui::GetWindowHeight() - (4 * ImGui::GetTextLineHeightWithSpacing())};
+
+    if (ImGui::BeginListBox("##LayerListBox", size))
     {
-      for (int index = 0; index < 5; ++index)
+      if (ImGui::Selectable("Layer 1"))
       {
-        if (ImGui::Selectable("Layer", selected_layer == index))
-        {
-          selected_layer = index;
-        }
+        //        selected_layer = index;
       }
 
-      ImGui::TreePop();
+      if (ImGui::Selectable("Layer 2"))
+      {}
+
+      ImGui::EndListBox();
     }
   }
 
