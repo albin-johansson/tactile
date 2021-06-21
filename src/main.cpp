@@ -8,7 +8,7 @@
 #include <utility>        // move
 
 #include "application.hpp"
-#include "imgui_wrapper.hpp"
+#include "gui/imgui_wrapper.hpp"
 #include "init_open_gl_attributes.hpp"
 
 namespace {
