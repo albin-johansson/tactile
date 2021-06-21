@@ -22,7 +22,7 @@ set(TACTILE_TEST_FILES
     unit/gtest_macros.hpp
     unit/test_main.cpp
 
-    unit/core/property/property_test.cpp
+    unit/core/properties/property_test.cpp
     )
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
