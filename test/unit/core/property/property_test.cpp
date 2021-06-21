@@ -1,223 +1,224 @@
-#include "property.hpp"
+#include "core/properties/property.hpp"
 
 #include <gtest/gtest.h>
 
 using namespace tactile;
+using namespace std::string_literals;
 
 TEST(Property, Defaults)
 {
-  const core::Property property;
-  EXPECT_FALSE(property.HasValue());
-  EXPECT_FALSE(property.Type());
+  const Property property;
+  ASSERT_FALSE(property.HasValue());
+  ASSERT_FALSE(property.Type());
 
-  EXPECT_FALSE(property.IsString());
-  EXPECT_FALSE(property.IsInteger());
-  EXPECT_FALSE(property.IsFloating());
-  EXPECT_FALSE(property.IsBoolean());
-  EXPECT_FALSE(property.IsColor());
-  EXPECT_FALSE(property.IsFile());
-  EXPECT_FALSE(property.IsObject());
+  ASSERT_FALSE(property.IsString());
+  ASSERT_FALSE(property.IsInteger());
+  ASSERT_FALSE(property.IsFloating());
+  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsColor());
+  ASSERT_FALSE(property.IsFile());
+  ASSERT_FALSE(property.IsObject());
 }
 
 TEST(Property, IntProperty)
 {
-  const core::Property property{123};
+  const Property property{123};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsInteger());
-  EXPECT_TRUE(property.TryAsInteger());
-  EXPECT_EQ(123, property.AsInteger());
+  ASSERT_TRUE(property.TryAsInteger());
+  ASSERT_EQ(123, property.AsInteger());
 
-  EXPECT_FALSE(property.IsString());
-  EXPECT_FALSE(property.IsFloating());
-  EXPECT_FALSE(property.IsBoolean());
-  EXPECT_FALSE(property.IsColor());
-  EXPECT_FALSE(property.IsFile());
-  EXPECT_FALSE(property.IsObject());
+  ASSERT_FALSE(property.IsString());
+  ASSERT_FALSE(property.IsFloating());
+  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsColor());
+  ASSERT_FALSE(property.IsFile());
+  ASSERT_FALSE(property.IsObject());
 }
 
 TEST(Property, FloatProperty)
 {
-  const core::Property property{12.3};
+  const Property property{12.3};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsFloating());
-  EXPECT_TRUE(property.TryAsFloating());
-  EXPECT_EQ(12.3, property.AsFloating());
+  ASSERT_TRUE(property.TryAsFloating());
+  ASSERT_EQ(12.3, property.AsFloating());
 
-  EXPECT_FALSE(property.IsString());
-  EXPECT_FALSE(property.IsInteger());
-  EXPECT_FALSE(property.IsBoolean());
-  EXPECT_FALSE(property.IsColor());
-  EXPECT_FALSE(property.IsFile());
-  EXPECT_FALSE(property.IsObject());
+  ASSERT_FALSE(property.IsString());
+  ASSERT_FALSE(property.IsInteger());
+  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsColor());
+  ASSERT_FALSE(property.IsFile());
+  ASSERT_FALSE(property.IsObject());
 }
 
 TEST(Property, StringProperty)
 {
-  const core::Property property{QStringLiteral(u"foo")};
+  const Property property{"foo"s};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsString());
-  EXPECT_TRUE(property.TryAsString());
-  EXPECT_EQ(QStringLiteral(u"foo"), property.AsString());
+  ASSERT_TRUE(property.TryAsString());
+  ASSERT_EQ("foo", property.AsString());
 
-  EXPECT_FALSE(property.IsInteger());
-  EXPECT_FALSE(property.IsFloating());
-  EXPECT_FALSE(property.IsBoolean());
-  EXPECT_FALSE(property.IsColor());
-  EXPECT_FALSE(property.IsFile());
-  EXPECT_FALSE(property.IsObject());
+  ASSERT_FALSE(property.IsInteger());
+  ASSERT_FALSE(property.IsFloating());
+  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsColor());
+  ASSERT_FALSE(property.IsFile());
+  ASSERT_FALSE(property.IsObject());
 }
 
 TEST(Property, BoolProperty)
 {
-  const core::Property property{false};
+  const Property property{false};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsBoolean());
-  EXPECT_TRUE(property.TryAsBoolean());
-  EXPECT_FALSE(property.AsBoolean());
+  ASSERT_TRUE(property.TryAsBoolean());
+  ASSERT_FALSE(property.AsBoolean());
 
-  EXPECT_FALSE(property.IsString());
-  EXPECT_FALSE(property.IsInteger());
-  EXPECT_FALSE(property.IsFloating());
-  EXPECT_FALSE(property.IsColor());
-  EXPECT_FALSE(property.IsFile());
-  EXPECT_FALSE(property.IsObject());
+  ASSERT_FALSE(property.IsString());
+  ASSERT_FALSE(property.IsInteger());
+  ASSERT_FALSE(property.IsFloating());
+  ASSERT_FALSE(property.IsColor());
+  ASSERT_FALSE(property.IsFile());
+  ASSERT_FALSE(property.IsObject());
 }
 
 TEST(Property, FileProperty)
 {
-  const QFileInfo file{QStringLiteral(u"resources/foo.txt")};
-  const core::Property property{file};
+  const std::filesystem::path file{"resources/foo.txt"};
+  const Property property{file};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsFile());
-  EXPECT_TRUE(property.TryAsFile());
+  ASSERT_TRUE(property.TryAsFile());
 
-  EXPECT_FALSE(property.IsString());
-  EXPECT_FALSE(property.IsInteger());
-  EXPECT_FALSE(property.IsFloating());
-  EXPECT_FALSE(property.IsBoolean());
-  EXPECT_FALSE(property.IsColor());
-  EXPECT_FALSE(property.IsObject());
+  ASSERT_FALSE(property.IsString());
+  ASSERT_FALSE(property.IsInteger());
+  ASSERT_FALSE(property.IsFloating());
+  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsColor());
+  ASSERT_FALSE(property.IsObject());
 }
 
 TEST(Property, ObjectProperty)
 {
-  const core::Property property{core::object_ref{7}};
+  const Property property{object_ref{7}};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsObject());
-  EXPECT_TRUE(property.TryAsObject());
+  ASSERT_TRUE(property.TryAsObject());
 
-  EXPECT_FALSE(property.IsString());
-  EXPECT_FALSE(property.IsInteger());
-  EXPECT_FALSE(property.IsFloating());
-  EXPECT_FALSE(property.IsBoolean());
-  EXPECT_FALSE(property.IsColor());
-  EXPECT_FALSE(property.IsFile());
+  ASSERT_FALSE(property.IsString());
+  ASSERT_FALSE(property.IsInteger());
+  ASSERT_FALSE(property.IsFloating());
+  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsColor());
+  ASSERT_FALSE(property.IsFile());
 }
 
 TEST(Property, ColorProperty)
 {
-  const QColor color{Qt::red};
-  const core::Property property{color};
+  const auto color = cen::colors::red;
+  const Property property{color};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsColor());
-  EXPECT_TRUE(property.TryAsColor());
+  ASSERT_TRUE(property.TryAsColor());
 
-  EXPECT_FALSE(property.IsString());
-  EXPECT_FALSE(property.IsInteger());
-  EXPECT_FALSE(property.IsFloating());
-  EXPECT_FALSE(property.IsBoolean());
-  EXPECT_FALSE(property.IsFile());
-  EXPECT_FALSE(property.IsObject());
+  ASSERT_FALSE(property.IsString());
+  ASSERT_FALSE(property.IsInteger());
+  ASSERT_FALSE(property.IsFloating());
+  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsFile());
+  ASSERT_FALSE(property.IsObject());
 }
 
 TEST(Property, Reset)
 {
-  core::Property property;
+  Property property;
   ASSERT_FALSE(property.HasValue());
 
   property.SetValue(123);
-  EXPECT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.HasValue());
 
   property.Reset();
-  EXPECT_FALSE(property.HasValue());
+  ASSERT_FALSE(property.HasValue());
 
-  EXPECT_NO_THROW(property.Reset());
-  EXPECT_NO_THROW(property.Reset());
+  ASSERT_NO_THROW(property.Reset());
+  ASSERT_NO_THROW(property.Reset());
 }
 
 TEST(Property, SetValue)
 {
-  core::Property property;
+  Property property;
 
   property.SetValue(10);
   ASSERT_TRUE(property.IsInteger());
-  EXPECT_EQ(10, property.AsInteger());
+  ASSERT_EQ(10, property.AsInteger());
 
   property.SetValue(93.2);
   ASSERT_TRUE(property.IsFloating());
-  EXPECT_EQ(93.2, property.AsFloating());
+  ASSERT_EQ(93.2, property.AsFloating());
 
   property.SetValue(true);
   ASSERT_TRUE(property.IsBoolean());
-  EXPECT_TRUE(property.AsBoolean());
+  ASSERT_TRUE(property.AsBoolean());
 
-  property.SetValue(QStringLiteral(u"foo"));
+  property.SetValue("foo"s);
   ASSERT_TRUE(property.IsString());
-  EXPECT_EQ(QStringLiteral(u"foo"), property.AsString());
+  ASSERT_EQ("foo", property.AsString());
 }
 
 TEST(Property, HasValue)
 {
-  core::Property property;
-  EXPECT_FALSE(property.HasValue());
+  Property property;
+  ASSERT_FALSE(property.HasValue());
 
   property.SetValue(924);
-  EXPECT_TRUE(property.HasValue());
+  ASSERT_TRUE(property.HasValue());
 }
 
 TEST(Property, As)
 {
-  const core::Property property{123};
+  const Property property{123};
 
-  EXPECT_NO_THROW(property.AsInteger());
-  EXPECT_ANY_THROW(property.AsFloating());
-  EXPECT_ANY_THROW(property.AsString());
-  EXPECT_ANY_THROW(property.AsBoolean());
-  EXPECT_ANY_THROW(property.AsObject());
-  EXPECT_ANY_THROW(property.AsFile());
-  EXPECT_ANY_THROW(property.AsColor());
+  ASSERT_NO_THROW(property.AsInteger());
+  ASSERT_ANY_THROW(property.AsFloating());
+  ASSERT_ANY_THROW(property.AsString());
+  ASSERT_ANY_THROW(property.AsBoolean());
+  ASSERT_ANY_THROW(property.AsObject());
+  ASSERT_ANY_THROW(property.AsFile());
+  ASSERT_ANY_THROW(property.AsColor());
 }
 
 TEST(Property, TryAs)
 {
-  core::Property property;
+  Property property;
 
-  EXPECT_FALSE(property.TryAsInteger());
-  EXPECT_FALSE(property.TryAsFloating());
-  EXPECT_FALSE(property.TryAsString());
-  EXPECT_FALSE(property.TryAsBoolean());
+  ASSERT_FALSE(property.TryAsInteger());
+  ASSERT_FALSE(property.TryAsFloating());
+  ASSERT_FALSE(property.TryAsString());
+  ASSERT_FALSE(property.TryAsBoolean());
 
   property.SetValue(123);
-  EXPECT_TRUE(property.TryAsInteger());
-  EXPECT_FALSE(property.TryAsFloating());
-  EXPECT_FALSE(property.TryAsString());
-  EXPECT_FALSE(property.TryAsBoolean());
+  ASSERT_TRUE(property.TryAsInteger());
+  ASSERT_FALSE(property.TryAsFloating());
+  ASSERT_FALSE(property.TryAsString());
+  ASSERT_FALSE(property.TryAsBoolean());
 }
 
 TEST(Property, Type)
 {
-  core::Property property;
-  EXPECT_FALSE(property.Type());
+  Property property;
+  ASSERT_FALSE(property.Type());
 
   property.SetValue(123);
-  EXPECT_EQ(core::PropertyType::Integer, property.Type());
+  ASSERT_EQ(PropertyType::Integer, property.Type());
 
   property.SetValue(12.3);
-  EXPECT_EQ(core::PropertyType::Floating, property.Type());
+  ASSERT_EQ(PropertyType::Floating, property.Type());
 
-  property.SetValue(QStringLiteral(u"foo"));
-  EXPECT_EQ(core::PropertyType::String, property.Type());
+  property.SetValue("foo"s);
+  ASSERT_EQ(PropertyType::String, property.Type());
 
   property.Reset();
-  EXPECT_FALSE(property.Type());
+  ASSERT_FALSE(property.Type());
 }
