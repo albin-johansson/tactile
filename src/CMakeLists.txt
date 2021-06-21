@@ -16,6 +16,7 @@ set(TACTILE_SOURCE_FILES
     aliases/object_ref.hpp
     aliases/tile_id.hpp
     aliases/tileset_id.hpp
+    core/properties/property_type.hpp
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
     gui/show_grid.cpp
