@@ -5,6 +5,7 @@
 namespace tactile {
 namespace {
 
+inline bool layer_tree_open = true;
 inline int selected_layer = 0;
 
 }  // namespace
@@ -13,8 +14,10 @@ void ShowLayers()
 {
   if (ImGui::Begin("Layers"))
   {
-    ImGui::SetNextItemOpen(true);
-    if (ImGui::TreeNode("##LayerTreeNode"))
+    ImGui::SetNextItemOpen(layer_tree_open);
+    layer_tree_open = ImGui::TreeNode("##LayerTreeNode");
+
+    if (layer_tree_open)
     {
       for (int index = 0; index < 5; ++index)
       {
