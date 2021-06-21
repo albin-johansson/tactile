@@ -5,8 +5,6 @@ project(tactile-src CXX)
 set(TACTILE_SOURCE_FILES
     application.cpp
     application.hpp
-    imgui_wrapper.cpp
-    imgui_wrapper.hpp
     init_open_gl_attributes.cpp
     init_open_gl_attributes.hpp
     main.cpp
@@ -18,6 +16,8 @@ set(TACTILE_SOURCE_FILES
     aliases/object_ref.hpp
     aliases/tile_id.hpp
     aliases/tileset_id.hpp
+    gui/imgui_wrapper.cpp
+    gui/imgui_wrapper.hpp
     gui/show_grid.cpp
     gui/show_grid.hpp
     gui/show_gui.cpp
