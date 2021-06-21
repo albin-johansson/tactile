@@ -37,6 +37,7 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imstb_truetype.h)
 
 add_header_only_lib(libCenturion ${LIBRARY_DIR}/centurion ${LIBRARY_DIR}/centurion/centurion.hpp)
+add_header_only_lib(libVectorMap ${LIBRARY_DIR}/vector-map ${LIBRARY_DIR}/vector-map/vector_map.hpp)
 
 add_subdirectory(src)
 add_subdirectory(test)

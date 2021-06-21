@@ -44,7 +44,8 @@ target_link_libraries(libTactile
     PUBLIC ${GLEW_LIBRARIES}
     PUBLIC ${SDL2_LIBRARY}
     PUBLIC libCenturion
-    PUBLIC libNenya)
+    PUBLIC libNenya
+    PUBLIC libVectorMap)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(libTactile PRIVATE
