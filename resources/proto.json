@@ -1,0 +1,55 @@
+{
+  "tactile-version": "0.1.0",
+  "format-version": 1,
+  "type": "map",
+  "name": "foo",
+  "next-layer-id": 6,
+  "next-object-id": 7,
+  "rows": 7,
+  "columns": 5,
+  "layers": [
+    {
+      "id": 1,
+      "name": "foo",
+      "opacity": 1.0,
+      "type": "tile-layer",
+      "visible": true,
+      "data": [
+        1,
+        2,
+        3
+      ]
+    }
+  ],
+  "tilesets": [
+    {
+      "first-global-id": 1,
+      "source": "foo.json"
+    },
+    {
+      "first-global-id": 1025,
+      "source": "bar.json"
+    }
+  ],
+  "properties": [
+    {
+      "name": "foo",
+      "type": "int",
+      "value": 123
+    }
+  ],
+  "components": [
+    {
+      "type": "Movable",
+      "speed": 3.4,
+      "position": {
+        "x": 42,
+        "y": 123
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ]
+}
