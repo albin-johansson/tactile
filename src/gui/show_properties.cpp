@@ -16,6 +16,16 @@ void ShowProperties()
   {
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
 
+    ImGui::Button("New");
+
+    ImGui::SameLine();
+    ImGui::Button("Remove");
+
+    ImGui::SameLine();
+    ImGui::Button("Rename");
+
+    ImGui::Separator();
+
     if (ImGui::BeginTable("PropertiesTable", 2, table_flags))
     {
       ImGui::TableSetupColumn("Name");
