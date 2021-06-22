@@ -112,6 +112,12 @@ add_dependencies(Tactile libTactile)
 
 target_link_libraries(Tactile PUBLIC libTactile)
 
+if (WIN32)
+  copy_directory_post_build(Tactile
+      ${TACTILE_ROOT_DIR}/bin
+      ${CMAKE_CURRENT_BINARY_DIR})
+endif ()
+
 copy_directory_post_build(Tactile
-    ${TACTILE_ROOT_DIR}/bin
-    ${CMAKE_CURRENT_BINARY_DIR})
+    ${RESOURCES_DIR}
+    ${CMAKE_CURRENT_BINARY_DIR}/resources)
