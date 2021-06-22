@@ -22,11 +22,19 @@ set(TACTILE_SOURCE_FILES
     aliases/tileset_id.hpp
     aliases/unique.hpp
     core/tactile_error.hpp
+
+    core/algorithms/flood_fill.cpp
+    core/algorithms/flood_fill.hpp
     core/algorithms/invoke_n.hpp
     core/commands/command.hpp
     core/commands/command.cpp
     core/map/layers/layer.hpp
+    core/map/layers/layer_delegate.cpp
+    core/map/layers/layer_delegate.hpp
     core/map/layers/layer_type.hpp
+    core/map/layers/tile_layer.cpp
+    core/map/layers/tile_layer.hpp
+
     core/properties/property.cpp
     core/properties/property.hpp
     core/properties/property_context.hpp
