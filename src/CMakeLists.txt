@@ -25,6 +25,7 @@ set(TACTILE_SOURCE_FILES
     core/commands/command.cpp
     core/properties/property.cpp
     core/properties/property.hpp
+    core/properties/property_context.hpp
     core/properties/property_type.hpp
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
