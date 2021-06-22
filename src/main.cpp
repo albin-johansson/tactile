@@ -63,9 +63,12 @@ void tactile_log(void* /*data*/,
 auto main(int argc, char** argv) -> int
 {
   cen::library centurion;
-
   SDL_LogSetOutputFunction(tactile_log, nullptr);
-  tactile::InitOpenGLAttributes();
+
+  if constexpr (cen::is_debug_build())
+  {
+    cen::log::set_priority(cen::log_priority::debug);
+  }
 
   constexpr auto flags = cen::window::default_flags() | cen::window::opengl |
                          cen::window::resizable | cen::window::high_dpi;
@@ -73,6 +76,8 @@ auto main(int argc, char** argv) -> int
 
   cen::gl_context context{window};
   context.make_current(window);
+
+  tactile::InitOpenGLAttributes();
 
   if (glewInit() != GLEW_OK)
   {
