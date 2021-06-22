@@ -28,6 +28,8 @@ set(TACTILE_SOURCE_FILES
     core/algorithms/invoke_n.hpp
     core/commands/command.hpp
     core/commands/command.cpp
+    core/map/map_position.hpp
+
     core/map/layers/layer.hpp
     core/map/layers/layer_delegate.cpp
     core/map/layers/layer_delegate.hpp
