@@ -17,6 +17,7 @@ set(TACTILE_SOURCE_FILES
     aliases/maybe.hpp
     aliases/object_ref.hpp
     aliases/row.hpp
+    aliases/shared.hpp
     aliases/tile_id.hpp
     aliases/tileset_id.hpp
     aliases/unique.hpp
