@@ -14,6 +14,8 @@ inline constexpr auto glsl_version = "#version 130";
 
 ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
 {
+  CENTURION_LOG_DEBUG("Initializing ImGui...");
+
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
 
@@ -45,6 +47,7 @@ ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
   style.GrabRounding = 4;
   style.TabRounding = 4;
 
+  CENTURION_LOG_DEBUG("Applying the \"Night\" theme...");
   ApplyNightTheme(style);
 
   style.ScaleAllSizes(1);
