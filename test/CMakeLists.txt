@@ -26,7 +26,7 @@ set(TACTILE_TEST_FILES
 
     unit/core/properties/property_delegate_test.cpp
     unit/core/properties/property_test.cpp
-    )
+    unit/core/map/map_position_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 
