@@ -22,6 +22,7 @@ set(TACTILE_SOURCE_FILES
     aliases/tileset_id.hpp
     aliases/unique.hpp
     core/tactile_error.hpp
+    core/algorithms/invoke_n.hpp
     core/commands/command.hpp
     core/commands/command.cpp
     core/properties/property.cpp
