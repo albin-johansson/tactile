@@ -25,6 +25,7 @@ set(TACTILE_SOURCE_FILES
     core/algorithms/invoke_n.hpp
     core/commands/command.hpp
     core/commands/command.cpp
+    core/map/layers/layer.hpp
     core/map/layers/layer_type.hpp
     core/properties/property.cpp
     core/properties/property.hpp
