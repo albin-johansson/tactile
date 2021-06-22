@@ -30,6 +30,7 @@ set(TACTILE_TEST_FILES
     unit/core/map/layers/object_test.cpp
     unit/core/map/layers/tile_layer_test.cpp
 
+    unit/core/properties/property_context_test.cpp
     unit/core/properties/property_test.cpp
     )
 
