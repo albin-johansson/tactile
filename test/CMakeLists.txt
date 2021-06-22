@@ -22,6 +22,8 @@ set(TACTILE_TEST_FILES
     unit/gtest_macros.hpp
     unit/test_main.cpp
 
+    unit/core/commands/command_stack_test.cpp
+
     unit/core/properties/property_test.cpp
     )
 

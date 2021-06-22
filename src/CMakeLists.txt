@@ -17,6 +17,8 @@ set(TACTILE_SOURCE_FILES
     aliases/tile_id.hpp
     aliases/tileset_id.hpp
     aliases/unique.hpp
+    core/commands/command.hpp
+    core/commands/command.cpp
     core/properties/property_type.hpp
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
