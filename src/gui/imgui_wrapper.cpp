@@ -22,8 +22,8 @@ ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;      // NOLINT
   io.WantCaptureKeyboard = true;
 
-  io.Fonts->AddFontFromFileTTF(R"(resources\fonts\roboto\Roboto-Regular.ttf)",
-                               15);
+  //  io.Fonts->AddFontFromFileTTF(R"(resources\fonts\roboto\Roboto-Regular.ttf)",
+  //                               15);
 
   ImGui::StyleColorsDark();
 
