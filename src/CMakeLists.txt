@@ -32,12 +32,17 @@ set(TACTILE_SOURCE_FILES
     core/map/layers/layer_delegate.cpp
     core/map/layers/layer_delegate.hpp
     core/map/layers/layer_type.hpp
+    core/map/layers/object.cpp
+    core/map/layers/object.hpp
+    core/map/layers/object_type.hpp
     core/map/layers/tile_layer.cpp
     core/map/layers/tile_layer.hpp
 
     core/properties/property.cpp
     core/properties/property.hpp
     core/properties/property_context.hpp
+    core/properties/property_delegate.cpp
+    core/properties/property_delegate.hpp
     core/properties/property_type.hpp
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
