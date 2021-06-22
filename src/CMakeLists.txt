@@ -87,7 +87,8 @@ target_link_libraries(libTactile
     PUBLIC ${SDL2_LIBRARY}
     PUBLIC libCenturion
     PUBLIC libNenya
-    PUBLIC libVectorMap)
+    PUBLIC libJson
+    PUBLIC libRune)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(libTactile PRIVATE
