@@ -45,15 +45,20 @@ set(TACTILE_SOURCE_FILES
     gui/show_grid.hpp
     gui/show_gui.cpp
     gui/show_gui.hpp
+    gui/show_layers.cpp
+    gui/show_layers.hpp
     gui/show_map_viewport.cpp
     gui/show_map_viewport.hpp
+    gui/show_menu_bar.cpp
+    gui/show_menu_bar.hpp
     gui/show_properties.cpp
     gui/show_properties.hpp
     gui/show_tilesets.cpp
     gui/show_tilesets.hpp
+    gui/show_tool_bar.cpp
+    gui/show_tool_bar.hpp
     gui/themes.cpp
-    gui/themes.hpp
-    )
+    gui/themes.hpp)
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 
