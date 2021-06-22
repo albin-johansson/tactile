@@ -9,11 +9,14 @@ set(TACTILE_SOURCE_FILES
     init_open_gl_attributes.hpp
     main.cpp
 
+    aliases/col.hpp
+    aliases/czstring.hpp
     aliases/ints.hpp
     aliases/layer_id.hpp
     aliases/map_id.hpp
     aliases/maybe.hpp
     aliases/object_ref.hpp
+    aliases/row.hpp
     aliases/tile_id.hpp
     aliases/tileset_id.hpp
     aliases/unique.hpp
