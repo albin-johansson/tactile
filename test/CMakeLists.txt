@@ -29,8 +29,8 @@ set(TACTILE_TEST_FILES
     unit/core/map/layers/layer_test.cpp
     unit/core/map/layers/object_test.cpp
     unit/core/map/layers/tile_layer_test.cpp
-    unit/core/map/layers/layer_test.cpp)
 
+    unit/core/properties/property_test.cpp
     )
 
 add_executable(testTactile ${TACTILE_TEST_FILES})

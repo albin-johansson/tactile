@@ -15,6 +15,7 @@ set(TACTILE_SOURCE_FILES
     aliases/layer_id.hpp
     aliases/map_id.hpp
     aliases/maybe.hpp
+    aliases/object_id.hpp
     aliases/object_ref.hpp
     aliases/row.hpp
     aliases/shared.hpp
@@ -36,6 +37,8 @@ set(TACTILE_SOURCE_FILES
     core/map/layers/layer_type.hpp
     core/map/layers/object.cpp
     core/map/layers/object.hpp
+    core/map/layers/object_layer.cpp
+    core/map/layers/object_layer.hpp
     core/map/layers/object_type.hpp
     core/map/layers/tile_layer.cpp
     core/map/layers/tile_layer.hpp
