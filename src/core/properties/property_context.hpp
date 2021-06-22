@@ -131,7 +131,7 @@ class IPropertyContext
    *
    * \return the amount of properties.
    */
-  [[nodiscard]] virtual auto PropertyCount() const -> usize = 0;
+  [[nodiscard]] virtual auto GetPropertyCount() const -> usize = 0;
 
   /**
    * \brief Returns a human-readable name associated with the context.

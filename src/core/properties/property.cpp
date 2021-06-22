@@ -81,40 +81,40 @@ auto Property::AsColor() const -> const color_type&
 
 auto Property::IsString() const noexcept -> bool
 {
-  return Type() == PropertyType::String;
+  return GetType() == PropertyType::String;
 }
 
 auto Property::IsInteger() const noexcept -> bool
 {
-  return Type() == PropertyType::Integer;
+  return GetType() == PropertyType::Integer;
 }
 
 auto Property::IsFloating() const noexcept -> bool
 {
-  return Type() == PropertyType::Floating;
+  return GetType() == PropertyType::Floating;
 }
 
 auto Property::IsBoolean() const noexcept -> bool
 {
-  return Type() == PropertyType::Boolean;
+  return GetType() == PropertyType::Boolean;
 }
 
 auto Property::IsFile() const noexcept -> bool
 {
-  return Type() == PropertyType::File;
+  return GetType() == PropertyType::File;
 }
 
 auto Property::IsObject() const noexcept -> bool
 {
-  return Type() == PropertyType::Object;
+  return GetType() == PropertyType::Object;
 }
 
 auto Property::IsColor() const noexcept -> bool
 {
-  return Type() == PropertyType::Color;
+  return GetType() == PropertyType::Color;
 }
 
-auto Property::Type() const -> Maybe<PropertyType>
+auto Property::GetType() const -> Maybe<PropertyType>
 {
   if (Is<integer_type>())
   {

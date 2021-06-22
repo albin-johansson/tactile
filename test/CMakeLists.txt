@@ -24,6 +24,7 @@ set(TACTILE_TEST_FILES
 
     unit/core/commands/command_stack_test.cpp
 
+    unit/core/properties/property_delegate_test.cpp
     unit/core/properties/property_test.cpp
     )
 

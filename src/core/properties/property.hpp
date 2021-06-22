@@ -241,7 +241,7 @@ class Property final
    *
    * \return the type of the stored value; `nothing` if there is no value.
    */
-  [[nodiscard]] auto Type() const -> Maybe<PropertyType>;
+  [[nodiscard]] auto GetType() const -> Maybe<PropertyType>;
 
  private:
   value_type mValue;

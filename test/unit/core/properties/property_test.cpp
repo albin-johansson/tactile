@@ -9,7 +9,7 @@ TEST(Property, Defaults)
 {
   const Property property;
   ASSERT_FALSE(property.HasValue());
-  ASSERT_FALSE(property.Type());
+  ASSERT_FALSE(property.GetType());
 
   ASSERT_FALSE(property.IsString());
   ASSERT_FALSE(property.IsInteger());
@@ -205,20 +205,20 @@ TEST(Property, TryAs)
   ASSERT_FALSE(property.TryAsBoolean());
 }
 
-TEST(Property, Type)
+TEST(Property, GetType)
 {
   Property property;
-  ASSERT_FALSE(property.Type());
+  ASSERT_FALSE(property.GetType());
 
   property.SetValue(123);
-  ASSERT_EQ(PropertyType::Integer, property.Type());
+  ASSERT_EQ(PropertyType::Integer, property.GetType());
 
   property.SetValue(12.3);
-  ASSERT_EQ(PropertyType::Floating, property.Type());
+  ASSERT_EQ(PropertyType::Floating, property.GetType());
 
   property.SetValue("foo"s);
-  ASSERT_EQ(PropertyType::String, property.Type());
+  ASSERT_EQ(PropertyType::String, property.GetType());
 
   property.Reset();
-  ASSERT_FALSE(property.Type());
+  ASSERT_FALSE(property.GetType());
 }
