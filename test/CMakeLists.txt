@@ -39,7 +39,6 @@ add_executable(testTactile ${TACTILE_TEST_FILES})
 
 add_definitions(-DCENTURION_NO_SDL_TTF)
 add_definitions(-DCENTURION_NO_SDL_MIXER)
-add_definitions(-DCENTURION_NO_SDL_IMAGE)
 
 target_include_directories(testTactile
     PUBLIC unit
@@ -60,4 +59,4 @@ copy_directory_post_build(testTactile
 
 copy_directory_post_build(testTactile
     ${CMAKE_CURRENT_SOURCE_DIR}/resources
-    ${CMAKE_CURRENT_BINARY_DIR})
+    ${CMAKE_CURRENT_BINARY_DIR}/resources)
