@@ -1,13 +1,12 @@
 #include <gtest/gtest.h>
 
+#include "core/map/layers/object_layer.hpp"
 #include "core/map/layers/tile_layer.hpp"
 #include "gtest_macros.hpp"
 
 using namespace tactile;
 
-// TODO test layer APIs for both TileLayer and ObjectLayer
-
-using LayerTypes = testing::Types<TileLayer>;
+using LayerTypes = testing::Types<TileLayer, ObjectLayer>;
 
 template <typename T>
 class LayerTest : public testing::Test

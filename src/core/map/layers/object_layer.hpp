@@ -117,10 +117,10 @@ class ObjectLayer final : public ILayer
    *
    * \return the object associated with the ID.
    */
-  [[nodiscard]] auto(GetObject)(object_id id) -> Object&;
+  [[nodiscard]] auto GetObject(object_id id) -> Object&;
 
   /// \copydoc GetObject()
-  [[nodiscard]] auto(GetObject)(object_id id) const -> const Object&;
+  [[nodiscard]] auto GetObject(object_id id) const -> const Object&;
 
   /**
    * \brief Returns the current amount of objects in the layer.

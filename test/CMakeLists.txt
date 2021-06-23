@@ -27,6 +27,7 @@ set(TACTILE_TEST_FILES
     unit/core/map/map_position_test.cpp
 
     unit/core/map/layers/layer_test.cpp
+    unit/core/map/layers/object_layer_test.cpp
     unit/core/map/layers/object_test.cpp
     unit/core/map/layers/tile_layer_test.cpp
 
