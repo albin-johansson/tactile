@@ -10,9 +10,8 @@
 
 using namespace tactile;
 
-// TODO Tileset
 using PropertyContextTypes =
-    testing::Types<PropertyDelegate, TileLayer, ObjectLayer, Object>;
+    testing::Types<PropertyDelegate, TileLayer, ObjectLayer, Object, Tileset>;
 
 template <typename T>
 class PropertyContextTest : public testing::Test
@@ -28,6 +27,12 @@ template <>
 inline auto MakeContext() -> Object
 {
   return Object{ObjectType::Rectangle};
+}
+
+template <>
+inline auto MakeContext() -> Tileset
+{
+  return Tileset{1_tile, "resources/terrain.png", 32, 32};
 }
 
 TYPED_TEST_SUITE(PropertyContextTest, PropertyContextTypes);
