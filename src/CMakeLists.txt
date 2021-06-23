@@ -27,6 +27,9 @@ set(TACTILE_SOURCE_FILES
     core/algorithms/flood_fill.cpp
     core/algorithms/flood_fill.hpp
     core/algorithms/invoke_n.hpp
+
+    core/commands/command_stack.cpp
+    core/commands/command_stack.hpp
     core/commands/command.hpp
     core/commands/command.cpp
     core/map/map_position.hpp
