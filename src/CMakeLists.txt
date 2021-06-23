@@ -68,7 +68,8 @@ set(TACTILE_SOURCE_FILES
     gui/show_tool_bar.cpp
     gui/show_tool_bar.hpp
     gui/themes.cpp
-    gui/themes.hpp)
+    gui/themes.hpp
+    )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 
