@@ -17,6 +17,7 @@ list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEW_LIBRARIES}")
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(SDL2 REQUIRED)
+find_package(SDL2_image REQUIRED)
 
 add_header_only_lib(libNenya ${LIBRARY_DIR}/nenya ${LIBRARY_DIR}/nenya/nenya.hpp)
 
