@@ -2,6 +2,8 @@
 
 #include <algorithm>  // clamp
 
+#include "imgui.h"
+
 namespace tactile {
 namespace {
 
