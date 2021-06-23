@@ -32,12 +32,17 @@ set(TACTILE_SOURCE_FILES
     core/commands/command_stack.hpp
     core/commands/command.hpp
     core/commands/command.cpp
+
+    core/map/map.cpp
+    core/map/map.hpp
     core/map/map_position.hpp
 
     core/map/layers/layer.hpp
     core/map/layers/layer_delegate.cpp
     core/map/layers/layer_delegate.hpp
     core/map/layers/layer_type.hpp
+    core/map/layers/layer_utils.cpp
+    core/map/layers/layer_utils.hpp
     core/map/layers/object.cpp
     core/map/layers/object.hpp
     core/map/layers/object_layer.cpp

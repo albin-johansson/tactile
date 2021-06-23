@@ -38,7 +38,7 @@ auto ObjectLayer::GetOpacity() const noexcept -> float
   return mDelegate.GetOpacity();
 }
 
-auto ObjectLayer::Clone() const -> Shared<ILayer>
+auto ObjectLayer::Clone() const -> SharedLayer
 {
   return std::make_shared<ObjectLayer>(*this);
 }

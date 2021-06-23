@@ -71,7 +71,7 @@ auto TileLayer::GetType() const -> LayerType
   return mDelegate.GetType();
 }
 
-auto TileLayer::Clone() const -> Shared<ILayer>
+auto TileLayer::Clone() const -> SharedLayer
 {
   return std::make_shared<TileLayer>(*this);
 }

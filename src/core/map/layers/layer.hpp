@@ -3,10 +3,16 @@
 #include <string>  // string
 
 #include "aliases/shared.hpp"
+#include "aliases/unique.hpp"
 #include "core/properties/property_context.hpp"
 #include "layer_type.hpp"
 
 namespace tactile {
+
+class ILayer;
+
+using UniqueLayer = Unique<ILayer>;
+using SharedLayer = Shared<ILayer>;
 
 /**
  * \interface ILayer
@@ -71,7 +77,7 @@ class ILayer : public IPropertyContext
    *
    * \return a copy of the layer.
    */
-  [[nodiscard]] virtual auto Clone() const -> Shared<ILayer> = 0;
+  [[nodiscard]] virtual auto Clone() const -> SharedLayer = 0;
 };
 
 }  // namespace tactile

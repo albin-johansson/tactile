@@ -38,7 +38,7 @@ class ObjectLayer final : public ILayer
 
   [[nodiscard]] auto GetOpacity() const noexcept -> float override;
 
-  [[nodiscard]] auto Clone() const -> Shared<ILayer> override;
+  [[nodiscard]] auto Clone() const -> SharedLayer override;
 
   /// \} End of layer API
 

@@ -59,7 +59,7 @@ class TileLayer final : public ILayer
 
   [[nodiscard]] auto GetType() const -> LayerType override;
 
-  [[nodiscard]] auto Clone() const -> Shared<ILayer> override;
+  [[nodiscard]] auto Clone() const -> SharedLayer override;
 
   /// \} End of layer API
 
