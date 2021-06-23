@@ -49,6 +49,11 @@ set(TACTILE_SOURCE_FILES
     core/properties/property_delegate.cpp
     core/properties/property_delegate.hpp
     core/properties/property_type.hpp
+
+    core/tileset/tileset.cpp
+    core/tileset/tileset.hpp
+    core/tileset/tileset_selection.hpp
+
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
     gui/show_grid.cpp

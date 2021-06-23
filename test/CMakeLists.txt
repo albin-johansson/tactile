@@ -33,6 +33,8 @@ set(TACTILE_TEST_FILES
 
     unit/core/properties/property_context_test.cpp
     unit/core/properties/property_test.cpp
+
+    unit/core/tileset/tileset_test.cpp
     )
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
