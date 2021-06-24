@@ -36,7 +36,11 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imgui_widgets.cpp
     ${LIBRARY_DIR}/imgui/imstb_rectpack.h
     ${LIBRARY_DIR}/imgui/imstb_textedit.h
-    ${LIBRARY_DIR}/imgui/imstb_truetype.h)
+    ${LIBRARY_DIR}/imgui/imstb_truetype.h
+
+    ${LIBRARY_DIR}/imgui/ImGuiFileDialog.cpp
+    ${LIBRARY_DIR}/imgui/ImGuiFileDialog.h
+    )
 
 set(RUNE_SOURCES
     ${LIBRARY_DIR}/rune/vector_map.hpp
