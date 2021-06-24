@@ -19,6 +19,21 @@ class CommandStack final
  public:
   /// Clears the command stack of all commands.
   void Clear();
+
+  /**
+   * \brief Marks the current command stack state as "clean".
+   *
+   * \details The notion of a clean command stack is used to prevent unnecessary
+   * saving of files, etc. For example, when a document is saved, it should be
+   * marked as clean.
+   */
+  void MarkAsClean();
+
+  /**
+   * \brief Resets any current clean state.
+   */
+  void ResetClean();
+
   /**
    * \brief Undoes the current command.
    *
@@ -61,6 +76,13 @@ class CommandStack final
   }
 
   /**
+   * \brief Indicates whether or not the current command stack state is clean.
+   *
+   * \return `true` if the current state is clean; `false` otherwise.
+   */
+  [[nodiscard]] auto IsClean() const -> bool;
+
+  /**
    * \brief Indicates whether or not the current command is undoable.
    *
    * \return `true` if undo is available; `false` otherwise.
@@ -101,6 +123,7 @@ class CommandStack final
  private:
   std::deque<Unique<ACommand>> mStack;
   Maybe<usize> mIndex{};
+  Maybe<usize> mCleanIndex;
 
   void RemoveCommandsAfterCurrentIndex();
 };

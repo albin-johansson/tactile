@@ -16,12 +16,12 @@ class Foo : public ACommand
 
   void Undo() override
   {
-    std::cout << "Foo::Undo\n";
+    // std::cout << "Foo::Undo\n";
   }
 
   void Redo() override
   {
-    std::cout << "Foo::Redo\n";
+    // std::cout << "Foo::Redo\n";
   }
 
   [[nodiscard]] auto GetId() const -> int override
@@ -138,4 +138,56 @@ TEST(CommandStack, Usage)
   ASSERT_TRUE(stack.CanUndo());
   ASSERT_FALSE(stack.CanRedo());
   ASSERT_EQ("Bar", stack.GetUndoText());
+}
+
+TEST(CommandStack, Clean)
+{
+  CommandStack stack;
+
+  ASSERT_FALSE(stack.IsClean());
+  ASSERT_FALSE(stack.CanUndo());
+  ASSERT_FALSE(stack.CanRedo());
+
+  // ^[ ] -> [ ^Foo ]
+  stack.Push<Foo>();
+  ASSERT_FALSE(stack.IsClean());
+  ASSERT_TRUE(stack.CanUndo());
+  ASSERT_FALSE(stack.CanRedo());
+
+  // [ ^Foo ] -> [ Foo, ^Bar ]
+  stack.Push<Bar>();
+  ASSERT_FALSE(stack.IsClean());
+  ASSERT_TRUE(stack.CanUndo());
+  ASSERT_FALSE(stack.CanRedo());
+
+  stack.MarkAsClean();
+  ASSERT_TRUE(stack.IsClean());
+  ASSERT_TRUE(stack.CanUndo());
+  ASSERT_FALSE(stack.CanRedo());
+
+  // [ Foo, ^Bar ] -> [ ^Foo, Bar ]
+  stack.Undo();
+  ASSERT_FALSE(stack.IsClean());
+  ASSERT_TRUE(stack.CanUndo());
+  ASSERT_TRUE(stack.CanRedo());
+
+  // [ ^Foo, Bar ] -> [ Foo, ^Bar ]
+  stack.Redo();
+  ASSERT_TRUE(stack.IsClean());
+  ASSERT_TRUE(stack.CanUndo());
+  ASSERT_FALSE(stack.CanRedo());
+
+  /* Here we test a special case when the clean state becomes invalidated */
+  // [ Foo, ^Bar ] -Undo-> [ ^Foo, Bar ] -Push-> [ Foo, ^Foo ]
+  stack.Undo();
+  stack.Push<Foo>();
+  ASSERT_FALSE(stack.IsClean());
+  ASSERT_TRUE(stack.CanUndo());
+  ASSERT_FALSE(stack.CanRedo());
+
+  stack.MarkAsClean();
+  ASSERT_TRUE(stack.IsClean());
+
+  stack.ResetClean();
+  ASSERT_FALSE(stack.IsClean());
 }

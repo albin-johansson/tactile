@@ -10,6 +10,19 @@ void CommandStack::Clear()
   mIndex.reset();
 }
 
+void CommandStack::MarkAsClean()
+{
+  if (!mStack.empty())
+  {
+    mCleanIndex = mIndex;
+  }
+}
+
+void CommandStack::ResetClean()
+{
+  mCleanIndex.reset();
+}
+
 void CommandStack::Undo()
 {
   assert(CanUndo());
@@ -37,6 +50,11 @@ void CommandStack::Redo()
   cmd->Redo();
 
   mIndex = index;
+}
+
+auto CommandStack::IsClean() const -> bool
+{
+  return mCleanIndex && mCleanIndex == mIndex;
 }
 
 auto CommandStack::CanUndo() const -> bool
@@ -70,6 +88,13 @@ void CommandStack::RemoveCommandsAfterCurrentIndex()
 {
   const auto startIndex = mIndex ? *mIndex + 1 : 0;
   const auto size = mStack.size();
+
+  /* If we have a clean index, and there are undone commands when another
+     command is pushed, then the clean index becomes invalidated */
+  if (mCleanIndex >= startIndex)
+  {
+    mCleanIndex.reset();
+  }
 
   for (auto index = startIndex; index < size; ++index)
   {
