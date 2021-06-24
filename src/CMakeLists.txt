@@ -112,7 +112,8 @@ target_link_libraries(libTactile
     PUBLIC libCenturion
     PUBLIC libNenya
     PUBLIC libJson
-    PUBLIC libRune)
+    PUBLIC libRune
+    PUBLIC libEntt)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(libTactile PRIVATE
