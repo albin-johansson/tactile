@@ -77,7 +77,7 @@ void Application::PollEvents()
       {
         if (keyEvent->is_active(cen::key_modifier::ctrl))
         {
-          OnCtrlKeyStroke(keyEvent->get_scan_code());
+          OnCtrlKeyStroke(keyEvent->scan());
         }
       }
     }
