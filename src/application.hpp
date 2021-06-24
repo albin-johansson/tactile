@@ -6,6 +6,7 @@
 #include "aliases/unique.hpp"
 #include "core/events/add_map_event.hpp"
 #include "core/events/open_map_event.hpp"
+#include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
 #include "core/events/undo_event.hpp"
 
@@ -22,6 +23,7 @@ class Application final
   cen::window mWindow;
   [[maybe_unused]] cen::gl_context mContext;
   entt::dispatcher mDispatcher;
+  bool mQuit{};
 
   void UpdateFrame();
 
@@ -32,6 +34,8 @@ class Application final
   void OnUndoEvent(const UndoEvent& event);
 
   void OnRedoEvent(const RedoEvent& event);
+
+  void OnQuitEvent(const QuitEvent& event);
 };
 
 }  // namespace tactile
