@@ -60,6 +60,8 @@ set(TACTILE_SOURCE_FILES
 
     core/tileset/tileset.cpp
     core/tileset/tileset.hpp
+    core/tileset/tileset_manager.cpp
+    core/tileset/tileset_manager.hpp
     core/tileset/tileset_selection.hpp
 
     gui/imgui_wrapper.cpp
