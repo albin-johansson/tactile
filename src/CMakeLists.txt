@@ -80,6 +80,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
+    gui/show_about_tactile.cpp
+    gui/show_about_tactile.hpp
     gui/show_file_dialog.cpp
     gui/show_file_dialog.hpp
     gui/show_grid.cpp
