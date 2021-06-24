@@ -50,7 +50,7 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_TextDisabled]          = ImVec4{0.6f, 0.6f, 0.6f, 1};
   style.Colors[ImGuiCol_WindowBg]              = window;
   style.Colors[ImGuiCol_ChildBg]               = window;
-  style.Colors[ImGuiCol_PopupBg]               = window;
+  style.Colors[ImGuiCol_PopupBg]               = WithAlpha(window, 0.95f);
   style.Colors[ImGuiCol_Border]                = WithAlpha(white,  0.29f);
   style.Colors[ImGuiCol_BorderShadow]          = black;
 
