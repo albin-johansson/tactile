@@ -8,7 +8,7 @@
 namespace tactile {
 namespace {
 
-inline constexpr auto border_color = IM_COL32(0x22, 0x22, 0x22, 0xFF);
+inline constexpr auto border_color = IM_COL32(0x10, 0x10, 0x10, 0xFF);
 
 inline bool show_grid = true;
 inline GridState state;
