@@ -25,7 +25,11 @@ class Application final
   entt::dispatcher mDispatcher;
   bool mQuit{};
 
+  void PollEvents();
+
   void UpdateFrame();
+
+  void OnCtrlKeyStroke(cen::scan_code key);
 
   void OnAddMapEvent(const AddMapEvent& event);
 

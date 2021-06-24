@@ -26,19 +26,9 @@ auto Application::Run() -> int
 {
   const auto& io = ImGui::GetIO();
 
-  cen::event event;
   while (!mQuit)
   {
-    while (event.poll())
-    {
-      ImGui_ImplSDL2_ProcessEvent(event.data());
-
-      if (event.is<cen::quit_event>())
-      {
-        mQuit = true;
-        break;
-      }
-    }
+    PollEvents();
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(mWindow.get());
@@ -64,10 +54,43 @@ auto Application::Run() -> int
   return 0;
 }
 
+void Application::PollEvents()
+{
+  cen::event event;
+  while (event.poll())
+  {
+    ImGui_ImplSDL2_ProcessEvent(event.data());
+
+    if (event.is<cen::quit_event>())
+    {
+      mQuit = true;
+      break;
+    }
+    else if (const auto* keyEvent = event.try_get<cen::keyboard_event>())
+    {
+      if (keyEvent->released())
+      {
+        if (keyEvent->is_active(cen::key_modifier::ctrl))
+        {
+          OnCtrlKeyStroke(keyEvent->get_scan_code());
+        }
+      }
+    }
+  }
+}
+
 void Application::UpdateFrame()
 {
   ShowGui();
   mDispatcher.update();
+
+void Application::OnCtrlKeyStroke(const cen::scan_code key)
+{
+  if (key == cen::scancodes::o)
+  {
+    EnableOpenMapDialog();
+  }
+}
 
 void Application::OnAddMapEvent(const AddMapEvent& event)
 {
@@ -77,7 +100,7 @@ void Application::OnAddMapEvent(const AddMapEvent& event)
 void Application::OnOpenMapEvent(const OpenMapEvent& event)
 {
   cen::log::info("Application::OnOpenMapEvent > %s",
-                 event.path.string().c_str());
+                 event.path.filename().string().c_str());
 }
 
 void Application::OnUndoEvent(const UndoEvent& event)
