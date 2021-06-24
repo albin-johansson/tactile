@@ -35,6 +35,11 @@ set(TACTILE_SOURCE_FILES
     core/commands/command.hpp
     core/commands/command.cpp
 
+    core/events/add_map_event.hpp
+    core/events/open_map_event.hpp
+    core/events/redo_event.hpp
+    core/events/undo_event.hpp
+
     core/map/map.cpp
     core/map/map.hpp
     core/map/map_position.hpp
