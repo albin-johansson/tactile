@@ -28,6 +28,8 @@ inline bool show_settings_window = false;
 inline bool show_map_file_dialog = false;
 inline bool show_tileset_dialog = false;
 
+inline bool is_grid_item_toggled = true;
+
 void ShowFileMenu(const Model& model, entt::dispatcher& dispatcher)
 {
   const auto* document = model.GetActiveDocument();
@@ -147,12 +149,11 @@ void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(ICON_FA_CROSSHAIRS " Center viewport", "Ctrl+SPACE"))
     {}
 
-    static bool isGridItemToggled = true;
     if (ImGui::MenuItem(ICON_FA_TH " Toggle grid",
                         "Ctrl+G",
-                        &isGridItemToggled))
+                        &is_grid_item_toggled))
     {
-      SetMapViewportGridEnabled(isGridItemToggled);
+      SetMapViewportGridEnabled(is_grid_item_toggled);
     }
 
     ImGui::Separator();
@@ -283,6 +284,12 @@ void EnableOpenMapDialog()
 void EnableSettingsDialog()
 {
   show_settings_window = true;
+}
+
+void ToggleMapGrid()
+{
+  is_grid_item_toggled = !is_grid_item_toggled;
+  SetMapViewportGridEnabled(is_grid_item_toggled);
 }
 
 }  // namespace tactile

@@ -12,4 +12,6 @@ void EnableOpenMapDialog();
 
 void EnableSettingsDialog();
 
+void ToggleMapGrid();
+
 }  // namespace tactile

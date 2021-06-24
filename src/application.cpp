@@ -100,7 +100,11 @@ void Application::UpdateFrame()
 
 void Application::OnCtrlKeyStroke(const cen::scan_code key)
 {
-  if (key == cen::scancodes::o)
+  if (key == cen::scancodes::g)
+  {
+    ToggleMapGrid();
+  }
+  else if (key == cen::scancodes::o)
   {
     EnableOpenMapDialog();
   }
