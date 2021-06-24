@@ -5,6 +5,7 @@
 #include <centurion.hpp>  // is_debug_build
 
 #include "core/events/add_map_event.hpp"
+#include "core/events/center_viewport_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
@@ -147,7 +148,9 @@ void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(ICON_FA_CROSSHAIRS " Center viewport", "Ctrl+SPACE"))
-    {}
+    {
+      dispatcher.enqueue<CenterViewportEvent>();
+    }
 
     if (ImGui::MenuItem(ICON_FA_TH " Toggle grid",
                         "Ctrl+G",

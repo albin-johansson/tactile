@@ -11,6 +11,7 @@ namespace {
 inline constexpr auto border_color = IM_COL32(0x10, 0x10, 0x10, 0xFF);
 
 inline bool show_grid = true;
+inline bool center_viewport = false;
 inline GridState state;
 
 inline constexpr auto viewport_button_flags =
@@ -49,6 +50,19 @@ void DrawMap(ImDrawList* drawList,
                     border_color);
 }
 
+void MouseTracker(const CanvasInfo& info)
+{
+  ImGui::InvisibleButton("MapViewportCanvas",
+                         info.canvas_size,
+                         viewport_button_flags);
+  if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Right))
+  {
+    const auto& io = ImGui::GetIO();
+    state.scroll_offset.x += io.MouseDelta.x;
+    state.scroll_offset.y += io.MouseDelta.y;
+  }
+}
+
 }  // namespace
 
 void ShowMapViewport(const MapDocument* document)
@@ -61,18 +75,20 @@ void ShowMapViewport(const MapDocument* document)
     const auto info = GetCanvasInfo();
 
     FillBackground(info);
-
-    ImGui::InvisibleButton("MapViewportCanvas",
-                           info.canvas_size,
-                           viewport_button_flags);
-    if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Right))
-    {
-      const auto& io = ImGui::GetIO();
-      state.scroll_offset.x += io.MouseDelta.x;
-      state.scroll_offset.y += io.MouseDelta.y;
-    }
+    MouseTracker(info);
 
     drawList->PushClipRect(info.canvas_tl, info.canvas_br, true);
+
+    if (center_viewport && document)
+    {
+      const auto width = document->GetColumnCount().get() * state.grid_size.x;
+      const auto height = document->GetRowCount().get() * state.grid_size.y;
+
+      state.scroll_offset.x = (info.canvas_size.x - width) / 2.0f;
+      state.scroll_offset.y = (info.canvas_size.y - height) / 2.0f;
+
+      center_viewport = false;
+    }
 
     if (show_grid)
     {
@@ -88,6 +104,11 @@ void ShowMapViewport(const MapDocument* document)
     drawList->PopClipRect();
   }
   ImGui::End();
+}
+
+void CenterMapViewport()
+{
+  center_viewport = true;
 }
 
 void SetMapViewportGridEnabled(const bool enabled) noexcept

@@ -3,6 +3,7 @@
 #include <utility>  // move
 
 #include "gui/show_gui.hpp"
+#include "gui/show_map_viewport.hpp"
 #include "gui/show_menu_bar.hpp"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
@@ -20,6 +21,7 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<OpenMapEvent>().connect<&Application::OnOpenMapEvent>(this);
   mDispatcher.sink<UndoEvent>().connect<&Application::OnUndoEvent>(this);
   mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
+  mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
@@ -108,6 +110,10 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   {
     EnableOpenMapDialog();
   }
+  else if (key == cen::scancodes::space)
+  {
+    CenterMapViewport();
+  }
 }
 
 void Application::OnCtrlAltKeyStroke(const cen::scan_code key)
@@ -137,6 +143,11 @@ void Application::OnUndoEvent(const UndoEvent& event)
 void Application::OnRedoEvent(const RedoEvent& event)
 {
   cen::log::info("Application::OnRedoEvent");
+}
+
+void Application::OnCenterViewportEvent(const CenterViewportEvent& event)
+{
+  CenterMapViewport();
 }
 
 void Application::OnQuitEvent(const QuitEvent& event)

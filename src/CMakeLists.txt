@@ -42,6 +42,7 @@ set(TACTILE_SOURCE_FILES
     core/commands/command.cpp
 
     core/events/add_map_event.hpp
+    core/events/center_viewport_event.hpp
     core/events/open_map_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp

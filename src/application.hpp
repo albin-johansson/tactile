@@ -5,6 +5,7 @@
 
 #include "aliases/unique.hpp"
 #include "core/events/add_map_event.hpp"
+#include "core/events/center_viewport_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
@@ -43,6 +44,8 @@ class Application final
   void OnUndoEvent(const UndoEvent& event);
 
   void OnRedoEvent(const RedoEvent& event);
+
+  void OnCenterViewportEvent(const CenterViewportEvent& event);
 
   void OnQuitEvent(const QuitEvent& event);
 };
