@@ -12,7 +12,14 @@ namespace tactile {
 Application::Application(cen::window&& window, cen::gl_context&& context)
     : mWindow{std::move(window)}
     , mContext{std::move(context)}
-{}
+{
+  // clang-format off
+  mDispatcher.sink<AddMapEvent>().connect<&Application::OnAddMapEvent>(this);
+  mDispatcher.sink<OpenMapEvent>().connect<&Application::OnOpenMapEvent>(this);
+  mDispatcher.sink<UndoEvent>().connect<&Application::OnUndoEvent>(this);
+  mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
+  // clang-format on
+}
 
 auto Application::Run() -> int
 {
@@ -61,6 +68,27 @@ auto Application::Run() -> int
 void Application::UpdateFrame()
 {
   ShowGui();
+  mDispatcher.update();
+
+void Application::OnAddMapEvent(const AddMapEvent& event)
+{
+  cen::log::info("Application::OnAddMapEvent");
+}
+
+void Application::OnOpenMapEvent(const OpenMapEvent& event)
+{
+  cen::log::info("Application::OnOpenMapEvent > %s",
+                 event.path.string().c_str());
+}
+
+void Application::OnUndoEvent(const UndoEvent& event)
+{
+  cen::log::info("Application::OnUndoEvent");
+}
+
+void Application::OnRedoEvent(const RedoEvent& event)
+{
+  cen::log::info("Application::OnRedoEvent");
 }
 
 }  // namespace tactile
