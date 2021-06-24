@@ -7,20 +7,26 @@
 
 namespace tactile {
 
+enum class FileDialogResult
+{
+  Idle,
+  Success,
+  Close
+};
+
 /**
  * \brief Shows a file dialog.
  *
  * \param id the unique ID associated with the dialog.
  * \param title the title of the window.
  * \param filter the file type filter, e.g. ".foo,.bar".
- * \param directory the initial directory.
  *
- * \return `true` if the user selected a file; `false` otherwise.
+ * \return `Idle` if the dialog is shown but no file has been chosen; `Success`
+ * if the a file was selected; `Close` if the dialog was closed.
  */
 auto ShowFileDialog(const std::string& id,
                     const std::string& title,
-                    czstring filter,
-                    const std::string& directory) -> bool;
+                    czstring filter) -> FileDialogResult;
 
 /// Returns the file path to the last selected file.
 [[nodiscard]] auto GetFileDialogSelectedPath() -> std::filesystem::path;

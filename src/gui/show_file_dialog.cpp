@@ -3,24 +3,28 @@
 #include "ImGuiFileDialog.h"
 
 namespace tactile {
+namespace {
+
+inline constexpr auto flags = ImGuiFileDialogFlags_DontShowHiddenFiles |
+                              ImGuiFileDialogFlags_DisableCreateDirectoryButton;
+
+}  // namespace
 
 auto ShowFileDialog(const std::string& id,
                     const std::string& title,
-                    const czstring filter,
-                    const std::string& directory) -> bool
+                    const czstring filter) -> FileDialogResult
 {
   auto* dialog = IGFD::FileDialog::Instance();
-  dialog->OpenDialog(id, title, filter, directory);
+  dialog->OpenDialog(id, title, filter, std::string{}, 1, nullptr, flags);
 
   if (dialog->Display(id))
   {
     const auto ok = dialog->IsOk();
     dialog->Close();
-
-    return ok;
+    return ok ? FileDialogResult::Success : FileDialogResult::Close;
   }
 
-  return false;
+  return FileDialogResult::Idle;
 }
 
 auto GetFileDialogSelectedPath() -> std::filesystem::path
