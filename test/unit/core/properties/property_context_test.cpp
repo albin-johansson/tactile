@@ -5,13 +5,18 @@
 #include "core/map/layers/object.hpp"
 #include "core/map/layers/object_layer.hpp"
 #include "core/map/layers/tile_layer.hpp"
+#include "core/map_document.hpp"
 #include "core/properties/property_delegate.hpp"
 #include "core/tileset/tileset.hpp"
 
 using namespace tactile;
 
-using PropertyContextTypes =
-    testing::Types<PropertyDelegate, TileLayer, ObjectLayer, Object, Tileset>;
+using PropertyContextTypes = testing::Types<PropertyDelegate,
+                                            MapDocument,
+                                            TileLayer,
+                                            ObjectLayer,
+                                            Object,
+                                            Tileset>;
 
 template <typename T>
 class PropertyContextTest : public testing::Test
