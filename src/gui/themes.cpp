@@ -36,10 +36,10 @@ namespace {
 
 void ApplyNightTheme(ImGuiStyle& style)
 {
-  const auto gray_4 = ImVec4{0.51f, 0.51f, 0.51f, 1};
+  const auto grab = ImVec4{0.51f, 0.51f, 0.51f, 1};
   const auto gray_3 = ImVec4{0.24f, 0.24f, 0.24f, 1};
-  const auto gray_2 = ImVec4{0.16f, 0.16f, 0.16f, 1};
-  const auto gray_1 = ImVec4{0.1f, 0.1f, 0.1f, 1};
+  const auto button = ImVec4{0.2f, 0.2f, 0.2f, 1};
+  const auto window = ImVec4{0.1f, 0.1f, 0.1f, 1};
   const auto black = ImVec4{0, 0, 0, 1};
   const auto white = ImVec4{1, 1, 1, 1};
   const auto lightBlue = ImVec4{0.26f, 0.59f, 0.98f, 1};
@@ -48,40 +48,40 @@ void ApplyNightTheme(ImGuiStyle& style)
   // clang-format off
   style.Colors[ImGuiCol_Text]                  = white;
   style.Colors[ImGuiCol_TextDisabled]          = ImVec4{0.6f, 0.6f, 0.6f, 1};
-  style.Colors[ImGuiCol_WindowBg]              = gray_1;
-  style.Colors[ImGuiCol_ChildBg]               = gray_1;
-  style.Colors[ImGuiCol_PopupBg]               = gray_1;
+  style.Colors[ImGuiCol_WindowBg]              = window;
+  style.Colors[ImGuiCol_ChildBg]               = window;
+  style.Colors[ImGuiCol_PopupBg]               = window;
   style.Colors[ImGuiCol_Border]                = WithAlpha(white,  0.29f);
   style.Colors[ImGuiCol_BorderShadow]          = black;
 
-  style.Colors[ImGuiCol_FrameBg]               = gray_2;
+  style.Colors[ImGuiCol_FrameBg]               = button;
   style.Colors[ImGuiCol_FrameBgHovered]        = Brighten(style.Colors[ImGuiCol_FrameBg]);
   style.Colors[ImGuiCol_FrameBgActive]         = style.Colors[ImGuiCol_FrameBg];
 
-  style.Colors[ImGuiCol_TitleBg]               = gray_2;
-  style.Colors[ImGuiCol_TitleBgActive]         = gray_2;
-  style.Colors[ImGuiCol_TitleBgCollapsed]      = gray_2;
+  style.Colors[ImGuiCol_TitleBg]               = button;
+  style.Colors[ImGuiCol_TitleBgActive]         = button;
+  style.Colors[ImGuiCol_TitleBgCollapsed]      = button;
 
-  style.Colors[ImGuiCol_MenuBarBg]             = gray_2;
-  style.Colors[ImGuiCol_ScrollbarBg]           = gray_1;
+  style.Colors[ImGuiCol_MenuBarBg]             = button;
+  style.Colors[ImGuiCol_ScrollbarBg]           = window;
 
-  style.Colors[ImGuiCol_ScrollbarGrab]         = gray_4;
+  style.Colors[ImGuiCol_ScrollbarGrab]         = grab;
   style.Colors[ImGuiCol_ScrollbarGrabHovered]  = Brighten(style.Colors[ImGuiCol_ScrollbarGrab]);
   style.Colors[ImGuiCol_ScrollbarGrabActive]   = Darken(style.Colors[ImGuiCol_ScrollbarGrab]);
 
   style.Colors[ImGuiCol_CheckMark]             = white;
-  style.Colors[ImGuiCol_SliderGrab]            = gray_4;
+  style.Colors[ImGuiCol_SliderGrab]            = grab;
   style.Colors[ImGuiCol_SliderGrabActive]      = white;
 
-  style.Colors[ImGuiCol_Button]                = gray_2;
+  style.Colors[ImGuiCol_Button]                = button;
   style.Colors[ImGuiCol_ButtonHovered]         = Brighten(style.Colors[ImGuiCol_Button]);
   style.Colors[ImGuiCol_ButtonActive]          = Darken(style.Colors[ImGuiCol_Button]);
 
-  style.Colors[ImGuiCol_Header]                = gray_2;
+  style.Colors[ImGuiCol_Header]                = button;
   style.Colors[ImGuiCol_HeaderHovered]         = Brighten(style.Colors[ImGuiCol_Header]);
   style.Colors[ImGuiCol_HeaderActive]          = Darken(style.Colors[ImGuiCol_Header]);
 
-  style.Colors[ImGuiCol_Separator]             = gray_2;
+  style.Colors[ImGuiCol_Separator]             = button;
   style.Colors[ImGuiCol_SeparatorHovered]      = Brighten(style.Colors[ImGuiCol_Separator]);
   style.Colors[ImGuiCol_SeparatorActive]       = Darken(style.Colors[ImGuiCol_Separator]);
 
@@ -89,11 +89,11 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_ResizeGripHovered]     = Brighten(style.Colors[ImGuiCol_ResizeGrip]);
   style.Colors[ImGuiCol_ResizeGripActive]      = Darken(style.Colors[ImGuiCol_ResizeGrip]);
 
-  style.Colors[ImGuiCol_Tab]                   = gray_1;
+  style.Colors[ImGuiCol_Tab]                   = window;
   style.Colors[ImGuiCol_TabHovered]            = ImVec4{0.63f, 0.63f, 0.63f, 0.8f};
   style.Colors[ImGuiCol_TabActive]             = ImVec4{0.48f, 0.48f, 0.48f, 1};
-  style.Colors[ImGuiCol_TabUnfocused]          = gray_1;
-  style.Colors[ImGuiCol_TabUnfocusedActive]    = gray_1;
+  style.Colors[ImGuiCol_TabUnfocused]          = window;
+  style.Colors[ImGuiCol_TabUnfocusedActive]    = window;
 
   style.Colors[ImGuiCol_DockingPreview]        = WithAlpha(lightBlue, 0.7f);
   style.Colors[ImGuiCol_DockingEmptyBg]        = ImVec4{0.2f, 0.2f, 0.2f, 1};
@@ -103,7 +103,7 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_PlotHistogram]         = ImVec4{0.4f, 0.4f, 0.4f, 0.63f};
   style.Colors[ImGuiCol_PlotHistogramHovered]  = limeGreen;
 
-  style.Colors[ImGuiCol_TableHeaderBg]         = gray_2;
+  style.Colors[ImGuiCol_TableHeaderBg]         = button;
   style.Colors[ImGuiCol_TableBorderStrong]     = black;
   style.Colors[ImGuiCol_TableBorderLight]      = black;
   style.Colors[ImGuiCol_TableRowBg]            = WithAlpha(black, 0);
