@@ -1,7 +1,7 @@
 #pragma once
 
-#include "aliases/unique.hpp"
 #include "aliases/ints.hpp"
+#include "aliases/unique.hpp"
 #include "core/document.hpp"
 #include "core/document_delegate.hpp"
 #include "core/map/map.hpp"

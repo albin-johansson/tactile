@@ -1,5 +1,7 @@
 #include "show_about_tactile.hpp"
 
+#include <IconsFontAwesome5.h>
+
 #include "imgui.h"
 
 namespace tactile {
@@ -10,7 +12,7 @@ void ShowAboutTactile(bool* open)
 
   if (ImGui::Begin("About Tactile", open, ImGuiWindowFlags_AlwaysAutoResize))
   {
-    ImGui::Text("Tactile 0.2.0");
+    ImGui::Text("Tactile 0.2.0 (C) Albin Johansson 2020-2021");
     ImGui::Separator();
 
     ImGui::Text(
@@ -18,7 +20,7 @@ void ShowAboutTactile(bool* open)
     ImGui::Text("Source code: https://www.github.com/albin-johansson/tactile");
 
     ImGui::Spacing();
-    ImGui::Text("(C) Albin Johansson 2020-2021");
+    ImGui::Text("Icons by Font Awesome.");
   }
   ImGui::End();
 

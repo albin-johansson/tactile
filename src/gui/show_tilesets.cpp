@@ -36,9 +36,7 @@ void ShowTilesets()
     }
 
     auto* drawList = ImGui::GetWindowDrawList();
-    drawList->PushClipRect(info.canvas_screen_pos,
-                           info.canvas_offset_pos,
-                           true);
+    drawList->PushClipRect(info.canvas_tl, info.canvas_br, true);
 
     ShowGrid(state, info);
 

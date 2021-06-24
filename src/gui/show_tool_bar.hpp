@@ -1,7 +1,11 @@
 #pragma once
 
+#include <entt.hpp>  // dispatcher
+
 namespace tactile {
 
-void ShowToolBar();
+class Model;
+
+void ShowToolBar(const Model& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

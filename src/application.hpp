@@ -34,6 +34,8 @@ class Application final
 
   void OnCtrlKeyStroke(cen::scan_code key);
 
+  void OnCtrlAltKeyStroke(cen::scan_code key);
+
   void OnAddMapEvent(const AddMapEvent& event);
 
   void OnOpenMapEvent(const OpenMapEvent& event);

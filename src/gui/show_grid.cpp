@@ -14,9 +14,9 @@ auto GetCanvasInfo() -> CanvasInfo
   CanvasInfo info;
 
   info.canvas_size = ImGui::GetContentRegionAvail();
-  info.canvas_screen_pos = ImGui::GetCursorScreenPos();
-  info.canvas_offset_pos = {info.canvas_screen_pos.x + info.canvas_size.x,
-                            info.canvas_screen_pos.y + info.canvas_size.y};
+  info.canvas_tl = ImGui::GetCursorScreenPos();
+  info.canvas_br = {info.canvas_tl.x + info.canvas_size.x,
+                    info.canvas_tl.y + info.canvas_size.y};
 
   return info;
 }
@@ -24,12 +24,8 @@ auto GetCanvasInfo() -> CanvasInfo
 void FillBackground(const CanvasInfo& info)
 {
   auto* drawList = ImGui::GetWindowDrawList();
-  drawList->AddRectFilled(info.canvas_screen_pos,
-                          info.canvas_offset_pos,
-                          background_color);
-  drawList->AddRect(info.canvas_screen_pos,
-                    info.canvas_offset_pos,
-                    border_color);
+  drawList->AddRectFilled(info.canvas_tl, info.canvas_br, background_color);
+  drawList->AddRect(info.canvas_tl, info.canvas_br, border_color);
 }
 
 void ShowGrid(const GridState& state, const CanvasInfo& info)
@@ -45,8 +41,8 @@ void ShowGrid(const GridState& state, const CanvasInfo& info)
        x += iGridWidth)
   {
     const auto fx = static_cast<float>(x);
-    const ImVec2 a{info.canvas_screen_pos.x + fx, info.canvas_screen_pos.y};
-    const ImVec2 b{info.canvas_screen_pos.x + fx, info.canvas_offset_pos.y};
+    const ImVec2 a{info.canvas_tl.x + fx, info.canvas_tl.y};
+    const ImVec2 b{info.canvas_tl.x + fx, info.canvas_br.y};
     drawList->AddLine(a, b, line_color);
   }
 
@@ -54,8 +50,8 @@ void ShowGrid(const GridState& state, const CanvasInfo& info)
        y += iGridHeight)
   {
     const auto fy = static_cast<float>(y);
-    const ImVec2 a{info.canvas_screen_pos.x, info.canvas_screen_pos.y + fy};
-    const ImVec2 b{info.canvas_offset_pos.x, info.canvas_screen_pos.y + fy};
+    const ImVec2 a{info.canvas_tl.x, info.canvas_tl.y + fy};
+    const ImVec2 b{info.canvas_br.x, info.canvas_tl.y + fy};
     drawList->AddLine(a, b, line_color);
   }
 }

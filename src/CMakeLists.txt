@@ -82,8 +82,6 @@ set(TACTILE_SOURCE_FILES
     gui/imgui_wrapper.hpp
     gui/show_about_tactile.cpp
     gui/show_about_tactile.hpp
-    gui/show_file_dialog.cpp
-    gui/show_file_dialog.hpp
     gui/show_grid.cpp
     gui/show_grid.hpp
     gui/show_gui.cpp
@@ -104,6 +102,13 @@ set(TACTILE_SOURCE_FILES
     gui/show_tool_bar.hpp
     gui/themes.cpp
     gui/themes.hpp
+    gui/show_tileset_dialog.cpp
+    gui/show_tileset_dialog.hpp
+
+    gui/widgets/button_ex.cpp
+    gui/widgets/button_ex.hpp
+    gui/widgets/file_dialog.cpp
+    gui/widgets/file_dialog.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})

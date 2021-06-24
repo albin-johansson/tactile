@@ -1,31 +1,70 @@
 #include "show_map_viewport.hpp"
 
+#include "core/map_document.hpp"
 #include "imgui.h"
+#include "imgui_internal.h"
 #include "show_grid.hpp"
 
 namespace tactile {
 namespace {
 
+inline constexpr auto border_color = IM_COL32(0x22, 0x22, 0x22, 0xFF);
+
 inline bool show_grid = true;
+inline GridState state;
+
+inline constexpr auto viewport_button_flags =
+    ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight;
+
+void DrawMap(ImDrawList* drawList,
+             const ImVec2 offset,
+             const MapDocument& document)
+{
+  const auto nRows = document.GetRowCount();
+  const auto nCols = document.GetColumnCount();
+  for (auto row = 0; row < nRows; ++row)
+  {
+    for (auto col = 0; col < nCols; ++col)
+    {
+      const auto x = offset.x + (state.grid_size.x * static_cast<float>(col));
+      const auto y = offset.y + (state.grid_size.y * static_cast<float>(row));
+
+      drawList->AddRect({x, y},
+                        {x + state.grid_size.x, y + state.grid_size.y},
+                        border_color);
+    }
+  }
+
+  const auto width = static_cast<float>(nCols) * state.grid_size.x;
+  const auto height = static_cast<float>(nRows) * state.grid_size.y;
+
+  drawList->AddLine(offset, {offset.x + width, offset.y}, border_color);
+  drawList->AddLine(offset, {offset.x, offset.y + height}, border_color);
+
+  drawList->AddLine({offset.x, offset.y + height},
+                    {offset.x + width, offset.y + height},
+                    border_color);
+  drawList->AddLine({offset.x + width, offset.y},
+                    {offset.x + width, offset.y + height},
+                    border_color);
+}
 
 }  // namespace
 
-void ShowMapViewport()
+void ShowMapViewport(const MapDocument* document)
 {
-  static GridState state;
   state.grid_size = {64, 64};
 
   if (ImGui::Begin("MapViewport"))
   {
+    auto* drawList = ImGui::GetWindowDrawList();
     const auto info = GetCanvasInfo();
 
     FillBackground(info);
 
-    ImGui::InvisibleButton(
-        "MapViewportCanvas",
-        info.canvas_size,
-        ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight);
-
+    ImGui::InvisibleButton("MapViewportCanvas",
+                           info.canvas_size,
+                           viewport_button_flags);
     if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Right))
     {
       const auto& io = ImGui::GetIO();
@@ -33,14 +72,17 @@ void ShowMapViewport()
       state.scroll_offset.y += io.MouseDelta.y;
     }
 
-    auto* drawList = ImGui::GetWindowDrawList();
-    drawList->PushClipRect(info.canvas_screen_pos,
-                           info.canvas_offset_pos,
-                           true);
+    drawList->PushClipRect(info.canvas_tl, info.canvas_br, true);
 
     if (show_grid)
     {
       ShowGrid(state, info);
+    }
+
+    if (document)
+    {
+      const auto offset = info.canvas_tl + state.scroll_offset;
+      DrawMap(drawList, offset, *document);
     }
 
     drawList->PopClipRect();

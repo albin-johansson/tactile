@@ -1,5 +1,6 @@
 #include "show_gui.hpp"
 
+#include "core/model.hpp"
 #include "imgui.h"
 #include "show_layers.hpp"
 #include "show_map_viewport.hpp"
@@ -10,19 +11,20 @@
 
 namespace tactile {
 
-void ShowGui()
+void ShowGui(const Model& model, entt::dispatcher& dispatcher)
 {
-  ShowMenuBar();
+  const auto* document = model.GetActiveDocument();
+
+  ShowMenuBar(model, dispatcher);
 
   ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
-  ShowToolBar();
-  ShowMapViewport();
+  ShowToolBar(model, dispatcher);
+
+  ShowMapViewport(document);
   ShowLayers();
   ShowProperties();
   ShowTilesets();
-
-  ImGui::ShowDemoWindow();
 }
 
 }  // namespace tactile

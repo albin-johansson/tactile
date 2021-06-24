@@ -73,9 +73,17 @@ void Application::PollEvents()
     }
     else if (const auto* keyEvent = event.try_get<cen::keyboard_event>())
     {
-      if (keyEvent->released())
+      if (keyEvent->pressed())
       {
-        if (keyEvent->is_active(cen::key_modifier::ctrl))
+        const auto ctrl = keyEvent->is_active(cen::key_modifier::ctrl);
+        const auto shift = keyEvent->is_active(cen::key_modifier::shift);
+        const auto alt = keyEvent->is_active(cen::key_modifier::alt);
+
+        if (ctrl && alt)
+        {
+          OnCtrlAltKeyStroke(keyEvent->scan());
+        }
+        else if (ctrl)
         {
           OnCtrlKeyStroke(keyEvent->scan());
         }
@@ -95,6 +103,14 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   if (key == cen::scancodes::o)
   {
     EnableOpenMapDialog();
+  }
+}
+
+void Application::OnCtrlAltKeyStroke(const cen::scan_code key)
+{
+  if (key == cen::scancodes::s)
+  {
+    EnableSettingsDialog();
   }
 }
 

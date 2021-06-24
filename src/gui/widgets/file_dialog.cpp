@@ -1,4 +1,4 @@
-#include "show_file_dialog.hpp"
+#include "file_dialog.hpp"
 
 #include "ImGuiFileDialog.h"
 
@@ -10,9 +10,9 @@ inline constexpr auto flags = ImGuiFileDialogFlags_DontShowHiddenFiles |
 
 }  // namespace
 
-auto ShowFileDialog(const std::string& id,
-                    const std::string& title,
-                    const czstring filter) -> FileDialogResult
+auto FileDialog(const std::string& id,
+                const std::string& title,
+                czstring filter) -> FileDialogResult
 {
   auto* dialog = IGFD::FileDialog::Instance();
   dialog->OpenDialog(id, title, filter, std::string{}, 1, nullptr, flags);

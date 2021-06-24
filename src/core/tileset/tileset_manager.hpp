@@ -109,7 +109,7 @@ class TilesetManager final
   void SetSelection(const TilesetSelection& selection);
 
   /// \brief Increments the next tileset ID value.
-  void IncrementNextTilesetId() ;
+  void IncrementNextTilesetId();
 
   /**
    * \brief Returns the tileset associated with the specified ID.

@@ -89,10 +89,8 @@ void ShowExportTab()
 
     static int tileWidth = 32;
     static int tileHeight = 32;
-    ImGui::InputInt("Tile width", &tileWidth, ImGuiInputTextFlags_CharsDecimal);
-    ImGui::InputInt("Tile height",
-                    &tileHeight,
-                    ImGuiInputTextFlags_CharsDecimal);
+    ImGui::InputInt("Tile width", &tileWidth);
+    ImGui::InputInt("Tile height", &tileHeight);
 
     ImGui::EndTabItem();
   }

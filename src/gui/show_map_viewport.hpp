@@ -2,7 +2,9 @@
 
 namespace tactile {
 
-void ShowMapViewport();
+class MapDocument;
+
+void ShowMapViewport(const MapDocument* document);
 
 void SetMapViewportGridEnabled(bool enabled) noexcept;
 

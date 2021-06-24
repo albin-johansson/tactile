@@ -13,8 +13,8 @@ struct GridState final
 struct CanvasInfo final
 {
   ImVec2 canvas_size{};
-  ImVec2 canvas_screen_pos{};
-  ImVec2 canvas_offset_pos{};
+  ImVec2 canvas_tl{};
+  ImVec2 canvas_br{};
 };
 
 [[nodiscard]] auto GetCanvasInfo() -> CanvasInfo;
