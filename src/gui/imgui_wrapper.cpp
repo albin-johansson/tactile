@@ -28,17 +28,20 @@ ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;      // NOLINT
   io.WantCaptureKeyboard = true;
 
-  io.Fonts->AddFontDefault();
+  ImFontConfig defaultCfg;
+  defaultCfg.SizePixels = 13.0f;
+  io.Fonts->AddFontDefault(&defaultCfg);
 
   // Merge in icons from Font Awesome
   static const std::array<ImWchar, 3> range = {ICON_MIN_FA, ICON_MAX_FA, 0};
-  ImFontConfig icons_config;
-  icons_config.MergeMode = true;
-  icons_config.PixelSnapH = true;
+  ImFontConfig iconCfg;
+  iconCfg.MergeMode = true;
+  iconCfg.PixelSnapH = true;
+  iconCfg.GlyphOffset = {0, 2};
 
   io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
-                               13.0f,
-                               &icons_config,
+                               15,
+                               &iconCfg,
                                range.data());
 
   ImGui::StyleColorsDark();
