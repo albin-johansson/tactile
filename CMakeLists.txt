@@ -51,6 +51,7 @@ add_header_only_lib(libRune ${LIBRARY_DIR}/rune ${RUNE_SOURCES})
 add_header_only_lib(libCenturion ${LIBRARY_DIR}/centurion ${LIBRARY_DIR}/centurion/centurion.hpp)
 add_header_only_lib(libEntt ${LIBRARY_DIR}/entt ${LIBRARY_DIR}/entt/entt.hpp)
 add_header_only_lib(libJson ${LIBRARY_DIR}/json ${LIBRARY_DIR}/json/json.hpp)
+add_header_only_lib(libFontAwesome ${LIBRARY_DIR}/fontawesome ${LIBRARY_DIR}/fontawesome/IconsFontAwesome5.h)
 
 add_subdirectory(src)
 add_subdirectory(test)

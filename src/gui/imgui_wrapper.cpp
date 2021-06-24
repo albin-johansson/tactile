@@ -1,5 +1,9 @@
 #include "imgui_wrapper.hpp"
 
+#include <IconsFontAwesome5.h>
+
+#include <array>  // array
+
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -24,8 +28,18 @@ ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
   io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;      // NOLINT
   io.WantCaptureKeyboard = true;
 
-  //  io.Fonts->AddFontFromFileTTF(R"(resources\fonts\roboto\Roboto-Regular.ttf)",
-  //                               15);
+  io.Fonts->AddFontDefault();
+
+  // Merge in icons from Font Awesome
+  static const std::array<ImWchar, 3> range = {ICON_MIN_FA, ICON_MAX_FA, 0};
+  ImFontConfig icons_config;
+  icons_config.MergeMode = true;
+  icons_config.PixelSnapH = true;
+
+  io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
+                               13.0f,
+                               &icons_config,
+                               range.data());
 
   ImGui::StyleColorsDark();
 
