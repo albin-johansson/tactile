@@ -81,8 +81,10 @@ void ShowMapViewport(const MapDocument* document)
 
     if (center_viewport && document)
     {
-      const auto width = document->GetColumnCount().get() * state.grid_size.x;
-      const auto height = document->GetRowCount().get() * state.grid_size.y;
+      const auto width = static_cast<float>(document->GetColumnCount().get()) *
+                         state.grid_size.x;
+      const auto height =
+          static_cast<float>(document->GetRowCount().get()) * state.grid_size.y;
 
       state.scroll_offset.x = (info.canvas_size.x - width) / 2.0f;
       state.scroll_offset.y = (info.canvas_size.y - height) / 2.0f;
