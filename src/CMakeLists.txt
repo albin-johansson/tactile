@@ -22,6 +22,8 @@ set(TACTILE_SOURCE_FILES
     aliases/tile_id.hpp
     aliases/tileset_id.hpp
     aliases/unique.hpp
+
+    core/document.hpp
     core/tactile_error.hpp
 
     core/algorithms/flood_fill.cpp
