@@ -3,6 +3,7 @@
 #include <utility>  // move
 
 #include "gui/show_gui.hpp"
+#include "gui/show_menu_bar.hpp"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -12,6 +13,7 @@ namespace tactile {
 Application::Application(cen::window&& window, cen::gl_context&& context)
     : mWindow{std::move(window)}
     , mContext{std::move(context)}
+    , mModel{std::make_unique<Model>()}
 {
   // clang-format off
   mDispatcher.sink<AddMapEvent>().connect<&Application::OnAddMapEvent>(this);
@@ -20,6 +22,9 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
+
+  const auto id = mModel->AddMap();
+  mModel->SelectMap(id);
 }
 
 auto Application::Run() -> int
@@ -81,8 +86,9 @@ void Application::PollEvents()
 
 void Application::UpdateFrame()
 {
-  ShowGui();
   mDispatcher.update();
+  ShowGui(*mModel, mDispatcher);
+}
 
 void Application::OnCtrlKeyStroke(const cen::scan_code key)
 {

@@ -9,6 +9,7 @@
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
 #include "core/events/undo_event.hpp"
+#include "core/model.hpp"
 
 namespace tactile {
 
@@ -23,6 +24,8 @@ class Application final
   cen::window mWindow;
   [[maybe_unused]] cen::gl_context mContext;
   entt::dispatcher mDispatcher;
+
+  Unique<Model> mModel;
   bool mQuit{};
 
   void PollEvents();

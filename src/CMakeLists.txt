@@ -24,6 +24,12 @@ set(TACTILE_SOURCE_FILES
     aliases/unique.hpp
 
     core/document.hpp
+    core/document_delegate.cpp
+    core/document_delegate.hpp
+    core/map_document.cpp
+    core/map_document.hpp
+    core/model.cpp
+    core/model.hpp
     core/tactile_error.hpp
 
     core/algorithms/flood_fill.cpp
