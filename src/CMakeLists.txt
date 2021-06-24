@@ -96,6 +96,8 @@ set(TACTILE_SOURCE_FILES
     gui/show_menu_bar.hpp
     gui/show_properties.cpp
     gui/show_properties.hpp
+    gui/show_settings.cpp
+    gui/show_settings.hpp
     gui/show_tilesets.cpp
     gui/show_tilesets.hpp
     gui/show_tool_bar.cpp
