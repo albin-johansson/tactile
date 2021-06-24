@@ -40,6 +40,7 @@ set(IMGUI_SOURCES
 
     ${LIBRARY_DIR}/imgui/ImGuiFileDialog.cpp
     ${LIBRARY_DIR}/imgui/ImGuiFileDialog.h
+    ${LIBRARY_DIR}/imgui/ImGuiFileDialogConfig.h
     )
 
 set(RUNE_SOURCES
