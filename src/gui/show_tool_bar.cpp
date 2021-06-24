@@ -16,7 +16,7 @@ void ShowToolBar(const Model& model, entt::dispatcher& dispatcher)
   const auto* document = model.GetActiveDocument();
   if (ImGui::Begin("Toolbar"))
   {
-    if (ButtonEx(ICON_FA_PLUS, "Create new tilemap."))
+    if (ButtonEx(ICON_FA_FILE, "Create new tilemap."))
     {
       dispatcher.enqueue<AddMapEvent>();
     }
@@ -44,6 +44,29 @@ void ShowToolBar(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::SameLine();
     ImGui::Spacing();
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_IMAGE, "Create tileset.", document))
+    {}
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_CROP_ALT, "Resize map.", document))
+    {}
+
+    ImGui::SameLine();
+    ImGui::Spacing();
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_STAMP, "Stamp tool.", document))
+    {}
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_FILL, "Bucket tool.", document))
+    {}
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_ERASER, "Eraser tool.", document))
+    {}
   }
 
   ImGui::End();

@@ -110,7 +110,7 @@ void ShowEditMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     show_tileset_dialog =
-        ImGui::MenuItem(ICON_FA_TH " Add tileset...", "Ctrl+T");
+        ImGui::MenuItem(ICON_FA_IMAGE " Create tileset...", "Ctrl+T");
 
     ImGui::EndMenu();
   }

@@ -1,6 +1,9 @@
 #include "show_properties.hpp"
 
+#include <IconsFontAwesome5.h>
+
 #include "imgui.h"
+#include "widgets/button_ex.hpp"
 
 namespace tactile {
 namespace {
@@ -14,15 +17,16 @@ void ShowProperties()
 {
   if (ImGui::Begin("Properties"))
   {
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
-
-    ImGui::Button("New");
-
-    ImGui::SameLine();
-    ImGui::Button("Remove");
+    if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Add property."))
+    {}
 
     ImGui::SameLine();
-    ImGui::Button("Rename");
+    if (ButtonEx(ICON_FA_MINUS_CIRCLE, "Remove property."))
+    {}
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_EDIT, "Rename property."))
+    {}
 
     ImGui::Separator();
 
@@ -44,8 +48,6 @@ void ShowProperties()
 
       ImGui::EndTable();
     }
-
-    ImGui::PopStyleVar();
   }
 
   ImGui::End();

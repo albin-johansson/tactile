@@ -1,7 +1,10 @@
 #include "show_tilesets.hpp"
 
+#include <IconsFontAwesome5.h>
+
 #include "imgui.h"
 #include "show_grid.hpp"
+#include "widgets/button_ex.hpp"
 
 namespace tactile {
 
@@ -12,11 +15,11 @@ void ShowTilesets()
 
   if (ImGui::Begin("Tilesets"))
   {
-    if (ImGui::Button("New"))
+    if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Create tileset."))
     {}
 
     ImGui::SameLine();
-    if (ImGui::Button("Remove"))
+    if (ButtonEx(ICON_FA_MINUS_CIRCLE, "Remove tileset."))
     {}
 
     const auto info = GetCanvasInfo();

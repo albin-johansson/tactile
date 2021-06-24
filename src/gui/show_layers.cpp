@@ -1,8 +1,11 @@
 #include "show_layers.hpp"
 
+#include <IconsFontAwesome5.h>
+
 #include <limits>  // numeric_limits
 
 #include "imgui.h"
+#include "widgets/button_ex.hpp"
 
 namespace tactile {
 namespace {
@@ -16,10 +19,24 @@ void ShowLayers()
 {
   if (ImGui::Begin("Layers"))
   {
-    ImGui::Button("New");
+    if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Add new layer."))
+    {}
 
     ImGui::SameLine();
-    ImGui::Button("Remove");
+    if (ButtonEx(ICON_FA_MINUS_CIRCLE, "Remove layer."))
+    {}
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_COPY, "Duplicate layer."))
+    {}
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_ARROW_UP, "Move layer up."))
+    {}
+
+    ImGui::SameLine();
+    if (ButtonEx(ICON_FA_ARROW_DOWN, "Move layer down."))
+    {}
 
     const ImVec2 size{
         std::numeric_limits<float>::min(),
