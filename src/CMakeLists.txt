@@ -113,7 +113,10 @@ add_library(libTactile ${TACTILE_SOURCE_FILES})
 add_definitions(-DCENTURION_NO_SDL_TTF)
 add_definitions(-DCENTURION_NO_SDL_MIXER)
 add_definitions(-DIMGUI_DEFINE_MATH_OPERATORS)
-add_definitions(-DMSVC) # ImGuiFileDialog needs this to avoid unsafe C-functions
+
+if (WIN32)
+  add_definitions(-DMSVC) # ImGuiFileDialog needs this to avoid unsafe C-functions
+endif ()
 
 target_include_directories(libTactile
     PUBLIC ${TACTILE_ROOT_DIR}/src
