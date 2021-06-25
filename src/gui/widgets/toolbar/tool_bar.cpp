@@ -1,4 +1,4 @@
-#include "show_tool_bar.hpp"
+#include "tool_bar.hpp"
 
 #include <IconsFontAwesome5.h>
 
@@ -6,16 +6,23 @@
 #include "core/events/redo_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
+#include "gui/show_menu_bar.hpp"
+#include "gui/widgets/button_ex.hpp"
 #include "imgui.h"
-#include "show_menu_bar.hpp"
-#include "widgets/button_ex.hpp"
 
 namespace tactile {
+namespace {
 
-void ShowToolBar(const Model& model, entt::dispatcher& dispatcher)
+inline constexpr auto flags =
+    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove |
+    ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
+
+}  // namespace
+
+void Toolbar(const Model& model, entt::dispatcher& dispatcher)
 {
   const auto* document = model.GetActiveDocument();
-  if (ImGui::Begin("Toolbar"))
+  if (ImGui::Begin("Toolbar", nullptr, flags))
   {
     if (ButtonEx(ICON_FA_FILE, "Create new tilemap."))
     {
@@ -25,7 +32,7 @@ void ShowToolBar(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
     if (ButtonEx(ICON_FA_FOLDER_OPEN, "Open tilemap."))
     {
-      cen::log::info("ShowToolBar > Open!");
+      cen::log::info("Toolbar > Open!");
     }
 
     ImGui::SameLine();

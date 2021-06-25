@@ -105,8 +105,6 @@ set(TACTILE_SOURCE_FILES
     gui/show_settings.hpp
     gui/show_tilesets.cpp
     gui/show_tilesets.hpp
-    gui/show_tool_bar.cpp
-    gui/show_tool_bar.hpp
     gui/themes.cpp
     gui/themes.hpp
     gui/show_tileset_dialog.cpp
@@ -123,6 +121,9 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/file_dialog.hpp
     gui/widgets/help_marker.cpp
     gui/widgets/help_marker.hpp
+
+    gui/widgets/toolbar/tool_bar.cpp
+    gui/widgets/toolbar/tool_bar.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
