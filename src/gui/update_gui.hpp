@@ -6,6 +6,6 @@ namespace tactile {
 
 class Model;
 
-void ShowGui(const Model& model, entt::dispatcher& dispatcher);
+void UpdateGui(const Model& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

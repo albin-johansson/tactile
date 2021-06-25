@@ -91,8 +91,8 @@ set(TACTILE_SOURCE_FILES
     gui/show_about_tactile.hpp
     gui/show_grid.cpp
     gui/show_grid.hpp
-    gui/show_gui.cpp
-    gui/show_gui.hpp
+    gui/update_gui.cpp
+    gui/update_gui.hpp
     gui/show_layers.cpp
     gui/show_layers.hpp
     gui/show_map_viewport.cpp

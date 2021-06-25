@@ -2,9 +2,9 @@
 
 #include <utility>  // move
 
-#include "gui/show_gui.hpp"
 #include "gui/show_map_viewport.hpp"
 #include "gui/show_menu_bar.hpp"
+#include "gui/update_gui.hpp"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -98,7 +98,7 @@ void Application::PollEvents()
 void Application::UpdateFrame()
 {
   mDispatcher.update();
-  ShowGui(*mModel, mDispatcher);
+  UpdateGui(*mModel, mDispatcher);
 }
 
 void Application::OnCtrlKeyStroke(const cen::scan_code key)
