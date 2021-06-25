@@ -59,7 +59,7 @@ ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
   style.GrabMinSize = 6;
   style.ScrollbarSize = 10;
 
-  style.WindowRounding = 5;
+  style.WindowRounding = 4;
   style.FrameRounding = 4;
   style.PopupRounding = 4;
   style.ScrollbarRounding = 4;
