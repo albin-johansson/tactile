@@ -40,6 +40,7 @@ void ApplyNightTheme(ImGuiStyle& style)
   const auto gray_3 = ImVec4{0.24f, 0.24f, 0.24f, 1};
   const auto button = ImVec4{0.2f, 0.2f, 0.2f, 1};
   const auto window = ImVec4{0.1f, 0.1f, 0.1f, 1};
+  const auto child = ImVec4{0.12f, 0.12f, 0.12f, 1};
   const auto black = ImVec4{0, 0, 0, 1};
   const auto white = ImVec4{1, 1, 1, 1};
   const auto lightBlue = ImVec4{0.26f, 0.59f, 0.98f, 1};
@@ -49,7 +50,7 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_Text]                  = white;
   style.Colors[ImGuiCol_TextDisabled]          = ImVec4{0.6f, 0.6f, 0.6f, 1};
   style.Colors[ImGuiCol_WindowBg]              = window;
-  style.Colors[ImGuiCol_ChildBg]               = window;
+  style.Colors[ImGuiCol_ChildBg]               = child;
   style.Colors[ImGuiCol_PopupBg]               = WithAlpha(window, 0.95f);
   style.Colors[ImGuiCol_Border]                = WithAlpha(white,  0.29f);
   style.Colors[ImGuiCol_BorderShadow]          = black;
