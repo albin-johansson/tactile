@@ -47,6 +47,8 @@ ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
   ImGui::StyleColorsDark();
 
   auto& style = ImGui::GetStyle();
+  style.WindowBorderSize = 0;
+
   style.WindowPadding = ImVec2{15, 15};
   style.FramePadding = ImVec2{5, 5};
 
