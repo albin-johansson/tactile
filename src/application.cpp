@@ -40,6 +40,7 @@ auto Application::Run() -> int
 
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL2_NewFrame(mWindow.get());
+
     ImGui::NewFrame();
     UpdateFrame();
     ImGui::EndFrame();
