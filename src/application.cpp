@@ -19,6 +19,7 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   // clang-format off
   mDispatcher.sink<AddMapEvent>().connect<&Application::OnAddMapEvent>(this);
   mDispatcher.sink<OpenMapEvent>().connect<&Application::OnOpenMapEvent>(this);
+  mDispatcher.sink<AddTilesetEvent>().connect<&Application::OnAddTilesetEvent>(this);
   mDispatcher.sink<UndoEvent>().connect<&Application::OnUndoEvent>(this);
   mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
   mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
@@ -110,6 +111,10 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   {
     EnableOpenMapDialog();
   }
+  else if (key == cen::scancodes::t)
+  {
+    EnableTilesetDialog();
+  }
   else if (key == cen::scancodes::space)
   {
     CenterMapViewport();
@@ -133,6 +138,10 @@ void Application::OnOpenMapEvent(const OpenMapEvent& event)
 {
   cen::log::info("Application::OnOpenMapEvent > %s",
                  event.path.filename().string().c_str());
+}
+
+void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
+{
 }
 
 void Application::OnUndoEvent(const UndoEvent& event)

@@ -5,6 +5,7 @@
 
 #include "aliases/unique.hpp"
 #include "core/events/add_map_event.hpp"
+#include "core/events/add_tileset_event.hpp"
 #include "core/events/center_viewport_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
@@ -40,6 +41,8 @@ class Application final
   void OnAddMapEvent(const AddMapEvent& event);
 
   void OnOpenMapEvent(const OpenMapEvent& event);
+
+  void OnAddTilesetEvent(const AddTilesetEvent& event);
 
   void OnUndoEvent(const UndoEvent& event);
 

@@ -7,6 +7,7 @@
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "imgui.h"
+#include "show_menu_bar.hpp"
 #include "widgets/button_ex.hpp"
 
 namespace tactile {
@@ -47,7 +48,9 @@ void ShowToolBar(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::SameLine();
     if (ButtonEx(ICON_FA_IMAGE, "Create tileset.", document))
-    {}
+    {
+      EnableTilesetDialog();
+    }
 
     ImGui::SameLine();
     if (ButtonEx(ICON_FA_CROP_ALT, "Resize map.", document))

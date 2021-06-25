@@ -267,7 +267,7 @@ void ShowMenuBar(const Model& model, entt::dispatcher& dispatcher)
 
   if (show_tileset_dialog)
   {
-    ShowTilesetDialog(&show_tileset_dialog);
+    ShowTilesetDialog(&show_tileset_dialog, dispatcher);
   }
 
   if constexpr (cen::is_debug_build())
@@ -287,6 +287,11 @@ void EnableOpenMapDialog()
 void EnableSettingsDialog()
 {
   show_settings_window = true;
+}
+
+void EnableTilesetDialog()
+{
+  show_tileset_dialog = true;
 }
 
 void ToggleMapGrid()
