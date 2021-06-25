@@ -1,54 +1,27 @@
 #include "show_map_viewport.hpp"
 
-#include "core/map_document.hpp"
+#include <format>         // format
+#include <string>         // string
+#include <unordered_map>  // unordered_map
+
+#include "core/model.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
+#include "render_map.hpp"
 #include "show_grid.hpp"
 
 namespace tactile {
 namespace {
 
+inline constexpr auto viewport_button_flags =
+    ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight;
 inline constexpr auto border_color = IM_COL32(0x10, 0x10, 0x10, 0xFF);
 
 inline bool show_grid = true;
 inline bool center_viewport = false;
 inline GridState state;
-
-inline constexpr auto viewport_button_flags =
-    ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight;
-
-void DrawMap(ImDrawList* drawList,
-             const ImVec2 offset,
-             const MapDocument& document)
-{
-  const auto nRows = document.GetRowCount();
-  const auto nCols = document.GetColumnCount();
-  for (auto row = 0; row < nRows; ++row)
-  {
-    for (auto col = 0; col < nCols; ++col)
-    {
-      const auto x = offset.x + (state.grid_size.x * static_cast<float>(col));
-      const auto y = offset.y + (state.grid_size.y * static_cast<float>(row));
-
-      drawList->AddRect({x, y},
-                        {x + state.grid_size.x, y + state.grid_size.y},
-                        border_color);
-    }
-  }
-
-  const auto width = static_cast<float>(nCols) * state.grid_size.x;
-  const auto height = static_cast<float>(nRows) * state.grid_size.y;
-
-  drawList->AddLine(offset, {offset.x + width, offset.y}, border_color);
-  drawList->AddLine(offset, {offset.x, offset.y + height}, border_color);
-
-  drawList->AddLine({offset.x, offset.y + height},
-                    {offset.x + width, offset.y + height},
-                    border_color);
-  drawList->AddLine({offset.x + width, offset.y},
-                    {offset.x + width, offset.y + height},
-                    border_color);
-}
+inline std::unordered_map<map_id, std::string> map_ids;
+inline int next_map_suffix = 1;
 
 void MouseTracker(const CanvasInfo& info)
 {
@@ -63,47 +36,82 @@ void MouseTracker(const CanvasInfo& info)
   }
 }
 
+void RenderActiveMap(const MapDocument& document)
+{
+  auto* drawList = ImGui::GetWindowDrawList();
+  const auto info = GetCanvasInfo();
+
+  FillBackground(info);
+  MouseTracker(info);
+
+  drawList->PushClipRect(info.canvas_tl, info.canvas_br, true);
+
+  if (center_viewport)
+  {
+    const auto rowCount = static_cast<float>(document.GetColumnCount().get());
+    const auto colCount = static_cast<float>(document.GetColumnCount().get());
+
+    const auto width = colCount * state.grid_size.x;
+    const auto height = rowCount * state.grid_size.y;
+
+    state.scroll_offset.x = (info.canvas_size.x - width) / 2.0f;
+    state.scroll_offset.y = (info.canvas_size.y - height) / 2.0f;
+
+    center_viewport = false;
+  }
+
+  if (show_grid)
+  {
+    ShowGrid(state, info);
+  }
+
+  const auto offset = info.canvas_tl + state.scroll_offset;
+  RenderMap(document, drawList, offset, state.grid_size);
+
+  drawList->PopClipRect();
+}
+
+void ValidateMapId(const map_id id)
+{
+  if (const auto it = map_ids.find(id); it == map_ids.end())
+  {
+    map_ids.try_emplace(id,
+                        std::format("Map {}##{}", next_map_suffix, id.get()));
+    ++next_map_suffix;
+  }
+}
+
 }  // namespace
 
-void ShowMapViewport(const MapDocument* document)
+void ShowMapViewport(const Model& model)
 {
+  constexpr auto flags = ImGuiWindowFlags_NoTitleBar;
+
   state.grid_size = {64, 64};
 
-  if (ImGui::Begin("MapViewport"))
+  const auto* document = model.GetActiveDocument();
+  if (ImGui::Begin("MapViewport", nullptr, flags))
   {
-    auto* drawList = ImGui::GetWindowDrawList();
-    const auto info = GetCanvasInfo();
-
-    FillBackground(info);
-    MouseTracker(info);
-
-    drawList->PushClipRect(info.canvas_tl, info.canvas_br, true);
-
-    if (center_viewport && document)
+    if (ImGui::BeginTabBar("ViewportTab"))
     {
-      const auto width = static_cast<float>(document->GetColumnCount().get()) *
-                         state.grid_size.x;
-      const auto height =
-          static_cast<float>(document->GetRowCount().get()) * state.grid_size.y;
+      for (const auto& [id, document] : model)
+      {
+        ValidateMapId(id);
 
-      state.scroll_offset.x = (info.canvas_size.x - width) / 2.0f;
-      state.scroll_offset.y = (info.canvas_size.y - height) / 2.0f;
+        const auto& key = map_ids.at(id);
+        if (ImGui::BeginTabItem(key.c_str()))
+        {
+          if (model.GetActiveMapId() == id)
+          {
+            RenderActiveMap(*document);
+          }
 
-      center_viewport = false;
+          ImGui::EndTabItem();
+        }
+      }
+
+      ImGui::EndTabBar();
     }
-
-    if (show_grid)
-    {
-      ShowGrid(state, info);
-    }
-
-    if (document)
-    {
-      const auto offset = info.canvas_tl + state.scroll_offset;
-      DrawMap(drawList, offset, *document);
-    }
-
-    drawList->PopClipRect();
   }
   ImGui::End();
 }

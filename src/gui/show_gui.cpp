@@ -20,8 +20,7 @@ void ShowGui(const Model& model, entt::dispatcher& dispatcher)
   ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
   ShowToolBar(model, dispatcher);
-
-  ShowMapViewport(document);
+  ShowMapViewport(model);
   ShowLayers();
   ShowProperties();
   ShowTilesets();

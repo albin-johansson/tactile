@@ -12,6 +12,9 @@ namespace tactile {
 class Model final
 {
  public:
+  using storage_type = rune::vector_map<map_id, Unique<MapDocument>>;
+  using const_iterator = storage_type::const_iterator;
+
   Model();
 
   [[nodiscard]] auto AddMap() -> map_id;
@@ -31,8 +34,18 @@ class Model final
     return mActiveMap;
   }
 
+  [[nodiscard]] auto begin() const noexcept -> const_iterator
+  {
+    return mDocuments.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept -> const_iterator
+  {
+    return mDocuments.end();
+  }
+
  private:
-  rune::vector_map<map_id, Unique<MapDocument>> mDocuments;
+  storage_type mDocuments;
   Maybe<map_id> mActiveMap;
   map_id mNextId{1};
 };

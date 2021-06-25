@@ -2,9 +2,9 @@
 
 namespace tactile {
 
-class MapDocument;
+class Model;
 
-void ShowMapViewport(const MapDocument* document);
+void ShowMapViewport(const Model& model);
 
 void CenterMapViewport();
 

@@ -85,6 +85,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
+    gui/render_map.cpp
+    gui/render_map.hpp
     gui/show_about_tactile.cpp
     gui/show_about_tactile.hpp
     gui/show_grid.cpp
