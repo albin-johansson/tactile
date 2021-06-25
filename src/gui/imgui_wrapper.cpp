@@ -66,6 +66,8 @@ ImGuiWrapper::ImGuiWrapper(cen::window& window, cen::gl_context& context)
   style.GrabRounding = 4;
   style.TabRounding = 4;
 
+  style.WindowMenuButtonPosition = ImGuiDir_Right;
+
   CENTURION_LOG_DEBUG("Applying the \"Night\" theme...");
   ApplyNightTheme(style);
 
