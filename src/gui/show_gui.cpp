@@ -13,8 +13,6 @@ namespace tactile {
 
 void ShowGui(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto* document = model.GetActiveDocument();
-
   ShowMenuBar(model, dispatcher);
 
   ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
