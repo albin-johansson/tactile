@@ -50,7 +50,7 @@ auto Application::Run() -> int
                0,
                static_cast<int>(io.DisplaySize.x),
                static_cast<int>(io.DisplaySize.y));
-    glClearColor(0, 0, 0, 1.0f);
+    glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 
     glClear(GL_COLOR_BUFFER_BIT);
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
