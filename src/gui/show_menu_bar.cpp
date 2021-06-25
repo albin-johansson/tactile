@@ -11,6 +11,7 @@
 #include "core/events/redo_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
+#include "gui/layout/dock_space.hpp"
 #include "gui/widgets/file_dialog.hpp"
 #include "imgui.h"
 #include "show_about_tactile.hpp"
@@ -123,6 +124,11 @@ void ShowViewAppearanceSubmenu(const Model& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMenu("Appearance"))
   {
+    if (ImGui::MenuItem("Reset layout"))
+    {
+      ResetLayout();
+    }
+
     if (ImGui::MenuItem("Mouse tools", nullptr, true))
     {}
 

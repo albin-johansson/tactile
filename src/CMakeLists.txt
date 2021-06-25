@@ -112,6 +112,11 @@ set(TACTILE_SOURCE_FILES
     gui/show_tileset_dialog.cpp
     gui/show_tileset_dialog.hpp
 
+    gui/layout/dock_space.cpp
+    gui/layout/dock_space.hpp
+    gui/layout/load_default_layout.cpp
+    gui/layout/load_default_layout.hpp
+
     gui/widgets/button_ex.cpp
     gui/widgets/button_ex.hpp
     gui/widgets/file_dialog.cpp
