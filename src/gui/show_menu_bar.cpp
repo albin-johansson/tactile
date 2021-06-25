@@ -147,7 +147,7 @@ void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_CROSSHAIRS " Center viewport", "Ctrl+SPACE"))
+    if (ImGui::MenuItem(ICON_FA_CROSSHAIRS " Center viewport", "Ctrl+Space"))
     {
       dispatcher.enqueue<CenterViewportEvent>();
     }
