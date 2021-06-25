@@ -14,7 +14,7 @@ void UpdateAboutDialog(bool* open)
     ImGui::Separator();
 
     ImGui::Text(
-        "This tool is open-source software, using under the GPL v3.0 license.");
+        "This tool is open-source software, using the GPL v3.0 license.");
     ImGui::Text("Source code: https://www.github.com/albin-johansson/tactile");
 
     ImGui::Spacing();
