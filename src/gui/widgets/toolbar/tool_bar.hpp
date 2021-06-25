@@ -6,6 +6,6 @@ namespace tactile {
 
 class Model;
 
-void Toolbar(const Model& model, entt::dispatcher& dispatcher);
+void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

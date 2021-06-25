@@ -2,9 +2,9 @@
 
 #include <utility>  // move
 
-#include "gui/show_map_viewport.hpp"
-#include "gui/show_menu_bar.hpp"
 #include "gui/update_gui.hpp"
+#include "gui/widgets/menus/menu_bar_widget.hpp"
+#include "gui/widgets/viewport/viewport_widget.hpp"
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -117,7 +117,7 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   }
   else if (key == cen::scancodes::space)
   {
-    CenterMapViewport();
+    CenterViewport();
   }
 }
 
@@ -156,7 +156,7 @@ void Application::OnRedoEvent(const RedoEvent& event)
 
 void Application::OnCenterViewportEvent(const CenterViewportEvent& event)
 {
-  CenterMapViewport();
+  CenterViewport();
 }
 
 void Application::OnQuitEvent(const QuitEvent& event)

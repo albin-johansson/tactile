@@ -2,6 +2,6 @@
 
 namespace tactile {
 
-void ShowAboutTactile(bool* open);
+void UpdateTilesetWidget();
 
 }  // namespace tactile

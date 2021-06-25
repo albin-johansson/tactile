@@ -2,6 +2,6 @@
 
 namespace tactile {
 
-void ShowSettings(bool* open);
+void UpdateSettingsDialog(bool* open);
 
 }  // namespace tactile

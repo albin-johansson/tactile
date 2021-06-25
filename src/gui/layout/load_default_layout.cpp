@@ -18,7 +18,7 @@ void LoadDefaultLayout(ImGuiID id)
   const auto layers = ImGui::DockBuilderSplitNode(tilesets, ImGuiDir_Down, 0.25f, nullptr, &tilesets);
   // clang-format on
 
-  ImGui::DockBuilderDockWindow("MapViewport", root);
+  ImGui::DockBuilderDockWindow("Viewport", root);
   ImGui::DockBuilderDockWindow("Toolbar", tools);
   ImGui::DockBuilderDockWindow("Properties", props);
   ImGui::DockBuilderDockWindow("Tilesets", tilesets);

@@ -1,9 +1,9 @@
-#include "show_properties.hpp"
+#include "properties_widget.hpp"
 
 #include <IconsFontAwesome5.h>
 
+#include "gui/widgets/button_ex.hpp"
 #include "imgui.h"
-#include "widgets/button_ex.hpp"
 
 namespace tactile {
 namespace {
@@ -13,7 +13,7 @@ inline constexpr auto table_flags =
 
 }  // namespace
 
-void ShowProperties()
+void UpdatePropertiesWidget()
 {
   if (ImGui::Begin("Properties"))
   {

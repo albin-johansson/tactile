@@ -1,4 +1,4 @@
-#include "show_tileset_dialog.hpp"
+#include "tileset_dialog.hpp"
 
 #include <array>        // array
 #include <cassert>      // assert
@@ -8,9 +8,9 @@
 
 #include "aliases/ints.hpp"
 #include "core/events/add_tileset_event.hpp"
+#include "gui/widgets/button_ex.hpp"
+#include "gui/widgets/file_dialog.hpp"
 #include "imgui.h"
-#include "widgets/button_ex.hpp"
-#include "widgets/file_dialog.hpp"
 
 namespace tactile {
 namespace {
@@ -79,7 +79,7 @@ void ResetInputs()
 
 }  // namespace
 
-void ShowTilesetDialog(bool* open, entt::dispatcher& dispatcher)
+void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking;

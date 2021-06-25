@@ -1,14 +1,14 @@
-#include "show_tilesets.hpp"
+#include "tileset_widget.hpp"
 
 #include <IconsFontAwesome5.h>
 
+#include "gui/show_grid.hpp"
+#include "gui/widgets/button_ex.hpp"
 #include "imgui.h"
-#include "show_grid.hpp"
-#include "widgets/button_ex.hpp"
 
 namespace tactile {
 
-void ShowTilesets()
+void UpdateTilesetWidget()
 {
   static GridState state;
   state.grid_size = {32, 32};

@@ -2,6 +2,6 @@
 
 namespace tactile {
 
-void ShowLayers();
+void UpdateLayerWidget();
 
 }  // namespace tactile

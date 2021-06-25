@@ -2,26 +2,26 @@
 
 #include "core/model.hpp"
 #include "layout/dock_space.hpp"
-#include "show_layers.hpp"
-#include "show_map_viewport.hpp"
-#include "show_menu_bar.hpp"
-#include "show_properties.hpp"
-#include "show_tilesets.hpp"
+#include "widgets/layers/layer_widget.hpp"
+#include "widgets/menus/menu_bar_widget.hpp"
+#include "widgets/properties/properties_widget.hpp"
+#include "widgets/tilesets/tileset_widget.hpp"
 #include "widgets/toolbar/tool_bar.hpp"
+#include "widgets/viewport/viewport_widget.hpp"
 
 namespace tactile {
 
 void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
 {
-  ShowMenuBar(model, dispatcher);
+  UpdateMenuBarWidget(model, dispatcher);
 
   UpdateDockSpace();
 
-  Toolbar(model, dispatcher);
-  ShowMapViewport(model);
-  ShowLayers();
-  ShowProperties();
-  ShowTilesets();
+  UpdateToolbarWidget(model, dispatcher);
+  UpdateViewportWidget(model);
+  UpdateLayerWidget();
+  UpdatePropertiesWidget();
+  UpdateTilesetWidget();
 }
 
 }  // namespace tactile

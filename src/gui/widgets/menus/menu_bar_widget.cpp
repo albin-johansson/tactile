@@ -1,4 +1,4 @@
-#include "show_menu_bar.hpp"
+#include "menu_bar_widget.hpp"
 
 #include <IconsFontAwesome5.h>
 
@@ -12,12 +12,12 @@
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "gui/layout/dock_space.hpp"
+#include "gui/widgets/dialogs/about_dialog.hpp"
+#include "gui/widgets/dialogs/settings_dialog.hpp"
+#include "gui/widgets/dialogs/tileset_dialog.hpp"
 #include "gui/widgets/file_dialog.hpp"
+#include "gui/widgets/viewport/viewport_widget.hpp"
 #include "imgui.h"
-#include "show_about_tactile.hpp"
-#include "show_map_viewport.hpp"
-#include "show_settings.hpp"
-#include "show_tileset_dialog.hpp"
 
 namespace tactile {
 namespace {
@@ -162,7 +162,7 @@ void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         "Ctrl+G",
                         &is_grid_item_toggled))
     {
-      SetMapViewportGridEnabled(is_grid_item_toggled);
+      SetViewportGridEnabled(is_grid_item_toggled);
     }
 
     ImGui::Separator();
@@ -234,7 +234,7 @@ void ShowMapFileDialog(entt::dispatcher& dispatcher)
 
 }  // namespace
 
-void ShowMenuBar(const Model& model, entt::dispatcher& dispatcher)
+void UpdateMenuBarWidget(const Model& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar())
   {
@@ -248,12 +248,12 @@ void ShowMenuBar(const Model& model, entt::dispatcher& dispatcher)
 
   if (show_settings_window)
   {
-    ShowSettings(&show_settings_window);
+    UpdateSettingsDialog(&show_settings_window);
   }
 
   if (show_about_tactile_window)
   {
-    ShowAboutTactile(&show_about_tactile_window);
+    UpdateAboutDialog(&show_about_tactile_window);
   }
 
   if (show_about_imgui_window)
@@ -273,7 +273,7 @@ void ShowMenuBar(const Model& model, entt::dispatcher& dispatcher)
 
   if (show_tileset_dialog)
   {
-    ShowTilesetDialog(&show_tileset_dialog, dispatcher);
+    UpdateTilesetDialog(&show_tileset_dialog, dispatcher);
   }
 
   if constexpr (cen::is_debug_build())
@@ -303,7 +303,7 @@ void EnableTilesetDialog()
 void ToggleMapGrid()
 {
   is_grid_item_toggled = !is_grid_item_toggled;
-  SetMapViewportGridEnabled(is_grid_item_toggled);
+  SetViewportGridEnabled(is_grid_item_toggled);
 }
 
 }  // namespace tactile

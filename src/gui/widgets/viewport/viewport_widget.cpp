@@ -1,14 +1,14 @@
-#include "show_map_viewport.hpp"
+#include "viewport_widget.hpp"
 
 #include <format>         // format
 #include <string>         // string
 #include <unordered_map>  // unordered_map
 
 #include "core/model.hpp"
+#include "gui/show_grid.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "render_map.hpp"
-#include "show_grid.hpp"
 
 namespace tactile {
 namespace {
@@ -83,14 +83,14 @@ void ValidateMapId(const map_id id)
 
 }  // namespace
 
-void ShowMapViewport(const Model& model)
+void UpdateViewportWidget(const Model& model)
 {
   constexpr auto flags = ImGuiWindowFlags_NoTitleBar;
 
   state.grid_size = {64, 64};
 
   const auto* document = model.GetActiveDocument();
-  if (ImGui::Begin("MapViewport", nullptr, flags))
+  if (ImGui::Begin("Viewport", nullptr, flags))
   {
     if (ImGui::BeginTabBar("ViewportTab"))
     {
@@ -116,12 +116,12 @@ void ShowMapViewport(const Model& model)
   ImGui::End();
 }
 
-void CenterMapViewport()
+void CenterViewport()
 {
   center_viewport = true;
 }
 
-void SetMapViewportGridEnabled(const bool enabled) noexcept
+void SetViewportGridEnabled(const bool enabled) noexcept
 {
   show_grid = enabled;
 }

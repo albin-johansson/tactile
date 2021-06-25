@@ -6,8 +6,8 @@
 #include "core/events/redo_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
-#include "gui/show_menu_bar.hpp"
 #include "gui/widgets/button_ex.hpp"
+#include "gui/widgets/menus/menu_bar_widget.hpp"
 #include "imgui.h"
 
 namespace tactile {
@@ -19,7 +19,7 @@ inline constexpr auto flags =
 
 }  // namespace
 
-void Toolbar(const Model& model, entt::dispatcher& dispatcher)
+void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 {
   const auto* document = model.GetActiveDocument();
   if (ImGui::Begin("Toolbar", nullptr, flags))
@@ -32,7 +32,7 @@ void Toolbar(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
     if (ButtonEx(ICON_FA_FOLDER_OPEN, "Open tilemap."))
     {
-      cen::log::info("Toolbar > Open!");
+      cen::log::info("UpdateToolbarWidget > Open!");
     }
 
     ImGui::SameLine();

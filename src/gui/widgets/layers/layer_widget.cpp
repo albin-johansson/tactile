@@ -1,11 +1,11 @@
-#include "show_layers.hpp"
+#include "layer_widget.hpp"
 
 #include <IconsFontAwesome5.h>
 
 #include <limits>  // numeric_limits
 
+#include "gui/widgets/button_ex.hpp"
 #include "imgui.h"
-#include "widgets/button_ex.hpp"
 
 namespace tactile {
 namespace {
@@ -15,7 +15,7 @@ inline int selected_layer = 0;
 
 }  // namespace
 
-void ShowLayers()
+void UpdateLayerWidget()
 {
   if (ImGui::Begin("Layers"))
   {

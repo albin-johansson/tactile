@@ -1,12 +1,10 @@
-#include "show_about_tactile.hpp"
-
-#include <IconsFontAwesome5.h>
+#include "about_dialog.hpp"
 
 #include "imgui.h"
 
 namespace tactile {
 
-void ShowAboutTactile(bool* open)
+void UpdateAboutDialog(bool* open)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2{200, 150});
 

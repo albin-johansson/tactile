@@ -2,6 +2,6 @@
 
 namespace tactile {
 
-void ShowProperties();
+void UpdatePropertiesWidget();
 
 }  // namespace tactile

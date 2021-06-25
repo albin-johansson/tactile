@@ -1,7 +1,7 @@
-#include "show_settings.hpp"
+#include "settings_dialog.hpp"
 
+#include "gui/widgets/help_marker.hpp"
 #include "imgui.h"
-#include "widgets/help_marker.hpp"
 
 namespace tactile {
 namespace {
@@ -86,7 +86,7 @@ void ShowExportTab()
 
 }  // namespace
 
-void ShowSettings(bool* open)
+void UpdateSettingsDialog(bool* open)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2{500, 300});
 

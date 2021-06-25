@@ -85,30 +85,12 @@ set(TACTILE_SOURCE_FILES
 
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
-    gui/render_map.cpp
-    gui/render_map.hpp
-    gui/show_about_tactile.cpp
-    gui/show_about_tactile.hpp
     gui/show_grid.cpp
     gui/show_grid.hpp
     gui/update_gui.cpp
     gui/update_gui.hpp
-    gui/show_layers.cpp
-    gui/show_layers.hpp
-    gui/show_map_viewport.cpp
-    gui/show_map_viewport.hpp
-    gui/show_menu_bar.cpp
-    gui/show_menu_bar.hpp
-    gui/show_properties.cpp
-    gui/show_properties.hpp
-    gui/show_settings.cpp
-    gui/show_settings.hpp
-    gui/show_tilesets.cpp
-    gui/show_tilesets.hpp
     gui/themes.cpp
     gui/themes.hpp
-    gui/show_tileset_dialog.cpp
-    gui/show_tileset_dialog.hpp
 
     gui/layout/dock_space.cpp
     gui/layout/dock_space.hpp
@@ -122,8 +104,32 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/help_marker.cpp
     gui/widgets/help_marker.hpp
 
+    gui/widgets/dialogs/about_dialog.cpp
+    gui/widgets/dialogs/about_dialog.hpp
+    gui/widgets/dialogs/settings_dialog.cpp
+    gui/widgets/dialogs/settings_dialog.hpp
+    gui/widgets/dialogs/tileset_dialog.cpp
+    gui/widgets/dialogs/tileset_dialog.hpp
+
+    gui/widgets/layers/layer_widget.cpp
+    gui/widgets/layers/layer_widget.hpp
+
+    gui/widgets/menus/menu_bar_widget.cpp
+    gui/widgets/menus/menu_bar_widget.hpp
+
+    gui/widgets/properties/properties_widget.cpp
+    gui/widgets/properties/properties_widget.hpp
+
+    gui/widgets/tilesets/tileset_widget.cpp
+    gui/widgets/tilesets/tileset_widget.hpp
+
     gui/widgets/toolbar/tool_bar.cpp
     gui/widgets/toolbar/tool_bar.hpp
+
+    gui/widgets/viewport/render_map.cpp
+    gui/widgets/viewport/render_map.hpp
+    gui/widgets/viewport/viewport_widget.cpp
+    gui/widgets/viewport/viewport_widget.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})

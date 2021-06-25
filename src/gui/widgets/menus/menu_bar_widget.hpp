@@ -6,7 +6,7 @@ namespace tactile {
 
 class Model;
 
-void ShowMenuBar(const Model& model, entt::dispatcher& dispatcher);
+void UpdateMenuBarWidget(const Model& model, entt::dispatcher& dispatcher);
 
 void EnableOpenMapDialog();
 
