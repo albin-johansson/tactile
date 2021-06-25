@@ -79,6 +79,9 @@ set(TACTILE_SOURCE_FILES
     core/tileset/tileset_manager.hpp
     core/tileset/tileset_selection.hpp
 
+    filesystem/get_persistent_file_path.cpp
+    filesystem/get_persistent_file_path.hpp
+
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
     gui/show_about_tactile.cpp
