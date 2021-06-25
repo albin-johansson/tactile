@@ -114,6 +114,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/button_ex.hpp
     gui/widgets/file_dialog.cpp
     gui/widgets/file_dialog.hpp
+    gui/widgets/help_marker.cpp
+    gui/widgets/help_marker.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})

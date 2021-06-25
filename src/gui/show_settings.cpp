@@ -1,6 +1,7 @@
 #include "show_settings.hpp"
 
 #include "imgui.h"
+#include "widgets/help_marker.hpp"
 
 namespace tactile {
 namespace {
@@ -37,19 +38,6 @@ void ShowThemeBar()
     ImGui::Combo("Theme", &currentItem, "Dark\0Light\0\0");
 
     ImGui::EndTabItem();
-  }
-}
-
-void HelpMarker(const char* desc)
-{
-  ImGui::TextDisabled("(?)");
-  if (ImGui::IsItemHovered())
-  {
-    ImGui::BeginTooltip();
-    ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);
-    ImGui::TextUnformatted(desc);
-    ImGui::PopTextWrapPos();
-    ImGui::EndTooltip();
   }
 }
 
