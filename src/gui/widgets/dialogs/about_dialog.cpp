@@ -1,5 +1,7 @@
 #include "about_dialog.hpp"
 
+#include <IconsFontAwesome5.h>
+
 #include "imgui.h"
 
 namespace tactile {
@@ -8,7 +10,9 @@ void UpdateAboutDialog(bool* open)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2{200, 150});
 
-  if (ImGui::Begin("About Tactile", open, ImGuiWindowFlags_AlwaysAutoResize))
+  if (ImGui::Begin(ICON_FA_QUESTION_CIRCLE " About Tactile",
+                   open,
+                   ImGuiWindowFlags_AlwaysAutoResize))
   {
     ImGui::Text("Tactile 0.2.0 (C) Albin Johansson 2020-2021");
     ImGui::Separator();
