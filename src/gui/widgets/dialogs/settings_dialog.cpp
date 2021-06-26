@@ -90,7 +90,7 @@ void UpdateSettingsDialog(bool* open)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2{500, 300});
 
-  if (ImGui::Begin("Settings", open))
+  if (ImGui::Begin("Settings", open, ImGuiWindowFlags_NoCollapse))
   {
     if (ImGui::BeginTabBar("SettingsTabBar"))
     {
