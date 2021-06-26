@@ -1,7 +1,7 @@
 #pragma once
 
-class ImDrawList;
-class ImVec2;
+struct ImDrawList;
+struct ImVec2;
 
 namespace tactile {
 
