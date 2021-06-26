@@ -55,6 +55,10 @@ class MapDocument final : public IDocument
   /// \name Map document API
   /// \{
 
+  [[nodiscard]] auto GetMap() -> Map&;
+
+  [[nodiscard]] auto GetMap() const -> const Map&;
+
   [[nodiscard]] auto GetRowCount() const -> row_t;
 
   [[nodiscard]] auto GetColumnCount() const -> col_t;

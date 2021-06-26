@@ -91,6 +91,16 @@ auto MapDocument::GetAbsolutePath() const -> std::filesystem::path
   return mDelegate->GetAbsolutePath();
 }
 
+auto MapDocument::GetMap() -> Map&
+{
+  return *mMap;
+}
+
+auto MapDocument::GetMap() const -> const Map&
+{
+  return *mMap;
+}
+
 auto MapDocument::GetRowCount() const -> row_t
 {
   return mMap->GetRowCount();
