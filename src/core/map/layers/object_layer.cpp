@@ -6,7 +6,9 @@
 namespace tactile {
 
 ObjectLayer::ObjectLayer() : mDelegate{LayerType::ObjectLayer}
-{}
+{
+  SetName("Object layer");
+}
 
 void ObjectLayer::SetVisible(const bool visible) noexcept
 {
