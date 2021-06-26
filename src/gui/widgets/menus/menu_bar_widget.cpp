@@ -13,6 +13,7 @@
 #include "core/model.hpp"
 #include "gui/layout/dock_space.hpp"
 #include "gui/widgets/dialogs/about_dialog.hpp"
+#include "gui/widgets/dialogs/credits_dialog.hpp"
 #include "gui/widgets/dialogs/settings_dialog.hpp"
 #include "gui/widgets/dialogs/tileset_dialog.hpp"
 #include "gui/widgets/file_dialog.hpp"
@@ -29,6 +30,7 @@ inline bool show_demo_window = false;
 inline bool show_settings_window = false;
 inline bool show_map_file_dialog = false;
 inline bool show_tileset_dialog = false;
+inline bool show_credits_dialog = false;
 
 inline bool is_grid_item_toggled = true;
 
@@ -204,6 +206,7 @@ void ShowHelpMenu()
         ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About Tactile...");
     show_about_imgui_window =
         ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About ImGui...");
+    show_credits_dialog = ImGui::MenuItem("Credits...");
 
     ImGui::Separator();
 
@@ -257,6 +260,11 @@ void UpdateMenuBarWidget(const Model& model, entt::dispatcher& dispatcher)
   if (show_about_tactile_window)
   {
     UpdateAboutDialog(&show_about_tactile_window);
+  }
+
+  if (show_credits_dialog)
+  {
+    UpdateCreditsDialog(&show_credits_dialog);
   }
 
   if (show_about_imgui_window)
