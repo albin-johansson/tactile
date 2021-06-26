@@ -90,6 +90,8 @@ void UpdateViewportWidget(const Model& model)
   state.grid_size = {64, 64};
 
   const auto* document = model.GetActiveDocument();
+
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
   if (ImGui::Begin("Viewport", nullptr, flags))
   {
     if (ImGui::BeginTabBar("ViewportTab"))
@@ -113,6 +115,8 @@ void UpdateViewportWidget(const Model& model)
       ImGui::EndTabBar();
     }
   }
+
+  ImGui::PopStyleVar();
   ImGui::End();
 }
 
