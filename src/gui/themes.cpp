@@ -78,7 +78,7 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_ButtonHovered]         = Brighten(style.Colors[ImGuiCol_Button]);
   style.Colors[ImGuiCol_ButtonActive]          = Darken(style.Colors[ImGuiCol_Button]);
 
-  style.Colors[ImGuiCol_Header]                = button;
+  style.Colors[ImGuiCol_Header]                = Brighten(button);
   style.Colors[ImGuiCol_HeaderHovered]         = Brighten(style.Colors[ImGuiCol_Header]);
   style.Colors[ImGuiCol_HeaderActive]          = Darken(style.Colors[ImGuiCol_Header]);
 
