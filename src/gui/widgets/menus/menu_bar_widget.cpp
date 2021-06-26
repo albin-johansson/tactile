@@ -122,12 +122,14 @@ void ShowEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
 void ShowViewAppearanceSubmenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMenu("Appearance"))
+  if (ImGui::BeginMenu("Widgets"))
   {
     if (ImGui::MenuItem("Reset layout"))
     {
       ResetLayout();
     }
+
+    ImGui::Separator();
 
     if (ImGui::MenuItem("Mouse tools", nullptr, true))
     {}
@@ -200,7 +202,8 @@ void ShowHelpMenu()
   {
     show_about_tactile_window =
         ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About Tactile...");
-    show_about_imgui_window = ImGui::MenuItem("About ImGui...");
+    show_about_imgui_window =
+        ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About ImGui...");
 
     ImGui::Separator();
 
