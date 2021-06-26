@@ -27,8 +27,15 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
-  const auto id = mModel->AddMap();
-  mModel->SelectMap(id);
+  const auto a = mModel->AddMap();
+  const auto b = mModel->AddMap();
+  mModel->SelectMap(b);
+
+  auto* document = mModel->GetDocument(b);
+  auto& map = document->GetMap();
+  map.AddTileLayer();
+  map.AddObjectLayer();
+  map.SelectLayer(1_layer);
 }
 
 auto Application::Run() -> int
@@ -167,6 +174,7 @@ void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
   {
     auto& map = document->GetMap();
     map.SelectLayer(event.id);
+    CENTURION_LOG_DEBUG("Selected layer %i!", event.id.get());
   }
 }
 

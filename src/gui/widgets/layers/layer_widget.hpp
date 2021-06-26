@@ -1,7 +1,11 @@
 #pragma once
 
+#include <entt.hpp> // dispatcher
+
 namespace tactile {
 
-void UpdateLayerWidget();
+class Model;
+
+void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher);
 
 }  // namespace tactile

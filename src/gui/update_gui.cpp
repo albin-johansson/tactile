@@ -19,7 +19,7 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
 
   UpdateToolbarWidget(model, dispatcher);
   UpdateViewportWidget(model);
-  UpdateLayerWidget();
+  UpdateLayerWidget(model, dispatcher);
   UpdatePropertiesWidget();
   UpdateTilesetWidget();
 }
