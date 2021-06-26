@@ -47,6 +47,7 @@ set(TACTILE_SOURCE_FILES
     core/events/open_map_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp
+    core/events/select_layer_event.hpp
     core/events/undo_event.hpp
 
     core/map/map.cpp

@@ -23,6 +23,7 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<UndoEvent>().connect<&Application::OnUndoEvent>(this);
   mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
   mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
+  mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
@@ -158,6 +159,15 @@ void Application::OnRedoEvent(const RedoEvent& event)
 void Application::OnCenterViewportEvent(const CenterViewportEvent& event)
 {
   CenterViewport();
+}
+
+void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    auto& map = document->GetMap();
+    map.SelectLayer(event.id);
+  }
 }
 
 void Application::OnQuitEvent(const QuitEvent& event)

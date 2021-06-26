@@ -10,6 +10,7 @@
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
+#include "core/events/select_layer_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 
@@ -49,6 +50,8 @@ class Application final
   void OnRedoEvent(const RedoEvent& event);
 
   void OnCenterViewportEvent(const CenterViewportEvent& event);
+
+  void OnSelectLayerEvent(const SelectLayerEvent& event);
 
   void OnQuitEvent(const QuitEvent& event);
 };
