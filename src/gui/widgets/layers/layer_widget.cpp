@@ -58,8 +58,9 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
     const auto& name = names.at(id);
 
     const auto isSelected = id == activeLayerId;
-    ImGui::Selectable(name.c_str()), isSelected);
+    ImGui::Selectable(name.c_str(), isSelected);
 
+    
     if (ImGui::IsItemActivated())
     {
       dispatcher.enqueue<SelectLayerEvent>(id);
