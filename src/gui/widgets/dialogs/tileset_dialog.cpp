@@ -81,8 +81,9 @@ void ResetInputs()
 
 void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
 {
-  constexpr auto flags =
-      ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking;
+  constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize |
+                         ImGuiWindowFlags_NoDocking |
+                         ImGuiWindowFlags_NoCollapse;
   if (ImGui::Begin("Add tileset", open, flags))
   {
     ImGui::Text("Select an image which contains the tiles aligned in a grid.");
