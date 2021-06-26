@@ -74,6 +74,11 @@ auto main(int argc, char** argv) -> int
                          cen::window::resizable | cen::window::high_dpi;
   cen::window window{"Tactile", cen::window::default_size(), flags};
 
+  {
+    const cen::surface icon{"resources/icon.png"};
+    window.set_icon(icon);
+  }
+
   cen::gl_context context{window};
   context.make_current(window);
 
