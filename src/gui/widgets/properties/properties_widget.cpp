@@ -9,7 +9,7 @@ namespace tactile {
 namespace {
 
 inline constexpr auto table_flags =
-    ImGuiTableFlags_BordersOuter | ImGuiTableFlags_Resizable;
+    ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable;
 
 }  // namespace
 
