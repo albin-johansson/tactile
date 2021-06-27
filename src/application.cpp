@@ -36,11 +36,9 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
-  const auto a = mModel->AddMap();
-  const auto b = mModel->AddMap();
-  mModel->SelectMap(b);
+  OnAddMapEvent();
 
-  auto* document = mModel->GetDocument(b);
+  auto* document = mModel->GetActiveDocument();
   auto& map = document->GetMap();
   map.AddTileLayer();
   map.AddObjectLayer();
