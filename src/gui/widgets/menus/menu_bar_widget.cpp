@@ -84,12 +84,18 @@ void ShowEditMenu(const Model& model, entt::dispatcher& dispatcher)
   const auto hasActiveMap = model.GetActiveMapId().has_value();
   if (ImGui::BeginMenu("Edit"))
   {
-    if (ImGui::MenuItem(ICON_FA_UNDO " Undo", "Ctrl+Z"))
+    if (ImGui::MenuItem(ICON_FA_UNDO " Undo",
+                        "Ctrl+Z",
+                        false,
+                        document && document->CanUndo()))
     {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (ImGui::MenuItem(ICON_FA_REDO " Redo", "Ctrl+Y"))
+    if (ImGui::MenuItem(ICON_FA_REDO " Redo",
+                        "Ctrl+Y",
+                        false,
+                        document && document->CanRedo()))
     {
       dispatcher.enqueue<RedoEvent>();
     }
