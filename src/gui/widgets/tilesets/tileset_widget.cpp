@@ -2,6 +2,7 @@
 
 #include <IconsFontAwesome5.h>
 
+#include "core/model.hpp"
 #include "gui/show_grid.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "imgui.h"
@@ -13,12 +14,12 @@ inline bool is_visible = true;
 
 }  // namespace
 
-void UpdateTilesetWidget()
+void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher)
 {
   static GridState state;
   state.grid_size = {32, 32};
 
-  if (!is_visible)
+  if (!is_visible || !model.GetActiveMapId())
   {
     return;
   }

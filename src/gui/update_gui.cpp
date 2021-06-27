@@ -20,8 +20,8 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
   UpdateToolbarWidget(model, dispatcher);
   UpdateViewportWidget(model, dispatcher);
   UpdateLayerWidget(model, dispatcher);
-  UpdatePropertiesWidget();
-  UpdateTilesetWidget();
+  UpdatePropertiesWidget(model, dispatcher);
+  UpdateTilesetWidget(model, dispatcher);
 }
 
 }  // namespace tactile

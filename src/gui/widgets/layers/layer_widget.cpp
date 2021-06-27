@@ -57,7 +57,7 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
 
 void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!is_visible)
+  if (!is_visible || !model.GetActiveMapId())
   {
     return;
   }

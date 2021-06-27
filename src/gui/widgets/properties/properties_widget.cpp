@@ -2,6 +2,7 @@
 
 #include <IconsFontAwesome5.h>
 
+#include "core/model.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "imgui.h"
 
@@ -15,9 +16,9 @@ inline constexpr auto table_flags =
 
 }  // namespace
 
-void UpdatePropertiesWidget()
+void UpdatePropertiesWidget(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!is_visible)
+  if (!is_visible || !model.GetActiveMapId())
   {
     return;
   }
