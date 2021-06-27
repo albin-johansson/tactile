@@ -44,13 +44,16 @@ void UpdateCreditsDialog(bool* open)
       ImGui::TableHeadersRow();
 
       Row("Centurion", "6.1.0", "MIT");
+      Row("Dear ImGui", "1.84", "MIT");
       Row("EnTT", "3.7.1", "MIT");
       Row("GLEW", "2.1.0", "BSD/MIT");
       Row("IconFontCppHeaders", "N/A", "Zlib");
-      Row("Dear ImGui", "1.84", "MIT");
+      Row("ImGuiFileDialog", "0.5.5", "MIT");
       Row("JSON for Modern C++", "3.9.1", "MIT");
       Row("Nenya", "0.1.0", "MIT");
       Row("Rune", "0.1.0", "MIT");
+      Row("SDL", "2.0.14", "Zlib");
+      Row("SDL_image", "2.0.5", "Zlib");
 
       ImGui::EndTable();
     }
