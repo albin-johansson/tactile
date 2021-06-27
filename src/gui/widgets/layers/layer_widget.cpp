@@ -2,7 +2,6 @@
 
 #include <IconsFontAwesome5.h>
 
-#include <array>          // array
 #include <format>         // format
 #include <limits>         // numeric_limits
 #include <string>         // string
@@ -21,25 +20,6 @@ inline std::unordered_map<layer_id, std::string> names;
 
 void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
 {
-  //  static std::array strings{"AAAA", "BBBB", "CCCC"};
-  //  static usize currentIndex = 0;
-  //
-  //  for (usize index = 0; const auto str : strings)
-  //  {
-  //    const auto isSelected = currentIndex == index;
-  //    if (ImGui::Selectable(str, isSelected))
-  //    {
-  //      currentIndex = index;
-  //    }
-  //
-  //    if (isSelected)
-  //    {
-  //      ImGui::SetItemDefaultFocus();
-  //    }
-  //
-  //    ++index;
-  //  }
-
   const auto& map = document.GetMap();
   const auto activeLayerId = map.GetActiveLayerId();
   for (const auto& [id, layer] : map)
@@ -60,7 +40,6 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
     const auto isSelected = id == activeLayerId;
     ImGui::Selectable(name.c_str(), isSelected);
 
-    
     if (ImGui::IsItemActivated())
     {
       dispatcher.enqueue<SelectLayerEvent>(id);
