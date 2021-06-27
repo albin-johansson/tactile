@@ -4,7 +4,9 @@
 #include <string>         // string
 #include <unordered_map>  // unordered_map
 
+#include "core/events/add_map_event.hpp"
 #include "core/events/close_map_event.hpp"
+#include "core/events/open_map_event.hpp"
 #include "core/events/select_map_event.hpp"
 #include "core/model.hpp"
 #include "gui/show_grid.hpp"
@@ -119,16 +121,26 @@ void ShowMaps(const Model& model, entt::dispatcher& dispatcher)
   }
 }
 
-void ShowNoActiveMapContent()
+void ShowNoActiveMapContent(entt::dispatcher& dispatcher)
 {
-  // TODO
+  ImGui::Indent(50);
+
   ImGui::Spacing();
   ImGui::Spacing();
 
-  ImGui::Indent();
   ImGui::Text("No active map");
-  ImGui::Text("Create new map | Ctrl+N");
-  ImGui::Text("Open existing map | Ctrl+O");
+
+  ImGui::Spacing();
+  if (ImGui::Button("Create new map"))
+  {
+    dispatcher.enqueue<AddMapEvent>();
+  }
+
+  ImGui::Spacing();
+  if (ImGui::Button("Open existing map"))
+  {
+    dispatcher.enqueue<OpenMapEvent>();
+  }
 }
 
 }  // namespace
@@ -150,7 +162,7 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
     }
     else
     {
-      ShowNoActiveMapContent();
+      ShowNoActiveMapContent(dispatcher);
     }
   }
 
