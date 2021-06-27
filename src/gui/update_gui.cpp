@@ -18,7 +18,7 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
   UpdateDockSpace();
 
   UpdateToolbarWidget(model, dispatcher);
-  UpdateViewportWidget(model);
+  UpdateViewportWidget(model, dispatcher);
   UpdateLayerWidget(model, dispatcher);
   UpdatePropertiesWidget();
   UpdateTilesetWidget();

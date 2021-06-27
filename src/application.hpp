@@ -15,6 +15,7 @@
 #include "core/events/remove_column_event.hpp"
 #include "core/events/remove_row_event.hpp"
 #include "core/events/select_layer_event.hpp"
+#include "core/events/select_map_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 
@@ -54,6 +55,8 @@ class Application final
   void OnRedoEvent(const RedoEvent& event);
 
   void OnCenterViewportEvent();
+
+  void OnSelectMapEvent(const SelectMapEvent& event);
 
   void OnSelectLayerEvent(const SelectLayerEvent& event);
 

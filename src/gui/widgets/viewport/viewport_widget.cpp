@@ -4,6 +4,7 @@
 #include <string>         // string
 #include <unordered_map>  // unordered_map
 
+#include "core/events/select_map_event.hpp"
 #include "core/model.hpp"
 #include "gui/show_grid.hpp"
 #include "imgui.h"
@@ -83,7 +84,7 @@ void ValidateMapId(const map_id id)
 
 }  // namespace
 
-void UpdateViewportWidget(const Model& model)
+void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
 {
   constexpr auto flags = ImGuiWindowFlags_NoTitleBar;
 
@@ -100,15 +101,22 @@ void UpdateViewportWidget(const Model& model)
       {
         ValidateMapId(id);
 
-        const auto& key = map_ids.at(id);
-        if (ImGui::BeginTabItem(key.c_str()))
+        const auto isActive = model.GetActiveMapId() == id;
+        if (ImGui::BeginTabItem(map_ids.at(id).c_str(),
+                                nullptr,
+                                isActive ? ImGuiTabItemFlags_SetSelected : 0))
         {
-          if (model.GetActiveMapId() == id)
+          if (isActive)
           {
             RenderActiveMap(*document);
           }
 
           ImGui::EndTabItem();
+        }
+
+        if (ImGui::IsItemActivated())
+        {
+          dispatcher.enqueue<SelectMapEvent>(id);
         }
       }
 

@@ -26,6 +26,7 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
 
   mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
   mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
+  mDispatcher.sink<SelectMapEvent>().connect<&Application::OnSelectMapEvent>(this);
 
   mDispatcher.sink<AddRowEvent>().connect<&Application::OnAddRowEvent>(this);
   mDispatcher.sink<AddColumnEvent>().connect<&Application::OnAddColumnEvent>(this);
@@ -180,6 +181,11 @@ void Application::OnRedoEvent(const RedoEvent& event)
 void Application::OnCenterViewportEvent()
 {
   CenterViewport();
+}
+
+void Application::OnSelectMapEvent(const SelectMapEvent& event)
+{
+  mModel->SelectMap(event.id);
 }
 
 void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
