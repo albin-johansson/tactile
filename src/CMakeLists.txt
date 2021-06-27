@@ -41,12 +41,16 @@ set(TACTILE_SOURCE_FILES
     core/commands/command.hpp
     core/commands/command.cpp
 
+    core/events/add_column_event.hpp
     core/events/add_map_event.hpp
+    core/events/add_row_event.hpp
     core/events/add_tileset_event.hpp
     core/events/center_viewport_event.hpp
     core/events/open_map_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp
+    core/events/remove_column_event.hpp
+    core/events/remove_row_event.hpp
     core/events/select_layer_event.hpp
     core/events/undo_event.hpp
 

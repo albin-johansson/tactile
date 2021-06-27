@@ -4,12 +4,16 @@
 #include <entt.hpp>       // dispatcher
 
 #include "aliases/unique.hpp"
+#include "core/events/add_column_event.hpp"
 #include "core/events/add_map_event.hpp"
+#include "core/events/add_row_event.hpp"
 #include "core/events/add_tileset_event.hpp"
 #include "core/events/center_viewport_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
+#include "core/events/remove_column_event.hpp"
+#include "core/events/remove_row_event.hpp"
 #include "core/events/select_layer_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
@@ -52,6 +56,14 @@ class Application final
   void OnCenterViewportEvent(const CenterViewportEvent& event);
 
   void OnSelectLayerEvent(const SelectLayerEvent& event);
+
+  void OnAddRowEvent();
+
+  void OnAddColumnEvent();
+
+  void OnRemoveRowEvent();
+
+  void OnRemoveColumnEvent();
 
   void OnQuitEvent(const QuitEvent& event);
 };

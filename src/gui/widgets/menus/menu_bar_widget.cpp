@@ -4,11 +4,15 @@
 
 #include <centurion.hpp>  // is_debug_build
 
+#include "core/events/add_column_event.hpp"
 #include "core/events/add_map_event.hpp"
+#include "core/events/add_row_event.hpp"
 #include "core/events/center_viewport_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
+#include "core/events/remove_column_event.hpp"
+#include "core/events/remove_row_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "gui/layout/dock_space.hpp"
@@ -91,16 +95,24 @@ void ShowEditMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem("Add row", "Alt+R"))
-    {}
+    {
+      dispatcher.enqueue<AddRowEvent>();
+    }
 
     if (ImGui::MenuItem("Add column", "Alt+C"))
-    {}
+    {
+      dispatcher.enqueue<AddColumnEvent>();
+    }
 
     if (ImGui::MenuItem("Remove row", "Alt+Shift+R"))
-    {}
+    {
+      dispatcher.enqueue<RemoveRowEvent>();
+    }
 
     if (ImGui::MenuItem("Remove column", "Alt+Shift+C"))
-    {}
+    {
+      dispatcher.enqueue<RemoveColumnEvent>();
+    }
 
     ImGui::Separator();
 

@@ -24,6 +24,10 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
   mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
   mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
+  mDispatcher.sink<AddRowEvent>().connect<&Application::OnAddRowEvent>(this);
+  mDispatcher.sink<AddColumnEvent>().connect<&Application::OnAddColumnEvent>(this);
+  mDispatcher.sink<RemoveRowEvent>().connect<&Application::OnRemoveRowEvent>(this);
+  mDispatcher.sink<RemoveColumnEvent>().connect<&Application::OnRemoveColumnEvent>(this);
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
@@ -181,6 +185,42 @@ void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
     auto& map = document->GetMap();
     map.SelectLayer(event.id);
     CENTURION_LOG_DEBUG("Selected layer %i!", event.id.get());
+  }
+}
+
+void Application::OnAddRowEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    auto& map = document->GetMap();
+    map.AddRow(empty_tile);
+  }
+}
+
+void Application::OnAddColumnEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    auto& map = document->GetMap();
+    map.AddColumn(empty_tile);
+  }
+}
+
+void Application::OnRemoveRowEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    auto& map = document->GetMap();
+    map.RemoveRow();
+  }
+}
+
+void Application::OnRemoveColumnEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    auto& map = document->GetMap();
+    map.RemoveColumn();
   }
 }
 
