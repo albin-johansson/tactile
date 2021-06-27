@@ -254,7 +254,7 @@ void ShowHelpMenu()
     show_about_tactile_window =
         ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About Tactile...");
     show_about_imgui_window =
-        ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About ImGui...");
+        ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About Dear ImGui...");
     show_credits_dialog = ImGui::MenuItem("Credits...");
 
     ImGui::Separator();
