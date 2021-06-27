@@ -15,13 +15,13 @@ void Row(const czstring lib, const czstring version, const czstring license)
   ImGui::TableNextRow();
 
   ImGui::TableNextColumn();
-  ImGui::Text("%s", lib);
+  ImGui::TextUnformatted(lib);
 
   ImGui::TableNextColumn();
-  ImGui::Text("%s", version);
+  ImGui::TextUnformatted(version);
 
   ImGui::TableNextColumn();
-  ImGui::Text("%s", license);
+  ImGui::TextUnformatted(license);
 }
 
 }  // namespace
