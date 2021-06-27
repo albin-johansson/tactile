@@ -80,6 +80,8 @@ void ShowFileMenu(const Model& model, entt::dispatcher& dispatcher)
 
 void ShowEditMenu(const Model& model, entt::dispatcher& dispatcher)
 {
+  const auto* document = model.GetActiveDocument();
+  const auto hasActiveMap = model.GetActiveMapId().has_value();
   if (ImGui::BeginMenu("Edit"))
   {
     if (ImGui::MenuItem(ICON_FA_UNDO " Undo", "Ctrl+Z"))
@@ -94,41 +96,43 @@ void ShowEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Add row", "Alt+R"))
+    if (ImGui::MenuItem("Add row", "Alt+R", false, hasActiveMap))
     {
       dispatcher.enqueue<AddRowEvent>();
     }
 
-    if (ImGui::MenuItem("Add column", "Alt+C"))
+    if (ImGui::MenuItem("Add column", "Alt+C", false, hasActiveMap))
     {
       dispatcher.enqueue<AddColumnEvent>();
     }
 
-    if (ImGui::MenuItem("Remove row", "Alt+Shift+R"))
+    if (ImGui::MenuItem("Remove row", "Alt+Shift+R", false, hasActiveMap))
     {
       dispatcher.enqueue<RemoveRowEvent>();
     }
 
-    if (ImGui::MenuItem("Remove column", "Alt+Shift+C"))
+    if (ImGui::MenuItem("Remove column", "Alt+Shift+C", false, hasActiveMap))
     {
       dispatcher.enqueue<RemoveColumnEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_STAMP " Stamp", "S"))
+    if (ImGui::MenuItem(ICON_FA_STAMP " Stamp", "S", false, hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_FILL " Bucket", "B"))
+    if (ImGui::MenuItem(ICON_FA_FILL " Bucket", "B", false, hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_ERASER " Eraser", "E"))
+    if (ImGui::MenuItem(ICON_FA_ERASER " Eraser", "E", false, hasActiveMap))
     {}
 
     ImGui::Separator();
 
-    show_tileset_dialog =
-        ImGui::MenuItem(ICON_FA_IMAGE " Create tileset...", "Ctrl+T");
+    show_tileset_dialog = ImGui::MenuItem(ICON_FA_IMAGE " Create tileset...",
+                                          "Ctrl+T",
+                                          false,
+                                          hasActiveMap);
 
     ImGui::EndMenu();
   }
@@ -163,13 +167,19 @@ void ShowViewAppearanceSubmenu(const Model& model, entt::dispatcher& dispatcher)
 
 void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
 {
+  const auto* document = model.GetActiveDocument();
+  const auto hasActiveMap = model.GetActiveMapId().has_value();
+
   if (ImGui::BeginMenu("View"))
   {
     ShowViewAppearanceSubmenu(model, dispatcher);
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_CROSSHAIRS " Center viewport", "Ctrl+Space"))
+    if (ImGui::MenuItem(ICON_FA_CROSSHAIRS " Center viewport",
+                        "Ctrl+Space",
+                        false,
+                        hasActiveMap))
     {
       dispatcher.enqueue<CenterViewportEvent>();
     }
@@ -183,27 +193,48 @@ void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_SEARCH_PLUS " Increase zoom", "Ctrl+Plus"))
+    if (ImGui::MenuItem(ICON_FA_SEARCH_PLUS " Increase zoom",
+                        "Ctrl+Plus",
+                        false,
+                        hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_SEARCH_MINUS " Decrease zoom", "Ctrl+Minus"))
+    if (ImGui::MenuItem(ICON_FA_SEARCH_MINUS " Decrease zoom",
+                        "Ctrl+Minus",
+                        false,
+                        hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_SEARCH " Reset zoom"))
+    if (ImGui::MenuItem(ICON_FA_SEARCH " Reset zoom",
+                        nullptr,
+                        false,
+                        hasActiveMap))
     {}
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_ARROW_UP " Pan up", "Ctrl+Up"))
+    if (ImGui::MenuItem(ICON_FA_ARROW_UP " Pan up",
+                        "Ctrl+Up",
+                        false,
+                        hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_ARROW_DOWN " Pan down", "Ctrl+Down"))
+    if (ImGui::MenuItem(ICON_FA_ARROW_DOWN " Pan down",
+                        "Ctrl+Down",
+                        false,
+                        hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_ARROW_RIGHT " Pan right", "Ctrl+Right"))
+    if (ImGui::MenuItem(ICON_FA_ARROW_RIGHT " Pan right",
+                        "Ctrl+Right",
+                        false,
+                        hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_ARROW_LEFT " Pan left", "Ctrl+Left"))
+    if (ImGui::MenuItem(ICON_FA_ARROW_LEFT " Pan left",
+                        "Ctrl+Left",
+                        false,
+                        hasActiveMap))
     {}
 
     ImGui::EndMenu();
