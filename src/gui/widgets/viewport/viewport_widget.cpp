@@ -83,6 +83,54 @@ void ValidateMapId(const map_id id)
   }
 }
 
+void ShowMaps(const Model& model, entt::dispatcher& dispatcher)
+{
+  if (ImGui::BeginTabBar("ViewportTab", ImGuiTabBarFlags_Reorderable))
+  {
+    for (const auto& [id, document] : model)
+    {
+      ValidateMapId(id);
+
+      bool opened = true;
+      const auto isActive = model.GetActiveMapId() == id;
+      if (ImGui::BeginTabItem(map_ids.at(id).c_str(),
+                              &opened,
+                              isActive ? ImGuiTabItemFlags_SetSelected : 0))
+      {
+        if (isActive)
+        {
+          RenderActiveMap(*document);
+        }
+
+        ImGui::EndTabItem();
+      }
+
+      if (!opened)
+      {
+        dispatcher.enqueue<CloseMapEvent>(id);
+      }
+      else if (ImGui::IsItemActivated())
+      {
+        dispatcher.enqueue<SelectMapEvent>(id);
+      }
+    }
+
+    ImGui::EndTabBar();
+  }
+}
+
+void ShowNoActiveMapContent()
+{
+  // TODO
+  ImGui::Spacing();
+  ImGui::Spacing();
+
+  ImGui::Indent();
+  ImGui::Text("No active map");
+  ImGui::Text("Create new map | Ctrl+N");
+  ImGui::Text("Open existing map | Ctrl+O");
+}
+
 }  // namespace
 
 void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
@@ -96,37 +144,13 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
 
   if (ImGui::Begin("Viewport", nullptr, flags))
   {
-    if (ImGui::BeginTabBar("ViewportTab", ImGuiTabBarFlags_Reorderable))
+    if (model.GetActiveMapId())
     {
-      for (const auto& [id, document] : model)
-      {
-        ValidateMapId(id);
-
-        bool opened = true;
-        const auto isActive = model.GetActiveMapId() == id;
-        if (ImGui::BeginTabItem(map_ids.at(id).c_str(),
-                                &opened,
-                                isActive ? ImGuiTabItemFlags_SetSelected : 0))
-        {
-          if (isActive)
-          {
-            RenderActiveMap(*document);
-          }
-
-          ImGui::EndTabItem();
-        }
-
-        if (!opened)
-        {
-          dispatcher.enqueue<CloseMapEvent>(id);
-        }
-        else if (ImGui::IsItemActivated())
-        {
-          dispatcher.enqueue<SelectMapEvent>(id);
-        }
-      }
-
-      ImGui::EndTabBar();
+      ShowMaps(model, dispatcher);
+    }
+    else
+    {
+      ShowNoActiveMapContent();
     }
   }
 
