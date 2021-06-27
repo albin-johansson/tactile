@@ -46,6 +46,7 @@ set(TACTILE_SOURCE_FILES
     core/events/add_row_event.hpp
     core/events/add_tileset_event.hpp
     core/events/center_viewport_event.hpp
+    core/events/close_map_event.hpp
     core/events/open_map_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp

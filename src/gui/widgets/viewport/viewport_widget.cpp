@@ -4,6 +4,7 @@
 #include <string>         // string
 #include <unordered_map>  // unordered_map
 
+#include "core/events/close_map_event.hpp"
 #include "core/events/select_map_event.hpp"
 #include "core/model.hpp"
 #include "gui/show_grid.hpp"
@@ -86,24 +87,25 @@ void ValidateMapId(const map_id id)
 
 void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
 {
-  constexpr auto flags = ImGuiWindowFlags_NoTitleBar;
+  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
 
   state.grid_size = {64, 64};
 
   const auto* document = model.GetActiveDocument();
+  const auto flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
 
-  ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
   if (ImGui::Begin("Viewport", nullptr, flags))
   {
-    if (ImGui::BeginTabBar("ViewportTab"))
+    if (ImGui::BeginTabBar("ViewportTab", ImGuiTabBarFlags_Reorderable))
     {
       for (const auto& [id, document] : model)
       {
         ValidateMapId(id);
 
+        bool opened = true;
         const auto isActive = model.GetActiveMapId() == id;
         if (ImGui::BeginTabItem(map_ids.at(id).c_str(),
-                                nullptr,
+                                &opened,
                                 isActive ? ImGuiTabItemFlags_SetSelected : 0))
         {
           if (isActive)
@@ -114,7 +116,11 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
           ImGui::EndTabItem();
         }
 
-        if (ImGui::IsItemActivated())
+        if (!opened)
+        {
+          dispatcher.enqueue<CloseMapEvent>(id);
+        }
+        else if (ImGui::IsItemActivated())
         {
           dispatcher.enqueue<SelectMapEvent>(id);
         }

@@ -23,6 +23,24 @@ void Model::SelectMap(const map_id id)
   mActiveMap = id;
 }
 
+void Model::RemoveMap(const map_id id)
+{
+  assert(mDocuments.contains(id));
+  mDocuments.erase(id);
+
+  if (mActiveMap == id)
+  {
+    if (!mDocuments.empty())
+    {
+      mActiveMap = mDocuments.at_index(0).first;
+    }
+    else
+    {
+      mActiveMap.reset();
+    }
+  }
+}
+
 auto Model::GetDocument(const map_id id) -> MapDocument*
 {
   return mDocuments.at(id).get();

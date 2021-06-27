@@ -21,6 +21,8 @@ class Model final
 
   void SelectMap(map_id id);
 
+  void RemoveMap(map_id id);
+
   [[nodiscard]] auto GetDocument(map_id id) -> MapDocument*;
 
   [[nodiscard]] auto GetDocument(map_id id) const -> const MapDocument*;

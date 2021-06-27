@@ -21,7 +21,9 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
 
   mDispatcher.sink<AddMapEvent>().connect<&Application::OnAddMapEvent>(this);
+  mDispatcher.sink<CloseMapEvent>().connect<&Application::OnCloseMapEvent>(this);
   mDispatcher.sink<OpenMapEvent>().connect<&Application::OnOpenMapEvent>(this);
+
   mDispatcher.sink<AddTilesetEvent>().connect<&Application::OnAddTilesetEvent>(this);
 
   mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
@@ -186,6 +188,11 @@ void Application::OnAddMapEvent()
 {
   const auto id = mModel->AddMap();
   mModel->SelectMap(id);
+}
+
+void Application::OnCloseMapEvent(const CloseMapEvent& event)
+{
+  mModel->RemoveMap(event.id);
 }
 
 void Application::OnOpenMapEvent(const OpenMapEvent& event)
