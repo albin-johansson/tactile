@@ -43,4 +43,16 @@ auto Model::GetActiveDocument() const -> const MapDocument*
   return mActiveMap ? GetDocument(*mActiveMap) : nullptr;
 }
 
+auto Model::GetActiveMap() -> Map&
+{
+  assert(mActiveMap.has_value());
+  return GetDocument(*mActiveMap)->GetMap();
+}
+
+auto Model::GetActiveMap() const -> const Map&
+{
+  assert(mActiveMap.has_value());
+  return GetDocument(*mActiveMap)->GetMap();
+}
+
 }  // namespace tactile

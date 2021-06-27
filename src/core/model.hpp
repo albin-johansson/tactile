@@ -29,6 +29,10 @@ class Model final
 
   [[nodiscard]] auto GetActiveDocument() const -> const MapDocument*;
 
+  [[nodiscard]] auto GetActiveMap() -> Map&;
+
+  [[nodiscard]] auto GetActiveMap() const -> const Map&;
+
   [[nodiscard]] auto GetActiveMapId() const -> Maybe<map_id>
   {
     return mActiveMap;
