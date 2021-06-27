@@ -17,17 +17,21 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
     , mModel{std::make_unique<Model>()}
 {
   // clang-format off
+  mDispatcher.sink<UndoEvent>().connect<&Application::OnUndoEvent>(this);
+  mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
+
   mDispatcher.sink<AddMapEvent>().connect<&Application::OnAddMapEvent>(this);
   mDispatcher.sink<OpenMapEvent>().connect<&Application::OnOpenMapEvent>(this);
   mDispatcher.sink<AddTilesetEvent>().connect<&Application::OnAddTilesetEvent>(this);
-  mDispatcher.sink<UndoEvent>().connect<&Application::OnUndoEvent>(this);
-  mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
+
   mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
   mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
+
   mDispatcher.sink<AddRowEvent>().connect<&Application::OnAddRowEvent>(this);
   mDispatcher.sink<AddColumnEvent>().connect<&Application::OnAddColumnEvent>(this);
   mDispatcher.sink<RemoveRowEvent>().connect<&Application::OnRemoveRowEvent>(this);
   mDispatcher.sink<RemoveColumnEvent>().connect<&Application::OnRemoveColumnEvent>(this);
+
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
@@ -142,7 +146,7 @@ void Application::OnCtrlAltKeyStroke(const cen::scan_code key)
   }
 }
 
-void Application::OnAddMapEvent(const AddMapEvent& event)
+void Application::OnAddMapEvent()
 {
   cen::log::info("Application::OnAddMapEvent");
 }
@@ -173,7 +177,7 @@ void Application::OnRedoEvent(const RedoEvent& event)
   cen::log::info("Application::OnRedoEvent");
 }
 
-void Application::OnCenterViewportEvent(const CenterViewportEvent& event)
+void Application::OnCenterViewportEvent()
 {
   CenterViewport();
 }
@@ -224,7 +228,7 @@ void Application::OnRemoveColumnEvent()
   }
 }
 
-void Application::OnQuitEvent(const QuitEvent& event)
+void Application::OnQuitEvent()
 {
   mQuit = true;
 }

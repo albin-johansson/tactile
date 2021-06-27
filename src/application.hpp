@@ -43,7 +43,7 @@ class Application final
 
   void OnCtrlAltKeyStroke(cen::scan_code key);
 
-  void OnAddMapEvent(const AddMapEvent& event);
+  void OnAddMapEvent();
 
   void OnOpenMapEvent(const OpenMapEvent& event);
 
@@ -53,7 +53,7 @@ class Application final
 
   void OnRedoEvent(const RedoEvent& event);
 
-  void OnCenterViewportEvent(const CenterViewportEvent& event);
+  void OnCenterViewportEvent();
 
   void OnSelectLayerEvent(const SelectLayerEvent& event);
 
@@ -65,7 +65,7 @@ class Application final
 
   void OnRemoveColumnEvent();
 
-  void OnQuitEvent(const QuitEvent& event);
+  void OnQuitEvent();
 };
 
 }  // namespace tactile
