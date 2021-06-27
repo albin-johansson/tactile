@@ -13,7 +13,7 @@ void UpdateTilesetWidget()
   static GridState state;
   state.grid_size = {32, 32};
 
-  if (ImGui::Begin("Tilesets"))
+  if (ImGui::Begin("Tilesets", nullptr, ImGuiWindowFlags_NoCollapse))
   {
     if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Create tileset."))
     {}
