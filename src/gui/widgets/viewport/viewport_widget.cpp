@@ -48,7 +48,7 @@ void RenderActiveMap(const MapDocument& document)
 
   if (center_viewport)
   {
-    const auto rowCount = static_cast<float>(document.GetColumnCount().get());
+    const auto rowCount = static_cast<float>(document.GetRowCount().get());
     const auto colCount = static_cast<float>(document.GetColumnCount().get());
 
     const auto width = colCount * state.grid_size.x;
