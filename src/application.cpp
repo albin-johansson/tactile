@@ -40,8 +40,7 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
 
   OnAddMapEvent();
 
-  auto* document = mModel->GetActiveDocument();
-  auto& map = document->GetMap();
+  auto& map = mModel->GetActiveMap();
   map.AddTileLayer();
   map.AddObjectLayer();
   map.SelectLayer(1_layer);
@@ -233,48 +232,33 @@ void Application::OnSelectMapEvent(const SelectMapEvent& event)
 
 void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
-  {
-    auto& map = document->GetMap();
-    map.SelectLayer(event.id);
-    CENTURION_LOG_DEBUG("Selected layer %i!", event.id.get());
-  }
+  auto& map = mModel->GetActiveMap();
+  map.SelectLayer(event.id);
+  CENTURION_LOG_DEBUG("Selected layer %i!", event.id.get());
 }
 
 void Application::OnAddRowEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
-  {
-    auto& map = document->GetMap();
-    map.AddRow(empty_tile);
-  }
+  auto& map = mModel->GetActiveMap();
+  map.AddRow(empty_tile);
 }
 
 void Application::OnAddColumnEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
-  {
-    auto& map = document->GetMap();
-    map.AddColumn(empty_tile);
-  }
+  auto& map = mModel->GetActiveMap();
+  map.AddColumn(empty_tile);
 }
 
 void Application::OnRemoveRowEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
-  {
-    auto& map = document->GetMap();
-    map.RemoveRow();
-  }
+  auto& map = mModel->GetActiveMap();
+  map.RemoveRow();
 }
 
 void Application::OnRemoveColumnEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
-  {
-    auto& map = document->GetMap();
-    map.RemoveColumn();
-  }
+  auto& map = mModel->GetActiveMap();
+  map.RemoveColumn();
 }
 
 void Application::OnQuitEvent()
