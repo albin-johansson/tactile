@@ -38,11 +38,11 @@ TEST(Property, IntProperty)
 
 TEST(Property, FloatProperty)
 {
-  const Property property{12.3};
+  const Property property{12.3f};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsFloating());
   ASSERT_TRUE(property.TryAsFloating());
-  ASSERT_EQ(12.3, property.AsFloating());
+  ASSERT_EQ(12.3f, property.AsFloating());
 
   ASSERT_FALSE(property.IsString());
   ASSERT_FALSE(property.IsInteger());
@@ -154,9 +154,9 @@ TEST(Property, SetValue)
   ASSERT_TRUE(property.IsInteger());
   ASSERT_EQ(10, property.AsInteger());
 
-  property.SetValue(93.2);
+  property.SetValue(93.2f);
   ASSERT_TRUE(property.IsFloating());
-  ASSERT_EQ(93.2, property.AsFloating());
+  ASSERT_EQ(93.2f, property.AsFloating());
 
   property.SetValue(true);
   ASSERT_TRUE(property.IsBoolean());
@@ -213,7 +213,7 @@ TEST(Property, GetType)
   property.SetValue(123);
   ASSERT_EQ(PropertyType::Integer, property.GetType());
 
-  property.SetValue(12.3);
+  property.SetValue(12.3f);
   ASSERT_EQ(PropertyType::Floating, property.GetType());
 
   property.SetValue("foo"s);
