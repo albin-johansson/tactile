@@ -56,7 +56,7 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
 
 void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::Begin("Layers"))
+  if (ImGui::Begin("Layers", nullptr, ImGuiWindowFlags_NoCollapse))
   {
     if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Add new layer."))
     {}
