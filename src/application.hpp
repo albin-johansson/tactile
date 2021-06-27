@@ -40,9 +40,13 @@ class Application final
 
   void UpdateFrame();
 
+  void OnCtrlAltKeyStroke(cen::scan_code key);
+
+  void OnAltShiftKeyStroke(cen::scan_code key);
+
   void OnCtrlKeyStroke(cen::scan_code key);
 
-  void OnCtrlAltKeyStroke(cen::scan_code key);
+  void OnAltKeyStroke(cen::scan_code key);
 
   void OnAddMapEvent();
 

@@ -98,13 +98,22 @@ void Application::PollEvents()
         const auto shift = keyEvent->is_active(cen::key_modifier::shift);
         const auto alt = keyEvent->is_active(cen::key_modifier::alt);
 
+        const auto key = keyEvent->scan();
         if (ctrl && alt)
         {
-          OnCtrlAltKeyStroke(keyEvent->scan());
+          OnCtrlAltKeyStroke(key);
+        }
+        else if (alt && shift)
+        {
+          OnAltShiftKeyStroke(key);
         }
         else if (ctrl)
         {
-          OnCtrlKeyStroke(keyEvent->scan());
+          OnCtrlKeyStroke(key);
+        }
+        else if (alt)
+        {
+          OnAltKeyStroke(key);
         }
       }
     }
@@ -117,9 +126,33 @@ void Application::UpdateFrame()
   UpdateGui(*mModel, mDispatcher);
 }
 
+void Application::OnCtrlAltKeyStroke(const cen::scan_code key)
+{
+  if (key == cen::scancodes::s)
+  {
+    EnableSettingsDialog();
+  }
+}
+
+void Application::OnAltShiftKeyStroke(const cen::scan_code key)
+{
+  if (key == cen::scancodes::r)
+  {
+    OnRemoveRowEvent();
+  }
+  else if (key == cen::scancodes::c)
+  {
+    OnRemoveColumnEvent();
+  }
+}
+
 void Application::OnCtrlKeyStroke(const cen::scan_code key)
 {
-  if (key == cen::scancodes::g)
+  if (key == cen::scancodes::n)
+  {
+    OnAddMapEvent();
+  }
+  else if (key == cen::scancodes::g)
   {
     ToggleMapGrid();
   }
@@ -133,21 +166,26 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   }
   else if (key == cen::scancodes::space)
   {
-    CenterViewport();
+    OnCenterViewportEvent();
   }
 }
 
-void Application::OnCtrlAltKeyStroke(const cen::scan_code key)
+void Application::OnAltKeyStroke(const cen::scan_code key)
 {
-  if (key == cen::scancodes::s)
+  if (key == cen::scancodes::r)
   {
-    EnableSettingsDialog();
+    OnAddRowEvent();
+  }
+  else if (key == cen::scancodes::c)
+  {
+    OnAddColumnEvent();
   }
 }
 
 void Application::OnAddMapEvent()
 {
-  cen::log::info("Application::OnAddMapEvent");
+  const auto id = mModel->AddMap();
+  mModel->SelectMap(id);
 }
 
 void Application::OnOpenMapEvent(const OpenMapEvent& event)
