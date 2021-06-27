@@ -12,6 +12,12 @@ DocumentDelegate::DocumentDelegate()
     , mCurrentPropertyContext{mPropertyContext.get()}
 {}
 
+DocumentDelegate::DocumentDelegate(std::string name)
+    : mCommandStack{std::make_unique<CommandStack>()}
+    , mPropertyContext{std::make_unique<PropertyDelegate>(std::move(name))}
+    , mCurrentPropertyContext{mPropertyContext.get()}
+{}
+
 void DocumentDelegate::Undo()
 {
   mCommandStack->Undo();

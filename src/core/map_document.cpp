@@ -7,13 +7,13 @@ namespace tactile {
 MapDocument::MapDocument()
     : mMap{std::make_unique<Map>()}
     , mTilesets{std::make_unique<TilesetManager>()}
-    , mDelegate{std::make_unique<DocumentDelegate>()}
+    , mDelegate{std::make_unique<DocumentDelegate>("Map")}
 {}
 
 MapDocument::MapDocument(const row_t nRows, const col_t nCols)
     : mMap{std::make_unique<Map>(nRows, nCols)}
     , mTilesets{std::make_unique<TilesetManager>()}
-    , mDelegate{std::make_unique<DocumentDelegate>()}
+    , mDelegate{std::make_unique<DocumentDelegate>("Map")}
 {}
 
 void MapDocument::Undo()

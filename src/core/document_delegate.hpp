@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <string>      // string
 
 #include "aliases/maybe.hpp"
 #include "aliases/unique.hpp"
@@ -13,6 +14,8 @@ class DocumentDelegate final : public IDocument
 {
  public:
   DocumentDelegate();
+
+  explicit DocumentDelegate(std::string name);
 
   /// \name Document API
   /// \{
