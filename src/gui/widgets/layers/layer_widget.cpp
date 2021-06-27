@@ -16,6 +16,7 @@
 namespace tactile {
 namespace {
 
+inline bool is_visible = true;
 inline std::unordered_map<layer_id, std::string> names;
 
 void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
@@ -56,7 +57,12 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
 
 void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::Begin("Layers", nullptr, ImGuiWindowFlags_NoCollapse))
+  if (!is_visible)
+  {
+    return;
+  }
+
+  if (ImGui::Begin("Layers", &is_visible, ImGuiWindowFlags_NoCollapse))
   {
     if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Add new layer."))
     {}
@@ -94,6 +100,16 @@ void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
   }
 
   ImGui::End();
+}
+
+void SetLayerWidgetVisible(const bool visible) noexcept
+{
+  is_visible = visible;
+}
+
+auto IsLayerWidgetVisible() noexcept -> bool
+{
+  return is_visible;
 }
 
 }  // namespace tactile

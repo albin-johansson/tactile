@@ -1,5 +1,8 @@
 #include "load_default_layout.hpp"
 
+#include "gui/widgets/layers/layer_widget.hpp"
+#include "gui/widgets/properties/properties_widget.hpp"
+#include "gui/widgets/tilesets/tileset_widget.hpp"
 #include "imgui_internal.h"
 
 namespace tactile {
@@ -28,6 +31,10 @@ void LoadDefaultLayout(ImGuiID id)
   ImGui::DockBuilderGetNode(root)->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
 
   ImGui::DockBuilderFinish(id);
+
+  SetLayerWidgetVisible(true);
+  SetPropertiesWidgetVisible(true);
+  SetTilesetWidgetVisible(true);
 }
 
 }  // namespace tactile

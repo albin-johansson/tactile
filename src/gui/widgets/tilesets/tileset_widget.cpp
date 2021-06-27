@@ -7,13 +7,23 @@
 #include "imgui.h"
 
 namespace tactile {
+namespace {
+
+inline bool is_visible = true;
+
+}  // namespace
 
 void UpdateTilesetWidget()
 {
   static GridState state;
   state.grid_size = {32, 32};
 
-  if (ImGui::Begin("Tilesets", nullptr, ImGuiWindowFlags_NoCollapse))
+  if (!is_visible)
+  {
+    return;
+  }
+
+  if (ImGui::Begin("Tilesets", &is_visible, ImGuiWindowFlags_NoCollapse))
   {
     if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Create tileset."))
     {}
@@ -47,6 +57,16 @@ void UpdateTilesetWidget()
   }
 
   ImGui::End();
+}
+
+void SetTilesetWidgetVisible(const bool visible) noexcept
+{
+  is_visible = visible;
+}
+
+auto IsTilesetWidgetVisible() noexcept -> bool
+{
+  return is_visible;
 }
 
 }  // namespace tactile

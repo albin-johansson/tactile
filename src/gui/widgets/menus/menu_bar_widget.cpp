@@ -21,6 +21,9 @@
 #include "gui/widgets/dialogs/settings_dialog.hpp"
 #include "gui/widgets/dialogs/tileset_dialog.hpp"
 #include "gui/widgets/file_dialog.hpp"
+#include "gui/widgets/layers/layer_widget.hpp"
+#include "gui/widgets/properties/properties_widget.hpp"
+#include "gui/widgets/tilesets/tileset_widget.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
 #include "imgui.h"
 
@@ -155,17 +158,20 @@ void ShowViewAppearanceSubmenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Mouse tools", nullptr, true))
-    {}
+    if (ImGui::MenuItem("Properties", nullptr, IsPropertiesWidgetVisible()))
+    {
+      SetPropertiesWidgetVisible(!IsPropertiesWidgetVisible());
+    }
 
-    if (ImGui::MenuItem("Properties", nullptr, true))
-    {}
+    if (ImGui::MenuItem("Layers", nullptr, IsLayerWidgetVisible()))
+    {
+      SetLayerWidgetVisible(!IsLayerWidgetVisible());
+    }
 
-    if (ImGui::MenuItem("Layers", nullptr, true))
-    {}
-
-    if (ImGui::MenuItem("Tilesets", nullptr, true))
-    {}
+    if (ImGui::MenuItem("Tilesets", nullptr, IsTilesetWidgetVisible()))
+    {
+      SetTilesetWidgetVisible(!IsTilesetWidgetVisible());
+    }
 
     ImGui::EndMenu();
   }

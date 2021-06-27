@@ -8,4 +8,8 @@ class Model;
 
 void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher);
 
+void SetLayerWidgetVisible(bool visible) noexcept;
+
+[[nodiscard]] auto IsLayerWidgetVisible() noexcept -> bool;
+
 }  // namespace tactile

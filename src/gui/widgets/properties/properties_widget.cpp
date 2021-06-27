@@ -8,6 +8,8 @@
 namespace tactile {
 namespace {
 
+inline bool is_visible = true;
+
 inline constexpr auto table_flags =
     ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders | ImGuiTableFlags_Resizable;
 
@@ -15,7 +17,12 @@ inline constexpr auto table_flags =
 
 void UpdatePropertiesWidget()
 {
-  if (ImGui::Begin("Properties"))
+  if (!is_visible)
+  {
+    return;
+  }
+
+  if (ImGui::Begin("Properties", &is_visible, ImGuiWindowFlags_NoCollapse))
   {
     if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Add property."))
     {}
@@ -51,6 +58,16 @@ void UpdatePropertiesWidget()
   }
 
   ImGui::End();
+}
+
+void SetPropertiesWidgetVisible(const bool visible) noexcept
+{
+  is_visible = visible;
+}
+
+auto IsPropertiesWidgetVisible() noexcept -> bool
+{
+  return is_visible;
 }
 
 }  // namespace tactile
