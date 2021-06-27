@@ -1,6 +1,6 @@
 #pragma once
 
-namespace {
+namespace tactile {
 
 struct RemoveColumnEvent final
 {};
