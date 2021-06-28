@@ -7,7 +7,6 @@ set(TACTILE_SOURCE_FILES
     application.hpp
     init_open_gl_attributes.cpp
     init_open_gl_attributes.hpp
-    main.cpp
 
     aliases/col.hpp
     aliases/czstring.hpp
