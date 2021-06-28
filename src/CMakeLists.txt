@@ -157,6 +157,8 @@ set(TACTILE_SOURCE_FILES
 
     utils/buffer_utils.hpp
     utils/color_utils.hpp
+    utils/load_texture.cpp
+    utils/load_texture.hpp
     utils/scope_id.hpp
     )
 
@@ -191,7 +193,8 @@ target_link_libraries(libTactile
     PUBLIC libJson
     PUBLIC libRune
     PUBLIC libEntt
-    PUBLIC libFontAwesome)
+    PUBLIC libFontAwesome
+    PUBLIC libStbImage)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   target_compile_options(libTactile PRIVATE

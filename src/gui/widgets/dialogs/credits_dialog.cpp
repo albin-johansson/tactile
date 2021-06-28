@@ -54,6 +54,7 @@ void UpdateCreditsDialog(bool* open)
       Row("Rune", "0.1.0", "MIT");
       Row("SDL", "2.0.14", "Zlib");
       Row("SDL_image", "2.0.5", "Zlib");
+      Row("stb_image", "2.26", "MIT");
 
       ImGui::EndTable();
     }

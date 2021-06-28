@@ -20,6 +20,7 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
 add_header_only_lib(libNenya ${LIBRARY_DIR}/nenya ${LIBRARY_DIR}/nenya/nenya.hpp)
+add_header_only_lib(libStbImage ${LIBRARY_DIR}/stbimage ${LIBRARY_DIR}/stbimage/stb_image.h)
 
 set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imconfig.h
