@@ -35,6 +35,8 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<RemoveRowEvent>().connect<&Application::OnRemoveRowEvent>(this);
   mDispatcher.sink<RemoveColumnEvent>().connect<&Application::OnRemoveColumnEvent>(this);
 
+  mDispatcher.sink<SetPropertyValueEvent>().connect<&Application::OnSetPropertyValueEvent>(this);
+
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
@@ -259,6 +261,12 @@ void Application::OnRemoveColumnEvent()
 {
   auto& map = mModel->GetActiveMap();
   map.RemoveColumn();
+}
+
+void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
+{
+  auto* document = mModel->GetActiveDocument();
+  document->SetProperty(event.name, event.property);
 }
 
 void Application::OnQuitEvent()

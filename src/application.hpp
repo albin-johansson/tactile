@@ -17,6 +17,7 @@
 #include "core/events/remove_row_event.hpp"
 #include "core/events/select_layer_event.hpp"
 #include "core/events/select_map_event.hpp"
+#include "core/events/set_property_value_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 
@@ -74,6 +75,8 @@ class Application final
   void OnRemoveRowEvent();
 
   void OnRemoveColumnEvent();
+
+  void OnSetPropertyValueEvent(const SetPropertyValueEvent& event);
 
   void OnQuitEvent();
 };

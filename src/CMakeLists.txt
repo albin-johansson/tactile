@@ -54,6 +54,7 @@ set(TACTILE_SOURCE_FILES
     core/events/remove_row_event.hpp
     core/events/select_layer_event.hpp
     core/events/select_map_event.hpp
+    core/events/set_property_value_event.hpp
     core/events/undo_event.hpp
 
     core/map/map.cpp
