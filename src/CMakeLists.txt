@@ -175,11 +175,10 @@ endif ()
 
 target_include_directories(libTactile
     PUBLIC ${TACTILE_ROOT_DIR}/src
-
     SYSTEM PUBLIC ${LIBRARY_DIR}/glew
+    SYSTEM PUBLIC ${LIBRARY_DIR}/imgui
     SYSTEM PUBLIC ${SDL2_INCLUDE_DIR}
-    SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS}
-    SYSTEM PUBLIC ${LIBRARY_DIR}/imgui)
+    SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
 
 target_link_libraries(libTactile
     PUBLIC ${OPENGL_LIBRARIES}
