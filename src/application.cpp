@@ -48,6 +48,14 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   map.SelectLayer(1_layer);
 }
 
+Application::~Application()
+{
+  for (const auto texture : mTextures)
+  {
+    glDeleteTextures(1, &texture);
+  }
+}
+
 auto Application::Run() -> int
 {
   const auto& io = ImGui::GetIO();

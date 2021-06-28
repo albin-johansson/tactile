@@ -2,7 +2,9 @@
 
 #include <centurion.hpp>  // window, gl_context
 #include <entt.hpp>       // dispatcher
+#include <vector>         // vector
 
+#include "aliases/ints.hpp"
 #include "aliases/unique.hpp"
 #include "core/events/add_column_event.hpp"
 #include "core/events/add_map_event.hpp"
@@ -28,6 +30,8 @@ class Application final
  public:
   Application(cen::window&& window, cen::gl_context&& context);
 
+  ~Application();
+
   auto Run() -> int;
 
  private:
@@ -35,6 +39,7 @@ class Application final
   [[maybe_unused]] cen::gl_context mContext;
   entt::dispatcher mDispatcher;
   Unique<Model> mModel;
+  std::vector<uint> mTextures;
   bool mQuit{};
 
   void PollEvents();
