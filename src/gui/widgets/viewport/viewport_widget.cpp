@@ -10,6 +10,7 @@
 #include "core/events/select_map_event.hpp"
 #include "core/model.hpp"
 #include "gui/show_grid.hpp"
+#include "gui/widgets/mouse_tracker.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
 #include "render_map.hpp"
@@ -17,8 +18,6 @@
 namespace tactile {
 namespace {
 
-inline constexpr auto viewport_button_flags =
-    ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight;
 inline constexpr auto border_color = IM_COL32(0x10, 0x10, 0x10, 0xFF);
 
 inline bool show_grid = true;
@@ -27,26 +26,13 @@ inline GridState state;
 inline std::unordered_map<map_id, std::string> map_ids;
 inline int next_map_suffix = 1;
 
-void MouseTracker(const CanvasInfo& info)
-{
-  ImGui::InvisibleButton("MapViewportCanvas",
-                         info.canvas_size,
-                         viewport_button_flags);
-  if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Right))
-  {
-    const auto& io = ImGui::GetIO();
-    state.scroll_offset.x += io.MouseDelta.x;
-    state.scroll_offset.y += io.MouseDelta.y;
-  }
-}
-
 void RenderActiveMap(const MapDocument& document)
 {
   auto* drawList = ImGui::GetWindowDrawList();
   const auto info = GetCanvasInfo();
 
   FillBackground(info);
-  MouseTracker(info);
+  MouseTracker(info, state);
 
   drawList->PushClipRect(info.canvas_tl, info.canvas_br, true);
 

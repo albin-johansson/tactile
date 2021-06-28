@@ -110,6 +110,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/file_dialog.hpp
     gui/widgets/help_marker.cpp
     gui/widgets/help_marker.hpp
+    gui/widgets/mouse_tracker.cpp
+    gui/widgets/mouse_tracker.hpp
 
     gui/widgets/dialogs/about_dialog.cpp
     gui/widgets/dialogs/about_dialog.hpp
