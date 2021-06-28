@@ -87,7 +87,7 @@ void ValidateMapId(const map_id id)
 
 void ShowMaps(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginTabBar("ViewportTab", ImGuiTabBarFlags_Reorderable))
+  if (ImGui::BeginTabBar("ViewportTabBar", ImGuiTabBarFlags_Reorderable))
   {
     for (const auto& [id, document] : model)
     {
