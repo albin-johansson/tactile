@@ -3,6 +3,7 @@
 #include <utility>  // move
 
 #include "core/tactile_error.hpp"
+#include "utils/load_texture.hpp"
 
 namespace tactile {
 namespace {
@@ -35,18 +36,29 @@ namespace {
 }  // namespace
 
 Tileset::Tileset(const tile_id firstId,
-                 cen::surface image,
+                 const std::filesystem::path& path,
                  const int tileWidth,
                  const int tileHeight)
-    : mImage{std::move(image)}
-    , mFirstId{firstId}
+    : mFirstId{firstId}
     , mTileWidth{tileWidth}
     , mTileHeight{tileHeight}
     , mProperties{std::make_unique<PropertyDelegate>()}
+    , mPath{path}
 {
   if (mTileWidth < 1 || mTileHeight < 1)
   {
     throw TactileError{"Invalid tileset tile dimensions!"};
+  }
+
+  if (const auto info = LoadTexture(path))
+  {
+    mTexture = info->texture;
+    mWidth = info->width;
+    mHeight = info->height;
+  }
+  else
+  {
+    throw TactileError{"Failed to load tileset texture!"};
   }
 
   mRowCount = row_t{GetHeight() / mTileHeight};
@@ -60,15 +72,6 @@ Tileset::Tileset(const tile_id firstId,
                                        mColumnCount,
                                        mTileWidth,
                                        mTileHeight);
-}
-
-Tileset::Tileset(const tile_id firstID,
-                 const std::filesystem::path& path,
-                 const int tileWidth,
-                 const int tileHeight)
-    : Tileset{firstID, cen::surface{path.string()}, tileWidth, tileHeight}
-{
-  mPath = path;
 }
 
 void Tileset::SetSelection(const TilesetSelection& selection)
@@ -117,16 +120,6 @@ auto Tileset::GetTile(const MapPosition& position) const -> tile_id
   {
     return empty_tile;
   }
-}
-
-auto Tileset::GetWidth() const -> int
-{
-  return mImage.width();
-}
-
-auto Tileset::GetHeight() const -> int
-{
-  return mImage.height();
 }
 
 auto Tileset::GetImageSource(const tile_id id) const -> Maybe<cen::irect>

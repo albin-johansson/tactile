@@ -6,6 +6,7 @@
 #include <unordered_map>  // unordered_map
 
 #include "aliases/col.hpp"
+#include "aliases/ints.hpp"
 #include "aliases/maybe.hpp"
 #include "aliases/row.hpp"
 #include "aliases/tile_id.hpp"
@@ -38,18 +39,6 @@ class Tileset final : public IPropertyContext
    * \brief Creates a tileset.
    *
    * \param firstId the first tile ID associated with the tileset.
-   * \param image the image that contains the tile sprites, mustn't be null.
-   * \param tileWidth the width of the tiles in the tileset.
-   * \param tileHeight the height of the tiles in the tileset.
-   *
-   * \throws TactileError if the supplied tile width or height are less than 1.
-   */
-  Tileset(tile_id firstId, cen::surface image, int tileWidth, int tileHeight);
-
-  /**
-   * \brief Creates a tileset.
-   *
-   * \param firstID the first tile ID associated with the tileset.
    * \param path the path to the image that contains the tile sprites.
    * \param tileWidth the width of the tiles in the tileset.
    * \param tileHeight the height of the tiles in the tileset.
@@ -57,7 +46,7 @@ class Tileset final : public IPropertyContext
    * \throws TactileError if the tileset cannot be created.
    * \throws TactileError if the supplied tile width or height are less than 1.
    */
-  Tileset(tile_id firstID,
+  Tileset(tile_id firstId,
           const std::filesystem::path& path,
           int tileWidth,
           int tileHeight);
@@ -195,20 +184,6 @@ class Tileset final : public IPropertyContext
   [[nodiscard]] auto GetTile(const MapPosition& position) const -> tile_id;
 
   /**
-   * \brief Returns the width of the tileset image.
-   *
-   * \return the width of the tileset image.
-   */
-  [[nodiscard]] auto GetWidth() const -> int;
-
-  /**
-   * \brief Returns the height of the tileset image.
-   *
-   * \return the height of the tileset image.
-   */
-  [[nodiscard]] auto GetHeight() const -> int;
-
-  /**
    * \brief Returns the source rectangle associated with the specified tile.
    *
    * \param id the ID of the tile to obtain the source rectangle of.
@@ -219,13 +194,33 @@ class Tileset final : public IPropertyContext
   [[nodiscard]] auto GetImageSource(tile_id id) const -> Maybe<cen::irect>;
 
   /**
-   * \brief Returns the image associated with the tileset.
+   * \brief Returns the texture identifier associated with the tileset.
    *
-   * \return the image associated with the tileset.
+   * \return the associated texture identifier.
    */
-  [[nodiscard]] auto GetImage() const -> const cen::surface&
+  [[nodiscard]] auto GetTexture() const -> uint
   {
-    return mImage;
+    return mTexture;
+  }
+
+  /**
+   * \brief Returns the width of the tileset image.
+   *
+   * \return the width of the tileset image.
+   */
+  [[nodiscard]] auto GetWidth() const -> int
+  {
+    return mWidth;
+  }
+
+  /**
+   * \brief Returns the height of the tileset image.
+   *
+   * \return the height of the tileset image.
+   */
+  [[nodiscard]] auto GetHeight() const -> int
+  {
+    return mHeight;
   }
 
   /**
@@ -368,7 +363,9 @@ class Tileset final : public IPropertyContext
   /// \} End of property API
 
  private:
-  cen::surface mImage;
+  uint mTexture;
+  int mWidth;
+  int mHeight;
   tile_id mFirstId{1};
   tile_id mLastId;
   Maybe<TilesetSelection> mSelection;

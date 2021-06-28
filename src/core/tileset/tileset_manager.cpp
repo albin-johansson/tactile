@@ -117,17 +117,17 @@ auto TilesetManager::GetName(const tileset_id id) -> std::string_view
   return tileset->GetName();
 }
 
-auto TilesetManager::GetImage(const tile_id id) const -> const cen::surface&
+auto TilesetManager::GetTexture(const tile_id id) const -> GLuint
 {
   for (const auto& [key, tileset] : mTilesets)
   {
     if (tileset->Contains(id))
     {
-      return tileset->GetImage();
+      return tileset->GetTexture();
     }
   }
 
-  throw TactileError{"Tileset manager could not find tile image!"};
+  throw TactileError{"Tileset manager could not find texture!"};
 }
 
 auto TilesetManager::GetImageSource(const tile_id id) const -> cen::irect

@@ -148,15 +148,15 @@ class TilesetManager final
   [[nodiscard]] auto GetName(tileset_id id) -> std::string_view;
 
   /**
-   * \brief Returns the image associated with the specified tile.
+   * \brief Returns the texture identifier associated with the specified tile.
    *
    * \param id the ID of the tile to obtain the image for.
    *
-   * \return the image associated with the specified tile.
+   * \return the texture identifier associated with the specified tile.
    *
-   * \throws TactileError if the tile image cannot be found.
+   * \throws TactileError if the identifier cannot be found.
    */
-  [[nodiscard]] auto GetImage(tile_id id) const -> const cen::surface&;
+  [[nodiscard]] auto GetTexture(tile_id id) const -> uint;
 
   /**
    * \brief Returns the source rectangle associated with the specified tile.

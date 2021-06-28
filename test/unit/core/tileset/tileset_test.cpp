@@ -23,15 +23,6 @@ class TilesetTest : public testing::Test
   inline static Unique<Tileset> mTileset;
 };
 
-TEST_F(TilesetTest, ImageConstructor)
-{
-  cen::surface image{"resources/terrain.png"};
-  ASSERT_NO_THROW(Tileset(1_tile, image, 32, 32));
-
-  ASSERT_THROW(Tileset(1_tile, image, 0, 32), TactileError);
-  ASSERT_THROW(Tileset(1_tile, image, 32, 0), TactileError);
-}
-
 TEST_F(TilesetTest, PathConstructor)
 {
   const auto goodPath = "resources/terrain.png";
