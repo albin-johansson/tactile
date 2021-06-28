@@ -139,6 +139,7 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/render_map.hpp
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
+    utils/scope_id.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
