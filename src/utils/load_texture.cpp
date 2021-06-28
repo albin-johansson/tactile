@@ -1,6 +1,8 @@
 #include "load_texture.hpp"
 
 #define STB_IMAGE_IMPLEMENTATION
+
+#include <GL/glew.h>
 #include <stb_image.h>
 
 namespace tactile {
@@ -10,7 +12,6 @@ namespace tactile {
  * see:
  * https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples#Example-for-OpenGL-users
  */
-
 auto LoadTexture(const std::filesystem::path& path) -> Maybe<TextureInfo>
 {
   TextureInfo info;

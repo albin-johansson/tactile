@@ -1,18 +1,17 @@
 #pragma once
 
-#include <GL/glew.h>
-
 #include <filesystem>  // path
 
+#include "aliases/ints.hpp"
 #include "aliases/maybe.hpp"
 
 namespace tactile {
 
 struct TextureInfo final
 {
-  GLuint texture{};
-  GLint width{};
-  GLint height{};
+  uint texture{};
+  int width{};
+  int height{};
 };
 
 [[nodiscard]] auto LoadTexture(const std::filesystem::path& path)
