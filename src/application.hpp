@@ -34,7 +34,6 @@ class Application final
   cen::window mWindow;
   [[maybe_unused]] cen::gl_context mContext;
   entt::dispatcher mDispatcher;
-
   Unique<Model> mModel;
   bool mQuit{};
 
