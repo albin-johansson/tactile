@@ -243,6 +243,10 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 
     // TODO add tileset to model
   }
+  else
+  {
+    CENTURION_LOG_WARN("Failed to load tileset texture!");
+  }
 }
 
 void Application::OnUndoEvent(const UndoEvent& event)
