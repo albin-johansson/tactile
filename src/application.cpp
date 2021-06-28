@@ -8,6 +8,7 @@
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
+#include "utils/load_texture.hpp"
 
 namespace tactile {
 
@@ -212,12 +213,12 @@ void Application::OnOpenMapEvent(const OpenMapEvent& event)
 
 void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
-  cen::log::info(
-      "Application::OnAddTilesetEvent > Path: \"%s\", Tile width: %i, Tile "
-      "height: %i",
-      event.path.string().c_str(),
-      event.tile_width,
-      event.tile_height);
+  if (const auto info = LoadTexture(event.path))
+  {
+    mTextures.push_back(info->texture);
+
+    // TODO add tileset to model
+  }
 }
 
 void Application::OnUndoEvent(const UndoEvent& event)
