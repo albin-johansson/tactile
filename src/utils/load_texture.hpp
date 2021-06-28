@@ -4,15 +4,9 @@
 
 #include "aliases/ints.hpp"
 #include "aliases/maybe.hpp"
+#include "texture_info.hpp"
 
 namespace tactile {
-
-struct TextureInfo final
-{
-  uint texture{};
-  int width{};
-  int height{};
-};
 
 [[nodiscard]] auto LoadTexture(const std::filesystem::path& path)
     -> Maybe<TextureInfo>;

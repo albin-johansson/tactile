@@ -159,6 +159,7 @@ set(TACTILE_SOURCE_FILES
     utils/load_texture.cpp
     utils/load_texture.hpp
     utils/scope_id.hpp
+    utils/texture_info.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
