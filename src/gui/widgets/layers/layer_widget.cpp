@@ -2,22 +2,20 @@
 
 #include <IconsFontAwesome5.h>
 
-#include <format>         // format
-#include <limits>         // numeric_limits
-#include <string>         // string
-#include <unordered_map>  // unordered_map
+#include <format>  // format
+#include <limits>  // numeric_limits
 
 #include "aliases/czstring.hpp"
 #include "core/events/select_layer_event.hpp"
 #include "core/model.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "imgui.h"
+#include "utils/scope_id.hpp"
 
 namespace tactile {
 namespace {
 
 inline bool is_visible = true;
-inline std::unordered_map<layer_id, std::string> names;
 
 void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
 {
@@ -25,18 +23,12 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
   const auto activeLayerId = map.GetActiveLayerId();
   for (const auto& [id, layer] : map)
   {
-    if (!names.contains(id))
-    {
-      const auto icon = layer->GetType() == LayerType::TileLayer
-                            ? ICON_FA_LAYER_GROUP
-                            : ICON_FA_SHAPES;
+    const ScopeID uid{id};
 
-      names.try_emplace(
-          id,
-          std::format("{} {}##{}", icon, layer->GetName(), id.get()));
-    }
-
-    const auto& name = names.at(id);
+    const auto icon = layer->GetType() == LayerType::ObjectLayer
+                          ? ICON_FA_SHAPES
+                          : ICON_FA_LAYER_GROUP;
+    const auto name = std::format("{} {}", icon, layer->GetName());
 
     const auto isSelected = id == activeLayerId;
     ImGui::Selectable(name.c_str(), isSelected);
