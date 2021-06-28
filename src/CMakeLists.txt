@@ -141,6 +141,7 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/viewport_widget.hpp
 
     utils/buffer_utils.hpp
+    utils/color_utils.hpp
     utils/scope_id.hpp
     )
 
