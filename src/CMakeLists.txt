@@ -90,6 +90,8 @@ set(TACTILE_SOURCE_FILES
     filesystem/get_persistent_file_path.cpp
     filesystem/get_persistent_file_path.hpp
 
+    gui/get_texture_id.cpp
+    gui/get_texture_id.hpp
     gui/imgui_wrapper.cpp
     gui/imgui_wrapper.hpp
     gui/show_grid.cpp
