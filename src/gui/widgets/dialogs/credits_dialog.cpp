@@ -46,7 +46,7 @@ void UpdateCreditsDialog(bool* open)
       Row("Centurion", "6.1.0", "MIT");
       Row("Dear ImGui", "1.84", "MIT");
       Row("EnTT", "3.7.1", "MIT");
-      Row("GLEW", "2.1.0", "BSD/MIT");
+      Row("GLEW", "2.2.0", "BSD/MIT");
       Row("IconFontCppHeaders", "N/A", "Zlib");
       Row("ImGuiFileDialog", "0.5.5", "MIT");
       Row("JSON for Modern C++", "3.9.1", "MIT");
