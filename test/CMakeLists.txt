@@ -55,7 +55,8 @@ target_include_directories(testTactile
 target_link_libraries(testTactile
     PUBLIC libTactile
     PUBLIC gtest
-    PUBLIC gmock)
+    PUBLIC gmock
+    )
 
 copy_directory_post_build(testTactile
     ${TACTILE_ROOT_DIR}/bin
