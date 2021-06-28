@@ -12,6 +12,7 @@ set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(RESOURCES_DIR ${PROJECT_SOURCE_DIR}/resources)
 
 list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEW_LIBRARIES}")
+list(APPEND CMAKE_PREFIX_PATH "${LIBRARY_DIR}/glew")
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
@@ -37,8 +38,7 @@ set(IMGUI_SOURCES
 
     ${LIBRARY_DIR}/imgui/ImGuiFileDialog.cpp
     ${LIBRARY_DIR}/imgui/ImGuiFileDialog.h
-    ${LIBRARY_DIR}/imgui/ImGuiFileDialogConfig.h
-    )
+    ${LIBRARY_DIR}/imgui/ImGuiFileDialogConfig.h)
 
 set(RUNE_SOURCES
     ${LIBRARY_DIR}/rune/vector_map.hpp
