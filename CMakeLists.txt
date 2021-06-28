@@ -18,9 +18,6 @@ find_package(GLEW REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 
-add_header_only_lib(libNenya ${LIBRARY_DIR}/nenya ${LIBRARY_DIR}/nenya/nenya.hpp)
-add_header_only_lib(libStbImage ${LIBRARY_DIR}/stbimage ${LIBRARY_DIR}/stbimage/stb_image.h)
-
 set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imconfig.h
     ${LIBRARY_DIR}/imgui/imgui.cpp
@@ -48,6 +45,8 @@ set(RUNE_SOURCES
     ${LIBRARY_DIR}/rune/rune_error.hpp)
 add_header_only_lib(libRune ${LIBRARY_DIR}/rune ${RUNE_SOURCES})
 
+add_header_only_lib(libNenya ${LIBRARY_DIR}/nenya ${LIBRARY_DIR}/nenya/nenya.hpp)
+add_header_only_lib(libStbImage ${LIBRARY_DIR}/stbimage ${LIBRARY_DIR}/stbimage/stb_image.h)
 add_header_only_lib(libCenturion ${LIBRARY_DIR}/centurion ${LIBRARY_DIR}/centurion/centurion.hpp)
 add_header_only_lib(libEntt ${LIBRARY_DIR}/entt ${LIBRARY_DIR}/entt/entt.hpp)
 add_header_only_lib(libJson ${LIBRARY_DIR}/json ${LIBRARY_DIR}/json/json.hpp)
