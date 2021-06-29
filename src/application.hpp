@@ -17,8 +17,10 @@
 #include "core/events/redo_event.hpp"
 #include "core/events/remove_column_event.hpp"
 #include "core/events/remove_row_event.hpp"
+#include "core/events/remove_tileset_event.hpp"
 #include "core/events/select_layer_event.hpp"
 #include "core/events/select_map_event.hpp"
+#include "core/events/select_tileset_event.hpp"
 #include "core/events/set_property_value_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
@@ -71,6 +73,10 @@ class Application final
   void OnSelectMapEvent(const SelectMapEvent& event);
 
   void OnSelectLayerEvent(const SelectLayerEvent& event);
+
+  void OnSelectTilesetEvent(const SelectTilesetEvent& event);
+
+  void OnRemoveTilesetEvent(const RemoveTilesetEvent& event);
 
   void OnAddRowEvent();
 

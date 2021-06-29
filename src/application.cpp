@@ -26,6 +26,8 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<OpenMapEvent>().connect<&Application::OnOpenMapEvent>(this);
 
   mDispatcher.sink<AddTilesetEvent>().connect<&Application::OnAddTilesetEvent>(this);
+  mDispatcher.sink<SelectTilesetEvent>().connect<&Application::OnSelectTilesetEvent>(this);
+  mDispatcher.sink<RemoveTilesetEvent>().connect<&Application::OnRemoveTilesetEvent>(this);
 
   mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
   mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
@@ -274,7 +276,18 @@ void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
 {
   auto& map = mModel->GetActiveMap();
   map.SelectLayer(event.id);
-  CENTURION_LOG_DEBUG("Selected layer %i!", event.id.get());
+}
+
+void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
+{
+  auto* document = mModel->GetActiveDocument();
+  document->SelectTileset(event.id);
+}
+
+void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
+{
+  auto* document = mModel->GetActiveDocument();
+  document->RemoveTileset(event.id);
 }
 
 void Application::OnAddRowEvent()
