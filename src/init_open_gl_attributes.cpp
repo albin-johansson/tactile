@@ -18,7 +18,6 @@ void InitOpenGLAttributes()
   cen::gl::set(cen::gl_attribute::context_major_version, major_version);
   cen::gl::set(cen::gl_attribute::context_minor_version, minor_version);
 
-  // Create window with graphics context
   cen::gl::set(cen::gl_attribute::double_buffer, 1);
   cen::gl::set(cen::gl_attribute::depth_size, 24);
   cen::gl::set(cen::gl_attribute::stencil_size, 8);
