@@ -41,6 +41,7 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<RemoveColumnEvent>().connect<&Application::OnRemoveColumnEvent>(this);
 
   mDispatcher.sink<SetPropertyValueEvent>().connect<&Application::OnSetPropertyValueEvent>(this);
+  mDispatcher.sink<SetTilesetSelectionEvent>().connect<&Application::OnSetTilesetSelectionEvent>(this);
 
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
@@ -330,6 +331,14 @@ void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
 {
   auto* document = mModel->GetActiveDocument();
   document->SetProperty(event.name, event.property);
+}
+
+void Application::OnSetTilesetSelectionEvent(
+    const SetTilesetSelectionEvent& event)
+{
+  auto* document = mModel->GetActiveDocument();
+  auto& tilesets = document->GetTilesets();
+  tilesets.GetActiveTileset()->SetSelection(event.selection);
 }
 
 void Application::OnQuitEvent()

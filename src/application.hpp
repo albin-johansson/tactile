@@ -88,6 +88,8 @@ class Application final
 
   void OnSetPropertyValueEvent(const SetPropertyValueEvent& event);
 
+  void OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event);
+
   void OnQuitEvent();
 };
 
