@@ -41,8 +41,14 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/ImGuiFileDialogConfig.h)
 
 set(RUNE_SOURCES
+    ${LIBRARY_DIR}/rune/czstring.hpp
+    ${LIBRARY_DIR}/rune/ini.hpp
+    ${LIBRARY_DIR}/rune/ini_section.hpp
+    ${LIBRARY_DIR}/rune/ini_value.hpp
+    ${LIBRARY_DIR}/rune/integers.hpp
     ${LIBRARY_DIR}/rune/vector_map.hpp
-    ${LIBRARY_DIR}/rune/rune_error.hpp)
+    ${LIBRARY_DIR}/rune/rune_error.hpp
+    )
 add_header_only_lib(libRune ${LIBRARY_DIR}/rune ${RUNE_SOURCES})
 
 add_header_only_lib(libNenya ${LIBRARY_DIR}/nenya ${LIBRARY_DIR}/nenya/nenya.hpp)
