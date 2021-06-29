@@ -151,6 +151,10 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/properties/string_property_widget.cpp
     gui/widgets/properties/string_property_widget.hpp
 
+    gui/widgets/tilesets/tileset_content_widget.cpp
+    gui/widgets/tilesets/tileset_content_widget.hpp
+    gui/widgets/tilesets/tileset_viewport_widget.cpp
+    gui/widgets/tilesets/tileset_viewport_widget.hpp
     gui/widgets/tilesets/tileset_widget.cpp
     gui/widgets/tilesets/tileset_widget.hpp
 
