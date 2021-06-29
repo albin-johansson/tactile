@@ -4,12 +4,14 @@
 
 #include <algorithm>  // min, max
 
+#include "core/events/add_tileset_event.hpp"
 #include "core/events/remove_tileset_event.hpp"
 #include "core/events/select_tileset_event.hpp"
 #include "core/model.hpp"
 #include "gui/get_texture_id.hpp"
 #include "gui/show_grid.hpp"
 #include "gui/widgets/button_ex.hpp"
+#include "gui/widgets/menus/menu_bar_widget.hpp"
 #include "gui/widgets/mouse_tracker.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
@@ -99,20 +101,29 @@ void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher)
     return;
   }
 
+  const auto* document = model.GetActiveDocument();
+  const auto& tilesets = document->GetTilesets();
+
   if (ImGui::Begin("Tilesets",
                    &is_visible,
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar))
   {
     if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Create tileset."))
-    {}
+    {
+      EnableTilesetDialog();
+    }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_MINUS_CIRCLE, "Remove tileset."))
-    {}
-
-    if (model.GetActiveDocument()->GetTilesets().GetSize() != 0)
+    if (ButtonEx(ICON_FA_MINUS_CIRCLE,
+                 "Remove tileset.",
+                 tilesets.HasActiveTileset()))
     {
-      ShowTilesets(*model.GetActiveDocument(), dispatcher);
+      dispatcher.enqueue<RemoveTilesetEvent>(*tilesets.GetActiveTilesetId());
+    }
+
+    if (tilesets.GetSize() != 0)
+    {
+      ShowTilesets(*document, dispatcher);
     }
     else
     {
