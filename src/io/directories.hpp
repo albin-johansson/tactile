@@ -4,6 +4,6 @@
 
 namespace tactile {
 
-[[nodiscard]] auto GetPersistentFilePath() -> const std::filesystem::path&;
+[[nodiscard]] auto GetPersistentFileDir() -> const std::filesystem::path&;
 
 }  // namespace tactile

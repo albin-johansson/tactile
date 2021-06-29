@@ -171,8 +171,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
 
-    io/get_persistent_file_path.cpp
-    io/get_persistent_file_path.hpp
+    io/directories.cpp
+    io/directories.hpp
     io/preferences.cpp
     io/preferences.hpp
 

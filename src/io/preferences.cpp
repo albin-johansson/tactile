@@ -5,7 +5,7 @@
 #include <string>      // string
 #include <utility>     // move
 
-#include "get_persistent_file_path.hpp"
+#include "directories.hpp"
 
 namespace tactile {
 namespace {
@@ -37,13 +37,13 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
   ini["Export"]["EmbedTilesets"] = preferences.embed_tilesets;
   ini["Export"]["HumanReadableOutput"] = preferences.human_readable_output;
 
-  rune::write_ini(ini, GetPersistentFilePath() / file_name);
+  rune::write_ini(ini, GetPersistentFileDir() / file_name);
 }
 
 // Read existing settings file and fill in any potentially missing settings
 void ValidateExistingFile()
 {
-  auto ini = rune::read_ini(GetPersistentFilePath() / file_name);
+  auto ini = rune::read_ini(GetPersistentFileDir() / file_name);
 
   auto& gfx = ini["Graphics"];
   auto& exp = ini["Export"];
@@ -68,17 +68,17 @@ void ValidateExistingFile()
     exp["HumanReadableOutput"] = def_human_readable_output;
   }
 
-  rune::write_ini(ini, GetPersistentFilePath() / file_name);
+  rune::write_ini(ini, GetPersistentFileDir() / file_name);
 }
 
 }  // namespace
 
 void LoadPreferences()
 {
-  if (std::filesystem::exists(GetPersistentFilePath() / file_name))
+  if (std::filesystem::exists(GetPersistentFileDir() / file_name))
   {
     ValidateExistingFile();
-    const auto ini = rune::read_ini(GetPersistentFilePath() / file_name);
+    const auto ini = rune::read_ini(GetPersistentFileDir() / file_name);
 
     const auto& gfx = ini.at("Graphics");
     settings.show_grid = gfx.at("ShowGrid").get<bool>();
@@ -94,7 +94,7 @@ void LoadPreferences()
   }
 
   CENTURION_LOG_INFO("Loaded preferences: \"%s\"",
-                     (GetPersistentFilePath() / file_name).string().c_str());
+                     (GetPersistentFileDir() / file_name).string().c_str());
   CENTURION_LOG_INFO("  Graphics::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Export::PreferredFormat: %s",
                      settings.preferred_format.c_str());
