@@ -34,9 +34,4 @@ void CenterViewport()
   CenterMapContentViewport();
 }
 
-void SetViewportGridEnabled(const bool enabled) noexcept
-{
-  SetMapContentViewportGridEnabled(enabled);
-}
-
 }  // namespace tactile

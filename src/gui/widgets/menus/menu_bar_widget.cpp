@@ -26,6 +26,7 @@
 #include "gui/widgets/tilesets/tileset_widget.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
 #include "imgui.h"
+#include "io/preferences.hpp"
 
 namespace tactile {
 namespace {
@@ -38,8 +39,6 @@ inline bool show_settings_window = false;
 inline bool show_map_file_dialog = false;
 inline bool show_tileset_dialog = false;
 inline bool show_credits_dialog = false;
-
-inline bool is_grid_item_toggled = true;
 
 void ShowFileMenu(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -196,11 +195,10 @@ void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<CenterViewportEvent>();
     }
 
-    if (ImGui::MenuItem(ICON_FA_TH " Toggle grid",
-                        "Ctrl+G",
-                        &is_grid_item_toggled))
+    bool showGrid = prefs::GetShowGrid();
+    if (ImGui::MenuItem(ICON_FA_TH " Toggle grid", "Ctrl+G", &showGrid))
     {
-      SetViewportGridEnabled(is_grid_item_toggled);
+      prefs::SetShowGrid(showGrid);
     }
 
     ImGui::Separator();
@@ -364,12 +362,6 @@ void EnableSettingsDialog()
 void EnableTilesetDialog()
 {
   show_tileset_dialog = true;
-}
-
-void ToggleMapGrid()
-{
-  is_grid_item_toggled = !is_grid_item_toggled;
-  SetViewportGridEnabled(is_grid_item_toggled);
 }
 
 }  // namespace tactile

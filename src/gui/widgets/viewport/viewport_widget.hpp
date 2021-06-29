@@ -10,6 +10,4 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher);
 
 void CenterViewport();
 
-void SetViewportGridEnabled(bool enabled) noexcept;
-
 }  // namespace tactile

@@ -2,15 +2,14 @@
 
 #include "gui/widgets/help_marker.hpp"
 #include "imgui.h"
+#include "io/preferences.hpp"
 
 namespace tactile {
 namespace {
 
 inline bool restore_last_session = false;
 inline bool rmb_stamp_as_eraser = false;
-inline bool embed_tilesets = false;
-inline bool human_readable_output = true;
-inline bool generate_default_values = true;
+inline bool generate_default_values = false;
 
 void ShowGeneralTab()
 {
@@ -45,13 +44,22 @@ void ShowExportTab()
 {
   if (ImGui::BeginTabItem("Export"))
   {
-    ImGui::Checkbox("Embed tilesets", &embed_tilesets);
+    bool embedTilesets = prefs::GetEmbedTilesets();
+    if (ImGui::Checkbox("Embed tilesets", &embedTilesets))
+    {
+      prefs::SetEmbedTilesets(embedTilesets);
+    }
     if (ImGui::IsItemActive() || ImGui::IsItemHovered())
     {
       ImGui::SetTooltip("Embed tileset data in map files.");
     }
 
-    ImGui::Checkbox("Human-readable output", &human_readable_output);
+    bool humanReadableOutput = prefs::GetHumanReadableOutput();
+    if (ImGui::Checkbox("Human-readable output", &humanReadableOutput))
+    {
+      prefs::SetHumanReadableOutput(humanReadableOutput);
+    }
+
     if (ImGui::IsItemActive() || ImGui::IsItemHovered())
     {
       ImGui::SetTooltip(
@@ -59,8 +67,12 @@ void ShowExportTab()
           "more space.");
     }
 
-    static int currentItem = 0;
-    ImGui::Combo("Default format", &currentItem, "JSON\0TMX\0\0");
+    int formatIndex = (prefs::GetPreferredFormat() == "JSON") ? 0 : 1;
+    if (ImGui::Combo("Default format", &formatIndex, "JSON\0TMX\0\0"))
+    {
+      prefs::SetPreferredFormat((formatIndex == 0) ? "JSON" : "TMX");
+    }
+
     if (ImGui::IsItemActive() || ImGui::IsItemHovered())
     {
       ImGui::SetTooltip("The default save file format.");

@@ -89,9 +89,6 @@ set(TACTILE_SOURCE_FILES
     core/tileset/tileset_manager.hpp
     core/tileset/tileset_selection.hpp
 
-    filesystem/get_persistent_file_path.cpp
-    filesystem/get_persistent_file_path.hpp
-
     gui/canvas_info.hpp
     gui/canvas_info.cpp
     gui/cursors.cpp
@@ -173,6 +170,11 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/render_map.hpp
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
+
+    io/get_persistent_file_path.cpp
+    io/get_persistent_file_path.hpp
+    io/preferences.cpp
+    io/preferences.hpp
 
     utils/buffer_utils.hpp
     utils/color_utils.hpp

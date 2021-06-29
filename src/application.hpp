@@ -32,8 +32,6 @@ class Application final
  public:
   Application(cen::window&& window, cen::gl_context&& context);
 
-  ~Application();
-
   auto Run() -> int;
 
  private:
@@ -43,6 +41,8 @@ class Application final
   Unique<Model> mModel;
   std::vector<uint> mTextures;
   bool mQuit{};
+
+  void OnAboutToExit();
 
   void PollEvents();
 

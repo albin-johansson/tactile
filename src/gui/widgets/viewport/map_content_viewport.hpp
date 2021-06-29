@@ -10,6 +10,4 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher);
 
 void CenterMapContentViewport();
 
-void SetMapContentViewportGridEnabled(bool enabled);
-
 }  // namespace tactile

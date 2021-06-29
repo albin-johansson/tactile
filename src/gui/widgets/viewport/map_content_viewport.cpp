@@ -8,13 +8,13 @@
 #include "gui/widgets/mouse_tracker.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
+#include "io/preferences.hpp"
 #include "render_map.hpp"
 #include "utils/scope_id.hpp"
 
 namespace tactile {
 namespace {
 
-inline bool show_grid = true;
 inline bool center_viewport = false;
 inline GridState state;
 
@@ -44,7 +44,7 @@ void RenderActiveMap(const MapDocument& document)
     center_viewport = false;
   }
 
-  if (show_grid)
+  if (prefs::GetShowGrid())
   {
     ShowGrid(state, info);
   }
@@ -96,11 +96,6 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
 void CenterMapContentViewport()
 {
   center_viewport = true;
-}
-
-void SetMapContentViewportGridEnabled(const bool enabled)
-{
-  show_grid = enabled;
 }
 
 }  // namespace tactile

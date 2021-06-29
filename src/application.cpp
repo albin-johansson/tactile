@@ -9,6 +9,7 @@
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
+#include "io/preferences.hpp"
 #include "utils/load_texture.hpp"
 
 namespace tactile {
@@ -44,6 +45,7 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
+  LoadPreferences();
   LoadCursors();
 
   OnAddMapEvent();
@@ -78,16 +80,6 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   document->AddProperty("Gb", cen::colors::cyan);
 }
 
-Application::~Application()
-{
-  UnloadCursors();
-
-  for (const auto texture : mTextures)
-  {
-    glDeleteTextures(1, &texture);
-  }
-}
-
 auto Application::Run() -> int
 {
   const auto& io = ImGui::GetIO();
@@ -117,8 +109,22 @@ auto Application::Run() -> int
     cen::gl::swap(mWindow);
   }
 
+  OnAboutToExit();
+
   mWindow.hide();
   return 0;
+}
+
+void Application::OnAboutToExit()
+{
+  UnloadCursors();
+  SavePreferences();
+
+  for (const auto texture : mTextures)
+  {
+    CENTURION_LOG_DEBUG("Deleting texture %u...", texture);
+    glDeleteTextures(1, &texture);
+  }
 }
 
 void Application::PollEvents()
@@ -197,7 +203,7 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   }
   else if (key == cen::scancodes::g)
   {
-    ToggleMapGrid();
+    prefs::SetShowGrid(!prefs::GetShowGrid());
   }
   else if (key == cen::scancodes::o)
   {
@@ -246,6 +252,7 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
   if (const auto info = LoadTexture(event.path))
   {
+    CENTURION_LOG_DEBUG("Loaded texture with ID %u", info->texture);
     mTextures.push_back(info->texture);
 
     auto* document = mModel->GetActiveDocument();

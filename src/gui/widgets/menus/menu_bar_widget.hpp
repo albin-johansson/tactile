@@ -14,6 +14,4 @@ void EnableSettingsDialog();
 
 void EnableTilesetDialog();
 
-void ToggleMapGrid();
-
 }  // namespace tactile
