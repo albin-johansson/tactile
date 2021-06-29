@@ -165,6 +165,10 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/toolbar/tool_bar.cpp
     gui/widgets/toolbar/tool_bar.hpp
 
+    gui/widgets/viewport/map_content_viewport.cpp
+    gui/widgets/viewport/map_content_viewport.hpp
+    gui/widgets/viewport/no_content_viewport_widget.cpp
+    gui/widgets/viewport/no_content_viewport_widget.hpp
     gui/widgets/viewport/render_map.cpp
     gui/widgets/viewport/render_map.hpp
     gui/widgets/viewport/viewport_widget.cpp
