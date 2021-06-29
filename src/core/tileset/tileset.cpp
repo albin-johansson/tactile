@@ -3,7 +3,6 @@
 #include <utility>  // move
 
 #include "core/tactile_error.hpp"
-#include "utils/load_texture.hpp"
 
 namespace tactile {
 namespace {
@@ -36,30 +35,24 @@ namespace {
 }  // namespace
 
 Tileset::Tileset(const tile_id firstId,
-                 const std::filesystem::path& path,
+                 const TextureInfo& info,
                  const int tileWidth,
                  const int tileHeight)
-    : mFirstId{firstId}
+    : mTexture{info.texture}
+    , mWidth{info.width}
+    , mHeight{info.height}
     , mTileWidth{tileWidth}
     , mTileHeight{tileHeight}
+    , mFirstId{firstId}
+    , mPath{info.path}
     , mProperties{std::make_unique<PropertyDelegate>()}
-    , mPath{path}
 {
   if (mTileWidth < 1 || mTileHeight < 1)
   {
     throw TactileError{"Invalid tileset tile dimensions!"};
   }
 
-  if (const auto info = LoadTexture(path))
-  {
-    mTexture = info->texture;
-    mWidth = info->width;
-    mHeight = info->height;
-  }
-  else
-  {
-    throw TactileError{"Failed to load tileset texture!"};
-  }
+  SetName(mPath.filename().string());
 
   mRowCount = row_t{GetHeight() / mTileHeight};
   mColumnCount = col_t{GetWidth() / mTileWidth};

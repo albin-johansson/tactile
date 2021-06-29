@@ -8,6 +8,7 @@
 #include "core/map_document.hpp"
 #include "core/properties/property_delegate.hpp"
 #include "core/tileset/tileset.hpp"
+#include "utils/load_texture.hpp"
 
 using namespace tactile;
 
@@ -18,9 +19,20 @@ using PropertyContextTypes = testing::Types<PropertyDelegate,
                                             Object,
                                             Tileset>;
 
+inline Maybe<uint> texture_id;
+
 template <typename T>
 class PropertyContextTest : public testing::Test
-{};
+{
+ public:
+  static void TearDownTestSuite()
+  {
+    if (texture_id)
+    {
+      glDeleteTextures(1, &texture_id.value());
+    }
+  }
+};
 
 template <typename T>
 auto MakeContext() -> T
@@ -37,7 +49,12 @@ inline auto MakeContext() -> Object
 template <>
 inline auto MakeContext() -> Tileset
 {
-  return Tileset{1_tile, "resources/terrain.png", 32, 32};
+  static const auto info = LoadTexture("resources/terrain.png");
+
+  assert(info.has_value());
+  texture_id = info->texture;
+
+  return Tileset{1_tile, *info, 32, 32};
 }
 
 TYPED_TEST_SUITE(PropertyContextTest, PropertyContextTypes);

@@ -15,6 +15,7 @@
 #include "core/properties/property_context.hpp"
 #include "core/properties/property_delegate.hpp"
 #include "tileset_selection.hpp"
+#include "utils/texture_info.hpp"
 
 namespace tactile {
 
@@ -39,15 +40,14 @@ class Tileset final : public IPropertyContext
    * \brief Creates a tileset.
    *
    * \param firstId the first tile ID associated with the tileset.
-   * \param path the path to the image that contains the tile sprites.
+   * \param info the information about the texture that contains the tiles.
    * \param tileWidth the width of the tiles in the tileset.
    * \param tileHeight the height of the tiles in the tileset.
    *
-   * \throws TactileError if the tileset cannot be created.
    * \throws TactileError if the supplied tile width or height are less than 1.
    */
   Tileset(tile_id firstId,
-          const std::filesystem::path& path,
+          const TextureInfo& info,
           int tileWidth,
           int tileHeight);
 

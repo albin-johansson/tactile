@@ -15,6 +15,7 @@ namespace tactile {
 auto LoadTexture(const std::filesystem::path& path) -> Maybe<TextureInfo>
 {
   TextureInfo info;
+  info.path = path;
 
   // Load from file
   auto* data =

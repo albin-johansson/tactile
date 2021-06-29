@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "core/tactile_error.hpp"
+#include "utils/load_texture.hpp"
 
 using namespace tactile;
 
@@ -11,30 +12,22 @@ class TilesetTest : public testing::Test
  public:
   [[maybe_unused]] static void SetUpTestSuite()
   {
-    mTileset =
-        std::make_unique<Tileset>(1_tile, "resources/terrain.png", 32, 32);
+    const auto info = LoadTexture("resources/terrain.png");
+    ASSERT_TRUE(info.has_value());
+
+    mTexture = info->texture;
+    mTileset = std::make_unique<Tileset>(1_tile, *info, 32, 32);
   }
 
   [[maybe_unused]] static void TearDownTestSuite()
   {
+    glDeleteTextures(1, &mTexture.value());
     mTileset.reset();
   }
 
   inline static Unique<Tileset> mTileset;
+  inline static Maybe<uint> mTexture;
 };
-
-TEST_F(TilesetTest, PathConstructor)
-{
-  const auto goodPath = "resources/terrain.png";
-  const auto badPath = "foo/bar.png";
-
-  ASSERT_NO_THROW(Tileset(1_tile, goodPath, 32, 32));
-
-  ASSERT_THROW(Tileset(1_tile, goodPath, 0, 32), TactileError);
-  ASSERT_THROW(Tileset(1_tile, goodPath, 32, 0), TactileError);
-
-  ASSERT_ANY_THROW(Tileset(1_tile, badPath, 32, 32));
-}
 
 TEST_F(TilesetTest, VisitSelection)
 {

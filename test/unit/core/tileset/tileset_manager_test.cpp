@@ -2,26 +2,40 @@
 
 #include <gtest/gtest.h>
 
+#include "utils/load_texture.hpp"
+
 using namespace tactile;
 
 struct TilesetManagerTest : testing::Test
 {
   [[maybe_unused]] static void SetUpTestSuite()
   {
-    // clang-format off
-    mInterior = std::make_shared<Tileset>(1_tile, "resources/terrain.png", 32, 32);
-    mExterior = std::make_shared<Tileset>(1026_tile, "resources/exterior.png", 32, 32);
-    // clang-format on
+    const auto interiorInfo = LoadTexture("resources/interior.png");
+    ASSERT_TRUE(interiorInfo.has_value());
+
+    const auto exteriorInfo = LoadTexture("resources/exterior.png");
+    ASSERT_TRUE(exteriorInfo.has_value());
+
+    mInteriorTex = interiorInfo->texture;
+    mExteriorTex = exteriorInfo->texture;
+
+    mInterior = std::make_shared<Tileset>(1_tile, *interiorInfo, 32, 32);
+    mExterior = std::make_shared<Tileset>(1026_tile, *exteriorInfo, 32, 32);
   }
 
   [[maybe_unused]] static void TearDownTestSuite()
   {
     mExterior.reset();
     mInterior.reset();
+
+    glDeleteTextures(1, &mExteriorTex);
+    glDeleteTextures(1, &mInteriorTex);
   }
 
   TilesetManager mManager;
 
+  inline static uint mInteriorTex;
+  inline static uint mExteriorTex;
   inline static Shared<Tileset> mInterior;
   inline static Shared<Tileset> mExterior;
 };
@@ -95,8 +109,8 @@ TEST_F(TilesetManagerTest, Remove)
 
 TEST_F(TilesetManagerTest, Clear)
 {
-  mManager.Add(mInterior);
-  mManager.Add(mExterior);
+  const auto a [[maybe_unused]] = mManager.Add(mInterior);
+  const auto b [[maybe_unused]] = mManager.Add(mExterior);
   ASSERT_EQ(2, mManager.GetSize());
   ASSERT_TRUE(mManager.GetActiveTilesetId());
 

@@ -1,14 +1,17 @@
 #pragma once
 
+#include <filesystem>  // path
+
 #include "aliases/ints.hpp"
 
 namespace tactile {
 
 struct TextureInfo final
 {
-  uint texture{};
-  int width{};
-  int height{};
+  uint texture{};              ///< OpenGL texture identifier.
+  int width{};                 ///< Texture width.
+  int height{};                ///< Texture height.
+  std::filesystem::path path;  ///< Source file path.
 };
 
 }  // namespace tactile

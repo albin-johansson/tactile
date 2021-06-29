@@ -241,7 +241,8 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
   {
     mTextures.push_back(info->texture);
 
-    // TODO add tileset to model
+    auto* document = mModel->GetActiveDocument();
+    document->AddTileset(*info, event.tile_width, event.tile_height);
   }
   else
   {

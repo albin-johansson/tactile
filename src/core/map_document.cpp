@@ -1,5 +1,6 @@
 #include "map_document.hpp"
 
+#include <cassert>  // assert
 #include <utility>  // move
 
 namespace tactile {
@@ -109,6 +110,34 @@ auto MapDocument::GetRowCount() const -> row_t
 auto MapDocument::GetColumnCount() const -> col_t
 {
   return mMap->GetColumnCount();
+}
+
+void MapDocument::AddTileset(const TextureInfo& info,
+                             const int tileWidth,
+                             const int tileHeight)
+{
+  const auto tilesetId = mTilesets->GetNextTilesetId();
+  const auto tileId = mTilesets->GetNextGlobalTileId();
+
+  auto tileset = std::make_shared<Tileset>(tileId, info, tileWidth, tileHeight);
+  mTilesets->Add(tilesetId, std::move(tileset));
+  mTilesets->IncrementNextTilesetId();
+}
+
+void MapDocument::SelectTileset(const tileset_id id)
+{
+  mTilesets->Select(id);
+}
+
+void MapDocument::RemoveTileset(const tileset_id id)
+{
+  mTilesets->Remove(id);
+}
+
+auto MapDocument::GetTilesets() const -> const TilesetManager&
+{
+  assert(mTilesets);
+  return *mTilesets;
 }
 
 void MapDocument::AddProperty(const std::string& name, const PropertyType type)

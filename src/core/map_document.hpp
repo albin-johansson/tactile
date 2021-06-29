@@ -7,6 +7,7 @@
 #include "core/map/map.hpp"
 #include "core/properties/property_delegate.hpp"
 #include "core/tileset/tileset_manager.hpp"
+#include "utils/texture_info.hpp"
 
 namespace tactile {
 
@@ -62,6 +63,16 @@ class MapDocument final : public IDocument
   [[nodiscard]] auto GetRowCount() const -> row_t;
 
   [[nodiscard]] auto GetColumnCount() const -> col_t;
+
+  void AddTileset(const TextureInfo& info,
+                  int tileWidth,
+                  int tileHeight);
+
+  void SelectTileset(tileset_id id);
+
+  void RemoveTileset(tileset_id id);
+
+  [[nodiscard]] auto GetTilesets() const -> const TilesetManager&;
 
   /// \} End of map document API
 
