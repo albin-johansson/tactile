@@ -4,12 +4,12 @@
 
 namespace tactile {
 
-class ImGuiWrapper
+class ImGuiContext final
 {
  public:
-  ImGuiWrapper(cen::window& window, cen::gl_context& context);
+  ImGuiContext(cen::window& window, cen::gl_context& context);
 
-  ~ImGuiWrapper();
+  ~ImGuiContext();
 };
 
 }  // namespace tactile

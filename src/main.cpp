@@ -8,7 +8,7 @@
 #include <utility>        // move
 
 #include "application.hpp"
-#include "gui/imgui_wrapper.hpp"
+#include "gui/imgui_context.hpp"
 #include "init_open_gl_attributes.hpp"
 
 namespace {
@@ -79,8 +79,8 @@ auto main(int argc, char** argv) -> int
     window.set_icon(icon);
   }
 
-  cen::gl_context context{window};
-  context.make_current(window);
+  cen::gl_context glContext{window};
+  glContext.make_current(window);
 
   tactile::InitOpenGLAttributes();
 
@@ -90,9 +90,9 @@ auto main(int argc, char** argv) -> int
     return -1;
   }
 
-  tactile::ImGuiWrapper wrapper{window, context};
+  tactile::ImGuiContext gui{window, glContext};
   window.maximize();
 
-  tactile::Application application{std::move(window), std::move(context)};
+  tactile::Application application{std::move(window), std::move(glContext)};
   return application.Run();
 }

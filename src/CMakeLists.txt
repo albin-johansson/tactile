@@ -96,10 +96,12 @@ set(TACTILE_SOURCE_FILES
     gui/cursors.hpp
     gui/get_texture_id.cpp
     gui/get_texture_id.hpp
-    gui/imgui_wrapper.cpp
-    gui/imgui_wrapper.hpp
+    gui/imgui_context.cpp
+    gui/imgui_context.hpp
     gui/show_grid.cpp
     gui/show_grid.hpp
+    gui/style.cpp
+    gui/style.hpp
     gui/update_gui.cpp
     gui/update_gui.hpp
     gui/themes.cpp
