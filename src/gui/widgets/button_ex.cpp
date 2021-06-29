@@ -1,5 +1,6 @@
 #include "button_ex.hpp"
 
+#include "gui/cursors.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
 
@@ -17,6 +18,7 @@ auto ButtonEx(const czstring text, const czstring tooltip, const bool enabled)
     if (ImGui::IsItemActive() || ImGui::IsItemHovered())
     {
       ImGui::SetTooltip("%s", tooltip);
+      EnableCursor(cen::system_cursor::hand);
     }
   }
 
