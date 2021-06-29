@@ -2,6 +2,7 @@
 
 #include <utility>  // move
 
+#include "gui/cursors.hpp"
 #include "gui/update_gui.hpp"
 #include "gui/widgets/menus/menu_bar_widget.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
@@ -43,6 +44,8 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
   mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
   // clang-format on
 
+  LoadCursors();
+
   OnAddMapEvent();
 
   auto& map = mModel->GetActiveMap();
@@ -77,6 +80,8 @@ Application::Application(cen::window&& window, cen::gl_context&& context)
 
 Application::~Application()
 {
+  UnloadCursors();
+
   for (const auto texture : mTextures)
   {
     glDeleteTextures(1, &texture);
