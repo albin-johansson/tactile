@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr int major_version = 3;
@@ -26,4 +26,4 @@ void InitOpenGLAttributes()
   cen::gl::set_swap_interval(cen::gl_swap_interval::synchronized);
 }
 
-}  // namespace tactile
+}  // namespace Tactile

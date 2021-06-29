@@ -17,7 +17,7 @@
 #include "tileset_selection.hpp"
 #include "utils/texture_info.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \class Tileset
@@ -379,4 +379,4 @@ class Tileset final : public IPropertyContext
   Unique<PropertyDelegate> mProperties;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -2,7 +2,7 @@
 
 #include <cassert>  // assert
 
-namespace tactile {
+namespace Tactile {
 
 Model::Model() = default;
 
@@ -73,4 +73,4 @@ auto Model::GetActiveMap() const -> const Map&
   return GetDocument(*mActiveMap)->GetMap();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

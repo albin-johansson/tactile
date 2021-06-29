@@ -2,11 +2,11 @@
 
 #include <optional>  // optional
 
-namespace tactile {
+namespace Tactile {
 
 template <typename T>
 using Maybe = std::optional<T>;
 
 inline constexpr std::nullopt_t nothing = std::nullopt;
 
-}  // namespace tactile
+}  // namespace Tactile

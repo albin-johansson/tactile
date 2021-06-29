@@ -4,7 +4,7 @@
 #include "core/map/layers/tile_layer.hpp"
 #include "gtest_macros.hpp"
 
-using namespace tactile;
+using namespace Tactile;
 
 using LayerTypes = testing::Types<TileLayer, ObjectLayer>;
 

@@ -12,7 +12,7 @@
 #include "gui/widgets/file_dialog.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline std::array<char, 100> path_preview_buffer;
@@ -134,4 +134,4 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -2,7 +2,7 @@
 
 #include <unordered_map>  // unordered_map
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline std::unordered_map<cen::system_cursor, cen::cursor> cursors;
@@ -37,4 +37,4 @@ void EnableCursor(const cen::system_cursor cursor)
   cursors.at(cursor).enable();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -4,7 +4,7 @@
 
 #include "aliases/ints.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \brief Invokes the supplied callable for the specified amount of times.
@@ -24,4 +24,4 @@ constexpr void InvokeN(const usize n,
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

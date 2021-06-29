@@ -25,7 +25,7 @@
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 class Application final
 {
@@ -91,4 +91,4 @@ class Application final
   void OnQuitEvent();
 };
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 /// Updates the root dock space, call this function once each frame.
 void UpdateDockSpace();
@@ -10,4 +10,4 @@ void UpdateDockSpace();
 /// Resets all dock space widgets to the default layout.
 void ResetLayout();
 
-}  // namespace tactile
+}  // namespace Tactile

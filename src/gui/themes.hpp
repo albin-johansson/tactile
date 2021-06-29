@@ -2,8 +2,8 @@
 
 struct ImGuiStyle;
 
-namespace tactile {
+namespace Tactile {
 
 void ApplyNightTheme(ImGuiStyle& style);
 
-}  // namespace tactile
+}  // namespace Tactile

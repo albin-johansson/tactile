@@ -3,7 +3,7 @@
 #include "core/map_document.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr auto border_color = IM_COL32(0x10, 0x10, 0x10, 0xFF);
@@ -51,4 +51,4 @@ void RenderMap(const MapDocument& document,
   RenderOutline(drawList, nRows, nCols, offset, tileSize);
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -1,6 +1,6 @@
 #include "object.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 void Object::AddProperty(const std::string& name, const PropertyType type)
 {
@@ -59,4 +59,4 @@ auto Object::GetName() const -> std::string_view
   return mProperties.GetName();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

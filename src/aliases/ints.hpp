@@ -3,7 +3,7 @@
 #include <cstddef>  // size_t
 #include <cstdint>  // uint{}_t, int{}_t
 
-namespace tactile {
+namespace Tactile {
 
 using usize = std::size_t;
 using uint = unsigned int;
@@ -19,4 +19,4 @@ using int16 = std::int16_t;
 using int32 = std::int32_t;
 using int64 = std::int64_t;
 
-}  // namespace tactile
+}  // namespace Tactile

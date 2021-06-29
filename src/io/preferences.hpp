@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-namespace tactile {
+namespace Tactile {
 
 // Loads existing persistent preferences or loads the default preferences
 void LoadPreferences();
@@ -10,7 +10,7 @@ void LoadPreferences();
 // Saves the current preferences in the persistent file directory
 void SavePreferences();
 
-namespace prefs {
+namespace Prefs {
 
 void SetPreferredFormat(std::string format);
 
@@ -28,5 +28,5 @@ void SetHumanReadableOutput(bool readable) noexcept;
 
 [[nodiscard]] auto GetHumanReadableOutput() noexcept -> bool;
 
-}  // namespace prefs
-}  // namespace tactile
+}  // namespace Prefs
+}  // namespace Tactile

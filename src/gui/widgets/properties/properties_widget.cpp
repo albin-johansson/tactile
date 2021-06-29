@@ -18,7 +18,7 @@
 #include "gui/widgets/properties/string_property_widget.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline bool is_visible = true;
@@ -199,4 +199,4 @@ auto IsPropertiesWidgetVisible() noexcept -> bool
   return is_visible;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

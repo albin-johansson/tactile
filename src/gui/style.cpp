@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 void ApplyStyle(ImGuiStyle& style)
 {
@@ -27,4 +27,4 @@ void ApplyStyle(ImGuiStyle& style)
   style.TabRounding = 4;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

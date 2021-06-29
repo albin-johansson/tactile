@@ -5,7 +5,7 @@
 #include <GL/glew.h>
 #include <stb_image.h>
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * The LoadTexture function was based on an example from the Dear ImGui wiki,
@@ -57,4 +57,4 @@ auto LoadTexture(const std::filesystem::path& path) -> Maybe<TextureInfo>
   return info;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

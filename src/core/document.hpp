@@ -5,7 +5,7 @@
 
 #include "properties/property_context.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 class IDocument : public IPropertyContext
 {
@@ -126,4 +126,4 @@ class IDocument : public IPropertyContext
       -> std::filesystem::path = 0;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

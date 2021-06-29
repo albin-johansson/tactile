@@ -1,7 +1,7 @@
 #pragma once
 
-namespace tactile {
+namespace Tactile {
 
 using czstring = const char*;
 
-}  // namespace tactile
+}  // namespace Tactile

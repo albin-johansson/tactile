@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tactile {
+namespace Tactile {
 
 /// \brief Provides values for all different possible property types.
 enum class PropertyType
@@ -14,4 +14,4 @@ enum class PropertyType
   Object     ///< An integer ID property, that refers to a map object.
 };
 
-}  // namespace tactile
+}  // namespace Tactile

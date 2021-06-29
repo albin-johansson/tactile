@@ -3,7 +3,7 @@
 #include "imgui.h"
 #include "utils/scope_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 auto BoolPropertyWidget(const Property& property) -> Maybe<bool>
 {
@@ -23,4 +23,4 @@ auto BoolPropertyWidget(const Property& property) -> Maybe<bool>
   return nothing;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

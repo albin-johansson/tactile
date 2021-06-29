@@ -2,7 +2,7 @@
 
 #include "ImGuiFileDialog.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr auto flags = ImGuiFileDialogFlags_DontShowHiddenFiles |
@@ -33,4 +33,4 @@ auto GetFileDialogSelectedPath() -> std::filesystem::path
   return std::filesystem::path{dialog->GetFilePathName()};
 }
 
-}  // namespace tactile
+}  // namespace Tactile

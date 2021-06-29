@@ -8,7 +8,7 @@
 #include "core/algorithms/invoke_n.hpp"
 #include "core/tactile_error.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 auto MakeTileRow(const col_t nCols, const tile_id value) -> TileRow
 {
@@ -296,4 +296,4 @@ auto TileLayer::GetName() const -> std::string_view
   return mDelegate.GetName();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

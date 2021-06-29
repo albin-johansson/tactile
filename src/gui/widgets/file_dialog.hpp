@@ -5,7 +5,7 @@
 
 #include "aliases/czstring.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 enum class FileDialogResult
 {
@@ -31,4 +31,4 @@ auto FileDialog(const std::string& id,
 /// Returns the file path to the last selected file.
 [[nodiscard]] auto GetFileDialogSelectedPath() -> std::filesystem::path;
 
-}  // namespace tactile
+}  // namespace Tactile

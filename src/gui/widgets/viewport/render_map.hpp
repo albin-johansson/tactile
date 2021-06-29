@@ -3,7 +3,7 @@
 struct ImDrawList;
 struct ImVec2;
 
-namespace tactile {
+namespace Tactile {
 
 class MapDocument;
 
@@ -12,4 +12,4 @@ void RenderMap(const MapDocument& document,
                ImVec2 offset,
                ImVec2 tileSize);
 
-}  // namespace tactile
+}  // namespace Tactile

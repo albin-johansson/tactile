@@ -2,7 +2,7 @@
 
 #include <nenya.hpp>  // strong_type
 
-namespace tactile {
+namespace Tactile {
 
 namespace tags {
 struct map_id_tag;
@@ -10,4 +10,4 @@ struct map_id_tag;
 
 using map_id = nenya::strong_type<int, tags::map_id_tag>;
 
-}  // namespace tactile
+}  // namespace Tactile

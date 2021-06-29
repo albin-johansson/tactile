@@ -4,7 +4,7 @@
 
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 void UpdateAboutDialog(bool* open)
 {
@@ -29,4 +29,4 @@ void UpdateAboutDialog(bool* open)
   ImGui::PopStyleVar();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

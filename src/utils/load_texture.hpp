@@ -6,9 +6,9 @@
 #include "aliases/maybe.hpp"
 #include "texture_info.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto LoadTexture(const std::filesystem::path& path)
     -> Maybe<TextureInfo>;
 
-}  // namespace tactile
+}  // namespace Tactile

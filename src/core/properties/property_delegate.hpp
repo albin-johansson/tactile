@@ -4,7 +4,7 @@
 
 #include "property_context.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 class PropertyDelegate final : public IPropertyContext
 {
@@ -44,4 +44,4 @@ class PropertyDelegate final : public IPropertyContext
   std::string mName;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

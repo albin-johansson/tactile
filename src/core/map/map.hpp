@@ -16,7 +16,7 @@
 #include "core/map/layers/object_layer.hpp"
 #include "core/map/layers/tile_layer.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \class Map
@@ -459,4 +459,4 @@ class Map final
   [[nodiscard]] auto FindLayer(layer_id id) const -> const ILayer*;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

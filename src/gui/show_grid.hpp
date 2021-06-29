@@ -1,9 +1,9 @@
 #pragma once
 
-#include "imgui.h"
 #include "canvas_info.hpp"
+#include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 struct GridState final
 {
@@ -15,4 +15,4 @@ void FillBackground(const CanvasInfo& info);
 
 void ShowGrid(const GridState& state, const CanvasInfo& info);
 
-}  // namespace tactile
+}  // namespace Tactile

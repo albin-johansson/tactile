@@ -4,7 +4,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 
-namespace tactile {
+namespace Tactile {
 
 auto ButtonEx(const czstring text, const czstring tooltip, const bool enabled)
     -> bool
@@ -27,4 +27,4 @@ auto ButtonEx(const czstring text, const czstring tooltip, const bool enabled)
   return result;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

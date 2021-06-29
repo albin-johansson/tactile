@@ -1,6 +1,6 @@
 #include "property.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 void Property::Reset()
 {
@@ -150,4 +150,4 @@ auto Property::GetType() const -> Maybe<PropertyType>
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -4,7 +4,7 @@
 
 #include "core/properties/property_delegate.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 DocumentDelegate::DocumentDelegate()
     : mCommandStack{std::make_unique<CommandStack>()}
@@ -154,4 +154,4 @@ auto DocumentDelegate::GetName() const -> std::string_view
   return mCurrentPropertyContext->GetName();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

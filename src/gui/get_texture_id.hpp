@@ -3,8 +3,8 @@
 #include "aliases/ints.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto GetTextureID(uint texture) -> ImTextureID;
 
-}  // namespace tactile
+}  // namespace Tactile

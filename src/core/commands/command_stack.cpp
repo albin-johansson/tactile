@@ -2,7 +2,7 @@
 
 #include <cassert>  // assert
 
-namespace tactile {
+namespace Tactile {
 
 void CommandStack::Clear()
 {
@@ -102,4 +102,4 @@ void CommandStack::RemoveCommandsAfterCurrentIndex()
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

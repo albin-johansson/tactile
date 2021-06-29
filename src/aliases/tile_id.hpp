@@ -4,7 +4,7 @@
 
 #include "ints.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 namespace tags {
 struct tile_id_tag;
@@ -20,4 +20,4 @@ inline constexpr tile_id empty_tile{0};
   return tile_id{static_cast<tile_id::value_type>(value)};
 }
 
-}  // namespace tactile
+}  // namespace Tactile

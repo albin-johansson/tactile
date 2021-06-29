@@ -7,7 +7,7 @@
 
 #include "directories.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr auto file_name = "settings.ini";
@@ -108,7 +108,7 @@ void SavePreferences()
   WritePreferencesToFile(settings);
 }
 
-namespace prefs {
+namespace Prefs {
 
 void SetPreferredFormat(std::string format)
 {
@@ -150,5 +150,5 @@ auto GetHumanReadableOutput() noexcept -> bool
   return settings.human_readable_output;
 }
 
-}  // namespace prefs
-}  // namespace tactile
+}  // namespace Prefs
+}  // namespace Tactile

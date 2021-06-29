@@ -2,7 +2,7 @@
 
 #include <nenya.hpp>  // strong_type
 
-namespace tactile {
+namespace Tactile {
 
 namespace tags {
 struct object_ref_tag;
@@ -10,4 +10,4 @@ struct object_ref_tag;
 
 using object_ref = nenya::strong_type<int, tags::object_ref_tag>;
 
-}  // namespace tactile
+}  // namespace Tactile

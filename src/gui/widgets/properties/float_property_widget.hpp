@@ -3,9 +3,9 @@
 #include "aliases/maybe.hpp"
 #include "core/properties/property.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto FloatPropertyWidget(const Property& property)
     -> Maybe<float>;
 
-}  // namespace tactile
+}  // namespace Tactile

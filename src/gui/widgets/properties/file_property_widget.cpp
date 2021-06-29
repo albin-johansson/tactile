@@ -3,7 +3,7 @@
 #include "imgui.h"
 #include "utils/scope_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 auto FilePropertyWidget(const Property& property)
     -> Maybe<std::filesystem::path>
@@ -22,4 +22,4 @@ auto FilePropertyWidget(const Property& property)
   return nothing;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

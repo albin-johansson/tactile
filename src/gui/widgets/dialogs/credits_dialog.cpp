@@ -3,7 +3,7 @@
 #include "aliases/czstring.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr auto table_flags =
@@ -63,4 +63,4 @@ void UpdateCreditsDialog(bool* open)
   ImGui::End();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

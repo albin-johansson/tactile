@@ -4,7 +4,7 @@
 
 #include "ints.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 namespace tags {
 struct layer_id_tag;
@@ -18,4 +18,4 @@ using layer_id = nenya::strong_type<int, tags::layer_id_tag>;
   return layer_id{static_cast<layer_id::value_type>(value)};
 }
 
-}  // namespace tactile
+}  // namespace Tactile

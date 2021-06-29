@@ -4,7 +4,7 @@
 #include "imgui.h"
 #include "io/preferences.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline bool restore_last_session = false;
@@ -44,20 +44,20 @@ void ShowExportTab()
 {
   if (ImGui::BeginTabItem("Export"))
   {
-    bool embedTilesets = prefs::GetEmbedTilesets();
+    bool embedTilesets = Prefs::GetEmbedTilesets();
     if (ImGui::Checkbox("Embed tilesets", &embedTilesets))
     {
-      prefs::SetEmbedTilesets(embedTilesets);
+      Prefs::SetEmbedTilesets(embedTilesets);
     }
     if (ImGui::IsItemActive() || ImGui::IsItemHovered())
     {
       ImGui::SetTooltip("Embed tileset data in map files.");
     }
 
-    bool humanReadableOutput = prefs::GetHumanReadableOutput();
+    bool humanReadableOutput = Prefs::GetHumanReadableOutput();
     if (ImGui::Checkbox("Human-readable output", &humanReadableOutput))
     {
-      prefs::SetHumanReadableOutput(humanReadableOutput);
+      Prefs::SetHumanReadableOutput(humanReadableOutput);
     }
 
     if (ImGui::IsItemActive() || ImGui::IsItemHovered())
@@ -67,10 +67,10 @@ void ShowExportTab()
           "more space.");
     }
 
-    int formatIndex = (prefs::GetPreferredFormat() == "JSON") ? 0 : 1;
+    int formatIndex = (Prefs::GetPreferredFormat() == "JSON") ? 0 : 1;
     if (ImGui::Combo("Default format", &formatIndex, "JSON\0TMX\0\0"))
     {
-      prefs::SetPreferredFormat((formatIndex == 0) ? "JSON" : "TMX");
+      Prefs::SetPreferredFormat((formatIndex == 0) ? "JSON" : "TMX");
     }
 
     if (ImGui::IsItemActive() || ImGui::IsItemHovered())
@@ -117,4 +117,4 @@ void UpdateSettingsDialog(bool* open)
   ImGui::End();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

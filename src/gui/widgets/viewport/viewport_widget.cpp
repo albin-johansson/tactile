@@ -5,7 +5,7 @@
 #include "map_content_viewport.hpp"
 #include "no_content_viewport_widget.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -34,4 +34,4 @@ void CenterViewport()
   CenterMapContentViewport();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

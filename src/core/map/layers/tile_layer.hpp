@@ -10,7 +10,7 @@
 #include "layer.hpp"
 #include "layer_delegate.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 using TileRow = std::vector<tile_id>;
 using TileMatrix = std::vector<TileRow>;
@@ -260,4 +260,4 @@ class TileLayer final : public ILayer
   LayerDelegate mDelegate;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

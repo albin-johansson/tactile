@@ -5,9 +5,9 @@
 #include "aliases/maybe.hpp"
 #include "core/properties/property.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto ColorPropertyWidget(const Property& property)
     -> Maybe<cen::color>;
 
-}  // namespace tactile
+}  // namespace Tactile

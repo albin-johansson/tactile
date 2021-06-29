@@ -10,7 +10,7 @@
 #include "gui/widgets/menus/menu_bar_widget.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr auto flags =
@@ -83,4 +83,4 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   ImGui::End();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

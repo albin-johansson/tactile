@@ -2,9 +2,9 @@
 
 #include <memory>  // shared_ptr
 
-namespace tactile {
+namespace Tactile {
 
 template <typename T>
 using Shared = std::shared_ptr<T>;
 
-}  // namespace tactile
+}  // namespace Tactile

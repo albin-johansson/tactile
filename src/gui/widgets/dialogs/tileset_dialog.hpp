@@ -2,8 +2,8 @@
 
 #include <entt.hpp>  // dispatcher
 
-namespace tactile {
+namespace Tactile {
 
 void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher);
 
-}  // namespace tactile
+}  // namespace Tactile

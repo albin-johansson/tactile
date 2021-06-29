@@ -8,7 +8,7 @@
 #include "utils/buffer_utils.hpp"
 #include "utils/scope_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr usize max_digits = 100;
@@ -37,4 +37,4 @@ auto StringPropertyWidget(const Property& property) -> Maybe<std::string>
   return nothing;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

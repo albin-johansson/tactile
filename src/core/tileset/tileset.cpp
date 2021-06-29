@@ -4,7 +4,7 @@
 
 #include "core/tactile_error.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 [[nodiscard]] auto CreateSourceRectCache(const tile_id first,
@@ -184,4 +184,4 @@ auto Tileset::GetName() const -> std::string_view
   return mProperties->GetName();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

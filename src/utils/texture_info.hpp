@@ -4,7 +4,7 @@
 
 #include "aliases/ints.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 struct TextureInfo final
 {
@@ -14,4 +14,4 @@ struct TextureInfo final
   std::filesystem::path path;  ///< Source file path.
 };
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -2,11 +2,11 @@
 
 #include "aliases/tileset_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 struct SelectTilesetEvent final
 {
   tileset_id id;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

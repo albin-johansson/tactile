@@ -4,7 +4,7 @@
 #include "core/events/open_map_event.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 void NoContentViewportWidget(entt::dispatcher& dispatcher)
 {
@@ -28,4 +28,4 @@ void NoContentViewportWidget(entt::dispatcher& dispatcher)
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

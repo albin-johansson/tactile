@@ -10,7 +10,7 @@
 #include "aliases/unique.hpp"
 #include "command.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 inline constexpr usize command_limit = 100;
 
@@ -128,4 +128,4 @@ class CommandStack final
   void RemoveCommandsAfterCurrentIndex();
 };
 
-}  // namespace tactile
+}  // namespace Tactile

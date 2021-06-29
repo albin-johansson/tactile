@@ -12,7 +12,7 @@
 #include "imgui.h"
 #include "utils/scope_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline bool is_visible = true;
@@ -104,4 +104,4 @@ auto IsLayerWidgetVisible() noexcept -> bool
   return is_visible;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -2,11 +2,11 @@
 
 #include "aliases/layer_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 struct SelectLayerEvent final
 {
   layer_id id;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

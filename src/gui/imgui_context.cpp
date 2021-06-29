@@ -10,7 +10,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr auto glsl_version = "#version 130";
@@ -69,4 +69,4 @@ ImGuiContext::~ImGuiContext()
   ImGui::DestroyContext();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

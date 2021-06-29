@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 void HelpMarker(const czstring text)
 {
@@ -19,4 +19,4 @@ void HelpMarker(const czstring text)
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

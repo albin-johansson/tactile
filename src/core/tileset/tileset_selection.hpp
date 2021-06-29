@@ -2,7 +2,7 @@
 
 #include "core/map/map_position.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 struct TilesetSelection final
 {
@@ -10,4 +10,4 @@ struct TilesetSelection final
   MapPosition bottom_right;  ///< The bottom-right corner position.
 };
 
-}  // namespace tactile
+}  // namespace Tactile

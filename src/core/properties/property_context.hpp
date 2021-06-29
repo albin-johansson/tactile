@@ -8,7 +8,7 @@
 #include "property.hpp"
 #include "property_type.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 using PropertyMap = rune::vector_map<std::string, Property>;
 
@@ -141,4 +141,4 @@ class IPropertyContext
   [[nodiscard]] virtual auto GetName() const -> std::string_view = 0;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

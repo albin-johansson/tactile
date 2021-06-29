@@ -1,6 +1,6 @@
 #include "show_grid.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr auto border_color = IM_COL32(255, 255, 255, 100);
@@ -44,4 +44,4 @@ void ShowGrid(const GridState& state, const CanvasInfo& info)
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

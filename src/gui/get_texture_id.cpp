@@ -2,7 +2,7 @@
 
 #include <cstdint>  // uintptr_t
 
-namespace tactile {
+namespace Tactile {
 
 auto GetTextureID(const uint texture) -> ImTextureID
 {
@@ -10,4 +10,4 @@ auto GetTextureID(const uint texture) -> ImTextureID
   return reinterpret_cast<void*>(value);  // NOLINT
 }
 
-}  // namespace tactile
+}  // namespace Tactile

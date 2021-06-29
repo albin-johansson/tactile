@@ -1,7 +1,7 @@
 #pragma once
 
-namespace tactile {
+namespace Tactile {
 
 void UpdateCreditsDialog(bool* open);
 
-}  // namespace tactile
+}  // namespace Tactile

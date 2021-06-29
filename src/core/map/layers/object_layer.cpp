@@ -3,7 +3,7 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
-namespace tactile {
+namespace Tactile {
 
 ObjectLayer::ObjectLayer() : mDelegate{LayerType::ObjectLayer}
 {
@@ -158,4 +158,4 @@ auto ObjectLayer::GetName() const -> std::string_view
   return mDelegate.GetName();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

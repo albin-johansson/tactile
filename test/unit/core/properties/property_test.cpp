@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace tactile;
+using namespace Tactile;
 using namespace std::string_literals;
 
 TEST(Property, Defaults)

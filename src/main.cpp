@@ -82,7 +82,7 @@ auto main(int argc, char** argv) -> int
   cen::gl_context glContext{window};
   glContext.make_current(window);
 
-  tactile::InitOpenGLAttributes();
+  Tactile::InitOpenGLAttributes();
 
   if (glewInit() != GLEW_OK)
   {
@@ -90,9 +90,9 @@ auto main(int argc, char** argv) -> int
     return -1;
   }
 
-  tactile::ImGuiContext gui{window, glContext};
+  Tactile::ImGuiContext gui{window, glContext};
   window.maximize();
 
-  tactile::Application application{std::move(window), std::move(glContext)};
+  Tactile::Application application{std::move(window), std::move(glContext)};
   return application.Run();
 }

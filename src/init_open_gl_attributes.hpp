@@ -1,7 +1,7 @@
 #pragma once
 
-namespace tactile {
+namespace Tactile {
 
 void InitOpenGLAttributes();
 
-}  // namespace tactile
+}  // namespace Tactile

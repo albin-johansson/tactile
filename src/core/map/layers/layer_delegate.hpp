@@ -6,7 +6,7 @@
 #include "core/properties/property_delegate.hpp"
 #include "layer_type.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \class LayerDelegate
@@ -85,4 +85,4 @@ class LayerDelegate final : public IPropertyContext
   bool mVisible{true};
 };
 
-}  // namespace tactile
+}  // namespace Tactile

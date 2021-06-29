@@ -12,7 +12,7 @@
 #include "io/preferences.hpp"
 #include "utils/load_texture.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 Application::Application(cen::window&& window, cen::gl_context&& context)
     : mWindow{std::move(window)}
@@ -203,7 +203,7 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   }
   else if (key == cen::scancodes::g)
   {
-    prefs::SetShowGrid(!prefs::GetShowGrid());
+    Prefs::SetShowGrid(!Prefs::GetShowGrid());
   }
   else if (key == cen::scancodes::o)
   {
@@ -337,4 +337,4 @@ void Application::OnQuitEvent()
   mQuit = true;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

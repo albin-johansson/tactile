@@ -2,9 +2,9 @@
 
 #include <memory>  // unique_ptr
 
-namespace tactile {
+namespace Tactile {
 
 template <typename T>
 using Unique = std::unique_ptr<T>;
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -10,7 +10,7 @@
 #include "imgui.h"
 #include "imgui_internal.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline GridState state;
@@ -55,4 +55,4 @@ void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
   drawList->PopClipRect();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

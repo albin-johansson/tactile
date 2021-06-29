@@ -12,7 +12,7 @@
 #include "render_map.hpp"
 #include "utils/scope_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline bool center_viewport = false;
@@ -44,7 +44,7 @@ void RenderActiveMap(const MapDocument& document)
     center_viewport = false;
   }
 
-  if (prefs::GetShowGrid())
+  if (Prefs::GetShowGrid())
   {
     ShowGrid(state, info);
   }
@@ -98,4 +98,4 @@ void CenterMapContentViewport()
   center_viewport = true;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -6,7 +6,7 @@
 #include "aliases/ints.hpp"
 #include "aliases/row.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \class MapPosition
@@ -223,4 +223,4 @@ class MapPosition final
                      lhs.GetColumn() - rhs.GetColumn()};
 }
 
-}  // namespace tactile
+}  // namespace Tactile

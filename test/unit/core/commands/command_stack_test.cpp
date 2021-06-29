@@ -4,7 +4,7 @@
 
 #include <iostream>  // cout
 
-using namespace tactile;
+using namespace Tactile;
 
 namespace {
 

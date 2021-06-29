@@ -9,7 +9,7 @@
 #include "widgets/toolbar/tool_bar.hpp"
 #include "widgets/viewport/viewport_widget.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -24,4 +24,4 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
   UpdateTilesetWidget(model, dispatcher);
 }
 
-}  // namespace tactile
+}  // namespace Tactile

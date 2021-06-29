@@ -9,7 +9,7 @@
 #include "layer_delegate.hpp"
 #include "object.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \class ObjectLayer
@@ -165,4 +165,4 @@ class ObjectLayer final : public ILayer
   LayerDelegate mDelegate;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

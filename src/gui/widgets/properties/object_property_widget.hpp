@@ -4,9 +4,9 @@
 #include "aliases/object_ref.hpp"
 #include "core/properties/property.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto ObjectPropertyWidget(const Property& property)
     -> Maybe<object_ref>;
 
-}  // namespace tactile
+}  // namespace Tactile

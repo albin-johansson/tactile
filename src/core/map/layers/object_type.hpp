@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tactile {
+namespace Tactile {
 
 enum class ObjectType
 {
@@ -8,4 +8,4 @@ enum class ObjectType
   Rectangle
 };
 
-}  // namespace tactile
+}  // namespace Tactile

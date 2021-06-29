@@ -9,7 +9,7 @@
 #include "core/tileset/tileset_manager.hpp"
 #include "utils/texture_info.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 class MapDocument final : public IDocument
 {
@@ -64,9 +64,7 @@ class MapDocument final : public IDocument
 
   [[nodiscard]] auto GetColumnCount() const -> col_t;
 
-  void AddTileset(const TextureInfo& info,
-                  int tileWidth,
-                  int tileHeight);
+  void AddTileset(const TextureInfo& info, int tileWidth, int tileHeight);
 
   void SelectTileset(tileset_id id);
 
@@ -113,4 +111,4 @@ class MapDocument final : public IDocument
   int mObjectLayerSuffix{1};           ///< Incrementing object layer suffix.
 };
 
-}  // namespace tactile
+}  // namespace Tactile

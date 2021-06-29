@@ -2,7 +2,7 @@
 
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 struct CanvasInfo final
 {
@@ -13,4 +13,4 @@ struct CanvasInfo final
 
 [[nodiscard]] auto GetCanvasInfo() -> CanvasInfo;
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -4,7 +4,7 @@
 
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 [[nodiscard]] auto WithAlpha(const ImVec4& color, const float opacity) -> ImVec4
@@ -118,4 +118,4 @@ void ApplyNightTheme(ImGuiStyle& style)
   // clang-format on
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -1,9 +1,9 @@
 #pragma once
 
-#include <entt.hpp> // dispatcher
+#include <entt.hpp>  // dispatcher
 
-namespace tactile {
+namespace Tactile {
 
 void NoContentViewportWidget(entt::dispatcher& dispatcher);
 
-}  // namespace tactile
+}  // namespace Tactile

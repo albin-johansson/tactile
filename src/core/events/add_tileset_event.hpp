@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-namespace tactile {
+namespace Tactile {
 
 struct AddTilesetEvent final
 {
@@ -11,4 +11,4 @@ struct AddTilesetEvent final
   int tile_height{};
 };
 
-}  // namespace tactile
+}  // namespace Tactile

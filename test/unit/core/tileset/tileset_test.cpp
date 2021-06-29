@@ -5,7 +5,7 @@
 #include "core/tactile_error.hpp"
 #include "utils/load_texture.hpp"
 
-using namespace tactile;
+using namespace Tactile;
 
 class TilesetTest : public testing::Test
 {

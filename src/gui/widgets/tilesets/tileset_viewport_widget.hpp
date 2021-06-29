@@ -2,11 +2,11 @@
 
 #include <entt.hpp>  // dispatcher
 
-namespace tactile {
+namespace Tactile {
 
 class Tileset;
 
 void TilesetViewportWidget(const Tileset& tileset,
                            entt::dispatcher& dispatcher);
 
-}  // namespace tactile
+}  // namespace Tactile

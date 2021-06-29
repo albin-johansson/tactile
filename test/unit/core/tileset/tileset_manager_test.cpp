@@ -4,7 +4,7 @@
 
 #include "utils/load_texture.hpp"
 
-using namespace tactile;
+using namespace Tactile;
 
 struct TilesetManagerTest : testing::Test
 {

@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-namespace tactile {
+namespace Tactile {
 
 class ACommand
 {
@@ -33,4 +33,4 @@ class ACommand
   std::string mText;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

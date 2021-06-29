@@ -1,8 +1,8 @@
 #pragma once
 
-namespace tactile {
+namespace Tactile {
 
 struct QuitEvent final
 {};
 
-}  // namespace tactile
+}  // namespace Tactile

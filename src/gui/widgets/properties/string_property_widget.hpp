@@ -5,9 +5,9 @@
 #include "aliases/maybe.hpp"
 #include "core/properties/property.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto StringPropertyWidget(const Property& property)
     -> Maybe<std::string>;
 
-}  // namespace tactile
+}  // namespace Tactile

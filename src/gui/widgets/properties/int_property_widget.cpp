@@ -5,7 +5,7 @@
 #include "imgui.h"
 #include "utils/scope_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 auto IntPropertyWidget(const Property& property) -> Maybe<int>
 {
@@ -26,4 +26,4 @@ auto IntPropertyWidget(const Property& property) -> Maybe<int>
   return nothing;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

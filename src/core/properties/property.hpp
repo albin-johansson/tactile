@@ -9,7 +9,7 @@
 #include "aliases/object_ref.hpp"
 #include "property_type.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 // clang-format off
 
@@ -265,4 +265,4 @@ class Property final
   }
 };
 
-}  // namespace tactile
+}  // namespace Tactile

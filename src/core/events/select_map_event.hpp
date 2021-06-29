@@ -2,11 +2,11 @@
 
 #include "aliases/map_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 struct SelectMapEvent final
 {
   map_id id;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

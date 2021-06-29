@@ -2,7 +2,7 @@
 
 #include "imgui_internal.h"
 
-namespace tactile {
+namespace Tactile {
 
 auto GetCanvasInfo() -> CanvasInfo
 {
@@ -15,4 +15,4 @@ auto GetCanvasInfo() -> CanvasInfo
   return info;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

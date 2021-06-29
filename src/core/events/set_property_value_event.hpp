@@ -4,7 +4,7 @@
 
 #include "core/properties/property.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 struct SetPropertyValueEvent final
 {
@@ -12,4 +12,4 @@ struct SetPropertyValueEvent final
   Property property;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

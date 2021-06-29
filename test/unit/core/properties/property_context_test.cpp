@@ -10,7 +10,7 @@
 #include "core/tileset/tileset.hpp"
 #include "utils/load_texture.hpp"
 
-using namespace tactile;
+using namespace Tactile;
 
 using PropertyContextTypes = testing::Types<PropertyDelegate,
                                             MapDocument,

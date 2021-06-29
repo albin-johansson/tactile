@@ -7,7 +7,7 @@
 #include "core/map/layers/layer_utils.hpp"
 #include "core/tactile_error.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 Map::Map(const row_t nRows, const col_t nCols) : mRows{nRows}, mCols{nCols}
 {
@@ -393,4 +393,4 @@ auto Map::FindLayer(const layer_id id) const -> const ILayer*
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

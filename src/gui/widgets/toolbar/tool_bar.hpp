@@ -2,10 +2,10 @@
 
 #include <entt.hpp>  // dispatcher
 
-namespace tactile {
+namespace Tactile {
 
 class Model;
 
 void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher);
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -7,7 +7,7 @@
 #include "utils/color_utils.hpp"
 #include "utils/scope_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 auto ColorPropertyWidget(const Property& property) -> Maybe<cen::color>
 {
@@ -38,4 +38,4 @@ auto ColorPropertyWidget(const Property& property) -> Maybe<cen::color>
   return nothing;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

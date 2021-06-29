@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>  // preferred_path
 
-namespace tactile {
+namespace Tactile {
 
 auto GetPersistentFileDir() -> const std::filesystem::path&
 {
@@ -11,4 +11,4 @@ auto GetPersistentFileDir() -> const std::filesystem::path&
   return path;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

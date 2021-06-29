@@ -1,8 +1,8 @@
 #pragma once
 
-#include <entt.hpp> // dispatcher
+#include <entt.hpp>  // dispatcher
 
-namespace tactile {
+namespace Tactile {
 
 class Model;
 
@@ -12,4 +12,4 @@ void SetLayerWidgetVisible(bool visible) noexcept;
 
 [[nodiscard]] auto IsLayerWidgetVisible() noexcept -> bool;
 
-}  // namespace tactile
+}  // namespace Tactile

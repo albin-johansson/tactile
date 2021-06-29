@@ -2,9 +2,9 @@
 
 #include <utility>  // move
 
-namespace tactile {
+namespace Tactile {
 
 ACommand::ACommand(std::string text) : mText{std::move(text)}
 {}
 
-}  // namespace tactile
+}  // namespace Tactile

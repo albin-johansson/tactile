@@ -3,8 +3,8 @@
 #include "aliases/maybe.hpp"
 #include "core/properties/property.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto IntPropertyWidget(const Property& property) -> Maybe<int>;
 
-}  // namespace tactile
+}  // namespace Tactile

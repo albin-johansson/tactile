@@ -2,8 +2,8 @@
 
 #include "gui/show_grid.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 void MouseTracker(const CanvasInfo& info, GridState& state);
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -7,7 +7,7 @@
 #include "core/properties/property_context.hpp"
 #include "layer_type.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 class ILayer;
 
@@ -80,4 +80,4 @@ class ILayer : public IPropertyContext
   [[nodiscard]] virtual auto Clone() const -> SharedLayer = 0;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

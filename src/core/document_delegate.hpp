@@ -8,7 +8,7 @@
 #include "commands/command_stack.hpp"
 #include "document.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 class DocumentDelegate final : public IDocument
 {
@@ -88,4 +88,4 @@ class DocumentDelegate final : public IDocument
   Maybe<std::filesystem::path> mPath;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

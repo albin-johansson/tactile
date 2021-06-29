@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // dispatcher
 
-namespace tactile {
+namespace Tactile {
 
 class Model;
 
@@ -14,4 +14,4 @@ void EnableSettingsDialog();
 
 void EnableTilesetDialog();
 
-}  // namespace tactile
+}  // namespace Tactile

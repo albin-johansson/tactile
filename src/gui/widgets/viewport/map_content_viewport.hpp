@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // dispatcher
 
-namespace tactile {
+namespace Tactile {
 
 class Model;
 
@@ -10,4 +10,4 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher);
 
 void CenterMapContentViewport();
 
-}  // namespace tactile
+}  // namespace Tactile

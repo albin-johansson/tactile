@@ -4,7 +4,7 @@
 #include "object_layer.hpp"
 #include "tile_layer.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto AsTileLayer(SharedLayer& layer) -> TileLayer*;
 
@@ -15,4 +15,4 @@ namespace tactile {
 [[nodiscard]] auto AsObjectLayer(const SharedLayer& layer)
     -> const ObjectLayer*;
 
-}  // namespace tactile
+}  // namespace Tactile

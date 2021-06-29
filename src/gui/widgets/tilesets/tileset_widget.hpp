@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // dispatcher
 
-namespace tactile {
+namespace Tactile {
 
 class Model;
 
@@ -12,4 +12,4 @@ void SetTilesetWidgetVisible(bool visible) noexcept;
 
 [[nodiscard]] auto IsTilesetWidgetVisible() noexcept -> bool;
 
-}  // namespace tactile
+}  // namespace Tactile

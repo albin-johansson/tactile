@@ -28,7 +28,7 @@
 #include "imgui.h"
 #include "io/preferences.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline bool show_about_tactile_window = false;
@@ -195,10 +195,10 @@ void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<CenterViewportEvent>();
     }
 
-    bool showGrid = prefs::GetShowGrid();
+    bool showGrid = Prefs::GetShowGrid();
     if (ImGui::MenuItem(ICON_FA_TH " Toggle grid", "Ctrl+G", &showGrid))
     {
-      prefs::SetShowGrid(showGrid);
+      Prefs::SetShowGrid(showGrid);
     }
 
     ImGui::Separator();
@@ -364,4 +364,4 @@ void EnableTilesetDialog()
   show_tileset_dialog = true;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -16,7 +16,7 @@ auto main(int argc, char** argv) -> int
   cen::gl_context context{window};
   context.make_current(window);
 
-  tactile::InitOpenGLAttributes();
+  Tactile::InitOpenGLAttributes();
 
   if (glewInit() != GLEW_OK)
   {

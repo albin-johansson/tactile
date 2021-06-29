@@ -9,7 +9,7 @@
 #include "gui/widgets/tilesets/tileset_content_widget.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline bool is_visible = true;
@@ -66,4 +66,4 @@ auto IsTilesetWidgetVisible() noexcept -> bool
   return is_visible;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -5,7 +5,7 @@
 #include "gui/widgets/tilesets/tileset_widget.hpp"
 #include "imgui_internal.h"
 
-namespace tactile {
+namespace Tactile {
 
 void LoadDefaultLayout(ImGuiID id)
 {
@@ -37,4 +37,4 @@ void LoadDefaultLayout(ImGuiID id)
   SetTilesetWidgetVisible(true);
 }
 
-}  // namespace tactile
+}  // namespace Tactile

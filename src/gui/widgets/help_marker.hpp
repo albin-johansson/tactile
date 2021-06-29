@@ -2,8 +2,8 @@
 
 #include "aliases/czstring.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 void HelpMarker(czstring text);
 
-}  // namespace tactile
+}  // namespace Tactile

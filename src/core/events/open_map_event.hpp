@@ -2,11 +2,11 @@
 
 #include <filesystem>  // path
 
-namespace tactile {
+namespace Tactile {
 
 struct OpenMapEvent final
 {
   std::filesystem::path path;
 };
 
-}  // namespace tactile
+}  // namespace Tactile

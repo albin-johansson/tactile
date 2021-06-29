@@ -4,7 +4,7 @@
 #include <centurion.hpp>  // log
 #include <utility>        // move
 
-namespace tactile {
+namespace Tactile {
 
 PropertyDelegate::PropertyDelegate(std::string name) : mName{std::move(name)}
 {}
@@ -122,4 +122,4 @@ auto PropertyDelegate::GetName() const -> std::string_view
   return mName;
 }
 
-}  // namespace tactile
+}  // namespace Tactile

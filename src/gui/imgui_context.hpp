@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>  // window, gl::context
 
-namespace tactile {
+namespace Tactile {
 
 class ImGuiContext final
 {
@@ -12,4 +12,4 @@ class ImGuiContext final
   ~ImGuiContext();
 };
 
-}  // namespace tactile
+}  // namespace Tactile

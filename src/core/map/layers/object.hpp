@@ -8,7 +8,7 @@
 #include "core/properties/property_delegate.hpp"
 #include "object_type.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \class Object
@@ -237,4 +237,4 @@ class Object final : public IPropertyContext
   bool mVisible{true};
 };
 
-}  // namespace tactile
+}  // namespace Tactile

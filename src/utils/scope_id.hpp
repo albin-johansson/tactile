@@ -3,7 +3,7 @@
 #include "aliases/czstring.hpp"
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 struct ScopeID final
 {
@@ -28,4 +28,4 @@ struct ScopeID final
   }
 };
 
-}  // namespace tactile
+}  // namespace Tactile

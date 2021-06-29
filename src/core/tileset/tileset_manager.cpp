@@ -6,7 +6,7 @@
 
 #include "core/tactile_error.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 TilesetManager::TilesetManager()
 {
@@ -192,4 +192,4 @@ void TilesetManager::ValidateNextTilesetId()
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

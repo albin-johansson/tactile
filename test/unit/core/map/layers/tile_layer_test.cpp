@@ -4,7 +4,7 @@
 
 #include "core/tactile_error.hpp"
 
-using namespace tactile;
+using namespace Tactile;
 
 TEST(TileLayer, Defaults)
 {

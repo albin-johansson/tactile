@@ -3,7 +3,7 @@
 #include <algorithm>  // clamp
 #include <utility>    // move
 
-namespace tactile {
+namespace Tactile {
 
 LayerDelegate::LayerDelegate(const LayerType type) : mType{type}
 {}
@@ -84,4 +84,4 @@ auto LayerDelegate::GetName() const -> std::string_view
   return mProperties.GetName();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

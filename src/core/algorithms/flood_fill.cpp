@@ -2,7 +2,7 @@
 
 #include <queue>  // queue
 
-namespace tactile {
+namespace Tactile {
 
 void FloodFill(TileLayer& layer,
                const MapPosition& origin,
@@ -45,4 +45,4 @@ void FloodFill(TileLayer& layer,
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

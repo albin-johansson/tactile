@@ -3,7 +3,7 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
-namespace tactile {
+namespace Tactile {
 
 MapDocument::MapDocument()
     : mMap{std::make_unique<Map>()}
@@ -199,4 +199,4 @@ auto MapDocument::GetName() const -> std::string_view
   return mDelegate->GetName();
 }
 
-}  // namespace tactile
+}  // namespace Tactile

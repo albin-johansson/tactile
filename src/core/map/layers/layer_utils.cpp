@@ -1,6 +1,6 @@
 #include "layer_utils.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 auto AsTileLayer(SharedLayer& layer) -> TileLayer*
 {
@@ -50,4 +50,4 @@ auto AsObjectLayer(const SharedLayer& layer) -> const ObjectLayer*
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

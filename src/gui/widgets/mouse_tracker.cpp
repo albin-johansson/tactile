@@ -1,6 +1,6 @@
 #include "mouse_tracker.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline constexpr auto flags =
@@ -19,4 +19,4 @@ void MouseTracker(const CanvasInfo& info, GridState& state)
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

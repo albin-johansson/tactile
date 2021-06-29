@@ -1,8 +1,8 @@
 #pragma once
 
-namespace tactile {
+namespace Tactile {
 
 struct CenterViewportEvent final
 {};
 
-}  // namespace tactile
+}  // namespace Tactile

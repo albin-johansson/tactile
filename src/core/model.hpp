@@ -7,7 +7,7 @@
 #include "aliases/unique.hpp"
 #include "map_document.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 class Model final
 {
@@ -56,4 +56,4 @@ class Model final
   map_id mNextId{1};
 };
 
-}  // namespace tactile
+}  // namespace Tactile

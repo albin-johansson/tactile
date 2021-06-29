@@ -4,7 +4,7 @@
 
 #include "aliases/czstring.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 class TactileError final : public std::exception
 {
@@ -23,4 +23,4 @@ class TactileError final : public std::exception
   czstring mWhat{"N/A"};
 };
 
-}  // namespace tactile
+}  // namespace Tactile

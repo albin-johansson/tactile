@@ -3,7 +3,7 @@
 #include <array>          // array
 #include <centurion.hpp>  // color
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] constexpr auto ColorToArray(const cen::color& color) noexcept
     -> std::array<float, 4>
@@ -15,4 +15,4 @@ namespace tactile {
   return {r, g, b, a};
 }
 
-}  // namespace tactile
+}  // namespace Tactile

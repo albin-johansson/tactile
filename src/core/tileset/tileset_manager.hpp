@@ -10,7 +10,7 @@
 #include "aliases/tileset_id.hpp"
 #include "tileset.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 struct TileRange final
 {
@@ -263,4 +263,4 @@ class TilesetManager final
   void ValidateNextTilesetId();
 };
 
-}  // namespace tactile
+}  // namespace Tactile

@@ -2,7 +2,7 @@
 
 #include "aliases/czstring.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \brief Shows a button.
@@ -16,4 +16,4 @@ namespace tactile {
 auto ButtonEx(czstring text, czstring tooltip = nullptr, bool enabled = true)
     -> bool;
 
-}  // namespace tactile
+}  // namespace Tactile

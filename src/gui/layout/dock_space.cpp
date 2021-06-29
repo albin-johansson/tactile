@@ -3,7 +3,7 @@
 #include "aliases/maybe.hpp"
 #include "load_default_layout.hpp"
 
-namespace tactile {
+namespace Tactile {
 namespace {
 
 inline bool initialized = false;
@@ -30,4 +30,4 @@ void ResetLayout()
   LoadDefaultLayout(root_id.value());
 }
 
-}  // namespace tactile
+}  // namespace Tactile

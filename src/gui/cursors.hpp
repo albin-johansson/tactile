@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>  // system_cursor
 
-namespace tactile {
+namespace Tactile {
 
 void LoadCursors();
 
@@ -10,4 +10,4 @@ void UnloadCursors() noexcept;
 
 void EnableCursor(cen::system_cursor cursor);
 
-}  // namespace tactile
+}  // namespace Tactile

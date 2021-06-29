@@ -7,7 +7,7 @@
 
 #include "aliases/ints.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \brief Copies a string into a character buffer.
@@ -72,4 +72,4 @@ template <usize Size>
   return std::string{buffer.data(), buffer.data() + index};
 }
 
-}  // namespace tactile
+}  // namespace Tactile

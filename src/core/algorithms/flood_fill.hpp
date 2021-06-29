@@ -6,7 +6,7 @@
 #include "core/map/layers/tile_layer.hpp"
 #include "core/map/map_position.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 /**
  * \brief Runs a flood fill in the supplied tile layer.
@@ -21,4 +21,4 @@ void FloodFill(TileLayer& layer,
                tile_id replacement,
                std::vector<MapPosition>& affected);
 
-}  // namespace tactile
+}  // namespace Tactile

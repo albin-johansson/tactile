@@ -2,8 +2,8 @@
 
 #include <filesystem>  // path
 
-namespace tactile {
+namespace Tactile {
 
 [[nodiscard]] auto GetPersistentFileDir() -> const std::filesystem::path&;
 
-}  // namespace tactile
+}  // namespace Tactile

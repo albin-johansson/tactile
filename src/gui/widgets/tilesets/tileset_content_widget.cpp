@@ -7,7 +7,7 @@
 #include "imgui.h"
 #include "utils/scope_id.hpp"
 
-namespace tactile {
+namespace Tactile {
 
 void TilesetContentWidget(const MapDocument& document,
                           entt::dispatcher& dispatcher)
@@ -43,4 +43,4 @@ void TilesetContentWidget(const MapDocument& document,
   }
 }
 
-}  // namespace tactile
+}  // namespace Tactile

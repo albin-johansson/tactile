@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tactile {
+namespace Tactile {
 
 enum class LayerType
 {
@@ -8,4 +8,4 @@ enum class LayerType
   ObjectLayer
 };
 
-}  // namespace tactile
+}  // namespace Tactile

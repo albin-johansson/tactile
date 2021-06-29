@@ -2,8 +2,8 @@
 
 #include "imgui.h"
 
-namespace tactile {
+namespace Tactile {
 
 void LoadDefaultLayout(ImGuiID id);
 
-}  // namespace tactile
+}  // namespace Tactile
