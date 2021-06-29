@@ -9,6 +9,7 @@
 #include "core/events/open_map_event.hpp"
 #include "core/events/select_map_event.hpp"
 #include "core/model.hpp"
+#include "gui/canvas_info.hpp"
 #include "gui/show_grid.hpp"
 #include "gui/widgets/mouse_tracker.hpp"
 #include "imgui.h"

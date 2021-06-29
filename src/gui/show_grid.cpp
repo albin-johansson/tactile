@@ -9,18 +9,6 @@ inline constexpr auto line_color = IM_COL32(200, 200, 200, 40);
 
 }  // namespace
 
-auto GetCanvasInfo() -> CanvasInfo
-{
-  CanvasInfo info;
-
-  info.canvas_size = ImGui::GetContentRegionAvail();
-  info.canvas_tl = ImGui::GetCursorScreenPos();
-  info.canvas_br = {info.canvas_tl.x + info.canvas_size.x,
-                    info.canvas_tl.y + info.canvas_size.y};
-
-  return info;
-}
-
 void FillBackground(const CanvasInfo& info)
 {
   auto* drawList = ImGui::GetWindowDrawList();

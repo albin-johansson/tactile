@@ -92,6 +92,8 @@ set(TACTILE_SOURCE_FILES
     filesystem/get_persistent_file_path.cpp
     filesystem/get_persistent_file_path.hpp
 
+    gui/canvas_info.hpp
+    gui/canvas_info.cpp
     gui/cursors.cpp
     gui/cursors.hpp
     gui/get_texture_id.cpp

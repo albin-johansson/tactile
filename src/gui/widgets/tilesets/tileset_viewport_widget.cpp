@@ -3,6 +3,7 @@
 #include <algorithm>  // min, max
 
 #include "core/tileset/tileset.hpp"
+#include "gui/canvas_info.hpp"
 #include "gui/get_texture_id.hpp"
 #include "gui/show_grid.hpp"
 #include "gui/widgets/mouse_tracker.hpp"
