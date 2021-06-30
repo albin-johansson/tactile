@@ -8,6 +8,7 @@
 #include "aliases/unique.hpp"
 #include "core/events/add_column_event.hpp"
 #include "core/events/add_map_event.hpp"
+#include "core/events/set_tileset_selection_event.hpp"
 #include "core/events/add_row_event.hpp"
 #include "core/events/add_tileset_event.hpp"
 #include "core/events/center_viewport_event.hpp"
