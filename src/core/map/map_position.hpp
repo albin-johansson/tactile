@@ -1,7 +1,5 @@
 #pragma once
 
-#include <algorithm>  // max
-
 #include "aliases/col.hpp"
 #include "aliases/ints.hpp"
 #include "aliases/row.hpp"
@@ -24,34 +22,28 @@ class MapPosition final
   /**
    * \brief Creates a map position.
    *
-   * \details The indices are clamped to be at least 0.
-   *
    * \param row the row index.
    * \param column the column index.
    */
   constexpr MapPosition(const row_t row, const col_t column)
-      : mRow{std::max(0, row.get())}
-      , mCol{std::max(0, column.get())}
+      : mRow{row.get()}
+      , mCol{column.get()}
   {}
 
   /**
    * \brief Sets the row index associated with the position.
-   *
-   * \param row the new row index, clamped to at least 0.
    */
   constexpr void SetRow(const row_t row)
   {
-    mRow = std::max(0, row.get());
+    mRow = row.get();
   }
 
   /**
    * \brief Sets the column index associated with the position.
-   *
-   * \param column the new column index, clamped to at least 0.
    */
   constexpr void SetColumn(const col_t column)
   {
-    mCol = std::max(0, column.get());
+    mCol = column.get();
   }
 
   /**
@@ -113,8 +105,6 @@ class MapPosition final
   /**
    * \brief Returns the row index of the map position.
    *
-   * \note The returned value is never negative.
-   *
    * \return the associated row index.
    */
   [[nodiscard]] constexpr auto GetRow() const -> row_t
@@ -124,8 +114,6 @@ class MapPosition final
 
   /**
    * \brief Returns the column index of the map position.
-   *
-   * \note The returned value is never negative.
    *
    * \return the associated column index.
    */

@@ -13,23 +13,15 @@ TEST(MapPosition, Defaults)
 
 TEST(Position, RowColConstructor)
 {
-  {  // Valid arguments
-    const MapPosition position{123_row, 557_col};
-    ASSERT_EQ(123_row, position.GetRow());
-    ASSERT_EQ(557_col, position.GetColumn());
-  }
+  const MapPosition a{123_row, 557_col};
+  ASSERT_EQ(123_row, a.GetRow());
+  ASSERT_EQ(557_col, a.GetColumn());
 
-  {  // Edge cases
-    const MapPosition valid1{0_row, 0_col};
-    ASSERT_EQ(0_row, valid1.GetRow());
-    ASSERT_EQ(0_col, valid1.GetColumn());
+  const MapPosition b{-1_row, 0_col};
+  ASSERT_EQ(-1_row, b.GetRow());
 
-    const MapPosition invalid1{-1_row, 0_col};
-    ASSERT_EQ(0_row, invalid1.GetRow());
-
-    const MapPosition invalid2{0_row, -1_col};
-    ASSERT_EQ(0_col, invalid2.GetColumn());
-  }
+  const MapPosition c{0_row, -1_col};
+  ASSERT_EQ(-1_col, c.GetColumn());
 }
 
 TEST(Position, SetRow)
