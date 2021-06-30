@@ -46,6 +46,7 @@ set(TACTILE_SOURCE_FILES
     core/events/add_tileset_event.hpp
     core/events/center_viewport_event.hpp
     core/events/close_map_event.hpp
+    core/events/mouse_drag_event.hpp
     core/events/open_map_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp
@@ -90,7 +91,18 @@ set(TACTILE_SOURCE_FILES
     core/tileset/tileset_manager.hpp
     core/tileset/tileset_selection.hpp
 
+    core/tools/bucket_tool.cpp
+    core/tools/bucket_tool.hpp
+    core/tools/eraser_tool.cpp
+    core/tools/eraser_tool.hpp
+    core/tools/mouse_tool.cpp
+    core/tools/mouse_tool.hpp
+    core/tools/mouse_tool_model.cpp
+    core/tools/mouse_tool_model.hpp
     core/tools/mouse_tool_type.hpp
+    core/tools/stamp_tool.cpp
+    core/tools/stamp_tool.hpp
+
     gui/canvas_info.hpp
     gui/canvas_info.cpp
     gui/cursors.cpp

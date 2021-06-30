@@ -4,7 +4,8 @@
 
 namespace Tactile {
 
-Model::Model() = default;
+Model::Model() : mTools{this}
+{}
 
 auto Model::AddMap() -> map_id
 {
@@ -71,6 +72,21 @@ auto Model::GetActiveMap() const -> const Map&
 {
   assert(mActiveMap.has_value());
   return GetDocument(*mActiveMap)->GetMap();
+}
+
+void Model::SelectTool(const MouseToolType tool)
+{
+  mTools.Select(tool);
+}
+
+void Model::OnMouseDragged(const MouseDragEvent& event)
+{
+  mTools.OnMouseDragged(event);
+}
+
+auto Model::GetActiveTool() const -> MouseToolType
+{
+  return mTools.GetActive();
 }
 
 }  // namespace Tactile

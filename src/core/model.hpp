@@ -5,17 +5,22 @@
 #include "aliases/map_id.hpp"
 #include "aliases/maybe.hpp"
 #include "aliases/unique.hpp"
+#include "events/mouse_drag_event.hpp"
 #include "map_document.hpp"
+#include "tools/mouse_tool_model.hpp"
 
 namespace Tactile {
 
 class Model final
 {
  public:
-  using storage_type = rune::vector_map<map_id, Unique<MapDocument>>;
-  using const_iterator = storage_type::const_iterator;
+  using document_storage = rune::vector_map<map_id, Unique<MapDocument>>;
+  using const_iterator = document_storage::const_iterator;
 
   Model();
+
+  /// \name Map document API
+  /// \{
 
   [[nodiscard]] auto AddMap() -> map_id;
 
@@ -50,8 +55,25 @@ class Model final
     return mDocuments.end();
   }
 
+  /// \} End of map document API
+
+  /// \name Tools API
+  /// \{
+
+  void SelectTool(MouseToolType tool);
+
+  //  void OnMousePressed(const MouseDragEvent& event);
+  //  void OnMouseReleased(const MouseDragEvent& event);
+
+  void OnMouseDragged(const MouseDragEvent& event);
+
+  [[nodiscard]] auto GetActiveTool() const -> MouseToolType;
+
+  /// \} End of tools API
+
  private:
-  storage_type mDocuments;
+  document_storage mDocuments;
+  MouseToolModel mTools;
   Maybe<map_id> mActiveMap;
   map_id mNextId{1};
 };
