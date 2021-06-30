@@ -1,6 +1,6 @@
 #pragma once
 
-#include <centurion.hpp>  // window, gl_context
+#include <centurion.hpp>  // window
 #include <entt.hpp>       // dispatcher
 #include <vector>         // vector
 
@@ -31,13 +31,12 @@ namespace Tactile {
 class Application final
 {
  public:
-  Application(cen::window&& window, cen::gl_context&& context);
+  Application(cen::window&& window);
 
   auto Run() -> int;
 
  private:
   cen::window mWindow;
-  [[maybe_unused]] cen::gl_context mContext;
   entt::dispatcher mDispatcher;
   Unique<Model> mModel;
   std::vector<uint> mTextures;

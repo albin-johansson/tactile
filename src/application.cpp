@@ -14,9 +14,8 @@
 
 namespace Tactile {
 
-Application::Application(cen::window&& window, cen::gl_context&& context)
+Application::Application(cen::window&& window)
     : mWindow{std::move(window)}
-    , mContext{std::move(context)}
     , mModel{std::make_unique<Model>()}
 {
   // clang-format off
