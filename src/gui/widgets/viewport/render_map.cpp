@@ -2,6 +2,7 @@
 
 #include "core/map_document.hpp"
 #include "imgui.h"
+#include "imgui_internal.h"
 
 namespace Tactile {
 namespace {
@@ -32,7 +33,7 @@ void RenderOutline(ImDrawList* drawList,
 
 void RenderMap(const MapDocument& document,
                ImDrawList* drawList,
-               const ImVec2 offset,
+               const ImVec2 mapPos,
                const ImVec2 tileSize)
 {
   const auto nRows = document.GetRowCount();
@@ -41,14 +42,13 @@ void RenderMap(const MapDocument& document,
   {
     for (auto col = 0; col < nCols; ++col)
     {
-      const auto x = offset.x + (tileSize.x * static_cast<float>(col));
-      const auto y = offset.y + (tileSize.y * static_cast<float>(row));
-
-      drawList->AddRect({x, y}, {x + tileSize.x, y + tileSize.y}, border_color);
+      const ImVec2 pos = {mapPos.x + (tileSize.x * static_cast<float>(col)),
+                          mapPos.y + (tileSize.y * static_cast<float>(row))};
+      drawList->AddRect(pos, pos + tileSize, border_color);
     }
   }
 
-  RenderOutline(drawList, nRows, nCols, offset, tileSize);
+  RenderOutline(drawList, nRows, nCols, mapPos, tileSize);
 }
 
 }  // namespace Tactile
