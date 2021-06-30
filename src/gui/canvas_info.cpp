@@ -8,9 +8,9 @@ auto GetCanvasInfo() -> CanvasInfo
 {
   CanvasInfo info;
 
-  info.canvas_size = ImGui::GetContentRegionAvail();
-  info.canvas_tl = ImGui::GetCursorScreenPos();
-  info.canvas_br = info.canvas_tl + info.canvas_size;
+  info.size = ImGui::GetContentRegionAvail();
+  info.tl = ImGui::GetCursorScreenPos();
+  info.br = info.tl + info.size;
 
   return info;
 }

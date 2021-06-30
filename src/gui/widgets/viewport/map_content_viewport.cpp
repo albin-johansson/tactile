@@ -72,7 +72,7 @@ void ShowActiveMap(const Model& model,
   FillBackground(canvas);
   MouseTracker(canvas, state);
 
-  drawList->PushClipRect(canvas.canvas_tl, canvas.canvas_br, true);
+  drawList->PushClipRect(canvas.tl, canvas.br, true);
 
   const auto nRows = static_cast<float>(document.GetRowCount().get());
   const auto nCols = static_cast<float>(document.GetColumnCount().get());
@@ -82,8 +82,8 @@ void ShowActiveMap(const Model& model,
     const auto width = nCols * state.grid_size.x;
     const auto height = nRows * state.grid_size.y;
 
-    state.scroll_offset.x = (canvas.canvas_size.x - width) / 2.0f;
-    state.scroll_offset.y = (canvas.canvas_size.y - height) / 2.0f;
+    state.scroll_offset.x = (canvas.size.x - width) / 2.0f;
+    state.scroll_offset.y = (canvas.size.y - height) / 2.0f;
 
     center_viewport = false;
   }
@@ -93,7 +93,7 @@ void ShowActiveMap(const Model& model,
     ShowGrid(state, canvas);
   }
 
-  const auto mapOrigin = canvas.canvas_tl + state.scroll_offset;
+  const auto mapOrigin = canvas.tl + state.scroll_offset;
   RenderMap(document, drawList, mapOrigin, state.grid_size);
 
   const auto cursor = GetCursorInfo(mapOrigin, nRows, nCols);

@@ -47,7 +47,7 @@ void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
   FillBackground(info);
 
   MouseTracker(info, state);
-  ClampOffsets(info.canvas_size, textureSize.x, textureSize.y);
+  ClampOffsets(info.size, textureSize.x, textureSize.y);
 
   if (const auto selection = RubberBand(state.scroll_offset, tileSize))
   {
@@ -55,7 +55,7 @@ void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
   }
 
   auto* drawList = ImGui::GetWindowDrawList();
-  drawList->PushClipRect(info.canvas_tl, info.canvas_br, true);
+  drawList->PushClipRect(info.tl, info.br, true);
 
   const auto min = drawList->GetClipRectMin() + state.scroll_offset;
   drawList->AddImage(texture, min, min + textureSize);

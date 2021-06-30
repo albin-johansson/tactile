@@ -10,7 +10,7 @@ inline constexpr auto flags =
 
 void MouseTracker(const CanvasInfo& info, GridState& state)
 {
-  ImGui::InvisibleButton("MouseTracker", info.canvas_size, flags);
+  ImGui::InvisibleButton("MouseTracker", info.size, flags);
   if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Right))
   {
     const auto& io = ImGui::GetIO();

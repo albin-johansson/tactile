@@ -11,8 +11,8 @@ struct GridState final
   ImVec2 grid_size{};
 };
 
-void FillBackground(const CanvasInfo& info);
+void FillBackground(const CanvasInfo& canvas);
 
-void ShowGrid(const GridState& state, const CanvasInfo& info);
+void ShowGrid(const GridState& state, const CanvasInfo& canvas);
 
 }  // namespace Tactile
