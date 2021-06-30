@@ -37,8 +37,8 @@ namespace {
 void ApplyNightTheme(ImGuiStyle& style)
 {
   const auto grab = ImVec4{0.51f, 0.51f, 0.51f, 1};
-  const auto gray_3 = ImVec4{0.24f, 0.24f, 0.24f, 1};
-  const auto button = ImVec4{0.2f, 0.2f, 0.2f, 1};
+  const auto gray = ImVec4{0.24f, 0.24f, 0.24f, 1};
+  const auto button = gray;
   const auto window = ImVec4{0.1f, 0.1f, 0.1f, 1};
   const auto child = ImVec4{0.12f, 0.12f, 0.12f, 1};
   const auto black = ImVec4{0, 0, 0, 1};
@@ -86,7 +86,7 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_SeparatorHovered]      = Brighten(style.Colors[ImGuiCol_Separator]);
   style.Colors[ImGuiCol_SeparatorActive]       = Darken(style.Colors[ImGuiCol_Separator]);
 
-  style.Colors[ImGuiCol_ResizeGrip]            = gray_3;
+  style.Colors[ImGuiCol_ResizeGrip]            = gray;
   style.Colors[ImGuiCol_ResizeGripHovered]     = Brighten(style.Colors[ImGuiCol_ResizeGrip]);
   style.Colors[ImGuiCol_ResizeGripActive]      = Darken(style.Colors[ImGuiCol_ResizeGrip]);
 
