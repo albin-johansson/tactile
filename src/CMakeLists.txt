@@ -90,6 +90,7 @@ set(TACTILE_SOURCE_FILES
     core/tileset/tileset_manager.hpp
     core/tileset/tileset_selection.hpp
 
+    core/tools/mouse_tool_type.hpp
     gui/canvas_info.hpp
     gui/canvas_info.cpp
     gui/cursors.cpp
