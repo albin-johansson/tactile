@@ -172,6 +172,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/no_content_viewport_widget.hpp
     gui/widgets/viewport/render_map.cpp
     gui/widgets/viewport/render_map.hpp
+    gui/widgets/viewport/render_stamp_preview.cpp
+    gui/widgets/viewport/render_stamp_preview.hpp
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
 
