@@ -6,13 +6,13 @@ namespace Tactile {
 
 auto GetCanvasInfo() -> CanvasInfo
 {
-  CanvasInfo info;
+  CanvasInfo canvas;
 
-  info.size = ImGui::GetContentRegionAvail();
-  info.tl = ImGui::GetCursorScreenPos();
-  info.br = info.tl + info.size;
+  canvas.size = ImGui::GetContentRegionAvail();
+  canvas.tl = ImGui::GetCursorScreenPos();
+  canvas.br = canvas.tl + canvas.size;
 
-  return info;
+  return canvas;
 }
 
 }  // namespace Tactile

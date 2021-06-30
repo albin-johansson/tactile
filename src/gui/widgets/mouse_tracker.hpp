@@ -4,6 +4,6 @@
 
 namespace Tactile {
 
-void MouseTracker(const CanvasInfo& info, GridState& state);
+void MouseTracker(const CanvasInfo& canvas, GridState& state);
 
 }  // namespace Tactile
