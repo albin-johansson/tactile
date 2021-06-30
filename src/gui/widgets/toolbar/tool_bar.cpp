@@ -4,6 +4,7 @@
 
 #include "core/events/add_map_event.hpp"
 #include "core/events/redo_event.hpp"
+#include "core/events/select_tool_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "gui/widgets/button_ex.hpp"
@@ -69,15 +70,21 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::SameLine();
     if (ButtonEx(ICON_FA_STAMP, "Stamp tool.", document))
-    {}
+    {
+      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
+    }
 
     ImGui::SameLine();
     if (ButtonEx(ICON_FA_FILL, "Bucket tool.", document))
-    {}
+    {
+      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
+    }
 
     ImGui::SameLine();
     if (ButtonEx(ICON_FA_ERASER, "Eraser tool.", document))
-    {}
+    {
+      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
+    }
   }
 
   ImGui::End();
