@@ -1,6 +1,9 @@
 #include "map_content_viewport.hpp"
 
+#include <cmath>  // trunc
+
 #include "core/events/close_map_event.hpp"
+#include "core/events/mouse_drag_event.hpp"
 #include "core/events/select_map_event.hpp"
 #include "core/model.hpp"
 #include "gui/canvas_info.hpp"
@@ -10,47 +13,117 @@
 #include "imgui_internal.h"
 #include "io/preferences.hpp"
 #include "render_map.hpp"
+#include "render_stamp_preview.hpp"
 #include "utils/scope_id.hpp"
 
 namespace Tactile {
 namespace {
 
+inline constexpr auto tile_highlight_color = IM_COL32(0, 0xFF, 0, 0xFF);
+
 inline bool center_viewport = false;
 inline GridState state;
 
-void RenderActiveMap(const MapDocument& document)
+struct CursorInfo final
+{
+  MapPosition map_position;
+  ImVec2 raw_position{};
+  bool is_within_map{};
+};
+
+[[nodiscard]] auto GetCursorInfo(const ImVec2& mapOrigin,
+                                 const float nRows,
+                                 const float nCols) -> CursorInfo
+{
+  CursorInfo info;
+
+  const auto mouse = ImGui::GetMousePos();
+  const auto item = ImGui::GetItemRectMin();
+  const auto diff = mouse - mapOrigin;
+
+  const auto xRow = diff.y / state.grid_size.y;
+  const auto xCol = diff.x / state.grid_size.x;
+  const auto row = std::trunc(xRow);
+  const auto col = std::trunc(xCol);
+
+  info.is_within_map = xRow >= 0 && xCol >= 0 && row < nRows && col < nCols;
+
+  if (info.is_within_map)
+  {
+    info.map_position = {row_t{static_cast<row_t::value_type>(row)},
+                         col_t{static_cast<col_t::value_type>(col)}};
+  }
+
+  info.raw_position = {mapOrigin.x + (col * state.grid_size.x),
+                       mapOrigin.y + (row * state.grid_size.y)};
+
+  return info;
+}
+
+void ShowActiveMap(const Model& model,
+                   const MapDocument& document,
+                   entt::dispatcher& dispatcher)
 {
   state.grid_size = {64, 64};
 
   auto* drawList = ImGui::GetWindowDrawList();
-  const auto info = GetCanvasInfo();
+  const auto canvas = GetCanvasInfo();
 
-  FillBackground(info);
-  MouseTracker(info, state);
+  FillBackground(canvas);
+  MouseTracker(canvas, state);
 
-  drawList->PushClipRect(info.canvas_tl, info.canvas_br, true);
+  drawList->PushClipRect(canvas.canvas_tl, canvas.canvas_br, true);
+
+  const auto nRows = static_cast<float>(document.GetRowCount().get());
+  const auto nCols = static_cast<float>(document.GetColumnCount().get());
 
   if (center_viewport)
   {
-    const auto rowCount = static_cast<float>(document.GetRowCount().get());
-    const auto colCount = static_cast<float>(document.GetColumnCount().get());
+    const auto width = nCols * state.grid_size.x;
+    const auto height = nRows * state.grid_size.y;
 
-    const auto width = colCount * state.grid_size.x;
-    const auto height = rowCount * state.grid_size.y;
-
-    state.scroll_offset.x = (info.canvas_size.x - width) / 2.0f;
-    state.scroll_offset.y = (info.canvas_size.y - height) / 2.0f;
+    state.scroll_offset.x = (canvas.canvas_size.x - width) / 2.0f;
+    state.scroll_offset.y = (canvas.canvas_size.y - height) / 2.0f;
 
     center_viewport = false;
   }
 
   if (Prefs::GetShowGrid())
   {
-    ShowGrid(state, info);
+    ShowGrid(state, canvas);
   }
 
-  const auto offset = info.canvas_tl + state.scroll_offset;
-  RenderMap(document, drawList, offset, state.grid_size);
+  const auto mapOrigin = canvas.canvas_tl + state.scroll_offset;
+  RenderMap(document, drawList, mapOrigin, state.grid_size);
+
+  const auto cursor = GetCursorInfo(mapOrigin, nRows, nCols);
+  if (cursor.is_within_map)
+  {
+    drawList->AddRect(cursor.raw_position,
+                      cursor.raw_position + state.grid_size,
+                      tile_highlight_color,
+                      0,
+                      0,
+                      2);
+
+    if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+    {
+      dispatcher.enqueue<MouseDragEvent>(cursor.map_position);
+    }
+
+    const auto& tilesets = document.GetTilesets();
+    const auto* tileset = tilesets.GetActiveTileset();
+    if (model.GetActiveTool() == MouseToolType::Stamp && tileset &&
+        tileset->GetSelection())
+    {
+      RenderStampPreview(drawList,
+                         mapOrigin,
+                         state.grid_size,
+                         document.GetMap(),
+                         *tileset,
+                         cursor.map_position);
+    }
+  }
 
   drawList->PopClipRect();
 }
@@ -73,7 +146,7 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
       {
         if (isActive)
         {
-          RenderActiveMap(*document);
+          ShowActiveMap(model, *document, dispatcher);
         }
 
         ImGui::EndTabItem();
