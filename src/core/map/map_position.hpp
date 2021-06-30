@@ -211,4 +211,18 @@ class MapPosition final
                      lhs.GetColumn() - rhs.GetColumn()};
 }
 
+[[nodiscard]] constexpr auto operator*(const MapPosition& lhs,
+                                       const MapPosition& rhs) -> MapPosition
+{
+  return MapPosition{lhs.GetRow() * rhs.GetRow(),
+                     lhs.GetColumn() * rhs.GetColumn()};
+}
+
+[[nodiscard]] constexpr auto operator/(const MapPosition& lhs,
+                                       const MapPosition& rhs) -> MapPosition
+{
+  return MapPosition{lhs.GetRow() / rhs.GetRow(),
+                     lhs.GetColumn() / rhs.GetColumn()};
+}
+
 }  // namespace Tactile
