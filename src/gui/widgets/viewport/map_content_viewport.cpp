@@ -74,8 +74,8 @@ void ShowActiveMap(const Model& model,
 
   drawList->PushClipRect(canvas.tl, canvas.br, true);
 
-  const auto nRows = static_cast<float>(document.GetRowCount().get());
-  const auto nCols = static_cast<float>(document.GetColumnCount().get());
+  const auto nRows = static_cast<float>(document.GetRowCount());
+  const auto nCols = static_cast<float>(document.GetColumnCount());
 
   if (center_viewport)
   {
