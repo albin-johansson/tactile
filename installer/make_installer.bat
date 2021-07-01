@@ -1,1 +1,0 @@
-binarycreator.exe -c config\config.xml -p packages TactileInstaller.exe
