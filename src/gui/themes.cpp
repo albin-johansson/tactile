@@ -4,6 +4,11 @@
 
 #include "imgui.h"
 
+#define TACTILE_SET_COLOR_GROUP(Element, Color)     \
+  style.Colors[Element] = Color;                    \
+  style.Colors[Element##Hovered] = Brighten(Color); \
+  style.Colors[Element##Active] = Darken(Color)
+
 namespace Tactile {
 namespace {
 
@@ -48,6 +53,12 @@ void ApplyNightTheme(ImGuiStyle& style)
   const auto lightBlue = ImVec4{0.26f, 0.59f, 0.98f, 1};
   const auto limeGreen = ImVec4{0.25f, 1, 0, 1};
 
+  TACTILE_SET_COLOR_GROUP(ImGuiCol_Button, button);
+  TACTILE_SET_COLOR_GROUP(ImGuiCol_Separator, button);
+  TACTILE_SET_COLOR_GROUP(ImGuiCol_Header, accent);
+  TACTILE_SET_COLOR_GROUP(ImGuiCol_ResizeGrip, gray);
+  TACTILE_SET_COLOR_GROUP(ImGuiCol_ScrollbarGrab, grab);
+
   // clang-format off
   style.Colors[ImGuiCol_Text]                  = white;
   style.Colors[ImGuiCol_TextDisabled]          = ImVec4{0.6f, 0.6f, 0.6f, 1};
@@ -68,29 +79,9 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_MenuBarBg]             = button;
   style.Colors[ImGuiCol_ScrollbarBg]           = window;
 
-  style.Colors[ImGuiCol_ScrollbarGrab]         = grab;
-  style.Colors[ImGuiCol_ScrollbarGrabHovered]  = Brighten(style.Colors[ImGuiCol_ScrollbarGrab]);
-  style.Colors[ImGuiCol_ScrollbarGrabActive]   = Darken(style.Colors[ImGuiCol_ScrollbarGrab]);
-
   style.Colors[ImGuiCol_CheckMark]             = white;
   style.Colors[ImGuiCol_SliderGrab]            = grab;
   style.Colors[ImGuiCol_SliderGrabActive]      = white;
-
-  style.Colors[ImGuiCol_Button]                = button;
-  style.Colors[ImGuiCol_ButtonHovered]         = Brighten(style.Colors[ImGuiCol_Button]);
-  style.Colors[ImGuiCol_ButtonActive]          = Darken(style.Colors[ImGuiCol_Button]);
-
-  style.Colors[ImGuiCol_Header]                = accent;
-  style.Colors[ImGuiCol_HeaderHovered]         = Brighten(style.Colors[ImGuiCol_Header]);
-  style.Colors[ImGuiCol_HeaderActive]          = Darken(style.Colors[ImGuiCol_Header]);
-
-  style.Colors[ImGuiCol_Separator]             = button;
-  style.Colors[ImGuiCol_SeparatorHovered]      = Brighten(style.Colors[ImGuiCol_Separator]);
-  style.Colors[ImGuiCol_SeparatorActive]       = Darken(style.Colors[ImGuiCol_Separator]);
-
-  style.Colors[ImGuiCol_ResizeGrip]            = gray;
-  style.Colors[ImGuiCol_ResizeGripHovered]     = Brighten(style.Colors[ImGuiCol_ResizeGrip]);
-  style.Colors[ImGuiCol_ResizeGripActive]      = Darken(style.Colors[ImGuiCol_ResizeGrip]);
 
   style.Colors[ImGuiCol_Tab]                   = button;
   style.Colors[ImGuiCol_TabHovered]            = Brighten(accent);
