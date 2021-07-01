@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Installer>
+  <Name>Tactile</Name>
+  <Version>0.2.0</Version>
+  <Title>Tactile installer</Title>
+  <Publisher>Albin Johansson</Publisher>
+  <StartMenuDir>Tactile</StartMenuDir>
+  <TargetDir>@ApplicationsDirX64@/Tactile</TargetDir>
+</Installer>
