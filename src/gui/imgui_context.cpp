@@ -20,7 +20,7 @@ void LoadFonts()
   auto& io = ImGui::GetIO();
 
   ImFontConfig defaultConfig{};
-  defaultConfig.SizePixels = 13.0f;
+  defaultConfig.SizePixels = 13;
   io.Fonts->AddFontDefault(&defaultConfig);
 
   // Merge in icons from Font Awesome
