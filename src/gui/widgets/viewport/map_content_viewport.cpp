@@ -4,6 +4,8 @@
 
 #include "core/events/close_map_event.hpp"
 #include "core/events/mouse_drag_event.hpp"
+#include "core/events/mouse_pressed_event.hpp"
+#include "core/events/mouse_released_event.hpp"
 #include "core/events/select_map_event.hpp"
 #include "core/model.hpp"
 #include "gui/canvas_info.hpp"
@@ -59,6 +61,34 @@ struct CursorInfo final
   return info;
 }
 
+template <typename Event, typename T>
+void CheckFor(const CursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
+{
+  const auto left = query(ImGuiMouseButton_Left);
+  const auto mid = query(ImGuiMouseButton_Middle);
+  const auto right = query(ImGuiMouseButton_Right);
+  if (left || mid || right)
+  {
+    MouseInfo info;
+    info.mouse_position_in_map = cursor.map_position;
+
+    if (left)
+    {
+      info.button = cen::mouse_button::left;
+    }
+    else if (mid)
+    {
+      info.button = cen::mouse_button::middle;
+    }
+    else /*if (right)*/
+    {
+      info.button = cen::mouse_button::right;
+    }
+
+    dispatcher.enqueue<Event>(info);
+  }
+}
+
 void ShowActiveMap(const Model& model,
                    const MapDocument& document,
                    entt::dispatcher& dispatcher)
@@ -102,9 +132,27 @@ void ShowActiveMap(const Model& model,
                       0,
                       2);
 
-    if (ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+    if (ImGui::IsMouseHoveringRect(
+            ImGui::GetWindowPos(),
+            ImGui::GetWindowPos() + ImGui::GetWindowSize()))
     {
-      dispatcher.enqueue<MouseDragEvent>(cursor.map_position);
+      CheckFor<MousePressedEvent>(cursor,
+                                  dispatcher,
+                                  [](const ImGuiMouseButton button) {
+                                    return ImGui::IsMouseClicked(button);
+                                  });
+
+      CheckFor<MouseDragEvent>(cursor,
+                               dispatcher,
+                               [](const ImGuiMouseButton button) {
+                                 return ImGui::IsMouseDragging(button);
+                               });
+
+      CheckFor<MouseReleasedEvent>(cursor,
+                                   dispatcher,
+                                   [](const ImGuiMouseButton button) {
+                                     return ImGui::IsMouseReleased(button);
+                                   });
     }
 
     const auto& tilesets = document.GetTilesets();
