@@ -11,7 +11,6 @@
 #include "gui/widgets/mouse_tracker.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
-#include "io/preferences.hpp"
 #include "render_map.hpp"
 #include "render_stamp_preview.hpp"
 #include "utils/scope_id.hpp"
@@ -88,10 +87,7 @@ void ShowActiveMap(const Model& model,
     center_viewport = false;
   }
 
-  if (Prefs::GetShowGrid())
-  {
-    ShowGrid(state, canvas);
-  }
+  ShowGrid(state, canvas, IM_COL32(200, 200, 200, 15));
 
   const auto mapOrigin = canvas.tl + state.scroll_offset;
   RenderMap(document, drawList, mapOrigin, state.grid_size);
