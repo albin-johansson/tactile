@@ -97,6 +97,7 @@ set(TACTILE_SOURCE_FILES
     core/tools/bucket_tool.hpp
     core/tools/eraser_tool.cpp
     core/tools/eraser_tool.hpp
+    core/tools/mouse_info.hpp
     core/tools/mouse_tool.hpp
     core/tools/mouse_tool_model.cpp
     core/tools/mouse_tool_model.hpp
