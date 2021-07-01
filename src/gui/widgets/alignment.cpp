@@ -21,4 +21,12 @@ void PrepareVerticalAlignmentCenter(const float count)
   ImGui::SetCursorPos(cursorPos + ImVec2{0, halfRegion.y - (height / 2.0f)});
 }
 
+void AlignNextItemCenteredHorizontally(const float width)
+{
+  const auto region = ImGui::GetContentRegionAvail();
+  const auto halfRegion = region / ImVec2{2.0f, 2.0f};
+  ImGui::SetCursorPos(ImGui::GetCursorPos() +
+                      ImVec2{halfRegion.x - (width / 2.0f), 0});
+}
+
 }  // namespace Tactile
