@@ -36,6 +36,7 @@ inline bool show_about_imgui_window = false;
 inline bool show_metrics_window = false;
 inline bool show_demo_window = false;
 inline bool show_settings_window = false;
+inline bool show_style_editor = false;
 inline bool show_map_file_dialog = false;
 inline bool show_tileset_dialog = false;
 inline bool show_credits_dialog = false;
@@ -270,6 +271,7 @@ void ShowHelpMenu()
     {
       ImGui::Separator();
       show_demo_window = ImGui::MenuItem("Show demo window...");
+      show_style_editor = ImGui::MenuItem("Show style editor...");
     }
 
     ImGui::EndMenu();
@@ -345,6 +347,15 @@ void UpdateMenuBarWidget(const Model& model, entt::dispatcher& dispatcher)
     if (show_demo_window)
     {
       ImGui::ShowDemoWindow(&show_demo_window);
+    }
+
+    if (show_style_editor)
+    {
+      if (ImGui::Begin("Style editor"))
+      {
+        ImGui::ShowStyleEditor();
+      }
+      ImGui::End();
     }
   }
 }
