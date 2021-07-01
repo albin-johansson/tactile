@@ -8,6 +8,8 @@
 #include "core/events/set_property_value_event.hpp"
 #include "core/model.hpp"
 #include "gui/widgets/button_ex.hpp"
+#include "gui/widgets/centered_text.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/help_marker.hpp"
 #include "gui/widgets/properties/bool_property_widget.hpp"
 #include "gui/widgets/properties/color_property_widget.hpp"
@@ -182,7 +184,8 @@ void UpdatePropertiesWidget(const Model& model, entt::dispatcher& dispatcher)
     }
     else
     {
-      ImGui::Text("No available properties.");
+      PrepareVerticalAlignmentCenter(1);
+      CenteredText("No available properties!");
     }
   }
 
