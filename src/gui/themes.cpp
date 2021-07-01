@@ -32,17 +32,19 @@ namespace {
   return {darken(color.x), darken(color.y), darken(color.z), opacity};
 }
 
+inline const ImVec4 white = {1, 1, 1, 1};
+inline const ImVec4 black = {0, 0, 0, 1};
+
 }  // namespace
 
 void ApplyNightTheme(ImGuiStyle& style)
 {
+  const auto accent = ImVec4{0.26f, 0.59f, 0.98f, 0.7f};
   const auto grab = ImVec4{0.51f, 0.51f, 0.51f, 1};
-  const auto gray = ImVec4{0.24f, 0.24f, 0.24f, 1};
+  const auto gray = ImVec4{0.28f, 0.28f, 0.28f, 1};
   const auto button = gray;
   const auto window = ImVec4{0.1f, 0.1f, 0.1f, 1};
   const auto child = ImVec4{0.12f, 0.12f, 0.12f, 1};
-  const auto black = ImVec4{0, 0, 0, 1};
-  const auto white = ImVec4{1, 1, 1, 1};
   const auto lightBlue = ImVec4{0.26f, 0.59f, 0.98f, 1};
   const auto limeGreen = ImVec4{0.25f, 1, 0, 1};
 
@@ -78,7 +80,7 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_ButtonHovered]         = Brighten(style.Colors[ImGuiCol_Button]);
   style.Colors[ImGuiCol_ButtonActive]          = Darken(style.Colors[ImGuiCol_Button]);
 
-  style.Colors[ImGuiCol_Header]                = Brighten(button);
+  style.Colors[ImGuiCol_Header]                = accent;
   style.Colors[ImGuiCol_HeaderHovered]         = Brighten(style.Colors[ImGuiCol_Header]);
   style.Colors[ImGuiCol_HeaderActive]          = Darken(style.Colors[ImGuiCol_Header]);
 
@@ -90,11 +92,11 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_ResizeGripHovered]     = Brighten(style.Colors[ImGuiCol_ResizeGrip]);
   style.Colors[ImGuiCol_ResizeGripActive]      = Darken(style.Colors[ImGuiCol_ResizeGrip]);
 
-  style.Colors[ImGuiCol_Tab]                   = window;
-  style.Colors[ImGuiCol_TabHovered]            = ImVec4{0.63f, 0.63f, 0.63f, 0.8f};
-  style.Colors[ImGuiCol_TabActive]             = ImVec4{0.48f, 0.48f, 0.48f, 1};
-  style.Colors[ImGuiCol_TabUnfocused]          = window;
-  style.Colors[ImGuiCol_TabUnfocusedActive]    = window;
+  style.Colors[ImGuiCol_Tab]                   = button;
+  style.Colors[ImGuiCol_TabHovered]            = Brighten(accent);
+  style.Colors[ImGuiCol_TabActive]             = accent;
+  style.Colors[ImGuiCol_TabUnfocused]          = child;
+  style.Colors[ImGuiCol_TabUnfocusedActive]    = child;
 
   style.Colors[ImGuiCol_DockingPreview]        = WithAlpha(lightBlue, 0.7f);
   style.Colors[ImGuiCol_DockingEmptyBg]        = ImVec4{0.2f, 0.2f, 0.2f, 1};
