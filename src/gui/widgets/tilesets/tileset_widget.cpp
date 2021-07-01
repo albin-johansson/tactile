@@ -4,7 +4,9 @@
 
 #include "core/events/remove_tileset_event.hpp"
 #include "core/model.hpp"
-#include "gui/widgets/button_ex.hpp"
+#include "gui/widgets/alignment.hpp"
+#include "gui/widgets/centered_button.hpp"
+#include "gui/widgets/centered_text.hpp"
 #include "gui/widgets/menus/menu_bar_widget.hpp"
 #include "gui/widgets/tilesets/tileset_content_widget.hpp"
 #include "imgui.h"
@@ -30,26 +32,19 @@ void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher)
                    &is_visible,
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar))
   {
-    if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Create tileset."))
-    {
-      EnableTilesetDialog();
-    }
-
-    ImGui::SameLine();
-    if (ButtonEx(ICON_FA_MINUS_CIRCLE,
-                 "Remove tileset.",
-                 tilesets.HasActiveTileset()))
-    {
-      dispatcher.enqueue<RemoveTilesetEvent>(*tilesets.GetActiveTilesetId());
-    }
-
     if (tilesets.GetSize() != 0)
     {
       TilesetContentWidget(*document, dispatcher);
     }
     else
     {
-      ImGui::Text("No tilesets available!");
+      PrepareVerticalAlignmentCenter(2);
+
+      CenteredText("No available tilesets!");
+      if (CenteredButton(ICON_FA_IMAGE " Create tileset..."))
+      {
+        EnableTilesetDialog();
+      }
     }
   }
 
