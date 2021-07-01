@@ -17,7 +17,11 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
 
   UpdateDockSpace();
 
-  UpdateToolbarWidget(model, dispatcher);
+  if (model.GetActiveMapId())
+  {
+    UpdateToolbarWidget(model, dispatcher);
+  }
+
   UpdateViewportWidget(model, dispatcher);
   UpdateLayerWidget(model, dispatcher);
   UpdatePropertiesWidget(model, dispatcher);
