@@ -149,7 +149,7 @@ void ShowEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
 void ShowViewAppearanceSubmenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMenu("Widgets"))
+  if (ImGui::BeginMenu("Widgets", model.GetActiveMapId().has_value()))
   {
     if (ImGui::MenuItem("Reset layout"))
     {
