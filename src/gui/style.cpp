@@ -12,19 +12,20 @@ void ApplyStyle(ImGuiStyle& style)
   style.FramePadding = ImVec2{5, 5};
   style.CellPadding = ImVec2{4, 4};
 
-  style.ItemSpacing = ImVec2{8, 8};
-  style.ItemInnerSpacing = ImVec2{8, 6};
+  style.ItemSpacing = ImVec2{10, 8};
+  style.ItemInnerSpacing = ImVec2{4, 6};
   style.IndentSpacing = 15;
 
   style.GrabMinSize = 6;
   style.ScrollbarSize = 10;
 
-  style.WindowRounding = 4;
-  style.FrameRounding = 4;
-  style.PopupRounding = 4;
-  style.ScrollbarRounding = 4;
-  style.GrabRounding = 4;
-  style.TabRounding = 4;
+  const float rounding = 2;
+  style.WindowRounding = rounding;
+  style.FrameRounding = rounding;
+  style.PopupRounding = rounding;
+  style.ScrollbarRounding = rounding;
+  style.GrabRounding = rounding;
+  style.TabRounding = rounding;
 }
 
 }  // namespace Tactile
