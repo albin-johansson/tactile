@@ -33,3 +33,5 @@ BreakConstructorInitializers: BeforeComma
 AllowAllConstructorInitializersOnNextLine: false
 
 BreakInheritanceList: BeforeColon
+
+IndentRequires: true
