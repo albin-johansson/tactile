@@ -39,7 +39,3 @@ compile_commands.json
 doxygen-out
 build
 cmake-build-*
-
-# Allow all necessary installer data and metainformation
-!installer/packages/com.albinjohansson.tactile/**/*
-!installer/*
