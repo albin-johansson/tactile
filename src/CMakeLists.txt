@@ -129,6 +129,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/alignment.hpp
     gui/widgets/button_ex.cpp
     gui/widgets/button_ex.hpp
+    gui/widgets/centered_text.cpp
+    gui/widgets/centered_text.hpp
     gui/widgets/file_dialog.cpp
     gui/widgets/file_dialog.hpp
     gui/widgets/help_marker.cpp
