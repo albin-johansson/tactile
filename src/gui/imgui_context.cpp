@@ -31,7 +31,7 @@ void LoadFonts()
   iconConfig.GlyphOffset = {0, 2};
 
   io.Fonts->AddFontFromFileTTF("resources/fonts/fa/fa-solid-900.otf",
-                               15,
+                               13,
                                &iconConfig,
                                range.data());
 }
