@@ -1,5 +1,6 @@
 #pragma once
 
+#include "aliases/ints.hpp"
 #include "canvas_info.hpp"
 #include "imgui.h"
 
@@ -13,6 +14,8 @@ struct GridState final
 
 void FillBackground(const CanvasInfo& canvas);
 
-void ShowGrid(const GridState& state, const CanvasInfo& canvas);
+void ShowGrid(const GridState& state,
+              const CanvasInfo& canvas,
+              uint32 lineColor = IM_COL32(200, 200, 200, 40));
 
 }  // namespace Tactile
