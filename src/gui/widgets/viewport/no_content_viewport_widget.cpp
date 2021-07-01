@@ -2,27 +2,35 @@
 
 #include "core/events/add_map_event.hpp"
 #include "core/events/open_map_event.hpp"
+#include "gui/get_texture_id.hpp"
+#include "gui/icons.hpp"
+#include "gui/widgets/alignment.hpp"
+#include "gui/widgets/centered_button.hpp"
+#include "gui/widgets/centered_text.hpp"
 #include "imgui.h"
+#include "imgui_internal.h"
 
 namespace Tactile {
 
 void NoContentViewportWidget(entt::dispatcher& dispatcher)
 {
-  ImGui::Indent(50);
+  PrepareVerticalAlignmentCenter(4);
+
+  ImGui::SetCursorPos(ImGui::GetCursorPos() - ImVec2{0, 64});
+
+  AlignNextItemCenteredHorizontally(128);
+  ImGui::Image(GetTextureID(GetTactileIcon()), {128, 128});
+
+  CenteredText("No active map");
 
   ImGui::Spacing();
-  ImGui::Spacing();
-
-  ImGui::Text("No active map");
-
-  ImGui::Spacing();
-  if (ImGui::Button("Create new map"))
+  if (CenteredButton("Create new map"))
   {
     dispatcher.enqueue<AddMapEvent>();
   }
 
   ImGui::Spacing();
-  if (ImGui::Button("Open existing map"))
+  if (CenteredButton("Open existing map"))
   {
     dispatcher.enqueue<OpenMapEvent>();
   }
