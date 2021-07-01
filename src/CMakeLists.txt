@@ -125,6 +125,8 @@ set(TACTILE_SOURCE_FILES
     gui/layout/load_default_layout.cpp
     gui/layout/load_default_layout.hpp
 
+    gui/widgets/alignment.cpp
+    gui/widgets/alignment.hpp
     gui/widgets/button_ex.cpp
     gui/widgets/button_ex.hpp
     gui/widgets/file_dialog.cpp
