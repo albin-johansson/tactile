@@ -48,6 +48,8 @@ set(TACTILE_SOURCE_FILES
     core/events/center_viewport_event.hpp
     core/events/close_map_event.hpp
     core/events/mouse_drag_event.hpp
+    core/events/mouse_pressed_event.hpp
+    core/events/mouse_released_event.hpp
     core/events/open_map_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp

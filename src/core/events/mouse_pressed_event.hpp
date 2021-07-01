@@ -4,7 +4,7 @@
 
 namespace Tactile {
 
-struct MouseDragEvent final
+struct MousePressedEvent final
 {
   MouseInfo info;
 };
