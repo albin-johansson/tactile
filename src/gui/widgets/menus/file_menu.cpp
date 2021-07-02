@@ -9,6 +9,7 @@
 #include "gui/widgets/dialogs/settings_dialog.hpp"
 #include "gui/widgets/file_dialog.hpp"
 #include "imgui.h"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {
@@ -16,10 +17,21 @@ namespace {
 inline bool show_settings_window = false;
 inline bool show_map_file_dialog = false;
 
+[[nodiscard]] auto GetFilter() -> czstring
+{
+  if (Prefs::GetPreferredFormat() == "JSON")
+  {
+    return ".json,.tmx";
+  }
+  else
+  {
+    return ".tmx,.json";
+  }
+}
+
 void ShowMapFileDialog(entt::dispatcher& dispatcher)
 {
-  const auto filter = ".json,.tmx";
-  const auto result = FileDialog("MapFileDialogID", "Open map...", filter);
+  const auto result = FileDialog("MapFileDialog", "Open map...", GetFilter());
   if (result == FileDialogResult::Success)
   {
     dispatcher.enqueue<OpenMapEvent>(GetFileDialogSelectedPath());
