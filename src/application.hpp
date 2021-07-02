@@ -7,18 +7,23 @@
 #include "aliases/ints.hpp"
 #include "aliases/unique.hpp"
 #include "core/events/add_column_event.hpp"
+#include "core/events/add_layer_event.hpp"
 #include "core/events/add_map_event.hpp"
 #include "core/events/add_row_event.hpp"
 #include "core/events/add_tileset_event.hpp"
 #include "core/events/center_viewport_event.hpp"
 #include "core/events/close_map_event.hpp"
+#include "core/events/duplicate_layer_event.hpp"
 #include "core/events/mouse_drag_event.hpp"
 #include "core/events/mouse_pressed_event.hpp"
 #include "core/events/mouse_released_event.hpp"
+#include "core/events/move_layer_down_event.hpp"
+#include "core/events/move_layer_up_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
 #include "core/events/remove_column_event.hpp"
+#include "core/events/remove_layer_event.hpp"
 #include "core/events/remove_row_event.hpp"
 #include "core/events/remove_tileset_event.hpp"
 #include "core/events/select_layer_event.hpp"
@@ -101,6 +106,16 @@ class Application final
   void OnRemoveRowEvent();
 
   void OnRemoveColumnEvent();
+
+  void OnAddLayerEvent(const AddLayerEvent& event);
+
+  void OnRemoveLayerEvent(const RemoveLayerEvent& event);
+
+  void OnMoveLayerUpEvent(const MoveLayerUpEvent& event);
+
+  void OnMoveLayerDownEvent(const MoveLayerDownEvent& event);
+
+  void OnDuplicateLayerEvent(const DuplicateLayerEvent& event);
 
   void OnSetPropertyValueEvent(const SetPropertyValueEvent& event);
 

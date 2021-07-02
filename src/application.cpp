@@ -108,13 +108,19 @@ void Application::SubscribeToEvents()
   mDispatcher.sink<RemoveTilesetEvent>().connect<&Application::OnRemoveTilesetEvent>(this);
 
   mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
-  mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
   mDispatcher.sink<SelectMapEvent>().connect<&Application::OnSelectMapEvent>(this);
 
   mDispatcher.sink<AddRowEvent>().connect<&Application::OnAddRowEvent>(this);
   mDispatcher.sink<AddColumnEvent>().connect<&Application::OnAddColumnEvent>(this);
   mDispatcher.sink<RemoveRowEvent>().connect<&Application::OnRemoveRowEvent>(this);
   mDispatcher.sink<RemoveColumnEvent>().connect<&Application::OnRemoveColumnEvent>(this);
+
+  mDispatcher.sink<AddLayerEvent>().connect<&Application::OnAddLayerEvent>(this);
+  mDispatcher.sink<RemoveLayerEvent>().connect<&Application::OnRemoveLayerEvent>(this);
+  mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
+  mDispatcher.sink<MoveLayerUpEvent>().connect<&Application::OnMoveLayerUpEvent>(this);
+  mDispatcher.sink<MoveLayerDownEvent>().connect<&Application::OnMoveLayerDownEvent>(this);
+  mDispatcher.sink<DuplicateLayerEvent>().connect<&Application::OnDuplicateLayerEvent>(this);
 
   mDispatcher.sink<SetPropertyValueEvent>().connect<&Application::OnSetPropertyValueEvent>(this);
   mDispatcher.sink<SetTilesetSelectionEvent>().connect<&Application::OnSetTilesetSelectionEvent>(this);
@@ -350,12 +356,6 @@ void Application::OnSelectMapEvent(const SelectMapEvent& event)
   mModel->SelectMap(event.id);
 }
 
-void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
-{
-  auto& map = mModel->GetActiveMap();
-  map.SelectLayer(event.id);
-}
-
 void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
 {
   auto* document = mModel->GetActiveDocument();
@@ -397,6 +397,63 @@ void Application::OnRemoveColumnEvent()
   if (auto* document = mModel->GetActiveDocument())
   {
     document->RemoveColumn();
+  }
+}
+
+void Application::OnAddLayerEvent(const AddLayerEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    switch (event.type)
+    {
+      case LayerType::TileLayer:
+        document->AddTileLayer();
+        break;
+
+      case LayerType::ObjectLayer:
+        document->AddObjectLayer();
+        break;
+    }
+  }
+}
+
+void Application::OnRemoveLayerEvent(const RemoveLayerEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->RemoveLayer(event.id);
+  }
+}
+
+void Application::OnMoveLayerUpEvent(const MoveLayerUpEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->MoveLayerUp(event.id);
+  }
+}
+
+void Application::OnMoveLayerDownEvent(const MoveLayerDownEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->MoveLayerDown(event.id);
+  }
+}
+
+void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->DuplicateLayer(event.id);
+  }
+}
+
+void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->SelectLayer(event.id);
   }
 }
 

@@ -53,19 +53,37 @@ set(TACTILE_SOURCE_FILES
     core/commands/maps/remove_row_cmd.cpp
     core/commands/maps/remove_row_cmd.hpp
 
+    core/commands/maps/layers/add_layer_cmd.cpp
+    core/commands/maps/layers/add_layer_cmd.hpp
+    core/commands/maps/layers/duplicate_layer_cmd.cpp
+    core/commands/maps/layers/duplicate_layer_cmd.hpp
+    core/commands/maps/layers/move_layer_down_cmd.cpp
+    core/commands/maps/layers/move_layer_down_cmd.hpp
+    core/commands/maps/layers/move_layer_up_cmd.cpp
+    core/commands/maps/layers/move_layer_up_cmd.hpp
+    core/commands/maps/layers/remove_layer_cmd.cpp
+    core/commands/maps/layers/remove_layer_cmd.hpp
+    core/commands/maps/layers/select_layer_cmd.cpp
+    core/commands/maps/layers/select_layer_cmd.hpp
+
     core/events/add_column_event.hpp
+    core/events/add_layer_event.hpp
     core/events/add_map_event.hpp
     core/events/add_row_event.hpp
     core/events/add_tileset_event.hpp
     core/events/center_viewport_event.hpp
     core/events/close_map_event.hpp
+    core/events/duplicate_layer_event.hpp
     core/events/mouse_drag_event.hpp
     core/events/mouse_pressed_event.hpp
     core/events/mouse_released_event.hpp
+    core/events/move_layer_down_event.hpp
+    core/events/move_layer_up_event.hpp
     core/events/open_map_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp
     core/events/remove_column_event.hpp
+    core/events/remove_layer_event.hpp
     core/events/remove_row_event.hpp
     core/events/remove_tileset_event.hpp
     core/events/select_layer_event.hpp

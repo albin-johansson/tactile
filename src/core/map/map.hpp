@@ -253,26 +253,26 @@ class Map final
   /**
    * \brief Moves the specified layer back one step in the render order.
    *
-   * \details This function will make the specified layer be rendered later.
+   * \details This function will make the specified layer be rendered *later*.
    *
    * \note This function has no effect if the specified layer ID isn't
    * associated with a layer.
    *
    * \param id the ID associated with the layer that will be moved.
    */
-  void MoveLayerDown(const layer_id id);
+  void MoveLayerDown(layer_id id);
 
   /**
    * \brief Moves the specified layer forwards one step in the render order.
    *
-   * \details This function will make the specified layer be rendered earlier.
+   * \details This function will make the specified layer be rendered *earlier*.
    *
    * \note This function has no effect if the specified layer ID isn't
    * associated with a layer.
    *
    * \param id the ID associated with the layer that will be moved.
    */
-  void MoveLayerUp(const layer_id id);
+  void MoveLayerUp(layer_id id);
 
   /**
    * \brief Creates and returns an empty tile layer but doesn't add it to the

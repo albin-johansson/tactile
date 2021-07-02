@@ -333,7 +333,7 @@ TEST(Map, SetName)
   ASSERT_EQ("bar", map.GetName(b));
 }
 
-TEST(Map, MoveLayerBack)
+TEST(Map, MoveLayerUp)
 {
   Map map;
 
@@ -345,26 +345,26 @@ TEST(Map, MoveLayerBack)
   ASSERT_EQ(1, map.IndexOf(b));
   ASSERT_EQ(2, map.IndexOf(c));
 
-  // Moving the first layer back should have no effect
-  map.MoveLayerDown(a);
+  // Moving the first layer up should have no effect
+  map.MoveLayerUp(a);
   ASSERT_EQ(0, map.IndexOf(a));
   ASSERT_EQ(1, map.IndexOf(b));
   ASSERT_EQ(2, map.IndexOf(c));
 
   // [ a, b, c ] -> [ b, a, c ]
-  map.MoveLayerDown(b);
+  map.MoveLayerUp(b);
   ASSERT_EQ(0, map.IndexOf(b));
   ASSERT_EQ(1, map.IndexOf(a));
   ASSERT_EQ(2, map.IndexOf(c));
 
   // [ b, a, c ] -> [ b, c, a ]
-  map.MoveLayerDown(c);
+  map.MoveLayerUp(c);
   ASSERT_EQ(0, map.IndexOf(b));
   ASSERT_EQ(1, map.IndexOf(c));
   ASSERT_EQ(2, map.IndexOf(a));
 }
 
-TEST(Map, MoveLayerForward)
+TEST(Map, MoveLayerDown)
 {
   Map map;
 
@@ -376,20 +376,20 @@ TEST(Map, MoveLayerForward)
   ASSERT_EQ(1, map.IndexOf(b));
   ASSERT_EQ(2, map.IndexOf(c));
 
-  // Moving the last layer forward should have no effect
-  map.MoveLayerUp(c);
+  // Moving the last layer down should have no effect
+  map.MoveLayerDown(c);
   ASSERT_EQ(0, map.IndexOf(a));
   ASSERT_EQ(1, map.IndexOf(b));
   ASSERT_EQ(2, map.IndexOf(c));
 
   // [ a, b, c ] -> [ a, c, b ]
-  map.MoveLayerUp(b);
+  map.MoveLayerDown(b);
   ASSERT_EQ(0, map.IndexOf(a));
   ASSERT_EQ(1, map.IndexOf(c));
   ASSERT_EQ(2, map.IndexOf(b));
 
   // [ a, c, b ] -> [ c, a, b ]
-  map.MoveLayerUp(a);
+  map.MoveLayerDown(a);
   ASSERT_EQ(0, map.IndexOf(c));
   ASSERT_EQ(1, map.IndexOf(a));
   ASSERT_EQ(2, map.IndexOf(b));

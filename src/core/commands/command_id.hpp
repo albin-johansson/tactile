@@ -9,7 +9,13 @@ struct CommandId final
     AddRow,
     AddColumn,
     RemoveRow,
-    RemoveColumn
+    RemoveColumn,
+    AddLayer,
+    RemoveLayer,
+    SelectLayer,
+    DuplicateLayer,
+    MoveLayerUp,
+    MoveLayerDown
   };
 };
 

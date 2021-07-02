@@ -64,6 +64,20 @@ class MapDocument final : public IDocument
 
   void RemoveColumn();
 
+  auto AddTileLayer() -> layer_id;
+
+  auto AddObjectLayer() -> layer_id;
+
+  void SelectLayer(layer_id id);
+
+  void RemoveLayer(layer_id id);
+
+  void DuplicateLayer(layer_id id);
+
+  void MoveLayerUp(layer_id id);
+
+  void MoveLayerDown(layer_id id);
+
   [[nodiscard]] auto GetMap() -> Map&;
 
   [[nodiscard]] auto GetMap() const -> const Map&;

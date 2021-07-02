@@ -1,10 +1,17 @@
 #include "map_document.hpp"
 
 #include <cassert>  // assert
+#include <format>   // format
 #include <utility>  // move
 
 #include "core/commands/maps/add_column_cmd.hpp"
 #include "core/commands/maps/add_row_cmd.hpp"
+#include "core/commands/maps/layers/add_layer_cmd.hpp"
+#include "core/commands/maps/layers/duplicate_layer_cmd.hpp"
+#include "core/commands/maps/layers/move_layer_down_cmd.hpp"
+#include "core/commands/maps/layers/move_layer_up_cmd.hpp"
+#include "core/commands/maps/layers/remove_layer_cmd.hpp"
+#include "core/commands/maps/layers/select_layer_cmd.hpp"
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
 
@@ -115,6 +122,57 @@ void MapDocument::RemoveRow()
 void MapDocument::RemoveColumn()
 {
   mDelegate->Execute<RemoveColumnCmd>(this);
+}
+
+auto MapDocument::AddTileLayer() -> layer_id
+{
+  const auto id = mMap->GetNextLayerId();
+  auto layer = mMap->MakeTileLayer();  // This increments the next layer ID
+
+  layer->SetName(std::format("{} {}", layer->GetName(), mTileLayerSuffix));
+  ++mTileLayerSuffix;
+
+  mDelegate->Execute<AddLayerCmd>(this, std::move(layer), id);
+
+  return id;
+}
+
+auto MapDocument::AddObjectLayer() -> layer_id
+{
+  const auto id = mMap->GetNextLayerId();
+  auto layer = mMap->MakeObjectLayer();  // This increments the next layer ID
+
+  layer->SetName(std::format("{} {}", layer->GetName(), mObjectLayerSuffix));
+  ++mObjectLayerSuffix;
+
+  mDelegate->Execute<AddLayerCmd>(this, std::move(layer), id);
+
+  return id;
+}
+
+void MapDocument::SelectLayer(const layer_id id)
+{
+  mDelegate->Execute<SelectLayerCmd>(this, id);
+}
+
+void MapDocument::RemoveLayer(const layer_id id)
+{
+  mDelegate->Execute<RemoveLayerCmd>(this, id);
+}
+
+void MapDocument::DuplicateLayer(const layer_id id)
+{
+  mDelegate->Execute<DuplicateLayerCmd>(this, id);
+}
+
+void MapDocument::MoveLayerUp(const layer_id id)
+{
+  mDelegate->Execute<MoveLayerUpCmd>(this, id);
+}
+
+void MapDocument::MoveLayerDown(const layer_id id)
+{
+  mDelegate->Execute<MoveLayerDownCmd>(this, id);
 }
 
 auto MapDocument::GetMap() -> Map&

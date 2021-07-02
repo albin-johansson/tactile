@@ -7,6 +7,11 @@
 #include <limits>  // numeric_limits
 
 #include "aliases/czstring.hpp"
+#include "core/events/add_layer_event.hpp"
+#include "core/events/duplicate_layer_event.hpp"
+#include "core/events/move_layer_down_event.hpp"
+#include "core/events/move_layer_up_event.hpp"
+#include "core/events/remove_layer_event.hpp"
 #include "core/events/select_layer_event.hpp"
 #include "core/model.hpp"
 #include "gui/widgets/button_ex.hpp"
@@ -54,26 +59,61 @@ void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
     return;
   }
 
+  const auto* document = model.GetActiveDocument();
+  const auto& map = document->GetMap();
+  const auto hasActiveLayer = map.GetActiveLayerId().has_value();
+  const auto activeLayerId = map.GetActiveLayerId();
+
   if (ImGui::Begin("Layers", &is_visible, ImGuiWindowFlags_NoCollapse))
   {
     if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Add new layer."))
-    {}
+    {
+      ImGui::OpenPopup("AddLayerPopup");
+    }
+
+    if (ImGui::BeginPopup("AddLayerPopup"))
+    {
+      if (ImGui::Selectable(ICON_FA_LAYER_GROUP " Tile layer"))
+      {
+        dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
+      }
+
+      if (ImGui::Selectable(ICON_FA_SHAPES " Object layer"))
+      {
+        dispatcher.enqueue<AddLayerEvent>(LayerType::ObjectLayer);
+      }
+
+      ImGui::EndPopup();
+    }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_MINUS_CIRCLE, "Remove layer."))
-    {}
+    if (ButtonEx(ICON_FA_MINUS_CIRCLE, "Remove layer.", hasActiveLayer))
+    {
+      dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
+    }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_COPY, "Duplicate layer."))
-    {}
+    if (ButtonEx(ICON_FA_COPY, "Duplicate layer.", hasActiveLayer))
+    {
+      dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
+    }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_ARROW_UP, "Move layer up."))
-    {}
+
+    const auto canMoveUp = hasActiveLayer && map.IndexOf(*activeLayerId) != 0;
+    if (ButtonEx(ICON_FA_ARROW_UP, "Move layer up.", canMoveUp))
+    {
+      dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
+    }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_ARROW_DOWN, "Move layer down."))
-    {}
+
+    const auto canMoveDown = hasActiveLayer && (map.IndexOf(*activeLayerId) !=
+                                                map.GetLayerCount() - 1);
+    if (ButtonEx(ICON_FA_ARROW_DOWN, "Move layer down.", canMoveDown))
+    {
+      dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
+    }
 
     const auto windowHeight = ImGui::GetWindowHeight();
     const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
@@ -82,7 +122,7 @@ void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
 
     if (ImGui::BeginListBox("##LayerTreeNode", size))
     {
-      if (const auto* document = model.GetActiveDocument())
+      if (document)
       {
         UpdateLayers(*document, dispatcher);
       }
