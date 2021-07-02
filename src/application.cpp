@@ -19,33 +19,7 @@ Application::Application(cen::window&& window)
     : mWindow{std::move(window)}
     , mModel{std::make_unique<Model>()}
 {
-  // clang-format off
-  mDispatcher.sink<UndoEvent>().connect<&Application::OnUndoEvent>(this);
-  mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
-
-  mDispatcher.sink<AddMapEvent>().connect<&Application::OnAddMapEvent>(this);
-  mDispatcher.sink<CloseMapEvent>().connect<&Application::OnCloseMapEvent>(this);
-  mDispatcher.sink<OpenMapEvent>().connect<&Application::OnOpenMapEvent>(this);
-
-  mDispatcher.sink<AddTilesetEvent>().connect<&Application::OnAddTilesetEvent>(this);
-  mDispatcher.sink<SelectTilesetEvent>().connect<&Application::OnSelectTilesetEvent>(this);
-  mDispatcher.sink<RemoveTilesetEvent>().connect<&Application::OnRemoveTilesetEvent>(this);
-
-  mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
-  mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
-  mDispatcher.sink<SelectMapEvent>().connect<&Application::OnSelectMapEvent>(this);
-
-  mDispatcher.sink<AddRowEvent>().connect<&Application::OnAddRowEvent>(this);
-  mDispatcher.sink<AddColumnEvent>().connect<&Application::OnAddColumnEvent>(this);
-  mDispatcher.sink<RemoveRowEvent>().connect<&Application::OnRemoveRowEvent>(this);
-  mDispatcher.sink<RemoveColumnEvent>().connect<&Application::OnRemoveColumnEvent>(this);
-
-  mDispatcher.sink<SetPropertyValueEvent>().connect<&Application::OnSetPropertyValueEvent>(this);
-  mDispatcher.sink<SetTilesetSelectionEvent>().connect<&Application::OnSetTilesetSelectionEvent>(this);
-
-  mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
-  // clang-format on
-
+  SubscribeToEvents();
   LoadPreferences();
   LoadCursors();
   LoadIcons();
@@ -115,6 +89,41 @@ auto Application::Run() -> int
 
   mWindow.hide();
   return 0;
+}
+
+void Application::SubscribeToEvents()
+{
+  // clang-format off
+  mDispatcher.sink<UndoEvent>().connect<&Application::OnUndoEvent>(this);
+  mDispatcher.sink<RedoEvent>().connect<&Application::OnRedoEvent>(this);
+
+  mDispatcher.sink<AddMapEvent>().connect<&Application::OnAddMapEvent>(this);
+  mDispatcher.sink<CloseMapEvent>().connect<&Application::OnCloseMapEvent>(this);
+  mDispatcher.sink<OpenMapEvent>().connect<&Application::OnOpenMapEvent>(this);
+
+  mDispatcher.sink<AddTilesetEvent>().connect<&Application::OnAddTilesetEvent>(this);
+  mDispatcher.sink<SelectTilesetEvent>().connect<&Application::OnSelectTilesetEvent>(this);
+  mDispatcher.sink<RemoveTilesetEvent>().connect<&Application::OnRemoveTilesetEvent>(this);
+
+  mDispatcher.sink<CenterViewportEvent>().connect<&Application::OnCenterViewportEvent>(this);
+  mDispatcher.sink<SelectLayerEvent>().connect<&Application::OnSelectLayerEvent>(this);
+  mDispatcher.sink<SelectMapEvent>().connect<&Application::OnSelectMapEvent>(this);
+
+  mDispatcher.sink<AddRowEvent>().connect<&Application::OnAddRowEvent>(this);
+  mDispatcher.sink<AddColumnEvent>().connect<&Application::OnAddColumnEvent>(this);
+  mDispatcher.sink<RemoveRowEvent>().connect<&Application::OnRemoveRowEvent>(this);
+  mDispatcher.sink<RemoveColumnEvent>().connect<&Application::OnRemoveColumnEvent>(this);
+
+  mDispatcher.sink<SetPropertyValueEvent>().connect<&Application::OnSetPropertyValueEvent>(this);
+  mDispatcher.sink<SetTilesetSelectionEvent>().connect<&Application::OnSetTilesetSelectionEvent>(this);
+
+  mDispatcher.sink<SelectToolEvent>().connect<&Application::OnSelectToolEvent>(this);
+  mDispatcher.sink<MousePressedEvent>().connect<&Application::OnMousePressedEvent>(this);
+  mDispatcher.sink<MouseReleasedEvent>().connect<&Application::OnMouseReleasedEvent>(this);
+  mDispatcher.sink<MouseDragEvent>().connect<&Application::OnMouseDragEvent>(this);
+
+  mDispatcher.sink<QuitEvent>().connect<&Application::OnQuitEvent>(this);
+  // clang-format on
 }
 
 void Application::OnAboutToExit()

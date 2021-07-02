@@ -46,6 +46,8 @@ class Application final
   std::vector<uint> mTextures;
   bool mQuit{};
 
+  void SubscribeToEvents();
+
   void OnAboutToExit();
 
   void PollEvents();
