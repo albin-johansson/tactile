@@ -215,6 +215,7 @@ void Application::OnAltShiftKeyStroke(const cen::scan_code key)
 
 void Application::OnCtrlKeyStroke(const cen::scan_code key)
 {
+  const auto* document = mModel->GetActiveDocument();
   if (key == cen::scancodes::n)
   {
     OnAddMapEvent();
@@ -234,6 +235,14 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   else if (key == cen::scancodes::space)
   {
     OnCenterViewportEvent();
+  }
+  else if (key == cen::scancodes::z && document && document->CanUndo())
+  {
+    OnUndoEvent();
+  }
+  else if (key == cen::scancodes::y && document && document->CanRedo())
+  {
+    OnRedoEvent();
   }
 }
 
@@ -296,10 +305,20 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 }
 
 void Application::OnUndoEvent()
-{}
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->Undo();
+  }
+}
 
 void Application::OnRedoEvent()
-{}
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->Redo();
+  }
+}
 
 void Application::OnSelectToolEvent(const SelectToolEvent& event)
 {
