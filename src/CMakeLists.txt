@@ -165,6 +165,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/menus/help_menu.hpp
     gui/widgets/menus/menu_bar_widget.cpp
     gui/widgets/menus/menu_bar_widget.hpp
+    gui/widgets/menus/view_menu.cpp
+    gui/widgets/menus/view_menu.hpp
 
     gui/widgets/properties/bool_property_widget.cpp
     gui/widgets/properties/bool_property_widget.hpp
