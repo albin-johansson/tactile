@@ -3,6 +3,8 @@
 #include <IconsFontAwesome5.h>
 #include <imgui.h>
 
+#include <format>  // format
+
 #include "core/events/add_column_event.hpp"
 #include "core/events/add_row_event.hpp"
 #include "core/events/redo_event.hpp"
@@ -26,18 +28,20 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
   const auto hasActiveMap = model.GetActiveMapId().has_value();
   if (ImGui::BeginMenu("Edit"))
   {
-    if (ImGui::MenuItem(ICON_FA_UNDO " Undo",
-                        "Ctrl+Z",
-                        false,
-                        document && document->CanUndo()))
+    const auto canUndo = document && document->CanUndo();
+    const auto undoText =
+        canUndo ? std::format(ICON_FA_UNDO " Undo {}", document->GetUndoText())
+                : std::string{ICON_FA_UNDO " Undo"};
+    if (ImGui::MenuItem(undoText.c_str(), "Ctrl+Z", false, canUndo))
     {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (ImGui::MenuItem(ICON_FA_REDO " Redo",
-                        "Ctrl+Y",
-                        false,
-                        document && document->CanRedo()))
+    const auto canRedo = document && document->CanRedo();
+    const auto redoText =
+        canRedo ? std::format(ICON_FA_REDO " Redo {}", document->GetRedoText())
+                : std::string{ICON_FA_REDO " Redo"};
+    if (ImGui::MenuItem(redoText.c_str(), "Ctrl+Y", false, canRedo))
     {
       dispatcher.enqueue<RedoEvent>();
     }
