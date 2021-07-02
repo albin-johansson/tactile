@@ -1,13 +1,20 @@
 #pragma once
 
-#include "core/map/map_position.hpp"
+#include "aliases/not_null.hpp"
+#include "mouse_info.hpp"
 #include "mouse_tool_type.hpp"
 
 namespace Tactile {
 
+class Model;
+class MapDocument;
+class Tileset;
+
 class AMouseTool
 {
  public:
+  explicit AMouseTool(NotNull<Model*> model);
+
   virtual ~AMouseTool() noexcept = default;
 
   virtual void Enable()
@@ -16,22 +23,31 @@ class AMouseTool
   virtual void Disable()
   {}
 
-  virtual void OnPressed()
+  virtual void OnPressed(const MouseInfo& info)
   {}
 
-  virtual void OnMoved()
+  virtual void OnDragged(const MouseInfo& info)
   {}
 
-  virtual void OnReleased()
-  {}
-
-  virtual void OnEntered()
-  {}
-
-  virtual void OnExited()
+  virtual void OnReleased(const MouseInfo& info)
   {}
 
   [[nodiscard]] virtual auto GetType() const -> MouseToolType = 0;
+
+ protected:
+  [[nodiscard]] auto GetModel() -> Model&
+  {
+    return *mModel;
+  }
+
+  [[nodiscard]] auto GetDocument() -> MapDocument*;
+
+  [[nodiscard]] auto GetDocument() const -> const MapDocument*;
+
+  [[nodiscard]] auto GetTileset() const -> const Tileset*;
+
+ private:
+  Model* mModel{};
 };
 
 }  // namespace Tactile

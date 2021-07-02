@@ -187,6 +187,8 @@ class TilesetManager final
    */
   [[nodiscard]] auto GetSize() const -> usize;
 
+  [[nodiscard]] auto GetSelection() const -> Maybe<TilesetSelection>;
+
   /**
    * \brief Indicates whether or not the manager has an active tileset.
    *
@@ -201,7 +203,12 @@ class TilesetManager final
    *
    * \return a pointer to the currently active tileset; null if there is none.
    */
+  [[nodiscard]] auto GetActiveTileset() -> Tileset*;
+
+  /// \copydoc GetActiveTileset()
   [[nodiscard]] auto GetActiveTileset() const -> const Tileset*;
+
+  [[nodiscard]] auto GetTileset(tile_id id) const -> const Tileset&;
 
   /**
    * \brief Returns the ID associated with the active tileset.

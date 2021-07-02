@@ -134,6 +134,12 @@ void MapDocument::RemoveTileset(const tileset_id id)
   mTilesets->Remove(id);
 }
 
+auto MapDocument::GetTilesets() -> TilesetManager&
+{
+  assert(mTilesets);
+  return *mTilesets;
+}
+
 auto MapDocument::GetTilesets() const -> const TilesetManager&
 {
   assert(mTilesets);

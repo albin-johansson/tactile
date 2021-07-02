@@ -79,6 +79,16 @@ void Model::SelectTool(const MouseToolType tool)
   mTools.Select(tool);
 }
 
+void Model::OnMousePressed(const MousePressedEvent& event)
+{
+  mTools.OnMousePressed(event);
+}
+
+void Model::OnMouseReleased(const MouseReleasedEvent& event)
+{
+  mTools.OnMouseReleased(event);
+}
+
 void Model::OnMouseDragged(const MouseDragEvent& event)
 {
   mTools.OnMouseDragged(event);

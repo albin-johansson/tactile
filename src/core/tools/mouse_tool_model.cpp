@@ -6,12 +6,12 @@
 
 namespace Tactile {
 
-MouseToolModel::MouseToolModel(Model* model)
+MouseToolModel::MouseToolModel(NotNull<Model*> model)
 {
   mTools.emplace(MouseToolType::None, nullptr);
-  mTools.emplace(MouseToolType::Stamp, std::make_unique<StampTool>());
-  mTools.emplace(MouseToolType::Eraser, std::make_unique<EraserTool>());
-  mTools.emplace(MouseToolType::Bucket, std::make_unique<BucketTool>());
+  mTools.emplace(MouseToolType::Stamp, std::make_unique<StampTool>(model));
+  mTools.emplace(MouseToolType::Eraser, std::make_unique<EraserTool>(model));
+  mTools.emplace(MouseToolType::Bucket, std::make_unique<BucketTool>(model));
 }
 
 void MouseToolModel::Select(const MouseToolType type)
@@ -19,8 +19,28 @@ void MouseToolModel::Select(const MouseToolType type)
   SwitchTo(mTools.at(type).get());
 }
 
+void MouseToolModel::OnMousePressed(const MousePressedEvent& event)
+{
+  if (auto* tool = mCurrent)
+  {
+    tool->OnPressed(event.info);
+  }
+}
+
+void MouseToolModel::OnMouseReleased(const MouseReleasedEvent& event)
+{
+  if (auto* tool = mCurrent)
+  {
+    tool->OnReleased(event.info);
+  }
+}
+
 void MouseToolModel::OnMouseDragged(const MouseDragEvent& event)
 {
+  if (auto* tool = mCurrent)
+  {
+    tool->OnDragged(event.info);
+  }
 }
 
 auto MouseToolModel::GetActive() const -> MouseToolType

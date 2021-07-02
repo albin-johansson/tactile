@@ -100,6 +100,7 @@ set(TACTILE_SOURCE_FILES
     core/tools/eraser_tool.cpp
     core/tools/eraser_tool.hpp
     core/tools/mouse_info.hpp
+    core/tools/mouse_tool.cpp
     core/tools/mouse_tool.hpp
     core/tools/mouse_tool_model.cpp
     core/tools/mouse_tool_model.hpp
@@ -198,6 +199,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/render_map.hpp
     gui/widgets/viewport/render_stamp_preview.cpp
     gui/widgets/viewport/render_stamp_preview.hpp
+    gui/widgets/viewport/rendering.cpp
+    gui/widgets/viewport/rendering.hpp
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
 

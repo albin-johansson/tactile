@@ -6,6 +6,8 @@
 #include "aliases/maybe.hpp"
 #include "aliases/unique.hpp"
 #include "events/mouse_drag_event.hpp"
+#include "events/mouse_pressed_event.hpp"
+#include "events/mouse_released_event.hpp"
 #include "map_document.hpp"
 #include "tools/mouse_tool_model.hpp"
 
@@ -62,8 +64,9 @@ class Model final
 
   void SelectTool(MouseToolType tool);
 
-  //  void OnMousePressed(const MouseDragEvent& event);
-  //  void OnMouseReleased(const MouseDragEvent& event);
+  void OnMousePressed(const MousePressedEvent& event);
+
+  void OnMouseReleased(const MouseReleasedEvent& event);
 
   void OnMouseDragged(const MouseDragEvent& event);
 

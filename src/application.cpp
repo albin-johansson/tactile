@@ -3,6 +3,7 @@
 #include <utility>  // move
 
 #include "gui/cursors.hpp"
+#include "gui/icons.hpp"
 #include "gui/update_gui.hpp"
 #include "gui/widgets/menus/menu_bar_widget.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
@@ -47,6 +48,7 @@ Application::Application(cen::window&& window)
 
   LoadPreferences();
   LoadCursors();
+  LoadIcons();
 
   OnAddMapEvent();
 
@@ -117,6 +119,7 @@ auto Application::Run() -> int
 
 void Application::OnAboutToExit()
 {
+  UnloadIcons();
   UnloadCursors();
   SavePreferences();
 
@@ -243,10 +246,7 @@ void Application::OnCloseMapEvent(const CloseMapEvent& event)
 }
 
 void Application::OnOpenMapEvent(const OpenMapEvent& event)
-{
-  cen::log::info("Application::OnOpenMapEvent > %s",
-                 event.path.filename().string().c_str());
-}
+{}
 
 void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
@@ -264,14 +264,30 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
   }
 }
 
-void Application::OnUndoEvent(const UndoEvent& event)
+void Application::OnUndoEvent()
+{}
+
+void Application::OnRedoEvent()
+{}
+
+void Application::OnSelectToolEvent(const SelectToolEvent& event)
 {
-  cen::log::info("Application::OnUndoEvent");
+  mModel->SelectTool(event.type);
 }
 
-void Application::OnRedoEvent(const RedoEvent& event)
+void Application::OnMousePressedEvent(const MousePressedEvent& event)
 {
-  cen::log::info("Application::OnRedoEvent");
+  mModel->OnMousePressed(event);
+}
+
+void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
+{
+  mModel->OnMouseReleased(event);
+}
+
+void Application::OnMouseDragEvent(const MouseDragEvent& event)
+{
+  mModel->OnMouseDragged(event);
 }
 
 void Application::OnCenterViewportEvent()

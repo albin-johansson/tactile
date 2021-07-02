@@ -8,11 +8,13 @@
 #include "aliases/unique.hpp"
 #include "core/events/add_column_event.hpp"
 #include "core/events/add_map_event.hpp"
-#include "core/events/set_tileset_selection_event.hpp"
 #include "core/events/add_row_event.hpp"
 #include "core/events/add_tileset_event.hpp"
 #include "core/events/center_viewport_event.hpp"
 #include "core/events/close_map_event.hpp"
+#include "core/events/mouse_drag_event.hpp"
+#include "core/events/mouse_pressed_event.hpp"
+#include "core/events/mouse_released_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
@@ -22,7 +24,9 @@
 #include "core/events/select_layer_event.hpp"
 #include "core/events/select_map_event.hpp"
 #include "core/events/select_tileset_event.hpp"
+#include "core/events/select_tool_event.hpp"
 #include "core/events/set_property_value_event.hpp"
+#include "core/events/set_tileset_selection_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 
@@ -64,9 +68,17 @@ class Application final
 
   void OnAddTilesetEvent(const AddTilesetEvent& event);
 
-  void OnUndoEvent(const UndoEvent& event);
+  void OnUndoEvent();
 
-  void OnRedoEvent(const RedoEvent& event);
+  void OnRedoEvent();
+
+  void OnSelectToolEvent(const SelectToolEvent& event);
+
+  void OnMousePressedEvent(const MousePressedEvent& event);
+
+  void OnMouseReleasedEvent(const MouseReleasedEvent& event);
+
+  void OnMouseDragEvent(const MouseDragEvent& event);
 
   void OnCenterViewportEvent();
 

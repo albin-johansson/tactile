@@ -2,11 +2,13 @@
 
 #include <vector_map.hpp>  // vector_map
 
+#include "aliases/not_null.hpp"
 #include "aliases/unique.hpp"
+#include "core/events/mouse_drag_event.hpp"
+#include "core/events/mouse_pressed_event.hpp"
+#include "core/events/mouse_released_event.hpp"
 #include "mouse_tool.hpp"
 #include "mouse_tool_type.hpp"
-
-#include "core/events/mouse_drag_event.hpp"
 
 namespace Tactile {
 
@@ -15,9 +17,13 @@ class Model;
 class MouseToolModel final
 {
  public:
-  explicit MouseToolModel(Model* model);
+  explicit MouseToolModel(NotNull<Model*> model);
 
   void Select(MouseToolType type);
+
+  void OnMousePressed(const MousePressedEvent& event);
+
+  void OnMouseReleased(const MouseReleasedEvent& event);
 
   void OnMouseDragged(const MouseDragEvent& event);
 

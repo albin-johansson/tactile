@@ -160,8 +160,7 @@ void ShowActiveMap(const Model& model,
     if (model.GetActiveTool() == MouseToolType::Stamp && tileset &&
         tileset->GetSelection())
     {
-      RenderStampPreview(drawList,
-                         mapOrigin,
+      RenderStampPreview(mapOrigin,
                          state.grid_size,
                          document.GetMap(),
                          *tileset,

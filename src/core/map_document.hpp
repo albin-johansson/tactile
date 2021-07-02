@@ -70,6 +70,8 @@ class MapDocument final : public IDocument
 
   void RemoveTileset(tileset_id id);
 
+  [[nodiscard]] auto GetTilesets() -> TilesetManager&;
+
   [[nodiscard]] auto GetTilesets() const -> const TilesetManager&;
 
   /// \} End of map document API

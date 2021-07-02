@@ -127,7 +127,7 @@ auto TilesetManager::GetTexture(const tile_id id) const -> GLuint
     }
   }
 
-  throw TactileError{"Tileset manager could not find texture!"};
+  throw TactileError{"Could not find texture!"};
 }
 
 auto TilesetManager::GetImageSource(const tile_id id) const -> cen::irect
@@ -140,7 +140,7 @@ auto TilesetManager::GetImageSource(const tile_id id) const -> cen::irect
     }
   }
 
-  throw TactileError{"Tileset manager could not find tile source rectangle!"};
+  throw TactileError{"Could not find tile source rectangle!"};
 }
 
 auto TilesetManager::GetRange(const tileset_id id) const -> TileRange
@@ -156,14 +156,44 @@ auto TilesetManager::GetSize() const -> usize
   return mTilesets.size();
 }
 
+auto TilesetManager::GetSelection() const -> Maybe<TilesetSelection>
+{
+  if (const auto* tileset = GetActiveTileset())
+  {
+    return tileset->GetSelection();
+  }
+  else
+  {
+    return nothing;
+  }
+}
+
 auto TilesetManager::HasActiveTileset() const -> bool
 {
   return mCurrentTileset.has_value();
 }
 
+auto TilesetManager::GetActiveTileset() -> Tileset*
+{
+  return mCurrentTileset ? mTilesets.at(*mCurrentTileset).get() : nullptr;
+}
+
 auto TilesetManager::GetActiveTileset() const -> const Tileset*
 {
   return mCurrentTileset ? mTilesets.at(*mCurrentTileset).get() : nullptr;
+}
+
+auto TilesetManager::GetTileset(const tile_id id) const -> const Tileset&
+{
+  for (const auto& [unused, tileset] : mTilesets)
+  {
+    if (tileset->Contains(id))
+    {
+      return *tileset;
+    }
+  }
+
+  throw TactileError{"Found no tileset that contains the specified tile!"};
 }
 
 auto TilesetManager::GetActiveTilesetId() const -> Maybe<tileset_id>

@@ -6,23 +6,14 @@
 #include "gui/get_texture_id.hpp"
 #include "imgui.h"
 #include "imgui_internal.h"
+#include "rendering.hpp"
 
 namespace Tactile {
 namespace {
 
 inline constexpr uint32 preview_opacity = 100;  // [0, 255]
 
-[[nodiscard]] auto GetTileSizeUV(const Tileset& tileset) -> ImVec2
-{
-  const ImVec2 textureSize = {static_cast<float>(tileset.GetWidth()),
-                              static_cast<float>(tileset.GetHeight())};
-  const ImVec2 tileSize = {static_cast<float>(tileset.GetTileWidth()),
-                           static_cast<float>(tileset.GetTileHeight())};
-  return tileSize / textureSize;
-}
-
-void RenderPreviewTile(ImDrawList* drawList,
-                       ImTextureID texture,
+void RenderPreviewTile(ImTextureID texture,
                        const MapPosition& tilePos,
                        const ImVec2& mapPos,
                        const ImVec2& tilesetTilePos,
@@ -36,6 +27,7 @@ void RenderPreviewTile(ImDrawList* drawList,
   const auto uvMin = tilesetTilePos * uvTileSize;
   const auto uvMax = uvMin + uvTileSize;
 
+  auto* drawList = ImGui::GetWindowDrawList();
   drawList->AddImage(texture,
                      realPos,
                      realPos + gridSize,
@@ -46,8 +38,7 @@ void RenderPreviewTile(ImDrawList* drawList,
 
 }  // namespace
 
-void RenderStampPreview(ImDrawList* drawList,
-                        const ImVec2& mapPos,
+void RenderStampPreview(const ImVec2& mapPos,
                         const ImVec2& gridSize,
                         const Map& map,
                         const Tileset& tileset,
@@ -74,8 +65,7 @@ void RenderStampPreview(ImDrawList* drawList,
         const auto tsRow = static_cast<float>(tsTile.GetRow());
         const auto tsCol = static_cast<float>(tsTile.GetColumn());
 
-        RenderPreviewTile(drawList,
-                          texture,
+        RenderPreviewTile(texture,
                           tilePos,
                           mapPos,
                           {tsCol, tsRow},
