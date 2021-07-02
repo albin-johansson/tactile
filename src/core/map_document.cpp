@@ -3,6 +3,11 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
+#include "core/commands/maps/add_column_cmd.hpp"
+#include "core/commands/maps/add_row_cmd.hpp"
+#include "core/commands/maps/remove_column_cmd.hpp"
+#include "core/commands/maps/remove_row_cmd.hpp"
+
 namespace Tactile {
 
 MapDocument::MapDocument()
@@ -90,6 +95,26 @@ auto MapDocument::GetPath() const -> std::filesystem::path
 auto MapDocument::GetAbsolutePath() const -> std::filesystem::path
 {
   return mDelegate->GetAbsolutePath();
+}
+
+void MapDocument::AddRow()
+{
+  mDelegate->Execute<AddRowCmd>(this);
+}
+
+void MapDocument::AddColumn()
+{
+  mDelegate->Execute<AddColumnCmd>(this);
+}
+
+void MapDocument::RemoveRow()
+{
+  mDelegate->Execute<RemoveRowCmd>(this);
+}
+
+void MapDocument::RemoveColumn()
+{
+  mDelegate->Execute<RemoveColumnCmd>(this);
 }
 
 auto MapDocument::GetMap() -> Map&

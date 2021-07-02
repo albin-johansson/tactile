@@ -36,10 +36,22 @@ set(TACTILE_SOURCE_FILES
     core/algorithms/flood_fill.hpp
     core/algorithms/invoke_n.hpp
 
-    core/commands/command_stack.cpp
-    core/commands/command_stack.hpp
     core/commands/command.hpp
     core/commands/command.cpp
+    core/commands/command_id.hpp
+    core/commands/command_stack.cpp
+    core/commands/command_stack.hpp
+
+    core/commands/maps/add_column_cmd.cpp
+    core/commands/maps/add_column_cmd.hpp
+    core/commands/maps/add_row_cmd.cpp
+    core/commands/maps/add_row_cmd.hpp
+    core/commands/maps/map_command.cpp
+    core/commands/maps/map_command.hpp
+    core/commands/maps/remove_column_cmd.cpp
+    core/commands/maps/remove_column_cmd.hpp
+    core/commands/maps/remove_row_cmd.cpp
+    core/commands/maps/remove_row_cmd.hpp
 
     core/events/add_column_event.hpp
     core/events/add_map_event.hpp

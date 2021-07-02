@@ -56,6 +56,14 @@ class MapDocument final : public IDocument
   /// \name Map document API
   /// \{
 
+  void AddRow();
+
+  void AddColumn();
+
+  void RemoveRow();
+
+  void RemoveColumn();
+
   [[nodiscard]] auto GetMap() -> Map&;
 
   [[nodiscard]] auto GetMap() const -> const Map&;

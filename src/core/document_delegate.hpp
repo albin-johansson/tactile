@@ -1,12 +1,14 @@
 #pragma once
 
+#include <concepts>    // derived_from
 #include <filesystem>  // path
 #include <string>      // string
+#include <utility>     // forward
 
 #include "aliases/maybe.hpp"
 #include "aliases/unique.hpp"
-#include "commands/command_stack.hpp"
-#include "document.hpp"
+#include "core/commands/command_stack.hpp"
+#include "core/document.hpp"
 
 namespace Tactile {
 
@@ -80,6 +82,17 @@ class DocumentDelegate final : public IDocument
   [[nodiscard]] auto GetName() const -> std::string_view override;
 
   /// \} End of property API
+
+  /// \name Command API
+  /// \{
+
+  template <std::derived_from<ACommand> T, typename... Args>
+  void Execute(Args&&... args)
+  {
+    mCommandStack->Push<T>(std::forward<Args>(args)...);
+  }
+
+  /// \} End of command API
 
  private:
   Unique<CommandStack> mCommandStack;

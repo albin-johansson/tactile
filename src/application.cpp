@@ -7,7 +7,8 @@
 #include "gui/cursors.hpp"
 #include "gui/icons.hpp"
 #include "gui/update_gui.hpp"
-#include "gui/widgets/menus/menu_bar_widget.hpp"
+#include "gui/widgets/menus/edit_menu.hpp"
+#include "gui/widgets/menus/file_menu.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -350,26 +351,34 @@ void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
 
 void Application::OnAddRowEvent()
 {
-  auto& map = mModel->GetActiveMap();
-  map.AddRow(empty_tile);
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->AddRow();
+  }
 }
 
 void Application::OnAddColumnEvent()
 {
-  auto& map = mModel->GetActiveMap();
-  map.AddColumn(empty_tile);
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->AddColumn();
+  }
 }
 
 void Application::OnRemoveRowEvent()
 {
-  auto& map = mModel->GetActiveMap();
-  map.RemoveRow();
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->RemoveRow();
+  }
 }
 
 void Application::OnRemoveColumnEvent()
 {
-  auto& map = mModel->GetActiveMap();
-  map.RemoveColumn();
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->RemoveColumn();
+  }
 }
 
 void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
