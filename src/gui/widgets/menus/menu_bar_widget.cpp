@@ -7,13 +7,13 @@
 #include "core/events/add_column_event.hpp"
 #include "core/events/add_map_event.hpp"
 #include "core/events/add_row_event.hpp"
-#include "core/events/select_tool_event.hpp"
 #include "core/events/center_viewport_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
 #include "core/events/remove_column_event.hpp"
 #include "core/events/remove_row_event.hpp"
+#include "core/events/select_tool_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "gui/layout/dock_space.hpp"
@@ -26,21 +26,16 @@
 #include "gui/widgets/properties/properties_widget.hpp"
 #include "gui/widgets/tilesets/tileset_widget.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
+#include "help_menu.hpp"
 #include "imgui.h"
 #include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {
 
-inline bool show_about_tactile_window = false;
-inline bool show_about_imgui_window = false;
-inline bool show_metrics_window = false;
-inline bool show_demo_window = false;
 inline bool show_settings_window = false;
-inline bool show_style_editor = false;
 inline bool show_map_file_dialog = false;
 inline bool show_tileset_dialog = false;
-inline bool show_credits_dialog = false;
 
 void ShowFileMenu(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -268,32 +263,6 @@ void ShowViewMenu(const Model& model, entt::dispatcher& dispatcher)
   }
 }
 
-void ShowHelpMenu()
-{
-  if (ImGui::BeginMenu("Help"))
-  {
-    show_about_tactile_window =
-        ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About Tactile...");
-    show_about_imgui_window =
-        ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About Dear ImGui...");
-    show_credits_dialog = ImGui::MenuItem("Credits...");
-
-    ImGui::Separator();
-
-    show_metrics_window =
-        ImGui::MenuItem(ICON_FA_TACHOMETER_ALT " Show metrics...");
-
-    if constexpr (cen::is_debug_build())
-    {
-      ImGui::Separator();
-      show_demo_window = ImGui::MenuItem("Show demo window...");
-      show_style_editor = ImGui::MenuItem("Show style editor...");
-    }
-
-    ImGui::EndMenu();
-  }
-}
-
 void ShowMapFileDialog(entt::dispatcher& dispatcher)
 {
   const auto filter = ".json,.tmx";
@@ -318,34 +287,16 @@ void UpdateMenuBarWidget(const Model& model, entt::dispatcher& dispatcher)
     ShowFileMenu(model, dispatcher);
     ShowEditMenu(model, dispatcher);
     ShowViewMenu(model, dispatcher);
-    ShowHelpMenu();
+    UpdateHelpMenu();
 
     ImGui::EndMainMenuBar();
   }
 
+  UpdateHelpMenuWindows();
+
   if (show_settings_window)
   {
     UpdateSettingsDialog(&show_settings_window);
-  }
-
-  if (show_about_tactile_window)
-  {
-    UpdateAboutDialog(&show_about_tactile_window);
-  }
-
-  if (show_credits_dialog)
-  {
-    UpdateCreditsDialog(&show_credits_dialog);
-  }
-
-  if (show_about_imgui_window)
-  {
-    ImGui::ShowAboutWindow(&show_about_imgui_window);
-  }
-
-  if (show_metrics_window)
-  {
-    ImGui::ShowMetricsWindow(&show_metrics_window);
   }
 
   if (show_map_file_dialog)
@@ -356,23 +307,6 @@ void UpdateMenuBarWidget(const Model& model, entt::dispatcher& dispatcher)
   if (show_tileset_dialog)
   {
     UpdateTilesetDialog(&show_tileset_dialog, dispatcher);
-  }
-
-  if constexpr (cen::is_debug_build())
-  {
-    if (show_demo_window)
-    {
-      ImGui::ShowDemoWindow(&show_demo_window);
-    }
-
-    if (show_style_editor)
-    {
-      if (ImGui::Begin("Style editor"))
-      {
-        ImGui::ShowStyleEditor();
-      }
-      ImGui::End();
-    }
   }
 }
 
