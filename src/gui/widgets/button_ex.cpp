@@ -10,6 +10,11 @@ namespace Tactile {
 auto ButtonEx(const czstring text, const czstring tooltip, const bool enabled)
     -> bool
 {
+  if (!enabled)
+  {
+    ImGui::PushDisabled();
+  }
+
   ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !enabled);
 
   const auto result = ImGui::Button(text);
@@ -24,6 +29,11 @@ auto ButtonEx(const czstring text, const czstring tooltip, const bool enabled)
   }
 
   ImGui::PopItemFlag();
+
+  if (!enabled)
+  {
+    ImGui::PopDisabled();
+  }
 
   return result;
 }
