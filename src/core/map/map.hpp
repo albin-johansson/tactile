@@ -260,7 +260,7 @@ class Map final
    *
    * \param id the ID associated with the layer that will be moved.
    */
-  void MoveLayerBack(layer_id id);
+  void MoveLayerDown(const layer_id id);
 
   /**
    * \brief Moves the specified layer forwards one step in the render order.
@@ -272,7 +272,7 @@ class Map final
    *
    * \param id the ID associated with the layer that will be moved.
    */
-  void MoveLayerForward(layer_id id);
+  void MoveLayerUp(const layer_id id);
 
   /**
    * \brief Creates and returns an empty tile layer but doesn't add it to the

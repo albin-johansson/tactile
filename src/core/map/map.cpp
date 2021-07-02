@@ -261,14 +261,14 @@ void Map::SetName(const layer_id id, std::string name)
   }
 }
 
-void Map::MoveLayerBack(const layer_id id)
-{
-  mLayers.move_backward(id);
-}
-
-void Map::MoveLayerForward(const layer_id id)
+void Map::MoveLayerDown(const layer_id id)
 {
   mLayers.move_forward(id);
+}
+
+void Map::MoveLayerUp(const layer_id id)
+{
+  mLayers.move_backward(id);
 }
 
 auto Map::MakeTileLayer() -> Shared<TileLayer>
