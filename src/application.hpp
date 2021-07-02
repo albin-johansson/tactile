@@ -62,6 +62,8 @@ class Application final
 
   void OnAltKeyStroke(cen::scan_code key);
 
+  void OnKeyStroke(cen::scan_code key);
+
   void OnAddMapEvent();
 
   void OnCloseMapEvent(const CloseMapEvent& event);

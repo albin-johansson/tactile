@@ -176,6 +176,10 @@ void Application::PollEvents()
         {
           OnAltKeyStroke(key);
         }
+        else
+        {
+          OnKeyStroke(key);
+        }
       }
     }
   }
@@ -240,6 +244,22 @@ void Application::OnAltKeyStroke(const cen::scan_code key)
   else if (key == cen::scancodes::c)
   {
     OnAddColumnEvent();
+  }
+}
+
+void Application::OnKeyStroke(const cen::scan_code key)
+{
+  if (key == cen::scancodes::s)
+  {
+    OnSelectToolEvent(SelectToolEvent{.type = MouseToolType::Stamp});
+  }
+  else if (key == cen::scancodes::b)
+  {
+    OnSelectToolEvent(SelectToolEvent{.type = MouseToolType::Bucket});
+  }
+  else if (key == cen::scancodes::e)
+  {
+    OnSelectToolEvent(SelectToolEvent{.type = MouseToolType::Eraser});
   }
 }
 
