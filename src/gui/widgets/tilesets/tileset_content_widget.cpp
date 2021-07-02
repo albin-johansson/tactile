@@ -5,7 +5,7 @@
 #include "core/events/remove_tileset_event.hpp"
 #include "core/events/select_tileset_event.hpp"
 #include "core/map_document.hpp"
-#include "gui/widgets/menus/menu_bar_widget.hpp"
+#include "gui/widgets/menus/edit_menu.hpp"
 #include "gui/widgets/tilesets/tileset_viewport_widget.hpp"
 #include "imgui.h"
 #include "utils/scope_id.hpp"

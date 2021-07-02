@@ -12,6 +12,4 @@ void EnableOpenMapDialog();
 
 void EnableSettingsDialog();
 
-void EnableTilesetDialog();
-
 }  // namespace Tactile

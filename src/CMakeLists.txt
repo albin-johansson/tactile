@@ -161,6 +161,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/layers/layer_widget.cpp
     gui/widgets/layers/layer_widget.hpp
 
+    gui/widgets/menus/edit_menu.cpp
+    gui/widgets/menus/edit_menu.hpp
     gui/widgets/menus/help_menu.cpp
     gui/widgets/menus/help_menu.hpp
     gui/widgets/menus/menu_bar_widget.cpp

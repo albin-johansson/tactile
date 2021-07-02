@@ -7,7 +7,7 @@
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/centered_button.hpp"
 #include "gui/widgets/centered_text.hpp"
-#include "gui/widgets/menus/menu_bar_widget.hpp"
+#include "gui/widgets/menus/edit_menu.hpp"
 #include "gui/widgets/tilesets/tileset_content_widget.hpp"
 #include "imgui.h"
 
