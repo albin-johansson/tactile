@@ -72,6 +72,12 @@ class Model final
 
   [[nodiscard]] auto GetActiveTool() const -> MouseToolType;
 
+  [[nodiscard]] auto IsStampActive() const -> bool;
+
+  [[nodiscard]] auto IsEraserActive() const -> bool;
+
+  [[nodiscard]] auto IsBucketActive() const -> bool;
+
   /// \} End of tools API
 
  private:

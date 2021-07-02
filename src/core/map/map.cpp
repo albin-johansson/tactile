@@ -360,6 +360,16 @@ auto Map::GetObjectLayer(const layer_id id) const -> const ObjectLayer*
   return AsObjectLayer(GetLayer(id));
 }
 
+auto Map::IsTileLayer(const layer_id id) const -> bool
+{
+  return GetLayer(id)->GetType() == LayerType::TileLayer;
+}
+
+auto Map::IsObjectLayer(const layer_id id) const -> bool
+{
+  return GetLayer(id)->GetType() == LayerType::ObjectLayer;
+}
+
 auto Map::InBounds(const MapPosition& pos) const -> bool
 {
   const auto endRow = mRows;

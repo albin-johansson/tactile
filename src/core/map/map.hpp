@@ -380,6 +380,10 @@ class Map final
 
   [[nodiscard]] auto GetObjectLayer(layer_id id) const -> const ObjectLayer*;
 
+  [[nodiscard]] auto IsTileLayer(layer_id id) const -> bool;
+
+  [[nodiscard]] auto IsObjectLayer(layer_id id) const -> bool;
+
   /**
    * \brief Indicates whether or not the supplied position is within the bounds
    * of the map.

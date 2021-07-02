@@ -99,4 +99,19 @@ auto Model::GetActiveTool() const -> MouseToolType
   return mTools.GetActive();
 }
 
+auto Model::IsStampActive() const -> bool
+{
+  return mTools.GetActive() == MouseToolType::Stamp;
+}
+
+auto Model::IsEraserActive() const -> bool
+{
+  return mTools.GetActive() == MouseToolType::Eraser;
+}
+
+auto Model::IsBucketActive() const -> bool
+{
+  return mTools.GetActive() == MouseToolType::Bucket;
+}
+
 }  // namespace Tactile
