@@ -1,5 +1,7 @@
 #include "application.hpp"
 
+#include <imgui.h>
+
 #include <utility>  // move
 
 #include "gui/cursors.hpp"
@@ -7,7 +9,6 @@
 #include "gui/update_gui.hpp"
 #include "gui/widgets/menus/menu_bar_widget.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
-#include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "io/preferences.hpp"

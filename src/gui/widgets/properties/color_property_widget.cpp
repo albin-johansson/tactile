@@ -1,9 +1,10 @@
 #include "color_property_widget.hpp"
 
+#include <imgui.h>
+
 #include <cmath>  // round
 
 #include "aliases/ints.hpp"
-#include "imgui.h"
 #include "utils/color_utils.hpp"
 #include "utils/scope_id.hpp"
 

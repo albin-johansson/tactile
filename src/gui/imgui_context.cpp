@@ -1,12 +1,12 @@
 #include "imgui_context.hpp"
 
 #include <IconsFontAwesome5.h>
+#include <imgui.h>
 
 #include <array>  // array
 
 #include "gui/style.hpp"
 #include "gui/themes.hpp"
-#include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 

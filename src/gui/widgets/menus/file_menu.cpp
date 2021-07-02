@@ -1,6 +1,7 @@
 #include "file_menu.hpp"
 
 #include <IconsFontAwesome5.h>
+#include <imgui.h>
 
 #include "core/events/add_map_event.hpp"
 #include "core/events/open_map_event.hpp"
@@ -8,7 +9,6 @@
 #include "core/model.hpp"
 #include "gui/widgets/dialogs/settings_dialog.hpp"
 #include "gui/widgets/file_dialog.hpp"
-#include "imgui.h"
 #include "io/preferences.hpp"
 
 namespace Tactile {

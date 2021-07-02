@@ -1,15 +1,16 @@
 #include "properties_widget.hpp"
 
 #include <IconsFontAwesome5.h>
+#include <imgui.h>
 
 #include <string_view>  // string_view
 
 #include "aliases/ints.hpp"
 #include "core/events/set_property_value_event.hpp"
 #include "core/model.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "gui/widgets/centered_text.hpp"
-#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/help_marker.hpp"
 #include "gui/widgets/properties/bool_property_widget.hpp"
 #include "gui/widgets/properties/color_property_widget.hpp"
@@ -18,7 +19,6 @@
 #include "gui/widgets/properties/int_property_widget.hpp"
 #include "gui/widgets/properties/object_property_widget.hpp"
 #include "gui/widgets/properties/string_property_widget.hpp"
-#include "imgui.h"
 
 namespace Tactile {
 namespace {

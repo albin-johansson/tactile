@@ -1,7 +1,8 @@
 #include "settings_dialog.hpp"
 
+#include <imgui.h>
+
 #include "gui/widgets/help_marker.hpp"
-#include "imgui.h"
 #include "io/preferences.hpp"
 
 namespace Tactile {

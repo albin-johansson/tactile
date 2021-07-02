@@ -1,6 +1,7 @@
 #include "view_menu.hpp"
 
 #include <IconsFontAwesome5.h>
+#include <imgui.h>
 
 #include "core/events/center_viewport_event.hpp"
 #include "core/model.hpp"
@@ -8,7 +9,6 @@
 #include "gui/widgets/layers/layer_widget.hpp"
 #include "gui/widgets/properties/properties_widget.hpp"
 #include "gui/widgets/tilesets/tileset_widget.hpp"
-#include "imgui.h"
 #include "io/preferences.hpp"
 
 namespace Tactile {

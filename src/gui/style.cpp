@@ -1,6 +1,6 @@
 #include "style.hpp"
 
-#include "imgui.h"
+#include <imgui.h>
 
 namespace Tactile {
 

@@ -1,6 +1,7 @@
 #include "edit_menu.hpp"
 
 #include <IconsFontAwesome5.h>
+#include <imgui.h>
 
 #include "core/events/add_column_event.hpp"
 #include "core/events/add_row_event.hpp"
@@ -11,7 +12,6 @@
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "gui/widgets/dialogs/tileset_dialog.hpp"
-#include "imgui.h"
 
 namespace Tactile {
 namespace {

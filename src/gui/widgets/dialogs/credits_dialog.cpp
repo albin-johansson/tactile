@@ -1,7 +1,8 @@
 #include "credits_dialog.hpp"
 
+#include <imgui.h>
+
 #include "aliases/czstring.hpp"
-#include "imgui.h"
 
 namespace Tactile {
 namespace {

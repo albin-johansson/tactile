@@ -1,11 +1,12 @@
 #include "rendering.hpp"
 
+#include <imgui_internal.h>
+
 #include <cassert>  //assert
 
 #include "core/tileset/tileset.hpp"
 #include "core/tileset/tileset_manager.hpp"
 #include "gui/get_texture_id.hpp"
-#include "imgui_internal.h"
 
 namespace Tactile {
 

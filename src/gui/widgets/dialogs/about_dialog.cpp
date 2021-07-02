@@ -1,8 +1,7 @@
 #include "about_dialog.hpp"
 
 #include <IconsFontAwesome5.h>
-
-#include "imgui.h"
+#include <imgui.h>
 
 namespace Tactile {
 

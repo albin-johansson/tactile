@@ -1,7 +1,7 @@
 #include "alignment.hpp"
 
-#include "imgui.h"
-#include "imgui_internal.h"
+#include <imgui.h>
+#include <imgui_internal.h>
 
 namespace Tactile {
 

@@ -1,8 +1,9 @@
 #include "button_ex.hpp"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include "gui/cursors.hpp"
-#include "imgui.h"
-#include "imgui_internal.h"
 
 namespace Tactile {
 

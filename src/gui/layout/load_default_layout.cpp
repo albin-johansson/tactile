@@ -1,9 +1,10 @@
 #include "load_default_layout.hpp"
 
+#include <imgui_internal.h>
+
 #include "gui/widgets/layers/layer_widget.hpp"
 #include "gui/widgets/properties/properties_widget.hpp"
 #include "gui/widgets/tilesets/tileset_widget.hpp"
-#include "imgui_internal.h"
 
 namespace Tactile {
 

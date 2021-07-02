@@ -1,5 +1,8 @@
 #include "map_content_viewport.hpp"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include <cmath>  // trunc
 
 #include "core/events/close_map_event.hpp"
@@ -11,8 +14,6 @@
 #include "gui/canvas_info.hpp"
 #include "gui/show_grid.hpp"
 #include "gui/widgets/mouse_tracker.hpp"
-#include "imgui.h"
-#include "imgui_internal.h"
 #include "render_map.hpp"
 #include "render_stamp_preview.hpp"
 #include "utils/scope_id.hpp"

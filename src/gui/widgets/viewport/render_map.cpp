@@ -1,9 +1,10 @@
 #include "render_map.hpp"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include "core/map/layers/layer_utils.hpp"
 #include "core/map_document.hpp"
-#include "imgui.h"
-#include "imgui_internal.h"
 #include "io/preferences.hpp"
 #include "rendering.hpp"
 

@@ -1,12 +1,12 @@
 #include "help_menu.hpp"
 
 #include <IconsFontAwesome5.h>
+#include <imgui.h>
 
 #include <centurion.hpp>  // is_debug_build
 
 #include "gui/widgets/dialogs/about_dialog.hpp"
 #include "gui/widgets/dialogs/credits_dialog.hpp"
-#include "imgui.h"
 
 namespace Tactile {
 namespace {

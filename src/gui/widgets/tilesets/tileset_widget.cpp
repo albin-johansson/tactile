@@ -1,6 +1,7 @@
 #include "tileset_widget.hpp"
 
 #include <IconsFontAwesome5.h>
+#include <imgui.h>
 
 #include "core/events/remove_tileset_event.hpp"
 #include "core/model.hpp"
@@ -9,7 +10,6 @@
 #include "gui/widgets/centered_text.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 #include "gui/widgets/tilesets/tileset_content_widget.hpp"
-#include "imgui.h"
 
 namespace Tactile {
 namespace {

@@ -1,11 +1,12 @@
 #include "render_stamp_preview.hpp"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include "aliases/ints.hpp"
 #include "core/map/map.hpp"
 #include "core/tileset/tileset.hpp"
 #include "gui/get_texture_id.hpp"
-#include "imgui.h"
-#include "imgui_internal.h"
 #include "rendering.hpp"
 
 namespace Tactile {

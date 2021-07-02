@@ -1,6 +1,7 @@
 #include "file_property_widget.hpp"
 
-#include "imgui.h"
+#include <imgui.h>
+
 #include "utils/scope_id.hpp"
 
 namespace Tactile {

@@ -1,10 +1,11 @@
 #include "string_property_widget.hpp"
 
+#include <imgui.h>
+
 #include <array>   // array
 #include <limits>  // numeric_limits
 
 #include "aliases/ints.hpp"
-#include "imgui.h"
 #include "utils/buffer_utils.hpp"
 #include "utils/scope_id.hpp"
 

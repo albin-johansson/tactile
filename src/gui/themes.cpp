@@ -1,8 +1,8 @@
 #include "themes.hpp"
 
-#include <algorithm>  // clamp
+#include <imgui.h>
 
-#include "imgui.h"
+#include <algorithm>  // clamp
 
 #define TACTILE_SET_COLOR_GROUP(Element, Color)     \
   style.Colors[Element] = Color;                    \

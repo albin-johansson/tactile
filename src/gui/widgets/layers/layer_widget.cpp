@@ -1,6 +1,7 @@
 #include "layer_widget.hpp"
 
 #include <IconsFontAwesome5.h>
+#include <imgui.h>
 
 #include <format>  // format
 #include <limits>  // numeric_limits
@@ -9,7 +10,6 @@
 #include "core/events/select_layer_event.hpp"
 #include "core/model.hpp"
 #include "gui/widgets/button_ex.hpp"
-#include "imgui.h"
 #include "utils/scope_id.hpp"
 
 namespace Tactile {

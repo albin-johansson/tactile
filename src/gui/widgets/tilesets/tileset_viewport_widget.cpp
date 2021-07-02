@@ -1,5 +1,8 @@
 #include "tileset_viewport_widget.hpp"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include <algorithm>  // min, max
 
 #include "core/events/set_tileset_selection_event.hpp"
@@ -9,8 +12,6 @@
 #include "gui/show_grid.hpp"
 #include "gui/widgets/mouse_tracker.hpp"
 #include "gui/widgets/rubber_band.hpp"
-#include "imgui.h"
-#include "imgui_internal.h"
 
 namespace Tactile {
 namespace {

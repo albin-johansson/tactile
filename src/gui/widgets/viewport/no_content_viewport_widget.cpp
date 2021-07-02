@@ -1,5 +1,8 @@
 #include "no_content_viewport_widget.hpp"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include "core/events/add_map_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "gui/get_texture_id.hpp"
@@ -7,8 +10,6 @@
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/centered_button.hpp"
 #include "gui/widgets/centered_text.hpp"
-#include "imgui.h"
-#include "imgui_internal.h"
 
 namespace Tactile {
 

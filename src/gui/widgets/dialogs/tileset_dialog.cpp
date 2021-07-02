@@ -1,5 +1,7 @@
 #include "tileset_dialog.hpp"
 
+#include <imgui.h>
+
 #include <array>        // array
 #include <cassert>      // assert
 #include <cstring>      // memset
@@ -10,7 +12,6 @@
 #include "core/events/add_tileset_event.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "gui/widgets/file_dialog.hpp"
-#include "imgui.h"
 
 namespace Tactile {
 namespace {
