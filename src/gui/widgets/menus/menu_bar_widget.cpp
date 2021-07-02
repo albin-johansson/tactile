@@ -7,6 +7,7 @@
 #include "core/events/add_column_event.hpp"
 #include "core/events/add_map_event.hpp"
 #include "core/events/add_row_event.hpp"
+#include "core/events/select_tool_event.hpp"
 #include "core/events/center_viewport_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
@@ -127,14 +128,29 @@ void ShowEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_STAMP " Stamp", "S", false, hasActiveMap))
-    {}
+    if (ImGui::MenuItem(ICON_FA_STAMP " Stamp",
+                        "S",
+                        model.IsStampActive(),
+                        hasActiveMap))
+    {
+      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
+    }
 
-    if (ImGui::MenuItem(ICON_FA_FILL " Bucket", "B", false, hasActiveMap))
-    {}
+    if (ImGui::MenuItem(ICON_FA_FILL " Bucket",
+                        "B",
+                        model.IsBucketActive(),
+                        hasActiveMap))
+    {
+      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
+    }
 
-    if (ImGui::MenuItem(ICON_FA_ERASER " Eraser", "E", false, hasActiveMap))
-    {}
+    if (ImGui::MenuItem(ICON_FA_ERASER " Eraser",
+                        "E",
+                        model.IsEraserActive(),
+                        hasActiveMap))
+    {
+      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
+    }
 
     ImGui::Separator();
 
