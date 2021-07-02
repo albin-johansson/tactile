@@ -94,7 +94,8 @@ auto Tileset::Contains(const tile_id id) const -> bool
 
 auto Tileset::IsSingleTileSelected() const -> bool
 {
-  return mSelection && (mSelection->top_left == mSelection->bottom_right);
+  return mSelection && (mSelection->bottom_right - mSelection->top_left ==
+                        MapPosition{1_row, 1_col});
 }
 
 auto Tileset::GetTile(const MapPosition& position) const -> tile_id

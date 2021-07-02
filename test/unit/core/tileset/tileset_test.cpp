@@ -127,10 +127,10 @@ TEST_F(TilesetTest, IsSingleTileSelected)
 {
   ASSERT_FALSE(mTileset->IsSingleTileSelected());
 
-  mTileset->SetSelection({{1_row, 1_col}, {1_row, 1_col}});
+  mTileset->SetSelection({{1_row, 1_col}, {2_row, 2_col}});
   ASSERT_TRUE(mTileset->IsSingleTileSelected());
 
-  mTileset->SetSelection({{1_row, 1_col}, {2_row, 1_col}});
+  mTileset->SetSelection({{1_row, 1_col}, {3_row, 3_col}});
   ASSERT_FALSE(mTileset->IsSingleTileSelected());
 
   mTileset->ClearSelection();
