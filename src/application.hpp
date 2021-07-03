@@ -30,6 +30,7 @@
 #include "core/events/select_map_event.hpp"
 #include "core/events/select_tileset_event.hpp"
 #include "core/events/select_tool_event.hpp"
+#include "core/events/set_layer_opacity_event.hpp"
 #include "core/events/set_property_value_event.hpp"
 #include "core/events/set_tileset_selection_event.hpp"
 #include "core/events/show_layer_properties_event.hpp"
@@ -117,6 +118,8 @@ class Application final
   void OnMoveLayerDownEvent(const MoveLayerDownEvent& event);
 
   void OnDuplicateLayerEvent(const DuplicateLayerEvent& event);
+
+  void OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event);
 
   void OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event);
 

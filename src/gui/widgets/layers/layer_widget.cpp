@@ -12,6 +12,7 @@
 #include "core/events/move_layer_up_event.hpp"
 #include "core/events/remove_layer_event.hpp"
 #include "core/events/select_layer_event.hpp"
+#include "core/events/set_layer_opacity_event.hpp"
 #include "core/events/show_layer_properties_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
@@ -33,11 +34,21 @@ void UpdateLayerItemPopup(const MapDocument& document,
       dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
     }
 
+    ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle visibility",
                         nullptr,
                         true))
     {
       // TODO dispatcher.enqueue<ToggleLayerVisibilityEvent>(id);
+    }
+
+    auto opacity = document.GetMap().GetOpacity(id);
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text(TAC_ICON_OPACITY " Opacity");
+    ImGui::SameLine();
+    if (ImGui::SliderFloat("##OpacitySlider", &opacity, 0, 1.0f))
+    {
+      dispatcher.enqueue<SetLayerOpacityEvent>(id, opacity);
     }
 
     ImGui::Separator();

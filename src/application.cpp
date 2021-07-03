@@ -122,6 +122,8 @@ void Application::SubscribeToEvents()
   mDispatcher.sink<MoveLayerUpEvent>().connect<&Application::OnMoveLayerUpEvent>(this);
   mDispatcher.sink<MoveLayerDownEvent>().connect<&Application::OnMoveLayerDownEvent>(this);
   mDispatcher.sink<DuplicateLayerEvent>().connect<&Application::OnDuplicateLayerEvent>(this);
+  mDispatcher.sink<SetLayerOpacityEvent>().connect<&Application::OnSetLayerOpacityEvent>(this);
+
   mDispatcher.sink<ShowLayerPropertiesEvent>().connect<&Application::OnShowLayerPropertiesEvent>(this);
   mDispatcher.sink<ShowMapPropertiesEvent>().connect<&Application::OnShowMapPropertiesEvent>(this);
 
@@ -449,6 +451,14 @@ void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
   if (auto* document = mModel->GetActiveDocument())
   {
     document->DuplicateLayer(event.id);
+  }
+}
+
+void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->SetLayerOpacity(event.id, event.opacity);
   }
 }
 

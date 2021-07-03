@@ -80,6 +80,8 @@ class MapDocument final : public IDocument
 
   void MoveLayerDown(layer_id id);
 
+  void SetLayerOpacity(layer_id id, float opacity);
+
   void ShowProperties();
 
   void ShowLayerProperties(layer_id id);

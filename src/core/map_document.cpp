@@ -12,6 +12,7 @@
 #include "core/commands/maps/layers/move_layer_up_cmd.hpp"
 #include "core/commands/maps/layers/remove_layer_cmd.hpp"
 #include "core/commands/maps/layers/select_layer_cmd.hpp"
+#include "core/commands/maps/layers/set_layer_opacity_cmd.hpp"
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/set_property_context_cmd.hpp"
@@ -179,6 +180,11 @@ void MapDocument::MoveLayerUp(const layer_id id)
 void MapDocument::MoveLayerDown(const layer_id id)
 {
   mDelegate->Execute<MoveLayerDownCmd>(this, id);
+}
+
+void MapDocument::SetLayerOpacity(const layer_id id, const float opacity)
+{
+  mDelegate->Execute<SetLayerOpacityCmd>(this, id, opacity);
 }
 
 void MapDocument::ShowProperties()

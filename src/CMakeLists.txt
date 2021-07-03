@@ -67,6 +67,8 @@ set(TACTILE_SOURCE_FILES
     core/commands/maps/layers/remove_layer_cmd.hpp
     core/commands/maps/layers/select_layer_cmd.cpp
     core/commands/maps/layers/select_layer_cmd.hpp
+    core/commands/maps/layers/set_layer_opacity_cmd.cpp
+    core/commands/maps/layers/set_layer_opacity_cmd.hpp
 
     core/events/add_column_event.hpp
     core/events/add_layer_event.hpp
@@ -92,6 +94,7 @@ set(TACTILE_SOURCE_FILES
     core/events/select_map_event.hpp
     core/events/select_tileset_event.hpp
     core/events/select_tool_event.hpp
+    core/events/set_layer_opacity_event.hpp
     core/events/set_property_value_event.hpp
     core/events/set_tileset_selection_event.hpp
     core/events/show_layer_properties_event.hpp

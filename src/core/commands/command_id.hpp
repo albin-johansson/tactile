@@ -16,6 +16,7 @@ struct CommandId final
     DuplicateLayer,
     MoveLayerUp,
     MoveLayerDown,
+    SetLayerOpacity,
     SetPropertyContext
   };
 };
