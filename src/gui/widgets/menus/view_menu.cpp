@@ -30,9 +30,9 @@ void UpdateWidgetsSubmenu(const bool hasActiveMap, entt::dispatcher& dispatcher)
       Prefs::SetShowPropertiesDock(!Prefs::GetShowPropertiesDock());
     }
 
-    if (ImGui::MenuItem("Layers", nullptr, IsLayerWidgetVisible()))
+    if (ImGui::MenuItem("Layers", nullptr, Prefs::GetShowLayerDock()))
     {
-      SetLayerWidgetVisible(!IsLayerWidgetVisible());
+      Prefs::SetShowLayerDock(!Prefs::GetShowLayerDock());
     }
 
     if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock()))

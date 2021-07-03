@@ -1,6 +1,5 @@
 #include "layer_widget.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include <format>  // format
@@ -14,13 +13,63 @@
 #include "core/events/remove_layer_event.hpp"
 #include "core/events/select_layer_event.hpp"
 #include "core/model.hpp"
+#include "gui/icons.hpp"
 #include "gui/widgets/button_ex.hpp"
+#include "io/preferences.hpp"
 #include "utils/scope_id.hpp"
 
 namespace Tactile {
 namespace {
 
-inline bool is_visible = true;
+void UpdateLayerItemPopup(const MapDocument& document,
+                          entt::dispatcher& dispatcher,
+                          const layer_id id)
+{
+  if (ImGui::BeginPopupContextItem())
+  {
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties"))
+    {
+      // TODO dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
+    }
+
+    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle visibility",
+                        nullptr,
+                        true))
+    {
+      // TODO dispatcher.enqueue<ToggleLayerVisibilityEvent>(id);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move layer up",
+                        nullptr,
+                        false,
+                        document.CanMoveLayerUp(id)))
+    {
+      dispatcher.enqueue<MoveLayerUpEvent>(id);
+    }
+
+    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move layer down",
+                        nullptr,
+                        false,
+                        document.CanMoveLayerDown(id)))
+    {
+      dispatcher.enqueue<MoveLayerDownEvent>(id);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate layer"))
+    {
+      dispatcher.enqueue<DuplicateLayerEvent>(id);
+    }
+
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove layer"))
+    {
+      dispatcher.enqueue<RemoveLayerEvent>(id);
+    }
+
+    ImGui::EndPopup();
+  }
+}
 
 void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
 {
@@ -31,17 +80,22 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
     const ScopeID uid{id};
 
     const auto icon = layer->GetType() == LayerType::ObjectLayer
-                          ? ICON_FA_SHAPES
-                          : ICON_FA_LAYER_GROUP;
+                          ? TAC_ICON_OBJECT_LAYER
+                          : TAC_ICON_TILE_LAYER;
     const auto name = std::format("{} {}", icon, layer->GetName());
 
     const auto isSelected = id == activeLayerId;
     ImGui::Selectable(name.c_str(), isSelected);
 
-    if (ImGui::IsItemActivated())
+    if (ImGui::IsItemActivated() ||
+        (ImGui::IsItemHovered() &&
+         ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
     {
+      CENTURION_LOG_INFO("Foo");
       dispatcher.enqueue<SelectLayerEvent>(id);
     }
+
+    UpdateLayerItemPopup(document, dispatcher, id);
 
     if (isSelected)
     {
@@ -50,11 +104,29 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
   }
 }
 
+void UpdateAddLayerPopup(entt::dispatcher& dispatcher)
+{
+  if (ImGui::BeginPopup("AddLayerPopup"))
+  {
+    if (ImGui::Selectable(TAC_ICON_TILE_LAYER " Tile layer"))
+    {
+      dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
+    }
+
+    if (ImGui::Selectable(TAC_ICON_OBJECT_LAYER " Object layer"))
+    {
+      dispatcher.enqueue<AddLayerEvent>(LayerType::ObjectLayer);
+    }
+
+    ImGui::EndPopup();
+  }
+}
+
 }  // namespace
 
 void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!is_visible || !model.GetActiveMapId())
+  if (!Prefs::GetShowLayerDock() || !model.GetActiveMapId())
   {
     return;
   }
@@ -64,53 +136,42 @@ void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
   const auto hasActiveLayer = map.GetActiveLayerId().has_value();
   const auto activeLayerId = map.GetActiveLayerId();
 
-  if (ImGui::Begin("Layers", &is_visible, ImGuiWindowFlags_NoCollapse))
+  bool isVisible = Prefs::GetShowLayerDock();
+  if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse))
   {
-    if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Add new layer."))
+    if (ButtonEx(TAC_ICON_ADD, "Add new layer."))
     {
       ImGui::OpenPopup("AddLayerPopup");
     }
 
-    if (ImGui::BeginPopup("AddLayerPopup"))
-    {
-      if (ImGui::Selectable(ICON_FA_LAYER_GROUP " Tile layer"))
-      {
-        dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
-      }
-
-      if (ImGui::Selectable(ICON_FA_SHAPES " Object layer"))
-      {
-        dispatcher.enqueue<AddLayerEvent>(LayerType::ObjectLayer);
-      }
-
-      ImGui::EndPopup();
-    }
+    UpdateAddLayerPopup(dispatcher);
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_MINUS_CIRCLE, "Remove layer.", hasActiveLayer))
+    if (ButtonEx(TAC_ICON_REMOVE, "Remove layer.", hasActiveLayer))
     {
       dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
     }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_COPY, "Duplicate layer.", hasActiveLayer))
+    if (ButtonEx(TAC_ICON_DUPLICATE, "Duplicate layer.", hasActiveLayer))
     {
       dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
     }
 
     ImGui::SameLine();
 
-    const auto canMoveUp = hasActiveLayer && map.IndexOf(*activeLayerId) != 0;
-    if (ButtonEx(ICON_FA_ARROW_UP, "Move layer up.", canMoveUp))
+    if (ButtonEx(TAC_ICON_MOVE_UP,
+                 "Move layer up.",
+                 document->CanMoveActiveLayerUp()))
     {
       dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
     }
 
     ImGui::SameLine();
 
-    const auto canMoveDown = hasActiveLayer && (map.IndexOf(*activeLayerId) !=
-                                                map.GetLayerCount() - 1);
-    if (ButtonEx(ICON_FA_ARROW_DOWN, "Move layer down.", canMoveDown))
+    if (ButtonEx(TAC_ICON_MOVE_DOWN,
+                 "Move layer down.",
+                 document->CanMoveActiveLayerDown()))
     {
       dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
     }
@@ -131,17 +192,8 @@ void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
     }
   }
 
+  Prefs::SetShowLayerDock(isVisible);
   ImGui::End();
-}
-
-void SetLayerWidgetVisible(const bool visible) noexcept
-{
-  is_visible = visible;
-}
-
-auto IsLayerWidgetVisible() noexcept -> bool
-{
-  return is_visible;
 }
 
 }  // namespace Tactile
