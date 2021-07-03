@@ -35,6 +35,8 @@ class MapDocument final : public IDocument
 
   [[nodiscard]] auto GetPropertyContext() -> IPropertyContext* override;
 
+  [[nodiscard]] auto GetContextName() const -> std::string_view override;
+
   [[nodiscard]] auto CanUndo() const -> bool override;
 
   [[nodiscard]] auto CanRedo() const -> bool override;

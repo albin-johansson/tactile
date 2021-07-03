@@ -53,6 +53,11 @@ auto DocumentDelegate::GetPropertyContext() -> IPropertyContext*
   return mCurrentPropertyContext;
 }
 
+auto DocumentDelegate::GetContextName() const -> std::string_view
+{
+  return mCurrentPropertyContext->GetName();
+}
+
 auto DocumentDelegate::CanUndo() const -> bool
 {
   return mCommandStack->CanUndo();
@@ -151,7 +156,7 @@ auto DocumentDelegate::GetPropertyCount() const -> usize
 
 auto DocumentDelegate::GetName() const -> std::string_view
 {
-  return mCurrentPropertyContext->GetName();
+  return mPropertyContext->GetName();
 }
 
 }  // namespace Tactile

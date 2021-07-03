@@ -64,6 +64,11 @@ auto MapDocument::GetPropertyContext() -> IPropertyContext*
   return mDelegate->GetPropertyContext();
 }
 
+auto MapDocument::GetContextName() const -> std::string_view
+{
+  return mDelegate->GetContextName();
+}
+
 auto MapDocument::CanUndo() const -> bool
 {
   return mDelegate->CanUndo();

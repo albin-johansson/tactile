@@ -1,7 +1,8 @@
 #pragma once
 
-#include <filesystem>  // path
-#include <string>      // string
+#include <filesystem>   // path
+#include <string>       // string
+#include <string_view>  // string_view
 
 #include "properties/property_context.hpp"
 
@@ -68,6 +69,13 @@ class IDocument : public IPropertyContext
    * is the current property context.
    */
   [[nodiscard]] virtual auto GetPropertyContext() -> IPropertyContext* = 0;
+
+  /**
+   * \brief Returns the name of the current property context.
+   *
+   * \return the current property context name.
+   */
+  [[nodiscard]] virtual auto GetContextName() const -> std::string_view = 0;
 
   /**
    * \brief Indicates whether or not there is a currently undoable command.

@@ -41,7 +41,7 @@ void UpdatePropertiesWidget(const Model& model, entt::dispatcher& dispatcher)
     const auto* document = model.GetActiveDocument();
 
     ImGui::Separator();
-    ImGui::Text("Context: %s", document->GetName().data());
+    ImGui::Text("Context: %s", document->GetContextName().data());
     ImGui::SameLine();
     HelpMarker("The owner of the shown properties.");
     ImGui::Separator();
