@@ -78,6 +78,14 @@ class MapDocument final : public IDocument
 
   void MoveLayerDown(layer_id id);
 
+  [[nodiscard]] auto CanMoveActiveLayerDown() const -> bool;
+
+  [[nodiscard]] auto CanMoveActiveLayerUp() const -> bool;
+
+  [[nodiscard]] auto CanMoveLayerDown(layer_id id) const -> bool;
+
+  [[nodiscard]] auto CanMoveLayerUp(layer_id id) const -> bool;
+
   [[nodiscard]] auto GetMap() -> Map&;
 
   [[nodiscard]] auto GetMap() const -> const Map&;

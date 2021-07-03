@@ -175,6 +175,28 @@ void MapDocument::MoveLayerDown(const layer_id id)
   mDelegate->Execute<MoveLayerDownCmd>(this, id);
 }
 
+auto MapDocument::CanMoveActiveLayerDown() const -> bool
+{
+  const auto id = mMap->GetActiveLayerId();
+  return id && CanMoveLayerDown(*id);
+}
+
+auto MapDocument::CanMoveActiveLayerUp() const -> bool
+{
+  const auto id = mMap->GetActiveLayerId();
+  return id && CanMoveLayerUp(*id);
+}
+
+auto MapDocument::CanMoveLayerDown(const layer_id id) const -> bool
+{
+  return mMap->IndexOf(id) != (mMap->GetLayerCount() - 1);
+}
+
+auto MapDocument::CanMoveLayerUp(const layer_id id) const -> bool
+{
+  return mMap->IndexOf(id) != 0;
+}
+
 auto MapDocument::GetMap() -> Map&
 {
   return *mMap;
