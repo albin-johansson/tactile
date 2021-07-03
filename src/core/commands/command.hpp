@@ -19,7 +19,7 @@ class ACommand
 
   [[nodiscard]] virtual auto GetId() const -> int = 0;
 
-  [[nodiscard]] virtual auto Merge(const ACommand& cmd) -> bool
+  [[nodiscard]] virtual auto MergeWith(const ACommand& cmd) -> bool
   {
     return false;
   }
