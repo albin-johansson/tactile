@@ -14,6 +14,7 @@
 #include "core/commands/maps/layers/select_layer_cmd.hpp"
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
+#include "core/commands/set_property_context_cmd.hpp"
 
 namespace Tactile {
 
@@ -178,6 +179,17 @@ void MapDocument::MoveLayerUp(const layer_id id)
 void MapDocument::MoveLayerDown(const layer_id id)
 {
   mDelegate->Execute<MoveLayerDownCmd>(this, id);
+}
+
+void MapDocument::ShowProperties()
+{
+  mDelegate->Execute<SetPropertyContextCmd>(this, nullptr);
+}
+
+void MapDocument::ShowLayerProperties(const layer_id id)
+{
+  auto& layer = mMap->GetLayer(id);
+  mDelegate->Execute<SetPropertyContextCmd>(this, layer.get());
 }
 
 auto MapDocument::CanMoveActiveLayerDown() const -> bool

@@ -4,6 +4,7 @@
 
 #include <utility>  // move
 
+#include "core/events/show_map_properties_event.hpp"
 #include "gui/cursors.hpp"
 #include "gui/icons.hpp"
 #include "gui/update_gui.hpp"
@@ -121,6 +122,8 @@ void Application::SubscribeToEvents()
   mDispatcher.sink<MoveLayerUpEvent>().connect<&Application::OnMoveLayerUpEvent>(this);
   mDispatcher.sink<MoveLayerDownEvent>().connect<&Application::OnMoveLayerDownEvent>(this);
   mDispatcher.sink<DuplicateLayerEvent>().connect<&Application::OnDuplicateLayerEvent>(this);
+  mDispatcher.sink<ShowLayerPropertiesEvent>().connect<&Application::OnShowLayerPropertiesEvent>(this);
+  mDispatcher.sink<ShowMapPropertiesEvent>().connect<&Application::OnShowMapPropertiesEvent>(this);
 
   mDispatcher.sink<SetPropertyValueEvent>().connect<&Application::OnSetPropertyValueEvent>(this);
   mDispatcher.sink<SetTilesetSelectionEvent>().connect<&Application::OnSetTilesetSelectionEvent>(this);
@@ -446,6 +449,23 @@ void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
   if (auto* document = mModel->GetActiveDocument())
   {
     document->DuplicateLayer(event.id);
+  }
+}
+
+void Application::OnShowLayerPropertiesEvent(
+    const ShowLayerPropertiesEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->ShowLayerProperties(event.id);
+  }
+}
+
+void Application::OnShowMapPropertiesEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->ShowProperties();
   }
 }
 

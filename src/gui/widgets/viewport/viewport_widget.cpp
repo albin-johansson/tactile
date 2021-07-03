@@ -2,7 +2,9 @@
 
 #include <imgui.h>
 
+#include "core/events/show_map_properties_event.hpp"
 #include "core/model.hpp"
+#include "gui/icons.hpp"
 #include "map_content_viewport.hpp"
 #include "no_content_viewport_widget.hpp"
 
@@ -27,6 +29,17 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
   }
 
   ImGui::PopStyleVar();
+
+  if (ImGui::BeginPopupContextItem())
+  {
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties"))
+    {
+      dispatcher.enqueue<ShowMapPropertiesEvent>();
+    }
+
+    ImGui::EndPopup();
+  }
+
   ImGui::End();
 }
 

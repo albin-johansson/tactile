@@ -32,6 +32,7 @@
 #include "core/events/select_tool_event.hpp"
 #include "core/events/set_property_value_event.hpp"
 #include "core/events/set_tileset_selection_event.hpp"
+#include "core/events/show_layer_properties_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 
@@ -116,6 +117,10 @@ class Application final
   void OnMoveLayerDownEvent(const MoveLayerDownEvent& event);
 
   void OnDuplicateLayerEvent(const DuplicateLayerEvent& event);
+
+  void OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event);
+
+  void OnShowMapPropertiesEvent();
 
   void OnSetPropertyValueEvent(const SetPropertyValueEvent& event);
 

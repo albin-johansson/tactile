@@ -80,6 +80,10 @@ class MapDocument final : public IDocument
 
   void MoveLayerDown(layer_id id);
 
+  void ShowProperties();
+
+  void ShowLayerProperties(layer_id id);
+
   [[nodiscard]] auto CanMoveActiveLayerDown() const -> bool;
 
   [[nodiscard]] auto CanMoveActiveLayerUp() const -> bool;

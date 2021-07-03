@@ -41,6 +41,8 @@ set(TACTILE_SOURCE_FILES
     core/commands/command_id.hpp
     core/commands/command_stack.cpp
     core/commands/command_stack.hpp
+    core/commands/set_property_context_cmd.cpp
+    core/commands/set_property_context_cmd.hpp
 
     core/commands/maps/add_column_cmd.cpp
     core/commands/maps/add_column_cmd.hpp
@@ -92,6 +94,8 @@ set(TACTILE_SOURCE_FILES
     core/events/select_tool_event.hpp
     core/events/set_property_value_event.hpp
     core/events/set_tileset_selection_event.hpp
+    core/events/show_layer_properties_event.hpp
+    core/events/show_map_properties_event.hpp
     core/events/undo_event.hpp
 
     core/map/map.cpp

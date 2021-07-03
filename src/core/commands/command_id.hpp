@@ -15,7 +15,8 @@ struct CommandId final
     SelectLayer,
     DuplicateLayer,
     MoveLayerUp,
-    MoveLayerDown
+    MoveLayerDown,
+    SetPropertyContext
   };
 };
 

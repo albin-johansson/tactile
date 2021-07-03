@@ -12,6 +12,7 @@
 #include "core/events/move_layer_up_event.hpp"
 #include "core/events/remove_layer_event.hpp"
 #include "core/events/select_layer_event.hpp"
+#include "core/events/show_layer_properties_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/button_ex.hpp"
@@ -29,7 +30,7 @@ void UpdateLayerItemPopup(const MapDocument& document,
   {
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties"))
     {
-      // TODO dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
+      dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
     }
 
     if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle visibility",
