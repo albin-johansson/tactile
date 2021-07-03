@@ -54,6 +54,8 @@ void RenderMap(const MapDocument& document,
                const ImVec2& mapPos,
                const ImVec2& tileSize)
 {
+  // TODO only render visible region
+
   const auto showGrid = Prefs::GetShowGrid();
   const auto& map = document.GetMap();
 
