@@ -35,9 +35,9 @@ void UpdateWidgetsSubmenu(const bool hasActiveMap, entt::dispatcher& dispatcher)
       SetLayerWidgetVisible(!IsLayerWidgetVisible());
     }
 
-    if (ImGui::MenuItem("Tilesets", nullptr, IsTilesetWidgetVisible()))
+    if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock()))
     {
-      SetTilesetWidgetVisible(!IsTilesetWidgetVisible());
+      Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
     }
 
     ImGui::EndMenu();

@@ -10,17 +10,13 @@
 #include "gui/widgets/centered_text.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 #include "gui/widgets/tilesets/tileset_content_widget.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
-namespace {
-
-inline bool is_visible = true;
-
-}  // namespace
 
 void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!is_visible || !model.GetActiveMapId())
+  if (!Prefs::GetShowTilesetDock() || !model.GetActiveMapId())
   {
     return;
   }
@@ -28,8 +24,9 @@ void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher)
   const auto* document = model.GetActiveDocument();
   const auto& tilesets = document->GetTilesets();
 
+  bool isVisible = Prefs::GetShowTilesetDock();
   if (ImGui::Begin("Tilesets",
-                   &is_visible,
+                   &isVisible,
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar))
   {
     if (tilesets.GetSize() != 0)
@@ -48,17 +45,8 @@ void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher)
     }
   }
 
+  Prefs::SetShowTilesetDock(isVisible);
   ImGui::End();
-}
-
-void SetTilesetWidgetVisible(const bool visible) noexcept
-{
-  is_visible = visible;
-}
-
-auto IsTilesetWidgetVisible() noexcept -> bool
-{
-  return is_visible;
 }
 
 }  // namespace Tactile
