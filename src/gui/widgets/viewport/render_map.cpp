@@ -59,6 +59,11 @@ void RenderMap(const MapDocument& document,
 
   for (const auto& [id, layer] : map)
   {
+    if (!layer->IsVisible())
+    {
+      continue;
+    }
+
     if (const auto* tileLayer = AsTileLayer(layer))
     {
       RenderTileLayer(*tileLayer, document.GetTilesets(), mapPos, tileSize);
