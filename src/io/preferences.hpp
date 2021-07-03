@@ -20,6 +20,12 @@ void SetEmbedTilesets(bool embed) noexcept;
 
 void SetHumanReadableOutput(bool readable) noexcept;
 
+void SetShowLayerDock(bool visible) noexcept;
+
+void SetShowTilesetDock(bool visible) noexcept;
+
+void SetShowPropertiesDock(bool visible) noexcept;
+
 [[nodiscard]] auto GetPreferredFormat() -> const std::string&;
 
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
@@ -27,6 +33,12 @@ void SetHumanReadableOutput(bool readable) noexcept;
 [[nodiscard]] auto GetEmbedTilesets() noexcept -> bool;
 
 [[nodiscard]] auto GetHumanReadableOutput() noexcept -> bool;
+
+[[nodiscard]] auto GetShowLayerDock() noexcept -> bool;
+
+[[nodiscard]] auto GetShowTilesetDock() noexcept -> bool;
+
+[[nodiscard]] auto GetShowPropertiesDock() noexcept -> bool;
 
 }  // namespace Prefs
 }  // namespace Tactile
