@@ -1,12 +1,12 @@
 #include "file_menu.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include "core/events/add_map_event.hpp"
 #include "core/events/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/model.hpp"
+#include "gui/icons.hpp"
 #include "gui/widgets/dialogs/settings_dialog.hpp"
 #include "gui/widgets/file_dialog.hpp"
 #include "io/preferences.hpp"
@@ -50,20 +50,20 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
   const auto* document = model.GetActiveDocument();
   if (ImGui::BeginMenu("File"))
   {
-    if (ImGui::MenuItem(ICON_FA_FILE " New map...", "Ctrl+N"))
+    if (ImGui::MenuItem(TAC_ICON_FILE " New map...", "Ctrl+N"))
     {
       dispatcher.enqueue<AddMapEvent>();
     }
 
     show_map_file_dialog =
-        ImGui::MenuItem(ICON_FA_FOLDER_OPEN " Open map...", "Ctrl+O");
+        ImGui::MenuItem(TAC_ICON_OPEN " Open map...", "Ctrl+O");
 
     if (ImGui::MenuItem("Close map", nullptr, false, document != nullptr))
     {}
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_SAVE " Save", "Ctrl+S"))
+    if (ImGui::MenuItem(TAC_ICON_SAVE " Save", "Ctrl+S"))
     {}
 
     if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S"))
@@ -72,11 +72,11 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     show_settings_window =
-        ImGui::MenuItem(ICON_FA_COG " Settings...", "Ctrl+Alt+S");
+        ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", "Ctrl+Alt+S");
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_WINDOW_CLOSE " Exit"))
+    if (ImGui::MenuItem(TAC_ICON_EXIT " Exit"))
     {
       dispatcher.enqueue<QuitEvent>();
     }

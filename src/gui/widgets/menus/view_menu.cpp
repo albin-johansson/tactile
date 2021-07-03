@@ -1,10 +1,10 @@
 #include "view_menu.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include "core/events/center_viewport_event.hpp"
 #include "core/model.hpp"
+#include "gui/icons.hpp"
 #include "gui/layout/dock_space.hpp"
 #include "gui/widgets/layers/layer_widget.hpp"
 #include "gui/widgets/properties/properties_widget.hpp"
@@ -56,7 +56,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_CROSSHAIRS " Center viewport",
+    if (ImGui::MenuItem(TAC_ICON_CENTER " Center viewport",
                         "Ctrl+Space",
                         false,
                         hasActiveMap))
@@ -65,26 +65,26 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     }
 
     bool showGrid = Prefs::GetShowGrid();
-    if (ImGui::MenuItem(ICON_FA_TH " Toggle grid", "Ctrl+G", &showGrid))
+    if (ImGui::MenuItem(TAC_ICON_GRID " Toggle grid", "Ctrl+G", &showGrid))
     {
       Prefs::SetShowGrid(showGrid);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_SEARCH_PLUS " Increase zoom",
+    if (ImGui::MenuItem(TAC_ICON_ZOOM_IN " Increase zoom",
                         "Ctrl+Plus",
                         false,
                         hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_SEARCH_MINUS " Decrease zoom",
+    if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease zoom",
                         "Ctrl+Minus",
                         false,
                         hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_SEARCH " Reset zoom",
+    if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset zoom",
                         nullptr,
                         false,
                         hasActiveMap))
@@ -92,25 +92,25 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_ARROW_UP " Pan up",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan up",
                         "Ctrl+Up",
                         false,
                         hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_ARROW_DOWN " Pan down",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Pan down",
                         "Ctrl+Down",
                         false,
                         hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_ARROW_RIGHT " Pan right",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_RIGHT " Pan right",
                         "Ctrl+Right",
                         false,
                         hasActiveMap))
     {}
 
-    if (ImGui::MenuItem(ICON_FA_ARROW_LEFT " Pan left",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_LEFT " Pan left",
                         "Ctrl+Left",
                         false,
                         hasActiveMap))

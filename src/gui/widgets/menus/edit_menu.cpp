@@ -1,6 +1,5 @@
 #include "edit_menu.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include <format>  // format
@@ -13,6 +12,7 @@
 #include "core/events/select_tool_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
+#include "gui/icons.hpp"
 #include "gui/widgets/dialogs/tileset_dialog.hpp"
 
 namespace Tactile {
@@ -30,8 +30,8 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
   {
     const auto canUndo = document && document->CanUndo();
     const auto undoText =
-        canUndo ? std::format(ICON_FA_UNDO " Undo {}", document->GetUndoText())
-                : std::string{ICON_FA_UNDO " Undo"};
+        canUndo ? std::format(TAC_ICON_UNDO " Undo {}", document->GetUndoText())
+                : std::string{TAC_ICON_UNDO " Undo"};
     if (ImGui::MenuItem(undoText.c_str(), "Ctrl+Z", false, canUndo))
     {
       dispatcher.enqueue<UndoEvent>();
@@ -39,8 +39,8 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     const auto canRedo = document && document->CanRedo();
     const auto redoText =
-        canRedo ? std::format(ICON_FA_REDO " Redo {}", document->GetRedoText())
-                : std::string{ICON_FA_REDO " Redo"};
+        canRedo ? std::format(TAC_ICON_REDO " Redo {}", document->GetRedoText())
+                : std::string{TAC_ICON_REDO " Redo"};
     if (ImGui::MenuItem(redoText.c_str(), "Ctrl+Y", false, canRedo))
     {
       dispatcher.enqueue<RedoEvent>();
@@ -70,7 +70,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(ICON_FA_STAMP " Stamp",
+    if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp",
                         "S",
                         model.IsStampActive(),
                         hasActiveMap))
@@ -78,7 +78,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
     }
 
-    if (ImGui::MenuItem(ICON_FA_FILL " Bucket",
+    if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket",
                         "B",
                         model.IsBucketActive(),
                         hasActiveMap))
@@ -86,7 +86,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
     }
 
-    if (ImGui::MenuItem(ICON_FA_ERASER " Eraser",
+    if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser",
                         "E",
                         model.IsEraserActive(),
                         hasActiveMap))
@@ -96,7 +96,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    show_tileset_dialog = ImGui::MenuItem(ICON_FA_IMAGE " Create tileset...",
+    show_tileset_dialog = ImGui::MenuItem(TAC_ICON_TILESET " Create tileset...",
                                           "Ctrl+T",
                                           false,
                                           hasActiveMap);

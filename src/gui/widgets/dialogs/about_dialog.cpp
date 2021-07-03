@@ -1,7 +1,8 @@
 #include "about_dialog.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
+
+#include "gui/icons.hpp"
 
 namespace Tactile {
 
@@ -9,7 +10,7 @@ void UpdateAboutDialog(bool* open)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2{200, 150});
 
-  if (ImGui::Begin(ICON_FA_QUESTION_CIRCLE " About Tactile",
+  if (ImGui::Begin(TAC_ICON_ABOUT " About Tactile",
                    open,
                    ImGuiWindowFlags_AlwaysAutoResize))
   {

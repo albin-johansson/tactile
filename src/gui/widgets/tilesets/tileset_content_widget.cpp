@@ -1,11 +1,11 @@
 #include "tileset_content_widget.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include "core/events/remove_tileset_event.hpp"
 #include "core/events/select_tileset_event.hpp"
 #include "core/map_document.hpp"
+#include "gui/icons.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 #include "gui/widgets/tilesets/tileset_viewport_widget.hpp"
 #include "utils/scope_id.hpp"
@@ -21,7 +21,7 @@ void TilesetContentWidget(const MapDocument& document,
   const auto& tilesets = document.GetTilesets();
   if (ImGui::BeginTabBar("TilesetTabBar", flags))
   {
-    if (ImGui::TabItemButton(ICON_FA_PLUS_CIRCLE "##AddTilesetButton",
+    if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing))
     {
       EnableTilesetDialog();

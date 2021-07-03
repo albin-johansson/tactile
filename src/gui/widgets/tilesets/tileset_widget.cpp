@@ -1,10 +1,10 @@
 #include "tileset_widget.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include "core/events/remove_tileset_event.hpp"
 #include "core/model.hpp"
+#include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/centered_button.hpp"
 #include "gui/widgets/centered_text.hpp"
@@ -41,7 +41,7 @@ void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher)
       PrepareVerticalAlignmentCenter(2);
 
       CenteredText("No available tilesets!");
-      if (CenteredButton(ICON_FA_IMAGE " Create tileset..."))
+      if (CenteredButton(TAC_ICON_TILESET " Create tileset..."))
       {
         EnableTilesetDialog();
       }

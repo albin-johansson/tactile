@@ -1,10 +1,10 @@
 #include "help_menu.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include <centurion.hpp>  // is_debug_build
 
+#include "gui/icons.hpp"
 #include "gui/widgets/dialogs/about_dialog.hpp"
 #include "gui/widgets/dialogs/credits_dialog.hpp"
 
@@ -25,15 +25,13 @@ void UpdateHelpMenu()
 {
   if (ImGui::BeginMenu("Help"))
   {
-    show_about_tactile =
-        ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About Tactile...");
-    show_about_imgui =
-        ImGui::MenuItem(ICON_FA_QUESTION_CIRCLE " About Dear ImGui...");
+    show_about_tactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
+    show_about_imgui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
     show_credits = ImGui::MenuItem("Credits...");
 
     ImGui::Separator();
 
-    show_metrics = ImGui::MenuItem(ICON_FA_TACHOMETER_ALT " Show metrics...");
+    show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show metrics...");
 
     if constexpr (cen::is_debug_build())
     {

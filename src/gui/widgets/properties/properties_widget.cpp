@@ -1,6 +1,5 @@
 #include "properties_widget.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include <string_view>  // string_view
@@ -8,6 +7,7 @@
 #include "aliases/ints.hpp"
 #include "core/events/set_property_value_event.hpp"
 #include "core/model.hpp"
+#include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "gui/widgets/centered_text.hpp"
@@ -159,15 +159,15 @@ void UpdatePropertiesWidget(const Model& model, entt::dispatcher& dispatcher)
 
   if (ImGui::Begin("Properties", &is_visible, flags))
   {
-    if (ButtonEx(ICON_FA_PLUS_CIRCLE, "Add property."))
+    if (ButtonEx(TAC_ICON_ADD, "Add property."))
     {}
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_MINUS_CIRCLE, "Remove property."))
+    if (ButtonEx(TAC_ICON_REMOVE, "Remove property."))
     {}
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_EDIT, "Rename property."))
+    if (ButtonEx(TAC_ICON_EDIT, "Rename property."))
     {}
 
     const auto* document = model.GetActiveDocument();

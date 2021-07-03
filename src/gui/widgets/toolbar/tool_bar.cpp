@@ -1,6 +1,5 @@
 #include "tool_bar.hpp"
 
-#include <IconsFontAwesome5.h>
 #include <imgui.h>
 
 #include "core/events/add_map_event.hpp"
@@ -8,6 +7,7 @@
 #include "core/events/select_tool_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
+#include "gui/icons.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 
@@ -26,13 +26,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   const auto* document = model.GetActiveDocument();
   if (ImGui::Begin("Toolbar", nullptr, flags))
   {
-    if (ButtonEx(ICON_FA_FILE, "Create new tilemap."))
+    if (ButtonEx(TAC_ICON_FILE, "Create new tilemap."))
     {
       dispatcher.enqueue<AddMapEvent>();
     }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_FOLDER_OPEN, "Open tilemap."))
+    if (ButtonEx(TAC_ICON_OPEN, "Open tilemap."))
     {
       cen::log::info("UpdateToolbarWidget > Open!");
     }
@@ -41,13 +41,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_UNDO, "Undo", document && document->CanUndo()))
+    if (ButtonEx(TAC_ICON_UNDO, "Undo", document && document->CanUndo()))
     {
       dispatcher.enqueue<UndoEvent>();
     }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_REDO, "Redo", document && document->CanRedo()))
+    if (ButtonEx(TAC_ICON_REDO, "Redo", document && document->CanRedo()))
     {
       dispatcher.enqueue<RedoEvent>();
     }
@@ -56,32 +56,32 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_IMAGE, "Create tileset.", document))
+    if (ButtonEx(TAC_ICON_TILESET, "Create tileset.", document))
     {
       EnableTilesetDialog();
     }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_CROP_ALT, "Resize map.", document))
+    if (ButtonEx(TAC_ICON_RESIZE, "Resize map.", document))
     {}
 
     ImGui::SameLine();
     ImGui::Spacing();
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_STAMP, "Stamp tool.", document))
+    if (ButtonEx(TAC_ICON_STAMP, "Stamp tool.", document))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
     }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_FILL, "Bucket tool.", document))
+    if (ButtonEx(TAC_ICON_BUCKET, "Bucket tool.", document))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
     }
 
     ImGui::SameLine();
-    if (ButtonEx(ICON_FA_ERASER, "Eraser tool.", document))
+    if (ButtonEx(TAC_ICON_ERASER, "Eraser tool.", document))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
     }
