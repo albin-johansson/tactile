@@ -4,6 +4,6 @@
 
 namespace Tactile {
 
-void LoadDefaultLayout(ImGuiID id);
+void LoadDefaultLayout(ImGuiID id, bool resetVisibility);
 
 }  // namespace Tactile

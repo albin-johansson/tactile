@@ -19,7 +19,7 @@ void UpdateDockSpace()
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0)
     {
-      ResetLayout();
+      LoadDefaultLayout(root_id.value(), false);
       initialized = true;
     }
   }
@@ -27,7 +27,7 @@ void UpdateDockSpace()
 
 void ResetLayout()
 {
-  LoadDefaultLayout(root_id.value());
+  LoadDefaultLayout(root_id.value(), true);
 }
 
 }  // namespace Tactile

@@ -2,13 +2,11 @@
 
 #include <imgui_internal.h>
 
-#include "gui/widgets/layers/layer_widget.hpp"
-#include "gui/widgets/properties/properties_widget.hpp"
-#include "gui/widgets/tilesets/tileset_widget.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 
-void LoadDefaultLayout(ImGuiID id)
+void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
 {
   ImGui::DockBuilderRemoveNodeChildNodes(id);
 
@@ -33,9 +31,12 @@ void LoadDefaultLayout(ImGuiID id)
 
   ImGui::DockBuilderFinish(id);
 
-  SetLayerWidgetVisible(true);
-  SetPropertiesWidgetVisible(true);
-  SetTilesetWidgetVisible(true);
+  if (resetVisibility)
+  {
+    Prefs::SetShowLayerDock(true);
+    Prefs::SetShowPropertiesDock(true);
+    Prefs::SetShowTilesetDock(true);
+  }
 }
 
 }  // namespace Tactile
