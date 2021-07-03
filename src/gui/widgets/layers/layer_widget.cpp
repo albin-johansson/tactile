@@ -91,7 +91,6 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
         (ImGui::IsItemHovered() &&
          ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
     {
-      CENTURION_LOG_INFO("Foo");
       dispatcher.enqueue<SelectLayerEvent>(id);
     }
 
