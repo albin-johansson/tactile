@@ -25,9 +25,9 @@ void UpdateWidgetsSubmenu(const bool hasActiveMap, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Properties", nullptr, IsPropertiesWidgetVisible()))
+    if (ImGui::MenuItem("Properties", nullptr, Prefs::GetShowPropertiesDock()))
     {
-      SetPropertiesWidgetVisible(!IsPropertiesWidgetVisible());
+      Prefs::SetShowPropertiesDock(!Prefs::GetShowPropertiesDock());
     }
 
     if (ImGui::MenuItem("Layers", nullptr, IsLayerWidgetVisible()))

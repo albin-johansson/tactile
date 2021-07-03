@@ -214,6 +214,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/properties/int_property_widget.hpp
     gui/widgets/properties/object_property_widget.cpp
     gui/widgets/properties/object_property_widget.hpp
+    gui/widgets/properties/properties_content_widget.cpp
+    gui/widgets/properties/properties_content_widget.hpp
     gui/widgets/properties/properties_widget.cpp
     gui/widgets/properties/properties_widget.hpp
     gui/widgets/properties/string_property_widget.cpp
