@@ -121,7 +121,7 @@ void ShowActiveMap(const Model& model,
   ShowGrid(state, canvas, IM_COL32(200, 200, 200, 15));
 
   const auto mapOrigin = canvas.tl + state.scroll_offset;
-  RenderMap(document, drawList, mapOrigin, state.grid_size);
+  RenderMap(document, mapOrigin, state.grid_size);
 
   const auto cursor = GetCursorInfo(mapOrigin, nRows, nCols);
   if (cursor.is_within_map)

@@ -14,20 +14,20 @@ namespace {
 inline constexpr auto out_border_color = IM_COL32(0xFF, 0xFF, 0xFF, 0xFF);
 inline constexpr auto in_border_color = IM_COL32(0xFF, 0xFF, 0xFF, 50);
 
-void RenderOutline(ImDrawList* drawList,
-                   const int nRows,
+void RenderOutline(const int nRows,
                    const int nCols,
                    const ImVec2 offset,
                    const ImVec2 tileSize)
 {
   const auto width = static_cast<float>(nCols) * tileSize.x;
   const auto height = static_cast<float>(nRows) * tileSize.y;
-  drawList->AddRect(offset, offset + ImVec2{width, height}, out_border_color);
+  ImGui::GetWindowDrawList()->AddRect(offset,
+                                      offset + ImVec2{width, height},
+                                      out_border_color);
 }
 
 void RenderTileLayer(const TileLayer& layer,
                      const TilesetManager& tilesets,
-                     ImDrawList* drawList,
                      const ImVec2& mapPos,
                      const ImVec2& gridSize)
 {
@@ -51,9 +51,8 @@ void RenderTileLayer(const TileLayer& layer,
 }  // namespace
 
 void RenderMap(const MapDocument& document,
-               ImDrawList* drawList,
-               const ImVec2 mapPos,
-               const ImVec2 tileSize)
+               const ImVec2& mapPos,
+               const ImVec2& tileSize)
 {
   const auto showGrid = Prefs::GetShowGrid();
   const auto& map = document.GetMap();
@@ -62,16 +61,13 @@ void RenderMap(const MapDocument& document,
   {
     if (const auto* tileLayer = AsTileLayer(layer))
     {
-      RenderTileLayer(*tileLayer,
-                      document.GetTilesets(),
-                      drawList,
-                      mapPos,
-                      tileSize);
+      RenderTileLayer(*tileLayer, document.GetTilesets(), mapPos, tileSize);
     }
 
     // TODO RenderObjectLayer()
   }
 
+  auto* drawList = ImGui::GetWindowDrawList();
   const auto nRows = document.GetRowCount();
   const auto nCols = document.GetColumnCount();
   for (auto row = 0; row < nRows; ++row)
@@ -87,7 +83,7 @@ void RenderMap(const MapDocument& document,
     }
   }
 
-  RenderOutline(drawList, nRows, nCols, mapPos, tileSize);
+  RenderOutline(nRows, nCols, mapPos, tileSize);
 }
 
 }  // namespace Tactile

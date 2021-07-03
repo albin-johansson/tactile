@@ -1,6 +1,5 @@
 #pragma once
 
-struct ImDrawList;
 struct ImVec2;
 
 namespace Tactile {
@@ -8,8 +7,7 @@ namespace Tactile {
 class MapDocument;
 
 void RenderMap(const MapDocument& document,
-               ImDrawList* drawList,
-               ImVec2 mapPos,
-               ImVec2 tileSize);
+               const ImVec2& mapPos,
+               const ImVec2& tileSize);
 
 }  // namespace Tactile
