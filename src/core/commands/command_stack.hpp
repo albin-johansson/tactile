@@ -67,12 +67,18 @@ class CommandStack final
     // TODO check limit
 
     RemoveCommandsAfterCurrentIndex();
-    mIndex = mIndex ? *mIndex + 1 : 0;
 
     auto cmd = std::make_unique<T>(std::forward<Args>(args)...);
     cmd->Redo();
 
-    mStack.push_back(std::move(cmd));
+    /* If the stack is empty, we simply push the command to the stack. However,
+       if there are commands on the stack, we try to merge the command into the
+       top of the stack and if that succeeds we discard the command. */
+    if (mStack.empty() || !mStack.back()->MergeWith(*cmd))
+    {
+      mIndex = mIndex ? *mIndex + 1 : 0;
+      mStack.push_back(std::move(cmd));
+    }
   }
 
   /**
