@@ -14,6 +14,7 @@ class TilesetManager;
 void RenderTile(tile_id tile,
                 const TilesetManager& tilesets,
                 const ImVec2& screenPos,
-                const ImVec2& gridSize);
+                const ImVec2& gridSize,
+                float opacity = 1.0);
 
 }  // namespace Tactile

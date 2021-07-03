@@ -22,7 +22,8 @@ namespace Tactile {
 void RenderTile(const tile_id tile,
                 const TilesetManager& tilesets,
                 const ImVec2& screenPos,
-                const ImVec2& gridSize)
+                const ImVec2& gridSize,
+                const float opacity)
 {
   const auto& tileset = tilesets.GetTileset(tile);
   const auto texture = GetTextureID(tileset.GetTexture());
@@ -39,11 +40,13 @@ void RenderTile(const tile_id tile,
   const auto uvMin = ImVec2{col, row} * uvTileSize;
   const auto uvMax = uvMin + uvTileSize;
 
+  const auto tintColor = IM_COL32(255, 255, 255, 255 * opacity);
   ImGui::GetWindowDrawList()->AddImage(texture,
                                        screenPos,
                                        screenPos + gridSize,
                                        uvMin,
-                                       uvMax);
+                                       uvMax,
+                                       tintColor);
 }
 
 }  // namespace Tactile

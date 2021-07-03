@@ -31,6 +31,7 @@ void RenderTileLayer(const TileLayer& layer,
                      const ImVec2& mapPos,
                      const ImVec2& gridSize)
 {
+  const auto opacity = layer.GetOpacity();
   const auto rowCount = layer.GetRowCount();
   const auto colCount = layer.GetColumnCount();
   for (auto row = 0_row; row < rowCount; ++row)
@@ -42,7 +43,7 @@ void RenderTileLayer(const TileLayer& layer,
       {
         const ImVec2 pos = {mapPos.x + (gridSize.x * static_cast<float>(col)),
                             mapPos.y + (gridSize.y * static_cast<float>(row))};
-        RenderTile(*tile, tilesets, pos, gridSize);
+        RenderTile(*tile, tilesets, pos, gridSize, opacity);
       }
     }
   }
