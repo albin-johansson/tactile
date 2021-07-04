@@ -5,11 +5,11 @@
 
 #include <cmath>  // trunc
 
-#include "core/events/close_map_event.hpp"
-#include "core/events/mouse_drag_event.hpp"
-#include "core/events/mouse_pressed_event.hpp"
-#include "core/events/mouse_released_event.hpp"
-#include "core/events/select_map_event.hpp"
+#include "core/events/maps/close_map_event.hpp"
+#include "core/events/maps/select_map_event.hpp"
+#include "core/events/tools/mouse_drag_event.hpp"
+#include "core/events/tools/mouse_pressed_event.hpp"
+#include "core/events/tools/mouse_released_event.hpp"
 #include "core/model.hpp"
 #include "gui/canvas_info.hpp"
 #include "gui/show_grid.hpp"

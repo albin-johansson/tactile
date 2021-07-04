@@ -4,7 +4,7 @@
 
 #include <utility>  // move
 
-#include "core/events/show_map_properties_event.hpp"
+#include "core/events/maps/show_map_properties_event.hpp"
 #include "gui/cursors.hpp"
 #include "gui/icons.hpp"
 #include "gui/update_gui.hpp"

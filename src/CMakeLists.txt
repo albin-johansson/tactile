@@ -72,36 +72,41 @@ set(TACTILE_SOURCE_FILES
     core/commands/maps/layers/set_layer_opacity_cmd.cpp
     core/commands/maps/layers/set_layer_opacity_cmd.hpp
 
-    core/events/add_column_event.hpp
-    core/events/add_layer_event.hpp
-    core/events/add_map_event.hpp
-    core/events/add_row_event.hpp
-    core/events/add_tileset_event.hpp
     core/events/center_viewport_event.hpp
-    core/events/close_map_event.hpp
-    core/events/duplicate_layer_event.hpp
-    core/events/mouse_drag_event.hpp
-    core/events/mouse_pressed_event.hpp
-    core/events/mouse_released_event.hpp
-    core/events/move_layer_down_event.hpp
-    core/events/move_layer_up_event.hpp
-    core/events/open_map_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp
-    core/events/remove_column_event.hpp
-    core/events/remove_layer_event.hpp
-    core/events/remove_row_event.hpp
-    core/events/remove_tileset_event.hpp
-    core/events/select_layer_event.hpp
-    core/events/select_map_event.hpp
-    core/events/select_tileset_event.hpp
-    core/events/select_tool_event.hpp
-    core/events/set_layer_opacity_event.hpp
-    core/events/set_property_value_event.hpp
-    core/events/set_tileset_selection_event.hpp
-    core/events/show_layer_properties_event.hpp
-    core/events/show_map_properties_event.hpp
     core/events/undo_event.hpp
+
+    core/events/layers/add_layer_event.hpp
+    core/events/layers/duplicate_layer_event.hpp
+    core/events/layers/move_layer_down_event.hpp
+    core/events/layers/move_layer_up_event.hpp
+    core/events/layers/remove_layer_event.hpp
+    core/events/layers/select_layer_event.hpp
+    core/events/layers/set_layer_opacity_event.hpp
+    core/events/layers/show_layer_properties_event.hpp
+
+    core/events/maps/add_column_event.hpp
+    core/events/maps/add_map_event.hpp
+    core/events/maps/add_row_event.hpp
+    core/events/maps/close_map_event.hpp
+    core/events/maps/open_map_event.hpp
+    core/events/maps/remove_column_event.hpp
+    core/events/maps/remove_row_event.hpp
+    core/events/maps/select_map_event.hpp
+    core/events/maps/show_map_properties_event.hpp
+
+    core/events/properties/set_property_value_event.hpp
+
+    core/events/tilesets/add_tileset_event.hpp
+    core/events/tilesets/remove_tileset_event.hpp
+    core/events/tilesets/select_tileset_event.hpp
+    core/events/tilesets/set_tileset_selection_event.hpp
+
+    core/events/tools/mouse_drag_event.hpp
+    core/events/tools/mouse_pressed_event.hpp
+    core/events/tools/mouse_released_event.hpp
+    core/events/tools/select_tool_event.hpp
 
     core/map/map.cpp
     core/map/map.hpp

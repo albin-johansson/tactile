@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-#include "core/events/add_map_event.hpp"
-#include "core/events/open_map_event.hpp"
+#include "core/events/maps/add_map_event.hpp"
+#include "core/events/maps/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"

@@ -2,9 +2,9 @@
 
 #include <imgui.h>
 
-#include "core/events/add_map_event.hpp"
+#include "core/events/maps/add_map_event.hpp"
 #include "core/events/redo_event.hpp"
-#include "core/events/select_tool_event.hpp"
+#include "core/events/tools/select_tool_event.hpp"
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"

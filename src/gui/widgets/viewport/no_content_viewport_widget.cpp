@@ -3,8 +3,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/events/add_map_event.hpp"
-#include "core/events/open_map_event.hpp"
+#include "core/events/maps/add_map_event.hpp"
+#include "core/events/maps/open_map_event.hpp"
 #include "gui/get_texture_id.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"

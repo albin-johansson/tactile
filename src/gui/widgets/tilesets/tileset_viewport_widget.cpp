@@ -5,7 +5,7 @@
 
 #include <algorithm>  // min, max
 
-#include "core/events/set_tileset_selection_event.hpp"
+#include "core/events/tilesets/set_tileset_selection_event.hpp"
 #include "core/tileset/tileset.hpp"
 #include "gui/canvas_info.hpp"
 #include "gui/get_texture_id.hpp"

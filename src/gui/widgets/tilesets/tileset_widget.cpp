@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "core/events/remove_tileset_event.hpp"
+#include "core/events/tilesets/remove_tileset_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"

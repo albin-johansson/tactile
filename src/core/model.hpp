@@ -5,11 +5,11 @@
 #include "aliases/map_id.hpp"
 #include "aliases/maybe.hpp"
 #include "aliases/unique.hpp"
-#include "events/mouse_drag_event.hpp"
-#include "events/mouse_pressed_event.hpp"
-#include "events/mouse_released_event.hpp"
-#include "map_document.hpp"
-#include "tools/mouse_tool_model.hpp"
+#include "core/events/tools/mouse_drag_event.hpp"
+#include "core/events/tools/mouse_pressed_event.hpp"
+#include "core/events/tools/mouse_released_event.hpp"
+#include "core/map_document.hpp"
+#include "core/tools/mouse_tool_model.hpp"
 
 namespace Tactile {
 

@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "core/events/show_map_properties_event.hpp"
+#include "core/events/maps/show_map_properties_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
 #include "map_content_viewport.hpp"

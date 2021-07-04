@@ -9,7 +9,7 @@
 #include <string_view>  // string_view
 
 #include "aliases/ints.hpp"
-#include "core/events/add_tileset_event.hpp"
+#include "core/events/tilesets/add_tileset_event.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "gui/widgets/file_dialog.hpp"
 
