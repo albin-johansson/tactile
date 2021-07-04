@@ -218,8 +218,6 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/dialogs/credits_dialog.hpp
     gui/widgets/dialogs/settings_dialog.cpp
     gui/widgets/dialogs/settings_dialog.hpp
-    gui/widgets/dialogs/tileset_dialog.cpp
-    gui/widgets/dialogs/tileset_dialog.hpp
 
     gui/widgets/layers/layer_dock.cpp
     gui/widgets/layers/layer_dock.hpp
@@ -269,6 +267,9 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/tilesets/tileset_dock.hpp
     gui/widgets/tilesets/tileset_viewport_widget.cpp
     gui/widgets/tilesets/tileset_viewport_widget.hpp
+
+    gui/widgets/tilesets/dialogs/tileset_dialog.cpp
+    gui/widgets/tilesets/dialogs/tileset_dialog.hpp
 
     gui/widgets/toolbar/tool_bar.cpp
     gui/widgets/toolbar/tool_bar.hpp

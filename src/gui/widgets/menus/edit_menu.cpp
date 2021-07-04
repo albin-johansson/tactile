@@ -13,7 +13,7 @@
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/dialogs/tileset_dialog.hpp"
+#include "gui/widgets/tilesets/dialogs/tileset_dialog.hpp"
 
 namespace Tactile {
 namespace {
