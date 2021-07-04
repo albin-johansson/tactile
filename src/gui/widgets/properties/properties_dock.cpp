@@ -9,6 +9,7 @@
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "gui/widgets/centered_text.hpp"
+#include "gui/widgets/dialogs/add_property_dialog.hpp"
 #include "gui/widgets/help_marker.hpp"
 #include "gui/widgets/properties/properties_content_widget.hpp"
 #include "io/preferences.hpp"
@@ -28,7 +29,9 @@ void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
   if (ImGui::Begin("Properties", &isVisible, flags))
   {
     if (ButtonEx(TAC_ICON_ADD, "Add property."))
-    {}
+    {
+      OpenAddPropertyDialog();
+    }
 
     ImGui::SameLine();
     if (ButtonEx(TAC_ICON_REMOVE, "Remove property."))
@@ -55,6 +58,11 @@ void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available properties!");
     }
+  }
+
+  if (const auto* document = model.GetActiveDocument())
+  {
+    UpdateAddPropertyDialog(*document, dispatcher);
   }
 
   Prefs::SetShowPropertiesDock(isVisible);

@@ -23,6 +23,7 @@
 #include "core/events/maps/remove_column_event.hpp"
 #include "core/events/maps/remove_row_event.hpp"
 #include "core/events/maps/select_map_event.hpp"
+#include "core/events/properties/add_property_event.hpp"
 #include "core/events/properties/set_property_value_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
@@ -124,6 +125,8 @@ class Application final
   void OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event);
 
   void OnShowMapPropertiesEvent();
+
+  void OnAddPropertyEvent(const AddPropertyEvent& event);
 
   void OnSetPropertyValueEvent(const SetPropertyValueEvent& event);
 

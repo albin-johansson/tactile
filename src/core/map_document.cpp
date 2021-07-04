@@ -15,6 +15,7 @@
 #include "core/commands/maps/layers/set_layer_opacity_cmd.hpp"
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
+#include "core/commands/properties/add_property_cmd.hpp"
 #include "core/commands/set_property_context_cmd.hpp"
 
 namespace Tactile {
@@ -276,7 +277,7 @@ auto MapDocument::GetTilesets() const -> const TilesetManager&
 
 void MapDocument::AddProperty(const std::string& name, const PropertyType type)
 {
-  mDelegate->AddProperty(name, type);
+  mDelegate->Execute<AddPropertyCmd>(mDelegate.get(), name, type);
 }
 
 void MapDocument::AddProperty(const std::string& name, const Property& property)

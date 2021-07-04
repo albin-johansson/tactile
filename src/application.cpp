@@ -127,7 +127,9 @@ void Application::SubscribeToEvents()
   mDispatcher.sink<ShowLayerPropertiesEvent>().connect<&Application::OnShowLayerPropertiesEvent>(this);
   mDispatcher.sink<ShowMapPropertiesEvent>().connect<&Application::OnShowMapPropertiesEvent>(this);
 
+  mDispatcher.sink<AddPropertyEvent>().connect<&Application::OnAddPropertyEvent>(this);
   mDispatcher.sink<SetPropertyValueEvent>().connect<&Application::OnSetPropertyValueEvent>(this);
+
   mDispatcher.sink<SetTilesetSelectionEvent>().connect<&Application::OnSetTilesetSelectionEvent>(this);
 
   mDispatcher.sink<SelectToolEvent>().connect<&Application::OnSelectToolEvent>(this);
@@ -489,18 +491,30 @@ void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
   }
 }
 
+void Application::OnAddPropertyEvent(const AddPropertyEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->AddProperty(event.name, event.type);
+  }
+}
+
 void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
 {
-  auto* document = mModel->GetActiveDocument();
-  document->SetProperty(event.name, event.property);
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->SetProperty(event.name, event.property);
+  }
 }
 
 void Application::OnSetTilesetSelectionEvent(
     const SetTilesetSelectionEvent& event)
 {
-  auto* document = mModel->GetActiveDocument();
-  auto& tilesets = document->GetTilesets();
-  tilesets.GetActiveTileset()->SetSelection(event.selection);
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    auto& tilesets = document->GetTilesets();
+    tilesets.GetActiveTileset()->SetSelection(event.selection);
+  }
 }
 
 void Application::OnQuitEvent()

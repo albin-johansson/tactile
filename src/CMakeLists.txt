@@ -72,6 +72,9 @@ set(TACTILE_SOURCE_FILES
     core/commands/maps/layers/set_layer_opacity_cmd.cpp
     core/commands/maps/layers/set_layer_opacity_cmd.hpp
 
+    core/commands/properties/add_property_cmd.cpp
+    core/commands/properties/add_property_cmd.hpp
+
     core/events/center_viewport_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp
@@ -96,6 +99,7 @@ set(TACTILE_SOURCE_FILES
     core/events/maps/select_map_event.hpp
     core/events/maps/show_map_properties_event.hpp
 
+    core/events/properties/add_property_event.hpp
     core/events/properties/set_property_value_event.hpp
 
     core/events/tilesets/add_tileset_event.hpp
@@ -197,6 +201,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/widgets/dialogs/about_dialog.cpp
     gui/widgets/dialogs/about_dialog.hpp
+    gui/widgets/dialogs/add_property_dialog.cpp
+    gui/widgets/dialogs/add_property_dialog.hpp
     gui/widgets/dialogs/credits_dialog.cpp
     gui/widgets/dialogs/credits_dialog.hpp
     gui/widgets/dialogs/settings_dialog.cpp
