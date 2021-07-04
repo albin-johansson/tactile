@@ -7,8 +7,8 @@
 
 #include "aliases/ints.hpp"
 #include "core/events/tilesets/add_tileset_event.hpp"
-#include "gui/widgets/button_ex.hpp"
-#include "gui/widgets/file_dialog.hpp"
+#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/file_dialog.hpp"
 #include "utils/buffer_utils.hpp"
 
 namespace Tactile {

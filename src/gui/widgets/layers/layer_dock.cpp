@@ -16,7 +16,7 @@
 #include "core/events/layers/show_layer_properties_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/button_ex.hpp"
+#include "gui/widgets/common/button_ex.hpp"
 #include "io/preferences.hpp"
 #include "utils/scope_id.hpp"
 

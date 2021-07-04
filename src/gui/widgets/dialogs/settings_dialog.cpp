@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "gui/widgets/help_marker.hpp"
+#include "gui/widgets/common/help_marker.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {

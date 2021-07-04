@@ -195,22 +195,23 @@ set(TACTILE_SOURCE_FILES
 
     gui/widgets/alignment.cpp
     gui/widgets/alignment.hpp
-    gui/widgets/button_ex.cpp
-    gui/widgets/button_ex.hpp
-    gui/widgets/centered_button.cpp
-    gui/widgets/centered_button.hpp
-    gui/widgets/centered_text.cpp
-    gui/widgets/centered_text.hpp
-    gui/widgets/file_dialog.cpp
-    gui/widgets/file_dialog.hpp
-    gui/widgets/help_marker.cpp
-    gui/widgets/help_marker.hpp
-    gui/widgets/mouse_tracker.cpp
-    gui/widgets/mouse_tracker.hpp
     gui/widgets/render_bounds.cpp
     gui/widgets/render_bounds.hpp
-    gui/widgets/rubber_band.cpp
-    gui/widgets/rubber_band.hpp
+
+    gui/widgets/common/button_ex.cpp
+    gui/widgets/common/button_ex.hpp
+    gui/widgets/common/centered_button.cpp
+    gui/widgets/common/centered_button.hpp
+    gui/widgets/common/centered_text.cpp
+    gui/widgets/common/centered_text.hpp
+    gui/widgets/common/file_dialog.cpp
+    gui/widgets/common/file_dialog.hpp
+    gui/widgets/common/help_marker.cpp
+    gui/widgets/common/help_marker.hpp
+    gui/widgets/common/mouse_tracker.cpp
+    gui/widgets/common/mouse_tracker.hpp
+    gui/widgets/common/rubber_band.cpp
+    gui/widgets/common/rubber_band.hpp
 
     gui/widgets/dialogs/about_dialog.cpp
     gui/widgets/dialogs/about_dialog.hpp

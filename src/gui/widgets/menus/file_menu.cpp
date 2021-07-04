@@ -7,8 +7,8 @@
 #include "core/events/quit_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
+#include "gui/widgets/common/file_dialog.hpp"
 #include "gui/widgets/dialogs/settings_dialog.hpp"
-#include "gui/widgets/file_dialog.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {

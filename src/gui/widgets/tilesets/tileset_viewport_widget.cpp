@@ -10,8 +10,8 @@
 #include "gui/canvas_info.hpp"
 #include "gui/get_texture_id.hpp"
 #include "gui/show_grid.hpp"
-#include "gui/widgets/mouse_tracker.hpp"
-#include "gui/widgets/rubber_band.hpp"
+#include "gui/widgets/common/mouse_tracker.hpp"
+#include "gui/widgets/common/rubber_band.hpp"
 
 namespace Tactile {
 namespace {

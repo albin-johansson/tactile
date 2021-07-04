@@ -8,7 +8,7 @@
 #include "aliases/maybe.hpp"
 #include "core/document.hpp"
 #include "core/events/properties/rename_property_event.hpp"
-#include "gui/widgets/button_ex.hpp"
+#include "gui/widgets/common/button_ex.hpp"
 #include "utils/buffer_utils.hpp"
 
 namespace Tactile {

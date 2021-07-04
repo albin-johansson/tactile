@@ -8,7 +8,7 @@
 #include "core/events/undo_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/button_ex.hpp"
+#include "gui/widgets/common/button_ex.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 
 namespace Tactile {

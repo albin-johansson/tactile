@@ -8,8 +8,8 @@
 #include "gui/get_texture_id.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
-#include "gui/widgets/centered_button.hpp"
-#include "gui/widgets/centered_text.hpp"
+#include "gui/widgets/common/centered_button.hpp"
+#include "gui/widgets/common/centered_text.hpp"
 
 namespace Tactile {
 

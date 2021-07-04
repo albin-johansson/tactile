@@ -13,7 +13,7 @@
 #include "core/model.hpp"
 #include "gui/canvas_info.hpp"
 #include "gui/show_grid.hpp"
-#include "gui/widgets/mouse_tracker.hpp"
+#include "gui/widgets/common/mouse_tracker.hpp"
 #include "render_map.hpp"
 #include "render_stamp_preview.hpp"
 #include "utils/scope_id.hpp"
