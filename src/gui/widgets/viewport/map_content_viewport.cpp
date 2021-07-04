@@ -52,8 +52,7 @@ struct CursorInfo final
 
   if (info.is_within_map)
   {
-    info.map_position = {row_t{static_cast<row_t::value_type>(row)},
-                         col_t{static_cast<col_t::value_type>(col)}};
+    info.map_position = {AsRow(row), AsColumn(col)};
   }
 
   info.raw_position = {mapOrigin.x + (col * state.grid_size.x),

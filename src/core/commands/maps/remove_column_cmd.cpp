@@ -25,7 +25,7 @@ void RemoveColumnCmd::Redo()
   auto& map = GetMap();
 
   const MapPosition begin{0_row,
-                          map.GetColumnCount() - col_t{GetAmount()} - 1_col};
+                          map.GetColumnCount() - AsColumn(GetAmount()) - 1_col};
   const MapPosition end{map.GetRowCount(), map.GetColumnCount()};
 
   ClearCache();

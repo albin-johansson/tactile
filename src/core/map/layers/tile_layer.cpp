@@ -204,13 +204,13 @@ void TileLayer::SetTile(const MapPosition& position, const tile_id id)
 
 auto TileLayer::GetRowCount() const noexcept -> row_t
 {
-  return row_t{static_cast<row_t::value_type>(mTiles.size())};
+  return AsRow(mTiles.size());
 }
 
 auto TileLayer::GetColumnCount() const noexcept -> col_t
 {
   assert(!mTiles.empty());
-  return col_t{static_cast<col_t::value_type>(mTiles[0].size())};
+  return AsColumn(mTiles[0].size());
 }
 
 auto TileLayer::GetTileCount() const noexcept -> int

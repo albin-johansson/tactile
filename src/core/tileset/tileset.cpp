@@ -54,8 +54,8 @@ Tileset::Tileset(const tile_id firstId,
 
   SetName(mPath.filename().string());
 
-  mRowCount = row_t{GetHeight() / mTileHeight};
-  mColumnCount = col_t{GetWidth() / mTileWidth};
+  mRowCount = AsRow(GetHeight() / mTileHeight);
+  mColumnCount = AsColumn(GetWidth() / mTileWidth);
 
   mTileCount = mRowCount.get() * mColumnCount.get();
   mLastId = mFirstId + tile_id{mTileCount};

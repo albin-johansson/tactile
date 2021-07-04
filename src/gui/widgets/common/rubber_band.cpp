@@ -14,12 +14,12 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize)
 {
   const auto toRow = [=](const float y) {
     const auto mod = y - std::fmod(y, tileSize.y);
-    return row_t{static_cast<row_t::value_type>(mod / tileSize.y)};
+    return AsRow(mod / tileSize.y);
   };
 
   const auto toColumn = [=](const float x) {
     const auto mod = x - std::fmod(x, tileSize.x);
-    return col_t{static_cast<col_t::value_type>(mod / tileSize.x)};
+    return AsColumn(mod / tileSize.x);
   };
 
   if (ImGui::IsItemActive())
