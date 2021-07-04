@@ -13,7 +13,7 @@ auto MergeableMapCommand::MergeWith(const ACommand& cmd) -> bool
 {
   if (GetId() == cmd.GetId())
   {
-    auto& other = dynamic_cast<const MergeableMapCommand&>(cmd);
+    const auto& other = dynamic_cast<const MergeableMapCommand&>(cmd);
     mAmount += other.mAmount;
 
     for (const auto& [otherLayer, otherTileCache] : other.GetLayerCache())
