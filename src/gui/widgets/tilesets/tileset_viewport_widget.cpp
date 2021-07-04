@@ -8,8 +8,8 @@
 #include "core/events/tilesets/set_tileset_selection_event.hpp"
 #include "core/tileset/tileset.hpp"
 #include "gui/canvas_info.hpp"
-#include "gui/get_texture_id.hpp"
 #include "gui/show_grid.hpp"
+#include "gui/texture_utils.hpp"
 #include "gui/widgets/common/mouse_tracker.hpp"
 #include "gui/widgets/common/rubber_band.hpp"
 
@@ -37,7 +37,7 @@ void ClampOffsets(const ImVec2 canvasSize,
 
 void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
 {
-  const auto texture = GetTextureID(tileset.GetTexture());
+  const auto texture = ToTextureID(tileset.GetTexture());
   const auto textureSize = ImVec2{static_cast<float>(tileset.GetWidth()),
                                   static_cast<float>(tileset.GetHeight())};
   const auto tileSize = ImVec2{static_cast<float>(tileset.GetTileWidth()),

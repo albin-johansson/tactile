@@ -6,7 +6,7 @@
 #include <cassert>  // assert
 
 #include "core/tileset/tileset_manager.hpp"
-#include "gui/get_texture_id.hpp"
+#include "gui/texture_utils.hpp"
 #include "gui/widgets/viewport/uv_tile_size.hpp"
 
 namespace Tactile {
@@ -18,7 +18,7 @@ void RenderTile(const tile_id tile,
                 const float opacity)
 {
   const auto& tileset = tilesets.GetTileset(tile);
-  const auto texture = GetTextureID(tileset.GetTexture());
+  const auto texture = ToTextureID(tileset.GetTexture());
 
   const auto source = tileset.GetImageSource(tile);
   assert(source.has_value());

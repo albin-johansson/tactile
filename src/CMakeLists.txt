@@ -173,8 +173,6 @@ set(TACTILE_SOURCE_FILES
     gui/canvas_info.cpp
     gui/cursors.cpp
     gui/cursors.hpp
-    gui/get_texture_id.cpp
-    gui/get_texture_id.hpp
     gui/icons.cpp
     gui/icons.hpp
     gui/imgui_context.cpp
@@ -183,10 +181,12 @@ set(TACTILE_SOURCE_FILES
     gui/show_grid.hpp
     gui/style.cpp
     gui/style.hpp
-    gui/update_gui.cpp
-    gui/update_gui.hpp
+    gui/texture_utils.cpp
+    gui/texture_utils.hpp
     gui/themes.cpp
     gui/themes.hpp
+    gui/update_gui.cpp
+    gui/update_gui.hpp
 
     gui/layout/dock_space.cpp
     gui/layout/dock_space.hpp

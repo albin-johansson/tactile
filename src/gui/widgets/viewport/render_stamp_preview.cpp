@@ -6,7 +6,7 @@
 #include "aliases/ints.hpp"
 #include "core/map/map.hpp"
 #include "core/tileset/tileset.hpp"
-#include "gui/get_texture_id.hpp"
+#include "gui/texture_utils.hpp"
 #include "uv_tile_size.hpp"
 
 namespace Tactile {
@@ -49,7 +49,7 @@ void RenderStampPreview(const ImVec2& mapPos,
   const auto size = bottomRight - topLeft;
   const MapPosition offset = {size.GetRow() / 2_row, size.GetColumn() / 2_col};
 
-  const auto texture = GetTextureID(tileset.GetTexture());
+  const auto texture = ToTextureID(tileset.GetTexture());
   const auto uvTileSize = GetTileSizeUV(tileset);
 
   const auto endRow = size.GetRow();

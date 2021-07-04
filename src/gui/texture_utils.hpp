@@ -6,6 +6,6 @@
 
 namespace Tactile {
 
-[[nodiscard]] auto GetTextureID(uint texture) -> ImTextureID;
+[[nodiscard]] auto ToTextureID(uint texture) -> ImTextureID;
 
 }  // namespace Tactile
