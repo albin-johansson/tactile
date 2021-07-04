@@ -190,6 +190,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/help_marker.hpp
     gui/widgets/mouse_tracker.cpp
     gui/widgets/mouse_tracker.hpp
+    gui/widgets/render_bounds.cpp
+    gui/widgets/render_bounds.hpp
     gui/widgets/rubber_band.cpp
     gui/widgets/rubber_band.hpp
 
@@ -253,8 +255,12 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/render_map.hpp
     gui/widgets/viewport/render_stamp_preview.cpp
     gui/widgets/viewport/render_stamp_preview.hpp
-    gui/widgets/viewport/rendering.cpp
-    gui/widgets/viewport/rendering.hpp
+    gui/widgets/viewport/render_tile.cpp
+    gui/widgets/viewport/render_tile.hpp
+    gui/widgets/viewport/render_tile_layer.cpp
+    gui/widgets/viewport/render_tile_layer.hpp
+    gui/widgets/viewport/uv_tile_size.cpp
+    gui/widgets/viewport/uv_tile_size.hpp
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
 

@@ -1,15 +1,12 @@
 #pragma once
 
-#include <imgui.h>
-
 #include "aliases/tile_id.hpp"
+
+struct ImVec2;
 
 namespace Tactile {
 
-class Tileset;
 class TilesetManager;
-
-[[nodiscard]] auto GetTileSizeUV(const Tileset& tileset) -> ImVec2;
 
 void RenderTile(tile_id tile,
                 const TilesetManager& tilesets,

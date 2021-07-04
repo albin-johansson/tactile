@@ -90,6 +90,9 @@ void CheckFor(const CursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
   }
 }
 
+// FIXME if stamp tool is enabled and an item in the viewport context menu is
+//   pressed, the stamp tool will receive a mouse pressed event
+
 void ShowActiveMap(const Model& model,
                    const MapDocument& document,
                    entt::dispatcher& dispatcher)
@@ -107,6 +110,7 @@ void ShowActiveMap(const Model& model,
   const auto nRows = static_cast<float>(document.GetRowCount());
   const auto nCols = static_cast<float>(document.GetColumnCount());
 
+  // TODO viewport should be centered by default
   if (center_viewport)
   {
     const auto width = nCols * state.grid_size.x;
@@ -121,7 +125,7 @@ void ShowActiveMap(const Model& model,
   ShowGrid(state, canvas, IM_COL32(200, 200, 200, 15));
 
   const auto mapOrigin = canvas.tl + state.scroll_offset;
-  RenderMap(document, mapOrigin, state.grid_size);
+  RenderMap(document, canvas, mapOrigin, state.grid_size);
 
   const auto cursor = GetCursorInfo(mapOrigin, nRows, nCols);
   if (cursor.is_within_map)

@@ -7,7 +7,7 @@
 #include "core/map/map.hpp"
 #include "core/tileset/tileset.hpp"
 #include "gui/get_texture_id.hpp"
-#include "rendering.hpp"
+#include "uv_tile_size.hpp"
 
 namespace Tactile {
 namespace {

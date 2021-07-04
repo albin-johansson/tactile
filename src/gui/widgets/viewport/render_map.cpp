@@ -5,8 +5,10 @@
 
 #include "core/map/layers/layer_utils.hpp"
 #include "core/map_document.hpp"
+#include "gui/canvas_info.hpp"
+#include "gui/widgets/render_bounds.hpp"
+#include "gui/widgets/viewport/render_tile_layer.hpp"
 #include "io/preferences.hpp"
-#include "rendering.hpp"
 
 namespace Tactile {
 namespace {
@@ -26,25 +28,20 @@ void RenderOutline(const int nRows,
                                       out_border_color);
 }
 
-void RenderTileLayer(const TileLayer& layer,
-                     const TilesetManager& tilesets,
-                     const ImVec2& mapPos,
-                     const ImVec2& gridSize)
+void RenderGrid(const ImVec2& mapPos,
+                const ImVec2& tileSize,
+                const RenderBounds& bounds)
 {
-  const auto opacity = layer.GetOpacity();
-  const auto rowCount = layer.GetRowCount();
-  const auto colCount = layer.GetColumnCount();
-  for (auto row = 0_row; row < rowCount; ++row)
+  auto* drawList = ImGui::GetWindowDrawList();
+  const auto endRow = bounds.end.GetRow();
+  const auto endCol = bounds.end.GetColumn();
+  for (auto row = bounds.begin.GetRow(); row < endRow; ++row)
   {
-    for (auto col = 0_col; col < colCount; ++col)
+    for (auto col = bounds.begin.GetColumn(); col < endCol; ++col)
     {
-      const auto tile = layer.GetTile({row, col});
-      if (tile && tile != empty_tile)
-      {
-        const ImVec2 pos = {mapPos.x + (gridSize.x * static_cast<float>(col)),
-                            mapPos.y + (gridSize.y * static_cast<float>(row))};
-        RenderTile(*tile, tilesets, pos, gridSize, opacity);
-      }
+      const ImVec2 pos = {mapPos.x + (tileSize.x * static_cast<float>(col)),
+                          mapPos.y + (tileSize.y * static_cast<float>(row))};
+      drawList->AddRect(pos, pos + tileSize, in_border_color);
     }
   }
 }
@@ -52,15 +49,15 @@ void RenderTileLayer(const TileLayer& layer,
 }  // namespace
 
 void RenderMap(const MapDocument& document,
+               const CanvasInfo& canvas,
                const ImVec2& mapPos,
                const ImVec2& tileSize)
 {
-  // TODO only render visible region
+  const auto nRows = document.GetRowCount();
+  const auto nCols = document.GetColumnCount();
+  const auto bounds = GetRenderBounds(canvas, mapPos, tileSize, nRows, nCols);
 
-  const auto showGrid = Prefs::GetShowGrid();
-  const auto& map = document.GetMap();
-
-  for (const auto& [id, layer] : map)
+  for (const auto& [id, layer] : document.GetMap())
   {
     if (!layer->IsVisible())
     {
@@ -69,26 +66,19 @@ void RenderMap(const MapDocument& document,
 
     if (const auto* tileLayer = AsTileLayer(layer))
     {
-      RenderTileLayer(*tileLayer, document.GetTilesets(), mapPos, tileSize);
+      RenderTileLayer(*tileLayer,
+                      document.GetTilesets(),
+                      mapPos,
+                      tileSize,
+                      bounds);
     }
 
     // TODO RenderObjectLayer()
   }
 
-  auto* drawList = ImGui::GetWindowDrawList();
-  const auto nRows = document.GetRowCount();
-  const auto nCols = document.GetColumnCount();
-  for (auto row = 0; row < nRows; ++row)
+  if (Prefs::GetShowGrid())
   {
-    for (auto col = 0; col < nCols; ++col)
-    {
-      const ImVec2 pos = {mapPos.x + (tileSize.x * static_cast<float>(col)),
-                          mapPos.y + (tileSize.y * static_cast<float>(row))};
-      if (showGrid)
-      {
-        drawList->AddRect(pos, pos + tileSize, in_border_color);
-      }
-    }
+    RenderGrid(mapPos, tileSize, bounds);
   }
 
   RenderOutline(nRows, nCols, mapPos, tileSize);

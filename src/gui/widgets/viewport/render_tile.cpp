@@ -1,23 +1,15 @@
-#include "rendering.hpp"
+#include "render_tile.hpp"
 
+#include <imgui.h>
 #include <imgui_internal.h>
 
-#include <cassert>  //assert
+#include <cassert>  // assert
 
-#include "core/tileset/tileset.hpp"
 #include "core/tileset/tileset_manager.hpp"
 #include "gui/get_texture_id.hpp"
+#include "gui/widgets/viewport/uv_tile_size.hpp"
 
 namespace Tactile {
-
-[[nodiscard]] auto GetTileSizeUV(const Tileset& tileset) -> ImVec2
-{
-  const ImVec2 textureSize = {static_cast<float>(tileset.GetWidth()),
-                              static_cast<float>(tileset.GetHeight())};
-  const ImVec2 tileSize = {static_cast<float>(tileset.GetTileWidth()),
-                           static_cast<float>(tileset.GetTileHeight())};
-  return tileSize / textureSize;
-}
 
 void RenderTile(const tile_id tile,
                 const TilesetManager& tilesets,
