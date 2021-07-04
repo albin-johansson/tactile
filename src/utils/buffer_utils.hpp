@@ -9,6 +9,12 @@
 
 namespace Tactile {
 
+template <usize Size>
+void ZeroBuffer(std::array<char, Size>& buffer)
+{
+  std::memset(buffer.data(), 0, sizeof buffer);
+}
+
 /**
  * \brief Copies a string into a character buffer.
  *
@@ -27,7 +33,7 @@ template <usize Size>
 void CopyStringIntoBuffer(std::array<char, Size>& buffer,
                           const std::string_view str)
 {
-  std::memset(buffer.data(), 0, sizeof buffer);
+  ZeroBuffer(buffer);
 
   usize index = 0;
   for (const auto ch : str)
