@@ -32,7 +32,7 @@ auto SelectLayerCmd::MergeWith(const ACommand& cmd) -> bool
 {
   if (GetId() == cmd.GetId())
   {
-    auto& other = dynamic_cast<const SelectLayerCmd&>(cmd);
+    const auto& other = dynamic_cast<const SelectLayerCmd&>(cmd);
     mId = other.mId;
     return true;
   }
