@@ -214,11 +214,13 @@ void Application::OnCtrlAltKeyStroke(const cen::scan_code key)
 
 void Application::OnAltShiftKeyStroke(const cen::scan_code key)
 {
-  if (key == cen::scancodes::r)
+  const auto* document = mModel->GetActiveDocument();
+  if (key == cen::scancodes::r && document && document->GetRowCount() != 1_row)
   {
     OnRemoveRowEvent();
   }
-  else if (key == cen::scancodes::c)
+  else if (key == cen::scancodes::c && document &&
+           document->GetColumnCount() != 1_col)
   {
     OnRemoveColumnEvent();
   }
