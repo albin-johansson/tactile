@@ -18,4 +18,9 @@ using col_t = nenya::strong_type<int, tags::col_tag>;
   return col_t{static_cast<col_t::value_type>(value)};
 }
 
+[[nodiscard]] constexpr auto MakeColumn(const auto value) noexcept -> col_t
+{
+  return col_t{static_cast<col_t::value_type>(value)};
+}
+
 }  // namespace Tactile
