@@ -20,7 +20,7 @@
 #include "core/commands/properties/remove_property_cmd.hpp"
 #include "core/commands/properties/rename_property_cmd.hpp"
 #include "core/commands/properties/set_property_cmd.hpp"
-#include "core/commands/set_property_context_cmd.hpp"
+#include "core/commands/properties/set_property_context_cmd.hpp"
 
 namespace Tactile {
 

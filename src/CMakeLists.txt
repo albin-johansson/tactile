@@ -41,8 +41,6 @@ set(TACTILE_SOURCE_FILES
     core/commands/command_id.hpp
     core/commands/command_stack.cpp
     core/commands/command_stack.hpp
-    core/commands/set_property_context_cmd.cpp
-    core/commands/set_property_context_cmd.hpp
 
     core/commands/maps/add_column_cmd.cpp
     core/commands/maps/add_column_cmd.hpp
@@ -84,6 +82,8 @@ set(TACTILE_SOURCE_FILES
     core/commands/properties/rename_property_cmd.hpp
     core/commands/properties/set_property_cmd.cpp
     core/commands/properties/set_property_cmd.hpp
+    core/commands/properties/set_property_context_cmd.cpp
+    core/commands/properties/set_property_context_cmd.hpp
 
     core/events/center_viewport_event.hpp
     core/events/quit_event.hpp
