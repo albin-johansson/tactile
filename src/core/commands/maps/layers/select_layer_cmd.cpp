@@ -28,4 +28,16 @@ void SelectLayerCmd::Redo()
   map.SelectLayer(mId);
 }
 
+auto SelectLayerCmd::MergeWith(const ACommand& cmd) -> bool
+{
+  if (GetId() == cmd.GetId())
+  {
+    auto& other = dynamic_cast<const SelectLayerCmd&>(cmd);
+    mId = other.mId;
+    return true;
+  }
+
+  return false;
+}
+
 }  // namespace Tactile

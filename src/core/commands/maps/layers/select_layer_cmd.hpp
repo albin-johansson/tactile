@@ -16,6 +16,8 @@ class SelectLayerCmd final : public MapCommand
 
   void Redo() override;
 
+  auto MergeWith(const ACommand& cmd) -> bool override;
+
   [[nodiscard]] auto GetId() const noexcept -> int override
   {
     return CommandId::SelectLayer;
