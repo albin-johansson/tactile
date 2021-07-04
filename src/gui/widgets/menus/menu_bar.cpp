@@ -1,4 +1,4 @@
-#include "menu_bar_widget.hpp"
+#include "menu_bar.hpp"
 
 #include <imgui.h>
 
@@ -9,7 +9,7 @@
 
 namespace Tactile {
 
-void UpdateMenuBarWidget(const Model& model, entt::dispatcher& dispatcher)
+void UpdateMenuBar(const Model& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginMainMenuBar())
   {

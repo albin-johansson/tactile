@@ -204,8 +204,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/dialogs/tileset_dialog.cpp
     gui/widgets/dialogs/tileset_dialog.hpp
 
-    gui/widgets/layers/layer_widget.cpp
-    gui/widgets/layers/layer_widget.hpp
+    gui/widgets/layers/layer_dock.cpp
+    gui/widgets/layers/layer_dock.hpp
 
     gui/widgets/menus/edit_menu.cpp
     gui/widgets/menus/edit_menu.hpp
@@ -213,8 +213,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/menus/file_menu.hpp
     gui/widgets/menus/help_menu.cpp
     gui/widgets/menus/help_menu.hpp
-    gui/widgets/menus/menu_bar_widget.cpp
-    gui/widgets/menus/menu_bar_widget.hpp
+    gui/widgets/menus/menu_bar.cpp
+    gui/widgets/menus/menu_bar.hpp
     gui/widgets/menus/view_menu.cpp
     gui/widgets/menus/view_menu.hpp
 
@@ -232,17 +232,17 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/properties/object_property_widget.hpp
     gui/widgets/properties/properties_content_widget.cpp
     gui/widgets/properties/properties_content_widget.hpp
-    gui/widgets/properties/properties_widget.cpp
-    gui/widgets/properties/properties_widget.hpp
+    gui/widgets/properties/properties_dock.cpp
+    gui/widgets/properties/properties_dock.hpp
     gui/widgets/properties/string_property_widget.cpp
     gui/widgets/properties/string_property_widget.hpp
 
     gui/widgets/tilesets/tileset_content_widget.cpp
     gui/widgets/tilesets/tileset_content_widget.hpp
+    gui/widgets/tilesets/tileset_dock.cpp
+    gui/widgets/tilesets/tileset_dock.hpp
     gui/widgets/tilesets/tileset_viewport_widget.cpp
     gui/widgets/tilesets/tileset_viewport_widget.hpp
-    gui/widgets/tilesets/tileset_widget.cpp
-    gui/widgets/tilesets/tileset_widget.hpp
 
     gui/widgets/toolbar/tool_bar.cpp
     gui/widgets/toolbar/tool_bar.hpp

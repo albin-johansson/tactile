@@ -1,4 +1,4 @@
-#include "layer_widget.hpp"
+#include "layer_dock.hpp"
 
 #include <imgui.h>
 
@@ -135,7 +135,7 @@ void UpdateAddLayerPopup(entt::dispatcher& dispatcher)
 
 }  // namespace
 
-void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher)
+void UpdateLayerDock(const Model& model, entt::dispatcher& dispatcher)
 {
   if (!Prefs::GetShowLayerDock() || !model.GetActiveMapId())
   {

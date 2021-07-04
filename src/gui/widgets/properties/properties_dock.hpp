@@ -6,6 +6,6 @@ namespace Tactile {
 
 class Model;
 
-void UpdateLayerWidget(const Model& model, entt::dispatcher& dispatcher);
+void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

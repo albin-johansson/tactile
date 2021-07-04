@@ -6,6 +6,6 @@ namespace Tactile {
 
 class Model;
 
-void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher);
+void UpdateTilesetDock(const Model& model, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

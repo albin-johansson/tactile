@@ -1,4 +1,4 @@
-#include "tileset_widget.hpp"
+#include "tileset_dock.hpp"
 
 #include <imgui.h>
 
@@ -14,7 +14,7 @@
 
 namespace Tactile {
 
-void UpdateTilesetWidget(const Model& model, entt::dispatcher& dispatcher)
+void UpdateTilesetDock(const Model& model, entt::dispatcher& dispatcher)
 {
   if (!Prefs::GetShowTilesetDock() || !model.GetActiveMapId())
   {

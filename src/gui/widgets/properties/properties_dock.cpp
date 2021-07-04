@@ -1,4 +1,4 @@
-#include "properties_widget.hpp"
+#include "properties_dock.hpp"
 
 #include <imgui.h>
 
@@ -15,7 +15,7 @@
 
 namespace Tactile {
 
-void UpdatePropertiesWidget(const Model& model, entt::dispatcher& dispatcher)
+void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
 {
   if (!Prefs::GetShowPropertiesDock() || !model.GetActiveMapId())
   {

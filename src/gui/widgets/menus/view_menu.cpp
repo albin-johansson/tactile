@@ -6,9 +6,9 @@
 #include "core/model.hpp"
 #include "gui/icons.hpp"
 #include "gui/layout/dock_space.hpp"
-#include "gui/widgets/layers/layer_widget.hpp"
-#include "gui/widgets/properties/properties_widget.hpp"
-#include "gui/widgets/tilesets/tileset_widget.hpp"
+#include "gui/widgets/layers/layer_dock.hpp"
+#include "gui/widgets/properties/properties_dock.hpp"
+#include "gui/widgets/tilesets/tileset_dock.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
