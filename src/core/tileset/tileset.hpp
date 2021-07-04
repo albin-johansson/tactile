@@ -1,6 +1,6 @@
 #pragma once
 
-#include <centurion.hpp>  // surface, irect
+#include <centurion.hpp>  // irect
 #include <filesystem>     // path, absolute
 #include <string>         // string
 #include <unordered_map>  // unordered_map
