@@ -68,15 +68,15 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_Border]                = WithAlpha(white,  0.29f);
   style.Colors[ImGuiCol_BorderShadow]          = black;
 
-  style.Colors[ImGuiCol_FrameBg]               = button;
+  style.Colors[ImGuiCol_FrameBg]               = ImVec4{0.25f, 0.25f, 0.25f, 1.0f};
   style.Colors[ImGuiCol_FrameBgHovered]        = Brighten(style.Colors[ImGuiCol_FrameBg]);
   style.Colors[ImGuiCol_FrameBgActive]         = style.Colors[ImGuiCol_FrameBg];
 
-  style.Colors[ImGuiCol_TitleBg]               = button;
-  style.Colors[ImGuiCol_TitleBgActive]         = button;
-  style.Colors[ImGuiCol_TitleBgCollapsed]      = button;
+  style.Colors[ImGuiCol_TitleBg]               = ImVec4{0.2f, 0.2f, 0.2f, 1.0f};
+  style.Colors[ImGuiCol_TitleBgActive]         = ImVec4{0.2f, 0.2f, 0.2f, 1.0f};
+  style.Colors[ImGuiCol_TitleBgCollapsed]      = ImVec4{0.2f, 0.2f, 0.2f, 1.0f};
 
-  style.Colors[ImGuiCol_MenuBarBg]             = button;
+  style.Colors[ImGuiCol_MenuBarBg]             = ImVec4{0.2f, 0.2f, 0.2f, 1.0f};
   style.Colors[ImGuiCol_ScrollbarBg]           = window;
 
   style.Colors[ImGuiCol_CheckMark]             = white;
