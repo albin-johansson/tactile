@@ -2,16 +2,14 @@
 
 #include <imgui.h>
 
-#include <array>        // array
-#include <cassert>      // assert
-#include <cstring>      // memset
-#include <filesystem>   // path
-#include <string_view>  // string_view
+#include <array>       // array
+#include <filesystem>  // path
 
 #include "aliases/ints.hpp"
 #include "core/events/tilesets/add_tileset_event.hpp"
 #include "gui/widgets/button_ex.hpp"
 #include "gui/widgets/file_dialog.hpp"
+#include "utils/buffer_utils.hpp"
 
 namespace Tactile {
 namespace {
@@ -22,19 +20,6 @@ inline int tile_width = 32;
 inline int tile_height = 32;
 
 inline bool show_image_file_dialog = false;
-
-void CopyStringIntoBuffer(const std::string_view str)
-{
-  assert(str.size() <= path_preview_buffer.size());
-  std::memset(path_preview_buffer.data(), 0, path_preview_buffer.size());
-
-  usize index = 0;
-  for (const auto ch : str)
-  {
-    path_preview_buffer.at(index) = ch;
-    ++index;
-  }
-}
 
 void ShowImageFileDialog()
 {
@@ -49,11 +34,11 @@ void ShowImageFileDialog()
     if (pathStr.size() > path_preview_buffer.size())
     {
       const auto name = full_image_path.filename();
-      CopyStringIntoBuffer(name.string());
+      CopyStringIntoBuffer(path_preview_buffer, name.string());
     }
     else
     {
-      CopyStringIntoBuffer(pathStr);
+      CopyStringIntoBuffer(path_preview_buffer, pathStr);
     }
 
     show_image_file_dialog = false;
@@ -72,7 +57,7 @@ void ShowImageFileDialog()
 
 void ResetInputs()
 {
-  std::memset(path_preview_buffer.data(), 0, path_preview_buffer.size());
+  ZeroBuffer(path_preview_buffer);
   full_image_path.clear();
   tile_width = 32;
   tile_height = 32;
