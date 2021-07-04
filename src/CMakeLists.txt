@@ -74,6 +74,16 @@ set(TACTILE_SOURCE_FILES
 
     core/commands/properties/add_property_cmd.cpp
     core/commands/properties/add_property_cmd.hpp
+    core/commands/properties/change_property_type_cmd.cpp
+    core/commands/properties/change_property_type_cmd.hpp
+    core/commands/properties/property_command.cpp
+    core/commands/properties/property_command.hpp
+    core/commands/properties/remove_property_cmd.cpp
+    core/commands/properties/remove_property_cmd.hpp
+    core/commands/properties/rename_property_cmd.cpp
+    core/commands/properties/rename_property_cmd.hpp
+    core/commands/properties/set_property_cmd.cpp
+    core/commands/properties/set_property_cmd.hpp
 
     core/events/center_viewport_event.hpp
     core/events/quit_event.hpp
@@ -100,6 +110,9 @@ set(TACTILE_SOURCE_FILES
     core/events/maps/show_map_properties_event.hpp
 
     core/events/properties/add_property_event.hpp
+    core/events/properties/change_property_type_event.hpp
+    core/events/properties/remove_property_event.hpp
+    core/events/properties/rename_property_event.hpp
     core/events/properties/set_property_value_event.hpp
 
     core/events/tilesets/add_tileset_event.hpp
@@ -201,8 +214,6 @@ set(TACTILE_SOURCE_FILES
 
     gui/widgets/dialogs/about_dialog.cpp
     gui/widgets/dialogs/about_dialog.hpp
-    gui/widgets/dialogs/add_property_dialog.cpp
-    gui/widgets/dialogs/add_property_dialog.hpp
     gui/widgets/dialogs/credits_dialog.cpp
     gui/widgets/dialogs/credits_dialog.hpp
     gui/widgets/dialogs/settings_dialog.cpp
@@ -242,6 +253,15 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/properties/properties_dock.hpp
     gui/widgets/properties/string_property_widget.cpp
     gui/widgets/properties/string_property_widget.hpp
+
+    gui/widgets/properties/dialogs/add_property_dialog.cpp
+    gui/widgets/properties/dialogs/add_property_dialog.hpp
+    gui/widgets/properties/dialogs/change_property_type_dialog.cpp
+    gui/widgets/properties/dialogs/change_property_type_dialog.hpp
+    gui/widgets/properties/dialogs/property_type_combo.cpp
+    gui/widgets/properties/dialogs/property_type_combo.hpp
+    gui/widgets/properties/dialogs/rename_property_dialog.cpp
+    gui/widgets/properties/dialogs/rename_property_dialog.hpp
 
     gui/widgets/tilesets/tileset_content_widget.cpp
     gui/widgets/tilesets/tileset_content_widget.hpp

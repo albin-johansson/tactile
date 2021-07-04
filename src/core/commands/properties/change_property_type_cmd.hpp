@@ -2,21 +2,20 @@
 
 #include <string>  // string
 
-#include "core/commands/command.hpp"
+#include "aliases/maybe.hpp"
 #include "core/commands/command_id.hpp"
 #include "core/commands/properties/property_command.hpp"
+#include "core/properties/property.hpp"
 #include "core/properties/property_type.hpp"
 
 namespace Tactile {
 
-class IPropertyContext;
-
-class AddPropertyCmd final : public APropertyCommand
+class ChangePropertyTypeCmd final : public APropertyCommand
 {
  public:
-  AddPropertyCmd(NotNull<IPropertyContext*> context,
-                 std::string name,
-                 PropertyType type);
+  ChangePropertyTypeCmd(NotNull<IPropertyContext*> context,
+                        std::string name,
+                        PropertyType type);
 
   void Undo() override;
 
@@ -24,12 +23,13 @@ class AddPropertyCmd final : public APropertyCommand
 
   [[nodiscard]] auto GetId() const noexcept -> int override
   {
-    return CommandId::AddProperty;
+    return CommandId::ChangePropertyType;
   }
 
  private:
   std::string mName;
   PropertyType mType;
+  Maybe<Property> mPreviousValue;
 };
 
 }  // namespace Tactile

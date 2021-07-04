@@ -5,18 +5,17 @@
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
 #include "core/commands/properties/property_command.hpp"
-#include "core/properties/property_type.hpp"
 
 namespace Tactile {
 
 class IPropertyContext;
 
-class AddPropertyCmd final : public APropertyCommand
+class RenamePropertyCmd final : public APropertyCommand
 {
  public:
-  AddPropertyCmd(NotNull<IPropertyContext*> context,
-                 std::string name,
-                 PropertyType type);
+  RenamePropertyCmd(NotNull<IPropertyContext*> context,
+                    std::string oldName,
+                    std::string newName);
 
   void Undo() override;
 
@@ -24,12 +23,12 @@ class AddPropertyCmd final : public APropertyCommand
 
   [[nodiscard]] auto GetId() const noexcept -> int override
   {
-    return CommandId::AddProperty;
+    return CommandId::RenameProperty;
   }
 
  private:
-  std::string mName;
-  PropertyType mType;
+  std::string mOldName;
+  std::string mNewName;
 };
 
 }  // namespace Tactile

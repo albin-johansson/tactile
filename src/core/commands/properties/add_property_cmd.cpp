@@ -3,32 +3,25 @@
 #include <utility>  // move
 
 #include "core/properties/property_context.hpp"
-#include "core/tactile_error.hpp"
 
 namespace Tactile {
 
 AddPropertyCmd::AddPropertyCmd(NotNull<IPropertyContext*> context,
                                std::string name,
                                const PropertyType type)
-    : ACommand{"Add Property"}
-    , mContext{context}
+    : APropertyCommand{context, "Add Property"}
     , mName{std::move(name)}
     , mType{type}
-{
-  if (!mContext)
-  {
-    throw TactileError{"Cannot create command from null property context!"};
-  }
-}
+{}
 
 void AddPropertyCmd::Undo()
 {
-  mContext->RemoveProperty(mName);
+  GetContext().RemoveProperty(mName);
 }
 
 void AddPropertyCmd::Redo()
 {
-  mContext->AddProperty(mName, mType);
+  GetContext().AddProperty(mName, mType);
 }
 
 }  // namespace Tactile

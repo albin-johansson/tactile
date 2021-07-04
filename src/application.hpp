@@ -24,6 +24,9 @@
 #include "core/events/maps/remove_row_event.hpp"
 #include "core/events/maps/select_map_event.hpp"
 #include "core/events/properties/add_property_event.hpp"
+#include "core/events/properties/change_property_type_event.hpp"
+#include "core/events/properties/remove_property_event.hpp"
+#include "core/events/properties/rename_property_event.hpp"
 #include "core/events/properties/set_property_value_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
@@ -128,7 +131,13 @@ class Application final
 
   void OnAddPropertyEvent(const AddPropertyEvent& event);
 
+  void OnRemovePropertyEvent(const RemovePropertyEvent& event);
+
+  void OnRenamePropertyEvent(const RenamePropertyEvent& event);
+
   void OnSetPropertyValueEvent(const SetPropertyValueEvent& event);
+
+  void OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event);
 
   void OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event);
 

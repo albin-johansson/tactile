@@ -128,7 +128,10 @@ void Application::SubscribeToEvents()
   mDispatcher.sink<ShowMapPropertiesEvent>().connect<&Application::OnShowMapPropertiesEvent>(this);
 
   mDispatcher.sink<AddPropertyEvent>().connect<&Application::OnAddPropertyEvent>(this);
+  mDispatcher.sink<RemovePropertyEvent>().connect<&Application::OnRemovePropertyEvent>(this);
+  mDispatcher.sink<RenamePropertyEvent>().connect<&Application::OnRenamePropertyEvent>(this);
   mDispatcher.sink<SetPropertyValueEvent>().connect<&Application::OnSetPropertyValueEvent>(this);
+  mDispatcher.sink<ChangePropertyTypeEvent>().connect<&Application::OnChangePropertyTypeEvent>(this);
 
   mDispatcher.sink<SetTilesetSelectionEvent>().connect<&Application::OnSetTilesetSelectionEvent>(this);
 
@@ -499,11 +502,36 @@ void Application::OnAddPropertyEvent(const AddPropertyEvent& event)
   }
 }
 
+void Application::OnRemovePropertyEvent(const RemovePropertyEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->RemoveProperty(event.name);
+  }
+}
+
+void Application::OnRenamePropertyEvent(const RenamePropertyEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->RenameProperty(event.old_name, event.new_name);
+  }
+}
+
 void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
 {
   if (auto* document = mModel->GetActiveDocument())
   {
     document->SetProperty(event.name, event.property);
+  }
+}
+
+void Application::OnChangePropertyTypeEvent(
+    const ChangePropertyTypeEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->ChangePropertyType(event.name, event.type);
   }
 }
 

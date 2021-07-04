@@ -16,6 +16,10 @@
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/properties/add_property_cmd.hpp"
+#include "core/commands/properties/change_property_type_cmd.hpp"
+#include "core/commands/properties/remove_property_cmd.hpp"
+#include "core/commands/properties/rename_property_cmd.hpp"
+#include "core/commands/properties/set_property_cmd.hpp"
 #include "core/commands/set_property_context_cmd.hpp"
 
 namespace Tactile {
@@ -287,25 +291,31 @@ void MapDocument::AddProperty(const std::string& name, const Property& property)
 
 void MapDocument::RemoveProperty(const std::string_view name)
 {
-  mDelegate->RemoveProperty(name);
+  mDelegate->Execute<RemovePropertyCmd>(mDelegate.get(), std::string{name});
 }
 
 void MapDocument::RenameProperty(const std::string_view oldName,
                                  const std::string& newName)
 {
-  mDelegate->RenameProperty(oldName, newName);
+  mDelegate->Execute<RenamePropertyCmd>(mDelegate.get(),
+                                        std::string{oldName},
+                                        newName);
 }
 
 void MapDocument::SetProperty(const std::string_view name,
                               const Property& property)
 {
-  mDelegate->SetProperty(name, property);
+  mDelegate->Execute<SetPropertyCmd>(mDelegate.get(),
+                                     std::string{name},
+                                     property);
 }
 
 void MapDocument::ChangePropertyType(const std::string_view name,
                                      const PropertyType type)
 {
-  mDelegate->ChangePropertyType(name, type);
+  mDelegate->Execute<ChangePropertyTypeCmd>(mDelegate.get(),
+                                            std::string{name},
+                                            type);
 }
 
 auto MapDocument::HasProperty(const std::string_view name) const -> bool
