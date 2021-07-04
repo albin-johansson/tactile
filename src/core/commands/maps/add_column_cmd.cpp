@@ -5,19 +5,25 @@
 namespace Tactile {
 
 AddColumnCmd::AddColumnCmd(NotNull<MapDocument*> document)
-    : MapCommand{document, "Add Column"}
+    : MergeableMapCommand{document, "Add Column(s)"}
 {}
 
 void AddColumnCmd::Undo()
 {
   auto& map = GetMap();
-  map.RemoveColumn();
+  for (int i = 0; i < GetAmount(); ++i)
+  {
+    map.RemoveColumn();
+  }
 }
 
 void AddColumnCmd::Redo()
 {
   auto& map = GetMap();
-  map.AddColumn(empty_tile);
+  for (int i = 0; i < GetAmount(); ++i)
+  {
+    map.AddColumn(empty_tile);
+  }
 }
 
 }  // namespace Tactile

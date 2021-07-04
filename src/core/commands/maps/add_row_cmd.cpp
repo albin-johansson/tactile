@@ -5,19 +5,25 @@
 namespace Tactile {
 
 AddRowCmd::AddRowCmd(NotNull<MapDocument*> document)
-    : MapCommand{document, "Add Row"}
+    : MergeableMapCommand{document, "Add Row(s)"}
 {}
 
 void AddRowCmd::Undo()
 {
   auto& map = GetMap();
-  map.RemoveRow();
+  for (int i = 0; i < GetAmount(); ++i)
+  {
+    map.RemoveRow();
+  }
 }
 
 void AddRowCmd::Redo()
 {
   auto& map = GetMap();
-  map.AddRow(empty_tile);
+  for (int i = 0; i < GetAmount(); ++i)
+  {
+    map.AddRow(empty_tile);
+  }
 }
 
 }  // namespace Tactile

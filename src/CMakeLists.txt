@@ -50,6 +50,8 @@ set(TACTILE_SOURCE_FILES
     core/commands/maps/add_row_cmd.hpp
     core/commands/maps/map_command.cpp
     core/commands/maps/map_command.hpp
+    core/commands/maps/mergeable_map_command.cpp
+    core/commands/maps/mergeable_map_command.hpp
     core/commands/maps/remove_column_cmd.cpp
     core/commands/maps/remove_column_cmd.hpp
     core/commands/maps/remove_row_cmd.cpp

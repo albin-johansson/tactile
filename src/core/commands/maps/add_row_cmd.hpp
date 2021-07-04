@@ -1,13 +1,13 @@
 #pragma once
 
 #include "core/commands/command_id.hpp"
-#include "core/commands/maps/map_command.hpp"
+#include "core/commands/maps/mergeable_map_command.hpp"
 
 namespace Tactile {
 
 class MapDocument;
 
-class AddRowCmd final : public MapCommand
+class AddRowCmd final : public MergeableMapCommand
 {
  public:
   explicit AddRowCmd(NotNull<MapDocument*> document);

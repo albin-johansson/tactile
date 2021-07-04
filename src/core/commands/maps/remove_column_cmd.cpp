@@ -5,13 +5,17 @@
 namespace Tactile {
 
 RemoveColumnCmd::RemoveColumnCmd(NotNull<MapDocument*> document)
-    : MapCommand{document, "Remove Column"}
+    : MergeableMapCommand{document, "Remove Column(s)"}
 {}
 
 void RemoveColumnCmd::Undo()
 {
   auto& map = GetMap();
-  map.AddColumn(empty_tile);
+
+  for (int i = 0; i < GetAmount(); ++i)
+  {
+    map.AddColumn(empty_tile);
+  }
 
   RestoreTiles();
 }
@@ -20,13 +24,17 @@ void RemoveColumnCmd::Redo()
 {
   auto& map = GetMap();
 
-  const auto begin = MapPosition{0_row, map.GetColumnCount() - 1_col};
-  const auto end = MapPosition{map.GetRowCount(), map.GetColumnCount()};
+  const MapPosition begin{0_row,
+                          map.GetColumnCount() - col_t{GetAmount()} - 1_col};
+  const MapPosition end{map.GetRowCount(), map.GetColumnCount()};
 
   ClearCache();
   SaveTiles(begin, end);
 
-  map.RemoveColumn();
+  for (int i = 0; i < GetAmount(); ++i)
+  {
+    map.RemoveColumn();
+  }
 }
 
 }  // namespace Tactile

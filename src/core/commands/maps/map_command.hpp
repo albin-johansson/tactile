@@ -31,6 +31,8 @@ class MapCommand : public ACommand
 
   [[nodiscard]] auto GetTileCache(layer_id id) -> TileCache&;
 
+  [[nodiscard]] auto GetLayerCache() const -> const LayerCache&;
+
   [[nodiscard]] auto GetMap() -> Map&;
 
   [[nodiscard]] auto GetDocument() -> MapDocument*

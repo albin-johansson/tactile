@@ -1,13 +1,13 @@
 #pragma once
 
 #include "core/commands/command_id.hpp"
-#include "core/commands/maps/map_command.hpp"
+#include "core/commands/maps/mergeable_map_command.hpp"
 
 namespace Tactile {
 
 class MapDocument;
 
-class RemoveColumnCmd final : public MapCommand
+class RemoveColumnCmd final : public MergeableMapCommand
 {
  public:
   explicit RemoveColumnCmd(NotNull<MapDocument*> document);

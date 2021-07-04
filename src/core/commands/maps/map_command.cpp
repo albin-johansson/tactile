@@ -77,6 +77,11 @@ auto MapCommand::GetTileCache(const layer_id id) -> TileCache&
   return mCache[id];
 }
 
+auto MapCommand::GetLayerCache() const -> const LayerCache&
+{
+  return mCache;
+}
+
 auto MapCommand::GetMap() -> Map&
 {
   return mDocument->GetMap();
