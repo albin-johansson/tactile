@@ -71,6 +71,8 @@ set(TACTILE_SOURCE_FILES
     core/commands/maps/layers/select_layer_cmd.hpp
     core/commands/maps/layers/set_layer_opacity_cmd.cpp
     core/commands/maps/layers/set_layer_opacity_cmd.hpp
+    core/commands/maps/layers/set_layer_visible_cmd.cpp
+    core/commands/maps/layers/set_layer_visible_cmd.hpp
 
     core/commands/properties/add_property_cmd.cpp
     core/commands/properties/add_property_cmd.hpp
@@ -111,6 +113,7 @@ set(TACTILE_SOURCE_FILES
     core/events/layers/remove_layer_event.hpp
     core/events/layers/select_layer_event.hpp
     core/events/layers/set_layer_opacity_event.hpp
+    core/events/layers/set_layer_visible_event.hpp
     core/events/layers/show_layer_properties_event.hpp
 
     core/events/maps/add_column_event.hpp

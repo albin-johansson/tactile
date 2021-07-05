@@ -14,6 +14,7 @@
 #include "core/events/layers/remove_layer_event.hpp"
 #include "core/events/layers/select_layer_event.hpp"
 #include "core/events/layers/set_layer_opacity_event.hpp"
+#include "core/events/layers/set_layer_visible_event.hpp"
 #include "core/events/layers/show_layer_properties_event.hpp"
 #include "core/events/maps/add_column_event.hpp"
 #include "core/events/maps/add_map_event.hpp"
@@ -124,6 +125,8 @@ class Application final
   void OnDuplicateLayerEvent(const DuplicateLayerEvent& event);
 
   void OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event);
+
+  void OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event);
 
   void OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event);
 

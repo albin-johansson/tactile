@@ -431,6 +431,14 @@ void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
   }
 }
 
+void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->SetLayerVisible(event.id, event.visible);
+  }
+}
+
 void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event)
 {
   if (auto* document = mModel->GetActiveDocument())

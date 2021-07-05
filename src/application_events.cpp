@@ -36,6 +36,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<MoveLayerDownEvent>().connect<&App::OnMoveLayerDownEvent>(app);
   dispatcher.sink<DuplicateLayerEvent>().connect<&App::OnDuplicateLayerEvent>(app);
   dispatcher.sink<SetLayerOpacityEvent>().connect<&App::OnSetLayerOpacityEvent>(app);
+  dispatcher.sink<SetLayerVisibleEvent>().connect<&App::OnSetLayerVisibleEvent>(app);
 
   dispatcher.sink<ShowLayerPropertiesEvent>().connect<&App::OnShowLayerPropertiesEvent>(app);
   dispatcher.sink<ShowMapPropertiesEvent>().connect<&App::OnShowMapPropertiesEvent>(app);

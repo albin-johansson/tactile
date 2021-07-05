@@ -90,6 +90,8 @@ class MapDocument final : public IDocument
 
   void SetLayerOpacity(layer_id id, float opacity);
 
+  void SetLayerVisible(layer_id id, bool visible);
+
   void ShowProperties();
 
   void ShowLayerProperties(layer_id id);
@@ -101,6 +103,8 @@ class MapDocument final : public IDocument
   [[nodiscard]] auto CanMoveLayerDown(layer_id id) const -> bool;
 
   [[nodiscard]] auto CanMoveLayerUp(layer_id id) const -> bool;
+
+  [[nodiscard]] auto IsLayerVisible(layer_id id) const -> bool;
 
   [[nodiscard]] auto GetMap() -> Map&;
 

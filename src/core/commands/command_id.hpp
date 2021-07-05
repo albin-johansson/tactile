@@ -17,6 +17,7 @@ struct CommandId final
     MoveLayerUp,
     MoveLayerDown,
     SetLayerOpacity,
+    SetLayerVisible,
     AddProperty,
     RemoveProperty,
     RenameProperty,

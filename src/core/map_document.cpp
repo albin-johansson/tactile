@@ -13,6 +13,7 @@
 #include "core/commands/maps/layers/remove_layer_cmd.hpp"
 #include "core/commands/maps/layers/select_layer_cmd.hpp"
 #include "core/commands/maps/layers/set_layer_opacity_cmd.hpp"
+#include "core/commands/maps/layers/set_layer_visible_cmd.hpp"
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/properties/add_property_cmd.hpp"
@@ -214,6 +215,11 @@ void MapDocument::SetLayerOpacity(const layer_id id, const float opacity)
   mDelegate->Execute<SetLayerOpacityCmd>(this, id, opacity);
 }
 
+void MapDocument::SetLayerVisible(const layer_id id, const bool visible)
+{
+  mDelegate->Execute<SetLayerVisibleCmd>(this, id, visible);
+}
+
 void MapDocument::ShowProperties()
 {
   mDelegate->Execute<SetPropertyContextCmd>(this, nullptr);
@@ -245,6 +251,11 @@ auto MapDocument::CanMoveLayerDown(const layer_id id) const -> bool
 auto MapDocument::CanMoveLayerUp(const layer_id id) const -> bool
 {
   return mMap->IndexOf(id) != 0;
+}
+
+auto MapDocument::IsLayerVisible(const layer_id id) const -> bool
+{
+  return mMap->IsVisible(id);
 }
 
 auto MapDocument::GetMap() -> Map&
