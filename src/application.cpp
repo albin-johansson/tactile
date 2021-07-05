@@ -170,14 +170,18 @@ void Application::OnCtrlAltKeyStroke(const cen::scan_code key)
 void Application::OnAltShiftKeyStroke(const cen::scan_code key)
 {
   const auto* document = mModel->GetActiveDocument();
-  if (key == cen::scancodes::r && document && document->GetRowCount() != 1_row)
+  if (!document)
   {
-    OnRemoveRowEvent();
+    return;
   }
-  else if (key == cen::scancodes::c && document &&
-           document->GetColumnCount() != 1_col)
+
+  if (key == cen::scancodes::r && document->GetRowCount() != 1_row)
   {
-    OnRemoveColumnEvent();
+    mDispatcher.enqueue<RemoveRowEvent>();
+  }
+  else if (key == cen::scancodes::c && document->GetColumnCount() != 1_col)
+  {
+    mDispatcher.enqueue<RemoveColumnEvent>();
   }
 }
 
@@ -186,7 +190,7 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   const auto* document = mModel->GetActiveDocument();
   if (key == cen::scancodes::n)
   {
-    OnAddMapEvent();
+    mDispatcher.enqueue<AddMapEvent>();
   }
   else if (key == cen::scancodes::g)
   {
@@ -202,15 +206,15 @@ void Application::OnCtrlKeyStroke(const cen::scan_code key)
   }
   else if (key == cen::scancodes::space)
   {
-    OnCenterViewportEvent();
+    mDispatcher.enqueue<CenterViewportEvent>();
   }
   else if (key == cen::scancodes::z && document && document->CanUndo())
   {
-    OnUndoEvent();
+    mDispatcher.enqueue<UndoEvent>();
   }
   else if (key == cen::scancodes::y && document && document->CanRedo())
   {
-    OnRedoEvent();
+    mDispatcher.enqueue<RedoEvent>();
   }
 }
 
@@ -218,11 +222,11 @@ void Application::OnAltKeyStroke(const cen::scan_code key)
 {
   if (key == cen::scancodes::r)
   {
-    OnAddRowEvent();
+    mDispatcher.enqueue<AddRowEvent>();
   }
   else if (key == cen::scancodes::c)
   {
-    OnAddColumnEvent();
+    mDispatcher.enqueue<AddColumnEvent>();
   }
 }
 
@@ -230,15 +234,15 @@ void Application::OnKeyStroke(const cen::scan_code key)
 {
   if (key == cen::scancodes::s)
   {
-    OnSelectToolEvent(SelectToolEvent{.type = MouseToolType::Stamp});
+    mDispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
   }
   else if (key == cen::scancodes::b)
   {
-    OnSelectToolEvent(SelectToolEvent{.type = MouseToolType::Bucket});
+    mDispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
   }
   else if (key == cen::scancodes::e)
   {
-    OnSelectToolEvent(SelectToolEvent{.type = MouseToolType::Eraser});
+    mDispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
   }
 }
 
