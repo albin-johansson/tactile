@@ -258,7 +258,9 @@ void Application::OnCloseMapEvent(const CloseMapEvent& event)
 }
 
 void Application::OnOpenMapEvent(const OpenMapEvent& event)
-{}
+{
+  // TODO
+}
 
 void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
