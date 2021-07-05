@@ -23,7 +23,6 @@ Application::Application(cen::window&& window)
     , mModel{std::make_unique<Model>()}
 {
   SubscribeToEvents();
-  LoadPreferences();
   LoadCursors();
   LoadIcons();
 

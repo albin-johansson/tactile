@@ -10,6 +10,7 @@
 #include "application.hpp"
 #include "gui/imgui_context.hpp"
 #include "init_open_gl_attributes.hpp"
+#include "io/preferences.hpp"
 
 namespace {
 
@@ -89,6 +90,8 @@ auto main(int argc, char** argv) -> int
     cen::log::error("Failed to initialize GLEW!");
     return -1;
   }
+
+  Tactile::LoadPreferences();
 
   Tactile::ImGuiContext gui{window, glContext};
   window.maximize();
