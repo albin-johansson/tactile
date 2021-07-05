@@ -15,6 +15,7 @@ void StampTool::OnPressed(const MouseInfo& info)
   {
     const auto* tileset = GetTileset();
     assert(tileset);
+
     UpdateSequence(*tileset, info.mouse_position_in_map);
   }
 }
@@ -25,6 +26,7 @@ void StampTool::OnDragged(const MouseInfo& info)
   {
     const auto* tileset = GetTileset();
     assert(tileset);
+
     UpdateSequence(*tileset, info.mouse_position_in_map);
   }
 }
@@ -34,6 +36,8 @@ void StampTool::OnReleased(const MouseInfo& info)
   if (IsUsable() && info.button == cen::mouse_button::left)
   {
     auto* document = GetDocument();
+    assert(document);
+
     document->AddStampSequence(std::move(mOldState), std::move(mSequence));
 
     // Clearing the maps allows for them to be reused after being moved from
