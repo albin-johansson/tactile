@@ -21,6 +21,8 @@
 #include "core/commands/properties/rename_property_cmd.hpp"
 #include "core/commands/properties/set_property_cmd.hpp"
 #include "core/commands/properties/set_property_context_cmd.hpp"
+#include "core/commands/tilesets/add_tileset_cmd.hpp"
+#include "core/commands/tilesets/remove_tileset_cmd.hpp"
 #include "core/commands/tools/bucket_cmd.hpp"
 #include "core/commands/tools/eraser_sequence_cmd.hpp"
 #include "core/commands/tools/stamp_sequence_cmd.hpp"
@@ -270,11 +272,12 @@ void MapDocument::AddTileset(const TextureInfo& info,
                              const int tileHeight)
 {
   const auto tilesetId = mTilesets->GetNextTilesetId();
-  const auto tileId = mTilesets->GetNextGlobalTileId();
-
-  auto tileset = std::make_shared<Tileset>(tileId, info, tileWidth, tileHeight);
-  mTilesets->Add(tilesetId, std::move(tileset));
   mTilesets->IncrementNextTilesetId();
+
+  const auto tileId = mTilesets->GetNextGlobalTileId();
+  auto tileset = std::make_shared<Tileset>(tileId, info, tileWidth, tileHeight);
+
+  mDelegate->Execute<AddTilesetCmd>(this, tilesetId, std::move(tileset));
 }
 
 void MapDocument::SelectTileset(const tileset_id id)
@@ -284,7 +287,7 @@ void MapDocument::SelectTileset(const tileset_id id)
 
 void MapDocument::RemoveTileset(const tileset_id id)
 {
-  mTilesets->Remove(id);
+  mDelegate->Execute<RemoveTilesetCmd>(this, id);
 }
 
 auto MapDocument::GetTilesets() -> TilesetManager&

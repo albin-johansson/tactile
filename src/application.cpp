@@ -263,8 +263,10 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
     CENTURION_LOG_DEBUG("Loaded texture with ID %u", info->texture);
     mTextures.push_back(info->texture);
 
-    auto* document = mModel->GetActiveDocument();
-    document->AddTileset(*info, event.tile_width, event.tile_height);
+    if (auto* document = mModel->GetActiveDocument())
+    {
+      document->AddTileset(*info, event.tile_width, event.tile_height);
+    }
   }
   else
   {
@@ -326,8 +328,10 @@ void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
 
 void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
 {
-  auto* document = mModel->GetActiveDocument();
-  document->RemoveTileset(event.id);
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->RemoveTileset(event.id);
+  }
 }
 
 void Application::OnAddRowEvent()

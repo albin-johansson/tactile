@@ -87,6 +87,11 @@ set(TACTILE_SOURCE_FILES
     core/commands/properties/set_property_context_cmd.cpp
     core/commands/properties/set_property_context_cmd.hpp
 
+    core/commands/tilesets/add_tileset_cmd.cpp
+    core/commands/tilesets/add_tileset_cmd.hpp
+    core/commands/tilesets/remove_tileset_cmd.cpp
+    core/commands/tilesets/remove_tileset_cmd.hpp
+
     core/commands/tools/bucket_cmd.cpp
     core/commands/tools/bucket_cmd.hpp
     core/commands/tools/eraser_sequence_cmd.cpp

@@ -25,7 +25,9 @@ struct CommandId final
     SetPropertyContext,
     StampSequence,
     EraserSequence,
-    Bucket
+    Bucket,
+    AddTileset,
+    RemoveTileset
   };
 };
 
