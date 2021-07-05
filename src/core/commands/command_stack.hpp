@@ -48,6 +48,15 @@ class CommandStack final
    */
   void Redo();
 
+  template <std::derived_from<ACommand> T, typename... Args>
+  void PushWithoutRedo(Args&&... args)
+  {
+    RemoveCommandsAfterCurrentIndex();
+    auto cmd = std::make_unique<T>(std::forward<Args>(args)...);
+    mIndex = mIndex ? *mIndex + 1 : 0;
+    mStack.push_back(std::move(cmd));
+  }
+
   /**
    * \brief Pushes a command to the command stack and executes it.
    *
