@@ -30,6 +30,8 @@ void EraserTool::OnReleased(const MouseInfo& info)
   if (IsUsable() && info.button == cen::mouse_button::left)
   {
     auto* document = GetDocument();
+    assert(document);
+
     document->AddEraserSequence(std::move(mOldState));
     mOldState.clear();
   }
