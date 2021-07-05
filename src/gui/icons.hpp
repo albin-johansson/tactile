@@ -49,6 +49,8 @@
 #define TAC_ICON_ZOOM_OUT ICON_FA_SEARCH_MINUS
 #define TAC_ICON_RESET_ZOOM ICON_FA_SEARCH
 
+#define TAC_ICON_LINK ICON_FA_LINK
+
 namespace Tactile {
 
 void LoadIcons();
