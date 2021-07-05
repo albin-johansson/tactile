@@ -10,6 +10,7 @@
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
+#include "gui/widgets/toolbar/tool_button.hpp"
 
 namespace Tactile {
 namespace {
@@ -69,19 +70,28 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
 
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_STAMP, "Stamp tool.", document))
+    if (ToolButton(TAC_ICON_STAMP,
+                   "Stamp tool.",
+                   model.IsStampActive(),
+                   document != nullptr))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
     }
 
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_BUCKET, "Bucket tool.", document))
+    if (ToolButton(TAC_ICON_BUCKET,
+                   "Bucket tool.",
+                   model.IsBucketActive(),
+                   document != nullptr))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
     }
 
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_ERASER, "Eraser tool.", document))
+    if (ToolButton(TAC_ICON_ERASER,
+                   "Eraser tool.",
+                   model.IsEraserActive(),
+                   document != nullptr))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
     }
