@@ -13,10 +13,14 @@ void StampTool::OnPressed(const MouseInfo& info)
 {
   if (IsUsable() && info.button == cen::mouse_button::left)
   {
-    const auto* tileset = GetTileset();
-    assert(tileset);
-
-    UpdateSequence(*tileset, info.mouse_position_in_map);
+    if (const auto* tileset = GetTileset())
+    {
+      UpdateSequence(*tileset, info.mouse_position_in_map);
+    }
+    else
+    {
+      CENTURION_LOG_ERROR("Failed to update stamp tool sequence!");
+    }
   }
 }
 
@@ -24,10 +28,14 @@ void StampTool::OnDragged(const MouseInfo& info)
 {
   if (IsUsable() && info.button == cen::mouse_button::left)
   {
-    const auto* tileset = GetTileset();
-    assert(tileset);
-
-    UpdateSequence(*tileset, info.mouse_position_in_map);
+    if (const auto* tileset = GetTileset())
+    {
+      UpdateSequence(*tileset, info.mouse_position_in_map);
+    }
+    else
+    {
+      CENTURION_LOG_ERROR("Failed to update stamp tool sequence!");
+    }
   }
 }
 
@@ -35,10 +43,14 @@ void StampTool::OnReleased(const MouseInfo& info)
 {
   if (IsUsable() && info.button == cen::mouse_button::left)
   {
-    auto* document = GetDocument();
-    assert(document);
-
-    document->AddStampSequence(std::move(mOldState), std::move(mSequence));
+    if (auto* document = GetDocument())
+    {
+      document->AddStampSequence(std::move(mOldState), std::move(mSequence));
+    }
+    else
+    {
+      CENTURION_LOG_ERROR("Failed to register stamp tool sequence!");
+    }
 
     // Clearing the maps allows for them to be reused after being moved from
     mOldState.clear();
@@ -60,6 +72,7 @@ void StampTool::UpdateSequence(const Tileset& tileset, const MapPosition& origin
   auto* tileLayer = map.GetTileLayer(map.GetActiveLayerId().value());
   if (!tileLayer)
   {
+    CENTURION_LOG_WARN("Failed to update stamp sequence due to null tile layer!");
     return;
   }
 
