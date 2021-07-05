@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include "gui/themes.hpp"
 #include "gui/widgets/common/help_marker.hpp"
 #include "io/preferences.hpp"
 
@@ -16,6 +17,8 @@ void ShowGeneralTab()
 {
   if (ImGui::BeginTabItem("General"))
   {
+    ImGui::Spacing();
+
     ImGui::Text("Startup");
     ImGui::Checkbox("Restore last session", &restore_last_session);
 
@@ -34,8 +37,19 @@ void ShowThemeBar()
 {
   if (ImGui::BeginTabItem("Theme"))
   {
-    static int currentItem = 0;
-    ImGui::Combo("Theme", &currentItem, "Dark\0Light\0\0");
+    ImGui::Spacing();
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Theme:");
+
+    ImGui::SameLine();
+    auto themeIndex = GetThemeIndex(Prefs::GetTheme());
+    if (ImGui::Combo("##ThemeCombo", &themeIndex, theme_options))
+    {
+      const auto theme = GetThemeFromIndex(themeIndex);
+      Prefs::SetTheme(theme);
+      ApplyTheme(ImGui::GetStyle(), theme);
+    }
 
     ImGui::EndTabItem();
   }
@@ -45,6 +59,8 @@ void ShowExportTab()
 {
   if (ImGui::BeginTabItem("Export"))
   {
+    ImGui::Spacing();
+
     bool embedTilesets = Prefs::GetEmbedTilesets();
     if (ImGui::Checkbox("Embed tilesets", &embedTilesets))
     {
@@ -68,8 +84,12 @@ void ShowExportTab()
           "more space.");
     }
 
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Preferred format:");
+
     int formatIndex = (Prefs::GetPreferredFormat() == "JSON") ? 0 : 1;
-    if (ImGui::Combo("Default format", &formatIndex, "JSON\0TMX\0\0"))
+    ImGui::SameLine();
+    if (ImGui::Combo("##PreferredFormatCombo", &formatIndex, "JSON\0TMX\0\0"))
     {
       Prefs::SetPreferredFormat((formatIndex == 0) ? "JSON" : "TMX");
     }
@@ -90,8 +110,16 @@ void ShowExportTab()
 
     static int tileWidth = 32;
     static int tileHeight = 32;
-    ImGui::InputInt("Tile width", &tileWidth);
-    ImGui::InputInt("Tile height", &tileHeight);
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Tile width: ");
+    ImGui::SameLine();
+    ImGui::InputInt("##TileWidthInput", &tileWidth);
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Tile height:");
+    ImGui::SameLine();
+    ImGui::InputInt("##TileHeightInput", &tileHeight);
 
     ImGui::EndTabItem();
   }

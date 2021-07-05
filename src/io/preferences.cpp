@@ -5,7 +5,9 @@
 #include <string>      // string
 #include <utility>     // move
 
+#include "aliases/czstring.hpp"
 #include "directories.hpp"
+#include "gui/themes.hpp"
 
 namespace Tactile {
 namespace {
@@ -19,10 +21,12 @@ inline constexpr bool def_show_layer_dock = true;
 inline constexpr bool def_show_tileset_dock = true;
 inline constexpr bool def_show_properties_dock = true;
 inline constexpr auto def_preferred_format = "JSON";
+inline constexpr Theme def_theme = Theme::Ash;
 
 struct Preferences final
 {
   std::string preferred_format = def_preferred_format;
+  Theme theme = def_theme;
   bool embed_tilesets = def_embed_tilesets;
   bool human_readable_output = def_human_readable_output;
   bool show_grid = def_show_grid;
@@ -33,11 +37,25 @@ struct Preferences final
 
 inline Preferences settings;
 
+template <typename T>
+void AddIfMissing(rune::ini_file& ini,
+                  czstring section,
+                  czstring element,
+                  T value)
+{
+  auto& s = ini[section];
+  if (!s.contains(element))
+  {
+    s[element] = std::move(value);
+  }
+}
+
 void WritePreferencesToFile(const Preferences& preferences = Preferences{})
 {
   rune::ini_file ini;
 
-  ini["Graphics"]["ShowGrid"] = preferences.show_grid;
+  ini["Appearance"]["Theme"] = GetThemeIndex(preferences.theme);
+  ini["Appearance"]["ShowGrid"] = preferences.show_grid;
 
   ini["Export"]["PreferredFormat"] = preferences.preferred_format;
   ini["Export"]["EmbedTilesets"] = preferences.embed_tilesets;
@@ -53,48 +71,21 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
 // Read existing settings file and fill in any potentially missing settings
 void ValidateExistingFile()
 {
-  auto ini = rune::read_ini(GetPersistentFileDir() / file_name);
+  const auto path = GetPersistentFileDir() / file_name;
+  auto ini = rune::read_ini(path);
 
-  auto& gfx = ini["Graphics"];
-  auto& exp = ini["Export"];
-  auto& widgets = ini["Widgets"];
+  AddIfMissing(ini, "Appearance", "Theme", GetThemeIndex(def_theme));
+  AddIfMissing(ini, "Appearance", "ShowGrid", def_show_grid);
 
-  if (!gfx.contains("ShowGrid"))
-  {
-    gfx["ShowGrid"] = def_show_grid;
-  }
+  AddIfMissing(ini, "Export", "PreferredFormat", def_preferred_format);
+  AddIfMissing(ini, "Export", "EmbedTilesets", def_embed_tilesets);
+  AddIfMissing(ini, "Export", "HumanReadableOutput", def_human_readable_output);
 
-  if (!exp.contains("PreferredFormat"))
-  {
-    exp["PreferredFormat"] = def_preferred_format;
-  }
+  AddIfMissing(ini, "Widgets", "ShowLayerDock", def_show_layer_dock);
+  AddIfMissing(ini, "Widgets", "ShowTilesetDock", def_show_tileset_dock);
+  AddIfMissing(ini, "Widgets", "ShowPropertiesDock", def_show_properties_dock);
 
-  if (!exp.contains("EmbedTilesets"))
-  {
-    exp["EmbedTilesets"] = def_embed_tilesets;
-  }
-
-  if (!exp.contains("HumanReadableOutput"))
-  {
-    exp["HumanReadableOutput"] = def_human_readable_output;
-  }
-
-  if (!widgets.contains("ShowLayerDock"))
-  {
-    widgets["ShowLayerDock"] = def_show_layer_dock;
-  }
-
-  if (!widgets.contains("ShowTilesetDock"))
-  {
-    widgets["ShowTilesetDock"] = def_show_tileset_dock;
-  }
-
-  if (!widgets.contains("ShowPropertiesDock"))
-  {
-    widgets["ShowPropertiesDock"] = def_show_properties_dock;
-  }
-
-  rune::write_ini(ini, GetPersistentFileDir() / file_name);
+  rune::write_ini(ini, path);
 }
 
 }  // namespace
@@ -106,8 +97,9 @@ void LoadPreferences()
     ValidateExistingFile();
     const auto ini = rune::read_ini(GetPersistentFileDir() / file_name);
 
-    const auto& gfx = ini.at("Graphics");
-    settings.show_grid = gfx.at("ShowGrid").get<bool>();
+    const auto& appearance = ini.at("Appearance");
+    settings.theme = GetThemeFromIndex(appearance.at("Theme").get<int>());
+    settings.show_grid = appearance.at("ShowGrid").get<bool>();
 
     const auto& exp = ini.at("Export");
     settings.preferred_format = exp.at("PreferredFormat").get<std::string>();
@@ -127,7 +119,8 @@ void LoadPreferences()
 
   // clang-format off
   CENTURION_LOG_INFO("Loaded preferences: \"%s\"", (GetPersistentFileDir() / file_name).string().c_str());
-  CENTURION_LOG_INFO("  Graphics::ShowGrid: %i", settings.show_grid);
+  CENTURION_LOG_INFO("  Appearance::Theme: %i", settings.theme);
+  CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Export::PreferredFormat: %s", settings.preferred_format.c_str());
   CENTURION_LOG_INFO("  Export::EmbedTilesets: %i", settings.embed_tilesets);
   CENTURION_LOG_INFO("  Export::HumanReadableOutput: %i", settings.human_readable_output);
@@ -179,6 +172,11 @@ void SetShowPropertiesDock(const bool visible) noexcept
   settings.show_properties_dock = visible;
 }
 
+void SetTheme(const Theme theme) noexcept
+{
+  settings.theme = theme;
+}
+
 auto GetPreferredFormat() -> const std::string&
 {
   return settings.preferred_format;
@@ -212,6 +210,11 @@ auto GetShowTilesetDock() noexcept -> bool
 auto GetShowPropertiesDock() noexcept -> bool
 {
   return settings.show_properties_dock;
+}
+
+auto GetTheme() noexcept -> Theme
+{
+  return settings.theme;
 }
 
 }  // namespace Prefs

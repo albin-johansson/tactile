@@ -2,7 +2,10 @@
 
 #include <imgui.h>
 
-#include <algorithm>  // clamp
+#include <algorithm>      // clamp
+#include <centurion.hpp>  // to_underlying
+
+#include "core/tactile_error.hpp"
 
 #define TACTILE_SET_COLOR_GROUP(Element, Color)     \
   style.Colors[Element] = Color;                    \
@@ -40,9 +43,7 @@ namespace {
 inline const ImVec4 white = {1, 1, 1, 1};
 inline const ImVec4 black = {0, 0, 0, 1};
 
-}  // namespace
-
-void ApplyNightTheme(ImGuiStyle& style)
+void ApplyAshTheme(ImGuiStyle& style)
 {
   const auto accent = ImVec4{0.26f, 0.59f, 0.98f, 0.7f};
   const auto grab = ImVec4{0.51f, 0.51f, 0.51f, 1};
@@ -109,6 +110,63 @@ void ApplyNightTheme(ImGuiStyle& style)
   style.Colors[ImGuiCol_NavWindowingDimBg]     = ImVec4{0.8f, 0.8f, 0.8f, 0.2f};
   style.Colors[ImGuiCol_ModalWindowDimBg]      = ImVec4{0.8f, 0.8f, 0.8f, 0.35f};
   // clang-format on
+}
+
+}  // namespace
+
+void ApplyTheme(ImGuiStyle& style, const Theme theme)
+{
+  switch (theme)
+  {
+    case Theme::Ash:
+    {
+      ApplyAshTheme(style);
+      break;
+    }
+    case Theme::DearDark:
+    {
+      ImGui::StyleColorsDark(&style);
+      break;
+    }
+    case Theme::DearLight:
+    {
+      ImGui::StyleColorsLight(&style);
+      break;
+    }
+    default:
+      throw TactileError{"Did not recognize theme enumerator!"};
+  }
+}
+
+auto GetThemeFromIndex(const int index) -> Theme
+{
+  switch (index)
+  {
+    case cen::to_underlying(Theme::Ash):
+    case cen::to_underlying(Theme::DearDark):
+    case cen::to_underlying(Theme::DearLight):
+      return static_cast<Theme>(index);
+
+    default:
+    {
+      CENTURION_LOG_WARN("Invalid theme index: %i", index);
+      return Theme::Ash;
+    }
+  }
+}
+
+auto GetThemeIndex(const Theme theme) -> int
+{
+  switch (theme)
+  {
+    case Theme::Ash:
+    case Theme::DearDark:
+    case Theme::DearLight:
+      return cen::to_underlying(theme);
+
+    default:
+      throw TactileError{"Failed to recognize theme enumerator!"};
+  }
 }
 
 }  // namespace Tactile

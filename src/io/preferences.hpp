@@ -2,6 +2,8 @@
 
 #include <string>  // string
 
+#include "gui/themes.hpp"
+
 namespace Tactile {
 
 // Loads existing persistent preferences or loads the default preferences
@@ -26,6 +28,8 @@ void SetShowTilesetDock(bool visible) noexcept;
 
 void SetShowPropertiesDock(bool visible) noexcept;
 
+void SetTheme(Theme theme) noexcept;
+
 [[nodiscard]] auto GetPreferredFormat() -> const std::string&;
 
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
@@ -39,6 +43,8 @@ void SetShowPropertiesDock(bool visible) noexcept;
 [[nodiscard]] auto GetShowTilesetDock() noexcept -> bool;
 
 [[nodiscard]] auto GetShowPropertiesDock() noexcept -> bool;
+
+[[nodiscard]] auto GetTheme() noexcept -> Theme;
 
 }  // namespace Prefs
 }  // namespace Tactile

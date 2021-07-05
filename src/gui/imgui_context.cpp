@@ -9,6 +9,7 @@
 #include "gui/themes.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {
@@ -55,7 +56,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   ImGui::StyleColorsDark();
   auto& style = ImGui::GetStyle();
   ApplyStyle(style);
-  ApplyNightTheme(style);
+  ApplyTheme(style, Prefs::GetTheme());
   style.ScaleAllSizes(1);
 
   ImGui_ImplSDL2_InitForOpenGL(window.get(), context.get());
