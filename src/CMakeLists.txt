@@ -5,6 +5,8 @@ project(tactile-src CXX)
 set(TACTILE_SOURCE_FILES
     application.cpp
     application.hpp
+    application_events.cpp
+    application_events.hpp
     init_open_gl_attributes.cpp
     init_open_gl_attributes.hpp
 

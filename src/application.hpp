@@ -45,6 +45,8 @@ namespace Tactile {
 
 class Application final
 {
+  friend void SubscribeToEvents(Application*, entt::dispatcher&);
+
  public:
   Application(cen::window&& window);
 
@@ -56,8 +58,6 @@ class Application final
   Unique<Model> mModel;
   std::vector<uint> mTextures;
   bool mQuit{};
-
-  void SubscribeToEvents();
 
   void OnAboutToExit();
 
