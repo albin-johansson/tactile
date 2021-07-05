@@ -17,15 +17,9 @@ void BucketTool::OnPressed(const MouseInfo& info)
       const auto* tileset = GetTileset();
       if (tileset && tileset->IsSingleTileSelected())
       {
-        auto& map = document->GetMap();
-        auto* tileLayer = map.GetTileLayer(map.GetActiveLayerId().value());
-
         const auto selection = tileset->GetSelection()->top_left;
         const auto replacement = tileset->GetTile(selection);
-
-        // TODO command
-        std::vector<MapPosition> positions;
-        tileLayer->Flood(info.mouse_position_in_map, replacement, positions);
+        document->Flood(info.mouse_position_in_map, replacement);
       }
     }
   }

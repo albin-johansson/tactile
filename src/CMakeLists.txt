@@ -85,6 +85,13 @@ set(TACTILE_SOURCE_FILES
     core/commands/properties/set_property_context_cmd.cpp
     core/commands/properties/set_property_context_cmd.hpp
 
+    core/commands/tools/bucket_cmd.cpp
+    core/commands/tools/bucket_cmd.hpp
+    core/commands/tools/eraser_sequence_cmd.cpp
+    core/commands/tools/eraser_sequence_cmd.hpp
+    core/commands/tools/stamp_sequence_cmd.cpp
+    core/commands/tools/stamp_sequence_cmd.hpp
+
     core/events/center_viewport_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp

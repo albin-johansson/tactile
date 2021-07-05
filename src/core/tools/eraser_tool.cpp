@@ -29,7 +29,8 @@ void EraserTool::OnReleased(const MouseInfo& info)
 {
   if (IsUsable() && info.button == cen::mouse_button::left)
   {
-    // TODO register command
+    auto* document = GetDocument();
+    document->AddEraserSequence(std::move(mOldState));
     mOldState.clear();
   }
 }

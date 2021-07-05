@@ -33,8 +33,8 @@ void StampTool::OnReleased(const MouseInfo& info)
 {
   if (IsUsable() && info.button == cen::mouse_button::left)
   {
-    // TODO document->AddStampSequence(std::move(mOldState),
-    // std::move(mSequence));
+    auto* document = GetDocument();
+    document->AddStampSequence(std::move(mOldState), std::move(mSequence));
 
     // Clearing the maps allows for them to be reused after being moved from
     mOldState.clear();

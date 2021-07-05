@@ -22,7 +22,10 @@ struct CommandId final
     RenameProperty,
     SetProperty,
     ChangePropertyType,
-    SetPropertyContext
+    SetPropertyContext,
+    StampSequence,
+    EraserSequence,
+    Bucket
   };
 };
 

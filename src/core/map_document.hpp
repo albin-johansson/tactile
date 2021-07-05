@@ -14,6 +14,8 @@ namespace Tactile {
 class MapDocument final : public IDocument
 {
  public:
+  using TileCache = rune::vector_map<MapPosition, tile_id>;
+
   MapDocument();
 
   MapDocument(row_t nRows, col_t nCols);
@@ -57,6 +59,12 @@ class MapDocument final : public IDocument
 
   /// \name Map document API
   /// \{
+
+  void AddStampSequence(TileCache&& oldState, TileCache&& newState);
+
+  void AddEraserSequence(TileCache&& oldState);
+
+  void Flood(MapPosition origin, tile_id replacement);
 
   void AddRow();
 

@@ -21,6 +21,9 @@
 #include "core/commands/properties/rename_property_cmd.hpp"
 #include "core/commands/properties/set_property_cmd.hpp"
 #include "core/commands/properties/set_property_context_cmd.hpp"
+#include "core/commands/tools/bucket_cmd.hpp"
+#include "core/commands/tools/eraser_sequence_cmd.hpp"
+#include "core/commands/tools/stamp_sequence_cmd.hpp"
 
 namespace Tactile {
 
@@ -114,6 +117,23 @@ auto MapDocument::GetPath() const -> std::filesystem::path
 auto MapDocument::GetAbsolutePath() const -> std::filesystem::path
 {
   return mDelegate->GetAbsolutePath();
+}
+
+void MapDocument::AddStampSequence(TileCache&& oldState, TileCache&& newState)
+{
+  mDelegate->PushWithoutRedo<StampSequenceCmd>(this,
+                                               std::move(oldState),
+                                               std::move(newState));
+}
+
+void MapDocument::AddEraserSequence(TileCache&& oldState)
+{
+  mDelegate->PushWithoutRedo<EraserSequenceCmd>(this, std::move(oldState));
+}
+
+void MapDocument::Flood(const MapPosition origin, const tile_id replacement)
+{
+  mDelegate->Execute<BucketCmd>(this, origin, replacement);
 }
 
 void MapDocument::AddRow()
