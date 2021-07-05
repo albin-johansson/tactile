@@ -322,8 +322,10 @@ void Application::OnSelectMapEvent(const SelectMapEvent& event)
 
 void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
 {
-  auto* document = mModel->GetActiveDocument();
-  document->SelectTileset(event.id);
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->SelectTileset(event.id);
+  }
 }
 
 void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
@@ -492,7 +494,10 @@ void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& eve
   if (auto* document = mModel->GetActiveDocument())
   {
     auto& tilesets = document->GetTilesets();
-    tilesets.GetActiveTileset()->SetSelection(event.selection);
+    if (auto* tileset = tilesets.GetActiveTileset())
+    {
+      tileset->SetSelection(event.selection);
+    }
   }
 }
 
