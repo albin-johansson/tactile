@@ -93,6 +93,12 @@ class DocumentDelegate final : public IDocument
     mCommandStack->Push<T>(std::forward<Args>(args)...);
   }
 
+  template <std::derived_from<ACommand> T, typename... Args>
+  void PushWithoutRedo(Args&&... args)
+  {
+    mCommandStack->PushWithoutRedo<T>(std::forward<Args>(args)...);
+  }
+
   /// \} End of command API
 
  private:
