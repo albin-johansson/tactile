@@ -29,10 +29,15 @@ void EraserTool::OnReleased(const MouseInfo& info)
 {
   if (IsUsable() && info.button == cen::mouse_button::left)
   {
-    auto* document = GetDocument();
-    assert(document);
+    if (auto* document = GetDocument())
+    {
+      document->AddEraserSequence(std::move(mOldState));
+    }
+    else
+    {
+      CENTURION_LOG_ERROR("Failed to register eraser sequence!");
+    }
 
-    document->AddEraserSequence(std::move(mOldState));
     mOldState.clear();
   }
 }
@@ -40,7 +45,11 @@ void EraserTool::OnReleased(const MouseInfo& info)
 void EraserTool::UpdateSequence(const MapPosition& position)
 {
   auto* document = GetDocument();
-  assert(document);
+  if (!document)
+  {
+    CENTURION_LOG_WARN("Could not update eraser sequence!");
+    return;
+  }
 
   auto& map = document->GetMap();
   auto* tileLayer = map.GetTileLayer(map.GetActiveLayerId().value());
