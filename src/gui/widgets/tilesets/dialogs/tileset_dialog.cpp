@@ -51,8 +51,7 @@ void ShowImageFileDialog()
 
 [[nodiscard]] auto IsInputValid() -> bool
 {
-  return path_preview_buffer.front() != '\0' && tile_width > 0 &&
-         tile_height > 0;
+  return path_preview_buffer.front() != '\0' && tile_width > 0 && tile_height > 0;
 }
 
 void ResetInputs()
@@ -68,8 +67,7 @@ void ResetInputs()
 void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
 {
   constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize |
-                         ImGuiWindowFlags_NoDocking |
-                         ImGuiWindowFlags_NoCollapse;
+                         ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
   if (ImGui::Begin("Add tileset", open, flags))
   {
     ImGui::Text("Select an image which contains the tiles aligned in a grid.");
@@ -95,9 +93,7 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
     ButtonEx("OK", nullptr, IsInputValid());
     if (ImGui::IsItemActivated())
     {
-      dispatcher.enqueue<AddTilesetEvent>(full_image_path,
-                                          tile_width,
-                                          tile_height);
+      dispatcher.enqueue<AddTilesetEvent>(full_image_path, tile_width, tile_height);
 
       ResetInputs();
       *open = false;

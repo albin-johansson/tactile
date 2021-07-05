@@ -17,8 +17,7 @@ using col_t = nenya::strong_type<int, tags::col_tag>;
   return col_t{static_cast<col_t::value_type>(value)};
 }
 
-[[nodiscard]] constexpr auto operator""_col(const ulonglong value) noexcept
-    -> col_t
+[[nodiscard]] constexpr auto operator""_col(const ulonglong value) noexcept -> col_t
 {
   return AsColumn(value);
 }

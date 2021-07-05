@@ -14,8 +14,7 @@ auto ColorPropertyWidget(const Property& property) -> Maybe<cen::color>
 {
   const ScopeID id{&property};
 
-  constexpr auto flags = ImGuiColorEditFlags_NoInputs |
-                         ImGuiColorEditFlags_NoLabel |
+  constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
                          ImGuiColorEditFlags_AlphaBar;
 
   const auto& color = property.AsColor();

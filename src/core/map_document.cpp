@@ -302,12 +302,9 @@ void MapDocument::RenameProperty(const std::string_view oldName,
                                         newName);
 }
 
-void MapDocument::SetProperty(const std::string_view name,
-                              const Property& property)
+void MapDocument::SetProperty(const std::string_view name, const Property& property)
 {
-  mDelegate->Execute<SetPropertyCmd>(mDelegate.get(),
-                                     std::string{name},
-                                     property);
+  mDelegate->Execute<SetPropertyCmd>(mDelegate.get(), std::string{name}, property);
 }
 
 void MapDocument::ChangePropertyType(const std::string_view name,
@@ -323,8 +320,7 @@ auto MapDocument::HasProperty(const std::string_view name) const -> bool
   return mDelegate->HasProperty(name);
 }
 
-auto MapDocument::GetProperty(const std::string_view name) const
-    -> const Property&
+auto MapDocument::GetProperty(const std::string_view name) const -> const Property&
 {
   return mDelegate->GetProperty(name);
 }

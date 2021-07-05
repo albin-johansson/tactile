@@ -28,8 +28,7 @@ void Object::SetProperty(const std::string_view name, const Property& property)
   mProperties.SetProperty(name, property);
 }
 
-void Object::ChangePropertyType(const std::string_view name,
-                                const PropertyType type)
+void Object::ChangePropertyType(const std::string_view name, const PropertyType type)
 {
   mProperties.ChangePropertyType(name, type);
 }

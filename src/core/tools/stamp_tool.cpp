@@ -49,8 +49,7 @@ auto StampTool::IsUsable() const -> bool
          document->GetMap().GetActiveLayerId();
 }
 
-void StampTool::UpdateSequence(const Tileset& tileset,
-                               const MapPosition& origin)
+void StampTool::UpdateSequence(const Tileset& tileset, const MapPosition& origin)
 {
   auto& map = GetDocument()->GetMap();
 

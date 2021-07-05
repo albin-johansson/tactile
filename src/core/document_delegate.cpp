@@ -98,14 +98,12 @@ auto DocumentDelegate::GetAbsolutePath() const -> std::filesystem::path
   return std::filesystem::absolute(mPath.value());
 }
 
-void DocumentDelegate::AddProperty(const std::string& name,
-                                   const PropertyType type)
+void DocumentDelegate::AddProperty(const std::string& name, const PropertyType type)
 {
   mCurrentPropertyContext->AddProperty(name, type);
 }
 
-void DocumentDelegate::AddProperty(const std::string& name,
-                                   const Property& property)
+void DocumentDelegate::AddProperty(const std::string& name, const Property& property)
 {
   mCurrentPropertyContext->AddProperty(name, property);
 }

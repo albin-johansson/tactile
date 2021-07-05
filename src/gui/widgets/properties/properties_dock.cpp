@@ -25,8 +25,7 @@ void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
     return;
   }
 
-  constexpr auto flags =
-      ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
+  constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
   bool isVisible = Prefs::GetShowPropertiesDock();
   if (ImGui::Begin("Properties", &isVisible, flags))
   {

@@ -15,8 +15,7 @@ namespace Tactile {
  * \param callable the callable that will be invoked, must provide `operator()`.
  */
 template <std::invocable T>
-constexpr void InvokeN(const usize n,
-                       T&& callable) noexcept(noexcept(callable()))
+constexpr void InvokeN(const usize n, T&& callable) noexcept(noexcept(callable()))
 {
   for (usize i = 0; i < n; ++i)
   {

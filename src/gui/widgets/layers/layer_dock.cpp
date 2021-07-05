@@ -35,9 +35,7 @@ void UpdateLayerItemPopup(const MapDocument& document,
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle visibility",
-                        nullptr,
-                        true))
+    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle visibility", nullptr, true))
     {
       // TODO dispatcher.enqueue<ToggleLayerVisibilityEvent>(id);
     }
@@ -100,8 +98,7 @@ void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
     ImGui::Selectable(name.c_str(), isSelected);
 
     if (ImGui::IsItemActivated() ||
-        (ImGui::IsItemHovered() &&
-         ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
+        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
     {
       dispatcher.enqueue<SelectLayerEvent>(id);
     }

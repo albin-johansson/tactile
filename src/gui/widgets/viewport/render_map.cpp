@@ -66,11 +66,7 @@ void RenderMap(const MapDocument& document,
 
     if (const auto* tileLayer = AsTileLayer(layer))
     {
-      RenderTileLayer(*tileLayer,
-                      document.GetTilesets(),
-                      mapPos,
-                      tileSize,
-                      bounds);
+      RenderTileLayer(*tileLayer, document.GetTilesets(), mapPos, tileSize, bounds);
     }
 
     // TODO RenderObjectLayer()

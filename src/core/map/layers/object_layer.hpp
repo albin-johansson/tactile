@@ -140,8 +140,7 @@ class ObjectLayer final : public ILayer
 
   void RemoveProperty(std::string_view name) override;
 
-  void RenameProperty(std::string_view oldName,
-                      const std::string& newName) override;
+  void RenameProperty(std::string_view oldName, const std::string& newName) override;
 
   void SetProperty(std::string_view name, const Property& property) override;
 

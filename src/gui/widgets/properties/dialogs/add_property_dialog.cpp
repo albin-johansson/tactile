@@ -27,8 +27,7 @@ void ResetState()
 
 }  // namespace
 
-void UpdateAddPropertyDialog(const IDocument& document,
-                             entt::dispatcher& dispatcher)
+void UpdateAddPropertyDialog(const IDocument& document, entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;

@@ -5,7 +5,6 @@
 
 namespace Tactile {
 
-[[nodiscard]] auto FloatPropertyWidget(const Property& property)
-    -> Maybe<float>;
+[[nodiscard]] auto FloatPropertyWidget(const Property& property) -> Maybe<float>;
 
 }  // namespace Tactile

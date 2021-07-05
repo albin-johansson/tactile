@@ -468,8 +468,7 @@ void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
   }
 }
 
-void Application::OnShowLayerPropertiesEvent(
-    const ShowLayerPropertiesEvent& event)
+void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event)
 {
   if (auto* document = mModel->GetActiveDocument())
   {
@@ -525,8 +524,7 @@ void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
   }
 }
 
-void Application::OnChangePropertyTypeEvent(
-    const ChangePropertyTypeEvent& event)
+void Application::OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event)
 {
   if (auto* document = mModel->GetActiveDocument())
   {
@@ -534,8 +532,7 @@ void Application::OnChangePropertyTypeEvent(
   }
 }
 
-void Application::OnSetTilesetSelectionEvent(
-    const SetTilesetSelectionEvent& event)
+void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event)
 {
   if (auto* document = mModel->GetActiveDocument())
   {

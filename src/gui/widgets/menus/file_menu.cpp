@@ -55,8 +55,7 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<AddMapEvent>();
     }
 
-    show_map_file_dialog =
-        ImGui::MenuItem(TAC_ICON_OPEN " Open map...", "Ctrl+O");
+    show_map_file_dialog = ImGui::MenuItem(TAC_ICON_OPEN " Open map...", "Ctrl+O");
 
     if (ImGui::MenuItem("Close map", nullptr, false, document != nullptr))
     {}

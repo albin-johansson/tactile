@@ -30,8 +30,7 @@ void ZeroBuffer(std::array<char, Size>& buffer)
  * \param str the string that will be copied into the buffer.
  */
 template <usize Size>
-void CopyStringIntoBuffer(std::array<char, Size>& buffer,
-                          const std::string_view str)
+void CopyStringIntoBuffer(std::array<char, Size>& buffer, const std::string_view str)
 {
   ZeroBuffer(buffer);
 

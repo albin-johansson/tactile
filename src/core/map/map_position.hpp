@@ -54,8 +54,8 @@ class MapPosition final
    *
    * \return a position that is offset from this position.
    */
-  [[nodiscard]] constexpr auto OffsetBy(const row_t row,
-                                        const col_t column) const -> MapPosition
+  [[nodiscard]] constexpr auto OffsetBy(const row_t row, const col_t column) const
+      -> MapPosition
   {
     return {row_t{mRow} + row, col_t{mCol} + column};
   }
@@ -165,8 +165,7 @@ class MapPosition final
    *
    * \return the column index converted to an x-coordinate.
    */
-  [[nodiscard]] constexpr auto ColumnToX(const int tileSize) const noexcept
-      -> int
+  [[nodiscard]] constexpr auto ColumnToX(const int tileSize) const noexcept -> int
   {
     return mCol * tileSize;
   }
@@ -192,8 +191,7 @@ class MapPosition final
 [[nodiscard]] constexpr auto operator+(const MapPosition& lhs,
                                        const MapPosition& rhs) -> MapPosition
 {
-  return MapPosition{lhs.GetRow() + rhs.GetRow(),
-                     lhs.GetColumn() + rhs.GetColumn()};
+  return MapPosition{lhs.GetRow() + rhs.GetRow(), lhs.GetColumn() + rhs.GetColumn()};
 }
 
 /**
@@ -207,22 +205,19 @@ class MapPosition final
 [[nodiscard]] constexpr auto operator-(const MapPosition& lhs,
                                        const MapPosition& rhs) -> MapPosition
 {
-  return MapPosition{lhs.GetRow() - rhs.GetRow(),
-                     lhs.GetColumn() - rhs.GetColumn()};
+  return MapPosition{lhs.GetRow() - rhs.GetRow(), lhs.GetColumn() - rhs.GetColumn()};
 }
 
 [[nodiscard]] constexpr auto operator*(const MapPosition& lhs,
                                        const MapPosition& rhs) -> MapPosition
 {
-  return MapPosition{lhs.GetRow() * rhs.GetRow(),
-                     lhs.GetColumn() * rhs.GetColumn()};
+  return MapPosition{lhs.GetRow() * rhs.GetRow(), lhs.GetColumn() * rhs.GetColumn()};
 }
 
 [[nodiscard]] constexpr auto operator/(const MapPosition& lhs,
                                        const MapPosition& rhs) -> MapPosition
 {
-  return MapPosition{lhs.GetRow() / rhs.GetRow(),
-                     lhs.GetColumn() / rhs.GetColumn()};
+  return MapPosition{lhs.GetRow() / rhs.GetRow(), lhs.GetColumn() / rhs.GetColumn()};
 }
 
 }  // namespace Tactile

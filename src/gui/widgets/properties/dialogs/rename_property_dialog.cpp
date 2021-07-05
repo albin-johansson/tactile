@@ -49,8 +49,7 @@ void UpdateRenamePropertyDialog(const IDocument& document,
     if (ButtonEx("OK", nullptr, is_input_valid))
     {
       auto name = CreateStringFromBuffer(name_buffer);
-      dispatcher.enqueue<RenamePropertyEvent>(old_name.value(),
-                                              std::move(name));
+      dispatcher.enqueue<RenamePropertyEvent>(old_name.value(), std::move(name));
       ResetState();
       ImGui::CloseCurrentPopup();
     }

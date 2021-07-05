@@ -4,8 +4,7 @@
 
 namespace Tactile {
 
-SelectLayerCmd::SelectLayerCmd(NotNull<MapDocument*> document,
-                               const layer_id id)
+SelectLayerCmd::SelectLayerCmd(NotNull<MapDocument*> document, const layer_id id)
     : MapCommand{document, "Select Layer"}
     , mId{id}
 {}

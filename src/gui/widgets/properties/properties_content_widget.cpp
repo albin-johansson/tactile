@@ -126,15 +126,13 @@ void UpdatePropertiesContentWidget(const MapDocument& document,
         show_add_dialog = ImGui::MenuItem(TAC_ICON_ADD " Add new property...");
         ImGui::Separator();
 
-        show_rename_dialog =
-            ImGui::MenuItem(TAC_ICON_EDIT " Rename property...");
+        show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename property...");
         if (show_rename_dialog)
         {
           rename_target = name;
         }
 
-        show_change_type_dialog =
-            ImGui::MenuItem(ICON_FA_SHAPES " Change type...");
+        show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change type...");
         if (show_change_type_dialog)
         {
           change_type_target = name;

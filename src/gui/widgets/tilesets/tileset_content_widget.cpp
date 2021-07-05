@@ -12,11 +12,10 @@
 
 namespace Tactile {
 
-void TilesetContentWidget(const MapDocument& document,
-                          entt::dispatcher& dispatcher)
+void TilesetContentWidget(const MapDocument& document, entt::dispatcher& dispatcher)
 {
-  constexpr auto flags = ImGuiTabBarFlags_Reorderable |
-                         ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
+  constexpr auto flags =
+      ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
   const auto& tilesets = document.GetTilesets();
   if (ImGui::BeginTabBar("TilesetTabBar", flags))

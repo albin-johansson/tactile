@@ -23,14 +23,12 @@ void LayerDelegate::SetName(std::string name)
   mProperties.SetName(std::move(name));
 }
 
-void LayerDelegate::AddProperty(const std::string& name,
-                                const PropertyType type)
+void LayerDelegate::AddProperty(const std::string& name, const PropertyType type)
 {
   mProperties.AddProperty(name, type);
 }
 
-void LayerDelegate::AddProperty(const std::string& name,
-                                const Property& property)
+void LayerDelegate::AddProperty(const std::string& name, const Property& property)
 {
   mProperties.AddProperty(name, property);
 }
@@ -63,8 +61,7 @@ auto LayerDelegate::HasProperty(const std::string_view name) const -> bool
   return mProperties.HasProperty(name);
 }
 
-auto LayerDelegate::GetProperty(const std::string_view name) const
-    -> const Property&
+auto LayerDelegate::GetProperty(const std::string_view name) const -> const Property&
 {
   return mProperties.GetProperty(name);
 }

@@ -4,8 +4,7 @@
 
 namespace Tactile {
 
-MoveLayerUpCmd::MoveLayerUpCmd(NotNull<MapDocument*> document,
-                               const layer_id id)
+MoveLayerUpCmd::MoveLayerUpCmd(NotNull<MapDocument*> document, const layer_id id)
     : MapCommand{document, "Move Layer Up"}
     , mId{id}
 {}

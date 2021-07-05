@@ -136,9 +136,8 @@ void ShowActiveMap(const Model& model,
                       0,
                       2);
 
-    if (ImGui::IsMouseHoveringRect(
-            ImGui::GetWindowPos(),
-            ImGui::GetWindowPos() + ImGui::GetWindowSize()))
+    if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(),
+                                   ImGui::GetWindowPos() + ImGui::GetWindowSize()))
     {
       CheckFor<MousePressedEvent>(cursor,
                                   dispatcher,

@@ -44,8 +44,7 @@ class IPropertyContext
    * \param name the name that will be associated with the property.
    * \param property the value of the property.
    */
-  virtual void AddProperty(const std::string& name,
-                           const Property& property) = 0;
+  virtual void AddProperty(const std::string& name, const Property& property) = 0;
 
   /**
    * \brief Removes the property associated with the specified name.
@@ -103,8 +102,7 @@ class IPropertyContext
    * \return `true` if there is a property associated with the specified name;
    * `false` otherwise.
    */
-  [[nodiscard]] virtual auto HasProperty(std::string_view name) const
-      -> bool = 0;
+  [[nodiscard]] virtual auto HasProperty(std::string_view name) const -> bool = 0;
 
   /**
    * \brief Returns the property associated with the specified name.

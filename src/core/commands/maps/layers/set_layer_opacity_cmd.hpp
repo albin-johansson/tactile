@@ -9,9 +9,7 @@ namespace Tactile {
 class SetLayerOpacityCmd final : public MapCommand
 {
  public:
-  SetLayerOpacityCmd(NotNull<MapDocument*> document,
-                     layer_id id,
-                     float opacity);
+  SetLayerOpacityCmd(NotNull<MapDocument*> document, layer_id id, float opacity);
 
   void Undo() override;
 

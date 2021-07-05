@@ -6,8 +6,7 @@
 
 namespace Tactile {
 
-auto FilePropertyWidget(const Property& property)
-    -> Maybe<std::filesystem::path>
+auto FilePropertyWidget(const Property& property) -> Maybe<std::filesystem::path>
 {
   const ScopeID id{&property};
 

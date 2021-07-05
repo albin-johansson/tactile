@@ -4,8 +4,7 @@
 
 namespace Tactile {
 
-RemoveLayerCmd::RemoveLayerCmd(NotNull<MapDocument*> document,
-                               const layer_id id)
+RemoveLayerCmd::RemoveLayerCmd(NotNull<MapDocument*> document, const layer_id id)
     : MapCommand{document, "Remove Layer"}
     , mId{id}
 {}

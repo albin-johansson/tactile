@@ -14,8 +14,7 @@ void PropertyDelegate::SetName(std::string name)
   mName = std::move(name);
 }
 
-void PropertyDelegate::AddProperty(const std::string& name,
-                                   const PropertyType type)
+void PropertyDelegate::AddProperty(const std::string& name, const PropertyType type)
 {
   assert(!mProperties.contains(name));
 
@@ -30,8 +29,7 @@ void PropertyDelegate::AddProperty(const std::string& name,
                       cen::to_underlying(type));
 }
 
-void PropertyDelegate::AddProperty(const std::string& name,
-                                   const Property& property)
+void PropertyDelegate::AddProperty(const std::string& name, const Property& property)
 {
   assert(!mProperties.contains(name));
   assert(property.GetType());
@@ -49,8 +47,7 @@ void PropertyDelegate::RemoveProperty(const std::string_view name)
   assert(mProperties.contains(name));
   mProperties.erase(name);
 
-  CENTURION_LOG_DEBUG("PropertyDelegate::RemoveProperty: Removed %s",
-                      name.data());
+  CENTURION_LOG_DEBUG("PropertyDelegate::RemoveProperty: Removed %s", name.data());
 }
 
 void PropertyDelegate::RenameProperty(const std::string_view oldName,

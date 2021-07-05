@@ -12,7 +12,6 @@ namespace Tactile {
 
 [[nodiscard]] auto AsObjectLayer(SharedLayer& layer) -> ObjectLayer*;
 
-[[nodiscard]] auto AsObjectLayer(const SharedLayer& layer)
-    -> const ObjectLayer*;
+[[nodiscard]] auto AsObjectLayer(const SharedLayer& layer) -> const ObjectLayer*;
 
 }  // namespace Tactile

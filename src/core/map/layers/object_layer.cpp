@@ -120,8 +120,7 @@ void ObjectLayer::RenameProperty(const std::string_view oldName,
   mDelegate.RenameProperty(oldName, newName);
 }
 
-void ObjectLayer::SetProperty(const std::string_view name,
-                              const Property& property)
+void ObjectLayer::SetProperty(const std::string_view name, const Property& property)
 {
   mDelegate.SetProperty(name, property);
 }
@@ -137,8 +136,7 @@ auto ObjectLayer::HasProperty(const std::string_view name) const -> bool
   return mDelegate.HasProperty(name);
 }
 
-auto ObjectLayer::GetProperty(const std::string_view name) const
-    -> const Property&
+auto ObjectLayer::GetProperty(const std::string_view name) const -> const Property&
 {
   return mDelegate.GetProperty(name);
 }

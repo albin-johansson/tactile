@@ -6,7 +6,6 @@ namespace Tactile {
 
 class MapDocument;
 
-void TilesetContentWidget(const MapDocument& document,
-                          entt::dispatcher& dispatcher);
+void TilesetContentWidget(const MapDocument& document, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

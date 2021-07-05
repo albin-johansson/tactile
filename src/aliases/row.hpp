@@ -17,8 +17,7 @@ using row_t = nenya::strong_type<int, tags::row_tag>;
   return row_t{static_cast<row_t::value_type>(value)};
 }
 
-[[nodiscard]] constexpr auto operator""_row(const ulonglong value) noexcept
-    -> row_t
+[[nodiscard]] constexpr auto operator""_row(const ulonglong value) noexcept -> row_t
 {
   return AsRow(value);
 }

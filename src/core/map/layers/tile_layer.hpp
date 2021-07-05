@@ -211,8 +211,7 @@ class TileLayer final : public ILayer
    * \return the ID of the tile at the specified position; `nothing` if the
    * position is out-of-bounds.
    */
-  [[nodiscard]] auto GetTile(const MapPosition& position) const
-      -> Maybe<tile_id>;
+  [[nodiscard]] auto GetTile(const MapPosition& position) const -> Maybe<tile_id>;
 
   /**
    * \brief Indicates whether or not the specified position is in bounds of the
@@ -235,8 +234,7 @@ class TileLayer final : public ILayer
 
   void RemoveProperty(std::string_view name) override;
 
-  void RenameProperty(std::string_view oldName,
-                      const std::string& newName) override;
+  void RenameProperty(std::string_view oldName, const std::string& newName) override;
 
   void SetProperty(std::string_view name, const Property& property) override;
 

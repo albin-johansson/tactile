@@ -26,8 +26,7 @@ void ShowGeneralTab()
     ImGui::Spacing();
 
     ImGui::Text("Behavior");
-    ImGui::Checkbox("RMB with stamp tool works as eraser",
-                    &rmb_stamp_as_eraser);
+    ImGui::Checkbox("RMB with stamp tool works as eraser", &rmb_stamp_as_eraser);
 
     ImGui::EndTabItem();
   }

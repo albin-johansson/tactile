@@ -20,8 +20,7 @@ namespace {
   return {color.x, color.y, color.z, opacity};
 }
 
-[[nodiscard]] auto Brighten(const ImVec4& color, const float opacity = 1)
-    -> ImVec4
+[[nodiscard]] auto Brighten(const ImVec4& color, const float opacity = 1) -> ImVec4
 {
   const auto brighten = [](const float f) {
     return std::clamp(f * 1.2f, 0.0f, 1.0f);
@@ -30,12 +29,9 @@ namespace {
   return {brighten(color.x), brighten(color.y), brighten(color.z), opacity};
 }
 
-[[nodiscard]] auto Darken(const ImVec4& color, const float opacity = 1)
-    -> ImVec4
+[[nodiscard]] auto Darken(const ImVec4& color, const float opacity = 1) -> ImVec4
 {
-  const auto darken = [](const float f) {
-    return std::clamp(f * 0.8f, 0.0f, 1.0f);
-  };
+  const auto darken = [](const float f) { return std::clamp(f * 0.8f, 0.0f, 1.0f); };
 
   return {darken(color.x), darken(color.y), darken(color.z), opacity};
 }

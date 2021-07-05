@@ -6,7 +6,6 @@ namespace Tactile {
 
 class Tileset;
 
-void TilesetViewportWidget(const Tileset& tileset,
-                           entt::dispatcher& dispatcher);
+void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

@@ -92,10 +92,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan up",
-                        "Ctrl+Up",
-                        false,
-                        hasActiveMap))
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan up", "Ctrl+Up", false, hasActiveMap))
     {}
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Pan down",

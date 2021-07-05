@@ -233,8 +233,7 @@ auto TileLayer::GetTile(const MapPosition& position) const -> Maybe<tile_id>
 auto TileLayer::InBounds(const MapPosition& position) const -> bool
 {
   const auto row = position.GetRowIndex();
-  return (row < mTiles.size()) &&
-         (position.GetColumnIndex() < mTiles[row].size());
+  return (row < mTiles.size()) && (position.GetColumnIndex() < mTiles[row].size());
 }
 
 void TileLayer::AddProperty(const std::string& name, const PropertyType type)
@@ -258,8 +257,7 @@ void TileLayer::RenameProperty(const std::string_view oldName,
   mDelegate.RenameProperty(oldName, newName);
 }
 
-void TileLayer::SetProperty(const std::string_view name,
-                            const Property& property)
+void TileLayer::SetProperty(const std::string_view name, const Property& property)
 {
   mDelegate.SetProperty(name, property);
 }
@@ -275,8 +273,7 @@ auto TileLayer::HasProperty(const std::string_view name) const -> bool
   return mDelegate.HasProperty(name);
 }
 
-auto TileLayer::GetProperty(const std::string_view name) const
-    -> const Property&
+auto TileLayer::GetProperty(const std::string_view name) const -> const Property&
 {
   return mDelegate.GetProperty(name);
 }

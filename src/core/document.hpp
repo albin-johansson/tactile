@@ -130,8 +130,7 @@ class IDocument : public IPropertyContext
    *
    * \return the absolute file path.
    */
-  [[nodiscard]] virtual auto GetAbsolutePath() const
-      -> std::filesystem::path = 0;
+  [[nodiscard]] virtual auto GetAbsolutePath() const -> std::filesystem::path = 0;
 };
 
 }  // namespace Tactile

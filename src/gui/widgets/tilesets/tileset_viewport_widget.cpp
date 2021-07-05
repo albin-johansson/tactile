@@ -20,17 +20,13 @@ inline constexpr auto rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
 
 inline GridState state;
 
-void ClampOffsets(const ImVec2 canvasSize,
-                  const float width,
-                  const float height)
+void ClampOffsets(const ImVec2 canvasSize, const float width, const float height)
 {
   state.scroll_offset.x = std::min(0.0f, state.scroll_offset.x);
   state.scroll_offset.y = std::min(0.0f, state.scroll_offset.y);
 
-  state.scroll_offset.x =
-      std::max(-width + canvasSize.x, state.scroll_offset.x);
-  state.scroll_offset.y =
-      std::max(-height + canvasSize.y, state.scroll_offset.y);
+  state.scroll_offset.x = std::max(-width + canvasSize.x, state.scroll_offset.x);
+  state.scroll_offset.y = std::max(-height + canvasSize.y, state.scroll_offset.y);
 }
 
 }  // namespace
@@ -73,9 +69,7 @@ void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
     const ImVec2 size{static_cast<float>(diff.GetColumn()) * tileSize.x,
                       static_cast<float>(diff.GetRow()) * tileSize.y};
 
-    drawList->AddRectFilled(min + origin,
-                            min + origin + size,
-                            rubber_band_color);
+    drawList->AddRectFilled(min + origin, min + origin + size, rubber_band_color);
   }
 
   ShowGrid(state, info);

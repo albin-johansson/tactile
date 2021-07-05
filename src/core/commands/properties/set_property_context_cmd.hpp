@@ -12,8 +12,7 @@ class IPropertyContext;
 class SetPropertyContextCmd final : public ACommand
 {
  public:
-  SetPropertyContextCmd(NotNull<IDocument*> document,
-                        IPropertyContext* context);
+  SetPropertyContextCmd(NotNull<IDocument*> document, IPropertyContext* context);
 
   void Undo() override;
 

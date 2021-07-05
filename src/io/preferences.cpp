@@ -38,10 +38,7 @@ struct Preferences final
 inline Preferences settings;
 
 template <typename T>
-void AddIfMissing(rune::ini_file& ini,
-                  czstring section,
-                  czstring element,
-                  T value)
+void AddIfMissing(rune::ini_file& ini, czstring section, czstring element, T value)
 {
   auto& s = ini[section];
   if (!s.contains(element))
@@ -109,8 +106,7 @@ void LoadPreferences()
     const auto& widgets = ini.at("Widgets");
     settings.show_tileset_dock = widgets.at("ShowTilesetDock").get<bool>();
     settings.show_layer_dock = widgets.at("ShowLayerDock").get<bool>();
-    settings.show_properties_dock =
-        widgets.at("ShowPropertiesDock").get<bool>();
+    settings.show_properties_dock = widgets.at("ShowPropertiesDock").get<bool>();
   }
   else
   {

@@ -46,10 +46,7 @@ class Tileset final : public IPropertyContext
    *
    * \throws TactileError if the supplied tile width or height are less than 1.
    */
-  Tileset(tile_id firstId,
-          const TextureInfo& info,
-          int tileWidth,
-          int tileHeight);
+  Tileset(tile_id firstId, const TextureInfo& info, int tileWidth, int tileHeight);
 
   /// \name Tileset API
   /// \{
@@ -72,8 +69,7 @@ class Tileset final : public IPropertyContext
       const auto& [topLeft, bottomRight] = *mSelection;
 
       const auto nRows = 1_row + (bottomRight.GetRow() - topLeft.GetRow());
-      const auto nCols =
-          1_col + (bottomRight.GetColumn() - topLeft.GetColumn());
+      const auto nCols = 1_col + (bottomRight.GetColumn() - topLeft.GetColumn());
 
       for (row_t row{0}; row < nRows; ++row)
       {
@@ -115,8 +111,7 @@ class Tileset final : public IPropertyContext
       else
       {
         const auto diff = bottomRight - topLeft;
-        const MapPosition offset{diff.GetRow() / 2_row,
-                                 diff.GetColumn() / 2_col};
+        const MapPosition offset{diff.GetRow() / 2_row, diff.GetColumn() / 2_col};
 
         const auto endRow = 1_row + diff.GetRow();
         const auto endCol = 1_col + diff.GetColumn();
@@ -252,8 +247,7 @@ class Tileset final : public IPropertyContext
    *
    * \return the current selection in the tileset.
    */
-  [[nodiscard]] auto GetSelection() const noexcept
-      -> const Maybe<TilesetSelection>&
+  [[nodiscard]] auto GetSelection() const noexcept -> const Maybe<TilesetSelection>&
   {
     return mSelection;
   }
@@ -342,8 +336,7 @@ class Tileset final : public IPropertyContext
 
   void RemoveProperty(std::string_view name) override;
 
-  void RenameProperty(std::string_view oldName,
-                      const std::string& newName) override;
+  void RenameProperty(std::string_view oldName, const std::string& newName) override;
 
   void SetProperty(std::string_view name, const Property& property) override;
 

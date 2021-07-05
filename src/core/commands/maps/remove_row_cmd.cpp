@@ -24,8 +24,7 @@ void RemoveRowCmd::Redo()
 {
   auto& map = GetMap();
 
-  const MapPosition begin{map.GetRowCount() - AsRow(GetAmount()) - 1_row,
-                          0_col};
+  const MapPosition begin{map.GetRowCount() - AsRow(GetAmount()) - 1_row, 0_col};
   const MapPosition end{map.GetRowCount(), map.GetColumnCount()};
 
   ClearCache();

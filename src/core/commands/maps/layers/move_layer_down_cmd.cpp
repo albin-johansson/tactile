@@ -4,8 +4,7 @@
 
 namespace Tactile {
 
-MoveLayerDownCmd::MoveLayerDownCmd(NotNull<MapDocument*> document,
-                                   const layer_id id)
+MoveLayerDownCmd::MoveLayerDownCmd(NotNull<MapDocument*> document, const layer_id id)
     : MapCommand{document, "Move Layer Down"}
     , mId{id}
 {}
