@@ -196,6 +196,19 @@ auto TilesetManager::GetTileset(const tile_id id) const -> const Tileset&
   throw TactileError{"Found no tileset that contains the specified tile!"};
 }
 
+auto TilesetManager::TryGetTileset(const tile_id id) const -> const Tileset*
+{
+  for (const auto& [unused, tileset] : mTilesets)
+  {
+    if (tileset->Contains(id))
+    {
+      return tileset.get();
+    }
+  }
+
+  return nullptr;
+}
+
 auto TilesetManager::GetActiveTilesetId() const -> Maybe<tileset_id>
 {
   return mCurrentTileset;

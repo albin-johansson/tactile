@@ -17,27 +17,29 @@ void RenderTile(const tile_id tile,
                 const ImVec2& gridSize,
                 const float opacity)
 {
-  const auto& tileset = tilesets.GetTileset(tile);
-  const auto texture = ToTextureID(tileset.GetTexture());
+  if (const auto* tileset = tilesets.TryGetTileset(tile))
+  {
+    const auto texture = ToTextureID(tileset->GetTexture());
 
-  const auto source = tileset.GetImageSource(tile);
-  assert(source.has_value());
+    const auto source = tileset->GetImageSource(tile);
+    assert(source.has_value());
 
-  const auto row =
-      static_cast<float>(source->y()) / static_cast<float>(source->height());
-  const auto col =
-      static_cast<float>(source->x()) / static_cast<float>(source->width());
+    const auto row =
+        static_cast<float>(source->y()) / static_cast<float>(source->height());
+    const auto col =
+        static_cast<float>(source->x()) / static_cast<float>(source->width());
 
-  const auto uvTileSize = GetTileSizeUV(tileset);
-  const auto uvMin = ImVec2{col, row} * uvTileSize;
-  const auto uvMax = uvMin + uvTileSize;
+    const auto uvTileSize = GetTileSizeUV(*tileset);
+    const auto uvMin = ImVec2{col, row} * uvTileSize;
+    const auto uvMax = uvMin + uvTileSize;
 
-  ImGui::GetWindowDrawList()->AddImage(texture,
-                                       screenPos,
-                                       screenPos + gridSize,
-                                       uvMin,
-                                       uvMax,
-                                       IM_COL32(255, 255, 255, 255 * opacity));
+    ImGui::GetWindowDrawList()->AddImage(texture,
+                                         screenPos,
+                                         screenPos + gridSize,
+                                         uvMin,
+                                         uvMax,
+                                         IM_COL32(255, 255, 255, 255 * opacity));
+  }
 }
 
 }  // namespace Tactile

@@ -210,6 +210,8 @@ class TilesetManager final
 
   [[nodiscard]] auto GetTileset(tile_id id) const -> const Tileset&;
 
+  [[nodiscard]] auto TryGetTileset(tile_id id) const -> const Tileset*;
+
   /**
    * \brief Returns the ID associated with the active tileset.
    *
