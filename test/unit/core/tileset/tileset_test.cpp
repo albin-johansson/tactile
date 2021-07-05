@@ -141,8 +141,7 @@ TEST_F(TilesetTest, GetTile)
   ASSERT_NE(empty_tile, mTileset->GetTile({0_row, 0_col}));
   ASSERT_NE(empty_tile,
             mTileset->GetTile({0_row, mTileset->GetColumnCount() - 1_col}));
-  ASSERT_NE(empty_tile,
-            mTileset->GetTile({mTileset->GetRowCount() - 1_row, 0_col}));
+  ASSERT_NE(empty_tile, mTileset->GetTile({mTileset->GetRowCount() - 1_row, 0_col}));
 
   ASSERT_EQ(empty_tile, mTileset->GetTile({0_row, mTileset->GetColumnCount()}));
   ASSERT_EQ(empty_tile, mTileset->GetTile({mTileset->GetRowCount(), 0_col}));
