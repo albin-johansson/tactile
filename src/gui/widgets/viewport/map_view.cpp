@@ -76,7 +76,7 @@ void RenderCursorGizmos(const Model& model,
 {
   assert(cursor.is_within_map);
 
-  if (!ImGui::IsWindowHovered())
+  if (!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered())
   {
     return;
   }
