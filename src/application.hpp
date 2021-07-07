@@ -6,7 +6,6 @@
 
 #include "aliases/ints.hpp"
 #include "aliases/unique.hpp"
-#include "core/events/center_viewport_event.hpp"
 #include "core/events/layers/add_layer_event.hpp"
 #include "core/events/layers/duplicate_layer_event.hpp"
 #include "core/events/layers/move_layer_down_event.hpp"
@@ -65,16 +64,6 @@ class Application final
   void PollEvents();
 
   void UpdateFrame();
-
-  void OnCtrlAltKeyStroke(cen::scan_code key);
-
-  void OnAltShiftKeyStroke(cen::scan_code key);
-
-  void OnCtrlKeyStroke(cen::scan_code key);
-
-  void OnAltKeyStroke(cen::scan_code key);
-
-  void OnKeyStroke(cen::scan_code key);
 
   void OnAddMapEvent();
 

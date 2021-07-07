@@ -9,6 +9,8 @@ set(TACTILE_SOURCE_FILES
     application_events.hpp
     init_open_gl_attributes.cpp
     init_open_gl_attributes.hpp
+    shortcuts.cpp
+    shortcuts.hpp
 
     aliases/col.hpp
     aliases/czstring.hpp

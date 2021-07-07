@@ -5,16 +5,14 @@
 #include <utility>  // move
 
 #include "application_events.hpp"
-#include "core/events/maps/show_map_properties_event.hpp"
 #include "gui/cursors.hpp"
 #include "gui/icons.hpp"
 #include "gui/update_gui.hpp"
-#include "gui/widgets/menus/edit_menu.hpp"
-#include "gui/widgets/menus/file_menu.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "io/preferences.hpp"
+#include "shortcuts.hpp"
 #include "utils/load_texture.hpp"
 
 namespace Tactile {
@@ -121,34 +119,7 @@ void Application::PollEvents()
     }
     else if (const auto* keyEvent = event.try_get<cen::keyboard_event>())
     {
-      if (keyEvent->pressed())
-      {
-        const auto ctrl = keyEvent->is_active(cen::key_modifier::ctrl);
-        const auto shift = keyEvent->is_active(cen::key_modifier::shift);
-        const auto alt = keyEvent->is_active(cen::key_modifier::alt);
-
-        const auto key = keyEvent->scan();
-        if (ctrl && alt)
-        {
-          OnCtrlAltKeyStroke(key);
-        }
-        else if (alt && shift)
-        {
-          OnAltShiftKeyStroke(key);
-        }
-        else if (ctrl)
-        {
-          OnCtrlKeyStroke(key);
-        }
-        else if (alt)
-        {
-          OnAltKeyStroke(key);
-        }
-        else
-        {
-          OnKeyStroke(key);
-        }
-      }
+      UpdateShortcuts(*mModel, *keyEvent, mDispatcher);
     }
   }
 }
@@ -157,93 +128,6 @@ void Application::UpdateFrame()
 {
   mDispatcher.update();
   UpdateGui(*mModel, mDispatcher);
-}
-
-void Application::OnCtrlAltKeyStroke(const cen::scan_code key)
-{
-  if (key == cen::scancodes::s)
-  {
-    EnableSettingsDialog();
-  }
-}
-
-void Application::OnAltShiftKeyStroke(const cen::scan_code key)
-{
-  const auto* document = mModel->GetActiveDocument();
-  if (!document)
-  {
-    return;
-  }
-
-  if (key == cen::scancodes::r && document->GetRowCount() != 1_row)
-  {
-    mDispatcher.enqueue<RemoveRowEvent>();
-  }
-  else if (key == cen::scancodes::c && document->GetColumnCount() != 1_col)
-  {
-    mDispatcher.enqueue<RemoveColumnEvent>();
-  }
-}
-
-void Application::OnCtrlKeyStroke(const cen::scan_code key)
-{
-  const auto* document = mModel->GetActiveDocument();
-  if (key == cen::scancodes::n)
-  {
-    mDispatcher.enqueue<AddMapEvent>();
-  }
-  else if (key == cen::scancodes::g)
-  {
-    Prefs::SetShowGrid(!Prefs::GetShowGrid());
-  }
-  else if (key == cen::scancodes::o)
-  {
-    EnableOpenMapDialog();
-  }
-  else if (key == cen::scancodes::t)
-  {
-    EnableTilesetDialog();
-  }
-  else if (key == cen::scancodes::space)
-  {
-    mDispatcher.enqueue<CenterViewportEvent>();
-  }
-  else if (key == cen::scancodes::z && document && document->CanUndo())
-  {
-    mDispatcher.enqueue<UndoEvent>();
-  }
-  else if (key == cen::scancodes::y && document && document->CanRedo())
-  {
-    mDispatcher.enqueue<RedoEvent>();
-  }
-}
-
-void Application::OnAltKeyStroke(const cen::scan_code key)
-{
-  if (key == cen::scancodes::r)
-  {
-    mDispatcher.enqueue<AddRowEvent>();
-  }
-  else if (key == cen::scancodes::c)
-  {
-    mDispatcher.enqueue<AddColumnEvent>();
-  }
-}
-
-void Application::OnKeyStroke(const cen::scan_code key)
-{
-  if (key == cen::scancodes::s)
-  {
-    mDispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
-  }
-  else if (key == cen::scancodes::b)
-  {
-    mDispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
-  }
-  else if (key == cen::scancodes::e)
-  {
-    mDispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
-  }
 }
 
 void Application::OnAddMapEvent()
