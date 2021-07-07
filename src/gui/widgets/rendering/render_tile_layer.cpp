@@ -3,8 +3,8 @@
 #include <imgui.h>
 
 #include "core/map/layers/tile_layer.hpp"
-#include "gui/widgets/render_bounds.hpp"
-#include "gui/widgets/viewport/render_tile.hpp"
+#include "gui/widgets/rendering/render_bounds.hpp"
+#include "render_tile.hpp"
 
 namespace Tactile {
 

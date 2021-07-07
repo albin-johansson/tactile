@@ -7,6 +7,7 @@
 #include "core/map/map.hpp"
 #include "core/properties/property_delegate.hpp"
 #include "core/tileset/tileset_manager.hpp"
+#include "core/viewport_info.hpp"
 #include "utils/texture_info.hpp"
 
 namespace Tactile {
@@ -124,6 +125,21 @@ class MapDocument final : public IDocument
 
   [[nodiscard]] auto GetTilesets() const -> const TilesetManager&;
 
+  void OffsetViewport(float dx, float dy);
+
+  void IncreaseViewportTileSize();
+
+  void DecreaseViewportTileSize();
+
+  void ResetViewportTileSize();
+
+  [[nodiscard]] auto CanDecreaseViewportTileSize() const -> bool;
+
+  [[nodiscard]] auto GetViewportInfo() const noexcept -> const ViewportInfo&
+  {
+    return mViewportInfo;
+  }
+
   /// \} End of map document API
 
   /// \name Property API
@@ -160,6 +176,7 @@ class MapDocument final : public IDocument
   Unique<DocumentDelegate> mDelegate;  ///< Delegate for document API.
   int mTileLayerSuffix{1};             ///< Incrementing tile layer suffix.
   int mObjectLayerSuffix{1};           ///< Incrementing object layer suffix.
+  ViewportInfo mViewportInfo;
 };
 
 }  // namespace Tactile

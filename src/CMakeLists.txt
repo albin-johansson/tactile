@@ -35,6 +35,7 @@ set(TACTILE_SOURCE_FILES
     core/model.cpp
     core/model.hpp
     core/tactile_error.hpp
+    core/viewport_info.hpp
 
     core/algorithms/flood_fill.cpp
     core/algorithms/flood_fill.hpp
@@ -103,7 +104,6 @@ set(TACTILE_SOURCE_FILES
     core/commands/tools/stamp_sequence_cmd.cpp
     core/commands/tools/stamp_sequence_cmd.hpp
 
-    core/events/center_viewport_event.hpp
     core/events/quit_event.hpp
     core/events/redo_event.hpp
     core/events/undo_event.hpp
@@ -143,6 +143,12 @@ set(TACTILE_SOURCE_FILES
     core/events/tools/mouse_pressed_event.hpp
     core/events/tools/mouse_released_event.hpp
     core/events/tools/select_tool_event.hpp
+
+    core/events/viewport/center_viewport_event.hpp
+    core/events/viewport/decrease_viewport_zoom_event.hpp
+    core/events/viewport/increase_viewport_zoom_event.hpp
+    core/events/viewport/offset_viewport_event.hpp
+    core/events/viewport/reset_viewport_zoom_event.hpp
 
     core/map/map.cpp
     core/map/map.hpp
@@ -188,16 +194,12 @@ set(TACTILE_SOURCE_FILES
     core/tools/stamp_tool.cpp
     core/tools/stamp_tool.hpp
 
-    gui/canvas_info.hpp
-    gui/canvas_info.cpp
     gui/cursors.cpp
     gui/cursors.hpp
     gui/icons.cpp
     gui/icons.hpp
     gui/imgui_context.cpp
     gui/imgui_context.hpp
-    gui/show_grid.cpp
-    gui/show_grid.hpp
     gui/style.cpp
     gui/style.hpp
     gui/texture_utils.cpp
@@ -214,8 +216,6 @@ set(TACTILE_SOURCE_FILES
 
     gui/widgets/alignment.cpp
     gui/widgets/alignment.hpp
-    gui/widgets/render_bounds.cpp
-    gui/widgets/render_bounds.hpp
 
     gui/widgets/common/button_ex.cpp
     gui/widgets/common/button_ex.hpp
@@ -281,6 +281,21 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/properties/dialogs/rename_property_dialog.cpp
     gui/widgets/properties/dialogs/rename_property_dialog.hpp
 
+    gui/widgets/rendering/canvas.hpp
+    gui/widgets/rendering/canvas.cpp
+    gui/widgets/rendering/render_bounds.cpp
+    gui/widgets/rendering/render_bounds.hpp
+    gui/widgets/rendering/render_map.cpp
+    gui/widgets/rendering/render_map.hpp
+    gui/widgets/rendering/render_tile.cpp
+    gui/widgets/rendering/render_tile.hpp
+    gui/widgets/rendering/render_tile_layer.cpp
+    gui/widgets/rendering/render_tile_layer.hpp
+    gui/widgets/rendering/grid.cpp
+    gui/widgets/rendering/grid.hpp
+    gui/widgets/rendering/uv_tile_size.cpp
+    gui/widgets/rendering/uv_tile_size.hpp
+
     gui/widgets/tilesets/tileset_content_widget.cpp
     gui/widgets/tilesets/tileset_content_widget.hpp
     gui/widgets/tilesets/tileset_dock.cpp
@@ -300,16 +315,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/map_content_viewport.hpp
     gui/widgets/viewport/no_content_viewport_widget.cpp
     gui/widgets/viewport/no_content_viewport_widget.hpp
-    gui/widgets/viewport/render_map.cpp
-    gui/widgets/viewport/render_map.hpp
     gui/widgets/viewport/render_stamp_preview.cpp
     gui/widgets/viewport/render_stamp_preview.hpp
-    gui/widgets/viewport/render_tile.cpp
-    gui/widgets/viewport/render_tile.hpp
-    gui/widgets/viewport/render_tile_layer.cpp
-    gui/widgets/viewport/render_tile_layer.hpp
-    gui/widgets/viewport/uv_tile_size.cpp
-    gui/widgets/viewport/uv_tile_size.hpp
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
 
@@ -324,7 +331,7 @@ set(TACTILE_SOURCE_FILES
     utils/load_texture.hpp
     utils/scope_id.hpp
     utils/texture_info.hpp
-    )
+    gui/widgets/viewport/viewport_cursor_info.cpp gui/widgets/viewport/viewport_cursor_info.hpp gui/widgets/viewport/map_view.cpp gui/widgets/viewport/map_view.hpp)
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 

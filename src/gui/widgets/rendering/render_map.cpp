@@ -5,10 +5,10 @@
 
 #include "core/map/layers/layer_utils.hpp"
 #include "core/map_document.hpp"
-#include "gui/canvas_info.hpp"
-#include "gui/widgets/render_bounds.hpp"
-#include "gui/widgets/viewport/render_tile_layer.hpp"
+#include "gui/widgets/rendering/canvas.hpp"
+#include "gui/widgets/rendering/render_bounds.hpp"
 #include "io/preferences.hpp"
+#include "render_tile_layer.hpp"
 
 namespace Tactile {
 namespace {

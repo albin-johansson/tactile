@@ -2,6 +2,10 @@
 
 #include "application.hpp"
 #include "core/events/maps/show_map_properties_event.hpp"
+#include "core/events/viewport/center_viewport_event.hpp"
+#include "core/events/viewport/decrease_viewport_zoom_event.hpp"
+#include "core/events/viewport/increase_viewport_zoom_event.hpp"
+#include "core/events/viewport/reset_viewport_zoom_event.hpp"
 
 namespace Tactile {
 
@@ -21,8 +25,12 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<SelectTilesetEvent>().connect<&App::OnSelectTilesetEvent>(app);
   dispatcher.sink<RemoveTilesetEvent>().connect<&App::OnRemoveTilesetEvent>(app);
 
-  dispatcher.sink<CenterViewportEvent>().connect<&App::OnCenterViewportEvent>(app);
   dispatcher.sink<SelectMapEvent>().connect<&App::OnSelectMapEvent>(app);
+  dispatcher.sink<CenterViewportEvent>().connect<&App::OnCenterViewportEvent>(app);
+  dispatcher.sink<OffsetViewportEvent>().connect<&App::OnOffsetViewportEvent>(app);
+  dispatcher.sink<IncreaseViewportZoomEvent>().connect<&App::OnIncreaseViewportZoomEvent>(app);
+  dispatcher.sink<DecreaseViewportZoomEvent>().connect<&App::OnDecreaseViewportZoomEvent>(app);
+  dispatcher.sink<ResetViewportZoomEvent>().connect<&App::OnResetViewportZoomEvent>(app);
 
   dispatcher.sink<AddRowEvent>().connect<&App::OnAddRowEvent>(app);
   dispatcher.sink<AddColumnEvent>().connect<&App::OnAddColumnEvent>(app);

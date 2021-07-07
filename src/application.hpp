@@ -39,6 +39,7 @@
 #include "core/events/tools/mouse_released_event.hpp"
 #include "core/events/tools/select_tool_event.hpp"
 #include "core/events/undo_event.hpp"
+#include "core/events/viewport/offset_viewport_event.hpp"
 #include "core/model.hpp"
 
 namespace Tactile {
@@ -86,6 +87,14 @@ class Application final
   void OnMouseDragEvent(const MouseDragEvent& event);
 
   void OnCenterViewportEvent();
+
+  void OnOffsetViewportEvent(const OffsetViewportEvent& event);
+
+  void OnIncreaseViewportZoomEvent();
+
+  void OnDecreaseViewportZoomEvent();
+
+  void OnResetViewportZoomEvent();
 
   void OnSelectMapEvent(const SelectMapEvent& event);
 

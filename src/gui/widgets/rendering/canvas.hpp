@@ -11,6 +11,8 @@ struct CanvasInfo final
   ImVec2 br{};  /// Bottom-right
 };
 
+void FillBackground(const CanvasInfo& canvas);
+
 [[nodiscard]] auto GetCanvasInfo() -> CanvasInfo;
 
 }  // namespace Tactile

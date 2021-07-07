@@ -1,19 +1,6 @@
-#include "show_grid.hpp"
+#include "grid.hpp"
 
 namespace Tactile {
-namespace {
-
-inline constexpr uint32 border_color = IM_COL32(255, 255, 255, 100);
-inline constexpr uint32 background_color = IM_COL32(60, 60, 60, 255);
-
-}  // namespace
-
-void FillBackground(const CanvasInfo& canvas)
-{
-  auto* drawList = ImGui::GetWindowDrawList();
-  drawList->AddRectFilled(canvas.tl, canvas.br, background_color);
-  drawList->AddRect(canvas.tl, canvas.br, border_color);
-}
 
 void ShowGrid(const GridState& state,
               const CanvasInfo& canvas,

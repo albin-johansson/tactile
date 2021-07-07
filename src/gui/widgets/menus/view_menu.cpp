@@ -2,13 +2,14 @@
 
 #include <imgui.h>
 
-#include "core/events/center_viewport_event.hpp"
+#include "core/events/viewport/center_viewport_event.hpp"
+#include "core/events/viewport/decrease_viewport_zoom_event.hpp"
+#include "core/events/viewport/increase_viewport_zoom_event.hpp"
+#include "core/events/viewport/offset_viewport_event.hpp"
+#include "core/events/viewport/reset_viewport_zoom_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
 #include "gui/layout/dock_space.hpp"
-#include "gui/widgets/layers/layer_dock.hpp"
-#include "gui/widgets/properties/properties_dock.hpp"
-#include "gui/widgets/tilesets/tileset_dock.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -48,18 +49,18 @@ void UpdateWidgetsSubmenu(const bool hasActiveMap, entt::dispatcher& dispatcher)
 
 void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto hasActiveMap = model.GetActiveMapId().has_value();
+  const auto* document = model.GetActiveDocument();
 
   if (ImGui::BeginMenu("View"))
   {
-    UpdateWidgetsSubmenu(hasActiveMap, dispatcher);
+    UpdateWidgetsSubmenu(document != nullptr, dispatcher);
 
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_CENTER " Center viewport",
                         "Ctrl+Space",
                         false,
-                        hasActiveMap))
+                        document != nullptr))
     {
       dispatcher.enqueue<CenterViewportEvent>();
     }
@@ -75,43 +76,64 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_ZOOM_IN " Increase zoom",
                         "Ctrl+Plus",
                         false,
-                        hasActiveMap))
-    {}
+                        document != nullptr))
+    {
+      dispatcher.enqueue<IncreaseViewportZoomEvent>();
+    }
 
     if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease zoom",
                         "Ctrl+Minus",
                         false,
-                        hasActiveMap))
-    {}
+                        document && document->CanDecreaseViewportTileSize()))
+    {
+      dispatcher.enqueue<DecreaseViewportZoomEvent>();
+    }
 
     if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset zoom",
                         nullptr,
                         false,
-                        hasActiveMap))
-    {}
+                        document != nullptr))
+    {
+      dispatcher.enqueue<ResetViewportZoomEvent>();
+    }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan up", "Ctrl+Up", false, hasActiveMap))
-    {}
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan up",
+                        "Ctrl+Up",
+                        false,
+                        document != nullptr))
+    {
+      const auto& info = document->GetViewportInfo();
+      dispatcher.enqueue<OffsetViewportEvent>(0.0f, -info.tile_height);
+    }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Pan down",
                         "Ctrl+Down",
                         false,
-                        hasActiveMap))
-    {}
+                        document != nullptr))
+    {
+      const auto& info = document->GetViewportInfo();
+      dispatcher.enqueue<OffsetViewportEvent>(0.0f, info.tile_height);
+    }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_RIGHT " Pan right",
                         "Ctrl+Right",
                         false,
-                        hasActiveMap))
-    {}
+                        document != nullptr))
+    {
+      const auto& info = document->GetViewportInfo();
+      dispatcher.enqueue<OffsetViewportEvent>(info.tile_width, 0.0f);
+    }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_LEFT " Pan left",
                         "Ctrl+Left",
                         false,
-                        hasActiveMap))
-    {}
+                        document != nullptr))
+    {
+      const auto& info = document->GetViewportInfo();
+      dispatcher.enqueue<OffsetViewportEvent>(-info.tile_width, 0.0f);
+    }
 
     ImGui::EndMenu();
   }

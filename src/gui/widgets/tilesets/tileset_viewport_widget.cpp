@@ -7,11 +7,11 @@
 
 #include "core/events/tilesets/set_tileset_selection_event.hpp"
 #include "core/tileset/tileset.hpp"
-#include "gui/canvas_info.hpp"
-#include "gui/show_grid.hpp"
 #include "gui/texture_utils.hpp"
 #include "gui/widgets/common/mouse_tracker.hpp"
 #include "gui/widgets/common/rubber_band.hpp"
+#include "gui/widgets/rendering/canvas.hpp"
+#include "gui/widgets/rendering/grid.hpp"
 
 namespace Tactile {
 namespace {
@@ -43,7 +43,7 @@ void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
   const auto info = GetCanvasInfo();
   FillBackground(info);
 
-  MouseTracker(info, state);
+  state.scroll_offset = MouseTracker(info, state.scroll_offset);
   ClampOffsets(info.size, textureSize.x, textureSize.y);
 
   if (const auto selection = RubberBand(state.scroll_offset, tileSize))

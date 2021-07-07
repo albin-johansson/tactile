@@ -205,6 +205,38 @@ void Application::OnCenterViewportEvent()
   CenterViewport();
 }
 
+void Application::OnOffsetViewportEvent(const OffsetViewportEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->OffsetViewport(event.dx, event.dy);
+  }
+}
+
+void Application::OnIncreaseViewportZoomEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->IncreaseViewportTileSize();
+  }
+}
+
+void Application::OnDecreaseViewportZoomEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->DecreaseViewportTileSize();
+  }
+}
+
+void Application::OnResetViewportZoomEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->ResetViewportTileSize();
+  }
+}
+
 void Application::OnSelectMapEvent(const SelectMapEvent& event)
 {
   mModel->SelectMap(event.id);

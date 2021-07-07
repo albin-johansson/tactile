@@ -1,9 +1,16 @@
 #pragma once
 
-#include "gui/show_grid.hpp"
+#include <imgui.h>
+
+#include <entt.hpp>  // dispatcher
 
 namespace Tactile {
 
-void MouseTracker(const CanvasInfo& canvas, GridState& state);
+struct CanvasInfo;
+
+[[nodiscard]] auto MouseTracker(const CanvasInfo& canvas, ImVec2 scrollOffset)
+    -> ImVec2;
+
+void UpdateViewportOffset(const CanvasInfo& canvas, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

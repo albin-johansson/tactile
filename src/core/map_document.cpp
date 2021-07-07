@@ -34,13 +34,19 @@ MapDocument::MapDocument()
     : mMap{std::make_unique<Map>()}
     , mTilesets{std::make_unique<TilesetManager>()}
     , mDelegate{std::make_unique<DocumentDelegate>("Map")}
-{}
+{
+  mViewportInfo.tile_width = 64;
+  mViewportInfo.tile_height = 64;
+}
 
 MapDocument::MapDocument(const row_t nRows, const col_t nCols)
     : mMap{std::make_unique<Map>(nRows, nCols)}
     , mTilesets{std::make_unique<TilesetManager>()}
     , mDelegate{std::make_unique<DocumentDelegate>("Map")}
-{}
+{
+  mViewportInfo.tile_width = 64;
+  mViewportInfo.tile_height = 64;
+}
 
 void MapDocument::Undo()
 {
@@ -311,6 +317,36 @@ auto MapDocument::GetTilesets() const -> const TilesetManager&
 {
   assert(mTilesets);
   return *mTilesets;
+}
+
+void MapDocument::OffsetViewport(const float dx, const float dy)
+{
+  mViewportInfo.x_offset += dx;
+  mViewportInfo.y_offset += dy;
+}
+
+void MapDocument::IncreaseViewportTileSize()
+{
+  mViewportInfo.tile_width += 4;
+  mViewportInfo.tile_height += 4;
+}
+
+void MapDocument::DecreaseViewportTileSize()
+{
+  assert(CanDecreaseViewportTileSize());
+  mViewportInfo.tile_width -= 4;
+  mViewportInfo.tile_height -= 4;
+}
+
+void MapDocument::ResetViewportTileSize()
+{
+  mViewportInfo.tile_width = 64;
+  mViewportInfo.tile_height = 64;
+}
+
+auto MapDocument::CanDecreaseViewportTileSize() const -> bool
+{
+  return mViewportInfo.tile_width > 4 && mViewportInfo.tile_height > 4;
 }
 
 void MapDocument::AddProperty(const std::string& name, const PropertyType type)

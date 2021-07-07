@@ -7,7 +7,7 @@
 
 #include "core/tileset/tileset_manager.hpp"
 #include "gui/texture_utils.hpp"
-#include "gui/widgets/viewport/uv_tile_size.hpp"
+#include "uv_tile_size.hpp"
 
 namespace Tactile {
 
