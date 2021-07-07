@@ -105,6 +105,7 @@ void OnAltKeyStroke(const cen::scan_code key, entt::dispatcher& dispatcher)
 
 void OnPlainKeyStroke(const cen::scan_code key, entt::dispatcher& dispatcher)
 {
+  // TODO these should only work when the map viewport is focused
   if (key == cen::scancodes::s)
   {
     dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
