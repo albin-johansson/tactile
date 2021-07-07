@@ -40,6 +40,11 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/ImGuiFileDialog.h
     ${LIBRARY_DIR}/imgui/ImGuiFileDialogConfig.h)
 
+set(PUGIXML_SOURCES
+    ${LIBRARY_DIR}/pugixml/pugiconfig.hpp
+    ${LIBRARY_DIR}/pugixml/pugixml.cpp
+    ${LIBRARY_DIR}/pugixml/pugixml.hpp)
+
 set(RUNE_SOURCES
     ${LIBRARY_DIR}/rune/czstring.hpp
     ${LIBRARY_DIR}/rune/ini.hpp

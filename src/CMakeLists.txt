@@ -334,6 +334,7 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/viewport/viewport_cursor_info.cpp gui/widgets/viewport/viewport_cursor_info.hpp gui/widgets/viewport/map_view.cpp gui/widgets/viewport/map_view.hpp)
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
+list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})
 
 add_library(libTactile ${TACTILE_SOURCE_FILES})
 
