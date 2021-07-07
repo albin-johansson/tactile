@@ -35,7 +35,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
     if (ButtonEx(TAC_ICON_OPEN, "Open tilemap."))
     {
-      cen::log::info("UpdateToolbarWidget > Open!");
+      // TODO
     }
 
     ImGui::SameLine();
