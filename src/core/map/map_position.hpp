@@ -25,10 +25,25 @@ class MapPosition final
    * \param row the row index.
    * \param column the column index.
    */
-  constexpr MapPosition(const row_t row, const col_t column)
+  constexpr MapPosition(const row_t row, const col_t column) noexcept
       : mRow{row.get()}
       , mCol{column.get()}
   {}
+
+  /**
+   * \brief Creates a position based on an index and the total number of columns.
+   *
+   * \param index the index of the position.
+   * \param nCols the total number of columns.
+   *
+   * \return a row/column position translated from the supplied index.
+   */
+  [[nodiscard]] constexpr static auto FromIndex(const int index,
+                                                const int nCols) noexcept
+      -> MapPosition
+  {
+    return MapPosition{AsRow(index / nCols), AsColumn(index % nCols)};
+  }
 
   /**
    * \brief Sets the row index associated with the position.
