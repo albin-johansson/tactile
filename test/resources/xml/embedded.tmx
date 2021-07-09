@@ -7,7 +7,7 @@
   <property name="foo" value="bar"/>
   <property name="integer" type="int" value="42"/>
   <property name="object ref" type="object" value="1"/>
-  <property name="path" type="file" value="../json/terrain.json"/>
+  <property name="path" type="file" value="terrain.tsx"/>
  </properties>
  <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="../terrain.png" width="1024" height="1024"/>
