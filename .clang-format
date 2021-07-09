@@ -30,6 +30,7 @@ BraceWrapping:
   SplitEmptyFunction: false
   BeforeElse: true
   AfterControlStatement: Always
+  BeforeCatch: true
 
 BreakConstructorInitializers: BeforeComma
 AllowAllConstructorInitializersOnNextLine: false
