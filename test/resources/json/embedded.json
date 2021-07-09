@@ -98,11 +98,83 @@
       "width": 7,
       "x": 0,
       "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 3,
+      "name": "Object Layer 1",
+      "objects": [
+        {
+          "height": 30,
+          "id": 1,
+          "name": "Rect",
+          "rotation": 0,
+          "type": "CustomType",
+          "visible": true,
+          "width": 28,
+          "x": 36,
+          "y": 40
+        },
+        {
+          "height": 0,
+          "id": 2,
+          "name": "SomePoint",
+          "point": true,
+          "rotation": 0,
+          "type": "CustomPoint",
+          "visible": true,
+          "width": 0,
+          "x": 143,
+          "y": 47
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0
     }
   ],
-  "nextlayerid": 3,
-  "nextobjectid": 1,
+  "nextlayerid": 4,
+  "nextobjectid": 3,
   "orientation": "orthogonal",
+  "properties": [
+    {
+      "name": "boolean",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "name": "cool color",
+      "type": "color",
+      "value": "#ff55aaff"
+    },
+    {
+      "name": "floating",
+      "type": "float",
+      "value": 12.3
+    },
+    {
+      "name": "foo",
+      "type": "string",
+      "value": "bar"
+    },
+    {
+      "name": "integer",
+      "type": "int",
+      "value": 42
+    },
+    {
+      "name": "object ref",
+      "type": "object",
+      "value": 1
+    },
+    {
+      "name": "path",
+      "type": "file",
+      "value": "terrain.json"
+    }
+  ],
   "renderorder": "right-down",
   "tiledversion": "1.7.0",
   "tileheight": 32,
