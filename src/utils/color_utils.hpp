@@ -2,6 +2,9 @@
 
 #include <array>          // array
 #include <centurion.hpp>  // color
+#include <string_view>    // string_view
+
+#include "aliases/maybe.hpp"
 
 namespace Tactile {
 
@@ -14,5 +17,8 @@ namespace Tactile {
   const auto a = static_cast<float>(color.alpha()) / 255.0f;
   return {r, g, b, a};
 }
+
+// Create color from string encoded as either #AARRGGBB or #RRGGBB
+[[nodiscard]] auto ColorFromString(std::string_view str) -> Maybe<cen::color>;
 
 }  // namespace Tactile

@@ -37,7 +37,7 @@ set(TACTILE_TEST_FILES
 
     unit/core/tileset/tileset_manager_test.cpp
     unit/core/tileset/tileset_test.cpp
-    )
+    unit/utils/color_utils_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
 

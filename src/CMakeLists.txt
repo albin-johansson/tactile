@@ -313,10 +313,14 @@ set(TACTILE_SOURCE_FILES
 
     gui/widgets/viewport/map_content_viewport.cpp
     gui/widgets/viewport/map_content_viewport.hpp
+    gui/widgets/viewport/map_view.cpp
+    gui/widgets/viewport/map_view.hpp
     gui/widgets/viewport/no_content_viewport_widget.cpp
     gui/widgets/viewport/no_content_viewport_widget.hpp
     gui/widgets/viewport/render_stamp_preview.cpp
     gui/widgets/viewport/render_stamp_preview.hpp
+    gui/widgets/viewport/viewport_cursor_info.cpp
+    gui/widgets/viewport/viewport_cursor_info.hpp
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
 
@@ -326,12 +330,13 @@ set(TACTILE_SOURCE_FILES
     io/preferences.hpp
 
     utils/buffer_utils.hpp
+    utils/color_utils.cpp
     utils/color_utils.hpp
+    utils/from_string.hpp
     utils/load_texture.cpp
     utils/load_texture.hpp
     utils/scope_id.hpp
-    utils/texture_info.hpp
-    gui/widgets/viewport/viewport_cursor_info.cpp gui/widgets/viewport/viewport_cursor_info.hpp gui/widgets/viewport/map_view.cpp gui/widgets/viewport/map_view.hpp)
+    utils/texture_info.hpp)
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})
