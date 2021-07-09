@@ -9,8 +9,8 @@
   <property name="object ref" type="object" value="1"/>
   <property name="path" type="file" value="terrain.tsx"/>
  </properties>
- <tileset firstgid="1" source="terrain.json"/>
- <tileset firstgid="1025" source="outside.json"/>
+ <tileset firstgid="1" source="terrain.tsx"/>
+ <tileset firstgid="1025" source="outside.tsx"/>
  <layer id="1" name="Tile Layer 1" width="8" height="6">
   <data encoding="csv">
 360,360,360,360,360,360,360,360,
