@@ -172,7 +172,7 @@
     {
       "name": "path",
       "type": "file",
-      "value": "terrain.json"
+      "value": "foo.bar"
     }
   ],
   "renderorder": "right-down",
