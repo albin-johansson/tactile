@@ -11,8 +11,8 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
     case ParseError::None:
       return stream << "None";
 
-    case ParseError::CouldNotOpenFile:
-      return stream << "CouldNotOpenFile";
+    case ParseError::MapUnsupportedExtension:
+      return stream << "MapUnsupportedExtension";
 
     case ParseError::MapDoesNotExist:
       return stream << "MapDoesNotExist";
@@ -41,11 +41,17 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
     case ParseError::LayerMissingId:
       return stream << "LayerMissingId";
 
+    case ParseError::LayerUnknownType:
+      return stream << "LayerUnknownType";
+
     case ParseError::CouldNotParseTiles:
       return stream << "CouldNotParseTiles";
 
     case ParseError::UnsupportedTileEncoding:
       return stream << "UnsupportedTileEncoding";
+
+    case ParseError::CouldNotReadExternalTileset:
+      return stream << "CouldNotReadExternalTileset";
 
     case ParseError::TilesetMissingFirstGid:
       return stream << "TilesetMissingFirstGid";
@@ -62,20 +68,17 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
     case ParseError::TilesetMissingName:
       return stream << "TilesetMissingName";
 
-    case ParseError::CouldNotReadExternalTileset:
-      return stream << "CouldNotReadExternalTileset";
-
     case ParseError::TilesetImageDoesNotExist:
       return stream << "TilesetImageDoesNotExist";
 
     case ParseError::CouldNotParseProperty:
       return stream << "CouldNotParseProperty";
 
-    case ParseError::UnknownPropertyType:
-      return stream << "UnknownPropertyType";
+    case ParseError::PropertyMissingName:
+      return stream << "PropertyMissingName";
 
-    case ParseError::UnknownLayerType:
-      return stream << "UnknownLayerType";
+    case ParseError::PropertyUnknownType:
+      return stream << "PropertyUnknownType";
 
     case ParseError::ObjectMissingId:
       return stream << "ObjectMissingId";

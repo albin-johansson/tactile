@@ -7,8 +7,8 @@ namespace Tactile::IO {
 enum class ParseError
 {
   None,
-  CouldNotOpenFile,
 
+  MapUnsupportedExtension,
   MapDoesNotExist,
   MapMissingNextLayerId,
   MapMissingNextObjectId,
@@ -19,21 +19,22 @@ enum class ParseError
   LayerMissingHeight,
   LayerMissingType,
   LayerMissingId,
+  LayerUnknownType,
 
   CouldNotParseTiles,
   UnsupportedTileEncoding,
 
+  CouldNotReadExternalTileset,
   TilesetMissingFirstGid,
   TilesetMissingTileWidth,
   TilesetMissingTileHeight,
   TilesetMissingImagePath,
   TilesetMissingName,
-  CouldNotReadExternalTileset,
   TilesetImageDoesNotExist,
 
   CouldNotParseProperty,
-  UnknownPropertyType,
-  UnknownLayerType,
+  PropertyMissingName,
+  PropertyUnknownType,
 
   ObjectMissingId
 };
