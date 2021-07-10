@@ -2,11 +2,15 @@
 #include <gtest/gtest.h>
 
 #include <centurion.hpp>  // library
+#include <cstdlib>        // atexit
 
 #include "init_open_gl_attributes.hpp"
+#include "utils/load_texture.hpp"
 
 auto main(int argc, char** argv) -> int
 {
+  std::atexit(Tactile::UnloadTextures);
+
   const cen::library centurion;
 
   constexpr auto flags = cen::window::default_flags() | cen::window::opengl |

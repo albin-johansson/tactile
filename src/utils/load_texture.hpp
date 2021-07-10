@@ -8,6 +8,8 @@
 
 namespace Tactile {
 
+void UnloadTextures();
+
 [[nodiscard]] auto LoadTexture(const std::filesystem::path& path)
     -> Maybe<TextureInfo>;
 

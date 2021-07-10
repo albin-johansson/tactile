@@ -2,7 +2,6 @@
 
 #include <centurion.hpp>  // window
 #include <entt.hpp>       // dispatcher
-#include <vector>         // vector
 
 #include "aliases/ints.hpp"
 #include "aliases/unique.hpp"
@@ -57,7 +56,6 @@ class Application final
   cen::window mWindow;
   entt::dispatcher mDispatcher;
   Unique<Model> mModel;
-  std::vector<uint> mTextures;
   bool mQuit{};
 
   void OnAboutToExit();

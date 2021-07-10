@@ -5,7 +5,28 @@
 #include <GL/glew.h>
 #include <stb_image.h>
 
+#include <centurion.hpp>
+#include <vector>  // vector
+
+#include "aliases/ints.hpp"
+
 namespace Tactile {
+namespace {
+
+inline std::vector<uint> textures;
+
+}  // namespace
+
+void UnloadTextures()
+{
+  for (const auto texture : textures)
+  {
+    CENTURION_LOG_DEBUG("Deleting texture %u...", texture);
+    glDeleteTextures(1, &texture);
+  }
+
+  textures.clear();
+}
 
 /**
  * The LoadTexture function was based on an example from the Dear ImGui wiki,
@@ -53,6 +74,9 @@ auto LoadTexture(const std::filesystem::path& path) -> Maybe<TextureInfo>
                data);
 
   stbi_image_free(data);
+
+  CENTURION_LOG_DEBUG("Loaded texture with ID: %u", info.texture);
+  textures.push_back(info.texture);
 
   return info;
 }

@@ -94,15 +94,10 @@ auto Application::Run() -> int
 
 void Application::OnAboutToExit()
 {
+  SavePreferences();
   UnloadIcons();
   UnloadCursors();
-  SavePreferences();
-
-  for (const auto texture : mTextures)
-  {
-    CENTURION_LOG_DEBUG("Deleting texture %u...", texture);
-    glDeleteTextures(1, &texture);
-  }
+  UnloadTextures();
 }
 
 void Application::PollEvents()
