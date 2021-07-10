@@ -56,6 +56,10 @@ void OnCtrlKeyStroke(const cen::scan_code key,
   {
     dispatcher.enqueue<AddMapEvent>();
   }
+  else if (key == cen::scancodes::o)
+  {
+    EnableOpenMapDialog();
+  }
   else if (key == cen::scancodes::g)
   {
     Prefs::SetShowGrid(!Prefs::GetShowGrid());
