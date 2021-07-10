@@ -329,6 +329,7 @@ set(TACTILE_SOURCE_FILES
     io/preferences.cpp
     io/preferences.hpp
 
+    io/parsing/map_attribute.hpp
     utils/buffer_utils.hpp
     utils/color_utils.cpp
     utils/color_utils.hpp
