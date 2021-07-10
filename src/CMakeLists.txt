@@ -237,6 +237,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/dialogs/about_dialog.hpp
     gui/widgets/dialogs/credits_dialog.cpp
     gui/widgets/dialogs/credits_dialog.hpp
+    gui/widgets/dialogs/map_import_error_dialog.cpp
+    gui/widgets/dialogs/map_import_error_dialog.hpp
     gui/widgets/dialogs/settings_dialog.cpp
     gui/widgets/dialogs/settings_dialog.hpp
 

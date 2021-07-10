@@ -8,9 +8,12 @@
 #include "gui/cursors.hpp"
 #include "gui/icons.hpp"
 #include "gui/update_gui.hpp"
+#include "gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
+#include "io/parsing/map_parser.hpp"
+#include "io/parsing/to_map_document.hpp"
 #include "io/preferences.hpp"
 #include "shortcuts.hpp"
 #include "utils/load_texture.hpp"
@@ -138,16 +141,21 @@ void Application::OnCloseMapEvent(const CloseMapEvent& event)
 
 void Application::OnOpenMapEvent(const OpenMapEvent& event)
 {
-  // TODO
+  IO::MapParser parser{event.path};
+  if (parser)
+  {
+    mModel->AddMap(IO::ToMapDocument(parser.GetData()));
+  }
+  else
+  {
+    OpenMapImportErrorDialog(parser.GetError());
+  }
 }
 
 void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
   if (const auto info = LoadTexture(event.path))
   {
-    CENTURION_LOG_DEBUG("Loaded texture with ID %u", info->texture);
-    mTextures.push_back(info->texture);
-
     if (auto* document = mModel->GetActiveDocument())
     {
       document->AddTileset(*info, event.tile_width, event.tile_height);
