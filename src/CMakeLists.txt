@@ -344,6 +344,8 @@ set(TACTILE_SOURCE_FILES
     io/parsing/parse_properties.hpp
     io/parsing/parse_tilesets.cpp
     io/parsing/parse_tilesets.hpp
+    io/parsing/to_map_document.cpp
+    io/parsing/to_map_document.hpp
 
     io/parsing/json/json_map_file.cpp
     io/parsing/json/json_map_file.hpp
