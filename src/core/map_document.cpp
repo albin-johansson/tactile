@@ -165,6 +165,11 @@ void MapDocument::RemoveColumn()
   mDelegate->Execute<RemoveColumnCmd>(this);
 }
 
+void MapDocument::AddLayer(const layer_id id, SharedLayer layer)
+{
+  mMap->AddLayer(id, std::move(layer));
+}
+
 auto MapDocument::AddTileLayer() -> layer_id
 {
   const auto id = mMap->GetNextLayerId();
@@ -342,6 +347,16 @@ void MapDocument::ResetViewportTileSize()
 {
   mViewportInfo.tile_width = 64;
   mViewportInfo.tile_height = 64;
+}
+
+void MapDocument::SetNextLayerId(const layer_id id)
+{
+  mMap->SetNextLayerId(id);
+}
+
+void MapDocument::SetNextObjectId(const object_id id)
+{
+  mMap->SetNextObjectId(id);
 }
 
 auto MapDocument::CanDecreaseViewportTileSize() const -> bool

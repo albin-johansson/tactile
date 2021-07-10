@@ -75,6 +75,9 @@ class MapDocument final : public IDocument
 
   void RemoveColumn();
 
+  // This function doesn't affect the command stack
+  void AddLayer(layer_id id, SharedLayer layer);
+
   auto AddTileLayer() -> layer_id;
 
   auto AddObjectLayer() -> layer_id;
@@ -132,6 +135,10 @@ class MapDocument final : public IDocument
   void DecreaseViewportTileSize();
 
   void ResetViewportTileSize();
+
+  void SetNextLayerId(layer_id id);
+
+  void SetNextObjectId(object_id id);
 
   [[nodiscard]] auto CanDecreaseViewportTileSize() const -> bool;
 
