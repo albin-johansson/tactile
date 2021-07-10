@@ -335,6 +335,8 @@ set(TACTILE_SOURCE_FILES
     io/parsing/map_object.hpp
     io/parsing/parse_error.cpp
     io/parsing/parse_error.hpp
+    io/parsing/json/json_map_object.cpp
+    io/parsing/json/json_map_object.hpp
     utils/buffer_utils.hpp
     utils/color_utils.cpp
     utils/color_utils.hpp
