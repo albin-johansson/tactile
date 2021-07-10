@@ -7,7 +7,7 @@
   <property name="foo" value="bar"/>
   <property name="integer" type="int" value="42"/>
   <property name="object ref" type="object" value="1"/>
-  <property name="path" type="file" value="terrain.tsx"/>
+  <property name="path" type="file" value="foo.bar"/>
  </properties>
  <tileset firstgid="1" source="terrain.tsx"/>
  <tileset firstgid="1025" source="outside.tsx"/>
@@ -22,6 +22,10 @@
 </data>
  </layer>
  <layer id="2" name="Tile Layer 2" width="8" height="6" opacity="0.83">
+  <properties>
+   <property name="a" type="int" value="42"/>
+   <property name="b" type="float" value="2.5"/>
+  </properties>
   <data encoding="csv">
 1293,1294,1295,0,0,0,307,308,
 1325,1326,1327,0,0,275,245,308,
@@ -32,7 +36,11 @@
 </data>
  </layer>
  <objectgroup id="3" name="Object Layer 1">
-  <object id="2" name="Rect" type="CustomType" x="36" y="40" width="28" height="30"/>
+  <object id="2" name="Rect" type="CustomType" x="36" y="40" width="28" height="30">
+   <properties>
+    <property name="foo" value="bar"/>
+   </properties>
+  </object>
   <object id="3" name="SomePoint" type="CustomPoint" x="143" y="47">
    <point/>
   </object>
