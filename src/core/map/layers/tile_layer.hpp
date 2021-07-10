@@ -6,14 +6,12 @@
 #include "aliases/col.hpp"
 #include "aliases/row.hpp"
 #include "aliases/tile_id.hpp"
+#include "aliases/tile_matrix.hpp"
 #include "core/map/map_position.hpp"
 #include "layer.hpp"
 #include "layer_delegate.hpp"
 
 namespace Tactile {
-
-using TileRow = std::vector<tile_id>;
-using TileMatrix = std::vector<TileRow>;
 
 [[nodiscard]] auto MakeTileRow(col_t nCols, tile_id value) -> TileRow;
 
