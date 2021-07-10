@@ -10,6 +10,7 @@
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
+#include "gui/widgets/menus/file_menu.hpp"
 #include "gui/widgets/toolbar/tool_button.hpp"
 
 namespace Tactile {
@@ -35,7 +36,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
     if (ButtonEx(TAC_ICON_OPEN, "Open tilemap."))
     {
-      // TODO
+      EnableOpenMapDialog();
     }
 
     ImGui::SameLine();
