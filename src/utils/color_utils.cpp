@@ -9,16 +9,11 @@ auto ColorFromString(const std::string_view str) -> Maybe<cen::color>
 {
   if (!str.starts_with('#'))
   {
-    CENTURION_LOG_ERROR("ARGB string must start with '#' character! String: %s",
-                        str.data());
     return nothing;
   }
 
   if (str.size() != 7 && str.size() != 9)
   {
-    CENTURION_LOG_ERROR(
-        "ARGB string must be either 7 or 9 characters long! Was actually: %u",
-        str.size());
     return nothing;
   }
 
