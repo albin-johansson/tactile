@@ -27,37 +27,6 @@ Application::Application(cen::window&& window)
   SubscribeToEvents(this, mDispatcher);
   LoadCursors();
   LoadIcons();
-
-  OnAddMapEvent();
-
-  auto& map = mModel->GetActiveMap();
-  map.AddTileLayer();
-  map.AddObjectLayer();
-  map.SelectLayer(1_layer);
-
-  auto* document = mModel->GetActiveDocument();
-
-  using namespace std::string_literals;
-  document->AddProperty("Aa", "Foo"s);
-  document->AddProperty("Ab", "Bar"s);
-
-  document->AddProperty("Ba", 123);
-  document->AddProperty("Bb", 1337);
-
-  document->AddProperty("Ca", 12.3f);
-  document->AddProperty("Cb", 42.5f);
-
-  document->AddProperty("Da", true);
-  document->AddProperty("Db", false);
-
-  document->AddProperty("Ea", std::filesystem::path{"foo.json"});
-  document->AddProperty("Eb", std::filesystem::path{"bar.json"});
-
-  document->AddProperty("Fa", object_ref{42});
-  document->AddProperty("Fb", object_ref{12});
-
-  document->AddProperty("Ga", cen::colors::magenta);
-  document->AddProperty("Gb", cen::colors::cyan);
 }
 
 auto Application::Run() -> int
