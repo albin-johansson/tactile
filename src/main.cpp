@@ -51,9 +51,9 @@ void tactile_log(void* /*data*/,
   using std::chrono::system_clock;
   using std::chrono::zoned_time;
 
-  const zoned_time zoned{current_zone(), system_clock::now()};
+  const zoned_time time{current_zone(), system_clock::now()};
 
-  std::clog << std::format("LOG {:%T} [{}] > {}\n", zoned, to_string(priority), msg);
+  std::clog << std::format("LOG {:%T} [{}] > {}\n", time, to_string(priority), msg);
 }
 
 }  // namespace
