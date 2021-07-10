@@ -1,0 +1,73 @@
+{
+  "compressionlevel": -1,
+  "height": 5,
+  "infinite": false,
+  "layers": [
+    {
+      "data": [
+        360,
+        360,
+        360,
+        360,
+        360,
+        360,
+        354,
+        360,
+        360,
+        360,
+        360,
+        360,
+        354,
+        354,
+        360,
+        360,
+        360,
+        360,
+        360,
+        354,
+        354,
+        360,
+        360,
+        360,
+        354,
+        354,
+        354,
+        354,
+        360,
+        354,
+        354,
+        354,
+        354,
+        354,
+        354
+      ],
+      "height": 5,
+      "id": 1,
+      "name": "Tile Layer 1",
+      "opacity": 1,
+      "type": "tilelayer",
+      "visible": true,
+      "width": 7,
+      "x": 0,
+      "y": 0
+    }
+  ],
+  "nextlayerid": 4,
+  "nextobjectid": 3,
+  "orientation": "orthogonal",
+  "properties": [
+    {
+      "name": "foo",
+      "type": "color",
+      "value": "this is clearly not a color"
+    }
+  ],
+  "renderorder": "right-down",
+  "tiledversion": "1.7.0",
+  "tileheight": 32,
+  "tilesets": [],
+  "tilewidth": 32,
+  "type": "map",
+  "version": "1.6",
+  "width": 7
+}
