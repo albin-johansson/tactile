@@ -24,7 +24,9 @@ class Model final
   /// \name Map document API
   /// \{
 
-  [[nodiscard]] auto AddMap() -> map_id;
+  auto AddMap(Unique<MapDocument> document) -> map_id;
+
+  auto AddMap() -> map_id;
 
   void SelectMap(map_id id);
 

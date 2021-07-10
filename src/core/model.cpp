@@ -1,21 +1,27 @@
 #include "model.hpp"
 
 #include <cassert>  // assert
+#include <utility>  // move
 
 namespace Tactile {
 
 Model::Model() : mTools{this}
 {}
 
-auto Model::AddMap() -> map_id
+auto Model::AddMap(Unique<MapDocument> document) -> map_id
 {
   const auto id = mNextId;
 
-  mDocuments.emplace(id, std::make_unique<MapDocument>(5_row, 5_col));
+  mDocuments.emplace(id, std::move(document));
   mActiveMap = id;
 
   ++mNextId;
   return id;
+}
+
+auto Model::AddMap() -> map_id
+{
+  return AddMap(std::make_unique<MapDocument>(5_row, 5_col));
 }
 
 void Model::SelectMap(const map_id id)
