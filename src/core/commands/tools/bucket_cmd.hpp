@@ -1,9 +1,9 @@
 #pragma once
 
-#include <vector> // vector
+#include <vector>  // vector
 
-#include "aliases/not_null.hpp"
 #include "aliases/maybe.hpp"
+#include "aliases/not_null.hpp"
 #include "aliases/tile_id.hpp"
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
