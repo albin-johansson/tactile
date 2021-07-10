@@ -37,6 +37,11 @@ set(TACTILE_TEST_FILES
 
     unit/core/tileset/tileset_manager_test.cpp
     unit/core/tileset/tileset_test.cpp
+
+    unit/io/parsing/map_parser_test.cpp
+    unit/io/parsing/parse_map_with_embedded_tilesets_test.cpp
+    unit/io/parsing/parse_map_with_external_tilesets_test.cpp
+
     unit/utils/color_utils_test.cpp)
 
 add_executable(testTactile ${TACTILE_TEST_FILES})

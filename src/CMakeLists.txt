@@ -333,9 +333,17 @@ set(TACTILE_SOURCE_FILES
     io/parsing/map_attribute.hpp
     io/parsing/map_file.hpp
     io/parsing/map_object.hpp
+    io/parsing/map_parser.cpp
+    io/parsing/map_parser.hpp
     io/parsing/parse_error.cpp
     io/parsing/parse_error.hpp
     io/parsing/parse_ir.hpp
+    io/parsing/parse_layers.cpp
+    io/parsing/parse_layers.hpp
+    io/parsing/parse_properties.cpp
+    io/parsing/parse_properties.hpp
+    io/parsing/parse_tilesets.cpp
+    io/parsing/parse_tilesets.hpp
 
     io/parsing/json/json_map_file.cpp
     io/parsing/json/json_map_file.hpp
