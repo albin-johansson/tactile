@@ -4,12 +4,12 @@
 #include <imgui_internal.h>
 
 #include "core/events/maps/add_map_event.hpp"
-#include "core/events/maps/open_map_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/texture_utils.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/centered_button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
+#include "gui/widgets/menus/file_menu.hpp"
 
 namespace Tactile {
 
@@ -33,7 +33,7 @@ void NoContentViewportWidget(entt::dispatcher& dispatcher)
   ImGui::Spacing();
   if (CenteredButton("Open existing map"))
   {
-    dispatcher.enqueue<OpenMapEvent>();
+    EnableOpenMapDialog();
   }
 }
 
