@@ -340,6 +340,14 @@ set(TACTILE_SOURCE_FILES
     io/parsing/json/json_map_file.hpp
     io/parsing/json/json_map_object.cpp
     io/parsing/json/json_map_object.hpp
+
+    io/parsing/xml/parse_csv.cpp
+    io/parsing/xml/parse_csv.hpp
+    io/parsing/xml/xml_map_file.cpp
+    io/parsing/xml/xml_map_file.hpp
+    io/parsing/xml/xml_map_object.cpp
+    io/parsing/xml/xml_map_object.hpp
+
     utils/buffer_utils.hpp
     utils/color_utils.cpp
     utils/color_utils.hpp
