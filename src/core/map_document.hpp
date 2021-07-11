@@ -65,39 +65,55 @@ class MapDocument final : public IDocument
 
   void AddEraserSequence(TileCache&& oldState);
 
+  /// \command
   void Flood(MapPosition origin, tile_id replacement);
 
+  /// \command
   void AddRow();
 
+  /// \command
   void AddColumn();
 
+  /// \command
   void RemoveRow();
 
+  /// \command
   void RemoveColumn();
 
   // This function doesn't affect the command stack
   void AddLayer(layer_id id, SharedLayer layer);
 
+  /// \command
   auto AddTileLayer() -> layer_id;
 
+  /// \command
   auto AddObjectLayer() -> layer_id;
 
+  /// \command
   void SelectLayer(layer_id id);
 
+  /// \command
   void RemoveLayer(layer_id id);
 
+  /// \command
   void DuplicateLayer(layer_id id);
 
+  /// \command
   void MoveLayerUp(layer_id id);
 
+  /// \command
   void MoveLayerDown(layer_id id);
 
+  /// \command
   void SetLayerOpacity(layer_id id, float opacity);
 
+  /// \command
   void SetLayerVisible(layer_id id, bool visible);
 
+  /// \command
   void ShowProperties();
 
+  /// \command
   void ShowLayerProperties(layer_id id);
 
   [[nodiscard]] auto CanMoveActiveLayerDown() const -> bool;
@@ -118,10 +134,12 @@ class MapDocument final : public IDocument
 
   [[nodiscard]] auto GetColumnCount() const -> col_t;
 
+  /// \command
   void AddTileset(const TextureInfo& info, int tileWidth, int tileHeight);
 
   void SelectTileset(tileset_id id);
 
+  /// \command
   void RemoveTileset(tileset_id id);
 
   [[nodiscard]] auto GetTilesets() -> TilesetManager&;
@@ -152,16 +170,21 @@ class MapDocument final : public IDocument
   /// \name Property API
   /// \{
 
+  /// \command
   void AddProperty(const std::string& name, PropertyType type) override;
 
   void AddProperty(const std::string& name, const Property& property) override;
 
+  /// \command
   void RemoveProperty(std::string_view name) override;
 
+  /// \command
   void RenameProperty(std::string_view oldName, const std::string& newName) override;
 
+  /// \command
   void SetProperty(std::string_view name, const Property& property) override;
 
+  /// \command
   void ChangePropertyType(std::string_view name, PropertyType type) override;
 
   [[nodiscard]] auto HasProperty(std::string_view name) const -> bool override;
