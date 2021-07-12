@@ -5,6 +5,8 @@
 #include <utility>  // move
 
 #include "application_events.hpp"
+#include "core/events/viewport/decrease_viewport_zoom_event.hpp"
+#include "core/events/viewport/increase_viewport_zoom_event.hpp"
 #include "gui/cursors.hpp"
 #include "gui/icons.hpp"
 #include "gui/update_gui.hpp"
@@ -36,6 +38,7 @@ auto Application::Run() -> int
 
   while (!mQuit)
   {
+    mKeyboard.update();
     PollEvents();
 
     ImGui_ImplOpenGL3_NewFrame();
@@ -93,6 +96,22 @@ void Application::PollEvents()
       keyEvent->set_modifier(cen::key_mod::mode, false);
 
       UpdateShortcuts(*mModel, *keyEvent, mDispatcher);
+    }
+    else if (const auto* wheelEvent = event.try_get<cen::mouse_wheel_event>())
+    {
+      const auto* document = mModel->GetActiveDocument();
+      if (document && mKeyboard.is_pressed(cen::scancodes::left_ctrl))
+      {
+        const auto dy = wheelEvent->y_scroll();
+        if (dy > 0)
+        {
+          mDispatcher.enqueue<IncreaseViewportZoomEvent>();
+        }
+        else if (dy < 0 && document->CanDecreaseViewportTileSize())
+        {
+          mDispatcher.enqueue<DecreaseViewportZoomEvent>();
+        }
+      }
     }
   }
 }

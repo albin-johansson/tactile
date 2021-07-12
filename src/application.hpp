@@ -1,6 +1,6 @@
 #pragma once
 
-#include <centurion.hpp>  // window
+#include <centurion.hpp>  // window, keyboard
 #include <entt.hpp>       // dispatcher
 
 #include "aliases/ints.hpp"
@@ -54,6 +54,7 @@ class Application final
 
  private:
   cen::window mWindow;
+  cen::keyboard mKeyboard;
   entt::dispatcher mDispatcher;
   Unique<Model> mModel;
   bool mQuit{};
