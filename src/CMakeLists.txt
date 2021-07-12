@@ -9,8 +9,6 @@ set(TACTILE_SOURCE_FILES
     application_events.hpp
     init_open_gl_attributes.cpp
     init_open_gl_attributes.hpp
-    shortcuts.cpp
-    shortcuts.hpp
 
     aliases/col.hpp
     aliases/czstring.hpp
@@ -372,7 +370,58 @@ set(TACTILE_SOURCE_FILES
     utils/load_texture.cpp
     utils/load_texture.hpp
     utils/scope_id.hpp
-    utils/texture_info.hpp)
+    utils/texture_info.hpp
+
+    shortcuts/shortcut.cpp
+    shortcuts/shortcut.hpp
+    shortcuts/shortcuts.cpp
+    shortcuts/shortcuts.hpp
+
+    shortcuts/edit/add_column_shortcut.cpp
+    shortcuts/edit/add_column_shortcut.hpp
+    shortcuts/edit/add_row_shortcut.cpp
+    shortcuts/edit/add_row_shortcut.hpp
+    shortcuts/edit/add_tileset_shortcut.cpp
+    shortcuts/edit/add_tileset_shortcut.hpp
+    shortcuts/edit/enable_bucket_tool.cpp
+    shortcuts/edit/enable_bucket_tool.hpp
+    shortcuts/edit/enable_eraser_shortcut.cpp
+    shortcuts/edit/enable_eraser_shortcut.hpp
+    shortcuts/edit/enable_stamp_shortcut.cpp
+    shortcuts/edit/enable_stamp_shortcut.hpp
+    shortcuts/edit/redo_shortcut.cpp
+    shortcuts/edit/redo_shortcut.hpp
+    shortcuts/edit/remove_column_shortcut.cpp
+    shortcuts/edit/remove_column_shortcut.hpp
+    shortcuts/edit/remove_row_shortcut.cpp
+    shortcuts/edit/remove_row_shortcut.hpp
+    shortcuts/edit/undo_shortcut.cpp
+    shortcuts/edit/undo_shortcut.hpp
+
+    shortcuts/file/new_map_shortcut.cpp
+    shortcuts/file/new_map_shortcut.hpp
+    shortcuts/file/open_map_shortcut.cpp
+    shortcuts/file/open_map_shortcut.hpp
+    shortcuts/file/open_settings_shortcut.cpp
+    shortcuts/file/open_settings_shortcut.hpp
+
+    shortcuts/view/center_viewport_shortcut.cpp
+    shortcuts/view/center_viewport_shortcut.hpp
+    shortcuts/view/decrease_viewport_zoom_shortcut.cpp
+    shortcuts/view/decrease_viewport_zoom_shortcut.hpp
+    shortcuts/view/increase_viewport_zoom_shortcut.cpp
+    shortcuts/view/increase_viewport_zoom_shortcut.hpp
+    shortcuts/view/pan_down_shortcut.cpp
+    shortcuts/view/pan_down_shortcut.hpp
+    shortcuts/view/pan_left_shortcut.cpp
+    shortcuts/view/pan_left_shortcut.hpp
+    shortcuts/view/pan_right_shortcut.cpp
+    shortcuts/view/pan_right_shortcut.hpp
+    shortcuts/view/pan_up_shortcut.cpp
+    shortcuts/view/pan_up_shortcut.hpp
+    shortcuts/view/toggle_grid_shortcut.cpp
+    shortcuts/view/toggle_grid_shortcut.hpp
+    )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})

@@ -5,6 +5,10 @@
 #include "core/events/viewport/center_viewport_event.hpp"
 #include "core/events/viewport/decrease_viewport_zoom_event.hpp"
 #include "core/events/viewport/increase_viewport_zoom_event.hpp"
+#include "core/events/viewport/pan_down_event.hpp"
+#include "core/events/viewport/pan_left_event.hpp"
+#include "core/events/viewport/pan_right_event.hpp"
+#include "core/events/viewport/pan_up_event.hpp"
 #include "core/events/viewport/reset_viewport_zoom_event.hpp"
 
 namespace Tactile {
@@ -28,6 +32,10 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<SelectMapEvent>().connect<&App::OnSelectMapEvent>(app);
   dispatcher.sink<CenterViewportEvent>().connect<&App::OnCenterViewportEvent>(app);
   dispatcher.sink<OffsetViewportEvent>().connect<&App::OnOffsetViewportEvent>(app);
+  dispatcher.sink<PanLeftEvent>().connect<&App::OnPanLeftEvent>(app);
+  dispatcher.sink<PanRightEvent>().connect<&App::OnPanRightEvent>(app);
+  dispatcher.sink<PanUpEvent>().connect<&App::OnPanUpEvent>(app);
+  dispatcher.sink<PanDownEvent>().connect<&App::OnPanDownEvent>(app);
   dispatcher.sink<IncreaseViewportZoomEvent>().connect<&App::OnIncreaseViewportZoomEvent>(app);
   dispatcher.sink<DecreaseViewportZoomEvent>().connect<&App::OnDecreaseViewportZoomEvent>(app);
   dispatcher.sink<ResetViewportZoomEvent>().connect<&App::OnResetViewportZoomEvent>(app);

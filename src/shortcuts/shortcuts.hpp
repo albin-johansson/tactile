@@ -7,6 +7,8 @@ namespace Tactile {
 
 class Model;
 
+void LoadDefaultShortcuts();
+
 void UpdateShortcuts(const Model& model,
                      const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher);

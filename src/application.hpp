@@ -88,6 +88,14 @@ class Application final
 
   void OnOffsetViewportEvent(const OffsetViewportEvent& event);
 
+  void OnPanLeftEvent();
+
+  void OnPanRightEvent();
+
+  void OnPanUpEvent();
+
+  void OnPanDownEvent();
+
   void OnIncreaseViewportZoomEvent();
 
   void OnDecreaseViewportZoomEvent();

@@ -15,7 +15,7 @@
 #include "io/parsing/map_parser.hpp"
 #include "io/parsing/to_map_document.hpp"
 #include "io/preferences.hpp"
-#include "shortcuts.hpp"
+#include "shortcuts/shortcuts.hpp"
 #include "utils/load_texture.hpp"
 
 namespace Tactile {
@@ -25,6 +25,7 @@ Application::Application(cen::window&& window)
     , mModel{std::make_unique<Model>()}
 {
   SubscribeToEvents(this, mDispatcher);
+  LoadDefaultShortcuts();
   LoadCursors();
   LoadIcons();
 }
@@ -84,8 +85,13 @@ void Application::PollEvents()
       mQuit = true;
       break;
     }
-    else if (const auto* keyEvent = event.try_get<cen::keyboard_event>())
+    else if (auto* keyEvent = event.try_get<cen::keyboard_event>())
     {
+      // We don't care about these modifiers, they are just noise
+      keyEvent->set_modifier(cen::key_mod::caps, false);
+      keyEvent->set_modifier(cen::key_mod::num, false);
+      keyEvent->set_modifier(cen::key_mod::mode, false);
+
       UpdateShortcuts(*mModel, *keyEvent, mDispatcher);
     }
   }
@@ -182,6 +188,42 @@ void Application::OnOffsetViewportEvent(const OffsetViewportEvent& event)
   if (auto* document = mModel->GetActiveDocument())
   {
     document->OffsetViewport(event.dx, event.dy);
+  }
+}
+
+void Application::OnPanLeftEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    const auto& info = document->GetViewportInfo();
+    document->OffsetViewport(info.tile_width, 0);
+  }
+}
+
+void Application::OnPanRightEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    const auto& info = document->GetViewportInfo();
+    document->OffsetViewport(-info.tile_width, 0);
+  }
+}
+
+void Application::OnPanUpEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    const auto& info = document->GetViewportInfo();
+    document->OffsetViewport(0, info.tile_height);
+  }
+}
+
+void Application::OnPanDownEvent()
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    const auto& info = document->GetViewportInfo();
+    document->OffsetViewport(0, -info.tile_height);
   }
 }
 
