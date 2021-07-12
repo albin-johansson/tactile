@@ -47,8 +47,8 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
   ImGui::CreateContext();
 
   auto& io = ImGui::GetIO();
-  io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // NOLINT
-  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;      // NOLINT
+  io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;  // NOLINT
+
   io.WantCaptureKeyboard = true;
 
   LoadFonts();
