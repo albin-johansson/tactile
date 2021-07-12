@@ -149,6 +149,10 @@ set(TACTILE_SOURCE_FILES
     core/events/viewport/decrease_viewport_zoom_event.hpp
     core/events/viewport/increase_viewport_zoom_event.hpp
     core/events/viewport/offset_viewport_event.hpp
+    core/events/viewport/pan_down_event.hpp
+    core/events/viewport/pan_left_event.hpp
+    core/events/viewport/pan_right_event.hpp
+    core/events/viewport/pan_up_event.hpp
     core/events/viewport/reset_viewport_zoom_event.hpp
 
     core/map/map.cpp
