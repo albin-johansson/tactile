@@ -5,7 +5,10 @@
 #include "core/events/viewport/center_viewport_event.hpp"
 #include "core/events/viewport/decrease_viewport_zoom_event.hpp"
 #include "core/events/viewport/increase_viewport_zoom_event.hpp"
-#include "core/events/viewport/offset_viewport_event.hpp"
+#include "core/events/viewport/pan_down_event.hpp"
+#include "core/events/viewport/pan_left_event.hpp"
+#include "core/events/viewport/pan_right_event.hpp"
+#include "core/events/viewport/pan_up_event.hpp"
 #include "core/events/viewport/reset_viewport_zoom_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
@@ -104,8 +107,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         false,
                         document != nullptr))
     {
-      const auto& info = document->GetViewportInfo();
-      dispatcher.enqueue<OffsetViewportEvent>(0.0f, -info.tile_height);
+      dispatcher.enqueue<PanUpEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Pan down",
@@ -113,8 +115,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         false,
                         document != nullptr))
     {
-      const auto& info = document->GetViewportInfo();
-      dispatcher.enqueue<OffsetViewportEvent>(0.0f, info.tile_height);
+      dispatcher.enqueue<PanDownEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_RIGHT " Pan right",
@@ -122,8 +123,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         false,
                         document != nullptr))
     {
-      const auto& info = document->GetViewportInfo();
-      dispatcher.enqueue<OffsetViewportEvent>(info.tile_width, 0.0f);
+      dispatcher.enqueue<PanRightEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_MOVE_LEFT " Pan left",
@@ -131,8 +131,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         false,
                         document != nullptr))
     {
-      const auto& info = document->GetViewportInfo();
-      dispatcher.enqueue<OffsetViewportEvent>(-info.tile_width, 0.0f);
+      dispatcher.enqueue<PanLeftEvent>();
     }
 
     ImGui::EndMenu();
