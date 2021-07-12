@@ -138,15 +138,15 @@ auto GetThemeFromIndex(const int index) -> Theme
 {
   switch (index)
   {
-    case cen::to_underlying(Theme::Ash):
     case cen::to_underlying(Theme::DearDark):
     case cen::to_underlying(Theme::DearLight):
+    case cen::to_underlying(Theme::Ash):
       return static_cast<Theme>(index);
 
     default:
     {
-      CENTURION_LOG_WARN("Invalid theme index: %i", index);
-      return Theme::Ash;
+      CENTURION_LOG_WARN("Invalid theme index: %i, assuming default theme!", index);
+      return Theme::DearDark;
     }
   }
 }
