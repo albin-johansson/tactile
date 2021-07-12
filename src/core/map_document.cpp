@@ -1,8 +1,10 @@
 #include "map_document.hpp"
 
-#include <cassert>  // assert
-#include <format>   // format
-#include <utility>  // move
+#include <algorithm>  // max
+#include <cassert>    // assert
+#include <cmath>      // round
+#include <format>     // format
+#include <utility>    // move
 
 #include "core/commands/maps/add_column_cmd.hpp"
 #include "core/commands/maps/add_row_cmd.hpp"
@@ -332,15 +334,24 @@ void MapDocument::OffsetViewport(const float dx, const float dy)
 
 void MapDocument::IncreaseViewportTileSize()
 {
-  mViewportInfo.tile_width += 4;
-  mViewportInfo.tile_height += 4;
+  const auto dx = std::max(2.0f, std::round(mViewportInfo.tile_width * 0.05f));
+  const auto dy = std::max(2.0f, std::round(mViewportInfo.tile_height * 0.05f));
+  mViewportInfo.tile_width += dx;
+  mViewportInfo.tile_height += dy;
 }
 
 void MapDocument::DecreaseViewportTileSize()
 {
   assert(CanDecreaseViewportTileSize());
-  mViewportInfo.tile_width -= 4;
-  mViewportInfo.tile_height -= 4;
+
+  const auto dx = std::max(2.0f, std::round(mViewportInfo.tile_width * 0.05f));
+  const auto dy = std::max(2.0f, std::round(mViewportInfo.tile_height * 0.05f));
+
+  mViewportInfo.tile_width -= dx;
+  mViewportInfo.tile_height -= dy;
+
+  mViewportInfo.tile_width = std::max(4.0f, mViewportInfo.tile_width);
+  mViewportInfo.tile_height = std::max(4.0f, mViewportInfo.tile_height);
 }
 
 void MapDocument::ResetViewportTileSize()
