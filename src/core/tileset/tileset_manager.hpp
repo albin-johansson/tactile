@@ -122,7 +122,7 @@ class TilesetManager final
    */
   [[nodiscard]] auto GetRef(tileset_id id) -> Tileset&;
 
-  /// \copydoc Get()
+  /// \copydoc GetRef()
   [[nodiscard]] auto GetRef(tileset_id id) const -> const Tileset&;
 
   /**
