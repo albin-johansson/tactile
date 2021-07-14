@@ -1,5 +1,7 @@
 #pragma once
 
+#include <IconsFontAwesome5.h>
+
 // uncomment and modify defines under for customize ImGuiFileDialog
 
 //#define MAX_FILE_DIALOG_NAME_BUFFER 1024
@@ -41,9 +43,9 @@
 //#define buttonDriveString "Drives"
 //#define buttonResetPathString "Reset to current directory"
 //#define buttonCreateDirString "Create Directory"
-//#define OverWriteDialogTitleString "The file Already Exist !"
-//#define OverWriteDialogMessageString "Would you like to OverWrite it ?"
-//#define OverWriteDialogConfirmButtonString "Confirm"
+#define OverWriteDialogTitleString ICON_FA_EXCLAMATION_TRIANGLE " The file already exists!"
+#define OverWriteDialogMessageString "Do you want to replace the file?"
+#define OverWriteDialogConfirmButtonString "OK"
 //#define OverWriteDialogCancelButtonString "Cancel"
 
 // DateTimeFormat
