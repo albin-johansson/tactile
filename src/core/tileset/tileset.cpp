@@ -52,7 +52,7 @@ Tileset::Tileset(const tile_id firstId,
     throw TactileError{"Invalid tileset tile dimensions!"};
   }
 
-  SetName(mPath.filename().string());
+  SetName(mPath.stem().string());
 
   mRowCount = AsRow(GetHeight() / mTileHeight);
   mColumnCount = AsColumn(GetWidth() / mTileWidth);
