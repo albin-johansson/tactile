@@ -105,6 +105,9 @@ set(TACTILE_SOURCE_FILES
 
     core/events/quit_event.hpp
     core/events/redo_event.hpp
+    core/events/save_as_event.hpp
+    core/events/save_as_request_event.hpp
+    core/events/save_event.hpp
     core/events/undo_event.hpp
 
     core/events/layers/add_layer_event.hpp

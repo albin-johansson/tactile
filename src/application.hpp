@@ -29,6 +29,7 @@
 #include "core/events/properties/set_property_value_event.hpp"
 #include "core/events/quit_event.hpp"
 #include "core/events/redo_event.hpp"
+#include "core/events/save_as_event.hpp"
 #include "core/events/tilesets/add_tileset_event.hpp"
 #include "core/events/tilesets/remove_tileset_event.hpp"
 #include "core/events/tilesets/select_tileset_event.hpp"
@@ -70,6 +71,12 @@ class Application final
   void OnCloseMapEvent(const CloseMapEvent& event);
 
   void OnOpenMapEvent(const OpenMapEvent& event);
+
+  void OnSaveEvent();
+
+  void OnSaveAsEvent(const SaveAsEvent& event);
+
+  void OnSaveAsRequestEvent();
 
   void OnAddTilesetEvent(const AddTilesetEvent& event);
 

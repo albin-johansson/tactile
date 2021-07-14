@@ -2,6 +2,9 @@
 
 #include "application.hpp"
 #include "core/events/maps/show_map_properties_event.hpp"
+#include "core/events/save_as_request_event.hpp"
+#include "core/events/save_event.hpp"
+#include "core/events/save_as_event.hpp"
 #include "core/events/viewport/center_viewport_event.hpp"
 #include "core/events/viewport/decrease_viewport_zoom_event.hpp"
 #include "core/events/viewport/increase_viewport_zoom_event.hpp"
@@ -24,6 +27,10 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<AddMapEvent>().connect<&App::OnAddMapEvent>(app);
   dispatcher.sink<CloseMapEvent>().connect<&App::OnCloseMapEvent>(app);
   dispatcher.sink<OpenMapEvent>().connect<&App::OnOpenMapEvent>(app);
+
+  dispatcher.sink<SaveEvent>().connect<&App::OnSaveEvent>(app);
+  dispatcher.sink<SaveAsEvent>().connect<&App::OnSaveAsEvent>(app);
+  dispatcher.sink<SaveAsRequestEvent>().connect<&App::OnSaveAsRequestEvent>(app);
 
   dispatcher.sink<AddTilesetEvent>().connect<&App::OnAddTilesetEvent>(app);
   dispatcher.sink<SelectTilesetEvent>().connect<&App::OnSelectTilesetEvent>(app);

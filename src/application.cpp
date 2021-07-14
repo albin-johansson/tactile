@@ -146,6 +146,18 @@ void Application::OnOpenMapEvent(const OpenMapEvent& event)
   }
 }
 
+void Application::OnSaveEvent()
+{
+}
+
+void Application::OnSaveAsEvent(const SaveAsEvent& event)
+{
+}
+
+void Application::OnSaveAsRequestEvent()
+{
+}
+
 void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
   if (const auto info = LoadTexture(event.path))
