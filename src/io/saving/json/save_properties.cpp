@@ -72,7 +72,8 @@ namespace {
     }
     case PropertyType::File:
     {
-      value = std::filesystem::relative(property.AsFile(), dir);
+      const auto path = std::filesystem::proximate(property.AsFile(), dir);
+      value = path.string();
       break;
     }
     case PropertyType::Color:
