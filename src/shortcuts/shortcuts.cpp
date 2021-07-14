@@ -15,6 +15,8 @@
 #include "shortcuts/edit/remove_row_shortcut.hpp"
 #include "shortcuts/edit/undo_shortcut.hpp"
 #include "shortcuts/file/new_map_shortcut.hpp"
+#include "shortcuts/file/save_shortcut.hpp"
+#include "shortcuts/file/save_as_shortcut.hpp"
 #include "shortcuts/file/open_map_shortcut.hpp"
 #include "shortcuts/file/open_settings_shortcut.hpp"
 #include "shortcuts/view/center_viewport_shortcut.hpp"
@@ -39,6 +41,8 @@ void LoadDefaultShortcuts()
   shortcuts.push_back(std::make_unique<NewMapShortcut>());
   shortcuts.push_back(std::make_unique<OpenMapShortcut>());
   shortcuts.push_back(std::make_unique<OpenSettingsShortcut>());
+  shortcuts.push_back(std::make_unique<SaveShortcut>());
+  shortcuts.push_back(std::make_unique<SaveAsShortcut>());
 
   // Edit
   shortcuts.push_back(std::make_unique<UndoShortcut>());

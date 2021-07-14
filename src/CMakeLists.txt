@@ -406,6 +406,10 @@ set(TACTILE_SOURCE_FILES
     shortcuts/file/open_map_shortcut.hpp
     shortcuts/file/open_settings_shortcut.cpp
     shortcuts/file/open_settings_shortcut.hpp
+    shortcuts/file/save_as_shortcut.cpp
+    shortcuts/file/save_as_shortcut.hpp
+    shortcuts/file/save_shortcut.cpp
+    shortcuts/file/save_shortcut.hpp
 
     shortcuts/view/center_viewport_shortcut.cpp
     shortcuts/view/center_viewport_shortcut.hpp
