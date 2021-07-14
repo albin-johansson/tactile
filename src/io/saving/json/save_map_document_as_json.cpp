@@ -30,7 +30,7 @@ namespace {
   json["infinite"] = false;
   json["orientation"] = "orthogonal";
   json["renderorder"] = "right-down";
-  json["compressionlevel"] = "-1";
+  json["compressionlevel"] = -1;
   json["tiledversion"] = tiled_version;
   json["version"] = format_version;
 
