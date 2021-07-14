@@ -14,9 +14,7 @@ class AShortcut
             const cen::key_mod modifiers = cen::key_mod::none)
       : mKey{key}
       , mModifiers{modifiers}
-  {
-    //    (mModifiers.push_back(modifiers), ...);
-  }
+  {}
 
   virtual ~AShortcut() noexcept = default;
 
