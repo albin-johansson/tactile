@@ -18,11 +18,21 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
     {
       const ScopeID uid{id};
 
-      bool opened = true;
+      ImGuiTabItemFlags flags = 0;
       const auto isActive = model.GetActiveMapId() == id;
-      if (ImGui::BeginTabItem(document->GetName().data(),
-                              &opened,
-                              isActive ? ImGuiTabItemFlags_SetSelected : 0))
+
+      if (isActive)
+      {
+        flags |= ImGuiTabItemFlags_SetSelected;
+      }
+
+      if (!document->IsClean())
+      {
+        flags |= ImGuiTabItemFlags_UnsavedDocument;
+      }
+
+      bool opened = true;
+      if (ImGui::BeginTabItem(document->GetName().data(), &opened, flags))
       {
         if (isActive)
         {
