@@ -41,8 +41,10 @@ namespace {
   }
   else if (type == "color")
   {
-    const auto colorStr = object.GetString(MapAttribute::Value).value();
-    if (const auto color = ColorFromString(colorStr))
+    const auto string = object.GetString(MapAttribute::Value).value();
+    const auto color = (string.size() == 9) ? cen::color::from_argb(string)
+                                            : cen::color::from_rgb(string);
+    if (color)
     {
       property.SetValue(*color);
     }

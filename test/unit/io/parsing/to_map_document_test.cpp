@@ -3,7 +3,6 @@
 #include <gtest/gtest.h>
 
 #include "io/parsing/map_parser.hpp"
-#include "utils/color_utils.hpp"
 
 using namespace Tactile;
 using namespace Tactile::IO;
@@ -112,7 +111,7 @@ TEST(ToMapDocument, Test)
 
   const auto& color = document->GetProperty("cool color");
   ASSERT_TRUE(color.IsColor());
-  ASSERT_EQ(ColorFromString("#FF55AAFF"), color.AsColor());
+  ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), color.AsColor());
 
   const auto& floating = document->GetProperty("floating");
   ASSERT_TRUE(floating.IsFloating());

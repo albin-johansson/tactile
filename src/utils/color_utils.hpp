@@ -18,7 +18,4 @@ namespace Tactile {
   return {r, g, b, a};
 }
 
-// Create color from string encoded as either #AARRGGBB or #RRGGBB
-[[nodiscard]] auto ColorFromString(std::string_view str) -> Maybe<cen::color>;
-
 }  // namespace Tactile

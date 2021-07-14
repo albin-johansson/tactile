@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "io/parsing/map_parser.hpp"
-#include "utils/color_utils.hpp"
 
 using namespace Tactile;
 using namespace Tactile::IO;
@@ -20,7 +19,7 @@ void VerifyProperties(const MapData& data)
   const auto& color = data.properties.at(1);
   ASSERT_EQ("cool color", color.name);
   ASSERT_EQ(PropertyType::Color, color.property.GetType());
-  ASSERT_EQ(ColorFromString("#FF55AAFF"), color.property.AsColor());
+  ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), color.property.AsColor());
 
   const auto& floating = data.properties.at(2);
   ASSERT_EQ("floating", floating.name);
