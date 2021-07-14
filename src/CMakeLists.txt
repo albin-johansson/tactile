@@ -364,7 +364,6 @@ set(TACTILE_SOURCE_FILES
     io/parsing/xml/xml_map_object.hpp
 
     utils/buffer_utils.hpp
-    utils/color_utils.cpp
     utils/color_utils.hpp
     utils/from_string.hpp
     utils/load_texture.cpp
