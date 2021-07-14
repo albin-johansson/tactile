@@ -8,10 +8,7 @@ void AShortcut::Poll(const Model& model,
 {
   if (IsEnabled(model))
   {
-    const bool areModsActive =
-        mModifiers != cen::key_mod::none ? event.is_only_active(mModifiers) : true;
-
-    if (event.pressed() && event.is_active(mKey) && areModsActive)
+    if (event.pressed() && event.is_active(mKey) && event.is_only_active(mModifiers))
     {
       Activate(dispatcher);
     }
