@@ -4,6 +4,7 @@
 
 #include "core/map/layers/object_layer.hpp"
 #include "core/map/layers/tile_layer.hpp"
+#include "io/preferences.hpp"
 #include "io/saving/xml/append_properties.hpp"
 
 namespace Tactile::IO {
@@ -27,23 +28,23 @@ void AppendTileLayer(const layer_id id,
 
   const auto count = layer.GetTileCount();
   const auto nCols = layer.GetColumnCount().get();
+  const auto readable = Prefs::GetHumanReadableOutput();
 
   std::stringstream stream;
   usize index = 0;
   layer.Each([&](const tile_id tile) {
-    if (index == 0)
+    if (readable && index == 0)
     {
       stream << '\n';
     }
 
     stream << tile.get();
-
     if (index < count - 1)
     {
       stream << ',';
     }
 
-    if ((index + 1) % nCols == 0)
+    if (readable && (index + 1) % nCols == 0)
     {
       stream << '\n';
     }
