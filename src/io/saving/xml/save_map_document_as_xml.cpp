@@ -39,7 +39,7 @@ void AppendMapChild(const MapDocument& document,
 
   for (const auto& [id, layer] : map)
   {
-    AppendLayer(*layer, node, dir);
+    AppendLayer(id, *layer, node, dir);
   }
 }
 
