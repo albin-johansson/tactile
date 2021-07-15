@@ -4,6 +4,7 @@
 
 #include "core/map/layers/object_layer.hpp"
 #include "core/map/layers/tile_layer.hpp"
+#include "io/saving/xml/append_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
@@ -18,6 +19,8 @@ void AppendTileLayer(const layer_id id,
   node.append_attribute("name").set_value(layer.GetName().data());
   node.append_attribute("width").set_value(layer.GetColumnCount().get());
   node.append_attribute("height").set_value(layer.GetRowCount().get());
+
+  AppendProperties(layer, node, dir);
 
   auto data = node.append_child("data");
   data.append_attribute("encoding").set_value("csv");
@@ -60,6 +63,8 @@ void AppendObjectLayer(const layer_id layerId,
   auto node = mapNode.append_child("objectgroup");
   node.append_attribute("id").set_value(layerId.get());
   node.append_attribute("name").set_value(layer.GetName().data());
+
+  AppendProperties(layer, node, dir);
 
   for (const auto& [id, object] : layer)
   {
