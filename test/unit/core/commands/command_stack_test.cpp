@@ -60,7 +60,7 @@ TEST(CommandStack, Defaults)
   ASSERT_EQ(0, stack.GetSize());
   ASSERT_FALSE(stack.CanUndo());
   ASSERT_FALSE(stack.CanRedo());
-  ASSERT_FALSE(stack.IsClean());
+  ASSERT_TRUE(stack.IsClean());
 }
 
 TEST(CommandStack, Usage)
@@ -144,7 +144,7 @@ TEST(CommandStack, Clean)
 {
   CommandStack stack;
 
-  ASSERT_FALSE(stack.IsClean());
+  ASSERT_TRUE(stack.IsClean());
   ASSERT_FALSE(stack.CanUndo());
   ASSERT_FALSE(stack.CanRedo());
 
