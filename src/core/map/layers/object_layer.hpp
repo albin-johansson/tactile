@@ -129,6 +129,16 @@ class ObjectLayer final : public ILayer
    */
   [[nodiscard]] auto GetObjectCount() const noexcept -> usize;
 
+  [[nodiscard]] auto begin() const noexcept
+  {
+    return mObjects.begin();
+  }
+
+  [[nodiscard]] auto end() const noexcept
+  {
+    return mObjects.end();
+  }
+
   /// \} End of object layer API
 
   /// \name Property API
