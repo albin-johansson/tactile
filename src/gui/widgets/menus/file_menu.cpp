@@ -5,6 +5,8 @@
 #include "core/events/maps/add_map_event.hpp"
 #include "core/events/maps/open_map_event.hpp"
 #include "core/events/quit_event.hpp"
+#include "core/events/save_as_request_event.hpp"
+#include "core/events/save_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/file_dialog.hpp"
@@ -63,10 +65,15 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save", "Ctrl+S"))
-    {}
+    {
+      // TODO only allow when changes have been made
+      dispatcher.enqueue<SaveEvent>();
+    }
 
     if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S"))
-    {}
+    {
+      dispatcher.enqueue<SaveAsRequestEvent>();
+    }
 
     ImGui::Separator();
 
