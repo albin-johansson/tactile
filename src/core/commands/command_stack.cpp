@@ -12,10 +12,7 @@ void CommandStack::Clear()
 
 void CommandStack::MarkAsClean()
 {
-  if (!mStack.empty())
-  {
-    mCleanIndex = mIndex;
-  }
+  mCleanIndex = mIndex;
 }
 
 void CommandStack::ResetClean()
@@ -54,7 +51,7 @@ void CommandStack::Redo()
 
 auto CommandStack::IsClean() const -> bool
 {
-  return mCleanIndex && mCleanIndex == mIndex;
+  return mStack.empty() || (mCleanIndex && mCleanIndex == mIndex);
 }
 
 auto CommandStack::CanUndo() const -> bool
