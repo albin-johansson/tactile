@@ -366,6 +366,8 @@ set(TACTILE_SOURCE_FILES
     io/parsing/xml/xml_map_object.cpp
     io/parsing/xml/xml_map_object.hpp
 
+    io/saving/common.cpp
+    io/saving/common.hpp
     io/saving/save_map_document.cpp
     io/saving/save_map_document.hpp
 
@@ -379,7 +381,6 @@ set(TACTILE_SOURCE_FILES
     io/saving/json/save_properties.hpp
     io/saving/json/save_tilesets.cpp
     io/saving/json/save_tilesets.hpp
-    io/saving/json/tiled_info.hpp
 
     utils/buffer_utils.hpp
     utils/color_utils.hpp

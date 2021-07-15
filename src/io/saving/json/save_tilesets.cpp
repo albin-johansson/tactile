@@ -5,9 +5,9 @@
 #include <utility>    // move
 
 #include "io/preferences.hpp"
+#include "io/saving/common.hpp"
 #include "io/saving/json/save_json.hpp"
 #include "io/saving/json/save_properties.hpp"
-#include "io/saving/json/tiled_info.hpp"
 
 namespace Tactile::IO {
 namespace {
@@ -18,15 +18,7 @@ void AddCommonAttributes(nlohmann::json& json,
 {
   json["name"] = tileset.GetName();
   json["columns"] = tileset.GetColumnCount().get();
-
-  const auto path = std::filesystem::relative(tileset.GetFilePath(), dir);
-
-  /* Here we make sure that the file path is portable, by using forward slashes that
-     can be understood by pretty much all operating systems that we care about. */
-  auto pathStr = path.string();
-  std::ranges::replace(pathStr, '\\', '/');
-
-  json["image"] = std::move(pathStr);
+  json["image"] = GetTilesetImagePath(tileset, dir);
   json["imagewidth"] = tileset.GetWidth();
   json["imageheight"] = tileset.GetHeight();
   json["margin"] = 0;
@@ -68,7 +60,7 @@ void CreateExternalTilesetFile(const Tileset& tileset,
 
   json["type"] = "tileset";
   json["tiledversion"] = tiled_version;
-  json["version"] = format_version;
+  json["version"] = tiled_json_version;
 
   const auto name = std::format("{}.json", tileset.GetName());
   const auto path = dir / name;

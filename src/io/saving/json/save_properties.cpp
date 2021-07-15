@@ -4,51 +4,23 @@
 #include <utility>  // move
 
 #include "core/tactile_error.hpp"
+#include "io/saving/common.hpp"
 
 namespace Tactile::IO {
 namespace {
-
-[[nodiscard]] auto Stringify(const PropertyType type) -> std::string
-{
-  switch (type)
-  {
-    case PropertyType::String:
-      return "string";
-
-    case PropertyType::Integer:
-      return "int";
-
-    case PropertyType::Floating:
-      return "float";
-
-    case PropertyType::Boolean:
-      return "bool";
-
-    case PropertyType::File:
-      return "file";
-
-    case PropertyType::Color:
-      return "color";
-
-    case PropertyType::Object:
-      return "object";
-
-    default:
-      throw TactileError{"Did not recognize property type!"};
-  }
-}
 
 [[nodiscard]] auto SaveProperty(std::string name,
                                 const Property& property,
                                 const std::filesystem::path& dir) -> nlohmann::json
 {
   auto json = nlohmann::json::object();
+  const auto type = property.GetType().value();
 
   json["name"] = std::move(name);
-  json["type"] = Stringify(property.GetType().value());
+  json["type"] = GetPropertyTypeString(type);
 
   auto& value = json["value"];
-  switch (property.GetType().value())
+  switch (type)
   {
     case PropertyType::String:
     {
@@ -72,8 +44,7 @@ namespace {
     }
     case PropertyType::File:
     {
-      const auto path = std::filesystem::proximate(property.AsFile(), dir);
-      value = path.string();
+      value = GetPropertyFileValue(property, dir);
       break;
     }
     case PropertyType::Color:

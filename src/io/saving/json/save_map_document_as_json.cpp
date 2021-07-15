@@ -3,11 +3,11 @@
 #include <filesystem>  // path
 #include <json.hpp>    // json
 
+#include "io/saving/common.hpp"
 #include "io/saving/json/save_json.hpp"
 #include "io/saving/json/save_layers.hpp"
 #include "io/saving/json/save_properties.hpp"
 #include "io/saving/json/save_tilesets.hpp"
-#include "io/saving/json/tiled_info.hpp"
 
 namespace Tactile::IO {
 namespace {
@@ -24,15 +24,15 @@ namespace {
   json["height"] = map.GetRowCount().get();
   json["nextlayerid"] = map.GetNextLayerId().get();
   json["nextobjectid"] = map.GetNextObjectId().get();
-  // TODO json["tilewidth"]
-  // TODO json["tileheight"]
+  json["tilewidth"] = 32;   // TODO
+  json["tileheight"] = 32;  // TODO
 
   json["infinite"] = false;
   json["orientation"] = "orthogonal";
   json["renderorder"] = "right-down";
   json["compressionlevel"] = -1;
   json["tiledversion"] = tiled_version;
-  json["version"] = format_version;
+  json["version"] = tiled_json_version;
 
   json["tilesets"] = SaveTilesets(document, dir);
   json["layers"] = SaveLayers(document.GetMap(), dir);
