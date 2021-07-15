@@ -4,6 +4,7 @@
 
 #include "io/preferences.hpp"
 #include "io/saving/common.hpp"
+#include "io/saving/xml/append_properties.hpp"
 #include "io/saving/xml/save_xml.hpp"
 
 namespace Tactile::IO {
@@ -24,6 +25,8 @@ void AddCommon(const Tileset& tileset,
   imageNode.append_attribute("source").set_value(source.c_str());
   imageNode.append_attribute("width").set_value(tileset.GetWidth());
   imageNode.append_attribute("height").set_value(tileset.GetHeight());
+
+  AppendProperties(tileset, node, dir);
 }
 
 void AppendEmbeddedTileset(const Tileset& tileset,
