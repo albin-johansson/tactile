@@ -12,7 +12,7 @@ void SaveXml(const pugi::xml_document& xml, const std::filesystem::path& path)
 
   if (Prefs::GetHumanReadableOutput())
   {
-    xml.save(stream);
+    xml.save(stream, " ");
   }
   else
   {
