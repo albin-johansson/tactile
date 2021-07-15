@@ -382,6 +382,9 @@ set(TACTILE_SOURCE_FILES
     io/saving/json/save_tilesets.cpp
     io/saving/json/save_tilesets.hpp
 
+    io/saving/xml/save_xml.cpp
+    io/saving/xml/save_xml.hpp
+
     utils/buffer_utils.hpp
     utils/color_utils.hpp
     utils/from_string.hpp
