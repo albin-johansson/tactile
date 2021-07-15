@@ -2,6 +2,7 @@
 
 #include "core/model.hpp"
 #include "gui/widgets/dialogs/map_import_error_dialog.hpp"
+#include "gui/widgets/dialogs/save_as_dialog.hpp"
 #include "layout/dock_space.hpp"
 #include "widgets/layers/layer_dock.hpp"
 #include "widgets/menus/menu_bar.hpp"
@@ -28,6 +29,7 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
   UpdateTilesetDock(model, dispatcher);
 
   UpdateMapImportErrorDialog();
+  UpdateSaveAsDialog(dispatcher);
 }
 
 }  // namespace Tactile

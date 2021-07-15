@@ -24,7 +24,8 @@ inline bool show_image_file_dialog = false;
 void ShowImageFileDialog()
 {
   const auto filter = ".png,.jpg";
-  const auto res = FileDialog("TilesetImageFileDialog", "Select image", filter);
+  const auto res =
+      FileDialogImport("TilesetImageFileDialog", "Select image", filter);
 
   if (res == FileDialogResult::Success)
   {

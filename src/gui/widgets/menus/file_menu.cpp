@@ -33,7 +33,7 @@ inline bool show_map_file_dialog = false;
 
 void ShowMapFileDialog(entt::dispatcher& dispatcher)
 {
-  const auto result = FileDialog("MapFileDialog", "Open map...", GetFilter());
+  const auto result = FileDialogImport("MapFileDialog", "Open map...", GetFilter());
   if (result == FileDialogResult::Success)
   {
     dispatcher.enqueue<OpenMapEvent>(GetFileDialogSelectedPath());

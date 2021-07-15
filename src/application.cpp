@@ -11,11 +11,13 @@
 #include "gui/icons.hpp"
 #include "gui/update_gui.hpp"
 #include "gui/widgets/dialogs/map_import_error_dialog.hpp"
+#include "gui/widgets/dialogs/save_as_dialog.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "io/parsing/map_parser.hpp"
 #include "io/parsing/to_map_document.hpp"
+#include "io/saving/save_map_document.hpp"
 #include "io/preferences.hpp"
 #include "shortcuts/shortcuts.hpp"
 #include "utils/load_texture.hpp"
@@ -148,14 +150,35 @@ void Application::OnOpenMapEvent(const OpenMapEvent& event)
 
 void Application::OnSaveEvent()
 {
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    if (document->HasPath())
+    {
+      IO::SaveMapDocument(*document);
+      document->MarkAsClean();
+    }
+    else
+    {
+      OnSaveAsRequestEvent();
+    }
+  }
 }
 
 void Application::OnSaveAsEvent(const SaveAsEvent& event)
 {
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    document->SetPath(event.path);
+    OnSaveEvent();
+  }
 }
 
 void Application::OnSaveAsRequestEvent()
 {
+  if (mModel->GetActiveDocument())
+  {
+    OpenSaveAsDialog();
+  }
 }
 
 void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
