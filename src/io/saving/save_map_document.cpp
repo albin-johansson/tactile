@@ -3,6 +3,7 @@
 #include <cassert>  // assert
 
 #include "io/saving/json/save_map_document_as_json.hpp"
+#include "io/saving/xml/save_map_document_as_xml.hpp"
 
 namespace Tactile::IO {
 
@@ -19,7 +20,7 @@ void SaveMapDocument(const MapDocument& document)
   }
   else if (extension == ".tmx")
   {
-    // TODO
+    SaveMapDocumentAsXml(document);
   }
   else
   {

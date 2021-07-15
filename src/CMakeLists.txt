@@ -382,6 +382,14 @@ set(TACTILE_SOURCE_FILES
     io/saving/json/save_tilesets.cpp
     io/saving/json/save_tilesets.hpp
 
+    io/saving/xml/append_layer.cpp
+    io/saving/xml/append_layer.hpp
+    io/saving/xml/append_properties.cpp
+    io/saving/xml/append_properties.hpp
+    io/saving/xml/append_tileset.cpp
+    io/saving/xml/append_tileset.hpp
+    io/saving/xml/save_map_document_as_xml.cpp
+    io/saving/xml/save_map_document_as_xml.hpp
     io/saving/xml/save_xml.cpp
     io/saving/xml/save_xml.hpp
 
