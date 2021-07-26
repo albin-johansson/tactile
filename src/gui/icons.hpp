@@ -59,4 +59,18 @@ void UnloadIcons();
 
 [[nodiscard]] auto GetTactileIcon() noexcept -> uint;
 
+class Icons final
+{
+ public:
+  Icons()
+  {
+    LoadIcons();
+  }
+
+  ~Icons()
+  {
+    UnloadIcons();
+  }
+};
+
 }  // namespace Tactile

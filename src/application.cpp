@@ -7,8 +7,6 @@
 #include "application_events.hpp"
 #include "core/events/viewport/decrease_viewport_zoom_event.hpp"
 #include "core/events/viewport/increase_viewport_zoom_event.hpp"
-#include "gui/cursors.hpp"
-#include "gui/icons.hpp"
 #include "gui/update_gui.hpp"
 #include "gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "gui/widgets/dialogs/save_as_dialog.hpp"
@@ -30,8 +28,6 @@ Application::Application(cen::window&& window)
 {
   SubscribeToEvents(this, mDispatcher);
   LoadDefaultShortcuts();
-  LoadCursors();
-  LoadIcons();
 }
 
 auto Application::Run() -> int
@@ -73,8 +69,6 @@ auto Application::Run() -> int
 void Application::OnAboutToExit()
 {
   SavePreferences();
-  UnloadIcons();
-  UnloadCursors();
   UnloadTextures();
 }
 
