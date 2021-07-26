@@ -4,7 +4,7 @@
 
 namespace Tactile {
 
-auto ToTextureID(uint texture) -> ImTextureID
+auto ToTextureID(const uint texture) -> ImTextureID
 {
   const auto value = static_cast<std::uintptr_t>(texture);
   return reinterpret_cast<ImTextureID>(value);  // NOLINT
