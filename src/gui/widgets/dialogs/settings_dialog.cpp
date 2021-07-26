@@ -42,12 +42,19 @@ void ShowThemeBar()
     ImGui::Text("Theme:");
 
     ImGui::SameLine();
-    auto themeIndex = GetThemeIndex(Prefs::GetTheme());
-    if (ImGui::Combo("##ThemeCombo", &themeIndex, theme_options))
+    if (auto themeIndex = GetThemeIndex(Prefs::GetTheme());
+        ImGui::Combo("##ThemeCombo", &themeIndex, theme_options))
     {
       const auto theme = GetThemeFromIndex(themeIndex);
       Prefs::SetTheme(theme);
       ApplyTheme(ImGui::GetStyle(), theme);
+    }
+
+    if (bool enabled = Prefs::GetWindowBorder();
+        ImGui::Checkbox("Window border", &enabled))
+    {
+      Prefs::SetWindowBorder(enabled);
+      ImGui::GetStyle().WindowBorderSize = enabled ? 1.0f : 0.0f;
     }
 
     ImGui::EndTabItem();

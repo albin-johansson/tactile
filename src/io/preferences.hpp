@@ -30,6 +30,8 @@ void SetShowPropertiesDock(bool visible) noexcept;
 
 void SetTheme(Theme theme) noexcept;
 
+void SetWindowBorder(bool enabled) noexcept;
+
 [[nodiscard]] auto GetPreferredFormat() -> const std::string&;
 
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
@@ -45,6 +47,8 @@ void SetTheme(Theme theme) noexcept;
 [[nodiscard]] auto GetShowPropertiesDock() noexcept -> bool;
 
 [[nodiscard]] auto GetTheme() noexcept -> Theme;
+
+[[nodiscard]] auto GetWindowBorder() noexcept -> bool;
 
 }  // namespace Prefs
 }  // namespace Tactile

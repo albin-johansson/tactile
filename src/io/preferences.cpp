@@ -20,6 +20,7 @@ inline constexpr bool def_human_readable_output = true;
 inline constexpr bool def_show_layer_dock = true;
 inline constexpr bool def_show_tileset_dock = true;
 inline constexpr bool def_show_properties_dock = true;
+inline constexpr bool def_window_border = false;
 inline constexpr auto def_preferred_format = "JSON";
 inline constexpr Theme def_theme = Theme::Ash;
 
@@ -33,6 +34,7 @@ struct Preferences final
   bool show_layer_dock = def_show_layer_dock;
   bool show_tileset_dock = def_show_tileset_dock;
   bool show_properties_dock = def_show_properties_dock;
+  bool window_border = def_window_border;
 };
 
 inline Preferences settings;
@@ -52,6 +54,7 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
   rune::ini_file ini;
 
   ini["Appearance"]["Theme"] = GetThemeIndex(preferences.theme);
+  ini["Appearance"]["WindowBorder"] = preferences.window_border;
   ini["Appearance"]["ShowGrid"] = preferences.show_grid;
 
   ini["Export"]["PreferredFormat"] = preferences.preferred_format;
@@ -73,6 +76,7 @@ void ValidateExistingFile()
 
   AddIfMissing(ini, "Appearance", "Theme", GetThemeIndex(def_theme));
   AddIfMissing(ini, "Appearance", "ShowGrid", def_show_grid);
+  AddIfMissing(ini, "Appearance", "WindowBorder", def_window_border);
 
   AddIfMissing(ini, "Export", "PreferredFormat", def_preferred_format);
   AddIfMissing(ini, "Export", "EmbedTilesets", def_embed_tilesets);
@@ -97,6 +101,7 @@ void LoadPreferences()
     const auto& appearance = ini.at("Appearance");
     settings.theme = GetThemeFromIndex(appearance.at("Theme").get<int>());
     settings.show_grid = appearance.at("ShowGrid").get<bool>();
+    settings.window_border = appearance.at("WindowBorder").get<bool>();
 
     const auto& exp = ini.at("Export");
     settings.preferred_format = exp.at("PreferredFormat").get<std::string>();
@@ -117,6 +122,7 @@ void LoadPreferences()
   CENTURION_LOG_INFO("Loaded preferences: \"%s\"", (GetPersistentFileDir() / file_name).string().c_str());
   CENTURION_LOG_INFO("  Appearance::Theme: %i", settings.theme);
   CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
+  CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
   CENTURION_LOG_INFO("  Export::PreferredFormat: %s", settings.preferred_format.c_str());
   CENTURION_LOG_INFO("  Export::EmbedTilesets: %i", settings.embed_tilesets);
   CENTURION_LOG_INFO("  Export::HumanReadableOutput: %i", settings.human_readable_output);
@@ -173,6 +179,11 @@ void SetTheme(const Theme theme) noexcept
   settings.theme = theme;
 }
 
+void SetWindowBorder(const bool enabled) noexcept
+{
+  settings.window_border = enabled;
+}
+
 auto GetPreferredFormat() -> const std::string&
 {
   return settings.preferred_format;
@@ -211,6 +222,11 @@ auto GetShowPropertiesDock() noexcept -> bool
 auto GetTheme() noexcept -> Theme
 {
   return settings.theme;
+}
+
+auto GetWindowBorder() noexcept -> bool
+{
+  return settings.window_border;
 }
 
 }  // namespace Prefs
