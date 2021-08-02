@@ -114,6 +114,10 @@ auto ToMapDocument(const MapData& data) -> Unique<MapDocument>
   document->SetNextObjectId(data.next_object_id);
   document->SetPath(data.absolute_path);
 
+  auto& map = document->GetMap();
+  map.SetTileWidth(data.tile_width);
+  map.SetTileHeight(data.tile_height);
+
   auto& tilesets = document->GetTilesets();
   for (const auto& tilesetData : data.tilesets)
   {
