@@ -1,5 +1,7 @@
 #pragma once
 
+#include <utility> // pair
+
 #include "aliases/ints.hpp"
 #include "aliases/unique.hpp"
 #include "core/document.hpp"
@@ -207,6 +209,8 @@ class MapDocument final : public IDocument
   int mTileLayerSuffix{1};             ///< Incrementing tile layer suffix.
   int mObjectLayerSuffix{1};           ///< Incrementing object layer suffix.
   ViewportInfo mViewportInfo;
+
+  [[nodiscard]] auto GetViewportOffsetDelta() const -> std::pair<float, float>;
 };
 
 }  // namespace Tactile

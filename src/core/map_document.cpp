@@ -32,6 +32,8 @@
 
 namespace Tactile {
 
+constexpr float minimum_viewport_tile_height = 4;
+
 MapDocument::MapDocument()
     : mMap{std::make_unique<Map>()}
     , mTilesets{std::make_unique<TilesetManager>()}
@@ -52,8 +54,7 @@ MapDocument::MapDocument(const row_t nRows,
   mMap->SetTileWidth(tileWidth);
   mMap->SetTileHeight(tileHeight);
 
-  mViewportInfo.tile_width = 2.0f * static_cast<float>(mMap->GetTileWidth());
-  mViewportInfo.tile_height = 2.0f * static_cast<float>(mMap->GetTileHeight());
+  ResetViewportTileSize();
 }
 
 void MapDocument::Undo()
@@ -340,8 +341,7 @@ void MapDocument::OffsetViewport(const float dx, const float dy)
 
 void MapDocument::IncreaseViewportTileSize()
 {
-  const auto dx = std::max(2.0f, std::round(mViewportInfo.tile_width * 0.05f));
-  const auto dy = std::max(2.0f, std::round(mViewportInfo.tile_height * 0.05f));
+  const auto [dx, dy] = GetViewportOffsetDelta();
   mViewportInfo.tile_width += dx;
   mViewportInfo.tile_height += dy;
 }
@@ -349,21 +349,22 @@ void MapDocument::IncreaseViewportTileSize()
 void MapDocument::DecreaseViewportTileSize()
 {
   assert(CanDecreaseViewportTileSize());
+  const auto ratio = mViewportInfo.tile_width / mViewportInfo.tile_height;
 
-  const auto dx = std::max(2.0f, std::round(mViewportInfo.tile_width * 0.05f));
-  const auto dy = std::max(2.0f, std::round(mViewportInfo.tile_height * 0.05f));
-
+  const auto [dx, dy] = GetViewportOffsetDelta();
   mViewportInfo.tile_width -= dx;
   mViewportInfo.tile_height -= dy;
 
-  mViewportInfo.tile_width = std::max(4.0f, mViewportInfo.tile_width);
-  mViewportInfo.tile_height = std::max(4.0f, mViewportInfo.tile_height);
+  mViewportInfo.tile_width =
+      std::max(minimum_viewport_tile_height * ratio, mViewportInfo.tile_width);
+  mViewportInfo.tile_height =
+      std::max(minimum_viewport_tile_height, mViewportInfo.tile_height);
 }
 
 void MapDocument::ResetViewportTileSize()
 {
-  mViewportInfo.tile_width = 64;
-  mViewportInfo.tile_height = 64;
+  mViewportInfo.tile_width = 2.0f * static_cast<float>(mMap->GetTileWidth());
+  mViewportInfo.tile_height = 2.0f * static_cast<float>(mMap->GetTileHeight());
 }
 
 void MapDocument::SetNextLayerId(const layer_id id)
@@ -378,7 +379,7 @@ void MapDocument::SetNextObjectId(const object_id id)
 
 auto MapDocument::CanDecreaseViewportTileSize() const -> bool
 {
-  return mViewportInfo.tile_width > 4 && mViewportInfo.tile_height > 4;
+  return mViewportInfo.tile_height > minimum_viewport_tile_height;
 }
 
 void MapDocument::AddProperty(const std::string& name, const PropertyType type)
@@ -440,6 +441,16 @@ auto MapDocument::GetPropertyCount() const -> usize
 auto MapDocument::GetName() const -> std::string_view
 {
   return mDelegate->GetName();
+}
+
+auto MapDocument::GetViewportOffsetDelta() const -> std::pair<float, float>
+{
+  const auto ratio = mViewportInfo.tile_width / mViewportInfo.tile_height;
+
+  const auto dx = std::round(std::max(2.0f, mViewportInfo.tile_width * 0.05f));
+  const auto dy = dx / ratio;
+
+  return {dx, dy};
 }
 
 }  // namespace Tactile
