@@ -120,7 +120,7 @@ void Application::UpdateFrame()
 
 void Application::OnAddMapEvent(const AddMapEvent& event)
 {
-  const auto id = mModel->AddMap();
+  const auto id = mModel->AddMap(event.tile_width, event.tile_height);
   mModel->SelectMap(id);
 }
 

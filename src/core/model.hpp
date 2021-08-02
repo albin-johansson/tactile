@@ -26,7 +26,7 @@ class Model final
 
   auto AddMap(Unique<MapDocument> document) -> map_id;
 
-  auto AddMap() -> map_id;
+  auto AddMap(int tileWidth, int tileHeight) -> map_id;
 
   void SelectMap(map_id id);
 

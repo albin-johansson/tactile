@@ -41,13 +41,19 @@ MapDocument::MapDocument()
   mViewportInfo.tile_height = 64;
 }
 
-MapDocument::MapDocument(const row_t nRows, const col_t nCols)
+MapDocument::MapDocument(const row_t nRows,
+                         const col_t nCols,
+                         const int tileWidth,
+                         const int tileHeight)
     : mMap{std::make_unique<Map>(nRows, nCols)}
     , mTilesets{std::make_unique<TilesetManager>()}
     , mDelegate{std::make_unique<DocumentDelegate>("Map")}
 {
-  mViewportInfo.tile_width = 64;
-  mViewportInfo.tile_height = 64;
+  mMap->SetTileWidth(tileWidth);
+  mMap->SetTileHeight(tileHeight);
+
+  mViewportInfo.tile_width = 2.0f * static_cast<float>(mMap->GetTileWidth());
+  mViewportInfo.tile_height = 2.0f * static_cast<float>(mMap->GetTileHeight());
 }
 
 void MapDocument::Undo()

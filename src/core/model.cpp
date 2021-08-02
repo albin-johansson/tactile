@@ -19,9 +19,9 @@ auto Model::AddMap(Unique<MapDocument> document) -> map_id
   return id;
 }
 
-auto Model::AddMap() -> map_id
+auto Model::AddMap(const int tileWidth, const int tileHeight) -> map_id
 {
-  return AddMap(std::make_unique<MapDocument>(5_row, 5_col));
+  return AddMap(std::make_unique<MapDocument>(5_row, 5_col, tileWidth, tileHeight));
 }
 
 void Model::SelectMap(const map_id id)

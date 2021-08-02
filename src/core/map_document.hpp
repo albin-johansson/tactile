@@ -19,7 +19,7 @@ class MapDocument final : public IDocument
 
   MapDocument();
 
-  MapDocument(row_t nRows, col_t nCols);
+  MapDocument(row_t nRows, col_t nCols, int tileWidth, int tileHeight);
 
   /// \name Document API
   /// \{
