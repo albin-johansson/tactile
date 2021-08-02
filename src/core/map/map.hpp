@@ -453,6 +453,11 @@ class Map final
     return mNextLayerId;
   }
 
+  /**
+   * \brief Returns the ID that will be used by the next object.
+   *
+   * \return the ID of the next object.
+   */
   [[nodiscard]] auto GetNextObjectId() const noexcept -> object_id
   {
     return mNextObjectId;
