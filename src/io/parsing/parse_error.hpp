@@ -15,6 +15,8 @@ enum class ParseError
   MapMissingNextObjectId,
   MapMissingTilesets,
   MapMissingLayers,
+  MapMissingTileWidth,
+  MapMissingTileHeight,
 
   LayerMissingWidth,
   LayerMissingHeight,

@@ -15,6 +15,9 @@ TEST(Map, Defaults)
 
   ASSERT_EQ(1_obj, map.GetNextObjectId());
   ASSERT_EQ(1_layer, map.GetNextLayerId());
+
+  ASSERT_EQ(32, map.GetTileWidth());
+  ASSERT_EQ(32, map.GetTileHeight());
 }
 
 TEST(Map, DimensionConstructor)
@@ -331,6 +334,22 @@ TEST(Map, SetName)
 
   ASSERT_EQ("foo", map.GetName(a));
   ASSERT_EQ("bar", map.GetName(b));
+}
+
+TEST(Map, SetTileWidth)
+{
+  Map map;
+  map.SetTileWidth(48);
+  ASSERT_EQ(48, map.GetTileWidth());
+  ASSERT_EQ(32, map.GetTileHeight());
+}
+
+TEST(Map, SetTileHeight)
+{
+  Map map;
+  map.SetTileHeight(64);
+  ASSERT_EQ(32, map.GetTileWidth());
+  ASSERT_EQ(64, map.GetTileHeight());
 }
 
 TEST(Map, MoveLayerUp)

@@ -38,6 +38,12 @@ inline Maybe<IO::ParseError> current_error;
     case IO::ParseError::MapMissingLayers:
       return "The map was missing the layers attribute!";
 
+    case IO::ParseError::MapMissingTileWidth:
+      return "The map was missing a tile width attribute!";
+
+    case IO::ParseError::MapMissingTileHeight:
+      return "The map was missing a tile height attribute!";
+
     case IO::ParseError::LayerMissingWidth:
       return "The map featured a layer without a width!";
 

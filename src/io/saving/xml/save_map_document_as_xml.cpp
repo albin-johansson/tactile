@@ -23,8 +23,8 @@ void AppendMapChild(const MapDocument& document,
   node.append_attribute("infinite").set_value(0);
 
   const auto& map = document.GetMap();
-  node.append_attribute("tilewidth").set_value(32);   // FIXME
-  node.append_attribute("tileheight").set_value(32);  // FIXME
+  node.append_attribute("tilewidth").set_value(map.GetTileWidth());
+  node.append_attribute("tileheight").set_value(map.GetTileHeight());
   node.append_attribute("width").set_value(map.GetColumnCount().get());
   node.append_attribute("height").set_value(map.GetRowCount().get());
   node.append_attribute("nextlayerid").set_value(map.GetNextLayerId().get());

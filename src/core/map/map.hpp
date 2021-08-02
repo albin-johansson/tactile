@@ -251,6 +251,24 @@ class Map final
   void SetName(layer_id id, std::string name);
 
   /**
+   * \brief Sets the tile width of tiles in the map.
+   *
+   * \pre `tileWidth` must be greater than zero.
+   *
+   * \param tileWidth the new tile width associated with the map.
+   */
+  void SetTileWidth(int tileWidth) noexcept;
+
+  /**
+   * \brief Sets the tile height of tiles in the map.
+   *
+   * \pre `tileHeight` must be greater than zero.
+   *
+   * \param tileHeight the new tile height associated with the map.
+   */
+  void SetTileHeight(int tileHeight) noexcept;
+
+  /**
    * \brief Moves the specified layer back one step in the render order.
    *
    * \details This function will make the specified layer be rendered *later*.
@@ -440,6 +458,30 @@ class Map final
     return mNextObjectId;
   }
 
+  /**
+   * \brief Returns the tile width of the tiles in the map.
+   *
+   * \details The default tile width is 32.
+   *
+   * \return the tile width.
+   */
+  [[nodiscard]] auto GetTileWidth() const noexcept -> int
+  {
+    return mTileWidth;
+  }
+
+  /**
+   * \brief Returns the tile height of the tiles in the map.
+   *
+   * \details The default tile height is 32.
+   *
+   * \return the tile height.
+   */
+  [[nodiscard]] auto GetTileHeight() const noexcept -> int
+  {
+    return mTileHeight;
+  }
+
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
     return mLayers.begin();
@@ -457,6 +499,8 @@ class Map final
   col_t mCols;
   layer_id mNextLayerId{1};
   object_id mNextObjectId{1};
+  int mTileWidth{32};
+  int mTileHeight{32};
 
   [[nodiscard]] auto FindLayer(layer_id id) -> ILayer*;
 

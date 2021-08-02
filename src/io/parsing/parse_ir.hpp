@@ -77,6 +77,8 @@ struct MapData final
   std::filesystem::path absolute_path;
   layer_id next_layer_id;
   object_id next_object_id;
+  int tile_width{};
+  int tile_height{};
   std::vector<TilesetData> tilesets;
   std::vector<LayerData> layers;
   std::vector<PropertyData> properties;

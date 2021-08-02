@@ -261,6 +261,18 @@ void Map::SetName(const layer_id id, std::string name)
   }
 }
 
+void Map::SetTileWidth(const int tileWidth) noexcept
+{
+  assert(tileWidth > 0);
+  mTileWidth = tileWidth;
+}
+
+void Map::SetTileHeight(const int tileHeight) noexcept
+{
+  assert(tileHeight > 0);
+  mTileHeight = tileHeight;
+}
+
 void Map::MoveLayerDown(const layer_id id)
 {
   mLayers.move_forward(id);

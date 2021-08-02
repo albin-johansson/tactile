@@ -29,6 +29,12 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
     case ParseError::MapMissingLayers:
       return stream << "MapMissingLayers";
 
+    case ParseError::MapMissingTileWidth:
+      return stream << "MapMissingTileWidth";
+
+    case ParseError::MapMissingTileHeight:
+      return stream << "MapMissingTileHeight";
+
     case ParseError::LayerMissingWidth:
       return stream << "LayerMissingWidth";
 

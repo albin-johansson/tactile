@@ -24,8 +24,8 @@ namespace {
   json["height"] = map.GetRowCount().get();
   json["nextlayerid"] = map.GetNextLayerId().get();
   json["nextobjectid"] = map.GetNextObjectId().get();
-  json["tilewidth"] = 32;   // TODO
-  json["tileheight"] = 32;  // TODO
+  json["tilewidth"] = map.GetTileWidth();
+  json["tileheight"] = map.GetTileHeight();
 
   json["infinite"] = false;
   json["orientation"] = "orthogonal";

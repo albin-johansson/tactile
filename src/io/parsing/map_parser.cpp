@@ -35,6 +35,16 @@ MapParser::MapParser(const std::filesystem::path& path)
       return;
     }
 
+    if (!ParseTileWidth(*file))
+    {
+      return;
+    }
+
+    if (!ParseTileHeight(*file))
+    {
+      return;
+    }
+
     mError = ParseTilesets(*file, mData);
     if (mError != ParseError::None)
     {
@@ -106,6 +116,36 @@ auto MapParser::ParseNextObjectId(const IMapFile& file) -> bool
   else
   {
     mError = ParseError::MapMissingNextObjectId;
+    return false;
+  }
+}
+
+auto MapParser::ParseTileWidth(const IMapFile& file) -> bool
+{
+  const auto map = file.GetMap();
+  if (const auto tileWidth = map->GetInt(MapAttribute::TileWidth))
+  {
+    mData.tile_width = *tileWidth;
+    return true;
+  }
+  else
+  {
+    mError = ParseError::MapMissingTileWidth;
+    return false;
+  }
+}
+
+auto MapParser::ParseTileHeight(const IMapFile& file) -> bool
+{
+  const auto map = file.GetMap();
+  if (const auto tileHeight = map->GetInt(MapAttribute::TileHeight))
+  {
+    mData.tile_height = *tileHeight;
+    return true;
+  }
+  else
+  {
+    mError = ParseError::MapMissingTileHeight;
     return false;
   }
 }

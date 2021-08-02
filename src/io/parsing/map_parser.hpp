@@ -38,6 +38,10 @@ class MapParser final
   [[nodiscard]] auto ParseNextLayerId(const IMapFile& file) -> bool;
 
   [[nodiscard]] auto ParseNextObjectId(const IMapFile& file) -> bool;
+
+  [[nodiscard]] auto ParseTileWidth(const IMapFile& file) -> bool;
+
+  [[nodiscard]] auto ParseTileHeight(const IMapFile& file) -> bool;
 };
 
 }  // namespace Tactile::IO
