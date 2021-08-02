@@ -15,8 +15,8 @@
 #include "imgui_impl_sdl.h"
 #include "io/parsing/map_parser.hpp"
 #include "io/parsing/to_map_document.hpp"
-#include "io/saving/save_map_document.hpp"
 #include "io/preferences.hpp"
+#include "io/saving/save_map_document.hpp"
 #include "shortcuts/shortcuts.hpp"
 #include "utils/load_texture.hpp"
 
