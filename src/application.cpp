@@ -118,7 +118,7 @@ void Application::UpdateFrame()
   UpdateGui(*mModel, mDispatcher);
 }
 
-void Application::OnAddMapEvent()
+void Application::OnAddMapEvent(const AddMapEvent& event)
 {
   const auto id = mModel->AddMap();
   mModel->SelectMap(id);

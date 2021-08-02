@@ -3,7 +3,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/events/maps/add_map_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/texture_utils.hpp"
 #include "gui/widgets/alignment.hpp"
@@ -27,7 +26,7 @@ void NoContentViewportWidget(entt::dispatcher& dispatcher)
   ImGui::Spacing();
   if (CenteredButton("Create new map"))
   {
-    dispatcher.enqueue<AddMapEvent>();
+    EnableAddMapDialog();
   }
 
   ImGui::Spacing();

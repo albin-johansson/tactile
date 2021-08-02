@@ -72,7 +72,7 @@ class Application final
 
   void UpdateFrame();
 
-  void OnAddMapEvent();
+  void OnAddMapEvent(const AddMapEvent& event);
 
   void OnCloseMapEvent(const CloseMapEvent& event);
 

@@ -2,7 +2,6 @@
 
 #include <imgui.h>
 
-#include "core/events/maps/add_map_event.hpp"
 #include "core/events/redo_event.hpp"
 #include "core/events/tools/select_tool_event.hpp"
 #include "core/events/undo_event.hpp"
@@ -30,7 +29,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   {
     if (ButtonEx(TAC_ICON_FILE, "Create new tilemap."))
     {
-      dispatcher.enqueue<AddMapEvent>();
+      EnableAddMapDialog();
     }
 
     ImGui::SameLine();
