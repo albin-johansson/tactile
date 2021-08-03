@@ -180,6 +180,8 @@ class TilesetManager final
    */
   [[nodiscard]] auto GetRange(tileset_id id) const -> TileRange;
 
+  [[nodiscard]] auto ToLocal(tile_id id) const -> Maybe<tile_id>;
+
   /**
    * \brief Returns the amount of tilesets handled by the manager.
    *

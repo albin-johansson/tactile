@@ -327,6 +327,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/toolbar/tool_button.cpp
     gui/widgets/toolbar/tool_button.hpp
 
+    gui/widgets/viewport/map_content_overlay.cpp
+    gui/widgets/viewport/map_content_overlay.hpp
     gui/widgets/viewport/map_content_viewport.cpp
     gui/widgets/viewport/map_content_viewport.hpp
     gui/widgets/viewport/map_view.cpp

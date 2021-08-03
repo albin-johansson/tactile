@@ -151,6 +151,23 @@ auto TilesetManager::GetRange(const tileset_id id) const -> TileRange
   return {tileset->GetFirstId(), tileset->GetLastId()};
 }
 
+auto TilesetManager::ToLocal(const tile_id id) const -> Maybe<tile_id>
+{
+  if (const auto* tileset = TryGetTileset(id))
+  {
+    if (tileset->GetFirstId() != 1_tile)
+    {
+      return id - tileset->GetFirstId();
+    }
+    else
+    {
+      return id;
+    }
+  }
+
+  return nothing;
+}
+
 auto TilesetManager::GetSize() const -> usize
 {
   return mTilesets.size();

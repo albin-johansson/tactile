@@ -5,7 +5,7 @@
 #include "core/events/maps/close_map_event.hpp"
 #include "core/events/maps/select_map_event.hpp"
 #include "core/model.hpp"
-#include "gui/widgets/viewport/map_view.hpp"
+#include "map_view.hpp"
 #include "utils/scope_id.hpp"
 
 namespace Tactile {

@@ -15,8 +15,9 @@
 #include "gui/rendering/render_info.hpp"
 #include "gui/rendering/render_map.hpp"
 #include "gui/widgets/common/mouse_tracker.hpp"
-#include "gui/widgets/viewport/render_stamp_preview.hpp"
-#include "gui/widgets/viewport/viewport_cursor_info.hpp"
+#include "map_content_overlay.hpp"
+#include "render_stamp_preview.hpp"
+#include "viewport_cursor_info.hpp"
 
 namespace Tactile {
 namespace {
@@ -82,8 +83,8 @@ void RenderCursorGizmos(const Model& model,
     return;
   }
 
-  ImGui::GetWindowDrawList()->AddRect(cursor.raw_position,
-                                      cursor.raw_position + info.grid_size,
+  ImGui::GetWindowDrawList()->AddRect(cursor.clamped_position,
+                                      cursor.clamped_position + info.grid_size,
                                       tile_highlight_color,
                                       0,
                                       0,
@@ -156,6 +157,8 @@ void MapView(const Model& model,
   }
 
   drawList->PopClipRect();
+
+  MapContentOverlay(document, canvas, cursor);
 }
 
 void CenterMapContentViewport()
