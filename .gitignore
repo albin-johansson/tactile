@@ -39,3 +39,4 @@ compile_commands.json
 doxygen-out
 build
 cmake-build-*
+installer/packages/com.albinjohansson.tactile/data/*
