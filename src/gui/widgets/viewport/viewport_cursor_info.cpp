@@ -4,35 +4,34 @@
 
 #include <cmath>  // trunc
 
+#include "gui/widgets/rendering/render_info.hpp"
+
 namespace Tactile {
 
-[[nodiscard]] auto GetViewportCursorInfo(const ImVec2& mapOrigin,
-                                         const ImVec2& gridSize,
-                                         const float nRows,
-                                         const float nCols) -> ViewportCursorInfo
+auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
 {
-  ViewportCursorInfo info;
+  ViewportCursorInfo cursor;
 
   const auto mouse = ImGui::GetMousePos();
   const auto item = ImGui::GetItemRectMin();
-  const auto diff = mouse - mapOrigin;
+  const auto diff = mouse - info.map_position;
 
-  const auto xRow = diff.y / gridSize.y;
-  const auto xCol = diff.x / gridSize.x;
-  const auto row = std::trunc(xRow);
-  const auto col = std::trunc(xCol);
+  const auto index = diff / info.grid_size;
+  const auto row = std::trunc(index.y);
+  const auto col = std::trunc(index.x);
 
-  info.is_within_map = xRow >= 0 && xCol >= 0 && row < nRows && col < nCols;
+  cursor.is_within_map =
+      index.y >= 0 && index.x >= 0 && row < info.row_count && col < info.col_count;
 
-  if (info.is_within_map)
+  if (cursor.is_within_map)
   {
-    info.map_position = {AsRow(row), AsColumn(col)};
+    cursor.map_position = {AsRow(row), AsColumn(col)};
   }
 
-  info.raw_position = {mapOrigin.x + (col * gridSize.x),
-                       mapOrigin.y + (row * gridSize.y)};
+  cursor.raw_position = {info.map_position.x + (col * info.grid_size.x),
+                         info.map_position.y + (row * info.grid_size.y)};
 
-  return info;
+  return cursor;
 }
 
 }  // namespace Tactile

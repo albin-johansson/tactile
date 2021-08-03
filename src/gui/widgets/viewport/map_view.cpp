@@ -12,6 +12,8 @@
 #include "core/model.hpp"
 #include "gui/widgets/common/mouse_tracker.hpp"
 #include "gui/widgets/rendering/canvas.hpp"
+#include "gui/widgets/rendering/render_bounds.hpp"
+#include "gui/widgets/rendering/render_info.hpp"
 #include "gui/widgets/rendering/render_map.hpp"
 #include "gui/widgets/viewport/render_stamp_preview.hpp"
 #include "gui/widgets/viewport/viewport_cursor_info.hpp"
@@ -71,8 +73,7 @@ void RenderCursorGizmos(const Model& model,
                         const MapDocument& document,
                         entt::dispatcher& dispatcher,
                         const ViewportCursorInfo& cursor,
-                        const ImVec2& mapOrigin,
-                        const ImVec2& gridSize)
+                        const RenderInfo& info)
 {
   assert(cursor.is_within_map);
 
@@ -82,7 +83,7 @@ void RenderCursorGizmos(const Model& model,
   }
 
   ImGui::GetWindowDrawList()->AddRect(cursor.raw_position,
-                                      cursor.raw_position + gridSize,
+                                      cursor.raw_position + info.grid_size,
                                       tile_highlight_color,
                                       0,
                                       0,
@@ -109,8 +110,8 @@ void RenderCursorGizmos(const Model& model,
   if (model.GetActiveTool() == MouseToolType::Stamp && tileset &&
       tileset->GetSelection())
   {
-    RenderStampPreview(mapOrigin,
-                       gridSize,
+    RenderStampPreview(info.map_position,
+                       info.grid_size,
                        document.GetMap(),
                        *tileset,
                        cursor.map_position);
@@ -130,29 +131,28 @@ void MapView(const Model& model,
   auto* drawList = ImGui::GetWindowDrawList();
   drawList->PushClipRect(canvas.tl, canvas.br, true);
 
-  const auto nRows = static_cast<float>(document.GetRowCount());
-  const auto nCols = static_cast<float>(document.GetColumnCount());
-
   const auto viewportInfo = document.GetViewportInfo();
+  const auto info = GetRenderInfo(document, canvas);
 
   // TODO viewport should be centered by default
   if (center_viewport)
   {
-    CenterViewport(dispatcher, viewportInfo, canvas.size, nRows, nCols);
+    CenterViewport(dispatcher,
+                   viewportInfo,
+                   canvas.size,
+                   info.row_count,
+                   info.col_count);
     center_viewport = false;
   }
 
   // TODO ShowGrid(state, canvas, IM_COL32(200, 200, 200, 15));
 
-  const ImVec2 offset = {viewportInfo.x_offset, viewportInfo.y_offset};
-  const ImVec2 gridSize = {viewportInfo.tile_width, viewportInfo.tile_height};
-  const auto mapOrigin = canvas.tl + offset;
-  RenderMap(document, canvas, mapOrigin, gridSize);
+  RenderMap(document, info);
 
-  const auto cursor = GetViewportCursorInfo(mapOrigin, gridSize, nRows, nCols);
+  const auto cursor = GetViewportCursorInfo(info);
   if (cursor.is_within_map)
   {
-    RenderCursorGizmos(model, document, dispatcher, cursor, mapOrigin, gridSize);
+    RenderCursorGizmos(model, document, dispatcher, cursor, info);
   }
 
   drawList->PopClipRect();

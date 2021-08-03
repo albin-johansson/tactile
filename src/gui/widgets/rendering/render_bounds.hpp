@@ -9,6 +9,7 @@ struct ImVec2;
 namespace Tactile {
 
 struct CanvasInfo;
+struct RenderInfo;
 
 struct RenderBounds final
 {
@@ -16,10 +17,7 @@ struct RenderBounds final
   MapPosition end;
 };
 
-[[nodiscard]] auto GetRenderBounds(const CanvasInfo& canvas,
-                                   const ImVec2& originPos,
-                                   const ImVec2& tileSize,
-                                   row_t nRows,
-                                   col_t nCols) -> RenderBounds;
+[[nodiscard]] auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info)
+    -> RenderBounds;
 
 }  // namespace Tactile

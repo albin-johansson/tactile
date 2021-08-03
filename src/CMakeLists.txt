@@ -297,6 +297,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/rendering/canvas.cpp
     gui/widgets/rendering/render_bounds.cpp
     gui/widgets/rendering/render_bounds.hpp
+    gui/widgets/rendering/render_info.cpp
+    gui/widgets/rendering/render_info.hpp
     gui/widgets/rendering/render_map.cpp
     gui/widgets/rendering/render_map.hpp
     gui/widgets/rendering/render_tile.cpp

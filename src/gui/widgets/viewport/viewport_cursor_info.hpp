@@ -6,6 +6,8 @@
 
 namespace Tactile {
 
+struct RenderInfo;
+
 struct ViewportCursorInfo final
 {
   MapPosition map_position;
@@ -13,9 +15,6 @@ struct ViewportCursorInfo final
   bool is_within_map{};
 };
 
-[[nodiscard]] auto GetViewportCursorInfo(const ImVec2& mapOrigin,
-                                         const ImVec2& gridSize,
-                                         float nRows,
-                                         float nCols) -> ViewportCursorInfo;
+[[nodiscard]] auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo;
 
 }  // namespace Tactile
