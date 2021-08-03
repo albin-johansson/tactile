@@ -32,7 +32,7 @@ void UpdateChangePropertyTypeDialog(const IDocument& document,
   if (ImGui::BeginPopupModal("Change property type", nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Type: ");
+    ImGui::TextUnformatted("Type: ");
 
     ImGui::SameLine();
     PropertyTypeCombo(&type_index);

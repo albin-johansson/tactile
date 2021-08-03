@@ -32,12 +32,12 @@ void UpdateAddMapDialog(entt::dispatcher& dispatcher)
   if (ImGui::BeginPopupModal("Add map", nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Tile width:  ");
+    ImGui::TextUnformatted("Tile width:  ");
     ImGui::SameLine();
     ImGui::InputInt("##TileWidthLabel", &tile_width);
 
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Tile height: ");
+    ImGui::TextUnformatted("Tile height: ");
     ImGui::SameLine();
     ImGui::InputInt("##TileHeightLabel", &tile_height);
 

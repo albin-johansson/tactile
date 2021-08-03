@@ -18,13 +18,13 @@ void ShowGeneralTab()
   {
     ImGui::Spacing();
 
-    ImGui::Text("Startup");
+    ImGui::TextUnformatted("Startup");
     ImGui::Checkbox("Restore last session", &restore_last_session);
 
     ImGui::Separator();
     ImGui::Spacing();
 
-    ImGui::Text("Behavior");
+    ImGui::TextUnformatted("Behavior");
     ImGui::Checkbox("RMB with stamp tool works as eraser", &rmb_stamp_as_eraser);
 
     ImGui::EndTabItem();
@@ -38,7 +38,7 @@ void ShowThemeBar()
     ImGui::Spacing();
 
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Theme:");
+    ImGui::TextUnformatted("Theme:");
 
     ImGui::SameLine();
     if (auto themeIndex = GetThemeIndex(Prefs::GetTheme());
@@ -67,7 +67,7 @@ void ShowExportTab()
     ImGui::Spacing();
 
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Preferred format:");
+    ImGui::TextUnformatted("Preferred format:");
 
     int formatIndex = (Prefs::GetPreferredFormat() == "JSON") ? 0 : 1;
     ImGui::SameLine();

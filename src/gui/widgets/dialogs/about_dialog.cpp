@@ -17,13 +17,15 @@ void UpdateAboutDialog(bool* open)
                    open,
                    ImGuiWindowFlags_AlwaysAutoResize))
   {
-    ImGui::Text("Tactile 0.2.0 (C) Albin Johansson 2020-2021");
+    ImGui::TextUnformatted("Tactile 0.2.0 (C) Albin Johansson 2020-2021");
     ImGui::Separator();
 
-    ImGui::Text("This tool is open-source software, using the GPL v3.0 license.");
+    ImGui::TextUnformatted(
+        "This tool is open-source software, using the GPL v3.0 license.");
 
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Source code: https://www.github.com/albin-johansson/tactile");
+    ImGui::TextUnformatted(
+        "Source code: https://www.github.com/albin-johansson/tactile");
     ImGui::SameLine();
     if (ButtonEx(TAC_ICON_LINK, "Open the GitHub repository in your browser."))
     {
@@ -31,7 +33,7 @@ void UpdateAboutDialog(bool* open)
     }
 
     ImGui::Spacing();
-    ImGui::Text("Icons by Font Awesome.");
+    ImGui::TextUnformatted("Icons by Font Awesome.");
   }
   ImGui::End();
 

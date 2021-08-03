@@ -110,7 +110,7 @@ void UpdateMapImportErrorDialog()
                              nullptr,
                              flags))
   {
-    ImGui::Text("Oops, failed to open the specified map!");
+    ImGui::TextUnformatted("Oops, failed to open the specified map!");
     ImGui::Text("Cause: %s", GetCause(current_error.value()));
 
     ImGui::Spacing();

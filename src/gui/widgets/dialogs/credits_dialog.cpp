@@ -33,7 +33,8 @@ void UpdateCreditsDialog(bool* open)
       ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
   if (ImGui::Begin("Credits", open, flags))
   {
-    ImGui::Text("Tactile is developed using the following open-source libraries.");
+    ImGui::TextUnformatted(
+        "Tactile is developed using the following open-source libraries.");
     ImGui::Spacing();
 
     if (ImGui::BeginTable("##CreditsTable", 3, table_flags))

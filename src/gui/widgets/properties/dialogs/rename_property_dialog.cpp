@@ -35,7 +35,7 @@ void UpdateRenamePropertyDialog(const IDocument& document,
   if (ImGui::BeginPopupModal("Rename property", nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Name: ");
+    ImGui::TextUnformatted("Name: ");
 
     ImGui::SameLine();
     if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer))

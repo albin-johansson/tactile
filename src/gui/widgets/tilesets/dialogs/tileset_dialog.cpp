@@ -71,7 +71,8 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
                          ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
   if (ImGui::Begin("Add tileset", open, flags))
   {
-    ImGui::Text("Select an image which contains the tiles aligned in a grid.");
+    ImGui::TextUnformatted(
+        "Select an image which contains the tiles aligned in a grid.");
     ImGui::Spacing();
 
     ImGui::Button("Select image...");

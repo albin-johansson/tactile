@@ -34,7 +34,7 @@ void UpdateAddPropertyDialog(const IDocument& document, entt::dispatcher& dispat
   if (ImGui::BeginPopupModal("Add property", nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Name: ");
+    ImGui::TextUnformatted("Name: ");
 
     ImGui::SameLine();
     if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer))
@@ -45,7 +45,7 @@ void UpdateAddPropertyDialog(const IDocument& document, entt::dispatcher& dispat
     }
 
     ImGui::AlignTextToFramePadding();
-    ImGui::Text("Type: ");
+    ImGui::TextUnformatted("Type: ");
 
     ImGui::SameLine();
     PropertyTypeCombo(&type_index);
