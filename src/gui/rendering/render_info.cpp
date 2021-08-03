@@ -2,8 +2,8 @@
 
 #include <imgui_internal.h>
 
+#include "canvas.hpp"
 #include "core/map_document.hpp"
-#include "gui/widgets/rendering/canvas.hpp"
 
 namespace Tactile {
 

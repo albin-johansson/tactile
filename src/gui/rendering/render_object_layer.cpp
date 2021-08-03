@@ -4,8 +4,8 @@
 #include <imgui_internal.h>
 
 #include "core/map/layers/object_layer.hpp"
-#include "gui/widgets/rendering/render_bounds.hpp"
-#include "gui/widgets/rendering/render_info.hpp"
+#include "render_bounds.hpp"
+#include "render_info.hpp"
 
 namespace Tactile {
 namespace {

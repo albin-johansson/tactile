@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "aliases/ints.hpp"
-#include "gui/widgets/rendering/canvas.hpp"
+#include "canvas.hpp"
 
 namespace Tactile {
 

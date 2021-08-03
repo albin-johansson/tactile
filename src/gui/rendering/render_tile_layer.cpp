@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "core/map/layers/tile_layer.hpp"
-#include "gui/widgets/rendering/render_info.hpp"
+#include "render_info.hpp"
 #include "render_tile.hpp"
 
 namespace Tactile {

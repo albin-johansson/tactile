@@ -220,6 +220,25 @@ set(TACTILE_SOURCE_FILES
     gui/layout/load_default_layout.cpp
     gui/layout/load_default_layout.hpp
 
+    gui/rendering/canvas.hpp
+    gui/rendering/canvas.cpp
+    gui/rendering/grid.cpp
+    gui/rendering/grid.hpp
+    gui/rendering/render_bounds.cpp
+    gui/rendering/render_bounds.hpp
+    gui/rendering/render_info.cpp
+    gui/rendering/render_info.hpp
+    gui/rendering/render_map.cpp
+    gui/rendering/render_map.hpp
+    gui/rendering/render_object_layer.cpp
+    gui/rendering/render_object_layer.hpp
+    gui/rendering/render_tile.cpp
+    gui/rendering/render_tile.hpp
+    gui/rendering/render_tile_layer.cpp
+    gui/rendering/render_tile_layer.hpp
+    gui/rendering/uv_tile_size.cpp
+    gui/rendering/uv_tile_size.hpp
+
     gui/widgets/alignment.cpp
     gui/widgets/alignment.hpp
 
@@ -292,25 +311,6 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/properties/dialogs/property_type_combo.hpp
     gui/widgets/properties/dialogs/rename_property_dialog.cpp
     gui/widgets/properties/dialogs/rename_property_dialog.hpp
-
-    gui/widgets/rendering/canvas.hpp
-    gui/widgets/rendering/canvas.cpp
-    gui/widgets/rendering/render_bounds.cpp
-    gui/widgets/rendering/render_bounds.hpp
-    gui/widgets/rendering/render_info.cpp
-    gui/widgets/rendering/render_info.hpp
-    gui/widgets/rendering/render_map.cpp
-    gui/widgets/rendering/render_map.hpp
-    gui/widgets/rendering/render_object_layer.cpp
-    gui/widgets/rendering/render_object_layer.hpp
-    gui/widgets/rendering/render_tile.cpp
-    gui/widgets/rendering/render_tile.hpp
-    gui/widgets/rendering/render_tile_layer.cpp
-    gui/widgets/rendering/render_tile_layer.hpp
-    gui/widgets/rendering/grid.cpp
-    gui/widgets/rendering/grid.hpp
-    gui/widgets/rendering/uv_tile_size.cpp
-    gui/widgets/rendering/uv_tile_size.hpp
 
     gui/widgets/tilesets/tileset_content_widget.cpp
     gui/widgets/tilesets/tileset_content_widget.hpp

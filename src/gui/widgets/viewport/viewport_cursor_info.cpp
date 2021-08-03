@@ -4,7 +4,7 @@
 
 #include <cmath>  // trunc
 
-#include "gui/widgets/rendering/render_info.hpp"
+#include "gui/rendering/render_info.hpp"
 
 namespace Tactile {
 

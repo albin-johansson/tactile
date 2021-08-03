@@ -5,8 +5,8 @@
 
 #include <algorithm>  // min, max
 
-#include "gui/widgets/rendering/canvas.hpp"
-#include "gui/widgets/rendering/render_info.hpp"
+#include "canvas.hpp"
+#include "render_info.hpp"
 
 namespace Tactile {
 

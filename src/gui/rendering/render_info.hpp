@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "gui/widgets/rendering/render_bounds.hpp"
+#include "render_bounds.hpp"
 
 namespace Tactile {
 

@@ -7,11 +7,11 @@
 
 #include "core/events/tilesets/set_tileset_selection_event.hpp"
 #include "core/tileset/tileset.hpp"
+#include "gui/rendering/canvas.hpp"
+#include "gui/rendering/grid.hpp"
 #include "gui/texture_utils.hpp"
 #include "gui/widgets/common/mouse_tracker.hpp"
 #include "gui/widgets/common/rubber_band.hpp"
-#include "gui/widgets/rendering/canvas.hpp"
-#include "gui/widgets/rendering/grid.hpp"
 
 namespace Tactile {
 namespace {
