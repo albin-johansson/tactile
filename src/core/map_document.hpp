@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utility> // pair
+#include <utility>  // pair
 
 #include "aliases/ints.hpp"
 #include "aliases/unique.hpp"

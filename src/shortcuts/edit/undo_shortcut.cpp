@@ -5,8 +5,7 @@
 
 namespace Tactile {
 
-UndoShortcut::UndoShortcut()
-    : AShortcut{cen::scancodes::z, cen::key_mod::left_ctrl}
+UndoShortcut::UndoShortcut() : AShortcut{cen::scancodes::z, cen::key_mod::left_ctrl}
 {}
 
 void UndoShortcut::Activate(entt::dispatcher& dispatcher)
