@@ -7,6 +7,7 @@
 #include "core/map_document.hpp"
 #include "gui/widgets/rendering/render_bounds.hpp"
 #include "gui/widgets/rendering/render_info.hpp"
+#include "gui/widgets/rendering/render_object_layer.hpp"
 #include "gui/widgets/rendering/render_tile_layer.hpp"
 #include "io/preferences.hpp"
 
@@ -59,9 +60,10 @@ void RenderMap(const MapDocument& document, const RenderInfo& info)
     {
       RenderTileLayer(*tileLayer, document.GetTilesets(), info);
     }
+    else if (const auto* objectLayer = AsObjectLayer(layer))
+    {
+      RenderObjectLayer(*objectLayer, info);
     }
-
-    // TODO RenderObjectLayer()
   }
 
   if (Prefs::GetShowGrid())

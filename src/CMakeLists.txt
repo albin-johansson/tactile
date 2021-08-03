@@ -301,6 +301,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/rendering/render_info.hpp
     gui/widgets/rendering/render_map.cpp
     gui/widgets/rendering/render_map.hpp
+    gui/widgets/rendering/render_object_layer.cpp
+    gui/widgets/rendering/render_object_layer.hpp
     gui/widgets/rendering/render_tile.cpp
     gui/widgets/rendering/render_tile.hpp
     gui/widgets/rendering/render_tile_layer.cpp

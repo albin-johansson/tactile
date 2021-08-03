@@ -30,4 +30,22 @@ auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info)
   return bounds;
 }
 
+auto ConvertBoundsToRect(const RenderInfo& info) -> cen::frect
+{
+  const auto begin = info.bounds.begin;
+
+  const auto gridWidth = info.grid_size.x;
+  const auto gridHeight = info.grid_size.y;
+
+  const auto index = ImVec2{static_cast<float>(begin.GetColumn()),
+                            static_cast<float>(begin.GetRow())};
+  const auto pos = info.map_position + (index * info.grid_size);
+
+  const auto size = info.bounds.end - info.bounds.begin;
+  const auto width = static_cast<float>(size.GetColumn()) * gridWidth;
+  const auto height = static_cast<float>(size.GetRow()) * gridHeight;
+
+  return cen::frect{pos.x, pos.y, width, height};
+}
+
 }  // namespace Tactile

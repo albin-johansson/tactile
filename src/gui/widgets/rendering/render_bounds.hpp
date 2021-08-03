@@ -1,5 +1,7 @@
 #pragma once
 
+#include <centurion.hpp>  // frect
+
 struct ImVec2;
 
 #include "aliases/col.hpp"
@@ -19,5 +21,7 @@ struct RenderBounds final
 
 [[nodiscard]] auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info)
     -> RenderBounds;
+
+[[nodiscard]] auto ConvertBoundsToRect(const RenderInfo& info) -> cen::frect;
 
 }  // namespace Tactile
