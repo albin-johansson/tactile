@@ -3,7 +3,6 @@
 #include <imgui.h>
 
 #include "gui/themes.hpp"
-#include "gui/widgets/common/help_marker.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -67,6 +66,21 @@ void ShowExportTab()
   {
     ImGui::Spacing();
 
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Preferred format:");
+
+    int formatIndex = (Prefs::GetPreferredFormat() == "JSON") ? 0 : 1;
+    ImGui::SameLine();
+    if (ImGui::Combo("##PreferredFormatCombo", &formatIndex, "JSON\0TMX\0\0"))
+    {
+      Prefs::SetPreferredFormat((formatIndex == 0) ? "JSON" : "TMX");
+    }
+
+    if (ImGui::IsItemActive() || ImGui::IsItemHovered())
+    {
+      ImGui::SetTooltip("The default save file format.");
+    }
+
     bool embedTilesets = Prefs::GetEmbedTilesets();
     if (ImGui::Checkbox("Embed tilesets", &embedTilesets))
     {
@@ -89,43 +103,6 @@ void ShowExportTab()
           "Human-readable saves are easier for humans to process, but take up "
           "more space.");
     }
-
-    ImGui::AlignTextToFramePadding();
-    ImGui::Text("Preferred format:");
-
-    int formatIndex = (Prefs::GetPreferredFormat() == "JSON") ? 0 : 1;
-    ImGui::SameLine();
-    if (ImGui::Combo("##PreferredFormatCombo", &formatIndex, "JSON\0TMX\0\0"))
-    {
-      Prefs::SetPreferredFormat((formatIndex == 0) ? "JSON" : "TMX");
-    }
-
-    if (ImGui::IsItemActive() || ImGui::IsItemHovered())
-    {
-      ImGui::SetTooltip("The default save file format.");
-    }
-
-    ImGui::Separator();
-    ImGui::Spacing();
-
-    ImGui::Text("Tiled compatibility");
-    ImGui::SameLine();
-    HelpMarker("Settings only relevant for Tiled compatibility");
-
-    ImGui::Checkbox("Generate default values", &generate_default_values);
-
-    static int tileWidth = 32;
-    static int tileHeight = 32;
-
-    ImGui::AlignTextToFramePadding();
-    ImGui::Text("Tile width: ");
-    ImGui::SameLine();
-    ImGui::InputInt("##TileWidthInput", &tileWidth);
-
-    ImGui::AlignTextToFramePadding();
-    ImGui::Text("Tile height:");
-    ImGui::SameLine();
-    ImGui::InputInt("##TileHeightInput", &tileHeight);
 
     ImGui::EndTabItem();
   }
