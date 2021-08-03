@@ -106,7 +106,9 @@ void UpdateMapImportErrorDialog()
 {
   constexpr auto flags =
       ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  if (ImGui::BeginPopupModal(ICON_FA_EXCLAMATION_TRIANGLE " Map import error", nullptr, flags))
+  if (ImGui::BeginPopupModal(ICON_FA_EXCLAMATION_TRIANGLE " Map import error",
+                             nullptr,
+                             flags))
   {
     ImGui::Text("Oops, failed to open the specified map!");
     ImGui::Text("Cause: %s", GetCause(current_error.value()));
