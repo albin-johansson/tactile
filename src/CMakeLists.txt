@@ -222,6 +222,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/rendering/canvas.hpp
     gui/rendering/canvas.cpp
+    gui/rendering/common.cpp
+    gui/rendering/common.hpp
     gui/rendering/grid.cpp
     gui/rendering/grid.hpp
     gui/rendering/render_bounds.cpp
@@ -238,6 +240,13 @@ set(TACTILE_SOURCE_FILES
     gui/rendering/render_tile_layer.hpp
     gui/rendering/uv_tile_size.cpp
     gui/rendering/uv_tile_size.hpp
+
+    gui/rendering/objects/render_ellipse.cpp
+    gui/rendering/objects/render_ellipse.hpp
+    gui/rendering/objects/render_point.cpp
+    gui/rendering/objects/render_point.hpp
+    gui/rendering/objects/render_rect.cpp
+    gui/rendering/objects/render_rect.hpp
 
     gui/widgets/alignment.cpp
     gui/widgets/alignment.hpp

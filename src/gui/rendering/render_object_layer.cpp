@@ -3,99 +3,15 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "common.hpp"
 #include "core/map/layers/object_layer.hpp"
+#include "objects/render_ellipse.hpp"
+#include "objects/render_point.hpp"
+#include "objects/render_rect.hpp"
 #include "render_bounds.hpp"
 #include "render_info.hpp"
 
 namespace Tactile {
-namespace {
-
-void RenderPoint(const Object& object,
-                 const ImVec2& position,
-                 const cen::frect& boundsRect,
-                 const ImU32 color,
-                 const float gridWidth)
-{
-  constexpr float radius = 6.0f;
-
-  if (boundsRect.contains(cen::fpoint{position.x, position.y}))
-  {
-    auto* drawList = ImGui::GetWindowDrawList();
-
-    drawList->AddCircle(position + ImVec2{2, 2}, radius, IM_COL32_BLACK, 0, 2.0f);
-    drawList->AddCircle(position, radius, color, 0, 2.0f);
-
-    if (const auto name = object.GetName(); !name.empty())
-    {
-      const auto textSize = ImGui::CalcTextSize(name.data());
-      if (textSize.x <= gridWidth)
-      {
-        const auto textX = position.x - (textSize.x / 2.0f);
-        const auto textY = position.y + radius + 4.0f;
-        drawList->AddText({textX, textY}, IM_COL32_WHITE, name.data());
-      }
-    }
-  }
-}
-
-void RenderEllipse(const Object& object,
-                   const ImVec2& position,
-                   const ImVec2& ratio,
-                   const ImU32 color)
-{
-  constexpr auto nSegments = 50;
-
-  const auto xRadius = object.GetWidth() * ratio.x;
-  const auto yRadius = object.GetHeight() * ratio.y;
-
-  // Offset the position to mimic Tiled behaviour
-  const auto offsetPos = position + ImVec2{xRadius / 2.0f, yRadius / 2.0f};
-
-  auto* drawList = ImGui::GetWindowDrawList();
-  drawList->AddEllipse(offsetPos + ImVec2{2, 2},
-                       xRadius,
-                       yRadius,
-                       IM_COL32_BLACK,
-                       nSegments,
-                       2);
-  drawList->AddEllipse(offsetPos, xRadius, yRadius, color, nSegments, 2);
-}
-
-void RenderRect(const Object& object,
-                const ImVec2& position,
-                const cen::frect& boundsRect,
-                const ImU32 color,
-                const ImVec2& ratio)
-{
-  const auto size = ImVec2{object.GetWidth(), object.GetHeight()} * ratio;
-  const auto rect = cen::frect{position.x, position.y, size.x, size.y};
-  if (cen::intersects(boundsRect, rect))
-  {
-    auto* drawList = ImGui::GetWindowDrawList();
-
-    drawList->AddRect(position + ImVec2{2, 2},
-                      position + ImVec2{2, 2} + size,
-                      IM_COL32_BLACK,
-                      0,
-                      0,
-                      2.0f);
-    drawList->AddRect(position, position + size, color, 0, 0, 2.0f);
-
-    if (const auto name = object.GetName(); !name.empty())
-    {
-      const auto textSize = ImGui::CalcTextSize(name.data());
-      if (textSize.x <= size.x)
-      {
-        const auto textX = (size.x - textSize.x) / 2.0f;
-        drawList->AddText(position + ImVec2{textX, size.y + 4.0f},
-                          IM_COL32_WHITE,
-                          name.data());
-      }
-    }
-  }
-}
-
-}  // namespace
 
 void RenderObjectLayer(const ObjectLayer& layer, const RenderInfo& info)
 {
@@ -114,13 +30,13 @@ void RenderObjectLayer(const ObjectLayer& layer, const RenderInfo& info)
     {
       RenderPoint(object, absolutePos, rect, color, info.grid_size.x);
     }
-    else if (object.IsRectangle())
-    {
-      RenderRect(object, absolutePos, rect, color, ratio);
-    }
     else if (object.IsEllipse())
     {
       RenderEllipse(object, absolutePos, ratio, color);
+    }
+    else if (object.IsRectangle())
+    {
+      RenderRect(object, absolutePos, rect, color, ratio);
     }
     else
     {
