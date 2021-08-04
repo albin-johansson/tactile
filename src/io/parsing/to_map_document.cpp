@@ -51,7 +51,7 @@ void AddProperties(IPropertyContext& context,
 
 [[nodiscard]] auto MakeObject(const ObjectData& data) -> Object
 {
-  Object object{data.is_point ? ObjectType::Point : ObjectType::Rectangle};
+  Object object{data.type};
 
   object.SetName(data.name);
   object.SetX(data.x);

@@ -127,6 +127,11 @@ auto JsonMapObject::IsPoint() const -> bool
   return mJson.contains("point");  // The value of "point" is always true
 }
 
+auto JsonMapObject::IsEllipse() const -> bool
+{
+  return mJson.contains("ellipse");  // The value of "ellipse" is always true
+}
+
 auto JsonMapObject::HasType() const -> bool
 {
   return mJson.contains("type");

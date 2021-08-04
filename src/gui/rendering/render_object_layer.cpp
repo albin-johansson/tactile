@@ -38,6 +38,29 @@ void RenderPoint(const Object& object,
   }
 }
 
+void RenderEllipse(const Object& object,
+                   const ImVec2& position,
+                   const ImVec2& ratio,
+                   const ImU32 color)
+{
+  constexpr auto nSegments = 50;
+
+  const auto xRadius = object.GetWidth() * ratio.x;
+  const auto yRadius = object.GetHeight() * ratio.y;
+
+  // Offset the position to mimic Tiled behaviour
+  const auto offsetPos = position + ImVec2{xRadius / 2.0f, yRadius / 2.0f};
+
+  auto* drawList = ImGui::GetWindowDrawList();
+  drawList->AddEllipse(offsetPos + ImVec2{2, 2},
+                       xRadius,
+                       yRadius,
+                       IM_COL32_BLACK,
+                       nSegments,
+                       2);
+  drawList->AddEllipse(offsetPos, xRadius, yRadius, color, nSegments, 2);
+}
+
 void RenderRect(const Object& object,
                 const ImVec2& position,
                 const cen::frect& boundsRect,
@@ -91,9 +114,17 @@ void RenderObjectLayer(const ObjectLayer& layer, const RenderInfo& info)
     {
       RenderPoint(object, absolutePos, rect, color, info.grid_size.x);
     }
-    else
+    else if (object.IsRectangle())
     {
       RenderRect(object, absolutePos, rect, color, ratio);
+    }
+    else if (object.IsEllipse())
+    {
+      RenderEllipse(object, absolutePos, ratio, color);
+    }
+    else
+    {
+      cen::log::warn("Did not recognize object type when rendering objects!");
     }
   }
 }

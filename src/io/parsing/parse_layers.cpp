@@ -66,10 +66,19 @@ namespace {
     object.name = elem->GetString(MapAttribute::Name).value_or(std::string{});
     object.custom_type = elem->GetString(MapAttribute::Type).value_or(std::string{});
     object.visible = elem->GetBool(MapAttribute::Visible).value_or(true);
-    object.is_point = elem->IsPoint();
 
-    // Note! This only works if there are only point and rectangle types
-    object.is_rectangle = !object.is_point;
+    if (elem->IsPoint())
+    {
+      object.type = ObjectType::Point;
+    }
+    else if (elem->IsEllipse())
+    {
+      object.type = ObjectType::Ellipse;
+    }
+    else
+    {
+      object.type = ObjectType::Rectangle;
+    }
 
     if (const auto err = ParseProperties(*elem, object.properties);
         err != ParseError::None)

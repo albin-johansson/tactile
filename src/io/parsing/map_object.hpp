@@ -57,6 +57,8 @@ class IMapObject
 
   [[nodiscard]] virtual auto IsPoint() const -> bool = 0;
 
+  [[nodiscard]] virtual auto IsEllipse() const -> bool = 0;
+
   [[nodiscard]] virtual auto HasType() const -> bool = 0;
 };
 

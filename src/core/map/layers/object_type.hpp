@@ -5,7 +5,8 @@ namespace Tactile {
 enum class ObjectType
 {
   Point,
-  Rectangle
+  Rectangle,
+  Ellipse
 };
 
 }  // namespace Tactile

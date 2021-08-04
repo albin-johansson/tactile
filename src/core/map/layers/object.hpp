@@ -195,6 +195,16 @@ class Object final : public IPropertyContext
     return GetType() == ObjectType::Rectangle;
   }
 
+  /**
+   * \brief Indicates whether or not the object is represented by an ellipse.
+   *
+   * \return `true` if the object is an ellipse; `false` otherwise.
+   */
+  [[nodiscard]] auto IsEllipse() const noexcept -> bool
+  {
+    return GetType() == ObjectType::Ellipse;
+  }
+
   /// \} End of object API
 
   /// \name Property API

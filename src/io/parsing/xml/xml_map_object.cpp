@@ -168,6 +168,11 @@ auto XmlMapObject::IsPoint() const -> bool
   return !mNode.child("point").empty();
 }
 
+auto XmlMapObject::IsEllipse() const -> bool
+{
+  return !mNode.child("ellipse").empty();
+}
+
 auto XmlMapObject::HasType() const -> bool
 {
   return true;

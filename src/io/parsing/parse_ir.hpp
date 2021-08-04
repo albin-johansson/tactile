@@ -12,6 +12,7 @@
 #include "aliases/tile_id.hpp"
 #include "aliases/tile_matrix.hpp"
 #include "core/map/layers/layer_type.hpp"
+#include "core/map/layers/object_type.hpp"
 #include "core/properties/property.hpp"
 
 namespace Tactile::IO {
@@ -50,8 +51,7 @@ struct ObjectData final
   std::string name;
   std::vector<PropertyData> properties;
   bool visible{};
-  bool is_point{};
-  bool is_rectangle{};
+  ObjectType type{};
 };
 
 struct ObjectLayerData final

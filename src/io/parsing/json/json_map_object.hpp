@@ -42,6 +42,8 @@ class JsonMapObject : public IMapObject
 
   [[nodiscard]] auto IsPoint() const -> bool override;
 
+  [[nodiscard]] auto IsEllipse() const -> bool override;
+
   [[nodiscard]] auto HasType() const -> bool override;
 
   [[nodiscard]] auto GetTileData(col_t nCols, TileMatrix& matrix) const
