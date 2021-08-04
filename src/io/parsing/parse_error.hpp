@@ -13,6 +13,7 @@ enum class ParseError
 
   MapUnsupportedExtension,
   MapUnsupportedOrientation,
+  MapUnsupportedInfinite,
   MapDoesNotExist,
   MapMissingNextLayerId,
   MapMissingNextObjectId,

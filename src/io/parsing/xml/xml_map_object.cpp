@@ -304,6 +304,9 @@ auto XmlMapObject::ToKey(const MapAttribute attr) -> std::string_view
     case MapAttribute::Orientation:
       return "orientation";
 
+    case MapAttribute::Infinite:
+      return "infinite";
+
     default:
       throw TactileError{"Did not recognize attribute!"};
   }

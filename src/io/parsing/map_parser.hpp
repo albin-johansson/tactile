@@ -35,15 +35,17 @@ class MapParser final
 
   [[nodiscard]] auto OpenFile(const std::filesystem::path& path) -> Unique<IMapFile>;
 
-  [[nodiscard]] auto ParseOrientation(const IMapFile::Object& map) -> bool;
+  [[nodiscard]] auto ParseOrientation(const IMapObject& map) -> bool;
 
-  [[nodiscard]] auto ParseNextLayerId(const IMapFile::Object& map) -> bool;
+  [[nodiscard]] auto ParseInfinite(const IMapObject& map) -> bool;
 
-  [[nodiscard]] auto ParseNextObjectId(const IMapFile::Object& map) -> bool;
+  [[nodiscard]] auto ParseNextLayerId(const IMapObject& map) -> bool;
 
-  [[nodiscard]] auto ParseTileWidth(const IMapFile::Object& map) -> bool;
+  [[nodiscard]] auto ParseNextObjectId(const IMapObject& map) -> bool;
 
-  [[nodiscard]] auto ParseTileHeight(const IMapFile::Object& map) -> bool;
+  [[nodiscard]] auto ParseTileWidth(const IMapObject& map) -> bool;
+
+  [[nodiscard]] auto ParseTileHeight(const IMapObject& map) -> bool;
 };
 
 }  // namespace Tactile::IO

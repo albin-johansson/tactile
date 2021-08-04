@@ -20,6 +20,9 @@ auto GetCause(const ParseError error) -> czstring
     case ParseError::MapUnsupportedOrientation:
       return "The map used an unsupported tile orientation.";
 
+    case ParseError::MapUnsupportedInfinite:
+      return "Infinite maps are not supported.";
+
     case ParseError::MapDoesNotExist:
       return "The specified map file did not exist.";
 
@@ -109,6 +112,9 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
 
     case ParseError::MapUnsupportedOrientation:
       return stream << "MapUnsupportedOrientation";
+
+    case ParseError::MapUnsupportedInfinite:
+      return stream << "MapUnsupportedInfinite";
 
     case ParseError::MapDoesNotExist:
       return stream << "MapDoesNotExist";

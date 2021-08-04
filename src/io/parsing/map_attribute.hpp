@@ -23,7 +23,8 @@ enum class MapAttribute
   Image,
   Value,
   Point,
-  Orientation
+  Orientation,
+  Infinite
 };
 
 }  // namespace Tactile::IO
