@@ -22,7 +22,8 @@ enum class MapAttribute
   TileHeight,
   Image,
   Value,
-  Point
+  Point,
+  Orientation
 };
 
 }  // namespace Tactile::IO

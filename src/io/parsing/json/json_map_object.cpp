@@ -254,6 +254,9 @@ auto JsonMapObject::ToKey(const MapAttribute attr) -> std::string_view
     case MapAttribute::Point:
       return "point";
 
+    case MapAttribute::Orientation:
+      return "orientation";
+
     default:
       throw TactileError{"Invalid JSON map file attribute!"};
   }

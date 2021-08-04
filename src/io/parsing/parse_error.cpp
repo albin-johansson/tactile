@@ -14,6 +14,9 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
     case ParseError::MapUnsupportedExtension:
       return stream << "MapUnsupportedExtension";
 
+    case ParseError::MapUnsupportedOrientation:
+      return stream << "MapUnsupportedOrientation";
+
     case ParseError::MapDoesNotExist:
       return stream << "MapDoesNotExist";
 

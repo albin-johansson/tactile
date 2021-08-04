@@ -25,22 +25,29 @@ MapParser::MapParser(const std::filesystem::path& path)
 
   if (const auto file = OpenFile(path))
   {
-    if (!ParseNextLayerId(*file))
+    const auto map = file->GetMap();
+
+    if (!ParseOrientation(map))
     {
       return;
     }
 
-    if (!ParseNextObjectId(*file))
+    if (!ParseNextLayerId(map))
     {
       return;
     }
 
-    if (!ParseTileWidth(*file))
+    if (!ParseNextObjectId(map))
     {
       return;
     }
 
-    if (!ParseTileHeight(*file))
+    if (!ParseTileWidth(map))
+    {
+      return;
+    }
+
+    if (!ParseTileHeight(map))
     {
       return;
     }
@@ -90,9 +97,21 @@ auto MapParser::OpenFile(const std::filesystem::path& path) -> Unique<IMapFile>
   }
 }
 
-auto MapParser::ParseNextLayerId(const IMapFile& file) -> bool
+auto MapParser::ParseOrientation(const IMapFile::Object& map) -> bool
 {
-  const auto map = file.GetMap();
+  const auto orientation = map->GetString(MapAttribute::Orientation);
+
+  if (!orientation || orientation != "orthogonal")
+  {
+    mError = ParseError::MapUnsupportedOrientation;
+    return false;
+  }
+
+  return true;
+}
+
+auto MapParser::ParseNextLayerId(const IMapFile::Object& map) -> bool
+{
   if (const auto id = map->GetInt(MapAttribute::NextLayerId))
   {
     mData.next_layer_id = layer_id{*id};
@@ -105,9 +124,8 @@ auto MapParser::ParseNextLayerId(const IMapFile& file) -> bool
   }
 }
 
-auto MapParser::ParseNextObjectId(const IMapFile& file) -> bool
+auto MapParser::ParseNextObjectId(const IMapFile::Object& map) -> bool
 {
-  const auto map = file.GetMap();
   if (const auto id = map->GetInt(MapAttribute::NextObjectId))
   {
     mData.next_object_id = object_id{*id};
@@ -120,9 +138,8 @@ auto MapParser::ParseNextObjectId(const IMapFile& file) -> bool
   }
 }
 
-auto MapParser::ParseTileWidth(const IMapFile& file) -> bool
+auto MapParser::ParseTileWidth(const IMapFile::Object& map) -> bool
 {
-  const auto map = file.GetMap();
   if (const auto tileWidth = map->GetInt(MapAttribute::TileWidth))
   {
     mData.tile_width = *tileWidth;
@@ -135,9 +152,8 @@ auto MapParser::ParseTileWidth(const IMapFile& file) -> bool
   }
 }
 
-auto MapParser::ParseTileHeight(const IMapFile& file) -> bool
+auto MapParser::ParseTileHeight(const IMapFile::Object& map) -> bool
 {
-  const auto map = file.GetMap();
   if (const auto tileHeight = map->GetInt(MapAttribute::TileHeight))
   {
     mData.tile_height = *tileHeight;

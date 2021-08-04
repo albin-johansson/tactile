@@ -23,6 +23,9 @@ inline Maybe<IO::ParseError> current_error;
     case IO::ParseError::MapUnsupportedExtension:
       return "The map file featured an unsupported file extension.";
 
+    case IO::ParseError::MapUnsupportedOrientation:
+      return "The map used an unsupported tile orientation.";
+
     case IO::ParseError::MapDoesNotExist:
       return "The specified map file did not exist.";
 
