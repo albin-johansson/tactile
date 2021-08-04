@@ -5,7 +5,8 @@ namespace Tactile {
 enum class LayerType
 {
   TileLayer,
-  ObjectLayer
+  ObjectLayer,
+  GroupLayer
 };
 
 }  // namespace Tactile

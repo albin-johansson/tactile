@@ -50,4 +50,28 @@ auto AsObjectLayer(const SharedLayer& layer) -> const ObjectLayer*
   }
 }
 
+auto AsGroupLayer(SharedLayer& layer) -> GroupLayer*
+{
+  if (layer->GetType() != LayerType::GroupLayer)
+  {
+    return nullptr;
+  }
+  else
+  {
+    return dynamic_cast<GroupLayer*>(layer.get());
+  }
+}
+
+auto AsGroupLayer(const SharedLayer& layer) -> const GroupLayer*
+{
+  if (layer->GetType() != LayerType::GroupLayer)
+  {
+    return nullptr;
+  }
+  else
+  {
+    return dynamic_cast<const GroupLayer*>(layer.get());
+  }
+}
+
 }  // namespace Tactile

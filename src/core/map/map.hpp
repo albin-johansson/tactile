@@ -12,9 +12,10 @@
 #include "aliases/row.hpp"
 #include "aliases/shared.hpp"
 #include "aliases/tile_id.hpp"
-#include "core/map/layers/layer.hpp"
-#include "core/map/layers/object_layer.hpp"
-#include "core/map/layers/tile_layer.hpp"
+#include "layers/group_layer.hpp"
+#include "layers/layer.hpp"
+#include "layers/object_layer.hpp"
+#include "layers/tile_layer.hpp"
 
 namespace Tactile {
 
@@ -397,6 +398,10 @@ class Map final
   [[nodiscard]] auto GetObjectLayer(layer_id id) -> ObjectLayer*;
 
   [[nodiscard]] auto GetObjectLayer(layer_id id) const -> const ObjectLayer*;
+
+  [[nodiscard]] auto GetGroupLayer(layer_id id) -> GroupLayer*;
+
+  [[nodiscard]] auto GetGroupLayer(layer_id id) const -> const GroupLayer*;
 
   [[nodiscard]] auto IsTileLayer(layer_id id) const -> bool;
 

@@ -372,6 +372,16 @@ auto Map::GetObjectLayer(const layer_id id) const -> const ObjectLayer*
   return AsObjectLayer(GetLayer(id));
 }
 
+auto Map::GetGroupLayer(const layer_id id) -> GroupLayer*
+{
+  return AsGroupLayer(GetLayer(id));
+}
+
+auto Map::GetGroupLayer(const layer_id id) const -> const GroupLayer*
+{
+  return AsGroupLayer(GetLayer(id));
+}
+
 auto Map::IsTileLayer(const layer_id id) const -> bool
 {
   return GetLayer(id)->GetType() == LayerType::TileLayer;
