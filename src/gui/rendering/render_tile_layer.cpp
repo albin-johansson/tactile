@@ -1,6 +1,7 @@
 #include "render_tile_layer.hpp"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
 #include "core/map/layers/tile_layer.hpp"
 #include "render_info.hpp"
@@ -23,10 +24,10 @@ void RenderTileLayer(const TileLayer& layer,
       const auto tile = layer.GetTile({row, col});
       if (tile && tile != empty_tile)
       {
-        const ImVec2 pos = {
-            info.map_position.x + (info.grid_size.x * static_cast<float>(col)),
-            info.map_position.y + (info.grid_size.y * static_cast<float>(row))};
-        RenderTile(*tile, tilesets, pos, info.grid_size, opacity);
+        const ImVec2 offset = info.grid_size * ImVec2{static_cast<float>(col),
+                                                      static_cast<float>(row)};
+        const ImVec2 position = info.map_position + offset;
+        RenderTile(*tile, tilesets, position, info.grid_size, opacity);
       }
     }
   }
