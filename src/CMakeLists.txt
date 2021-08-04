@@ -380,6 +380,8 @@ set(TACTILE_SOURCE_FILES
 
     io/parsing/xml/parse_csv.cpp
     io/parsing/xml/parse_csv.hpp
+    io/parsing/xml/parse_tile_nodes.cpp
+    io/parsing/xml/parse_tile_nodes.hpp
     io/parsing/xml/xml_map_file.cpp
     io/parsing/xml/xml_map_file.hpp
     io/parsing/xml/xml_map_object.cpp

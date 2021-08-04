@@ -75,9 +75,8 @@ void VerifyLayers(const MapData& data)
     ASSERT_EQ(40, rect.y);
     ASSERT_EQ(28, rect.width);
     ASSERT_EQ(30, rect.height);
+    ASSERT_EQ(ObjectType::Rectangle, rect.type);
     ASSERT_TRUE(rect.visible);
-    ASSERT_FALSE(rect.is_point);
-    ASSERT_TRUE(rect.is_rectangle);
     ASSERT_EQ(1, rect.properties.size());
 
     const auto& foo = rect.properties.at(0);
@@ -93,9 +92,8 @@ void VerifyLayers(const MapData& data)
     ASSERT_EQ(47, point.y);
     ASSERT_EQ(0, point.width);
     ASSERT_EQ(0, point.height);
+    ASSERT_EQ(ObjectType::Point, point.type);
     ASSERT_TRUE(point.visible);
-    ASSERT_TRUE(point.is_point);
-    ASSERT_FALSE(point.is_rectangle);
     ASSERT_TRUE(point.properties.empty());
   }
 }

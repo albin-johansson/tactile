@@ -103,8 +103,7 @@ void VerifyLayers(const MapData& data)
     ASSERT_EQ(30, rect.height);
     ASSERT_EQ("CustomType", rect.custom_type);
     ASSERT_TRUE(rect.visible);
-    ASSERT_TRUE(rect.is_rectangle);
-    ASSERT_FALSE(rect.is_point);
+    ASSERT_EQ(ObjectType::Rectangle, rect.type);
     ASSERT_TRUE(rect.properties.empty());
 
     const auto& point = objectData.objects.at(1);
@@ -116,8 +115,7 @@ void VerifyLayers(const MapData& data)
     ASSERT_EQ(0, point.height);
     ASSERT_EQ("CustomPoint", point.custom_type);
     ASSERT_TRUE(point.visible);
-    ASSERT_FALSE(point.is_rectangle);
-    ASSERT_TRUE(point.is_point);
+    ASSERT_EQ(ObjectType::Point, point.type);
     ASSERT_TRUE(point.properties.empty());
   }
 }

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="12" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
+  <image source="../terrain.png" width="1024" height="1024"/>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="12" height="8">
+  <data>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+   <tile gid="360"/>
+  </data>
+ </layer>
+ <layer id="2" name="Tile Layer 2" width="12" height="8">
+  <data>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="615"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="615"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="615"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="615"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="615"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="615"/>
+   <tile/>
+   <tile/>
+   <tile gid="615"/>
+   <tile/>
+   <tile/>
+   <tile gid="1"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+  </data>
+ </layer>
+</map>

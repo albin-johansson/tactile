@@ -8,7 +8,8 @@
 
 #include "core/map/map_position.hpp"
 #include "core/tactile_error.hpp"
-#include "io/parsing/xml/parse_csv.hpp"
+#include "parse_csv.hpp"
+#include "parse_tile_nodes.hpp"
 
 namespace Tactile::IO {
 
@@ -206,8 +207,11 @@ auto XmlMapObject::GetTileData(const col_t nCols, TileMatrix& matrix) const
   }
   else
   {
-    // TODO parse <tile> nodes
-    assert(false && "Non-CSV tile encoding with XML format is not implemented yet");
+    if (const auto error = ParseTileNodes(data, nCols, matrix);
+        error != ParseError::None)
+    {
+      return error;
+    }
   }
 
   return ParseError::None;
