@@ -56,6 +56,17 @@ void ShowThemeBar()
       ImGui::GetStyle().WindowBorderSize = enabled ? 1.0f : 0.0f;
     }
 
+    if (bool restoreLayout = Prefs::GetRestoreLayout();
+        ImGui::Checkbox("Restore layout", &restoreLayout))
+    {
+      Prefs::SetRestoreLayout(restoreLayout);
+    }
+
+    if (ImGui::IsItemHovered())
+    {
+      ImGui::SetTooltip("Restore the previous layout of widgets at startup.");
+    }
+
     ImGui::EndTabItem();
   }
 }

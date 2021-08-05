@@ -1,6 +1,7 @@
 #include "dock_space.hpp"
 
 #include "aliases/maybe.hpp"
+#include "io/preferences.hpp"
 #include "load_default_layout.hpp"
 
 namespace Tactile {
@@ -19,7 +20,10 @@ void UpdateDockSpace()
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0)
     {
-      LoadDefaultLayout(root_id.value(), false);
+      if (!Prefs::GetRestoreLayout())
+      {
+        LoadDefaultLayout(root_id.value(), false);
+      }
       initialized = true;
     }
   }

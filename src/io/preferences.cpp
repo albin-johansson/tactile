@@ -12,17 +12,19 @@
 namespace Tactile {
 namespace {
 
-inline constexpr auto file_name = "settings.ini";
+constexpr auto file_name = "settings.ini";
 
-inline constexpr bool def_show_grid = true;
-inline constexpr bool def_embed_tilesets = false;
-inline constexpr bool def_human_readable_output = true;
-inline constexpr bool def_show_layer_dock = true;
-inline constexpr bool def_show_tileset_dock = true;
-inline constexpr bool def_show_properties_dock = true;
-inline constexpr bool def_window_border = false;
-inline constexpr auto def_preferred_format = "JSON";
-inline constexpr Theme def_theme = Theme::Ash;
+constexpr bool def_show_grid = true;
+constexpr bool def_embed_tilesets = false;
+constexpr bool def_human_readable_output = true;
+constexpr bool def_show_layer_dock = true;
+constexpr bool def_show_tileset_dock = true;
+constexpr bool def_show_properties_dock = true;
+constexpr bool def_window_border = false;
+constexpr bool def_restore_layout = true;
+
+constexpr auto def_preferred_format = "JSON";
+constexpr Theme def_theme = Theme::Ash;
 
 struct Preferences final
 {
@@ -35,6 +37,7 @@ struct Preferences final
   bool show_tileset_dock = def_show_tileset_dock;
   bool show_properties_dock = def_show_properties_dock;
   bool window_border = def_window_border;
+  bool restore_layout = def_restore_layout;
 };
 
 inline Preferences settings;
@@ -64,6 +67,7 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
   ini["Widgets"]["ShowLayerDock"] = preferences.show_layer_dock;
   ini["Widgets"]["ShowTilesetDock"] = preferences.show_tileset_dock;
   ini["Widgets"]["ShowPropertiesDock"] = preferences.show_properties_dock;
+  ini["Widgets"]["RestoreLayout"] = preferences.restore_layout;
 
   rune::write_ini(ini, GetPersistentFileDir() / file_name);
 }
@@ -85,6 +89,7 @@ void ValidateExistingFile()
   AddIfMissing(ini, "Widgets", "ShowLayerDock", def_show_layer_dock);
   AddIfMissing(ini, "Widgets", "ShowTilesetDock", def_show_tileset_dock);
   AddIfMissing(ini, "Widgets", "ShowPropertiesDock", def_show_properties_dock);
+  AddIfMissing(ini, "Widgets", "RestoreLayout", def_restore_layout);
 
   rune::write_ini(ini, path);
 }
@@ -112,6 +117,7 @@ void LoadPreferences()
     settings.show_tileset_dock = widgets.at("ShowTilesetDock").get<bool>();
     settings.show_layer_dock = widgets.at("ShowLayerDock").get<bool>();
     settings.show_properties_dock = widgets.at("ShowPropertiesDock").get<bool>();
+    settings.restore_layout = widgets.at("RestoreLayout").get<bool>();
   }
   else
   {
@@ -129,6 +135,7 @@ void LoadPreferences()
   CENTURION_LOG_INFO("  Widgets::ShowLayerDock: %i", settings.show_layer_dock);
   CENTURION_LOG_INFO("  Widgets::ShowTilesetDock: %i", settings.show_tileset_dock);
   CENTURION_LOG_INFO("  Widgets::ShowPropertiesDock: %i", settings.show_properties_dock);
+  CENTURION_LOG_INFO("  Widgets::RestoreLayout: %i", settings.restore_layout);
   // clang-format on
 }
 
@@ -184,6 +191,11 @@ void SetWindowBorder(const bool enabled) noexcept
   settings.window_border = enabled;
 }
 
+void SetRestoreLayout(const bool restore) noexcept
+{
+  settings.restore_layout = restore;
+}
+
 auto GetPreferredFormat() -> const std::string&
 {
   return settings.preferred_format;
@@ -227,6 +239,11 @@ auto GetTheme() noexcept -> Theme
 auto GetWindowBorder() noexcept -> bool
 {
   return settings.window_border;
+}
+
+auto GetRestoreLayout() noexcept -> bool
+{
+  return settings.restore_layout;
 }
 
 }  // namespace Prefs

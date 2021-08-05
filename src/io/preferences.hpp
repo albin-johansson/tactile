@@ -32,6 +32,8 @@ void SetTheme(Theme theme) noexcept;
 
 void SetWindowBorder(bool enabled) noexcept;
 
+void SetRestoreLayout(bool restore) noexcept;
+
 [[nodiscard]] auto GetPreferredFormat() -> const std::string&;
 
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
@@ -49,6 +51,8 @@ void SetWindowBorder(bool enabled) noexcept;
 [[nodiscard]] auto GetTheme() noexcept -> Theme;
 
 [[nodiscard]] auto GetWindowBorder() noexcept -> bool;
+
+[[nodiscard]] auto GetRestoreLayout() noexcept -> bool;
 
 }  // namespace Prefs
 }  // namespace Tactile
