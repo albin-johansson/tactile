@@ -2,134 +2,70 @@
 
 #include <imgui.h>
 
-#include <format>  // format
 #include <limits>  // numeric_limits
 
-#include "aliases/czstring.hpp"
+#include "add_layer_popup.hpp"
 #include "core/events/layers/add_layer_event.hpp"
 #include "core/events/layers/duplicate_layer_event.hpp"
 #include "core/events/layers/move_layer_down_event.hpp"
 #include "core/events/layers/move_layer_up_event.hpp"
 #include "core/events/layers/remove_layer_event.hpp"
-#include "core/events/layers/select_layer_event.hpp"
-#include "core/events/layers/set_layer_opacity_event.hpp"
-#include "core/events/layers/set_layer_visible_event.hpp"
-#include "core/events/layers/show_layer_properties_event.hpp"
 #include "core/model.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 #include "io/preferences.hpp"
-#include "utils/scope_id.hpp"
+#include "layer_item.hpp"
 
 namespace Tactile {
 namespace {
 
-void UpdateLayerItemPopup(const MapDocument& document,
-                          entt::dispatcher& dispatcher,
-                          const layer_id id)
+void UpdateLayerDockButtons(const MapDocument* document,
+                            entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginPopupContextItem())
+  Maybe<layer_id> activeLayerId;
+
+  if (document)
   {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties"))
-    {
-      dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
-    }
-
-    ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle visibility",
-                        nullptr,
-                        document.IsLayerVisible(id)))
-    {
-      dispatcher.enqueue<SetLayerVisibleEvent>(id, !document.IsLayerVisible(id));
-    }
-
-    auto opacity = document.GetMap().GetOpacity(id);
-    ImGui::AlignTextToFramePadding();
-    ImGui::Text(TAC_ICON_OPACITY " Opacity");
-    ImGui::SameLine();
-    if (ImGui::SliderFloat("##OpacitySlider", &opacity, 0, 1.0f))
-    {
-      dispatcher.enqueue<SetLayerOpacityEvent>(id, opacity);
-    }
-
-    ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move layer up",
-                        nullptr,
-                        false,
-                        document.CanMoveLayerUp(id)))
-    {
-      dispatcher.enqueue<MoveLayerUpEvent>(id);
-    }
-
-    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move layer down",
-                        nullptr,
-                        false,
-                        document.CanMoveLayerDown(id)))
-    {
-      dispatcher.enqueue<MoveLayerDownEvent>(id);
-    }
-
-    ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate layer"))
-    {
-      dispatcher.enqueue<DuplicateLayerEvent>(id);
-    }
-
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove layer"))
-    {
-      dispatcher.enqueue<RemoveLayerEvent>(id);
-    }
-
-    ImGui::EndPopup();
+    activeLayerId = document->GetMap().GetActiveLayerId();
   }
-}
 
-void UpdateLayers(const MapDocument& document, entt::dispatcher& dispatcher)
-{
-  const auto& map = document.GetMap();
-  const auto activeLayerId = map.GetActiveLayerId();
-  for (const auto& [id, layer] : map)
+  const bool hasActiveLayer = activeLayerId.has_value();
+
+  if (ButtonEx(TAC_ICON_ADD, "Add new layer."))
   {
-    const ScopeID uid{id};
-
-    const auto icon = layer->GetType() == LayerType::ObjectLayer
-                          ? TAC_ICON_OBJECT_LAYER
-                          : TAC_ICON_TILE_LAYER;
-    const auto name = std::format("{} {}", icon, layer->GetName());
-
-    const auto isSelected = id == activeLayerId;
-    ImGui::Selectable(name.c_str(), isSelected);
-
-    if (ImGui::IsItemActivated() ||
-        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
-    {
-      dispatcher.enqueue<SelectLayerEvent>(id);
-    }
-
-    UpdateLayerItemPopup(document, dispatcher, id);
-
-    if (isSelected)
-    {
-      ImGui::SetItemDefaultFocus();
-    }
+    ImGui::OpenPopup("AddLayerPopup");
   }
-}
 
-void UpdateAddLayerPopup(entt::dispatcher& dispatcher)
-{
-  if (ImGui::BeginPopup("AddLayerPopup"))
+  UpdateAddLayerPopup(dispatcher);
+
+  ImGui::SameLine();
+  if (ButtonEx(TAC_ICON_REMOVE, "Remove layer.", hasActiveLayer))
   {
-    if (ImGui::Selectable(TAC_ICON_TILE_LAYER " Tile layer"))
-    {
-      dispatcher.enqueue<AddLayerEvent>(LayerType::TileLayer);
-    }
+    dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
+  }
 
-    if (ImGui::Selectable(TAC_ICON_OBJECT_LAYER " Object layer"))
-    {
-      dispatcher.enqueue<AddLayerEvent>(LayerType::ObjectLayer);
-    }
+  ImGui::SameLine();
+  if (ButtonEx(TAC_ICON_DUPLICATE, "Duplicate layer.", hasActiveLayer))
+  {
+    dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
+  }
 
-    ImGui::EndPopup();
+  ImGui::SameLine();
+
+  if (ButtonEx(TAC_ICON_MOVE_UP,
+               "Move layer up.",
+               document && document->CanMoveActiveLayerUp()))
+  {
+    dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
+  }
+
+  ImGui::SameLine();
+
+  if (ButtonEx(TAC_ICON_MOVE_DOWN,
+               "Move layer down.",
+               document && document->CanMoveActiveLayerDown()))
+  {
+    dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
   }
 }
 
@@ -143,63 +79,27 @@ void UpdateLayerDock(const Model& model, entt::dispatcher& dispatcher)
   }
 
   const auto* document = model.GetActiveDocument();
-  const auto& map = document->GetMap();
-  const auto hasActiveLayer = map.GetActiveLayerId().has_value();
-  const auto activeLayerId = map.GetActiveLayerId();
-
   bool isVisible = Prefs::GetShowLayerDock();
+
   if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse))
   {
-    if (ButtonEx(TAC_ICON_ADD, "Add new layer."))
+    UpdateLayerDockButtons(document, dispatcher);
+    if (document)
     {
-      ImGui::OpenPopup("AddLayerPopup");
-    }
+      const auto windowHeight = ImGui::GetWindowHeight();
+      const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
+      const auto size = ImVec2{std::numeric_limits<float>::min(),
+                               windowHeight - (4 * textLineHeight)};
 
-    UpdateAddLayerPopup(dispatcher);
-
-    ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_REMOVE, "Remove layer.", hasActiveLayer))
-    {
-      dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
-    }
-
-    ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_DUPLICATE, "Duplicate layer.", hasActiveLayer))
-    {
-      dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
-    }
-
-    ImGui::SameLine();
-
-    if (ButtonEx(TAC_ICON_MOVE_UP,
-                 "Move layer up.",
-                 document->CanMoveActiveLayerUp()))
-    {
-      dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
-    }
-
-    ImGui::SameLine();
-
-    if (ButtonEx(TAC_ICON_MOVE_DOWN,
-                 "Move layer down.",
-                 document->CanMoveActiveLayerDown()))
-    {
-      dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
-    }
-
-    const auto windowHeight = ImGui::GetWindowHeight();
-    const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
-    const auto size = ImVec2{std::numeric_limits<float>::min(),
-                             windowHeight - (4 * textLineHeight)};
-
-    if (ImGui::BeginListBox("##LayerTreeNode", size))
-    {
-      if (document)
+      if (ImGui::BeginListBox("##LayerTreeNode", size))
       {
-        UpdateLayers(*document, dispatcher);
-      }
+        for (const auto& [id, layer] : document->GetMap())
+        {
+          LayerItem(*document, dispatcher, id, layer);
+        }
 
-      ImGui::EndListBox();
+        ImGui::EndListBox();
+      }
     }
   }
 

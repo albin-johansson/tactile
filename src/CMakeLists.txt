@@ -282,8 +282,16 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/dialogs/settings_dialog.cpp
     gui/widgets/dialogs/settings_dialog.hpp
 
+    gui/widgets/layers/add_layer_popup.cpp
+    gui/widgets/layers/add_layer_popup.hpp
+    gui/widgets/layers/icons.cpp
+    gui/widgets/layers/icons.hpp
     gui/widgets/layers/layer_dock.cpp
     gui/widgets/layers/layer_dock.hpp
+    gui/widgets/layers/layer_item.cpp
+    gui/widgets/layers/layer_item.hpp
+    gui/widgets/layers/layer_item_popup.cpp
+    gui/widgets/layers/layer_item_popup.hpp
 
     gui/widgets/menus/edit_menu.cpp
     gui/widgets/menus/edit_menu.hpp
