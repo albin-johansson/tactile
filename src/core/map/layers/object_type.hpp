@@ -2,6 +2,8 @@
 
 namespace Tactile {
 
+// TODO Polygon, Polyline, Text
+
 enum class ObjectType
 {
   Point,
