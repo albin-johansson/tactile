@@ -3,6 +3,7 @@
 #include <utility>  // move
 
 #include "core/map/layers/layer_utils.hpp"
+#include "core/tactile_error.hpp"
 #include "io/saving/json/save_properties.hpp"
 
 namespace Tactile::IO {
@@ -87,6 +88,50 @@ void AddCommonAttributes(nlohmann::json& json,
   return json;
 }
 
+[[nodiscard]] auto SaveLayer(layer_id id,
+                             const SharedLayer& layer,
+                             const std::filesystem::path& dir) -> nlohmann::json;
+
+[[nodiscard]] auto SaveGroupLayer(const layer_id id,
+                                  const GroupLayer& layer,
+                                  const std::filesystem::path& dir)
+{
+  auto json = nlohmann::json::object();
+  AddCommonAttributes(json, id, layer, dir);
+
+  json["type"] = "group";
+
+  auto layers = nlohmann::json::array();
+  for (const auto& [subid, sublayer] : layer)
+  {
+    layers += SaveLayer(subid, sublayer, dir);
+  }
+
+  json["layers"] = std::move(layers);
+
+  return json;
+}
+
+[[nodiscard]] auto SaveLayer(const layer_id id,
+                             const SharedLayer& layer,
+                             const std::filesystem::path& dir) -> nlohmann::json
+{
+  switch (layer->GetType())
+  {
+    case LayerType::TileLayer:
+      return SaveTileLayer(id, *AsTileLayer(layer), dir);
+
+    case LayerType::ObjectLayer:
+      return SaveObjectLayer(id, *AsObjectLayer(layer), dir);
+
+    case LayerType::GroupLayer:
+      return SaveGroupLayer(id, *AsGroupLayer(layer), dir);
+
+    default:
+      throw TactileError{"Did not recognize layer type when saving as JSON!"};
+  }
+}
+
 }  // namespace
 
 auto SaveLayers(const Map& map, const std::filesystem::path& dir) -> nlohmann::json
@@ -95,18 +140,7 @@ auto SaveLayers(const Map& map, const std::filesystem::path& dir) -> nlohmann::j
 
   for (const auto& [id, layer] : map)
   {
-    if (layer->GetType() == LayerType::TileLayer)
-    {
-      json += SaveTileLayer(id, *AsTileLayer(layer), dir);
-    }
-    else if (layer->GetType() == LayerType::ObjectLayer)
-    {
-      json += SaveObjectLayer(id, *AsObjectLayer(layer), dir);
-    }
-    else
-    {
-      CENTURION_LOG_WARN("Did not recognize layer type when saving as JSON!");
-    }
+    json += SaveLayer(id, layer, dir);
   }
 
   return json;
