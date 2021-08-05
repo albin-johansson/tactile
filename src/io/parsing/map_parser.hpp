@@ -3,9 +3,9 @@
 #include <filesystem>  // path, absolute
 
 #include "aliases/unique.hpp"
-#include "io/parsing/map_file.hpp"
-#include "io/parsing/parse_error.hpp"
-#include "io/parsing/parse_ir.hpp"
+#include "map_file.hpp"
+#include "parse_error.hpp"
+#include "parse_ir.hpp"
 
 namespace Tactile::IO {
 
