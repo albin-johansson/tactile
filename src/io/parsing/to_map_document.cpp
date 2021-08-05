@@ -82,6 +82,20 @@ void AddProperties(IPropertyContext& context,
   return layer;
 }
 
+[[nodiscard]] auto MakeLayer(const LayerData& data) -> SharedLayer;
+
+[[nodiscard]] auto MakeGroupLayer(const GroupLayerData& data) -> SharedLayer
+{
+  auto layer = std::make_shared<GroupLayer>();
+
+  for (const auto& layerData : data.layers)
+  {
+    layer->AddLayer(layerData->id, MakeLayer(*layerData));
+  }
+
+  return layer;
+}
+
 [[nodiscard]] auto MakeLayer(const LayerData& data) -> SharedLayer
 {
   SharedLayer layer;
@@ -93,6 +107,10 @@ void AddProperties(IPropertyContext& context,
   else if (data.type == LayerType::ObjectLayer)
   {
     layer = MakeObjectLayer(std::get<ObjectLayerData>(data.data));
+  }
+  else if (data.type == LayerType::GroupLayer)
+  {
+    layer = MakeGroupLayer(std::get<GroupLayerData>(data.data));
   }
 
   assert(layer);
