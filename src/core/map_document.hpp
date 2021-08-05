@@ -121,9 +121,9 @@ class MapDocument final : public IDocument
   /// \command
   void ShowLayerProperties(layer_id id);
 
-  [[nodiscard, deprecated]] auto CanMoveActiveLayerDown() const -> bool;
+  [[nodiscard]] auto CanMoveActiveLayerDown() const -> bool;
 
-  [[nodiscard, deprecated]] auto CanMoveActiveLayerUp() const -> bool;
+  [[nodiscard]] auto CanMoveActiveLayerUp() const -> bool;
 
   [[nodiscard]] auto CanMoveLayerDown(layer_id id) const -> bool;
 
