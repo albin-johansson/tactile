@@ -11,12 +11,14 @@ class DuplicateLayerCmd final : public MapCommand
  public:
   DuplicateLayerCmd(NotNull<MapDocument*> document, layer_id id);
 
+  void Undo() override;
+
+  void Redo() override;
+
   [[nodiscard]] auto GetId() const noexcept -> int override
   {
     return CommandId::DuplicateLayer;
   }
-  void Undo() override;
-  void Redo() override;
 
  private:
   layer_id mId;
