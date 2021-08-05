@@ -1,7 +1,5 @@
 #include "xml_map_file.hpp"
 
-#include <iterator>  // make_move_iterator
-
 #include "core/tactile_error.hpp"
 
 namespace Tactile::IO {
@@ -23,16 +21,7 @@ auto XmlMapFile::GetMap() const -> Object
 auto XmlMapFile::GetLayers() const -> Objects
 {
   const auto node = GetMapNode();
-
-  auto layers = node.GetArray("layer");
-  auto objectLayers = node.GetArray("objectgroup");
-
-  // Move all object layers into the vector with tile layers
-  layers.insert(layers.end(),
-                std::make_move_iterator(objectLayers.begin()),
-                std::make_move_iterator(objectLayers.end()));
-
-  return layers;
+  return node.GetLayers();
 }
 
 auto XmlMapFile::GetTilesets() const -> Objects

@@ -3,6 +3,7 @@
 #include <algorithm>  // any_of
 #include <cassert>    // assert
 #include <cstring>    // strcmp
+#include <iterator>   // make_move_iterator
 #include <string>     // string
 #include <utility>    // move
 
@@ -158,6 +159,11 @@ auto XmlMapObject::IsObjectLayer() const -> bool
   return std::strcmp(mNode.name(), "objectgroup") == 0;
 }
 
+auto XmlMapObject::IsGroupLayer() const -> bool
+{
+  return std::strcmp(mNode.name(), "group") == 0;
+}
+
 auto XmlMapObject::IsImplicitStringProperty() const -> bool
 {
   return std::strcmp(mNode.name(), "property") == 0 &&
@@ -221,6 +227,19 @@ auto XmlMapObject::GetObjects() const -> Objects
 {
   assert(IsObjectLayer());
   return GetArray("object");
+}
+
+auto XmlMapObject::GetLayers() const -> IMapObject::Objects
+{
+  auto layers = GetArray("layer");
+  auto objectLayers = GetArray("objectgroup");
+
+  // Move all object layers into the vector with tile layers
+  layers.insert(layers.end(),
+                std::make_move_iterator(objectLayers.begin()),
+                std::make_move_iterator(objectLayers.end()));
+
+  return layers;
 }
 
 auto XmlMapObject::GetProperties() const -> Objects

@@ -10,6 +10,7 @@
 #include "aliases/object_id.hpp"
 #include "aliases/row.hpp"
 #include "aliases/tile_id.hpp"
+#include "aliases/unique.hpp"
 #include "aliases/tile_matrix.hpp"
 #include "core/map/layers/layer_type.hpp"
 #include "core/map/layers/object_type.hpp"
@@ -59,9 +60,16 @@ struct ObjectLayerData final
   std::vector<ObjectData> objects;
 };
 
+struct LayerData;
+
+struct GroupLayerData final
+{
+  std::vector<Unique<LayerData>> layers;
+};
+
 struct LayerData final
 {
-  using LayerContent = std::variant<TileLayerData, ObjectLayerData>;
+  using LayerContent = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
   layer_id id;
   LayerType type;

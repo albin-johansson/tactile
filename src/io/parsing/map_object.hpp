@@ -42,6 +42,8 @@ class IMapObject
 
   [[nodiscard]] virtual auto GetObjects() const -> Objects = 0;
 
+  [[nodiscard]] virtual auto GetLayers() const -> Objects = 0;
+
   [[nodiscard]] virtual auto GetProperties() const -> Objects = 0;
 
   [[nodiscard]] virtual auto GetExternalTileset() const -> Object = 0;
@@ -52,6 +54,8 @@ class IMapObject
   [[nodiscard]] virtual auto IsTileLayer() const -> bool = 0;
 
   [[nodiscard]] virtual auto IsObjectLayer() const -> bool = 0;
+
+  [[nodiscard]] virtual auto IsGroupLayer() const -> bool = 0;
 
   [[nodiscard]] virtual auto IsImplicitStringProperty() const -> bool = 0;
 

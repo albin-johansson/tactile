@@ -117,6 +117,12 @@ auto JsonMapObject::IsObjectLayer() const -> bool
   return mJson.at("type") == "objectgroup";
 }
 
+auto JsonMapObject::IsGroupLayer() const -> bool
+{
+  assert(mJson.contains("type"));
+  return mJson.at("type") == "group";
+}
+
 auto JsonMapObject::IsImplicitStringProperty() const -> bool
 {
   return false;
@@ -183,7 +189,12 @@ auto JsonMapObject::GetObjects() const -> Objects
   return GetArray("objects");
 }
 
-auto JsonMapObject::GetProperties() const -> IMapObject::Objects
+auto JsonMapObject::GetLayers() const -> Objects
+{
+  return GetArray("layers");
+}
+
+auto JsonMapObject::GetProperties() const -> Objects
 {
   return GetArray("properties");
 }

@@ -90,14 +90,16 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseLayer(const IMapObject& object, MapData& data) -> ParseError
+[[nodiscard]] auto ParseGroupLayer(const IMapObject& object, LayerData& layer)
+    -> ParseError;
+
+[[nodiscard]] auto ParseLayer(const IMapObject& object, LayerData& layer)
+    -> ParseError
 {
   if (!object.HasType())
   {
     return ParseError::LayerMissingType;
   }
-
-  LayerData layer;
 
   if (const auto id = object.GetInt(MapAttribute::Id))
   {
@@ -128,6 +130,14 @@ namespace {
       return err;
     }
   }
+  else if (object.IsGroupLayer())
+  {
+    layer.type = LayerType::GroupLayer;
+    if (const auto err = ParseGroupLayer(object, layer); err != ParseError::None)
+    {
+      return err;
+    }
+  }
   else
   {
     return ParseError::LayerUnknownType;
@@ -139,8 +149,39 @@ namespace {
     return err;
   }
 
-  data.layers.push_back(std::move(layer));
+  return ParseError::None;
+}
 
+[[nodiscard]] auto ParseGroupLayer(const IMapObject& object, LayerData& layer)
+    -> ParseError
+{
+  auto& data = layer.data.emplace<GroupLayerData>();
+
+  for (const auto& elem : object.GetLayers())
+  {
+    auto layerData = std::make_unique<LayerData>();
+
+    if (const auto err = ParseLayer(*elem, *layerData); err != ParseError::None)
+    {
+      return err;
+    }
+
+    data.layers.push_back(std::move(layerData));
+  }
+
+  return ParseError::None;
+}
+
+[[nodiscard]] auto ParseLayer(const IMapObject& object, MapData& data) -> ParseError
+{
+  LayerData layer;
+
+  if (const auto err = ParseLayer(object, layer); err != ParseError::None)
+  {
+    return err;
+  }
+
+  data.layers.push_back(std::move(layer));
   return ParseError::None;
 }
 

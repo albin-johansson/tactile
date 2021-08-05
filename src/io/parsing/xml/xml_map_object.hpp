@@ -40,6 +40,8 @@ class XmlMapObject final : public IMapObject
 
   [[nodiscard]] auto IsObjectLayer() const -> bool override;
 
+  [[nodiscard]] auto IsGroupLayer() const -> bool override;
+
   [[nodiscard]] auto IsImplicitStringProperty() const -> bool override;
 
   [[nodiscard]] auto IsPoint() const -> bool override;
@@ -52,6 +54,8 @@ class XmlMapObject final : public IMapObject
       -> ParseError override;
 
   [[nodiscard]] auto GetObjects() const -> Objects override;
+
+  [[nodiscard]] auto GetLayers() const -> Objects override;
 
   [[nodiscard]] auto GetProperties() const -> Objects override;
 
