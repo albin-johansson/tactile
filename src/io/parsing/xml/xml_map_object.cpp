@@ -229,15 +229,20 @@ auto XmlMapObject::GetObjects() const -> Objects
   return GetArray("object");
 }
 
-auto XmlMapObject::GetLayers() const -> IMapObject::Objects
+auto XmlMapObject::GetLayers() const -> Objects
 {
   auto layers = GetArray("layer");
   auto objectLayers = GetArray("objectgroup");
+  auto groups = GetArray("group");
 
-  // Move all object layers into the vector with tile layers
+  // Move all layers into the vector with tile layers
   layers.insert(layers.end(),
                 std::make_move_iterator(objectLayers.begin()),
                 std::make_move_iterator(objectLayers.end()));
+
+  layers.insert(layers.end(),
+                std::make_move_iterator(groups.begin()),
+                std::make_move_iterator(groups.end()));
 
   return layers;
 }
