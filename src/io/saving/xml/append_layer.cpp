@@ -2,8 +2,10 @@
 
 #include <sstream>  // stringstream
 
+#include "core/map/layers/group_layer.hpp"
 #include "core/map/layers/object_layer.hpp"
 #include "core/map/layers/tile_layer.hpp"
+#include "core/tactile_error.hpp"
 #include "io/preferences.hpp"
 #include "io/saving/xml/append_properties.hpp"
 
@@ -102,6 +104,21 @@ void AppendObjectLayer(const layer_id layerId,
   }
 }
 
+void AppendGroupLayer(const layer_id id,
+                      const GroupLayer& layer,
+                      pugi::xml_node& mapNode,
+                      const std::filesystem::path& dir)
+{
+  auto node = mapNode.append_child("group");
+  node.append_attribute("id").set_value(id.get());
+  node.append_attribute("name").set_value(layer.GetName().data());
+
+  for (const auto& [subid, sublayer] : layer)
+  {
+    AppendLayer(subid, *sublayer, node, dir);
+  }
+}
+
 }  // namespace
 
 void AppendLayer(const layer_id id,
@@ -109,19 +126,28 @@ void AppendLayer(const layer_id id,
                  pugi::xml_node& mapNode,
                  const std::filesystem::path& dir)
 {
-  if (layer.GetType() == LayerType::TileLayer)
+  switch (layer.GetType())
   {
-    const auto& tileLayer = dynamic_cast<const TileLayer&>(layer);
-    AppendTileLayer(id, tileLayer, mapNode, dir);
-  }
-  else if (layer.GetType() == LayerType::ObjectLayer)
-  {
-    const auto& objectLayer = dynamic_cast<const ObjectLayer&>(layer);
-    AppendObjectLayer(id, objectLayer, mapNode, dir);
-  }
-  else
-  {
-    CENTURION_LOG_WARN("Did not recognize layer type when saving as XML!");
+    case LayerType::TileLayer:
+    {
+      const auto& tileLayer = dynamic_cast<const TileLayer&>(layer);
+      AppendTileLayer(id, tileLayer, mapNode, dir);
+      break;
+    }
+    case LayerType::ObjectLayer:
+    {
+      const auto& objectLayer = dynamic_cast<const ObjectLayer&>(layer);
+      AppendObjectLayer(id, objectLayer, mapNode, dir);
+      break;
+    }
+    case LayerType::GroupLayer:
+    {
+      const auto& groupLayer = dynamic_cast<const GroupLayer&>(layer);
+      AppendGroupLayer(id, groupLayer, mapNode, dir);
+      break;
+    }
+    default:
+      throw TactileError{"Did not recognize layer type when saving as XML!"};
   }
 }
 
