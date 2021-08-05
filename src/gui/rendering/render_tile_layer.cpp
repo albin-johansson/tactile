@@ -11,9 +11,10 @@ namespace Tactile {
 
 void RenderTileLayer(const TileLayer& layer,
                      const TilesetManager& tilesets,
-                     const RenderInfo& info)
+                     const RenderInfo& info,
+                     const float parentOpacity)
 {
-  const auto opacity = layer.GetOpacity();
+  const auto opacity = parentOpacity * layer.GetOpacity();
 
   const auto endRow = info.bounds.end.GetRow();
   const auto endCol = info.bounds.end.GetColumn();

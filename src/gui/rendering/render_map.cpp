@@ -45,24 +45,42 @@ void RenderGrid(const RenderInfo& info)
   }
 }
 
+void RenderLayer(const TilesetManager& tilesets,
+                 const SharedLayer& layer,
+                 const RenderInfo& info,
+                 const float parentOpacity)
+{
+  if (const auto* tileLayer = AsTileLayer(layer))
+  {
+    RenderTileLayer(*tileLayer, tilesets, info, parentOpacity);
+  }
+  else if (const auto* objectLayer = AsObjectLayer(layer))
+  {
+    RenderObjectLayer(*objectLayer, info, parentOpacity);
+  }
+  else if (const auto* groupLayer = AsGroupLayer(layer))
+  {
+    if (groupLayer->IsVisible())
+    {
+      for (const auto& [subid, sublayer] : *groupLayer)
+      {
+        const auto opacity = parentOpacity * groupLayer->GetOpacity();
+        RenderLayer(tilesets, sublayer, info, opacity);
+      }
+    }
+  }
+}
+
 }  // namespace
 
 void RenderMap(const MapDocument& document, const RenderInfo& info)
 {
+  const auto& tilesets = document.GetTilesets();
   for (const auto& [id, layer] : document.GetMap())
   {
-    if (!layer->IsVisible())
+    if (layer->IsVisible())
     {
-      continue;
-    }
-
-    if (const auto* tileLayer = AsTileLayer(layer))
-    {
-      RenderTileLayer(*tileLayer, document.GetTilesets(), info);
-    }
-    else if (const auto* objectLayer = AsObjectLayer(layer))
-    {
-      RenderObjectLayer(*objectLayer, info);
+      RenderLayer(tilesets, layer, info, layer->GetOpacity());
     }
   }
 

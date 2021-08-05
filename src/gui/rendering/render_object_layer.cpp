@@ -13,9 +13,11 @@
 
 namespace Tactile {
 
-void RenderObjectLayer(const ObjectLayer& layer, const RenderInfo& info)
+void RenderObjectLayer(const ObjectLayer& layer,
+                       const RenderInfo& info,
+                       const float parentOpacity)
 {
-  const auto opacity = 255.0f * layer.GetOpacity();
+  const auto opacity = 255.0f * (parentOpacity * layer.GetOpacity());
   const auto color = IM_COL32(0xFF, 0, 0, opacity);
 
   const auto ratio = info.grid_size / info.tile_size;

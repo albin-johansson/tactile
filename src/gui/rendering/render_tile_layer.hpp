@@ -8,6 +8,7 @@ struct RenderInfo;
 
 void RenderTileLayer(const TileLayer& layer,
                      const TilesetManager& tilesets,
-                     const RenderInfo& info);
+                     const RenderInfo& info,
+                     float parentOpacity);
 
 }  // namespace Tactile
