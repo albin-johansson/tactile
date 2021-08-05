@@ -1,13 +1,22 @@
 #pragma once
 
-#include <array>        // array
-#include <cstring>      // memset
-#include <string>       // string
-#include <string_view>  // string_view
+#include <array>            // array
+#include <cstddef>          // byte
+#include <cstring>          // memset
+#include <memory_resource>  // monotonic_buffer_resource
+#include <string>           // string
+#include <string_view>      // string_view
 
 #include "aliases/ints.hpp"
 
 namespace Tactile {
+
+template <usize Size>
+struct StackResource final
+{
+  std::array<std::byte, Size> buffer;
+  std::pmr::monotonic_buffer_resource resource{buffer.data(), sizeof buffer};
+};
 
 template <usize Size>
 void ZeroBuffer(std::array<char, Size>& buffer)
