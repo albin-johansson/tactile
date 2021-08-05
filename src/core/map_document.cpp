@@ -205,6 +205,19 @@ auto MapDocument::AddObjectLayer() -> layer_id
   return id;
 }
 
+auto MapDocument::AddGroupLayer() -> layer_id
+{
+  const auto id = mMap->GetNextLayerId();
+  auto layer = mMap->MakeGroupLayer();  // This increments the next layer ID
+
+  layer->SetName(std::format("{} {}", layer->GetName(), mObjectLayerSuffix));
+  ++mObjectLayerSuffix;
+
+  mDelegate->Execute<AddLayerCmd>(this, std::move(layer), id);
+
+  return id;
+}
+
 void MapDocument::SelectLayer(const layer_id id)
 {
   mDelegate->Execute<SelectLayerCmd>(this, id);
@@ -247,7 +260,7 @@ void MapDocument::ShowProperties()
 
 void MapDocument::ShowLayerProperties(const layer_id id)
 {
-  auto& layer = mMap->GetLayer(id);
+  auto layer = mMap->GetLayer(id);
   mDelegate->Execute<SetPropertyContextCmd>(this, layer.get());
 }
 
@@ -265,12 +278,12 @@ auto MapDocument::CanMoveActiveLayerUp() const -> bool
 
 auto MapDocument::CanMoveLayerDown(const layer_id id) const -> bool
 {
-  return mMap->IndexOf(id) != (mMap->GetLayerCount() - 1);
+  return mMap->CanMoveLayerDown(id);
 }
 
 auto MapDocument::CanMoveLayerUp(const layer_id id) const -> bool
 {
-  return mMap->IndexOf(id) != 0;
+  return mMap->CanMoveLayerUp(id);
 }
 
 auto MapDocument::IsLayerVisible(const layer_id id) const -> bool

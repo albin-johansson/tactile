@@ -2,6 +2,10 @@
 
 #include <utility>  // move
 
+#include "aliases/layer_stack_resource.hpp"
+#include "core/tactile_error.hpp"
+#include "utils/buffer_utils.hpp"
+
 namespace Tactile {
 
 GroupLayer::GroupLayer() : mDelegate{LayerType::GroupLayer}
@@ -59,7 +63,8 @@ void GroupLayer::RemoveProperty(const std::string_view name)
   mDelegate.RemoveProperty(name);
 }
 
-void GroupLayer::RenameProperty(const std::string_view oldName, const std::string& newName)
+void GroupLayer::RenameProperty(const std::string_view oldName,
+                                const std::string& newName)
 {
   mDelegate.RenameProperty(oldName, newName);
 }
@@ -69,7 +74,8 @@ void GroupLayer::SetProperty(const std::string_view name, const Property& proper
   mDelegate.SetProperty(name, property);
 }
 
-void GroupLayer::ChangePropertyType(const std::string_view name, const PropertyType type)
+void GroupLayer::ChangePropertyType(const std::string_view name,
+                                    const PropertyType type)
 {
   mDelegate.ChangePropertyType(name, type);
 }
@@ -104,14 +110,34 @@ void GroupLayer::AddLayer(const layer_id id, SharedLayer layer)
   mLayers.emplace(id, std::move(layer));
 }
 
-auto GroupLayer::GetLayer(const layer_id id) const -> const SharedLayer&
+auto GroupLayer::GetLayer(const layer_id id) const -> SharedLayer
 {
-  return mLayers.at(id);
+  return Tactile::GetLayer(mLayers, id);
+}
+
+auto GroupLayer::FindLayer(const layer_id id) -> ILayer*
+{
+  return Tactile::FindLayer(mLayers, id).get();
+}
+
+auto GroupLayer::FindLayer(const layer_id id) const -> const ILayer*
+{
+  return Tactile::FindLayer(mLayers, id).get();
 }
 
 auto GroupLayer::ContainsLayer(const layer_id id) const -> bool
 {
-  return mLayers.contains(id);
+  return FindLayer(id) != nullptr;
+}
+
+auto GroupLayer::GetLayers() -> layer_map&
+{
+  return mLayers;
+}
+
+auto GroupLayer::GetLayers() const -> const layer_map&
+{
+  return mLayers;
 }
 
 }  // namespace Tactile

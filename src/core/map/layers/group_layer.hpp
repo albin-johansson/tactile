@@ -5,15 +5,14 @@
 #include "aliases/layer_id.hpp"
 #include "layer.hpp"
 #include "layer_delegate.hpp"
+#include "layer_utils.hpp"
 
 namespace Tactile {
 
 class GroupLayer final : public ILayer
 {
  public:
-  using layer_storage = rune::vector_map<layer_id, SharedLayer>;
-  using layer_pair = typename layer_storage::value_type;
-  using const_iterator = typename layer_storage::const_iterator;
+  using const_iterator = layer_map::const_iterator;
 
   GroupLayer();
 
@@ -71,9 +70,17 @@ class GroupLayer final : public ILayer
 
   void AddLayer(layer_id id, SharedLayer layer);
 
-  [[nodiscard]] auto GetLayer(layer_id id) const -> const SharedLayer&;
+  [[nodiscard]] auto GetLayer(layer_id id) const -> SharedLayer;
+
+  [[nodiscard]] auto FindLayer(layer_id id) -> ILayer*;
+
+  [[nodiscard]] auto FindLayer(layer_id id) const -> const ILayer*;
 
   [[nodiscard]] auto ContainsLayer(layer_id id) const -> bool;
+
+  [[nodiscard]] auto GetLayers() -> layer_map&;
+
+  [[nodiscard]] auto GetLayers() const -> const layer_map&;
 
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
@@ -88,7 +95,7 @@ class GroupLayer final : public ILayer
   /// \} End of group layer API
 
  private:
-  layer_storage mLayers;
+  layer_map mLayers;
   LayerDelegate mDelegate;
 };
 

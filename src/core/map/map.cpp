@@ -1,11 +1,11 @@
 #include "map.hpp"
 
 #include <algorithm>  // max
-#include <cassert>    // assert
 #include <utility>    // move
 
-#include "core/map/layers/layer_utils.hpp"
 #include "core/tactile_error.hpp"
+#include "layers/layer_utils.hpp"
+#include "utils/buffer_utils.hpp"
 
 namespace Tactile {
 
@@ -25,9 +25,10 @@ Map::Map(const row_t nRows, const col_t nCols) : mRows{nRows}, mCols{nCols}
 
 void Map::RemoveOccurrences(const tile_id id)
 {
-  for (auto& [key, layer] : mLayers)
+  LayerStackResource res;
+  for (const auto layer : GetTileLayers(&res.resource, mLayers))
   {
-    if (auto* tileLayer = AsTileLayer(layer))
+    if (auto* tileLayer = GetTileLayer(layer))
     {
       tileLayer->RemoveAll(id);
     }
@@ -36,9 +37,10 @@ void Map::RemoveOccurrences(const tile_id id)
 
 void Map::RemoveOccurrences(const tile_id first, const tile_id last)
 {
-  for (auto& [key, layer] : mLayers)
+  LayerStackResource res;
+  for (const auto layer : GetTileLayers(&res.resource, mLayers))
   {
-    if (auto* tileLayer = AsTileLayer(layer))
+    if (auto* tileLayer = GetTileLayer(layer))
     {
       tileLayer->RemoveAll(first, last);
     }
@@ -63,7 +65,7 @@ void Map::AddLayer(const layer_id id, SharedLayer layer)
 {
   // TODO what happens if dimensions mismatch?
 
-  assert(!mLayers.contains(id));
+  assert(!HasLayer(id));
   assert(layer);
 
   if (mLayers.empty())
@@ -75,18 +77,28 @@ void Map::AddLayer(const layer_id id, SharedLayer layer)
     }
   }
 
+  if (mActiveLayer)
+  {
+    if (auto* groupLayer = GetGroupLayer(*mActiveLayer))
+    {
+      groupLayer->AddLayer(id, std::move(layer));
+      return;
+    }
+  }
+
   mLayers.emplace(id, std::move(layer));
 }
 
 auto Map::DuplicateLayer(const layer_id id) -> layer_pair&
 {
-  assert(mLayers.contains(id));
-  const auto& layer = mLayers.at(id);
+  assert(HasLayer(id));
+  const auto layer = GetLayer(id);
 
   const auto newId = mNextLayerId;
   auto copy = layer->Clone();
 
-  auto& pair = mLayers.emplace(newId, std::move(copy));
+  auto& layers = GetStorage(id);
+  auto& pair = layers.emplace(newId, std::move(copy));
 
   ++mNextLayerId;
   return pair;
@@ -94,34 +106,33 @@ auto Map::DuplicateLayer(const layer_id id) -> layer_pair&
 
 void Map::RemoveLayer(const layer_id id)
 {
-  assert(mLayers.contains(id));
-
   if (mActiveLayer == id)
   {
     mActiveLayer.reset();
   }
 
-  mLayers.erase(id);
+  const auto layerWasRemoved = Tactile::RemoveLayer(mLayers, id);
+  assert(layerWasRemoved);
 }
 
 auto Map::TakeLayer(const layer_id id) -> SharedLayer
 {
-  assert(mLayers.contains(id));
+  assert(HasLayer(id));
 
   if (mActiveLayer == id)
   {
     mActiveLayer.reset();
   }
 
-  auto layer = mLayers.at(id);
-  mLayers.erase(id);
+  auto layer = GetLayer(id);
+  RemoveLayer(id);
 
   return layer;
 }
 
 void Map::SelectLayer(const layer_id id)
 {
-  if (mLayers.contains(id))
+  if (HasLayer(id))
   {
     mActiveLayer = id;
   }
@@ -129,25 +140,29 @@ void Map::SelectLayer(const layer_id id)
 
 void Map::AddRow(const tile_id id)
 {
-  for (auto& [key, layer] : mLayers)
+  LayerStackResource res;
+  for (const auto layer : GetTileLayers(&res.resource, mLayers))
   {
-    if (auto* tileLayer = AsTileLayer(layer))
+    if (auto* tileLayer = GetTileLayer(layer))
     {
       tileLayer->AddRow(id);
     }
   }
+
   ++mRows;
 }
 
 void Map::AddColumn(const tile_id id)
 {
-  for (auto& [key, layer] : mLayers)
+  LayerStackResource res;
+  for (const auto layer : GetTileLayers(&res.resource, mLayers))
   {
-    if (auto* tileLayer = AsTileLayer(layer))
+    if (auto* tileLayer = GetTileLayer(layer))
     {
       tileLayer->AddColumn(id);
     }
   }
+
   ++mCols;
 }
 
@@ -158,9 +173,10 @@ void Map::RemoveRow()
     return;
   }
 
-  for (auto& [key, layer] : mLayers)
+  LayerStackResource res;
+  for (const auto layer : GetTileLayers(&res.resource, mLayers))
   {
-    if (auto* tileLayer = AsTileLayer(layer))
+    if (auto* tileLayer = GetTileLayer(layer))
     {
       tileLayer->RemoveRow();
     }
@@ -176,9 +192,10 @@ void Map::RemoveColumn()
     return;
   }
 
-  for (auto& [key, layer] : mLayers)
+  LayerStackResource res;
+  for (const auto layer : GetTileLayers(&res.resource, mLayers))
   {
-    if (auto* tileLayer = AsTileLayer(layer))
+    if (auto* tileLayer = GetTileLayer(layer))
     {
       tileLayer->RemoveColumn();
     }
@@ -209,9 +226,11 @@ void Map::SetRowCount(row_t nRows)
   }
 
   mRows = nRows;
-  for (auto& [key, layer] : mLayers)
+
+  LayerStackResource res;
+  for (const auto layer : GetTileLayers(&res.resource, mLayers))
   {
-    if (auto* tileLayer = AsTileLayer(layer))
+    if (auto* tileLayer = GetTileLayer(layer))
     {
       tileLayer->SetRowCount(mRows);
     }
@@ -228,9 +247,11 @@ void Map::SetColumnCount(col_t nCols)
   }
 
   mCols = nCols;
-  for (auto& [key, layer] : mLayers)
+
+  LayerStackResource res;
+  for (const auto layer : GetTileLayers(&res.resource, mLayers))
   {
-    if (auto* tileLayer = AsTileLayer(layer))
+    if (auto* tileLayer = GetTileLayer(layer))
     {
       tileLayer->SetColumnCount(mCols);
     }
@@ -275,12 +296,14 @@ void Map::SetTileHeight(const int tileHeight) noexcept
 
 void Map::MoveLayerDown(const layer_id id)
 {
-  mLayers.move_forward(id);
+  auto& layers = GetStorage(id);
+  layers.move_forward(id);
 }
 
 void Map::MoveLayerUp(const layer_id id)
 {
-  mLayers.move_backward(id);
+  auto& layers = GetStorage(id);
+  layers.move_backward(id);
 }
 
 auto Map::MakeTileLayer() -> Shared<TileLayer>
@@ -302,9 +325,35 @@ auto Map::MakeObjectLayer() -> Shared<ObjectLayer>
   return std::make_shared<ObjectLayer>();
 }
 
+auto Map::MakeGroupLayer() -> Shared<GroupLayer>
+{
+  ++mNextLayerId;
+  return std::make_shared<GroupLayer>();
+}
+
 auto Map::IndexOf(const layer_id id) const -> Maybe<usize>
 {
-  return mLayers.index_of(id);
+  return GetIndex(mLayers, id);
+}
+
+auto Map::GetParent(const layer_id id) const -> Maybe<layer_id>
+{
+  Maybe<layer_id> parent;
+
+  EachGroup([&parent, id](const layer_id layerId, const GroupLayer& layer) {
+    // We intentionally don't use ContainsLayer here!
+    if (layer.GetLayers().contains(id))
+    {
+      parent = layerId;
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  });
+
+  return parent;
 }
 
 auto Map::GetName(const layer_id id) const -> std::string_view
@@ -326,10 +375,7 @@ auto Map::IsVisible(const layer_id id) const -> bool
 
 auto Map::GetOpacity(const layer_id id) const -> float
 {
-  const auto* layer = FindLayer(id);
-  assert(layer);
-
-  return layer->GetOpacity();
+  return GetLayer(id)->GetOpacity();
 }
 
 auto Map::GetLayerCount() const -> int
@@ -339,17 +385,17 @@ auto Map::GetLayerCount() const -> int
 
 auto Map::HasLayer(const layer_id id) const -> bool
 {
-  return mLayers.contains(id);
+  return Tactile::FindLayer(mLayers, id) != nullptr;
 }
 
-auto Map::GetLayer(const layer_id id) const -> const SharedLayer&
+auto Map::GetLayer(const layer_id id) -> SharedLayer
 {
-  return mLayers.at(id);
+  return Tactile::GetLayer(mLayers, id);
 }
 
-auto Map::GetLayer(const layer_id id) -> SharedLayer&
+auto Map::GetLayer(const layer_id id) const -> SharedLayer
 {
-  return mLayers.at(id);
+  return Tactile::GetLayer(mLayers, id);
 }
 
 auto Map::GetTileLayer(const layer_id id) -> TileLayer*
@@ -392,6 +438,23 @@ auto Map::IsObjectLayer(const layer_id id) const -> bool
   return GetLayer(id)->GetType() == LayerType::ObjectLayer;
 }
 
+auto Map::IsGroupLayer(const layer_id id) const -> bool
+{
+  return GetLayer(id)->GetType() == LayerType::GroupLayer;
+}
+
+auto Map::CanMoveLayerDown(const layer_id id) const -> bool
+{
+  const auto& layers = GetStorage(id);
+  return layers.index_of(id) != (layers.size() - 1);
+}
+
+auto Map::CanMoveLayerUp(const layer_id id) const -> bool
+{
+  const auto& layers = GetStorage(id);
+  return layers.index_of(id) != 0;
+}
+
 auto Map::InBounds(const MapPosition& pos) const -> bool
 {
   const auto endRow = mRows;
@@ -403,26 +466,38 @@ auto Map::InBounds(const MapPosition& pos) const -> bool
 
 auto Map::FindLayer(const layer_id id) -> ILayer*
 {
-  if (const auto it = mLayers.find(id); it != mLayers.end())
-  {
-    return it->second.get();
-  }
-  else
-  {
-    return nullptr;
-  }
+  return Tactile::FindLayer(mLayers, id).get();
 }
 
 auto Map::FindLayer(const layer_id id) const -> const ILayer*
 {
-  if (const auto it = mLayers.find(id); it != mLayers.end())
+  return Tactile::FindLayer(mLayers, id).get();
+}
+
+auto Map::GetStorage(const layer_id id) -> layer_map&
+{
+  if (const auto parent = GetParent(id))
   {
-    return it->second.get();
+    if (auto* groupLayer = GetGroupLayer(*parent))
+    {
+      return groupLayer->GetLayers();
+    }
   }
-  else
+
+  return mLayers;
+}
+
+auto Map::GetStorage(const layer_id id) const -> const layer_map&
+{
+  if (const auto parent = GetParent(id))
   {
-    return nullptr;
+    if (const auto* groupLayer = GetGroupLayer(*parent))
+    {
+      return groupLayer->GetLayers();
+    }
   }
+
+  return mLayers;
 }
 
 }  // namespace Tactile

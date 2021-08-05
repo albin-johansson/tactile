@@ -2,6 +2,7 @@
 
 #include "aliases/ints.hpp"
 #include "aliases/layer_id.hpp"
+#include "aliases/maybe.hpp"
 #include "core/commands/command_id.hpp"
 #include "core/commands/maps/map_command.hpp"
 #include "core/map/layers/layer.hpp"
@@ -25,6 +26,7 @@ class RemoveLayerCmd final : public MapCommand
  private:
   SharedLayer mLayer;
   layer_id mId;
+  Maybe<layer_id> mParent;
   usize mIndex{};
   bool mWasLayerActive{};
 };

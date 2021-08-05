@@ -1,7 +1,9 @@
 #pragma once
 
+#include <cassert>         // assert
 #include <concepts>        // invocable
 #include <string_view>     // string_view
+#include <type_traits>     // invoke_result_t, is_same_v
 #include <vector_map.hpp>  // vector_map
 
 #include "aliases/col.hpp"
@@ -304,14 +306,22 @@ class Map final
   [[nodiscard]] auto MakeTileLayer() -> Shared<TileLayer>;
 
   /**
-   * \brief Creates and returns an empty object layer but doesn't add it to the
-   * map.
+   * \brief Creates and returns an empty object layer but doesn't add it to the map.
    *
    * \note This function *does* increment the next layer ID property.
    *
    * \return the created layer.
    */
   [[nodiscard]] auto MakeObjectLayer() -> Shared<ObjectLayer>;
+
+  /**
+   * \brief Creates and returns an empty group layer but doesn't add it to the map.
+   *
+   * \note This function *does* increment the next layer ID property.
+   *
+   * \return the created layer.
+   */
+  [[nodiscard]] auto MakeGroupLayer() -> Shared<GroupLayer>;
 
   /**
    * \brief Returns the index associated with the specified layer.
@@ -322,6 +332,8 @@ class Map final
    * found.
    */
   [[nodiscard]] auto IndexOf(layer_id id) const -> Maybe<usize>;
+
+  [[nodiscard]] auto GetParent(layer_id id) const -> Maybe<layer_id>;
 
   /**
    * \brief Returns the name of the specified layer.
@@ -368,28 +380,30 @@ class Map final
   [[nodiscard]] auto GetLayerCount() const -> int;
 
   /**
-   * \brief Indicates whether or not the specified layer ID is associated
-   * with a tile layer.
+   * \brief Indicates whether or not the map contains a layer with the specified ID.
    *
-   * \param id the tile layer ID that will be checked.
+   * \details This function will also search for the supplied layer in all group
+   * layers.
    *
-   * \return `true` if the supplied layer ID is associated with a tile layer;
-   * `false` otherwise.
+   * \param id the layer ID that will be checked.
+   *
+   * \return `true` if the map contains the specified layer; `false` otherwise.
    */
   [[nodiscard]] auto HasLayer(layer_id id) const -> bool;
 
   /**
    * \brief Returns the layer associated with the specified ID.
    *
-   * \note This function throws if no layer is found.
-   *
    * \param id the ID associated with the desired layer.
    *
    * \return a reference to the layer associated with the specified ID.
+   *
+   * \throws TactileError if not layer is found.
    */
-  [[nodiscard]] auto GetLayer(layer_id id) const -> const SharedLayer&;
+  [[nodiscard]] auto GetLayer(layer_id id) -> SharedLayer;
 
-  [[nodiscard]] auto GetLayer(layer_id id) -> SharedLayer&;
+  /// \copydoc GetLayer()
+  [[nodiscard]] auto GetLayer(layer_id id) const -> SharedLayer;
 
   [[nodiscard]] auto GetTileLayer(layer_id id) -> TileLayer*;
 
@@ -406,6 +420,12 @@ class Map final
   [[nodiscard]] auto IsTileLayer(layer_id id) const -> bool;
 
   [[nodiscard]] auto IsObjectLayer(layer_id id) const -> bool;
+
+  [[nodiscard]] auto IsGroupLayer(layer_id id) const -> bool;
+
+  [[nodiscard]] auto CanMoveLayerDown(layer_id id) const -> bool;
+
+  [[nodiscard]] auto CanMoveLayerUp(layer_id id) const -> bool;
 
   /**
    * \brief Indicates whether or not the supplied position is within the bounds
@@ -515,6 +535,34 @@ class Map final
   [[nodiscard]] auto FindLayer(layer_id id) -> ILayer*;
 
   [[nodiscard]] auto FindLayer(layer_id id) const -> const ILayer*;
+
+  [[nodiscard]] auto GetStorage(layer_id id) -> layer_map&;
+
+  [[nodiscard]] auto GetStorage(layer_id id) const -> const layer_map&;
+
+  template <std::invocable<layer_id, const GroupLayer&> T>
+  void EachGroup(T&& callable) const
+  {
+    LayerStackResource res;
+    for (const auto group : GetGroups(&res.resource, mLayers))
+    {
+      const auto* groupLayer = GetGroupLayer(group);
+      assert(groupLayer);
+
+      using return_type = std::invoke_result_t<T, layer_id, const GroupLayer&>;
+      if constexpr (std::is_same_v<return_type, bool>)
+      {
+        if (callable(group, *groupLayer))
+        {
+          break;
+        }
+      }
+      else
+      {
+        callable(group, *groupLayer);
+      }
+    }
+  }
 };
 
 }  // namespace Tactile

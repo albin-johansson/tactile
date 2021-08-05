@@ -12,6 +12,13 @@ RemoveLayerCmd::RemoveLayerCmd(NotNull<MapDocument*> document, const layer_id id
 void RemoveLayerCmd::Undo()
 {
   auto& map = GetMap();
+  const auto previousActive = map.GetActiveLayerId();
+
+  if (mParent)
+  {
+    map.SelectLayer(*mParent);
+  }
+
   map.AddLayer(mId, mLayer);
 
   // Make sure that the layer is returned to its original index
@@ -27,6 +34,11 @@ void RemoveLayerCmd::Undo()
     }
   }
 
+  if (mParent && previousActive)
+  {
+    map.SelectLayer(*previousActive);
+  }
+
   if (mWasLayerActive)
   {
     map.SelectLayer(mId);
@@ -37,6 +49,8 @@ void RemoveLayerCmd::Redo()
 {
   auto& map = GetMap();
   mWasLayerActive = map.GetActiveLayerId() == mId;
+
+  mParent = map.GetParent(mId);
   mIndex = map.IndexOf(mId).value();
   mLayer = map.TakeLayer(mId);
 }
