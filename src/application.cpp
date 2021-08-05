@@ -365,6 +365,10 @@ void Application::OnAddLayerEvent(const AddLayerEvent& event)
       case LayerType::ObjectLayer:
         document->AddObjectLayer();
         break;
+
+      case LayerType::GroupLayer:
+        document->AddGroupLayer();
+        break;
     }
   }
 }
