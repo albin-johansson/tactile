@@ -6,7 +6,6 @@
 
 namespace Tactile::IO {
 
-// TODO there are many possible errors caused by unsupported Tiled features
 enum class ParseError
 {
   None,
