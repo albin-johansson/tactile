@@ -17,6 +17,7 @@
 #include "io/parsing/to_map_document.hpp"
 #include "io/preferences.hpp"
 #include "io/saving/save_map_document.hpp"
+#include "io/session.hpp"
 #include "shortcuts/shortcuts.hpp"
 #include "utils/load_texture.hpp"
 
@@ -33,6 +34,11 @@ Application::Application(cen::window&& window)
 auto Application::Run() -> int
 {
   const auto& io = ImGui::GetIO();
+
+  if (Prefs::GetRestoreLastSession())
+  {
+    RestoreLastSession(*mModel);
+  }
 
   while (!mQuit)
   {
@@ -69,6 +75,7 @@ auto Application::Run() -> int
 void Application::OnAboutToExit()
 {
   SavePreferences();
+  SaveSession(*mModel);
   UnloadTextures();
 }
 

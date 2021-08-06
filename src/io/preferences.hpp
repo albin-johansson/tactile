@@ -20,6 +20,7 @@ struct Preferences final
   bool show_properties_dock;
   bool window_border;
   bool restore_layout;
+  bool restore_last_session;
 };
 
 /// Loads existing persistent preferences or loads the default preferences.
@@ -54,6 +55,7 @@ void SetShowGrid(bool show) noexcept;
 void ResetBehaviorPreferences(Preferences& prefs);
 
 [[nodiscard]] auto GetCommandCapacity() noexcept -> usize;
+[[nodiscard]] auto GetRestoreLastSession() noexcept -> bool;
 
 /// \} End of behavior
 

@@ -6,18 +6,21 @@
 
 namespace Tactile::IO {
 
+auto ConvertToForwardSlashes(const std::filesystem::path& path) -> std::string
+{
+  /* Here we make sure that the file path is portable, by using forward slashes that
+     can be understood by pretty much all operating systems that we care about. */
+  auto str = path.string();
+  std::ranges::replace(str, '\\', '/');
+  return str;
+}
+
 [[nodiscard]] auto GetTilesetImagePath(const Tileset& tileset,
                                        const std::filesystem::path& dir)
     -> std::string
 {
   const auto path = std::filesystem::relative(tileset.GetFilePath(), dir);
-
-  /* Here we make sure that the file path is portable, by using forward slashes that
-     can be understood by pretty much all operating systems that we care about. */
-  auto pathStr = path.string();
-  std::ranges::replace(pathStr, '\\', '/');
-
-  return pathStr;
+  return ConvertToForwardSlashes(path);
 }
 
 auto GetPropertyTypeString(const PropertyType type) -> std::string

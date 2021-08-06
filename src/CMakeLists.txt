@@ -371,6 +371,8 @@ set(TACTILE_SOURCE_FILES
     io/directories.hpp
     io/preferences.cpp
     io/preferences.hpp
+    io/session.cpp
+    io/session.hpp
 
     io/parsing/map_attribute.hpp
     io/parsing/map_file.hpp

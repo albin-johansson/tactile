@@ -12,6 +12,9 @@ inline constexpr auto tiled_version = "1.7.0";
 inline constexpr auto tiled_xml_version = "1.5";
 inline constexpr auto tiled_json_version = "1.6";
 
+[[nodiscard]] auto ConvertToForwardSlashes(const std::filesystem::path& path)
+    -> std::string;
+
 [[nodiscard]] auto GetTilesetImagePath(const Tileset& tileset,
                                        const std::filesystem::path& dir)
     -> std::string;

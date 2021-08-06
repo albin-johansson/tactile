@@ -22,24 +22,24 @@ constexpr bool def_show_tileset_dock = true;
 constexpr bool def_show_properties_dock = true;
 constexpr bool def_window_border = false;
 constexpr bool def_restore_layout = true;
+constexpr bool def_restore_last_session = true;
 constexpr usize def_command_capacity = 100;
 
 constexpr auto def_preferred_format = "JSON";
 constexpr Theme def_theme = Theme::Ash;
 
-inline Preferences settings = {
-    .preferred_format = def_preferred_format,
-    .theme = def_theme,
-    .command_capacity = def_command_capacity,
-    .embed_tilesets = def_embed_tilesets,
-    .human_readable_output = def_human_readable_output,
-    .show_grid = def_show_grid,
-    .show_layer_dock = def_show_layer_dock,
-    .show_tileset_dock = def_show_tileset_dock,
-    .show_properties_dock = def_show_properties_dock,
-    .window_border = def_window_border,
-    .restore_layout = def_restore_layout,
-};
+inline Preferences settings = {.preferred_format = def_preferred_format,
+                               .theme = def_theme,
+                               .command_capacity = def_command_capacity,
+                               .embed_tilesets = def_embed_tilesets,
+                               .human_readable_output = def_human_readable_output,
+                               .show_grid = def_show_grid,
+                               .show_layer_dock = def_show_layer_dock,
+                               .show_tileset_dock = def_show_tileset_dock,
+                               .show_properties_dock = def_show_properties_dock,
+                               .window_border = def_window_border,
+                               .restore_layout = def_restore_layout,
+                               .restore_last_session = def_restore_last_session};
 
 template <typename T>
 void AddIfMissing(rune::ini_file& ini, czstring section, czstring element, T value)
@@ -60,6 +60,7 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
   ini["Appearance"]["ShowGrid"] = preferences.show_grid;
 
   ini["Behavior"]["CommandCapacity"] = preferences.command_capacity;
+  ini["Behavior"]["RestoreLastSession"] = preferences.restore_last_session;
 
   ini["Export"]["PreferredFormat"] = preferences.preferred_format;
   ini["Export"]["EmbedTilesets"] = preferences.embed_tilesets;
@@ -84,6 +85,7 @@ void ValidateExistingFile()
   AddIfMissing(ini, "Appearance", "WindowBorder", def_window_border);
 
   AddIfMissing(ini, "Behavior", "CommandCapacity", def_command_capacity);
+  AddIfMissing(ini, "Behavior", "RestoreLastSession", def_restore_last_session);
 
   AddIfMissing(ini, "Export", "PreferredFormat", def_preferred_format);
   AddIfMissing(ini, "Export", "EmbedTilesets", def_embed_tilesets);
@@ -113,6 +115,7 @@ void LoadPreferences()
 
     const auto& behavior = ini.at("Behavior");
     settings.command_capacity = behavior.at("CommandCapacity").get<usize>();
+    settings.restore_last_session = behavior.at("RestoreLastSession").get<bool>();
 
     const auto& exp = ini.at("Export");
     settings.preferred_format = exp.at("PreferredFormat").get<std::string>();
@@ -136,6 +139,7 @@ void LoadPreferences()
   CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
   CENTURION_LOG_INFO("  Behavior::CommandCapacity: %u", settings.command_capacity);
+  CENTURION_LOG_INFO("  Behavior::RestoreLastSession: %i", settings.restore_last_session);
   CENTURION_LOG_INFO("  Export::PreferredFormat: %s", settings.preferred_format.c_str());
   CENTURION_LOG_INFO("  Export::EmbedTilesets: %i", settings.embed_tilesets);
   CENTURION_LOG_INFO("  Export::HumanReadableOutput: %i", settings.human_readable_output);
@@ -181,6 +185,7 @@ void SetShowGrid(const bool show) noexcept
 void ResetBehaviorPreferences(Preferences& prefs)
 {
   prefs.command_capacity = def_command_capacity;
+  prefs.restore_last_session = def_restore_last_session;
 }
 
 void ResetExportPreferences(Preferences& prefs)
@@ -258,6 +263,11 @@ auto GetRestoreLayout() noexcept -> bool
 auto GetCommandCapacity() noexcept -> usize
 {
   return settings.command_capacity;
+}
+
+auto GetRestoreLastSession() noexcept -> bool
+{
+  return settings.restore_last_session;
 }
 
 }  // namespace Prefs

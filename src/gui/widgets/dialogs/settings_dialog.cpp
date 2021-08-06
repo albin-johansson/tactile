@@ -35,7 +35,12 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
     }
     ImGui::Spacing();
 
-    // TODO "Restore last session on startup"
+    if (auto restore = settings.restore_last_session;
+        Checkbox("Restore last session on startup", &restore))
+    {
+      settings.restore_last_session = restore;
+    }
+
     // TODO "RMB with stamp tool works as eraser"
 
     ImGui::AlignTextToFramePadding();
