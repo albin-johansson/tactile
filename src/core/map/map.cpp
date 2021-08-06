@@ -25,25 +25,19 @@ Map::Map(const row_t nRows, const col_t nCols) : mRows{nRows}, mCols{nCols}
 
 void Map::RemoveOccurrences(const tile_id id)
 {
-  LayerStackResource res;
-  for (const auto layer : GetTileLayers(&res.resource, mLayers))
+  TileLayerQuery query{mLayers};
+  for (auto [layerId, layer] : query)
   {
-    if (auto* tileLayer = GetTileLayer(layer))
-    {
-      tileLayer->RemoveAll(id);
-    }
+    layer->RemoveAll(id);
   }
 }
 
 void Map::RemoveOccurrences(const tile_id first, const tile_id last)
 {
-  LayerStackResource res;
-  for (const auto layer : GetTileLayers(&res.resource, mLayers))
+  TileLayerQuery query{mLayers};
+  for (auto [id, layer] : query)
   {
-    if (auto* tileLayer = GetTileLayer(layer))
-    {
-      tileLayer->RemoveAll(first, last);
-    }
+    layer->RemoveAll(first, last);
   }
 }
 
@@ -140,13 +134,10 @@ void Map::SelectLayer(const layer_id id)
 
 void Map::AddRow(const tile_id id)
 {
-  LayerStackResource res;
-  for (const auto layer : GetTileLayers(&res.resource, mLayers))
+  TileLayerQuery query{mLayers};
+  for (auto [layerId, layer] : query)
   {
-    if (auto* tileLayer = GetTileLayer(layer))
-    {
-      tileLayer->AddRow(id);
-    }
+    layer->AddRow(id);
   }
 
   ++mRows;
@@ -154,13 +145,10 @@ void Map::AddRow(const tile_id id)
 
 void Map::AddColumn(const tile_id id)
 {
-  LayerStackResource res;
-  for (const auto layer : GetTileLayers(&res.resource, mLayers))
+  TileLayerQuery query{mLayers};
+  for (auto [layerId, layer] : query)
   {
-    if (auto* tileLayer = GetTileLayer(layer))
-    {
-      tileLayer->AddColumn(id);
-    }
+    layer->AddColumn(id);
   }
 
   ++mCols;
@@ -173,13 +161,10 @@ void Map::RemoveRow()
     return;
   }
 
-  LayerStackResource res;
-  for (const auto layer : GetTileLayers(&res.resource, mLayers))
+  TileLayerQuery query{mLayers};
+  for (auto [id, layer] : query)
   {
-    if (auto* tileLayer = GetTileLayer(layer))
-    {
-      tileLayer->RemoveRow();
-    }
+    layer->RemoveRow();
   }
 
   --mRows;
@@ -192,13 +177,10 @@ void Map::RemoveColumn()
     return;
   }
 
-  LayerStackResource res;
-  for (const auto layer : GetTileLayers(&res.resource, mLayers))
+  TileLayerQuery query{mLayers};
+  for (auto [id, layer] : query)
   {
-    if (auto* tileLayer = GetTileLayer(layer))
-    {
-      tileLayer->RemoveColumn();
-    }
+    layer->RemoveColumn();
   }
 
   --mCols;
@@ -227,13 +209,10 @@ void Map::SetRowCount(row_t nRows)
 
   mRows = nRows;
 
-  LayerStackResource res;
-  for (const auto layer : GetTileLayers(&res.resource, mLayers))
+  TileLayerQuery query{mLayers};
+  for (auto [id, layer] : query)
   {
-    if (auto* tileLayer = GetTileLayer(layer))
-    {
-      tileLayer->SetRowCount(mRows);
-    }
+    layer->SetRowCount(mRows);
   }
 }
 
@@ -248,13 +227,10 @@ void Map::SetColumnCount(col_t nCols)
 
   mCols = nCols;
 
-  LayerStackResource res;
-  for (const auto layer : GetTileLayers(&res.resource, mLayers))
+  TileLayerQuery query{mLayers};
+  for (auto [id, layer] : query)
   {
-    if (auto* tileLayer = GetTileLayer(layer))
-    {
-      tileLayer->SetColumnCount(mCols);
-    }
+    layer->SetColumnCount(mCols);
   }
 }
 
@@ -338,22 +314,47 @@ auto Map::IndexOf(const layer_id id) const -> Maybe<usize>
 
 auto Map::GetParent(const layer_id id) const -> Maybe<layer_id>
 {
-  Maybe<layer_id> parent;
-
-  EachGroup([&parent, id](const layer_id layerId, const GroupLayer& layer) {
+  GroupLayerQuery query{mLayers};
+  for (auto [layerId, layer] : query)
+  {
     // We intentionally don't use ContainsLayer here!
-    if (layer.GetLayers().contains(id))
+    if (layer->GetLayers().contains(id))
     {
-      parent = layerId;
-      return true;
+      return layerId;
     }
-    else
-    {
-      return false;
-    }
-  });
+  }
 
-  return parent;
+  return nothing;
+}
+
+auto Map::GetParentLayer(layer_id id) -> GroupLayer*
+{
+  GroupLayerQuery query{mLayers};
+  for (auto [layerId, layer] : query)
+  {
+    // We intentionally don't use ContainsLayer here!
+    if (layer->GetLayers().contains(id))
+    {
+      return layer;
+    }
+  }
+
+  return nullptr;
+}
+
+auto Map::GetParentLayer(const layer_id id) const -> const GroupLayer*
+{
+  GroupLayerQuery query{mLayers};
+  for (const auto [layerId, layer] : query)
+  {
+    // We intentionally don't use ContainsLayer here!
+    if (layer->GetLayers().contains(id))
+    {
+      return layer;
+    }
+  }
+
+  return nullptr;
 }
 
 auto Map::GetName(const layer_id id) const -> std::string_view
@@ -476,28 +477,26 @@ auto Map::FindLayer(const layer_id id) const -> const ILayer*
 
 auto Map::GetStorage(const layer_id id) -> layer_map&
 {
-  if (const auto parent = GetParent(id))
+  if (auto* parent = GetParentLayer(id))
   {
-    if (auto* groupLayer = GetGroupLayer(*parent))
-    {
-      return groupLayer->GetLayers();
-    }
+    return parent->GetLayers();
   }
-
-  return mLayers;
+  else
+  {
+    return mLayers;
+  }
 }
 
 auto Map::GetStorage(const layer_id id) const -> const layer_map&
 {
-  if (const auto parent = GetParent(id))
+  if (const auto* parent = GetParentLayer(id))
   {
-    if (const auto* groupLayer = GetGroupLayer(*parent))
-    {
-      return groupLayer->GetLayers();
-    }
+    return parent->GetLayers();
   }
-
-  return mLayers;
+  else
+  {
+    return mLayers;
+  }
 }
 
 }  // namespace Tactile

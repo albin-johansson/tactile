@@ -43,51 +43,77 @@ auto AsGroupLayer(const SharedLayer& layer) -> GroupLayer*
   }
 }
 
-auto GetTileLayers(std::pmr::memory_resource* resource, const layer_map& layers)
-    -> std::pmr::vector<layer_id>
+auto GetGroupLayers(std::pmr::memory_resource* resource, const layer_map& layers)
+    -> group_layer_map
 {
-  std::pmr::vector<layer_id> tileLayers{resource};
+  group_layer_map groups{resource};
 
   for (const auto& [id, layer] : layers)
   {
-    if (const auto* groupLayer = AsGroupLayer(layer))
+    if (auto* groupLayer = AsGroupLayer(layer))
     {
-      LayerStackResource res;
-      for (const auto layerId :
-           GetTileLayers(&res.resource, groupLayer->GetLayers()))
+      groups.try_emplace(id, groupLayer);
+
+      StackResource<group_layer_map::value_type, 16> res;
+      for (const auto& [child, childLayer] :
+           GetGroupLayers(&res.resource, groupLayer->GetLayers()))
       {
-        tileLayers.push_back(layerId);
+        groups.try_emplace(child, childLayer);
       }
     }
-    else if (AsTileLayer(layer))
+  }
+
+  return groups;
+}
+
+auto GetTileLayers(std::pmr::memory_resource* resource, const layer_map& layers)
+    -> tile_layer_map
+{
+  tile_layer_map tileLayers{resource};
+
+  for (const auto& [id, layer] : layers)
+  {
+    if (auto* tileLayer = AsTileLayer(layer))
     {
-      tileLayers.push_back(id);
+      tileLayers.try_emplace(id, tileLayer);
+    }
+    else if (const auto* groupLayer = AsGroupLayer(layer))
+    {
+      StackResource<tile_layer_map::value_type, 16> res;
+      for (const auto& [childId, childLayer] :
+           GetTileLayers(&res.resource, groupLayer->GetLayers()))
+      {
+        tileLayers.try_emplace(childId, childLayer);
+      }
     }
   }
 
   return tileLayers;
 }
 
-auto GetGroups(std::pmr::memory_resource* resource, const layer_map& layers)
-    -> std::pmr::vector<layer_id>
+auto GetObjectLayers(std::pmr::memory_resource* resource, const layer_map& layers)
+    -> object_layer_map
 {
-  std::pmr::vector<layer_id> groups{resource};
+  object_layer_map objectLayers{resource};
 
   for (const auto& [id, layer] : layers)
   {
-    if (const auto* groupLayer = AsGroupLayer(layer))
+    if (auto* objectLayer = AsObjectLayer(layer))
     {
-      groups.push_back(id);
-
-      LayerStackResource res;
-      for (const auto layerId : GetGroups(&res.resource, groupLayer->GetLayers()))
+      objectLayers.try_emplace(id, objectLayer);
+    }
+    else if (const auto* groupLayer = AsGroupLayer(layer))
+    {
+      StackResource<object_layer_map::value_type, 16> res;
+      for (const auto& [childId, childLayer] :
+           GetObjectLayers(&res.resource, groupLayer->GetLayers()))
       {
-        groups.push_back(layerId);
+        objectLayers.try_emplace(childId, childLayer);
       }
     }
   }
 
-  return groups;
+  return objectLayers;
 }
 
 auto RemoveLayer(layer_map& layers, const layer_id id) -> bool
@@ -99,13 +125,10 @@ auto RemoveLayer(layer_map& layers, const layer_id id) -> bool
   }
   else
   {
-    LayerStackResource res;
-    for (const auto group : GetGroups(&res.resource, layers))
+    GroupLayerQuery query{layers};
+    for (auto [group, groupLayer] : query)
     {
-      if (auto* groupLayer = AsGroupLayer(layers.at(group)))
-      {
-        return RemoveLayer(groupLayer->GetLayers(), id);
-      }
+      return RemoveLayer(groupLayer->GetLayers(), id);
     }
   }
 
@@ -120,13 +143,10 @@ auto FindLayer(const layer_map& layers, const layer_id id) -> SharedLayer
   }
   else
   {
-    LayerStackResource res;
-    for (const auto group : GetGroups(&res.resource, layers))
+    GroupLayerQuery query{layers};
+    for (auto [group, groupLayer] : query)
     {
-      if (auto* groupLayer = AsGroupLayer(layers.at(group)))
-      {
-        return FindLayer(groupLayer->GetLayers(), id);
-      }
+      return FindLayer(groupLayer->GetLayers(), id);
     }
   }
 
@@ -153,13 +173,10 @@ auto GetIndex(const layer_map& layers, const layer_id id) -> Maybe<usize>
   }
   else
   {
-    LayerStackResource res;
-    for (const auto group : GetGroups(&res.resource, layers))
+    GroupLayerQuery query{layers};
+    for (auto [group, groupLayer] : query)
     {
-      if (auto* groupLayer = AsGroupLayer(layers.at(group)))
-      {
-        return GetIndex(groupLayer->GetLayers(), id);
-      }
+      return GetIndex(groupLayer->GetLayers(), id);
     }
   }
 

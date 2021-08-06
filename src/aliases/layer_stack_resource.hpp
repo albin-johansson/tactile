@@ -5,6 +5,7 @@
 
 namespace Tactile {
 
-using LayerStackResource = StackResource<16 * sizeof(layer_id)>;
+template <typename T = layer_id>
+using LayerStackResource = StackResource<T, 16>;
 
 }  // namespace Tactile

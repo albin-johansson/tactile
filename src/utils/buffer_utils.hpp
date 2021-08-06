@@ -11,10 +11,10 @@
 
 namespace Tactile {
 
-template <usize Size>
+template <typename T, usize Size>
 struct StackResource final
 {
-  std::array<std::byte, Size> buffer;
+  std::array<std::byte, Size * sizeof(T)> buffer;
   std::pmr::monotonic_buffer_resource resource{buffer.data(), sizeof buffer};
 };
 

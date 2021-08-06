@@ -333,7 +333,30 @@ class Map final
    */
   [[nodiscard]] auto IndexOf(layer_id id) const -> Maybe<usize>;
 
+  /**
+   * \brief Returns the parent group layer ID for a layer, if there is one.
+   *
+   * \param id the ID of the layer to obtain the parent of.
+   *
+   * \return the ID of the parent layer; `nothing` if there is no parent.
+   *
+   * \see `GetParentLayer()`
+   */
   [[nodiscard]] auto GetParent(layer_id id) const -> Maybe<layer_id>;
+
+  /**
+   * \brief Returns the parent layer for a layer, if there is one.
+   *
+   * \param id the ID of the layer to obtain the parent of.
+   *
+   * \return the parent group layer; null if there is none.
+   *
+   * \see `GetParent()`
+   */
+  [[nodiscard]] auto GetParentLayer(layer_id id) -> GroupLayer*;
+
+  /// \copydoc GetParentLayer()
+  [[nodiscard]] auto GetParentLayer(layer_id id) const -> const GroupLayer*;
 
   /**
    * \brief Returns the name of the specified layer.
@@ -539,30 +562,6 @@ class Map final
   [[nodiscard]] auto GetStorage(layer_id id) -> layer_map&;
 
   [[nodiscard]] auto GetStorage(layer_id id) const -> const layer_map&;
-
-  template <std::invocable<layer_id, const GroupLayer&> T>
-  void EachGroup(T&& callable) const
-  {
-    LayerStackResource res;
-    for (const auto group : GetGroups(&res.resource, mLayers))
-    {
-      const auto* groupLayer = GetGroupLayer(group);
-      assert(groupLayer);
-
-      using return_type = std::invoke_result_t<T, layer_id, const GroupLayer&>;
-      if constexpr (std::is_same_v<return_type, bool>)
-      {
-        if (callable(group, *groupLayer))
-        {
-          break;
-        }
-      }
-      else
-      {
-        callable(group, *groupLayer);
-      }
-    }
-  }
 };
 
 }  // namespace Tactile
