@@ -7,6 +7,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class IPropertyContext;
 
 class APropertyCommand : public ACommand
@@ -20,5 +23,7 @@ class APropertyCommand : public ACommand
  private:
   IPropertyContext* mContext{};
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

@@ -6,6 +6,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class SetLayerOpacityCmd final : public MapCommand
 {
  public:
@@ -27,5 +30,7 @@ class SetLayerOpacityCmd final : public MapCommand
   float mOpacity;
   Maybe<float> mPrevious;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

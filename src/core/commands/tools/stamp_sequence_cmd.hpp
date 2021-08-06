@@ -10,6 +10,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class MapDocument;
 
 class StampSequenceCmd final : public ACommand
@@ -35,5 +38,7 @@ class StampSequenceCmd final : public ACommand
   TileCache mOldState;
   TileCache mNewState;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

@@ -8,6 +8,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class MapDocument;
 class Tileset;
 
@@ -30,5 +33,7 @@ class RemoveTilesetCmd final : public ACommand
   tileset_id mId;
   Shared<Tileset> mTileset;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

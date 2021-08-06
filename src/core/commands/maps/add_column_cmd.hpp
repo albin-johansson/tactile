@@ -5,6 +5,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class MapDocument;
 
 class AddColumnCmd final : public MergeableMapCommand
@@ -21,5 +24,7 @@ class AddColumnCmd final : public MergeableMapCommand
     return CommandId::AddColumn;
   }
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

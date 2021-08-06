@@ -4,6 +4,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class ACommand
 {
  public:
@@ -86,5 +89,7 @@ class ACommand
  private:
   std::string mText;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

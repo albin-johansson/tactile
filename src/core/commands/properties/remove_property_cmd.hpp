@@ -10,6 +10,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class IPropertyContext;
 
 class RemovePropertyCmd final : public APropertyCommand
@@ -30,5 +33,7 @@ class RemovePropertyCmd final : public APropertyCommand
   std::string mName;
   Maybe<Property> mProperty;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

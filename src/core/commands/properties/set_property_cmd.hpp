@@ -9,6 +9,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class IPropertyContext;
 
 class SetPropertyCmd final : public APropertyCommand
@@ -34,5 +37,7 @@ class SetPropertyCmd final : public APropertyCommand
   Property mValue;
   Maybe<Property> mPrevious;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

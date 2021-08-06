@@ -6,6 +6,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class IDocument;
 class IPropertyContext;
 
@@ -28,5 +31,7 @@ class SetPropertyContextCmd final : public ACommand
   IPropertyContext* mContext{};
   IPropertyContext* mPrevious{};
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

@@ -7,6 +7,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class SelectLayerCmd final : public MapCommand
 {
  public:
@@ -27,5 +30,7 @@ class SelectLayerCmd final : public MapCommand
   layer_id mId;
   Maybe<layer_id> mPrevious;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

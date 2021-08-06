@@ -11,6 +11,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class MapDocument;
 
 class BucketCmd final : public ACommand
@@ -34,5 +37,7 @@ class BucketCmd final : public ACommand
   Maybe<tile_id> mTarget;
   std::vector<MapPosition> mPositions;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile
