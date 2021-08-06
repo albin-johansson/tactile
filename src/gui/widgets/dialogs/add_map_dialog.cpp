@@ -4,6 +4,7 @@
 
 #include "events/maps/add_map_event.hpp"
 #include "gui/widgets/common/button_ex.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {
@@ -16,8 +17,8 @@ constinit int tile_height = 32;
 
 void ResetState()
 {
-  tile_width = 32;   // TODO use preference
-  tile_height = 32;  // TODO use preference
+  tile_width = Prefs::GetPreferredTileWidth();
+  tile_height = Prefs::GetPreferredTileHeight();
 }
 
 [[nodiscard]] auto is_input_valid() noexcept -> bool

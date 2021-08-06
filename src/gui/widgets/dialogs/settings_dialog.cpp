@@ -41,10 +41,40 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
       settings.restore_last_session = restore;
     }
 
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Preferred tile width: ");
+    ImGui::SameLine();
+
+    if (auto width = settings.preferred_tile_width;
+        ImGui::DragInt("##PreferredTileWidth", &width, 1.0f, 1, 10'000))
+    {
+      settings.preferred_tile_width = width;
+    }
+
+    if (ImGui::IsItemHovered())
+    {
+      ImGui::SetTooltip("The suggested tile width when creating maps.");
+    }
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Preferred tile height:");
+    ImGui::SameLine();
+
+    if (auto height = settings.preferred_tile_height;
+        ImGui::DragInt("##PreferredTileHeight", &height, 1.0f, 1, 10'000))
+    {
+      settings.preferred_tile_height = height;
+    }
+
+    if (ImGui::IsItemHovered())
+    {
+      ImGui::SetTooltip("The suggested tile height when creating maps.");
+    }
+
     // TODO "RMB with stamp tool works as eraser"
 
     ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Command capacity:");
+    ImGui::TextUnformatted("Command capacity:     ");
     ImGui::SameLine();
 
     if (auto capacity = static_cast<int>(settings.command_capacity);

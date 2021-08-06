@@ -12,6 +12,8 @@ struct Preferences final
   std::string preferred_format;
   std::string theme;
   usize command_capacity;
+  int preferred_tile_width;
+  int preferred_tile_height;
   bool embed_tilesets;
   bool human_readable_output;
   bool show_grid;
@@ -55,6 +57,8 @@ void SetShowGrid(bool show) noexcept;
 void ResetBehaviorPreferences(Preferences& prefs);
 
 [[nodiscard]] auto GetCommandCapacity() noexcept -> usize;
+[[nodiscard]] auto GetPreferredTileWidth() noexcept -> int;
+[[nodiscard]] auto GetPreferredTileHeight() noexcept -> int;
 [[nodiscard]] auto GetRestoreLastSession() noexcept -> bool;
 
 /// \} End of behavior

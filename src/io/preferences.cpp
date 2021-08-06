@@ -16,6 +16,8 @@ constexpr czstring file_name = "settings.ini";
 constexpr czstring def_preferred_format = "JSON";
 constexpr czstring def_theme = "Ash";
 constexpr usize def_command_capacity = 100;
+constexpr int def_preferred_tile_width = 32;
+constexpr int def_preferred_tile_height = 32;
 constexpr bool def_show_grid = true;
 constexpr bool def_embed_tilesets = false;
 constexpr bool def_human_readable_output = true;
@@ -29,6 +31,8 @@ constexpr bool def_restore_last_session = true;
 inline Preferences settings = {.preferred_format = def_preferred_format,
                                .theme = def_theme,
                                .command_capacity = def_command_capacity,
+                               .preferred_tile_width = def_preferred_tile_width,
+                               .preferred_tile_height = def_preferred_tile_height,
                                .embed_tilesets = def_embed_tilesets,
                                .human_readable_output = def_human_readable_output,
                                .show_grid = def_show_grid,
@@ -59,6 +63,8 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
 
   ini["Behavior"]["CommandCapacity"] = preferences.command_capacity;
   ini["Behavior"]["RestoreLastSession"] = preferences.restore_last_session;
+  ini["Behavior"]["PreferredTileWidth"] = preferences.preferred_tile_width;
+  ini["Behavior"]["PreferredTileHeight"] = preferences.preferred_tile_height;
 
   ini["Export"]["PreferredFormat"] = preferences.preferred_format;
   ini["Export"]["EmbedTilesets"] = preferences.embed_tilesets;
@@ -84,6 +90,8 @@ void ValidateExistingFile()
 
   AddIfMissing(ini, "Behavior", "CommandCapacity", def_command_capacity);
   AddIfMissing(ini, "Behavior", "RestoreLastSession", def_restore_last_session);
+  AddIfMissing(ini, "Behavior", "PreferredTileWidth", def_preferred_tile_width);
+  AddIfMissing(ini, "Behavior", "PreferredTileHeight", def_preferred_tile_height);
 
   AddIfMissing(ini, "Export", "PreferredFormat", def_preferred_format);
   AddIfMissing(ini, "Export", "EmbedTilesets", def_embed_tilesets);
@@ -114,6 +122,8 @@ void LoadPreferences()
     const auto& behavior = ini.at("Behavior");
     settings.command_capacity = behavior.at("CommandCapacity").get<usize>();
     settings.restore_last_session = behavior.at("RestoreLastSession").get<bool>();
+    settings.preferred_tile_width = behavior.at("PreferredTileWidth").get<int>();
+    settings.preferred_tile_height = behavior.at("PreferredTileHeight").get<int>();
 
     const auto& exp = ini.at("Export");
     settings.preferred_format = exp.at("PreferredFormat").get<std::string>();
@@ -138,6 +148,8 @@ void LoadPreferences()
   CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
   CENTURION_LOG_INFO("  Behavior::CommandCapacity: %u", settings.command_capacity);
   CENTURION_LOG_INFO("  Behavior::RestoreLastSession: %i", settings.restore_last_session);
+  CENTURION_LOG_INFO("  Behavior::PreferredTileWidth: %i", settings.preferred_tile_width);
+  CENTURION_LOG_INFO("  Behavior::PreferredTileHeight: %i", settings.preferred_tile_height);
   CENTURION_LOG_INFO("  Export::PreferredFormat: %s", settings.preferred_format.c_str());
   CENTURION_LOG_INFO("  Export::EmbedTilesets: %i", settings.embed_tilesets);
   CENTURION_LOG_INFO("  Export::HumanReadableOutput: %i", settings.human_readable_output);
@@ -184,6 +196,8 @@ void ResetBehaviorPreferences(Preferences& prefs)
 {
   prefs.command_capacity = def_command_capacity;
   prefs.restore_last_session = def_restore_last_session;
+  prefs.preferred_tile_width = def_preferred_tile_width;
+  prefs.preferred_tile_height = def_preferred_tile_height;
 }
 
 void ResetExportPreferences(Preferences& prefs)
@@ -261,6 +275,16 @@ auto GetRestoreLayout() noexcept -> bool
 auto GetCommandCapacity() noexcept -> usize
 {
   return settings.command_capacity;
+}
+
+auto GetPreferredTileWidth() noexcept -> int
+{
+  return settings.preferred_tile_width;
+}
+
+auto GetPreferredTileHeight() noexcept -> int
+{
+  return settings.preferred_tile_height;
 }
 
 auto GetRestoreLastSession() noexcept -> bool
