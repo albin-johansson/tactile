@@ -261,6 +261,10 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/common/centered_button.hpp
     gui/widgets/common/centered_text.cpp
     gui/widgets/common/centered_text.hpp
+    gui/widgets/common/checkbox.cpp
+    gui/widgets/common/checkbox.hpp
+    gui/widgets/common/combo.cpp
+    gui/widgets/common/combo.hpp
     gui/widgets/common/file_dialog.cpp
     gui/widgets/common/file_dialog.hpp
     gui/widgets/common/help_marker.cpp

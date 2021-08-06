@@ -99,12 +99,14 @@ void UpdateFileMenuWindows(entt::dispatcher& dispatcher)
     show_add_map_dialog = false;
   }
 
-  UpdateAddMapDialog(dispatcher);
-
   if (show_settings_window)
   {
-    UpdateSettingsDialog(dispatcher, &show_settings_window);
+    OpenSettingsDialog();
+    show_settings_window = false;
   }
+
+  UpdateAddMapDialog(dispatcher);
+  UpdateSettingsDialog(dispatcher);
 
   if (show_open_map_dialog)
   {

@@ -7,11 +7,32 @@
 
 namespace Tactile {
 
-// Loads existing persistent preferences or loads the default preferences
+struct Preferences final
+{
+  std::string preferred_format;
+  Theme theme;
+  usize command_capacity;
+  bool embed_tilesets;
+  bool human_readable_output;
+  bool show_grid;
+  bool show_layer_dock;
+  bool show_tileset_dock;
+  bool show_properties_dock;
+  bool window_border;
+  bool restore_layout;
+};
+
+/// Loads existing persistent preferences or loads the default preferences.
 void LoadPreferences();
 
-// Saves the current preferences in the persistent file directory
+/// Saves the current preferences in the persistent file directory.
 void SavePreferences();
+
+/// Overrides the current preferences.
+void SetPreferences(Preferences prefs);
+
+/// Returns a snapshot of the current preferences.
+[[nodiscard]] auto GetPreferences() -> Preferences;
 
 namespace Prefs {
 

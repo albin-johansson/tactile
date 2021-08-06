@@ -4,6 +4,8 @@
 
 namespace Tactile {
 
-void UpdateSettingsDialog(entt::dispatcher& dispatcher, bool* open);
+void UpdateSettingsDialog(entt::dispatcher& dispatcher);
+
+void OpenSettingsDialog();
 
 }  // namespace Tactile

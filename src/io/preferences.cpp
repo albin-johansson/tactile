@@ -27,22 +27,19 @@ constexpr usize def_command_capacity = 100;
 constexpr auto def_preferred_format = "JSON";
 constexpr Theme def_theme = Theme::Ash;
 
-struct Preferences final
-{
-  std::string preferred_format = def_preferred_format;
-  Theme theme = def_theme;
-  usize command_capacity = def_command_capacity;
-  bool embed_tilesets = def_embed_tilesets;
-  bool human_readable_output = def_human_readable_output;
-  bool show_grid = def_show_grid;
-  bool show_layer_dock = def_show_layer_dock;
-  bool show_tileset_dock = def_show_tileset_dock;
-  bool show_properties_dock = def_show_properties_dock;
-  bool window_border = def_window_border;
-  bool restore_layout = def_restore_layout;
+inline Preferences settings = {
+    .preferred_format = def_preferred_format,
+    .theme = def_theme,
+    .command_capacity = def_command_capacity,
+    .embed_tilesets = def_embed_tilesets,
+    .human_readable_output = def_human_readable_output,
+    .show_grid = def_show_grid,
+    .show_layer_dock = def_show_layer_dock,
+    .show_tileset_dock = def_show_tileset_dock,
+    .show_properties_dock = def_show_properties_dock,
+    .window_border = def_window_border,
+    .restore_layout = def_restore_layout,
 };
-
-inline Preferences settings;
 
 template <typename T>
 void AddIfMissing(rune::ini_file& ini, czstring section, czstring element, T value)
@@ -152,6 +149,16 @@ void LoadPreferences()
 void SavePreferences()
 {
   WritePreferencesToFile(settings);
+}
+
+void SetPreferences(Preferences prefs)
+{
+  settings = std::move(prefs);
+}
+
+auto GetPreferences() -> Preferences
+{
+  return settings;
 }
 
 namespace Prefs {

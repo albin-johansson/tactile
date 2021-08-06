@@ -4,36 +4,38 @@
 
 #include "events/change_command_capacity_event.hpp"
 #include "gui/themes.hpp"
+#include "gui/widgets/common/checkbox.hpp"
+#include "gui/widgets/common/combo.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {
 
-inline bool restore_last_session = false;
+constexpr auto flags =
+    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+
+inline Preferences snapshot;  // The original settings when the dialog was opened
+inline Preferences settings;  // The value of the settings in the GUI
 
 void ShowGeneralTab(entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginTabItem("General"))
   {
     ImGui::Spacing();
-
-    ImGui::TextUnformatted("Startup");
-    ImGui::Checkbox("Restore last session", &restore_last_session);
-
-    ImGui::Separator();
+    ImGui::Button("Restore Defaults");
     ImGui::Spacing();
 
-    ImGui::TextUnformatted("Behavior");
+    // TODO "Restore last session on startup"
+    // TODO "RMB with stamp tool works as eraser"
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Command capacity:");
     ImGui::SameLine();
 
-    if (auto capacity = static_cast<int>(Prefs::GetCommandCapacity());
+    if (auto capacity = static_cast<int>(settings.command_capacity);
         ImGui::DragInt("##CommandCapacityInput", &capacity, 1.0f, 10, 1'000))
     {
-      Prefs::SetCommandCapacity(static_cast<usize>(capacity));
-      dispatcher.enqueue<ChangeCommandCapacityEvent>(Prefs::GetCommandCapacity());
+      settings.command_capacity = static_cast<usize>(capacity);
     }
 
     if (ImGui::IsItemHovered())
@@ -41,8 +43,6 @@ void ShowGeneralTab(entt::dispatcher& dispatcher)
       ImGui::SetTooltip(
           "The maximum amount of commands that will be stored on the undo stack.");
     }
-
-    // ImGui::Checkbox("RMB with stamp tool works as eraser", &rmb_stamp_as_eraser);
 
     ImGui::EndTabItem();
   }
@@ -53,35 +53,29 @@ void ShowThemeBar()
   if (ImGui::BeginTabItem("Theme"))
   {
     ImGui::Spacing();
+    ImGui::Button("Restore Defaults");
+    ImGui::Spacing();
 
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Theme:");
-
-    ImGui::SameLine();
-    if (auto themeIndex = GetThemeIndex(Prefs::GetTheme());
-        ImGui::Combo("##ThemeCombo", &themeIndex, theme_options))
+    if (auto index = GetThemeIndex(settings.theme);
+        Combo("Theme:", theme_options, &index))
     {
-      const auto theme = GetThemeFromIndex(themeIndex);
-      Prefs::SetTheme(theme);
-      ApplyTheme(ImGui::GetStyle(), theme);
+      settings.theme = GetThemeFromIndex(index);
+      ApplyTheme(ImGui::GetStyle(), settings.theme);
     }
 
-    if (bool enabled = Prefs::GetWindowBorder();
+    if (auto enabled = settings.window_border;
         ImGui::Checkbox("Window border", &enabled))
     {
-      Prefs::SetWindowBorder(enabled);
+      settings.window_border = enabled;
       ImGui::GetStyle().WindowBorderSize = enabled ? 1.0f : 0.0f;
     }
 
-    if (bool restoreLayout = Prefs::GetRestoreLayout();
-        ImGui::Checkbox("Restore layout", &restoreLayout))
+    if (auto restoreLayout = settings.restore_layout;
+        Checkbox("Restore layout",
+                 &restoreLayout,
+                 "Restore the previous layout of widgets at startup."))
     {
-      Prefs::SetRestoreLayout(restoreLayout);
-    }
-
-    if (ImGui::IsItemHovered())
-    {
-      ImGui::SetTooltip("Restore the previous layout of widgets at startup.");
+      settings.restore_layout = restoreLayout;
     }
 
     ImGui::EndTabItem();
@@ -93,56 +87,58 @@ void ShowExportTab()
   if (ImGui::BeginTabItem("Export"))
   {
     ImGui::Spacing();
+    ImGui::Button("Restore Defaults");
+    ImGui::Spacing();
 
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Preferred format:");
-
-    int formatIndex = (Prefs::GetPreferredFormat() == "JSON") ? 0 : 1;
-    ImGui::SameLine();
-    if (ImGui::Combo("##PreferredFormatCombo", &formatIndex, "JSON\0TMX\0\0"))
+    if (auto index = (settings.preferred_format == "JSON") ? 0 : 1;
+        Combo("Preferred format:",
+              "JSON\0TMX\0\0",
+              &index,
+              "The default save file format."))
     {
-      Prefs::SetPreferredFormat((formatIndex == 0) ? "JSON" : "TMX");
+      settings.preferred_format = (index == 0) ? "JSON" : "TMX";
     }
 
-    if (ImGui::IsItemActive() || ImGui::IsItemHovered())
+    if (auto embedTilesets = settings.embed_tilesets;
+        Checkbox("Embed tilesets",
+                 &embedTilesets,
+                 "Embed tileset data in map files."))
     {
-      ImGui::SetTooltip("The default save file format.");
+      settings.embed_tilesets = embedTilesets;
     }
 
-    bool embedTilesets = Prefs::GetEmbedTilesets();
-    if (ImGui::Checkbox("Embed tilesets", &embedTilesets))
+    if (auto humanReadableOutput = settings.human_readable_output;
+        Checkbox("Human-readable output",
+                 &humanReadableOutput,
+                 "Make save files easier for humans to edit, at the cost of space."))
     {
-      Prefs::SetEmbedTilesets(embedTilesets);
-    }
-    if (ImGui::IsItemActive() || ImGui::IsItemHovered())
-    {
-      ImGui::SetTooltip("Embed tileset data in map files.");
-    }
-
-    bool humanReadableOutput = Prefs::GetHumanReadableOutput();
-    if (ImGui::Checkbox("Human-readable output", &humanReadableOutput))
-    {
-      Prefs::SetHumanReadableOutput(humanReadableOutput);
-    }
-
-    if (ImGui::IsItemActive() || ImGui::IsItemHovered())
-    {
-      ImGui::SetTooltip(
-          "Human-readable saves are easier for humans to process, but take up "
-          "more space.");
+      settings.human_readable_output = humanReadableOutput;
     }
 
     ImGui::EndTabItem();
   }
 }
 
+void ApplySettings(entt::dispatcher& dispatcher)
+{
+  SetPreferences(settings);
+  if (settings.command_capacity != snapshot.command_capacity)
+  {
+    dispatcher.enqueue<ChangeCommandCapacityEvent>(Prefs::GetCommandCapacity());
+  }
+}
+
+void RestorePreviewSettings()
+{
+  ApplyTheme(ImGui::GetStyle(), Prefs::GetTheme());
+  ImGui::GetStyle().WindowBorderSize = Prefs::GetWindowBorder() ? 1.0f : 0.0f;
+}
+
 }  // namespace
 
-void UpdateSettingsDialog(entt::dispatcher& dispatcher, bool* open)
+void UpdateSettingsDialog(entt::dispatcher& dispatcher)
 {
-  ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2{500, 300});
-
-  if (ImGui::Begin("Settings", open, ImGuiWindowFlags_NoCollapse))
+  if (ImGui::BeginPopupModal("Settings", nullptr, flags))
   {
     if (ImGui::BeginTabBar("SettingsTabBar"))
     {
@@ -151,10 +147,41 @@ void UpdateSettingsDialog(entt::dispatcher& dispatcher, bool* open)
       ShowExportTab();
       ImGui::EndTabBar();
     }
-  }
 
-  ImGui::PopStyleVar();
-  ImGui::End();
+    ImGui::Spacing();
+    ImGui::Spacing();
+    ImGui::Separator();
+
+    if (ImGui::Button("OK"))
+    {
+      ApplySettings(dispatcher);
+      RestorePreviewSettings();
+      ImGui::CloseCurrentPopup();
+    }
+
+    ImGui::SameLine();
+    if (ImGui::Button("Cancel"))
+    {
+      RestorePreviewSettings();
+      ImGui::CloseCurrentPopup();
+    }
+
+    ImGui::SameLine();
+    if (ImGui::Button("Apply"))
+    {
+      ApplySettings(dispatcher);
+      RestorePreviewSettings();
+    }
+
+    ImGui::EndPopup();
+  }
+}
+
+void OpenSettingsDialog()
+{
+  snapshot = GetPreferences();
+  settings = snapshot;
+  ImGui::OpenPopup("Settings");
 }
 
 }  // namespace Tactile
