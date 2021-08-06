@@ -17,12 +17,22 @@ constexpr auto flags =
 inline Preferences snapshot;  // The original settings when the dialog was opened
 inline Preferences settings;  // The value of the settings in the GUI
 
-void ShowGeneralTab(entt::dispatcher& dispatcher)
+void UpdatePreviewSettings(const Preferences& prefs)
 {
-  if (ImGui::BeginTabItem("General"))
+  ApplyTheme(ImGui::GetStyle(), prefs.theme);
+  ImGui::GetStyle().WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
+}
+
+void ShowBehaviorTab(entt::dispatcher& dispatcher)
+{
+  if (ImGui::BeginTabItem("Behavior"))
   {
     ImGui::Spacing();
-    ImGui::Button("Restore Defaults");
+    if (ImGui::Button("Restore Defaults"))
+    {
+      Prefs::ResetBehaviorPreferences(settings);
+      UpdatePreviewSettings(settings);
+    }
     ImGui::Spacing();
 
     // TODO "Restore last session on startup"
@@ -48,12 +58,16 @@ void ShowGeneralTab(entt::dispatcher& dispatcher)
   }
 }
 
-void ShowThemeBar()
+void ShowAppearanceBar()
 {
-  if (ImGui::BeginTabItem("Theme"))
+  if (ImGui::BeginTabItem("Appearance"))
   {
     ImGui::Spacing();
-    ImGui::Button("Restore Defaults");
+    if (ImGui::Button("Restore Defaults"))
+    {
+      Prefs::ResetAppearancePreferences(settings);
+      UpdatePreviewSettings(settings);
+    }
     ImGui::Spacing();
 
     if (auto index = GetThemeIndex(settings.theme);
@@ -87,7 +101,11 @@ void ShowExportTab()
   if (ImGui::BeginTabItem("Export"))
   {
     ImGui::Spacing();
-    ImGui::Button("Restore Defaults");
+    if (ImGui::Button("Restore Defaults"))
+    {
+      Prefs::ResetExportPreferences(settings);
+      UpdatePreviewSettings(settings);
+    }
     ImGui::Spacing();
 
     if (auto index = (settings.preferred_format == "JSON") ? 0 : 1;
@@ -128,12 +146,6 @@ void ApplySettings(entt::dispatcher& dispatcher)
   }
 }
 
-void RestorePreviewSettings()
-{
-  ApplyTheme(ImGui::GetStyle(), Prefs::GetTheme());
-  ImGui::GetStyle().WindowBorderSize = Prefs::GetWindowBorder() ? 1.0f : 0.0f;
-}
-
 }  // namespace
 
 void UpdateSettingsDialog(entt::dispatcher& dispatcher)
@@ -142,8 +154,8 @@ void UpdateSettingsDialog(entt::dispatcher& dispatcher)
   {
     if (ImGui::BeginTabBar("SettingsTabBar"))
     {
-      ShowGeneralTab(dispatcher);
-      ShowThemeBar();
+      ShowBehaviorTab(dispatcher);
+      ShowAppearanceBar();
       ShowExportTab();
       ImGui::EndTabBar();
     }
@@ -155,14 +167,14 @@ void UpdateSettingsDialog(entt::dispatcher& dispatcher)
     if (ImGui::Button("OK"))
     {
       ApplySettings(dispatcher);
-      RestorePreviewSettings();
+      UpdatePreviewSettings(GetPreferences());
       ImGui::CloseCurrentPopup();
     }
 
     ImGui::SameLine();
     if (ImGui::Button("Cancel"))
     {
-      RestorePreviewSettings();
+      UpdatePreviewSettings(GetPreferences());
       ImGui::CloseCurrentPopup();
     }
 
@@ -170,7 +182,7 @@ void UpdateSettingsDialog(entt::dispatcher& dispatcher)
     if (ImGui::Button("Apply"))
     {
       ApplySettings(dispatcher);
-      RestorePreviewSettings();
+      UpdatePreviewSettings(GetPreferences());
     }
 
     ImGui::EndPopup();

@@ -156,16 +156,21 @@ void SetPreferences(Preferences prefs)
   settings = std::move(prefs);
 }
 
-auto GetPreferences() -> Preferences
+auto GetPreferences() -> const Preferences&
 {
   return settings;
 }
 
 namespace Prefs {
 
-void SetPreferredFormat(std::string format)
+void ResetAppearancePreferences(Preferences& prefs)
 {
-  settings.preferred_format = std::move(format);
+  prefs.theme = def_theme;
+  prefs.window_border = def_window_border;
+  prefs.show_grid = def_show_grid;
+
+  // Note, not technically an "appearance" setting but it is to the user
+  prefs.restore_layout = def_restore_layout;
 }
 
 void SetShowGrid(const bool show) noexcept
@@ -173,14 +178,16 @@ void SetShowGrid(const bool show) noexcept
   settings.show_grid = show;
 }
 
-void SetEmbedTilesets(const bool embed) noexcept
+void ResetBehaviorPreferences(Preferences& prefs)
 {
-  settings.embed_tilesets = embed;
+  prefs.command_capacity = def_command_capacity;
 }
 
-void SetHumanReadableOutput(const bool readable) noexcept
+void ResetExportPreferences(Preferences& prefs)
 {
-  settings.human_readable_output = readable;
+  prefs.preferred_format = def_preferred_format;
+  prefs.embed_tilesets = def_embed_tilesets;
+  prefs.human_readable_output = def_human_readable_output;
 }
 
 void SetShowLayerDock(const bool visible) noexcept
@@ -196,26 +203,6 @@ void SetShowTilesetDock(const bool visible) noexcept
 void SetShowPropertiesDock(const bool visible) noexcept
 {
   settings.show_properties_dock = visible;
-}
-
-void SetTheme(const Theme theme) noexcept
-{
-  settings.theme = theme;
-}
-
-void SetWindowBorder(const bool enabled) noexcept
-{
-  settings.window_border = enabled;
-}
-
-void SetRestoreLayout(const bool restore) noexcept
-{
-  settings.restore_layout = restore;
-}
-
-void SetCommandCapacity(const usize capacity) noexcept
-{
-  settings.command_capacity = capacity;
 }
 
 auto GetPreferredFormat() -> const std::string&
