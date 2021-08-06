@@ -12,7 +12,7 @@
 namespace Tactile {
 namespace {
 
-inline constexpr uint32 preview_opacity = 100;  // [0, 255]
+constexpr uint32 preview_opacity = 100;  // [0, 255]
 
 void RenderPreviewTile(ImTextureID texture,
                        const MapPosition& tilePos,

@@ -16,7 +16,7 @@
 namespace Tactile {
 namespace {
 
-inline constexpr auto rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
+constexpr auto rubber_band_color = IM_COL32(0, 0x44, 0xCC, 100);
 
 inline GridState state;
 

@@ -7,7 +7,7 @@
 namespace Tactile {
 namespace {
 
-inline constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
+constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
                                     ImGuiTableFlags_Resizable |
                                     ImGuiTableFlags_SizingStretchProp;
 

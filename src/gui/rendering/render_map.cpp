@@ -14,8 +14,8 @@
 namespace Tactile {
 namespace {
 
-inline constexpr auto out_border_color = IM_COL32(0xFF, 0xFF, 0xFF, 0xFF);
-inline constexpr auto in_border_color = IM_COL32(0xFF, 0xFF, 0xFF, 50);
+constexpr auto out_border_color = IM_COL32(0xFF, 0xFF, 0xFF, 0xFF);
+constexpr auto in_border_color = IM_COL32(0xFF, 0xFF, 0xFF, 50);
 
 void RenderOutline(const RenderInfo& info)
 {

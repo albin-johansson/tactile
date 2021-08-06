@@ -12,7 +12,7 @@
 namespace Tactile {
 namespace {
 
-inline constexpr usize max_digits = 100;
+constexpr usize max_digits = 100;
 
 }  // namespace
 

@@ -6,7 +6,7 @@ struct ImGuiStyle;
 
 namespace Tactile {
 
-inline constexpr auto theme_options = "Dear Dark\0Dear Light\0Ash\0\0";
+constexpr auto theme_options = "Dear Dark\0Dear Light\0Ash\0\0";
 
 enum class Theme
 {

@@ -7,8 +7,8 @@
 namespace Tactile {
 namespace {
 
-inline constexpr uint32 border_color = IM_COL32(255, 255, 255, 100);
-inline constexpr uint32 background_color = IM_COL32(60, 60, 60, 255);
+constexpr uint32 border_color = IM_COL32(255, 255, 255, 100);
+constexpr uint32 background_color = IM_COL32(60, 60, 60, 255);
 
 }  // namespace
 

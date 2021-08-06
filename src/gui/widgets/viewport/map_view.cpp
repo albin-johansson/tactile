@@ -22,7 +22,7 @@
 namespace Tactile {
 namespace {
 
-inline constexpr auto tile_highlight_color = IM_COL32(0, 255, 0, 200);
+constexpr auto tile_highlight_color = IM_COL32(0, 255, 0, 200);
 
 inline bool center_viewport = false;
 

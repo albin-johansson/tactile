@@ -14,7 +14,7 @@
 namespace Tactile {
 namespace {
 
-inline constexpr auto glsl_version = "#version 130";
+constexpr auto glsl_version = "#version 130";
 
 void LoadFonts()
 {
