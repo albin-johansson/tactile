@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include "events/change_command_capacity_event.hpp"
 #include "gui/themes.hpp"
 #include "io/preferences.hpp"
 
@@ -9,10 +10,8 @@ namespace Tactile {
 namespace {
 
 inline bool restore_last_session = false;
-inline bool rmb_stamp_as_eraser = false;
-inline bool generate_default_values = false;
 
-void ShowGeneralTab()
+void ShowGeneralTab(entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginTabItem("General"))
   {
@@ -25,7 +24,25 @@ void ShowGeneralTab()
     ImGui::Spacing();
 
     ImGui::TextUnformatted("Behavior");
-    ImGui::Checkbox("RMB with stamp tool works as eraser", &rmb_stamp_as_eraser);
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Command capacity:");
+    ImGui::SameLine();
+
+    if (auto capacity = static_cast<int>(Prefs::GetCommandCapacity());
+        ImGui::DragInt("##CommandCapacityInput", &capacity, 1.0f, 10, 1'000))
+    {
+      Prefs::SetCommandCapacity(static_cast<usize>(capacity));
+      dispatcher.enqueue<ChangeCommandCapacityEvent>(Prefs::GetCommandCapacity());
+    }
+
+    if (ImGui::IsItemHovered())
+    {
+      ImGui::SetTooltip(
+          "The maximum amount of commands that will be stored on the undo stack.");
+    }
+
+    // ImGui::Checkbox("RMB with stamp tool works as eraser", &rmb_stamp_as_eraser);
 
     ImGui::EndTabItem();
   }
@@ -121,7 +138,7 @@ void ShowExportTab()
 
 }  // namespace
 
-void UpdateSettingsDialog(bool* open)
+void UpdateSettingsDialog(entt::dispatcher& dispatcher, bool* open)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, ImVec2{500, 300});
 
@@ -129,7 +146,7 @@ void UpdateSettingsDialog(bool* open)
   {
     if (ImGui::BeginTabBar("SettingsTabBar"))
     {
-      ShowGeneralTab();
+      ShowGeneralTab(dispatcher);
       ShowThemeBar();
       ShowExportTab();
       ImGui::EndTabBar();

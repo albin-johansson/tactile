@@ -8,6 +8,14 @@ namespace Tactile {
 Model::Model() : mTools{this}
 {}
 
+void Model::OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event)
+{
+  for (auto& [id, document] : mDocuments)
+  {
+    document->SetCommandCapacity(event.capacity);
+  }
+}
+
 auto Model::AddMap(Unique<MapDocument> document) -> map_id
 {
   const auto id = mNextId;

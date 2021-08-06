@@ -103,7 +103,7 @@ void UpdateFileMenuWindows(entt::dispatcher& dispatcher)
 
   if (show_settings_window)
   {
-    UpdateSettingsDialog(&show_settings_window);
+    UpdateSettingsDialog(dispatcher, &show_settings_window);
   }
 
   if (show_open_map_dialog)

@@ -1,7 +1,9 @@
 #pragma once
 
+#include <entt.hpp>  // dispatcher
+
 namespace Tactile {
 
-void UpdateSettingsDialog(bool* open);
+void UpdateSettingsDialog(entt::dispatcher& dispatcher, bool* open);
 
 }  // namespace Tactile

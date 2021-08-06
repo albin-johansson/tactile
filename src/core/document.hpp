@@ -4,6 +4,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
+#include "aliases/ints.hpp"
 #include "properties/property_context.hpp"
 
 namespace Tactile {
@@ -41,6 +42,13 @@ class IDocument : public IPropertyContext
 
   /// \brief Clears the entire undo/redo history associated with the document.
   virtual void ResetHistory() = 0;
+
+  /**
+   * \brief Sets the maximum amount of commands stored in the command stack.
+   *
+   * \param capacity the maximum amount of commands.
+   */
+  virtual void SetCommandCapacity(usize capacity) = 0;
 
   /**
    * \brief Sets the file path associated with the document.

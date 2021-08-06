@@ -77,6 +77,11 @@ void MapDocument::ResetHistory()
   mDelegate->ResetHistory();
 }
 
+void MapDocument::SetCommandCapacity(const usize capacity)
+{
+  mDelegate->SetCommandCapacity(capacity);
+}
+
 void MapDocument::SetPath(std::filesystem::path path)
 {
   mDelegate->SetPath(std::move(path));

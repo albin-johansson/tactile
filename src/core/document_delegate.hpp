@@ -33,6 +33,8 @@ class DocumentDelegate final : public IDocument
 
   void ResetHistory() override;
 
+  void SetCommandCapacity(usize capacity) override;
+
   void SetPath(std::filesystem::path path) override;
 
   void SetPropertyContext(IPropertyContext* context) override;

@@ -6,6 +6,7 @@
 #include "aliases/ints.hpp"
 #include "aliases/unique.hpp"
 #include "core/model.hpp"
+#include "events/change_command_capacity_event.hpp"
 #include "events/layers/add_layer_event.hpp"
 #include "events/layers/duplicate_layer_event.hpp"
 #include "events/layers/move_layer_down_event.hpp"
@@ -161,6 +162,8 @@ class Application final
   void OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event);
 
   void OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event);
+
+  void OnChangeCommandCapacityEvent(const ChangeCommandCapacityEvent& event);
 
   void OnQuitEvent();
 };

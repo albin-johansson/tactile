@@ -38,6 +38,11 @@ void DocumentDelegate::ResetHistory()
   mCommandStack->Clear();
 }
 
+void DocumentDelegate::SetCommandCapacity(const usize capacity)
+{
+  mCommandStack->SetCapacity(capacity);
+}
+
 void DocumentDelegate::SetPath(std::filesystem::path path)
 {
   mPath = std::move(path);

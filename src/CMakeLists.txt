@@ -150,6 +150,7 @@ set(TACTILE_SOURCE_FILES
     core/tools/stamp_tool.cpp
     core/tools/stamp_tool.hpp
 
+    events/change_command_capacity_event.hpp
     events/quit_event.hpp
     events/redo_event.hpp
     events/save_as_event.hpp

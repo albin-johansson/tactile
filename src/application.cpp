@@ -497,6 +497,12 @@ void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& eve
   }
 }
 
+void Application::OnChangeCommandCapacityEvent(
+    const ChangeCommandCapacityEvent& event)
+{
+  mModel->OnCommandCapacityChanged(event);
+}
+
 void Application::OnQuitEvent()
 {
   mQuit = true;

@@ -10,6 +10,7 @@
 #include "events/tools/mouse_drag_event.hpp"
 #include "events/tools/mouse_pressed_event.hpp"
 #include "events/tools/mouse_released_event.hpp"
+#include "events/change_command_capacity_event.hpp"
 
 namespace Tactile {
 
@@ -23,6 +24,8 @@ class Model final
   using const_iterator = document_storage::const_iterator;
 
   Model();
+
+  void OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event);
 
   /// \name Map document API
   /// \{
