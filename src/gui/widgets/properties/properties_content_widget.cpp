@@ -5,10 +5,10 @@
 #include <string>  // string
 
 #include "aliases/maybe.hpp"
-#include "core/events/properties/remove_property_event.hpp"
-#include "core/events/properties/rename_property_event.hpp"
-#include "core/events/properties/set_property_value_event.hpp"
 #include "core/map_document.hpp"
+#include "events/properties/remove_property_event.hpp"
+#include "events/properties/rename_property_event.hpp"
+#include "events/properties/set_property_value_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/properties/bool_property_widget.hpp"
 #include "gui/widgets/properties/color_property_widget.hpp"

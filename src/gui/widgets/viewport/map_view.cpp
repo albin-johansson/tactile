@@ -5,11 +5,11 @@
 
 #include <cassert>  // assert
 
-#include "core/events/tools/mouse_drag_event.hpp"
-#include "core/events/tools/mouse_pressed_event.hpp"
-#include "core/events/tools/mouse_released_event.hpp"
-#include "core/events/viewport/offset_viewport_event.hpp"
 #include "core/model.hpp"
+#include "events/tools/mouse_drag_event.hpp"
+#include "events/tools/mouse_pressed_event.hpp"
+#include "events/tools/mouse_released_event.hpp"
+#include "events/viewport/offset_viewport_event.hpp"
 #include "gui/rendering/canvas.hpp"
 #include "gui/rendering/render_bounds.hpp"
 #include "gui/rendering/render_info.hpp"

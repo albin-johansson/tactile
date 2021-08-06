@@ -10,6 +10,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 /**
  * \class Object
  *
@@ -245,5 +248,7 @@ class Object final : public IPropertyContext
   PropertyDelegate mProperties;
   bool mVisible{true};
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

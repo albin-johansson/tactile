@@ -12,6 +12,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 struct TileRange final
 {
   tile_id first;
@@ -273,5 +276,7 @@ class TilesetManager final
 
   void ValidateNextTilesetId();
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

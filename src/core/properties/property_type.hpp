@@ -2,6 +2,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 /// \brief Provides values for all different possible property types.
 enum class PropertyType
 {
@@ -13,5 +16,7 @@ enum class PropertyType
   Color,     ///< A color property.
   Object     ///< An integer ID property, that refers to a map object.
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

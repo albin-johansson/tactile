@@ -2,15 +2,15 @@
 
 #include <imgui.h>
 
-#include "core/events/viewport/center_viewport_event.hpp"
-#include "core/events/viewport/decrease_viewport_zoom_event.hpp"
-#include "core/events/viewport/increase_viewport_zoom_event.hpp"
-#include "core/events/viewport/pan_down_event.hpp"
-#include "core/events/viewport/pan_left_event.hpp"
-#include "core/events/viewport/pan_right_event.hpp"
-#include "core/events/viewport/pan_up_event.hpp"
-#include "core/events/viewport/reset_viewport_zoom_event.hpp"
 #include "core/model.hpp"
+#include "events/viewport/center_viewport_event.hpp"
+#include "events/viewport/decrease_viewport_zoom_event.hpp"
+#include "events/viewport/increase_viewport_zoom_event.hpp"
+#include "events/viewport/pan_down_event.hpp"
+#include "events/viewport/pan_left_event.hpp"
+#include "events/viewport/pan_right_event.hpp"
+#include "events/viewport/pan_up_event.hpp"
+#include "events/viewport/reset_viewport_zoom_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/layout/dock_space.hpp"
 #include "io/preferences.hpp"

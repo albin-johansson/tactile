@@ -2,11 +2,11 @@
 
 #include <imgui.h>
 
-#include "core/events/maps/open_map_event.hpp"
-#include "core/events/quit_event.hpp"
-#include "core/events/save_as_request_event.hpp"
-#include "core/events/save_event.hpp"
 #include "core/model.hpp"
+#include "events/maps/open_map_event.hpp"
+#include "events/quit_event.hpp"
+#include "events/save_as_request_event.hpp"
+#include "events/save_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/file_dialog.hpp"
 #include "gui/widgets/dialogs/add_map_dialog.hpp"

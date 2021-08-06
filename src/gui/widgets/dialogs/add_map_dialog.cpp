@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "core/events/maps/add_map_event.hpp"
+#include "events/maps/add_map_event.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 
 namespace Tactile {

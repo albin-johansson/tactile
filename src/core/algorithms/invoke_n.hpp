@@ -6,6 +6,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 /**
  * \brief Invokes the supplied callable for the specified amount of times.
  *
@@ -22,5 +25,7 @@ constexpr void InvokeN(const usize n, T&& callable) noexcept(noexcept(callable()
     callable();
   }
 }
+
+/// \} End of group core
 
 }  // namespace Tactile

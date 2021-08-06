@@ -21,6 +21,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 /**
  * \class Map
  *
@@ -28,8 +31,6 @@ namespace Tactile {
  *
  * \see `TileLayer`
  * \see `ObjectLayer`
- *
- * \headerfile map.hpp
  */
 class Map final
 {
@@ -51,6 +52,9 @@ class Map final
    */
   Map(row_t nRows, col_t nCols);
 
+  /// \name Layer functions
+  /// \{
+
   /**
    * \brief Visits each layer in the map.
    *
@@ -68,21 +72,32 @@ class Map final
   }
 
   /**
-   * \brief Removes all occurrences of the specified ID in all layers.
+   * \brief Creates and returns an empty tile layer but doesn't add it to the
+   * map.
    *
-   * \param id the ID that will be replaced with `empty`.
+   * \note This function *does* increment the next layer ID property.
+   *
+   * \return the created layer.
    */
-  void RemoveOccurrences(tile_id id);
+  [[nodiscard]] auto MakeTileLayer() -> Shared<TileLayer>;
 
   /**
-   * \brief Removes all occurrences of a range of tiles, in all tile layers.
+   * \brief Creates and returns an empty object layer but doesn't add it to the map.
    *
-   * \details This function removes tiles in the range [first, last].
+   * \note This function *does* increment the next layer ID property.
    *
-   * \param first the first tile in the range that will be removed.
-   * \param last the last tile in the range that will be removed.
+   * \return the created layer.
    */
-  void RemoveOccurrences(tile_id first, tile_id last);
+  [[nodiscard]] auto MakeObjectLayer() -> Shared<ObjectLayer>;
+
+  /**
+   * \brief Creates and returns an empty group layer but doesn't add it to the map.
+   *
+   * \note This function *does* increment the next layer ID property.
+   *
+   * \return the created layer.
+   */
+  [[nodiscard]] auto MakeGroupLayer() -> Shared<GroupLayer>;
 
   /**
    * \brief Adds an empty tile layer to the map.
@@ -152,32 +167,28 @@ class Map final
   void SelectLayer(layer_id id);
 
   /**
-   * \brief Adds a row to the map.
+   * \brief Moves the specified layer back one step in the render order.
    *
-   * \param id the tile ID that the new tiles will have.
+   * \details This function will make the specified layer be rendered *later*.
+   *
+   * \note This function has no effect if the specified layer ID isn't
+   * associated with a layer.
+   *
+   * \param id the ID associated with the layer that will be moved.
    */
-  void AddRow(tile_id id);
+  void MoveLayerDown(layer_id id);
 
   /**
-   * \brief Adds a column to the map.
+   * \brief Moves the specified layer forwards one step in the render order.
    *
-   * \param id the tile ID that the new tiles will have.
-   */
-  void AddColumn(tile_id id);
-
-  /**
-   * \brief Removes a row from the map.
+   * \details This function will make the specified layer be rendered *earlier*.
    *
-   * \note This function has no effect if the tile map only contains one row.
-   */
-  void RemoveRow();
-
-  /**
-   * \brief Removes a column from the map.
+   * \note This function has no effect if the specified layer ID isn't
+   * associated with a layer.
    *
-   * \note This function has no effect if the tile map only contains one column.
+   * \param id the ID associated with the layer that will be moved.
    */
-  void RemoveColumn();
+  void MoveLayerUp(layer_id id);
 
   /**
    * \brief Sets the next available layer ID.
@@ -191,34 +202,6 @@ class Map final
    * \param id the ID that will be used by the next layer.
    */
   void SetNextLayerId(layer_id id) noexcept;
-
-  /**
-   * \brief Sets the next available object ID.
-   *
-   * \pre There mustn't be an object associated with `id`.
-   *
-   * \details This function is meant to be used when parsing maps from save
-   * files.
-   *
-   * \param id the ID that will be used by the next object.
-   */
-  void SetNextObjectId(object_id id) noexcept;
-
-  /**
-   * \brief Sets the total number of rows in the map.
-   *
-   * \param nRows the new number of rows in the map. Clamped to be at
-   * least 1.
-   */
-  void SetRowCount(row_t nRows);
-
-  /**
-   * \brief Sets the total number of columns in the map.
-   *
-   * \param nCols the new number of columns in the map. Clamped to be at
-   * least 1.
-   */
-  void SetColumnCount(col_t nCols);
 
   /**
    * \brief Sets the visibility of a tile layer.
@@ -254,76 +237,6 @@ class Map final
   void SetName(layer_id id, std::string name);
 
   /**
-   * \brief Sets the tile width of tiles in the map.
-   *
-   * \pre `tileWidth` must be greater than zero.
-   *
-   * \param tileWidth the new tile width associated with the map.
-   */
-  void SetTileWidth(int tileWidth) noexcept;
-
-  /**
-   * \brief Sets the tile height of tiles in the map.
-   *
-   * \pre `tileHeight` must be greater than zero.
-   *
-   * \param tileHeight the new tile height associated with the map.
-   */
-  void SetTileHeight(int tileHeight) noexcept;
-
-  /**
-   * \brief Moves the specified layer back one step in the render order.
-   *
-   * \details This function will make the specified layer be rendered *later*.
-   *
-   * \note This function has no effect if the specified layer ID isn't
-   * associated with a layer.
-   *
-   * \param id the ID associated with the layer that will be moved.
-   */
-  void MoveLayerDown(layer_id id);
-
-  /**
-   * \brief Moves the specified layer forwards one step in the render order.
-   *
-   * \details This function will make the specified layer be rendered *earlier*.
-   *
-   * \note This function has no effect if the specified layer ID isn't
-   * associated with a layer.
-   *
-   * \param id the ID associated with the layer that will be moved.
-   */
-  void MoveLayerUp(layer_id id);
-
-  /**
-   * \brief Creates and returns an empty tile layer but doesn't add it to the
-   * map.
-   *
-   * \note This function *does* increment the next layer ID property.
-   *
-   * \return the created layer.
-   */
-  [[nodiscard]] auto MakeTileLayer() -> Shared<TileLayer>;
-
-  /**
-   * \brief Creates and returns an empty object layer but doesn't add it to the map.
-   *
-   * \note This function *does* increment the next layer ID property.
-   *
-   * \return the created layer.
-   */
-  [[nodiscard]] auto MakeObjectLayer() -> Shared<ObjectLayer>;
-
-  /**
-   * \brief Creates and returns an empty group layer but doesn't add it to the map.
-   *
-   * \note This function *does* increment the next layer ID property.
-   *
-   * \return the created layer.
-   */
-  [[nodiscard]] auto MakeGroupLayer() -> Shared<GroupLayer>;
-
-  /**
    * \brief Returns the index associated with the specified layer.
    *
    * \param id the ID associated with the layer to obtain the index of.
@@ -332,6 +245,10 @@ class Map final
    * found.
    */
   [[nodiscard]] auto IndexOf(layer_id id) const -> Maybe<usize>;
+
+  [[nodiscard]] auto CanMoveLayerDown(layer_id id) const -> bool;
+
+  [[nodiscard]] auto CanMoveLayerUp(layer_id id) const -> bool;
 
   /**
    * \brief Returns the parent group layer ID for a layer, if there is one.
@@ -403,6 +320,155 @@ class Map final
   [[nodiscard]] auto GetLayerCount() const -> int;
 
   /**
+   * \brief Returns the ID of the currently active layer.
+   *
+   * \return the ID of the active layer; `nothing` if there is no active
+   * layer.
+   */
+  [[nodiscard]] auto GetActiveLayerId() const noexcept -> Maybe<layer_id>
+  {
+    return mActiveLayer;
+  }
+
+  /**
+   * \brief Returns the ID that will be used by the next layer.
+   *
+   * \return the ID of the next layer.
+   */
+  [[nodiscard]] auto GetNextLayerId() const noexcept -> layer_id
+  {
+    return mNextLayerId;
+  }
+
+  /// \} End of layer functions
+
+  /// \name Tile layer functions
+  /// \{
+
+  /**
+   * \brief Removes all occurrences of the specified ID in all layers.
+   *
+   * \param id the ID that will be replaced with `empty`.
+   */
+  void RemoveOccurrences(tile_id id);
+
+  /**
+   * \brief Removes all occurrences of a range of tiles, in all tile layers.
+   *
+   * \details This function removes tiles in the range [first, last].
+   *
+   * \param first the first tile in the range that will be removed.
+   * \param last the last tile in the range that will be removed.
+   */
+  void RemoveOccurrences(tile_id first, tile_id last);
+
+  /**
+   * \brief Adds a row to the map.
+   *
+   * \param id the tile ID that the new tiles will have.
+   */
+  void AddRow(tile_id id);
+
+  /**
+   * \brief Adds a column to the map.
+   *
+   * \param id the tile ID that the new tiles will have.
+   */
+  void AddColumn(tile_id id);
+
+  /**
+   * \brief Removes a row from the map.
+   *
+   * \note This function has no effect if the tile map only contains one row.
+   */
+  void RemoveRow();
+
+  /**
+   * \brief Removes a column from the map.
+   *
+   * \note This function has no effect if the tile map only contains one column.
+   */
+  void RemoveColumn();
+
+  /**
+   * \brief Sets the total number of rows in the map.
+   *
+   * \param nRows the new number of rows in the map. Clamped to be at
+   * least 1.
+   */
+  void SetRowCount(row_t nRows);
+
+  /**
+   * \brief Sets the total number of columns in the map.
+   *
+   * \param nCols the new number of columns in the map. Clamped to be at
+   * least 1.
+   */
+  void SetColumnCount(col_t nCols);
+
+  /**
+   * \brief Indicates whether or not the supplied position is within the bounds
+   * of the map.
+   *
+   * \param pos the position that will be checked.
+   *
+   * \return `true` if the supplied positions is in bounds; `false` otherwise.
+   */
+  [[nodiscard]] auto InBounds(const MapPosition& pos) const -> bool;
+
+  /**
+   * \brief Returns the total number of rows in the map.
+   *
+   * \return the amount of rows in the map.
+   */
+  [[nodiscard]] auto GetRowCount() const -> row_t
+  {
+    return mRows;
+  }
+
+  /**
+   * \brief Returns the total number of columns in the map.
+   *
+   * \return the amount of columns in the map.
+   */
+  [[nodiscard]] auto GetColumnCount() const -> col_t
+  {
+    return mCols;
+  }
+
+  /// \} End of tile layer functions
+
+  /**
+   * \brief Sets the next available object ID.
+   *
+   * \pre There mustn't be an object associated with `id`.
+   *
+   * \details This function is meant to be used when parsing maps from save
+   * files.
+   *
+   * \param id the ID that will be used by the next object.
+   */
+  void SetNextObjectId(object_id id) noexcept;
+
+  /**
+   * \brief Sets the tile width of tiles in the map.
+   *
+   * \pre `tileWidth` must be greater than zero.
+   *
+   * \param tileWidth the new tile width associated with the map.
+   */
+  void SetTileWidth(int tileWidth) noexcept;
+
+  /**
+   * \brief Sets the tile height of tiles in the map.
+   *
+   * \pre `tileHeight` must be greater than zero.
+   *
+   * \param tileHeight the new tile height associated with the map.
+   */
+  void SetTileHeight(int tileHeight) noexcept;
+
+  /**
    * \brief Indicates whether or not the map contains a layer with the specified ID.
    *
    * \details This function will also search for the supplied layer in all group
@@ -446,61 +512,6 @@ class Map final
 
   [[nodiscard]] auto IsGroupLayer(layer_id id) const -> bool;
 
-  [[nodiscard]] auto CanMoveLayerDown(layer_id id) const -> bool;
-
-  [[nodiscard]] auto CanMoveLayerUp(layer_id id) const -> bool;
-
-  /**
-   * \brief Indicates whether or not the supplied position is within the bounds
-   * of the map.
-   *
-   * \param pos the position that will be checked.
-   *
-   * \return `true` if the supplied positions is in bounds; `false` otherwise.
-   */
-  [[nodiscard]] auto InBounds(const MapPosition& pos) const -> bool;
-
-  /**
-   * \brief Returns the total number of rows in the map.
-   *
-   * \return the amount of rows in the map.
-   */
-  [[nodiscard]] auto GetRowCount() const -> row_t
-  {
-    return mRows;
-  }
-
-  /**
-   * \brief Returns the total number of columns in the map.
-   *
-   * \return the amount of columns in the map.
-   */
-  [[nodiscard]] auto GetColumnCount() const -> col_t
-  {
-    return mCols;
-  }
-
-  /**
-   * \brief Returns the ID of the currently active layer.
-   *
-   * \return the ID of the active layer; `nothing` if there is no active
-   * layer.
-   */
-  [[nodiscard]] auto GetActiveLayerId() const noexcept -> Maybe<layer_id>
-  {
-    return mActiveLayer;
-  }
-
-  /**
-   * \brief Returns the ID that will be used by the next layer.
-   *
-   * \return the ID of the next layer.
-   */
-  [[nodiscard]] auto GetNextLayerId() const noexcept -> layer_id
-  {
-    return mNextLayerId;
-  }
-
   /**
    * \brief Returns the ID that will be used by the next object.
    *
@@ -535,6 +546,9 @@ class Map final
     return mTileHeight;
   }
 
+  /// \name Iteration
+  /// \{
+
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
     return mLayers.begin();
@@ -545,23 +559,31 @@ class Map final
     return mLayers.end();
   }
 
- private:
-  layer_storage mLayers;
-  Maybe<layer_id> mActiveLayer;
-  row_t mRows;
-  col_t mCols;
-  layer_id mNextLayerId{1};
-  object_id mNextObjectId{1};
-  int mTileWidth{32};
-  int mTileHeight{32};
+  /// \} End of iteration
 
+ private:
+  layer_storage mLayers;         ///< The layers that constitute the map.
+  Maybe<layer_id> mActiveLayer;  ///< ID of currently active layer.
+  row_t mRows;                   ///< Total amount of rows.
+  col_t mCols;                   ///< Total amount of columns.
+  layer_id mNextLayerId{1};      ///< The next available layer identifier.
+  object_id mNextObjectId{1};    ///< The next available object identifier.
+  int mTileWidth{32};            ///< Logical width of all tiles.
+  int mTileHeight{32};           ///< Logical height of all tiles.
+
+  /// Attempts to find the specified layer, returns null if no layer was found
   [[nodiscard]] auto FindLayer(layer_id id) -> ILayer*;
 
+  /// \copydoc FindLayer()
   [[nodiscard]] auto FindLayer(layer_id id) const -> const ILayer*;
 
+  // Returns the container that the specified layer is located in.
   [[nodiscard]] auto GetStorage(layer_id id) -> layer_map&;
 
+  /// \copydoc GetStorage()
   [[nodiscard]] auto GetStorage(layer_id id) const -> const layer_map&;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

@@ -1,6 +1,6 @@
 #include "add_column_shortcut.hpp"
 
-#include "core/events/maps/add_column_event.hpp"
+#include "events/maps/add_column_event.hpp"
 
 namespace Tactile {
 

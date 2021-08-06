@@ -6,7 +6,7 @@
 #include <filesystem>  // path
 
 #include "aliases/ints.hpp"
-#include "core/events/tilesets/add_tileset_event.hpp"
+#include "events/tilesets/add_tileset_event.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 #include "gui/widgets/common/file_dialog.hpp"
 #include "utils/buffer_utils.hpp"

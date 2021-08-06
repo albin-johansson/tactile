@@ -5,7 +5,7 @@
 #include <format>  // format
 
 #include "aliases/czstring.hpp"
-#include "core/events/layers/select_layer_event.hpp"
+#include "events/layers/select_layer_event.hpp"
 #include "core/map/layers/layer_utils.hpp"
 #include "core/map_document.hpp"
 #include "icons.hpp"

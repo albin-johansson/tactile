@@ -7,7 +7,7 @@
 
 #include "aliases/maybe.hpp"
 #include "core/document.hpp"
-#include "core/events/properties/rename_property_event.hpp"
+#include "events/properties/rename_property_event.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 #include "utils/buffer_utils.hpp"
 

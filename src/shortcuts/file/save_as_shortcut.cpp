@@ -1,6 +1,6 @@
 #include "save_as_shortcut.hpp"
 
-#include "core/events/save_as_request_event.hpp"
+#include "events/save_as_request_event.hpp"
 
 namespace Tactile {
 

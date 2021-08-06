@@ -11,6 +11,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 /**
  * \class ObjectLayer
  *
@@ -173,5 +176,7 @@ class ObjectLayer final : public ILayer
   rune::vector_map<object_id, Object> mObjects;
   LayerDelegate mDelegate;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

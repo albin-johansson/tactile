@@ -8,6 +8,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class MapDocument;
 class Tileset;
 
@@ -35,5 +38,7 @@ class StampTool final : public AMouseTool
 
   void UpdateSequence(const Tileset& tileset, const MapPosition& origin);
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

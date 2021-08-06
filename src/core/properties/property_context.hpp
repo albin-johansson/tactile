@@ -10,6 +10,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 using PropertyMap = rune::vector_map<std::string, Property>;
 
 /**
@@ -138,5 +141,7 @@ class IPropertyContext
    */
   [[nodiscard]] virtual auto GetName() const -> std::string_view = 0;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

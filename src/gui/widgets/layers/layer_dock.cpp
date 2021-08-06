@@ -5,12 +5,12 @@
 #include <limits>  // numeric_limits
 
 #include "add_layer_popup.hpp"
-#include "core/events/layers/add_layer_event.hpp"
-#include "core/events/layers/duplicate_layer_event.hpp"
-#include "core/events/layers/move_layer_down_event.hpp"
-#include "core/events/layers/move_layer_up_event.hpp"
-#include "core/events/layers/remove_layer_event.hpp"
 #include "core/model.hpp"
+#include "events/layers/add_layer_event.hpp"
+#include "events/layers/duplicate_layer_event.hpp"
+#include "events/layers/move_layer_down_event.hpp"
+#include "events/layers/move_layer_up_event.hpp"
+#include "events/layers/remove_layer_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 #include "io/preferences.hpp"

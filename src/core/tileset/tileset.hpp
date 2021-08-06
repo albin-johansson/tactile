@@ -19,6 +19,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 /**
  * \class Tileset
  *
@@ -371,5 +374,7 @@ class Tileset final : public IPropertyContext
   std::filesystem::path mPath;
   Unique<PropertyDelegate> mProperties;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

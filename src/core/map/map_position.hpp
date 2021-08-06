@@ -6,6 +6,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 /**
  * \class MapPosition
  *
@@ -234,5 +237,7 @@ class MapPosition final
 {
   return MapPosition{lhs.GetRow() / rhs.GetRow(), lhs.GetColumn() / rhs.GetColumn()};
 }
+
+/// \} End of group core
 
 }  // namespace Tactile

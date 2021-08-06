@@ -104,59 +104,6 @@ set(TACTILE_SOURCE_FILES
     core/commands/tools/stamp_sequence_cmd.cpp
     core/commands/tools/stamp_sequence_cmd.hpp
 
-    core/events/quit_event.hpp
-    core/events/redo_event.hpp
-    core/events/save_as_event.hpp
-    core/events/save_as_request_event.hpp
-    core/events/save_event.hpp
-    core/events/undo_event.hpp
-
-    core/events/layers/add_layer_event.hpp
-    core/events/layers/duplicate_layer_event.hpp
-    core/events/layers/move_layer_down_event.hpp
-    core/events/layers/move_layer_up_event.hpp
-    core/events/layers/remove_layer_event.hpp
-    core/events/layers/select_layer_event.hpp
-    core/events/layers/set_layer_opacity_event.hpp
-    core/events/layers/set_layer_visible_event.hpp
-    core/events/layers/show_layer_properties_event.hpp
-
-    core/events/maps/add_column_event.hpp
-    core/events/maps/add_map_event.hpp
-    core/events/maps/add_row_event.hpp
-    core/events/maps/close_map_event.hpp
-    core/events/maps/open_map_event.hpp
-    core/events/maps/remove_column_event.hpp
-    core/events/maps/remove_row_event.hpp
-    core/events/maps/select_map_event.hpp
-    core/events/maps/show_map_properties_event.hpp
-
-    core/events/properties/add_property_event.hpp
-    core/events/properties/change_property_type_event.hpp
-    core/events/properties/remove_property_event.hpp
-    core/events/properties/rename_property_event.hpp
-    core/events/properties/set_property_value_event.hpp
-
-    core/events/tilesets/add_tileset_event.hpp
-    core/events/tilesets/remove_tileset_event.hpp
-    core/events/tilesets/select_tileset_event.hpp
-    core/events/tilesets/set_tileset_selection_event.hpp
-
-    core/events/tools/mouse_drag_event.hpp
-    core/events/tools/mouse_pressed_event.hpp
-    core/events/tools/mouse_released_event.hpp
-    core/events/tools/select_tool_event.hpp
-
-    core/events/viewport/center_viewport_event.hpp
-    core/events/viewport/decrease_viewport_zoom_event.hpp
-    core/events/viewport/increase_viewport_zoom_event.hpp
-    core/events/viewport/offset_viewport_event.hpp
-    core/events/viewport/pan_down_event.hpp
-    core/events/viewport/pan_left_event.hpp
-    core/events/viewport/pan_right_event.hpp
-    core/events/viewport/pan_up_event.hpp
-    core/events/viewport/reset_viewport_zoom_event.hpp
-
     core/map/map.cpp
     core/map/map.hpp
     core/map/map_position.hpp
@@ -202,6 +149,59 @@ set(TACTILE_SOURCE_FILES
     core/tools/mouse_tool_type.hpp
     core/tools/stamp_tool.cpp
     core/tools/stamp_tool.hpp
+
+    events/quit_event.hpp
+    events/redo_event.hpp
+    events/save_as_event.hpp
+    events/save_as_request_event.hpp
+    events/save_event.hpp
+    events/undo_event.hpp
+
+    events/layers/add_layer_event.hpp
+    events/layers/duplicate_layer_event.hpp
+    events/layers/move_layer_down_event.hpp
+    events/layers/move_layer_up_event.hpp
+    events/layers/remove_layer_event.hpp
+    events/layers/select_layer_event.hpp
+    events/layers/set_layer_opacity_event.hpp
+    events/layers/set_layer_visible_event.hpp
+    events/layers/show_layer_properties_event.hpp
+
+    events/maps/add_column_event.hpp
+    events/maps/add_map_event.hpp
+    events/maps/add_row_event.hpp
+    events/maps/close_map_event.hpp
+    events/maps/open_map_event.hpp
+    events/maps/remove_column_event.hpp
+    events/maps/remove_row_event.hpp
+    events/maps/select_map_event.hpp
+    events/maps/show_map_properties_event.hpp
+
+    events/properties/add_property_event.hpp
+    events/properties/change_property_type_event.hpp
+    events/properties/remove_property_event.hpp
+    events/properties/rename_property_event.hpp
+    events/properties/set_property_value_event.hpp
+
+    events/tilesets/add_tileset_event.hpp
+    events/tilesets/remove_tileset_event.hpp
+    events/tilesets/select_tileset_event.hpp
+    events/tilesets/set_tileset_selection_event.hpp
+
+    events/tools/mouse_drag_event.hpp
+    events/tools/mouse_pressed_event.hpp
+    events/tools/mouse_released_event.hpp
+    events/tools/select_tool_event.hpp
+
+    events/viewport/center_viewport_event.hpp
+    events/viewport/decrease_viewport_zoom_event.hpp
+    events/viewport/increase_viewport_zoom_event.hpp
+    events/viewport/offset_viewport_event.hpp
+    events/viewport/pan_down_event.hpp
+    events/viewport/pan_left_event.hpp
+    events/viewport/pan_right_event.hpp
+    events/viewport/pan_up_event.hpp
+    events/viewport/reset_viewport_zoom_event.hpp
 
     gui/cursors.cpp
     gui/cursors.hpp

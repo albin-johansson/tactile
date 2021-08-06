@@ -1,6 +1,6 @@
 #include "enable_bucket_tool.hpp"
 
-#include "core/events/tools/select_tool_event.hpp"
+#include "events/tools/select_tool_event.hpp"
 
 namespace Tactile {
 

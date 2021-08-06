@@ -6,6 +6,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class TactileError final : public std::exception
 {
  public:
@@ -22,5 +25,7 @@ class TactileError final : public std::exception
  private:
   czstring mWhat{"N/A"};
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

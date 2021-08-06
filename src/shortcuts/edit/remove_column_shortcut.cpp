@@ -1,7 +1,7 @@
 #include "remove_column_shortcut.hpp"
 
-#include "core/events/maps/remove_column_event.hpp"
 #include "core/model.hpp"
+#include "events/maps/remove_column_event.hpp"
 
 namespace Tactile {
 

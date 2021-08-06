@@ -11,6 +11,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 // clang-format off
 
 template <typename T>
@@ -264,5 +267,7 @@ class Property final
     return std::get_if<T>(&mValue);
   }
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

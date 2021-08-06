@@ -4,6 +4,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class BucketTool final : public AMouseTool
 {
  public:
@@ -16,5 +19,7 @@ class BucketTool final : public AMouseTool
     return MouseToolType::Bucket;
   }
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

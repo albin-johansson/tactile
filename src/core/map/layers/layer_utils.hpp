@@ -12,6 +12,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class TileLayer;
 class ObjectLayer;
 class GroupLayer;
@@ -85,5 +88,7 @@ class LayerQuery final
 using TileLayerQuery = LayerQuery<TileLayer, GetTileLayers>;
 using ObjectLayerQuery = LayerQuery<ObjectLayer, GetObjectLayers>;
 using GroupLayerQuery = LayerQuery<GroupLayer, GetGroupLayers>;
+
+/// \} End of group core
 
 }  // namespace Tactile

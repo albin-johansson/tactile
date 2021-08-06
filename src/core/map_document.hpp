@@ -14,6 +14,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class MapDocument final : public IDocument
 {
  public:
@@ -215,5 +218,7 @@ class MapDocument final : public IDocument
 
   [[nodiscard]] auto GetViewportOffsetDelta() const -> std::pair<float, float>;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

@@ -2,6 +2,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 enum class MouseToolType
 {
   None,
@@ -9,5 +12,7 @@ enum class MouseToolType
   Eraser,
   Bucket
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

@@ -6,6 +6,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class PropertyDelegate final : public IPropertyContext
 {
  public:
@@ -42,5 +45,7 @@ class PropertyDelegate final : public IPropertyContext
   PropertyMap mProperties;
   std::string mName;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

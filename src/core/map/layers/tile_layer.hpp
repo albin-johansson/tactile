@@ -13,6 +13,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 [[nodiscard]] auto MakeTileRow(col_t nCols, tile_id value) -> TileRow;
 
 [[nodiscard]] auto MakeTileMatrix(row_t nRows, col_t nCols) -> TileMatrix;
@@ -255,5 +258,7 @@ class TileLayer final : public ILayer
   TileMatrix mTiles;
   LayerDelegate mDelegate;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

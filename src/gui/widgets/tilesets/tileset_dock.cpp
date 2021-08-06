@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-#include "core/events/tilesets/remove_tileset_event.hpp"
 #include "core/model.hpp"
+#include "events/tilesets/remove_tileset_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/centered_button.hpp"

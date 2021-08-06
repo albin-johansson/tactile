@@ -11,6 +11,8 @@ namespace Tactile {
 /**
  * \brief Runs a flood fill in the supplied tile layer.
  *
+ * \ingroup core
+ *
  * \param layer the tile layer to run the flood fill in.
  * \param origin the starting position of the flood fill.
  * \param replacement the tile type that will be used as the replacement.

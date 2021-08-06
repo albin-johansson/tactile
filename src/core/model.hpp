@@ -5,13 +5,16 @@
 #include "aliases/map_id.hpp"
 #include "aliases/maybe.hpp"
 #include "aliases/unique.hpp"
-#include "core/events/tools/mouse_drag_event.hpp"
-#include "core/events/tools/mouse_pressed_event.hpp"
-#include "core/events/tools/mouse_released_event.hpp"
 #include "core/map_document.hpp"
 #include "core/tools/mouse_tool_model.hpp"
+#include "events/tools/mouse_drag_event.hpp"
+#include "events/tools/mouse_pressed_event.hpp"
+#include "events/tools/mouse_released_event.hpp"
 
 namespace Tactile {
+
+/// \addtogroup core
+/// \{
 
 class Model final
 {
@@ -88,5 +91,7 @@ class Model final
   Maybe<map_id> mActiveMap;
   map_id mNextId{1};
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

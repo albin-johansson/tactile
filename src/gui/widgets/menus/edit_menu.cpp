@@ -4,14 +4,14 @@
 
 #include <format>  // format
 
-#include "core/events/maps/add_column_event.hpp"
-#include "core/events/maps/add_row_event.hpp"
-#include "core/events/maps/remove_column_event.hpp"
-#include "core/events/maps/remove_row_event.hpp"
-#include "core/events/redo_event.hpp"
-#include "core/events/tools/select_tool_event.hpp"
-#include "core/events/undo_event.hpp"
 #include "core/model.hpp"
+#include "events/maps/add_column_event.hpp"
+#include "events/maps/add_row_event.hpp"
+#include "events/maps/remove_column_event.hpp"
+#include "events/maps/remove_row_event.hpp"
+#include "events/redo_event.hpp"
+#include "events/tools/select_tool_event.hpp"
+#include "events/undo_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/tilesets/dialogs/tileset_dialog.hpp"
 

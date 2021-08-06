@@ -1,7 +1,7 @@
 #include "decrease_viewport_zoom_shortcut.hpp"
 
-#include "core/events/viewport/decrease_viewport_zoom_event.hpp"
 #include "core/model.hpp"
+#include "events/viewport/decrease_viewport_zoom_event.hpp"
 
 namespace Tactile {
 

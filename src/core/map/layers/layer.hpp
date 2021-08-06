@@ -9,6 +9,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class ILayer;
 
 using UniqueLayer = Unique<ILayer>;
@@ -79,5 +82,7 @@ class ILayer : public IPropertyContext
    */
   [[nodiscard]] virtual auto Clone() const -> SharedLayer = 0;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

@@ -6,8 +6,8 @@
 
 #include "aliases/maybe.hpp"
 #include "core/document.hpp"
-#include "core/events/properties/change_property_type_event.hpp"
 #include "core/tactile_error.hpp"
+#include "events/properties/change_property_type_event.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 
 namespace Tactile {

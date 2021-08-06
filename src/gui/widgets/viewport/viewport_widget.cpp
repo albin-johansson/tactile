@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-#include "core/events/maps/show_map_properties_event.hpp"
 #include "core/model.hpp"
+#include "events/maps/show_map_properties_event.hpp"
 #include "gui/icons.hpp"
 #include "map_content_viewport.hpp"
 #include "no_content_viewport_widget.hpp"

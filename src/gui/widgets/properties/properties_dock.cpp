@@ -3,8 +3,8 @@
 #include <imgui.h>
 
 #include "aliases/ints.hpp"
-#include "core/events/properties/set_property_value_event.hpp"
 #include "core/model.hpp"
+#include "events/properties/set_property_value_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button_ex.hpp"

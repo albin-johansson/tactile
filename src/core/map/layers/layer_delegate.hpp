@@ -8,6 +8,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 /**
  * \class LayerDelegate
  *
@@ -83,5 +86,7 @@ class LayerDelegate final : public IPropertyContext
   float mOpacity{1};
   bool mVisible{true};
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

@@ -6,6 +6,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class Model;
 class MapDocument;
 class Tileset;
@@ -49,5 +52,7 @@ class AMouseTool
  private:
   Model* mModel{};
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

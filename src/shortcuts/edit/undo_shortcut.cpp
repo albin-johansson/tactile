@@ -1,7 +1,7 @@
 #include "undo_shortcut.hpp"
 
-#include "core/events/undo_event.hpp"
 #include "core/model.hpp"
+#include "events/undo_event.hpp"
 
 namespace Tactile {
 

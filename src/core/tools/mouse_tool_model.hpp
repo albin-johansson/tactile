@@ -4,13 +4,16 @@
 
 #include "aliases/not_null.hpp"
 #include "aliases/unique.hpp"
-#include "core/events/tools/mouse_drag_event.hpp"
-#include "core/events/tools/mouse_pressed_event.hpp"
-#include "core/events/tools/mouse_released_event.hpp"
+#include "events/tools/mouse_drag_event.hpp"
+#include "events/tools/mouse_pressed_event.hpp"
+#include "events/tools/mouse_released_event.hpp"
 #include "mouse_tool.hpp"
 #include "mouse_tool_type.hpp"
 
 namespace Tactile {
+
+/// \addtogroup core
+/// \{
 
 class Model;
 
@@ -35,5 +38,7 @@ class MouseToolModel final
 
   void SwitchTo(AMouseTool* tool);
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

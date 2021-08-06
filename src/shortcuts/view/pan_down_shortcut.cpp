@@ -1,6 +1,6 @@
 #include "pan_down_shortcut.hpp"
 
-#include "core/events/viewport/pan_down_event.hpp"
+#include "events/viewport/pan_down_event.hpp"
 
 namespace Tactile {
 

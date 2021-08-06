@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-#include "core/events/tilesets/remove_tileset_event.hpp"
-#include "core/events/tilesets/select_tileset_event.hpp"
+#include "events/tilesets/remove_tileset_event.hpp"
+#include "events/tilesets/select_tileset_event.hpp"
 #include "core/map_document.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"

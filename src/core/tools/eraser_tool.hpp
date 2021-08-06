@@ -8,6 +8,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class EraserTool final : public AMouseTool
 {
  public:
@@ -17,11 +20,12 @@ class EraserTool final : public AMouseTool
 
   void OnDragged(const MouseInfo& info) override;
 
+  void OnReleased(const MouseInfo& info) override;
+
   [[nodiscard]] auto GetType() const -> MouseToolType override
   {
     return MouseToolType::Eraser;
   }
-  void OnReleased(const MouseInfo& info) override;
 
  private:
   rune::vector_map<MapPosition, tile_id> mOldState;
@@ -30,5 +34,7 @@ class EraserTool final : public AMouseTool
 
   [[nodiscard]] auto IsUsable() const -> bool;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

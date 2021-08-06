@@ -9,6 +9,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class GroupLayer final : public ILayer
 {
  public:
@@ -98,5 +101,7 @@ class GroupLayer final : public ILayer
   layer_map mLayers;
   LayerDelegate mDelegate;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

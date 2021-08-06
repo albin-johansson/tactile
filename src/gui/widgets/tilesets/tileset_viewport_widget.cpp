@@ -5,8 +5,8 @@
 
 #include <algorithm>  // min, max
 
-#include "core/events/tilesets/set_tileset_selection_event.hpp"
 #include "core/tileset/tileset.hpp"
+#include "events/tilesets/set_tileset_selection_event.hpp"
 #include "gui/rendering/canvas.hpp"
 #include "gui/rendering/grid.hpp"
 #include "gui/texture_utils.hpp"

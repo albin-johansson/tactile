@@ -8,6 +8,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class IDocument : public IPropertyContext
 {
  public:
@@ -132,5 +135,7 @@ class IDocument : public IPropertyContext
    */
   [[nodiscard]] virtual auto GetAbsolutePath() const -> std::filesystem::path = 0;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

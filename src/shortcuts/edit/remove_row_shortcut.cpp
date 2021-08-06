@@ -1,7 +1,7 @@
 #include "remove_row_shortcut.hpp"
 
-#include "core/events/maps/remove_row_event.hpp"
 #include "core/model.hpp"
+#include "events/maps/remove_row_event.hpp"
 
 namespace Tactile {
 

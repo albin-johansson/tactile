@@ -2,6 +2,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 // TODO Polygon, Polyline, Text
 
 enum class ObjectType
@@ -10,5 +13,7 @@ enum class ObjectType
   Rectangle,
   Ellipse
 };
+
+/// \} End of group core
 
 }  // namespace Tactile

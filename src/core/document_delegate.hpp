@@ -12,6 +12,9 @@
 
 namespace Tactile {
 
+/// \addtogroup core
+/// \{
+
 class DocumentDelegate final : public IDocument
 {
  public:
@@ -107,5 +110,7 @@ class DocumentDelegate final : public IDocument
   IPropertyContext* mCurrentPropertyContext{};
   Maybe<std::filesystem::path> mPath;
 };
+
+/// \} End of group core
 
 }  // namespace Tactile
