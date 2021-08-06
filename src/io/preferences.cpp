@@ -22,6 +22,7 @@ constexpr bool def_show_tileset_dock = true;
 constexpr bool def_show_properties_dock = true;
 constexpr bool def_window_border = false;
 constexpr bool def_restore_layout = true;
+constexpr usize def_command_capacity = 100;
 
 constexpr auto def_preferred_format = "JSON";
 constexpr Theme def_theme = Theme::Ash;
@@ -30,6 +31,7 @@ struct Preferences final
 {
   std::string preferred_format = def_preferred_format;
   Theme theme = def_theme;
+  usize command_capacity = def_command_capacity;
   bool embed_tilesets = def_embed_tilesets;
   bool human_readable_output = def_human_readable_output;
   bool show_grid = def_show_grid;
@@ -60,6 +62,8 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
   ini["Appearance"]["WindowBorder"] = preferences.window_border;
   ini["Appearance"]["ShowGrid"] = preferences.show_grid;
 
+  ini["Behavior"]["CommandCapacity"] = preferences.command_capacity;
+
   ini["Export"]["PreferredFormat"] = preferences.preferred_format;
   ini["Export"]["EmbedTilesets"] = preferences.embed_tilesets;
   ini["Export"]["HumanReadableOutput"] = preferences.human_readable_output;
@@ -81,6 +85,8 @@ void ValidateExistingFile()
   AddIfMissing(ini, "Appearance", "Theme", GetThemeIndex(def_theme));
   AddIfMissing(ini, "Appearance", "ShowGrid", def_show_grid);
   AddIfMissing(ini, "Appearance", "WindowBorder", def_window_border);
+
+  AddIfMissing(ini, "Behavior", "CommandCapacity", def_command_capacity);
 
   AddIfMissing(ini, "Export", "PreferredFormat", def_preferred_format);
   AddIfMissing(ini, "Export", "EmbedTilesets", def_embed_tilesets);
@@ -108,6 +114,9 @@ void LoadPreferences()
     settings.show_grid = appearance.at("ShowGrid").get<bool>();
     settings.window_border = appearance.at("WindowBorder").get<bool>();
 
+    const auto& behavior = ini.at("Behavior");
+    settings.command_capacity = behavior.at("CommandCapacity").get<usize>();
+
     const auto& exp = ini.at("Export");
     settings.preferred_format = exp.at("PreferredFormat").get<std::string>();
     settings.embed_tilesets = exp.at("EmbedTilesets").get<bool>();
@@ -129,6 +138,7 @@ void LoadPreferences()
   CENTURION_LOG_INFO("  Appearance::Theme: %i", settings.theme);
   CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
+  CENTURION_LOG_INFO("  Behavior::CommandCapacity: %u", settings.command_capacity);
   CENTURION_LOG_INFO("  Export::PreferredFormat: %s", settings.preferred_format.c_str());
   CENTURION_LOG_INFO("  Export::EmbedTilesets: %i", settings.embed_tilesets);
   CENTURION_LOG_INFO("  Export::HumanReadableOutput: %i", settings.human_readable_output);
@@ -196,6 +206,11 @@ void SetRestoreLayout(const bool restore) noexcept
   settings.restore_layout = restore;
 }
 
+void SetCommandCapacity(const usize capacity) noexcept
+{
+  settings.command_capacity = capacity;
+}
+
 auto GetPreferredFormat() -> const std::string&
 {
   return settings.preferred_format;
@@ -244,6 +259,11 @@ auto GetWindowBorder() noexcept -> bool
 auto GetRestoreLayout() noexcept -> bool
 {
   return settings.restore_layout;
+}
+
+auto GetCommandCapacity() noexcept -> usize
+{
+  return settings.command_capacity;
 }
 
 }  // namespace Prefs

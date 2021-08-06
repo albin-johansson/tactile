@@ -2,7 +2,13 @@
 
 #include <cassert>  // assert
 
+#include "core/algorithms/invoke_n.hpp"
+#include "io/preferences.hpp"
+
 namespace Tactile {
+
+CommandStack::CommandStack() : mCapacity{Prefs::GetCommandCapacity()}
+{}
 
 void CommandStack::Clear()
 {
@@ -49,6 +55,18 @@ void CommandStack::Redo()
   mIndex = index;
 }
 
+void CommandStack::SetCapacity(const usize capacity)
+{
+  mCapacity = capacity;
+
+  const auto size = GetSize();
+  if (size > mCapacity)
+  {
+    const auto n = size - mCapacity;
+    InvokeN(n, [this] { RemoveOldestCommand(); });
+  }
+}
+
 auto CommandStack::IsClean() const -> bool
 {
   return mStack.empty() || (mCleanIndex && mCleanIndex == mIndex);
@@ -79,6 +97,28 @@ auto CommandStack::GetRedoText() const -> const std::string&
 
   const auto& cmd = mStack.at(mIndex ? *mIndex + 1 : 0);
   return cmd->GetText();
+}
+
+void CommandStack::RemoveOldestCommand()
+{
+  mStack.pop_front();
+
+  if (mIndex)
+  {
+    mIndex = *mIndex - 1;
+  }
+
+  if (mCleanIndex)
+  {
+    if (mCleanIndex == 0)
+    {
+      mCleanIndex.reset();
+    }
+    else
+    {
+      mCleanIndex = *mCleanIndex - 1;
+    }
+  }
 }
 
 void CommandStack::RemoveCommandsAfterCurrentIndex()

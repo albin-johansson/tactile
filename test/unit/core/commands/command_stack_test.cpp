@@ -4,6 +4,8 @@
 
 #include <iostream>  // cout
 
+#include "io/preferences.hpp"
+
 using namespace Tactile;
 
 namespace {
@@ -58,6 +60,7 @@ TEST(CommandStack, Defaults)
 {
   const CommandStack stack;
   ASSERT_EQ(0, stack.GetSize());
+  ASSERT_EQ(Prefs::GetCommandCapacity(), stack.GetCapacity());
   ASSERT_FALSE(stack.CanUndo());
   ASSERT_FALSE(stack.CanRedo());
   ASSERT_TRUE(stack.IsClean());
@@ -190,4 +193,97 @@ TEST(CommandStack, Clean)
 
   stack.ResetClean();
   ASSERT_FALSE(stack.IsClean());
+}
+
+TEST(CommandStack, OverflowWithCleanIndex)
+{
+  CommandStack stack;
+
+  stack.SetCapacity(4);
+  ASSERT_EQ(4, stack.GetCapacity());
+
+  stack.Push<Foo>();
+
+  stack.Push<Bar>();
+  stack.MarkAsClean();
+
+  stack.Push<Bar>();
+  stack.Push<Bar>();
+
+  //  ^[ ] -> [ Foo, _Bar_, Bar, ^Bar ]
+  ASSERT_EQ(4, stack.GetSize());
+  ASSERT_EQ(3, stack.GetIndex());
+  ASSERT_EQ(1, stack.GetCleanIndex());
+  ASSERT_EQ("Bar", stack.GetUndoText());
+
+  // [ Foo, _Bar_, Bar, ^Bar ] -> [ _Bar_, Bar, Bar, ^Foo ]
+  stack.Push<Foo>();
+  ASSERT_EQ(4, stack.GetSize());
+  ASSERT_EQ(3, stack.GetIndex());
+  ASSERT_EQ(0, stack.GetCleanIndex());
+  ASSERT_EQ("Foo", stack.GetUndoText());
+
+  // [ _Bar_, Bar, Bar, ^Foo ] -> [ Bar, Bar, Foo, ^Bar ]
+  stack.Push<Bar>();
+  ASSERT_EQ(4, stack.GetSize());
+  ASSERT_EQ(3, stack.GetIndex());
+  ASSERT_FALSE(stack.GetCleanIndex());
+  ASSERT_EQ("Bar", stack.GetUndoText());
+}
+
+TEST(CommandStack, Overflow)
+{
+  CommandStack stack;
+  stack.Push<Foo>();
+
+  ASSERT_EQ(1, stack.GetSize());
+  ASSERT_EQ(0, stack.GetIndex());
+  ASSERT_EQ("Foo", stack.GetUndoText());
+
+  // The stack should be full after this
+  for (auto index = 0u; index < (stack.GetCapacity() - 1); ++index)
+  {
+    stack.Push<Bar>();
+  }
+
+  ASSERT_EQ(stack.GetCapacity(), stack.GetSize());
+  ASSERT_EQ(stack.GetCapacity() - 1, stack.GetIndex());
+  ASSERT_EQ("Bar", stack.GetUndoText());
+
+  stack.Push<Foo>();  // This should cause the first command to get removed
+  ASSERT_EQ(stack.GetCapacity(), stack.GetSize());
+}
+
+TEST(CommandStack, SetCapacity)
+{
+  CommandStack stack;
+
+  stack.SetCapacity(5);
+  ASSERT_EQ(5, stack.GetCapacity());
+
+  for (auto index = 0u; index < 5; ++index)
+  {
+    stack.Push<Foo>();
+  }
+  ASSERT_EQ(5, stack.GetSize());
+  ASSERT_EQ("Foo", stack.GetUndoText());
+
+  // [ Foo, Foo, Foo, Foo, ^Foo ] -> [ Foo, Foo, Foo, Foo, ^Bar ]
+  stack.Push<Bar>();
+  ASSERT_EQ(5, stack.GetSize());
+  ASSERT_EQ(4, stack.GetIndex());
+  ASSERT_EQ("Bar", stack.GetUndoText());
+
+  // [ Foo, Foo, Foo, Foo, ^Bar ] -> [ Foo, Foo, ^Bar ]
+  stack.SetCapacity(3);
+  ASSERT_EQ(3, stack.GetCapacity());
+  ASSERT_EQ(3, stack.GetSize());
+  ASSERT_EQ(2, stack.GetIndex());
+  ASSERT_EQ("Bar", stack.GetUndoText());
+
+  stack.SetCapacity(10);
+  ASSERT_EQ(10, stack.GetCapacity());
+  ASSERT_EQ(3, stack.GetSize());
+  ASSERT_EQ(2, stack.GetIndex());
+  ASSERT_EQ("Bar", stack.GetUndoText());
 }

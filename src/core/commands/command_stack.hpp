@@ -18,11 +18,11 @@ namespace Tactile {
 /// \addtogroup commands
 /// \{
 
-inline constexpr usize command_limit = 100;
-
 class CommandStack final
 {
  public:
+  CommandStack();
+
   /// Clears the command stack of all commands.
   void Clear();
 
@@ -57,6 +57,11 @@ class CommandStack final
   template <std::derived_from<ACommand> T, typename... Args>
   void PushWithoutRedo(Args&&... args)
   {
+    if (GetSize() == GetCapacity())
+    {
+      RemoveOldestCommand();
+    }
+
     RemoveCommandsAfterCurrentIndex();
     auto cmd = std::make_unique<T>(std::forward<Args>(args)...);
     mIndex = mIndex ? *mIndex + 1 : 0;
@@ -79,7 +84,10 @@ class CommandStack final
   template <std::derived_from<ACommand> T, typename... Args>
   void Push(Args&&... args)
   {
-    // TODO check limit
+    if (GetSize() == GetCapacity())
+    {
+      RemoveOldestCommand();
+    }
 
     RemoveCommandsAfterCurrentIndex();
 
@@ -95,6 +103,16 @@ class CommandStack final
       mStack.push_back(std::move(cmd));
     }
   }
+
+  /**
+   * \brief Sets the maximum amount of commands that the stack can hold.
+   *
+   * \details If the supplied capacity is smaller than the current capacity, then
+   * commands are removed so that the size doesn't exceed the new capacity.
+   *
+   * \param capacity the maximum amount of commands.
+   */
+  void SetCapacity(usize capacity);
 
   /**
    * \brief Indicates whether or not the current command stack state is clean.
@@ -141,10 +159,37 @@ class CommandStack final
     return mStack.size();
   }
 
+  /// Returns the current command index.
+  [[nodiscard]] auto GetIndex() const noexcept -> Maybe<usize>
+  {
+    return mIndex;
+  }
+
+  /// Returns the clean index, if there is one.
+  [[nodiscard]] auto GetCleanIndex() const noexcept -> Maybe<usize>
+  {
+    return mCleanIndex;
+  }
+
+  /**
+   * \brief Returns the maximum amount of commands that the stack can hold.
+   *
+   * \details The capacity defaults to the value of `Prefs::GetCommandCapacity()`.
+   *
+   * \return the stack capacity.
+   */
+  [[nodiscard]] auto GetCapacity() const noexcept -> usize
+  {
+    return mCapacity;
+  }
+
  private:
   std::deque<Unique<ACommand>> mStack;
   Maybe<usize> mIndex{};
   Maybe<usize> mCleanIndex;
+  usize mCapacity;
+
+  void RemoveOldestCommand();
 
   void RemoveCommandsAfterCurrentIndex();
 };

@@ -5,6 +5,7 @@
 #include <cstdlib>        // atexit
 
 #include "init_open_gl_attributes.hpp"
+#include "io/preferences.hpp"
 #include "utils/load_texture.hpp"
 
 auto main(int argc, char** argv) -> int
@@ -27,6 +28,8 @@ auto main(int argc, char** argv) -> int
     cen::log::error("Failed to initialize GLEW!");
     return -1;
   }
+
+  Tactile::LoadPreferences();
 
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();

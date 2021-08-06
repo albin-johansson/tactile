@@ -2,6 +2,7 @@
 
 #include <string>  // string
 
+#include "aliases/ints.hpp"
 #include "gui/themes.hpp"
 
 namespace Tactile {
@@ -34,6 +35,8 @@ void SetWindowBorder(bool enabled) noexcept;
 
 void SetRestoreLayout(bool restore) noexcept;
 
+void SetCommandCapacity(usize capacity) noexcept;
+
 [[nodiscard]] auto GetPreferredFormat() -> const std::string&;
 
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
@@ -53,6 +56,8 @@ void SetRestoreLayout(bool restore) noexcept;
 [[nodiscard]] auto GetWindowBorder() noexcept -> bool;
 
 [[nodiscard]] auto GetRestoreLayout() noexcept -> bool;
+
+[[nodiscard]] auto GetCommandCapacity() noexcept -> usize;
 
 }  // namespace Prefs
 }  // namespace Tactile
