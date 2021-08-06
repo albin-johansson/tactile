@@ -9,6 +9,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 class SetLayerOpacityCmd final : public MapCommand
 {
  public:
@@ -30,6 +33,8 @@ class SetLayerOpacityCmd final : public MapCommand
   float mOpacity;
   Maybe<float> mPrevious;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

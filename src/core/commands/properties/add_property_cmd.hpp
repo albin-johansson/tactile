@@ -14,6 +14,9 @@ namespace Tactile {
 
 class IPropertyContext;
 
+/// \addtogroup commands
+/// \{
+
 class AddPropertyCmd final : public APropertyCommand
 {
  public:
@@ -34,6 +37,8 @@ class AddPropertyCmd final : public APropertyCommand
   std::string mName;
   PropertyType mType;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

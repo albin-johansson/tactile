@@ -12,6 +12,9 @@ namespace Tactile {
 class IDocument;
 class IPropertyContext;
 
+/// \addtogroup commands
+/// \{
+
 class SetPropertyContextCmd final : public ACommand
 {
  public:
@@ -31,6 +34,8 @@ class SetPropertyContextCmd final : public ACommand
   IPropertyContext* mContext{};
   IPropertyContext* mPrevious{};
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

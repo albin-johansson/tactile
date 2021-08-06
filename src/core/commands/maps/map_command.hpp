@@ -17,6 +17,9 @@ namespace Tactile {
 class MapDocument;
 class Map;
 
+/// \addtogroup commands
+/// \{
+
 class MapCommand : public ACommand
 {
  public:
@@ -52,6 +55,8 @@ class MapCommand : public ACommand
   MapDocument* mDocument{};
   LayerCache mCache;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

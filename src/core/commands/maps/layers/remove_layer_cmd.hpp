@@ -12,6 +12,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 class RemoveLayerCmd final : public MapCommand
 {
  public:
@@ -33,6 +36,8 @@ class RemoveLayerCmd final : public MapCommand
   usize mIndex{};
   bool mWasLayerActive{};
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

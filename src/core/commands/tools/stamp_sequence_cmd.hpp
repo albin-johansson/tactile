@@ -15,6 +15,9 @@ namespace Tactile {
 
 class MapDocument;
 
+/// \addtogroup commands
+/// \{
+
 class StampSequenceCmd final : public ACommand
 {
  public:
@@ -38,6 +41,8 @@ class StampSequenceCmd final : public ACommand
   TileCache mOldState;
   TileCache mNewState;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

@@ -10,6 +10,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 class AddLayerCmd final : public MapCommand
 {
  public:
@@ -28,6 +31,8 @@ class AddLayerCmd final : public MapCommand
   SharedLayer mLayer;
   layer_id mId;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

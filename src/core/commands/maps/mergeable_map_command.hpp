@@ -9,6 +9,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 class MergeableMapCommand : public MapCommand
 {
  public:
@@ -25,6 +28,8 @@ class MergeableMapCommand : public MapCommand
  private:
   int mAmount{1};
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

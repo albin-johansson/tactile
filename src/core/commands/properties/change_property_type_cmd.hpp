@@ -13,6 +13,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 class ChangePropertyTypeCmd final : public APropertyCommand
 {
  public:
@@ -34,6 +37,8 @@ class ChangePropertyTypeCmd final : public APropertyCommand
   PropertyType mType;
   Maybe<Property> mPreviousValue;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

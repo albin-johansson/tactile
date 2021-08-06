@@ -8,6 +8,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 class MoveLayerUpCmd final : public MapCommand
 {
  public:
@@ -25,6 +28,8 @@ class MoveLayerUpCmd final : public MapCommand
  private:
   layer_id mId;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

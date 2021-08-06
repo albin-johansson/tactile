@@ -14,6 +14,9 @@ namespace Tactile {
 class MapDocument;
 class Tileset;
 
+/// \addtogroup commands
+/// \{
+
 class RemoveTilesetCmd final : public ACommand
 {
  public:
@@ -33,6 +36,8 @@ class RemoveTilesetCmd final : public ACommand
   tileset_id mId;
   Shared<Tileset> mTileset;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

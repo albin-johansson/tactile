@@ -12,6 +12,9 @@ namespace Tactile {
 
 class IPropertyContext;
 
+/// \addtogroup commands
+/// \{
+
 class APropertyCommand : public ACommand
 {
  public:
@@ -23,6 +26,8 @@ class APropertyCommand : public ACommand
  private:
   IPropertyContext* mContext{};
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

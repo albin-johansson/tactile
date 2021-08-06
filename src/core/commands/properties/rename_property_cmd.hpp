@@ -13,6 +13,9 @@ namespace Tactile {
 
 class IPropertyContext;
 
+/// \addtogroup commands
+/// \{
+
 class RenamePropertyCmd final : public APropertyCommand
 {
  public:
@@ -33,6 +36,8 @@ class RenamePropertyCmd final : public APropertyCommand
   std::string mOldName;
   std::string mNewName;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

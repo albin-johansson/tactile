@@ -15,6 +15,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 inline constexpr usize command_limit = 100;
 
 class CommandStack final
@@ -145,6 +148,8 @@ class CommandStack final
 
   void RemoveCommandsAfterCurrentIndex();
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

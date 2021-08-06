@@ -5,6 +5,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 struct CommandId final
 {
   enum Value
@@ -34,6 +37,8 @@ struct CommandId final
     RemoveTileset
   };
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

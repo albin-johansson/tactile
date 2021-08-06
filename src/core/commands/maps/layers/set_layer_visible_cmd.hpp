@@ -9,6 +9,9 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
+/// \addtogroup commands
+/// \{
+
 class SetLayerVisibleCmd final : public MapCommand
 {
  public:
@@ -27,6 +30,8 @@ class SetLayerVisibleCmd final : public MapCommand
   layer_id mId;
   bool mVisible;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 

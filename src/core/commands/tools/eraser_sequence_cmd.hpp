@@ -15,6 +15,9 @@ namespace Tactile {
 
 class MapDocument;
 
+/// \addtogroup commands
+/// \{
+
 class EraserSequenceCmd final : public ACommand
 {
  public:
@@ -35,6 +38,8 @@ class EraserSequenceCmd final : public ACommand
   MapDocument* mDocument{};
   TileCache mOldState;
 };
+
+/// \} End of group commands
 
 /// \} End of group core
 
