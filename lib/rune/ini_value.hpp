@@ -62,7 +62,7 @@ class basic_ini_value final
   // clang-format off
 
   template <typename T> requires is_ini_value<T, char_type>
-  [[nodiscard]] auto get() const -> const T&
+  [[nodiscard]] auto get() const -> T
   {
     static_assert(std::convertible_to<T, string_type> ||
                   std::signed_integral<T> ||
@@ -78,15 +78,15 @@ class basic_ini_value final
     }
     else if constexpr (std::signed_integral<T>)
     {
-      return std::get<int64>(m_value);
+      return static_cast<T>(std::get<int64>(m_value));
     }
     else if constexpr (std::unsigned_integral<T>)
     {
-      return std::get<uint64>(m_value);
+      return static_cast<T>(std::get<uint64>(m_value));
     }
     else if constexpr (std::floating_point<T>)
     {
-      return std::get<double>(m_value);
+      return static_cast<T>(std::get<double>(m_value));
     }
     else /*if constexpr (std::convertible_to<T, string_type>)*/
     {
@@ -286,7 +286,7 @@ auto operator<<(std::ostream& stream, const basic_ini_value<Char>& value) -> std
   }
   else if (const auto* u = value.try_get_uint())
   {
-    stream << std::to_string(*u);
+    stream << std::to_string(*u) << 'u';
   }
   else if (const auto* f = value.try_get_float())
   {
