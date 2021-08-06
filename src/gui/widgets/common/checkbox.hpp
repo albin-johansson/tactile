@@ -5,6 +5,7 @@
 
 namespace Tactile {
 
-auto Checkbox(czstring label, NotNull<bool*> value, czstring tooltip = nullptr) -> bool;
+auto Checkbox(czstring label, NotNull<bool*> value, czstring tooltip = nullptr)
+    -> bool;
 
 }  // namespace Tactile

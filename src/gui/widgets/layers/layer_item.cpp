@@ -5,9 +5,9 @@
 #include <format>  // format
 
 #include "aliases/czstring.hpp"
-#include "events/layers/select_layer_event.hpp"
 #include "core/map/layers/layer_utils.hpp"
 #include "core/map_document.hpp"
+#include "events/layers/select_layer_event.hpp"
 #include "icons.hpp"
 #include "layer_item_popup.hpp"
 #include "utils/scope_id.hpp"

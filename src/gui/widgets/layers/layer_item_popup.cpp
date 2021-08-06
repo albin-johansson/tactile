@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include "core/map_document.hpp"
 #include "events/layers/duplicate_layer_event.hpp"
 #include "events/layers/move_layer_down_event.hpp"
 #include "events/layers/move_layer_up_event.hpp"
@@ -9,7 +10,6 @@
 #include "events/layers/set_layer_opacity_event.hpp"
 #include "events/layers/set_layer_visible_event.hpp"
 #include "events/layers/show_layer_properties_event.hpp"
-#include "core/map_document.hpp"
 #include "gui/icons.hpp"
 
 namespace Tactile {

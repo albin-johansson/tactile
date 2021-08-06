@@ -5,8 +5,8 @@
 #include <array>  // array
 
 #include "core/document.hpp"
-#include "events/properties/add_property_event.hpp"
 #include "core/tactile_error.hpp"
+#include "events/properties/add_property_event.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 #include "utils/buffer_utils.hpp"

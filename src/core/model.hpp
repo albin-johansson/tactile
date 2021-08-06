@@ -7,10 +7,10 @@
 #include "aliases/unique.hpp"
 #include "core/map_document.hpp"
 #include "core/tools/mouse_tool_model.hpp"
+#include "events/change_command_capacity_event.hpp"
 #include "events/tools/mouse_drag_event.hpp"
 #include "events/tools/mouse_pressed_event.hpp"
 #include "events/tools/mouse_released_event.hpp"
-#include "events/change_command_capacity_event.hpp"
 
 namespace Tactile {
 
