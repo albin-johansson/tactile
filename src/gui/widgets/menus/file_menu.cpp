@@ -61,13 +61,16 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_SAVE " Save", "Ctrl+S"))
+    // FIXME the behaviour of the clean state is not 100% accurate
+    if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
+                        "Ctrl+S",
+                        false,
+                        document && (!document->HasPath() || !document->IsClean())))
     {
-      // TODO only allow when changes have been made
       dispatcher.enqueue<SaveEvent>();
     }
 
-    if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S"))
+    if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S", false, document != nullptr))
     {
       dispatcher.enqueue<SaveAsRequestEvent>();
     }
