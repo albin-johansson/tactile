@@ -40,12 +40,12 @@ class Bar : public ACommand
 
   void Undo() override
   {
-    std::cout << "Bar::Undo\n";
+    // std::cout << "Bar::Undo\n";
   }
 
   void Redo() override
   {
-    std::cout << "Bar::Redo\n";
+    // std::cout << "Bar::Redo\n";
   }
 
   [[nodiscard]] auto GetId() const -> int override
