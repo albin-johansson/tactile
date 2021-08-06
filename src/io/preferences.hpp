@@ -10,7 +10,7 @@ namespace Tactile {
 struct Preferences final
 {
   std::string preferred_format;
-  Theme theme;
+  std::string theme;
   usize command_capacity;
   bool embed_tilesets;
   bool human_readable_output;
@@ -43,7 +43,7 @@ namespace Prefs {
 void ResetAppearancePreferences(Preferences& prefs);
 void SetShowGrid(bool show) noexcept;
 
-[[nodiscard]] auto GetTheme() noexcept -> Theme;
+[[nodiscard]] auto GetTheme() noexcept -> const std::string&;
 [[nodiscard]] auto GetWindowBorder() noexcept -> bool;
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
 

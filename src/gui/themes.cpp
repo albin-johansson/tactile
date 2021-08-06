@@ -134,20 +134,43 @@ void ApplyTheme(ImGuiStyle& style, const Theme theme)
   }
 }
 
-auto GetThemeFromIndex(const int index) -> Theme
+auto GetThemeFromIndex(const int index) -> std::string
 {
   switch (index)
   {
-    case cen::to_underlying(Theme::DearDark):
-    case cen::to_underlying(Theme::DearLight):
-    case cen::to_underlying(Theme::Ash):
-      return static_cast<Theme>(index);
-
     default:
-    {
       CENTURION_LOG_WARN("Invalid theme index: %i, assuming default theme!", index);
-      return Theme::DearDark;
-    }
+      [[fallthrough]];
+
+    case cen::to_underlying(Theme::Ash):
+      return "Ash";
+
+    case cen::to_underlying(Theme::DearDark):
+      return "Dear Dark";
+
+    case cen::to_underlying(Theme::DearLight):
+      return "Dear Light";
+  }
+}
+
+auto GetThemeFromName(const std::string_view name) -> Theme
+{
+  if (name == "Dear Dark")
+  {
+    return Theme::DearDark;
+  }
+  else if (name == "Dear Light")
+  {
+    return Theme::DearLight;
+  }
+  else if (name == "Ash")
+  {
+    return Theme::Ash;
+  }
+  else
+  {
+    CENTURION_LOG_WARN("Invalid theme name, assuming default theme!");
+    return Theme::DearDark;
   }
 }
 
@@ -163,6 +186,11 @@ auto GetThemeIndex(const Theme theme) -> int
     default:
       throw TactileError{"Failed to recognize theme enumerator!"};
   }
+}
+
+auto Tactile::GetThemeIndex(const std::string_view name) -> int
+{
+  return GetThemeIndex(GetThemeFromName(name));
 }
 
 }  // namespace Tactile

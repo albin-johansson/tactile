@@ -57,7 +57,7 @@ ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 
   auto& style = ImGui::GetStyle();
   ApplyStyle(style);
-  ApplyTheme(style, Prefs::GetTheme());
+  ApplyTheme(style, GetThemeFromName(Prefs::GetTheme()));
 
   style.WindowBorderSize = Prefs::GetWindowBorder() ? 1.0f : 0.0f;
   style.ScaleAllSizes(1);

@@ -2,7 +2,6 @@
 
 #include <filesystem>  // exists
 #include <ini.hpp>     // ini_file, read_ini, write_ini
-#include <string>      // string
 #include <utility>     // move
 
 #include "aliases/czstring.hpp"
@@ -12,8 +11,11 @@
 namespace Tactile {
 namespace {
 
-constexpr auto file_name = "settings.ini";
+constexpr czstring file_name = "settings.ini";
 
+constexpr czstring def_preferred_format = "JSON";
+constexpr czstring def_theme = "Ash";
+constexpr usize def_command_capacity = 100;
 constexpr bool def_show_grid = true;
 constexpr bool def_embed_tilesets = false;
 constexpr bool def_human_readable_output = true;
@@ -23,10 +25,6 @@ constexpr bool def_show_properties_dock = true;
 constexpr bool def_window_border = false;
 constexpr bool def_restore_layout = true;
 constexpr bool def_restore_last_session = true;
-constexpr usize def_command_capacity = 100;
-
-constexpr auto def_preferred_format = "JSON";
-constexpr Theme def_theme = Theme::Ash;
 
 inline Preferences settings = {.preferred_format = def_preferred_format,
                                .theme = def_theme,
@@ -55,7 +53,7 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
 {
   rune::ini_file ini;
 
-  ini["Appearance"]["Theme"] = GetThemeIndex(preferences.theme);
+  ini["Appearance"]["Theme"] = preferences.theme;
   ini["Appearance"]["WindowBorder"] = preferences.window_border;
   ini["Appearance"]["ShowGrid"] = preferences.show_grid;
 
@@ -80,7 +78,7 @@ void ValidateExistingFile()
   const auto path = GetPersistentFileDir() / file_name;
   auto ini = rune::read_ini(path);
 
-  AddIfMissing(ini, "Appearance", "Theme", GetThemeIndex(def_theme));
+  AddIfMissing(ini, "Appearance", "Theme", def_theme);
   AddIfMissing(ini, "Appearance", "ShowGrid", def_show_grid);
   AddIfMissing(ini, "Appearance", "WindowBorder", def_window_border);
 
@@ -109,7 +107,7 @@ void LoadPreferences()
     const auto ini = rune::read_ini(GetPersistentFileDir() / file_name);
 
     const auto& appearance = ini.at("Appearance");
-    settings.theme = GetThemeFromIndex(appearance.at("Theme").get<int>());
+    settings.theme = appearance.at("Theme").get<std::string>();
     settings.show_grid = appearance.at("ShowGrid").get<bool>();
     settings.window_border = appearance.at("WindowBorder").get<bool>();
 
@@ -135,7 +133,7 @@ void LoadPreferences()
 
   // clang-format off
   CENTURION_LOG_INFO("Loaded preferences: \"%s\"", (GetPersistentFileDir() / file_name).string().c_str());
-  CENTURION_LOG_INFO("  Appearance::Theme: %i", settings.theme);
+  CENTURION_LOG_INFO("  Appearance::Theme: %s", settings.theme.c_str());
   CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
   CENTURION_LOG_INFO("  Behavior::CommandCapacity: %u", settings.command_capacity);
@@ -245,7 +243,7 @@ auto GetShowPropertiesDock() noexcept -> bool
   return settings.show_properties_dock;
 }
 
-auto GetTheme() noexcept -> Theme
+auto GetTheme() noexcept -> const std::string&
 {
   return settings.theme;
 }

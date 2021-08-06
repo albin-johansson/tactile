@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string_view>  // string_view
+
 struct ImGuiStyle;
 
 namespace Tactile {
@@ -15,8 +17,12 @@ enum class Theme
 
 void ApplyTheme(ImGuiStyle& style, Theme theme);
 
-[[nodiscard]] auto GetThemeFromIndex(int index) -> Theme;
+[[nodiscard]] auto GetThemeFromIndex(int index) -> std::string;
+
+[[nodiscard]] auto GetThemeFromName(std::string_view name) -> Theme;
 
 [[nodiscard]] auto GetThemeIndex(Theme theme) -> int;
+
+[[nodiscard]] auto GetThemeIndex(std::string_view name) -> int;
 
 }  // namespace Tactile
