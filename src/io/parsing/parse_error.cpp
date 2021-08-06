@@ -14,6 +14,9 @@ auto GetCause(const ParseError error) -> czstring
     case ParseError::None:
       return "N/A";  // This shouldn't ever be used
 
+    case ParseError::Unknown:
+      return "Unknown.";
+
     case ParseError::MapUnsupportedExtension:
       return "The map file featured an unsupported file extension.";
 
@@ -106,6 +109,9 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
   {
     case ParseError::None:
       return stream << "None";
+
+    case ParseError::Unknown:
+      return stream << "Unknown";
 
     case ParseError::MapUnsupportedExtension:
       return stream << "MapUnsupportedExtension";

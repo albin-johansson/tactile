@@ -10,78 +10,85 @@ namespace Tactile::IO {
 
 MapParser::MapParser(const std::filesystem::path& path)
 {
+  try
+  {
 #ifndef NDEBUG
-  const auto timeStart = cen::counter::now();
+    const auto timeStart = cen::counter::now();
 #endif  // NDEBUG
 
-  CENTURION_LOG_INFO("Parsing map at \"%s\"...", path.string().c_str());
-  mData.absolute_path = std::filesystem::absolute(path);
+    CENTURION_LOG_INFO("Parsing map at \"%s\"...", path.string().c_str());
+    mData.absolute_path = std::filesystem::absolute(path);
 
-  if (!std::filesystem::exists(mData.absolute_path))
-  {
-    mError = ParseError::MapDoesNotExist;
-    return;
-  }
-
-  if (const auto file = OpenFile(path))
-  {
-    const auto map = file->GetMap();
-
-    if (!ParseOrientation(*map))
+    if (!std::filesystem::exists(mData.absolute_path))
     {
+      mError = ParseError::MapDoesNotExist;
       return;
     }
 
-    if (!ParseInfinite(*map))
+    if (const auto file = OpenFile(path))
     {
-      return;
-    }
+      const auto map = file->GetMap();
 
-    if (!ParseNextLayerId(*map))
-    {
-      return;
-    }
+      if (!ParseOrientation(*map))
+      {
+        return;
+      }
 
-    if (!ParseNextObjectId(*map))
-    {
-      return;
-    }
+      if (!ParseInfinite(*map))
+      {
+        return;
+      }
 
-    if (!ParseTileWidth(*map))
-    {
-      return;
-    }
+      if (!ParseNextLayerId(*map))
+      {
+        return;
+      }
 
-    if (!ParseTileHeight(*map))
-    {
-      return;
-    }
+      if (!ParseNextObjectId(*map))
+      {
+        return;
+      }
 
-    mError = ParseTilesets(*file, mData);
-    if (mError != ParseError::None)
-    {
-      return;
-    }
+      if (!ParseTileWidth(*map))
+      {
+        return;
+      }
 
-    mError = ParseLayers(*file, mData);
-    if (mError != ParseError::None)
-    {
-      return;
-    }
+      if (!ParseTileHeight(*map))
+      {
+        return;
+      }
 
-    mError = ParseProperties(*map, mData.properties);
-    if (mError != ParseError::None)
-    {
-      return;
+      mError = ParseTilesets(*file, mData);
+      if (mError != ParseError::None)
+      {
+        return;
+      }
+
+      mError = ParseLayers(*file, mData);
+      if (mError != ParseError::None)
+      {
+        return;
+      }
+
+      mError = ParseProperties(*map, mData.properties);
+      if (mError != ParseError::None)
+      {
+        return;
+      }
     }
-  }
 
 #ifndef NDEBUG
-  const auto timeFinish = cen::counter::now();
-  const auto diff = static_cast<double>(timeFinish - timeStart);
-  const auto freq = static_cast<double>(cen::counter::frequency());
-  CENTURION_LOG_DEBUG("Parsed map in %f seconds", diff / freq);
+    const auto timeFinish = cen::counter::now();
+    const auto diff = static_cast<double>(timeFinish - timeStart);
+    const auto freq = static_cast<double>(cen::counter::frequency());
+    CENTURION_LOG_DEBUG("Parsed map in %f seconds", diff / freq);
 #endif  // NDEBUG
+  }
+  catch (...)
+  {
+    mError = ParseError::Unknown;
+  }
 }
 
 auto MapParser::OpenFile(const std::filesystem::path& path) -> Unique<IMapFile>

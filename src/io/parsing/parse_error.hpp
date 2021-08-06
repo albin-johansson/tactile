@@ -10,6 +10,7 @@ namespace Tactile::IO {
 enum class ParseError
 {
   None,
+  Unknown,
 
   MapUnsupportedExtension,
   MapUnsupportedOrientation,
