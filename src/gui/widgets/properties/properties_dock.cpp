@@ -20,7 +20,8 @@ namespace Tactile {
 
 void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!Prefs::GetShowPropertiesDock() || !model.GetActiveMapId())
+  const auto* document = model.GetActiveDocument();
+  if (!Prefs::GetShowPropertiesDock() || !document)
   {
     return;
   }
@@ -29,8 +30,6 @@ void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
   bool isVisible = Prefs::GetShowPropertiesDock();
   if (ImGui::Begin("Properties", &isVisible, flags))
   {
-    const auto* document = model.GetActiveDocument();
-
     if (Button(TAC_ICON_ADD, "Add property."))
     {
       OpenAddPropertyDialog();
@@ -53,12 +52,9 @@ void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
     }
   }
 
-  if (const auto* document = model.GetActiveDocument())
-  {
-    UpdateAddPropertyDialog(*document, dispatcher);
-    UpdateRenamePropertyDialog(*document, dispatcher);
-    UpdateChangePropertyTypeDialog(*document, dispatcher);
-  }
+  UpdateAddPropertyDialog(*document, dispatcher);
+  UpdateRenamePropertyDialog(*document, dispatcher);
+  UpdateChangePropertyTypeDialog(*document, dispatcher);
 
   Prefs::SetShowPropertiesDock(isVisible);
   ImGui::End();
