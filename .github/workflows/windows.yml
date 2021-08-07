@@ -6,7 +6,6 @@ env:
   SDL_VERSION: 2.0.14
   IMG_VERSION: 2.0.5
   GLEW_VERSION: 2.1.0
-  GLEW_LIBRARIES: ${{github.workspace}}/glew-2.1.0/lib/Release/x64
 
 jobs:
   windows-latest-test:
@@ -38,11 +37,14 @@ jobs:
       - name: Download GLEW
         shell: powershell
         run: |
-          Invoke-WebRequest -Uri "https://sourceforge.net/projects/glew/files/glew/${{env.GLEW_VERSION}}/glew-${{env.GLEW_VERSION}}-win32.zip" -OutFile glew.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
+          Invoke-WebRequest -Uri "https://sourceforge.net/projects/glew/files/glew/${{env.GLEW_VERSION}}/glew-${{env.GLEW_VERSION}}-win32.zip" `
+                            -OutFile glew.zip `
+                            -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
           7z x -y glew.zip
           del glew.zip
           dir
-          Copy-Item -Path glew-${{env.GLEW_VERSION}}/bin/Release/x64/glew32.dll -Destination bin/glew32.dll
+          Copy-Item -Path glew-${{env.GLEW_VERSION}}/bin/Release/x64/glew32.dll `
+                    -Destination bin/glew32.dll
 
       - name: Create build folder
         shell: cmd
@@ -54,6 +56,7 @@ jobs:
         env:
           SDL2DIR: ${{github.workspace}}/SDL2-${{env.SDL_VERSION}}
           SDL2IMAGEDIR: ${{github.workspace}}/SDL2_image-${{env.IMG_VERSION}}
+          GLEW_LIBRARIES: ${{github.workspace}}/glew-${{env.GLEW_VERSION}}/lib/Release/x64
         run: |
           cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
           ninja
