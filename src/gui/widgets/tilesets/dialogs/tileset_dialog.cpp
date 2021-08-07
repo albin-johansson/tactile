@@ -76,8 +76,7 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
         "Select an image which contains the tiles aligned in a grid.");
     ImGui::Spacing();
 
-    ImGui::Button("Select image...");
-    if (ImGui::IsItemActivated())
+    if (ImGui::Button("Select image..."))
     {
       show_image_file_dialog = true;
     }
@@ -93,8 +92,7 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
     ImGui::Spacing();
     ImGui::Separator();
 
-    Button("OK", nullptr, IsInputValid());
-    if (ImGui::IsItemActivated())
+    if (Button("OK", nullptr, IsInputValid()))
     {
       dispatcher.enqueue<AddTilesetEvent>(full_image_path, tile_width, tile_height);
 
@@ -103,8 +101,7 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
     }
 
     ImGui::SameLine();
-    ImGui::Button("Close");
-    if (ImGui::IsItemActivated())
+    if (ImGui::Button("Close"))
     {
       ResetInputs();
       *open = false;
