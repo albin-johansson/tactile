@@ -7,6 +7,12 @@
 
 namespace Tactile {
 
+/// \addtogroup io
+/// \{
+
+/// \name Preference API
+/// \{
+
 struct Preferences final
 {
   std::string preferred_format;
@@ -37,7 +43,17 @@ void SetPreferences(Preferences prefs);
 /// Returns a snapshot of the current preferences.
 [[nodiscard]] auto GetPreferences() -> const Preferences&;
 
+/// \} End of preference API
+
+/// \} End of group io
+
 namespace Prefs {
+
+/// \addtogroup io
+/// \{
+
+/// \name Preference API
+/// \{
 
 /// \name Appearance
 /// \{
@@ -87,6 +103,10 @@ void SetShowPropertiesDock(bool visible) noexcept;
 [[nodiscard]] auto GetRestoreLayout() noexcept -> bool;
 
 /// \} End of widgets
+
+/// \} End of preference API
+
+/// \} End of group io
 
 }  // namespace Prefs
 }  // namespace Tactile
