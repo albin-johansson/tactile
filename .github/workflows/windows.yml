@@ -45,7 +45,9 @@ jobs:
 
       - name: Set GLEW_LIBRARIES environment variable
         shell: cmd
-        run: setx GLEW_LIBRARIES %cd%/glew-${{env.GLEW_VERSION}}/lib/Release/x64
+        run: |
+          setx GLEW_LIBRARIES %GITHUB_REPOSITORY%/glew-${{env.GLEW_VERSION}}/lib/Release/x64
+          echo %GLEW_LIBRARIES%
 
       - name: Create build folder
         shell: cmd
