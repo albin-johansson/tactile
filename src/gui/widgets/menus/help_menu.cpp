@@ -11,13 +11,12 @@
 namespace Tactile {
 namespace {
 
-inline bool show_about_tactile = false;
-inline bool show_about_imgui = false;
-inline bool show_credits = false;
-inline bool show_metrics = false;
-
-inline bool show_demo = false;
-inline bool show_style_editor = false;
+constinit bool show_about_tactile = false;
+constinit bool show_about_imgui = false;
+constinit bool show_credits = false;
+constinit bool show_metrics = false;
+constinit bool show_demo = false;
+constinit bool show_style_editor = false;
 
 }  // namespace
 

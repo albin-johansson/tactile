@@ -25,9 +25,9 @@
 namespace Tactile {
 namespace {
 
-inline bool show_add_dialog = false;
-inline bool show_rename_dialog = false;
-inline bool show_change_type_dialog = false;
+constinit bool show_add_dialog = false;
+constinit bool show_rename_dialog = false;
+constinit bool show_change_type_dialog = false;
 inline Maybe<std::string> rename_target;
 inline Maybe<std::string> change_type_target;
 

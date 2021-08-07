@@ -7,7 +7,7 @@
 namespace Tactile {
 namespace {
 
-inline bool show = false;
+constinit bool show = false;
 
 }  // namespace
 

@@ -16,9 +16,9 @@
 namespace Tactile {
 namespace {
 
-inline bool show_settings_window = false;
-inline bool show_add_map_dialog = false;
-inline bool show_open_map_dialog = false;
+constinit bool show_settings_window = false;
+constinit bool show_add_map_dialog = false;
+constinit bool show_open_map_dialog = false;
 
 [[nodiscard]] auto GetFilter() -> czstring
 {

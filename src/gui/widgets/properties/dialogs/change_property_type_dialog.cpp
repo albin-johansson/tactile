@@ -13,7 +13,7 @@
 namespace Tactile {
 namespace {
 
-inline int type_index = 0;
+constinit int type_index = 0;
 inline Maybe<std::string> property_name;
 
 void ResetState()

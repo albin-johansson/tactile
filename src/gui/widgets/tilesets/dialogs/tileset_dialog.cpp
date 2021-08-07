@@ -14,12 +14,12 @@
 namespace Tactile {
 namespace {
 
-inline std::array<char, 100> path_preview_buffer;
 inline std::filesystem::path full_image_path;
-inline int tile_width = 32;
-inline int tile_height = 32;
+constinit std::array<char, 100> path_preview_buffer{};
+constinit int tile_width = 32;
+constinit int tile_height = 32;
 
-inline bool show_image_file_dialog = false;
+constinit bool show_image_file_dialog = false;
 
 void ShowImageFileDialog()
 {

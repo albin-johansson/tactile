@@ -7,8 +7,8 @@
 namespace Tactile {
 namespace {
 
-inline bool initialized = false;
-inline Maybe<ImGuiID> root_id;
+constinit bool initialized = false;
+constinit Maybe<ImGuiID> root_id;
 
 }  // namespace
 

@@ -14,9 +14,9 @@
 namespace Tactile {
 namespace {
 
-inline std::array<char, 100> name_buffer{};
-inline int type_index = 0;
-inline bool is_input_valid = false;
+constinit std::array<char, 100> name_buffer{};
+constinit int type_index = 0;
+constinit bool is_input_valid = false;
 
 void ResetState()
 {

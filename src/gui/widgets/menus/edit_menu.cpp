@@ -18,7 +18,7 @@
 namespace Tactile {
 namespace {
 
-inline bool show_tileset_dialog = false;
+constinit bool show_tileset_dialog = false;
 
 }  // namespace
 

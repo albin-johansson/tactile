@@ -10,7 +10,7 @@
 namespace Tactile {
 namespace {
 
-inline GLuint icon_tactile;
+constinit GLuint icon_tactile{};
 
 [[nodiscard]] auto LoadIcon(const std::filesystem::path& path) -> GLuint
 {

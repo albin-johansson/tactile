@@ -14,9 +14,9 @@
 namespace Tactile {
 namespace {
 
-inline std::array<char, 100> name_buffer{};
 inline Maybe<std::string> old_name;
-inline bool is_input_valid = false;
+constinit std::array<char, 100> name_buffer{};
+constinit bool is_input_valid = false;
 
 void ResetState()
 {
