@@ -253,8 +253,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/alignment.cpp
     gui/widgets/alignment.hpp
 
-    gui/widgets/common/button_ex.cpp
-    gui/widgets/common/button_ex.hpp
+    gui/widgets/common/button.cpp
+    gui/widgets/common/button.hpp
     gui/widgets/common/centered_button.cpp
     gui/widgets/common/centered_button.hpp
     gui/widgets/common/centered_text.cpp

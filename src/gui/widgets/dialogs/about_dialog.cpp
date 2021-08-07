@@ -5,7 +5,7 @@
 #include <centurion.hpp>  // open_url
 
 #include "gui/icons.hpp"
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 
 namespace Tactile {
 
@@ -27,7 +27,7 @@ void UpdateAboutDialog(bool* open)
     ImGui::TextUnformatted(
         "Source code: https://www.github.com/albin-johansson/tactile");
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_LINK, "Open the GitHub repository in your browser."))
+    if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser."))
     {
       cen::open_url("https://www.github.com/albin-johansson/tactile");
     }

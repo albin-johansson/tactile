@@ -7,7 +7,7 @@
 #include "events/tools/select_tool_event.hpp"
 #include "events/undo_event.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 #include "gui/widgets/menus/file_menu.hpp"
 #include "gui/widgets/toolbar/tool_button.hpp"
@@ -27,13 +27,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   const auto* document = model.GetActiveDocument();
   if (ImGui::Begin("Toolbar", nullptr, flags))
   {
-    if (ButtonEx(TAC_ICON_FILE, "Create new tilemap."))
+    if (Button(TAC_ICON_FILE, "Create new tilemap."))
     {
       EnableAddMapDialog();
     }
 
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_OPEN, "Open tilemap."))
+    if (Button(TAC_ICON_OPEN, "Open tilemap."))
     {
       EnableOpenMapDialog();
     }
@@ -42,13 +42,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
 
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_UNDO, "Undo", document && document->CanUndo()))
+    if (Button(TAC_ICON_UNDO, "Undo", document && document->CanUndo()))
     {
       dispatcher.enqueue<UndoEvent>();
     }
 
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_REDO, "Redo", document && document->CanRedo()))
+    if (Button(TAC_ICON_REDO, "Redo", document && document->CanRedo()))
     {
       dispatcher.enqueue<RedoEvent>();
     }
@@ -57,13 +57,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
 
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_TILESET, "Create tileset.", document))
+    if (Button(TAC_ICON_TILESET, "Create tileset.", document))
     {
       EnableTilesetDialog();
     }
 
     ImGui::SameLine();
-    if (ButtonEx(TAC_ICON_RESIZE, "Resize map.", document))
+    if (Button(TAC_ICON_RESIZE, "Resize map.", document))
     {}
 
     ImGui::SameLine();

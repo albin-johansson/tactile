@@ -7,7 +7,7 @@
 #include "events/properties/set_property_value_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
 #include "gui/widgets/common/help_marker.hpp"
 #include "gui/widgets/properties/dialogs/add_property_dialog.hpp"
@@ -31,7 +31,7 @@ void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
   {
     const auto* document = model.GetActiveDocument();
 
-    if (ButtonEx(TAC_ICON_ADD, "Add property."))
+    if (Button(TAC_ICON_ADD, "Add property."))
     {
       OpenAddPropertyDialog();
     }

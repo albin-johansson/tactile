@@ -7,7 +7,7 @@
 #include "core/document.hpp"
 #include "core/tactile_error.hpp"
 #include "events/properties/add_property_event.hpp"
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 #include "utils/buffer_utils.hpp"
 
@@ -51,7 +51,7 @@ void UpdateAddPropertyDialog(const IDocument& document, entt::dispatcher& dispat
     PropertyTypeCombo(&type_index);
 
     ImGui::Spacing();
-    if (ButtonEx("OK", nullptr, is_input_valid))
+    if (Button("OK", nullptr, is_input_valid))
     {
       const auto type = GetPropertyTypeFromComboIndex(type_index);
       dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(name_buffer),

@@ -1,11 +1,14 @@
 #pragma once
 
 #include "aliases/czstring.hpp"
+#include "aliases/not_null.hpp"
 
 namespace Tactile {
 
 /**
  * \brief Shows a button.
+ *
+ * \ingroup gui
  *
  * \param text the button text.
  * \param tooltip the tooltip text, can safely be null.
@@ -13,7 +16,7 @@ namespace Tactile {
  *
  * \return `true` if the button was pressed; `false` otherwise.
  */
-auto ButtonEx(czstring text, czstring tooltip = nullptr, bool enabled = true)
+auto Button(NotNull<czstring> text, czstring tooltip = nullptr, bool enabled = true)
     -> bool;
 
 }  // namespace Tactile

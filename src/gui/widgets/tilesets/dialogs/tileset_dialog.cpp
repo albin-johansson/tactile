@@ -7,7 +7,7 @@
 
 #include "aliases/ints.hpp"
 #include "events/tilesets/add_tileset_event.hpp"
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/file_dialog.hpp"
 #include "io/preferences.hpp"
 #include "utils/buffer_utils.hpp"
@@ -93,7 +93,7 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
     ImGui::Spacing();
     ImGui::Separator();
 
-    ButtonEx("OK", nullptr, IsInputValid());
+    Button("OK", nullptr, IsInputValid());
     if (ImGui::IsItemActivated())
     {
       dispatcher.enqueue<AddTilesetEvent>(full_image_path, tile_width, tile_height);

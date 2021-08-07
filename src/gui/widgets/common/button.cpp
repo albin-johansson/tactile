@@ -1,13 +1,17 @@
-#include "button_ex.hpp"
+#include "button.hpp"
 
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include <cassert>  // assert
+
 namespace Tactile {
 
-auto ButtonEx(const czstring text, const czstring tooltip, const bool enabled)
+auto Button(const NotNull<czstring> text, const czstring tooltip, const bool enabled)
     -> bool
 {
+  assert(text);
+
   if (!enabled)
   {
     ImGui::PushDisabled();

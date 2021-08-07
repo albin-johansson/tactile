@@ -12,7 +12,7 @@
 #include "events/layers/move_layer_up_event.hpp"
 #include "events/layers/remove_layer_event.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
 
@@ -31,7 +31,7 @@ void UpdateLayerDockButtons(const MapDocument* document,
 
   const bool hasActiveLayer = activeLayerId.has_value();
 
-  if (ButtonEx(TAC_ICON_ADD, "Add new layer."))
+  if (Button(TAC_ICON_ADD, "Add new layer."))
   {
     ImGui::OpenPopup("AddLayerPopup");
   }
@@ -39,31 +39,31 @@ void UpdateLayerDockButtons(const MapDocument* document,
   UpdateAddLayerPopup(dispatcher);
 
   ImGui::SameLine();
-  if (ButtonEx(TAC_ICON_REMOVE, "Remove layer.", hasActiveLayer))
+  if (Button(TAC_ICON_REMOVE, "Remove layer.", hasActiveLayer))
   {
     dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
   }
 
   ImGui::SameLine();
-  if (ButtonEx(TAC_ICON_DUPLICATE, "Duplicate layer.", hasActiveLayer))
+  if (Button(TAC_ICON_DUPLICATE, "Duplicate layer.", hasActiveLayer))
   {
     dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
   }
 
   ImGui::SameLine();
 
-  if (ButtonEx(TAC_ICON_MOVE_UP,
-               "Move layer up.",
-               document && document->CanMoveActiveLayerUp()))
+  if (Button(TAC_ICON_MOVE_UP,
+             "Move layer up.",
+             document && document->CanMoveActiveLayerUp()))
   {
     dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
   }
 
   ImGui::SameLine();
 
-  if (ButtonEx(TAC_ICON_MOVE_DOWN,
-               "Move layer down.",
-               document && document->CanMoveActiveLayerDown()))
+  if (Button(TAC_ICON_MOVE_DOWN,
+             "Move layer down.",
+             document && document->CanMoveActiveLayerDown()))
   {
     dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
   }

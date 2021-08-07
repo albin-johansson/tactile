@@ -8,7 +8,7 @@
 #include "aliases/maybe.hpp"
 #include "core/document.hpp"
 #include "events/properties/rename_property_event.hpp"
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 #include "utils/buffer_utils.hpp"
 
 namespace Tactile {
@@ -46,7 +46,7 @@ void UpdateRenamePropertyDialog(const IDocument& document,
     }
 
     ImGui::Spacing();
-    if (ButtonEx("OK", nullptr, is_input_valid))
+    if (Button("OK", nullptr, is_input_valid))
     {
       auto name = CreateStringFromBuffer(name_buffer);
       dispatcher.enqueue<RenamePropertyEvent>(old_name.value(), std::move(name));

@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 
 namespace Tactile {
 
@@ -17,7 +17,7 @@ auto ToolButton(const czstring label,
     ImGui::PushStyleColor(ImGuiCol_Button, color);
   }
 
-  const auto pressed = ButtonEx(label, tooltip, enabled);
+  const auto pressed = Button(label, tooltip, enabled);
 
   if (selected)
   {

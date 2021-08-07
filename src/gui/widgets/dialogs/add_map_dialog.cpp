@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "events/maps/add_map_event.hpp"
-#include "gui/widgets/common/button_ex.hpp"
+#include "gui/widgets/common/button.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -43,7 +43,7 @@ void UpdateAddMapDialog(entt::dispatcher& dispatcher)
     ImGui::InputInt("##TileHeightLabel", &tile_height);
 
     ImGui::Spacing();
-    if (ButtonEx("OK", nullptr, is_input_valid()))
+    if (Button("OK", nullptr, is_input_valid()))
     {
       dispatcher.enqueue<AddMapEvent>(tile_width, tile_height);
 
@@ -52,7 +52,7 @@ void UpdateAddMapDialog(entt::dispatcher& dispatcher)
     }
 
     ImGui::SameLine();
-    if (ButtonEx("Cancel"))
+    if (Button("Cancel"))
     {
       ResetState();
       ImGui::CloseCurrentPopup();
