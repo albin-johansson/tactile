@@ -4,6 +4,7 @@
 [![Language](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization)
 [![version](https://img.shields.io/github/v/release/albin-johansson/tactile)](https://github.com/albin-johansson/tactile/releases)
 [![doxygen](https://img.shields.io/badge/doxygen-stable-blue)](https://albin-johansson.github.io/tactile/)
+[![CI: Windows](https://github.com/albin-johansson/tactile/actions/workflows/windows.yml/badge.svg?branch=dev)](https://github.com/albin-johansson/tactile/actions/workflows/windows.yml)
 
 A tilemap editor that aims to be easy-to-use, fast and lightweight. Furthermore, compatibility with
 the [Tiled](https://www.mapeditor.org/) map editor has been pursued.
