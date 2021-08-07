@@ -1,5 +1,7 @@
 #include "dock_space.hpp"
 
+#include <imgui.h>
+
 #include "aliases/maybe.hpp"
 #include "io/preferences.hpp"
 #include "load_default_layout.hpp"
