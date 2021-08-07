@@ -2,7 +2,9 @@
 
 #include <IconsFontAwesome5.h>
 
+#include "aliases/czstring.hpp"
 #include "aliases/ints.hpp"
+#include "core/map/layers/layer_type.hpp"
 
 /// \addtogroup gui
 /// \{
@@ -76,6 +78,17 @@ namespace Tactile {
  * \return the OpenGL texture ID for the Tactile icon.
  */
 [[nodiscard]] auto GetTactileIcon() noexcept -> uint;
+
+/**
+ * \brief Returns the icon string literal for the specified layer type.
+ *
+ * \param type the layer type to obtain the icon for.
+ *
+ * \return an icon literal for the specified layer type.
+ *
+ * \throws TactileError if the layer type isn't recognized.
+ */
+[[nodiscard]] auto GetIcon(LayerType type) -> czstring;
 
 /**
  * \brief Simple RAII wrapper for loading and unloading icons.
