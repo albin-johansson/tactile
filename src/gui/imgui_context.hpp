@@ -4,6 +4,11 @@
 
 namespace Tactile {
 
+/**
+ * \brief A simple wrapper that manages a Dear ImGui context.
+ *
+ * \ingroup gui
+ */
 class ImGuiContext final
 {
  public:
