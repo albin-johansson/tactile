@@ -14,13 +14,11 @@ void RenderEllipse(const Object& object,
 {
   constexpr auto nSegments = 50;
 
-  const auto xRadius = object.GetWidth() * ratio.x;
-  const auto yRadius = object.GetHeight() * ratio.y;
+  const auto xRadius = 0.5f * object.GetWidth() * ratio.x;
+  const auto yRadius = 0.5f * object.GetHeight() * ratio.y;
 
-  // Offset the position to mimic Tiled behaviour
-  const auto offsetPos = position + ImVec2{xRadius / 2.0f, yRadius / 2.0f};
-
-  RenderShadowedEllipse(offsetPos, color, xRadius, yRadius, 2, nSegments);
+  const auto center = position + ImVec2{xRadius, yRadius};
+  RenderShadowedEllipse(center, color, xRadius, yRadius, 2, nSegments);
 }
 
 }  // namespace Tactile
