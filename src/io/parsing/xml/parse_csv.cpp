@@ -34,7 +34,7 @@ auto ParseCSV(const czstring csv, const col_t nCols, TileMatrix& matrix)
   int index{};
   for (const auto& token : GetTokens(csv))
   {
-    if (const auto id = FromString(token))
+    if (const auto id = FromString<tile_id::value_type>(token))
     {
       const auto pos = MapPosition::FromIndex(index, nCols);
       matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = tile_id{*id};
