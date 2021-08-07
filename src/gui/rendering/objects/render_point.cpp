@@ -36,7 +36,7 @@ void RenderPoint(const Object& object,
 {
   if (boundsRect.contains(cen::fpoint{position.x, position.y}))
   {
-    RenderShadowedCircle(position, color, radius, thickness);
+    RenderShadowedCircle(position, radius, color, thickness);
     if (const auto name = object.GetName(); !name.empty())
     {
       RenderName(name, position, gridWidth);

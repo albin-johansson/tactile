@@ -18,7 +18,7 @@ void RenderEllipse(const Object& object,
   const auto yRadius = 0.5f * object.GetHeight() * ratio.y;
 
   const auto center = position + ImVec2{xRadius, yRadius};
-  RenderShadowedEllipse(center, color, xRadius, yRadius, 2, nSegments);
+  RenderShadowedEllipse(center, xRadius, yRadius, color, 2, nSegments);
 }
 
 }  // namespace Tactile
