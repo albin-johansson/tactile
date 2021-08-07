@@ -9,6 +9,7 @@
 #include "events/tilesets/add_tileset_event.hpp"
 #include "gui/widgets/common/button_ex.hpp"
 #include "gui/widgets/common/file_dialog.hpp"
+#include "io/preferences.hpp"
 #include "utils/buffer_utils.hpp"
 
 namespace Tactile {
@@ -59,8 +60,8 @@ void ResetInputs()
 {
   ZeroBuffer(path_preview_buffer);
   full_image_path.clear();
-  tile_width = 32;
-  tile_height = 32;
+  tile_width = Prefs::GetPreferredTileWidth();
+  tile_height = Prefs::GetPreferredTileHeight();
 }
 
 }  // namespace
