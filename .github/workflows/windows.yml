@@ -6,7 +6,7 @@ env:
   SDL_VERSION: 2.0.14
   IMG_VERSION: 2.0.5
   GLEW_VERSION: 2.1.0
-  GLEW_LIBRARIES: ${{github.workspace}}/glew-${{env.GLEW_VERSION}}/lib/Release/x64
+  GLEW_LIBRARIES: ${{github.workspace}}/glew-2.1.0/lib/Release/x64
 
 jobs:
   windows-latest-test:
