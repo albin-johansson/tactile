@@ -6,7 +6,6 @@
 
 #include "add_layer_popup.hpp"
 #include "core/model.hpp"
-#include "events/layers/add_layer_event.hpp"
 #include "events/layers/duplicate_layer_event.hpp"
 #include "events/layers/move_layer_down_event.hpp"
 #include "events/layers/move_layer_up_event.hpp"
@@ -33,7 +32,7 @@ void UpdateLayerDockButtons(const MapDocument* document,
 
   if (Button(TAC_ICON_ADD, "Add new layer."))
   {
-    ImGui::OpenPopup("AddLayerPopup");
+    OpenAddLayerPopup();
   }
 
   UpdateAddLayerPopup(dispatcher);

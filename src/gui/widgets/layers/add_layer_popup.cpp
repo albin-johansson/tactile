@@ -30,4 +30,9 @@ void UpdateAddLayerPopup(entt::dispatcher& dispatcher)
   }
 }
 
+void OpenAddLayerPopup()
+{
+  ImGui::OpenPopup("AddLayerPopup");
+}
+
 }  // namespace Tactile
