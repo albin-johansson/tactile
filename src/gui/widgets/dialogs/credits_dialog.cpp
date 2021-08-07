@@ -8,8 +8,8 @@ namespace Tactile {
 namespace {
 
 constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
-                                    ImGuiTableFlags_Resizable |
-                                    ImGuiTableFlags_SizingStretchProp;
+                             ImGuiTableFlags_Resizable |
+                             ImGuiTableFlags_SizingStretchProp;
 
 void Row(const czstring lib, const czstring version, const czstring license)
 {
@@ -29,9 +29,9 @@ void Row(const czstring lib, const czstring version, const czstring license)
 
 void UpdateCreditsDialog(bool* open)
 {
-  constexpr auto flags =
-      ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  if (ImGui::Begin("Credits", open, flags))
+  if (ImGui::Begin("Credits",
+                   open,
+                   ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse))
   {
     ImGui::TextUnformatted(
         "Tactile is developed using the following open-source libraries.");
