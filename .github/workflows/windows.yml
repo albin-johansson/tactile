@@ -40,6 +40,7 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://sourceforge.net/projects/glew/files/glew/${{env.GLEW_VERSION}}/glew-${{env.GLEW_VERSION}}-win32.zip" -OutFile glew.zip -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
           7z x -y glew.zip
+          dir
           Copy-Item -Path glew/glew-${{env.GLEW_VERSION}}/bin/Release/x64/glew32.dll -Destination glew32.dll
 
       - name: Create build folder
