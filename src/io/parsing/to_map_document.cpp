@@ -3,6 +3,7 @@
 #include <cassert>  // assert
 #include <variant>  // get
 
+#include "io/parsing/parse_ir.hpp"
 #include "utils/load_texture.hpp"
 
 namespace Tactile::IO {

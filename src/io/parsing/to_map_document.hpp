@@ -2,9 +2,10 @@
 
 #include "aliases/unique.hpp"
 #include "core/map_document.hpp"
-#include "io/parsing/parse_ir.hpp"
 
 namespace Tactile::IO {
+
+struct MapData;
 
 /**
  * \brief Creates a map document from an intermediate map representation.
