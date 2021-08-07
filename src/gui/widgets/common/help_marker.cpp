@@ -2,10 +2,14 @@
 
 #include <imgui.h>
 
+#include <cassert>  // assert
+
 namespace Tactile {
 
-void HelpMarker(const czstring text)
+void HelpMarker(const NotNull<czstring> text)
 {
+  assert(text);
+
   ImGui::TextDisabled("(?)");
   if (ImGui::IsItemHovered())
   {

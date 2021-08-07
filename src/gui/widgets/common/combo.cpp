@@ -2,15 +2,21 @@
 
 #include <imgui.h>
 
+#include <cassert>  // assert
+
 #include "utils/scope_id.hpp"
 
 namespace Tactile {
 
-auto Combo(const czstring label,
-           const czstring values,
+auto Combo(const NotNull<czstring> label,
+           const NotNull<czstring> values,
            NotNull<int*> index,
            const czstring tooltip) -> bool
 {
+  assert(label);
+  assert(values);
+  assert(index);
+
   ImGui::AlignTextToFramePadding();
   ImGui::TextUnformatted(label);
   ImGui::SameLine();

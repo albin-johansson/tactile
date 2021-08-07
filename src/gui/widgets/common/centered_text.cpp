@@ -3,10 +3,13 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include <cassert>  // assert
+
 namespace Tactile {
 
-void CenteredText(const czstring text)
+void CenteredText(const NotNull<czstring> text)
 {
+  assert(text);
   const auto textSize = ImGui::CalcTextSize(text);
 
   const auto region = ImGui::GetContentRegionAvail();
