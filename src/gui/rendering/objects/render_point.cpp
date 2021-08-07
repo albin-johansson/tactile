@@ -1,7 +1,9 @@
 #include "render_point.hpp"
 
+#include <imgui.h>
 #include <imgui_internal.h>
 
+#include <cassert>      // assert
 #include <string_view>  // string_view
 
 #include "core/map/layers/object.hpp"
@@ -30,11 +32,12 @@ void RenderName(const std::string_view name,
 
 void RenderPoint(const Object& object,
                  const ImVec2& position,
-                 const cen::frect& boundsRect,
-                 const ImU32 color,
+                 const cen::frect& bounds,
+                 const uint32 color,
                  const float gridWidth)
 {
-  if (boundsRect.contains(cen::fpoint{position.x, position.y}))
+  assert(object.IsPoint());
+  if (bounds.contains(cen::fpoint{position.x, position.y}))
   {
     RenderShadowedCircle(position, radius, color, thickness);
     if (const auto name = object.GetName(); !name.empty())
