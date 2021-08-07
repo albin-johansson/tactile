@@ -12,7 +12,7 @@ void SaveMapDocument(const MapDocument& document)
   assert(document.HasPath());
 
   const auto path = document.GetAbsolutePath();
-  CENTURION_LOG_INFO("Saving map document to \"%s\"...", path.string().c_str());
+  CENTURION_LOG_INFO("Saving map document to \"%s\"", path.string().c_str());
 
   if (const auto extension = path.extension(); extension == ".json")
   {
