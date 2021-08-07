@@ -42,7 +42,6 @@
 #include "events/tools/select_tool_event.hpp"
 #include "events/undo_event.hpp"
 #include "events/viewport/offset_viewport_event.hpp"
-#include "gui/cursors.hpp"
 #include "gui/icons.hpp"
 
 namespace Tactile {
@@ -60,10 +59,7 @@ class Application final
   cen::window mWindow;
   cen::keyboard mKeyboard;
   entt::dispatcher mDispatcher;
-
   Icons mIcons;
-  Cursors mCursors;
-
   Unique<Model> mModel;
   bool mQuit{};
 

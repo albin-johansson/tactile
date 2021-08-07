@@ -204,8 +204,6 @@ set(TACTILE_SOURCE_FILES
     events/viewport/pan_up_event.hpp
     events/viewport/reset_viewport_zoom_event.hpp
 
-    gui/cursors.cpp
-    gui/cursors.hpp
     gui/icons.cpp
     gui/icons.hpp
     gui/imgui_context.cpp

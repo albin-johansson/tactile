@@ -3,8 +3,6 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "gui/cursors.hpp"
-
 namespace Tactile {
 
 auto ButtonEx(const czstring text, const czstring tooltip, const bool enabled)
@@ -24,7 +22,7 @@ auto ButtonEx(const czstring text, const czstring tooltip, const bool enabled)
     if (ImGui::IsItemActive() || ImGui::IsItemHovered())
     {
       ImGui::SetTooltip("%s", tooltip);
-      EnableCursor(cen::system_cursor::hand);
+      ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
     }
   }
 
