@@ -7,6 +7,9 @@
 
 namespace Tactile {
 
+/// \addtogroup rendering
+/// \{
+
 struct [[deprecated]] GridState final
 {
   ImVec2 scroll_offset{};
@@ -16,5 +19,7 @@ struct [[deprecated]] GridState final
 [[deprecated]] void ShowGrid(const GridState& state,
                              const CanvasInfo& canvas,
                              uint32 lineColor = IM_COL32(200, 200, 200, 40));
+
+/// \} End of group rendering
 
 }  // namespace Tactile
