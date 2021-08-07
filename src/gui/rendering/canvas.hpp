@@ -4,6 +4,15 @@
 
 namespace Tactile {
 
+/// \addtogroup rendering
+/// \{
+
+/**
+ * \brief Provides useful information when rendering to a canvas.
+ *
+ * \see `GetCanvasInfo()`
+ * \see `FillBackground()`
+ */
 struct CanvasInfo final
 {
   ImVec2 size{};
@@ -11,8 +20,20 @@ struct CanvasInfo final
   ImVec2 br{};  /// Bottom-right
 };
 
+/**
+ * \brief Returns information about the current canvas.
+ *
+ * \return information about the current canvas.
+ */
+[[nodiscard]] auto GetCanvasInfo() -> CanvasInfo;
+
+/**
+ * \brief Fills an entire canvas.
+ *
+ * \param canvas the canvas that will be filled with a background color.
+ */
 void FillBackground(const CanvasInfo& canvas);
 
-[[nodiscard]] auto GetCanvasInfo() -> CanvasInfo;
+/// \} End of group rendering
 
 }  // namespace Tactile
