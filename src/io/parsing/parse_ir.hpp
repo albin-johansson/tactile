@@ -63,11 +63,11 @@ struct ObjectData final
   float y{};                             ///< Logical y-coordinate.
   float width{};                         ///< Logical width.
   float height{};                        ///< Logical height.
+  ObjectType type{};                     ///< Specific object type.
   std::string custom_type;               ///< Optional custom type string.
   std::string name;                      ///< Object name.
   std::vector<PropertyData> properties;  ///< Object properties.
   bool visible{};                        ///< Is the object visible?
-  ObjectType type{};                     ///< Specific object type.
 };
 
 /**
