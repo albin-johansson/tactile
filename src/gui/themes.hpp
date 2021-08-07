@@ -1,28 +1,53 @@
 #pragma once
 
-#include <string_view>  // string_view
+#include <string>  // string
+
+#include "aliases/maybe.hpp"
 
 struct ImGuiStyle;
 
 namespace Tactile {
 
+/// \addtogroup gui
+/// \{
+
+/// \name Theme API
+/// \{
+
+/// A string literal with the available theme options for use with combo boxes.
 constexpr auto theme_options = "Dear Dark\0Dear Light\0Ash\0\0";
 
-enum class Theme
-{
-  DearDark = 0,
-  DearLight = 1,
-  Ash = 2
-};
+/**
+ * \brief Applies a theme to the specified style.
+ *
+ * \details This function has no effect if there is no theme associated with the
+ * specified name.
+ *
+ * \param style the style that will be affected.
+ * \param name the name of the theme that will be applied to the style.
+ */
+void ApplyTheme(ImGuiStyle& style, const std::string& name);
 
-void ApplyTheme(ImGuiStyle& style, Theme theme);
+/**
+ * \brief Returns the name of the theme associated with the specified index.
+ *
+ * \param index the theme index.
+ *
+ * \return the name of the associated theme; `nothing` if the index is invalid.
+ */
+[[nodiscard]] auto GetThemeFromIndex(int index) -> Maybe<std::string>;
 
-[[nodiscard]] auto GetThemeFromIndex(int index) -> std::string;
+/**
+ * \brief Returns the index (underlying value) of the theme with the specified name.
+ *
+ * \param name the name of the theme to get the index of.
+ *
+ * \return the index associated with the theme; `nothing` if the name is invalid.
+ */
+[[nodiscard]] auto GetThemeIndex(const std::string& name) -> Maybe<int>;
 
-[[nodiscard]] auto GetThemeFromName(std::string_view name) -> Theme;
+/// \} End of theme API
 
-[[nodiscard]] auto GetThemeIndex(Theme theme) -> int;
-
-[[nodiscard]] auto GetThemeIndex(std::string_view name) -> int;
+/// \} End of group gui
 
 }  // namespace Tactile

@@ -19,7 +19,7 @@ inline Preferences settings;  // The value of the settings in the GUI
 
 void UpdatePreviewSettings(const Preferences& prefs)
 {
-  ApplyTheme(ImGui::GetStyle(), GetThemeFromName(prefs.theme));
+  ApplyTheme(ImGui::GetStyle(), prefs.theme);
   ImGui::GetStyle().WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
 }
 
@@ -105,11 +105,11 @@ void ShowAppearanceBar()
     }
     ImGui::Spacing();
 
-    if (auto index = GetThemeIndex(settings.theme);
+    if (auto index = GetThemeIndex(settings.theme).value_or(0);
         Combo("Theme:", theme_options, &index))
     {
-      settings.theme = GetThemeFromIndex(index);
-      ApplyTheme(ImGui::GetStyle(), GetThemeFromName(settings.theme));
+      settings.theme = GetThemeFromIndex(index).value();
+      ApplyTheme(ImGui::GetStyle(), settings.theme);
     }
 
     if (auto enabled = settings.window_border;

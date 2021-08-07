@@ -3,9 +3,9 @@
 #include <imgui.h>
 
 #include <algorithm>      // clamp
+#include <cassert>        // assert
 #include <centurion.hpp>  // to_underlying
-
-#include "core/tactile_error.hpp"
+#include <string_view>    // string_view
 
 #define TACTILE_SET_COLOR_GROUP(Element, Color)     \
   style.Colors[Element] = Color;                    \
@@ -14,6 +14,24 @@
 
 namespace Tactile {
 namespace {
+
+constexpr auto ash = "Ash";
+constexpr auto dear_dark = "Dear Dark";
+constexpr auto dear_light = "Dear Light";
+
+/**
+ * \brief Represents the different available themes.
+ *
+ * \see `ApplyTheme()`
+ * \see `GetThemeFromIndex()`
+ * \see `GetThemeIndex()`
+ */
+enum class Theme
+{
+  DearDark = 0,   ///< The standard Dear ImGui dark theme.
+  DearLight = 1,  ///< The standard Dear ImGui light theme.
+  Ash = 2
+};
 
 [[nodiscard]] auto WithAlpha(const ImVec4& color, const float opacity) -> ImVec4
 {
@@ -108,89 +126,86 @@ void ApplyAshTheme(ImGuiStyle& style)
   // clang-format on
 }
 
-}  // namespace
-
-void ApplyTheme(ImGuiStyle& style, const Theme theme)
+[[nodiscard]] auto GetThemeFromName(const std::string_view name) -> Maybe<Theme>
 {
-  switch (theme)
-  {
-    case Theme::Ash:
-    {
-      ApplyAshTheme(style);
-      break;
-    }
-    case Theme::DearDark:
-    {
-      ImGui::StyleColorsDark(&style);
-      break;
-    }
-    case Theme::DearLight:
-    {
-      ImGui::StyleColorsLight(&style);
-      break;
-    }
-    default:
-      throw TactileError{"Did not recognize theme enumerator!"};
-  }
-}
-
-auto GetThemeFromIndex(const int index) -> std::string
-{
-  switch (index)
-  {
-    default:
-      CENTURION_LOG_WARN("Invalid theme index: %i, assuming default theme!", index);
-      [[fallthrough]];
-
-    case cen::to_underlying(Theme::Ash):
-      return "Ash";
-
-    case cen::to_underlying(Theme::DearDark):
-      return "Dear Dark";
-
-    case cen::to_underlying(Theme::DearLight):
-      return "Dear Light";
-  }
-}
-
-auto GetThemeFromName(const std::string_view name) -> Theme
-{
-  if (name == "Dear Dark")
+  if (name == dear_dark)
   {
     return Theme::DearDark;
   }
-  else if (name == "Dear Light")
+  else if (name == dear_light)
   {
     return Theme::DearLight;
   }
-  else if (name == "Ash")
+  else if (name == ash)
   {
     return Theme::Ash;
   }
   else
   {
-    CENTURION_LOG_WARN("Invalid theme name, assuming default theme!");
-    return Theme::DearDark;
+    return nothing;
   }
 }
 
-auto GetThemeIndex(const Theme theme) -> int
+}  // namespace
+
+void ApplyTheme(ImGuiStyle& style, const std::string& name)
 {
-  switch (theme)
+  const auto theme = GetThemeFromName(name);
+  if (!theme)
+  {
+    return;
+  }
+
+  switch (*theme)
   {
     case Theme::Ash:
+      ApplyAshTheme(style);
+      break;
+
     case Theme::DearDark:
+      ImGui::StyleColorsDark(&style);
+      break;
+
     case Theme::DearLight:
-      return cen::to_underlying(theme);
+      ImGui::StyleColorsLight(&style);
+      break;
 
     default:
-      throw TactileError{"Failed to recognize theme enumerator!"};
+      cen::log::error("Could not apply theme \"%s\", because no such theme exists!",
+                      theme);
+      break;
   }
 }
 
-auto Tactile::GetThemeIndex(const std::string_view name) -> int
+auto GetThemeFromIndex(const int index) -> Maybe<std::string>
 {
-  return GetThemeIndex(GetThemeFromName(name));
+  switch (index)
+  {
+    case cen::to_underlying(Theme::Ash):
+      return ash;
+
+    case cen::to_underlying(Theme::DearDark):
+      return dear_dark;
+
+    case cen::to_underlying(Theme::DearLight):
+      return dear_light;
+
+    default:
+      CENTURION_LOG_WARN("Could not get theme name from invalid index: %i", index);
+      return nothing;
+  }
+}
+
+auto GetThemeIndex(const std::string& name) -> Maybe<int>
+{
+  if (const auto theme = GetThemeFromName(name))
+  {
+    return cen::to_underlying(*theme);
+  }
+  else
+  {
+    return nothing;
+  }
 }
 
 }  // namespace Tactile
