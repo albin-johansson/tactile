@@ -10,9 +10,9 @@
 namespace Tactile {
 namespace {
 
-constinit GLuint icon_tactile{};
+constinit uint icon_tactile{};
 
-[[nodiscard]] auto LoadIcon(const std::filesystem::path& path) -> GLuint
+[[nodiscard]] auto LoadIcon(const std::filesystem::path& path) -> uint
 {
   if (const auto info = LoadTexture(path))
   {
@@ -26,19 +26,19 @@ constinit GLuint icon_tactile{};
 
 }  // namespace
 
-void LoadIcons()
+auto GetTactileIcon() noexcept -> uint
+{
+  return icon_tactile;
+}
+
+Icons::Icons()
 {
   icon_tactile = LoadIcon("resources/icon.png");
 }
 
-void UnloadIcons()
+Icons::~Icons()
 {
   glDeleteTextures(1, &icon_tactile);
-}
-
-auto GetTactileIcon() noexcept -> uint
-{
-  return icon_tactile;
 }
 
 }  // namespace Tactile

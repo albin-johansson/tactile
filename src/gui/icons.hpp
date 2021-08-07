@@ -4,6 +4,12 @@
 
 #include "aliases/ints.hpp"
 
+/// \addtogroup gui
+/// \{
+
+/// \name Icon literals
+/// \{
+
 #define TAC_ICON_UNDO ICON_FA_UNDO
 #define TAC_ICON_REDO ICON_FA_REDO
 
@@ -52,26 +58,44 @@
 
 #define TAC_ICON_LINK ICON_FA_LINK
 
+/// \} End of icon literals
+
+/// \} End of group gui
+
 namespace Tactile {
 
-void LoadIcons();
+/// \addtogroup gui
+/// \{
 
-void UnloadIcons();
+/// \name Icon API
+/// \{
 
+/**
+ * \brief Returns the texture identifier for the Tactile icon.
+ *
+ * \return the OpenGL texture ID for the Tactile icon.
+ */
 [[nodiscard]] auto GetTactileIcon() noexcept -> uint;
 
+/**
+ * \brief Simple RAII wrapper for loading and unloading icons.
+ */
 class Icons final
 {
  public:
-  Icons()
-  {
-    LoadIcons();
-  }
+  /**
+   * \brief Loads all icons.
+   *
+   * \throws TactileError if any of the icons couldn't be loaded.
+   */
+  Icons();
 
-  ~Icons()
-  {
-    UnloadIcons();
-  }
+  /// Unloads all icons.
+  ~Icons();
 };
+
+/// \} End of icon API
+
+/// \} End of group gui
 
 }  // namespace Tactile
