@@ -20,7 +20,7 @@ using PropertyMap = rune::vector_map<std::string, Property>;
  *
  * \brief An interface for objects that support properties.
  *
- * \headerfile property_context.hpp
+ * \todo Don't use `string_view`s since it causes ugly `.data()` usage.
  */
 class IPropertyContext
 {
