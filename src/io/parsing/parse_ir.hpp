@@ -18,78 +18,107 @@
 
 namespace Tactile::IO {
 
+/// \addtogroup io
+/// \{
+
+/**
+ * \brief Intermediate representation of a property.
+ */
 struct PropertyData final
 {
-  std::string name;
-  Property property;
+  std::string name;   ///< The unique (within the context) property name
+  Property property;  ///< The property value.
 };
 
+/**
+ * \brief Intermediate representation of a tileset.
+ */
 struct TilesetData final
 {
-  tile_id first_id;
-  int tile_width{};
-  int tile_height{};
-  std::filesystem::path absolute_image_path;
-  std::string name;
-  std::vector<PropertyData> properties;
+  tile_id first_id;                           ///< The first global tile ID.
+  int tile_width{};                           ///< Logical tile width.
+  int tile_height{};                          ///< Logical tile height.
+  std::filesystem::path absolute_image_path;  ///< Absolute path of tileset file.
+  std::string name;                           ///< Tileset name.
+  std::vector<PropertyData> properties;       ///< Tileset properties.
 };
 
+/**
+ * \brief Intermediate representation of tile layer data.
+ */
 struct TileLayerData final
 {
-  row_t row_count;
-  col_t col_count;
-  TileMatrix tiles;
+  row_t row_count;   ///< Total amount of rows.
+  col_t col_count;   ///< Total amount of columns.
+  TileMatrix tiles;  ///< The associated tile data.
 };
 
+/**
+ * \brief Intermediate representation of a map object.
+ */
 struct ObjectData final
 {
-  object_id id;
-  float x{};
-  float y{};
-  float width{};
-  float height{};
-  std::string custom_type;
-  std::string name;
-  std::vector<PropertyData> properties;
-  bool visible{};
-  ObjectType type{};
+  object_id id;                          ///< Unique object identifier.
+  float x{};                             ///< Logical x-coordinate.
+  float y{};                             ///< Logical y-coordinate.
+  float width{};                         ///< Logical width.
+  float height{};                        ///< Logical height.
+  std::string custom_type;               ///< Optional custom type string.
+  std::string name;                      ///< Object name.
+  std::vector<PropertyData> properties;  ///< Object properties.
+  bool visible{};                        ///< Is the object visible?
+  ObjectType type{};                     ///< Specific object type.
 };
 
+/**
+ * \brief Intermediate representation of object layer data.
+ */
 struct ObjectLayerData final
 {
-  std::vector<ObjectData> objects;
+  std::vector<ObjectData> objects;  ///< The associated objects.
 };
 
 struct LayerData;
 
+/**
+ * \brief Intermediate representation of group layer data.
+ */
 struct GroupLayerData final
 {
-  std::vector<Unique<LayerData>> layers;
+  std::vector<Unique<LayerData>> layers;  ///< Child layers in the group.
 };
 
+/**
+ * \brief Intermediate representation of a layer.
+ */
 struct LayerData final
 {
   using LayerContent = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
-  layer_id id;
-  LayerType type;
-  LayerContent data;
-  std::string name;
-  std::vector<PropertyData> properties;
-  float opacity{};
-  bool is_visible{};
+  layer_id id;                           ///< Unique layer identifier.
+  LayerType type;                        ///< The type of the layer.
+  LayerContent data;                     ///< Type-specific data.
+  std::string name;                      ///< The name of the layer.
+  std::vector<PropertyData> properties;  ///< The layer properties.
+  float opacity{};                       ///< Opacity of the layer, [0, 1].
+  bool is_visible{};                     ///< Is the layer visible?
 };
 
+/**
+ * \brief Intermediate representation of a map.
+ */
 struct MapData final
 {
-  std::filesystem::path absolute_path;
-  layer_id next_layer_id;
-  object_id next_object_id;
-  int tile_width{};
-  int tile_height{};
-  std::vector<TilesetData> tilesets;
-  std::vector<LayerData> layers;
-  std::vector<PropertyData> properties;
+  std::filesystem::path absolute_path;   ///< Absolute path of the map file.
+  layer_id next_layer_id;                ///< The next available layer ID.
+  object_id next_object_id;              ///< The next available object ID.
+  int tile_width{};                      ///< The logical tile width.
+  int tile_height{};                     ///< The logical tile height.
+  std::vector<TilesetData> tilesets;     ///< The associated tilesets.
+  std::vector<LayerData> layers;         ///< The associated layers.
+  std::vector<PropertyData> properties;  ///< The map properties.
 };
+
+/// \} End of group io
 
 }  // namespace Tactile::IO
