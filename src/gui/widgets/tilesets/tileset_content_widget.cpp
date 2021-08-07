@@ -23,7 +23,7 @@ void TilesetContentWidget(const MapDocument& document, entt::dispatcher& dispatc
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
                              ImGuiTabItemFlags_Trailing))
     {
-      EnableTilesetDialog();
+      ShowTilesetDialog();
     }
 
     for (const auto& [id, tileset] : tilesets)

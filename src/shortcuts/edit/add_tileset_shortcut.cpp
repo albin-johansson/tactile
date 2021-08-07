@@ -11,7 +11,7 @@ AddTilesetShortcut::AddTilesetShortcut()
 
 void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  EnableTilesetDialog();
+  ShowTilesetDialog();
 }
 
 auto AddTilesetShortcut::IsEnabled(const Model& model) const -> bool

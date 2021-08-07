@@ -10,7 +10,7 @@ OpenMapShortcut::OpenMapShortcut()
 
 void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  EnableOpenMapDialog();
+  ShowOpenMapDialog();
 }
 
 }  // namespace Tactile

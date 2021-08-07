@@ -114,17 +114,17 @@ void UpdateFileMenuWindows(entt::dispatcher& dispatcher)
   }
 }
 
-void EnableAddMapDialog() noexcept
+void ShowAddMapDialog() noexcept
 {
   show_add_map_dialog = true;
 }
 
-void EnableOpenMapDialog() noexcept
+void ShowOpenMapDialog() noexcept
 {
   show_open_map_dialog = true;
 }
 
-void EnableSettingsDialog() noexcept
+void ShowSettingsDialog() noexcept
 {
   show_settings_window = true;
 }

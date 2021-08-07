@@ -113,7 +113,7 @@ void UpdateEditMenuWindows(entt::dispatcher& dispatcher)
   }
 }
 
-void EnableTilesetDialog() noexcept
+void ShowTilesetDialog() noexcept
 {
   show_tileset_dialog = true;
 }

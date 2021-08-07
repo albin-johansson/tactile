@@ -40,7 +40,7 @@ void UpdateTilesetDock(const Model& model, entt::dispatcher& dispatcher)
       CenteredText("No available tilesets!");
       if (CenteredButton(TAC_ICON_TILESET " Create tileset..."))
       {
-        EnableTilesetDialog();
+        ShowTilesetDialog();
       }
     }
   }

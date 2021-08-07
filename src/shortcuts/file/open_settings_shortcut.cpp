@@ -10,7 +10,7 @@ OpenSettingsShortcut::OpenSettingsShortcut()
 
 void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  EnableSettingsDialog();
+  ShowSettingsDialog();
 }
 
 }  // namespace Tactile

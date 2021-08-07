@@ -29,13 +29,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   {
     if (Button(TAC_ICON_FILE, "Create new tilemap."))
     {
-      EnableAddMapDialog();
+      ShowAddMapDialog();
     }
 
     ImGui::SameLine();
     if (Button(TAC_ICON_OPEN, "Open tilemap."))
     {
-      EnableOpenMapDialog();
+      ShowOpenMapDialog();
     }
 
     ImGui::SameLine();
@@ -59,7 +59,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
     if (Button(TAC_ICON_TILESET, "Create tileset.", document))
     {
-      EnableTilesetDialog();
+      ShowTilesetDialog();
     }
 
     ImGui::SameLine();

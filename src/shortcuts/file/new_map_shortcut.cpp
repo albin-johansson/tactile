@@ -10,7 +10,7 @@ NewMapShortcut::NewMapShortcut()
 
 void NewMapShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  EnableAddMapDialog();
+  ShowAddMapDialog();
 }
 
 }  // namespace Tactile
