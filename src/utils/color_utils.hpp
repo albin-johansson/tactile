@@ -2,9 +2,6 @@
 
 #include <array>          // array
 #include <centurion.hpp>  // color
-#include <string_view>    // string_view
-
-#include "aliases/maybe.hpp"
 
 namespace Tactile {
 
