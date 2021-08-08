@@ -15,7 +15,7 @@ TEST(ToMapDocument, Test)
   const auto document = ToMapDocument(parser.GetData());
   ASSERT_FALSE(document->CanUndo());
   ASSERT_FALSE(document->CanRedo());
-  ASSERT_EQ("Map", document->GetName());
+  ASSERT_EQ("embedded.json", document->GetName());
   ASSERT_EQ(std::filesystem::absolute("resources/json/embedded.json"),
             document->GetAbsolutePath());
 
