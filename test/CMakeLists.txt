@@ -48,12 +48,12 @@ set(TACTILE_TEST_FILES
     unit/utils/from_string_test.cpp
     )
 
-add_executable(testTactile ${TACTILE_TEST_FILES})
+add_executable(TactileTests ${TACTILE_TEST_FILES})
 
 add_definitions(-DCENTURION_NO_SDL_TTF)
 add_definitions(-DCENTURION_NO_SDL_MIXER)
 
-target_include_directories(testTactile
+target_include_directories(TactileTests
     PUBLIC unit
     PUBLIC ${TACTILE_ROOT_DIR}/src
     SYSTEM PUBLIC ${gtest_SOURCE_DIR}/include
@@ -61,16 +61,16 @@ target_include_directories(testTactile
     SYSTEM PUBLIC ${gmock_SOURCE_DIR}/include
     SYSTEM PUBLIC ${gmock_SOURCE_DIR})
 
-target_link_libraries(testTactile
+target_link_libraries(TactileTests
     PUBLIC libtactile
     PUBLIC gtest
     PUBLIC gmock
     )
 
-copy_directory_post_build(testTactile
+copy_directory_post_build(TactileTests
     ${TACTILE_ROOT_DIR}/bin
     ${CMAKE_CURRENT_BINARY_DIR})
 
-copy_directory_post_build(testTactile
+copy_directory_post_build(TactileTests
     ${CMAKE_CURRENT_SOURCE_DIR}/resources
     ${CMAKE_CURRENT_BINARY_DIR}/resources)
