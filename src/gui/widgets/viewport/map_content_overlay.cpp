@@ -64,7 +64,8 @@ void MouseTileLabels(const Map& map,
 
       if (global)
       {
-        if (const auto local = tilesets.ToLocal(*global))
+        const auto local = tilesets.ToLocal(*global);
+        if (cursor.is_within_map && local)
         {
           ImGui::Text("Local ID: %i", local->get());
         }
