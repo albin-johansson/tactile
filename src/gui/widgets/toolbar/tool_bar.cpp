@@ -15,10 +15,9 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize |
-                              ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar |
-                              ImGuiWindowFlags_NoCollapse |
-                              ImGuiWindowFlags_NoScrollbar;
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove |
+                       ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
+                       ImGuiWindowFlags_NoScrollbar;
 
 }  // namespace
 
