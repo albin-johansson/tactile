@@ -32,7 +32,7 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
       }
 
       bool opened = true;
-      if (ImGui::BeginTabItem(document->GetName().data(), &opened, flags))
+      if (ImGui::BeginTabItem(document->GetName().c_str(), &opened, flags))
       {
         if (isActive)
         {
