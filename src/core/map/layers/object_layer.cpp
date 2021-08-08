@@ -99,14 +99,14 @@ auto ObjectLayer::GetObjectCount() const noexcept -> usize
   return mObjects.size();
 }
 
-void ObjectLayer::AddProperty(const std::string& name, const PropertyType type)
+void ObjectLayer::AddProperty(std::string name, const PropertyType type)
 {
-  mDelegate.AddProperty(name, type);
+  mDelegate.AddProperty(std::move(name), type);
 }
 
-void ObjectLayer::AddProperty(const std::string& name, const Property& property)
+void ObjectLayer::AddProperty(std::string name, const Property& property)
 {
-  mDelegate.AddProperty(name, property);
+  mDelegate.AddProperty(std::move(name), property);
 }
 
 void ObjectLayer::RemoveProperty(const std::string_view name)
@@ -114,10 +114,9 @@ void ObjectLayer::RemoveProperty(const std::string_view name)
   mDelegate.RemoveProperty(name);
 }
 
-void ObjectLayer::RenameProperty(const std::string_view oldName,
-                                 const std::string& newName)
+void ObjectLayer::RenameProperty(const std::string_view oldName, std::string newName)
 {
-  mDelegate.RenameProperty(oldName, newName);
+  mDelegate.RenameProperty(oldName, std::move(newName));
 }
 
 void ObjectLayer::SetProperty(const std::string_view name, const Property& property)
@@ -125,10 +124,9 @@ void ObjectLayer::SetProperty(const std::string_view name, const Property& prope
   mDelegate.SetProperty(name, property);
 }
 
-void ObjectLayer::ChangePropertyType(const std::string_view name,
-                                     const PropertyType type)
+void ObjectLayer::ChangePropertyType(std::string name, const PropertyType type)
 {
-  mDelegate.ChangePropertyType(name, type);
+  mDelegate.ChangePropertyType(std::move(name), type);
 }
 
 auto ObjectLayer::HasProperty(const std::string_view name) const -> bool
@@ -151,7 +149,7 @@ auto ObjectLayer::GetPropertyCount() const -> usize
   return mDelegate.GetPropertyCount();
 }
 
-auto ObjectLayer::GetName() const -> std::string_view
+auto ObjectLayer::GetName() const -> const std::string&
 {
   return mDelegate.GetName();
 }

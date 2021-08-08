@@ -128,14 +128,14 @@ auto Tileset::GetImageSource(const tile_id id) const -> Maybe<cen::irect>
   }
 }
 
-void Tileset::AddProperty(const std::string& name, const PropertyType type)
+void Tileset::AddProperty(std::string name, const PropertyType type)
 {
-  mProperties->AddProperty(name, type);
+  mProperties->AddProperty(std::move(name), type);
 }
 
-void Tileset::AddProperty(const std::string& name, const Property& property)
+void Tileset::AddProperty(std::string name, const Property& property)
 {
-  mProperties->AddProperty(name, property);
+  mProperties->AddProperty(std::move(name), property);
 }
 
 void Tileset::RemoveProperty(const std::string_view name)
@@ -143,10 +143,9 @@ void Tileset::RemoveProperty(const std::string_view name)
   mProperties->RemoveProperty(name);
 }
 
-void Tileset::RenameProperty(const std::string_view oldName,
-                             const std::string& newName)
+void Tileset::RenameProperty(const std::string_view oldName, std::string newName)
 {
-  mProperties->RenameProperty(oldName, newName);
+  mProperties->RenameProperty(oldName, std::move(newName));
 }
 
 void Tileset::SetProperty(const std::string_view name, const Property& property)
@@ -154,10 +153,9 @@ void Tileset::SetProperty(const std::string_view name, const Property& property)
   mProperties->SetProperty(name, property);
 }
 
-void Tileset::ChangePropertyType(const std::string_view name,
-                                 const PropertyType type)
+void Tileset::ChangePropertyType(std::string name, const PropertyType type)
 {
-  mProperties->ChangePropertyType(name, type);
+  mProperties->ChangePropertyType(std::move(name), type);
 }
 
 auto Tileset::HasProperty(const std::string_view name) const -> bool
@@ -180,7 +178,7 @@ auto Tileset::GetPropertyCount() const -> usize
   return mProperties->GetPropertyCount();
 }
 
-auto Tileset::GetName() const -> std::string_view
+auto Tileset::GetName() const -> const std::string&
 {
   return mProperties->GetName();
 }

@@ -41,17 +41,17 @@ class GroupLayer final : public ILayer
   /// \name Property API
   /// \{
 
-  void AddProperty(const std::string& name, PropertyType type) override;
+  void AddProperty(std::string name, PropertyType type) override;
 
-  void AddProperty(const std::string& name, const Property& property) override;
+  void AddProperty(std::string name, const Property& property) override;
 
   void RemoveProperty(std::string_view name) override;
 
-  void RenameProperty(std::string_view oldName, const std::string& newName) override;
+  void RenameProperty(std::string_view oldName, std::string newName) override;
 
   void SetProperty(std::string_view name, const Property& property) override;
 
-  void ChangePropertyType(std::string_view name, PropertyType type) override;
+  void ChangePropertyType(std::string name, PropertyType type) override;
 
   [[nodiscard]] auto HasProperty(std::string_view name) const -> bool override;
 
@@ -62,7 +62,7 @@ class GroupLayer final : public ILayer
 
   [[nodiscard]] auto GetPropertyCount() const -> usize override;
 
-  [[nodiscard]] auto GetName() const -> std::string_view override;
+  [[nodiscard]] auto GetName() const -> const std::string& override;
 
   /// \} End of property API
 

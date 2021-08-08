@@ -181,21 +181,21 @@ class MapDocument final : public IDocument
   /// \{
 
   /// \command
-  void AddProperty(const std::string& name, PropertyType type) override;
+  void AddProperty(std::string name, PropertyType type) override;
 
-  void AddProperty(const std::string& name, const Property& property) override;
+  void AddProperty(std::string name, const Property& property) override;
 
   /// \command
   void RemoveProperty(std::string_view name) override;
 
   /// \command
-  void RenameProperty(std::string_view oldName, const std::string& newName) override;
+  void RenameProperty(std::string_view oldName, std::string newName) override;
 
   /// \command
   void SetProperty(std::string_view name, const Property& property) override;
 
   /// \command
-  void ChangePropertyType(std::string_view name, PropertyType type) override;
+  void ChangePropertyType(std::string name, PropertyType type) override;
 
   [[nodiscard]] auto HasProperty(std::string_view name) const -> bool override;
 
@@ -206,7 +206,7 @@ class MapDocument final : public IDocument
 
   [[nodiscard]] auto GetPropertyCount() const -> usize override;
 
-  [[nodiscard]] auto GetName() const -> std::string_view override;
+  [[nodiscard]] auto GetName() const -> const std::string& override;
 
   /// \} End of property API
 

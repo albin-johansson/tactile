@@ -1,15 +1,17 @@
 #include "object.hpp"
 
+#include <utility>  // move
+
 namespace Tactile {
 
-void Object::AddProperty(const std::string& name, const PropertyType type)
+void Object::AddProperty(std::string name, const PropertyType type)
 {
-  mProperties.AddProperty(name, type);
+  mProperties.AddProperty(std::move(name), type);
 }
 
-void Object::AddProperty(const std::string& name, const Property& property)
+void Object::AddProperty(std::string name, const Property& property)
 {
-  mProperties.AddProperty(name, property);
+  mProperties.AddProperty(std::move(name), property);
 }
 
 void Object::RemoveProperty(const std::string_view name)
@@ -17,10 +19,9 @@ void Object::RemoveProperty(const std::string_view name)
   mProperties.RemoveProperty(name);
 }
 
-void Object::RenameProperty(const std::string_view oldName,
-                            const std::string& newName)
+void Object::RenameProperty(const std::string_view oldName, std::string newName)
 {
-  mProperties.RenameProperty(oldName, newName);
+  mProperties.RenameProperty(oldName, std::move(newName));
 }
 
 void Object::SetProperty(const std::string_view name, const Property& property)
@@ -28,9 +29,9 @@ void Object::SetProperty(const std::string_view name, const Property& property)
   mProperties.SetProperty(name, property);
 }
 
-void Object::ChangePropertyType(const std::string_view name, const PropertyType type)
+void Object::ChangePropertyType(std::string name, const PropertyType type)
 {
-  mProperties.ChangePropertyType(name, type);
+  mProperties.ChangePropertyType(std::move(name), type);
 }
 
 auto Object::HasProperty(const std::string_view name) const -> bool
@@ -53,7 +54,7 @@ auto Object::GetPropertyCount() const -> usize
   return mProperties.GetPropertyCount();
 }
 
-auto Object::GetName() const -> std::string_view
+auto Object::GetName() const -> const std::string&
 {
   return mProperties.GetName();
 }

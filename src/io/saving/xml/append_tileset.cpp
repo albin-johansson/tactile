@@ -14,7 +14,7 @@ void AddCommon(const Tileset& tileset,
                pugi::xml_node& node,
                const std::filesystem::path& dir)
 {
-  node.append_attribute("name").set_value(tileset.GetName().data());
+  node.append_attribute("name").set_value(tileset.GetName().c_str());
   node.append_attribute("tilewidth").set_value(tileset.GetTileWidth());
   node.append_attribute("tileheight").set_value(tileset.GetTileHeight());
   node.append_attribute("tilecount").set_value(tileset.GetTileCount());

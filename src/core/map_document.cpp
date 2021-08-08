@@ -400,14 +400,14 @@ auto MapDocument::CanDecreaseViewportTileSize() const -> bool
   return mViewportInfo.tile_height > minimum_viewport_tile_height;
 }
 
-void MapDocument::AddProperty(const std::string& name, const PropertyType type)
+void MapDocument::AddProperty(std::string name, const PropertyType type)
 {
-  mDelegate->Execute<AddPropertyCmd>(mDelegate.get(), name, type);
+  mDelegate->Execute<AddPropertyCmd>(mDelegate.get(), std::move(name), type);
 }
 
-void MapDocument::AddProperty(const std::string& name, const Property& property)
+void MapDocument::AddProperty(std::string name, const Property& property)
 {
-  mDelegate->AddProperty(name, property);
+  mDelegate->AddProperty(std::move(name), property);
 }
 
 void MapDocument::RemoveProperty(const std::string_view name)
@@ -415,12 +415,11 @@ void MapDocument::RemoveProperty(const std::string_view name)
   mDelegate->Execute<RemovePropertyCmd>(mDelegate.get(), std::string{name});
 }
 
-void MapDocument::RenameProperty(const std::string_view oldName,
-                                 const std::string& newName)
+void MapDocument::RenameProperty(const std::string_view oldName, std::string newName)
 {
   mDelegate->Execute<RenamePropertyCmd>(mDelegate.get(),
                                         std::string{oldName},
-                                        newName);
+                                        std::move(newName));
 }
 
 void MapDocument::SetProperty(const std::string_view name, const Property& property)
@@ -428,12 +427,9 @@ void MapDocument::SetProperty(const std::string_view name, const Property& prope
   mDelegate->Execute<SetPropertyCmd>(mDelegate.get(), std::string{name}, property);
 }
 
-void MapDocument::ChangePropertyType(const std::string_view name,
-                                     const PropertyType type)
+void MapDocument::ChangePropertyType(std::string name, const PropertyType type)
 {
-  mDelegate->Execute<ChangePropertyTypeCmd>(mDelegate.get(),
-                                            std::string{name},
-                                            type);
+  mDelegate->Execute<ChangePropertyTypeCmd>(mDelegate.get(), std::move(name), type);
 }
 
 auto MapDocument::HasProperty(const std::string_view name) const -> bool
@@ -456,7 +452,7 @@ auto MapDocument::GetPropertyCount() const -> usize
   return mDelegate->GetPropertyCount();
 }
 
-auto MapDocument::GetName() const -> std::string_view
+auto MapDocument::GetName() const -> const std::string&
 {
   return mDelegate->GetName();
 }

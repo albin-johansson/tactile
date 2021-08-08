@@ -37,7 +37,7 @@ class IPropertyContext
    * \param name the name that will be associated with the property.
    * \param type the type of the property.
    */
-  virtual void AddProperty(const std::string& name, PropertyType type) = 0;
+  virtual void AddProperty(std::string name, PropertyType type) = 0;
 
   /**
    * \brief Adds a property with the specified name and value.
@@ -47,7 +47,7 @@ class IPropertyContext
    * \param name the name that will be associated with the property.
    * \param property the value of the property.
    */
-  virtual void AddProperty(const std::string& name, const Property& property) = 0;
+  virtual void AddProperty(std::string name, const Property& property) = 0;
 
   /**
    * \brief Removes the property associated with the specified name.
@@ -67,8 +67,7 @@ class IPropertyContext
    * \param oldName the name that used to be associated with the property.
    * \param newName the new name that will be associated with the property.
    */
-  virtual void RenameProperty(std::string_view oldName,
-                              const std::string& newName) = 0;
+  virtual void RenameProperty(std::string_view oldName, std::string newName) = 0;
 
   /**
    * \brief Sets the value of a property.
@@ -94,7 +93,7 @@ class IPropertyContext
    * \param name the name associated with the property that will be changed.
    * \param type the new type of the property.
    */
-  virtual void ChangePropertyType(std::string_view name, PropertyType type) = 0;
+  virtual void ChangePropertyType(std::string name, PropertyType type) = 0;
 
   /**
    * \brief Indicates whether or not there is a property associated with the
@@ -139,7 +138,7 @@ class IPropertyContext
    *
    * \return the name of the context.
    */
-  [[nodiscard]] virtual auto GetName() const -> std::string_view = 0;
+  [[nodiscard]] virtual auto GetName() const -> const std::string& = 0;
 };
 
 /// \} End of group core

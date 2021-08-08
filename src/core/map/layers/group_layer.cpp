@@ -48,14 +48,14 @@ auto GroupLayer::Clone() const -> SharedLayer
   return std::make_shared<GroupLayer>(*this);
 }
 
-void GroupLayer::AddProperty(const std::string& name, const PropertyType type)
+void GroupLayer::AddProperty(std::string name, const PropertyType type)
 {
-  mDelegate.AddProperty(name, type);
+  mDelegate.AddProperty(std::move(name), type);
 }
 
-void GroupLayer::AddProperty(const std::string& name, const Property& property)
+void GroupLayer::AddProperty(std::string name, const Property& property)
 {
-  mDelegate.AddProperty(name, property);
+  mDelegate.AddProperty(std::move(name), property);
 }
 
 void GroupLayer::RemoveProperty(const std::string_view name)
@@ -63,10 +63,9 @@ void GroupLayer::RemoveProperty(const std::string_view name)
   mDelegate.RemoveProperty(name);
 }
 
-void GroupLayer::RenameProperty(const std::string_view oldName,
-                                const std::string& newName)
+void GroupLayer::RenameProperty(const std::string_view oldName, std::string newName)
 {
-  mDelegate.RenameProperty(oldName, newName);
+  mDelegate.RenameProperty(oldName, std::move(newName));
 }
 
 void GroupLayer::SetProperty(const std::string_view name, const Property& property)
@@ -74,10 +73,9 @@ void GroupLayer::SetProperty(const std::string_view name, const Property& proper
   mDelegate.SetProperty(name, property);
 }
 
-void GroupLayer::ChangePropertyType(const std::string_view name,
-                                    const PropertyType type)
+void GroupLayer::ChangePropertyType(std::string name, const PropertyType type)
 {
-  mDelegate.ChangePropertyType(name, type);
+  mDelegate.ChangePropertyType(std::move(name), type);
 }
 
 auto GroupLayer::HasProperty(const std::string_view name) const -> bool
@@ -100,7 +98,7 @@ auto GroupLayer::GetPropertyCount() const -> usize
   return mDelegate.GetPropertyCount();
 }
 
-auto GroupLayer::GetName() const -> std::string_view
+auto GroupLayer::GetName() const -> const std::string&
 {
   return mDelegate.GetName();
 }

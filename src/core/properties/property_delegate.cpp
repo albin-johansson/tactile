@@ -14,32 +14,22 @@ void PropertyDelegate::SetName(std::string name)
   mName = std::move(name);
 }
 
-void PropertyDelegate::AddProperty(const std::string& name, const PropertyType type)
+void PropertyDelegate::AddProperty(std::string name, const PropertyType type)
 {
   assert(!mProperties.contains(name));
 
   Property property;
   property.ResetToDefault(type);
 
-  mProperties.emplace(name, std::move(property));
-
-  CENTURION_LOG_DEBUG("%s: Added %s with type %i",
-                      __FUNCTION__,
-                      name.c_str(),
-                      cen::to_underlying(type));
+  mProperties.emplace(std::move(name), std::move(property));
 }
 
-void PropertyDelegate::AddProperty(const std::string& name, const Property& property)
+void PropertyDelegate::AddProperty(std::string name, const Property& property)
 {
   assert(!mProperties.contains(name));
   assert(property.GetType());
 
-  mProperties.emplace(name, property);
-
-  CENTURION_LOG_DEBUG("%s: Added %s with type %i",
-                      __FUNCTION__,
-                      name.c_str(),
-                      cen::to_underlying(property.GetType().value()));
+  mProperties.emplace(std::move(name), property);
 }
 
 void PropertyDelegate::RemoveProperty(const std::string_view name)
@@ -51,18 +41,14 @@ void PropertyDelegate::RemoveProperty(const std::string_view name)
 }
 
 void PropertyDelegate::RenameProperty(const std::string_view oldName,
-                                      const std::string& newName)
+                                      std::string newName)
 {
   assert(mProperties.contains(oldName));
   assert(!mProperties.contains(newName));
 
   auto property = mProperties.at(oldName);
   mProperties.erase(oldName);
-  mProperties.emplace(newName, std::move(property));
-
-  CENTURION_LOG_DEBUG("PropertyDelegate::RenameProperty: %s -> %s",
-                      oldName.data(),
-                      newName.c_str());
+  mProperties.emplace(std::move(newName), std::move(property));
 }
 
 void PropertyDelegate::SetProperty(const std::string_view name,
@@ -71,12 +57,9 @@ void PropertyDelegate::SetProperty(const std::string_view name,
   assert(mProperties.contains(name));
   assert(mProperties.at(name).GetType() == property.GetType());
   mProperties.at(name) = property;
-
-  CENTURION_LOG_DEBUG("Updated value of property \"%s\"", name.data());
 }
 
-void PropertyDelegate::ChangePropertyType(const std::string_view name,
-                                          const PropertyType type)
+void PropertyDelegate::ChangePropertyType(std::string name, const PropertyType type)
 {
   assert(mProperties.contains(name));
   assert(GetProperty(name).GetType() != type);
@@ -86,11 +69,7 @@ void PropertyDelegate::ChangePropertyType(const std::string_view name,
   Property property;
   property.ResetToDefault(type);
 
-  mProperties.emplace(std::string{name}, std::move(property));
-
-  CENTURION_LOG_DEBUG("Changed type of property \"%s\" to %i",
-                      name.data(),
-                      cen::to_underlying(type));
+  mProperties.emplace(std::move(name), std::move(property));
 }
 
 auto PropertyDelegate::HasProperty(const std::string_view name) const -> bool
@@ -114,7 +93,7 @@ auto PropertyDelegate::GetPropertyCount() const -> usize
   return mProperties.size();
 }
 
-auto PropertyDelegate::GetName() const -> std::string_view
+auto PropertyDelegate::GetName() const -> const std::string&
 {
   return mName;
 }

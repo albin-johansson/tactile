@@ -103,14 +103,14 @@ auto DocumentDelegate::GetAbsolutePath() const -> std::filesystem::path
   return std::filesystem::absolute(mPath.value());
 }
 
-void DocumentDelegate::AddProperty(const std::string& name, const PropertyType type)
+void DocumentDelegate::AddProperty(std::string name, const PropertyType type)
 {
-  mCurrentPropertyContext->AddProperty(name, type);
+  mCurrentPropertyContext->AddProperty(std::move(name), type);
 }
 
-void DocumentDelegate::AddProperty(const std::string& name, const Property& property)
+void DocumentDelegate::AddProperty(std::string name, const Property& property)
 {
-  mCurrentPropertyContext->AddProperty(name, property);
+  mCurrentPropertyContext->AddProperty(std::move(name), property);
 }
 
 void DocumentDelegate::RemoveProperty(const std::string_view name)
@@ -119,9 +119,9 @@ void DocumentDelegate::RemoveProperty(const std::string_view name)
 }
 
 void DocumentDelegate::RenameProperty(const std::string_view oldName,
-                                      const std::string& newName)
+                                      std::string newName)
 {
-  mCurrentPropertyContext->RenameProperty(oldName, newName);
+  mCurrentPropertyContext->RenameProperty(oldName, std::move(newName));
 }
 
 void DocumentDelegate::SetProperty(const std::string_view name,
@@ -130,10 +130,9 @@ void DocumentDelegate::SetProperty(const std::string_view name,
   mCurrentPropertyContext->SetProperty(name, property);
 }
 
-void DocumentDelegate::ChangePropertyType(const std::string_view name,
-                                          const PropertyType type)
+void DocumentDelegate::ChangePropertyType(std::string name, const PropertyType type)
 {
-  mCurrentPropertyContext->ChangePropertyType(name, type);
+  mCurrentPropertyContext->ChangePropertyType(std::move(name), type);
 }
 
 auto DocumentDelegate::HasProperty(const std::string_view name) const -> bool
@@ -157,7 +156,7 @@ auto DocumentDelegate::GetPropertyCount() const -> usize
   return mCurrentPropertyContext->GetPropertyCount();
 }
 
-auto DocumentDelegate::GetName() const -> std::string_view
+auto DocumentDelegate::GetName() const -> const std::string&
 {
   return mPropertyContext->GetName();
 }

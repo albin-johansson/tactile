@@ -236,14 +236,14 @@ auto TileLayer::InBounds(const MapPosition& position) const -> bool
   return (row < mTiles.size()) && (position.GetColumnIndex() < mTiles[row].size());
 }
 
-void TileLayer::AddProperty(const std::string& name, const PropertyType type)
+void TileLayer::AddProperty(std::string name, const PropertyType type)
 {
-  mDelegate.AddProperty(name, type);
+  mDelegate.AddProperty(std::move(name), type);
 }
 
-void TileLayer::AddProperty(const std::string& name, const Property& property)
+void TileLayer::AddProperty(std::string name, const Property& property)
 {
-  mDelegate.AddProperty(name, property);
+  mDelegate.AddProperty(std::move(name), property);
 }
 
 void TileLayer::RemoveProperty(const std::string_view name)
@@ -251,10 +251,9 @@ void TileLayer::RemoveProperty(const std::string_view name)
   mDelegate.RemoveProperty(name);
 }
 
-void TileLayer::RenameProperty(const std::string_view oldName,
-                               const std::string& newName)
+void TileLayer::RenameProperty(const std::string_view oldName, std::string newName)
 {
-  mDelegate.RenameProperty(oldName, newName);
+  mDelegate.RenameProperty(oldName, std::move(newName));
 }
 
 void TileLayer::SetProperty(const std::string_view name, const Property& property)
@@ -262,10 +261,9 @@ void TileLayer::SetProperty(const std::string_view name, const Property& propert
   mDelegate.SetProperty(name, property);
 }
 
-void TileLayer::ChangePropertyType(const std::string_view name,
-                                   const PropertyType type)
+void TileLayer::ChangePropertyType(std::string name, const PropertyType type)
 {
-  mDelegate.ChangePropertyType(name, type);
+  mDelegate.ChangePropertyType(std::move(name), type);
 }
 
 auto TileLayer::HasProperty(const std::string_view name) const -> bool
@@ -288,7 +286,7 @@ auto TileLayer::GetPropertyCount() const -> usize
   return mDelegate.GetPropertyCount();
 }
 
-auto TileLayer::GetName() const -> std::string_view
+auto TileLayer::GetName() const -> const std::string&
 {
   return mDelegate.GetName();
 }

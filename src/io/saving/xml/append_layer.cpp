@@ -19,7 +19,7 @@ void AppendTileLayer(const layer_id id,
 {
   auto node = mapNode.append_child("layer");
   node.append_attribute("id").set_value(id.get());
-  node.append_attribute("name").set_value(layer.GetName().data());
+  node.append_attribute("name").set_value(layer.GetName().c_str());
   node.append_attribute("width").set_value(layer.GetColumnCount().get());
   node.append_attribute("height").set_value(layer.GetRowCount().get());
 
@@ -65,7 +65,7 @@ void AppendObjectLayer(const layer_id layerId,
 {
   auto node = mapNode.append_child("objectgroup");
   node.append_attribute("id").set_value(layerId.get());
-  node.append_attribute("name").set_value(layer.GetName().data());
+  node.append_attribute("name").set_value(layer.GetName().c_str());
 
   AppendProperties(layer, node, dir);
 
@@ -111,7 +111,7 @@ void AppendGroupLayer(const layer_id id,
 {
   auto node = mapNode.append_child("group");
   node.append_attribute("id").set_value(id.get());
-  node.append_attribute("name").set_value(layer.GetName().data());
+  node.append_attribute("name").set_value(layer.GetName().c_str());
 
   for (const auto& [subid, sublayer] : layer)
   {
