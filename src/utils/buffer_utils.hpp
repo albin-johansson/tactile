@@ -11,6 +11,15 @@
 
 namespace Tactile {
 
+/// \addtogroup utils
+/// \{
+
+/**
+ * \brief Represents a stack buffer resource that can use heap memory as a fallback.
+ *
+ * \tparam T the type of the stored type.
+ * \tparam Size the number of elements that the buffer can store.
+ */
 template <typename T, usize Size>
 struct StackResource final
 {
@@ -18,6 +27,13 @@ struct StackResource final
   std::pmr::monotonic_buffer_resource resource{buffer.data(), sizeof buffer};
 };
 
+/**
+ * \brief Zeroes the values of a buffer.
+ *
+ * \tparam Size the size of the buffer.
+ *
+ * \param buffer the buffer that will be zeroed.
+ */
 template <usize Size>
 void ZeroBuffer(std::array<char, Size>& buffer)
 {
@@ -85,5 +101,7 @@ template <usize Size>
 
   return std::string{buffer.data(), buffer.data() + index};
 }
+
+/// \} End of group utils
 
 }  // namespace Tactile
