@@ -4,6 +4,7 @@
 
 #include "canvas.hpp"
 #include "core/map_document.hpp"
+#include "render_bounds.hpp"
 
 namespace Tactile {
 

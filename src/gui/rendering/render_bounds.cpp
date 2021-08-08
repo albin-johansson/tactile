@@ -10,8 +10,7 @@
 
 namespace Tactile {
 
-auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info)
-    -> RenderBounds
+auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info) -> Region
 {
   const auto begin = (canvas.tl - info.map_position) / info.grid_size;
   const auto end = (canvas.br - info.map_position) / info.grid_size;
@@ -22,7 +21,7 @@ auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info)
   const auto endRow = std::min(AsRow(info.row_count), AsRow(end.y) + 1_row);
   const auto endCol = std::min(AsColumn(info.col_count), AsColumn(end.x) + 1_col);
 
-  RenderBounds bounds;
+  Region bounds;
 
   bounds.begin = {beginRow, beginCol};
   bounds.end = {endRow, endCol};

@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "render_bounds.hpp"
+#include "core/region.hpp"
 
 namespace Tactile {
 
@@ -19,7 +19,7 @@ struct CanvasInfo;
  */
 struct RenderInfo final
 {
-  RenderBounds bounds;    ///< The area of the map that should be rendered.
+  Region bounds;          ///< The area of the map that should be rendered.
   ImVec2 map_position{};  ///< Absolute screen position of the map.
   ImVec2 grid_size{};     ///< Graphical tile size.
   ImVec2 tile_size{};     ///< Logical tile size.

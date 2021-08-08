@@ -2,11 +2,7 @@
 
 #include <centurion.hpp>  // frect
 
-struct ImVec2;
-
-#include "aliases/col.hpp"
-#include "aliases/row.hpp"
-#include "core/map/map_position.hpp"
+#include "core/region.hpp"
 
 namespace Tactile {
 
@@ -17,18 +13,6 @@ struct RenderInfo;
 /// \{
 
 /**
- * \brief Represents the area of a map that should be rendered.
- *
- * \see `GetRenderBounds()`
- * \see `ConvertBoundsToRect()`
- */
-struct RenderBounds final
-{
-  MapPosition begin;  ///< The top-left position of the bounds.
-  MapPosition end;    ///< The bottom-right position of the bounds.
-};
-
-/**
  * \brief Returns the render bounds for the specified rendering context.
  *
  * \param canvas information about the target canvas.
@@ -37,7 +21,7 @@ struct RenderBounds final
  * \return the corresponding render bounds.
  */
 [[nodiscard]] auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info)
-    -> RenderBounds;
+    -> Region;
 
 /**
  * \brief Converts the render bounds associated with a rendering context to an
