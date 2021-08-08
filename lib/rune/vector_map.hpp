@@ -99,10 +99,10 @@ class vector_map final
    * \return a reference to the added key/value pair.
    */
   template <typename... Args>
-  auto emplace(const key_type& key, Args&&... args) -> value_type&
+  auto emplace(key_type key, Args&&... args) -> value_type&
   {
     assert(!contains(key));
-    return m_data.emplace_back(key, mapped_type{std::forward<Args>(args)...});
+    return m_data.emplace_back(std::move(key), mapped_type{std::forward<Args>(args)...});
   }
 
   /**
@@ -115,10 +115,10 @@ class vector_map final
    *
    * \return a reference to the added key/value pair.
    */
-  auto emplace(const key_type& key, mapped_type value) -> value_type&
+  auto emplace(key_type key, mapped_type value) -> value_type&
   {
     assert(!contains(key));
-    return m_data.emplace_back(key, std::move(value));
+    return m_data.emplace_back(std::move(key), std::move(value));
   }
 
   /**
@@ -132,7 +132,7 @@ class vector_map final
    * \return a reference to the added key/value pair.
    */
   template <typename... Args>
-  auto emplace_or_replace(const key_type& key, Args&&... args) -> value_type&
+  auto emplace_or_replace(key_type key, Args&&... args) -> value_type&
   {
     if (const auto it = find(key); it != end())
     {
@@ -141,7 +141,7 @@ class vector_map final
     }
     else
     {
-      return emplace(key, std::forward<Args>(args)...);
+      return emplace(std::move(key), std::forward<Args>(args)...);
     }
   }
 
@@ -153,7 +153,7 @@ class vector_map final
    *
    * \return a reference to the added key/value pair.
    */
-  auto emplace_or_replace(const key_type& key, mapped_type value) -> value_type&
+  auto emplace_or_replace(key_type key, mapped_type value) -> value_type&
   {
     if (const auto it = find(key); it != end())
     {
@@ -162,7 +162,7 @@ class vector_map final
     }
     else
     {
-      return emplace(key, std::move(value));
+      return emplace(std::move(key), std::move(value));
     }
   }
 
