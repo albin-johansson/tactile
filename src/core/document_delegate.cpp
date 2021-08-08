@@ -2,8 +2,6 @@
 
 #include <utility>  // move
 
-#include "core/properties/property_delegate.hpp"
-
 namespace Tactile {
 
 DocumentDelegate::DocumentDelegate()
@@ -46,6 +44,7 @@ void DocumentDelegate::SetCommandCapacity(const usize capacity)
 void DocumentDelegate::SetPath(std::filesystem::path path)
 {
   mPath = std::move(path);
+  mPropertyContext->SetName(mPath->filename().string());
 }
 
 void DocumentDelegate::SetPropertyContext(IPropertyContext* context)

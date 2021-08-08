@@ -9,6 +9,7 @@
 #include "aliases/unique.hpp"
 #include "core/commands/command_stack.hpp"
 #include "core/document.hpp"
+#include "core/properties/property_delegate.hpp"
 
 namespace Tactile {
 
@@ -108,7 +109,7 @@ class DocumentDelegate final : public IDocument
 
  private:
   Unique<CommandStack> mCommandStack;
-  Unique<IPropertyContext> mPropertyContext;
+  Unique<PropertyDelegate> mPropertyContext;
   IPropertyContext* mCurrentPropertyContext{};
   Maybe<std::filesystem::path> mPath;
 };
