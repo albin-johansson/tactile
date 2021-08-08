@@ -45,6 +45,7 @@ set(TACTILE_TEST_FILES
     unit/io/parsing/to_map_document_test.cpp
 
     unit/utils/color_utils_test.cpp
+    unit/utils/from_string_test.cpp
     )
 
 add_executable(testTactile ${TACTILE_TEST_FILES})
