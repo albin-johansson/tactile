@@ -69,7 +69,7 @@ void CommandStack::SetCapacity(const usize capacity)
 
 auto CommandStack::IsClean() const -> bool
 {
-  return mStack.empty() || (mCleanIndex && mCleanIndex == mIndex);
+  return mStack.empty() || (mCleanIndex == mIndex);
 }
 
 auto CommandStack::CanUndo() const -> bool

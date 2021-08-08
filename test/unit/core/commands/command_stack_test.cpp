@@ -151,7 +151,16 @@ TEST(CommandStack, Clean)
   ASSERT_FALSE(stack.CanUndo());
   ASSERT_FALSE(stack.CanRedo());
 
+  stack.MarkAsClean();
+  stack.Push<Foo>();
+  ASSERT_FALSE(stack.IsClean());
+
+  stack.Undo();
+  ASSERT_TRUE(stack.IsClean());
+
   // ^[ ] -> [ ^Foo ]
+  stack.Clear();
+  stack.ResetClean();
   stack.Push<Foo>();
   ASSERT_FALSE(stack.IsClean());
   ASSERT_TRUE(stack.CanUndo());
