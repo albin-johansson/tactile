@@ -2,16 +2,16 @@
 
 namespace Tactile {
 
-/// \addtogroup core
-/// \{
-
+/**
+ * \brief Represents all different layer types.
+ *
+ * \ingroup core
+ */
 enum class LayerType
 {
   TileLayer,
   ObjectLayer,
   GroupLayer
 };
-
-/// \} End of group core
 
 }  // namespace Tactile
