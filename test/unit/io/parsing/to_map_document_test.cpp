@@ -66,6 +66,10 @@ TEST(ToMapDocument, Test)
     ASSERT_TRUE(objectLayer);
     ASSERT_EQ(2, objectLayer->GetObjectCount());
 
+    ASSERT_TRUE(map.HasObject(1_obj));
+    ASSERT_TRUE(map.HasObject(2_obj));
+    ASSERT_FALSE(map.HasObject(42_obj));
+
     const auto& rect = objectLayer->GetObject(1_obj);
     ASSERT_EQ("Rect", rect.GetName());
     ASSERT_EQ(36, rect.GetX());

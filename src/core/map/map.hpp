@@ -471,14 +471,20 @@ class Map final
   /**
    * \brief Indicates whether or not the map contains a layer with the specified ID.
    *
-   * \details This function will also search for the supplied layer in all group
-   * layers.
-   *
    * \param id the layer ID that will be checked.
    *
    * \return `true` if the map contains the specified layer; `false` otherwise.
    */
   [[nodiscard]] auto HasLayer(layer_id id) const -> bool;
+
+  /**
+   * \brief Indicates whether or not the map contains an object.
+   *
+   * \param id the object ID that will be checked.
+   *
+   * \return `true` if the map contains the specified object; `false` otherwise.
+   */
+  [[nodiscard]] auto HasObject(object_id id) const -> bool;
 
   /**
    * \brief Returns the layer associated with the specified ID.

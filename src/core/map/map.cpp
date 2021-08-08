@@ -1,6 +1,6 @@
 #include "map.hpp"
 
-#include <algorithm>  // max
+#include <algorithm>  // any_of, max
 #include <utility>    // move
 
 #include "core/tactile_error.hpp"
@@ -192,7 +192,7 @@ void Map::SetNextLayerId(const layer_id id) noexcept
 
 void Map::SetNextObjectId(const object_id id) noexcept
 {
-  // TODO assert that there is no object with the specified ID
+  assert(!HasObject(id));
   mNextObjectId = id;
 }
 
@@ -385,6 +385,14 @@ auto Map::GetLayerCount() const -> int
 auto Map::HasLayer(const layer_id id) const -> bool
 {
   return Tactile::FindLayer(mLayers, id) != nullptr;
+}
+
+auto Map::HasObject(const object_id id) const -> bool
+{
+  ObjectLayerQuery query{mLayers};
+  return std::ranges::any_of(query, [id](object_layer_map::value_type pair) {
+    return pair.second->HasObject(id);
+  });
 }
 
 auto Map::GetLayer(const layer_id id) -> SharedLayer
