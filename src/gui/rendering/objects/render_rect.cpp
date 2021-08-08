@@ -42,7 +42,7 @@ void RenderRect(const Object& object,
 
     if (const auto name = object.GetName(); !name.empty())
     {
-      RenderName(name.data(), position, size);
+      RenderName(name.c_str(), position, size);
     }
   }
 }
