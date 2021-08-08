@@ -32,7 +32,7 @@ void TilesetContentWidget(const MapDocument& document, entt::dispatcher& dispatc
 
       bool opened = true;
       const auto isActive = tilesets.GetActiveTilesetId() == id;
-      if (ImGui::BeginTabItem(tileset->GetName().data(),
+      if (ImGui::BeginTabItem(tileset->GetName().c_str(),
                               &opened,
                               isActive ? ImGuiTabItemFlags_SetSelected : 0))
       {
