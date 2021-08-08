@@ -57,8 +57,6 @@ auto Map::AddObjectLayer() -> layer_id
 
 void Map::AddLayer(const layer_id id, SharedLayer layer)
 {
-  // TODO what happens if dimensions mismatch?
-
   assert(!HasLayer(id));
   assert(layer);
 
