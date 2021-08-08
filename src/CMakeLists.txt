@@ -14,6 +14,7 @@ set(TACTILE_SOURCE_FILES
     aliases/czstring.hpp
     aliases/ints.hpp
     aliases/layer_id.hpp
+    aliases/layer_map.hpp
     aliases/layer_stack_resource.hpp
     aliases/map_id.hpp
     aliases/maybe.hpp
@@ -108,6 +109,8 @@ set(TACTILE_SOURCE_FILES
     core/map/map.hpp
     core/map/map_position.hpp
 
+    core/map/layers/abstract_layer.cpp
+    core/map/layers/abstract_layer.hpp
     core/map/layers/group_layer.cpp
     core/map/layers/group_layer.hpp
     core/map/layers/layer.hpp

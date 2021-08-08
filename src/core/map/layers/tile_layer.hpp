@@ -8,8 +8,7 @@
 #include "aliases/tile_id.hpp"
 #include "aliases/tile_matrix.hpp"
 #include "core/map/map_position.hpp"
-#include "layer.hpp"
-#include "layer_delegate.hpp"
+#include "abstract_layer.hpp"
 
 namespace Tactile {
 
@@ -27,7 +26,7 @@ namespace Tactile {
  *
  * \headerfile tile_layer.hpp
  */
-class TileLayer final : public ILayer
+class TileLayer final : public ALayer
 {
  public:
   /**
@@ -45,27 +44,7 @@ class TileLayer final : public ILayer
   TileLayer() : TileLayer{5_row, 5_col}
   {}
 
-  /// \name Layer API
-  /// \{
-
-  void SetVisible(bool visible) override;
-
-  void SetOpacity(float opacity) override;
-
-  void SetName(std::string name) override;
-
-  [[nodiscard]] auto IsVisible() const -> bool override;
-
-  [[nodiscard]] auto GetOpacity() const noexcept -> float override;
-
-  [[nodiscard]] auto GetType() const -> LayerType override;
-
   [[nodiscard]] auto Clone() const -> SharedLayer override;
-
-  /// \} End of layer API
-
-  /// \name Tile layer API
-  /// \{
 
   /**
    * \brief Iterates each tile in the layer.
@@ -224,39 +203,8 @@ class TileLayer final : public ILayer
    */
   [[nodiscard]] auto InBounds(const MapPosition& position) const -> bool;
 
-  /// \} End of tile layer API
-
-  /// \name Property API
-  /// \{
-
-  void AddProperty(std::string name, PropertyType type) override;
-
-  void AddProperty(std::string name, const Property& property) override;
-
-  void RemoveProperty(std::string_view name) override;
-
-  void RenameProperty(std::string_view oldName, std::string newName) override;
-
-  void SetProperty(std::string_view name, const Property& property) override;
-
-  void ChangePropertyType(std::string name, PropertyType type) override;
-
-  [[nodiscard]] auto HasProperty(std::string_view name) const -> bool override;
-
-  [[nodiscard]] auto GetProperty(std::string_view name) const
-      -> const Property& override;
-
-  [[nodiscard]] auto GetProperties() const -> const PropertyMap& override;
-
-  [[nodiscard]] auto GetPropertyCount() const -> usize override;
-
-  [[nodiscard]] auto GetName() const -> const std::string& override;
-
-  /// \} End of property API
-
  private:
   TileMatrix mTiles;
-  LayerDelegate mDelegate;
 };
 
 /// \} End of group core

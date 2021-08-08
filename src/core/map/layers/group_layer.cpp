@@ -4,103 +4,18 @@
 
 #include "aliases/layer_stack_resource.hpp"
 #include "core/tactile_error.hpp"
-#include "utils/buffer_utils.hpp"
+#include "layer_utils.hpp"
 
 namespace Tactile {
 
-GroupLayer::GroupLayer() : mDelegate{LayerType::GroupLayer}
+GroupLayer::GroupLayer() : ALayer{LayerType::GroupLayer}
 {
   SetName("Group layer");
-}
-
-void GroupLayer::SetVisible(const bool visible) noexcept
-{
-  mDelegate.SetVisible(visible);
-}
-
-void GroupLayer::SetOpacity(const float opacity)
-{
-  mDelegate.SetOpacity(opacity);
-}
-
-void GroupLayer::SetName(std::string name)
-{
-  mDelegate.SetName(std::move(name));
-}
-
-auto GroupLayer::GetType() const -> LayerType
-{
-  return mDelegate.GetType();
-}
-
-auto GroupLayer::IsVisible() const -> bool
-{
-  return mDelegate.IsVisible();
-}
-
-auto GroupLayer::GetOpacity() const noexcept -> float
-{
-  return mDelegate.GetOpacity();
 }
 
 auto GroupLayer::Clone() const -> SharedLayer
 {
   return std::make_shared<GroupLayer>(*this);
-}
-
-void GroupLayer::AddProperty(std::string name, const PropertyType type)
-{
-  mDelegate.AddProperty(std::move(name), type);
-}
-
-void GroupLayer::AddProperty(std::string name, const Property& property)
-{
-  mDelegate.AddProperty(std::move(name), property);
-}
-
-void GroupLayer::RemoveProperty(const std::string_view name)
-{
-  mDelegate.RemoveProperty(name);
-}
-
-void GroupLayer::RenameProperty(const std::string_view oldName, std::string newName)
-{
-  mDelegate.RenameProperty(oldName, std::move(newName));
-}
-
-void GroupLayer::SetProperty(const std::string_view name, const Property& property)
-{
-  mDelegate.SetProperty(name, property);
-}
-
-void GroupLayer::ChangePropertyType(std::string name, const PropertyType type)
-{
-  mDelegate.ChangePropertyType(std::move(name), type);
-}
-
-auto GroupLayer::HasProperty(const std::string_view name) const -> bool
-{
-  return mDelegate.HasProperty(name);
-}
-
-auto GroupLayer::GetProperty(const std::string_view name) const -> const Property&
-{
-  return mDelegate.GetProperty(name);
-}
-
-auto GroupLayer::GetProperties() const -> const PropertyMap&
-{
-  return mDelegate.GetProperties();
-}
-
-auto GroupLayer::GetPropertyCount() const -> usize
-{
-  return mDelegate.GetPropertyCount();
-}
-
-auto GroupLayer::GetName() const -> const std::string&
-{
-  return mDelegate.GetName();
 }
 
 void GroupLayer::AddLayer(const layer_id id, SharedLayer layer)
@@ -128,12 +43,12 @@ auto GroupLayer::ContainsLayer(const layer_id id) const -> bool
   return FindLayer(id) != nullptr;
 }
 
-auto GroupLayer::GetLayers() -> layer_map&
+auto GroupLayer::GetLayers() -> storage_type&
 {
   return mLayers;
 }
 
-auto GroupLayer::GetLayers() const -> const layer_map&
+auto GroupLayer::GetLayers() const -> const storage_type&
 {
   return mLayers;
 }

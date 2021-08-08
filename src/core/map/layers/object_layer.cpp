@@ -5,39 +5,9 @@
 
 namespace Tactile {
 
-ObjectLayer::ObjectLayer() : mDelegate{LayerType::ObjectLayer}
+ObjectLayer::ObjectLayer() : ALayer{LayerType::ObjectLayer}
 {
   SetName("Object layer");
-}
-
-void ObjectLayer::SetVisible(const bool visible) noexcept
-{
-  mDelegate.SetVisible(visible);
-}
-
-void ObjectLayer::SetOpacity(const float opacity)
-{
-  mDelegate.SetOpacity(opacity);
-}
-
-void ObjectLayer::SetName(std::string name)
-{
-  mDelegate.SetName(std::move(name));
-}
-
-auto ObjectLayer::GetType() const -> LayerType
-{
-  return mDelegate.GetType();
-}
-
-auto ObjectLayer::IsVisible() const -> bool
-{
-  return mDelegate.IsVisible();
-}
-
-auto ObjectLayer::GetOpacity() const noexcept -> float
-{
-  return mDelegate.GetOpacity();
 }
 
 auto ObjectLayer::Clone() const -> SharedLayer
@@ -97,61 +67,6 @@ auto ObjectLayer::GetObject(const object_id id) const -> const Object&
 auto ObjectLayer::GetObjectCount() const noexcept -> usize
 {
   return mObjects.size();
-}
-
-void ObjectLayer::AddProperty(std::string name, const PropertyType type)
-{
-  mDelegate.AddProperty(std::move(name), type);
-}
-
-void ObjectLayer::AddProperty(std::string name, const Property& property)
-{
-  mDelegate.AddProperty(std::move(name), property);
-}
-
-void ObjectLayer::RemoveProperty(const std::string_view name)
-{
-  mDelegate.RemoveProperty(name);
-}
-
-void ObjectLayer::RenameProperty(const std::string_view oldName, std::string newName)
-{
-  mDelegate.RenameProperty(oldName, std::move(newName));
-}
-
-void ObjectLayer::SetProperty(const std::string_view name, const Property& property)
-{
-  mDelegate.SetProperty(name, property);
-}
-
-void ObjectLayer::ChangePropertyType(std::string name, const PropertyType type)
-{
-  mDelegate.ChangePropertyType(std::move(name), type);
-}
-
-auto ObjectLayer::HasProperty(const std::string_view name) const -> bool
-{
-  return mDelegate.HasProperty(name);
-}
-
-auto ObjectLayer::GetProperty(const std::string_view name) const -> const Property&
-{
-  return mDelegate.GetProperty(name);
-}
-
-auto ObjectLayer::GetProperties() const -> const PropertyMap&
-{
-  return mDelegate.GetProperties();
-}
-
-auto ObjectLayer::GetPropertyCount() const -> usize
-{
-  return mDelegate.GetPropertyCount();
-}
-
-auto ObjectLayer::GetName() const -> const std::string&
-{
-  return mDelegate.GetName();
 }
 
 }  // namespace Tactile

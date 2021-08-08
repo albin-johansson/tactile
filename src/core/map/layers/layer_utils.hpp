@@ -6,6 +6,7 @@
 
 #include "aliases/ints.hpp"
 #include "aliases/layer_id.hpp"
+#include "aliases/layer_map.hpp"
 #include "aliases/maybe.hpp"
 #include "layer.hpp"
 #include "utils/buffer_utils.hpp"
@@ -19,7 +20,6 @@ class TileLayer;
 class ObjectLayer;
 class GroupLayer;
 
-using layer_map = rune::vector_map<layer_id, SharedLayer>;
 using group_layer_map = std::pmr::unordered_map<layer_id, GroupLayer*>;
 using tile_layer_map = std::pmr::unordered_map<layer_id, TileLayer*>;
 using object_layer_map = std::pmr::unordered_map<layer_id, ObjectLayer*>;

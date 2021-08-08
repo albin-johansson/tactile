@@ -3,50 +3,27 @@
 #include <concepts>        // invocable
 #include <vector_map.hpp>  // vector_map
 
+#include "abstract_layer.hpp"
 #include "aliases/ints.hpp"
 #include "aliases/object_id.hpp"
-#include "layer.hpp"
-#include "layer_delegate.hpp"
 #include "object.hpp"
 
 namespace Tactile {
 
-/// \addtogroup core
-/// \{
-
 /**
- * \class ObjectLayer
- *
  * \brief Represents a layer that only contains map objects.
  *
- * \headerfile object_layer.hpp
+ * \ingroup core
  */
-class ObjectLayer final : public ILayer
+class ObjectLayer final : public ALayer
 {
  public:
+  using storage_type = rune::vector_map<object_id, Object>;
+  using const_iterator = storage_type::const_iterator;
+
   ObjectLayer();
 
-  /// \name Layer API
-  /// \{
-
-  void SetVisible(bool visible) noexcept override;
-
-  void SetOpacity(float opacity) override;
-
-  void SetName(std::string name) override;
-
-  [[nodiscard]] auto GetType() const -> LayerType override;
-
-  [[nodiscard]] auto IsVisible() const -> bool override;
-
-  [[nodiscard]] auto GetOpacity() const noexcept -> float override;
-
   [[nodiscard]] auto Clone() const -> SharedLayer override;
-
-  /// \} End of layer API
-
-  /// \name Object layer API
-  /// \{
 
   template <std::invocable<object_id, const Object&> T>
   void Each(T&& callable) const
@@ -132,51 +109,18 @@ class ObjectLayer final : public ILayer
    */
   [[nodiscard]] auto GetObjectCount() const noexcept -> usize;
 
-  [[nodiscard]] auto begin() const noexcept
+  [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
     return mObjects.begin();
   }
 
-  [[nodiscard]] auto end() const noexcept
+  [[nodiscard]] auto end() const noexcept -> const_iterator
   {
     return mObjects.end();
   }
 
-  /// \} End of object layer API
-
-  /// \name Property API
-  /// \{
-
-  void AddProperty(std::string name, PropertyType type) override;
-
-  void AddProperty(std::string name, const Property& property) override;
-
-  void RemoveProperty(std::string_view name) override;
-
-  void RenameProperty(std::string_view oldName, std::string newName) override;
-
-  void SetProperty(std::string_view name, const Property& property) override;
-
-  void ChangePropertyType(std::string name, PropertyType type) override;
-
-  [[nodiscard]] auto HasProperty(std::string_view name) const -> bool override;
-
-  [[nodiscard]] auto GetProperty(std::string_view name) const
-      -> const Property& override;
-
-  [[nodiscard]] auto GetProperties() const -> const PropertyMap& override;
-
-  [[nodiscard]] auto GetPropertyCount() const -> usize override;
-
-  [[nodiscard]] auto GetName() const -> const std::string& override;
-
-  /// \} End of property API
-
  private:
-  rune::vector_map<object_id, Object> mObjects;
-  LayerDelegate mDelegate;
+  storage_type mObjects;
 };
-
-/// \} End of group core
 
 }  // namespace Tactile

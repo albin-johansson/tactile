@@ -2,7 +2,6 @@
 
 #include <cassert>  // assert
 #include <cmath>    // abs
-#include <utility>  // move
 
 #include "core/algorithms/flood_fill.hpp"
 #include "core/algorithms/invoke_n.hpp"
@@ -27,48 +26,18 @@ auto MakeTileMatrix(const row_t nRows, const col_t nCols) -> TileMatrix
 }
 
 TileLayer::TileLayer(const row_t nRows, const col_t nCols)
-    : mDelegate{LayerType::TileLayer}
+    : ALayer{LayerType::TileLayer}
 {
   if (nRows < 1_row || nCols < 1_col)
   {
     throw TactileError{"Invalid tile layer dimensions!"};
   }
 
-  mDelegate.SetName("Tile layer");
+  SetName("Tile layer");
 
   mTiles = MakeTileMatrix(nRows, nCols);
   assert(GetRowCount() == nRows);
   assert(GetColumnCount() == nCols);
-}
-
-void TileLayer::SetVisible(const bool visible)
-{
-  mDelegate.SetVisible(visible);
-}
-
-void TileLayer::SetOpacity(const float opacity)
-{
-  mDelegate.SetOpacity(opacity);
-}
-
-void TileLayer::SetName(std::string name)
-{
-  mDelegate.SetName(std::move(name));
-}
-
-auto TileLayer::IsVisible() const -> bool
-{
-  return mDelegate.IsVisible();
-}
-
-auto TileLayer::GetOpacity() const noexcept -> float
-{
-  return mDelegate.GetOpacity();
-}
-
-auto TileLayer::GetType() const -> LayerType
-{
-  return mDelegate.GetType();
 }
 
 auto TileLayer::Clone() const -> SharedLayer
@@ -234,61 +203,6 @@ auto TileLayer::InBounds(const MapPosition& position) const -> bool
 {
   const auto row = position.GetRowIndex();
   return (row < mTiles.size()) && (position.GetColumnIndex() < mTiles[row].size());
-}
-
-void TileLayer::AddProperty(std::string name, const PropertyType type)
-{
-  mDelegate.AddProperty(std::move(name), type);
-}
-
-void TileLayer::AddProperty(std::string name, const Property& property)
-{
-  mDelegate.AddProperty(std::move(name), property);
-}
-
-void TileLayer::RemoveProperty(const std::string_view name)
-{
-  mDelegate.RemoveProperty(name);
-}
-
-void TileLayer::RenameProperty(const std::string_view oldName, std::string newName)
-{
-  mDelegate.RenameProperty(oldName, std::move(newName));
-}
-
-void TileLayer::SetProperty(const std::string_view name, const Property& property)
-{
-  mDelegate.SetProperty(name, property);
-}
-
-void TileLayer::ChangePropertyType(std::string name, const PropertyType type)
-{
-  mDelegate.ChangePropertyType(std::move(name), type);
-}
-
-auto TileLayer::HasProperty(const std::string_view name) const -> bool
-{
-  return mDelegate.HasProperty(name);
-}
-
-auto TileLayer::GetProperty(const std::string_view name) const -> const Property&
-{
-  return mDelegate.GetProperty(name);
-}
-
-auto TileLayer::GetProperties() const -> const PropertyMap&
-{
-  return mDelegate.GetProperties();
-}
-
-auto TileLayer::GetPropertyCount() const -> usize
-{
-  return mDelegate.GetPropertyCount();
-}
-
-auto TileLayer::GetName() const -> const std::string&
-{
-  return mDelegate.GetName();
 }
 
 }  // namespace Tactile
