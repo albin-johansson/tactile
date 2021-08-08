@@ -146,8 +146,6 @@ void MapView(const Model& model,
     center_viewport = false;
   }
 
-  // TODO ShowGrid(state, canvas, IM_COL32(200, 200, 200, 15));
-
   RenderMap(document, info);
 
   const auto cursor = GetViewportCursorInfo(info);
