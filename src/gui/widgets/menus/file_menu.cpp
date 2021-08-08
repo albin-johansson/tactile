@@ -61,7 +61,6 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    // FIXME the behaviour of the clean state is not 100% accurate
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
                         "Ctrl+S",
                         false,
