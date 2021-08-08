@@ -80,7 +80,7 @@ void TilesetManager::Select(const Maybe<tileset_id> id)
   }
 }
 
-void TilesetManager::SetSelection(const TilesetSelection& selection)
+void TilesetManager::SetSelection(const Region& selection)
 {
   assert(HasActiveTileset());
 
@@ -173,7 +173,7 @@ auto TilesetManager::GetSize() const -> usize
   return mTilesets.size();
 }
 
-auto TilesetManager::GetSelection() const -> Maybe<TilesetSelection>
+auto TilesetManager::GetSelection() const -> Maybe<Region>
 {
   if (const auto* tileset = GetActiveTileset())
   {

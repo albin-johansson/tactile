@@ -59,8 +59,8 @@ void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
 
   if (const auto& selection = tileset.GetSelection())
   {
-    const auto tl = selection->top_left;
-    const auto br = selection->bottom_right;
+    const auto tl = selection->begin;
+    const auto br = selection->end;
     const auto diff = br - tl;
 
     const ImVec2 origin{static_cast<float>(tl.GetColumn()) * tileSize.x,

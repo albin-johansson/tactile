@@ -35,6 +35,7 @@ set(TACTILE_SOURCE_FILES
     core/map_document.hpp
     core/model.cpp
     core/model.hpp
+    core/region.hpp
     core/tactile_error.hpp
     core/viewport_info.hpp
 
@@ -138,7 +139,6 @@ set(TACTILE_SOURCE_FILES
     core/tileset/tileset.hpp
     core/tileset/tileset_manager.cpp
     core/tileset/tileset_manager.hpp
-    core/tileset/tileset_selection.hpp
 
     core/tools/bucket_tool.cpp
     core/tools/bucket_tool.hpp

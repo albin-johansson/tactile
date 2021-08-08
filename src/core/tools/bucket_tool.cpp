@@ -17,7 +17,7 @@ void BucketTool::OnPressed(const MouseInfo& info)
       const auto* tileset = GetTileset();
       if (tileset && tileset->IsSingleTileSelected())
       {
-        const auto selection = tileset->GetSelection()->top_left;
+        const auto selection = tileset->GetSelection()->begin;
         const auto replacement = tileset->GetTile(selection);
         document->Flood(info.mouse_position_in_map, replacement);
       }

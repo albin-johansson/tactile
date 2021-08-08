@@ -67,7 +67,7 @@ Tileset::Tileset(const tile_id firstId,
                                        mTileHeight);
 }
 
-void Tileset::SetSelection(const TilesetSelection& selection)
+void Tileset::SetSelection(const Region& selection)
 {
   mSelection = selection;
 }
@@ -94,8 +94,8 @@ auto Tileset::Contains(const tile_id id) const -> bool
 
 auto Tileset::IsSingleTileSelected() const -> bool
 {
-  return mSelection && (mSelection->bottom_right - mSelection->top_left ==
-                        MapPosition{1_row, 1_col});
+  return mSelection &&
+         (mSelection->end - mSelection->begin == MapPosition{1_row, 1_col});
 }
 
 auto Tileset::GetTile(const MapPosition& position) const -> tile_id

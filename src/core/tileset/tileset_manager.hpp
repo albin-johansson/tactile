@@ -8,6 +8,7 @@
 #include "aliases/maybe.hpp"
 #include "aliases/shared.hpp"
 #include "aliases/tileset_id.hpp"
+#include "core/region.hpp"
 #include "tileset.hpp"
 
 namespace Tactile {
@@ -109,7 +110,7 @@ class TilesetManager final
    *
    * \param selection the new selection.
    */
-  void SetSelection(const TilesetSelection& selection);
+  void SetSelection(const Region& selection);
 
   /// \brief Increments the next tileset ID value.
   void IncrementNextTilesetId();
@@ -192,7 +193,7 @@ class TilesetManager final
    */
   [[nodiscard]] auto GetSize() const -> usize;
 
-  [[nodiscard]] auto GetSelection() const -> Maybe<TilesetSelection>;
+  [[nodiscard]] auto GetSelection() const -> Maybe<Region>;
 
   /**
    * \brief Indicates whether or not the manager has an active tileset.

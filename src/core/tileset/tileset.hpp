@@ -14,7 +14,7 @@
 #include "core/map/map_position.hpp"
 #include "core/properties/property_context.hpp"
 #include "core/properties/property_delegate.hpp"
-#include "tileset_selection.hpp"
+#include "core/region.hpp"
 #include "utils/texture_info.hpp"
 
 namespace Tactile {
@@ -136,7 +136,7 @@ class Tileset final : public IPropertyContext
    *
    * \param selection the new selection.
    */
-  void SetSelection(const TilesetSelection& selection);
+  void SetSelection(const Region& selection);
 
   /// \brief Clears any current selection.
   void ClearSelection() noexcept;
@@ -250,7 +250,7 @@ class Tileset final : public IPropertyContext
    *
    * \return the current selection in the tileset.
    */
-  [[nodiscard]] auto GetSelection() const noexcept -> const Maybe<TilesetSelection>&
+  [[nodiscard]] auto GetSelection() const noexcept -> const Maybe<Region>&
   {
     return mSelection;
   }
@@ -364,7 +364,7 @@ class Tileset final : public IPropertyContext
   int mHeight;
   tile_id mFirstId{1};
   tile_id mLastId;
-  Maybe<TilesetSelection> mSelection;
+  Maybe<Region> mSelection;
   std::unordered_map<tile_id, cen::irect> mSourceRects;
   int mTileWidth{};
   int mTileHeight{};

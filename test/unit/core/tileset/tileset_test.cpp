@@ -66,13 +66,13 @@ TEST_F(TilesetTest, VisitSelection)
 
 TEST_F(TilesetTest, SetSelection)
 {
-  const TilesetSelection selection{{1_row, 2_col}, {7_row, 8_col}};
+  const Region selection{{1_row, 2_col}, {7_row, 8_col}};
 
   mTileset->SetSelection(selection);
   ASSERT_TRUE(mTileset->GetSelection());
 
-  ASSERT_EQ(selection.top_left, mTileset->GetSelection()->top_left);
-  ASSERT_EQ(selection.bottom_right, mTileset->GetSelection()->bottom_right);
+  ASSERT_EQ(selection.begin, mTileset->GetSelection()->begin);
+  ASSERT_EQ(selection.end, mTileset->GetSelection()->end);
 
   mTileset->ClearSelection();
 }
@@ -82,7 +82,7 @@ TEST_F(TilesetTest, ClearSelection)
   mTileset->ClearSelection();
   ASSERT_FALSE(mTileset->GetSelection());
 
-  const TilesetSelection selection{{1_row, 2_col}, {7_row, 8_col}};
+  const Region selection{{1_row, 2_col}, {7_row, 8_col}};
   mTileset->SetSelection(selection);
   ASSERT_TRUE(mTileset->GetSelection());
 

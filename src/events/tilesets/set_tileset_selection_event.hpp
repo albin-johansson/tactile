@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/tileset/tileset_selection.hpp"
+#include "core/region.hpp"
 
 namespace Tactile {
 
@@ -9,7 +9,7 @@ namespace Tactile {
 
 struct SetTilesetSelectionEvent final
 {
-  TilesetSelection selection;
+  Region selection;
 };
 
 /// \} End of group events

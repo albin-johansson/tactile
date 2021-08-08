@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize)
-    -> Maybe<TilesetSelection>
+auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Region>
 {
   const auto toRow = [=](const float y) {
     const auto mod = y - std::fmod(y, tileSize.y);
@@ -67,12 +66,12 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize)
       rect.set_width(static_cast<float>(w + ww) * tileSize.x);
       rect.set_height(static_cast<float>(h + hh) * tileSize.y);
 
-      TilesetSelection selection;
-      selection.top_left = {toRow(rect.y()), toColumn(rect.x())};
+      Region selection;
+      selection.begin = {toRow(rect.y()), toColumn(rect.x())};
 
       const MapPosition offset{toRow(rect.max_y() - rect.y()),
                                toColumn(rect.max_x() - rect.x())};
-      selection.bottom_right = selection.top_left + offset;
+      selection.end = selection.begin + offset;
 
       return selection;
     }
