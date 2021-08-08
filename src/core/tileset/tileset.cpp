@@ -67,6 +67,14 @@ Tileset::Tileset(const tile_id firstId,
                                        mTileHeight);
 }
 
+void Tileset::UpdateAnimations()
+{
+  for (auto& [tile, animation] : mAnimations)
+  {
+    animation.Update();
+  }
+}
+
 void Tileset::SetSelection(const Region& selection)
 {
   mSelection = selection;
@@ -87,6 +95,11 @@ void Tileset::SetPath(std::filesystem::path path)
   mPath = std::move(path);
 }
 
+void Tileset::SetAnimation(const tile_id id, const TileAnimation& animation)
+{
+  mAnimations.try_emplace(id, animation);
+}
+
 auto Tileset::Contains(const tile_id id) const -> bool
 {
   return (id >= GetFirstId()) && (id <= GetLastId());
@@ -96,6 +109,16 @@ auto Tileset::IsSingleTileSelected() const -> bool
 {
   return mSelection &&
          (mSelection->end - mSelection->begin == MapPosition{1_row, 1_col});
+}
+
+auto Tileset::IsAnimated(const tile_id id) const -> bool
+{
+  return mAnimations.contains(id);
+}
+
+auto Tileset::GetAnimatedTile(const tile_id id) const -> tile_id
+{
+  return mAnimations.at(id).GetCurrentTile();
 }
 
 auto Tileset::GetTile(const MapPosition& position) const -> tile_id

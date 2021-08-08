@@ -13,6 +13,14 @@ TilesetManager::TilesetManager()
   mTilesets.reserve(8);
 }
 
+void TilesetManager::UpdateAnimations()
+{
+  for (auto& [id, tileset] : mTilesets)
+  {
+    tileset->UpdateAnimations();
+  }
+}
+
 void TilesetManager::Add(const tileset_id id, Shared<Tileset> tileset)
 {
   assert(!Contains(id));

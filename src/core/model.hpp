@@ -25,6 +25,11 @@ class Model final
 
   Model();
 
+  /**
+   * \brief Updates the state of animations.
+   */
+  void UpdateAnimations();
+
   void OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event);
 
   /// \name Map document API

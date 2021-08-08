@@ -122,6 +122,7 @@ void Application::PollEvents()
 void Application::UpdateFrame()
 {
   mDispatcher.update();
+  mModel->UpdateAnimations();
   UpdateGui(*mModel, mDispatcher);
 }
 

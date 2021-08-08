@@ -2,6 +2,7 @@
 
 #include <centurion.hpp>  // irect
 #include <filesystem>     // path, absolute
+#include <map>            // map
 #include <string>         // string
 #include <unordered_map>  // unordered_map
 
@@ -15,6 +16,7 @@
 #include "core/properties/property_context.hpp"
 #include "core/properties/property_delegate.hpp"
 #include "core/region.hpp"
+#include "tile_animation.hpp"
 #include "utils/texture_info.hpp"
 
 namespace Tactile {
@@ -53,6 +55,11 @@ class Tileset final : public IPropertyContext
 
   /// \name Tileset API
   /// \{
+
+  /**
+   * \brief Updates the state of all associated tile animations.
+   */
+  void UpdateAnimations();
 
   /**
    * \brief Iterates the current selection.
@@ -156,6 +163,14 @@ class Tileset final : public IPropertyContext
   void SetPath(std::filesystem::path path);
 
   /**
+   * \brief Associates an animation with the specified tile.
+   *
+   * \param id the tile to associate the animation with.
+   * \param animation the animation that will be added.
+   */
+  void SetAnimation(tile_id id, const TileAnimation& animation);
+
+  /**
    * \brief Indicates whether or not the tileset contains the specified tile ID.
    *
    * \param id the tile ID that will be checked.
@@ -170,6 +185,29 @@ class Tileset final : public IPropertyContext
    * \return `true` if only a single tile is selected; `false` otherwise.
    */
   [[nodiscard]] auto IsSingleTileSelected() const -> bool;
+
+  /**
+   * \brief Indicates whether or not a tile has an associated animation.
+   *
+   * \param id the tile that will be checked.
+   *
+   * \return `true` if the specified tile has an associated animation; `false`
+   * otherwise.
+   */
+  [[nodiscard]] auto IsAnimated(tile_id id) const -> bool;
+
+  /**
+   * \brief Returns the tile associated with the current frame in the animation
+   * associated with the specified tile.
+   *
+   * \pre The specified tile must have an associated animation.
+   *
+   * \param id the source tile that has an associated animation.
+   *
+   * \return the tile associated with the current frame for the specified tile
+   * animation.
+   */
+  [[nodiscard]] auto GetAnimatedTile(tile_id id) const -> tile_id;
 
   /**
    * \brief Returns the ID of the tile at the specified position.
@@ -362,15 +400,20 @@ class Tileset final : public IPropertyContext
   uint mTexture;
   int mWidth;
   int mHeight;
+
   tile_id mFirstId{1};
   tile_id mLastId;
+
   Maybe<Region> mSelection;
   std::unordered_map<tile_id, cen::irect> mSourceRects;
+  std::map<tile_id, TileAnimation> mAnimations;
+
   int mTileWidth{};
   int mTileHeight{};
   int mTileCount{};
   row_t mRowCount;
   col_t mColumnCount;
+
   std::filesystem::path mPath;
   Unique<PropertyDelegate> mProperties;
 };

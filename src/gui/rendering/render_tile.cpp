@@ -19,9 +19,12 @@ void RenderTile(const tile_id tile,
 {
   if (const auto* tileset = tilesets.TryGetTileset(tile))
   {
+    const auto renderedTile =
+        tileset->IsAnimated(tile) ? tileset->GetAnimatedTile(tile) : tile;
+
     const auto texture = ToTextureID(tileset->GetTexture());
 
-    const auto source = tileset->GetImageSource(tile);
+    const auto source = tileset->GetImageSource(renderedTile);
     assert(source.has_value());
 
     const auto row =

@@ -40,6 +40,11 @@ class TilesetManager final
   TilesetManager();
 
   /**
+   * \brief Updates the state of all tile animations.
+   */
+  void UpdateAnimations();
+
+  /**
    * \brief Adds a tileset to the manager.
    *
    * \details The next tileset ID property will be updated if it clashes with

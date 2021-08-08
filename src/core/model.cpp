@@ -8,6 +8,15 @@ namespace Tactile {
 Model::Model() : mTools{this}
 {}
 
+void Model::UpdateAnimations()
+{
+  if (auto* document = GetActiveDocument())
+  {
+    auto& tilesets = document->GetTilesets();
+    tilesets.UpdateAnimations();
+  }
+}
+
 void Model::OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event)
 {
   for (auto& [id, document] : mDocuments)
