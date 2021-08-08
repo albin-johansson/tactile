@@ -494,7 +494,7 @@ set(TACTILE_SOURCE_FILES
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})
 
-add_library(libTactile ${TACTILE_SOURCE_FILES})
+add_library(libtactile ${TACTILE_SOURCE_FILES})
 
 add_definitions(-DCENTURION_NO_SDL_TTF)
 add_definitions(-DCENTURION_NO_SDL_MIXER)
@@ -504,7 +504,7 @@ if (WIN32)
   add_definitions(-DMSVC) # ImGuiFileDialog needs this to avoid unsafe C-functions
 endif ()
 
-target_include_directories(libTactile
+target_include_directories(libtactile
     PUBLIC ${TACTILE_ROOT_DIR}/src
     SYSTEM PUBLIC ${LIBRARY_DIR}/glew
     SYSTEM PUBLIC ${LIBRARY_DIR}/imgui
@@ -512,7 +512,7 @@ target_include_directories(libTactile
     SYSTEM PUBLIC ${SDL2_INCLUDE_DIR}
     SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
 
-target_link_libraries(libTactile
+target_link_libraries(libtactile
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${GLEW_LIBRARIES}
     PUBLIC ${SDL2_LIBRARY}
@@ -526,7 +526,7 @@ target_link_libraries(libTactile
     PUBLIC libStbImage)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  target_compile_options(libTactile PRIVATE
+  target_compile_options(libtactile PRIVATE
       -Wall
       -Wextra
       -Wpedantic
@@ -541,12 +541,12 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       -Wduplicated-cond
       -Wconversion)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  target_compile_options(libTactile PRIVATE
+  target_compile_options(libtactile PRIVATE
       /EHsc
       /MP
       /W3)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  target_compile_options(libTactile PRIVATE
+  target_compile_options(libtactile PRIVATE
       -Xclang
       -Wall
       -Wextra
@@ -575,9 +575,9 @@ else ()
       main.cpp)
 endif ()
 
-add_dependencies(Tactile libTactile)
+add_dependencies(Tactile libtactile)
 
-target_link_libraries(Tactile PUBLIC libTactile)
+target_link_libraries(Tactile PUBLIC libtactile)
 
 if (WIN32)
   copy_directory_post_build(Tactile

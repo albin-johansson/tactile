@@ -62,7 +62,7 @@ target_include_directories(testTactile
     SYSTEM PUBLIC ${gmock_SOURCE_DIR})
 
 target_link_libraries(testTactile
-    PUBLIC libTactile
+    PUBLIC libtactile
     PUBLIC gtest
     PUBLIC gmock
     )
