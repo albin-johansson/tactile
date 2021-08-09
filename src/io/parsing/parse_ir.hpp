@@ -31,6 +31,25 @@ struct PropertyData final
 };
 
 /**
+ * \brief Intermediate representation of a tile animation frame.
+ */
+struct FrameData final
+{
+  tile_id tile;    ///< The tile that should be displayed during the frame.
+  int duration{};  ///< Frame duration in milliseconds.
+};
+
+/**
+ * \brief Intermediate representation of tile data.
+ */
+struct TileData final
+{
+  tile_id id;                        ///< The associated tile.
+  std::vector<FrameData> animation;  ///< Optional animation frames.
+  // TODO properties
+};
+
+/**
  * \brief Intermediate representation of a tileset.
  */
 struct TilesetData final
@@ -40,6 +59,7 @@ struct TilesetData final
   int tile_height{};                          ///< Logical tile height.
   std::filesystem::path absolute_image_path;  ///< Absolute path of tileset image.
   std::string name;                           ///< Tileset name.
+  std::vector<TileData> tiles;                ///< Data related to specific tiles.
   std::vector<PropertyData> properties;       ///< Tileset properties.
 };
 
