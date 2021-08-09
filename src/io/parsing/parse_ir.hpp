@@ -38,7 +38,7 @@ struct TilesetData final
   tile_id first_id;                           ///< The first global tile ID.
   int tile_width{};                           ///< Logical tile width.
   int tile_height{};                          ///< Logical tile height.
-  std::filesystem::path absolute_image_path;  ///< Absolute path of tileset file.
+  std::filesystem::path absolute_image_path;  ///< Absolute path of tileset image.
   std::string name;                           ///< Tileset name.
   std::vector<PropertyData> properties;       ///< Tileset properties.
 };
