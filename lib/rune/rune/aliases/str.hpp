@@ -3,12 +3,12 @@
 namespace rune {
 
 /**
- * \typedef czstring
+ * \typedef str
  *
  * \brief An alias for a C-style null-terminated string.
  *
  * \ingroup core
  */
-using czstring = const char*;
+using str = const char*;
 
 }  // namespace rune

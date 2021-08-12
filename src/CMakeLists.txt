@@ -501,7 +501,6 @@ list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})
 
 add_library(libtactile ${TACTILE_SOURCE_FILES})
 
-add_definitions(-DCENTURION_NO_SDL_TTF)
 add_definitions(-DCENTURION_NO_SDL_MIXER)
 add_definitions(-DIMGUI_DEFINE_MATH_OPERATORS)
 
@@ -514,18 +513,21 @@ target_include_directories(libtactile
     SYSTEM PUBLIC ${LIBRARY_DIR}/glew
     SYSTEM PUBLIC ${LIBRARY_DIR}/imgui
     SYSTEM PUBLIC ${LIBRARY_DIR}/pugixml
+    SYSTEM PUBLIC ${LIBRARY_DIR}/rune
     SYSTEM PUBLIC ${SDL2_INCLUDE_DIR}
-    SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
+    SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS}
+    SYSTEM PUBLIC ${SDL2_TTF_INCLUDE_DIRS}
+    )
 
 target_link_libraries(libtactile
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${GLEW_LIBRARIES}
-    PUBLIC ${SDL2_LIBRARY}
     PUBLIC ${SDL2_IMAGE_LIBRARIES}
+    PUBLIC ${SDL2_TTF_LIBRARIES}
+    PUBLIC ${SDL2_LIBRARY}
     PUBLIC libCenturion
     PUBLIC libNenya
     PUBLIC libJson
-    PUBLIC libRune
     PUBLIC libEntt
     PUBLIC libFontAwesome
     PUBLIC libStbImage)
@@ -549,7 +551,10 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(libtactile PRIVATE
       /EHsc
       /MP
-      /W3)
+      /W3
+      /Zc:preprocessor
+      /Zc:__cplusplus
+      )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   target_compile_options(libtactile PRIVATE
       -Xclang

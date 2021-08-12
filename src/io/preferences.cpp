@@ -1,8 +1,8 @@
 #include "preferences.hpp"
 
-#include <filesystem>  // exists
-#include <ini.hpp>     // ini_file, read_ini, write_ini
-#include <utility>     // move
+#include <filesystem>           // exists
+#include <rune/everything.hpp>  // ini_file, read_ini, write_ini
+#include <utility>              // move
 
 #include "aliases/czstring.hpp"
 #include "directories.hpp"
@@ -82,7 +82,7 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
 void ValidateExistingFile()
 {
   const auto path = GetPersistentFileDir() / file_name;
-  auto ini = rune::read_ini(path);
+  auto ini = rune::read_ini(path).value();
 
   AddIfMissing(ini, "Appearance", "Theme", def_theme);
   AddIfMissing(ini, "Appearance", "ShowGrid", def_show_grid);
@@ -112,29 +112,29 @@ void LoadPreferences()
   if (std::filesystem::exists(GetPersistentFileDir() / file_name))
   {
     ValidateExistingFile();
-    const auto ini = rune::read_ini(GetPersistentFileDir() / file_name);
+    const auto ini = rune::read_ini(GetPersistentFileDir() / file_name).value();
 
     const auto& appearance = ini.at("Appearance");
-    settings.theme = appearance.at("Theme").get<std::string>();
-    settings.show_grid = appearance.at("ShowGrid").get<bool>();
-    settings.window_border = appearance.at("WindowBorder").get<bool>();
+    settings.theme = appearance.at("Theme").as<std::string>();
+    settings.show_grid = appearance.at("ShowGrid").as<bool>();
+    settings.window_border = appearance.at("WindowBorder").as<bool>();
 
     const auto& behavior = ini.at("Behavior");
-    settings.command_capacity = behavior.at("CommandCapacity").get<usize>();
-    settings.restore_last_session = behavior.at("RestoreLastSession").get<bool>();
-    settings.preferred_tile_width = behavior.at("PreferredTileWidth").get<int>();
-    settings.preferred_tile_height = behavior.at("PreferredTileHeight").get<int>();
+    settings.command_capacity = behavior.at("CommandCapacity").as<usize>();
+    settings.restore_last_session = behavior.at("RestoreLastSession").as<bool>();
+    settings.preferred_tile_width = behavior.at("PreferredTileWidth").as<int>();
+    settings.preferred_tile_height = behavior.at("PreferredTileHeight").as<int>();
 
     const auto& exp = ini.at("Export");
-    settings.preferred_format = exp.at("PreferredFormat").get<std::string>();
-    settings.embed_tilesets = exp.at("EmbedTilesets").get<bool>();
-    settings.human_readable_output = exp.at("HumanReadableOutput").get<bool>();
+    settings.preferred_format = exp.at("PreferredFormat").as<std::string>();
+    settings.embed_tilesets = exp.at("EmbedTilesets").as<bool>();
+    settings.human_readable_output = exp.at("HumanReadableOutput").as<bool>();
 
     const auto& widgets = ini.at("Widgets");
-    settings.show_tileset_dock = widgets.at("ShowTilesetDock").get<bool>();
-    settings.show_layer_dock = widgets.at("ShowLayerDock").get<bool>();
-    settings.show_properties_dock = widgets.at("ShowPropertiesDock").get<bool>();
-    settings.restore_layout = widgets.at("RestoreLayout").get<bool>();
+    settings.show_tileset_dock = widgets.at("ShowTilesetDock").as<bool>();
+    settings.show_layer_dock = widgets.at("ShowLayerDock").as<bool>();
+    settings.show_properties_dock = widgets.at("ShowPropertiesDock").as<bool>();
+    settings.restore_layout = widgets.at("RestoreLayout").as<bool>();
   }
   else
   {

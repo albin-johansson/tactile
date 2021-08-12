@@ -4,7 +4,7 @@
 #include <concepts>        // invocable
 #include <string_view>     // string_view
 #include <type_traits>     // invoke_result_t, is_same_v
-#include <vector_map.hpp>  // vector_map
+#include <rune/everything.hpp>  // vector_map
 
 #include "aliases/col.hpp"
 #include "aliases/ints.hpp"

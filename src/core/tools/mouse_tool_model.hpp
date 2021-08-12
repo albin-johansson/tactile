@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector_map.hpp>  // vector_map
+#include <rune/everything.hpp>  // vector_map
 
 #include "aliases/not_null.hpp"
 #include "aliases/unique.hpp"

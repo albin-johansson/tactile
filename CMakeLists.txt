@@ -18,6 +18,7 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
+find_package(SDL2_ttf REQUIRED)
 
 set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imconfig.h
@@ -44,16 +45,6 @@ set(PUGIXML_SOURCES
     ${LIBRARY_DIR}/pugixml/pugiconfig.hpp
     ${LIBRARY_DIR}/pugixml/pugixml.cpp
     ${LIBRARY_DIR}/pugixml/pugixml.hpp)
-
-set(RUNE_SOURCES
-    ${LIBRARY_DIR}/rune/czstring.hpp
-    ${LIBRARY_DIR}/rune/ini.hpp
-    ${LIBRARY_DIR}/rune/ini_section.hpp
-    ${LIBRARY_DIR}/rune/ini_value.hpp
-    ${LIBRARY_DIR}/rune/integers.hpp
-    ${LIBRARY_DIR}/rune/vector_map.hpp
-    ${LIBRARY_DIR}/rune/rune_error.hpp)
-add_header_only_lib(libRune ${LIBRARY_DIR}/rune ${RUNE_SOURCES})
 
 add_header_only_lib(libNenya ${LIBRARY_DIR}/nenya ${LIBRARY_DIR}/nenya/nenya.hpp)
 add_header_only_lib(libStbImage ${LIBRARY_DIR}/stbimage ${LIBRARY_DIR}/stbimage/stb_image.h)

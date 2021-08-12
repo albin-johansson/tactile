@@ -7,10 +7,10 @@
 #include <iterator>   // distance, iter_swap
 #include <utility>    // pair, move, forward
 #include <vector>     // vector
-#include <optional>   // optional
-#include <cstddef>    // size_t
 
-#include "rune_error.hpp"
+#include "../aliases/integers.hpp"
+#include "../aliases/maybe.hpp"
+#include "../core/rune_error.hpp"
 
 namespace rune {
 
@@ -49,7 +49,7 @@ class vector_map final
   using key_type = K;
   using mapped_type = V;
   using value_type = std::pair<key_type, mapped_type>;
-  using size_type = std::size_t;
+  using size_type = usize;
   using iterator = typename std::vector<value_type>::iterator;
   using const_iterator = typename std::vector<value_type>::const_iterator;
 
@@ -177,9 +177,7 @@ class vector_map final
   template <transparent_to<key_type> T>
   void erase(const T& key)
   {
-    std::erase_if(m_data, [&](const value_type& pair) {
-      return pair.first == key;
-    });
+    std::erase_if(m_data, [&](const value_type& pair) { return pair.first == key; });
   }
 
   /**
@@ -312,11 +310,11 @@ class vector_map final
    *
    * \param key the key of the entry to look for.
    *
-   * \return the index of the specified entry in the underlying vector; `std::nullopt` if
+   * \return the index of the specified entry in the underlying vector; `nothing` if
    * the key is unused.
    */
   template <transparent_to<key_type> T>
-  [[nodiscard]] auto index_of(const T& key) const -> std::optional<size_type>
+  [[nodiscard]] auto index_of(const T& key) const -> maybe<size_type>
   {
     if (const auto it = find(key); it != end())
     {
@@ -324,7 +322,7 @@ class vector_map final
     }
     else
     {
-      return std::nullopt;
+      return nothing;
     }
   }
 
