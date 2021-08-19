@@ -71,7 +71,7 @@ inline const auto maps = testing::Values(
 class MapParserTest : public testing::TestWithParam<PathErrorPair>
 {};
 
-TEST_P(MapParserTest, JsonEngine)
+TEST_P(MapParserTest, MapParser)
 {
   const auto [path, code] = GetParam();
 
