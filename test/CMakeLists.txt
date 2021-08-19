@@ -50,7 +50,6 @@ set(TACTILE_TEST_FILES
 
 add_executable(TactileTests ${TACTILE_TEST_FILES})
 
-add_definitions(-DCENTURION_NO_SDL_TTF)
 add_definitions(-DCENTURION_NO_SDL_MIXER)
 
 target_include_directories(TactileTests
