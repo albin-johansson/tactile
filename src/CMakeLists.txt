@@ -438,6 +438,7 @@ set(TACTILE_SOURCE_FILES
     utils/from_string.hpp
     utils/load_texture.cpp
     utils/load_texture.hpp
+    utils/profile.hpp
     utils/scope_id.hpp
     utils/texture_info.hpp
 

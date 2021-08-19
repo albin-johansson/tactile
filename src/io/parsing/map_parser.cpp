@@ -5,6 +5,7 @@
 #include "io/parsing/parse_properties.hpp"
 #include "io/parsing/parse_tilesets.hpp"
 #include "io/parsing/xml/xml_map_file.hpp"
+#include "utils/profile.hpp"
 
 namespace Tactile::IO {
 
@@ -12,9 +13,7 @@ MapParser::MapParser(const std::filesystem::path& path)
 {
   try
   {
-#ifndef NDEBUG
-    const auto timeStart = cen::counter::now();
-#endif  // NDEBUG
+    TACTILE_PROFILE_START;
 
     CENTURION_LOG_INFO("Parsing map at \"%s\"...", path.string().c_str());
     mData.absolute_path = std::filesystem::absolute(path);
@@ -78,12 +77,7 @@ MapParser::MapParser(const std::filesystem::path& path)
       }
     }
 
-#ifndef NDEBUG
-    const auto timeFinish = cen::counter::now();
-    const auto diff = static_cast<double>(timeFinish - timeStart);
-    const auto freq = static_cast<double>(cen::counter::frequency());
-    CENTURION_LOG_DEBUG("Parsed map in %f seconds", diff / freq);
-#endif  // NDEBUG
+    TACTILE_PROFILE_END("Parsed map");
   }
   catch (...)
   {
