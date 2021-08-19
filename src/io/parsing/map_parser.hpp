@@ -1,9 +1,7 @@
 #pragma once
 
-#include <filesystem>  // path, absolute
+#include <filesystem>  // path
 
-#include "aliases/unique.hpp"
-#include "map_file.hpp"
 #include "parse_error.hpp"
 #include "parse_ir.hpp"
 
@@ -66,20 +64,6 @@ class MapParser final
  private:
   ParseError mError{ParseError::None};
   MapData mData;
-
-  [[nodiscard]] auto OpenFile(const std::filesystem::path& path) -> Unique<IMapFile>;
-
-  [[nodiscard]] auto ParseOrientation(const IMapObject& map) -> bool;
-
-  [[nodiscard]] auto ParseInfinite(const IMapObject& map) -> bool;
-
-  [[nodiscard]] auto ParseNextLayerId(const IMapObject& map) -> bool;
-
-  [[nodiscard]] auto ParseNextObjectId(const IMapObject& map) -> bool;
-
-  [[nodiscard]] auto ParseTileWidth(const IMapObject& map) -> bool;
-
-  [[nodiscard]] auto ParseTileHeight(const IMapObject& map) -> bool;
 };
 
 }  // namespace Tactile::IO

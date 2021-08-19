@@ -1,6 +1,7 @@
 #include "to_map_document.hpp"
 
 #include <cassert>  // assert
+#include <utility>  // move
 #include <variant>  // get
 
 #include "io/parsing/parse_ir.hpp"
@@ -27,6 +28,21 @@ void AddProperties(IPropertyContext& context,
                                            data.tile_width,
                                            data.tile_height);
   tileset->SetName(data.name);
+
+  for (const auto& tile : data.tiles)
+  {
+    if (!tile.animation.empty())
+    {
+      TileAnimation animation;
+      for (const auto& frame : tile.animation)
+      {
+        animation.AddFrame({.tile = data.first_id + frame.tile,
+                            .duration = cen::milliseconds<uint32>{frame.duration}});
+      }
+
+      tileset->SetAnimation(data.first_id + tile.id, std::move(animation));
+    }
+  }
 
   AddProperties(*tileset, data.properties);
 

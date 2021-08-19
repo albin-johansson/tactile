@@ -8,6 +8,49 @@
 namespace Tactile::IO {
 namespace {
 
+[[nodiscard]] auto ParseTiles(const IMapObject& object, TilesetData& tileset)
+    -> ParseError
+{
+  for (const auto& tile : object.GetArray(MapAttribute::Tiles))
+  {
+    auto& tileData = tileset.tiles.emplace_back();
+
+    if (const auto id = tile->GetInt(MapAttribute::Id))
+    {
+      tileData.id = tile_id{*id};
+    }
+    else
+    {
+      return ParseError::Unknown;  // FIXME
+    }
+
+    for (const auto& frame : tile->GetArray(MapAttribute::Animation))
+    {
+      auto& frameData = tileData.animation.emplace_back();
+
+      if (const auto tileId = frame->GetInt(MapAttribute::TileId))
+      {
+        frameData.tile = tile_id{*tileId};
+      }
+      else
+      {
+        return ParseError::Unknown;  // FIXME
+      }
+
+      if (const auto duration = frame->GetInt(MapAttribute::Duration))
+      {
+        frameData.duration = *duration;
+      }
+      else
+      {
+        return ParseError::Unknown;  // FIXME
+      }
+    }
+  }
+
+  return ParseError::None;
+}
+
 [[nodiscard]] auto ParseCommon(const IMapObject& object,
                                const MapData& data,
                                TilesetData& tileset) -> ParseError
@@ -56,6 +99,11 @@ namespace {
   else
   {
     return ParseError::TilesetMissingName;
+  }
+
+  if (const auto error = ParseTiles(object, tileset); error != ParseError::None)
+  {
+    return error;
   }
 
   if (const auto error = ParseProperties(object, tileset.properties);

@@ -1,10 +1,9 @@
 #include "map_parser.hpp"
 
-#include "io/parsing/json/json_map_file.hpp"
-#include "io/parsing/parse_layers.hpp"
-#include "io/parsing/parse_properties.hpp"
-#include "io/parsing/parse_tilesets.hpp"
-#include "io/parsing/xml/xml_map_file.hpp"
+#include <filesystem>  // absolute
+
+#include "io/parsing/json/parse_json_map.hpp"
+#include "io/parsing/xml/parse_xml_map.hpp"
 #include "utils/profile.hpp"
 
 namespace Tactile::IO {
@@ -24,57 +23,18 @@ MapParser::MapParser(const std::filesystem::path& path)
       return;
     }
 
-    if (const auto file = OpenFile(path))
+    const auto extension = path.extension();
+    if (extension == ".json")
     {
-      const auto map = file->GetMap();
-
-      if (!ParseOrientation(*map))
-      {
-        return;
-      }
-
-      if (!ParseInfinite(*map))
-      {
-        return;
-      }
-
-      if (!ParseNextLayerId(*map))
-      {
-        return;
-      }
-
-      if (!ParseNextObjectId(*map))
-      {
-        return;
-      }
-
-      if (!ParseTileWidth(*map))
-      {
-        return;
-      }
-
-      if (!ParseTileHeight(*map))
-      {
-        return;
-      }
-
-      mError = ParseTilesets(*file, mData);
-      if (mError != ParseError::None)
-      {
-        return;
-      }
-
-      mError = ParseLayers(*file, mData);
-      if (mError != ParseError::None)
-      {
-        return;
-      }
-
-      mError = ParseProperties(*map, mData.properties);
-      if (mError != ParseError::None)
-      {
-        return;
-      }
+      mError = IO::ParseJsonMap(path, mData);
+    }
+    else if (extension == ".tmx")
+    {
+      mError = IO::ParseXmlMap(path, mData);
+    }
+    else
+    {
+      mError = ParseError::MapUnsupportedExtension;
     }
 
     TACTILE_PROFILE_END("Parsed map");
@@ -82,106 +42,6 @@ MapParser::MapParser(const std::filesystem::path& path)
   catch (...)
   {
     mError = ParseError::Unknown;
-  }
-}
-
-auto MapParser::OpenFile(const std::filesystem::path& path) -> Unique<IMapFile>
-{
-  const auto extension = path.extension();
-  if (extension == ".json")
-  {
-    return std::make_unique<JsonMapFile>(path);
-  }
-  else if (extension == ".tmx")
-  {
-    return std::make_unique<XmlMapFile>(path);
-  }
-  else
-  {
-    mError = ParseError::MapUnsupportedExtension;
-    return nullptr;
-  }
-}
-
-auto MapParser::ParseOrientation(const IMapObject& map) -> bool
-{
-  const auto orientation = map.GetString(MapAttribute::Orientation);
-
-  if (!orientation || orientation != "orthogonal")
-  {
-    mError = ParseError::MapUnsupportedOrientation;
-    return false;
-  }
-
-  return true;
-}
-
-auto MapParser::ParseInfinite(const IMapObject& map) -> bool
-{
-  const auto infinite = map.GetBool(MapAttribute::Infinite);
-
-  if (infinite.has_value() && *infinite)
-  {
-    mError = ParseError::MapUnsupportedInfinite;
-    return false;
-  }
-
-  return true;
-}
-
-auto MapParser::ParseNextLayerId(const IMapObject& map) -> bool
-{
-  if (const auto id = map.GetInt(MapAttribute::NextLayerId))
-  {
-    mData.next_layer_id = layer_id{*id};
-    return true;
-  }
-  else
-  {
-    mError = ParseError::MapMissingNextLayerId;
-    return false;
-  }
-}
-
-auto MapParser::ParseNextObjectId(const IMapObject& map) -> bool
-{
-  if (const auto id = map.GetInt(MapAttribute::NextObjectId))
-  {
-    mData.next_object_id = object_id{*id};
-    return true;
-  }
-  else
-  {
-    mError = ParseError::MapMissingNextObjectId;
-    return false;
-  }
-}
-
-auto MapParser::ParseTileWidth(const IMapObject& map) -> bool
-{
-  if (const auto tileWidth = map.GetInt(MapAttribute::TileWidth))
-  {
-    mData.tile_width = *tileWidth;
-    return true;
-  }
-  else
-  {
-    mError = ParseError::MapMissingTileWidth;
-    return false;
-  }
-}
-
-auto MapParser::ParseTileHeight(const IMapObject& map) -> bool
-{
-  if (const auto tileHeight = map.GetInt(MapAttribute::TileHeight))
-  {
-    mData.tile_height = *tileHeight;
-    return true;
-  }
-  else
-  {
-    mError = ParseError::MapMissingTileHeight;
-    return false;
   }
 }
 

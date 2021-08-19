@@ -392,19 +392,44 @@ set(TACTILE_SOURCE_FILES
     io/parsing/to_map_document.cpp
     io/parsing/to_map_document.hpp
 
-    io/parsing/json/json_map_file.cpp
-    io/parsing/json/json_map_file.hpp
-    io/parsing/json/json_map_object.cpp
-    io/parsing/json/json_map_object.hpp
+    io/parsing/json/json_utils.hpp
+    io/parsing/json/parse_json_map.cpp
+    io/parsing/json/parse_json_map.hpp
+    io/parsing/json/parse_layers.cpp
+    io/parsing/json/parse_layers.hpp
+    io/parsing/json/parse_object_layer.cpp
+    io/parsing/json/parse_object_layer.hpp
+    io/parsing/json/parse_properties.cpp
+    io/parsing/json/parse_properties.hpp
+    io/parsing/json/parse_tile_data.cpp
+    io/parsing/json/parse_tile_data.hpp
+    io/parsing/json/parse_tile_layer.cpp
+    io/parsing/json/parse_tile_layer.hpp
+    io/parsing/json/parse_tilesets.cpp
+    io/parsing/json/parse_tilesets.hpp
+    io/parsing/json/read_json.cpp
+    io/parsing/json/read_json.hpp
 
     io/parsing/xml/parse_csv.cpp
     io/parsing/xml/parse_csv.hpp
+    io/parsing/xml/parse_layers.cpp
+    io/parsing/xml/parse_layers.hpp
+    io/parsing/xml/parse_object_layer.cpp
+    io/parsing/xml/parse_object_layer.hpp
+    io/parsing/xml/parse_properties.cpp
+    io/parsing/xml/parse_properties.hpp
+    io/parsing/xml/parse_tile_data.cpp
+    io/parsing/xml/parse_tile_data.hpp
+    io/parsing/xml/parse_tile_layer.cpp
+    io/parsing/xml/parse_tile_layer.hpp
     io/parsing/xml/parse_tile_nodes.cpp
     io/parsing/xml/parse_tile_nodes.hpp
-    io/parsing/xml/xml_map_file.cpp
-    io/parsing/xml/xml_map_file.hpp
-    io/parsing/xml/xml_map_object.cpp
-    io/parsing/xml/xml_map_object.hpp
+    io/parsing/xml/parse_tilesets.cpp
+    io/parsing/xml/parse_tilesets.hpp
+    io/parsing/xml/parse_xml_map.cpp
+    io/parsing/xml/parse_xml_map.hpp
+    io/parsing/xml/xml_utils.cpp
+    io/parsing/xml/xml_utils.hpp
 
     io/saving/common.cpp
     io/saving/common.hpp
