@@ -554,6 +554,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
       /W3
       /Zc:preprocessor
       /Zc:__cplusplus
+      /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
       )
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   target_compile_options(libtactile PRIVATE
