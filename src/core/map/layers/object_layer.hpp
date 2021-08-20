@@ -1,6 +1,6 @@
 #pragma once
 
-#include <concepts>        // invocable
+#include <concepts>             // invocable
 #include <rune/everything.hpp>  // vector_map
 
 #include "abstract_layer.hpp"
