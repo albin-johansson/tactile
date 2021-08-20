@@ -3,12 +3,12 @@
 #include <concepts>  // invocable
 #include <vector>    // vector
 
+#include "abstract_layer.hpp"
 #include "aliases/col.hpp"
 #include "aliases/row.hpp"
 #include "aliases/tile_id.hpp"
 #include "aliases/tile_matrix.hpp"
 #include "core/map/map_position.hpp"
-#include "abstract_layer.hpp"
 
 namespace Tactile {
 
