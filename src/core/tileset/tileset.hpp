@@ -16,6 +16,7 @@
 #include "core/properties/property_context.hpp"
 #include "core/properties/property_delegate.hpp"
 #include "core/region.hpp"
+#include "fancy_tile.hpp"
 #include "tile_animation.hpp"
 #include "utils/texture_info.hpp"
 
@@ -219,6 +220,8 @@ class Tileset final : public IPropertyContext
    */
   [[nodiscard]] auto GetTile(const MapPosition& position) const -> tile_id;
 
+  [[nodiscard]] auto GetFancyTiles() const -> const std::map<tile_id, FancyTile>&;
+
   /**
    * \brief Returns the source rectangle associated with the specified tile.
    *
@@ -406,7 +409,7 @@ class Tileset final : public IPropertyContext
 
   Maybe<Region> mSelection;
   std::unordered_map<tile_id, cen::irect> mSourceRects;
-  std::map<tile_id, TileAnimation> mAnimations;
+  std::map<tile_id, FancyTile> mFancyTiles;
 
   int mTileWidth{};
   int mTileHeight{};

@@ -69,9 +69,12 @@ Tileset::Tileset(const tile_id firstId,
 
 void Tileset::UpdateAnimations()
 {
-  for (auto& [tile, animation] : mAnimations)
+  for (auto& [id, tile] : mFancyTiles)
   {
-    animation.Update();
+    if (auto& animation = tile.GetAnimation())
+    {
+      animation->Update();
+    }
   }
 }
 
@@ -97,7 +100,7 @@ void Tileset::SetPath(std::filesystem::path path)
 
 void Tileset::SetAnimation(const tile_id id, const TileAnimation& animation)
 {
-  mAnimations.try_emplace(id, animation);
+  mFancyTiles[id].SetAnimation(animation);
 }
 
 auto Tileset::Contains(const tile_id id) const -> bool
@@ -113,12 +116,22 @@ auto Tileset::IsSingleTileSelected() const -> bool
 
 auto Tileset::IsAnimated(const tile_id id) const -> bool
 {
-  return mAnimations.contains(id);
+  if (const auto it = mFancyTiles.find(id); it != mFancyTiles.end())
+  {
+    const auto& tile = it->second;
+    return tile.GetAnimation().has_value();
+  }
+  else
+  {
+    return false;
+  }
 }
 
 auto Tileset::GetAnimatedTile(const tile_id id) const -> tile_id
 {
-  return mAnimations.at(id).GetCurrentTile();
+  const auto& tile = mFancyTiles.at(id);
+  const auto& animation = tile.GetAnimation().value();
+  return animation.GetCurrentTile();
 }
 
 auto Tileset::GetTile(const MapPosition& position) const -> tile_id
@@ -137,6 +150,11 @@ auto Tileset::GetTile(const MapPosition& position) const -> tile_id
   {
     return empty_tile;
   }
+}
+
+auto Tileset::GetFancyTiles() const -> const std::map<tile_id, FancyTile>&
+{
+  return mFancyTiles;
 }
 
 auto Tileset::GetImageSource(const tile_id id) const -> Maybe<cen::irect>

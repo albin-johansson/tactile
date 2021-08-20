@@ -135,6 +135,8 @@ set(TACTILE_SOURCE_FILES
     core/properties/property_delegate.hpp
     core/properties/property_type.hpp
 
+    core/tileset/fancy_tile.cpp
+    core/tileset/fancy_tile.hpp
     core/tileset/tile_animation.cpp
     core/tileset/tile_animation.hpp
     core/tileset/tileset.cpp

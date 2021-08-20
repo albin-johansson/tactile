@@ -7,17 +7,22 @@
 #include "core/map/layers/tile_layer.hpp"
 #include "core/map_document.hpp"
 #include "core/properties/property_delegate.hpp"
+#include "core/tileset/fancy_tile.hpp"
 #include "core/tileset/tileset.hpp"
 #include "utils/load_texture.hpp"
 
 using namespace Tactile;
+
+// clang-format off
 
 using PropertyContextTypes = testing::Types<PropertyDelegate,
                                             MapDocument,
                                             TileLayer,
                                             ObjectLayer,
                                             Object,
-                                            Tileset>;
+                                            Tileset,
+                                            FancyTile>;
+// clang-format on
 
 inline Maybe<uint> texture_id;
 
