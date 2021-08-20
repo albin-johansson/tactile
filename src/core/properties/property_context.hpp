@@ -1,8 +1,8 @@
 #pragma once
 
-#include <string>          // string
-#include <string_view>     // string_view
 #include <rune/everything.hpp>  // vector_map
+#include <string>               // string
+#include <string_view>          // string_view
 
 #include "aliases/ints.hpp"
 #include "property.hpp"
