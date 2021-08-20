@@ -1,8 +1,8 @@
 #pragma once
 
-#include <centurion.hpp>   // surface
-#include <string>          // string
+#include <centurion.hpp>        // surface
 #include <rune/everything.hpp>  // vector_map
+#include <string>               // string
 
 #include "aliases/ints.hpp"
 #include "aliases/maybe.hpp"
