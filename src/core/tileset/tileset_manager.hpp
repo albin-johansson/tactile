@@ -189,6 +189,18 @@ class TilesetManager final
    */
   [[nodiscard]] auto GetRange(tileset_id id) const -> TileRange;
 
+  /**
+   * \brief Converts a tile identifier to its local value.
+   *
+   * \details A local tile identifier is simply the value of a tile in its native
+   * tileset, without any potential offset.
+   *
+   * \param id the tile identifier that will be converted.
+   *
+   * \return a local tile identifier; `nothing` if the tile isn't recognized.
+   *
+   * \since 0.1.0
+   */
   [[nodiscard]] auto ToLocal(tile_id id) const -> Maybe<tile_id>;
 
   /**
