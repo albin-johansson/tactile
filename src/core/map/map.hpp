@@ -1,10 +1,10 @@
 #pragma once
 
-#include <cassert>         // assert
-#include <concepts>        // invocable
-#include <string_view>     // string_view
-#include <type_traits>     // invoke_result_t, is_same_v
+#include <cassert>              // assert
+#include <concepts>             // invocable
 #include <rune/everything.hpp>  // vector_map
+#include <string_view>          // string_view
+#include <type_traits>          // invoke_result_t, is_same_v
 
 #include "aliases/col.hpp"
 #include "aliases/ints.hpp"
