@@ -26,7 +26,10 @@ void AddCommonAttributes(nlohmann::json& json,
   json["tilecount"] = tileset.GetTileCount();
   json["tilewidth"] = tileset.GetTileWidth();
   json["tileheight"] = tileset.GetTileHeight();
-  json["properties"] = SaveProperties(tileset, dir);
+  if (tileset.GetPropertyCount() != 0)
+  {
+    json["properties"] = SaveProperties(tileset, dir);
+  }
 }
 
 [[nodiscard]] auto SaveEmbeddedTileset(const Tileset& tileset,
