@@ -3,7 +3,7 @@ name: "CI: Windows"
 on: [ push, pull_request ]
 
 env:
-  SDL_VERSION: 2.0.14
+  SDL_VERSION: 2.0.16
   IMG_VERSION: 2.0.5
   TTF_VERSION: 2.0.15
   GLEW_VERSION: 2.1.0
