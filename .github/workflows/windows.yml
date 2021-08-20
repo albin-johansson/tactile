@@ -18,34 +18,29 @@ jobs:
       - uses: lukka/get-cmake@v3.18.3
 
       - name: Create binaries directory
-        run: mkdir bin
         shell: cmd
+        run: mkdir bin
 
       - name: Download SDL2
-        uses: albin-johansson/download-sdl2@v1
+        uses: albin-johansson/download-sdl2@latest
         with:
           version: ${{env.SDL_VERSION}}
           sources_destination: .
           binaries_destination: bin
 
       - name: Download SDL2_image
-        uses: albin-johansson/download-sdl2-image@v1
+        uses: albin-johansson/download-sdl2-image@latest
         with:
           version: ${{env.IMG_VERSION}}
           sources_destination: .
           binaries_destination: bin
 
       - name: Download SDL2_ttf
-        shell: powershell
-        run: |
-          Invoke-WebRequest -Uri "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-${{env.TTF_VERSION}}-VC.zip" `
-                            -OutFile SDL2_ttf-devel-${{env.TTF_VERSION}}-VC.zip
-          7z x -y SDL2_ttf-devel-${{env.TTF_VERSION}}-VC.zip
-
-          mkdir bin
-          Invoke-WebRequest -Uri "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-${{env.TTF_VERSION}}-win32-x64.zip" `
-                            -OutFile bin/SDL2_ttf-${{env.TTF_VERSION}}-win32-x64.zip
-
+        uses: albin-johansson/download-sdl2-ttf@latest
+        with:
+          version: ${{env.TTF_VERSION}}
+          sources_destination: .
+          binaries_destination: bin
 
       - name: Download GLEW
         shell: powershell
@@ -55,7 +50,6 @@ jobs:
                             -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
           7z x -y glew.zip
           del glew.zip
-          dir
           Copy-Item -Path glew-${{env.GLEW_VERSION}}/bin/Release/x64/glew32.dll `
                     -Destination bin/glew32.dll
 
