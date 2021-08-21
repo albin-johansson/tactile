@@ -36,7 +36,7 @@ void AppendEmbeddedTileset(const Tileset& tileset,
                            const std::filesystem::path& dir)
 {
   auto node = mapNode.append_child("tileset");
-  node.append_attribute("firstgid").set_value(tileset.GetFirstId().get());
+  node.append_attribute("firstgid").set_value(tileset.GetFirstId());
 
   AddCommon(tileset, node, dir);
 }
