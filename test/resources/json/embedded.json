@@ -69,7 +69,7 @@
         329,
         0,
         0,
-        0,
+        182,
         0,
         0,
         297,
@@ -190,6 +190,25 @@
       "spacing": 0,
       "tilecount": 1024,
       "tileheight": 32,
+      "tiles": [
+        {
+          "animation": [
+            {
+              "duration": 300,
+              "tileid": 181
+            },
+            {
+              "duration": 300,
+              "tileid": 182
+            },
+            {
+              "duration": 300,
+              "tileid": 183
+            }
+          ],
+          "id": 181
+        }
+      ],
       "tilewidth": 32
     }
   ],
