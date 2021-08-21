@@ -135,6 +135,21 @@ void VerifyTilesets(const MapData& data, const std::filesystem::path& path)
   const auto expected =
       std::filesystem::weakly_canonical(directory / "../terrain.png");
   ASSERT_EQ(expected, tileset.absolute_image_path);
+
+  ASSERT_EQ(1, tileset.tiles.size());
+
+  const auto& tile = tileset.tiles.at(0);
+  ASSERT_EQ(181_tile, tile.id);
+  ASSERT_EQ(3, tile.animation.size());
+
+  ASSERT_EQ(181_tile, tile.animation.at(0).tile);
+  ASSERT_EQ(300, tile.animation.at(0).duration);
+
+  ASSERT_EQ(182_tile, tile.animation.at(1).tile);
+  ASSERT_EQ(300, tile.animation.at(1).duration);
+
+  ASSERT_EQ(183_tile, tile.animation.at(2).tile);
+  ASSERT_EQ(300, tile.animation.at(2).duration);
 }
 
 void VerifyMap(const std::filesystem::path& path)
