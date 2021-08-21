@@ -98,9 +98,9 @@ void Tileset::SetPath(std::filesystem::path path)
   mPath = std::move(path);
 }
 
-void Tileset::SetAnimation(const tile_id id, const TileAnimation& animation)
+void Tileset::SetAnimation(const tile_id id, TileAnimation animation)
 {
-  mFancyTiles[id].SetAnimation(animation);
+  mFancyTiles[id].SetAnimation(std::move(animation));
 }
 
 auto Tileset::Contains(const tile_id id) const -> bool

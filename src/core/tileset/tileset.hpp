@@ -169,7 +169,7 @@ class Tileset final : public IPropertyContext
    * \param id the tile to associate the animation with.
    * \param animation the animation that will be added.
    */
-  void SetAnimation(tile_id id, const TileAnimation& animation);
+  void SetAnimation(tile_id id, TileAnimation animation);
 
   /**
    * \brief Indicates whether or not the tileset contains the specified tile ID.
