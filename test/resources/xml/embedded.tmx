@@ -11,6 +11,13 @@
  </properties>
  <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="../terrain.png" width="1024" height="1024"/>
+  <tile id="181">
+   <animation>
+    <frame tileid="181" duration="300"/>
+    <frame tileid="182" duration="300"/>
+    <frame tileid="183" duration="300"/>
+   </animation>
+  </tile>
  </tileset>
  <layer id="1" name="Tile Layer 1" width="7" height="5">
   <data encoding="csv">
@@ -25,7 +32,7 @@
   <data encoding="csv">
 0,0,0,0,0,0,297,
 0,0,0,0,0,200,329,
-0,0,0,0,0,297,0,
+0,0,182,0,0,297,0,
 0,0,0,200,328,329,0,
 0,200,328,329,0,0,0
 </data>
