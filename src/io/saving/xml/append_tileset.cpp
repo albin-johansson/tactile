@@ -64,7 +64,7 @@ void AppendExternalTileset(const Tileset& tileset,
                            pugi::xml_node& mapNode)
 {
   auto node = mapNode.append_child("tileset");
-  node.append_attribute("firstgid").set_value(tileset.GetFirstId().get());
+  node.append_attribute("firstgid").set_value(tileset.GetFirstId());
   node.append_attribute("source").set_value(source.c_str());
 }
 
