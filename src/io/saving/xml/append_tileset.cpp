@@ -18,13 +18,15 @@ void AddCommon(const Tileset& tileset,
   node.append_attribute("tilewidth").set_value(tileset.GetTileWidth());
   node.append_attribute("tileheight").set_value(tileset.GetTileHeight());
   node.append_attribute("tilecount").set_value(tileset.GetTileCount());
-  node.append_attribute("columns").set_value(tileset.GetColumnCount().get());
+  node.append_attribute("columns").set_value(tileset.GetColumnCount());
 
-  auto imageNode = node.append_child("image");
-  const auto source = GetTilesetImagePath(tileset, dir);
-  imageNode.append_attribute("source").set_value(source.c_str());
-  imageNode.append_attribute("width").set_value(tileset.GetWidth());
-  imageNode.append_attribute("height").set_value(tileset.GetHeight());
+  {
+    auto imageNode = node.append_child("image");
+    const auto source = GetTilesetImagePath(tileset, dir);
+    imageNode.append_attribute("source").set_value(source.c_str());
+    imageNode.append_attribute("width").set_value(tileset.GetWidth());
+    imageNode.append_attribute("height").set_value(tileset.GetHeight());
+  }
 
   AppendProperties(tileset, node, dir);
 }
