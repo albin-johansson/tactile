@@ -554,22 +554,7 @@ target_link_libraries(libtactile
     PUBLIC libFontAwesome
     PUBLIC libStbImage)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  target_compile_options(libtactile PRIVATE
-      -Wall
-      -Wextra
-      -Wpedantic
-      -Wdouble-promotion
-      -Wswitch-default
-      -Wswitch-enum
-      -Wunused
-      -Wuninitialized
-      -Wsuggest-final-types
-      -Wsuggest-final-methods
-      -Wsuggest-override
-      -Wduplicated-cond
-      -Wconversion)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(libtactile PRIVATE
       /EHsc
       /MP
@@ -578,24 +563,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
       /Zc:__cplusplus
       /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
       )
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-  target_compile_options(libtactile PRIVATE
-      -Xclang
-      -Wall
-      -Wextra
-      -Wpedantic
-      -Wdouble-promotion
-      -Wswitch-default
-      -Wswitch-enum
-      -Wunused
-      -Wuninitialized
-      -Wconversion
-      -Wno-c++98-compat
-      -Wno-c++98-compat-pedantic
-      -Wno-unused-template
-      -Wno-unused-macros
-      -Wno-newline-eof
-      -Wno-documentation-unknown-command)
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
