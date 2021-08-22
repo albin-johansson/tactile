@@ -521,8 +521,9 @@ list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})
 
 add_library(libtactile ${TACTILE_SOURCE_FILES})
 
-add_definitions(-DCENTURION_NO_SDL_MIXER)
-add_definitions(-DIMGUI_DEFINE_MATH_OPERATORS)
+target_compile_definitions(libtactile
+    PUBLIC CENTURION_NO_SDL_MIXER
+    PUBLIC IMGUI_DEFINE_MATH_OPERATORS)
 
 if (WIN32)
   add_definitions(-DMSVC) # ImGuiFileDialog needs this to avoid unsafe C-functions
