@@ -32,9 +32,10 @@ void AppendMapChild(const MapDocument& document,
 
   AppendProperties(document, node, dir);
 
-  for (const auto& [id, tileset] : document.GetTilesets())
+  const auto& tilesets = document.GetTilesets();
+  for (const auto& [id, tileset] : tilesets)
   {
-    AppendTileset(*tileset, node, dir);
+    AppendTileset(tilesets, *tileset, node, dir);
   }
 
   for (const auto& [id, layer] : map)

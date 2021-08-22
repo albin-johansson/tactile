@@ -10,8 +10,36 @@
 namespace Tactile::IO {
 namespace {
 
-void AddCommon(const Tileset& tileset,
-               pugi::xml_node& node,
+void AppendFancyTiles(const TilesetManager& manager,
+                      const Tileset& tileset,
+                      pugi::xml_node node,
+                      const std::filesystem::path& dir)
+{
+  for (const auto& [id, fancy] : tileset.GetFancyTiles())
+  {
+    auto tileNode = node.append_child("tile");
+    tileNode.append_attribute("id").set_value(manager.ToLocal(id).value());
+
+    if (const auto& animation = fancy.GetAnimation())
+    {
+      auto animationNode = tileNode.append_child("animation");
+      for (const auto& frame : animation->GetFrames())
+      {
+        auto frameNode = animationNode.append_child("frame");
+
+        const auto tile = manager.ToLocal(frame.tile).value();
+        frameNode.append_attribute("tileid").set_value(tile);
+        frameNode.append_attribute("duration").set_value(frame.duration.count());
+      }
+    }
+
+    AppendProperties(fancy, tileNode, dir);
+  }
+}
+
+void AddCommon(const TilesetManager& manager,
+               const Tileset& tileset,
+               pugi::xml_node node,
                const std::filesystem::path& dir)
 {
   node.append_attribute("name").set_value(tileset.GetName().c_str());
@@ -28,20 +56,23 @@ void AddCommon(const Tileset& tileset,
     imageNode.append_attribute("height").set_value(tileset.GetHeight());
   }
 
+  AppendFancyTiles(manager, tileset, node, dir);
   AppendProperties(tileset, node, dir);
 }
 
-void AppendEmbeddedTileset(const Tileset& tileset,
-                           pugi::xml_node& mapNode,
+void AppendEmbeddedTileset(const TilesetManager& manager,
+                           const Tileset& tileset,
+                           pugi::xml_node mapNode,
                            const std::filesystem::path& dir)
 {
   auto node = mapNode.append_child("tileset");
   node.append_attribute("firstgid").set_value(tileset.GetFirstId());
 
-  AddCommon(tileset, node, dir);
+  AddCommon(manager, tileset, node, dir);
 }
 
-void CreateExternalTilesetFile(const Tileset& tileset,
+void CreateExternalTilesetFile(const TilesetManager& manager,
+                               const Tileset& tileset,
                                const std::string& source,
                                const std::filesystem::path& dir)
 {
@@ -51,7 +82,7 @@ void CreateExternalTilesetFile(const Tileset& tileset,
   root.append_attribute("version").set_value(tiled_xml_version);
   root.append_attribute("tiledversion").set_value(tiled_version);
 
-  AddCommon(tileset, root, dir);
+  AddCommon(manager, tileset, root, dir);
 
   const auto path = dir / source;
   CENTURION_LOG_INFO("Saving external tileset in \"%s\"", path.string().c_str());
@@ -61,7 +92,7 @@ void CreateExternalTilesetFile(const Tileset& tileset,
 
 void AppendExternalTileset(const Tileset& tileset,
                            const std::string& source,
-                           pugi::xml_node& mapNode)
+                           pugi::xml_node mapNode)
 {
   auto node = mapNode.append_child("tileset");
   node.append_attribute("firstgid").set_value(tileset.GetFirstId());
@@ -70,18 +101,19 @@ void AppendExternalTileset(const Tileset& tileset,
 
 }  // namespace
 
-void AppendTileset(const Tileset& tileset,
-                   pugi::xml_node& mapNode,
+void AppendTileset(const TilesetManager& manager,
+                   const Tileset& tileset,
+                   pugi::xml_node mapNode,
                    const std::filesystem::path& dir)
 {
   if (Prefs::GetEmbedTilesets())
   {
-    AppendEmbeddedTileset(tileset, mapNode, dir);
+    AppendEmbeddedTileset(manager, tileset, mapNode, dir);
   }
   else
   {
     const auto source = std::format("{}.tsx", tileset.GetName());
-    CreateExternalTilesetFile(tileset, source, dir);
+    CreateExternalTilesetFile(manager, tileset, source, dir);
     AppendExternalTileset(tileset, source, mapNode);
   }
 }
