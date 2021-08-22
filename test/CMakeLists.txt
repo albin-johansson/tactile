@@ -66,9 +66,11 @@ target_link_libraries(TactileTests
     PUBLIC gmock
     )
 
-copy_directory_post_build(TactileTests
-    ${TACTILE_ROOT_DIR}/bin
-    ${CMAKE_CURRENT_BINARY_DIR})
+if (WIN32)
+  copy_directory_post_build(TactileTests
+      ${TACTILE_ROOT_DIR}/bin
+      ${CMAKE_CURRENT_BINARY_DIR})
+endif ()
 
 copy_directory_post_build(TactileTests
     ${CMAKE_CURRENT_SOURCE_DIR}/resources
