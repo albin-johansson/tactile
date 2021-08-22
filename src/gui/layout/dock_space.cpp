@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+#include <filesystem>  // exists
+
 #include "aliases/maybe.hpp"
 #include "io/preferences.hpp"
 #include "load_default_layout.hpp"
@@ -22,7 +24,7 @@ void UpdateDockSpace()
     const auto size = ImGui::GetMainViewport()->Size;
     if (size.x > 0 && size.y > 0)
     {
-      if (!Prefs::GetRestoreLayout())
+      if (!Prefs::GetRestoreLayout() || !std::filesystem::exists("imgui.ini"))
       {
         LoadDefaultLayout(root_id.value(), false);
       }
