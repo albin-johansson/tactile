@@ -1,0 +1,71 @@
+---
+name: Tactile map
+version: 1
+row-count: 4
+column-count: 5
+next-layer-id: 5
+next-object-id: 2
+layers:
+  - name: foo
+    id: 1
+    opacity: 1.0
+    visible: Yes
+    type: tile-layer
+    data: >
+      0 0 0 0 0
+      0 0 0 0 0
+      0 0 0 0 0
+      0 0 0 0 0
+  - name: bar
+    id: 2
+    opacity: 0.75
+    visible: Yes
+    type: object-layer
+    objects:
+      - name: Object 1
+        id: 1
+        type: CustomType
+        visible: No
+        x: 42
+        y: 27
+        width: 123
+        height: 88
+  - name: hello
+    id: 3
+    opacity: 1.0
+    visible: Yes
+    type: group-layer
+    layers:
+      - id: 4
+        name: world
+        opacity: 0.5
+        visible: Yes
+        type: tile-layer
+        data: >
+          0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0 0
+          0 0 0 0 0
+tilesets:
+  - name: terrain
+    first-global-id: 1
+    tile-count: 1024
+    tile-width: 32
+    tile-height: 32
+    column-count: 32
+    image-path: ../terrain.png
+    image-width: 1024
+    image-height: 1024
+    tiles:
+      - tile: 181
+        animation:
+          - tile: 181
+            duration: 300
+          - tile: 182
+            duration: 300
+          - tile: 183
+            duration: 300
+        properties:
+          - name: abc
+            type: string
+            value: woho
