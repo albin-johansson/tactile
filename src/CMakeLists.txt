@@ -525,8 +525,9 @@ target_compile_definitions(libtactile
     PUBLIC CENTURION_NO_SDL_MIXER
     PUBLIC IMGUI_DEFINE_MATH_OPERATORS)
 
-if (WIN32)
-  add_definitions(-DMSVC) # ImGuiFileDialog needs this to avoid unsafe C-functions
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  # ImGuiFileDialog needs this to avoid unsafe C-functions
+  target_compile_definitions(libtactile PUBLIC MSVC)
 endif ()
 
 target_include_directories(libtactile
