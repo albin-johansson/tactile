@@ -58,6 +58,7 @@ void UpdateCreditsDialog(bool* open)
       Row("SDL_image", "2.0.5", "Zlib");
       Row("SDL_ttf", "2.0.15", "Zlib");
       Row("stb_image", "2.26", "MIT");
+      Row("rapidyaml", "0.2.0", "MIT");
 
       ImGui::EndTable();
     }

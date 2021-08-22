@@ -5,6 +5,7 @@ project(tactile CXX)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_STANDARD 20)
 
+include(FetchContent)
 include(Utilities)
 
 set(LIBRARY_DIR ${PROJECT_SOURCE_DIR}/lib)
@@ -19,6 +20,13 @@ find_package(GLEW REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
+
+FetchContent_Declare(ryml
+    GIT_REPOSITORY https://github.com/biojppm/rapidyaml.git
+    GIT_TAG master
+    GIT_SHALLOW FALSE  # Ensure submodules are checked out
+    )
+FetchContent_MakeAvailable(ryml)
 
 set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imconfig.h
