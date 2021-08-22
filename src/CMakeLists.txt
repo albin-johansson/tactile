@@ -107,6 +107,11 @@ set(TACTILE_SOURCE_FILES
     core/commands/tools/stamp_sequence_cmd.cpp
     core/commands/tools/stamp_sequence_cmd.hpp
 
+    core/components/component.cpp
+    core/components/component.hpp
+    core/components/component_prototype.cpp
+    core/components/component_prototype.hpp
+
     core/map/map.cpp
     core/map/map.hpp
     core/map/map_position.hpp
