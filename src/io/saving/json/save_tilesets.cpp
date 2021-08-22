@@ -12,7 +12,44 @@
 namespace Tactile::IO {
 namespace {
 
-void AddCommonAttributes(nlohmann::json& json,
+[[nodiscard]] auto SaveFancyTiles(const TilesetManager& manager,
+                                  const Tileset& tileset,
+                                  const std::filesystem::path& dir) -> JSON
+{
+  auto array = JSON::array();
+
+  for (const auto& [id, tile] : tileset.GetFancyTiles())
+  {
+    auto& tileJson = array.emplace_back();
+    tileJson["id"] = manager.ToLocal(id).value().get();
+
+    if (const auto& animation = tile.GetAnimation())
+    {
+      auto animationJson = JSON::array();
+      for (const auto& frame : animation->GetFrames())
+      {
+        auto frameJson = JSON::object();
+
+        frameJson["tileid"] = manager.ToLocal(frame.tile).value().get();
+        frameJson["duration"] = frame.duration.count();
+
+        animationJson += std::move(frameJson);
+      }
+
+      tileJson["animation"] = std::move(animationJson);
+    }
+
+    if (tile.GetPropertyCount() != 0)
+    {
+      tileJson["properties"] = SaveProperties(tile, dir);
+    }
+  }
+
+  return array;
+}
+
+void AddCommonAttributes(JSON& json,
+                         const TilesetManager& manager,
                          const Tileset& tileset,
                          const std::filesystem::path& dir)
 {
@@ -26,27 +63,29 @@ void AddCommonAttributes(nlohmann::json& json,
   json["tilecount"] = tileset.GetTileCount();
   json["tilewidth"] = tileset.GetTileWidth();
   json["tileheight"] = tileset.GetTileHeight();
+  json["tiles"] = SaveFancyTiles(manager, tileset, dir);
+
   if (tileset.GetPropertyCount() != 0)
   {
     json["properties"] = SaveProperties(tileset, dir);
   }
 }
 
-[[nodiscard]] auto SaveEmbeddedTileset(const Tileset& tileset,
-                                       const std::filesystem::path& dir)
-    -> nlohmann::json
+[[nodiscard]] auto SaveEmbeddedTileset(const TilesetManager& manager,
+                                       const Tileset& tileset,
+                                       const std::filesystem::path& dir) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   json["firstgid"] = tileset.GetFirstId().get();
-  AddCommonAttributes(json, tileset, dir);
+  AddCommonAttributes(json, manager, tileset, dir);
 
   return json;
 }
 
-[[nodiscard]] auto SaveExternalTileset(const Tileset& tileset) -> nlohmann::json
+[[nodiscard]] auto SaveExternalTileset(const Tileset& tileset) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   json["firstgid"] = tileset.GetFirstId().get();
   json["source"] = std::format("{}.json", tileset.GetName());
@@ -54,12 +93,13 @@ void AddCommonAttributes(nlohmann::json& json,
   return json;
 }
 
-void CreateExternalTilesetFile(const Tileset& tileset,
+void CreateExternalTilesetFile(const TilesetManager& manager,
+                               const Tileset& tileset,
                                const std::filesystem::path& dir)
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
-  AddCommonAttributes(json, tileset, dir);
+  AddCommonAttributes(json, manager, tileset, dir);
 
   json["type"] = "tileset";
   json["tiledversion"] = tiled_version;
@@ -72,16 +112,17 @@ void CreateExternalTilesetFile(const Tileset& tileset,
   SaveJson(json, path);
 }
 
-[[nodiscard]] auto SaveTileset(const Tileset& tileset,
-                               const std::filesystem::path& dir) -> nlohmann::json
+[[nodiscard]] auto SaveTileset(const TilesetManager& manager,
+                               const Tileset& tileset,
+                               const std::filesystem::path& dir) -> JSON
 {
   if (Prefs::GetEmbedTilesets())
   {
-    return SaveEmbeddedTileset(tileset, dir);
+    return SaveEmbeddedTileset(manager, tileset, dir);
   }
   else
   {
-    CreateExternalTilesetFile(tileset, dir);
+    CreateExternalTilesetFile(manager, tileset, dir);
     return SaveExternalTileset(tileset);
   }
 }
@@ -89,13 +130,14 @@ void CreateExternalTilesetFile(const Tileset& tileset,
 }  // namespace
 
 [[nodiscard]] auto SaveTilesets(const MapDocument& document,
-                                const std::filesystem::path& dir) -> nlohmann::json
+                                const std::filesystem::path& dir) -> JSON
 {
-  auto json = nlohmann::json::array();
+  auto json = JSON::array();
 
-  for (const auto& [id, tileset] : document.GetTilesets())
+  const auto& tilesets = document.GetTilesets();
+  for (const auto& [id, tileset] : tilesets)
   {
-    json += SaveTileset(*tileset, dir);
+    json += SaveTileset(tilesets, *tileset, dir);
   }
 
   return json;
