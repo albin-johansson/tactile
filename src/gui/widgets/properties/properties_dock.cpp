@@ -20,6 +20,8 @@ namespace Tactile {
 
 void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
 {
+  // TODO context menu for entire dock
+
   const auto* document = model.GetActiveDocument();
   if (!Prefs::GetShowPropertiesDock() || !document)
   {
