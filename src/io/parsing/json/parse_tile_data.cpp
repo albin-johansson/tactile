@@ -4,7 +4,7 @@
 
 namespace Tactile::IO {
 
-auto ParseTileData(const nlohmann::json& json, const col_t nCols, TileMatrix& matrix)
+auto ParseTileData(const JSON& json, const col_t nCols, TileMatrix& matrix)
     -> ParseError
 {
   // For now, only support the CSV tile encoding, which is the implicit default

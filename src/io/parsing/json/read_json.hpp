@@ -1,10 +1,11 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <json.hpp>    // json
+
+#include "aliases/json.hpp"
 
 namespace Tactile {
 
-[[nodiscard]] auto ReadJson(const std::filesystem::path& path) -> nlohmann::json;
+[[nodiscard]] auto ReadJson(const std::filesystem::path& path) -> JSON;
 
 }  // namespace Tactile

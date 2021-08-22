@@ -4,11 +4,11 @@
 
 namespace Tactile {
 
-auto ReadJson(const std::filesystem::path& path) -> nlohmann::json
+auto ReadJson(const std::filesystem::path& path) -> JSON
 {
   std::ifstream stream{path};
 
-  nlohmann::json json;
+  JSON json;
   stream >> json;
 
   return json;

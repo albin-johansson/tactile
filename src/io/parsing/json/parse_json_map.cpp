@@ -2,10 +2,10 @@
 
 #include <filesystem>  // absolute, exists, weakly_canonical
 #include <fstream>     // ifstream
-#include <json.hpp>    // json
 #include <string>      // string
 #include <vector>      // vector
 
+#include "aliases/json.hpp"
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
@@ -14,7 +14,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseOrientation(const nlohmann::json& json) -> ParseError
+[[nodiscard]] auto ParseOrientation(const JSON& json) -> ParseError
 {
   const auto it = json.find("orientation");
   if (it != json.end() && it->get<std::string>() == "orthogonal")
@@ -27,7 +27,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseInfinite(const nlohmann::json& json) -> ParseError
+[[nodiscard]] auto ParseInfinite(const JSON& json) -> ParseError
 {
   const auto it = json.find("infinite");
   if (it != json.end() && it->get<bool>())
@@ -40,8 +40,8 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextLayerId(const nlohmann::json& json,
-                                    layer_id& nextLayerId) -> ParseError
+[[nodiscard]] auto ParseNextLayerId(const JSON& json, layer_id& nextLayerId)
+    -> ParseError
 {
   if (const auto it = json.find("nextlayerid"); it != json.end())
   {
@@ -54,8 +54,8 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextObjectId(const nlohmann::json& json,
-                                     object_id& nextObjectId) -> ParseError
+[[nodiscard]] auto ParseNextObjectId(const JSON& json, object_id& nextObjectId)
+    -> ParseError
 {
   if (const auto it = json.find("nextobjectid"); it != json.end())
   {
@@ -68,8 +68,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileWidth(const nlohmann::json& json, int& tileWidth)
-    -> ParseError
+[[nodiscard]] auto ParseTileWidth(const JSON& json, int& tileWidth) -> ParseError
 {
   if (const auto it = json.find("tilewidth"); it != json.end())
   {
@@ -82,8 +81,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileHeight(const nlohmann::json& json, int& tileHeight)
-    -> ParseError
+[[nodiscard]] auto ParseTileHeight(const JSON& json, int& tileHeight) -> ParseError
 {
   if (const auto it = json.find("tileheight"); it != json.end())
   {

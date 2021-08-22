@@ -1,8 +1,8 @@
 #include "save_map_document_as_json.hpp"
 
 #include <filesystem>  // path
-#include <json.hpp>    // json
 
+#include "aliases/json.hpp"
 #include "io/saving/common.hpp"
 #include "io/saving/json/save_json.hpp"
 #include "io/saving/json/save_layers.hpp"
@@ -13,9 +13,9 @@ namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto SaveMap(const MapDocument& document,
-                           const std::filesystem::path& dir) -> nlohmann::json
+                           const std::filesystem::path& dir) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
 
   const auto& map = document.GetMap();
 

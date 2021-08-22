@@ -11,11 +11,9 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseLayer(const nlohmann::json& json, LayerData& data)
-    -> ParseError;
+[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data) -> ParseError;
 
-[[nodiscard]] auto ParseGroupLayer(const nlohmann::json& json, LayerData& target)
-    -> ParseError
+[[nodiscard]] auto ParseGroupLayer(const JSON& json, LayerData& target) -> ParseError
 {
   auto& data = target.data.emplace<GroupLayerData>();
 
@@ -37,8 +35,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseLayer(const nlohmann::json& json, LayerData& data)
-    -> ParseError
+[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data) -> ParseError
 {
   if (const auto it = json.find("id"); it != json.end())
   {
@@ -124,8 +121,7 @@ namespace {
 
 }  // namespace
 
-auto ParseLayers(const nlohmann::json& json, std::vector<LayerData>& layers)
-    -> ParseError
+auto ParseLayers(const JSON& json, std::vector<LayerData>& layers) -> ParseError
 {
   if (const auto it = json.find("layers"); it != json.end())
   {

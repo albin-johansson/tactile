@@ -9,7 +9,7 @@
 namespace Tactile::IO {
 namespace {
 
-void AddCommonAttributes(nlohmann::json& json,
+void AddCommonAttributes(JSON& json,
                          const layer_id id,
                          const ILayer& layer,
                          const std::filesystem::path& dir)
@@ -29,16 +29,16 @@ void AddCommonAttributes(nlohmann::json& json,
 
 [[nodiscard]] auto SaveTileLayer(const layer_id id,
                                  const TileLayer& layer,
-                                 const std::filesystem::path& dir) -> nlohmann::json
+                                 const std::filesystem::path& dir) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
   AddCommonAttributes(json, id, layer, dir);
 
   json["type"] = "tilelayer";
   json["width"] = layer.GetColumnCount().get();
   json["height"] = layer.GetRowCount().get();
 
-  auto data = nlohmann::json::array();
+  auto data = JSON::array();
   layer.Each([&](const tile_id tile) { data += tile.get(); });
 
   json["data"] = std::move(data);
@@ -48,17 +48,16 @@ void AddCommonAttributes(nlohmann::json& json,
 
 [[nodiscard]] auto SaveObjectLayer(const layer_id id,
                                    const ObjectLayer& layer,
-                                   const std::filesystem::path& dir)
-    -> nlohmann::json
+                                   const std::filesystem::path& dir) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
   AddCommonAttributes(json, id, layer, dir);
 
   json["type"] = "objectgroup";
 
-  auto objects = nlohmann::json::array();
+  auto objects = JSON::array();
   layer.Each([&](const object_id id, const Object& object) {
-    auto jsonObject = nlohmann::json::object();
+    auto jsonObject = JSON::object();
 
     jsonObject["id"] = id.get();
     jsonObject["name"] = object.GetName();
@@ -90,18 +89,18 @@ void AddCommonAttributes(nlohmann::json& json,
 
 [[nodiscard]] auto SaveLayer(layer_id id,
                              const SharedLayer& layer,
-                             const std::filesystem::path& dir) -> nlohmann::json;
+                             const std::filesystem::path& dir) -> JSON;
 
 [[nodiscard]] auto SaveGroupLayer(const layer_id id,
                                   const GroupLayer& layer,
                                   const std::filesystem::path& dir)
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
   AddCommonAttributes(json, id, layer, dir);
 
   json["type"] = "group";
 
-  auto layers = nlohmann::json::array();
+  auto layers = JSON::array();
   for (const auto& [subid, sublayer] : layer)
   {
     layers += SaveLayer(subid, sublayer, dir);
@@ -114,7 +113,7 @@ void AddCommonAttributes(nlohmann::json& json,
 
 [[nodiscard]] auto SaveLayer(const layer_id id,
                              const SharedLayer& layer,
-                             const std::filesystem::path& dir) -> nlohmann::json
+                             const std::filesystem::path& dir) -> JSON
 {
   switch (layer->GetType())
   {
@@ -134,9 +133,9 @@ void AddCommonAttributes(nlohmann::json& json,
 
 }  // namespace
 
-auto SaveLayers(const Map& map, const std::filesystem::path& dir) -> nlohmann::json
+auto SaveLayers(const Map& map, const std::filesystem::path& dir) -> JSON
 {
-  auto json = nlohmann::json::array();
+  auto json = JSON::array();
 
   for (const auto& [id, layer] : map)
   {

@@ -7,7 +7,7 @@
 
 namespace Tactile::IO {
 
-void SaveJson(const nlohmann::json& json, const std::filesystem::path& path)
+void SaveJson(const JSON& json, const std::filesystem::path& path)
 {
   std::ofstream stream{path};
 

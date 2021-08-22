@@ -11,9 +11,9 @@ namespace {
 
 [[nodiscard]] auto SaveProperty(std::string name,
                                 const Property& property,
-                                const std::filesystem::path& dir) -> nlohmann::json
+                                const std::filesystem::path& dir) -> JSON
 {
-  auto json = nlohmann::json::object();
+  auto json = JSON::object();
   const auto type = property.GetType().value();
 
   json["name"] = std::move(name);
@@ -65,9 +65,9 @@ namespace {
 }  // namespace
 
 [[nodiscard]] auto SaveProperties(const IPropertyContext& context,
-                                  const std::filesystem::path& dir) -> nlohmann::json
+                                  const std::filesystem::path& dir) -> JSON
 {
-  auto array = nlohmann::json::array();
+  auto array = JSON::array();
 
   for (const auto& [name, property] : context.GetProperties())
   {

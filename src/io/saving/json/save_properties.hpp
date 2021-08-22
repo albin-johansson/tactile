@@ -1,14 +1,13 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <json.hpp>    // json
 
+#include "aliases/json.hpp"
 #include "core/properties/property_context.hpp"
 
 namespace Tactile::IO {
 
 [[nodiscard]] auto SaveProperties(const IPropertyContext& context,
-                                  const std::filesystem::path& dir)
-    -> nlohmann::json;
+                                  const std::filesystem::path& dir) -> JSON;
 
 }  // namespace Tactile::IO

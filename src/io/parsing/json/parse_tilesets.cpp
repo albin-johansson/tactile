@@ -10,8 +10,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseFirstTileId(const nlohmann::json& json, tile_id& id)
-    -> ParseError
+[[nodiscard]] auto ParseFirstTileId(const JSON& json, tile_id& id) -> ParseError
 {
   if (const auto it = json.find("firstgid"); it != json.end())
   {
@@ -24,8 +23,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTiles(const nlohmann::json& json, TilesetData& data)
-    -> ParseError
+[[nodiscard]] auto ParseTiles(const JSON& json, TilesetData& data) -> ParseError
 {
   if (!json.contains("tiles"))
   {
@@ -52,7 +50,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseTilesetCommon(const nlohmann::json& json,
+[[nodiscard]] auto ParseTilesetCommon(const JSON& json,
                                       TilesetData& data,
                                       const std::filesystem::path& directory)
     -> ParseError
@@ -116,7 +114,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseExternalTileset(const nlohmann::json& json,
+[[nodiscard]] auto ParseExternalTileset(const JSON& json,
                                         TilesetData& data,
                                         const std::filesystem::path& directory)
     -> ParseError
@@ -137,7 +135,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileset(const nlohmann::json& json,
+[[nodiscard]] auto ParseTileset(const JSON& json,
                                 TilesetData& data,
                                 const std::filesystem::path& directory) -> ParseError
 {
@@ -161,7 +159,7 @@ namespace {
 
 }  // namespace
 
-auto ParseTilesets(const nlohmann::json& json,
+auto ParseTilesets(const JSON& json,
                    std::vector<TilesetData>& tilesets,
                    const std::filesystem::path& directory) -> ParseError
 {

@@ -6,7 +6,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ToProperty(const nlohmann::json& json,
+[[nodiscard]] auto ToProperty(const JSON& json,
                               const std::string& type,
                               Property& property) -> ParseError
 {
@@ -60,8 +60,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseProperty(const nlohmann::json& json, PropertyData& data)
-    -> ParseError
+[[nodiscard]] auto ParseProperty(const JSON& json, PropertyData& data) -> ParseError
 {
   if (const auto it = json.find("name"); it != json.end())
   {
@@ -91,8 +90,8 @@ namespace {
 
 }  // namespace
 
-auto ParseProperties(const nlohmann::json& json,
-                     std::vector<PropertyData>& properties) -> ParseError
+auto ParseProperties(const JSON& json, std::vector<PropertyData>& properties)
+    -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end())
   {

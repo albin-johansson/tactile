@@ -7,8 +7,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseObject(const nlohmann::json& json, ObjectData& data)
-    -> ParseError
+[[nodiscard]] auto ParseObject(const JSON& json, ObjectData& data) -> ParseError
 {
   if (const auto it = json.find("id"); it != json.end())
   {
@@ -98,7 +97,7 @@ namespace {
 
 }  // namespace
 
-auto ParseObjectLayer(const nlohmann::json& json, LayerData& layer) -> ParseError
+auto ParseObjectLayer(const JSON& json, LayerData& layer) -> ParseError
 {
   auto& data = layer.data.emplace<ObjectLayerData>();
 

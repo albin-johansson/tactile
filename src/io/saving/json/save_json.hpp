@@ -1,10 +1,11 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <json.hpp>    // json
+
+#include "aliases/json.hpp"
 
 namespace Tactile::IO {
 
-void SaveJson(const nlohmann::json& json, const std::filesystem::path& path);
+void SaveJson(const JSON& json, const std::filesystem::path& path);
 
 }  // namespace Tactile::IO

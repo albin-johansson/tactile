@@ -3,10 +3,10 @@
 #include <centurion.hpp>  // ...
 #include <filesystem>     // exists
 #include <fstream>        // ifstream
-#include <json.hpp>       // json
 #include <string>         // string
 #include <utility>        // move
 
+#include "aliases/json.hpp"
 #include "core/model.hpp"
 #include "directories.hpp"
 #include "parsing/map_parser.hpp"
@@ -29,7 +29,7 @@ void RestoreLastSession(Model& model)
   {
     std::ifstream stream{path};
 
-    nlohmann::json json;
+    JSON json;
     stream >> json;
 
     for (const auto& [key, value] : json.at("maps").items())
@@ -53,8 +53,8 @@ void RestoreLastSession(Model& model)
 
 void SaveSession(const Model& model)
 {
-  auto json = nlohmann::json::object();
-  auto array = nlohmann::json::array();
+  auto json = JSON::object();
+  auto array = JSON::array();
 
   for (const auto& [id, document] : model)
   {

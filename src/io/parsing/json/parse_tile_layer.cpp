@@ -5,7 +5,7 @@
 
 namespace Tactile::IO {
 
-auto ParseTileLayer(const nlohmann::json& json, LayerData& layer) -> ParseError
+auto ParseTileLayer(const JSON& json, LayerData& layer) -> ParseError
 {
   auto& data = layer.data.emplace<TileLayerData>();
 
