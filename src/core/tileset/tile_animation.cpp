@@ -27,4 +27,9 @@ auto TileAnimation::GetCurrentDuration() const -> cen::milliseconds<uint32>
   return mFrames.at(mIndex).duration;
 }
 
+auto TileAnimation::GetFrames() const -> const std::vector<Frame>&
+{
+  return mFrames;
+}
+
 }  // namespace Tactile

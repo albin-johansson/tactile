@@ -52,6 +52,13 @@ class TileAnimation final
    */
   [[nodiscard]] auto GetCurrentDuration() const -> cen::milliseconds<uint32>;
 
+  /**
+   * \brief Returns the animation frames.
+   *
+   * \return all associated frames.
+   */
+  [[nodiscard]] auto GetFrames() const -> const std::vector<Frame>&;
+
  private:
   usize mIndex{};
   cen::milliseconds<uint32> mLastUpdateTime{};
