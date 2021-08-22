@@ -69,4 +69,27 @@ tilesets:
           - name: abc
             type: string
             value: woho
+components:
+  - name: Plant
+    properties:
+      - name: rate
+        type: float
+        value: 10.0
+      - name: tiles
+        type: string
+        value: "1,2,3"
+      - name: tallTiles
+        type: string
+        value: "2,3"
+      - name: tileset
+        type: string
+        value: foo
+  - name: Light
+    properties:
+      - name: fluctuationLimit
+        type: float
+        value: 5.0
+      - name: fluctuationStep
+        type: float
+        value: 1.0
 ...
