@@ -69,3 +69,4 @@ tilesets:
           - name: abc
             type: string
             value: woho
+...
