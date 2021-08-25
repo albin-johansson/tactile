@@ -14,7 +14,7 @@ auto Button(const NotNull<czstring> text, const czstring tooltip, const bool ena
 
   if (!enabled)
   {
-    ImGui::PushDisabled();
+    ImGui::BeginDisabled();
   }
 
   ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !enabled);
@@ -34,7 +34,7 @@ auto Button(const NotNull<czstring> text, const czstring tooltip, const bool ena
 
   if (!enabled)
   {
-    ImGui::PopDisabled();
+    ImGui::EndDisabled();
   }
 
   return result;
