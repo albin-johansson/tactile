@@ -9,7 +9,7 @@ namespace Tactile {
 auto BoolPropertyWidget(const Property& property) -> Maybe<bool>
 {
   const ScopeID id{&property};
-  auto value = property.AsBoolean();
+  auto value = property.AsBool();
 
   if (ImGui::Checkbox("##asd", &value))
   {

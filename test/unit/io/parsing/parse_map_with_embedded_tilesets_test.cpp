@@ -14,7 +14,7 @@ void VerifyProperties(const MapData& data)
   const auto& boolean = data.properties.at(0);
   ASSERT_EQ("boolean", boolean.name);
   ASSERT_EQ(PropertyType::Boolean, boolean.property.GetType());
-  ASSERT_TRUE(boolean.property.AsBoolean());
+  ASSERT_TRUE(boolean.property.AsBool());
 
   const auto& color = data.properties.at(1);
   ASSERT_EQ("cool color", color.name);
@@ -24,7 +24,7 @@ void VerifyProperties(const MapData& data)
   const auto& floating = data.properties.at(2);
   ASSERT_EQ("floating", floating.name);
   ASSERT_EQ(PropertyType::Floating, floating.property.GetType());
-  ASSERT_EQ(12.3f, floating.property.AsFloating());
+  ASSERT_EQ(12.3f, floating.property.AsFloat());
 
   const auto& foo = data.properties.at(3);
   ASSERT_EQ("foo", foo.name);
@@ -34,7 +34,7 @@ void VerifyProperties(const MapData& data)
   const auto& integer = data.properties.at(4);
   ASSERT_EQ("integer", integer.name);
   ASSERT_EQ(PropertyType::Integer, integer.property.GetType());
-  ASSERT_EQ(42, integer.property.AsInteger());
+  ASSERT_EQ(42, integer.property.AsInt());
 
   const auto& object = data.properties.at(5);
   ASSERT_EQ("object ref", object.name);

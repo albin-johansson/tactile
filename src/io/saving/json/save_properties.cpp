@@ -29,17 +29,17 @@ namespace {
     }
     case PropertyType::Integer:
     {
-      value = property.AsInteger();
+      value = property.AsInt();
       break;
     }
     case PropertyType::Floating:
     {
-      value = property.AsFloating();
+      value = property.AsFloat();
       break;
     }
     case PropertyType::Boolean:
     {
-      value = property.AsBoolean();
+      value = property.AsBool();
       break;
     }
     case PropertyType::File:

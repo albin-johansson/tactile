@@ -152,15 +152,15 @@ void UpdatePropertiesContentWidget(const MapDocument& document,
       {
         StringValue(name, property, dispatcher);
       }
-      else if (property.IsInteger())
+      else if (property.IsInt())
       {
         IntValue(name, property, dispatcher);
       }
-      else if (property.IsFloating())
+      else if (property.IsFloat())
       {
         FloatValue(name, property, dispatcher);
       }
-      else if (property.IsBoolean())
+      else if (property.IsBool())
       {
         BoolValue(name, property, dispatcher);
       }

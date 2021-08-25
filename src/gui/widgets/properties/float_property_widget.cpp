@@ -11,7 +11,7 @@ namespace Tactile {
 auto FloatPropertyWidget(const Property& property) -> Maybe<float>
 {
   const ScopeID id{&property};
-  auto value = property.AsFloating();
+  auto value = property.AsFloat();
 
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
   if (ImGui::DragFloat("##FloatPropertyInput", &value))

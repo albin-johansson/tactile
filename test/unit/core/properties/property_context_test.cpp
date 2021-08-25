@@ -83,8 +83,8 @@ TYPED_TEST(PropertyContextTest, AddProperty)
   ASSERT_EQ(1, context.GetPropertyCount());
 
   const auto& property = context.GetProperty("foo");
-  ASSERT_TRUE(property.IsInteger());
-  ASSERT_EQ(0, property.AsInteger());
+  ASSERT_TRUE(property.IsInt());
+  ASSERT_EQ(0, property.AsInt());
 }
 
 TYPED_TEST(PropertyContextTest, RemoveProperty)
@@ -116,7 +116,7 @@ TYPED_TEST(PropertyContextTest, RenameProperty)
   ASSERT_TRUE(context.HasProperty(newName));
 
   const auto& property = context.GetProperty(newName);
-  ASSERT_TRUE(property.IsBoolean());
+  ASSERT_TRUE(property.IsBool());
 }
 
 TYPED_TEST(PropertyContextTest, SetProperty)
@@ -126,10 +126,10 @@ TYPED_TEST(PropertyContextTest, SetProperty)
   const auto name = "foo";
 
   context.AddProperty(name, PropertyType::Integer);
-  ASSERT_EQ(0, context.GetProperty(name).AsInteger());
+  ASSERT_EQ(0, context.GetProperty(name).AsInt());
 
   context.SetProperty(name, 123);
-  ASSERT_EQ(123, context.GetProperty(name).AsInteger());
+  ASSERT_EQ(123, context.GetProperty(name).AsInt());
 }
 
 TYPED_TEST(PropertyContextTest, GetProperty)

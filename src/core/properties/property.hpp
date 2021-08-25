@@ -106,7 +106,7 @@ class Property final
    *
    * \return the stored integer.
    */
-  [[nodiscard]] auto AsInteger() const -> integer_type;
+  [[nodiscard]] auto AsInt() const -> integer_type;
 
   /**
    * \brief Returns the stored float value.
@@ -115,7 +115,7 @@ class Property final
    *
    * \return the stored floating-point value.
    */
-  [[nodiscard]] auto AsFloating() const -> float_type;
+  [[nodiscard]] auto AsFloat() const -> float_type;
 
   /**
    * \brief Returns the stored boolean value.
@@ -124,7 +124,7 @@ class Property final
    *
    * \return the stored boolean value.
    */
-  [[nodiscard]] auto AsBoolean() const -> bool;
+  [[nodiscard]] auto AsBool() const -> bool;
 
   /**
    * \brief Returns the stored file path value.
@@ -158,17 +158,17 @@ class Property final
     return TryAs<string_type>();
   }
 
-  [[nodiscard]] auto TryAsInteger() const noexcept -> const integer_type*
+  [[nodiscard]] auto TryAsInt() const noexcept -> const integer_type*
   {
     return TryAs<integer_type>();
   }
 
-  [[nodiscard]] auto TryAsFloating() const noexcept -> const float_type*
+  [[nodiscard]] auto TryAsFloat() const noexcept -> const float_type*
   {
     return TryAs<float_type>();
   }
 
-  [[nodiscard]] auto TryAsBoolean() const noexcept -> const bool*
+  [[nodiscard]] auto TryAsBool() const noexcept -> const bool*
   {
     return TryAs<bool>();
   }
@@ -200,7 +200,7 @@ class Property final
    *
    * \return `true` if the stored value is an integer; `false` otherwise.
    */
-  [[nodiscard]] auto IsInteger() const noexcept -> bool;
+  [[nodiscard]] auto IsInt() const noexcept -> bool;
 
   /**
    * \brief Indicates whether or not the stored value is a floating-point
@@ -209,14 +209,14 @@ class Property final
    * \return `true` if the stored value is a floating-point number; `false`
    * otherwise.
    */
-  [[nodiscard]] auto IsFloating() const noexcept -> bool;
+  [[nodiscard]] auto IsFloat() const noexcept -> bool;
 
   /**
    * \brief Indicates whether or not the stored value is a boolean.
    *
    * \return `true` if the stored value is a boolean; `false` otherwise.
    */
-  [[nodiscard]] auto IsBoolean() const noexcept -> bool;
+  [[nodiscard]] auto IsBool() const noexcept -> bool;
 
   /**
    * \brief Indicates whether or not the stored value is a file path.

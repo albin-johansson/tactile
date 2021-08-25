@@ -11,7 +11,7 @@ namespace Tactile {
 auto IntPropertyWidget(const Property& property) -> Maybe<int>
 {
   const ScopeID id{&property};
-  auto value = property.AsInteger();
+  auto value = property.AsInt();
 
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
   if (ImGui::DragInt("##IntPropertyInput", &value))

@@ -12,9 +12,9 @@ TEST(Property, Defaults)
   ASSERT_FALSE(property.GetType());
 
   ASSERT_FALSE(property.IsString());
-  ASSERT_FALSE(property.IsInteger());
-  ASSERT_FALSE(property.IsFloating());
-  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsInt());
+  ASSERT_FALSE(property.IsFloat());
+  ASSERT_FALSE(property.IsBool());
   ASSERT_FALSE(property.IsColor());
   ASSERT_FALSE(property.IsFile());
   ASSERT_FALSE(property.IsObject());
@@ -24,13 +24,13 @@ TEST(Property, IntProperty)
 {
   const Property property{123};
   ASSERT_TRUE(property.HasValue());
-  ASSERT_TRUE(property.IsInteger());
-  ASSERT_TRUE(property.TryAsInteger());
-  ASSERT_EQ(123, property.AsInteger());
+  ASSERT_TRUE(property.IsInt());
+  ASSERT_TRUE(property.TryAsInt());
+  ASSERT_EQ(123, property.AsInt());
 
   ASSERT_FALSE(property.IsString());
-  ASSERT_FALSE(property.IsFloating());
-  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsFloat());
+  ASSERT_FALSE(property.IsBool());
   ASSERT_FALSE(property.IsColor());
   ASSERT_FALSE(property.IsFile());
   ASSERT_FALSE(property.IsObject());
@@ -40,13 +40,13 @@ TEST(Property, FloatProperty)
 {
   const Property property{12.3f};
   ASSERT_TRUE(property.HasValue());
-  ASSERT_TRUE(property.IsFloating());
-  ASSERT_TRUE(property.TryAsFloating());
-  ASSERT_EQ(12.3f, property.AsFloating());
+  ASSERT_TRUE(property.IsFloat());
+  ASSERT_TRUE(property.TryAsFloat());
+  ASSERT_EQ(12.3f, property.AsFloat());
 
   ASSERT_FALSE(property.IsString());
-  ASSERT_FALSE(property.IsInteger());
-  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsInt());
+  ASSERT_FALSE(property.IsBool());
   ASSERT_FALSE(property.IsColor());
   ASSERT_FALSE(property.IsFile());
   ASSERT_FALSE(property.IsObject());
@@ -60,9 +60,9 @@ TEST(Property, StringProperty)
   ASSERT_TRUE(property.TryAsString());
   ASSERT_EQ("foo", property.AsString());
 
-  ASSERT_FALSE(property.IsInteger());
-  ASSERT_FALSE(property.IsFloating());
-  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsInt());
+  ASSERT_FALSE(property.IsFloat());
+  ASSERT_FALSE(property.IsBool());
   ASSERT_FALSE(property.IsColor());
   ASSERT_FALSE(property.IsFile());
   ASSERT_FALSE(property.IsObject());
@@ -72,13 +72,13 @@ TEST(Property, BoolProperty)
 {
   const Property property{false};
   ASSERT_TRUE(property.HasValue());
-  ASSERT_TRUE(property.IsBoolean());
-  ASSERT_TRUE(property.TryAsBoolean());
-  ASSERT_FALSE(property.AsBoolean());
+  ASSERT_TRUE(property.IsBool());
+  ASSERT_TRUE(property.TryAsBool());
+  ASSERT_FALSE(property.AsBool());
 
   ASSERT_FALSE(property.IsString());
-  ASSERT_FALSE(property.IsInteger());
-  ASSERT_FALSE(property.IsFloating());
+  ASSERT_FALSE(property.IsInt());
+  ASSERT_FALSE(property.IsFloat());
   ASSERT_FALSE(property.IsColor());
   ASSERT_FALSE(property.IsFile());
   ASSERT_FALSE(property.IsObject());
@@ -93,9 +93,9 @@ TEST(Property, FileProperty)
   ASSERT_TRUE(property.TryAsFile());
 
   ASSERT_FALSE(property.IsString());
-  ASSERT_FALSE(property.IsInteger());
-  ASSERT_FALSE(property.IsFloating());
-  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsInt());
+  ASSERT_FALSE(property.IsFloat());
+  ASSERT_FALSE(property.IsBool());
   ASSERT_FALSE(property.IsColor());
   ASSERT_FALSE(property.IsObject());
 }
@@ -108,9 +108,9 @@ TEST(Property, ObjectProperty)
   ASSERT_TRUE(property.TryAsObject());
 
   ASSERT_FALSE(property.IsString());
-  ASSERT_FALSE(property.IsInteger());
-  ASSERT_FALSE(property.IsFloating());
-  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsInt());
+  ASSERT_FALSE(property.IsFloat());
+  ASSERT_FALSE(property.IsBool());
   ASSERT_FALSE(property.IsColor());
   ASSERT_FALSE(property.IsFile());
 }
@@ -124,9 +124,9 @@ TEST(Property, ColorProperty)
   ASSERT_TRUE(property.TryAsColor());
 
   ASSERT_FALSE(property.IsString());
-  ASSERT_FALSE(property.IsInteger());
-  ASSERT_FALSE(property.IsFloating());
-  ASSERT_FALSE(property.IsBoolean());
+  ASSERT_FALSE(property.IsInt());
+  ASSERT_FALSE(property.IsFloat());
+  ASSERT_FALSE(property.IsBool());
   ASSERT_FALSE(property.IsFile());
   ASSERT_FALSE(property.IsObject());
 }
@@ -151,16 +151,16 @@ TEST(Property, SetValue)
   Property property;
 
   property.SetValue(10);
-  ASSERT_TRUE(property.IsInteger());
-  ASSERT_EQ(10, property.AsInteger());
+  ASSERT_TRUE(property.IsInt());
+  ASSERT_EQ(10, property.AsInt());
 
   property.SetValue(93.2f);
-  ASSERT_TRUE(property.IsFloating());
-  ASSERT_EQ(93.2f, property.AsFloating());
+  ASSERT_TRUE(property.IsFloat());
+  ASSERT_EQ(93.2f, property.AsFloat());
 
   property.SetValue(true);
-  ASSERT_TRUE(property.IsBoolean());
-  ASSERT_TRUE(property.AsBoolean());
+  ASSERT_TRUE(property.IsBool());
+  ASSERT_TRUE(property.AsBool());
 
   property.SetValue("foo"s);
   ASSERT_TRUE(property.IsString());
@@ -180,10 +180,10 @@ TEST(Property, As)
 {
   const Property property{123};
 
-  ASSERT_NO_THROW(property.AsInteger());
-  ASSERT_ANY_THROW(property.AsFloating());
+  ASSERT_NO_THROW(property.AsInt());
+  ASSERT_ANY_THROW(property.AsFloat());
   ASSERT_ANY_THROW(property.AsString());
-  ASSERT_ANY_THROW(property.AsBoolean());
+  ASSERT_ANY_THROW(property.AsBool());
   ASSERT_ANY_THROW(property.AsObject());
   ASSERT_ANY_THROW(property.AsFile());
   ASSERT_ANY_THROW(property.AsColor());
@@ -193,16 +193,16 @@ TEST(Property, TryAs)
 {
   Property property;
 
-  ASSERT_FALSE(property.TryAsInteger());
-  ASSERT_FALSE(property.TryAsFloating());
+  ASSERT_FALSE(property.TryAsInt());
+  ASSERT_FALSE(property.TryAsFloat());
   ASSERT_FALSE(property.TryAsString());
-  ASSERT_FALSE(property.TryAsBoolean());
+  ASSERT_FALSE(property.TryAsBool());
 
   property.SetValue(123);
-  ASSERT_TRUE(property.TryAsInteger());
-  ASSERT_FALSE(property.TryAsFloating());
+  ASSERT_TRUE(property.TryAsInt());
+  ASSERT_FALSE(property.TryAsFloat());
   ASSERT_FALSE(property.TryAsString());
-  ASSERT_FALSE(property.TryAsBoolean());
+  ASSERT_FALSE(property.TryAsBool());
 }
 
 TEST(Property, GetType)

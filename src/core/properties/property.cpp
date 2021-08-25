@@ -49,17 +49,17 @@ auto Property::AsString() const -> const string_type&
   return As<string_type>();
 }
 
-auto Property::AsInteger() const -> integer_type
+auto Property::AsInt() const -> integer_type
 {
   return As<integer_type>();
 }
 
-auto Property::AsFloating() const -> float_type
+auto Property::AsFloat() const -> float_type
 {
   return As<float_type>();
 }
 
-auto Property::AsBoolean() const -> bool
+auto Property::AsBool() const -> bool
 {
   return As<bool>();
 }
@@ -84,17 +84,17 @@ auto Property::IsString() const noexcept -> bool
   return GetType() == PropertyType::String;
 }
 
-auto Property::IsInteger() const noexcept -> bool
+auto Property::IsInt() const noexcept -> bool
 {
   return GetType() == PropertyType::Integer;
 }
 
-auto Property::IsFloating() const noexcept -> bool
+auto Property::IsFloat() const noexcept -> bool
 {
   return GetType() == PropertyType::Floating;
 }
 
-auto Property::IsBoolean() const noexcept -> bool
+auto Property::IsBool() const noexcept -> bool
 {
   return GetType() == PropertyType::Boolean;
 }

@@ -27,15 +27,15 @@ void AppendValueAttribute(const Property& property,
       break;
 
     case PropertyType::Integer:
-      valueAttr.set_value(property.AsInteger());
+      valueAttr.set_value(property.AsInt());
       break;
 
     case PropertyType::Floating:
-      valueAttr.set_value(property.AsFloating());
+      valueAttr.set_value(property.AsFloat());
       break;
 
     case PropertyType::Boolean:
-      valueAttr.set_value(property.AsBoolean());
+      valueAttr.set_value(property.AsBool());
       break;
 
     case PropertyType::File:

@@ -110,20 +110,20 @@ TEST(ToMapDocument, Test)
   ASSERT_EQ(7, document->GetPropertyCount());
 
   const auto& boolean = document->GetProperty("boolean");
-  ASSERT_TRUE(boolean.IsBoolean());
-  ASSERT_TRUE(boolean.AsBoolean());
+  ASSERT_TRUE(boolean.IsBool());
+  ASSERT_TRUE(boolean.AsBool());
 
   const auto& color = document->GetProperty("cool color");
   ASSERT_TRUE(color.IsColor());
   ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), color.AsColor());
 
   const auto& floating = document->GetProperty("floating");
-  ASSERT_TRUE(floating.IsFloating());
-  ASSERT_FLOAT_EQ(12.3f, floating.AsFloating());
+  ASSERT_TRUE(floating.IsFloat());
+  ASSERT_FLOAT_EQ(12.3f, floating.AsFloat());
 
   const auto& integer = document->GetProperty("integer");
-  ASSERT_TRUE(integer.IsInteger());
-  ASSERT_EQ(42, integer.AsInteger());
+  ASSERT_TRUE(integer.IsInt());
+  ASSERT_EQ(42, integer.AsInt());
 
   const auto& object = document->GetProperty("object ref");
   ASSERT_TRUE(object.IsObject());
