@@ -45,7 +45,7 @@ void UpdateCreditsDialog(bool* open)
       ImGui::TableHeadersRow();
 
       Row("Centurion", "6.2.0", "MIT");
-      Row("Dear ImGui", "1.84", "MIT");
+      Row("Dear ImGui", "1.84.1", "MIT");
       Row("EnTT", "3.8.1", "MIT");
       Row("GLEW", "2.2.0", "BSD/MIT");
       Row("IconFontCppHeaders", "N/A", "Zlib");
