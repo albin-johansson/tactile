@@ -1,6 +1,8 @@
 #include "application.hpp"
 
 #include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl.h>
 
 #include <utility>  // move
 
@@ -11,8 +13,6 @@
 #include "gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "gui/widgets/dialogs/save_as_dialog.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_sdl.h"
 #include "io/parsing/map_parser.hpp"
 #include "io/parsing/to_map_document.hpp"
 #include "io/preferences.hpp"
