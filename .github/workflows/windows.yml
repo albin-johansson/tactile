@@ -12,10 +12,10 @@ jobs:
   windows-latest-test:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: ilammy/msvc-dev-cmd@v1
-      - uses: seanmiddleditch/gha-setup-ninja@v3
-      - uses: lukka/get-cmake@3.18.3
+      - uses: actions/checkout@main
+      - uses: ilammy/msvc-dev-cmd@master
+      - uses: seanmiddleditch/gha-setup-ninja@master
+      - uses: lukka/get-cmake@main
 
       - name: Create binaries directory
         shell: cmd
