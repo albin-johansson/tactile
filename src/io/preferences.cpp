@@ -1,8 +1,9 @@
 #include "preferences.hpp"
 
-#include <filesystem>           // exists
-#include <rune/everything.hpp>  // ini_file, read_ini, write_ini
-#include <utility>              // move
+#include <centurion.hpp>  // CENTURION_LOG_INFO
+#include <filesystem>     // exists
+#include <init/ini.hpp>   // ini, read_ini, write_ini
+#include <utility>        // move
 
 #include "aliases/czstring.hpp"
 #include "directories.hpp"
@@ -44,18 +45,18 @@ inline Preferences settings = {.preferred_format = def_preferred_format,
                                .restore_last_session = def_restore_last_session};
 
 template <typename T>
-void AddIfMissing(rune::ini_file& ini, czstring section, czstring element, T value)
+void AddIfMissing(init::ini& ini, czstring section, czstring element, T value)
 {
-  auto& s = ini[section];
-  if (!s.contains(element))
+  auto& sec = ini[section];
+  if (!sec.contains(element))
   {
-    s[element] = std::move(value);
+    sec[element] = std::move(value);
   }
 }
 
 void WritePreferencesToFile(const Preferences& preferences = Preferences{})
 {
-  rune::ini_file ini;
+  init::ini ini;
 
   ini["Appearance"]["Theme"] = preferences.theme;
   ini["Appearance"]["WindowBorder"] = preferences.window_border;
@@ -75,14 +76,14 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
   ini["Widgets"]["ShowPropertiesDock"] = preferences.show_properties_dock;
   ini["Widgets"]["RestoreLayout"] = preferences.restore_layout;
 
-  rune::write_ini(ini, GetPersistentFileDir() / file_name);
+  init::write_ini(ini, GetPersistentFileDir() / file_name);
 }
 
 // Read existing settings file and fill in any potentially missing settings
 void ValidateExistingFile()
 {
   const auto path = GetPersistentFileDir() / file_name;
-  auto ini = rune::read_ini(path).value();
+  auto ini = init::read_ini(path);
 
   AddIfMissing(ini, "Appearance", "Theme", def_theme);
   AddIfMissing(ini, "Appearance", "ShowGrid", def_show_grid);
@@ -102,7 +103,7 @@ void ValidateExistingFile()
   AddIfMissing(ini, "Widgets", "ShowPropertiesDock", def_show_properties_dock);
   AddIfMissing(ini, "Widgets", "RestoreLayout", def_restore_layout);
 
-  rune::write_ini(ini, path);
+  init::write_ini(ini, path);
 }
 
 }  // namespace
@@ -112,7 +113,7 @@ void LoadPreferences()
   if (std::filesystem::exists(GetPersistentFileDir() / file_name))
   {
     ValidateExistingFile();
-    const auto ini = rune::read_ini(GetPersistentFileDir() / file_name).value();
+    const auto ini = init::read_ini(GetPersistentFileDir() / file_name);
 
     const auto& appearance = ini.at("Appearance");
     settings.theme = appearance.at("Theme").as<std::string>();
