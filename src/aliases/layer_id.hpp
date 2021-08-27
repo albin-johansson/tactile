@@ -6,11 +6,11 @@
 
 namespace Tactile {
 
-namespace tags {
-struct layer_id_tag;
-}  // namespace tags
+namespace Tags {
+struct LayerIdTag;
+}  // namespace Tags
 
-using layer_id = nenya::strong_type<int, tags::layer_id_tag>;
+using layer_id = nenya::strong_type<int, Tags::LayerIdTag>;
 
 [[nodiscard]] constexpr auto operator""_layer(const ulonglong value) noexcept
     -> layer_id

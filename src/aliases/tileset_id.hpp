@@ -6,11 +6,11 @@
 
 namespace Tactile {
 
-namespace tags {
-struct tileset_id_tag;
-}  // namespace tags
+namespace Tags {
+struct TilesetIdTag;
+}  // namespace Tags
 
-using tileset_id = nenya::strong_type<int, tags::tileset_id_tag>;
+using tileset_id = nenya::strong_type<int, Tags::TilesetIdTag>;
 
 [[nodiscard]] constexpr auto operator""_tset(const ulonglong value) noexcept
     -> tileset_id

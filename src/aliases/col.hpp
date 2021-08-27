@@ -6,11 +6,11 @@
 
 namespace Tactile {
 
-namespace tags {
-struct col_tag;
-}  // namespace tags
+namespace Tags {
+struct ColumnTag;
+}  // namespace Tags
 
-using col_t = nenya::strong_type<int, tags::col_tag>;
+using col_t = nenya::strong_type<int, Tags::ColumnTag>;
 
 [[nodiscard]] constexpr auto AsColumn(const auto value) noexcept -> col_t
 {

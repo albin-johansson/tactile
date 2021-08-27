@@ -6,11 +6,11 @@
 
 namespace Tactile {
 
-namespace tags {
-struct tile_id_tag;
-}  // namespace tags
+namespace Tags {
+struct TileIdTag;
+}  // namespace Tags
 
-using tile_id = nenya::strong_type<int, tags::tile_id_tag>;
+using tile_id = nenya::strong_type<int, Tags::TileIdTag>;
 
 constexpr tile_id empty_tile{0};
 

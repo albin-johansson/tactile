@@ -4,10 +4,10 @@
 
 namespace Tactile {
 
-namespace tags {
-struct object_ref_tag;
-}  // namespace tags
+namespace Tags {
+struct ObjectRefTag;
+}  // namespace Tags
 
-using object_ref = nenya::strong_type<int, tags::object_ref_tag>;
+using object_ref = nenya::strong_type<int, Tags::ObjectRefTag>;
 
 }  // namespace Tactile
