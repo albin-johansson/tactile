@@ -44,90 +44,12 @@ set(TACTILE_SOURCE_FILES
     core/algorithms/flood_fill.hpp
     core/algorithms/invoke_n.hpp
 
-    core/commands/command.hpp
     core/commands/command.cpp
+    core/commands/command.hpp
     core/commands/command_id.hpp
     core/commands/command_stack.cpp
     core/commands/command_stack.hpp
 
-    core/commands/maps/add_column_cmd.cpp
-    core/commands/maps/add_column_cmd.hpp
-    core/commands/maps/add_row_cmd.cpp
-    core/commands/maps/add_row_cmd.hpp
-    core/commands/maps/map_command.cpp
-    core/commands/maps/map_command.hpp
-    core/commands/maps/mergeable_map_command.cpp
-    core/commands/maps/mergeable_map_command.hpp
-    core/commands/maps/remove_column_cmd.cpp
-    core/commands/maps/remove_column_cmd.hpp
-    core/commands/maps/remove_row_cmd.cpp
-    core/commands/maps/remove_row_cmd.hpp
-
-    core/commands/maps/layers/add_layer_cmd.cpp
-    core/commands/maps/layers/add_layer_cmd.hpp
-    core/commands/maps/layers/duplicate_layer_cmd.cpp
-    core/commands/maps/layers/duplicate_layer_cmd.hpp
-    core/commands/maps/layers/move_layer_down_cmd.cpp
-    core/commands/maps/layers/move_layer_down_cmd.hpp
-    core/commands/maps/layers/move_layer_up_cmd.cpp
-    core/commands/maps/layers/move_layer_up_cmd.hpp
-    core/commands/maps/layers/remove_layer_cmd.cpp
-    core/commands/maps/layers/remove_layer_cmd.hpp
-    core/commands/maps/layers/select_layer_cmd.cpp
-    core/commands/maps/layers/select_layer_cmd.hpp
-    core/commands/maps/layers/set_layer_opacity_cmd.cpp
-    core/commands/maps/layers/set_layer_opacity_cmd.hpp
-    core/commands/maps/layers/set_layer_visible_cmd.cpp
-    core/commands/maps/layers/set_layer_visible_cmd.hpp
-
-    core/commands/properties/add_property_cmd.cpp
-    core/commands/properties/add_property_cmd.hpp
-    core/commands/properties/change_property_type_cmd.cpp
-    core/commands/properties/change_property_type_cmd.hpp
-    core/commands/properties/property_command.cpp
-    core/commands/properties/property_command.hpp
-    core/commands/properties/remove_property_cmd.cpp
-    core/commands/properties/remove_property_cmd.hpp
-    core/commands/properties/rename_property_cmd.cpp
-    core/commands/properties/rename_property_cmd.hpp
-    core/commands/properties/set_property_cmd.cpp
-    core/commands/properties/set_property_cmd.hpp
-    core/commands/properties/set_property_context_cmd.cpp
-    core/commands/properties/set_property_context_cmd.hpp
-
-    core/commands/tilesets/add_tileset_cmd.cpp
-    core/commands/tilesets/add_tileset_cmd.hpp
-    core/commands/tilesets/remove_tileset_cmd.cpp
-    core/commands/tilesets/remove_tileset_cmd.hpp
-
-    core/commands/tools/bucket_cmd.cpp
-    core/commands/tools/bucket_cmd.hpp
-    core/commands/tools/eraser_sequence_cmd.cpp
-    core/commands/tools/eraser_sequence_cmd.hpp
-    core/commands/tools/stamp_sequence_cmd.cpp
-    core/commands/tools/stamp_sequence_cmd.hpp
-
-    core/map/map.cpp
-    core/map/map.hpp
-    core/map/map_position.hpp
-
-    core/map/layers/abstract_layer.cpp
-    core/map/layers/abstract_layer.hpp
-    core/map/layers/group_layer.cpp
-    core/map/layers/group_layer.hpp
-    core/map/layers/layer.hpp
-    core/map/layers/layer_delegate.cpp
-    core/map/layers/layer_delegate.hpp
-    core/map/layers/layer_type.hpp
-    core/map/layers/layer_utils.cpp
-    core/map/layers/layer_utils.hpp
-    core/map/layers/object.cpp
-    core/map/layers/object.hpp
-    core/map/layers/object_layer.cpp
-    core/map/layers/object_layer.hpp
-    core/map/layers/object_type.hpp
-    core/map/layers/tile_layer.cpp
-    core/map/layers/tile_layer.hpp
 
     core/properties/property.cpp
     core/properties/property.hpp
