@@ -31,6 +31,7 @@ set(TACTILE_SOURCE_FILES
     aliases/unique.hpp
 
     core/document.hpp
+    core/layer_type.hpp
     core/model.cpp
     core/model.hpp
     core/region.hpp
