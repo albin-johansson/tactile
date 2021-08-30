@@ -35,6 +35,7 @@ set(TACTILE_SOURCE_FILES
     core/map_position.hpp
     core/model.cpp
     core/model.hpp
+    core/mouse_info.hpp
     core/region.hpp
     core/tactile_error.hpp
 
