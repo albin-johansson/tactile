@@ -39,6 +39,7 @@ set(TACTILE_SOURCE_FILES
     core/object_type.hpp
     core/region.hpp
     core/tactile_error.hpp
+    core/viewport.hpp
 
     core/algorithms/invoke_n.hpp
 
