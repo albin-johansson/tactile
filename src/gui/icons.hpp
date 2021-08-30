@@ -4,7 +4,7 @@
 
 #include "aliases/czstring.hpp"
 #include "aliases/ints.hpp"
-#include "core/map/layers/layer_type.hpp"
+#include "core/layer_type.hpp"
 
 /// \addtogroup gui
 /// \{
