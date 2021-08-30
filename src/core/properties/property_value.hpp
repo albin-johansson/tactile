@@ -27,7 +27,7 @@ concept IsPropertyType = std::same_as<T, std::string> ||
 
 // clang-format on
 
-class Property final
+class PropertyValue final
 {
  public:
   using string_type = std::string;
@@ -46,7 +46,7 @@ class Property final
                                   object_ref>;
 
   /// Creates a property with no value.
-  Property() = default;
+  PropertyValue() = default;
 
   /**
    * \brief Creates a property.
@@ -56,7 +56,7 @@ class Property final
    * \param value the value of the property.
    */
   template <IsPropertyType T>
-  /*implicit*/ Property(const T& value)
+  /*implicit*/ PropertyValue(const T& value)
   {
     mValue.emplace<T>(value);
   }

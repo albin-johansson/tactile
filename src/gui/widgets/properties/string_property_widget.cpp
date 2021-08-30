@@ -16,7 +16,7 @@ constexpr usize max_digits = 100;
 
 }  // namespace
 
-auto StringPropertyWidget(const Property& property) -> Maybe<std::string>
+auto StringPropertyWidget(const PropertyValue& property) -> Maybe<std::string>
 {
   const ScopeID id{&property};
   const auto& str = property.AsString();

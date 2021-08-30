@@ -10,7 +10,7 @@
 
 namespace Tactile {
 
-auto ColorPropertyWidget(const Property& property) -> Maybe<cen::color>
+auto ColorPropertyWidget(const PropertyValue& property) -> Maybe<cen::color>
 {
   const ScopeID id{&property};
 

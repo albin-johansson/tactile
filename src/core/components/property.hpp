@@ -2,14 +2,14 @@
 
 #include <string>  // string
 
-#include "core/properties/property.hpp"
+#include "core/properties/property_value.hpp"
 
 namespace Tactile {
 
-struct PropertyComp final
+struct Property final
 {
   std::string name;
-  Property value;
+  PropertyValue value;
 };
 
 }  // namespace Tactile

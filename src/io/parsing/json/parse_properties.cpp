@@ -8,7 +8,7 @@ namespace {
 
 [[nodiscard]] auto ToProperty(const JSON& json,
                               const std::string& type,
-                              Property& property) -> ParseError
+                              PropertyValue& property) -> ParseError
 {
   const auto value = json.at("value");
 

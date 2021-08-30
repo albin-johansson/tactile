@@ -50,7 +50,7 @@ set(TACTILE_SOURCE_FILES
     core/components/object.hpp
     core/components/object_layer.hpp
     core/components/parent.hpp
-    core/components/property_comp.hpp
+    core/components/property.hpp
     core/components/property_context.hpp
     core/components/texture.hpp
     core/components/tile_animation.hpp
@@ -58,8 +58,8 @@ set(TACTILE_SOURCE_FILES
     core/components/tileset.hpp
     core/components/uv_tile_size.hpp
 
-    core/properties/property.cpp
-    core/properties/property.hpp
+    core/properties/property_value.cpp
+    core/properties/property_value.hpp
     core/properties/property_type.hpp
 
     core/systems/viewport_system.cpp

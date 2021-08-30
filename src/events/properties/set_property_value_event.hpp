@@ -2,7 +2,7 @@
 
 #include <string_view>  // string_view
 
-#include "core/properties/property.hpp"
+#include "core/properties/property_value.hpp"
 
 namespace Tactile {
 
@@ -12,7 +12,7 @@ namespace Tactile {
 struct SetPropertyValueEvent final
 {
   std::string_view name;
-  Property property;
+  PropertyValue property;
 };
 
 /// \} End of group events

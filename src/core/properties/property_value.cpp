@@ -1,13 +1,13 @@
-#include "property.hpp"
+#include "property_value.hpp"
 
 namespace Tactile {
 
-void Property::Reset()
+void PropertyValue::Reset()
 {
   mValue.emplace<std::monostate>();
 }
 
-void Property::ResetToDefault(const PropertyType type)
+void PropertyValue::ResetToDefault(const PropertyType type)
 {
   if (type == PropertyType::Integer)
   {
@@ -39,82 +39,82 @@ void Property::ResetToDefault(const PropertyType type)
   }
 }
 
-auto Property::HasValue() const noexcept -> bool
+auto PropertyValue::HasValue() const noexcept -> bool
 {
   return !std::holds_alternative<std::monostate>(mValue);
 }
 
-auto Property::AsString() const -> const string_type&
+auto PropertyValue::AsString() const -> const string_type&
 {
   return As<string_type>();
 }
 
-auto Property::AsInt() const -> integer_type
+auto PropertyValue::AsInt() const -> integer_type
 {
   return As<integer_type>();
 }
 
-auto Property::AsFloat() const -> float_type
+auto PropertyValue::AsFloat() const -> float_type
 {
   return As<float_type>();
 }
 
-auto Property::AsBool() const -> bool
+auto PropertyValue::AsBool() const -> bool
 {
   return As<bool>();
 }
 
-auto Property::AsFile() const -> const file_type&
+auto PropertyValue::AsFile() const -> const file_type&
 {
   return As<file_type>();
 }
 
-auto Property::AsObject() const -> object_ref
+auto PropertyValue::AsObject() const -> object_ref
 {
   return As<object_ref>();
 }
 
-auto Property::AsColor() const -> const color_type&
+auto PropertyValue::AsColor() const -> const color_type&
 {
   return As<color_type>();
 }
 
-auto Property::IsString() const noexcept -> bool
+auto PropertyValue::IsString() const noexcept -> bool
 {
   return GetType() == PropertyType::String;
 }
 
-auto Property::IsInt() const noexcept -> bool
+auto PropertyValue::IsInt() const noexcept -> bool
 {
   return GetType() == PropertyType::Integer;
 }
 
-auto Property::IsFloat() const noexcept -> bool
+auto PropertyValue::IsFloat() const noexcept -> bool
 {
   return GetType() == PropertyType::Floating;
 }
 
-auto Property::IsBool() const noexcept -> bool
+auto PropertyValue::IsBool() const noexcept -> bool
 {
   return GetType() == PropertyType::Boolean;
 }
 
-auto Property::IsFile() const noexcept -> bool
+auto PropertyValue::IsFile() const noexcept -> bool
 {
   return GetType() == PropertyType::File;
 }
 
-auto Property::IsObject() const noexcept -> bool
+auto PropertyValue::IsObject() const noexcept -> bool
 {
   return GetType() == PropertyType::Object;
 }
 
-auto Property::IsColor() const noexcept -> bool
+auto PropertyValue::IsColor() const noexcept -> bool
 {
   return GetType() == PropertyType::Color;
 }
 
-auto Property::GetType() const -> Maybe<PropertyType>
+auto PropertyValue::GetType() const -> Maybe<PropertyType>
 {
   if (Is<integer_type>())
   {

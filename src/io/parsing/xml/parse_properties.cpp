@@ -11,7 +11,7 @@ namespace {
 
 [[nodiscard]] auto ToProperty(const pugi::xml_node node,
                               const czstring type,
-                              Property& property) -> ParseError
+                              PropertyValue& property) -> ParseError
 {
   if (std::strcmp(type, "string") == 0)
   {

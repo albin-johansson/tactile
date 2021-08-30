@@ -8,7 +8,7 @@
 
 namespace Tactile {
 
-auto IntPropertyWidget(const Property& property) -> Maybe<int>
+auto IntPropertyWidget(const PropertyValue& property) -> Maybe<int>
 {
   const ScopeID id{&property};
   auto value = property.AsInt();

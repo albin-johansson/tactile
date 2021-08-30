@@ -2,11 +2,11 @@
 
 #include "aliases/maybe.hpp"
 #include "aliases/object_ref.hpp"
-#include "core/properties/property.hpp"
+#include "core/properties/property_value.hpp"
 
 namespace Tactile {
 
-[[nodiscard]] auto ObjectPropertyWidget(const Property& property)
+[[nodiscard]] auto ObjectPropertyWidget(const PropertyValue& property)
     -> Maybe<object_ref>;
 
 }  // namespace Tactile

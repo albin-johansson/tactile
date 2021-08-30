@@ -8,7 +8,7 @@
 
 namespace Tactile {
 
-auto FloatPropertyWidget(const Property& property) -> Maybe<float>
+auto FloatPropertyWidget(const PropertyValue& property) -> Maybe<float>
 {
   const ScopeID id{&property};
   auto value = property.AsFloat();

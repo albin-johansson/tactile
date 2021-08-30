@@ -1,10 +1,10 @@
 #pragma once
 
 #include "aliases/maybe.hpp"
-#include "core/properties/property.hpp"
+#include "core/properties/property_value.hpp"
 
 namespace Tactile {
 
-[[nodiscard]] auto IntPropertyWidget(const Property& property) -> Maybe<int>;
+[[nodiscard]] auto IntPropertyWidget(const PropertyValue& property) -> Maybe<int>;
 
 }  // namespace Tactile

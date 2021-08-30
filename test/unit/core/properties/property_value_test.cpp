@@ -1,13 +1,13 @@
-#include "core/properties/property.hpp"
-
 #include <gtest/gtest.h>
+
+#include "core/properties/property_value.hpp"
 
 using namespace Tactile;
 using namespace std::string_literals;
 
-TEST(Property, Defaults)
+TEST(PropertyValue, Defaults)
 {
-  const Property property;
+  const PropertyValue property;
   ASSERT_FALSE(property.HasValue());
   ASSERT_FALSE(property.GetType());
 
@@ -20,9 +20,9 @@ TEST(Property, Defaults)
   ASSERT_FALSE(property.IsObject());
 }
 
-TEST(Property, IntProperty)
+TEST(PropertyValue, IntProperty)
 {
-  const Property property{123};
+  const PropertyValue property{123};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsInt());
   ASSERT_TRUE(property.TryAsInt());
@@ -36,9 +36,9 @@ TEST(Property, IntProperty)
   ASSERT_FALSE(property.IsObject());
 }
 
-TEST(Property, FloatProperty)
+TEST(PropertyValue, FloatProperty)
 {
-  const Property property{12.3f};
+  const PropertyValue property{12.3f};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsFloat());
   ASSERT_TRUE(property.TryAsFloat());
@@ -52,9 +52,9 @@ TEST(Property, FloatProperty)
   ASSERT_FALSE(property.IsObject());
 }
 
-TEST(Property, StringProperty)
+TEST(PropertyValue, StringProperty)
 {
-  const Property property{"foo"s};
+  const PropertyValue property{"foo"s};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsString());
   ASSERT_TRUE(property.TryAsString());
@@ -68,9 +68,9 @@ TEST(Property, StringProperty)
   ASSERT_FALSE(property.IsObject());
 }
 
-TEST(Property, BoolProperty)
+TEST(PropertyValue, BoolProperty)
 {
-  const Property property{false};
+  const PropertyValue property{false};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsBool());
   ASSERT_TRUE(property.TryAsBool());
@@ -84,10 +84,10 @@ TEST(Property, BoolProperty)
   ASSERT_FALSE(property.IsObject());
 }
 
-TEST(Property, FileProperty)
+TEST(PropertyValue, FileProperty)
 {
   const std::filesystem::path file{"resources/foo.txt"};
-  const Property property{file};
+  const PropertyValue property{file};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsFile());
   ASSERT_TRUE(property.TryAsFile());
@@ -100,9 +100,9 @@ TEST(Property, FileProperty)
   ASSERT_FALSE(property.IsObject());
 }
 
-TEST(Property, ObjectProperty)
+TEST(PropertyValue, ObjectProperty)
 {
-  const Property property{object_ref{7}};
+  const PropertyValue property{object_ref{7}};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsObject());
   ASSERT_TRUE(property.TryAsObject());
@@ -115,10 +115,10 @@ TEST(Property, ObjectProperty)
   ASSERT_FALSE(property.IsFile());
 }
 
-TEST(Property, ColorProperty)
+TEST(PropertyValue, ColorProperty)
 {
   const auto color = cen::colors::red;
-  const Property property{color};
+  const PropertyValue property{color};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsColor());
   ASSERT_TRUE(property.TryAsColor());
@@ -131,9 +131,9 @@ TEST(Property, ColorProperty)
   ASSERT_FALSE(property.IsObject());
 }
 
-TEST(Property, Reset)
+TEST(PropertyValue, Reset)
 {
-  Property property;
+  PropertyValue property;
   ASSERT_FALSE(property.HasValue());
 
   property.SetValue(123);
@@ -146,9 +146,9 @@ TEST(Property, Reset)
   ASSERT_NO_THROW(property.Reset());
 }
 
-TEST(Property, SetValue)
+TEST(PropertyValue, SetValue)
 {
-  Property property;
+  PropertyValue property;
 
   property.SetValue(10);
   ASSERT_TRUE(property.IsInt());
@@ -167,18 +167,18 @@ TEST(Property, SetValue)
   ASSERT_EQ("foo", property.AsString());
 }
 
-TEST(Property, HasValue)
+TEST(PropertyValue, HasValue)
 {
-  Property property;
+  PropertyValue property;
   ASSERT_FALSE(property.HasValue());
 
   property.SetValue(924);
   ASSERT_TRUE(property.HasValue());
 }
 
-TEST(Property, As)
+TEST(PropertyValue, As)
 {
-  const Property property{123};
+  const PropertyValue property{123};
 
   ASSERT_NO_THROW(property.AsInt());
   ASSERT_ANY_THROW(property.AsFloat());
@@ -189,9 +189,9 @@ TEST(Property, As)
   ASSERT_ANY_THROW(property.AsColor());
 }
 
-TEST(Property, TryAs)
+TEST(PropertyValue, TryAs)
 {
-  Property property;
+  PropertyValue property;
 
   ASSERT_FALSE(property.TryAsInt());
   ASSERT_FALSE(property.TryAsFloat());
@@ -205,9 +205,9 @@ TEST(Property, TryAs)
   ASSERT_FALSE(property.TryAsBool());
 }
 
-TEST(Property, GetType)
+TEST(PropertyValue, GetType)
 {
-  Property property;
+  PropertyValue property;
   ASSERT_FALSE(property.GetType());
 
   property.SetValue(123);

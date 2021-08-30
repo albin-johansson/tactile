@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-auto BoolPropertyWidget(const Property& property) -> Maybe<bool>
+auto BoolPropertyWidget(const PropertyValue& property) -> Maybe<bool>
 {
   const ScopeID id{&property};
   auto value = property.AsBool();
