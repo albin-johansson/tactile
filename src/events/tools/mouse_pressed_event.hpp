@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/tools/mouse_info.hpp"
+#include "core/mouse_info.hpp"
 
 namespace Tactile {
 
