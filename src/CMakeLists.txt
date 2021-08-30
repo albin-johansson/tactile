@@ -44,6 +44,19 @@ set(TACTILE_SOURCE_FILES
     core/commands/command_stack.cpp
     core/commands/command_stack.hpp
 
+    core/components/fancy_tile.hpp
+    core/components/group_layer.hpp
+    core/components/layer.hpp
+    core/components/object.hpp
+    core/components/object_layer.hpp
+    core/components/parent.hpp
+    core/components/property_comp.hpp
+    core/components/property_context.hpp
+    core/components/texture.hpp
+    core/components/tile_animation.hpp
+    core/components/tile_layer.hpp
+    core/components/tileset.hpp
+    core/components/uv_tile_size.hpp
 
     core/properties/property.cpp
     core/properties/property.hpp
