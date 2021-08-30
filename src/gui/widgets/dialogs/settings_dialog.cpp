@@ -163,7 +163,7 @@ void ShowExportTab()
     if (auto humanReadableOutput = settings.human_readable_output;
         Checkbox("Human-readable output",
                  &humanReadableOutput,
-                 "Make save files easier for humans to edit, at the cost of space."))
+                 "Make save files easier for humans to edit, at the expense of space."))
     {
       settings.human_readable_output = humanReadableOutput;
     }
