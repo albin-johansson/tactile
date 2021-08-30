@@ -30,18 +30,11 @@ set(TACTILE_SOURCE_FILES
     aliases/unique.hpp
 
     core/document.hpp
-    core/document_delegate.cpp
-    core/document_delegate.hpp
-    core/map_document.cpp
-    core/map_document.hpp
     core/model.cpp
     core/model.hpp
     core/region.hpp
     core/tactile_error.hpp
-    core/viewport_info.hpp
 
-    core/algorithms/flood_fill.cpp
-    core/algorithms/flood_fill.hpp
     core/algorithms/invoke_n.hpp
 
     core/commands/command.cpp
@@ -53,32 +46,9 @@ set(TACTILE_SOURCE_FILES
 
     core/properties/property.cpp
     core/properties/property.hpp
-    core/properties/property_context.hpp
-    core/properties/property_delegate.cpp
-    core/properties/property_delegate.hpp
     core/properties/property_type.hpp
 
-    core/tileset/fancy_tile.cpp
-    core/tileset/fancy_tile.hpp
-    core/tileset/tile_animation.cpp
-    core/tileset/tile_animation.hpp
-    core/tileset/tileset.cpp
-    core/tileset/tileset.hpp
-    core/tileset/tileset_manager.cpp
-    core/tileset/tileset_manager.hpp
-
-    core/tools/bucket_tool.cpp
-    core/tools/bucket_tool.hpp
-    core/tools/eraser_tool.cpp
-    core/tools/eraser_tool.hpp
-    core/tools/mouse_info.hpp
-    core/tools/mouse_tool.cpp
-    core/tools/mouse_tool.hpp
-    core/tools/mouse_tool_model.cpp
-    core/tools/mouse_tool_model.hpp
     core/tools/mouse_tool_type.hpp
-    core/tools/stamp_tool.cpp
-    core/tools/stamp_tool.hpp
 
     events/change_command_capacity_event.hpp
     events/quit_event.hpp
@@ -170,8 +140,6 @@ set(TACTILE_SOURCE_FILES
     gui/rendering/render_tile.hpp
     gui/rendering/render_tile_layer.cpp
     gui/rendering/render_tile_layer.hpp
-    gui/rendering/uv_tile_size.cpp
-    gui/rendering/uv_tile_size.hpp
 
     gui/rendering/objects/render_ellipse.cpp
     gui/rendering/objects/render_ellipse.hpp
