@@ -12,21 +12,18 @@ void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
 
   // clang-format off
   const auto root = id;
+  const auto top = ImGui::DockBuilderSplitNode(id, ImGuiDir_Up, 0.04f, nullptr, &id);
 
-  const auto tools = ImGui::DockBuilderSplitNode(id, ImGuiDir_Up, 0.04f, nullptr, &id);
-  const auto props = ImGui::DockBuilderSplitNode(id, ImGuiDir_Left, 0.15f, nullptr, &id);
-
-  auto tilesets = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.20f, nullptr, &id);
-  const auto layers = ImGui::DockBuilderSplitNode(tilesets, ImGuiDir_Down, 0.25f, nullptr, &tilesets);
+  auto right = ImGui::DockBuilderSplitNode(id, ImGuiDir_Right, 0.20f, nullptr, &id);
+  const auto rightBottom = ImGui::DockBuilderSplitNode(right, ImGuiDir_Down, 0.25f, nullptr, &right);
   // clang-format on
 
   ImGui::DockBuilderDockWindow("Viewport", root);
-  ImGui::DockBuilderDockWindow("Toolbar", tools);
-  ImGui::DockBuilderDockWindow("Properties", props);
-  ImGui::DockBuilderDockWindow("Tilesets", tilesets);
-  ImGui::DockBuilderDockWindow("Layers", layers);
+  ImGui::DockBuilderDockWindow("Toolbar", top);
+  ImGui::DockBuilderDockWindow("Tilesets", right);
+  ImGui::DockBuilderDockWindow("Properties", right);
+  ImGui::DockBuilderDockWindow("Layers", rightBottom);
 
-  ImGui::DockBuilderGetNode(tools)->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
   ImGui::DockBuilderGetNode(root)->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
 
   ImGui::DockBuilderFinish(id);
