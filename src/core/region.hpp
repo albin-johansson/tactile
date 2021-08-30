@@ -1,6 +1,6 @@
 #pragma once
 
-#include "map/map_position.hpp"
+#include "map_position.hpp"
 
 namespace Tactile {
 
