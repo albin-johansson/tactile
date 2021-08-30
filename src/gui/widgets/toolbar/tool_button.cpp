@@ -9,7 +9,7 @@ namespace Tactile {
 auto ToolButton(const czstring label,
                 const czstring tooltip,
                 const bool selected,
-                const bool enabled = true) -> bool
+                const bool enabled) -> bool
 {
   if (selected)
   {
