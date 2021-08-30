@@ -4,7 +4,7 @@
 
 namespace Tactile {
 
-auto ToolButton(czstring label, czstring tooltip, bool selected, bool enabled)
+auto ToolButton(czstring label, czstring tooltip, bool selected, bool enabled = true)
     -> bool;
 
 }  // namespace Tactile
