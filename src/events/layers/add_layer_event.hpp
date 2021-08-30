@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/map/layers/layer_type.hpp"
+#include "core/layer_type.hpp"
 
 namespace Tactile {
 
