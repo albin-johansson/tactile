@@ -5,11 +5,11 @@
 
 #include <array>  // array
 
-#include "gui/style.hpp"
-#include "gui/themes.hpp"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "io/preferences.hpp"
+#include "style.hpp"
+#include "themes.hpp"
 
 namespace Tactile {
 namespace {
