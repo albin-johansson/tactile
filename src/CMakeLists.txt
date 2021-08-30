@@ -62,6 +62,9 @@ set(TACTILE_SOURCE_FILES
     core/properties/property.hpp
     core/properties/property_type.hpp
 
+    core/systems/viewport_system.cpp
+    core/systems/viewport_system.hpp
+
     core/tools/mouse_tool_type.hpp
 
     events/change_command_capacity_event.hpp
