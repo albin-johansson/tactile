@@ -25,18 +25,8 @@ set(TACTILE_TEST_FILES
     unit/core/commands/command_stack_test.cpp
 
     unit/core/map/map_position_test.cpp
-    unit/core/map/map_test.cpp
 
-    unit/core/map/layers/layer_test.cpp
-    unit/core/map/layers/object_layer_test.cpp
-    unit/core/map/layers/object_test.cpp
-    unit/core/map/layers/tile_layer_test.cpp
-
-    unit/core/properties/property_context_test.cpp
     unit/core/properties/property_test.cpp
-
-    unit/core/tileset/tileset_manager_test.cpp
-    unit/core/tileset/tileset_test.cpp
 
     unit/io/parsing/map_parser_test.cpp
     unit/io/parsing/parse_map_with_embedded_tilesets_test.cpp
