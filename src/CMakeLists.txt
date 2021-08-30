@@ -32,6 +32,7 @@ set(TACTILE_SOURCE_FILES
 
     core/document.hpp
     core/layer_type.hpp
+    core/map_position.hpp
     core/model.cpp
     core/model.hpp
     core/region.hpp
