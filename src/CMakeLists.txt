@@ -12,6 +12,7 @@ set(TACTILE_SOURCE_FILES
 
     aliases/col.hpp
     aliases/czstring.hpp
+    aliases/hash_map.hpp
     aliases/ints.hpp
     aliases/json.hpp
     aliases/layer_id.hpp
