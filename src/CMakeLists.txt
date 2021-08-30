@@ -67,6 +67,8 @@ set(TACTILE_SOURCE_FILES
     core/properties/property_value.hpp
     core/properties/property_type.hpp
 
+    core/systems/registry_factory_system.cpp
+    core/systems/registry_factory_system.hpp
     core/systems/viewport_system.cpp
     core/systems/viewport_system.hpp
 
