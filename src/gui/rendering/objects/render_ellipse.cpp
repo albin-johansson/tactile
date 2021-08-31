@@ -5,7 +5,6 @@
 
 #include <cassert>  // assert
 
-#include "core/map/layers/object.hpp"
 #include "gui/rendering/common.hpp"
 
 namespace Tactile {
@@ -15,12 +14,12 @@ void RenderEllipse(const Object& object,
                    const ImVec2& ratio,
                    const uint32 color)
 {
-  assert(object.IsEllipse());
+  assert(object.type == ObjectType::Ellipse);
 
   constexpr auto nSegments = 50;
 
-  const auto xRadius = 0.5f * object.GetWidth() * ratio.x;
-  const auto yRadius = 0.5f * object.GetHeight() * ratio.y;
+  const auto xRadius = 0.5f * object.width * ratio.x;
+  const auto yRadius = 0.5f * object.height * ratio.y;
 
   const auto center = position + ImVec2{xRadius, yRadius};
   RenderShadowedEllipse(center, xRadius, yRadius, color, 2, nSegments);
