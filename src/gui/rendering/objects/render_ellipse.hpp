@@ -3,10 +3,9 @@
 struct ImVec2;
 
 #include "aliases/ints.hpp"
+#include "core/components/object.hpp"
 
 namespace Tactile {
-
-class Object;
 
 /**
  * \brief Renders an ellipse object.
