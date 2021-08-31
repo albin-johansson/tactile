@@ -3,12 +3,11 @@
 #include <centurion.hpp>  // frect
 
 #include "aliases/ints.hpp"
+#include "core/components/object.hpp"
 
 struct ImVec2;
 
 namespace Tactile {
-
-class Object;
 
 /**
  * \brief Renders a rectangle object.
