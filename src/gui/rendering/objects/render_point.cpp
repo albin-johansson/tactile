@@ -6,7 +6,6 @@
 #include <cassert>      // assert
 #include <string_view>  // string_view
 
-#include "core/map/layers/object.hpp"
 #include "gui/rendering/common.hpp"
 
 namespace Tactile {
@@ -36,14 +35,16 @@ void RenderPoint(const Object& object,
                  const uint32 color,
                  const float gridWidth)
 {
-  assert(object.IsPoint());
+  assert(object.type == ObjectType::Point);
   if (bounds.contains(cen::fpoint{position.x, position.y}))
   {
     RenderShadowedCircle(position, radius, color, thickness);
-    if (const auto name = object.GetName(); !name.empty())
-    {
-      RenderName(name, position, gridWidth);
-    }
+
+    // TODO
+    //    if (const auto name = object.n; !name.empty())
+    //    {
+    //      RenderName(name, position, gridWidth);
+    //    }
   }
 }
 
