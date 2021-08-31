@@ -6,7 +6,6 @@
 #include <cassert>  // assert
 
 #include "aliases/czstring.hpp"
-#include "core/map/layers/object.hpp"
 #include "gui/rendering/common.hpp"
 
 namespace Tactile {
@@ -32,18 +31,19 @@ void RenderRect(const Object& object,
                 const uint32 color,
                 const ImVec2& ratio)
 {
-  assert(object.IsRectangle());
+  assert(object.type == ObjectType::Rectangle);
 
-  const auto size = ImVec2{object.GetWidth(), object.GetHeight()} * ratio;
+  const auto size = ImVec2{object.width, object.height} * ratio;
   const auto rect = cen::frect{position.x, position.y, size.x, size.y};
   if (cen::intersects(bounds, rect))
   {
     RenderShadowedRect(position, size, color, 2);
 
-    if (const auto name = object.GetName(); !name.empty())
-    {
-      RenderName(name.c_str(), position, size);
-    }
+    // TODO
+    // if (const auto name = object.GetName(); !name.empty())
+    // {
+    //   RenderName(name.c_str(), position, size);
+    // }
   }
 }
 
