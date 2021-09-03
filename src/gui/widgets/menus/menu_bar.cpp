@@ -2,10 +2,10 @@
 
 #include <imgui.h>
 
-#include "gui/widgets/menus/edit_menu.hpp"
-#include "gui/widgets/menus/file_menu.hpp"
-#include "gui/widgets/menus/help_menu.hpp"
-#include "gui/widgets/menus/view_menu.hpp"
+#include "edit_menu.hpp"
+#include "file_menu.hpp"
+#include "help_menu.hpp"
+#include "view_menu.hpp"
 
 namespace Tactile {
 
