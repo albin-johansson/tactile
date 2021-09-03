@@ -271,6 +271,7 @@ void RemoveLayer(entt::registry& registry, const entt::entity entity)
   }
 
   registry.destroy(entity);
+  SortLayers(registry);
 }
 
 void SelectLayer(entt::registry& registry, const entt::entity entity)
