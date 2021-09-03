@@ -99,6 +99,7 @@ void MakeObjectLayer(entt::registry& registry,
     const auto objectEntity = objectLayer.objects.emplace_back(registry.create());
 
     auto& object = registry.emplace<Object>(objectEntity);
+    object.id = objectData.id;
     object.x = objectData.x;
     object.y = objectData.y;
     object.width = objectData.width;
@@ -110,6 +111,9 @@ void MakeObjectLayer(entt::registry& registry,
     {
       object.custom_type = objectData.custom_type;
     }
+
+    auto& context = registry.emplace<PropertyContext>(objectEntity);
+    context.name = objectData.name;
 
     // TODO properties
   }
@@ -180,6 +184,12 @@ auto ToMapDocument(const MapData& data) -> Document
     ++id;
   }
 
+  if (!data.tilesets.empty())
+  {
+    auto& activeTileset = document.registry.ctx<ActiveTileset>();
+    activeTileset.entity = document.registry.view<Tileset>().front();
+  }
+
   for (const auto& layerData : data.layers)
   {
     MakeLayer(document.registry, layerData);
@@ -187,13 +197,13 @@ auto ToMapDocument(const MapData& data) -> Document
 
   AddProperties(document.registry, entt::null, data.properties);
 
-  // TODO
-  // if (!data.layers.empty())
-  // {
-  //   auto& activeLayer = document.registry.ctx<ActiveLayer>();
-  // }
-
   Sys::SortLayers(document.registry);
+
+  if (!data.layers.empty())
+  {
+    auto& activeLayer = document.registry.ctx<ActiveLayer>();
+    activeLayer.entity = document.registry.view<Layer>().front();
+  }
 
   return document;
 }
