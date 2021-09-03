@@ -27,7 +27,7 @@ namespace Tactile::IO {
  */
 struct PropertyData final
 {
-  std::string name;   ///< The unique (within the context) property name
+  std::string name;        ///< The unique (within the context) property name
   PropertyValue property;  ///< The property value.
 };
 
