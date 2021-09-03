@@ -54,8 +54,8 @@ auto GetPropertyTypeString(const PropertyType type) -> std::string
   }
 }
 
-auto GetPropertyFileValue(const PropertyValue& file, const std::filesystem::path& dir)
-    -> std::string
+auto GetPropertyFileValue(const PropertyValue& file,
+                          const std::filesystem::path& dir) -> std::string
 {
   const auto path = std::filesystem::proximate(file.AsFile(), dir);
   return path.string();
