@@ -1,13 +1,13 @@
 #pragma once
 
-namespace Tactile {
+#include <entt.hpp>  // registry
 
-class MapDocument;
+namespace Tactile {
 
 struct CanvasInfo;
 struct ViewportCursorInfo;
 
-void MapContentOverlay(const MapDocument& document,
+void MapContentOverlay(const entt::registry& registry,
                        const CanvasInfo& canvas,
                        const ViewportCursorInfo& cursor);
 

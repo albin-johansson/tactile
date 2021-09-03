@@ -1,11 +1,10 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, dispatcher
 
 namespace Tactile {
 
-class MapDocument;
-
-void TilesetContentWidget(const MapDocument& document, entt::dispatcher& dispatcher);
+void TilesetContentWidget(const entt::registry& registry,
+                          entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

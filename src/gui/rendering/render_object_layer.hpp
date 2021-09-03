@@ -1,8 +1,9 @@
 #pragma once
 
+#include <entt.hpp>  // registry, entity
+
 namespace Tactile {
 
-class ObjectLayer;
 struct RenderInfo;
 
 /**
@@ -10,11 +11,13 @@ struct RenderInfo;
  *
  * \ingroup rendering
  *
- * \param layer the object layer that will be rendered.
+ * \param registry the associated registry.
+ * \param layerEntity the object layer entity.
  * \param info the rendering context information that will be used.
  * \param parentOpacity the opacity of the parent layer.
  */
-void RenderObjectLayer(const ObjectLayer& layer,
+void RenderObjectLayer(const entt::registry& registry,
+                       entt::entity layerEntity,
                        const RenderInfo& info,
                        float parentOpacity);
 

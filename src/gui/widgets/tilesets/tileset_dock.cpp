@@ -2,36 +2,34 @@
 
 #include <imgui.h>
 
-#include "core/model.hpp"
+#include "core/components/tileset.hpp"
 #include "events/tilesets/remove_tileset_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/centered_button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
-#include "gui/widgets/tilesets/tileset_content_widget.hpp"
 #include "io/preferences.hpp"
+#include "tileset_content_widget.hpp"
 
 namespace Tactile {
 
-void UpdateTilesetDock(const Model& model, entt::dispatcher& dispatcher)
+void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (!Prefs::GetShowTilesetDock() || !model.GetActiveMapId())
+  if (!Prefs::GetShowTilesetDock())
   {
     return;
   }
-
-  const auto* document = model.GetActiveDocument();
-  const auto& tilesets = document->GetTilesets();
 
   bool isVisible = Prefs::GetShowTilesetDock();
   if (ImGui::Begin("Tilesets",
                    &isVisible,
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar))
   {
-    if (tilesets.GetSize() != 0)
+    const auto view = registry.view<Tileset>();
+    if (view.size() != 0)
     {
-      TilesetContentWidget(*document, dispatcher);
+      TilesetContentWidget(registry, dispatcher);
     }
     else
     {

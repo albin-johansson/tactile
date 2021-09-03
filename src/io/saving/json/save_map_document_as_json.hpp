@@ -1,9 +1,9 @@
 #pragma once
 
-#include "core/map_document.hpp"
+#include "core/document.hpp"
 
 namespace Tactile::IO {
 
-void SaveMapDocumentAsJson(const MapDocument& document);
+void SaveMapDocumentAsJson(const Document& document);
 
 }  // namespace Tactile::IO

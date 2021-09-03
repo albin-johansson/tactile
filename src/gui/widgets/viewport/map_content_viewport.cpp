@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include "core/components/property_context.hpp"
 #include "core/model.hpp"
 #include "events/maps/close_map_event.hpp"
 #include "events/maps/select_map_event.hpp"
@@ -26,17 +27,19 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
         flags |= ImGuiTabItemFlags_SetSelected;
       }
 
-      if (!document->IsClean())
+      if (!model.IsClean())
       {
         flags |= ImGuiTabItemFlags_UnsavedDocument;
       }
 
+      const auto& context = document.registry.ctx<PropertyContext>();
       bool opened = true;
-      if (ImGui::BeginTabItem(document->GetName().c_str(), &opened, flags))
+
+      if (ImGui::BeginTabItem(context.name.c_str(), &opened, flags))
       {
         if (isActive)
         {
-          MapView(model, *document, dispatcher);
+          MapView(document.registry, dispatcher);
         }
 
         ImGui::EndTabItem();

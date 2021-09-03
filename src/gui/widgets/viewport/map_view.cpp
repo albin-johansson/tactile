@@ -5,7 +5,7 @@
 
 #include <cassert>  // assert
 
-#include "core/model.hpp"
+#include "core/viewport.hpp"
 #include "events/tools/mouse_drag_event.hpp"
 #include "events/tools/mouse_pressed_event.hpp"
 #include "events/tools/mouse_released_event.hpp"
@@ -57,21 +57,20 @@ void CheckFor(const ViewportCursorInfo& cursor,
 }
 
 void CenterViewport(entt::dispatcher& dispatcher,
-                    const ViewportInfo& viewportInfo,
+                    const Viewport& viewport,
                     const ImVec2& canvasSize,
                     const float nRows,
                     const float nCols)
 {
-  const auto width = nCols * viewportInfo.tile_width;
-  const auto height = nRows * viewportInfo.tile_height;
+  const auto width = nCols * viewport.tile_width;
+  const auto height = nRows * viewport.tile_height;
 
-  const auto dx = ((canvasSize.x - width) / 2.0f) - viewportInfo.x_offset;
-  const auto dy = ((canvasSize.y - height) / 2.0f) - viewportInfo.y_offset;
+  const auto dx = ((canvasSize.x - width) / 2.0f) - viewport.x_offset;
+  const auto dy = ((canvasSize.y - height) / 2.0f) - viewport.y_offset;
   dispatcher.enqueue<OffsetViewportEvent>(dx, dy);
 }
 
-void RenderCursorGizmos(const Model& model,
-                        const MapDocument& document,
+void RenderCursorGizmos(const entt::registry& registry,
                         entt::dispatcher& dispatcher,
                         const ViewportCursorInfo& cursor,
                         const RenderInfo& info)
@@ -106,24 +105,22 @@ void RenderCursorGizmos(const Model& model,
     });
   }
 
-  const auto& tilesets = document.GetTilesets();
-  const auto* tileset = tilesets.GetActiveTileset();
-  if (model.GetActiveTool() == MouseToolType::Stamp && tileset &&
-      tileset->GetSelection())
-  {
-    RenderStampPreview(info.map_position,
-                       info.grid_size,
-                       document.GetMap(),
-                       *tileset,
-                       cursor.map_position);
-  }
+  // TODO reintroduce
+
+  //  if (model.GetActiveTool() == MouseToolType::Stamp && tileset &&
+  //      tileset->GetSelection())
+  //  {
+  //    RenderStampPreview(info.map_position,
+  //                       info.grid_size,
+  //                       document.GetMap(),
+  //                       *tileset,
+  //                       cursor.map_position);
+  //  }
 }
 
 }  // namespace
 
-void MapView(const Model& model,
-             const MapDocument& document,
-             entt::dispatcher& dispatcher)
+void MapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   const auto canvas = GetCanvasInfo();
   FillBackground(canvas);
@@ -132,31 +129,31 @@ void MapView(const Model& model,
   auto* drawList = ImGui::GetWindowDrawList();
   drawList->PushClipRect(canvas.tl, canvas.br, true);
 
-  const auto viewportInfo = document.GetViewportInfo();
-  const auto info = GetRenderInfo(document, canvas);
+  const auto& viewport = registry.ctx<Viewport>();
+  const auto info = GetRenderInfo(registry, canvas);
 
   // TODO viewport should be centered by default
   if (center_viewport)
   {
     CenterViewport(dispatcher,
-                   viewportInfo,
+                   viewport,
                    canvas.size,
                    info.row_count,
                    info.col_count);
     center_viewport = false;
   }
 
-  RenderMap(document, info);
+  RenderMap(registry, info);
 
   const auto cursor = GetViewportCursorInfo(info);
   if (cursor.is_within_map)
   {
-    RenderCursorGizmos(model, document, dispatcher, cursor, info);
+    RenderCursorGizmos(registry, dispatcher, cursor, info);
   }
 
   drawList->PopClipRect();
 
-  MapContentOverlay(document, canvas, cursor);
+  MapContentOverlay(registry, canvas, cursor);
 }
 
 void CenterMapContentViewport()

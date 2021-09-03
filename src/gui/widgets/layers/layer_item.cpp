@@ -5,8 +5,10 @@
 #include <format>  // format
 
 #include "aliases/czstring.hpp"
-#include "core/map/layers/layer_utils.hpp"
-#include "core/map_document.hpp"
+#include "core/components/group_layer.hpp"
+#include "core/components/parent.hpp"
+#include "core/components/property_context.hpp"
+#include "core/map.hpp"
 #include "events/layers/select_layer_event.hpp"
 #include "gui/icons.hpp"
 #include "layer_item_popup.hpp"
@@ -15,10 +17,10 @@
 namespace Tactile {
 namespace {
 
-void GroupLayerItem(const MapDocument& document,
+void GroupLayerItem(const entt::registry& registry,
                     entt::dispatcher& dispatcher,
-                    const layer_id id,
-                    const SharedLayer& layer,
+                    const entt::entity layerEntity,
+                    const Layer& layer,
                     const ImGuiTreeNodeFlags flags,
                     const czstring name)
 {
@@ -30,17 +32,16 @@ void GroupLayerItem(const MapDocument& document,
     if (ImGui::IsItemActivated() ||
         (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
     {
-      dispatcher.enqueue<SelectLayerEvent>(id);
+      dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
-    UpdateLayerItemPopup(document, dispatcher, id);
+    UpdateLayerItemPopup(registry, dispatcher, layer.id);
 
-    if (const auto* group = AsGroupLayer(layer))
+    const auto& groupLayer = registry.get<GroupLayer>(layerEntity);
+    for (const auto child : groupLayer.layers)
     {
-      for (const auto& [subid, sublayer] : *group)
-      {
-        LayerItem(document, dispatcher, subid, sublayer);
-      }
+      const auto& childLayer = registry.get<Layer>(child);
+      LayerItem(registry, dispatcher, child, childLayer);
     }
 
     ImGui::TreePop();
@@ -53,39 +54,40 @@ void GroupLayerItem(const MapDocument& document,
 
 }  // namespace
 
-void LayerItem(const MapDocument& document,
+void LayerItem(const entt::registry& registry,
                entt::dispatcher& dispatcher,
-               const layer_id id,
-               const SharedLayer& layer)
+               const entt::entity layerEntity,
+               const Layer& layer)
 {
-  const auto& map = document.GetMap();
-  const auto activeLayer = map.GetActiveLayerId();
+  const ScopeID uid{layer.id};
 
-  const ScopeID uid{id};
+  const auto& map = registry.ctx<Map>();
+  const auto& activeLayer = registry.ctx<ActiveLayer>();
+  const auto isActiveLayer = layerEntity == activeLayer.entity;
 
   auto flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |
                ImGuiTreeNodeFlags_OpenOnDoubleClick |
                ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_SpanFullWidth;
-  if (id == activeLayer)
+  if (isActiveLayer)
   {
     flags |= ImGuiTreeNodeFlags_Selected;
   }
 
-  const auto name =
-      std::format("{} {}", GetIcon(layer->GetType()), layer->GetName());
+  const auto& context = registry.get<PropertyContext>(layerEntity);
+  const auto name = std::format("{} {}", GetIcon(layer.type), context.name);
 
-  if (layer->GetType() == LayerType::GroupLayer)
+  if (layer.type != LayerType::GroupLayer)
   {
-    GroupLayerItem(document, dispatcher, id, layer, flags, name.c_str());
+    if (ImGui::Selectable(name.c_str(), isActiveLayer))
+    {
+      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+    }
+
+    UpdateLayerItemPopup(registry, dispatcher, layer.id);
   }
   else
   {
-    if (ImGui::Selectable(name.c_str(), id == activeLayer))
-    {
-      dispatcher.enqueue<SelectLayerEvent>(id);
-    }
-
-    UpdateLayerItemPopup(document, dispatcher, id);
+    GroupLayerItem(registry, dispatcher, layerEntity, layer, flags, name.c_str());
   }
 }
 

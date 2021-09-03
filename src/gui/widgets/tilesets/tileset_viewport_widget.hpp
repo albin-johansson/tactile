@@ -1,11 +1,11 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, entity, dispatcher
 
 namespace Tactile {
 
-class Tileset;
-
-void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher);
+void TilesetViewportWidget(const entt::registry& registry,
+                           entt::entity entity,
+                           entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

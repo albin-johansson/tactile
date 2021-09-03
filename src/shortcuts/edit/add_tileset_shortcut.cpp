@@ -16,7 +16,7 @@ void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto AddTilesetShortcut::IsEnabled(const Model& model) const -> bool
 {
-  return model.GetActiveDocument() != nullptr;
+  return model.HasActiveDocument();
 }
 
 }  // namespace Tactile

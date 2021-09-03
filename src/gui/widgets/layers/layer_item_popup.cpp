@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "core/map_document.hpp"
+#include "core/systems/layer_system.hpp"
 #include "events/layers/duplicate_layer_event.hpp"
 #include "events/layers/move_layer_down_event.hpp"
 #include "events/layers/move_layer_up_event.hpp"
@@ -14,7 +14,7 @@
 
 namespace Tactile {
 
-void UpdateLayerItemPopup(const MapDocument& document,
+void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           const layer_id id)
 {
@@ -25,15 +25,16 @@ void UpdateLayerItemPopup(const MapDocument& document,
       dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
     }
 
+    const auto isLayerVisible = Sys::IsLayerVisible(registry, id);
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle visibility",
                         nullptr,
-                        document.IsLayerVisible(id)))
+                        isLayerVisible))
     {
-      dispatcher.enqueue<SetLayerVisibleEvent>(id, !document.IsLayerVisible(id));
+      dispatcher.enqueue<SetLayerVisibleEvent>(id, !isLayerVisible);
     }
 
-    auto opacity = document.GetMap().GetOpacity(id);
+    auto opacity = Sys::GetLayerOpacity(registry, id);
     ImGui::AlignTextToFramePadding();
     ImGui::Text(TAC_ICON_OPACITY " Opacity");
     ImGui::SameLine();
@@ -46,7 +47,7 @@ void UpdateLayerItemPopup(const MapDocument& document,
     if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move layer up",
                         nullptr,
                         false,
-                        document.CanMoveLayerUp(id)))
+                        Sys::CanMoveLayerUp(registry, id)))
     {
       dispatcher.enqueue<MoveLayerUpEvent>(id);
     }
@@ -54,7 +55,7 @@ void UpdateLayerItemPopup(const MapDocument& document,
     if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move layer down",
                         nullptr,
                         false,
-                        document.CanMoveLayerDown(id)))
+                        Sys::CanMoveLayerDown(registry, id)))
     {
       dispatcher.enqueue<MoveLayerDownEvent>(id);
     }

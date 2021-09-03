@@ -1,12 +1,10 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, dispatcher
 
 namespace Tactile {
 
-class IDocument;
-
-void UpdateAddPropertyDialog(const IDocument& document,
+void UpdateAddPropertyDialog(const entt::registry& registry,
                              entt::dispatcher& dispatcher);
 
 void OpenAddPropertyDialog();

@@ -3,27 +3,28 @@
 #include <imgui.h>
 
 #include "aliases/ints.hpp"
-#include "core/model.hpp"
+#include "core/components/property_context.hpp"
+#include "core/systems/property_system.hpp"
+#include "dialogs/add_property_dialog.hpp"
+#include "dialogs/change_property_type_dialog.hpp"
+#include "dialogs/rename_property_dialog.hpp"
 #include "events/properties/set_property_value_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
 #include "gui/widgets/common/help_marker.hpp"
-#include "gui/widgets/properties/dialogs/add_property_dialog.hpp"
-#include "gui/widgets/properties/dialogs/change_property_type_dialog.hpp"
-#include "gui/widgets/properties/dialogs/rename_property_dialog.hpp"
-#include "gui/widgets/properties/properties_content_widget.hpp"
 #include "io/preferences.hpp"
+#include "properties_content_widget.hpp"
 
 namespace Tactile {
 
-void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
+void UpdatePropertiesDock(const entt::registry& registry,
+                          entt::dispatcher& dispatcher)
 {
   // TODO context menu for entire dock
 
-  const auto* document = model.GetActiveDocument();
-  if (!Prefs::GetShowPropertiesDock() || !document)
+  if (!Prefs::GetShowPropertiesDock())
   {
     return;
   }
@@ -32,31 +33,33 @@ void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher)
   bool isVisible = Prefs::GetShowPropertiesDock();
   if (ImGui::Begin("Properties", &isVisible, flags))
   {
+    const auto& context = Sys::GetCurrentContext(registry);
+
     if (Button(TAC_ICON_ADD, "Add property."))
     {
       OpenAddPropertyDialog();
     }
 
     ImGui::SameLine();
-    ImGui::Text("Context: %s", document->GetContextName().data());
+    ImGui::Text("Context: %s", context.name.c_str());
     ImGui::SameLine();
     HelpMarker("The owner of the shown properties.");
     ImGui::Separator();
 
-    if (document->GetPropertyCount() != 0)
-    {
-      UpdatePropertiesContentWidget(*document, dispatcher);
-    }
-    else
+    if (context.properties.empty())
     {
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available properties!");
     }
+    else
+    {
+      UpdatePropertiesContentWidget(registry, dispatcher);
+    }
   }
 
-  UpdateAddPropertyDialog(*document, dispatcher);
-  UpdateRenamePropertyDialog(*document, dispatcher);
-  UpdateChangePropertyTypeDialog(*document, dispatcher);
+  UpdateAddPropertyDialog(registry, dispatcher);
+  UpdateRenamePropertyDialog(registry, dispatcher);
+  UpdateChangePropertyTypeDialog(registry, dispatcher);
 
   Prefs::SetShowPropertiesDock(isVisible);
   ImGui::End();

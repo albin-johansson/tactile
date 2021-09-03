@@ -1,20 +1,25 @@
 #include "save_map_document.hpp"
 
-#include <cassert>  // assert
+#include <cassert>        // assert
+#include <centurion.hpp>  // CENTURION_LOG_{}
+#include <filesystem>     // absolute
 
-#include "io/saving/json/save_map_document_as_json.hpp"
-#include "io/saving/xml/save_map_document_as_xml.hpp"
+#include "json/save_map_document_as_json.hpp"
+#include "utils/profile.hpp"
+#include "xml/save_map_document_as_xml.hpp"
 
 namespace Tactile::IO {
 
-void SaveMapDocument(const MapDocument& document)
+void SaveMapDocument(const Document& document)
 {
-  assert(document.HasPath());
+  assert(!document.path.empty());
+  TACTILE_PROFILE_START
 
-  const auto path = document.GetAbsolutePath();
+  const auto path = std::filesystem::absolute(document.path);
   CENTURION_LOG_INFO("Saving map document to \"%s\"", path.string().c_str());
 
-  if (const auto extension = path.extension(); extension == ".json")
+  const auto extension = path.extension();
+  if (extension == ".json")
   {
     SaveMapDocumentAsJson(document);
   }
@@ -27,6 +32,8 @@ void SaveMapDocument(const MapDocument& document)
     CENTURION_LOG_ERROR("Failed to save map document due to invalid extension: %s",
                         extension.string().c_str());
   }
+
+  TACTILE_PROFILE_END("IO::SaveMapDocument()")
 }
 
 }  // namespace Tactile::IO

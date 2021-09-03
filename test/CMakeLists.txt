@@ -28,6 +28,7 @@ set(TACTILE_TEST_FILES
 
     unit/core/properties/property_value_test.cpp
 
+    unit/core/systems/layer_system_test.cpp
     unit/core/systems/registry_factory_system_test.cpp
 
     unit/io/parsing/map_parser_test.cpp

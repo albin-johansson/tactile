@@ -3,8 +3,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/map/layers/layer_utils.hpp"
-#include "core/map_document.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/parent.hpp"
 #include "io/preferences.hpp"
 #include "render_bounds.hpp"
 #include "render_info.hpp"
@@ -45,42 +45,40 @@ void RenderGrid(const RenderInfo& info)
   }
 }
 
-void RenderLayer(const TilesetManager& tilesets,
-                 const SharedLayer& layer,
+void RenderLayer(const entt::registry& registry,
+                 const entt::entity layerEntity,
+                 const Layer& layer,
                  const RenderInfo& info,
                  const float parentOpacity)
 {
-  if (const auto* tileLayer = AsTileLayer(layer))
+  if (layer.type == LayerType::TileLayer)
   {
-    RenderTileLayer(*tileLayer, tilesets, info, parentOpacity);
+    RenderTileLayer(registry, layerEntity, info, parentOpacity);
   }
-  else if (const auto* objectLayer = AsObjectLayer(layer))
+  else if (layer.type == LayerType::ObjectLayer)
   {
-    RenderObjectLayer(*objectLayer, info, parentOpacity);
-  }
-  else if (const auto* groupLayer = AsGroupLayer(layer))
-  {
-    if (groupLayer->IsVisible())
-    {
-      for (const auto& [subid, sublayer] : *groupLayer)
-      {
-        const auto opacity = parentOpacity * groupLayer->GetOpacity();
-        RenderLayer(tilesets, sublayer, info, opacity);
-      }
-    }
+    RenderObjectLayer(registry, layerEntity, info, parentOpacity);
   }
 }
 
 }  // namespace
 
-void RenderMap(const MapDocument& document, const RenderInfo& info)
+void RenderMap(const entt::registry& registry, const RenderInfo& info)
 {
-  const auto& tilesets = document.GetTilesets();
-  for (const auto& [id, layer] : document.GetMap())
+  for (auto&& [entity, layer] : registry.view<Layer>().each())
   {
-    if (layer->IsVisible())
+    const auto& parent = registry.get<Parent>(entity);
+    const auto* parentLayer =
+        (parent.entity != entt::null) ? registry.try_get<Layer>(entity) : nullptr;
+
+    const auto parentOpacity = parentLayer ? parentLayer->opacity : 1.0f;
+
+    if (layer.visible)
     {
-      RenderLayer(tilesets, layer, info, layer->GetOpacity());
+      if (!parentLayer || parentLayer->visible)
+      {
+        RenderLayer(registry, entity, layer, info, layer.opacity * parentOpacity);
+      }
     }
   }
 

@@ -3,40 +3,40 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include <cassert>  // assert
-
-#include "core/tileset/tileset_manager.hpp"
+#include "core/components/texture.hpp"
+#include "core/components/tileset.hpp"
+#include "core/components/uv_tile_size.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "gui/texture_utils.hpp"
-#include "uv_tile_size.hpp"
 
 namespace Tactile {
 
 void RenderTile(const tile_id tile,
-                const TilesetManager& tilesets,
+                const entt::registry& registry,
                 const ImVec2& screenPos,
                 const ImVec2& gridSize,
                 const float opacity)
 {
-  if (const auto* tileset = tilesets.TryGetTileset(tile))
+  const auto tilesetEntity = Sys::FindTileset(registry, tile);
+  if (tilesetEntity != entt::null)
   {
-    const auto renderedTile =
-        tileset->IsAnimated(tile) ? tileset->GetAnimatedTile(tile) : tile;
+    const auto& tileset = registry.get<Tileset>(tilesetEntity);
+    const auto& texture = registry.get<Texture>(tilesetEntity);
 
-    const auto texture = ToTextureID(tileset->GetTexture());
-
-    const auto source = tileset->GetImageSource(renderedTile);
-    assert(source.has_value());
+    const auto textureId = ToTextureID(texture.id);
+    const auto tileToRender = Sys::GetTileToRender(registry, tilesetEntity, tile);
+    const auto& source = Sys::GetSourceRect(registry, tilesetEntity, tileToRender);
 
     const auto row =
-        static_cast<float>(source->y()) / static_cast<float>(source->height());
+        static_cast<float>(source.y()) / static_cast<float>(source.height());
     const auto col =
-        static_cast<float>(source->x()) / static_cast<float>(source->width());
+        static_cast<float>(source.x()) / static_cast<float>(source.width());
 
-    const auto uvTileSize = GetTileSizeUV(*tileset);
-    const auto uvMin = ImVec2{col, row} * uvTileSize;
-    const auto uvMax = uvMin + uvTileSize;
+    const auto uv = registry.get<UvTileSize>(tilesetEntity);
+    const auto uvMin = ImVec2{col * uv.width, row * uv.height};
+    const auto uvMax = uvMin + ImVec2{uv.width, uv.height};
 
-    ImGui::GetWindowDrawList()->AddImage(texture,
+    ImGui::GetWindowDrawList()->AddImage(textureId,
                                          screenPos,
                                          screenPos + gridSize,
                                          uvMin,

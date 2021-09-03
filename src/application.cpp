@@ -7,6 +7,13 @@
 #include <utility>  // move
 
 #include "application_events.hpp"
+#include "core/components/property_context.hpp"
+#include "core/map.hpp"
+#include "core/systems/layer_system.hpp"
+#include "core/systems/map_system.hpp"
+#include "core/systems/property_system.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "core/systems/viewport_system.hpp"
 #include "events/viewport/decrease_viewport_zoom_event.hpp"
 #include "events/viewport/increase_viewport_zoom_event.hpp"
 #include "gui/update_gui.hpp"
@@ -102,15 +109,15 @@ void Application::PollEvents()
     }
     else if (const auto* wheelEvent = event.try_get<cen::mouse_wheel_event>())
     {
-      const auto* document = mModel->GetActiveDocument();
-      if (document && mKeyboard.is_pressed(cen::scancodes::left_ctrl))
+      if (mModel->HasActiveDocument() &&
+          mKeyboard.is_pressed(cen::scancodes::left_ctrl))
       {
         const auto dy = wheelEvent->y_scroll();
         if (dy > 0)
         {
           mDispatcher.enqueue<IncreaseViewportZoomEvent>();
         }
-        else if (dy < 0 && document->CanDecreaseViewportTileSize())
+        else if (dy < 0 && mModel->CanDecreaseViewportTileSize())
         {
           mDispatcher.enqueue<DecreaseViewportZoomEvent>();
         }
@@ -122,7 +129,7 @@ void Application::PollEvents()
 void Application::UpdateFrame()
 {
   mDispatcher.update();
-  mModel->UpdateAnimations();
+  mModel->Update();
   UpdateGui(*mModel, mDispatcher);
 }
 
@@ -154,10 +161,10 @@ void Application::OnSaveEvent()
 {
   if (auto* document = mModel->GetActiveDocument())
   {
-    if (document->HasPath())
+    if (!document->path.empty())
     {
       IO::SaveMapDocument(*document);
-      document->MarkAsClean();
+      document->commands.MarkAsClean();
     }
     else
     {
@@ -170,7 +177,7 @@ void Application::OnSaveAsEvent(const SaveAsEvent& event)
 {
   if (auto* document = mModel->GetActiveDocument())
   {
-    document->SetPath(event.path);
+    document->path = event.path;
     OnSaveEvent();
   }
 }
@@ -187,9 +194,9 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
   if (const auto info = LoadTexture(event.path))
   {
-    if (auto* document = mModel->GetActiveDocument())
+    if (auto* registry = mModel->GetActiveRegistry())
     {
-      document->AddTileset(*info, event.tile_width, event.tile_height);
+      Sys::AddTileset(*registry, *info, event.tile_width, event.tile_height);
     }
   }
   else
@@ -202,7 +209,7 @@ void Application::OnUndoEvent()
 {
   if (auto* document = mModel->GetActiveDocument())
   {
-    document->Undo();
+    document->commands.Undo();
   }
 }
 
@@ -210,13 +217,13 @@ void Application::OnRedoEvent()
 {
   if (auto* document = mModel->GetActiveDocument())
   {
-    document->Redo();
+    document->commands.Redo();
   }
 }
 
 void Application::OnSelectToolEvent(const SelectToolEvent& event)
 {
-  mModel->SelectTool(event.type);
+  // TODO mModel->SelectTool(event.type);
 }
 
 void Application::OnMousePressedEvent(const MousePressedEvent& event)
@@ -241,69 +248,65 @@ void Application::OnCenterViewportEvent()
 
 void Application::OnOffsetViewportEvent(const OffsetViewportEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->OffsetViewport(event.dx, event.dy);
+    Sys::OffsetViewport(*registry, event.dx, event.dy);
   }
 }
 
 void Application::OnPanLeftEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    const auto& info = document->GetViewportInfo();
-    document->OffsetViewport(info.tile_width, 0);
+    Sys::PanViewportLeft(*registry);
   }
 }
 
 void Application::OnPanRightEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    const auto& info = document->GetViewportInfo();
-    document->OffsetViewport(-info.tile_width, 0);
+    Sys::PanViewportRight(*registry);
   }
 }
 
 void Application::OnPanUpEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    const auto& info = document->GetViewportInfo();
-    document->OffsetViewport(0, info.tile_height);
+    Sys::PanViewportUp(*registry);
   }
 }
 
 void Application::OnPanDownEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    const auto& info = document->GetViewportInfo();
-    document->OffsetViewport(0, -info.tile_height);
+    Sys::PanViewportDown(*registry);
   }
 }
 
 void Application::OnIncreaseViewportZoomEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->IncreaseViewportTileSize();
+    Sys::IncreaseViewportZoom(*registry);
   }
 }
 
 void Application::OnDecreaseViewportZoomEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->DecreaseViewportTileSize();
+    Sys::DecreaseViewportZoom(*registry);
   }
 }
 
 void Application::OnResetViewportZoomEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->ResetViewportTileSize();
+    Sys::ResetViewportZoom(*registry);
   }
 }
 
@@ -314,68 +317,68 @@ void Application::OnSelectMapEvent(const SelectMapEvent& event)
 
 void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->SelectTileset(event.id);
+    Sys::SelectTileset(*registry, event.id);
   }
 }
 
 void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->RemoveTileset(event.id);
+    Sys::RemoveTileset(*registry, event.id);
   }
 }
 
 void Application::OnAddRowEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->AddRow();
+    Sys::AddRow(*registry);
   }
 }
 
 void Application::OnAddColumnEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->AddColumn();
+    Sys::AddColumn(*registry);
   }
 }
 
 void Application::OnRemoveRowEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->RemoveRow();
+    Sys::RemoveRow(*registry);
   }
 }
 
 void Application::OnRemoveColumnEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->RemoveColumn();
+    Sys::RemoveColumn(*registry);
   }
 }
 
 void Application::OnAddLayerEvent(const AddLayerEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
     switch (event.type)
     {
       case LayerType::TileLayer:
-        document->AddTileLayer();
+        Sys::AddTileLayer(*registry);
         break;
 
       case LayerType::ObjectLayer:
-        document->AddObjectLayer();
+        Sys::AddObjectLayer(*registry);
         break;
 
       case LayerType::GroupLayer:
-        document->AddGroupLayer();
+        Sys::AddGroupLayer(*registry);
         break;
     }
   }
@@ -383,125 +386,123 @@ void Application::OnAddLayerEvent(const AddLayerEvent& event)
 
 void Application::OnRemoveLayerEvent(const RemoveLayerEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->RemoveLayer(event.id);
+    Sys::RemoveLayer(*registry, event.id);
   }
 }
 
 void Application::OnMoveLayerUpEvent(const MoveLayerUpEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->MoveLayerUp(event.id);
+    Sys::MoveLayerUp(*registry, event.id);
   }
 }
 
 void Application::OnMoveLayerDownEvent(const MoveLayerDownEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->MoveLayerDown(event.id);
+    Sys::MoveLayerDown(*registry, event.id);
   }
 }
 
 void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->DuplicateLayer(event.id);
+    Sys::DuplicateLayer(*registry, event.id);
   }
 }
 
 void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->SetLayerOpacity(event.id, event.opacity);
+    Sys::SetLayerOpacity(*registry, event.id, event.opacity);
   }
 }
 
 void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->SetLayerVisible(event.id, event.visible);
+    Sys::SetLayerVisible(*registry, event.id, event.visible);
   }
 }
 
 void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->ShowLayerProperties(event.id);
+    auto& current = registry->ctx<ActivePropertyContext>();
+    current.entity = Sys::FindLayer(*registry, event.id);
   }
 }
 
 void Application::OnShowMapPropertiesEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->ShowProperties();
+    auto& current = registry->ctx<ActivePropertyContext>();
+    current.entity = entt::null;
   }
 }
 
 void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->SelectLayer(event.id);
+    Sys::SelectLayer(*registry, event.id);
   }
 }
 
 void Application::OnAddPropertyEvent(const AddPropertyEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->AddProperty(event.name, event.type);
+    Sys::AddProperty(*registry, event.name, event.type);
   }
 }
 
 void Application::OnRemovePropertyEvent(const RemovePropertyEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->RemoveProperty(event.name);
+    Sys::RemoveProperty(*registry, event.name);
   }
 }
 
 void Application::OnRenamePropertyEvent(const RenamePropertyEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->RenameProperty(event.old_name, event.new_name);
+    Sys::RenameProperty(*registry, event.old_name, event.new_name);
   }
 }
 
 void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->SetProperty(event.name, event.property);
+    Sys::UpdateProperty(*registry, event.name, event.property);
   }
 }
 
 void Application::OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    document->ChangePropertyType(event.name, event.type);
+    Sys::ChangePropertyType(*registry, event.name, event.type);
   }
 }
 
 void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* registry = mModel->GetActiveRegistry())
   {
-    auto& tilesets = document->GetTilesets();
-    if (auto* tileset = tilesets.GetActiveTileset())
-    {
-      tileset->SetSelection(event.selection);
-    }
+    Sys::UpdateTilesetSelection(*registry, event.selection);
   }
 }
 

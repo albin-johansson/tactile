@@ -6,15 +6,16 @@
 #include <vector>      // vector
 
 #include "aliases/col.hpp"
+#include "aliases/ints.hpp"
 #include "aliases/layer_id.hpp"
 #include "aliases/object_id.hpp"
 #include "aliases/row.hpp"
 #include "aliases/tile_id.hpp"
 #include "aliases/tile_matrix.hpp"
 #include "aliases/unique.hpp"
-#include "core/map/layers/layer_type.hpp"
-#include "core/map/layers/object_type.hpp"
-#include "core/properties/property.hpp"
+#include "core/layer_type.hpp"
+#include "core/object_type.hpp"
+#include "core/properties/property_value.hpp"
 
 namespace Tactile::IO {
 
@@ -27,7 +28,7 @@ namespace Tactile::IO {
 struct PropertyData final
 {
   std::string name;   ///< The unique (within the context) property name
-  Property property;  ///< The property value.
+  PropertyValue property;  ///< The property value.
 };
 
 /**
@@ -116,6 +117,7 @@ struct LayerData final
   using LayerContent = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
   layer_id id;                           ///< Unique layer identifier.
+  usize index;                           ///< Local layer stack index.
   LayerType type;                        ///< The type of the layer.
   LayerContent data;                     ///< Type-specific data.
   std::string name;                      ///< The name of the layer.
@@ -134,6 +136,8 @@ struct MapData final
   object_id next_object_id;              ///< The next available object ID.
   int tile_width{};                      ///< The logical tile width.
   int tile_height{};                     ///< The logical tile height.
+  int row_count{};                       ///< The number of rows.
+  int column_count{};                    ///< The number of columns.
   std::vector<TilesetData> tilesets;     ///< The associated tilesets.
   std::vector<LayerData> layers;         ///< The associated layers.
   std::vector<PropertyData> properties;  ///< The map properties.

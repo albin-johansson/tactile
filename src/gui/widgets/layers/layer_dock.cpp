@@ -5,7 +5,9 @@
 #include <limits>  // numeric_limits
 
 #include "add_layer_popup.hpp"
-#include "core/model.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/parent.hpp"
+#include "core/systems/layer_system.hpp"
 #include "events/layers/duplicate_layer_event.hpp"
 #include "events/layers/move_layer_down_event.hpp"
 #include "events/layers/move_layer_up_event.hpp"
@@ -18,17 +20,18 @@
 namespace Tactile {
 namespace {
 
-void UpdateLayerDockButtons(const MapDocument* document,
+void UpdateLayerDockButtons(const entt::registry& registry,
                             entt::dispatcher& dispatcher)
 {
+  const auto activeLayerEntity = registry.ctx<ActiveLayer>().entity;
+  const auto hasActiveLayer = activeLayerEntity != entt::null;
+
   Maybe<layer_id> activeLayerId;
-
-  if (document)
+  if (hasActiveLayer)
   {
-    activeLayerId = document->GetMap().GetActiveLayerId();
+    const auto& layer = registry.get<Layer>(activeLayerEntity);
+    activeLayerId = layer.id;
   }
-
-  const bool hasActiveLayer = activeLayerId.has_value();
 
   if (Button(TAC_ICON_ADD, "Add new layer."))
   {
@@ -53,7 +56,7 @@ void UpdateLayerDockButtons(const MapDocument* document,
 
   if (Button(TAC_ICON_MOVE_UP,
              "Move layer up.",
-             document && document->CanMoveActiveLayerUp()))
+             activeLayerId && Sys::CanMoveLayerUp(registry, *activeLayerId)))
   {
     dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
   }
@@ -62,7 +65,7 @@ void UpdateLayerDockButtons(const MapDocument* document,
 
   if (Button(TAC_ICON_MOVE_DOWN,
              "Move layer down.",
-             document && document->CanMoveActiveLayerDown()))
+             activeLayerId && Sys::CanMoveLayerDown(registry, *activeLayerId)))
   {
     dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);
   }
@@ -70,35 +73,36 @@ void UpdateLayerDockButtons(const MapDocument* document,
 
 }  // namespace
 
-void UpdateLayerDock(const Model& model, entt::dispatcher& dispatcher)
+void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (!Prefs::GetShowLayerDock() || !model.GetActiveMapId())
+  if (!Prefs::GetShowLayerDock())
   {
     return;
   }
 
-  const auto* document = model.GetActiveDocument();
   bool isVisible = Prefs::GetShowLayerDock();
-
   if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse))
   {
-    UpdateLayerDockButtons(document, dispatcher);
-    if (document)
+    UpdateLayerDockButtons(registry, dispatcher);
+    const auto windowHeight = ImGui::GetWindowHeight();
+    const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
+    const auto size = ImVec2{std::numeric_limits<float>::min(),
+                             windowHeight - (4 * textLineHeight)};
+
+    if (ImGui::BeginListBox("##LayerTreeNode", size))
     {
-      const auto windowHeight = ImGui::GetWindowHeight();
-      const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
-      const auto size = ImVec2{std::numeric_limits<float>::min(),
-                               windowHeight - (4 * textLineHeight)};
-
-      if (ImGui::BeginListBox("##LayerTreeNode", size))
+      for (auto&& [entity, layer] : registry.view<Layer>().each())
       {
-        for (const auto& [id, layer] : document->GetMap())
+        /* Note, we rely on the Layer pool being sorted by layer index, so we can't
+           include Parent in the view query directly. */
+        const auto& parent = registry.get<Parent>(entity);
+        if (parent.entity == entt::null)
         {
-          LayerItem(*document, dispatcher, id, layer);
+          LayerItem(registry, dispatcher, entity, layer);
         }
-
-        ImGui::EndListBox();
       }
+
+      ImGui::EndListBox();
     }
   }
 

@@ -1,9 +1,12 @@
 #include "update_gui.hpp"
 
+#include <imgui.h>
+#include <imgui_internal.h>
+
 #include "core/model.hpp"
-#include "gui/widgets/dialogs/map_import_error_dialog.hpp"
-#include "gui/widgets/dialogs/save_as_dialog.hpp"
 #include "layout/dock_space.hpp"
+#include "widgets/dialogs/map_import_error_dialog.hpp"
+#include "widgets/dialogs/save_as_dialog.hpp"
 #include "widgets/layers/layer_dock.hpp"
 #include "widgets/menus/menu_bar.hpp"
 #include "widgets/properties/properties_dock.hpp"
@@ -18,15 +21,19 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
   UpdateMenuBar(model, dispatcher);
   UpdateDockSpace();
 
-  if (model.GetActiveMapId())
+  if (model.HasActiveDocument())
   {
     UpdateToolbarWidget(model, dispatcher);
   }
 
   UpdateViewportWidget(model, dispatcher);
-  UpdateLayerDock(model, dispatcher);
-  UpdatePropertiesDock(model, dispatcher);
-  UpdateTilesetDock(model, dispatcher);
+
+  if (const auto* registry = model.GetActiveRegistry())
+  {
+    UpdateLayerDock(*registry, dispatcher);
+    UpdatePropertiesDock(*registry, dispatcher);
+    UpdateTilesetDock(*registry, dispatcher);
+  }
 
   UpdateMapImportErrorDialog();
   UpdateSaveAsDialog(dispatcher);

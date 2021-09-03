@@ -4,6 +4,7 @@
 #include <memory>    // make_unique
 #include <utility>   // move
 
+#include "aliases/ints.hpp"
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"
@@ -111,13 +112,18 @@ namespace {
 auto ParseLayers(const pugi::xml_node root, std::vector<LayerData>& layers)
     -> ParseError
 {
+  usize index = 0;
   for (const auto node : GetLayerNodes(root))
   {
     auto& data = layers.emplace_back();
+    data.index = index;
+
     if (const auto err = ParseLayer(node, data); err != ParseError::None)
     {
       return err;
     }
+
+    ++index;
   }
 
   return ParseError::None;

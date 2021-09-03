@@ -9,13 +9,13 @@
 
 namespace Tactile {
 
-struct TileAnimationFrame final
+struct AnimationFrame final
 {
   tile_id tile;
   cen::milliseconds<uint32> duration{};
 };
 
-struct TileAnimation final
+struct Animation final
 {
   usize index{};
   cen::milliseconds<uint32> last_update_time{};

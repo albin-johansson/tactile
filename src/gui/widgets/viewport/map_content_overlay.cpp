@@ -3,7 +3,10 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "core/map_document.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/tile_layer.hpp"
+#include "core/systems/tile_layer_system.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "gui/rendering/canvas.hpp"
 #include "viewport_cursor_info.hpp"
 
@@ -42,17 +45,21 @@ void MouseRowColumnLabels(const ViewportCursorInfo& cursor)
   }
 }
 
-void MouseTileLabels(const Map& map,
-                     const TilesetManager& tilesets,
+void MouseTileLabels(const entt::registry& registry,
                      const ViewportCursorInfo& cursor)
 {
-  if (const auto id = map.GetActiveLayerId())
+  const auto& activeLayer = registry.ctx<ActiveLayer>();
+
+  if (activeLayer.entity != entt::null)
   {
-    if (const auto* tileLayer = map.GetTileLayer(*id))
+    if (registry.all_of<TileLayer>(activeLayer.entity))
     {
       ImGui::Separator();
 
-      const auto global = tileLayer->GetTile(cursor.map_position);
+      const auto global = Sys::GetTile(registry,
+                                       activeLayer.entity,
+                                       cursor.map_position.GetRow(),
+                                       cursor.map_position.GetColumn());
       if (cursor.is_within_map && global)
       {
         ImGui::Text("Global ID: %i", global->get());
@@ -64,7 +71,7 @@ void MouseTileLabels(const Map& map,
 
       if (global)
       {
-        const auto local = tilesets.ToLocal(*global);
+        const auto local = Sys::ConvertToLocal(registry, *global);
         if (cursor.is_within_map && local)
         {
           ImGui::Text("Local ID: %i", local->get());
@@ -80,7 +87,7 @@ void MouseTileLabels(const Map& map,
 
 }  // namespace
 
-void MapContentOverlay(const MapDocument& document,
+void MapContentOverlay(const entt::registry& registry,
                        const CanvasInfo& canvas,
                        const ViewportCursorInfo& cursor)
 {
@@ -93,7 +100,7 @@ void MapContentOverlay(const MapDocument& document,
   {
     MouseCoordinateLabels(cursor);
     MouseRowColumnLabels(cursor);
-    MouseTileLabels(document.GetMap(), document.GetTilesets(), cursor);
+    MouseTileLabels(registry, cursor);
   }
 
   ImGui::End();

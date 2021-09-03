@@ -6,7 +6,8 @@
 #include <utility>  // move
 
 #include "aliases/maybe.hpp"
-#include "core/document.hpp"
+#include "core/components/property_context.hpp"
+#include "core/systems/property_system.hpp"
 #include "events/properties/rename_property_event.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "utils/buffer_utils.hpp"
@@ -27,7 +28,7 @@ void ResetState()
 
 }  // namespace
 
-void UpdateRenamePropertyDialog(const IDocument& document,
+void UpdateRenamePropertyDialog(const entt::registry& registry,
                                 entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
@@ -41,8 +42,7 @@ void UpdateRenamePropertyDialog(const IDocument& document,
     if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer))
     {
       const auto name = CreateStringFromBuffer(name_buffer);
-      const auto& properties = document.GetProperties();
-      is_input_valid = !name.empty() && !properties.contains(name);
+      is_input_valid = !name.empty() && !Sys::HasPropertyWithName(registry, name);
     }
 
     ImGui::Spacing();

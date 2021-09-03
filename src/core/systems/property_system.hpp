@@ -4,6 +4,7 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
+#include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
 #include "core/properties/property_type.hpp"
 #include "core/properties/property_value.hpp"
@@ -21,7 +22,8 @@ void RenameProperty(entt::registry& registry,
                     std::string_view oldName,
                     std::string newName);
 
-void UpdateProperty(entt::registry& registry, std::string_view name,
+void UpdateProperty(entt::registry& registry,
+                    std::string_view name,
                     PropertyValue value);
 
 void ChangePropertyType(entt::registry& registry,

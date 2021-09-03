@@ -1,8 +1,9 @@
 #pragma once
 
+#include <entt.hpp>  // registry
+
 namespace Tactile {
 
-class MapDocument;
 struct RenderInfo;
 
 /**
@@ -10,9 +11,9 @@ struct RenderInfo;
  *
  * \ingroup rendering
  *
- * \param document the map document that will have its map rendered.
+ * \param registry the registry associated with the map that will rendered.
  * \param info the rendering context information that will be used.
  */
-void RenderMap(const MapDocument& document, const RenderInfo& info);
+void RenderMap(const entt::registry& registry, const RenderInfo& info);
 
 }  // namespace Tactile

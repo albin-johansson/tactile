@@ -1,5 +1,6 @@
 #include "remove_row_shortcut.hpp"
 
+#include "core/map.hpp"
 #include "core/model.hpp"
 #include "events/maps/remove_row_event.hpp"
 
@@ -16,8 +17,15 @@ void RemoveRowShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto RemoveRowShortcut::IsEnabled(const Model& model) const -> bool
 {
-  const auto* document = model.GetActiveDocument();
-  return document && document->GetRowCount() > 1_row;
+  if (const auto* registry = model.GetActiveRegistry())
+  {
+    const auto& map = registry->ctx<Map>();
+    return map.row_count > 1_row;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 }  // namespace Tactile

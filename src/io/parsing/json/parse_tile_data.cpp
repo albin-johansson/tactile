@@ -1,6 +1,6 @@
 #include "parse_tile_data.hpp"
 
-#include "core/map/map_position.hpp"
+#include "core/map_position.hpp"
 
 namespace Tactile::IO {
 

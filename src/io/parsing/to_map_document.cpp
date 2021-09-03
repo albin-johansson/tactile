@@ -1,177 +1,199 @@
 #include "to_map_document.hpp"
 
-#include <cassert>  // assert
-#include <utility>  // move
-#include <variant>  // get
+#include <algorithm>  // sort
+#include <entt.hpp>   // registry
+#include <variant>    // get
 
+#include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
+#include "core/components/group_layer.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
+#include "core/components/parent.hpp"
+#include "core/components/property.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/tile_layer.hpp"
+#include "core/components/tileset.hpp"
+#include "core/map.hpp"
+#include "core/systems/layer_system.hpp"
+#include "core/systems/registry_factory_system.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "io/parsing/parse_ir.hpp"
 #include "utils/load_texture.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-void AddProperties(IPropertyContext& context,
-                   const std::vector<PropertyData>& properties)
+void AddProperties(entt::registry& registry,
+                   const entt::entity entity,
+                   const std::vector<PropertyData>& data)
 {
-  for (const auto& data : properties)
+  auto& context = (entity != entt::null)
+                      ? registry.get_or_emplace<PropertyContext>(entity)
+                      : registry.ctx<PropertyContext>();
+  for (const auto& propertyData : data)
   {
-    context.AddProperty(data.name, data.property);
+    const auto propertyEntity = registry.create();
+
+    auto& property = registry.emplace<Property>(propertyEntity);
+    property.name = propertyData.name;
+    property.value = propertyData.property;
+
+    context.properties.push_back(propertyEntity);
   }
 }
 
-[[nodiscard]] auto MakeTileset(const TilesetData& data) -> Shared<Tileset>
+void MakeTileset(entt::registry& registry,
+                 const tileset_id id,
+                 const TilesetData& data)
 {
-  const auto info = LoadTexture(data.absolute_image_path);
+  const auto info = LoadTexture(data.absolute_image_path).value();
+  const auto tilesetEntity = Sys::MakeTileset(registry,
+                                              id,
+                                              data.first_id,
+                                              info,
+                                              data.tile_width,
+                                              data.tile_height);
 
-  auto tileset = std::make_shared<Tileset>(data.first_id,
-                                           info.value(),
-                                           data.tile_width,
-                                           data.tile_height);
-  tileset->SetName(data.name);
+  auto& context = registry.get<PropertyContext>(tilesetEntity);
+  context.name = data.name;
 
-  for (const auto& tile : data.tiles)
+  AddProperties(registry, tilesetEntity, data.properties);
+
+  auto& cache = registry.get<TilesetCache>(tilesetEntity);
+  for (const auto& tileData : data.tiles)
   {
-    if (!tile.animation.empty())
+    const auto tileEntity = registry.create();
+
+    auto& tile = registry.emplace<FancyTile>(tileEntity);
+    tile.id = data.first_id + tileData.id;
+
+    cache.tiles.try_emplace(tile.id, tileEntity);
+
+    if (!tileData.animation.empty())
     {
-      TileAnimation animation;
-      for (const auto& frame : tile.animation)
+      auto& animation = registry.emplace<Animation>(tileEntity);
+      for (const auto& frameData : tileData.animation)
       {
-        animation.AddFrame({.tile = data.first_id + frame.tile,
-                            .duration = cen::milliseconds<uint32>{frame.duration}});
+        const auto frameEntity = registry.create();
+
+        auto& frame = registry.emplace<AnimationFrame>(frameEntity);
+        frame.tile = data.first_id + frameData.tile;
+        frame.duration = cen::milliseconds<uint32>{frameData.duration};
+
+        animation.frames.push_back(frameEntity);
       }
-
-      tileset->SetAnimation(data.first_id + tile.id, std::move(animation));
     }
   }
-
-  AddProperties(*tileset, data.properties);
-
-  return tileset;
 }
 
-[[nodiscard]] auto MakeTileLayer(const TileLayerData& data) -> SharedLayer
+void MakeObjectLayer(entt::registry& registry,
+                     const entt::entity entity,
+                     const ObjectLayerData& data)
 {
-  auto layer = std::make_shared<TileLayer>(data.row_count, data.col_count);
-
-  for (auto row = 0_row; row < data.row_count; ++row)
-  {
-    for (auto col = 0_col; col < data.col_count; ++col)
-    {
-      const MapPosition pos{row, col};
-      const auto tile = data.tiles.at(pos.GetRowIndex()).at(pos.GetColumnIndex());
-      layer->SetTile(pos, tile);
-    }
-  }
-
-  return layer;
-}
-
-[[nodiscard]] auto MakeObject(const ObjectData& data) -> Object
-{
-  Object object{data.type};
-
-  object.SetName(data.name);
-  object.SetX(data.x);
-  object.SetY(data.y);
-  object.SetWidth(data.width);
-  object.SetHeight(data.height);
-  object.SetVisible(data.visible);
-
-  if (!data.custom_type.empty())
-  {
-    object.SetCustomType(data.custom_type);
-  }
-
-  AddProperties(object, data.properties);
-
-  return object;
-}
-
-[[nodiscard]] auto MakeObjectLayer(const ObjectLayerData& data) -> SharedLayer
-{
-  auto layer = std::make_shared<ObjectLayer>();
+  auto& objectLayer = registry.emplace<ObjectLayer>(entity);
 
   for (const auto& objectData : data.objects)
   {
-    layer->AddObject(objectData.id, MakeObject(objectData));
-  }
+    const auto objectEntity = objectLayer.objects.emplace_back(registry.create());
 
-  return layer;
+    auto& object = registry.emplace<Object>(objectEntity);
+    object.x = objectData.x;
+    object.y = objectData.y;
+    object.width = objectData.width;
+    object.height = objectData.height;
+    object.type = objectData.type;
+    object.visible = objectData.visible;
+
+    if (!objectData.custom_type.empty())
+    {
+      object.custom_type = objectData.custom_type;
+    }
+
+    // TODO properties
+  }
 }
 
-[[nodiscard]] auto MakeLayer(const LayerData& data) -> SharedLayer;
-
-[[nodiscard]] auto MakeGroupLayer(const GroupLayerData& data) -> SharedLayer
+auto MakeLayer(entt::registry& registry,
+               const LayerData& data,
+               entt::entity parent = entt::null) -> entt::entity
 {
-  auto layer = std::make_shared<GroupLayer>();
+  const auto entity =
+      Sys::AddBasicLayer(registry, data.id, data.type, data.name, parent);
 
-  for (const auto& layerData : data.layers)
-  {
-    layer->AddLayer(layerData->id, MakeLayer(*layerData));
-  }
-
-  return layer;
-}
-
-[[nodiscard]] auto MakeLayer(const LayerData& data) -> SharedLayer
-{
-  SharedLayer layer;
+  auto& layer = registry.get<Layer>(entity);
+  layer.index = data.index;
+  layer.opacity = data.opacity;
+  layer.visible = data.is_visible;
 
   if (data.type == LayerType::TileLayer)
   {
-    layer = MakeTileLayer(std::get<TileLayerData>(data.data));
+    const auto& tileLayerData = std::get<TileLayerData>(data.data);
+
+    auto& tileLayer = registry.emplace<TileLayer>(entity);
+    tileLayer.matrix = tileLayerData.tiles;
   }
   else if (data.type == LayerType::ObjectLayer)
   {
-    layer = MakeObjectLayer(std::get<ObjectLayerData>(data.data));
+    const auto& objectLayerData = std::get<ObjectLayerData>(data.data);
+    MakeObjectLayer(registry, entity, objectLayerData);
   }
   else if (data.type == LayerType::GroupLayer)
   {
-    layer = MakeGroupLayer(std::get<GroupLayerData>(data.data));
+    registry.emplace<GroupLayer>(entity);
+
+    const auto& groupLayerData = std::get<GroupLayerData>(data.data);
+    for (const auto& layerData : groupLayerData.layers)
+    {
+      MakeLayer(registry, *layerData, entity);
+    }
   }
 
-  assert(layer);
-  layer->SetName(data.name);
-  layer->SetOpacity(data.opacity);
-  layer->SetVisible(data.is_visible);
+  AddProperties(registry, entity, data.properties);
 
-  AddProperties(*layer, data.properties);
-
-  return layer;
+  return entity;
 }
 
 }  // namespace
 
-auto ToMapDocument(const MapData& data) -> Unique<MapDocument>
+auto ToMapDocument(const MapData& data) -> Document
 {
-  auto document = std::make_unique<MapDocument>();
-  document->SetNextLayerId(data.next_layer_id);
-  document->SetNextObjectId(data.next_object_id);
-  document->SetPath(data.absolute_path);
+  Document document;
+  document.path = data.absolute_path;
+  document.registry = Sys::MakeRegistry();
 
-  auto& map = document->GetMap();
-  map.SetTileWidth(data.tile_width);
-  map.SetTileHeight(data.tile_height);
+  auto& map = document.registry.ctx<Map>();
+  map.next_layer_id = data.next_layer_id;
+  map.next_object_id = data.next_object_id;
+  map.tile_width = data.tile_width;
+  map.tile_height = data.tile_height;
+  map.row_count = AsRow(data.row_count);
+  map.column_count = AsColumn(data.column_count);
 
-  auto& tilesets = document->GetTilesets();
-  for (const auto& tilesetData : data.tilesets)
+  auto& context = document.registry.ctx<PropertyContext>();
+  context.name = data.absolute_path.filename().string();
+
+  for (tileset_id id{1}; const auto& tilesetData : data.tilesets)
   {
-    const auto id [[maybe_unused]] = tilesets.Add(MakeTileset(tilesetData));
+    MakeTileset(document.registry, id, tilesetData);
+    ++id;
   }
 
   for (const auto& layerData : data.layers)
   {
-    document->AddLayer(layerData.id, MakeLayer(layerData));
+    MakeLayer(document.registry, layerData);
   }
 
-  AddProperties(*document, data.properties);
+  AddProperties(document.registry, entt::null, data.properties);
 
-  if (!data.layers.empty())
-  {
-    document->SelectLayer(data.layers.front().id);
-  }
+  // TODO
+  // if (!data.layers.empty())
+  // {
+  //   auto& activeLayer = document.registry.ctx<ActiveLayer>();
+  // }
 
-  document->ResetHistory();  // Make sure there is no undo/redo history
+  Sys::SortLayers(document.registry);
 
   return document;
 }

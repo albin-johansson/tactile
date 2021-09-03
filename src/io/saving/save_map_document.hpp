@@ -1,6 +1,6 @@
 #pragma once
 
-#include "core/map_document.hpp"
+#include "core/document.hpp"
 
 namespace Tactile::IO {
 
@@ -11,6 +11,6 @@ namespace Tactile::IO {
  *
  * \param document the map document that will be saved.
  */
-void SaveMapDocument(const MapDocument& document);
+void SaveMapDocument(const Document& document);
 
 }  // namespace Tactile::IO

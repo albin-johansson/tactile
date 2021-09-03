@@ -4,9 +4,10 @@
 #include <imgui_internal.h>
 
 #include "aliases/ints.hpp"
-#include "core/map/map.hpp"
-#include "core/tileset/tileset.hpp"
-#include "gui/rendering/uv_tile_size.hpp"
+#include "core/components/texture.hpp"
+#include "core/components/tileset.hpp"
+#include "core/components/uv_tile_size.hpp"
+#include "core/map.hpp"
 #include "gui/texture_utils.hpp"
 
 namespace Tactile {
@@ -39,19 +40,25 @@ void RenderPreviewTile(ImTextureID texture,
 
 }  // namespace
 
-void RenderStampPreview(const ImVec2& mapPos,
+void RenderStampPreview(const entt::registry& registry,
+                        const entt::entity tilesetEntity,
+                        const ImVec2& mapPos,
                         const ImVec2& gridSize,
-                        const Map& map,
-                        const Tileset& tileset,
                         const MapPosition& mousePos)
 {
-  const auto [topLeft, bottomRight] = tileset.GetSelection().value();
+  const auto& tileset = registry.get<Tileset>(tilesetEntity);
+  const auto& texture = registry.get<Texture>(tilesetEntity);
+  const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
+  const auto& uv = registry.get<UvTileSize>(tilesetEntity);
+
+  const auto [topLeft, bottomRight] = selection.region.value();
   const auto size = bottomRight - topLeft;
   const MapPosition offset = {size.GetRow() / 2_row, size.GetColumn() / 2_col};
 
-  const auto texture = ToTextureID(tileset.GetTexture());
-  const auto uvTileSize = GetTileSizeUV(tileset);
+  const auto textureId = ToTextureID(texture.id);
+  const ImVec2 uvTileSize = {uv.width, uv.height};
 
+  const auto& map = registry.ctx<Map>();
   const auto endRow = size.GetRow();
   const auto endCol = size.GetColumn();
   for (row_t row{0}; row < endRow; ++row)
@@ -60,13 +67,14 @@ void RenderStampPreview(const ImVec2& mapPos,
     {
       const auto position = MapPosition{row, col};
       const auto tilePos = mousePos + position - offset;
-      if (map.InBounds(tilePos))
+      if (tilePos.GetRow() > 0_row && tilePos.GetColumn() > 0_col &&
+          tilePos.GetRow() < map.row_count && tilePos.GetColumn() < map.column_count)
       {
         const auto tsTile = topLeft + position;
         const auto tsRow = static_cast<float>(tsTile.GetRow());
         const auto tsCol = static_cast<float>(tsTile.GetColumn());
 
-        RenderPreviewTile(texture,
+        RenderPreviewTile(textureId,
                           tilePos,
                           mapPos,
                           {tsCol, tsRow},

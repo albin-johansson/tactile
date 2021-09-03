@@ -2,148 +2,178 @@
 
 #include <sstream>  // stringstream
 
-#include "core/map/layers/group_layer.hpp"
-#include "core/map/layers/object_layer.hpp"
-#include "core/map/layers/tile_layer.hpp"
+#include "append_properties.hpp"
+#include "core/components/group_layer.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/tile_layer.hpp"
 #include "core/tactile_error.hpp"
 #include "io/preferences.hpp"
-#include "io/saving/xml/append_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-void AppendTileLayer(const layer_id id,
-                     const TileLayer& layer,
-                     pugi::xml_node& mapNode,
+void AppendTileLayer(pugi::xml_node mapNode,
+                     const entt::registry& registry,
+                     const entt::entity layerEntity,
+                     const Layer& layer,
                      const std::filesystem::path& dir)
 {
-  auto node = mapNode.append_child("layer");
-  node.append_attribute("id").set_value(id.get());
-  node.append_attribute("name").set_value(layer.GetName().c_str());
-  node.append_attribute("width").set_value(layer.GetColumnCount().get());
-  node.append_attribute("height").set_value(layer.GetRowCount().get());
+  const auto& tileLayer = registry.get<TileLayer>(layerEntity);
+  const auto& context = registry.get<PropertyContext>(layerEntity);
 
-  AppendProperties(layer, node, dir);
+  auto node = mapNode.append_child("layer");
+  node.append_attribute("id").set_value(layer.id.get());
+  node.append_attribute("name").set_value(context.name.c_str());
+
+  const auto nCols = tileLayer.matrix.at(0).size();
+  const auto nRows = tileLayer.matrix.size();
+  node.append_attribute("width").set_value(nCols);
+  node.append_attribute("height").set_value(nRows);
+
+  AppendProperties(registry, layerEntity, node, dir);
 
   auto data = node.append_child("data");
   data.append_attribute("encoding").set_value("csv");
 
-  const auto count = layer.GetTileCount();
-  const auto nCols = layer.GetColumnCount().get();
+  const auto count = nRows * nCols;
   const auto readable = Prefs::GetHumanReadableOutput();
 
   std::stringstream stream;
   usize index = 0;
-  layer.Each([&](const tile_id tile) {
-    if (readable && index == 0)
-    {
-      stream << '\n';
-    }
 
-    stream << tile.get();
-    if (index < count - 1)
+  for (const auto& row : tileLayer.matrix)
+  {
+    for (const auto tile : row)
     {
-      stream << ',';
-    }
+      if (readable && index == 0)
+      {
+        stream << '\n';
+      }
 
-    if (readable && (index + 1) % nCols == 0)
-    {
-      stream << '\n';
-    }
+      stream << tile.get();
+      if (index < count - 1)
+      {
+        stream << ',';
+      }
 
-    ++index;
-  });
+      if (readable && (index + 1) % nCols == 0)
+      {
+        stream << '\n';
+      }
+
+      ++index;
+    }
+  }
 
   const auto tileData = stream.str();
   data.text().set(tileData.c_str());
 }
 
-void AppendObjectLayer(const layer_id layerId,
-                       const ObjectLayer& layer,
-                       pugi::xml_node& mapNode,
-                       const std::filesystem::path& dir)
+void AppendObject(pugi::xml_node node,
+                  const entt::registry& registry,
+                  const entt::entity objectEntity)
 {
-  auto node = mapNode.append_child("objectgroup");
-  node.append_attribute("id").set_value(layerId.get());
-  node.append_attribute("name").set_value(layer.GetName().c_str());
+  const auto& object = registry.get<Object>(objectEntity);
+  const auto& context = registry.get<PropertyContext>(objectEntity);
 
-  AppendProperties(layer, node, dir);
+  auto objNode = node.append_child("object");
+  objNode.append_attribute("id").set_value(object.id.get());
 
-  for (const auto& [id, object] : layer)
+  if (!context.name.empty())
   {
-    auto objNode = node.append_child("object");
-    objNode.append_attribute("id").set_value(id.get());
+    objNode.append_attribute("name").set_value(context.name.data());
+  }
 
-    if (!object.GetName().empty())
-    {
-      objNode.append_attribute("name").set_value(object.GetName().data());
-    }
+  if (!object.custom_type.empty())
+  {
+    objNode.append_attribute("type").set_value(object.custom_type.c_str());
+  }
 
-    if (const auto type = object.GetCustomType())
-    {
-      objNode.append_attribute("type").set_value(type->c_str());
-    }
+  objNode.append_attribute("x").set_value(object.x);
+  objNode.append_attribute("y").set_value(object.y);
 
-    objNode.append_attribute("x").set_value(object.GetX());
-    objNode.append_attribute("y").set_value(object.GetY());
+  if (object.width != 0)
+  {
+    objNode.append_attribute("width").set_value(object.width);
+  }
 
-    if (object.GetWidth() != 0)
-    {
-      objNode.append_attribute("width").set_value(object.GetWidth());
-    }
+  if (object.height != 0)
+  {
+    objNode.append_attribute("height").set_value(object.height);
+  }
 
-    if (object.GetHeight() != 0)
-    {
-      objNode.append_attribute("height").set_value(object.GetHeight());
-    }
-
-    if (!object.IsVisible())
-    {
-      objNode.append_attribute("visible").set_value(0);
-    }
+  if (!object.visible)
+  {
+    objNode.append_attribute("visible").set_value(0);
   }
 }
 
-void AppendGroupLayer(const layer_id id,
-                      const GroupLayer& layer,
-                      pugi::xml_node& mapNode,
+void AppendObjectLayer(pugi::xml_node mapNode,
+                       const entt::registry& registry,
+                       const entt::entity layerEntity,
+                       const Layer& layer,
+                       const std::filesystem::path& dir)
+{
+  const auto& objectLayer = registry.get<ObjectLayer>(layerEntity);
+  const auto& context = registry.get<PropertyContext>(layerEntity);
+
+  auto node = mapNode.append_child("objectgroup");
+  node.append_attribute("id").set_value(layer.id.get());
+  node.append_attribute("name").set_value(context.name.c_str());
+
+  AppendProperties(registry, layerEntity, node, dir);
+
+  for (const auto objectEntity : objectLayer.objects)
+  {
+    AppendObject(node, registry, objectEntity);
+  }
+}
+
+void AppendGroupLayer(pugi::xml_node mapNode,
+                      const entt::registry& registry,
+                      const entt::entity layerEntity,
+                      const Layer& layer,
                       const std::filesystem::path& dir)
 {
-  auto node = mapNode.append_child("group");
-  node.append_attribute("id").set_value(id.get());
-  node.append_attribute("name").set_value(layer.GetName().c_str());
+  const auto& groupLayer = registry.get<GroupLayer>(layerEntity);
+  const auto& context = registry.get<PropertyContext>(layerEntity);
 
-  for (const auto& [subid, sublayer] : layer)
+  auto node = mapNode.append_child("group");
+  node.append_attribute("id").set_value(layer.id.get());
+  node.append_attribute("name").set_value(context.name.c_str());
+
+  for (const auto child : groupLayer.layers)
   {
-    AppendLayer(subid, *sublayer, node, dir);
+    AppendLayer(node, registry, child, dir);
   }
 }
 
 }  // namespace
 
-void AppendLayer(const layer_id id,
-                 const ILayer& layer,
-                 pugi::xml_node& mapNode,
+void AppendLayer(pugi::xml_node mapNode,
+                 const entt::registry& registry,
+                 const entt::entity layerEntity,
                  const std::filesystem::path& dir)
 {
-  switch (layer.GetType())
+  const auto& layer = registry.get<Layer>(layerEntity);
+  switch (layer.type)
   {
     case LayerType::TileLayer:
     {
-      const auto& tileLayer = dynamic_cast<const TileLayer&>(layer);
-      AppendTileLayer(id, tileLayer, mapNode, dir);
+      AppendTileLayer(mapNode, registry, layerEntity, layer, dir);
       break;
     }
     case LayerType::ObjectLayer:
     {
-      const auto& objectLayer = dynamic_cast<const ObjectLayer&>(layer);
-      AppendObjectLayer(id, objectLayer, mapNode, dir);
+      AppendObjectLayer(mapNode, registry, layerEntity, layer, dir);
       break;
     }
     case LayerType::GroupLayer:
     {
-      const auto& groupLayer = dynamic_cast<const GroupLayer&>(layer);
-      AppendGroupLayer(id, groupLayer, mapNode, dir);
+      AppendGroupLayer(mapNode, registry, layerEntity, layer, dir);
       break;
     }
     default:

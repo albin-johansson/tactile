@@ -4,7 +4,8 @@
 
 #include <array>  // array
 
-#include "core/document.hpp"
+#include "core/components/property_context.hpp"
+#include "core/systems/property_system.hpp"
 #include "core/tactile_error.hpp"
 #include "events/properties/add_property_event.hpp"
 #include "gui/widgets/common/button.hpp"
@@ -27,7 +28,8 @@ void ResetState()
 
 }  // namespace
 
-void UpdateAddPropertyDialog(const IDocument& document, entt::dispatcher& dispatcher)
+void UpdateAddPropertyDialog(const entt::registry& registry,
+                             entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
@@ -40,8 +42,7 @@ void UpdateAddPropertyDialog(const IDocument& document, entt::dispatcher& dispat
     if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer))
     {
       const auto name = CreateStringFromBuffer(name_buffer);
-      const auto& properties = document.GetProperties();
-      is_input_valid = !name.empty() && !properties.contains(name);
+      is_input_valid = !name.empty() && !Sys::HasPropertyWithName(registry, name);
     }
 
     ImGui::AlignTextToFramePadding();

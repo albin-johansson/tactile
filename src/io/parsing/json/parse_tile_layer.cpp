@@ -1,6 +1,6 @@
 #include "parse_tile_layer.hpp"
 
-#include "core/map/layers/tile_layer.hpp"
+#include "core/systems/tile_layer_system.hpp"
 #include "parse_tile_data.hpp"
 
 namespace Tactile::IO {
@@ -27,7 +27,7 @@ auto ParseTileLayer(const JSON& json, LayerData& layer) -> ParseError
     return ParseError::LayerMissingWidth;
   }
 
-  data.tiles = MakeTileMatrix(data.row_count, data.col_count);
+  data.tiles = Sys::MakeTileMatrix(data.row_count, data.col_count);
   if (const auto err = ParseTileData(json, data.col_count, data.tiles);
       err != ParseError::None)
   {

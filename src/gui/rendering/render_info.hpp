@@ -2,11 +2,12 @@
 
 #include <imgui.h>
 
+#include <entt.hpp>  // registry
+
 #include "core/region.hpp"
 
 namespace Tactile {
 
-class MapDocument;
 struct CanvasInfo;
 
 /// \addtogroup rendering
@@ -30,12 +31,12 @@ struct RenderInfo final
 /**
  * \brief Returns information about a rendering context.
  *
- * \param document the map document that will be rendered later.
+ * \param registry the currently active registry.
  * \param canvas information about the target canvas.
  *
  * \return information about the rendering context.
  */
-[[nodiscard]] auto GetRenderInfo(const MapDocument& document,
+[[nodiscard]] auto GetRenderInfo(const entt::registry& registry,
                                  const CanvasInfo& canvas) -> RenderInfo;
 
 /// \} End of group rendering

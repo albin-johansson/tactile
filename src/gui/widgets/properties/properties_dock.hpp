@@ -1,11 +1,10 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, dispatcher
 
 namespace Tactile {
 
-class Model;
-
-void UpdatePropertiesDock(const Model& model, entt::dispatcher& dispatcher);
+void UpdatePropertiesDock(const entt::registry& registry,
+                          entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

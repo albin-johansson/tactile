@@ -1,36 +1,44 @@
 #include "save_tilesets.hpp"
 
-#include <algorithm>  // replace
-#include <format>     // format
-#include <utility>    // move
+#include <format>   // format
+#include <utility>  // move
 
+#include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/texture.hpp"
+#include "core/components/tileset.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "io/preferences.hpp"
 #include "io/saving/common.hpp"
-#include "io/saving/json/save_json.hpp"
-#include "io/saving/json/save_properties.hpp"
+#include "save_json.hpp"
+#include "save_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto SaveFancyTiles(const TilesetManager& manager,
+[[nodiscard]] auto SaveFancyTiles(const entt::registry& registry,
+                                  const entt::entity tilesetEntity,
                                   const Tileset& tileset,
                                   const std::filesystem::path& dir) -> JSON
 {
   auto array = JSON::array();
 
-  for (const auto& [id, tile] : tileset.GetFancyTiles())
+  for (auto&& [entity, tile] : registry.view<FancyTile>().each())
   {
     auto& tileJson = array.emplace_back();
-    tileJson["id"] = manager.ToLocal(id).value().get();
+    tileJson["id"] = Sys::ConvertToLocal(registry, tile.id).value().get();
 
-    if (const auto& animation = tile.GetAnimation())
+    if (const auto* animation = registry.try_get<Animation>(entity))
     {
       auto animationJson = JSON::array();
-      for (const auto& frame : animation->GetFrames())
+      for (const auto frameEntity : animation->frames)
       {
+        const auto& frame = registry.get<AnimationFrame>(frameEntity);
         auto frameJson = JSON::object();
 
-        frameJson["tileid"] = manager.ToLocal(frame.tile).value().get();
+        frameJson["tileid"] =
+            Sys::ConvertToLocal(registry, frame.tile).value().get();
         frameJson["duration"] = frame.duration.count();
 
         animationJson += std::move(frameJson);
@@ -39,9 +47,10 @@ namespace {
       tileJson["animation"] = std::move(animationJson);
     }
 
-    if (tile.GetPropertyCount() != 0)
+    const auto& ctx = registry.get<PropertyContext>(entity);
+    if (!ctx.properties.empty())
     {
-      tileJson["properties"] = SaveProperties(tile, dir);
+      tileJson["properties"] = SaveProperties(registry, entity, dir);
     }
   }
 
@@ -49,95 +58,106 @@ namespace {
 }
 
 void AddCommonAttributes(JSON& json,
-                         const TilesetManager& manager,
+                         const entt::registry& registry,
+                         const entt::entity tilesetEntity,
                          const Tileset& tileset,
                          const std::filesystem::path& dir)
 {
-  json["name"] = tileset.GetName();
-  json["columns"] = tileset.GetColumnCount().get();
+  const auto& context = registry.get<PropertyContext>(tilesetEntity);
+  const auto& texture = registry.get<Texture>(tilesetEntity);
+
+  json["name"] = context.name;
+  json["columns"] = tileset.column_count.get();
   json["image"] = GetTilesetImagePath(tileset, dir);
-  json["imagewidth"] = tileset.GetWidth();
-  json["imageheight"] = tileset.GetHeight();
+  json["imagewidth"] = texture.width;
+  json["imageheight"] = texture.height;
   json["margin"] = 0;
   json["spacing"] = 0;
-  json["tilecount"] = tileset.GetTileCount();
-  json["tilewidth"] = tileset.GetTileWidth();
-  json["tileheight"] = tileset.GetTileHeight();
-  json["tiles"] = SaveFancyTiles(manager, tileset, dir);
+  json["tilecount"] = tileset.tile_count;
+  json["tilewidth"] = tileset.tile_width;
+  json["tileheight"] = tileset.tile_height;
+  json["tiles"] = SaveFancyTiles(registry, tilesetEntity, tileset, dir);
 
-  if (tileset.GetPropertyCount() != 0)
+  const auto& ctx = registry.get<PropertyContext>(tilesetEntity);
+  if (!ctx.properties.empty())
   {
-    json["properties"] = SaveProperties(tileset, dir);
+    json["properties"] = SaveProperties(registry, tilesetEntity, dir);
   }
 }
 
-[[nodiscard]] auto SaveEmbeddedTileset(const TilesetManager& manager,
+[[nodiscard]] auto SaveEmbeddedTileset(const entt::registry& registry,
+                                       const entt::entity tilesetEntity,
                                        const Tileset& tileset,
                                        const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::object();
 
-  json["firstgid"] = tileset.GetFirstId().get();
-  AddCommonAttributes(json, manager, tileset, dir);
+  json["firstgid"] = tileset.first_id.get();
+  AddCommonAttributes(json, registry, tilesetEntity, tileset, dir);
 
   return json;
 }
 
-[[nodiscard]] auto SaveExternalTileset(const Tileset& tileset) -> JSON
+[[nodiscard]] auto SaveExternalTileset(const entt::registry& registry,
+                                       const entt::entity tilesetEntity,
+                                       const Tileset& tileset) -> JSON
 {
+  const auto& context = registry.get<PropertyContext>(tilesetEntity);
   auto json = JSON::object();
 
-  json["firstgid"] = tileset.GetFirstId().get();
-  json["source"] = std::format("{}.json", tileset.GetName());
+  json["firstgid"] = tileset.first_id.get();
+  json["source"] = std::format("{}.json", context.name);
 
   return json;
 }
 
-void CreateExternalTilesetFile(const TilesetManager& manager,
+void CreateExternalTilesetFile(const entt::registry& registry,
+                               const entt::entity tilesetEntity,
                                const Tileset& tileset,
                                const std::filesystem::path& dir)
 {
   auto json = JSON::object();
 
-  AddCommonAttributes(json, manager, tileset, dir);
+  AddCommonAttributes(json, registry, tilesetEntity, tileset, dir);
 
   json["type"] = "tileset";
   json["tiledversion"] = tiled_version;
   json["version"] = tiled_json_version;
 
-  const auto name = std::format("{}.json", tileset.GetName());
+  const auto& context = registry.get<PropertyContext>(tilesetEntity);
+  const auto name = std::format("{}.json", context.name);
   const auto path = dir / name;
 
   CENTURION_LOG_INFO("Saving external tileset in \"%s\"", path.string().c_str());
   SaveJson(json, path);
 }
 
-[[nodiscard]] auto SaveTileset(const TilesetManager& manager,
+[[nodiscard]] auto SaveTileset(const entt::registry& registry,
+                               const entt::entity tilesetEntity,
                                const Tileset& tileset,
                                const std::filesystem::path& dir) -> JSON
 {
   if (Prefs::GetEmbedTilesets())
   {
-    return SaveEmbeddedTileset(manager, tileset, dir);
+    return SaveEmbeddedTileset(registry, tilesetEntity, tileset, dir);
   }
   else
   {
-    CreateExternalTilesetFile(manager, tileset, dir);
-    return SaveExternalTileset(tileset);
+    CreateExternalTilesetFile(registry, tilesetEntity, tileset, dir);
+    return SaveExternalTileset(registry, tilesetEntity, tileset);
   }
 }
 
 }  // namespace
 
-[[nodiscard]] auto SaveTilesets(const MapDocument& document,
+[[nodiscard]] auto SaveTilesets(const entt::registry& registry,
                                 const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::array();
 
-  const auto& tilesets = document.GetTilesets();
-  for (const auto& [id, tileset] : tilesets)
+  for (auto&& [entity, tileset] : registry.view<Tileset>().each())
   {
-    json += SaveTileset(tilesets, *tileset, dir);
+    json += SaveTileset(registry, entity, tileset, dir);
   }
 
   return json;

@@ -5,6 +5,7 @@
 #include <format>  // format
 
 #include "core/model.hpp"
+#include "core/tools/mouse_tool_type.hpp"
 #include "events/maps/add_column_event.hpp"
 #include "events/maps/add_row_event.hpp"
 #include "events/maps/remove_column_event.hpp"
@@ -24,22 +25,21 @@ constinit bool show_tileset_dialog = false;
 
 void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto* document = model.GetActiveDocument();
-  const auto hasActiveMap = model.GetActiveMapId().has_value();
+  const auto hasActiveDocument = model.HasActiveDocument();
   if (ImGui::BeginMenu("Edit"))
   {
-    const auto canUndo = document && document->CanUndo();
+    const auto canUndo = model.CanUndo();
     const auto undoText =
-        canUndo ? std::format(TAC_ICON_UNDO " Undo {}", document->GetUndoText())
+        canUndo ? std::format(TAC_ICON_UNDO " Undo {}", model.GetUndoText())
                 : std::string{TAC_ICON_UNDO " Undo"};
     if (ImGui::MenuItem(undoText.c_str(), "Ctrl+Z", false, canUndo))
     {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    const auto canRedo = document && document->CanRedo();
+    const auto canRedo = model.CanRedo();
     const auto redoText =
-        canRedo ? std::format(TAC_ICON_REDO " Redo {}", document->GetRedoText())
+        canRedo ? std::format(TAC_ICON_REDO " Redo {}", model.GetRedoText())
                 : std::string{TAC_ICON_REDO " Redo"};
     if (ImGui::MenuItem(redoText.c_str(), "Ctrl+Y", false, canRedo))
     {
@@ -48,22 +48,22 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Add row", "Alt+R", false, hasActiveMap))
+    if (ImGui::MenuItem("Add row", "Alt+R", false, hasActiveDocument))
     {
       dispatcher.enqueue<AddRowEvent>();
     }
 
-    if (ImGui::MenuItem("Add column", "Alt+C", false, hasActiveMap))
+    if (ImGui::MenuItem("Add column", "Alt+C", false, hasActiveDocument))
     {
       dispatcher.enqueue<AddColumnEvent>();
     }
 
-    if (ImGui::MenuItem("Remove row", "Alt+Shift+R", false, hasActiveMap))
+    if (ImGui::MenuItem("Remove row", "Alt+Shift+R", false, hasActiveDocument))
     {
       dispatcher.enqueue<RemoveRowEvent>();
     }
 
-    if (ImGui::MenuItem("Remove column", "Alt+Shift+C", false, hasActiveMap))
+    if (ImGui::MenuItem("Remove column", "Alt+Shift+C", false, hasActiveDocument))
     {
       dispatcher.enqueue<RemoveColumnEvent>();
     }
@@ -73,7 +73,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp",
                         "S",
                         model.IsStampActive(),
-                        hasActiveMap))
+                        hasActiveDocument))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
     }
@@ -81,7 +81,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket",
                         "B",
                         model.IsBucketActive(),
-                        hasActiveMap))
+                        hasActiveDocument))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
     }
@@ -89,7 +89,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser",
                         "E",
                         model.IsEraserActive(),
-                        hasActiveMap))
+                        hasActiveDocument))
     {
       dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
     }
@@ -99,7 +99,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     show_tileset_dialog = ImGui::MenuItem(TAC_ICON_TILESET " Create tileset...",
                                           "Ctrl+T",
                                           false,
-                                          hasActiveMap);
+                                          hasActiveDocument);
 
     ImGui::EndMenu();
   }

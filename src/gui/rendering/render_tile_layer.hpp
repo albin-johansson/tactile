@@ -1,9 +1,9 @@
 #pragma once
 
+#include <entt.hpp>  // registry, entity
+
 namespace Tactile {
 
-class TileLayer;
-class TilesetManager;
 struct RenderInfo;
 
 /**
@@ -11,13 +11,13 @@ struct RenderInfo;
  *
  * \ingroup rendering
  *
- * \param layer the tile layer that will be rendered.
- * \param tilesets the available tilesets.
+ * \param registry the active registry.
+ * \param layerEntity the entity that represents the tile layer.
  * \param info the rendering context information that will be used.
  * \param parentOpacity the opacity of the parent layer.
  */
-void RenderTileLayer(const TileLayer& layer,
-                     const TilesetManager& tilesets,
+void RenderTileLayer(const entt::registry& registry,
+                     entt::entity layerEntity,
                      const RenderInfo& info,
                      float parentOpacity);
 

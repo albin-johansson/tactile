@@ -1,7 +1,6 @@
 #pragma once
 
-#include "aliases/unique.hpp"
-#include "core/map_document.hpp"
+#include "core/document.hpp"
 
 namespace Tactile::IO {
 
@@ -16,6 +15,6 @@ struct MapData;
  *
  * \return a map document based on the intermediate representation.
  */
-[[nodiscard]] auto ToMapDocument(const MapData& data) -> Unique<MapDocument>;
+[[nodiscard]] auto ToMapDocument(const MapData& data) -> Document;
 
 }  // namespace Tactile::IO

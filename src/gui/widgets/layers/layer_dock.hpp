@@ -1,19 +1,17 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, dispatcher
 
 namespace Tactile {
-
-class Model;
 
 /**
  * \brief Updates the state of the layer dock widget.
  *
  * \ingroup gui
  *
- * \param model the associated model.
+ * \param registry the currently active registry.
  * \param dispatcher the event dispatcher that will be used.
  */
-void UpdateLayerDock(const Model& model, entt::dispatcher& dispatcher);
+void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

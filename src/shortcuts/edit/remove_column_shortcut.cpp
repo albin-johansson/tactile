@@ -1,5 +1,6 @@
 #include "remove_column_shortcut.hpp"
 
+#include "core/map.hpp"
 #include "core/model.hpp"
 #include "events/maps/remove_column_event.hpp"
 
@@ -16,8 +17,15 @@ void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto RemoveColumnShortcut::IsEnabled(const Model& model) const -> bool
 {
-  const auto* document = model.GetActiveDocument();
-  return document && document->GetColumnCount() > 1_col;
+  if (const auto* registry = model.GetActiveRegistry())
+  {
+    const auto& map = registry->ctx<Map>();
+    return map.column_count > 1_col;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 }  // namespace Tactile

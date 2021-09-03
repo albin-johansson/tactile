@@ -1,14 +1,9 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, dispatcher
 
 namespace Tactile {
 
-class Model;
-class MapDocument;
-
-void MapView(const Model& model,
-             const MapDocument& document,
-             entt::dispatcher& dispatcher);
+void MapView(const entt::registry& registry, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

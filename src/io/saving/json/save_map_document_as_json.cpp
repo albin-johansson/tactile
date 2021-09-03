@@ -1,31 +1,32 @@
 #include "save_map_document_as_json.hpp"
 
-#include <filesystem>  // path
+#include <filesystem>  // path, absolute
 
 #include "aliases/json.hpp"
+#include "core/map.hpp"
 #include "io/saving/common.hpp"
-#include "io/saving/json/save_json.hpp"
-#include "io/saving/json/save_layers.hpp"
-#include "io/saving/json/save_properties.hpp"
-#include "io/saving/json/save_tilesets.hpp"
+#include "save_json.hpp"
+#include "save_layers.hpp"
+#include "save_properties.hpp"
+#include "save_tilesets.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto SaveMap(const MapDocument& document,
+[[nodiscard]] auto SaveMap(const entt::registry& registry,
                            const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::object();
 
-  const auto& map = document.GetMap();
+  const auto& map = registry.ctx<Map>();
 
   json["type"] = "map";
-  json["width"] = map.GetColumnCount().get();
-  json["height"] = map.GetRowCount().get();
-  json["nextlayerid"] = map.GetNextLayerId().get();
-  json["nextobjectid"] = map.GetNextObjectId().get();
-  json["tilewidth"] = map.GetTileWidth();
-  json["tileheight"] = map.GetTileHeight();
+  json["width"] = map.column_count.get();
+  json["height"] = map.row_count.get();
+  json["nextlayerid"] = map.next_layer_id.get();
+  json["nextobjectid"] = map.next_object_id.get();
+  json["tilewidth"] = map.tile_width;
+  json["tileheight"] = map.tile_height;
 
   json["infinite"] = false;
   json["orientation"] = "orthogonal";
@@ -34,21 +35,20 @@ namespace {
   json["tiledversion"] = tiled_version;
   json["version"] = tiled_json_version;
 
-  json["tilesets"] = SaveTilesets(document, dir);
-  json["layers"] = SaveLayers(document.GetMap(), dir);
-  json["properties"] = SaveProperties(document, dir);
+  json["tilesets"] = SaveTilesets(registry, dir);
+  json["layers"] = SaveLayers(registry, dir);
+  json["properties"] = SaveProperties(registry, entt::null, dir);
 
   return json;
 }
 
 }  // namespace
 
-void SaveMapDocumentAsJson(const MapDocument& document)
+void SaveMapDocumentAsJson(const Document& document)
 {
-  const auto path = document.GetAbsolutePath();
+  const auto path = std::filesystem::absolute(document.path);
   const auto dir = path.parent_path();
-
-  const auto json = SaveMap(document, dir);
+  const auto json = SaveMap(document.registry, dir);
   SaveJson(json, path);
 }
 

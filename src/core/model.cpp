@@ -3,17 +3,18 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
+#include "systems/animation_system.hpp"
+#include "systems/registry_factory_system.hpp"
+#include "systems/tileset_system.hpp"
+#include "systems/viewport_system.hpp"
+
 namespace Tactile {
 
-Model::Model() : mTools{this}
-{}
-
-void Model::UpdateAnimations()
+void Model::Update()
 {
-  if (auto* document = GetActiveDocument())
+  if (auto* registry = GetActiveRegistry())
   {
-    auto& tilesets = document->GetTilesets();
-    tilesets.UpdateAnimations();
+    Sys::UpdateAnimations(*registry);
   }
 }
 
@@ -21,11 +22,62 @@ void Model::OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event)
 {
   for (auto& [id, document] : mDocuments)
   {
-    document->SetCommandCapacity(event.capacity);
+    document.commands.SetCapacity(event.capacity);
   }
 }
 
-auto Model::AddMap(Unique<MapDocument> document) -> map_id
+auto Model::IsClean() const -> bool
+{
+  return mActiveMap && mDocuments.at(*mActiveMap).commands.IsClean();
+}
+
+auto Model::CanUndo() const -> bool
+{
+  return mActiveMap && mDocuments.at(*mActiveMap).commands.CanUndo();
+}
+
+auto Model::CanRedo() const -> bool
+{
+  return mActiveMap && mDocuments.at(*mActiveMap).commands.CanRedo();
+}
+
+auto Model::GetUndoText() const -> const std::string&
+{
+  assert(CanUndo());
+  return mDocuments.at(mActiveMap.value()).commands.GetUndoText();
+}
+
+auto Model::GetRedoText() const -> const std::string&
+{
+  assert(CanRedo());
+  return mDocuments.at(mActiveMap.value()).commands.GetRedoText();
+}
+
+auto Model::CanSaveDocument() const -> bool
+{
+  if (mActiveMap)
+  {
+    const auto& document = mDocuments.at(*mActiveMap);
+    return !document.path.empty() || !document.commands.IsClean();
+  }
+  else
+  {
+    return false;
+  }
+}
+
+auto Model::CanDecreaseViewportTileSize() const -> bool
+{
+  if (HasActiveDocument())
+  {
+    const auto& document = mDocuments.at(*mActiveMap);
+    return Sys::CanDecreaseViewportZoom(document.registry);
+  }
+
+  return false;
+}
+
+auto Model::AddMap(Document document) -> map_id
 {
   const auto id = mNextId;
 
@@ -38,7 +90,12 @@ auto Model::AddMap(Unique<MapDocument> document) -> map_id
 
 auto Model::AddMap(const int tileWidth, const int tileHeight) -> map_id
 {
-  return AddMap(std::make_unique<MapDocument>(5_row, 5_col, tileWidth, tileHeight));
+  Document document;
+  document.registry = Sys::MakeRegistry();
+
+  // TODO
+
+  return AddMap(std::move(document));
 }
 
 void Model::SelectMap(const map_id id)
@@ -65,64 +122,87 @@ void Model::RemoveMap(const map_id id)
   }
 }
 
-auto Model::GetDocument(const map_id id) -> MapDocument*
+auto Model::HasActiveDocument() const -> bool
 {
-  return mDocuments.at(id).get();
+  return mActiveMap.has_value();
 }
 
-auto Model::GetDocument(const map_id id) const -> const MapDocument*
+auto Model::GetActiveDocument() -> Document*
 {
-  return mDocuments.at(id).get();
+  if (mActiveMap)
+  {
+    return &mDocuments.at(*mActiveMap);
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
-auto Model::GetActiveDocument() -> MapDocument*
+auto Model::GetActiveDocument() const -> const Document*
 {
-  return mActiveMap ? GetDocument(*mActiveMap) : nullptr;
+  if (mActiveMap)
+  {
+    return &mDocuments.at(*mActiveMap);
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
-auto Model::GetActiveDocument() const -> const MapDocument*
+auto Model::GetActiveRegistry() -> entt::registry*
 {
-  return mActiveMap ? GetDocument(*mActiveMap) : nullptr;
+  if (mActiveMap)
+  {
+    return &mDocuments.at(*mActiveMap).registry;
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
-void Model::SelectTool(const MouseToolType tool)
+auto Model::GetActiveRegistry() const -> const entt::registry*
 {
-  mTools.Select(tool);
+  if (mActiveMap)
+  {
+    return &mDocuments.at(*mActiveMap).registry;
+  }
+  else
+  {
+    return nullptr;
+  }
 }
 
 void Model::OnMousePressed(const MousePressedEvent& event)
 {
-  mTools.OnMousePressed(event);
+  //  mTools.OnMousePressed(event);
 }
 
 void Model::OnMouseReleased(const MouseReleasedEvent& event)
 {
-  mTools.OnMouseReleased(event);
+  //  mTools.OnMouseReleased(event);
 }
 
 void Model::OnMouseDragged(const MouseDragEvent& event)
 {
-  mTools.OnMouseDragged(event);
-}
-
-auto Model::GetActiveTool() const -> MouseToolType
-{
-  return mTools.GetActive();
+  //  mTools.OnMouseDragged(event);
 }
 
 auto Model::IsStampActive() const -> bool
 {
-  return mTools.GetActive() == MouseToolType::Stamp;
+  return false;
 }
 
 auto Model::IsEraserActive() const -> bool
 {
-  return mTools.GetActive() == MouseToolType::Eraser;
+  return false;
 }
 
 auto Model::IsBucketActive() const -> bool
 {
-  return mTools.GetActive() == MouseToolType::Bucket;
+  return false;
 }
 
 }  // namespace Tactile

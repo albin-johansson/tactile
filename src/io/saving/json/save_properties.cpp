@@ -3,6 +3,8 @@
 #include <string>   // string
 #include <utility>  // move
 
+#include "core/components/property.hpp"
+#include "core/components/property_context.hpp"
 #include "core/tactile_error.hpp"
 #include "io/saving/common.hpp"
 
@@ -10,7 +12,7 @@ namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto SaveProperty(std::string name,
-                                const Property& property,
+                                const PropertyValue& property,
                                 const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::object();
@@ -64,14 +66,19 @@ namespace {
 
 }  // namespace
 
-[[nodiscard]] auto SaveProperties(const IPropertyContext& context,
+[[nodiscard]] auto SaveProperties(const entt::registry& registry,
+                                  const entt::entity entity,
                                   const std::filesystem::path& dir) -> JSON
 {
   auto array = JSON::array();
 
-  for (const auto& [name, property] : context.GetProperties())
+  const auto& context = (entity != entt::null)
+                            ? registry.get<PropertyContext>(entity)
+                            : registry.ctx<PropertyContext>();
+  for (const auto propertyEntity : context.properties)
   {
-    array += SaveProperty(name, property, dir);
+    const auto& property = registry.get<Property>(propertyEntity);
+    array += SaveProperty(property.name, property.value, dir);
   }
 
   return array;

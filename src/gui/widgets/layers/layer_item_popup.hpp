@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, dispatcher
 
 #include "aliases/layer_id.hpp"
 
@@ -13,11 +13,11 @@ class MapDocument;
  *
  * \ingroup gui
  *
- * \param document the currently active map document.
+ * \param registry the currently active registry.
  * \param dispatcher the event dispatcher that will be used.
  * \param id the ID of the pressed layer.
  */
-void UpdateLayerItemPopup(const MapDocument& document,
+void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           layer_id id);
 

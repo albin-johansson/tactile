@@ -140,6 +140,10 @@ auto ParseJsonMap(const std::filesystem::path& path, MapData& data) -> ParseErro
     return err;
   }
 
+  // TODO possible parse errors
+  json.at("width").get_to(data.column_count);
+  json.at("height").get_to(data.row_count);
+
   const auto directory = data.absolute_path.parent_path();
   if (const auto err = ParseTilesets(json, data.tilesets, directory);
       err != ParseError::None)

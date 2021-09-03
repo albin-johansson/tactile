@@ -1,9 +1,9 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, entity, dispatcher
 
 #include "aliases/layer_id.hpp"
-#include "core/map/layers/layer.hpp"
+#include "core/components/layer.hpp"
 
 namespace Tactile {
 
@@ -14,14 +14,14 @@ class MapDocument;
  *
  * \ingroup gui
  *
- * \param document the currently active map document.
+ * \param registry the currently active registry.
  * \param dispatcher the event dispatcher that will be used.
- * \param id the ID of the layer associated with the item.
+ * \param layerEntity the associated layer entity.
  * \param layer the associated layer.
  */
-void LayerItem(const MapDocument& document,
+void LayerItem(const entt::registry& registry,
                entt::dispatcher& dispatcher,
-               layer_id id,
-               const SharedLayer& layer);
+               entt::entity layerEntity,
+               const Layer& layer);
 
 }  // namespace Tactile

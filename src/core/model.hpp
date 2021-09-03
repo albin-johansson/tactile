@@ -1,12 +1,12 @@
 #pragma once
 
+#include <entt.hpp>             // registry
 #include <rune/everything.hpp>  // vector_map
 
 #include "aliases/map_id.hpp"
 #include "aliases/maybe.hpp"
 #include "aliases/unique.hpp"
-#include "core/map_document.hpp"
-#include "core/tools/mouse_tool_model.hpp"
+#include "document.hpp"
 #include "events/change_command_capacity_event.hpp"
 #include "events/tools/mouse_drag_event.hpp"
 #include "events/tools/mouse_pressed_event.hpp"
@@ -20,22 +20,14 @@ namespace Tactile {
 class Model final
 {
  public:
-  using document_storage = rune::vector_map<map_id, Unique<MapDocument>>;
-  using const_iterator = document_storage::const_iterator;
+  using document_map = rune::vector_map<map_id, Document>;
+  using const_iterator = document_map::const_iterator;
 
-  Model();
-
-  /**
-   * \brief Updates the state of animations.
-   */
-  void UpdateAnimations();
+  void Update();
 
   void OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event);
 
-  /// \name Map document API
-  /// \{
-
-  auto AddMap(Unique<MapDocument> document) -> map_id;
+  auto AddMap(Document document) -> map_id;
 
   auto AddMap(int tileWidth, int tileHeight) -> map_id;
 
@@ -43,18 +35,20 @@ class Model final
 
   void RemoveMap(map_id id);
 
-  [[nodiscard]] auto GetDocument(map_id id) -> MapDocument*;
-
-  [[nodiscard]] auto GetDocument(map_id id) const -> const MapDocument*;
-
-  [[nodiscard]] auto GetActiveDocument() -> MapDocument*;
-
-  [[nodiscard]] auto GetActiveDocument() const -> const MapDocument*;
-
   [[nodiscard]] auto GetActiveMapId() const -> Maybe<map_id>
   {
     return mActiveMap;
   }
+
+  [[nodiscard]] auto HasActiveDocument() const -> bool;
+
+  [[nodiscard]] auto GetActiveDocument() -> Document*;
+
+  [[nodiscard]] auto GetActiveDocument() const -> const Document*;
+
+  [[nodiscard]] auto GetActiveRegistry() -> entt::registry*;
+
+  [[nodiscard]] auto GetActiveRegistry() const -> const entt::registry*;
 
   [[nodiscard]] auto begin() const noexcept -> const_iterator
   {
@@ -66,12 +60,7 @@ class Model final
     return mDocuments.end();
   }
 
-  /// \} End of map document API
-
-  /// \name Tools API
-  /// \{
-
-  void SelectTool(MouseToolType tool);
+  //  void SelectTool(MouseToolType tool);
 
   void OnMousePressed(const MousePressedEvent& event);
 
@@ -79,7 +68,6 @@ class Model final
 
   void OnMouseDragged(const MouseDragEvent& event);
 
-  [[nodiscard]] auto GetActiveTool() const -> MouseToolType;
 
   [[nodiscard]] auto IsStampActive() const -> bool;
 
@@ -87,11 +75,22 @@ class Model final
 
   [[nodiscard]] auto IsBucketActive() const -> bool;
 
-  /// \} End of tools API
+  [[nodiscard]] auto IsClean() const -> bool;
+
+  [[nodiscard]] auto CanUndo() const -> bool;
+
+  [[nodiscard]] auto CanRedo() const -> bool;
+
+  [[nodiscard]] auto GetUndoText() const -> const std::string&;
+
+  [[nodiscard]] auto GetRedoText() const -> const std::string&;
+
+  [[nodiscard]] auto CanSaveDocument() const -> bool;
+
+  [[nodiscard]] auto CanDecreaseViewportTileSize() const -> bool;
 
  private:
-  document_storage mDocuments;
-  MouseToolModel mTools;
+  document_map mDocuments;
   Maybe<map_id> mActiveMap;
   map_id mNextId{1};
 };

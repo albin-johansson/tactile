@@ -1,6 +1,6 @@
 #include "parse_tile_layer.hpp"
 
-#include "core/map/layers/tile_layer.hpp"
+#include "core/systems/tile_layer_system.hpp"
 #include "parse_tile_data.hpp"
 #include "xml_utils.hpp"
 
@@ -28,7 +28,7 @@ auto ParseTileLayer(const pugi::xml_node node, LayerData& layer) -> ParseError
     return ParseError::LayerMissingHeight;
   }
 
-  data.tiles = MakeTileMatrix(data.row_count, data.col_count);
+  data.tiles = Sys::MakeTileMatrix(data.row_count, data.col_count);
   if (const auto err = ParseTileData(node, data.col_count, data.tiles);
       err != ParseError::None)
   {

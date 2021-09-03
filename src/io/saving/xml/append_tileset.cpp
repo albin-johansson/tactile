@@ -2,77 +2,90 @@
 
 #include <format>  // format
 
+#include "append_properties.hpp"
+#include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/texture.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "io/preferences.hpp"
 #include "io/saving/common.hpp"
-#include "io/saving/xml/append_properties.hpp"
-#include "io/saving/xml/save_xml.hpp"
+#include "save_xml.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-void AppendFancyTiles(const TilesetManager& manager,
-                      const Tileset& tileset,
-                      pugi::xml_node node,
+void AppendFancyTiles(pugi::xml_node node,
+                      const entt::registry& registry,
+                      const entt::entity tilesetEntity,
                       const std::filesystem::path& dir)
 {
-  for (const auto& [id, fancy] : tileset.GetFancyTiles())
+  for (auto&& [entity, tile] : registry.view<FancyTile>().each())
   {
     auto tileNode = node.append_child("tile");
-    tileNode.append_attribute("id").set_value(manager.ToLocal(id).value());
+    tileNode.append_attribute("id").set_value(
+        Sys::ConvertToLocal(registry, tile.id).value());
 
-    if (const auto& animation = fancy.GetAnimation())
+    if (const auto* animation = registry.try_get<Animation>(entity))
     {
       auto animationNode = tileNode.append_child("animation");
-      for (const auto& frame : animation->GetFrames())
+      for (const auto frameEntity : animation->frames)
       {
+        const auto& frame = registry.get<AnimationFrame>(frameEntity);
         auto frameNode = animationNode.append_child("frame");
 
-        const auto tile = manager.ToLocal(frame.tile).value();
-        frameNode.append_attribute("tileid").set_value(tile);
+        const auto local = Sys::ConvertToLocal(registry, frame.tile).value();
+        frameNode.append_attribute("tileid").set_value(local);
         frameNode.append_attribute("duration").set_value(frame.duration.count());
       }
     }
 
-    AppendProperties(fancy, tileNode, dir);
+    AppendProperties(registry, entity, tileNode, dir);
   }
 }
 
-void AddCommon(const TilesetManager& manager,
-               const Tileset& tileset,
-               pugi::xml_node node,
+void AddCommon(pugi::xml_node node,
+               const entt::registry& registry,
+               const entt::entity tilesetEntity,
                const std::filesystem::path& dir)
 {
-  node.append_attribute("name").set_value(tileset.GetName().c_str());
-  node.append_attribute("tilewidth").set_value(tileset.GetTileWidth());
-  node.append_attribute("tileheight").set_value(tileset.GetTileHeight());
-  node.append_attribute("tilecount").set_value(tileset.GetTileCount());
-  node.append_attribute("columns").set_value(tileset.GetColumnCount());
+  const auto& tileset = registry.get<Tileset>(tilesetEntity);
+  const auto& texture = registry.get<Texture>(tilesetEntity);
+  const auto& context = registry.get<PropertyContext>(tilesetEntity);
+
+  node.append_attribute("name").set_value(context.name.c_str());
+  node.append_attribute("tilewidth").set_value(tileset.tile_width);
+  node.append_attribute("tileheight").set_value(tileset.tile_height);
+  node.append_attribute("tilecount").set_value(tileset.tile_count);
+  node.append_attribute("columns").set_value(tileset.column_count);
 
   {
     auto imageNode = node.append_child("image");
     const auto source = GetTilesetImagePath(tileset, dir);
     imageNode.append_attribute("source").set_value(source.c_str());
-    imageNode.append_attribute("width").set_value(tileset.GetWidth());
-    imageNode.append_attribute("height").set_value(tileset.GetHeight());
+    imageNode.append_attribute("width").set_value(texture.width);
+    imageNode.append_attribute("height").set_value(texture.height);
   }
 
-  AppendFancyTiles(manager, tileset, node, dir);
-  AppendProperties(tileset, node, dir);
+  AppendFancyTiles(node, registry, tilesetEntity, dir);
+  AppendProperties(registry, tilesetEntity, node, dir);
 }
 
-void AppendEmbeddedTileset(const TilesetManager& manager,
-                           const Tileset& tileset,
-                           pugi::xml_node mapNode,
+void AppendEmbeddedTileset(pugi::xml_node mapNode,
+                           const entt::registry& registry,
+                           const entt::entity tilesetEntity,
                            const std::filesystem::path& dir)
 {
-  auto node = mapNode.append_child("tileset");
-  node.append_attribute("firstgid").set_value(tileset.GetFirstId());
+  const auto& tileset = registry.get<Tileset>(tilesetEntity);
 
-  AddCommon(manager, tileset, node, dir);
+  auto node = mapNode.append_child("tileset");
+  node.append_attribute("firstgid").set_value(tileset.first_id.get());
+
+  AddCommon(node, registry, tilesetEntity, dir);
 }
 
-void CreateExternalTilesetFile(const TilesetManager& manager,
-                               const Tileset& tileset,
+void CreateExternalTilesetFile(const entt::registry& registry,
+                               const entt::entity tilesetEntity,
                                const std::string& source,
                                const std::filesystem::path& dir)
 {
@@ -82,7 +95,7 @@ void CreateExternalTilesetFile(const TilesetManager& manager,
   root.append_attribute("version").set_value(tiled_xml_version);
   root.append_attribute("tiledversion").set_value(tiled_version);
 
-  AddCommon(manager, tileset, root, dir);
+  AddCommon(root, registry, tilesetEntity, dir);
 
   const auto path = dir / source;
   CENTURION_LOG_INFO("Saving external tileset in \"%s\"", path.string().c_str());
@@ -90,31 +103,35 @@ void CreateExternalTilesetFile(const TilesetManager& manager,
   SaveXml(xml, path);
 }
 
-void AppendExternalTileset(const Tileset& tileset,
-                           const std::string& source,
-                           pugi::xml_node mapNode)
+void AppendExternalTileset(pugi::xml_node mapNode,
+                           const entt::registry& registry,
+                           const entt::entity tilesetEntity,
+                           const std::string& source)
 {
+  const auto& tileset = registry.get<Tileset>(tilesetEntity);
+
   auto node = mapNode.append_child("tileset");
-  node.append_attribute("firstgid").set_value(tileset.GetFirstId());
+  node.append_attribute("firstgid").set_value(tileset.first_id);
   node.append_attribute("source").set_value(source.c_str());
 }
 
 }  // namespace
 
-void AppendTileset(const TilesetManager& manager,
-                   const Tileset& tileset,
-                   pugi::xml_node mapNode,
+void AppendTileset(pugi::xml_node mapNode,
+                   const entt::registry& registry,
+                   const entt::entity tilesetEntity,
                    const std::filesystem::path& dir)
 {
   if (Prefs::GetEmbedTilesets())
   {
-    AppendEmbeddedTileset(manager, tileset, mapNode, dir);
+    AppendEmbeddedTileset(mapNode, registry, tilesetEntity, dir);
   }
   else
   {
-    const auto source = std::format("{}.tsx", tileset.GetName());
-    CreateExternalTilesetFile(manager, tileset, source, dir);
-    AppendExternalTileset(tileset, source, mapNode);
+    const auto& context = registry.get<PropertyContext>(tilesetEntity);
+    const auto source = std::format("{}.tsx", context.name);
+    CreateExternalTilesetFile(registry, tilesetEntity, source, dir);
+    AppendExternalTileset(mapNode, registry, tilesetEntity, source);
   }
 }
 

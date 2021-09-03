@@ -1,9 +1,9 @@
 #pragma once
 
-#include "core/map_document.hpp"
+#include "core/document.hpp"
 
 namespace Tactile::IO {
 
-void SaveMapDocumentAsXml(const MapDocument& document);
+void SaveMapDocumentAsXml(const Document& document);
 
 }  // namespace Tactile::IO

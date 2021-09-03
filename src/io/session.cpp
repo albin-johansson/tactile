@@ -1,7 +1,7 @@
 #include "session.hpp"
 
 #include <centurion.hpp>  // ...
-#include <filesystem>     // exists
+#include <filesystem>     // exists, absolute
 #include <fstream>        // ifstream
 #include <string>         // string
 #include <utility>        // move
@@ -58,9 +58,9 @@ void SaveSession(const Model& model)
 
   for (const auto& [id, document] : model)
   {
-    if (document->HasPath())
+    if (!document.path.empty())
     {
-      const auto documentPath = document->GetAbsolutePath();
+      const auto documentPath = std::filesystem::absolute(document.path);
       array += IO::ConvertToForwardSlashes(documentPath);
     }
   }

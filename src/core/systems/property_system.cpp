@@ -5,8 +5,6 @@
 #include <utility>    // move
 #include <vector>     // erase
 
-#include "core/components/property.hpp"
-
 namespace Tactile::Sys {
 
 void AddProperty(entt::registry& registry, std::string name, const PropertyType type)

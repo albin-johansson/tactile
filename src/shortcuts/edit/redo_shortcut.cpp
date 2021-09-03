@@ -15,8 +15,7 @@ void RedoShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto RedoShortcut::IsEnabled(const Model& model) const -> bool
 {
-  const auto* document = model.GetActiveDocument();
-  return document && document->CanRedo();
+  return model.CanRedo();
 }
 
 }  // namespace Tactile

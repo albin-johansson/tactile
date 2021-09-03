@@ -50,13 +50,14 @@ void ShowMapFileDialog(entt::dispatcher& dispatcher)
 
 void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto* document = model.GetActiveDocument();
   if (ImGui::BeginMenu("File"))
   {
     show_add_map_dialog = ImGui::MenuItem(TAC_ICON_FILE " New map...", "Ctrl+N");
     show_open_map_dialog = ImGui::MenuItem(TAC_ICON_OPEN " Open map...", "Ctrl+O");
 
-    if (ImGui::MenuItem("Close map", nullptr, false, document != nullptr))
+    const auto hasActiveDocument = model.HasActiveDocument();
+
+    if (ImGui::MenuItem("Close map", nullptr, false, hasActiveDocument))
     {}
 
     ImGui::Separator();
@@ -64,12 +65,12 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
                         "Ctrl+S",
                         false,
-                        document && (!document->HasPath() || !document->IsClean())))
+                        model.CanSaveDocument()))
     {
       dispatcher.enqueue<SaveEvent>();
     }
 
-    if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S", false, document != nullptr))
+    if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S", false, hasActiveDocument))
     {
       dispatcher.enqueue<SaveAsRequestEvent>();
     }

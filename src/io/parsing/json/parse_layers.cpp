@@ -3,7 +3,7 @@
 #include <string>   // string
 #include <utility>  // move
 
-#include "core/map/layers/tile_layer.hpp"
+#include "aliases/ints.hpp"
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"
@@ -11,32 +11,41 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data) -> ParseError;
+[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data, usize index)
+    -> ParseError;
 
-[[nodiscard]] auto ParseGroupLayer(const JSON& json, LayerData& target) -> ParseError
+[[nodiscard]] auto ParseGroupLayer(const JSON& json,
+                                   LayerData& target,
+                                   const usize index) -> ParseError
 {
   auto& data = target.data.emplace<GroupLayerData>();
 
   if (const auto it = json.find("layers"); it != json.end())
   {
+    usize childIndex = 0;
     for (const auto& [key, layer] : it->items())
     {
       auto layerData = std::make_unique<LayerData>();
 
-      if (const auto err = ParseLayer(layer, *layerData); err != ParseError::None)
+      if (const auto err = ParseLayer(layer, *layerData, childIndex);
+          err != ParseError::None)
       {
         return err;
       }
 
       data.layers.push_back(std::move(layerData));
+      ++childIndex;
     }
   }
 
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data) -> ParseError
+[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data, const usize index)
+    -> ParseError
 {
+  data.index = index;
+
   if (const auto it = json.find("id"); it != json.end())
   {
     data.id = layer_id{it->get<layer_id::value_type>()};
@@ -95,7 +104,8 @@ namespace {
     else if (type == "group")
     {
       data.type = LayerType::GroupLayer;
-      if (const auto err = ParseGroupLayer(json, data); err != ParseError::None)
+      if (const auto err = ParseGroupLayer(json, data, index);
+          err != ParseError::None)
       {
         return err;
       }
@@ -125,13 +135,17 @@ auto ParseLayers(const JSON& json, std::vector<LayerData>& layers) -> ParseError
 {
   if (const auto it = json.find("layers"); it != json.end())
   {
+    usize index = 0;
     for (const auto& [key, layer] : it->items())
     {
       auto& layerData = layers.emplace_back();
-      if (const auto err = ParseLayer(layer, layerData); err != ParseError::None)
+      if (const auto err = ParseLayer(layer, layerData, index);
+          err != ParseError::None)
       {
         return err;
       }
+
+      ++index;
     }
   }
   else

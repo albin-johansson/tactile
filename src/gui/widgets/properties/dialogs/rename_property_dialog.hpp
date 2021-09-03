@@ -1,13 +1,11 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
+#include <entt.hpp>  // registry, dispatcher
 #include <string>    // string
 
 namespace Tactile {
 
-class IDocument;
-
-void UpdateRenamePropertyDialog(const IDocument& document,
+void UpdateRenamePropertyDialog(const entt::registry& registry,
                                 entt::dispatcher& dispatcher);
 
 void OpenRenamePropertyDialog(std::string name);

@@ -1,17 +1,20 @@
 #include "save_map_document_as_xml.hpp"
 
-#include <filesystem>   // path, relative
+#include <filesystem>   // path, relative, absolute
 #include <pugixml.hpp>  // xml_document, xml_node
 
+#include "append_layer.hpp"
+#include "append_properties.hpp"
+#include "append_tileset.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/tileset.hpp"
+#include "core/map.hpp"
 #include "io/saving/common.hpp"
-#include "io/saving/xml/append_layer.hpp"
-#include "io/saving/xml/append_properties.hpp"
-#include "io/saving/xml/append_tileset.hpp"
-#include "io/saving/xml/save_xml.hpp"
+#include "save_xml.hpp"
 
 namespace Tactile::IO {
 
-void AppendMapChild(const MapDocument& document,
+void AppendMapChild(const entt::registry& registry,
                     pugi::xml_document& xml,
                     const std::filesystem::path& dir)
 {
@@ -22,35 +25,34 @@ void AppendMapChild(const MapDocument& document,
   node.append_attribute("renderorder").set_value("right-down");
   node.append_attribute("infinite").set_value(0);
 
-  const auto& map = document.GetMap();
-  node.append_attribute("tilewidth").set_value(map.GetTileWidth());
-  node.append_attribute("tileheight").set_value(map.GetTileHeight());
-  node.append_attribute("width").set_value(map.GetColumnCount().get());
-  node.append_attribute("height").set_value(map.GetRowCount().get());
-  node.append_attribute("nextlayerid").set_value(map.GetNextLayerId().get());
-  node.append_attribute("nextobjectid").set_value(map.GetNextObjectId().get());
+  const auto& map = registry.ctx<Map>();
+  node.append_attribute("tilewidth").set_value(map.tile_width);
+  node.append_attribute("tileheight").set_value(map.tile_height);
+  node.append_attribute("width").set_value(map.column_count.get());
+  node.append_attribute("height").set_value(map.row_count.get());
+  node.append_attribute("nextlayerid").set_value(map.next_layer_id.get());
+  node.append_attribute("nextobjectid").set_value(map.next_object_id.get());
 
-  AppendProperties(document, node, dir);
+  AppendProperties(registry, entt::null, node, dir);
 
-  const auto& tilesets = document.GetTilesets();
-  for (const auto& [id, tileset] : tilesets)
+  for (auto&& [entity, tileset] : registry.view<Tileset>().each())
   {
-    AppendTileset(tilesets, *tileset, node, dir);
+    AppendTileset(node, registry, entity, dir);
   }
 
-  for (const auto& [id, layer] : map)
+  for (auto&& [entity, layer] : registry.view<Layer>().each())
   {
-    AppendLayer(id, *layer, node, dir);
+    AppendLayer(node, registry, entity, dir);
   }
 }
 
-void SaveMapDocumentAsXml(const MapDocument& document)
+void SaveMapDocumentAsXml(const Document& document)
 {
-  const auto path = document.GetAbsolutePath();
+  const auto path = std::filesystem::absolute(document.path);
   const auto dir = path.parent_path();
 
   pugi::xml_document xml;
-  AppendMapChild(document, xml, dir);
+  AppendMapChild(document.registry, xml, dir);
 
   SaveXml(xml, path);
 }

@@ -4,7 +4,9 @@
 #include <imgui_internal.h>
 
 #include "common.hpp"
-#include "core/map/layers/object_layer.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
 #include "objects/render_ellipse.hpp"
 #include "objects/render_point.hpp"
 #include "objects/render_rect.hpp"
@@ -13,36 +15,44 @@
 
 namespace Tactile {
 
-void RenderObjectLayer(const ObjectLayer& layer,
+void RenderObjectLayer(const entt::registry& registry,
+                       const entt::entity layerEntity,
                        const RenderInfo& info,
                        const float parentOpacity)
 {
-  const auto opacity = 255.0f * (parentOpacity * layer.GetOpacity());
+  const auto& layer = registry.get<Layer>(layerEntity);
+  const auto& objectLayer = registry.get<ObjectLayer>(layerEntity);
+
+  const auto opacity = 255.0f * (parentOpacity * layer.opacity);
   const auto color = IM_COL32(0xFF, 0, 0, opacity);
 
   const auto ratio = info.grid_size / info.tile_size;
   const auto rect = ConvertBoundsToRect(info);
 
-  for (const auto& [id, object] : layer)
+  for (const auto objectEntity : objectLayer.objects)
   {
-    const auto localPos = ImVec2{object.GetX(), object.GetY()};
+    const auto& object = registry.get<Object>(objectEntity);
+
+    const auto localPos = ImVec2{object.x, object.y};
     const auto absolutePos = info.map_position + (localPos * ratio);
 
-    if (object.IsPoint())
+    switch (object.type)
     {
-      RenderPoint(object, absolutePos, rect, color, info.grid_size.x);
-    }
-    else if (object.IsEllipse())
-    {
-      RenderEllipse(object, absolutePos, ratio, color);
-    }
-    else if (object.IsRectangle())
-    {
-      RenderRect(object, absolutePos, rect, color, ratio);
-    }
-    else
-    {
-      cen::log::warn("Did not recognize object type when rendering objects!");
+      case ObjectType::Point:
+        RenderPoint(object, absolutePos, rect, color, info.grid_size.x);
+        break;
+
+      case ObjectType::Ellipse:
+        RenderEllipse(object, absolutePos, ratio, color);
+        break;
+
+      case ObjectType::Rectangle:
+        RenderRect(object, absolutePos, rect, color, ratio);
+        break;
+
+      default:
+        cen::log::warn("Did not recognize object type when rendering objects!");
+        break;
     }
   }
 }

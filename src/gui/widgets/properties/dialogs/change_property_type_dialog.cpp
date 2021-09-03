@@ -5,7 +5,6 @@
 #include <utility>  // move
 
 #include "aliases/maybe.hpp"
-#include "core/document.hpp"
 #include "core/tactile_error.hpp"
 #include "events/properties/change_property_type_event.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
@@ -24,7 +23,7 @@ void ResetState()
 
 }  // namespace
 
-void UpdateChangePropertyTypeDialog(const IDocument& document,
+void UpdateChangePropertyTypeDialog(const entt::registry& registry,
                                     entt::dispatcher& dispatcher)
 {
   constexpr auto flags =

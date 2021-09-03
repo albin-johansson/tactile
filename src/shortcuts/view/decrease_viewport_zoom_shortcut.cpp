@@ -16,8 +16,7 @@ void DecreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto DecreaseViewportZoomShortcut::IsEnabled(const Model& model) const -> bool
 {
-  const auto* document = model.GetActiveDocument();
-  return document && document->CanDecreaseViewportTileSize();
+  return model.CanDecreaseViewportTileSize();
 }
 
 }  // namespace Tactile

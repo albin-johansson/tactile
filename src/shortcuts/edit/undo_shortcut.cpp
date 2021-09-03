@@ -15,8 +15,7 @@ void UndoShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto UndoShortcut::IsEnabled(const Model& model) const -> bool
 {
-  const auto* document = model.GetActiveDocument();
-  return document && document->CanUndo();
+  return model.CanUndo();
 }
 
 }  // namespace Tactile

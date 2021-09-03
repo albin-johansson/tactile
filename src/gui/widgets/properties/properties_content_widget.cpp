@@ -5,21 +5,22 @@
 #include <string>  // string
 
 #include "aliases/maybe.hpp"
-#include "core/map_document.hpp"
+#include "bool_property_widget.hpp"
+#include "color_property_widget.hpp"
+#include "core/components/property.hpp"
+#include "core/systems/property_system.hpp"
+#include "dialogs/add_property_dialog.hpp"
+#include "dialogs/change_property_type_dialog.hpp"
+#include "dialogs/rename_property_dialog.hpp"
 #include "events/properties/remove_property_event.hpp"
 #include "events/properties/rename_property_event.hpp"
 #include "events/properties/set_property_value_event.hpp"
+#include "file_property_widget.hpp"
+#include "float_property_widget.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/properties/bool_property_widget.hpp"
-#include "gui/widgets/properties/color_property_widget.hpp"
-#include "gui/widgets/properties/dialogs/add_property_dialog.hpp"
-#include "gui/widgets/properties/dialogs/change_property_type_dialog.hpp"
-#include "gui/widgets/properties/dialogs/rename_property_dialog.hpp"
-#include "gui/widgets/properties/file_property_widget.hpp"
-#include "gui/widgets/properties/float_property_widget.hpp"
-#include "gui/widgets/properties/int_property_widget.hpp"
-#include "gui/widgets/properties/object_property_widget.hpp"
-#include "gui/widgets/properties/string_property_widget.hpp"
+#include "int_property_widget.hpp"
+#include "object_property_widget.hpp"
+#include "string_property_widget.hpp"
 #include "utils/scope_id.hpp"
 
 namespace Tactile {
@@ -32,7 +33,7 @@ inline Maybe<std::string> rename_target;
 inline Maybe<std::string> change_type_target;
 
 void StringValue(const std::string_view name,
-                 const Property& property,
+                 const PropertyValue& property,
                  entt::dispatcher& dispatcher)
 {
   if (const auto str = StringPropertyWidget(property))
@@ -42,7 +43,7 @@ void StringValue(const std::string_view name,
 }
 
 void IntValue(const std::string_view name,
-              const Property& property,
+              const PropertyValue& property,
               entt::dispatcher& dispatcher)
 {
   if (const auto value = IntPropertyWidget(property))
@@ -52,7 +53,7 @@ void IntValue(const std::string_view name,
 }
 
 void FloatValue(const std::string_view name,
-                const Property& property,
+                const PropertyValue& property,
                 entt::dispatcher& dispatcher)
 {
   if (const auto value = FloatPropertyWidget(property))
@@ -62,7 +63,7 @@ void FloatValue(const std::string_view name,
 }
 
 void BoolValue(const std::string_view name,
-               const Property& property,
+               const PropertyValue& property,
                entt::dispatcher& dispatcher)
 {
   if (const auto value = BoolPropertyWidget(property))
@@ -72,7 +73,7 @@ void BoolValue(const std::string_view name,
 }
 
 void ColorValue(const std::string_view name,
-                const Property& property,
+                const PropertyValue& property,
                 entt::dispatcher& dispatcher)
 {
   if (const auto color = ColorPropertyWidget(property))
@@ -82,7 +83,7 @@ void ColorValue(const std::string_view name,
 }
 
 void ObjectValue(const std::string_view name,
-                 const Property& property,
+                 const PropertyValue& property,
                  entt::dispatcher& dispatcher)
 {
   if (const auto value = ObjectPropertyWidget(property))
@@ -92,7 +93,7 @@ void ObjectValue(const std::string_view name,
 }
 
 void FileValue(const std::string_view name,
-               const Property& property,
+               const PropertyValue& property,
                entt::dispatcher& dispatcher)
 {
   if (const auto path = FilePropertyWidget(property))
@@ -101,9 +102,38 @@ void FileValue(const std::string_view name,
   }
 }
 
+void PropertyItemContextMenu(entt::dispatcher& dispatcher, const std::string& name)
+{
+  if (ImGui::BeginPopupContextItem("##PropertyItemContext"))
+  {
+    show_add_dialog = ImGui::MenuItem(TAC_ICON_ADD " Add new property...");
+    ImGui::Separator();
+
+    show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename property...");
+    if (show_rename_dialog)
+    {
+      rename_target = name;
+    }
+
+    show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change type...");
+    if (show_change_type_dialog)
+    {
+      change_type_target = name;
+    }
+    ImGui::Separator();
+
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove property"))
+    {
+      dispatcher.enqueue<RemovePropertyEvent>(name);
+    }
+
+    ImGui::EndPopup();
+  }
+}
+
 }  // namespace
 
-void UpdatePropertiesContentWidget(const MapDocument& document,
+void UpdatePropertiesContentWidget(const entt::registry& registry,
                                    entt::dispatcher& dispatcher)
 {
   constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
@@ -111,8 +141,13 @@ void UpdatePropertiesContentWidget(const MapDocument& document,
 
   if (ImGui::BeginTable("PropertiesTable", 2, flags))
   {
-    for (const auto& [name, property] : document.GetProperties())
+    const auto& context = Sys::GetCurrentContext(registry);
+    for (const auto entity : context.properties)
     {
+      const auto& property = registry.get<Property>(entity);
+      const auto& name = property.name;
+      const auto& value = property.value;
+
       const ScopeID uid{name.c_str()};
 
       ImGui::TableNextRow();
@@ -121,60 +156,36 @@ void UpdatePropertiesContentWidget(const MapDocument& document,
       ImGui::AlignTextToFramePadding();
       ImGui::Selectable(name.c_str());
 
-      if (ImGui::BeginPopupContextItem("##PropertyItemContext"))
-      {
-        show_add_dialog = ImGui::MenuItem(TAC_ICON_ADD " Add new property...");
-        ImGui::Separator();
-
-        show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename property...");
-        if (show_rename_dialog)
-        {
-          rename_target = name;
-        }
-
-        show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change type...");
-        if (show_change_type_dialog)
-        {
-          change_type_target = name;
-        }
-        ImGui::Separator();
-
-        if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove property"))
-        {
-          dispatcher.enqueue<RemovePropertyEvent>(name);
-        }
-
-        ImGui::EndPopup();
-      }
+      PropertyItemContextMenu(dispatcher, name);
 
       ImGui::TableNextColumn();
-      if (property.IsString())
+      if (value.IsString())
       {
-        StringValue(name, property, dispatcher);
+        StringValue(name, value, dispatcher);
       }
-      else if (property.IsInt())
+      else if (value.IsInt())
       {
-        IntValue(name, property, dispatcher);
+        IntValue(name, value, dispatcher);
       }
-      else if (property.IsFloat())
+      else if (value.IsFloat())
       {
-        FloatValue(name, property, dispatcher);
+        FloatValue(name, value, dispatcher);
       }
-      else if (property.IsBool())
+      else if (value.IsBool())
       {
-        BoolValue(name, property, dispatcher);
+        BoolValue(name, value, dispatcher);
       }
-      else if (property.IsColor())
+      else if (value.IsColor())
       {
-        ColorValue(name, property, dispatcher);
+        ColorValue(name, value, dispatcher);
       }
-      else if (property.IsObject())
+      else if (value.IsObject())
       {
-        ObjectValue(name, property, dispatcher);
+        ObjectValue(name, value, dispatcher);
       }
-      else if (property.IsFile())
+      else if (value.IsFile())
       {
-        FileValue(name, property, dispatcher);
+        FileValue(name, value, dispatcher);
       }
     }
 

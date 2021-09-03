@@ -1,6 +1,7 @@
 #include "common.hpp"
 
-#include <algorithm>  // replace
+#include <algorithm>   // replace
+#include <filesystem>  // relative
 
 #include "core/tactile_error.hpp"
 
@@ -19,7 +20,7 @@ auto ConvertToForwardSlashes(const std::filesystem::path& path) -> std::string
                                        const std::filesystem::path& dir)
     -> std::string
 {
-  const auto path = std::filesystem::relative(tileset.GetFilePath(), dir);
+  const auto path = std::filesystem::relative(tileset.image_path, dir);
   return ConvertToForwardSlashes(path);
 }
 
@@ -53,7 +54,7 @@ auto GetPropertyTypeString(const PropertyType type) -> std::string
   }
 }
 
-auto GetPropertyFileValue(const Property& file, const std::filesystem::path& dir)
+auto GetPropertyFileValue(const PropertyValue& file, const std::filesystem::path& dir)
     -> std::string
 {
   const auto path = std::filesystem::proximate(file.AsFile(), dir);

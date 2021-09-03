@@ -146,6 +146,10 @@ auto ParseXmlMap(const std::filesystem::path& path, MapData& data) -> ParseError
     return err;
   }
 
+  // TODO possible parse errors
+  data.column_count = root.attribute("width").as_int();
+  data.row_count = root.attribute("height").as_int();
+
   const auto directory = data.absolute_path.parent_path();
   if (const auto err = ParseTilesets(root, data.tilesets, directory);
       err != ParseError::None)

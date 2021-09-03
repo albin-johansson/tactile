@@ -16,7 +16,7 @@ void CenterViewportShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto CenterViewportShortcut::IsEnabled(const Model& model) const -> bool
 {
-  return model.GetActiveDocument() != nullptr;
+  return model.HasActiveDocument();
 }
 
 }  // namespace Tactile

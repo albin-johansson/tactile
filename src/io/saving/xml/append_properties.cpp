@@ -1,12 +1,14 @@
 #include "append_properties.hpp"
 
+#include "core/components/property.hpp"
+#include "core/components/property_context.hpp"
 #include "core/tactile_error.hpp"
 #include "io/saving/common.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-void AppendTypeAttribute(const PropertyType type, pugi::xml_node& node)
+void AppendTypeAttribute(const PropertyType type, pugi::xml_node node)
 {
   if (type != PropertyType::String)
   {
@@ -15,8 +17,8 @@ void AppendTypeAttribute(const PropertyType type, pugi::xml_node& node)
   }
 }
 
-void AppendValueAttribute(const Property& property,
-                          pugi::xml_node& node,
+void AppendValueAttribute(const PropertyValue& property,
+                          pugi::xml_node node,
                           const std::filesystem::path& dir)
 {
   auto valueAttr = node.append_attribute("value");
@@ -59,19 +61,25 @@ void AppendValueAttribute(const Property& property,
 
 }  // namespace
 
-void AppendProperties(const IPropertyContext& context,
-                      pugi::xml_node& node,
+void AppendProperties(const entt::registry& registry,
+                      const entt::entity entity,
+                      pugi::xml_node node,
                       const std::filesystem::path& dir)
 {
-  if (context.GetPropertyCount() > 0)
+  const auto& context = (entity != entt::null)
+                            ? registry.get<PropertyContext>(entity)
+                            : registry.ctx<PropertyContext>();
+  if (!context.properties.empty())
   {
     auto root = node.append_child("properties");
-    for (const auto& [name, property] : context.GetProperties())
+    for (const auto propertyEntity : context.properties)
     {
+      const auto& property = registry.get<Property>(propertyEntity);
+
       auto propertyNode = root.append_child("property");
-      propertyNode.append_attribute("name").set_value(name.c_str());
-      AppendTypeAttribute(property.GetType().value(), propertyNode);
-      AppendValueAttribute(property, propertyNode, dir);
+      propertyNode.append_attribute("name").set_value(context.name.c_str());
+      AppendTypeAttribute(property.value.GetType().value(), propertyNode);
+      AppendValueAttribute(property.value, propertyNode, dir);
     }
   }
 }

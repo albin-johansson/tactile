@@ -3,8 +3,9 @@
 #include <filesystem>  // path
 #include <string>      // string
 
+#include "core/components/tileset.hpp"
 #include "core/properties/property_type.hpp"
-#include "core/tileset/tileset.hpp"
+#include "core/properties/property_value.hpp"
 
 namespace Tactile::IO {
 
@@ -21,7 +22,7 @@ constexpr auto tiled_json_version = "1.6";
 
 [[nodiscard]] auto GetPropertyTypeString(PropertyType type) -> std::string;
 
-[[nodiscard]] auto GetPropertyFileValue(const Property& file,
+[[nodiscard]] auto GetPropertyFileValue(const PropertyValue& file,
                                         const std::filesystem::path& dir)
     -> std::string;
 

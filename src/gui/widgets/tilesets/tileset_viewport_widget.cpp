@@ -5,7 +5,8 @@
 
 #include <algorithm>  // min, max
 
-#include "core/tileset/tileset.hpp"
+#include "core/components/texture.hpp"
+#include "core/components/tileset.hpp"
 #include "events/tilesets/set_tileset_selection_event.hpp"
 #include "gui/rendering/canvas.hpp"
 #include "gui/rendering/grid.hpp"
@@ -31,13 +32,18 @@ void ClampOffsets(const ImVec2 canvasSize, const float width, const float height
 
 }  // namespace
 
-void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
+void TilesetViewportWidget(const entt::registry& registry,
+                           const entt::entity entity,
+                           entt::dispatcher& dispatcher)
 {
-  const auto texture = ToTextureID(tileset.GetTexture());
-  const auto textureSize = ImVec2{static_cast<float>(tileset.GetWidth()),
-                                  static_cast<float>(tileset.GetHeight())};
-  const auto tileSize = ImVec2{static_cast<float>(tileset.GetTileWidth()),
-                               static_cast<float>(tileset.GetTileHeight())};
+  const auto& tileset = registry.get<Tileset>(entity);
+  const auto& texture = registry.get<Texture>(entity);
+
+  const auto textureId = ToTextureID(texture.id);
+  const ImVec2 textureSize = {static_cast<float>(texture.width),
+                              static_cast<float>(texture.height)};
+  const ImVec2 tileSize = {static_cast<float>(tileset.tile_width),
+                           static_cast<float>(tileset.tile_height)};
   state.grid_size = tileSize;
 
   const auto info = GetCanvasInfo();
@@ -55,12 +61,13 @@ void TilesetViewportWidget(const Tileset& tileset, entt::dispatcher& dispatcher)
   drawList->PushClipRect(info.tl, info.br, true);
 
   const auto min = drawList->GetClipRectMin() + state.scroll_offset;
-  drawList->AddImage(texture, min, min + textureSize);
+  drawList->AddImage(textureId, min, min + textureSize);
 
-  if (const auto& selection = tileset.GetSelection())
+  const auto& selection = registry.get<TilesetSelection>(entity);
+  if (selection.region)
   {
-    const auto tl = selection->begin;
-    const auto br = selection->end;
+    const auto tl = selection.region->begin;
+    const auto br = selection.region->end;
     const auto diff = br - tl;
 
     const ImVec2 origin{static_cast<float>(tl.GetColumn()) * tileSize.x,
