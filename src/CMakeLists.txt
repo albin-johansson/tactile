@@ -68,16 +68,18 @@ set(TACTILE_SOURCE_FILES
     core/properties/property_value.hpp
     core/properties/property_type.hpp
 
+    core/systems/animation_system.cpp
+    core/systems/animation_system.hpp
     core/systems/layer_system.cpp
     core/systems/layer_system.hpp
     core/systems/map_system.cpp
     core/systems/map_system.hpp
+    core/systems/object_layer_system.cpp
+    core/systems/object_layer_system.hpp
     core/systems/property_system.cpp
     core/systems/property_system.hpp
     core/systems/registry_factory_system.cpp
     core/systems/registry_factory_system.hpp
-    core/systems/animation_system.cpp
-    core/systems/animation_system.hpp
     core/systems/tile_layer_system.cpp
     core/systems/tile_layer_system.hpp
     core/systems/tileset_system.cpp
