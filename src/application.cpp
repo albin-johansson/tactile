@@ -31,9 +31,7 @@
 
 namespace Tactile {
 
-Application::Application(cen::window&& window)
-    : mWindow{std::move(window)}
-    , mModel{std::make_unique<Model>()}
+Application::Application(cen::window&& window) : mWindow{std::move(window)}
 {
   SubscribeToEvents(this, mDispatcher);
   LoadDefaultShortcuts();
@@ -45,7 +43,7 @@ auto Application::Run() -> int
 
   if (Prefs::GetRestoreLastSession())
   {
-    RestoreLastSession(*mModel);
+    RestoreLastSession(mModel);
   }
 
   while (!mQuit)
@@ -83,7 +81,7 @@ auto Application::Run() -> int
 void Application::OnAboutToExit()
 {
   SavePreferences();
-  SaveSession(*mModel);
+  SaveSession(mModel);
   UnloadTextures();
 }
 
@@ -106,11 +104,11 @@ void Application::PollEvents()
       keyEvent->set_modifier(cen::key_mod::num, false);
       keyEvent->set_modifier(cen::key_mod::mode, false);
 
-      UpdateShortcuts(*mModel, *keyEvent, mDispatcher);
+      UpdateShortcuts(mModel, *keyEvent, mDispatcher);
     }
     else if (const auto* wheelEvent = event.try_get<cen::mouse_wheel_event>())
     {
-      if (mModel->HasActiveDocument() &&
+      if (mModel.HasActiveDocument() &&
           mKeyboard.is_pressed(cen::scancodes::left_ctrl))
       {
         const auto dy = wheelEvent->y_scroll();
@@ -118,7 +116,7 @@ void Application::PollEvents()
         {
           mDispatcher.enqueue<IncreaseViewportZoomEvent>();
         }
-        else if (dy < 0 && mModel->CanDecreaseViewportTileSize())
+        else if (dy < 0 && mModel.CanDecreaseViewportTileSize())
         {
           mDispatcher.enqueue<DecreaseViewportZoomEvent>();
         }
@@ -130,19 +128,19 @@ void Application::PollEvents()
 void Application::UpdateFrame()
 {
   mDispatcher.update();
-  mModel->Update();
-  UpdateGui(*mModel, mDispatcher);
+  mModel.Update();
+  UpdateGui(mModel, mDispatcher);
 }
 
 void Application::OnAddMapEvent(const AddMapEvent& event)
 {
-  const auto id = mModel->AddMap(event.tile_width, event.tile_height);
-  mModel->SelectMap(id);
+  const auto id = mModel.AddMap(event.tile_width, event.tile_height);
+  mModel.SelectMap(id);
 }
 
 void Application::OnCloseMapEvent(const CloseMapEvent& event)
 {
-  mModel->RemoveMap(event.id);
+  mModel.RemoveMap(event.id);
 }
 
 void Application::OnOpenMapEvent(const OpenMapEvent& event)
@@ -150,7 +148,7 @@ void Application::OnOpenMapEvent(const OpenMapEvent& event)
   IO::MapParser parser{event.path};
   if (parser)
   {
-    mModel->AddMap(IO::ToMapDocument(parser.GetData()));
+    mModel.AddMap(IO::ToMapDocument(parser.GetData()));
   }
   else
   {
@@ -160,7 +158,7 @@ void Application::OnOpenMapEvent(const OpenMapEvent& event)
 
 void Application::OnSaveEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* document = mModel.GetActiveDocument())
   {
     if (!document->path.empty())
     {
@@ -176,7 +174,7 @@ void Application::OnSaveEvent()
 
 void Application::OnSaveAsEvent(const SaveAsEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* document = mModel.GetActiveDocument())
   {
     document->path = event.path;
     OnSaveEvent();
@@ -185,7 +183,7 @@ void Application::OnSaveAsEvent(const SaveAsEvent& event)
 
 void Application::OnSaveAsRequestEvent()
 {
-  if (mModel->GetActiveDocument())
+  if (mModel.GetActiveDocument())
   {
     OpenSaveAsDialog();
   }
@@ -195,7 +193,7 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
   if (const auto info = LoadTexture(event.path))
   {
-    if (auto* registry = mModel->GetActiveRegistry())
+    if (auto* registry = mModel.GetActiveRegistry())
     {
       Sys::AddTileset(*registry, *info, event.tile_width, event.tile_height);
     }
@@ -208,7 +206,7 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 
 void Application::OnUndoEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* document = mModel.GetActiveDocument())
   {
     document->commands.Undo();
   }
@@ -216,7 +214,7 @@ void Application::OnUndoEvent()
 
 void Application::OnRedoEvent()
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* document = mModel.GetActiveDocument())
   {
     document->commands.Redo();
   }
@@ -224,7 +222,7 @@ void Application::OnRedoEvent()
 
 void Application::OnSelectToolEvent(const SelectToolEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::SelectTool(*registry, event.type);
   }
@@ -232,7 +230,7 @@ void Application::OnSelectToolEvent(const SelectToolEvent& event)
 
 void Application::OnMousePressedEvent(const MousePressedEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::ToolOnPressed(*registry, event.info);
   }
@@ -240,7 +238,7 @@ void Application::OnMousePressedEvent(const MousePressedEvent& event)
 
 void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::ToolOnReleased(*registry, mDispatcher, event.info);
   }
@@ -248,7 +246,7 @@ void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
 
 void Application::OnMouseDragEvent(const MouseDragEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::ToolOnDragged(*registry, event.info);
   }
@@ -256,7 +254,7 @@ void Application::OnMouseDragEvent(const MouseDragEvent& event)
 
 void Application::OnStampSequenceEvent(const StampSequenceEvent& event)
 {
-  if (auto* document = mModel->GetActiveDocument())
+  if (auto* document = mModel.GetActiveDocument())
   {
     CENTURION_LOG_DEBUG("Application::OnStampSequenceEvent");
     // TODO register command
@@ -270,7 +268,7 @@ void Application::OnCenterViewportEvent()
 
 void Application::OnOffsetViewportEvent(const OffsetViewportEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::OffsetViewport(*registry, event.dx, event.dy);
   }
@@ -278,7 +276,7 @@ void Application::OnOffsetViewportEvent(const OffsetViewportEvent& event)
 
 void Application::OnPanLeftEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::PanViewportLeft(*registry);
   }
@@ -286,7 +284,7 @@ void Application::OnPanLeftEvent()
 
 void Application::OnPanRightEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::PanViewportRight(*registry);
   }
@@ -294,7 +292,7 @@ void Application::OnPanRightEvent()
 
 void Application::OnPanUpEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::PanViewportUp(*registry);
   }
@@ -302,7 +300,7 @@ void Application::OnPanUpEvent()
 
 void Application::OnPanDownEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::PanViewportDown(*registry);
   }
@@ -310,7 +308,7 @@ void Application::OnPanDownEvent()
 
 void Application::OnIncreaseViewportZoomEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::IncreaseViewportZoom(*registry);
   }
@@ -318,7 +316,7 @@ void Application::OnIncreaseViewportZoomEvent()
 
 void Application::OnDecreaseViewportZoomEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::DecreaseViewportZoom(*registry);
   }
@@ -326,7 +324,7 @@ void Application::OnDecreaseViewportZoomEvent()
 
 void Application::OnResetViewportZoomEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::ResetViewportZoom(*registry);
   }
@@ -334,12 +332,12 @@ void Application::OnResetViewportZoomEvent()
 
 void Application::OnSelectMapEvent(const SelectMapEvent& event)
 {
-  mModel->SelectMap(event.id);
+  mModel.SelectMap(event.id);
 }
 
 void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::SelectTileset(*registry, event.id);
   }
@@ -347,7 +345,7 @@ void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
 
 void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::RemoveTileset(*registry, event.id);
   }
@@ -355,7 +353,7 @@ void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
 
 void Application::OnAddRowEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::AddRow(*registry);
   }
@@ -363,7 +361,7 @@ void Application::OnAddRowEvent()
 
 void Application::OnAddColumnEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::AddColumn(*registry);
   }
@@ -371,7 +369,7 @@ void Application::OnAddColumnEvent()
 
 void Application::OnRemoveRowEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::RemoveRow(*registry);
   }
@@ -379,7 +377,7 @@ void Application::OnRemoveRowEvent()
 
 void Application::OnRemoveColumnEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::RemoveColumn(*registry);
   }
@@ -387,7 +385,7 @@ void Application::OnRemoveColumnEvent()
 
 void Application::OnAddLayerEvent(const AddLayerEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     switch (event.type)
     {
@@ -408,7 +406,7 @@ void Application::OnAddLayerEvent(const AddLayerEvent& event)
 
 void Application::OnRemoveLayerEvent(const RemoveLayerEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::RemoveLayer(*registry, event.id);
   }
@@ -416,7 +414,7 @@ void Application::OnRemoveLayerEvent(const RemoveLayerEvent& event)
 
 void Application::OnMoveLayerUpEvent(const MoveLayerUpEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::MoveLayerUp(*registry, event.id);
   }
@@ -424,7 +422,7 @@ void Application::OnMoveLayerUpEvent(const MoveLayerUpEvent& event)
 
 void Application::OnMoveLayerDownEvent(const MoveLayerDownEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::MoveLayerDown(*registry, event.id);
   }
@@ -432,7 +430,7 @@ void Application::OnMoveLayerDownEvent(const MoveLayerDownEvent& event)
 
 void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::DuplicateLayer(*registry, event.id);
   }
@@ -440,7 +438,7 @@ void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
 
 void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::SetLayerOpacity(*registry, event.id, event.opacity);
   }
@@ -448,7 +446,7 @@ void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
 
 void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::SetLayerVisible(*registry, event.id, event.visible);
   }
@@ -456,7 +454,7 @@ void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
 
 void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     auto& current = registry->ctx<ActivePropertyContext>();
     current.entity = Sys::FindLayer(*registry, event.id);
@@ -465,7 +463,7 @@ void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& eve
 
 void Application::OnShowMapPropertiesEvent()
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     auto& current = registry->ctx<ActivePropertyContext>();
     current.entity = entt::null;
@@ -474,7 +472,7 @@ void Application::OnShowMapPropertiesEvent()
 
 void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::SelectLayer(*registry, event.id);
   }
@@ -482,7 +480,7 @@ void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
 
 void Application::OnAddPropertyEvent(const AddPropertyEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::AddProperty(*registry, event.name, event.type);
   }
@@ -490,7 +488,7 @@ void Application::OnAddPropertyEvent(const AddPropertyEvent& event)
 
 void Application::OnRemovePropertyEvent(const RemovePropertyEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::RemoveProperty(*registry, event.name);
   }
@@ -498,7 +496,7 @@ void Application::OnRemovePropertyEvent(const RemovePropertyEvent& event)
 
 void Application::OnRenamePropertyEvent(const RenamePropertyEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::RenameProperty(*registry, event.old_name, event.new_name);
   }
@@ -506,7 +504,7 @@ void Application::OnRenamePropertyEvent(const RenamePropertyEvent& event)
 
 void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::UpdateProperty(*registry, event.name, event.property);
   }
@@ -514,7 +512,7 @@ void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
 
 void Application::OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::ChangePropertyType(*registry, event.name, event.type);
   }
@@ -522,7 +520,7 @@ void Application::OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event
 
 void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event)
 {
-  if (auto* registry = mModel->GetActiveRegistry())
+  if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::UpdateTilesetSelection(*registry, event.selection);
   }
@@ -531,7 +529,7 @@ void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& eve
 void Application::OnChangeCommandCapacityEvent(
     const ChangeCommandCapacityEvent& event)
 {
-  mModel->OnCommandCapacityChanged(event);
+  mModel.OnCommandCapacityChanged(event);
 }
 
 void Application::OnQuitEvent()

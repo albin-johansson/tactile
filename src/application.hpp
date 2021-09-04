@@ -4,7 +4,6 @@
 #include <entt.hpp>       // dispatcher
 
 #include "aliases/ints.hpp"
-#include "aliases/unique.hpp"
 #include "core/model.hpp"
 #include "events/change_command_capacity_event.hpp"
 #include "events/layers/add_layer_event.hpp"
@@ -57,8 +56,10 @@ class Application final
   cen::window mWindow;
   cen::keyboard mKeyboard;
   entt::dispatcher mDispatcher;
-  Icons mIcons;
-  Unique<Model> mModel;
+
+  Model mModel;
+  [[no_unique_address]] Icons mIcons;
+
   bool mQuit{};
 
   void OnAboutToExit();
