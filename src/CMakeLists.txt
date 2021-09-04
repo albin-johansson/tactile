@@ -7,6 +7,7 @@ set(TACTILE_SOURCE_FILES
     application.hpp
     application_events.cpp
     application_events.hpp
+    build.hpp
     init_open_gl_attributes.cpp
     init_open_gl_attributes.hpp
 
