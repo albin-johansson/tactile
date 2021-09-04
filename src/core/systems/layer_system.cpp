@@ -424,6 +424,12 @@ auto FindLayer(const entt::registry& registry, const layer_id id) -> entt::entit
   return entt::null;
 }
 
+auto GetActiveLayer(const entt::registry& registry) -> entt::entity
+{
+  const auto& active = registry.ctx<ActiveLayer>();
+  return active.entity;
+}
+
 auto GetLayerIndex(const entt::registry& registry, const entt::entity entity)
     -> usize
 {
@@ -546,6 +552,19 @@ auto CanMoveLayerDown(const entt::registry& registry, const entt::entity entity)
   const auto index = registry.get<Layer>(entity).index;
   const auto nSiblings = GetSiblingCount(registry, entity);
   return index < nSiblings;
+}
+
+auto IsTileLayerActive(const entt::registry& registry) -> bool
+{
+  const auto& active = registry.ctx<ActiveLayer>();
+  if (active.entity != entt::null)
+  {
+    return registry.all_of<TileLayer>(active.entity);
+  }
+  else
+  {
+    return false;
+  }
 }
 
 }  // namespace Tactile::Sys

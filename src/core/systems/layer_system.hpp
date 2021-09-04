@@ -220,6 +220,8 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 [[nodiscard]] auto FindLayer(const entt::registry& registry, layer_id id)
     -> entt::entity;
 
+[[nodiscard]] auto GetActiveLayer(const entt::registry& registry) -> entt::entity;
+
 [[nodiscard]] auto GetLayerIndex(const entt::registry& registry, entt::entity)
     -> usize;
 
@@ -249,6 +251,8 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 
 [[nodiscard]] auto CanMoveLayerDown(const entt::registry& registry,
                                     entt::entity entity) -> bool;
+
+[[nodiscard]] auto IsTileLayerActive(const entt::registry& registry) -> bool;
 
 inline void RemoveLayer(entt::registry& registry, const layer_id id)
 {
