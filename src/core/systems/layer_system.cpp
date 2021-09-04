@@ -115,6 +115,20 @@ void SwapLayerIndices(entt::registry& registry,
   SortLayers(registry);
 }
 
+void OffsetLayerIndicesOfSiblingsBelow(entt::registry& registry,
+                                       const entt::entity entity,
+                                       const int offset)
+{
+  auto sibling = GetLayerSiblingBelow(registry, entity);
+  while (sibling != entt::null)
+  {
+    auto& siblingLayer = registry.get<Layer>(sibling);
+    const auto newIndex = siblingLayer.index + offset;
+    sibling = GetLayerSiblingBelow(registry, sibling);
+    siblingLayer.index = newIndex;
+  }
+}
+
 void DestroyChildLayers(entt::registry& registry, const entt::entity entity)
 {
   auto& group = registry.get<GroupLayer>(entity);
@@ -247,17 +261,7 @@ void RemoveLayer(entt::registry& registry, const entt::entity entity)
   }
 
   /* Fix indices of siblings that are below the removed layer */
-  auto sibling = GetLayerSiblingBelow(registry, entity);
-  while (sibling != entt::null)
-  {
-    auto& siblingLayer = registry.get<Layer>(sibling);
-
-    assert(siblingLayer.index > 0);
-    const auto newIndex = siblingLayer.index - 1;
-
-    sibling = GetLayerSiblingBelow(registry, sibling);
-    siblingLayer.index = newIndex;
-  }
+  OffsetLayerIndicesOfSiblingsBelow(registry, entity, -1);
 
   /* Remove the layer from the parent group layer, if there is one. */
   const auto& parent = registry.get<Parent>(entity);
