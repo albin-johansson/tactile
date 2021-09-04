@@ -178,6 +178,8 @@ auto ToMapDocument(const MapData& data) -> Document
   auto& context = document.registry.ctx<PropertyContext>();
   context.name = data.absolute_path.filename().string();
 
+  AddProperties(document.registry, entt::null, data.properties);
+
   for (tileset_id id{1}; const auto& tilesetData : data.tilesets)
   {
     MakeTileset(document.registry, id, tilesetData);
@@ -194,8 +196,6 @@ auto ToMapDocument(const MapData& data) -> Document
   {
     MakeLayer(document.registry, layerData);
   }
-
-  AddProperties(document.registry, entt::null, data.properties);
 
   Sys::SortLayers(document.registry);
 
