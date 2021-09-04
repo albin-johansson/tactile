@@ -111,6 +111,9 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
 [[nodiscard]] auto HasNonEmptyTilesetSelection(const entt::registry& registry)
     -> bool;
 
+[[nodiscard]] auto IsSingleTileSelectedInTileset(const entt::registry& registry)
+    -> bool;
+
 /**
  * \brief Returns the ID of the tile that should be rendered when the specified tile
  * is encountered.

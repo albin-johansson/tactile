@@ -186,6 +186,22 @@ auto HasNonEmptyTilesetSelection(const entt::registry& registry) -> bool
   }
 }
 
+auto IsSingleTileSelectedInTileset(const entt::registry& registry) -> bool
+{
+  const auto& active = registry.ctx<ActiveTileset>();
+  if (active.entity != entt::null)
+  {
+    const auto& selection = registry.get<TilesetSelection>(active.entity);
+    if (selection.region)
+    {
+      const auto& region = *selection.region;
+      return (region.end - region.begin) == MapPosition{1_row, 1_col};
+    }
+  }
+
+  return false;
+}
+
 auto GetTileToRender(const entt::registry& registry,
                      const entt::entity tilesetEntity,
                      const tile_id id) -> tile_id
