@@ -2,13 +2,15 @@
 
 #include <centurion.hpp>
 
-#ifdef NDEBUG
+#include "build.hpp"
+
+#if TACTILE_RELEASE
 #define TACTILE_PROFILE_START
 #else
 #define TACTILE_PROFILE_START const auto tactile_profile_start = cen::counter::now();
-#endif  // NDEBUG
+#endif  // TACTILE_RELEASE
 
-#ifdef NDEBUG
+#if TACTILE_RELEASE
 #define TACTILE_PROFILE_END(Msg)
 #else
 #define TACTILE_PROFILE_END(Msg)                                                    \
@@ -18,4 +20,4 @@
   const auto tactile_profile_freq = static_cast<double>(cen::counter::frequency()); \
   CENTURION_LOG_DEBUG(Msg " in %f seconds",                                         \
                       tactile_profile_diff / tactile_profile_freq);
-#endif  // NDEBUG
+#endif  // TACTILE_RELEASE
