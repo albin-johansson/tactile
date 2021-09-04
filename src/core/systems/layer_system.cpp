@@ -174,10 +174,10 @@ auto AddBasicLayer(entt::registry& registry,
     parentLayer.layers.push_back(entity);
   }
 
-  auto& context = registry.emplace<PropertyContext>(entity);
-  context.name = std::move(name);
-
-  SortLayers(registry);
+  {
+    auto& context = registry.emplace<PropertyContext>(entity);
+    context.name = std::move(name);
+  }
 
   return entity;
 }
