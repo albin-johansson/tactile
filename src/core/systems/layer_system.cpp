@@ -198,7 +198,7 @@ auto AddTileLayer(entt::registry& registry) -> entt::entity
   ++map.next_layer_id;
 
   auto& tileLayer = registry.emplace<TileLayer>(entity);
-  tileLayer.matrix = Sys::MakeTileMatrix(map.row_count, map.column_count);
+  tileLayer.matrix = MakeTileMatrix(map.row_count, map.column_count);
 
   return entity;
 }
