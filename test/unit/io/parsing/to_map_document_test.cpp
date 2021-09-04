@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 
 #include "core/components/layer.hpp"
+#include "core/components/object.hpp"
 #include "core/components/object_layer.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/texture.hpp"
