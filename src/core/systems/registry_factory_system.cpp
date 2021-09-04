@@ -3,6 +3,7 @@
 #include "core/components/layer.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
+#include "core/components/tool.hpp"
 #include "core/map.hpp"
 #include "core/viewport.hpp"
 
@@ -16,6 +17,7 @@ auto MakeRegistry() -> entt::registry
   registry.set<ActiveLayer>();
   registry.set<ActiveTileset>();
   registry.set<ActivePropertyContext>();
+  registry.set<ActiveTool>();
 
   auto& viewport = registry.set<Viewport>();
   viewport.tile_width = 64;

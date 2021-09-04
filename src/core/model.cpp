@@ -6,6 +6,7 @@
 #include "systems/animation_system.hpp"
 #include "systems/registry_factory_system.hpp"
 #include "systems/tileset_system.hpp"
+#include "systems/tool_system.hpp"
 #include "systems/viewport_system.hpp"
 
 namespace Tactile {
@@ -175,34 +176,40 @@ auto Model::GetActiveRegistry() const -> const entt::registry*
   }
 }
 
-void Model::OnMousePressed(const MousePressedEvent& event)
-{
-  //  mTools.OnMousePressed(event);
-}
-
-void Model::OnMouseReleased(const MouseReleasedEvent& event)
-{
-  //  mTools.OnMouseReleased(event);
-}
-
-void Model::OnMouseDragged(const MouseDragEvent& event)
-{
-  //  mTools.OnMouseDragged(event);
-}
-
 auto Model::IsStampActive() const -> bool
 {
-  return false;
+  if (const auto* registry = GetActiveRegistry())
+  {
+    return Sys::IsStampEnabled(*registry);
+  }
+  else
+  {
+    return false;
+  }
 }
 
 auto Model::IsEraserActive() const -> bool
 {
-  return false;
+  if (const auto* registry = GetActiveRegistry())
+  {
+    return Sys::IsEraserEnabled(*registry);
+  }
+  else
+  {
+    return false;
+  }
 }
 
 auto Model::IsBucketActive() const -> bool
 {
-  return false;
+  if (const auto* registry = GetActiveRegistry())
+  {
+    return Sys::IsBucketEnabled(*registry);
+  }
+  else
+  {
+    return false;
+  }
 }
 
 }  // namespace Tactile

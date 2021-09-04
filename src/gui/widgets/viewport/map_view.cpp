@@ -5,6 +5,8 @@
 
 #include <cassert>  // assert
 
+#include "core/systems/tileset_system.hpp"
+#include "core/systems/tool_system.hpp"
 #include "core/viewport.hpp"
 #include "events/tool_events.hpp"
 #include "events/viewport/offset_viewport_event.hpp"
@@ -103,17 +105,10 @@ void RenderCursorGizmos(const entt::registry& registry,
     });
   }
 
-  // TODO reintroduce
-
-  //  if (model.GetActiveTool() == MouseToolType::Stamp && tileset &&
-  //      tileset->GetSelection())
-  //  {
-  //    RenderStampPreview(info.map_position,
-  //                       info.grid_size,
-  //                       document.GetMap(),
-  //                       *tileset,
-  //                       cursor.map_position);
-  //  }
+  if (Sys::IsStampEnabled(registry) && Sys::HasNonEmptyTilesetSelection(registry))
+  {
+    RenderStampPreview(registry, cursor.map_position, info);
+  }
 }
 
 }  // namespace

@@ -13,6 +13,7 @@
 #include "core/systems/map_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "core/systems/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
 #include "events/viewport/decrease_viewport_zoom_event.hpp"
 #include "events/viewport/increase_viewport_zoom_event.hpp"
@@ -223,22 +224,34 @@ void Application::OnRedoEvent()
 
 void Application::OnSelectToolEvent(const SelectToolEvent& event)
 {
-  // TODO mModel->SelectTool(event.type);
+  if (auto* registry = mModel->GetActiveRegistry())
+  {
+    Sys::SelectTool(*registry, event.type);
+  }
 }
 
 void Application::OnMousePressedEvent(const MousePressedEvent& event)
 {
-  mModel->OnMousePressed(event);
+  if (auto* registry = mModel->GetActiveRegistry())
+  {
+    Sys::ToolOnPressed(*registry, event.info);
+  }
 }
 
 void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
 {
-  mModel->OnMouseReleased(event);
+  if (auto* registry = mModel->GetActiveRegistry())
+  {
+    Sys::ToolOnReleased(*registry, event.info);
+  }
 }
 
 void Application::OnMouseDragEvent(const MouseDragEvent& event)
 {
-  mModel->OnMouseDragged(event);
+  if (auto* registry = mModel->GetActiveRegistry())
+  {
+    Sys::ToolOnDragged(*registry, event.info);
+  }
 }
 
 void Application::OnCenterViewportEvent()

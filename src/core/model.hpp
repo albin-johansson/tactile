@@ -58,15 +58,6 @@ class Model final
     return mDocuments.end();
   }
 
-  //  void SelectTool(MouseToolType tool);
-
-  void OnMousePressed(const MousePressedEvent& event);
-
-  void OnMouseReleased(const MouseReleasedEvent& event);
-
-  void OnMouseDragged(const MouseDragEvent& event);
-
-
   [[nodiscard]] auto IsStampActive() const -> bool;
 
   [[nodiscard]] auto IsEraserActive() const -> bool;

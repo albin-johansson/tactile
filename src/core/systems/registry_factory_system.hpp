@@ -12,6 +12,7 @@ namespace Tactile::Sys {
  * - `ActiveLayer`
  * - `ActiveTileset`
  * - `ActivePropertyContext`
+ * - `ActiveTool`
  * - `Viewport`
  * - `PropertyContext`
  * - `TilesetContext`

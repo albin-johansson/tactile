@@ -3,11 +3,15 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include <cassert>  // assert
+
 #include "aliases/ints.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
 #include "core/map.hpp"
+#include "core/map_position.hpp"
+#include "gui/rendering/render_info.hpp"
 #include "gui/texture_utils.hpp"
 
 namespace Tactile {
@@ -15,74 +19,103 @@ namespace {
 
 constexpr uint32 preview_opacity = 100;  // [0, 255]
 
-void RenderPreviewTile(ImTextureID texture,
-                       const MapPosition& tilePos,
-                       const ImVec2& mapPos,
-                       const ImVec2& tilesetTilePos,
-                       const ImVec2& uvTileSize,
-                       const ImVec2& gridSize)
+struct PreviewInfo final
 {
-  const auto x = static_cast<float>(tilePos.GetColumn()) * gridSize.x;
-  const auto y = static_cast<float>(tilePos.GetRow()) * gridSize.y;
-  const auto realPos = mapPos + ImVec2{x, y};
+  ImTextureID texture_id{};
 
-  const auto uvMin = tilesetTilePos * uvTileSize;
-  const auto uvMax = uvMin + uvTileSize;
+  ImVec2 map_pos{};
+  ImVec2 grid_size{};
+  ImVec2 uv_size{};
+
+  MapPosition mouse_pos{};
+  MapPosition selection_begin;
+  MapPosition selection_size;
+  MapPosition offset;
+};
+
+void RenderPreviewTile(const PreviewInfo& info,
+                       const MapPosition& previewTilePos,
+                       const ImVec2& tilesetTilePos)
+{
+  const auto x = static_cast<float>(previewTilePos.GetColumn()) * info.grid_size.x;
+  const auto y = static_cast<float>(previewTilePos.GetRow()) * info.grid_size.y;
+  const auto realPos = info.map_pos + ImVec2{x, y};
+
+  const auto uvMin = tilesetTilePos * info.uv_size;
+  const auto uvMax = uvMin + info.uv_size;
 
   auto* drawList = ImGui::GetWindowDrawList();
-  drawList->AddImage(texture,
+  drawList->AddImage(info.texture_id,
                      realPos,
-                     realPos + gridSize,
+                     realPos + info.grid_size,
                      uvMin,
                      uvMax,
                      IM_COL32(0xFF, 0xFF, 0xFF, preview_opacity));
 }
 
-}  // namespace
-
-void RenderStampPreview(const entt::registry& registry,
-                        const entt::entity tilesetEntity,
-                        const ImVec2& mapPos,
-                        const ImVec2& gridSize,
-                        const MapPosition& mousePos)
+void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
 {
-  const auto& tileset = registry.get<Tileset>(tilesetEntity);
-  const auto& texture = registry.get<Texture>(tilesetEntity);
-  const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
-  const auto& uv = registry.get<UvTileSize>(tilesetEntity);
-
-  const auto [topLeft, bottomRight] = selection.region.value();
-  const auto size = bottomRight - topLeft;
-  const MapPosition offset = {size.GetRow() / 2_row, size.GetColumn() / 2_col};
-
-  const auto textureId = ToTextureID(texture.id);
-  const ImVec2 uvTileSize = {uv.width, uv.height};
-
   const auto& map = registry.ctx<Map>();
-  const auto endRow = size.GetRow();
-  const auto endCol = size.GetColumn();
+
+  const auto endRow = info.selection_size.GetRow();
+  const auto endCol = info.selection_size.GetColumn();
   for (row_t row{0}; row < endRow; ++row)
   {
     for (col_t col{0}; col < endCol; ++col)
     {
       const auto position = MapPosition{row, col};
-      const auto tilePos = mousePos + position - offset;
-      if (tilePos.GetRow() > 0_row && tilePos.GetColumn() > 0_col &&
-          tilePos.GetRow() < map.row_count && tilePos.GetColumn() < map.column_count)
-      {
-        const auto tsTile = topLeft + position;
-        const auto tsRow = static_cast<float>(tsTile.GetRow());
-        const auto tsCol = static_cast<float>(tsTile.GetColumn());
+      const auto previewTilePos = info.mouse_pos + position - info.offset;
 
-        RenderPreviewTile(textureId,
-                          tilePos,
-                          mapPos,
-                          {tsCol, tsRow},
-                          uvTileSize,
-                          gridSize);
+      if ((previewTilePos.GetRow() >= 0_row) &&
+          (previewTilePos.GetColumn() >= 0_col) &&
+          (previewTilePos.GetRow() < map.row_count) &&
+          (previewTilePos.GetColumn() < map.column_count))
+      {
+        const auto tilesetTilePos = info.selection_begin + position;
+        const auto tilesetTileRow = static_cast<float>(tilesetTilePos.GetRow());
+        const auto tilesetTileCol = static_cast<float>(tilesetTilePos.GetColumn());
+        RenderPreviewTile(info, previewTilePos, {tilesetTileCol, tilesetTileRow});
       }
     }
   }
+}
+
+}  // namespace
+
+void RenderStampPreview(const entt::registry& registry,
+                        const MapPosition& mousePos,
+                        const RenderInfo& renderInfo)
+{
+  const auto& activeTileset = registry.ctx<ActiveTileset>();
+
+  const auto tilesetEntity = activeTileset.entity;
+  assert(tilesetEntity != entt::null);
+
+  const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
+  if (!selection.region)
+  {
+    return;
+  }
+
+  const auto& region = selection.region.value();
+  const auto& map = registry.ctx<Map>();
+  const auto& tileset = registry.get<Tileset>(tilesetEntity);
+  const auto& texture = registry.get<Texture>(tilesetEntity);
+  const auto& uv = registry.get<UvTileSize>(tilesetEntity);
+
+  PreviewInfo info;
+  info.texture_id = ToTextureID(texture.id);
+
+  info.map_pos = renderInfo.map_position;
+  info.grid_size = renderInfo.grid_size;
+  info.uv_size = {uv.width, uv.height};
+
+  info.mouse_pos = mousePos;
+  info.selection_begin = region.begin;
+  info.selection_size = region.end - region.begin;
+  info.offset = info.selection_size / MapPosition{2_row, 2_col};
+
+  RenderPreviewTiles(registry, info);
 }
 
 }  // namespace Tactile

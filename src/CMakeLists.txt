@@ -64,6 +64,7 @@ set(TACTILE_SOURCE_FILES
     core/components/animation.hpp
     core/components/tile_layer.hpp
     core/components/tileset.hpp
+    core/components/tool.hpp
     core/components/uv_tile_size.hpp
 
     core/properties/property_value.cpp
