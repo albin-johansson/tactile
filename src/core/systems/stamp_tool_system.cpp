@@ -22,18 +22,17 @@ inline rune::vector_map<MapPosition, tile_id> sequence;
 
 [[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
 {
-  return Sys::IsTileLayerActive(registry) &&
-         Sys::HasNonEmptyTilesetSelection(registry);
+  return IsTileLayerActive(registry) && HasNonEmptyTilesetSelection(registry);
 }
 
 void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 {
   assert(IsUsable(registry));
 
-  const auto layerEntity = Sys::GetActiveLayer(registry);
+  const auto layerEntity = GetActiveLayer(registry);
   assert(layerEntity != entt::null);
 
-  const auto tilesetEntity = Sys::GetActiveTileset(registry);
+  const auto tilesetEntity = GetActiveTileset(registry);
   assert(tilesetEntity != entt::null);
 
   const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
@@ -52,15 +51,15 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
       const auto selectionPosition = region.begin + index;
 
       const auto tile =
-          Sys::GetTileFromTileset(registry, tilesetEntity, selectionPosition);
+          GetTileFromTileset(registry, tilesetEntity, selectionPosition);
       if (tile != empty_tile)
       {
         const auto pos = cursor + index - previewOffset;
-        if (Sys::IsPositionInMap(registry, pos))
+        if (IsPositionInMap(registry, pos))
         {
           if (!old_state.contains(pos))
           {
-            const auto prev = Sys::GetTileFromLayer(registry, layerEntity, pos);
+            const auto prev = GetTileFromLayer(registry, layerEntity, pos);
             old_state.emplace(pos, prev);
           }
           sequence.emplace_or_replace(pos, tile);
