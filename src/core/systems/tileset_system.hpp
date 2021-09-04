@@ -6,6 +6,7 @@
 #include "aliases/maybe.hpp"
 #include "aliases/tile_id.hpp"
 #include "aliases/tileset_id.hpp"
+#include "core/map_position.hpp"
 #include "core/region.hpp"
 #include "utils/texture_info.hpp"
 
@@ -105,6 +106,8 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
 [[nodiscard]] auto FindTileset(const entt::registry& registry, tile_id id)
     -> entt::entity;
 
+[[nodiscard]] auto GetActiveTileset(const entt::registry& registry) -> entt::entity;
+
 [[nodiscard]] auto HasNonEmptyTilesetSelection(const entt::registry& registry)
     -> bool;
 
@@ -149,6 +152,10 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
 [[nodiscard]] auto GetSourceRect(const entt::registry& registry,
                                  entt::entity tilesetEntity,
                                  tile_id id) -> const cen::irect&;
+
+[[nodiscard]] auto GetTileFromTileset(const entt::registry& registry,
+                                      entt::entity entity,
+                                      const MapPosition& position) -> tile_id;
 
 /**
  * \brief Converts a global tile identifier to its local counterpart.

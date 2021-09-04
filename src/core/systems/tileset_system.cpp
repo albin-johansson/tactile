@@ -166,6 +166,12 @@ auto FindTileset(const entt::registry& registry, const tile_id id) -> entt::enti
   return entt::null;
 }
 
+auto GetActiveTileset(const entt::registry& registry) -> entt::entity
+{
+  const auto& active = registry.ctx<ActiveTileset>();
+  return active.entity;
+}
+
 auto HasNonEmptyTilesetSelection(const entt::registry& registry) -> bool
 {
   const auto& active = registry.ctx<ActiveTileset>();
@@ -206,6 +212,28 @@ auto GetSourceRect(const entt::registry& registry,
 {
   const auto& cache = registry.get<TilesetCache>(tilesetEntity);
   return cache.source_rects.at(id);
+}
+
+auto GetTileFromTileset(const entt::registry& registry,
+                        const entt::entity entity,
+                        const MapPosition& position) -> tile_id
+{
+  assert(entity != entt::null);
+  const auto& tileset = registry.get<Tileset>(entity);
+
+  const auto row = position.GetRow();
+  const auto col = position.GetColumn();
+
+  if ((row >= 0_row) && (col >= 0_col) && (row < tileset.row_count) &&
+      (col < tileset.column_count))
+  {
+    const auto index = row * tileset.column_count.get() + col;
+    return tileset.first_id + tile_id{index};
+  }
+  else
+  {
+    return empty_tile;
+  }
 }
 
 auto ConvertToLocal(const entt::registry& registry, const tile_id global)
