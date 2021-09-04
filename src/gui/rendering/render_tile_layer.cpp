@@ -27,13 +27,13 @@ void RenderTileLayer(const entt::registry& registry,
   {
     for (auto col = info.bounds.begin.GetColumn(); col < endCol; ++col)
     {
-      const auto tile = Sys::GetTile(registry, layerEntity, row, col);
-      if (tile && tile != empty_tile)
+      const auto tile = Sys::GetTileFromLayer(registry, layerEntity, {row, col});
+      if (tile != empty_tile)
       {
         const ImVec2 offset = info.grid_size * ImVec2{static_cast<float>(col),
                                                       static_cast<float>(row)};
         const ImVec2 position = info.map_position + offset;
-        RenderTile(*tile, registry, position, info.grid_size, opacity);
+        RenderTile(tile, registry, position, info.grid_size, opacity);
       }
     }
   }

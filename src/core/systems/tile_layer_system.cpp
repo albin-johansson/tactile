@@ -20,13 +20,15 @@ auto MakeTileMatrix(const row_t nRows, const col_t nCols) -> TileMatrix
   return tiles;
 }
 
-auto GetTile(const entt::registry& registry,
-             const entt::entity entity,
-             const row_t row,
-             const col_t col) -> Maybe<tile_id>
+auto GetTileFromLayer(const entt::registry& registry,
+                      const entt::entity entity,
+                      const MapPosition& position) -> tile_id
 {
   const auto& tileLayer = registry.get<TileLayer>(entity);
   const auto& matrix = tileLayer.matrix;
+
+  const auto row = position.GetRow();
+  const auto col = position.GetColumn();
 
   if (row < matrix.size() && col < matrix.at(0).size())
   {
@@ -34,7 +36,7 @@ auto GetTile(const entt::registry& registry,
   }
   else
   {
-    return nothing;
+    return empty_tile;
   }
 }
 

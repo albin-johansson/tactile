@@ -3,10 +3,10 @@
 #include <entt.hpp>  // registry, entity
 
 #include "aliases/col.hpp"
-#include "aliases/maybe.hpp"
 #include "aliases/row.hpp"
 #include "aliases/tile_id.hpp"
 #include "aliases/tile_matrix.hpp"
+#include "core/map_position.hpp"
 
 namespace Tactile::Sys {
 
@@ -17,10 +17,9 @@ namespace Tactile::Sys {
 
 [[nodiscard]] auto MakeTileMatrix(row_t nRows, col_t nCols) -> TileMatrix;
 
-[[nodiscard]] auto GetTile(const entt::registry& registry,
-                           entt::entity entity,
-                           row_t row,
-                           col_t col) -> Maybe<tile_id>;
+[[nodiscard]] auto GetTileFromLayer(const entt::registry& registry,
+                                    entt::entity entity,
+                                    const MapPosition& position) -> tile_id;
 
 /// \} End of tile layer system
 

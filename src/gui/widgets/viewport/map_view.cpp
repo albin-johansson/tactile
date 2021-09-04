@@ -37,7 +37,7 @@ void CheckFor(const ViewportCursorInfo& cursor,
   if (left || mid || right)
   {
     MouseInfo info;
-    info.mouse_position_in_map = cursor.map_position;
+    info.position_in_map = cursor.map_position;
 
     if (left)
     {

@@ -56,22 +56,20 @@ void MouseTileLabels(const entt::registry& registry,
     {
       ImGui::Separator();
 
-      const auto global = Sys::GetTile(registry,
-                                       activeLayer.entity,
-                                       cursor.map_position.GetRow(),
-                                       cursor.map_position.GetColumn());
-      if (cursor.is_within_map && global)
+      const auto global =
+          Sys::GetTileFromLayer(registry, activeLayer.entity, cursor.map_position);
+      if (cursor.is_within_map && global != empty_tile)
       {
-        ImGui::Text("Global ID: %i", global->get());
+        ImGui::Text("Global ID: %i", global.get());
       }
       else
       {
-        ImGui::TextUnformatted("Global ID: N/A");
+        ImGui::TextUnformatted("Global ID: N/A (empty)");
       }
 
-      if (global)
+      if (global != empty_tile)
       {
-        const auto local = Sys::ConvertToLocal(registry, *global);
+        const auto local = Sys::ConvertToLocal(registry, global);
         if (cursor.is_within_map && local)
         {
           ImGui::Text("Local ID: %i", local->get());

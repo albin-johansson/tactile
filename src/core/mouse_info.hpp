@@ -11,7 +11,7 @@ namespace Tactile {
 
 struct MouseInfo final
 {
-  MapPosition mouse_position_in_map;
+  MapPosition position_in_map;
   cen::mouse_button button;
 };
 
