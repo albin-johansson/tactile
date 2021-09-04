@@ -353,9 +353,7 @@ auto GetLayerGlobalIndex(const entt::registry& registry,
   const auto& sourceLayer = registry.get<Layer>(sourceEntity);
   const auto& sourceParent = registry.get<Parent>(sourceEntity);
 
-  const auto nLayersAbove = CountAllLayersAbove(registry, sourceEntity);
-  const auto base = sourceLayer.index + nLayersAbove;
-
+  const auto base = CountAllLayersAbove(registry, sourceEntity) + sourceLayer.index;
   if (sourceParent.entity == entt::null)
   {
     return base;
