@@ -5,8 +5,6 @@
 
 #include "aliases/ints.hpp"
 #include "aliases/layer_id.hpp"
-#include "core/components/object.hpp"
-#include "core/components/object_layer.hpp"
 #include "core/layer_type.hpp"
 #include "core/map.hpp"
 
@@ -143,6 +141,13 @@ void RemoveLayer(entt::registry& registry, entt::entity entity);
  * \since 0.2.0
  */
 void SelectLayer(entt::registry& registry, entt::entity entity);
+
+auto DuplicateLayer(entt::registry& registry, entt::entity source) -> entt::entity;
+
+auto DuplicateLayer(entt::registry& registry,
+                    entt::entity source,
+                    entt::entity parent,
+                    bool recursive) -> entt::entity;
 
 /**
  * \brief Moves the specified layer "up", i.e. earlier in the rendering order.

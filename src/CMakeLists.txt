@@ -71,6 +71,7 @@ set(TACTILE_SOURCE_FILES
 
     core/systems/animation_system.cpp
     core/systems/animation_system.hpp
+    core/systems/copy.hpp
     core/systems/layer_system.cpp
     core/systems/layer_system.hpp
     core/systems/map_system.cpp

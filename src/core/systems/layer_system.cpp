@@ -5,8 +5,12 @@
 #include <utility>    // move, swap
 #include <vector>     // erase
 
+#include "build.hpp"
+#include "copy.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
@@ -286,6 +290,89 @@ void SelectLayer(entt::registry& registry, const entt::entity entity)
 
   auto& active = registry.ctx<ActiveLayer>();
   active.entity = entity;
+}
+
+auto DuplicateLayer(entt::registry& registry, const entt::entity source)
+    -> entt::entity
+{
+  const auto& sourceParent = registry.get<Parent>(source);
+  const auto copy = DuplicateLayer(registry, source, sourceParent.entity, false);
+
+  SortLayers(registry);
+
+
+  return copy;
+}
+
+auto DuplicateLayer(entt::registry& registry,
+                    const entt::entity source,
+                    const entt::entity parent,
+                    const bool recursive) -> entt::entity
+{
+  /* The recursive flag determines whether indices need to be adjusted, since we
+     do not touch indices of children of the original source layer that we want to
+     duplicate. */
+
+  if (!recursive)
+  {
+    OffsetLayerIndicesOfSiblingsBelow(registry, source, 1);
+  }
+
+  const auto copy = registry.create();
+
+  registry.emplace<Parent>(copy, parent);
+  if (parent != entt::null)
+  {
+    auto& parentLayer = registry.get<GroupLayer>(parent);
+    parentLayer.layers.push_back(copy);
+  }
+
+  {
+    auto& context = Copy<PropertyContext>(registry, source, copy);
+    if (!recursive)
+    {
+      context.name += " (Copy)";
+    }
+  }
+
+  {
+    auto& map = registry.ctx<Map>();
+    auto& layer = Copy<Layer>(registry, source, copy);
+    layer.id = map.next_layer_id;
+
+    if (!recursive)
+    {
+      const auto sourceLayer = registry.get<Layer>(source);
+      layer.index = sourceLayer.index + 1;
+    }
+
+    ++map.next_layer_id;
+  }
+
+  if (registry.all_of<TileLayer>(source))
+  {
+    Copy<TileLayer>(registry, source, copy);
+  }
+  else if (registry.all_of<ObjectLayer>(source))
+  {
+    Copy<ObjectLayer>(registry, source, copy);
+  }
+  else if (registry.all_of<GroupLayer>(source))
+  {
+    Copy<GroupLayer>(registry, source, copy);
+  }
+
+#if TACTILE_DEBUG
+  const auto& layer = registry.get<Layer>(copy);
+  cen::log::debug(
+      "Created duplicated layer: {entity: [%u], parent: [%u], id: %i, index: %i }",
+      copy,
+      parent,
+      layer.id,
+      layer.index);
+#endif  // TACTILE_DEBUG
+
+  return copy;
 }
 
 void MoveLayerUp(entt::registry& registry, const entt::entity entity)
