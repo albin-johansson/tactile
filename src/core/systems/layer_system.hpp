@@ -109,8 +109,6 @@ auto AddGroupLayer(entt::registry& registry) -> entt::entity;
  *
  * \param registry the associated registry.
  *
- * \see `RepairLayerIndices()`
- *
  * \since 0.2.0
  */
 void SortLayers(entt::registry& registry);
