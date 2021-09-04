@@ -6,9 +6,7 @@
 #include <cassert>  // assert
 
 #include "core/viewport.hpp"
-#include "events/tools/mouse_drag_event.hpp"
-#include "events/tools/mouse_pressed_event.hpp"
-#include "events/tools/mouse_released_event.hpp"
+#include "events/tool_events.hpp"
 #include "events/viewport/offset_viewport_event.hpp"
 #include "gui/rendering/canvas.hpp"
 #include "gui/rendering/render_bounds.hpp"

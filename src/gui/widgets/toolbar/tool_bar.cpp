@@ -4,9 +4,9 @@
 #include <imgui_internal.h>
 
 #include "core/model.hpp"
-#include "core/tools/mouse_tool_type.hpp"
+#include "core/mouse_tool_type.hpp"
 #include "events/redo_event.hpp"
-#include "events/tools/select_tool_event.hpp"
+#include "events/tool_events.hpp"
 #include "events/undo_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button.hpp"

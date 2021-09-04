@@ -1,6 +1,6 @@
 #include "enable_stamp_shortcut.hpp"
 
-#include "events/tools/select_tool_event.hpp"
+#include "events/tool_events.hpp"
 
 namespace Tactile {
 

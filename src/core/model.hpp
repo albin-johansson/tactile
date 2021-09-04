@@ -8,9 +8,7 @@
 #include "aliases/unique.hpp"
 #include "document.hpp"
 #include "events/change_command_capacity_event.hpp"
-#include "events/tools/mouse_drag_event.hpp"
-#include "events/tools/mouse_pressed_event.hpp"
-#include "events/tools/mouse_released_event.hpp"
+#include "events/tool_events.hpp"
 
 namespace Tactile {
 

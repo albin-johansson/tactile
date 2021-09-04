@@ -38,6 +38,7 @@ set(TACTILE_SOURCE_FILES
     core/model.cpp
     core/model.hpp
     core/mouse_info.hpp
+    core/mouse_tool_type.hpp
     core/object_type.hpp
     core/region.hpp
     core/tactile_error.hpp
@@ -88,8 +89,11 @@ set(TACTILE_SOURCE_FILES
     core/systems/tileset_system.hpp
     core/systems/viewport_system.cpp
     core/systems/viewport_system.hpp
+    core/systems/stamp_tool_system.cpp
+    core/systems/stamp_tool_system.hpp
+    core/systems/tool_system.cpp
+    core/systems/tool_system.hpp
 
-    core/tools/mouse_tool_type.hpp
 
     events/change_command_capacity_event.hpp
     events/quit_event.hpp
@@ -97,6 +101,7 @@ set(TACTILE_SOURCE_FILES
     events/save_as_event.hpp
     events/save_as_request_event.hpp
     events/save_event.hpp
+    events/tool_events.hpp
     events/undo_event.hpp
 
     events/layers/add_layer_event.hpp
@@ -129,11 +134,6 @@ set(TACTILE_SOURCE_FILES
     events/tilesets/remove_tileset_event.hpp
     events/tilesets/select_tileset_event.hpp
     events/tilesets/set_tileset_selection_event.hpp
-
-    events/tools/mouse_drag_event.hpp
-    events/tools/mouse_pressed_event.hpp
-    events/tools/mouse_released_event.hpp
-    events/tools/select_tool_event.hpp
 
     events/viewport/center_viewport_event.hpp
     events/viewport/decrease_viewport_zoom_event.hpp
