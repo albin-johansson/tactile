@@ -256,7 +256,6 @@ void Application::OnStampSequenceEvent(const StampSequenceEvent& event)
 {
   if (auto* document = mModel.GetActiveDocument())
   {
-    CENTURION_LOG_DEBUG("Application::OnStampSequenceEvent");
     // TODO register command
   }
 }
