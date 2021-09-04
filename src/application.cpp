@@ -242,7 +242,7 @@ void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
 {
   if (auto* registry = mModel->GetActiveRegistry())
   {
-    Sys::ToolOnReleased(*registry, event.info);
+    Sys::ToolOnReleased(*registry, mDispatcher, event.info);
   }
 }
 
@@ -251,6 +251,15 @@ void Application::OnMouseDragEvent(const MouseDragEvent& event)
   if (auto* registry = mModel->GetActiveRegistry())
   {
     Sys::ToolOnDragged(*registry, event.info);
+  }
+}
+
+void Application::OnStampSequenceEvent(const StampSequenceEvent& event)
+{
+  if (auto* document = mModel->GetActiveDocument())
+  {
+    CENTURION_LOG_DEBUG("Application::OnStampSequenceEvent");
+    // TODO register command
   }
 }
 

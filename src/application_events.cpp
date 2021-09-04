@@ -2,7 +2,6 @@
 
 #include "application.hpp"
 #include "events/maps/show_map_properties_event.hpp"
-#include "events/save_as_event.hpp"
 #include "events/save_as_request_event.hpp"
 #include "events/save_event.hpp"
 #include "events/viewport/center_viewport_event.hpp"
@@ -76,6 +75,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<MousePressedEvent>().connect<&App::OnMousePressedEvent>(app);
   dispatcher.sink<MouseReleasedEvent>().connect<&App::OnMouseReleasedEvent>(app);
   dispatcher.sink<MouseDragEvent>().connect<&App::OnMouseDragEvent>(app);
+  dispatcher.sink<StampSequenceEvent>().connect<&App::OnStampSequenceEvent>(app);
 
   dispatcher.sink<ChangeCommandCapacityEvent>().connect<&App::OnChangeCommandCapacityEvent>(app);
   dispatcher.sink<QuitEvent>().connect<&App::OnQuitEvent>(app);

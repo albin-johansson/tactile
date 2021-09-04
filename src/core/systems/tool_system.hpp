@@ -1,6 +1,6 @@
 #pragma once
 
-#include <entt.hpp>  // registry
+#include <entt.hpp>  // registry, dispatcher
 
 #include "core/mouse_info.hpp"
 #include "core/mouse_tool_type.hpp"
@@ -13,7 +13,9 @@ void ToolOnPressed(entt::registry& registry, const MouseInfo& mouse);
 
 void ToolOnDragged(entt::registry& registry, const MouseInfo& mouse);
 
-void ToolOnReleased(entt::registry& registry, const MouseInfo& mouse);
+void ToolOnReleased(entt::registry& registry,
+                    entt::dispatcher& dispatcher,
+                    const MouseInfo& mouse);
 
 [[nodiscard]] auto IsStampEnabled(const entt::registry& registry) -> bool;
 

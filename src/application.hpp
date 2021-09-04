@@ -32,6 +32,7 @@
 #include "events/quit_event.hpp"
 #include "events/redo_event.hpp"
 #include "events/save_as_event.hpp"
+#include "events/stamp_sequence_event.hpp"
 #include "events/tilesets/add_tileset_event.hpp"
 #include "events/tilesets/remove_tileset_event.hpp"
 #include "events/tilesets/select_tileset_event.hpp"
@@ -91,6 +92,8 @@ class Application final
   void OnMouseReleasedEvent(const MouseReleasedEvent& event);
 
   void OnMouseDragEvent(const MouseDragEvent& event);
+
+  void OnStampSequenceEvent(const StampSequenceEvent& event);
 
   void OnCenterViewportEvent();
 
