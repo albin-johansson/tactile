@@ -9,8 +9,8 @@
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
-#include "core/map.hpp"
 #include "core/map_position.hpp"
+#include "core/systems/map_system.hpp"
 #include "gui/rendering/render_info.hpp"
 #include "gui/texture_utils.hpp"
 
@@ -55,8 +55,6 @@ void RenderPreviewTile(const PreviewInfo& info,
 
 void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
 {
-  const auto& map = registry.ctx<Map>();
-
   const auto endRow = info.selection_size.GetRow();
   const auto endCol = info.selection_size.GetColumn();
   for (row_t row{0}; row < endRow; ++row)
@@ -66,10 +64,7 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
       const auto position = MapPosition{row, col};
       const auto previewTilePos = info.mouse_pos + position - info.offset;
 
-      if ((previewTilePos.GetRow() >= 0_row) &&
-          (previewTilePos.GetColumn() >= 0_col) &&
-          (previewTilePos.GetRow() < map.row_count) &&
-          (previewTilePos.GetColumn() < map.column_count))
+      if (Sys::IsPositionInMap(registry, previewTilePos))
       {
         const auto tilesetTilePos = info.selection_begin + position;
         const auto tilesetTileRow = static_cast<float>(tilesetTilePos.GetRow());
@@ -98,7 +93,6 @@ void RenderStampPreview(const entt::registry& registry,
   }
 
   const auto& region = selection.region.value();
-  const auto& map = registry.ctx<Map>();
   const auto& tileset = registry.get<Tileset>(tilesetEntity);
   const auto& texture = registry.get<Texture>(tilesetEntity);
   const auto& uv = registry.get<UvTileSize>(tilesetEntity);

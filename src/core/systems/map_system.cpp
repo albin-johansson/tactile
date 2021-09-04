@@ -74,4 +74,16 @@ void RemoveColumn(entt::registry& registry)
   }
 }
 
+auto IsPositionInMap(const entt::registry& registry, const MapPosition& position)
+    -> bool
+{
+  const auto& map = registry.ctx<Map>();
+
+  const auto row = position.GetRowIndex();
+  const auto column = position.GetColumnIndex();
+
+  return (row >= 0_row) && (column >= 0_col) && (row < map.row_count) &&
+         (column < map.column_count);
+}
+
 }  // namespace Tactile::Sys
