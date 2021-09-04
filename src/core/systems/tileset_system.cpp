@@ -4,7 +4,6 @@
 
 #include "aliases/hash_map.hpp"
 #include "core/components/animation.hpp"
-#include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
@@ -165,6 +164,20 @@ auto FindTileset(const entt::registry& registry, const tile_id id) -> entt::enti
   }
 
   return entt::null;
+}
+
+auto HasNonEmptyTilesetSelection(const entt::registry& registry) -> bool
+{
+  const auto& active = registry.ctx<ActiveTileset>();
+  if (active.entity != entt::null)
+  {
+    const auto& selection = registry.get<TilesetSelection>(active.entity);
+    return selection.region.has_value();
+  }
+  else
+  {
+    return false;
+  }
 }
 
 auto GetTileToRender(const entt::registry& registry,
