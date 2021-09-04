@@ -73,6 +73,8 @@ set(TACTILE_SOURCE_FILES
 
     core/systems/animation_system.cpp
     core/systems/animation_system.hpp
+    core/systems/bucket_tool_system.cpp
+    core/systems/bucket_tool_system.hpp
     core/systems/copy.hpp
     core/systems/layer_system.cpp
     core/systems/layer_system.hpp
@@ -95,8 +97,8 @@ set(TACTILE_SOURCE_FILES
     core/systems/tool_system.cpp
     core/systems/tool_system.hpp
 
-
     events/change_command_capacity_event.hpp
+    events/flood_event.hpp
     events/quit_event.hpp
     events/redo_event.hpp
     events/save_as_event.hpp

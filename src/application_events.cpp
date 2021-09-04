@@ -76,6 +76,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<MouseReleasedEvent>().connect<&App::OnMouseReleasedEvent>(app);
   dispatcher.sink<MouseDragEvent>().connect<&App::OnMouseDragEvent>(app);
   dispatcher.sink<StampSequenceEvent>().connect<&App::OnStampSequenceEvent>(app);
+  dispatcher.sink<FloodEvent>().connect<&App::OnFloodEvent>(app);
 
   dispatcher.sink<ChangeCommandCapacityEvent>().connect<&App::OnChangeCommandCapacityEvent>(app);
   dispatcher.sink<QuitEvent>().connect<&App::OnQuitEvent>(app);

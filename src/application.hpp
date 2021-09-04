@@ -6,6 +6,7 @@
 #include "aliases/ints.hpp"
 #include "core/model.hpp"
 #include "events/change_command_capacity_event.hpp"
+#include "events/flood_event.hpp"
 #include "events/layers/add_layer_event.hpp"
 #include "events/layers/duplicate_layer_event.hpp"
 #include "events/layers/move_layer_down_event.hpp"
@@ -95,6 +96,8 @@ class Application final
   void OnMouseDragEvent(const MouseDragEvent& event);
 
   void OnStampSequenceEvent(const StampSequenceEvent& event);
+
+  void OnFloodEvent(const FloodEvent& event);
 
   void OnCenterViewportEvent();
 

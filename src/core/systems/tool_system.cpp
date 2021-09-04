@@ -1,5 +1,6 @@
 #include "tool_system.hpp"
 
+#include "bucket_tool_system.hpp"
 #include "core/components/tool.hpp"
 #include "stamp_tool_system.hpp"
 
@@ -11,7 +12,9 @@ void SelectTool(entt::registry& registry, const MouseToolType tool)
   active.tool = tool;
 }
 
-void ToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
+void ToolOnPressed(entt::registry& registry,
+                   entt::dispatcher& dispatcher,
+                   const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<ActiveTool>();
   switch (active.tool)
@@ -24,6 +27,7 @@ void ToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
       break;
 
     case MouseToolType::Bucket:
+      BucketToolOnPressed(registry, dispatcher, mouse);
       break;
 
     case MouseToolType::Eraser:
@@ -31,7 +35,9 @@ void ToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
   }
 }
 
-void ToolOnDragged(entt::registry& registry, const MouseInfo& mouse)
+void ToolOnDragged(entt::registry& registry,
+                   entt::dispatcher& dispatcher,
+                   const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<ActiveTool>();
   switch (active.tool)
@@ -59,13 +65,14 @@ void ToolOnReleased(entt::registry& registry,
   switch (active.tool)
   {
     case MouseToolType::None:
+      [[fallthrough]];
+    case MouseToolType::Bucket:
       break;
 
     case MouseToolType::Stamp:
       StampToolOnReleased(registry, dispatcher, mouse);
       break;
 
-    case MouseToolType::Bucket:
       break;
 
     case MouseToolType::Eraser:

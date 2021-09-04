@@ -9,9 +9,13 @@ namespace Tactile::Sys {
 
 void SelectTool(entt::registry& registry, MouseToolType tool);
 
-void ToolOnPressed(entt::registry& registry, const MouseInfo& mouse);
+void ToolOnPressed(entt::registry& registry,
+                   entt::dispatcher& dispatcher,
+                   const MouseInfo& mouse);
 
-void ToolOnDragged(entt::registry& registry, const MouseInfo& mouse);
+void ToolOnDragged(entt::registry& registry,
+                   entt::dispatcher& dispatcher,
+                   const MouseInfo& mouse);
 
 void ToolOnReleased(entt::registry& registry,
                     entt::dispatcher& dispatcher,

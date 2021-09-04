@@ -232,7 +232,7 @@ void Application::OnMousePressedEvent(const MousePressedEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
-    Sys::ToolOnPressed(*registry, event.info);
+    Sys::ToolOnPressed(*registry, mDispatcher, event.info);
   }
 }
 
@@ -248,7 +248,7 @@ void Application::OnMouseDragEvent(const MouseDragEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
-    Sys::ToolOnDragged(*registry, event.info);
+    Sys::ToolOnDragged(*registry, mDispatcher, event.info);
   }
 }
 
@@ -257,6 +257,14 @@ void Application::OnStampSequenceEvent(const StampSequenceEvent& event)
   if (auto* document = mModel.GetActiveDocument())
   {
     CENTURION_LOG_DEBUG("Application::OnStampSequenceEvent");
+    // TODO register command
+  }
+}
+
+void Application::OnFloodEvent(const FloodEvent& event)
+{
+  if (auto* document = mModel.GetActiveDocument())
+  {
     // TODO register command
   }
 }
