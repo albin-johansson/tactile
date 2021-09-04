@@ -142,12 +142,14 @@ auto AddBasicLayer(entt::registry& registry,
 {
   const auto entity = registry.create();
 
-  auto& layer = registry.emplace<Layer>(entity);
-  layer.id = id;
-  layer.index = GetNewLayerIndex(registry, entity, parent);
-  layer.type = type;
-  layer.visible = true;
-  layer.opacity = 1.0f;
+  {
+    auto& layer = registry.emplace<Layer>(entity);
+    layer.id = id;
+    layer.index = GetNewLayerIndex(registry, entity, parent);
+    layer.type = type;
+    layer.visible = true;
+    layer.opacity = 1.0f;
+  }
 
   assert(parent == entt::null || registry.all_of<GroupLayer>(parent));
   registry.emplace<Parent>(entity, parent);
