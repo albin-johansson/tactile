@@ -75,6 +75,9 @@ void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left)
   {
+    old_state.clear();
+    sequence.clear();
+
     UpdateSequence(registry, mouse.position_in_map);
   }
 }
@@ -95,8 +98,6 @@ void StampToolOnReleased(entt::registry& registry,
   {
     dispatcher.enqueue<StampSequenceEvent>(std::move(old_state),
                                            std::move(sequence));
-    old_state.clear();
-    sequence.clear();
   }
 }
 
