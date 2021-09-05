@@ -24,7 +24,6 @@
 #include "events/quit_event.hpp"
 #include "events/redo_event.hpp"
 #include "events/save_as_event.hpp"
-#include "events/stamp_sequence_event.hpp"
 #include "events/tilesets/add_tileset_event.hpp"
 #include "events/tilesets/remove_tileset_event.hpp"
 #include "events/tilesets/select_tileset_event.hpp"

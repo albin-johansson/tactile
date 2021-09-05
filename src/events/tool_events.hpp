@@ -32,6 +32,12 @@ struct SelectToolEvent final
   MouseToolType type;
 };
 
+struct StampSequenceEvent final
+{
+  rune::vector_map<MapPosition, tile_id> old_state;
+  rune::vector_map<MapPosition, tile_id> sequence;
+};
+
 struct EraserSequenceEvent final
 {
   rune::vector_map<MapPosition, tile_id> old_state;

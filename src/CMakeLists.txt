@@ -109,7 +109,6 @@ set(TACTILE_SOURCE_FILES
     events/save_as_event.hpp
     events/save_as_request_event.hpp
     events/save_event.hpp
-    events/stamp_sequence_event.hpp
     events/tool_events.hpp
     events/undo_event.hpp
 

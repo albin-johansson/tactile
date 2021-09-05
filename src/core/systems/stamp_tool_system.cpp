@@ -8,7 +8,7 @@
 #include "core/components/tile_layer.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map_position.hpp"
-#include "events/stamp_sequence_event.hpp"
+#include "events/tool_events.hpp"
 #include "layer_system.hpp"
 #include "map_system.hpp"
 #include "tile_layer_system.hpp"
