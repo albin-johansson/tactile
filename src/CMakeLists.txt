@@ -99,6 +99,7 @@ set(TACTILE_SOURCE_FILES
 
     events/change_command_capacity_event.hpp
     events/flood_event.hpp
+    events/layer_events.hpp
     events/quit_event.hpp
     events/redo_event.hpp
     events/save_as_event.hpp
@@ -107,16 +108,6 @@ set(TACTILE_SOURCE_FILES
     events/stamp_sequence_event.hpp
     events/tool_events.hpp
     events/undo_event.hpp
-
-    events/layers/add_layer_event.hpp
-    events/layers/duplicate_layer_event.hpp
-    events/layers/move_layer_down_event.hpp
-    events/layers/move_layer_up_event.hpp
-    events/layers/remove_layer_event.hpp
-    events/layers/select_layer_event.hpp
-    events/layers/set_layer_opacity_event.hpp
-    events/layers/set_layer_visible_event.hpp
-    events/layers/show_layer_properties_event.hpp
 
     events/maps/add_column_event.hpp
     events/maps/add_map_event.hpp

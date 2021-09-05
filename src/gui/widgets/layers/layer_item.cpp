@@ -9,7 +9,7 @@
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
 #include "core/map.hpp"
-#include "events/layers/select_layer_event.hpp"
+#include "events/layer_events.hpp"
 #include "gui/icons.hpp"
 #include "layer_item_popup.hpp"
 #include "utils/scope_id.hpp"
