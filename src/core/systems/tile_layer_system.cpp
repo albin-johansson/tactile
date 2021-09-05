@@ -1,8 +1,21 @@
 #include "tile_layer_system.hpp"
 
+#include <cassert>  // assert
+
 #include "core/components/tile_layer.hpp"
 
 namespace Tactile::Sys {
+
+void SetTileInLayer(entt::registry& registry,
+                    const entt::entity entity,
+                    const MapPosition& position,
+                    const tile_id tile)
+{
+  assert(registry.all_of<TileLayer>(entity));
+
+  auto& layer = registry.get<TileLayer>(entity);
+  layer.matrix.at(position.GetRowIndex()).at(position.GetColumnIndex()) = tile;
+}
 
 auto MakeTileRow(const col_t nCols, const tile_id value) -> TileRow
 {

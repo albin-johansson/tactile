@@ -44,6 +44,8 @@ set(TACTILE_SOURCE_FILES
     core/tactile_error.hpp
     core/viewport.hpp
 
+    core/algorithms/flood_fill.cpp
+    core/algorithms/flood_fill.hpp
     core/algorithms/invoke_n.hpp
 
     core/commands/command.cpp

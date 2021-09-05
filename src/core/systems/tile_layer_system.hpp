@@ -13,6 +13,11 @@ namespace Tactile::Sys {
 /// \name Tile layer system
 /// \{
 
+void SetTileInLayer(entt::registry& registry,
+                    entt::entity entity,
+                    const MapPosition& position,
+                    tile_id tile);
+
 [[nodiscard]] auto MakeTileRow(col_t nCols, tile_id value) -> TileRow;
 
 [[nodiscard]] auto MakeTileMatrix(row_t nRows, col_t nCols) -> TileMatrix;

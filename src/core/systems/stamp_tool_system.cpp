@@ -42,7 +42,6 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
   const auto endRow = selectionSize.GetRow();
   const auto endCol = selectionSize.GetColumn();
 
-  auto& tileLayer = registry.get<TileLayer>(layerEntity);
   for (auto row = 0_row; row < endRow; ++row)
   {
     for (auto col = 0_col; col < endCol; ++col)
@@ -63,7 +62,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
             old_state.emplace(pos, prev);
           }
           sequence.emplace_or_replace(pos, tile);
-          tileLayer.matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = tile;
+          Sys::SetTileInLayer(registry, layerEntity, pos, tile);
         }
       }
     }

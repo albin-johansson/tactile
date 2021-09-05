@@ -5,8 +5,10 @@
 #include <imgui_impl_sdl.h>
 
 #include <utility>  // move
+#include <vector>   // vector
 
 #include "application_events.hpp"
+#include "core/algorithms/flood_fill.hpp"
 #include "core/components/property_context.hpp"
 #include "core/map.hpp"
 #include "core/systems/layer_system.hpp"
@@ -264,6 +266,11 @@ void Application::OnFloodEvent(const FloodEvent& event)
 {
   if (auto* document = mModel.GetActiveDocument())
   {
+    std::vector<MapPosition> affected;
+
+    const auto entity = Sys::GetActiveLayer(document->registry);
+    FloodFill(document->registry, entity, event.origin, event.replacement, affected);
+
     // TODO register command
   }
 }
