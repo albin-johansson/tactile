@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "core/components/tileset.hpp"
-#include "events/tilesets/remove_tileset_event.hpp"
+#include "events/tileset_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/centered_button.hpp"

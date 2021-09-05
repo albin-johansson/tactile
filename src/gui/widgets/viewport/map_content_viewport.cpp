@@ -4,8 +4,7 @@
 
 #include "core/components/property_context.hpp"
 #include "core/model.hpp"
-#include "events/maps/close_map_event.hpp"
-#include "events/maps/select_map_event.hpp"
+#include "events/map_events.hpp"
 #include "map_view.hpp"
 #include "utils/scope_id.hpp"
 

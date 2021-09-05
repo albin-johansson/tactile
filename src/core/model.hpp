@@ -7,7 +7,7 @@
 #include "aliases/maybe.hpp"
 #include "aliases/unique.hpp"
 #include "document.hpp"
-#include "events/change_command_capacity_event.hpp"
+#include "events/command_events.hpp"
 #include "events/tool_events.hpp"
 
 namespace Tactile {

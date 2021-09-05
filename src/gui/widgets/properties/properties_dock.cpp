@@ -8,7 +8,7 @@
 #include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
-#include "events/properties/set_property_value_event.hpp"
+#include "events/property_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"

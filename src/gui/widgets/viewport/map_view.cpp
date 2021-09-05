@@ -9,7 +9,7 @@
 #include "core/systems/tool_system.hpp"
 #include "core/viewport.hpp"
 #include "events/tool_events.hpp"
-#include "events/viewport/offset_viewport_event.hpp"
+#include "events/viewport_events.hpp"
 #include "gui/rendering/canvas.hpp"
 #include "gui/rendering/render_bounds.hpp"
 #include "gui/rendering/render_info.hpp"

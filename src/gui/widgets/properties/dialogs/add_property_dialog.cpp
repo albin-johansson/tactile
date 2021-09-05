@@ -7,7 +7,7 @@
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/tactile_error.hpp"
-#include "events/properties/add_property_event.hpp"
+#include "events/property_events.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 #include "utils/buffer_utils.hpp"

@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "core/model.hpp"
-#include "events/maps/show_map_properties_event.hpp"
+#include "events/map_events.hpp"
 #include "gui/icons.hpp"
 #include "map_content_viewport.hpp"
 #include "no_content_viewport_widget.hpp"

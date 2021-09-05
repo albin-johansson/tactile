@@ -43,6 +43,12 @@ struct EraserSequenceEvent final
   rune::vector_map<MapPosition, tile_id> old_state;
 };
 
+struct FloodEvent final
+{
+  MapPosition origin;
+  tile_id replacement;
+};
+
 /// \} End of group events
 
 }  // namespace Tactile

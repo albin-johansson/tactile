@@ -4,8 +4,7 @@
 
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
-#include "events/tilesets/remove_tileset_event.hpp"
-#include "events/tilesets/select_tileset_event.hpp"
+#include "events/tileset_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 #include "tileset_viewport_widget.hpp"

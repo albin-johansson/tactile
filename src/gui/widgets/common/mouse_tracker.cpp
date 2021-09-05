@@ -1,6 +1,6 @@
 #include "mouse_tracker.hpp"
 
-#include "events/viewport/offset_viewport_event.hpp"
+#include "events/viewport_events.hpp"
 #include "gui/rendering/canvas.hpp"
 
 namespace Tactile {

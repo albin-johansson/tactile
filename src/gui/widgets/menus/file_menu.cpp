@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "core/model.hpp"
-#include "events/maps/open_map_event.hpp"
+#include "events/map_events.hpp"
 #include "events/quit_event.hpp"
 #include "events/save_as_request_event.hpp"
 #include "events/save_event.hpp"

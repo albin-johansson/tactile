@@ -2,7 +2,7 @@
 
 #include "core/map.hpp"
 #include "core/model.hpp"
-#include "events/maps/remove_column_event.hpp"
+#include "events/map_events.hpp"
 
 namespace Tactile {
 

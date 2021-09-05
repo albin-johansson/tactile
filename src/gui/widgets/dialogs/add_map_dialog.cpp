@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "events/maps/add_map_event.hpp"
+#include "events/map_events.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "io/preferences.hpp"
 

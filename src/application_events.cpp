@@ -1,17 +1,10 @@
 #include "application_events.hpp"
 
 #include "application.hpp"
-#include "events/maps/show_map_properties_event.hpp"
+#include "events/map_events.hpp"
 #include "events/save_as_request_event.hpp"
 #include "events/save_event.hpp"
-#include "events/viewport/center_viewport_event.hpp"
-#include "events/viewport/decrease_viewport_zoom_event.hpp"
-#include "events/viewport/increase_viewport_zoom_event.hpp"
-#include "events/viewport/pan_down_event.hpp"
-#include "events/viewport/pan_left_event.hpp"
-#include "events/viewport/pan_right_event.hpp"
-#include "events/viewport/pan_up_event.hpp"
-#include "events/viewport/reset_viewport_zoom_event.hpp"
+#include "events/viewport_events.hpp"
 
 namespace Tactile {
 

@@ -1,6 +1,6 @@
 #include "add_row_shortcut.hpp"
 
-#include "events/maps/add_row_event.hpp"
+#include "events/map_events.hpp"
 
 namespace Tactile {
 

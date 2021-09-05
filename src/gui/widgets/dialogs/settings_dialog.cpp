@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "events/change_command_capacity_event.hpp"
+#include "events/command_events.hpp"
 #include "gui/themes.hpp"
 #include "gui/widgets/common/checkbox.hpp"
 #include "gui/widgets/common/combo.hpp"

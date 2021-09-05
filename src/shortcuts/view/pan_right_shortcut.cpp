@@ -1,6 +1,6 @@
 #include "pan_right_shortcut.hpp"
 
-#include "events/viewport/pan_right_event.hpp"
+#include "events/viewport_events.hpp"
 
 namespace Tactile {
 

@@ -5,9 +5,8 @@
 
 #include "core/model.hpp"
 #include "core/mouse_tool_type.hpp"
-#include "events/redo_event.hpp"
+#include "events/command_events.hpp"
 #include "events/tool_events.hpp"
-#include "events/undo_event.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/docking_toolbar.hpp"

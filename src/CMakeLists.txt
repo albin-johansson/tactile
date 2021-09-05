@@ -101,47 +101,16 @@ set(TACTILE_SOURCE_FILES
     core/systems/tool_system.cpp
     core/systems/tool_system.hpp
 
-    events/change_command_capacity_event.hpp
-    events/flood_event.hpp
     events/layer_events.hpp
+    events/map_events.hpp
+    events/property_events.hpp
     events/quit_event.hpp
-    events/redo_event.hpp
     events/save_as_event.hpp
     events/save_as_request_event.hpp
     events/save_event.hpp
+    events/tileset_events.hpp
     events/tool_events.hpp
-    events/undo_event.hpp
-
-    events/maps/add_column_event.hpp
-    events/maps/add_map_event.hpp
-    events/maps/add_row_event.hpp
-    events/maps/close_map_event.hpp
-    events/maps/open_map_event.hpp
-    events/maps/remove_column_event.hpp
-    events/maps/remove_row_event.hpp
-    events/maps/select_map_event.hpp
-    events/maps/show_map_properties_event.hpp
-
-    events/properties/add_property_event.hpp
-    events/properties/change_property_type_event.hpp
-    events/properties/remove_property_event.hpp
-    events/properties/rename_property_event.hpp
-    events/properties/set_property_value_event.hpp
-
-    events/tilesets/add_tileset_event.hpp
-    events/tilesets/remove_tileset_event.hpp
-    events/tilesets/select_tileset_event.hpp
-    events/tilesets/set_tileset_selection_event.hpp
-
-    events/viewport/center_viewport_event.hpp
-    events/viewport/decrease_viewport_zoom_event.hpp
-    events/viewport/increase_viewport_zoom_event.hpp
-    events/viewport/offset_viewport_event.hpp
-    events/viewport/pan_down_event.hpp
-    events/viewport/pan_left_event.hpp
-    events/viewport/pan_right_event.hpp
-    events/viewport/pan_up_event.hpp
-    events/viewport/reset_viewport_zoom_event.hpp
+    events/viewport_events.hpp
 
     gui/icons.cpp
     gui/icons.hpp
@@ -445,7 +414,7 @@ set(TACTILE_SOURCE_FILES
     shortcuts/view/pan_up_shortcut.hpp
     shortcuts/view/toggle_grid_shortcut.cpp
     shortcuts/view/toggle_grid_shortcut.hpp
-    )
+    events/command_events.hpp)
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})

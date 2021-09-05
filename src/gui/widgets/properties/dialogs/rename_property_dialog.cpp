@@ -8,7 +8,7 @@
 #include "aliases/maybe.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
-#include "events/properties/rename_property_event.hpp"
+#include "events/property_events.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "utils/buffer_utils.hpp"
 
