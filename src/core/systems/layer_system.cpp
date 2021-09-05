@@ -300,7 +300,6 @@ auto DuplicateLayer(entt::registry& registry, const entt::entity source)
 
   SortLayers(registry);
 
-
   return copy;
 }
 
