@@ -2,9 +2,6 @@
 
 namespace Tactile {
 
-/// \addtogroup core
-/// \{
-
 /// \addtogroup commands
 /// \{
 
@@ -39,7 +36,5 @@ struct CommandId final
 };
 
 /// \} End of group commands
-
-/// \} End of group core
 
 }  // namespace Tactile
