@@ -56,6 +56,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
         const auto pos = cursor + index - previewOffset;
         if (IsPositionInMap(registry, pos))
         {
+          // TODO rune::vector_map::try_emplace
           if (!old_state.contains(pos))
           {
             const auto prev = GetTileFromLayer(registry, layerEntity, pos);
