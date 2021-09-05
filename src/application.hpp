@@ -89,6 +89,8 @@ class Application final
 
   void OnStampSequenceEvent(const StampSequenceEvent& event);
 
+  void OnEraserSequenceEvent(EraserSequenceEvent event);
+
   void OnFloodEvent(const FloodEvent& event);
 
   void OnCenterViewportEvent();

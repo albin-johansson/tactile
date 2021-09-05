@@ -2,6 +2,7 @@
 
 #include "bucket_tool_system.hpp"
 #include "core/components/tool.hpp"
+#include "eraser_tool_system.hpp"
 #include "stamp_tool_system.hpp"
 
 namespace Tactile::Sys {
@@ -31,6 +32,7 @@ void ToolOnPressed(entt::registry& registry,
       break;
 
     case MouseToolType::Eraser:
+      EraserToolOnPressed(registry, mouse);
       break;
   }
 }
@@ -43,16 +45,17 @@ void ToolOnDragged(entt::registry& registry,
   switch (active.tool)
   {
     case MouseToolType::None:
+      [[fallthrough]];
+
+    case MouseToolType::Bucket:
       break;
 
     case MouseToolType::Stamp:
       StampToolOnDragged(registry, mouse);
       break;
 
-    case MouseToolType::Bucket:
-      break;
-
     case MouseToolType::Eraser:
+      EraserToolOnDragged(registry, mouse);
       break;
   }
 }
@@ -66,6 +69,7 @@ void ToolOnReleased(entt::registry& registry,
   {
     case MouseToolType::None:
       [[fallthrough]];
+
     case MouseToolType::Bucket:
       break;
 
@@ -73,9 +77,8 @@ void ToolOnReleased(entt::registry& registry,
       StampToolOnReleased(registry, dispatcher, mouse);
       break;
 
-      break;
-
     case MouseToolType::Eraser:
+      EraserToolOnReleased(registry, dispatcher, mouse);
       break;
   }
 }

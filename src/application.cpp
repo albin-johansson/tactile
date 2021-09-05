@@ -262,6 +262,15 @@ void Application::OnStampSequenceEvent(const StampSequenceEvent& event)
   }
 }
 
+void Application::OnEraserSequenceEvent(EraserSequenceEvent event)
+{
+  if (auto* document = mModel.GetActiveDocument())
+  {
+    cen::log::debug("OnEraserSequenceEvent");
+    // TODO register command
+  }
+}
+
 void Application::OnFloodEvent(const FloodEvent& event)
 {
   if (auto* document = mModel.GetActiveDocument())
