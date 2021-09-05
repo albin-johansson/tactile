@@ -12,9 +12,6 @@
 
 namespace Tactile {
 
-/// \addtogroup core
-/// \{
-
 /// \addtogroup commands
 /// \{
 
@@ -195,7 +192,5 @@ class CommandStack final
 };
 
 /// \} End of group commands
-
-/// \} End of group core
 
 }  // namespace Tactile
