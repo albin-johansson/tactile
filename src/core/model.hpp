@@ -19,22 +19,22 @@ class Model final
 {
  public:
   // Store documents on the heap to ensure stability, which is important for commands
-  using document_map = rune::vector_map<map_id, Unique<Document>>;
+  using document_map = rune::vector_map<MapID, Unique<Document>>;
   using const_iterator = document_map::const_iterator;
 
   void Update();
 
   void OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event);
 
-  auto AddMap(Document document) -> map_id;
+  auto AddMap(Document document) -> MapID;
 
-  auto AddMap(int tileWidth, int tileHeight) -> map_id;
+  auto AddMap(int tileWidth, int tileHeight) -> MapID;
 
-  void SelectMap(map_id id);
+  void SelectMap(MapID id);
 
-  void RemoveMap(map_id id);
+  void RemoveMap(MapID id);
 
-  [[nodiscard]] auto GetActiveMapId() const -> Maybe<map_id>
+  [[nodiscard]] auto GetActiveMapId() const -> Maybe<MapID>
   {
     return mActiveMap;
   }
@@ -81,8 +81,8 @@ class Model final
 
  private:
   document_map mDocuments;
-  Maybe<map_id> mActiveMap;
-  map_id mNextId{1};
+  Maybe<MapID> mActiveMap;
+  MapID mNextId{1};
 };
 
 /// \} End of group core

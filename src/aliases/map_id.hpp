@@ -5,9 +5,9 @@
 namespace Tactile {
 
 namespace Tags {
-struct MapIdTag;
+struct MapID;
 }  // namespace Tags
 
-using map_id = nenya::strong_type<int, Tags::MapIdTag>;
+using MapID = nenya::strong_type<int, Tags::MapID>;
 
 }  // namespace Tactile

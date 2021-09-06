@@ -78,7 +78,7 @@ auto Model::CanDecreaseViewportTileSize() const -> bool
   return false;
 }
 
-auto Model::AddMap(Document document) -> map_id
+auto Model::AddMap(Document document) -> MapID
 {
   const auto id = mNextId;
 
@@ -89,7 +89,7 @@ auto Model::AddMap(Document document) -> map_id
   return id;
 }
 
-auto Model::AddMap(const int tileWidth, const int tileHeight) -> map_id
+auto Model::AddMap(const int tileWidth, const int tileHeight) -> MapID
 {
   Document document;
   document.registry = Sys::MakeRegistry();
@@ -99,13 +99,13 @@ auto Model::AddMap(const int tileWidth, const int tileHeight) -> map_id
   return AddMap(std::move(document));
 }
 
-void Model::SelectMap(const map_id id)
+void Model::SelectMap(const MapID id)
 {
   assert(mDocuments.contains(id));
   mActiveMap = id;
 }
 
-void Model::RemoveMap(const map_id id)
+void Model::RemoveMap(const MapID id)
 {
   assert(mDocuments.contains(id));
   mDocuments.erase(id);
