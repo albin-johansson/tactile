@@ -48,7 +48,7 @@ namespace {
 
   if (const auto it = json.find("id"); it != json.end())
   {
-    data.id = layer_id{it->get<layer_id::value_type>()};
+    data.id = LayerID{it->get<LayerID::value_type>()};
   }
   else
   {

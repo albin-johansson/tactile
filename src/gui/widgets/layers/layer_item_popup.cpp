@@ -10,7 +10,7 @@ namespace Tactile {
 
 void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
-                          const layer_id id)
+                          const LayerID id)
 {
   if (ImGui::BeginPopupContextItem())
   {

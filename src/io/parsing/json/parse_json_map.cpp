@@ -40,12 +40,12 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextLayerId(const JSON& json, layer_id& nextLayerId)
+[[nodiscard]] auto ParseNextLayerId(const JSON& json, LayerID& nextLayerId)
     -> ParseError
 {
   if (const auto it = json.find("nextlayerid"); it != json.end())
   {
-    nextLayerId = layer_id{it->get<layer_id::value_type>()};
+    nextLayerId = LayerID{it->get<LayerID::value_type>()};
     return ParseError::None;
   }
   else

@@ -38,12 +38,12 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextLayerId(const pugi::xml_node root, layer_id& nextLayerId)
+[[nodiscard]] auto ParseNextLayerId(const pugi::xml_node root, LayerID& nextLayerId)
     -> ParseError
 {
   if (const auto value = GetInt(root, "nextlayerid"))
   {
-    nextLayerId = layer_id{*value};
+    nextLayerId = LayerID{*value};
     return ParseError::None;
   }
   else

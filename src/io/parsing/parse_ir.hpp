@@ -116,7 +116,7 @@ struct LayerData final
 {
   using LayerContent = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
-  layer_id id;                           ///< Unique layer identifier.
+  LayerID id;                            ///< Unique layer identifier.
   usize index;                           ///< Local layer stack index.
   LayerType type;                        ///< The type of the layer.
   LayerContent data;                     ///< Type-specific data.
@@ -132,7 +132,7 @@ struct LayerData final
 struct MapData final
 {
   std::filesystem::path absolute_path;   ///< Absolute path of the map file.
-  layer_id next_layer_id;                ///< The next available layer ID.
+  LayerID next_layer_id;                 ///< The next available layer ID.
   ObjectID next_object_id;               ///< The next available object ID.
   int tile_width{};                      ///< The logical tile width.
   int tile_height{};                     ///< The logical tile height.

@@ -23,7 +23,7 @@ void UpdateLayerDockButtons(const entt::registry& registry,
   const auto activeLayerEntity = registry.ctx<ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
-  Maybe<layer_id> activeLayerId;
+  Maybe<LayerID> activeLayerId;
   if (hasActiveLayer)
   {
     const auto& layer = registry.get<Layer>(activeLayerEntity);

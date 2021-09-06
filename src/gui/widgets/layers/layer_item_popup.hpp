@@ -19,6 +19,6 @@ class MapDocument;
  */
 void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
-                          layer_id id);
+                          LayerID id);
 
 }  // namespace Tactile

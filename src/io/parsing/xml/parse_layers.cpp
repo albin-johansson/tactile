@@ -58,7 +58,7 @@ namespace {
 {
   if (const auto id = GetInt(node, "id"))
   {
-    layer.id = layer_id{*id};
+    layer.id = LayerID{*id};
   }
   else
   {

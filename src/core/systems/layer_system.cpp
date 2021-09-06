@@ -153,7 +153,7 @@ void DestroyChildLayers(entt::registry& registry, const entt::entity entity)
 }  // namespace
 
 auto AddBasicLayer(entt::registry& registry,
-                   const layer_id id,
+                   const LayerID id,
                    const LayerType type,
                    std::string name,
                    const entt::entity parent) -> entt::entity
@@ -410,7 +410,7 @@ void SetLayerVisible(entt::registry& registry,
   layer.visible = visible;
 }
 
-auto FindLayer(const entt::registry& registry, const layer_id id) -> entt::entity
+auto FindLayer(const entt::registry& registry, const LayerID id) -> entt::entity
 {
   for (auto&& [entity, layer] : registry.view<Layer>().each())
   {
