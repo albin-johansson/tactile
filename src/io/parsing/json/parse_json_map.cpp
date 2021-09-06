@@ -54,12 +54,12 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextObjectId(const JSON& json, object_id& nextObjectId)
+[[nodiscard]] auto ParseNextObjectId(const JSON& json, ObjectID& nextObjectId)
     -> ParseError
 {
   if (const auto it = json.find("nextobjectid"); it != json.end())
   {
-    nextObjectId = object_id{it->get<object_id::value_type>()};
+    nextObjectId = ObjectID{it->get<ObjectID::value_type>()};
     return ParseError::None;
   }
   else

@@ -79,7 +79,7 @@ struct TileLayerData final
  */
 struct ObjectData final
 {
-  object_id id;                          ///< Unique object identifier.
+  ObjectID id;                           ///< Unique object identifier.
   float x{};                             ///< Logical x-coordinate.
   float y{};                             ///< Logical y-coordinate.
   float width{};                         ///< Logical width.
@@ -133,7 +133,7 @@ struct MapData final
 {
   std::filesystem::path absolute_path;   ///< Absolute path of the map file.
   layer_id next_layer_id;                ///< The next available layer ID.
-  object_id next_object_id;              ///< The next available object ID.
+  ObjectID next_object_id;               ///< The next available object ID.
   int tile_width{};                      ///< The logical tile width.
   int tile_height{};                     ///< The logical tile height.
   int row_count{};                       ///< The number of rows.

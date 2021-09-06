@@ -7,15 +7,15 @@
 namespace Tactile {
 
 namespace Tags {
-struct ObjectIdTag;
+struct ObjectID;
 }  // namespace Tags
 
-using object_id = nenya::strong_type<int, Tags::ObjectIdTag>;
+using ObjectID = nenya::strong_type<int, Tags::ObjectID>;
 
 [[nodiscard]] constexpr auto operator""_obj(const ulonglong value) noexcept
-    -> object_id
+    -> ObjectID
 {
-  return object_id{static_cast<object_id::value_type>(value)};
+  return ObjectID{static_cast<ObjectID::value_type>(value)};
 }
 
 }  // namespace Tactile

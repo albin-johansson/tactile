@@ -17,7 +17,7 @@ auto ParseObjectLayer(const pugi::xml_node node, LayerData& layer) -> ParseError
 
     if (const auto id = GetInt(objectNode, "id"))
     {
-      object.id = object_id{*id};
+      object.id = ObjectID{*id};
     }
     else
     {

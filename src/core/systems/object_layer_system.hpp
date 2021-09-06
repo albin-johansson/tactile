@@ -11,11 +11,11 @@ namespace Tactile::Sys {
 
 [[nodiscard]] auto HasObject(const entt::registry& registry,
                              entt::entity entity,
-                             object_id id) -> bool;
+                             ObjectID id) -> bool;
 
 [[nodiscard]] auto FindObject(const entt::registry& registry,
                               entt::entity entity,
-                              object_id id) -> entt::entity;
+                              ObjectID id) -> entt::entity;
 
 /// \} End of object layer system
 

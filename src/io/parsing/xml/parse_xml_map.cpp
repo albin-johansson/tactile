@@ -53,11 +53,11 @@ namespace {
 }
 
 [[nodiscard]] auto ParseNextObjectId(const pugi::xml_node root,
-                                     object_id& nextObjectId) -> ParseError
+                                     ObjectID& nextObjectId) -> ParseError
 {
   if (const auto value = GetInt(root, "nextobjectid"))
   {
-    nextObjectId = object_id{*value};
+    nextObjectId = ObjectID{*value};
     return ParseError::None;
   }
   else

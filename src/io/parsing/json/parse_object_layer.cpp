@@ -11,7 +11,7 @@ namespace {
 {
   if (const auto it = json.find("id"); it != json.end())
   {
-    data.id = object_id{it->get<object_id::value_type>()};
+    data.id = ObjectID{it->get<ObjectID::value_type>()};
   }
   else
   {

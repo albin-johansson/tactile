@@ -9,7 +9,7 @@ namespace Tactile {
 
 struct Object final
 {
-  object_id id;             ///< Unique object identifier.
+  ObjectID id;              ///< Unique object identifier.
   float x{};                ///< X-coordinate.
   float y{};                ///< Y-coordinate.
   float width{};            ///< Object width (might be zero for points, etc.).

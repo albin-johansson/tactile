@@ -7,14 +7,14 @@ namespace Tactile::Sys {
 
 auto HasObject(const entt::registry& registry,
                const entt::entity entity,
-               const object_id id) -> bool
+               const ObjectID id) -> bool
 {
   return FindObject(registry, entity, id) != entt::null;
 }
 
 auto FindObject(const entt::registry& registry,
                 const entt::entity entity,
-                const object_id id) -> entt::entity
+                const ObjectID id) -> entt::entity
 {
   const auto& layer = registry.get<ObjectLayer>(entity);
 
