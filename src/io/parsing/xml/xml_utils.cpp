@@ -14,7 +14,7 @@ constexpr float error_float = std::numeric_limits<float>::lowest();
 
 }  // namespace
 
-auto Collect(const pugi::xml_node node, const czstring str)
+auto Collect(const pugi::xml_node node, const CStr str)
     -> std::vector<pugi::xml_node>
 {
   std::vector<pugi::xml_node> nodes;
@@ -27,7 +27,7 @@ auto Collect(const pugi::xml_node node, const czstring str)
   return nodes;
 }
 
-auto Contains(const pugi::xml_node node, const NotNull<czstring> attr) -> bool
+auto Contains(const pugi::xml_node node, const NotNull<CStr> attr) -> bool
 {
   assert(attr);
 
@@ -39,7 +39,7 @@ auto Contains(const pugi::xml_node node, const NotNull<czstring> attr) -> bool
   });
 }
 
-auto GetString(const pugi::xml_node node, const NotNull<czstring> attr)
+auto GetString(const pugi::xml_node node, const NotNull<CStr> attr)
     -> Maybe<std::string>
 {
   assert(attr);
@@ -54,7 +54,7 @@ auto GetString(const pugi::xml_node node, const NotNull<czstring> attr)
   }
 }
 
-auto GetInt(const pugi::xml_node node, const NotNull<czstring> attr) -> Maybe<int>
+auto GetInt(const pugi::xml_node node, const NotNull<CStr> attr) -> Maybe<int>
 {
   assert(attr);
 
@@ -71,8 +71,7 @@ auto GetInt(const pugi::xml_node node, const NotNull<czstring> attr) -> Maybe<in
   }
 }
 
-auto GetFloat(const pugi::xml_node node, const NotNull<czstring> attr)
-    -> Maybe<float>
+auto GetFloat(const pugi::xml_node node, const NotNull<CStr> attr) -> Maybe<float>
 {
   assert(attr);
 
@@ -89,7 +88,7 @@ auto GetFloat(const pugi::xml_node node, const NotNull<czstring> attr)
   }
 }
 
-auto GetBool(const pugi::xml_node node, const NotNull<czstring> attr) -> Maybe<bool>
+auto GetBool(const pugi::xml_node node, const NotNull<CStr> attr) -> Maybe<bool>
 {
   assert(attr);
 

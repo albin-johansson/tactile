@@ -8,10 +8,10 @@
 
 namespace Tactile {
 
-auto Combo(const NotNull<czstring> label,
-           const NotNull<czstring> values,
+auto Combo(const NotNull<CStr> label,
+           const NotNull<CStr> values,
            NotNull<int*> index,
-           const czstring tooltip) -> bool
+           const CStr tooltip) -> bool
 {
   assert(label);
   assert(values);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "aliases/not_null.hpp"
 
 namespace Tactile {
@@ -12,6 +12,6 @@ namespace Tactile {
  *
  * \param text the text that will be displayed.
  */
-void CenteredText(NotNull<czstring> text);
+void CenteredText(NotNull<CStr> text);
 
 }  // namespace Tactile

@@ -10,7 +10,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto GetTokens(const czstring csv) -> std::vector<std::string>
+[[nodiscard]] auto GetTokens(const CStr csv) -> std::vector<std::string>
 {
   std::istringstream stream{csv};
   std::vector<std::string> tokens;
@@ -28,8 +28,7 @@ namespace {
 
 }  // namespace
 
-auto ParseCSV(const czstring csv, const col_t nCols, TileMatrix& matrix)
-    -> ParseError
+auto ParseCSV(const CStr csv, const col_t nCols, TileMatrix& matrix) -> ParseError
 {
   int index{};
   for (const auto& token : GetTokens(csv))

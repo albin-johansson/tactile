@@ -6,7 +6,7 @@ namespace Tactile {
 
 auto FileDialog(const std::string& id,
                 const std::string& title,
-                const czstring filter,
+                const CStr filter,
                 const ImGuiFileDialogFlags flags) -> FileDialogResult
 {
   auto* dialog = IGFD::FileDialog::Instance();
@@ -24,7 +24,7 @@ auto FileDialog(const std::string& id,
 
 auto FileDialogExport(const std::string& id,
                       const std::string& title,
-                      const czstring filter) -> FileDialogResult
+                      const CStr filter) -> FileDialogResult
 {
   constexpr auto flags = ImGuiFileDialogFlags_DontShowHiddenFiles |
                          ImGuiFileDialogFlags_DisableCreateDirectoryButton |
@@ -34,7 +34,7 @@ auto FileDialogExport(const std::string& id,
 
 auto FileDialogImport(const std::string& id,
                       const std::string& title,
-                      const czstring filter) -> FileDialogResult
+                      const CStr filter) -> FileDialogResult
 {
   constexpr auto flags = ImGuiFileDialogFlags_DontShowHiddenFiles |
                          ImGuiFileDialogFlags_DisableCreateDirectoryButton;

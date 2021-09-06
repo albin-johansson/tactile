@@ -31,7 +31,7 @@ auto GetTactileIcon() noexcept -> uint
   return icon_tactile;
 }
 
-auto GetIcon(const LayerType type) -> czstring
+auto GetIcon(const LayerType type) -> CStr
 {
   switch (type)
   {

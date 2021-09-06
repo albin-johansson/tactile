@@ -4,7 +4,7 @@
 
 #include <utility>  // pair
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "io/parsing/parse_error.hpp"
 
 using namespace Tactile;

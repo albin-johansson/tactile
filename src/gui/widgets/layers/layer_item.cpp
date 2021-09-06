@@ -4,7 +4,7 @@
 
 #include <format>  // format
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
@@ -22,7 +22,7 @@ void GroupLayerItem(const entt::registry& registry,
                     const entt::entity layerEntity,
                     const Layer& layer,
                     const ImGuiTreeNodeFlags flags,
-                    const czstring name)
+                    const CStr name)
 {
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
   if (ImGui::TreeNodeEx("##GroupLayerTreeNode", flags, "%s", name))

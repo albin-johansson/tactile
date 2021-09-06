@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "aliases/not_null.hpp"
 
 namespace Tactile {
@@ -12,6 +12,6 @@ namespace Tactile {
  *
  * \param text the tooltip text.
  */
-void HelpMarker(NotNull<czstring> text);
+void HelpMarker(NotNull<CStr> text);
 
 }  // namespace Tactile

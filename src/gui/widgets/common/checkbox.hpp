@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "aliases/not_null.hpp"
 
 namespace Tactile {
@@ -16,8 +16,7 @@ namespace Tactile {
  *
  * \return `true` if the value changed; `false` otherwise.
  */
-auto Checkbox(NotNull<czstring> label,
-              NotNull<bool*> value,
-              czstring tooltip = nullptr) -> bool;
+auto Checkbox(NotNull<CStr> label, NotNull<bool*> value, CStr tooltip = nullptr)
+    -> bool;
 
 }  // namespace Tactile

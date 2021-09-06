@@ -6,8 +6,8 @@
 
 namespace Tactile {
 
-auto ToolButton(const czstring label,
-                const czstring tooltip,
+auto ToolButton(const CStr label,
+                const CStr tooltip,
                 const bool selected,
                 const bool enabled) -> bool
 {

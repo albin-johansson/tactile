@@ -3,14 +3,14 @@
 #include <centurion.hpp>
 #include <cstring>  // strcmp
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "xml_utils.hpp"
 
 namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ToProperty(const pugi::xml_node node,
-                              const czstring type,
+                              const CStr type,
                               PropertyValue& property) -> ParseError
 {
   if (std::strcmp(type, "string") == 0)

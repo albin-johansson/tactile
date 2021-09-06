@@ -20,7 +20,7 @@ constinit bool show_settings_window = false;
 constinit bool show_add_map_dialog = false;
 constinit bool show_open_map_dialog = false;
 
-[[nodiscard]] auto GetFilter() -> czstring
+[[nodiscard]] auto GetFilter() -> CStr
 {
   if (Prefs::GetPreferredFormat() == "JSON")
   {

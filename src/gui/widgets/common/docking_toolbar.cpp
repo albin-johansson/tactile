@@ -12,7 +12,7 @@ namespace Tactile {
  * https://github.com/ocornut/imgui/issues/2648.
  */
 
-void BeginDockingToolbar(NotNull<czstring> name, int& toolbarAxis)
+void BeginDockingToolbar(NotNull<CStr> name, int& toolbarAxis)
 {
   assert(name);
 

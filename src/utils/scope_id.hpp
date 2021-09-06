@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 
 namespace Tactile {
 
@@ -13,7 +13,7 @@ struct ScopeID final
     ImGui::PushID(ptr);
   }
 
-  explicit ScopeID(const czstring str)
+  explicit ScopeID(const CStr str)
   {
     ImGui::PushID(str);
   }

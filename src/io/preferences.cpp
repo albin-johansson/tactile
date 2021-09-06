@@ -5,17 +5,17 @@
 #include <init/ini.hpp>   // ini, read_ini, write_ini
 #include <utility>        // move
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "directories.hpp"
 #include "gui/themes.hpp"
 
 namespace Tactile {
 namespace {
 
-constexpr czstring file_name = "settings.ini";
+constexpr CStr file_name = "settings.ini";
 
-constexpr czstring def_preferred_format = "JSON";
-constexpr czstring def_theme = "Ash";
+constexpr CStr def_preferred_format = "JSON";
+constexpr CStr def_theme = "Ash";
 constexpr usize def_command_capacity = 100;
 constexpr int def_preferred_tile_width = 32;
 constexpr int def_preferred_tile_height = 32;
@@ -45,7 +45,7 @@ inline Preferences settings = {.preferred_format = def_preferred_format,
                                .restore_last_session = def_restore_last_session};
 
 template <typename T>
-void AddIfMissing(init::ini& ini, czstring section, czstring element, T value)
+void AddIfMissing(init::ini& ini, CStr section, CStr element, T value)
 {
   auto& sec = ini[section];
   if (!sec.contains(element))

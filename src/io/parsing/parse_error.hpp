@@ -2,7 +2,7 @@
 
 #include <ostream>  // ostream
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 
 namespace Tactile::IO {
 
@@ -65,7 +65,7 @@ enum class ParseError
  *
  * \return a short explanation of the potential cause of the error.
  */
-[[nodiscard]] auto GetCause(ParseError error) -> czstring;
+[[nodiscard]] auto GetCause(ParseError error) -> CStr;
 
 /**
  * \brief Prints a textual representation of a parse error enumerator.

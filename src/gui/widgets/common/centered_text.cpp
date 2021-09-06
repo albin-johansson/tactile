@@ -7,7 +7,7 @@
 
 namespace Tactile {
 
-void CenteredText(const NotNull<czstring> text)
+void CenteredText(const NotNull<CStr> text)
 {
   assert(text);
   const auto textSize = ImGui::CalcTextSize(text);

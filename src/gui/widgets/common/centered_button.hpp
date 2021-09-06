@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "aliases/not_null.hpp"
 
 namespace Tactile {
@@ -14,6 +14,6 @@ namespace Tactile {
  *
  * \return `true` if the button was pressed; `false` otherwise.
  */
-auto CenteredButton(NotNull<czstring> label) -> bool;
+auto CenteredButton(NotNull<CStr> label) -> bool;
 
 }  // namespace Tactile

@@ -2,7 +2,7 @@
 
 #include <IconsFontAwesome5.h>
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "aliases/ints.hpp"
 #include "core/layer_type.hpp"
 
@@ -88,7 +88,7 @@ namespace Tactile {
  *
  * \throws TactileError if the layer type isn't recognized.
  */
-[[nodiscard]] auto GetIcon(LayerType type) -> czstring;
+[[nodiscard]] auto GetIcon(LayerType type) -> CStr;
 
 /**
  * \brief Simple RAII wrapper for loading and unloading icons.

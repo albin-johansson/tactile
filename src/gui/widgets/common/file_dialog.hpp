@@ -5,7 +5,7 @@
 #include <filesystem>  // path
 #include <string>      // string
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 
 namespace Tactile {
 
@@ -47,7 +47,7 @@ enum class FileDialogResult
  */
 auto FileDialog(const std::string& id,
                 const std::string& title,
-                czstring filter,
+                CStr filter,
                 ImGuiFileDialogFlags flags) -> FileDialogResult;
 
 /**
@@ -63,9 +63,8 @@ auto FileDialog(const std::string& id,
  *
  * \see `FileDialogImport()`
  */
-auto FileDialogExport(const std::string& id,
-                      const std::string& title,
-                      czstring filter) -> FileDialogResult;
+auto FileDialogExport(const std::string& id, const std::string& title, CStr filter)
+    -> FileDialogResult;
 
 /**
  * \brief Shows a file dialog for importing files.
@@ -80,9 +79,8 @@ auto FileDialogExport(const std::string& id,
  *
  * \see `FileDialogExport()`
  */
-auto FileDialogImport(const std::string& id,
-                      const std::string& title,
-                      czstring filter) -> FileDialogResult;
+auto FileDialogImport(const std::string& id, const std::string& title, CStr filter)
+    -> FileDialogResult;
 
 /// Returns the file path to the last selected file.
 [[nodiscard]] auto GetFileDialogSelectedPath() -> std::filesystem::path;

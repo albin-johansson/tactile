@@ -5,13 +5,13 @@
 
 #include <cassert>  // assert
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "gui/rendering/common_rendering.hpp"
 
 namespace Tactile {
 namespace {
 
-void RenderName(const czstring name, const ImVec2& position, const ImVec2& rectSize)
+void RenderName(const CStr name, const ImVec2& position, const ImVec2& rectSize)
 {
   const auto textSize = ImGui::CalcTextSize(name);
   if (textSize.x <= rectSize.x)

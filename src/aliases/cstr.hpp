@@ -2,6 +2,6 @@
 
 namespace Tactile {
 
-using czstring = const char*;
+using CStr = const char*;
 
 }  // namespace Tactile

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "aliases/not_null.hpp"
 
 namespace Tactile {
@@ -16,7 +16,6 @@ namespace Tactile {
  *
  * \return `true` if the button was pressed; `false` otherwise.
  */
-auto Button(NotNull<czstring> text, czstring tooltip = nullptr, bool enabled = true)
-    -> bool;
+auto Button(NotNull<CStr> text, CStr tooltip = nullptr, bool enabled = true) -> bool;
 
 }  // namespace Tactile

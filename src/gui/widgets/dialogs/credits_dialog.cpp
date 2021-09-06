@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 
 namespace Tactile {
 namespace {
@@ -11,7 +11,7 @@ constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
                              ImGuiTableFlags_Resizable |
                              ImGuiTableFlags_SizingStretchProp;
 
-void Row(const czstring lib, const czstring version, const czstring license)
+void Row(const CStr lib, const CStr version, const CStr license)
 {
   ImGui::TableNextRow();
 

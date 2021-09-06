@@ -12,7 +12,7 @@ set(TACTILE_SOURCE_FILES
     init_open_gl_attributes.hpp
 
     aliases/col.hpp
-    aliases/czstring.hpp
+    aliases/cstr.hpp
     aliases/hash_map.hpp
     aliases/ints.hpp
     aliases/json.hpp

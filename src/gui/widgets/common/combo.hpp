@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/czstring.hpp"
+#include "aliases/cstr.hpp"
 #include "aliases/not_null.hpp"
 
 namespace Tactile {
@@ -17,9 +17,9 @@ namespace Tactile {
  *
  * \return `true` if the selected item changed; `false` otherwise.
  */
-auto Combo(NotNull<czstring> label,
-           NotNull<czstring> values,
+auto Combo(NotNull<CStr> label,
+           NotNull<CStr> values,
            NotNull<int*> index,
-           czstring tooltip = nullptr) -> bool;
+           CStr tooltip = nullptr) -> bool;
 
 }  // namespace Tactile

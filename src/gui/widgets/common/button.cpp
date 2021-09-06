@@ -7,8 +7,7 @@
 
 namespace Tactile {
 
-auto Button(const NotNull<czstring> text, const czstring tooltip, const bool enabled)
-    -> bool
+auto Button(const NotNull<CStr> text, const CStr tooltip, const bool enabled) -> bool
 {
   assert(text);
 
