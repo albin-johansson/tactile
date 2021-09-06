@@ -28,7 +28,7 @@ auto MakeRegistry() -> entt::registry
   auto& context = registry.set<PropertyContext>();
   context.name = "Map";
 
-  registry.set<TilesetContext>(tileset_id{1}, TileID{1});
+  registry.set<TilesetContext>(1_tset, 1_tile);
 
   return registry;
 }

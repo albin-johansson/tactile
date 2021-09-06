@@ -38,7 +38,7 @@ namespace Tactile::Sys {
  * \since 0.2.0
  */
 auto MakeTileset(entt::registry& registry,
-                 tileset_id id,
+                 TilesetID id,
                  TileID firstId,
                  const TextureInfo& info,
                  int tileWidth,
@@ -60,7 +60,7 @@ auto AddTileset(entt::registry& registry,
  *
  * \since 0.2.0
  */
-void SelectTileset(entt::registry& registry, tileset_id id);
+void SelectTileset(entt::registry& registry, TilesetID id);
 
 /**
  * \brief Removes the tileset associated with the specified ID.
@@ -76,7 +76,7 @@ void SelectTileset(entt::registry& registry, tileset_id id);
  *
  * \since 0.2.0
  */
-void RemoveTileset(entt::registry& registry, tileset_id id);
+void RemoveTileset(entt::registry& registry, TilesetID id);
 
 void UpdateTilesetSelection(entt::registry& registry, const Region& region);
 
@@ -90,7 +90,7 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto FindTileset(const entt::registry& registry, tileset_id id)
+[[nodiscard]] auto FindTileset(const entt::registry& registry, TilesetID id)
     -> entt::entity;
 
 /**

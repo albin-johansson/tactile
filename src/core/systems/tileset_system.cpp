@@ -46,7 +46,7 @@ void UpdateTilesetContext(entt::registry& registry, const entt::entity entity)
 }  // namespace
 
 auto MakeTileset(entt::registry& registry,
-                 const tileset_id id,
+                 const TilesetID id,
                  const TileID firstId,
                  const TextureInfo& info,
                  const int tileWidth,
@@ -108,7 +108,7 @@ auto AddTileset(entt::registry& registry,
   return entity;
 }
 
-void SelectTileset(entt::registry& registry, const tileset_id id)
+void SelectTileset(entt::registry& registry, const TilesetID id)
 {
   const auto entity = FindTileset(registry, id);
   assert(entity != entt::null);
@@ -117,7 +117,7 @@ void SelectTileset(entt::registry& registry, const tileset_id id)
   activeTileset.entity = entity;
 }
 
-void RemoveTileset(entt::registry& registry, const tileset_id id)
+void RemoveTileset(entt::registry& registry, const TilesetID id)
 {
   const auto entity = FindTileset(registry, id);
   assert(entity != entt::null);
@@ -140,7 +140,7 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region)
   selection.region = region;
 }
 
-auto FindTileset(const entt::registry& registry, const tileset_id id) -> entt::entity
+auto FindTileset(const entt::registry& registry, const TilesetID id) -> entt::entity
 {
   for (auto&& [entity, tileset] : registry.view<Tileset>().each())
   {

@@ -45,7 +45,7 @@ void AddProperties(entt::registry& registry,
 }
 
 void MakeTileset(entt::registry& registry,
-                 const tileset_id id,
+                 const TilesetID id,
                  const TilesetData& data)
 {
   const auto info = LoadTexture(data.absolute_image_path).value();
@@ -180,7 +180,7 @@ auto ToMapDocument(const MapData& data) -> Document
 
   AddProperties(document.registry, entt::null, data.properties);
 
-  for (tileset_id id{1}; const auto& tilesetData : data.tilesets)
+  for (TilesetID id{1}; const auto& tilesetData : data.tilesets)
   {
     MakeTileset(document.registry, id, tilesetData);
     ++id;

@@ -7,15 +7,15 @@
 namespace Tactile {
 
 namespace Tags {
-struct TilesetIdTag;
+struct TilesetID;
 }  // namespace Tags
 
-using tileset_id = nenya::strong_type<int, Tags::TilesetIdTag>;
+using TilesetID = nenya::strong_type<int, Tags::TilesetID>;
 
 [[nodiscard]] constexpr auto operator""_tset(const ulonglong value) noexcept
-    -> tileset_id
+    -> TilesetID
 {
-  return tileset_id{static_cast<tileset_id::value_type>(value)};
+  return TilesetID{static_cast<TilesetID::value_type>(value)};
 }
 
 }  // namespace Tactile
