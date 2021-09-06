@@ -17,8 +17,6 @@ set(TACTILE_SOURCE_FILES
     aliases/ints.hpp
     aliases/json.hpp
     aliases/layer_id.hpp
-    aliases/layer_map.hpp
-    aliases/layer_stack_resource.hpp
     aliases/map_id.hpp
     aliases/maybe.hpp
     aliases/not_null.hpp
