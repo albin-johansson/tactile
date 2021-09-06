@@ -24,11 +24,11 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
       if (isActive)
       {
         flags |= ImGuiTabItemFlags_SetSelected;
-      }
 
-      if (!model.IsClean())
-      {
-        flags |= ImGuiTabItemFlags_UnsavedDocument;
+        if (!model.IsClean())
+        {
+          flags |= ImGuiTabItemFlags_UnsavedDocument;
+        }
       }
 
       const auto& context = document.registry.ctx<PropertyContext>();
