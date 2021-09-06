@@ -9,7 +9,7 @@
 #include "core/components/layer.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
-#include "io/saving/common.hpp"
+#include "io/saving/common_saving.hpp"
 #include "save_xml.hpp"
 
 namespace Tactile::IO {
