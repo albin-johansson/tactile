@@ -16,15 +16,15 @@ namespace Tactile {
 
 struct TilesetContext final
 {
-  tileset_id next_id;    ///< Next available tileset ID.
-  tile_id next_tile_id;  ///< Next available global tile ID.
+  tileset_id next_id;   ///< Next available tileset ID.
+  TileID next_tile_id;  ///< Next available global tile ID.
 };
 
 struct Tileset final
 {
   tileset_id id;       ///< Unique ID associated with the tileset.
-  tile_id first_id;    ///< First associated global tile ID.
-  tile_id last_id;     ///< Last associated global tile ID (inclusive).
+  TileID first_id;     ///< First associated global tile ID.
+  TileID last_id;      ///< Last associated global tile ID (inclusive).
   int tile_width{};    ///< Width of tiles in the tileset.
   int tile_height{};   ///< Height of tiles in the tileset.
   int tile_count{};    ///< Number of tiles associated with the tileset.
@@ -35,8 +35,8 @@ struct Tileset final
 
 struct TilesetCache final
 {
-  HashMap<tile_id, cen::irect> source_rects;  ///< Tileset source rectangles.
-  HashMap<tile_id, entt::entity> tiles;  ///< Maps tiles to `FancyTile` entities.
+  HashMap<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
+  HashMap<TileID, entt::entity> tiles;       ///< Maps tiles to `FancyTile` entities.
 };
 
 struct TilesetSelection final

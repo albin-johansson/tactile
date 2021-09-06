@@ -17,7 +17,7 @@ namespace Tactile::Sys {
 void SetTileInLayer(entt::registry& registry,
                     entt::entity entity,
                     const MapPosition& position,
-                    tile_id tile);
+                    TileID tile);
 
 void SetTilesInLayer(entt::registry& registry,
                      entt::entity entity,

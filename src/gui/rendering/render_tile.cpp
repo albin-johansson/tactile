@@ -11,7 +11,7 @@
 
 namespace Tactile {
 
-void RenderTile(const tile_id tile,
+void RenderTile(const TileID tile,
                 const entt::registry& registry,
                 const ImVec2& screenPos,
                 const ImVec2& gridSize,

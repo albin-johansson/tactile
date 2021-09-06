@@ -11,7 +11,7 @@ namespace Tactile {
 void FloodFill(entt::registry& registry,
                entt::entity entity,
                const MapPosition& origin,
-               tile_id replacement,
+               TileID replacement,
                std::vector<MapPosition>& affected);
 
 }  // namespace Tactile

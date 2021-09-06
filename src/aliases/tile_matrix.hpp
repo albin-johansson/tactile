@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-using TileRow = std::vector<tile_id>;
+using TileRow = std::vector<TileID>;
 using TileMatrix = std::vector<TileRow>;
 
 }  // namespace Tactile

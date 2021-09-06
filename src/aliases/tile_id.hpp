@@ -7,18 +7,17 @@
 namespace Tactile {
 
 namespace Tags {
-struct TileIdTag;
+struct TileID;
 }  // namespace Tags
 
-using tile_id = nenya::strong_type<int, Tags::TileIdTag>;
-using TileID = tile_id;
+using TileID = nenya::strong_type<int, Tags::TileID>;
 
-constexpr tile_id empty_tile{0};
+constexpr TileID empty_tile{0};
 
 [[nodiscard]] constexpr auto operator""_tile(const ulonglong value) noexcept
-    -> tile_id
+    -> TileID
 {
-  return tile_id{static_cast<tile_id::value_type>(value)};
+  return TileID{static_cast<TileID::value_type>(value)};
 }
 
 }  // namespace Tactile

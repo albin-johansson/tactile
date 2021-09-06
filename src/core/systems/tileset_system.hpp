@@ -39,7 +39,7 @@ namespace Tactile::Sys {
  */
 auto MakeTileset(entt::registry& registry,
                  tileset_id id,
-                 tile_id firstId,
+                 TileID firstId,
                  const TextureInfo& info,
                  int tileWidth,
                  int tileHeight) -> entt::entity;
@@ -103,7 +103,7 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto FindTileset(const entt::registry& registry, tile_id id)
+[[nodiscard]] auto FindTileset(const entt::registry& registry, TileID id)
     -> entt::entity;
 
 [[nodiscard]] auto GetActiveTileset(const entt::registry& registry) -> entt::entity;
@@ -133,7 +133,7 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto GetTileToRender(const entt::registry& registry,
                                    entt::entity tilesetEntity,
-                                   tile_id id) -> tile_id;
+                                   TileID id) -> TileID;
 
 /**
  * \brief Returns the region out of the tileset texture that should be rendered when
@@ -154,11 +154,11 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  */
 [[nodiscard]] auto GetSourceRect(const entt::registry& registry,
                                  entt::entity tilesetEntity,
-                                 tile_id id) -> const cen::irect&;
+                                 TileID id) -> const cen::irect&;
 
 [[nodiscard]] auto GetTileFromTileset(const entt::registry& registry,
                                       entt::entity entity,
-                                      const MapPosition& position) -> tile_id;
+                                      const MapPosition& position) -> TileID;
 
 /**
  * \brief Converts a global tile identifier to its local counterpart.
@@ -174,8 +174,8 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto ConvertToLocal(const entt::registry& registry, tile_id global)
-    -> Maybe<tile_id>;
+[[nodiscard]] auto ConvertToLocal(const entt::registry& registry, TileID global)
+    -> Maybe<TileID>;
 
 /// \} End of tileset system
 

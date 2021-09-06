@@ -36,7 +36,7 @@ struct PropertyData final
  */
 struct FrameData final
 {
-  tile_id tile;    ///< The tile that should be displayed during the frame.
+  TileID tile;     ///< The tile that should be displayed during the frame.
   int duration{};  ///< Frame duration in milliseconds.
 };
 
@@ -45,7 +45,7 @@ struct FrameData final
  */
 struct TileData final
 {
-  tile_id id;                        ///< The associated tile.
+  TileID id;                         ///< The associated tile.
   std::vector<FrameData> animation;  ///< Optional animation frames.
   // TODO properties
 };
@@ -55,7 +55,7 @@ struct TileData final
  */
 struct TilesetData final
 {
-  tile_id first_id;                           ///< The first global tile ID.
+  TileID first_id;                            ///< The first global tile ID.
   int tile_width{};                           ///< Logical tile width.
   int tile_height{};                          ///< Logical tile height.
   std::filesystem::path absolute_image_path;  ///< Absolute path of tileset image.

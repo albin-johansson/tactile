@@ -11,12 +11,12 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseFirstTileId(const pugi::xml_node node, tile_id& firstId)
+[[nodiscard]] auto ParseFirstTileId(const pugi::xml_node node, TileID& firstId)
     -> ParseError
 {
   if (const auto id = GetInt(node, "firstgid"))
   {
-    firstId = tile_id{*id};
+    firstId = TileID{*id};
     return ParseError::None;
   }
   else
@@ -53,12 +53,12 @@ namespace {
   for (const auto tile : node.children("tile"))
   {
     auto& tileData = data.tiles.emplace_back();
-    tileData.id = tile_id{GetInt(tile, "id").value()};
+    tileData.id = TileID{GetInt(tile, "id").value()};
 
     for (const auto frame : tile.child("animation").children("frame"))
     {
       auto& frameData = tileData.animation.emplace_back();
-      frameData.tile = tile_id{GetInt(frame, "tileid").value()};
+      frameData.tile = TileID{GetInt(frame, "tileid").value()};
       frameData.duration = GetInt(frame, "duration").value();
     }
   }

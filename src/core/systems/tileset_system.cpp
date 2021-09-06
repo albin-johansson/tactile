@@ -13,14 +13,14 @@ namespace Tactile::Sys {
 namespace {
 
 [[nodiscard]] auto CreateSourceRectCache(const Tileset& tileset)
-    -> HashMap<tile_id, cen::irect>
+    -> HashMap<TileID, cen::irect>
 {
-  HashMap<tile_id, cen::irect> cache;
+  HashMap<TileID, cen::irect> cache;
 
   const auto amount = (tileset.last_id + 1_tile) - tileset.first_id;
   cache.reserve(amount.get());
 
-  for (tile_id id{tileset.first_id}; id <= tileset.last_id; ++id)
+  for (TileID id{tileset.first_id}; id <= tileset.last_id; ++id)
   {
     const auto index = id - tileset.first_id;
 
@@ -47,7 +47,7 @@ void UpdateTilesetContext(entt::registry& registry, const entt::entity entity)
 
 auto MakeTileset(entt::registry& registry,
                  const tileset_id id,
-                 const tile_id firstId,
+                 const TileID firstId,
                  const TextureInfo& info,
                  const int tileWidth,
                  const int tileHeight) -> entt::entity
@@ -66,7 +66,7 @@ auto MakeTileset(entt::registry& registry,
   tileset.tile_count = tileset.row_count.get() * tileset.column_count.get();
 
   tileset.first_id = firstId;
-  tileset.last_id = tileset.first_id + tile_id{tileset.tile_count};
+  tileset.last_id = tileset.first_id + TileID{tileset.tile_count};
 
   auto& texture = registry.emplace<Texture>(entity);
   texture.id = info.texture;
@@ -153,7 +153,7 @@ auto FindTileset(const entt::registry& registry, const tileset_id id) -> entt::e
   return entt::null;
 }
 
-auto FindTileset(const entt::registry& registry, const tile_id id) -> entt::entity
+auto FindTileset(const entt::registry& registry, const TileID id) -> entt::entity
 {
   for (auto&& [entity, tileset] : registry.view<Tileset>().each())
   {
@@ -204,7 +204,7 @@ auto IsSingleTileSelectedInTileset(const entt::registry& registry) -> bool
 
 auto GetTileToRender(const entt::registry& registry,
                      const entt::entity tilesetEntity,
-                     const tile_id id) -> tile_id
+                     const TileID id) -> TileID
 {
   const auto& cache = registry.get<TilesetCache>(tilesetEntity);
 
@@ -224,7 +224,7 @@ auto GetTileToRender(const entt::registry& registry,
 
 auto GetSourceRect(const entt::registry& registry,
                    const entt::entity tilesetEntity,
-                   const tile_id id) -> const cen::irect&
+                   const TileID id) -> const cen::irect&
 {
   const auto& cache = registry.get<TilesetCache>(tilesetEntity);
   return cache.source_rects.at(id);
@@ -232,7 +232,7 @@ auto GetSourceRect(const entt::registry& registry,
 
 auto GetTileFromTileset(const entt::registry& registry,
                         const entt::entity entity,
-                        const MapPosition& position) -> tile_id
+                        const MapPosition& position) -> TileID
 {
   assert(entity != entt::null);
   const auto& tileset = registry.get<Tileset>(entity);
@@ -244,7 +244,7 @@ auto GetTileFromTileset(const entt::registry& registry,
       (col < tileset.column_count))
   {
     const auto index = row * tileset.column_count.get() + col;
-    return tileset.first_id + tile_id{index};
+    return tileset.first_id + TileID{index};
   }
   else
   {
@@ -252,8 +252,8 @@ auto GetTileFromTileset(const entt::registry& registry,
   }
 }
 
-auto ConvertToLocal(const entt::registry& registry, const tile_id global)
-    -> Maybe<tile_id>
+auto ConvertToLocal(const entt::registry& registry, const TileID global)
+    -> Maybe<TileID>
 {
   const auto entity = FindTileset(registry, global);
   if (entity != entt::null)

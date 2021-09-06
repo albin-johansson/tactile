@@ -10,11 +10,11 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseFirstTileId(const JSON& json, tile_id& id) -> ParseError
+[[nodiscard]] auto ParseFirstTileId(const JSON& json, TileID& id) -> ParseError
 {
   if (const auto it = json.find("firstgid"); it != json.end())
   {
-    id = tile_id{it->get<tile_id::value_type>()};
+    id = TileID{it->get<TileID::value_type>()};
     return ParseError::None;
   }
   else
@@ -34,14 +34,14 @@ namespace {
   for (const auto& [key, tile] : tiles.items())
   {
     auto& tileData = data.tiles.emplace_back();
-    tileData.id = tile_id{tile.at("id").get<tile_id::value_type>()};
+    tileData.id = TileID{tile.at("id").get<TileID::value_type>()};
 
     if (const auto it = tile.find("animation"); it != tile.end())
     {
       for (const auto& [_, frame] : it->items())
       {
         auto& frameData = tileData.animation.emplace_back();
-        frameData.tile = tile_id{frame.at("tileid").get<tile_id::value_type>()};
+        frameData.tile = TileID{frame.at("tileid").get<TileID::value_type>()};
         frameData.duration = frame.at("duration").get<int>();
       }
     }

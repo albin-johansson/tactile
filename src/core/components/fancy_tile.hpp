@@ -6,7 +6,7 @@ namespace Tactile {
 
 struct FancyTile final
 {
-  tile_id id;  ///< The associated tile that has additional meta-information.
+  TileID id;  ///< The associated tile that has additional meta-information.
 };
 
 }  // namespace Tactile

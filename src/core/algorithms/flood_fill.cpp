@@ -10,7 +10,7 @@ namespace Tactile {
 void FloodFill(entt::registry& registry,
                const entt::entity entity,
                const MapPosition& origin,
-               const tile_id replacement,
+               const TileID replacement,
                std::vector<MapPosition>& affected)
 {
   const auto target = Sys::GetTileFromLayer(registry, entity, origin);

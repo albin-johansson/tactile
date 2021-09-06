@@ -45,7 +45,7 @@ struct EraserSequenceEvent final
 struct FloodEvent final
 {
   MapPosition origin;
-  tile_id replacement;
+  TileID replacement;
 };
 
 /// \} End of group events

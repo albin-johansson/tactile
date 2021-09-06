@@ -14,7 +14,7 @@ auto ParseTileNodes(const pugi::xml_node& data,
     const auto gid = node.attribute("gid").as_int(empty_tile);
 
     const auto pos = MapPosition::FromIndex(index, nCols);
-    matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = tile_id{gid};
+    matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = TileID{gid};
 
     ++index;
   }
