@@ -6,7 +6,7 @@
 #include <cassert>      // assert
 #include <string_view>  // string_view
 
-#include "gui/rendering/common.hpp"
+#include "gui/rendering/common_rendering.hpp"
 
 namespace Tactile {
 namespace {

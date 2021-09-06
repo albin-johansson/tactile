@@ -5,7 +5,7 @@
 
 #include <cassert>  // assert
 
-#include "gui/rendering/common.hpp"
+#include "gui/rendering/common_rendering.hpp"
 
 namespace Tactile {
 
