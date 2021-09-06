@@ -23,7 +23,7 @@ concept IsPropertyType = std::same_as<T, std::string> ||
                          std::same_as<T, bool> ||
                          std::same_as<T, cen::color> ||
                          std::same_as<T, std::filesystem::path> ||
-                         std::same_as<T, object_ref>;
+                         std::same_as<T, ObjectRef>;
 
 // clang-format on
 
@@ -43,7 +43,7 @@ class PropertyValue final
                                   bool,
                                   color_type,
                                   file_type,
-                                  object_ref>;
+                                  ObjectRef>;
 
   /// Creates a property with no value.
   PropertyValue() = default;
@@ -142,7 +142,7 @@ class PropertyValue final
    *
    * \return the stored object ID value.
    */
-  [[nodiscard]] auto AsObject() const -> object_ref;
+  [[nodiscard]] auto AsObject() const -> ObjectRef;
 
   /**
    * \brief Returns the stored color value.
@@ -178,9 +178,9 @@ class PropertyValue final
     return TryAs<file_type>();
   }
 
-  [[nodiscard]] auto TryAsObject() const noexcept -> const object_ref*
+  [[nodiscard]] auto TryAsObject() const noexcept -> const ObjectRef*
   {
-    return TryAs<object_ref>();
+    return TryAs<ObjectRef>();
   }
 
   [[nodiscard]] auto TryAsColor() const noexcept -> const color_type*

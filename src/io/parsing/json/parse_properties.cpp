@@ -36,7 +36,7 @@ namespace {
   else if (type == "object")
   {
     const auto obj = value.get<int>();
-    property.SetValue(object_ref{obj});
+    property.SetValue(ObjectRef{obj});
   }
   else if (type == "color")
   {

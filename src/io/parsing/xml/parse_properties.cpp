@@ -37,7 +37,7 @@ namespace {
   else if (std::strcmp(type, "object") == 0)
   {
     const auto object = GetInt(node, "value").value();
-    property.SetValue(object_ref{object});
+    property.SetValue(ObjectRef{object});
   }
   else if (std::strcmp(type, "color") == 0)
   {

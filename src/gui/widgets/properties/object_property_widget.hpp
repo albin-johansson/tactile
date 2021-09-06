@@ -7,6 +7,6 @@
 namespace Tactile {
 
 [[nodiscard]] auto ObjectPropertyWidget(const PropertyValue& property)
-    -> Maybe<object_ref>;
+    -> Maybe<ObjectRef>;
 
 }  // namespace Tactile

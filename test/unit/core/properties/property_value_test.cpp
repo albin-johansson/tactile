@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
-
 #include "core/properties/property_value.hpp"
+
+#include <gtest/gtest.h>
 
 using namespace Tactile;
 using namespace std::string_literals;
@@ -102,7 +102,7 @@ TEST(PropertyValue, FileProperty)
 
 TEST(PropertyValue, ObjectProperty)
 {
-  const PropertyValue property{object_ref{7}};
+  const PropertyValue property{ObjectRef{7}};
   ASSERT_TRUE(property.HasValue());
   ASSERT_TRUE(property.IsObject());
   ASSERT_TRUE(property.TryAsObject());

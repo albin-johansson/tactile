@@ -6,7 +6,7 @@
 
 namespace Tactile {
 
-auto ObjectPropertyWidget(const PropertyValue& property) -> Maybe<object_ref>
+auto ObjectPropertyWidget(const PropertyValue& property) -> Maybe<ObjectRef>
 {
   const ScopeID id{&property};
 

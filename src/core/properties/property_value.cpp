@@ -31,7 +31,7 @@ void PropertyValue::ResetToDefault(const PropertyType type)
   }
   else if (type == PropertyType::Object)
   {
-    SetValue<object_ref>(object_ref{});
+    SetValue<ObjectRef>(ObjectRef{});
   }
   else if (type == PropertyType::File)
   {
@@ -69,9 +69,9 @@ auto PropertyValue::AsFile() const -> const file_type&
   return As<file_type>();
 }
 
-auto PropertyValue::AsObject() const -> object_ref
+auto PropertyValue::AsObject() const -> ObjectRef
 {
-  return As<object_ref>();
+  return As<ObjectRef>();
 }
 
 auto PropertyValue::AsColor() const -> const color_type&
@@ -136,7 +136,7 @@ auto PropertyValue::GetType() const -> Maybe<PropertyType>
   {
     return PropertyType::File;
   }
-  else if (Is<object_ref>())
+  else if (Is<ObjectRef>())
   {
     return PropertyType::Object;
   }
