@@ -69,7 +69,7 @@ class Application final
 
   void OnMouseDragEvent(const MouseDragEvent& event);
 
-  void OnStampSequenceEvent(const StampSequenceEvent& event);
+  void OnStampSequenceEvent(StampSequenceEvent event);
 
   void OnEraserSequenceEvent(EraserSequenceEvent event);
 

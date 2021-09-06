@@ -5,6 +5,7 @@
 
 #include "aliases/ints.hpp"
 #include "aliases/layer_id.hpp"
+#include "aliases/maybe.hpp"
 #include "core/layer_type.hpp"
 #include "core/map.hpp"
 
@@ -37,7 +38,7 @@ namespace Tactile::Sys {
  * \since 0.2.0
  */
 auto AddBasicLayer(entt::registry& registry,
-                   layer_id id,
+                   LayerID id,
                    LayerType type,
                    std::string name,
                    entt::entity parent = entt::null) -> entt::entity;
@@ -217,7 +218,7 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto FindLayer(const entt::registry& registry, layer_id id)
+[[nodiscard]] auto FindLayer(const entt::registry& registry, LayerID id)
     -> entt::entity;
 
 [[nodiscard]] auto GetActiveLayer(const entt::registry& registry) -> entt::entity;
@@ -254,39 +255,42 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 
 [[nodiscard]] auto IsTileLayerActive(const entt::registry& registry) -> bool;
 
-inline void RemoveLayer(entt::registry& registry, const layer_id id)
+[[nodiscard]] auto GetActiveLayerID(const entt::registry& registry)
+    -> Maybe<LayerID>;
+
+inline void RemoveLayer(entt::registry& registry, const LayerID id)
 {
   const auto entity = FindLayer(registry, id);
   RemoveLayer(registry, entity);
 }
 
-inline void SelectLayer(entt::registry& registry, const layer_id id)
+inline void SelectLayer(entt::registry& registry, const LayerID id)
 {
   const auto entity = FindLayer(registry, id);
   SelectLayer(registry, entity);
 }
 
-inline auto DuplicateLayer(entt::registry& registry, const layer_id id)
+inline auto DuplicateLayer(entt::registry& registry, const LayerID id)
     -> entt::entity
 {
   const auto entity = FindLayer(registry, id);
   return DuplicateLayer(registry, entity);
 }
 
-inline void MoveLayerUp(entt::registry& registry, const layer_id id)
+inline void MoveLayerUp(entt::registry& registry, const LayerID id)
 {
   const auto entity = FindLayer(registry, id);
   MoveLayerUp(registry, entity);
 }
 
-inline void MoveLayerDown(entt::registry& registry, const layer_id id)
+inline void MoveLayerDown(entt::registry& registry, const LayerID id)
 {
   const auto entity = FindLayer(registry, id);
   MoveLayerDown(registry, entity);
 }
 
 inline void SetLayerOpacity(entt::registry& registry,
-                            const layer_id id,
+                            const LayerID id,
                             const float opacity)
 {
   const auto entity = FindLayer(registry, id);
@@ -294,7 +298,7 @@ inline void SetLayerOpacity(entt::registry& registry,
 }
 
 inline void SetLayerVisible(entt::registry& registry,
-                            const layer_id id,
+                            const LayerID id,
                             const bool visible)
 {
   const auto entity = FindLayer(registry, id);
@@ -302,28 +306,28 @@ inline void SetLayerVisible(entt::registry& registry,
 }
 
 [[nodiscard]] inline auto GetLayerOpacity(const entt::registry& registry,
-                                          const layer_id id) -> float
+                                          const LayerID id) -> float
 {
   const auto entity = FindLayer(registry, id);
   return GetLayerOpacity(registry, entity);
 }
 
 [[nodiscard]] inline auto IsLayerVisible(const entt::registry& registry,
-                                         const layer_id id) -> bool
+                                         const LayerID id) -> bool
 {
   const auto entity = FindLayer(registry, id);
   return IsLayerVisible(registry, entity);
 }
 
 [[nodiscard]] inline auto CanMoveLayerUp(const entt::registry& registry,
-                                         const layer_id id) -> bool
+                                         const LayerID id) -> bool
 {
   const auto entity = FindLayer(registry, id);
   return CanMoveLayerUp(registry, entity);
 }
 
 [[nodiscard]] inline auto CanMoveLayerDown(const entt::registry& registry,
-                                           const layer_id id) -> bool
+                                           const LayerID id) -> bool
 {
   const auto entity = FindLayer(registry, id);
   return CanMoveLayerDown(registry, entity);

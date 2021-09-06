@@ -4,6 +4,7 @@
 
 #include "aliases/col.hpp"
 #include "aliases/row.hpp"
+#include "aliases/tile_cache.hpp"
 #include "aliases/tile_id.hpp"
 #include "aliases/tile_matrix.hpp"
 #include "core/map_position.hpp"
@@ -18,13 +19,17 @@ void SetTileInLayer(entt::registry& registry,
                     const MapPosition& position,
                     tile_id tile);
 
-[[nodiscard]] auto MakeTileRow(col_t nCols, tile_id value) -> TileRow;
+void SetTilesInLayer(entt::registry& registry,
+                     entt::entity entity,
+                     const TileCache& tiles);
+
+[[nodiscard]] auto MakeTileRow(col_t nCols, TileID value) -> TileRow;
 
 [[nodiscard]] auto MakeTileMatrix(row_t nRows, col_t nCols) -> TileMatrix;
 
 [[nodiscard]] auto GetTileFromLayer(const entt::registry& registry,
                                     entt::entity entity,
-                                    const MapPosition& position) -> tile_id;
+                                    const MapPosition& position) -> TileID;
 
 /// \} End of tile layer system
 

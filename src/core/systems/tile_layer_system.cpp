@@ -9,15 +9,32 @@ namespace Tactile::Sys {
 void SetTileInLayer(entt::registry& registry,
                     const entt::entity entity,
                     const MapPosition& position,
-                    const tile_id tile)
+                    const TileID tile)
 {
+  assert(entity != entt::null);
   assert(registry.all_of<TileLayer>(entity));
 
   auto& layer = registry.get<TileLayer>(entity);
   layer.matrix.at(position.GetRowIndex()).at(position.GetColumnIndex()) = tile;
 }
 
-auto MakeTileRow(const col_t nCols, const tile_id value) -> TileRow
+void SetTilesInLayer(entt::registry& registry,
+                     const entt::entity entity,
+                     const TileCache& tiles)
+{
+  assert(entity != entt::null);
+  assert(registry.all_of<TileLayer>(entity));
+
+  auto& matrix = registry.get<TileLayer>(entity).matrix;
+  for (const auto& [position, tile] : tiles)
+  {
+    assert(position.GetRowIndex() < matrix.size());
+    assert(position.GetColumnIndex() < matrix.front().size());
+    matrix[position.GetRowIndex()][position.GetColumnIndex()] = tile;
+  }
+}
+
+auto MakeTileRow(const col_t nCols, const TileID value) -> TileRow
 {
   TileRow row;
   row.reserve(nCols);
@@ -35,7 +52,7 @@ auto MakeTileMatrix(const row_t nRows, const col_t nCols) -> TileMatrix
 
 auto GetTileFromLayer(const entt::registry& registry,
                       const entt::entity entity,
-                      const MapPosition& position) -> tile_id
+                      const MapPosition& position) -> TileID
 {
   const auto& tileLayer = registry.get<TileLayer>(entity);
   const auto& matrix = tileLayer.matrix;

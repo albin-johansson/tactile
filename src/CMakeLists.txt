@@ -54,6 +54,13 @@ set(TACTILE_SOURCE_FILES
     core/commands/command_stack.cpp
     core/commands/command_stack.hpp
 
+    core/commands/tools/bucket_cmd.cpp
+    core/commands/tools/bucket_cmd.hpp
+    core/commands/tools/eraser_sequence_cmd.cpp
+    core/commands/tools/eraser_sequence_cmd.hpp
+    core/commands/tools/stamp_sequence_cmd.cpp
+    core/commands/tools/stamp_sequence_cmd.hpp
+
     core/components/fancy_tile.hpp
     core/components/group_layer.hpp
     core/components/layer.hpp
@@ -101,6 +108,7 @@ set(TACTILE_SOURCE_FILES
     core/systems/tool_system.cpp
     core/systems/tool_system.hpp
 
+    events/command_events.hpp
     events/layer_events.hpp
     events/map_events.hpp
     events/property_events.hpp
@@ -132,8 +140,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/rendering/canvas.hpp
     gui/rendering/canvas.cpp
-    gui/rendering/common.cpp
-    gui/rendering/common.hpp
+    gui/rendering/common_rendering.cpp
+    gui/rendering/common_rendering.hpp
     gui/rendering/grid.cpp
     gui/rendering/grid.hpp
     gui/rendering/render_bounds.cpp
@@ -325,8 +333,8 @@ set(TACTILE_SOURCE_FILES
     io/parsing/xml/xml_utils.cpp
     io/parsing/xml/xml_utils.hpp
 
-    io/saving/common.cpp
-    io/saving/common.hpp
+    io/saving/common_saving.cpp
+    io/saving/common_saving.hpp
     io/saving/save_map_document.cpp
     io/saving/save_map_document.hpp
 
@@ -414,7 +422,7 @@ set(TACTILE_SOURCE_FILES
     shortcuts/view/pan_up_shortcut.hpp
     shortcuts/view/toggle_grid_shortcut.cpp
     shortcuts/view/toggle_grid_shortcut.hpp
-    events/command_events.hpp)
+    )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})

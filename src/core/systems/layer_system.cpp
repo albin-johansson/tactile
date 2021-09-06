@@ -566,4 +566,17 @@ auto IsTileLayerActive(const entt::registry& registry) -> bool
   }
 }
 
+auto GetActiveLayerID(const entt::registry& registry) -> Maybe<LayerID>
+{
+  const auto& active = registry.ctx<ActiveLayer>();
+  if (active.entity != entt::null)
+  {
+    return registry.get<Layer>(active.entity).id;
+  }
+  else
+  {
+    return nothing;
+  }
+}
+
 }  // namespace Tactile::Sys

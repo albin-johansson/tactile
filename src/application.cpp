@@ -5,19 +5,18 @@
 #include <imgui_impl_sdl.h>
 
 #include <utility>  // move
-#include <vector>   // vector
 
 #include "application_events.hpp"
-#include "core/algorithms/flood_fill.hpp"
+#include "core/commands/tools/bucket_cmd.hpp"
+#include "core/commands/tools/eraser_sequence_cmd.hpp"
+#include "core/commands/tools/stamp_sequence_cmd.hpp"
 #include "core/components/property_context.hpp"
-#include "core/map.hpp"
 #include "core/systems/layer_system.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
-#include "events/viewport_events.hpp"
 #include "gui/update_gui.hpp"
 #include "gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "gui/widgets/dialogs/save_as_dialog.hpp"
@@ -253,11 +252,14 @@ void Application::OnMouseDragEvent(const MouseDragEvent& event)
   }
 }
 
-void Application::OnStampSequenceEvent(const StampSequenceEvent& event)
+void Application::OnStampSequenceEvent(StampSequenceEvent event)
 {
   if (auto* document = mModel.GetActiveDocument())
   {
-    // TODO register command
+    auto& commands = document->commands;
+    commands.PushWithoutRedo<StampSequenceCmd>(document->registry,
+                                               std::move(event.old_state),
+                                               std::move(event.sequence));
   }
 }
 
@@ -265,8 +267,9 @@ void Application::OnEraserSequenceEvent(EraserSequenceEvent event)
 {
   if (auto* document = mModel.GetActiveDocument())
   {
-    cen::log::debug("OnEraserSequenceEvent");
-    // TODO register command
+    auto& commands = document->commands;
+    commands.PushWithoutRedo<EraserSequenceCmd>(document->registry,
+                                                std::move(event.old_state));
   }
 }
 
@@ -274,12 +277,8 @@ void Application::OnFloodEvent(const FloodEvent& event)
 {
   if (auto* document = mModel.GetActiveDocument())
   {
-    std::vector<MapPosition> affected;
-
-    const auto entity = Sys::GetActiveLayer(document->registry);
-    FloodFill(document->registry, entity, event.origin, event.replacement, affected);
-
-    // TODO register command
+    auto& commands = document->commands;
+    commands.Push<BucketCmd>(document->registry, event.origin, event.replacement);
   }
 }
 
