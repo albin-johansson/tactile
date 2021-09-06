@@ -5,6 +5,7 @@
 #include <utility>              // move
 
 #include "aliases/tile_id.hpp"
+#include "aliases/tile_cache.hpp"
 #include "core/map_position.hpp"
 #include "events/tool_events.hpp"
 #include "layer_system.hpp"
@@ -13,7 +14,7 @@
 namespace Tactile::Sys {
 namespace {
 
-inline rune::vector_map<MapPosition, tile_id> old_state;
+inline TileCache old_state;
 
 [[nodiscard]] auto IsUsable(const entt::registry& registry) -> bool
 {
