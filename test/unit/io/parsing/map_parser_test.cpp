@@ -10,7 +10,7 @@
 using namespace Tactile;
 using namespace Tactile::IO;
 
-using PathErrorPair = std::pair<czstring, ParseError>;
+using PathErrorPair = std::pair<CStr, ParseError>;
 
 // clang-format off
 inline const auto maps = testing::Values(
