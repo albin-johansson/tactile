@@ -11,6 +11,7 @@ struct TileIdTag;
 }  // namespace Tags
 
 using tile_id = nenya::strong_type<int, Tags::TileIdTag>;
+using TileID = tile_id;
 
 constexpr tile_id empty_tile{0};
 
