@@ -18,7 +18,8 @@ namespace Tactile {
 class Model final
 {
  public:
-  using document_map = rune::vector_map<map_id, Document>;
+  // Store documents on the heap to ensure stability, which is important for commands
+  using document_map = rune::vector_map<map_id, Unique<Document>>;
   using const_iterator = document_map::const_iterator;
 
   void Update();

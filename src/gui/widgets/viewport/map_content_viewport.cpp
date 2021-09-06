@@ -31,14 +31,14 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
         }
       }
 
-      const auto& context = document.registry.ctx<PropertyContext>();
+      const auto& context = document->registry.ctx<PropertyContext>();
       bool opened = true;
 
       if (ImGui::BeginTabItem(context.name.c_str(), &opened, flags))
       {
         if (isActive)
         {
-          MapView(document.registry, dispatcher);
+          MapView(document->registry, dispatcher);
         }
 
         ImGui::EndTabItem();

@@ -23,35 +23,35 @@ void Model::OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event)
 {
   for (auto& [id, document] : mDocuments)
   {
-    document.commands.SetCapacity(event.capacity);
+    document->commands.SetCapacity(event.capacity);
   }
 }
 
 auto Model::IsClean() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap).commands.IsClean();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.IsClean();
 }
 
 auto Model::CanUndo() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap).commands.CanUndo();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.CanUndo();
 }
 
 auto Model::CanRedo() const -> bool
 {
-  return mActiveMap && mDocuments.at(*mActiveMap).commands.CanRedo();
+  return mActiveMap && mDocuments.at(*mActiveMap)->commands.CanRedo();
 }
 
 auto Model::GetUndoText() const -> const std::string&
 {
   assert(CanUndo());
-  return mDocuments.at(mActiveMap.value()).commands.GetUndoText();
+  return mDocuments.at(mActiveMap.value())->commands.GetUndoText();
 }
 
 auto Model::GetRedoText() const -> const std::string&
 {
   assert(CanRedo());
-  return mDocuments.at(mActiveMap.value()).commands.GetRedoText();
+  return mDocuments.at(mActiveMap.value())->commands.GetRedoText();
 }
 
 auto Model::CanSaveDocument() const -> bool
@@ -59,7 +59,7 @@ auto Model::CanSaveDocument() const -> bool
   if (mActiveMap)
   {
     const auto& document = mDocuments.at(*mActiveMap);
-    return !document.path.empty() || !document.commands.IsClean();
+    return !document->path.empty() || !document->commands.IsClean();
   }
   else
   {
@@ -72,7 +72,7 @@ auto Model::CanDecreaseViewportTileSize() const -> bool
   if (HasActiveDocument())
   {
     const auto& document = mDocuments.at(*mActiveMap);
-    return Sys::CanDecreaseViewportZoom(document.registry);
+    return Sys::CanDecreaseViewportZoom(document->registry);
   }
 
   return false;
@@ -82,7 +82,7 @@ auto Model::AddMap(Document document) -> map_id
 {
   const auto id = mNextId;
 
-  mDocuments.emplace(id, std::move(document));
+  mDocuments.emplace(id, std::make_unique<Document>(std::move(document)));
   mActiveMap = id;
 
   ++mNextId;
@@ -132,7 +132,7 @@ auto Model::GetActiveDocument() -> Document*
 {
   if (mActiveMap)
   {
-    return &mDocuments.at(*mActiveMap);
+    return mDocuments.at(*mActiveMap).get();
   }
   else
   {
@@ -144,7 +144,7 @@ auto Model::GetActiveDocument() const -> const Document*
 {
   if (mActiveMap)
   {
-    return &mDocuments.at(*mActiveMap);
+    return mDocuments.at(*mActiveMap).get();
   }
   else
   {
@@ -156,7 +156,7 @@ auto Model::GetActiveRegistry() -> entt::registry*
 {
   if (mActiveMap)
   {
-    return &mDocuments.at(*mActiveMap).registry;
+    return &mDocuments.at(*mActiveMap)->registry;
   }
   else
   {
@@ -168,7 +168,7 @@ auto Model::GetActiveRegistry() const -> const entt::registry*
 {
   if (mActiveMap)
   {
-    return &mDocuments.at(*mActiveMap).registry;
+    return &mDocuments.at(*mActiveMap)->registry;
   }
   else
   {

@@ -58,9 +58,9 @@ void SaveSession(const Model& model)
 
   for (const auto& [id, document] : model)
   {
-    if (!document.path.empty())
+    if (!document->path.empty())
     {
-      const auto documentPath = std::filesystem::absolute(document.path);
+      const auto documentPath = std::filesystem::absolute(document->path);
       array += IO::ConvertToForwardSlashes(documentPath);
     }
   }
