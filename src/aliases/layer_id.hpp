@@ -11,6 +11,7 @@ struct LayerIdTag;
 }  // namespace Tags
 
 using layer_id = nenya::strong_type<int, Tags::LayerIdTag>;
+using LayerID = layer_id;
 
 [[nodiscard]] constexpr auto operator""_layer(const ulonglong value) noexcept
     -> layer_id
