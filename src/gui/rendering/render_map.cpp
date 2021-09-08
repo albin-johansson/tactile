@@ -68,8 +68,9 @@ void RenderMap(const entt::registry& registry, const RenderInfo& info)
   for (auto&& [entity, layer] : registry.view<Layer>().each())
   {
     const auto& parent = registry.get<Parent>(entity);
-    const auto* parentLayer =
-        (parent.entity != entt::null) ? registry.try_get<Layer>(entity) : nullptr;
+    const auto* parentLayer = (parent.entity != entt::null)
+                                  ? registry.try_get<Layer>(parent.entity)
+                                  : nullptr;
 
     const auto parentOpacity = parentLayer ? parentLayer->opacity : 1.0f;
 
