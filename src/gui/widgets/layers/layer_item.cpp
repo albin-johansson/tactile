@@ -49,6 +49,14 @@ void GroupLayerItem(const entt::registry& registry,
   else
   {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
+
+    if (ImGui::IsItemActivated() ||
+        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
+    {
+      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+    }
+
+    UpdateLayerItemPopup(registry, dispatcher, layer.id);
   }
 }
 
