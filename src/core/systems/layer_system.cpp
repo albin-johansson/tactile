@@ -257,6 +257,12 @@ auto RestoreLayer(entt::registry& registry, LayerSnapshot snapshot) -> entt::ent
                                     snapshot.context.name,
                                     parent);
 
+  {
+    auto& layer = registry.get<Layer>(entity);
+    layer.opacity = snapshot.core.opacity;
+    layer.visible = snapshot.core.visible;
+  }
+
   RestorePropertyContext(registry, entity, std::move(snapshot.context));
 
   switch (snapshot.core.type)
