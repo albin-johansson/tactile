@@ -254,8 +254,6 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 [[nodiscard]] auto CanMoveLayerDown(const entt::registry& registry,
                                     entt::entity entity) -> bool;
 
-[[nodiscard]] auto GetNewLayerParent(const entt::registry& registry) -> entt::entity;
-
 [[nodiscard]] auto IsTileLayerActive(const entt::registry& registry) -> bool;
 
 [[nodiscard]] auto GetActiveLayerID(const entt::registry& registry)

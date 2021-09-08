@@ -23,6 +23,18 @@
 namespace Tactile::Sys {
 namespace {
 
+[[nodiscard]] auto GetNewLayerParent(const entt::registry& registry) -> entt::entity
+{
+  const auto active = registry.ctx<ActiveLayer>();
+  if (active.entity != entt::null && registry.all_of<GroupLayer>(active.entity))
+  {
+    return active.entity;
+  }
+  {
+    return entt::null;
+  }
+}
+
 [[nodiscard]] auto GetNewLayerIndex(const entt::registry& registry,
                                     const entt::entity layerEntity,
                                     const entt::entity parentEntity) -> usize
@@ -669,18 +681,6 @@ auto CanMoveLayerDown(const entt::registry& registry, const entt::entity entity)
   const auto index = registry.get<Layer>(entity).index;
   const auto nSiblings = GetSiblingCount(registry, entity);
   return index < nSiblings;
-}
-
-auto GetNewLayerParent(const entt::registry& registry) -> entt::entity
-{
-  const auto active = registry.ctx<ActiveLayer>();
-  if (active.entity != entt::null && registry.all_of<GroupLayer>(active.entity))
-  {
-    return active.entity;
-  }
-  {
-    return entt::null;
-  }
 }
 
 auto IsTileLayerActive(const entt::registry& registry) -> bool
