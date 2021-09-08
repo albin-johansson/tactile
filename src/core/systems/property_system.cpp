@@ -7,6 +7,37 @@
 
 namespace Tactile::Sys {
 
+void RestorePropertyContext(entt::registry& registry,
+                            const entt::entity source,
+                            PropertyContextSnapshot snapshot)
+{
+  auto& context = registry.get_or_emplace<PropertyContext>(source);
+  for (auto [propertyName, propertyValue] : snapshot.properties)
+  {
+    const auto propertyEntity = registry.create();
+    auto& property = registry.emplace<Property>(propertyEntity);
+    property.name = propertyName;
+    property.value = std::move(propertyValue);
+  }
+}
+
+auto CopyPropertyContext(const entt::registry& registry, const entt::entity source)
+    -> PropertyContextSnapshot
+{
+  const auto& context = registry.get<PropertyContext>(source);
+
+  PropertyContextSnapshot snapshot;
+  snapshot.name = context.name;
+
+  for (const auto propertyEntity : context.properties)
+  {
+    const auto& property = registry.get<Property>(propertyEntity);
+    snapshot.properties.try_emplace(property.name, property.value);
+  }
+
+  return snapshot;
+}
+
 void AddProperty(entt::registry& registry, std::string name, const PropertyType type)
 {
   auto& context = GetCurrentContext(registry);

@@ -4,9 +4,11 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 
-#include <utility>  // move
+#include <utility>  // move, forward
 
 #include "application_events.hpp"
+#include "core/commands/layers/add_layer_cmd.hpp"
+#include "core/commands/layers/remove_layer_cmd.hpp"
 #include "core/commands/tools/bucket_cmd.hpp"
 #include "core/commands/tools/eraser_sequence_cmd.hpp"
 #include "core/commands/tools/stamp_sequence_cmd.hpp"
@@ -30,6 +32,19 @@
 #include "utils/load_texture.hpp"
 
 namespace Tactile {
+namespace {
+
+template <typename Command, typename... Args>
+void Execute(Model& model, Args&&... args)
+{
+  if (auto* document = model.GetActiveDocument())
+  {
+    auto& commands = document->commands;
+    commands.Push<Command>(document->registry, std::forward<Args>(args)...);
+  }
+}
+
+}  // namespace
 
 Application::Application(cen::window&& window) : mWindow{std::move(window)}
 {
@@ -406,31 +421,12 @@ void Application::OnRemoveColumnEvent()
 
 void Application::OnAddLayerEvent(const AddLayerEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    switch (event.type)
-    {
-      case LayerType::TileLayer:
-        Sys::AddTileLayer(*registry);
-        break;
-
-      case LayerType::ObjectLayer:
-        Sys::AddObjectLayer(*registry);
-        break;
-
-      case LayerType::GroupLayer:
-        Sys::AddGroupLayer(*registry);
-        break;
-    }
-  }
+  Execute<AddLayerCmd>(mModel, event.type);
 }
 
 void Application::OnRemoveLayerEvent(const RemoveLayerEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::RemoveLayer(*registry, event.id);
-  }
+  Execute<RemoveLayerCmd>(mModel, event.id);
 }
 
 void Application::OnMoveLayerUpEvent(const MoveLayerUpEvent& event)

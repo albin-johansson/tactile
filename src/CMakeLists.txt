@@ -54,6 +54,11 @@ set(TACTILE_SOURCE_FILES
     core/commands/command_stack.cpp
     core/commands/command_stack.hpp
 
+    core/commands/layers/add_layer_cmd.cpp
+    core/commands/layers/add_layer_cmd.hpp
+    core/commands/layers/remove_layer_cmd.cpp
+    core/commands/layers/remove_layer_cmd.hpp
+
     core/commands/tools/bucket_cmd.cpp
     core/commands/tools/bucket_cmd.hpp
     core/commands/tools/eraser_sequence_cmd.cpp
@@ -87,12 +92,15 @@ set(TACTILE_SOURCE_FILES
     core/systems/copy.hpp
     core/systems/eraser_tool_system.cpp
     core/systems/eraser_tool_system.hpp
+    core/systems/layer_snapshot.hpp
     core/systems/layer_system.cpp
     core/systems/layer_system.hpp
     core/systems/map_system.cpp
     core/systems/map_system.hpp
     core/systems/object_layer_system.cpp
     core/systems/object_layer_system.hpp
+    core/systems/object_snapshot.hpp
+    core/systems/property_context_snapshot.hpp
     core/systems/property_system.cpp
     core/systems/property_system.hpp
     core/systems/registry_factory_system.cpp

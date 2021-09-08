@@ -8,11 +8,20 @@
 #include "core/components/property_context.hpp"
 #include "core/properties/property_type.hpp"
 #include "core/properties/property_value.hpp"
+#include "property_context_snapshot.hpp"
 
 namespace Tactile::Sys {
 
 /// \name Property system
 /// \{
+
+void RestorePropertyContext(entt::registry& registry,
+                            entt::entity source,
+                            PropertyContextSnapshot snapshot);
+
+[[nodiscard]] auto CopyPropertyContext(const entt::registry& registry,
+                                       entt::entity source)
+    -> PropertyContextSnapshot;
 
 void AddProperty(entt::registry& registry, std::string name, PropertyType type);
 

@@ -8,13 +8,11 @@
 #include "aliases/maybe.hpp"
 #include "core/layer_type.hpp"
 #include "core/map.hpp"
+#include "layer_snapshot.hpp"
 
 namespace Tactile::Sys {
 
 /// \name Layer system
-/// \{
-
-/// \name Construction
 /// \{
 
 /**
@@ -103,7 +101,7 @@ auto AddObjectLayer(entt::registry& registry) -> entt::entity;
  */
 auto AddGroupLayer(entt::registry& registry) -> entt::entity;
 
-/// \} End of construction
+auto RestoreLayer(entt::registry& registry, LayerSnapshot snapshot) -> entt::entity;
 
 /**
  * \brief Sorts all layers according to their current indices.
@@ -140,6 +138,9 @@ void RemoveLayer(entt::registry& registry, entt::entity entity);
  * \since 0.2.0
  */
 void SelectLayer(entt::registry& registry, entt::entity entity);
+
+[[nodiscard]] auto CopyLayer(const entt::registry& registry, entt::entity source)
+    -> LayerSnapshot;
 
 auto DuplicateLayer(entt::registry& registry, entt::entity source) -> entt::entity;
 
@@ -252,6 +253,8 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 
 [[nodiscard]] auto CanMoveLayerDown(const entt::registry& registry,
                                     entt::entity entity) -> bool;
+
+[[nodiscard]] auto GetNewLayerParent(const entt::registry& registry) -> entt::entity;
 
 [[nodiscard]] auto IsTileLayerActive(const entt::registry& registry) -> bool;
 
