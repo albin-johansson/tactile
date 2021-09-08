@@ -64,7 +64,7 @@ void MouseTileLabels(const entt::registry& registry,
       }
       else
       {
-        ImGui::TextUnformatted("Global ID: N/A (empty)");
+        ImGui::TextUnformatted("Global ID: N/A");
       }
 
       if (global != empty_tile)
