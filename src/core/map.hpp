@@ -21,6 +21,7 @@ struct Map final
 
   int tile_layer_suffix{1};    ///< Incrementing tile layer suffix.
   int object_layer_suffix{1};  ///< Incrementing object layer suffix.
+  int group_layer_suffix{1};   ///< Incrementing group layer suffix.
 };
 
 }  // namespace Tactile

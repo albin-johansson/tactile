@@ -217,12 +217,14 @@ auto AddGroupLayer(entt::registry& registry) -> entt::entity
 {
   auto& map = registry.ctx<Map>();
 
-  const auto entity = AddBasicLayer(registry,
-                                    map.next_layer_id,
-                                    LayerType::GroupLayer,
-                                    "Group Layer",
-                                    GetNewLayerParent(registry));
+  const auto entity =
+      AddBasicLayer(registry,
+                    map.next_layer_id,
+                    LayerType::GroupLayer,
+                    std::format("Group Layer {}", map.group_layer_suffix),
+                    GetNewLayerParent(registry));
   ++map.next_layer_id;
+  ++map.group_layer_suffix;
 
   registry.emplace<GroupLayer>(entity);
 
