@@ -74,6 +74,12 @@ set(TACTILE_SOURCE_FILES
     core/commands/maps/add_column_cmd.hpp
     core/commands/maps/add_row_cmd.cpp
     core/commands/maps/add_row_cmd.hpp
+    core/commands/maps/map_command_cache.cpp
+    core/commands/maps/map_command_cache.hpp
+    core/commands/maps/remove_column_cmd.cpp
+    core/commands/maps/remove_column_cmd.hpp
+    core/commands/maps/remove_row_cmd.cpp
+    core/commands/maps/remove_row_cmd.hpp
 
     core/commands/properties/add_property_cmd.cpp
     core/commands/properties/add_property_cmd.hpp

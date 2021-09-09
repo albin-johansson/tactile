@@ -16,6 +16,8 @@
 #include "core/commands/layers/set_layer_visibility_cmd.hpp"
 #include "core/commands/maps/add_column_cmd.hpp"
 #include "core/commands/maps/add_row_cmd.hpp"
+#include "core/commands/maps/remove_column_cmd.hpp"
+#include "core/commands/maps/remove_row_cmd.hpp"
 #include "core/commands/properties/add_property_cmd.hpp"
 #include "core/commands/properties/change_property_type_cmd.hpp"
 #include "core/commands/properties/remove_property_cmd.hpp"
@@ -408,18 +410,12 @@ void Application::OnAddColumnEvent()
 
 void Application::OnRemoveRowEvent()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::RemoveRow(*registry);
-  }
+  Execute<RemoveRowCmd>(mModel);
 }
 
 void Application::OnRemoveColumnEvent()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::RemoveColumn(*registry);
-  }
+  Execute<RemoveColumnCmd>(mModel);
 }
 
 void Application::OnAddLayerEvent(const AddLayerEvent& event)
