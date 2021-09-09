@@ -13,6 +13,7 @@ struct CommandId final
     AddColumn,
     RemoveRow,
     RemoveColumn,
+
     AddLayer,
     RemoveLayer,
     DuplicateLayer,
@@ -20,15 +21,17 @@ struct CommandId final
     MoveLayerDown,
     SetLayerOpacity,
     SetLayerVisible,
+
     AddProperty,
     RemoveProperty,
     RenameProperty,
     UpdateProperty,
     ChangePropertyType,
-    SetPropertyContext,
+
     StampSequence,
     EraserSequence,
     Bucket,
+
     AddTileset,
     RemoveTileset
   };
