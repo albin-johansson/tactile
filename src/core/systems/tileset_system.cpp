@@ -172,7 +172,6 @@ void RemoveTileset(entt::registry& registry, const TilesetID id)
   const auto entity = FindTileset(registry, id);
   assert(entity != entt::null);
 
-  // TODO consider setting the active tileset to the next available tileset
   auto& activeTileset = registry.ctx<ActiveTileset>();
   if (entity == activeTileset.entity)
   {
@@ -180,6 +179,11 @@ void RemoveTileset(entt::registry& registry, const TilesetID id)
   }
 
   registry.destroy(entity);
+
+  if (!registry.empty<Tileset>())
+  {
+    activeTileset.entity = registry.view<Tileset>().front();
+  }
 }
 
 void UpdateTilesetSelection(entt::registry& registry, const Region& region)

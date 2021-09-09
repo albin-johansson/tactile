@@ -74,8 +74,8 @@ void SelectTileset(entt::registry& registry, TilesetID id);
  *
  * \pre `id` must be associated with an existing tileset.
  *
- * \details The active tileset is reset if the specified tileset is active at the
- * time of invocation.
+ * \details The active tileset is either reset or changed to another available
+ * tileset if the specified tileset is active at the time of invocation.
  *
  * \param registry the associated registry.
  *
