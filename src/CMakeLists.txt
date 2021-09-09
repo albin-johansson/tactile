@@ -70,6 +70,11 @@ set(TACTILE_SOURCE_FILES
     core/commands/layers/set_layer_visibility_cmd.cpp
     core/commands/layers/set_layer_visibility_cmd.hpp
 
+    core/commands/maps/add_column_cmd.cpp
+    core/commands/maps/add_column_cmd.hpp
+    core/commands/maps/add_row_cmd.cpp
+    core/commands/maps/add_row_cmd.hpp
+
     core/commands/properties/add_property_cmd.cpp
     core/commands/properties/add_property_cmd.hpp
     core/commands/properties/change_property_type_cmd.cpp

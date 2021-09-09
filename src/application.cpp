@@ -14,6 +14,8 @@
 #include "core/commands/layers/remove_layer_cmd.hpp"
 #include "core/commands/layers/set_layer_opacity_cmd.hpp"
 #include "core/commands/layers/set_layer_visibility_cmd.hpp"
+#include "core/commands/maps/add_column_cmd.hpp"
+#include "core/commands/maps/add_row_cmd.hpp"
 #include "core/commands/properties/add_property_cmd.hpp"
 #include "core/commands/properties/change_property_type_cmd.hpp"
 #include "core/commands/properties/remove_property_cmd.hpp"
@@ -396,18 +398,12 @@ void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
 
 void Application::OnAddRowEvent()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::AddRow(*registry);
-  }
+  Execute<AddRowCmd>(mModel);
 }
 
 void Application::OnAddColumnEvent()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::AddColumn(*registry);
-  }
+  Execute<AddColumnCmd>(mModel);
 }
 
 void Application::OnRemoveRowEvent()
