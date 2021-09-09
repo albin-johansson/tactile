@@ -11,6 +11,7 @@
 #include "core/commands/layers/move_layer_down_cmd.hpp"
 #include "core/commands/layers/move_layer_up_cmd.hpp"
 #include "core/commands/layers/remove_layer_cmd.hpp"
+#include "core/commands/layers/set_layer_opacity_cmd.hpp"
 #include "core/commands/tools/bucket_cmd.hpp"
 #include "core/commands/tools/eraser_sequence_cmd.hpp"
 #include "core/commands/tools/stamp_sequence_cmd.hpp"
@@ -451,10 +452,7 @@ void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
 
 void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::SetLayerOpacity(*registry, event.id, event.opacity);
-  }
+  Execute<SetLayerOpacityCmd>(mModel, event.id, event.opacity);
 }
 
 void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
