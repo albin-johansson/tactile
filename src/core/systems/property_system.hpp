@@ -53,6 +53,7 @@ void UpdateProperty(entt::registry& registry,
                     PropertyValue value);
 
 void ChangePropertyType(entt::registry& registry,
+                        ContextID id,
                         std::string_view name,
                         PropertyType type);
 

@@ -72,6 +72,8 @@ set(TACTILE_SOURCE_FILES
 
     core/commands/properties/add_property_cmd.cpp
     core/commands/properties/add_property_cmd.hpp
+    core/commands/properties/change_property_type_cmd.cpp
+    core/commands/properties/change_property_type_cmd.hpp
     core/commands/properties/remove_property_cmd.cpp
     core/commands/properties/remove_property_cmd.hpp
     core/commands/properties/rename_property_cmd.cpp

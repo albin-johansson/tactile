@@ -147,17 +147,17 @@ void UpdateProperty(entt::registry& registry,
 }
 
 void ChangePropertyType(entt::registry& registry,
+                        const ContextID id,
                         const std::string_view name,
                         const PropertyType type)
 {
-  assert(HasPropertyWithName(registry, name));
+  auto& context = GetContext(registry, id);
 
-  const auto entity = FindProperty(registry, name);
-  if (entity != entt::null)
-  {
-    auto& property = registry.get<Property>(entity);
-    property.value.ResetToDefault(type);
-  }
+  const auto entity = FindProperty(registry, context, name);
+  assert(entity != entt::null);
+
+  auto& property = registry.get<Property>(entity);
+  property.value.ResetToDefault(type);
 }
 
 auto GetCurrentContext(entt::registry& registry) -> PropertyContext&

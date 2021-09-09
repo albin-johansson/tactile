@@ -15,6 +15,7 @@
 #include "core/commands/layers/set_layer_opacity_cmd.hpp"
 #include "core/commands/layers/set_layer_visibility_cmd.hpp"
 #include "core/commands/properties/add_property_cmd.hpp"
+#include "core/commands/properties/change_property_type_cmd.hpp"
 #include "core/commands/properties/remove_property_cmd.hpp"
 #include "core/commands/properties/rename_property_cmd.hpp"
 #include "core/commands/properties/update_property_cmd.hpp"
@@ -508,10 +509,7 @@ void Application::OnUpdatePropertyEvent(const UpdatePropertyEvent& event)
 
 void Application::OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::ChangePropertyType(*registry, event.name, event.type);
-  }
+  Execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
 }
 
 void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event)
