@@ -4,8 +4,8 @@
 #include <rune/everything.hpp>  // vector_map
 #include <utility>              // move
 
-#include "aliases/tile_id.hpp"
 #include "aliases/tile_cache.hpp"
+#include "aliases/tile_id.hpp"
 #include "core/map_position.hpp"
 #include "events/tool_events.hpp"
 #include "layer_system.hpp"
