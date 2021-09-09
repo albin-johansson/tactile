@@ -13,6 +13,7 @@
 
 namespace Tactile::Sys {
 
+// TODO rename to something like "Duplicate"
 template <typename T>
 auto Copy(entt::registry& registry,
           const entt::entity source,
