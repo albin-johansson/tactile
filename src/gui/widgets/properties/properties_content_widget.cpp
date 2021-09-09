@@ -30,7 +30,7 @@ constinit bool show_change_type_dialog = false;
 inline Maybe<std::string> rename_target;
 inline Maybe<std::string> change_type_target;
 
-void StringValue(const std::string_view name,
+void StringValue(const std::string& name,
                  const PropertyValue& property,
                  entt::dispatcher& dispatcher)
 {
@@ -40,7 +40,7 @@ void StringValue(const std::string_view name,
   }
 }
 
-void IntValue(const std::string_view name,
+void IntValue(const std::string& name,
               const PropertyValue& property,
               entt::dispatcher& dispatcher)
 {
@@ -50,7 +50,7 @@ void IntValue(const std::string_view name,
   }
 }
 
-void FloatValue(const std::string_view name,
+void FloatValue(const std::string& name,
                 const PropertyValue& property,
                 entt::dispatcher& dispatcher)
 {
@@ -60,7 +60,7 @@ void FloatValue(const std::string_view name,
   }
 }
 
-void BoolValue(const std::string_view name,
+void BoolValue(const std::string& name,
                const PropertyValue& property,
                entt::dispatcher& dispatcher)
 {
@@ -70,7 +70,7 @@ void BoolValue(const std::string_view name,
   }
 }
 
-void ColorValue(const std::string_view name,
+void ColorValue(const std::string& name,
                 const PropertyValue& property,
                 entt::dispatcher& dispatcher)
 {
@@ -80,7 +80,7 @@ void ColorValue(const std::string_view name,
   }
 }
 
-void ObjectValue(const std::string_view name,
+void ObjectValue(const std::string& name,
                  const PropertyValue& property,
                  entt::dispatcher& dispatcher)
 {
@@ -90,7 +90,7 @@ void ObjectValue(const std::string_view name,
   }
 }
 
-void FileValue(const std::string_view name,
+void FileValue(const std::string& name,
                const PropertyValue& property,
                entt::dispatcher& dispatcher)
 {

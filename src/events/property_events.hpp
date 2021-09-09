@@ -29,7 +29,7 @@ struct RenamePropertyEvent final
 
 struct UpdatePropertyEvent final
 {
-  std::string_view name;
+  std::string name;
   PropertyValue value;
 };
 
