@@ -12,6 +12,7 @@
 #include "core/commands/layers/move_layer_up_cmd.hpp"
 #include "core/commands/layers/remove_layer_cmd.hpp"
 #include "core/commands/layers/set_layer_opacity_cmd.hpp"
+#include "core/commands/layers/set_layer_visibility_cmd.hpp"
 #include "core/commands/tools/bucket_cmd.hpp"
 #include "core/commands/tools/eraser_sequence_cmd.hpp"
 #include "core/commands/tools/stamp_sequence_cmd.hpp"
@@ -457,10 +458,7 @@ void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
 
 void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::SetLayerVisible(*registry, event.id, event.visible);
-  }
+  Execute<SetLayerVisibilityCmd>(mModel, event.id, event.visible);
 }
 
 void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event)

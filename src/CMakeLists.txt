@@ -64,6 +64,8 @@ set(TACTILE_SOURCE_FILES
     core/commands/layers/remove_layer_cmd.hpp
     core/commands/layers/set_layer_opacity_cmd.cpp
     core/commands/layers/set_layer_opacity_cmd.hpp
+    core/commands/layers/set_layer_visibility_cmd.cpp
+    core/commands/layers/set_layer_visibility_cmd.hpp
 
     core/commands/tools/bucket_cmd.cpp
     core/commands/tools/bucket_cmd.hpp
