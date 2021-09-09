@@ -15,7 +15,6 @@ struct CommandId final
     RemoveColumn,
     AddLayer,
     RemoveLayer,
-    SelectLayer,
     DuplicateLayer,
     MoveLayerUp,
     MoveLayerDown,
