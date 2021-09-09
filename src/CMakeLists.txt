@@ -56,6 +56,10 @@ set(TACTILE_SOURCE_FILES
 
     core/commands/layers/add_layer_cmd.cpp
     core/commands/layers/add_layer_cmd.hpp
+    core/commands/layers/move_layer_down_cmd.cpp
+    core/commands/layers/move_layer_down_cmd.hpp
+    core/commands/layers/move_layer_up_cmd.cpp
+    core/commands/layers/move_layer_up_cmd.hpp
     core/commands/layers/remove_layer_cmd.cpp
     core/commands/layers/remove_layer_cmd.hpp
 

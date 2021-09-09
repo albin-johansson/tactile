@@ -8,6 +8,8 @@
 
 #include "application_events.hpp"
 #include "core/commands/layers/add_layer_cmd.hpp"
+#include "core/commands/layers/move_layer_down_cmd.hpp"
+#include "core/commands/layers/move_layer_up_cmd.hpp"
 #include "core/commands/layers/remove_layer_cmd.hpp"
 #include "core/commands/tools/bucket_cmd.hpp"
 #include "core/commands/tools/eraser_sequence_cmd.hpp"
@@ -431,18 +433,12 @@ void Application::OnRemoveLayerEvent(const RemoveLayerEvent& event)
 
 void Application::OnMoveLayerUpEvent(const MoveLayerUpEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::MoveLayerUp(*registry, event.id);
-  }
+  Execute<MoveLayerUpCmd>(mModel, event.id);
 }
 
 void Application::OnMoveLayerDownEvent(const MoveLayerDownEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::MoveLayerDown(*registry, event.id);
-  }
+  Execute<MoveLayerDownCmd>(mModel, event.id);
 }
 
 void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
