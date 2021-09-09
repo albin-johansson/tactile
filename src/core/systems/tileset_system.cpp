@@ -1,13 +1,16 @@
 #include "tileset_system.hpp"
 
 #include <cassert>  // assert
+#include <utility>  // move
 
 #include "aliases/hash_map.hpp"
 #include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
+#include "property_system.hpp"
 
 namespace Tactile::Sys {
 namespace {
@@ -31,6 +34,22 @@ namespace {
   }
 
   return cache;
+}
+
+void RefreshTilesetCache(entt::registry& registry, const entt::entity entity)
+{
+  const auto& tileset = registry.get<Tileset>(entity);
+
+  auto& cache = registry.emplace_or_replace<TilesetCache>(entity);
+  cache.source_rects = CreateSourceRectCache(tileset);
+
+  for (auto&& [tileEntity, tile] : registry.view<FancyTile>().each())
+  {
+    if (tile.id >= tileset.first_id && tile.id <= tileset.last_id)
+    {
+      cache.tiles.try_emplace(tile.id, tileEntity);
+    }
+  }
 }
 
 void UpdateTilesetContext(entt::registry& registry, const entt::entity entity)
@@ -106,6 +125,37 @@ auto AddTileset(entt::registry& registry,
   UpdateTilesetContext(registry, entity);
 
   return entity;
+}
+
+auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot)
+    -> entt::entity
+{
+  const auto entity = registry.create();
+
+  registry.emplace<Tileset>(entity, std::move(snapshot.core));
+  registry.emplace<TilesetSelection>(entity, snapshot.selection);
+  registry.emplace<Texture>(entity, snapshot.texture);
+  registry.emplace<UvTileSize>(entity, snapshot.uv);
+
+  RefreshTilesetCache(registry, entity);
+  RestorePropertyContext(registry, entity, std::move(snapshot.context));
+
+  return entity;
+}
+
+auto CopyTileset(const entt::registry& registry, const entt::entity source)
+    -> TilesetSnapshot
+{
+  assert(source != entt::null);
+  TilesetSnapshot snapshot;
+
+  snapshot.core = registry.get<Tileset>(source);
+  snapshot.selection = registry.get<TilesetSelection>(source);
+  snapshot.texture = registry.get<Texture>(source);
+  snapshot.uv = registry.get<UvTileSize>(source);
+  snapshot.context = CopyPropertyContext(registry, source);
+
+  return snapshot;
 }
 
 void SelectTileset(entt::registry& registry, const TilesetID id)

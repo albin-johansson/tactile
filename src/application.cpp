@@ -14,6 +14,8 @@
 #include "core/commands/layers/remove_layer_cmd.hpp"
 #include "core/commands/layers/set_layer_opacity_cmd.hpp"
 #include "core/commands/layers/set_layer_visibility_cmd.hpp"
+#include "core/commands/tilesets/add_tileset_cmd.hpp"
+#include "core/commands/tilesets/remove_tileset_cmd.hpp"
 #include "core/commands/tools/bucket_cmd.hpp"
 #include "core/commands/tools/eraser_sequence_cmd.hpp"
 #include "core/commands/tools/stamp_sequence_cmd.hpp"
@@ -211,12 +213,12 @@ void Application::OnSaveAsRequestEvent()
 
 void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
-  if (const auto info = LoadTexture(event.path))
+  if (auto info = LoadTexture(event.path))
   {
-    if (auto* registry = mModel.GetActiveRegistry())
-    {
-      Sys::AddTileset(*registry, *info, event.tile_width, event.tile_height);
-    }
+    Execute<AddTilesetCmd>(mModel,
+                           std::move(*info),
+                           event.tile_width,
+                           event.tile_height);
   }
   else
   {
@@ -386,10 +388,7 @@ void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
 
 void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::RemoveTileset(*registry, event.id);
-  }
+  Execute<RemoveTilesetCmd>(mModel, event.id);
 }
 
 void Application::OnAddRowEvent()

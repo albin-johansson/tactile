@@ -69,6 +69,11 @@ set(TACTILE_SOURCE_FILES
     core/commands/layers/set_layer_visibility_cmd.cpp
     core/commands/layers/set_layer_visibility_cmd.hpp
 
+    core/commands/tilesets/add_tileset_cmd.cpp
+    core/commands/tilesets/add_tileset_cmd.hpp
+    core/commands/tilesets/remove_tileset_cmd.cpp
+    core/commands/tilesets/remove_tileset_cmd.hpp
+
     core/commands/tools/bucket_cmd.cpp
     core/commands/tools/bucket_cmd.hpp
     core/commands/tools/eraser_sequence_cmd.cpp
@@ -117,6 +122,7 @@ set(TACTILE_SOURCE_FILES
     core/systems/registry_factory_system.hpp
     core/systems/tile_layer_system.cpp
     core/systems/tile_layer_system.hpp
+    core/systems/tileset_snapshot.hpp
     core/systems/tileset_system.cpp
     core/systems/tileset_system.hpp
     core/systems/viewport_system.cpp

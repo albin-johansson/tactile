@@ -8,6 +8,7 @@
 #include "aliases/tileset_id.hpp"
 #include "core/map_position.hpp"
 #include "core/region.hpp"
+#include "tileset_snapshot.hpp"
 #include "utils/texture_info.hpp"
 
 namespace Tactile::Sys {
@@ -48,6 +49,12 @@ auto AddTileset(entt::registry& registry,
                 const TextureInfo& info,
                 int tileWidth,
                 int tileHeight) -> entt::entity;
+
+auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot)
+    -> entt::entity;
+
+[[nodiscard]] auto CopyTileset(const entt::registry& registry, entt::entity source)
+    -> TilesetSnapshot;
 
 /**
  * \brief Selects the tileset associated with the specified ID.
