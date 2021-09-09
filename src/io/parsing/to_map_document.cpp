@@ -17,6 +17,7 @@
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
 #include "core/systems/layer_system.hpp"
+#include "core/systems/property_system.hpp"
 #include "core/systems/registry_factory_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "io/parsing/parse_ir.hpp"
@@ -112,7 +113,7 @@ void MakeObjectLayer(entt::registry& registry,
       object.custom_type = objectData.custom_type;
     }
 
-    auto& context = registry.emplace<PropertyContext>(objectEntity);
+    auto& context = Sys::AddPropertyContext(registry, objectEntity);
     context.name = objectData.name;
 
     // TODO properties

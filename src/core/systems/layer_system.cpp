@@ -181,7 +181,7 @@ auto AddBasicLayer(entt::registry& registry,
   }
 
   {
-    auto& context = registry.emplace<PropertyContext>(entity);
+    auto& context = Sys::AddPropertyContext(registry, entity);
     context.name = std::move(name);
   }
 

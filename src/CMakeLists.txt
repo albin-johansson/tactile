@@ -70,6 +70,13 @@ set(TACTILE_SOURCE_FILES
     core/commands/layers/set_layer_visibility_cmd.cpp
     core/commands/layers/set_layer_visibility_cmd.hpp
 
+    core/commands/properties/add_property_cmd.cpp
+    core/commands/properties/add_property_cmd.hpp
+    core/commands/properties/remove_property_cmd.cpp
+    core/commands/properties/remove_property_cmd.hpp
+    core/commands/properties/rename_property_cmd.cpp
+    core/commands/properties/rename_property_cmd.hpp
+
     core/commands/tilesets/add_tileset_cmd.cpp
     core/commands/tilesets/add_tileset_cmd.hpp
     core/commands/tilesets/remove_tileset_cmd.cpp

@@ -99,7 +99,7 @@ auto MakeTileset(entt::registry& registry,
   auto& cache = registry.emplace<TilesetCache>(entity);
   cache.source_rects = CreateSourceRectCache(tileset);
 
-  auto& context = registry.emplace<PropertyContext>(entity);
+  auto& context = Sys::AddPropertyContext(registry, entity);
   context.name = info.path.stem().string();
 
   registry.emplace<TilesetSelection>(entity);

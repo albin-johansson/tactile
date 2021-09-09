@@ -15,6 +15,9 @@ namespace Tactile::Sys {
 /// \name Property system
 /// \{
 
+auto AddPropertyContext(entt::registry& registry, entt::entity entity)
+    -> PropertyContext&;
+
 void RestorePropertyContext(entt::registry& registry,
                             entt::entity source,
                             PropertyContextSnapshot snapshot);
@@ -23,9 +26,22 @@ void RestorePropertyContext(entt::registry& registry,
                                        entt::entity source)
     -> PropertyContextSnapshot;
 
-void AddProperty(entt::registry& registry, std::string name, PropertyType type);
+void AddProperty(entt::registry& registry,
+                 ContextID id,
+                 std::string name,
+                 PropertyType type);
 
-void RemoveProperty(entt::registry& registry, std::string_view name);
+void AddProperty(entt::registry& registry,
+                 ContextID id,
+                 std::string name,
+                 PropertyValue value);
+
+void RemoveProperty(entt::registry& registry, ContextID id, std::string_view name);
+
+void RenameProperty(entt::registry& registry,
+                    ContextID id,
+                    std::string_view oldName,
+                    std::string newName);
 
 void RenameProperty(entt::registry& registry,
                     std::string_view oldName,
@@ -44,7 +60,21 @@ void ChangePropertyType(entt::registry& registry,
 [[nodiscard]] auto GetCurrentContext(const entt::registry& registry)
     -> const PropertyContext&;
 
+[[nodiscard]] auto GetContext(entt::registry& registry, ContextID id)
+    -> PropertyContext&;
+
+[[nodiscard]] auto GetContext(const entt::registry& registry, ContextID id)
+    -> const PropertyContext&;
+
+[[nodiscard]] auto GetPropertyValue(const entt::registry& registry,
+                                    ContextID id,
+                                    std::string_view name) -> const PropertyValue&;
+
 [[nodiscard]] auto FindProperty(const entt::registry& registry,
+                                std::string_view name) -> entt::entity;
+
+[[nodiscard]] auto FindProperty(const entt::registry& registry,
+                                const PropertyContext& context,
                                 std::string_view name) -> entt::entity;
 
 [[nodiscard]] auto HasPropertyWithName(const entt::registry& registry,

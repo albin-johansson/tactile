@@ -14,6 +14,9 @@
 #include "core/commands/layers/remove_layer_cmd.hpp"
 #include "core/commands/layers/set_layer_opacity_cmd.hpp"
 #include "core/commands/layers/set_layer_visibility_cmd.hpp"
+#include "core/commands/properties/add_property_cmd.hpp"
+#include "core/commands/properties/remove_property_cmd.hpp"
+#include "core/commands/properties/rename_property_cmd.hpp"
 #include "core/commands/tilesets/add_tileset_cmd.hpp"
 #include "core/commands/tilesets/remove_tileset_cmd.hpp"
 #include "core/commands/tools/bucket_cmd.hpp"
@@ -484,26 +487,17 @@ void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
 
 void Application::OnAddPropertyEvent(const AddPropertyEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::AddProperty(*registry, event.name, event.type);
-  }
+  Execute<AddPropertyCmd>(mModel, event.name, event.type);
 }
 
 void Application::OnRemovePropertyEvent(const RemovePropertyEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::RemoveProperty(*registry, event.name);
-  }
+  Execute<RemovePropertyCmd>(mModel, event.name);
 }
 
 void Application::OnRenamePropertyEvent(const RenamePropertyEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::RenameProperty(*registry, event.old_name, event.new_name);
-  }
+  Execute<RenamePropertyCmd>(mModel, event.old_name, event.new_name);
 }
 
 void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)

@@ -4,10 +4,13 @@
 #include <string>    // string
 #include <vector>    // vector
 
+#include "aliases/context_id.hpp"
+
 namespace Tactile {
 
 struct PropertyContext final
 {
+  ContextID id;
   std::string name;
   std::vector<entt::entity> properties;
 };

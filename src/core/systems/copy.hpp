@@ -10,6 +10,7 @@
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
 #include "core/map.hpp"
+#include "property_system.hpp"
 
 namespace Tactile::Sys {
 
@@ -27,7 +28,7 @@ inline auto Copy<PropertyContext>(entt::registry& registry,
                                   const entt::entity source,
                                   const entt::entity destination) -> PropertyContext&
 {
-  auto& context = registry.emplace<PropertyContext>(destination);
+  auto& context = AddPropertyContext(registry, destination);
 
   const auto& srcContext = registry.get<PropertyContext>(source);
   context.name = srcContext.name;
