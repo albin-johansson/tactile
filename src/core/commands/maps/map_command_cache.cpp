@@ -56,7 +56,7 @@ void MapCommandCache::MergeWith(const MapCommandCache& other)
     auto& tileCache = mCache[otherLayer];
     for (const auto& [otherPos, otherTile] : otherTileCache)
     {
-      tileCache.emplace(otherPos, otherTile);
+      tileCache.try_emplace(otherPos, otherTile);
     }
   }
 }
