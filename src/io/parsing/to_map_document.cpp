@@ -30,7 +30,7 @@ void AddProperties(entt::registry& registry,
                    const std::vector<PropertyData>& data)
 {
   auto& context = (entity != entt::null)
-                      ? registry.get_or_emplace<PropertyContext>(entity)
+                      ? registry.get<PropertyContext>(entity)
                       : registry.ctx<PropertyContext>();
   for (const auto& propertyData : data)
   {
