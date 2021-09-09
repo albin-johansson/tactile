@@ -8,6 +8,7 @@
 
 #include "application_events.hpp"
 #include "core/commands/layers/add_layer_cmd.hpp"
+#include "core/commands/layers/duplicate_layer_cmd.hpp"
 #include "core/commands/layers/move_layer_down_cmd.hpp"
 #include "core/commands/layers/move_layer_up_cmd.hpp"
 #include "core/commands/layers/remove_layer_cmd.hpp"
@@ -445,10 +446,7 @@ void Application::OnMoveLayerDownEvent(const MoveLayerDownEvent& event)
 
 void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::DuplicateLayer(*registry, event.id);
-  }
+  Execute<DuplicateLayerCmd>(mModel, event.id);
 }
 
 void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)

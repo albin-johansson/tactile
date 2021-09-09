@@ -245,6 +245,9 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 [[nodiscard]] auto GetLayerOpacity(const entt::registry& registry,
                                    entt::entity entity) -> float;
 
+[[nodiscard]] auto GetLayerId(const entt::registry& registry, entt::entity entity)
+    -> LayerID;
+
 [[nodiscard]] auto IsLayerVisible(const entt::registry& registry,
                                   entt::entity entity) -> bool;
 

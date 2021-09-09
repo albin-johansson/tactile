@@ -665,6 +665,13 @@ auto GetLayerOpacity(const entt::registry& registry, const entt::entity entity)
   return layer.opacity;
 }
 
+auto GetLayerId(const entt::registry& registry, const entt::entity entity) -> LayerID
+{
+  assert(entity != entt::null);
+  const auto& layer = registry.get<Layer>(entity);
+  return layer.id;
+}
+
 auto IsLayerVisible(const entt::registry& registry, const entt::entity entity)
     -> bool
 {
