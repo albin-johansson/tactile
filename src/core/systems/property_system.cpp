@@ -12,6 +12,8 @@ void RestorePropertyContext(entt::registry& registry,
                             PropertyContextSnapshot snapshot)
 {
   auto& context = registry.get_or_emplace<PropertyContext>(source);
+  context.name = std::move(snapshot.name);
+
   for (auto [propertyName, propertyValue] : snapshot.properties)
   {
     const auto propertyEntity = registry.create();
