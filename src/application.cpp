@@ -51,6 +51,17 @@ void Execute(Model& model, Args&&... args)
   }
 }
 
+template <typename Command, typename... Args>
+void Register(Model& model, Args&&... args)
+{
+  if (auto* document = model.GetActiveDocument())
+  {
+    auto& commands = document->commands;
+    commands.PushWithoutRedo<Command>(document->registry,
+                                      std::forward<Args>(args)...);
+  }
+}
+
 }  // namespace
 
 Application::Application(cen::window&& window) : mWindow{std::move(window)}
@@ -276,32 +287,19 @@ void Application::OnMouseDragEvent(const MouseDragEvent& event)
 
 void Application::OnStampSequenceEvent(StampSequenceEvent event)
 {
-  if (auto* document = mModel.GetActiveDocument())
-  {
-    auto& commands = document->commands;
-    commands.PushWithoutRedo<StampSequenceCmd>(document->registry,
-                                               std::move(event.old_state),
-                                               std::move(event.sequence));
-  }
+  Register<StampSequenceCmd>(mModel,
+                             std::move(event.old_state),
+                             std::move(event.sequence));
 }
 
 void Application::OnEraserSequenceEvent(EraserSequenceEvent event)
 {
-  if (auto* document = mModel.GetActiveDocument())
-  {
-    auto& commands = document->commands;
-    commands.PushWithoutRedo<EraserSequenceCmd>(document->registry,
-                                                std::move(event.old_state));
-  }
+  Register<EraserSequenceCmd>(mModel, std::move(event.old_state));
 }
 
 void Application::OnFloodEvent(const FloodEvent& event)
 {
-  if (auto* document = mModel.GetActiveDocument())
-  {
-    auto& commands = document->commands;
-    commands.Push<BucketCmd>(document->registry, event.origin, event.replacement);
-  }
+  Execute<BucketCmd>(mModel, event.origin, event.replacement);
 }
 
 void Application::OnCenterViewportEvent()
