@@ -48,6 +48,7 @@ void RenameProperty(entt::registry& registry,
                     std::string newName);
 
 void UpdateProperty(entt::registry& registry,
+                    ContextID id,
                     std::string_view name,
                     PropertyValue value);
 

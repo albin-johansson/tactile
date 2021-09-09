@@ -133,17 +133,17 @@ void RenameProperty(entt::registry& registry,
 }
 
 void UpdateProperty(entt::registry& registry,
+                    const ContextID id,
                     const std::string_view name,
                     PropertyValue value)
 {
-  assert(HasPropertyWithName(registry, name));
+  auto& context = GetContext(registry, id);
 
-  const auto entity = FindProperty(registry, name);
-  if (entity != entt::null)
-  {
-    auto& property = registry.get<Property>(entity);
-    property.value = std::move(value);
-  }
+  const auto entity = FindProperty(registry, context, name);
+  assert(entity != entt::null);
+
+  auto& property = registry.get<Property>(entity);
+  property.value = std::move(value);
 }
 
 void ChangePropertyType(entt::registry& registry,

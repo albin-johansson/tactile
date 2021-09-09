@@ -27,10 +27,10 @@ struct RenamePropertyEvent final
   std::string new_name;
 };
 
-struct SetPropertyValueEvent final
+struct UpdatePropertyEvent final
 {
   std::string_view name;
-  PropertyValue property;
+  PropertyValue value;
 };
 
 struct ChangePropertyTypeEvent final

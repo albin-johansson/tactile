@@ -23,7 +23,7 @@ struct CommandId final
     AddProperty,
     RemoveProperty,
     RenameProperty,
-    SetProperty,
+    UpdateProperty,
     ChangePropertyType,
     SetPropertyContext,
     StampSequence,

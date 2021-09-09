@@ -36,7 +36,7 @@ void StringValue(const std::string_view name,
 {
   if (const auto str = StringPropertyWidget(property))
   {
-    dispatcher.enqueue<SetPropertyValueEvent>(name, *str);
+    dispatcher.enqueue<UpdatePropertyEvent>(name, *str);
   }
 }
 
@@ -46,7 +46,7 @@ void IntValue(const std::string_view name,
 {
   if (const auto value = IntPropertyWidget(property))
   {
-    dispatcher.enqueue<SetPropertyValueEvent>(name, *value);
+    dispatcher.enqueue<UpdatePropertyEvent>(name, *value);
   }
 }
 
@@ -56,7 +56,7 @@ void FloatValue(const std::string_view name,
 {
   if (const auto value = FloatPropertyWidget(property))
   {
-    dispatcher.enqueue<SetPropertyValueEvent>(name, *value);
+    dispatcher.enqueue<UpdatePropertyEvent>(name, *value);
   }
 }
 
@@ -66,7 +66,7 @@ void BoolValue(const std::string_view name,
 {
   if (const auto value = BoolPropertyWidget(property))
   {
-    dispatcher.enqueue<SetPropertyValueEvent>(name, *value);
+    dispatcher.enqueue<UpdatePropertyEvent>(name, *value);
   }
 }
 
@@ -76,7 +76,7 @@ void ColorValue(const std::string_view name,
 {
   if (const auto color = ColorPropertyWidget(property))
   {
-    dispatcher.enqueue<SetPropertyValueEvent>(name, *color);
+    dispatcher.enqueue<UpdatePropertyEvent>(name, *color);
   }
 }
 
@@ -86,7 +86,7 @@ void ObjectValue(const std::string_view name,
 {
   if (const auto value = ObjectPropertyWidget(property))
   {
-    dispatcher.enqueue<SetPropertyValueEvent>(name, *value);
+    dispatcher.enqueue<UpdatePropertyEvent>(name, *value);
   }
 }
 
@@ -96,7 +96,7 @@ void FileValue(const std::string_view name,
 {
   if (const auto path = FilePropertyWidget(property))
   {
-    dispatcher.enqueue<SetPropertyValueEvent>(name, *path);
+    dispatcher.enqueue<UpdatePropertyEvent>(name, *path);
   }
 }
 

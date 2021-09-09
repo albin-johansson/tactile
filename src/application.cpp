@@ -17,6 +17,7 @@
 #include "core/commands/properties/add_property_cmd.hpp"
 #include "core/commands/properties/remove_property_cmd.hpp"
 #include "core/commands/properties/rename_property_cmd.hpp"
+#include "core/commands/properties/update_property_cmd.hpp"
 #include "core/commands/tilesets/add_tileset_cmd.hpp"
 #include "core/commands/tilesets/remove_tileset_cmd.hpp"
 #include "core/commands/tools/bucket_cmd.hpp"
@@ -500,12 +501,9 @@ void Application::OnRenamePropertyEvent(const RenamePropertyEvent& event)
   Execute<RenamePropertyCmd>(mModel, event.old_name, event.new_name);
 }
 
-void Application::OnSetPropertyValueEvent(const SetPropertyValueEvent& event)
+void Application::OnSetPropertyValueEvent(const UpdatePropertyEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::UpdateProperty(*registry, event.name, event.property);
-  }
+  Execute<UpdatePropertyCmd>(mModel, std::string{event.name}, event.value);
 }
 
 void Application::OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event)
