@@ -133,7 +133,7 @@ class Application final
 
   void OnRenamePropertyEvent(const RenamePropertyEvent& event);
 
-  void OnSetPropertyValueEvent(const UpdatePropertyEvent& event);
+  void OnUpdatePropertyEvent(const UpdatePropertyEvent& event);
 
   void OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event);
 

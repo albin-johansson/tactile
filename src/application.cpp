@@ -501,7 +501,7 @@ void Application::OnRenamePropertyEvent(const RenamePropertyEvent& event)
   Execute<RenamePropertyCmd>(mModel, event.old_name, event.new_name);
 }
 
-void Application::OnSetPropertyValueEvent(const UpdatePropertyEvent& event)
+void Application::OnUpdatePropertyEvent(const UpdatePropertyEvent& event)
 {
   Execute<UpdatePropertyCmd>(mModel, std::string{event.name}, event.value);
 }

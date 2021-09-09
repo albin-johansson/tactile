@@ -59,7 +59,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<AddPropertyEvent>().connect<&App::OnAddPropertyEvent>(app);
   dispatcher.sink<RemovePropertyEvent>().connect<&App::OnRemovePropertyEvent>(app);
   dispatcher.sink<RenamePropertyEvent>().connect<&App::OnRenamePropertyEvent>(app);
-  dispatcher.sink<UpdatePropertyEvent>().connect<&App::OnSetPropertyValueEvent>(app);
+  dispatcher.sink<UpdatePropertyEvent>().connect<&App::OnUpdatePropertyEvent>(app);
   dispatcher.sink<ChangePropertyTypeEvent>().connect<&App::OnChangePropertyTypeEvent>(app);
 
   dispatcher.sink<SetTilesetSelectionEvent>().connect<&App::OnSetTilesetSelectionEvent>(app);
