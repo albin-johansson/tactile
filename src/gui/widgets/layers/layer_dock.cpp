@@ -10,7 +10,9 @@
 #include "core/systems/layer_system.hpp"
 #include "events/layer_events.hpp"
 #include "gui/icons.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
+#include "gui/widgets/common/centered_text.hpp"
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
 
@@ -81,25 +83,32 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
   if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse))
   {
     UpdateLayerDockButtons(registry, dispatcher);
-    const auto windowHeight = ImGui::GetWindowHeight();
-    const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
-    const auto size = ImVec2{std::numeric_limits<float>::min(),
-                             windowHeight - (4 * textLineHeight)};
-
-    if (ImGui::BeginListBox("##LayerTreeNode", size))
+    if (registry.empty<Layer>())
     {
-      for (auto&& [entity, layer] : registry.view<Layer>().each())
-      {
-        /* Note, we rely on the Layer pool being sorted by layer index, so we can't
-           include Parent in the view query directly. */
-        const auto& parent = registry.get<Parent>(entity);
-        if (parent.entity == entt::null)
-        {
-          LayerItem(registry, dispatcher, entity, layer);
-        }
-      }
+      PrepareVerticalAlignmentCenter(1);
+      CenteredText("No available layers!");
+    }
+    else
+    {
+      const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
+      const auto size = ImVec2{std::numeric_limits<float>::min(),
+                               ImGui::GetWindowHeight() - (4 * textLineHeight)};
 
-      ImGui::EndListBox();
+      if (ImGui::BeginListBox("##LayerTreeNode", size))
+      {
+        for (auto&& [entity, layer] : registry.view<Layer>().each())
+        {
+          /* Note, we rely on the Layer pool being sorted, so we can't include Parent
+             in the view query directly. */
+          const auto& parent = registry.get<Parent>(entity);
+          if (parent.entity == entt::null)
+          {
+            LayerItem(registry, dispatcher, entity, layer);
+          }
+        }
+
+        ImGui::EndListBox();
+      }
     }
   }
 
