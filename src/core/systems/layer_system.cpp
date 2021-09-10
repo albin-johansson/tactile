@@ -343,10 +343,16 @@ void SortLayers(entt::registry& registry)
 void RemoveLayer(entt::registry& registry, const entt::entity entity)
 {
   /* Reset the active layer if we're removing the active layer. */
-  auto& active = registry.ctx<ActiveLayer>();
-  if (entity == active.entity)
+  auto& activeLayer = registry.ctx<ActiveLayer>();
+  if (entity == activeLayer.entity)
   {
-    active.entity = entt::null;
+    activeLayer.entity = entt::null;
+  }
+
+  auto& activeContext = registry.ctx<ActivePropertyContext>();
+  if (entity == activeContext.entity)
+  {
+    activeContext.entity = entt::null;
   }
 
   /* Fix indices of siblings that are below the removed layer */
