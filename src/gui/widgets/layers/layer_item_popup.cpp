@@ -14,14 +14,29 @@ void UpdateLayerItemPopup(const entt::registry& registry,
 {
   if (ImGui::BeginPopupContextItem())
   {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties"))
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show layer properties"))
     {
       dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
     }
 
-    const auto isLayerVisible = Sys::IsLayerVisible(registry, id);
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle visibility",
+    ImGui::MenuItem(TAC_ICON_EDIT " Rename layer");  // TODO implement
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate layer"))
+    {
+      dispatcher.enqueue<DuplicateLayerEvent>(id);
+    }
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove layer"))
+    {
+      dispatcher.enqueue<RemoveLayerEvent>(id);
+    }
+
+    ImGui::Separator();
+    if (const auto isLayerVisible = Sys::IsLayerVisible(registry, id);
+        ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle layer visibility",
                         nullptr,
                         isLayerVisible))
     {
@@ -52,17 +67,6 @@ void UpdateLayerItemPopup(const entt::registry& registry,
                         Sys::CanMoveLayerDown(registry, id)))
     {
       dispatcher.enqueue<MoveLayerDownEvent>(id);
-    }
-
-    ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate layer"))
-    {
-      dispatcher.enqueue<DuplicateLayerEvent>(id);
-    }
-
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove layer"))
-    {
-      dispatcher.enqueue<RemoveLayerEvent>(id);
     }
 
     ImGui::EndPopup();
