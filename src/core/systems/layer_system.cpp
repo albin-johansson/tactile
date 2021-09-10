@@ -503,15 +503,6 @@ auto DuplicateLayer(entt::registry& registry,
     Copy<GroupLayer>(registry, source, copy);
   }
 
-#if TACTILE_DEBUG
-  const auto& layer = registry.get<Layer>(copy);
-  cen::log::debug(
-      "Created duplicated layer: {entity: [%u], parent: [%u], id: %i, index: %i }",
-      copy,
-      parent,
-      layer.id,
-      layer.index);
-#endif  // TACTILE_DEBUG
 
   return copy;
 }
