@@ -13,11 +13,14 @@ auto MakeRegistry() -> entt::registry
 {
   entt::registry registry;
 
-  registry.set<Map>();
   registry.set<ActiveLayer>();
   registry.set<ActiveTileset>();
   registry.set<ActivePropertyContext>();
   registry.set<ActiveTool>();
+
+  auto& map = registry.set<Map>();
+  map.row_count = 5_row;
+  map.column_count = 5_col;
 
   auto& viewport = registry.set<Viewport>();
   viewport.tile_width = 64;
