@@ -6,7 +6,6 @@
 #include <utility>    // move, swap
 #include <vector>     // erase
 
-#include "build.hpp"
 #include "copy.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
@@ -502,7 +501,6 @@ auto DuplicateLayer(entt::registry& registry,
   {
     Copy<GroupLayer>(registry, source, copy);
   }
-
 
   return copy;
 }
