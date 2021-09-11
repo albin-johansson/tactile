@@ -1,5 +1,6 @@
 #include "add_column_shortcut.hpp"
 
+#include "core/model.hpp"
 #include "events/map_events.hpp"
 
 namespace Tactile {
@@ -11,6 +12,11 @@ AddColumnShortcut::AddColumnShortcut()
 void AddColumnShortcut::Activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<AddColumnEvent>();
+}
+
+auto AddColumnShortcut::IsEnabled(const Model& model) const -> bool
+{
+  return model.HasActiveDocument();
 }
 
 }  // namespace Tactile

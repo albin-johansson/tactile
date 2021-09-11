@@ -10,6 +10,8 @@ class PanLeftShortcut final : public AShortcut
   PanLeftShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto IsEnabled(const Model& model) const -> bool override;
 };
 
 }  // namespace Tactile

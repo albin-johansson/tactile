@@ -10,6 +10,8 @@ class AddRowShortcut final : public AShortcut
   AddRowShortcut();
 
   void Activate(entt::dispatcher& dispatcher) override;
+
+  [[nodiscard]] auto IsEnabled(const Model& model) const -> bool override;
 };
 
 }  // namespace Tactile

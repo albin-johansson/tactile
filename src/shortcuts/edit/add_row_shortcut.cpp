@@ -1,5 +1,6 @@
 #include "add_row_shortcut.hpp"
 
+#include "core/model.hpp"
 #include "events/map_events.hpp"
 
 namespace Tactile {
@@ -11,6 +12,11 @@ AddRowShortcut::AddRowShortcut()
 void AddRowShortcut::Activate(entt::dispatcher& dispatcher)
 {
   dispatcher.enqueue<AddRowEvent>();
+}
+
+auto AddRowShortcut::IsEnabled(const Model& model) const -> bool
+{
+  return model.HasActiveDocument();
 }
 
 }  // namespace Tactile
