@@ -30,7 +30,6 @@ struct Tileset final
   int tile_count{};    ///< Number of tiles associated with the tileset.
   row_t row_count;     ///< Amount of tile rows.
   col_t column_count;  ///< Amount of tile columns.
-  std::filesystem::path image_path;  ///< File path of tileset image.
 };
 
 struct TilesetCache final

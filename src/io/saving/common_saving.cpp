@@ -16,11 +16,11 @@ auto ConvertToForwardSlashes(const std::filesystem::path& path) -> std::string
   return str;
 }
 
-[[nodiscard]] auto GetTilesetImagePath(const Tileset& tileset,
+[[nodiscard]] auto GetTilesetImagePath(const std::filesystem::path& image,
                                        const std::filesystem::path& dir)
     -> std::string
 {
-  const auto path = std::filesystem::relative(tileset.image_path, dir);
+  const auto path = std::filesystem::relative(image, dir);
   return ConvertToForwardSlashes(path);
 }
 

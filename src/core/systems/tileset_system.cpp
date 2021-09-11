@@ -75,7 +75,6 @@ auto MakeTileset(entt::registry& registry,
 
   auto& tileset = registry.emplace<Tileset>(entity);
   tileset.id = id;
-  tileset.image_path = info.path;
 
   tileset.tile_width = tileWidth;
   tileset.tile_height = tileHeight;
@@ -91,6 +90,7 @@ auto MakeTileset(entt::registry& registry,
   texture.id = info.texture;
   texture.width = info.width;
   texture.height = info.height;
+  texture.path = info.path;
 
   auto& uv = registry.emplace<UvTileSize>(entity);
   uv.width = static_cast<float>(tileWidth) / static_cast<float>(info.width);

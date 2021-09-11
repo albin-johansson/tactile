@@ -68,7 +68,7 @@ void AddCommonAttributes(JSON& json,
 
   json["name"] = context.name;
   json["columns"] = tileset.column_count.get();
-  json["image"] = GetTilesetImagePath(tileset, dir);
+  json["image"] = GetTilesetImagePath(texture.path, dir);
   json["imagewidth"] = texture.width;
   json["imageheight"] = texture.height;
   json["margin"] = 0;

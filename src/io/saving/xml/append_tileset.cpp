@@ -61,7 +61,7 @@ void AddCommon(pugi::xml_node node,
 
   {
     auto imageNode = node.append_child("image");
-    const auto source = GetTilesetImagePath(tileset, dir);
+    const auto source = GetTilesetImagePath(texture.path, dir);
     imageNode.append_attribute("source").set_value(source.c_str());
     imageNode.append_attribute("width").set_value(texture.width);
     imageNode.append_attribute("height").set_value(texture.height);
