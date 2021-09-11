@@ -59,7 +59,7 @@ auto Model::CanSaveDocument() const -> bool
   if (mActiveMap)
   {
     const auto& document = mDocuments.at(*mActiveMap);
-    return !document->path.empty() || !document->commands.IsClean();
+    return !document->commands.IsClean();
   }
   else
   {
