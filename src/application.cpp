@@ -209,6 +209,9 @@ void Application::OnSaveEvent()
     {
       IO::SaveMapDocument(*document);
       document->commands.MarkAsClean();
+
+      auto& context = document->registry.ctx<PropertyContext>();
+      context.name = document->path.filename().string();
     }
     else
     {
