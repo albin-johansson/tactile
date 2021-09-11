@@ -10,8 +10,6 @@
 #include "objects/render_ellipse.hpp"
 #include "objects/render_point.hpp"
 #include "objects/render_rect.hpp"
-#include "render_bounds.hpp"
-#include "render_info.hpp"
 
 namespace Tactile {
 
@@ -26,34 +24,25 @@ void RenderObjectLayer(const entt::registry& registry,
   const auto opacity = 255.0f * (parentOpacity * layer.opacity);
   const auto color = IM_COL32(0xFF, 0, 0, opacity);
 
-  // TODO consider adding to RenderInfo
-  const auto ratio = info.grid_size / info.tile_size;
-  const auto boundsRect = ConvertBoundsToRect(info);
-
   for (const auto objectEntity : objectLayer.objects)
   {
     const auto& object = registry.get<Object>(objectEntity);
 
     const auto localPos = ImVec2{object.x, object.y};
-    const auto absolutePos = info.map_position + (localPos * ratio);
+    const auto absolutePos = info.map_position + (localPos * info.ratio);
 
     switch (object.type)
     {
       case ObjectType::Point:
-        RenderPoint(registry,
-                    objectEntity,
-                    absolutePos,
-                    boundsRect,
-                    color,
-                    info.grid_size.x);
+        RenderPoint(registry, objectEntity, info, absolutePos, color);
         break;
 
       case ObjectType::Ellipse:
-        RenderEllipse(registry, objectEntity, absolutePos, ratio, color);
+        RenderEllipse(registry, objectEntity, info, absolutePos, color);
         break;
 
       case ObjectType::Rectangle:
-        RenderRect(registry, objectEntity, absolutePos, boundsRect, color, ratio);
+        RenderRect(registry, objectEntity, info, absolutePos, color);
         break;
     }
   }

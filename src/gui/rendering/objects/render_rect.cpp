@@ -29,17 +29,16 @@ void RenderName(const CStr name, const ImVec2& position, const ImVec2& rectSize)
 
 void RenderRect(const entt::registry& registry,
                 const entt::entity entity,
+                const RenderInfo& info,
                 const ImVec2& position,
-                const cen::frect& bounds,
-                const uint32 color,
-                const ImVec2& ratio)
+                const uint32 color)
 {
   const auto& object = registry.get<Object>(entity);
   assert(object.type == ObjectType::Rectangle);
 
-  const auto size = ImVec2{object.width, object.height} * ratio;
+  const auto size = ImVec2{object.width, object.height} * info.ratio;
   const auto rect = cen::frect{position.x, position.y, size.x, size.y};
-  if (cen::intersects(bounds, rect))
+  if (cen::intersects(info.bounds_rect, rect))
   {
     RenderShadowedRect(position, size, color, 2);
 

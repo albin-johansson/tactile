@@ -31,22 +31,21 @@ void RenderName(const CStr name, const ImVec2& position, const float gridWidth)
 
 void RenderPoint(const entt::registry& registry,
                  const entt::entity entity,
+                 const RenderInfo& info,
                  const ImVec2& position,
-                 const cen::frect& bounds,
-                 const uint32 color,
-                 const float gridWidth)
+                 const uint32 color)
 {
   const auto& object = registry.get<Object>(entity);
   assert(object.type == ObjectType::Point);
 
-  if (bounds.contains(cen::fpoint{position.x, position.y}))
+  if (info.bounds_rect.contains(cen::fpoint{position.x, position.y}))
   {
     RenderShadowedCircle(position, radius, color, thickness);
 
     const auto& context = registry.get<PropertyContext>(entity);
     if (!context.name.empty())
     {
-      RenderName(context.name.c_str(), position, gridWidth);
+      RenderName(context.name.c_str(), position, info.grid_size.x);
     }
   }
 }

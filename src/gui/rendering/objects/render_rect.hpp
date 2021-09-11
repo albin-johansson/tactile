@@ -4,6 +4,7 @@
 #include <entt.hpp>       // registry, entity
 
 #include "aliases/ints.hpp"
+#include "gui/rendering/render_info.hpp"
 
 struct ImVec2;
 
@@ -18,15 +19,13 @@ namespace Tactile {
  *
  * \param registry the associated registry.
  * \param entity the point entity.
- * \param bounds the current render bounds.
+ * \param info the current render info.
  * \param color the foreground color of the rectangle.
- * \param ratio the ratio between the viewport tile size and the logical tile size.
  */
 void RenderRect(const entt::registry& registry,
                 entt::entity entity,
+                const RenderInfo& info,
                 const ImVec2& position,
-                const cen::frect& bounds,
-                uint32 color,
-                const ImVec2& ratio);
+                uint32 color);
 
 }  // namespace Tactile

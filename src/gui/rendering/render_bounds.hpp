@@ -23,16 +23,6 @@ struct RenderInfo;
 [[nodiscard]] auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info)
     -> Region;
 
-/**
- * \brief Converts the render bounds associated with a rendering context to an
- * ordinary rectangle.
- *
- * \param info the rendering context information that provides the render bounds.
- *
- * \return the render bounds as a rectangle.
- */
-[[nodiscard]] auto ConvertBoundsToRect(const RenderInfo& info) -> cen::frect;
-
 /// \} End of group rendering
 
 }  // namespace Tactile

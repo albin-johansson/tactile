@@ -28,15 +28,15 @@ void RenderName(const CStr name, const ImVec2& center, const ImVec2& radius)
 
 void RenderEllipse(const entt::registry& registry,
                    const entt::entity entity,
+                   const RenderInfo& info,
                    const ImVec2& position,
-                   const ImVec2& ratio,
                    const uint32 color)
 {
   const auto& object = registry.get<Object>(entity);
   assert(object.type == ObjectType::Ellipse);
 
-  const auto xRadius = 0.5f * object.width * ratio.x;
-  const auto yRadius = 0.5f * object.height * ratio.y;
+  const auto xRadius = 0.5f * object.width * info.ratio.x;
+  const auto yRadius = 0.5f * object.height * info.ratio.y;
 
   const auto center = position + ImVec2{xRadius, yRadius};
 
