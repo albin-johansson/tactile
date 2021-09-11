@@ -1,7 +1,10 @@
 #include "save_as_dialog.hpp"
 
+#include <portable-file-dialogs.h>
+
+#include <utility>  // move
+
 #include "events/save_as_event.hpp"
-#include "gui/widgets/common/file_dialog.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -15,19 +18,24 @@ void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
 {
   if (show)
   {
-    const auto filter =
-        (Prefs::GetPreferredFormat() == "JSON") ? ".json,.tmx" : ".tmx,.json";
-    const auto res = FileDialogExport("SaveAsDialog", "Save as...", filter);
+    auto path = pfd::save_file{"Save as...",
+                               "",
+                               {"JSON File", "*.json", "TMX File", "*.tmx"}}
+                    .result();
 
-    if (res == FileDialogResult::Success)
+    if (!path.ends_with(".json") || !path.ends_with(".tmx"))
     {
-      dispatcher.enqueue<SaveAsEvent>(GetFileDialogSelectedPath());
-      show = false;
+      CENTURION_LOG_INFO(
+          "No suffix in requested file path, using preferred format...");
+      path += (Prefs::GetPreferredFormat() == "JSON") ? ".json" : ".tmx";
     }
-    else if (res == FileDialogResult::Close)
+
+    if (!path.empty())
     {
-      show = false;
+      dispatcher.enqueue<SaveAsEvent>(std::move(path));
     }
+
+    show = false;
   }
 }
 
