@@ -16,7 +16,7 @@ void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto IncreaseViewportZoomShortcut::IsEnabled(const Model& model) const -> bool
 {
-  return model.GetActiveDocument() != nullptr;
+  return model.HasActiveDocument();
 }
 
 }  // namespace Tactile
