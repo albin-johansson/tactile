@@ -49,7 +49,6 @@ void UpdateCreditsDialog(bool* open)
       Row("EnTT", "3.8.1", "MIT");
       Row("GLEW", "2.2.0", "BSD/MIT");
       Row("IconFontCppHeaders", "N/A", "Zlib");
-      Row("ImGuiFileDialog", "0.5.5", "MIT");
       Row("JSON for Modern C++", "3.9.1", "MIT");
       Row("Nenya", "0.1.0", "MIT");
       Row("portable-file-dialogs", "0.1.0", "WTFPL");

@@ -228,8 +228,6 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/common/combo.hpp
     gui/widgets/common/docking_toolbar.cpp
     gui/widgets/common/docking_toolbar.hpp
-    gui/widgets/common/file_dialog.cpp
-    gui/widgets/common/file_dialog.hpp
     gui/widgets/common/help_marker.cpp
     gui/widgets/common/help_marker.hpp
     gui/widgets/common/mouse_tracker.cpp

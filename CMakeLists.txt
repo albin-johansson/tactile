@@ -35,11 +35,7 @@ set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imgui_widgets.cpp
     ${LIBRARY_DIR}/imgui/imstb_rectpack.h
     ${LIBRARY_DIR}/imgui/imstb_textedit.h
-    ${LIBRARY_DIR}/imgui/imstb_truetype.h
-
-    ${LIBRARY_DIR}/imgui/ImGuiFileDialog.cpp
-    ${LIBRARY_DIR}/imgui/ImGuiFileDialog.h
-    ${LIBRARY_DIR}/imgui/ImGuiFileDialogConfig.h)
+    ${LIBRARY_DIR}/imgui/imstb_truetype.h)
 
 set(PUGIXML_SOURCES
     ${LIBRARY_DIR}/pugixml/pugiconfig.hpp
