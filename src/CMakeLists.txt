@@ -491,6 +491,16 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_definitions(libtactile PUBLIC MSVC)
 endif ()
 
+target_precompile_headers(libtactile
+    PRIVATE
+      <entt.hpp>
+      <json.hpp>
+      <centurion.hpp>
+      <rune/everything.hpp>
+      <init/ini.hpp>
+      <nenya.hpp>
+    )
+
 target_include_directories(libtactile
     PUBLIC ${TACTILE_ROOT_DIR}/src
     SYSTEM PUBLIC ${LIBRARY_DIR}/glew
@@ -517,7 +527,7 @@ target_link_libraries(libtactile
     PUBLIC libStbImage)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  target_compile_options(libtactile PRIVATE
+  target_compile_options(libtactile PUBLIC
       /EHsc
       /MP
       /W3
@@ -537,6 +547,7 @@ else ()
       main.cpp)
 endif ()
 
+target_precompile_headers(Tactile REUSE_FROM libtactile)
 add_dependencies(Tactile libtactile)
 
 target_link_libraries(Tactile PUBLIC libtactile)

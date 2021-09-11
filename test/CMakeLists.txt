@@ -45,6 +45,8 @@ add_executable(TactileTests ${TACTILE_TEST_FILES})
 
 add_definitions(-DCENTURION_NO_SDL_MIXER)
 
+target_precompile_headers(TactileTests REUSE_FROM libtactile)
+
 target_include_directories(TactileTests
     PUBLIC unit
     PUBLIC ${TACTILE_ROOT_DIR}/src
