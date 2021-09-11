@@ -52,6 +52,7 @@ void UpdateCreditsDialog(bool* open)
       Row("ImGuiFileDialog", "0.5.5", "MIT");
       Row("JSON for Modern C++", "3.9.1", "MIT");
       Row("Nenya", "0.1.0", "MIT");
+      Row("portable-file-dialogs", "0.1.0", "WTFPL");
       Row("pugixml", "1.11.4", "MIT");
       Row("Rune", "0.1.0", "MIT");
       Row("SDL", "2.0.14", "Zlib");
