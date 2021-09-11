@@ -1,6 +1,7 @@
 #include "tileset_dialog.hpp"
 
 #include <imgui.h>
+#include <portable-file-dialogs.h>
 
 #include <array>       // array
 #include <filesystem>  // path
@@ -8,7 +9,6 @@
 #include "aliases/ints.hpp"
 #include "events/tileset_events.hpp"
 #include "gui/widgets/common/button.hpp"
-#include "gui/widgets/common/file_dialog.hpp"
 #include "io/preferences.hpp"
 #include "utils/buffer_utils.hpp"
 
@@ -20,34 +20,27 @@ constinit std::array<char, 100> path_preview_buffer{};
 constinit int tile_width = 32;
 constinit int tile_height = 32;
 
-constinit bool show_image_file_dialog = false;
-
 void ShowImageFileDialog()
 {
-  const auto filter = ".png,.jpg";
-  const auto res =
-      FileDialogImport("TilesetImageFileDialog", "Select image", filter);
+  auto files =
+      pfd::open_file{"Select image", "", {"Image Files", "*.png *.jpg"}}.result();
 
-  if (res == FileDialogResult::Success)
+  if (files.empty())
   {
-    full_image_path = GetFileDialogSelectedPath();
-    const auto pathStr = full_image_path.string();
-
-    if (pathStr.size() > path_preview_buffer.size())
-    {
-      const auto name = full_image_path.filename();
-      CopyStringIntoBuffer(path_preview_buffer, name.string());
-    }
-    else
-    {
-      CopyStringIntoBuffer(path_preview_buffer, pathStr);
-    }
-
-    show_image_file_dialog = false;
+    return;
   }
-  else if (res == FileDialogResult::Close)
+
+  full_image_path = files.front();
+  const auto pathStr = full_image_path.string();
+
+  if (pathStr.size() > path_preview_buffer.size())
   {
-    show_image_file_dialog = false;
+    const auto name = full_image_path.filename();
+    CopyStringIntoBuffer(path_preview_buffer, name.string());
+  }
+  else
+  {
+    CopyStringIntoBuffer(path_preview_buffer, pathStr);
   }
 }
 
@@ -78,14 +71,15 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
 
     if (ImGui::Button("Select image..."))
     {
-      show_image_file_dialog = true;
+      ShowImageFileDialog();
     }
 
     ImGui::SameLine();
-    ImGui::InputText("Source",
-                     path_preview_buffer.data(),
-                     path_preview_buffer.size(),
-                     ImGuiInputTextFlags_ReadOnly);
+    ImGui::InputTextWithHint("##Source",
+                             "Source image path",
+                             path_preview_buffer.data(),
+                             path_preview_buffer.size(),
+                             ImGuiInputTextFlags_ReadOnly);
     ImGui::InputInt("Tile width", &tile_width);
     ImGui::InputInt("Tile height", &tile_height);
 
@@ -109,11 +103,6 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
   }
 
   ImGui::End();
-
-  if (show_image_file_dialog)
-  {
-    ShowImageFileDialog();
-  }
 }
 
 }  // namespace Tactile
