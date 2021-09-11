@@ -249,6 +249,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/dialogs/save_as_dialog.hpp
     gui/widgets/dialogs/settings_dialog.cpp
     gui/widgets/dialogs/settings_dialog.hpp
+    gui/widgets/dialogs/rename_dialog.cpp
+    gui/widgets/dialogs/rename_dialog.hpp
 
     gui/widgets/layers/add_layer_popup.cpp
     gui/widgets/layers/add_layer_popup.hpp

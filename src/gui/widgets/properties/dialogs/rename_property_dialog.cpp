@@ -1,75 +1,37 @@
 #include "rename_property_dialog.hpp"
 
-#include <imgui.h>
-
-#include <array>    // array
 #include <utility>  // move
 
 #include "aliases/maybe.hpp"
-#include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
 #include "events/property_events.hpp"
-#include "gui/widgets/common/button.hpp"
-#include "utils/buffer_utils.hpp"
+#include "gui/widgets/dialogs/rename_dialog.hpp"
 
 namespace Tactile {
 namespace {
 
 inline Maybe<std::string> old_name;
-constinit std::array<char, 100> name_buffer{};
-constinit bool is_input_valid = false;
-
-void ResetState()
-{
-  ZeroBuffer(name_buffer);
-  old_name.reset();
-  is_input_valid = false;
-}
 
 }  // namespace
 
 void UpdateRenamePropertyDialog(const entt::registry& registry,
                                 entt::dispatcher& dispatcher)
 {
-  constexpr auto flags =
-      ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  if (ImGui::BeginPopupModal("Rename property", nullptr, flags))
-  {
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Name: ");
+  auto validator = [](const entt::registry& registry, const std::string_view name) {
+    return !name.empty() && !Sys::HasPropertyWithName(registry, name);
+  };
 
-    ImGui::SameLine();
-    if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer))
-    {
-      const auto name = CreateStringFromBuffer(name_buffer);
-      is_input_valid = !name.empty() && !Sys::HasPropertyWithName(registry, name);
-    }
+  auto callback = [](entt::dispatcher& dispatcher, std::string name) {
+    dispatcher.enqueue<RenamePropertyEvent>(old_name.value(), std::move(name));
+  };
 
-    ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid))
-    {
-      auto name = CreateStringFromBuffer(name_buffer);
-      dispatcher.enqueue<RenamePropertyEvent>(old_name.value(), std::move(name));
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::SameLine();
-    if (ImGui::Button("Cancel"))
-    {
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::EndPopup();
-  }
+  UpdateRenameDialog("Rename property", registry, dispatcher, validator, callback);
 }
 
 void OpenRenamePropertyDialog(std::string name)
 {
   old_name = std::move(name);
-  CopyStringIntoBuffer(name_buffer, old_name.value());
-  ImGui::OpenPopup("Rename property");
+  OpenRenameDialog("Rename property", *old_name);
 }
 
 }  // namespace Tactile

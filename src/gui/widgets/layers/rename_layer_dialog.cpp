@@ -1,77 +1,40 @@
 #include "rename_layer_dialog.hpp"
 
-#include <imgui.h>
-
-#include <array>    // array
 #include <string>   // string
 #include <utility>  // move
 
 #include "aliases/maybe.hpp"
 #include "events/layer_events.hpp"
 #include "gui/widgets/common/button.hpp"
-#include "utils/buffer_utils.hpp"
+#include "gui/widgets/dialogs/rename_dialog.hpp"
 
 namespace Tactile {
 namespace {
 
 inline Maybe<LayerID> target_id;
 inline Maybe<std::string> old_name;
-constinit std::array<char, 100> name_buffer{};
-constinit bool is_input_valid = false;
-
-void ResetState()
-{
-  ZeroBuffer(name_buffer);
-  target_id.reset();
-  old_name.reset();
-  is_input_valid = false;
-}
 
 }  // namespace
 
 void UpdateRenameLayerDialog(const entt::registry& registry,
                              entt::dispatcher& dispatcher)
 {
-  constexpr auto flags =
-      ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
-  if (ImGui::BeginPopupModal("Rename layer", nullptr, flags))
-  {
-    ImGui::AlignTextToFramePadding();
-    ImGui::TextUnformatted("Name: ");
+  auto validator = [](const entt::registry& registry, const std::string_view name) {
+    return !name.empty() && old_name != name;
+  };
 
-    ImGui::SameLine();
-    if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer))
-    {
-      const auto name = CreateStringFromBuffer(name_buffer);
-      is_input_valid = !name.empty() && old_name != name;
-    }
+  auto callback = [](entt::dispatcher& dispatcher, std::string name) {
+    dispatcher.enqueue<RenameLayerEvent>(target_id.value(), std::move(name));
+  };
 
-    ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid))
-    {
-      auto name = CreateStringFromBuffer(name_buffer);
-      dispatcher.enqueue<RenameLayerEvent>(target_id.value(), std::move(name));
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::SameLine();
-    if (ImGui::Button("Cancel"))
-    {
-      ResetState();
-      ImGui::CloseCurrentPopup();
-    }
-
-    ImGui::EndPopup();
-  }
+  UpdateRenameDialog("Rename layer", registry, dispatcher, validator, callback);
 }
 
-void OpenRenameLayerDialog(const LayerID id, const std::string_view oldName)
+void OpenRenameLayerDialog(const LayerID id, std::string oldName)
 {
   target_id = id;
-  old_name = std::string{oldName};
-  CopyStringIntoBuffer(name_buffer, oldName);
-  ImGui::OpenPopup("Rename layer");
+  old_name = std::move(oldName);
+  OpenRenameDialog("Rename layer", *old_name);
 }
 
 }  // namespace Tactile
