@@ -147,7 +147,8 @@ void ShowExportTab()
         Combo("Preferred format:",
               "JSON\0TMX\0\0",
               &index,
-              "The default save file format."))
+              "The save file format used if no file extension is specified when "
+              "saving maps."))
     {
       settings.preferred_format = (index == 0) ? "JSON" : "TMX";
     }
