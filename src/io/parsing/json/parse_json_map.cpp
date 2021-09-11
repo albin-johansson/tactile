@@ -94,6 +94,32 @@ namespace {
   }
 }
 
+[[nodiscard]] auto ParseWidth(const JSON& json, int& width) -> ParseError
+{
+  if (const auto it = json.find("width"); it != json.end())
+  {
+    width = it->get<int>();
+    return ParseError::None;
+  }
+  else
+  {
+    return ParseError::MapMissingWidth;
+  }
+}
+
+[[nodiscard]] auto ParseHeight(const JSON& json, int& height) -> ParseError
+{
+  if (const auto it = json.find("height"); it != json.end())
+  {
+    height = it->get<int>();
+    return ParseError::None;
+  }
+  else
+  {
+    return ParseError::MapMissingHeight;
+  }
+}
+
 }  // namespace
 
 auto ParseJsonMap(const std::filesystem::path& path, MapData& data) -> ParseError
@@ -140,9 +166,15 @@ auto ParseJsonMap(const std::filesystem::path& path, MapData& data) -> ParseErro
     return err;
   }
 
-  // TODO possible parse errors
-  json.at("width").get_to(data.column_count);
-  json.at("height").get_to(data.row_count);
+  if (const auto err = ParseWidth(json, data.column_count); err != ParseError::None)
+  {
+    return err;
+  }
+
+  if (const auto err = ParseHeight(json, data.row_count); err != ParseError::None)
+  {
+    return err;
+  }
 
   const auto directory = data.absolute_path.parent_path();
   if (const auto err = ParseTilesets(json, data.tilesets, directory);

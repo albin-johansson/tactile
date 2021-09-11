@@ -30,6 +30,8 @@ enum class ParseError
   MapMissingLayers,
   MapMissingTileWidth,
   MapMissingTileHeight,
+  MapMissingWidth,
+  MapMissingHeight,
 
   LayerMissingWidth,
   LayerMissingHeight,

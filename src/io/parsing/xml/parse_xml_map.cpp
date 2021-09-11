@@ -94,6 +94,32 @@ namespace {
   }
 }
 
+[[nodiscard]] auto ParseWidth(const pugi::xml_node root, int& width) -> ParseError
+{
+  if (const auto value = GetInt(root, "width"))
+  {
+    width = *value;
+    return ParseError::None;
+  }
+  else
+  {
+    return ParseError::MapMissingWidth;
+  }
+}
+
+[[nodiscard]] auto ParseHeight(const pugi::xml_node root, int& height) -> ParseError
+{
+  if (const auto value = GetInt(root, "height"))
+  {
+    height = *value;
+    return ParseError::None;
+  }
+  else
+  {
+    return ParseError::MapMissingHeight;
+  }
+}
+
 }  // namespace
 
 auto ParseXmlMap(const std::filesystem::path& path, MapData& data) -> ParseError
@@ -146,9 +172,15 @@ auto ParseXmlMap(const std::filesystem::path& path, MapData& data) -> ParseError
     return err;
   }
 
-  // TODO possible parse errors
-  data.column_count = root.attribute("width").as_int();
-  data.row_count = root.attribute("height").as_int();
+  if (const auto err = ParseWidth(root, data.column_count); err != ParseError::None)
+  {
+    return err;
+  }
+
+  if (const auto err = ParseHeight(root, data.row_count); err != ParseError::None)
+  {
+    return err;
+  }
 
   const auto directory = data.absolute_path.parent_path();
   if (const auto err = ParseTilesets(root, data.tilesets, directory);

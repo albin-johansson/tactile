@@ -47,6 +47,12 @@ auto GetCause(const ParseError error) -> CStr
     case ParseError::MapMissingTileHeight:
       return "The map was missing a tile height attribute!";
 
+    case ParseError::MapMissingWidth:
+      return "The map had no width attribute!";
+
+    case ParseError::MapMissingHeight:
+      return "The map had no height attribute!";
+
     case ParseError::LayerMissingWidth:
       return "The map featured a layer without a width!";
 
@@ -142,6 +148,12 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
 
     case ParseError::MapMissingTileHeight:
       return stream << "MapMissingTileHeight";
+
+    case ParseError::MapMissingWidth:
+      return stream << "MapMissingWidth";
+
+    case ParseError::MapMissingHeight:
+      return stream << "MapMissingHeight";
 
     case ParseError::LayerMissingWidth:
       return stream << "LayerMissingWidth";
