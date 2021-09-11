@@ -6,7 +6,6 @@
 #include <utility>    // move, swap
 #include <vector>     // erase
 
-#include "copy.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
@@ -16,6 +15,7 @@
 #include "core/components/property_context.hpp"
 #include "core/components/tile_layer.hpp"
 #include "core/map.hpp"
+#include "duplicate_comp.hpp"
 #include "property_system.hpp"
 #include "tile_layer_system.hpp"
 
@@ -468,7 +468,7 @@ auto DuplicateLayer(entt::registry& registry,
   }
 
   {
-    auto& context = Copy<PropertyContext>(registry, source, copy);
+    auto& context = DuplicateComp<PropertyContext>(registry, source, copy);
     if (!recursive)
     {
       context.name += " (Copy)";
@@ -477,7 +477,7 @@ auto DuplicateLayer(entt::registry& registry,
 
   {
     auto& map = registry.ctx<Map>();
-    auto& layer = Copy<Layer>(registry, source, copy);
+    auto& layer = DuplicateComp<Layer>(registry, source, copy);
     layer.id = map.next_layer_id;
 
     if (!recursive)
@@ -491,15 +491,15 @@ auto DuplicateLayer(entt::registry& registry,
 
   if (registry.all_of<TileLayer>(source))
   {
-    Copy<TileLayer>(registry, source, copy);
+    DuplicateComp<TileLayer>(registry, source, copy);
   }
   else if (registry.all_of<ObjectLayer>(source))
   {
-    Copy<ObjectLayer>(registry, source, copy);
+    DuplicateComp<ObjectLayer>(registry, source, copy);
   }
   else if (registry.all_of<GroupLayer>(source))
   {
-    Copy<GroupLayer>(registry, source, copy);
+    DuplicateComp<GroupLayer>(registry, source, copy);
   }
 
   return copy;

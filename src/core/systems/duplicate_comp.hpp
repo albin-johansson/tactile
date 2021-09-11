@@ -14,19 +14,19 @@
 
 namespace Tactile::Sys {
 
-// TODO rename to something like "Duplicate"
 template <typename T>
-auto Copy(entt::registry& registry,
-          const entt::entity source,
-          const entt::entity destination) -> T&
+auto DuplicateComp(entt::registry& registry,
+                   const entt::entity source,
+                   const entt::entity destination) -> T&
 {
   return registry.emplace<T>(destination, registry.get<T>(source));
 }
 
 template <>
-inline auto Copy<PropertyContext>(entt::registry& registry,
-                                  const entt::entity source,
-                                  const entt::entity destination) -> PropertyContext&
+inline auto DuplicateComp<PropertyContext>(entt::registry& registry,
+                                           const entt::entity source,
+                                           const entt::entity destination)
+    -> PropertyContext&
 {
   auto& context = AddPropertyContext(registry, destination);
 
@@ -38,16 +38,17 @@ inline auto Copy<PropertyContext>(entt::registry& registry,
     const auto propertyEntity = registry.create();
     context.properties.push_back(propertyEntity);
 
-    Copy<Property>(registry, srcPropertyEntity, propertyEntity);
+    DuplicateComp<Property>(registry, srcPropertyEntity, propertyEntity);
   }
 
   return context;
 }
 
 template <>
-inline auto Copy<ObjectLayer>(entt::registry& registry,
-                              const entt::entity source,
-                              const entt::entity destination) -> ObjectLayer&
+inline auto DuplicateComp<ObjectLayer>(entt::registry& registry,
+                                       const entt::entity source,
+                                       const entt::entity destination)
+    -> ObjectLayer&
 {
   auto& map = registry.ctx<Map>();
   auto& layer = registry.emplace<ObjectLayer>(destination);
@@ -58,9 +59,9 @@ inline auto Copy<ObjectLayer>(entt::registry& registry,
     const auto objectEntity = registry.create();
     layer.objects.push_back(objectEntity);
 
-    Copy<PropertyContext>(registry, sourceObject, objectEntity);
+    DuplicateComp<PropertyContext>(registry, sourceObject, objectEntity);
 
-    auto& object = Copy<Object>(registry, sourceObject, objectEntity);
+    auto& object = DuplicateComp<Object>(registry, sourceObject, objectEntity);
     object.id = map.next_object_id;
     ++map.next_object_id;
   }
@@ -74,9 +75,9 @@ auto DuplicateLayer(entt::registry& registry,
                     bool recursive) -> entt::entity;
 
 template <>
-inline auto Copy<GroupLayer>(entt::registry& registry,
-                             const entt::entity source,
-                             const entt::entity destination) -> GroupLayer&
+inline auto DuplicateComp<GroupLayer>(entt::registry& registry,
+                                      const entt::entity source,
+                                      const entt::entity destination) -> GroupLayer&
 {
   auto& map = registry.ctx<Map>();
 

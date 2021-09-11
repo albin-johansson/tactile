@@ -129,7 +129,7 @@ set(TACTILE_SOURCE_FILES
     core/systems/animation_system.hpp
     core/systems/bucket_tool_system.cpp
     core/systems/bucket_tool_system.hpp
-    core/systems/copy.hpp
+    core/systems/duplicate_comp.hpp
     core/systems/eraser_tool_system.cpp
     core/systems/eraser_tool_system.hpp
     core/systems/layer_snapshot.hpp
