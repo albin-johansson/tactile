@@ -53,6 +53,7 @@ enum class ParseError
 
   CouldNotParseProperty,
   PropertyMissingName,
+  PropertyMissingType,
   PropertyUnknownType,
 
   ObjectMissingId

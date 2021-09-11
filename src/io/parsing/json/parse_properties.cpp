@@ -82,7 +82,7 @@ namespace {
   }
   else
   {
-    return ParseError::CouldNotParseProperty;  // TODO PropertyMissingType
+    return ParseError::PropertyMissingType;
   }
 
   return ParseError::None;

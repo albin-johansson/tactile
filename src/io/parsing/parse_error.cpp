@@ -104,6 +104,9 @@ auto GetCause(const ParseError error) -> CStr
     case ParseError::PropertyMissingName:
       return "The map featured a property without a name!";
 
+    case ParseError::PropertyMissingType:
+      return "The map featured a property without a type!";
+
     case ParseError::PropertyUnknownType:
       return "The map featured a property with an unknown type!";
 
@@ -208,6 +211,9 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
 
     case ParseError::PropertyMissingName:
       return stream << "PropertyMissingName";
+
+    case ParseError::PropertyMissingType:
+      return stream << "PropertyMissingType";
 
     case ParseError::PropertyUnknownType:
       return stream << "PropertyUnknownType";

@@ -48,6 +48,7 @@ inline const auto maps = testing::Values(
     std::make_pair(JSON_INVALID "tileset_image_does_not_exist.json", PE::TilesetImageDoesNotExist),
     std::make_pair(JSON_INVALID "could_not_parse_property.json", PE::CouldNotParseProperty),
     std::make_pair(JSON_INVALID "property_missing_name.json", PE::PropertyMissingName),
+    std::make_pair(JSON_INVALID "property_missing_type.json", PE::PropertyMissingType),
     std::make_pair(JSON_INVALID "property_unknown_type.json", PE::PropertyUnknownType),
 
     std::make_pair("resources/xml/embedded.tmx", PE::None),
