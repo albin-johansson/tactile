@@ -485,8 +485,7 @@ target_compile_definitions(libtactile
     PUBLIC IMGUI_DEFINE_MATH_OPERATORS)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-  # ImGuiFileDialog needs this to avoid unsafe C-functions
-  target_compile_definitions(libtactile PUBLIC MSVC)
+  target_compile_definitions(libtactile PUBLIC _CRT_SECURE_NO_WARNINGS)
 endif ()
 
 target_precompile_headers(libtactile
