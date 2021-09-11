@@ -1,6 +1,9 @@
 #include "file_menu.hpp"
 
 #include <imgui.h>
+#include <portable-file-dialogs.h>
+
+#include <utility>  // move
 
 #include "core/model.hpp"
 #include "events/map_events.hpp"
@@ -8,7 +11,6 @@
 #include "events/save_as_request_event.hpp"
 #include "events/save_event.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/common/file_dialog.hpp"
 #include "gui/widgets/dialogs/add_map_dialog.hpp"
 #include "gui/widgets/dialogs/settings_dialog.hpp"
 #include "io/preferences.hpp"
@@ -34,16 +36,15 @@ constinit bool show_open_map_dialog = false;
 
 void ShowMapFileDialog(entt::dispatcher& dispatcher)
 {
-  const auto result = FileDialogImport("MapFileDialog", "Open map...", GetFilter());
-  if (result == FileDialogResult::Success)
+  auto path =
+      pfd::open_file{"Open Map...", "", {"Map Files", "*.json *.tmx"}}.result();
+
+  if (!path.empty())
   {
-    dispatcher.enqueue<OpenMapEvent>(GetFileDialogSelectedPath());
-    show_open_map_dialog = false;
+    dispatcher.enqueue<OpenMapEvent>(std::move(path.front()));
   }
-  else if (result == FileDialogResult::Close)
-  {
-    show_open_map_dialog = false;
-  }
+
+  show_open_map_dialog = false;
 }
 
 }  // namespace
