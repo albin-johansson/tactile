@@ -26,8 +26,9 @@ void RenderObjectLayer(const entt::registry& registry,
   const auto opacity = 255.0f * (parentOpacity * layer.opacity);
   const auto color = IM_COL32(0xFF, 0, 0, opacity);
 
+  // TODO consider adding to RenderInfo
   const auto ratio = info.grid_size / info.tile_size;
-  const auto rect = ConvertBoundsToRect(info);
+  const auto boundsRect = ConvertBoundsToRect(info);
 
   for (const auto objectEntity : objectLayer.objects)
   {
@@ -39,19 +40,20 @@ void RenderObjectLayer(const entt::registry& registry,
     switch (object.type)
     {
       case ObjectType::Point:
-        RenderPoint(object, absolutePos, rect, color, info.grid_size.x);
+        RenderPoint(registry,
+                    objectEntity,
+                    absolutePos,
+                    boundsRect,
+                    color,
+                    info.grid_size.x);
         break;
 
       case ObjectType::Ellipse:
-        RenderEllipse(object, absolutePos, ratio, color);
+        RenderEllipse(registry, objectEntity, absolutePos, ratio, color);
         break;
 
       case ObjectType::Rectangle:
-        RenderRect(object, absolutePos, rect, color, ratio);
-        break;
-
-      default:
-        cen::log::warn("Did not recognize object type when rendering objects!");
+        RenderRect(registry, objectEntity, absolutePos, boundsRect, color, ratio);
         break;
     }
   }

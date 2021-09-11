@@ -2,8 +2,9 @@
 
 struct ImVec2;
 
+#include <entt.hpp>  // registry, entity
+
 #include "aliases/ints.hpp"
-#include "core/components/object.hpp"
 
 namespace Tactile {
 
@@ -14,12 +15,14 @@ namespace Tactile {
  *
  * \ingroup rendering
  *
- * \param object the ellipse object that will be rendered.
+ * \param registry the associated registry.
+ * \param entity the point entity.
  * \param position the translated position of the ellipse.
  * \param ratio the ratio between the viewport tile size and the logical tile size.
  * \param color the foreground color of the ellipse.
  */
-void RenderEllipse(const Object& object,
+void RenderEllipse(const entt::registry& registry,
+                   entt::entity entity,
                    const ImVec2& position,
                    const ImVec2& ratio,
                    uint32 color);
