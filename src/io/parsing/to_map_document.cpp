@@ -121,8 +121,7 @@ void MakeObjectLayer(entt::registry& registry,
 
     auto& context = Sys::AddPropertyContext(registry, objectEntity);
     context.name = objectData.name;
-
-    // TODO properties
+    AddProperties(registry, objectEntity, objectData.properties);
   }
 }
 
