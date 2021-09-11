@@ -1084,9 +1084,10 @@ namespace cen {
  *
  * \brief Provides values that represent different fade playback states.
  *
- * \since 3.0.0
- *
  * \see `Mix_Fading`
+ * \see `fade_status_count()`
+ *
+ * \since 3.0.0
  */
 enum class fade_status
 {
@@ -1094,6 +1095,18 @@ enum class fade_status
   in = MIX_FADING_IN,    ///< Currently fading in music.
   out = MIX_FADING_OUT   ///< Currently fading out music.
 };
+
+/**
+ * \brief Returns the number of enumerators for the `fade_status` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto fade_status_count() noexcept -> int
+{
+  return 3;
+}
 
 /// \name String conversions
 /// \{
@@ -1728,9 +1741,10 @@ namespace cen {
  *
  * \brief Provides values that represent different fade playback states.
  *
- * \since 3.0.0
- *
  * \see `Mix_Fading`
+ * \see `fade_status_count()`
+ *
+ * \since 3.0.0
  */
 enum class fade_status
 {
@@ -1738,6 +1752,18 @@ enum class fade_status
   in = MIX_FADING_IN,    ///< Currently fading in music.
   out = MIX_FADING_OUT   ///< Currently fading out music.
 };
+
+/**
+ * \brief Returns the number of enumerators for the `fade_status` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto fade_status_count() noexcept -> int
+{
+  return 3;
+}
 
 /// \name String conversions
 /// \{
@@ -1880,9 +1906,10 @@ namespace cen {
  *
  * \brief Provides values that represent different supported music types.
  *
- * \since 3.0.0
- *
  * \see `Mix_MusicType`
+ * \see `music_type_count()`
+ *
+ * \since 3.0.0
  */
 enum class music_type
 {
@@ -1896,6 +1923,18 @@ enum class music_type
   flac = MUS_FLAC,
   opus = MUS_OPUS
 };
+
+/**
+ * \brief Returns the number of enumerators for the `music_type` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto music_type_count() noexcept -> int
+{
+  return 9;
+}
 
 /// \name String conversions
 /// \{
@@ -2641,9 +2680,10 @@ namespace cen {
  *
  * \brief Provides values that represent different supported music types.
  *
- * \since 3.0.0
- *
  * \see `Mix_MusicType`
+ * \see `music_type_count()`
+ *
+ * \since 3.0.0
  */
 enum class music_type
 {
@@ -2657,6 +2697,18 @@ enum class music_type
   flac = MUS_FLAC,
   opus = MUS_OPUS
 };
+
+/**
+ * \brief Returns the number of enumerators for the `music_type` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto music_type_count() noexcept -> int
+{
+  return 9;
+}
 
 /// \name String conversions
 /// \{
@@ -5642,6 +5694,9 @@ namespace cen {
  * \brief Represents different logging categories.
  *
  * \see `SDL_LogCategory`
+ * \see `log_category_count()`
+ *
+ * \todo Centurion 7: rename `misc` enumerator to `custom`.
  *
  * \since 3.0.0
  */
@@ -5658,6 +5713,18 @@ enum class log_category : int
   test = SDL_LOG_CATEGORY_TEST,
   misc = SDL_LOG_CATEGORY_CUSTOM
 };
+
+/**
+ * \brief Returns the number of enumerators for the `log_category` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto log_category_count() noexcept -> int
+{
+  return 10;
+}
 
 /// \name String conversions
 /// \{
@@ -6543,6 +6610,9 @@ namespace cen {
  * \brief Represents different logging categories.
  *
  * \see `SDL_LogCategory`
+ * \see `log_category_count()`
+ *
+ * \todo Centurion 7: rename `misc` enumerator to `custom`.
  *
  * \since 3.0.0
  */
@@ -6559,6 +6629,18 @@ enum class log_category : int
   test = SDL_LOG_CATEGORY_TEST,
   misc = SDL_LOG_CATEGORY_CUSTOM
 };
+
+/**
+ * \brief Returns the number of enumerators for the `log_category` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto log_category_count() noexcept -> int
+{
+  return 10;
+}
 
 /// \name String conversions
 /// \{
@@ -10911,7 +10993,10 @@ enum class event_type : u32
   app_low_memory = SDL_APP_LOWMEMORY,
   app_will_enter_background = SDL_APP_WILLENTERBACKGROUND,
   app_did_enter_background = SDL_APP_DIDENTERBACKGROUND,
+  app_will_enter_foreground = SDL_APP_WILLENTERFOREGROUND,
   app_did_enter_foreground = SDL_APP_DIDENTERFOREGROUND,
+
+  locale_changed = SDL_LOCALECHANGED,
 
   display = SDL_DISPLAYEVENT,
 
@@ -10943,6 +11028,10 @@ enum class event_type : u32
   controller_device_added = SDL_CONTROLLERDEVICEADDED,
   controller_device_removed = SDL_CONTROLLERDEVICEREMOVED,
   controller_device_remapped = SDL_CONTROLLERDEVICEREMAPPED,
+  controller_touchpad_down = SDL_CONTROLLERTOUCHPADDOWN,
+  controller_touchpad_up = SDL_CONTROLLERTOUCHPADUP,
+  controller_touchpad_motion = SDL_CONTROLLERTOUCHPADMOTION,
+  controller_sensor_update = SDL_CONTROLLERSENSORUPDATE,
 
   touch_down = SDL_FINGERDOWN,
   touch_up = SDL_FINGERUP,
@@ -11006,8 +11095,14 @@ enum class event_type : u32
     case event_type::app_did_enter_background:
       return "app_did_enter_background";
 
+    case event_type::app_will_enter_foreground:
+      return "app_will_enter_foreground";
+
     case event_type::app_did_enter_foreground:
       return "app_did_enter_foreground";
+
+    case event_type::locale_changed:
+      return "locale_changed";
 
     case event_type::display:
       return "display";
@@ -11083,6 +11178,18 @@ enum class event_type : u32
 
     case event_type::controller_device_remapped:
       return "controller_device_remapped";
+
+    case event_type::controller_touchpad_down:
+      return "controller_sensor_update";
+
+    case event_type::controller_touchpad_up:
+      return "controller_touchpad_up";
+
+    case event_type::controller_touchpad_motion:
+      return "controller_touchpad_motion";
+
+    case event_type::controller_sensor_update:
+      return "controller_sensor_update";
 
     case event_type::touch_down:
       return "touch_down";
@@ -14975,19 +15082,6 @@ class color final
   }
 
   /**
-   * \copydoc from_hsv()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsv(const double hue,
-                                                 const double saturation,
-                                                 const double value) -> color
-  {
-    return from_hsv(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(value));
-  }
-
-  /**
    * \brief Creates a color from HSL-encoded values.
    *
    * \note The values will be clamped to be within their respective ranges.
@@ -15063,19 +15157,6 @@ class color final
     const auto b = static_cast<u8>(std::round((blue + m) * 255.0f));
 
     return color{r, g, b};
-  }
-
-  /**
-   * \copydoc from_hsl()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsl(const double hue,
-                                                 const double saturation,
-                                                 const double lightness) -> color
-  {
-    return from_hsl(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(lightness));
   }
 
   /**
@@ -21177,6 +21258,390 @@ inline auto as_sdl_event(const common_event<SDL_ControllerDeviceEvent>& event)
 
 #endif  // CENTURION_CONTROLLER_DEVICE_EVENT_HEADER
 
+// #include "centurion/events/display_event.hpp"
+#ifndef CENTURION_DISPLAY_EVENT_HEADER
+#define CENTURION_DISPLAY_EVENT_HEADER
+
+#include <SDL.h>
+
+// #include "../core/integers.hpp"
+
+// #include "../core/to_underlying.hpp"
+
+// #include "common_event.hpp"
+
+// #include "display_event_id.hpp"
+#ifndef CENTURION_DISPLAY_EVENT_ID_HEADER
+#define CENTURION_DISPLAY_EVENT_ID_HEADER
+
+#include <SDL.h>
+
+#include <ostream>      // ostream
+#include <string_view>  // string_view
+
+// #include "../core/exception.hpp"
+
+
+namespace cen {
+
+#if SDL_VERSION_ATLEAST(2, 0, 14)
+
+/// \addtogroup event
+/// \{
+
+/**
+ * \enum display_event_id
+ *
+ * \brief Represents the different variants of `display_event` events.
+ *
+ * \see `display_event_id_count()`
+ * \see `display_event`
+ *
+ * \since 6.3.0
+ */
+enum class display_event_id
+{
+  none = SDL_DISPLAYEVENT_NONE,                  ///< Unused.
+  orientation = SDL_DISPLAYEVENT_ORIENTATION,    ///< Display orientation changed.
+  connected = SDL_DISPLAYEVENT_CONNECTED,        ///< A display was added.
+  disconnected = SDL_DISPLAYEVENT_DISCONNECTED,  ///< A display was removed.
+};
+
+/**
+ * \brief Returns the number of enumerators for the `display_event_id` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto display_event_id_count() noexcept -> int
+{
+  return 4;
+}
+
+/// \name String conversions
+/// \{
+
+/**
+ * \brief Returns a textual version of the supplied display event ID.
+ *
+ * \details This function returns a string that mirrors the name of the enumerator, e.g.
+ * `to_string(display_event_id::connected) == "connected"`.
+ *
+ * \param id the enumerator that will be converted.
+ *
+ * \return a string that mirrors the name of the enumerator.
+ *
+ * \throws cen_error if the enumerator is not recognized.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto to_string(const display_event_id id) -> std::string_view
+{
+  switch (id)
+  {
+    case display_event_id::none:
+      return "none";
+
+    case display_event_id::orientation:
+      return "orientation";
+
+    case display_event_id::connected:
+      return "connected";
+
+    case display_event_id::disconnected:
+      return "disconnected";
+
+    default:
+      throw cen_error{"Did not recognize display event ID!"};
+  }
+}
+
+/// \} End of string conversions
+
+/// \name Streaming
+/// \{
+
+/**
+ * \brief Prints a textual representation of a display event ID enumerator.
+ *
+ * \param stream the output stream that will be used.
+ * \param id the enumerator that will be printed.
+ *
+ * \see `to_string(display_event_id)`
+ *
+ * \return the used stream.
+ *
+ * \since 6.3.0
+ */
+inline auto operator<<(std::ostream& stream, const display_event_id id) -> std::ostream&
+{
+  return stream << to_string(id);
+}
+
+/// \} End of streaming
+
+/// \} End of group event
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 14)
+
+}  // namespace cen
+
+#endif  // CENTURION_DISPLAY_EVENT_ID_HEADER
+
+
+namespace cen {
+
+#if SDL_VERSION_ATLEAST(2, 0, 14)
+
+/// \addtogroup event
+/// \{
+
+/**
+ * \class display_event
+ *
+ * \brief Represents events related to displays.
+ *
+ * \see `SDL_DisplayEvent`
+ *
+ * \since 6.3.0
+ */
+class display_event final : public common_event<SDL_DisplayEvent>
+{
+ public:
+  /**
+   * \brief Creates a display event.
+   *
+   * \since 6.3.0
+   */
+  display_event() noexcept : common_event{event_type::display}
+  {}
+
+  /**
+   * \brief Creates a display event based an SDL event.
+   *
+   * \param event the event that will be copied.
+   *
+   * \since 6.3.0
+   */
+  explicit display_event(const SDL_DisplayEvent& event) noexcept : common_event{event}
+  {}
+
+  /**
+   * \brief Sets the associated display event ID.
+   *
+   * \param id the associated display event subtype.
+   *
+   * \since 6.3.0
+   */
+  void set_event_id(const display_event_id id) noexcept
+  {
+    m_event.event = to_underlying(id);
+  }
+
+  /**
+   * \brief Sets the associated display index.
+   *
+   * \param index the associated display index.
+   *
+   * \since 6.3.0
+   */
+  void set_index(const u32 index) noexcept
+  {
+    m_event.display = index;
+  }
+
+  /**
+   * \brief Sets event type specific data.
+   *
+   * \param data the associated data value.
+   *
+   * \see `display_event_id`
+   *
+   * \since 6.3.0
+   */
+  void set_data_1(const i32 data) noexcept
+  {
+    m_event.data1 = data;
+  }
+
+  /**
+   * \brief Returns the associated display event ID.
+   *
+   * \return the associated display event subtype.
+   *
+   * \since 6.3.0
+   */
+  [[nodiscard]] auto event_id() const noexcept -> display_event_id
+  {
+    return static_cast<display_event_id>(m_event.event);
+  }
+
+  /**
+   * \brief Returns the index of the associated display.
+   *
+   * \return the associated display index.
+   *
+   * \since 6.3.0
+   */
+  [[nodiscard]] auto index() const noexcept -> u32
+  {
+    return m_event.display;
+  }
+
+  /**
+   * \brief Returns subtype specific data.
+   *
+   * \details The returned value is the display orientation if the type of the event is
+   * equivalent to `display_event_id::orientation`.
+   *
+   * \return subtype specific data.
+   *
+   * \see `screen_orientation`
+   *
+   * \since 6.3.0
+   */
+  [[nodiscard]] auto data_1() const noexcept -> i32
+  {
+    return m_event.data1;
+  }
+};
+
+template <>
+inline auto as_sdl_event(const common_event<SDL_DisplayEvent>& event) -> SDL_Event
+{
+  SDL_Event e;
+  e.display = event.get();
+  return e;
+}
+
+/// \} End of group event
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 14)
+
+}  // namespace cen
+
+#endif  // CENTURION_DISPLAY_EVENT_HEADER
+
+// #include "centurion/events/display_event_id.hpp"
+#ifndef CENTURION_DISPLAY_EVENT_ID_HEADER
+#define CENTURION_DISPLAY_EVENT_ID_HEADER
+
+#include <SDL.h>
+
+#include <ostream>      // ostream
+#include <string_view>  // string_view
+
+// #include "../core/exception.hpp"
+
+
+namespace cen {
+
+#if SDL_VERSION_ATLEAST(2, 0, 14)
+
+/// \addtogroup event
+/// \{
+
+/**
+ * \enum display_event_id
+ *
+ * \brief Represents the different variants of `display_event` events.
+ *
+ * \see `display_event_id_count()`
+ * \see `display_event`
+ *
+ * \since 6.3.0
+ */
+enum class display_event_id
+{
+  none = SDL_DISPLAYEVENT_NONE,                  ///< Unused.
+  orientation = SDL_DISPLAYEVENT_ORIENTATION,    ///< Display orientation changed.
+  connected = SDL_DISPLAYEVENT_CONNECTED,        ///< A display was added.
+  disconnected = SDL_DISPLAYEVENT_DISCONNECTED,  ///< A display was removed.
+};
+
+/**
+ * \brief Returns the number of enumerators for the `display_event_id` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto display_event_id_count() noexcept -> int
+{
+  return 4;
+}
+
+/// \name String conversions
+/// \{
+
+/**
+ * \brief Returns a textual version of the supplied display event ID.
+ *
+ * \details This function returns a string that mirrors the name of the enumerator, e.g.
+ * `to_string(display_event_id::connected) == "connected"`.
+ *
+ * \param id the enumerator that will be converted.
+ *
+ * \return a string that mirrors the name of the enumerator.
+ *
+ * \throws cen_error if the enumerator is not recognized.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto to_string(const display_event_id id) -> std::string_view
+{
+  switch (id)
+  {
+    case display_event_id::none:
+      return "none";
+
+    case display_event_id::orientation:
+      return "orientation";
+
+    case display_event_id::connected:
+      return "connected";
+
+    case display_event_id::disconnected:
+      return "disconnected";
+
+    default:
+      throw cen_error{"Did not recognize display event ID!"};
+  }
+}
+
+/// \} End of string conversions
+
+/// \name Streaming
+/// \{
+
+/**
+ * \brief Prints a textual representation of a display event ID enumerator.
+ *
+ * \param stream the output stream that will be used.
+ * \param id the enumerator that will be printed.
+ *
+ * \see `to_string(display_event_id)`
+ *
+ * \return the used stream.
+ *
+ * \since 6.3.0
+ */
+inline auto operator<<(std::ostream& stream, const display_event_id id) -> std::ostream&
+{
+  return stream << to_string(id);
+}
+
+/// \} End of streaming
+
+/// \} End of group event
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 14)
+
+}  // namespace cen
+
+#endif  // CENTURION_DISPLAY_EVENT_ID_HEADER
+
 // #include "centurion/events/dollar_gesture_event.hpp"
 #ifndef CENTURION_DOLLAR_GESTURE_HEADER
 #define CENTURION_DOLLAR_GESTURE_HEADER
@@ -21335,20 +21800,6 @@ class dollar_gesture_event final : public common_event<SDL_DollarGestureEvent>
   [[nodiscard]] auto finger_count() const noexcept -> u32
   {
     return m_event.numFingers;
-  }
-
-  /**
-   * \brief Returns the amount of fingers used to draw the stroke.
-   *
-   * \return the amount of fingers used to draw the stroke.
-   *
-   * \deprecated Since 6.1.0, use `finger_count()` instead.
-   *
-   * \since 4.0.0
-   */
-  [[nodiscard, deprecated]] auto fingers() const noexcept -> u32
-  {
-    return finger_count();
   }
 
   /**
@@ -22340,6 +22791,154 @@ inline auto as_sdl_event(const common_event<SDL_ControllerDeviceEvent>& event)
 
 #endif  // CENTURION_CONTROLLER_DEVICE_EVENT_HEADER
 
+// #include "display_event.hpp"
+#ifndef CENTURION_DISPLAY_EVENT_HEADER
+#define CENTURION_DISPLAY_EVENT_HEADER
+
+#include <SDL.h>
+
+// #include "../core/integers.hpp"
+
+// #include "../core/to_underlying.hpp"
+
+// #include "common_event.hpp"
+
+// #include "display_event_id.hpp"
+
+
+namespace cen {
+
+#if SDL_VERSION_ATLEAST(2, 0, 14)
+
+/// \addtogroup event
+/// \{
+
+/**
+ * \class display_event
+ *
+ * \brief Represents events related to displays.
+ *
+ * \see `SDL_DisplayEvent`
+ *
+ * \since 6.3.0
+ */
+class display_event final : public common_event<SDL_DisplayEvent>
+{
+ public:
+  /**
+   * \brief Creates a display event.
+   *
+   * \since 6.3.0
+   */
+  display_event() noexcept : common_event{event_type::display}
+  {}
+
+  /**
+   * \brief Creates a display event based an SDL event.
+   *
+   * \param event the event that will be copied.
+   *
+   * \since 6.3.0
+   */
+  explicit display_event(const SDL_DisplayEvent& event) noexcept : common_event{event}
+  {}
+
+  /**
+   * \brief Sets the associated display event ID.
+   *
+   * \param id the associated display event subtype.
+   *
+   * \since 6.3.0
+   */
+  void set_event_id(const display_event_id id) noexcept
+  {
+    m_event.event = to_underlying(id);
+  }
+
+  /**
+   * \brief Sets the associated display index.
+   *
+   * \param index the associated display index.
+   *
+   * \since 6.3.0
+   */
+  void set_index(const u32 index) noexcept
+  {
+    m_event.display = index;
+  }
+
+  /**
+   * \brief Sets event type specific data.
+   *
+   * \param data the associated data value.
+   *
+   * \see `display_event_id`
+   *
+   * \since 6.3.0
+   */
+  void set_data_1(const i32 data) noexcept
+  {
+    m_event.data1 = data;
+  }
+
+  /**
+   * \brief Returns the associated display event ID.
+   *
+   * \return the associated display event subtype.
+   *
+   * \since 6.3.0
+   */
+  [[nodiscard]] auto event_id() const noexcept -> display_event_id
+  {
+    return static_cast<display_event_id>(m_event.event);
+  }
+
+  /**
+   * \brief Returns the index of the associated display.
+   *
+   * \return the associated display index.
+   *
+   * \since 6.3.0
+   */
+  [[nodiscard]] auto index() const noexcept -> u32
+  {
+    return m_event.display;
+  }
+
+  /**
+   * \brief Returns subtype specific data.
+   *
+   * \details The returned value is the display orientation if the type of the event is
+   * equivalent to `display_event_id::orientation`.
+   *
+   * \return subtype specific data.
+   *
+   * \see `screen_orientation`
+   *
+   * \since 6.3.0
+   */
+  [[nodiscard]] auto data_1() const noexcept -> i32
+  {
+    return m_event.data1;
+  }
+};
+
+template <>
+inline auto as_sdl_event(const common_event<SDL_DisplayEvent>& event) -> SDL_Event
+{
+  SDL_Event e;
+  e.display = event.get();
+  return e;
+}
+
+/// \} End of group event
+
+#endif  // SDL_VERSION_ATLEAST(2, 0, 14)
+
+}  // namespace cen
+
+#endif  // CENTURION_DISPLAY_EVENT_HEADER
+
 // #include "dollar_gesture_event.hpp"
 #ifndef CENTURION_DOLLAR_GESTURE_HEADER
 #define CENTURION_DOLLAR_GESTURE_HEADER
@@ -22498,20 +23097,6 @@ class dollar_gesture_event final : public common_event<SDL_DollarGestureEvent>
   [[nodiscard]] auto finger_count() const noexcept -> u32
   {
     return m_event.numFingers;
-  }
-
-  /**
-   * \brief Returns the amount of fingers used to draw the stroke.
-   *
-   * \return the amount of fingers used to draw the stroke.
-   *
-   * \deprecated Since 6.1.0, use `finger_count()` instead.
-   *
-   * \since 4.0.0
-   */
-  [[nodiscard, deprecated]] auto fingers() const noexcept -> u32
-  {
-    return finger_count();
   }
 
   /**
@@ -23473,6 +24058,8 @@ namespace cen {
  *
  * \brief Serves as a wrapper for the `SDL_HAT_x` macro values.
  *
+ * \see `joy_hat_position_count()`
+ *
  * \since 4.0.0
  */
 enum class joy_hat_position : u8
@@ -23487,6 +24074,18 @@ enum class joy_hat_position : u8
   right = SDL_HAT_RIGHT,
   right_down = SDL_HAT_RIGHTDOWN
 };
+
+/**
+ * \brief Returns the number of enumerators for the `joy_hat_position` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto joy_hat_position_count() noexcept -> int
+{
+  return 9;
+}
 
 /// \name String conversions
 /// \{
@@ -25347,109 +25946,6 @@ class keyboard_event final : public common_event<SDL_KeyboardEvent>
   }
 
   /**
-   * \brief Indicates whether or not the specified modifier are active.
-   *
-   * \note Multiple key modifiers can be active at the same time.
-   *
-   * \param modifier the key modifiers that will be checked.
-   *
-   * \return `true` if any of the specified modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0. Use `is_active(key_mod)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto modifier_active(const key_mod modifier) const noexcept
-      -> bool
-  {
-    return is_active(modifier);
-  }
-
-  /**
-   * \brief Indicates whether or not any of the SHIFT modifiers are active.
-   *
-   * \return `true` if any of the SHIFT modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::shift)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto shift_active() const noexcept -> bool
-  {
-    return is_active(key_mod::left_shift) || is_active(key_mod::right_shift);
-  }
-
-  /**
-   * \brief Indicates whether or not any of the CTRL modifiers are active.
-   *
-   * \return `true` if any of the CTRL modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::ctrl)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto ctrl_active() const noexcept -> bool
-  {
-    return is_active(key_mod::left_ctrl) || is_active(key_mod::right_ctrl);
-  }
-
-  /**
-   * \brief Indicates whether or not any of the ALT modifiers are active.
-   *
-   * \return `true` if any of the ALT modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::alt)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto alt_active() const noexcept -> bool
-  {
-    return is_active(key_mod::left_alt) || is_active(key_mod::right_alt);
-  }
-
-  /**
-   * \brief Indicates whether or not any of the GUI modifiers are active.
-   *
-   * \return `true` if any of the GUI modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::gui)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto gui_active() const noexcept -> bool
-  {
-    return is_active(key_mod::left_gui) || is_active(key_mod::right_gui);
-  }
-
-  /**
-   * \brief Indicates whether or not the CAPS modifier is active.
-   *
-   * \return `true` if the CAPS modifier is active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::caps)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto caps_active() const noexcept -> bool
-  {
-    return is_active(key_mod::caps);
-  }
-
-  /**
-   * \brief Indicates whether or not the NUM modifier is active.
-   *
-   * \return `true` if the NUM modifier is active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::num)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto num_active() const noexcept -> bool
-  {
-    return is_active(key_mod::num);
-  }
-
-  /**
    * \brief Indicates whether or not the key associated with this key event has
    * been repeatedly triggered.
    *
@@ -26251,6 +26747,7 @@ namespace cen {
  * \brief Represents mouse wheel directions.
  *
  * \see `SDL_MouseWheelDirection`
+ * \see `mouse_wheel_direction_count()`
  *
  * \since 4.0.0
  */
@@ -26259,6 +26756,18 @@ enum class mouse_wheel_direction : u32
   normal = SDL_MOUSEWHEEL_NORMAL,   ///< The scroll direction is normal
   flipped = SDL_MOUSEWHEEL_FLIPPED  ///< The scroll direction is flipped natural
 };
+
+/**
+ * \brief Returns the number of enumerators for the `mouse_wheel_direction` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto mouse_wheel_direction_count() noexcept -> int
+{
+  return 2;
+}
 
 /// \name String conversions
 /// \{
@@ -26696,21 +27205,6 @@ class multi_gesture_event final : public common_event<SDL_MultiGestureEvent>
   }
 
   /**
-   * \brief Sets the number of fingers that was used in the gesture associated
-   * with the event.
-   *
-   * \param nFingers the number of fingers that was used in the gesture.
-   *
-   * \deprecated Since 6.1.0, use `set_finger_count()` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated]] void set_fingers(const u16 nFingers) noexcept
-  {
-    set_finger_count(nFingers);
-  }
-
-  /**
    * \brief Returns the touch device ID associated with the event.
    *
    * \return the touch device ID associated with the event.
@@ -26786,23 +27280,6 @@ class multi_gesture_event final : public common_event<SDL_MultiGestureEvent>
   [[nodiscard]] auto finger_count() const noexcept -> u16
   {
     return m_event.numFingers;
-  }
-
-  /**
-   * \brief Returns the amount of fingers used in the gesture associated with
-   * the event.
-   *
-   * \return the amount of fingers used in the gesture associated with the
-   * event.
-   *
-   * \deprecated Since 6.1.0, use `finger_count()` instead. Note, this function
-   * incorrectly returns a `float`, and will be removed shortly.
-   *
-   * \since 4.0.0
-   */
-  [[nodiscard, deprecated]] auto fingers() const noexcept -> float
-  {
-    return finger_count();
   }
 };
 
@@ -28043,7 +28520,7 @@ class event final
     }
     else
     {
-      update_data(std::nullopt);
+      m_data.emplace<std::monostate>();
     }
 
     return result;
@@ -28266,6 +28743,9 @@ class event final
                controller_axis_event,
                controller_button_event,
                controller_device_event,
+#if SDL_VERSION_ATLEAST(2, 0, 14)
+               display_event,
+#endif  // SDL_VERSION_ATLEAST(2, 0, 14)
                dollar_gesture_event,
                drop_event,
                joy_axis_event,
@@ -28285,100 +28765,109 @@ class event final
                window_event>
       m_data{};
 
-  void update_data(const std::optional<event_type> t) noexcept
+  // TODO 6.3.0: display_event, controller_sensor_event, sensor_event,
+  //  controller_touchpad_event, os_event, user_event
+  void update_data(const event_type event) noexcept
   {
-    using et = event_type;
-
-    if (t == et::quit)
+    if (event == event_type::quit)
     {
       m_data.emplace<quit_event>(m_event.quit);
     }
-    else if (t == et::audio_device_added || t == et::audio_device_removed)
+    else if (event == event_type::audio_device_added ||
+             event == event_type::audio_device_removed)
     {
       m_data.emplace<audio_device_event>(m_event.adevice);
     }
-    else if (t == et::controller_axis_motion)
+    else if (event == event_type::controller_axis_motion)
     {
       m_data.emplace<controller_axis_event>(m_event.caxis);
     }
-    else if (t == et::controller_button_down || t == et::controller_button_up)
+    else if (event == event_type::controller_button_down ||
+             event == event_type::controller_button_up)
     {
       m_data.emplace<controller_button_event>(m_event.cbutton);
     }
-    else if (t == et::controller_device_added || t == et::controller_device_removed ||
-             t == et::controller_device_remapped)
+    else if (event == event_type::controller_device_added ||
+             event == event_type::controller_device_removed ||
+             event == event_type::controller_device_remapped)
     {
       m_data.emplace<controller_device_event>(m_event.cdevice);
     }
-    else if (t == et::dollar_gesture || t == et::dollar_record)
+    else if (event == event_type::dollar_gesture || event == event_type::dollar_record)
     {
       m_data.emplace<dollar_gesture_event>(m_event.dgesture);
     }
-    else if (t == et::drop_begin || t == et::drop_complete || t == et::drop_file ||
-             t == et::drop_text)
+    else if (event == event_type::drop_begin || event == event_type::drop_complete ||
+             event == event_type::drop_file || event == event_type::drop_text)
     {
       m_data.emplace<drop_event>(m_event.drop);
     }
-    else if (t == et::joystick_axis_motion)
+    else if (event == event_type::joystick_axis_motion)
     {
       m_data.emplace<joy_axis_event>(m_event.jaxis);
     }
-    else if (t == et::joystick_ball_motion)
+    else if (event == event_type::joystick_ball_motion)
     {
       m_data.emplace<joy_ball_event>(m_event.jball);
     }
-    else if (t == et::joystick_button_up || t == et::joystick_button_down)
+    else if (event == event_type::joystick_button_up ||
+             event == event_type::joystick_button_down)
     {
       m_data.emplace<joy_button_event>(m_event.jbutton);
     }
-    else if (t == et::joystick_device_added || t == et::joystick_device_removed)
+    else if (event == event_type::joystick_device_added ||
+             event == event_type::joystick_device_removed)
     {
       m_data.emplace<joy_device_event>(m_event.jdevice);
     }
-    else if (t == event_type::joystick_hat_motion)
+    else if (event == event_type::joystick_hat_motion)
     {
       m_data.emplace<joy_hat_event>(m_event.jhat);
     }
-    else if (t == et::key_down || t == et::key_up)
+    else if (event == event_type::key_down || event == event_type::key_up)
     {
       m_data.emplace<keyboard_event>(m_event.key);
     }
-    else if (t == et::mouse_button_up || t == et::mouse_button_down)
+    else if (event == event_type::mouse_button_up ||
+             event == event_type::mouse_button_down)
     {
       m_data.emplace<mouse_button_event>(m_event.button);
     }
-    else if (t == et::mouse_motion)
+    else if (event == event_type::mouse_motion)
     {
       m_data.emplace<mouse_motion_event>(m_event.motion);
     }
-    else if (t == et::mouse_wheel)
+    else if (event == event_type::mouse_wheel)
     {
       m_data.emplace<mouse_wheel_event>(m_event.wheel);
     }
-    else if (t == et::multi_gesture)
+    else if (event == event_type::multi_gesture)
     {
       m_data.emplace<multi_gesture_event>(m_event.mgesture);
     }
-    else if (t == et::text_editing)
+    else if (event == event_type::text_editing)
     {
       m_data.emplace<text_editing_event>(m_event.edit);
     }
-    else if (t == et::text_input)
+    else if (event == event_type::text_input)
     {
       m_data.emplace<text_input_event>(m_event.text);
     }
-    else if (t == et::touch_motion || t == et::touch_down || t == et::touch_up)
+    else if (event == event_type::touch_motion || event == event_type::touch_down ||
+             event == event_type::touch_up)
     {
       m_data.emplace<touch_finger_event>(m_event.tfinger);
     }
-    else if (t == et::window)
+    else if (event == event_type::window)
     {
       m_data.emplace<window_event>(m_event.window);
     }
-    else
+#if SDL_VERSION_ATLEAST(2, 0, 14)
+    else if (event == event_type::display)
     {
-      m_data.emplace<std::monostate>();
+      m_data.emplace<display_event>(m_event.display);
     }
+#endif  // SDL_VERSION_ATLEAST(2, 0, 14)
   }
 };
 
@@ -28654,6 +29143,8 @@ inline constexpr int tuple_type_index_v = tuple_type_index<Target, T...>::value;
 
 // #include "controller_device_event.hpp"
 
+// #include "display_event.hpp"
+
 // #include "dollar_gesture_event.hpp"
 
 // #include "drop_event.hpp"
@@ -28821,7 +29312,7 @@ class event final
     }
     else
     {
-      update_data(std::nullopt);
+      m_data.emplace<std::monostate>();
     }
 
     return result;
@@ -29044,6 +29535,9 @@ class event final
                controller_axis_event,
                controller_button_event,
                controller_device_event,
+#if SDL_VERSION_ATLEAST(2, 0, 14)
+               display_event,
+#endif  // SDL_VERSION_ATLEAST(2, 0, 14)
                dollar_gesture_event,
                drop_event,
                joy_axis_event,
@@ -29063,100 +29557,109 @@ class event final
                window_event>
       m_data{};
 
-  void update_data(const std::optional<event_type> t) noexcept
+  // TODO 6.3.0: display_event, controller_sensor_event, sensor_event,
+  //  controller_touchpad_event, os_event, user_event
+  void update_data(const event_type event) noexcept
   {
-    using et = event_type;
-
-    if (t == et::quit)
+    if (event == event_type::quit)
     {
       m_data.emplace<quit_event>(m_event.quit);
     }
-    else if (t == et::audio_device_added || t == et::audio_device_removed)
+    else if (event == event_type::audio_device_added ||
+             event == event_type::audio_device_removed)
     {
       m_data.emplace<audio_device_event>(m_event.adevice);
     }
-    else if (t == et::controller_axis_motion)
+    else if (event == event_type::controller_axis_motion)
     {
       m_data.emplace<controller_axis_event>(m_event.caxis);
     }
-    else if (t == et::controller_button_down || t == et::controller_button_up)
+    else if (event == event_type::controller_button_down ||
+             event == event_type::controller_button_up)
     {
       m_data.emplace<controller_button_event>(m_event.cbutton);
     }
-    else if (t == et::controller_device_added || t == et::controller_device_removed ||
-             t == et::controller_device_remapped)
+    else if (event == event_type::controller_device_added ||
+             event == event_type::controller_device_removed ||
+             event == event_type::controller_device_remapped)
     {
       m_data.emplace<controller_device_event>(m_event.cdevice);
     }
-    else if (t == et::dollar_gesture || t == et::dollar_record)
+    else if (event == event_type::dollar_gesture || event == event_type::dollar_record)
     {
       m_data.emplace<dollar_gesture_event>(m_event.dgesture);
     }
-    else if (t == et::drop_begin || t == et::drop_complete || t == et::drop_file ||
-             t == et::drop_text)
+    else if (event == event_type::drop_begin || event == event_type::drop_complete ||
+             event == event_type::drop_file || event == event_type::drop_text)
     {
       m_data.emplace<drop_event>(m_event.drop);
     }
-    else if (t == et::joystick_axis_motion)
+    else if (event == event_type::joystick_axis_motion)
     {
       m_data.emplace<joy_axis_event>(m_event.jaxis);
     }
-    else if (t == et::joystick_ball_motion)
+    else if (event == event_type::joystick_ball_motion)
     {
       m_data.emplace<joy_ball_event>(m_event.jball);
     }
-    else if (t == et::joystick_button_up || t == et::joystick_button_down)
+    else if (event == event_type::joystick_button_up ||
+             event == event_type::joystick_button_down)
     {
       m_data.emplace<joy_button_event>(m_event.jbutton);
     }
-    else if (t == et::joystick_device_added || t == et::joystick_device_removed)
+    else if (event == event_type::joystick_device_added ||
+             event == event_type::joystick_device_removed)
     {
       m_data.emplace<joy_device_event>(m_event.jdevice);
     }
-    else if (t == event_type::joystick_hat_motion)
+    else if (event == event_type::joystick_hat_motion)
     {
       m_data.emplace<joy_hat_event>(m_event.jhat);
     }
-    else if (t == et::key_down || t == et::key_up)
+    else if (event == event_type::key_down || event == event_type::key_up)
     {
       m_data.emplace<keyboard_event>(m_event.key);
     }
-    else if (t == et::mouse_button_up || t == et::mouse_button_down)
+    else if (event == event_type::mouse_button_up ||
+             event == event_type::mouse_button_down)
     {
       m_data.emplace<mouse_button_event>(m_event.button);
     }
-    else if (t == et::mouse_motion)
+    else if (event == event_type::mouse_motion)
     {
       m_data.emplace<mouse_motion_event>(m_event.motion);
     }
-    else if (t == et::mouse_wheel)
+    else if (event == event_type::mouse_wheel)
     {
       m_data.emplace<mouse_wheel_event>(m_event.wheel);
     }
-    else if (t == et::multi_gesture)
+    else if (event == event_type::multi_gesture)
     {
       m_data.emplace<multi_gesture_event>(m_event.mgesture);
     }
-    else if (t == et::text_editing)
+    else if (event == event_type::text_editing)
     {
       m_data.emplace<text_editing_event>(m_event.edit);
     }
-    else if (t == et::text_input)
+    else if (event == event_type::text_input)
     {
       m_data.emplace<text_input_event>(m_event.text);
     }
-    else if (t == et::touch_motion || t == et::touch_down || t == et::touch_up)
+    else if (event == event_type::touch_motion || event == event_type::touch_down ||
+             event == event_type::touch_up)
     {
       m_data.emplace<touch_finger_event>(m_event.tfinger);
     }
-    else if (t == et::window)
+    else if (event == event_type::window)
     {
       m_data.emplace<window_event>(m_event.window);
     }
-    else
+#if SDL_VERSION_ATLEAST(2, 0, 14)
+    else if (event == event_type::display)
     {
-      m_data.emplace<std::monostate>();
+      m_data.emplace<display_event>(m_event.display);
     }
+#endif  // SDL_VERSION_ATLEAST(2, 0, 14)
   }
 };
 
@@ -29543,7 +30046,10 @@ enum class event_type : u32
   app_low_memory = SDL_APP_LOWMEMORY,
   app_will_enter_background = SDL_APP_WILLENTERBACKGROUND,
   app_did_enter_background = SDL_APP_DIDENTERBACKGROUND,
+  app_will_enter_foreground = SDL_APP_WILLENTERFOREGROUND,
   app_did_enter_foreground = SDL_APP_DIDENTERFOREGROUND,
+
+  locale_changed = SDL_LOCALECHANGED,
 
   display = SDL_DISPLAYEVENT,
 
@@ -29575,6 +30081,10 @@ enum class event_type : u32
   controller_device_added = SDL_CONTROLLERDEVICEADDED,
   controller_device_removed = SDL_CONTROLLERDEVICEREMOVED,
   controller_device_remapped = SDL_CONTROLLERDEVICEREMAPPED,
+  controller_touchpad_down = SDL_CONTROLLERTOUCHPADDOWN,
+  controller_touchpad_up = SDL_CONTROLLERTOUCHPADUP,
+  controller_touchpad_motion = SDL_CONTROLLERTOUCHPADMOTION,
+  controller_sensor_update = SDL_CONTROLLERSENSORUPDATE,
 
   touch_down = SDL_FINGERDOWN,
   touch_up = SDL_FINGERUP,
@@ -29638,8 +30148,14 @@ enum class event_type : u32
     case event_type::app_did_enter_background:
       return "app_did_enter_background";
 
+    case event_type::app_will_enter_foreground:
+      return "app_will_enter_foreground";
+
     case event_type::app_did_enter_foreground:
       return "app_did_enter_foreground";
+
+    case event_type::locale_changed:
+      return "locale_changed";
 
     case event_type::display:
       return "display";
@@ -29715,6 +30231,18 @@ enum class event_type : u32
 
     case event_type::controller_device_remapped:
       return "controller_device_remapped";
+
+    case event_type::controller_touchpad_down:
+      return "controller_sensor_update";
+
+    case event_type::controller_touchpad_up:
+      return "controller_touchpad_up";
+
+    case event_type::controller_touchpad_motion:
+      return "controller_touchpad_motion";
+
+    case event_type::controller_sensor_update:
+      return "controller_sensor_update";
 
     case event_type::touch_down:
       return "touch_down";
@@ -30781,109 +31309,6 @@ class keyboard_event final : public common_event<SDL_KeyboardEvent>
   }
 
   /**
-   * \brief Indicates whether or not the specified modifier are active.
-   *
-   * \note Multiple key modifiers can be active at the same time.
-   *
-   * \param modifier the key modifiers that will be checked.
-   *
-   * \return `true` if any of the specified modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0. Use `is_active(key_mod)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto modifier_active(const key_mod modifier) const noexcept
-      -> bool
-  {
-    return is_active(modifier);
-  }
-
-  /**
-   * \brief Indicates whether or not any of the SHIFT modifiers are active.
-   *
-   * \return `true` if any of the SHIFT modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::shift)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto shift_active() const noexcept -> bool
-  {
-    return is_active(key_mod::left_shift) || is_active(key_mod::right_shift);
-  }
-
-  /**
-   * \brief Indicates whether or not any of the CTRL modifiers are active.
-   *
-   * \return `true` if any of the CTRL modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::ctrl)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto ctrl_active() const noexcept -> bool
-  {
-    return is_active(key_mod::left_ctrl) || is_active(key_mod::right_ctrl);
-  }
-
-  /**
-   * \brief Indicates whether or not any of the ALT modifiers are active.
-   *
-   * \return `true` if any of the ALT modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::alt)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto alt_active() const noexcept -> bool
-  {
-    return is_active(key_mod::left_alt) || is_active(key_mod::right_alt);
-  }
-
-  /**
-   * \brief Indicates whether or not any of the GUI modifiers are active.
-   *
-   * \return `true` if any of the GUI modifiers are active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::gui)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto gui_active() const noexcept -> bool
-  {
-    return is_active(key_mod::left_gui) || is_active(key_mod::right_gui);
-  }
-
-  /**
-   * \brief Indicates whether or not the CAPS modifier is active.
-   *
-   * \return `true` if the CAPS modifier is active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::caps)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto caps_active() const noexcept -> bool
-  {
-    return is_active(key_mod::caps);
-  }
-
-  /**
-   * \brief Indicates whether or not the NUM modifier is active.
-   *
-   * \return `true` if the NUM modifier is active; `false` otherwise.
-   *
-   * \deprecated Since 6.1.0, use `is_active(key_mod::num)` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated, nodiscard]] auto num_active() const noexcept -> bool
-  {
-    return is_active(key_mod::num);
-  }
-
-  /**
    * \brief Indicates whether or not the key associated with this key event has
    * been repeatedly triggered.
    *
@@ -31570,6 +31995,7 @@ namespace cen {
  * \brief Represents mouse wheel directions.
  *
  * \see `SDL_MouseWheelDirection`
+ * \see `mouse_wheel_direction_count()`
  *
  * \since 4.0.0
  */
@@ -31578,6 +32004,18 @@ enum class mouse_wheel_direction : u32
   normal = SDL_MOUSEWHEEL_NORMAL,   ///< The scroll direction is normal
   flipped = SDL_MOUSEWHEEL_FLIPPED  ///< The scroll direction is flipped natural
 };
+
+/**
+ * \brief Returns the number of enumerators for the `mouse_wheel_direction` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto mouse_wheel_direction_count() noexcept -> int
+{
+  return 2;
+}
 
 /// \name String conversions
 /// \{
@@ -32029,21 +32467,6 @@ class multi_gesture_event final : public common_event<SDL_MultiGestureEvent>
   }
 
   /**
-   * \brief Sets the number of fingers that was used in the gesture associated
-   * with the event.
-   *
-   * \param nFingers the number of fingers that was used in the gesture.
-   *
-   * \deprecated Since 6.1.0, use `set_finger_count()` instead.
-   *
-   * \since 4.0.0
-   */
-  [[deprecated]] void set_fingers(const u16 nFingers) noexcept
-  {
-    set_finger_count(nFingers);
-  }
-
-  /**
    * \brief Returns the touch device ID associated with the event.
    *
    * \return the touch device ID associated with the event.
@@ -32119,23 +32542,6 @@ class multi_gesture_event final : public common_event<SDL_MultiGestureEvent>
   [[nodiscard]] auto finger_count() const noexcept -> u16
   {
     return m_event.numFingers;
-  }
-
-  /**
-   * \brief Returns the amount of fingers used in the gesture associated with
-   * the event.
-   *
-   * \return the amount of fingers used in the gesture associated with the
-   * event.
-   *
-   * \deprecated Since 6.1.0, use `finger_count()` instead. Note, this function
-   * incorrectly returns a `float`, and will be removed shortly.
-   *
-   * \since 4.0.0
-   */
-  [[nodiscard, deprecated]] auto fingers() const noexcept -> float
-  {
-    return finger_count();
   }
 };
 
@@ -38913,6 +39319,9 @@ namespace cen {
  * \brief Represents different logging categories.
  *
  * \see `SDL_LogCategory`
+ * \see `log_category_count()`
+ *
+ * \todo Centurion 7: rename `misc` enumerator to `custom`.
  *
  * \since 3.0.0
  */
@@ -38929,6 +39338,18 @@ enum class log_category : int
   test = SDL_LOG_CATEGORY_TEST,
   misc = SDL_LOG_CATEGORY_CUSTOM
 };
+
+/**
+ * \brief Returns the number of enumerators for the `log_category` enum.
+ *
+ * \return the number of enumerators.
+ *
+ * \since 6.3.0
+ */
+[[nodiscard]] constexpr auto log_category_count() noexcept -> int
+{
+  return 10;
+}
 
 /// \name String conversions
 /// \{
@@ -44355,19 +44776,6 @@ class color final
   }
 
   /**
-   * \copydoc from_hsv()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsv(const double hue,
-                                                 const double saturation,
-                                                 const double value) -> color
-  {
-    return from_hsv(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(value));
-  }
-
-  /**
    * \brief Creates a color from HSL-encoded values.
    *
    * \note The values will be clamped to be within their respective ranges.
@@ -44443,19 +44851,6 @@ class color final
     const auto b = static_cast<u8>(std::round((blue + m) * 255.0f));
 
     return color{r, g, b};
-  }
-
-  /**
-   * \copydoc from_hsl()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsl(const double hue,
-                                                 const double saturation,
-                                                 const double lightness) -> color
-  {
-    return from_hsl(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(lightness));
   }
 
   /**
@@ -73131,19 +73526,6 @@ class color final
   }
 
   /**
-   * \copydoc from_hsv()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsv(const double hue,
-                                                 const double saturation,
-                                                 const double value) -> color
-  {
-    return from_hsv(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(value));
-  }
-
-  /**
    * \brief Creates a color from HSL-encoded values.
    *
    * \note The values will be clamped to be within their respective ranges.
@@ -73219,19 +73601,6 @@ class color final
     const auto b = static_cast<u8>(std::round((blue + m) * 255.0f));
 
     return color{r, g, b};
-  }
-
-  /**
-   * \copydoc from_hsl()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsl(const double hue,
-                                                 const double saturation,
-                                                 const double lightness) -> color
-  {
-    return from_hsl(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(lightness));
   }
 
   /**
@@ -74164,19 +74533,6 @@ class color final
   }
 
   /**
-   * \copydoc from_hsv()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsv(const double hue,
-                                                 const double saturation,
-                                                 const double value) -> color
-  {
-    return from_hsv(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(value));
-  }
-
-  /**
    * \brief Creates a color from HSL-encoded values.
    *
    * \note The values will be clamped to be within their respective ranges.
@@ -74252,19 +74608,6 @@ class color final
     const auto b = static_cast<u8>(std::round((blue + m) * 255.0f));
 
     return color{r, g, b};
-  }
-
-  /**
-   * \copydoc from_hsl()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsl(const double hue,
-                                                 const double saturation,
-                                                 const double lightness) -> color
-  {
-    return from_hsl(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(lightness));
   }
 
   /**
@@ -90007,7 +90350,6 @@ inline auto operator<<(std::ostream& stream, const message_box_type type) -> std
 #ifndef CENTURION_NO_OPENGL
 
 #include <SDL.h>
-#include <SDL_opengl.h>
 
 #include <ostream>      // ostream
 #include <string_view>  // string_view
@@ -90433,7 +90775,6 @@ inline auto operator<<(std::ostream& stream, const gl_attribute attr) -> std::os
 #ifndef CENTURION_NO_OPENGL
 
 #include <SDL.h>
-#include <SDL_opengl.h>
 
 #include <cassert>  // assert
 #include <memory>   // unique_ptr
@@ -95853,19 +96194,6 @@ class color final
   }
 
   /**
-   * \copydoc from_hsv()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsv(const double hue,
-                                                 const double saturation,
-                                                 const double value) -> color
-  {
-    return from_hsv(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(value));
-  }
-
-  /**
    * \brief Creates a color from HSL-encoded values.
    *
    * \note The values will be clamped to be within their respective ranges.
@@ -95941,19 +96269,6 @@ class color final
     const auto b = static_cast<u8>(std::round((blue + m) * 255.0f));
 
     return color{r, g, b};
-  }
-
-  /**
-   * \copydoc from_hsl()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsl(const double hue,
-                                                 const double saturation,
-                                                 const double lightness) -> color
-  {
-    return from_hsl(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(lightness));
   }
 
   /**
@@ -99492,7 +99807,6 @@ using gl_context_handle = gl::context_handle;
 #ifndef CENTURION_NO_OPENGL
 
 #include <SDL.h>
-#include <SDL_opengl.h>
 
 #include <cassert>      // assert
 #include <optional>     // optional
@@ -101582,7 +101896,6 @@ auto operator<<(std::ostream& stream, const basic_texture<T>& texture) -> std::o
 #ifndef CENTURION_NO_OPENGL
 
 #include <SDL.h>
-#include <SDL_opengl.h>
 
 #include <ostream>      // ostream
 #include <string_view>  // string_view
@@ -101782,7 +102095,6 @@ inline auto operator<<(std::ostream& stream, const gl_attribute attr) -> std::os
 #ifndef CENTURION_NO_OPENGL
 
 #include <SDL.h>
-#include <SDL_opengl.h>
 
 #include <cassert>  // assert
 #include <memory>   // unique_ptr
@@ -102348,7 +102660,6 @@ auto unbind(basic_texture<T>& texture) noexcept -> result
 // clang-format on
 
 #include <SDL.h>
-#include <SDL_opengl.h>
 
 #include <cassert>  // assert
 
@@ -117532,19 +117843,6 @@ class color final
   }
 
   /**
-   * \copydoc from_hsv()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsv(const double hue,
-                                                 const double saturation,
-                                                 const double value) -> color
-  {
-    return from_hsv(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(value));
-  }
-
-  /**
    * \brief Creates a color from HSL-encoded values.
    *
    * \note The values will be clamped to be within their respective ranges.
@@ -117620,19 +117918,6 @@ class color final
     const auto b = static_cast<u8>(std::round((blue + m) * 255.0f));
 
     return color{r, g, b};
-  }
-
-  /**
-   * \copydoc from_hsl()
-   * \deprecated Since 6.1.0, use the `float` overload instead.
-   */
-  [[nodiscard, deprecated]] static auto from_hsl(const double hue,
-                                                 const double saturation,
-                                                 const double lightness) -> color
-  {
-    return from_hsl(static_cast<float>(hue),
-                    static_cast<float>(saturation),
-                    static_cast<float>(lightness));
   }
 
   /**
