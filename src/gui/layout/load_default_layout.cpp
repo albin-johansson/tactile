@@ -24,8 +24,6 @@ void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
   ImGui::DockBuilderDockWindow("Properties", right);
   ImGui::DockBuilderDockWindow("Layers", rightBottom);
 
-  ImGui::DockBuilderGetNode(root)->LocalFlags |= ImGuiDockNodeFlags_NoTabBar;
-
   ImGui::DockBuilderFinish(id);
 
   if (resetVisibility)

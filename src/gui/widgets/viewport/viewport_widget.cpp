@@ -1,6 +1,7 @@
 #include "viewport_widget.hpp"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
 #include "core/model.hpp"
 #include "events/map_events.hpp"
@@ -13,6 +14,13 @@ namespace Tactile {
 void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
 {
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
+
+  {
+    // Makes sure that the viewport never features a tab bar
+    ImGuiWindowClass wc;
+    wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
+    ImGui::SetNextWindowClass(&wc);
+  }
 
   if (ImGui::Begin("Viewport",
                    nullptr,
