@@ -19,6 +19,7 @@ enum class ParseError
 {
   None,
   Unknown,
+  CouldNotReadFile,
 
   MapUnsupportedExtension,
   MapUnsupportedOrientation,

@@ -17,6 +17,9 @@ auto GetCause(const ParseError error) -> CStr
     case ParseError::Unknown:
       return "Unknown.";
 
+    case ParseError::CouldNotReadFile:
+      return "Failed to read a file.";
+
     case ParseError::MapUnsupportedExtension:
       return "The map file featured an unsupported file extension.";
 
@@ -118,6 +121,9 @@ auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
 
     case ParseError::Unknown:
       return stream << "Unknown";
+
+    case ParseError::CouldNotReadFile:
+      return stream << "CouldNotReadFile";
 
     case ParseError::MapUnsupportedExtension:
       return stream << "MapUnsupportedExtension";

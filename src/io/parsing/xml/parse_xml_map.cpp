@@ -133,7 +133,7 @@ auto ParseXmlMap(const std::filesystem::path& path, MapData& data) -> ParseError
   pugi::xml_document document;
   if (!document.load_file(path.c_str()))
   {
-    return ParseError::Unknown;  // TODO
+    return ParseError::CouldNotReadFile;
   }
 
   const auto root = document.child("map");
