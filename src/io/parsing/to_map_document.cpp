@@ -2,6 +2,7 @@
 
 #include <algorithm>  // sort
 #include <entt.hpp>   // registry
+#include <format>     // format
 #include <variant>    // get
 
 #include "core/components/animation.hpp"
@@ -56,8 +57,10 @@ void MakeTileset(entt::registry& registry,
                                               data.tile_width,
                                               data.tile_height);
 
-  auto& context = registry.get<PropertyContext>(tilesetEntity);
-  context.name = data.name;
+  {
+    auto& context = registry.get<PropertyContext>(tilesetEntity);
+    context.name = data.name;
+  }
 
   AddProperties(registry, tilesetEntity, data.properties);
 
@@ -85,6 +88,10 @@ void MakeTileset(entt::registry& registry,
         animation.frames.push_back(frameEntity);
       }
     }
+
+    auto& context = Sys::AddPropertyContext(registry, tileEntity);
+    context.name = std::format("Tile {}", tile.id.get());
+    // TODO if (!tileData.properties.empty()) {}
   }
 }
 
