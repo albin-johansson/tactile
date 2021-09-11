@@ -45,9 +45,9 @@ struct FrameData final
  */
 struct TileData final
 {
-  TileID id;                         ///< The associated tile.
-  std::vector<FrameData> animation;  ///< Optional animation frames.
-  // TODO properties
+  TileID id;                             ///< The associated tile.
+  std::vector<FrameData> animation;      ///< Optional animation frames.
+  std::vector<PropertyData> properties;  ///< Tile properties.
 };
 
 /**

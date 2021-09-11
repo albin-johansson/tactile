@@ -61,6 +61,12 @@ namespace {
       frameData.tile = TileID{GetInt(frame, "tileid").value()};
       frameData.duration = GetInt(frame, "duration").value();
     }
+
+    if (const auto err = ParseProperties(tile, tileData.properties);
+        err != ParseError::None)
+    {
+      return err;
+    }
   }
 
   return ParseError::None;

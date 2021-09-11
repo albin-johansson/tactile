@@ -91,7 +91,7 @@ void MakeTileset(entt::registry& registry,
 
     auto& context = Sys::AddPropertyContext(registry, tileEntity);
     context.name = std::format("Tile {}", tile.id.get());
-    // TODO if (!tileData.properties.empty()) {}
+    AddProperties(registry, tileEntity, tileData.properties);
   }
 }
 

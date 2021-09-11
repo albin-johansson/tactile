@@ -45,6 +45,12 @@ namespace {
         frameData.duration = frame.at("duration").get<int>();
       }
     }
+
+    if (const auto err = ParseProperties(tile, tileData.properties);
+        err != ParseError::None)
+    {
+      return err;
+    }
   }
 
   return ParseError::None;
