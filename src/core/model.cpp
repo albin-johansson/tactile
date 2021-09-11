@@ -93,9 +93,6 @@ auto Model::AddMap(const int tileWidth, const int tileHeight) -> MapID
 {
   Document document;
   document.registry = Sys::MakeRegistry();
-
-  // TODO
-
   return AddMap(std::move(document));
 }
 
