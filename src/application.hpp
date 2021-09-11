@@ -123,6 +123,10 @@ class Application final
 
   void OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event);
 
+  void OnRenameLayerRequestEvent(const RenameLayerRequestEvent& event);
+
+  void OnRenameLayerEvent(const RenameLayerEvent& event);
+
   void OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event);
 
   void OnShowMapPropertiesEvent();

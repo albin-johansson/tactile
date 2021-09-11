@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>  // string
+
 #include "aliases/layer_id.hpp"
 #include "core/layer_type.hpp"
 
@@ -53,6 +55,17 @@ struct SetLayerVisibleEvent final
 struct ShowLayerPropertiesEvent final
 {
   LayerID id;
+};
+
+struct RenameLayerRequestEvent final
+{
+  LayerID id;
+};
+
+struct RenameLayerEvent final
+{
+  LayerID id;
+  std::string name;
 };
 
 /// \} End of group events

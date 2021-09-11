@@ -52,6 +52,8 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<DuplicateLayerEvent>().connect<&App::OnDuplicateLayerEvent>(app);
   dispatcher.sink<SetLayerOpacityEvent>().connect<&App::OnSetLayerOpacityEvent>(app);
   dispatcher.sink<SetLayerVisibleEvent>().connect<&App::OnSetLayerVisibleEvent>(app);
+  dispatcher.sink<RenameLayerRequestEvent>().connect<&App::OnRenameLayerRequestEvent>(app);
+  dispatcher.sink<RenameLayerEvent>().connect<&App::OnRenameLayerEvent>(app);
 
   dispatcher.sink<ShowLayerPropertiesEvent>().connect<&App::OnShowLayerPropertiesEvent>(app);
   dispatcher.sink<ShowMapPropertiesEvent>().connect<&App::OnShowMapPropertiesEvent>(app);

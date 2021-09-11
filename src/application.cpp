@@ -12,6 +12,7 @@
 #include "core/commands/layers/move_layer_down_cmd.hpp"
 #include "core/commands/layers/move_layer_up_cmd.hpp"
 #include "core/commands/layers/remove_layer_cmd.hpp"
+#include "core/commands/layers/rename_layer_cmd.hpp"
 #include "core/commands/layers/set_layer_opacity_cmd.hpp"
 #include "core/commands/layers/set_layer_visibility_cmd.hpp"
 #include "core/commands/maps/add_column_cmd.hpp"
@@ -38,6 +39,7 @@
 #include "gui/update_gui.hpp"
 #include "gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "gui/widgets/dialogs/save_as_dialog.hpp"
+#include "gui/widgets/layers/layer_dock.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
 #include "io/parsing/map_parser.hpp"
 #include "io/parsing/to_map_document.hpp"
@@ -451,6 +453,16 @@ void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
 void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
 {
   Execute<SetLayerVisibilityCmd>(mModel, event.id, event.visible);
+}
+
+void Application::OnRenameLayerRequestEvent(const RenameLayerRequestEvent& event)
+{
+  OpenRenameLayerDialog(event.id);
+}
+
+void Application::OnRenameLayerEvent(const RenameLayerEvent& event)
+{
+  Execute<RenameLayerCmd>(mModel, event.id, event.name);
 }
 
 void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event)

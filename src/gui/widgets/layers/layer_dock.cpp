@@ -2,11 +2,14 @@
 
 #include <imgui.h>
 
-#include <limits>  // numeric_limits
+#include <cassert>  // assert
+#include <limits>   // numeric_limits
 
 #include "add_layer_popup.hpp"
+#include "aliases/maybe.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
+#include "core/components/property_context.hpp"
 #include "core/systems/layer_system.hpp"
 #include "events/layer_events.hpp"
 #include "gui/icons.hpp"
@@ -15,9 +18,13 @@
 #include "gui/widgets/common/centered_text.hpp"
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
+#include "rename_layer_dialog.hpp"
 
 namespace Tactile {
 namespace {
+
+constinit bool show_rename_dialog = false;
+inline Maybe<LayerID> rename_target;
 
 void UpdateLayerDockButtons(const entt::registry& registry,
                             entt::dispatcher& dispatcher)
@@ -114,6 +121,28 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
 
   Prefs::SetShowLayerDock(isVisible);
   ImGui::End();
+
+  if (show_rename_dialog)
+  {
+    const auto target = rename_target.value();
+
+    const auto entity = Sys::FindLayer(registry, target);
+    assert(entity != entt::null);
+
+    const auto& context = registry.get<PropertyContext>(entity);
+
+    OpenRenameLayerDialog(rename_target.value(), context.name);
+    rename_target.reset();
+    show_rename_dialog = false;
+  }
+
+  UpdateRenameLayerDialog(registry, dispatcher);
+}
+
+void OpenRenameLayerDialog(const LayerID id)
+{
+  rename_target = id;
+  show_rename_dialog = true;
 }
 
 }  // namespace Tactile

@@ -20,7 +20,10 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     }
 
     ImGui::Separator();
-    ImGui::MenuItem(TAC_ICON_EDIT " Rename layer");  // TODO implement
+    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename layer"))
+    {
+      dispatcher.enqueue<RenameLayerRequestEvent>(id);
+    }
 
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate layer"))

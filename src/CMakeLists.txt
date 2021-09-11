@@ -65,6 +65,8 @@ set(TACTILE_SOURCE_FILES
     core/commands/layers/move_layer_up_cmd.hpp
     core/commands/layers/remove_layer_cmd.cpp
     core/commands/layers/remove_layer_cmd.hpp
+    core/commands/layers/rename_layer_cmd.cpp
+    core/commands/layers/rename_layer_cmd.hpp
     core/commands/layers/set_layer_opacity_cmd.cpp
     core/commands/layers/set_layer_opacity_cmd.hpp
     core/commands/layers/set_layer_visibility_cmd.cpp
@@ -256,6 +258,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/layers/layer_item.hpp
     gui/widgets/layers/layer_item_popup.cpp
     gui/widgets/layers/layer_item_popup.hpp
+    gui/widgets/layers/rename_layer_dialog.cpp
+    gui/widgets/layers/rename_layer_dialog.hpp
 
     gui/widgets/menus/edit_menu.cpp
     gui/widgets/menus/edit_menu.hpp
