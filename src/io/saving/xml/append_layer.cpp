@@ -74,10 +74,11 @@ void AppendTileLayer(pugi::xml_node mapNode,
 
 void AppendObject(pugi::xml_node node,
                   const entt::registry& registry,
-                  const entt::entity objectEntity)
+                  const entt::entity entity,
+                  const std::filesystem::path& dir)
 {
-  const auto& object = registry.get<Object>(objectEntity);
-  const auto& context = registry.get<PropertyContext>(objectEntity);
+  const auto& object = registry.get<Object>(entity);
+  const auto& context = registry.get<PropertyContext>(entity);
 
   auto objNode = node.append_child("object");
   objNode.append_attribute("id").set_value(object.id.get());
@@ -109,6 +110,7 @@ void AppendObject(pugi::xml_node node,
   {
     objNode.append_attribute("visible").set_value(0);
   }
+  AppendProperties(registry, entity, node, dir);
 }
 
 void AppendObjectLayer(pugi::xml_node mapNode,
@@ -128,7 +130,7 @@ void AppendObjectLayer(pugi::xml_node mapNode,
 
   for (const auto objectEntity : objectLayer.objects)
   {
-    AppendObject(node, registry, objectEntity);
+    AppendObject(node, registry, objectEntity, dir);
   }
 }
 
