@@ -31,126 +31,77 @@ class Application final
   cen::window mWindow;
   cen::keyboard mKeyboard;
   entt::dispatcher mDispatcher;
-
   Model mModel;
   [[no_unique_address]] Icons mIcons;
-
   bool mQuit{};
 
   void OnAboutToExit();
-
   void PollEvents();
-
   void UpdateFrame();
 
+  void OnShowMapPropertiesEvent();
   void OnAddMapEvent(const AddMapEvent& event);
-
   void OnCloseMapEvent(const CloseMapEvent& event);
-
   void OnOpenMapEvent(const OpenMapEvent& event);
-
-  void OnSaveEvent();
-
-  void OnSaveAsEvent(const SaveAsEvent& event);
-
-  void OnSaveAsRequestEvent();
-
-  void OnAddTilesetEvent(const AddTilesetEvent& event);
-
-  void OnUndoEvent();
-
-  void OnRedoEvent();
-
-  void OnSelectToolEvent(const SelectToolEvent& event);
-
-  void OnMousePressedEvent(const MousePressedEvent& event);
-
-  void OnMouseReleasedEvent(const MouseReleasedEvent& event);
-
-  void OnMouseDragEvent(const MouseDragEvent& event);
-
-  void OnStampSequenceEvent(StampSequenceEvent event);
-
-  void OnEraserSequenceEvent(EraserSequenceEvent event);
-
-  void OnFloodEvent(const FloodEvent& event);
-
-  static void OnCenterViewportEvent();
-
-  void OnOffsetViewportEvent(const OffsetViewportEvent& event);
-
-  void OnPanLeftEvent();
-
-  void OnPanRightEvent();
-
-  void OnPanUpEvent();
-
-  void OnPanDownEvent();
-
-  void OnIncreaseViewportZoomEvent();
-
-  void OnDecreaseViewportZoomEvent();
-
-  void OnResetViewportZoomEvent();
-
-  static void OnToggleUiEvent();
-
   void OnSelectMapEvent(const SelectMapEvent& event);
 
-  void OnSelectLayerEvent(const SelectLayerEvent& event);
+  void OnSaveEvent();
+  void OnSaveAsEvent(const SaveAsEvent& event);
+  void OnSaveAsRequestEvent();
 
-  void OnSelectTilesetEvent(const SelectTilesetEvent& event);
+  void OnUndoEvent();
+  void OnRedoEvent();
+  void OnChangeCommandCapacityEvent(const ChangeCommandCapacityEvent& event);
 
+  void OnSelectToolEvent(const SelectToolEvent& event);
+  void OnMousePressedEvent(const MousePressedEvent& event);
+  void OnMouseReleasedEvent(const MouseReleasedEvent& event);
+  void OnMouseDragEvent(const MouseDragEvent& event);
+  void OnStampSequenceEvent(StampSequenceEvent event);
+  void OnEraserSequenceEvent(EraserSequenceEvent event);
+  void OnFloodEvent(const FloodEvent& event);
+
+  void OnCenterViewportEvent();
+  void OnOffsetViewportEvent(const OffsetViewportEvent& event);
+  void OnPanLeftEvent();
+  void OnPanRightEvent();
+  void OnPanUpEvent();
+  void OnPanDownEvent();
+  void OnIncreaseViewportZoomEvent();
+  void OnDecreaseViewportZoomEvent();
+  void OnResetViewportZoomEvent();
+
+  void OnAddTilesetEvent(const AddTilesetEvent& event);
   void OnRemoveTilesetEvent(const RemoveTilesetEvent& event);
+  void OnSelectTilesetEvent(const SelectTilesetEvent& event);
+  void OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event);
 
   void OnAddRowEvent();
-
   void OnAddColumnEvent();
-
   void OnRemoveRowEvent();
-
   void OnRemoveColumnEvent();
-
   void OnResizeMapEvent(const ResizeMapEvent& event);
-
   void OnOpenResizeMapDialogEvent();
 
   void OnAddLayerEvent(const AddLayerEvent& event);
-
   void OnRemoveLayerEvent(const RemoveLayerEvent& event);
-
+  void OnSelectLayerEvent(const SelectLayerEvent& event);
   void OnMoveLayerUpEvent(const MoveLayerUpEvent& event);
-
   void OnMoveLayerDownEvent(const MoveLayerDownEvent& event);
-
   void OnDuplicateLayerEvent(const DuplicateLayerEvent& event);
-
   void OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event);
-
   void OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event);
-
-  static void OnRenameLayerRequestEvent(const RenameLayerRequestEvent& event);
-
+  void OnRenameLayerRequestEvent(const RenameLayerRequestEvent& event);
   void OnRenameLayerEvent(const RenameLayerEvent& event);
-
   void OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event);
 
-  void OnShowMapPropertiesEvent();
-
   void OnAddPropertyEvent(const AddPropertyEvent& event);
-
   void OnRemovePropertyEvent(const RemovePropertyEvent& event);
-
   void OnRenamePropertyEvent(const RenamePropertyEvent& event);
-
   void OnUpdatePropertyEvent(const UpdatePropertyEvent& event);
-
   void OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event);
 
-  void OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event);
-
-  void OnChangeCommandCapacityEvent(const ChangeCommandCapacityEvent& event);
-
+  void OnToggleUiEvent();
   void OnQuitEvent();
 };
 

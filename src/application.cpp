@@ -195,6 +195,15 @@ void Application::UpdateFrame()
   UpdateGui(mModel, mDispatcher);
 }
 
+void Application::OnShowMapPropertiesEvent()
+{
+  if (auto* registry = mModel.GetActiveRegistry())
+  {
+    auto& current = registry->ctx<ActivePropertyContext>();
+    current.entity = entt::null;
+  }
+}
+
 void Application::OnAddMapEvent(const AddMapEvent& event)
 {
   const auto id = mModel.AddMap(event.tile_width, event.tile_height);
@@ -217,6 +226,11 @@ void Application::OnOpenMapEvent(const OpenMapEvent& event)
   {
     OpenMapImportErrorDialog(parser.GetError());
   }
+}
+
+void Application::OnSelectMapEvent(const SelectMapEvent& event)
+{
+  mModel.SelectMap(event.id);
 }
 
 void Application::OnSaveEvent()
@@ -255,21 +269,6 @@ void Application::OnSaveAsRequestEvent()
   }
 }
 
-void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
-{
-  if (auto info = LoadTexture(event.path))
-  {
-    Execute<AddTilesetCmd>(mModel,
-                           std::move(*info),
-                           event.tile_width,
-                           event.tile_height);
-  }
-  else
-  {
-    CENTURION_LOG_WARN("Failed to load tileset texture!");
-  }
-}
-
 void Application::OnUndoEvent()
 {
   if (auto* document = mModel.GetActiveDocument())
@@ -284,6 +283,12 @@ void Application::OnRedoEvent()
   {
     document->commands.Redo();
   }
+}
+
+void Application::OnChangeCommandCapacityEvent(
+    const ChangeCommandCapacityEvent& event)
+{
+  mModel.OnCommandCapacityChanged(event);
 }
 
 void Application::OnSelectToolEvent(const SelectToolEvent& event)
@@ -404,37 +409,24 @@ void Application::OnResetViewportZoomEvent()
   }
 }
 
-void Application::OnToggleUiEvent()
+void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
 {
-  static bool show = false;
-
-  if (!show)
+  if (auto info = LoadTexture(event.path))
   {
-    prev_show_layer_dock = Prefs::GetShowLayerDock();
-    prev_show_tileset_dock = Prefs::GetShowTilesetDock();
-    prev_show_properties_dock = Prefs::GetShowPropertiesDock();
-    prev_show_toolbar = IsToolbarVisible();
+    Execute<AddTilesetCmd>(mModel,
+                           std::move(*info),
+                           event.tile_width,
+                           event.tile_height);
   }
-
-  Prefs::SetShowLayerDock(show);
-  Prefs::SetShowTilesetDock(show);
-  Prefs::SetShowPropertiesDock(show);
-  SetToolbarVisible(show);
-
-  if (show)
+  else
   {
-    Prefs::SetShowLayerDock(prev_show_layer_dock);
-    Prefs::SetShowTilesetDock(prev_show_tileset_dock);
-    Prefs::SetShowPropertiesDock(prev_show_properties_dock);
-    SetToolbarVisible(prev_show_toolbar);
+    CENTURION_LOG_WARN("Failed to load tileset texture!");
   }
-
-  show = !show;
 }
 
-void Application::OnSelectMapEvent(const SelectMapEvent& event)
+void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
 {
-  mModel.SelectMap(event.id);
+  Execute<RemoveTilesetCmd>(mModel, event.id);
 }
 
 void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
@@ -445,9 +437,12 @@ void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
   }
 }
 
-void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
+void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event)
 {
-  Execute<RemoveTilesetCmd>(mModel, event.id);
+  if (auto* registry = mModel.GetActiveRegistry())
+  {
+    Sys::UpdateTilesetSelection(*registry, event.selection);
+  }
 }
 
 void Application::OnAddRowEvent()
@@ -494,6 +489,14 @@ void Application::OnRemoveLayerEvent(const RemoveLayerEvent& event)
   Execute<RemoveLayerCmd>(mModel, event.id);
 }
 
+void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry())
+  {
+    Sys::SelectLayer(*registry, event.id);
+  }
+}
+
 void Application::OnMoveLayerUpEvent(const MoveLayerUpEvent& event)
 {
   Execute<MoveLayerUpCmd>(mModel, event.id);
@@ -538,23 +541,6 @@ void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& eve
   }
 }
 
-void Application::OnShowMapPropertiesEvent()
-{
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    auto& current = registry->ctx<ActivePropertyContext>();
-    current.entity = entt::null;
-  }
-}
-
-void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
-{
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::SelectLayer(*registry, event.id);
-  }
-}
-
 void Application::OnAddPropertyEvent(const AddPropertyEvent& event)
 {
   Execute<AddPropertyCmd>(mModel, event.name, event.type);
@@ -580,18 +566,32 @@ void Application::OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event
   Execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
 }
 
-void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event)
+void Application::OnToggleUiEvent()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::UpdateTilesetSelection(*registry, event.selection);
-  }
-}
+  static bool show = false;
 
-void Application::OnChangeCommandCapacityEvent(
-    const ChangeCommandCapacityEvent& event)
-{
-  mModel.OnCommandCapacityChanged(event);
+  if (!show)
+  {
+    prev_show_layer_dock = Prefs::GetShowLayerDock();
+    prev_show_tileset_dock = Prefs::GetShowTilesetDock();
+    prev_show_properties_dock = Prefs::GetShowPropertiesDock();
+    prev_show_toolbar = IsToolbarVisible();
+  }
+
+  Prefs::SetShowLayerDock(show);
+  Prefs::SetShowTilesetDock(show);
+  Prefs::SetShowPropertiesDock(show);
+  SetToolbarVisible(show);
+
+  if (show)
+  {
+    Prefs::SetShowLayerDock(prev_show_layer_dock);
+    Prefs::SetShowTilesetDock(prev_show_tileset_dock);
+    Prefs::SetShowPropertiesDock(prev_show_properties_dock);
+    SetToolbarVisible(prev_show_toolbar);
+  }
+
+  show = !show;
 }
 
 void Application::OnQuitEvent()

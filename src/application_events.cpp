@@ -30,7 +30,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<RemoveTilesetEvent>().connect<&App::OnRemoveTilesetEvent>(app);
 
   dispatcher.sink<SelectMapEvent>().connect<&App::OnSelectMapEvent>(app);
-  dispatcher.sink<CenterViewportEvent>().connect<&App::OnCenterViewportEvent>();
+  dispatcher.sink<CenterViewportEvent>().connect<&App::OnCenterViewportEvent>(app);
   dispatcher.sink<OffsetViewportEvent>().connect<&App::OnOffsetViewportEvent>(app);
   dispatcher.sink<PanLeftEvent>().connect<&App::OnPanLeftEvent>(app);
   dispatcher.sink<PanRightEvent>().connect<&App::OnPanRightEvent>(app);
@@ -39,7 +39,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<IncreaseViewportZoomEvent>().connect<&App::OnIncreaseViewportZoomEvent>(app);
   dispatcher.sink<DecreaseViewportZoomEvent>().connect<&App::OnDecreaseViewportZoomEvent>(app);
   dispatcher.sink<ResetViewportZoomEvent>().connect<&App::OnResetViewportZoomEvent>(app);
-  dispatcher.sink<ToggleUiEvent>().connect<&App::OnToggleUiEvent>();
+  dispatcher.sink<ToggleUiEvent>().connect<&App::OnToggleUiEvent>(app);
 
   dispatcher.sink<AddRowEvent>().connect<&App::OnAddRowEvent>(app);
   dispatcher.sink<AddColumnEvent>().connect<&App::OnAddColumnEvent>(app);
@@ -56,7 +56,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<DuplicateLayerEvent>().connect<&App::OnDuplicateLayerEvent>(app);
   dispatcher.sink<SetLayerOpacityEvent>().connect<&App::OnSetLayerOpacityEvent>(app);
   dispatcher.sink<SetLayerVisibleEvent>().connect<&App::OnSetLayerVisibleEvent>(app);
-  dispatcher.sink<RenameLayerRequestEvent>().connect<&App::OnRenameLayerRequestEvent>();
+  dispatcher.sink<RenameLayerRequestEvent>().connect<&App::OnRenameLayerRequestEvent>(app);
   dispatcher.sink<RenameLayerEvent>().connect<&App::OnRenameLayerEvent>(app);
 
   dispatcher.sink<ShowLayerPropertiesEvent>().connect<&App::OnShowLayerPropertiesEvent>(app);
