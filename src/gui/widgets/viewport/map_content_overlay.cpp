@@ -23,7 +23,7 @@ void MouseCoordinateLabels(const ViewportCursorInfo& cursor)
 {
   if (ImGui::IsMousePosValid())
   {
-    ImGui::Text("X: %.1f, Y: %.1f", cursor.raw_position.x, cursor.raw_position.y);
+    ImGui::Text("X: %.0f, Y: %.0f", cursor.raw_position.x, cursor.raw_position.y);
   }
   else
   {
