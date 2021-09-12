@@ -19,6 +19,7 @@ constexpr CStr def_theme = "Ash";
 constexpr usize def_command_capacity = 100;
 constexpr int def_preferred_tile_width = 32;
 constexpr int def_preferred_tile_height = 32;
+constexpr int def_viewport_overlay_pos = cen::to_underlying(OverlayPos::BottomLeft);
 constexpr bool def_show_grid = true;
 constexpr bool def_embed_tilesets = false;
 constexpr bool def_human_readable_output = true;
@@ -34,6 +35,7 @@ inline Preferences settings = {.preferred_format = def_preferred_format,
                                .command_capacity = def_command_capacity,
                                .preferred_tile_width = def_preferred_tile_width,
                                .preferred_tile_height = def_preferred_tile_height,
+                               .viewport_overlay_pos = def_viewport_overlay_pos,
                                .embed_tilesets = def_embed_tilesets,
                                .human_readable_output = def_human_readable_output,
                                .show_grid = def_show_grid,
@@ -75,6 +77,7 @@ void WritePreferencesToFile(const Preferences& preferences = Preferences{})
   ini["Widgets"]["ShowTilesetDock"] = preferences.show_tileset_dock;
   ini["Widgets"]["ShowPropertiesDock"] = preferences.show_properties_dock;
   ini["Widgets"]["RestoreLayout"] = preferences.restore_layout;
+  ini["Widgets"]["ViewportOverlayPos"] = preferences.viewport_overlay_pos;
 
   init::write_ini(ini, GetPersistentFileDir() / file_name);
 }
@@ -102,6 +105,7 @@ void ValidateExistingFile()
   AddIfMissing(ini, "Widgets", "ShowTilesetDock", def_show_tileset_dock);
   AddIfMissing(ini, "Widgets", "ShowPropertiesDock", def_show_properties_dock);
   AddIfMissing(ini, "Widgets", "RestoreLayout", def_restore_layout);
+  AddIfMissing(ini, "Widgets", "ViewportOverlayPos", def_viewport_overlay_pos);
 
   init::write_ini(ini, path);
 }
@@ -136,6 +140,7 @@ void LoadPreferences()
     settings.show_layer_dock = widgets.at("ShowLayerDock").as<bool>();
     settings.show_properties_dock = widgets.at("ShowPropertiesDock").as<bool>();
     settings.restore_layout = widgets.at("RestoreLayout").as<bool>();
+    widgets.at("ViewportOverlayPos").get_to(settings.viewport_overlay_pos);
   }
   else
   {
@@ -158,6 +163,7 @@ void LoadPreferences()
   CENTURION_LOG_INFO("  Widgets::ShowTilesetDock: %i", settings.show_tileset_dock);
   CENTURION_LOG_INFO("  Widgets::ShowPropertiesDock: %i", settings.show_properties_dock);
   CENTURION_LOG_INFO("  Widgets::RestoreLayout: %i", settings.restore_layout);
+  CENTURION_LOG_INFO("  Widgets::ViewportOverlayPos: %i", settings.viewport_overlay_pos);
   // clang-format on
 }
 
@@ -223,6 +229,11 @@ void SetShowPropertiesDock(const bool visible) noexcept
   settings.show_properties_dock = visible;
 }
 
+void SetViewportOverlayPos(const OverlayPos pos) noexcept
+{
+  settings.viewport_overlay_pos = cen::to_underlying(pos);
+}
+
 auto GetPreferredFormat() -> const std::string&
 {
   return settings.preferred_format;
@@ -271,6 +282,11 @@ auto GetWindowBorder() noexcept -> bool
 auto GetRestoreLayout() noexcept -> bool
 {
   return settings.restore_layout;
+}
+
+auto GetViewportOverlayPos() noexcept -> OverlayPos
+{
+  return static_cast<OverlayPos>(settings.viewport_overlay_pos);
 }
 
 auto GetCommandCapacity() noexcept -> usize

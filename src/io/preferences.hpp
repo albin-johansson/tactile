@@ -9,9 +9,16 @@ namespace Tactile {
 
 /// \addtogroup io
 /// \{
-
 /// \name Preference API
 /// \{
+
+enum class OverlayPos
+{
+  TopLeft = 0,
+  TopRight = 1,
+  BottomLeft = 2,
+  BottomRight = 3
+};
 
 struct Preferences final
 {
@@ -20,6 +27,7 @@ struct Preferences final
   usize command_capacity;
   int preferred_tile_width;
   int preferred_tile_height;
+  int viewport_overlay_pos;
   bool embed_tilesets;
   bool human_readable_output;
   bool show_grid;
@@ -96,6 +104,7 @@ void ResetExportPreferences(Preferences& prefs);
 void SetShowLayerDock(bool visible) noexcept;
 void SetShowTilesetDock(bool visible) noexcept;
 void SetShowPropertiesDock(bool visible) noexcept;
+void SetViewportOverlayPos(OverlayPos pos) noexcept;
 
 [[nodiscard]] auto GetShowLayerDock() noexcept -> bool;
 [[nodiscard]] auto GetShowTilesetDock() noexcept -> bool;
@@ -103,6 +112,7 @@ void SetShowPropertiesDock(bool visible) noexcept;
 [[nodiscard]] auto GetRestoreLayout() noexcept -> bool;
 
 /// \} End of widgets
+[[nodiscard]] auto GetViewportOverlayPos() noexcept -> OverlayPos;
 
 /// \} End of preference API
 
