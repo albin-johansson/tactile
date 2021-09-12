@@ -39,70 +39,70 @@ class Application final
   void PollEvents();
   void UpdateFrame();
 
-  void OnUndoEvent();
-  void OnRedoEvent();
-  void OnSetCommandCapacityEvent(const SetCommandCapacityEvent& event);
+  void OnUndo();
+  void OnRedo();
+  void OnSetCommandCapacity(const SetCommandCapacityEvent& event);
 
-  void OnSaveEvent();
-  void OnSaveAsEvent(const SaveAsEvent& event);
-  void OnOpenSaveAsDialogEvent();
+  void OnSave();
+  void OnSaveAs(const SaveAsEvent& event);
+  void OnOpenSaveAsDialog();
 
-  void OnShowMapPropertiesEvent();
-  void OnAddMapEvent(const AddMapEvent& event);
-  void OnCloseMapEvent(const CloseMapEvent& event);
-  void OnOpenMapEvent(const OpenMapEvent& event);
-  void OnSelectMapEvent(const SelectMapEvent& event);
+  void OnShowMapProperties();
+  void OnAddMap(const AddMapEvent& event);
+  void OnCloseMap(const CloseMapEvent& event);
+  void OnOpenMap(const OpenMapEvent& event);
+  void OnSelectMap(const SelectMapEvent& event);
 
-  void OnSelectToolEvent(const SelectToolEvent& event);
-  void OnMousePressedEvent(const MousePressedEvent& event);
-  void OnMouseDragEvent(const MouseDragEvent& event);
-  void OnMouseReleasedEvent(const MouseReleasedEvent& event);
-  void OnStampSequenceEvent(StampSequenceEvent event);
-  void OnEraserSequenceEvent(EraserSequenceEvent event);
-  void OnFloodEvent(const FloodEvent& event);
+  void OnSelectTool(const SelectToolEvent& event);
+  void OnMousePressed(const MousePressedEvent& event);
+  void OnMouseDrag(const MouseDragEvent& event);
+  void OnMouseReleased(const MouseReleasedEvent& event);
+  void OnStampSequence(StampSequenceEvent event);
+  void OnEraserSequence(EraserSequenceEvent event);
+  void OnFlood(const FloodEvent& event);
 
-  void OnCenterViewportEvent();
-  void OnOffsetViewportEvent(const OffsetViewportEvent& event);
-  void OnPanLeftEvent();
-  void OnPanRightEvent();
-  void OnPanUpEvent();
-  void OnPanDownEvent();
-  void OnIncreaseZoomEvent();
-  void OnDecreaseZoomEvent();
-  void OnResetZoomEvent();
+  void OnCenterViewport();
+  void OnOffsetViewport(const OffsetViewportEvent& event);
+  void OnPanLeft();
+  void OnPanRight();
+  void OnPanUp();
+  void OnPanDown();
+  void OnIncreaseZoom();
+  void OnDecreaseZoom();
+  void OnResetZoom();
 
-  void OnAddTilesetEvent(const AddTilesetEvent& event);
-  void OnRemoveTilesetEvent(const RemoveTilesetEvent& event);
-  void OnSelectTilesetEvent(const SelectTilesetEvent& event);
-  void OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event);
+  void OnAddTileset(const AddTilesetEvent& event);
+  void OnRemoveTileset(const RemoveTilesetEvent& event);
+  void OnSelectTileset(const SelectTilesetEvent& event);
+  void OnSetTilesetSelection(const SetTilesetSelectionEvent& event);
 
-  void OnAddRowEvent();
-  void OnAddColumnEvent();
-  void OnRemoveRowEvent();
-  void OnRemoveColumnEvent();
-  void OnResizeMapEvent(const ResizeMapEvent& event);
-  void OnOpenResizeMapDialogEvent();
+  void OnAddRow();
+  void OnAddColumn();
+  void OnRemoveRow();
+  void OnRemoveColumn();
+  void OnResizeMap(const ResizeMapEvent& event);
+  void OnOpenResizeMapDialog();
 
-  void OnAddLayerEvent(const AddLayerEvent& event);
-  void OnRemoveLayerEvent(const RemoveLayerEvent& event);
-  void OnSelectLayerEvent(const SelectLayerEvent& event);
-  void OnMoveLayerUpEvent(const MoveLayerUpEvent& event);
-  void OnMoveLayerDownEvent(const MoveLayerDownEvent& event);
-  void OnDuplicateLayerEvent(const DuplicateLayerEvent& event);
-  void OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event);
-  void OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event);
-  void OnOpenRenameLayerDialogEvent(const OpenRenameLayerDialogEvent& event);
-  void OnRenameLayerEvent(const RenameLayerEvent& event);
-  void OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event);
+  void OnAddLayer(const AddLayerEvent& event);
+  void OnRemoveLayer(const RemoveLayerEvent& event);
+  void OnSelectLayer(const SelectLayerEvent& event);
+  void OnMoveLayerUp(const MoveLayerUpEvent& event);
+  void OnMoveLayerDown(const MoveLayerDownEvent& event);
+  void OnDuplicateLayer(const DuplicateLayerEvent& event);
+  void OnSetLayerOpacity(const SetLayerOpacityEvent& event);
+  void OnSetLayerVisible(const SetLayerVisibleEvent& event);
+  void OnOpenRenameLayerDialog(const OpenRenameLayerDialogEvent& event);
+  void OnRenameLayer(const RenameLayerEvent& event);
+  void OnShowLayerProperties(const ShowLayerPropertiesEvent& event);
 
-  void OnAddPropertyEvent(const AddPropertyEvent& event);
-  void OnRemovePropertyEvent(const RemovePropertyEvent& event);
-  void OnRenamePropertyEvent(const RenamePropertyEvent& event);
-  void OnUpdatePropertyEvent(const UpdatePropertyEvent& event);
-  void OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event);
+  void OnAddProperty(const AddPropertyEvent& event);
+  void OnRemoveProperty(const RemovePropertyEvent& event);
+  void OnRenameProperty(const RenamePropertyEvent& event);
+  void OnUpdateProperty(const UpdatePropertyEvent& event);
+  void OnChangePropertyType(const ChangePropertyTypeEvent& event);
 
-  void OnToggleUiEvent();
-  void OnQuitEvent();
+  void OnToggleUi();
+  void OnQuit();
 };
 
 }  // namespace Tactile

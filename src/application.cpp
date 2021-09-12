@@ -195,7 +195,7 @@ void Application::UpdateFrame()
   UpdateGui(mModel, mDispatcher);
 }
 
-void Application::OnUndoEvent()
+void Application::OnUndo()
 {
   if (auto* document = mModel.GetActiveDocument())
   {
@@ -203,7 +203,7 @@ void Application::OnUndoEvent()
   }
 }
 
-void Application::OnRedoEvent()
+void Application::OnRedo()
 {
   if (auto* document = mModel.GetActiveDocument())
   {
@@ -211,12 +211,12 @@ void Application::OnRedoEvent()
   }
 }
 
-void Application::OnSetCommandCapacityEvent(const SetCommandCapacityEvent& event)
+void Application::OnSetCommandCapacity(const SetCommandCapacityEvent& event)
 {
   mModel.OnCommandCapacityChanged(event);
 }
 
-void Application::OnSaveEvent()
+void Application::OnSave()
 {
   if (auto* document = mModel.GetActiveDocument())
   {
@@ -230,21 +230,21 @@ void Application::OnSaveEvent()
     }
     else
     {
-      OnOpenSaveAsDialogEvent();
+      OnOpenSaveAsDialog();
     }
   }
 }
 
-void Application::OnSaveAsEvent(const SaveAsEvent& event)
+void Application::OnSaveAs(const SaveAsEvent& event)
 {
   if (auto* document = mModel.GetActiveDocument())
   {
     document->path = event.path;
-    OnSaveEvent();
+    OnSave();
   }
 }
 
-void Application::OnOpenSaveAsDialogEvent()
+void Application::OnOpenSaveAsDialog()
 {
   if (mModel.GetActiveDocument())
   {
@@ -252,7 +252,7 @@ void Application::OnOpenSaveAsDialogEvent()
   }
 }
 
-void Application::OnShowMapPropertiesEvent()
+void Application::OnShowMapProperties()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -261,18 +261,18 @@ void Application::OnShowMapPropertiesEvent()
   }
 }
 
-void Application::OnAddMapEvent(const AddMapEvent& event)
+void Application::OnAddMap(const AddMapEvent& event)
 {
   const auto id = mModel.AddMap(event.tile_width, event.tile_height);
   mModel.SelectMap(id);
 }
 
-void Application::OnCloseMapEvent(const CloseMapEvent& event)
+void Application::OnCloseMap(const CloseMapEvent& event)
 {
   mModel.RemoveMap(event.id);
 }
 
-void Application::OnOpenMapEvent(const OpenMapEvent& event)
+void Application::OnOpenMap(const OpenMapEvent& event)
 {
   IO::MapParser parser{event.path};
   if (parser)
@@ -285,12 +285,12 @@ void Application::OnOpenMapEvent(const OpenMapEvent& event)
   }
 }
 
-void Application::OnSelectMapEvent(const SelectMapEvent& event)
+void Application::OnSelectMap(const SelectMapEvent& event)
 {
   mModel.SelectMap(event.id);
 }
 
-void Application::OnSelectToolEvent(const SelectToolEvent& event)
+void Application::OnSelectTool(const SelectToolEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -298,7 +298,7 @@ void Application::OnSelectToolEvent(const SelectToolEvent& event)
   }
 }
 
-void Application::OnMousePressedEvent(const MousePressedEvent& event)
+void Application::OnMousePressed(const MousePressedEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -306,7 +306,7 @@ void Application::OnMousePressedEvent(const MousePressedEvent& event)
   }
 }
 
-void Application::OnMouseDragEvent(const MouseDragEvent& event)
+void Application::OnMouseDrag(const MouseDragEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -314,7 +314,7 @@ void Application::OnMouseDragEvent(const MouseDragEvent& event)
   }
 }
 
-void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
+void Application::OnMouseReleased(const MouseReleasedEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -322,29 +322,29 @@ void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
   }
 }
 
-void Application::OnStampSequenceEvent(StampSequenceEvent event)
+void Application::OnStampSequence(StampSequenceEvent event)
 {
   Register<StampSequenceCmd>(mModel,
                              std::move(event.old_state),
                              std::move(event.sequence));
 }
 
-void Application::OnEraserSequenceEvent(EraserSequenceEvent event)
+void Application::OnEraserSequence(EraserSequenceEvent event)
 {
   Register<EraserSequenceCmd>(mModel, std::move(event.old_state));
 }
 
-void Application::OnFloodEvent(const FloodEvent& event)
+void Application::OnFlood(const FloodEvent& event)
 {
   Execute<BucketCmd>(mModel, event.origin, event.replacement);
 }
 
-void Application::OnCenterViewportEvent()
+void Application::OnCenterViewport()
 {
   CenterViewport();
 }
 
-void Application::OnOffsetViewportEvent(const OffsetViewportEvent& event)
+void Application::OnOffsetViewport(const OffsetViewportEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -352,7 +352,7 @@ void Application::OnOffsetViewportEvent(const OffsetViewportEvent& event)
   }
 }
 
-void Application::OnPanLeftEvent()
+void Application::OnPanLeft()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -360,7 +360,7 @@ void Application::OnPanLeftEvent()
   }
 }
 
-void Application::OnPanRightEvent()
+void Application::OnPanRight()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -368,7 +368,7 @@ void Application::OnPanRightEvent()
   }
 }
 
-void Application::OnPanUpEvent()
+void Application::OnPanUp()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -376,7 +376,7 @@ void Application::OnPanUpEvent()
   }
 }
 
-void Application::OnPanDownEvent()
+void Application::OnPanDown()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -384,7 +384,7 @@ void Application::OnPanDownEvent()
   }
 }
 
-void Application::OnIncreaseZoomEvent()
+void Application::OnIncreaseZoom()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -392,7 +392,7 @@ void Application::OnIncreaseZoomEvent()
   }
 }
 
-void Application::OnDecreaseZoomEvent()
+void Application::OnDecreaseZoom()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -400,7 +400,7 @@ void Application::OnDecreaseZoomEvent()
   }
 }
 
-void Application::OnResetZoomEvent()
+void Application::OnResetZoom()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -408,7 +408,7 @@ void Application::OnResetZoomEvent()
   }
 }
 
-void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
+void Application::OnAddTileset(const AddTilesetEvent& event)
 {
   if (auto info = LoadTexture(event.path))
   {
@@ -423,12 +423,12 @@ void Application::OnAddTilesetEvent(const AddTilesetEvent& event)
   }
 }
 
-void Application::OnRemoveTilesetEvent(const RemoveTilesetEvent& event)
+void Application::OnRemoveTileset(const RemoveTilesetEvent& event)
 {
   Execute<RemoveTilesetCmd>(mModel, event.id);
 }
 
-void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
+void Application::OnSelectTileset(const SelectTilesetEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -436,7 +436,7 @@ void Application::OnSelectTilesetEvent(const SelectTilesetEvent& event)
   }
 }
 
-void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& event)
+void Application::OnSetTilesetSelection(const SetTilesetSelectionEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -444,32 +444,32 @@ void Application::OnSetTilesetSelectionEvent(const SetTilesetSelectionEvent& eve
   }
 }
 
-void Application::OnAddRowEvent()
+void Application::OnAddRow()
 {
   Execute<AddRowCmd>(mModel);
 }
 
-void Application::OnAddColumnEvent()
+void Application::OnAddColumn()
 {
   Execute<AddColumnCmd>(mModel);
 }
 
-void Application::OnRemoveRowEvent()
+void Application::OnRemoveRow()
 {
   Execute<RemoveRowCmd>(mModel);
 }
 
-void Application::OnRemoveColumnEvent()
+void Application::OnRemoveColumn()
 {
   Execute<RemoveColumnCmd>(mModel);
 }
 
-void Application::OnResizeMapEvent(const ResizeMapEvent& event)
+void Application::OnResizeMap(const ResizeMapEvent& event)
 {
   Execute<ResizeMapCmd>(mModel, event.row_count, event.col_count);
 }
 
-void Application::OnOpenResizeMapDialogEvent()
+void Application::OnOpenResizeMapDialog()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -478,17 +478,17 @@ void Application::OnOpenResizeMapDialogEvent()
   }
 }
 
-void Application::OnAddLayerEvent(const AddLayerEvent& event)
+void Application::OnAddLayer(const AddLayerEvent& event)
 {
   Execute<AddLayerCmd>(mModel, event.type);
 }
 
-void Application::OnRemoveLayerEvent(const RemoveLayerEvent& event)
+void Application::OnRemoveLayer(const RemoveLayerEvent& event)
 {
   Execute<RemoveLayerCmd>(mModel, event.id);
 }
 
-void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
+void Application::OnSelectLayer(const SelectLayerEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -496,43 +496,42 @@ void Application::OnSelectLayerEvent(const SelectLayerEvent& event)
   }
 }
 
-void Application::OnMoveLayerUpEvent(const MoveLayerUpEvent& event)
+void Application::OnMoveLayerUp(const MoveLayerUpEvent& event)
 {
   Execute<MoveLayerUpCmd>(mModel, event.id);
 }
 
-void Application::OnMoveLayerDownEvent(const MoveLayerDownEvent& event)
+void Application::OnMoveLayerDown(const MoveLayerDownEvent& event)
 {
   Execute<MoveLayerDownCmd>(mModel, event.id);
 }
 
-void Application::OnDuplicateLayerEvent(const DuplicateLayerEvent& event)
+void Application::OnDuplicateLayer(const DuplicateLayerEvent& event)
 {
   Execute<DuplicateLayerCmd>(mModel, event.id);
 }
 
-void Application::OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event)
+void Application::OnSetLayerOpacity(const SetLayerOpacityEvent& event)
 {
   Execute<SetLayerOpacityCmd>(mModel, event.id, event.opacity);
 }
 
-void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
+void Application::OnSetLayerVisible(const SetLayerVisibleEvent& event)
 {
   Execute<SetLayerVisibilityCmd>(mModel, event.id, event.visible);
 }
 
-void Application::OnOpenRenameLayerDialogEvent(
-    const OpenRenameLayerDialogEvent& event)
+void Application::OnOpenRenameLayerDialog(const OpenRenameLayerDialogEvent& event)
 {
   OpenRenameLayerDialog(event.id);
 }
 
-void Application::OnRenameLayerEvent(const RenameLayerEvent& event)
+void Application::OnRenameLayer(const RenameLayerEvent& event)
 {
   Execute<RenameLayerCmd>(mModel, event.id, event.name);
 }
 
-void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event)
+void Application::OnShowLayerProperties(const ShowLayerPropertiesEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -541,32 +540,32 @@ void Application::OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& eve
   }
 }
 
-void Application::OnAddPropertyEvent(const AddPropertyEvent& event)
+void Application::OnAddProperty(const AddPropertyEvent& event)
 {
   Execute<AddPropertyCmd>(mModel, event.name, event.type);
 }
 
-void Application::OnRemovePropertyEvent(const RemovePropertyEvent& event)
+void Application::OnRemoveProperty(const RemovePropertyEvent& event)
 {
   Execute<RemovePropertyCmd>(mModel, event.name);
 }
 
-void Application::OnRenamePropertyEvent(const RenamePropertyEvent& event)
+void Application::OnRenameProperty(const RenamePropertyEvent& event)
 {
   Execute<RenamePropertyCmd>(mModel, event.old_name, event.new_name);
 }
 
-void Application::OnUpdatePropertyEvent(const UpdatePropertyEvent& event)
+void Application::OnUpdateProperty(const UpdatePropertyEvent& event)
 {
   Execute<UpdatePropertyCmd>(mModel, event.name, event.value);
 }
 
-void Application::OnChangePropertyTypeEvent(const ChangePropertyTypeEvent& event)
+void Application::OnChangePropertyType(const ChangePropertyTypeEvent& event)
 {
   Execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
 }
 
-void Application::OnToggleUiEvent()
+void Application::OnToggleUi()
 {
   static bool show = false;
 
@@ -594,7 +593,7 @@ void Application::OnToggleUiEvent()
   show = !show;
 }
 
-void Application::OnQuitEvent()
+void Application::OnQuit()
 {
   mQuit = true;
 }
