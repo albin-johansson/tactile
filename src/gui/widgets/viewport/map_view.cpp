@@ -4,6 +4,7 @@
 #include <imgui_internal.h>
 
 #include <cassert>  // assert
+#include <cmath>    // round
 
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tool_system.hpp"
@@ -65,8 +66,9 @@ void CenterViewport(entt::dispatcher& dispatcher,
   const auto width = nCols * viewport.tile_width;
   const auto height = nRows * viewport.tile_height;
 
-  const auto dx = ((canvasSize.x - width) / 2.0f) - viewport.x_offset;
-  const auto dy = ((canvasSize.y - height) / 2.0f) - viewport.y_offset;
+  const auto dx = std::round(((canvasSize.x - width) / 2.0f) - viewport.x_offset);
+  const auto dy = std::round(((canvasSize.y - height) / 2.0f) - viewport.y_offset);
+
   dispatcher.enqueue<OffsetViewportEvent>(dx, dy);
 }
 
