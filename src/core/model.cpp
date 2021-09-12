@@ -19,7 +19,7 @@ void Model::Update()
   }
 }
 
-void Model::OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event)
+void Model::OnCommandCapacityChanged(const SetCommandCapacityEvent& event)
 {
   for (auto& [id, document] : mDocuments)
   {

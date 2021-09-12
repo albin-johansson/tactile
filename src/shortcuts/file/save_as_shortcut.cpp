@@ -1,7 +1,7 @@
 #include "save_as_shortcut.hpp"
 
 #include "core/model.hpp"
-#include "events/save_as_request_event.hpp"
+#include "events/save_events.hpp"
 
 namespace Tactile {
 
@@ -12,7 +12,7 @@ SaveAsShortcut::SaveAsShortcut()
 
 void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SaveAsRequestEvent>();
+  dispatcher.enqueue<OpenSaveAsDialogEvent>();
 }
 
 auto SaveAsShortcut::IsEnabled(const Model& model) const -> bool

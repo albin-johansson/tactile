@@ -78,7 +78,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         false,
                         hasActiveDocument))
     {
-      dispatcher.enqueue<IncreaseViewportZoomEvent>();
+      dispatcher.enqueue<IncreaseZoomEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease zoom",
@@ -86,7 +86,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         false,
                         model.CanDecreaseViewportTileSize()))
     {
-      dispatcher.enqueue<DecreaseViewportZoomEvent>();
+      dispatcher.enqueue<DecreaseZoomEvent>();
     }
 
     if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset zoom",
@@ -94,7 +94,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         false,
                         hasActiveDocument))
     {
-      dispatcher.enqueue<ResetViewportZoomEvent>();
+      dispatcher.enqueue<ResetZoomEvent>();
     }
 
     ImGui::Separator();

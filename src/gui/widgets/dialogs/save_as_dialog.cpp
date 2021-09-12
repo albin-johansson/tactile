@@ -4,7 +4,7 @@
 
 #include <utility>  // move
 
-#include "events/save_as_event.hpp"
+#include "events/save_events.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {

@@ -22,7 +22,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     ImGui::Separator();
     if (ImGui::MenuItem(TAC_ICON_EDIT " Rename layer"))
     {
-      dispatcher.enqueue<RenameLayerRequestEvent>(id);
+      dispatcher.enqueue<OpenRenameLayerDialogEvent>(id);
     }
 
     ImGui::Separator();

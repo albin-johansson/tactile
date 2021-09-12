@@ -8,13 +8,13 @@ namespace Tactile {
 struct CenterViewportEvent final
 {};
 
-struct ResetViewportZoomEvent final
+struct ResetZoomEvent final
 {};
 
-struct DecreaseViewportZoomEvent final
+struct DecreaseZoomEvent final
 {};
 
-struct IncreaseViewportZoomEvent final
+struct IncreaseZoomEvent final
 {};
 
 struct OffsetViewportEvent final

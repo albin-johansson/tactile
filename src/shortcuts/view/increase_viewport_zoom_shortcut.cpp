@@ -11,7 +11,7 @@ IncreaseViewportZoomShortcut::IncreaseViewportZoomShortcut()
 
 void IncreaseViewportZoomShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<IncreaseViewportZoomEvent>();
+  dispatcher.enqueue<IncreaseZoomEvent>();
 }
 
 auto IncreaseViewportZoomShortcut::IsEnabled(const Model& model) const -> bool

@@ -10,7 +10,7 @@
 #include "events/map_events.hpp"
 #include "events/property_events.hpp"
 #include "events/quit_event.hpp"
-#include "events/save_as_event.hpp"
+#include "events/save_events.hpp"
 #include "events/tileset_events.hpp"
 #include "events/tool_events.hpp"
 #include "events/viewport_events.hpp"
@@ -39,24 +39,24 @@ class Application final
   void PollEvents();
   void UpdateFrame();
 
+  void OnUndoEvent();
+  void OnRedoEvent();
+  void OnSetCommandCapacityEvent(const SetCommandCapacityEvent& event);
+
+  void OnSaveEvent();
+  void OnSaveAsEvent(const SaveAsEvent& event);
+  void OnOpenSaveAsDialogEvent();
+
   void OnShowMapPropertiesEvent();
   void OnAddMapEvent(const AddMapEvent& event);
   void OnCloseMapEvent(const CloseMapEvent& event);
   void OnOpenMapEvent(const OpenMapEvent& event);
   void OnSelectMapEvent(const SelectMapEvent& event);
 
-  void OnSaveEvent();
-  void OnSaveAsEvent(const SaveAsEvent& event);
-  void OnSaveAsRequestEvent();
-
-  void OnUndoEvent();
-  void OnRedoEvent();
-  void OnChangeCommandCapacityEvent(const ChangeCommandCapacityEvent& event);
-
   void OnSelectToolEvent(const SelectToolEvent& event);
   void OnMousePressedEvent(const MousePressedEvent& event);
-  void OnMouseReleasedEvent(const MouseReleasedEvent& event);
   void OnMouseDragEvent(const MouseDragEvent& event);
+  void OnMouseReleasedEvent(const MouseReleasedEvent& event);
   void OnStampSequenceEvent(StampSequenceEvent event);
   void OnEraserSequenceEvent(EraserSequenceEvent event);
   void OnFloodEvent(const FloodEvent& event);
@@ -67,9 +67,9 @@ class Application final
   void OnPanRightEvent();
   void OnPanUpEvent();
   void OnPanDownEvent();
-  void OnIncreaseViewportZoomEvent();
-  void OnDecreaseViewportZoomEvent();
-  void OnResetViewportZoomEvent();
+  void OnIncreaseZoomEvent();
+  void OnDecreaseZoomEvent();
+  void OnResetZoomEvent();
 
   void OnAddTilesetEvent(const AddTilesetEvent& event);
   void OnRemoveTilesetEvent(const RemoveTilesetEvent& event);
@@ -91,7 +91,7 @@ class Application final
   void OnDuplicateLayerEvent(const DuplicateLayerEvent& event);
   void OnSetLayerOpacityEvent(const SetLayerOpacityEvent& event);
   void OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event);
-  void OnRenameLayerRequestEvent(const RenameLayerRequestEvent& event);
+  void OnOpenRenameLayerDialogEvent(const OpenRenameLayerDialogEvent& event);
   void OnRenameLayerEvent(const RenameLayerEvent& event);
   void OnShowLayerPropertiesEvent(const ShowLayerPropertiesEvent& event);
 

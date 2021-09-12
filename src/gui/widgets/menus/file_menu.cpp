@@ -8,8 +8,7 @@
 #include "core/model.hpp"
 #include "events/map_events.hpp"
 #include "events/quit_event.hpp"
-#include "events/save_as_request_event.hpp"
-#include "events/save_event.hpp"
+#include "events/save_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/dialogs/add_map_dialog.hpp"
 #include "gui/widgets/dialogs/settings_dialog.hpp"
@@ -73,7 +72,7 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 
     if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S", false, hasActiveDocument))
     {
-      dispatcher.enqueue<SaveAsRequestEvent>();
+      dispatcher.enqueue<OpenSaveAsDialogEvent>();
     }
 
     ImGui::Separator();

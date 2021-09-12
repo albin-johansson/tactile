@@ -181,7 +181,7 @@ void ApplySettings(entt::dispatcher& dispatcher)
   SetPreferences(settings);
   if (settings.command_capacity != snapshot.command_capacity)
   {
-    dispatcher.enqueue<ChangeCommandCapacityEvent>(Prefs::GetCommandCapacity());
+    dispatcher.enqueue<SetCommandCapacityEvent>(Prefs::GetCommandCapacity());
   }
 }
 

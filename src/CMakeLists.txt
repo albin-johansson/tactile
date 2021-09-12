@@ -165,9 +165,7 @@ set(TACTILE_SOURCE_FILES
     events/map_events.hpp
     events/property_events.hpp
     events/quit_event.hpp
-    events/save_as_event.hpp
-    events/save_as_request_event.hpp
-    events/save_event.hpp
+    events/save_events.hpp
     events/tileset_events.hpp
     events/tool_events.hpp
     events/view_events.hpp

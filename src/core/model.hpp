@@ -24,7 +24,7 @@ class Model final
 
   void Update();
 
-  void OnCommandCapacityChanged(const ChangeCommandCapacityEvent& event);
+  void OnCommandCapacityChanged(const SetCommandCapacityEvent& event);
 
   auto AddMap(Document document) -> MapID;
 

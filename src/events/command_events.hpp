@@ -13,7 +13,7 @@ struct UndoEvent final
 struct RedoEvent final
 {};
 
-struct ChangeCommandCapacityEvent final
+struct SetCommandCapacityEvent final
 {
   usize capacity{};
 };

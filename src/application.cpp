@@ -169,11 +169,11 @@ void Application::PollEvents()
         const auto dy = wheelEvent->y_scroll();
         if (dy > 0)
         {
-          mDispatcher.enqueue<IncreaseViewportZoomEvent>();
+          mDispatcher.enqueue<IncreaseZoomEvent>();
         }
         else if (dy < 0 && mModel.CanDecreaseViewportTileSize())
         {
-          mDispatcher.enqueue<DecreaseViewportZoomEvent>();
+          mDispatcher.enqueue<DecreaseZoomEvent>();
         }
       }
     }
@@ -193,6 +193,63 @@ void Application::UpdateFrame()
   mDispatcher.update();
   mModel.Update();
   UpdateGui(mModel, mDispatcher);
+}
+
+void Application::OnUndoEvent()
+{
+  if (auto* document = mModel.GetActiveDocument())
+  {
+    document->commands.Undo();
+  }
+}
+
+void Application::OnRedoEvent()
+{
+  if (auto* document = mModel.GetActiveDocument())
+  {
+    document->commands.Redo();
+  }
+}
+
+void Application::OnSetCommandCapacityEvent(const SetCommandCapacityEvent& event)
+{
+  mModel.OnCommandCapacityChanged(event);
+}
+
+void Application::OnSaveEvent()
+{
+  if (auto* document = mModel.GetActiveDocument())
+  {
+    if (!document->path.empty())
+    {
+      IO::SaveMapDocument(*document);
+      document->commands.MarkAsClean();
+
+      auto& context = document->registry.ctx<PropertyContext>();
+      context.name = document->path.filename().string();
+    }
+    else
+    {
+      OnOpenSaveAsDialogEvent();
+    }
+  }
+}
+
+void Application::OnSaveAsEvent(const SaveAsEvent& event)
+{
+  if (auto* document = mModel.GetActiveDocument())
+  {
+    document->path = event.path;
+    OnSaveEvent();
+  }
+}
+
+void Application::OnOpenSaveAsDialogEvent()
+{
+  if (mModel.GetActiveDocument())
+  {
+    OpenSaveAsDialog();
+  }
 }
 
 void Application::OnShowMapPropertiesEvent()
@@ -233,64 +290,6 @@ void Application::OnSelectMapEvent(const SelectMapEvent& event)
   mModel.SelectMap(event.id);
 }
 
-void Application::OnSaveEvent()
-{
-  if (auto* document = mModel.GetActiveDocument())
-  {
-    if (!document->path.empty())
-    {
-      IO::SaveMapDocument(*document);
-      document->commands.MarkAsClean();
-
-      auto& context = document->registry.ctx<PropertyContext>();
-      context.name = document->path.filename().string();
-    }
-    else
-    {
-      OnSaveAsRequestEvent();
-    }
-  }
-}
-
-void Application::OnSaveAsEvent(const SaveAsEvent& event)
-{
-  if (auto* document = mModel.GetActiveDocument())
-  {
-    document->path = event.path;
-    OnSaveEvent();
-  }
-}
-
-void Application::OnSaveAsRequestEvent()
-{
-  if (mModel.GetActiveDocument())
-  {
-    OpenSaveAsDialog();
-  }
-}
-
-void Application::OnUndoEvent()
-{
-  if (auto* document = mModel.GetActiveDocument())
-  {
-    document->commands.Undo();
-  }
-}
-
-void Application::OnRedoEvent()
-{
-  if (auto* document = mModel.GetActiveDocument())
-  {
-    document->commands.Redo();
-  }
-}
-
-void Application::OnChangeCommandCapacityEvent(
-    const ChangeCommandCapacityEvent& event)
-{
-  mModel.OnCommandCapacityChanged(event);
-}
-
 void Application::OnSelectToolEvent(const SelectToolEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
@@ -307,19 +306,19 @@ void Application::OnMousePressedEvent(const MousePressedEvent& event)
   }
 }
 
-void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
-{
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
-    Sys::ToolOnReleased(*registry, mDispatcher, event.info);
-  }
-}
-
 void Application::OnMouseDragEvent(const MouseDragEvent& event)
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
     Sys::ToolOnDragged(*registry, mDispatcher, event.info);
+  }
+}
+
+void Application::OnMouseReleasedEvent(const MouseReleasedEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry())
+  {
+    Sys::ToolOnReleased(*registry, mDispatcher, event.info);
   }
 }
 
@@ -385,7 +384,7 @@ void Application::OnPanDownEvent()
   }
 }
 
-void Application::OnIncreaseViewportZoomEvent()
+void Application::OnIncreaseZoomEvent()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -393,7 +392,7 @@ void Application::OnIncreaseViewportZoomEvent()
   }
 }
 
-void Application::OnDecreaseViewportZoomEvent()
+void Application::OnDecreaseZoomEvent()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -401,7 +400,7 @@ void Application::OnDecreaseViewportZoomEvent()
   }
 }
 
-void Application::OnResetViewportZoomEvent()
+void Application::OnResetZoomEvent()
 {
   if (auto* registry = mModel.GetActiveRegistry())
   {
@@ -522,7 +521,8 @@ void Application::OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event)
   Execute<SetLayerVisibilityCmd>(mModel, event.id, event.visible);
 }
 
-void Application::OnRenameLayerRequestEvent(const RenameLayerRequestEvent& event)
+void Application::OnOpenRenameLayerDialogEvent(
+    const OpenRenameLayerDialogEvent& event)
 {
   OpenRenameLayerDialog(event.id);
 }

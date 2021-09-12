@@ -57,7 +57,7 @@ struct ShowLayerPropertiesEvent final
   LayerID id;
 };
 
-struct RenameLayerRequestEvent final
+struct OpenRenameLayerDialogEvent final
 {
   LayerID id;
 };
