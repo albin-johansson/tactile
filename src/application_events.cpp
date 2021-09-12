@@ -43,6 +43,8 @@ void SubscribeToEvents(Application* app, entt::dispatcher& dispatcher)
   dispatcher.sink<AddColumnEvent>().connect<&App::OnAddColumnEvent>(app);
   dispatcher.sink<RemoveRowEvent>().connect<&App::OnRemoveRowEvent>(app);
   dispatcher.sink<RemoveColumnEvent>().connect<&App::OnRemoveColumnEvent>(app);
+  dispatcher.sink<ResizeMapEvent>().connect<&App::OnResizeMapEvent>(app);
+  dispatcher.sink<OpenResizeMapDialogEvent>().connect<&App::OnOpenResizeMapDialogEvent>(app);
 
   dispatcher.sink<AddLayerEvent>().connect<&App::OnAddLayerEvent>(app);
   dispatcher.sink<RemoveLayerEvent>().connect<&App::OnRemoveLayerEvent>(app);

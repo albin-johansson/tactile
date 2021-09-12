@@ -45,6 +45,15 @@ struct SelectMapEvent final
 struct ShowMapPropertiesEvent final
 {};
 
+struct OpenResizeMapDialogEvent final
+{};
+
+struct ResizeMapEvent final
+{
+  int row_count;
+  int col_count;
+};
+
 /// \} End of group events
 
 }  // namespace Tactile

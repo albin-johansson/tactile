@@ -6,6 +6,7 @@
 #include "core/model.hpp"
 #include "core/mouse_tool_type.hpp"
 #include "events/command_events.hpp"
+#include "events/map_events.hpp"
 #include "events/tool_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button.hpp"
@@ -20,6 +21,20 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 {
   static int axis = ImGuiAxis_X;
   BeginDockingToolbar("Toolbar", axis);
+
+  auto separate = [] {
+    if (axis == ImGuiAxis_X)
+    {
+      ImGui::SameLine();
+    }
+    ImGui::Spacing();
+
+    if (axis == ImGuiAxis_X)
+    {
+      ImGui::SameLine();
+    }
+    ImGui::Spacing();
+  };
 
   if (Button(TAC_ICON_FILE, "Create new tilemap."))
   {
@@ -36,16 +51,13 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ShowOpenMapDialog();
   }
 
-  if (axis == ImGuiAxis_X)
-  {
-    ImGui::SameLine();
-  }
-  ImGui::Spacing();
+  separate();
 
   if (axis == ImGuiAxis_X)
   {
     ImGui::SameLine();
   }
+
   if (Button(TAC_ICON_UNDO, "Undo", model.CanUndo()))
   {
     dispatcher.enqueue<UndoEvent>();
@@ -55,21 +67,19 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   {
     ImGui::SameLine();
   }
+
   if (Button(TAC_ICON_REDO, "Redo", model.CanRedo()))
   {
     dispatcher.enqueue<RedoEvent>();
   }
 
-  if (axis == ImGuiAxis_X)
-  {
-    ImGui::SameLine();
-  }
-  ImGui::Spacing();
+  separate();
 
   if (axis == ImGuiAxis_X)
   {
     ImGui::SameLine();
   }
+
   if (Button(TAC_ICON_TILESET, "Create tileset."))
   {
     ShowTilesetDialog();
@@ -79,19 +89,24 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   {
     ImGui::SameLine();
   }
+
   if (Button(TAC_ICON_RESIZE, "Resize map."))
-  {}
+  {
+    dispatcher.enqueue<OpenResizeMapDialogEvent>();
+  }
 
   if (axis == ImGuiAxis_X)
   {
     ImGui::SameLine();
   }
-  ImGui::Spacing();
+
+  separate();
 
   if (axis == ImGuiAxis_X)
   {
     ImGui::SameLine();
   }
+
   if (ToolButton(TAC_ICON_STAMP, "Stamp tool.", model.IsStampActive()))
   {
     dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
@@ -101,6 +116,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   {
     ImGui::SameLine();
   }
+
   if (ToolButton(TAC_ICON_BUCKET, "Bucket tool.", model.IsBucketActive()))
   {
     dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
@@ -110,6 +126,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   {
     ImGui::SameLine();
   }
+
   if (ToolButton(TAC_ICON_ERASER, "Eraser tool.", model.IsEraserActive()))
   {
     dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);

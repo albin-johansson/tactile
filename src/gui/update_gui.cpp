@@ -7,6 +7,7 @@
 #include "layout/dock_space.hpp"
 #include "widgets/dialogs/map_import_error_dialog.hpp"
 #include "widgets/dialogs/save_as_dialog.hpp"
+#include "widgets/dialogs/resize_map_dialog.hpp"
 #include "widgets/layers/layer_dock.hpp"
 #include "widgets/menus/menu_bar.hpp"
 #include "widgets/properties/properties_dock.hpp"
@@ -36,6 +37,7 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
   }
 
   UpdateMapImportErrorDialog();
+  UpdateResizeMapDialog(dispatcher);
   UpdateSaveAsDialog(dispatcher);
 }
 

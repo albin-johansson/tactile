@@ -1,8 +1,10 @@
 #include "map_system.hpp"
 
 #include <cassert>   // assert
+#include <cmath>     // abs
 #include <concepts>  // invocable
 
+#include "core/algorithms/invoke_n.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/tile_layer.hpp"
 #include "core/map.hpp"
@@ -71,6 +73,31 @@ void RemoveColumn(entt::registry& registry)
         row.pop_back();
       }
     });
+  }
+}
+
+void ResizeMap(entt::registry& registry, const int nRows, const int nCols)
+{
+  assert(nRows > 0);
+  assert(nCols > 0);
+  auto& map = registry.ctx<Map>();
+
+  if (const auto diff = std::abs(map.row_count - nRows); map.row_count < nRows)
+  {
+    InvokeN(diff, [&] { AddRow(registry); });
+  }
+  else
+  {
+    InvokeN(diff, [&] { RemoveRow(registry); });
+  }
+
+  if (const auto diff = std::abs(map.column_count - nCols); map.column_count < nCols)
+  {
+    InvokeN(diff, [&] { AddColumn(registry); });
+  }
+  else
+  {
+    InvokeN(diff, [&] { RemoveColumn(registry); });
   }
 }
 

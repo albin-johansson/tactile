@@ -13,6 +13,7 @@ struct CommandId final
     AddColumn,
     RemoveRow,
     RemoveColumn,
+    ResizeMap,
 
     AddLayer,
     RemoveLayer,

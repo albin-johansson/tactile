@@ -20,6 +20,7 @@
 #include "core/commands/maps/add_row_cmd.hpp"
 #include "core/commands/maps/remove_column_cmd.hpp"
 #include "core/commands/maps/remove_row_cmd.hpp"
+#include "core/commands/maps/resize_map_cmd.hpp"
 #include "core/commands/properties/add_property_cmd.hpp"
 #include "core/commands/properties/change_property_type_cmd.hpp"
 #include "core/commands/properties/remove_property_cmd.hpp"
@@ -40,6 +41,7 @@
 #include "core/systems/viewport_system.hpp"
 #include "gui/update_gui.hpp"
 #include "gui/widgets/dialogs/map_import_error_dialog.hpp"
+#include "gui/widgets/dialogs/resize_map_dialog.hpp"
 #include "gui/widgets/dialogs/save_as_dialog.hpp"
 #include "gui/widgets/layers/layer_dock.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
@@ -431,6 +433,20 @@ void Application::OnRemoveRowEvent()
 void Application::OnRemoveColumnEvent()
 {
   Execute<RemoveColumnCmd>(mModel);
+}
+
+void Application::OnResizeMapEvent(const ResizeMapEvent& event)
+{
+  Execute<ResizeMapCmd>(mModel, event.row_count, event.col_count);
+}
+
+void Application::OnOpenResizeMapDialogEvent()
+{
+  if (auto* registry = mModel.GetActiveRegistry())
+  {
+    const auto& map = registry->ctx<Map>();
+    OpenResizeMapDialog(map.row_count, map.column_count);
+  }
 }
 
 void Application::OnAddLayerEvent(const AddLayerEvent& event)

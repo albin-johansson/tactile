@@ -109,6 +109,10 @@ class Application final
 
   void OnRemoveColumnEvent();
 
+  void OnResizeMapEvent(const ResizeMapEvent& event);
+
+  void OnOpenResizeMapDialogEvent();
+
   void OnAddLayerEvent(const AddLayerEvent& event);
 
   void OnRemoveLayerEvent(const RemoveLayerEvent& event);

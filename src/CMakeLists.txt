@@ -83,6 +83,8 @@ set(TACTILE_SOURCE_FILES
     core/commands/maps/remove_column_cmd.hpp
     core/commands/maps/remove_row_cmd.cpp
     core/commands/maps/remove_row_cmd.hpp
+    core/commands/maps/resize_map_cmd.cpp
+    core/commands/maps/resize_map_cmd.hpp
 
     core/commands/properties/add_property_cmd.cpp
     core/commands/properties/add_property_cmd.hpp
@@ -244,12 +246,14 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/dialogs/credits_dialog.hpp
     gui/widgets/dialogs/map_import_error_dialog.cpp
     gui/widgets/dialogs/map_import_error_dialog.hpp
+    gui/widgets/dialogs/rename_dialog.cpp
+    gui/widgets/dialogs/rename_dialog.hpp
+    gui/widgets/dialogs/resize_map_dialog.cpp
+    gui/widgets/dialogs/resize_map_dialog.hpp
     gui/widgets/dialogs/save_as_dialog.cpp
     gui/widgets/dialogs/save_as_dialog.hpp
     gui/widgets/dialogs/settings_dialog.cpp
     gui/widgets/dialogs/settings_dialog.hpp
-    gui/widgets/dialogs/rename_dialog.cpp
-    gui/widgets/dialogs/rename_dialog.hpp
 
     gui/widgets/layers/add_layer_popup.cpp
     gui/widgets/layers/add_layer_popup.hpp
