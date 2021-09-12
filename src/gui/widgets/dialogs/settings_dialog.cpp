@@ -4,6 +4,7 @@
 
 #include "events/command_events.hpp"
 #include "gui/themes.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/checkbox.hpp"
 #include "gui/widgets/common/combo.hpp"
 #include "io/preferences.hpp"
@@ -13,6 +14,8 @@ namespace {
 
 constexpr auto flags =
     ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+
+constinit bool is_visible = false;
 
 inline Preferences snapshot;  // The original settings when the dialog was opened
 inline Preferences settings;  // The value of the settings in the GUI
@@ -186,7 +189,8 @@ void ApplySettings(entt::dispatcher& dispatcher)
 
 void UpdateSettingsDialog(entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginPopupModal("Settings", nullptr, flags))
+  CenterNextWindowOnAppearance();
+  if (ImGui::BeginPopupModal("Settings", &is_visible, flags))
   {
     if (ImGui::BeginTabBar("SettingsTabBar"))
     {
@@ -227,6 +231,7 @@ void UpdateSettingsDialog(entt::dispatcher& dispatcher)
 
 void OpenSettingsDialog()
 {
+  is_visible = true;
   snapshot = GetPreferences();
   settings = snapshot;
   ImGui::OpenPopup("Settings");

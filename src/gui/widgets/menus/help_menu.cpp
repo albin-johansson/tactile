@@ -5,6 +5,7 @@
 #include <centurion.hpp>  // open_url, is_debug_build
 
 #include "gui/icons.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/dialogs/about_dialog.hpp"
 #include "gui/widgets/dialogs/credits_dialog.hpp"
 
@@ -59,16 +60,21 @@ void UpdateHelpMenuWindows()
 
   if (show_about_imgui)
   {
+    CenterNextWindowOnAppearance();
     ImGui::ShowAboutWindow(&show_about_imgui);
   }
 
   if (show_credits)
   {
-    UpdateCreditsDialog(&show_credits);
+    OpenCreditsDialog();
+    show_credits = false;
   }
+
+  UpdateCreditsDialog();
 
   if (show_metrics)
   {
+    CenterNextWindowOnAppearance();
     ImGui::ShowMetricsWindow(&show_metrics);
   }
 

@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include "events/map_events.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "io/preferences.hpp"
 
@@ -30,6 +31,7 @@ void ResetState()
 
 void UpdateAddMapDialog(entt::dispatcher& dispatcher)
 {
+  CenterNextWindowOnAppearance();
   if (ImGui::BeginPopupModal("Add map", nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();

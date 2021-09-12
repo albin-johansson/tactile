@@ -6,6 +6,7 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "utils/buffer_utils.hpp"
 
@@ -36,6 +37,7 @@ void UpdateRenameDialog(const NotNull<CStr> title,
   assert(validator);
   assert(callback);
 
+  CenterNextWindowOnAppearance();
   if (ImGui::BeginPopupModal(title, nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();

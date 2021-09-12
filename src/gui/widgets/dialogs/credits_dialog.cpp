@@ -3,13 +3,19 @@
 #include <imgui.h>
 
 #include "aliases/cstr.hpp"
+#include "gui/widgets/alignment.hpp"
 
 namespace Tactile {
 namespace {
 
+constexpr auto window_flags =
+    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+
 constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
                              ImGuiTableFlags_Resizable |
                              ImGuiTableFlags_SizingStretchProp;
+
+constinit bool is_visible = false;
 
 void Row(const CStr lib, const CStr version, const CStr license)
 {
@@ -27,11 +33,10 @@ void Row(const CStr lib, const CStr version, const CStr license)
 
 }  // namespace
 
-void UpdateCreditsDialog(bool* open)
+void UpdateCreditsDialog()
 {
-  if (ImGui::Begin("Credits",
-                   open,
-                   ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse))
+  CenterNextWindowOnAppearance();
+  if (ImGui::BeginPopupModal("Credits", &is_visible, window_flags))
   {
     ImGui::TextUnformatted(
         "Tactile is developed using the following open-source libraries.");
@@ -61,9 +66,15 @@ void UpdateCreditsDialog(bool* open)
 
       ImGui::EndTable();
     }
-  }
 
-  ImGui::End();
+    ImGui::EndPopup();
+  }
+}
+
+void OpenCreditsDialog()
+{
+  is_visible = true;
+  ImGui::OpenPopup("Credits");
 }
 
 }  // namespace Tactile

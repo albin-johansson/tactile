@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include "events/map_events.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 
 namespace Tactile {
@@ -23,6 +24,7 @@ constinit int col_count = 0;
 
 void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
 {
+  CenterNextWindowOnAppearance();
   if (ImGui::BeginPopupModal("Resize Map", nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();

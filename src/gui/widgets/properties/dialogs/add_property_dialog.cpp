@@ -8,12 +8,16 @@
 #include "core/systems/property_system.hpp"
 #include "core/tactile_error.hpp"
 #include "events/property_events.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 #include "utils/buffer_utils.hpp"
 
 namespace Tactile {
 namespace {
+
+constexpr auto flags =
+    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 constinit std::array<char, 100> name_buffer{};
 constinit int type_index = 0;
@@ -31,8 +35,7 @@ void ResetState()
 void UpdateAddPropertyDialog(const entt::registry& registry,
                              entt::dispatcher& dispatcher)
 {
-  constexpr auto flags =
-      ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+  CenterNextWindowOnAppearance();
   if (ImGui::BeginPopupModal("Add property", nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();

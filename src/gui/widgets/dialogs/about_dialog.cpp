@@ -1,10 +1,12 @@
 #include "about_dialog.hpp"
 
 #include <imgui.h>
+#include <imgui_internal.h>
 
 #include <centurion.hpp>  // open_url
 
 #include "gui/icons.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 
 #define TACTILE_VER "0.2.0"
@@ -19,6 +21,7 @@ constexpr auto source_code = "Source code: " TACTILE_URL;
 
 void UpdateAboutDialog(bool* open)
 {
+  CenterNextWindowOnAppearance();
   if (ImGui::Begin(TAC_ICON_ABOUT " About Tactile",
                    open,
                    ImGuiWindowFlags_AlwaysAutoResize))

@@ -7,4 +7,6 @@ void PrepareVerticalAlignmentCenter(float count = 1);
 
 void AlignNextItemCenteredHorizontally(float width);
 
+void CenterNextWindowOnAppearance();
+
 }  // namespace Tactile

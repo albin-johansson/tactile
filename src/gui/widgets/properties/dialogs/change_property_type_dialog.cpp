@@ -7,10 +7,14 @@
 #include "aliases/maybe.hpp"
 #include "core/tactile_error.hpp"
 #include "events/property_events.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 
 namespace Tactile {
 namespace {
+
+constexpr auto flags =
+    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 constinit int type_index = 0;
 inline Maybe<std::string> property_name;
@@ -26,8 +30,7 @@ void ResetState()
 void UpdateChangePropertyTypeDialog(const entt::registry& registry,
                                     entt::dispatcher& dispatcher)
 {
-  constexpr auto flags =
-      ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+  CenterNextWindowOnAppearance();
   if (ImGui::BeginPopupModal("Change property type", nullptr, flags))
   {
     ImGui::AlignTextToFramePadding();

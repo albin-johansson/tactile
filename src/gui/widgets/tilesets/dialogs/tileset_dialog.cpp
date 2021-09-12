@@ -8,12 +8,16 @@
 
 #include "aliases/ints.hpp"
 #include "events/tileset_events.hpp"
+#include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "io/preferences.hpp"
 #include "utils/buffer_utils.hpp"
 
 namespace Tactile {
 namespace {
+
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize |
+                       ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
 
 inline std::filesystem::path full_image_path;
 constinit std::array<char, 100> path_preview_buffer{};
@@ -59,11 +63,10 @@ void ResetInputs()
 
 }  // namespace
 
-void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
+void UpdateTilesetDialog(entt::dispatcher& dispatcher)
 {
-  constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize |
-                         ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
-  if (ImGui::Begin("Add tileset", open, flags))
+  CenterNextWindowOnAppearance();
+  if (ImGui::BeginPopupModal("Add tileset", nullptr, flags))
   {
     ImGui::TextUnformatted(
         "Select an image which contains the tiles aligned in a grid.");
@@ -91,18 +94,23 @@ void UpdateTilesetDialog(bool* open, entt::dispatcher& dispatcher)
       dispatcher.enqueue<AddTilesetEvent>(full_image_path, tile_width, tile_height);
 
       ResetInputs();
-      *open = false;
+      ImGui::CloseCurrentPopup();
     }
 
     ImGui::SameLine();
     if (ImGui::Button("Close"))
     {
       ResetInputs();
-      *open = false;
+      ImGui::CloseCurrentPopup();
     }
-  }
 
-  ImGui::End();
+    ImGui::EndPopup();
+  }
+}
+
+void OpenTilesetDialog()
+{
+  ImGui::OpenPopup("Add tileset");
 }
 
 }  // namespace Tactile

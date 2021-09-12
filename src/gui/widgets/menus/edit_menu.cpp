@@ -110,8 +110,11 @@ void UpdateEditMenuWindows(entt::dispatcher& dispatcher)
 {
   if (show_tileset_dialog)
   {
-    UpdateTilesetDialog(&show_tileset_dialog, dispatcher);
+    OpenTilesetDialog();
+    show_tileset_dialog = false;
   }
+
+  UpdateTilesetDialog(dispatcher);
 }
 
 void ShowTilesetDialog() noexcept

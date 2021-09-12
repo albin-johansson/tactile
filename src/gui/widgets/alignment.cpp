@@ -29,4 +29,16 @@ void AlignNextItemCenteredHorizontally(const float width)
                       ImVec2{halfRegion.x - (width / 2.0f), 0});
 }
 
+void CenterNextWindowOnAppearance()
+{
+  const auto* viewport = ImGui::GetMainViewport();
+  const auto pos = viewport->WorkPos;
+  const auto size = viewport->WorkSize;
+
+  const ImVec2 next_pos = pos + (size / ImVec2{2, 2});
+  const ImVec2 next_pivot{0.5f, 0.5f};
+
+  ImGui::SetNextWindowPos(next_pos, ImGuiCond_Appearing, next_pivot);
+}
+
 }  // namespace Tactile

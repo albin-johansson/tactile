@@ -4,9 +4,13 @@
 
 #include "aliases/maybe.hpp"
 #include "gui/icons.hpp"
+#include "gui/widgets/alignment.hpp"
 
 namespace Tactile {
 namespace {
+
+constexpr auto flags =
+    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 inline Maybe<IO::ParseError> current_error;
 
@@ -14,8 +18,7 @@ inline Maybe<IO::ParseError> current_error;
 
 void UpdateMapImportErrorDialog()
 {
-  constexpr auto flags =
-      ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+  CenterNextWindowOnAppearance();
   if (ImGui::BeginPopupModal(ICON_FA_EXCLAMATION_TRIANGLE " Map import error",
                              nullptr,
                              flags))
