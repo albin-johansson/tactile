@@ -64,6 +64,11 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<RemoveColumnEvent>();
     }
 
+    if (ImGui::MenuItem("Resize map", nullptr, false, hasActiveDocument))
+    {
+      dispatcher.enqueue<OpenResizeMapDialogEvent>();
+    }
+
     ImGui::Separator();
 
     if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp",
