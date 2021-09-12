@@ -31,6 +31,7 @@
 #include "core/commands/tools/eraser_sequence_cmd.hpp"
 #include "core/commands/tools/stamp_sequence_cmd.hpp"
 #include "core/components/property_context.hpp"
+#include "core/mouse.hpp"
 #include "core/systems/layer_system.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/systems/property_system.hpp"
@@ -172,6 +173,14 @@ void Application::PollEvents()
 
 void Application::UpdateFrame()
 {
+  if (auto* registry = mModel.GetActiveRegistry())
+  {
+    const auto position = ImGui::GetMousePos();
+    auto& mouse = registry->ctx<Mouse>();
+    mouse.x = position.x;
+    mouse.y = position.y;
+  }
+
   mDispatcher.update();
   mModel.Update();
   UpdateGui(mModel, mDispatcher);

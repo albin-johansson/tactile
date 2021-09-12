@@ -5,6 +5,7 @@
 #include "core/components/tileset.hpp"
 #include "core/components/tool.hpp"
 #include "core/map.hpp"
+#include "core/mouse.hpp"
 #include "core/viewport.hpp"
 
 namespace Tactile::Sys {
@@ -17,6 +18,7 @@ auto MakeRegistry() -> entt::registry
   registry.set<ActiveTileset>();
   registry.set<ActivePropertyContext>();
   registry.set<ActiveTool>();
+  registry.set<Mouse>();
 
   auto& map = registry.set<Map>();
   map.row_count = 5_row;

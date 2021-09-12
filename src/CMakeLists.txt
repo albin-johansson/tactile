@@ -38,6 +38,7 @@ set(TACTILE_SOURCE_FILES
     core/map_position.hpp
     core/model.cpp
     core/model.hpp
+    core/mouse.hpp
     core/mouse_info.hpp
     core/mouse_tool_type.hpp
     core/object_type.hpp
