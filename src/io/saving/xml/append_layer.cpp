@@ -110,6 +110,16 @@ void AppendObject(pugi::xml_node node,
   {
     objNode.append_attribute("visible").set_value(0);
   }
+
+  if (object.type == ObjectType::Point)
+  {
+    objNode.append_child("point");
+  }
+  else if (object.type == ObjectType::Ellipse)
+  {
+    objNode.append_child("ellipse");
+  }
+
   AppendProperties(registry, entity, node, dir);
 }
 
