@@ -59,6 +59,7 @@
 #define TAC_ICON_RESET_ZOOM ICON_FA_SEARCH
 
 #define TAC_ICON_LINK ICON_FA_LINK
+#define TAC_ICON_BUG ICON_FA_BUG
 
 /// \} End of icon literals
 

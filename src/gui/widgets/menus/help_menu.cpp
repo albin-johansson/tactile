@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include <centurion.hpp>  // is_debug_build
+#include <centurion.hpp>  // open_url, is_debug_build
 
 #include "gui/icons.hpp"
 #include "gui/widgets/dialogs/about_dialog.hpp"
@@ -26,10 +26,17 @@ void UpdateHelpMenu()
   {
     show_about_tactile = ImGui::MenuItem(TAC_ICON_ABOUT " About Tactile...");
     show_about_imgui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
+
+    ImGui::Separator();
+    if (ImGui::MenuItem(TAC_ICON_BUG " Report an issue..."))
+    {
+      cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
+    }
+
+    ImGui::Separator();
     show_credits = ImGui::MenuItem("Credits...");
 
     ImGui::Separator();
-
     show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show metrics...");
 
     if constexpr (cen::is_debug_build())
