@@ -2,6 +2,7 @@
 
 #include "core/model.hpp"
 #include "events/tool_events.hpp"
+#include "gui/widgets/viewport/viewport_widget.hpp"
 
 namespace Tactile {
 
@@ -15,7 +16,7 @@ void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto EnableEraserShortcut::IsEnabled(const Model& model) const -> bool
 {
-  return model.HasActiveDocument();
+  return model.HasActiveDocument() && IsViewportFocused();
 }
 
 }  // namespace Tactile
