@@ -120,26 +120,26 @@ void LoadPreferences()
     const auto ini = init::read_ini(GetPersistentFileDir() / file_name);
 
     const auto& appearance = ini.at("Appearance");
-    settings.theme = appearance.at("Theme").as<std::string>();
-    settings.show_grid = appearance.at("ShowGrid").as<bool>();
-    settings.window_border = appearance.at("WindowBorder").as<bool>();
+    appearance.at("Theme").get_to(settings.theme);
+    appearance.at("ShowGrid").get_to(settings.show_grid);
+    appearance.at("WindowBorder").get_to(settings.window_border);
 
     const auto& behavior = ini.at("Behavior");
-    settings.command_capacity = behavior.at("CommandCapacity").as<usize>();
-    settings.restore_last_session = behavior.at("RestoreLastSession").as<bool>();
-    settings.preferred_tile_width = behavior.at("PreferredTileWidth").as<int>();
-    settings.preferred_tile_height = behavior.at("PreferredTileHeight").as<int>();
+    behavior.at("CommandCapacity").get_to(settings.command_capacity);
+    behavior.at("RestoreLastSession").get_to(settings.restore_last_session);
+    behavior.at("PreferredTileWidth").get_to(settings.preferred_tile_width);
+    behavior.at("PreferredTileHeight").get_to(settings.preferred_tile_height);
 
     const auto& exp = ini.at("Export");
-    settings.preferred_format = exp.at("PreferredFormat").as<std::string>();
-    settings.embed_tilesets = exp.at("EmbedTilesets").as<bool>();
-    settings.human_readable_output = exp.at("HumanReadableOutput").as<bool>();
+    exp.at("PreferredFormat").get_to(settings.preferred_format);
+    exp.at("EmbedTilesets").get_to(settings.embed_tilesets);
+    exp.at("HumanReadableOutput").get_to(settings.human_readable_output);
 
     const auto& widgets = ini.at("Widgets");
-    settings.show_tileset_dock = widgets.at("ShowTilesetDock").as<bool>();
-    settings.show_layer_dock = widgets.at("ShowLayerDock").as<bool>();
-    settings.show_properties_dock = widgets.at("ShowPropertiesDock").as<bool>();
-    settings.restore_layout = widgets.at("RestoreLayout").as<bool>();
+    widgets.at("ShowTilesetDock").get_to(settings.show_tileset_dock);
+    widgets.at("ShowLayerDock").get_to(settings.show_layer_dock);
+    widgets.at("ShowPropertiesDock").get_to(settings.show_properties_dock);
+    widgets.at("RestoreLayout").get_to(settings.restore_layout);
     widgets.at("ViewportOverlayPos").get_to(settings.viewport_overlay_pos);
   }
   else
