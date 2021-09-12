@@ -10,6 +10,11 @@
 #include "no_content_viewport_widget.hpp"
 
 namespace Tactile {
+namespace {
+
+constinit bool has_focus = false;
+
+}  // namespace
 
 void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
 {
@@ -26,7 +31,9 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
                    nullptr,
                    ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse))
   {
-    if (model.GetActiveMapId())
+    has_focus = ImGui::IsWindowFocused();
+
+    if (model.HasActiveDocument())
     {
       MapContentViewport(model, dispatcher);
     }
@@ -34,6 +41,10 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
     {
       NoContentViewportWidget(dispatcher);
     }
+  }
+  else
+  {
+    has_focus = false;
   }
 
   ImGui::PopStyleVar();
@@ -54,6 +65,11 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
 void CenterViewport()
 {
   CenterMapContentViewport();
+}
+
+auto IsViewportFocused() noexcept -> bool
+{
+  return has_focus;
 }
 
 }  // namespace Tactile

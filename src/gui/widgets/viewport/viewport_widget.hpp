@@ -10,4 +10,6 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher);
 
 void CenterViewport();
 
+[[nodiscard]] auto IsViewportFocused() noexcept -> bool;
+
 }  // namespace Tactile
