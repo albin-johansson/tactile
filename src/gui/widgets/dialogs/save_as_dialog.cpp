@@ -23,7 +23,7 @@ void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
                                {"JSON File", "*.json", "TMX File", "*.tmx"}}
                     .result();
 
-    if (!path.ends_with(".json") || !path.ends_with(".tmx"))
+    if (!path.ends_with(".json") && !path.ends_with(".tmx"))
     {
       CENTURION_LOG_INFO(
           "No suffix in requested file path, using preferred format...");
