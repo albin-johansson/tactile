@@ -35,12 +35,12 @@ void UpdateAddMapDialog(entt::dispatcher& dispatcher)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Tile width:  ");
     ImGui::SameLine();
-    ImGui::InputInt("##TileWidthLabel", &tile_width);
+    ImGui::InputInt("##TileWidthInput", &tile_width);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Tile height: ");
     ImGui::SameLine();
-    ImGui::InputInt("##TileHeightLabel", &tile_height);
+    ImGui::InputInt("##TileHeightInput", &tile_height);
 
     ImGui::Spacing();
     if (Button("OK", nullptr, is_input_valid()))
