@@ -63,6 +63,42 @@ void AddCommonAttributes(JSON& json,
   return json;
 }
 
+[[nodiscard]] auto SaveObject(const entt::registry& registry,
+                              const entt::entity entity,
+                              const std::filesystem::path& dir) -> JSON
+{
+  const auto& object = registry.get<Object>(entity);
+  const auto& context = registry.get<PropertyContext>(entity);
+
+  auto json = JSON::object();
+
+  json["id"] = object.id.get();
+  json["name"] = context.name;
+  json["x"] = object.x;
+  json["y"] = object.y;
+  json["width"] = object.width;
+  json["height"] = object.height;
+  json["visible"] = object.visible;
+  json["type"] = object.custom_type;
+  json["rotation"] = 0;
+
+  if (object.type == ObjectType::Point)
+  {
+    json["point"] = true;
+  }
+  else if (object.type == ObjectType::Ellipse)
+  {
+    json["ellipse"] = true;
+  }
+
+  if (!context.properties.empty())
+  {
+    json["properties"] = SaveProperties(registry, entity, dir);
+  }
+
+  return json;
+}
+
 [[nodiscard]] auto SaveObjectLayer(const entt::registry& registry,
                                    const entt::entity entity,
                                    const Layer& layer,
@@ -78,31 +114,7 @@ void AddCommonAttributes(JSON& json,
   const auto& objectLayer = registry.get<ObjectLayer>(entity);
   for (const auto objectEntity : objectLayer.objects)
   {
-    const auto& object = registry.get<Object>(objectEntity);
-    const auto& ctx = registry.get<PropertyContext>(objectEntity);
-
-    auto jsonObject = JSON::object();
-    jsonObject["id"] = object.id.get();
-    jsonObject["name"] = ctx.name;
-    jsonObject["x"] = object.x;
-    jsonObject["y"] = object.y;
-    jsonObject["width"] = object.width;
-    jsonObject["height"] = object.height;
-    jsonObject["visible"] = object.visible;
-    jsonObject["type"] = object.custom_type;
-    jsonObject["rotation"] = 0;
-
-    if (object.type == ObjectType::Point)
-    {
-      jsonObject["point"] = true;
-    }
-
-    if (!ctx.properties.empty())
-    {
-      // TODO jsonObject["properties"] = SaveProperties(object, dir);
-    }
-
-    objects += std::move(jsonObject);
+    objects += SaveObject(registry, objectEntity, dir);
   }
 
   json["objects"] = std::move(objects);
