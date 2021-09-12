@@ -61,7 +61,7 @@ void RemoveRow(entt::registry& registry)
 void RemoveColumn(entt::registry& registry)
 {
   auto& map = registry.ctx<Map>();
-  if (map.row_count > 1)
+  if (map.column_count > 1)
   {
     --map.column_count;
     TileLayerQuery(registry, [](TileLayer& layer) {
