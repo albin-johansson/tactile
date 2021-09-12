@@ -496,12 +496,12 @@ endif ()
 
 target_precompile_headers(libtactile
     PRIVATE
-      <entt.hpp>
-      <json.hpp>
-      <centurion.hpp>
-      <rune/everything.hpp>
-      <init/ini.hpp>
-      <nenya.hpp>
+    <entt.hpp>
+    <json.hpp>
+    <centurion.hpp>
+    <rune/everything.hpp>
+    <init/ini.hpp>
+    <nenya.hpp>
     )
 
 target_include_directories(libtactile
