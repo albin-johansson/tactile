@@ -52,18 +52,13 @@ void SetPreferences(Preferences prefs);
 [[nodiscard]] auto GetPreferences() -> const Preferences&;
 
 /// \} End of preference API
-
 /// \} End of group io
 
 namespace Prefs {
 
 /// \addtogroup io
 /// \{
-
 /// \name Preference API
-/// \{
-
-/// \name Appearance
 /// \{
 
 void ResetAppearancePreferences(Preferences& prefs);
@@ -73,11 +68,6 @@ void SetShowGrid(bool show) noexcept;
 [[nodiscard]] auto GetWindowBorder() noexcept -> bool;
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
 
-/// \} End of appearance
-
-/// \name Behavior
-/// \{
-
 void ResetBehaviorPreferences(Preferences& prefs);
 
 [[nodiscard]] auto GetCommandCapacity() noexcept -> usize;
@@ -85,21 +75,11 @@ void ResetBehaviorPreferences(Preferences& prefs);
 [[nodiscard]] auto GetPreferredTileHeight() noexcept -> int;
 [[nodiscard]] auto GetRestoreLastSession() noexcept -> bool;
 
-/// \} End of behavior
-
-/// \name Export
-/// \{
-
 void ResetExportPreferences(Preferences& prefs);
 
 [[nodiscard]] auto GetPreferredFormat() -> const std::string&;
 [[nodiscard]] auto GetEmbedTilesets() noexcept -> bool;
 [[nodiscard]] auto GetHumanReadableOutput() noexcept -> bool;
-
-/// \} End of export
-
-/// \name Widgets
-/// \{
 
 void SetShowLayerDock(bool visible) noexcept;
 void SetShowTilesetDock(bool visible) noexcept;
@@ -110,12 +90,9 @@ void SetViewportOverlayPos(OverlayPos pos) noexcept;
 [[nodiscard]] auto GetShowTilesetDock() noexcept -> bool;
 [[nodiscard]] auto GetShowPropertiesDock() noexcept -> bool;
 [[nodiscard]] auto GetRestoreLayout() noexcept -> bool;
-
-/// \} End of widgets
 [[nodiscard]] auto GetViewportOverlayPos() noexcept -> OverlayPos;
 
 /// \} End of preference API
-
 /// \} End of group io
 
 }  // namespace Prefs
