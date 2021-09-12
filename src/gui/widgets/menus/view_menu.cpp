@@ -3,9 +3,11 @@
 #include <imgui.h>
 
 #include "core/model.hpp"
+#include "events/view_events.hpp"
 #include "events/viewport_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/layout/dock_space.hpp"
+#include "gui/widgets/toolbar/toolbar.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -61,8 +63,10 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<CenterViewportEvent>();
     }
 
-    bool showGrid = Prefs::GetShowGrid();
-    if (ImGui::MenuItem(TAC_ICON_GRID " Toggle grid", "Ctrl+G", &showGrid))
+    ImGui::Separator();
+
+    if (bool showGrid = Prefs::GetShowGrid();
+        ImGui::MenuItem(TAC_ICON_GRID " Toggle grid", "Ctrl+G", &showGrid))
     {
       Prefs::SetShowGrid(showGrid);
     }
@@ -125,6 +129,13 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
                         hasActiveDocument))
     {
       dispatcher.enqueue<PanLeftEvent>();
+    }
+
+    ImGui::Separator();
+
+    if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument))
+    {
+      dispatcher.enqueue<ToggleUiEvent>();
     }
 
     ImGui::EndMenu();

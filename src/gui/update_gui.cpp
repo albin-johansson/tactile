@@ -12,7 +12,7 @@
 #include "widgets/menus/menu_bar.hpp"
 #include "widgets/properties/properties_dock.hpp"
 #include "widgets/tilesets/tileset_dock.hpp"
-#include "widgets/toolbar/tool_bar.hpp"
+#include "widgets/toolbar/toolbar.hpp"
 #include "widgets/viewport/viewport_widget.hpp"
 
 namespace Tactile {

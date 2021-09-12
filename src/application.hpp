@@ -75,7 +75,7 @@ class Application final
 
   void OnFloodEvent(const FloodEvent& event);
 
-  void OnCenterViewportEvent();
+  static void OnCenterViewportEvent();
 
   void OnOffsetViewportEvent(const OffsetViewportEvent& event);
 
@@ -92,6 +92,8 @@ class Application final
   void OnDecreaseViewportZoomEvent();
 
   void OnResetViewportZoomEvent();
+
+  static void OnToggleUiEvent();
 
   void OnSelectMapEvent(const SelectMapEvent& event);
 
@@ -127,7 +129,7 @@ class Application final
 
   void OnSetLayerVisibleEvent(const SetLayerVisibleEvent& event);
 
-  void OnRenameLayerRequestEvent(const RenameLayerRequestEvent& event);
+  static void OnRenameLayerRequestEvent(const RenameLayerRequestEvent& event);
 
   void OnRenameLayerEvent(const RenameLayerEvent& event);
 

@@ -44,6 +44,7 @@
 #include "gui/widgets/dialogs/resize_map_dialog.hpp"
 #include "gui/widgets/dialogs/save_as_dialog.hpp"
 #include "gui/widgets/layers/layer_dock.hpp"
+#include "gui/widgets/toolbar/toolbar.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
 #include "io/parsing/map_parser.hpp"
 #include "io/parsing/to_map_document.hpp"
@@ -76,6 +77,12 @@ void Register(Model& model, Args&&... args)
                                       std::forward<Args>(args)...);
   }
 }
+
+/* These variables are used by the "Toggle UI" feature */
+constinit bool prev_show_layer_dock{true};
+constinit bool prev_show_tileset_dock{true};
+constinit bool prev_show_properties_dock{true};
+constinit bool prev_show_toolbar{true};
 
 }  // namespace
 
@@ -395,6 +402,34 @@ void Application::OnResetViewportZoomEvent()
   {
     Sys::ResetViewportZoom(*registry);
   }
+}
+
+void Application::OnToggleUiEvent()
+{
+  static bool show = false;
+
+  if (!show)
+  {
+    prev_show_layer_dock = Prefs::GetShowLayerDock();
+    prev_show_tileset_dock = Prefs::GetShowTilesetDock();
+    prev_show_properties_dock = Prefs::GetShowPropertiesDock();
+    prev_show_toolbar = IsToolbarVisible();
+  }
+
+  Prefs::SetShowLayerDock(show);
+  Prefs::SetShowTilesetDock(show);
+  Prefs::SetShowPropertiesDock(show);
+  SetToolbarVisible(show);
+
+  if (show)
+  {
+    Prefs::SetShowLayerDock(prev_show_layer_dock);
+    Prefs::SetShowTilesetDock(prev_show_tileset_dock);
+    Prefs::SetShowPropertiesDock(prev_show_properties_dock);
+    SetToolbarVisible(prev_show_toolbar);
+  }
+
+  show = !show;
 }
 
 void Application::OnSelectMapEvent(const SelectMapEvent& event)

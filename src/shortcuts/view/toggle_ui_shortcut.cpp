@@ -1,0 +1,22 @@
+#include "toggle_ui_shortcut.hpp"
+
+#include "core/model.hpp"
+#include "events/view_events.hpp"
+#include "gui/widgets/viewport/viewport_widget.hpp"
+
+namespace Tactile {
+
+ToggleUiShortcut::ToggleUiShortcut() : AShortcut{cen::scancodes::tab}
+{}
+
+void ToggleUiShortcut::Activate(entt::dispatcher& dispatcher)
+{
+  dispatcher.enqueue<ToggleUiEvent>();
+}
+
+auto ToggleUiShortcut::IsEnabled(const Model& model) const -> bool
+{
+  return model.HasActiveDocument() && IsViewportFocused();
+}
+
+}  // namespace Tactile

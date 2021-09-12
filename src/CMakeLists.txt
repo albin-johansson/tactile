@@ -170,6 +170,7 @@ set(TACTILE_SOURCE_FILES
     events/save_event.hpp
     events/tileset_events.hpp
     events/tool_events.hpp
+    events/view_events.hpp
     events/viewport_events.hpp
 
     gui/icons.cpp
@@ -315,8 +316,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/tilesets/dialogs/tileset_dialog.cpp
     gui/widgets/tilesets/dialogs/tileset_dialog.hpp
 
-    gui/widgets/toolbar/tool_bar.cpp
-    gui/widgets/toolbar/tool_bar.hpp
+    gui/widgets/toolbar/toolbar.cpp
+    gui/widgets/toolbar/toolbar.hpp
     gui/widgets/toolbar/tool_button.cpp
     gui/widgets/toolbar/tool_button.hpp
 
@@ -478,6 +479,8 @@ set(TACTILE_SOURCE_FILES
     shortcuts/view/pan_up_shortcut.hpp
     shortcuts/view/toggle_grid_shortcut.cpp
     shortcuts/view/toggle_grid_shortcut.hpp
+    shortcuts/view/toggle_ui_shortcut.cpp
+    shortcuts/view/toggle_ui_shortcut.hpp
     )
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})

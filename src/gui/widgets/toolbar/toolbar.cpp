@@ -1,4 +1,4 @@
-#include "tool_bar.hpp"
+#include "toolbar.hpp"
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -16,9 +16,19 @@
 #include "gui/widgets/toolbar/tool_button.hpp"
 
 namespace Tactile {
+namespace {
+
+constinit bool is_visible = true;
+
+}  // namespace
 
 void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 {
+  if (!is_visible)
+  {
+    return;
+  }
+
   static int axis = ImGuiAxis_X;
   BeginDockingToolbar("Toolbar", axis);
 
@@ -133,6 +143,16 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   }
 
   EndDockingToolbar();
+}
+
+void SetToolbarVisible(const bool visible) noexcept
+{
+  is_visible = visible;
+}
+
+auto IsToolbarVisible() noexcept -> bool
+{
+  return is_visible;
 }
 
 }  // namespace Tactile

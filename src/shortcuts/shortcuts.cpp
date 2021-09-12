@@ -27,6 +27,7 @@
 #include "shortcuts/view/pan_right_shortcut.hpp"
 #include "shortcuts/view/pan_up_shortcut.hpp"
 #include "shortcuts/view/toggle_grid_shortcut.hpp"
+#include "shortcuts/view/toggle_ui_shortcut.hpp"
 
 namespace Tactile {
 namespace {
@@ -66,6 +67,7 @@ void LoadDefaultShortcuts()
   shortcuts.push_back(std::make_unique<DecreaseViewportZoomShortcut>());
 
   shortcuts.push_back(std::make_unique<ToggleGridShortcut>());
+  shortcuts.push_back(std::make_unique<ToggleUiShortcut>());
 
   shortcuts.push_back(std::make_unique<PanRightShortcut>());
   shortcuts.push_back(std::make_unique<PanLeftShortcut>());
