@@ -19,9 +19,7 @@ inline Maybe<IO::ParseError> current_error;
 void UpdateMapImportErrorDialog()
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal(ICON_FA_EXCLAMATION_TRIANGLE " Map import error",
-                             nullptr,
-                             flags))
+  if (ImGui::BeginPopupModal(TAC_ICON_ERROR " Map import error", nullptr, flags))
   {
     ImGui::TextUnformatted("Oops, failed to open the specified map!");
     ImGui::Text("Cause: %s", IO::GetCause(current_error.value()));
@@ -42,7 +40,7 @@ void UpdateMapImportErrorDialog()
 void OpenMapImportErrorDialog(const IO::ParseError error)
 {
   current_error = error;
-  ImGui::OpenPopup(ICON_FA_EXCLAMATION_TRIANGLE " Map import error");
+  ImGui::OpenPopup(TAC_ICON_ERROR " Map import error");
 }
 
 }  // namespace Tactile

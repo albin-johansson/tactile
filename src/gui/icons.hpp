@@ -60,6 +60,7 @@
 
 #define TAC_ICON_LINK ICON_FA_LINK
 #define TAC_ICON_BUG ICON_FA_BUG
+#define TAC_ICON_ERROR ICON_FA_EXCLAMATION_TRIANGLE
 
 /// \} End of icon literals
 
