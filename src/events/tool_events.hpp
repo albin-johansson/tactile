@@ -4,7 +4,7 @@
 #include "aliases/tile_id.hpp"
 #include "core/map_position.hpp"
 #include "core/mouse_info.hpp"
-#include "core/mouse_tool_type.hpp"
+#include "core/tool_type.hpp"
 
 namespace Tactile {
 
@@ -28,7 +28,7 @@ struct MouseReleasedEvent final
 
 struct SelectToolEvent final
 {
-  MouseToolType type;
+  ToolType type;
 };
 
 struct StampSequenceEvent final

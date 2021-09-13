@@ -11,7 +11,7 @@ EnableStampShortcut::EnableStampShortcut() : AShortcut{cen::scancodes::s}
 
 void EnableStampShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
 }
 
 auto EnableStampShortcut::IsEnabled(const Model& model) const -> bool

@@ -11,7 +11,7 @@ EnableBucketShortcut::EnableBucketShortcut() : AShortcut{cen::scancodes::b}
 
 void EnableBucketShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
 }
 
 auto EnableBucketShortcut::IsEnabled(const Model& model) const -> bool

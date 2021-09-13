@@ -40,10 +40,10 @@ set(TACTILE_SOURCE_FILES
     core/model.hpp
     core/mouse.hpp
     core/mouse_info.hpp
-    core/mouse_tool_type.hpp
     core/object_type.hpp
     core/region.hpp
     core/tactile_error.hpp
+    core/tool_type.hpp
     core/viewport.hpp
 
     core/algorithms/flood_fill.cpp

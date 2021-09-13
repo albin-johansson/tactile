@@ -5,7 +5,7 @@ namespace Tactile {
 /// \addtogroup core
 /// \{
 
-enum class MouseToolType
+enum class ToolType
 {
   None,
   Stamp,

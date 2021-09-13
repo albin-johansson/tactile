@@ -7,7 +7,7 @@
 
 namespace Tactile::Sys {
 
-void SelectTool(entt::registry& registry, const MouseToolType tool)
+void SelectTool(entt::registry& registry, const ToolType tool)
 {
   auto& active = registry.ctx<ActiveTool>();
   active.tool = tool;
@@ -20,18 +20,18 @@ void ToolOnPressed(entt::registry& registry,
   const auto& active = registry.ctx<ActiveTool>();
   switch (active.tool)
   {
-    case MouseToolType::None:
+    case ToolType::None:
       break;
 
-    case MouseToolType::Stamp:
+    case ToolType::Stamp:
       StampToolOnPressed(registry, mouse);
       break;
 
-    case MouseToolType::Bucket:
+    case ToolType::Bucket:
       BucketToolOnPressed(registry, dispatcher, mouse);
       break;
 
-    case MouseToolType::Eraser:
+    case ToolType::Eraser:
       EraserToolOnPressed(registry, mouse);
       break;
   }
@@ -44,17 +44,17 @@ void ToolOnDragged(entt::registry& registry,
   const auto& active = registry.ctx<ActiveTool>();
   switch (active.tool)
   {
-    case MouseToolType::None:
+    case ToolType::None:
       [[fallthrough]];
 
-    case MouseToolType::Bucket:
+    case ToolType::Bucket:
       break;
 
-    case MouseToolType::Stamp:
+    case ToolType::Stamp:
       StampToolOnDragged(registry, mouse);
       break;
 
-    case MouseToolType::Eraser:
+    case ToolType::Eraser:
       EraserToolOnDragged(registry, mouse);
       break;
   }
@@ -67,17 +67,17 @@ void ToolOnReleased(entt::registry& registry,
   const auto& active = registry.ctx<ActiveTool>();
   switch (active.tool)
   {
-    case MouseToolType::None:
+    case ToolType::None:
       [[fallthrough]];
 
-    case MouseToolType::Bucket:
+    case ToolType::Bucket:
       break;
 
-    case MouseToolType::Stamp:
+    case ToolType::Stamp:
       StampToolOnReleased(registry, dispatcher, mouse);
       break;
 
-    case MouseToolType::Eraser:
+    case ToolType::Eraser:
       EraserToolOnReleased(registry, dispatcher, mouse);
       break;
   }
@@ -86,19 +86,19 @@ void ToolOnReleased(entt::registry& registry,
 auto IsStampEnabled(const entt::registry& registry) -> bool
 {
   const auto& active = registry.ctx<ActiveTool>();
-  return active.tool == MouseToolType::Stamp;
+  return active.tool == ToolType::Stamp;
 }
 
 auto IsEraserEnabled(const entt::registry& registry) -> bool
 {
   const auto& active = registry.ctx<ActiveTool>();
-  return active.tool == MouseToolType::Eraser;
+  return active.tool == ToolType::Eraser;
 }
 
 auto IsBucketEnabled(const entt::registry& registry) -> bool
 {
   const auto& active = registry.ctx<ActiveTool>();
-  return active.tool == MouseToolType::Bucket;
+  return active.tool == ToolType::Bucket;
 }
 
 }  // namespace Tactile::Sys

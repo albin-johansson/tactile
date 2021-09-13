@@ -3,11 +3,11 @@
 #include <entt.hpp>  // registry, dispatcher
 
 #include "core/mouse_info.hpp"
-#include "core/mouse_tool_type.hpp"
+#include "core/tool_type.hpp"
 
 namespace Tactile::Sys {
 
-void SelectTool(entt::registry& registry, MouseToolType tool);
+void SelectTool(entt::registry& registry, ToolType tool);
 
 void ToolOnPressed(entt::registry& registry,
                    entt::dispatcher& dispatcher,

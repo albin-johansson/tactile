@@ -5,7 +5,7 @@
 #include <format>  // format
 
 #include "core/model.hpp"
-#include "core/mouse_tool_type.hpp"
+#include "core/tool_type.hpp"
 #include "events/command_events.hpp"
 #include "events/map_events.hpp"
 #include "events/tool_events.hpp"
@@ -76,7 +76,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
                         model.IsStampActive(),
                         hasActiveDocument))
     {
-      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
+      dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
     }
 
     if (ImGui::MenuItem(TAC_ICON_BUCKET " Bucket",
@@ -84,7 +84,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
                         model.IsBucketActive(),
                         hasActiveDocument))
     {
-      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
+      dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
     }
 
     if (ImGui::MenuItem(TAC_ICON_ERASER " Eraser",
@@ -92,7 +92,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
                         model.IsEraserActive(),
                         hasActiveDocument))
     {
-      dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
+      dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
     }
 
     ImGui::Separator();

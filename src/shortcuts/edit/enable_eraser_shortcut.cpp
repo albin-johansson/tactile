@@ -11,7 +11,7 @@ EnableEraserShortcut::EnableEraserShortcut() : AShortcut{cen::scancodes::e}
 
 void EnableEraserShortcut::Activate(entt::dispatcher& dispatcher)
 {
-  dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
+  dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
 }
 
 auto EnableEraserShortcut::IsEnabled(const Model& model) const -> bool

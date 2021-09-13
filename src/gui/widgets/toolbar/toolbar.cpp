@@ -4,7 +4,7 @@
 #include <imgui_internal.h>
 
 #include "core/model.hpp"
-#include "core/mouse_tool_type.hpp"
+#include "core/tool_type.hpp"
 #include "events/command_events.hpp"
 #include "events/map_events.hpp"
 #include "events/tool_events.hpp"
@@ -119,7 +119,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 
   if (ToolButton(TAC_ICON_STAMP, "Stamp tool.", model.IsStampActive()))
   {
-    dispatcher.enqueue<SelectToolEvent>(MouseToolType::Stamp);
+    dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
   }
 
   if (axis == ImGuiAxis_X)
@@ -129,7 +129,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 
   if (ToolButton(TAC_ICON_BUCKET, "Bucket tool.", model.IsBucketActive()))
   {
-    dispatcher.enqueue<SelectToolEvent>(MouseToolType::Bucket);
+    dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
   }
 
   if (axis == ImGuiAxis_X)
@@ -139,7 +139,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 
   if (ToolButton(TAC_ICON_ERASER, "Eraser tool.", model.IsEraserActive()))
   {
-    dispatcher.enqueue<SelectToolEvent>(MouseToolType::Eraser);
+    dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
   }
 
   EndDockingToolbar();
