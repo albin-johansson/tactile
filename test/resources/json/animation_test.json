@@ -272,27 +272,6 @@
               "tileid": 532
             }
           ],
-          "id": 0
-        },
-        {
-          "animation": [
-            {
-              "duration": 100,
-              "tileid": 436
-            },
-            {
-              "duration": 100,
-              "tileid": 468
-            },
-            {
-              "duration": 100,
-              "tileid": 500
-            },
-            {
-              "duration": 100,
-              "tileid": 532
-            }
-          ],
           "id": 532
         }
       ],
