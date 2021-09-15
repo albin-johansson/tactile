@@ -18,8 +18,8 @@ auto main(int argc, char** argv) -> int
     cen::log::set_priority(cen::log_priority::debug);
   }
 
-  constexpr auto flags = cen::window::default_flags() | cen::window::opengl |
-                         cen::window::resizable | cen::window::high_dpi;
+  constexpr auto flags =
+      cen::window::hidden | cen::window::opengl | cen::window::resizable;
   cen::window window{"Tactile", cen::window::default_size(), flags};
   window.set_icon(cen::surface{"resources/icon.png"});
 
