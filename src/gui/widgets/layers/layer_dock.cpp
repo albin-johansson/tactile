@@ -90,7 +90,7 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
   bool isVisible = Prefs::GetShowLayerDock();
   if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse))
   {
-    has_focus = ImGui::IsWindowFocused(ImGuiFocusedFlags_ChildWindows);
+    has_focus = ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
     UpdateLayerDockButtons(registry, dispatcher);
     if (registry.empty<Layer>())
