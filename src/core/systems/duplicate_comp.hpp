@@ -9,7 +9,7 @@
 #include "core/components/parent.hpp"
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
-#include "core/map.hpp"
+#include "core/ctx/map.hpp"
 #include "property_system.hpp"
 
 namespace Tactile::Sys {

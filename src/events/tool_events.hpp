@@ -2,8 +2,8 @@
 
 #include "aliases/tile_cache.hpp"
 #include "aliases/tile_id.hpp"
+#include "core/ctx/mouse_info.hpp"
 #include "core/map_position.hpp"
-#include "core/mouse_info.hpp"
 #include "core/tool_type.hpp"
 
 namespace Tactile {

@@ -4,9 +4,9 @@
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/tool.hpp"
-#include "core/map.hpp"
-#include "core/mouse.hpp"
-#include "core/viewport.hpp"
+#include "core/ctx/map.hpp"
+#include "core/ctx/mouse.hpp"
+#include "core/ctx/viewport.hpp"
 
 namespace Tactile::Sys {
 

@@ -8,7 +8,7 @@
 #include "core/components/group_layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
-#include "core/map.hpp"
+#include "core/ctx/map.hpp"
 #include "events/layer_events.hpp"
 #include "gui/icons.hpp"
 #include "layer_item_popup.hpp"

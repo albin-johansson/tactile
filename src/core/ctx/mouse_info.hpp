@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>  // mouse_button
 
-#include "map_position.hpp"
+#include "core/map_position.hpp"
 
 namespace Tactile {
 

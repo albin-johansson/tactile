@@ -6,8 +6,8 @@
 #include "aliases/ints.hpp"
 #include "aliases/layer_id.hpp"
 #include "aliases/maybe.hpp"
+#include "core/ctx/map.hpp"
 #include "core/layer_type.hpp"
-#include "core/map.hpp"
 #include "layer_snapshot.hpp"
 
 namespace Tactile::Sys {

@@ -32,7 +32,7 @@
 #include "core/commands/tools/eraser_sequence_cmd.hpp"
 #include "core/commands/tools/stamp_sequence_cmd.hpp"
 #include "core/components/property_context.hpp"
-#include "core/mouse.hpp"
+#include "core/ctx/mouse.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/systems/property_system.hpp"

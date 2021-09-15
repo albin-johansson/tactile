@@ -1,6 +1,6 @@
 #include "remove_column_shortcut.hpp"
 
-#include "core/map.hpp"
+#include "core/ctx/map.hpp"
 #include "core/model.hpp"
 #include "events/map_events.hpp"
 

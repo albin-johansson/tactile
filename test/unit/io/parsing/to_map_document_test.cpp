@@ -9,7 +9,7 @@
 #include "core/components/texture.hpp"
 #include "core/components/tile_layer.hpp"
 #include "core/components/tileset.hpp"
-#include "core/map.hpp"
+#include "core/ctx/map.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/property_system.hpp"

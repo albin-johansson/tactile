@@ -8,7 +8,7 @@
 #include "append_tileset.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/tileset.hpp"
-#include "core/map.hpp"
+#include "core/ctx/map.hpp"
 #include "io/saving/common_saving.hpp"
 #include "save_xml.hpp"
 

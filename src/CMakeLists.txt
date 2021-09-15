@@ -34,17 +34,13 @@ set(TACTILE_SOURCE_FILES
 
     core/document.hpp
     core/layer_type.hpp
-    core/map.hpp
     core/map_position.hpp
     core/model.cpp
     core/model.hpp
-    core/mouse.hpp
-    core/mouse_info.hpp
     core/object_type.hpp
     core/region.hpp
     core/tactile_error.hpp
     core/tool_type.hpp
-    core/viewport.hpp
 
     core/algorithms/flood_fill.cpp
     core/algorithms/flood_fill.hpp
@@ -123,6 +119,11 @@ set(TACTILE_SOURCE_FILES
     core/components/tileset.hpp
     core/components/tool.hpp
     core/components/uv_tile_size.hpp
+
+    core/ctx/map.hpp
+    core/ctx/mouse.hpp
+    core/ctx/mouse_info.hpp
+    core/ctx/viewport.hpp
 
     core/properties/property_value.cpp
     core/properties/property_value.hpp

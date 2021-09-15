@@ -5,8 +5,8 @@
 #include "core/components/layer.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
-#include "core/map.hpp"
-#include "core/viewport.hpp"
+#include "core/ctx/map.hpp"
+#include "core/ctx/viewport.hpp"
 
 using namespace Tactile;
 
