@@ -10,8 +10,8 @@
 #include "core/components/tile_layer.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map.hpp"
-#include "core/systems/layer_system.hpp"
-#include "core/systems/object_layer_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/property_system.hpp"
 #include "io/parsing/map_parser.hpp"
 

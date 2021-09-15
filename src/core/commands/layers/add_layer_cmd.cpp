@@ -2,7 +2,7 @@
 
 #include <cassert>  // assert
 
-#include "core/systems/layer_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
 
 namespace Tactile {
 

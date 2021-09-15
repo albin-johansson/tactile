@@ -4,8 +4,8 @@
 #include <utility>  // move
 
 #include "core/components/tile_layer.hpp"
-#include "core/systems/layer_system.hpp"
-#include "core/systems/tile_layer_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 
 namespace Tactile {
 

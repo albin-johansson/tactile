@@ -4,7 +4,7 @@
 #include <utility>  // move
 
 #include "core/components/property_context.hpp"
-#include "core/systems/layer_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
 
 namespace Tactile {
 

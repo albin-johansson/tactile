@@ -15,8 +15,8 @@
 #include "core/components/property_context.hpp"
 #include "core/components/tile_layer.hpp"
 #include "core/map.hpp"
-#include "duplicate_comp.hpp"
-#include "property_system.hpp"
+#include "core/systems/duplicate_comp.hpp"
+#include "core/systems/property_system.hpp"
 #include "tile_layer_system.hpp"
 
 namespace Tactile::Sys {

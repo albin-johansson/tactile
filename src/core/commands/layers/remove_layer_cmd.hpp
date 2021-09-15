@@ -7,7 +7,7 @@
 #include "aliases/ref.hpp"
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
-#include "core/systems/layer_snapshot.hpp"
+#include "core/systems/layers/layer_snapshot.hpp"
 
 namespace Tactile {
 

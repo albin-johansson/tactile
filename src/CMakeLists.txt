@@ -130,35 +130,37 @@ set(TACTILE_SOURCE_FILES
 
     core/systems/animation_system.cpp
     core/systems/animation_system.hpp
-    core/systems/bucket_tool_system.cpp
-    core/systems/bucket_tool_system.hpp
     core/systems/duplicate_comp.hpp
-    core/systems/eraser_tool_system.cpp
-    core/systems/eraser_tool_system.hpp
-    core/systems/layer_snapshot.hpp
-    core/systems/layer_system.cpp
-    core/systems/layer_system.hpp
     core/systems/map_system.cpp
     core/systems/map_system.hpp
-    core/systems/object_layer_system.cpp
-    core/systems/object_layer_system.hpp
-    core/systems/object_snapshot.hpp
     core/systems/property_context_snapshot.hpp
     core/systems/property_system.cpp
     core/systems/property_system.hpp
     core/systems/registry_factory_system.cpp
     core/systems/registry_factory_system.hpp
-    core/systems/tile_layer_system.cpp
-    core/systems/tile_layer_system.hpp
     core/systems/tileset_snapshot.hpp
     core/systems/tileset_system.cpp
     core/systems/tileset_system.hpp
     core/systems/viewport_system.cpp
     core/systems/viewport_system.hpp
-    core/systems/stamp_tool_system.cpp
-    core/systems/stamp_tool_system.hpp
-    core/systems/tool_system.cpp
-    core/systems/tool_system.hpp
+
+    core/systems/layers/layer_snapshot.hpp
+    core/systems/layers/layer_system.cpp
+    core/systems/layers/layer_system.hpp
+    core/systems/layers/object_layer_system.cpp
+    core/systems/layers/object_layer_system.hpp
+    core/systems/layers/object_snapshot.hpp
+    core/systems/layers/tile_layer_system.cpp
+    core/systems/layers/tile_layer_system.hpp
+
+    core/systems/tools/bucket_tool_system.cpp
+    core/systems/tools/bucket_tool_system.hpp
+    core/systems/tools/eraser_tool_system.cpp
+    core/systems/tools/eraser_tool_system.hpp
+    core/systems/tools/stamp_tool_system.cpp
+    core/systems/tools/stamp_tool_system.hpp
+    core/systems/tools/tool_system.cpp
+    core/systems/tools/tool_system.hpp
 
     events/command_events.hpp
     events/layer_events.hpp

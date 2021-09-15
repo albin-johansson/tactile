@@ -6,8 +6,8 @@
 #include "aliases/maybe.hpp"
 #include "aliases/tile_matrix.hpp"
 #include "core/components/layer.hpp"
+#include "core/systems/property_context_snapshot.hpp"
 #include "object_snapshot.hpp"
-#include "property_context_snapshot.hpp"
 
 namespace Tactile::Sys {
 

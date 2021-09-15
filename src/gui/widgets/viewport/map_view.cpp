@@ -7,7 +7,7 @@
 #include <cmath>    // round
 
 #include "core/systems/tileset_system.hpp"
-#include "core/systems/tool_system.hpp"
+#include "core/systems/tools/tool_system.hpp"
 #include "core/viewport.hpp"
 #include "events/tool_events.hpp"
 #include "events/viewport_events.hpp"

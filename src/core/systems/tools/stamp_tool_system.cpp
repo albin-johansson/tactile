@@ -9,11 +9,11 @@
 #include "core/components/tile_layer.hpp"
 #include "core/components/tileset.hpp"
 #include "core/map_position.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
+#include "core/systems/map_system.hpp"
+#include "core/systems/tileset_system.hpp"
 #include "events/tool_events.hpp"
-#include "layer_system.hpp"
-#include "map_system.hpp"
-#include "tile_layer_system.hpp"
-#include "tileset_system.hpp"
 
 namespace Tactile::Sys {
 namespace {

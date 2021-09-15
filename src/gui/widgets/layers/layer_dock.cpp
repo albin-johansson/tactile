@@ -10,7 +10,7 @@
 #include "core/components/layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
-#include "core/systems/layer_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
 #include "events/layer_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"

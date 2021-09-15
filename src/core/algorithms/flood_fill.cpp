@@ -2,8 +2,8 @@
 
 #include <queue>  // queue
 
+#include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
-#include "core/systems/tile_layer_system.hpp"
 
 namespace Tactile {
 

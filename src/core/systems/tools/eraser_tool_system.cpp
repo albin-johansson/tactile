@@ -7,9 +7,9 @@
 #include "aliases/tile_cache.hpp"
 #include "aliases/tile_id.hpp"
 #include "core/map_position.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 #include "events/tool_events.hpp"
-#include "layer_system.hpp"
-#include "tile_layer_system.hpp"
 
 namespace Tactile::Sys {
 namespace {
