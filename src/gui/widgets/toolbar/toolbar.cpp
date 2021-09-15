@@ -8,6 +8,7 @@
 #include "events/command_events.hpp"
 #include "events/map_events.hpp"
 #include "events/tool_events.hpp"
+#include "events/viewport_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/docking_toolbar.hpp"
@@ -92,9 +93,9 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_TILESET, "Create tileset."))
+  if (Button(TAC_ICON_CENTER, "Center viewport."))
   {
-    ShowTilesetDialog();
+    dispatcher.enqueue<CenterViewportEvent>();
   }
 
   if (axis == ImGuiAxis_X)
@@ -110,6 +111,18 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   if (axis == ImGuiAxis_X)
   {
     ImGui::SameLine();
+  }
+
+  separate();
+
+  if (axis == ImGuiAxis_X)
+  {
+    ImGui::SameLine();
+  }
+
+  if (Button(TAC_ICON_TILESET, "Create tileset."))
+  {
+    ShowTilesetDialog();
   }
 
   separate();
