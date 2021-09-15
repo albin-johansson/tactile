@@ -25,7 +25,10 @@ auto StringPropertyWidget(const PropertyValue& property) -> Maybe<std::string>
   CopyStringIntoBuffer(buffer, str);
 
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
-  if (ImGui::InputText("##StringPropertyInput", buffer.data(), sizeof buffer))
+  if (ImGui::InputTextWithHint("##StringPropertyInput",
+                               "N/A",
+                               buffer.data(),
+                               sizeof buffer))
   {
     return CreateStringFromBuffer(buffer);
   }
