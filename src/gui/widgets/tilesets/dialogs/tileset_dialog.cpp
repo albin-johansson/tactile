@@ -66,7 +66,7 @@ void ResetInputs()
 void UpdateTilesetDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Add tileset", nullptr, flags))
+  if (ImGui::BeginPopupModal("Create tileset", nullptr, flags))
   {
     ImGui::TextUnformatted(
         "Select an image which contains the tiles aligned in a grid.");
@@ -110,7 +110,7 @@ void UpdateTilesetDialog(entt::dispatcher& dispatcher)
 
 void OpenTilesetDialog()
 {
-  ImGui::OpenPopup("Add tileset");
+  ImGui::OpenPopup("Create tileset");
 }
 
 }  // namespace Tactile
