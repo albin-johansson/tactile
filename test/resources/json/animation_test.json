@@ -225,6 +225,18 @@
   "nextlayerid": 3,
   "nextobjectid": 1,
   "orientation": "orthogonal",
+  "properties": [
+    {
+      "name": "foo",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "name": "bar",
+      "type": "file",
+      "value": "group.json"
+    }
+  ],
   "renderorder": "right-down",
   "tiledversion": "1.7.0",
   "tileheight": 32,
