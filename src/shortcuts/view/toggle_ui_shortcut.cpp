@@ -2,7 +2,7 @@
 
 #include "core/model.hpp"
 #include "events/view_events.hpp"
-#include "gui/widgets/viewport/viewport_widget.hpp"
+#include "gui/widgets/focus.hpp"
 
 namespace Tactile {
 
@@ -16,7 +16,7 @@ void ToggleUiShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto ToggleUiShortcut::IsEnabled(const Model& model) const -> bool
 {
-  return model.HasActiveDocument() && IsViewportFocused();
+  return model.HasActiveDocument() && IsEditorFocused();
 }
 
 }  // namespace Tactile

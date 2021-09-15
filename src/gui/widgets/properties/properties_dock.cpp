@@ -18,6 +18,11 @@
 #include "properties_content_widget.hpp"
 
 namespace Tactile {
+namespace {
+
+constinit bool has_focus = false;
+
+}  // namespace
 
 void UpdatePropertiesDock(const entt::registry& registry,
                           entt::dispatcher& dispatcher)
@@ -33,6 +38,7 @@ void UpdatePropertiesDock(const entt::registry& registry,
   bool isVisible = Prefs::GetShowPropertiesDock();
   if (ImGui::Begin("Properties", &isVisible, flags))
   {
+    has_focus = ImGui::IsWindowFocused();
     const auto& context = Sys::GetCurrentContext(registry);
 
     if (Button(TAC_ICON_ADD, "Add property."))
@@ -56,6 +62,10 @@ void UpdatePropertiesDock(const entt::registry& registry,
       UpdatePropertiesContentWidget(registry, dispatcher);
     }
   }
+  else
+  {
+    has_focus = false;
+  }
 
   UpdateAddPropertyDialog(registry, dispatcher);
   UpdateRenamePropertyDialog(registry, dispatcher);
@@ -63,6 +73,11 @@ void UpdatePropertiesDock(const entt::registry& registry,
 
   Prefs::SetShowPropertiesDock(isVisible);
   ImGui::End();
+}
+
+auto IsPropertyDockFocused() noexcept -> bool
+{
+  return has_focus;
 }
 
 }  // namespace Tactile

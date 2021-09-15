@@ -18,4 +18,6 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
 
 void OpenRenameLayerDialog(LayerID id);
 
+[[nodiscard]] auto IsLayerDockFocused() noexcept -> bool;
+
 }  // namespace Tactile

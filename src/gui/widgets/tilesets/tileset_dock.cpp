@@ -13,6 +13,11 @@
 #include "tileset_content_widget.hpp"
 
 namespace Tactile {
+namespace {
+
+constinit bool has_focus = false;
+
+}  // namespace
 
 void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
@@ -26,6 +31,8 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
                    &isVisible,
                    ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar))
   {
+    has_focus = ImGui::IsWindowFocused();
+
     const auto view = registry.view<Tileset>();
     if (view.size() != 0)
     {
@@ -42,9 +49,18 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
       }
     }
   }
+  else
+  {
+    has_focus = false;
+  }
 
   Prefs::SetShowTilesetDock(isVisible);
   ImGui::End();
+}
+
+auto IsTilesetDockFocused() noexcept -> bool
+{
+  return has_focus;
 }
 
 }  // namespace Tactile

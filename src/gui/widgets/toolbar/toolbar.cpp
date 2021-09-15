@@ -19,6 +19,7 @@ namespace Tactile {
 namespace {
 
 constinit bool is_visible = true;
+constinit bool has_focus = false;
 
 }  // namespace
 
@@ -31,6 +32,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 
   static int axis = ImGuiAxis_X;
   BeginDockingToolbar("Toolbar", axis);
+  has_focus = ImGui::IsWindowFocused();
 
   auto separate = [] {
     if (axis == ImGuiAxis_X)
@@ -153,6 +155,11 @@ void SetToolbarVisible(const bool visible) noexcept
 auto IsToolbarVisible() noexcept -> bool
 {
   return is_visible;
+}
+
+auto IsToolbarFocused() noexcept -> bool
+{
+  return has_focus;
 }
 
 }  // namespace Tactile

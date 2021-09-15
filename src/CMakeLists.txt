@@ -220,6 +220,8 @@ set(TACTILE_SOURCE_FILES
 
     gui/widgets/alignment.cpp
     gui/widgets/alignment.hpp
+    gui/widgets/focus.cpp
+    gui/widgets/focus.hpp
 
     gui/widgets/common/button.cpp
     gui/widgets/common/button.hpp

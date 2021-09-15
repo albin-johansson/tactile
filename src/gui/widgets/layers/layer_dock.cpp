@@ -24,6 +24,7 @@ namespace Tactile {
 namespace {
 
 constinit bool show_rename_dialog = false;
+constinit bool has_focus = false;
 inline Maybe<LayerID> rename_target;
 
 void UpdateLayerDockButtons(const entt::registry& registry,
@@ -89,6 +90,8 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
   bool isVisible = Prefs::GetShowLayerDock();
   if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse))
   {
+    has_focus = ImGui::IsWindowFocused(ImGuiFocusedFlags_ChildWindows);
+
     UpdateLayerDockButtons(registry, dispatcher);
     if (registry.empty<Layer>())
     {
@@ -118,6 +121,10 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
       }
     }
   }
+  else
+  {
+    has_focus = false;
+  }
 
   Prefs::SetShowLayerDock(isVisible);
   ImGui::End();
@@ -143,6 +150,11 @@ void OpenRenameLayerDialog(const LayerID id)
 {
   rename_target = id;
   show_rename_dialog = true;
+}
+
+auto IsLayerDockFocused() noexcept -> bool
+{
+  return has_focus;
 }
 
 }  // namespace Tactile

@@ -12,4 +12,6 @@ void SetToolbarVisible(bool visible) noexcept;
 
 [[nodiscard]] auto IsToolbarVisible() noexcept -> bool;
 
+[[nodiscard]] auto IsToolbarFocused() noexcept -> bool;
+
 }  // namespace Tactile
