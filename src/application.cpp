@@ -163,6 +163,8 @@ void Application::PollEvents()
     }
     else if (const auto* wheelEvent = event.try_get<cen::mouse_wheel_event>())
     {
+      // TODO support zooming in tilesets
+
       if (mModel.HasActiveDocument() &&
           mKeyboard.is_pressed(cen::scancodes::left_ctrl))
       {
