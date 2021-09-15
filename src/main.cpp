@@ -39,6 +39,6 @@ auto main(int argc, char** argv) -> int
   Tactile::ImGuiContext gui{window, glContext};
   window.maximize();
 
-  Tactile::Application application{std::move(window)};
-  return application.Run();
+  Tactile::Application app{std::move(window)};
+  return app.Run();
 }
