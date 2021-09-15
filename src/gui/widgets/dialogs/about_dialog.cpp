@@ -1,7 +1,6 @@
 #include "about_dialog.hpp"
 
 #include <imgui.h>
-#include <imgui_internal.h>
 
 #include <centurion.hpp>  // open_url
 
@@ -22,9 +21,7 @@ constexpr auto source_code = "Source code: " TACTILE_URL;
 void UpdateAboutDialog(bool* open)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::Begin(TAC_ICON_ABOUT " About Tactile",
-                   open,
-                   ImGuiWindowFlags_AlwaysAutoResize))
+  if (ImGui::Begin("About Tactile", open, ImGuiWindowFlags_AlwaysAutoResize))
   {
     ImGui::TextUnformatted("Tactile " TACTILE_VER " (C) Albin Johansson 2020-2021");
     ImGui::Separator();
