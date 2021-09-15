@@ -10,7 +10,7 @@ namespace Tactile::Sys {
 void SelectTool(entt::registry& registry, const ToolType tool)
 {
   auto& active = registry.ctx<ActiveTool>();
-  active.tool = tool;
+  active.tool = (active.tool == tool) ? ToolType::None : tool;
 }
 
 void ToolOnPressed(entt::registry& registry,
