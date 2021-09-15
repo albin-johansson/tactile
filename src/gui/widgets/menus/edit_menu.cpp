@@ -64,6 +64,8 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<RemoveColumnEvent>();
     }
 
+    ImGui::Separator();
+
     if (ImGui::MenuItem("Resize map", nullptr, false, hasActiveDocument))
     {
       dispatcher.enqueue<OpenResizeMapDialogEvent>();
