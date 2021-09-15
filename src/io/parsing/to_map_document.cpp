@@ -45,26 +45,10 @@ void AddProperties(entt::registry& registry,
   }
 }
 
-void MakeTileset(entt::registry& registry,
-                 const TilesetID id,
-                 const TilesetData& data)
+void MakeFancyTiles(entt::registry& registry,
+                    TilesetCache& cache,
+                    const TilesetData& data)
 {
-  const auto info = LoadTexture(data.absolute_image_path).value();
-  const auto tilesetEntity = Sys::MakeTileset(registry,
-                                              id,
-                                              data.first_id,
-                                              info,
-                                              data.tile_width,
-                                              data.tile_height);
-
-  {
-    auto& context = registry.get<PropertyContext>(tilesetEntity);
-    context.name = data.name;
-  }
-
-  AddProperties(registry, tilesetEntity, data.properties);
-
-  auto& cache = registry.get<TilesetCache>(tilesetEntity);
   for (const auto& tileData : data.tiles)
   {
     const auto tileEntity = registry.create();
@@ -93,6 +77,29 @@ void MakeTileset(entt::registry& registry,
     context.name = std::format("Tile {}", tile.id.get());
     AddProperties(registry, tileEntity, tileData.properties);
   }
+}
+
+void MakeTileset(entt::registry& registry,
+                 const TilesetID id,
+                 const TilesetData& data)
+{
+  const auto info = LoadTexture(data.absolute_image_path).value();
+  const auto tilesetEntity = Sys::MakeTileset(registry,
+                                              id,
+                                              data.first_id,
+                                              info,
+                                              data.tile_width,
+                                              data.tile_height);
+
+  {
+    auto& context = registry.get<PropertyContext>(tilesetEntity);
+    context.name = data.name;
+  }
+
+  AddProperties(registry, tilesetEntity, data.properties);
+
+  auto& cache = registry.get<TilesetCache>(tilesetEntity);
+  MakeFancyTiles(registry, cache, data);
 }
 
 void MakeObjectLayer(entt::registry& registry,
