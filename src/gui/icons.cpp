@@ -16,7 +16,7 @@ constinit uint icon_tactile{};
 {
   if (const auto info = LoadTexture(path))
   {
-    return info->texture;
+    return info->id;
   }
   else
   {

@@ -7,8 +7,8 @@
 #include "aliases/tileset_id.hpp"
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
+#include "core/components/texture.hpp"
 #include "core/systems/tileset_snapshot.hpp"
-#include "utils/texture_info.hpp"
 
 namespace Tactile {
 
@@ -16,7 +16,7 @@ class AddTilesetCmd final : public ACommand
 {
  public:
   AddTilesetCmd(Ref<entt::registry> registry,
-                TextureInfo info,
+                Texture texture,
                 int tileWidth,
                 int tileHeight);
 
@@ -31,7 +31,7 @@ class AddTilesetCmd final : public ACommand
 
  private:
   Ref<entt::registry> mRegistry;
-  TextureInfo mInfo;
+  Texture mTexture;
   int mTileWidth;
   int mTileHeight;
   Maybe<TilesetID> mTilesetId;

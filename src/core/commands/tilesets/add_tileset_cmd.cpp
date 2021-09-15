@@ -8,12 +8,12 @@
 namespace Tactile {
 
 AddTilesetCmd::AddTilesetCmd(Ref<entt::registry> registry,
-                             TextureInfo info,
+                             Texture texture,
                              const int tileWidth,
                              const int tileHeight)
     : ACommand{"Add Tileset"}
     , mRegistry{registry}
-    , mInfo{std::move(info)}
+    , mTexture{std::move(texture)}
     , mTileWidth{tileWidth}
     , mTileHeight{tileHeight}
 {}
@@ -35,7 +35,7 @@ void AddTilesetCmd::Redo()
   auto& registry = mRegistry.get();
   if (!mSnapshot)
   {
-    const auto entity = Sys::AddTileset(registry, mInfo, mTileWidth, mTileHeight);
+    const auto entity = Sys::AddTileset(registry, mTexture, mTileWidth, mTileHeight);
     const auto& tileset = registry.get<Tileset>(entity);
     mTilesetId = tileset.id;
   }

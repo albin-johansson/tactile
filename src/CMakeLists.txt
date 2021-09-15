@@ -422,7 +422,6 @@ set(TACTILE_SOURCE_FILES
     utils/load_texture.hpp
     utils/profile.hpp
     utils/scope_id.hpp
-    utils/texture_info.hpp
 
     shortcuts/shortcut.cpp
     shortcuts/shortcut.hpp

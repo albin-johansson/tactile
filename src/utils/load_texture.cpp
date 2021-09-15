@@ -33,22 +33,22 @@ void UnloadTextures()
  * see:
  * https://github.com/ocornut/imgui/wiki/Image-Loading-and-Displaying-Examples#Example-for-OpenGL-users
  */
-auto LoadTexture(const std::filesystem::path& path) -> Maybe<TextureInfo>
+auto LoadTexture(const std::filesystem::path& path) -> Maybe<Texture>
 {
-  TextureInfo info;
-  info.path = path;
+  Texture texture;
+  texture.path = path;
 
   // Load from file
   auto* data =
-      stbi_load(path.string().c_str(), &info.width, &info.height, nullptr, 4);
+      stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4);
   if (!data)
   {
     return nothing;
   }
 
   // Create a OpenGL texture identifier
-  glGenTextures(1, &info.texture);
-  glBindTexture(GL_TEXTURE_2D, info.texture);
+  glGenTextures(1, &texture.id);
+  glBindTexture(GL_TEXTURE_2D, texture.id);
 
   // Setup filtering parameters for display
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -66,8 +66,8 @@ auto LoadTexture(const std::filesystem::path& path) -> Maybe<TextureInfo>
   glTexImage2D(GL_TEXTURE_2D,
                0,
                GL_RGBA,
-               info.width,
-               info.height,
+               texture.width,
+               texture.height,
                0,
                GL_RGBA,
                GL_UNSIGNED_BYTE,
@@ -75,10 +75,10 @@ auto LoadTexture(const std::filesystem::path& path) -> Maybe<TextureInfo>
 
   stbi_image_free(data);
 
-  CENTURION_LOG_DEBUG("Loaded texture with ID: %u", info.texture);
-  textures.push_back(info.texture);
+  CENTURION_LOG_DEBUG("Loaded texture with ID: %u", texture.id);
+  textures.push_back(texture.id);
 
-  return info;
+  return texture;
 }
 
 }  // namespace Tactile

@@ -6,10 +6,10 @@
 #include "aliases/maybe.hpp"
 #include "aliases/tile_id.hpp"
 #include "aliases/tileset_id.hpp"
+#include "core/components/texture.hpp"
 #include "core/map_position.hpp"
 #include "core/region.hpp"
 #include "tileset_snapshot.hpp"
-#include "utils/texture_info.hpp"
 
 namespace Tactile::Sys {
 
@@ -41,12 +41,12 @@ namespace Tactile::Sys {
 auto MakeTileset(entt::registry& registry,
                  TilesetID id,
                  TileID firstId,
-                 const TextureInfo& info,
+                 Texture texture,
                  int tileWidth,
                  int tileHeight) -> entt::entity;
 
 auto AddTileset(entt::registry& registry,
-                const TextureInfo& info,
+                Texture texture,
                 int tileWidth,
                 int tileHeight) -> entt::entity;
 

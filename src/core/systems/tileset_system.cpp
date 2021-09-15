@@ -67,7 +67,7 @@ void UpdateTilesetContext(entt::registry& registry, const entt::entity entity)
 auto MakeTileset(entt::registry& registry,
                  const TilesetID id,
                  const TileID firstId,
-                 const TextureInfo& info,
+                 Texture texture,
                  const int tileWidth,
                  const int tileHeight) -> entt::entity
 {
@@ -79,28 +79,24 @@ auto MakeTileset(entt::registry& registry,
   tileset.tile_width = tileWidth;
   tileset.tile_height = tileHeight;
 
-  tileset.row_count = AsRow(info.height / tileHeight);
-  tileset.column_count = AsColumn(info.width / tileWidth);
+  tileset.row_count = AsRow(texture.height / tileHeight);
+  tileset.column_count = AsColumn(texture.width / tileWidth);
   tileset.tile_count = tileset.row_count.get() * tileset.column_count.get();
 
   tileset.first_id = firstId;
   tileset.last_id = tileset.first_id + TileID{tileset.tile_count};
 
-  auto& texture = registry.emplace<Texture>(entity);
-  texture.id = info.texture;
-  texture.width = info.width;
-  texture.height = info.height;
-  texture.path = info.path;
+  registry.emplace<Texture>(entity, texture);
 
   auto& uv = registry.emplace<UvTileSize>(entity);
-  uv.width = static_cast<float>(tileWidth) / static_cast<float>(info.width);
-  uv.height = static_cast<float>(tileHeight) / static_cast<float>(info.height);
+  uv.width = static_cast<float>(tileWidth) / static_cast<float>(texture.width);
+  uv.height = static_cast<float>(tileHeight) / static_cast<float>(texture.height);
 
   auto& cache = registry.emplace<TilesetCache>(entity);
   cache.source_rects = CreateSourceRectCache(tileset);
 
   auto& context = Sys::AddPropertyContext(registry, entity);
-  context.name = info.path.stem().string();
+  context.name = texture.path.stem().string();
 
   registry.emplace<TilesetSelection>(entity);
 
@@ -110,17 +106,18 @@ auto MakeTileset(entt::registry& registry,
 }
 
 auto AddTileset(entt::registry& registry,
-                const TextureInfo& info,
+                Texture texture,
                 const int tileWidth,
                 const int tileHeight) -> entt::entity
 {
   auto& context = registry.ctx<TilesetContext>();
 
-  const auto id = context.next_id;
-  const auto firstTile = context.next_tile_id;
-
-  const auto entity =
-      MakeTileset(registry, id, firstTile, info, tileWidth, tileHeight);
+  const auto entity = MakeTileset(registry,
+                                  context.next_id,
+                                  context.next_tile_id,
+                                  std::move(texture),
+                                  tileWidth,
+                                  tileHeight);
 
   UpdateTilesetContext(registry, entity);
 
