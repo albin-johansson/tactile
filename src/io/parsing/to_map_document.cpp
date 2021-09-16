@@ -185,8 +185,8 @@ auto ToMapDocument(const MapData& data) -> Document
   map.next_object_id = data.next_object_id;
   map.tile_width = data.tile_width;
   map.tile_height = data.tile_height;
-  map.row_count = AsRow(data.row_count);
-  map.column_count = AsColumn(data.column_count);
+  map.row_count = data.row_count;
+  map.column_count = data.column_count;
 
   auto& context = document.registry.ctx<PropertyContext>();
   context.name = data.absolute_path.filename().string();

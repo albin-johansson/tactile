@@ -57,9 +57,9 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
 {
   const auto endRow = info.selection_size.GetRow();
   const auto endCol = info.selection_size.GetColumn();
-  for (row_t row{0}; row < endRow; ++row)
+  for (auto row = 0; row < endRow; ++row)
   {
-    for (col_t col{0}; col < endCol; ++col)
+    for (auto col = 0; col < endCol; ++col)
     {
       const auto position = MapPosition{row, col};
       const auto previewTilePos = info.mouse_pos + position - info.offset;
@@ -107,7 +107,7 @@ void RenderStampPreview(const entt::registry& registry,
   info.mouse_pos = mousePos;
   info.selection_begin = region.begin;
   info.selection_size = region.end - region.begin;
-  info.offset = info.selection_size / MapPosition{2_row, 2_col};
+  info.offset = info.selection_size / MapPosition{2, 2};
 
   RenderPreviewTiles(registry, info);
 }

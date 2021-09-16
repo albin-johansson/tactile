@@ -22,7 +22,7 @@ void RemoveColumnCmd::Redo()
   auto& registry = mRegistry.get();
 
   const auto& map = registry.ctx<Map>();
-  const MapPosition begin{0_row, map.column_count - AsColumn(mColumns) - 1_col};
+  const MapPosition begin{0, map.column_count - static_cast<int32>(mColumns) - 1};
   const MapPosition end{map.row_count, map.column_count};
 
   mCache.Clear();

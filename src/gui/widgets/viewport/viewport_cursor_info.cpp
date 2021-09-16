@@ -25,7 +25,7 @@ auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
 
   if (cursor.is_within_map)
   {
-    cursor.map_position = {AsRow(row), AsColumn(col)};
+    cursor.map_position = {static_cast<int32>(row), static_cast<int32>(col)};
   }
 
   cursor.clamped_position = {info.map_position.x + (col * info.grid_size.x),

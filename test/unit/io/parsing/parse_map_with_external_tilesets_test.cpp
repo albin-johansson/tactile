@@ -21,8 +21,8 @@ void VerifyLayers(const MapData& data)
     ASSERT_TRUE(std::holds_alternative<TileLayerData>(layer.data));
 
     const auto& tileLayer = std::get<TileLayerData>(layer.data);
-    ASSERT_EQ(6_row, tileLayer.row_count);
-    ASSERT_EQ(8_col, tileLayer.col_count);
+    ASSERT_EQ(6, tileLayer.row_count);
+    ASSERT_EQ(8, tileLayer.col_count);
     ASSERT_EQ(6, tileLayer.tiles.size());
     ASSERT_EQ(8, tileLayer.tiles.at(0).size());
   }
@@ -37,8 +37,8 @@ void VerifyLayers(const MapData& data)
     ASSERT_TRUE(std::holds_alternative<TileLayerData>(layer.data));
 
     const auto& tileLayer = std::get<TileLayerData>(layer.data);
-    ASSERT_EQ(6_row, tileLayer.row_count);
-    ASSERT_EQ(8_col, tileLayer.col_count);
+    ASSERT_EQ(6, tileLayer.row_count);
+    ASSERT_EQ(8, tileLayer.col_count);
     ASSERT_EQ(6, tileLayer.tiles.size());
     ASSERT_EQ(8, tileLayer.tiles.at(0).size());
 

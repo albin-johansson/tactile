@@ -21,8 +21,8 @@ auto MakeRegistry() -> entt::registry
   registry.set<Mouse>();
 
   auto& map = registry.set<Map>();
-  map.row_count = 5_row;
-  map.column_count = 5_col;
+  map.row_count = 5;
+  map.column_count = 5;
 
   auto& viewport = registry.set<Viewport>();
   viewport.tile_width = 64;

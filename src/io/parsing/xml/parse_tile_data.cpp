@@ -7,7 +7,7 @@
 
 namespace Tactile::IO {
 
-auto ParseTileData(const pugi::xml_node node, const col_t nCols, TileMatrix& matrix)
+auto ParseTileData(const pugi::xml_node node, const int32 nCols, TileMatrix& matrix)
     -> ParseError
 {
   const auto data = node.child("data");

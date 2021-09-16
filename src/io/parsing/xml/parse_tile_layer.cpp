@@ -12,7 +12,7 @@ auto ParseTileLayer(const pugi::xml_node node, LayerData& layer) -> ParseError
 
   if (const auto width = GetInt(node, "width"))
   {
-    data.col_count = col_t{*width};
+    data.col_count = *width;
   }
   else
   {
@@ -21,7 +21,7 @@ auto ParseTileLayer(const pugi::xml_node node, LayerData& layer) -> ParseError
 
   if (const auto height = GetInt(node, "height"))
   {
-    data.row_count = row_t{*height};
+    data.row_count = *height;
   }
   else
   {

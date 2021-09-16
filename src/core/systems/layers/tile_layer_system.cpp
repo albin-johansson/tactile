@@ -34,7 +34,7 @@ void SetTilesInLayer(entt::registry& registry,
   }
 }
 
-auto MakeTileRow(const col_t nCols, const TileID value) -> TileRow
+auto MakeTileRow(const int32 nCols, const TileID value) -> TileRow
 {
   TileRow row;
   row.reserve(nCols);
@@ -42,7 +42,7 @@ auto MakeTileRow(const col_t nCols, const TileID value) -> TileRow
   return row;
 }
 
-auto MakeTileMatrix(const row_t nRows, const col_t nCols) -> TileMatrix
+auto MakeTileMatrix(const int32 nRows, const int32 nCols) -> TileMatrix
 {
   TileMatrix tiles;
   tiles.reserve(nRows);

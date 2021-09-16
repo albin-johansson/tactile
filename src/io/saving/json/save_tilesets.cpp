@@ -67,7 +67,7 @@ void AddCommonAttributes(JSON& json,
   const auto& texture = registry.get<Texture>(tilesetEntity);
 
   json["name"] = context.name;
-  json["columns"] = tileset.column_count.get();
+  json["columns"] = tileset.column_count;
   json["image"] = GetTilesetImagePath(texture.path, dir);
   json["imagewidth"] = texture.width;
   json["imageheight"] = texture.height;

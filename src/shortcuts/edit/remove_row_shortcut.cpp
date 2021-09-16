@@ -20,7 +20,7 @@ auto RemoveRowShortcut::IsEnabled(const Model& model) const -> bool
   if (const auto* registry = model.GetActiveRegistry())
   {
     const auto& map = registry->ctx<Map>();
-    return map.row_count > 1_row;
+    return map.row_count > 1;
   }
   else
   {

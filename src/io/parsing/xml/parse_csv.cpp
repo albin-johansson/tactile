@@ -28,7 +28,7 @@ namespace {
 
 }  // namespace
 
-auto ParseCSV(const CStr csv, const col_t nCols, TileMatrix& matrix) -> ParseError
+auto ParseCSV(const CStr csv, const int32 nCols, TileMatrix& matrix) -> ParseError
 {
   int index{};
   for (const auto& token : GetTokens(csv))

@@ -15,11 +15,11 @@ auto GetRenderBounds(const CanvasInfo& canvas, const RenderInfo& info) -> Region
   const auto begin = (canvas.tl - info.map_position) / info.grid_size;
   const auto end = (canvas.br - info.map_position) / info.grid_size;
 
-  const auto beginRow = std::max(0_row, AsRow(begin.y));
-  const auto beginCol = std::max(0_col, AsColumn(begin.x));
+  const auto beginRow = std::max(0, static_cast<int32>(begin.y));
+  const auto beginCol = std::max(0, static_cast<int32>(begin.x));
 
-  const auto endRow = std::min(AsRow(info.row_count), AsRow(end.y) + 1_row);
-  const auto endCol = std::min(AsColumn(info.col_count), AsColumn(end.x) + 1_col);
+  const auto endRow = static_cast<int32>(std::min(info.row_count, end.y + 1));
+  const auto endCol = static_cast<int32>(std::min(info.col_count, end.x + 1));
 
   Region bounds;
 

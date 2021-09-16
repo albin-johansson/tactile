@@ -27,8 +27,8 @@ namespace {
   {
     const auto index = id - tileset.first_id;
 
-    const auto x = (index.get() % tileset.column_count.get()) * tileset.tile_width;
-    const auto y = (index.get() / tileset.column_count.get()) * tileset.tile_height;
+    const auto x = (index.get() % tileset.column_count) * tileset.tile_width;
+    const auto y = (index.get() / tileset.column_count) * tileset.tile_height;
 
     cache.emplace(id, cen::irect{x, y, tileset.tile_width, tileset.tile_height});
   }
@@ -79,9 +79,9 @@ auto MakeTileset(entt::registry& registry,
   tileset.tile_width = tileWidth;
   tileset.tile_height = tileHeight;
 
-  tileset.row_count = AsRow(texture.height / tileHeight);
-  tileset.column_count = AsColumn(texture.width / tileWidth);
-  tileset.tile_count = tileset.row_count.get() * tileset.column_count.get();
+  tileset.row_count = texture.height / tileHeight;
+  tileset.column_count = texture.width / tileWidth;
+  tileset.tile_count = tileset.row_count * tileset.column_count;
 
   tileset.first_id = firstId;
   tileset.last_id = tileset.first_id + TileID{tileset.tile_count};
@@ -247,7 +247,7 @@ auto IsSingleTileSelectedInTileset(const entt::registry& registry) -> bool
     if (selection.region)
     {
       const auto& region = *selection.region;
-      return (region.end - region.begin) == MapPosition{1_row, 1_col};
+      return (region.end - region.begin) == MapPosition{1, 1};
     }
   }
 
@@ -292,10 +292,10 @@ auto GetTileFromTileset(const entt::registry& registry,
   const auto row = position.GetRow();
   const auto col = position.GetColumn();
 
-  if ((row >= 0_row) && (col >= 0_col) && (row < tileset.row_count) &&
+  if ((row >= 0) && (col >= 0) && (row < tileset.row_count) &&
       (col < tileset.column_count))
   {
-    const auto index = row * tileset.column_count.get() + col;
+    const auto index = row * tileset.column_count + col;
     return tileset.first_id + TileID{index};
   }
   else

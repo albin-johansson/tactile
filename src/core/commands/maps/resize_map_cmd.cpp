@@ -17,7 +17,7 @@ ResizeMapCmd::ResizeMapCmd(Ref<entt::registry> registry,
 void ResizeMapCmd::Undo()
 {
   auto& registry = mRegistry.get();
-  Sys::ResizeMap(registry, AsRow(mPrevRows.value()), AsColumn(mPrevCols.value()));
+  Sys::ResizeMap(registry, mPrevRows.value(), mPrevCols.value());
 
   if (IsLossyResize())
   {
@@ -40,10 +40,10 @@ void ResizeMapCmd::Redo()
 
     mCache.Clear();
     mCache.SaveTiles(registry,
-                     {rows - AsRow(mPrevRows.value() - mRows), 0_col},
+                     {rows - (mPrevRows.value() - mRows), 0},
                      {rows, cols});
     mCache.SaveTiles(registry,
-                     {0_row, cols - AsColumn(mPrevCols.value() - mCols)},
+                     {0, cols - (mPrevCols.value() - mCols)},
                      {rows, cols});
   }
 

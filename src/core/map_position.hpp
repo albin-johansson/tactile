@@ -1,8 +1,6 @@
 #pragma once
 
-#include "aliases/col.hpp"
 #include "aliases/ints.hpp"
-#include "aliases/row.hpp"
 
 namespace Tactile {
 
@@ -28,9 +26,9 @@ class MapPosition final
    * \param row the row index.
    * \param column the column index.
    */
-  constexpr MapPosition(const row_t row, const col_t column) noexcept
-      : mRow{row.get()}
-      , mCol{column.get()}
+  constexpr MapPosition(const int32 row, const int32 column) noexcept
+      : mRow{row}
+      , mCol{column}
   {}
 
   /**
@@ -41,27 +39,27 @@ class MapPosition final
    *
    * \return a row/column position translated from the supplied index.
    */
-  [[nodiscard]] constexpr static auto FromIndex(const int index,
-                                                const int nCols) noexcept
+  [[nodiscard]] constexpr static auto FromIndex(const int32 index,
+                                                const int32 nCols) noexcept
       -> MapPosition
   {
-    return MapPosition{AsRow(index / nCols), AsColumn(index % nCols)};
+    return MapPosition{index / nCols, index % nCols};
   }
 
   /**
    * \brief Sets the row index associated with the position.
    */
-  constexpr void SetRow(const row_t row)
+  constexpr void SetRow(const int32 row)
   {
-    mRow = row.get();
+    mRow = row;
   }
 
   /**
    * \brief Sets the column index associated with the position.
    */
-  constexpr void SetColumn(const col_t column)
+  constexpr void SetColumn(const int32 column)
   {
-    mCol = column.get();
+    mCol = column;
   }
 
   /**
@@ -72,10 +70,10 @@ class MapPosition final
    *
    * \return a position that is offset from this position.
    */
-  [[nodiscard]] constexpr auto OffsetBy(const row_t row, const col_t column) const
+  [[nodiscard]] constexpr auto OffsetBy(const int32 row, const int32 column) const
       -> MapPosition
   {
-    return {row_t{mRow} + row, col_t{mCol} + column};
+    return {mRow + row, mCol + column};
   }
 
   /**
@@ -85,7 +83,7 @@ class MapPosition final
    */
   [[nodiscard]] constexpr auto North() const -> MapPosition
   {
-    return {row_t{mRow - 1}, col_t{mCol}};
+    return {mRow - 1, mCol};
   }
 
   /**
@@ -95,7 +93,7 @@ class MapPosition final
    */
   [[nodiscard]] constexpr auto South() const -> MapPosition
   {
-    return {row_t{mRow + 1}, col_t{mCol}};
+    return {mRow + 1, mCol};
   }
 
   /**
@@ -106,7 +104,7 @@ class MapPosition final
    */
   [[nodiscard]] constexpr auto West() const -> MapPosition
   {
-    return {row_t{mRow}, col_t{mCol - 1}};
+    return {mRow, mCol - 1};
   }
 
   /**
@@ -117,7 +115,7 @@ class MapPosition final
    */
   [[nodiscard]] constexpr auto East() const -> MapPosition
   {
-    return {row_t{mRow}, col_t{mCol + 1}};
+    return {mRow, mCol + 1};
   }
 
   /**
@@ -125,9 +123,9 @@ class MapPosition final
    *
    * \return the associated row index.
    */
-  [[nodiscard]] constexpr auto GetRow() const -> row_t
+  [[nodiscard]] constexpr auto GetRow() const -> int32
   {
-    return row_t{mRow};
+    return mRow;
   }
 
   /**
@@ -135,9 +133,9 @@ class MapPosition final
    *
    * \return the associated column index.
    */
-  [[nodiscard]] constexpr auto GetColumn() const -> col_t
+  [[nodiscard]] constexpr auto GetColumn() const -> int32
   {
-    return col_t{mCol};
+    return mCol;
   }
 
   /**
@@ -171,7 +169,7 @@ class MapPosition final
    *
    * \return the row index converted to a y-coordinate.
    */
-  [[nodiscard]] constexpr auto RowToY(const int tileSize) const noexcept -> int
+  [[nodiscard]] constexpr auto RowToY(const int32 tileSize) const noexcept -> int32
   {
     return mRow * tileSize;
   }
@@ -183,7 +181,8 @@ class MapPosition final
    *
    * \return the column index converted to an x-coordinate.
    */
-  [[nodiscard]] constexpr auto ColumnToX(const int tileSize) const noexcept -> int
+  [[nodiscard]] constexpr auto ColumnToX(const int32 tileSize) const noexcept
+      -> int32
   {
     return mCol * tileSize;
   }
@@ -193,9 +192,8 @@ class MapPosition final
   // clang-format on
 
  private:
-  // We don't use strong types here in order to enable the spaceship operator
-  row_t::value_type mRow{};
-  col_t::value_type mCol{};
+  int32 mRow{};
+  int32 mCol{};
 };
 
 /**

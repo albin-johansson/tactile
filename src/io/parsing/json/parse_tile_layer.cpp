@@ -11,7 +11,7 @@ auto ParseTileLayer(const JSON& json, LayerData& layer) -> ParseError
 
   if (const auto it = json.find("height"); it != json.end())
   {
-    data.row_count = row_t{it->get<row_t::value_type>()};
+    it->get_to(data.row_count);
   }
   else
   {
@@ -20,7 +20,7 @@ auto ParseTileLayer(const JSON& json, LayerData& layer) -> ParseError
 
   if (const auto it = json.find("width"); it != json.end())
   {
-    data.col_count = col_t{it->get<col_t::value_type>()};
+    it->get_to(data.col_count);
   }
   else
   {

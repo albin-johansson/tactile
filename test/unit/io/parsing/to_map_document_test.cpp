@@ -36,8 +36,8 @@ TEST(ToMapDocument, Test)
   ASSERT_EQ(std::filesystem::absolute("resources/json/embedded.json"),
             document.path);
 
-  ASSERT_EQ(5_row, map.row_count);
-  ASSERT_EQ(7_col, map.column_count);
+  ASSERT_EQ(5, map.row_count);
+  ASSERT_EQ(7, map.column_count);
   ASSERT_EQ(4_layer, map.next_layer_id);
   ASSERT_EQ(3_obj, map.next_object_id);
   ASSERT_EQ(1_layer, registry.get<Layer>(activeLayer.entity).id);

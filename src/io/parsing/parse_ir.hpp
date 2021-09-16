@@ -5,11 +5,9 @@
 #include <variant>     // variant
 #include <vector>      // vector
 
-#include "aliases/col.hpp"
 #include "aliases/ints.hpp"
 #include "aliases/layer_id.hpp"
 #include "aliases/object_id.hpp"
-#include "aliases/row.hpp"
 #include "aliases/tile_id.hpp"
 #include "aliases/tile_matrix.hpp"
 #include "aliases/unique.hpp"
@@ -69,9 +67,9 @@ struct TilesetData final
  */
 struct TileLayerData final
 {
-  row_t row_count;   ///< Total amount of rows.
-  col_t col_count;   ///< Total amount of columns.
-  TileMatrix tiles;  ///< The associated tile data.
+  int32 row_count{};  ///< Total amount of rows.
+  int32 col_count{};  ///< Total amount of columns.
+  TileMatrix tiles;   ///< The associated tile data.
 };
 
 /**

@@ -39,13 +39,13 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
   const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
   const auto& region = selection.region.value();
   const auto selectionSize = region.end - region.begin;
-  const auto previewOffset = selectionSize / MapPosition{2_row, 2_col};
+  const auto previewOffset = selectionSize / MapPosition{2, 2};
   const auto endRow = selectionSize.GetRow();
   const auto endCol = selectionSize.GetColumn();
 
-  for (auto row = 0_row; row < endRow; ++row)
+  for (auto row = 0; row < endRow; ++row)
   {
-    for (auto col = 0_col; col < endCol; ++col)
+    for (auto col = 0; col < endCol; ++col)
     {
       const auto index = MapPosition{row, col};
       const auto selectionPosition = region.begin + index;

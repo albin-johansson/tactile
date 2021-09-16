@@ -20,7 +20,7 @@ auto RemoveColumnShortcut::IsEnabled(const Model& model) const -> bool
   if (const auto* registry = model.GetActiveRegistry())
   {
     const auto& map = registry->ctx<Map>();
-    return map.column_count > 1_col;
+    return map.column_count > 1;
   }
   else
   {

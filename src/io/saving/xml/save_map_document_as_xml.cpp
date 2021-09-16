@@ -28,8 +28,8 @@ void AppendMapChild(const entt::registry& registry,
   const auto& map = registry.ctx<Map>();
   node.append_attribute("tilewidth").set_value(map.tile_width);
   node.append_attribute("tileheight").set_value(map.tile_height);
-  node.append_attribute("width").set_value(map.column_count.get());
-  node.append_attribute("height").set_value(map.row_count.get());
+  node.append_attribute("width").set_value(map.column_count);
+  node.append_attribute("height").set_value(map.row_count);
   node.append_attribute("nextlayerid").set_value(map.next_layer_id.get());
   node.append_attribute("nextobjectid").set_value(map.next_object_id.get());
 

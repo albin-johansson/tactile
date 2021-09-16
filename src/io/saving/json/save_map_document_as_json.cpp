@@ -21,8 +21,8 @@ namespace {
   const auto& map = registry.ctx<Map>();
 
   json["type"] = "map";
-  json["width"] = map.column_count.get();
-  json["height"] = map.row_count.get();
+  json["width"] = map.column_count;
+  json["height"] = map.row_count;
   json["nextlayerid"] = map.next_layer_id.get();
   json["nextobjectid"] = map.next_object_id.get();
   json["tilewidth"] = map.tile_width;

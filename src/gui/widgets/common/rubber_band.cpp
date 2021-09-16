@@ -13,12 +13,12 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Reg
 {
   const auto toRow = [=](const float y) {
     const auto mod = y - std::fmod(y, tileSize.y);
-    return AsRow(mod / tileSize.y);
+    return static_cast<int32>(mod / tileSize.y);
   };
 
   const auto toColumn = [=](const float x) {
     const auto mod = x - std::fmod(x, tileSize.x);
-    return AsColumn(mod / tileSize.x);
+    return static_cast<int32>(mod / tileSize.x);
   };
 
   if (ImGui::IsItemActive())
@@ -53,12 +53,12 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Reg
       const auto c2 = toColumn(x2);
 
       // Ensure that the selection width and height are non-zero
-      const auto w = std::max(1_col, c2 - c1);
-      const auto h = std::max(1_row, r2 - r1);
+      const auto w = std::max(1, c2 - c1);
+      const auto h = std::max(1, r2 - r1);
 
       // Calculate width/height offsets for single tile selections
-      const auto ww = (c1 != c2) ? 1_col : 0_col;
-      const auto hh = (r1 != r2) ? 1_row : 0_row;
+      const auto ww = (c1 != c2) ? 1 : 0;
+      const auto hh = (r1 != r2) ? 1 : 0;
 
       cen::frect rect;
       rect.set_x(static_cast<float>(c1) * tileSize.x);
