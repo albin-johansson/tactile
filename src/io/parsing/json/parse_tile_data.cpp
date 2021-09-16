@@ -28,7 +28,7 @@ auto ParseTileData(const JSON& json, const int32 nCols, TileMatrix& matrix)
     const auto value = elem.value();
     if (value.is_number_integer())
     {
-      const auto id = TileID{value.get<int>()};
+      const auto id = TileID{value.get<TileID::value_type>()};
       const auto pos = MapPosition::FromIndex(index, nCols);
       matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = id;
     }
