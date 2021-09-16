@@ -55,14 +55,14 @@ namespace {
     -> ParseError
 {
   if (const auto it = json.find("tilewidth"); it != json.end()) {
-    data.tile_width = it->get<int>();
+    it->get_to(data.tile_width);
   }
   else {
     return ParseError::TilesetMissingTileWidth;
   }
 
   if (const auto it = json.find("tileheight"); it != json.end()) {
-    data.tile_height = it->get<int>();
+    it->get_to(data.tile_height);
   }
   else {
     return ParseError::TilesetMissingTileHeight;
@@ -84,7 +84,7 @@ namespace {
   }
 
   if (const auto it = json.find("name"); it != json.end()) {
-    data.name = it->get<std::string>();
+    it->get_to(data.name);
   }
   else {
     return ParseError::TilesetMissingName;

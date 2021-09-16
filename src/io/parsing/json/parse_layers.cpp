@@ -50,21 +50,21 @@ namespace {
   }
 
   if (const auto it = json.find("name"); it != json.end()) {
-    data.name = it->get<std::string>();
+    it->get_to(data.name);
   }
   else {
     data.name = "Layer";
   }
 
   if (const auto it = json.find("opacity"); it != json.end()) {
-    data.opacity = it->get<float>();
+    it->get_to(data.opacity);
   }
   else {
     data.opacity = 1.0f;
   }
 
   if (const auto it = json.find("visible"); it != json.end()) {
-    data.is_visible = it->get<bool>();
+    it->get_to(data.is_visible);
   }
   else {
     data.is_visible = true;

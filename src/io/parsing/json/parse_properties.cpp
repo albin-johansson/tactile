@@ -53,7 +53,7 @@ namespace {
 [[nodiscard]] auto ParseProperty(const JSON& json, PropertyData& data) -> ParseError
 {
   if (const auto it = json.find("name"); it != json.end()) {
-    data.name = it->get<std::string>();
+    it->get_to(data.name);
   }
   else {
     return ParseError::PropertyMissingName;

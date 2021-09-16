@@ -62,7 +62,7 @@ namespace {
 [[nodiscard]] auto ParseTileWidth(const JSON& json, int& tileWidth) -> ParseError
 {
   if (const auto it = json.find("tilewidth"); it != json.end()) {
-    tileWidth = it->get<int>();
+    it->get_to(tileWidth);
     return ParseError::None;
   }
   else {
@@ -73,7 +73,7 @@ namespace {
 [[nodiscard]] auto ParseTileHeight(const JSON& json, int& tileHeight) -> ParseError
 {
   if (const auto it = json.find("tileheight"); it != json.end()) {
-    tileHeight = it->get<int>();
+    it->get_to(tileHeight);
     return ParseError::None;
   }
   else {
@@ -84,7 +84,7 @@ namespace {
 [[nodiscard]] auto ParseWidth(const JSON& json, int& width) -> ParseError
 {
   if (const auto it = json.find("width"); it != json.end()) {
-    width = it->get<int>();
+    it->get_to(width);
     return ParseError::None;
   }
   else {
@@ -95,7 +95,7 @@ namespace {
 [[nodiscard]] auto ParseHeight(const JSON& json, int& height) -> ParseError
 {
   if (const auto it = json.find("height"); it != json.end()) {
-    height = it->get<int>();
+    it->get_to(height);
     return ParseError::None;
   }
   else {

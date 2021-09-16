@@ -17,43 +17,43 @@ namespace {
   }
 
   if (const auto it = json.find("x"); it != json.end()) {
-    data.x = it->get<float>();
+    it->get_to(data.x);
   }
   else {
     data.x = 0;
   }
 
   if (const auto it = json.find("y"); it != json.end()) {
-    data.y = it->get<float>();
+    it->get_to(data.y);
   }
   else {
     data.y = 0;
   }
 
   if (const auto it = json.find("width"); it != json.end()) {
-    data.width = it->get<float>();
+    it->get_to(data.width);
   }
   else {
     data.width = 0;
   }
 
   if (const auto it = json.find("height"); it != json.end()) {
-    data.height = it->get<float>();
+    it->get_to(data.height);
   }
   else {
     data.height = 0;
   }
 
   if (const auto it = json.find("name"); it != json.end()) {
-    data.name = it->get<std::string>();
+    it->get_to(data.name);
   }
 
   if (const auto it = json.find("type"); it != json.end()) {
-    data.custom_type = it->get<std::string>();
+    it->get_to(data.custom_type);
   }
 
   if (const auto it = json.find("visible"); it != json.end()) {
-    data.visible = it->get<bool>();
+    it->get_to(data.visible);
   }
   else {
     data.visible = true;
