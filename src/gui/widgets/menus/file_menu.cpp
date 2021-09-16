@@ -21,16 +21,6 @@ constinit bool show_settings_window = false;
 constinit bool show_add_map_dialog = false;
 constinit bool show_open_map_dialog = false;
 
-[[nodiscard]] auto GetFilter() -> CStr
-{
-  if (Prefs::GetPreferredFormat() == "JSON") {
-    return ".json,.tmx";
-  }
-  else {
-    return ".tmx,.json";
-  }
-}
-
 void ShowMapFileDialog(entt::dispatcher& dispatcher)
 {
   auto path = pfd::open_file{"Open Map...", "", {"Map Files", "*.json *.tmx"}}.result();
