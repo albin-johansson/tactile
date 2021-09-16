@@ -250,8 +250,7 @@ TEST(CommandStack, Overflow)
   ASSERT_EQ("Foo", stack.GetUndoText());
 
   // The stack should be full after this
-  for (auto index = 0u; index < (stack.GetCapacity() - 1); ++index)
-  {
+  for (auto index = 0u; index < (stack.GetCapacity() - 1); ++index) {
     stack.Push<Bar>();
   }
 
@@ -270,8 +269,7 @@ TEST(CommandStack, SetCapacity)
   stack.SetCapacity(5);
   ASSERT_EQ(5, stack.GetCapacity());
 
-  for (auto index = 0u; index < 5; ++index)
-  {
+  for (auto index = 0u; index < 5; ++index) {
     stack.Push<Foo>();
   }
   ASSERT_EQ(5, stack.GetSize());

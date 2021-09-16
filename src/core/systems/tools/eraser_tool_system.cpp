@@ -27,8 +27,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
   assert(entity != entt::null);
 
   // TODO rune::vector_map::try_emplace
-  if (!old_state.contains(cursor))
-  {
+  if (!old_state.contains(cursor)) {
     old_state.emplace(cursor, GetTileFromLayer(registry, entity, cursor));
   }
 
@@ -39,8 +38,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 
 void EraserToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left)
-  {
+  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     old_state.clear();
     UpdateSequence(registry, mouse.position_in_map);
   }
@@ -48,8 +46,7 @@ void EraserToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 
 void EraserToolOnDragged(entt::registry& registry, const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left)
-  {
+  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     UpdateSequence(registry, mouse.position_in_map);
   }
 }
@@ -58,8 +55,7 @@ void EraserToolOnReleased(entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left)
-  {
+  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     dispatcher.enqueue<EraserSequenceEvent>(std::move(old_state));
   }
 }

@@ -14,11 +14,11 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
-                       ImGuiWindowFlags_AlwaysAutoResize |
-                       ImGuiWindowFlags_NoSavedSettings |
-                       ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
-                       ImGuiWindowFlags_NoMove;
+constexpr auto flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking
+                       | ImGuiWindowFlags_AlwaysAutoResize
+                       | ImGuiWindowFlags_NoSavedSettings
+                       | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav
+                       | ImGuiWindowFlags_NoMove;
 
 constexpr float opacity = 0.35f;
 
@@ -50,61 +50,49 @@ void PreparePositionAndPivot()
 
 void MouseCoordinateLabels(const ViewportCursorInfo& cursor)
 {
-  if (ImGui::IsMousePosValid())
-  {
+  if (ImGui::IsMousePosValid()) {
     ImGui::Text("X/Y: (%.0f, %.0f)", cursor.raw_position.x, cursor.raw_position.y);
   }
-  else
-  {
+  else {
     ImGui::TextUnformatted("X/Y: N/A");
   }
 }
 
 void MouseRowColumnLabels(const ViewportCursorInfo& cursor)
 {
-  if (cursor.is_within_map)
-  {
+  if (cursor.is_within_map) {
     ImGui::Text("Row/Column: (%i, %i)",
                 cursor.map_position.GetRow(),
                 cursor.map_position.GetColumn());
   }
-  else
-  {
+  else {
     ImGui::TextUnformatted("Row/Column: N/A");
   }
 }
 
-void MouseTileLabels(const entt::registry& registry,
-                     const ViewportCursorInfo& cursor)
+void MouseTileLabels(const entt::registry& registry, const ViewportCursorInfo& cursor)
 {
   const auto& activeLayer = registry.ctx<ActiveLayer>();
 
-  if (activeLayer.entity != entt::null)
-  {
-    if (registry.all_of<TileLayer>(activeLayer.entity))
-    {
+  if (activeLayer.entity != entt::null) {
+    if (registry.all_of<TileLayer>(activeLayer.entity)) {
       ImGui::Separator();
 
       const auto global =
           Sys::GetTileFromLayer(registry, activeLayer.entity, cursor.map_position);
-      if (cursor.is_within_map && global != empty_tile)
-      {
+      if (cursor.is_within_map && global != empty_tile) {
         ImGui::Text("Global ID: %i", global.get());
       }
-      else
-      {
+      else {
         ImGui::TextUnformatted("Global ID: [empty]");
       }
 
-      if (global != empty_tile)
-      {
+      if (global != empty_tile) {
         const auto local = Sys::ConvertToLocal(registry, global);
-        if (cursor.is_within_map && local)
-        {
+        if (cursor.is_within_map && local) {
           ImGui::Text("Local ID: %i", local->get());
         }
-        else
-        {
+        else {
           ImGui::TextUnformatted("Local ID: N/A");
         }
       }
@@ -114,27 +102,22 @@ void MouseTileLabels(const entt::registry& registry,
 
 void OverlayContextMenu()
 {
-  if (ImGui::BeginPopupContextWindow())
-  {
+  if (ImGui::BeginPopupContextWindow()) {
     const auto corner = Prefs::GetViewportOverlayPos();
 
-    if (ImGui::MenuItem("Top-left", nullptr, corner == OverlayPos::TopLeft))
-    {
+    if (ImGui::MenuItem("Top-left", nullptr, corner == OverlayPos::TopLeft)) {
       Prefs::SetViewportOverlayPos(OverlayPos::TopLeft);
     }
 
-    if (ImGui::MenuItem("Top-right", nullptr, corner == OverlayPos::TopRight))
-    {
+    if (ImGui::MenuItem("Top-right", nullptr, corner == OverlayPos::TopRight)) {
       Prefs::SetViewportOverlayPos(OverlayPos::TopRight);
     }
 
-    if (ImGui::MenuItem("Bottom-left", nullptr, corner == OverlayPos::BottomLeft))
-    {
+    if (ImGui::MenuItem("Bottom-left", nullptr, corner == OverlayPos::BottomLeft)) {
       Prefs::SetViewportOverlayPos(OverlayPos::BottomLeft);
     }
 
-    if (ImGui::MenuItem("Bottom-right", nullptr, corner == OverlayPos::BottomRight))
-    {
+    if (ImGui::MenuItem("Bottom-right", nullptr, corner == OverlayPos::BottomRight)) {
       Prefs::SetViewportOverlayPos(OverlayPos::BottomRight);
     }
 
@@ -151,8 +134,7 @@ void MapContentOverlay(const entt::registry& registry,
   PreparePositionAndPivot();
 
   ImGui::SetNextWindowBgAlpha(opacity);
-  if (ImGui::Begin("##MapContentOverlay", nullptr, flags))
-  {
+  if (ImGui::Begin("##MapContentOverlay", nullptr, flags)) {
     MouseCoordinateLabels(cursor);
     MouseRowColumnLabels(cursor);
     MouseTileLabels(registry, cursor);

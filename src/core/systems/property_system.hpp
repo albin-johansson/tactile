@@ -23,8 +23,7 @@ void RestorePropertyContext(entt::registry& registry,
                             PropertyContextSnapshot snapshot);
 
 [[nodiscard]] auto CopyPropertyContext(const entt::registry& registry,
-                                       entt::entity source)
-    -> PropertyContextSnapshot;
+                                       entt::entity source) -> PropertyContextSnapshot;
 
 void AddProperty(entt::registry& registry,
                  ContextID id,
@@ -62,8 +61,7 @@ void ChangePropertyType(entt::registry& registry,
 [[nodiscard]] auto GetCurrentContext(const entt::registry& registry)
     -> const PropertyContext&;
 
-[[nodiscard]] auto GetContext(entt::registry& registry, ContextID id)
-    -> PropertyContext&;
+[[nodiscard]] auto GetContext(entt::registry& registry, ContextID id) -> PropertyContext&;
 
 [[nodiscard]] auto GetContext(const entt::registry& registry, ContextID id)
     -> const PropertyContext&;
@@ -72,8 +70,8 @@ void ChangePropertyType(entt::registry& registry,
                                     ContextID id,
                                     std::string_view name) -> const PropertyValue&;
 
-[[nodiscard]] auto FindProperty(const entt::registry& registry,
-                                std::string_view name) -> entt::entity;
+[[nodiscard]] auto FindProperty(const entt::registry& registry, std::string_view name)
+    -> entt::entity;
 
 [[nodiscard]] auto FindProperty(const entt::registry& registry,
                                 const PropertyContext& context,

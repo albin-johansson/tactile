@@ -6,8 +6,7 @@
 namespace Tactile {
 
 SaveAsShortcut::SaveAsShortcut()
-    : AShortcut{cen::scancodes::s,
-                cen::key_mod::left_ctrl | cen::key_mod::left_shift}
+    : AShortcut{cen::scancodes::s, cen::key_mod::left_ctrl | cen::key_mod::left_shift}
 {}
 
 void SaveAsShortcut::Activate(entt::dispatcher& dispatcher)

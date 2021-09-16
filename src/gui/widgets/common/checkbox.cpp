@@ -6,15 +6,13 @@
 
 namespace Tactile {
 
-auto Checkbox(const NotNull<CStr> label, NotNull<bool*> value, const CStr tooltip)
-    -> bool
+auto Checkbox(const NotNull<CStr> label, NotNull<bool*> value, const CStr tooltip) -> bool
 {
   assert(label);
   assert(value);
   const auto changed = ImGui::Checkbox(label, value);
 
-  if (tooltip && ImGui::IsItemHovered())
-  {
+  if (tooltip && ImGui::IsItemHovered()) {
     ImGui::SetTooltip("%s", tooltip);
   }
 

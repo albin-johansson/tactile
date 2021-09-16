@@ -14,13 +14,11 @@ auto FloatPropertyWidget(const PropertyValue& property) -> Maybe<float>
   auto value = property.AsFloat();
 
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
-  if (ImGui::DragFloat("##FloatPropertyInput", &value))
-  {
+  if (ImGui::DragFloat("##FloatPropertyInput", &value)) {
     return value;
   }
 
-  if (ImGui::IsItemHovered())
-  {
+  if (ImGui::IsItemHovered()) {
     ImGui::SetTooltip("[float]");
   }
 

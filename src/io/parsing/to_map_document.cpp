@@ -33,8 +33,7 @@ void AddProperties(entt::registry& registry,
 {
   auto& context = (entity != entt::null) ? registry.get<PropertyContext>(entity)
                                          : registry.ctx<PropertyContext>();
-  for (const auto& propertyData : data)
-  {
+  for (const auto& propertyData : data) {
     const auto propertyEntity = registry.create();
 
     auto& property = registry.emplace<Property>(propertyEntity);
@@ -49,8 +48,7 @@ void MakeFancyTiles(entt::registry& registry,
                     TilesetCache& cache,
                     const TilesetData& data)
 {
-  for (const auto& tileData : data.tiles)
-  {
+  for (const auto& tileData : data.tiles) {
     const auto tileEntity = registry.create();
 
     auto& tile = registry.emplace<FancyTile>(tileEntity);
@@ -58,11 +56,9 @@ void MakeFancyTiles(entt::registry& registry,
 
     cache.tiles.try_emplace(tile.id, tileEntity);
 
-    if (!tileData.animation.empty())
-    {
+    if (!tileData.animation.empty()) {
       auto& animation = registry.emplace<Animation>(tileEntity);
-      for (const auto& frameData : tileData.animation)
-      {
+      for (const auto& frameData : tileData.animation) {
         const auto frameEntity = registry.create();
 
         auto& frame = registry.emplace<AnimationFrame>(frameEntity);
@@ -79,9 +75,7 @@ void MakeFancyTiles(entt::registry& registry,
   }
 }
 
-void MakeTileset(entt::registry& registry,
-                 const TilesetID id,
-                 const TilesetData& data)
+void MakeTileset(entt::registry& registry, const TilesetID id, const TilesetData& data)
 {
   const auto info = LoadTexture(data.absolute_image_path).value();
   const auto tilesetEntity = Sys::MakeTileset(registry,
@@ -108,8 +102,7 @@ void MakeObjectLayer(entt::registry& registry,
 {
   auto& objectLayer = registry.emplace<ObjectLayer>(entity);
 
-  for (const auto& objectData : data.objects)
-  {
+  for (const auto& objectData : data.objects) {
     const auto objectEntity = objectLayer.objects.emplace_back(registry.create());
 
     auto& object = registry.emplace<Object>(objectEntity);
@@ -121,8 +114,7 @@ void MakeObjectLayer(entt::registry& registry,
     object.type = objectData.type;
     object.visible = objectData.visible;
 
-    if (!objectData.custom_type.empty())
-    {
+    if (!objectData.custom_type.empty()) {
       object.custom_type = objectData.custom_type;
     }
 
@@ -136,33 +128,28 @@ auto MakeLayer(entt::registry& registry,
                const LayerData& data,
                entt::entity parent = entt::null) -> entt::entity
 {
-  const auto entity =
-      Sys::AddBasicLayer(registry, data.id, data.type, data.name, parent);
+  const auto entity = Sys::AddBasicLayer(registry, data.id, data.type, data.name, parent);
 
   auto& layer = registry.get<Layer>(entity);
   layer.index = data.index;
   layer.opacity = data.opacity;
   layer.visible = data.is_visible;
 
-  if (data.type == LayerType::TileLayer)
-  {
+  if (data.type == LayerType::TileLayer) {
     const auto& tileLayerData = std::get<TileLayerData>(data.data);
 
     auto& tileLayer = registry.emplace<TileLayer>(entity);
     tileLayer.matrix = tileLayerData.tiles;
   }
-  else if (data.type == LayerType::ObjectLayer)
-  {
+  else if (data.type == LayerType::ObjectLayer) {
     const auto& objectLayerData = std::get<ObjectLayerData>(data.data);
     MakeObjectLayer(registry, entity, objectLayerData);
   }
-  else if (data.type == LayerType::GroupLayer)
-  {
+  else if (data.type == LayerType::GroupLayer) {
     registry.emplace<GroupLayer>(entity);
 
     const auto& groupLayerData = std::get<GroupLayerData>(data.data);
-    for (const auto& layerData : groupLayerData.layers)
-    {
+    for (const auto& layerData : groupLayerData.layers) {
       MakeLayer(registry, *layerData, entity);
     }
   }
@@ -193,27 +180,23 @@ auto ToMapDocument(const MapData& data) -> Document
 
   AddProperties(document.registry, entt::null, data.properties);
 
-  for (TilesetID id{1}; const auto& tilesetData : data.tilesets)
-  {
+  for (TilesetID id{1}; const auto& tilesetData : data.tilesets) {
     MakeTileset(document.registry, id, tilesetData);
     ++id;
   }
 
-  if (!data.tilesets.empty())
-  {
+  if (!data.tilesets.empty()) {
     auto& activeTileset = document.registry.ctx<ActiveTileset>();
     activeTileset.entity = document.registry.view<Tileset>().front();
   }
 
-  for (const auto& layerData : data.layers)
-  {
+  for (const auto& layerData : data.layers) {
     MakeLayer(document.registry, layerData);
   }
 
   Sys::SortLayers(document.registry);
 
-  if (!data.layers.empty())
-  {
+  if (!data.layers.empty()) {
     auto& activeLayer = document.registry.ctx<ActiveLayer>();
     activeLayer.entity = document.registry.view<Layer>().front();
   }

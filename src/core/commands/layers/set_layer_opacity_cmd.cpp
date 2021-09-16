@@ -27,11 +27,9 @@ void SetLayerOpacityCmd::Redo()
 
 auto SetLayerOpacityCmd::MergeWith(const ACommand& cmd) -> bool
 {
-  if (GetId() == cmd.GetId())
-  {
+  if (GetId() == cmd.GetId()) {
     const auto& other = dynamic_cast<const SetLayerOpacityCmd&>(cmd);
-    if (mLayerId == other.mLayerId)
-    {
+    if (mLayerId == other.mLayerId) {
       mOpacity = other.mOpacity;
       return true;
     }

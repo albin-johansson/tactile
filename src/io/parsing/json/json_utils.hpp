@@ -9,12 +9,10 @@ namespace Tactile::IO {
 template <typename T>
 [[nodiscard]] auto GetValue(const JSON& json, const CStr key) -> Maybe<T>
 {
-  if (const auto it = json.find(key); it != json.end())
-  {
+  if (const auto it = json.find(key); it != json.end()) {
     return it->get<T>();
   }
-  else
-  {
+  else {
     return nothing;
   }
 }

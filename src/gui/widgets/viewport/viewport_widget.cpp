@@ -33,26 +33,21 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
   {
     has_focus = ImGui::IsWindowFocused();
 
-    if (model.HasActiveDocument())
-    {
+    if (model.HasActiveDocument()) {
       MapContentViewport(model, dispatcher);
     }
-    else
-    {
+    else {
       NoContentViewportWidget(dispatcher);
     }
   }
-  else
-  {
+  else {
     has_focus = false;
   }
 
   ImGui::PopStyleVar();
 
-  if (ImGui::BeginPopupContextItem())
-  {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties"))
-    {
+  if (ImGui::BeginPopupContextItem()) {
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
 

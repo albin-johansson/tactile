@@ -24,8 +24,7 @@ auto Combo(const NotNull<CStr> label,
   const ScopeID uid{label};
   const auto changed = ImGui::Combo("##TactileCombo", index, values);
 
-  if (tooltip && ImGui::IsItemHovered())
-  {
+  if (tooltip && ImGui::IsItemHovered()) {
     ImGui::SetTooltip(tooltip);
   }
 

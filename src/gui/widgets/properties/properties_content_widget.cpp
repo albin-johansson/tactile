@@ -34,8 +34,7 @@ void StringValue(const std::string& name,
                  const PropertyValue& property,
                  entt::dispatcher& dispatcher)
 {
-  if (const auto str = StringPropertyWidget(property))
-  {
+  if (const auto str = StringPropertyWidget(property)) {
     dispatcher.enqueue<UpdatePropertyEvent>(name, *str);
   }
 }
@@ -44,8 +43,7 @@ void IntValue(const std::string& name,
               const PropertyValue& property,
               entt::dispatcher& dispatcher)
 {
-  if (const auto value = IntPropertyWidget(property))
-  {
+  if (const auto value = IntPropertyWidget(property)) {
     dispatcher.enqueue<UpdatePropertyEvent>(name, *value);
   }
 }
@@ -54,8 +52,7 @@ void FloatValue(const std::string& name,
                 const PropertyValue& property,
                 entt::dispatcher& dispatcher)
 {
-  if (const auto value = FloatPropertyWidget(property))
-  {
+  if (const auto value = FloatPropertyWidget(property)) {
     dispatcher.enqueue<UpdatePropertyEvent>(name, *value);
   }
 }
@@ -64,8 +61,7 @@ void BoolValue(const std::string& name,
                const PropertyValue& property,
                entt::dispatcher& dispatcher)
 {
-  if (const auto value = BoolPropertyWidget(property))
-  {
+  if (const auto value = BoolPropertyWidget(property)) {
     dispatcher.enqueue<UpdatePropertyEvent>(name, *value);
   }
 }
@@ -74,8 +70,7 @@ void ColorValue(const std::string& name,
                 const PropertyValue& property,
                 entt::dispatcher& dispatcher)
 {
-  if (const auto color = ColorPropertyWidget(property))
-  {
+  if (const auto color = ColorPropertyWidget(property)) {
     dispatcher.enqueue<UpdatePropertyEvent>(name, *color);
   }
 }
@@ -84,8 +79,7 @@ void ObjectValue(const std::string& name,
                  const PropertyValue& property,
                  entt::dispatcher& dispatcher)
 {
-  if (const auto value = ObjectPropertyWidget(property))
-  {
+  if (const auto value = ObjectPropertyWidget(property)) {
     dispatcher.enqueue<UpdatePropertyEvent>(name, *value);
   }
 }
@@ -94,34 +88,29 @@ void FileValue(const std::string& name,
                const PropertyValue& property,
                entt::dispatcher& dispatcher)
 {
-  if (const auto path = FilePropertyWidget(property))
-  {
+  if (const auto path = FilePropertyWidget(property)) {
     dispatcher.enqueue<UpdatePropertyEvent>(name, *path);
   }
 }
 
 void PropertyItemContextMenu(entt::dispatcher& dispatcher, const std::string& name)
 {
-  if (ImGui::BeginPopupContextItem("##PropertyItemContext"))
-  {
+  if (ImGui::BeginPopupContextItem("##PropertyItemContext")) {
     show_add_dialog = ImGui::MenuItem(TAC_ICON_ADD " Add new property...");
     ImGui::Separator();
 
     show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename property...");
-    if (show_rename_dialog)
-    {
+    if (show_rename_dialog) {
       rename_target = name;
     }
 
     show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change type...");
-    if (show_change_type_dialog)
-    {
+    if (show_change_type_dialog) {
       change_type_target = name;
     }
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove property"))
-    {
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove property")) {
       dispatcher.enqueue<RemovePropertyEvent>(name);
     }
 
@@ -134,14 +123,12 @@ void PropertyItemContextMenu(entt::dispatcher& dispatcher, const std::string& na
 void UpdatePropertiesContentWidget(const entt::registry& registry,
                                    entt::dispatcher& dispatcher)
 {
-  constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
-                         ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY;
+  constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders
+                         | ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY;
 
-  if (ImGui::BeginTable("PropertiesTable", 2, flags))
-  {
+  if (ImGui::BeginTable("PropertiesTable", 2, flags)) {
     const auto& context = Sys::GetCurrentContext(registry);
-    for (const auto entity : context.properties)
-    {
+    for (const auto entity : context.properties) {
       const auto& property = registry.get<Property>(entity);
       const auto& name = property.name;
       const auto& value = property.value;
@@ -157,32 +144,25 @@ void UpdatePropertiesContentWidget(const entt::registry& registry,
       PropertyItemContextMenu(dispatcher, name);
 
       ImGui::TableNextColumn();
-      if (value.IsString())
-      {
+      if (value.IsString()) {
         StringValue(name, value, dispatcher);
       }
-      else if (value.IsInt())
-      {
+      else if (value.IsInt()) {
         IntValue(name, value, dispatcher);
       }
-      else if (value.IsFloat())
-      {
+      else if (value.IsFloat()) {
         FloatValue(name, value, dispatcher);
       }
-      else if (value.IsBool())
-      {
+      else if (value.IsBool()) {
         BoolValue(name, value, dispatcher);
       }
-      else if (value.IsColor())
-      {
+      else if (value.IsColor()) {
         ColorValue(name, value, dispatcher);
       }
-      else if (value.IsObject())
-      {
+      else if (value.IsObject()) {
         ObjectValue(name, value, dispatcher);
       }
-      else if (value.IsFile())
-      {
+      else if (value.IsFile()) {
         FileValue(name, value, dispatcher);
       }
     }
@@ -190,21 +170,18 @@ void UpdatePropertiesContentWidget(const entt::registry& registry,
     ImGui::EndTable();
   }
 
-  if (show_add_dialog)
-  {
+  if (show_add_dialog) {
     OpenAddPropertyDialog();
     show_add_dialog = false;
   }
 
-  if (show_rename_dialog)
-  {
+  if (show_rename_dialog) {
     OpenRenamePropertyDialog(rename_target.value());
     rename_target.reset();
     show_rename_dialog = false;
   }
 
-  if (show_change_type_dialog)
-  {
+  if (show_change_type_dialog) {
     OpenChangePropertyTypeDialog(change_type_target.value());
     change_type_target.reset();
     show_change_type_dialog = false;

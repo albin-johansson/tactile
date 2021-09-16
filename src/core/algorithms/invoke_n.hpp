@@ -19,8 +19,7 @@ namespace Tactile {
 template <std::integral Integer, std::invocable T>
 constexpr void InvokeN(const Integer n, T&& callable) noexcept(noexcept(callable()))
 {
-  for (Integer i = 0; i < n; ++i)
-  {
+  for (Integer i = 0; i < n; ++i) {
     callable();
   }
 }

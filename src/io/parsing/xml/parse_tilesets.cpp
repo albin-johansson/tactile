@@ -14,13 +14,11 @@ namespace {
 [[nodiscard]] auto ParseFirstTileId(const pugi::xml_node node, TileID& firstId)
     -> ParseError
 {
-  if (const auto id = GetInt(node, "firstgid"))
-  {
+  if (const auto id = GetInt(node, "firstgid")) {
     firstId = TileID{*id};
     return ParseError::None;
   }
-  else
-  {
+  else {
     return ParseError::TilesetMissingFirstGid;
   }
 }
@@ -37,34 +35,28 @@ namespace {
   const auto imageNode = tilesetNode.child("image");
   const auto source = imageNode.attribute("source");
 
-  if (const auto* str = source.as_string(nullptr))
-  {
+  if (const auto* str = source.as_string(nullptr)) {
     return std::filesystem::path{str};
   }
-  else
-  {
+  else {
     return nothing;
   }
 }
 
-[[nodiscard]] auto ParseTiles(const pugi::xml_node node, TilesetData& data)
-    -> ParseError
+[[nodiscard]] auto ParseTiles(const pugi::xml_node node, TilesetData& data) -> ParseError
 {
-  for (const auto tile : node.children("tile"))
-  {
+  for (const auto tile : node.children("tile")) {
     auto& tileData = data.tiles.emplace_back();
     tileData.id = TileID{GetInt(tile, "id").value()};
 
-    for (const auto frame : tile.child("animation").children("frame"))
-    {
+    for (const auto frame : tile.child("animation").children("frame")) {
       auto& frameData = tileData.animation.emplace_back();
       frameData.tile = TileID{GetInt(frame, "tileid").value()};
       frameData.duration = GetInt(frame, "duration").value();
     }
 
     if (const auto err = ParseProperties(tile, tileData.properties);
-        err != ParseError::None)
-    {
+        err != ParseError::None) {
       return err;
     }
   }
@@ -76,58 +68,46 @@ namespace {
                                TilesetData& data,
                                const std::filesystem::path& directory) -> ParseError
 {
-  if (const auto tileWidth = GetInt(node, "tilewidth"))
-  {
+  if (const auto tileWidth = GetInt(node, "tilewidth")) {
     data.tile_width = *tileWidth;
   }
-  else
-  {
+  else {
     return ParseError::TilesetMissingTileWidth;
   }
 
-  if (const auto tileHeight = GetInt(node, "tileheight"))
-  {
+  if (const auto tileHeight = GetInt(node, "tileheight")) {
     data.tile_height = *tileHeight;
   }
-  else
-  {
+  else {
     return ParseError::TilesetMissingTileHeight;
   }
 
   const auto relativeImagePath = GetTilesetImageRelativePath(node);
-  if (!relativeImagePath)
-  {
+  if (!relativeImagePath) {
     return ParseError::TilesetMissingImagePath;
   }
 
   const auto absoluteImagePath =
       std::filesystem::weakly_canonical(directory / *relativeImagePath);
-  if (std::filesystem::exists(absoluteImagePath))
-  {
+  if (std::filesystem::exists(absoluteImagePath)) {
     data.absolute_image_path = absoluteImagePath;
   }
-  else
-  {
+  else {
     return ParseError::TilesetImageDoesNotExist;
   }
 
-  if (auto name = GetString(node, "name"))
-  {
+  if (auto name = GetString(node, "name")) {
     data.name = std::move(*name);
   }
-  else
-  {
+  else {
     return ParseError::TilesetMissingName;
   }
 
-  if (const auto err = ParseTiles(node, data); err != ParseError::None)
-  {
+  if (const auto err = ParseTiles(node, data); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseProperties(node, data.properties);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseProperties(node, data.properties); err != ParseError::None) {
     return err;
   }
 
@@ -136,8 +116,7 @@ namespace {
 
 [[nodiscard]] auto ParseExternal(const pugi::xml_node node,
                                  TilesetData& data,
-                                 const std::filesystem::path& directory)
-    -> ParseError
+                                 const std::filesystem::path& directory) -> ParseError
 {
   assert(Contains(node, "source"));
 
@@ -145,8 +124,7 @@ namespace {
   const auto path = std::filesystem::weakly_canonical(directory / source);
 
   pugi::xml_document external;
-  if (!external.load_file(path.c_str()))
-  {
+  if (!external.load_file(path.c_str())) {
     return ParseError::CouldNotReadExternalTileset;
   }
 
@@ -157,18 +135,14 @@ namespace {
                                 TilesetData& data,
                                 const std::filesystem::path& directory) -> ParseError
 {
-  if (const auto err = ParseFirstTileId(node, data.first_id);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseFirstTileId(node, data.first_id); err != ParseError::None) {
     return err;
   }
 
-  if (Contains(node, "source"))
-  {
+  if (Contains(node, "source")) {
     return ParseExternal(node, data, directory);
   }
-  else
-  {
+  else {
     return ParseCommon(node, data, directory);
   }
 
@@ -181,8 +155,7 @@ auto ParseTilesets(const pugi::xml_node root,
                    std::vector<TilesetData>& tilesets,
                    const std::filesystem::path& directory) -> ParseError
 {
-  for (const auto tileset : root.children("tileset"))
-  {
+  for (const auto tileset : root.children("tileset")) {
     auto& tilesetData = tilesets.emplace_back();
     if (const auto err = ParseTileset(tileset, tilesetData, directory);
         err != ParseError::None)

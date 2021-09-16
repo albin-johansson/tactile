@@ -11,7 +11,6 @@ namespace Tactile::IO {
 
 [[nodiscard]] auto ParseTilesets(const JSON& json,
                                  std::vector<TilesetData>& tilesets,
-                                 const std::filesystem::path& directory)
-    -> ParseError;
+                                 const std::filesystem::path& directory) -> ParseError;
 
 }  // namespace Tactile::IO

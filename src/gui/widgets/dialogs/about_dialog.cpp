@@ -21,8 +21,7 @@ constexpr auto source_code = "Source code: " TACTILE_URL;
 void UpdateAboutDialog(bool* open)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::Begin("About Tactile", open, ImGuiWindowFlags_AlwaysAutoResize))
-  {
+  if (ImGui::Begin("About Tactile", open, ImGuiWindowFlags_AlwaysAutoResize)) {
     ImGui::TextUnformatted("Tactile " TACTILE_VER " (C) Albin Johansson 2020-2021");
     ImGui::Separator();
 
@@ -32,8 +31,7 @@ void UpdateAboutDialog(bool* open)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(source_code);
     ImGui::SameLine();
-    if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser."))
-    {
+    if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser.")) {
       cen::open_url(TACTILE_URL);
     }
 

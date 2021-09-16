@@ -21,8 +21,7 @@ constinit bool has_focus = false;
 
 void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (!Prefs::GetShowTilesetDock())
-  {
+  if (!Prefs::GetShowTilesetDock()) {
     return;
   }
 
@@ -34,23 +33,19 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
     has_focus = ImGui::IsWindowFocused();
 
     const auto view = registry.view<Tileset>();
-    if (view.size() != 0)
-    {
+    if (view.size() != 0) {
       TilesetContentWidget(registry, dispatcher);
     }
-    else
-    {
+    else {
       PrepareVerticalAlignmentCenter(2);
 
       CenteredText("No available tilesets!");
-      if (CenteredButton(TAC_ICON_TILESET " Create tileset..."))
-      {
+      if (CenteredButton(TAC_ICON_TILESET " Create tileset...")) {
         ShowTilesetDialog();
       }
     }
   }
-  else
-  {
+  else {
     has_focus = false;
   }
 

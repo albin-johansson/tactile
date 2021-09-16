@@ -17,8 +17,8 @@ namespace {
   const auto gridWidth = info.grid_size.x;
   const auto gridHeight = info.grid_size.y;
 
-  const auto index = ImVec2{static_cast<float>(begin.GetColumn()),
-                            static_cast<float>(begin.GetRow())};
+  const auto index =
+      ImVec2{static_cast<float>(begin.GetColumn()), static_cast<float>(begin.GetRow())};
   const auto pos = info.map_position + (index * info.grid_size);
 
   const auto size = info.bounds.end - info.bounds.begin;
@@ -30,8 +30,7 @@ namespace {
 
 }  // namespace
 
-auto GetRenderInfo(const entt::registry& registry, const CanvasInfo& canvas)
-    -> RenderInfo
+auto GetRenderInfo(const entt::registry& registry, const CanvasInfo& canvas) -> RenderInfo
 {
   RenderInfo info;
 

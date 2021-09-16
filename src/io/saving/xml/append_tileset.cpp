@@ -20,17 +20,14 @@ void AppendFancyTiles(pugi::xml_node node,
                       const entt::entity tilesetEntity,
                       const std::filesystem::path& dir)
 {
-  for (auto&& [entity, tile] : registry.view<FancyTile>().each())
-  {
+  for (auto&& [entity, tile] : registry.view<FancyTile>().each()) {
     auto tileNode = node.append_child("tile");
     tileNode.append_attribute("id").set_value(
         Sys::ConvertToLocal(registry, tile.id).value());
 
-    if (const auto* animation = registry.try_get<Animation>(entity))
-    {
+    if (const auto* animation = registry.try_get<Animation>(entity)) {
       auto animationNode = tileNode.append_child("animation");
-      for (const auto frameEntity : animation->frames)
-      {
+      for (const auto frameEntity : animation->frames) {
         const auto& frame = registry.get<AnimationFrame>(frameEntity);
         auto frameNode = animationNode.append_child("frame");
 
@@ -122,12 +119,10 @@ void AppendTileset(pugi::xml_node mapNode,
                    const entt::entity tilesetEntity,
                    const std::filesystem::path& dir)
 {
-  if (Prefs::GetEmbedTilesets())
-  {
+  if (Prefs::GetEmbedTilesets()) {
     AppendEmbeddedTileset(mapNode, registry, tilesetEntity, dir);
   }
-  else
-  {
+  else {
     const auto& context = registry.get<PropertyContext>(tilesetEntity);
     const auto source = std::format("{}.tsx", context.name);
     CreateExternalTilesetFile(registry, tilesetEntity, source, dir);

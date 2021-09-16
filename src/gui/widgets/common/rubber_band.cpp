@@ -21,12 +21,10 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Reg
     return static_cast<int32>(mod / tileSize.x);
   };
 
-  if (ImGui::IsItemActive())
-  {
+  if (ImGui::IsItemActive()) {
     constexpr auto button = ImGuiMouseButton_Left;
     const auto dragging = ImGui::IsMouseDragging(button);
-    if (ImGui::IsMouseClicked(button) || dragging)
-    {
+    if (ImGui::IsMouseClicked(button) || dragging) {
       const auto mousePos = ImGui::GetMousePos();
       const auto itemPos = ImGui::GetItemRectMin();
       const auto delta = dragging ? ImGui::GetMouseDragDelta(button) : ImVec2{};

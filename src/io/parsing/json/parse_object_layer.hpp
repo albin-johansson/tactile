@@ -6,7 +6,6 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseObjectLayer(const JSON& json, LayerData& layer)
-    -> ParseError;
+[[nodiscard]] auto ParseObjectLayer(const JSON& json, LayerData& layer) -> ParseError;
 
 }  // namespace Tactile::IO

@@ -15,27 +15,22 @@ namespace {
 
 void UpdateWidgetsSubmenu(const bool hasActiveMap, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMenu("Widgets", hasActiveMap))
-  {
-    if (ImGui::MenuItem("Reset layout"))
-    {
+  if (ImGui::BeginMenu("Widgets", hasActiveMap)) {
+    if (ImGui::MenuItem("Reset layout")) {
       ResetLayout();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Properties", nullptr, Prefs::GetShowPropertiesDock()))
-    {
+    if (ImGui::MenuItem("Properties", nullptr, Prefs::GetShowPropertiesDock())) {
       Prefs::SetShowPropertiesDock(!Prefs::GetShowPropertiesDock());
     }
 
-    if (ImGui::MenuItem("Layers", nullptr, Prefs::GetShowLayerDock()))
-    {
+    if (ImGui::MenuItem("Layers", nullptr, Prefs::GetShowLayerDock())) {
       Prefs::SetShowLayerDock(!Prefs::GetShowLayerDock());
     }
 
-    if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock()))
-    {
+    if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock())) {
       Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
     }
 
@@ -49,8 +44,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 {
   const auto hasActiveDocument = model.HasActiveDocument();
 
-  if (ImGui::BeginMenu("View"))
-  {
+  if (ImGui::BeginMenu("View")) {
     UpdateWidgetsSubmenu(hasActiveDocument, dispatcher);
 
     ImGui::Separator();
@@ -92,17 +86,13 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset zoom",
                         nullptr,
                         false,
-                        hasActiveDocument))
-    {
+                        hasActiveDocument)) {
       dispatcher.enqueue<ResetZoomEvent>();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan up",
-                        "Ctrl+Up",
-                        false,
-                        hasActiveDocument))
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan up", "Ctrl+Up", false, hasActiveDocument))
     {
       dispatcher.enqueue<PanUpEvent>();
     }
@@ -133,8 +123,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument))
-    {
+    if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument)) {
       dispatcher.enqueue<ToggleUiEvent>();
     }
 

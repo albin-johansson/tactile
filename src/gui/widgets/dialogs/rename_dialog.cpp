@@ -13,8 +13,7 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags =
-    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 constinit std::array<char, 100> name_buffer{};
 constinit bool is_input_valid = false;
@@ -38,27 +37,23 @@ void UpdateRenameDialog(const NotNull<CStr> title,
   assert(callback);
 
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal(title, nullptr, flags))
-  {
+  if (ImGui::BeginPopupModal(title, nullptr, flags)) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Name: ");
 
     ImGui::SameLine();
 
-    if (!ImGui::IsAnyItemActive())
-    {
+    if (!ImGui::IsAnyItemActive()) {
       ImGui::SetKeyboardFocusHere();
     }
 
-    if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer))
-    {
+    if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer)) {
       const auto name = CreateStringFromBuffer(name_buffer);
       is_input_valid = validator(registry, name);
     }
 
     ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid))
-    {
+    if (Button("OK", nullptr, is_input_valid)) {
       auto name = CreateStringFromBuffer(name_buffer);
       callback(dispatcher, std::move(name));
       ResetState();
@@ -66,8 +61,7 @@ void UpdateRenameDialog(const NotNull<CStr> title,
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Cancel"))
-    {
+    if (ImGui::Button("Cancel")) {
       ResetState();
       ImGui::CloseCurrentPopup();
     }

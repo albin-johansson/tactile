@@ -45,13 +45,10 @@ auto MakeTileset(entt::registry& registry,
                  int tileWidth,
                  int tileHeight) -> entt::entity;
 
-auto AddTileset(entt::registry& registry,
-                Texture texture,
-                int tileWidth,
-                int tileHeight) -> entt::entity;
-
-auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot)
+auto AddTileset(entt::registry& registry, Texture texture, int tileWidth, int tileHeight)
     -> entt::entity;
+
+auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity;
 
 [[nodiscard]] auto CopyTileset(const entt::registry& registry, entt::entity source)
     -> TilesetSnapshot;
@@ -110,16 +107,13 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region);
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto FindTileset(const entt::registry& registry, TileID id)
-    -> entt::entity;
+[[nodiscard]] auto FindTileset(const entt::registry& registry, TileID id) -> entt::entity;
 
 [[nodiscard]] auto GetActiveTileset(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto HasNonEmptyTilesetSelection(const entt::registry& registry)
-    -> bool;
+[[nodiscard]] auto HasNonEmptyTilesetSelection(const entt::registry& registry) -> bool;
 
-[[nodiscard]] auto IsSingleTileSelectedInTileset(const entt::registry& registry)
-    -> bool;
+[[nodiscard]] auto IsSingleTileSelectedInTileset(const entt::registry& registry) -> bool;
 
 /**
  * \brief Returns the ID of the tile that should be rendered when the specified tile

@@ -52,8 +52,7 @@ void TilesetViewportWidget(const entt::registry& registry,
   state.scroll_offset = MouseTracker(info, state.scroll_offset);
   ClampOffsets(info.size, textureSize.x, textureSize.y);
 
-  if (const auto selection = RubberBand(state.scroll_offset, tileSize))
-  {
+  if (const auto selection = RubberBand(state.scroll_offset, tileSize)) {
     dispatcher.enqueue<SetTilesetSelectionEvent>(*selection);
   }
 
@@ -64,8 +63,7 @@ void TilesetViewportWidget(const entt::registry& registry,
   drawList->AddImage(textureId, min, min + textureSize);
 
   const auto& selection = registry.get<TilesetSelection>(entity);
-  if (selection.region)
-  {
+  if (selection.region) {
     const auto tl = selection.region->begin;
     const auto br = selection.region->end;
     const auto diff = br - tl;

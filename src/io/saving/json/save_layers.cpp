@@ -29,8 +29,7 @@ void AddCommonAttributes(JSON& json,
   json["x"] = 0;
   json["y"] = 0;
 
-  if (!ctx.properties.empty())
-  {
+  if (!ctx.properties.empty()) {
     json["properties"] = SaveProperties(registry, entity, dir);
   }
 }
@@ -50,10 +49,8 @@ void AddCommonAttributes(JSON& json,
 
   auto data = JSON::array();
 
-  for (const auto& row : tileLayer.matrix)
-  {
-    for (const auto tile : row)
-    {
+  for (const auto& row : tileLayer.matrix) {
+    for (const auto tile : row) {
       data += tile.get();
     }
   }
@@ -82,17 +79,14 @@ void AddCommonAttributes(JSON& json,
   json["type"] = object.custom_type;
   json["rotation"] = 0;
 
-  if (object.type == ObjectType::Point)
-  {
+  if (object.type == ObjectType::Point) {
     json["point"] = true;
   }
-  else if (object.type == ObjectType::Ellipse)
-  {
+  else if (object.type == ObjectType::Ellipse) {
     json["ellipse"] = true;
   }
 
-  if (!context.properties.empty())
-  {
+  if (!context.properties.empty()) {
     json["properties"] = SaveProperties(registry, entity, dir);
   }
 
@@ -112,8 +106,7 @@ void AddCommonAttributes(JSON& json,
   auto objects = JSON::array();
 
   const auto& objectLayer = registry.get<ObjectLayer>(entity);
-  for (const auto objectEntity : objectLayer.objects)
-  {
+  for (const auto objectEntity : objectLayer.objects) {
     objects += SaveObject(registry, objectEntity, dir);
   }
 
@@ -140,8 +133,7 @@ void AddCommonAttributes(JSON& json,
   auto layers = JSON::array();
 
   const auto& groupLayer = registry.get<GroupLayer>(entity);
-  for (const auto child : groupLayer.layers)
-  {
+  for (const auto child : groupLayer.layers) {
     const auto& childLayer = registry.get<Layer>(child);
     layers += SaveLayer(registry, child, childLayer, dir);
   }
@@ -156,8 +148,7 @@ void AddCommonAttributes(JSON& json,
                              const Layer& layer,
                              const std::filesystem::path& dir) -> JSON
 {
-  switch (layer.type)
-  {
+  switch (layer.type) {
     case LayerType::TileLayer:
       return SaveTileLayer(registry, entity, layer, dir);
 
@@ -174,13 +165,11 @@ void AddCommonAttributes(JSON& json,
 
 }  // namespace
 
-auto SaveLayers(const entt::registry& registry, const std::filesystem::path& dir)
-    -> JSON
+auto SaveLayers(const entt::registry& registry, const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::array();
 
-  for (auto&& [entity, layer] : registry.view<Layer>().each())
-  {
+  for (auto&& [entity, layer] : registry.view<Layer>().each()) {
     json += SaveLayer(registry, entity, layer, dir);
   }
 

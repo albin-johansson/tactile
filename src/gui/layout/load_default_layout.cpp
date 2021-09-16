@@ -26,8 +26,7 @@ void LoadDefaultLayout(ImGuiID id, const bool resetVisibility)
 
   ImGui::DockBuilderFinish(id);
 
-  if (resetVisibility)
-  {
+  if (resetVisibility) {
     Prefs::SetShowLayerDock(true);
     Prefs::SetShowPropertiesDock(true);
     Prefs::SetShowTilesetDock(true);

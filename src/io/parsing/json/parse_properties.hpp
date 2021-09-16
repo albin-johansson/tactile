@@ -9,7 +9,6 @@
 namespace Tactile::IO {
 
 [[nodiscard]] auto ParseProperties(const JSON& json,
-                                   std::vector<PropertyData>& properties)
-    -> ParseError;
+                                   std::vector<PropertyData>& properties) -> ParseError;
 
 }  // namespace Tactile::IO

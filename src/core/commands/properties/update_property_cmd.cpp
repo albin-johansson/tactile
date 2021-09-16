@@ -30,11 +30,9 @@ void UpdatePropertyCmd::Redo()
 
 auto UpdatePropertyCmd::MergeWith(const ACommand& cmd) -> bool
 {
-  if (GetId() == cmd.GetId())
-  {
+  if (GetId() == cmd.GetId()) {
     const auto& other = dynamic_cast<const UpdatePropertyCmd&>(cmd);
-    if (mContextId == other.mContextId && mName == other.mName)
-    {
+    if (mContextId == other.mContextId && mName == other.mName) {
       mNewValue = other.mNewValue;
       return true;
     }

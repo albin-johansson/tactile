@@ -14,12 +14,10 @@ constinit uint icon_tactile{};
 
 [[nodiscard]] auto LoadIcon(const std::filesystem::path& path) -> uint
 {
-  if (const auto info = LoadTexture(path))
-  {
+  if (const auto info = LoadTexture(path)) {
     return info->id;
   }
-  else
-  {
+  else {
     throw TactileError{"Failed to load icon!"};
   }
 }
@@ -33,8 +31,7 @@ auto GetTactileIcon() noexcept -> uint
 
 auto GetIcon(const LayerType type) -> CStr
 {
-  switch (type)
-  {
+  switch (type) {
     case LayerType::TileLayer:
       return TAC_ICON_TILE_LAYER;
 

@@ -11,8 +11,7 @@ void SaveJson(const JSON& json, const std::filesystem::path& path)
 {
   std::ofstream stream{path};
 
-  if (Prefs::GetHumanReadableOutput())
-  {
+  if (Prefs::GetHumanReadableOutput()) {
     stream << std::setw(2);
   }
 

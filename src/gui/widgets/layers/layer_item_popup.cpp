@@ -12,28 +12,23 @@ void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           const LayerID id)
 {
-  if (ImGui::BeginPopupContextItem())
-  {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show layer properties"))
-    {
+  if (ImGui::BeginPopupContextItem()) {
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show layer properties")) {
       dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename layer"))
-    {
+    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename layer")) {
       dispatcher.enqueue<OpenRenameLayerDialogEvent>(id);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate layer"))
-    {
+    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate layer")) {
       dispatcher.enqueue<DuplicateLayerEvent>(id);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove layer"))
-    {
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove layer")) {
       dispatcher.enqueue<RemoveLayerEvent>(id);
     }
 
@@ -50,8 +45,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     ImGui::AlignTextToFramePadding();
     ImGui::Text(TAC_ICON_OPACITY " Opacity");
     ImGui::SameLine();
-    if (ImGui::SliderFloat("##OpacitySlider", &opacity, 0, 1.0f))
-    {
+    if (ImGui::SliderFloat("##OpacitySlider", &opacity, 0, 1.0f)) {
       dispatcher.enqueue<SetLayerOpacityEvent>(id, opacity);
     }
 

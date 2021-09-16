@@ -91,12 +91,10 @@ TEST_P(MapParserTest, MapParser)
   MapParser parser{path};
   ASSERT_EQ(code, parser.GetError());
 
-  if (code != ParseError::None)
-  {
+  if (code != ParseError::None) {
     ASSERT_FALSE(parser);
   }
-  else
-  {
+  else {
     ASSERT_TRUE(parser);
   }
 }

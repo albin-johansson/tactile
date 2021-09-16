@@ -24,25 +24,21 @@ constinit bool has_focus = false;
 
 }  // namespace
 
-void UpdatePropertiesDock(const entt::registry& registry,
-                          entt::dispatcher& dispatcher)
+void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   // TODO context menu for entire dock
 
-  if (!Prefs::GetShowPropertiesDock())
-  {
+  if (!Prefs::GetShowPropertiesDock()) {
     return;
   }
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
   bool isVisible = Prefs::GetShowPropertiesDock();
-  if (ImGui::Begin("Properties", &isVisible, flags))
-  {
+  if (ImGui::Begin("Properties", &isVisible, flags)) {
     has_focus = ImGui::IsWindowFocused();
     const auto& context = Sys::GetCurrentContext(registry);
 
-    if (Button(TAC_ICON_ADD, "Add property."))
-    {
+    if (Button(TAC_ICON_ADD, "Add property.")) {
       OpenAddPropertyDialog();
     }
 
@@ -52,18 +48,15 @@ void UpdatePropertiesDock(const entt::registry& registry,
     HelpMarker("The owner of the shown properties.");
     ImGui::Separator();
 
-    if (context.properties.empty())
-    {
+    if (context.properties.empty()) {
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available properties!");
     }
-    else
-    {
+    else {
       UpdatePropertiesContentWidget(registry, dispatcher);
     }
   }
-  else
-  {
+  else {
     has_focus = false;
   }
 

@@ -57,15 +57,12 @@ void RenderPreviewTiles(const entt::registry& registry, const PreviewInfo& info)
 {
   const auto endRow = info.selection_size.GetRow();
   const auto endCol = info.selection_size.GetColumn();
-  for (auto row = 0; row < endRow; ++row)
-  {
-    for (auto col = 0; col < endCol; ++col)
-    {
+  for (auto row = 0; row < endRow; ++row) {
+    for (auto col = 0; col < endCol; ++col) {
       const auto position = MapPosition{row, col};
       const auto previewTilePos = info.mouse_pos + position - info.offset;
 
-      if (Sys::IsPositionInMap(registry, previewTilePos))
-      {
+      if (Sys::IsPositionInMap(registry, previewTilePos)) {
         const auto tilesetTilePos = info.selection_begin + position;
         const auto tilesetTileRow = static_cast<float>(tilesetTilePos.GetRow());
         const auto tilesetTileCol = static_cast<float>(tilesetTilePos.GetColumn());
@@ -87,8 +84,7 @@ void RenderStampPreview(const entt::registry& registry,
   assert(tilesetEntity != entt::null);
 
   const auto& selection = registry.get<TilesetSelection>(tilesetEntity);
-  if (!selection.region)
-  {
+  if (!selection.region) {
     return;
   }
 

@@ -9,8 +9,7 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags =
-    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 inline Maybe<IO::ParseError> current_error;
 
@@ -19,16 +18,14 @@ inline Maybe<IO::ParseError> current_error;
 void UpdateMapImportErrorDialog()
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal(TAC_ICON_ERROR " Map import error", nullptr, flags))
-  {
+  if (ImGui::BeginPopupModal(TAC_ICON_ERROR " Map import error", nullptr, flags)) {
     ImGui::TextUnformatted("Oops, failed to open the specified map!");
     ImGui::Text("Cause: %s", IO::GetCause(current_error.value()));
 
     ImGui::Spacing();
     ImGui::Separator();
 
-    if (ImGui::Button("OK"))
-    {
+    if (ImGui::Button("OK")) {
       current_error.reset();
       ImGui::CloseCurrentPopup();
     }

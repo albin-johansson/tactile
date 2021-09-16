@@ -9,32 +9,25 @@ void PropertyValue::Reset()
 
 void PropertyValue::ResetToDefault(const PropertyType type)
 {
-  if (type == PropertyType::Integer)
-  {
+  if (type == PropertyType::Integer) {
     SetValue<integer_type>(0);
   }
-  else if (type == PropertyType::Floating)
-  {
+  else if (type == PropertyType::Floating) {
     SetValue<float_type>(0);
   }
-  else if (type == PropertyType::Boolean)
-  {
+  else if (type == PropertyType::Boolean) {
     SetValue<bool>(false);
   }
-  else if (type == PropertyType::String)
-  {
+  else if (type == PropertyType::String) {
     SetValue<string_type>(string_type{});
   }
-  else if (type == PropertyType::Color)
-  {
+  else if (type == PropertyType::Color) {
     SetValue<color_type>(cen::colors::black);
   }
-  else if (type == PropertyType::Object)
-  {
+  else if (type == PropertyType::Object) {
     SetValue<ObjectRef>(ObjectRef{});
   }
-  else if (type == PropertyType::File)
-  {
+  else if (type == PropertyType::File) {
     SetValue<file_type>(file_type{});
   }
 }
@@ -116,36 +109,28 @@ auto PropertyValue::IsColor() const noexcept -> bool
 
 auto PropertyValue::GetType() const -> Maybe<PropertyType>
 {
-  if (Is<integer_type>())
-  {
+  if (Is<integer_type>()) {
     return PropertyType::Integer;
   }
-  else if (Is<float_type>())
-  {
+  else if (Is<float_type>()) {
     return PropertyType::Floating;
   }
-  else if (Is<string_type>())
-  {
+  else if (Is<string_type>()) {
     return PropertyType::String;
   }
-  else if (Is<bool>())
-  {
+  else if (Is<bool>()) {
     return PropertyType::Boolean;
   }
-  else if (Is<file_type>())
-  {
+  else if (Is<file_type>()) {
     return PropertyType::File;
   }
-  else if (Is<ObjectRef>())
-  {
+  else if (Is<ObjectRef>()) {
     return PropertyType::Object;
   }
-  else if (Is<color_type>())
-  {
+  else if (Is<color_type>()) {
     return PropertyType::Color;
   }
-  else
-  {
+  else {
     return nothing;
   }
 }

@@ -23,23 +23,19 @@ constinit bool show_open_map_dialog = false;
 
 [[nodiscard]] auto GetFilter() -> CStr
 {
-  if (Prefs::GetPreferredFormat() == "JSON")
-  {
+  if (Prefs::GetPreferredFormat() == "JSON") {
     return ".json,.tmx";
   }
-  else
-  {
+  else {
     return ".tmx,.json";
   }
 }
 
 void ShowMapFileDialog(entt::dispatcher& dispatcher)
 {
-  auto path =
-      pfd::open_file{"Open Map...", "", {"Map Files", "*.json *.tmx"}}.result();
+  auto path = pfd::open_file{"Open Map...", "", {"Map Files", "*.json *.tmx"}}.result();
 
-  if (!path.empty())
-  {
+  if (!path.empty()) {
     dispatcher.enqueue<OpenMapEvent>(std::move(path.front()));
   }
 
@@ -50,28 +46,23 @@ void ShowMapFileDialog(entt::dispatcher& dispatcher)
 
 void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMenu("File"))
-  {
+  if (ImGui::BeginMenu("File")) {
     show_add_map_dialog = ImGui::MenuItem(TAC_ICON_FILE " New map...", "Ctrl+N");
     show_open_map_dialog = ImGui::MenuItem(TAC_ICON_OPEN " Open map...", "Ctrl+O");
 
     const auto hasActiveDocument = model.HasActiveDocument();
 
-    if (ImGui::MenuItem("Close map", nullptr, false, hasActiveDocument))
-    {}
+    if (ImGui::MenuItem("Close map", nullptr, false, hasActiveDocument)) {
+    }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_SAVE " Save",
-                        "Ctrl+S",
-                        false,
-                        model.CanSaveDocument()))
+    if (ImGui::MenuItem(TAC_ICON_SAVE " Save", "Ctrl+S", false, model.CanSaveDocument()))
     {
       dispatcher.enqueue<SaveEvent>();
     }
 
-    if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S", false, hasActiveDocument))
-    {
+    if (ImGui::MenuItem("Save as...", "Ctrl+Shift+S", false, hasActiveDocument)) {
       dispatcher.enqueue<OpenSaveAsDialogEvent>();
     }
 
@@ -82,8 +73,7 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_EXIT " Exit"))
-    {
+    if (ImGui::MenuItem(TAC_ICON_EXIT " Exit")) {
       dispatcher.enqueue<QuitEvent>();
     }
 
@@ -93,14 +83,12 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 
 void UpdateFileMenuWindows(entt::dispatcher& dispatcher)
 {
-  if (show_add_map_dialog)
-  {
+  if (show_add_map_dialog) {
     OpenAddMapDialog();
     show_add_map_dialog = false;
   }
 
-  if (show_settings_window)
-  {
+  if (show_settings_window) {
     OpenSettingsDialog();
     show_settings_window = false;
   }
@@ -108,8 +96,7 @@ void UpdateFileMenuWindows(entt::dispatcher& dispatcher)
   UpdateAddMapDialog(dispatcher);
   UpdateSettingsDialog(dispatcher);
 
-  if (show_open_map_dialog)
-  {
+  if (show_open_map_dialog) {
     ShowMapFileDialog(dispatcher);
   }
 }

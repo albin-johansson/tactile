@@ -50,8 +50,7 @@ template <typename T>
 void AddIfMissing(init::ini& ini, CStr section, CStr element, T value)
 {
   auto& sec = ini[section];
-  if (!sec.contains(element))
-  {
+  if (!sec.contains(element)) {
     sec[element] = std::move(value);
   }
 }
@@ -114,8 +113,7 @@ void ValidateExistingFile()
 
 void LoadPreferences()
 {
-  if (std::filesystem::exists(GetPersistentFileDir() / file_name))
-  {
+  if (std::filesystem::exists(GetPersistentFileDir() / file_name)) {
     ValidateExistingFile();
     const auto ini = init::read_ini(GetPersistentFileDir() / file_name);
 
@@ -142,8 +140,7 @@ void LoadPreferences()
     widgets.at("RestoreLayout").get_to(settings.restore_layout);
     widgets.at("ViewportOverlayPos").get_to(settings.viewport_overlay_pos);
   }
-  else
-  {
+  else {
     WritePreferencesToFile();
   }
 

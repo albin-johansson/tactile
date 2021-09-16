@@ -16,8 +16,7 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags =
-    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 constinit std::array<char, 100> name_buffer{};
 constinit int type_index = 0;
@@ -32,18 +31,15 @@ void ResetState()
 
 }  // namespace
 
-void UpdateAddPropertyDialog(const entt::registry& registry,
-                             entt::dispatcher& dispatcher)
+void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Add property", nullptr, flags))
-  {
+  if (ImGui::BeginPopupModal("Add property", nullptr, flags)) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Name: ");
 
     ImGui::SameLine();
-    if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer))
-    {
+    if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer)) {
       const auto name = CreateStringFromBuffer(name_buffer);
       is_input_valid = !name.empty() && !Sys::HasPropertyWithName(registry, name);
     }
@@ -55,18 +51,15 @@ void UpdateAddPropertyDialog(const entt::registry& registry,
     PropertyTypeCombo(&type_index);
 
     ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid))
-    {
+    if (Button("OK", nullptr, is_input_valid)) {
       const auto type = GetPropertyTypeFromComboIndex(type_index);
-      dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(name_buffer),
-                                           type);
+      dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(name_buffer), type);
       ResetState();
       ImGui::CloseCurrentPopup();
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Cancel"))
-    {
+    if (ImGui::Button("Cancel")) {
       ResetState();
       ImGui::CloseCurrentPopup();
     }

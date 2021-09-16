@@ -16,8 +16,8 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize |
-                       ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse;
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking
+                       | ImGuiWindowFlags_NoCollapse;
 
 inline std::filesystem::path full_image_path;
 constinit std::array<char, 100> path_preview_buffer{};
@@ -29,21 +29,18 @@ void ShowImageFileDialog()
   auto files =
       pfd::open_file{"Select image", "", {"Image Files", "*.png *.jpg"}}.result();
 
-  if (files.empty())
-  {
+  if (files.empty()) {
     return;
   }
 
   full_image_path = files.front();
   const auto pathStr = full_image_path.string();
 
-  if (pathStr.size() > path_preview_buffer.size())
-  {
+  if (pathStr.size() > path_preview_buffer.size()) {
     const auto name = full_image_path.filename();
     CopyStringIntoBuffer(path_preview_buffer, name.string());
   }
-  else
-  {
+  else {
     CopyStringIntoBuffer(path_preview_buffer, pathStr);
   }
 }
@@ -66,14 +63,11 @@ void ResetInputs()
 void UpdateTilesetDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Create tileset", nullptr, flags))
-  {
-    ImGui::TextUnformatted(
-        "Select an image which contains the tiles aligned in a grid.");
+  if (ImGui::BeginPopupModal("Create tileset", nullptr, flags)) {
+    ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
     ImGui::Spacing();
 
-    if (ImGui::Button("Select image..."))
-    {
+    if (ImGui::Button("Select image...")) {
       ShowImageFileDialog();
     }
 
@@ -89,8 +83,7 @@ void UpdateTilesetDialog(entt::dispatcher& dispatcher)
     ImGui::Spacing();
     ImGui::Separator();
 
-    if (Button("OK", nullptr, IsInputValid()))
-    {
+    if (Button("OK", nullptr, IsInputValid())) {
       dispatcher.enqueue<AddTilesetEvent>(full_image_path, tile_width, tile_height);
 
       ResetInputs();
@@ -98,8 +91,7 @@ void UpdateTilesetDialog(entt::dispatcher& dispatcher)
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Close"))
-    {
+    if (ImGui::Button("Close")) {
       ResetInputs();
       ImGui::CloseCurrentPopup();
     }

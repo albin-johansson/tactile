@@ -35,13 +35,11 @@ void AppendMapChild(const entt::registry& registry,
 
   AppendProperties(registry, entt::null, node, dir);
 
-  for (auto&& [entity, tileset] : registry.view<Tileset>().each())
-  {
+  for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
     AppendTileset(node, registry, entity, dir);
   }
 
-  for (auto&& [entity, layer] : registry.view<Layer>().each())
-  {
+  for (auto&& [entity, layer] : registry.view<Layer>().each()) {
     AppendLayer(node, registry, entity, dir);
   }
 }

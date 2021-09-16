@@ -25,28 +25,23 @@ inline const auto path = GetPersistentFileDir() / "session.json";
 
 void RestoreLastSession(Model& model)
 {
-  if (std::filesystem::exists(path))
-  {
+  if (std::filesystem::exists(path)) {
     std::ifstream stream{path};
 
     JSON json;
     stream >> json;
 
-    for (const auto& [key, value] : json.at("maps").items())
-    {
+    for (const auto& [key, value] : json.at("maps").items()) {
       IO::MapParser parser{value.get<std::string>()};
-      if (parser)
-      {
+      if (parser) {
         model.AddMap(IO::ToMapDocument(parser.GetData()));
       }
-      else
-      {
+      else {
         CENTURION_LOG_ERROR("Failed to restore a map from previous session!");
       }
     }
   }
-  else
-  {
+  else {
     CENTURION_LOG_WARN("Could not locate a session JSON file!");
   }
 }
@@ -56,10 +51,8 @@ void SaveSession(const Model& model)
   auto json = JSON::object();
   auto array = JSON::array();
 
-  for (const auto& [id, document] : model)
-  {
-    if (!document->path.empty())
-    {
+  for (const auto& [id, document] : model) {
+    if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);
       array += IO::ConvertToForwardSlashes(documentPath);
     }

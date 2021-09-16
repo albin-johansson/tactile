@@ -22,12 +22,10 @@ void DuplicateLayerCmd::Redo()
   auto& registry = mRegistry.get();
   const auto entity = Sys::DuplicateLayer(registry, mLayerId);
 
-  if (!mNewLayerId)
-  {
+  if (!mNewLayerId) {
     mNewLayerId = Sys::GetLayerId(registry, entity);
   }
-  else
-  {
+  else {
     // Reuse previous ID of duplicated layer
     assert(Sys::FindLayer(registry, *mNewLayerId) == entt::null);
     auto& layer = registry.get<Layer>(entity);

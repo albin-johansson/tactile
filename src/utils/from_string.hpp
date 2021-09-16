@@ -10,19 +10,16 @@
 namespace Tactile {
 
 template <std::integral T>
-[[nodiscard]] auto FromString(const std::string_view str, const int base = 10)
-    -> Maybe<T>
+[[nodiscard]] auto FromString(const std::string_view str, const int base = 10) -> Maybe<T>
 {
   T value{};
 
   const auto [ptr, error] =
       std::from_chars(str.data(), str.data() + str.size(), value, base);
-  if (error == std::errc{})
-  {
+  if (error == std::errc{}) {
     return value;
   }
-  else
-  {
+  else {
     return nothing;
   }
 }
@@ -32,14 +29,11 @@ template <std::floating_point T>
 {
   T value{};
 
-  const auto [ptr, error] =
-      std::from_chars(str.data(), str.data() + str.size(), value);
-  if (error == std::errc{})
-  {
+  const auto [ptr, error] = std::from_chars(str.data(), str.data() + str.size(), value);
+  if (error == std::errc{}) {
     return value;
   }
-  else
-  {
+  else {
     return nothing;
   }
 }

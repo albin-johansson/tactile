@@ -40,9 +40,7 @@ enum class Theme
 
 [[nodiscard]] auto Brighten(const ImVec4& color, const float opacity = 1) -> ImVec4
 {
-  const auto brighten = [](const float f) {
-    return std::clamp(f * 1.2f, 0.0f, 1.0f);
-  };
+  const auto brighten = [](const float f) { return std::clamp(f * 1.2f, 0.0f, 1.0f); };
 
   return {brighten(color.x), brighten(color.y), brighten(color.z), opacity};
 }
@@ -128,20 +126,16 @@ void ApplyAshTheme(ImGuiStyle& style)
 
 [[nodiscard]] auto GetThemeFromName(const std::string_view name) -> Maybe<Theme>
 {
-  if (name == dear_dark)
-  {
+  if (name == dear_dark) {
     return Theme::DearDark;
   }
-  else if (name == dear_light)
-  {
+  else if (name == dear_light) {
     return Theme::DearLight;
   }
-  else if (name == ash)
-  {
+  else if (name == ash) {
     return Theme::Ash;
   }
-  else
-  {
+  else {
     return nothing;
   }
 }
@@ -151,13 +145,11 @@ void ApplyAshTheme(ImGuiStyle& style)
 void ApplyTheme(ImGuiStyle& style, const std::string& name)
 {
   const auto theme = GetThemeFromName(name);
-  if (!theme)
-  {
+  if (!theme) {
     return;
   }
 
-  switch (*theme)
-  {
+  switch (*theme) {
     case Theme::Ash:
       ApplyAshTheme(style);
       break;
@@ -179,8 +171,7 @@ void ApplyTheme(ImGuiStyle& style, const std::string& name)
 
 auto GetThemeFromIndex(const int index) -> Maybe<std::string>
 {
-  switch (index)
-  {
+  switch (index) {
     case cen::to_underlying(Theme::Ash):
       return ash;
 
@@ -198,12 +189,10 @@ auto GetThemeFromIndex(const int index) -> Maybe<std::string>
 
 auto GetThemeIndex(const std::string& name) -> Maybe<int>
 {
-  if (const auto theme = GetThemeFromName(name))
-  {
+  if (const auto theme = GetThemeFromName(name)) {
     return cen::to_underlying(*theme);
   }
-  else
-  {
+  else {
     return nothing;
   }
 }

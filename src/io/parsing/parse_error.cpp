@@ -6,8 +6,7 @@ namespace Tactile::IO {
 
 auto GetCause(const ParseError error) -> CStr
 {
-  switch (error)
-  {
+  switch (error) {
     default:
       [[fallthrough]];
 
@@ -117,8 +116,7 @@ auto GetCause(const ParseError error) -> CStr
 
 auto operator<<(std::ostream& stream, const ParseError error) -> std::ostream&
 {
-  switch (error)
-  {
+  switch (error) {
     case ParseError::None:
       return stream << "None";
 

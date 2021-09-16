@@ -18,11 +18,9 @@ auto FindObject(const entt::registry& registry,
 {
   const auto& layer = registry.get<ObjectLayer>(entity);
 
-  for (const auto objectEntity : layer.objects)
-  {
+  for (const auto objectEntity : layer.objects) {
     const auto& object = registry.get<Object>(objectEntity);
-    if (object.id == id)
-    {
+    if (object.id == id) {
       return objectEntity;
     }
   }

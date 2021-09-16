@@ -11,8 +11,7 @@ auto Button(const NotNull<CStr> text, const CStr tooltip, const bool enabled) ->
 {
   assert(text);
 
-  if (!enabled)
-  {
+  if (!enabled) {
     ImGui::BeginDisabled();
   }
 
@@ -20,10 +19,8 @@ auto Button(const NotNull<CStr> text, const CStr tooltip, const bool enabled) ->
 
   const auto result = ImGui::Button(text);
 
-  if (tooltip)
-  {
-    if (ImGui::IsItemActive() || ImGui::IsItemHovered())
-    {
+  if (tooltip) {
+    if (ImGui::IsItemActive() || ImGui::IsItemHovered()) {
       ImGui::SetTooltip("%s", tooltip);
       ImGui::SetMouseCursor(ImGuiMouseCursor_Hand);
     }
@@ -31,8 +28,7 @@ auto Button(const NotNull<CStr> text, const CStr tooltip, const bool enabled) ->
 
   ImGui::PopItemFlag();
 
-  if (!enabled)
-  {
+  if (!enabled) {
     ImGui::EndDisabled();
   }
 

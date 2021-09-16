@@ -17,8 +17,7 @@ auto ConvertToForwardSlashes(const std::filesystem::path& path) -> std::string
 }
 
 [[nodiscard]] auto GetTilesetImagePath(const std::filesystem::path& image,
-                                       const std::filesystem::path& dir)
-    -> std::string
+                                       const std::filesystem::path& dir) -> std::string
 {
   const auto path = std::filesystem::relative(image, dir);
   return ConvertToForwardSlashes(path);
@@ -26,8 +25,7 @@ auto ConvertToForwardSlashes(const std::filesystem::path& path) -> std::string
 
 auto GetPropertyTypeString(const PropertyType type) -> std::string
 {
-  switch (type)
-  {
+  switch (type) {
     case PropertyType::String:
       return "string";
 
@@ -54,8 +52,8 @@ auto GetPropertyTypeString(const PropertyType type) -> std::string
   }
 }
 
-auto GetPropertyFileValue(const PropertyValue& file,
-                          const std::filesystem::path& dir) -> std::string
+auto GetPropertyFileValue(const PropertyValue& file, const std::filesystem::path& dir)
+    -> std::string
 {
   const auto path = std::filesystem::proximate(file.AsFile(), dir);
   return path.string();

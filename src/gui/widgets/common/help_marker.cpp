@@ -11,8 +11,7 @@ void HelpMarker(const NotNull<CStr> text)
   assert(text);
 
   ImGui::TextDisabled("(?)");
-  if (ImGui::IsItemHovered())
-  {
+  if (ImGui::IsItemHovered()) {
     ImGui::BeginTooltip();
 
     ImGui::PushTextWrapPos(ImGui::GetFontSize() * 35.0f);

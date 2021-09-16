@@ -54,8 +54,7 @@ class CommandStack final
   template <std::derived_from<ACommand> T, typename... Args>
   void PushWithoutRedo(Args&&... args)
   {
-    if (GetSize() == GetCapacity())
-    {
+    if (GetSize() == GetCapacity()) {
       RemoveOldestCommand();
     }
 
@@ -81,8 +80,7 @@ class CommandStack final
   template <std::derived_from<ACommand> T, typename... Args>
   void Push(Args&&... args)
   {
-    if (GetSize() == GetCapacity())
-    {
+    if (GetSize() == GetCapacity()) {
       RemoveOldestCommand();
     }
 
@@ -94,8 +92,7 @@ class CommandStack final
     /* If the stack is empty, we simply push the command to the stack. However,
        if there are commands on the stack, we try to merge the command into the
        top of the stack and if that succeeds we discard the command. */
-    if (mStack.empty() || !mStack.back()->MergeWith(*cmd))
-    {
+    if (mStack.empty() || !mStack.back()->MergeWith(*cmd)) {
       mIndex = mIndex ? *mIndex + 1 : 0;
       mStack.push_back(std::move(cmd));
     }

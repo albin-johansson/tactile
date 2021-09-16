@@ -40,8 +40,7 @@ class MapPosition final
    * \return a row/column position translated from the supplied index.
    */
   [[nodiscard]] constexpr static auto FromIndex(const int32 index,
-                                                const int32 nCols) noexcept
-      -> MapPosition
+                                                const int32 nCols) noexcept -> MapPosition
   {
     return MapPosition{index / nCols, index % nCols};
   }
@@ -181,8 +180,7 @@ class MapPosition final
    *
    * \return the column index converted to an x-coordinate.
    */
-  [[nodiscard]] constexpr auto ColumnToX(const int32 tileSize) const noexcept
-      -> int32
+  [[nodiscard]] constexpr auto ColumnToX(const int32 tileSize) const noexcept -> int32
   {
     return mCol * tileSize;
   }
@@ -204,8 +202,8 @@ class MapPosition final
  *
  * \return a position that is the sum of two positions.
  */
-[[nodiscard]] constexpr auto operator+(const MapPosition& lhs,
-                                       const MapPosition& rhs) -> MapPosition
+[[nodiscard]] constexpr auto operator+(const MapPosition& lhs, const MapPosition& rhs)
+    -> MapPosition
 {
   return MapPosition{lhs.GetRow() + rhs.GetRow(), lhs.GetColumn() + rhs.GetColumn()};
 }
@@ -218,20 +216,20 @@ class MapPosition final
  *
  * \return a position that is the difference between two positions.
  */
-[[nodiscard]] constexpr auto operator-(const MapPosition& lhs,
-                                       const MapPosition& rhs) -> MapPosition
+[[nodiscard]] constexpr auto operator-(const MapPosition& lhs, const MapPosition& rhs)
+    -> MapPosition
 {
   return MapPosition{lhs.GetRow() - rhs.GetRow(), lhs.GetColumn() - rhs.GetColumn()};
 }
 
-[[nodiscard]] constexpr auto operator*(const MapPosition& lhs,
-                                       const MapPosition& rhs) -> MapPosition
+[[nodiscard]] constexpr auto operator*(const MapPosition& lhs, const MapPosition& rhs)
+    -> MapPosition
 {
   return MapPosition{lhs.GetRow() * rhs.GetRow(), lhs.GetColumn() * rhs.GetColumn()};
 }
 
-[[nodiscard]] constexpr auto operator/(const MapPosition& lhs,
-                                       const MapPosition& rhs) -> MapPosition
+[[nodiscard]] constexpr auto operator/(const MapPosition& lhs, const MapPosition& rhs)
+    -> MapPosition
 {
   return MapPosition{lhs.GetRow() / rhs.GetRow(), lhs.GetColumn() / rhs.GetColumn()};
 }

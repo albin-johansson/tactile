@@ -13,8 +13,7 @@ auto main(int argc, char** argv) -> int
   cen::library centurion;
   cen::log::use_preset_output_function();
 
-  if constexpr (cen::is_debug_build())
-  {
+  if constexpr (cen::is_debug_build()) {
     cen::log::set_priority(cen::log_priority::debug);
   }
 
@@ -28,8 +27,7 @@ auto main(int argc, char** argv) -> int
 
   Tactile::InitOpenGLAttributes();
 
-  if (glewInit() != GLEW_OK)
-  {
+  if (glewInit() != GLEW_OK) {
     cen::log::error("Failed to initialize GLEW!");
     return -1;
   }

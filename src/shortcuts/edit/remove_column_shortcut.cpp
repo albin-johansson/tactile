@@ -17,13 +17,11 @@ void RemoveColumnShortcut::Activate(entt::dispatcher& dispatcher)
 
 auto RemoveColumnShortcut::IsEnabled(const Model& model) const -> bool
 {
-  if (const auto* registry = model.GetActiveRegistry())
-  {
+  if (const auto* registry = model.GetActiveRegistry()) {
     const auto& map = registry->ctx<Map>();
     return map.column_count > 1;
   }
-  else
-  {
+  else {
     return false;
   }
 }

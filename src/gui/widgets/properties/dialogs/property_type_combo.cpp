@@ -14,8 +14,7 @@ auto PropertyTypeCombo(int* index) -> bool
 
 auto GetPropertyTypeFromComboIndex(const int index) -> PropertyType
 {
-  switch (index)
-  {
+  switch (index) {
     case 0:
       return PropertyType::String;
 

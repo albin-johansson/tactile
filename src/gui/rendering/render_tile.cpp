@@ -18,8 +18,7 @@ void RenderTile(const TileID tile,
                 const float opacity)
 {
   const auto tilesetEntity = Sys::FindTileset(registry, tile);
-  if (tilesetEntity != entt::null)
-  {
+  if (tilesetEntity != entt::null) {
     const auto& tileset = registry.get<Tileset>(tilesetEntity);
     const auto& texture = registry.get<Texture>(tilesetEntity);
 
@@ -27,10 +26,8 @@ void RenderTile(const TileID tile,
     const auto tileToRender = Sys::GetTileToRender(registry, tilesetEntity, tile);
     const auto& source = Sys::GetSourceRect(registry, tilesetEntity, tileToRender);
 
-    const auto row =
-        static_cast<float>(source.y()) / static_cast<float>(source.height());
-    const auto col =
-        static_cast<float>(source.x()) / static_cast<float>(source.width());
+    const auto row = static_cast<float>(source.y()) / static_cast<float>(source.height());
+    const auto col = static_cast<float>(source.x()) / static_cast<float>(source.width());
 
     const auto uv = registry.get<UvTileSize>(tilesetEntity);
     const auto uvMin = ImVec2{col * uv.width, row * uv.height};

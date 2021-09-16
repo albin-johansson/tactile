@@ -33,8 +33,7 @@ auto StringPropertyWidget(const PropertyValue& property) -> Maybe<std::string>
     return CreateStringFromBuffer(buffer);
   }
 
-  if (ImGui::IsItemHovered())
-  {
+  if (ImGui::IsItemHovered()) {
     ImGui::SetTooltip("[string]");
   }
 

@@ -23,8 +23,7 @@ auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
   cursor.is_within_map =
       index.y >= 0 && index.x >= 0 && row < info.row_count && col < info.col_count;
 
-  if (cursor.is_within_map)
-  {
+  if (cursor.is_within_map) {
     cursor.map_position = {static_cast<int32>(row), static_cast<int32>(col)};
   }
 

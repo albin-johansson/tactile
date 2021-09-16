@@ -12,8 +12,7 @@ struct LayerID;
 
 using LayerID = nenya::strong_type<int, Tags::LayerID>;
 
-[[nodiscard]] constexpr auto operator""_layer(const ulonglong value) noexcept
-    -> LayerID
+[[nodiscard]] constexpr auto operator""_layer(const ulonglong value) noexcept -> LayerID
 {
   return LayerID{static_cast<LayerID::value_type>(value)};
 }

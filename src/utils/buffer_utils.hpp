@@ -60,14 +60,11 @@ void CopyStringIntoBuffer(std::array<char, Size>& buffer, const std::string_view
   ZeroBuffer(buffer);
 
   usize index = 0;
-  for (const auto ch : str)
-  {
-    if (index < buffer.size())
-    {
+  for (const auto ch : str) {
+    if (index < buffer.size()) {
       buffer.at(index) = ch;
     }
-    else
-    {
+    else {
       // The string is larger than the buffer, so we are finished
       break;
     }
@@ -94,8 +91,7 @@ template <usize Size>
 {
   usize index = 0;
 
-  while (index < buffer.size() && buffer.at(index) != '\0')
-  {
+  while (index < buffer.size() && buffer.at(index) != '\0') {
     ++index;
   }
 

@@ -27,35 +27,30 @@ constinit bool show_rename_dialog = false;
 constinit bool has_focus = false;
 inline Maybe<LayerID> rename_target;
 
-void UpdateLayerDockButtons(const entt::registry& registry,
-                            entt::dispatcher& dispatcher)
+void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   const auto activeLayerEntity = registry.ctx<ActiveLayer>().entity;
   const auto hasActiveLayer = activeLayerEntity != entt::null;
 
   Maybe<LayerID> activeLayerId;
-  if (hasActiveLayer)
-  {
+  if (hasActiveLayer) {
     const auto& layer = registry.get<Layer>(activeLayerEntity);
     activeLayerId = layer.id;
   }
 
-  if (Button(TAC_ICON_ADD, "Add new layer."))
-  {
+  if (Button(TAC_ICON_ADD, "Add new layer.")) {
     OpenAddLayerPopup();
   }
 
   UpdateAddLayerPopup(dispatcher);
 
   ImGui::SameLine();
-  if (Button(TAC_ICON_REMOVE, "Remove layer.", hasActiveLayer))
-  {
+  if (Button(TAC_ICON_REMOVE, "Remove layer.", hasActiveLayer)) {
     dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
   }
 
   ImGui::SameLine();
-  if (Button(TAC_ICON_DUPLICATE, "Duplicate layer.", hasActiveLayer))
-  {
+  if (Button(TAC_ICON_DUPLICATE, "Duplicate layer.", hasActiveLayer)) {
     dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
   }
 
@@ -82,37 +77,30 @@ void UpdateLayerDockButtons(const entt::registry& registry,
 
 void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  if (!Prefs::GetShowLayerDock())
-  {
+  if (!Prefs::GetShowLayerDock()) {
     return;
   }
 
   bool isVisible = Prefs::GetShowLayerDock();
-  if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse))
-  {
+  if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse)) {
     has_focus = ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
     UpdateLayerDockButtons(registry, dispatcher);
-    if (registry.empty<Layer>())
-    {
+    if (registry.empty<Layer>()) {
       PrepareVerticalAlignmentCenter(1);
       CenteredText("No available layers!");
     }
-    else
-    {
+    else {
       const auto textLineHeight = ImGui::GetTextLineHeightWithSpacing();
       const auto size = ImVec2{std::numeric_limits<float>::min(),
                                ImGui::GetWindowHeight() - (4 * textLineHeight)};
 
-      if (ImGui::BeginListBox("##LayerTreeNode", size))
-      {
-        for (auto&& [entity, layer] : registry.view<Layer>().each())
-        {
+      if (ImGui::BeginListBox("##LayerTreeNode", size)) {
+        for (auto&& [entity, layer] : registry.view<Layer>().each()) {
           /* Note, we rely on the Layer pool being sorted, so we can't include Parent
              in the view query directly. */
           const auto& parent = registry.get<Parent>(entity);
-          if (parent.entity == entt::null)
-          {
+          if (parent.entity == entt::null) {
             LayerItem(registry, dispatcher, entity, layer);
           }
         }
@@ -121,16 +109,14 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
       }
     }
   }
-  else
-  {
+  else {
     has_focus = false;
   }
 
   Prefs::SetShowLayerDock(isVisible);
   ImGui::End();
 
-  if (show_rename_dialog)
-  {
+  if (show_rename_dialog) {
     const auto target = rename_target.value();
 
     const auto entity = Sys::FindLayer(registry, target);

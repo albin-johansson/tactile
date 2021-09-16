@@ -14,8 +14,7 @@ using TileID = nenya::strong_type<int, Tags::TileID>;
 
 constexpr TileID empty_tile{0};
 
-[[nodiscard]] constexpr auto operator""_tile(const ulonglong value) noexcept
-    -> TileID
+[[nodiscard]] constexpr auto operator""_tile(const ulonglong value) noexcept -> TileID
 {
   return TileID{static_cast<TileID::value_type>(value)};
 }

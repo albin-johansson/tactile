@@ -22,15 +22,13 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
   UpdateMenuBar(model, dispatcher);
   UpdateDockSpace();
 
-  if (model.HasActiveDocument())
-  {
+  if (model.HasActiveDocument()) {
     UpdateToolbarWidget(model, dispatcher);
   }
 
   UpdateViewportWidget(model, dispatcher);
 
-  if (const auto* registry = model.GetActiveRegistry())
-  {
+  if (const auto* registry = model.GetActiveRegistry()) {
     UpdateLayerDock(*registry, dispatcher);
     UpdatePropertiesDock(*registry, dispatcher);
     UpdateTilesetDock(*registry, dispatcher);

@@ -9,21 +9,17 @@ auto ParseTileLayer(const JSON& json, LayerData& layer) -> ParseError
 {
   auto& data = layer.data.emplace<TileLayerData>();
 
-  if (const auto it = json.find("height"); it != json.end())
-  {
+  if (const auto it = json.find("height"); it != json.end()) {
     it->get_to(data.row_count);
   }
-  else
-  {
+  else {
     return ParseError::LayerMissingHeight;
   }
 
-  if (const auto it = json.find("width"); it != json.end())
-  {
+  if (const auto it = json.find("width"); it != json.end()) {
     it->get_to(data.col_count);
   }
-  else
-  {
+  else {
     return ParseError::LayerMissingWidth;
   }
 

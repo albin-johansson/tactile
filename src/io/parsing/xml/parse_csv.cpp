@@ -16,8 +16,7 @@ namespace {
   std::vector<std::string> tokens;
 
   std::string token;
-  while (std::getline(stream, token, ','))
-  {
+  while (std::getline(stream, token, ',')) {
     std::erase(token, '\n');
     tokens.push_back(std::move(token));
     token.clear();
@@ -31,16 +30,13 @@ namespace {
 auto ParseCSV(const CStr csv, const int32 nCols, TileMatrix& matrix) -> ParseError
 {
   int index{};
-  for (const auto& token : GetTokens(csv))
-  {
-    if (const auto id = FromString<TileID::value_type>(token))
-    {
+  for (const auto& token : GetTokens(csv)) {
+    if (const auto id = FromString<TileID::value_type>(token)) {
       const auto pos = MapPosition::FromIndex(index, nCols);
       matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = TileID{*id};
       ++index;
     }
-    else
-    {
+    else {
       return ParseError::CouldNotParseTiles;
     }
   }

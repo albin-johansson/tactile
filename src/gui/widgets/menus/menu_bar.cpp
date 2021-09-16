@@ -11,8 +11,7 @@ namespace Tactile {
 
 void UpdateMenuBar(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMainMenuBar())
-  {
+  if (ImGui::BeginMainMenuBar()) {
     UpdateFileMenu(model, dispatcher);
     UpdateEditMenu(model, dispatcher);
     UpdateViewMenu(model, dispatcher);

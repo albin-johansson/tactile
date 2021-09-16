@@ -26,29 +26,23 @@ void AddLayerCmd::Undo()
 
 void AddLayerCmd::Redo()
 {
-  if (mLayerSnapshot)
-  {
+  if (mLayerSnapshot) {
     Sys::RestoreLayer(mRegistry, *mLayerSnapshot);
   }
-  else
-  {
+  else {
     auto& registry = mRegistry.get();
 
     entt::entity entity{entt::null};
-    switch (mLayerType)
-    {
-      case LayerType::TileLayer:
-      {
+    switch (mLayerType) {
+      case LayerType::TileLayer: {
         entity = Sys::AddTileLayer(registry);
         break;
       }
-      case LayerType::ObjectLayer:
-      {
+      case LayerType::ObjectLayer: {
         entity = Sys::AddObjectLayer(registry);
         break;
       }
-      case LayerType::GroupLayer:
-      {
+      case LayerType::GroupLayer: {
         entity = Sys::AddGroupLayer(registry);
         break;
       }

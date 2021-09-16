@@ -29,8 +29,7 @@ void BucketCmd::Undo()
 
   const auto target = mTarget.value();
   auto& layer = registry.get<TileLayer>(entity);
-  for (const auto& position : mPositions)
-  {
+  for (const auto& position : mPositions) {
     layer.matrix.at(position.GetRowIndex()).at(position.GetColumnIndex()) = target;
   }
 

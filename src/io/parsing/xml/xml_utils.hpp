@@ -10,8 +10,7 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto Collect(pugi::xml_node node, CStr str)
-    -> std::vector<pugi::xml_node>;
+[[nodiscard]] auto Collect(pugi::xml_node node, CStr str) -> std::vector<pugi::xml_node>;
 
 [[nodiscard]] auto Contains(pugi::xml_node node, NotNull<CStr> attr) -> bool;
 

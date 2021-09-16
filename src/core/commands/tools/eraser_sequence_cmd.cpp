@@ -9,8 +9,7 @@
 
 namespace Tactile {
 
-EraserSequenceCmd::EraserSequenceCmd(Ref<entt::registry> registry,
-                                     TileCache&& oldState)
+EraserSequenceCmd::EraserSequenceCmd(Ref<entt::registry> registry, TileCache&& oldState)
     : ACommand{"Eraser Sequence"}
     , mRegistry{registry}
     , mLayer{Sys::GetActiveLayerID(registry).value()}
@@ -35,8 +34,7 @@ void EraserSequenceCmd::Redo()
   assert(entity != entt::null);
 
   auto& matrix = registry.get<TileLayer>(entity).matrix;
-  for (const auto& [position, _] : mOldState)
-  {
+  for (const auto& [position, _] : mOldState) {
     assert(position.GetRowIndex() < matrix.size());
     assert(position.GetColumnIndex() < matrix.front().size());
     matrix[position.GetRowIndex()][position.GetColumnIndex()] = empty_tile;

@@ -11,16 +11,14 @@ auto ToolButton(const CStr label,
                 const bool selected,
                 const bool enabled) -> bool
 {
-  if (selected)
-  {
+  if (selected) {
     const auto color = ImVec4{0, 0.7f, 0, 1.0f};
     ImGui::PushStyleColor(ImGuiCol_Button, color);
   }
 
   const auto pressed = Button(label, tooltip, enabled);
 
-  if (selected)
-  {
+  if (selected) {
     ImGui::PopStyleColor();
   }
 

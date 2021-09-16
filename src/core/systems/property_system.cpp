@@ -33,8 +33,7 @@ void RestorePropertyContext(entt::registry& registry,
   context.id = snapshot.id;
   context.name = std::move(snapshot.name);
 
-  for (auto [propertyName, propertyValue] : snapshot.properties)
-  {
+  for (auto [propertyName, propertyValue] : snapshot.properties) {
     const auto propertyEntity = registry.create();
     auto& property = registry.emplace<Property>(propertyEntity);
     property.name = propertyName;
@@ -51,8 +50,7 @@ auto CopyPropertyContext(const entt::registry& registry, const entt::entity sour
   snapshot.id = context.id;
   snapshot.name = context.name;
 
-  for (const auto propertyEntity : context.properties)
-  {
+  for (const auto propertyEntity : context.properties) {
     const auto& property = registry.get<Property>(propertyEntity);
     snapshot.properties.try_emplace(property.name, property.value);
   }
@@ -110,8 +108,7 @@ void RenameProperty(entt::registry& registry,
   assert(HasPropertyWithName(registry, oldName));
 
   const auto entity = FindProperty(registry, oldName);
-  if (entity != entt::null)
-  {
+  if (entity != entt::null) {
     auto& property = registry.get<Property>(entity);
     property.name = std::move(newName);
   }
@@ -163,25 +160,21 @@ void ChangePropertyType(entt::registry& registry,
 auto GetCurrentContext(entt::registry& registry) -> PropertyContext&
 {
   const auto& current = registry.ctx<ActivePropertyContext>();
-  return (current.entity != entt::null)
-             ? registry.get<PropertyContext>(current.entity)
-             : registry.ctx<PropertyContext>();
+  return (current.entity != entt::null) ? registry.get<PropertyContext>(current.entity)
+                                        : registry.ctx<PropertyContext>();
 }
 
 auto GetCurrentContext(const entt::registry& registry) -> const PropertyContext&
 {
   const auto& current = registry.ctx<ActivePropertyContext>();
-  return (current.entity != entt::null)
-             ? registry.get<PropertyContext>(current.entity)
-             : registry.ctx<PropertyContext>();
+  return (current.entity != entt::null) ? registry.get<PropertyContext>(current.entity)
+                                        : registry.ctx<PropertyContext>();
 }
 
 auto GetContext(entt::registry& registry, const ContextID id) -> PropertyContext&
 {
-  for (auto&& [entity, context] : registry.view<PropertyContext>().each())
-  {
-    if (context.id == id)
-    {
+  for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
+    if (context.id == id) {
       return context;
     }
   }
@@ -193,10 +186,8 @@ auto GetContext(entt::registry& registry, const ContextID id) -> PropertyContext
 auto GetContext(const entt::registry& registry, const ContextID id)
     -> const PropertyContext&
 {
-  for (auto&& [entity, context] : registry.view<PropertyContext>().each())
-  {
-    if (context.id == id)
-    {
+  for (auto&& [entity, context] : registry.view<PropertyContext>().each()) {
+    if (context.id == id) {
       return context;
     }
   }
@@ -222,11 +213,9 @@ auto FindProperty(const entt::registry& registry, const std::string_view name)
     -> entt::entity
 {
   const auto& context = GetCurrentContext(registry);
-  for (const auto propertyEntity : context.properties)
-  {
+  for (const auto propertyEntity : context.properties) {
     const auto& property = registry.get<Property>(propertyEntity);
-    if (name == property.name)
-    {
+    if (name == property.name) {
       return propertyEntity;
     }
   }
@@ -238,11 +227,9 @@ auto FindProperty(const entt::registry& registry,
                   const PropertyContext& context,
                   const std::string_view name) -> entt::entity
 {
-  for (const auto entity : context.properties)
-  {
+  for (const auto entity : context.properties) {
     const auto& property = registry.get<Property>(entity);
-    if (property.name == name)
-    {
+    if (property.name == name) {
       return entity;
     }
   }

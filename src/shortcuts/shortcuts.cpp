@@ -79,8 +79,7 @@ void UpdateShortcuts(const Model& model,
                      const cen::keyboard_event& event,
                      entt::dispatcher& dispatcher)
 {
-  for (const auto& shortcut : shortcuts)
-  {
+  for (const auto& shortcut : shortcuts) {
     shortcut->Poll(model, event, dispatcher);
   }
 }

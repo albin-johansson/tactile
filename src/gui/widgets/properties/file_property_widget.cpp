@@ -12,16 +12,13 @@
 
 namespace Tactile {
 
-auto FilePropertyWidget(const PropertyValue& property)
-    -> Maybe<std::filesystem::path>
+auto FilePropertyWidget(const PropertyValue& property) -> Maybe<std::filesystem::path>
 {
   const ScopeID id{&property};
 
-  if (ImGui::Button(TAC_ICON_SELECT_FILE))
-  {
+  if (ImGui::Button(TAC_ICON_SELECT_FILE)) {
     auto files = pfd::open_file{"Select File..."}.result();
-    if (!files.empty())
-    {
+    if (!files.empty()) {
       return files.front();
     }
   }
@@ -37,8 +34,7 @@ auto FilePropertyWidget(const PropertyValue& property)
                            str.capacity(),
                            ImGuiInputTextFlags_ReadOnly);
 
-  if (ImGui::IsItemHovered())
-  {
+  if (ImGui::IsItemHovered()) {
     ImGui::SetTooltip("[file]");
   }
 

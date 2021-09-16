@@ -19,13 +19,10 @@ constinit Maybe<ImGuiID> root_id;
 void UpdateDockSpace()
 {
   root_id = ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
-  if (!initialized)
-  {
+  if (!initialized) {
     const auto size = ImGui::GetMainViewport()->Size;
-    if (size.x > 0 && size.y > 0)
-    {
-      if (!Prefs::GetRestoreLayout() || !std::filesystem::exists("imgui.ini"))
-      {
+    if (size.x > 0 && size.y > 0) {
+      if (!Prefs::GetRestoreLayout() || !std::filesystem::exists("imgui.ini")) {
         LoadDefaultLayout(root_id.value(), false);
       }
       initialized = true;

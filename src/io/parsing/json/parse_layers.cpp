@@ -14,22 +14,18 @@ namespace {
 [[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data, usize index)
     -> ParseError;
 
-[[nodiscard]] auto ParseGroupLayer(const JSON& json,
-                                   LayerData& target,
-                                   const usize index) -> ParseError
+[[nodiscard]] auto ParseGroupLayer(const JSON& json, LayerData& target, const usize index)
+    -> ParseError
 {
   auto& data = target.data.emplace<GroupLayerData>();
 
-  if (const auto it = json.find("layers"); it != json.end())
-  {
+  if (const auto it = json.find("layers"); it != json.end()) {
     usize childIndex = 0;
-    for (const auto& [key, layer] : it->items())
-    {
+    for (const auto& [key, layer] : it->items()) {
       auto layerData = std::make_unique<LayerData>();
 
       if (const auto err = ParseLayer(layer, *layerData, childIndex);
-          err != ParseError::None)
-      {
+          err != ParseError::None) {
         return err;
       }
 
@@ -46,83 +42,63 @@ namespace {
 {
   data.index = index;
 
-  if (const auto it = json.find("id"); it != json.end())
-  {
+  if (const auto it = json.find("id"); it != json.end()) {
     data.id = LayerID{it->get<LayerID::value_type>()};
   }
-  else
-  {
+  else {
     return ParseError::LayerMissingId;
   }
 
-  if (const auto it = json.find("name"); it != json.end())
-  {
+  if (const auto it = json.find("name"); it != json.end()) {
     data.name = it->get<std::string>();
   }
-  else
-  {
+  else {
     data.name = "Layer";
   }
 
-  if (const auto it = json.find("opacity"); it != json.end())
-  {
+  if (const auto it = json.find("opacity"); it != json.end()) {
     data.opacity = it->get<float>();
   }
-  else
-  {
+  else {
     data.opacity = 1.0f;
   }
 
-  if (const auto it = json.find("visible"); it != json.end())
-  {
+  if (const auto it = json.find("visible"); it != json.end()) {
     data.is_visible = it->get<bool>();
   }
-  else
-  {
+  else {
     data.is_visible = true;
   }
 
-  if (const auto it = json.find("type"); it != json.end())
-  {
+  if (const auto it = json.find("type"); it != json.end()) {
     const auto type = it->get<std::string>();
-    if (type == "tilelayer")
-    {
+    if (type == "tilelayer") {
       data.type = LayerType::TileLayer;
-      if (const auto err = ParseTileLayer(json, data); err != ParseError::None)
-      {
+      if (const auto err = ParseTileLayer(json, data); err != ParseError::None) {
         return err;
       }
     }
-    else if (type == "objectgroup")
-    {
+    else if (type == "objectgroup") {
       data.type = LayerType::ObjectLayer;
-      if (const auto err = ParseObjectLayer(json, data); err != ParseError::None)
-      {
+      if (const auto err = ParseObjectLayer(json, data); err != ParseError::None) {
         return err;
       }
     }
-    else if (type == "group")
-    {
+    else if (type == "group") {
       data.type = LayerType::GroupLayer;
-      if (const auto err = ParseGroupLayer(json, data, index);
-          err != ParseError::None)
-      {
+      if (const auto err = ParseGroupLayer(json, data, index); err != ParseError::None) {
         return err;
       }
     }
-    else
-    {
+    else {
       return ParseError::LayerUnknownType;
     }
   }
-  else
-  {
+  else {
     return ParseError::LayerMissingType;
   }
 
-  if (const auto err = ParseProperties(json, data.properties);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
     return err;
   }
 
@@ -133,23 +109,18 @@ namespace {
 
 auto ParseLayers(const JSON& json, std::vector<LayerData>& layers) -> ParseError
 {
-  if (const auto it = json.find("layers"); it != json.end())
-  {
+  if (const auto it = json.find("layers"); it != json.end()) {
     usize index = 0;
-    for (const auto& [key, layer] : it->items())
-    {
+    for (const auto& [key, layer] : it->items()) {
       auto& layerData = layers.emplace_back();
-      if (const auto err = ParseLayer(layer, layerData, index);
-          err != ParseError::None)
-      {
+      if (const auto err = ParseLayer(layer, layerData, index); err != ParseError::None) {
         return err;
       }
 
       ++index;
     }
   }
-  else
-  {
+  else {
     return ParseError::MapMissingLayers;
   }
 

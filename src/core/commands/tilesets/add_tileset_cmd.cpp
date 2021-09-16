@@ -33,14 +33,12 @@ void AddTilesetCmd::Undo()
 void AddTilesetCmd::Redo()
 {
   auto& registry = mRegistry.get();
-  if (!mSnapshot)
-  {
+  if (!mSnapshot) {
     const auto entity = Sys::AddTileset(registry, mTexture, mTileWidth, mTileHeight);
     const auto& tileset = registry.get<Tileset>(entity);
     mTilesetId = tileset.id;
   }
-  else
-  {
+  else {
     Sys::RestoreTileset(registry, *mSnapshot);
   }
 

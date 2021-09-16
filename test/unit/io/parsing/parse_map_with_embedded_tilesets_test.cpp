@@ -132,8 +132,7 @@ void VerifyTilesets(const MapData& data, const std::filesystem::path& path)
   ASSERT_TRUE(tileset.properties.empty());
 
   const auto directory = std::filesystem::absolute(path.parent_path());
-  const auto expected =
-      std::filesystem::weakly_canonical(directory / "../terrain.png");
+  const auto expected = std::filesystem::weakly_canonical(directory / "../terrain.png");
   ASSERT_EQ(expected, tileset.absolute_image_path);
 
   ASSERT_EQ(1, tileset.tiles.size());

@@ -25,12 +25,11 @@ void GroupLayerItem(const entt::registry& registry,
                     const CStr name)
 {
   ImGui::Unindent(ImGui::GetTreeNodeToLabelSpacing());
-  if (ImGui::TreeNodeEx("##GroupLayerTreeNode", flags, "%s", name))
-  {
+  if (ImGui::TreeNodeEx("##GroupLayerTreeNode", flags, "%s", name)) {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
-    if (ImGui::IsItemActivated() ||
-        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
+    if (ImGui::IsItemActivated()
+        || (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
     {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
@@ -38,20 +37,18 @@ void GroupLayerItem(const entt::registry& registry,
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
 
     const auto& groupLayer = registry.get<GroupLayer>(layerEntity);
-    for (const auto child : groupLayer.layers)
-    {
+    for (const auto child : groupLayer.layers) {
       const auto& childLayer = registry.get<Layer>(child);
       LayerItem(registry, dispatcher, child, childLayer);
     }
 
     ImGui::TreePop();
   }
-  else
-  {
+  else {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
-    if (ImGui::IsItemActivated() ||
-        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
+    if (ImGui::IsItemActivated()
+        || (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
     {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
@@ -73,28 +70,24 @@ void LayerItem(const entt::registry& registry,
   const auto& activeLayer = registry.ctx<ActiveLayer>();
   const auto isActiveLayer = layerEntity == activeLayer.entity;
 
-  auto flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |
-               ImGuiTreeNodeFlags_OpenOnDoubleClick |
-               ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_SpanFullWidth;
-  if (isActiveLayer)
-  {
+  auto flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow
+               | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth
+               | ImGuiTreeNodeFlags_SpanFullWidth;
+  if (isActiveLayer) {
     flags |= ImGuiTreeNodeFlags_Selected;
   }
 
   const auto& context = registry.get<PropertyContext>(layerEntity);
   const auto name = std::format("{} {}", GetIcon(layer.type), context.name);
 
-  if (layer.type != LayerType::GroupLayer)
-  {
-    if (ImGui::Selectable(name.c_str(), isActiveLayer))
-    {
+  if (layer.type != LayerType::GroupLayer) {
+    if (ImGui::Selectable(name.c_str(), isActiveLayer)) {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
   }
-  else
-  {
+  else {
     GroupLayerItem(registry, dispatcher, layerEntity, layer, flags, name.c_str());
   }
 }

@@ -9,7 +9,6 @@
 namespace Tactile::IO {
 
 [[nodiscard]] auto ParseProperties(pugi::xml_node node,
-                                   std::vector<PropertyData>& properties)
-    -> ParseError;
+                                   std::vector<PropertyData>& properties) -> ParseError;
 
 }  // namespace Tactile::IO

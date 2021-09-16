@@ -33,12 +33,10 @@ void CommandStack::Undo()
   const auto& cmd = mStack.at(mIndex.value());
   cmd->Undo();
 
-  if (mIndex == 0)
-  {
+  if (mIndex == 0) {
     mIndex.reset();
   }
-  else
-  {
+  else {
     mIndex = mIndex.value() - 1;
   }
 }
@@ -60,8 +58,7 @@ void CommandStack::SetCapacity(const usize capacity)
   mCapacity = capacity;
 
   const auto size = GetSize();
-  if (size > mCapacity)
-  {
+  if (size > mCapacity) {
     const auto n = size - mCapacity;
     InvokeN(n, [this] { RemoveOldestCommand(); });
   }
@@ -79,8 +76,7 @@ auto CommandStack::CanUndo() const -> bool
 
 auto CommandStack::CanRedo() const -> bool
 {
-  return (!mStack.empty() && !mIndex) ||
-         (!mStack.empty() && mIndex < mStack.size() - 1);
+  return (!mStack.empty() && !mIndex) || (!mStack.empty() && mIndex < mStack.size() - 1);
 }
 
 auto CommandStack::GetUndoText() const -> const std::string&
@@ -103,19 +99,15 @@ void CommandStack::RemoveOldestCommand()
 {
   mStack.pop_front();
 
-  if (mIndex)
-  {
+  if (mIndex) {
     mIndex = *mIndex - 1;
   }
 
-  if (mCleanIndex)
-  {
-    if (mCleanIndex == 0)
-    {
+  if (mCleanIndex) {
+    if (mCleanIndex == 0) {
       mCleanIndex.reset();
     }
-    else
-    {
+    else {
       mCleanIndex = *mCleanIndex - 1;
     }
   }
@@ -128,13 +120,11 @@ void CommandStack::RemoveCommandsAfterCurrentIndex()
 
   /* If we have a clean index, and there are undone commands when another
      command is pushed, then the clean index becomes invalidated */
-  if (mCleanIndex >= startIndex)
-  {
+  if (mCleanIndex >= startIndex) {
     mCleanIndex.reset();
   }
 
-  for (auto index = startIndex; index < size; ++index)
-  {
+  for (auto index = startIndex; index < size; ++index) {
     mStack.pop_back();
   }
 }

@@ -44,23 +44,18 @@ void AppendTileLayer(pugi::xml_node mapNode,
   std::stringstream stream;
   usize index = 0;
 
-  for (const auto& row : tileLayer.matrix)
-  {
-    for (const auto tile : row)
-    {
-      if (readable && index == 0)
-      {
+  for (const auto& row : tileLayer.matrix) {
+    for (const auto tile : row) {
+      if (readable && index == 0) {
         stream << '\n';
       }
 
       stream << tile.get();
-      if (index < count - 1)
-      {
+      if (index < count - 1) {
         stream << ',';
       }
 
-      if (readable && (index + 1) % nCols == 0)
-      {
+      if (readable && (index + 1) % nCols == 0) {
         stream << '\n';
       }
 
@@ -83,40 +78,33 @@ void AppendObject(pugi::xml_node node,
   auto objNode = node.append_child("object");
   objNode.append_attribute("id").set_value(object.id.get());
 
-  if (!context.name.empty())
-  {
+  if (!context.name.empty()) {
     objNode.append_attribute("name").set_value(context.name.data());
   }
 
-  if (!object.custom_type.empty())
-  {
+  if (!object.custom_type.empty()) {
     objNode.append_attribute("type").set_value(object.custom_type.c_str());
   }
 
   objNode.append_attribute("x").set_value(object.x);
   objNode.append_attribute("y").set_value(object.y);
 
-  if (object.width != 0)
-  {
+  if (object.width != 0) {
     objNode.append_attribute("width").set_value(object.width);
   }
 
-  if (object.height != 0)
-  {
+  if (object.height != 0) {
     objNode.append_attribute("height").set_value(object.height);
   }
 
-  if (!object.visible)
-  {
+  if (!object.visible) {
     objNode.append_attribute("visible").set_value(0);
   }
 
-  if (object.type == ObjectType::Point)
-  {
+  if (object.type == ObjectType::Point) {
     objNode.append_child("point");
   }
-  else if (object.type == ObjectType::Ellipse)
-  {
+  else if (object.type == ObjectType::Ellipse) {
     objNode.append_child("ellipse");
   }
 
@@ -138,8 +126,7 @@ void AppendObjectLayer(pugi::xml_node mapNode,
 
   AppendProperties(registry, layerEntity, node, dir);
 
-  for (const auto objectEntity : objectLayer.objects)
-  {
+  for (const auto objectEntity : objectLayer.objects) {
     AppendObject(node, registry, objectEntity, dir);
   }
 }
@@ -157,8 +144,7 @@ void AppendGroupLayer(pugi::xml_node mapNode,
   node.append_attribute("id").set_value(layer.id.get());
   node.append_attribute("name").set_value(context.name.c_str());
 
-  for (const auto child : groupLayer.layers)
-  {
+  for (const auto child : groupLayer.layers) {
     AppendLayer(node, registry, child, dir);
   }
 }
@@ -171,20 +157,16 @@ void AppendLayer(pugi::xml_node mapNode,
                  const std::filesystem::path& dir)
 {
   const auto& layer = registry.get<Layer>(layerEntity);
-  switch (layer.type)
-  {
-    case LayerType::TileLayer:
-    {
+  switch (layer.type) {
+    case LayerType::TileLayer: {
       AppendTileLayer(mapNode, registry, layerEntity, layer, dir);
       break;
     }
-    case LayerType::ObjectLayer:
-    {
+    case LayerType::ObjectLayer: {
       AppendObjectLayer(mapNode, registry, layerEntity, layer, dir);
       break;
     }
-    case LayerType::GroupLayer:
-    {
+    case LayerType::GroupLayer: {
       AppendGroupLayer(mapNode, registry, layerEntity, layer, dir);
       break;
     }

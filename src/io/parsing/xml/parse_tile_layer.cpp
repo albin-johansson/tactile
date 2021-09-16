@@ -10,21 +10,17 @@ auto ParseTileLayer(const pugi::xml_node node, LayerData& layer) -> ParseError
 {
   auto& data = layer.data.emplace<TileLayerData>();
 
-  if (const auto width = GetInt(node, "width"))
-  {
+  if (const auto width = GetInt(node, "width")) {
     data.col_count = *width;
   }
-  else
-  {
+  else {
     return ParseError::LayerMissingWidth;
   }
 
-  if (const auto height = GetInt(node, "height"))
-  {
+  if (const auto height = GetInt(node, "height")) {
     data.row_count = *height;
   }
-  else
-  {
+  else {
     return ParseError::LayerMissingHeight;
   }
 

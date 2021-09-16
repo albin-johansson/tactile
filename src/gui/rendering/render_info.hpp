@@ -41,8 +41,8 @@ struct RenderInfo final
  *
  * \return information about the rendering context.
  */
-[[nodiscard]] auto GetRenderInfo(const entt::registry& registry,
-                                 const CanvasInfo& canvas) -> RenderInfo;
+[[nodiscard]] auto GetRenderInfo(const entt::registry& registry, const CanvasInfo& canvas)
+    -> RenderInfo;
 
 /// \} End of group rendering
 

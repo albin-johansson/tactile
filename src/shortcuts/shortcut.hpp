@@ -10,8 +10,7 @@ class Model;
 class AShortcut
 {
  public:
-  AShortcut(const cen::scan_code key,
-            const cen::key_mod modifiers = cen::key_mod::none)
+  AShortcut(const cen::scan_code key, const cen::key_mod modifiers = cen::key_mod::none)
       : mKey{key}
       , mModifiers{modifiers}
   {}

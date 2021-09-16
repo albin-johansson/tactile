@@ -14,27 +14,21 @@ auto ParseTileData(const pugi::xml_node node, const int32 nCols, TileMatrix& mat
 
   /* The encoding attribute is optional, if it is missing then the tile data is
      stored as individual "tile" nodes. */
-  if (const auto* encoding = data.attribute("encoding").as_string(nullptr))
-  {
+  if (const auto* encoding = data.attribute("encoding").as_string(nullptr)) {
     // We only support the CSV encoding (when explicit)
-    if (std::strcmp(encoding, "csv") != 0)
-    {
+    if (std::strcmp(encoding, "csv") != 0) {
       return ParseError::UnsupportedTileEncoding;
     }
-    else
-    {
+    else {
       const auto text = data.text();
       if (const auto error = ParseCSV(text.get(), nCols, matrix);
-          error != ParseError::None)
-      {
+          error != ParseError::None) {
         return error;
       }
     }
   }
-  else
-  {
-    if (const auto error = ParseTileNodes(data, nCols, matrix);
-        error != ParseError::None)
+  else {
+    if (const auto error = ParseTileNodes(data, nCols, matrix); error != ParseError::None)
     {
       return error;
     }

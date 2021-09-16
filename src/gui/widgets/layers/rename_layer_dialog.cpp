@@ -16,8 +16,7 @@ inline Maybe<std::string> old_name;
 
 }  // namespace
 
-void UpdateRenameLayerDialog(const entt::registry& registry,
-                             entt::dispatcher& dispatcher)
+void UpdateRenameLayerDialog(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   auto validator = [](const entt::registry& registry, const std::string_view name) {
     return !name.empty() && old_name != name;

@@ -14,13 +14,11 @@ auto IntPropertyWidget(const PropertyValue& property) -> Maybe<int>
   auto value = property.AsInt();
 
   ImGui::SetNextItemWidth(-std::numeric_limits<float>::min());
-  if (ImGui::DragInt("##IntPropertyInput", &value))
-  {
+  if (ImGui::DragInt("##IntPropertyInput", &value)) {
     return value;
   }
 
-  if (ImGui::IsItemHovered())
-  {
+  if (ImGui::IsItemHovered()) {
     ImGui::SetTooltip("[int]");
   }
 

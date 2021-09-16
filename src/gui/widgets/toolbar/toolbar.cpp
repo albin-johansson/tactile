@@ -26,8 +26,7 @@ constinit bool has_focus = false;
 
 void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (!is_visible)
-  {
+  if (!is_visible) {
     return;
   }
 
@@ -36,124 +35,102 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   has_focus = ImGui::IsWindowFocused();
 
   auto separate = [] {
-    if (axis == ImGuiAxis_X)
-    {
+    if (axis == ImGuiAxis_X) {
       ImGui::SameLine();
     }
     ImGui::Spacing();
 
-    if (axis == ImGuiAxis_X)
-    {
+    if (axis == ImGuiAxis_X) {
       ImGui::SameLine();
     }
     ImGui::Spacing();
   };
 
-  if (Button(TAC_ICON_FILE, "Create new tilemap."))
-  {
+  if (Button(TAC_ICON_FILE, "Create new tilemap.")) {
     ShowAddMapDialog();
   }
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_OPEN, "Open tilemap."))
-  {
+  if (Button(TAC_ICON_OPEN, "Open tilemap.")) {
     ShowOpenMapDialog();
   }
 
   separate();
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_UNDO, "Undo", model.CanUndo()))
-  {
+  if (Button(TAC_ICON_UNDO, "Undo", model.CanUndo())) {
     dispatcher.enqueue<UndoEvent>();
   }
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_REDO, "Redo", model.CanRedo()))
-  {
+  if (Button(TAC_ICON_REDO, "Redo", model.CanRedo())) {
     dispatcher.enqueue<RedoEvent>();
   }
 
   separate();
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_CENTER, "Center viewport."))
-  {
+  if (Button(TAC_ICON_CENTER, "Center viewport.")) {
     dispatcher.enqueue<CenterViewportEvent>();
   }
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_RESIZE, "Resize map."))
-  {
+  if (Button(TAC_ICON_RESIZE, "Resize map.")) {
     dispatcher.enqueue<OpenResizeMapDialogEvent>();
   }
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
   separate();
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_TILESET, "Create tileset."))
-  {
+  if (Button(TAC_ICON_TILESET, "Create tileset.")) {
     ShowTilesetDialog();
   }
 
   separate();
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_STAMP, "Stamp tool.", model.IsStampActive()))
-  {
+  if (ToolButton(TAC_ICON_STAMP, "Stamp tool.", model.IsStampActive())) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
   }
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_BUCKET, "Bucket tool.", model.IsBucketActive()))
-  {
+  if (ToolButton(TAC_ICON_BUCKET, "Bucket tool.", model.IsBucketActive())) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
   }
 
-  if (axis == ImGuiAxis_X)
-  {
+  if (axis == ImGuiAxis_X) {
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_ERASER, "Eraser tool.", model.IsEraserActive()))
-  {
+  if (ToolButton(TAC_ICON_ERASER, "Eraser tool.", model.IsEraserActive())) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
   }
 

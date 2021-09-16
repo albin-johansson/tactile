@@ -13,16 +13,14 @@ namespace Tactile {
 
 void Model::Update()
 {
-  if (auto* registry = GetActiveRegistry())
-  {
+  if (auto* registry = GetActiveRegistry()) {
     Sys::UpdateAnimations(*registry);
   }
 }
 
 void Model::OnCommandCapacityChanged(const SetCommandCapacityEvent& event)
 {
-  for (auto& [id, document] : mDocuments)
-  {
+  for (auto& [id, document] : mDocuments) {
     document->commands.SetCapacity(event.capacity);
   }
 }
@@ -56,21 +54,18 @@ auto Model::GetRedoText() const -> const std::string&
 
 auto Model::CanSaveDocument() const -> bool
 {
-  if (mActiveMap)
-  {
+  if (mActiveMap) {
     const auto& document = mDocuments.at(*mActiveMap);
     return !document->commands.IsClean();
   }
-  else
-  {
+  else {
     return false;
   }
 }
 
 auto Model::CanDecreaseViewportTileSize() const -> bool
 {
-  if (HasActiveDocument())
-  {
+  if (HasActiveDocument()) {
     const auto& document = mDocuments.at(*mActiveMap);
     return Sys::CanDecreaseViewportZoom(document->registry);
   }
@@ -107,14 +102,11 @@ void Model::RemoveMap(const MapID id)
   assert(mDocuments.contains(id));
   mDocuments.erase(id);
 
-  if (mActiveMap == id)
-  {
-    if (!mDocuments.empty())
-    {
+  if (mActiveMap == id) {
+    if (!mDocuments.empty()) {
       mActiveMap = mDocuments.at_index(0).first;
     }
-    else
-    {
+    else {
       mActiveMap.reset();
     }
   }
@@ -127,84 +119,70 @@ auto Model::HasActiveDocument() const -> bool
 
 auto Model::GetActiveDocument() -> Document*
 {
-  if (mActiveMap)
-  {
+  if (mActiveMap) {
     return mDocuments.at(*mActiveMap).get();
   }
-  else
-  {
+  else {
     return nullptr;
   }
 }
 
 auto Model::GetActiveDocument() const -> const Document*
 {
-  if (mActiveMap)
-  {
+  if (mActiveMap) {
     return mDocuments.at(*mActiveMap).get();
   }
-  else
-  {
+  else {
     return nullptr;
   }
 }
 
 auto Model::GetActiveRegistry() -> entt::registry*
 {
-  if (mActiveMap)
-  {
+  if (mActiveMap) {
     return &mDocuments.at(*mActiveMap)->registry;
   }
-  else
-  {
+  else {
     return nullptr;
   }
 }
 
 auto Model::GetActiveRegistry() const -> const entt::registry*
 {
-  if (mActiveMap)
-  {
+  if (mActiveMap) {
     return &mDocuments.at(*mActiveMap)->registry;
   }
-  else
-  {
+  else {
     return nullptr;
   }
 }
 
 auto Model::IsStampActive() const -> bool
 {
-  if (const auto* registry = GetActiveRegistry())
-  {
+  if (const auto* registry = GetActiveRegistry()) {
     return Sys::IsStampEnabled(*registry);
   }
-  else
-  {
+  else {
     return false;
   }
 }
 
 auto Model::IsEraserActive() const -> bool
 {
-  if (const auto* registry = GetActiveRegistry())
-  {
+  if (const auto* registry = GetActiveRegistry()) {
     return Sys::IsEraserEnabled(*registry);
   }
-  else
-  {
+  else {
     return false;
   }
 }
 
 auto Model::IsBucketActive() const -> bool
 {
-  if (const auto* registry = GetActiveRegistry())
-  {
+  if (const auto* registry = GetActiveRegistry()) {
     return Sys::IsBucketEnabled(*registry);
   }
-  else
-  {
+  else {
     return false;
   }
 }

@@ -14,8 +14,7 @@ auto ObjectPropertyWidget(const PropertyValue& property) -> Maybe<ObjectRef>
   const auto object = property.AsObject();
   ImGui::Text("%i", object.get());
 
-  if (ImGui::IsItemHovered())
-  {
+  if (ImGui::IsItemHovered()) {
     ImGui::SetTooltip("[object]");
   }
 

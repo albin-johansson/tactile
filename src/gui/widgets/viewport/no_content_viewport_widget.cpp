@@ -24,14 +24,12 @@ void NoContentViewportWidget(entt::dispatcher& dispatcher)
   CenteredText("No active map");
 
   ImGui::Spacing();
-  if (CenteredButton("Create new map"))
-  {
+  if (CenteredButton("Create new map")) {
     ShowAddMapDialog();
   }
 
   ImGui::Spacing();
-  if (CenteredButton("Open existing map"))
-  {
+  if (CenteredButton("Open existing map")) {
     ShowOpenMapDialog();
   }
 }

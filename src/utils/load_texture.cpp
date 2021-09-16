@@ -19,8 +19,7 @@ inline std::vector<uint> textures;
 
 void UnloadTextures()
 {
-  for (const auto texture : textures)
-  {
+  for (const auto texture : textures) {
     CENTURION_LOG_DEBUG("Deleting texture %u...", texture);
     glDeleteTextures(1, &texture);
   }
@@ -41,8 +40,7 @@ auto LoadTexture(const std::filesystem::path& path) -> Maybe<Texture>
   // Load from file
   auto* data =
       stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4);
-  if (!data)
-  {
+  if (!data) {
     return nothing;
   }
 

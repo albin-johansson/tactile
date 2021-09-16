@@ -33,8 +33,7 @@ TEST(ToMapDocument, Test)
 
   ASSERT_EQ("embedded.json", mapContext.name);
 
-  ASSERT_EQ(std::filesystem::absolute("resources/json/embedded.json"),
-            document.path);
+  ASSERT_EQ(std::filesystem::absolute("resources/json/embedded.json"), document.path);
 
   ASSERT_EQ(5, map.row_count);
   ASSERT_EQ(7, map.column_count);

@@ -12,8 +12,7 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags =
-    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 constinit bool is_visible = false;
 
@@ -28,11 +27,9 @@ void UpdatePreviewSettings(const Preferences& prefs)
 
 void ShowBehaviorTab(entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginTabItem("Behavior"))
-  {
+  if (ImGui::BeginTabItem("Behavior")) {
     ImGui::Spacing();
-    if (ImGui::Button("Restore Defaults"))
-    {
+    if (ImGui::Button("Restore Defaults")) {
       Prefs::ResetBehaviorPreferences(settings);
       UpdatePreviewSettings(settings);
     }
@@ -54,8 +51,7 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
       settings.preferred_tile_width = width;
     }
 
-    if (ImGui::IsItemHovered())
-    {
+    if (ImGui::IsItemHovered()) {
       ImGui::SetTooltip("The suggested tile width when creating maps.");
     }
 
@@ -69,8 +65,7 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
       settings.preferred_tile_height = height;
     }
 
-    if (ImGui::IsItemHovered())
-    {
+    if (ImGui::IsItemHovered()) {
       ImGui::SetTooltip("The suggested tile height when creating maps.");
     }
 
@@ -86,8 +81,7 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
       settings.command_capacity = static_cast<usize>(capacity);
     }
 
-    if (ImGui::IsItemHovered())
-    {
+    if (ImGui::IsItemHovered()) {
       ImGui::SetTooltip(
           "The maximum amount of commands that will be stored on the undo stack.");
     }
@@ -98,11 +92,9 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
 
 void ShowAppearanceBar()
 {
-  if (ImGui::BeginTabItem("Appearance"))
-  {
+  if (ImGui::BeginTabItem("Appearance")) {
     ImGui::Spacing();
-    if (ImGui::Button("Restore Defaults"))
-    {
+    if (ImGui::Button("Restore Defaults")) {
       Prefs::ResetAppearancePreferences(settings);
       UpdatePreviewSettings(settings);
     }
@@ -115,8 +107,7 @@ void ShowAppearanceBar()
       ApplyTheme(ImGui::GetStyle(), settings.theme);
     }
 
-    if (auto enabled = settings.window_border;
-        ImGui::Checkbox("Window border", &enabled))
+    if (auto enabled = settings.window_border; ImGui::Checkbox("Window border", &enabled))
     {
       settings.window_border = enabled;
       ImGui::GetStyle().WindowBorderSize = enabled ? 1.0f : 0.0f;
@@ -136,11 +127,9 @@ void ShowAppearanceBar()
 
 void ShowExportTab()
 {
-  if (ImGui::BeginTabItem("Export"))
-  {
+  if (ImGui::BeginTabItem("Export")) {
     ImGui::Spacing();
-    if (ImGui::Button("Restore Defaults"))
-    {
+    if (ImGui::Button("Restore Defaults")) {
       Prefs::ResetExportPreferences(settings);
       UpdatePreviewSettings(settings);
     }
@@ -157,9 +146,7 @@ void ShowExportTab()
     }
 
     if (auto embedTilesets = settings.embed_tilesets;
-        Checkbox("Embed tilesets",
-                 &embedTilesets,
-                 "Embed tileset data in map files."))
+        Checkbox("Embed tilesets", &embedTilesets, "Embed tileset data in map files."))
     {
       settings.embed_tilesets = embedTilesets;
     }
@@ -179,8 +166,7 @@ void ShowExportTab()
 void ApplySettings(entt::dispatcher& dispatcher)
 {
   SetPreferences(settings);
-  if (settings.command_capacity != snapshot.command_capacity)
-  {
+  if (settings.command_capacity != snapshot.command_capacity) {
     dispatcher.enqueue<SetCommandCapacityEvent>(Prefs::GetCommandCapacity());
   }
 }
@@ -190,10 +176,8 @@ void ApplySettings(entt::dispatcher& dispatcher)
 void UpdateSettingsDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Settings", &is_visible, flags))
-  {
-    if (ImGui::BeginTabBar("SettingsTabBar"))
-    {
+  if (ImGui::BeginPopupModal("Settings", &is_visible, flags)) {
+    if (ImGui::BeginTabBar("SettingsTabBar")) {
       ShowBehaviorTab(dispatcher);
       ShowAppearanceBar();
       ShowExportTab();
@@ -204,23 +188,20 @@ void UpdateSettingsDialog(entt::dispatcher& dispatcher)
     ImGui::Spacing();
     ImGui::Separator();
 
-    if (ImGui::Button("OK"))
-    {
+    if (ImGui::Button("OK")) {
       ApplySettings(dispatcher);
       UpdatePreviewSettings(GetPreferences());
       ImGui::CloseCurrentPopup();
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Cancel"))
-    {
+    if (ImGui::Button("Cancel")) {
       UpdatePreviewSettings(GetPreferences());
       ImGui::CloseCurrentPopup();
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Apply"))
-    {
+    if (ImGui::Button("Apply")) {
       ApplySettings(dispatcher);
       UpdatePreviewSettings(GetPreferences());
     }

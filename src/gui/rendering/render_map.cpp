@@ -33,10 +33,8 @@ void RenderGrid(const RenderInfo& info)
   const auto& bounds = info.bounds;
   const auto endRow = bounds.end.GetRow();
   const auto endCol = bounds.end.GetColumn();
-  for (auto row = bounds.begin.GetRow(); row < endRow; ++row)
-  {
-    for (auto col = bounds.begin.GetColumn(); col < endCol; ++col)
-    {
+  for (auto row = bounds.begin.GetRow(); row < endRow; ++row) {
+    for (auto col = bounds.begin.GetColumn(); col < endCol; ++col) {
       const ImVec2 pos = {
           info.map_position.x + (info.grid_size.x * static_cast<float>(col)),
           info.map_position.y + (info.grid_size.y * static_cast<float>(row))};
@@ -51,12 +49,10 @@ void RenderLayer(const entt::registry& registry,
                  const RenderInfo& info,
                  const float parentOpacity)
 {
-  if (layer.type == LayerType::TileLayer)
-  {
+  if (layer.type == LayerType::TileLayer) {
     RenderTileLayer(registry, layerEntity, info, parentOpacity);
   }
-  else if (layer.type == LayerType::ObjectLayer)
-  {
+  else if (layer.type == LayerType::ObjectLayer) {
     RenderObjectLayer(registry, layerEntity, info, parentOpacity);
   }
 }
@@ -65,26 +61,21 @@ void RenderLayer(const entt::registry& registry,
 
 void RenderMap(const entt::registry& registry, const RenderInfo& info)
 {
-  for (auto&& [entity, layer] : registry.view<Layer>().each())
-  {
+  for (auto&& [entity, layer] : registry.view<Layer>().each()) {
     const auto& parent = registry.get<Parent>(entity);
-    const auto* parentLayer = (parent.entity != entt::null)
-                                  ? registry.try_get<Layer>(parent.entity)
-                                  : nullptr;
+    const auto* parentLayer =
+        (parent.entity != entt::null) ? registry.try_get<Layer>(parent.entity) : nullptr;
 
     const auto parentOpacity = parentLayer ? parentLayer->opacity : 1.0f;
 
-    if (layer.visible)
-    {
-      if (!parentLayer || parentLayer->visible)
-      {
+    if (layer.visible) {
+      if (!parentLayer || parentLayer->visible) {
         RenderLayer(registry, entity, layer, info, layer.opacity * parentOpacity);
       }
     }
   }
 
-  if (Prefs::GetShowGrid())
-  {
+  if (Prefs::GetShowGrid()) {
     RenderGrid(info);
   }
 

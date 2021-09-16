@@ -19,16 +19,13 @@ void SaveMapDocument(const Document& document)
   CENTURION_LOG_INFO("Saving map document to \"%s\"", path.string().c_str());
 
   const auto extension = path.extension();
-  if (extension == ".json")
-  {
+  if (extension == ".json") {
     SaveMapDocumentAsJson(document);
   }
-  else if (extension == ".tmx")
-  {
+  else if (extension == ".tmx") {
     SaveMapDocumentAsXml(document);
   }
-  else
-  {
+  else {
     CENTURION_LOG_ERROR("Failed to save map document due to invalid extension: %s",
                         extension.string().c_str());
   }

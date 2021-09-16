@@ -18,8 +18,7 @@ void ToolOnPressed(entt::registry& registry,
                    const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<ActiveTool>();
-  switch (active.tool)
-  {
+  switch (active.tool) {
     case ToolType::None:
       break;
 
@@ -42,8 +41,7 @@ void ToolOnDragged(entt::registry& registry,
                    const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<ActiveTool>();
-  switch (active.tool)
-  {
+  switch (active.tool) {
     case ToolType::None:
       [[fallthrough]];
 
@@ -65,8 +63,7 @@ void ToolOnReleased(entt::registry& registry,
                     const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<ActiveTool>();
-  switch (active.tool)
-  {
+  switch (active.tool) {
     case ToolType::None:
       [[fallthrough]];
 

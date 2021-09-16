@@ -43,23 +43,17 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
   const auto endRow = selectionSize.GetRow();
   const auto endCol = selectionSize.GetColumn();
 
-  for (auto row = 0; row < endRow; ++row)
-  {
-    for (auto col = 0; col < endCol; ++col)
-    {
+  for (auto row = 0; row < endRow; ++row) {
+    for (auto col = 0; col < endCol; ++col) {
       const auto index = MapPosition{row, col};
       const auto selectionPosition = region.begin + index;
 
-      const auto tile =
-          GetTileFromTileset(registry, tilesetEntity, selectionPosition);
-      if (tile != empty_tile)
-      {
+      const auto tile = GetTileFromTileset(registry, tilesetEntity, selectionPosition);
+      if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
-        if (IsPositionInMap(registry, pos))
-        {
+        if (IsPositionInMap(registry, pos)) {
           // TODO rune::vector_map::try_emplace
-          if (!old_state.contains(pos))
-          {
+          if (!old_state.contains(pos)) {
             const auto prev = GetTileFromLayer(registry, layerEntity, pos);
             old_state.emplace(pos, prev);
           }
@@ -75,8 +69,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
 
 void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left)
-  {
+  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     old_state.clear();
     sequence.clear();
 
@@ -86,8 +79,7 @@ void StampToolOnPressed(entt::registry& registry, const MouseInfo& mouse)
 
 void StampToolOnDragged(entt::registry& registry, const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left)
-  {
+  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     UpdateSequence(registry, mouse.position_in_map);
   }
 }
@@ -96,10 +88,8 @@ void StampToolOnReleased(entt::registry& registry,
                          entt::dispatcher& dispatcher,
                          const MouseInfo& mouse)
 {
-  if (IsUsable(registry) && mouse.button == cen::mouse_button::left)
-  {
-    dispatcher.enqueue<StampSequenceEvent>(std::move(old_state),
-                                           std::move(sequence));
+  if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
+    dispatcher.enqueue<StampSequenceEvent>(std::move(old_state), std::move(sequence));
   }
 }
 

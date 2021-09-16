@@ -22,40 +22,32 @@ namespace {
   json["type"] = GetPropertyTypeString(type);
 
   auto& value = json["value"];
-  switch (type)
-  {
-    case PropertyType::String:
-    {
+  switch (type) {
+    case PropertyType::String: {
       value = property.AsString();
       break;
     }
-    case PropertyType::Integer:
-    {
+    case PropertyType::Integer: {
       value = property.AsInt();
       break;
     }
-    case PropertyType::Floating:
-    {
+    case PropertyType::Floating: {
       value = property.AsFloat();
       break;
     }
-    case PropertyType::Boolean:
-    {
+    case PropertyType::Boolean: {
       value = property.AsBool();
       break;
     }
-    case PropertyType::File:
-    {
+    case PropertyType::File: {
       value = GetPropertyFileValue(property, dir);
       break;
     }
-    case PropertyType::Color:
-    {
+    case PropertyType::Color: {
       value = property.AsColor().as_argb();
       break;
     }
-    case PropertyType::Object:
-    {
+    case PropertyType::Object: {
       value = property.AsObject().get();
       break;
     }
@@ -72,11 +64,9 @@ namespace {
 {
   auto array = JSON::array();
 
-  const auto& context = (entity != entt::null)
-                            ? registry.get<PropertyContext>(entity)
-                            : registry.ctx<PropertyContext>();
-  for (const auto propertyEntity : context.properties)
-  {
+  const auto& context = (entity != entt::null) ? registry.get<PropertyContext>(entity)
+                                               : registry.ctx<PropertyContext>();
+  for (const auto propertyEntity : context.properties) {
     const auto& property = registry.get<Property>(propertyEntity);
     array += SaveProperty(property.name, property.value, dir);
   }

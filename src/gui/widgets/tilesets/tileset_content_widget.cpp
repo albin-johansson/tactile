@@ -12,23 +12,19 @@
 
 namespace Tactile {
 
-void TilesetContentWidget(const entt::registry& registry,
-                          entt::dispatcher& dispatcher)
+void TilesetContentWidget(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   constexpr auto flags =
       ImGuiTabBarFlags_Reorderable | ImGuiTabBarFlags_NoCloseWithMiddleMouseButton;
 
-  if (ImGui::BeginTabBar("TilesetTabBar", flags))
-  {
+  if (ImGui::BeginTabBar("TilesetTabBar", flags)) {
     if (ImGui::TabItemButton(TAC_ICON_ADD "##AddTilesetButton",
-                             ImGuiTabItemFlags_Trailing))
-    {
+                             ImGuiTabItemFlags_Trailing)) {
       ShowTilesetDialog();
     }
 
     const auto& currentTileset = registry.ctx<ActiveTileset>();
-    for (auto&& [entity, tileset] : registry.view<Tileset>().each())
-    {
+    for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
       const ScopeID uid{tileset.id};
 
       const auto isActive = currentTileset.entity == entity;
@@ -43,12 +39,10 @@ void TilesetContentWidget(const entt::registry& registry,
         ImGui::EndTabItem();
       }
 
-      if (!opened)
-      {
+      if (!opened) {
         dispatcher.enqueue<RemoveTilesetEvent>(tileset.id);
       }
-      else if (ImGui::IsItemActivated())
-      {
+      else if (ImGui::IsItemActivated()) {
         dispatcher.enqueue<SelectTilesetEvent>(tileset.id);
       }
     }

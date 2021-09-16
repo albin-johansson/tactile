@@ -11,9 +11,9 @@ namespace {
 constexpr auto window_flags =
     ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
-constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
-                             ImGuiTableFlags_Resizable |
-                             ImGuiTableFlags_SizingStretchProp;
+constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders
+                             | ImGuiTableFlags_Resizable
+                             | ImGuiTableFlags_SizingStretchProp;
 
 constinit bool is_visible = false;
 
@@ -36,14 +36,12 @@ void Row(const CStr lib, const CStr version, const CStr license)
 void UpdateCreditsDialog()
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Credits", &is_visible, window_flags))
-  {
+  if (ImGui::BeginPopupModal("Credits", &is_visible, window_flags)) {
     ImGui::TextUnformatted(
         "Tactile is developed using the following open-source libraries.");
     ImGui::Spacing();
 
-    if (ImGui::BeginTable("##CreditsTable", 3, table_flags))
-    {
+    if (ImGui::BeginTable("##CreditsTable", 3, table_flags)) {
       ImGui::TableSetupColumn("Library");
       ImGui::TableSetupColumn("Version");
       ImGui::TableSetupColumn("License");

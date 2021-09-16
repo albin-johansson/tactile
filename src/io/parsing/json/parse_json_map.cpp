@@ -17,12 +17,10 @@ namespace {
 [[nodiscard]] auto ParseOrientation(const JSON& json) -> ParseError
 {
   const auto it = json.find("orientation");
-  if (it != json.end() && it->get<std::string>() == "orthogonal")
-  {
+  if (it != json.end() && it->get<std::string>() == "orthogonal") {
     return ParseError::None;
   }
-  else
-  {
+  else {
     return ParseError::MapUnsupportedOrientation;
   }
 }
@@ -30,26 +28,21 @@ namespace {
 [[nodiscard]] auto ParseInfinite(const JSON& json) -> ParseError
 {
   const auto it = json.find("infinite");
-  if (it != json.end() && it->get<bool>())
-  {
+  if (it != json.end() && it->get<bool>()) {
     return ParseError::MapUnsupportedInfinite;
   }
-  else
-  {
+  else {
     return ParseError::None;
   }
 }
 
-[[nodiscard]] auto ParseNextLayerId(const JSON& json, LayerID& nextLayerId)
-    -> ParseError
+[[nodiscard]] auto ParseNextLayerId(const JSON& json, LayerID& nextLayerId) -> ParseError
 {
-  if (const auto it = json.find("nextlayerid"); it != json.end())
-  {
+  if (const auto it = json.find("nextlayerid"); it != json.end()) {
     nextLayerId = LayerID{it->get<LayerID::value_type>()};
     return ParseError::None;
   }
-  else
-  {
+  else {
     return ParseError::MapMissingNextLayerId;
   }
 }
@@ -57,65 +50,55 @@ namespace {
 [[nodiscard]] auto ParseNextObjectId(const JSON& json, ObjectID& nextObjectId)
     -> ParseError
 {
-  if (const auto it = json.find("nextobjectid"); it != json.end())
-  {
+  if (const auto it = json.find("nextobjectid"); it != json.end()) {
     nextObjectId = ObjectID{it->get<ObjectID::value_type>()};
     return ParseError::None;
   }
-  else
-  {
+  else {
     return ParseError::MapMissingNextObjectId;
   }
 }
 
 [[nodiscard]] auto ParseTileWidth(const JSON& json, int& tileWidth) -> ParseError
 {
-  if (const auto it = json.find("tilewidth"); it != json.end())
-  {
+  if (const auto it = json.find("tilewidth"); it != json.end()) {
     tileWidth = it->get<int>();
     return ParseError::None;
   }
-  else
-  {
+  else {
     return ParseError::MapMissingTileWidth;
   }
 }
 
 [[nodiscard]] auto ParseTileHeight(const JSON& json, int& tileHeight) -> ParseError
 {
-  if (const auto it = json.find("tileheight"); it != json.end())
-  {
+  if (const auto it = json.find("tileheight"); it != json.end()) {
     tileHeight = it->get<int>();
     return ParseError::None;
   }
-  else
-  {
+  else {
     return ParseError::MapMissingTileHeight;
   }
 }
 
 [[nodiscard]] auto ParseWidth(const JSON& json, int& width) -> ParseError
 {
-  if (const auto it = json.find("width"); it != json.end())
-  {
+  if (const auto it = json.find("width"); it != json.end()) {
     width = it->get<int>();
     return ParseError::None;
   }
-  else
-  {
+  else {
     return ParseError::MapMissingWidth;
   }
 }
 
 [[nodiscard]] auto ParseHeight(const JSON& json, int& height) -> ParseError
 {
-  if (const auto it = json.find("height"); it != json.end())
-  {
+  if (const auto it = json.find("height"); it != json.end()) {
     height = it->get<int>();
     return ParseError::None;
   }
-  else
-  {
+  else {
     return ParseError::MapMissingHeight;
   }
 }
@@ -125,26 +108,22 @@ namespace {
 auto ParseJsonMap(const std::filesystem::path& path, MapData& data) -> ParseError
 {
   data.absolute_path = std::filesystem::absolute(path);
-  if (!std::filesystem::exists(data.absolute_path))
-  {
+  if (!std::filesystem::exists(data.absolute_path)) {
     return ParseError::MapDoesNotExist;
   }
 
   const auto json = ReadJson(data.absolute_path);
 
-  if (const auto err = ParseOrientation(json); err != ParseError::None)
-  {
+  if (const auto err = ParseOrientation(json); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseInfinite(json); err != ParseError::None)
-  {
+  if (const auto err = ParseInfinite(json); err != ParseError::None) {
     return err;
   }
 
   if (const auto err = ParseNextLayerId(json, data.next_layer_id);
-      err != ParseError::None)
-  {
+      err != ParseError::None) {
     return err;
   }
 
@@ -154,25 +133,19 @@ auto ParseJsonMap(const std::filesystem::path& path, MapData& data) -> ParseErro
     return err;
   }
 
-  if (const auto err = ParseTileWidth(json, data.tile_width);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseTileWidth(json, data.tile_width); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseTileHeight(json, data.tile_height);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseTileHeight(json, data.tile_height); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseWidth(json, data.column_count); err != ParseError::None)
-  {
+  if (const auto err = ParseWidth(json, data.column_count); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseHeight(json, data.row_count); err != ParseError::None)
-  {
+  if (const auto err = ParseHeight(json, data.row_count); err != ParseError::None) {
     return err;
   }
 
@@ -183,14 +156,11 @@ auto ParseJsonMap(const std::filesystem::path& path, MapData& data) -> ParseErro
     return err;
   }
 
-  if (const auto err = ParseLayers(json, data.layers); err != ParseError::None)
-  {
+  if (const auto err = ParseLayers(json, data.layers); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseProperties(json, data.properties);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
     return err;
   }
 

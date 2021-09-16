@@ -22,8 +22,7 @@ void AddColumnCmd::Redo()
 
 auto AddColumnCmd::MergeWith(const ACommand& cmd) -> bool
 {
-  if (GetId() == cmd.GetId())
-  {
+  if (GetId() == cmd.GetId()) {
     const auto& other = dynamic_cast<const AddColumnCmd&>(cmd);
     mColumns += other.mColumns;
     return true;

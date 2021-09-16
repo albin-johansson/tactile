@@ -28,28 +28,22 @@ constexpr auto tile_highlight_color = IM_COL32(0, 255, 0, 200);
 constinit bool center_viewport = false;
 
 template <typename Event, typename T>
-void CheckFor(const ViewportCursorInfo& cursor,
-              entt::dispatcher& dispatcher,
-              T&& query)
+void CheckFor(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&& query)
 {
   const auto left = query(ImGuiMouseButton_Left);
   const auto mid = query(ImGuiMouseButton_Middle);
   const auto right = query(ImGuiMouseButton_Right);
-  if (left || mid || right)
-  {
+  if (left || mid || right) {
     MouseInfo info;
     info.position_in_map = cursor.map_position;
 
-    if (left)
-    {
+    if (left) {
       info.button = cen::mouse_button::left;
     }
-    else if (mid)
-    {
+    else if (mid) {
       info.button = cen::mouse_button::middle;
     }
-    else /*if (right)*/
-    {
+    else /*if (right)*/ {
       info.button = cen::mouse_button::right;
     }
 
@@ -79,8 +73,7 @@ void RenderCursorGizmos(const entt::registry& registry,
 {
   assert(cursor.is_within_map);
 
-  if (!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered())
-  {
+  if (!ImGui::IsWindowFocused() && !ImGui::IsWindowHovered()) {
     return;
   }
 
@@ -107,8 +100,7 @@ void RenderCursorGizmos(const entt::registry& registry,
     });
   }
 
-  if (Sys::IsStampEnabled(registry) && Sys::HasNonEmptyTilesetSelection(registry))
-  {
+  if (Sys::IsStampEnabled(registry) && Sys::HasNonEmptyTilesetSelection(registry)) {
     RenderStampPreview(registry, cursor.map_position, info);
   }
 }
@@ -128,21 +120,15 @@ void MapView(const entt::registry& registry, entt::dispatcher& dispatcher)
   const auto info = GetRenderInfo(registry, canvas);
 
   // TODO viewport should be centered by default
-  if (center_viewport)
-  {
-    CenterViewport(dispatcher,
-                   viewport,
-                   canvas.size,
-                   info.row_count,
-                   info.col_count);
+  if (center_viewport) {
+    CenterViewport(dispatcher, viewport, canvas.size, info.row_count, info.col_count);
     center_viewport = false;
   }
 
   RenderMap(registry, info);
 
   const auto cursor = GetViewportCursorInfo(info);
-  if (cursor.is_within_map)
-  {
+  if (cursor.is_within_map) {
     RenderCursorGizmos(registry, dispatcher, cursor, info);
   }
 

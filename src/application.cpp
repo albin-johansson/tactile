@@ -60,8 +60,7 @@ namespace {
 template <typename Command, typename... Args>
 void Execute(Model& model, Args&&... args)
 {
-  if (auto* document = model.GetActiveDocument())
-  {
+  if (auto* document = model.GetActiveDocument()) {
     auto& commands = document->commands;
     commands.Push<Command>(document->registry, std::forward<Args>(args)...);
   }
@@ -70,11 +69,9 @@ void Execute(Model& model, Args&&... args)
 template <typename Command, typename... Args>
 void Register(Model& model, Args&&... args)
 {
-  if (auto* document = model.GetActiveDocument())
-  {
+  if (auto* document = model.GetActiveDocument()) {
     auto& commands = document->commands;
-    commands.PushWithoutRedo<Command>(document->registry,
-                                      std::forward<Args>(args)...);
+    commands.PushWithoutRedo<Command>(document->registry, std::forward<Args>(args)...);
   }
 }
 
@@ -96,13 +93,11 @@ auto Application::Run() -> int
 {
   const auto& io = ImGui::GetIO();
 
-  if (Prefs::GetRestoreLastSession())
-  {
+  if (Prefs::GetRestoreLastSession()) {
     RestoreLastSession(mModel);
   }
 
-  while (!mQuit)
-  {
+  while (!mQuit) {
     mKeyboard.update();
     PollEvents();
 
@@ -143,17 +138,14 @@ void Application::OnAboutToExit()
 void Application::PollEvents()
 {
   cen::event event;
-  while (event.poll())
-  {
+  while (event.poll()) {
     ImGui_ImplSDL2_ProcessEvent(event.data());
 
-    if (event.is<cen::quit_event>())
-    {
+    if (event.is<cen::quit_event>()) {
       mQuit = true;
       break;
     }
-    else if (auto* keyEvent = event.try_get<cen::keyboard_event>())
-    {
+    else if (auto* keyEvent = event.try_get<cen::keyboard_event>()) {
       // We don't care about these modifiers, they are just noise
       keyEvent->set_modifier(cen::key_mod::caps, false);
       keyEvent->set_modifier(cen::key_mod::num, false);
@@ -161,20 +153,15 @@ void Application::PollEvents()
 
       UpdateShortcuts(mModel, *keyEvent, mDispatcher);
     }
-    else if (const auto* wheelEvent = event.try_get<cen::mouse_wheel_event>())
-    {
+    else if (const auto* wheelEvent = event.try_get<cen::mouse_wheel_event>()) {
       // TODO support zooming in tilesets
 
-      if (mModel.HasActiveDocument() &&
-          mKeyboard.is_pressed(cen::scancodes::left_ctrl))
-      {
+      if (mModel.HasActiveDocument() && mKeyboard.is_pressed(cen::scancodes::left_ctrl)) {
         const auto dy = wheelEvent->y_scroll();
-        if (dy > 0)
-        {
+        if (dy > 0) {
           mDispatcher.enqueue<IncreaseZoomEvent>();
         }
-        else if (dy < 0 && mModel.CanDecreaseViewportTileSize())
-        {
+        else if (dy < 0 && mModel.CanDecreaseViewportTileSize()) {
           mDispatcher.enqueue<DecreaseZoomEvent>();
         }
       }
@@ -184,8 +171,7 @@ void Application::PollEvents()
 
 void Application::UpdateFrame()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     const auto position = ImGui::GetMousePos();
     auto& mouse = registry->ctx<Mouse>();
     mouse.x = position.x;
@@ -199,16 +185,14 @@ void Application::UpdateFrame()
 
 void Application::OnUndo()
 {
-  if (auto* document = mModel.GetActiveDocument())
-  {
+  if (auto* document = mModel.GetActiveDocument()) {
     document->commands.Undo();
   }
 }
 
 void Application::OnRedo()
 {
-  if (auto* document = mModel.GetActiveDocument())
-  {
+  if (auto* document = mModel.GetActiveDocument()) {
     document->commands.Redo();
   }
 }
@@ -220,18 +204,15 @@ void Application::OnSetCommandCapacity(const SetCommandCapacityEvent& event)
 
 void Application::OnSave()
 {
-  if (auto* document = mModel.GetActiveDocument())
-  {
-    if (!document->path.empty())
-    {
+  if (auto* document = mModel.GetActiveDocument()) {
+    if (!document->path.empty()) {
       IO::SaveMapDocument(*document);
       document->commands.MarkAsClean();
 
       auto& context = document->registry.ctx<PropertyContext>();
       context.name = document->path.filename().string();
     }
-    else
-    {
+    else {
       OnOpenSaveAsDialog();
     }
   }
@@ -239,8 +220,7 @@ void Application::OnSave()
 
 void Application::OnSaveAs(const SaveAsEvent& event)
 {
-  if (auto* document = mModel.GetActiveDocument())
-  {
+  if (auto* document = mModel.GetActiveDocument()) {
     document->path = event.path;
     OnSave();
   }
@@ -248,16 +228,14 @@ void Application::OnSaveAs(const SaveAsEvent& event)
 
 void Application::OnOpenSaveAsDialog()
 {
-  if (mModel.GetActiveDocument())
-  {
+  if (mModel.GetActiveDocument()) {
     OpenSaveAsDialog();
   }
 }
 
 void Application::OnShowMapProperties()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     auto& current = registry->ctx<ActivePropertyContext>();
     current.entity = entt::null;
   }
@@ -277,12 +255,10 @@ void Application::OnCloseMap(const CloseMapEvent& event)
 void Application::OnOpenMap(const OpenMapEvent& event)
 {
   IO::MapParser parser{event.path};
-  if (parser)
-  {
+  if (parser) {
     mModel.AddMap(IO::ToMapDocument(parser.GetData()));
   }
-  else
-  {
+  else {
     OpenMapImportErrorDialog(parser.GetError());
   }
 }
@@ -294,32 +270,28 @@ void Application::OnSelectMap(const SelectMapEvent& event)
 
 void Application::OnSelectTool(const SelectToolEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::SelectTool(*registry, event.type);
   }
 }
 
 void Application::OnMousePressed(const MousePressedEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::ToolOnPressed(*registry, mDispatcher, event.info);
   }
 }
 
 void Application::OnMouseDrag(const MouseDragEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::ToolOnDragged(*registry, mDispatcher, event.info);
   }
 }
 
 void Application::OnMouseReleased(const MouseReleasedEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::ToolOnReleased(*registry, mDispatcher, event.info);
   }
 }
@@ -348,79 +320,66 @@ void Application::OnCenterViewport()
 
 void Application::OnOffsetViewport(const OffsetViewportEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::OffsetViewport(*registry, event.dx, event.dy);
   }
 }
 
 void Application::OnPanLeft()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::PanViewportLeft(*registry);
   }
 }
 
 void Application::OnPanRight()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::PanViewportRight(*registry);
   }
 }
 
 void Application::OnPanUp()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::PanViewportUp(*registry);
   }
 }
 
 void Application::OnPanDown()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::PanViewportDown(*registry);
   }
 }
 
 void Application::OnIncreaseZoom()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::IncreaseViewportZoom(*registry);
   }
 }
 
 void Application::OnDecreaseZoom()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::DecreaseViewportZoom(*registry);
   }
 }
 
 void Application::OnResetZoom()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::ResetViewportZoom(*registry);
   }
 }
 
 void Application::OnAddTileset(const AddTilesetEvent& event)
 {
-  if (auto info = LoadTexture(event.path))
-  {
-    Execute<AddTilesetCmd>(mModel,
-                           std::move(*info),
-                           event.tile_width,
-                           event.tile_height);
+  if (auto info = LoadTexture(event.path)) {
+    Execute<AddTilesetCmd>(mModel, std::move(*info), event.tile_width, event.tile_height);
   }
-  else
-  {
+  else {
     CENTURION_LOG_WARN("Failed to load tileset texture!");
   }
 }
@@ -432,16 +391,14 @@ void Application::OnRemoveTileset(const RemoveTilesetEvent& event)
 
 void Application::OnSelectTileset(const SelectTilesetEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::SelectTileset(*registry, event.id);
   }
 }
 
 void Application::OnSetTilesetSelection(const SetTilesetSelectionEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::UpdateTilesetSelection(*registry, event.selection);
   }
 }
@@ -473,8 +430,7 @@ void Application::OnResizeMap(const ResizeMapEvent& event)
 
 void Application::OnOpenResizeMapDialog()
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     const auto& map = registry->ctx<Map>();
     OpenResizeMapDialog(map.row_count, map.column_count);
   }
@@ -492,8 +448,7 @@ void Application::OnRemoveLayer(const RemoveLayerEvent& event)
 
 void Application::OnSelectLayer(const SelectLayerEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     Sys::SelectLayer(*registry, event.id);
   }
 }
@@ -535,8 +490,7 @@ void Application::OnRenameLayer(const RenameLayerEvent& event)
 
 void Application::OnShowLayerProperties(const ShowLayerPropertiesEvent& event)
 {
-  if (auto* registry = mModel.GetActiveRegistry())
-  {
+  if (auto* registry = mModel.GetActiveRegistry()) {
     auto& current = registry->ctx<ActivePropertyContext>();
     current.entity = Sys::FindLayer(*registry, event.id);
   }
@@ -571,8 +525,7 @@ void Application::OnToggleUi()
 {
   static bool show = false;
 
-  if (!show)
-  {
+  if (!show) {
     prev_show_layer_dock = Prefs::GetShowLayerDock();
     prev_show_tileset_dock = Prefs::GetShowTilesetDock();
     prev_show_properties_dock = Prefs::GetShowPropertiesDock();
@@ -584,8 +537,7 @@ void Application::OnToggleUi()
   Prefs::SetShowPropertiesDock(show);
   SetToolbarVisible(show);
 
-  if (show)
-  {
+  if (show) {
     Prefs::SetShowLayerDock(prev_show_layer_dock);
     Prefs::SetShowTilesetDock(prev_show_tileset_dock);
     Prefs::SetShowPropertiesDock(prev_show_properties_dock);

@@ -219,13 +219,11 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
  *
  * \since 0.2.0
  */
-[[nodiscard]] auto FindLayer(const entt::registry& registry, LayerID id)
-    -> entt::entity;
+[[nodiscard]] auto FindLayer(const entt::registry& registry, LayerID id) -> entt::entity;
 
 [[nodiscard]] auto GetActiveLayer(const entt::registry& registry) -> entt::entity;
 
-[[nodiscard]] auto GetLayerIndex(const entt::registry& registry, entt::entity)
-    -> usize;
+[[nodiscard]] auto GetLayerIndex(const entt::registry& registry, entt::entity) -> usize;
 
 [[nodiscard]] auto GetLayerGlobalIndex(const entt::registry& registry,
                                        entt::entity entity) -> usize;
@@ -236,31 +234,30 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 [[nodiscard]] auto GetLayerSiblingBelow(const entt::registry& registry,
                                         entt::entity entity) -> entt::entity;
 
-[[nodiscard]] auto GetSiblingCount(const entt::registry& registry,
-                                   entt::entity entity) -> usize;
+[[nodiscard]] auto GetSiblingCount(const entt::registry& registry, entt::entity entity)
+    -> usize;
 
 [[nodiscard]] auto GetLayerChildrenCount(const entt::registry& registry,
                                          entt::entity entity) -> usize;
 
-[[nodiscard]] auto GetLayerOpacity(const entt::registry& registry,
-                                   entt::entity entity) -> float;
+[[nodiscard]] auto GetLayerOpacity(const entt::registry& registry, entt::entity entity)
+    -> float;
 
 [[nodiscard]] auto GetLayerId(const entt::registry& registry, entt::entity entity)
     -> LayerID;
 
-[[nodiscard]] auto IsLayerVisible(const entt::registry& registry,
-                                  entt::entity entity) -> bool;
+[[nodiscard]] auto IsLayerVisible(const entt::registry& registry, entt::entity entity)
+    -> bool;
 
-[[nodiscard]] auto CanMoveLayerUp(const entt::registry& registry,
-                                  entt::entity entity) -> bool;
+[[nodiscard]] auto CanMoveLayerUp(const entt::registry& registry, entt::entity entity)
+    -> bool;
 
-[[nodiscard]] auto CanMoveLayerDown(const entt::registry& registry,
-                                    entt::entity entity) -> bool;
+[[nodiscard]] auto CanMoveLayerDown(const entt::registry& registry, entt::entity entity)
+    -> bool;
 
 [[nodiscard]] auto IsTileLayerActive(const entt::registry& registry) -> bool;
 
-[[nodiscard]] auto GetActiveLayerID(const entt::registry& registry)
-    -> Maybe<LayerID>;
+[[nodiscard]] auto GetActiveLayerID(const entt::registry& registry) -> Maybe<LayerID>;
 
 inline void RemoveLayer(entt::registry& registry, const LayerID id)
 {
@@ -274,8 +271,7 @@ inline void SelectLayer(entt::registry& registry, const LayerID id)
   SelectLayer(registry, entity);
 }
 
-inline auto DuplicateLayer(entt::registry& registry, const LayerID id)
-    -> entt::entity
+inline auto DuplicateLayer(entt::registry& registry, const LayerID id) -> entt::entity
 {
   const auto entity = FindLayer(registry, id);
   return DuplicateLayer(registry, entity);
@@ -316,15 +312,15 @@ inline void SetLayerVisible(entt::registry& registry,
   return GetLayerOpacity(registry, entity);
 }
 
-[[nodiscard]] inline auto IsLayerVisible(const entt::registry& registry,
-                                         const LayerID id) -> bool
+[[nodiscard]] inline auto IsLayerVisible(const entt::registry& registry, const LayerID id)
+    -> bool
 {
   const auto entity = FindLayer(registry, id);
   return IsLayerVisible(registry, entity);
 }
 
-[[nodiscard]] inline auto CanMoveLayerUp(const entt::registry& registry,
-                                         const LayerID id) -> bool
+[[nodiscard]] inline auto CanMoveLayerUp(const entt::registry& registry, const LayerID id)
+    -> bool
 {
   const auto entity = FindLayer(registry, id);
   return CanMoveLayerUp(registry, entity);

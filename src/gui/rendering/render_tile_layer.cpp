@@ -23,15 +23,12 @@ void RenderTileLayer(const entt::registry& registry,
 
   const auto endRow = info.bounds.end.GetRow();
   const auto endCol = info.bounds.end.GetColumn();
-  for (auto row = info.bounds.begin.GetRow(); row < endRow; ++row)
-  {
-    for (auto col = info.bounds.begin.GetColumn(); col < endCol; ++col)
-    {
+  for (auto row = info.bounds.begin.GetRow(); row < endRow; ++row) {
+    for (auto col = info.bounds.begin.GetColumn(); col < endCol; ++col) {
       const auto tile = Sys::GetTileFromLayer(registry, layerEntity, {row, col});
-      if (tile != empty_tile)
-      {
-        const ImVec2 offset = info.grid_size * ImVec2{static_cast<float>(col),
-                                                      static_cast<float>(row)};
+      if (tile != empty_tile) {
+        const ImVec2 offset =
+            info.grid_size * ImVec2{static_cast<float>(col), static_cast<float>(row)};
         const ImVec2 position = info.map_position + offset;
         RenderTile(tile, registry, position, info.grid_size, opacity);
       }

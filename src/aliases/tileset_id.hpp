@@ -12,8 +12,7 @@ struct TilesetID;
 
 using TilesetID = nenya::strong_type<int, Tags::TilesetID>;
 
-[[nodiscard]] constexpr auto operator""_tset(const ulonglong value) noexcept
-    -> TilesetID
+[[nodiscard]] constexpr auto operator""_tset(const ulonglong value) noexcept -> TilesetID
 {
   return TilesetID{static_cast<TilesetID::value_type>(value)};
 }

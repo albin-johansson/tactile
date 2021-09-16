@@ -11,16 +11,13 @@ auto ParseObjectLayer(const pugi::xml_node node, LayerData& layer) -> ParseError
 {
   auto& data = layer.data.emplace<ObjectLayerData>();
 
-  for (const auto objectNode : node.children("object"))
-  {
+  for (const auto objectNode : node.children("object")) {
     auto& object = data.objects.emplace_back();
 
-    if (const auto id = GetInt(objectNode, "id"))
-    {
+    if (const auto id = GetInt(objectNode, "id")) {
       object.id = ObjectID{*id};
     }
-    else
-    {
+    else {
       return ParseError::ObjectMissingId;
     }
 
@@ -32,16 +29,13 @@ auto ParseObjectLayer(const pugi::xml_node node, LayerData& layer) -> ParseError
     object.custom_type = GetString(objectNode, "type").value_or(std::string{});
     object.visible = GetBool(objectNode, "visible").value_or(true);
 
-    if (!objectNode.child("point").empty())
-    {
+    if (!objectNode.child("point").empty()) {
       object.type = ObjectType::Point;
     }
-    else if (!objectNode.child("ellipse").empty())
-    {
+    else if (!objectNode.child("ellipse").empty()) {
       object.type = ObjectType::Ellipse;
     }
-    else
-    {
+    else {
       object.type = ObjectType::Rectangle;
     }
 

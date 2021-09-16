@@ -10,8 +10,7 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags =
-    ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 constinit int tile_width = 32;
 constinit int tile_height = 32;
@@ -32,8 +31,7 @@ void ResetState()
 void UpdateAddMapDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Add map", nullptr, flags))
-  {
+  if (ImGui::BeginPopupModal("Add map", nullptr, flags)) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Tile width:  ");
     ImGui::SameLine();
@@ -45,8 +43,7 @@ void UpdateAddMapDialog(entt::dispatcher& dispatcher)
     ImGui::InputInt("##TileHeightInput", &tile_height);
 
     ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid()))
-    {
+    if (Button("OK", nullptr, is_input_valid())) {
       dispatcher.enqueue<AddMapEvent>(tile_width, tile_height);
 
       ResetState();
@@ -54,8 +51,7 @@ void UpdateAddMapDialog(entt::dispatcher& dispatcher)
     }
 
     ImGui::SameLine();
-    if (Button("Cancel"))
-    {
+    if (Button("Cancel")) {
       ResetState();
       ImGui::CloseCurrentPopup();
     }

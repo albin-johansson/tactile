@@ -23,8 +23,7 @@ namespace {
   const auto amount = (tileset.last_id + 1_tile) - tileset.first_id;
   cache.reserve(amount.get());
 
-  for (TileID id{tileset.first_id}; id <= tileset.last_id; ++id)
-  {
+  for (TileID id{tileset.first_id}; id <= tileset.last_id; ++id) {
     const auto index = id - tileset.first_id;
 
     const auto x = (index.get() % tileset.column_count) * tileset.tile_width;
@@ -43,10 +42,8 @@ void RefreshTilesetCache(entt::registry& registry, const entt::entity entity)
   auto& cache = registry.emplace_or_replace<TilesetCache>(entity);
   cache.source_rects = CreateSourceRectCache(tileset);
 
-  for (auto&& [tileEntity, tile] : registry.view<FancyTile>().each())
-  {
-    if (tile.id >= tileset.first_id && tile.id <= tileset.last_id)
-    {
+  for (auto&& [tileEntity, tile] : registry.view<FancyTile>().each()) {
+    if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       cache.tiles.try_emplace(tile.id, tileEntity);
     }
   }
@@ -124,8 +121,7 @@ auto AddTileset(entt::registry& registry,
   return entity;
 }
 
-auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot)
-    -> entt::entity
+auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity
 {
   const auto entity = registry.create();
 
@@ -170,15 +166,13 @@ void RemoveTileset(entt::registry& registry, const TilesetID id)
   assert(entity != entt::null);
 
   auto& activeTileset = registry.ctx<ActiveTileset>();
-  if (entity == activeTileset.entity)
-  {
+  if (entity == activeTileset.entity) {
     activeTileset.entity = entt::null;
   }
 
   registry.destroy(entity);
 
-  if (!registry.empty<Tileset>())
-  {
+  if (!registry.empty<Tileset>()) {
     activeTileset.entity = registry.view<Tileset>().front();
   }
 }
@@ -194,10 +188,8 @@ void UpdateTilesetSelection(entt::registry& registry, const Region& region)
 
 auto FindTileset(const entt::registry& registry, const TilesetID id) -> entt::entity
 {
-  for (auto&& [entity, tileset] : registry.view<Tileset>().each())
-  {
-    if (tileset.id == id)
-    {
+  for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
+    if (tileset.id == id) {
       return entity;
     }
   }
@@ -207,10 +199,8 @@ auto FindTileset(const entt::registry& registry, const TilesetID id) -> entt::en
 
 auto FindTileset(const entt::registry& registry, const TileID id) -> entt::entity
 {
-  for (auto&& [entity, tileset] : registry.view<Tileset>().each())
-  {
-    if (id >= tileset.first_id && id <= tileset.last_id)
-    {
+  for (auto&& [entity, tileset] : registry.view<Tileset>().each()) {
+    if (id >= tileset.first_id && id <= tileset.last_id) {
       return entity;
     }
   }
@@ -227,13 +217,11 @@ auto GetActiveTileset(const entt::registry& registry) -> entt::entity
 auto HasNonEmptyTilesetSelection(const entt::registry& registry) -> bool
 {
   const auto& active = registry.ctx<ActiveTileset>();
-  if (active.entity != entt::null)
-  {
+  if (active.entity != entt::null) {
     const auto& selection = registry.get<TilesetSelection>(active.entity);
     return selection.region.has_value();
   }
-  else
-  {
+  else {
     return false;
   }
 }
@@ -241,11 +229,9 @@ auto HasNonEmptyTilesetSelection(const entt::registry& registry) -> bool
 auto IsSingleTileSelectedInTileset(const entt::registry& registry) -> bool
 {
   const auto& active = registry.ctx<ActiveTileset>();
-  if (active.entity != entt::null)
-  {
+  if (active.entity != entt::null) {
     const auto& selection = registry.get<TilesetSelection>(active.entity);
-    if (selection.region)
-    {
+    if (selection.region) {
       const auto& region = *selection.region;
       return (region.end - region.begin) == MapPosition{1, 1};
     }
@@ -260,11 +246,9 @@ auto GetTileToRender(const entt::registry& registry,
 {
   const auto& cache = registry.get<TilesetCache>(tilesetEntity);
 
-  if (const auto it = cache.tiles.find(id); it != cache.tiles.end())
-  {
+  if (const auto it = cache.tiles.find(id); it != cache.tiles.end()) {
     const auto entity = it->second;
-    if (const auto* animation = registry.try_get<Animation>(entity))
-    {
+    if (const auto* animation = registry.try_get<Animation>(entity)) {
       const auto frameEntity = animation->frames.at(animation->index);
       const auto& frame = registry.get<AnimationFrame>(frameEntity);
       return frame.tile;
@@ -292,29 +276,24 @@ auto GetTileFromTileset(const entt::registry& registry,
   const auto row = position.GetRow();
   const auto col = position.GetColumn();
 
-  if ((row >= 0) && (col >= 0) && (row < tileset.row_count) &&
-      (col < tileset.column_count))
-  {
+  if ((row >= 0) && (col >= 0) && (row < tileset.row_count)
+      && (col < tileset.column_count)) {
     const auto index = row * tileset.column_count + col;
     return tileset.first_id + TileID{index};
   }
-  else
-  {
+  else {
     return empty_tile;
   }
 }
 
-auto ConvertToLocal(const entt::registry& registry, const TileID global)
-    -> Maybe<TileID>
+auto ConvertToLocal(const entt::registry& registry, const TileID global) -> Maybe<TileID>
 {
   const auto entity = FindTileset(registry, global);
-  if (entity != entt::null)
-  {
+  if (entity != entt::null) {
     const auto& tileset = registry.get<Tileset>(entity);
     return global - tileset.first_id;
   }
-  else
-  {
+  else {
     return nothing;
   }
 }

@@ -16,8 +16,7 @@ namespace {
 void RenderName(const CStr name, const ImVec2& center, const ImVec2& radius)
 {
   const auto textSize = ImGui::CalcTextSize(name);
-  if (textSize.x <= radius.x)
-  {
+  if (textSize.x <= radius.x) {
     const auto textX = center.x - (textSize.x / 2.0f);
     const auto textY = center.y + (textSize.y / 2.0f) + (radius.y);
     ImGui::GetWindowDrawList()->AddText({textX, textY}, IM_COL32_WHITE, name);
@@ -44,8 +43,7 @@ void RenderEllipse(const entt::registry& registry,
   RenderShadowedEllipse(center, xRadius, yRadius, color, 2, nSegments);
 
   const auto& context = registry.get<PropertyContext>(entity);
-  if (!context.name.empty())
-  {
+  if (!context.name.empty()) {
     RenderName(context.name.c_str(), center, {xRadius, yRadius});
   }
 }

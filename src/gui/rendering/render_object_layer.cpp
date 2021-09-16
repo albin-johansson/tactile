@@ -24,15 +24,13 @@ void RenderObjectLayer(const entt::registry& registry,
   const auto opacity = 255.0f * (parentOpacity * layer.opacity);
   const auto color = IM_COL32(0xFF, 0, 0, opacity);
 
-  for (const auto objectEntity : objectLayer.objects)
-  {
+  for (const auto objectEntity : objectLayer.objects) {
     const auto& object = registry.get<Object>(objectEntity);
 
     const auto localPos = ImVec2{object.x, object.y};
     const auto absolutePos = info.map_position + (localPos * info.ratio);
 
-    switch (object.type)
-    {
+    switch (object.type) {
       case ObjectType::Point:
         RenderPoint(registry, objectEntity, info, absolutePos, color);
         break;

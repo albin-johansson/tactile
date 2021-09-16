@@ -33,8 +33,7 @@ void RemoveColumnCmd::Redo()
 
 auto RemoveColumnCmd::MergeWith(const ACommand& cmd) -> bool
 {
-  if (GetId() == cmd.GetId())
-  {
+  if (GetId() == cmd.GetId()) {
     const auto& other = dynamic_cast<const RemoveColumnCmd&>(cmd);
 
     mColumns += other.mColumns;

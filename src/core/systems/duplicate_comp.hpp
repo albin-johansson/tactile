@@ -33,8 +33,7 @@ inline auto DuplicateComp<PropertyContext>(entt::registry& registry,
   const auto& srcContext = registry.get<PropertyContext>(source);
   context.name = srcContext.name;
 
-  for (const auto srcPropertyEntity : srcContext.properties)
-  {
+  for (const auto srcPropertyEntity : srcContext.properties) {
     const auto propertyEntity = registry.create();
     context.properties.push_back(propertyEntity);
 
@@ -47,15 +46,13 @@ inline auto DuplicateComp<PropertyContext>(entt::registry& registry,
 template <>
 inline auto DuplicateComp<ObjectLayer>(entt::registry& registry,
                                        const entt::entity source,
-                                       const entt::entity destination)
-    -> ObjectLayer&
+                                       const entt::entity destination) -> ObjectLayer&
 {
   auto& map = registry.ctx<Map>();
   auto& layer = registry.emplace<ObjectLayer>(destination);
 
   const auto& sourceLayer = registry.get<ObjectLayer>(source);
-  for (const auto sourceObject : sourceLayer.objects)
-  {
+  for (const auto sourceObject : sourceLayer.objects) {
     const auto objectEntity = registry.create();
     layer.objects.push_back(objectEntity);
 
@@ -82,8 +79,7 @@ inline auto DuplicateComp<GroupLayer>(entt::registry& registry,
   auto& map = registry.ctx<Map>();
 
   auto& group = registry.emplace<GroupLayer>(destination);
-  for (const auto sourceChild : registry.get<GroupLayer>(source).layers)
-  {
+  for (const auto sourceChild : registry.get<GroupLayer>(source).layers) {
     /* We don't need to add the created child layer to the group layer explicitly */
     DuplicateLayer(registry, sourceChild, destination, true);
   }

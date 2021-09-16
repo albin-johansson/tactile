@@ -26,8 +26,7 @@ void SetTilesInLayer(entt::registry& registry,
   assert(registry.all_of<TileLayer>(entity));
 
   auto& matrix = registry.get<TileLayer>(entity).matrix;
-  for (const auto& [position, tile] : tiles)
-  {
+  for (const auto& [position, tile] : tiles) {
     assert(position.GetRowIndex() < matrix.size());
     assert(position.GetColumnIndex() < matrix.front().size());
     matrix[position.GetRowIndex()][position.GetColumnIndex()] = tile;
@@ -60,12 +59,10 @@ auto GetTileFromLayer(const entt::registry& registry,
   const auto row = position.GetRow();
   const auto col = position.GetColumn();
 
-  if (row < matrix.size() && col < matrix.at(0).size())
-  {
+  if (row < matrix.size() && col < matrix.at(0).size()) {
     return matrix.at(row).at(col);
   }
-  else
-  {
+  else {
     return empty_tile;
   }
 }

@@ -12,8 +12,7 @@ struct ObjectID;
 
 using ObjectID = nenya::strong_type<int, Tags::ObjectID>;
 
-[[nodiscard]] constexpr auto operator""_obj(const ulonglong value) noexcept
-    -> ObjectID
+[[nodiscard]] constexpr auto operator""_obj(const ulonglong value) noexcept -> ObjectID
 {
   return ObjectID{static_cast<ObjectID::value_type>(value)};
 }

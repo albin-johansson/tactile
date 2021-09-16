@@ -14,13 +14,11 @@ constexpr float error_float = std::numeric_limits<float>::lowest();
 
 }  // namespace
 
-auto Collect(const pugi::xml_node node, const CStr str)
-    -> std::vector<pugi::xml_node>
+auto Collect(const pugi::xml_node node, const CStr str) -> std::vector<pugi::xml_node>
 {
   std::vector<pugi::xml_node> nodes;
 
-  for (auto child : node.children(str))
-  {
+  for (auto child : node.children(str)) {
     nodes.push_back(std::move(child));
   }
 
@@ -39,17 +37,14 @@ auto Contains(const pugi::xml_node node, const NotNull<CStr> attr) -> bool
   });
 }
 
-auto GetString(const pugi::xml_node node, const NotNull<CStr> attr)
-    -> Maybe<std::string>
+auto GetString(const pugi::xml_node node, const NotNull<CStr> attr) -> Maybe<std::string>
 {
   assert(attr);
 
-  if (const auto str = node.attribute(attr).as_string(nullptr))
-  {
+  if (const auto str = node.attribute(attr).as_string(nullptr)) {
     return str;
   }
-  else
-  {
+  else {
     return nothing;
   }
 }
@@ -61,12 +56,10 @@ auto GetInt(const pugi::xml_node node, const NotNull<CStr> attr) -> Maybe<int>
   const auto attribute = node.attribute(attr);
   const auto value = attribute.as_int(error_int);
 
-  if (!attribute.empty() && value != error_int)
-  {
+  if (!attribute.empty() && value != error_int) {
     return value;
   }
-  else
-  {
+  else {
     return nothing;
   }
 }
@@ -78,12 +71,10 @@ auto GetFloat(const pugi::xml_node node, const NotNull<CStr> attr) -> Maybe<floa
   const auto attribute = node.attribute(attr);
   const auto value = attribute.as_float(error_float);
 
-  if (!attribute.empty() && value != error_float)
-  {
+  if (!attribute.empty() && value != error_float) {
     return value;
   }
-  else
-  {
+  else {
     return nothing;
   }
 }
@@ -93,12 +84,10 @@ auto GetBool(const pugi::xml_node node, const NotNull<CStr> attr) -> Maybe<bool>
   assert(attr);
 
   const auto attribute = node.attribute(attr);
-  if (!attribute.empty())
-  {
+  if (!attribute.empty()) {
     return attribute.as_bool();
   }
-  else
-  {
+  else {
     return nothing;
   }
 }

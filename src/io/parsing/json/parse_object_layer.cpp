@@ -9,86 +9,67 @@ namespace {
 
 [[nodiscard]] auto ParseObject(const JSON& json, ObjectData& data) -> ParseError
 {
-  if (const auto it = json.find("id"); it != json.end())
-  {
+  if (const auto it = json.find("id"); it != json.end()) {
     data.id = ObjectID{it->get<ObjectID::value_type>()};
   }
-  else
-  {
+  else {
     return ParseError::ObjectMissingId;
   }
 
-  if (const auto it = json.find("x"); it != json.end())
-  {
+  if (const auto it = json.find("x"); it != json.end()) {
     data.x = it->get<float>();
   }
-  else
-  {
+  else {
     data.x = 0;
   }
 
-  if (const auto it = json.find("y"); it != json.end())
-  {
+  if (const auto it = json.find("y"); it != json.end()) {
     data.y = it->get<float>();
   }
-  else
-  {
+  else {
     data.y = 0;
   }
 
-  if (const auto it = json.find("width"); it != json.end())
-  {
+  if (const auto it = json.find("width"); it != json.end()) {
     data.width = it->get<float>();
   }
-  else
-  {
+  else {
     data.width = 0;
   }
 
-  if (const auto it = json.find("height"); it != json.end())
-  {
+  if (const auto it = json.find("height"); it != json.end()) {
     data.height = it->get<float>();
   }
-  else
-  {
+  else {
     data.height = 0;
   }
 
-  if (const auto it = json.find("name"); it != json.end())
-  {
+  if (const auto it = json.find("name"); it != json.end()) {
     data.name = it->get<std::string>();
   }
 
-  if (const auto it = json.find("type"); it != json.end())
-  {
+  if (const auto it = json.find("type"); it != json.end()) {
     data.custom_type = it->get<std::string>();
   }
 
-  if (const auto it = json.find("visible"); it != json.end())
-  {
+  if (const auto it = json.find("visible"); it != json.end()) {
     data.visible = it->get<bool>();
   }
-  else
-  {
+  else {
     data.visible = true;
   }
 
-  if (json.contains("point"))
-  {
+  if (json.contains("point")) {
     data.type = ObjectType::Point;
   }
-  else if (json.contains("ellipse"))
-  {
+  else if (json.contains("ellipse")) {
     data.type = ObjectType::Ellipse;
   }
-  else
-  {
+  else {
     data.type = ObjectType::Rectangle;
   }
 
-  if (const auto err = ParseProperties(json, data.properties);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
     return err;
   }
 
@@ -101,13 +82,10 @@ auto ParseObjectLayer(const JSON& json, LayerData& layer) -> ParseError
 {
   auto& data = layer.data.emplace<ObjectLayerData>();
 
-  if (const auto it = json.find("objects"); it != json.end())
-  {
-    for (const auto& [key, object] : it->items())
-    {
+  if (const auto it = json.find("objects"); it != json.end()) {
+    for (const auto& [key, object] : it->items()) {
       auto& objectData = data.objects.emplace_back();
-      if (const auto err = ParseObject(object, objectData); err != ParseError::None)
-      {
+      if (const auto err = ParseObject(object, objectData); err != ParseError::None) {
         return err;
       }
     }
