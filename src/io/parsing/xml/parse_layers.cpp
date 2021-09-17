@@ -1,8 +1,8 @@
 #include "parse_layers.hpp"
 
-#include <iterator>  // make_move_iterator
-#include <memory>    // make_unique
-#include <utility>   // move
+#include <cstring>  // strcmp
+#include <memory>   // make_unique
+#include <utility>  // move
 
 #include "aliases/ints.hpp"
 #include "parse_object_layer.hpp"
@@ -13,21 +13,21 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseLayer(pugi::xml_node node, LayerData& layer) -> ParseError;
+[[nodiscard]] auto ParseLayer(pugi::xml_node node, LayerData& layer, usize index)
+    -> ParseError;
 
 [[nodiscard]] auto GetLayerNodes(const pugi::xml_node root) -> std::vector<pugi::xml_node>
 {
-  auto nodes = Collect(root, "layer");
+  std::vector<pugi::xml_node> nodes;
 
-  auto objectLayers = root.children("objectgroup");
-  nodes.insert(nodes.end(),
-               std::make_move_iterator(objectLayers.begin()),
-               std::make_move_iterator(objectLayers.end()));
-
-  auto groups = root.children("group");
-  nodes.insert(nodes.end(),
-               std::make_move_iterator(groups.begin()),
-               std::make_move_iterator(groups.end()));
+  for (const auto node : root.children()) {
+    if (std::strcmp(node.name(), "layer") == 0 ||
+        std::strcmp(node.name(), "objectgroup") == 0 ||
+        std::strcmp(node.name(), "group") == 0)
+    {
+      nodes.push_back(node);
+    }
+  }
 
   return nodes;
 }
@@ -37,21 +37,29 @@ namespace {
 {
   auto& data = layer.data.emplace<GroupLayerData>();
 
+  usize childIndex = 0;
   for (const auto layerNode : GetLayerNodes(node)) {
     auto layerData = std::make_unique<LayerData>();
 
-    if (const auto err = ParseLayer(layerNode, *layerData); err != ParseError::None) {
+    if (const auto err = ParseLayer(layerNode, *layerData, childIndex);
+        err != ParseError::None)
+    {
       return err;
     }
 
     data.layers.push_back(std::move(layerData));
+    ++childIndex;
   }
 
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseLayer(const pugi::xml_node node, LayerData& layer) -> ParseError
+[[nodiscard]] auto ParseLayer(const pugi::xml_node node,
+                              LayerData& layer,
+                              const usize index) -> ParseError
 {
+  layer.index = index;
+
   if (const auto id = GetInt(node, "id")) {
     layer.id = LayerID{*id};
   }
@@ -99,9 +107,8 @@ auto ParseLayers(const pugi::xml_node root, std::vector<LayerData>& layers) -> P
   usize index = 0;
   for (const auto node : GetLayerNodes(root)) {
     auto& data = layers.emplace_back();
-    data.index = index;
 
-    if (const auto err = ParseLayer(node, data); err != ParseError::None) {
+    if (const auto err = ParseLayer(node, data, index); err != ParseError::None) {
       return err;
     }
 
