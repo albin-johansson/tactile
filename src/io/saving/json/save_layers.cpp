@@ -6,6 +6,7 @@
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
 #include "core/components/object_layer.hpp"
+#include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/tile_layer.hpp"
 #include "core/tactile_error.hpp"
@@ -170,7 +171,10 @@ auto SaveLayers(const entt::registry& registry, const std::filesystem::path& dir
   auto json = JSON::array();
 
   for (auto&& [entity, layer] : registry.view<Layer>().each()) {
-    json += SaveLayer(registry, entity, layer, dir);
+    const auto& parent = registry.get<Parent>(entity);
+    if (parent.entity == entt::null) {
+      json += SaveLayer(registry, entity, layer, dir);
+    }
   }
 
   return json;
