@@ -32,8 +32,7 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
   {
     has_focus = ImGui::IsWindowFocused();
 
-    const auto view = registry.view<Tileset>();
-    if (view.size() != 0) {
+    if (!registry.empty<Tileset>()) {
       TilesetContentWidget(registry, dispatcher);
     }
     else {
