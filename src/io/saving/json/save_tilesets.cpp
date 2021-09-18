@@ -11,46 +11,12 @@
 #include "core/systems/tileset_system.hpp"
 #include "io/preferences.hpp"
 #include "io/saving/common_saving.hpp"
+#include "save_fancy_tiles.hpp"
 #include "save_json.hpp"
 #include "save_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
-
-[[nodiscard]] auto SaveFancyTiles(const entt::registry& registry,
-                                  const entt::entity tilesetEntity,
-                                  const Tileset& tileset,
-                                  const std::filesystem::path& dir) -> JSON
-{
-  auto array = JSON::array();
-
-  for (auto&& [entity, tile] : registry.view<FancyTile>().each()) {
-    auto& tileJson = array.emplace_back();
-    tileJson["id"] = Sys::ConvertToLocal(registry, tile.id).value().get();
-
-    if (const auto* animation = registry.try_get<Animation>(entity)) {
-      auto animationJson = JSON::array();
-      for (const auto frameEntity : animation->frames) {
-        const auto& frame = registry.get<AnimationFrame>(frameEntity);
-        auto frameJson = JSON::object();
-
-        frameJson["tileid"] = Sys::ConvertToLocal(registry, frame.tile).value().get();
-        frameJson["duration"] = frame.duration.count();
-
-        animationJson += std::move(frameJson);
-      }
-
-      tileJson["animation"] = std::move(animationJson);
-    }
-
-    const auto& ctx = registry.get<PropertyContext>(entity);
-    if (!ctx.properties.empty()) {
-      tileJson["properties"] = SaveProperties(registry, entity, dir);
-    }
-  }
-
-  return array;
-}
 
 void AddCommonAttributes(JSON& json,
                          const entt::registry& registry,
@@ -71,7 +37,7 @@ void AddCommonAttributes(JSON& json,
   json["tilecount"] = tileset.tile_count;
   json["tilewidth"] = tileset.tile_width;
   json["tileheight"] = tileset.tile_height;
-  json["tiles"] = SaveFancyTiles(registry, tilesetEntity, tileset, dir);
+  json["tiles"] = SaveFancyTiles(registry, tilesetEntity, dir);
 
   const auto& ctx = registry.get<PropertyContext>(tilesetEntity);
   if (!ctx.properties.empty()) {

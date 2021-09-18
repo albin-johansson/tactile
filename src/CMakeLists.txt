@@ -400,6 +400,8 @@ set(TACTILE_SOURCE_FILES
     io/saving/save_map_document.cpp
     io/saving/save_map_document.hpp
 
+    io/saving/json/save_fancy_tiles.cpp
+    io/saving/json/save_fancy_tiles.hpp
     io/saving/json/save_json.cpp
     io/saving/json/save_json.hpp
     io/saving/json/save_layers.cpp
