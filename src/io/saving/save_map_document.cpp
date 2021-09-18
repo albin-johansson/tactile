@@ -22,7 +22,7 @@ void SaveMapDocument(const Document& document)
   if (extension == ".json") {
     SaveMapDocumentAsJson(document);
   }
-  else if (extension == ".tmx") {
+  else if (extension == ".tmx" || extension == ".xml") {
     SaveMapDocumentAsXml(document);
   }
   else {

@@ -18,10 +18,12 @@ void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
 {
   if (show) {
     auto path =
-        pfd::save_file{"Save as...", "", {"JSON File", "*.json", "TMX File", "*.tmx"}}
+        pfd::save_file{"Save as...",
+                       "",
+                       {"JSON File", "*.json", "TMX File", "*.tmx", "XML File", "*.xml"}}
             .result();
 
-    if (!path.ends_with(".json") && !path.ends_with(".tmx")) {
+    if (!path.ends_with(".json") && !path.ends_with(".tmx") && !path.ends_with(".xml")) {
       CENTURION_LOG_INFO("No suffix in requested file path, using preferred format...");
       path += (Prefs::GetPreferredFormat() == "JSON") ? ".json" : ".tmx";
     }

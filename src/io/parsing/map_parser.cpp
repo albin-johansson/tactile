@@ -25,7 +25,7 @@ MapParser::MapParser(const std::filesystem::path& path)
     if (extension == ".json") {
       mError = IO::ParseJsonMap(path, mData);
     }
-    else if (extension == ".tmx") {
+    else if (extension == ".tmx" || extension == ".xml") {
       mError = IO::ParseXmlMap(path, mData);
     }
     else {

@@ -23,7 +23,8 @@ constinit bool show_open_map_dialog = false;
 
 void ShowMapFileDialog(entt::dispatcher& dispatcher)
 {
-  auto path = pfd::open_file{"Open Map...", "", {"Map Files", "*.json *.tmx"}}.result();
+  auto path =
+      pfd::open_file{"Open Map...", "", {"Map Files", "*.json *.tmx *.xml"}}.result();
 
   if (!path.empty()) {
     dispatcher.enqueue<OpenMapEvent>(std::move(path.front()));
