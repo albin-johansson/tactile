@@ -403,6 +403,14 @@ void Application::OnSetTilesetSelection(const SetTilesetSelectionEvent& event)
   }
 }
 
+void Application::OnShowTilesetProperties(const ShowTilesetPropertiesEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    auto& current = registry->ctx<ActivePropertyContext>();
+    current.entity = Sys::FindTileset(*registry, event.id);
+  }
+}
+
 void Application::OnAddRow()
 {
   Execute<AddRowCmd>(mModel);

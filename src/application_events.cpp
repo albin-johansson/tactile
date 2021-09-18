@@ -47,6 +47,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<RemoveTilesetEvent>().connect<&App::OnRemoveTileset>(app);
   d.sink<SelectTilesetEvent>().connect<&App::OnSelectTileset>(app);
   d.sink<SetTilesetSelectionEvent>().connect<&App::OnSetTilesetSelection>(app);
+  d.sink<ShowTilesetPropertiesEvent>().connect<&App::OnShowTilesetProperties>(app);
 
   d.sink<AddRowEvent>().connect<&App::OnAddRow>(app);
   d.sink<AddColumnEvent>().connect<&App::OnAddColumn>(app);

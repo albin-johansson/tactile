@@ -75,6 +75,7 @@ class Application final
   void OnRemoveTileset(const RemoveTilesetEvent& event);
   void OnSelectTileset(const SelectTilesetEvent& event);
   void OnSetTilesetSelection(const SetTilesetSelectionEvent& event);
+  void OnShowTilesetProperties(const ShowTilesetPropertiesEvent& event);
 
   void OnAddRow();
   void OnAddColumn();

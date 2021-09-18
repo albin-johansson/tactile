@@ -32,6 +32,11 @@ struct SetTilesetSelectionEvent final
   Region selection;
 };
 
+struct ShowTilesetPropertiesEvent final
+{
+  TilesetID id;
+};
+
 /// \} End of group events
 
 }  // namespace Tactile
