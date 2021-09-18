@@ -45,6 +45,31 @@ void TilesetContentWidget(const entt::registry& registry, entt::dispatcher& disp
       else if (ImGui::IsItemActivated()) {
         dispatcher.enqueue<SelectTilesetEvent>(tileset.id);
       }
+      else if (ImGui::BeginPopupContextItem("##TilesetTabContext")) {
+        if (ImGui::MenuItem(TAC_ICON_ADD " Create new tileset...")) {
+          ShowTilesetDialog();
+        }
+
+        ImGui::Separator();
+
+        if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show tileset properties")) {
+          dispatcher.enqueue<ShowTilesetPropertiesEvent>(tileset.id);
+        }
+
+        ImGui::Separator();
+
+        if (ImGui::MenuItem(TAC_ICON_EDIT " Rename tileset")) {
+          // TODO
+        }
+
+        ImGui::Separator();
+
+        if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove tileset")) {
+          dispatcher.enqueue<RemoveTilesetEvent>(tileset.id);
+        }
+
+        ImGui::EndPopup();
+      }
     }
 
     ImGui::EndTabBar();
