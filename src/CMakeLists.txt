@@ -374,6 +374,8 @@ set(TACTILE_SOURCE_FILES
 
     io/parsing/xml/parse_csv.cpp
     io/parsing/xml/parse_csv.hpp
+    io/parsing/xml/parse_fancy_tiles.cpp
+    io/parsing/xml/parse_fancy_tiles.hpp
     io/parsing/xml/parse_layers.cpp
     io/parsing/xml/parse_layers.hpp
     io/parsing/xml/parse_object_layer.cpp

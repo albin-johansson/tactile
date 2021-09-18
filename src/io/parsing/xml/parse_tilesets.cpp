@@ -1,10 +1,12 @@
 #include "parse_tilesets.hpp"
 
+#include <cassert>     // assert
 #include <cstring>     // strcmp
 #include <filesystem>  // exists, weakly_canonical
 #include <string>      // string
 #include <utility>     // move
 
+#include "parse_fancy_tiles.hpp"
 #include "parse_properties.hpp"
 #include "xml_utils.hpp"
 
@@ -41,27 +43,6 @@ namespace {
   else {
     return nothing;
   }
-}
-
-[[nodiscard]] auto ParseTiles(const pugi::xml_node node, TilesetData& data) -> ParseError
-{
-  for (const auto tile : node.children("tile")) {
-    auto& tileData = data.tiles.emplace_back();
-    tileData.id = TileID{GetInt(tile, "id").value()};
-
-    for (const auto frame : tile.child("animation").children("frame")) {
-      auto& frameData = tileData.animation.emplace_back();
-      frameData.tile = TileID{GetInt(frame, "tileid").value()};
-      frameData.duration = GetInt(frame, "duration").value();
-    }
-
-    if (const auto err = ParseProperties(tile, tileData.properties);
-        err != ParseError::None) {
-      return err;
-    }
-  }
-
-  return ParseError::None;
 }
 
 [[nodiscard]] auto ParseCommon(const pugi::xml_node node,
@@ -103,7 +84,7 @@ namespace {
     return ParseError::TilesetMissingName;
   }
 
-  if (const auto err = ParseTiles(node, data); err != ParseError::None) {
+  if (const auto err = ParseFancyTiles(node, data); err != ParseError::None) {
     return err;
   }
 
