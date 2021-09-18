@@ -4,6 +4,7 @@
 #include <filesystem>  // exists, weakly_canonical
 #include <string>      // string
 
+#include "parse_fancy_tiles.hpp"
 #include "parse_properties.hpp"
 #include "read_json.hpp"
 
@@ -19,34 +20,6 @@ namespace {
   else {
     return ParseError::TilesetMissingFirstGid;
   }
-}
-
-[[nodiscard]] auto ParseTiles(const JSON& json, TilesetData& data) -> ParseError
-{
-  if (!json.contains("tiles")) {
-    return ParseError::None;
-  }
-
-  const auto tiles = json.at("tiles");
-  for (const auto& [key, tile] : tiles.items()) {
-    auto& tileData = data.tiles.emplace_back();
-    tileData.id = TileID{tile.at("id").get<TileID::value_type>()};
-
-    if (const auto it = tile.find("animation"); it != tile.end()) {
-      for (const auto& [_, frame] : it->items()) {
-        auto& frameData = tileData.animation.emplace_back();
-        frameData.tile = TileID{frame.at("tileid").get<TileID::value_type>()};
-        frameData.duration = frame.at("duration").get<int>();
-      }
-    }
-
-    if (const auto err = ParseProperties(tile, tileData.properties);
-        err != ParseError::None) {
-      return err;
-    }
-  }
-
-  return ParseError::None;
 }
 
 [[nodiscard]] auto ParseTilesetCommon(const JSON& json,
@@ -90,7 +63,7 @@ namespace {
     return ParseError::TilesetMissingName;
   }
 
-  if (const auto err = ParseTiles(json, data); err != ParseError::None) {
+  if (const auto err = ParseFancyTiles(json, data); err != ParseError::None) {
     return err;
   }
 

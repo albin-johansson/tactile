@@ -353,6 +353,8 @@ set(TACTILE_SOURCE_FILES
     io/parsing/to_map_document.hpp
 
     io/parsing/json/json_utils.hpp
+    io/parsing/json/parse_fancy_tiles.cpp
+    io/parsing/json/parse_fancy_tiles.hpp
     io/parsing/json/parse_json_map.cpp
     io/parsing/json/parse_json_map.hpp
     io/parsing/json/parse_layers.cpp
