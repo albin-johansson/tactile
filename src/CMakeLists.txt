@@ -413,6 +413,8 @@ set(TACTILE_SOURCE_FILES
     io/saving/json/save_tilesets.cpp
     io/saving/json/save_tilesets.hpp
 
+    io/saving/xml/append_fancy_tiles.cpp
+    io/saving/xml/append_fancy_tiles.hpp
     io/saving/xml/append_layer.cpp
     io/saving/xml/append_layer.hpp
     io/saving/xml/append_properties.cpp

@@ -2,9 +2,8 @@
 
 #include <format>  // format
 
+#include "append_fancy_tiles.hpp"
 #include "append_properties.hpp"
-#include "core/components/animation.hpp"
-#include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/texture.hpp"
 #include "core/systems/tileset_system.hpp"
@@ -14,32 +13,6 @@
 
 namespace Tactile::IO {
 namespace {
-
-void AppendFancyTiles(pugi::xml_node node,
-                      const entt::registry& registry,
-                      const entt::entity tilesetEntity,
-                      const std::filesystem::path& dir)
-{
-  for (auto&& [entity, tile] : registry.view<FancyTile>().each()) {
-    auto tileNode = node.append_child("tile");
-    tileNode.append_attribute("id").set_value(
-        Sys::ConvertToLocal(registry, tile.id).value());
-
-    if (const auto* animation = registry.try_get<Animation>(entity)) {
-      auto animationNode = tileNode.append_child("animation");
-      for (const auto frameEntity : animation->frames) {
-        const auto& frame = registry.get<AnimationFrame>(frameEntity);
-        auto frameNode = animationNode.append_child("frame");
-
-        const auto local = Sys::ConvertToLocal(registry, frame.tile).value();
-        frameNode.append_attribute("tileid").set_value(local);
-        frameNode.append_attribute("duration").set_value(frame.duration.count());
-      }
-    }
-
-    AppendProperties(registry, entity, tileNode, dir);
-  }
-}
 
 void AddCommon(pugi::xml_node node,
                const entt::registry& registry,
