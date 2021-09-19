@@ -36,6 +36,7 @@ class Application final
   bool mQuit{};
 
   void OnAboutToExit();
+  void SaveCurrentFilesToHistory();
   void PollEvents();
   void UpdateFrame();
 

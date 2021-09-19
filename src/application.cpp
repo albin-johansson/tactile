@@ -46,6 +46,7 @@
 #include "gui/widgets/layers/layer_dock.hpp"
 #include "gui/widgets/toolbar/toolbar.hpp"
 #include "gui/widgets/viewport/viewport_widget.hpp"
+#include "io/history.hpp"
 #include "io/parsing/map_parser.hpp"
 #include "io/parsing/to_map_document.hpp"
 #include "io/preferences.hpp"
@@ -97,6 +98,8 @@ auto Application::Run() -> int
     RestoreLastSession(mModel);
   }
 
+  LoadFileHistory();
+
   while (!mQuit) {
     mKeyboard.update();
     PollEvents();
@@ -130,9 +133,20 @@ auto Application::Run() -> int
 
 void Application::OnAboutToExit()
 {
+  SaveCurrentFilesToHistory();
   SavePreferences();
   SaveSession(mModel);
+  SaveFileHistory();
   UnloadTextures();
+}
+
+void Application::SaveCurrentFilesToHistory()
+{
+  for (const auto& [id, document] : mModel) {
+    if (!document->path.empty()) {
+      AddFileToHistory(document->path);
+    }
+  }
 }
 
 void Application::PollEvents()
@@ -249,14 +263,22 @@ void Application::OnAddMap(const AddMapEvent& event)
 
 void Application::OnCloseMap(const CloseMapEvent& event)
 {
+  SetLastClosedFile(mModel.GetPath(event.id));
   mModel.RemoveMap(event.id);
 }
 
 void Application::OnOpenMap(const OpenMapEvent& event)
 {
+  /* Just silently ignore the request if the map is already open */
+  if (mModel.HasDocumentWithPath(event.path)) {
+    CENTURION_LOG_INFO("Tried to open map that was already open!");
+    return;
+  }
+
   IO::MapParser parser{event.path};
   if (parser) {
     mModel.AddMap(IO::ToMapDocument(parser.GetData()));
+    AddFileToHistory(event.path);
   }
   else {
     OpenMapImportErrorDialog(parser.GetError());

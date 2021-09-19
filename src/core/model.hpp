@@ -1,6 +1,7 @@
 #pragma once
 
 #include <entt.hpp>             // registry
+#include <filesystem>           // path
 #include <rune/everything.hpp>  // vector_map
 
 #include "aliases/map_id.hpp"
@@ -33,6 +34,10 @@ class Model final
   void SelectMap(MapID id);
 
   void RemoveMap(MapID id);
+
+  [[nodiscard]] auto GetPath(MapID id) const -> const std::filesystem::path&;
+
+  [[nodiscard]] auto HasDocumentWithPath(const std::filesystem::path& path) const -> bool;
 
   [[nodiscard]] auto GetActiveMapId() const -> Maybe<MapID>
   {

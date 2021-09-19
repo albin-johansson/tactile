@@ -112,6 +112,23 @@ void Model::RemoveMap(const MapID id)
   }
 }
 
+auto Model::GetPath(const MapID id) const -> const std::filesystem::path&
+{
+  assert(mDocuments.contains(id));
+  return mDocuments.at(id)->path;
+}
+
+auto Model::HasDocumentWithPath(const std::filesystem::path& path) const -> bool
+{
+  for (const auto& [id, document] : mDocuments) {
+    if (document->path == path) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 auto Model::HasActiveDocument() const -> bool
 {
   return mActiveMap.has_value();

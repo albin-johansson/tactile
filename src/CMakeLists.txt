@@ -339,6 +339,8 @@ set(TACTILE_SOURCE_FILES
 
     io/directories.cpp
     io/directories.hpp
+    io/history.cpp
+    io/history.hpp
     io/preferences.cpp
     io/preferences.hpp
     io/session.cpp
