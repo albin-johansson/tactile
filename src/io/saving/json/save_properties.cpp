@@ -40,6 +40,7 @@ namespace {
       break;
     }
     case PropertyType::File: {
+      // FIXME relative paths are saved with '\\' characters
       value = GetPropertyFileValue(property, dir);
       break;
     }
