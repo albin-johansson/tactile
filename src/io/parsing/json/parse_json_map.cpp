@@ -113,54 +113,58 @@ auto ParseJsonMap(const std::filesystem::path& path, MapData& data) -> ParseErro
   }
 
   const auto json = ReadJson(data.absolute_path);
+  if (!json) {
+    return ParseError::CouldNotReadFile;
+  }
 
-  if (const auto err = ParseOrientation(json); err != ParseError::None) {
+  if (const auto err = ParseOrientation(*json); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseInfinite(json); err != ParseError::None) {
+  if (const auto err = ParseInfinite(*json); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseNextLayerId(json, data.next_layer_id);
+  if (const auto err = ParseNextLayerId(*json, data.next_layer_id);
       err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseNextObjectId(json, data.next_object_id);
+  if (const auto err = ParseNextObjectId(*json, data.next_object_id);
       err != ParseError::None)
   {
     return err;
   }
 
-  if (const auto err = ParseTileWidth(json, data.tile_width); err != ParseError::None) {
+  if (const auto err = ParseTileWidth(*json, data.tile_width); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseTileHeight(json, data.tile_height); err != ParseError::None) {
+  if (const auto err = ParseTileHeight(*json, data.tile_height); err != ParseError::None)
+  {
     return err;
   }
 
-  if (const auto err = ParseWidth(json, data.column_count); err != ParseError::None) {
+  if (const auto err = ParseWidth(*json, data.column_count); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseHeight(json, data.row_count); err != ParseError::None) {
+  if (const auto err = ParseHeight(*json, data.row_count); err != ParseError::None) {
     return err;
   }
 
   const auto directory = data.absolute_path.parent_path();
-  if (const auto err = ParseTilesets(json, data.tilesets, directory);
+  if (const auto err = ParseTilesets(*json, data.tilesets, directory);
       err != ParseError::None)
   {
     return err;
   }
 
-  if (const auto err = ParseLayers(json, data.layers); err != ParseError::None) {
+  if (const auto err = ParseLayers(*json, data.layers); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
+  if (const auto err = ParseProperties(*json, data.properties); err != ParseError::None) {
     return err;
   }
 

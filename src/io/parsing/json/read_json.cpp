@@ -4,14 +4,19 @@
 
 namespace Tactile {
 
-auto ReadJson(const std::filesystem::path& path) -> JSON
+auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>
 {
-  std::ifstream stream{path};
+  try {
+    std::ifstream stream{path};
 
-  JSON json;
-  stream >> json;
+    JSON json;
+    stream >> json;
 
-  return json;
+    return json;
+  }
+  catch (...) {
+    return nothing;
+  }
 }
 
 }  // namespace Tactile

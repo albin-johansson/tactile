@@ -85,7 +85,7 @@ namespace {
   const auto path = std::filesystem::weakly_canonical(directory / source);
 
   try {
-    const auto external = ReadJson(path);
+    const auto external = ReadJson(path).value();
     return ParseTilesetCommon(external, data, directory);
   }
   catch (...) {
