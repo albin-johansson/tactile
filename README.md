@@ -1,29 +1,62 @@
 # Tactile
 
 [![License](https://img.shields.io/badge/license-GPL3-blue.svg)](https://opensource.org/licenses/GPL-3.0)
-[![Language](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization)
 [![version](https://img.shields.io/github/v/release/albin-johansson/tactile)](https://github.com/albin-johansson/tactile/releases)
-[![doxygen](https://img.shields.io/badge/doxygen-stable-blue)](https://albin-johansson.github.io/tactile/)
 [![CI: Windows](https://github.com/albin-johansson/tactile/actions/workflows/windows.yml/badge.svg?branch=dev)](https://github.com/albin-johansson/tactile/actions/workflows/windows.yml)
 
-A tilemap editor that aims to be easy-to-use, fast and lightweight. Furthermore, compatibility with
-the [Tiled](https://www.mapeditor.org/) map editor has been pursued.
+A tilemap editor that aims to be easy-to-use, fast and lightweight.
 
 ![example](meta/screenshots/v020.png "example")
 
 ## Aim
 
-The following bullet points describe the goals that guide the design and development of the Tactile
-editor.
+* Must be easy to learn
+* Must be easy to use
+* Keep things simple, hide advanced options that are rarely used
+* Well documented and high-quality source code
+* Be lightweight and performant
 
-* Must be easy to learn and get started with.
-* Must be easy to use.
-* Keep things simple, hide advanced options that are rarely used.
-* Well documented and high-quality source code.
+## Features
 
-## Source code
+* Great performance thanks to ECS architecture
+* Extensive and intelligent undo/redo support
+* Tile layers
+* Object layers
+* Group layers
+* Embedded and external tilesets
+* Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
+* Intuitive mouse tools
+  * Tile stamp
+  * Eraser
+  * Bucket fill
+* Display tile animations
+* Various editor themes
+* Insightful and helpful error messages when things go wrong, e.g. when parsing corrupted maps
 
-Tactile is developed with C++20 on Windows using MSVC. The code might be using features that are not
-yet available in stable releases of GCC and Clang, which means that Tactile is only available on
-Windows, for now. However, with time any C++20 compatible compiler should be able to build the
-sources.
+## Coming features
+
+* Object layer tools
+* Active layer highlighting
+* Stamp tool randomizer
+* Tile animation editor
+* Theme editor
+* Minimap dock
+* Components
+* Tileset editor
+
+## Dependencies
+
+* [Centurion](https://github.com/albin-johansson/centurion)
+* [Dear ImGui](https://github.com/ocornut/imgui)
+* [EnTT](https://github.com/skypjack/entt)
+* [GLEW](https://github.com/nigels-com/glew)
+* [IconFontCppHeaders](https://github.com/juliettef/IconFontCppHeaders)
+* [JSON for Modern C++](https://github.com/nlohmann/json)
+* [Nenya](https://github.com/albin-johansson/nenya)
+* [Portable File Dialogs](https://github.com/samhocevar/portable-file-dialogs)
+* [pugixml](https://github.com/zeux/pugixml)
+* [Rune](https://github.com/albin-johansson/rune)
+* [SDL2](https://github.com/libsdl-org/SDL)
+* [SDL2_image](https://github.com/libsdl-org/SDL_image)
+* [SDL2_ttf](https://github.com/libsdl-org/SDL_ttf)
+* [stb_image](https://github.com/nothings/stb)
