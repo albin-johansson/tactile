@@ -2,13 +2,13 @@
 
 #include <centurion.hpp>  // ...
 #include <filesystem>     // exists, absolute
-#include <fstream>        // ifstream
 #include <string>         // string
 #include <utility>        // move
 
 #include "aliases/json.hpp"
 #include "core/model.hpp"
 #include "directories.hpp"
+#include "parsing/json/read_json.hpp"
 #include "parsing/map_parser.hpp"
 #include "parsing/to_map_document.hpp"
 #include "saving/common_saving.hpp"
@@ -19,19 +19,21 @@ namespace {
 
 constexpr int format_version = 1;
 
-inline const auto path = GetPersistentFileDir() / "session.json";
+inline const auto file_path = GetPersistentFileDir() / "session.json";
 
 }  // namespace
 
 void RestoreLastSession(Model& model)
 {
-  if (std::filesystem::exists(path)) {
-    std::ifstream stream{path};
+  if (std::filesystem::exists(file_path)) {
+    const auto json = ReadJson(file_path);
 
-    JSON json;
-    stream >> json;
+    if (!json) {
+      CENTURION_LOG_WARN("Failed to read session JSON file!");
+      return;
+    }
 
-    for (const auto& [key, value] : json.at("maps").items()) {
+    for (const auto& [key, value] : json->at("maps").items()) {
       IO::MapParser parser{value.get<std::string>()};
       if (parser) {
         model.AddMap(IO::ToMapDocument(parser.GetData()));
@@ -61,7 +63,7 @@ void SaveSession(const Model& model)
   json["maps"] = std::move(array);
   json["format_version"] = format_version;
 
-  IO::SaveJson(json, path);
+  IO::SaveJson(json, file_path);
 }
 
 }  // namespace Tactile
