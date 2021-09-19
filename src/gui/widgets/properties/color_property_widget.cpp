@@ -14,19 +14,14 @@ auto ColorPropertyWidget(const PropertyValue& property) -> Maybe<cen::color>
 {
   const ScopeID id{&property};
 
-  constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel
-                         | ImGuiColorEditFlags_AlphaBar;
+  constexpr auto flags = ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
+                         ImGuiColorEditFlags_AlphaBar;
 
   const auto& color = property.AsColor();
-  auto colorArr = ColorToArray(color);
+  auto array = ColorToArray(color);
 
-  if (ImGui::ColorEdit4("##ColorPropertyEdit", colorArr.data(), flags)) {
-    const auto red = static_cast<uint8>(std::round(colorArr.at(0) * 255.0f));
-    const auto green = static_cast<uint8>(std::round(colorArr.at(1) * 255.0f));
-    const auto blue = static_cast<uint8>(std::round(colorArr.at(2) * 255.0f));
-    const auto alpha = static_cast<uint8>(std::round(colorArr.at(3) * 255.0f));
-
-    return cen::color{red, green, blue, alpha};
+  if (ImGui::ColorEdit4("##ColorPropertyEdit", array.data(), flags)) {
+    return cen::color::from_norm(array.at(0), array.at(1), array.at(2), array.at(3));
   }
 
   if (ImGui::IsItemHovered()) {
