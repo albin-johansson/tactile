@@ -1,9 +1,7 @@
 #include "parse_json_map.hpp"
 
 #include <filesystem>  // absolute, exists, weakly_canonical
-#include <fstream>     // ifstream
 #include <string>      // string
-#include <vector>      // vector
 
 #include "aliases/json.hpp"
 #include "parse_layers.hpp"
