@@ -64,6 +64,9 @@
 #define TAC_ICON_BUG ICON_FA_BUG
 #define TAC_ICON_ERROR ICON_FA_EXCLAMATION_TRIANGLE
 
+#define TAC_ICON_HISTORY ICON_FA_HISTORY
+#define TAC_ICON_CLEAR_HISTORY ICON_FA_TRASH_ALT
+
 /// \} End of icon literals
 
 /// \} End of group gui
