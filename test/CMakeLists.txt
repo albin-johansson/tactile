@@ -44,7 +44,7 @@ set(TACTILE_TEST_FILES
 
 add_executable(TactileTests ${TACTILE_TEST_FILES})
 
-add_definitions(-DCENTURION_NO_SDL_MIXER)
+target_compile_definitions(TactileTests PUBLIC CENTURION_NO_SDL_MIXER)
 
 target_precompile_headers(TactileTests REUSE_FROM libtactile)
 
