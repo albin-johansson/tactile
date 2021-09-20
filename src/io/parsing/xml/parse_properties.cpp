@@ -9,7 +9,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ToProperty(const pugi::xml_node node,
+[[nodiscard]] auto ParseValue(const pugi::xml_node node,
                               const CStr type,
                               PropertyValue& property) -> ParseError
 {
@@ -63,12 +63,12 @@ namespace {
 
   // String properties in the XML format do not feature explicit type attributes
   if (const auto* type = node.attribute("type").as_string(nullptr)) {
-    if (const auto err = ToProperty(node, type, data.property); err != ParseError::None) {
+    if (const auto err = ParseValue(node, type, data.property); err != ParseError::None) {
       return err;
     }
   }
   else {
-    if (const auto err = ToProperty(node, "string", data.property);
+    if (const auto err = ParseValue(node, "string", data.property);
         err != ParseError::None) {
       return err;
     }
