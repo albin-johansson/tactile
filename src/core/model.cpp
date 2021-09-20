@@ -3,10 +3,11 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
-#include "core/systems/tools/tool_system.hpp"
+#include "ctx/map.hpp"
 #include "systems/animation_system.hpp"
 #include "systems/registry_factory_system.hpp"
 #include "systems/tileset_system.hpp"
+#include "systems/tools/tool_system.hpp"
 #include "systems/viewport_system.hpp"
 
 namespace Tactile {
@@ -86,8 +87,16 @@ auto Model::AddMap(Document document) -> MapID
 
 auto Model::AddMap(const int tileWidth, const int tileHeight) -> MapID
 {
+  assert(tileWidth > 0);
+  assert(tileHeight > 0);
+
   Document document;
   document.registry = Sys::MakeRegistry();
+
+  auto& map = document.registry.ctx<Map>();
+  map.tile_width = tileWidth;
+  map.tile_height = tileHeight;
+
   return AddMap(std::move(document));
 }
 
