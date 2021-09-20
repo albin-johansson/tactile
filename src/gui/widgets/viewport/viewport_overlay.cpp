@@ -127,9 +127,9 @@ void OverlayContextMenu()
 
 }  // namespace
 
-void ViewportOverlay(const entt::registry& registry,
-                     const CanvasInfo& canvas,
-                     const ViewportCursorInfo& cursor)
+void UpdateViewportOverlay(const entt::registry& registry,
+                           const CanvasInfo& canvas,
+                           const ViewportCursorInfo& cursor)
 {
   PreparePositionAndPivot();
 

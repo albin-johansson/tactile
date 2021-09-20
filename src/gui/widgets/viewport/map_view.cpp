@@ -134,7 +134,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 
   drawList->PopClipRect();
 
-  ViewportOverlay(registry, canvas, cursor);
+  UpdateViewportOverlay(registry, canvas, cursor);
 }
 
 void CenterMapViewport()
