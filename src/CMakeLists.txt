@@ -512,7 +512,9 @@ endif ()
 
 target_precompile_headers(libtactile
     PRIVATE
+    <array>
     <algorithm>
+    <format>
     <functional>
     <filesystem>
     <unordered_map>
