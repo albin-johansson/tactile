@@ -5086,7 +5086,7 @@
     {
       "name": "qwerty",
       "type": "file",
-      "value": "..\\interior.png"
+      "value": "../interior.png"
     }
   ],
   "renderorder": "right-down",
