@@ -204,6 +204,8 @@ set(TACTILE_SOURCE_FILES
     gui/rendering/render_map.hpp
     gui/rendering/render_object_layer.cpp
     gui/rendering/render_object_layer.hpp
+    gui/rendering/render_stamp_preview.cpp
+    gui/rendering/render_stamp_preview.hpp
     gui/rendering/render_tile.cpp
     gui/rendering/render_tile.hpp
     gui/rendering/render_tile_layer.cpp
@@ -325,18 +327,16 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/toolbar/tool_button.cpp
     gui/widgets/toolbar/tool_button.hpp
 
-    gui/widgets/viewport/map_content_overlay.cpp
-    gui/widgets/viewport/map_content_overlay.hpp
-    gui/widgets/viewport/map_content_viewport.cpp
-    gui/widgets/viewport/map_content_viewport.hpp
+    gui/widgets/viewport/document_tab_bar.cpp
+    gui/widgets/viewport/document_tab_bar.hpp
+    gui/widgets/viewport/home_page_content.cpp
+    gui/widgets/viewport/home_page_content.hpp
     gui/widgets/viewport/map_view.cpp
     gui/widgets/viewport/map_view.hpp
-    gui/widgets/viewport/no_content_viewport_widget.cpp
-    gui/widgets/viewport/no_content_viewport_widget.hpp
-    gui/widgets/viewport/render_stamp_preview.cpp
-    gui/widgets/viewport/render_stamp_preview.hpp
     gui/widgets/viewport/viewport_cursor_info.cpp
     gui/widgets/viewport/viewport_cursor_info.hpp
+    gui/widgets/viewport/viewport_overlay.cpp
+    gui/widgets/viewport/viewport_overlay.hpp
     gui/widgets/viewport/viewport_widget.cpp
     gui/widgets/viewport/viewport_widget.hpp
 

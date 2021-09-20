@@ -1,4 +1,4 @@
-#include "map_content_viewport.hpp"
+#include "document_tab_bar.hpp"
 
 #include <imgui.h>
 
@@ -10,7 +10,7 @@
 
 namespace Tactile {
 
-void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
+void UpdateDocumentTabBar(const Model& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginTabBar("MapViewportTabBar", ImGuiTabBarFlags_Reorderable)) {
     for (const auto& [id, document] : model) {
@@ -29,10 +29,9 @@ void MapContentViewport(const Model& model, entt::dispatcher& dispatcher)
 
       const auto& context = document->registry.ctx<PropertyContext>();
       bool opened = true;
-
       if (ImGui::BeginTabItem(context.name.c_str(), &opened, flags)) {
         if (isActive) {
-          MapView(document->registry, dispatcher);
+          UpdateMapView(document->registry, dispatcher);
         }
 
         ImGui::EndTabItem();

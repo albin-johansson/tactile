@@ -15,10 +15,10 @@
 #include "gui/rendering/render_bounds.hpp"
 #include "gui/rendering/render_info.hpp"
 #include "gui/rendering/render_map.hpp"
+#include "gui/rendering/render_stamp_preview.hpp"
 #include "gui/widgets/common/mouse_tracker.hpp"
-#include "map_content_overlay.hpp"
-#include "render_stamp_preview.hpp"
 #include "viewport_cursor_info.hpp"
+#include "viewport_overlay.hpp"
 
 namespace Tactile {
 namespace {
@@ -107,7 +107,7 @@ void RenderCursorGizmos(const entt::registry& registry,
 
 }  // namespace
 
-void MapView(const entt::registry& registry, entt::dispatcher& dispatcher)
+void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   const auto canvas = GetCanvasInfo();
   FillBackground(canvas);
@@ -134,10 +134,10 @@ void MapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 
   drawList->PopClipRect();
 
-  MapContentOverlay(registry, canvas, cursor);
+  ViewportOverlay(registry, canvas, cursor);
 }
 
-void CenterMapContentViewport()
+void CenterMapViewport()
 {
   center_viewport = true;
 }

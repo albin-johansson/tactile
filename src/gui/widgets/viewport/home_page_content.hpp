@@ -4,6 +4,6 @@
 
 namespace Tactile {
 
-void NoContentViewportWidget(entt::dispatcher& dispatcher);
+void UpdateHomePageContent(entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

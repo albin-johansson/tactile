@@ -1,4 +1,4 @@
-#include "no_content_viewport_widget.hpp"
+#include "home_page_content.hpp"
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -12,7 +12,7 @@
 
 namespace Tactile {
 
-void NoContentViewportWidget(entt::dispatcher& dispatcher)
+void UpdateHomePageContent(entt::dispatcher& dispatcher)
 {
   PrepareVerticalAlignmentCenter(4);
 

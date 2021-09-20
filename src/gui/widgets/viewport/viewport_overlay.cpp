@@ -1,4 +1,4 @@
-#include "map_content_overlay.hpp"
+#include "viewport_overlay.hpp"
 
 #include <imgui.h>
 #include <imgui_internal.h>
@@ -36,13 +36,13 @@ void PreparePositionAndPivot()
   const float padding = 10.0f;
 
   ImVec2 next_pos{};
-  next_pos.x = (isRight) ? (pos.x + size.x - padding) : (pos.x + padding);
-  next_pos.y = (isBottom) ? (pos.y + size.y - padding)
-                          : (pos.y + padding + ImGui::GetFrameHeightWithSpacing());
+  next_pos.x = isRight ? (pos.x + size.x - padding) : (pos.x + padding);
+  next_pos.y = isBottom ? (pos.y + size.y - padding)
+                        : (pos.y + padding + ImGui::GetFrameHeightWithSpacing());
 
   ImVec2 next_pivot{};
-  next_pivot.x = (isRight) ? 1.0f : 0.0f;
-  next_pivot.y = (isBottom) ? 1.0f : 0.0f;
+  next_pivot.x = isRight ? 1.0f : 0.0f;
+  next_pivot.y = isBottom ? 1.0f : 0.0f;
 
   ImGui::SetNextWindowPos(next_pos, ImGuiCond_Always, next_pivot);
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
@@ -127,14 +127,14 @@ void OverlayContextMenu()
 
 }  // namespace
 
-void MapContentOverlay(const entt::registry& registry,
-                       const CanvasInfo& canvas,
-                       const ViewportCursorInfo& cursor)
+void ViewportOverlay(const entt::registry& registry,
+                     const CanvasInfo& canvas,
+                     const ViewportCursorInfo& cursor)
 {
   PreparePositionAndPivot();
 
   ImGui::SetNextWindowBgAlpha(opacity);
-  if (ImGui::Begin("##MapContentOverlay", nullptr, flags)) {
+  if (ImGui::Begin("##ViewportOverlay", nullptr, flags)) {
     MouseCoordinateLabels(cursor);
     MouseRowColumnLabels(cursor);
     MouseTileLabels(registry, cursor);

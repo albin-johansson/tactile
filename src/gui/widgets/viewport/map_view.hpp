@@ -4,6 +4,6 @@
 
 namespace Tactile {
 
-void MapView(const entt::registry& registry, entt::dispatcher& dispatcher);
+void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

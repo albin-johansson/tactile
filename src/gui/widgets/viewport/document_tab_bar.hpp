@@ -6,8 +6,8 @@ namespace Tactile {
 
 class Model;
 
-void MapContentViewport(const Model& model, entt::dispatcher& dispatcher);
+void UpdateDocumentTabBar(const Model& model, entt::dispatcher& dispatcher);
 
-void CenterMapContentViewport();
+void CenterMapViewport();
 
 }  // namespace Tactile
