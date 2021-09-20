@@ -48,7 +48,7 @@ void PreparePositionAndPivot()
   ImGui::SetNextWindowViewport(ImGui::GetWindowViewport()->ID);
 }
 
-void MouseCoordinateLabels(const ViewportCursorInfo& cursor)
+void UpdateMouseCoordinateLabels(const ViewportCursorInfo& cursor)
 {
   if (ImGui::IsMousePosValid()) {
     ImGui::Text("X/Y: (%.0f, %.0f)", cursor.raw_position.x, cursor.raw_position.y);
@@ -58,7 +58,7 @@ void MouseCoordinateLabels(const ViewportCursorInfo& cursor)
   }
 }
 
-void MouseRowColumnLabels(const ViewportCursorInfo& cursor)
+void UpdateMouseRowColumnLabels(const ViewportCursorInfo& cursor)
 {
   if (cursor.is_within_map) {
     ImGui::Text("Row/Column: (%i, %i)",
@@ -70,7 +70,8 @@ void MouseRowColumnLabels(const ViewportCursorInfo& cursor)
   }
 }
 
-void MouseTileLabels(const entt::registry& registry, const ViewportCursorInfo& cursor)
+void UpdateMouseTileLabels(const entt::registry& registry,
+                           const ViewportCursorInfo& cursor)
 {
   const auto& activeLayer = registry.ctx<ActiveLayer>();
 
@@ -100,7 +101,7 @@ void MouseTileLabels(const entt::registry& registry, const ViewportCursorInfo& c
   }
 }
 
-void OverlayContextMenu()
+void UpdateOverlayContextMenu()
 {
   if (ImGui::BeginPopupContextWindow()) {
     const auto corner = Prefs::GetViewportOverlayPos();
@@ -135,11 +136,11 @@ void UpdateViewportOverlay(const entt::registry& registry,
 
   ImGui::SetNextWindowBgAlpha(opacity);
   if (ImGui::Begin("##ViewportOverlay", nullptr, flags)) {
-    MouseCoordinateLabels(cursor);
-    MouseRowColumnLabels(cursor);
-    MouseTileLabels(registry, cursor);
+    UpdateMouseCoordinateLabels(cursor);
+    UpdateMouseRowColumnLabels(cursor);
+    UpdateMouseTileLabels(registry, cursor);
 
-    OverlayContextMenu();
+    UpdateOverlayContextMenu();
   }
 
   ImGui::End();
