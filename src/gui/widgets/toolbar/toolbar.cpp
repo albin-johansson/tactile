@@ -46,7 +46,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
   };
 
-  if (Button(TAC_ICON_FILE, "Create new tilemap.")) {
+  if (Button(TAC_ICON_FILE, "Create new tilemap")) {
     ShowAddMapDialog();
   }
 
@@ -54,7 +54,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_OPEN, "Open tilemap.")) {
+  if (Button(TAC_ICON_OPEN, "Open tilemap")) {
     ShowOpenMapDialog();
   }
 
@@ -82,7 +82,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_CENTER, "Center viewport.")) {
+  if (Button(TAC_ICON_CENTER, "Center viewport")) {
     dispatcher.enqueue<CenterViewportEvent>();
   }
 
@@ -90,7 +90,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_RESIZE, "Resize map.")) {
+  if (Button(TAC_ICON_RESIZE, "Resize map")) {
     dispatcher.enqueue<OpenResizeMapDialogEvent>();
   }
 
@@ -104,7 +104,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_TILESET, "Create tileset.")) {
+  if (Button(TAC_ICON_TILESET, "Create tileset")) {
     ShowTilesetDialog();
   }
 
@@ -114,7 +114,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_STAMP, "Stamp tool.", model.IsStampActive())) {
+  if (ToolButton(TAC_ICON_STAMP, "Stamp tool", model.IsStampActive())) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
   }
 
@@ -122,7 +122,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_BUCKET, "Bucket tool.", model.IsBucketActive())) {
+  if (ToolButton(TAC_ICON_BUCKET, "Bucket tool", model.IsBucketActive())) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
   }
 
@@ -130,7 +130,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_ERASER, "Eraser tool.", model.IsEraserActive())) {
+  if (ToolButton(TAC_ICON_ERASER, "Eraser tool", model.IsEraserActive())) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
   }
 

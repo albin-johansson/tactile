@@ -52,7 +52,7 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
     }
 
     if (ImGui::IsItemHovered()) {
-      ImGui::SetTooltip("The suggested tile width when creating maps.");
+      ImGui::SetTooltip("The suggested tile width when creating maps");
     }
 
     ImGui::AlignTextToFramePadding();
@@ -66,7 +66,7 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
     }
 
     if (ImGui::IsItemHovered()) {
-      ImGui::SetTooltip("The suggested tile height when creating maps.");
+      ImGui::SetTooltip("The suggested tile height when creating maps");
     }
 
     // TODO "RMB with stamp tool works as eraser"
@@ -83,7 +83,7 @@ void ShowBehaviorTab(entt::dispatcher& dispatcher)
 
     if (ImGui::IsItemHovered()) {
       ImGui::SetTooltip(
-          "The maximum amount of commands that will be stored on the undo stack.");
+          "The maximum amount of commands that will be stored on the undo stack");
     }
 
     ImGui::EndTabItem();
@@ -116,7 +116,7 @@ void ShowAppearanceBar()
     if (auto restoreLayout = settings.restore_layout;
         Checkbox("Restore layout",
                  &restoreLayout,
-                 "Restore the previous layout of widgets at startup."))
+                 "Restore the previous layout of widgets at startup"))
     {
       settings.restore_layout = restoreLayout;
     }
@@ -140,13 +140,13 @@ void ShowExportTab()
               "JSON\0TMX\0\0",
               &index,
               "The save file format used if no file extension is specified when "
-              "saving maps."))
+              "saving maps"))
     {
       settings.preferred_format = (index == 0) ? "JSON" : "TMX";
     }
 
     if (auto embedTilesets = settings.embed_tilesets;
-        Checkbox("Embed tilesets", &embedTilesets, "Embed tileset data in map files."))
+        Checkbox("Embed tilesets", &embedTilesets, "Embed tileset data in map files"))
     {
       settings.embed_tilesets = embedTilesets;
     }
@@ -154,7 +154,7 @@ void ShowExportTab()
     if (auto humanReadableOutput = settings.human_readable_output;
         Checkbox("Human-readable output",
                  &humanReadableOutput,
-                 "Make save files easier for humans to edit, at the expense of space."))
+                 "Make save files easier for humans to edit, at the expense of space"))
     {
       settings.human_readable_output = humanReadableOutput;
     }

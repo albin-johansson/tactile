@@ -38,26 +38,26 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
     activeLayerId = layer.id;
   }
 
-  if (Button(TAC_ICON_ADD, "Add new layer.")) {
+  if (Button(TAC_ICON_ADD, "Add new layer")) {
     OpenAddLayerPopup();
   }
 
   UpdateAddLayerPopup(dispatcher);
 
   ImGui::SameLine();
-  if (Button(TAC_ICON_REMOVE, "Remove layer.", hasActiveLayer)) {
+  if (Button(TAC_ICON_REMOVE, "Remove layer", hasActiveLayer)) {
     dispatcher.enqueue<RemoveLayerEvent>(*activeLayerId);
   }
 
   ImGui::SameLine();
-  if (Button(TAC_ICON_DUPLICATE, "Duplicate layer.", hasActiveLayer)) {
+  if (Button(TAC_ICON_DUPLICATE, "Duplicate layer", hasActiveLayer)) {
     dispatcher.enqueue<DuplicateLayerEvent>(*activeLayerId);
   }
 
   ImGui::SameLine();
 
   if (Button(TAC_ICON_MOVE_UP,
-             "Move layer up.",
+             "Move layer up",
              activeLayerId && Sys::CanMoveLayerUp(registry, *activeLayerId)))
   {
     dispatcher.enqueue<MoveLayerUpEvent>(*activeLayerId);
@@ -66,7 +66,7 @@ void UpdateLayerDockButtons(const entt::registry& registry, entt::dispatcher& di
   ImGui::SameLine();
 
   if (Button(TAC_ICON_MOVE_DOWN,
-             "Move layer down.",
+             "Move layer down",
              activeLayerId && Sys::CanMoveLayerDown(registry, *activeLayerId)))
   {
     dispatcher.enqueue<MoveLayerDownEvent>(*activeLayerId);

@@ -31,7 +31,7 @@ void UpdateAboutDialog(bool* open)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(source_code);
     ImGui::SameLine();
-    if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser.")) {
+    if (Button(TAC_ICON_LINK, "Open the GitHub repository in your browser")) {
       cen::open_url(TACTILE_URL);
     }
 
