@@ -7,6 +7,7 @@
 #include "core/tool_type.hpp"
 #include "events/command_events.hpp"
 #include "events/map_events.hpp"
+#include "events/save_events.hpp"
 #include "events/tool_events.hpp"
 #include "events/viewport_events.hpp"
 #include "gui/icons.hpp"
@@ -46,7 +47,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
   };
 
-  if (Button(TAC_ICON_FILE, "Create new tilemap")) {
+  if (Button(TAC_ICON_FILE, "Create new map")) {
     ShowAddMapDialog();
   }
 
@@ -54,8 +55,16 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_OPEN, "Open tilemap")) {
+  if (Button(TAC_ICON_OPEN, "Open map")) {
     ShowOpenMapDialog();
+  }
+
+  if (axis == ImGuiAxis_X) {
+    ImGui::SameLine();
+  }
+
+  if (Button(TAC_ICON_SAVE, "Save", !model.IsClean())) {
+    dispatcher.enqueue<SaveEvent>();
   }
 
   separate();
