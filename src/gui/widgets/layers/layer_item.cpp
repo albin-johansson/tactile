@@ -28,8 +28,8 @@ void GroupLayerItem(const entt::registry& registry,
   if (ImGui::TreeNodeEx("##GroupLayerTreeNode", flags, "%s", name)) {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
-    if (ImGui::IsItemActivated()
-        || (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
+    if (ImGui::IsItemActivated() ||
+        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
     {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
@@ -47,8 +47,8 @@ void GroupLayerItem(const entt::registry& registry,
   else {
     ImGui::Indent(ImGui::GetTreeNodeToLabelSpacing());
 
-    if (ImGui::IsItemActivated()
-        || (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
+    if (ImGui::IsItemActivated() ||
+        (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right)))
     {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
@@ -70,9 +70,9 @@ void LayerItem(const entt::registry& registry,
   const auto& activeLayer = registry.ctx<ActiveLayer>();
   const auto isActiveLayer = layerEntity == activeLayer.entity;
 
-  auto flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow
-               | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth
-               | ImGuiTreeNodeFlags_SpanFullWidth;
+  auto flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnArrow |
+               ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_SpanAvailWidth |
+               ImGuiTreeNodeFlags_SpanFullWidth;
   if (isActiveLayer) {
     flags |= ImGuiTreeNodeFlags_Selected;
   }

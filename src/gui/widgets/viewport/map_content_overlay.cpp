@@ -14,11 +14,11 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking
-                       | ImGuiWindowFlags_AlwaysAutoResize
-                       | ImGuiWindowFlags_NoSavedSettings
-                       | ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav
-                       | ImGuiWindowFlags_NoMove;
+constexpr auto flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoDocking |
+                       ImGuiWindowFlags_AlwaysAutoResize |
+                       ImGuiWindowFlags_NoSavedSettings |
+                       ImGuiWindowFlags_NoFocusOnAppearing | ImGuiWindowFlags_NoNav |
+                       ImGuiWindowFlags_NoMove;
 
 constexpr float opacity = 0.35f;
 

@@ -16,8 +16,8 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking
-                       | ImGuiWindowFlags_NoCollapse;
+constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking |
+                       ImGuiWindowFlags_NoCollapse;
 
 inline std::filesystem::path full_image_path;
 constinit std::array<char, 100> path_preview_buffer{};

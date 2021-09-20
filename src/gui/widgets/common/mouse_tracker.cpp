@@ -6,9 +6,9 @@
 namespace Tactile {
 namespace {
 
-constexpr auto flags = ImGuiButtonFlags_MouseButtonLeft
-                       | ImGuiButtonFlags_MouseButtonMiddle
-                       | ImGuiButtonFlags_MouseButtonRight;
+constexpr auto flags = ImGuiButtonFlags_MouseButtonLeft |
+                       ImGuiButtonFlags_MouseButtonMiddle |
+                       ImGuiButtonFlags_MouseButtonRight;
 
 }  // namespace
 

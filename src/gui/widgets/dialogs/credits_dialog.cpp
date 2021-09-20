@@ -11,9 +11,9 @@ namespace {
 constexpr auto window_flags =
     ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
-constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders
-                             | ImGuiTableFlags_Resizable
-                             | ImGuiTableFlags_SizingStretchProp;
+constexpr auto table_flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
+                             ImGuiTableFlags_Resizable |
+                             ImGuiTableFlags_SizingStretchProp;
 
 constinit bool is_visible = false;
 

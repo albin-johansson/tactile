@@ -276,8 +276,8 @@ auto GetTileFromTileset(const entt::registry& registry,
   const auto row = position.GetRow();
   const auto col = position.GetColumn();
 
-  if ((row >= 0) && (col >= 0) && (row < tileset.row_count)
-      && (col < tileset.column_count)) {
+  if ((row >= 0) && (col >= 0) && (row < tileset.row_count) &&
+      (col < tileset.column_count)) {
     const auto index = row * tileset.column_count + col;
     return tileset.first_id + TileID{index};
   }

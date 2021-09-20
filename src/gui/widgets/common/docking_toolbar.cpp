@@ -38,8 +38,9 @@ void BeginDockingToolbar(NotNull<CStr> name, int& toolbarAxis)
   const auto fontSize = ImGui::GetFontSize();
   const ImVec2 iconSize{ImFloor(fontSize * 1.7f), ImFloor(fontSize * 1.7f)};
 
-  constexpr auto window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar
-                                | ImGuiWindowFlags_NoScrollbar;
+  constexpr auto window_flags = ImGuiWindowFlags_NoCollapse |
+                                ImGuiWindowFlags_NoTitleBar |
+                                ImGuiWindowFlags_NoScrollbar;
   ImGui::Begin(name, nullptr, window_flags);
 
   if (auto* node = ImGui::GetWindowDockNode()) {

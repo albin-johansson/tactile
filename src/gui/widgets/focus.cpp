@@ -10,8 +10,8 @@ namespace Tactile {
 
 auto IsEditorFocused() -> bool
 {
-  return IsViewportFocused() || IsPropertyDockFocused() || IsToolbarFocused()
-         || IsTilesetDockFocused() || IsLayerDockFocused();
+  return IsViewportFocused() || IsPropertyDockFocused() || IsToolbarFocused() ||
+         IsTilesetDockFocused() || IsLayerDockFocused();
 }
 
 }  // namespace Tactile
