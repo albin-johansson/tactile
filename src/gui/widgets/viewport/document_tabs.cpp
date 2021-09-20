@@ -1,4 +1,4 @@
-#include "document_tab_bar.hpp"
+#include "document_tabs.hpp"
 
 #include <imgui.h>
 
@@ -10,7 +10,7 @@
 
 namespace Tactile {
 
-void UpdateDocumentTabBar(const Model& model, entt::dispatcher& dispatcher)
+void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginTabBar("MapViewportTabBar", ImGuiTabBarFlags_Reorderable)) {
     for (const auto& [id, document] : model) {

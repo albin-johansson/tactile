@@ -327,8 +327,8 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/toolbar/tool_button.cpp
     gui/widgets/toolbar/tool_button.hpp
 
-    gui/widgets/viewport/document_tab_bar.cpp
-    gui/widgets/viewport/document_tab_bar.hpp
+    gui/widgets/viewport/document_tabs.cpp
+    gui/widgets/viewport/document_tabs.hpp
     gui/widgets/viewport/home_page_content.cpp
     gui/widgets/viewport/home_page_content.hpp
     gui/widgets/viewport/map_view.cpp

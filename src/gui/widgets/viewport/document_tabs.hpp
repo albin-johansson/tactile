@@ -6,7 +6,7 @@ namespace Tactile {
 
 class Model;
 
-void UpdateDocumentTabBar(const Model& model, entt::dispatcher& dispatcher);
+void UpdateDocumentTabs(const Model& model, entt::dispatcher& dispatcher);
 
 void CenterMapViewport();
 

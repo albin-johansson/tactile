@@ -4,7 +4,7 @@
 #include <imgui_internal.h>
 
 #include "core/model.hpp"
-#include "document_tab_bar.hpp"
+#include "document_tabs.hpp"
 #include "home_page_content.hpp"
 
 namespace Tactile {
@@ -32,7 +32,7 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
     has_focus = ImGui::IsWindowFocused();
 
     if (model.HasActiveDocument()) {
-      UpdateDocumentTabBar(model, dispatcher);
+      UpdateDocumentTabs(model, dispatcher);
     }
     else {
       UpdateHomePageContent(dispatcher);
