@@ -509,11 +509,20 @@ endif ()
 
 target_precompile_headers(libtactile
     PRIVATE
+    <algorithm>
+    <functional>
+    <unordered_map>
+    <map>
+    <vector>
+    <string>
+    <memory>
+    <concepts>
+    <type_traits>
+
+    <centurion.hpp>
     <entt.hpp>
     <json.hpp>
-    <centurion.hpp>
     <rune/everything.hpp>
-    <init/ini.hpp>
     <nenya.hpp>
     )
 
