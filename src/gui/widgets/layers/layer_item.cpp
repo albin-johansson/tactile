@@ -85,6 +85,11 @@ void LayerItem(const entt::registry& registry,
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
+    /* Make sure to select the layer item when right-clicked as well */
+    if (ImGui::IsItemClicked(ImGuiMouseButton_Right)) {
+      dispatcher.enqueue<SelectLayerEvent>(layer.id);
+    }
+
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
   }
   else {
