@@ -6,6 +6,7 @@
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/ctx/map.hpp"
+#include "core/ctx/mouse.hpp"
 #include "core/ctx/viewport.hpp"
 
 using namespace Tactile;
@@ -19,4 +20,6 @@ TEST(RegistryFactorySystem, MakeRegistry)
   ASSERT_TRUE(registry.try_ctx<ActivePropertyContext>());
   ASSERT_TRUE(registry.try_ctx<Viewport>());
   ASSERT_TRUE(registry.try_ctx<PropertyContext>());
+  ASSERT_TRUE(registry.try_ctx<TilesetContext>());
+  ASSERT_TRUE(registry.try_ctx<Mouse>());
 }
