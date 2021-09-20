@@ -2,7 +2,8 @@
 
 #include <imgui.h>
 
-#include <format>  // format
+#include <array>   // array
+#include <format>  // format_to_n
 
 #include "aliases/cstr.hpp"
 #include "core/components/group_layer.hpp"
@@ -78,10 +79,12 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<PropertyContext>(layerEntity);
-  const auto name = std::format("{} {}", GetIcon(layer.type), context.name);
+
+  std::array<char, 128> name{};  // Zero-initialize to ensure null-termination
+  std::format_to_n(name.data(), name.size(), "{} {}", GetIcon(layer.type), context.name);
 
   if (layer.type != LayerType::GroupLayer) {
-    if (ImGui::Selectable(name.c_str(), isActiveLayer)) {
+    if (ImGui::Selectable(name.data(), isActiveLayer)) {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
@@ -93,7 +96,7 @@ void LayerItem(const entt::registry& registry,
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
   }
   else {
-    GroupLayerItem(registry, dispatcher, layerEntity, layer, flags, name.c_str());
+    GroupLayerItem(registry, dispatcher, layerEntity, layer, flags, name.data());
   }
 }
 
