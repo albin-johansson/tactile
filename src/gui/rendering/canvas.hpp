@@ -11,7 +11,7 @@ namespace Tactile {
  * \brief Provides useful information when rendering to a canvas.
  *
  * \see `GetCanvasInfo()`
- * \see `FillBackground()`
+ * \see `ClearBackground()`
  */
 struct CanvasInfo final
 {
@@ -32,7 +32,7 @@ struct CanvasInfo final
  *
  * \param canvas the canvas that will be filled with a background color.
  */
-void FillBackground(const CanvasInfo& canvas);
+void ClearBackground(const CanvasInfo& canvas);
 
 /// \} End of group rendering
 

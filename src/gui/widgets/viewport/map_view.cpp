@@ -123,8 +123,7 @@ void UpdateContextMenu(entt::dispatcher& dispatcher)
 void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   const auto canvas = GetCanvasInfo();
-
-  FillBackground(canvas);
+  ClearBackground(canvas);
   UpdateViewportOffset(canvas, dispatcher);
 
   auto* drawList = ImGui::GetWindowDrawList();

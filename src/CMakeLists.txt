@@ -312,12 +312,12 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/properties/dialogs/rename_property_dialog.cpp
     gui/widgets/properties/dialogs/rename_property_dialog.hpp
 
-    gui/widgets/tilesets/tileset_content_widget.cpp
-    gui/widgets/tilesets/tileset_content_widget.hpp
     gui/widgets/tilesets/tileset_dock.cpp
     gui/widgets/tilesets/tileset_dock.hpp
-    gui/widgets/tilesets/tileset_viewport_widget.cpp
-    gui/widgets/tilesets/tileset_viewport_widget.hpp
+    gui/widgets/tilesets/tileset_tabs.cpp
+    gui/widgets/tilesets/tileset_tabs.hpp
+    gui/widgets/tilesets/tileset_view.cpp
+    gui/widgets/tilesets/tileset_view.hpp
 
     gui/widgets/tilesets/dialogs/tileset_dialog.cpp
     gui/widgets/tilesets/dialogs/tileset_dialog.hpp

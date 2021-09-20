@@ -4,6 +4,6 @@
 
 namespace Tactile {
 
-void TilesetContentWidget(const entt::registry& registry, entt::dispatcher& dispatcher);
+void UpdateTilesetTabs(const entt::registry& registry, entt::dispatcher& dispatcher);
 
 }  // namespace Tactile

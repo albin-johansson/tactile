@@ -3,19 +3,19 @@
 #include <imgui.h>
 
 #include "core/components/tileset.hpp"
-#include "events/tileset_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/centered_button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 #include "io/preferences.hpp"
-#include "tileset_content_widget.hpp"
+#include "tileset_tabs.hpp"
 
 namespace Tactile {
 namespace {
 
 constinit bool has_focus = false;
+constexpr auto window_flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
 
 }  // namespace
 
@@ -25,20 +25,17 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
     return;
   }
 
-  bool isVisible = Prefs::GetShowTilesetDock();
-  if (ImGui::Begin("Tilesets",
-                   &isVisible,
-                   ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar))
-  {
+  bool visible = Prefs::GetShowTilesetDock();
+  if (ImGui::Begin("Tilesets", &visible, window_flags)) {
     has_focus = ImGui::IsWindowFocused();
 
     if (!registry.empty<Tileset>()) {
-      TilesetContentWidget(registry, dispatcher);
+      UpdateTilesetTabs(registry, dispatcher);
     }
     else {
       PrepareVerticalAlignmentCenter(2);
-
-      CenteredText("No available tilesets!");
+      CenteredText("Current map has no tilesets!");
+      ImGui::Spacing();
       if (CenteredButton(TAC_ICON_TILESET " Create tileset...")) {
         ShowTilesetDialog();
       }
@@ -48,7 +45,7 @@ void UpdateTilesetDock(const entt::registry& registry, entt::dispatcher& dispatc
     has_focus = false;
   }
 
-  Prefs::SetShowTilesetDock(isVisible);
+  Prefs::SetShowTilesetDock(visible);
   ImGui::End();
 }
 

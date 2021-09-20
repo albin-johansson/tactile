@@ -12,7 +12,7 @@ constexpr uint32 background_color = IM_COL32(60, 60, 60, 255);
 
 }  // namespace
 
-void FillBackground(const CanvasInfo& canvas)
+void ClearBackground(const CanvasInfo& canvas)
 {
   auto* drawList = ImGui::GetWindowDrawList();
   drawList->AddRectFilled(canvas.tl, canvas.br, background_color);
