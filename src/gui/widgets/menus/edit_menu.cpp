@@ -2,7 +2,8 @@
 
 #include <imgui.h>
 
-#include <format>  // format
+#include <array>   // array
+#include <format>  // format_to_n
 
 #include "core/model.hpp"
 #include "core/tool_type.hpp"
@@ -24,18 +25,37 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
   const auto hasActiveDocument = model.HasActiveDocument();
   if (ImGui::BeginMenu("Edit")) {
     const auto canUndo = model.CanUndo();
-    const auto undoText = canUndo
-                              ? std::format(TAC_ICON_UNDO " Undo {}", model.GetUndoText())
-                              : std::string{TAC_ICON_UNDO " Undo"};
-    if (ImGui::MenuItem(undoText.c_str(), "Ctrl+Z", false, canUndo)) {
+    const auto canRedo = model.CanRedo();
+
+    // Zero-initialize buffers to ensure null-termination
+    std::array<char, 128> undoText{};
+    std::array<char, 128> redoText{};
+
+    if (canUndo) {
+      std::format_to_n(undoText.data(),
+                       undoText.size(),
+                       TAC_ICON_UNDO " Undo {}",
+                       model.GetUndoText());
+    }
+    else {
+      std::format_to_n(undoText.data(), undoText.size(), TAC_ICON_UNDO " Undo");
+    }
+
+    if (canRedo) {
+      std::format_to_n(redoText.data(),
+                       redoText.size(),
+                       TAC_ICON_REDO " Redo {}",
+                       model.GetRedoText());
+    }
+    else {
+      std::format_to_n(redoText.data(), redoText.size(), TAC_ICON_REDO " Redo");
+    }
+
+    if (ImGui::MenuItem(undoText.data(), "Ctrl+Z", false, canUndo)) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    const auto canRedo = model.CanRedo();
-    const auto redoText = canRedo
-                              ? std::format(TAC_ICON_REDO " Redo {}", model.GetRedoText())
-                              : std::string{TAC_ICON_REDO " Redo"};
-    if (ImGui::MenuItem(redoText.c_str(), "Ctrl+Y", false, canRedo)) {
+    if (ImGui::MenuItem(redoText.data(), "Ctrl+Y", false, canRedo)) {
       dispatcher.enqueue<RedoEvent>();
     }
 
