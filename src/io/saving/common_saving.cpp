@@ -55,8 +55,8 @@ auto GetPropertyTypeString(const PropertyType type) -> std::string
 auto GetPropertyFileValue(const PropertyValue& file, const std::filesystem::path& dir)
     -> std::string
 {
-  const auto path = std::filesystem::proximate(file.AsFile(), dir);
-  return path.string();
+  const auto path = std::filesystem::relative(file.AsFile(), dir);
+  return ConvertToForwardSlashes(path);
 }
 
 }  // namespace Tactile::IO
