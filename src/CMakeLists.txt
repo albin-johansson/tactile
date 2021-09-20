@@ -279,24 +279,27 @@ set(TACTILE_SOURCE_FILES
     gui/widgets/menus/view_menu.cpp
     gui/widgets/menus/view_menu.hpp
 
-    gui/widgets/properties/bool_property_widget.cpp
-    gui/widgets/properties/bool_property_widget.hpp
-    gui/widgets/properties/color_property_widget.cpp
-    gui/widgets/properties/color_property_widget.hpp
-    gui/widgets/properties/file_property_widget.hpp
-    gui/widgets/properties/file_property_widget.cpp
-    gui/widgets/properties/float_property_widget.cpp
-    gui/widgets/properties/float_property_widget.hpp
-    gui/widgets/properties/int_property_widget.cpp
-    gui/widgets/properties/int_property_widget.hpp
-    gui/widgets/properties/object_property_widget.cpp
-    gui/widgets/properties/object_property_widget.hpp
-    gui/widgets/properties/properties_content_widget.cpp
-    gui/widgets/properties/properties_content_widget.hpp
     gui/widgets/properties/properties_dock.cpp
     gui/widgets/properties/properties_dock.hpp
-    gui/widgets/properties/string_property_widget.cpp
-    gui/widgets/properties/string_property_widget.hpp
+    gui/widgets/properties/property_table.cpp
+    gui/widgets/properties/property_table.hpp
+
+    gui/widgets/properties/items/bool_property_widget.cpp
+    gui/widgets/properties/items/bool_property_widget.hpp
+    gui/widgets/properties/items/color_property_widget.cpp
+    gui/widgets/properties/items/color_property_widget.hpp
+    gui/widgets/properties/items/file_property_widget.hpp
+    gui/widgets/properties/items/file_property_widget.cpp
+    gui/widgets/properties/items/float_property_widget.cpp
+    gui/widgets/properties/items/float_property_widget.hpp
+    gui/widgets/properties/items/int_property_widget.cpp
+    gui/widgets/properties/items/int_property_widget.hpp
+    gui/widgets/properties/items/object_property_widget.cpp
+    gui/widgets/properties/items/object_property_widget.hpp
+    gui/widgets/properties/items/property_item_context_menu.cpp
+    gui/widgets/properties/items/property_item_context_menu.hpp
+    gui/widgets/properties/items/string_property_widget.cpp
+    gui/widgets/properties/items/string_property_widget.hpp
 
     gui/widgets/properties/dialogs/add_property_dialog.cpp
     gui/widgets/properties/dialogs/add_property_dialog.hpp

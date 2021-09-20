@@ -2,6 +2,9 @@
 
 #include <imgui.h>
 
+#include <array>   // array
+#include <format>  // format_to_n
+
 #include "aliases/ints.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
@@ -12,10 +15,11 @@
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
+#include "gui/widgets/common/centered_button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
 #include "gui/widgets/common/help_marker.hpp"
 #include "io/preferences.hpp"
-#include "properties_content_widget.hpp"
+#include "property_table.hpp"
 
 namespace Tactile {
 namespace {
@@ -38,22 +42,21 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
     has_focus = ImGui::IsWindowFocused();
     const auto& context = Sys::GetCurrentContext(registry);
 
-    if (Button(TAC_ICON_ADD, "Add property.")) {
-      OpenAddPropertyDialog();
-    }
-
-    ImGui::SameLine();
-    ImGui::Text("Context: %s", context.name.c_str());
-    ImGui::SameLine();
-    HelpMarker("The owner of the shown properties.");
-    ImGui::Separator();
+    std::array<char, 128> buffer{};  // Zero-initialize to ensure null-termination
+    std::format_to_n(buffer.data(), buffer.size(), "Context: {}", context.name);
+    CenteredText(buffer.data());
 
     if (context.properties.empty()) {
-      PrepareVerticalAlignmentCenter(1);
-      CenteredText("No available properties!");
+      PrepareVerticalAlignmentCenter(2.5f);
+      CenteredText("Current context has no properties!");
+      ImGui::Spacing();
+      if (CenteredButton(TAC_ICON_PROPERTIES " Add property...")) {
+        OpenAddPropertyDialog();
+      }
     }
     else {
-      UpdatePropertiesContentWidget(registry, dispatcher);
+      ImGui::Separator();
+      UpdatePropertyTable(registry, dispatcher);
     }
   }
   else {
