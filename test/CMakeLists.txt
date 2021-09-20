@@ -37,6 +37,7 @@ set(TACTILE_TEST_FILES
     unit/io/parsing/parse_tmx_with_tile_nodes_test.cpp
     unit/io/parsing/to_map_document_test.cpp
 
+    unit/utils/buffer_utils_test.cpp
     unit/utils/color_utils_test.cpp
     unit/utils/from_string_test.cpp
     )
