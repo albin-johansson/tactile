@@ -96,6 +96,10 @@ class CommandStack final
       mIndex = mIndex ? *mIndex + 1 : 0;
       mStack.push_back(std::move(cmd));
     }
+    else if (!mStack.empty()) {
+      /* If we get here, the command was merged into the top-most command */
+      mCleanIndex.reset();
+    }
   }
 
   /**
