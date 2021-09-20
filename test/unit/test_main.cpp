@@ -14,8 +14,8 @@ auto main(int argc, char** argv) -> int
 
   const cen::library centurion;
 
-  constexpr auto flags = cen::window::default_flags() | cen::window::opengl
-                         | cen::window::resizable | cen::window::high_dpi;
+  constexpr auto flags = cen::window::default_flags() | cen::window::opengl |
+                         cen::window::resizable | cen::window::high_dpi;
   cen::window window{"Tactile tests", cen::window::default_size(), flags};
 
   cen::gl_context context{window};
