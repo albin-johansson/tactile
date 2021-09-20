@@ -12,6 +12,7 @@
 namespace Tactile {
 namespace {
 
+constexpr auto window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse;
 constinit bool has_focus = false;
 
 void RemoveTabBarFromNextWindow()
@@ -40,10 +41,8 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
   ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{4, 4});
 
   RemoveTabBarFromNextWindow();
-  if (ImGui::Begin("Viewport",
-                   nullptr,
-                   ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse))
-  {
+  if (ImGui::Begin("Viewport", nullptr, window_flags)) {
+    ImGui::PopStyleVar();
     has_focus = ImGui::IsWindowFocused();
 
     if (model.HasActiveDocument()) {
@@ -54,12 +53,11 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
     }
   }
   else {
+    ImGui::PopStyleVar();
     has_focus = false;
   }
 
-  ImGui::PopStyleVar();
   UpdateViewportContextMenu(dispatcher);
-
   ImGui::End();
 }
 
