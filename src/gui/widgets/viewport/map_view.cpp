@@ -66,7 +66,7 @@ void CenterViewport(entt::dispatcher& dispatcher,
   dispatcher.enqueue<OffsetViewportEvent>(dx, dy);
 }
 
-void RenderCursorGizmos(const entt::registry& registry,
+void UpdateCursorGizmos(const entt::registry& registry,
                         entt::dispatcher& dispatcher,
                         const ViewportCursorInfo& cursor,
                         const RenderInfo& info)
@@ -110,6 +110,7 @@ void RenderCursorGizmos(const entt::registry& registry,
 void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   const auto canvas = GetCanvasInfo();
+
   FillBackground(canvas);
   UpdateViewportOffset(canvas, dispatcher);
 
@@ -129,11 +130,10 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 
   const auto cursor = GetViewportCursorInfo(info);
   if (cursor.is_within_map) {
-    RenderCursorGizmos(registry, dispatcher, cursor, info);
+    UpdateCursorGizmos(registry, dispatcher, cursor, info);
   }
 
   drawList->PopClipRect();
-
   UpdateViewportOverlay(registry, canvas, cursor);
 }
 
