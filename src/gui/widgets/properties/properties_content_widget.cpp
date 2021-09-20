@@ -123,8 +123,8 @@ void PropertyItemContextMenu(entt::dispatcher& dispatcher, const std::string& na
 void UpdatePropertiesContentWidget(const entt::registry& registry,
                                    entt::dispatcher& dispatcher)
 {
-  constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Borders |
-                         ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY;
+  constexpr auto flags =
+      ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_ScrollY;
 
   if (ImGui::BeginTable("PropertiesTable", 2, flags)) {
     const auto& context = Sys::GetCurrentContext(registry);
