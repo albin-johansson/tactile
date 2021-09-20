@@ -46,6 +46,7 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
 
   ImGui::PopStyleVar();
 
+  // FIXME this context menu won't show for all viewports when there are multiple maps
   if (ImGui::BeginPopupContextItem()) {
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
