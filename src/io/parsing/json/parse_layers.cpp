@@ -11,11 +11,15 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data, usize index)
-    -> ParseError;
+[[nodiscard]] auto ParseLayer(const JSON& json,
+                              LayerData& data,
+                              usize index,
+                              const std::filesystem::path& dir) -> ParseError;
 
-[[nodiscard]] auto ParseGroupLayer(const JSON& json, LayerData& target, const usize index)
-    -> ParseError
+[[nodiscard]] auto ParseGroupLayer(const JSON& json,
+                                   LayerData& target,
+                                   const usize index,
+                                   const std::filesystem::path& dir) -> ParseError
 {
   auto& data = target.data.emplace<GroupLayerData>();
 
@@ -24,8 +28,9 @@ namespace {
     for (const auto& [key, layer] : it->items()) {
       auto layerData = std::make_unique<LayerData>();
 
-      if (const auto err = ParseLayer(layer, *layerData, childIndex);
-          err != ParseError::None) {
+      if (const auto err = ParseLayer(layer, *layerData, childIndex, dir);
+          err != ParseError::None)
+      {
         return err;
       }
 
@@ -37,8 +42,10 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data, const usize index)
-    -> ParseError
+[[nodiscard]] auto ParseLayer(const JSON& json,
+                              LayerData& data,
+                              const usize index,
+                              const std::filesystem::path& dir) -> ParseError
 {
   data.index = index;
 
@@ -80,13 +87,14 @@ namespace {
     }
     else if (type == "objectgroup") {
       data.type = LayerType::ObjectLayer;
-      if (const auto err = ParseObjectLayer(json, data); err != ParseError::None) {
+      if (const auto err = ParseObjectLayer(json, data, dir); err != ParseError::None) {
         return err;
       }
     }
     else if (type == "group") {
       data.type = LayerType::GroupLayer;
-      if (const auto err = ParseGroupLayer(json, data, index); err != ParseError::None) {
+      if (const auto err = ParseGroupLayer(json, data, index, dir);
+          err != ParseError::None) {
         return err;
       }
     }
@@ -98,7 +106,8 @@ namespace {
     return ParseError::LayerMissingType;
   }
 
-  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
+  if (const auto err = ParseProperties(json, data.properties, dir);
+      err != ParseError::None) {
     return err;
   }
 
@@ -107,13 +116,17 @@ namespace {
 
 }  // namespace
 
-auto ParseLayers(const JSON& json, std::vector<LayerData>& layers) -> ParseError
+auto ParseLayers(const JSON& json,
+                 std::vector<LayerData>& layers,
+                 const std::filesystem::path& dir) -> ParseError
 {
   if (const auto it = json.find("layers"); it != json.end()) {
     usize index = 0;
     for (const auto& [key, layer] : it->items()) {
       auto& layerData = layers.emplace_back();
-      if (const auto err = ParseLayer(layer, layerData, index); err != ParseError::None) {
+
+      if (const auto err = ParseLayer(layer, layerData, index, dir);
+          err != ParseError::None) {
         return err;
       }
 
