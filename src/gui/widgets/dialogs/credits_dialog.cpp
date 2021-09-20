@@ -47,7 +47,7 @@ void UpdateCreditsDialog()
       ImGui::TableSetupColumn("License");
       ImGui::TableHeadersRow();
 
-      Row("Centurion", "6.2.0", "MIT");
+      Row("Centurion", "6.3.0", "MIT");
       Row("Dear ImGui", "1.84.1", "MIT");
       Row("EnTT", "3.8.1", "MIT");
       Row("GLEW", "2.2.0", "BSD/MIT");
