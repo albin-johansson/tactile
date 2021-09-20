@@ -9,8 +9,10 @@
 #include "core/ctx/viewport.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
+#include "events/map_events.hpp"
 #include "events/tool_events.hpp"
 #include "events/viewport_events.hpp"
+#include "gui/icons.hpp"
 #include "gui/rendering/canvas.hpp"
 #include "gui/rendering/render_bounds.hpp"
 #include "gui/rendering/render_info.hpp"
@@ -105,6 +107,17 @@ void UpdateCursorGizmos(const entt::registry& registry,
   }
 }
 
+void UpdateContextMenu(entt::dispatcher& dispatcher)
+{
+  if (ImGui::BeginPopupContextItem()) {
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show map properties")) {
+      dispatcher.enqueue<ShowMapPropertiesEvent>();
+    }
+
+    ImGui::EndPopup();
+  }
+}
+
 }  // namespace
 
 void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
@@ -135,6 +148,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
 
   drawList->PopClipRect();
   UpdateViewportOverlay(registry, canvas, cursor);
+  UpdateContextMenu(dispatcher);
 }
 
 void CenterMapViewport()

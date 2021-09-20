@@ -5,8 +5,6 @@
 
 #include "core/model.hpp"
 #include "document_tab_bar.hpp"
-#include "events/map_events.hpp"
-#include "gui/icons.hpp"
 #include "home_page_content.hpp"
 
 namespace Tactile {
@@ -20,18 +18,6 @@ void RemoveTabBarFromNextWindow()
   ImGuiWindowClass wc{};
   wc.DockNodeFlagsOverrideSet = ImGuiDockNodeFlags_NoTabBar;
   ImGui::SetNextWindowClass(&wc);
-}
-
-void UpdateViewportContextMenu(entt::dispatcher& dispatcher)
-{
-  // FIXME this context menu won't show for all viewports when there are multiple maps
-  if (ImGui::BeginPopupContextItem()) {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show properties")) {
-      dispatcher.enqueue<ShowMapPropertiesEvent>();
-    }
-
-    ImGui::EndPopup();
-  }
 }
 
 }  // namespace
@@ -57,7 +43,6 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
     has_focus = false;
   }
 
-  UpdateViewportContextMenu(dispatcher);
   ImGui::End();
 }
 
