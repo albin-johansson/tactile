@@ -158,14 +158,11 @@ auto ParseJsonMap(const std::filesystem::path& path, MapData& data) -> ParseErro
     return err;
   }
 
-  if (const auto err = ParseLayers(*json, data.layers, directory);
-      err != ParseError::None) {
+  if (const auto err = ParseLayers(*json, data.layers); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseProperties(*json, data.properties, directory);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseProperties(*json, data.properties); err != ParseError::None) {
     return err;
   }
 

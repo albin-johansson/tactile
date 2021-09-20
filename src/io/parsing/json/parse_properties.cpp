@@ -8,8 +8,7 @@ namespace {
 
 [[nodiscard]] auto ParseValue(const JSON& json,
                               const std::string& type,
-                              PropertyValue& property,
-                              const std::filesystem::path& dir) -> ParseError
+                              PropertyValue& property) -> ParseError
 {
   const auto value = json.at("value");
 
@@ -26,7 +25,7 @@ namespace {
     property.SetValue(value.get<bool>());
   }
   else if (type == "file") {
-    property.SetValue(dir / value.get<std::string>());
+    property.SetValue(std::filesystem::path{value.get<std::string>()});
   }
   else if (type == "object") {
     const auto obj = value.get<int>();
@@ -50,9 +49,7 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseProperty(const JSON& json,
-                                 PropertyData& data,
-                                 const std::filesystem::path& dir) -> ParseError
+[[nodiscard]] auto ParseProperty(const JSON& json, PropertyData& data) -> ParseError
 {
   if (const auto it = json.find("name"); it != json.end()) {
     it->get_to(data.name);
@@ -64,8 +61,7 @@ namespace {
   if (const auto it = json.find("type"); it != json.end()) {
     const auto type = it->get<std::string>();
 
-    if (const auto err = ParseValue(json, type, data.property, dir);
-        err != ParseError::None) {
+    if (const auto err = ParseValue(json, type, data.property); err != ParseError::None) {
       return err;
     }
   }
@@ -78,14 +74,13 @@ namespace {
 
 }  // namespace
 
-auto ParseProperties(const JSON& json,
-                     std::vector<PropertyData>& properties,
-                     const std::filesystem::path& dir) -> ParseError
+auto ParseProperties(const JSON& json, std::vector<PropertyData>& properties)
+    -> ParseError
 {
   if (const auto it = json.find("properties"); it != json.end()) {
     for (const auto& [key, value] : it->items()) {
       auto& data = properties.emplace_back();
-      if (const auto err = ParseProperty(value, data, dir); err != ParseError::None) {
+      if (const auto err = ParseProperty(value, data); err != ParseError::None) {
         return err;
       }
     }

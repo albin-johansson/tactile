@@ -511,6 +511,7 @@ target_precompile_headers(libtactile
     PRIVATE
     <algorithm>
     <functional>
+    <filesystem>
     <unordered_map>
     <map>
     <vector>

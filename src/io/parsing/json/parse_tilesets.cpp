@@ -63,13 +63,11 @@ namespace {
     return ParseError::TilesetMissingName;
   }
 
-  if (const auto err = ParseFancyTiles(json, data, directory); err != ParseError::None) {
+  if (const auto err = ParseFancyTiles(json, data); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseProperties(json, data.properties, directory);
-      err != ParseError::None)
-  {
+  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
     return err;
   }
 

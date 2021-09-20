@@ -7,9 +7,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseObject(const JSON& json,
-                               ObjectData& data,
-                               const std::filesystem::path& dir) -> ParseError
+[[nodiscard]] auto ParseObject(const JSON& json, ObjectData& data) -> ParseError
 {
   if (const auto it = json.find("id"); it != json.end()) {
     data.id = ObjectID{it->get<ObjectID::value_type>()};
@@ -71,8 +69,7 @@ namespace {
     data.type = ObjectType::Rectangle;
   }
 
-  if (const auto err = ParseProperties(json, data.properties, dir);
-      err != ParseError::None) {
+  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
     return err;
   }
 
@@ -81,17 +78,14 @@ namespace {
 
 }  // namespace
 
-auto ParseObjectLayer(const JSON& json,
-                      LayerData& layer,
-                      const std::filesystem::path& dir) -> ParseError
+auto ParseObjectLayer(const JSON& json, LayerData& layer) -> ParseError
 {
   auto& data = layer.data.emplace<ObjectLayerData>();
 
   if (const auto it = json.find("objects"); it != json.end()) {
     for (const auto& [key, object] : it->items()) {
       auto& objectData = data.objects.emplace_back();
-      if (const auto err = ParseObject(object, objectData, dir); err != ParseError::None)
-      {
+      if (const auto err = ParseObject(object, objectData); err != ParseError::None) {
         return err;
       }
     }

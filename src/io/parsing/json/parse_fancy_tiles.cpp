@@ -5,9 +5,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseFancyTile(const JSON& json,
-                                  TileData& data,
-                                  const std::filesystem::path& dir) -> ParseError
+[[nodiscard]] auto ParseFancyTile(const JSON& json, TileData& data) -> ParseError
 {
   data.id = TileID{json.at("id").get<TileID::value_type>()};
 
@@ -19,8 +17,7 @@ namespace {
     }
   }
 
-  if (const auto err = ParseProperties(json, data.properties, dir);
-      err != ParseError::None) {
+  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
     return err;
   }
 
@@ -29,9 +26,7 @@ namespace {
 
 }  // namespace
 
-auto ParseFancyTiles(const JSON& json,
-                     TilesetData& data,
-                     const std::filesystem::path& dir) -> ParseError
+auto ParseFancyTiles(const JSON& json, TilesetData& data) -> ParseError
 {
   if (!json.contains("tiles")) {
     return ParseError::None;
@@ -39,8 +34,7 @@ auto ParseFancyTiles(const JSON& json,
 
   for (const auto& [key, tileJson] : json.at("tiles").items()) {
     auto& tileData = data.tiles.emplace_back();
-    if (const auto err = ParseFancyTile(tileJson, tileData, dir); err != ParseError::None)
-    {
+    if (const auto err = ParseFancyTile(tileJson, tileData); err != ParseError::None) {
       return err;
     }
   }

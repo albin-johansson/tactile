@@ -55,7 +55,8 @@ auto GetPropertyTypeString(const PropertyType type) -> std::string
 auto GetPropertyFileValue(const PropertyValue& file, const std::filesystem::path& dir)
     -> std::string
 {
-  const auto path = std::filesystem::relative(file.AsFile(), dir);
+  const auto abs = std::filesystem::absolute(dir / file.AsFile());
+  const auto path = std::filesystem::relative(abs, dir);
   return ConvertToForwardSlashes(path);
 }
 
