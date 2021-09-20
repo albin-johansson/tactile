@@ -39,7 +39,16 @@ void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& d
     ImGui::TextUnformatted("Name: ");
 
     ImGui::SameLine();
-    if (ImGui::InputText("##NameInput", name_buffer.data(), sizeof name_buffer)) {
+
+    if (!ImGui::IsAnyItemActive()) {
+      ImGui::SetKeyboardFocusHere();
+    }
+
+    if (ImGui::InputTextWithHint("##NameInput",
+                                 "Unique property name...",
+                                 name_buffer.data(),
+                                 sizeof name_buffer))
+    {
       const auto name = CreateStringFromBuffer(name_buffer);
       is_input_valid = !name.empty() && !Sys::HasPropertyWithName(registry, name);
     }
