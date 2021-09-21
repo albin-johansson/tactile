@@ -26,8 +26,7 @@ void ResetState()
 
 }  // namespace
 
-void UpdateChangePropertyTypeDialog(const entt::registry& registry,
-                                    entt::dispatcher& dispatcher)
+void UpdateChangePropertyTypeDialog(const entt::registry&, entt::dispatcher& dispatcher)
 {
   // TODO disallow changing type to the original type
 
