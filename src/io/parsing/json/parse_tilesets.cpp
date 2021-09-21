@@ -107,8 +107,6 @@ namespace {
   else {
     return ParseTilesetCommon(json, data, directory);
   }
-
-  return ParseError::None;
 }
 
 }  // namespace
