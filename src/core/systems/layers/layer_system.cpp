@@ -80,8 +80,10 @@ namespace {
   return entt::null;
 }
 
-[[nodiscard]] auto CountAllLayersAbove(const entt::registry& registry,
-                                       const entt::entity entity) -> usize
+/* Counts the amount of sibling layers above a layer, including the child
+   count of those siblings */
+[[nodiscard]] auto CountLayersAboveIncludingChildren(const entt::registry& registry,
+                                                     const entt::entity entity) -> usize
 {
   usize count = 0;
 
@@ -522,7 +524,8 @@ auto GetLayerGlobalIndex(const entt::registry& registry, const entt::entity sour
   const auto& sourceLayer = registry.get<Layer>(sourceEntity);
   const auto& sourceParent = registry.get<Parent>(sourceEntity);
 
-  const auto base = CountAllLayersAbove(registry, sourceEntity) + sourceLayer.index;
+  const auto base =
+      CountLayersAboveIncludingChildren(registry, sourceEntity) + sourceLayer.index;
   if (sourceParent.entity == entt::null) {
     return base;
   }
