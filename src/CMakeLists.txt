@@ -534,35 +534,34 @@ target_precompile_headers(libtactile
 
 target_include_directories(libtactile
     PUBLIC ${TACTILE_ROOT_DIR}/src
-    SYSTEM PUBLIC ${LIBRARY_DIR}/glew
+    SYSTEM PUBLIC ${LIBRARY_DIR}/centurion
+    SYSTEM PUBLIC ${LIBRARY_DIR}/entt
     SYSTEM PUBLIC ${LIBRARY_DIR}/imgui
-    SYSTEM PUBLIC ${LIBRARY_DIR}/pugixml
+    SYSTEM PUBLIC ${LIBRARY_DIR}/glew
+    SYSTEM PUBLIC ${LIBRARY_DIR}/nenya
     SYSTEM PUBLIC ${LIBRARY_DIR}/rune
     SYSTEM PUBLIC ${LIBRARY_DIR}/init
+    SYSTEM PUBLIC ${LIBRARY_DIR}/pugixml
+    SYSTEM PUBLIC ${LIBRARY_DIR}/json
+    SYSTEM PUBLIC ${LIBRARY_DIR}/stbimage
+    SYSTEM PUBLIC ${LIBRARY_DIR}/fontawesome
+    SYSTEM PUBLIC ${LIBRARY_DIR}/pfd
     SYSTEM PUBLIC ${SDL2_INCLUDE_DIR}
     SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS}
-    SYSTEM PUBLIC ${SDL2_TTF_INCLUDE_DIRS}
-    )
+    SYSTEM PUBLIC ${SDL2_TTF_INCLUDE_DIRS})
 
 target_link_libraries(libtactile
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${GLEW_LIBRARIES}
     PUBLIC ${SDL2_IMAGE_LIBRARIES}
     PUBLIC ${SDL2_TTF_LIBRARIES}
-    PUBLIC ${SDL2_LIBRARY}
-    PUBLIC libCenturion
-    PUBLIC libNenya
-    PUBLIC libJson
-    PUBLIC libEntt
-    PUBLIC libFontAwesome
-    PUBLIC libStbImage
-    PUBLIC libPFD)
+    PUBLIC ${SDL2_LIBRARY})
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(libtactile PUBLIC
       /EHsc
       /MP
-      /W3
+      /W4
       /Zc:preprocessor
       /Zc:__cplusplus
       /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
