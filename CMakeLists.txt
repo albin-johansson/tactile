@@ -42,13 +42,5 @@ set(PUGIXML_SOURCES
     ${LIBRARY_DIR}/pugixml/pugixml.cpp
     ${LIBRARY_DIR}/pugixml/pugixml.hpp)
 
-add_header_only_lib(libNenya ${LIBRARY_DIR}/nenya ${LIBRARY_DIR}/nenya/nenya.hpp)
-add_header_only_lib(libStbImage ${LIBRARY_DIR}/stbimage ${LIBRARY_DIR}/stbimage/stb_image.h)
-add_header_only_lib(libCenturion ${LIBRARY_DIR}/centurion ${LIBRARY_DIR}/centurion/centurion.hpp)
-add_header_only_lib(libEntt ${LIBRARY_DIR}/entt ${LIBRARY_DIR}/entt/entt.hpp)
-add_header_only_lib(libJson ${LIBRARY_DIR}/json ${LIBRARY_DIR}/json/json.hpp)
-add_header_only_lib(libFontAwesome ${LIBRARY_DIR}/fontawesome ${LIBRARY_DIR}/fontawesome/IconsFontAwesome5.h)
-add_header_only_lib(libPFD ${LIBRARY_DIR}/pfd ${LIBRARY_DIR}/pfd/portable-file-dialogs.h)
-
 add_subdirectory(src)
 add_subdirectory(test)
