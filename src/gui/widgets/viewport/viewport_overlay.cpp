@@ -129,7 +129,6 @@ void UpdateOverlayContextMenu()
 }  // namespace
 
 void UpdateViewportOverlay(const entt::registry& registry,
-                           const CanvasInfo& canvas,
                            const ViewportCursorInfo& cursor)
 {
   PreparePositionAndPivot();

@@ -17,8 +17,6 @@ void RenderTileLayer(const entt::registry& registry,
                      const float parentOpacity)
 {
   const auto& layer = registry.get<Layer>(layerEntity);
-  const auto& tileLayer = registry.get<TileLayer>(layerEntity);
-
   const auto opacity = parentOpacity * layer.opacity;
 
   const auto endRow = info.bounds.end.GetRow();

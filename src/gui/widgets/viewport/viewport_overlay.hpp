@@ -4,11 +4,9 @@
 
 namespace Tactile {
 
-struct CanvasInfo;
 struct ViewportCursorInfo;
 
 void UpdateViewportOverlay(const entt::registry& registry,
-                           const CanvasInfo& canvas,
                            const ViewportCursorInfo& cursor);
 
 }  // namespace Tactile

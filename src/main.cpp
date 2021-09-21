@@ -8,7 +8,7 @@
 #include "init_open_gl_attributes.hpp"
 #include "io/preferences.hpp"
 
-auto main(int argc, char** argv) -> int
+auto main(int, char**) -> int
 {
   cen::library centurion;
   cen::log::use_preset_output_function();

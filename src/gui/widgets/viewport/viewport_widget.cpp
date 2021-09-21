@@ -35,7 +35,7 @@ void UpdateViewportWidget(const Model& model, entt::dispatcher& dispatcher)
       UpdateDocumentTabs(model, dispatcher);
     }
     else {
-      UpdateHomePageContent(dispatcher);
+      UpdateHomePageContent();
     }
   }
   else {

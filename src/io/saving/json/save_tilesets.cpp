@@ -37,7 +37,7 @@ void AddCommonAttributes(JSON& json,
   json["tilecount"] = tileset.tile_count;
   json["tilewidth"] = tileset.tile_width;
   json["tileheight"] = tileset.tile_height;
-  json["tiles"] = SaveFancyTiles(registry, tilesetEntity, dir);
+  json["tiles"] = SaveFancyTiles(registry, dir);
 
   const auto& ctx = registry.get<PropertyContext>(tilesetEntity);
   if (!ctx.properties.empty()) {

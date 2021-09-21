@@ -12,7 +12,7 @@
 
 namespace Tactile {
 
-void UpdateHomePageContent(entt::dispatcher& dispatcher)
+void UpdateHomePageContent()
 {
   PrepareVerticalAlignmentCenter(4);
 

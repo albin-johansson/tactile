@@ -126,8 +126,6 @@ namespace {
   else {
     return ParseCommon(node, data, directory);
   }
-
-  return ParseError::None;
 }
 
 }  // namespace

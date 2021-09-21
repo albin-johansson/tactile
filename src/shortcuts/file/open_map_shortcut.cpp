@@ -7,7 +7,7 @@ namespace Tactile {
 OpenMapShortcut::OpenMapShortcut() : AShortcut{cen::scancodes::o, cen::key_mod::left_ctrl}
 {}
 
-void OpenMapShortcut::Activate(entt::dispatcher& dispatcher)
+void OpenMapShortcut::Activate(entt::dispatcher&)
 {
   ShowOpenMapDialog();
 }

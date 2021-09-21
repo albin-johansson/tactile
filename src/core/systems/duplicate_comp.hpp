@@ -76,8 +76,6 @@ inline auto DuplicateComp<GroupLayer>(entt::registry& registry,
                                       const entt::entity source,
                                       const entt::entity destination) -> GroupLayer&
 {
-  auto& map = registry.ctx<Map>();
-
   auto& group = registry.emplace<GroupLayer>(destination);
   for (const auto sourceChild : registry.get<GroupLayer>(source).layers) {
     /* We don't need to add the created child layer to the group layer explicitly */

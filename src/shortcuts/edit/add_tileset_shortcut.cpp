@@ -9,7 +9,7 @@ AddTilesetShortcut::AddTilesetShortcut()
     : AShortcut{cen::scancodes::t, cen::key_mod::left_ctrl}
 {}
 
-void AddTilesetShortcut::Activate(entt::dispatcher& dispatcher)
+void AddTilesetShortcut::Activate(entt::dispatcher&)
 {
   ShowTilesetDialog();
 }

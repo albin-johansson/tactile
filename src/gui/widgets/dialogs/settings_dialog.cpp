@@ -25,7 +25,7 @@ void UpdatePreviewSettings(const Preferences& prefs)
   ImGui::GetStyle().WindowBorderSize = prefs.window_border ? 1.0f : 0.0f;
 }
 
-void ShowBehaviorTab(entt::dispatcher& dispatcher)
+void ShowBehaviorTab()
 {
   if (ImGui::BeginTabItem("Behavior")) {
     ImGui::Spacing();
@@ -178,7 +178,7 @@ void UpdateSettingsDialog(entt::dispatcher& dispatcher)
   CenterNextWindowOnAppearance();
   if (ImGui::BeginPopupModal("Settings", &is_visible, flags)) {
     if (ImGui::BeginTabBar("SettingsTabBar")) {
-      ShowBehaviorTab(dispatcher);
+      ShowBehaviorTab();
       ShowAppearanceBar();
       ShowExportTab();
       ImGui::EndTabBar();

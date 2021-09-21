@@ -23,7 +23,7 @@ class AShortcut
 
   virtual void Activate(entt::dispatcher& dispatcher) = 0;
 
-  [[nodiscard]] virtual auto IsEnabled(const Model& model) const -> bool
+  [[nodiscard]] virtual auto IsEnabled([[maybe_unused]] const Model& model) const -> bool
   {
     return true;
   }

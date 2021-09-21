@@ -146,7 +146,7 @@ void UpdateMapView(const entt::registry& registry, entt::dispatcher& dispatcher)
   }
 
   drawList->PopClipRect();
-  UpdateViewportOverlay(registry, canvas, cursor);
+  UpdateViewportOverlay(registry, cursor);
   UpdateContextMenu(dispatcher);
 }
 

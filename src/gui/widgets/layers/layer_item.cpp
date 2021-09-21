@@ -67,7 +67,6 @@ void LayerItem(const entt::registry& registry,
 {
   const ScopeID uid{layer.id};
 
-  const auto& map = registry.ctx<Map>();
   const auto& activeLayer = registry.ctx<ActiveLayer>();
   const auto isActiveLayer = layerEntity == activeLayer.entity;
 

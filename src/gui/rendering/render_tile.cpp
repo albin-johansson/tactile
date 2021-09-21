@@ -19,7 +19,6 @@ void RenderTile(const TileID tile,
 {
   const auto tilesetEntity = Sys::FindTileset(registry, tile);
   if (tilesetEntity != entt::null) {
-    const auto& tileset = registry.get<Tileset>(tilesetEntity);
     const auto& texture = registry.get<Texture>(tilesetEntity);
 
     const auto textureId = ToTextureID(texture.id);

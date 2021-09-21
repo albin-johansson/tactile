@@ -36,9 +36,7 @@ void ToolOnPressed(entt::registry& registry,
   }
 }
 
-void ToolOnDragged(entt::registry& registry,
-                   entt::dispatcher& dispatcher,
-                   const MouseInfo& mouse)
+void ToolOnDragged(entt::registry& registry, entt::dispatcher&, const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<ActiveTool>();
   switch (active.tool) {

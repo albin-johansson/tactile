@@ -55,9 +55,8 @@ namespace {
 
 }  // namespace
 
-auto SaveFancyTiles(const entt::registry& registry,
-                    const entt::entity tilesetEntity,
-                    const std::filesystem::path& dir) -> JSON
+auto SaveFancyTiles(const entt::registry& registry, const std::filesystem::path& dir)
+    -> JSON
 {
   auto array = JSON::array();
 

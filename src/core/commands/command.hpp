@@ -71,7 +71,7 @@ class ACommand
    * \return `true` if the supplied command was merged into *this* command;
    * `false` otherwise.
    */
-  [[nodiscard]] virtual auto MergeWith(const ACommand& cmd) -> bool
+  [[nodiscard]] virtual auto MergeWith([[maybe_unused]] const ACommand& cmd) -> bool
   {
     return false;
   }

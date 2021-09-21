@@ -34,7 +34,6 @@ void AppendAnimation(pugi::xml_node tileNode,
 
 void AppendFancyTiles(pugi::xml_node node,
                       const entt::registry& registry,
-                      const entt::entity tilesetEntity,
                       const std::filesystem::path& dir)
 {
   for (auto&& [entity, tile] : registry.view<FancyTile>().each()) {

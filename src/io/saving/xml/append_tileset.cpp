@@ -37,7 +37,7 @@ void AddCommon(pugi::xml_node node,
     imageNode.append_attribute("height").set_value(texture.height);
   }
 
-  AppendFancyTiles(node, registry, tilesetEntity, dir);
+  AppendFancyTiles(node, registry, dir);
   AppendProperties(registry, tilesetEntity, node, dir);
 }
 

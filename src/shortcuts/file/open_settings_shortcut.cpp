@@ -8,7 +8,7 @@ OpenSettingsShortcut::OpenSettingsShortcut()
     : AShortcut{cen::scancodes::s, cen::key_mod::left_ctrl | cen::key_mod::left_alt}
 {}
 
-void OpenSettingsShortcut::Activate(entt::dispatcher& dispatcher)
+void OpenSettingsShortcut::Activate(entt::dispatcher&)
 {
   ShowSettingsDialog();
 }

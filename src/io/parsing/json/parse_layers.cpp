@@ -14,8 +14,7 @@ namespace {
 [[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data, usize index)
     -> ParseError;
 
-[[nodiscard]] auto ParseGroupLayer(const JSON& json, LayerData& target, const usize index)
-    -> ParseError
+[[nodiscard]] auto ParseGroupLayer(const JSON& json, LayerData& target) -> ParseError
 {
   auto& data = target.data.emplace<GroupLayerData>();
 
@@ -86,7 +85,7 @@ namespace {
     }
     else if (type == "group") {
       data.type = LayerType::GroupLayer;
-      if (const auto err = ParseGroupLayer(json, data, index); err != ParseError::None) {
+      if (const auto err = ParseGroupLayer(json, data); err != ParseError::None) {
         return err;
       }
     }
