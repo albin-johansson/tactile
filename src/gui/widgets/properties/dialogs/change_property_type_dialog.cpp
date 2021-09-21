@@ -29,6 +29,8 @@ void ResetState()
 void UpdateChangePropertyTypeDialog(const entt::registry& registry,
                                     entt::dispatcher& dispatcher)
 {
+  // TODO disallow changing type to the original type
+
   CenterNextWindowOnAppearance();
   if (ImGui::BeginPopupModal("Change property type", nullptr, flags)) {
     ImGui::AlignTextToFramePadding();
