@@ -2,7 +2,8 @@
 
 #include <imgui.h>
 
-#include <array>  // array
+#include <array>    // array
+#include <cstring>  // strcmp
 
 #include "aliases/cstr.hpp"
 #include "aliases/ints.hpp"
