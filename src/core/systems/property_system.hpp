@@ -70,6 +70,10 @@ void ChangePropertyType(entt::registry& registry,
                                     ContextID id,
                                     std::string_view name) -> const PropertyValue&;
 
+[[nodiscard]] auto GetPropertyType(const entt::registry& registry,
+                                   ContextID id,
+                                   std::string_view name) -> PropertyType;
+
 [[nodiscard]] auto FindProperty(const entt::registry& registry, std::string_view name)
     -> entt::entity;
 

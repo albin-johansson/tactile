@@ -209,6 +209,14 @@ auto GetPropertyValue(const entt::registry& registry,
   return property.value;
 }
 
+auto GetPropertyType(const entt::registry& registry,
+                     const ContextID id,
+                     const std::string_view name) -> PropertyType
+{
+  const auto& value = GetPropertyValue(registry, id, name);
+  return value.GetType().value();
+}
+
 auto FindProperty(const entt::registry& registry, const std::string_view name)
     -> entt::entity
 {

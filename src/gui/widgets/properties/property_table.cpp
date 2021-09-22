@@ -99,8 +99,8 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
   constexpr auto flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable |
                          ImGuiTableFlags_ScrollY | ImGuiTableFlags_PadOuterX;
 
+  const auto& context = Sys::GetCurrentContext(registry);
   if (ImGui::BeginTable("##PropertyTable", 2, flags)) {
-    const auto& context = Sys::GetCurrentContext(registry);
     for (const auto entity : context.properties) {
       const auto& property = registry.get<Property>(entity);
       const auto& name = property.name;
@@ -163,7 +163,9 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
   }
 
   if (context_state.show_change_type_dialog) {
-    OpenChangePropertyTypeDialog(change_type_target.value());
+    const auto& name = change_type_target.value();
+    const auto type = Sys::GetPropertyType(registry, context.id, name);
+    OpenChangePropertyTypeDialog(name, type);
     change_type_target.reset();
     context_state.show_change_type_dialog = false;
   }

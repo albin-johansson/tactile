@@ -65,7 +65,7 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
 
   UpdateAddPropertyDialog(registry, dispatcher);
   UpdateRenamePropertyDialog(registry, dispatcher);
-  UpdateChangePropertyTypeDialog(registry, dispatcher);
+  UpdateChangePropertyTypeDialog(dispatcher);
 
   Prefs::SetShowPropertiesDock(isVisible);
   ImGui::End();

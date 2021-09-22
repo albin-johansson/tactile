@@ -8,6 +8,7 @@
 #include "core/tactile_error.hpp"
 #include "events/property_events.hpp"
 #include "gui/widgets/alignment.hpp"
+#include "gui/widgets/common/button.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 
 namespace Tactile {
@@ -15,18 +16,20 @@ namespace {
 
 constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
-constinit int type_index = 0;
+constinit PropertyType current_type = PropertyType::String;
 inline Maybe<std::string> property_name;
+inline Maybe<PropertyType> previous_type;
 
 void ResetState()
 {
-  type_index = 0;
+  current_type = PropertyType::String;
   property_name.reset();
+  previous_type.reset();
 }
 
 }  // namespace
 
-void UpdateChangePropertyTypeDialog(const entt::registry&, entt::dispatcher& dispatcher)
+void UpdateChangePropertyTypeDialog(entt::dispatcher& dispatcher)
 {
   // TODO disallow changing type to the original type
 
@@ -36,12 +39,12 @@ void UpdateChangePropertyTypeDialog(const entt::registry&, entt::dispatcher& dis
     ImGui::TextUnformatted("Type: ");
 
     ImGui::SameLine();
-    PropertyTypeCombo(&type_index);
+    PropertyTypeCombo(previous_type.value(), current_type);
 
     ImGui::Spacing();
-    if (ImGui::Button("OK")) {
-      const auto type = GetPropertyTypeFromComboIndex(type_index);
-      dispatcher.enqueue<ChangePropertyTypeEvent>(property_name.value(), type);
+
+    if (Button("OK", nullptr, current_type != previous_type.value())) {
+      dispatcher.enqueue<ChangePropertyTypeEvent>(property_name.value(), current_type);
 
       ResetState();
       ImGui::CloseCurrentPopup();
@@ -57,9 +60,11 @@ void UpdateChangePropertyTypeDialog(const entt::registry&, entt::dispatcher& dis
   }
 }
 
-void OpenChangePropertyTypeDialog(std::string name)
+void OpenChangePropertyTypeDialog(std::string name, const PropertyType type)
 {
   property_name = std::move(name);
+  current_type = type;
+  previous_type = type;
   ImGui::OpenPopup("Change property type");
 }
 
