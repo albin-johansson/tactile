@@ -116,11 +116,11 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
 
       PropertyItemContextMenu(dispatcher, name, context_state);
 
-      if (context_state.show_rename_dialog) {
+      if (context_state.show_rename_dialog && !rename_target) {
         rename_target = name;
       }
 
-      if (context_state.show_change_type_dialog) {
+      if (context_state.show_change_type_dialog && !change_type_target) {
         change_type_target = name;
       }
 
