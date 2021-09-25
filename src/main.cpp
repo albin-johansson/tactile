@@ -1,4 +1,5 @@
 #include <GL/glew.h>  // glewInit
+#include <google/protobuf/stubs/common.h>
 
 #include <centurion.hpp>  // library, window, gl_context
 #include <utility>        // move
@@ -8,8 +9,27 @@
 #include "init_open_gl_attributes.hpp"
 #include "io/preferences.hpp"
 
+namespace Tactile {
+
+struct ProtobufContext final
+{
+  ProtobufContext()
+  {
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
+  }
+
+  ~ProtobufContext()
+  {
+    google::protobuf::ShutdownProtobufLibrary();
+  }
+};
+
+}  // namespace Tactile
+
 auto main(int, char**) -> int
 {
+  Tactile::ProtobufContext protobuf;
+
   cen::library centurion;
   cen::log::use_preset_output_function();
 
