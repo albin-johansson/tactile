@@ -1,40 +1,43 @@
 #include "session.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push, 1)
+#endif  // _MSC_VER
+
+#include <session.pb.h>
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif  // _MSC_VER
+
 #include <centurion.hpp>  // ...
-#include <filesystem>     // exists, absolute
-#include <string>         // string
-#include <utility>        // move
+#include <fstream>        // ifstream, ofstream
+#include <ios>            // ios
 
 #include "aliases/json.hpp"
 #include "core/model.hpp"
 #include "directories.hpp"
-#include "parsing/json/read_json.hpp"
 #include "parsing/map_parser.hpp"
 #include "parsing/to_map_document.hpp"
 #include "saving/common_saving.hpp"
-#include "saving/json/save_json.hpp"
 
 namespace Tactile {
 namespace {
 
 constexpr int format_version = 1;
 
-inline const auto file_path = GetPersistentFileDir() / "session.json";
+inline const auto file_path = GetPersistentFileDir() / "session.bin";
 
 }  // namespace
 
 void RestoreLastSession(Model& model)
 {
-  if (std::filesystem::exists(file_path)) {
-    const auto json = ReadJson(file_path);
+  ProtoBuf::Session session;
 
-    if (!json) {
-      CENTURION_LOG_WARN("Failed to read session JSON file!");
-      return;
-    }
-
-    for (const auto& [key, value] : json->at("maps").items()) {
-      IO::MapParser parser{value.get<std::string>()};
+  std::ifstream stream{file_path, std::ios::in | std::ios::binary};
+  if (session.ParseFromIstream(&stream)) {
+    for (const auto& file : session.files()) {
+      IO::MapParser parser{file};
       if (parser) {
         model.AddMap(IO::ToMapDocument(parser.GetData()));
       }
@@ -44,26 +47,24 @@ void RestoreLastSession(Model& model)
     }
   }
   else {
-    CENTURION_LOG_WARN("Could not locate a session JSON file!");
+    CENTURION_LOG_WARN("Failed to parse binary session file!");
   }
 }
 
 void SaveSession(const Model& model)
 {
-  auto json = JSON::object();
-  auto array = JSON::array();
-
+  ProtoBuf::Session session;
   for (const auto& [id, document] : model) {
     if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);
-      array += IO::ConvertToForwardSlashes(documentPath);
+      session.add_files(IO::ConvertToForwardSlashes(documentPath));
     }
   }
 
-  json["maps"] = std::move(array);
-  json["format_version"] = format_version;
-
-  IO::SaveJson(json, file_path);
+  std::ofstream stream{file_path, std::ios::out | std::ios::trunc | std::ios::binary};
+  if (!session.SerializeToOstream(&stream)) {
+    CENTURION_LOG_WARN("Failed to save session binary file!");
+  }
 }
 
 }  // namespace Tactile
