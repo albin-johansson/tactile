@@ -20,6 +20,8 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 
+include(TactileDependencies)
+
 set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imconfig.h
     ${LIBRARY_DIR}/imgui/imgui.cpp
