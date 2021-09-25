@@ -12,6 +12,7 @@ namespace Tactile {
 /// \name Preference API
 /// \{
 
+/* Do not change the values of this enum! */
 enum class OverlayPos
 {
   TopLeft = 0,

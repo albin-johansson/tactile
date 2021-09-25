@@ -49,7 +49,10 @@ set(TACTILE_GENERATED_PROTOBUF_FILES
     ${GENERATED_PROTO_DIR}/history.pb.cc
     ${GENERATED_PROTO_DIR}/history.pb.h
     ${GENERATED_PROTO_DIR}/session.pb.cc
-    ${GENERATED_PROTO_DIR}/session.pb.h)
+    ${GENERATED_PROTO_DIR}/session.pb.h
+    ${GENERATED_PROTO_DIR}/settings.pb.cc
+    ${GENERATED_PROTO_DIR}/settings.pb.h
+    )
 
 add_subdirectory(src)
 add_subdirectory(test)

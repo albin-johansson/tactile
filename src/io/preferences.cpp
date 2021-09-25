@@ -1,8 +1,11 @@
 #include "preferences.hpp"
 
-#include <centurion.hpp>  // CENTURION_LOG_INFO
+#include <settings.pb.h>
+
+#include <centurion.hpp>  // ...
 #include <filesystem>     // exists
-#include <init/ini.hpp>   // ini, read_ini, write_ini
+#include <fstream>        // ifstream, ofstream
+#include <ios>            // ios
 #include <utility>        // move
 
 #include "aliases/cstr.hpp"
@@ -12,7 +15,7 @@
 namespace Tactile {
 namespace {
 
-constexpr CStr file_name = "settings.ini";
+inline const auto settings_path = GetPersistentFileDir() / "settings.bin";
 
 constexpr CStr def_preferred_format = "JSON";
 constexpr CStr def_theme = "Ash";
@@ -30,122 +33,105 @@ constexpr bool def_window_border = false;
 constexpr bool def_restore_layout = true;
 constexpr bool def_restore_last_session = true;
 
-inline Preferences settings = {.preferred_format = def_preferred_format,
-                               .theme = def_theme,
-                               .command_capacity = def_command_capacity,
-                               .preferred_tile_width = def_preferred_tile_width,
-                               .preferred_tile_height = def_preferred_tile_height,
-                               .viewport_overlay_pos = def_viewport_overlay_pos,
-                               .embed_tilesets = def_embed_tilesets,
-                               .human_readable_output = def_human_readable_output,
-                               .show_grid = def_show_grid,
-                               .show_layer_dock = def_show_layer_dock,
-                               .show_tileset_dock = def_show_tileset_dock,
-                               .show_properties_dock = def_show_properties_dock,
-                               .window_border = def_window_border,
-                               .restore_layout = def_restore_layout,
-                               .restore_last_session = def_restore_last_session};
-
-template <typename T>
-void AddIfMissing(init::ini& ini, CStr section, CStr element, T value)
+[[nodiscard]] auto MakeDefaultPreferences() -> Preferences
 {
-  auto& sec = ini[section];
-  if (!sec.contains(element)) {
-    sec[element] = std::move(value);
-  }
+  return {.preferred_format = def_preferred_format,
+          .theme = def_theme,
+          .command_capacity = def_command_capacity,
+          .preferred_tile_width = def_preferred_tile_width,
+          .preferred_tile_height = def_preferred_tile_height,
+          .viewport_overlay_pos = def_viewport_overlay_pos,
+          .embed_tilesets = def_embed_tilesets,
+          .human_readable_output = def_human_readable_output,
+          .show_grid = def_show_grid,
+          .show_layer_dock = def_show_layer_dock,
+          .show_tileset_dock = def_show_tileset_dock,
+          .show_properties_dock = def_show_properties_dock,
+          .window_border = def_window_border,
+          .restore_layout = def_restore_layout,
+          .restore_last_session = def_restore_last_session};
 }
 
-void WritePreferencesToFile(const Preferences& preferences = Preferences{})
-{
-  init::ini ini;
-
-  ini["Appearance"]["Theme"] = preferences.theme;
-  ini["Appearance"]["WindowBorder"] = preferences.window_border;
-  ini["Appearance"]["ShowGrid"] = preferences.show_grid;
-
-  ini["Behavior"]["CommandCapacity"] = preferences.command_capacity;
-  ini["Behavior"]["RestoreLastSession"] = preferences.restore_last_session;
-  ini["Behavior"]["PreferredTileWidth"] = preferences.preferred_tile_width;
-  ini["Behavior"]["PreferredTileHeight"] = preferences.preferred_tile_height;
-
-  ini["Export"]["PreferredFormat"] = preferences.preferred_format;
-  ini["Export"]["EmbedTilesets"] = preferences.embed_tilesets;
-  ini["Export"]["HumanReadableOutput"] = preferences.human_readable_output;
-
-  ini["Widgets"]["ShowLayerDock"] = preferences.show_layer_dock;
-  ini["Widgets"]["ShowTilesetDock"] = preferences.show_tileset_dock;
-  ini["Widgets"]["ShowPropertiesDock"] = preferences.show_properties_dock;
-  ini["Widgets"]["RestoreLayout"] = preferences.restore_layout;
-  ini["Widgets"]["ViewportOverlayPos"] = preferences.viewport_overlay_pos;
-
-  init::write_ini(ini, GetPersistentFileDir() / file_name);
-}
-
-// Read existing settings file and fill in any potentially missing settings
-void ValidateExistingFile()
-{
-  const auto path = GetPersistentFileDir() / file_name;
-  auto ini = init::read_ini(path);
-
-  AddIfMissing(ini, "Appearance", "Theme", def_theme);
-  AddIfMissing(ini, "Appearance", "ShowGrid", def_show_grid);
-  AddIfMissing(ini, "Appearance", "WindowBorder", def_window_border);
-
-  AddIfMissing(ini, "Behavior", "CommandCapacity", def_command_capacity);
-  AddIfMissing(ini, "Behavior", "RestoreLastSession", def_restore_last_session);
-  AddIfMissing(ini, "Behavior", "PreferredTileWidth", def_preferred_tile_width);
-  AddIfMissing(ini, "Behavior", "PreferredTileHeight", def_preferred_tile_height);
-
-  AddIfMissing(ini, "Export", "PreferredFormat", def_preferred_format);
-  AddIfMissing(ini, "Export", "EmbedTilesets", def_embed_tilesets);
-  AddIfMissing(ini, "Export", "HumanReadableOutput", def_human_readable_output);
-
-  AddIfMissing(ini, "Widgets", "ShowLayerDock", def_show_layer_dock);
-  AddIfMissing(ini, "Widgets", "ShowTilesetDock", def_show_tileset_dock);
-  AddIfMissing(ini, "Widgets", "ShowPropertiesDock", def_show_properties_dock);
-  AddIfMissing(ini, "Widgets", "RestoreLayout", def_restore_layout);
-  AddIfMissing(ini, "Widgets", "ViewportOverlayPos", def_viewport_overlay_pos);
-
-  init::write_ini(ini, path);
-}
+inline Preferences settings = MakeDefaultPreferences();
 
 }  // namespace
 
 void LoadPreferences()
 {
-  if (std::filesystem::exists(GetPersistentFileDir() / file_name)) {
-    ValidateExistingFile();
-    const auto ini = init::read_ini(GetPersistentFileDir() / file_name);
+  settings = MakeDefaultPreferences();
 
-    const auto& appearance = ini.at("Appearance");
-    appearance.at("Theme").get_to(settings.theme);
-    appearance.at("ShowGrid").get_to(settings.show_grid);
-    appearance.at("WindowBorder").get_to(settings.window_border);
+  if (std::filesystem::exists(settings_path)) {
+    std::ifstream stream{settings_path, std::ios::in | std::ios::binary};
 
-    const auto& behavior = ini.at("Behavior");
-    behavior.at("CommandCapacity").get_to(settings.command_capacity);
-    behavior.at("RestoreLastSession").get_to(settings.restore_last_session);
-    behavior.at("PreferredTileWidth").get_to(settings.preferred_tile_width);
-    behavior.at("PreferredTileHeight").get_to(settings.preferred_tile_height);
+    ProtoBuf::Settings cfg;
+    if (cfg.ParseFromIstream(&stream)) {
+      if (cfg.has_theme()) {
+        settings.theme = cfg.theme();
+      }
 
-    const auto& exp = ini.at("Export");
-    exp.at("PreferredFormat").get_to(settings.preferred_format);
-    exp.at("EmbedTilesets").get_to(settings.embed_tilesets);
-    exp.at("HumanReadableOutput").get_to(settings.human_readable_output);
+      if (cfg.has_show_grid()) {
+        settings.show_grid = cfg.show_grid();
+      }
 
-    const auto& widgets = ini.at("Widgets");
-    widgets.at("ShowTilesetDock").get_to(settings.show_tileset_dock);
-    widgets.at("ShowLayerDock").get_to(settings.show_layer_dock);
-    widgets.at("ShowPropertiesDock").get_to(settings.show_properties_dock);
-    widgets.at("RestoreLayout").get_to(settings.restore_layout);
-    widgets.at("ViewportOverlayPos").get_to(settings.viewport_overlay_pos);
+      if (cfg.has_window_border()) {
+        settings.window_border = cfg.window_border();
+      }
+
+      if (cfg.has_command_capacity()) {
+        settings.command_capacity = cfg.command_capacity();
+      }
+
+      if (cfg.has_restore_last_session()) {
+        settings.restore_last_session = cfg.restore_last_session();
+      }
+
+      if (cfg.has_preferred_tile_width()) {
+        settings.preferred_tile_width = cfg.preferred_tile_width();
+      }
+
+      if (cfg.has_preferred_tile_height()) {
+        settings.preferred_tile_height = cfg.preferred_tile_height();
+      }
+
+      if (cfg.has_preferred_format()) {
+        settings.preferred_format = cfg.preferred_format();
+      }
+
+      if (cfg.has_embed_tilesets()) {
+        settings.embed_tilesets = cfg.embed_tilesets();
+      }
+
+      if (cfg.has_human_readable_output()) {
+        settings.human_readable_output = cfg.human_readable_output();
+      }
+
+      if (cfg.has_show_tileset_dock()) {
+        settings.show_tileset_dock = cfg.show_tileset_dock();
+      }
+
+      if (cfg.has_show_layer_dock()) {
+        settings.show_layer_dock = cfg.show_layer_dock();
+      }
+
+      if (cfg.has_show_properties_dock()) {
+        settings.show_properties_dock = cfg.show_properties_dock();
+      }
+
+      if (cfg.has_restore_layout()) {
+        settings.restore_layout = cfg.restore_layout();
+      }
+
+      if (cfg.has_viewport_overlay_pos()) {
+        settings.viewport_overlay_pos = cfg.viewport_overlay_pos();
+      }
+    }
   }
   else {
-    WritePreferencesToFile();
+    SavePreferences();
   }
 
   // clang-format off
-  CENTURION_LOG_INFO("Loaded preferences: \"%s\"", (GetPersistentFileDir() / file_name).string().c_str());
+  CENTURION_LOG_INFO("Loaded preferences: \"%s\"", settings_path.string().c_str());
   CENTURION_LOG_INFO("  Appearance::Theme: %s", settings.theme.c_str());
   CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
@@ -166,7 +152,31 @@ void LoadPreferences()
 
 void SavePreferences()
 {
-  WritePreferencesToFile(settings);
+  ProtoBuf::Settings cfg;
+
+  cfg.set_theme(settings.theme);
+  cfg.set_show_grid(settings.show_grid);
+  cfg.set_window_border(settings.window_border);
+
+  cfg.set_command_capacity(settings.command_capacity);
+  cfg.set_restore_last_session(settings.restore_last_session);
+  cfg.set_preferred_tile_width(settings.preferred_tile_width);
+  cfg.set_preferred_tile_height(settings.preferred_tile_height);
+
+  cfg.set_preferred_format(settings.preferred_format);
+  cfg.set_embed_tilesets(settings.embed_tilesets);
+  cfg.set_human_readable_output(settings.human_readable_output);
+
+  cfg.set_show_tileset_dock(settings.show_tileset_dock);
+  cfg.set_show_layer_dock(settings.show_layer_dock);
+  cfg.set_show_properties_dock(settings.show_properties_dock);
+  cfg.set_restore_layout(settings.restore_layout);
+  cfg.set_viewport_overlay_pos(ProtoBuf::OverlayPos{settings.viewport_overlay_pos});
+
+  std::ofstream stream{settings_path, std::ios::out | std::ios::trunc | std::ios::binary};
+  if (!cfg.SerializeToOstream(&stream)) {
+    CENTURION_LOG_WARN("Failed to save settings file!");
+  }
 }
 
 void SetPreferences(Preferences prefs)
@@ -187,7 +197,7 @@ void ResetAppearancePreferences(Preferences& prefs)
   prefs.window_border = def_window_border;
   prefs.show_grid = def_show_grid;
 
-  // Note, not technically an "appearance" setting but it is to the user
+  // Note, not technically an "appearance" setting, but it is to the user
   prefs.restore_layout = def_restore_layout;
 }
 
