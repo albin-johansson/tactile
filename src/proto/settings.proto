@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package Tactile.ProtoBuf;
+
+/* Remember to keep these values synced with Tactile::OverlayPos! */
+enum OverlayPos {
+  TOP_LEFT = 0;
+  TOP_RIGHT = 1;
+  BOTTOM_LEFT = 2;
+  BOTTOM_RIGHT = 3;
+}
+
+message Settings {
+  optional string theme = 1;
+
+  optional int32 preferred_tile_width = 2;
+  optional int32 preferred_tile_height = 3;
+
+  /* Reserve use of most tags in range 1-15 for "high-priority" values */
+
+  optional string preferred_format = 16;
+  optional uint64 command_capacity = 17;
+
+  optional bool show_grid = 18;
+  optional bool window_border = 19;
+
+  optional bool restore_last_session = 20;
+  optional bool restore_layout = 21;
+  optional bool show_layer_dock = 22;
+  optional bool show_properties_dock = 23;
+  optional bool show_tileset_dock = 24;
+
+  optional bool embed_tilesets = 25;
+  optional bool human_readable_output = 26;
+
+  optional OverlayPos viewport_overlay_pos = 27;
+}
