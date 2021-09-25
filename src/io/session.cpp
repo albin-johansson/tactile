@@ -11,6 +11,7 @@
 #endif  // _MSC_VER
 
 #include <centurion.hpp>  // ...
+#include <filesystem>     // absolute
 #include <fstream>        // ifstream, ofstream
 #include <ios>            // ios
 
