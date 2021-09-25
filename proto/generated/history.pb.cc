@@ -21,7 +21,7 @@ namespace ProtoBuf {
 constexpr History::History(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : files_()
-  , lastopenedfile_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+  , last_opened_file_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
 struct HistoryDefaultTypeInternal {
   constexpr HistoryDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -44,7 +44,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_history_2eproto::offsets[] PRO
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::History, lastopenedfile_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::History, last_opened_file_),
   PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::History, files_),
   0,
   ~0u,
@@ -58,13 +58,13 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_history_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rhistory.proto\022\020Tactile.ProtoBuf\"H\n\007His"
-  "tory\022\033\n\016lastOpenedFile\030\001 \001(\tH\000\210\001\001\022\r\n\005fil"
-  "es\030\002 \003(\tB\021\n\017_lastOpenedFileb\006proto3"
+  "\n\rhistory.proto\022\020Tactile.ProtoBuf\"L\n\007His"
+  "tory\022\035\n\020last_opened_file\030\001 \001(\tH\000\210\001\001\022\r\n\005f"
+  "iles\030\002 \003(\tB\023\n\021_last_opened_fileb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_history_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_history_2eproto = {
-  false, false, 115, descriptor_table_protodef_history_2eproto, "history.proto", 
+  false, false, 119, descriptor_table_protodef_history_2eproto, "history.proto", 
   &descriptor_table_history_2eproto_once, nullptr, 0, 1,
   schemas, file_default_instances, TableStruct_history_2eproto::offsets,
   file_level_metadata_history_2eproto, file_level_enum_descriptors_history_2eproto, file_level_service_descriptors_history_2eproto,
@@ -83,7 +83,7 @@ namespace ProtoBuf {
 class History::_Internal {
  public:
   using HasBits = decltype(std::declval<History>()._has_bits_);
-  static void set_has_lastopenedfile(HasBits* has_bits) {
+  static void set_has_last_opened_file(HasBits* has_bits) {
     (*has_bits)[0] |= 1u;
   }
 };
@@ -103,16 +103,16 @@ History::History(const History& from)
       _has_bits_(from._has_bits_),
       files_(from.files_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  lastopenedfile_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_lastopenedfile()) {
-    lastopenedfile_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_lastopenedfile(), 
+  last_opened_file_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_last_opened_file()) {
+    last_opened_file_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_last_opened_file(), 
       GetArenaForAllocation());
   }
   // @@protoc_insertion_point(copy_constructor:Tactile.ProtoBuf.History)
 }
 
 void History::SharedCtor() {
-lastopenedfile_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+last_opened_file_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 History::~History() {
@@ -124,7 +124,7 @@ History::~History() {
 
 inline void History::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  lastopenedfile_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  last_opened_file_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void History::ArenaDtor(void* object) {
@@ -146,7 +146,7 @@ void History::Clear() {
   files_.Clear();
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
-    lastopenedfile_.ClearNonDefaultToEmpty();
+    last_opened_file_.ClearNonDefaultToEmpty();
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -159,12 +159,12 @@ const char* History::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // optional string lastOpenedFile = 1;
+      // optional string last_opened_file = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          auto str = _internal_mutable_lastopenedfile();
+          auto str = _internal_mutable_last_opened_file();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.ProtoBuf.History.lastOpenedFile"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.ProtoBuf.History.last_opened_file"));
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -214,14 +214,14 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // optional string lastOpenedFile = 1;
-  if (_internal_has_lastopenedfile()) {
+  // optional string last_opened_file = 1;
+  if (_internal_has_last_opened_file()) {
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_lastopenedfile().data(), static_cast<int>(this->_internal_lastopenedfile().length()),
+      this->_internal_last_opened_file().data(), static_cast<int>(this->_internal_last_opened_file().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Tactile.ProtoBuf.History.lastOpenedFile");
+      "Tactile.ProtoBuf.History.last_opened_file");
     target = stream->WriteStringMaybeAliased(
-        1, this->_internal_lastopenedfile(), target);
+        1, this->_internal_last_opened_file(), target);
   }
 
   // repeated string files = 2;
@@ -258,12 +258,12 @@ size_t History::ByteSizeLong() const {
       files_.Get(i));
   }
 
-  // optional string lastOpenedFile = 1;
+  // optional string last_opened_file = 1;
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x00000001u) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_lastopenedfile());
+        this->_internal_last_opened_file());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -289,8 +289,8 @@ void History::MergeFrom(const History& from) {
   (void) cached_has_bits;
 
   files_.MergeFrom(from.files_);
-  if (from._internal_has_lastopenedfile()) {
-    _internal_set_lastopenedfile(from._internal_lastopenedfile());
+  if (from._internal_has_last_opened_file()) {
+    _internal_set_last_opened_file(from._internal_last_opened_file());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -315,8 +315,8 @@ void History::InternalSwap(History* other) {
   files_.InternalSwap(&other->files_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &lastopenedfile_, lhs_arena,
-      &other->lastopenedfile_, rhs_arena
+      &last_opened_file_, lhs_arena,
+      &other->last_opened_file_, rhs_arena
   );
 }
 

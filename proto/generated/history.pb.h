@@ -214,22 +214,22 @@ class History final :
   std::string* _internal_add_files();
   public:
 
-  // optional string lastOpenedFile = 1;
-  bool has_lastopenedfile() const;
+  // optional string last_opened_file = 1;
+  bool has_last_opened_file() const;
   private:
-  bool _internal_has_lastopenedfile() const;
+  bool _internal_has_last_opened_file() const;
   public:
-  void clear_lastopenedfile();
-  const std::string& lastopenedfile() const;
+  void clear_last_opened_file();
+  const std::string& last_opened_file() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_lastopenedfile(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_lastopenedfile();
-  PROTOBUF_MUST_USE_RESULT std::string* release_lastopenedfile();
-  void set_allocated_lastopenedfile(std::string* lastopenedfile);
+  void set_last_opened_file(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_last_opened_file();
+  PROTOBUF_MUST_USE_RESULT std::string* release_last_opened_file();
+  void set_allocated_last_opened_file(std::string* last_opened_file);
   private:
-  const std::string& _internal_lastopenedfile() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_lastopenedfile(const std::string& value);
-  std::string* _internal_mutable_lastopenedfile();
+  const std::string& _internal_last_opened_file() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_last_opened_file(const std::string& value);
+  std::string* _internal_mutable_last_opened_file();
   public:
 
   // @@protoc_insertion_point(class_scope:Tactile.ProtoBuf.History)
@@ -242,7 +242,7 @@ class History final :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> files_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr lastopenedfile_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr last_opened_file_;
   friend struct ::TableStruct_history_2eproto;
 };
 // ===================================================================
@@ -256,62 +256,62 @@ class History final :
 #endif  // __GNUC__
 // History
 
-// optional string lastOpenedFile = 1;
-inline bool History::_internal_has_lastopenedfile() const {
+// optional string last_opened_file = 1;
+inline bool History::_internal_has_last_opened_file() const {
   bool value = (_has_bits_[0] & 0x00000001u) != 0;
   return value;
 }
-inline bool History::has_lastopenedfile() const {
-  return _internal_has_lastopenedfile();
+inline bool History::has_last_opened_file() const {
+  return _internal_has_last_opened_file();
 }
-inline void History::clear_lastopenedfile() {
-  lastopenedfile_.ClearToEmpty();
+inline void History::clear_last_opened_file() {
+  last_opened_file_.ClearToEmpty();
   _has_bits_[0] &= ~0x00000001u;
 }
-inline const std::string& History::lastopenedfile() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.History.lastOpenedFile)
-  return _internal_lastopenedfile();
+inline const std::string& History::last_opened_file() const {
+  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.History.last_opened_file)
+  return _internal_last_opened_file();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void History::set_lastopenedfile(ArgT0&& arg0, ArgT... args) {
+void History::set_last_opened_file(ArgT0&& arg0, ArgT... args) {
  _has_bits_[0] |= 0x00000001u;
- lastopenedfile_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.History.lastOpenedFile)
+ last_opened_file_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.History.last_opened_file)
 }
-inline std::string* History::mutable_lastopenedfile() {
-  std::string* _s = _internal_mutable_lastopenedfile();
-  // @@protoc_insertion_point(field_mutable:Tactile.ProtoBuf.History.lastOpenedFile)
+inline std::string* History::mutable_last_opened_file() {
+  std::string* _s = _internal_mutable_last_opened_file();
+  // @@protoc_insertion_point(field_mutable:Tactile.ProtoBuf.History.last_opened_file)
   return _s;
 }
-inline const std::string& History::_internal_lastopenedfile() const {
-  return lastopenedfile_.Get();
+inline const std::string& History::_internal_last_opened_file() const {
+  return last_opened_file_.Get();
 }
-inline void History::_internal_set_lastopenedfile(const std::string& value) {
+inline void History::_internal_set_last_opened_file(const std::string& value) {
   _has_bits_[0] |= 0x00000001u;
-  lastopenedfile_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+  last_opened_file_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
-inline std::string* History::_internal_mutable_lastopenedfile() {
+inline std::string* History::_internal_mutable_last_opened_file() {
   _has_bits_[0] |= 0x00000001u;
-  return lastopenedfile_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+  return last_opened_file_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
-inline std::string* History::release_lastopenedfile() {
-  // @@protoc_insertion_point(field_release:Tactile.ProtoBuf.History.lastOpenedFile)
-  if (!_internal_has_lastopenedfile()) {
+inline std::string* History::release_last_opened_file() {
+  // @@protoc_insertion_point(field_release:Tactile.ProtoBuf.History.last_opened_file)
+  if (!_internal_has_last_opened_file()) {
     return nullptr;
   }
   _has_bits_[0] &= ~0x00000001u;
-  return lastopenedfile_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+  return last_opened_file_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
-inline void History::set_allocated_lastopenedfile(std::string* lastopenedfile) {
-  if (lastopenedfile != nullptr) {
+inline void History::set_allocated_last_opened_file(std::string* last_opened_file) {
+  if (last_opened_file != nullptr) {
     _has_bits_[0] |= 0x00000001u;
   } else {
     _has_bits_[0] &= ~0x00000001u;
   }
-  lastopenedfile_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), lastopenedfile,
+  last_opened_file_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), last_opened_file,
       GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set_allocated:Tactile.ProtoBuf.History.lastOpenedFile)
+  // @@protoc_insertion_point(field_set_allocated:Tactile.ProtoBuf.History.last_opened_file)
 }
 
 // repeated string files = 2;

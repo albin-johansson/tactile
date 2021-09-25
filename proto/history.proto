@@ -3,6 +3,6 @@ syntax = "proto3";
 package Tactile.ProtoBuf;
 
 message History {
-  optional string lastOpenedFile = 1;
+  optional string last_opened_file = 1;
   repeated string files = 2;
 }
