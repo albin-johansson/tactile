@@ -2,14 +2,15 @@
 
 #include <algorithm>   // find
 #include <filesystem>  // exists
+#include <fstream>     // ifstream, ofstream
+#include <ios>         // ios
 #include <utility>     // move
 
 #include "aliases/ints.hpp"
 #include "aliases/maybe.hpp"
 #include "directories.hpp"
-#include "parsing/json/read_json.hpp"
+#include "history.pb.h"
 #include "saving/common_saving.hpp"
-#include "saving/json/save_json.hpp"
 
 namespace Tactile {
 namespace {
@@ -17,7 +18,7 @@ namespace {
 constexpr int format_version = 1;
 constexpr usize max_size = 10;
 
-inline const auto file_path = GetPersistentFileDir() / "history.json";
+inline const auto file_path = GetPersistentFileDir() / "history.bin";
 
 /* We store paths as strings because that makes displaying them in menus
    _much_ easier (and faster) */
@@ -28,54 +29,43 @@ inline std::deque<std::string> history;
 
 void LoadFileHistory()
 {
-  if (std::filesystem::exists(file_path)) {
-    const auto json = ReadJson(file_path.string());
+  std::ifstream stream{file_path, std::ios::in | std::ios::binary};
 
-    if (!json) {
-      CENTURION_LOG_WARN("Failed to read history JSON file!");
-      return;
+  ProtoBuf::History h;
+  if (h.ParseFromIstream(&stream)) {
+    if (h.has_last_opened_file()) {
+      last_closed_file = h.last_opened_file();
     }
 
-    if (const auto last = json->at("last_closed_file"); !last.is_null()) {
-      last_closed_file = last.get<std::string>();
-    }
-
-    for (const auto& [key, value] : json->at("files").items()) {
-      auto path = value.get<std::string>();
-      if (std::filesystem::exists(path)) {
-        history.push_back(std::move(path));
-      }
-      else {
-        CENTURION_LOG_WARN("Read invalid file path from history!");
-      }
+    for (auto file : h.files()) {
+      history.push_back(std::move(file));
     }
   }
   else {
-    CENTURION_LOG_WARN("Could not locate a history JSON file!");
+    CENTURION_LOG_WARN("Failed to parse binary history file!");
   }
 }
 
 void SaveFileHistory()
 {
-  auto json = JSON::object();
-  json["format_version"] = format_version;
+  ProtoBuf::History h;
 
   if (last_closed_file) {
-    json["last_closed_file"] = *last_closed_file;
-  }
-  else {
-    json["last_closed_file"] = nullptr;
+    h.set_last_opened_file(*last_closed_file);
   }
 
-  auto array = JSON::array();
   for (const auto& path : history) {
-    if (std::filesystem::exists(path)) {
-      array += path;
+    h.add_files(path);
+  }
+
+  {
+    std::ofstream stream{file_path, std::ios::out | std::ios::trunc | std::ios::binary};
+    if (!h.SerializeToOstream(&stream)) {
+      CENTURION_LOG_WARN("Failed to write history to binary file!");
     }
   }
-  json["files"] = std::move(array);
 
-  IO::SaveJson(json, file_path);
+  google::protobuf::ShutdownProtobufLibrary();
 }
 
 void ClearFileHistory()
