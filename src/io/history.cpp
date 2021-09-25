@@ -1,5 +1,15 @@
 #include "history.hpp"
 
+#ifdef _MSC_VER
+#pragma warning(push, 1)
+#endif  // _MSC_VER
+
+#include <history.pb.h>
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif  // _MSC_VER
+
 #include <algorithm>   // find
 #include <filesystem>  // exists
 #include <fstream>     // ifstream, ofstream
@@ -9,7 +19,6 @@
 #include "aliases/ints.hpp"
 #include "aliases/maybe.hpp"
 #include "directories.hpp"
-#include "history.pb.h"
 #include "saving/common_saving.hpp"
 
 namespace Tactile {
