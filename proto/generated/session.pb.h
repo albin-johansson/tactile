@@ -54,22 +54,22 @@ struct TableStruct_session_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_session_2eproto;
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 class Session;
 struct SessionDefaultTypeInternal;
 extern SessionDefaultTypeInternal _Session_default_instance_;
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 PROTOBUF_NAMESPACE_OPEN
-template<> ::Tactile::ProtoBuf::Session* Arena::CreateMaybeMessage<::Tactile::ProtoBuf::Session>(Arena*);
+template<> ::Tactile::Proto::Session* Arena::CreateMaybeMessage<::Tactile::Proto::Session>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 
 // ===================================================================
 
 class Session final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Tactile.ProtoBuf.Session) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Tactile.Proto.Session) */ {
  public:
   inline Session() : Session(nullptr) {}
   ~Session() override;
@@ -167,7 +167,7 @@ class Session final :
   void InternalSwap(Session* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Tactile.ProtoBuf.Session";
+    return "Tactile.Proto.Session";
   }
   protected:
   explicit Session(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -213,7 +213,7 @@ class Session final :
   std::string* _internal_add_files();
   public:
 
-  // @@protoc_insertion_point(class_scope:Tactile.ProtoBuf.Session)
+  // @@protoc_insertion_point(class_scope:Tactile.Proto.Session)
  private:
   class _Internal;
 
@@ -247,66 +247,66 @@ inline void Session::clear_files() {
 }
 inline std::string* Session::add_files() {
   std::string* _s = _internal_add_files();
-  // @@protoc_insertion_point(field_add_mutable:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_add_mutable:Tactile.Proto.Session.files)
   return _s;
 }
 inline const std::string& Session::_internal_files(int index) const {
   return files_.Get(index);
 }
 inline const std::string& Session::files(int index) const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Session.files)
   return _internal_files(index);
 }
 inline std::string* Session::mutable_files(int index) {
-  // @@protoc_insertion_point(field_mutable:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_mutable:Tactile.Proto.Session.files)
   return files_.Mutable(index);
 }
 inline void Session::set_files(int index, const std::string& value) {
   files_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Session.files)
 }
 inline void Session::set_files(int index, std::string&& value) {
   files_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Session.files)
 }
 inline void Session::set_files(int index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   files_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_set_char:Tactile.Proto.Session.files)
 }
 inline void Session::set_files(int index, const char* value, size_t size) {
   files_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_set_pointer:Tactile.Proto.Session.files)
 }
 inline std::string* Session::_internal_add_files() {
   return files_.Add();
 }
 inline void Session::add_files(const std::string& value) {
   files_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_add:Tactile.Proto.Session.files)
 }
 inline void Session::add_files(std::string&& value) {
   files_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_add:Tactile.Proto.Session.files)
 }
 inline void Session::add_files(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   files_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_add_char:Tactile.Proto.Session.files)
 }
 inline void Session::add_files(const char* value, size_t size) {
   files_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_add_pointer:Tactile.Proto.Session.files)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
 Session::files() const {
-  // @@protoc_insertion_point(field_list:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_list:Tactile.Proto.Session.files)
   return files_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 Session::mutable_files() {
-  // @@protoc_insertion_point(field_mutable_list:Tactile.ProtoBuf.Session.files)
+  // @@protoc_insertion_point(field_mutable_list:Tactile.Proto.Session.files)
   return &files_;
 }
 
@@ -316,7 +316,7 @@ Session::mutable_files() {
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 
 // @@protoc_insertion_point(global_scope)

@@ -17,7 +17,7 @@
 
 PROTOBUF_PRAGMA_INIT_SEG
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 constexpr Session::Session(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : files_(){}
@@ -30,7 +30,7 @@ struct SessionDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT SessionDefaultTypeInternal _Session_default_instance_;
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_session_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_session_2eproto = nullptr;
@@ -38,28 +38,28 @@ static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_s
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_session_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::Session, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Session, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::Session, files_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Session, files_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, -1, -1, sizeof(::Tactile::ProtoBuf::Session)},
+  { 0, -1, -1, sizeof(::Tactile::Proto::Session)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Tactile::ProtoBuf::_Session_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Tactile::Proto::_Session_default_instance_),
 };
 
 const char descriptor_table_protodef_session_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rsession.proto\022\020Tactile.ProtoBuf\"\030\n\007Ses"
-  "sion\022\r\n\005files\030\001 \003(\tb\006proto3"
+  "\n\rsession.proto\022\rTactile.Proto\"\030\n\007Sessio"
+  "n\022\r\n\005files\030\001 \003(\tb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_session_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_session_2eproto = {
-  false, false, 67, descriptor_table_protodef_session_2eproto, "session.proto", 
+  false, false, 64, descriptor_table_protodef_session_2eproto, "session.proto", 
   &descriptor_table_session_2eproto_once, nullptr, 0, 1,
   schemas, file_default_instances, TableStruct_session_2eproto::offsets,
   file_level_metadata_session_2eproto, file_level_enum_descriptors_session_2eproto, file_level_service_descriptors_session_2eproto,
@@ -71,7 +71,7 @@ PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_session_2eproto(&descriptor_table_session_2eproto);
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 
 // ===================================================================
 
@@ -87,20 +87,20 @@ Session::Session(::PROTOBUF_NAMESPACE_ID::Arena* arena,
   if (!is_message_owned) {
     RegisterArenaDtor(arena);
   }
-  // @@protoc_insertion_point(arena_constructor:Tactile.ProtoBuf.Session)
+  // @@protoc_insertion_point(arena_constructor:Tactile.Proto.Session)
 }
 Session::Session(const Session& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       files_(from.files_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:Tactile.ProtoBuf.Session)
+  // @@protoc_insertion_point(copy_constructor:Tactile.Proto.Session)
 }
 
 void Session::SharedCtor() {
 }
 
 Session::~Session() {
-  // @@protoc_insertion_point(destructor:Tactile.ProtoBuf.Session)
+  // @@protoc_insertion_point(destructor:Tactile.Proto.Session)
   if (GetArenaForAllocation() != nullptr) return;
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -121,7 +121,7 @@ void Session::SetCachedSize(int size) const {
 }
 
 void Session::Clear() {
-// @@protoc_insertion_point(message_clear_start:Tactile.ProtoBuf.Session)
+// @@protoc_insertion_point(message_clear_start:Tactile.Proto.Session)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -144,7 +144,7 @@ const char* Session::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
             ptr += 1;
             auto str = _internal_add_files();
             ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.ProtoBuf.Session.files"));
+            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.Proto.Session.files"));
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
@@ -176,7 +176,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* Session::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Tactile.ProtoBuf.Session)
+  // @@protoc_insertion_point(serialize_to_array_start:Tactile.Proto.Session)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -186,7 +186,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Tactile.ProtoBuf.Session.files");
+      "Tactile.Proto.Session.files");
     target = stream->WriteString(1, s, target);
   }
 
@@ -194,12 +194,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Tactile.ProtoBuf.Session)
+  // @@protoc_insertion_point(serialize_to_array_end:Tactile.Proto.Session)
   return target;
 }
 
 size_t Session::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Tactile.ProtoBuf.Session)
+// @@protoc_insertion_point(message_byte_size_start:Tactile.Proto.Session)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -231,7 +231,7 @@ void Session::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
 
 
 void Session::MergeFrom(const Session& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:Tactile.ProtoBuf.Session)
+// @@protoc_insertion_point(class_specific_merge_from_start:Tactile.Proto.Session)
   GOOGLE_DCHECK_NE(&from, this);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -241,7 +241,7 @@ void Session::MergeFrom(const Session& from) {
 }
 
 void Session::CopyFrom(const Session& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Tactile.ProtoBuf.Session)
+// @@protoc_insertion_point(class_specific_copy_from_start:Tactile.Proto.Session)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -264,11 +264,11 @@ void Session::InternalSwap(Session* other) {
 }
 
 // @@protoc_insertion_point(namespace_scope)
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::Tactile::ProtoBuf::Session* Arena::CreateMaybeMessage< ::Tactile::ProtoBuf::Session >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Tactile::ProtoBuf::Session >(arena);
+template<> PROTOBUF_NOINLINE ::Tactile::Proto::Session* Arena::CreateMaybeMessage< ::Tactile::Proto::Session >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Tactile::Proto::Session >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

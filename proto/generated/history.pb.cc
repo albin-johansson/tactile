@@ -17,7 +17,7 @@
 
 PROTOBUF_PRAGMA_INIT_SEG
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 constexpr History::History(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : files_()
@@ -31,40 +31,40 @@ struct HistoryDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT HistoryDefaultTypeInternal _History_default_instance_;
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_history_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_history_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_history_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_history_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::History, _has_bits_),
-  PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::History, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::History, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::History, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::History, last_opened_file_),
-  PROTOBUF_FIELD_OFFSET(::Tactile::ProtoBuf::History, files_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::History, last_opened_file_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::History, files_),
   0,
   ~0u,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
-  { 0, 8, -1, sizeof(::Tactile::ProtoBuf::History)},
+  { 0, 8, -1, sizeof(::Tactile::Proto::History)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Tactile::ProtoBuf::_History_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::Tactile::Proto::_History_default_instance_),
 };
 
 const char descriptor_table_protodef_history_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\rhistory.proto\022\020Tactile.ProtoBuf\"L\n\007His"
-  "tory\022\035\n\020last_opened_file\030\001 \001(\tH\000\210\001\001\022\r\n\005f"
-  "iles\030\002 \003(\tB\023\n\021_last_opened_fileb\006proto3"
+  "\n\rhistory.proto\022\rTactile.Proto\"L\n\007Histor"
+  "y\022\035\n\020last_opened_file\030\001 \001(\tH\000\210\001\001\022\r\n\005file"
+  "s\030\002 \003(\tB\023\n\021_last_opened_fileb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_history_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_history_2eproto = {
-  false, false, 119, descriptor_table_protodef_history_2eproto, "history.proto", 
+  false, false, 116, descriptor_table_protodef_history_2eproto, "history.proto", 
   &descriptor_table_history_2eproto_once, nullptr, 0, 1,
   schemas, file_default_instances, TableStruct_history_2eproto::offsets,
   file_level_metadata_history_2eproto, file_level_enum_descriptors_history_2eproto, file_level_service_descriptors_history_2eproto,
@@ -76,7 +76,7 @@ PROTOBUF_ATTRIBUTE_WEAK const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY static ::PROTOBUF_NAMESPACE_ID::internal::AddDescriptorsRunner dynamic_init_dummy_history_2eproto(&descriptor_table_history_2eproto);
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 
 // ===================================================================
 
@@ -96,7 +96,7 @@ History::History(::PROTOBUF_NAMESPACE_ID::Arena* arena,
   if (!is_message_owned) {
     RegisterArenaDtor(arena);
   }
-  // @@protoc_insertion_point(arena_constructor:Tactile.ProtoBuf.History)
+  // @@protoc_insertion_point(arena_constructor:Tactile.Proto.History)
 }
 History::History(const History& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
@@ -108,7 +108,7 @@ History::History(const History& from)
     last_opened_file_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_last_opened_file(), 
       GetArenaForAllocation());
   }
-  // @@protoc_insertion_point(copy_constructor:Tactile.ProtoBuf.History)
+  // @@protoc_insertion_point(copy_constructor:Tactile.Proto.History)
 }
 
 void History::SharedCtor() {
@@ -116,7 +116,7 @@ last_opened_file_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyS
 }
 
 History::~History() {
-  // @@protoc_insertion_point(destructor:Tactile.ProtoBuf.History)
+  // @@protoc_insertion_point(destructor:Tactile.Proto.History)
   if (GetArenaForAllocation() != nullptr) return;
   SharedDtor();
   _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -138,7 +138,7 @@ void History::SetCachedSize(int size) const {
 }
 
 void History::Clear() {
-// @@protoc_insertion_point(message_clear_start:Tactile.ProtoBuf.History)
+// @@protoc_insertion_point(message_clear_start:Tactile.Proto.History)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -164,7 +164,7 @@ const char* History::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
         if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
           auto str = _internal_mutable_last_opened_file();
           ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.ProtoBuf.History.last_opened_file"));
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.Proto.History.last_opened_file"));
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -177,7 +177,7 @@ const char* History::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::in
             ptr += 1;
             auto str = _internal_add_files();
             ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.ProtoBuf.History.files"));
+            CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.Proto.History.files"));
             CHK_(ptr);
             if (!ctx->DataAvailable(ptr)) break;
           } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<18>(ptr));
@@ -210,7 +210,7 @@ failure:
 
 ::PROTOBUF_NAMESPACE_ID::uint8* History::_InternalSerialize(
     ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Tactile.ProtoBuf.History)
+  // @@protoc_insertion_point(serialize_to_array_start:Tactile.Proto.History)
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -219,7 +219,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       this->_internal_last_opened_file().data(), static_cast<int>(this->_internal_last_opened_file().length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Tactile.ProtoBuf.History.last_opened_file");
+      "Tactile.Proto.History.last_opened_file");
     target = stream->WriteStringMaybeAliased(
         1, this->_internal_last_opened_file(), target);
   }
@@ -230,7 +230,7 @@ failure:
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Tactile.ProtoBuf.History.files");
+      "Tactile.Proto.History.files");
     target = stream->WriteString(2, s, target);
   }
 
@@ -238,12 +238,12 @@ failure:
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Tactile.ProtoBuf.History)
+  // @@protoc_insertion_point(serialize_to_array_end:Tactile.Proto.History)
   return target;
 }
 
 size_t History::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Tactile.ProtoBuf.History)
+// @@protoc_insertion_point(message_byte_size_start:Tactile.Proto.History)
   size_t total_size = 0;
 
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
@@ -283,7 +283,7 @@ void History::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
 
 
 void History::MergeFrom(const History& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:Tactile.ProtoBuf.History)
+// @@protoc_insertion_point(class_specific_merge_from_start:Tactile.Proto.History)
   GOOGLE_DCHECK_NE(&from, this);
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
@@ -296,7 +296,7 @@ void History::MergeFrom(const History& from) {
 }
 
 void History::CopyFrom(const History& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Tactile.ProtoBuf.History)
+// @@protoc_insertion_point(class_specific_copy_from_start:Tactile.Proto.History)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
@@ -327,11 +327,11 @@ void History::InternalSwap(History* other) {
 }
 
 // @@protoc_insertion_point(namespace_scope)
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 PROTOBUF_NAMESPACE_OPEN
-template<> PROTOBUF_NOINLINE ::Tactile::ProtoBuf::History* Arena::CreateMaybeMessage< ::Tactile::ProtoBuf::History >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Tactile::ProtoBuf::History >(arena);
+template<> PROTOBUF_NOINLINE ::Tactile::Proto::History* Arena::CreateMaybeMessage< ::Tactile::Proto::History >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Tactile::Proto::History >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

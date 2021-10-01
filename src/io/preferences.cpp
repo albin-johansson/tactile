@@ -63,7 +63,7 @@ void LoadPreferences()
   if (std::filesystem::exists(settings_path)) {
     std::ifstream stream{settings_path, std::ios::in | std::ios::binary};
 
-    ProtoBuf::Settings cfg;
+    Proto::Settings cfg;
     if (cfg.ParseFromIstream(&stream)) {
       if (cfg.has_theme()) {
         settings.theme = cfg.theme();
@@ -152,7 +152,7 @@ void LoadPreferences()
 
 void SavePreferences()
 {
-  ProtoBuf::Settings cfg;
+  Proto::Settings cfg;
 
   cfg.set_theme(settings.theme);
   cfg.set_show_grid(settings.show_grid);
@@ -171,7 +171,7 @@ void SavePreferences()
   cfg.set_show_layer_dock(settings.show_layer_dock);
   cfg.set_show_properties_dock(settings.show_properties_dock);
   cfg.set_restore_layout(settings.restore_layout);
-  cfg.set_viewport_overlay_pos(ProtoBuf::OverlayPos{settings.viewport_overlay_pos});
+  cfg.set_viewport_overlay_pos(Proto::OverlayPos{settings.viewport_overlay_pos});
 
   std::ofstream stream{settings_path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {

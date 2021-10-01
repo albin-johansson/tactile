@@ -54,22 +54,22 @@ struct TableStruct_history_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_history_2eproto;
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 class History;
 struct HistoryDefaultTypeInternal;
 extern HistoryDefaultTypeInternal _History_default_instance_;
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 PROTOBUF_NAMESPACE_OPEN
-template<> ::Tactile::ProtoBuf::History* Arena::CreateMaybeMessage<::Tactile::ProtoBuf::History>(Arena*);
+template<> ::Tactile::Proto::History* Arena::CreateMaybeMessage<::Tactile::Proto::History>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 
 // ===================================================================
 
 class History final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Tactile.ProtoBuf.History) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Tactile.Proto.History) */ {
  public:
   inline History() : History(nullptr) {}
   ~History() override;
@@ -167,7 +167,7 @@ class History final :
   void InternalSwap(History* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Tactile.ProtoBuf.History";
+    return "Tactile.Proto.History";
   }
   protected:
   explicit History(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -232,7 +232,7 @@ class History final :
   std::string* _internal_mutable_last_opened_file();
   public:
 
-  // @@protoc_insertion_point(class_scope:Tactile.ProtoBuf.History)
+  // @@protoc_insertion_point(class_scope:Tactile.Proto.History)
  private:
   class _Internal;
 
@@ -269,7 +269,7 @@ inline void History::clear_last_opened_file() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& History::last_opened_file() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.History.last_opened_file)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.History.last_opened_file)
   return _internal_last_opened_file();
 }
 template <typename ArgT0, typename... ArgT>
@@ -277,11 +277,11 @@ inline PROTOBUF_ALWAYS_INLINE
 void History::set_last_opened_file(ArgT0&& arg0, ArgT... args) {
  _has_bits_[0] |= 0x00000001u;
  last_opened_file_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.History.last_opened_file)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.History.last_opened_file)
 }
 inline std::string* History::mutable_last_opened_file() {
   std::string* _s = _internal_mutable_last_opened_file();
-  // @@protoc_insertion_point(field_mutable:Tactile.ProtoBuf.History.last_opened_file)
+  // @@protoc_insertion_point(field_mutable:Tactile.Proto.History.last_opened_file)
   return _s;
 }
 inline const std::string& History::_internal_last_opened_file() const {
@@ -296,7 +296,7 @@ inline std::string* History::_internal_mutable_last_opened_file() {
   return last_opened_file_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* History::release_last_opened_file() {
-  // @@protoc_insertion_point(field_release:Tactile.ProtoBuf.History.last_opened_file)
+  // @@protoc_insertion_point(field_release:Tactile.Proto.History.last_opened_file)
   if (!_internal_has_last_opened_file()) {
     return nullptr;
   }
@@ -311,7 +311,7 @@ inline void History::set_allocated_last_opened_file(std::string* last_opened_fil
   }
   last_opened_file_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), last_opened_file,
       GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set_allocated:Tactile.ProtoBuf.History.last_opened_file)
+  // @@protoc_insertion_point(field_set_allocated:Tactile.Proto.History.last_opened_file)
 }
 
 // repeated string files = 2;
@@ -326,66 +326,66 @@ inline void History::clear_files() {
 }
 inline std::string* History::add_files() {
   std::string* _s = _internal_add_files();
-  // @@protoc_insertion_point(field_add_mutable:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_add_mutable:Tactile.Proto.History.files)
   return _s;
 }
 inline const std::string& History::_internal_files(int index) const {
   return files_.Get(index);
 }
 inline const std::string& History::files(int index) const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.History.files)
   return _internal_files(index);
 }
 inline std::string* History::mutable_files(int index) {
-  // @@protoc_insertion_point(field_mutable:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_mutable:Tactile.Proto.History.files)
   return files_.Mutable(index);
 }
 inline void History::set_files(int index, const std::string& value) {
   files_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.History.files)
 }
 inline void History::set_files(int index, std::string&& value) {
   files_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.History.files)
 }
 inline void History::set_files(int index, const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   files_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_set_char:Tactile.Proto.History.files)
 }
 inline void History::set_files(int index, const char* value, size_t size) {
   files_.Mutable(index)->assign(
     reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_set_pointer:Tactile.Proto.History.files)
 }
 inline std::string* History::_internal_add_files() {
   return files_.Add();
 }
 inline void History::add_files(const std::string& value) {
   files_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_add:Tactile.Proto.History.files)
 }
 inline void History::add_files(std::string&& value) {
   files_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_add:Tactile.Proto.History.files)
 }
 inline void History::add_files(const char* value) {
   GOOGLE_DCHECK(value != nullptr);
   files_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_add_char:Tactile.Proto.History.files)
 }
 inline void History::add_files(const char* value, size_t size) {
   files_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_add_pointer:Tactile.Proto.History.files)
 }
 inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
 History::files() const {
-  // @@protoc_insertion_point(field_list:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_list:Tactile.Proto.History.files)
   return files_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 History::mutable_files() {
-  // @@protoc_insertion_point(field_mutable_list:Tactile.ProtoBuf.History.files)
+  // @@protoc_insertion_point(field_mutable_list:Tactile.Proto.History.files)
   return &files_;
 }
 
@@ -395,7 +395,7 @@ History::mutable_files() {
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 
 // @@protoc_insertion_point(global_scope)

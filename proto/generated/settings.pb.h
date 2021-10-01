@@ -55,17 +55,17 @@ struct TableStruct_settings_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_settings_2eproto;
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 class Settings;
 struct SettingsDefaultTypeInternal;
 extern SettingsDefaultTypeInternal _Settings_default_instance_;
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 PROTOBUF_NAMESPACE_OPEN
-template<> ::Tactile::ProtoBuf::Settings* Arena::CreateMaybeMessage<::Tactile::ProtoBuf::Settings>(Arena*);
+template<> ::Tactile::Proto::Settings* Arena::CreateMaybeMessage<::Tactile::Proto::Settings>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Tactile {
-namespace ProtoBuf {
+namespace Proto {
 
 enum OverlayPos : int {
   TOP_LEFT = 0,
@@ -97,7 +97,7 @@ inline bool OverlayPos_Parse(
 // ===================================================================
 
 class Settings final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Tactile.ProtoBuf.Settings) */ {
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Tactile.Proto.Settings) */ {
  public:
   inline Settings() : Settings(nullptr) {}
   ~Settings() override;
@@ -195,7 +195,7 @@ class Settings final :
   void InternalSwap(Settings* other);
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Tactile.ProtoBuf.Settings";
+    return "Tactile.Proto.Settings";
   }
   protected:
   explicit Settings(::PROTOBUF_NAMESPACE_ID::Arena* arena,
@@ -423,20 +423,20 @@ class Settings final :
   void _internal_set_human_readable_output(bool value);
   public:
 
-  // optional .Tactile.ProtoBuf.OverlayPos viewport_overlay_pos = 27;
+  // optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;
   bool has_viewport_overlay_pos() const;
   private:
   bool _internal_has_viewport_overlay_pos() const;
   public:
   void clear_viewport_overlay_pos();
-  ::Tactile::ProtoBuf::OverlayPos viewport_overlay_pos() const;
-  void set_viewport_overlay_pos(::Tactile::ProtoBuf::OverlayPos value);
+  ::Tactile::Proto::OverlayPos viewport_overlay_pos() const;
+  void set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value);
   private:
-  ::Tactile::ProtoBuf::OverlayPos _internal_viewport_overlay_pos() const;
-  void _internal_set_viewport_overlay_pos(::Tactile::ProtoBuf::OverlayPos value);
+  ::Tactile::Proto::OverlayPos _internal_viewport_overlay_pos() const;
+  void _internal_set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Tactile.ProtoBuf.Settings)
+  // @@protoc_insertion_point(class_scope:Tactile.Proto.Settings)
  private:
   class _Internal;
 
@@ -486,7 +486,7 @@ inline void Settings::clear_theme() {
   _has_bits_[0] &= ~0x00000001u;
 }
 inline const std::string& Settings::theme() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.theme)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.theme)
   return _internal_theme();
 }
 template <typename ArgT0, typename... ArgT>
@@ -494,11 +494,11 @@ inline PROTOBUF_ALWAYS_INLINE
 void Settings::set_theme(ArgT0&& arg0, ArgT... args) {
  _has_bits_[0] |= 0x00000001u;
  theme_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.theme)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.theme)
 }
 inline std::string* Settings::mutable_theme() {
   std::string* _s = _internal_mutable_theme();
-  // @@protoc_insertion_point(field_mutable:Tactile.ProtoBuf.Settings.theme)
+  // @@protoc_insertion_point(field_mutable:Tactile.Proto.Settings.theme)
   return _s;
 }
 inline const std::string& Settings::_internal_theme() const {
@@ -513,7 +513,7 @@ inline std::string* Settings::_internal_mutable_theme() {
   return theme_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* Settings::release_theme() {
-  // @@protoc_insertion_point(field_release:Tactile.ProtoBuf.Settings.theme)
+  // @@protoc_insertion_point(field_release:Tactile.Proto.Settings.theme)
   if (!_internal_has_theme()) {
     return nullptr;
   }
@@ -528,7 +528,7 @@ inline void Settings::set_allocated_theme(std::string* theme) {
   }
   theme_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), theme,
       GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set_allocated:Tactile.ProtoBuf.Settings.theme)
+  // @@protoc_insertion_point(field_set_allocated:Tactile.Proto.Settings.theme)
 }
 
 // optional int32 preferred_tile_width = 2;
@@ -547,7 +547,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 Settings::_internal_preferred_tile_width()
   return preferred_tile_width_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Settings::preferred_tile_width() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.preferred_tile_width)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.preferred_tile_width)
   return _internal_preferred_tile_width();
 }
 inline void Settings::_internal_set_preferred_tile_width(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -556,7 +556,7 @@ inline void Settings::_internal_set_preferred_tile_width(::PROTOBUF_NAMESPACE_ID
 }
 inline void Settings::set_preferred_tile_width(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_preferred_tile_width(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.preferred_tile_width)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.preferred_tile_width)
 }
 
 // optional int32 preferred_tile_height = 3;
@@ -575,7 +575,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 Settings::_internal_preferred_tile_height(
   return preferred_tile_height_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Settings::preferred_tile_height() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.preferred_tile_height)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.preferred_tile_height)
   return _internal_preferred_tile_height();
 }
 inline void Settings::_internal_set_preferred_tile_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -584,7 +584,7 @@ inline void Settings::_internal_set_preferred_tile_height(::PROTOBUF_NAMESPACE_I
 }
 inline void Settings::set_preferred_tile_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_preferred_tile_height(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.preferred_tile_height)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.preferred_tile_height)
 }
 
 // optional string preferred_format = 16;
@@ -600,7 +600,7 @@ inline void Settings::clear_preferred_format() {
   _has_bits_[0] &= ~0x00000002u;
 }
 inline const std::string& Settings::preferred_format() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.preferred_format)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.preferred_format)
   return _internal_preferred_format();
 }
 template <typename ArgT0, typename... ArgT>
@@ -608,11 +608,11 @@ inline PROTOBUF_ALWAYS_INLINE
 void Settings::set_preferred_format(ArgT0&& arg0, ArgT... args) {
  _has_bits_[0] |= 0x00000002u;
  preferred_format_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.preferred_format)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.preferred_format)
 }
 inline std::string* Settings::mutable_preferred_format() {
   std::string* _s = _internal_mutable_preferred_format();
-  // @@protoc_insertion_point(field_mutable:Tactile.ProtoBuf.Settings.preferred_format)
+  // @@protoc_insertion_point(field_mutable:Tactile.Proto.Settings.preferred_format)
   return _s;
 }
 inline const std::string& Settings::_internal_preferred_format() const {
@@ -627,7 +627,7 @@ inline std::string* Settings::_internal_mutable_preferred_format() {
   return preferred_format_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
 inline std::string* Settings::release_preferred_format() {
-  // @@protoc_insertion_point(field_release:Tactile.ProtoBuf.Settings.preferred_format)
+  // @@protoc_insertion_point(field_release:Tactile.Proto.Settings.preferred_format)
   if (!_internal_has_preferred_format()) {
     return nullptr;
   }
@@ -642,7 +642,7 @@ inline void Settings::set_allocated_preferred_format(std::string* preferred_form
   }
   preferred_format_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), preferred_format,
       GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set_allocated:Tactile.ProtoBuf.Settings.preferred_format)
+  // @@protoc_insertion_point(field_set_allocated:Tactile.Proto.Settings.preferred_format)
 }
 
 // optional uint64 command_capacity = 17;
@@ -661,7 +661,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 Settings::_internal_command_capacity() co
   return command_capacity_;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 Settings::command_capacity() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.command_capacity)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.command_capacity)
   return _internal_command_capacity();
 }
 inline void Settings::_internal_set_command_capacity(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -670,7 +670,7 @@ inline void Settings::_internal_set_command_capacity(::PROTOBUF_NAMESPACE_ID::ui
 }
 inline void Settings::set_command_capacity(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_command_capacity(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.command_capacity)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.command_capacity)
 }
 
 // optional bool show_grid = 18;
@@ -689,7 +689,7 @@ inline bool Settings::_internal_show_grid() const {
   return show_grid_;
 }
 inline bool Settings::show_grid() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.show_grid)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.show_grid)
   return _internal_show_grid();
 }
 inline void Settings::_internal_set_show_grid(bool value) {
@@ -698,7 +698,7 @@ inline void Settings::_internal_set_show_grid(bool value) {
 }
 inline void Settings::set_show_grid(bool value) {
   _internal_set_show_grid(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.show_grid)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.show_grid)
 }
 
 // optional bool window_border = 19;
@@ -717,7 +717,7 @@ inline bool Settings::_internal_window_border() const {
   return window_border_;
 }
 inline bool Settings::window_border() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.window_border)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.window_border)
   return _internal_window_border();
 }
 inline void Settings::_internal_set_window_border(bool value) {
@@ -726,7 +726,7 @@ inline void Settings::_internal_set_window_border(bool value) {
 }
 inline void Settings::set_window_border(bool value) {
   _internal_set_window_border(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.window_border)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.window_border)
 }
 
 // optional bool restore_last_session = 20;
@@ -745,7 +745,7 @@ inline bool Settings::_internal_restore_last_session() const {
   return restore_last_session_;
 }
 inline bool Settings::restore_last_session() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.restore_last_session)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.restore_last_session)
   return _internal_restore_last_session();
 }
 inline void Settings::_internal_set_restore_last_session(bool value) {
@@ -754,7 +754,7 @@ inline void Settings::_internal_set_restore_last_session(bool value) {
 }
 inline void Settings::set_restore_last_session(bool value) {
   _internal_set_restore_last_session(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.restore_last_session)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.restore_last_session)
 }
 
 // optional bool restore_layout = 21;
@@ -773,7 +773,7 @@ inline bool Settings::_internal_restore_layout() const {
   return restore_layout_;
 }
 inline bool Settings::restore_layout() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.restore_layout)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.restore_layout)
   return _internal_restore_layout();
 }
 inline void Settings::_internal_set_restore_layout(bool value) {
@@ -782,7 +782,7 @@ inline void Settings::_internal_set_restore_layout(bool value) {
 }
 inline void Settings::set_restore_layout(bool value) {
   _internal_set_restore_layout(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.restore_layout)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.restore_layout)
 }
 
 // optional bool show_layer_dock = 22;
@@ -801,7 +801,7 @@ inline bool Settings::_internal_show_layer_dock() const {
   return show_layer_dock_;
 }
 inline bool Settings::show_layer_dock() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.show_layer_dock)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.show_layer_dock)
   return _internal_show_layer_dock();
 }
 inline void Settings::_internal_set_show_layer_dock(bool value) {
@@ -810,7 +810,7 @@ inline void Settings::_internal_set_show_layer_dock(bool value) {
 }
 inline void Settings::set_show_layer_dock(bool value) {
   _internal_set_show_layer_dock(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.show_layer_dock)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.show_layer_dock)
 }
 
 // optional bool show_properties_dock = 23;
@@ -829,7 +829,7 @@ inline bool Settings::_internal_show_properties_dock() const {
   return show_properties_dock_;
 }
 inline bool Settings::show_properties_dock() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.show_properties_dock)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.show_properties_dock)
   return _internal_show_properties_dock();
 }
 inline void Settings::_internal_set_show_properties_dock(bool value) {
@@ -838,7 +838,7 @@ inline void Settings::_internal_set_show_properties_dock(bool value) {
 }
 inline void Settings::set_show_properties_dock(bool value) {
   _internal_set_show_properties_dock(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.show_properties_dock)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.show_properties_dock)
 }
 
 // optional bool show_tileset_dock = 24;
@@ -857,7 +857,7 @@ inline bool Settings::_internal_show_tileset_dock() const {
   return show_tileset_dock_;
 }
 inline bool Settings::show_tileset_dock() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.show_tileset_dock)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.show_tileset_dock)
   return _internal_show_tileset_dock();
 }
 inline void Settings::_internal_set_show_tileset_dock(bool value) {
@@ -866,7 +866,7 @@ inline void Settings::_internal_set_show_tileset_dock(bool value) {
 }
 inline void Settings::set_show_tileset_dock(bool value) {
   _internal_set_show_tileset_dock(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.show_tileset_dock)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.show_tileset_dock)
 }
 
 // optional bool embed_tilesets = 25;
@@ -885,7 +885,7 @@ inline bool Settings::_internal_embed_tilesets() const {
   return embed_tilesets_;
 }
 inline bool Settings::embed_tilesets() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.embed_tilesets)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.embed_tilesets)
   return _internal_embed_tilesets();
 }
 inline void Settings::_internal_set_embed_tilesets(bool value) {
@@ -894,7 +894,7 @@ inline void Settings::_internal_set_embed_tilesets(bool value) {
 }
 inline void Settings::set_embed_tilesets(bool value) {
   _internal_set_embed_tilesets(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.embed_tilesets)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.embed_tilesets)
 }
 
 // optional bool human_readable_output = 26;
@@ -913,7 +913,7 @@ inline bool Settings::_internal_human_readable_output() const {
   return human_readable_output_;
 }
 inline bool Settings::human_readable_output() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.human_readable_output)
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.human_readable_output)
   return _internal_human_readable_output();
 }
 inline void Settings::_internal_set_human_readable_output(bool value) {
@@ -922,10 +922,10 @@ inline void Settings::_internal_set_human_readable_output(bool value) {
 }
 inline void Settings::set_human_readable_output(bool value) {
   _internal_set_human_readable_output(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.human_readable_output)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.human_readable_output)
 }
 
-// optional .Tactile.ProtoBuf.OverlayPos viewport_overlay_pos = 27;
+// optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;
 inline bool Settings::_internal_has_viewport_overlay_pos() const {
   bool value = (_has_bits_[0] & 0x00004000u) != 0;
   return value;
@@ -937,20 +937,20 @@ inline void Settings::clear_viewport_overlay_pos() {
   viewport_overlay_pos_ = 0;
   _has_bits_[0] &= ~0x00004000u;
 }
-inline ::Tactile::ProtoBuf::OverlayPos Settings::_internal_viewport_overlay_pos() const {
-  return static_cast< ::Tactile::ProtoBuf::OverlayPos >(viewport_overlay_pos_);
+inline ::Tactile::Proto::OverlayPos Settings::_internal_viewport_overlay_pos() const {
+  return static_cast< ::Tactile::Proto::OverlayPos >(viewport_overlay_pos_);
 }
-inline ::Tactile::ProtoBuf::OverlayPos Settings::viewport_overlay_pos() const {
-  // @@protoc_insertion_point(field_get:Tactile.ProtoBuf.Settings.viewport_overlay_pos)
+inline ::Tactile::Proto::OverlayPos Settings::viewport_overlay_pos() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.viewport_overlay_pos)
   return _internal_viewport_overlay_pos();
 }
-inline void Settings::_internal_set_viewport_overlay_pos(::Tactile::ProtoBuf::OverlayPos value) {
+inline void Settings::_internal_set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value) {
   _has_bits_[0] |= 0x00004000u;
   viewport_overlay_pos_ = value;
 }
-inline void Settings::set_viewport_overlay_pos(::Tactile::ProtoBuf::OverlayPos value) {
+inline void Settings::set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value) {
   _internal_set_viewport_overlay_pos(value);
-  // @@protoc_insertion_point(field_set:Tactile.ProtoBuf.Settings.viewport_overlay_pos)
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.viewport_overlay_pos)
 }
 
 #ifdef __GNUC__
@@ -959,15 +959,15 @@ inline void Settings::set_viewport_overlay_pos(::Tactile::ProtoBuf::OverlayPos v
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace ProtoBuf
+}  // namespace Proto
 }  // namespace Tactile
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::Tactile::ProtoBuf::OverlayPos> : ::std::true_type {};
+template <> struct is_proto_enum< ::Tactile::Proto::OverlayPos> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::Tactile::ProtoBuf::OverlayPos>() {
-  return ::Tactile::ProtoBuf::OverlayPos_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::Tactile::Proto::OverlayPos>() {
+  return ::Tactile::Proto::OverlayPos_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

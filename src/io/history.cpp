@@ -40,7 +40,7 @@ void LoadFileHistory()
 {
   std::ifstream stream{file_path, std::ios::in | std::ios::binary};
 
-  ProtoBuf::History h;
+  Proto::History h;
   if (h.ParseFromIstream(&stream)) {
     if (h.has_last_opened_file()) {
       last_closed_file = h.last_opened_file();
@@ -57,7 +57,7 @@ void LoadFileHistory()
 
 void SaveFileHistory()
 {
-  ProtoBuf::History h;
+  Proto::History h;
 
   if (last_closed_file) {
     h.set_last_opened_file(*last_closed_file);

@@ -33,7 +33,7 @@ inline const auto file_path = GetPersistentFileDir() / "session.bin";
 
 void RestoreLastSession(Model& model)
 {
-  ProtoBuf::Session session;
+  Proto::Session session;
 
   std::ifstream stream{file_path, std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
@@ -54,7 +54,7 @@ void RestoreLastSession(Model& model)
 
 void SaveSession(const Model& model)
 {
-  ProtoBuf::Session session;
+  Proto::Session session;
   for (const auto& [id, document] : model) {
     if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);
