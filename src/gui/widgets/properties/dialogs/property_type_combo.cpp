@@ -5,9 +5,9 @@
 #include <array>    // array
 #include <cstring>  // strcmp
 
-#include "aliases/cstr.hpp"
-#include "aliases/ints.hpp"
-#include "aliases/maybe.hpp"
+#include "common/cstr.hpp"
+#include "common/ints.hpp"
+#include "common/maybe.hpp"
 #include "core/tactile_error.hpp"
 
 namespace Tactile {

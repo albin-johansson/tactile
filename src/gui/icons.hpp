@@ -2,8 +2,8 @@
 
 #include <IconsFontAwesome5.h>
 
-#include "aliases/cstr.hpp"
-#include "aliases/ints.hpp"
+#include "common/cstr.hpp"
+#include "common/ints.hpp"
 #include "core/layer_type.hpp"
 
 /// \addtogroup gui

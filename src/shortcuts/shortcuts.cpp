@@ -2,7 +2,7 @@
 
 #include <vector>  // vector
 
-#include "aliases/unique.hpp"
+#include "common/unique.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 #include "shortcuts/edit/add_column_shortcut.hpp"
 #include "shortcuts/edit/add_row_shortcut.hpp"

@@ -4,7 +4,7 @@ struct ImVec2;
 
 #include <entt.hpp>  // registry, entity
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "gui/rendering/render_info.hpp"
 
 namespace Tactile {

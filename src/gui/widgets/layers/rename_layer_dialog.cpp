@@ -3,7 +3,7 @@
 #include <string>   // string
 #include <utility>  // move
 
-#include "aliases/maybe.hpp"
+#include "common/maybe.hpp"
 #include "events/layer_events.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/dialogs/rename_dialog.hpp"

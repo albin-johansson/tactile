@@ -4,7 +4,7 @@
 
 #include <utility>  // move
 
-#include "aliases/maybe.hpp"
+#include "common/maybe.hpp"
 #include "core/tactile_error.hpp"
 #include "events/property_events.hpp"
 #include "gui/widgets/alignment.hpp"

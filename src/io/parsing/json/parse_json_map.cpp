@@ -3,7 +3,7 @@
 #include <filesystem>  // absolute, exists, weakly_canonical
 #include <string>      // string
 
-#include "aliases/json.hpp"
+#include "common/json.hpp"
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"

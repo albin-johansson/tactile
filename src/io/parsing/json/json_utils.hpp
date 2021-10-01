@@ -1,8 +1,8 @@
 #pragma once
 
-#include "aliases/cstr.hpp"
-#include "aliases/json.hpp"
-#include "aliases/maybe.hpp"
+#include "common/cstr.hpp"
+#include "common/json.hpp"
+#include "common/maybe.hpp"
 
 namespace Tactile::IO {
 

@@ -5,7 +5,7 @@
 #include <array>   // array
 #include <format>  // format_to_n
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
 #include "dialogs/add_property_dialog.hpp"

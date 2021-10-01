@@ -5,7 +5,7 @@
 
 #include <cassert>  // assert
 
-#include "aliases/cstr.hpp"
+#include "common/cstr.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property_context.hpp"
 #include "gui/rendering/common_rendering.hpp"

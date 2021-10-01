@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 
 struct ImVec2;
 

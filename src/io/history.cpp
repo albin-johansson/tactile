@@ -16,8 +16,8 @@
 #include <ios>         // ios
 #include <utility>     // move
 
-#include "aliases/ints.hpp"
-#include "aliases/maybe.hpp"
+#include "common/ints.hpp"
+#include "common/maybe.hpp"
 #include "directories.hpp"
 #include "saving/common_saving.hpp"
 

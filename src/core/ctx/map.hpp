@@ -2,9 +2,9 @@
 
 #include <entt.hpp>  // entity
 
-#include "aliases/ints.hpp"
-#include "aliases/layer_id.hpp"
-#include "aliases/object_id.hpp"
+#include "common/ints.hpp"
+#include "common/layer_id.hpp"
+#include "common/object_id.hpp"
 
 namespace Tactile {
 

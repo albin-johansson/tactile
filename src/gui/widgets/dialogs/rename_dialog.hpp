@@ -4,8 +4,8 @@
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include "aliases/cstr.hpp"
-#include "aliases/not_null.hpp"
+#include "common/cstr.hpp"
+#include "common/not_null.hpp"
 
 namespace Tactile {
 

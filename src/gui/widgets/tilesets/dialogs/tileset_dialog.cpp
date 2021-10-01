@@ -6,7 +6,7 @@
 #include <array>       // array
 #include <filesystem>  // path
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "events/tileset_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"

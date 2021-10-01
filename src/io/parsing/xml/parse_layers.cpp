@@ -4,7 +4,7 @@
 #include <memory>   // make_unique
 #include <utility>  // move
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"

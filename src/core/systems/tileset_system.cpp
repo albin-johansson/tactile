@@ -3,7 +3,7 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
-#include "aliases/hash_map.hpp"
+#include "common/hash_map.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"

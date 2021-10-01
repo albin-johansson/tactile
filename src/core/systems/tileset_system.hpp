@@ -3,9 +3,9 @@
 #include <centurion.hpp>  // irect
 #include <entt.hpp>       // registry, entity
 
-#include "aliases/maybe.hpp"
-#include "aliases/tile_id.hpp"
-#include "aliases/tileset_id.hpp"
+#include "common/maybe.hpp"
+#include "common/tile_id.hpp"
+#include "common/tileset_id.hpp"
 #include "core/components/texture.hpp"
 #include "core/map_position.hpp"
 #include "core/region.hpp"

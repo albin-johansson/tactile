@@ -4,7 +4,7 @@
 
 #include <string>  // string
 
-#include "aliases/maybe.hpp"
+#include "common/maybe.hpp"
 #include "core/components/property.hpp"
 #include "core/systems/property_system.hpp"
 #include "dialogs/add_property_dialog.hpp"

@@ -5,7 +5,7 @@
 
 #include <cassert>  // assert
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"

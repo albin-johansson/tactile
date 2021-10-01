@@ -2,10 +2,10 @@
 
 #include <entt.hpp>  // registry, entity
 
-#include "aliases/ints.hpp"
-#include "aliases/tile_cache.hpp"
-#include "aliases/tile_id.hpp"
-#include "aliases/tile_matrix.hpp"
+#include "common/ints.hpp"
+#include "common/tile_cache.hpp"
+#include "common/tile_id.hpp"
+#include "common/tile_matrix.hpp"
 #include "core/map_position.hpp"
 
 namespace Tactile::Sys {

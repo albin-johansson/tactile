@@ -1,7 +1,7 @@
 #pragma once
 
-#include "aliases/maybe.hpp"
-#include "aliases/object_ref.hpp"
+#include "common/maybe.hpp"
+#include "common/object_ref.hpp"
 #include "core/properties/property_value.hpp"
 
 namespace Tactile {

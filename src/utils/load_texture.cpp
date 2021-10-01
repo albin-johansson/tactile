@@ -9,7 +9,7 @@
 #include <memory>  // unique_ptr
 #include <vector>  // vector
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 
 namespace Tactile {
 namespace {

@@ -15,7 +15,7 @@
 #include <fstream>        // ifstream, ofstream
 #include <ios>            // ios
 
-#include "aliases/json.hpp"
+#include "common/json.hpp"
 #include "core/model.hpp"
 #include "directories.hpp"
 #include "parsing/map_parser.hpp"

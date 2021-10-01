@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "gui/themes.hpp"
 
 namespace Tactile {

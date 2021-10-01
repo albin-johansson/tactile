@@ -5,7 +5,7 @@
 #include <array>   // array
 #include <format>  // format_to_n
 
-#include "aliases/cstr.hpp"
+#include "common/cstr.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"

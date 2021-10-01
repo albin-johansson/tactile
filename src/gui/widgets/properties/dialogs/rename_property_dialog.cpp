@@ -2,7 +2,7 @@
 
 #include <utility>  // move
 
-#include "aliases/maybe.hpp"
+#include "common/maybe.hpp"
 #include "core/systems/property_system.hpp"
 #include "events/property_events.hpp"
 #include "gui/widgets/dialogs/rename_dialog.hpp"

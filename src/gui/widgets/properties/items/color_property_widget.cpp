@@ -4,7 +4,7 @@
 
 #include <cmath>  // round
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "utils/color_utils.hpp"
 #include "utils/scope_id.hpp"
 

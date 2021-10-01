@@ -3,7 +3,7 @@
 #include <centurion.hpp>  // window, keyboard
 #include <entt.hpp>       // dispatcher
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "core/model.hpp"
 #include "events/command_events.hpp"
 #include "events/layer_events.hpp"

@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include "aliases/maybe.hpp"
+#include "common/maybe.hpp"
 #include "core/properties/property_value.hpp"
 
 namespace Tactile {

@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // registry
 
-#include "aliases/tile_id.hpp"
+#include "common/tile_id.hpp"
 
 struct ImVec2;
 

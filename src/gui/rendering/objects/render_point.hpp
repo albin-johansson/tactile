@@ -3,7 +3,7 @@
 #include <centurion.hpp>  // frect
 #include <entt.hpp>       // registry, entity
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "gui/rendering/render_info.hpp"
 
 struct ImVec2;

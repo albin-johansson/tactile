@@ -5,7 +5,7 @@
 #include <array>   // array
 #include <limits>  // numeric_limits
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 #include "utils/buffer_utils.hpp"
 #include "utils/scope_id.hpp"
 

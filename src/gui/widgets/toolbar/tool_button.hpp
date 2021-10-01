@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/cstr.hpp"
+#include "common/cstr.hpp"
 
 namespace Tactile {
 

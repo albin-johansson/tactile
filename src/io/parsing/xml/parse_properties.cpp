@@ -3,7 +3,7 @@
 #include <centurion.hpp>
 #include <cstring>  // strcmp
 
-#include "aliases/cstr.hpp"
+#include "common/cstr.hpp"
 #include "xml_utils.hpp"
 
 namespace Tactile::IO {

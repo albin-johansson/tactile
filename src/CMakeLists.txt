@@ -14,24 +14,24 @@ set(SOURCE_FILES
     init_open_gl_attributes.cpp
     init_open_gl_attributes.hpp
 
-    aliases/context_id.hpp
-    aliases/cstr.hpp
-    aliases/hash_map.hpp
-    aliases/ints.hpp
-    aliases/json.hpp
-    aliases/layer_id.hpp
-    aliases/map_id.hpp
-    aliases/maybe.hpp
-    aliases/not_null.hpp
-    aliases/object_id.hpp
-    aliases/object_ref.hpp
-    aliases/ref.hpp
-    aliases/shared.hpp
-    aliases/tile_cache.hpp
-    aliases/tile_id.hpp
-    aliases/tile_matrix.hpp
-    aliases/tileset_id.hpp
-    aliases/unique.hpp
+    common/context_id.hpp
+    common/cstr.hpp
+    common/hash_map.hpp
+    common/ints.hpp
+    common/json.hpp
+    common/layer_id.hpp
+    common/map_id.hpp
+    common/maybe.hpp
+    common/not_null.hpp
+    common/object_id.hpp
+    common/object_ref.hpp
+    common/ref.hpp
+    common/shared.hpp
+    common/tile_cache.hpp
+    common/tile_id.hpp
+    common/tile_matrix.hpp
+    common/tileset_id.hpp
+    common/unique.hpp
 
     core/document.hpp
     core/layer_type.hpp

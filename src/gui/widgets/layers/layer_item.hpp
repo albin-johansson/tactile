@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // registry, entity, dispatcher
 
-#include "aliases/layer_id.hpp"
+#include "common/layer_id.hpp"
 #include "core/components/layer.hpp"
 
 namespace Tactile {

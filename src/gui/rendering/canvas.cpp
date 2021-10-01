@@ -2,7 +2,7 @@
 
 #include <imgui_internal.h>
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 
 namespace Tactile {
 namespace {

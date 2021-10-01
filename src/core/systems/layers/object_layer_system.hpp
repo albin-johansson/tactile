@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // registry, entity
 
-#include "aliases/object_id.hpp"
+#include "common/object_id.hpp"
 
 namespace Tactile::Sys {
 

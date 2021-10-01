@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "aliases/maybe.hpp"
+#include "common/maybe.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 

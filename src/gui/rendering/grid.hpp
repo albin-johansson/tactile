@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-#include "aliases/ints.hpp"
 #include "canvas.hpp"
+#include "common/ints.hpp"
 
 namespace Tactile {
 

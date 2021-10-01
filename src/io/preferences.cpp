@@ -8,7 +8,7 @@
 #include <ios>            // ios
 #include <utility>        // move
 
-#include "aliases/cstr.hpp"
+#include "common/cstr.hpp"
 #include "directories.hpp"
 #include "gui/themes.hpp"
 

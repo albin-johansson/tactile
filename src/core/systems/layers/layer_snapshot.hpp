@@ -2,9 +2,9 @@
 
 #include <vector>  // vector
 
-#include "aliases/layer_id.hpp"
-#include "aliases/maybe.hpp"
 #include "aliases/tile_matrix.hpp"
+#include "common/layer_id.hpp"
+#include "common/maybe.hpp"
 #include "core/components/layer.hpp"
 #include "core/systems/property_context_snapshot.hpp"
 #include "object_snapshot.hpp"
