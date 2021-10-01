@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include "aliases/layer_id.hpp"
+#include "common/layer_id.hpp"
 #include "core/layer_type.hpp"
 
 namespace Tactile {

@@ -5,8 +5,8 @@
 #include <string>         // string
 #include <variant>        // variant, monostate, get, get_if, holds_alternative
 
-#include "aliases/maybe.hpp"
-#include "aliases/object_ref.hpp"
+#include "common/maybe.hpp"
+#include "common/object_ref.hpp"
 #include "property_type.hpp"
 
 namespace Tactile {

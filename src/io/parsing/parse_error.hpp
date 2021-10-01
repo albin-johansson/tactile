@@ -2,7 +2,7 @@
 
 #include <ostream>  // ostream
 
-#include "aliases/cstr.hpp"
+#include "common/cstr.hpp"
 
 namespace Tactile::IO {
 

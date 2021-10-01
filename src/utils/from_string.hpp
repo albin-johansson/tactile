@@ -5,7 +5,7 @@
 #include <string_view>   // string_view
 #include <system_error>  // errc
 
-#include "aliases/maybe.hpp"
+#include "common/maybe.hpp"
 
 namespace Tactile {
 

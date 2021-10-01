@@ -3,10 +3,10 @@
 #include <entt.hpp>  // registry
 #include <vector>    // vector
 
-#include "aliases/layer_id.hpp"
-#include "aliases/maybe.hpp"
-#include "aliases/ref.hpp"
-#include "aliases/tile_id.hpp"
+#include "common/layer_id.hpp"
+#include "common/maybe.hpp"
+#include "common/ref.hpp"
+#include "common/tile_id.hpp"
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
 #include "core/map_position.hpp"

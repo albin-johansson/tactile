@@ -1,8 +1,8 @@
 #pragma once
 
-#include "aliases/ints.hpp"
-#include "aliases/json.hpp"
-#include "aliases/tile_matrix.hpp"
+#include "common/ints.hpp"
+#include "common/json.hpp"
+#include "common/tile_matrix.hpp"
 #include "io/parsing/parse_error.hpp"
 
 namespace Tactile::IO {

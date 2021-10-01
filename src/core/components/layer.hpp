@@ -1,7 +1,7 @@
 #pragma once
 
-#include "aliases/ints.hpp"
-#include "aliases/layer_id.hpp"
+#include "common/ints.hpp"
+#include "common/layer_id.hpp"
 #include "core/layer_type.hpp"
 
 namespace Tactile {

@@ -2,8 +2,8 @@
 
 #include <entt.hpp>  // registry
 
-#include "aliases/maybe.hpp"
-#include "aliases/ref.hpp"
+#include "common/maybe.hpp"
+#include "common/ref.hpp"
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
 #include "map_command_cache.hpp"

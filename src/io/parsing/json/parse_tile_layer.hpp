@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/json.hpp"
+#include "common/json.hpp"
 #include "io/parsing/parse_error.hpp"
 #include "io/parsing/parse_ir.hpp"
 

@@ -5,10 +5,10 @@
 #include <string>    // string
 #include <utility>   // move
 
-#include "aliases/ints.hpp"
-#include "aliases/maybe.hpp"
-#include "aliases/unique.hpp"
 #include "command.hpp"
+#include "common/ints.hpp"
+#include "common/maybe.hpp"
+#include "common/unique.hpp"
 
 namespace Tactile {
 

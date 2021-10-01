@@ -4,7 +4,7 @@
 #include <filesystem>   // path
 #include <pugixml.hpp>  // xml_node
 
-#include "aliases/layer_id.hpp"
+#include "common/layer_id.hpp"
 
 namespace Tactile::IO {
 

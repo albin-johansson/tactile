@@ -4,9 +4,9 @@
 #include <string>       // string
 #include <vector>       // vector
 
-#include "aliases/cstr.hpp"
-#include "aliases/maybe.hpp"
-#include "aliases/not_null.hpp"
+#include "common/cstr.hpp"
+#include "common/maybe.hpp"
+#include "common/not_null.hpp"
 
 namespace Tactile::IO {
 

@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-#include "aliases/tileset_id.hpp"
+#include "common/tileset_id.hpp"
 #include "core/region.hpp"
 
 namespace Tactile {

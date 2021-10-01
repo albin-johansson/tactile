@@ -4,8 +4,8 @@
 #include <entt.hpp>       // entity
 #include <vector>         // vector
 
-#include "aliases/ints.hpp"
-#include "aliases/tile_id.hpp"
+#include "common/ints.hpp"
+#include "common/tile_id.hpp"
 
 namespace Tactile {
 

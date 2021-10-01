@@ -2,8 +2,8 @@
 
 #include <pugixml.hpp>  // xml_node
 
-#include "aliases/ints.hpp"
-#include "aliases/tile_matrix.hpp"
+#include "common/ints.hpp"
+#include "common/tile_matrix.hpp"
 #include "io/parsing/parse_error.hpp"
 #include "io/parsing/parse_ir.hpp"
 

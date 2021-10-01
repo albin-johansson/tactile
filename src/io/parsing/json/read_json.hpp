@@ -2,8 +2,8 @@
 
 #include <filesystem>  // path
 
-#include "aliases/json.hpp"
-#include "aliases/maybe.hpp"
+#include "common/json.hpp"
+#include "common/maybe.hpp"
 
 namespace Tactile {
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "aliases/tile_cache.hpp"
-#include "aliases/tile_id.hpp"
+#include "common/tile_cache.hpp"
+#include "common/tile_id.hpp"
 #include "core/ctx/mouse_info.hpp"
 #include "core/map_position.hpp"
 #include "core/tool_type.hpp"

@@ -3,7 +3,7 @@
 #include <entt.hpp>    // registry, entity
 #include <filesystem>  // path
 
-#include "aliases/json.hpp"
+#include "common/json.hpp"
 
 namespace Tactile::IO {
 

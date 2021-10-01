@@ -4,9 +4,9 @@
 #include <filesystem>           // path
 #include <rune/everything.hpp>  // vector_map
 
-#include "aliases/map_id.hpp"
-#include "aliases/maybe.hpp"
-#include "aliases/unique.hpp"
+#include "common/map_id.hpp"
+#include "common/maybe.hpp"
+#include "common/unique.hpp"
 #include "document.hpp"
 #include "events/command_events.hpp"
 #include "events/tool_events.hpp"

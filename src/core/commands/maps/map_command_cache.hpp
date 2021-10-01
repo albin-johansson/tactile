@@ -4,8 +4,8 @@
 #include <functional>  // less
 #include <map>         // map
 
-#include "aliases/layer_id.hpp"
-#include "aliases/tile_id.hpp"
+#include "common/layer_id.hpp"
+#include "common/tile_id.hpp"
 #include "core/map_position.hpp"
 
 namespace Tactile {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/tile_id.hpp"
+#include "common/tile_id.hpp"
 
 namespace Tactile {
 

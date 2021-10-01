@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include "aliases/object_id.hpp"
+#include "common/object_id.hpp"
 #include "core/object_type.hpp"
 
 namespace Tactile {

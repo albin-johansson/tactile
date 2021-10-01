@@ -5,12 +5,12 @@
 #include <variant>     // variant
 #include <vector>      // vector
 
-#include "aliases/ints.hpp"
-#include "aliases/layer_id.hpp"
-#include "aliases/object_id.hpp"
-#include "aliases/tile_id.hpp"
-#include "aliases/tile_matrix.hpp"
-#include "aliases/unique.hpp"
+#include "common/ints.hpp"
+#include "common/layer_id.hpp"
+#include "common/object_id.hpp"
+#include "common/tile_id.hpp"
+#include "common/tile_matrix.hpp"
+#include "common/unique.hpp"
 #include "core/layer_type.hpp"
 #include "core/object_type.hpp"
 #include "core/properties/property_value.hpp"

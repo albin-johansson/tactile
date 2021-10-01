@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-#include "aliases/ints.hpp"
+#include "common/ints.hpp"
 
 namespace Tactile {
 

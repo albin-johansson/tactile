@@ -1,6 +1,6 @@
 #pragma once
 
-#include "aliases/tile_matrix.hpp"
+#include "common/tile_matrix.hpp"
 
 namespace Tactile {
 

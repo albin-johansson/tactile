@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "aliases/cstr.hpp"
+#include "common/cstr.hpp"
 
 namespace Tactile {
 

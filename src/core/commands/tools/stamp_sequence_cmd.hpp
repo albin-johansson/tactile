@@ -2,9 +2,9 @@
 
 #include <entt.hpp>  // registry
 
-#include "aliases/layer_id.hpp"
-#include "aliases/ref.hpp"
-#include "aliases/tile_cache.hpp"
+#include "common/layer_id.hpp"
+#include "common/ref.hpp"
+#include "common/tile_cache.hpp"
 #include "core/commands/command.hpp"
 #include "core/commands/command_id.hpp"
 

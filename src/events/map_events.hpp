@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-#include "aliases/map_id.hpp"
+#include "common/map_id.hpp"
 
 namespace Tactile {
 

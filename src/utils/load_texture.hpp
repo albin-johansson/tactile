@@ -2,8 +2,8 @@
 
 #include <filesystem>  // path
 
-#include "aliases/ints.hpp"
-#include "aliases/maybe.hpp"
+#include "common/ints.hpp"
+#include "common/maybe.hpp"
 #include "core/components/texture.hpp"
 
 namespace Tactile {

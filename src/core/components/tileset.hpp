@@ -4,11 +4,11 @@
 #include <entt.hpp>       // entity, null
 #include <filesystem>     // path
 
-#include "aliases/hash_map.hpp"
-#include "aliases/ints.hpp"
-#include "aliases/maybe.hpp"
-#include "aliases/tile_id.hpp"
-#include "aliases/tileset_id.hpp"
+#include "common/hash_map.hpp"
+#include "common/ints.hpp"
+#include "common/maybe.hpp"
+#include "common/tile_id.hpp"
+#include "common/tileset_id.hpp"
 #include "core/region.hpp"
 
 namespace Tactile {
