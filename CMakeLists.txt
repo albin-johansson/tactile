@@ -6,22 +6,28 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_STANDARD 23)
 
 include(Utilities)
+include(TactileDependencies)
 
-set(LIBRARY_DIR ${PROJECT_SOURCE_DIR}/lib)
-set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
-set(RESOURCES_DIR ${PROJECT_SOURCE_DIR}/resources)
-set(GENERATED_PROTO_DIR ${PROJECT_SOURCE_DIR}/proto/generated)
+set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(LIBRARY_DIR ${ROOT_DIR}/lib)
+set(RESOURCE_DIR ${ROOT_DIR}/resources)
+set(GENERATED_PROTO_DIR ${ROOT_DIR}/proto/generated)
 
-list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEW_LIBRARIES}")
-list(APPEND CMAKE_PREFIX_PATH "${LIBRARY_DIR}/glew")
+# Target names
+set(TACTILE_PROTO prototactile)
+set(TACTILE_LIB libtactile)
+set(TACTILE_EXE Tactile)
+set(TACTILE_TEST TactileTests)
+
+list(APPEND CMAKE_PREFIX_PATH
+    "$ENV{GLEW_LIBRARIES}"
+    "${LIBRARY_DIR}/glew")
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
-
-include(TactileDependencies)
 
 set(IMGUI_SOURCES
     ${LIBRARY_DIR}/imgui/imconfig.h

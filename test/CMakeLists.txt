@@ -4,9 +4,7 @@ project(tactile-test CXX)
 
 enable_testing()
 
-include(CTest)
-
-set(TACTILE_TEST_FILES
+set(TEST_FILES
     unit/gtest_macros.hpp
     unit/test_main.cpp
 
@@ -30,31 +28,31 @@ set(TACTILE_TEST_FILES
     unit/utils/from_string_test.cpp
     )
 
-add_executable(TactileTests ${TACTILE_TEST_FILES})
+add_executable(${TACTILE_TEST} ${TEST_FILES})
+add_dependencies(${TACTILE_TEST} ${TACTILE_LIB})
 
-target_compile_definitions(TactileTests PUBLIC CENTURION_NO_SDL_MIXER)
+target_include_directories(${TACTILE_TEST}
+    PUBLIC
+    unit
 
-target_precompile_headers(TactileTests REUSE_FROM libtactile)
+    SYSTEM PUBLIC
+    ${gtest_SOURCE_DIR}/include
+    ${gtest_SOURCE_DIR}
+    ${gmock_SOURCE_DIR}/include
+    ${gmock_SOURCE_DIR})
 
-target_include_directories(TactileTests
-    PUBLIC unit
-    PUBLIC ${TACTILE_ROOT_DIR}/src
-    SYSTEM PUBLIC ${gtest_SOURCE_DIR}/include
-    SYSTEM PUBLIC ${gtest_SOURCE_DIR}
-    SYSTEM PUBLIC ${gmock_SOURCE_DIR}/include
-    SYSTEM PUBLIC ${gmock_SOURCE_DIR})
+target_link_libraries(${TACTILE_TEST}
+    PUBLIC
+    ${TACTILE_LIB}
+    gtest
+    gmock)
 
-target_link_libraries(TactileTests
-    PUBLIC libtactile
-    PUBLIC gtest
-    PUBLIC gmock)
+target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
 
 if (WIN32)
-  copy_directory_post_build(TactileTests
-      ${TACTILE_ROOT_DIR}/bin
-      ${CMAKE_CURRENT_BINARY_DIR})
+  copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_CURRENT_BINARY_DIR})
 endif ()
 
-copy_directory_post_build(TactileTests
+copy_directory_post_build(${TACTILE_TEST}
     ${CMAKE_CURRENT_SOURCE_DIR}/resources
     ${CMAKE_CURRENT_BINARY_DIR}/resources)

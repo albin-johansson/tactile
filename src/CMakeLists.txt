@@ -2,7 +2,10 @@ cmake_minimum_required(VERSION 3.18)
 
 project(tactile-src CXX)
 
-set(TACTILE_SOURCE_FILES
+set(SOURCE_FILES
+    ${IMGUI_SOURCES}
+    ${PUGIXML_SOURCES}
+
     application.cpp
     application.hpp
     application_events.cpp
@@ -496,46 +499,12 @@ set(TACTILE_SOURCE_FILES
     shortcuts/view/toggle_ui_shortcut.hpp
     )
 
-list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
-list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})
+add_library(${TACTILE_LIB} ${SOURCE_FILES})
+add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
 
-add_library(libtactile ${TACTILE_SOURCE_FILES})
-add_dependencies(libtactile prototactile)
-
-target_compile_definitions(libtactile
+target_include_directories(${TACTILE_LIB}
     PUBLIC
-    CENTURION_NO_SDL_MIXER
-    IMGUI_DISABLE_OBSOLETE_FUNCTIONS
-    IMGUI_DEFINE_MATH_OPERATORS)
-
-if (MSVC)
-  target_compile_definitions(libtactile PUBLIC _CRT_SECURE_NO_WARNINGS)
-endif ()
-
-target_precompile_headers(libtactile
-    PRIVATE
-    <array>
-    <algorithm>
-    <format>
-    <functional>
-    <filesystem>
-    <unordered_map>
-    <map>
-    <vector>
-    <string>
-    <memory>
-    <concepts>
-    <type_traits>
-
-    <centurion.hpp>
-    <entt.hpp>
-    <json.hpp>
-    <rune/everything.hpp>
-    <nenya.hpp>)
-
-target_include_directories(libtactile
-    PUBLIC
-    ${TACTILE_ROOT_DIR}/src
+    ${ROOT_DIR}/src
 
     SYSTEM PUBLIC
     ${LIBRARY_DIR}/centurion
@@ -556,18 +525,29 @@ target_include_directories(libtactile
     ${PROTOBUF_INCLUDE_DIRS}
     ${GENERATED_PROTO_DIR})
 
-target_link_libraries(libtactile
+target_link_libraries(${TACTILE_LIB}
     PUBLIC
+    ${TACTILE_PROTO}
     ${OPENGL_LIBRARIES}
     ${GLEW_LIBRARIES}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
     ${SDL2_LIBRARY}
-    ${PROTOBUF_LIBRARIES}
-    prototactile)
+    ${PROTOBUF_LIBRARIES})
+
+target_compile_definitions(${TACTILE_LIB}
+    PUBLIC
+    CENTURION_NO_SDL_MIXER
+    IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+    IMGUI_DEFINE_MATH_OPERATORS)
 
 if (MSVC)
-  target_compile_options(libtactile PUBLIC
+  target_compile_definitions(${TACTILE_LIB} PUBLIC _CRT_SECURE_NO_WARNINGS)
+endif ()
+
+if (MSVC)
+  target_compile_options(${TACTILE_LIB}
+      PUBLIC
       /EHsc
       /MP
       /W4
@@ -577,20 +557,41 @@ if (MSVC)
       )
 endif ()
 
+target_precompile_headers(${TACTILE_LIB}
+    PRIVATE
+    <array>
+    <algorithm>
+    <format>
+    <functional>
+    <filesystem>
+    <unordered_map>
+    <map>
+    <vector>
+    <string>
+    <memory>
+    <concepts>
+    <type_traits>
+
+    <centurion.hpp>
+    <entt.hpp>
+    <json.hpp>
+    <rune/everything.hpp>
+    <nenya.hpp>)
+
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
-  add_executable(Tactile WIN32 ${TACTILE_SOURCE_FILES} main.cpp)
+  add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
 else ()
-  add_executable(Tactile ${TACTILE_SOURCE_FILES} main.cpp)
+  add_executable(${TACTILE_EXE} ${SOURCE_FILES} main.cpp)
 endif ()
 
-add_dependencies(Tactile libtactile)
+add_dependencies(${TACTILE_EXE} ${TACTILE_LIB})
 
-target_precompile_headers(Tactile REUSE_FROM libtactile)
+target_precompile_headers(${TACTILE_EXE} REUSE_FROM ${TACTILE_LIB})
 
-target_link_libraries(Tactile PUBLIC libtactile)
+target_link_libraries(${TACTILE_EXE} PUBLIC ${TACTILE_LIB})
 
 if (WIN32)
-  copy_directory_post_build(Tactile ${TACTILE_ROOT_DIR}/bin ${CMAKE_CURRENT_BINARY_DIR})
+  copy_directory_post_build(${TACTILE_EXE} ${ROOT_DIR}/bin ${CMAKE_CURRENT_BINARY_DIR})
 endif ()
 
-copy_directory_post_build(Tactile ${RESOURCES_DIR} ${CMAKE_CURRENT_BINARY_DIR}/resources)
+copy_directory_post_build(${TACTILE_EXE} ${RESOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/resources)
