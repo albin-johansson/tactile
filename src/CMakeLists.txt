@@ -26,7 +26,6 @@ set(SOURCE_FILES
     common/object_id.hpp
     common/object_ref.hpp
     common/ref.hpp
-    common/shared.hpp
     common/tile_cache.hpp
     common/tile_id.hpp
     common/tile_matrix.hpp
