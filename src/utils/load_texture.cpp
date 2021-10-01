@@ -6,12 +6,23 @@
 #include <stb_image.h>
 
 #include <centurion.hpp>
+#include <memory>  // unique_ptr
 #include <vector>  // vector
 
 #include "aliases/ints.hpp"
 
 namespace Tactile {
 namespace {
+
+struct TextureDataDeleter final
+{
+  void operator()(unsigned char* data) noexcept
+  {
+    stbi_image_free(data);
+  }
+};
+
+using TextureDataPtr = std::unique_ptr<unsigned char, TextureDataDeleter>;
 
 inline std::vector<uint> textures;
 
@@ -38,8 +49,8 @@ auto LoadTexture(const std::filesystem::path& path) -> Maybe<Texture>
   texture.path = path;
 
   // Load from file
-  auto* data =
-      stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4);
+  TextureDataPtr data{
+      stbi_load(path.string().c_str(), &texture.width, &texture.height, nullptr, 4)};
   if (!data) {
     return nothing;
   }
@@ -69,9 +80,7 @@ auto LoadTexture(const std::filesystem::path& path) -> Maybe<Texture>
                0,
                GL_RGBA,
                GL_UNSIGNED_BYTE,
-               data);
-
-  stbi_image_free(data);
+               data.get());
 
   CENTURION_LOG_DEBUG("Loaded texture with ID: %u", texture.id);
   textures.push_back(texture.id);
