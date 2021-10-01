@@ -1,8 +1,8 @@
 #include "shortcuts.hpp"
 
+#include <memory>  // unique_ptr
 #include <vector>  // vector
 
-#include "common/unique.hpp"
 #include "gui/widgets/menus/edit_menu.hpp"
 #include "shortcuts/edit/add_column_shortcut.hpp"
 #include "shortcuts/edit/add_row_shortcut.hpp"
@@ -32,7 +32,7 @@
 namespace Tactile {
 namespace {
 
-inline std::vector<Unique<AShortcut>> shortcuts;
+inline std::vector<std::unique_ptr<AShortcut>> shortcuts;
 
 }  // namespace
 

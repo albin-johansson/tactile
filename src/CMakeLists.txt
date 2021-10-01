@@ -30,7 +30,6 @@ set(SOURCE_FILES
     common/tile_id.hpp
     common/tile_matrix.hpp
     common/tileset_id.hpp
-    common/unique.hpp
 
     core/document.hpp
     core/layer_type.hpp

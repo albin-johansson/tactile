@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <memory>      // unique_ptr
 #include <string>      // string
 #include <variant>     // variant
 #include <vector>      // vector
@@ -10,7 +11,6 @@
 #include "common/object_id.hpp"
 #include "common/tile_id.hpp"
 #include "common/tile_matrix.hpp"
-#include "common/unique.hpp"
 #include "core/layer_type.hpp"
 #include "core/object_type.hpp"
 #include "core/properties/property_value.hpp"
@@ -104,7 +104,7 @@ struct LayerData;
  */
 struct GroupLayerData final
 {
-  std::vector<Unique<LayerData>> layers;  ///< Child layers in the group.
+  std::vector<std::unique_ptr<LayerData>> layers;  ///< Child layers in the group.
 };
 
 /**

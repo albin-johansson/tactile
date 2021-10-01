@@ -2,13 +2,13 @@
 
 #include <concepts>  // derived_from
 #include <deque>     // deque
+#include <memory>    // unique_ptr
 #include <string>    // string
 #include <utility>   // move
 
 #include "command.hpp"
 #include "common/ints.hpp"
 #include "common/maybe.hpp"
-#include "common/unique.hpp"
 
 namespace Tactile {
 
@@ -182,7 +182,7 @@ class CommandStack final
   }
 
  private:
-  std::deque<Unique<ACommand>> mStack;
+  std::deque<std::unique_ptr<ACommand>> mStack;
   Maybe<usize> mIndex{};
   Maybe<usize> mCleanIndex;
   usize mCapacity;
