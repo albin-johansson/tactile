@@ -10,7 +10,7 @@ include(Utilities)
 set(LIBRARY_DIR ${PROJECT_SOURCE_DIR}/lib)
 set(TACTILE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(RESOURCES_DIR ${PROJECT_SOURCE_DIR}/resources)
-set(GENERATED_PROTO_DIR ${PROJECT_SOURCE_DIR}/src/proto/generated)
+set(GENERATED_PROTO_DIR ${PROJECT_SOURCE_DIR}/proto/generated)
 
 list(APPEND CMAKE_PREFIX_PATH "$ENV{GLEW_LIBRARIES}")
 list(APPEND CMAKE_PREFIX_PATH "${LIBRARY_DIR}/glew")
@@ -45,14 +45,6 @@ set(PUGIXML_SOURCES
     ${LIBRARY_DIR}/pugixml/pugixml.cpp
     ${LIBRARY_DIR}/pugixml/pugixml.hpp)
 
-set(TACTILE_GENERATED_PROTOBUF_FILES
-    ${GENERATED_PROTO_DIR}/history.pb.cc
-    ${GENERATED_PROTO_DIR}/history.pb.h
-    ${GENERATED_PROTO_DIR}/session.pb.cc
-    ${GENERATED_PROTO_DIR}/session.pb.h
-    ${GENERATED_PROTO_DIR}/settings.pb.cc
-    ${GENERATED_PROTO_DIR}/settings.pb.h
-    )
-
+add_subdirectory(proto)
 add_subdirectory(src)
 add_subdirectory(test)

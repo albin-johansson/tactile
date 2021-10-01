@@ -498,16 +498,17 @@ set(TACTILE_SOURCE_FILES
 
 list(APPEND TACTILE_SOURCE_FILES ${IMGUI_SOURCES})
 list(APPEND TACTILE_SOURCE_FILES ${PUGIXML_SOURCES})
-list(APPEND TACTILE_SOURCE_FILES ${TACTILE_GENERATED_PROTOBUF_FILES})
 
 add_library(libtactile ${TACTILE_SOURCE_FILES})
+add_dependencies(libtactile prototactile)
 
 target_compile_definitions(libtactile
-    PUBLIC CENTURION_NO_SDL_MIXER
-    PUBLIC IMGUI_DISABLE_OBSOLETE_FUNCTIONS
-    PUBLIC IMGUI_DEFINE_MATH_OPERATORS)
+    PUBLIC
+    CENTURION_NO_SDL_MIXER
+    IMGUI_DISABLE_OBSOLETE_FUNCTIONS
+    IMGUI_DEFINE_MATH_OPERATORS)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+if (MSVC)
   target_compile_definitions(libtactile PUBLIC _CRT_SECURE_NO_WARNINGS)
 endif ()
 
@@ -530,38 +531,42 @@ target_precompile_headers(libtactile
     <entt.hpp>
     <json.hpp>
     <rune/everything.hpp>
-    <nenya.hpp>
-    )
+    <nenya.hpp>)
 
 target_include_directories(libtactile
-    PUBLIC ${TACTILE_ROOT_DIR}/src
-    SYSTEM PUBLIC ${LIBRARY_DIR}/centurion
-    SYSTEM PUBLIC ${LIBRARY_DIR}/entt
-    SYSTEM PUBLIC ${LIBRARY_DIR}/imgui
-    SYSTEM PUBLIC ${LIBRARY_DIR}/glew
-    SYSTEM PUBLIC ${LIBRARY_DIR}/nenya
-    SYSTEM PUBLIC ${LIBRARY_DIR}/rune
-    SYSTEM PUBLIC ${LIBRARY_DIR}/init
-    SYSTEM PUBLIC ${LIBRARY_DIR}/pugixml
-    SYSTEM PUBLIC ${LIBRARY_DIR}/json
-    SYSTEM PUBLIC ${LIBRARY_DIR}/stbimage
-    SYSTEM PUBLIC ${LIBRARY_DIR}/fontawesome
-    SYSTEM PUBLIC ${LIBRARY_DIR}/pfd
-    SYSTEM PUBLIC ${GENERATED_PROTO_DIR}
-    SYSTEM PUBLIC ${SDL2_INCLUDE_DIR}
-    SYSTEM PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS}
-    SYSTEM PUBLIC ${SDL2_TTF_INCLUDE_DIRS}
-    SYSTEM PUBLIC ${PROTOBUF_INCLUDE_DIRS})
+    PUBLIC
+    ${TACTILE_ROOT_DIR}/src
+
+    SYSTEM PUBLIC
+    ${LIBRARY_DIR}/centurion
+    ${LIBRARY_DIR}/entt
+    ${LIBRARY_DIR}/imgui
+    ${LIBRARY_DIR}/glew
+    ${LIBRARY_DIR}/nenya
+    ${LIBRARY_DIR}/rune
+    ${LIBRARY_DIR}/init
+    ${LIBRARY_DIR}/pugixml
+    ${LIBRARY_DIR}/json
+    ${LIBRARY_DIR}/stbimage
+    ${LIBRARY_DIR}/fontawesome
+    ${LIBRARY_DIR}/pfd
+    ${SDL2_INCLUDE_DIR}
+    ${SDL2_IMAGE_INCLUDE_DIRS}
+    ${SDL2_TTF_INCLUDE_DIRS}
+    ${PROTOBUF_INCLUDE_DIRS}
+    ${GENERATED_PROTO_DIR})
 
 target_link_libraries(libtactile
-    PUBLIC ${OPENGL_LIBRARIES}
-    PUBLIC ${GLEW_LIBRARIES}
-    PUBLIC ${SDL2_IMAGE_LIBRARIES}
-    PUBLIC ${SDL2_TTF_LIBRARIES}
-    PUBLIC ${SDL2_LIBRARY}
-    PUBLIC ${PROTOBUF_LIBRARIES})
+    PUBLIC
+    ${OPENGL_LIBRARIES}
+    ${GLEW_LIBRARIES}
+    ${SDL2_IMAGE_LIBRARIES}
+    ${SDL2_TTF_LIBRARIES}
+    ${SDL2_LIBRARY}
+    ${PROTOBUF_LIBRARIES}
+    prototactile)
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+if (MSVC)
   target_compile_options(libtactile PUBLIC
       /EHsc
       /MP
@@ -573,26 +578,19 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 endif ()
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
-  add_executable(Tactile WIN32
-      ${TACTILE_SOURCE_FILES}
-      main.cpp)
+  add_executable(Tactile WIN32 ${TACTILE_SOURCE_FILES} main.cpp)
 else ()
-  add_executable(Tactile
-      ${TACTILE_SOURCE_FILES}
-      main.cpp)
+  add_executable(Tactile ${TACTILE_SOURCE_FILES} main.cpp)
 endif ()
 
-target_precompile_headers(Tactile REUSE_FROM libtactile)
 add_dependencies(Tactile libtactile)
+
+target_precompile_headers(Tactile REUSE_FROM libtactile)
 
 target_link_libraries(Tactile PUBLIC libtactile)
 
 if (WIN32)
-  copy_directory_post_build(Tactile
-      ${TACTILE_ROOT_DIR}/bin
-      ${CMAKE_CURRENT_BINARY_DIR})
+  copy_directory_post_build(Tactile ${TACTILE_ROOT_DIR}/bin ${CMAKE_CURRENT_BINARY_DIR})
 endif ()
 
-copy_directory_post_build(Tactile
-    ${RESOURCES_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}/resources)
+copy_directory_post_build(Tactile ${RESOURCES_DIR} ${CMAKE_CURRENT_BINARY_DIR}/resources)
