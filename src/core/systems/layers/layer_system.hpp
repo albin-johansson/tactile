@@ -234,8 +234,8 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 [[nodiscard]] auto GetLayerSiblingBelow(const entt::registry& registry,
                                         entt::entity entity) -> entt::entity;
 
-[[nodiscard]] auto GetSiblingCount(const entt::registry& registry, entt::entity entity)
-    -> usize;
+[[nodiscard]] auto GetLayerSiblingCount(const entt::registry& registry,
+                                        entt::entity entity) -> usize;
 
 [[nodiscard]] auto GetLayerChildrenCount(const entt::registry& registry,
                                          entt::entity entity) -> usize;

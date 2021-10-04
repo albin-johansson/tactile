@@ -550,7 +550,8 @@ auto GetLayerSiblingBelow(const entt::registry& registry, const entt::entity ent
   return GetLayerSibling(registry, entity, index + 1);
 }
 
-auto GetSiblingCount(const entt::registry& registry, const entt::entity entity) -> usize
+auto GetLayerSiblingCount(const entt::registry& registry, const entt::entity entity)
+    -> usize
 {
   assert(entity != entt::null);
   const auto& parent = registry.get<Parent>(entity);
@@ -623,7 +624,7 @@ auto CanMoveLayerDown(const entt::registry& registry, const entt::entity entity)
 {
   assert(entity != entt::null);
   const auto index = registry.get<Layer>(entity).index;
-  const auto nSiblings = GetSiblingCount(registry, entity);
+  const auto nSiblings = GetLayerSiblingCount(registry, entity);
   return index < nSiblings;
 }
 

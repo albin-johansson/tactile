@@ -476,7 +476,7 @@ TEST(LayerSystem, GetLayerSiblingBelow)
   ASSERT_EQ(null_entity, Sys::GetLayerSiblingBelow(registry, i));
 }
 
-TEST(LayerSystem, GetSiblingCount)
+TEST(LayerSystem, GetLayerSiblingCount)
 {
   auto registry = Sys::MakeRegistry();
   auto& active = registry.ctx<ActiveLayer>();
@@ -500,20 +500,20 @@ TEST(LayerSystem, GetSiblingCount)
   active.entity = entt::null;
   const auto j = Sys::AddObjectLayer(registry);
 
-  ASSERT_EQ(4, Sys::GetSiblingCount(registry, a));
-  ASSERT_EQ(4, Sys::GetSiblingCount(registry, b));
-  ASSERT_EQ(4, Sys::GetSiblingCount(registry, c));
-  ASSERT_EQ(4, Sys::GetSiblingCount(registry, d));
+  ASSERT_EQ(4, Sys::GetLayerSiblingCount(registry, a));
+  ASSERT_EQ(4, Sys::GetLayerSiblingCount(registry, b));
+  ASSERT_EQ(4, Sys::GetLayerSiblingCount(registry, c));
+  ASSERT_EQ(4, Sys::GetLayerSiblingCount(registry, d));
   {
-    ASSERT_EQ(3, Sys::GetSiblingCount(registry, e));
-    ASSERT_EQ(3, Sys::GetSiblingCount(registry, f));
-    ASSERT_EQ(3, Sys::GetSiblingCount(registry, g));
+    ASSERT_EQ(3, Sys::GetLayerSiblingCount(registry, e));
+    ASSERT_EQ(3, Sys::GetLayerSiblingCount(registry, f));
+    ASSERT_EQ(3, Sys::GetLayerSiblingCount(registry, g));
     {
-      ASSERT_EQ(0, Sys::GetSiblingCount(registry, h));
+      ASSERT_EQ(0, Sys::GetLayerSiblingCount(registry, h));
     }
-    ASSERT_EQ(3, Sys::GetSiblingCount(registry, i));
+    ASSERT_EQ(3, Sys::GetLayerSiblingCount(registry, i));
   }
-  ASSERT_EQ(4, Sys::GetSiblingCount(registry, j));
+  ASSERT_EQ(4, Sys::GetLayerSiblingCount(registry, j));
 }
 
 TEST(LayerSystem, GetLayerChildrenCount)
