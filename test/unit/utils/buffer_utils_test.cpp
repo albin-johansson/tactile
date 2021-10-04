@@ -28,7 +28,7 @@ TEST(BufferUtils, CopyStringIntoBuffer)
   ASSERT_EQ('e', buffer.at(4));
   ASSERT_EQ('f', buffer.at(5));
 
-  // The buffer should have be zeroed
+  // The buffer should have been zeroed
   ASSERT_EQ(0, buffer.at(6));
   ASSERT_EQ(0, buffer.at(7));
   ASSERT_EQ(0, buffer.at(8));
