@@ -36,7 +36,7 @@ void ShowMapFileDialog(entt::dispatcher& dispatcher)
 
 void UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMenu(TAC_ICON_HISTORY " Recent files...")) {
+  if (ImGui::BeginMenu(TAC_ICON_HISTORY " Recent files")) {
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen last closed file",
                         nullptr,
                         false,
