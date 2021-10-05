@@ -1,11 +1,10 @@
-#ifndef RUNE_CONTAINERS_AABB_HPP
-#define RUNE_CONTAINERS_AABB_HPP
+#ifndef RUNE_AABB_HPP_
+#define RUNE_AABB_HPP_
 
-#include <cassert>   // assert
-#include <concepts>  // floating_point
+#include <algorithm>  // min, max
+#include <cassert>    // assert
+#include <concepts>   // floating_point
 
-#include "../math/max.hpp"
-#include "../math/min.hpp"
 #include "../math/vector2.hpp"
 
 namespace rune {
@@ -192,17 +191,17 @@ template <std::floating_point T>
  * \return an AABB that corresponds to the union of the two AABBs.
  */
 template <std::floating_point T>
-[[nodiscard]] constexpr auto merge(const basic_aabb<T>& a,
-                                   const basic_aabb<T>& b) noexcept -> basic_aabb<T>
+[[nodiscard]] constexpr auto merge(const basic_aabb<T>& a, const basic_aabb<T>& b)
+    -> basic_aabb<T>
 {
   basic_vector2<T> lower;
   basic_vector2<T> upper;
 
-  lower.x = min(a.min.x, b.min.x);
-  lower.y = min(a.min.y, b.min.y);
+  lower.x = std::min(a.min.x, b.min.x);
+  lower.y = std::min(a.min.y, b.min.y);
 
-  upper.x = max(a.max.x, b.max.x);
-  upper.y = max(a.max.y, b.max.y);
+  upper.x = std::max(a.max.x, b.max.x);
+  upper.y = std::max(a.max.y, b.max.y);
 
   return make_aabb(lower, upper);
 }
@@ -268,4 +267,4 @@ void fatten(basic_aabb<T>& aabb, const T percentage) noexcept
 
 }  // namespace rune
 
-#endif  // RUNE_CONTAINERS_AABB_HPP
+#endif  // RUNE_AABB_HPP_

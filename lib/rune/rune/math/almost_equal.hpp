@@ -1,5 +1,5 @@
-#ifndef RUNE_MATH_ALMOST_EQUAL_HPP
-#define RUNE_MATH_ALMOST_EQUAL_HPP
+#ifndef RUNE_ALMOST_EQUAL_HPP_
+#define RUNE_ALMOST_EQUAL_HPP_
 
 #include <cmath>     // abs
 #include <concepts>  // floating_point
@@ -41,4 +41,4 @@ template <std::floating_point T>
 
 }  // namespace rune
 
-#endif  // RUNE_MATH_ALMOST_EQUAL_HPP
+#endif  // RUNE_ALMOST_EQUAL_HPP_

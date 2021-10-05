@@ -3,7 +3,7 @@
 #include <entt.hpp>             // registry
 #include <filesystem>           // path
 #include <memory>               // unique_ptr
-#include <rune/everything.hpp>  // vector_map
+#include <rune/rune.hpp>        // vector_map
 
 #include "common/map_id.hpp"
 #include "common/maybe.hpp"

@@ -1,5 +1,5 @@
-#ifndef RUNE_IO_CSV_HPP
-#define RUNE_IO_CSV_HPP
+#ifndef RUNE_CSV_HPP_
+#define RUNE_CSV_HPP_
 
 #include <sstream>  // istringstream
 #include <string>   // string, getline
@@ -37,4 +37,4 @@ namespace rune {
 
 }  // namespace rune
 
-#endif  // RUNE_IO_CSV_HPP
+#endif  // RUNE_CSV_HPP_

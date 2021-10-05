@@ -1,6 +1,6 @@
 #pragma once
 
-#include <rune/everything.hpp>  // vector_map
+#include <rune/rune.hpp>  // vector_map
 
 #include "core/map_position.hpp"
 #include "tile_id.hpp"

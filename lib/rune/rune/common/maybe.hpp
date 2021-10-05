@@ -1,5 +1,5 @@
-#ifndef RUNE_ALIASES_MAYBE_HPP
-#define RUNE_ALIASES_MAYBE_HPP
+#ifndef RUNE_MAYBE_HPP_
+#define RUNE_MAYBE_HPP_
 
 #include <optional>  // optional
 
@@ -12,4 +12,4 @@ inline constexpr std::nullopt_t nothing = std::nullopt;
 
 }  // namespace rune
 
-#endif  // RUNE_ALIASES_MAYBE_HPP
+#endif  // RUNE_MAYBE_HPP_

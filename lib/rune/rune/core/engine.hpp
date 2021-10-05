@@ -1,116 +1,39 @@
-#ifndef RUNE_CORE_ENGINE_HPP
-#define RUNE_CORE_ENGINE_HPP
+#ifndef RUNE_ENGINE_HPP_
+#define RUNE_ENGINE_HPP_
 
+#include <algorithm>      // min, max
 #include <cassert>        // assert
-#include <centurion.hpp>  // window, renderer, ...
-#include <concepts>       // derived_from, constructible_from
+#include <centurion.hpp>  // window, event, counter, screen, keyboard, mouse
+#include <entt.hpp>       // registry, dispatcher, delegate
+#include <utility>        // move
+#include <vector>         // vector
 
-#include "../aliases/maybe.hpp"
-#include "game.hpp"
-#include "graphics.hpp"
-#include "input.hpp"
-#include "semi_fixed_game_loop.hpp"
+#include "../common/maybe.hpp"
+#include "configuration.hpp"
 
 namespace rune {
 
 /// \addtogroup core
 /// \{
 
-// clang-format off
-
-template <typename T>
-concept is_configuration_type = requires
+class engine final
 {
-  { T::renderer_flags } -> std::convertible_to<uint32>;
-  { T::window_size } -> std::convertible_to<cen::iarea>;
-};
-
-// clang-format on
-
-/**
- * \struct configuration
- *
- * \brief Provides configuration options for different engine aspects.
- *
- * \note Members are initialized to their default values, meaning that you do not have to
- * assign each member if you create custom configurations.
- *
- * \see `engine`
- */
-struct configuration
-{
-  uint32 renderer_flags = cen::renderer::default_flags();
-  cen::iarea window_size = cen::window::default_size();
-};
-
-static_assert(is_configuration_type<configuration>);
-
-/**
- * \class engine
- *
- * \brief Represents the core engine in the framework.
- *
- * \details The easiest way to set up your game is to use either of
- * `RUNE_IMPLEMENT_MAIN_WITH_GAME` or `RUNE_IMPLEMENT_MAIN_WITH_ENGINE` to automatically
- * generate a correct definition of the `main` function.
- *
- * \details Alternatively, you could manually initialize an `engine` instance with your
- * game and graphics types and call the `engine::run()` function to start your game.
- * However, remember to initialize Centurion _before_ creating your engine instance!
- *
- * \details It is perfectly valid to derive from this class, which enables easy access to
- * the game window, graphics context, input state, etc.
- *
- * \details The game class must either be default-constructible or provide a constructor
- * that accepts `graphics_type&`.
- *
- * \tparam Game the type of the game class.
- * \tparam Graphics the type of the graphics context.
- *
- * \see `game_base`
- * \see `graphics`
- * \see `RUNE_IMPLEMENT_MAIN_WITH_ENGINE`
- * \see `RUNE_IMPLEMENT_MAIN_WITH_GAME`
- * \see `RUNE_IMPLEMENT_MAIN_WITH_GAME_AND_GRAPHICS`
- *
- * \since 0.1.0
- */
-template <typename Game, typename Graphics = graphics>
-class engine
-{
-  // To be able to access update_logic and update_input
-  friend class semi_fixed_game_loop<Game, Graphics>;
-
  public:
-  using game_type = Game;          ///< Game class type.
-  using graphics_type = Graphics;  ///< Graphics context type.
-  using loop_type = semi_fixed_game_loop<game_type, graphics_type>;  ///< Game loop type.
+  using seconds_type = cen::seconds<double>;
+  using delta_type = float;
 
-  static_assert(std::constructible_from<game_type, graphics_type&> ||
-                    std::default_initializable<game_type>,
-                "Game class must either be default constructible or provide a "
-                "constructor that accepts \"graphics_type&\"");
-
-  /**
-   * \brief Creates an engine instance.
-   *
-   * \param cfg optional custom configuration of the engine.
-   */
-  explicit engine(const configuration& cfg = default_cfg())
-      : m_loop{this}
-      , m_window{"Rune", cfg.window_size}
-      , m_graphics{m_window, cfg.renderer_flags}
+  explicit engine(const configuration& cfg = {})
+      : mWindow{cfg.window_title, cfg.window_size}
+      , mRate{std::min(
+            cfg.max_tick_rate,
+            static_cast<seconds_type::rep>(cen::screen::refresh_rate().value()))}
+      , mMaxFramesPerTick{std::max(cfg.max_frames_per_tick, 1)}
+      , mDelta{1.0 / mRate}
+      , mCurrent{cen::counter::now_in_seconds<seconds_type::rep>()}
   {
-    if constexpr (std::constructible_from<game_type, graphics_type&>)
-    {
-      m_game.emplace(m_graphics);
-    }
-    else
-    {
-      m_game.emplace();
-    }
-
-    m_game->init(m_graphics);
+    mInputSystems.reserve(4u);
+    mLogicSystems.reserve(32u);
+    mRenderSystems.reserve(32u);
   }
 
   /**
@@ -120,156 +43,270 @@ class engine
    */
   auto run() -> int
   {
-    assert(m_game);
+    mWindow.show();
+    mCurrent = cen::counter::now_in_seconds<seconds_type::rep>();
 
-    m_window.show();
-    m_loop.fetch_current_time();
-
-    m_game->on_start();
-
-    auto& renderer = m_graphics.get_renderer();
-    while (m_loop.is_running())
+    if (mOnStart)
     {
-      m_loop.tick();
-      m_game->render(m_graphics);
+      mOnStart();
     }
 
-    m_game->on_exit();
-    m_window.hide();
+    while (mRunning)
+    {
+      tick();
+      render();
+    }
 
+    if (mOnExit)
+    {
+      mOnExit();
+    }
+
+    mWindow.hide();
     return 0;
   }
 
-  /**
-   * \brief Returns the associated game window.
-   *
-   * \return the associated window.
-   */
-  [[nodiscard]] auto get_window() noexcept -> cen::window&
+  void stop() noexcept
   {
-    return m_window;
+    mRunning = false;
   }
 
-  /// \copydoc get_window()
-  [[nodiscard]] auto get_window() const noexcept -> const cen::window&
+  template <auto Func>
+  void on_start()
   {
-    return m_window;
+    mOnStart.template connect<Func>();
   }
 
-  /**
-   * \brief Returns the associated game instance.
-   *
-   * \return the game instance.
-   */
-  [[nodiscard]] auto get_game() -> game_type&
+  template <auto Func, typename T>
+  void on_start(T* self)
   {
-    assert(m_game);
-    return *m_game;
+    mOnStart.template connect<Func>(self);
   }
 
-  /// \copydoc get_game()
-  [[nodiscard]] auto get_game() const -> const game_type&
+  template <std::invocable T>
+  void on_start(T func)
   {
-    assert(m_game);
-    return *m_game;
+    mOnStart = std::move(func);
   }
 
-  /**
-   * \brief Returns the associated graphics context.
-   *
-   * \return the graphics context.
-   */
-  [[nodiscard]] auto get_graphics() noexcept -> graphics_type&
+  template <auto Func>
+  void on_exit()
   {
-    return m_graphics;
+    mOnExit.template connect<Func>();
   }
 
-  /// \copydoc get_graphics()
-  [[nodiscard]] auto get_graphics() const noexcept -> const graphics_type&
+  template <auto Func, typename T>
+  void on_exit(T* self)
   {
-    return m_graphics;
+    mOnExit.template connect<Func>(self);
   }
 
-  /**
-   * \brief Returns the current input state.
-   *
-   * \return the input state.
-   */
-  [[nodiscard]] auto get_input() noexcept -> input&
+  template <std::invocable T>
+  void on_exit(T func)
   {
-    return m_input;
+    mOnExit = std::move(func);
   }
 
-  /// \copydoc get_input()
-  [[nodiscard]] auto get_input() const noexcept -> const input&
+  template <auto Func>
+  void add_logic_system()
   {
-    return m_input;
+    auto& delegate = mLogicSystems.emplace_back();
+    delegate.template connect<Func>();
   }
 
-  /**
-   * \brief Returns the default configuration used by the engine, if no custom
-   * configuration is requested.
-   *
-   * \return the default engine configuration.
-   */
-  [[nodiscard]] constexpr static auto default_cfg() -> configuration
+  template <auto Func, typename T>
+  void add_logic_system(T* self)
   {
-    return configuration{};
+    auto& delegate = mLogicSystems.emplace_back();
+    delegate.template connect<Func>(self);
+  }
+
+  template <std::invocable<entt::registry&, entt::dispatcher&, delta_type> T>
+  void add_logic_system(T func)
+  {
+    auto& delegate = mLogicSystems.emplace_back();
+    delegate = std::move(func);
+  }
+
+  template <auto Func>
+  void add_input_system()
+  {
+    auto& delegate = mInputSystems.emplace_back();
+    delegate.template connect<Func>();
+  }
+
+  template <auto Func, typename T>
+  void add_input_system(T* self)
+  {
+    auto& delegate = mInputSystems.emplace_back();
+    delegate.template connect<Func>(self);
+  }
+
+  template <std::invocable<entt::registry&, entt::dispatcher&> T>
+  void add_input_system(T func)
+  {
+    auto& delegate = mInputSystems.emplace_back();
+    delegate = std::move(func);
+  }
+
+  template <auto Func>
+  void add_render_system()
+  {
+    auto& delegate = mRenderSystems.emplace_back();
+    delegate.template connect<Func>();
+  }
+
+  template <auto Func, typename T>
+  void add_render_system(T* self)
+  {
+    auto& delegate = mRenderSystems.emplace_back();
+    delegate.template connect<Func>(self);
+  }
+
+  template <std::invocable<const entt::registry&> T>
+  void add_render_system(T func)
+  {
+    auto& delegate = mRenderSystems.emplace_back();
+    delegate = std::move(func);
+  }
+
+  [[nodiscard]] auto registry() noexcept -> entt::registry&
+  {
+    return mRegistry;
+  }
+
+  [[nodiscard]] auto registry() const noexcept -> const entt::registry&
+  {
+    return mRegistry;
+  }
+
+  [[nodiscard]] auto dispatcher() noexcept -> entt::dispatcher&
+  {
+    return mDispatcher;
+  }
+
+  [[nodiscard]] auto dispatcher() const noexcept -> const entt::dispatcher&
+  {
+    return mDispatcher;
+  }
+
+  [[nodiscard]] auto keyboard() const noexcept -> const cen::keyboard&
+  {
+    return mKeyboard;
+  }
+
+  [[nodiscard]] auto mouse() const noexcept -> const cen::mouse&
+  {
+    return mMouse;
+  }
+
+  [[nodiscard]] auto window() noexcept -> cen::window&
+  {
+    return mWindow;
+  }
+
+  [[nodiscard]] auto window() const noexcept -> const cen::window&
+  {
+    return mWindow;
   }
 
  private:
-  loop_type m_loop;          ///< The game loop.
-  cen::window m_window;      ///< The associated window.
-  graphics_type m_graphics;  ///< The graphics context.
-  input m_input;             ///< The input state wrapper.
-  maybe<game_type> m_game;   ///< The game instance, optional to delay construction.
+  using input_func = entt::delegate<void(entt::registry&, entt::dispatcher&)>;
+  using logic_func = entt::delegate<void(entt::registry&, entt::dispatcher&, delta_type)>;
+  using render_func = entt::delegate<void(entt::registry&)>;
 
-  void update_logic(const float dt)
+  cen::window mWindow;
+  cen::keyboard mKeyboard;
+  cen::mouse mMouse;
+
+  seconds_type::rep mRate;
+  int mMaxFramesPerTick;
+  seconds_type mDelta;
+  seconds_type mCurrent;
+  bool mRunning{true};
+
+  entt::registry mRegistry;
+  entt::dispatcher mDispatcher;
+
+  entt::delegate<void()> mOnStart;
+  entt::delegate<void()> mOnExit;
+
+  std::vector<input_func> mInputSystems;
+  std::vector<logic_func> mLogicSystems;
+  std::vector<render_func> mRenderSystems;
+
+  void tick()
   {
-    m_game->tick(dt);
+    const auto newTime = cen::counter::now_in_seconds<seconds_type::rep>();
+    auto frameTime = newTime - mCurrent;
+
+    mCurrent = newTime;
+    auto nSteps = 0;
+
+    while (frameTime > seconds_type::zero())
+    {
+      if (nSteps > mMaxFramesPerTick)
+      {
+        break;  // avoids spiral-of-death by limiting maximum amount of steps
+      }
+
+      mRunning = update_input();
+      if (!mRunning)
+      {
+        break;
+      }
+
+      const auto dt = std::min(frameTime, mDelta);
+      update_logic(static_cast<delta_type>(dt.count()));
+
+      frameTime -= dt;
+
+      ++nSteps;
+    }
   }
 
   auto update_input() -> bool
   {
-    const auto& renderer = m_graphics.get_renderer();
-    m_input.mouse.set_logical_size(renderer.logical_size());
-    m_input.mouse.update(renderer.output_size());
-    m_input.keyboard.update();
+    if (auto renderer = cen::get_renderer(mWindow))
+    {
+      mMouse.update(renderer.output_size());
+    }
+    else
+    {
+      mMouse.update();
+    }
 
+    mKeyboard.update();
     cen::event::update();
 
-    m_game->handle_input(m_input);
+    for (const auto& system : mInputSystems)
+    {
+      system(mRegistry, mDispatcher);
+    }
 
-    return !m_game->should_quit() && !cen::event::in_queue(cen::event_type::quit);
+    return !cen::event::in_queue(cen::event_type::quit);
+  }
+
+  void update_logic(const delta_type dt)
+  {
+    mDispatcher.update();
+    for (const auto& system : mLogicSystems)
+    {
+      system(mRegistry, mDispatcher, dt);
+    }
+  }
+
+  void render()
+  {
+    for (const auto& system : mRenderSystems)
+    {
+      system(mRegistry);
+    }
   }
 };
-
-#define RUNE_IMPLEMENT_MAIN_WITH_ENGINE(Engine) \
-  int main(int, char**)                         \
-  {                                             \
-    cen::library centurion;                     \
-    Engine engine;                              \
-    return engine.run();                        \
-  }
-
-#define RUNE_IMPLEMENT_MAIN_WITH_GAME(Game)    \
-  int main(int, char**)                        \
-  {                                            \
-    cen::library centurion;                    \
-    rune::engine<Game, rune::graphics> engine; \
-    return engine.run();                       \
-  }
-
-#define RUNE_IMPLEMENT_MAIN_WITH_GAME_AND_GRAPHICS(Game, Graphics) \
-  int main(int, char**)                                            \
-  {                                                                \
-    cen::library centurion;                                        \
-    rune::engine<Game, Graphics> engine;                           \
-    return engine.run();                                           \
-  }
 
 /// \} End of group core
 
 }  // namespace rune
 
-#endif  // RUNE_CORE_ENGINE_HPP
+#endif  // RUNE_ENGINE_HPP_

@@ -1,5 +1,5 @@
-#ifndef RUNE_MATH_VECTOR2_HPP
-#define RUNE_MATH_VECTOR2_HPP
+#ifndef RUNE_VECTOR2_HPP_
+#define RUNE_VECTOR2_HPP_
 
 #include <cmath>     // lerp, sqrt
 #include <concepts>  // floating_point
@@ -457,4 +457,4 @@ auto operator<<(std::ostream& stream, const basic_vector2<T> vec) -> std::ostrea
 
 }  // namespace rune
 
-#endif  // RUNE_MATH_VECTOR2_HPP
+#endif  // RUNE_VECTOR2_HPP_

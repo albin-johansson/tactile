@@ -1,5 +1,5 @@
-#ifndef RUNE_CORE_COMPILER_HPP
-#define RUNE_CORE_COMPILER_HPP
+#ifndef RUNE_COMPILER_HPP_
+#define RUNE_COMPILER_HPP_
 
 namespace rune {
 
@@ -45,4 +45,4 @@ namespace rune {
 
 }  // namespace rune
 
-#endif  // RUNE_CORE_COMPILER_HPP
+#endif  // RUNE_COMPILER_HPP_

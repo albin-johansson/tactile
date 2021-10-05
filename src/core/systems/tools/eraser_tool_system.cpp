@@ -1,8 +1,8 @@
 #include "eraser_tool_system.hpp"
 
-#include <cassert>              // assert
-#include <rune/everything.hpp>  // vector_map
-#include <utility>              // move
+#include <cassert>        // assert
+#include <rune/rune.hpp>  // vector_map
+#include <utility>        // move
 
 #include "common/tile_cache.hpp"
 #include "common/tile_id.hpp"
@@ -26,10 +26,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
   const auto entity = GetActiveLayer(registry);
   assert(entity != entt::null);
 
-  // TODO rune::vector_map::try_emplace
-  if (!old_state.contains(cursor)) {
-    old_state.emplace(cursor, GetTileFromLayer(registry, entity, cursor));
-  }
+  old_state.try_emplace(cursor, GetTileFromLayer(registry, entity, cursor));
 
   SetTileInLayer(registry, entity, cursor, empty_tile);
 }

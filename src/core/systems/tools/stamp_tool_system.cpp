@@ -1,8 +1,8 @@
 #include "stamp_tool_system.hpp"
 
-#include <cassert>              // assert
-#include <rune/everything.hpp>  // vector_map
-#include <utility>              // move
+#include <cassert>        // assert
+#include <rune/rune.hpp>  // vector_map
+#include <utility>        // move
 
 #include "common/tile_cache.hpp"
 #include "common/tile_id.hpp"
@@ -52,11 +52,7 @@ void UpdateSequence(entt::registry& registry, const MapPosition& cursor)
       if (tile != empty_tile) {
         const auto pos = cursor + index - previewOffset;
         if (IsPositionInMap(registry, pos)) {
-          // TODO rune::vector_map::try_emplace
-          if (!old_state.contains(pos)) {
-            const auto prev = GetTileFromLayer(registry, layerEntity, pos);
-            old_state.emplace(pos, prev);
-          }
+          old_state.try_emplace(pos, GetTileFromLayer(registry, layerEntity, pos));
           sequence.emplace_or_replace(pos, tile);
           Sys::SetTileInLayer(registry, layerEntity, pos, tile);
         }

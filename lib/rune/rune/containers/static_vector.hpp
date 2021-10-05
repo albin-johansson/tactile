@@ -1,5 +1,5 @@
-#ifndef RUNE_CONTAINERS_STATIC_VECTOR_HPP
-#define RUNE_CONTAINERS_STATIC_VECTOR_HPP
+#ifndef RUNE_STATIC_VECTOR_HPP_
+#define RUNE_STATIC_VECTOR_HPP_
 
 #include <array>             // array
 #include <cassert>           // assert
@@ -7,7 +7,7 @@
 #include <initializer_list>  // initializer_list
 #include <utility>           // forward, move
 
-#include "../aliases/integers.hpp"
+#include "../common/integers.hpp"
 #include "../core/rune_error.hpp"
 
 namespace rune {
@@ -274,4 +274,4 @@ static_vector(T, Rest...) -> static_vector<T, 1u + sizeof...(Rest)>;
 
 }  // namespace rune
 
-#endif  // RUNE_CONTAINERS_STATIC_VECTOR_HPP
+#endif  // RUNE_STATIC_VECTOR_HPP_
