@@ -117,6 +117,7 @@ set(SOURCE_FILES
     core/components/tile_layer.hpp
     core/components/tileset.hpp
     core/components/tool.hpp
+    core/components/tree.hpp
     core/components/uv_tile_size.hpp
 
     core/ctx/map.hpp
