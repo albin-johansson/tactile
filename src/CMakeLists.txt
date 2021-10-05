@@ -142,6 +142,8 @@ set(SOURCE_FILES
     core/systems/tileset_snapshot.hpp
     core/systems/tileset_system.cpp
     core/systems/tileset_system.hpp
+    core/systems/tree_system.cpp
+    core/systems/tree_system.hpp
     core/systems/viewport_system.cpp
     core/systems/viewport_system.hpp
 
