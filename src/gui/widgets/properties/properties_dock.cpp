@@ -40,8 +40,8 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
     has_focus = ImGui::IsWindowFocused();
     const auto& context = Sys::GetCurrentContext(registry);
 
-    FormattedString<128> context_name{"Context: {}", context.name};
-    CenteredText(context_name.data());
+    FormattedString<128> contextName{"Context: {}", context.name};
+    CenteredText(contextName.data());
 
     if (context.properties.empty()) {
       PrepareVerticalAlignmentCenter(2.5f);
