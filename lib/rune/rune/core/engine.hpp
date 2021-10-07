@@ -4,6 +4,7 @@
 #include <algorithm>      // min, max
 #include <cassert>        // assert
 #include <centurion.hpp>  // window, event, counter, screen, keyboard, mouse
+#include <concepts>       // invocable
 #include <entt.hpp>       // registry, dispatcher, delegate
 #include <utility>        // move
 #include <vector>         // vector

@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+#include <rune/core/formatted_string.hpp>  // formatted_string
+
 #include "common/cstr.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/parent.hpp"
@@ -10,7 +12,6 @@
 #include "events/layer_events.hpp"
 #include "gui/icons.hpp"
 #include "layer_item_popup.hpp"
-#include "utils/formatted_string.hpp"
 #include "utils/scope_id.hpp"
 
 namespace Tactile {
@@ -76,7 +77,7 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<PropertyContext>(layerEntity);
-  FormattedString<128> name{"{} {}", GetIcon(layer.type), context.name};
+  rune::formatted_string<128> name{"{} {}", GetIcon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {

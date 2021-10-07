@@ -434,7 +434,6 @@ set(SOURCE_FILES
 
     utils/buffer_utils.hpp
     utils/color_utils.hpp
-    utils/formatted_string.hpp
     utils/from_string.hpp
     utils/load_texture.cpp
     utils/load_texture.hpp

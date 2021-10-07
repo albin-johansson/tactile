@@ -2,22 +2,20 @@
 
 #include <imgui.h>
 
-#include "common/ints.hpp"
+#include <rune/core/formatted_string.hpp>  // formatted_string
+
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
 #include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
-#include "events/property_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/centered_button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
-#include "gui/widgets/common/help_marker.hpp"
 #include "io/preferences.hpp"
 #include "property_table.hpp"
-#include "utils/formatted_string.hpp"
 
 namespace Tactile {
 namespace {
@@ -40,7 +38,7 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
     has_focus = ImGui::IsWindowFocused();
     const auto& context = Sys::GetCurrentContext(registry);
 
-    FormattedString<128> contextName{"Context: {}", context.name};
+    rune::formatted_string<128> contextName{"Context: {}", context.name};
     CenteredText(contextName.data());
 
     if (context.properties.empty()) {
