@@ -2,9 +2,6 @@
 
 #include <imgui.h>
 
-#include <array>   // array
-#include <format>  // format_to_n
-
 #include "common/ints.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
@@ -20,6 +17,7 @@
 #include "gui/widgets/common/help_marker.hpp"
 #include "io/preferences.hpp"
 #include "property_table.hpp"
+#include "utils/formatted_string.hpp"
 
 namespace Tactile {
 namespace {
@@ -42,9 +40,8 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
     has_focus = ImGui::IsWindowFocused();
     const auto& context = Sys::GetCurrentContext(registry);
 
-    std::array<char, 128> buffer{};  // Zero-initialize to ensure null-termination
-    std::format_to_n(buffer.data(), buffer.size(), "Context: {}", context.name);
-    CenteredText(buffer.data());
+    FormattedString<128> context_name{"Context: {}", context.name};
+    CenteredText(context_name.data());
 
     if (context.properties.empty()) {
       PrepareVerticalAlignmentCenter(2.5f);

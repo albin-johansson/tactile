@@ -2,9 +2,6 @@
 
 #include <imgui.h>
 
-#include <array>   // array
-#include <format>  // format_to_n
-
 #include "common/cstr.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/parent.hpp"
@@ -13,6 +10,7 @@
 #include "events/layer_events.hpp"
 #include "gui/icons.hpp"
 #include "layer_item_popup.hpp"
+#include "utils/formatted_string.hpp"
 #include "utils/scope_id.hpp"
 
 namespace Tactile {
@@ -78,9 +76,7 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<PropertyContext>(layerEntity);
-
-  std::array<char, 128> name{};  // Zero-initialize to ensure null-termination
-  std::format_to_n(name.data(), name.size(), "{} {}", GetIcon(layer.type), context.name);
+  FormattedString<128> name{"{} {}", GetIcon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
