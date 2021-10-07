@@ -19,13 +19,13 @@ namespace {
 constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse;
 
 constinit std::array<char, 100> name_buffer{};
-constinit int type_index = 0;
+constinit PropertyType property_type = PropertyType::String;
 constinit bool is_input_valid = false;
 
 void ResetState()
 {
-  type_index = 0;
   ZeroBuffer(name_buffer);
+  property_type = PropertyType::String;
   is_input_valid = false;
 }
 
@@ -40,10 +40,6 @@ void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& d
 
     ImGui::SameLine();
 
-    if (!ImGui::IsAnyItemActive()) {
-      ImGui::SetKeyboardFocusHere();
-    }
-
     if (ImGui::InputTextWithHint("##NameInput",
                                  "Unique property name...",
                                  name_buffer.data(),
@@ -55,14 +51,14 @@ void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& d
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Type: ");
-
     ImGui::SameLine();
-    PropertyTypeCombo(&type_index);
+
+    PropertyTypeCombo(property_type);
 
     ImGui::Spacing();
     if (Button("OK", nullptr, is_input_valid)) {
-      const auto type = GetPropertyTypeFromComboIndex(type_index);
-      dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(name_buffer), type);
+      dispatcher.enqueue<AddPropertyEvent>(CreateStringFromBuffer(name_buffer),
+                                           property_type);
       ResetState();
       ImGui::CloseCurrentPopup();
     }
@@ -79,6 +75,7 @@ void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& d
 
 void OpenAddPropertyDialog()
 {
+  ResetState();
   ImGui::OpenPopup("Add property");
 }
 

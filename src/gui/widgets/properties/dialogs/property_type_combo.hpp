@@ -4,10 +4,8 @@
 
 namespace Tactile {
 
+void PropertyTypeCombo(PropertyType& out);
+
 void PropertyTypeCombo(PropertyType previous, PropertyType& out);
-
-[[deprecated]] auto PropertyTypeCombo(int* index) -> bool;
-
-[[deprecated, nodiscard]] auto GetPropertyTypeFromComboIndex(int index) -> PropertyType;
 
 }  // namespace Tactile
