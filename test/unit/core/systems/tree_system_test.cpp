@@ -65,11 +65,6 @@ struct SimpleTreeConfig final
   cfg.registry.emplace<TreeNode>(cfg.e, 1u);
   cfg.registry.emplace<TreeNode>(cfg.f, 2u);
 
-  cfg.registry.emplace<TreeLeaf>(cfg.c);
-  cfg.registry.emplace<TreeLeaf>(cfg.d);
-  cfg.registry.emplace<TreeLeaf>(cfg.e);
-  cfg.registry.emplace<TreeLeaf>(cfg.f);
-
   Sys::Tree::SortNodes(cfg.registry);
 
   return cfg;

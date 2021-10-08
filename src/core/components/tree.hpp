@@ -13,7 +13,4 @@ struct TreeNode final
   std::vector<entt::entity> children;  ///< All associated child nodes.
 };
 
-struct TreeLeaf final
-{};
-
 }  // namespace Tactile
