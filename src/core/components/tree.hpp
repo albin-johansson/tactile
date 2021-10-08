@@ -3,11 +3,14 @@
 #include <entt.hpp>  // entity
 #include <vector>    // vector
 
+#include "common/ints.hpp"
+
 namespace Tactile {
 
 struct TreeNode final
 {
-  std::vector<entt::entity> children;
+  usize index{};                       ///< Local index, i.e. relative to tree siblings.
+  std::vector<entt::entity> children;  ///< All associated child nodes.
 };
 
 struct TreeLeaf final

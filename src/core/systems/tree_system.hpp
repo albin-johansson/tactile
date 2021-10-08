@@ -28,4 +28,7 @@ void MoveNodeDown(entt::registry& registry, entt::entity entity);
 [[nodiscard]] auto GetChildrenCount(const entt::registry& registry, entt::entity entity)
     -> usize;
 
+[[nodiscard]] auto GetGlobalIndex(const entt::registry& registry, entt::entity entity)
+    -> usize;
+
 }  // namespace Tactile::Sys::Tree
