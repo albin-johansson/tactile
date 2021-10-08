@@ -7,7 +7,7 @@
 
 namespace Tactile {
 
-struct TreeNode final
+struct LayerTreeNode final
 {
   usize index{};                       ///< Local index, i.e. relative to tree siblings.
   std::vector<entt::entity> children;  ///< All associated child nodes.

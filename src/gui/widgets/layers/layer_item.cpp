@@ -6,6 +6,7 @@
 
 #include "common/cstr.hpp"
 #include "core/components/group_layer.hpp"
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
 #include "core/ctx/map.hpp"
@@ -36,8 +37,8 @@ void GroupLayerItem(const entt::registry& registry,
 
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
 
-    const auto& groupLayer = registry.get<GroupLayer>(layerEntity);
-    for (const auto child : groupLayer.layers) {
+    const auto& node = registry.get<LayerTreeNode>(layerEntity);
+    for (const auto child : node.children) {
       const auto& childLayer = registry.get<Layer>(child);
       LayerItem(registry, dispatcher, child, childLayer);
     }

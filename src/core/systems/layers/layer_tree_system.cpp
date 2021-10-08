@@ -1,12 +1,12 @@
-#include "tree_system.hpp"
+#include "layer_tree_system.hpp"
 
 #include <cassert>  // assert
 #include <utility>  // swap
 
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
-#include "core/components/tree.hpp"
 
-namespace Tactile::Sys::Tree {
+namespace Tactile::Sys::LayerTree {
 namespace {
 
 void SwapIndices(entt::registry& registry, const entt::entity a, const entt::entity b)
@@ -14,11 +14,35 @@ void SwapIndices(entt::registry& registry, const entt::entity a, const entt::ent
   assert(a != entt::null);
   assert(b != entt::null);
 
-  auto& fst = registry.get<TreeNode>(a);
-  auto& snd = registry.get<TreeNode>(b);
+  auto& fst = registry.get<LayerTreeNode>(a);
+  auto& snd = registry.get<LayerTreeNode>(b);
 
   std::swap(fst.index, snd.index);
   SortNodes(registry);
+}
+
+void OffsetIndicesOfSiblingsBelow(entt::registry& registry,
+                                  const entt::entity entity,
+                                  const int64 offset)
+{
+  auto sibling = GetSiblingBelow(registry, entity);
+  while (sibling != entt::null) {
+    auto& siblingNode = registry.get<LayerTreeNode>(sibling);
+    const auto newIndex = siblingNode.index + offset;
+    sibling = GetSiblingBelow(registry, sibling);
+    siblingNode.index = newIndex;
+  }
+}
+
+void DestroyChildNodes(entt::registry& registry, const entt::entity entity)
+{
+  auto& node = registry.get<LayerTreeNode>(entity);
+  for (const auto child : node.children) {
+    if (registry.all_of<LayerTreeNode>(child)) {
+      DestroyChildNodes(registry, child);
+    }
+    registry.destroy(child);
+  }
 }
 
 [[nodiscard]] auto GetSibling(const entt::registry& registry,
@@ -27,9 +51,9 @@ void SwapIndices(entt::registry& registry, const entt::entity a, const entt::ent
 {
   const auto& parent = registry.get<Parent>(entity);
   if (parent.entity != entt::null) {
-    const auto& parentNode = registry.get<TreeNode>(parent.entity);
+    const auto& parentNode = registry.get<LayerTreeNode>(parent.entity);
     for (const auto child : parentNode.children) {
-      const auto& childLayer = registry.get<TreeNode>(child);
+      const auto& childLayer = registry.get<LayerTreeNode>(child);
       if (childLayer.index == targetIndex) {
         return child;
       }
@@ -37,7 +61,7 @@ void SwapIndices(entt::registry& registry, const entt::entity a, const entt::ent
   }
   else {
     for (auto&& [otherEntity, otherNode, otherParent] :
-         registry.view<TreeNode, Parent>().each())
+         registry.view<LayerTreeNode, Parent>().each())
     {
       if (otherParent.entity == entt::null && otherNode.index == targetIndex) {
         return otherEntity;
@@ -68,7 +92,7 @@ void SwapIndices(entt::registry& registry, const entt::entity a, const entt::ent
 
 void SortNodes(entt::registry& registry)
 {
-  registry.sort<TreeNode>(
+  registry.sort<LayerTreeNode>(
       [&](const entt::entity a, const entt::entity b) {
         const auto fst = GetGlobalIndex(registry, a);
         const auto snd = GetGlobalIndex(registry, b);
@@ -77,19 +101,52 @@ void SortNodes(entt::registry& registry)
       entt::insertion_sort{});
 
   /* Ensure that nodes hold sorted child node lists */
-  for (auto&& [entity, node] : registry.view<TreeNode>().each()) {
+  for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
     std::ranges::sort(node.children, [&](const entt::entity a, const entt::entity b) {
-      const auto& fst = registry.get<TreeNode>(a);
-      const auto& snd = registry.get<TreeNode>(b);
+      const auto& fst = registry.get<LayerTreeNode>(a);
+      const auto& snd = registry.get<LayerTreeNode>(b);
       return fst.index < snd.index;
     });
   }
 }
 
+void IncrementIndicesOfSiblingsBelow(entt::registry& registry, const entt::entity entity)
+{
+  OffsetIndicesOfSiblingsBelow(registry, entity, 1);
+}
+
+void DecrementIndicesOfSiblingsBelow(entt::registry& registry, const entt::entity entity)
+{
+  OffsetIndicesOfSiblingsBelow(registry, entity, -1);
+}
+
+void DestroyNode(entt::registry& registry, const entt::entity entity)
+{
+  assert(entity != entt::null);
+  assert(registry.all_of<LayerTreeNode>(entity));
+
+  /* Fix indices of siblings that are below the removed layer */
+  DecrementIndicesOfSiblingsBelow(registry, entity);
+
+  /* Remove the node from the parent node, if there is one. */
+  const auto& parent = registry.get<Parent>(entity);
+  if (parent.entity != entt::null) {
+    auto& parentNode = registry.get<LayerTreeNode>(parent.entity);
+    std::erase(parentNode.children, entity);
+  }
+
+  if (registry.all_of<LayerTreeNode>(entity)) {
+    DestroyChildNodes(registry, entity);
+  }
+
+  registry.destroy(entity);
+  SortNodes(registry);
+}
+
 void MoveNodeUp(entt::registry& registry, const entt::entity entity)
 {
   assert(entity != entt::null);
-  assert(registry.all_of<TreeNode>(entity));
+  assert(registry.all_of<LayerTreeNode>(entity));
   assert(CanMoveNodeUp(registry, entity));
 
   const auto target = GetSiblingAbove(registry, entity);
@@ -101,7 +158,7 @@ void MoveNodeUp(entt::registry& registry, const entt::entity entity)
 void MoveNodeDown(entt::registry& registry, const entt::entity entity)
 {
   assert(entity != entt::null);
-  assert(registry.all_of<TreeNode>(entity));
+  assert(registry.all_of<LayerTreeNode>(entity));
   assert(CanMoveNodeDown(registry, entity));
 
   const auto target = GetSiblingBelow(registry, entity);
@@ -113,17 +170,17 @@ void MoveNodeDown(entt::registry& registry, const entt::entity entity)
 auto CanMoveNodeUp(const entt::registry& registry, const entt::entity entity) -> bool
 {
   assert(entity != entt::null);
-  assert(registry.all_of<TreeNode>(entity));
+  assert(registry.all_of<LayerTreeNode>(entity));
 
-  return registry.get<TreeNode>(entity).index > 0u;
+  return registry.get<LayerTreeNode>(entity).index > 0u;
 }
 
 auto CanMoveNodeDown(const entt::registry& registry, const entt::entity entity) -> bool
 {
   assert(entity != entt::null);
-  assert(registry.all_of<TreeNode>(entity));
+  assert(registry.all_of<LayerTreeNode>(entity));
 
-  const auto index = registry.get<TreeNode>(entity).index;
+  const auto index = registry.get<LayerTreeNode>(entity).index;
   const auto nSiblings = GetSiblingCount(registry, entity);
 
   return index < nSiblings;
@@ -133,9 +190,9 @@ auto GetSiblingAbove(const entt::registry& registry, const entt::entity entity)
     -> entt::entity
 {
   assert(entity != entt::null);
-  assert(registry.all_of<TreeNode>(entity));
+  assert(registry.all_of<LayerTreeNode>(entity));
 
-  const auto index = registry.get<TreeNode>(entity).index;
+  const auto index = registry.get<LayerTreeNode>(entity).index;
   if (index != 0u) {
     return GetSibling(registry, entity, index - 1u);
   }
@@ -148,9 +205,9 @@ auto GetSiblingBelow(const entt::registry& registry, const entt::entity entity)
     -> entt::entity
 {
   assert(entity != entt::null);
-  assert(registry.all_of<TreeNode>(entity));
+  assert(registry.all_of<LayerTreeNode>(entity));
 
-  const auto index = registry.get<TreeNode>(entity).index;
+  const auto index = registry.get<LayerTreeNode>(entity).index;
   return GetSibling(registry, entity, index + 1u);
 }
 
@@ -165,7 +222,7 @@ auto GetSiblingCount(const entt::registry& registry, const entt::entity entity) 
     usize count = 0;
 
     for (auto&& [otherEntity, otherNode, otherParent] :
-         registry.view<TreeNode, Parent>().each())
+         registry.view<LayerTreeNode, Parent>().each())
     {
       if (otherEntity != entity && otherParent.entity == entt::null) {
         ++count;
@@ -175,7 +232,7 @@ auto GetSiblingCount(const entt::registry& registry, const entt::entity entity) 
     return count;
   }
   else {
-    const auto& parentNode = registry.get<TreeNode>(parent.entity);
+    const auto& parentNode = registry.get<LayerTreeNode>(parent.entity);
     return parentNode.children.size() - 1;  // Exclude the queried layer
   }
 }
@@ -183,9 +240,9 @@ auto GetSiblingCount(const entt::registry& registry, const entt::entity entity) 
 auto GetChildrenCount(const entt::registry& registry, const entt::entity entity) -> usize
 {
   assert(entity != entt::null);
-  assert(registry.all_of<TreeNode>(entity));
+  assert(registry.all_of<LayerTreeNode>(entity));
 
-  const auto& node = registry.get<TreeNode>(entity);
+  const auto& node = registry.get<LayerTreeNode>(entity);
   auto count = node.children.size();
 
   for (const auto child : node.children) {
@@ -198,10 +255,10 @@ auto GetChildrenCount(const entt::registry& registry, const entt::entity entity)
 auto GetGlobalIndex(const entt::registry& registry, const entt::entity entity) -> usize
 {
   assert(entity != entt::null);
-  assert(registry.all_of<TreeNode>(entity));
+  assert(registry.all_of<LayerTreeNode>(entity));
   assert(registry.all_of<Parent>(entity));
 
-  const auto& node = registry.get<TreeNode>(entity);
+  const auto& node = registry.get<LayerTreeNode>(entity);
   const auto& parent = registry.get<Parent>(entity);
 
   const auto base = node.index + CountSiblingsAboveInclusiveChildren(registry, entity);

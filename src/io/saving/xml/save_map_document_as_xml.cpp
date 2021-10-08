@@ -7,6 +7,7 @@
 #include "append_properties.hpp"
 #include "append_tileset.hpp"
 #include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/tileset.hpp"
 #include "core/ctx/map.hpp"
@@ -40,7 +41,7 @@ void AppendMapChild(const entt::registry& registry,
     AppendTileset(node, registry, entity, dir);
   }
 
-  for (auto&& [entity, layer] : registry.view<Layer>().each()) {
+  for (auto&& [entity, treeNode] : registry.view<LayerTreeNode>().each()) {
     const auto& parent = registry.get<Parent>(entity);
     if (parent.entity == entt::null) {
       AppendLayer(node, registry, entity, dir);

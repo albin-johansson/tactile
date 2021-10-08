@@ -4,6 +4,7 @@
 #include <imgui_internal.h>
 
 #include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
 #include "io/preferences.hpp"
 #include "render_bounds.hpp"
@@ -61,7 +62,8 @@ void RenderLayer(const entt::registry& registry,
 
 void RenderMap(const entt::registry& registry, const RenderInfo& info)
 {
-  for (auto&& [entity, layer] : registry.view<Layer>().each()) {
+  for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
+    const auto& layer = registry.get<Layer>(entity);
     const auto& parent = registry.get<Parent>(entity);
     const auto* parentLayer =
         (parent.entity != entt::null) ? registry.try_get<Layer>(parent.entity) : nullptr;

@@ -104,20 +104,20 @@ set(SOURCE_FILES
     core/commands/tools/stamp_sequence_cmd.cpp
     core/commands/tools/stamp_sequence_cmd.hpp
 
+    core/components/animation.hpp
     core/components/fancy_tile.hpp
     core/components/group_layer.hpp
     core/components/layer.hpp
+    core/components/layer_tree_node.hpp
     core/components/object.hpp
     core/components/object_layer.hpp
     core/components/parent.hpp
     core/components/property.hpp
     core/components/property_context.hpp
     core/components/texture.hpp
-    core/components/animation.hpp
     core/components/tile_layer.hpp
     core/components/tileset.hpp
     core/components/tool.hpp
-    core/components/tree.hpp
     core/components/uv_tile_size.hpp
 
     core/ctx/map.hpp
@@ -142,14 +142,14 @@ set(SOURCE_FILES
     core/systems/tileset_snapshot.hpp
     core/systems/tileset_system.cpp
     core/systems/tileset_system.hpp
-    core/systems/tree_system.cpp
-    core/systems/tree_system.hpp
     core/systems/viewport_system.cpp
     core/systems/viewport_system.hpp
 
     core/systems/layers/layer_snapshot.hpp
     core/systems/layers/layer_system.cpp
     core/systems/layers/layer_system.hpp
+    core/systems/layers/layer_tree_system.cpp
+    core/systems/layers/layer_tree_system.hpp
     core/systems/layers/object_layer_system.cpp
     core/systems/layers/object_layer_system.hpp
     core/systems/layers/object_snapshot.hpp

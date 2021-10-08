@@ -4,9 +4,15 @@
 
 #include "common/ints.hpp"
 
-namespace Tactile::Sys::Tree {
+namespace Tactile::Sys::LayerTree {
 
 void SortNodes(entt::registry& registry);
+
+void IncrementIndicesOfSiblingsBelow(entt::registry& registry, entt::entity entity);
+
+void DecrementIndicesOfSiblingsBelow(entt::registry& registry, entt::entity entity);
+
+void DestroyNode(entt::registry& registry, entt::entity entity);
 
 void MoveNodeUp(entt::registry& registry, entt::entity entity);
 
