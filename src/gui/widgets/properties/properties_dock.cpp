@@ -2,22 +2,18 @@
 
 #include <imgui.h>
 
-#include <array>   // array
-#include <format>  // format_to_n
+#include <rune/core/formatted_string.hpp>  // formatted_string
 
-#include "common/ints.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
 #include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
-#include "events/property_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/centered_button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
-#include "gui/widgets/common/help_marker.hpp"
 #include "io/preferences.hpp"
 #include "property_table.hpp"
 
@@ -42,9 +38,8 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
     has_focus = ImGui::IsWindowFocused();
     const auto& context = Sys::GetCurrentContext(registry);
 
-    std::array<char, 128> buffer{};  // Zero-initialize to ensure null-termination
-    std::format_to_n(buffer.data(), buffer.size(), "Context: {}", context.name);
-    CenteredText(buffer.data());
+    rune::formatted_string<128> contextName{"Context: {}", context.name};
+    CenteredText(contextName.data());
 
     if (context.properties.empty()) {
       PrepareVerticalAlignmentCenter(2.5f);

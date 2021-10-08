@@ -576,7 +576,7 @@ target_precompile_headers(${TACTILE_LIB}
     <centurion.hpp>
     <entt.hpp>
     <json.hpp>
-    <rune/everything.hpp>
+    <rune/rune.hpp>
     <nenya.hpp>)
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")

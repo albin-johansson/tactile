@@ -1,5 +1,5 @@
-#ifndef RUNE_MATH_RANDOM_UTILS_HPP
-#define RUNE_MATH_RANDOM_UTILS_HPP
+#ifndef RUNE_RANDOM_UTILS_HPP_
+#define RUNE_RANDOM_UTILS_HPP_
 
 #include <algorithm>   // generate
 #include <array>       // array
@@ -106,4 +106,4 @@ template <typename T>
 
 }  // namespace rune
 
-#endif  // RUNE_MATH_RANDOM_UTILS_HPP
+#endif  // RUNE_RANDOM_UTILS_HPP_

@@ -1,5 +1,5 @@
-#ifndef RUNE_MATH_INDEX_TO_MATRIX_HPP
-#define RUNE_MATH_INDEX_TO_MATRIX_HPP
+#ifndef RUNE_INDEX_TO_MATRIX_HPP_
+#define RUNE_INDEX_TO_MATRIX_HPP_
 
 #include <concepts>  // integral
 
@@ -26,4 +26,4 @@ template <std::integral T = int>
 
 }  // namespace rune
 
-#endif  // RUNE_MATH_INDEX_TO_MATRIX_HPP
+#endif  // RUNE_INDEX_TO_MATRIX_HPP_

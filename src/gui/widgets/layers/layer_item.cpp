@@ -2,8 +2,7 @@
 
 #include <imgui.h>
 
-#include <array>   // array
-#include <format>  // format_to_n
+#include <rune/core/formatted_string.hpp>  // formatted_string
 
 #include "common/cstr.hpp"
 #include "core/components/group_layer.hpp"
@@ -78,9 +77,7 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<PropertyContext>(layerEntity);
-
-  std::array<char, 128> name{};  // Zero-initialize to ensure null-termination
-  std::format_to_n(name.data(), name.size(), "{} {}", GetIcon(layer.type), context.name);
+  rune::formatted_string<128> name{"{} {}", GetIcon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {
     if (ImGui::Selectable(name.data(), isActiveLayer)) {
