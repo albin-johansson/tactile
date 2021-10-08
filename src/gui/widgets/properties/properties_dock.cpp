@@ -39,7 +39,7 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
     const auto& context = Sys::GetCurrentContext(registry);
 
     rune::formatted_string<128> contextName{"Context: {}", context.name};
-    CenteredText(contextName.data());
+    ImGui::TextUnformatted(contextName.data());
 
     if (context.properties.empty()) {
       PrepareVerticalAlignmentCenter(2.5f);
