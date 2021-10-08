@@ -24,6 +24,10 @@ void MoveNodeDown(entt::registry& registry, entt::entity entity);
 [[nodiscard]] auto CanMoveNodeDown(const entt::registry& registry, entt::entity entity)
     -> bool;
 
+[[nodiscard]] auto IsChildNode(const entt::registry& registry,
+                               entt::entity parent,
+                               entt::entity entity) -> bool;
+
 [[nodiscard]] auto GetSiblingAbove(const entt::registry& registry, entt::entity entity)
     -> entt::entity;
 

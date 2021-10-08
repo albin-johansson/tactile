@@ -220,16 +220,16 @@ void SortLayers(entt::registry& registry)
 
 void RemoveLayer(entt::registry& registry, const entt::entity entity)
 {
-  /* Reset the active layer if we're removing the active layer. */
-  auto& activeLayer = registry.ctx<ActiveLayer>();
-  if (entity == activeLayer.entity) {
-    activeLayer.entity = entt::null;
-  }
+  auto maybe_reset = [&](entt::entity& active, const entt::entity entity) {
+    if (active != entt::null) {
+      if (entity == active || LayerTree::IsChildNode(registry, entity, active)) {
+        active = entt::null;
+      }
+    }
+  };
 
-  auto& activeContext = registry.ctx<ActivePropertyContext>();
-  if (entity == activeContext.entity) {
-    activeContext.entity = entt::null;
-  }
+  maybe_reset(registry.ctx<ActiveLayer>().entity, entity);
+  maybe_reset(registry.ctx<ActivePropertyContext>().entity, entity);
 
   LayerTree::DestroyNode(registry, entity);
 }

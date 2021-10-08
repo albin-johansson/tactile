@@ -186,6 +186,27 @@ auto CanMoveNodeDown(const entt::registry& registry, const entt::entity entity) 
   return index < nSiblings;
 }
 
+auto IsChildNode(const entt::registry& registry,
+                 const entt::entity parent,
+                 const entt::entity entity) -> bool
+{
+  assert(parent != entt::null);
+  assert(entity != entt::null);
+  assert(registry.all_of<LayerTreeNode>(parent));
+  assert(registry.all_of<LayerTreeNode>(entity));
+
+  for (const auto child : registry.get<LayerTreeNode>(parent).children) {
+    if (child == entity) {
+      return true;
+    }
+    else {
+      return IsChildNode(registry, child, entity);
+    }
+  }
+
+  return false;
+}
+
 auto GetSiblingAbove(const entt::registry& registry, const entt::entity entity)
     -> entt::entity
 {
