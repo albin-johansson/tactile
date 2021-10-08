@@ -1,12 +1,25 @@
 #include "tree_system.hpp"
 
 #include <cassert>  // assert
+#include <utility>  // swap
 
 #include "core/components/parent.hpp"
 #include "core/components/tree.hpp"
 
 namespace Tactile::Sys::Tree {
 namespace {
+
+void SwapIndices(entt::registry& registry, const entt::entity a, const entt::entity b)
+{
+  assert(a != entt::null);
+  assert(b != entt::null);
+
+  auto& fst = registry.get<TreeNode>(a);
+  auto& snd = registry.get<TreeNode>(b);
+
+  std::swap(fst.index, snd.index);
+  SortNodes(registry);
+}
 
 [[nodiscard]] auto GetSibling(const entt::registry& registry,
                               const entt::entity entity,
@@ -52,6 +65,69 @@ namespace {
 }
 
 }  // namespace
+
+void SortNodes(entt::registry& registry)
+{
+  registry.sort<TreeNode>(
+      [&](const entt::entity a, const entt::entity b) {
+        const auto fst = GetGlobalIndex(registry, a);
+        const auto snd = GetGlobalIndex(registry, b);
+        return fst < snd;
+      },
+      entt::insertion_sort{});
+
+  /* Ensure that nodes hold sorted child node lists */
+  for (auto&& [entity, node] : registry.view<TreeNode>().each()) {
+    std::ranges::sort(node.children, [&](const entt::entity a, const entt::entity b) {
+      const auto& fst = registry.get<TreeNode>(a);
+      const auto& snd = registry.get<TreeNode>(b);
+      return fst.index < snd.index;
+    });
+  }
+}
+
+void MoveNodeUp(entt::registry& registry, const entt::entity entity)
+{
+  assert(entity != entt::null);
+  assert(registry.all_of<TreeNode>(entity));
+  assert(CanMoveNodeUp(registry, entity));
+
+  const auto target = GetSiblingAbove(registry, entity);
+  assert(target != entt::null);
+
+  SwapIndices(registry, entity, target);
+}
+
+void MoveNodeDown(entt::registry& registry, const entt::entity entity)
+{
+  assert(entity != entt::null);
+  assert(registry.all_of<TreeNode>(entity));
+  assert(CanMoveNodeDown(registry, entity));
+
+  const auto target = GetSiblingBelow(registry, entity);
+  assert(target != entt::null);
+
+  SwapIndices(registry, entity, target);
+}
+
+auto CanMoveNodeUp(const entt::registry& registry, const entt::entity entity) -> bool
+{
+  assert(entity != entt::null);
+  assert(registry.all_of<TreeNode>(entity));
+
+  return registry.get<TreeNode>(entity).index > 0u;
+}
+
+auto CanMoveNodeDown(const entt::registry& registry, const entt::entity entity) -> bool
+{
+  assert(entity != entt::null);
+  assert(registry.all_of<TreeNode>(entity));
+
+  const auto index = registry.get<TreeNode>(entity).index;
+  const auto nSiblings = GetSiblingCount(registry, entity);
+
+  return index < nSiblings;
+}
 
 auto GetSiblingAbove(const entt::registry& registry, const entt::entity entity)
     -> entt::entity

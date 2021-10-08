@@ -6,6 +6,8 @@
 
 namespace Tactile::Sys::Tree {
 
+void SortNodes(entt::registry& registry);
+
 void MoveNodeUp(entt::registry& registry, entt::entity entity);
 
 void MoveNodeDown(entt::registry& registry, entt::entity entity);

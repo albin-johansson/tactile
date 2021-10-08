@@ -70,10 +70,114 @@ struct SimpleTreeConfig final
   cfg.registry.emplace<TreeLeaf>(cfg.e);
   cfg.registry.emplace<TreeLeaf>(cfg.f);
 
+  Sys::Tree::SortNodes(cfg.registry);
+
   return cfg;
 }
 
 }  // namespace
+
+TEST(TreeSystem, MoveNodeUp)
+{
+  auto cfg = CreateTreeRegistrySimple();
+
+  ASSERT_EQ(0u, cfg.registry.get<TreeNode>(cfg.a).index);
+  ASSERT_EQ(1u, cfg.registry.get<TreeNode>(cfg.e).index);
+  ASSERT_EQ(0u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.a));
+  ASSERT_EQ(5u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.e));
+  Sys::Tree::MoveNodeUp(cfg.registry, cfg.e);
+
+  // New tree
+  // > e
+  // > a
+  //   |__b
+  //      |__d
+  //   |__c
+  //   |__f
+  ASSERT_EQ(1u, cfg.registry.get<TreeNode>(cfg.a).index);
+  ASSERT_EQ(0u, cfg.registry.get<TreeNode>(cfg.e).index);
+  ASSERT_EQ(1u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.a));
+  ASSERT_EQ(0u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.e));
+
+  ASSERT_EQ(0u, cfg.registry.get<TreeNode>(cfg.b).index);
+  ASSERT_EQ(1u, cfg.registry.get<TreeNode>(cfg.c).index);
+  ASSERT_EQ(2u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.b));
+  ASSERT_EQ(4u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.c));
+  Sys::Tree::MoveNodeUp(cfg.registry, cfg.c);
+
+  // New tree
+  // > e
+  // > a
+  //   |__c
+  //   |__b
+  //      |__d
+  //   |__f
+  ASSERT_EQ(1u, cfg.registry.get<TreeNode>(cfg.b).index);
+  ASSERT_EQ(0u, cfg.registry.get<TreeNode>(cfg.c).index);
+  ASSERT_EQ(3u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.b));
+  ASSERT_EQ(2u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.c));
+}
+
+TEST(TreeSystem, MoveNodeDown)
+{
+  auto cfg = CreateTreeRegistrySimple();
+
+  ASSERT_EQ(0u, cfg.registry.get<TreeNode>(cfg.b).index);
+  ASSERT_EQ(1u, cfg.registry.get<TreeNode>(cfg.c).index);
+  ASSERT_EQ(1u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.b));
+  ASSERT_EQ(3u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.c));
+  Sys::Tree::MoveNodeDown(cfg.registry, cfg.b);
+  // New tree
+  // > a
+  //   |__c
+  //   |__b
+  //      |__d
+  //   |__f
+  // > e
+  ASSERT_EQ(1u, cfg.registry.get<TreeNode>(cfg.b).index);
+  ASSERT_EQ(0u, cfg.registry.get<TreeNode>(cfg.c).index);
+  ASSERT_EQ(2u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.b));
+  ASSERT_EQ(1u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.c));
+
+  ASSERT_EQ(0u, cfg.registry.get<TreeNode>(cfg.a).index);
+  ASSERT_EQ(1u, cfg.registry.get<TreeNode>(cfg.e).index);
+  ASSERT_EQ(0u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.a));
+  ASSERT_EQ(5u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.e));
+  Sys::Tree::MoveNodeDown(cfg.registry, cfg.a);
+  // New tree
+  // > e
+  // > a
+  //   |__c
+  //   |__b
+  //      |__d
+  //   |__f
+  ASSERT_EQ(1u, cfg.registry.get<TreeNode>(cfg.a).index);
+  ASSERT_EQ(0u, cfg.registry.get<TreeNode>(cfg.e).index);
+  ASSERT_EQ(1u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.a));
+  ASSERT_EQ(0u, Sys::Tree::GetGlobalIndex(cfg.registry, cfg.e));
+}
+
+TEST(TreeSystem, CanMoveNodeUp)
+{
+  const auto cfg = CreateTreeRegistrySimple();
+  ASSERT_FALSE(Sys::Tree::CanMoveNodeUp(cfg.registry, cfg.a));
+  ASSERT_FALSE(Sys::Tree::CanMoveNodeUp(cfg.registry, cfg.b));
+  ASSERT_TRUE(Sys::Tree::CanMoveNodeUp(cfg.registry, cfg.c));
+  ASSERT_FALSE(Sys::Tree::CanMoveNodeUp(cfg.registry, cfg.d));
+  ASSERT_TRUE(Sys::Tree::CanMoveNodeUp(cfg.registry, cfg.e));
+  ASSERT_TRUE(Sys::Tree::CanMoveNodeUp(cfg.registry, cfg.f));
+}
+
+TEST(TreeSystem, CanMoveNodeDown)
+{
+  const auto cfg = CreateTreeRegistrySimple();
+  ASSERT_TRUE(Sys::Tree::CanMoveNodeDown(cfg.registry, cfg.a));
+  ASSERT_TRUE(Sys::Tree::CanMoveNodeDown(cfg.registry, cfg.b));
+  ASSERT_TRUE(Sys::Tree::CanMoveNodeDown(cfg.registry, cfg.c));
+  ASSERT_FALSE(Sys::Tree::CanMoveNodeDown(cfg.registry, cfg.d));
+  ASSERT_FALSE(Sys::Tree::CanMoveNodeDown(cfg.registry, cfg.e));
+  ASSERT_FALSE(Sys::Tree::CanMoveNodeDown(cfg.registry, cfg.f));
+}
 
 TEST(TreeSystem, GetSiblingAbove)
 {
