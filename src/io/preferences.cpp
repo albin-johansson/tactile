@@ -2,15 +2,15 @@
 
 #include <settings.pb.h>
 
-#include <centurion.hpp>  // ...
-#include <filesystem>     // exists
-#include <fstream>        // ifstream, ofstream
-#include <ios>            // ios
-#include <utility>        // move
+#include <centurion.hpp>   // ...
+#include <filesystem>      // exists
+#include <fstream>         // ifstream, ofstream
+#include <ios>             // ios
+#include <magic_enum.hpp>  // enum_name
+#include <utility>         // move
 
 #include "common/cstr.hpp"
 #include "directories.hpp"
-#include "gui/themes.hpp"
 
 namespace Tactile {
 namespace {
@@ -132,7 +132,7 @@ void LoadPreferences()
 
   // clang-format off
   CENTURION_LOG_INFO("Loaded preferences: \"%s\"", settings_path.string().c_str());
-  CENTURION_LOG_INFO("  Appearance::Theme: %s", ToString(settings.theme).data());
+  CENTURION_LOG_INFO("  Appearance::Theme: %s", magic_enum::enum_name(settings.theme).data());
   CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
   CENTURION_LOG_INFO("  Behavior::CommandCapacity: %u", settings.command_capacity);

@@ -53,6 +53,7 @@ void UpdateCreditsDialog()
       Row("GLEW", "2.2.0", "BSD/MIT");
       Row("IconFontCppHeaders", "N/A", "Zlib");
       Row("JSON for Modern C++", "3.9.1", "MIT");
+      Row("Magic Enum C++", "0.7.3", "MIT");
       Row("Nenya", "0.1.0", "MIT");
       Row("portable-file-dialogs", "0.1.0", "WTFPL");
       Row("pugixml", "1.11.4", "MIT");

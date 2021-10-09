@@ -52,6 +52,7 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * [GLEW](https://github.com/nigels-com/glew)
 * [IconFontCppHeaders](https://github.com/juliettef/IconFontCppHeaders)
 * [JSON for Modern C++](https://github.com/nlohmann/json)
+* [Magic Enum C++](https://github.com/Neargye/magic_enum)
 * [Nenya](https://github.com/albin-johansson/nenya)
 * [Portable File Dialogs](https://github.com/samhocevar/portable-file-dialogs)
 * [pugixml](https://github.com/zeux/pugixml)

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <string_view>  // string_view
-
-#include "common/maybe.hpp"
 #include "io/preferences.hpp"
 
 struct ImGuiStyle;
@@ -22,8 +19,6 @@ namespace Tactile {
  * \param theme the theme that will be applied to the style.
  */
 void ApplyTheme(ImGuiStyle& style, Theme theme);
-
-[[nodiscard]] auto ToString(Theme theme) -> std::string_view;
 
 /// \} End of theme API
 

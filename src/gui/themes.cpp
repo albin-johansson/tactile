@@ -2,8 +2,6 @@
 
 #include <imgui.h>
 
-#include "core/tactile_error.hpp"
-
 namespace Tactile {
 namespace {
 
@@ -132,35 +130,6 @@ void ApplyTheme(ImGuiStyle& style, const Theme theme)
     case Theme::Amber:
       SetupStyleFromHue(style, MakeThemeFromHue(272));
       break;
-  }
-}
-
-auto ToString(const Theme theme) -> std::string_view
-{
-  switch (theme) {
-    case Theme::DearDark:
-      return "DearDark";
-
-    case Theme::DearLight:
-      return "DearLight";
-
-    case Theme::Ruby:
-      return "Ruby";
-
-    case Theme::Sapphire:
-      return "Sapphire";
-
-    case Theme::Emerald:
-      return "Emerald";
-
-    case Theme::Amethyst:
-      return "Amethyst";
-
-    case Theme::Amber:
-      return "Amber";
-
-    default:
-      throw TactileError{"Did not recognize theme enumerator!"};
   }
 }
 

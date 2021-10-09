@@ -2,6 +2,8 @@
 
 #include <imgui.h>
 
+#include <magic_enum.hpp>  // enum_name
+
 #include "events/command_events.hpp"
 #include "gui/themes.hpp"
 #include "gui/widgets/alignment.hpp"
@@ -104,7 +106,7 @@ void ShowAppearanceBar()
     ImGui::TextUnformatted("Theme: ");
     ImGui::SameLine();
 
-    if (ImGui::BeginCombo("##ThemeCombo", ToString(settings.theme).data())) {
+    if (ImGui::BeginCombo("##ThemeCombo", magic_enum::enum_name(settings.theme).data())) {
       if (ImGui::Selectable("Dear Dark")) {
         settings.theme = Theme::DearDark;
         ApplyTheme(ImGui::GetStyle(), Theme::DearDark);
