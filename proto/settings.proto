@@ -10,8 +10,19 @@ enum OverlayPos {
   BOTTOM_RIGHT = 3;
 }
 
+/* Remember to keep these values synced with Tactile::Theme! */
+enum Theme {
+  DEAR_DARK = 0;
+  DEAR_LIGHT = 1;
+  RUBY = 2;
+  SAPPHIRE = 3;
+  EMERALD = 4;
+  AMETHYST = 5;
+  AMBER = 6;
+}
+
 message Settings {
-  optional string theme = 1;
+  optional Theme theme = 1;
 
   optional int32 preferred_tile_width = 2;
   optional int32 preferred_tile_height = 3;

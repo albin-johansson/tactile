@@ -20,22 +20,23 @@ namespace Tactile {
 namespace Proto {
 constexpr Settings::Settings(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
-  : theme_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
-  , preferred_format_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  : preferred_format_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , theme_(0)
+
   , preferred_tile_width_(0)
+  , viewport_overlay_pos_(0)
+
   , preferred_tile_height_(0)
-  , command_capacity_(uint64_t{0u})
   , show_grid_(false)
   , window_border_(false)
   , restore_last_session_(false)
   , restore_layout_(false)
+  , command_capacity_(uint64_t{0u})
   , show_layer_dock_(false)
   , show_properties_dock_(false)
   , show_tileset_dock_(false)
   , embed_tilesets_(false)
-  , human_readable_output_(false)
-  , viewport_overlay_pos_(0)
-{}
+  , human_readable_output_(false){}
 struct SettingsDefaultTypeInternal {
   constexpr SettingsDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -48,7 +49,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT SettingsDefaultTypeInternal _Se
 }  // namespace Proto
 }  // namespace Tactile
 static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_settings_2eproto[1];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_settings_2eproto[1];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_settings_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_settings_2eproto = nullptr;
 
 const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_settings_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -73,21 +74,21 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_settings_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, embed_tilesets_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, human_readable_output_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, viewport_overlay_pos_),
-  0,
-  2,
-  3,
   1,
+  2,
   4,
+  0,
+  9,
   5,
   6,
   7,
   8,
-  9,
   10,
   11,
   12,
   13,
   14,
+  3,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 21, -1, sizeof(::Tactile::Proto::Settings)},
@@ -98,34 +99,37 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 };
 
 const char descriptor_table_protodef_settings_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\016settings.proto\022\rTactile.Proto\"\263\006\n\010Sett"
-  "ings\022\022\n\005theme\030\001 \001(\tH\000\210\001\001\022!\n\024preferred_ti"
-  "le_width\030\002 \001(\005H\001\210\001\001\022\"\n\025preferred_tile_he"
-  "ight\030\003 \001(\005H\002\210\001\001\022\035\n\020preferred_format\030\020 \001("
-  "\tH\003\210\001\001\022\035\n\020command_capacity\030\021 \001(\004H\004\210\001\001\022\026\n"
-  "\tshow_grid\030\022 \001(\010H\005\210\001\001\022\032\n\rwindow_border\030\023"
-  " \001(\010H\006\210\001\001\022!\n\024restore_last_session\030\024 \001(\010H"
-  "\007\210\001\001\022\033\n\016restore_layout\030\025 \001(\010H\010\210\001\001\022\034\n\017sho"
-  "w_layer_dock\030\026 \001(\010H\t\210\001\001\022!\n\024show_properti"
-  "es_dock\030\027 \001(\010H\n\210\001\001\022\036\n\021show_tileset_dock\030"
-  "\030 \001(\010H\013\210\001\001\022\033\n\016embed_tilesets\030\031 \001(\010H\014\210\001\001\022"
-  "\"\n\025human_readable_output\030\032 \001(\010H\r\210\001\001\022<\n\024v"
-  "iewport_overlay_pos\030\033 \001(\0162\031.Tactile.Prot"
-  "o.OverlayPosH\016\210\001\001B\010\n\006_themeB\027\n\025_preferre"
-  "d_tile_widthB\030\n\026_preferred_tile_heightB\023"
-  "\n\021_preferred_formatB\023\n\021_command_capacity"
-  "B\014\n\n_show_gridB\020\n\016_window_borderB\027\n\025_res"
-  "tore_last_sessionB\021\n\017_restore_layoutB\022\n\020"
-  "_show_layer_dockB\027\n\025_show_properties_doc"
-  "kB\024\n\022_show_tileset_dockB\021\n\017_embed_tilese"
-  "tsB\030\n\026_human_readable_outputB\027\n\025_viewpor"
-  "t_overlay_pos*L\n\nOverlayPos\022\014\n\010TOP_LEFT\020"
-  "\000\022\r\n\tTOP_RIGHT\020\001\022\017\n\013BOTTOM_LEFT\020\002\022\020\n\014BOT"
-  "TOM_RIGHT\020\003b\006proto3"
+  "\n\016settings.proto\022\rTactile.Proto\"\311\006\n\010Sett"
+  "ings\022(\n\005theme\030\001 \001(\0162\024.Tactile.Proto.Them"
+  "eH\000\210\001\001\022!\n\024preferred_tile_width\030\002 \001(\005H\001\210\001"
+  "\001\022\"\n\025preferred_tile_height\030\003 \001(\005H\002\210\001\001\022\035\n"
+  "\020preferred_format\030\020 \001(\tH\003\210\001\001\022\035\n\020command_"
+  "capacity\030\021 \001(\004H\004\210\001\001\022\026\n\tshow_grid\030\022 \001(\010H\005"
+  "\210\001\001\022\032\n\rwindow_border\030\023 \001(\010H\006\210\001\001\022!\n\024resto"
+  "re_last_session\030\024 \001(\010H\007\210\001\001\022\033\n\016restore_la"
+  "yout\030\025 \001(\010H\010\210\001\001\022\034\n\017show_layer_dock\030\026 \001(\010"
+  "H\t\210\001\001\022!\n\024show_properties_dock\030\027 \001(\010H\n\210\001\001"
+  "\022\036\n\021show_tileset_dock\030\030 \001(\010H\013\210\001\001\022\033\n\016embe"
+  "d_tilesets\030\031 \001(\010H\014\210\001\001\022\"\n\025human_readable_"
+  "output\030\032 \001(\010H\r\210\001\001\022<\n\024viewport_overlay_po"
+  "s\030\033 \001(\0162\031.Tactile.Proto.OverlayPosH\016\210\001\001B"
+  "\010\n\006_themeB\027\n\025_preferred_tile_widthB\030\n\026_p"
+  "referred_tile_heightB\023\n\021_preferred_forma"
+  "tB\023\n\021_command_capacityB\014\n\n_show_gridB\020\n\016"
+  "_window_borderB\027\n\025_restore_last_sessionB"
+  "\021\n\017_restore_layoutB\022\n\020_show_layer_dockB\027"
+  "\n\025_show_properties_dockB\024\n\022_show_tileset"
+  "_dockB\021\n\017_embed_tilesetsB\030\n\026_human_reada"
+  "ble_outputB\027\n\025_viewport_overlay_pos*L\n\nO"
+  "verlayPos\022\014\n\010TOP_LEFT\020\000\022\r\n\tTOP_RIGHT\020\001\022\017"
+  "\n\013BOTTOM_LEFT\020\002\022\020\n\014BOTTOM_RIGHT\020\003*d\n\005The"
+  "me\022\r\n\tDEAR_DARK\020\000\022\016\n\nDEAR_LIGHT\020\001\022\010\n\004RUB"
+  "Y\020\002\022\014\n\010SAPPHIRE\020\003\022\013\n\007EMERALD\020\004\022\014\n\010AMETHY"
+  "ST\020\005\022\t\n\005AMBER\020\006b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_settings_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_settings_2eproto = {
-  false, false, 939, descriptor_table_protodef_settings_2eproto, "settings.proto", 
+  false, false, 1063, descriptor_table_protodef_settings_2eproto, "settings.proto", 
   &descriptor_table_settings_2eproto_once, nullptr, 0, 1,
   schemas, file_default_instances, TableStruct_settings_2eproto::offsets,
   file_level_metadata_settings_2eproto, file_level_enum_descriptors_settings_2eproto, file_level_service_descriptors_settings_2eproto,
@@ -154,6 +158,25 @@ bool OverlayPos_IsValid(int value) {
   }
 }
 
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Theme_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_settings_2eproto);
+  return file_level_enum_descriptors_settings_2eproto[1];
+}
+bool Theme_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+      return true;
+    default:
+      return false;
+  }
+}
+
 
 // ===================================================================
 
@@ -161,19 +184,19 @@ class Settings::_Internal {
  public:
   using HasBits = decltype(std::declval<Settings>()._has_bits_);
   static void set_has_theme(HasBits* has_bits) {
-    (*has_bits)[0] |= 1u;
+    (*has_bits)[0] |= 2u;
   }
   static void set_has_preferred_tile_width(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
   static void set_has_preferred_tile_height(HasBits* has_bits) {
-    (*has_bits)[0] |= 8u;
+    (*has_bits)[0] |= 16u;
   }
   static void set_has_preferred_format(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
+    (*has_bits)[0] |= 1u;
   }
   static void set_has_command_capacity(HasBits* has_bits) {
-    (*has_bits)[0] |= 16u;
+    (*has_bits)[0] |= 512u;
   }
   static void set_has_show_grid(HasBits* has_bits) {
     (*has_bits)[0] |= 32u;
@@ -188,22 +211,22 @@ class Settings::_Internal {
     (*has_bits)[0] |= 256u;
   }
   static void set_has_show_layer_dock(HasBits* has_bits) {
-    (*has_bits)[0] |= 512u;
-  }
-  static void set_has_show_properties_dock(HasBits* has_bits) {
     (*has_bits)[0] |= 1024u;
   }
-  static void set_has_show_tileset_dock(HasBits* has_bits) {
+  static void set_has_show_properties_dock(HasBits* has_bits) {
     (*has_bits)[0] |= 2048u;
   }
-  static void set_has_embed_tilesets(HasBits* has_bits) {
+  static void set_has_show_tileset_dock(HasBits* has_bits) {
     (*has_bits)[0] |= 4096u;
   }
-  static void set_has_human_readable_output(HasBits* has_bits) {
+  static void set_has_embed_tilesets(HasBits* has_bits) {
     (*has_bits)[0] |= 8192u;
   }
-  static void set_has_viewport_overlay_pos(HasBits* has_bits) {
+  static void set_has_human_readable_output(HasBits* has_bits) {
     (*has_bits)[0] |= 16384u;
+  }
+  static void set_has_viewport_overlay_pos(HasBits* has_bits) {
+    (*has_bits)[0] |= 8u;
   }
 };
 
@@ -220,29 +243,23 @@ Settings::Settings(const Settings& from)
   : ::PROTOBUF_NAMESPACE_ID::Message(),
       _has_bits_(from._has_bits_) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  theme_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
-  if (from._internal_has_theme()) {
-    theme_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_theme(), 
-      GetArenaForAllocation());
-  }
   preferred_format_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   if (from._internal_has_preferred_format()) {
     preferred_format_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_preferred_format(), 
       GetArenaForAllocation());
   }
-  ::memcpy(&preferred_tile_width_, &from.preferred_tile_width_,
-    static_cast<size_t>(reinterpret_cast<char*>(&viewport_overlay_pos_) -
-    reinterpret_cast<char*>(&preferred_tile_width_)) + sizeof(viewport_overlay_pos_));
+  ::memcpy(&theme_, &from.theme_,
+    static_cast<size_t>(reinterpret_cast<char*>(&human_readable_output_) -
+    reinterpret_cast<char*>(&theme_)) + sizeof(human_readable_output_));
   // @@protoc_insertion_point(copy_constructor:Tactile.Proto.Settings)
 }
 
 void Settings::SharedCtor() {
-theme_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 preferred_format_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&preferred_tile_width_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&viewport_overlay_pos_) -
-    reinterpret_cast<char*>(&preferred_tile_width_)) + sizeof(viewport_overlay_pos_));
+    reinterpret_cast<char*>(&theme_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&human_readable_output_) -
+    reinterpret_cast<char*>(&theme_)) + sizeof(human_readable_output_));
 }
 
 Settings::~Settings() {
@@ -254,7 +271,6 @@ Settings::~Settings() {
 
 inline void Settings::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  theme_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   preferred_format_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -275,23 +291,18 @@ void Settings::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000003u) {
-    if (cached_has_bits & 0x00000001u) {
-      theme_.ClearNonDefaultToEmpty();
-    }
-    if (cached_has_bits & 0x00000002u) {
-      preferred_format_.ClearNonDefaultToEmpty();
-    }
+  if (cached_has_bits & 0x00000001u) {
+    preferred_format_.ClearNonDefaultToEmpty();
   }
-  if (cached_has_bits & 0x000000fcu) {
-    ::memset(&preferred_tile_width_, 0, static_cast<size_t>(
+  if (cached_has_bits & 0x000000feu) {
+    ::memset(&theme_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&restore_last_session_) -
-        reinterpret_cast<char*>(&preferred_tile_width_)) + sizeof(restore_last_session_));
+        reinterpret_cast<char*>(&theme_)) + sizeof(restore_last_session_));
   }
   if (cached_has_bits & 0x00007f00u) {
     ::memset(&restore_layout_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&viewport_overlay_pos_) -
-        reinterpret_cast<char*>(&restore_layout_)) + sizeof(viewport_overlay_pos_));
+        reinterpret_cast<char*>(&human_readable_output_) -
+        reinterpret_cast<char*>(&restore_layout_)) + sizeof(human_readable_output_));
   }
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
@@ -304,13 +315,12 @@ const char* Settings::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
     ::PROTOBUF_NAMESPACE_ID::uint32 tag;
     ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // optional string theme = 1;
+      // optional .Tactile.Proto.Theme theme = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          auto str = _internal_mutable_theme();
-          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "Tactile.Proto.Settings.theme"));
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          ::PROTOBUF_NAMESPACE_ID::uint64 val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
+          _internal_set_theme(static_cast<::Tactile::Proto::Theme>(val));
         } else
           goto handle_unusual;
         continue;
@@ -471,14 +481,11 @@ failure:
   ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // optional string theme = 1;
+  // optional .Tactile.Proto.Theme theme = 1;
   if (_internal_has_theme()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_theme().data(), static_cast<int>(this->_internal_theme().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Tactile.Proto.Settings.theme");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_theme(), target);
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_theme(), target);
   }
 
   // optional int32 preferred_tile_width = 2;
@@ -588,18 +595,17 @@ size_t Settings::ByteSizeLong() const {
 
   cached_has_bits = _has_bits_[0];
   if (cached_has_bits & 0x000000ffu) {
-    // optional string theme = 1;
-    if (cached_has_bits & 0x00000001u) {
-      total_size += 1 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-          this->_internal_theme());
-    }
-
     // optional string preferred_format = 16;
-    if (cached_has_bits & 0x00000002u) {
+    if (cached_has_bits & 0x00000001u) {
       total_size += 2 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
           this->_internal_preferred_format());
+    }
+
+    // optional .Tactile.Proto.Theme theme = 1;
+    if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_theme());
     }
 
     // optional int32 preferred_tile_width = 2;
@@ -607,16 +613,15 @@ size_t Settings::ByteSizeLong() const {
       total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_preferred_tile_width());
     }
 
-    // optional int32 preferred_tile_height = 3;
+    // optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;
     if (cached_has_bits & 0x00000008u) {
-      total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_preferred_tile_height());
+      total_size += 2 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_viewport_overlay_pos());
     }
 
-    // optional uint64 command_capacity = 17;
+    // optional int32 preferred_tile_height = 3;
     if (cached_has_bits & 0x00000010u) {
-      total_size += 2 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
-          this->_internal_command_capacity());
+      total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_preferred_tile_height());
     }
 
     // optional bool show_grid = 18;
@@ -641,35 +646,36 @@ size_t Settings::ByteSizeLong() const {
       total_size += 2 + 1;
     }
 
-    // optional bool show_layer_dock = 22;
+    // optional uint64 command_capacity = 17;
     if (cached_has_bits & 0x00000200u) {
-      total_size += 2 + 1;
+      total_size += 2 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
+          this->_internal_command_capacity());
     }
 
-    // optional bool show_properties_dock = 23;
+    // optional bool show_layer_dock = 22;
     if (cached_has_bits & 0x00000400u) {
       total_size += 2 + 1;
     }
 
-    // optional bool show_tileset_dock = 24;
+    // optional bool show_properties_dock = 23;
     if (cached_has_bits & 0x00000800u) {
       total_size += 2 + 1;
     }
 
-    // optional bool embed_tilesets = 25;
+    // optional bool show_tileset_dock = 24;
     if (cached_has_bits & 0x00001000u) {
       total_size += 2 + 1;
     }
 
-    // optional bool human_readable_output = 26;
+    // optional bool embed_tilesets = 25;
     if (cached_has_bits & 0x00002000u) {
       total_size += 2 + 1;
     }
 
-    // optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;
+    // optional bool human_readable_output = 26;
     if (cached_has_bits & 0x00004000u) {
-      total_size += 2 +
-        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_viewport_overlay_pos());
+      total_size += 2 + 1;
     }
 
   }
@@ -698,19 +704,19 @@ void Settings::MergeFrom(const Settings& from) {
   cached_has_bits = from._has_bits_[0];
   if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
-      _internal_set_theme(from._internal_theme());
+      _internal_set_preferred_format(from._internal_preferred_format());
     }
     if (cached_has_bits & 0x00000002u) {
-      _internal_set_preferred_format(from._internal_preferred_format());
+      theme_ = from.theme_;
     }
     if (cached_has_bits & 0x00000004u) {
       preferred_tile_width_ = from.preferred_tile_width_;
     }
     if (cached_has_bits & 0x00000008u) {
-      preferred_tile_height_ = from.preferred_tile_height_;
+      viewport_overlay_pos_ = from.viewport_overlay_pos_;
     }
     if (cached_has_bits & 0x00000010u) {
-      command_capacity_ = from.command_capacity_;
+      preferred_tile_height_ = from.preferred_tile_height_;
     }
     if (cached_has_bits & 0x00000020u) {
       show_grid_ = from.show_grid_;
@@ -728,22 +734,22 @@ void Settings::MergeFrom(const Settings& from) {
       restore_layout_ = from.restore_layout_;
     }
     if (cached_has_bits & 0x00000200u) {
-      show_layer_dock_ = from.show_layer_dock_;
+      command_capacity_ = from.command_capacity_;
     }
     if (cached_has_bits & 0x00000400u) {
-      show_properties_dock_ = from.show_properties_dock_;
+      show_layer_dock_ = from.show_layer_dock_;
     }
     if (cached_has_bits & 0x00000800u) {
-      show_tileset_dock_ = from.show_tileset_dock_;
+      show_properties_dock_ = from.show_properties_dock_;
     }
     if (cached_has_bits & 0x00001000u) {
-      embed_tilesets_ = from.embed_tilesets_;
+      show_tileset_dock_ = from.show_tileset_dock_;
     }
     if (cached_has_bits & 0x00002000u) {
-      human_readable_output_ = from.human_readable_output_;
+      embed_tilesets_ = from.embed_tilesets_;
     }
     if (cached_has_bits & 0x00004000u) {
-      viewport_overlay_pos_ = from.viewport_overlay_pos_;
+      human_readable_output_ = from.human_readable_output_;
     }
     _has_bits_[0] |= cached_has_bits;
   }
@@ -769,20 +775,15 @@ void Settings::InternalSwap(Settings* other) {
   swap(_has_bits_[0], other->_has_bits_[0]);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
-      &theme_, lhs_arena,
-      &other->theme_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
       &preferred_format_, lhs_arena,
       &other->preferred_format_, rhs_arena
   );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Settings, viewport_overlay_pos_)
-      + sizeof(Settings::viewport_overlay_pos_)
-      - PROTOBUF_FIELD_OFFSET(Settings, preferred_tile_width_)>(
-          reinterpret_cast<char*>(&preferred_tile_width_),
-          reinterpret_cast<char*>(&other->preferred_tile_width_));
+      PROTOBUF_FIELD_OFFSET(Settings, human_readable_output_)
+      + sizeof(Settings::human_readable_output_)
+      - PROTOBUF_FIELD_OFFSET(Settings, theme_)>(
+          reinterpret_cast<char*>(&theme_),
+          reinterpret_cast<char*>(&other->theme_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata Settings::GetMetadata() const {

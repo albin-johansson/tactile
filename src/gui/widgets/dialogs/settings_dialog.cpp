@@ -100,11 +100,49 @@ void ShowAppearanceBar()
     }
     ImGui::Spacing();
 
-    if (auto index = GetThemeIndex(settings.theme).value_or(0);
-        Combo("Theme:", theme_options, &index))
-    {
-      settings.theme = GetThemeFromIndex(index).value();
-      ApplyTheme(ImGui::GetStyle(), settings.theme);
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Theme: ");
+    ImGui::SameLine();
+
+    if (ImGui::BeginCombo("##ThemeCombo", ToString(settings.theme).data())) {
+      if (ImGui::Selectable("Dear Dark")) {
+        settings.theme = Theme::DearDark;
+        ApplyTheme(ImGui::GetStyle(), Theme::DearDark);
+      }
+
+      if (ImGui::Selectable("Dear Light")) {
+        settings.theme = Theme::DearLight;
+        ApplyTheme(ImGui::GetStyle(), Theme::DearLight);
+      }
+
+      ImGui::Separator();
+
+      if (ImGui::Selectable("Ruby")) {
+        settings.theme = Theme::Ruby;
+        ApplyTheme(ImGui::GetStyle(), Theme::Ruby);
+      }
+
+      if (ImGui::Selectable("Sapphire")) {
+        settings.theme = Theme::Sapphire;
+        ApplyTheme(ImGui::GetStyle(), Theme::Sapphire);
+      }
+
+      if (ImGui::Selectable("Emerald")) {
+        settings.theme = Theme::Emerald;
+        ApplyTheme(ImGui::GetStyle(), Theme::Emerald);
+      }
+
+      if (ImGui::Selectable("Amethyst")) {
+        settings.theme = Theme::Amethyst;
+        ApplyTheme(ImGui::GetStyle(), Theme::Amethyst);
+      }
+
+      if (ImGui::Selectable("Amber")) {
+        settings.theme = Theme::Amber;
+        ApplyTheme(ImGui::GetStyle(), Theme::Amber);
+      }
+
+      ImGui::EndCombo();
     }
 
     if (auto enabled = settings.window_border; ImGui::Checkbox("Window border", &enabled))

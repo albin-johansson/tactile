@@ -18,7 +18,7 @@ namespace {
 inline const auto settings_path = GetPersistentFileDir() / "settings.bin";
 
 constexpr CStr def_preferred_format = "JSON";
-constexpr CStr def_theme = "Ash";
+constexpr Theme def_theme = Theme::Sapphire;
 constexpr usize def_command_capacity = 100;
 constexpr int def_preferred_tile_width = 32;
 constexpr int def_preferred_tile_height = 32;
@@ -66,7 +66,7 @@ void LoadPreferences()
     Proto::Settings cfg;
     if (cfg.ParseFromIstream(&stream)) {
       if (cfg.has_theme()) {
-        settings.theme = cfg.theme();
+        settings.theme = static_cast<Theme>(cfg.theme());
       }
 
       if (cfg.has_show_grid()) {
@@ -132,7 +132,7 @@ void LoadPreferences()
 
   // clang-format off
   CENTURION_LOG_INFO("Loaded preferences: \"%s\"", settings_path.string().c_str());
-  CENTURION_LOG_INFO("  Appearance::Theme: %s", settings.theme.c_str());
+  CENTURION_LOG_INFO("  Appearance::Theme: %s", ToString(settings.theme).data());
   CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
   CENTURION_LOG_INFO("  Behavior::CommandCapacity: %u", settings.command_capacity);
@@ -154,7 +154,7 @@ void SavePreferences()
 {
   Proto::Settings cfg;
 
-  cfg.set_theme(settings.theme);
+  cfg.set_theme(static_cast<Proto::Theme>(settings.theme));
   cfg.set_show_grid(settings.show_grid);
   cfg.set_window_border(settings.window_border);
 
@@ -276,7 +276,7 @@ auto GetShowPropertiesDock() noexcept -> bool
   return settings.show_properties_dock;
 }
 
-auto GetTheme() noexcept -> const std::string&
+auto GetTheme() noexcept -> Theme
 {
   return settings.theme;
 }

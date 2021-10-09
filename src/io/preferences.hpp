@@ -3,7 +3,6 @@
 #include <string>  // string
 
 #include "common/ints.hpp"
-#include "gui/themes.hpp"
 
 namespace Tactile {
 
@@ -21,10 +20,22 @@ enum class OverlayPos
   BottomRight = 3
 };
 
+/// \brief Represents the different available themes.
+enum class Theme
+{
+  DearDark = 0,   ///< The standard Dear ImGui dark theme.
+  DearLight = 1,  ///< The standard Dear ImGui light theme.
+  Ruby = 2,
+  Sapphire = 3,
+  Emerald = 4,
+  Amethyst = 5,
+  Amber = 6
+};
+
 struct Preferences final
 {
   std::string preferred_format;
-  std::string theme;
+  Theme theme;
   usize command_capacity;
   int preferred_tile_width;
   int preferred_tile_height;
@@ -65,7 +76,7 @@ namespace Prefs {
 void ResetAppearancePreferences(Preferences& prefs);
 void SetShowGrid(bool show) noexcept;
 
-[[nodiscard]] auto GetTheme() noexcept -> const std::string&;
+[[nodiscard]] auto GetTheme() noexcept -> Theme;
 [[nodiscard]] auto GetWindowBorder() noexcept -> bool;
 [[nodiscard]] auto GetShowGrid() noexcept -> bool;
 
