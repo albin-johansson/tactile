@@ -94,7 +94,13 @@ void ApplyThemeFromConfig(ImGuiStyle& style, const ThemeCfg& cfg)
   style.Colors[ImGuiCol_TableRowBgAlt]     = {cfg.area.x, cfg.area.y, cfg.area.z, 0.30f};
   style.Colors[ImGuiCol_TableBorderStrong] = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
   style.Colors[ImGuiCol_TableBorderLight]  = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
+
   style.Colors[ImGuiCol_ModalWindowDimBg] = {0.50f, 0.50f, 0.50f, 0.3f};
+
+  // style.Colors[ImGuiCol_DragDropTarget]        = {area.x, area.y, area.z, 0.80f};
+  // style.Colors[ImGuiCol_NavHighlight]          = {area.x, area.y, area.z, 0.80f};
+  // style.Colors[ImGuiCol_NavWindowingHighlight] = {area.x, area.y, area.z, 0.80f};
+  // style.Colors[ImGuiCol_NavWindowingDimBg]     = {area.x, area.y, area.z, 0.80f};
   // clang-format on
 }
 
