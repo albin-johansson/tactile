@@ -27,7 +27,7 @@ struct ThemeCfg final
   return cfg;
 }
 
-void SetupStyleFromHue(ImGuiStyle& style, const ThemeCfg& cfg)
+void ApplyThemeFromConfig(ImGuiStyle& style, const ThemeCfg& cfg)
 {
   // clang-format off
   style.Colors[ImGuiCol_Text]           = {cfg.text.x, cfg.text.y, cfg.text.z, 1.00f};
@@ -112,40 +112,25 @@ void ApplyTheme(ImGuiStyle& style, const Theme theme)
       break;
 
     case Theme::Ruby:
-      SetupStyleFromHue(style, MakeThemeFromHue(0));
+      ApplyThemeFromConfig(style, MakeThemeFromHue(0));
       break;
 
     case Theme::Sapphire:
-      SetupStyleFromHue(style, MakeThemeFromHue(150));
+      ApplyThemeFromConfig(style, MakeThemeFromHue(150));
       break;
 
     case Theme::Emerald:
-      SetupStyleFromHue(style, MakeThemeFromHue(100));
+      ApplyThemeFromConfig(style, MakeThemeFromHue(100));
       break;
 
     case Theme::Amethyst:
-      SetupStyleFromHue(style, MakeThemeFromHue(225));
+      ApplyThemeFromConfig(style, MakeThemeFromHue(225));
       break;
 
     case Theme::Amber:
-      SetupStyleFromHue(style, MakeThemeFromHue(272));
+      ApplyThemeFromConfig(style, MakeThemeFromHue(272));
       break;
   }
 }
-
-// const float hue = 150;
-// const ImVec4 accent = ImColor::HSV(hue / 255.0f, 0.70f, 0.63f);
-// const ImVec4 bg = ImColor::HSV(hue / 255.0f, 0.23f, 0.16f);
-// const ImVec4 area = ImColor::HSV(hue / 255.0f, 0.49f, 0.39f);
-// const ImVec4 text = ImColor::HSV(hue / 255.0f, 0.08f, 0.92f);
-
-//      ThemeCfg cfg;
-//
-//      cfg.accent = {0.19f, 0.40f, 0.63f, 0.63f};
-//      cfg.bg = {0.12f, 0.14f, 0.16f, 0.16f};
-//      cfg.area = {0.20f, 0.29f, 0.39f, 0.39f};
-//      cfg.text = {0.85f, 0.88f, 0.92f, 0.92f};
-//
-//      SetupStyleFromHue(cfg);
 
 }  // namespace Tactile
