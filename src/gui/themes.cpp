@@ -94,7 +94,7 @@ void SetupStyleFromHue(ImGuiStyle& style, const ThemeCfg& cfg)
   style.Colors[ImGuiCol_TableRowBgAlt]     = {cfg.area.x, cfg.area.y, cfg.area.z, 0.30f};
   style.Colors[ImGuiCol_TableBorderStrong] = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
   style.Colors[ImGuiCol_TableBorderLight]  = {cfg.text.x, cfg.text.y, cfg.text.z, 0.10f};
-  style.Colors[ImGuiCol_ModalWindowDimBg] = {0.80f, 0.80f, 0.80f, 0.3f};
+  style.Colors[ImGuiCol_ModalWindowDimBg] = {0.50f, 0.50f, 0.50f, 0.3f};
   // clang-format on
 }
 
