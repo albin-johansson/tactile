@@ -5,8 +5,8 @@
 #include <utility>        // move
 
 #include "application.hpp"
+#include "gl_attributes.hpp"
 #include "gui/imgui_context.hpp"
-#include "init_open_gl_attributes.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {

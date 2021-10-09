@@ -11,8 +11,8 @@ set(SOURCE_FILES
     application_events.cpp
     application_events.hpp
     build.hpp
-    init_open_gl_attributes.cpp
-    init_open_gl_attributes.hpp
+    gl_attributes.cpp
+    gl_attributes.hpp
 
     common/context_id.hpp
     common/cstr.hpp

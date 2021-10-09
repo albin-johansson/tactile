@@ -4,7 +4,7 @@
 #include <centurion.hpp>  // library
 #include <cstdlib>        // atexit
 
-#include "init_open_gl_attributes.hpp"
+#include "gl_attributes.hpp"
 #include "io/preferences.hpp"
 #include "utils/load_texture.hpp"
 

@@ -1,4 +1,4 @@
-#include "init_open_gl_attributes.hpp"
+#include "gl_attributes.hpp"
 
 #include <centurion.hpp>
 
