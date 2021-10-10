@@ -6,7 +6,6 @@
 #include "ctx/map.hpp"
 #include "systems/animation_system.hpp"
 #include "systems/registry_factory_system.hpp"
-#include "systems/tileset_system.hpp"
 #include "systems/tools/tool_system.hpp"
 #include "systems/viewport_system.hpp"
 
