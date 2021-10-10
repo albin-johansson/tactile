@@ -12,8 +12,8 @@ struct PropertyItemContextMenuState final
   bool show_change_type_dialog{};
 };
 
-void PropertyItemContextMenu(entt::dispatcher& dispatcher,
+auto PropertyItemContextMenu(entt::dispatcher& dispatcher,
                              const std::string& name,
-                             PropertyItemContextMenuState& state);
+                             PropertyItemContextMenuState& state) -> bool;
 
 }  // namespace Tactile

@@ -7,14 +7,12 @@
 
 namespace Tactile {
 
-void PropertyItemContextMenu(entt::dispatcher& dispatcher,
+auto PropertyItemContextMenu(entt::dispatcher& dispatcher,
                              const std::string& name,
-                             PropertyItemContextMenuState& state)
+                             PropertyItemContextMenuState& state) -> bool
 {
-  if (ImGui::BeginPopupContextItem("##PropertyItemContext")) {
-    state.show_add_dialog = ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
-    ImGui::Separator();
-
+  const auto isOpen = ImGui::BeginPopupContextItem("##PropertyItemContext");
+  if (isOpen) {
     state.show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename Property...");
     state.show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change Type...");
 
@@ -26,6 +24,8 @@ void PropertyItemContextMenu(entt::dispatcher& dispatcher,
 
     ImGui::EndPopup();
   }
+
+  return isOpen;
 }
 
 }  // namespace Tactile

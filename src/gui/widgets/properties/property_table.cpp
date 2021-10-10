@@ -101,6 +101,7 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
 
   const auto& context = Sys::GetCurrentContext(registry);
   if (ImGui::BeginTable("##PropertyTable", 2, flags)) {
+    bool isItemContextOpen = false;
     for (const auto entity : context.properties) {
       const auto& property = registry.get<Property>(entity);
       const auto& name = property.name;
@@ -114,7 +115,9 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
       ImGui::AlignTextToFramePadding();
       ImGui::Selectable(name.c_str());
 
-      PropertyItemContextMenu(dispatcher, name, context_state);
+      if (!isItemContextOpen) {
+        isItemContextOpen = PropertyItemContextMenu(dispatcher, name, context_state);
+      }
 
       if (context_state.show_rename_dialog && !rename_target) {
         rename_target = name;
@@ -146,6 +149,13 @@ void UpdatePropertyTable(const entt::registry& registry, entt::dispatcher& dispa
       else if (value.IsFile()) {
         FileValue(name, value, dispatcher);
       }
+    }
+
+    if (!isItemContextOpen && ImGui::BeginPopupContextWindow("##PropertyTableContext")) {
+      context_state.show_add_dialog =
+          ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
+
+      ImGui::EndPopup();
     }
 
     ImGui::EndTable();
