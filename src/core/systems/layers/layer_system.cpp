@@ -8,6 +8,7 @@
 
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/object.hpp"
 #include "core/components/object_layer.hpp"
 #include "core/components/parent.hpp"
@@ -17,6 +18,7 @@
 #include "core/ctx/map.hpp"
 #include "core/systems/duplicate_comp.hpp"
 #include "core/systems/property_system.hpp"
+#include "layer_tree_system.hpp"
 #include "tile_layer_system.hpp"
 
 namespace Tactile::Sys {
@@ -38,8 +40,8 @@ namespace {
                                     const entt::entity parentEntity) -> usize
 {
   if (parentEntity != entt::null) {
-    const auto& group = registry.get<GroupLayer>(parentEntity);
-    return group.layers.size();
+    const auto& node = registry.get<LayerTreeNode>(parentEntity);
+    return node.children.size();
   }
   else {
     usize index = 0;
@@ -50,91 +52,6 @@ namespace {
     }
 
     return index;
-  }
-}
-
-[[nodiscard]] auto GetLayerSibling(const entt::registry& registry,
-                                   const entt::entity entity,
-                                   const usize targetIndex) -> entt::entity
-{
-  const auto& parent = registry.get<Parent>(entity);
-  if (parent.entity != entt::null) {
-    const auto& parentLayer = registry.get<GroupLayer>(parent.entity);
-    for (const auto child : parentLayer.layers) {
-      const auto& childLayer = registry.get<Layer>(child);
-      if (childLayer.index == targetIndex) {
-        return child;
-      }
-    }
-  }
-  else {
-    for (auto&& [otherEntity, otherLayer, otherParent] :
-         registry.view<Layer, Parent>().each())
-    {
-      if (otherParent.entity == entt::null && otherLayer.index == targetIndex) {
-        return otherEntity;
-      }
-    }
-  }
-
-  return entt::null;
-}
-
-/* Counts the amount of sibling layers above a layer, including the child
-   count of those siblings */
-[[nodiscard]] auto CountLayersAboveIncludingChildren(const entt::registry& registry,
-                                                     const entt::entity entity) -> usize
-{
-  usize count = 0;
-
-  auto sibling = GetLayerSiblingAbove(registry, entity);
-  while (sibling != entt::null) {
-    count += GetLayerChildrenCount(registry, sibling);
-    sibling = GetLayerSiblingAbove(registry, sibling);
-  }
-
-  return count;
-}
-
-void SwapLayerIndices(entt::registry& registry,
-                      const entt::entity entity,
-                      const entt::entity targetEntity)
-{
-  assert(entity != entt::null);
-  assert(targetEntity != entt::null);
-
-  auto& layer = registry.get<Layer>(entity);
-  auto& targetLayer = registry.get<Layer>(targetEntity);
-
-  std::swap(layer.index, targetLayer.index);
-
-  SortLayers(registry);
-}
-
-void OffsetLayerIndicesOfSiblingsBelow(entt::registry& registry,
-                                       const entt::entity entity,
-                                       const int offset)
-{
-  auto sibling = GetLayerSiblingBelow(registry, entity);
-  while (sibling != entt::null) {
-    auto& siblingLayer = registry.get<Layer>(sibling);
-    const auto newIndex = siblingLayer.index + offset;
-    sibling = GetLayerSiblingBelow(registry, sibling);
-    siblingLayer.index = newIndex;
-  }
-}
-
-void DestroyChildLayers(entt::registry& registry, const entt::entity entity)
-{
-  auto& group = registry.get<GroupLayer>(entity);
-  for (const auto child : group.layers) {
-    if (registry.all_of<GroupLayer>(child)) {
-      DestroyChildLayers(registry, child);
-      registry.destroy(child);
-    }
-    else {
-      registry.destroy(child);
-    }
   }
 }
 
@@ -149,9 +66,13 @@ auto AddBasicLayer(entt::registry& registry,
   const auto entity = registry.create();
 
   {
+    auto& node = registry.emplace<LayerTreeNode>(entity);
+    node.index = GetNewLayerIndex(registry, entity, parent);
+  }
+
+  {
     auto& layer = registry.emplace<Layer>(entity);
     layer.id = id;
-    layer.index = GetNewLayerIndex(registry, entity, parent);
     layer.type = type;
     layer.visible = true;
     layer.opacity = 1.0f;
@@ -161,8 +82,9 @@ auto AddBasicLayer(entt::registry& registry,
   registry.emplace<Parent>(entity, parent);
 
   if (parent != entt::null) {
-    auto& parentLayer = registry.get<GroupLayer>(parent);
-    parentLayer.layers.push_back(entity);
+    assert(registry.all_of<LayerTreeNode>(parent));
+    auto& parentNode = registry.get<LayerTreeNode>(parent);
+    parentNode.children.push_back(entity);
   }
 
   {
@@ -277,68 +199,39 @@ auto RestoreLayer(entt::registry& registry, LayerSnapshot snapshot) -> entt::ent
   }
 
   /* Restore the previous layer index */
-  while (GetLayerIndex(registry, entity) != snapshot.core.index) {
+  while (GetLayerIndex(registry, entity) != snapshot.index) {
     const auto index = GetLayerIndex(registry, entity);
-    if (index > snapshot.core.index) {
-      MoveLayerUp(registry, entity);
+    if (index > snapshot.index) {
+      LayerTree::MoveNodeUp(registry, entity);
     }
-    else if (index < snapshot.core.index) {
-      MoveLayerDown(registry, entity);
+    else if (index < snapshot.index) {
+      LayerTree::MoveNodeDown(registry, entity);
     }
   }
 
-  SortLayers(registry);
+  LayerTree::SortNodes(registry);
   return entity;
 }
 
 void SortLayers(entt::registry& registry)
 {
-  auto sorter = [&](const entt::entity a, const entt::entity b) {
-    const auto fst = GetLayerGlobalIndex(registry, a);
-    const auto snd = GetLayerGlobalIndex(registry, b);
-    return fst < snd;
-  };
-  registry.sort<Layer>(sorter, entt::insertion_sort{});
-
-  /* Ensure that group layers store sorted child layers */
-  for (auto&& [entity, group] : registry.view<GroupLayer>().each()) {
-    std::ranges::sort(group.layers, [&](const entt::entity a, const entt::entity b) {
-      const auto& fst = registry.get<Layer>(a);
-      const auto& snd = registry.get<Layer>(b);
-      return fst.index < snd.index;
-    });
-  }
+  LayerTree::SortNodes(registry);
 }
 
 void RemoveLayer(entt::registry& registry, const entt::entity entity)
 {
-  /* Reset the active layer if we're removing the active layer. */
-  auto& activeLayer = registry.ctx<ActiveLayer>();
-  if (entity == activeLayer.entity) {
-    activeLayer.entity = entt::null;
-  }
+  auto maybe_reset = [&](entt::entity& active, const entt::entity entity) {
+    if (active != entt::null) {
+      if (entity == active || LayerTree::IsChildNode(registry, entity, active)) {
+        active = entt::null;
+      }
+    }
+  };
 
-  auto& activeContext = registry.ctx<ActivePropertyContext>();
-  if (entity == activeContext.entity) {
-    activeContext.entity = entt::null;
-  }
+  maybe_reset(registry.ctx<ActiveLayer>().entity, entity);
+  maybe_reset(registry.ctx<ActivePropertyContext>().entity, entity);
 
-  /* Fix indices of siblings that are below the removed layer */
-  OffsetLayerIndicesOfSiblingsBelow(registry, entity, -1);
-
-  /* Remove the layer from the parent group layer, if there is one. */
-  const auto& parent = registry.get<Parent>(entity);
-  if (parent.entity != entt::null) {
-    auto& group = registry.get<GroupLayer>(parent.entity);
-    std::erase(group.layers, entity);
-  }
-
-  if (registry.all_of<GroupLayer>(entity)) {
-    DestroyChildLayers(registry, entity);
-  }
-
-  registry.destroy(entity);
-  SortLayers(registry);
+  LayerTree::DestroyNode(registry, entity);
 }
 
 void SelectLayer(entt::registry& registry, const entt::entity entity)
@@ -354,6 +247,7 @@ auto CopyLayer(const entt::registry& registry, const entt::entity source) -> Lay
   assert(source != entt::null);
 
   LayerSnapshot snapshot;
+  snapshot.index = registry.get<LayerTreeNode>(source).index;
   snapshot.core = registry.get<Layer>(source);
   snapshot.context = CopyPropertyContext(registry, source);
 
@@ -381,7 +275,7 @@ auto CopyLayer(const entt::registry& registry, const entt::entity source) -> Lay
     case LayerType::GroupLayer: {
       auto& children = snapshot.children.emplace();
 
-      for (const auto child : registry.get<GroupLayer>(source).layers) {
+      for (const auto child : registry.get<LayerTreeNode>(source).children) {
         children.push_back(CopyLayer(registry, child));
       }
 
@@ -397,7 +291,7 @@ auto DuplicateLayer(entt::registry& registry, const entt::entity source) -> entt
   const auto& sourceParent = registry.get<Parent>(source);
   const auto copy = DuplicateLayer(registry, source, sourceParent.entity, false);
 
-  SortLayers(registry);
+  LayerTree::SortNodes(registry);
 
   return copy;
 }
@@ -412,15 +306,21 @@ auto DuplicateLayer(entt::registry& registry,
      duplicate. */
 
   if (!recursive) {
-    OffsetLayerIndicesOfSiblingsBelow(registry, source, 1);
+    LayerTree::IncrementIndicesOfSiblingsBelow(registry, source);
   }
 
   const auto copy = registry.create();
 
+  {
+    auto& node = registry.emplace<LayerTreeNode>(copy);
+    node.index = registry.get<LayerTreeNode>(source).index;
+  }
+
   registry.emplace<Parent>(copy, parent);
+
   if (parent != entt::null) {
-    auto& parentLayer = registry.get<GroupLayer>(parent);
-    parentLayer.layers.push_back(copy);
+    auto& parentNode = registry.get<LayerTreeNode>(parent);
+    parentNode.children.push_back(copy);
   }
 
   {
@@ -436,8 +336,10 @@ auto DuplicateLayer(entt::registry& registry,
     layer.id = map.next_layer_id;
 
     if (!recursive) {
-      const auto sourceLayer = registry.get<Layer>(source);
-      layer.index = sourceLayer.index + 1;
+      const auto sourceNode = registry.get<LayerTreeNode>(source);
+
+      auto& node = registry.get<LayerTreeNode>(copy);
+      node.index = sourceNode.index + 1u;
     }
 
     ++map.next_layer_id;
@@ -450,7 +352,10 @@ auto DuplicateLayer(entt::registry& registry,
     DuplicateComp<ObjectLayer>(registry, source, copy);
   }
   else if (registry.all_of<GroupLayer>(source)) {
-    DuplicateComp<GroupLayer>(registry, source, copy);
+    for (const auto sourceChild : registry.get<LayerTreeNode>(source).children) {
+      /* We don't need to add the created child layer to the group layer explicitly */
+      DuplicateLayer(registry, sourceChild, copy, true);
+    }
   }
 
   return copy;
@@ -458,18 +363,12 @@ auto DuplicateLayer(entt::registry& registry,
 
 void MoveLayerUp(entt::registry& registry, const entt::entity entity)
 {
-  assert(CanMoveLayerUp(registry, entity));
-
-  const auto targetEntity = GetLayerSiblingAbove(registry, entity);
-  SwapLayerIndices(registry, entity, targetEntity);
+  LayerTree::MoveNodeUp(registry, entity);
 }
 
 void MoveLayerDown(entt::registry& registry, const entt::entity entity)
 {
-  assert(CanMoveLayerDown(registry, entity));
-
-  const auto targetEntity = GetLayerSiblingBelow(registry, entity);
-  SwapLayerIndices(registry, entity, targetEntity);
+  LayerTree::MoveNodeDown(registry, entity);
 }
 
 void SetLayerOpacity(entt::registry& registry,
@@ -511,86 +410,7 @@ auto GetActiveLayer(const entt::registry& registry) -> entt::entity
 
 auto GetLayerIndex(const entt::registry& registry, const entt::entity entity) -> usize
 {
-  assert(entity != entt::null);
-  const auto& layer = registry.get<Layer>(entity);
-  return layer.index;
-}
-
-auto GetLayerGlobalIndex(const entt::registry& registry, const entt::entity sourceEntity)
-    -> usize
-{
-  /* SortLayers makes use of this function, so do not assume sorted layers! */
-  assert(sourceEntity != entt::null);
-  const auto& sourceLayer = registry.get<Layer>(sourceEntity);
-  const auto& sourceParent = registry.get<Parent>(sourceEntity);
-
-  const auto base =
-      CountLayersAboveIncludingChildren(registry, sourceEntity) + sourceLayer.index;
-  if (sourceParent.entity == entt::null) {
-    return base;
-  }
-  else {
-    return base + GetLayerGlobalIndex(registry, sourceParent.entity) + 1;
-  }
-}
-
-auto GetLayerSiblingAbove(const entt::registry& registry, const entt::entity entity)
-    -> entt::entity
-{
-  assert(entity != entt::null);
-  const auto index = registry.get<Layer>(entity).index;
-  return GetLayerSibling(registry, entity, index - 1);
-}
-
-auto GetLayerSiblingBelow(const entt::registry& registry, const entt::entity entity)
-    -> entt::entity
-{
-  assert(entity != entt::null);
-  const auto index = registry.get<Layer>(entity).index;
-  return GetLayerSibling(registry, entity, index + 1);
-}
-
-auto GetLayerSiblingCount(const entt::registry& registry, const entt::entity entity)
-    -> usize
-{
-  assert(entity != entt::null);
-  const auto& parent = registry.get<Parent>(entity);
-  if (parent.entity == entt::null) {
-    // The layer is root-level, so count layers without parents
-    usize count = 0;
-
-    for (auto&& [otherEntity, otherLayer, otherParent] :
-         registry.view<Layer, Parent>().each())
-    {
-      if (otherEntity != entity && otherParent.entity == entt::null) {
-        ++count;
-      }
-    }
-
-    return count;
-  }
-  else {
-    const auto& parentLayer = registry.get<GroupLayer>(parent.entity);
-    return parentLayer.layers.size() - 1;  // Exclude the queried layer
-  }
-}
-
-auto GetLayerChildrenCount(const entt::registry& registry, const entt::entity entity)
-    -> usize
-{
-  assert(entity != entt::null);
-  if (const auto* group = registry.try_get<GroupLayer>(entity)) {
-    usize count = group->layers.size();
-
-    for (const auto child : group->layers) {
-      count += GetLayerChildrenCount(registry, child);
-    }
-
-    return count;
-  }
-  else {
-    return 0;
-  }
+  return registry.get<LayerTreeNode>(entity).index;
 }
 
 auto GetLayerOpacity(const entt::registry& registry, const entt::entity entity) -> float
@@ -616,16 +436,12 @@ auto IsLayerVisible(const entt::registry& registry, const entt::entity entity) -
 
 auto CanMoveLayerUp(const entt::registry& registry, const entt::entity entity) -> bool
 {
-  assert(entity != entt::null);
-  return registry.get<Layer>(entity).index > 0;
+  return LayerTree::CanMoveNodeUp(registry, entity);
 }
 
 auto CanMoveLayerDown(const entt::registry& registry, const entt::entity entity) -> bool
 {
-  assert(entity != entt::null);
-  const auto index = registry.get<Layer>(entity).index;
-  const auto nSiblings = GetLayerSiblingCount(registry, entity);
-  return index < nSiblings;
+  return LayerTree::CanMoveNodeDown(registry, entity);
 }
 
 auto IsTileLayerActive(const entt::registry& registry) -> bool

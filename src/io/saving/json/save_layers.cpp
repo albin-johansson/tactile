@@ -4,6 +4,7 @@
 
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/object.hpp"
 #include "core/components/object_layer.hpp"
 #include "core/components/parent.hpp"
@@ -133,8 +134,8 @@ void AddCommonAttributes(JSON& json,
 
   auto layers = JSON::array();
 
-  const auto& groupLayer = registry.get<GroupLayer>(entity);
-  for (const auto child : groupLayer.layers) {
+  const auto& node = registry.get<LayerTreeNode>(entity);
+  for (const auto child : node.children) {
     const auto& childLayer = registry.get<Layer>(child);
     layers += SaveLayer(registry, child, childLayer, dir);
   }
@@ -170,7 +171,8 @@ auto SaveLayers(const entt::registry& registry, const std::filesystem::path& dir
 {
   auto json = JSON::array();
 
-  for (auto&& [entity, layer] : registry.view<Layer>().each()) {
+  for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
+    const auto& layer = registry.get<Layer>(entity);
     const auto& parent = registry.get<Parent>(entity);
     if (parent.entity == entt::null) {
       json += SaveLayer(registry, entity, layer, dir);

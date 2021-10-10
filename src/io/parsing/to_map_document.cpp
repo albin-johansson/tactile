@@ -9,6 +9,7 @@
 #include "core/components/fancy_tile.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/object.hpp"
 #include "core/components/object_layer.hpp"
 #include "core/components/parent.hpp"
@@ -130,8 +131,10 @@ auto MakeLayer(entt::registry& registry,
 {
   const auto entity = Sys::AddBasicLayer(registry, data.id, data.type, data.name, parent);
 
+  auto& node = registry.get<LayerTreeNode>(entity);
+  node.index = data.index;
+
   auto& layer = registry.get<Layer>(entity);
-  layer.index = data.index;
   layer.opacity = data.opacity;
   layer.visible = data.is_visible;
 
@@ -198,7 +201,7 @@ auto ToMapDocument(const MapData& data) -> Document
 
   if (!data.layers.empty()) {
     auto& activeLayer = document.registry.ctx<ActiveLayer>();
-    activeLayer.entity = document.registry.view<Layer>().front();
+    activeLayer.entity = document.registry.view<LayerTreeNode>().front();
   }
 
   return document;

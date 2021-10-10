@@ -2,6 +2,7 @@
 
 #include <vector>  // vector
 
+#include "common/ints.hpp"
 #include "common/layer_id.hpp"
 #include "common/maybe.hpp"
 #include "common/tile_matrix.hpp"
@@ -13,6 +14,7 @@ namespace Tactile::Sys {
 
 struct LayerSnapshot final
 {
+  usize index{};
   Layer core;
   PropertyContextSnapshot context;
   Maybe<LayerID> parent;

@@ -71,18 +71,4 @@ auto DuplicateLayer(entt::registry& registry,
                     entt::entity parent,
                     bool recursive) -> entt::entity;
 
-template <>
-inline auto DuplicateComp<GroupLayer>(entt::registry& registry,
-                                      const entt::entity source,
-                                      const entt::entity destination) -> GroupLayer&
-{
-  auto& group = registry.emplace<GroupLayer>(destination);
-  for (const auto sourceChild : registry.get<GroupLayer>(source).layers) {
-    /* We don't need to add the created child layer to the group layer explicitly */
-    DuplicateLayer(registry, sourceChild, destination, true);
-  }
-
-  return group;
-}
-
 }  // namespace Tactile::Sys

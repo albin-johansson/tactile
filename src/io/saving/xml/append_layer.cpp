@@ -5,6 +5,7 @@
 #include "append_properties.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/object.hpp"
 #include "core/components/object_layer.hpp"
 #include "core/components/property_context.hpp"
@@ -137,14 +138,14 @@ void AppendGroupLayer(pugi::xml_node mapNode,
                       const Layer& layer,
                       const std::filesystem::path& dir)
 {
-  const auto& groupLayer = registry.get<GroupLayer>(layerEntity);
+  const auto& treeNode = registry.get<LayerTreeNode>(layerEntity);
   const auto& context = registry.get<PropertyContext>(layerEntity);
 
   auto node = mapNode.append_child("group");
   node.append_attribute("id").set_value(layer.id.get());
   node.append_attribute("name").set_value(context.name.c_str());
 
-  for (const auto child : groupLayer.layers) {
+  for (const auto child : treeNode.children) {
     AppendLayer(node, registry, child, dir);
   }
 }

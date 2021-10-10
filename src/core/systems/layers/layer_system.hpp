@@ -22,6 +22,7 @@ namespace Tactile::Sys {
  *
  * \details The created entity will feature the following components:
  * - `Layer`
+ * - `LayerTreeNode`
  * - `Parent`
  * - `PropertyContext`
  *
@@ -224,21 +225,6 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 [[nodiscard]] auto GetActiveLayer(const entt::registry& registry) -> entt::entity;
 
 [[nodiscard]] auto GetLayerIndex(const entt::registry& registry, entt::entity) -> usize;
-
-[[nodiscard]] auto GetLayerGlobalIndex(const entt::registry& registry,
-                                       entt::entity entity) -> usize;
-
-[[nodiscard]] auto GetLayerSiblingAbove(const entt::registry& registry,
-                                        entt::entity entity) -> entt::entity;
-
-[[nodiscard]] auto GetLayerSiblingBelow(const entt::registry& registry,
-                                        entt::entity entity) -> entt::entity;
-
-[[nodiscard]] auto GetLayerSiblingCount(const entt::registry& registry,
-                                        entt::entity entity) -> usize;
-
-[[nodiscard]] auto GetLayerChildrenCount(const entt::registry& registry,
-                                         entt::entity entity) -> usize;
 
 [[nodiscard]] auto GetLayerOpacity(const entt::registry& registry, entt::entity entity)
     -> float;

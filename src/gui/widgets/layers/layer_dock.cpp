@@ -8,6 +8,7 @@
 #include "add_layer_popup.hpp"
 #include "common/maybe.hpp"
 #include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/layers/layer_system.hpp"
@@ -96,9 +97,10 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
                                ImGui::GetWindowHeight() - (4 * textLineHeight)};
 
       if (ImGui::BeginListBox("##LayerTreeNode", size)) {
-        for (auto&& [entity, layer] : registry.view<Layer>().each()) {
-          /* Note, we rely on the Layer pool being sorted, so we can't include Parent
-             in the view query directly. */
+        for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
+          /* Note, we rely on the LayerTreeNode pool being sorted, so we can't include
+             other components in the view query directly. */
+          const auto& layer = registry.get<Layer>(entity);
           const auto& parent = registry.get<Parent>(entity);
           if (parent.entity == entt::null) {
             LayerItem(registry, dispatcher, entity, layer);
