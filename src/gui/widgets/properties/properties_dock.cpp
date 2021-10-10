@@ -26,8 +26,6 @@ constinit bool has_focus = false;
 
 void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
-  // TODO context menu for entire dock
-
   if (!Prefs::GetShowPropertiesDock()) {
     return;
   }
