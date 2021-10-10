@@ -28,12 +28,12 @@ void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Rows:     ");
     ImGui::SameLine();
-    ImGui::InputInt("##RowCountInput", &row_count);
+    ImGui::DragInt("##RowCountInput", &row_count, 1.0f, 1, 10'000);
 
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Columns:  ");
     ImGui::SameLine();
-    ImGui::InputInt("##ColumnCountInput", &col_count);
+    ImGui::DragInt("##ColumnCountInput", &col_count, 1.0f, 1, 10'000);
 
     ImGui::Spacing();
     if (Button("OK", nullptr, is_input_valid())) {

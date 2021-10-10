@@ -77,8 +77,8 @@ void UpdateTilesetDialog(entt::dispatcher& dispatcher)
                              path_preview_buffer.data(),
                              path_preview_buffer.size(),
                              ImGuiInputTextFlags_ReadOnly);
-    ImGui::InputInt("Tile width", &tile_width);
-    ImGui::InputInt("Tile height", &tile_height);
+    ImGui::DragInt("Tile width", &tile_width, 1.0f, 1, 10'000);
+    ImGui::DragInt("Tile height", &tile_height, 1.0f, 1, 10'000);
 
     ImGui::Spacing();
     ImGui::Separator();
