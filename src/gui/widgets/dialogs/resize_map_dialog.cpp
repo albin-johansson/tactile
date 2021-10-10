@@ -14,7 +14,7 @@ constexpr auto flags = ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCo
 constinit int row_count = 0;
 constinit int col_count = 0;
 
-[[nodiscard]] auto is_input_valid() noexcept -> bool
+[[nodiscard]] auto IsInputValid() noexcept -> bool
 {
   return row_count > 0 && col_count > 0;
 }
@@ -36,7 +36,7 @@ void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
     ImGui::DragInt("##ColumnCountInput", &col_count, 1.0f, 1, 10'000);
 
     ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid())) {
+    if (Button("OK", nullptr, IsInputValid())) {
       dispatcher.enqueue<ResizeMapEvent>(row_count, col_count);
       ImGui::CloseCurrentPopup();
     }
