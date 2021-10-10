@@ -28,9 +28,8 @@ namespace Tactile::Sys {
  * - `PropertyContext`
  *
  * \param registry the associated registry.
- * \param id the ID that will be associated with the created tileset.
  * \param firstId the first global tile ID associated with the tileset.
- * \param info information about the associated texture.
+ * \param texture information about the associated texture.
  * \param tileWidth the width of tiles in the tileset.
  * \param tileHeight the height of tiles in the tileset.
  *
@@ -39,14 +38,16 @@ namespace Tactile::Sys {
  * \since 0.2.0
  */
 auto MakeTileset(entt::registry& registry,
-                 TilesetID id,
                  TileID firstId,
-                 Texture texture,
+                 const Texture& texture,
                  int tileWidth,
                  int tileHeight) -> entt::entity;
 
-auto AddTileset(entt::registry& registry, Texture texture, int tileWidth, int tileHeight)
-    -> entt::entity;
+// This overload should be used when the user adds new tilesets (i.e. not from parsing)
+auto MakeTileset(entt::registry& registry,
+                 const Texture& texture,
+                 int tileWidth,
+                 int tileHeight) -> entt::entity;
 
 auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity;
 

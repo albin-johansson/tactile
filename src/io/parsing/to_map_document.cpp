@@ -76,24 +76,16 @@ void MakeFancyTiles(entt::registry& registry,
   }
 }
 
-void MakeTileset(entt::registry& registry, const TilesetID id, const TilesetData& data)
+void MakeTileset(entt::registry& registry, const TilesetData& data)
 {
   const auto info = LoadTexture(data.absolute_image_path).value();
-  const auto tilesetEntity = Sys::MakeTileset(registry,
-                                              id,
-                                              data.first_id,
-                                              info,
-                                              data.tile_width,
-                                              data.tile_height);
+  const auto entity =
+      Sys::MakeTileset(registry, data.first_id, info, data.tile_width, data.tile_height);
 
-  {
-    auto& context = registry.get<PropertyContext>(tilesetEntity);
-    context.name = data.name;
-  }
+  registry.get<PropertyContext>(entity).name = data.name;
+  AddProperties(registry, entity, data.properties);
 
-  AddProperties(registry, tilesetEntity, data.properties);
-
-  auto& cache = registry.get<TilesetCache>(tilesetEntity);
+  auto& cache = registry.get<TilesetCache>(entity);
   MakeFancyTiles(registry, cache, data);
 }
 
@@ -170,22 +162,25 @@ auto ToMapDocument(const MapData& data) -> Document
   document.path = data.absolute_path;
   document.registry = Sys::MakeRegistry();
 
-  auto& map = document.registry.ctx<Map>();
-  map.next_layer_id = data.next_layer_id;
-  map.next_object_id = data.next_object_id;
-  map.tile_width = data.tile_width;
-  map.tile_height = data.tile_height;
-  map.row_count = data.row_count;
-  map.column_count = data.column_count;
+  {
+    auto& map = document.registry.ctx<Map>();
+    map.next_layer_id = data.next_layer_id;
+    map.next_object_id = data.next_object_id;
+    map.tile_width = data.tile_width;
+    map.tile_height = data.tile_height;
+    map.row_count = data.row_count;
+    map.column_count = data.column_count;
+  }
 
-  auto& context = document.registry.ctx<PropertyContext>();
-  context.name = data.absolute_path.filename().string();
+  {
+    auto& context = document.registry.ctx<PropertyContext>();
+    context.name = data.absolute_path.filename().string();
+  }
 
   AddProperties(document.registry, entt::null, data.properties);
 
-  for (TilesetID id{1}; const auto& tilesetData : data.tilesets) {
-    MakeTileset(document.registry, id, tilesetData);
-    ++id;
+  for (const auto& tilesetData : data.tilesets) {
+    MakeTileset(document.registry, tilesetData);
   }
 
   if (!data.tilesets.empty()) {

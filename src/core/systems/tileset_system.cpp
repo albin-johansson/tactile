@@ -49,27 +49,20 @@ void RefreshTilesetCache(entt::registry& registry, const entt::entity entity)
   }
 }
 
-void UpdateTilesetContext(entt::registry& registry, const entt::entity entity)
-{
-  auto& context = registry.ctx<TilesetContext>();
-
-  const auto& tileset = registry.get<Tileset>(entity);
-  context.next_tile_id = tileset.last_id + 1_tile;
-
-  ++context.next_id;
-}
-
 }  // namespace
 
 auto MakeTileset(entt::registry& registry,
-                 const TilesetID id,
                  const TileID firstId,
-                 Texture texture,
+                 const Texture& texture,
                  const int tileWidth,
                  const int tileHeight) -> entt::entity
 {
-  const auto entity = registry.create();
+  auto& tilesets = registry.ctx<TilesetContext>();
 
+  const auto id = tilesets.next_id;
+  ++tilesets.next_id;
+
+  const auto entity = registry.create();
   auto& tileset = registry.emplace<Tileset>(entity);
   tileset.id = id;
 
@@ -82,6 +75,7 @@ auto MakeTileset(entt::registry& registry,
 
   tileset.first_id = firstId;
   tileset.last_id = tileset.first_id + TileID{tileset.tile_count};
+  tilesets.next_tile_id += TileID{tileset.tile_count} + 1_tile;
 
   registry.emplace<Texture>(entity, texture);
 
@@ -97,28 +91,16 @@ auto MakeTileset(entt::registry& registry,
 
   registry.emplace<TilesetSelection>(entity);
 
-  UpdateTilesetContext(registry, entity);
-
   return entity;
 }
 
-auto AddTileset(entt::registry& registry,
-                Texture texture,
-                const int tileWidth,
-                const int tileHeight) -> entt::entity
+auto MakeTileset(entt::registry& registry,
+                 const Texture& texture,
+                 const int tileWidth,
+                 const int tileHeight) -> entt::entity
 {
   auto& context = registry.ctx<TilesetContext>();
-
-  const auto entity = MakeTileset(registry,
-                                  context.next_id,
-                                  context.next_tile_id,
-                                  std::move(texture),
-                                  tileWidth,
-                                  tileHeight);
-
-  UpdateTilesetContext(registry, entity);
-
-  return entity;
+  return MakeTileset(registry, context.next_tile_id, texture, tileWidth, tileHeight);
 }
 
 auto RestoreTileset(entt::registry& registry, TilesetSnapshot snapshot) -> entt::entity

@@ -34,7 +34,7 @@ void AddTilesetCmd::Redo()
 {
   auto& registry = mRegistry.get();
   if (!mSnapshot) {
-    const auto entity = Sys::AddTileset(registry, mTexture, mTileWidth, mTileHeight);
+    const auto entity = Sys::MakeTileset(registry, mTexture, mTileWidth, mTileHeight);
     const auto& tileset = registry.get<Tileset>(entity);
     mTilesetId = tileset.id;
   }
