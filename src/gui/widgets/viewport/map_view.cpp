@@ -110,7 +110,7 @@ void UpdateCursorGizmos(const entt::registry& registry,
 void UpdateContextMenu(entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginPopupContextItem()) {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show map properties")) {
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Map Properties")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
 

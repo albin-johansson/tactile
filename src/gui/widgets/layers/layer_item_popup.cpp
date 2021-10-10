@@ -12,29 +12,29 @@ void UpdateLayerItemPopup(const entt::registry& registry,
                           entt::dispatcher& dispatcher,
                           const LayerID id)
 {
-  if (ImGui::BeginPopupContextItem()) {
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show layer properties")) {
+  if (ImGui::BeginPopupContextItem("##LayerItemPopup")) {
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Layer Properties")) {
       dispatcher.enqueue<ShowLayerPropertiesEvent>(id);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename layer")) {
+    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Layer")) {
       dispatcher.enqueue<OpenRenameLayerDialogEvent>(id);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate layer")) {
+    if (ImGui::MenuItem(TAC_ICON_DUPLICATE " Duplicate Layer")) {
       dispatcher.enqueue<DuplicateLayerEvent>(id);
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove layer")) {
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Layer")) {
       dispatcher.enqueue<RemoveLayerEvent>(id);
     }
 
     ImGui::Separator();
     if (const auto isLayerVisible = Sys::IsLayerVisible(registry, id);
-        ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle layer visibility",
+        ImGui::MenuItem(TAC_ICON_VISIBILITY " Toggle Layer Visibility",
                         nullptr,
                         isLayerVisible))
     {
@@ -50,7 +50,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move layer up",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Move Layer Up",
                         nullptr,
                         false,
                         Sys::CanMoveLayerUp(registry, id)))
@@ -58,7 +58,7 @@ void UpdateLayerItemPopup(const entt::registry& registry,
       dispatcher.enqueue<MoveLayerUpEvent>(id);
     }
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move layer down",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Move Layer Down",
                         nullptr,
                         false,
                         Sys::CanMoveLayerDown(registry, id)))

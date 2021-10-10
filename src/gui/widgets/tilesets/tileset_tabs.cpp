@@ -19,25 +19,25 @@ constexpr auto tab_bar_flags =
 void UpdateContextMenu(const TilesetID id, entt::dispatcher& dispatcher)
 {
   if (ImGui::BeginPopupContextItem("##TilesetTabContext")) {
-    if (ImGui::MenuItem(TAC_ICON_ADD " Create new tileset...")) {
+    if (ImGui::MenuItem(TAC_ICON_ADD " Create New Tileset...")) {
       ShowTilesetDialog();
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show tileset properties")) {
+    if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Tileset Properties")) {
       dispatcher.enqueue<ShowTilesetPropertiesEvent>(id);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename tileset")) {
+    if (ImGui::MenuItem(TAC_ICON_EDIT " Rename Tileset")) {
       // TODO
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove tileset")) {
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Tileset")) {
       dispatcher.enqueue<RemoveTilesetEvent>(id);
     }
 

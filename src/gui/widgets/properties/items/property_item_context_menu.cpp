@@ -12,15 +12,15 @@ void PropertyItemContextMenu(entt::dispatcher& dispatcher,
                              PropertyItemContextMenuState& state)
 {
   if (ImGui::BeginPopupContextItem("##PropertyItemContext")) {
-    state.show_add_dialog = ImGui::MenuItem(TAC_ICON_ADD " Add new property...");
+    state.show_add_dialog = ImGui::MenuItem(TAC_ICON_ADD " Add New Property...");
     ImGui::Separator();
 
-    state.show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename property...");
-    state.show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change type...");
+    state.show_rename_dialog = ImGui::MenuItem(TAC_ICON_EDIT " Rename Property...");
+    state.show_change_type_dialog = ImGui::MenuItem(ICON_FA_SHAPES " Change Type...");
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove property")) {
+    if (ImGui::MenuItem(TAC_ICON_REMOVE " Remove Property")) {
       dispatcher.enqueue<RemovePropertyEvent>(name);
     }
 
