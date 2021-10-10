@@ -49,7 +49,6 @@ void LoadDefaultShortcuts()
   shortcuts.push_back(std::make_unique<UndoShortcut>());
   shortcuts.push_back(std::make_unique<RedoShortcut>());
 
-  // TODO these should only work when the map viewport is focused
   shortcuts.push_back(std::make_unique<EnableStampShortcut>());
   shortcuts.push_back(std::make_unique<EnableEraserShortcut>());
   shortcuts.push_back(std::make_unique<EnableBucketShortcut>());
