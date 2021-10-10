@@ -16,7 +16,7 @@ namespace {
 void UpdateWidgetsSubmenu(const bool hasActiveMap)
 {
   if (ImGui::BeginMenu("Widgets", hasActiveMap)) {
-    if (ImGui::MenuItem("Reset layout")) {
+    if (ImGui::MenuItem("Reset Layout")) {
       ResetLayout();
     }
 
@@ -49,7 +49,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_CENTER " Center viewport",
+    if (ImGui::MenuItem(TAC_ICON_CENTER " Center Viewport",
                         "Ctrl+Space",
                         false,
                         hasActiveDocument))
@@ -60,14 +60,14 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Separator();
 
     if (bool showGrid = Prefs::GetShowGrid();
-        ImGui::MenuItem(TAC_ICON_GRID " Toggle grid", "Ctrl+G", &showGrid))
+        ImGui::MenuItem(TAC_ICON_GRID " Toggle Grid", "Ctrl+G", &showGrid))
     {
       Prefs::SetShowGrid(showGrid);
     }
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_ZOOM_IN " Increase zoom",
+    if (ImGui::MenuItem(TAC_ICON_ZOOM_IN " Increase Zoom",
                         "Ctrl+Plus",
                         false,
                         hasActiveDocument))
@@ -75,7 +75,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<IncreaseZoomEvent>();
     }
 
-    if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease zoom",
+    if (ImGui::MenuItem(TAC_ICON_ZOOM_OUT " Decrease Zoom",
                         "Ctrl+Minus",
                         false,
                         model.CanDecreaseViewportTileSize()))
@@ -83,7 +83,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<DecreaseZoomEvent>();
     }
 
-    if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset zoom",
+    if (ImGui::MenuItem(TAC_ICON_RESET_ZOOM " Reset Zoom",
                         nullptr,
                         false,
                         hasActiveDocument)) {
@@ -92,12 +92,12 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan up", "Ctrl+Up", false, hasActiveDocument))
+    if (ImGui::MenuItem(TAC_ICON_MOVE_UP " Pan Up", "Ctrl+Up", false, hasActiveDocument))
     {
       dispatcher.enqueue<PanUpEvent>();
     }
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Pan down",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_DOWN " Pan Down",
                         "Ctrl+Down",
                         false,
                         hasActiveDocument))
@@ -105,7 +105,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<PanDownEvent>();
     }
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_RIGHT " Pan right",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_RIGHT " Pan Right",
                         "Ctrl+Right",
                         false,
                         hasActiveDocument))
@@ -113,7 +113,7 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<PanRightEvent>();
     }
 
-    if (ImGui::MenuItem(TAC_ICON_MOVE_LEFT " Pan left",
+    if (ImGui::MenuItem(TAC_ICON_MOVE_LEFT " Pan Left",
                         "Ctrl+Left",
                         false,
                         hasActiveDocument))

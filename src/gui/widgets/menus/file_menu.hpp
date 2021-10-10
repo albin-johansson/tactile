@@ -36,11 +36,6 @@ void ShowAddMapDialog() noexcept;
  */
 void ShowOpenMapDialog() noexcept;
 
-/**
- * \brief Opens the settings dialog.
- */
-void ShowSettingsDialog() noexcept;
-
 /// \} End of group gui
 
 }  // namespace Tactile

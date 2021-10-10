@@ -11,14 +11,11 @@
 #include "events/save_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/dialogs/add_map_dialog.hpp"
-#include "gui/widgets/dialogs/settings_dialog.hpp"
 #include "io/history.hpp"
-#include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {
 
-constinit bool show_settings_window = false;
 constinit bool show_add_map_dialog = false;
 constinit bool show_open_map_dialog = false;
 
@@ -36,8 +33,8 @@ void ShowMapFileDialog(entt::dispatcher& dispatcher)
 
 void UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMenu(TAC_ICON_HISTORY " Recent files")) {
-    if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen last closed file",
+  if (ImGui::BeginMenu(TAC_ICON_HISTORY " Recent Files")) {
+    if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
                         nullptr,
                         false,
                         HasValidLastClosedFile()))
@@ -60,7 +57,12 @@ void UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
     }
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear file history")) {
+
+    if (ImGui::MenuItem(TAC_ICON_CLEAR_HISTORY " Clear File History",
+                        nullptr,
+                        false,
+                        !history.empty()))
+    {
       ClearFileHistory();
     }
 
@@ -75,8 +77,8 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
   if (ImGui::BeginMenu("File")) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
-    show_add_map_dialog = ImGui::MenuItem(TAC_ICON_FILE " New map...", "Ctrl+N");
-    show_open_map_dialog = ImGui::MenuItem(TAC_ICON_OPEN " Open map...", "Ctrl+O");
+    show_add_map_dialog = ImGui::MenuItem(TAC_ICON_FILE " New Map...", "Ctrl+N");
+    show_open_map_dialog = ImGui::MenuItem(TAC_ICON_OPEN " Open Map...", "Ctrl+O");
 
     UpdateRecentFilesMenu(dispatcher);
 
@@ -87,7 +89,7 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
       dispatcher.enqueue<SaveEvent>();
     }
 
-    if (ImGui::MenuItem(TAC_ICON_SAVE " Save as...",
+    if (ImGui::MenuItem(TAC_ICON_SAVE " Save As...",
                         "Ctrl+Shift+S",
                         false,
                         hasActiveDocument))
@@ -97,12 +99,7 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    show_settings_window =
-        ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", "Ctrl+Alt+S");
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem(TAC_ICON_CLOSE " Close map", nullptr, false, hasActiveDocument)) {
+    if (ImGui::MenuItem(TAC_ICON_CLOSE " Close Map", nullptr, false, hasActiveDocument)) {
       dispatcher.enqueue<CloseMapEvent>(model.GetActiveMapId().value());
     }
 
@@ -123,13 +120,7 @@ void UpdateFileMenuWindows(entt::dispatcher& dispatcher)
     show_add_map_dialog = false;
   }
 
-  if (show_settings_window) {
-    OpenSettingsDialog();
-    show_settings_window = false;
-  }
-
   UpdateAddMapDialog(dispatcher);
-  UpdateSettingsDialog(dispatcher);
 
   if (show_open_map_dialog) {
     ShowMapFileDialog(dispatcher);
@@ -144,11 +135,6 @@ void ShowAddMapDialog() noexcept
 void ShowOpenMapDialog() noexcept
 {
   show_open_map_dialog = true;
-}
-
-void ShowSettingsDialog() noexcept
-{
-  show_settings_window = true;
 }
 
 }  // namespace Tactile

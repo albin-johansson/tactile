@@ -11,12 +11,12 @@
 #include "events/map_events.hpp"
 #include "events/tool_events.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/tilesets/dialogs/tileset_dialog.hpp"
+#include "gui/widgets/dialogs/settings_dialog.hpp"
 
 namespace Tactile {
 namespace {
 
-constinit bool show_tileset_dialog = false;
+constinit bool show_settings_window = false;
 
 }  // namespace
 
@@ -61,30 +61,6 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    if (ImGui::MenuItem("Add row", "Alt+R", false, hasActiveDocument)) {
-      dispatcher.enqueue<AddRowEvent>();
-    }
-
-    if (ImGui::MenuItem("Add column", "Alt+C", false, hasActiveDocument)) {
-      dispatcher.enqueue<AddColumnEvent>();
-    }
-
-    if (ImGui::MenuItem("Remove row", "Alt+Shift+R", false, hasActiveDocument)) {
-      dispatcher.enqueue<RemoveRowEvent>();
-    }
-
-    if (ImGui::MenuItem("Remove column", "Alt+Shift+C", false, hasActiveDocument)) {
-      dispatcher.enqueue<RemoveColumnEvent>();
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::MenuItem("Resize map", nullptr, false, hasActiveDocument)) {
-      dispatcher.enqueue<OpenResizeMapDialogEvent>();
-    }
-
-    ImGui::Separator();
-
     if (ImGui::MenuItem(TAC_ICON_STAMP " Stamp",
                         "S",
                         model.IsStampActive(),
@@ -111,10 +87,8 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     ImGui::Separator();
 
-    show_tileset_dialog = ImGui::MenuItem(TAC_ICON_TILESET " Create tileset...",
-                                          "Ctrl+T",
-                                          false,
-                                          hasActiveDocument);
+    show_settings_window =
+        ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", "Ctrl+Alt+S");
 
     ImGui::EndMenu();
   }
@@ -122,17 +96,17 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
 void UpdateEditMenuWindows(entt::dispatcher& dispatcher)
 {
-  if (show_tileset_dialog) {
-    OpenTilesetDialog();
-    show_tileset_dialog = false;
+  if (show_settings_window) {
+    OpenSettingsDialog();
+    show_settings_window = false;
   }
 
-  UpdateTilesetDialog(dispatcher);
+  UpdateSettingsDialog(dispatcher);
 }
 
-void ShowTilesetDialog() noexcept
+void ShowSettingsDialog() noexcept
 {
-  show_tileset_dialog = true;
+  show_settings_window = true;
 }
 
 }  // namespace Tactile

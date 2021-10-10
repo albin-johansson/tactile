@@ -26,10 +26,7 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher);
  */
 void UpdateEditMenuWindows(entt::dispatcher& dispatcher);
 
-/**
- * \brief Opens the dialog for adding new tilesets.
- */
-void ShowTilesetDialog() noexcept;
+void ShowSettingsDialog() noexcept;
 
 /// \} End of group gui
 

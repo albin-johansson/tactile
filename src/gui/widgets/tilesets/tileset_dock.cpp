@@ -7,7 +7,7 @@
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/centered_button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
-#include "gui/widgets/menus/edit_menu.hpp"
+#include "gui/widgets/menus/map_menu.hpp"
 #include "io/preferences.hpp"
 #include "tileset_tabs.hpp"
 

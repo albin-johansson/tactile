@@ -6,7 +6,7 @@
 #include "core/components/tileset.hpp"
 #include "events/tileset_events.hpp"
 #include "gui/icons.hpp"
-#include "gui/widgets/menus/edit_menu.hpp"
+#include "gui/widgets/menus/map_menu.hpp"
 #include "tileset_view.hpp"
 #include "utils/scope_id.hpp"
 

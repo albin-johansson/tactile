@@ -13,8 +13,8 @@
 #include "gui/icons.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/docking_toolbar.hpp"
-#include "gui/widgets/menus/edit_menu.hpp"
 #include "gui/widgets/menus/file_menu.hpp"
+#include "gui/widgets/menus/map_menu.hpp"
 #include "gui/widgets/toolbar/tool_button.hpp"
 
 namespace Tactile {

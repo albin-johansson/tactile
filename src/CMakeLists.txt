@@ -280,6 +280,8 @@ set(SOURCE_FILES
     gui/widgets/menus/file_menu.hpp
     gui/widgets/menus/help_menu.cpp
     gui/widgets/menus/help_menu.hpp
+    gui/widgets/menus/map_menu.cpp
+    gui/widgets/menus/map_menu.hpp
     gui/widgets/menus/menu_bar.cpp
     gui/widgets/menus/menu_bar.hpp
     gui/widgets/menus/view_menu.cpp

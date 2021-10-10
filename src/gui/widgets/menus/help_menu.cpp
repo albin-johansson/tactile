@@ -28,7 +28,7 @@ void UpdateHelpMenu()
     show_about_imgui = ImGui::MenuItem(TAC_ICON_ABOUT " About Dear ImGui...");
 
     ImGui::Separator();
-    if (ImGui::MenuItem(TAC_ICON_BUG " Report an issue...")) {
+    if (ImGui::MenuItem(TAC_ICON_BUG " Report Issue...")) {
       cen::open_url("https://github.com/albin-johansson/tactile/issues/new");
     }
 
@@ -36,11 +36,11 @@ void UpdateHelpMenu()
     show_credits = ImGui::MenuItem("Credits...");
 
     ImGui::Separator();
-    show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show metrics...");
+    show_metrics = ImGui::MenuItem(TAC_ICON_METRICS " Show Metrics...");
 
     if constexpr (cen::is_debug_build()) {
       ImGui::Separator();
-      show_demo = ImGui::MenuItem("Show demo window...");
+      show_demo = ImGui::MenuItem("Show Demo Window...");
       show_style_editor = ImGui::MenuItem("Show style editor...");
     }
 
