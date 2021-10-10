@@ -21,7 +21,7 @@ void ResetState()
   tile_height = Prefs::GetPreferredTileHeight();
 }
 
-[[nodiscard]] auto is_input_valid() noexcept -> bool
+[[nodiscard]] auto IsInputValid() noexcept -> bool
 {
   return tile_width > 0 && tile_height > 0;
 }
@@ -43,7 +43,7 @@ void UpdateAddMapDialog(entt::dispatcher& dispatcher)
     ImGui::DragInt("##TileHeightInput", &tile_height, 1.0f, 1, 10'000);
 
     ImGui::Spacing();
-    if (Button("OK", nullptr, is_input_valid())) {
+    if (Button("OK", nullptr, IsInputValid())) {
       dispatcher.enqueue<AddMapEvent>(tile_width, tile_height);
 
       ResetState();
