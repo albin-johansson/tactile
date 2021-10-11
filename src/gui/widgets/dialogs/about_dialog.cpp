@@ -7,6 +7,7 @@
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
+#include "gui/widgets/common/window.hpp"
 
 #define TACTILE_VER "0.2.0"
 #define TACTILE_URL "https://www.github.com/albin-johansson/tactile"
@@ -21,7 +22,8 @@ constexpr auto source_code = "Source code: " TACTILE_URL;
 void UpdateAboutDialog(bool* open)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::Begin("About Tactile", open, ImGuiWindowFlags_AlwaysAutoResize)) {
+  auto window = Window{"About Tactile", ImGuiWindowFlags_AlwaysAutoResize, open};
+  if (window) {
     ImGui::TextUnformatted("Tactile " TACTILE_VER " (C) Albin Johansson 2020-2021");
     ImGui::Separator();
 
@@ -38,8 +40,6 @@ void UpdateAboutDialog(bool* open)
     ImGui::Spacing();
     ImGui::TextUnformatted("Icons by Font Awesome.");
   }
-
-  ImGui::End();
 }
 
 }  // namespace Tactile
