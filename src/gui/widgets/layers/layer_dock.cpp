@@ -17,6 +17,7 @@
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
+#include "gui/widgets/common/window.hpp"
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
 #include "rename_layer_dialog.hpp"
@@ -83,9 +84,10 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
   }
 
   bool isVisible = Prefs::GetShowLayerDock();
-  if (ImGui::Begin("Layers", &isVisible, ImGuiWindowFlags_NoCollapse)) {
-    has_focus = ImGui::IsWindowFocused(ImGuiFocusedFlags_RootAndChildWindows);
+  auto dock = Window{"Layers", ImGuiWindowFlags_NoCollapse, &isVisible};
+  has_focus = dock.IsFocused(ImGuiFocusedFlags_RootAndChildWindows);
 
+  if (dock) {
     UpdateLayerDockButtons(registry, dispatcher);
     if (registry.empty<Layer>()) {
       PrepareVerticalAlignmentCenter(1);
@@ -111,12 +113,8 @@ void UpdateLayerDock(const entt::registry& registry, entt::dispatcher& dispatche
       }
     }
   }
-  else {
-    has_focus = false;
-  }
 
   Prefs::SetShowLayerDock(isVisible);
-  ImGui::End();
 
   if (show_rename_dialog) {
     const auto target = rename_target.value();
