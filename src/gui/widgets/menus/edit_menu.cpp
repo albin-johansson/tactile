@@ -2,15 +2,13 @@
 
 #include <imgui.h>
 
-#include <array>   // array
-#include <format>  // format_to_n
-
 #include "core/model.hpp"
 #include "core/tool_type.hpp"
 #include "events/command_events.hpp"
 #include "events/map_events.hpp"
 #include "events/tool_events.hpp"
 #include "gui/icons.hpp"
+#include "gui/widgets/common/menu.hpp"
 #include "gui/widgets/dialogs/settings_dialog.hpp"
 
 namespace Tactile {
@@ -22,34 +20,16 @@ constinit bool show_settings_window = false;
 
 void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto hasActiveDocument = model.HasActiveDocument();
-  if (ImGui::BeginMenu("Edit")) {
+  if (auto menu = Menu{"Edit"}) {
+    const auto hasActiveDocument = model.HasActiveDocument();
+
     const auto canUndo = model.CanUndo();
     const auto canRedo = model.CanRedo();
 
-    // Zero-initialize buffers to ensure null-termination
-    std::array<char, 128> undoText{};
-    std::array<char, 128> redoText{};
-
-    if (canUndo) {
-      std::format_to_n(undoText.data(),
-                       undoText.size(),
-                       TAC_ICON_UNDO " Undo {}",
-                       model.GetUndoText());
-    }
-    else {
-      std::format_to_n(undoText.data(), undoText.size(), TAC_ICON_UNDO " Undo");
-    }
-
-    if (canRedo) {
-      std::format_to_n(redoText.data(),
-                       redoText.size(),
-                       TAC_ICON_REDO " Redo {}",
-                       model.GetRedoText());
-    }
-    else {
-      std::format_to_n(redoText.data(), redoText.size(), TAC_ICON_REDO " Redo");
-    }
+    const rune::fmt_string undoText{TAC_ICON_UNDO " Undo {}",
+                                    canUndo ? model.GetUndoText() : ""};
+    const rune::fmt_string redoText{TAC_ICON_REDO " Redo {}",
+                                    canRedo ? model.GetRedoText() : ""};
 
     if (ImGui::MenuItem(undoText.data(), "Ctrl+Z", false, canUndo)) {
       dispatcher.enqueue<UndoEvent>();
@@ -89,8 +69,6 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
 
     show_settings_window =
         ImGui::MenuItem(TAC_ICON_SETTINGS " Settings...", "Ctrl+Alt+S");
-
-    ImGui::EndMenu();
   }
 }
 

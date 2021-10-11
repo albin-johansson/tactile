@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 
+#include "debug_menu.hpp"
 #include "edit_menu.hpp"
 #include "file_menu.hpp"
 #include "help_menu.hpp"
@@ -18,6 +19,7 @@ void UpdateMenuBar(const Model& model, entt::dispatcher& dispatcher)
     UpdateViewMenu(model, dispatcher);
     UpdateMapMenu(model, dispatcher);
     UpdateHelpMenu();
+    UpdateDebugMenu();
 
     ImGui::EndMainMenuBar();
   }
@@ -26,6 +28,7 @@ void UpdateMenuBar(const Model& model, entt::dispatcher& dispatcher)
   UpdateEditMenuWindows(dispatcher);
   UpdateMapMenuWindows(dispatcher);
   UpdateHelpMenuWindows();
+  UpdateDebugMenuWindows();
 }
 
 }  // namespace Tactile

@@ -276,6 +276,8 @@ set(SOURCE_FILES
     gui/widgets/layers/rename_layer_dialog.cpp
     gui/widgets/layers/rename_layer_dialog.hpp
 
+    gui/widgets/menus/debug_menu.cpp
+    gui/widgets/menus/debug_menu.hpp
     gui/widgets/menus/edit_menu.cpp
     gui/widgets/menus/edit_menu.hpp
     gui/widgets/menus/file_menu.cpp
