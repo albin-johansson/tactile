@@ -356,6 +356,7 @@ auto DuplicateLayer(entt::registry& registry,
     DuplicateComp<ObjectLayer>(registry, source, copy);
   }
   else if (registry.all_of<GroupLayer>(source)) {
+    registry.emplace<GroupLayer>(copy);
     for (const auto sourceChild : registry.get<LayerTreeNode>(source).children) {
       /* We don't need to add the created child layer to the group layer explicitly */
       DuplicateLayer(registry, sourceChild, copy, true);
