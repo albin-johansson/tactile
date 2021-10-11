@@ -9,6 +9,7 @@
 #include "events/property_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
+#include "gui/widgets/common/modal.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 
 namespace Tactile {
@@ -32,7 +33,7 @@ void ResetState()
 void UpdateChangePropertyTypeDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Change property type", nullptr, flags)) {
+  if (auto modal = Modal{"Change property type", flags}) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Type: ");
 
@@ -53,8 +54,6 @@ void UpdateChangePropertyTypeDialog(entt::dispatcher& dispatcher)
       ResetState();
       ImGui::CloseCurrentPopup();
     }
-
-    ImGui::EndPopup();
   }
 }
 

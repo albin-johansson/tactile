@@ -5,6 +5,7 @@
 #include "events/map_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
+#include "gui/widgets/common/modal.hpp"
 
 namespace Tactile {
 namespace {
@@ -24,7 +25,7 @@ constinit int col_count = 0;
 void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Resize Map", nullptr, flags)) {
+  if (auto modal = Modal{"Resize Map", flags}) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Rows:     ");
     ImGui::SameLine();
@@ -45,8 +46,6 @@ void UpdateResizeMapDialog(entt::dispatcher& dispatcher)
     if (Button("Cancel")) {
       ImGui::CloseCurrentPopup();
     }
-
-    ImGui::EndPopup();
   }
 }
 

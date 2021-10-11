@@ -4,6 +4,7 @@
 
 #include "common/cstr.hpp"
 #include "gui/widgets/alignment.hpp"
+#include "gui/widgets/common/modal.hpp"
 
 namespace Tactile {
 namespace {
@@ -36,7 +37,7 @@ void Row(const CStr lib, const CStr version, const CStr license)
 void UpdateCreditsDialog()
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Credits", &is_visible, window_flags)) {
+  if (auto modal = Modal{"Credits", window_flags, &is_visible}) {
     ImGui::TextUnformatted(
         "Tactile is developed using the following open-source libraries.");
     ImGui::Spacing();
@@ -65,8 +66,6 @@ void UpdateCreditsDialog()
 
       ImGui::EndTable();
     }
-
-    ImGui::EndPopup();
   }
 }
 

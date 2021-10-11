@@ -5,6 +5,7 @@
 #include "common/maybe.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/alignment.hpp"
+#include "gui/widgets/common/modal.hpp"
 
 namespace Tactile {
 namespace {
@@ -18,7 +19,7 @@ inline Maybe<IO::ParseError> current_error;
 void UpdateMapImportErrorDialog()
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal(TAC_ICON_ERROR " Map import error", nullptr, flags)) {
+  if (auto modal = Modal{TAC_ICON_ERROR " Map import error", flags}) {
     ImGui::TextUnformatted("Oops, failed to open the specified map!");
     ImGui::Text("Cause: %s", IO::GetCause(current_error.value()));
 
@@ -29,8 +30,6 @@ void UpdateMapImportErrorDialog()
       current_error.reset();
       ImGui::CloseCurrentPopup();
     }
-
-    ImGui::EndPopup();
   }
 }
 

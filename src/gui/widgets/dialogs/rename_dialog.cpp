@@ -8,6 +8,7 @@
 
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
+#include "gui/widgets/common/modal.hpp"
 #include "utils/buffer_utils.hpp"
 
 namespace Tactile {
@@ -37,7 +38,7 @@ void UpdateRenameDialog(const NotNull<CStr> title,
   assert(callback);
 
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal(title, nullptr, flags)) {
+  if (auto modal = Modal{title, flags}) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Name: ");
 
@@ -65,8 +66,6 @@ void UpdateRenameDialog(const NotNull<CStr> title,
       ResetState();
       ImGui::CloseCurrentPopup();
     }
-
-    ImGui::EndPopup();
   }
 }
 

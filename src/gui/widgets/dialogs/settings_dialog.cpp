@@ -9,6 +9,7 @@
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/checkbox.hpp"
 #include "gui/widgets/common/combo.hpp"
+#include "gui/widgets/common/modal.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -216,7 +217,7 @@ void ApplySettings(entt::dispatcher& dispatcher)
 void UpdateSettingsDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Settings", &is_visible, flags)) {
+  if (auto modal = Modal{"Settings", flags, &is_visible}) {
     if (ImGui::BeginTabBar("SettingsTabBar")) {
       ShowBehaviorTab();
       ShowAppearanceBar();
@@ -245,8 +246,6 @@ void UpdateSettingsDialog(entt::dispatcher& dispatcher)
       ApplySettings(dispatcher);
       UpdatePreviewSettings(GetPreferences());
     }
-
-    ImGui::EndPopup();
   }
 }
 

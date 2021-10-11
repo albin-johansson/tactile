@@ -10,6 +10,7 @@
 #include "events/tileset_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
+#include "gui/widgets/common/modal.hpp"
 #include "io/preferences.hpp"
 #include "utils/buffer_utils.hpp"
 
@@ -63,7 +64,7 @@ void ResetInputs()
 void UpdateTilesetDialog(entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Create tileset", nullptr, flags)) {
+  if (auto modal = Modal{"Create tileset", flags}) {
     ImGui::TextUnformatted("Select an image which contains the tiles aligned in a grid.");
     ImGui::Spacing();
 
@@ -95,8 +96,6 @@ void UpdateTilesetDialog(entt::dispatcher& dispatcher)
       ResetInputs();
       ImGui::CloseCurrentPopup();
     }
-
-    ImGui::EndPopup();
   }
 }
 

@@ -10,6 +10,7 @@
 #include "events/property_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
+#include "gui/widgets/common/modal.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
 #include "utils/buffer_utils.hpp"
 
@@ -34,7 +35,7 @@ void ResetState()
 void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& dispatcher)
 {
   CenterNextWindowOnAppearance();
-  if (ImGui::BeginPopupModal("Add property", nullptr, flags)) {
+  if (auto modal = Modal{"Add property", flags}) {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted("Name: ");
 
@@ -68,8 +69,6 @@ void UpdateAddPropertyDialog(const entt::registry& registry, entt::dispatcher& d
       ResetState();
       ImGui::CloseCurrentPopup();
     }
-
-    ImGui::EndPopup();
   }
 }
 

@@ -242,6 +242,7 @@ set(SOURCE_FILES
     gui/widgets/common/help_marker.cpp
     gui/widgets/common/help_marker.hpp
     gui/widgets/common/menu.hpp
+    gui/widgets/common/modal.hpp
     gui/widgets/common/mouse_tracker.cpp
     gui/widgets/common/mouse_tracker.hpp
     gui/widgets/common/rubber_band.cpp
