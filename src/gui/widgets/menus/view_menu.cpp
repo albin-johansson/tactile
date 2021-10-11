@@ -7,7 +7,7 @@
 #include "events/viewport_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/layout/dock_space.hpp"
-#include "gui/widgets/toolbar/toolbar.hpp"
+#include "gui/widgets/common/menu.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile {
@@ -15,7 +15,7 @@ namespace {
 
 void UpdateWidgetsSubmenu(const bool hasActiveMap)
 {
-  if (ImGui::BeginMenu("Widgets", hasActiveMap)) {
+  if (auto menu = Menu{"Widgets", hasActiveMap}) {
     if (ImGui::MenuItem("Reset Layout")) {
       ResetLayout();
     }
@@ -33,8 +33,6 @@ void UpdateWidgetsSubmenu(const bool hasActiveMap)
     if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock())) {
       Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
     }
-
-    ImGui::EndMenu();
   }
 }
 
@@ -42,9 +40,8 @@ void UpdateWidgetsSubmenu(const bool hasActiveMap)
 
 void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  const auto hasActiveDocument = model.HasActiveDocument();
-
-  if (ImGui::BeginMenu("View")) {
+  if (auto menu = Menu{"View"}) {
+    const auto hasActiveDocument = model.HasActiveDocument();
     UpdateWidgetsSubmenu(hasActiveDocument);
 
     ImGui::Separator();
@@ -126,8 +123,6 @@ void UpdateViewMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem("Toggle UI", "Tab", false, hasActiveDocument)) {
       dispatcher.enqueue<ToggleUiEvent>();
     }
-
-    ImGui::EndMenu();
   }
 }
 
