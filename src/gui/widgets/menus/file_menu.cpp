@@ -10,6 +10,7 @@
 #include "events/quit_event.hpp"
 #include "events/save_events.hpp"
 #include "gui/icons.hpp"
+#include "gui/widgets/common/menu.hpp"
 #include "gui/widgets/dialogs/add_map_dialog.hpp"
 #include "io/history.hpp"
 
@@ -33,7 +34,7 @@ void ShowMapFileDialog(entt::dispatcher& dispatcher)
 
 void UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMenu(TAC_ICON_HISTORY " Recent Files")) {
+  if (auto menu = Menu{TAC_ICON_HISTORY " Recent Files"}) {
     if (ImGui::MenuItem(TAC_ICON_OPEN " Reopen Last Closed File",
                         nullptr,
                         false,
@@ -65,8 +66,6 @@ void UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
     {
       ClearFileHistory();
     }
-
-    ImGui::EndMenu();
   }
 }
 
@@ -74,7 +73,7 @@ void UpdateRecentFilesMenu(entt::dispatcher& dispatcher)
 
 void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
 {
-  if (ImGui::BeginMenu("File")) {
+  if (auto menu = Menu{"File"}) {
     const auto hasActiveDocument = model.HasActiveDocument();
 
     show_add_map_dialog = ImGui::MenuItem(TAC_ICON_FILE " New Map...", "Ctrl+N");
@@ -108,8 +107,6 @@ void UpdateFileMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem(TAC_ICON_EXIT " Exit")) {
       dispatcher.enqueue<QuitEvent>();
     }
-
-    ImGui::EndMenu();
   }
 }
 
