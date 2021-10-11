@@ -19,6 +19,7 @@ inline const auto settings_path = GetPersistentFileDir() / "settings.bin";
 
 constexpr CStr def_preferred_format = "JSON";
 constexpr Theme def_theme = Theme::Sapphire;
+constexpr cen::color def_viewport_background{60, 60, 60};
 constexpr usize def_command_capacity = 100;
 constexpr int def_preferred_tile_width = 32;
 constexpr int def_preferred_tile_height = 32;
@@ -37,6 +38,7 @@ constexpr bool def_restore_last_session = true;
 {
   return {.preferred_format = def_preferred_format,
           .theme = def_theme,
+          .viewport_background = def_viewport_background,
           .command_capacity = def_command_capacity,
           .preferred_tile_width = def_preferred_tile_width,
           .preferred_tile_height = def_preferred_tile_height,
@@ -67,6 +69,14 @@ void LoadPreferences()
     if (cfg.ParseFromIstream(&stream)) {
       if (cfg.has_theme()) {
         settings.theme = static_cast<Theme>(cfg.theme());
+      }
+
+      if (cfg.has_viewport_background()) {
+        const auto& color = cfg.viewport_background();
+        settings.viewport_background.set_red(static_cast<uint8>(color.red()));
+        settings.viewport_background.set_green(static_cast<uint8>(color.green()));
+        settings.viewport_background.set_blue(static_cast<uint8>(color.blue()));
+        settings.viewport_background.set_alpha(static_cast<uint8>(color.alpha()));
       }
 
       if (cfg.has_show_grid()) {
@@ -133,6 +143,7 @@ void LoadPreferences()
   // clang-format off
   CENTURION_LOG_INFO("Loaded preferences: \"%s\"", settings_path.string().c_str());
   CENTURION_LOG_INFO("  Appearance::Theme: %s", magic_enum::enum_name(settings.theme).data());
+  CENTURION_LOG_INFO("  Appearance::ViewportBackground: %s", settings.viewport_background.as_rgb().c_str());
   CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
   CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
   CENTURION_LOG_INFO("  Behavior::CommandCapacity: %u", settings.command_capacity);
@@ -157,6 +168,14 @@ void SavePreferences()
   cfg.set_theme(static_cast<Proto::Theme>(settings.theme));
   cfg.set_show_grid(settings.show_grid);
   cfg.set_window_border(settings.window_border);
+
+  {
+    auto* background = cfg.mutable_viewport_background();
+    background->set_red(settings.viewport_background.red());
+    background->set_green(settings.viewport_background.green());
+    background->set_blue(settings.viewport_background.blue());
+    background->set_alpha(settings.viewport_background.alpha());
+  }
 
   cfg.set_command_capacity(settings.command_capacity);
   cfg.set_restore_last_session(settings.restore_last_session);
@@ -194,6 +213,7 @@ namespace Prefs {
 void ResetAppearancePreferences(Preferences& prefs)
 {
   prefs.theme = def_theme;
+  prefs.viewport_background = def_viewport_background;
   prefs.window_border = def_window_border;
   prefs.show_grid = def_show_grid;
 
@@ -279,6 +299,11 @@ auto GetShowPropertiesDock() noexcept -> bool
 auto GetTheme() noexcept -> Theme
 {
   return settings.theme;
+}
+
+auto GetViewportBackground() noexcept -> const cen::color&
+{
+  return settings.viewport_background;
 }
 
 auto GetWindowBorder() noexcept -> bool

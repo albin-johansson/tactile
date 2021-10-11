@@ -23,11 +23,20 @@ enum Theme {
   ASH = 8;
 }
 
+message Color {
+  optional uint32 red = 1;
+  optional uint32 green = 2;
+  optional uint32 blue = 3;
+  optional uint32 alpha = 4;
+}
+
 message Settings {
   optional Theme theme = 1;
 
   optional int32 preferred_tile_width = 2;
   optional int32 preferred_tile_height = 3;
+
+  optional Color viewport_background = 4;
 
   /* Reserve use of most tags in range 1-15 for "high-priority" values */
 

@@ -47,7 +47,7 @@ struct TableStruct_settings_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[1]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[2]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -56,12 +56,16 @@ struct TableStruct_settings_2eproto {
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_settings_2eproto;
 namespace Tactile {
 namespace Proto {
+class Color;
+struct ColorDefaultTypeInternal;
+extern ColorDefaultTypeInternal _Color_default_instance_;
 class Settings;
 struct SettingsDefaultTypeInternal;
 extern SettingsDefaultTypeInternal _Settings_default_instance_;
 }  // namespace Proto
 }  // namespace Tactile
 PROTOBUF_NAMESPACE_OPEN
+template<> ::Tactile::Proto::Color* Arena::CreateMaybeMessage<::Tactile::Proto::Color>(Arena*);
 template<> ::Tactile::Proto::Settings* Arena::CreateMaybeMessage<::Tactile::Proto::Settings>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Tactile {
@@ -128,6 +132,199 @@ inline bool Theme_Parse(
 }
 // ===================================================================
 
+class Color final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Tactile.Proto.Color) */ {
+ public:
+  inline Color() : Color(nullptr) {}
+  ~Color() override;
+  explicit constexpr Color(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  Color(const Color& from);
+  Color(Color&& from) noexcept
+    : Color() {
+    *this = ::std::move(from);
+  }
+
+  inline Color& operator=(const Color& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline Color& operator=(Color&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const Color& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const Color* internal_default_instance() {
+    return reinterpret_cast<const Color*>(
+               &_Color_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    0;
+
+  friend void swap(Color& a, Color& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(Color* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(Color* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline Color* New() const final {
+    return new Color();
+  }
+
+  Color* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<Color>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const Color& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const Color& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(Color* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Tactile.Proto.Color";
+  }
+  protected:
+  explicit Color(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kRedFieldNumber = 1,
+    kGreenFieldNumber = 2,
+    kBlueFieldNumber = 3,
+    kAlphaFieldNumber = 4,
+  };
+  // optional uint32 red = 1;
+  bool has_red() const;
+  private:
+  bool _internal_has_red() const;
+  public:
+  void clear_red();
+  ::PROTOBUF_NAMESPACE_ID::uint32 red() const;
+  void set_red(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_red() const;
+  void _internal_set_red(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // optional uint32 green = 2;
+  bool has_green() const;
+  private:
+  bool _internal_has_green() const;
+  public:
+  void clear_green();
+  ::PROTOBUF_NAMESPACE_ID::uint32 green() const;
+  void set_green(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_green() const;
+  void _internal_set_green(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // optional uint32 blue = 3;
+  bool has_blue() const;
+  private:
+  bool _internal_has_blue() const;
+  public:
+  void clear_blue();
+  ::PROTOBUF_NAMESPACE_ID::uint32 blue() const;
+  void set_blue(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_blue() const;
+  void _internal_set_blue(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // optional uint32 alpha = 4;
+  bool has_alpha() const;
+  private:
+  bool _internal_has_alpha() const;
+  public:
+  void clear_alpha();
+  ::PROTOBUF_NAMESPACE_ID::uint32 alpha() const;
+  void set_alpha(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_alpha() const;
+  void _internal_set_alpha(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Tactile.Proto.Color)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 red_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 green_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 blue_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 alpha_;
+  friend struct ::TableStruct_settings_2eproto;
+};
+// -------------------------------------------------------------------
+
 class Settings final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Tactile.Proto.Settings) */ {
  public:
@@ -176,7 +373,7 @@ class Settings final :
                &_Settings_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    0;
+    1;
 
   friend void swap(Settings& a, Settings& b) {
     a.Swap(&b);
@@ -248,15 +445,16 @@ class Settings final :
 
   enum : int {
     kPreferredFormatFieldNumber = 16,
+    kViewportBackgroundFieldNumber = 4,
     kThemeFieldNumber = 1,
     kPreferredTileWidthFieldNumber = 2,
-    kViewportOverlayPosFieldNumber = 27,
     kPreferredTileHeightFieldNumber = 3,
     kShowGridFieldNumber = 18,
     kWindowBorderFieldNumber = 19,
     kRestoreLastSessionFieldNumber = 20,
     kRestoreLayoutFieldNumber = 21,
     kCommandCapacityFieldNumber = 17,
+    kViewportOverlayPosFieldNumber = 27,
     kShowLayerDockFieldNumber = 22,
     kShowPropertiesDockFieldNumber = 23,
     kShowTilesetDockFieldNumber = 24,
@@ -280,6 +478,24 @@ class Settings final :
   inline PROTOBUF_ALWAYS_INLINE void _internal_set_preferred_format(const std::string& value);
   std::string* _internal_mutable_preferred_format();
   public:
+
+  // optional .Tactile.Proto.Color viewport_background = 4;
+  bool has_viewport_background() const;
+  private:
+  bool _internal_has_viewport_background() const;
+  public:
+  void clear_viewport_background();
+  const ::Tactile::Proto::Color& viewport_background() const;
+  PROTOBUF_MUST_USE_RESULT ::Tactile::Proto::Color* release_viewport_background();
+  ::Tactile::Proto::Color* mutable_viewport_background();
+  void set_allocated_viewport_background(::Tactile::Proto::Color* viewport_background);
+  private:
+  const ::Tactile::Proto::Color& _internal_viewport_background() const;
+  ::Tactile::Proto::Color* _internal_mutable_viewport_background();
+  public:
+  void unsafe_arena_set_allocated_viewport_background(
+      ::Tactile::Proto::Color* viewport_background);
+  ::Tactile::Proto::Color* unsafe_arena_release_viewport_background();
 
   // optional .Tactile.Proto.Theme theme = 1;
   bool has_theme() const;
@@ -305,19 +521,6 @@ class Settings final :
   private:
   ::PROTOBUF_NAMESPACE_ID::int32 _internal_preferred_tile_width() const;
   void _internal_set_preferred_tile_width(::PROTOBUF_NAMESPACE_ID::int32 value);
-  public:
-
-  // optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;
-  bool has_viewport_overlay_pos() const;
-  private:
-  bool _internal_has_viewport_overlay_pos() const;
-  public:
-  void clear_viewport_overlay_pos();
-  ::Tactile::Proto::OverlayPos viewport_overlay_pos() const;
-  void set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value);
-  private:
-  ::Tactile::Proto::OverlayPos _internal_viewport_overlay_pos() const;
-  void _internal_set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value);
   public:
 
   // optional int32 preferred_tile_height = 3;
@@ -398,6 +601,19 @@ class Settings final :
   void _internal_set_command_capacity(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
+  // optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;
+  bool has_viewport_overlay_pos() const;
+  private:
+  bool _internal_has_viewport_overlay_pos() const;
+  public:
+  void clear_viewport_overlay_pos();
+  ::Tactile::Proto::OverlayPos viewport_overlay_pos() const;
+  void set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value);
+  private:
+  ::Tactile::Proto::OverlayPos _internal_viewport_overlay_pos() const;
+  void _internal_set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value);
+  public:
+
   // optional bool show_layer_dock = 22;
   bool has_show_layer_dock() const;
   private:
@@ -473,15 +689,16 @@ class Settings final :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr preferred_format_;
+  ::Tactile::Proto::Color* viewport_background_;
   int theme_;
   ::PROTOBUF_NAMESPACE_ID::int32 preferred_tile_width_;
-  int viewport_overlay_pos_;
   ::PROTOBUF_NAMESPACE_ID::int32 preferred_tile_height_;
   bool show_grid_;
   bool window_border_;
   bool restore_last_session_;
   bool restore_layout_;
   ::PROTOBUF_NAMESPACE_ID::uint64 command_capacity_;
+  int viewport_overlay_pos_;
   bool show_layer_dock_;
   bool show_properties_dock_;
   bool show_tileset_dock_;
@@ -498,11 +715,127 @@ class Settings final :
   #pragma GCC diagnostic push
   #pragma GCC diagnostic ignored "-Wstrict-aliasing"
 #endif  // __GNUC__
+// Color
+
+// optional uint32 red = 1;
+inline bool Color::_internal_has_red() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool Color::has_red() const {
+  return _internal_has_red();
+}
+inline void Color::clear_red() {
+  red_ = 0u;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Color::_internal_red() const {
+  return red_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Color::red() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Color.red)
+  return _internal_red();
+}
+inline void Color::_internal_set_red(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _has_bits_[0] |= 0x00000001u;
+  red_ = value;
+}
+inline void Color::set_red(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_red(value);
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Color.red)
+}
+
+// optional uint32 green = 2;
+inline bool Color::_internal_has_green() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool Color::has_green() const {
+  return _internal_has_green();
+}
+inline void Color::clear_green() {
+  green_ = 0u;
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Color::_internal_green() const {
+  return green_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Color::green() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Color.green)
+  return _internal_green();
+}
+inline void Color::_internal_set_green(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _has_bits_[0] |= 0x00000002u;
+  green_ = value;
+}
+inline void Color::set_green(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_green(value);
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Color.green)
+}
+
+// optional uint32 blue = 3;
+inline bool Color::_internal_has_blue() const {
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  return value;
+}
+inline bool Color::has_blue() const {
+  return _internal_has_blue();
+}
+inline void Color::clear_blue() {
+  blue_ = 0u;
+  _has_bits_[0] &= ~0x00000004u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Color::_internal_blue() const {
+  return blue_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Color::blue() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Color.blue)
+  return _internal_blue();
+}
+inline void Color::_internal_set_blue(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _has_bits_[0] |= 0x00000004u;
+  blue_ = value;
+}
+inline void Color::set_blue(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_blue(value);
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Color.blue)
+}
+
+// optional uint32 alpha = 4;
+inline bool Color::_internal_has_alpha() const {
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  return value;
+}
+inline bool Color::has_alpha() const {
+  return _internal_has_alpha();
+}
+inline void Color::clear_alpha() {
+  alpha_ = 0u;
+  _has_bits_[0] &= ~0x00000008u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Color::_internal_alpha() const {
+  return alpha_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 Color::alpha() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Color.alpha)
+  return _internal_alpha();
+}
+inline void Color::_internal_set_alpha(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _has_bits_[0] |= 0x00000008u;
+  alpha_ = value;
+}
+inline void Color::set_alpha(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_alpha(value);
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Color.alpha)
+}
+
+// -------------------------------------------------------------------
+
 // Settings
 
 // optional .Tactile.Proto.Theme theme = 1;
 inline bool Settings::_internal_has_theme() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool Settings::has_theme() const {
@@ -510,7 +843,7 @@ inline bool Settings::has_theme() const {
 }
 inline void Settings::clear_theme() {
   theme_ = 0;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::Tactile::Proto::Theme Settings::_internal_theme() const {
   return static_cast< ::Tactile::Proto::Theme >(theme_);
@@ -520,7 +853,7 @@ inline ::Tactile::Proto::Theme Settings::theme() const {
   return _internal_theme();
 }
 inline void Settings::_internal_set_theme(::Tactile::Proto::Theme value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   theme_ = value;
 }
 inline void Settings::set_theme(::Tactile::Proto::Theme value) {
@@ -530,7 +863,7 @@ inline void Settings::set_theme(::Tactile::Proto::Theme value) {
 
 // optional int32 preferred_tile_width = 2;
 inline bool Settings::_internal_has_preferred_tile_width() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool Settings::has_preferred_tile_width() const {
@@ -538,7 +871,7 @@ inline bool Settings::has_preferred_tile_width() const {
 }
 inline void Settings::clear_preferred_tile_width() {
   preferred_tile_width_ = 0;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::int32 Settings::_internal_preferred_tile_width() const {
   return preferred_tile_width_;
@@ -548,7 +881,7 @@ inline ::PROTOBUF_NAMESPACE_ID::int32 Settings::preferred_tile_width() const {
   return _internal_preferred_tile_width();
 }
 inline void Settings::_internal_set_preferred_tile_width(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   preferred_tile_width_ = value;
 }
 inline void Settings::set_preferred_tile_width(::PROTOBUF_NAMESPACE_ID::int32 value) {
@@ -582,6 +915,96 @@ inline void Settings::_internal_set_preferred_tile_height(::PROTOBUF_NAMESPACE_I
 inline void Settings::set_preferred_tile_height(::PROTOBUF_NAMESPACE_ID::int32 value) {
   _internal_set_preferred_tile_height(value);
   // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.preferred_tile_height)
+}
+
+// optional .Tactile.Proto.Color viewport_background = 4;
+inline bool Settings::_internal_has_viewport_background() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  PROTOBUF_ASSUME(!value || viewport_background_ != nullptr);
+  return value;
+}
+inline bool Settings::has_viewport_background() const {
+  return _internal_has_viewport_background();
+}
+inline void Settings::clear_viewport_background() {
+  if (viewport_background_ != nullptr) viewport_background_->Clear();
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const ::Tactile::Proto::Color& Settings::_internal_viewport_background() const {
+  const ::Tactile::Proto::Color* p = viewport_background_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Tactile::Proto::Color&>(
+      ::Tactile::Proto::_Color_default_instance_);
+}
+inline const ::Tactile::Proto::Color& Settings::viewport_background() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.viewport_background)
+  return _internal_viewport_background();
+}
+inline void Settings::unsafe_arena_set_allocated_viewport_background(
+    ::Tactile::Proto::Color* viewport_background) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(viewport_background_);
+  }
+  viewport_background_ = viewport_background;
+  if (viewport_background) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Tactile.Proto.Settings.viewport_background)
+}
+inline ::Tactile::Proto::Color* Settings::release_viewport_background() {
+  _has_bits_[0] &= ~0x00000002u;
+  ::Tactile::Proto::Color* temp = viewport_background_;
+  viewport_background_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Tactile::Proto::Color* Settings::unsafe_arena_release_viewport_background() {
+  // @@protoc_insertion_point(field_release:Tactile.Proto.Settings.viewport_background)
+  _has_bits_[0] &= ~0x00000002u;
+  ::Tactile::Proto::Color* temp = viewport_background_;
+  viewport_background_ = nullptr;
+  return temp;
+}
+inline ::Tactile::Proto::Color* Settings::_internal_mutable_viewport_background() {
+  _has_bits_[0] |= 0x00000002u;
+  if (viewport_background_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Tactile::Proto::Color>(GetArenaForAllocation());
+    viewport_background_ = p;
+  }
+  return viewport_background_;
+}
+inline ::Tactile::Proto::Color* Settings::mutable_viewport_background() {
+  ::Tactile::Proto::Color* _msg = _internal_mutable_viewport_background();
+  // @@protoc_insertion_point(field_mutable:Tactile.Proto.Settings.viewport_background)
+  return _msg;
+}
+inline void Settings::set_allocated_viewport_background(::Tactile::Proto::Color* viewport_background) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete viewport_background_;
+  }
+  if (viewport_background) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::Tactile::Proto::Color>::GetOwningArena(viewport_background);
+    if (message_arena != submessage_arena) {
+      viewport_background = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, viewport_background, submessage_arena);
+    }
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  viewport_background_ = viewport_background;
+  // @@protoc_insertion_point(field_set_allocated:Tactile.Proto.Settings.viewport_background)
 }
 
 // optional string preferred_format = 16;
@@ -784,7 +1207,7 @@ inline void Settings::set_restore_layout(bool value) {
 
 // optional bool show_layer_dock = 22;
 inline bool Settings::_internal_has_show_layer_dock() const {
-  bool value = (_has_bits_[0] & 0x00000400u) != 0;
+  bool value = (_has_bits_[0] & 0x00000800u) != 0;
   return value;
 }
 inline bool Settings::has_show_layer_dock() const {
@@ -792,7 +1215,7 @@ inline bool Settings::has_show_layer_dock() const {
 }
 inline void Settings::clear_show_layer_dock() {
   show_layer_dock_ = false;
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00000800u;
 }
 inline bool Settings::_internal_show_layer_dock() const {
   return show_layer_dock_;
@@ -802,7 +1225,7 @@ inline bool Settings::show_layer_dock() const {
   return _internal_show_layer_dock();
 }
 inline void Settings::_internal_set_show_layer_dock(bool value) {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00000800u;
   show_layer_dock_ = value;
 }
 inline void Settings::set_show_layer_dock(bool value) {
@@ -812,7 +1235,7 @@ inline void Settings::set_show_layer_dock(bool value) {
 
 // optional bool show_properties_dock = 23;
 inline bool Settings::_internal_has_show_properties_dock() const {
-  bool value = (_has_bits_[0] & 0x00000800u) != 0;
+  bool value = (_has_bits_[0] & 0x00001000u) != 0;
   return value;
 }
 inline bool Settings::has_show_properties_dock() const {
@@ -820,7 +1243,7 @@ inline bool Settings::has_show_properties_dock() const {
 }
 inline void Settings::clear_show_properties_dock() {
   show_properties_dock_ = false;
-  _has_bits_[0] &= ~0x00000800u;
+  _has_bits_[0] &= ~0x00001000u;
 }
 inline bool Settings::_internal_show_properties_dock() const {
   return show_properties_dock_;
@@ -830,7 +1253,7 @@ inline bool Settings::show_properties_dock() const {
   return _internal_show_properties_dock();
 }
 inline void Settings::_internal_set_show_properties_dock(bool value) {
-  _has_bits_[0] |= 0x00000800u;
+  _has_bits_[0] |= 0x00001000u;
   show_properties_dock_ = value;
 }
 inline void Settings::set_show_properties_dock(bool value) {
@@ -840,7 +1263,7 @@ inline void Settings::set_show_properties_dock(bool value) {
 
 // optional bool show_tileset_dock = 24;
 inline bool Settings::_internal_has_show_tileset_dock() const {
-  bool value = (_has_bits_[0] & 0x00001000u) != 0;
+  bool value = (_has_bits_[0] & 0x00002000u) != 0;
   return value;
 }
 inline bool Settings::has_show_tileset_dock() const {
@@ -848,7 +1271,7 @@ inline bool Settings::has_show_tileset_dock() const {
 }
 inline void Settings::clear_show_tileset_dock() {
   show_tileset_dock_ = false;
-  _has_bits_[0] &= ~0x00001000u;
+  _has_bits_[0] &= ~0x00002000u;
 }
 inline bool Settings::_internal_show_tileset_dock() const {
   return show_tileset_dock_;
@@ -858,7 +1281,7 @@ inline bool Settings::show_tileset_dock() const {
   return _internal_show_tileset_dock();
 }
 inline void Settings::_internal_set_show_tileset_dock(bool value) {
-  _has_bits_[0] |= 0x00001000u;
+  _has_bits_[0] |= 0x00002000u;
   show_tileset_dock_ = value;
 }
 inline void Settings::set_show_tileset_dock(bool value) {
@@ -868,7 +1291,7 @@ inline void Settings::set_show_tileset_dock(bool value) {
 
 // optional bool embed_tilesets = 25;
 inline bool Settings::_internal_has_embed_tilesets() const {
-  bool value = (_has_bits_[0] & 0x00002000u) != 0;
+  bool value = (_has_bits_[0] & 0x00004000u) != 0;
   return value;
 }
 inline bool Settings::has_embed_tilesets() const {
@@ -876,7 +1299,7 @@ inline bool Settings::has_embed_tilesets() const {
 }
 inline void Settings::clear_embed_tilesets() {
   embed_tilesets_ = false;
-  _has_bits_[0] &= ~0x00002000u;
+  _has_bits_[0] &= ~0x00004000u;
 }
 inline bool Settings::_internal_embed_tilesets() const {
   return embed_tilesets_;
@@ -886,7 +1309,7 @@ inline bool Settings::embed_tilesets() const {
   return _internal_embed_tilesets();
 }
 inline void Settings::_internal_set_embed_tilesets(bool value) {
-  _has_bits_[0] |= 0x00002000u;
+  _has_bits_[0] |= 0x00004000u;
   embed_tilesets_ = value;
 }
 inline void Settings::set_embed_tilesets(bool value) {
@@ -896,7 +1319,7 @@ inline void Settings::set_embed_tilesets(bool value) {
 
 // optional bool human_readable_output = 26;
 inline bool Settings::_internal_has_human_readable_output() const {
-  bool value = (_has_bits_[0] & 0x00004000u) != 0;
+  bool value = (_has_bits_[0] & 0x00008000u) != 0;
   return value;
 }
 inline bool Settings::has_human_readable_output() const {
@@ -904,7 +1327,7 @@ inline bool Settings::has_human_readable_output() const {
 }
 inline void Settings::clear_human_readable_output() {
   human_readable_output_ = false;
-  _has_bits_[0] &= ~0x00004000u;
+  _has_bits_[0] &= ~0x00008000u;
 }
 inline bool Settings::_internal_human_readable_output() const {
   return human_readable_output_;
@@ -914,7 +1337,7 @@ inline bool Settings::human_readable_output() const {
   return _internal_human_readable_output();
 }
 inline void Settings::_internal_set_human_readable_output(bool value) {
-  _has_bits_[0] |= 0x00004000u;
+  _has_bits_[0] |= 0x00008000u;
   human_readable_output_ = value;
 }
 inline void Settings::set_human_readable_output(bool value) {
@@ -924,7 +1347,7 @@ inline void Settings::set_human_readable_output(bool value) {
 
 // optional .Tactile.Proto.OverlayPos viewport_overlay_pos = 27;
 inline bool Settings::_internal_has_viewport_overlay_pos() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000400u) != 0;
   return value;
 }
 inline bool Settings::has_viewport_overlay_pos() const {
@@ -932,7 +1355,7 @@ inline bool Settings::has_viewport_overlay_pos() const {
 }
 inline void Settings::clear_viewport_overlay_pos() {
   viewport_overlay_pos_ = 0;
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000400u;
 }
 inline ::Tactile::Proto::OverlayPos Settings::_internal_viewport_overlay_pos() const {
   return static_cast< ::Tactile::Proto::OverlayPos >(viewport_overlay_pos_);
@@ -942,7 +1365,7 @@ inline ::Tactile::Proto::OverlayPos Settings::viewport_overlay_pos() const {
   return _internal_viewport_overlay_pos();
 }
 inline void Settings::_internal_set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000400u;
   viewport_overlay_pos_ = value;
 }
 inline void Settings::set_viewport_overlay_pos(::Tactile::Proto::OverlayPos value) {
@@ -953,6 +1376,8 @@ inline void Settings::set_viewport_overlay_pos(::Tactile::Proto::OverlayPos valu
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 

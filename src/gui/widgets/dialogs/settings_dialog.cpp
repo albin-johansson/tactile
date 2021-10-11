@@ -11,6 +11,7 @@
 #include "gui/widgets/common/combo.hpp"
 #include "gui/widgets/common/modal.hpp"
 #include "io/preferences.hpp"
+#include "utils/color_utils.hpp"
 
 namespace Tactile {
 namespace {
@@ -116,6 +117,20 @@ void ShowAppearanceBar()
       }
 
       ImGui::EndCombo();
+    }
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Viewport background color: ");
+    ImGui::SameLine();
+
+    if (auto array = ColorToArray(settings.viewport_background);
+        ImGui::ColorEdit3("Viewport Background Color",
+                          array.data(),
+                          ImGuiColorEditFlags_NoInputs | ImGuiColorEditFlags_NoLabel |
+                              ImGuiColorEditFlags_NoAlpha))
+    {
+      settings.viewport_background =
+          cen::color::from_norm(array.at(0), array.at(1), array.at(2));
     }
 
     if (auto enabled = settings.window_border; ImGui::Checkbox("Window border", &enabled))

@@ -3,19 +3,22 @@
 #include <imgui_internal.h>
 
 #include "common/ints.hpp"
+#include "io/preferences.hpp"
+#include "utils/color_utils.hpp"
 
 namespace Tactile {
 namespace {
 
 constexpr uint32 border_color = IM_COL32(255, 255, 255, 100);
-constexpr uint32 background_color = IM_COL32(60, 60, 60, 255);
 
 }  // namespace
 
 void ClearBackground(const CanvasInfo& canvas)
 {
   auto* drawList = ImGui::GetWindowDrawList();
-  drawList->AddRectFilled(canvas.tl, canvas.br, background_color);
+  drawList->AddRectFilled(canvas.tl,
+                          canvas.br,
+                          ColorToU32(Prefs::GetViewportBackground()));
   drawList->AddRect(canvas.tl, canvas.br, border_color);
 }
 

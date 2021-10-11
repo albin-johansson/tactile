@@ -3,6 +3,8 @@
 #include <array>          // array
 #include <centurion.hpp>  // color
 
+#include "common/ints.hpp"
+
 namespace Tactile {
 
 /**
@@ -24,6 +26,11 @@ namespace Tactile {
   const auto b = color.blue_norm();
   const auto a = color.alpha_norm();
   return {r, g, b, a};
+}
+
+[[nodiscard]] constexpr auto ColorToU32(const cen::color& color) -> uint32
+{
+  return IM_COL32(color.red(), color.green(), color.blue(), color.alpha());
 }
 
 }  // namespace Tactile
