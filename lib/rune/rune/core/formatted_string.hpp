@@ -47,6 +47,8 @@ class formatted_string final
   std::string_view m_view;
 };
 
+using fmt_string = formatted_string<128>;
+
 }  // namespace rune
 
 #endif  // RUNE_FORMATTED_STRING_HPP_
