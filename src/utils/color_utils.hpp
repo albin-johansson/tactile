@@ -1,5 +1,7 @@
 #pragma once
 
+#include <imgui.h>
+
 #include <array>          // array
 #include <centurion.hpp>  // color
 
