@@ -14,6 +14,7 @@
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/centered_button.hpp"
 #include "gui/widgets/common/centered_text.hpp"
+#include "gui/widgets/common/window.hpp"
 #include "io/preferences.hpp"
 #include "property_table.hpp"
 
@@ -32,8 +33,11 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
 
   constexpr auto flags = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar;
   bool isVisible = Prefs::GetShowPropertiesDock();
-  if (ImGui::Begin("Properties", &isVisible, flags)) {
-    has_focus = ImGui::IsWindowFocused();
+
+  Window dock{"Properties", flags, &isVisible};
+  has_focus = dock.IsFocused();
+
+  if (dock) {
     const auto& context = Sys::GetCurrentContext(registry);
 
     rune::formatted_string<128> contextName{"Context: {}", context.name};
@@ -52,16 +56,12 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
       UpdatePropertyTable(registry, dispatcher);
     }
   }
-  else {
-    has_focus = false;
-  }
 
   UpdateAddPropertyDialog(registry, dispatcher);
   UpdateRenamePropertyDialog(registry, dispatcher);
   UpdateChangePropertyTypeDialog(dispatcher);
 
   Prefs::SetShowPropertiesDock(isVisible);
-  ImGui::End();
 }
 
 auto IsPropertyDockFocused() noexcept -> bool
