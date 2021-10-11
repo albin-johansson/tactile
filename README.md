@@ -6,7 +6,7 @@
 
 A tilemap editor that aims to be easy-to-use, fast and lightweight.
 
-![example](meta/screenshots/v020.png "example")
+![example](meta/splash.png "splash")
 
 ## Aim
 
