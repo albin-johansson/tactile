@@ -245,6 +245,7 @@ set(SOURCE_FILES
     gui/widgets/common/mouse_tracker.hpp
     gui/widgets/common/rubber_band.cpp
     gui/widgets/common/rubber_band.hpp
+    gui/widgets/common/window.hpp
 
     gui/widgets/dialogs/about_dialog.cpp
     gui/widgets/dialogs/about_dialog.hpp
