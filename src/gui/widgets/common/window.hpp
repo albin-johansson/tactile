@@ -2,8 +2,6 @@
 
 #include <imgui.h>
 
-#include <cassert>  // assert
-
 #include "common/cstr.hpp"
 
 namespace Tactile {
