@@ -29,7 +29,9 @@ enum class Theme
   Sapphire = 3,
   Emerald = 4,
   Amethyst = 5,
-  Amber = 6
+  Amber = 6,
+  Nocturnal = 7,
+  Ash = 8
 };
 
 struct Preferences final

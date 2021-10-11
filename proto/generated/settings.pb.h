@@ -102,12 +102,14 @@ enum Theme : int {
   EMERALD = 4,
   AMETHYST = 5,
   AMBER = 6,
+  NOCTURNAL = 7,
+  ASH = 8,
   Theme_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
   Theme_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
 bool Theme_IsValid(int value);
 constexpr Theme Theme_MIN = DEAR_DARK;
-constexpr Theme Theme_MAX = AMBER;
+constexpr Theme Theme_MAX = ASH;
 constexpr int Theme_ARRAYSIZE = Theme_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Theme_descriptor();

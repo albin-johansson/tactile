@@ -19,6 +19,8 @@ enum Theme {
   EMERALD = 4;
   AMETHYST = 5;
   AMBER = 6;
+  NOCTURNAL = 7;
+  ASH = 8;
 }
 
 message Settings {

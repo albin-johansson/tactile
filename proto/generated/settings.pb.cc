@@ -122,14 +122,15 @@ const char descriptor_table_protodef_settings_2eproto[] PROTOBUF_SECTION_VARIABL
   "_dockB\021\n\017_embed_tilesetsB\030\n\026_human_reada"
   "ble_outputB\027\n\025_viewport_overlay_pos*L\n\nO"
   "verlayPos\022\014\n\010TOP_LEFT\020\000\022\r\n\tTOP_RIGHT\020\001\022\017"
-  "\n\013BOTTOM_LEFT\020\002\022\020\n\014BOTTOM_RIGHT\020\003*d\n\005The"
+  "\n\013BOTTOM_LEFT\020\002\022\020\n\014BOTTOM_RIGHT\020\003*|\n\005The"
   "me\022\r\n\tDEAR_DARK\020\000\022\016\n\nDEAR_LIGHT\020\001\022\010\n\004RUB"
   "Y\020\002\022\014\n\010SAPPHIRE\020\003\022\013\n\007EMERALD\020\004\022\014\n\010AMETHY"
-  "ST\020\005\022\t\n\005AMBER\020\006b\006proto3"
+  "ST\020\005\022\t\n\005AMBER\020\006\022\r\n\tNOCTURNAL\020\007\022\007\n\003ASH\020\010b"
+  "\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_settings_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_settings_2eproto = {
-  false, false, 1063, descriptor_table_protodef_settings_2eproto, "settings.proto", 
+  false, false, 1087, descriptor_table_protodef_settings_2eproto, "settings.proto", 
   &descriptor_table_settings_2eproto_once, nullptr, 0, 1,
   schemas, file_default_instances, TableStruct_settings_2eproto::offsets,
   file_level_metadata_settings_2eproto, file_level_enum_descriptors_settings_2eproto, file_level_service_descriptors_settings_2eproto,
@@ -171,6 +172,8 @@ bool Theme_IsValid(int value) {
     case 4:
     case 5:
     case 6:
+    case 7:
+    case 8:
       return true;
     default:
       return false;

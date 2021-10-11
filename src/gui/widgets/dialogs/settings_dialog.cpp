@@ -108,41 +108,11 @@ void ShowAppearanceBar()
     ImGui::SameLine();
 
     if (ImGui::BeginCombo("##ThemeCombo", magic_enum::enum_name(settings.theme).data())) {
-      if (ImGui::Selectable("Dear Dark")) {
-        settings.theme = Theme::DearDark;
-        ApplyTheme(ImGui::GetStyle(), Theme::DearDark);
-      }
-
-      if (ImGui::Selectable("Dear Light")) {
-        settings.theme = Theme::DearLight;
-        ApplyTheme(ImGui::GetStyle(), Theme::DearLight);
-      }
-
-      ImGui::Separator();
-
-      if (ImGui::Selectable("Ruby")) {
-        settings.theme = Theme::Ruby;
-        ApplyTheme(ImGui::GetStyle(), Theme::Ruby);
-      }
-
-      if (ImGui::Selectable("Sapphire")) {
-        settings.theme = Theme::Sapphire;
-        ApplyTheme(ImGui::GetStyle(), Theme::Sapphire);
-      }
-
-      if (ImGui::Selectable("Emerald")) {
-        settings.theme = Theme::Emerald;
-        ApplyTheme(ImGui::GetStyle(), Theme::Emerald);
-      }
-
-      if (ImGui::Selectable("Amethyst")) {
-        settings.theme = Theme::Amethyst;
-        ApplyTheme(ImGui::GetStyle(), Theme::Amethyst);
-      }
-
-      if (ImGui::Selectable("Amber")) {
-        settings.theme = Theme::Amber;
-        ApplyTheme(ImGui::GetStyle(), Theme::Amber);
+      for (auto&& [name, value] : themes) {
+        if (ImGui::Selectable(name)) {
+          settings.theme = value;
+          ApplyTheme(ImGui::GetStyle(), value);
+        }
       }
 
       ImGui::EndCombo();
