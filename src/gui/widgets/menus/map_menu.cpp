@@ -5,6 +5,7 @@
 #include "core/model.hpp"
 #include "events/map_events.hpp"
 #include "gui/icons.hpp"
+#include "gui/widgets/common/menu.hpp"
 #include "gui/widgets/tilesets/dialogs/tileset_dialog.hpp"
 
 namespace Tactile {
@@ -18,7 +19,7 @@ void UpdateMapMenu(const Model& model, entt::dispatcher& dispatcher)
 {
   ImGui::BeginDisabled(!model.HasActiveDocument());
 
-  if (ImGui::BeginMenu("Map")) {
+  if (auto menu = Menu{"Map"}) {
     if (ImGui::MenuItem(TAC_ICON_PROPERTIES " Show Map Properties")) {
       dispatcher.enqueue<ShowMapPropertiesEvent>();
     }
@@ -50,8 +51,6 @@ void UpdateMapMenu(const Model& model, entt::dispatcher& dispatcher)
     if (ImGui::MenuItem("Resize Map...")) {
       dispatcher.enqueue<OpenResizeMapDialogEvent>();
     }
-
-    ImGui::EndMenu();
   }
 
   ImGui::EndDisabled();
