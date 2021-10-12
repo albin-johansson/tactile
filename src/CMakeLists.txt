@@ -527,6 +527,7 @@ target_include_directories(${TACTILE_LIB}
     ${LIBRARY_DIR}/fontawesome
     ${LIBRARY_DIR}/pfd
     ${LIBRARY_DIR}/magic-enum
+    ${LIBRARY_DIR}/tl
     ${SDL2_INCLUDE_DIR}
     ${SDL2_IMAGE_INCLUDE_DIRS}
     ${SDL2_TTF_INCLUDE_DIRS}
@@ -569,6 +570,8 @@ target_precompile_headers(${TACTILE_LIB}
     PRIVATE
     <array>
     <algorithm>
+    <string>
+    <string_view>
     <format>
     <functional>
     <filesystem>
@@ -584,7 +587,10 @@ target_precompile_headers(${TACTILE_LIB}
     <entt.hpp>
     <json.hpp>
     <rune/rune.hpp>
-    <nenya.hpp>)
+    <nenya.hpp>
+    <optional.hpp>
+    <expected.hpp>
+    )
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
   add_executable(${TACTILE_EXE} WIN32 ${SOURCE_FILES} main.cpp)
