@@ -368,7 +368,6 @@ set(SOURCE_FILES
     io/parsing/to_map_document.cpp
     io/parsing/to_map_document.hpp
 
-    io/parsing/json/json_utils.hpp
     io/parsing/json/parse_fancy_tiles.cpp
     io/parsing/json/parse_fancy_tiles.hpp
     io/parsing/json/parse_json_map.cpp
