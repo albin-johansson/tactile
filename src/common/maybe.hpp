@@ -1,12 +1,12 @@
 #pragma once
 
-#include <optional>  // optional
+#include <optional.hpp>  // optional
 
 namespace Tactile {
 
 template <typename T>
-using Maybe = std::optional<T>;
+using Maybe = tl::optional<T>;
 
-constexpr std::nullopt_t nothing = std::nullopt;
+constexpr tl::nullopt_t nothing = tl::nullopt;
 
 }  // namespace Tactile
