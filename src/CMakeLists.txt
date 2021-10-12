@@ -16,6 +16,7 @@ set(SOURCE_FILES
 
     common/context_id.hpp
     common/cstr.hpp
+    common/expected.hpp
     common/hash_map.hpp
     common/ints.hpp
     common/json.hpp
