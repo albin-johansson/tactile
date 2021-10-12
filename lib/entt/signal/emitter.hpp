@@ -1,6 +1,7 @@
 #ifndef ENTT_SIGNAL_EMITTER_HPP
 #define ENTT_SIGNAL_EMITTER_HPP
 
+
 #include <algorithm>
 #include <functional>
 #include <iterator>
@@ -13,7 +14,9 @@
 #include "../core/fwd.hpp"
 #include "../core/type_info.hpp"
 
+
 namespace entt {
+
 
 /**
  * @brief General purpose event emitter.
@@ -56,8 +59,8 @@ class emitter {
         [[nodiscard]] bool empty() const ENTT_NOEXCEPT override {
             auto pred = [](auto &&element) { return element.first; };
 
-            return std::all_of(once_list.cbegin(), once_list.cend(), pred)
-                   && std::all_of(on_list.cbegin(), on_list.cend(), pred);
+            return std::all_of(once_list.cbegin(), once_list.cend(), pred) &&
+                    std::all_of(on_list.cbegin(), on_list.cend(), pred);
         }
 
         void clear() ENTT_NOEXCEPT override {
@@ -119,11 +122,11 @@ class emitter {
     };
 
     template<typename Event>
-    [[nodiscard]] pool_handler<Event> *assure() {
-        const auto index = type_index<Event>::value();
+    [[nodiscard]] pool_handler<Event> * assure() {
+        const auto index = type_seq<Event>::value();
 
         if(!(index < pools.size())) {
-            pools.resize(std::size_t(index) + 1u);
+            pools.resize(std::size_t(index)+1u);
         }
 
         if(!pools[index]) {
@@ -134,8 +137,8 @@ class emitter {
     }
 
     template<typename Event>
-    [[nodiscard]] const pool_handler<Event> *assure() const {
-        const auto index = type_index<Event>::value();
+    [[nodiscard]] const pool_handler<Event> * assure() const {
+        const auto index = type_seq<Event>::value();
         return (!(index < pools.size()) || !pools[index]) ? nullptr : static_cast<const pool_handler<Event> *>(pools[index].get());
     }
 
@@ -166,7 +169,8 @@ public:
          * @param conn A connection object to wrap.
          */
         connection(typename pool_handler<Event>::connection_type conn)
-            : pool_handler<Event>::connection_type{std::move(conn)} {}
+            : pool_handler<Event>::connection_type{std::move(conn)}
+        {}
     };
 
     /*! @brief Default constructor. */
@@ -181,7 +185,7 @@ public:
     emitter(emitter &&) = default;
 
     /*! @brief Default move assignment operator. @return This emitter. */
-    emitter &operator=(emitter &&) = default;
+    emitter & operator=(emitter &&) = default;
 
     /**
      * @brief Emits the given event.
@@ -195,7 +199,7 @@ public:
      * @param args Parameters to use to initialize the event.
      */
     template<typename Event, typename... Args>
-    void publish(Args &&...args) {
+    void publish(Args &&... args) {
         Event instance{std::forward<Args>(args)...};
         assure<Event>()->publish(instance, *static_cast<Derived *>(this));
     }
@@ -316,6 +320,8 @@ private:
     std::vector<std::unique_ptr<basic_pool>> pools{};
 };
 
-} // namespace entt
+
+}
+
 
 #endif

@@ -1,10 +1,13 @@
 #ifndef ENTT_META_RANGE_HPP
 #define ENTT_META_RANGE_HPP
 
+
 #include <cstddef>
 #include <iterator>
 
+
 namespace entt {
+
 
 /**
  * @brief Iterable range to use to iterate all types of meta objects.
@@ -24,9 +27,10 @@ class meta_range {
         range_iterator() ENTT_NOEXCEPT = default;
 
         range_iterator(node_type *head) ENTT_NOEXCEPT
-            : it{head} {}
+            : it{head}
+        {}
 
-        range_iterator &operator++() ENTT_NOEXCEPT {
+        range_iterator & operator++() ENTT_NOEXCEPT {
             return (it = it->next), *this;
         }
 
@@ -56,8 +60,6 @@ public:
     using node_type = Node;
     /*! @brief Input iterator type. */
     using iterator = range_iterator;
-    /*! @brief Constant input iterator type. */
-    using const_iterator = iterator;
 
     /*! @brief Default constructor. */
     meta_range() ENTT_NOEXCEPT = default;
@@ -67,19 +69,15 @@ public:
      * @param head The underlying node with which to construct the range.
      */
     meta_range(node_type *head)
-        : node{head} {}
+        : node{head}
+    {}
 
     /**
      * @brief Returns an iterator to the beginning.
      * @return An iterator to the first meta object of the range.
      */
-    [[nodiscard]] const_iterator cbegin() const ENTT_NOEXCEPT {
-        return iterator{node};
-    }
-
-    /*! @copydoc cbegin */
     [[nodiscard]] iterator begin() const ENTT_NOEXCEPT {
-        return cbegin();
+        return iterator{node};
     }
 
     /**
@@ -87,19 +85,16 @@ public:
      * @return An iterator to the element following the last meta object of the
      * range.
      */
-    [[nodiscard]] const_iterator cend() const ENTT_NOEXCEPT {
-        return iterator{};
-    }
-
-    /*! @copydoc cend */
     [[nodiscard]] iterator end() const ENTT_NOEXCEPT {
-        return cend();
+        return iterator{};
     }
 
 private:
     node_type *node{nullptr};
 };
 
-} // namespace entt
+
+}
+
 
 #endif

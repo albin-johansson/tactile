@@ -1,17 +1,20 @@
 #ifndef ENTT_SIGNAL_SIGH_HPP
 #define ENTT_SIGNAL_SIGH_HPP
 
+
+#include <vector>
+#include <utility>
+#include <iterator>
 #include <algorithm>
 #include <functional>
-#include <iterator>
 #include <type_traits>
-#include <utility>
-#include <vector>
 #include "../config/config.h"
 #include "delegate.hpp"
 #include "fwd.hpp"
 
+
 namespace entt {
+
 
 /**
  * @brief Sink class.
@@ -24,6 +27,7 @@ namespace entt {
 template<typename Function>
 class sink;
 
+
 /**
  * @brief Unmanaged signal handler.
  *
@@ -34,6 +38,7 @@ class sink;
  */
 template<typename Function>
 class sigh;
+
 
 /**
  * @brief Unmanaged signal handler.
@@ -136,6 +141,7 @@ private:
     std::vector<delegate<Ret(Args...)>> calls;
 };
 
+
 /**
  * @brief Connection class.
  *
@@ -149,7 +155,8 @@ class connection {
     friend class sink;
 
     connection(delegate<void(void *)> fn, void *ref)
-        : disconnect{fn}, signal{ref} {}
+        : disconnect{fn}, signal{ref}
+    {}
 
 public:
     /*! @brief Default constructor. */
@@ -176,6 +183,7 @@ private:
     void *signal{};
 };
 
+
 /**
  * @brief Scoped connection class.
  *
@@ -194,17 +202,11 @@ struct scoped_connection {
      * @param other A valid connection object.
      */
     scoped_connection(const connection &other)
-        : conn{other} {}
+        : conn{other}
+    {}
 
     /*! @brief Default copy constructor, deleted on purpose. */
     scoped_connection(const scoped_connection &) = delete;
-
-    /**
-     * @brief Move constructor.
-     * @param other The scoped connection to move from.
-     */
-    scoped_connection(scoped_connection &&other) ENTT_NOEXCEPT
-        : conn{std::exchange(other.conn, {})} {}
 
     /*! @brief Automatically breaks the link on destruction. */
     ~scoped_connection() {
@@ -215,24 +217,14 @@ struct scoped_connection {
      * @brief Default copy assignment operator, deleted on purpose.
      * @return This scoped connection.
      */
-    scoped_connection &operator=(const scoped_connection &) = delete;
-
-    /**
-     * @brief Move assignment operator.
-     * @param other The scoped connection to move from.
-     * @return This scoped connection.
-     */
-    scoped_connection &operator=(scoped_connection &&other) ENTT_NOEXCEPT {
-        conn = std::exchange(other.conn, {});
-        return *this;
-    }
+    scoped_connection & operator=(const scoped_connection &) = delete;
 
     /**
      * @brief Acquires a connection.
      * @param other The connection object to acquire.
      * @return This scoped connection.
      */
-    scoped_connection &operator=(connection other) {
+    scoped_connection & operator=(connection other) {
         conn = std::move(other);
         return *this;
     }
@@ -253,6 +245,7 @@ struct scoped_connection {
 private:
     connection conn;
 };
+
 
 /**
  * @brief Sink class.
@@ -294,7 +287,8 @@ public:
      */
     sink(sigh<Ret(Args...)> &ref) ENTT_NOEXCEPT
         : offset{},
-          signal{&ref} {}
+          signal{&ref}
+    {}
 
     /**
      * @brief Returns false if at least a listener is connected to the sink.
@@ -408,7 +402,7 @@ public:
 
         delegate<void(void *)> conn{};
         conn.template connect<&release<Candidate>>();
-        return {std::move(conn), signal};
+        return { std::move(conn), signal };
     }
 
     /**
@@ -438,7 +432,7 @@ public:
 
         delegate<void(void *)> conn{};
         conn.template connect<&release<Candidate, Type>>(value_or_instance);
-        return {std::move(conn), signal};
+        return { std::move(conn), signal };
     }
 
     /**
@@ -489,8 +483,9 @@ public:
     void disconnect(Type *value_or_instance) {
         if(value_or_instance) {
             auto &calls = signal->calls;
-            auto predicate = [value_or_instance](const auto &delegate) { return delegate.instance() == value_or_instance; };
-            calls.erase(std::remove_if(calls.begin(), calls.end(), std::move(predicate)), calls.end());
+            calls.erase(std::remove_if(calls.begin(), calls.end(), [value_or_instance](const auto &delegate) {
+                return delegate.instance() == value_or_instance;
+            }), calls.end());
         }
     }
 
@@ -504,6 +499,7 @@ private:
     signal_type *signal;
 };
 
+
 /**
  * @brief Deduction guide.
  *
@@ -514,8 +510,11 @@ private:
  * @tparam Args Types of arguments of a function type.
  */
 template<typename Ret, typename... Args>
-sink(sigh<Ret(Args...)> &) -> sink<Ret(Args...)>;
+sink(sigh<Ret(Args...)> &)
+-> sink<Ret(Args...)>;
 
-} // namespace entt
+
+}
+
 
 #endif

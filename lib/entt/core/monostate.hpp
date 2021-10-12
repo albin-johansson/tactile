@@ -1,10 +1,13 @@
 #ifndef ENTT_CORE_MONOSTATE_HPP
 #define ENTT_CORE_MONOSTATE_HPP
 
+
 #include "../config/config.h"
 #include "fwd.hpp"
 
+
 namespace entt {
+
 
 /**
  * @brief Minimal implementation of the monostate pattern.
@@ -44,6 +47,7 @@ private:
     inline static ENTT_MAYBE_ATOMIC(Type) value{};
 };
 
+
 /**
  * @brief Helper variable template.
  * @tparam Value Value used to differentiate between different variables.
@@ -51,6 +55,8 @@ private:
 template<id_type Value>
 inline monostate<Value> monostate_v = {};
 
-} // namespace entt
+
+}
+
 
 #endif

@@ -1,17 +1,20 @@
 #ifndef ENTT_ENTITY_RUNTIME_VIEW_HPP
 #define ENTT_ENTITY_RUNTIME_VIEW_HPP
 
-#include <algorithm>
+
 #include <iterator>
-#include <type_traits>
-#include <utility>
 #include <vector>
+#include <utility>
+#include <algorithm>
+#include <type_traits>
 #include "../config/config.h"
 #include "entity.hpp"
-#include "fwd.hpp"
 #include "sparse_set.hpp"
+#include "fwd.hpp"
+
 
 namespace entt {
+
 
 /**
  * @brief Runtime view.
@@ -58,9 +61,11 @@ class basic_runtime_view final {
 
     class view_iterator final {
         [[nodiscard]] bool valid() const {
-            return (no_tombstone_check || (*it != tombstone))
-                   && std::all_of(pools->begin()++, pools->end(), [entt = *it](const auto *curr) { return curr->contains(entt); })
-                   && std::none_of(filter->cbegin(), filter->cend(), [entt = *it](const auto *curr) { return curr && curr->contains(entt); });
+            const auto entt = *it;
+
+            return (!stable_storage || (entt != tombstone))
+                && std::all_of(pools->begin()++, pools->end(), [entt](const auto *curr) { return curr->contains(entt); })
+                && std::none_of(filter->cbegin(), filter->cend(), [entt](const auto *curr) { return curr && curr->contains(entt); });
         }
 
     public:
@@ -76,14 +81,15 @@ class basic_runtime_view final {
             : pools{&cpools},
               filter{&ignore},
               it{curr},
-              no_tombstone_check{std::all_of(pools->cbegin(), pools->cend(), [](const basic_common_type *cpool) { return (cpool->policy() == deletion_policy::swap_and_pop); })} {
+              stable_storage{std::any_of(pools->cbegin(), pools->cend(), [](const basic_common_type *cpool) { return (cpool->policy() == deletion_policy::in_place); })}
+        {
             if(it != (*pools)[0]->end() && !valid()) {
                 ++(*this);
             }
         }
 
-        view_iterator &operator++() {
-            while(++it != (*pools)[0]->end() && !valid()) {}
+        view_iterator & operator++() {
+            while(++it != (*pools)[0]->end() && !valid());
             return *this;
         }
 
@@ -92,8 +98,8 @@ class basic_runtime_view final {
             return ++(*this), orig;
         }
 
-        view_iterator &operator--() ENTT_NOEXCEPT {
-            while(--it != (*pools)[0]->begin() && !valid()) {}
+        view_iterator & operator--() ENTT_NOEXCEPT {
+            while(--it != (*pools)[0]->begin() && !valid());
             return *this;
         }
 
@@ -122,7 +128,7 @@ class basic_runtime_view final {
         const std::vector<const basic_common_type *> *pools;
         const std::vector<const basic_common_type *> *filter;
         underlying_iterator it;
-        bool no_tombstone_check;
+        bool stable_storage;
     };
 
     [[nodiscard]] bool valid() const {
@@ -140,7 +146,8 @@ public:
     /*! @brief Default constructor to use to create empty, invalid views. */
     basic_runtime_view() ENTT_NOEXCEPT
         : pools{},
-          filter{} {}
+          filter{}
+    {}
 
     /**
      * @brief Constructs a runtime view from a set of storage classes.
@@ -149,13 +156,12 @@ public:
      */
     basic_runtime_view(std::vector<const basic_common_type *> cpools, std::vector<const basic_common_type *> epools) ENTT_NOEXCEPT
         : pools{std::move(cpools)},
-          filter{std::move(epools)} {
-        auto candidate = std::min_element(pools.begin(), pools.end(), [](const auto *lhs, const auto *rhs) {
-            return (!lhs && rhs) || (lhs && rhs && lhs->size() < rhs->size());
-        });
-
+          filter{std::move(epools)}
+    {
         // brings the best candidate (if any) on front of the vector
-        std::rotate(pools.begin(), candidate, pools.end());
+        std::rotate(pools.begin(), std::min_element(pools.begin(), pools.end(), [](const auto *lhs, const auto *rhs) {
+            return (!lhs && rhs) || (lhs && rhs && lhs->size() < rhs->size());
+        }), pools.end());
     }
 
     /**
@@ -197,12 +203,12 @@ public:
 
     /**
      * @brief Checks if a view contains an entity.
-     * @param entt A valid identifier.
+     * @param entt A valid entity identifier.
      * @return True if the view contains the given entity, false otherwise.
      */
     [[nodiscard]] bool contains(const entity_type entt) const {
         return valid() && std::all_of(pools.cbegin(), pools.cend(), [entt](const auto *curr) { return curr->contains(entt); })
-               && std::none_of(filter.cbegin(), filter.cend(), [entt](const auto *curr) { return curr && curr->contains(entt); });
+                && std::none_of(filter.cbegin(), filter.cend(), [entt](const auto *curr) { return curr && curr->contains(entt); });
     }
 
     /**
@@ -232,6 +238,8 @@ private:
     std::vector<const basic_common_type *> filter;
 };
 
-} // namespace entt
+
+}
+
 
 #endif
