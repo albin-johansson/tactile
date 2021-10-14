@@ -517,7 +517,6 @@ target_include_directories(${TACTILE_LIB}
     ${ROOT_DIR}/src
 
     SYSTEM PUBLIC
-    ${LIBRARY_DIR}/centurion
     ${LIBRARY_DIR}/entt
     ${LIBRARY_DIR}/imgui
     ${LIBRARY_DIR}/glew
@@ -535,7 +534,6 @@ target_include_directories(${TACTILE_LIB}
     ${SDL2_IMAGE_INCLUDE_DIRS}
     ${SDL2_TTF_INCLUDE_DIRS}
     ${PROTOBUF_INCLUDE_DIRS}
-    ${GENERATED_PROTO_DIR})
 
 target_link_libraries(${TACTILE_LIB}
     PUBLIC
@@ -545,7 +543,8 @@ target_link_libraries(${TACTILE_LIB}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
     ${SDL2_LIBRARY}
-    ${PROTOBUF_LIBRARIES})
+    ${CENTURION_LIBRARIES}
+    )
 
 target_compile_definitions(${TACTILE_LIB}
     PUBLIC
