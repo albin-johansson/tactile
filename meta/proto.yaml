@@ -2,6 +2,8 @@ name: Tactile map
 version: 1
 row-count: 4
 column-count: 5
+tile-width: 32
+tile-height: 32
 next-layer-id: 5
 next-object-id: 2
 layers:
@@ -11,10 +13,10 @@ layers:
     visible: Yes
     type: tile-layer
     data: >
-      0 0 0 0 0
-      0 0 0 0 0
-      0 0 0 0 0
-      0 0 0 0 0
+      1 2 3 4 5
+      6 7 8 9 10
+      11 12 13 14 15
+      16 17 18 19 20
   - name: bar
     id: 2
     opacity: 0.75
