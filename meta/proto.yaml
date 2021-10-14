@@ -1,4 +1,3 @@
----
 name: Tactile map
 version: 1
 row-count: 4
@@ -92,4 +91,3 @@ components:
       - name: fluctuationStep
         type: float
         value: 1.0
-...
