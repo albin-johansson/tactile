@@ -581,7 +581,7 @@ target_precompile_headers(${TACTILE_LIB}
     <unordered_map>
     <map>
     <vector>
-    <string>
+    <variant>
     <memory>
     <concepts>
     <type_traits>
