@@ -1,19 +1,22 @@
 #include "parse_object_layer.hpp"
 
-#include <string>  // string
+#include <string>   // string
+#include <utility>  // move
 
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseObject(const JSON& json, ObjectData& data) -> ParseError
+[[nodiscard]] auto ParseObject(const JSON& json) -> Expected<ObjectData, ParseError>
 {
+  ObjectData data;
+
   if (const auto it = json.find("id"); it != json.end()) {
     data.id = ObjectID{it->get<ObjectID::value_type>()};
   }
   else {
-    return ParseError::ObjectMissingId;
+    return tl::make_unexpected(ParseError::ObjectMissingId);
   }
 
   if (const auto it = json.find("x"); it != json.end()) {
@@ -69,29 +72,35 @@ namespace {
     data.type = ObjectType::Rectangle;
   }
 
-  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
-    return err;
+  if (auto props = ParseProperties(json)) {
+    data.properties = std::move(*props);
+  }
+  else {
+    return tl::make_unexpected(props.error());
   }
 
-  return ParseError::None;
+  return data;
 }
 
 }  // namespace
 
-auto ParseObjectLayer(const JSON& json, LayerData& layer) -> ParseError
+auto ParseObjectLayer(const JSON& json) -> Expected<ObjectLayerData, ParseError>
 {
-  auto& data = layer.data.emplace<ObjectLayerData>();
+  ObjectLayerData data;
 
   if (const auto it = json.find("objects"); it != json.end()) {
-    for (const auto& [key, object] : it->items()) {
-      auto& objectData = data.objects.emplace_back();
-      if (const auto err = ParseObject(object, objectData); err != ParseError::None) {
-        return err;
+    data.objects.reserve(it->size());
+    for (const auto& [key, value] : it->items()) {
+      if (auto object = ParseObject(value)) {
+        data.objects.push_back(std::move(*object));
+      }
+      else {
+        return tl::make_unexpected(object.error());
       }
     }
   }
 
-  return ParseError::None;
+  return data;
 }
 
 }  // namespace Tactile::IO

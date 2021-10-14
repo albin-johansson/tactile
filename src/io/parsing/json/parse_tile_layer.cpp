@@ -1,36 +1,37 @@
 #include "parse_tile_layer.hpp"
 
-#include "core/systems/layers/tile_layer_system.hpp"
+#include <utility>  // move
+
 #include "parse_tile_data.hpp"
 
 namespace Tactile::IO {
 
-auto ParseTileLayer(const JSON& json, LayerData& layer) -> ParseError
+auto ParseTileLayer(const JSON& json) -> Expected<TileLayerData, ParseError>
 {
-  auto& data = layer.data.emplace<TileLayerData>();
+  TileLayerData data;
 
   if (const auto it = json.find("height"); it != json.end()) {
     it->get_to(data.row_count);
   }
   else {
-    return ParseError::LayerMissingHeight;
+    return tl::make_unexpected(ParseError::LayerMissingHeight);
   }
 
   if (const auto it = json.find("width"); it != json.end()) {
     it->get_to(data.col_count);
   }
   else {
-    return ParseError::LayerMissingWidth;
+    return tl::make_unexpected(ParseError::LayerMissingWidth);
   }
 
-  data.tiles = Sys::MakeTileMatrix(data.row_count, data.col_count);
-  if (const auto err = ParseTileData(json, data.col_count, data.tiles);
-      err != ParseError::None)
-  {
-    return err;
+  if (auto tiles = ParseTileData(json, data.row_count, data.col_count)) {
+    data.tiles = std::move(*tiles);
+  }
+  else {
+    return tl::make_unexpected(tiles.error());
   }
 
-  return ParseError::None;
+  return data;
 }
 
 }  // namespace Tactile::IO

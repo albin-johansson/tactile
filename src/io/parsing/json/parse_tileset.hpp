@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>  // vector
+#include <filesystem>  // path
 
 #include "common/expected.hpp"
 #include "common/json.hpp"
@@ -9,7 +9,7 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseFancyTiles(const JSON& json)
-    -> Expected<std::vector<TileData>, ParseError>;
+[[nodiscard]] auto ParseTileset(const JSON& json, const std::filesystem::path& dir)
+    -> Expected<TilesetData, ParseError>;
 
 }  // namespace Tactile::IO

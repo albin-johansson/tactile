@@ -23,7 +23,12 @@ MapParser::MapParser(const std::filesystem::path& path)
 
     const auto extension = path.extension();
     if (extension == ".json") {
-      mError = IO::ParseJsonMap(path, mData);
+      if (auto data = IO::ParseJsonMap(path)) {
+        mData = std::move(*data);
+      }
+      else {
+        mError = data.error();
+      }
     }
     else if (extension == ".tmx" || extension == ".xml") {
       mError = IO::ParseXmlMap(path, mData);

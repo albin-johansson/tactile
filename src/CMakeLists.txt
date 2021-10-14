@@ -383,6 +383,8 @@ set(SOURCE_FILES
     io/parsing/json/parse_tile_data.hpp
     io/parsing/json/parse_tile_layer.cpp
     io/parsing/json/parse_tile_layer.hpp
+    io/parsing/json/parse_tileset.cpp
+    io/parsing/json/parse_tileset.hpp
     io/parsing/json/parse_tilesets.cpp
     io/parsing/json/parse_tilesets.hpp
     io/parsing/json/read_json.cpp

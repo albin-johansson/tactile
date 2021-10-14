@@ -1,92 +1,102 @@
 #include "parse_properties.hpp"
 
 #include <centurion.hpp>
-#include <string>  // string
+#include <filesystem>  // path
+#include <string>      // string
+#include <utility>     // move
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseValue(const JSON& json,
-                              const std::string& type,
-                              PropertyValue& property) -> ParseError
+[[nodiscard]] auto ParseValue(const JSON& json, const std::string& type)
+    -> Expected<PropertyValue, ParseError>
 {
-  const auto value = json.at("value");
+  PropertyValue result;
 
-  if (type == "string") {
-    property.SetValue(value.get<std::string>());
+  if (const auto value = json.at("value"); type == "string") {
+    result.SetValue(value.get<std::string>());
   }
   else if (type == "int") {
-    property.SetValue(value.get<int>());
+    result.SetValue(value.get<int>());
   }
   else if (type == "float") {
-    property.SetValue(value.get<float>());
+    result.SetValue(value.get<float>());
   }
   else if (type == "bool") {
-    property.SetValue(value.get<bool>());
+    result.SetValue(value.get<bool>());
   }
   else if (type == "file") {
-    property.SetValue(std::filesystem::path{value.get<std::string>()});
+    result.SetValue(std::filesystem::path{value.get<std::string>()});
   }
   else if (type == "object") {
     const auto obj = value.get<int>();
-    property.SetValue(ObjectRef{obj});
+    result.SetValue(ObjectRef{obj});
   }
   else if (type == "color") {
     const auto string = value.get<std::string>();
     const auto color = (string.size() == 9) ? cen::color::from_argb(string)
                                             : cen::color::from_rgb(string);
     if (color) {
-      property.SetValue(*color);
+      result.SetValue(*color);
     }
     else {
-      return ParseError::CouldNotParseProperty;
+      return tl::make_unexpected(ParseError::CouldNotParseProperty);
     }
   }
   else {
-    return ParseError::PropertyUnknownType;
+    return tl::make_unexpected(ParseError::PropertyUnknownType);
   }
 
-  return ParseError::None;
+  return result;
 }
 
-[[nodiscard]] auto ParseProperty(const JSON& json, PropertyData& data) -> ParseError
+[[nodiscard]] auto ParseProperty(const JSON& json) -> Expected<PropertyData, ParseError>
 {
+  PropertyData result;
+
   if (const auto it = json.find("name"); it != json.end()) {
-    it->get_to(data.name);
+    it->get_to(result.name);
   }
   else {
-    return ParseError::PropertyMissingName;
+    return tl::make_unexpected(ParseError::PropertyMissingName);
   }
 
   if (const auto it = json.find("type"); it != json.end()) {
     const auto type = it->get<std::string>();
 
-    if (const auto err = ParseValue(json, type, data.property); err != ParseError::None) {
-      return err;
+    if (auto value = ParseValue(json, type)) {
+      result.property = std::move(*value);
+    }
+    else {
+      return tl::make_unexpected(value.error());
     }
   }
   else {
-    return ParseError::PropertyMissingType;
+    return tl::make_unexpected(ParseError::PropertyMissingType);
   }
 
-  return ParseError::None;
+  return result;
 }
 
 }  // namespace
 
-auto ParseProperties(const JSON& json, std::vector<PropertyData>& properties)
-    -> ParseError
+auto ParseProperties(const JSON& json) -> Expected<std::vector<PropertyData>, ParseError>
 {
+  std::vector<PropertyData> properties;
+
   if (const auto it = json.find("properties"); it != json.end()) {
+    properties.reserve(it->size());
     for (const auto& [key, value] : it->items()) {
-      auto& data = properties.emplace_back();
-      if (const auto err = ParseProperty(value, data); err != ParseError::None) {
-        return err;
+      if (auto property = ParseProperty(value)) {
+        properties.push_back(std::move(*property));
+      }
+      else {
+        return tl::make_unexpected(property.error());
       }
     }
   }
 
-  return ParseError::None;
+  return properties;
 }
 
 }  // namespace Tactile::IO

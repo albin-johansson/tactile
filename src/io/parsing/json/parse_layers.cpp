@@ -11,120 +11,136 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data, usize index)
-    -> ParseError;
+[[nodiscard]] auto ParseLayer(const JSON& json, usize index)
+    -> Expected<LayerData, ParseError>;
 
-[[nodiscard]] auto ParseGroupLayer(const JSON& json, LayerData& target) -> ParseError
+[[nodiscard]] auto ParseGroupLayer(const JSON& json)
+    -> Expected<GroupLayerData, ParseError>
 {
-  auto& data = target.data.emplace<GroupLayerData>();
+  GroupLayerData data;
 
   if (const auto it = json.find("layers"); it != json.end()) {
     usize childIndex = 0;
     for (const auto& [key, layer] : it->items()) {
-      auto layerData = std::make_unique<LayerData>();
-
-      if (const auto err = ParseLayer(layer, *layerData, childIndex);
-          err != ParseError::None) {
-        return err;
+      if (auto child = ParseLayer(layer, childIndex)) {
+        data.layers.push_back(std::make_unique<LayerData>(std::move(*child)));
+      }
+      else {
+        return tl::make_unexpected(child.error());
       }
 
-      data.layers.push_back(std::move(layerData));
       ++childIndex;
     }
   }
 
-  return ParseError::None;
+  return data;
 }
 
-[[nodiscard]] auto ParseLayer(const JSON& json, LayerData& data, const usize index)
-    -> ParseError
+[[nodiscard]] auto ParseLayer(const JSON& json, const usize index)
+    -> Expected<LayerData, ParseError>
 {
-  data.index = index;
+  LayerData layer;
+  layer.index = index;
 
   if (const auto it = json.find("id"); it != json.end()) {
-    data.id = LayerID{it->get<LayerID::value_type>()};
+    layer.id = LayerID{it->get<LayerID::value_type>()};
   }
   else {
-    return ParseError::LayerMissingId;
+    return tl::make_unexpected(ParseError::LayerMissingId);
   }
 
   if (const auto it = json.find("name"); it != json.end()) {
-    it->get_to(data.name);
+    it->get_to(layer.name);
   }
   else {
-    data.name = "Layer";
+    layer.name = "Layer";
   }
 
   if (const auto it = json.find("opacity"); it != json.end()) {
-    it->get_to(data.opacity);
+    it->get_to(layer.opacity);
   }
   else {
-    data.opacity = 1.0f;
+    layer.opacity = 1.0f;
   }
 
   if (const auto it = json.find("visible"); it != json.end()) {
-    it->get_to(data.is_visible);
+    it->get_to(layer.is_visible);
   }
   else {
-    data.is_visible = true;
+    layer.is_visible = true;
   }
 
   if (const auto it = json.find("type"); it != json.end()) {
     const auto type = it->get<std::string>();
     if (type == "tilelayer") {
-      data.type = LayerType::TileLayer;
-      if (const auto err = ParseTileLayer(json, data); err != ParseError::None) {
-        return err;
+      layer.type = LayerType::TileLayer;
+      if (auto tileLayer = ParseTileLayer(json)) {
+        layer.data.emplace<TileLayerData>(std::move(*tileLayer));
+      }
+      else {
+        return tl::make_unexpected(tileLayer.error());
       }
     }
     else if (type == "objectgroup") {
-      data.type = LayerType::ObjectLayer;
-      if (const auto err = ParseObjectLayer(json, data); err != ParseError::None) {
-        return err;
+      layer.type = LayerType::ObjectLayer;
+      if (auto objectLayer = ParseObjectLayer(json)) {
+        layer.data.emplace<ObjectLayerData>(std::move(*objectLayer));
+      }
+      else {
+        return tl::make_unexpected(objectLayer.error());
       }
     }
     else if (type == "group") {
-      data.type = LayerType::GroupLayer;
-      if (const auto err = ParseGroupLayer(json, data); err != ParseError::None) {
-        return err;
+      layer.type = LayerType::GroupLayer;
+      if (auto groupLayer = ParseGroupLayer(json)) {
+        layer.data.emplace<GroupLayerData>(std::move(*groupLayer));
+      }
+      else {
+        return tl::make_unexpected(groupLayer.error());
       }
     }
     else {
-      return ParseError::LayerUnknownType;
+      return tl::make_unexpected(ParseError::LayerUnknownType);
     }
   }
   else {
-    return ParseError::LayerMissingType;
+    return tl::make_unexpected(ParseError::LayerMissingType);
   }
 
-  if (const auto err = ParseProperties(json, data.properties); err != ParseError::None) {
-    return err;
+  if (auto props = ParseProperties(json)) {
+    layer.properties = std::move(*props);
+  }
+  else {
+    return tl::make_unexpected(props.error());
   }
 
-  return ParseError::None;
+  return layer;
 }
 
 }  // namespace
 
-auto ParseLayers(const JSON& json, std::vector<LayerData>& layers) -> ParseError
+auto ParseLayers(const JSON& json) -> Expected<std::vector<LayerData>, ParseError>
 {
+  std::vector<LayerData> layers;
+
   if (const auto it = json.find("layers"); it != json.end()) {
     usize index = 0;
-    for (const auto& [key, layer] : it->items()) {
-      auto& layerData = layers.emplace_back();
-
-      if (const auto err = ParseLayer(layer, layerData, index); err != ParseError::None) {
-        return err;
+    for (const auto& [key, value] : it->items()) {
+      if (auto layer = ParseLayer(value, index)) {
+        layers.push_back(std::move(*layer));
+      }
+      else {
+        return tl::make_unexpected(layer.error());
       }
 
       ++index;
     }
   }
   else {
-    return ParseError::MapMissingLayers;
+    return tl::make_unexpected(ParseError::MapMissingLayers);
   }
 
-  return ParseError::None;
+  return layers;
 }
 
 }  // namespace Tactile::IO
