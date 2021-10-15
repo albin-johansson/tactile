@@ -3,8 +3,13 @@ cmake_minimum_required(VERSION 3.18)
 project(tactile CXX)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
-set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+if (MSVC)
+  add_compile_options(/std:c++latest)  # This is a workaround for issues with <format>
+else ()
+  set(CMAKE_CXX_STANDARD 20)
+endif ()
 
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARY_DIR ${ROOT_DIR}/lib)
@@ -48,10 +53,6 @@ set(PUGIXML_SOURCES
     ${LIBRARY_DIR}/pugixml/pugiconfig.hpp
     ${LIBRARY_DIR}/pugixml/pugixml.cpp
     ${LIBRARY_DIR}/pugixml/pugixml.hpp)
-
-if (MSVC)
-  add_compile_options(/std:c++latest)  # This is a workaround for issues with <format>
-endif ()
 
 include(Utilities)
 include(TactileDependencies)
