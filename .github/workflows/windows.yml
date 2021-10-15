@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@main
       - uses: ilammy/msvc-dev-cmd@master
       - uses: seanmiddleditch/gha-setup-ninja@master
-      - uses: lukka/get-cmake@main
+      - uses: lukka/get-cmake@latest
 
       - name: Create binaries directory
         shell: cmd
