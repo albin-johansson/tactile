@@ -5,6 +5,8 @@ FetchContent_Declare(centurion
     GIT_REPOSITORY "https://github.com/albin-johansson/centurion.git"
     GIT_TAG "cmake-package")
 
+set(CEN_USE_MIX OFF)
+
 FetchContent_MakeAvailable(centurion)
 
 set(CENTURION_INCLUDE_DIRS "${centurion_SOURCE_DIR}/src")
