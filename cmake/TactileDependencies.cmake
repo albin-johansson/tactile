@@ -33,3 +33,12 @@ FetchContent_Declare(googletest
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
+
+# YAML-CPP
+FetchContent_Declare(yaml-cpp
+    GIT_REPOSITORY "https://github.com/jbeder/yaml-cpp"
+    GIT_TAG "master")
+
+set(YAML_CPP_BUILD_TESTS OFF)
+
+FetchContent_MakeAvailable(yaml-cpp)

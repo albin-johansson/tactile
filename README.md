@@ -63,3 +63,4 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * [stb_image](https://github.com/nothings/stb)
 * [tl::expected](https://github.com/TartanLlama/expected)
 * [tl::optional](https://github.com/TartanLlama/optional)
+* [yaml-cpp](https://github.com/jbeder/yaml-cpp)

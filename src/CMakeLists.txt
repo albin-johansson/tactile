@@ -546,6 +546,8 @@ target_link_libraries(${TACTILE_LIB}
     ${SDL2_TTF_LIBRARIES}
     ${SDL2_LIBRARY}
     ${CENTURION_LIBRARIES}
+    ${PROTOBUF_LIBRARIES}
+    yaml-cpp
     )
 
 target_compile_definitions(${TACTILE_LIB}

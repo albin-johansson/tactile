@@ -65,6 +65,7 @@ void UpdateCreditsDialog()
       Row("stb_image", "2.26", "MIT");
       Row("tl::expected", "1.0.0", "CC0");
       Row("tl::optional", "1.0.0", "CC0");
+      Row("yaml-cpp", "0.7.0", "MIT");
 
       ImGui::EndTable();
     }
