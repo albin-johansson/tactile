@@ -135,6 +135,9 @@ namespace {
 
   const auto source = GetString(node, "source").value();
   const auto path = std::filesystem::weakly_canonical(directory / source);
+  if (!std::filesystem::exists(path)) {
+    return ParseError::ExternalTilesetDoesNotExist;
+  }
 
   pugi::xml_document external;
   if (!external.load_file(path.c_str())) {

@@ -43,6 +43,7 @@ enum class ParseError
   CouldNotParseTiles,
   UnsupportedTileEncoding,
 
+  ExternalTilesetDoesNotExist,
   CouldNotReadExternalTileset,
   TilesetMissingFirstGid,
   TilesetMissingTileWidth,
@@ -61,7 +62,6 @@ enum class ParseError
   ObjectMissingType,  // Tactile YAML only
 
   MissingTilesetPath,           // Tactile YAML only
-  ExternalTilesetDoesNotExist,  // TODO use in JSON/XML parsers?
   TilesetMissingVersion,        // Tactile YAML only
   TilesetInvalidVersion,        // Tactile YAML only
   TilesetMissingTileCount,

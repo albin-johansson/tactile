@@ -159,6 +159,9 @@ namespace {
 
   const auto source = json.at("source").get<std::string>();
   const auto path = std::filesystem::weakly_canonical(dir / source);
+  if (!std::filesystem::exists(path)) {
+    return tl::make_unexpected(ParseError::ExternalTilesetDoesNotExist);
+  }
 
   try {
     const auto external = ReadJson(path).value();
