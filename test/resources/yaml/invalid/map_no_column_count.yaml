@@ -8,7 +8,7 @@ layers:
   - id: 1
     name: Tile Layer 1
     type: tile-layer
-    data: >
+    data: |
       360 360 360 360 360 360 360 360
       360 360 360 360 360 360 360 360
       360 360 360 360 360 360 360 360
@@ -19,7 +19,7 @@ layers:
     name: Tile Layer 2
     opacity: 0.83
     type: tile-layer
-    data: >
+    data: |
       1293 1294 1295 0 0 0 307 308
       1325 1326 1327 0 0 275 245 308
       1357 1358 1359 0 275 245 308 308

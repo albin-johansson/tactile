@@ -1,7 +1,8 @@
 #include "parse_tile_layer.hpp"
 
-#include <string>   // string
-#include <utility>  // move
+#include <algorithm>  // replace
+#include <string>     // string
+#include <utility>    // move
 
 #include "core/map_position.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
@@ -42,7 +43,10 @@ auto ParseTileLayer(const YAML::Node& node, const int nRows, const int nCols)
   data.col_count = nCols;
 
   if (auto tiles = node["data"]) {
-    if (auto matrix = ParseTiles(tiles.as<std::string>(), nRows, nCols)) {
+    auto raw = tiles.as<std::string>();
+    std::ranges::replace(raw, '\n', ' ');
+
+    if (auto matrix = ParseTiles(raw, nRows, nCols)) {
       data.tiles = std::move(*matrix);
     }
     else {
