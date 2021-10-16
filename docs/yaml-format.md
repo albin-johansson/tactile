@@ -178,14 +178,30 @@ The `frame` node represents a frame in an animation.
 |    `type` | `string`  |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
 |   `value` | `variant` |   Yes    | The value of the property.                                           |
 
-Color properties are always stored using RGBA encoding, with a `#` prefix, e.g. `"#11223344"`.
+Note, color properties are always stored using RGBA encoding, with a `#` prefix, e.g. `"#11223344"`.
 
-Object properties are effectively just integer properties that store object identifiers.
-
-Example:
+Examples:
 
 ```YAML
-name: Foo
+name: Scale
+type: float
+value: 0.7
+```
+
+```YAML
+name: Tint
 type: color
 value: "#4FEB19FF"
+```
+
+```YAML
+name: Associated object
+type: object
+value: 42
+```
+
+```YAML
+name: Raw data
+type: file
+value: foo/bar/data.bin
 ```
