@@ -56,14 +56,14 @@ namespace {
           break;
 
         case PropertyType::Color: {
-        const auto hex = value.as<std::string>();
-        if (const auto color = cen::color::from_rgba(hex)) {
-          result.SetValue(*color);
-        }
-        else {
-          return tl::make_unexpected(ParseError::CouldNotParseProperty);
-        }
-        break;
+          const auto hex = value.as<std::string>();
+          if (const auto color = cen::color::from_rgba(hex)) {
+            result.SetValue(*color);
+          }
+          else {
+            return tl::make_unexpected(ParseError::CouldNotParseProperty);
+          }
+          break;
         }
 
         case PropertyType::Object:
