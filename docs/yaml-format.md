@@ -2,7 +2,7 @@
 
 Other than the Tiled JSON and XML formats, Tactile supports its own custom YAML map format. If
 you're familiar with the Tiled JSON format, you'll notice many similarities. However, one of the key
-differences is that the Tactile YAML format doesn't support embedded tilesets. All predefined names are in `kebab-case`.
+differences is that the Tactile YAML format doesn't support embedded tilesets. All predefined names are in `kebab-case`. All attributes that aren't specified as required may be omitted from save files.
 
 ## Root
 
