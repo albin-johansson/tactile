@@ -62,7 +62,7 @@
   "tilesets": [
     {
       "firstgid": 1,
-      "source": "foo.json"
+      "source": "invalid.json"
     }
   ],
   "tilewidth": 32,
