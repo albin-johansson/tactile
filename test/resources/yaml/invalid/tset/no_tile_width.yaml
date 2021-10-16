@@ -1,0 +1,8 @@
+name: terrain
+tile-count: 1024
+tile-height: 32
+column-count: 32
+image-path: ../../../terrain.png
+image-width: 1024
+image-height: 1024
+version: 1
