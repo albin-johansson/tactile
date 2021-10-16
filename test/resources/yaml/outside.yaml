@@ -1,3 +1,4 @@
+version: 1
 name: outside
 tile-count: 1024
 tile-width: 32
@@ -6,4 +7,5 @@ column-count: 32
 image-path: ../outside.png
 image-width: 1024
 image-height: 1024
-version: 1
+tiles:
+  []
