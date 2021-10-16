@@ -292,4 +292,4 @@ auto GetGlobalIndex(const entt::registry& registry, const entt::entity entity) -
   }
 }
 
-}  // namespace Tactile::Sys::Tree
+}  // namespace Tactile::Sys::LayerTree
