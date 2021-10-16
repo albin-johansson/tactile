@@ -69,8 +69,8 @@ additional attributes.
 |    Attribute |   Type   | Required | Description                          |
 | -----------: | :------: | :------: | :----------------------------------- |
 |         `id` |  `int`   |   Yes    |                                      |
+|       `type` | `string` |   Yes    | One of `point`, `rect` or `ellipse`. |
 |       `name` | `string` |    No    |                                      |
-|       `type` | `string` |    No    | One of `point`, `rect` or `ellipse`. |
 |        `tag` | `string` |    No    | A user-defined type tag.             |
 |    `visible` |  `bool`  |    No    |                                      |
 |          `x` | `float`  |    No    |                                      |
