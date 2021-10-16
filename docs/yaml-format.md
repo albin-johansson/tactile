@@ -10,7 +10,6 @@ The root node in the Tactile YAML format provides general information about the 
 
 |        Attribute |   Type   | Required | Description                           |
 | ---------------: | :------: | :------: | :------------------------------------ |
-|           `name` | `string` |   Yes    | The name associated with the tilemap. |
 |        `version` |  `int`   |   Yes    | The version of the YAML map format.   |
 |      `row-count` |  `int`   |   Yes    | The number of rows in the tilemap.    |
 |   `column-count` |  `int`   |   Yes    | The number of columns in the tilemap. |
