@@ -26,7 +26,15 @@ void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
           !path.ends_with(".xml") && !path.ends_with(".yml") && !path.ends_with(".yaml"))
       {
         CENTURION_LOG_INFO("No suffix in requested file path, using preferred format...");
-        path += (Prefs::GetPreferredFormat() == "JSON") ? ".json" : ".tmx";
+        if (const auto& format = Prefs::GetPreferredFormat(); format == "YAML") {
+          path += ".yaml";
+        }
+        else if (format == "JSON") {
+          path += ".json";
+        }
+        else if (format == "XML") {
+          path += ".tmx";
+        }
       }
 
       dispatcher.enqueue<SaveAsEvent>(std::move(path));

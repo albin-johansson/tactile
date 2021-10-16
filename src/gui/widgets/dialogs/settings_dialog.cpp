@@ -161,14 +161,27 @@ void ShowExportTab()
     }
     ImGui::Spacing();
 
-    if (auto index = (settings.preferred_format == "JSON") ? 0 : 1;
-        Combo("Preferred format:",
-              "JSON\0TMX\0\0",
-              &index,
-              "The save file format used if no file extension is specified when "
-              "saving maps"))
-    {
-      settings.preferred_format = (index == 0) ? "JSON" : "TMX";
+    ImGui::TextUnformatted("Preferred format: ");
+    ImGui::SameLine();
+    if (ImGui::BeginCombo("##PreferredFormatCombo", settings.preferred_format.c_str())) {
+      if (ImGui::MenuItem("YAML")) {
+        settings.preferred_format = "YAML";
+      }
+
+      if (ImGui::MenuItem("JSON")) {
+        settings.preferred_format = "JSON";
+      }
+
+      if (ImGui::MenuItem("XML (TMX)")) {
+        settings.preferred_format = "XML";
+      }
+
+      ImGui::EndCombo();
+    }
+
+    if (ImGui::IsItemHovered()) {
+      ImGui::SetTooltip(
+          "The save file format used if no file extension is specified when saving maps");
     }
 
     if (auto embedTilesets = settings.embed_tilesets;

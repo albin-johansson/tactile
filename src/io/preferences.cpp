@@ -17,7 +17,7 @@ namespace {
 
 inline const auto settings_path = GetPersistentFileDir() / "settings.bin";
 
-constexpr CStr def_preferred_format = "JSON";
+constexpr CStr def_preferred_format = "YAML";
 constexpr Theme def_theme = Theme::Nocturnal;
 constexpr cen::color def_viewport_background{60, 60, 60};
 constexpr usize def_command_capacity = 100;
