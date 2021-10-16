@@ -97,6 +97,17 @@ additional attributes.
 |  `animation` | Sequence |    No    | A sequence of `frame` nodes.    |
 | `properties` | Sequence |    No    | A sequence of `property` nodes. |
 
+Example:
+
+```YAML
+id: 42
+animation:
+  - tile: 123
+    duration: 150
+  - tile: 456
+    duration: 120
+```
+
 ### `frame`
 
 |  Attribute | Type  | Required | Description |
@@ -111,3 +122,11 @@ additional attributes.
 |    `name` | `string` |   Yes    |             |
 |    `type` | `string` |   Yes    |             |
 |   `value` | `string` |   Yes    |             |
+
+Example:
+
+```YAML
+name: Foo
+type: color
+value: "#4FEB19"
+```
