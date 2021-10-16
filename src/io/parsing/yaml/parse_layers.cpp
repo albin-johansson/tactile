@@ -106,6 +106,9 @@ namespace {
         return tl::make_unexpected(data.error());
       }
     }
+    else {
+      return tl::make_unexpected(ParseError::LayerUnknownType);
+    }
   }
   else {
     return tl::make_unexpected(ParseError::LayerMissingType);
