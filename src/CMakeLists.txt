@@ -459,6 +459,15 @@ set(SOURCE_FILES
     io/saving/xml/save_xml.cpp
     io/saving/xml/save_xml.hpp
 
+    io/saving/yaml/save_document_as_yaml.cpp
+    io/saving/yaml/save_document_as_yaml.hpp
+    io/saving/yaml/save_layers.cpp
+    io/saving/yaml/save_layers.hpp
+    io/saving/yaml/save_properties.cpp
+    io/saving/yaml/save_properties.hpp
+    io/saving/yaml/save_tilesets.cpp
+    io/saving/yaml/save_tilesets.hpp
+
     utils/buffer_utils.hpp
     utils/color_utils.hpp
     utils/from_string.hpp

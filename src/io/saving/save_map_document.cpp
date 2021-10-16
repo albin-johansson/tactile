@@ -7,6 +7,7 @@
 #include "json/save_map_document_as_json.hpp"
 #include "utils/profile.hpp"
 #include "xml/save_map_document_as_xml.hpp"
+#include "yaml/save_document_as_yaml.hpp"
 
 namespace Tactile::IO {
 
@@ -24,6 +25,9 @@ void SaveMapDocument(const Document& document)
   }
   else if (extension == ".tmx" || extension == ".xml") {
     SaveMapDocumentAsXml(document);
+  }
+  else if (extension == ".yml" || extension == ".yaml") {
+    SaveDocumentAsYaml(document);
   }
   else {
     CENTURION_LOG_ERROR("Failed to save map document due to invalid extension: %s",
