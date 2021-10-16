@@ -413,6 +413,19 @@ set(SOURCE_FILES
     io/parsing/xml/xml_utils.cpp
     io/parsing/xml/xml_utils.hpp
 
+    io/parsing/yaml/parse_layers.cpp
+    io/parsing/yaml/parse_layers.hpp
+    io/parsing/yaml/parse_object_layer.cpp
+    io/parsing/yaml/parse_object_layer.hpp
+    io/parsing/yaml/parse_properties.cpp
+    io/parsing/yaml/parse_properties.hpp
+    io/parsing/yaml/parse_tile_layer.cpp
+    io/parsing/yaml/parse_tile_layer.hpp
+    io/parsing/yaml/parse_tilesets.cpp
+    io/parsing/yaml/parse_tilesets.hpp
+    io/parsing/yaml/parse_yaml_map.cpp
+    io/parsing/yaml/parse_yaml_map.hpp
+
     io/saving/common_saving.cpp
     io/saving/common_saving.hpp
     io/saving/save_map_document.cpp
@@ -451,6 +464,8 @@ set(SOURCE_FILES
     utils/load_texture.hpp
     utils/profile.hpp
     utils/scope_id.hpp
+    utils/string_utils.hpp
+    utils/string_utils.cpp
 
     shortcuts/shortcut.cpp
     shortcuts/shortcut.hpp

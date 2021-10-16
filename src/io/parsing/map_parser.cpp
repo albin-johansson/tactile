@@ -4,6 +4,7 @@
 
 #include "io/parsing/json/parse_json_map.hpp"
 #include "io/parsing/xml/parse_xml_map.hpp"
+#include "io/parsing/yaml/parse_yaml_map.hpp"
 #include "utils/profile.hpp"
 
 namespace Tactile::IO {
@@ -32,6 +33,14 @@ MapParser::MapParser(const std::filesystem::path& path)
     }
     else if (extension == ".tmx" || extension == ".xml") {
       mError = IO::ParseXmlMap(path, mData);
+    }
+    else if (extension == ".yaml" || extension == ".yml") {
+      if (auto data = IO::ParseYamlMap(path)) {
+        mData = std::move(*data);
+      }
+      else {
+        mError = data.error();
+      }
     }
     else {
       mError = ParseError::MapUnsupportedExtension;

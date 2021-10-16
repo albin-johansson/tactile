@@ -189,3 +189,8 @@ TEST(ParseMapExternalTilesets, XML)
 {
   VerifyMap("resources/xml/external.tmx");
 }
+
+TEST(ParseMapExternalTilesets, YAML)
+{
+  VerifyMap("resources/yaml/map.yaml");
+}

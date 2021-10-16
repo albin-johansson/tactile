@@ -56,7 +56,18 @@ enum class ParseError
   PropertyMissingType,
   PropertyUnknownType,
 
-  ObjectMissingId
+  ObjectMissingId,
+  ObjectInvalidType,  // Tactile YAML only
+  ObjectMissingType,  // Tactile YAML only
+
+  MissingTilesetPath,           // Tactile YAML only
+  ExternalTilesetDoesNotExist,  // TODO use in JSON/XML parsers?
+  TilesetMissingVersion,        // Tactile YAML only
+  TilesetInvalidVersion,        // Tactile YAML only
+  TilesetMissingTileCount,
+  TilesetMissingColumnCount,
+  TilesetMissingImageWidth,
+  TilesetMissingImageHeight,
 };
 
 /**

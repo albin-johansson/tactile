@@ -111,6 +111,36 @@ auto GetCause(const ParseError error) -> CStr
 
     case ParseError::ObjectMissingId:
       return "The map featured an object layer containing an object without an ID!";
+
+    case ParseError::ObjectInvalidType:
+      return "The map featured an object layer with an object of an invalid type!";
+
+    case ParseError::ObjectMissingType:
+      return "The map featured an object layer with an object without a type!";
+
+    case ParseError::MissingTilesetPath:
+      return "The map featured an external tileset reference without a path!";
+
+    case ParseError::ExternalTilesetDoesNotExist:
+      return "The map featured a path to an external tileset that doesn't exist!";
+
+    case ParseError::TilesetMissingVersion:
+      return "The map featured a tileset without a version attribute!";
+
+    case ParseError::TilesetInvalidVersion:
+      return "The map featured a tileset with an invalid version attribute!";
+
+    case ParseError::TilesetMissingTileCount:
+      return "The map featured a tileset without a tile count attribute!";
+
+    case ParseError::TilesetMissingColumnCount:
+      return "The map featured a tileset without a column count attribute!";
+
+    case ParseError::TilesetMissingImageWidth:
+      return "The map featured a tileset without an image width attribute!";
+
+    case ParseError::TilesetMissingImageHeight:
+      return "The map featured a tileset without an image height attribute!";
   }
 }
 

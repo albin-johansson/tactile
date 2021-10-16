@@ -14,6 +14,7 @@ using PE = ParseError;
 using PathErrorPair = std::pair<CStr, PE>;
 
 #define JSON_INVALID "resources/json/invalid/"
+#define YAML_INVALID "resources/yaml/invalid/"
 #define TMX_INVALID "resources/xml/invalid/"
 
 // clang-format off
@@ -50,6 +51,8 @@ inline const auto maps = testing::Values(
     std::make_pair(JSON_INVALID "property_missing_name.json", PE::PropertyMissingName),
     std::make_pair(JSON_INVALID "property_missing_type.json", PE::PropertyMissingType),
     std::make_pair(JSON_INVALID "property_unknown_type.json", PE::PropertyUnknownType),
+
+    std::make_pair("resources/yaml/map.yaml", PE::None),
 
     std::make_pair("resources/xml/embedded.tmx", PE::None),
     std::make_pair("resources/xml/external.tmx", PE::None),
