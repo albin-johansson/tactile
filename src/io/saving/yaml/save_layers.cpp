@@ -145,22 +145,22 @@ void SaveLayer(YAML::Emitter& emitter,
     emitter << YAML::Key << "visible" << YAML::Value << layer.visible;
   }
 
-  emitter << YAML::Key << "type";
+  emitter << YAML::Key << "type" << YAML::Value;
   switch (layer.type) {
     case LayerType::TileLayer: {
-      emitter << YAML::Value << "tile-layer";
+      emitter << "tile-layer";
       SaveTiles(emitter, registry, entity);
       break;
     }
 
     case LayerType::ObjectLayer: {
-      emitter << YAML::Value << "object-layer";
+      emitter << "object-layer";
       SaveObjects(emitter, registry, entity, dir);
       break;
     }
 
     case LayerType::GroupLayer: {
-      emitter << YAML::Value << "group-layer";
+      emitter << "group-layer";
 
       if (!node.children.empty()) {
         emitter << YAML::Key << "layers" << YAML::BeginSeq;
@@ -186,8 +186,7 @@ void SaveLayers(YAML::Emitter& emitter,
                 const std::filesystem::path& dir)
 {
   if (!registry.empty<LayerTreeNode>()) {
-    emitter << YAML::Key << "layers";
-    emitter << YAML::BeginSeq;
+    emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
     for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
       const auto& parent = registry.get<Parent>(entity);
