@@ -21,6 +21,8 @@ The root node in the Tactile YAML format provides general information about the 
 |       `tilesets` | Sequence |    No    | A sequence of `tileset-ref` nodes.    |
 |     `properties` | Sequence |    No    | A sequence of `property` nodes.       |
 
+---
+
 ## `layer`
 
 |    Attribute |   Type   | Required | Default | Description                                          |
@@ -64,6 +66,8 @@ additional attributes.
 | --------: | :------: | :------: | :--------------------------- |
 |  `layers` | Sequence |   Yes    | A sequence of `layer` nodes. |
 
+---
+
 ## `object`
 
 |    Attribute |   Type   | Required | Default | Description                          |
@@ -90,6 +94,8 @@ x: 123
 y: 456
 ```
 
+---
+
 ## `tileset-ref`
 
 The `tileset-ref` node provides information about an external tileset definition, and are always stored in the main tilemap file.
@@ -105,6 +111,8 @@ Example:
 first-global-id: 42
 path: foo/bar/tileset.yaml
 ```
+
+---
 
 ## `tileset`
 
@@ -169,6 +177,8 @@ The `frame` node represents a frame in an animation.
 | ---------: | :---: | :------: | :------------------------------------------------------------- |
 |     `tile` | `int` |   Yes    | Local ID of the tile that should be rendered during the frame. |
 | `duration` | `int` |   Yes    | Duration of the frame, in milliseconds.                        |
+
+---
 
 ## `property`
 
