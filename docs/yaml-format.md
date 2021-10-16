@@ -31,6 +31,17 @@ differences is that the Tactile YAML format doesn't support embedded tilesets.
 |    `visible` |  `bool`  |    No    | Whether or not the layer is rendered.                |
 | `properties` | Sequence |    No    | A sequence of `property` nodes.                      |
 
+Example:
+
+```YAML
+name: foo
+id: 7
+type: tile-layer
+data: >
+  1 2 3 4
+  5 6 7 8
+```
+
 In addition to the layer attributes listed above, each of the three different kinds of layers have
 additional attributes.
 
@@ -54,17 +65,29 @@ additional attributes.
 
 ## `object`
 
-|    Attribute |   Type   | Required | Description                     |
-| -----------: | :------: | :------: | :------------------------------ |
-|       `name` | `string` |   Yes    |                                 |
-|         `id` |  `int`   |   Yes    |                                 |
-|       `type` | `string` |    No    |                                 |
-|    `visible` |  `bool`  |    No    |                                 |
-|          `x` | `float`  |    No    |                                 |
-|          `y` | `float`  |    No    |                                 |
-|      `width` | `float`  |    No    |                                 |
-|     `height` | `float`  |    No    |                                 |
-| `properties` | Sequence |    No    | A sequence of `property` nodes. |
+|    Attribute |   Type   | Required | Description                          |
+| -----------: | :------: | :------: | :----------------------------------- |
+|       `name` | `string` |   Yes    |                                      |
+|         `id` |  `int`   |   Yes    |                                      |
+|       `type` | `string` |    No    | One of `point`, `rect` or `ellipse`. |
+|        `tag` | `string` |    No    | A user-defined type tag.             |
+|    `visible` |  `bool`  |    No    |                                      |
+|          `x` | `float`  |    No    |                                      |
+|          `y` | `float`  |    No    |                                      |
+|      `width` | `float`  |    No    |                                      |
+|     `height` | `float`  |    No    |                                      |
+| `properties` | Sequence |    No    | A sequence of `property` nodes.      |
+
+Example:
+
+```YAML
+name: foo
+id: 42
+type: point
+tag: spawn-point
+x: 123
+y: 456
+```
 
 ## `tileset-ref`
 
