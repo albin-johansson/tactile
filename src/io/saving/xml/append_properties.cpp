@@ -71,7 +71,7 @@ void AppendProperties(const entt::registry& registry,
       const auto& property = registry.get<Property>(propertyEntity);
 
       auto propertyNode = root.append_child("property");
-      propertyNode.append_attribute("name").set_value(context.name.c_str());
+      propertyNode.append_attribute("name").set_value(property.name.c_str());
       AppendTypeAttribute(property.value.GetType().value(), propertyNode);
       AppendValueAttribute(property.value, propertyNode, dir);
     }
