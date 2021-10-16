@@ -68,8 +68,8 @@ additional attributes.
 
 |    Attribute |   Type   | Required | Description                          |
 | -----------: | :------: | :------: | :----------------------------------- |
-|       `name` | `string` |   Yes    |                                      |
 |         `id` |  `int`   |   Yes    |                                      |
+|       `name` | `string` |    No    |                                      |
 |       `type` | `string` |    No    | One of `point`, `rect` or `ellipse`. |
 |        `tag` | `string` |    No    | A user-defined type tag.             |
 |    `visible` |  `bool`  |    No    |                                      |
