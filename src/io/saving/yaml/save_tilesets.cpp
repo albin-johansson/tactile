@@ -107,8 +107,7 @@ void SaveTilesets(YAML::Emitter& emitter,
                   const std::filesystem::path& dir)
 {
   if (!registry.empty<Tileset>()) {
-    emitter << YAML::Key << "tilesets";
-    emitter << YAML::BeginSeq;
+    emitter << YAML::Key << "tilesets" << YAML::BeginSeq;
 
     for (auto&& [entity, tileset, ctx] : registry.view<Tileset, PropertyContext>().each())
     {
