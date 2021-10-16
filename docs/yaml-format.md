@@ -23,14 +23,14 @@ The root node in the Tactile YAML format provides general information about the 
 
 ## `layer`
 
-|    Attribute |   Type   | Required | Description                                          |
-| -----------: | :------: | :------: | :--------------------------------------------------- |
-|       `name` | `string` |   Yes    | The name associated with the layer.                  |
-|         `id` |  `int`   |   Yes    | The unique identifier associated with the layer.     |
-|       `type` | `string` |   Yes    | One of `tile-layer`, `object-layer` or `group-layer` |
-|    `opacity` | `float`  |    No    | The opacity of the layer, in the range [0, 1].       |
-|    `visible` |  `bool`  |    No    | Whether or not the layer is rendered.                |
-| `properties` | Sequence |    No    | A sequence of `property` nodes.                      |
+|    Attribute |   Type   | Required | Default | Description                                          |
+| -----------: | :------: | :------: | :-----: | :--------------------------------------------------- |
+|       `name` | `string` |   Yes    |   N/A   | The name associated with the layer.                  |
+|         `id` |  `int`   |   Yes    |   N/A   | The unique identifier associated with the layer.     |
+|       `type` | `string` |   Yes    |   N/A   | One of `tile-layer`, `object-layer` or `group-layer` |
+|    `opacity` | `float`  |    No    |  `1.0`  | The opacity of the layer, in the range [0, 1].       |
+|    `visible` |  `bool`  |    No    | `true`  | Whether or not the layer is rendered.                |
+| `properties` | Sequence |    No    |   N/A   | A sequence of `property` nodes.                      |
 
 Example:
 
@@ -66,18 +66,18 @@ additional attributes.
 
 ## `object`
 
-|    Attribute |   Type   | Required | Description                          |
-| -----------: | :------: | :------: | :----------------------------------- |
-|         `id` |  `int`   |   Yes    |                                      |
-|       `type` | `string` |   Yes    | One of `point`, `rect` or `ellipse`. |
-|       `name` | `string` |    No    |                                      |
-|        `tag` | `string` |    No    | A user-defined type tag.             |
-|    `visible` |  `bool`  |    No    |                                      |
-|          `x` | `float`  |    No    |                                      |
-|          `y` | `float`  |    No    |                                      |
-|      `width` | `float`  |    No    |                                      |
-|     `height` | `float`  |    No    |                                      |
-| `properties` | Sequence |    No    | A sequence of `property` nodes.      |
+|    Attribute |   Type   | Required | Default | Description                          |
+| -----------: | :------: | :------: | :-----: | :----------------------------------- |
+|         `id` |  `int`   |   Yes    |   N/A   |                                      |
+|       `type` | `string` |   Yes    |   N/A   | One of `point`, `rect` or `ellipse`. |
+|       `name` | `string` |    No    |  `""`   |                                      |
+|        `tag` | `string` |    No    |  `""`   | A user-defined type tag.             |
+|    `visible` |  `bool`  |    No    | `true`  |                                      |
+|          `x` | `float`  |    No    |   `0`   |                                      |
+|          `y` | `float`  |    No    |   `0`   |                                      |
+|      `width` | `float`  |    No    |   `0`   |                                      |
+|     `height` | `float`  |    No    |   `0`   |                                      |
+| `properties` | Sequence |    No    |   N/A   | A sequence of `property` nodes.      |
 
 Example:
 
