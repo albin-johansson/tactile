@@ -86,6 +86,9 @@ inline const auto maps = testing::Values(
     std::make_pair(YAML_INVALID "object_no_id.yaml", PE::ObjectMissingId),
     std::make_pair(YAML_INVALID "object_no_type.yaml", PE::ObjectMissingType),
     std::make_pair(YAML_INVALID "object_invalid_type.yaml", PE::ObjectInvalidType),
+    std::make_pair(YAML_INVALID "tile_no_id.yaml", PE::TileMissingId),
+    std::make_pair(YAML_INVALID "animation_frame_no_id.yaml", PE::AnimationFrameNoTile),
+    std::make_pair(YAML_INVALID "animation_frame_no_duration.yaml", PE::AnimationFrameNoDuration),
 
     std::make_pair("resources/xml/embedded.tmx", PE::None),
     std::make_pair("resources/xml/external.tmx", PE::None),

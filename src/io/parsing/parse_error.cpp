@@ -141,6 +141,15 @@ auto GetCause(const ParseError error) -> CStr
 
     case ParseError::TilesetMissingImageHeight:
       return "The map featured a tileset without an image height attribute!";
+
+    case ParseError::TileMissingId:
+      return "The map featured a tileset with a tile definition without an ID!";
+
+    case ParseError::AnimationFrameNoTile:
+      return "The map featured a tileset with a tile animation frame without a tile ID!";
+
+    case ParseError::AnimationFrameNoDuration:
+      return "The map featured a tileset with a tile animation frame without a duration!";
   }
 }
 

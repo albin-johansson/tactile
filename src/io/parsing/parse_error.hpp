@@ -61,13 +61,17 @@ enum class ParseError
   ObjectInvalidType,  // Tactile YAML only
   ObjectMissingType,  // Tactile YAML only
 
-  MissingTilesetPath,           // Tactile YAML only
-  TilesetMissingVersion,        // Tactile YAML only
-  TilesetInvalidVersion,        // Tactile YAML only
+  MissingTilesetPath,     // Tactile YAML only
+  TilesetMissingVersion,  // Tactile YAML only
+  TilesetInvalidVersion,  // Tactile YAML only
   TilesetMissingTileCount,
   TilesetMissingColumnCount,
   TilesetMissingImageWidth,
   TilesetMissingImageHeight,
+
+  TileMissingId,
+  AnimationFrameNoTile,
+  AnimationFrameNoDuration
 };
 
 /**

@@ -4,6 +4,7 @@
 #include <string>      // string
 #include <utility>     // move
 
+#include "parse_fancy_tiles.hpp"
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
@@ -93,8 +94,11 @@ namespace {
       return tl::make_unexpected(ParseError::TilesetMissingImageHeight);
     }
 
-    if (auto seq = node["tiles"]) {
-      // TODO
+    if (auto tiles = ParseFancyTiles(node)) {
+      data.tiles = std::move(*tiles);
+    }
+    else {
+      return tl::make_unexpected(tiles.error());
     }
 
     if (auto props = ParseProperties(node)) {

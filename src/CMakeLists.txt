@@ -413,6 +413,8 @@ set(SOURCE_FILES
     io/parsing/xml/xml_utils.cpp
     io/parsing/xml/xml_utils.hpp
 
+    io/parsing/yaml/parse_fancy_tiles.cpp
+    io/parsing/yaml/parse_fancy_tiles.hpp
     io/parsing/yaml/parse_layers.cpp
     io/parsing/yaml/parse_layers.hpp
     io/parsing/yaml/parse_object_layer.cpp
