@@ -33,28 +33,29 @@ namespace {
   PropertyValue result;
 
   if (auto value = node["value"]) {
-    switch (type) {
-      case PropertyType::String:
-        result.SetValue(value.as<std::string>());
-        break;
+    try {
+      switch (type) {
+        case PropertyType::String:
+          result.SetValue(value.as<std::string>());
+          break;
 
-      case PropertyType::Integer:
-        result.SetValue(value.as<PropertyValue::integer_type>());
-        break;
+        case PropertyType::Integer:
+          result.SetValue(value.as<PropertyValue::integer_type>());
+          break;
 
-      case PropertyType::Floating:
-        result.SetValue(value.as<PropertyValue::float_type>());
-        break;
+        case PropertyType::Floating:
+          result.SetValue(value.as<PropertyValue::float_type>());
+          break;
 
-      case PropertyType::Boolean:
-        result.SetValue(value.as<bool>());
-        break;
+        case PropertyType::Boolean:
+          result.SetValue(value.as<bool>());
+          break;
 
-      case PropertyType::File:
-        result.SetValue(std::filesystem::path{value.as<std::string>()});
-        break;
+        case PropertyType::File:
+          result.SetValue(std::filesystem::path{value.as<std::string>()});
+          break;
 
-      case PropertyType::Color: {
+        case PropertyType::Color: {
         const auto hex = value.as<std::string>();
         if (const auto color = cen::color::from_rgba(hex)) {
           result.SetValue(*color);
@@ -63,11 +64,15 @@ namespace {
           return tl::make_unexpected(ParseError::CouldNotParseProperty);
         }
         break;
-      }
+        }
 
-      case PropertyType::Object:
-        result.SetValue(ObjectRef{value.as<ObjectRef::value_type>()});
-        break;
+        case PropertyType::Object:
+          result.SetValue(ObjectRef{value.as<ObjectRef::value_type>()});
+          break;
+      }
+    }
+    catch (...) {
+      return tl::make_unexpected(ParseError::CouldNotParseProperty);
     }
   }
   else {
