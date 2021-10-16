@@ -17,7 +17,7 @@ namespace Tactile::IO {
  */
 enum class ParseError
 {
-  None [[deprecated]],
+  None,
   Unknown,
   CouldNotReadFile,
 
