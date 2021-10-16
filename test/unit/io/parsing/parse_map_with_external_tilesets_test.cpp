@@ -127,7 +127,13 @@ void VerifyProperties(const MapData& data)
   const auto& color = data.properties.at(1);
   ASSERT_EQ("cool color", color.name);
   ASSERT_EQ(PropertyType::Color, color.property.GetType());
-  ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), color.property.AsColor());
+  {
+    const auto value = color.property.AsColor();
+    ASSERT_EQ(0x1A, value.red());
+    ASSERT_EQ(0x2B, value.green());
+    ASSERT_EQ(0x3C, value.blue());
+    ASSERT_EQ(0x4D, value.alpha());
+  }
 
   const auto& floating = data.properties.at(2);
   ASSERT_EQ("floating", floating.name);

@@ -2,7 +2,7 @@
 <map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="8" height="6" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="4">
  <properties>
   <property name="boolean" type="bool" value="true"/>
-  <property name="cool color" type="color" value="#ff55aaff"/>
+  <property name="cool color" type="color" value="#4d1a2b3c"/>
   <property name="floating" type="float" value="12.3"/>
   <property name="foo" value="bar"/>
   <property name="integer" type="int" value="42"/>
