@@ -24,6 +24,7 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * Object layers
 * Group layers
 * Embedded and external tilesets
+* Supports an intuitive and human-readable YAML map format
 * Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
 * Intuitive mouse tools
   * Tile stamp
