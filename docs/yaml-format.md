@@ -6,6 +6,8 @@ differences is that the Tactile YAML format doesn't support embedded tilesets.
 
 ## Root
 
+The root node in the Tactile YAML format provides general information about the tilemap.
+
 |        Attribute |   Type   | Required | Description                           |
 | ---------------: | :------: | :------: | :------------------------------------ |
 |           `name` | `string` |   Yes    | The name associated with the tilemap. |
@@ -91,6 +93,8 @@ y: 456
 
 ## `tileset-ref`
 
+The `tileset-ref` node provides information about an external tileset definition, and are always stored in the main tilemap file.
+
 |         Attribute |   Type   | Required | Description                                           |
 | ----------------: | :------: | :------: | :---------------------------------------------------- |
 | `first-global-id` |  `int`   |   Yes    | The first global tile ID associated with the tileset. |
@@ -139,11 +143,13 @@ version: 1
 
 ### `tile`
 
-|    Attribute |   Type   | Required | Description                     |
-| -----------: | :------: | :------: | :------------------------------ |
-|         `id` |  `int`   |   Yes    |                                 |
-|  `animation` | Sequence |    No    | A sequence of `frame` nodes.    |
-| `properties` | Sequence |    No    | A sequence of `property` nodes. |
+The `tile` node provides additional information about tiles in a tileset.
+
+|    Attribute |   Type   | Required | Description                      |
+| -----------: | :------: | :------: | :------------------------------- |
+|         `id` |  `int`   |   Yes    | Local ID of the associated tile. |
+|  `animation` | Sequence |    No    | A sequence of `frame` nodes.     |
+| `properties` | Sequence |    No    | A sequence of `property` nodes.  |
 
 Example:
 
@@ -158,18 +164,20 @@ animation:
 
 ### `frame`
 
-|  Attribute | Type  | Required | Description |
-| ---------: | :---: | :------: | :---------- |
-|     `tile` | `int` |   Yes    |             |
-| `duration` | `int` |   Yes    |             |
+The `frame` node represents a frame in an animation.
+
+|  Attribute | Type  | Required | Description                                                    |
+| ---------: | :---: | :------: | :------------------------------------------------------------- |
+|     `tile` | `int` |   Yes    | Local ID of the tile that should be rendered during the frame. |
+| `duration` | `int` |   Yes    | Duration of the frame, in milliseconds.                        |
 
 ## `property`
 
-| Attribute |   Type   | Required | Description |
-| --------: | :------: | :------: | :---------- |
-|    `name` | `string` |   Yes    |             |
-|    `type` | `string` |   Yes    |             |
-|   `value` | `string` |   Yes    |             |
+| Attribute |   Type   | Required | Description                                                          |
+| --------: | :------: | :------: | :------------------------------------------------------------------- |
+|    `name` | `string` |   Yes    | Name that is unique in the scope of "sibling" properties.            |
+|    `type` | `string` |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
+|   `value` | `string` |   Yes    |                                                                      |
 
 Example:
 
