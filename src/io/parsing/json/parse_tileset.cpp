@@ -91,6 +91,34 @@ namespace {
     return tl::make_unexpected(tileHeight.error());
   }
 
+  if (const auto it = json.find("imagewidth"); it != json.end()) {
+    it->get_to(data.image_width);
+  }
+  else {
+    return tl::make_unexpected(ParseError::TilesetMissingImageWidth);
+  }
+
+  if (const auto it = json.find("tilecount"); it != json.end()) {
+    it->get_to(data.tile_count);
+  }
+  else {
+    return tl::make_unexpected(ParseError::TilesetMissingTileCount);
+  }
+
+  if (const auto it = json.find("columns"); it != json.end()) {
+    it->get_to(data.column_count);
+  }
+  else {
+    return tl::make_unexpected(ParseError::TilesetMissingColumnCount);
+  }
+
+  if (const auto it = json.find("imageheight"); it != json.end()) {
+    it->get_to(data.image_height);
+  }
+  else {
+    return tl::make_unexpected(ParseError::TilesetMissingImageHeight);
+  }
+
   if (auto path = ParseImagePath(json, dir)) {
     data.absolute_image_path = std::move(*path);
   }

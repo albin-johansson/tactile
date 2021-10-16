@@ -105,14 +105,22 @@ void VerifyTilesets(const MapData& data)
   const auto& terrain = data.tilesets.at(0);
   ASSERT_EQ("terrain", terrain.name);
   ASSERT_EQ(1_tile, terrain.first_id);
+  ASSERT_EQ(1024, terrain.tile_count);
   ASSERT_EQ(32, terrain.tile_width);
   ASSERT_EQ(32, terrain.tile_height);
+  ASSERT_EQ(32, terrain.column_count);
+  ASSERT_EQ(1024, terrain.image_width);
+  ASSERT_EQ(1024, terrain.image_height);
 
   const auto& outside = data.tilesets.at(1);
   ASSERT_EQ("outside", outside.name);
   ASSERT_EQ(1025_tile, outside.first_id);
+  ASSERT_EQ(1024, outside.tile_count);
   ASSERT_EQ(32, outside.tile_width);
   ASSERT_EQ(32, outside.tile_height);
+  ASSERT_EQ(32, outside.column_count);
+  ASSERT_EQ(1024, outside.image_width);
+  ASSERT_EQ(1024, outside.image_height);
 }
 
 void VerifyProperties(const MapData& data)

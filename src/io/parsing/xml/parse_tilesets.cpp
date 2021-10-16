@@ -25,18 +25,20 @@ namespace {
   }
 }
 
-[[nodiscard]] auto GetTilesetImageRelativePath(const pugi::xml_node node)
-    -> Maybe<std::filesystem::path>
+[[nodiscard]] auto GetImageNode(const pugi::xml_node node) -> pugi::xml_node
 {
   const auto tilesetNode = (std::strcmp(node.name(), "tileset") == 0)
                                ? node
                                : node.find_node([](const pugi::xml_node& node) {
                                    return std::strcmp(node.name(), "tileset") == 0;
                                  });
+  return tilesetNode.child("image");
+}
 
-  const auto imageNode = tilesetNode.child("image");
-  const auto source = imageNode.attribute("source");
-
+[[nodiscard]] auto GetTilesetImageRelativePath(const pugi::xml_node node)
+    -> Maybe<std::filesystem::path>
+{
+  const auto source = node.attribute("source");
   if (const auto* str = source.as_string(nullptr)) {
     return std::filesystem::path{str};
   }
@@ -63,7 +65,37 @@ namespace {
     return ParseError::TilesetMissingTileHeight;
   }
 
-  const auto relativeImagePath = GetTilesetImageRelativePath(node);
+  if (const auto count = GetInt(node, "tilecount")) {
+    data.tile_count = *count;
+  }
+  else {
+    return ParseError::TilesetMissingTileCount;
+  }
+
+  if (const auto count = GetInt(node, "columns")) {
+    data.column_count = *count;
+  }
+  else {
+    return ParseError::TilesetMissingColumnCount;
+  }
+
+  const auto imageNode = GetImageNode(node);
+
+  if (const auto imageWidth = GetInt(imageNode, "width")) {
+    data.image_width = *imageWidth;
+  }
+  else {
+    return ParseError::TilesetMissingImageWidth;
+  }
+
+  if (const auto imageHeight = GetInt(imageNode, "height")) {
+    data.image_height = *imageHeight;
+  }
+  else {
+    return ParseError::TilesetMissingImageHeight;
+  }
+
+  const auto relativeImagePath = GetTilesetImageRelativePath(imageNode);
   if (!relativeImagePath) {
     return ParseError::TilesetMissingImagePath;
   }

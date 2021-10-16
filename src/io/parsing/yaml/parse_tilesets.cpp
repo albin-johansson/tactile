@@ -38,7 +38,7 @@ namespace {
     }
 
     if (auto count = node["tile-count"]) {
-      // TODO data.tile_count = name.as<int>();
+      data.tile_count = count.as<int>();
     }
     else {
       return tl::make_unexpected(ParseError::TilesetMissingTileCount);
@@ -59,7 +59,7 @@ namespace {
     }
 
     if (auto columns = node["column-count"]) {
-      // TODO data.column_count = columns.as<int>();
+      data.column_count = columns.as<int>();
     }
     else {
       return tl::make_unexpected(ParseError::TilesetMissingColumnCount);
@@ -80,14 +80,14 @@ namespace {
     }
 
     if (auto imageWidth = node["image-width"]) {
-      // TODO data.image_width = imageWidth.as<int>();
+      data.image_width = imageWidth.as<int>();
     }
     else {
       return tl::make_unexpected(ParseError::TilesetMissingImageWidth);
     }
 
     if (auto imageHeight = node["image-height"]) {
-      // TODO data.image_height = imageHeight.as<int>();
+      data.image_height = imageHeight.as<int>();
     }
     else {
       return tl::make_unexpected(ParseError::TilesetMissingImageHeight);
