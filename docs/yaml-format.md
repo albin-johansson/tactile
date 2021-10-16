@@ -173,11 +173,11 @@ The `frame` node represents a frame in an animation.
 
 ## `property`
 
-| Attribute |   Type   | Required | Description                                                          |
-| --------: | :------: | :------: | :------------------------------------------------------------------- |
-|    `name` | `string` |   Yes    | Name that is unique in the scope of "sibling" properties.            |
-|    `type` | `string` |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
-|   `value` | `string` |   Yes    | The value of the property.                                           |
+| Attribute |   Type    | Required | Description                                                          |
+| --------: | :-------: | :------: | :------------------------------------------------------------------- |
+|    `name` | `string`  |   Yes    | Name that is unique in the scope of "sibling" properties.            |
+|    `type` | `string`  |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
+|   `value` | `variant` |   Yes    | The value of the property.                                           |
 
 Color properties are always stored using RGBA encoding, with a `#` prefix, e.g. `"#11223344"`.
 
