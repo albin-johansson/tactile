@@ -97,10 +97,7 @@ void SaveTileset(const entt::registry& registry,
 
   emitter << YAML::EndMap;
 
-  const auto path = dir / fileName;
-  std::cout << "Writing tileset definition to " << path << '\n';
-
-  std::ofstream stream{path};
+  std::ofstream stream{dir / fileName};
   stream << emitter.c_str();
 }
 
