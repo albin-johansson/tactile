@@ -177,12 +177,16 @@ The `frame` node represents a frame in an animation.
 | --------: | :------: | :------: | :------------------------------------------------------------------- |
 |    `name` | `string` |   Yes    | Name that is unique in the scope of "sibling" properties.            |
 |    `type` | `string` |   Yes    | One of `string`, `int`, `float`, `bool`, `color`, `file` or `object` |
-|   `value` | `string` |   Yes    |                                                                      |
+|   `value` | `string` |   Yes    | The value of the property.                                           |
+
+Color properties are always stored using RGBA encoding, with a `#` prefix, e.g. `"#11223344"`.
+
+Object properties are effectively just integer properties that store object identifiers.
 
 Example:
 
 ```YAML
 name: Foo
 type: color
-value: "#4FEB19"
+value: "#4FEB19FF"
 ```
