@@ -40,7 +40,7 @@ Example:
 name: foo
 id: 7
 type: tile-layer
-data: >
+data: |
   1 2 3 4
   5 6 7 8
 ```
