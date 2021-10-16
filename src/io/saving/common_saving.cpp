@@ -1,8 +1,12 @@
 #include "common_saving.hpp"
 
 #include <algorithm>   // replace
+#include <cassert>     // assert
 #include <filesystem>  // relative
 
+#include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
+#include "core/components/property_context.hpp"
 #include "core/tactile_error.hpp"
 
 namespace Tactile::IO {
@@ -16,8 +20,8 @@ auto ConvertToForwardSlashes(const std::filesystem::path& path) -> std::string
   return str;
 }
 
-[[nodiscard]] auto GetTilesetImagePath(const std::filesystem::path& image,
-                                       const std::filesystem::path& dir) -> std::string
+auto GetTilesetImagePath(const std::filesystem::path& image,
+                         const std::filesystem::path& dir) -> std::string
 {
   const auto path = std::filesystem::relative(image, dir);
   return ConvertToForwardSlashes(path);
@@ -58,6 +62,14 @@ auto GetPropertyFileValue(const PropertyValue& file, const std::filesystem::path
   const auto abs = std::filesystem::absolute(dir / file.AsFile());
   const auto path = std::filesystem::relative(abs, dir);
   return ConvertToForwardSlashes(path);
+}
+
+auto IsTileWorthSaving(const entt::registry& registry, const entt::entity entity) -> bool
+{
+  assert(entity != entt::null);
+  assert(registry.all_of<FancyTile>(entity));
+  return registry.all_of<Animation>(entity) ||
+         !registry.get<PropertyContext>(entity).properties.empty();
 }
 
 }  // namespace Tactile::IO

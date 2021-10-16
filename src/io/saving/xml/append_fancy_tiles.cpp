@@ -4,6 +4,7 @@
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "io/saving/common_saving.hpp"
 
 namespace Tactile::IO {
 namespace {
@@ -34,19 +35,24 @@ void AppendAnimation(pugi::xml_node tileNode,
 
 void AppendFancyTiles(pugi::xml_node node,
                       const entt::registry& registry,
+                      const Tileset& tileset,
                       const std::filesystem::path& dir)
 {
   for (auto&& [entity, tile] : registry.view<FancyTile>().each()) {
-    auto tileNode = node.append_child("tile");
+    if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
+      if (IsTileWorthSaving(registry, entity)) {
+        auto tileNode = node.append_child("tile");
 
-    const auto id = Sys::ConvertToLocal(registry, tile.id).value();
-    tileNode.append_attribute("id").set_value(id);
+        const auto id = Sys::ConvertToLocal(registry, tile.id).value();
+        tileNode.append_attribute("id").set_value(id);
 
-    if (const auto* animation = registry.try_get<Animation>(entity)) {
-      AppendAnimation(tileNode, registry, *animation);
+        if (const auto* animation = registry.try_get<Animation>(entity)) {
+          AppendAnimation(tileNode, registry, *animation);
+        }
+
+        AppendProperties(registry, entity, tileNode, dir);
+      }
     }
-
-    AppendProperties(registry, entity, tileNode, dir);
   }
 }
 

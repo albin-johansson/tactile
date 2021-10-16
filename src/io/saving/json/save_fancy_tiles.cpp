@@ -4,6 +4,7 @@
 #include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "io/saving/common_saving.hpp"
 #include "save_properties.hpp"
 
 namespace Tactile::IO {
@@ -55,13 +56,18 @@ namespace {
 
 }  // namespace
 
-auto SaveFancyTiles(const entt::registry& registry, const std::filesystem::path& dir)
-    -> JSON
+auto SaveFancyTiles(const entt::registry& registry,
+                    const Tileset& tileset,
+                    const std::filesystem::path& dir) -> JSON
 {
   auto array = JSON::array();
 
   for (auto&& [entity, tile] : registry.view<FancyTile>().each()) {
-    array += SaveFancyTile(registry, entity, tile, dir);
+    if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
+      if (IsTileWorthSaving(registry, entity)) {
+        array += SaveFancyTile(registry, entity, tile, dir);
+      }
+    }
   }
 
   return array;

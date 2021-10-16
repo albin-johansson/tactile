@@ -24,4 +24,7 @@ constexpr auto tiled_json_version = "1.6";
 [[nodiscard]] auto GetPropertyFileValue(const PropertyValue& file,
                                         const std::filesystem::path& dir) -> std::string;
 
+[[nodiscard]] auto IsTileWorthSaving(const entt::registry& registry, entt::entity entity)
+    -> bool;
+
 }  // namespace Tactile::IO
