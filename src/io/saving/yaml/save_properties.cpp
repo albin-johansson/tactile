@@ -16,8 +16,7 @@ void SaveProperties(YAML::Emitter& emitter,
   const auto& ctx = (entity != entt::null) ? registry.get<PropertyContext>(entity)
                                            : registry.ctx<PropertyContext>();
   if (!ctx.properties.empty()) {
-    emitter << YAML::Key << "properties";
-    emitter << YAML::BeginSeq;
+    emitter << YAML::Key << "properties" << YAML::BeginSeq;
 
     for (const auto& propertyEntity : ctx.properties) {
       const auto& property = registry.get<Property>(propertyEntity);
