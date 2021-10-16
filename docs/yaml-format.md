@@ -137,6 +137,7 @@ next to the main map file.
 Example:
 
 ```YAML
+version: 1
 name: foo
 tile-count: 1024
 tile-width: 32
@@ -145,7 +146,6 @@ column-count: 32
 image-path: ../foo.png
 image-width: 1024
 image-height: 1024
-version: 1
 ```
 
 ### `Tile`
