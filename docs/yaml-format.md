@@ -122,6 +122,7 @@ next to the main map file.
 
 |      Attribute |   Type   | Required | Description                                |
 | -------------: | :------: | :------: | :----------------------------------------- |
+|      `version` |  `int`   |   Yes    |                                            |
 |         `name` | `string` |   Yes    | The name of the tileset.                   |
 |   `tile-count` |  `int`   |   Yes    | The total amount of tiles in the tileset.  |
 |   `tile-width` |  `int`   |   Yes    | The width of each tile in the tileset.     |
@@ -130,7 +131,6 @@ next to the main map file.
 |   `image-path` | `string` |   Yes    | Relative path to the tileset image.        |
 |  `image-width` |  `int`   |   Yes    | The width of the tileset image.            |
 | `image-height` |  `int`   |   Yes    | The height of the tileset image.           |
-|      `version` |  `int`   |   Yes    |                                            |
 |        `tiles` | Sequence |    No    | A sequence of `Tile` nodes.                |
 |   `properties` | Sequence |    No    | A sequence of `Property` nodes.            |
 
