@@ -79,7 +79,7 @@ layers:
         x: 143
         y: 47
 tilesets:
-  - first-global-id: 1025
-    path: outside.yaml
   - first-global-id: 1
     path: terrain.yaml
+  - first-global-id: 1025
+    path: outside.yaml
