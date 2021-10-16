@@ -105,6 +105,10 @@ path: foo/bar/tileset.yaml
 
 ## `tileset`
 
+The `tileset` node is always defined in an external YAML file, since embedded tilesets are not supported
+by the Tactile YAML format. By default, a tileset that is added to a map in the Tactile editor will be stored
+next to the main map file.
+
 |      Attribute |   Type   | Required | Description                                |
 | -------------: | :------: | :------: | :----------------------------------------- |
 |         `name` | `string` |   Yes    | The name of the tileset.                   |
