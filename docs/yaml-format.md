@@ -73,6 +73,13 @@ additional attributes.
 | `first-global-id` |  `int`   |   Yes    | The first global tile ID associated with the tileset. |
 |            `path` | `string` |   Yes    | Relative path to the tileset definition file.         |
 
+Example:
+
+```YAML
+first-global-id: 42
+path: foo/bar/tileset.yaml
+```
+
 ## `tileset`
 
 |      Attribute |   Type   | Required | Description                                |
@@ -88,6 +95,20 @@ additional attributes.
 |      `version` |  `int`   |   Yes    |                                            |
 |        `tiles` | Sequence |    No    | A sequence of `tile` nodes.                |
 |   `properties` | Sequence |    No    | A sequence of `property` nodes.            |
+
+Example:
+
+```YAML
+name: foo
+tile-count: 1024
+tile-width: 32
+tile-height: 32
+column-count: 32
+image-path: ../foo.png
+image-width: 1024
+image-height: 1024
+version: 1
+```
 
 ### `tile`
 
