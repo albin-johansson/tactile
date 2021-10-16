@@ -80,6 +80,6 @@ properties:
     value: foo.bar
 tilesets:
   - first-global-id: 1
-    path: "terrain.yaml"
+    path: terrain.yaml
   - first-global-id: 1025
-    path: "outside.yaml"
+    path: outside.yaml
