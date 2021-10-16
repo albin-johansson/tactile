@@ -9,7 +9,7 @@
   <property name="object ref" type="object" value="1"/>
   <property name="path" type="file" value="foo.bar"/>
  </properties>
- <tileset firstgid="1" source="foo.tsx"/>
+ <tileset firstgid="1" source="invalid.tsx"/>
  <layer id="1" name="Tile Layer 1" width="7" height="5">
   <data encoding="csv">
 360,360,360,360,360,360,354,
