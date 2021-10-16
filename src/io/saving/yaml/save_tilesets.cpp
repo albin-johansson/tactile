@@ -46,7 +46,6 @@ void SaveFancyTiles(YAML::Emitter& emitter,
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
   for (auto&& [entity, tile] : registry.view<FancyTile>().each()) {
-    // TODO include this check for other emitters (JSON and XML)
     if (tile.id >= tileset.first_id && tile.id <= tileset.last_id) {
       if (IsTileWorthSaving(registry, entity)) {
         emitter << YAML::BeginMap;
