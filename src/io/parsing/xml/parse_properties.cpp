@@ -67,11 +67,10 @@ namespace {
       return err;
     }
   }
-  else {
-    if (const auto err = ParseValue(node, "string", data.property);
-        err != ParseError::None) {
-      return err;
-    }
+  else if (const auto err = ParseValue(node, "string", data.property);
+           err != ParseError::None)
+  {
+    return err;
   }
 
   return ParseError::None;
