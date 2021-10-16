@@ -17,13 +17,13 @@ The root node in the Tactile YAML format provides general information about the 
 |    `tile-height` |  `int`   |   Yes    | The height of tiles in the tilemap.   |
 |  `next-layer-id` |  `int`   |   Yes    | The next available layer ID.          |
 | `next-object-id` |  `int`   |   Yes    | The next available object ID.         |
-|         `layers` | Sequence |    No    | A sequence of `layer` nodes.          |
-|       `tilesets` | Sequence |    No    | A sequence of `tileset-ref` nodes.    |
-|     `properties` | Sequence |    No    | A sequence of `property` nodes.       |
+|         `layers` | Sequence |    No    | A sequence of `Layer` nodes.          |
+|       `tilesets` | Sequence |    No    | A sequence of `TilesetRef` nodes.     |
+|     `properties` | Sequence |    No    | A sequence of `Property` nodes.       |
 
 ---
 
-## `layer`
+## `Layer`
 
 |    Attribute |   Type   | Required | Default | Description                                          |
 | -----------: | :------: | :------: | :-----: | :--------------------------------------------------- |
@@ -32,7 +32,7 @@ The root node in the Tactile YAML format provides general information about the 
 |       `type` | `string` |   Yes    |   N/A   | One of `tile-layer`, `object-layer` or `group-layer` |
 |    `opacity` | `float`  |    No    |  `1.0`  | The opacity of the layer, in the range [0, 1].       |
 |    `visible` |  `bool`  |    No    | `true`  | Whether or not the layer is rendered.                |
-| `properties` | Sequence |    No    |   N/A   | A sequence of `property` nodes.                      |
+| `properties` | Sequence |    No    |   N/A   | A sequence of `Property` nodes.                      |
 
 Example:
 
@@ -48,27 +48,27 @@ data: >
 In addition to the layer attributes listed above, each of the three different kinds of layers have
 additional attributes.
 
-### `tile-layer`
+### `TileLayer`
 
 | Attribute |   Type   | Required | Description                                               |
 | --------: | :------: | :------: | :-------------------------------------------------------- |
 |    `data` | `string` |   Yes    | A string of global tile identifiers, separated by spaces. |
 
-### `object-layer`
+### `ObjectLayer`
 
 | Attribute |   Type   | Required | Description                   |
 | --------: | :------: | :------: | :---------------------------- |
-| `objects` | Sequence |   Yes    | A sequence of `object` nodes. |
+| `objects` | Sequence |   Yes    | A sequence of `Object` nodes. |
 
-### `group-layer`
+### `GroupLayer`
 
 | Attribute |   Type   | Required | Description                  |
 | --------: | :------: | :------: | :--------------------------- |
-|  `layers` | Sequence |   Yes    | A sequence of `layer` nodes. |
+|  `layers` | Sequence |   Yes    | A sequence of `Layer` nodes. |
 
 ---
 
-## `object`
+## `Object`
 
 |    Attribute |   Type   | Required | Default | Description                          |
 | -----------: | :------: | :------: | :-----: | :----------------------------------- |
@@ -81,7 +81,7 @@ additional attributes.
 |          `y` | `float`  |    No    |   `0`   |                                      |
 |      `width` | `float`  |    No    |   `0`   |                                      |
 |     `height` | `float`  |    No    |   `0`   |                                      |
-| `properties` | Sequence |    No    |   N/A   | A sequence of `property` nodes.      |
+| `properties` | Sequence |    No    |   N/A   | A sequence of `Property` nodes.      |
 
 Example:
 
@@ -96,9 +96,9 @@ y: 456
 
 ---
 
-## `tileset-ref`
+## `TilesetRef`
 
-The `tileset-ref` node provides information about an external tileset definition, and are always stored in the main tilemap file.
+The `TilesetRef` node provides information about an external tileset definition, and are always stored in the main tilemap file.
 
 |         Attribute |   Type   | Required | Description                                           |
 | ----------------: | :------: | :------: | :---------------------------------------------------- |
@@ -114,9 +114,9 @@ path: foo/bar/tileset.yaml
 
 ---
 
-## `tileset`
+## `Tileset`
 
-The `tileset` node is always defined in an external YAML file, since embedded tilesets are not supported
+The `Tileset` node is always defined in an external YAML file, since embedded tilesets are not supported
 by the Tactile YAML format. By default, a tileset that is added to a map in the Tactile editor will be stored
 next to the main map file.
 
@@ -131,8 +131,8 @@ next to the main map file.
 |  `image-width` |  `int`   |   Yes    | The width of the tileset image.            |
 | `image-height` |  `int`   |   Yes    | The height of the tileset image.           |
 |      `version` |  `int`   |   Yes    |                                            |
-|        `tiles` | Sequence |    No    | A sequence of `tile` nodes.                |
-|   `properties` | Sequence |    No    | A sequence of `property` nodes.            |
+|        `tiles` | Sequence |    No    | A sequence of `Tile` nodes.                |
+|   `properties` | Sequence |    No    | A sequence of `Property` nodes.            |
 
 Example:
 
@@ -148,15 +148,15 @@ image-height: 1024
 version: 1
 ```
 
-### `tile`
+### `Tile`
 
-The `tile` node provides additional information about tiles in a tileset.
+The `Tile` node provides additional information about tiles in a tileset.
 
 |    Attribute |   Type   | Required | Description                      |
 | -----------: | :------: | :------: | :------------------------------- |
 |         `id` |  `int`   |   Yes    | Local ID of the associated tile. |
-|  `animation` | Sequence |    No    | A sequence of `frame` nodes.     |
-| `properties` | Sequence |    No    | A sequence of `property` nodes.  |
+|  `animation` | Sequence |    No    | A sequence of `Frame` nodes.     |
+| `properties` | Sequence |    No    | A sequence of `Property` nodes.  |
 
 Example:
 
@@ -169,9 +169,9 @@ animation:
     duration: 120
 ```
 
-### `frame`
+### `Frame`
 
-The `frame` node represents a frame in an animation.
+The `Frame` node represents a frame in an animation.
 
 |  Attribute | Type  | Required | Description                                                    |
 | ---------: | :---: | :------: | :------------------------------------------------------------- |
@@ -180,7 +180,7 @@ The `frame` node represents a frame in an animation.
 
 ---
 
-## `property`
+## `Property`
 
 | Attribute |   Type    | Required | Description                                                          |
 | --------: | :-------: | :------: | :------------------------------------------------------------------- |
