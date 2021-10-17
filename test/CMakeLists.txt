@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 
 project(tactile-test CXX)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/test")
 
 enable_testing()
 
@@ -51,9 +52,9 @@ target_link_libraries(${TACTILE_TEST}
 target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
 
 if (WIN32)
-  copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_CURRENT_BINARY_DIR})
+  copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endif ()
 
 copy_directory_post_build(${TACTILE_TEST}
     ${CMAKE_CURRENT_SOURCE_DIR}/resources
-    ${CMAKE_CURRENT_BINARY_DIR}/resources)
+    ${CMAKE_CURRENT_BINARY_DIR}/resources)    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)

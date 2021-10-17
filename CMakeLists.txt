@@ -4,6 +4,7 @@ project(tactile CXX)
 
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build")
 
 if (MSVC)
   add_compile_options(/std:c++latest)  # This is a workaround for issues with <format>
