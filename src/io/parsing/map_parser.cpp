@@ -2,10 +2,10 @@
 
 #include <filesystem>  // absolute
 
+#include "core/utils/profile.hpp"
 #include "io/parsing/json/parse_json_map.hpp"
 #include "io/parsing/xml/parse_xml_map.hpp"
 #include "io/parsing/yaml/parse_yaml_map.hpp"
-#include "utils/profile.hpp"
 
 namespace Tactile::IO {
 

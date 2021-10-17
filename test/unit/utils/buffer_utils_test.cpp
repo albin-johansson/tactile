@@ -1,4 +1,4 @@
-#include "utils/buffer_utils.hpp"
+#include "core/utils/buffer_utils.hpp"
 
 #include <gtest/gtest.h>
 

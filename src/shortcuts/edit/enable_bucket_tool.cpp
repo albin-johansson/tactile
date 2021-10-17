@@ -1,7 +1,7 @@
 #include "enable_bucket_tool.hpp"
 
 #include "core/model.hpp"
-#include "events/tool_events.hpp"
+#include "gui/events/tool_events.hpp"
 #include "gui/widgets/focus.hpp"
 
 namespace Tactile {

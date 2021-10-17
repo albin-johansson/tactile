@@ -1,7 +1,7 @@
 #include "pan_up_shortcut.hpp"
 
 #include "core/model.hpp"
-#include "events/viewport_events.hpp"
+#include "gui/events/viewport_events.hpp"
 
 namespace Tactile {
 

@@ -6,7 +6,7 @@
 
 #include "common/maybe.hpp"
 #include "core/tactile_error.hpp"
-#include "events/property_events.hpp"
+#include "gui/events/property_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/modal.hpp"

@@ -2,7 +2,7 @@
 
 #include "core/ctx/map.hpp"
 #include "core/model.hpp"
-#include "events/map_events.hpp"
+#include "gui/events/map_events.hpp"
 
 namespace Tactile {
 

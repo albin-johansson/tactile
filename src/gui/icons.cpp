@@ -5,7 +5,7 @@
 #include <filesystem>  // path
 
 #include "core/tactile_error.hpp"
-#include "utils/load_texture.hpp"
+#include "core/utils/load_texture.hpp"
 
 namespace Tactile {
 namespace {

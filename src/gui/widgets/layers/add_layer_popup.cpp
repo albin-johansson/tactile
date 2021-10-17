@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "events/layer_events.hpp"
+#include "gui/events/layer_events.hpp"
 #include "gui/icons.hpp"
 
 namespace Tactile {

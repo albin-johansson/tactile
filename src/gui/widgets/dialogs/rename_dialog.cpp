@@ -6,10 +6,10 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
+#include "core/utils/buffer_utils.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/modal.hpp"
-#include "utils/buffer_utils.hpp"
 
 namespace Tactile {
 namespace {

@@ -22,8 +22,8 @@
 #include "core/systems/property_system.hpp"
 #include "core/systems/registry_factory_system.hpp"
 #include "core/systems/tileset_system.hpp"
+#include "core/utils/load_texture.hpp"
 #include "io/parsing/parse_ir.hpp"
-#include "utils/load_texture.hpp"
 
 namespace Tactile::IO {
 namespace {

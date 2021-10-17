@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "events/map_events.hpp"
+#include "gui/events/map_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/modal.hpp"

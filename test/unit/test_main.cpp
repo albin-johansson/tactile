@@ -4,9 +4,9 @@
 #include <centurion.hpp>  // library
 #include <cstdlib>        // atexit
 
+#include "core/utils/load_texture.hpp"
 #include "gl_attributes.hpp"
 #include "io/preferences.hpp"
-#include "utils/load_texture.hpp"
 
 auto main(int argc, char** argv) -> int
 {

@@ -39,6 +39,7 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "core/utils/load_texture.hpp"
 #include "gui/update_gui.hpp"
 #include "gui/widgets/dialogs/map_import_error_dialog.hpp"
 #include "gui/widgets/dialogs/resize_map_dialog.hpp"
@@ -53,7 +54,6 @@
 #include "io/saving/save_map_document.hpp"
 #include "io/session.hpp"
 #include "shortcuts/shortcuts.hpp"
-#include "utils/load_texture.hpp"
 
 namespace Tactile {
 namespace {

@@ -166,16 +166,15 @@ set(SOURCE_FILES
     core/systems/tools/tool_system.cpp
     core/systems/tools/tool_system.hpp
 
-    events/command_events.hpp
-    events/layer_events.hpp
-    events/map_events.hpp
-    events/property_events.hpp
-    events/quit_event.hpp
-    events/save_events.hpp
-    events/tileset_events.hpp
-    events/tool_events.hpp
-    events/view_events.hpp
-    events/viewport_events.hpp
+    core/utils/buffer_utils.hpp
+    core/utils/color_utils.hpp
+    core/utils/from_string.hpp
+    core/utils/load_texture.cpp
+    core/utils/load_texture.hpp
+    core/utils/profile.hpp
+    core/utils/scope_id.hpp
+    core/utils/string_utils.hpp
+    core/utils/string_utils.cpp
 
     gui/icons.cpp
     gui/icons.hpp
@@ -189,6 +188,17 @@ set(SOURCE_FILES
     gui/themes.hpp
     gui/update_gui.cpp
     gui/update_gui.hpp
+
+    gui/events/command_events.hpp
+    gui/events/layer_events.hpp
+    gui/events/map_events.hpp
+    gui/events/property_events.hpp
+    gui/events/quit_event.hpp
+    gui/events/save_events.hpp
+    gui/events/tileset_events.hpp
+    gui/events/tool_events.hpp
+    gui/events/view_events.hpp
+    gui/events/viewport_events.hpp
 
     gui/layout/dock_space.cpp
     gui/layout/dock_space.hpp
@@ -467,16 +477,6 @@ set(SOURCE_FILES
     io/saving/yaml/save_properties.hpp
     io/saving/yaml/save_tilesets.cpp
     io/saving/yaml/save_tilesets.hpp
-
-    utils/buffer_utils.hpp
-    utils/color_utils.hpp
-    utils/from_string.hpp
-    utils/load_texture.cpp
-    utils/load_texture.hpp
-    utils/profile.hpp
-    utils/scope_id.hpp
-    utils/string_utils.hpp
-    utils/string_utils.cpp
 
     shortcuts/shortcut.cpp
     shortcuts/shortcut.hpp

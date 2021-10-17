@@ -4,9 +4,9 @@
 
 #include "core/components/property_context.hpp"
 #include "core/model.hpp"
-#include "events/map_events.hpp"
+#include "core/utils/scope_id.hpp"
+#include "gui/events/map_events.hpp"
 #include "map_view.hpp"
-#include "utils/scope_id.hpp"
 
 namespace Tactile {
 

@@ -4,10 +4,10 @@
 #include <utility>  // move
 
 #include "common/ints.hpp"
+#include "core/utils/string_utils.hpp"
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"
-#include "utils/string_utils.hpp"
 
 namespace Tactile::IO {
 namespace {

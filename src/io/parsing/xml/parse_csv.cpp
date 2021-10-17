@@ -5,8 +5,8 @@
 #include <vector>   // vector
 
 #include "core/map_position.hpp"
-#include "utils/from_string.hpp"
-#include "utils/string_utils.hpp"
+#include "core/utils/from_string.hpp"
+#include "core/utils/string_utils.hpp"
 
 namespace Tactile::IO {
 

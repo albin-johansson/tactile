@@ -7,7 +7,7 @@
 
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
-#include "events/tileset_events.hpp"
+#include "gui/events/tileset_events.hpp"
 #include "gui/rendering/canvas.hpp"
 #include "gui/rendering/grid.hpp"
 #include "gui/texture_utils.hpp"

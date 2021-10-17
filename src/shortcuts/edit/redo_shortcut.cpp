@@ -1,7 +1,7 @@
 #include "redo_shortcut.hpp"
 
 #include "core/model.hpp"
-#include "events/command_events.hpp"
+#include "gui/events/command_events.hpp"
 
 namespace Tactile {
 

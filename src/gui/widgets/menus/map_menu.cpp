@@ -3,7 +3,7 @@
 #include <imgui.h>
 
 #include "core/model.hpp"
-#include "events/map_events.hpp"
+#include "gui/events/map_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/menu.hpp"
 #include "gui/widgets/tilesets/dialogs/tileset_dialog.hpp"

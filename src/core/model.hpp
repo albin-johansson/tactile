@@ -8,8 +8,8 @@
 #include "common/map_id.hpp"
 #include "common/maybe.hpp"
 #include "document.hpp"
-#include "events/command_events.hpp"
-#include "events/tool_events.hpp"
+#include "gui/events/command_events.hpp"
+#include "gui/events/tool_events.hpp"
 
 namespace Tactile {
 

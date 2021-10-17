@@ -4,11 +4,11 @@
 
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
-#include "events/tileset_events.hpp"
+#include "core/utils/scope_id.hpp"
+#include "gui/events/tileset_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/menus/map_menu.hpp"
 #include "tileset_view.hpp"
-#include "utils/scope_id.hpp"
 
 namespace Tactile {
 namespace {

@@ -4,9 +4,9 @@
 
 #include "core/model.hpp"
 #include "core/tool_type.hpp"
-#include "events/command_events.hpp"
-#include "events/map_events.hpp"
-#include "events/tool_events.hpp"
+#include "gui/events/command_events.hpp"
+#include "gui/events/map_events.hpp"
+#include "gui/events/tool_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/menu.hpp"
 #include "gui/widgets/dialogs/settings_dialog.hpp"

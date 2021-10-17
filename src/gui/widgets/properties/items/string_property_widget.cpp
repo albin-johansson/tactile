@@ -6,8 +6,8 @@
 #include <limits>  // numeric_limits
 
 #include "common/ints.hpp"
-#include "utils/buffer_utils.hpp"
-#include "utils/scope_id.hpp"
+#include "core/utils/buffer_utils.hpp"
+#include "core/utils/scope_id.hpp"
 
 namespace Tactile {
 namespace {

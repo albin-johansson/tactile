@@ -3,8 +3,8 @@
 #include <imgui_internal.h>
 
 #include "common/ints.hpp"
+#include "core/utils/color_utils.hpp"
 #include "io/preferences.hpp"
-#include "utils/color_utils.hpp"
 
 namespace Tactile {
 namespace {

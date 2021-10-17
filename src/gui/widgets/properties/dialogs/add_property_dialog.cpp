@@ -7,12 +7,12 @@
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/tactile_error.hpp"
-#include "events/property_events.hpp"
+#include "core/utils/buffer_utils.hpp"
+#include "gui/events/property_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/modal.hpp"
 #include "gui/widgets/properties/dialogs/property_type_combo.hpp"
-#include "utils/buffer_utils.hpp"
 
 namespace Tactile {
 namespace {

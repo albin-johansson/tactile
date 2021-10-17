@@ -5,7 +5,7 @@
 #include "core/components/tileset.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
-#include "events/tool_events.hpp"
+#include "gui/events/tool_events.hpp"
 
 namespace Tactile::Sys {
 

@@ -6,9 +6,9 @@
 #include <utility>  // move
 
 #include "core/model.hpp"
-#include "events/map_events.hpp"
-#include "events/quit_event.hpp"
-#include "events/save_events.hpp"
+#include "gui/events/map_events.hpp"
+#include "gui/events/quit_event.hpp"
+#include "gui/events/save_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/widgets/common/menu.hpp"
 #include "gui/widgets/dialogs/add_map_dialog.hpp"

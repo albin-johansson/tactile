@@ -7,12 +7,12 @@
 #include <filesystem>  // path
 
 #include "common/ints.hpp"
-#include "events/tileset_events.hpp"
+#include "core/utils/buffer_utils.hpp"
+#include "gui/events/tileset_events.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/button.hpp"
 #include "gui/widgets/common/modal.hpp"
 #include "io/preferences.hpp"
-#include "utils/buffer_utils.hpp"
 
 namespace Tactile {
 namespace {

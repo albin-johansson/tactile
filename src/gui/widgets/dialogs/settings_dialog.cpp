@@ -4,14 +4,14 @@
 
 #include <magic_enum.hpp>  // enum_name
 
-#include "events/command_events.hpp"
+#include "core/utils/color_utils.hpp"
+#include "gui/events/command_events.hpp"
 #include "gui/themes.hpp"
 #include "gui/widgets/alignment.hpp"
 #include "gui/widgets/common/checkbox.hpp"
 #include "gui/widgets/common/combo.hpp"
 #include "gui/widgets/common/modal.hpp"
 #include "io/preferences.hpp"
-#include "utils/color_utils.hpp"
 
 namespace Tactile {
 namespace {

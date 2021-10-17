@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "utils/scope_id.hpp"
+#include "core/utils/scope_id.hpp"
 
 namespace Tactile {
 

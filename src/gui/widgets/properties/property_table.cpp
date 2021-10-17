@@ -7,10 +7,11 @@
 #include "common/maybe.hpp"
 #include "core/components/property.hpp"
 #include "core/systems/property_system.hpp"
+#include "core/utils/scope_id.hpp"
 #include "dialogs/add_property_dialog.hpp"
 #include "dialogs/change_property_type_dialog.hpp"
 #include "dialogs/rename_property_dialog.hpp"
-#include "events/property_events.hpp"
+#include "gui/events/property_events.hpp"
 #include "gui/icons.hpp"
 #include "items/bool_property_widget.hpp"
 #include "items/color_property_widget.hpp"
@@ -20,7 +21,6 @@
 #include "items/object_property_widget.hpp"
 #include "items/property_item_context_menu.hpp"
 #include "items/string_property_widget.hpp"
-#include "utils/scope_id.hpp"
 
 namespace Tactile {
 namespace {

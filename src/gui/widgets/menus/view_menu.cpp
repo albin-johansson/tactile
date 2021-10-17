@@ -3,8 +3,8 @@
 #include <imgui.h>
 
 #include "core/model.hpp"
-#include "events/view_events.hpp"
-#include "events/viewport_events.hpp"
+#include "gui/events/view_events.hpp"
+#include "gui/events/viewport_events.hpp"
 #include "gui/icons.hpp"
 #include "gui/layout/dock_space.hpp"
 #include "gui/widgets/common/menu.hpp"
