@@ -53,8 +53,13 @@ target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
 
 if (WIN32)
   copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+  add_custom_command(TARGET ${TACTILE_TEST} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy
+      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/../TactileYAML.dll
+      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+      )
 endif ()
 
 copy_directory_post_build(${TACTILE_TEST}
     ${CMAKE_CURRENT_SOURCE_DIR}/resources
-    ${CMAKE_CURRENT_BINARY_DIR}/resources)    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)

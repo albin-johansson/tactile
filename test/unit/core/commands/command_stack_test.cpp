@@ -1,4 +1,4 @@
-#include "core/commands/command_stack.hpp"
+#include "editor/commands/command_stack.hpp"
 
 #include <gtest/gtest.h>
 

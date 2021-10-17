@@ -1,4 +1,4 @@
-#include "io/parsing/to_map_document.hpp"
+#include "parsers/to_map_document.hpp"
 
 #include <gtest/gtest.h>
 
@@ -9,11 +9,11 @@
 #include "core/components/texture.hpp"
 #include "core/components/tile_layer.hpp"
 #include "core/components/tileset.hpp"
-#include "core/ctx/map.hpp"
+#include "core/map.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/property_system.hpp"
-#include "io/parsing/map_parser.hpp"
+#include "parsers/map_parser.hpp"
 
 using namespace Tactile;
 

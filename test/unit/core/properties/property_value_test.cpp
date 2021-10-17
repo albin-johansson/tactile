@@ -1,4 +1,4 @@
-#include "core/properties/property_value.hpp"
+#include "core/property_value.hpp"
 
 #include <gtest/gtest.h>
 

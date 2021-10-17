@@ -4,8 +4,8 @@
 #include <string>      // string
 
 #include "core/components/tileset.hpp"
-#include "core/properties/property_type.hpp"
-#include "core/properties/property_value.hpp"
+#include "core/property_type.hpp"
+#include "core/property_value.hpp"
 
 namespace Tactile::IO {
 

@@ -22,10 +22,6 @@ void SetTilesInLayer(entt::registry& registry,
                      entt::entity entity,
                      const TileCache& tiles);
 
-[[nodiscard]] auto MakeTileRow(int32 nCols, TileID value) -> TileRow;
-
-[[nodiscard]] auto MakeTileMatrix(int32 nRows, int32 nCols) -> TileMatrix;
-
 [[nodiscard]] auto GetTileFromLayer(const entt::registry& registry,
                                     entt::entity entity,
                                     const MapPosition& position) -> TileID;

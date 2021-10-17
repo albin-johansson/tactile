@@ -1,13 +1,27 @@
 #pragma once
 
-#include <string>  // string
-#include <vector>  // vector
+#include <sstream>  // stringstream
+#include <string>   // string, erase, getline
+#include <vector>   // vector
 
 #include "common/cstr.hpp"
 #include "common/not_null.hpp"
 
 namespace Tactile {
 
-[[nodiscard]] auto Split(CStr str, char sep) -> std::vector<std::string>;
+[[nodiscard]] inline auto Split(CStr str, char sep) -> std::vector<std::string>
+{
+  std::stringstream stream{str};
+  std::vector<std::string> tokens;
+
+  std::string token;
+  while (std::getline(stream, token, sep)) {
+    std::erase(token, '\n');
+    tokens.push_back(std::move(token));
+    token.clear();
+  }
+
+  return tokens;
+}
 
 }  // namespace Tactile

@@ -15,11 +15,11 @@
 #include <fstream>        // ifstream, ofstream
 #include <ios>            // ios
 
-#include "common/json.hpp"
-#include "core/model.hpp"
 #include "directories.hpp"
-#include "parsing/map_parser.hpp"
-#include "parsing/to_map_document.hpp"
+#include "editor/model.hpp"
+#include "json.hpp"
+#include "parsers/map_parser.hpp"
+#include "parsers/to_map_document.hpp"
 #include "saving/common_saving.hpp"
 
 namespace Tactile {

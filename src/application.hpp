@@ -4,17 +4,17 @@
 #include <entt.hpp>       // dispatcher
 
 #include "common/ints.hpp"
-#include "core/model.hpp"
-#include "gui/events/command_events.hpp"
-#include "gui/events/layer_events.hpp"
-#include "gui/events/map_events.hpp"
-#include "gui/events/property_events.hpp"
-#include "gui/events/quit_event.hpp"
-#include "gui/events/save_events.hpp"
-#include "gui/events/tileset_events.hpp"
-#include "gui/events/tool_events.hpp"
-#include "gui/events/viewport_events.hpp"
-#include "gui/icons.hpp"
+#include "editor/events/command_events.hpp"
+#include "editor/events/layer_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/property_events.hpp"
+#include "editor/events/quit_event.hpp"
+#include "editor/events/save_events.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/events/tool_events.hpp"
+#include "editor/events/viewport_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/model.hpp"
 
 namespace Tactile {
 

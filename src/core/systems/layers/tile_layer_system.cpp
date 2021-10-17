@@ -33,22 +33,6 @@ void SetTilesInLayer(entt::registry& registry,
   }
 }
 
-auto MakeTileRow(const int32 nCols, const TileID value) -> TileRow
-{
-  TileRow row;
-  row.reserve(nCols);
-  row.assign(nCols, value);
-  return row;
-}
-
-auto MakeTileMatrix(const int32 nRows, const int32 nCols) -> TileMatrix
-{
-  TileMatrix tiles;
-  tiles.reserve(nRows);
-  tiles.assign(nRows, MakeTileRow(nCols, empty_tile));
-  return tiles;
-}
-
 auto GetTileFromLayer(const entt::registry& registry,
                       const entt::entity entity,
                       const MapPosition& position) -> TileID

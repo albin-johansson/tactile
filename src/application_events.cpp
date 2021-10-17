@@ -1,9 +1,9 @@
 #include "application_events.hpp"
 
 #include "application.hpp"
-#include "gui/events/map_events.hpp"
-#include "gui/events/view_events.hpp"
-#include "gui/events/viewport_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/view_events.hpp"
+#include "editor/events/viewport_events.hpp"
 
 namespace Tactile {
 

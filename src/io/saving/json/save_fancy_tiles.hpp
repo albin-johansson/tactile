@@ -3,8 +3,8 @@
 #include <entt.hpp>    // registry
 #include <filesystem>  // path
 
-#include "common/json.hpp"
 #include "core/components/tileset.hpp"
+#include "io/json.hpp"
 
 namespace Tactile::IO {
 

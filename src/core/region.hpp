@@ -4,11 +4,8 @@
 
 namespace Tactile {
 
-/**
- * \brief Represents a region of a grid.
- *
- * \ingroup core
- */
+/// \brief Represents a region of a grid.
+/// \ingroup core
 struct Region final
 {
   MapPosition begin;  ///< The top-left position.

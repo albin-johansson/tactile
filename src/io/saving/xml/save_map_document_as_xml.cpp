@@ -10,7 +10,7 @@
 #include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
 #include "core/components/tileset.hpp"
-#include "core/ctx/map.hpp"
+#include "core/map.hpp"
 #include "io/saving/common_saving.hpp"
 #include "save_xml.hpp"
 

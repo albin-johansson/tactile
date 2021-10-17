@@ -6,8 +6,8 @@
 #include <fstream>     // ofstream
 
 #include "core/components/property.hpp"
-#include "core/ctx/map.hpp"
-#include "core/document.hpp"
+#include "core/map.hpp"
+#include "editor/document.hpp"
 #include "save_layers.hpp"
 #include "save_properties.hpp"
 #include "save_tilesets.hpp"

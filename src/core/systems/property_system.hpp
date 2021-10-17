@@ -6,8 +6,8 @@
 
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
-#include "core/properties/property_type.hpp"
-#include "core/properties/property_value.hpp"
+#include "core/property_type.hpp"
+#include "core/property_value.hpp"
 #include "property_context_snapshot.hpp"
 
 namespace Tactile::Sys {

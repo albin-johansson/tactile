@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "io/parsing/map_parser.hpp"
+#include "parsers/map_parser.hpp"
 
 using namespace Tactile;
 using namespace Tactile::IO;

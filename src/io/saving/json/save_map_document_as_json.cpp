@@ -2,8 +2,8 @@
 
 #include <filesystem>  // path, absolute
 
-#include "common/json.hpp"
-#include "core/ctx/map.hpp"
+#include "core/map.hpp"
+#include "io/json.hpp"
 #include "io/saving/common_saving.hpp"
 #include "save_json.hpp"
 #include "save_layers.hpp"
