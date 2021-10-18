@@ -57,7 +57,7 @@ set(PUGIXML_SOURCES
 include(Utilities)
 include(TactileDependencies)
 
-add_subdirectory(modules/proto)
+add_subdirectory(modules/tactile-proto)
 add_subdirectory(modules/tactile-io)
 add_subdirectory(modules/tactile)
 add_subdirectory(test)
