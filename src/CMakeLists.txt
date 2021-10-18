@@ -545,7 +545,7 @@ target_include_directories(${TACTILE_LIB}
     ${SDL2_IMAGE_INCLUDE_DIRS}
     ${SDL2_TTF_INCLUDE_DIRS}
     ${PROTOBUF_INCLUDE_DIRS}
-    ${GENERATED_PROTO_DIR}
+    ${TACTILE_PROTO_GENERATED_DIR}
     )
 
 target_link_libraries(${TACTILE_LIB}

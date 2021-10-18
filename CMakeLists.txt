@@ -15,7 +15,6 @@ endif ()
 set(ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(LIBRARY_DIR ${ROOT_DIR}/lib)
 set(RESOURCE_DIR ${ROOT_DIR}/resources)
-set(GENERATED_PROTO_DIR ${ROOT_DIR}/proto/generated)
 
 # Target names
 set(TACTILE_PROTO prototactile)
@@ -58,7 +57,7 @@ set(PUGIXML_SOURCES
 include(Utilities)
 include(TactileDependencies)
 
-add_subdirectory(proto)
+add_subdirectory(modules/proto)
 add_subdirectory(modules/tactile-io)
 add_subdirectory(src)
 add_subdirectory(test)
