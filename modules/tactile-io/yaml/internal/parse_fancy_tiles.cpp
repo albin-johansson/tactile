@@ -2,13 +2,15 @@
 
 #include <utility>  // move
 
+#include <yaml-cpp/yaml.h>
+
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseAnimationFrame(const YAML::Node& node)
-    -> Expected<FrameData, ParseError>
+    -> tl::expected<FrameData, ParseError>
 {
   FrameData frame;
 
@@ -30,7 +32,7 @@ namespace {
 }
 
 [[nodiscard]] auto ParseFancyTile(const YAML::Node& node)
-    -> Expected<TileData, ParseError>
+    -> tl::expected<TileData, ParseError>
 {
   TileData data;
 
@@ -66,7 +68,7 @@ namespace {
 }  // namespace
 
 auto ParseFancyTiles(const YAML::Node& node)
-    -> Expected<std::vector<TileData>, ParseError>
+    -> tl::expected<std::vector<TileData>, ParseError>
 {
   std::vector<TileData> tiles;
 

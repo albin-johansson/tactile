@@ -1,11 +1,12 @@
-#include <tactile/io/maps/map_parser.hpp>
-
-#include <gtest/gtest.h>
+#include "io/map_parser.hpp"
 
 #include <utility>  // pair
 
+#include <gtest/gtest.h>
+
+#include <tactile-io/parse_error.hpp>
+
 #include "common/cstr.hpp"
-#include <tactile/io/maps/parse_error.hpp>
 
 using namespace Tactile;
 using namespace Tactile::IO;

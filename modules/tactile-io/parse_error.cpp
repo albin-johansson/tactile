@@ -4,7 +4,7 @@
 
 namespace Tactile::IO {
 
-auto GetCause(const ParseError error) -> CStr
+auto GetCause(const ParseError error) -> const char*
 {
   switch (error) {
     default:

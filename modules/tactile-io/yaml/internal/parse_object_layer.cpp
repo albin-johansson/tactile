@@ -5,10 +5,12 @@
 
 #include "parse_properties.hpp"
 
+#include <yaml-cpp/yaml.h>
+
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseObject(const YAML::Node& node) -> Expected<ObjectData, ParseError>
+[[nodiscard]] auto ParseObject(const YAML::Node& node) -> tl::expected<ObjectData, ParseError>
 {
   ObjectData data;
 
@@ -93,7 +95,7 @@ namespace {
 
 }  // namespace
 
-auto ParseObjectLayer(const YAML::Node& node) -> Expected<ObjectLayerData, ParseError>
+auto ParseObjectLayer(const YAML::Node& node) -> tl::expected<ObjectLayerData, ParseError>
 {
   ObjectLayerData data;
 

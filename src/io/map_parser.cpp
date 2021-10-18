@@ -2,7 +2,7 @@
 
 #include <filesystem>  // absolute
 
-#include <tactile/io/maps/yaml/yaml_parser.hpp>
+#include <tactile-io/yaml/yaml_parser.hpp>
 
 #include "core/utils/profile.hpp"
 #include "parsers/json/parse_json_map.hpp"

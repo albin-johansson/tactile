@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.18)
 
 project(tactile-src CXX)
 
-add_subdirectory(tactile/io/maps/yaml)
-
 set(SOURCE_FILES
     ${IMGUI_SOURCES}
     ${PUGIXML_SOURCES}
@@ -430,11 +428,8 @@ set(SOURCE_FILES
     io/session.cpp
     io/session.hpp
 
-    tactile/io/maps/map_parser.cpp
-    tactile/io/maps/map_parser.hpp
-    tactile/io/maps/parse_error.cpp
-    tactile/io/maps/parse_error.hpp
-    tactile/io/maps/parse_ir.hpp
+    io/map_parser.cpp
+    io/map_parser.hpp
     io/to_map_document.cpp
     io/to_map_document.hpp
 
@@ -525,11 +520,12 @@ set(SOURCE_FILES
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})
 add_dependencies(${TACTILE_LIB} ${TACTILE_PROTO})
-add_dependencies(${TACTILE_LIB} TactileYAML)
+add_dependencies(${TACTILE_LIB} TactileIO)
 
 target_include_directories(${TACTILE_LIB}
     PUBLIC
     ${ROOT_DIR}/src
+    ${ROOT_DIR}/modules
 
     SYSTEM PUBLIC
     ${LIBRARY_DIR}/entt
@@ -562,7 +558,7 @@ target_link_libraries(${TACTILE_LIB}
     ${SDL2_LIBRARY}
     ${CENTURION_LIBRARIES}
     ${PROTOBUF_LIBRARIES}
-    TactileYAML
+    TactileIO
     )
 
 target_compile_definitions(${TACTILE_LIB}

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <tactile/io/maps/parse_error.hpp>
-#include <tactile/io/maps/parse_ir.hpp>
+#include <tactile-io/parse_error.hpp>
+#include <tactile-io/parse_ir.hpp>
 
 #include "common/expected.hpp"
 #include "io/json.hpp"

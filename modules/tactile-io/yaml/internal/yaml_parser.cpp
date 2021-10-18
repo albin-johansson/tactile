@@ -1,4 +1,4 @@
-#include "tactile/io/maps/yaml/yaml_parser.hpp"
+#include "../yaml_parser.hpp"
 
 #include <filesystem>  // absolute
 #include <utility>     // move
@@ -13,7 +13,7 @@ namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseMap(const std::filesystem::path& path)
-    -> Expected<MapData, ParseError>
+    -> tl::expected<MapData, ParseError>
 {
   try {
     const auto node = YAML::LoadFile(path.string());

@@ -59,5 +59,6 @@ include(Utilities)
 include(TactileDependencies)
 
 add_subdirectory(proto)
+add_subdirectory(modules/tactile-io)
 add_subdirectory(src)
 add_subdirectory(test)

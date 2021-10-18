@@ -7,11 +7,13 @@
 #include "parse_fancy_tiles.hpp"
 #include "parse_properties.hpp"
 
+#include <yaml-cpp/yaml.h>
+
 namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseTileset(const TileID first, const std::filesystem::path& path)
-    -> Expected<TilesetData, ParseError>
+    -> tl::expected<TilesetData, ParseError>
 {
   try {
     const auto node = YAML::LoadFile(path.string());
@@ -118,7 +120,7 @@ namespace {
 }  // namespace
 
 auto ParseTilesets(const YAML::Node& seq, const std::filesystem::path& dir)
-    -> Expected<std::vector<TilesetData>, ParseError>
+    -> tl::expected<std::vector<TilesetData>, ParseError>
 {
   std::vector<TilesetData> tilesets;
   tilesets.reserve(seq.size());

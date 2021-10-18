@@ -4,21 +4,22 @@
 #include <utility>  // move
 
 #include "common.hpp"
-#include "core/utils/string_utils.hpp"
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"
+
+#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseLayer(const YAML::Node& node, usize index, int nRows, int nCols)
-    -> Expected<LayerData, ParseError>;
+    -> tl::expected<LayerData, ParseError>;
 
 [[nodiscard]] auto ParseGroupLayer(const YAML::Node& node,
                                    const int nRows,
                                    const int nCols)
-    -> Expected<GroupLayerData, ParseError>
+    -> tl::expected<GroupLayerData, ParseError>
 {
   GroupLayerData data;
 
@@ -44,7 +45,7 @@ namespace {
 [[nodiscard]] auto ParseLayer(const YAML::Node& node,
                               const usize index,
                               const int nRows,
-                              const int nCols) -> Expected<LayerData, ParseError>
+                              const int nCols) -> tl::expected<LayerData, ParseError>
 {
   LayerData layer;
   layer.index = index;
@@ -127,7 +128,7 @@ namespace {
 }  // namespace
 
 auto ParseLayers(const YAML::Node& seq, const int nRows, const int nCols)
-    -> Expected<std::vector<LayerData>, ParseError>
+    -> tl::expected<std::vector<LayerData>, ParseError>
 {
   std::vector<LayerData> layers;
   layers.reserve(seq.size());

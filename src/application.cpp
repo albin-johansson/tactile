@@ -7,8 +7,6 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 
-#include <tactile/io/maps/map_parser.hpp>
-
 #include "application_events.hpp"
 #include "core/components/property_context.hpp"
 #include "core/mouse.hpp"
@@ -51,6 +49,7 @@
 #include "editor/gui/widgets/viewport/viewport_widget.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
 #include "io/history.hpp"
+#include "io/map_parser.hpp"
 #include "io/preferences.hpp"
 #include "io/saving/save_map_document.hpp"
 #include "io/session.hpp"

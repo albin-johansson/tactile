@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tactile/io/maps/parse_error.hpp>
+#include <tactile-io/parse_error.hpp>
 
 #include "common/cstr.hpp"
 #include "common/ints.hpp"

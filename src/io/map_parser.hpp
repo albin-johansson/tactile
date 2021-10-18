@@ -2,8 +2,8 @@
 
 #include <filesystem>  // path
 
-#include "parse_error.hpp"
-#include "parse_ir.hpp"
+#include "tactile-io/parse_error.hpp"
+#include "tactile-io/parse_ir.hpp"
 
 namespace Tactile::IO {
 

@@ -2,7 +2,7 @@
 
 #include <ostream>  // ostream
 
-#include "common/cstr.hpp"
+#include "api.hpp"
 
 namespace Tactile::IO {
 
@@ -84,7 +84,7 @@ enum class ParseError
  *
  * \return a short explanation of the potential cause of the error.
  */
-[[nodiscard]] auto GetCause(ParseError error) -> CStr;
+[[nodiscard]] TACTILE_IO_API auto GetCause(ParseError error) -> const char*;
 
 /**
  * \brief Prints a textual representation of a parse error enumerator.
@@ -94,7 +94,7 @@ enum class ParseError
  *
  * \return the used stream.
  */
-auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;
+TACTILE_IO_API auto operator<<(std::ostream& stream, ParseError error) -> std::ostream&;
 
 /// \} End of group io
 

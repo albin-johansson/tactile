@@ -4,10 +4,12 @@
 #include <string>          // string
 #include <utility>         // move
 
+#include <yaml-cpp/yaml.h>
+
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseType(const YAML::Node& node) -> Expected<PropertyType, ParseError>
+[[nodiscard]] auto ParseType(const YAML::Node& node) -> tl::expected<PropertyType, ParseError>
 {
   PropertyType type;
 
@@ -28,7 +30,7 @@ namespace {
 }
 
 [[nodiscard]] auto ParseValue(const YAML::Node& node, const PropertyType type)
-    -> Expected<PropertyValue, ParseError>
+    -> tl::expected<PropertyValue, ParseError>
 {
   PropertyValue result;
 
@@ -83,7 +85,7 @@ namespace {
 }
 
 [[nodiscard]] auto ParseProperty(const YAML::Node& node)
-    -> Expected<PropertyData, ParseError>
+    -> tl::expected<PropertyData, ParseError>
 {
   PropertyData data;
 
@@ -112,7 +114,7 @@ namespace {
 }  // namespace
 
 auto ParseProperties(const YAML::Node& node)
-    -> Expected<std::vector<PropertyData>, ParseError>
+    -> tl::expected<std::vector<PropertyData>, ParseError>
 {
   std::vector<PropertyData> properties;
 

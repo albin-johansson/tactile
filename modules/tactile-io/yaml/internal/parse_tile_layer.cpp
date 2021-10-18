@@ -8,11 +8,13 @@
 #include "core/utils/from_string.hpp"
 #include "core/utils/string_utils.hpp"
 
+#include <yaml-cpp/yaml.h>
+
 namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseTiles(const std::string& data, const int nRows, const int nCols)
-    -> Expected<TileMatrix, ParseError>
+    -> tl::expected<TileMatrix, ParseError>
 {
   auto matrix = MakeTileMatrix(nRows, nCols);
 
@@ -35,7 +37,7 @@ namespace {
 }  // namespace
 
 auto ParseTileLayer(const YAML::Node& node, const int nRows, const int nCols)
-    -> Expected<TileLayerData, ParseError>
+    -> tl::expected<TileLayerData, ParseError>
 {
   TileLayerData data;
   data.row_count = nRows;

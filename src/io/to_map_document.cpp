@@ -6,6 +6,8 @@
 
 #include <entt.hpp>  // registry
 
+#include <tactile-io/parse_ir.hpp>
+
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/group_layer.hpp"
@@ -24,7 +26,6 @@
 #include "core/systems/registry_factory_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/utils/load_texture.hpp"
-#include "tactile/io/maps/parse_ir.hpp"
 
 namespace Tactile::IO {
 namespace {
