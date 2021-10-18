@@ -1,0 +1,17 @@
+#pragma once
+
+#include <filesystem>  // path
+
+#include <entt.hpp>     // registry
+#include <pugixml.hpp>  // xml_node
+
+#include "tactile/core/components/tileset.hpp"
+
+namespace Tactile::IO {
+
+void AppendFancyTiles(pugi::xml_node node,
+                      const entt::registry& registry,
+                      const Tileset& tileset,
+                      const std::filesystem::path& dir);
+
+}  // namespace Tactile::IO
