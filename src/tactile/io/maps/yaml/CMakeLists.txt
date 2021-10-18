@@ -1,25 +1,24 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(tactile-src-parsers-yaml CXX)
+project(tactile-io-yaml-parser CXX)
 
 set(TACTILE_YAML_PARSER_SOURCES
-    include/api.hpp
-    include/parse_yaml_map.hpp
+    yaml_parser.hpp
 
-    private/parse_fancy_tiles.hpp
-    private/parse_layers.hpp
-    private/parse_object_layer.hpp
-    private/parse_properties.hpp
-    private/parse_tile_layer.hpp
-    private/parse_tilesets.hpp
+    internal/parse_fancy_tiles.hpp
+    internal/parse_layers.hpp
+    internal/parse_object_layer.hpp
+    internal/parse_properties.hpp
+    internal/parse_tile_layer.hpp
+    internal/parse_tilesets.hpp
 
-    private/parse_fancy_tiles.cpp
-    private/parse_layers.cpp
-    private/parse_object_layer.cpp
-    private/parse_properties.cpp
-    private/parse_tile_layer.cpp
-    private/parse_tilesets.cpp
-    private/parse_yaml_map.cpp
+    internal/parse_fancy_tiles.cpp
+    internal/parse_layers.cpp
+    internal/parse_object_layer.cpp
+    internal/parse_properties.cpp
+    internal/parse_tile_layer.cpp
+    internal/parse_tilesets.cpp
+    internal/yaml_parser.cpp
     )
 
 add_library(TactileYAML SHARED ${TACTILE_YAML_PARSER_SOURCES})

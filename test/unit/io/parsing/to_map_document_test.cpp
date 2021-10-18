@@ -1,6 +1,7 @@
-#include <tactile/io/maps/to_map_document.hpp>
-
 #include <gtest/gtest.h>
+#include <io/to_map_document.hpp>
+
+#include <tactile/io/maps/map_parser.hpp>
 
 #include "core/components/layer.hpp"
 #include "core/components/object.hpp"
@@ -13,7 +14,6 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/property_system.hpp"
-#include <tactile/io/maps/map_parser.hpp>
 
 using namespace Tactile;
 

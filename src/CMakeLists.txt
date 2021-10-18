@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.18)
 
 project(tactile-src CXX)
 
-add_subdirectory(parsers)
+add_subdirectory(tactile/io/maps/yaml)
 
 set(SOURCE_FILES
     ${IMGUI_SOURCES}
@@ -435,8 +435,8 @@ set(SOURCE_FILES
     tactile/io/maps/parse_error.cpp
     tactile/io/maps/parse_error.hpp
     tactile/io/maps/parse_ir.hpp
-    tactile/io/maps/to_map_document.cpp
-    tactile/io/maps/to_map_document.hpp
+    io/to_map_document.cpp
+    io/to_map_document.hpp
 
     parsers/json/parse_fancy_tiles.cpp
     parsers/json/parse_fancy_tiles.hpp

@@ -17,10 +17,10 @@
 #include <centurion.hpp>  // ...
 
 #include <tactile/io/maps/map_parser.hpp>
-#include <tactile/io/maps/to_map_document.hpp>
 
 #include "directories.hpp"
 #include "editor/model.hpp"
+#include "io/to_map_document.hpp"
 #include "json.hpp"
 #include "saving/common_saving.hpp"
 

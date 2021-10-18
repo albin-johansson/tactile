@@ -2,10 +2,11 @@
 
 #include <filesystem>  // absolute
 
+#include <tactile/io/maps/yaml/yaml_parser.hpp>
+
 #include "core/utils/profile.hpp"
 #include "parsers/json/parse_json_map.hpp"
 #include "parsers/xml/parse_xml_map.hpp"
-#include "parsers/yaml/include/parse_yaml_map.hpp"
 
 namespace Tactile::IO {
 

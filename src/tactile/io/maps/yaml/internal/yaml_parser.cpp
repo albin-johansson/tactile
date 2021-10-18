@@ -1,6 +1,4 @@
-#include "parse_yaml_map.hpp"
-
-#include <yaml-cpp/yaml.h>
+#include "tactile/io/maps/yaml/yaml_parser.hpp"
 
 #include <filesystem>  // absolute
 #include <utility>     // move
@@ -8,6 +6,8 @@
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
+
+#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 
