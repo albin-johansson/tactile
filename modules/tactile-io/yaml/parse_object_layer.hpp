@@ -2,9 +2,9 @@
 
 #include <expected.hpp>
 
-#include "../../parse_error.hpp"
-#include "../../parse_ir.hpp"
-#include "../yaml_fwd.hpp"
+#include "../parse_error.hpp"
+#include "../parse_ir.hpp"
+#include "yaml_fwd.hpp"
 
 namespace Tactile::IO {
 

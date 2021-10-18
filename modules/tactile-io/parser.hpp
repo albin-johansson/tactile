@@ -3,9 +3,9 @@
 #include <filesystem>  // path
 #include <optional>    // optional
 
-#include "../api.hpp"
-#include "../parse_error.hpp"
-#include "../parse_ir.hpp"
+#include "api.hpp"
+#include "parse_error.hpp"
+#include "parse_ir.hpp"
 
 namespace Tactile::IO {
 
