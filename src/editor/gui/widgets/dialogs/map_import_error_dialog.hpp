@@ -1,6 +1,6 @@
 #pragma once
 
-#include "parsers/parse_error.hpp"
+#include <tactile/io/maps/parse_error.hpp>
 
 namespace Tactile {
 

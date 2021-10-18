@@ -2,9 +2,10 @@
 
 #include <pugixml.hpp>
 
+#include <tactile/io/maps/parse_error.hpp>
+
 #include "common/ints.hpp"
 #include "common/tile_matrix.hpp"
-#include "parsers/parse_error.hpp"
 
 namespace Tactile::IO {
 

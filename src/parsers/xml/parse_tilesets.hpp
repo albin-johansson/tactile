@@ -1,11 +1,12 @@
 #pragma once
 
-#include <filesystem>   // path
-#include <pugixml.hpp>  // xml_node
-#include <vector>       // vector
+#include <filesystem>  // path
+#include <vector>      // vector
 
-#include "parsers/parse_error.hpp"
-#include "parsers/parse_ir.hpp"
+#include <pugixml.hpp>  // xml_node
+
+#include <tactile/io/maps/parse_error.hpp>
+#include <tactile/io/maps/parse_ir.hpp>
 
 namespace Tactile::IO {
 

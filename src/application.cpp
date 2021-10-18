@@ -1,11 +1,14 @@
 #include "application.hpp"
 
+#include <utility>  // move, forward
+
 #include <GL/glew.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl.h>
 
-#include <utility>  // move, forward
+#include <tactile/io/maps/map_parser.hpp>
+#include <tactile/io/maps/to_map_document.hpp>
 
 #include "application_events.hpp"
 #include "core/components/property_context.hpp"
@@ -52,8 +55,6 @@
 #include "io/preferences.hpp"
 #include "io/saving/save_map_document.hpp"
 #include "io/session.hpp"
-#include "parsers/map_parser.hpp"
-#include "parsers/to_map_document.hpp"
 
 namespace Tactile {
 namespace {

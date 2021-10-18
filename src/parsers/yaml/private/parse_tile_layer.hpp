@@ -1,10 +1,11 @@
 #pragma once
 
-#include <yaml-cpp/yaml.h>
+#include <tactile/io/maps/parse_error.hpp>
+#include <tactile/io/maps/parse_ir.hpp>
 
 #include "common.hpp"
-#include "parsers/parse_error.hpp"
-#include "parsers/parse_ir.hpp"
+
+#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 

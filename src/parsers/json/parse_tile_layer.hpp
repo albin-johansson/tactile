@@ -1,9 +1,10 @@
 #pragma once
 
+#include <tactile/io/maps/parse_error.hpp>
+#include <tactile/io/maps/parse_ir.hpp>
+
 #include "common/expected.hpp"
 #include "io/json.hpp"
-#include "parsers/parse_error.hpp"
-#include "parsers/parse_ir.hpp"
 
 namespace Tactile::IO {
 

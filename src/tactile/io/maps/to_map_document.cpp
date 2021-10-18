@@ -1,9 +1,10 @@
 #include "to_map_document.hpp"
 
 #include <algorithm>  // sort
-#include <entt.hpp>   // registry
 #include <format>     // format
 #include <variant>    // get
+
+#include <entt.hpp>  // registry
 
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"

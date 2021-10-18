@@ -10,16 +10,18 @@
 #pragma warning(pop)
 #endif  // _MSC_VER
 
+#include <filesystem>  // absolute
+#include <fstream>     // ifstream, ofstream
+#include <ios>         // ios
+
 #include <centurion.hpp>  // ...
-#include <filesystem>     // absolute
-#include <fstream>        // ifstream, ofstream
-#include <ios>            // ios
+
+#include <tactile/io/maps/map_parser.hpp>
+#include <tactile/io/maps/to_map_document.hpp>
 
 #include "directories.hpp"
 #include "editor/model.hpp"
 #include "json.hpp"
-#include "parsers/map_parser.hpp"
-#include "parsers/to_map_document.hpp"
 #include "saving/common_saving.hpp"
 
 namespace Tactile {

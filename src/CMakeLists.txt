@@ -430,13 +430,13 @@ set(SOURCE_FILES
     io/session.cpp
     io/session.hpp
 
-    parsers/map_parser.cpp
-    parsers/map_parser.hpp
-    parsers/parse_error.cpp
-    parsers/parse_error.hpp
-    parsers/parse_ir.hpp
-    parsers/to_map_document.cpp
-    parsers/to_map_document.hpp
+    tactile/io/maps/map_parser.cpp
+    tactile/io/maps/map_parser.hpp
+    tactile/io/maps/parse_error.cpp
+    tactile/io/maps/parse_error.hpp
+    tactile/io/maps/parse_ir.hpp
+    tactile/io/maps/to_map_document.cpp
+    tactile/io/maps/to_map_document.hpp
 
     parsers/json/parse_fancy_tiles.cpp
     parsers/json/parse_fancy_tiles.hpp
