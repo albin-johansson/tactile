@@ -2,13 +2,10 @@
 
 #include <vector>  // vector
 
-#include "common/ints.hpp"
-#include "common/layer_id.hpp"
-#include "common/maybe.hpp"
-#include "common/tile_matrix.hpp"
 #include "core/components/layer.hpp"
 #include "core/systems/property_context_snapshot.hpp"
 #include "object_snapshot.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::Sys {
 

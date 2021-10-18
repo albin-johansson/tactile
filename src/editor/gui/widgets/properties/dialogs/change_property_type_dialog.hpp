@@ -1,9 +1,10 @@
 #pragma once
 
-#include <entt.hpp>  // dispatcher
-#include <string>    // string
+#include <string>  // string
 
-#include "core/property_type.hpp"
+#include <entt.hpp>  // dispatcher
+
+#include <tactile-base/property_type.hpp>
 
 namespace Tactile {
 

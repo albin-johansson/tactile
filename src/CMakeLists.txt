@@ -16,34 +16,12 @@ set(SOURCE_FILES
     cfg/gl_attributes.cpp
     cfg/gl_attributes.hpp
 
-    common/context_id.hpp
-    common/cstr.hpp
-    common/expected.hpp
-    common/hash_map.hpp
-    common/ints.hpp
-    common/layer_id.hpp
-    common/map_id.hpp
-    common/maybe.hpp
-    common/not_null.hpp
-    common/object_id.hpp
-    common/object_ref.hpp
-    common/ref.hpp
     common/tile_cache.hpp
-    common/tile_id.hpp
-    common/tile_matrix.hpp
-    common/tileset_id.hpp
 
-    core/layer_type.hpp
     core/map.hpp
-    core/map_position.hpp
     core/mouse.hpp
     core/mouse_info.hpp
-    core/object_type.hpp
-    core/property_type.hpp
-    core/property_value.cpp
-    core/property_value.hpp
     core/region.hpp
-    core/tactile_error.hpp
     core/tool_type.hpp
     core/viewport.hpp
 
@@ -105,13 +83,10 @@ set(SOURCE_FILES
 
     core/utils/buffer_utils.hpp
     core/utils/color_utils.hpp
-    core/utils/from_string.hpp
     core/utils/load_texture.cpp
     core/utils/load_texture.hpp
     core/utils/profile.hpp
     core/utils/scope_id.hpp
-    core/utils/string_utils.hpp
-    core/utils/string_utils.cpp
 
     editor/document.hpp
     editor/model.cpp
@@ -422,12 +397,13 @@ set(SOURCE_FILES
     io/directories.hpp
     io/history.cpp
     io/history.hpp
-    io/json.hpp
     io/preferences.cpp
     io/preferences.hpp
     io/session.cpp
     io/session.hpp
 
+    io/convert_document_to_ir.cpp
+    io/convert_document_to_ir.hpp
     io/map_parser.cpp
     io/map_parser.hpp
     io/to_map_document.cpp
@@ -461,19 +437,6 @@ set(SOURCE_FILES
     io/saving/save_map_document.cpp
     io/saving/save_map_document.hpp
 
-    io/saving/json/save_fancy_tiles.cpp
-    io/saving/json/save_fancy_tiles.hpp
-    io/saving/json/save_json.cpp
-    io/saving/json/save_json.hpp
-    io/saving/json/save_layers.cpp
-    io/saving/json/save_layers.hpp
-    io/saving/json/save_map_document_as_json.cpp
-    io/saving/json/save_map_document_as_json.hpp
-    io/saving/json/save_properties.cpp
-    io/saving/json/save_properties.hpp
-    io/saving/json/save_tilesets.cpp
-    io/saving/json/save_tilesets.hpp
-
     io/saving/xml/append_fancy_tiles.cpp
     io/saving/xml/append_fancy_tiles.hpp
     io/saving/xml/append_layer.cpp
@@ -503,7 +466,7 @@ add_dependencies(${TACTILE_LIB} TactileIO)
 
 target_include_directories(${TACTILE_LIB}
     PUBLIC
-    ${ROOT_DIR}/src
+    ${PROJECT_SOURCE_DIR}
     ${ROOT_DIR}/modules
 
     SYSTEM PUBLIC

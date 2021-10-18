@@ -3,7 +3,6 @@
 #include <centurion.hpp>  // window, keyboard
 #include <entt.hpp>       // dispatcher
 
-#include "common/ints.hpp"
 #include "editor/events/command_events.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/map_events.hpp"
@@ -15,6 +14,7 @@
 #include "editor/events/viewport_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "editor/model.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

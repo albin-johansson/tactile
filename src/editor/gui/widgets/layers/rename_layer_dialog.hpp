@@ -1,9 +1,10 @@
 #pragma once
 
-#include <entt.hpp>  // registry, dispatcher
-#include <string>    // string
+#include <string>  // string
 
-#include "common/layer_id.hpp"
+#include <entt.hpp>  // registry, dispatcher
+
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

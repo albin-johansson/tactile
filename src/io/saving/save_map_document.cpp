@@ -5,11 +5,12 @@
 
 #include <centurion.hpp>  // CENTURION_LOG_{}
 
+#include <tactile-io/emitter.hpp>
+
 #include "core/utils/profile.hpp"
+#include "io/convert_document_to_ir.hpp"
 #include "xml/save_map_document_as_xml.hpp"
 #include "yaml/save_document_as_yaml.hpp"
-
-#include "tactile-io/json/emitter/save_map_document_as_json.hpp"
 
 namespace Tactile::IO {
 
@@ -23,7 +24,8 @@ void SaveMapDocument(const Document& document)
 
   const auto extension = path.extension();
   if (extension == ".json") {
-    SaveMapDocumentAsJson(document);
+    const auto data = ConvertDocumentToIR(document);
+    EmitJsonMap(data);
   }
   else if (extension == ".tmx" || extension == ".xml") {
     SaveMapDocumentAsXml(document);

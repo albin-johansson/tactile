@@ -1,12 +1,12 @@
 #include "color_property_widget.hpp"
 
-#include <imgui.h>
-
 #include <cmath>  // round
 
-#include "common/ints.hpp"
+#include <imgui.h>
+
 #include "core/utils/color_utils.hpp"
 #include "core/utils/scope_id.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

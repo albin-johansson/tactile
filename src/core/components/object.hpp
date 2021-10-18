@@ -2,8 +2,8 @@
 
 #include <string>  // string
 
-#include "common/object_id.hpp"
-#include "core/object_type.hpp"
+#include <tactile-base/object_type.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

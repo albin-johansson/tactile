@@ -3,12 +3,10 @@
 #include <centurion.hpp>  // irect
 #include <entt.hpp>       // registry, entity
 
-#include "common/maybe.hpp"
-#include "common/tile_id.hpp"
-#include "common/tileset_id.hpp"
+#include <tactile-base/map_position.hpp>
 #include "core/components/texture.hpp"
-#include "core/map_position.hpp"
 #include "core/region.hpp"
+#include <tactile-base/tactile_std.hpp>
 #include "tileset_snapshot.hpp"
 
 namespace Tactile::Sys {

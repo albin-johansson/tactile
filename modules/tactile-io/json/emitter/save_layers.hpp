@@ -1,13 +1,14 @@
 #pragma once
 
-#include <entt.hpp>    // registry
 #include <filesystem>  // path
+#include <vector>      // vector
 
-#include "io/json.hpp"
+#include "../../parse_ir.hpp"
+#include "../json_common.hpp"
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto SaveLayers(const entt::registry& registry,
+[[nodiscard]] auto SaveLayers(const std::vector<LayerData>& layers,
                               const std::filesystem::path& dir) -> JSON;
 
 }  // namespace Tactile::IO

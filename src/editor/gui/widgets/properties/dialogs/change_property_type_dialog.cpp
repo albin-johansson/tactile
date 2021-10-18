@@ -1,16 +1,16 @@
 #include "change_property_type_dialog.hpp"
 
-#include <imgui.h>
-
 #include <utility>  // move
 
-#include "common/maybe.hpp"
-#include "core/tactile_error.hpp"
+#include <imgui.h>
+
+#include <tactile-base/tactile_error.hpp>
 #include "editor/events/property_events.hpp"
 #include "editor/gui/widgets/alignment.hpp"
 #include "editor/gui/widgets/common/button.hpp"
 #include "editor/gui/widgets/common/modal.hpp"
 #include "property_type_combo.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

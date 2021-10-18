@@ -1,17 +1,16 @@
 #include "history.hpp"
 
-#include <history.pb.h>
-
 #include <algorithm>   // find
 #include <filesystem>  // exists
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 #include <utility>     // move
 
-#include "common/ints.hpp"
-#include "common/maybe.hpp"
+#include <history.pb.h>
+
 #include "directories.hpp"
 #include "saving/common_saving.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

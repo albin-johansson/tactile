@@ -1,12 +1,11 @@
 #include "layer_dock.hpp"
 
-#include <imgui.h>
-
 #include <cassert>  // assert
 #include <limits>   // numeric_limits
 
+#include <imgui.h>
+
 #include "add_layer_popup.hpp"
-#include "common/maybe.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
@@ -21,6 +20,7 @@
 #include "io/preferences.hpp"
 #include "layer_item.hpp"
 #include "rename_layer_dialog.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

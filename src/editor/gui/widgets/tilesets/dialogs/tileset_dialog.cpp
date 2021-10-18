@@ -1,18 +1,19 @@
 #include "tileset_dialog.hpp"
 
-#include <imgui.h>
-#include <portable-file-dialogs.h>
-
 #include <array>       // array
 #include <filesystem>  // path
 
-#include "common/ints.hpp"
+#include <imgui.h>
+
 #include "core/utils/buffer_utils.hpp"
 #include "editor/events/tileset_events.hpp"
 #include "editor/gui/widgets/alignment.hpp"
 #include "editor/gui/widgets/common/button.hpp"
 #include "editor/gui/widgets/common/modal.hpp"
 #include "io/preferences.hpp"
+#include <tactile-base/tactile_std.hpp>
+
+#include <portable-file-dialogs.h>
 
 namespace Tactile {
 namespace {

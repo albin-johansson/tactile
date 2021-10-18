@@ -1,16 +1,14 @@
 #include "property_type_combo.hpp"
 
-#include <imgui.h>
-
 #include <algorithm>  // find_if
 #include <array>      // array
 #include <cstring>    // strcmp
 #include <utility>    // pair, make_pair
 
-#include "common/cstr.hpp"
-#include "common/ints.hpp"
-#include "common/maybe.hpp"
-#include "core/tactile_error.hpp"
+#include <imgui.h>
+
+#include <tactile-base/tactile_error.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

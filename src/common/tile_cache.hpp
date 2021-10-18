@@ -2,8 +2,8 @@
 
 #include <rune/rune.hpp>  // vector_map
 
-#include "core/map_position.hpp"
-#include "tile_id.hpp"
+#include <tactile-base/map_position.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

@@ -4,11 +4,28 @@ project(tactile-io CXX)
 
 set(TACTILE_IO_SOURCES
     api.hpp
+    emitter.hpp
     parse_error.cpp
     parse_error.hpp
     parse_ir.hpp
     parser.hpp
 
+    json/json_common.hpp
+
+    json/emitter/common_saving.cpp
+    json/emitter/common_saving.hpp
+
+    json/emitter/save_fancy_tiles.cpp
+    json/emitter/save_fancy_tiles.hpp
+    json/emitter/save_json.cpp
+    json/emitter/save_json.hpp
+    json/emitter/save_json_map.cpp
+    json/emitter/save_layers.cpp
+    json/emitter/save_layers.hpp
+    json/emitter/save_properties.cpp
+    json/emitter/save_properties.hpp
+    json/emitter/save_tilesets.cpp
+    json/emitter/save_tilesets.hpp
 
     json/parser/parse_fancy_tiles.cpp
     json/parser/parse_fancy_tiles.hpp
@@ -50,13 +67,16 @@ add_library(TactileIO SHARED ${TACTILE_IO_SOURCES})
 
 target_include_directories(TactileIO
     PRIVATE
-    ${ROOT_DIR}/src
-    ${ROOT_DIR}/src/tactile-io
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/..
 
     SYSTEM PRIVATE
-    ${LIBRARY_DIR}/magic-enum
+    ${LIBRARY_DIR}/entt
+    ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/tl
-    ${LIBRARY_DIR}/nenya)
+    ${LIBRARY_DIR}/magic-enum
+    ${LIBRARY_DIR}/json
+    )
 
 target_link_libraries(TactileIO
     PUBLIC

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/ints.hpp"
+#include "tactile_std.hpp"
 
 namespace Tactile {
 

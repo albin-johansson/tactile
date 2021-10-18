@@ -1,6 +1,7 @@
-#include "core/map_position.hpp"
 
 #include <gtest/gtest.h>
+
+#include <tactile-base/map_position.hpp>
 
 using namespace Tactile;
 

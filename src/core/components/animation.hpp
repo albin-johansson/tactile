@@ -1,11 +1,11 @@
 #pragma once
 
+#include <vector>  // vector
+
 #include <centurion.hpp>  // milliseconds
 #include <entt.hpp>       // entity
-#include <vector>         // vector
 
-#include "common/ints.hpp"
-#include "common/tile_id.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

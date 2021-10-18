@@ -1,11 +1,11 @@
 #pragma once
 
+#include <array>  // array
+
+#include <centurion.hpp>  // color
 #include <imgui.h>
 
-#include <array>          // array
-#include <centurion.hpp>  // color
-
-#include "common/ints.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

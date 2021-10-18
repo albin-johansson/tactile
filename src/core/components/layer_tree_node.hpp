@@ -1,9 +1,10 @@
 #pragma once
 
-#include <entt.hpp>  // entity
-#include <vector>    // vector
+#include <vector>  // vector
 
-#include "common/ints.hpp"
+#include <entt.hpp>  // entity
+
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

@@ -1,19 +1,20 @@
 #include "stamp_tool_system.hpp"
 
-#include <cassert>        // assert
-#include <rune/rune.hpp>  // vector_map
-#include <utility>        // move
+#include <cassert>  // assert
+#include <utility>  // move
 
+#include <rune/rune.hpp>  // vector_map
+
+#include <tactile-base/map_position.hpp>
 #include "common/tile_cache.hpp"
-#include "common/tile_id.hpp"
 #include "core/components/tile_layer.hpp"
 #include "core/components/tileset.hpp"
-#include "core/map_position.hpp"
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/tile_layer_system.hpp"
 #include "core/systems/map_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "editor/events/tool_events.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::Sys {
 namespace {

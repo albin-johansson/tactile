@@ -3,7 +3,8 @@
 #include <string>   // string
 #include <utility>  // move
 
-#include "common.hpp"
+#include <tactile-base/tactile_std.hpp>
+
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"

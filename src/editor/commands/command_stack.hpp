@@ -7,8 +7,7 @@
 #include <utility>   // move
 
 #include "command.hpp"
-#include "common/ints.hpp"
-#include "common/maybe.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

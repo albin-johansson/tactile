@@ -4,8 +4,8 @@
 #include <map>         // map
 #include <string>      // string
 
-#include "common/context_id.hpp"
-#include "core/property_value.hpp"
+#include <tactile-base/property_value.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::Sys {
 

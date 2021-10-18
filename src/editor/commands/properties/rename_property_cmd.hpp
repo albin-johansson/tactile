@@ -1,12 +1,12 @@
 #pragma once
 
-#include <entt.hpp>  // registry
-#include <string>    // string
+#include <string>  // string
 
-#include "common/context_id.hpp"
-#include "common/ref.hpp"
+#include <entt.hpp>  // registry
+
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

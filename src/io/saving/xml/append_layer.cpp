@@ -3,6 +3,7 @@
 #include <sstream>  // stringstream
 
 #include "append_properties.hpp"
+#include <tactile-base/tactile_error.hpp>
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/layer_tree_node.hpp"
@@ -10,7 +11,6 @@
 #include "core/components/object_layer.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/tile_layer.hpp"
-#include "core/tactile_error.hpp"
 #include "io/preferences.hpp"
 
 namespace Tactile::IO {

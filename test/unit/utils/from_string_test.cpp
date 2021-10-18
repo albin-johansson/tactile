@@ -1,6 +1,6 @@
-#include "core/utils/from_string.hpp"
-
 #include <gtest/gtest.h>
+
+#include <tactile-base/from_string.hpp>
 
 using namespace Tactile;
 

@@ -4,9 +4,9 @@
 #include <string>     // string
 #include <utility>    // move
 
-#include "core/map_position.hpp"
-#include "core/utils/from_string.hpp"
-#include "core/utils/string_utils.hpp"
+#include <tactile-base/from_string.hpp>
+#include <tactile-base/map_position.hpp>
+#include <tactile-base/string_utils.hpp>
 
 #include <yaml-cpp/yaml.h>
 

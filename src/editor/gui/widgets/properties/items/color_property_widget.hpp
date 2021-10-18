@@ -2,8 +2,8 @@
 
 #include <centurion.hpp>  // color
 
-#include "common/maybe.hpp"
-#include "core/property_value.hpp"
+#include <tactile-base/property_value.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

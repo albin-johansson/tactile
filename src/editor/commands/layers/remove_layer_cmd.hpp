@@ -2,12 +2,10 @@
 
 #include <entt.hpp>  // registry
 
-#include "common/layer_id.hpp"
-#include "common/maybe.hpp"
-#include "common/ref.hpp"
 #include "core/systems/layers/layer_snapshot.hpp"
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

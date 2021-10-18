@@ -2,7 +2,7 @@
 
 #include <filesystem>  // path
 
-#include "io/json.hpp"
+#include "../json_common.hpp"
 
 namespace Tactile::IO {
 

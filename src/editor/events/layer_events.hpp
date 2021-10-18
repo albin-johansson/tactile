@@ -2,8 +2,8 @@
 
 #include <string>  // string
 
-#include "common/layer_id.hpp"
-#include "core/layer_type.hpp"
+#include <tactile-base/layer_type.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

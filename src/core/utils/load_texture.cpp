@@ -2,14 +2,14 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 
-#include <GL/glew.h>
-#include <stb_image.h>
-
-#include <centurion.hpp>
 #include <memory>  // unique_ptr
 #include <vector>  // vector
 
-#include "common/ints.hpp"
+#include <GL/glew.h>
+#include <centurion.hpp>
+#include <stb_image.h>
+
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

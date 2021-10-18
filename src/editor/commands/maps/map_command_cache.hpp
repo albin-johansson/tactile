@@ -1,12 +1,12 @@
 #pragma once
 
-#include <entt.hpp>    // registry
 #include <functional>  // less
 #include <map>         // map
 
-#include "common/layer_id.hpp"
-#include "common/tile_id.hpp"
-#include "core/map_position.hpp"
+#include <entt.hpp>  // registry
+
+#include <tactile-base/map_position.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

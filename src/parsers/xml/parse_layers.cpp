@@ -4,10 +4,10 @@
 #include <memory>   // make_unique
 #include <utility>  // move
 
-#include "common/ints.hpp"
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"
+#include <tactile-base/tactile_std.hpp>
 #include "xml_utils.hpp"
 
 namespace Tactile::IO {

@@ -1,8 +1,8 @@
 #include "append_properties.hpp"
 
+#include <tactile-base/tactile_error.hpp>
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
-#include "core/tactile_error.hpp"
 #include "io/saving/common_saving.hpp"
 
 namespace Tactile::IO {

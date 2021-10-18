@@ -2,9 +2,9 @@
 
 #include <fstream>  // ifstream
 
-namespace Tactile {
+namespace Tactile::IO {
 
-auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>
+auto ReadJson(const std::filesystem::path& path) -> std::optional<JSON>
 {
   try {
     std::ifstream stream{path};
@@ -15,7 +15,7 @@ auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>
     return json;
   }
   catch (...) {
-    return nothing;
+    return std::nullopt;
   }
 }
 

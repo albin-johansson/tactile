@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // registry
 
-#include "core/map_position.hpp"
+#include <tactile-base/map_position.hpp>
 
 namespace Tactile::Sys {
 

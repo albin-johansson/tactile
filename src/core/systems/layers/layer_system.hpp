@@ -1,14 +1,13 @@
 #pragma once
 
-#include <entt.hpp>  // registry, entity, null
-#include <string>    // string
+#include <string>  // string
 
-#include "common/ints.hpp"
-#include "common/layer_id.hpp"
-#include "common/maybe.hpp"
-#include "core/layer_type.hpp"
+#include <entt.hpp>  // registry, entity, null
+
+#include <tactile-base/layer_type.hpp>
 #include "core/map.hpp"
 #include "layer_snapshot.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::Sys {
 

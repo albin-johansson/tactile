@@ -1,6 +1,6 @@
 #pragma once
 
-#include "common/ints.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 struct ImVec2;
 

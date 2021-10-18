@@ -2,7 +2,7 @@
 
 #include <exception>  // exception
 
-#include "common/cstr.hpp"
+#include "tactile_std.hpp"
 
 namespace Tactile {
 

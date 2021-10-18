@@ -1,10 +1,8 @@
 #pragma once
 
 #include <IconsFontAwesome5.h>
-
-#include "common/cstr.hpp"
-#include "common/ints.hpp"
-#include "core/layer_type.hpp"
+#include <tactile-base/layer_type.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 /// \addtogroup gui
 /// \{

@@ -1,17 +1,2 @@
 #pragma once
 
-#include "common/context_id.hpp"
-#include "common/cstr.hpp"
-#include "common/expected.hpp"
-#include "common/hash_map.hpp"
-#include "common/ints.hpp"
-#include "common/layer_id.hpp"
-#include "common/map_id.hpp"
-#include "common/maybe.hpp"
-#include "common/not_null.hpp"
-#include "common/object_id.hpp"
-#include "common/object_ref.hpp"
-#include "common/ref.hpp"
-#include "common/tile_id.hpp"
-#include "common/tile_matrix.hpp"
-#include "common/tileset_id.hpp"

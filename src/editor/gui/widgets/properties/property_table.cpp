@@ -1,10 +1,9 @@
 #include "property_table.hpp"
 
-#include <imgui.h>
-
 #include <string>  // string
 
-#include "common/maybe.hpp"
+#include <imgui.h>
+
 #include "core/components/property.hpp"
 #include "core/systems/property_system.hpp"
 #include "core/utils/scope_id.hpp"
@@ -21,6 +20,7 @@
 #include "editor/gui/widgets/properties/items/object_property_widget.hpp"
 #include "editor/gui/widgets/properties/items/property_item_context_menu.hpp"
 #include "editor/gui/widgets/properties/items/string_property_widget.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

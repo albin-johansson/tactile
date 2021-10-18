@@ -1,14 +1,14 @@
 #include "render_ellipse.hpp"
 
+#include <cassert>  // assert
+
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include <cassert>  // assert
-
-#include "common/cstr.hpp"
 #include "core/components/object.hpp"
 #include "core/components/property_context.hpp"
 #include "editor/gui/rendering/common_rendering.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

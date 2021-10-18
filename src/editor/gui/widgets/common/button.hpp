@@ -1,7 +1,6 @@
 #pragma once
 
-#include "common/cstr.hpp"
-#include "common/not_null.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

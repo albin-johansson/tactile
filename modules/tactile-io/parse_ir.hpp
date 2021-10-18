@@ -6,10 +6,10 @@
 #include <variant>     // variant
 #include <vector>      // vector
 
-#include "common.hpp"
-#include "core/layer_type.hpp"
-#include "core/object_type.hpp"
-#include "core/property_value.hpp"
+#include <tactile-base/layer_type.hpp>
+#include <tactile-base/object_type.hpp>
+#include <tactile-base/property_value.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::IO {
 
@@ -25,21 +25,17 @@ struct PropertyData final
   PropertyValue property;  ///< The property value.
 };
 
-/**
- * \brief Intermediate representation of a tile animation frame.
- */
+/// \brief Intermediate representation of a tile animation frame.
 struct FrameData final
 {
-  TileID tile;     ///< The tile that should be displayed during the frame.
+  TileID tile;     ///< Local ID of the tile that should be displayed during the frame.
   int duration{};  ///< Frame duration in milliseconds.
 };
 
-/**
- * \brief Intermediate representation of tile data.
- */
+/// \brief Intermediate representation of tile data.
 struct TileData final
 {
-  TileID id;                             ///< The associated tile.
+  TileID id;                             ///< Local ID of the associated tile.
   std::vector<FrameData> animation;      ///< Optional animation frames.
   std::vector<PropertyData> properties;  ///< Tile properties.
 };

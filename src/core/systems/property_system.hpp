@@ -1,13 +1,14 @@
 #pragma once
 
-#include <entt.hpp>     // registry, entity
 #include <string>       // string
 #include <string_view>  // string_view
 
+#include <entt.hpp>  // registry, entity
+
+#include <tactile-base/property_type.hpp>
+#include <tactile-base/property_value.hpp>
 #include "core/components/property.hpp"
 #include "core/components/property_context.hpp"
-#include "core/property_type.hpp"
-#include "core/property_value.hpp"
 #include "property_context_snapshot.hpp"
 
 namespace Tactile::Sys {

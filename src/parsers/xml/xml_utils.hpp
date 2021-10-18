@@ -1,12 +1,11 @@
 #pragma once
 
-#include <pugixml.hpp>  // xml_node
-#include <string>       // string
-#include <vector>       // vector
+#include <string>  // string
+#include <vector>  // vector
 
-#include "common/cstr.hpp"
-#include "common/maybe.hpp"
-#include "common/not_null.hpp"
+#include <pugixml.hpp>  // xml_node
+
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::IO {
 

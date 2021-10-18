@@ -1,10 +1,8 @@
 #include "layer_item.hpp"
 
 #include <imgui.h>
-
 #include <rune/core/formatted_string.hpp>  // formatted_string
 
-#include "common/cstr.hpp"
 #include "core/components/group_layer.hpp"
 #include "core/components/layer_tree_node.hpp"
 #include "core/components/parent.hpp"
@@ -14,6 +12,7 @@
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/icons.hpp"
 #include "layer_item_popup.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

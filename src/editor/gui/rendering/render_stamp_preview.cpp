@@ -1,18 +1,18 @@
 #include "render_stamp_preview.hpp"
 
+#include <cassert>  // assert
+
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include <cassert>  // assert
-
-#include "common/ints.hpp"
+#include <tactile-base/map_position.hpp>
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/uv_tile_size.hpp"
-#include "core/map_position.hpp"
 #include "core/systems/map_system.hpp"
 #include "editor/gui/texture_utils.hpp"
 #include "render_info.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

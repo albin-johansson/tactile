@@ -2,7 +2,7 @@
 
 #include <string>  // string
 
-#include "core/property_value.hpp"
+#include <tactile-base/property_value.hpp>
 
 namespace Tactile {
 

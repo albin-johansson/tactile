@@ -1,10 +1,10 @@
 #include "icons.hpp"
 
-#include <GL/glew.h>
-
 #include <filesystem>  // path
 
-#include "core/tactile_error.hpp"
+#include <GL/glew.h>
+
+#include <tactile-base/tactile_error.hpp>
 #include "core/utils/load_texture.hpp"
 
 namespace Tactile {

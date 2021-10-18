@@ -2,9 +2,7 @@
 
 #include <tactile-io/parse_error.hpp>
 
-#include "common/cstr.hpp"
-#include "common/ints.hpp"
-#include "common/tile_matrix.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::IO {
 

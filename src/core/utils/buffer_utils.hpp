@@ -7,7 +7,7 @@
 #include <string>           // string
 #include <string_view>      // string_view
 
-#include "common/ints.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

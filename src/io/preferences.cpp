@@ -1,16 +1,16 @@
 #include "preferences.hpp"
 
-#include <settings.pb.h>
+#include <filesystem>  // exists
+#include <fstream>     // ifstream, ofstream
+#include <ios>         // ios
+#include <utility>     // move
 
 #include <centurion.hpp>   // ...
-#include <filesystem>      // exists
-#include <fstream>         // ifstream, ofstream
-#include <ios>             // ios
 #include <magic_enum.hpp>  // enum_name
-#include <utility>         // move
+#include <settings.pb.h>
 
-#include "common/cstr.hpp"
 #include "directories.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

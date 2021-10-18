@@ -2,7 +2,7 @@
 
 #include <json.hpp>  // json
 
-#include "core/map_position.hpp"
+#include <tactile-base/map_position.hpp>
 
 namespace Tactile::IO {
 

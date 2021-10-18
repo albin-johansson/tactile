@@ -1,9 +1,9 @@
 #include "tileset_system.hpp"
 
-#include <cassert>  // assert
-#include <utility>  // move
+#include <cassert>        // assert
+#include <unordered_map>  // unordered_map
+#include <utility>        // move
 
-#include "common/hash_map.hpp"
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"
@@ -16,9 +16,9 @@ namespace Tactile::Sys {
 namespace {
 
 [[nodiscard]] auto CreateSourceRectCache(const Tileset& tileset)
-    -> HashMap<TileID, cen::irect>
+    -> std::unordered_map<TileID, cen::irect>
 {
-  HashMap<TileID, cen::irect> cache;
+  std::unordered_map<TileID, cen::irect> cache;
 
   const auto amount = (tileset.last_id + 1_tile) - tileset.first_id;
   cache.reserve(amount.get());

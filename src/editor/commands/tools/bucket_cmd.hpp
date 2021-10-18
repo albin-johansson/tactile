@@ -1,15 +1,13 @@
 #pragma once
 
-#include <entt.hpp>  // registry
-#include <vector>    // vector
+#include <vector>  // vector
 
-#include "common/layer_id.hpp"
-#include "common/maybe.hpp"
-#include "common/ref.hpp"
-#include "common/tile_id.hpp"
-#include "core/map_position.hpp"
+#include <entt.hpp>  // registry
+
+#include <tactile-base/map_position.hpp>
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // registry, entity
 
-#include "common/object_id.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::Sys {
 

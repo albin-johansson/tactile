@@ -1,12 +1,12 @@
 #include "add_property_dialog.hpp"
 
-#include <imgui.h>
-
 #include <array>  // array
 
+#include <imgui.h>
+
+#include <tactile-base/tactile_error.hpp>
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
-#include "core/tactile_error.hpp"
 #include "core/utils/buffer_utils.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/gui/widgets/alignment.hpp"

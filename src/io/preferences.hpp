@@ -1,9 +1,10 @@
 #pragma once
 
-#include <centurion.hpp>  // color
-#include <string>         // string
+#include <string>  // string
 
-#include "common/ints.hpp"
+#include <centurion.hpp>  // color
+
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

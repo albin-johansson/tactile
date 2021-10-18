@@ -2,7 +2,6 @@
 
 #include <sstream>  // stringstream
 
-#include "common/ints.hpp"
 #include "core/components/layer.hpp"
 #include "core/components/layer_tree_node.hpp"
 #include "core/components/object.hpp"
@@ -11,6 +10,7 @@
 #include "core/components/property_context.hpp"
 #include "core/components/tile_layer.hpp"
 #include "save_properties.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::IO {
 

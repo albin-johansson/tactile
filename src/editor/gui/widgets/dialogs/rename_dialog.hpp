@@ -1,11 +1,11 @@
 #pragma once
 
-#include <entt.hpp>     // registry, dispatcher
 #include <string>       // string
 #include <string_view>  // string_view
 
-#include "common/cstr.hpp"
-#include "common/not_null.hpp"
+#include <entt.hpp>  // registry, dispatcher
+
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

@@ -1,15 +1,13 @@
 #pragma once
 
+#include <filesystem>     // path
+#include <unordered_map>  // unordered_map
+
 #include <centurion.hpp>  // irect
 #include <entt.hpp>       // entity, null
-#include <filesystem>     // path
 
-#include "common/hash_map.hpp"
-#include "common/ints.hpp"
-#include "common/maybe.hpp"
-#include "common/tile_id.hpp"
-#include "common/tileset_id.hpp"
 #include "core/region.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 
@@ -33,8 +31,8 @@ struct Tileset final
 
 struct TilesetCache final
 {
-  HashMap<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
-  HashMap<TileID, entt::entity> tiles;       ///< Maps tiles to `FancyTile` entities.
+  std::unordered_map<TileID, cen::irect> source_rects;  ///< Tileset source rectangles.
+  std::unordered_map<TileID, entt::entity> tiles;  ///< Tiles to `FancyTile` entities.
 };
 
 struct TilesetSelection final

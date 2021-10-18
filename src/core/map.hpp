@@ -1,10 +1,7 @@
 #pragma once
 
+#include <tactile-base/tactile_std.hpp>
 #include <entt.hpp>  // entity
-
-#include "common/ints.hpp"
-#include "common/layer_id.hpp"
-#include "common/object_id.hpp"
 
 namespace Tactile {
 

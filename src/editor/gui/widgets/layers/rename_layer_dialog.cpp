@@ -3,10 +3,10 @@
 #include <string>   // string
 #include <utility>  // move
 
-#include "common/maybe.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/gui/widgets/common/button.hpp"
 #include "editor/gui/widgets/dialogs/rename_dialog.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

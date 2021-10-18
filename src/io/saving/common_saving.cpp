@@ -4,10 +4,10 @@
 #include <cassert>     // assert
 #include <filesystem>  // relative
 
+#include <tactile-base/tactile_error.hpp>
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
 #include "core/components/property_context.hpp"
-#include "core/tactile_error.hpp"
 
 namespace Tactile::IO {
 

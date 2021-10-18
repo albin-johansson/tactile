@@ -1,9 +1,10 @@
 #include "parse_properties.hpp"
 
-#include <centurion.hpp>
 #include <cstring>  // strcmp
 
-#include "common/cstr.hpp"
+#include <centurion.hpp>
+
+#include <tactile-base/tactile_std.hpp>
 #include "xml_utils.hpp"
 
 namespace Tactile::IO {

@@ -1,8 +1,7 @@
 #pragma once
 
-#include "common/maybe.hpp"
-#include "common/object_ref.hpp"
-#include "core/property_value.hpp"
+#include <tactile-base/property_value.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

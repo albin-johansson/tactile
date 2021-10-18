@@ -4,8 +4,7 @@
 #include <string>   // string, erase, getline
 #include <vector>   // vector
 
-#include "common/cstr.hpp"
-#include "common/not_null.hpp"
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

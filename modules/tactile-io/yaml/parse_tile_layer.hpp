@@ -1,5 +1,7 @@
 #pragma once
 
+#include <expected.hpp>  // expected
+
 #include "../parse_error.hpp"
 #include "../parse_ir.hpp"
 #include "yaml_fwd.hpp"

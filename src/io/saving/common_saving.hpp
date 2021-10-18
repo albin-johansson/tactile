@@ -3,9 +3,9 @@
 #include <filesystem>  // path
 #include <string>      // string
 
+#include <tactile-base/property_type.hpp>
+#include <tactile-base/property_value.hpp>
 #include "core/components/tileset.hpp"
-#include "core/property_type.hpp"
-#include "core/property_value.hpp"
 
 namespace Tactile::IO {
 

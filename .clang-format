@@ -58,7 +58,7 @@ IncludeCategories:
     Priority: 10
 
   # Headers in <> from tactile folder.
-  - Regex: '<(tactile|tactile-io)\/'
+  - Regex: '<(tactile|tactile-io|tactile-base)\/'
     Priority: 30
 
   # Headers in <> with extension.
