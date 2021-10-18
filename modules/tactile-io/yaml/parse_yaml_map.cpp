@@ -1,10 +1,10 @@
 #include <filesystem>  // absolute
 #include <utility>     // move
 
-#include "../parser.hpp"
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
+#include "parser.hpp"
 
 #include <yaml-cpp/yaml.h>
 

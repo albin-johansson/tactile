@@ -2,9 +2,9 @@
 
 #include <expected.hpp>  // expected
 
-#include "../../parse_error.hpp"
-#include "../../parse_ir.hpp"
 #include "../json_common.hpp"
+#include "parse_error.hpp"
+#include "parse_ir.hpp"
 
 namespace Tactile::IO {
 

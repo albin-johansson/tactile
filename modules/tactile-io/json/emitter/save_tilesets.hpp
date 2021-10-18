@@ -3,8 +3,8 @@
 #include <filesystem>  // path
 #include <vector>      // vector
 
-#include "../../parse_ir.hpp"
 #include "../json_common.hpp"
+#include "parse_ir.hpp"
 
 namespace Tactile::IO {
 

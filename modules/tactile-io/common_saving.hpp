@@ -6,7 +6,7 @@
 #include <tactile-base/property_type.hpp>
 #include <tactile-base/property_value.hpp>
 
-#include "../../parse_ir.hpp"
+#include "parse_ir.hpp"
 
 namespace Tactile::IO {
 

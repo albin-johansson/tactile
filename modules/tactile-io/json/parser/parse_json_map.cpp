@@ -2,14 +2,15 @@
 #include <string>      // string
 #include <utility>     // move
 
-#include <tactile-base/tactile_std.hpp>
 #include <json.hpp>  // json
 
-#include "../../parser.hpp"
+#include <tactile-base/tactile_std.hpp>
+
 #include "../json_common.hpp"
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
+#include "parser.hpp"
 #include "read_json.hpp"
 
 namespace Tactile::IO {

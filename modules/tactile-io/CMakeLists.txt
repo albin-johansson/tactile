@@ -4,6 +4,8 @@ project(tactile-io CXX)
 
 set(TACTILE_IO_SOURCES
     api.hpp
+    common_saving.cpp
+    common_saving.hpp
     emitter.hpp
     parse_error.cpp
     parse_error.hpp
@@ -11,9 +13,6 @@ set(TACTILE_IO_SOURCES
     parser.hpp
 
     json/json_common.hpp
-
-    json/emitter/common_saving.cpp
-    json/emitter/common_saving.hpp
 
     json/emitter/save_fancy_tiles.cpp
     json/emitter/save_fancy_tiles.hpp

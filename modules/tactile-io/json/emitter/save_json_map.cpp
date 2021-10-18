@@ -1,8 +1,8 @@
 #include <filesystem>  // path, absolute
 
-#include "../../emitter.hpp"
 #include "../json_common.hpp"
 #include "common_saving.hpp"
+#include "emitter.hpp"
 #include "save_json.hpp"
 #include "save_layers.hpp"
 #include "save_properties.hpp"

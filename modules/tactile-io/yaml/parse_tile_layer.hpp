@@ -2,8 +2,8 @@
 
 #include <expected.hpp>  // expected
 
-#include "../parse_error.hpp"
-#include "../parse_ir.hpp"
+#include "parse_error.hpp"
+#include "parse_ir.hpp"
 #include "yaml_fwd.hpp"
 
 namespace Tactile::IO {
