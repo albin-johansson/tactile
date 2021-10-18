@@ -36,11 +36,8 @@ MapParser::MapParser(const std::filesystem::path& path)
       mError = IO::ParseXmlMap(path, mData);
     }
     else if (extension == ".yaml" || extension == ".yml") {
-      if (auto data = IO::ParseYamlMap(path)) {
+      if (auto data = IO::ParseYamlMap(path, &mError)) {
         mData = std::move(*data);
-      }
-      else {
-        mError = data.error();
       }
     }
     else {

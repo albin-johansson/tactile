@@ -10,8 +10,10 @@
 #include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
+namespace {
 
-auto ParseYamlMap(const std::filesystem::path& path) -> tl::expected<MapData, ParseError>
+[[nodiscard]] auto ParseMap(const std::filesystem::path& path)
+    -> Expected<MapData, ParseError>
 {
   try {
     const auto node = YAML::LoadFile(path.string());
@@ -93,6 +95,25 @@ auto ParseYamlMap(const std::filesystem::path& path) -> tl::expected<MapData, Pa
   }
   catch (...) {
     return tl::make_unexpected(ParseError::Unknown);
+  }
+}
+
+}  // namespace
+
+auto ParseYamlMap(const std::filesystem::path& path, ParseError* error)
+    -> std::optional<MapData>
+{
+  if (auto map = ParseMap(path)) {
+    if (error) {
+      *error = ParseError::None;
+    }
+    return std::move(map.value());
+  }
+  else {
+    if (error) {
+      *error = map.error();
+    }
+    return std::nullopt;
   }
 }
 

@@ -1,8 +1,7 @@
 #pragma once
 
 #include <filesystem>  // path
-
-#include <expected.hpp>  // expected
+#include <optional>    // optional
 
 #include "../parse_error.hpp"
 #include "../parse_ir.hpp"
@@ -19,7 +18,8 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] TACTILE_YAML_PARSER_API auto ParseYamlMap(const std::filesystem::path& path)
-    -> tl::expected<MapData, ParseError>;
+[[nodiscard]] TACTILE_YAML_PARSER_API auto ParseYamlMap(const std::filesystem::path& path,
+                                                        ParseError* error = nullptr)
+    -> std::optional<MapData>;
 
 }  // namespace Tactile::IO
