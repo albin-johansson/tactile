@@ -1,12 +1,13 @@
-#include "parse_json_map.hpp"
-
 #include <filesystem>  // absolute, exists, weakly_canonical
 #include <string>      // string
 #include <utility>     // move
 
+#include <json.hpp>  // json
+
+#include "../../parser.hpp"
+#include "../json_common.hpp"
 #include "common/expected.hpp"
 #include "common/maybe.hpp"
-#include "io/json.hpp"
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
@@ -37,7 +38,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextLayerId(const JSON& json) -> Expected<LayerID, ParseError>
+[[nodiscard]] auto ParseNextLayerId(const JSON& json) -> tl::expected<LayerID, ParseError>
 {
   if (const auto it = json.find("nextlayerid"); it != json.end()) {
     return LayerID{it->get<LayerID::value_type>()};
@@ -47,7 +48,8 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextObjectId(const JSON& json) -> Expected<ObjectID, ParseError>
+[[nodiscard]] auto ParseNextObjectId(const JSON& json)
+    -> tl::expected<ObjectID, ParseError>
 {
   if (const auto it = json.find("nextobjectid"); it != json.end()) {
     return ObjectID{it->get<ObjectID::value_type>()};
@@ -57,7 +59,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileWidth(const JSON& json) -> Expected<int, ParseError>
+[[nodiscard]] auto ParseTileWidth(const JSON& json) -> tl::expected<int, ParseError>
 {
   if (const auto it = json.find("tilewidth"); it != json.end()) {
     return it->get<int>();
@@ -67,7 +69,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileHeight(const JSON& json) -> Expected<int, ParseError>
+[[nodiscard]] auto ParseTileHeight(const JSON& json) -> tl::expected<int, ParseError>
 {
   if (const auto it = json.find("tileheight"); it != json.end()) {
     return it->get<int>();
@@ -77,7 +79,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseWidth(const JSON& json) -> Expected<int, ParseError>
+[[nodiscard]] auto ParseWidth(const JSON& json) -> tl::expected<int, ParseError>
 {
   if (const auto it = json.find("width"); it != json.end()) {
     return it->get<int>();
@@ -87,7 +89,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseHeight(const JSON& json) -> Expected<int, ParseError>
+[[nodiscard]] auto ParseHeight(const JSON& json) -> tl::expected<int, ParseError>
 {
   if (const auto it = json.find("height"); it != json.end()) {
     return it->get<int>();
@@ -97,9 +99,8 @@ namespace {
   }
 }
 
-}  // namespace
-
-auto ParseJsonMap(const std::filesystem::path& path) -> Expected<MapData, ParseError>
+[[nodiscard]] auto ParseMap(const std::filesystem::path& path)
+    -> tl::expected<MapData, ParseError>
 {
   const auto absPath = std::filesystem::absolute(path);
   if (!std::filesystem::exists(absPath)) {
@@ -186,6 +187,25 @@ auto ParseJsonMap(const std::filesystem::path& path) -> Expected<MapData, ParseE
   }
 
   return data;
+}
+
+}  // namespace
+
+auto ParseJsonMap(const std::filesystem::path& path, ParseError* error)
+    -> std::optional<MapData>
+{
+  if (auto data = ParseMap(path)) {
+    if (error) {
+      *error = ParseError::None;
+    }
+    return std::move(data.value());
+  }
+  else {
+    if (error) {
+      *error = data.error();
+    }
+    return std::nullopt;
+  }
 }
 
 }  // namespace Tactile::IO

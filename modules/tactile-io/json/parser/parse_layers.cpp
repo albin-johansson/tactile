@@ -12,10 +12,10 @@ namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseLayer(const JSON& json, usize index)
-    -> Expected<LayerData, ParseError>;
+    -> tl::expected<LayerData, ParseError>;
 
 [[nodiscard]] auto ParseGroupLayer(const JSON& json)
-    -> Expected<GroupLayerData, ParseError>
+    -> tl::expected<GroupLayerData, ParseError>
 {
   GroupLayerData data;
 
@@ -37,7 +37,7 @@ namespace {
 }
 
 [[nodiscard]] auto ParseLayer(const JSON& json, const usize index)
-    -> Expected<LayerData, ParseError>
+    -> tl::expected<LayerData, ParseError>
 {
   LayerData layer;
   layer.index = index;
@@ -119,7 +119,7 @@ namespace {
 
 }  // namespace
 
-auto ParseLayers(const JSON& json) -> Expected<std::vector<LayerData>, ParseError>
+auto ParseLayers(const JSON& json) -> tl::expected<std::vector<LayerData>, ParseError>
 {
   std::vector<LayerData> layers;
 

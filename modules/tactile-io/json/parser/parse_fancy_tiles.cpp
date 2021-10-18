@@ -2,12 +2,14 @@
 
 #include <utility>  // move
 
+#include <json.hpp>  // json
+
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseFancyTile(const JSON& json) -> Expected<TileData, ParseError>
+[[nodiscard]] auto ParseFancyTile(const JSON& json) -> tl::expected<TileData, ParseError>
 {
   TileData data;
   data.id = TileID{json.at("id").get<TileID::value_type>()};
@@ -33,7 +35,7 @@ namespace {
 
 }  // namespace
 
-auto ParseFancyTiles(const JSON& json) -> Expected<std::vector<TileData>, ParseError>
+auto ParseFancyTiles(const JSON& json) -> tl::expected<std::vector<TileData>, ParseError>
 {
   std::vector<TileData> tiles;
 

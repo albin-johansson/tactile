@@ -9,6 +9,27 @@ set(TACTILE_IO_SOURCES
     parse_ir.hpp
     parser.hpp
 
+
+    json/parser/parse_fancy_tiles.cpp
+    json/parser/parse_fancy_tiles.hpp
+    json/parser/parse_json_map.cpp
+    json/parser/parse_layers.cpp
+    json/parser/parse_layers.hpp
+    json/parser/parse_object_layer.cpp
+    json/parser/parse_object_layer.hpp
+    json/parser/parse_properties.cpp
+    json/parser/parse_properties.hpp
+    json/parser/parse_tile_data.cpp
+    json/parser/parse_tile_data.hpp
+    json/parser/parse_tile_layer.cpp
+    json/parser/parse_tile_layer.hpp
+    json/parser/parse_tileset.cpp
+    json/parser/parse_tileset.hpp
+    json/parser/parse_tilesets.cpp
+    json/parser/parse_tilesets.hpp
+    json/parser/read_json.cpp
+    json/parser/read_json.hpp
+
     yaml/parse_fancy_tiles.cpp
     yaml/parse_fancy_tiles.hpp
     yaml/parse_layers.cpp

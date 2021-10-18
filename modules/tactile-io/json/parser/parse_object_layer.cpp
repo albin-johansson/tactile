@@ -3,12 +3,14 @@
 #include <string>   // string
 #include <utility>  // move
 
+#include <json.hpp>  // json
+
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseObject(const JSON& json) -> Expected<ObjectData, ParseError>
+[[nodiscard]] auto ParseObject(const JSON& json) -> tl::expected<ObjectData, ParseError>
 {
   ObjectData data;
 
@@ -84,7 +86,7 @@ namespace {
 
 }  // namespace
 
-auto ParseObjectLayer(const JSON& json) -> Expected<ObjectLayerData, ParseError>
+auto ParseObjectLayer(const JSON& json) -> tl::expected<ObjectLayerData, ParseError>
 {
   ObjectLayerData data;
 

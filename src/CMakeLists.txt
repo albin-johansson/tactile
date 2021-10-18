@@ -433,27 +433,6 @@ set(SOURCE_FILES
     io/to_map_document.cpp
     io/to_map_document.hpp
 
-    parsers/json/parse_fancy_tiles.cpp
-    parsers/json/parse_fancy_tiles.hpp
-    parsers/json/parse_json_map.cpp
-    parsers/json/parse_json_map.hpp
-    parsers/json/parse_layers.cpp
-    parsers/json/parse_layers.hpp
-    parsers/json/parse_object_layer.cpp
-    parsers/json/parse_object_layer.hpp
-    parsers/json/parse_properties.cpp
-    parsers/json/parse_properties.hpp
-    parsers/json/parse_tile_data.cpp
-    parsers/json/parse_tile_data.hpp
-    parsers/json/parse_tile_layer.cpp
-    parsers/json/parse_tile_layer.hpp
-    parsers/json/parse_tileset.cpp
-    parsers/json/parse_tileset.hpp
-    parsers/json/parse_tilesets.cpp
-    parsers/json/parse_tilesets.hpp
-    parsers/json/read_json.cpp
-    parsers/json/read_json.hpp
-
     parsers/xml/parse_csv.cpp
     parsers/xml/parse_csv.hpp
     parsers/xml/parse_fancy_tiles.cpp

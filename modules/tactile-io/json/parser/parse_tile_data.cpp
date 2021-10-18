@@ -1,11 +1,13 @@
 #include "parse_tile_data.hpp"
 
+#include <json.hpp>  // json
+
 #include "core/map_position.hpp"
 
 namespace Tactile::IO {
 
 auto ParseTileData(const JSON& json, const int32 nRows, const int32 nCols)
-    -> Expected<TileMatrix, ParseError>
+    -> tl::expected<TileMatrix, ParseError>
 {
   // For now, only support the CSV tile encoding, which is the implicit default
   if (const auto it = json.find("encoding"); it != json.end()) {

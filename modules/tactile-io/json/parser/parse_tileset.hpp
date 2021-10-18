@@ -2,15 +2,15 @@
 
 #include <filesystem>  // path
 
-#include <tactile-io/parse_error.hpp>
-#include <tactile-io/parse_ir.hpp>
+#include <expected.hpp>  // expected
 
-#include "common/expected.hpp"
-#include "io/json.hpp"
+#include "../../parse_error.hpp"
+#include "../../parse_ir.hpp"
+#include "../json_common.hpp"
 
 namespace Tactile::IO {
 
 [[nodiscard]] auto ParseTileset(const JSON& json, const std::filesystem::path& dir)
-    -> Expected<TilesetData, ParseError>;
+    -> tl::expected<TilesetData, ParseError>;
 
 }  // namespace Tactile::IO

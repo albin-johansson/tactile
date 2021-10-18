@@ -5,6 +5,8 @@
 #include <string>      // string
 #include <utility>     // move
 
+#include <json.hpp>  // json
+
 #include "parse_fancy_tiles.hpp"
 #include "parse_properties.hpp"
 #include "read_json.hpp"
@@ -12,7 +14,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseFirstTileId(const JSON& json) -> Expected<TileID, ParseError>
+[[nodiscard]] auto ParseFirstTileId(const JSON& json) -> tl::expected<TileID, ParseError>
 {
   if (const auto it = json.find("firstgid"); it != json.end()) {
     return TileID{it->get<TileID::value_type>()};
@@ -22,7 +24,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileWidth(const JSON& json) -> Expected<int, ParseError>
+[[nodiscard]] auto ParseTileWidth(const JSON& json) -> tl::expected<int, ParseError>
 {
   if (const auto it = json.find("tilewidth"); it != json.end()) {
     return it->get<int>();
@@ -32,7 +34,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileHeight(const JSON& json) -> Expected<int, ParseError>
+[[nodiscard]] auto ParseTileHeight(const JSON& json) -> tl::expected<int, ParseError>
 {
   if (const auto it = json.find("tileheight"); it != json.end()) {
     return it->get<int>();
@@ -43,7 +45,7 @@ namespace {
 }
 
 [[nodiscard]] auto ParseImagePath(const JSON& json, const std::filesystem::path& dir)
-    -> Expected<std::filesystem::path, ParseError>
+    -> tl::expected<std::filesystem::path, ParseError>
 {
   const auto relative = json.find("image");
   if (relative == json.end()) {
@@ -59,7 +61,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseName(const JSON& json) -> Expected<std::string, ParseError>
+[[nodiscard]] auto ParseName(const JSON& json) -> tl::expected<std::string, ParseError>
 {
   if (const auto it = json.find("name"); it != json.end()) {
     return it->get<std::string>();
@@ -72,7 +74,7 @@ namespace {
 [[nodiscard]] auto ParseTilesetCommon(const TileID first,
                                       const JSON& json,
                                       const std::filesystem::path& dir)
-    -> Expected<TilesetData, ParseError>
+    -> tl::expected<TilesetData, ParseError>
 {
   TilesetData data;
   data.first_id = first;
@@ -153,7 +155,7 @@ namespace {
 [[nodiscard]] auto ParseExternalTileset(const TileID first,
                                         const JSON& json,
                                         const std::filesystem::path& dir)
-    -> Expected<TilesetData, ParseError>
+    -> tl::expected<TilesetData, ParseError>
 {
   assert(json.contains("source"));
 
@@ -175,7 +177,7 @@ namespace {
 }  // namespace
 
 auto ParseTileset(const JSON& json, const std::filesystem::path& dir)
-    -> Expected<TilesetData, ParseError>
+    -> tl::expected<TilesetData, ParseError>
 {
   return ParseFirstTileId(json).and_then([&](const TileID first) {
     if (json.contains("source")) {

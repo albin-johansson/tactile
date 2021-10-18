@@ -5,7 +5,6 @@
 #include <tactile-io/parser.hpp>
 
 #include "core/utils/profile.hpp"
-#include "parsers/json/parse_json_map.hpp"
 #include "parsers/xml/parse_xml_map.hpp"
 
 namespace Tactile::IO {
@@ -25,11 +24,8 @@ MapParser::MapParser(const std::filesystem::path& path)
 
     const auto extension = path.extension();
     if (extension == ".json") {
-      if (auto data = IO::ParseJsonMap(path)) {
+      if (auto data = IO::ParseJsonMap(path, &mError)) {
         mData = std::move(*data);
-      }
-      else {
-        mError = data.error();
       }
     }
     else if (extension == ".tmx" || extension == ".xml") {

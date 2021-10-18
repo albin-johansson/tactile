@@ -1,15 +1,17 @@
 #include "parse_properties.hpp"
 
-#include <centurion.hpp>
 #include <filesystem>  // path
 #include <string>      // string
 #include <utility>     // move
+
+#include <centurion.hpp>
+#include <json.hpp>  // json
 
 namespace Tactile::IO {
 namespace {
 
 [[nodiscard]] auto ParseValue(const JSON& json, const std::string& type)
-    -> Expected<PropertyValue, ParseError>
+    -> tl::expected<PropertyValue, ParseError>
 {
   PropertyValue result;
 
@@ -50,7 +52,8 @@ namespace {
   return result;
 }
 
-[[nodiscard]] auto ParseProperty(const JSON& json) -> Expected<PropertyData, ParseError>
+[[nodiscard]] auto ParseProperty(const JSON& json)
+    -> tl::expected<PropertyData, ParseError>
 {
   PropertyData result;
 
@@ -80,7 +83,8 @@ namespace {
 
 }  // namespace
 
-auto ParseProperties(const JSON& json) -> Expected<std::vector<PropertyData>, ParseError>
+auto ParseProperties(const JSON& json)
+    -> tl::expected<std::vector<PropertyData>, ParseError>
 {
   std::vector<PropertyData> properties;
 
