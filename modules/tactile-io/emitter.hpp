@@ -1,7 +1,5 @@
 #pragma once
 
-#include <filesystem>  // path
-
 #include "api.hpp"
 #include "parse_ir.hpp"
 
