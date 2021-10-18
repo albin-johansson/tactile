@@ -1,14 +1,6 @@
 #include "history.hpp"
 
-#ifdef _MSC_VER
-#pragma warning(push, 1)
-#endif  // _MSC_VER
-
 #include <history.pb.h>
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
 
 #include <algorithm>   // find
 #include <filesystem>  // exists
