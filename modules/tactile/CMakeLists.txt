@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.18)
 
-project(tactile-editor CXX)
+project(tactile-app CXX)
 
 set(SOURCE_FILES
     ${IMGUI_SOURCES}
