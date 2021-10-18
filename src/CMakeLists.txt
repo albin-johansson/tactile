@@ -23,7 +23,6 @@ set(SOURCE_FILES
     common/expected.hpp
     common/hash_map.hpp
     common/ints.hpp
-    io/json.hpp
     common/layer_id.hpp
     common/map_id.hpp
     common/maybe.hpp
@@ -425,6 +424,7 @@ set(SOURCE_FILES
     io/directories.hpp
     io/history.cpp
     io/history.hpp
+    io/json.hpp
     io/preferences.cpp
     io/preferences.hpp
     io/session.cpp
