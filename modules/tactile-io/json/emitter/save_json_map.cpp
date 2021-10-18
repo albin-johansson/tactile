@@ -1,5 +1,6 @@
 #include <filesystem>  // path, absolute
 
+#include "../../emitter.hpp"
 #include "../json_common.hpp"
 #include "common_saving.hpp"
 #include "save_json.hpp"
