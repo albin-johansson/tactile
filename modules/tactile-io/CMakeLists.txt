@@ -85,3 +85,9 @@ target_link_libraries(TactileIO
 target_compile_definitions(TactileIO PRIVATE
     TACTILE_IO_EXPORT
     CENTURION_NO_SDL_MIXER)
+
+target_precompile_headers(TactileIO PRIVATE
+    <centurion.hpp>
+    <json.hpp>
+    <magic_enum.hpp>
+    <yaml-cpp/yaml.h>)
