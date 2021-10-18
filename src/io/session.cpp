@@ -1,14 +1,6 @@
 #include "session.hpp"
 
-#ifdef _MSC_VER
-#pragma warning(push, 1)
-#endif  // _MSC_VER
-
 #include <session.pb.h>
-
-#ifdef _MSC_VER
-#pragma warning(pop)
-#endif  // _MSC_VER
 
 #include <filesystem>  // absolute
 #include <fstream>     // ifstream, ofstream
