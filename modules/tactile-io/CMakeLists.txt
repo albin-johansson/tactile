@@ -88,6 +88,7 @@ target_compile_definitions(TactileIO PRIVATE
 
 target_precompile_headers(TactileIO PRIVATE
     <centurion.hpp>
+    <expected.hpp>
     <json.hpp>
     <magic_enum.hpp>
     <yaml-cpp/yaml.h>)
