@@ -3,10 +3,10 @@
 #include <pugixml.hpp>  // xml_document, xml_node
 
 #include "../../common_saving.hpp"
-#include "../../emitter.hpp"
 #include "append_layer.hpp"
 #include "append_properties.hpp"
 #include "append_tileset.hpp"
+#include "emitter.hpp"
 #include "save_xml.hpp"
 
 namespace Tactile::IO {

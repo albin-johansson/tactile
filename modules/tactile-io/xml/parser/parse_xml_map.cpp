@@ -3,10 +3,10 @@
 
 #include <pugixml.hpp>  // xml_document, xml_node
 
-#include "../../parser.hpp"
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
+#include "parser.hpp"
 #include "xml_utils.hpp"
 
 namespace Tactile::IO {

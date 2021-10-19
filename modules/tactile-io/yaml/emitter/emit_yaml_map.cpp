@@ -1,6 +1,6 @@
 #include <fstream>     // ofstream
 
-#include "../../emitter.hpp"
+#include "emitter.hpp"
 #include "save_layers.hpp"
 #include "save_properties.hpp"
 #include "save_tilesets.hpp"

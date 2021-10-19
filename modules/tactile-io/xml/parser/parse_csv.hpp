@@ -1,8 +1,8 @@
 #pragma once
 
-#include <tactile-io/parse_error.hpp>
-
 #include <tactile-base/tactile_std.hpp>
+
+#include "parse_error.hpp"
 
 namespace Tactile::IO {
 

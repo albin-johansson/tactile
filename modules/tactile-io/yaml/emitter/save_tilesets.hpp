@@ -3,7 +3,7 @@
 #include <filesystem>  // path
 #include <vector>      // vector
 
-#include "../../parse_ir.hpp"
+#include "parse_ir.hpp"
 #include "../yaml_fwd.hpp"
 
 namespace Tactile::IO {

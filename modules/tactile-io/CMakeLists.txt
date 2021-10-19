@@ -5,14 +5,15 @@ project(tactile-io CXX)
 set(TACTILE_IO_SOURCES
     ${PUGIXML_SOURCES}
 
-    api.hpp
     common_saving.cpp
     common_saving.hpp
-    emitter.hpp
     parse_error.cpp
-    parse_error.hpp
-    parse_ir.hpp
-    parser.hpp
+
+    include/tactile-io/api.hpp
+    include/tactile-io/emitter.hpp
+    include/tactile-io/parse_error.hpp
+    include/tactile-io/parse_ir.hpp
+    include/tactile-io/parser.hpp
 
     json/json_common.hpp
 
@@ -112,6 +113,7 @@ add_library(TactileIO SHARED ${TACTILE_IO_SOURCES})
 target_include_directories(TactileIO
     PRIVATE
     ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/include/tactile-io
     ${PROJECT_SOURCE_DIR}/..
 
     SYSTEM PRIVATE

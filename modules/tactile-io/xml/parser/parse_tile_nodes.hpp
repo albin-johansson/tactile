@@ -2,7 +2,7 @@
 
 #include <pugixml.hpp>
 
-#include <tactile-io/parse_error.hpp>
+#include "parse_error.hpp"
 
 #include <tactile-base/tactile_std.hpp>
 
