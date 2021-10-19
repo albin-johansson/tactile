@@ -6,11 +6,11 @@
 
 #include "parse_error.hpp"
 #include "parse_ir.hpp"
-#include "yaml_fwd.hpp"
+#include "yaml/yaml_fwd.hpp"
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseFancyTiles(const YAML::Node& node)
-    -> tl::expected<std::vector<TileData>, ParseError>;
+[[nodiscard]] auto ParseLayers(const YAML::Node& seq, int nRows, int nCols)
+    -> tl::expected<std::vector<LayerData>, ParseError>;
 
 }  // namespace Tactile::IO

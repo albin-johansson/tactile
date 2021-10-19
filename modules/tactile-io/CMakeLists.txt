@@ -46,6 +46,8 @@ set(TACTILE_IO_SOURCES
     json/parser/read_json.cpp
     json/parser/read_json.hpp
 
+    yaml/yaml_fwd.hpp
+
     yaml/emitter/emit_yaml_map.cpp
     yaml/emitter/save_layers.cpp
     yaml/emitter/save_layers.hpp
@@ -54,20 +56,19 @@ set(TACTILE_IO_SOURCES
     yaml/emitter/save_tilesets.cpp
     yaml/emitter/save_tilesets.hpp
 
-    yaml/parse_fancy_tiles.cpp
-    yaml/parse_fancy_tiles.hpp
-    yaml/parse_layers.cpp
-    yaml/parse_layers.hpp
-    yaml/parse_object_layer.cpp
-    yaml/parse_object_layer.hpp
-    yaml/parse_properties.cpp
-    yaml/parse_properties.hpp
-    yaml/parse_tile_layer.cpp
-    yaml/parse_tile_layer.hpp
-    yaml/parse_tilesets.hpp
-    yaml/parse_tilesets.cpp
-    yaml/parse_yaml_map.cpp
-    yaml/yaml_fwd.hpp
+    yaml/parser/parse_fancy_tiles.cpp
+    yaml/parser/parse_fancy_tiles.hpp
+    yaml/parser/parse_layers.cpp
+    yaml/parser/parse_layers.hpp
+    yaml/parser/parse_object_layer.cpp
+    yaml/parser/parse_object_layer.hpp
+    yaml/parser/parse_properties.cpp
+    yaml/parser/parse_properties.hpp
+    yaml/parser/parse_tile_layer.cpp
+    yaml/parser/parse_tile_layer.hpp
+    yaml/parser/parse_tilesets.hpp
+    yaml/parser/parse_tilesets.cpp
+    yaml/parser/parse_yaml_map.cpp
     )
 
 add_library(TactileIO SHARED ${TACTILE_IO_SOURCES})
