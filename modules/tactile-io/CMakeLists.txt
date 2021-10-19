@@ -135,12 +135,15 @@ target_compile_definitions(TactileIO PRIVATE
     CENTURION_NO_SDL_MIXER)
 
 target_precompile_headers(TactileIO PRIVATE
+    <algorithm>
+    <functional>
     <string>
     <vector>
     <format>
     <filesystem>
     <utility>
     <memory>
+    <optional>
 
     <centurion.hpp>
     <expected.hpp>
