@@ -17,11 +17,11 @@ set(TACTILE_IO_SOURCES
 
     json/json_common.hpp
 
+    json/emitter/emit_json_map.cpp
     json/emitter/save_fancy_tiles.cpp
     json/emitter/save_fancy_tiles.hpp
     json/emitter/save_json.cpp
     json/emitter/save_json.hpp
-    json/emitter/save_json_map.cpp
     json/emitter/save_layers.cpp
     json/emitter/save_layers.hpp
     json/emitter/save_properties.cpp
