@@ -7,9 +7,8 @@
 
 #include <tactile-io/emitter.hpp>
 
-#include "core/utils/profile.hpp"
-#include "io/convert_document_to_ir.hpp"
-#include "io/saving/xml/save_map_document_as_xml.hpp"
+#include "convert_document_to_ir.hpp"
+#include "tactile/core/utils/profile.hpp"
 
 namespace Tactile::IO {
 
@@ -27,7 +26,8 @@ void SaveMapDocument(const Document& document)
     EmitJsonMap(data);
   }
   else if (extension == ".tmx" || extension == ".xml") {
-    SaveMapDocumentAsXml(document);
+    const auto data = ConvertDocumentToIR(document);
+    EmitXmlMap(data);
   }
   else if (extension == ".yml" || extension == ".yaml") {
     const auto data = ConvertDocumentToIR(document);

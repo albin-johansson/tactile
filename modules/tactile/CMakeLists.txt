@@ -392,39 +392,22 @@ set(SOURCE_FILES
     editor/gui/widgets/viewport/viewport_widget.cpp
     editor/gui/widgets/viewport/viewport_widget.hpp
 
+    io/convert_document_to_ir.cpp
+    io/convert_document_to_ir.hpp
     io/directories.cpp
     io/directories.hpp
     io/history.cpp
     io/history.hpp
-    io/preferences.cpp
-    io/preferences.hpp
-    io/session.cpp
-    io/session.hpp
-
-    io/convert_document_to_ir.cpp
-    io/convert_document_to_ir.hpp
     io/map_parser.cpp
     io/map_parser.hpp
+    io/preferences.cpp
+    io/preferences.hpp
+    io/save_map_document.cpp
+    io/save_map_document.hpp
+    io/session.cpp
+    io/session.hpp
     io/to_map_document.cpp
     io/to_map_document.hpp
-
-    io/saving/common_saving.cpp
-    io/saving/common_saving.hpp
-    io/saving/save_map_document.cpp
-    io/saving/save_map_document.hpp
-
-    io/saving/xml/append_fancy_tiles.cpp
-    io/saving/xml/append_fancy_tiles.hpp
-    io/saving/xml/append_layer.cpp
-    io/saving/xml/append_layer.hpp
-    io/saving/xml/append_properties.cpp
-    io/saving/xml/append_properties.hpp
-    io/saving/xml/append_tileset.cpp
-    io/saving/xml/append_tileset.hpp
-    io/saving/xml/save_map_document_as_xml.cpp
-    io/saving/xml/save_map_document_as_xml.hpp
-    io/saving/xml/save_xml.cpp
-    io/saving/xml/save_xml.hpp
     )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})

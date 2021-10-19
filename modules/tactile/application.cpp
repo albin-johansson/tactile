@@ -51,7 +51,7 @@
 #include "io/history.hpp"
 #include "io/map_parser.hpp"
 #include "io/preferences.hpp"
-#include "io/saving/save_map_document.hpp"
+#include "io/save_map_document.hpp"
 #include "io/session.hpp"
 #include "io/to_map_document.hpp"
 

@@ -7,9 +7,10 @@
 #include <centurion.hpp>  // ...
 #include <session.pb.h>
 
+#include <tactile-base/convert_to_forward_slashes.hpp>
+
 #include "directories.hpp"
 #include "editor/model.hpp"
-#include "io/saving/common_saving.hpp"
 #include "json.hpp"
 #include "map_parser.hpp"
 #include "to_map_document.hpp"
@@ -50,7 +51,7 @@ void SaveSession(const Model& model)
   for (const auto& [id, document] : model) {
     if (!document->path.empty()) {
       const auto documentPath = std::filesystem::absolute(document->path);
-      session.add_files(IO::ConvertToForwardSlashes(documentPath));
+      session.add_files(ConvertToForwardSlashes(documentPath));
     }
   }
 

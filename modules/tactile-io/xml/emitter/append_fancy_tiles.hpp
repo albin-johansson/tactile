@@ -1,17 +1,16 @@
 #pragma once
 
 #include <filesystem>  // path
+#include <vector>      // vector
 
-#include <entt.hpp>     // registry
 #include <pugixml.hpp>  // xml_node
 
-#include "core/components/tileset.hpp"
+#include "../../parse_ir.hpp"
 
 namespace Tactile::IO {
 
 void AppendFancyTiles(pugi::xml_node node,
-                      const entt::registry& registry,
-                      const Tileset& tileset,
+                      const std::vector<TileData>& tiles,
                       const std::filesystem::path& dir);
 
 }  // namespace Tactile::IO

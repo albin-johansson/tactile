@@ -9,6 +9,8 @@ namespace Tactile::IO {
 
 TACTILE_IO_API void EmitJsonMap(const MapData& data);
 
+TACTILE_IO_API void EmitXmlMap(const MapData& data);
+
 TACTILE_IO_API void EmitYamlMap(const MapData& data);
 
 }  // namespace Tactile::IO

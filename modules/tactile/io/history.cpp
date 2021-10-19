@@ -8,10 +8,10 @@
 
 #include <history.pb.h>
 
+#include <tactile-base/convert_to_forward_slashes.hpp>
 #include <tactile-base/tactile_std.hpp>
 
 #include "directories.hpp"
-#include "io/saving/common_saving.hpp"
 
 namespace Tactile {
 namespace {
@@ -77,7 +77,7 @@ void ClearFileHistory()
 void AddFileToHistory(const std::filesystem::path& path)
 {
   if (std::ranges::find(history, path) == history.end()) {
-    history.push_back(IO::ConvertToForwardSlashes(path));
+    history.push_back(ConvertToForwardSlashes(path));
   }
 
   if (history.size() > max_size) {
@@ -87,7 +87,7 @@ void AddFileToHistory(const std::filesystem::path& path)
 
 void SetLastClosedFile(const std::filesystem::path& path)
 {
-  last_closed_file = IO::ConvertToForwardSlashes(path);
+  last_closed_file = ConvertToForwardSlashes(path);
   AddFileToHistory(path);
 }
 

@@ -2,9 +2,7 @@
 
 #include <tactile-base/tactile_error.hpp>
 
-#include "core/components/property.hpp"
-#include "core/components/property_context.hpp"
-#include "io/saving/common_saving.hpp"
+#include "../../common_saving.hpp"
 
 namespace Tactile::IO {
 namespace {
@@ -59,22 +57,17 @@ void AppendValueAttribute(const PropertyValue& property,
 
 }  // namespace
 
-void AppendProperties(const entt::registry& registry,
-                      const entt::entity entity,
-                      pugi::xml_node node,
+void AppendProperties(pugi::xml_node node,
+                      const std::vector<PropertyData>& properties,
                       const std::filesystem::path& dir)
 {
-  const auto& context = (entity != entt::null) ? registry.get<PropertyContext>(entity)
-                                               : registry.ctx<PropertyContext>();
-  if (!context.properties.empty()) {
+  if (!properties.empty()) {
     auto root = node.append_child("properties");
-    for (const auto propertyEntity : context.properties) {
-      const auto& property = registry.get<Property>(propertyEntity);
-
+    for (const auto& property : properties) {
       auto propertyNode = root.append_child("property");
       propertyNode.append_attribute("name").set_value(property.name.c_str());
-      AppendTypeAttribute(property.value.GetType().value(), propertyNode);
-      AppendValueAttribute(property.value, propertyNode, dir);
+      AppendTypeAttribute(property.property.GetType().value(), propertyNode);
+      AppendValueAttribute(property.property, propertyNode, dir);
     }
   }
 }

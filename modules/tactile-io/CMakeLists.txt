@@ -48,6 +48,18 @@ set(TACTILE_IO_SOURCES
     json/parser/read_json.cpp
     json/parser/read_json.hpp
 
+    xml/emitter/append_fancy_tiles.cpp
+    xml/emitter/append_fancy_tiles.hpp
+    xml/emitter/append_layer.cpp
+    xml/emitter/append_layer.hpp
+    xml/emitter/append_properties.cpp
+    xml/emitter/append_properties.hpp
+    xml/emitter/append_tileset.cpp
+    xml/emitter/append_tileset.hpp
+    xml/emitter/emit_xml_map.cpp
+    xml/emitter/save_xml.cpp
+    xml/emitter/save_xml.hpp
+
     xml/parser/parse_csv.cpp
     xml/parser/parse_csv.hpp
     xml/parser/parse_fancy_tiles.cpp

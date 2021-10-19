@@ -1,20 +1,11 @@
 #include "common_saving.hpp"
 
-#include <algorithm>   // replace
 #include <filesystem>  // relative
 
+#include <tactile-base/convert_to_forward_slashes.hpp>
 #include <tactile-base/tactile_error.hpp>
 
 namespace Tactile::IO {
-
-auto ConvertToForwardSlashes(const std::filesystem::path& path) -> std::string
-{
-  /* Here we make sure that the file path is portable, by using forward slashes that
-     can be understood by pretty much all operating systems that we care about. */
-  auto str = path.string();
-  std::ranges::replace(str, '\\', '/');
-  return str;
-}
 
 auto GetTilesetImagePath(const std::filesystem::path& image,
                          const std::filesystem::path& dir) -> std::string
