@@ -417,6 +417,7 @@ target_include_directories(${TACTILE_LIB}
     PUBLIC
     ${PROJECT_SOURCE_DIR}
     ${ROOT_DIR}/modules
+    ${ROOT_DIR}/modules/tactile-base/include
     ${ROOT_DIR}/modules/tactile-io/include
 
     SYSTEM PUBLIC
