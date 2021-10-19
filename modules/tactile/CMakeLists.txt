@@ -408,29 +408,6 @@ set(SOURCE_FILES
     io/to_map_document.cpp
     io/to_map_document.hpp
 
-    parsers/xml/parse_csv.cpp
-    parsers/xml/parse_csv.hpp
-    parsers/xml/parse_fancy_tiles.cpp
-    parsers/xml/parse_fancy_tiles.hpp
-    parsers/xml/parse_layers.cpp
-    parsers/xml/parse_layers.hpp
-    parsers/xml/parse_object_layer.cpp
-    parsers/xml/parse_object_layer.hpp
-    parsers/xml/parse_properties.cpp
-    parsers/xml/parse_properties.hpp
-    parsers/xml/parse_tile_data.cpp
-    parsers/xml/parse_tile_data.hpp
-    parsers/xml/parse_tile_layer.cpp
-    parsers/xml/parse_tile_layer.hpp
-    parsers/xml/parse_tile_nodes.cpp
-    parsers/xml/parse_tile_nodes.hpp
-    parsers/xml/parse_tilesets.cpp
-    parsers/xml/parse_tilesets.hpp
-    parsers/xml/parse_xml_map.cpp
-    parsers/xml/parse_xml_map.hpp
-    parsers/xml/xml_utils.cpp
-    parsers/xml/xml_utils.hpp
-
     io/saving/common_saving.cpp
     io/saving/common_saving.hpp
     io/saving/save_map_document.cpp

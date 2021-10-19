@@ -1,9 +1,9 @@
-#include "parse_xml_map.hpp"
+#include <cstring>     // strcmp
+#include <filesystem>  // absolute, exists
 
-#include <cstring>      // strcmp
-#include <filesystem>   // absolute, exists
 #include <pugixml.hpp>  // xml_document, xml_node
 
+#include "../../parser.hpp"
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
@@ -105,9 +105,8 @@ namespace {
   }
 }
 
-}  // namespace
-
-auto ParseXmlMap(const std::filesystem::path& path, MapData& data) -> ParseError
+[[nodiscard]] auto ParseMap(const std::filesystem::path& path, MapData& data)
+    -> ParseError
 {
   data.absolute_path = std::filesystem::absolute(path);
   if (!std::filesystem::exists(data.absolute_path)) {
@@ -172,6 +171,27 @@ auto ParseXmlMap(const std::filesystem::path& path, MapData& data) -> ParseError
   }
 
   return ParseError::None;
+}
+
+}  // namespace
+
+auto ParseXmlMap(const std::filesystem::path& path, ParseError* error)
+    -> std::optional<MapData>
+{
+  MapData data;
+  const auto res = ParseMap(path, data);
+  if (res == ParseError::None) {
+    if (error) {
+      *error = ParseError::None;
+    }
+    return data;
+  }
+  else {
+    if (error) {
+      *error = res;
+    }
+    return std::nullopt;
+  }
 }
 
 }  // namespace Tactile::IO

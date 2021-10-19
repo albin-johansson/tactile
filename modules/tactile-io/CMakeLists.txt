@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 3.18)
 project(tactile-io CXX)
 
 set(TACTILE_IO_SOURCES
+    ${PUGIXML_SOURCES}
+
     api.hpp
     common_saving.cpp
     common_saving.hpp
@@ -46,6 +48,28 @@ set(TACTILE_IO_SOURCES
     json/parser/read_json.cpp
     json/parser/read_json.hpp
 
+    xml/parser/parse_csv.cpp
+    xml/parser/parse_csv.hpp
+    xml/parser/parse_fancy_tiles.cpp
+    xml/parser/parse_fancy_tiles.hpp
+    xml/parser/parse_layers.cpp
+    xml/parser/parse_layers.hpp
+    xml/parser/parse_object_layer.cpp
+    xml/parser/parse_object_layer.hpp
+    xml/parser/parse_properties.cpp
+    xml/parser/parse_properties.hpp
+    xml/parser/parse_tile_data.cpp
+    xml/parser/parse_tile_data.hpp
+    xml/parser/parse_tile_layer.cpp
+    xml/parser/parse_tile_layer.hpp
+    xml/parser/parse_tile_nodes.cpp
+    xml/parser/parse_tile_nodes.hpp
+    xml/parser/parse_tilesets.cpp
+    xml/parser/parse_tilesets.hpp
+    xml/parser/parse_xml_map.cpp
+    xml/parser/xml_utils.cpp
+    xml/parser/xml_utils.hpp
+
     yaml/yaml_fwd.hpp
 
     yaml/emitter/emit_yaml_map.cpp
@@ -84,6 +108,7 @@ target_include_directories(TactileIO
     ${LIBRARY_DIR}/tl
     ${LIBRARY_DIR}/magic-enum
     ${LIBRARY_DIR}/json
+    ${LIBRARY_DIR}/pugixml
     )
 
 target_link_libraries(TactileIO

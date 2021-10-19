@@ -5,7 +5,6 @@
 #include <tactile-io/parser.hpp>
 
 #include "core/utils/profile.hpp"
-#include "parsers/xml/parse_xml_map.hpp"
 
 namespace Tactile::IO {
 
@@ -29,7 +28,9 @@ MapParser::MapParser(const std::filesystem::path& path)
       }
     }
     else if (extension == ".tmx" || extension == ".xml") {
-      mError = IO::ParseXmlMap(path, mData);
+      if (auto data = IO::ParseXmlMap(path, &mError)) {
+        mData = std::move(*data);
+      }
     }
     else if (extension == ".yaml" || extension == ".yml") {
       if (auto data = IO::ParseYamlMap(path, &mError)) {
