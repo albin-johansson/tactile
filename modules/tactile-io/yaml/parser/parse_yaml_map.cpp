@@ -99,8 +99,7 @@ namespace {
 
 }  // namespace
 
-auto ParseYamlMap(const std::filesystem::path& path, ParseError* error)
-    -> std::optional<MapData>
+auto ParseYamlMap(const std::filesystem::path& path, ParseError* error) -> Maybe<MapData>
 {
   if (auto map = ParseMap(path)) {
     if (error) {
@@ -112,7 +111,7 @@ auto ParseYamlMap(const std::filesystem::path& path, ParseError* error)
     if (error) {
       *error = map.error();
     }
-    return std::nullopt;
+    return nothing;
   }
 }
 

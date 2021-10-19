@@ -191,8 +191,7 @@ namespace {
 
 }  // namespace
 
-auto ParseJsonMap(const std::filesystem::path& path, ParseError* error)
-    -> std::optional<MapData>
+auto ParseJsonMap(const std::filesystem::path& path, ParseError* error) -> Maybe<MapData>
 {
   if (auto data = ParseMap(path)) {
     if (error) {
@@ -204,7 +203,7 @@ auto ParseJsonMap(const std::filesystem::path& path, ParseError* error)
     if (error) {
       *error = data.error();
     }
-    return std::nullopt;
+    return nothing;
   }
 }
 

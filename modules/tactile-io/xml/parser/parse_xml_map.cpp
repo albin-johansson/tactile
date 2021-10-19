@@ -175,8 +175,7 @@ namespace {
 
 }  // namespace
 
-auto ParseXmlMap(const std::filesystem::path& path, ParseError* error)
-    -> std::optional<MapData>
+auto ParseXmlMap(const std::filesystem::path& path, ParseError* error) -> Maybe<MapData>
 {
   MapData data;
   const auto res = ParseMap(path, data);
@@ -190,7 +189,7 @@ auto ParseXmlMap(const std::filesystem::path& path, ParseError* error)
     if (error) {
       *error = res;
     }
-    return std::nullopt;
+    return nothing;
   }
 }
 

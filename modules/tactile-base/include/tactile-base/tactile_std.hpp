@@ -3,11 +3,11 @@
 #include <cstddef>      // size_t
 #include <cstdint>      // uint{}_t, int{}_t
 #include <functional>   // reference_wrapper
+#include <optional>     // optional
 #include <type_traits>  // is_pointer_v
 #include <vector>       // vector
 
-#include <nenya.hpp>     // strong_type
-#include <optional.hpp>  // optional
+#include <nenya.hpp>  // strong_type
 
 namespace Tactile {
 
@@ -19,9 +19,9 @@ template <typename T>
 using Ref = std::reference_wrapper<T>;
 
 template <typename T>
-using Maybe = tl::optional<T>;
+using Maybe = std::optional<T>;
 
-constexpr tl::nullopt_t nothing = tl::nullopt;
+constexpr std::nullopt_t nothing = std::nullopt;
 
 using CStr = const char*;
 

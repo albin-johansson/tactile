@@ -1,12 +1,13 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <optional>    // optional
+
+#include <tactile-base/tactile_std.hpp>
 
 #include "../json_common.hpp"
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ReadJson(const std::filesystem::path& path) -> std::optional<JSON>;
+[[nodiscard]] auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>;
 
-}  // namespace Tactile
+}  // namespace Tactile::IO

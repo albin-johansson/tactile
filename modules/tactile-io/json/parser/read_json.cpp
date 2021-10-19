@@ -4,7 +4,7 @@
 
 namespace Tactile::IO {
 
-auto ReadJson(const std::filesystem::path& path) -> std::optional<JSON>
+auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>
 {
   try {
     std::ifstream stream{path};
@@ -15,7 +15,7 @@ auto ReadJson(const std::filesystem::path& path) -> std::optional<JSON>
     return json;
   }
   catch (...) {
-    return std::nullopt;
+    return nothing;
   }
 }
 
