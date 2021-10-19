@@ -7,9 +7,9 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/components/object.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/editor/gui/rendering/common_rendering.hpp"
+#include "core/components/object.hpp"
+#include "core/components/property_context.hpp"
+#include "editor/gui/rendering/common_rendering.hpp"
 
 namespace Tactile {
 namespace {

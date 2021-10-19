@@ -4,9 +4,9 @@
 
 #include <tactile-base/tactile_std.hpp>
 
+#include "core/components/layer.hpp"
+#include "core/systems/property_context_snapshot.hpp"
 #include "object_snapshot.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/systems/property_context_snapshot.hpp"
 
 namespace Tactile::Sys {
 

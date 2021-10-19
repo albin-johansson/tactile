@@ -5,15 +5,15 @@
 
 #include <tactile-base/tactile_std.hpp>
 
+#include "core/components/group_layer.hpp"
+#include "core/components/layer_tree_node.hpp"
+#include "core/components/parent.hpp"
+#include "core/components/property_context.hpp"
+#include "core/map.hpp"
+#include "core/utils/scope_id.hpp"
+#include "editor/events/layer_events.hpp"
+#include "editor/gui/icons.hpp"
 #include "layer_item_popup.hpp"
-#include "tactile/core/components/group_layer.hpp"
-#include "tactile/core/components/layer_tree_node.hpp"
-#include "tactile/core/components/parent.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/map.hpp"
-#include "tactile/core/utils/scope_id.hpp"
-#include "tactile/editor/events/layer_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
 
 namespace Tactile {
 namespace {

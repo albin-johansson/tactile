@@ -5,9 +5,9 @@
 #include <cmath>      // round
 #include <utility>    // pair
 
-#include "tactile/core/map.hpp"
-#include "tactile/core/mouse.hpp"
-#include "tactile/core/viewport.hpp"
+#include "core/map.hpp"
+#include "core/mouse.hpp"
+#include "core/viewport.hpp"
 
 namespace Tactile::Sys {
 namespace {

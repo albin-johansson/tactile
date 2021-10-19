@@ -1,7 +1,7 @@
 #include "center_viewport_shortcut.hpp"
 
-#include "tactile/editor/events/viewport_events.hpp"
-#include "tactile/editor/model.hpp"
+#include "editor/events/viewport_events.hpp"
+#include "editor/model.hpp"
 
 namespace Tactile {
 

@@ -2,10 +2,10 @@
 
 #include <cassert>  // assert
 
-#include "tactile/core/algorithms/flood_fill.hpp"
-#include "tactile/core/components/tile_layer.hpp"
-#include "tactile/core/systems/layers/layer_system.hpp"
-#include "tactile/core/systems/layers/tile_layer_system.hpp"
+#include "core/algorithms/flood_fill.hpp"
+#include "core/components/tile_layer.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 
 namespace Tactile {
 

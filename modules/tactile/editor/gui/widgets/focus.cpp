@@ -1,10 +1,10 @@
 #include "focus.hpp"
 
-#include "tactile/editor/gui/widgets/layers/layer_dock.hpp"
-#include "tactile/editor/gui/widgets/properties/properties_dock.hpp"
-#include "tactile/editor/gui/widgets/tilesets/tileset_dock.hpp"
-#include "tactile/editor/gui/widgets/toolbar/toolbar.hpp"
-#include "tactile/editor/gui/widgets/viewport/viewport_widget.hpp"
+#include "editor/gui/widgets/layers/layer_dock.hpp"
+#include "editor/gui/widgets/properties/properties_dock.hpp"
+#include "editor/gui/widgets/tilesets/tileset_dock.hpp"
+#include "editor/gui/widgets/toolbar/toolbar.hpp"
+#include "editor/gui/widgets/viewport/viewport_widget.hpp"
 
 namespace Tactile {
 

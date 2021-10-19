@@ -3,18 +3,18 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "tactile/core/tool_type.hpp"
-#include "tactile/editor/events/command_events.hpp"
-#include "tactile/editor/events/map_events.hpp"
-#include "tactile/editor/events/save_events.hpp"
-#include "tactile/editor/events/tool_events.hpp"
-#include "tactile/editor/events/viewport_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/common/button.hpp"
-#include "tactile/editor/gui/widgets/common/docking_toolbar.hpp"
-#include "tactile/editor/gui/widgets/menus/file_menu.hpp"
-#include "tactile/editor/gui/widgets/menus/map_menu.hpp"
-#include "tactile/editor/model.hpp"
+#include "core/tool_type.hpp"
+#include "editor/events/command_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/save_events.hpp"
+#include "editor/events/tool_events.hpp"
+#include "editor/events/viewport_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/common/button.hpp"
+#include "editor/gui/widgets/common/docking_toolbar.hpp"
+#include "editor/gui/widgets/menus/file_menu.hpp"
+#include "editor/gui/widgets/menus/map_menu.hpp"
+#include "editor/model.hpp"
 #include "tool_button.hpp"
 
 namespace Tactile {

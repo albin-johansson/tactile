@@ -4,8 +4,8 @@
 
 #include <tactile-io/parser.hpp>
 
-#include "tactile/core/utils/profile.hpp"
-#include "tactile/parsers/xml/parse_xml_map.hpp"
+#include "core/utils/profile.hpp"
+#include "parsers/xml/parse_xml_map.hpp"
 
 namespace Tactile::IO {
 

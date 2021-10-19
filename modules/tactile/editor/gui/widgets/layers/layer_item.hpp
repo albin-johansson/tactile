@@ -4,7 +4,7 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/components/layer.hpp"
+#include "core/components/layer.hpp"
 
 namespace Tactile {
 

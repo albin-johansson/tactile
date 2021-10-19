@@ -6,7 +6,7 @@
 
 #include <tactile-base/tactile_error.hpp>
 
-#include "tactile/core/utils/load_texture.hpp"
+#include "core/utils/load_texture.hpp"
 
 namespace Tactile {
 namespace {

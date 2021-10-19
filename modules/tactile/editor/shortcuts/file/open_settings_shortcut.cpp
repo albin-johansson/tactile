@@ -1,6 +1,6 @@
 #include "open_settings_shortcut.hpp"
 
-#include "tactile/editor/gui/widgets/menus/edit_menu.hpp"
+#include "editor/gui/widgets/menus/edit_menu.hpp"
 
 namespace Tactile {
 

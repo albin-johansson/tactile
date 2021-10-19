@@ -2,8 +2,8 @@
 
 #include <cassert>  // assert
 
-#include "tactile/core/algorithms/invoke_n.hpp"
-#include "tactile/io/preferences.hpp"
+#include "core/algorithms/invoke_n.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 

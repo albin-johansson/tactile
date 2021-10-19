@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tactile/editor/shortcuts/shortcut.hpp"
+#include "editor/shortcuts/shortcut.hpp"
 
 namespace Tactile {
 

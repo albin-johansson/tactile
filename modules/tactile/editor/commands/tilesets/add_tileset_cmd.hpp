@@ -4,10 +4,10 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/components/texture.hpp"
-#include "tactile/core/systems/tileset_snapshot.hpp"
-#include "tactile/editor/commands/command.hpp"
-#include "tactile/editor/commands/command_id.hpp"
+#include "core/components/texture.hpp"
+#include "core/systems/tileset_snapshot.hpp"
+#include "editor/commands/command.hpp"
+#include "editor/commands/command_id.hpp"
 
 namespace Tactile {
 

@@ -1,6 +1,6 @@
 #include "set_layer_visibility_cmd.hpp"
 
-#include "tactile/core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
 
 namespace Tactile {
 

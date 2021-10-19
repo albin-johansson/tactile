@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>  // ticks
 
-#include "tactile/core/components/animation.hpp"
+#include "core/components/animation.hpp"
 
 namespace Tactile::Sys {
 

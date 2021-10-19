@@ -6,22 +6,22 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/components/property.hpp"
-#include "tactile/core/systems/property_system.hpp"
-#include "tactile/core/utils/scope_id.hpp"
-#include "tactile/editor/events/property_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/properties/dialogs/add_property_dialog.hpp"
-#include "tactile/editor/gui/widgets/properties/dialogs/change_property_type_dialog.hpp"
-#include "tactile/editor/gui/widgets/properties/dialogs/rename_property_dialog.hpp"
-#include "tactile/editor/gui/widgets/properties/items/bool_property_widget.hpp"
-#include "tactile/editor/gui/widgets/properties/items/color_property_widget.hpp"
-#include "tactile/editor/gui/widgets/properties/items/file_property_widget.hpp"
-#include "tactile/editor/gui/widgets/properties/items/float_property_widget.hpp"
-#include "tactile/editor/gui/widgets/properties/items/int_property_widget.hpp"
-#include "tactile/editor/gui/widgets/properties/items/object_property_widget.hpp"
-#include "tactile/editor/gui/widgets/properties/items/property_item_context_menu.hpp"
-#include "tactile/editor/gui/widgets/properties/items/string_property_widget.hpp"
+#include "core/components/property.hpp"
+#include "core/systems/property_system.hpp"
+#include "core/utils/scope_id.hpp"
+#include "editor/events/property_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/properties/dialogs/add_property_dialog.hpp"
+#include "editor/gui/widgets/properties/dialogs/change_property_type_dialog.hpp"
+#include "editor/gui/widgets/properties/dialogs/rename_property_dialog.hpp"
+#include "editor/gui/widgets/properties/items/bool_property_widget.hpp"
+#include "editor/gui/widgets/properties/items/color_property_widget.hpp"
+#include "editor/gui/widgets/properties/items/file_property_widget.hpp"
+#include "editor/gui/widgets/properties/items/float_property_widget.hpp"
+#include "editor/gui/widgets/properties/items/int_property_widget.hpp"
+#include "editor/gui/widgets/properties/items/object_property_widget.hpp"
+#include "editor/gui/widgets/properties/items/property_item_context_menu.hpp"
+#include "editor/gui/widgets/properties/items/string_property_widget.hpp"
 
 namespace Tactile {
 namespace {

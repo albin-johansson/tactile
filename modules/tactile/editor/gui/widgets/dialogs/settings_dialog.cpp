@@ -3,14 +3,14 @@
 #include <imgui.h>
 #include <magic_enum.hpp>  // enum_name
 
-#include "tactile/core/utils/color_utils.hpp"
-#include "tactile/editor/events/command_events.hpp"
-#include "tactile/editor/gui/themes.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/checkbox.hpp"
-#include "tactile/editor/gui/widgets/common/combo.hpp"
-#include "tactile/editor/gui/widgets/common/modal.hpp"
-#include "tactile/io/preferences.hpp"
+#include "core/utils/color_utils.hpp"
+#include "editor/events/command_events.hpp"
+#include "editor/gui/themes.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/checkbox.hpp"
+#include "editor/gui/widgets/common/combo.hpp"
+#include "editor/gui/widgets/common/modal.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {

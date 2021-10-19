@@ -5,9 +5,9 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/editor/events/layer_events.hpp"
-#include "tactile/editor/gui/widgets/common/button.hpp"
-#include "tactile/editor/gui/widgets/dialogs/rename_dialog.hpp"
+#include "editor/events/layer_events.hpp"
+#include "editor/gui/widgets/common/button.hpp"
+#include "editor/gui/widgets/dialogs/rename_dialog.hpp"
 
 namespace Tactile {
 namespace {

@@ -4,8 +4,8 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/utils/color_utils.hpp"
-#include "tactile/io/preferences.hpp"
+#include "core/utils/color_utils.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {

@@ -6,8 +6,8 @@
 
 #include <imgui.h>
 
-#include "tactile/core/utils/scope_id.hpp"
-#include "tactile/editor/gui/icons.hpp"
+#include "core/utils/scope_id.hpp"
+#include "editor/gui/icons.hpp"
 
 #include <portable-file-dialogs.h>
 

@@ -4,7 +4,7 @@
 
 #include <imgui_internal.h>
 
-#include "tactile/editor/gui/rendering/render_info.hpp"
+#include "editor/gui/rendering/render_info.hpp"
 
 namespace Tactile {
 

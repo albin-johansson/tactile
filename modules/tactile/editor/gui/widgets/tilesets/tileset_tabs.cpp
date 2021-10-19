@@ -2,12 +2,12 @@
 
 #include <imgui.h>
 
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/core/utils/scope_id.hpp"
-#include "tactile/editor/events/tileset_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/menus/map_menu.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/tileset.hpp"
+#include "core/utils/scope_id.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/menus/map_menu.hpp"
 #include "tileset_view.hpp"
 
 namespace Tactile {

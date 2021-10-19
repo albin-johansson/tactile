@@ -2,7 +2,7 @@
 
 #include <cassert>  // assert
 
-#include "tactile/core/systems/tileset_system.hpp"
+#include "core/systems/tileset_system.hpp"
 
 namespace Tactile {
 

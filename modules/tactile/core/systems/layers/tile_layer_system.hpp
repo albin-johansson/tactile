@@ -5,7 +5,7 @@
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/common/tile_cache.hpp"
+#include "common/tile_cache.hpp"
 
 namespace Tactile::Sys {
 

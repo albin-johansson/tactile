@@ -8,9 +8,9 @@
 #include <tactile-base/property_type.hpp>
 #include <tactile-base/property_value.hpp>
 
+#include "core/components/property.hpp"
+#include "core/components/property_context.hpp"
 #include "property_context_snapshot.hpp"
-#include "tactile/core/components/property.hpp"
-#include "tactile/core/components/property_context.hpp"
 
 namespace Tactile::Sys {
 

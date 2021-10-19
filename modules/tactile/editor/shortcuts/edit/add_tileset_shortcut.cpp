@@ -1,7 +1,7 @@
 #include "add_tileset_shortcut.hpp"
 
-#include "tactile/editor/gui/widgets/menus/map_menu.hpp"
-#include "tactile/editor/model.hpp"
+#include "editor/gui/widgets/menus/map_menu.hpp"
+#include "editor/model.hpp"
 
 namespace Tactile {
 

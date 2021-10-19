@@ -7,8 +7,8 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/utils/buffer_utils.hpp"
-#include "tactile/core/utils/scope_id.hpp"
+#include "core/utils/buffer_utils.hpp"
+#include "core/utils/scope_id.hpp"
 
 namespace Tactile {
 namespace {

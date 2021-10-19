@@ -7,9 +7,9 @@
 
 #include <tactile-io/emitter.hpp>
 
-#include "tactile/core/utils/profile.hpp"
-#include "tactile/io/convert_document_to_ir.hpp"
-#include "tactile/io/saving/xml/save_map_document_as_xml.hpp"
+#include "core/utils/profile.hpp"
+#include "io/convert_document_to_ir.hpp"
+#include "io/saving/xml/save_map_document_as_xml.hpp"
 
 namespace Tactile::IO {
 

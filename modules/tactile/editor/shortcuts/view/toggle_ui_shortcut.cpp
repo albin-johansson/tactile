@@ -1,8 +1,8 @@
 #include "toggle_ui_shortcut.hpp"
 
-#include "tactile/editor/events/view_events.hpp"
-#include "tactile/editor/gui/widgets/focus.hpp"
-#include "tactile/editor/model.hpp"
+#include "editor/events/view_events.hpp"
+#include "editor/gui/widgets/focus.hpp"
+#include "editor/model.hpp"
 
 namespace Tactile {
 

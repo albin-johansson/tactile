@@ -2,13 +2,13 @@
 
 #include <imgui.h>
 
-#include "tactile/editor/events/view_events.hpp"
-#include "tactile/editor/events/viewport_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/layout/dock_space.hpp"
-#include "tactile/editor/gui/widgets/common/menu.hpp"
-#include "tactile/editor/model.hpp"
-#include "tactile/io/preferences.hpp"
+#include "editor/events/view_events.hpp"
+#include "editor/events/viewport_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/layout/dock_space.hpp"
+#include "editor/gui/widgets/common/menu.hpp"
+#include "editor/model.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 namespace {

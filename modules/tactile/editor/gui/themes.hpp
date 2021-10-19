@@ -3,7 +3,7 @@
 #include <array>    // array
 #include <utility>  // make_pair
 
-#include "tactile/io/preferences.hpp"
+#include "io/preferences.hpp"
 
 struct ImGuiStyle;
 

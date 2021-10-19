@@ -3,12 +3,12 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/tile_layer.hpp"
-#include "tactile/core/systems/layers/tile_layer_system.hpp"
-#include "tactile/core/systems/tileset_system.hpp"
-#include "tactile/editor/gui/rendering/canvas.hpp"
-#include "tactile/io/preferences.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/tile_layer.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "editor/gui/rendering/canvas.hpp"
+#include "io/preferences.hpp"
 #include "viewport_cursor_info.hpp"
 
 namespace Tactile {

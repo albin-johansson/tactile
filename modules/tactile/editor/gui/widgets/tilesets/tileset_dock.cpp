@@ -2,13 +2,13 @@
 
 #include <imgui.h>
 
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/centered_button.hpp"
-#include "tactile/editor/gui/widgets/common/centered_text.hpp"
-#include "tactile/editor/gui/widgets/menus/map_menu.hpp"
-#include "tactile/io/preferences.hpp"
+#include "core/components/tileset.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/centered_button.hpp"
+#include "editor/gui/widgets/common/centered_text.hpp"
+#include "editor/gui/widgets/menus/map_menu.hpp"
+#include "io/preferences.hpp"
 #include "tileset_tabs.hpp"
 
 namespace Tactile {

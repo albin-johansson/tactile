@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tactile/core/tool_type.hpp"
+#include "core/tool_type.hpp"
 
 namespace Tactile {
 

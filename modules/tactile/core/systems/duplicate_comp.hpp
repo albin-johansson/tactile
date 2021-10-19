@@ -2,15 +2,15 @@
 
 #include <entt.hpp>  // registry, entity
 
+#include "core/components/group_layer.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
+#include "core/components/parent.hpp"
+#include "core/components/property.hpp"
+#include "core/components/property_context.hpp"
+#include "core/map.hpp"
 #include "property_system.hpp"
-#include "tactile/core/components/group_layer.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/object.hpp"
-#include "tactile/core/components/object_layer.hpp"
-#include "tactile/core/components/parent.hpp"
-#include "tactile/core/components/property.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/map.hpp"
 
 namespace Tactile::Sys {
 

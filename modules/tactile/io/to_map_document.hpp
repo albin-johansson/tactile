@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tactile/editor/document.hpp"
+#include "editor/document.hpp"
 
 namespace Tactile::IO {
 

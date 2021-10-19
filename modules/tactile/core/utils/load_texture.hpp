@@ -4,7 +4,7 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/components/texture.hpp"
+#include "core/components/texture.hpp"
 
 namespace Tactile {
 

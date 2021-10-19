@@ -5,7 +5,7 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/editor/gui/rendering/render_info.hpp"
+#include "editor/gui/rendering/render_info.hpp"
 
 struct ImVec2;
 

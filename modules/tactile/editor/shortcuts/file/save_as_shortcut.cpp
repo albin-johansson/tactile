@@ -1,7 +1,7 @@
 #include "save_as_shortcut.hpp"
 
-#include "tactile/editor/events/save_events.hpp"
-#include "tactile/editor/model.hpp"
+#include "editor/events/save_events.hpp"
+#include "editor/model.hpp"
 
 namespace Tactile {
 

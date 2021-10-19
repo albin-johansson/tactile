@@ -6,7 +6,7 @@
 #include <tactile-base/property_type.hpp>
 #include <tactile-base/property_value.hpp>
 
-#include "tactile/core/components/tileset.hpp"
+#include "core/components/tileset.hpp"
 
 namespace Tactile::IO {
 

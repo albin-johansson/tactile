@@ -2,7 +2,7 @@
 
 #include <cassert>  // assert
 
-#include "tactile/core/components/tile_layer.hpp"
+#include "core/components/tile_layer.hpp"
 
 namespace Tactile::Sys {
 

@@ -11,7 +11,7 @@
 #include <tactile-base/tactile_std.hpp>
 
 #include "directories.hpp"
-#include "tactile/io/saving/common_saving.hpp"
+#include "io/saving/common_saving.hpp"
 
 namespace Tactile {
 namespace {

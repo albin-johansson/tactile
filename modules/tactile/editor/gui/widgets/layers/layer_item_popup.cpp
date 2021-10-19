@@ -2,9 +2,9 @@
 
 #include <imgui.h>
 
-#include "tactile/core/systems/layers/layer_system.hpp"
-#include "tactile/editor/events/layer_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "editor/events/layer_events.hpp"
+#include "editor/gui/icons.hpp"
 
 namespace Tactile {
 

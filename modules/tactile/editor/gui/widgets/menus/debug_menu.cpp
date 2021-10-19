@@ -3,10 +3,10 @@
 #include <centurion.hpp>
 #include <imgui.h>
 
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/menu.hpp"
-#include "tactile/editor/gui/widgets/common/window.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/menu.hpp"
+#include "editor/gui/widgets/common/window.hpp"
 
 namespace Tactile {
 namespace {

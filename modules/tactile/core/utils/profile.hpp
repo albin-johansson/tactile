@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>
 
-#include "tactile/build.hpp"
+#include "build.hpp"
 
 #if TACTILE_RELEASE
 #define TACTILE_PROFILE_START

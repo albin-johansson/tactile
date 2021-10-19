@@ -3,9 +3,9 @@
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/common/tile_cache.hpp"
-#include "tactile/core/mouse_info.hpp"
-#include "tactile/core/tool_type.hpp"
+#include "common/tile_cache.hpp"
+#include "core/mouse_info.hpp"
+#include "core/tool_type.hpp"
 
 namespace Tactile {
 

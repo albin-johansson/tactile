@@ -4,7 +4,7 @@
 #include <entt.hpp>       // registry
 #include <imgui.h>
 
-#include "tactile/core/region.hpp"
+#include "core/region.hpp"
 
 namespace Tactile {
 

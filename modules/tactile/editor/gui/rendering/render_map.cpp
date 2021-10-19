@@ -3,14 +3,14 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
+#include "core/components/parent.hpp"
+#include "io/preferences.hpp"
 #include "render_bounds.hpp"
 #include "render_info.hpp"
 #include "render_object_layer.hpp"
 #include "render_tile_layer.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/layer_tree_node.hpp"
-#include "tactile/core/components/parent.hpp"
-#include "tactile/io/preferences.hpp"
 
 namespace Tactile {
 namespace {

@@ -2,7 +2,7 @@
 
 #include <imgui.h>
 
-#include "tactile/editor/gui/widgets/common/button.hpp"
+#include "editor/gui/widgets/common/button.hpp"
 
 namespace Tactile {
 

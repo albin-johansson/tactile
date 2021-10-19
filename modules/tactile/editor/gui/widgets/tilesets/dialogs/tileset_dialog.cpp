@@ -7,12 +7,12 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/utils/buffer_utils.hpp"
-#include "tactile/editor/events/tileset_events.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/button.hpp"
-#include "tactile/editor/gui/widgets/common/modal.hpp"
-#include "tactile/io/preferences.hpp"
+#include "core/utils/buffer_utils.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/button.hpp"
+#include "editor/gui/widgets/common/modal.hpp"
+#include "io/preferences.hpp"
 
 #include <portable-file-dialogs.h>
 

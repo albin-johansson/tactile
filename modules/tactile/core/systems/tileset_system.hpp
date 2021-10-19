@@ -6,8 +6,8 @@
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/components/texture.hpp"
-#include "tactile/core/region.hpp"
+#include "core/components/texture.hpp"
+#include "core/region.hpp"
 #include "tileset_snapshot.hpp"
 
 namespace Tactile::Sys {

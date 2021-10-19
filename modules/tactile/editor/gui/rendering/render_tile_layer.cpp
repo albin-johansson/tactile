@@ -3,11 +3,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/components/layer.hpp"
+#include "core/components/tile_layer.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 #include "render_info.hpp"
 #include "render_tile.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/tile_layer.hpp"
-#include "tactile/core/systems/layers/tile_layer_system.hpp"
 
 namespace Tactile {
 

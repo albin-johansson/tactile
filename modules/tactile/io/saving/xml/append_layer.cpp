@@ -5,14 +5,14 @@
 #include <tactile-base/tactile_error.hpp>
 
 #include "append_properties.hpp"
-#include "tactile/core/components/group_layer.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/layer_tree_node.hpp"
-#include "tactile/core/components/object.hpp"
-#include "tactile/core/components/object_layer.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/components/tile_layer.hpp"
-#include "tactile/io/preferences.hpp"
+#include "core/components/group_layer.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/tile_layer.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile::IO {
 namespace {

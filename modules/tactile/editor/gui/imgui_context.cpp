@@ -7,8 +7,8 @@
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
+#include "io/preferences.hpp"
 #include "style.hpp"
-#include "tactile/io/preferences.hpp"
 #include "themes.hpp"
 
 namespace Tactile {

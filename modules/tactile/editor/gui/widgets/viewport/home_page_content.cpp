@@ -3,12 +3,12 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/texture_utils.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/centered_button.hpp"
-#include "tactile/editor/gui/widgets/common/centered_text.hpp"
-#include "tactile/editor/gui/widgets/menus/file_menu.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/texture_utils.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/centered_button.hpp"
+#include "editor/gui/widgets/common/centered_text.hpp"
+#include "editor/gui/widgets/menus/file_menu.hpp"
 
 namespace Tactile {
 

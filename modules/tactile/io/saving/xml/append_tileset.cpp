@@ -4,12 +4,12 @@
 
 #include "append_fancy_tiles.hpp"
 #include "append_properties.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/texture.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "io/preferences.hpp"
+#include "io/saving/common_saving.hpp"
 #include "save_xml.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/components/texture.hpp"
-#include "tactile/core/systems/tileset_system.hpp"
-#include "tactile/io/preferences.hpp"
-#include "tactile/io/saving/common_saving.hpp"
 
 namespace Tactile::IO {
 namespace {

@@ -3,8 +3,8 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
-#include "tactile/core/systems/layers/layer_system.hpp"
-#include "tactile/core/systems/layers/tile_layer_system.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 
 namespace Tactile {
 

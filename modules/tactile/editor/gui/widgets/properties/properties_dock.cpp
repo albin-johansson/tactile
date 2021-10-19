@@ -3,19 +3,19 @@
 #include <imgui.h>
 #include <rune/core/formatted_string.hpp>  // formatted_string
 
+#include "core/components/property_context.hpp"
+#include "core/systems/property_system.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/button.hpp"
+#include "editor/gui/widgets/common/centered_button.hpp"
+#include "editor/gui/widgets/common/centered_text.hpp"
+#include "editor/gui/widgets/common/window.hpp"
+#include "editor/gui/widgets/properties/dialogs/add_property_dialog.hpp"
+#include "editor/gui/widgets/properties/dialogs/change_property_type_dialog.hpp"
+#include "editor/gui/widgets/properties/dialogs/rename_property_dialog.hpp"
+#include "io/preferences.hpp"
 #include "property_table.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/systems/property_system.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/button.hpp"
-#include "tactile/editor/gui/widgets/common/centered_button.hpp"
-#include "tactile/editor/gui/widgets/common/centered_text.hpp"
-#include "tactile/editor/gui/widgets/common/window.hpp"
-#include "tactile/editor/gui/widgets/properties/dialogs/add_property_dialog.hpp"
-#include "tactile/editor/gui/widgets/properties/dialogs/change_property_type_dialog.hpp"
-#include "tactile/editor/gui/widgets/properties/dialogs/rename_property_dialog.hpp"
-#include "tactile/io/preferences.hpp"
 
 namespace Tactile {
 namespace {

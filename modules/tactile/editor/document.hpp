@@ -4,7 +4,7 @@
 
 #include <entt.hpp>  // registry
 
-#include "tactile/editor/commands/command_stack.hpp"
+#include "editor/commands/command_stack.hpp"
 
 namespace Tactile {
 

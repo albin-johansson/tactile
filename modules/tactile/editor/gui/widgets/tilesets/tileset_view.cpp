@@ -5,13 +5,13 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "tactile/core/components/texture.hpp"
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/editor/events/tileset_events.hpp"
-#include "tactile/editor/gui/rendering/canvas.hpp"
-#include "tactile/editor/gui/rendering/grid.hpp"
-#include "tactile/editor/gui/texture_utils.hpp"
-#include "tactile/editor/gui/widgets/common/rubber_band.hpp"
+#include "core/components/texture.hpp"
+#include "core/components/tileset.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/gui/rendering/canvas.hpp"
+#include "editor/gui/rendering/grid.hpp"
+#include "editor/gui/texture_utils.hpp"
+#include "editor/gui/widgets/common/rubber_band.hpp"
 
 namespace Tactile {
 namespace {

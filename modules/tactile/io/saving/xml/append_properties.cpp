@@ -2,9 +2,9 @@
 
 #include <tactile-base/tactile_error.hpp>
 
-#include "tactile/core/components/property.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/io/saving/common_saving.hpp"
+#include "core/components/property.hpp"
+#include "core/components/property_context.hpp"
+#include "io/saving/common_saving.hpp"
 
 namespace Tactile::IO {
 namespace {

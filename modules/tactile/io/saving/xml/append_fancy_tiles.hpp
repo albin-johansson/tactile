@@ -5,7 +5,7 @@
 #include <entt.hpp>     // registry
 #include <pugixml.hpp>  // xml_node
 
-#include "tactile/core/components/tileset.hpp"
+#include "core/components/tileset.hpp"
 
 namespace Tactile::IO {
 

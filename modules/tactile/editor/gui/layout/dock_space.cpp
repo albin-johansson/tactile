@@ -6,8 +6,8 @@
 
 #include <tactile-base/tactile_std.hpp>
 
+#include "io/preferences.hpp"
 #include "load_default_layout.hpp"
-#include "tactile/io/preferences.hpp"
 
 namespace Tactile {
 namespace {

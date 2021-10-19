@@ -8,7 +8,7 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/region.hpp"
+#include "core/region.hpp"
 
 namespace Tactile {
 

@@ -2,8 +2,8 @@
 
 #include <utility>  // move
 
-#include "tactile/editor/events/save_events.hpp"
-#include "tactile/io/preferences.hpp"
+#include "editor/events/save_events.hpp"
+#include "io/preferences.hpp"
 
 #include <portable-file-dialogs.h>
 

@@ -8,20 +8,20 @@
 #include <tactile-base/tactile_std.hpp>
 
 #include "add_layer_popup.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
+#include "core/components/parent.hpp"
+#include "core/components/property_context.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "editor/events/layer_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/button.hpp"
+#include "editor/gui/widgets/common/centered_text.hpp"
+#include "editor/gui/widgets/common/window.hpp"
+#include "io/preferences.hpp"
 #include "layer_item.hpp"
 #include "rename_layer_dialog.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/layer_tree_node.hpp"
-#include "tactile/core/components/parent.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/systems/layers/layer_system.hpp"
-#include "tactile/editor/events/layer_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/button.hpp"
-#include "tactile/editor/gui/widgets/common/centered_text.hpp"
-#include "tactile/editor/gui/widgets/common/window.hpp"
-#include "tactile/io/preferences.hpp"
 
 namespace Tactile {
 namespace {

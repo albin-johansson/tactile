@@ -1,6 +1,6 @@
 #include "open_map_shortcut.hpp"
 
-#include "tactile/editor/gui/widgets/menus/file_menu.hpp"
+#include "editor/gui/widgets/menus/file_menu.hpp"
 
 namespace Tactile {
 

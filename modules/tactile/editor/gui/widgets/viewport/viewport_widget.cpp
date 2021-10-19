@@ -4,8 +4,8 @@
 #include <imgui_internal.h>
 
 #include "document_tabs.hpp"
+#include "editor/model.hpp"
 #include "home_page_content.hpp"
-#include "tactile/editor/model.hpp"
 
 namespace Tactile {
 namespace {

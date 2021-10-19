@@ -8,10 +8,10 @@
 #include <session.pb.h>
 
 #include "directories.hpp"
+#include "editor/model.hpp"
+#include "io/saving/common_saving.hpp"
 #include "json.hpp"
 #include "map_parser.hpp"
-#include "tactile/editor/model.hpp"
-#include "tactile/io/saving/common_saving.hpp"
 #include "to_map_document.hpp"
 
 namespace Tactile {

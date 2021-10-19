@@ -1,12 +1,12 @@
 #include "registry_factory_system.hpp"
 
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/core/components/tool.hpp"
-#include "tactile/core/map.hpp"
-#include "tactile/core/mouse.hpp"
-#include "tactile/core/viewport.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/tileset.hpp"
+#include "core/components/tool.hpp"
+#include "core/map.hpp"
+#include "core/mouse.hpp"
+#include "core/viewport.hpp"
 
 namespace Tactile::Sys {
 

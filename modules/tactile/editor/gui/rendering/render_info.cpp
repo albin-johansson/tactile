@@ -3,9 +3,9 @@
 #include <imgui_internal.h>
 
 #include "canvas.hpp"
+#include "core/map.hpp"
+#include "core/viewport.hpp"
 #include "render_bounds.hpp"
-#include "tactile/core/map.hpp"
-#include "tactile/core/viewport.hpp"
 
 namespace Tactile {
 namespace {

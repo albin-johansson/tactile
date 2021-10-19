@@ -3,11 +3,11 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
-#include "tactile/core/components/texture.hpp"
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/core/components/uv_tile_size.hpp"
-#include "tactile/core/systems/tileset_system.hpp"
-#include "tactile/editor/gui/texture_utils.hpp"
+#include "core/components/texture.hpp"
+#include "core/components/tileset.hpp"
+#include "core/components/uv_tile_size.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "editor/gui/texture_utils.hpp"
 
 namespace Tactile {
 

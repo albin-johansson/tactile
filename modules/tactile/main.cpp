@@ -5,9 +5,9 @@
 #include <google/protobuf/stubs/common.h>
 
 #include "application.hpp"
-#include "tactile/cfg/gl_attributes.hpp"
-#include "tactile/editor/gui/imgui_context.hpp"
-#include "tactile/io/preferences.hpp"
+#include "cfg/gl_attributes.hpp"
+#include "editor/gui/imgui_context.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 

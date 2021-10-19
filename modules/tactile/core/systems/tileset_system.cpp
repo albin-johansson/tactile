@@ -4,13 +4,13 @@
 #include <unordered_map>  // unordered_map
 #include <utility>        // move
 
+#include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/texture.hpp"
+#include "core/components/tileset.hpp"
+#include "core/components/uv_tile_size.hpp"
 #include "property_system.hpp"
-#include "tactile/core/components/animation.hpp"
-#include "tactile/core/components/fancy_tile.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/components/texture.hpp"
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/core/components/uv_tile_size.hpp"
 
 namespace Tactile::Sys {
 namespace {

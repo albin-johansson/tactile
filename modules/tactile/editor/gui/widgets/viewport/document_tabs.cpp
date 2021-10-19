@@ -2,11 +2,11 @@
 
 #include <imgui.h>
 
+#include "core/components/property_context.hpp"
+#include "core/utils/scope_id.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/model.hpp"
 #include "map_view.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/utils/scope_id.hpp"
-#include "tactile/editor/events/map_events.hpp"
-#include "tactile/editor/model.hpp"
 
 namespace Tactile {
 

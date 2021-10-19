@@ -2,7 +2,7 @@
 
 #include <entt.hpp>  // registry, dispatcher
 
-#include "tactile/core/mouse_info.hpp"
+#include "core/mouse_info.hpp"
 
 namespace Tactile::Sys {
 

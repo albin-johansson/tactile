@@ -2,14 +2,14 @@
 
 #include <imgui.h>
 
-#include "tactile/core/tool_type.hpp"
-#include "tactile/editor/events/command_events.hpp"
-#include "tactile/editor/events/map_events.hpp"
-#include "tactile/editor/events/tool_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/common/menu.hpp"
-#include "tactile/editor/gui/widgets/dialogs/settings_dialog.hpp"
-#include "tactile/editor/model.hpp"
+#include "core/tool_type.hpp"
+#include "editor/events/command_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/tool_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/common/menu.hpp"
+#include "editor/gui/widgets/dialogs/settings_dialog.hpp"
+#include "editor/model.hpp"
 
 namespace Tactile {
 namespace {

@@ -4,12 +4,12 @@
 #include <imgui_internal.h>
 
 #include "common_rendering.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/object.hpp"
-#include "tactile/core/components/object_layer.hpp"
-#include "tactile/editor/gui/rendering/objects/render_ellipse.hpp"
-#include "tactile/editor/gui/rendering/objects/render_point.hpp"
-#include "tactile/editor/gui/rendering/objects/render_rect.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
+#include "editor/gui/rendering/objects/render_ellipse.hpp"
+#include "editor/gui/rendering/objects/render_point.hpp"
+#include "editor/gui/rendering/objects/render_rect.hpp"
 
 namespace Tactile {
 

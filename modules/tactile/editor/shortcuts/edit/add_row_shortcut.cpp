@@ -1,7 +1,7 @@
 #include "add_row_shortcut.hpp"
 
-#include "tactile/editor/events/map_events.hpp"
-#include "tactile/editor/model.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/model.hpp"
 
 namespace Tactile {
 

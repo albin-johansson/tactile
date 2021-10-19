@@ -1,10 +1,10 @@
 #include "append_fancy_tiles.hpp"
 
 #include "append_properties.hpp"
-#include "tactile/core/components/animation.hpp"
-#include "tactile/core/components/fancy_tile.hpp"
-#include "tactile/core/systems/tileset_system.hpp"
-#include "tactile/io/saving/common_saving.hpp"
+#include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "io/saving/common_saving.hpp"
 
 namespace Tactile::IO {
 namespace {

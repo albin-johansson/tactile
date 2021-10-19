@@ -1,7 +1,7 @@
 #include "object_layer_system.hpp"
 
-#include "tactile/core/components/object.hpp"
-#include "tactile/core/components/object_layer.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
 
 namespace Tactile::Sys {
 

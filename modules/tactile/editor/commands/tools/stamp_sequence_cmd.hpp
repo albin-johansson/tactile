@@ -4,9 +4,9 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/common/tile_cache.hpp"
-#include "tactile/editor/commands/command.hpp"
-#include "tactile/editor/commands/command_id.hpp"
+#include "common/tile_cache.hpp"
+#include "editor/commands/command.hpp"
+#include "editor/commands/command_id.hpp"
 
 namespace Tactile {
 

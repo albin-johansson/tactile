@@ -5,17 +5,17 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/editor/events/command_events.hpp"
-#include "tactile/editor/events/layer_events.hpp"
-#include "tactile/editor/events/map_events.hpp"
-#include "tactile/editor/events/property_events.hpp"
-#include "tactile/editor/events/quit_event.hpp"
-#include "tactile/editor/events/save_events.hpp"
-#include "tactile/editor/events/tileset_events.hpp"
-#include "tactile/editor/events/tool_events.hpp"
-#include "tactile/editor/events/viewport_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/model.hpp"
+#include "editor/events/command_events.hpp"
+#include "editor/events/layer_events.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/property_events.hpp"
+#include "editor/events/quit_event.hpp"
+#include "editor/events/save_events.hpp"
+#include "editor/events/tileset_events.hpp"
+#include "editor/events/tool_events.hpp"
+#include "editor/events/viewport_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/model.hpp"
 
 namespace Tactile {
 

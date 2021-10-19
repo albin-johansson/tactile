@@ -2,10 +2,10 @@
 
 #include <imgui.h>
 
-#include "tactile/editor/events/map_events.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/button.hpp"
-#include "tactile/editor/gui/widgets/common/modal.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/button.hpp"
+#include "editor/gui/widgets/common/modal.hpp"
 
 namespace Tactile {
 namespace {

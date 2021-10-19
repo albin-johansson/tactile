@@ -7,11 +7,11 @@
 #include <tactile-base/tactile_error.hpp>
 #include <tactile-base/tactile_std.hpp>
 
+#include "editor/events/property_events.hpp"
+#include "editor/gui/widgets/alignment.hpp"
+#include "editor/gui/widgets/common/button.hpp"
+#include "editor/gui/widgets/common/modal.hpp"
 #include "property_type_combo.hpp"
-#include "tactile/editor/events/property_events.hpp"
-#include "tactile/editor/gui/widgets/alignment.hpp"
-#include "tactile/editor/gui/widgets/common/button.hpp"
-#include "tactile/editor/gui/widgets/common/modal.hpp"
 
 namespace Tactile {
 namespace {

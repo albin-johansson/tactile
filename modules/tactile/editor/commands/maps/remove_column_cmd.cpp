@@ -1,8 +1,8 @@
 #include "remove_column_cmd.hpp"
 
-#include "tactile/core/algorithms/invoke_n.hpp"
-#include "tactile/core/map.hpp"
-#include "tactile/core/systems/map_system.hpp"
+#include "core/algorithms/invoke_n.hpp"
+#include "core/map.hpp"
+#include "core/systems/map_system.hpp"
 
 namespace Tactile {
 

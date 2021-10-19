@@ -2,7 +2,7 @@
 
 #include <centurion.hpp>  // frect
 
-#include "tactile/core/region.hpp"
+#include "core/region.hpp"
 
 namespace Tactile {
 

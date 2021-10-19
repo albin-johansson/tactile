@@ -1,9 +1,9 @@
 #include "tool_system.hpp"
 
 #include "bucket_tool_system.hpp"
+#include "core/components/tool.hpp"
 #include "eraser_tool_system.hpp"
 #include "stamp_tool_system.hpp"
-#include "tactile/core/components/tool.hpp"
 
 namespace Tactile::Sys {
 

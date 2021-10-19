@@ -8,14 +8,14 @@
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/common/tile_cache.hpp"
-#include "tactile/core/components/tile_layer.hpp"
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/core/systems/layers/layer_system.hpp"
-#include "tactile/core/systems/layers/tile_layer_system.hpp"
-#include "tactile/core/systems/map_system.hpp"
-#include "tactile/core/systems/tileset_system.hpp"
-#include "tactile/editor/events/tool_events.hpp"
+#include "common/tile_cache.hpp"
+#include "core/components/tile_layer.hpp"
+#include "core/components/tileset.hpp"
+#include "core/systems/layers/layer_system.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
+#include "core/systems/map_system.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "editor/events/tool_events.hpp"
 
 namespace Tactile::Sys {
 namespace {

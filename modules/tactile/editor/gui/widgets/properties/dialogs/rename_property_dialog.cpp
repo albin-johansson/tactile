@@ -4,9 +4,9 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/systems/property_system.hpp"
-#include "tactile/editor/events/property_events.hpp"
-#include "tactile/editor/gui/widgets/dialogs/rename_dialog.hpp"
+#include "core/systems/property_system.hpp"
+#include "editor/events/property_events.hpp"
+#include "editor/gui/widgets/dialogs/rename_dialog.hpp"
 
 namespace Tactile {
 namespace {

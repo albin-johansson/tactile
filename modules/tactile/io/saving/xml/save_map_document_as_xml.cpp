@@ -7,13 +7,13 @@
 #include "append_layer.hpp"
 #include "append_properties.hpp"
 #include "append_tileset.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
+#include "core/components/parent.hpp"
+#include "core/components/tileset.hpp"
+#include "core/map.hpp"
+#include "io/saving/common_saving.hpp"
 #include "save_xml.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/layer_tree_node.hpp"
-#include "tactile/core/components/parent.hpp"
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/core/map.hpp"
-#include "tactile/io/saving/common_saving.hpp"
 
 namespace Tactile::IO {
 

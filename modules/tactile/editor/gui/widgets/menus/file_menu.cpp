@@ -4,14 +4,14 @@
 
 #include <imgui.h>
 
-#include "tactile/editor/events/map_events.hpp"
-#include "tactile/editor/events/quit_event.hpp"
-#include "tactile/editor/events/save_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
-#include "tactile/editor/gui/widgets/common/menu.hpp"
-#include "tactile/editor/gui/widgets/dialogs/add_map_dialog.hpp"
-#include "tactile/editor/model.hpp"
-#include "tactile/io/history.hpp"
+#include "editor/events/map_events.hpp"
+#include "editor/events/quit_event.hpp"
+#include "editor/events/save_events.hpp"
+#include "editor/gui/icons.hpp"
+#include "editor/gui/widgets/common/menu.hpp"
+#include "editor/gui/widgets/dialogs/add_map_dialog.hpp"
+#include "editor/model.hpp"
+#include "io/history.hpp"
 
 #include <portable-file-dialogs.h>
 

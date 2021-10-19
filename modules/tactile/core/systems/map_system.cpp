@@ -4,11 +4,11 @@
 #include <cmath>     // abs
 #include <concepts>  // invocable
 
-#include "tactile/core/algorithms/invoke_n.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/tile_layer.hpp"
-#include "tactile/core/map.hpp"
-#include "tactile/core/systems/layers/tile_layer_system.hpp"
+#include "core/algorithms/invoke_n.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/tile_layer.hpp"
+#include "core/map.hpp"
+#include "core/systems/layers/tile_layer_system.hpp"
 
 namespace Tactile::Sys {
 namespace {

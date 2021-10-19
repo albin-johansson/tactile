@@ -6,9 +6,9 @@
 
 #include <tactile-base/tactile_error.hpp>
 
-#include "tactile/core/components/animation.hpp"
-#include "tactile/core/components/fancy_tile.hpp"
-#include "tactile/core/components/property_context.hpp"
+#include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
+#include "core/components/property_context.hpp"
 
 namespace Tactile::IO {
 

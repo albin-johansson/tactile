@@ -1,6 +1,6 @@
 #include "toggle_grid_shortcut.hpp"
 
-#include "tactile/io/preferences.hpp"
+#include "io/preferences.hpp"
 
 namespace Tactile {
 

@@ -2,8 +2,8 @@
 
 #include <imgui.h>
 
-#include "tactile/editor/events/property_events.hpp"
-#include "tactile/editor/gui/icons.hpp"
+#include "editor/events/property_events.hpp"
+#include "editor/gui/icons.hpp"
 
 namespace Tactile {
 
