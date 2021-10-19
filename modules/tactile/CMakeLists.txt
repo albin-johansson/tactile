@@ -11,7 +11,6 @@ set(SOURCE_FILES
     application_events.cpp
     application_events.hpp
     build.hpp
-    common.hpp
 
     cfg/gl_attributes.cpp
     cfg/gl_attributes.hpp

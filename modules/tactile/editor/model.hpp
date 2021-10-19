@@ -7,7 +7,6 @@
 #include <rune/rune.hpp>  // vector_map
 
 #include "document.hpp"
-#include "tactile/common.hpp"
 #include "tactile/editor/events/command_events.hpp"
 #include "tactile/editor/events/tool_events.hpp"
 
