@@ -46,6 +46,14 @@ set(TACTILE_IO_SOURCES
     json/parser/read_json.cpp
     json/parser/read_json.hpp
 
+    yaml/emitter/emit_yaml_map.cpp
+    yaml/emitter/save_layers.cpp
+    yaml/emitter/save_layers.hpp
+    yaml/emitter/save_properties.cpp
+    yaml/emitter/save_properties.hpp
+    yaml/emitter/save_tilesets.cpp
+    yaml/emitter/save_tilesets.hpp
+
     yaml/parse_fancy_tiles.cpp
     yaml/parse_fancy_tiles.hpp
     yaml/parse_layers.cpp
@@ -78,7 +86,7 @@ target_include_directories(TactileIO
     )
 
 target_link_libraries(TactileIO
-    PUBLIC
+    PRIVATE
     yaml-cpp
     centurion)
 
@@ -87,6 +95,13 @@ target_compile_definitions(TactileIO PRIVATE
     CENTURION_NO_SDL_MIXER)
 
 target_precompile_headers(TactileIO PRIVATE
+    <string>
+    <vector>
+    <format>
+    <filesystem>
+    <utility>
+    <memory>
+
     <centurion.hpp>
     <expected.hpp>
     <json.hpp>

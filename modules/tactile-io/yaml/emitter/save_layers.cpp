@@ -1,33 +1,27 @@
 #include "save_layers.hpp"
 
 #include <sstream>  // stringstream
+#include <variant>  // get
 
 #include <tactile-base/tactile_std.hpp>
 
 #include "save_properties.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/layer_tree_node.hpp"
-#include "tactile/core/components/object.hpp"
-#include "tactile/core/components/object_layer.hpp"
-#include "tactile/core/components/parent.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/components/tile_layer.hpp"
+
+#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 
-void SaveTiles(YAML::Emitter& emitter,
-               const entt::registry& registry,
-               const entt::entity entity)
+void SaveTiles(YAML::Emitter& emitter, const LayerData& layer)
 {
   emitter << YAML::Key << "data";
 
-  const auto& tileLayer = registry.get<TileLayer>(entity);
-  const auto nRows = tileLayer.matrix.size();
+  const auto& tileLayer = std::get<TileLayerData>(layer.data);
+  const auto nRows = tileLayer.tiles.size();
 
   std::stringstream stream;
   usize index = 0;
 
-  for (const auto& row : tileLayer.matrix) {
+  for (const auto& row : tileLayer.tiles) {
     bool first = true;
     for (const auto tile : row) {
       if (!first) {
@@ -49,13 +43,9 @@ void SaveTiles(YAML::Emitter& emitter,
 }
 
 void SaveObject(YAML::Emitter& emitter,
-                const entt::registry& registry,
-                const entt::entity entity,
+                const ObjectData& object,
                 const std::filesystem::path& dir)
 {
-  const auto& object = registry.get<Object>(entity);
-  const auto& context = registry.get<PropertyContext>(entity);
-
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "id" << YAML::Value << object.id.get();
 
@@ -74,8 +64,8 @@ void SaveObject(YAML::Emitter& emitter,
       break;
   }
 
-  if (!context.name.empty()) {
-    emitter << YAML::Key << "name" << YAML::Value << context.name;
+  if (!object.name.empty()) {
+    emitter << YAML::Key << "name" << YAML::Value << object.name;
   }
 
   if (!object.custom_type.empty()) {
@@ -102,23 +92,22 @@ void SaveObject(YAML::Emitter& emitter,
     emitter << YAML::Key << "height" << YAML::Value << object.height;
   }
 
-  SaveProperties(emitter, registry, entity, dir);
+  SaveProperties(emitter, object.properties, dir);
 
   emitter << YAML::EndMap;
 }
 
 void SaveObjects(YAML::Emitter& emitter,
-                 const entt::registry& registry,
-                 const entt::entity entity,
+                 const LayerData& layer,
                  const std::filesystem::path& dir)
 {
-  const auto& objectLayer = registry.get<ObjectLayer>(entity);
+  const auto& objectLayer = std::get<ObjectLayerData>(layer.data);
   if (!objectLayer.objects.empty()) {
     emitter << YAML::Key << "objects";
     emitter << YAML::BeginSeq;
 
-    for (const auto objectEntity : objectLayer.objects) {
-      SaveObject(emitter, registry, objectEntity, dir);
+    for (const auto& object : objectLayer.objects) {
+      SaveObject(emitter, object, dir);
     }
 
     emitter << YAML::EndSeq;
@@ -126,48 +115,44 @@ void SaveObjects(YAML::Emitter& emitter,
 }
 
 void SaveLayer(YAML::Emitter& emitter,
-               const entt::registry& registry,
-               const entt::entity entity,
+               const LayerData& layer,
                const std::filesystem::path& dir)
 {
-  const auto& node = registry.get<LayerTreeNode>(entity);
-  const auto& layer = registry.get<Layer>(entity);
-  const auto& context = registry.get<PropertyContext>(entity);
-
   emitter << YAML::BeginMap;
-  emitter << YAML::Key << "name" << YAML::Value << context.name;
+  emitter << YAML::Key << "name" << YAML::Value << layer.name;
   emitter << YAML::Key << "id" << YAML::Value << layer.id.get();
 
   if (layer.opacity != 1.0f) {
     emitter << YAML::Key << "opacity" << YAML::Value << layer.opacity;
   }
 
-  if (!layer.visible) {
-    emitter << YAML::Key << "visible" << YAML::Value << layer.visible;
+  if (!layer.is_visible) {
+    emitter << YAML::Key << "visible" << YAML::Value << layer.is_visible;
   }
 
   emitter << YAML::Key << "type" << YAML::Value;
   switch (layer.type) {
     case LayerType::TileLayer: {
       emitter << "tile-layer";
-      SaveTiles(emitter, registry, entity);
+      SaveTiles(emitter, layer);
       break;
     }
 
     case LayerType::ObjectLayer: {
       emitter << "object-layer";
-      SaveObjects(emitter, registry, entity, dir);
+      SaveObjects(emitter, layer, dir);
       break;
     }
 
     case LayerType::GroupLayer: {
       emitter << "group-layer";
 
-      if (!node.children.empty()) {
+      const auto& groupLayer = std::get<GroupLayerData>(layer.data);
+      if (!groupLayer.layers.empty()) {
         emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-        for (const auto child : node.children) {
-          SaveLayer(emitter, registry, child, dir);
+        for (const auto& child : groupLayer.layers) {
+          SaveLayer(emitter, *child, dir);
         }
 
         emitter << YAML::EndSeq;
@@ -177,23 +162,20 @@ void SaveLayer(YAML::Emitter& emitter,
     }
   }
 
-  SaveProperties(emitter, registry, entity, dir);
+  SaveProperties(emitter, layer.properties, dir);
 
   emitter << YAML::EndMap;
 }
 
 void SaveLayers(YAML::Emitter& emitter,
-                const entt::registry& registry,
+                const std::vector<LayerData>& layers,
                 const std::filesystem::path& dir)
 {
-  if (!registry.empty<LayerTreeNode>()) {
+  if (!layers.empty()) {
     emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-    for (auto&& [entity, node] : registry.view<LayerTreeNode>().each()) {
-      const auto& parent = registry.get<Parent>(entity);
-      if (parent.entity == entt::null) {
-        SaveLayer(emitter, registry, entity, dir);
-      }
+    for (const auto& layer : layers) {
+      SaveLayer(emitter, layer, dir);
     }
 
     emitter << YAML::EndSeq;

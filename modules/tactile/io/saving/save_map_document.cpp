@@ -10,7 +10,6 @@
 #include "tactile/core/utils/profile.hpp"
 #include "tactile/io/convert_document_to_ir.hpp"
 #include "tactile/io/saving/xml/save_map_document_as_xml.hpp"
-#include "tactile/io/saving/yaml/save_document_as_yaml.hpp"
 
 namespace Tactile::IO {
 
@@ -31,7 +30,8 @@ void SaveMapDocument(const Document& document)
     SaveMapDocumentAsXml(document);
   }
   else if (extension == ".yml" || extension == ".yaml") {
-    SaveDocumentAsYaml(document);
+    const auto data = ConvertDocumentToIR(document);
+    EmitYamlMap(data);
   }
   else {
     CENTURION_LOG_ERROR("Failed to save map document due to invalid extension: %s",

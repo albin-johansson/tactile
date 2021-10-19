@@ -6,21 +6,22 @@
 
 #include <tactile-base/tactile_std.hpp>
 
-#include "tactile/core/components/animation.hpp"
-#include "tactile/core/components/fancy_tile.hpp"
-#include "tactile/core/components/layer.hpp"
-#include "tactile/core/components/layer_tree_node.hpp"
-#include "tactile/core/components/object.hpp"
-#include "tactile/core/components/object_layer.hpp"
-#include "tactile/core/components/parent.hpp"
-#include "tactile/core/components/property.hpp"
-#include "tactile/core/components/property_context.hpp"
-#include "tactile/core/components/texture.hpp"
-#include "tactile/core/components/tile_layer.hpp"
-#include "tactile/core/components/tileset.hpp"
-#include "tactile/core/map.hpp"
-#include "tactile/core/systems/tileset_system.hpp"
-#include "tactile/editor/document.hpp"
+#include "core/components/animation.hpp"
+#include "core/components/fancy_tile.hpp"
+#include "core/components/layer.hpp"
+#include "core/components/layer_tree_node.hpp"
+#include "core/components/object.hpp"
+#include "core/components/object_layer.hpp"
+#include "core/components/parent.hpp"
+#include "core/components/property.hpp"
+#include "core/components/property_context.hpp"
+#include "core/components/texture.hpp"
+#include "core/components/tile_layer.hpp"
+#include "core/components/tileset.hpp"
+#include "core/map.hpp"
+#include "core/systems/tileset_system.hpp"
+#include "core/utils/profile.hpp"
+#include "editor/document.hpp"
 
 namespace Tactile {
 namespace {
@@ -184,6 +185,8 @@ namespace {
 
 auto ConvertDocumentToIR(const Document& document) -> IO::MapData
 {
+  TACTILE_PROFILE_START;
+
   const auto& registry = document.registry;
   const auto& map = registry.ctx<Map>();
 
@@ -215,6 +218,7 @@ auto ConvertDocumentToIR(const Document& document) -> IO::MapData
 
   data.properties = ConvertProperties(registry, registry.ctx<PropertyContext>());
 
+  TACTILE_PROFILE_END("Converted document to IR");
   return data;
 }
 
