@@ -491,6 +491,7 @@ target_precompile_headers(${TACTILE_LIB}
     <memory>
     <concepts>
     <type_traits>
+    <optional>
 
     <centurion.hpp>
     <entt.hpp>
