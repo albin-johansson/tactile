@@ -4,7 +4,6 @@ project(tactile-app CXX)
 
 set(SOURCE_FILES
     ${IMGUI_SOURCES}
-    ${PUGIXML_SOURCES}
 
     application.cpp
     application.hpp
@@ -426,7 +425,6 @@ target_include_directories(${TACTILE_LIB}
     ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/rune
     ${LIBRARY_DIR}/init
-    ${LIBRARY_DIR}/pugixml
     ${LIBRARY_DIR}/json
     ${LIBRARY_DIR}/stbimage
     ${LIBRARY_DIR}/fontawesome
