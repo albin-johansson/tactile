@@ -8,8 +8,11 @@
 
 namespace Tactile::IO {
 
+struct EmitterOptions;
+
 void AppendTileset(pugi::xml_node mapNode,
                    const TilesetData& tileset,
-                   const std::filesystem::path& dir);
+                   const std::filesystem::path& dir,
+                   const EmitterOptions& options);
 
 }  // namespace Tactile::IO

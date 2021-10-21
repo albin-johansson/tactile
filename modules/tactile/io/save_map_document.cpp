@@ -37,7 +37,7 @@ void SaveMapDocument(const Document& document)
   }
   else if (extension == ".tmx" || extension == ".xml") {
     const auto data = ConvertDocumentToIR(document);
-    EmitXmlMap(data);
+    EmitXmlMap(data, GetEmitterOptions());
   }
   else if (extension == ".yml" || extension == ".yaml") {
     const auto data = ConvertDocumentToIR(document);

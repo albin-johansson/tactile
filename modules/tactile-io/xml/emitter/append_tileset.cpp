@@ -5,6 +5,7 @@
 #include "../../common_saving.hpp"
 #include "append_fancy_tiles.hpp"
 #include "append_properties.hpp"
+#include "emitter.hpp"
 #include "save_xml.hpp"
 
 namespace Tactile::IO {
@@ -73,18 +74,17 @@ void AppendExternalTileset(pugi::xml_node mapNode,
 
 void AppendTileset(pugi::xml_node mapNode,
                    const TilesetData& tileset,
-                   const std::filesystem::path& dir)
+                   const std::filesystem::path& dir,
+                   const EmitterOptions& options)
 {
-  // TODO
-  //  if (Prefs::GetEmbedTilesets()) {
-  AppendEmbeddedTileset(mapNode, tileset, dir);
-  //  }
-  //  else {
-  //    const auto& context = registry.get<PropertyContext>(tilesetEntity);
-  //    const auto source = std::format("{}.tsx", context.name);
-  //    CreateExternalTilesetFile(registry, tilesetEntity, source, dir);
-  //    AppendExternalTileset(mapNode, registry, tilesetEntity, source);
-  //  }
+  if (options.embed_tilesets) {
+    AppendEmbeddedTileset(mapNode, tileset, dir);
+  }
+  else {
+    const auto source = std::format("{}.tsx", tileset.name);
+    CreateExternalTilesetFile(tileset, source, dir);
+    AppendExternalTileset(mapNode, tileset, source);
+  }
 }
 
 }  // namespace Tactile::IO
