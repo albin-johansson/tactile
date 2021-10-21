@@ -13,38 +13,38 @@ void VerifyProperties(const MapData& data)
 
   const auto& boolean = data.properties.at(0);
   ASSERT_EQ("boolean", boolean.name);
-  ASSERT_EQ(PropertyType::Boolean, boolean.property.GetType());
-  ASSERT_TRUE(boolean.property.AsBool());
+  ASSERT_EQ(PropertyType::Boolean, boolean.value.GetType());
+  ASSERT_TRUE(boolean.value.AsBool());
 
   const auto& color = data.properties.at(1);
   ASSERT_EQ("cool color", color.name);
-  ASSERT_EQ(PropertyType::Color, color.property.GetType());
-  ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), color.property.AsColor());
+  ASSERT_EQ(PropertyType::Color, color.value.GetType());
+  ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), color.value.AsColor());
 
   const auto& floating = data.properties.at(2);
   ASSERT_EQ("floating", floating.name);
-  ASSERT_EQ(PropertyType::Floating, floating.property.GetType());
-  ASSERT_EQ(12.3f, floating.property.AsFloat());
+  ASSERT_EQ(PropertyType::Floating, floating.value.GetType());
+  ASSERT_EQ(12.3f, floating.value.AsFloat());
 
   const auto& foo = data.properties.at(3);
   ASSERT_EQ("foo", foo.name);
-  ASSERT_EQ(PropertyType::String, foo.property.GetType());
-  ASSERT_EQ("bar", foo.property.AsString());
+  ASSERT_EQ(PropertyType::String, foo.value.GetType());
+  ASSERT_EQ("bar", foo.value.AsString());
 
   const auto& integer = data.properties.at(4);
   ASSERT_EQ("integer", integer.name);
-  ASSERT_EQ(PropertyType::Integer, integer.property.GetType());
-  ASSERT_EQ(42, integer.property.AsInt());
+  ASSERT_EQ(PropertyType::Integer, integer.value.GetType());
+  ASSERT_EQ(42, integer.value.AsInt());
 
   const auto& object = data.properties.at(5);
   ASSERT_EQ("object ref", object.name);
-  ASSERT_EQ(PropertyType::Object, object.property.GetType());
-  ASSERT_EQ(1_obj, object.property.AsObject());
+  ASSERT_EQ(PropertyType::Object, object.value.GetType());
+  ASSERT_EQ(1_obj, object.value.AsObject());
 
   const auto& path = data.properties.at(6);
   ASSERT_EQ("path", path.name);
-  ASSERT_EQ(PropertyType::File, path.property.GetType());
-  ASSERT_EQ(std::filesystem::path{"foo.bar"}, path.property.AsFile());
+  ASSERT_EQ(PropertyType::File, path.value.GetType());
+  ASSERT_EQ(std::filesystem::path{"foo.bar"}, path.value.AsFile());
 }
 
 void VerifyLayers(const MapData& data)
