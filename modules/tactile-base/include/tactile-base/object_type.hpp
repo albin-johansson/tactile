@@ -2,13 +2,7 @@
 
 namespace Tactile {
 
-/**
- * \brief Represents the different available map object types.
- *
- * \ingroup core
- *
- * \todo Polygon, Polyline, Text.
- */
+/// \brief Represents the different available map object types.
 enum class ObjectType
 {
   Point,
