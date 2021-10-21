@@ -1,8 +1,10 @@
 #include "save_fancy_tiles.hpp"
 
-#include <vector>  // vector
+#include <utility>  // move
+#include <vector>   // vector
 
 #include "common_saving.hpp"
+#include "save_object.hpp"
 #include "save_properties.hpp"
 
 namespace Tactile::IO {
@@ -37,6 +39,25 @@ namespace {
 
   if (!tile.animation.empty()) {
     json["animation"] = SaveAnimation(tile.animation);
+  }
+
+  if (!tile.objects.empty()) {
+    auto dummy = JSON::object();
+    dummy["draworder"] = "index";
+    dummy["name"] = "";
+    dummy["opacity"] = 1;
+    dummy["type"] = "objectgroup";
+    dummy["visible"] = true;
+    dummy["x"] = 0;
+    dummy["y"] = 0;
+
+    auto objects = JSON::array();
+    for (const auto& object : tile.objects) {
+      objects += SaveObject(object, dir);
+    }
+    dummy["objects"] = std::move(objects);
+
+    json["objectgroup"] = std::move(dummy);
   }
 
   if (!tile.properties.empty()) {

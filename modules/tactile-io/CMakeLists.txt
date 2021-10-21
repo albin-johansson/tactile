@@ -24,6 +24,8 @@ set(TACTILE_IO_SOURCES
     json/emitter/save_json.hpp
     json/emitter/save_layers.cpp
     json/emitter/save_layers.hpp
+    json/emitter/save_object.cpp
+    json/emitter/save_object.hpp
     json/emitter/save_properties.cpp
     json/emitter/save_properties.hpp
     json/emitter/save_tilesets.cpp
