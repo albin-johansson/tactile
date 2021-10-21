@@ -41,7 +41,7 @@ void SaveMapDocument(const Document& document)
   }
   else if (extension == ".yml" || extension == ".yaml") {
     const auto data = ConvertDocumentToIR(document);
-    EmitYamlMap(data);
+    EmitYamlMap(data, GetEmitterOptions());
   }
   else {
     CENTURION_LOG_ERROR("Failed to save map document due to invalid extension: %s",
