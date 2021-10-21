@@ -22,6 +22,8 @@ set(TACTILE_LIB libtactile)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 
+set(TACTILE_IO_IMPORT_LIBRARY "${CMAKE_BINARY_DIR}/modules/tactile-io/TactileIO${CMAKE_IMPORT_LIBRARY_SUFFIX}")
+
 list(APPEND CMAKE_PREFIX_PATH
     "$ENV{GLEW_LIBRARIES}"
     "${LIBRARY_DIR}/glew")
