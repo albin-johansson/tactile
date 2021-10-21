@@ -4,12 +4,11 @@
 #include <utility>  // move
 
 #include <tactile-base/tactile_std.hpp>
+#include <yaml-cpp/yaml.h>
 
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 #include "parse_tile_layer.hpp"
-
-#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 namespace {

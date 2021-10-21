@@ -3,7 +3,6 @@
 #include <utility>     // move
 
 #include <json.hpp>  // json
-
 #include <tactile-base/tactile_std.hpp>
 
 #include "../json_common.hpp"

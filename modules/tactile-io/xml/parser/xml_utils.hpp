@@ -4,7 +4,6 @@
 #include <vector>  // vector
 
 #include <pugixml.hpp>  // xml_node
-
 #include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::IO {

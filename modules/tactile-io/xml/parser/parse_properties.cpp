@@ -3,8 +3,8 @@
 #include <cstring>  // strcmp
 
 #include <centurion.hpp>
-
 #include <tactile-base/tactile_std.hpp>
+
 #include "xml_utils.hpp"
 
 namespace Tactile::IO {

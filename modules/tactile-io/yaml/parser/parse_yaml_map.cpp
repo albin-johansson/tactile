@@ -1,12 +1,12 @@
 #include <filesystem>  // absolute
 #include <utility>     // move
 
+#include <yaml-cpp/yaml.h>
+
 #include "parse_layers.hpp"
 #include "parse_properties.hpp"
 #include "parse_tilesets.hpp"
 #include "parser.hpp"
-
-#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 namespace {

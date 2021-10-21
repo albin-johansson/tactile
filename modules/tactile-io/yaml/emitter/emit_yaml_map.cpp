@@ -1,11 +1,11 @@
-#include <fstream>     // ofstream
+#include <fstream>  // ofstream
+
+#include <yaml-cpp/yaml.h>
 
 #include "emitter.hpp"
 #include "save_layers.hpp"
 #include "save_properties.hpp"
 #include "save_tilesets.hpp"
-
-#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 namespace {

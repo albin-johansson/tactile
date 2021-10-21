@@ -4,11 +4,10 @@
 #include <variant>  // get
 
 #include <tactile-base/tactile_std.hpp>
+#include <yaml-cpp/yaml.h>
 
 #include "save_object.hpp"
 #include "save_properties.hpp"
-
-#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 

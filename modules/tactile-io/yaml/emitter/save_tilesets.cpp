@@ -4,11 +4,11 @@
 #include <fstream>  // ofstream
 #include <string>   // string
 
+#include <yaml-cpp/yaml.h>
+
 #include "../../common_saving.hpp"
 #include "save_object.hpp"
 #include "save_properties.hpp"
-
-#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 namespace {

@@ -1,6 +1,7 @@
 #pragma once
 
-#include <filesystem>   // path
+#include <filesystem>  // path
+
 #include <pugixml.hpp>  // xml_document
 
 namespace Tactile::IO {

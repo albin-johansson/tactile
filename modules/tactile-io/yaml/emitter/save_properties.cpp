@@ -1,10 +1,9 @@
 #include "save_properties.hpp"
 
 #include <magic_enum.hpp>  // enum_name
+#include <yaml-cpp/yaml.h>
 
 #include "../../common_saving.hpp"
-
-#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 

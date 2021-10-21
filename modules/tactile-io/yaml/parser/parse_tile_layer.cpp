@@ -7,7 +7,6 @@
 #include <tactile-base/from_string.hpp>
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/string_utils.hpp>
-
 #include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {

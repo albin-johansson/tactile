@@ -1,8 +1,8 @@
 #include "save_object.hpp"
 
-#include "save_properties.hpp"
-
 #include <yaml-cpp/yaml.h>
+
+#include "save_properties.hpp"
 
 namespace Tactile::IO {
 

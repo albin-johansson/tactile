@@ -19,4 +19,4 @@ auto ReadJson(const std::filesystem::path& path) -> Maybe<JSON>
   }
 }
 
-}  // namespace Tactile
+}  // namespace Tactile::IO

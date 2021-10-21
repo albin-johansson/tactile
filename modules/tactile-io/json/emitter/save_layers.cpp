@@ -3,9 +3,9 @@
 #include <utility>  // move
 #include <variant>  // get
 
-#include "save_properties.hpp"
-
 #include <tactile-base/tactile_error.hpp>
+
+#include "save_properties.hpp"
 
 namespace Tactile::IO {
 namespace {

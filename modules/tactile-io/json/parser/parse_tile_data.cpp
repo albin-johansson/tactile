@@ -1,7 +1,6 @@
 #include "parse_tile_data.hpp"
 
 #include <json.hpp>  // json
-
 #include <tactile-base/map_position.hpp>
 
 namespace Tactile::IO {

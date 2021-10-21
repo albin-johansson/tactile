@@ -1,10 +1,9 @@
 #pragma once
 
 #include <pugixml.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 #include "parse_error.hpp"
-
-#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::IO {
 

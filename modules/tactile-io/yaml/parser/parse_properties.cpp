@@ -1,15 +1,16 @@
 #include "parse_properties.hpp"
 
-#include <magic_enum.hpp>  // enum_cast
-#include <string>          // string
-#include <utility>         // move
+#include <string>   // string
+#include <utility>  // move
 
+#include <magic_enum.hpp>  // enum_cast
 #include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseType(const YAML::Node& node) -> tl::expected<PropertyType, ParseError>
+[[nodiscard]] auto ParseType(const YAML::Node& node)
+    -> tl::expected<PropertyType, ParseError>
 {
   PropertyType type;
 

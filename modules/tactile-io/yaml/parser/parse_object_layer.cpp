@@ -3,10 +3,10 @@
 #include <string>   // string
 #include <utility>  // move
 
+#include <yaml-cpp/yaml.h>
+
 #include "parse_object.hpp"
 #include "parse_properties.hpp"
-
-#include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 
