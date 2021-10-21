@@ -16,6 +16,8 @@ namespace Tactile::IO {
 /// \addtogroup io
 /// \{
 
+/* TODO: do not use strong types, Tactile::PropertyValue or cen::color */
+
 /// \brief Intermediate representation of a property.
 struct PropertyData final
 {
