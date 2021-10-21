@@ -44,6 +44,28 @@ namespace {
   return props;
 }
 
+[[nodiscard]] auto ConvertObject(const entt::registry& registry,
+                                 const entt::entity entity) -> IO::ObjectData
+{
+  IO::ObjectData data;
+
+  const auto& object = registry.get<Object>(entity);
+  data.id = object.id;
+  data.x = object.x;
+  data.y = object.y;
+  data.width = object.width;
+  data.height = object.height;
+  data.type = object.type;
+  data.custom_type = object.custom_type;
+  data.visible = object.visible;
+
+  const auto& context = registry.get<PropertyContext>(entity);
+  data.name = context.name;
+  data.properties = ConvertProperties(registry, context);
+
+  return data;
+}
+
 [[nodiscard]] auto ConvertFancyTiles(const entt::registry& registry,
                                      const Tileset& tileset) -> std::vector<IO::TileData>
 {
@@ -65,6 +87,11 @@ namespace {
           frameData.tile = Sys::ConvertToLocal(registry, frame.tile).value();
           frameData.duration = frame.duration.count();  // TODO make uint32
         }
+      }
+
+      data.objects.reserve(tile.objects.size());
+      for (const auto objectEntity : tile.objects) {
+        data.objects.push_back(ConvertObject(registry, objectEntity));
       }
 
       data.properties = ConvertProperties(registry, ctx);
@@ -95,28 +122,6 @@ namespace {
   data.properties = ConvertProperties(registry, ctx);
 
   data.tiles = ConvertFancyTiles(registry, tileset);
-
-  return data;
-}
-
-[[nodiscard]] auto ConvertObject(const entt::registry& registry,
-                                 const entt::entity entity) -> IO::ObjectData
-{
-  IO::ObjectData data;
-
-  const auto& object = registry.get<Object>(entity);
-  data.id = object.id;
-  data.x = object.x;
-  data.y = object.y;
-  data.width = object.width;
-  data.height = object.height;
-  data.type = object.type;
-  data.custom_type = object.custom_type;
-  data.visible = object.visible;
-
-  const auto& context = registry.get<PropertyContext>(entity);
-  data.name = context.name;
-  data.properties = ConvertProperties(registry, context);
 
   return data;
 }
