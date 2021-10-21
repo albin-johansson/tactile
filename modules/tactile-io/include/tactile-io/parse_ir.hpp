@@ -16,13 +16,26 @@ namespace Tactile::IO {
 /// \addtogroup io
 /// \{
 
-/**
- * \brief Intermediate representation of a property.
- */
+/// \brief Intermediate representation of a property.
 struct PropertyData final
 {
   std::string name;        ///< The unique (within the context) property name
   PropertyValue property;  ///< The property value.
+};
+
+/// \brief Intermediate representation of a map object.
+struct ObjectData final
+{
+  ObjectID id;                           ///< Unique object identifier.
+  float x{};                             ///< Logical x-coordinate.
+  float y{};                             ///< Logical y-coordinate.
+  float width{};                         ///< Logical width.
+  float height{};                        ///< Logical height.
+  ObjectType type{};                     ///< Specific object type.
+  std::string custom_type;               ///< Optional custom type string.
+  std::string name;                      ///< Object name.
+  std::vector<PropertyData> properties;  ///< Object properties.
+  bool visible{};                        ///< Is the object visible?
 };
 
 /// \brief Intermediate representation of a tile animation frame.
@@ -37,12 +50,11 @@ struct TileData final
 {
   TileID id;                             ///< Local ID of the associated tile.
   std::vector<FrameData> animation;      ///< Optional animation frames.
+  std::vector<ObjectData> objects;       ///< Optional collection of contained objects.
   std::vector<PropertyData> properties;  ///< Tile properties.
 };
 
-/**
- * \brief Intermediate representation of a tileset.
- */
+/// \brief Intermediate representation of a tileset.
 struct TilesetData final
 {
   TileID first_id;                            ///< The first global tile ID.
@@ -66,23 +78,6 @@ struct TileLayerData final
   int32 row_count{};  ///< Total amount of rows.
   int32 col_count{};  ///< Total amount of columns.
   TileMatrix tiles;   ///< The associated tile data.
-};
-
-/**
- * \brief Intermediate representation of a map object.
- */
-struct ObjectData final
-{
-  ObjectID id;                           ///< Unique object identifier.
-  float x{};                             ///< Logical x-coordinate.
-  float y{};                             ///< Logical y-coordinate.
-  float width{};                         ///< Logical width.
-  float height{};                        ///< Logical height.
-  ObjectType type{};                     ///< Specific object type.
-  std::string custom_type;               ///< Optional custom type string.
-  std::string name;                      ///< Object name.
-  std::vector<PropertyData> properties;  ///< Object properties.
-  bool visible{};                        ///< Is the object visible?
 };
 
 /**

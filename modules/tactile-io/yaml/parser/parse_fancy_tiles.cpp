@@ -4,6 +4,7 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "parse_object.hpp"
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
@@ -51,6 +52,18 @@ namespace {
       }
       else {
         return tl::make_unexpected(frame.error());
+      }
+    }
+  }
+
+  if (auto objects = node["objects"]) {
+    data.objects.reserve(objects.size());
+    for (const auto& objectNode : objects) {
+      if (auto object = ParseObject(objectNode)) {
+        data.objects.push_back(std::move(*object));
+      }
+      else {
+        return tl::make_unexpected(object.error());
       }
     }
   }

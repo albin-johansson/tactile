@@ -53,7 +53,7 @@ auto GetPropertyFileValue(const PropertyValue& file, const std::filesystem::path
 
 auto IsTileWorthSaving(const TileData& tile) -> bool
 {
-  return !tile.animation.empty() || !tile.properties.empty();
+  return !tile.animation.empty() || !tile.properties.empty() || !tile.objects.empty();
 }
 
 }  // namespace Tactile::IO

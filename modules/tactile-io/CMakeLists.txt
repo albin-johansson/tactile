@@ -88,6 +88,8 @@ set(TACTILE_IO_SOURCES
     yaml/emitter/emit_yaml_map.cpp
     yaml/emitter/save_layers.cpp
     yaml/emitter/save_layers.hpp
+    yaml/emitter/save_object.cpp
+    yaml/emitter/save_object.hpp
     yaml/emitter/save_properties.cpp
     yaml/emitter/save_properties.hpp
     yaml/emitter/save_tilesets.cpp
@@ -97,6 +99,8 @@ set(TACTILE_IO_SOURCES
     yaml/parser/parse_fancy_tiles.hpp
     yaml/parser/parse_layers.cpp
     yaml/parser/parse_layers.hpp
+    yaml/parser/parse_object.cpp
+    yaml/parser/parse_object.hpp
     yaml/parser/parse_object_layer.cpp
     yaml/parser/parse_object_layer.hpp
     yaml/parser/parse_properties.cpp

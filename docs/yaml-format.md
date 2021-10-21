@@ -116,9 +116,10 @@ path: foo/bar/tileset.yaml
 
 ## `Tileset`
 
-The `Tileset` node is always defined in an external YAML file, since embedded tilesets are not supported
-by the Tactile YAML format. By default, a tileset that is added to a map in the Tactile editor will be stored
-next to the main map file.
+The `Tileset` node is always defined in an external YAML file, since embedded tilesets are not
+supported by the Tactile YAML format. By default, a tileset that is added to a map in the Tactile
+editor will be stored next to the main map file. Note, the `tiles` node only contains tiles that
+feature additional data, such as properties and animations.
 
 |      Attribute |   Type   | Required | Description                                |
 | -------------: | :------: | :------: | :----------------------------------------- |
@@ -156,6 +157,7 @@ The `Tile` node provides additional information about tiles in a tileset.
 | -----------: | :------: | :------: | :------------------------------- |
 |         `id` |  `int`   |   Yes    | Local ID of the associated tile. |
 |  `animation` | Sequence |    No    | A sequence of `Frame` nodes.     |
+|    `objects` | Sequence |    No    | A sequence of `Object` nodes.    |
 | `properties` | Sequence |    No    | A sequence of `Property` nodes.  |
 
 Example:

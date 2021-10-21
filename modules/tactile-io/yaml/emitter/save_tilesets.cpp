@@ -5,6 +5,7 @@
 #include <string>   // string
 
 #include "../../common_saving.hpp"
+#include "save_object.hpp"
 #include "save_properties.hpp"
 
 #include <yaml-cpp/yaml.h>
@@ -28,6 +29,19 @@ void SaveAnimation(YAML::Emitter& emitter, const std::vector<FrameData>& frames)
   emitter << YAML::EndSeq;
 }
 
+void SaveObjects(YAML::Emitter& emitter,
+                 const std::vector<ObjectData>& objects,
+                 const std::filesystem::path& dir)
+{
+  emitter << YAML::Key << "objects" << YAML::BeginSeq;
+
+  for (const auto& object : objects) {
+    SaveObject(emitter, object, dir);
+  }
+
+  emitter << YAML::EndSeq;
+}
+
 void SaveFancyTiles(YAML::Emitter& emitter,
                     const std::vector<TileData>& tiles,
                     const std::filesystem::path& dir)
@@ -41,6 +55,10 @@ void SaveFancyTiles(YAML::Emitter& emitter,
 
       if (!tile.animation.empty()) {
         SaveAnimation(emitter, tile.animation);
+      }
+
+      if (!tile.objects.empty()) {
+        SaveObjects(emitter, tile.objects, dir);
       }
 
       SaveProperties(emitter, tile.properties, dir);
