@@ -37,7 +37,7 @@ void AppendMapChild(pugi::xml_document& xml,
   }
 
   for (const auto& layer : map.layers) {
-    AppendLayer(node, layer, dir);
+    AppendLayer(node, layer, dir, options.human_readable_output);
   }
 }
 

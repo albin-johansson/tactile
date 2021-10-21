@@ -10,6 +10,7 @@ namespace Tactile::IO {
 
 void AppendLayer(pugi::xml_node mapNode,
                  const LayerData& layer,
-                 const std::filesystem::path& dir);
+                 const std::filesystem::path& dir,
+                 bool humanReadableOutput);
 
 }  // namespace Tactile::IO

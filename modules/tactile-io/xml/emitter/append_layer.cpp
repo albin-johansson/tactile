@@ -26,7 +26,8 @@ void AppendCommonLayerAttributes(pugi::xml_node node, const LayerData& layer)
 
 void AppendTileLayer(pugi::xml_node mapNode,
                      const LayerData& layer,
-                     const std::filesystem::path& dir)
+                     const std::filesystem::path& dir,
+                     const bool humanReadableOutput)
 {
   const auto& tileLayer = std::get<TileLayerData>(layer.data);
 
@@ -44,14 +45,13 @@ void AppendTileLayer(pugi::xml_node mapNode,
   data.append_attribute("encoding").set_value("csv");
 
   const auto count = nRows * nCols;
-  const auto readable = true;  // Prefs::GetHumanReadableOutput(); TODO
 
   std::stringstream stream;
   usize index = 0;
 
   for (const auto& row : tileLayer.tiles) {
     for (const auto tile : row) {
-      if (readable && index == 0) {
+      if (humanReadableOutput && index == 0) {
         stream << '\n';
       }
 
@@ -60,7 +60,7 @@ void AppendTileLayer(pugi::xml_node mapNode,
         stream << ',';
       }
 
-      if (readable && (index + 1) % nCols == 0) {
+      if (humanReadableOutput && (index + 1) % nCols == 0) {
         stream << '\n';
       }
 
@@ -129,7 +129,8 @@ void AppendObjectLayer(pugi::xml_node mapNode,
 
 void AppendGroupLayer(pugi::xml_node mapNode,
                       const LayerData& layer,
-                      const std::filesystem::path& dir)
+                      const std::filesystem::path& dir,
+                      const bool humanReadableOutput)
 {
   const auto& groupLayer = std::get<GroupLayerData>(layer.data);
 
@@ -137,7 +138,7 @@ void AppendGroupLayer(pugi::xml_node mapNode,
   AppendCommonLayerAttributes(node, layer);
 
   for (const auto& childLayer : groupLayer.layers) {
-    AppendLayer(node, *childLayer, dir);
+    AppendLayer(node, *childLayer, dir, humanReadableOutput);
   }
 }
 
@@ -145,11 +146,12 @@ void AppendGroupLayer(pugi::xml_node mapNode,
 
 void AppendLayer(pugi::xml_node mapNode,
                  const LayerData& layer,
-                 const std::filesystem::path& dir)
+                 const std::filesystem::path& dir,
+                 const bool humanReadableOutput)
 {
   switch (layer.type) {
     case LayerType::TileLayer: {
-      AppendTileLayer(mapNode, layer, dir);
+      AppendTileLayer(mapNode, layer, dir, humanReadableOutput);
       break;
     }
     case LayerType::ObjectLayer: {
@@ -157,7 +159,7 @@ void AppendLayer(pugi::xml_node mapNode,
       break;
     }
     case LayerType::GroupLayer: {
-      AppendGroupLayer(mapNode, layer, dir);
+      AppendGroupLayer(mapNode, layer, dir, humanReadableOutput);
       break;
     }
     default:
