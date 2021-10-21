@@ -8,8 +8,10 @@
 
 namespace Tactile::IO {
 
+struct EmitterOptions;
+
 [[nodiscard]] auto SaveTilesets(const std::vector<TilesetData>& tilesets,
                                 const std::filesystem::path& dir,
-                                bool embed) -> JSON;
+                                const EmitterOptions& options) -> JSON;
 
 }  // namespace Tactile::IO

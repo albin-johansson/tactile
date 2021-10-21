@@ -3,18 +3,15 @@
 #include <fstream>  // ofstream
 #include <iomanip>  // setw
 
-//#include "io/preferences.hpp"
-
 namespace Tactile::IO {
 
-void SaveJson(const JSON& json, const std::filesystem::path& path)
+void SaveJson(const JSON& json, const std::filesystem::path& path, const bool indent)
 {
   std::ofstream stream{path};
 
-  // TODO include option
-//  if (Prefs::GetHumanReadableOutput()) {
+  if (indent) {
     stream << std::setw(2);
-//  }
+  }
 
   stream << json;
 }

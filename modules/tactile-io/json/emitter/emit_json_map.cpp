@@ -11,7 +11,9 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto SaveMap(const MapData& data, const std::filesystem::path& dir) -> JSON
+[[nodiscard]] auto SaveMap(const MapData& data,
+                           const std::filesystem::path& dir,
+                           const EmitterOptions& options) -> JSON
 {
   auto json = JSON::object();
 
@@ -30,7 +32,7 @@ namespace {
   json["tiledversion"] = tiled_version;
   json["version"] = tiled_json_version;
 
-  json["tilesets"] = SaveTilesets(data.tilesets, dir, true); // TODO pass option
+  json["tilesets"] = SaveTilesets(data.tilesets, dir, options);
   json["layers"] = SaveLayers(data.layers, dir);
   json["properties"] = SaveProperties(data.properties, dir);
 
@@ -39,12 +41,12 @@ namespace {
 
 }  // namespace
 
-void EmitJsonMap(const MapData& data)
+void EmitJsonMap(const MapData& data, const EmitterOptions& options)
 {
   const auto path = data.absolute_path;
   const auto dir = path.parent_path();
-  const auto json = SaveMap(data, dir);
-  SaveJson(json, path);
+  const auto json = SaveMap(data, dir, options);
+  SaveJson(json, path, options.human_readable_output);
 }
 
 }  // namespace Tactile::IO

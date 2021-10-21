@@ -6,6 +6,6 @@
 
 namespace Tactile::IO {
 
-void SaveJson(const JSON& json, const std::filesystem::path& path);
+void SaveJson(const JSON& json, const std::filesystem::path& path, bool indent);
 
 }  // namespace Tactile::IO

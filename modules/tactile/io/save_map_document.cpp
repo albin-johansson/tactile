@@ -8,9 +8,19 @@
 #include <tactile-io/emitter.hpp>
 
 #include "convert_document_to_ir.hpp"
+#include "io/preferences.hpp"
 #include "tactile/core/utils/profile.hpp"
 
 namespace Tactile::IO {
+namespace {
+
+[[nodiscard]] auto GetEmitterOptions() -> IO::EmitterOptions
+{
+  return {.embed_tilesets = Prefs::GetEmbedTilesets(),
+          .human_readable_output = Prefs::GetHumanReadableOutput()};
+}
+
+}  // namespace
 
 void SaveMapDocument(const Document& document)
 {
@@ -23,7 +33,7 @@ void SaveMapDocument(const Document& document)
   const auto extension = path.extension();
   if (extension == ".json") {
     const auto data = ConvertDocumentToIR(document);
-    EmitJsonMap(data);
+    EmitJsonMap(data, GetEmitterOptions());
   }
   else if (extension == ".tmx" || extension == ".xml") {
     const auto data = ConvertDocumentToIR(document);

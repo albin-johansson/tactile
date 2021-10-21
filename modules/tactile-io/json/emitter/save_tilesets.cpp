@@ -4,6 +4,7 @@
 #include <utility>  // move
 
 #include "common_saving.hpp"
+#include "emitter.hpp"
 #include "save_fancy_tiles.hpp"
 #include "save_json.hpp"
 #include "save_properties.hpp"
@@ -54,7 +55,8 @@ void AddCommonAttributes(JSON& json,
 }
 
 void CreateExternalTilesetFile(const TilesetData& tileset,
-                               const std::filesystem::path& dir)
+                               const std::filesystem::path& dir,
+                               const bool indent)
 {
   auto json = JSON::object();
 
@@ -68,18 +70,18 @@ void CreateExternalTilesetFile(const TilesetData& tileset,
   const auto path = dir / name;
 
   CENTURION_LOG_INFO("Saving external tileset in \"%s\"", path.string().c_str());
-  SaveJson(json, path);
+  SaveJson(json, path, indent);
 }
 
 [[nodiscard]] auto SaveTileset(const TilesetData& tileset,
                                const std::filesystem::path& dir,
-                               const bool embed) -> JSON
+                               const EmitterOptions& options) -> JSON
 {
-  if (embed) {
+  if (options.embed_tilesets) {
     return SaveEmbeddedTileset(tileset, dir);
   }
   else {
-    CreateExternalTilesetFile(tileset, dir);
+    CreateExternalTilesetFile(tileset, dir, options.human_readable_output);
     return SaveExternalTileset(tileset);
   }
 }
@@ -88,12 +90,12 @@ void CreateExternalTilesetFile(const TilesetData& tileset,
 
 [[nodiscard]] auto SaveTilesets(const std::vector<TilesetData>& tilesets,
                                 const std::filesystem::path& dir,
-                                const bool embed) -> JSON
+                                const EmitterOptions& options) -> JSON
 {
   auto json = JSON::array();
 
   for (const auto& tileset : tilesets) {
-    json += SaveTileset(tileset, dir, embed);
+    json += SaveTileset(tileset, dir, options);
   }
 
   return json;
