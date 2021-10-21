@@ -18,37 +18,37 @@ void SaveProperties(YAML::Emitter& emitter,
       emitter << YAML::BeginMap;
       emitter << YAML::Key << "name" << YAML::Value << property.name;
 
-      const auto type = property.property.GetType().value();
+      const auto type = property.value.GetType().value();
       emitter << YAML::Key << "type" << YAML::Value << magic_enum::enum_name(type).data();
 
       emitter << YAML::Key << "value";
       switch (type) {
         case PropertyType::String:
-          emitter << YAML::Value << property.property.AsString();
+          emitter << YAML::Value << property.value.AsString();
           break;
 
         case PropertyType::Integer:
-          emitter << YAML::Value << property.property.AsInt();
+          emitter << YAML::Value << property.value.AsInt();
           break;
 
         case PropertyType::Floating:
-          emitter << YAML::Value << property.property.AsFloat();
+          emitter << YAML::Value << property.value.AsFloat();
           break;
 
         case PropertyType::Boolean:
-          emitter << YAML::Value << property.property.AsBool();
+          emitter << YAML::Value << property.value.AsBool();
           break;
 
         case PropertyType::File:
-          emitter << YAML::Value << GetPropertyFileValue(property.property, dir);
+          emitter << YAML::Value << GetPropertyFileValue(property.value, dir);
           break;
 
         case PropertyType::Color:
-          emitter << YAML::Value << property.property.AsColor().as_rgba();
+          emitter << YAML::Value << property.value.AsColor().as_rgba();
           break;
 
         case PropertyType::Object:
-          emitter << YAML::Value << property.property.AsObject().get();
+          emitter << YAML::Value << property.value.AsObject().get();
           break;
       }
 

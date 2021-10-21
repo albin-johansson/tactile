@@ -68,7 +68,7 @@ namespace {
     const auto type = it->get<std::string>();
 
     if (auto value = ParseValue(json, type)) {
-      result.property = std::move(*value);
+      result.value = std::move(*value);
     }
     else {
       return tl::make_unexpected(value.error());

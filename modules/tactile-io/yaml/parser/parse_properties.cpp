@@ -99,7 +99,7 @@ namespace {
 
   if (const auto type = ParseType(node)) {
     if (auto value = ParseValue(node, *type)) {
-      data.property = std::move(*value);
+      data.value = std::move(*value);
     }
     else {
       return tl::make_unexpected(value.error());

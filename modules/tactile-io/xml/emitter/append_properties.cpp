@@ -66,8 +66,8 @@ void AppendProperties(pugi::xml_node node,
     for (const auto& property : properties) {
       auto propertyNode = root.append_child("property");
       propertyNode.append_attribute("name").set_value(property.name.c_str());
-      AppendTypeAttribute(property.property.GetType().value(), propertyNode);
-      AppendValueAttribute(property.property, propertyNode, dir);
+      AppendTypeAttribute(property.value.GetType().value(), propertyNode);
+      AppendValueAttribute(property.value, propertyNode, dir);
     }
   }
 }

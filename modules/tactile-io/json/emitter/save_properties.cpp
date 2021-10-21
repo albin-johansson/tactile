@@ -14,7 +14,7 @@ namespace {
   const auto& name = property.name;
 
   auto json = JSON::object();
-  const auto type = property.property.GetType().value();
+  const auto type = property.value.GetType().value();
 
   json["name"] = name;
   json["type"] = GetPropertyTypeString(type);
@@ -22,31 +22,31 @@ namespace {
   auto& value = json["value"];
   switch (type) {
     case PropertyType::String: {
-      value = property.property.AsString();
+      value = property.value.AsString();
       break;
     }
     case PropertyType::Integer: {
-      value = property.property.AsInt();
+      value = property.value.AsInt();
       break;
     }
     case PropertyType::Floating: {
-      value = property.property.AsFloat();
+      value = property.value.AsFloat();
       break;
     }
     case PropertyType::Boolean: {
-      value = property.property.AsBool();
+      value = property.value.AsBool();
       break;
     }
     case PropertyType::File: {
-      value = GetPropertyFileValue(property.property, dir);
+      value = GetPropertyFileValue(property.value, dir);
       break;
     }
     case PropertyType::Color: {
-      value = property.property.AsColor().as_argb();
+      value = property.value.AsColor().as_argb();
       break;
     }
     case PropertyType::Object: {
-      value = property.property.AsObject().get();
+      value = property.value.AsObject().get();
       break;
     }
   }

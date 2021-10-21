@@ -19,8 +19,8 @@ namespace Tactile::IO {
 /// \brief Intermediate representation of a property.
 struct PropertyData final
 {
-  std::string name;        ///< The unique (within the context) property name
-  PropertyValue property;  ///< The property value.
+  std::string name;     ///< The unique (within the context) property name
+  PropertyValue value;  ///< The property value.
 };
 
 /// \brief Intermediate representation of a map object.

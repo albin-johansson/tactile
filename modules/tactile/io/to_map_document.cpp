@@ -41,7 +41,7 @@ void AddProperties(entt::registry& registry,
 
     auto& property = registry.emplace<Property>(propertyEntity);
     property.name = propertyData.name;
-    property.value = propertyData.property;
+    property.value = propertyData.value;
 
     context.properties.push_back(propertyEntity);
   }

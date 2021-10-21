@@ -64,11 +64,11 @@ namespace {
 
   // String properties in the XML format do not feature explicit type attributes
   if (const auto* type = node.attribute("type").as_string(nullptr)) {
-    if (const auto err = ParseValue(node, type, data.property); err != ParseError::None) {
+    if (const auto err = ParseValue(node, type, data.value); err != ParseError::None) {
       return err;
     }
   }
-  else if (const auto err = ParseValue(node, "string", data.property);
+  else if (const auto err = ParseValue(node, "string", data.value);
            err != ParseError::None)
   {
     return err;

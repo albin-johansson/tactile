@@ -38,7 +38,7 @@ namespace {
 
     auto& data = props.emplace_back();
     data.name = property.name;
-    data.property = property.value;
+    data.value = property.value;
   }
 
   return props;
