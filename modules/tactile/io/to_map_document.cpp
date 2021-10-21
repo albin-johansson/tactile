@@ -47,6 +47,30 @@ void AddProperties(entt::registry& registry,
   }
 }
 
+auto AddObject(entt::registry& registry, const ObjectData& data) -> entt::entity
+{
+  const auto objectEntity = registry.create();
+
+  auto& object = registry.emplace<Object>(objectEntity);
+  object.id = data.id;
+  object.x = data.x;
+  object.y = data.y;
+  object.width = data.width;
+  object.height = data.height;
+  object.type = data.type;
+  object.visible = data.visible;
+
+  if (!data.custom_type.empty()) {
+    object.custom_type = data.custom_type;
+  }
+
+  auto& context = Sys::AddPropertyContext(registry, objectEntity);
+  context.name = data.name;
+  AddProperties(registry, objectEntity, data.properties);
+
+  return objectEntity;
+}
+
 void MakeFancyTiles(entt::registry& registry,
                     TilesetCache& cache,
                     const TilesetData& data)
@@ -69,6 +93,14 @@ void MakeFancyTiles(entt::registry& registry,
         frame.duration = cen::milliseconds<uint32>{frameData.duration};
 
         animation.frames.push_back(frameEntity);
+      }
+    }
+
+    if (!tileData.objects.empty()) {
+      tile.objects.reserve(tileData.objects.size());
+      for (const auto& objectData : tileData.objects) {
+        const auto objectEntity = AddObject(registry, objectData);
+        tile.objects.push_back(objectEntity);
       }
     }
 
@@ -98,24 +130,8 @@ void MakeObjectLayer(entt::registry& registry,
   auto& objectLayer = registry.emplace<ObjectLayer>(entity);
 
   for (const auto& objectData : data.objects) {
-    const auto objectEntity = objectLayer.objects.emplace_back(registry.create());
-
-    auto& object = registry.emplace<Object>(objectEntity);
-    object.id = objectData.id;
-    object.x = objectData.x;
-    object.y = objectData.y;
-    object.width = objectData.width;
-    object.height = objectData.height;
-    object.type = objectData.type;
-    object.visible = objectData.visible;
-
-    if (!objectData.custom_type.empty()) {
-      object.custom_type = objectData.custom_type;
-    }
-
-    auto& context = Sys::AddPropertyContext(registry, objectEntity);
-    context.name = objectData.name;
-    AddProperties(registry, objectEntity, objectData.properties);
+    const auto objectEntity = AddObject(registry, objectData);
+    objectLayer.objects.push_back(objectEntity);
   }
 }
 
