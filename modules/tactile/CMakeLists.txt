@@ -450,7 +450,7 @@ target_link_libraries(${TACTILE_LIB}
     ${SDL2_LIBRARY}
     ${CENTURION_LIBRARIES}
     ${PROTOBUF_LIBRARIES}
-    TactileIO
+    ${TACTILE_IO_IMPORT_LIBRARY}
     )
 
 target_compile_definitions(${TACTILE_LIB}
