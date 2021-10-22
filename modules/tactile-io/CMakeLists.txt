@@ -8,6 +8,7 @@ set(TACTILE_IO_SOURCES
     common_saving.cpp
     common_saving.hpp
     parse_error.cpp
+    parse_ir.cpp
 
     include/tactile-io/api.hpp
     include/tactile-io/emitter.hpp
