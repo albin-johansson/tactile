@@ -13,7 +13,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseFirstTileId(const pugi::xml_node node, TileID& firstId)
+[[nodiscard]] auto ParseFirstTileId(const pugi::xml_node node, int32& firstId)
     -> ParseError
 {
   if (const auto id = GetInt(node, "firstgid")) {

@@ -52,7 +52,7 @@ auto AddObject(entt::registry& registry, const ObjectData& data) -> entt::entity
   const auto objectEntity = registry.create();
 
   auto& object = registry.emplace<Object>(objectEntity);
-  object.id = data.id;
+  object.id = ObjectID{data.id};
   object.x = data.x;
   object.y = data.y;
   object.width = data.width;
@@ -79,7 +79,7 @@ void MakeFancyTiles(entt::registry& registry,
     const auto tileEntity = registry.create();
 
     auto& tile = registry.emplace<FancyTile>(tileEntity);
-    tile.id = data.first_id + tileData.id;
+    tile.id = TileID{data.first_id + tileData.id};
 
     cache.tiles.try_emplace(tile.id, tileEntity);
 
@@ -89,7 +89,7 @@ void MakeFancyTiles(entt::registry& registry,
         const auto frameEntity = registry.create();
 
         auto& frame = registry.emplace<AnimationFrame>(frameEntity);
-        frame.tile = data.first_id + frameData.tile;
+        frame.tile = TileID{data.first_id + frameData.tile};
         frame.duration = cen::milliseconds<uint32>{frameData.duration};
 
         animation.frames.push_back(frameEntity);
@@ -113,8 +113,11 @@ void MakeFancyTiles(entt::registry& registry,
 void MakeTileset(entt::registry& registry, const TilesetData& data)
 {
   const auto info = LoadTexture(data.absolute_image_path).value();
-  const auto entity =
-      Sys::MakeTileset(registry, data.first_id, info, data.tile_width, data.tile_height);
+  const auto entity = Sys::MakeTileset(registry,
+                                       TileID{data.first_id},
+                                       info,
+                                       data.tile_width,
+                                       data.tile_height);
 
   registry.get<PropertyContext>(entity).name = data.name;
   AddProperties(registry, entity, data.properties);
@@ -139,7 +142,8 @@ auto MakeLayer(entt::registry& registry,
                const LayerData& data,
                entt::entity parent = entt::null) -> entt::entity
 {
-  const auto entity = Sys::AddBasicLayer(registry, data.id, data.type, data.name, parent);
+  const auto entity =
+      Sys::AddBasicLayer(registry, LayerID{data.id}, data.type, data.name, parent);
 
   auto& node = registry.get<LayerTreeNode>(entity);
   node.index = data.index;
@@ -182,8 +186,8 @@ auto ToMapDocument(const MapData& data) -> Document
 
   {
     auto& map = document.registry.ctx<Map>();
-    map.next_layer_id = data.next_layer_id;
-    map.next_object_id = data.next_object_id;
+    map.next_layer_id = LayerID{data.next_layer_id};
+    map.next_object_id = ObjectID{data.next_object_id};
     map.tile_width = data.tile_width;
     map.tile_height = data.tile_height;
     map.row_count = data.row_count;

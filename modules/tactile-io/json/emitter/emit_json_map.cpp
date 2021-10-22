@@ -20,8 +20,8 @@ namespace {
   json["type"] = "map";
   json["width"] = data.column_count;
   json["height"] = data.row_count;
-  json["nextlayerid"] = data.next_layer_id.get();
-  json["nextobjectid"] = data.next_object_id.get();
+  json["nextlayerid"] = data.next_layer_id;
+  json["nextobjectid"] = data.next_object_id;
   json["tilewidth"] = data.tile_width;
   json["tileheight"] = data.tile_height;
 

@@ -38,7 +38,7 @@ void AddCommonAttributes(JSON& json,
 {
   auto json = JSON::object();
 
-  json["firstgid"] = tileset.first_id.get();
+  json["firstgid"] = tileset.first_id;
   AddCommonAttributes(json, tileset, dir);
 
   return json;
@@ -48,7 +48,7 @@ void AddCommonAttributes(JSON& json,
 {
   auto json = JSON::object();
 
-  json["firstgid"] = tileset.first_id.get();
+  json["firstgid"] = tileset.first_id;
   json["source"] = std::format("{}.json", tileset.name);
 
   return json;

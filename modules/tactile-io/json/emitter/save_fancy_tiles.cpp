@@ -14,7 +14,7 @@ namespace {
 {
   auto json = JSON::object();
 
-  json["tileid"] = frame.tile.get();
+  json["tileid"] = frame.tile;
   json["duration"] = frame.duration;
 
   return json;
@@ -35,7 +35,7 @@ namespace {
     -> JSON
 {
   auto json = JSON::object();
-  json["id"] = tile.id.get();
+  json["id"] = tile.id;
 
   if (!tile.animation.empty()) {
     json["animation"] = SaveAnimation(tile.animation);

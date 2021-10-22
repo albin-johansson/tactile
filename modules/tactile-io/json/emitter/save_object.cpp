@@ -8,7 +8,7 @@ auto SaveObject(const ObjectData& object, const std::filesystem::path& dir) -> J
 {
   auto json = JSON::object();
 
-  json["id"] = object.id.get();
+  json["id"] = object.id;
   json["name"] = object.name;
   json["x"] = object.x;
   json["y"] = object.y;

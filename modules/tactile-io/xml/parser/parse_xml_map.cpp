@@ -36,11 +36,11 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextLayerId(const pugi::xml_node root, LayerID& nextLayerId)
+[[nodiscard]] auto ParseNextLayerId(const pugi::xml_node root, int32& nextLayerId)
     -> ParseError
 {
   if (const auto value = GetInt(root, "nextlayerid")) {
-    nextLayerId = LayerID{*value};
+    nextLayerId = *value;
     return ParseError::None;
   }
   else {
@@ -48,11 +48,11 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseNextObjectId(const pugi::xml_node root, ObjectID& nextObjectId)
+[[nodiscard]] auto ParseNextObjectId(const pugi::xml_node root, int32& nextObjectId)
     -> ParseError
 {
   if (const auto value = GetInt(root, "nextobjectid")) {
-    nextObjectId = ObjectID{*value};
+    nextObjectId = *value;
     return ParseError::None;
   }
   else {
@@ -60,7 +60,8 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileWidth(const pugi::xml_node root, int& tileWidth) -> ParseError
+[[nodiscard]] auto ParseTileWidth(const pugi::xml_node root, int32& tileWidth)
+    -> ParseError
 {
   if (const auto value = GetInt(root, "tilewidth")) {
     tileWidth = *value;
@@ -71,7 +72,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseTileHeight(const pugi::xml_node root, int& tileHeight)
+[[nodiscard]] auto ParseTileHeight(const pugi::xml_node root, int32& tileHeight)
     -> ParseError
 {
   if (const auto value = GetInt(root, "tileheight")) {
@@ -83,7 +84,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseWidth(const pugi::xml_node root, int& width) -> ParseError
+[[nodiscard]] auto ParseWidth(const pugi::xml_node root, int32& width) -> ParseError
 {
   if (const auto value = GetInt(root, "width")) {
     width = *value;
@@ -94,7 +95,7 @@ namespace {
   }
 }
 
-[[nodiscard]] auto ParseHeight(const pugi::xml_node root, int& height) -> ParseError
+[[nodiscard]] auto ParseHeight(const pugi::xml_node root, int32& height) -> ParseError
 {
   if (const auto value = GetInt(root, "height")) {
     height = *value;

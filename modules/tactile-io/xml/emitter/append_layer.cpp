@@ -56,7 +56,7 @@ void AppendTileLayer(pugi::xml_node mapNode,
         stream << '\n';
       }
 
-      stream << tile.get();
+      stream << tile;
       if (index < count - 1) {
         stream << ',';
       }

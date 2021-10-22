@@ -16,7 +16,7 @@ namespace Tactile::IO {
 /// \addtogroup io
 /// \{
 
-/* TODO: do not use strong types, Tactile::PropertyValue or cen::color */
+/* TODO: do not use Tactile::PropertyValue or cen::color */
 
 /// \brief Intermediate representation of a property.
 struct PropertyData final
@@ -28,7 +28,7 @@ struct PropertyData final
 /// \brief Intermediate representation of a map object.
 struct ObjectData final
 {
-  ObjectID id;                           ///< Unique object identifier.
+  int32 id{};                            ///< Unique object identifier.
   float x{};                             ///< Logical x-coordinate.
   float y{};                             ///< Logical y-coordinate.
   float width{};                         ///< Logical width.
@@ -43,14 +43,14 @@ struct ObjectData final
 /// \brief Intermediate representation of a tile animation frame.
 struct FrameData final
 {
-  TileID tile;     ///< Local ID of the tile that should be displayed during the frame.
-  int duration{};  ///< Frame duration in milliseconds.
+  int32 tile{};      ///< Local ID of the tile that should be displayed during the frame.
+  int32 duration{};  ///< Frame duration in milliseconds.
 };
 
 /// \brief Intermediate representation of tile data.
 struct TileData final
 {
-  TileID id;                             ///< Local ID of the associated tile.
+  int32 id{};                            ///< Local ID of the associated tile.
   std::vector<FrameData> animation;      ///< Optional animation frames.
   std::vector<ObjectData> objects;       ///< Optional collection of contained objects.
   std::vector<PropertyData> properties;  ///< Tile properties.
@@ -59,22 +59,20 @@ struct TileData final
 /// \brief Intermediate representation of a tileset.
 struct TilesetData final
 {
-  TileID first_id;                            ///< The first global tile ID.
-  int tile_width{};                           ///< Logical tile width.
-  int tile_height{};                          ///< Logical tile height.
-  int tile_count{};                           ///< Total amount of tiles.
-  int column_count{};                         ///< The amount of columns.
-  int image_width{};                          ///< Width of the tileset image, in pixels.
-  int image_height{};                         ///< Height of the tileset image, in pixels.
+  int32 first_id{};                           ///< The first global tile ID.
+  int32 tile_width{};                         ///< Logical tile width.
+  int32 tile_height{};                        ///< Logical tile height.
+  int32 tile_count{};                         ///< Total amount of tiles.
+  int32 column_count{};                       ///< The amount of columns.
+  int32 image_width{};                        ///< Width of the tileset image, in pixels.
+  int32 image_height{};                       ///< Height of the tileset image, in pixels.
   std::filesystem::path absolute_image_path;  ///< Absolute path of tileset image.
   std::string name;                           ///< Tileset name.
   std::vector<TileData> tiles;                ///< Data related to specific tiles.
   std::vector<PropertyData> properties;       ///< Tileset properties.
 };
 
-/**
- * \brief Intermediate representation of tile layer data.
- */
+/// \brief Intermediate representation of tile layer data.
 struct TileLayerData final
 {
   int32 row_count{};  ///< Total amount of rows.
@@ -82,9 +80,7 @@ struct TileLayerData final
   TileMatrix tiles;   ///< The associated tile data.
 };
 
-/**
- * \brief Intermediate representation of object layer data.
- */
+/// \brief Intermediate representation of object layer data.
 struct ObjectLayerData final
 {
   std::vector<ObjectData> objects;  ///< The associated objects.
@@ -92,24 +88,20 @@ struct ObjectLayerData final
 
 struct LayerData;
 
-/**
- * \brief Intermediate representation of group layer data.
- */
+/// \brief Intermediate representation of group layer data.
 struct GroupLayerData final
 {
   std::vector<std::unique_ptr<LayerData>> layers;  ///< Child layers in the group.
 };
 
-/**
- * \brief Intermediate representation of a layer.
- */
+/// \brief Intermediate representation of a layer.
 struct LayerData final
 {
   using LayerContent = std::variant<TileLayerData, ObjectLayerData, GroupLayerData>;
 
-  LayerID id;                            ///< Unique layer identifier.
-  usize index;                           ///< Local layer stack index.
-  LayerType type;                        ///< The type of the layer.
+  int32 id{};                            ///< Unique layer identifier.
+  usize index{};                         ///< Local layer stack index.
+  LayerType type{};                      ///< The type of the layer.
   LayerContent data;                     ///< Type-specific data.
   std::string name;                      ///< The name of the layer.
   std::vector<PropertyData> properties;  ///< The layer properties.
@@ -117,18 +109,16 @@ struct LayerData final
   bool is_visible{};                     ///< Is the layer visible?
 };
 
-/**
- * \brief Intermediate representation of a map.
- */
+/// \brief Intermediate representation of a map.
 struct MapData final
 {
   std::filesystem::path absolute_path;   ///< Absolute path of the map file.
-  LayerID next_layer_id;                 ///< The next available layer ID.
-  ObjectID next_object_id;               ///< The next available object ID.
-  int tile_width{};                      ///< The logical tile width.
-  int tile_height{};                     ///< The logical tile height.
-  int row_count{};                       ///< The number of rows.
-  int column_count{};                    ///< The number of columns.
+  int32 next_layer_id{};                 ///< The next available layer ID.
+  int32 next_object_id{};                ///< The next available object ID.
+  int32 tile_width{};                    ///< The logical tile width.
+  int32 tile_height{};                   ///< The logical tile height.
+  int32 row_count{};                     ///< The number of rows.
+  int32 column_count{};                  ///< The number of columns.
   std::vector<TilesetData> tilesets;     ///< The associated tilesets.
   std::vector<LayerData> layers;         ///< The associated layers.
   std::vector<PropertyData> properties;  ///< The map properties.

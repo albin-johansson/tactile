@@ -15,7 +15,7 @@ void AddCommonAttributes(JSON& json,
                          const LayerData& layer,
                          const std::filesystem::path& dir)
 {
-  json["id"] = layer.id.get();
+  json["id"] = layer.id;
   json["name"] = layer.name;
   json["opacity"] = layer.opacity;
   json["visible"] = layer.is_visible;

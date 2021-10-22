@@ -65,7 +65,7 @@ void SaveLayer(YAML::Emitter& emitter,
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << layer.name;
-  emitter << YAML::Key << "id" << YAML::Value << layer.id.get();
+  emitter << YAML::Key << "id" << YAML::Value << layer.id;
 
   if (layer.opacity != 1.0f) {
     emitter << YAML::Key << "opacity" << YAML::Value << layer.opacity;

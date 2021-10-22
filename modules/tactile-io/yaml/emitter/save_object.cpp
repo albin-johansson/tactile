@@ -11,7 +11,7 @@ void SaveObject(YAML::Emitter& emitter,
                 const std::filesystem::path& dir)
 {
   emitter << YAML::BeginMap;
-  emitter << YAML::Key << "id" << YAML::Value << object.id.get();
+  emitter << YAML::Key << "id" << YAML::Value << object.id;
 
   emitter << YAML::Key << "type" << YAML::Value;
   switch (object.type) {
