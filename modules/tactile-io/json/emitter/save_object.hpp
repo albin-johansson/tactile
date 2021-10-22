@@ -7,7 +7,7 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto SaveObject(const ObjectData& object, const std::filesystem::path& dir)
+[[nodiscard]] auto SaveObject(const Object& object, const std::filesystem::path& dir)
     -> JSON;
 
 }  // namespace Tactile::IO

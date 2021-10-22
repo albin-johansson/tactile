@@ -13,48 +13,48 @@ namespace Tactile::IO {
 namespace {
 
 void AddCommonAttributes(JSON& json,
-                         const TilesetData& tileset,
+                         const Tileset& tileset,
                          const std::filesystem::path& dir)
 {
-  json["name"] = tileset.name;
-  json["columns"] = tileset.column_count;
-  json["image"] = GetTilesetImagePath(tileset.absolute_image_path, dir);  // TODO check
-  json["imagewidth"] = tileset.image_width;
-  json["imageheight"] = tileset.image_height;
+  json["name"] = GetName(tileset);
+  json["columns"] = GetColumnCount(tileset);
+  json["image"] = GetTilesetImagePath(GetImagePath(tileset), dir);  // TODO check
+  json["imagewidth"] = GetImageWidth(tileset);
+  json["imageheight"] = GetImageHeight(tileset);
   json["margin"] = 0;
   json["spacing"] = 0;
-  json["tilecount"] = tileset.tile_count;
-  json["tilewidth"] = tileset.tile_width;
-  json["tileheight"] = tileset.tile_height;
+  json["tilecount"] = GetTileCount(tileset);
+  json["tilewidth"] = GetTileWidth(tileset);
+  json["tileheight"] = GetTileHeight(tileset);
   json["tiles"] = SaveFancyTiles(tileset, dir);
 
-  if (!tileset.properties.empty()) {
-    json["properties"] = SaveProperties(tileset.properties, dir);
+  if (const auto nProps = GetPropertyCount(tileset); nProps != 0) {
+    json["properties"] = SaveProperties(tileset, dir);
   }
 }
 
-[[nodiscard]] auto SaveEmbeddedTileset(const TilesetData& tileset,
+[[nodiscard]] auto SaveEmbeddedTileset(const Tileset& tileset,
                                        const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::object();
 
-  json["firstgid"] = tileset.first_id;
+  json["firstgid"] = GetFirstGlobalId(tileset);
   AddCommonAttributes(json, tileset, dir);
 
   return json;
 }
 
-[[nodiscard]] auto SaveExternalTileset(const TilesetData& tileset) -> JSON
+[[nodiscard]] auto SaveExternalTileset(const Tileset& tileset) -> JSON
 {
   auto json = JSON::object();
 
-  json["firstgid"] = tileset.first_id;
-  json["source"] = std::format("{}.json", tileset.name);
+  json["firstgid"] = GetFirstGlobalId(tileset);
+  json["source"] = std::format("{}.json", GetName(tileset));
 
   return json;
 }
 
-void CreateExternalTilesetFile(const TilesetData& tileset,
+void CreateExternalTilesetFile(const Tileset& tileset,
                                const std::filesystem::path& dir,
                                const bool indent)
 {
@@ -66,14 +66,14 @@ void CreateExternalTilesetFile(const TilesetData& tileset,
   json["tiledversion"] = tiled_version;
   json["version"] = tiled_json_version;
 
-  const auto name = std::format("{}.json", tileset.name);
+  const auto name = std::format("{}.json", GetName(tileset));
   const auto path = dir / name;
 
   CENTURION_LOG_INFO("Saving external tileset in \"%s\"", path.string().c_str());
   SaveJson(json, path, indent);
 }
 
-[[nodiscard]] auto SaveTileset(const TilesetData& tileset,
+[[nodiscard]] auto SaveTileset(const Tileset& tileset,
                                const std::filesystem::path& dir,
                                const EmitterOptions& options) -> JSON
 {
@@ -88,13 +88,15 @@ void CreateExternalTilesetFile(const TilesetData& tileset,
 
 }  // namespace
 
-[[nodiscard]] auto SaveTilesets(const std::vector<TilesetData>& tilesets,
-                                const std::filesystem::path& dir,
-                                const EmitterOptions& options) -> JSON
+auto SaveTilesets(const Map& map,
+                  const std::filesystem::path& dir,
+                  const EmitterOptions& options) -> JSON
 {
   auto json = JSON::array();
 
-  for (const auto& tileset : tilesets) {
+  const auto count = GetTilesetCount(map);
+  for (usize index = 0; index < count; ++index) {
+    const auto& tileset = GetTileset(map, index);
     json += SaveTileset(tileset, dir, options);
   }
 

@@ -10,38 +10,39 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto SaveFrame(const FrameData& frame) -> JSON
+[[nodiscard]] auto SaveFrame(const AnimationFrame& frame) -> JSON
 {
   auto json = JSON::object();
 
-  json["tileid"] = frame.tile;
-  json["duration"] = frame.duration;
+  json["tileid"] = GetTile(frame);
+  json["duration"] = GetDuration(frame);
 
   return json;
 }
 
-[[nodiscard]] auto SaveAnimation(const std::vector<FrameData>& animation) -> JSON
+[[nodiscard]] auto SaveAnimation(const Tile& tile, const usize nFrames) -> JSON
 {
   auto array = JSON::array();
 
-  for (const auto& frame : animation) {
+  for (usize index = 0; index < nFrames; ++index) {
+    const auto& frame = GetAnimationFrame(tile, index);
     array += SaveFrame(frame);
   }
 
   return array;
 }
 
-[[nodiscard]] auto SaveFancyTile(const TileData& tile, const std::filesystem::path& dir)
+[[nodiscard]] auto SaveFancyTile(const Tile& tile, const std::filesystem::path& dir)
     -> JSON
 {
   auto json = JSON::object();
-  json["id"] = tile.id;
+  json["id"] = GetId(tile);
 
-  if (!tile.animation.empty()) {
-    json["animation"] = SaveAnimation(tile.animation);
+  if (const auto nFrames = GetAnimationFrameCount(tile); nFrames != 0) {
+    json["animation"] = SaveAnimation(tile, nFrames);
   }
 
-  if (!tile.objects.empty()) {
+  if (const auto nObjects = GetObjectCount(tile); nObjects != 0) {
     auto dummy = JSON::object();
     dummy["draworder"] = "index";
     dummy["name"] = "";
@@ -52,7 +53,8 @@ namespace {
     dummy["y"] = 0;
 
     auto objects = JSON::array();
-    for (const auto& object : tile.objects) {
+    for (usize index = 0; index < nObjects; ++index) {
+      const auto& object = GetObject(tile, index);
       objects += SaveObject(object, dir);
     }
     dummy["objects"] = std::move(objects);
@@ -60,8 +62,8 @@ namespace {
     json["objectgroup"] = std::move(dummy);
   }
 
-  if (!tile.properties.empty()) {
-    json["properties"] = SaveProperties(tile.properties, dir);
+  if (const auto nProps = GetPropertyCount(tile); nProps != 0) {
+    json["properties"] = SaveProperties(tile, dir);
   }
 
   return json;
@@ -69,11 +71,13 @@ namespace {
 
 }  // namespace
 
-auto SaveFancyTiles(const TilesetData& tileset, const std::filesystem::path& dir) -> JSON
+auto SaveFancyTiles(const Tileset& tileset, const std::filesystem::path& dir) -> JSON
 {
   auto array = JSON::array();
 
-  for (const auto& tile : tileset.tiles) {
+  const auto count = GetTileInfoCount(tileset);
+  for (usize index = 0; index < count; ++index) {
+    const auto& tile = GetTileInfo(tileset, index);
     if (IsTileWorthSaving(tile)) {
       array += SaveFancyTile(tile, dir);
     }

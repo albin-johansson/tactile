@@ -11,38 +11,39 @@
 namespace Tactile::IO {
 namespace {
 
-void AddCommonAttributes(JSON& json,
-                         const LayerData& layer,
-                         const std::filesystem::path& dir)
+void AddCommonAttributes(JSON& json, const Layer& layer, const std::filesystem::path& dir)
 {
-  json["id"] = layer.id;
-  json["name"] = layer.name;
-  json["opacity"] = layer.opacity;
-  json["visible"] = layer.is_visible;
+  json["id"] = GetId(layer);
+  json["name"] = GetName(layer);
+  json["opacity"] = GetOpacity(layer);
+  json["visible"] = IsVisible(layer);
   json["x"] = 0;
   json["y"] = 0;
 
-  if (!layer.properties.empty()) {
-    json["properties"] = SaveProperties(layer.properties, dir);
+  if (const auto nProps = GetPropertyCount(layer); nProps != 0) {
+    json["properties"] = SaveProperties(layer, dir);
   }
 }
 
-[[nodiscard]] auto SaveTileLayer(const LayerData& layer, const std::filesystem::path& dir)
+[[nodiscard]] auto SaveTileLayer(const Layer& layer, const std::filesystem::path& dir)
     -> JSON
 {
   auto json = JSON::object();
   AddCommonAttributes(json, layer, dir);
 
-  const auto& tileLayer = std::get<TileLayerData>(layer.data);
+  const auto& tileLayer = GetTileLayer(layer);
+  const auto nRows = GetRowCount(tileLayer);
+  const auto nCols = GetColumnCount(tileLayer);
+
   json["type"] = "tilelayer";
-  json["width"] = tileLayer.tiles.at(0).size();
-  json["height"] = tileLayer.tiles.size();
+  json["width"] = nCols;
+  json["height"] = nRows;
 
   auto data = JSON::array();
 
-  for (const auto& row : tileLayer.tiles) {
-    for (const auto tile : row) {
-      data += tile.get();
+  for (int32 row = 0; row < nRows; ++row) {
+    for (int32 col = 0; col < nCols; ++col) {
+      data += GetTile(tileLayer, row, col);
     }
   }
 
@@ -51,8 +52,8 @@ void AddCommonAttributes(JSON& json,
   return json;
 }
 
-[[nodiscard]] auto SaveObjectLayer(const LayerData& layer,
-                                   const std::filesystem::path& dir) -> JSON
+[[nodiscard]] auto SaveObjectLayer(const Layer& layer, const std::filesystem::path& dir)
+    -> JSON
 {
   auto json = JSON::object();
   AddCommonAttributes(json, layer, dir);
@@ -61,8 +62,11 @@ void AddCommonAttributes(JSON& json,
 
   auto objects = JSON::array();
 
-  const auto& objectLayer = std::get<ObjectLayerData>(layer.data);
-  for (const auto& object : objectLayer.objects) {
+  const auto& objectLayer = GetObjectLayer(layer);
+  const auto nObjects = GetObjectCount(objectLayer);
+
+  for (usize index = 0; index < nObjects; ++index) {
+    const auto& object = GetObject(objectLayer, index);
     objects += SaveObject(object, dir);
   }
 
@@ -71,11 +75,10 @@ void AddCommonAttributes(JSON& json,
   return json;
 }
 
-[[nodiscard]] auto SaveLayer(const LayerData& layer, const std::filesystem::path& dir)
+[[nodiscard]] auto SaveLayer(const Layer& layer, const std::filesystem::path& dir)
     -> JSON;
 
-[[nodiscard]] auto SaveGroupLayer(const LayerData& layer,
-                                  const std::filesystem::path& dir)
+[[nodiscard]] auto SaveGroupLayer(const Layer& layer, const std::filesystem::path& dir)
 {
   auto json = JSON::object();
   AddCommonAttributes(json, layer, dir);
@@ -84,9 +87,12 @@ void AddCommonAttributes(JSON& json,
 
   auto layers = JSON::array();
 
-  const auto& groupLayer = std::get<GroupLayerData>(layer.data);
-  for (const auto& child : groupLayer.layers) {
-    layers += SaveLayer(*child, dir);
+  const auto& groupLayer = GetGroupLayer(layer);
+  const auto nChildren = GetLayerCount(groupLayer);
+
+  for (usize index = 0; index < nChildren; ++index) {
+    const auto& child = GetLayer(groupLayer, index);
+    layers += SaveLayer(child, dir);
   }
 
   json["layers"] = std::move(layers);
@@ -94,10 +100,9 @@ void AddCommonAttributes(JSON& json,
   return json;
 }
 
-[[nodiscard]] auto SaveLayer(const LayerData& layer, const std::filesystem::path& dir)
-    -> JSON
+[[nodiscard]] auto SaveLayer(const Layer& layer, const std::filesystem::path& dir) -> JSON
 {
-  switch (layer.type) {
+  switch (GetType(layer)) {
     case LayerType::TileLayer:
       return SaveTileLayer(layer, dir);
 
@@ -114,12 +119,13 @@ void AddCommonAttributes(JSON& json,
 
 }  // namespace
 
-auto SaveLayers(const std::vector<LayerData>& layers, const std::filesystem::path& dir)
-    -> JSON
+auto SaveLayers(const Map& map, const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::array();
 
-  for (const auto& layer : layers) {
+  const auto count = GetLayerCount(map);
+  for (usize index = 0; index < count; ++index) {
+    const auto& layer = GetLayer(map, index);
     json += SaveLayer(layer, dir);
   }
 

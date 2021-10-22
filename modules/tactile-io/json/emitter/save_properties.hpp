@@ -1,14 +1,25 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <vector>      // vector
 
 #include "../json_common.hpp"
 #include "parse_ir.hpp"
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto SaveProperties(const std::vector<PropertyData>& properties,
+[[nodiscard]] auto SaveProperties(const Map& map, const std::filesystem::path& dir)
+    -> JSON;
+
+[[nodiscard]] auto SaveProperties(const Layer& layer, const std::filesystem::path& dir)
+    -> JSON;
+
+[[nodiscard]] auto SaveProperties(const Tileset& tileset,
                                   const std::filesystem::path& dir) -> JSON;
+
+[[nodiscard]] auto SaveProperties(const Tile& tile, const std::filesystem::path& dir)
+    -> JSON;
+
+[[nodiscard]] auto SaveProperties(const Object& object, const std::filesystem::path& dir)
+    -> JSON;
 
 }  // namespace Tactile::IO

@@ -4,29 +4,29 @@
 
 namespace Tactile::IO {
 
-auto SaveObject(const ObjectData& object, const std::filesystem::path& dir) -> JSON
+auto SaveObject(const Object& object, const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::object();
 
-  json["id"] = object.id;
-  json["name"] = object.name;
-  json["x"] = object.x;
-  json["y"] = object.y;
-  json["width"] = object.width;
-  json["height"] = object.height;
-  json["visible"] = object.visible;
-  json["type"] = object.tag;
+  json["id"] = GetId(object);
+  json["name"] = GetName(object);
+  json["x"] = GetX(object);
+  json["y"] = GetY(object);
+  json["width"] = GetWidth(object);
+  json["height"] = GetHeight(object);
+  json["visible"] = IsVisible(object);
+  json["type"] = GetTag(object);
   json["rotation"] = 0;
 
-  if (object.type == ObjectType::Point) {
+  if (const auto type = GetType(object); type == ObjectType::Point) {
     json["point"] = true;
   }
-  else if (object.type == ObjectType::Ellipse) {
+  else if (type == ObjectType::Ellipse) {
     json["ellipse"] = true;
   }
 
-  if (!object.properties.empty()) {
-    json["properties"] = SaveProperties(object.properties, dir);
+  if (const auto nProps = GetPropertyCount(object); nProps != 0) {
+    json["properties"] = SaveProperties(object, dir);
   }
 
   return json;

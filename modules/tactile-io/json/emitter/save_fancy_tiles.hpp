@@ -7,7 +7,7 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto SaveFancyTiles(const TilesetData& tileset,
+[[nodiscard]] auto SaveFancyTiles(const Tileset& tileset,
                                   const std::filesystem::path& dir) -> JSON;
 
 }  // namespace Tactile::IO

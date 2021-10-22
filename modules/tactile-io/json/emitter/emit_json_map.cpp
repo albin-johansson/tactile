@@ -11,19 +11,19 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto SaveMap(const MapData& data,
+[[nodiscard]] auto SaveMap(const Map& map,
                            const std::filesystem::path& dir,
                            const EmitterOptions& options) -> JSON
 {
   auto json = JSON::object();
 
   json["type"] = "map";
-  json["width"] = data.column_count;
-  json["height"] = data.row_count;
-  json["nextlayerid"] = data.next_layer_id;
-  json["nextobjectid"] = data.next_object_id;
-  json["tilewidth"] = data.tile_width;
-  json["tileheight"] = data.tile_height;
+  json["width"] = GetColumnCount(map);
+  json["height"] = GetRowCount(map);
+  json["nextlayerid"] = GetNextLayerId(map);
+  json["nextobjectid"] = GetNextObjectId(map);
+  json["tilewidth"] = GetTileWidth(map);
+  json["tileheight"] = GetTileHeight(map);
 
   json["infinite"] = false;
   json["orientation"] = "orthogonal";
@@ -32,20 +32,21 @@ namespace {
   json["tiledversion"] = tiled_version;
   json["version"] = tiled_json_version;
 
-  json["tilesets"] = SaveTilesets(data.tilesets, dir, options);
-  json["layers"] = SaveLayers(data.layers, dir);
-  json["properties"] = SaveProperties(data.properties, dir);
+  json["tilesets"] = SaveTilesets(map, dir, options);
+  json["layers"] = SaveLayers(map, dir);
+  json["properties"] = SaveProperties(map, dir);
 
   return json;
 }
 
 }  // namespace
 
-void EmitJsonMap(const MapData& data, const EmitterOptions& options)
+void EmitJsonMap(const Map& map, const EmitterOptions& options)
 {
-  const auto path = data.absolute_path;
+  const std::filesystem::path path = GetAbsolutePath(map);
   const auto dir = path.parent_path();
-  const auto json = SaveMap(data, dir, options);
+
+  const auto json = SaveMap(map, dir, options);
   SaveJson(json, path, options.human_readable_output);
 }
 

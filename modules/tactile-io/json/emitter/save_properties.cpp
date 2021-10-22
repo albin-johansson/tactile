@@ -8,13 +8,13 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto SaveProperty(const PropertyData& property,
+[[nodiscard]] auto SaveProperty(const Property& property,
                                 const std::filesystem::path& dir) -> JSON
 {
-  const auto& name = property.name;
-
   auto json = JSON::object();
-  const auto type = property.value.GetType().value();
+
+  const auto* name = GetName(property);
+  const auto type = GetType(property);
 
   json["name"] = name;
   json["type"] = GetPropertyTypeString(type);
@@ -22,31 +22,32 @@ namespace {
   auto& value = json["value"];
   switch (type) {
     case PropertyType::String: {
-      value = property.value.AsString();
+      value = GetString(property);
       break;
     }
     case PropertyType::Integer: {
-      value = property.value.AsInt();
+      value = GetInt(property);
       break;
     }
     case PropertyType::Floating: {
-      value = property.value.AsFloat();
+      value = GetFloat(property);
       break;
     }
     case PropertyType::Boolean: {
-      value = property.value.AsBool();
+      value = GetBool(property);
       break;
     }
     case PropertyType::File: {
-      value = GetPropertyFileValue(property.value, dir);
+      value = GetPropertyFileValue(property, dir);
       break;
     }
     case PropertyType::Color: {
-      value = property.value.AsColor().as_argb();
+      const auto color = GetColor(property);
+      value = cen::color{color.red, color.green, color.blue, color.alpha}.as_argb();
       break;
     }
     case PropertyType::Object: {
-      value = property.value.AsObject().get();
+      value = GetObject(property);
       break;
     }
   }
@@ -54,18 +55,46 @@ namespace {
   return json;
 }
 
-}  // namespace
-
-[[nodiscard]] auto SaveProperties(const std::vector<PropertyData>& properties,
-                                  const std::filesystem::path& dir) -> JSON
+template <typename T>
+[[nodiscard]] auto SavePropertiesImpl(const T& source, const std::filesystem::path& dir)
+    -> JSON
 {
   auto array = JSON::array();
 
-  for (const auto& property : properties) {
+  const auto count = GetPropertyCount(source);
+  for (usize index = 0; index < count; ++index) {
+    const auto& property = GetProperty(source, index);
     array += SaveProperty(property, dir);
   }
 
   return array;
+}
+
+}  // namespace
+
+auto SaveProperties(const Map& map, const std::filesystem::path& dir) -> JSON
+{
+  return SavePropertiesImpl(map, dir);
+}
+
+auto SaveProperties(const Layer& layer, const std::filesystem::path& dir) -> JSON
+{
+  return SavePropertiesImpl(layer, dir);
+}
+
+auto SaveProperties(const Tileset& tileset, const std::filesystem::path& dir) -> JSON
+{
+  return SavePropertiesImpl(tileset, dir);
+}
+
+auto SaveProperties(const Tile& tile, const std::filesystem::path& dir) -> JSON
+{
+  return SavePropertiesImpl(tile, dir);
+}
+
+auto SaveProperties(const Object& object, const std::filesystem::path& dir) -> JSON
+{
+  return SavePropertiesImpl(object, dir);
 }
 
 }  // namespace Tactile::IO
