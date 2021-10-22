@@ -1,52 +1,54 @@
 #include "append_object.hpp"
 
+#include <cstring>  // strcmp
+
 #include "append_properties.hpp"
 
 namespace Tactile::IO {
 
 void AppendObject(pugi::xml_node source,
-                  const ObjectData& object,
+                  const Object& object,
                   const std::filesystem::path& dir)
 {
   auto node = source.append_child("object");
-  node.append_attribute("id").set_value(object.id);
+  node.append_attribute("id").set_value(GetId(object));
 
-  if (!object.name.empty()) {
-    node.append_attribute("name").set_value(object.name.c_str());
+  if (const auto name = GetName(object); std::strcmp(name, "") != 0) {
+    node.append_attribute("name").set_value(name);
   }
 
-  if (!object.tag.empty()) {
-    node.append_attribute("type").set_value(object.tag.c_str());
+  if (const auto tag = GetTag(object); std::strcmp(tag, "") != 0) {
+    node.append_attribute("type").set_value(tag);
   }
 
-  if (object.x != 0) {
-    node.append_attribute("x").set_value(object.x);
+  if (const auto x = GetX(object); x != 0.0f) {
+    node.append_attribute("x").set_value(x);
   }
 
-  if (object.y != 0) {
-    node.append_attribute("y").set_value(object.y);
+  if (const auto y = GetY(object); y != 0.0f) {
+    node.append_attribute("y").set_value(y);
   }
 
-  if (object.width != 0) {
-    node.append_attribute("width").set_value(object.width);
+  if (const auto width = GetWidth(object); width != 0.0f) {
+    node.append_attribute("width").set_value(width);
   }
 
-  if (object.height != 0) {
-    node.append_attribute("height").set_value(object.height);
+  if (const auto height = GetHeight(object); height != 0.0f) {
+    node.append_attribute("height").set_value(height);
   }
 
-  if (!object.visible) {
+  if (const auto visible = IsVisible(object); !visible) {
     node.append_attribute("visible").set_value(0);
   }
 
-  if (object.type == ObjectType::Point) {
+  if (const auto type = GetType(object); type == ObjectType::Point) {
     node.append_child("point");
   }
-  else if (object.type == ObjectType::Ellipse) {
+  else if (type == ObjectType::Ellipse) {
     node.append_child("ellipse");
   }
 
-  AppendProperties(node, object.properties, dir);
+  AppendProperties(node, object, dir);
 }
 
 }  // namespace Tactile::IO

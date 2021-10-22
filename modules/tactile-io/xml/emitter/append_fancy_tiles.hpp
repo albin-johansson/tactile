@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <vector>      // vector
 
 #include <pugixml.hpp>  // xml_node
 
@@ -10,7 +9,7 @@
 namespace Tactile::IO {
 
 void AppendFancyTiles(pugi::xml_node node,
-                      const std::vector<TileData>& tiles,
+                      const Tileset& tileset,
                       const std::filesystem::path& dir);
 
 }  // namespace Tactile::IO

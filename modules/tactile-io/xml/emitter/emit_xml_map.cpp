@@ -12,7 +12,7 @@
 namespace Tactile::IO {
 
 void AppendMapChild(pugi::xml_document& xml,
-                    const MapData& map,
+                    const Map& map,
                     const std::filesystem::path& dir,
                     const EmitterOptions& options)
 {
@@ -23,29 +23,37 @@ void AppendMapChild(pugi::xml_document& xml,
   node.append_attribute("renderorder").set_value("right-down");
   node.append_attribute("infinite").set_value(0);
 
-  node.append_attribute("tilewidth").set_value(map.tile_width);
-  node.append_attribute("tileheight").set_value(map.tile_height);
-  node.append_attribute("width").set_value(map.column_count);
-  node.append_attribute("height").set_value(map.row_count);
-  node.append_attribute("nextlayerid").set_value(map.next_layer_id);
-  node.append_attribute("nextobjectid").set_value(map.next_object_id);
+  node.append_attribute("tilewidth").set_value(GetTileWidth(map));
+  node.append_attribute("tileheight").set_value(GetTileHeight(map));
+  node.append_attribute("width").set_value(GetColumnCount(map));
+  node.append_attribute("height").set_value(GetRowCount(map));
+  node.append_attribute("nextlayerid").set_value(GetNextLayerId(map));
+  node.append_attribute("nextobjectid").set_value(GetNextObjectId(map));
 
-  AppendProperties(node, map.properties, dir);
+  AppendProperties(node, map, dir);
 
-  for (const auto& tileset : map.tilesets) {
+  const auto nTilesets = GetTilesetCount(map);
+  for (usize index = 0; index < nTilesets; ++index) {
+    const auto& tileset = GetTileset(map, index);
     AppendTileset(node, tileset, dir, options);
   }
 
-  for (const auto& layer : map.layers) {
+  const auto nLayers = GetLayerCount(map);
+  for (usize index = 0; index < nLayers; ++index) {
+    const auto& layer = GetLayer(map, index);
     AppendLayer(node, layer, dir, options.human_readable_output);
   }
 }
 
-void EmitXmlMap(const MapData& data, const EmitterOptions& options)
+void EmitXmlMap(const Map& data, const EmitterOptions& options)
 {
   pugi::xml_document xml;
-  AppendMapChild(xml, data, data.absolute_path.parent_path(), options);
-  SaveXml(xml, data.absolute_path);
+
+  const std::filesystem::path path = GetAbsolutePath(data);
+  const auto dir = path.parent_path();
+
+  AppendMapChild(xml, data, dir, options);
+  SaveXml(xml, path);
 }
 
 }  // namespace Tactile::IO

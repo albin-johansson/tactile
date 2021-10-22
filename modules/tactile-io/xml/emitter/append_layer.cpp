@@ -11,36 +11,36 @@
 namespace Tactile::IO {
 namespace {
 
-void AppendCommonLayerAttributes(pugi::xml_node node, const LayerData& layer)
+void AppendCommonLayerAttributes(pugi::xml_node node, const Layer& layer)
 {
-  node.append_attribute("id").set_value(layer.id);
-  node.append_attribute("name").set_value(layer.name.c_str());
+  node.append_attribute("id").set_value(GetId(layer));
+  node.append_attribute("name").set_value(GetName(layer));
 
-  if (layer.opacity != 1.0f) {
-    node.append_attribute("opacity").set_value(layer.opacity);
+  if (const auto opacity = GetOpacity(layer); opacity != 1.0f) {
+    node.append_attribute("opacity").set_value(opacity);
   }
 
-  if (!layer.is_visible) {
+  if (const auto visible = IsVisible(layer); !visible) {
     node.append_attribute("visible").set_value(0);
   }
 }
 
 void AppendTileLayer(pugi::xml_node mapNode,
-                     const LayerData& layer,
+                     const Layer& layer,
                      const std::filesystem::path& dir,
                      const bool humanReadableOutput)
 {
-  const auto& tileLayer = std::get<TileLayerData>(layer.data);
+  const auto& tileLayer = GetTileLayer(layer);
 
   auto node = mapNode.append_child("layer");
   AppendCommonLayerAttributes(node, layer);
 
-  const auto nCols = tileLayer.tiles.at(0).size();
-  const auto nRows = tileLayer.tiles.size();
+  const auto nRows = GetRowCount(tileLayer);
+  const auto nCols = GetColumnCount(tileLayer);
   node.append_attribute("width").set_value(nCols);
   node.append_attribute("height").set_value(nRows);
 
-  AppendProperties(node, layer.properties, dir);
+  AppendProperties(node, layer, dir);
 
   auto data = node.append_child("data");
   data.append_attribute("encoding").set_value("csv");
@@ -50,13 +50,13 @@ void AppendTileLayer(pugi::xml_node mapNode,
   std::stringstream stream;
   usize index = 0;
 
-  for (const auto& row : tileLayer.tiles) {
-    for (const auto tile : row) {
+  for (int32 row = 0; row < nRows; ++row) {
+    for (int32 col = 0; col < nCols; ++col) {
       if (humanReadableOutput && index == 0) {
         stream << '\n';
       }
 
-      stream << tile;
+      stream << GetTile(tileLayer, row, col);
       if (index < count - 1) {
         stream << ',';
       }
@@ -74,43 +74,47 @@ void AppendTileLayer(pugi::xml_node mapNode,
 }
 
 void AppendObjectLayer(pugi::xml_node mapNode,
-                       const LayerData& layer,
+                       const Layer& layer,
                        const std::filesystem::path& dir)
 {
-  const auto& objectLayer = std::get<ObjectLayerData>(layer.data);
+  const auto& objectLayer = GetObjectLayer(layer);
 
   auto node = mapNode.append_child("objectgroup");
   AppendCommonLayerAttributes(node, layer);
-  AppendProperties(node, layer.properties, dir);
+  AppendProperties(node, layer, dir);
 
-  for (const auto& object : objectLayer.objects) {
+  const auto count = GetObjectCount(objectLayer);
+  for (usize index = 0; index < count; ++index) {
+    const auto& object = GetObject(objectLayer, index);
     AppendObject(node, object, dir);
   }
 }
 
 void AppendGroupLayer(pugi::xml_node mapNode,
-                      const LayerData& layer,
+                      const Layer& layer,
                       const std::filesystem::path& dir,
                       const bool humanReadableOutput)
 {
-  const auto& groupLayer = std::get<GroupLayerData>(layer.data);
+  const auto& groupLayer = GetGroupLayer(layer);
 
   auto node = mapNode.append_child("group");
   AppendCommonLayerAttributes(node, layer);
 
-  for (const auto& childLayer : groupLayer.layers) {
-    AppendLayer(node, *childLayer, dir, humanReadableOutput);
+  const auto count = GetLayerCount(groupLayer);
+  for (usize index = 0; index < count; ++index) {
+    const auto& childLayer = GetLayer(groupLayer, index);
+    AppendLayer(node, childLayer, dir, humanReadableOutput);
   }
 }
 
 }  // namespace
 
 void AppendLayer(pugi::xml_node mapNode,
-                 const LayerData& layer,
+                 const Layer& layer,
                  const std::filesystem::path& dir,
                  const bool humanReadableOutput)
 {
-  switch (layer.type) {
+  switch (GetType(layer)) {
     case LayerType::TileLayer: {
       AppendTileLayer(mapNode, layer, dir, humanReadableOutput);
       break;

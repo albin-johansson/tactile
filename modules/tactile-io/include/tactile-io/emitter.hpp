@@ -15,7 +15,7 @@ struct EmitterOptions final
 
 TACTILE_IO_API void EmitJsonMap(const MapData& data, const EmitterOptions& options);
 
-TACTILE_IO_API void EmitXmlMap(const MapData& data, const EmitterOptions& options);
+TACTILE_IO_API void EmitXmlMap(const Map& map, const EmitterOptions& options);
 
 TACTILE_IO_API void EmitYamlMap(const Map& map, const EmitterOptions& options);
 

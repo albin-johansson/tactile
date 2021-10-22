@@ -9,7 +9,7 @@
 namespace Tactile::IO {
 
 void AppendObject(pugi::xml_node source,
-                  const ObjectData& object,
+                  const Object& object,
                   const std::filesystem::path& dir);
 
 }  // namespace Tactile::IO
