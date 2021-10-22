@@ -1,6 +1,7 @@
 #include "append_fancy_tiles.hpp"
 
 #include "../../common_saving.hpp"
+#include "append_object.hpp"
 #include "append_properties.hpp"
 
 namespace Tactile::IO {
@@ -29,6 +30,15 @@ void AppendFancyTiles(pugi::xml_node node,
 
       if (!tile.animation.empty()) {
         AppendAnimation(tileNode, tile.animation);
+      }
+
+      if (!tile.objects.empty()) {
+        auto objectLayerNode = tileNode.append_child("objectgroup");
+        objectLayerNode.append_attribute("draworder").set_value("index");
+
+        for (const auto& object : tile.objects) {
+          AppendObject(objectLayerNode, object, dir);
+        }
       }
 
       AppendProperties(tileNode, tile.properties, dir);

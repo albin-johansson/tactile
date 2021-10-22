@@ -1,5 +1,6 @@
 #include "parse_fancy_tiles.hpp"
 
+#include "parse_object.hpp"
 #include "parse_properties.hpp"
 #include "xml_utils.hpp"
 
@@ -15,6 +16,13 @@ auto ParseFancyTiles(const pugi::xml_node node, TilesetData& data) -> ParseError
       auto& frameData = tileData.animation.emplace_back();
       frameData.tile = TileID{GetInt(frame, "tileid").value()};
       frameData.duration = GetInt(frame, "duration").value();
+    }
+
+    for (const auto object : tile.child("objectgroup").children("object")) {
+      auto& objectData = tileData.objects.emplace_back();
+      if (const auto err = ParseObject(object, objectData); err != ParseError::None) {
+        return err;
+      }
     }
 
     if (const auto err = ParseProperties(tile, tileData.properties);

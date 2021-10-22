@@ -55,6 +55,8 @@ set(TACTILE_IO_SOURCES
     xml/emitter/append_fancy_tiles.hpp
     xml/emitter/append_layer.cpp
     xml/emitter/append_layer.hpp
+    xml/emitter/append_object.cpp
+    xml/emitter/append_object.hpp
     xml/emitter/append_properties.cpp
     xml/emitter/append_properties.hpp
     xml/emitter/append_tileset.cpp
@@ -69,6 +71,8 @@ set(TACTILE_IO_SOURCES
     xml/parser/parse_fancy_tiles.hpp
     xml/parser/parse_layers.cpp
     xml/parser/parse_layers.hpp
+    xml/parser/parse_object.cpp
+    xml/parser/parse_object.hpp
     xml/parser/parse_object_layer.cpp
     xml/parser/parse_object_layer.hpp
     xml/parser/parse_properties.cpp

@@ -5,6 +5,7 @@
 
 #include <tactile-base/tactile_error.hpp>
 
+#include "append_object.hpp"
 #include "append_properties.hpp"
 
 namespace Tactile::IO {
@@ -70,46 +71,6 @@ void AppendTileLayer(pugi::xml_node mapNode,
 
   const auto tileData = stream.str();
   data.text().set(tileData.c_str());
-}
-
-void AppendObject(pugi::xml_node layerNode,
-                  const ObjectData& object,
-                  const std::filesystem::path& dir)
-{
-  auto node = layerNode.append_child("object");
-  node.append_attribute("id").set_value(object.id);
-
-  if (!object.name.empty()) {
-    node.append_attribute("name").set_value(object.name.c_str());
-  }
-
-  if (!object.custom_type.empty()) {
-    node.append_attribute("type").set_value(object.custom_type.c_str());
-  }
-
-  node.append_attribute("x").set_value(object.x);
-  node.append_attribute("y").set_value(object.y);
-
-  if (object.width != 0) {
-    node.append_attribute("width").set_value(object.width);
-  }
-
-  if (object.height != 0) {
-    node.append_attribute("height").set_value(object.height);
-  }
-
-  if (!object.visible) {
-    node.append_attribute("visible").set_value(0);
-  }
-
-  if (object.type == ObjectType::Point) {
-    node.append_child("point");
-  }
-  else if (object.type == ObjectType::Ellipse) {
-    node.append_child("ellipse");
-  }
-
-  AppendProperties(node, object.properties, dir);
 }
 
 void AppendObjectLayer(pugi::xml_node mapNode,
