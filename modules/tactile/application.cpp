@@ -48,12 +48,12 @@
 #include "editor/gui/widgets/toolbar/toolbar.hpp"
 #include "editor/gui/widgets/viewport/viewport_widget.hpp"
 #include "editor/shortcuts/shortcuts.hpp"
+#include "io/create_document_from_ir.hpp"
 #include "io/history.hpp"
 #include "io/map_parser.hpp"
 #include "io/preferences.hpp"
 #include "io/save_map_document.hpp"
 #include "io/session.hpp"
-#include "io/to_map_document.hpp"
 
 namespace Tactile {
 namespace {
@@ -277,7 +277,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
 
   IO::MapParser parser{event.path};
   if (parser) {
-    mModel.AddMap(IO::ToMapDocument(parser.GetData()));
+    mModel.AddMap(CreateDocumentFromIR(parser.GetData()));
     AddFileToHistory(event.path);
   }
   else {

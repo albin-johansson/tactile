@@ -14,7 +14,7 @@ namespace Tactile::IO {
  *
  * \ingroup io
  *
- * \see `ToMapDocument()`
+ * \see `CreateDocumentFromIR()`
  * \see `GetCause(ParseError)`
  */
 class MapParser final
@@ -54,7 +54,7 @@ class MapParser final
    *
    * \return the intermediate representation of the parsed map.
    *
-   * \see `ToMapDocument()`
+   * \see `CreateDocumentFromIR()`
    */
   [[nodiscard]] auto GetData() const noexcept -> const MapData&
   {

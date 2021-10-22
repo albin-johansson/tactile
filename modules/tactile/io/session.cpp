@@ -4,16 +4,17 @@
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 
-#include <centurion.hpp>  // ...
-#include <session.pb.h>
-
 #include <tactile-base/convert_to_forward_slashes.hpp>
 
+#include <centurion.hpp>  // ...
+
+#include "create_document_from_ir.hpp"
 #include "directories.hpp"
 #include "editor/model.hpp"
 #include "json.hpp"
 #include "map_parser.hpp"
-#include "to_map_document.hpp"
+
+#include <session.pb.h>
 
 namespace Tactile {
 namespace {
@@ -33,7 +34,7 @@ void RestoreLastSession(Model& model)
     for (const auto& file : session.files()) {
       IO::MapParser parser{file};
       if (parser) {
-        model.AddMap(IO::ToMapDocument(parser.GetData()));
+        model.AddMap(CreateDocumentFromIR(parser.GetData()));
       }
       else {
         CENTURION_LOG_ERROR("Failed to restore a map from previous session!");

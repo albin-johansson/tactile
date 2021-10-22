@@ -1,12 +1,12 @@
-#include "to_map_document.hpp"
+#include "create_document_from_ir.hpp"
 
 #include <algorithm>  // sort
 #include <format>     // format
 #include <variant>    // get
 
-#include <entt.hpp>  // registry
-
 #include <tactile-io/parse_ir.hpp>
+
+#include <entt.hpp>  // registry
 
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
@@ -27,12 +27,12 @@
 #include "core/systems/tileset_system.hpp"
 #include "core/utils/load_texture.hpp"
 
-namespace Tactile::IO {
+namespace Tactile {
 namespace {
 
 void AddProperties(entt::registry& registry,
                    const entt::entity entity,
-                   const std::vector<PropertyData>& data)
+                   const std::vector<IO::PropertyData>& data)
 {
   auto& context = (entity != entt::null) ? registry.get<PropertyContext>(entity)
                                          : registry.ctx<PropertyContext>();
@@ -47,7 +47,7 @@ void AddProperties(entt::registry& registry,
   }
 }
 
-auto AddObject(entt::registry& registry, const ObjectData& data) -> entt::entity
+auto AddObject(entt::registry& registry, const IO::ObjectData& data) -> entt::entity
 {
   const auto objectEntity = registry.create();
 
@@ -73,7 +73,7 @@ auto AddObject(entt::registry& registry, const ObjectData& data) -> entt::entity
 
 void MakeFancyTiles(entt::registry& registry,
                     TilesetCache& cache,
-                    const TilesetData& data)
+                    const IO::TilesetData& data)
 {
   for (const auto& tileData : data.tiles) {
     const auto tileEntity = registry.create();
@@ -110,7 +110,7 @@ void MakeFancyTiles(entt::registry& registry,
   }
 }
 
-void MakeTileset(entt::registry& registry, const TilesetData& data)
+void MakeTileset(entt::registry& registry, const IO::TilesetData& data)
 {
   const auto info = LoadTexture(data.absolute_image_path).value();
   const auto entity = Sys::MakeTileset(registry,
@@ -128,7 +128,7 @@ void MakeTileset(entt::registry& registry, const TilesetData& data)
 
 void MakeObjectLayer(entt::registry& registry,
                      const entt::entity entity,
-                     const ObjectLayerData& data)
+                     const IO::ObjectLayerData& data)
 {
   auto& objectLayer = registry.emplace<ObjectLayer>(entity);
 
@@ -139,7 +139,7 @@ void MakeObjectLayer(entt::registry& registry,
 }
 
 auto MakeLayer(entt::registry& registry,
-               const LayerData& data,
+               const IO::LayerData& data,
                entt::entity parent = entt::null) -> entt::entity
 {
   const auto entity =
@@ -153,19 +153,19 @@ auto MakeLayer(entt::registry& registry,
   layer.visible = data.is_visible;
 
   if (data.type == LayerType::TileLayer) {
-    const auto& tileLayerData = std::get<TileLayerData>(data.data);
+    const auto& tileLayerData = std::get<IO::TileLayerData>(data.data);
 
     auto& tileLayer = registry.emplace<TileLayer>(entity);
     tileLayer.matrix = tileLayerData.tiles;
   }
   else if (data.type == LayerType::ObjectLayer) {
-    const auto& objectLayerData = std::get<ObjectLayerData>(data.data);
+    const auto& objectLayerData = std::get<IO::ObjectLayerData>(data.data);
     MakeObjectLayer(registry, entity, objectLayerData);
   }
   else if (data.type == LayerType::GroupLayer) {
     registry.emplace<GroupLayer>(entity);
 
-    const auto& groupLayerData = std::get<GroupLayerData>(data.data);
+    const auto& groupLayerData = std::get<IO::GroupLayerData>(data.data);
     for (const auto& layerData : groupLayerData.layers) {
       MakeLayer(registry, *layerData, entity);
     }
@@ -178,7 +178,7 @@ auto MakeLayer(entt::registry& registry,
 
 }  // namespace
 
-auto ToMapDocument(const MapData& data) -> Document
+auto CreateDocumentFromIR(const IO::MapData& data) -> Document
 {
   Document document;
   document.path = data.absolute_path;

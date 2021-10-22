@@ -405,8 +405,8 @@ set(SOURCE_FILES
     io/save_map_document.hpp
     io/session.cpp
     io/session.hpp
-    io/to_map_document.cpp
-    io/to_map_document.hpp
+    io/create_document_from_ir.cpp
+    io/create_document_from_ir.hpp
     )
 
 add_library(${TACTILE_LIB} ${SOURCE_FILES})

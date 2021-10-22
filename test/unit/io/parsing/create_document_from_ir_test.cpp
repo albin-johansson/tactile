@@ -1,4 +1,4 @@
-#include "io/to_map_document.hpp"
+#include "io/create_document_from_ir.hpp"
 
 #include <gtest/gtest.h>
 
@@ -17,12 +17,12 @@
 
 using namespace Tactile;
 
-TEST(ToMapDocument, Test)
+TEST(CreateDocumentFromIR, Test)
 {
   IO::MapParser parser{"resources/json/embedded.json"};
   ASSERT_TRUE(parser);
 
-  const auto document = IO::ToMapDocument(parser.GetData());
+  const auto document = CreateDocumentFromIR(parser.GetData());
   ASSERT_FALSE(document.commands.CanUndo());
   ASSERT_FALSE(document.commands.CanRedo());
 

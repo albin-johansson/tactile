@@ -70,7 +70,7 @@ void VerifyLayers(const MapData& data)
     const auto& rect = objectLayer.objects.at(0);
     ASSERT_EQ(2_obj, rect.id);
     ASSERT_EQ("Rect", rect.name);
-    ASSERT_EQ("CustomType", rect.custom_type);
+    ASSERT_EQ("CustomType", rect.tag);
     ASSERT_EQ(36, rect.x);
     ASSERT_EQ(40, rect.y);
     ASSERT_EQ(28, rect.width);
@@ -87,7 +87,7 @@ void VerifyLayers(const MapData& data)
     const auto& point = objectLayer.objects.at(1);
     ASSERT_EQ(3_obj, point.id);
     ASSERT_EQ("SomePoint", point.name);
-    ASSERT_EQ("CustomPoint", point.custom_type);
+    ASSERT_EQ("CustomPoint", point.tag);
     ASSERT_EQ(143, point.x);
     ASSERT_EQ(47, point.y);
     ASSERT_EQ(0, point.width);

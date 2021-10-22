@@ -101,7 +101,7 @@ void VerifyLayers(const MapData& data)
     ASSERT_EQ(40, rect.y);
     ASSERT_EQ(28, rect.width);
     ASSERT_EQ(30, rect.height);
-    ASSERT_EQ("CustomType", rect.custom_type);
+    ASSERT_EQ("CustomType", rect.tag);
     ASSERT_TRUE(rect.visible);
     ASSERT_EQ(ObjectType::Rectangle, rect.type);
     ASSERT_TRUE(rect.properties.empty());
@@ -113,7 +113,7 @@ void VerifyLayers(const MapData& data)
     ASSERT_EQ(47, point.y);
     ASSERT_EQ(0, point.width);
     ASSERT_EQ(0, point.height);
-    ASSERT_EQ("CustomPoint", point.custom_type);
+    ASSERT_EQ("CustomPoint", point.tag);
     ASSERT_TRUE(point.visible);
     ASSERT_EQ(ObjectType::Point, point.type);
     ASSERT_TRUE(point.properties.empty());

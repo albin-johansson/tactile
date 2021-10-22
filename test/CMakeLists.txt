@@ -23,7 +23,7 @@ set(TEST_FILES
     unit/io/parsing/parse_map_with_embedded_tilesets_test.cpp
     unit/io/parsing/parse_map_with_external_tilesets_test.cpp
     unit/io/parsing/parse_tmx_with_tile_nodes_test.cpp
-    unit/io/parsing/to_map_document_test.cpp
+    unit/io/parsing/create_document_from_ir_test.cpp
 
     unit/utils/buffer_utils_test.cpp
     unit/utils/color_utils_test.cpp
