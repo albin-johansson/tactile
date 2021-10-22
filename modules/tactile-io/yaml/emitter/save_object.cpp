@@ -32,8 +32,8 @@ void SaveObject(YAML::Emitter& emitter,
     emitter << YAML::Key << "name" << YAML::Value << object.name;
   }
 
-  if (!object.custom_type.empty()) {
-    emitter << YAML::Key << "tag" << YAML::Value << object.custom_type;
+  if (!object.tag.empty()) {
+    emitter << YAML::Key << "tag" << YAML::Value << object.tag;
   }
 
   if (!object.visible) {

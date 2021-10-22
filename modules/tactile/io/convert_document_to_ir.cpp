@@ -56,7 +56,7 @@ namespace {
   data.width = object.width;
   data.height = object.height;
   data.type = object.type;
-  data.custom_type = object.custom_type;
+  data.tag = object.custom_type;
   data.visible = object.visible;
 
   const auto& context = registry.get<PropertyContext>(entity);

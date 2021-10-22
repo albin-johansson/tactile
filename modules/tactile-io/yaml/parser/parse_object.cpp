@@ -44,7 +44,7 @@ auto ParseObject(const YAML::Node& node) -> tl::expected<ObjectData, ParseError>
   }
 
   if (auto tag = node["tag"]) {
-    data.custom_type = tag.as<std::string>();
+    data.tag = tag.as<std::string>();
   }
 
   if (auto visible = node["visible"]) {

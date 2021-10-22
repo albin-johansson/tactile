@@ -34,7 +34,7 @@ struct ObjectData final
   float width{};                         ///< Logical width.
   float height{};                        ///< Logical height.
   ObjectType type{};                     ///< Specific object type.
-  std::string custom_type;               ///< Optional custom type string.
+  std::string tag;                       ///< Optional user-defined type tag.
   std::string name;                      ///< Object name.
   std::vector<PropertyData> properties;  ///< Object properties.
   bool visible{};                        ///< Is the object visible?

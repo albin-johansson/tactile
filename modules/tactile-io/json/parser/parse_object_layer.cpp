@@ -54,7 +54,7 @@ namespace {
   }
 
   if (const auto it = json.find("type"); it != json.end()) {
-    it->get_to(data.custom_type);
+    it->get_to(data.tag);
   }
 
   if (const auto it = json.find("visible"); it != json.end()) {

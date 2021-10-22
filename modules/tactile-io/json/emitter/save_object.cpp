@@ -15,7 +15,7 @@ auto SaveObject(const ObjectData& object, const std::filesystem::path& dir) -> J
   json["width"] = object.width;
   json["height"] = object.height;
   json["visible"] = object.visible;
-  json["type"] = object.custom_type;
+  json["type"] = object.tag;
   json["rotation"] = 0;
 
   if (object.type == ObjectType::Point) {

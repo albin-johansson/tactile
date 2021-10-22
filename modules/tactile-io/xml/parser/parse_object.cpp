@@ -21,7 +21,7 @@ auto ParseObject(const pugi::xml_node node, ObjectData& object) -> ParseError
   object.width = GetFloat(node, "width").value_or(0.0f);
   object.height = GetFloat(node, "height").value_or(0.0f);
   object.name = GetString(node, "name").value_or(std::string{});
-  object.custom_type = GetString(node, "type").value_or(std::string{});
+  object.tag = GetString(node, "type").value_or(std::string{});
   object.visible = GetBool(node, "visible").value_or(true);
 
   if (!node.child("point").empty()) {

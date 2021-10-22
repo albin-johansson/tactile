@@ -60,8 +60,8 @@ auto AddObject(entt::registry& registry, const ObjectData& data) -> entt::entity
   object.type = data.type;
   object.visible = data.visible;
 
-  if (!data.custom_type.empty()) {
-    object.custom_type = data.custom_type;
+  if (!data.tag.empty()) {
+    object.custom_type = data.tag;
   }
 
   auto& context = Sys::AddPropertyContext(registry, objectEntity);

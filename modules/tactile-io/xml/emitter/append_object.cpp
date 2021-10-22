@@ -15,8 +15,8 @@ void AppendObject(pugi::xml_node source,
     node.append_attribute("name").set_value(object.name.c_str());
   }
 
-  if (!object.custom_type.empty()) {
-    node.append_attribute("type").set_value(object.custom_type.c_str());
+  if (!object.tag.empty()) {
+    node.append_attribute("type").set_value(object.tag.c_str());
   }
 
   if (object.x != 0) {
