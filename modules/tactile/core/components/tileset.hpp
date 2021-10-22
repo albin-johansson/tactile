@@ -23,9 +23,9 @@ struct Tileset final
   TilesetID id;          ///< Unique ID associated with the tileset.
   TileID first_id;       ///< First associated global tile ID.
   TileID last_id;        ///< Last associated global tile ID (inclusive).
-  int tile_width{};      ///< Width of tiles in the tileset.
-  int tile_height{};     ///< Height of tiles in the tileset.
-  int tile_count{};      ///< Number of tiles associated with the tileset.
+  int32 tile_width{};    ///< Width of tiles in the tileset.
+  int32 tile_height{};   ///< Height of tiles in the tileset.
+  int32 tile_count{};    ///< Number of tiles associated with the tileset.
   int32 row_count{};     ///< Amount of tile rows.
   int32 column_count{};  ///< Amount of tile columns.
 };
