@@ -57,6 +57,10 @@ IncludeCategories:
   - Regex: '<([A-Za-z0-9\_\-]+)>'
     Priority: 10
 
+  # Tactile IO or base headers
+  - Regex: '<((tactile-io|tactile-base)\/)+([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
+    Priority: 13
+
   # Headers in <> with extension and optional prefix.
   - Regex: '<([A-Za-z0-9\_\-]+\/)*(\.\.)*([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
     Priority: 15
