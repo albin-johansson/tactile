@@ -10,9 +10,8 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] TACTILE_IO_API auto ParseJsonMap(const std::filesystem::path& path,
-                                               ParseError* error = nullptr)
-    -> Maybe<MapData>;
+TACTILE_IO_API_QUERY auto ParseJsonMap(const std::filesystem::path& path,
+                                       ParseError* error = nullptr) -> MapPtr;
 
 [[nodiscard]] TACTILE_IO_API auto ParseXmlMap(const std::filesystem::path& path,
                                               ParseError* error = nullptr)

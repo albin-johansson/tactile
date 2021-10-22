@@ -15,194 +15,173 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseOrientation(const JSON& json) -> Maybe<ParseError>
+[[nodiscard]] auto ParseOrientation(const JSON& json) -> ParseError
 {
   const auto it = json.find("orientation");
   if (it != json.end() && it->get<std::string>() == "orthogonal") {
-    return nothing;
+    return ParseError::None;
   }
   else {
     return ParseError::MapUnsupportedOrientation;
   }
 }
 
-[[nodiscard]] auto ParseInfinite(const JSON& json) -> Maybe<ParseError>
+[[nodiscard]] auto ParseInfinite(const JSON& json) -> ParseError
 {
   const auto it = json.find("infinite");
   if (it != json.end() && it->get<bool>()) {
     return ParseError::MapUnsupportedInfinite;
   }
   else {
-    return nothing;
+    return ParseError::None;
   }
 }
 
-[[nodiscard]] auto ParseNextLayerId(const JSON& json) -> tl::expected<LayerID, ParseError>
+[[nodiscard]] auto ParseNextLayerId(const JSON& json, Map& map) -> ParseError
 {
   if (const auto it = json.find("nextlayerid"); it != json.end()) {
-    return LayerID{it->get<LayerID::value_type>()};
+    SetNextLayerId(map, it->get<int32>());
+    return ParseError::None;
   }
   else {
-    return tl::make_unexpected(ParseError::MapMissingNextLayerId);
+    return ParseError::MapMissingNextLayerId;
   }
 }
 
-[[nodiscard]] auto ParseNextObjectId(const JSON& json)
-    -> tl::expected<ObjectID, ParseError>
+[[nodiscard]] auto ParseNextObjectId(const JSON& json, Map& map) -> ParseError
 {
   if (const auto it = json.find("nextobjectid"); it != json.end()) {
-    return ObjectID{it->get<ObjectID::value_type>()};
+    SetNextObjectId(map, it->get<int32>());
+    return ParseError::None;
   }
   else {
-    return tl::make_unexpected(ParseError::MapMissingNextObjectId);
+    return ParseError::MapMissingNextObjectId;
   }
 }
 
-[[nodiscard]] auto ParseTileWidth(const JSON& json) -> tl::expected<int, ParseError>
+[[nodiscard]] auto ParseTileWidth(const JSON& json, Map& map) -> ParseError
 {
   if (const auto it = json.find("tilewidth"); it != json.end()) {
-    return it->get<int>();
+    SetTileWidth(map, it->get<int32>());
+    return ParseError::None;
   }
   else {
-    return tl::make_unexpected(ParseError::MapMissingTileWidth);
+    return ParseError::MapMissingTileWidth;
   }
 }
 
-[[nodiscard]] auto ParseTileHeight(const JSON& json) -> tl::expected<int, ParseError>
+[[nodiscard]] auto ParseTileHeight(const JSON& json, Map& map) -> ParseError
 {
   if (const auto it = json.find("tileheight"); it != json.end()) {
-    return it->get<int>();
+    SetTileHeight(map, it->get<int32>());
+    return ParseError::None;
   }
   else {
-    return tl::make_unexpected(ParseError::MapMissingTileHeight);
+    return ParseError::MapMissingTileHeight;
   }
 }
 
-[[nodiscard]] auto ParseWidth(const JSON& json) -> tl::expected<int, ParseError>
+[[nodiscard]] auto ParseWidth(const JSON& json, Map& map) -> ParseError
 {
   if (const auto it = json.find("width"); it != json.end()) {
-    return it->get<int>();
+    SetColumnCount(map, it->get<int32>());
+    return ParseError::None;
   }
   else {
-    return tl::make_unexpected(ParseError::MapMissingWidth);
+    return ParseError::MapMissingWidth;
   }
 }
 
-[[nodiscard]] auto ParseHeight(const JSON& json) -> tl::expected<int, ParseError>
+[[nodiscard]] auto ParseHeight(const JSON& json, Map& map) -> ParseError
 {
   if (const auto it = json.find("height"); it != json.end()) {
-    return it->get<int>();
+    SetRowCount(map, it->get<int32>());
+    return ParseError::None;
   }
   else {
-    return tl::make_unexpected(ParseError::MapMissingHeight);
+    return ParseError::MapMissingHeight;
   }
 }
 
-[[nodiscard]] auto ParseMap(const std::filesystem::path& path)
-    -> tl::expected<MapData, ParseError>
+[[nodiscard]] auto ParseMap(const std::filesystem::path& path, Map& map) -> ParseError
 {
   const auto absPath = std::filesystem::absolute(path);
+  const auto dir = absPath.parent_path();
+
   if (!std::filesystem::exists(absPath)) {
-    return tl::make_unexpected(ParseError::MapDoesNotExist);
+    return ParseError::MapDoesNotExist;
   }
+
+  SetPath(map, absPath.c_str());
 
   const auto json = ReadJson(absPath);
   if (!json) {
-    return tl::make_unexpected(ParseError::CouldNotReadFile);
+    return ParseError::CouldNotReadFile;
   }
 
-  if (const auto err = ParseOrientation(*json)) {
-    return tl::make_unexpected(*err);
+  if (const auto err = ParseOrientation(*json); err != ParseError::None) {
+    return err;
   }
 
-  if (const auto err = ParseInfinite(*json)) {
-    return tl::make_unexpected(*err);
+  if (const auto err = ParseInfinite(*json); err != ParseError::None) {
+    return err;
   }
 
-  MapData data;
-  data.absolute_path = absPath;
-
-  if (const auto id = ParseNextLayerId(*json)) {
-    data.next_layer_id = *id;
-  }
-  else {
-    return tl::make_unexpected(id.error());
+  if (const auto err = ParseNextLayerId(*json, map); err != ParseError::None) {
+    return err;
   }
 
-  if (const auto id = ParseNextObjectId(*json)) {
-    data.next_object_id = *id;
-  }
-  else {
-    return tl::make_unexpected(id.error());
+  if (const auto err = ParseNextObjectId(*json, map); err != ParseError::None) {
+    return err;
   }
 
-  if (const auto tileWidth = ParseTileWidth(*json)) {
-    data.tile_width = *tileWidth;
-  }
-  else {
-    return tl::make_unexpected(tileWidth.error());
+  if (const auto err = ParseTileWidth(*json, map); err != ParseError::None) {
+    return err;
   }
 
-  if (const auto tileHeight = ParseTileHeight(*json)) {
-    data.tile_height = *tileHeight;
-  }
-  else {
-    return tl::make_unexpected(tileHeight.error());
+  if (const auto err = ParseTileHeight(*json, map); err != ParseError::None) {
+    return err;
   }
 
-  if (const auto width = ParseWidth(*json)) {
-    data.column_count = *width;
-  }
-  else {
-    return tl::make_unexpected(width.error());
+  if (const auto err = ParseWidth(*json, map); err != ParseError::None) {
+    return err;
   }
 
-  if (const auto height = ParseHeight(*json)) {
-    data.row_count = *height;
-  }
-  else {
-    return tl::make_unexpected(height.error());
+  if (const auto err = ParseHeight(*json, map); err != ParseError::None) {
+    return err;
   }
 
-  if (auto tilesets = ParseTilesets(*json, data.absolute_path.parent_path())) {
-    data.tilesets = std::move(*tilesets);
-  }
-  else {
-    return tl::make_unexpected(tilesets.error());
+  if (const auto err = ParseTilesets(*json, map, dir); err != ParseError::None) {
+    return err;
   }
 
-  if (auto layers = ParseLayers(*json)) {
-    data.layers = std::move(*layers);
-  }
-  else {
-    return tl::make_unexpected(layers.error());
+  if (const auto err = ParseLayers(*json, map); err != ParseError::None) {
+    return err;
   }
 
-  if (auto props = ParseProperties(*json)) {
-    data.properties = std::move(*props);
-  }
-  else {
-    return tl::make_unexpected(props.error());
+  if (const auto err = ParseProperties(*json, map); err != ParseError::None) {
+    return err;
   }
 
-  return data;
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto ParseJsonMap(const std::filesystem::path& path, ParseError* error) -> Maybe<MapData>
+auto ParseJsonMap(const std::filesystem::path& path, ParseError* error) -> MapPtr
 {
-  if (auto data = ParseMap(path)) {
-    if (error) {
-      *error = ParseError::None;
-    }
-    return std::move(data.value());
+  auto map = CreateMap();
+  const auto err = ParseMap(path, *map);
+
+  if (error) {
+    *error = err;
+  }
+
+  if (err == ParseError::None) {
+    return map;
   }
   else {
-    if (error) {
-      *error = data.error();
-    }
-    return nothing;
+    return nullptr;
   }
 }
 

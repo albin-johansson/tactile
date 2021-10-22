@@ -1,39 +1,36 @@
 #include "parse_tile_layer.hpp"
 
-#include <utility>  // move
-
-#include <json.hpp>  // json
-
 #include "parse_tile_data.hpp"
 
 namespace Tactile::IO {
 
-auto ParseTileLayer(const JSON& json) -> tl::expected<TileLayerData, ParseError>
+auto ParseTileLayer(const JSON& json, Layer& layer) -> ParseError
 {
-  TileLayerData data;
+  auto& tileLayer = MarkAsTileLayer(layer);
+
+  int32 nRows{};
+  int32 nCols{};
 
   if (const auto it = json.find("height"); it != json.end()) {
-    it->get_to(data.row_count);
+    nRows = it->get<int32>();
   }
   else {
-    return tl::make_unexpected(ParseError::LayerMissingHeight);
+    return ParseError::LayerMissingHeight;
   }
 
   if (const auto it = json.find("width"); it != json.end()) {
-    it->get_to(data.col_count);
+    nCols = it->get<int32>();
   }
   else {
-    return tl::make_unexpected(ParseError::LayerMissingWidth);
+    return ParseError::LayerMissingWidth;
   }
 
-  if (auto tiles = ParseTileData(json, data.row_count, data.col_count)) {
-    data.tiles = std::move(*tiles);
-  }
-  else {
-    return tl::make_unexpected(tiles.error());
+  ReserveTiles(tileLayer, nRows, nCols);
+  if (const auto err = ParseTileData(json, tileLayer); err != ParseError::None) {
+    return err;
   }
 
-  return data;
+  return ParseError::None;
 }
 
 }  // namespace Tactile::IO

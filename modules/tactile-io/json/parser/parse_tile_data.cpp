@@ -1,43 +1,44 @@
 #include "parse_tile_data.hpp"
 
-#include <json.hpp>  // json
+#include <string>  // string
+
 #include <tactile-base/map_position.hpp>
 
 namespace Tactile::IO {
 
-auto ParseTileData(const JSON& json, const int32 nRows, const int32 nCols)
-    -> tl::expected<TileMatrix, ParseError>
+auto ParseTileData(const JSON& json, TileLayer& layer) -> ParseError
 {
   // For now, only support the CSV tile encoding, which is the implicit default
   if (const auto it = json.find("encoding"); it != json.end()) {
     if (it->get<std::string>() != "csv") {
-      return tl::make_unexpected(ParseError::UnsupportedTileEncoding);
+      return ParseError::UnsupportedTileEncoding;
     }
   }
 
   const auto data = json.at("data");
   if (!data.is_array()) {
-    return tl::make_unexpected(ParseError::CouldNotParseTiles);
+    return ParseError::CouldNotParseTiles;
   }
 
-  auto matrix = MakeTileMatrix(nRows, nCols);
+  const auto nCols = GetColumnCount(layer);
+  int32 index = 0;
 
-  int index = 0;
   for (const auto& elem : data.items()) {
-    const auto value = elem.value();
+    const auto& value = elem.value();
+
     if (value.is_number_integer()) {
-      const auto id = TileID{value.get<TileID::value_type>()};
+      const auto id = value.get<int32>();
       const auto pos = MapPosition::FromIndex(index, nCols);
-      matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = id;
+      SetTile(layer, pos.GetRow(), pos.GetColumn(), id);
     }
     else {
-      return tl::make_unexpected(ParseError::CouldNotParseTiles);
+      return ParseError::CouldNotParseTiles;
     }
 
     ++index;
   }
 
-  return matrix;
+  return ParseError::None;
 }
 
 }  // namespace Tactile::IO

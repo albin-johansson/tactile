@@ -1,71 +1,57 @@
 #include "parse_fancy_tiles.hpp"
 
-#include <utility>  // move
-
-#include <json.hpp>  // json
-
 #include "parse_object_layer.hpp"
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseFancyTile(const JSON& json) -> tl::expected<TileData, ParseError>
+[[nodiscard]] auto ParseFancyTile(const JSON& json, Tile& tile) -> ParseError
 {
-  TileData tile;
-  tile.id = TileID{json.at("id").get<TileID::value_type>()};
+  SetId(tile, json.at("id").get<int32>());
 
   if (const auto it = json.find("animation"); it != json.end()) {
-    tile.animation.reserve(it->size());
-    for (const auto& [_, frame] : it->items()) {
-      auto& frameData = tile.animation.emplace_back();
-      frameData.tile = TileID{frame.at("tileid").get<TileID::value_type>()};
-      frame.at("duration").get_to(frameData.duration);
+    ReserveAnimationFrames(tile, it->size());
+
+    for (const auto& [key, value] : it->items()) {
+      auto& frame = AddAnimationFrame(tile);
+      SetTile(frame, value.at("tileid").get<int32>());
+      SetDuration(frame, value.at("duration").get<int32>());
     }
   }
 
   if (const auto it = json.find("objectgroup"); it != json.end()) {
-    if (auto data = ParseObjectLayer(it.value())) {
-      tile.objects = std::move(data->objects);
-    }
-    else {
-      return tl::make_unexpected(data.error());
+    if (const auto err = ParseObjectLayer(it.value(), tile); err != ParseError::None) {
+      return err;
     }
   }
 
-  if (auto props = ParseProperties(json)) {
-    tile.properties = std::move(*props);
-  }
-  else {
-    return tl::make_unexpected(props.error());
+  if (const auto err = ParseProperties(json, tile); err != ParseError::None) {
+    return err;
   }
 
-  return tile;
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto ParseFancyTiles(const JSON& json) -> tl::expected<std::vector<TileData>, ParseError>
+auto ParseFancyTiles(const JSON& json, Tileset& tileset) -> ParseError
 {
-  std::vector<TileData> tiles;
-
   if (!json.contains("tiles")) {
-    return tiles;
+    return ParseError::None;
   }
 
   const auto& array = json.at("tiles");
-  tiles.reserve(array.size());
+  ReserveTiles(tileset, array.size());
 
-  for (const auto& [key, tileJson] : array.items()) {
-    if (auto tile = ParseFancyTile(tileJson)) {
-      tiles.push_back(std::move(*tile));
-    }
-    else {
-      return tl::make_unexpected(tile.error());
+  for (const auto& [key, value] : array.items()) {
+    auto& tile = AddTile(tileset);
+    if (const auto err = ParseFancyTile(value, tile); err != ParseError::None) {
+      return err;
     }
   }
 
-  return tiles;
+  return ParseError::None;
 }
 
 }  // namespace Tactile::IO

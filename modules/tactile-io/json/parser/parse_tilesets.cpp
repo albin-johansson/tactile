@@ -1,34 +1,27 @@
 #include "parse_tilesets.hpp"
 
-#include <utility>  // move
-
-#include <json.hpp>  // json
-
 #include "parse_tileset.hpp"
 
 namespace Tactile::IO {
 
-auto ParseTilesets(const JSON& json, const std::filesystem::path& dir)
-    -> tl::expected<std::vector<TilesetData>, ParseError>
+auto ParseTilesets(const JSON& json, Map& map, const std::filesystem::path& dir)
+    -> ParseError
 {
   const auto it = json.find("tilesets");
   if (it == json.end()) {
-    return tl::make_unexpected(ParseError::MapMissingTilesets);
+    return ParseError::MapMissingTilesets;
   }
 
-  std::vector<TilesetData> tilesets;
-  tilesets.reserve(it->size());
+  ReserveTilesets(map, it->size());
 
   for (const auto& [key, value] : it->items()) {
-    if (auto tileset = ParseTileset(value, dir)) {
-      tilesets.push_back(std::move(*tileset));
-    }
-    else {
-      return tl::make_unexpected(tileset.error());
+    auto& tileset = AddTileset(map);
+    if (const auto err = ParseTileset(value, tileset, dir); err != ParseError::None) {
+      return err;
     }
   }
 
-  return tilesets;
+  return ParseError::None;
 }
 
 }  // namespace Tactile::IO
