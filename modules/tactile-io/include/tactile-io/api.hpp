@@ -9,3 +9,5 @@
 #else
 #define TACTILE_IO_API
 #endif  // WIN32
+
+#define TACTILE_IO_API_QUERY [[nodiscard]] TACTILE_IO_API
