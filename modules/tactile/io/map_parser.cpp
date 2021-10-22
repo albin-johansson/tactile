@@ -6,7 +6,7 @@
 
 #include "core/utils/profile.hpp"
 
-namespace Tactile::IO {
+namespace Tactile {
 
 MapParser::MapParser(const std::filesystem::path& path)
 {
@@ -17,7 +17,7 @@ MapParser::MapParser(const std::filesystem::path& path)
     mData.absolute_path = std::filesystem::absolute(path);
 
     if (!std::filesystem::exists(mData.absolute_path)) {
-      mError = ParseError::MapDoesNotExist;
+      mError = IO::ParseError::MapDoesNotExist;
       return;
     }
 
@@ -38,13 +38,13 @@ MapParser::MapParser(const std::filesystem::path& path)
       }
     }
     else {
-      mError = ParseError::MapUnsupportedExtension;
+      mError = IO::ParseError::MapUnsupportedExtension;
     }
 
     TACTILE_PROFILE_END("Parsed map");
   }
   catch (...) {
-    mError = ParseError::Unknown;
+    mError = IO::ParseError::Unknown;
   }
 }
 

@@ -2,7 +2,7 @@
 
 #include "tactile/editor/document.hpp"
 
-namespace Tactile::IO {
+namespace Tactile {
 
 /**
  * \brief Saves a map document.
@@ -13,4 +13,4 @@ namespace Tactile::IO {
  */
 void SaveMapDocument(const Document& document);
 
-}  // namespace Tactile::IO
+}  // namespace Tactile

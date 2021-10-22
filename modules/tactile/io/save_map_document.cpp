@@ -3,15 +3,15 @@
 #include <cassert>     // assert
 #include <filesystem>  // absolute
 
-#include <centurion.hpp>  // CENTURION_LOG_{}
-
 #include <tactile-io/emitter.hpp>
 
-#include "convert_document_to_ir.hpp"
-#include "io/preferences.hpp"
-#include "tactile/core/utils/profile.hpp"
+#include <centurion.hpp>  // CENTURION_LOG_{}
 
-namespace Tactile::IO {
+#include "convert_document_to_ir.hpp"
+#include "core/utils/profile.hpp"
+#include "io/preferences.hpp"
+
+namespace Tactile {
 namespace {
 
 [[nodiscard]] auto GetEmitterOptions() -> IO::EmitterOptions
@@ -33,15 +33,15 @@ void SaveMapDocument(const Document& document)
   const auto extension = path.extension();
   if (extension == ".json") {
     const auto data = ConvertDocumentToIR(document);
-    EmitJsonMap(data, GetEmitterOptions());
+    IO::EmitJsonMap(data, GetEmitterOptions());
   }
   else if (extension == ".tmx" || extension == ".xml") {
     const auto data = ConvertDocumentToIR(document);
-    EmitXmlMap(data, GetEmitterOptions());
+    IO::EmitXmlMap(data, GetEmitterOptions());
   }
   else if (extension == ".yml" || extension == ".yaml") {
     const auto data = ConvertDocumentToIR(document);
-    EmitYamlMap(data, GetEmitterOptions());
+    IO::EmitYamlMap(data, GetEmitterOptions());
   }
   else {
     CENTURION_LOG_ERROR("Failed to save map document due to invalid extension: %s",

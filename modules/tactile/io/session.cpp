@@ -32,7 +32,7 @@ void RestoreLastSession(Model& model)
   std::ifstream stream{file_path, std::ios::in | std::ios::binary};
   if (session.ParseFromIstream(&stream)) {
     for (const auto& file : session.files()) {
-      IO::MapParser parser{file};
+      MapParser parser{file};
       if (parser) {
         model.AddMap(CreateDocumentFromIR(parser.GetData()));
       }

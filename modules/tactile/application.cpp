@@ -220,7 +220,7 @@ void Application::OnSave()
 {
   if (auto* document = mModel.GetActiveDocument()) {
     if (!document->path.empty()) {
-      IO::SaveMapDocument(*document);
+      SaveMapDocument(*document);
       document->commands.MarkAsClean();
 
       auto& context = document->registry.ctx<PropertyContext>();
@@ -275,7 +275,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
     return;
   }
 
-  IO::MapParser parser{event.path};
+  MapParser parser{event.path};
   if (parser) {
     mModel.AddMap(CreateDocumentFromIR(parser.GetData()));
     AddFileToHistory(event.path);

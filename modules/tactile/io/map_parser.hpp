@@ -2,10 +2,10 @@
 
 #include <filesystem>  // path
 
-#include "tactile-io/parse_error.hpp"
-#include "tactile-io/parse_ir.hpp"
+#include <tactile-io/parse_error.hpp>
+#include <tactile-io/parse_ir.hpp>
 
-namespace Tactile::IO {
+namespace Tactile {
 
 /**
  * \brief Represents the core parser engine for map files.
@@ -36,7 +36,7 @@ class MapParser final
    */
   [[nodiscard]] explicit operator bool() const noexcept
   {
-    return mError == ParseError::None;
+    return mError == IO::ParseError::None;
   }
 
   /**
@@ -44,7 +44,7 @@ class MapParser final
    *
    * \return the error code.
    */
-  [[nodiscard]] auto GetError() const noexcept -> ParseError
+  [[nodiscard]] auto GetError() const noexcept -> IO::ParseError
   {
     return mError;
   }
@@ -56,14 +56,14 @@ class MapParser final
    *
    * \see `CreateDocumentFromIR()`
    */
-  [[nodiscard]] auto GetData() const noexcept -> const MapData&
+  [[nodiscard]] auto GetData() const noexcept -> const IO::MapData&
   {
     return mData;
   }
 
  private:
-  ParseError mError{ParseError::None};
-  MapData mData;
+  IO::ParseError mError{IO::ParseError::None};
+  IO::MapData mData;
 };
 
 }  // namespace Tactile::IO

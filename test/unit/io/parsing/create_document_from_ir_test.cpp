@@ -19,7 +19,7 @@ using namespace Tactile;
 
 TEST(CreateDocumentFromIR, Test)
 {
-  IO::MapParser parser{"resources/json/embedded.json"};
+  MapParser parser{"resources/json/embedded.json"};
   ASSERT_TRUE(parser);
 
   const auto document = CreateDocumentFromIR(parser.GetData());
