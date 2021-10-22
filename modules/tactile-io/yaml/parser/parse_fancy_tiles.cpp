@@ -1,7 +1,5 @@
 #include "parse_fancy_tiles.hpp"
 
-#include <utility>  // move
-
 #include <yaml-cpp/yaml.h>
 
 #include "parse_object.hpp"
@@ -10,95 +8,79 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseAnimationFrame(const YAML::Node& node)
-    -> tl::expected<FrameData, ParseError>
+[[nodiscard]] auto ParseAnimationFrame(const YAML::Node& node, Tile& tile) -> ParseError
 {
-  FrameData frame;
+  auto& frame = AddAnimationFrame(tile);
 
   if (auto id = node["tile"]) {
-    frame.tile = TileID{id.as<TileID::value_type>()};
+    SetTile(frame, id.as<int32>());
   }
   else {
-    return tl::make_unexpected(ParseError::AnimationFrameNoTile);
+    return ParseError::AnimationFrameNoTile;
   }
 
   if (auto duration = node["duration"]) {
-    frame.duration = duration.as<int>();
+    SetDuration(frame, duration.as<int32>());
   }
   else {
-    return tl::make_unexpected(ParseError::AnimationFrameNoDuration);
+    return ParseError::AnimationFrameNoDuration;
   }
 
-  return frame;
+  return ParseError::None;
 }
 
-[[nodiscard]] auto ParseFancyTile(const YAML::Node& node)
-    -> tl::expected<TileData, ParseError>
+[[nodiscard]] auto ParseFancyTile(const YAML::Node& node, Tileset& tileset) -> ParseError
 {
-  TileData data;
+  auto& tile = AddTile(tileset);
 
   if (auto id = node["id"]) {
-    data.id = TileID{id.as<TileID::value_type>()};
+    SetId(tile, id.as<int32>());
   }
   else {
-    return tl::make_unexpected(ParseError::TileMissingId);
+    return ParseError::TileMissingId;
   }
 
-  if (auto animation = node["animation"]) {
-    data.animation.reserve(animation.size());
-    for (const auto& frameNode : animation) {
-      if (auto frame = ParseAnimationFrame(frameNode)) {
-        data.animation.push_back(std::move(*frame));
-      }
-      else {
-        return tl::make_unexpected(frame.error());
+  if (auto seq = node["animation"]) {
+    ReserveAnimationFrames(tile, seq.size());
+    for (const auto& frameNode : seq) {
+      if (const auto err = ParseAnimationFrame(frameNode, tile); err != ParseError::None)
+      {
+        return err;
       }
     }
   }
 
-  if (auto objects = node["objects"]) {
-    data.objects.reserve(objects.size());
-    for (const auto& objectNode : objects) {
-      if (auto object = ParseObject(objectNode)) {
-        data.objects.push_back(std::move(*object));
-      }
-      else {
-        return tl::make_unexpected(object.error());
+  if (auto seq = node["objects"]) {
+    ReserveObjects(tile, seq.size());
+    for (const auto& objectNode : seq) {
+      if (const auto err = ParseObject(objectNode, tile); err != ParseError::None) {
+        return err;
       }
     }
   }
 
-  if (auto props = ParseProperties(node)) {
-    data.properties = std::move(*props);
-  }
-  else {
-    return tl::make_unexpected(props.error());
+  if (const auto err = ParseProperties(node, tile); err != ParseError::None) {
+    return err;
   }
 
-  return data;
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto ParseFancyTiles(const YAML::Node& node)
-    -> tl::expected<std::vector<TileData>, ParseError>
+auto ParseFancyTiles(const YAML::Node& node, Tileset& tileset) -> ParseError
 {
-  std::vector<TileData> tiles;
-
   if (auto seq = node["tiles"]) {
-    tiles.reserve(seq.size());
+    ReserveTiles(tileset, seq.size());
 
     for (const auto& tileNode : seq) {
-      if (auto tile = ParseFancyTile(tileNode)) {
-        tiles.push_back(std::move(*tile));
-      }
-      else {
-        return tl::make_unexpected(tile.error());
+      if (const auto err = ParseFancyTile(tileNode, tileset); err != ParseError::None) {
+        return err;
       }
     }
   }
 
-  return tiles;
+  return ParseError::None;
 }
 
 }  // namespace Tactile::IO

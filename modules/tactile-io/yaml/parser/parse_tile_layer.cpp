@@ -2,7 +2,6 @@
 
 #include <algorithm>  // replace
 #include <string>     // string
-#include <utility>    // move
 
 #include <tactile-base/from_string.hpp>
 #include <tactile-base/map_position.hpp>
@@ -12,52 +11,49 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseTiles(const std::string& data, const int nRows, const int nCols)
-    -> tl::expected<TileMatrix, ParseError>
+[[nodiscard]] auto ParseTiles(TileLayer& layer,
+                              const std::string& data,
+                              const int32 nCols) -> ParseError
 {
-  auto matrix = MakeTileMatrix(nRows, nCols);
-
-  int index = 0;
+  int32 index = 0;
   for (const auto& token : Split(data.c_str(), ' ')) {
     if (const auto id = FromString<TileID::value_type>(token)) {
       const auto pos = MapPosition::FromIndex(index, nCols);
-      matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = TileID{*id};
+      SetTile(layer, pos.GetRow(), pos.GetColumn(), *id);
     }
     else {
-      return tl::make_unexpected(ParseError::CouldNotParseTiles);
+      return ParseError::CouldNotParseTiles;
     }
 
     ++index;
   }
 
-  return matrix;
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto ParseTileLayer(const YAML::Node& node, const int nRows, const int nCols)
-    -> tl::expected<TileLayerData, ParseError>
+auto ParseTileLayer(const YAML::Node& node,
+                    Layer& layer,
+                    const int32 nRows,
+                    const int32 nCols) -> ParseError
 {
-  TileLayerData data;
-  data.row_count = nRows;
-  data.col_count = nCols;
+  auto& tileLayer = MarkAsTileLayer(layer);
+  ReserveTiles(tileLayer, nRows, nCols);
 
   if (auto tiles = node["data"]) {
     auto raw = tiles.as<std::string>();
     std::ranges::replace(raw, '\n', ' ');
 
-    if (auto matrix = ParseTiles(raw, nRows, nCols)) {
-      data.tiles = std::move(*matrix);
-    }
-    else {
-      return tl::make_unexpected(matrix.error());
+    if (const auto err = ParseTiles(tileLayer, raw, nCols); err != ParseError::None) {
+      return err;
     }
   }
   else {
-    return tl::make_unexpected(ParseError::CouldNotParseTiles);
+    return ParseError::CouldNotParseTiles;
   }
 
-  return data;
+  return ParseError::None;
 }
 
 }  // namespace Tactile::IO

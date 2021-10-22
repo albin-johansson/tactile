@@ -1,95 +1,105 @@
 #include "parse_object.hpp"
 
-#include <string>   // string
-#include <utility>  // move
+#include <string>  // string
 
 #include <yaml-cpp/yaml.h>
 
 #include "parse_properties.hpp"
 
 namespace Tactile::IO {
+namespace {
 
-auto ParseObject(const YAML::Node& node) -> tl::expected<ObjectData, ParseError>
+template <typename T>
+[[nodiscard]] auto ParseObjectImpl(const YAML::Node& node, T& parent) -> ParseError
 {
-  ObjectData data;
+  auto& object = AddObject(parent);
 
   if (auto id = node["id"]) {
-    data.id = ObjectID{id.as<ObjectID::value_type>()};
+    SetId(object, id.as<int32>());
   }
   else {
-    return tl::make_unexpected(ParseError::ObjectMissingId);
+    return ParseError::ObjectMissingId;
   }
 
   if (auto type = node["type"]) {
     const auto str = type.as<std::string>();
     if (str == "point") {
-      data.type = ObjectType::Point;
+      SetType(object, ObjectType::Point);
     }
     else if (str == "rect") {
-      data.type = ObjectType::Rectangle;
+      SetType(object, ObjectType::Rectangle);
     }
     else if (str == "ellipse") {
-      data.type = ObjectType::Ellipse;
+      SetType(object, ObjectType::Ellipse);
     }
     else {
-      return tl::make_unexpected(ParseError::ObjectInvalidType);
+      return ParseError::ObjectInvalidType;
     }
   }
   else {
-    return tl::make_unexpected(ParseError::ObjectMissingType);
+    return ParseError::ObjectMissingType;
   }
 
   if (auto name = node["name"]) {
-    data.name = name.as<std::string>();
+    SetName(object, name.as<std::string>().c_str());
   }
 
   if (auto tag = node["tag"]) {
-    data.tag = tag.as<std::string>();
+    SetTag(object, tag.as<std::string>().c_str());
   }
 
   if (auto visible = node["visible"]) {
-    data.visible = visible.as<bool>();
+    SetVisible(object, visible.as<bool>());
   }
   else {
-    data.visible = true;
+    SetVisible(object, true);
   }
 
   if (auto x = node["x"]) {
-    data.x = x.as<float>();
+    SetX(object, x.as<float>());
   }
   else {
-    data.x = 0;
+    SetX(object, 0);
   }
 
   if (auto y = node["y"]) {
-    data.y = y.as<float>();
+    SetY(object, y.as<float>());
   }
   else {
-    data.y = 0;
+    SetY(object, 0);
   }
 
   if (auto width = node["width"]) {
-    data.width = width.as<float>();
+    SetWidth(object, width.as<float>());
   }
   else {
-    data.width = 0;
+    SetWidth(object, 0);
   }
 
   if (auto height = node["height"]) {
-    data.height = height.as<float>();
+    SetHeight(object, height.as<float>());
   }
   else {
-    data.height = 0;
+    SetHeight(object, 0);
   }
 
-  if (auto props = ParseProperties(node)) {
-    data.properties = std::move(*props);
-  }
-  else {
-    return tl::make_unexpected(props.error());
+  if (const auto err = ParseProperties(node, object); err != ParseError::None) {
+    return err;
   }
 
-  return data;
+  return ParseError::None;
+}
+
+}  // namespace
+
+auto ParseObject(const YAML::Node& node, ObjectLayer& layer) -> ParseError
+{
+  return ParseObjectImpl(node, layer);
+}
+
+auto ParseObject(const YAML::Node& node, Tile& tile) -> ParseError
+{
+  return ParseObjectImpl(node, tile);
 }
 
 }  // namespace Tactile::IO

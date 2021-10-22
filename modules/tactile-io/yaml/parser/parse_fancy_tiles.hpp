@@ -1,16 +1,12 @@
 #pragma once
 
-#include <vector>  // vector
-
-#include <expected.hpp>  // expected
-
 #include "parse_error.hpp"
 #include "parse_ir.hpp"
 #include "yaml/yaml_fwd.hpp"
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseFancyTiles(const YAML::Node& node)
-    -> tl::expected<std::vector<TileData>, ParseError>;
+[[nodiscard]] auto ParseFancyTiles(const YAML::Node& node, Tileset& tileset)
+    -> ParseError;
 
 }  // namespace Tactile::IO

@@ -3,136 +3,151 @@
 #include <string>   // string
 #include <utility>  // move
 
+#include <tactile-base/property_type.hpp>
+
 #include <magic_enum.hpp>  // enum_cast
 #include <yaml-cpp/yaml.h>
 
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseType(const YAML::Node& node)
-    -> tl::expected<PropertyType, ParseError>
+[[nodiscard]] auto ParseType(const YAML::Node& node, PropertyType& type) -> ParseError
 {
-  PropertyType type;
-
   if (auto propType = node["type"]) {
-    const auto name = propType.as<std::string>();
+    const auto name = propType.as<std::string>().c_str();
     if (const auto value = magic_enum::enum_cast<PropertyType>(name)) {
       type = *value;
     }
     else {
-      return tl::make_unexpected(ParseError::PropertyUnknownType);
+      return ParseError::PropertyUnknownType;
     }
   }
   else {
-    return tl::make_unexpected(ParseError::PropertyMissingType);
+    return ParseError::PropertyMissingType;
   }
 
-  return type;
+  return ParseError::None;
 }
 
-[[nodiscard]] auto ParseValue(const YAML::Node& node, const PropertyType type)
-    -> tl::expected<PropertyValue, ParseError>
+[[nodiscard]] auto ParseValue(const YAML::Node& node,
+                              Property& property,
+                              const PropertyType type) -> ParseError
 {
-  PropertyValue result;
-
   if (auto value = node["value"]) {
     try {
       switch (type) {
         case PropertyType::String:
-          result.SetValue(value.as<std::string>());
+          AssignString(property, value.as<std::string>().c_str());
           break;
 
         case PropertyType::Integer:
-          result.SetValue(value.as<PropertyValue::integer_type>());
+          AssignInt(property, value.as<int32>());
           break;
 
         case PropertyType::Floating:
-          result.SetValue(value.as<PropertyValue::float_type>());
+          AssignFloat(property, value.as<float>());
           break;
 
         case PropertyType::Boolean:
-          result.SetValue(value.as<bool>());
+          AssignBool(property, value.as<bool>());
           break;
 
         case PropertyType::File:
-          result.SetValue(std::filesystem::path{value.as<std::string>()});
+          AssignFile(property, value.as<std::string>().c_str());
           break;
 
         case PropertyType::Color: {
           const auto hex = value.as<std::string>();
           if (const auto color = cen::color::from_rgba(hex)) {
-            result.SetValue(*color);
+            AssignColor(property,
+                        {color->red(), color->green(), color->blue(), color->alpha()});
           }
           else {
-            return tl::make_unexpected(ParseError::CouldNotParseProperty);
+            return ParseError::CouldNotParseProperty;
           }
           break;
         }
 
         case PropertyType::Object:
-          result.SetValue(ObjectRef{value.as<ObjectRef::value_type>()});
+          AssignObject(property, value.as<int32>());
           break;
       }
     }
     catch (...) {
-      return tl::make_unexpected(ParseError::CouldNotParseProperty);
+      return ParseError::CouldNotParseProperty;
     }
   }
   else {
-    return tl::make_unexpected(ParseError::CouldNotParseProperty);
+    return ParseError::CouldNotParseProperty;
   }
 
-  return result;
+  return ParseError::None;
 }
 
-[[nodiscard]] auto ParseProperty(const YAML::Node& node)
-    -> tl::expected<PropertyData, ParseError>
+[[nodiscard]] auto ParseProperty(const YAML::Node& node, Property& property) -> ParseError
 {
-  PropertyData data;
-
   if (auto name = node["name"]) {
-    data.name = name.as<std::string>();
+    SetName(property, name.as<std::string>().c_str());
   }
   else {
-    return tl::make_unexpected(ParseError::PropertyMissingName);
+    return ParseError::PropertyMissingName;
   }
 
-  if (const auto type = ParseType(node)) {
-    if (auto value = ParseValue(node, *type)) {
-      data.value = std::move(*value);
-    }
-    else {
-      return tl::make_unexpected(value.error());
-    }
-  }
-  else {
-    return tl::make_unexpected(type.error());
+  PropertyType type{};
+  if (const auto err = ParseType(node, type); err != ParseError::None) {
+    return err;
   }
 
-  return data;
+  if (const auto err = ParseValue(node, property, type); err != ParseError::None) {
+    return err;
+  }
+
+  return ParseError::None;
+}
+
+template <typename T>
+auto ParsePropertiesImpl(const YAML::Node& node, T& obj) -> ParseError
+{
+  if (auto propertySeq = node["properties"]) {
+    ReserveProperties(obj, propertySeq.size());
+
+    for (const auto& propertyNode : propertySeq) {
+      auto& property = AddProperty(obj);
+      if (const auto err = ParseProperty(propertyNode, property); err != ParseError::None)
+      {
+        return err;
+      }
+    }
+  }
+
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto ParseProperties(const YAML::Node& node)
-    -> tl::expected<std::vector<PropertyData>, ParseError>
+auto ParseProperties(const YAML::Node& node, Map& map) -> ParseError
 {
-  std::vector<PropertyData> properties;
+  return ParsePropertiesImpl(node, map);
+}
 
-  if (auto propertySeq = node["properties"]) {
-    properties.reserve(propertySeq.size());
+auto ParseProperties(const YAML::Node& node, Tileset& tileset) -> ParseError
+{
+  return ParsePropertiesImpl(node, tileset);
+}
 
-    for (const auto& propertyNode : propertySeq) {
-      if (auto property = ParseProperty(propertyNode)) {
-        properties.push_back(std::move(*property));
-      }
-      else {
-        return tl::make_unexpected(property.error());
-      }
-    }
-  }
+auto ParseProperties(const YAML::Node& node, Tile& tile) -> ParseError
+{
+  return ParsePropertiesImpl(node, tile);
+}
 
-  return properties;
+auto ParseProperties(const YAML::Node& node, Layer& layer) -> ParseError
+{
+  return ParsePropertiesImpl(node, layer);
+}
+
+auto ParseProperties(const YAML::Node& node, Object& object) -> ParseError
+{
+  return ParsePropertiesImpl(node, object);
 }
 
 }  // namespace Tactile::IO

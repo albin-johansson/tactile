@@ -1,7 +1,6 @@
 #include "parse_layers.hpp"
 
 #include <string>   // string
-#include <utility>  // move
 
 #include <tactile-base/tactile_std.hpp>
 #include <yaml-cpp/yaml.h>
@@ -13,139 +12,135 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseLayer(const YAML::Node& node, usize index, int nRows, int nCols)
-    -> tl::expected<LayerData, ParseError>;
+[[nodiscard]] auto ParseLayer(const YAML::Node& node,
+                              Layer& layer,
+                              usize index,
+                              int32 nRows,
+                              int32 nCols) -> ParseError;
 
 [[nodiscard]] auto ParseGroupLayer(const YAML::Node& node,
-                                   const int nRows,
-                                   const int nCols)
-    -> tl::expected<GroupLayerData, ParseError>
+                                   Layer& layer,
+                                   const int32 nRows,
+                                   const int32 nCols) -> ParseError
 {
-  GroupLayerData data;
+  auto& groupLayer = MarkAsGroupLayer(layer);
 
-  if (auto layers = node["layers"]) {
-    data.layers.reserve(layers.size());
+  if (auto seq = node["layers"]) {
+    ReserveLayers(groupLayer, seq.size());
 
     usize index = 0;
-    for (const auto& layerNode : layers) {
-      if (auto layer = ParseLayer(layerNode, index, nRows, nCols)) {
-        data.layers.push_back(std::make_unique<LayerData>(std::move(*layer)));
-      }
-      else {
-        return tl::make_unexpected(layer.error());
+    for (const auto& layerNode : seq) {
+      auto& child = AddLayer(groupLayer);
+
+      if (const auto err = ParseLayer(layerNode, child, index, nRows, nCols);
+          err != ParseError::None)
+      {
+        return err;
       }
 
       ++index;
     }
   }
 
-  return data;
+  return ParseError::None;
 }
 
 [[nodiscard]] auto ParseLayer(const YAML::Node& node,
+                              Layer& layer,
                               const usize index,
-                              const int nRows,
-                              const int nCols) -> tl::expected<LayerData, ParseError>
+                              const int32 nRows,
+                              const int32 nCols) -> ParseError
 {
-  LayerData layer;
-  layer.index = index;
+  SetIndex(layer, index);
 
   if (auto id = node["id"]) {
-    layer.id = LayerID{id.as<LayerID::value_type>()};
+    SetId(layer, id.as<int32>());
   }
   else {
-    return tl::make_unexpected(ParseError::LayerMissingId);
+    return ParseError::LayerMissingId;
   }
 
   if (auto opacity = node["opacity"]) {
-    layer.opacity = opacity.as<float>();
+    SetOpacity(layer, opacity.as<float>());
   }
   else {
-    layer.opacity = 1.0f;
+    SetOpacity(layer, 1.0f);
   }
 
   if (auto visible = node["visible"]) {
-    layer.is_visible = visible.as<bool>();
+    SetVisible(layer, visible.as<bool>());
   }
   else {
-    layer.is_visible = true;
+    SetVisible(layer, true);
   }
 
   if (auto name = node["name"]) {
-    layer.name = name.as<std::string>();
+    SetName(layer, name.as<std::string>().c_str());
   }
   else {
-    layer.name = "Layer";
+    SetName(layer, "Layer");
   }
 
   if (auto type = node["type"]) {
     const auto value = type.as<std::string>();
+
     if (value == "tile-layer") {
-      layer.type = LayerType::TileLayer;
-      if (auto data = ParseTileLayer(node, nRows, nCols)) {
-        layer.data.emplace<TileLayerData>(std::move(*data));
-      }
-      else {
-        return tl::make_unexpected(data.error());
+      SetType(layer, LayerType::TileLayer);
+      if (const auto err = ParseTileLayer(node, layer, nRows, nCols);
+          err != ParseError::None) {
+        return err;
       }
     }
     else if (value == "object-layer") {
-      layer.type = LayerType::ObjectLayer;
-      if (auto data = ParseObjectLayer(node)) {
-        layer.data.emplace<ObjectLayerData>(std::move(*data));
-      }
-      else {
-        return tl::make_unexpected(data.error());
+      SetType(layer, LayerType::ObjectLayer);
+      if (const auto err = ParseObjectLayer(node, layer); err != ParseError::None) {
+        return err;
       }
     }
     else if (value == "group-layer") {
-      layer.type = LayerType::GroupLayer;
-      if (auto data = ParseGroupLayer(node, nRows, nCols)) {
-        layer.data.emplace<GroupLayerData>(std::move(*data));
-      }
-      else {
-        return tl::make_unexpected(data.error());
+      SetType(layer, LayerType::GroupLayer);
+      if (const auto err = ParseGroupLayer(node, layer, nRows, nCols);
+          err != ParseError::None) {
+        return err;
       }
     }
     else {
-      return tl::make_unexpected(ParseError::LayerUnknownType);
+      return ParseError::LayerUnknownType;
     }
   }
   else {
-    return tl::make_unexpected(ParseError::LayerMissingType);
+    return ParseError::LayerMissingType;
   }
 
-  if (auto props = ParseProperties(node)) {
-    layer.properties = std::move(*props);
-  }
-  else {
-    return tl::make_unexpected(props.error());
+  if (const auto err = ParseProperties(node, layer); err != ParseError::None) {
+    return err;
   }
 
-  return layer;
+  return ParseError::None;
 }
 
 }  // namespace
 
-auto ParseLayers(const YAML::Node& seq, const int nRows, const int nCols)
-    -> tl::expected<std::vector<LayerData>, ParseError>
+auto ParseLayers(const YAML::Node& seq, Map& map) -> ParseError
 {
-  std::vector<LayerData> layers;
-  layers.reserve(seq.size());
+  const auto nRows = GetRowCount(map);
+  const auto nCols = GetColumnCount(map);
+
+  ReserveLayers(map, seq.size());
 
   usize index = 0;
   for (const auto& layerNode : seq) {
-    if (auto layer = ParseLayer(layerNode, index, nRows, nCols)) {
-      layers.push_back(std::move(*layer));
-    }
-    else {
-      return tl::make_unexpected(layer.error());
+    auto& layer = AddLayer(map);
+    if (const auto err = ParseLayer(layerNode, layer, index, nRows, nCols);
+        err != ParseError::None)
+    {
+      return err;
     }
 
     ++index;
   }
 
-  return layers;
+  return ParseError::None;
 }
 
 }  // namespace Tactile::IO

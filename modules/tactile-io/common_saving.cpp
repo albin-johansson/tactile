@@ -43,17 +43,13 @@ auto GetPropertyTypeString(const PropertyType type) -> std::string
   }
 }
 
-auto GetPropertyFileValue(const PropertyValue& file, const std::filesystem::path& dir)
+auto GetPropertyFileValue(const Property& file, const std::filesystem::path& dir)
     -> std::string
 {
-  const auto abs = std::filesystem::absolute(dir / file.AsFile());
-  const auto path = std::filesystem::relative(abs, dir);
-  return ConvertToForwardSlashes(path);
-}
-
-auto IsTileWorthSaving(const TileData& tile) -> bool
-{
-  return !tile.animation.empty() || !tile.properties.empty() || !tile.objects.empty();
+  const auto* path = GetFile(file);
+  const auto abs = std::filesystem::absolute(dir / path);
+  const auto value = std::filesystem::relative(abs, dir);
+  return ConvertToForwardSlashes(value);
 }
 
 }  // namespace Tactile::IO

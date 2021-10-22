@@ -1,5 +1,4 @@
 #include <filesystem>  // absolute
-#include <utility>     // move
 
 #include <yaml-cpp/yaml.h>
 
@@ -11,107 +10,97 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseMap(const std::filesystem::path& path)
-    -> tl::expected<MapData, ParseError>
+[[nodiscard]] auto ParseMap(const std::filesystem::path& path, Map& map) -> ParseError
 {
   try {
     const auto node = YAML::LoadFile(path.string());
     if (!node) {
-      return tl::make_unexpected(ParseError::CouldNotReadFile);
+      return ParseError::CouldNotReadFile;
     }
 
-    MapData map;
-    map.absolute_path = std::filesystem::absolute(path);
+    SetPath(map, path.c_str());
 
     if (auto nRows = node["row-count"]) {
-      map.row_count = nRows.as<int>();
+      SetRowCount(map, nRows.as<int32>());
     }
     else {
-      return tl::make_unexpected(ParseError::MapMissingHeight);
+      return ParseError::MapMissingHeight;
     }
 
     if (auto nCols = node["column-count"]) {
-      map.column_count = nCols.as<int>();
+      SetColumnCount(map, nCols.as<int32>());
     }
     else {
-      return tl::make_unexpected(ParseError::MapMissingWidth);
+      return ParseError::MapMissingWidth;
     }
 
     if (auto tileWidth = node["tile-width"]) {
-      map.tile_width = tileWidth.as<int>();
+      SetTileWidth(map, tileWidth.as<int32>());
     }
     else {
-      return tl::make_unexpected(ParseError::MapMissingTileWidth);
+      return ParseError::MapMissingTileWidth;
     }
 
     if (auto tileHeight = node["tile-height"]) {
-      map.tile_height = tileHeight.as<int>();
+      SetTileHeight(map, tileHeight.as<int32>());
     }
     else {
-      return tl::make_unexpected(ParseError::MapMissingTileHeight);
+      return ParseError::MapMissingTileHeight;
     }
 
     if (auto id = node["next-layer-id"]) {
-      map.next_layer_id = LayerID{id.as<LayerID::value_type>()};
+      SetNextLayerId(map, id.as<int32>());
     }
     else {
-      return tl::make_unexpected(ParseError::MapMissingNextLayerId);
+      return ParseError::MapMissingNextLayerId;
     }
 
     if (auto id = node["next-object-id"]) {
-      map.next_object_id = ObjectID{id.as<ObjectID::value_type>()};
+      SetNextObjectId(map, id.as<int32>());
     }
     else {
-      return tl::make_unexpected(ParseError::MapMissingNextObjectId);
+      return ParseError::MapMissingNextObjectId;
     }
 
     if (auto seq = node["layers"]) {
-      if (auto layers = ParseLayers(seq, map.row_count, map.column_count)) {
-        map.layers = std::move(*layers);
-      }
-      else {
-        return tl::make_unexpected(layers.error());
+      if (const auto err = ParseLayers(seq, map); err != ParseError::None) {
+        return err;
       }
     }
 
     if (auto seq = node["tilesets"]) {
-      if (auto tilesets = ParseTilesets(seq, map.absolute_path.parent_path())) {
-        map.tilesets = std::move(*tilesets);
-      }
-      else {
-        return tl::make_unexpected(tilesets.error());
+      if (const auto err = ParseTilesets(seq, map); err != ParseError::None) {
+        return err;
       }
     }
 
-    if (auto props = ParseProperties(node)) {
-      map.properties = std::move(*props);
-    }
-    else {
-      return tl::make_unexpected(props.error());
+    if (const auto err = ParseProperties(node, map); err != ParseError::None) {
+      return err;
     }
 
-    return map;
+    return ParseError::None;
   }
   catch (...) {
-    return tl::make_unexpected(ParseError::Unknown);
+    return ParseError::Unknown;
   }
 }
 
 }  // namespace
 
-auto ParseYamlMap(const std::filesystem::path& path, ParseError* error) -> Maybe<MapData>
+auto ParseYamlMap(const std::filesystem::path& path, ParseError* error) -> MapPtr
 {
-  if (auto map = ParseMap(path)) {
-    if (error) {
-      *error = ParseError::None;
-    }
-    return std::move(map.value());
+  auto map = CreateMap();
+  const auto err = ParseMap(path, *map);
+
+  if (error) {
+    *error = err;
+  }
+
+  if (err == ParseError::None) {
+    return map;
   }
   else {
-    if (error) {
-      *error = map.error();
-    }
-    return nothing;
+    return nullptr;
   }
 }
 

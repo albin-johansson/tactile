@@ -18,8 +18,7 @@ namespace Tactile::IO {
                                               ParseError* error = nullptr)
     -> Maybe<MapData>;
 
-[[nodiscard]] TACTILE_IO_API auto ParseYamlMap(const std::filesystem::path& path,
-                                               ParseError* error = nullptr)
-    -> Maybe<MapData>;
+TACTILE_IO_API_QUERY auto ParseYamlMap(const std::filesystem::path& path,
+                                       ParseError* error = nullptr) -> MapPtr;
 
 }  // namespace Tactile::IO
