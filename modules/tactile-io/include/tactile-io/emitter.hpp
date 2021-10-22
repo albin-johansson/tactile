@@ -17,6 +17,6 @@ TACTILE_IO_API void EmitJsonMap(const MapData& data, const EmitterOptions& optio
 
 TACTILE_IO_API void EmitXmlMap(const MapData& data, const EmitterOptions& options);
 
-TACTILE_IO_API void EmitYamlMap(const MapData& data, const EmitterOptions& options);
+TACTILE_IO_API void EmitYamlMap(const Map& map, const EmitterOptions& options);
 
 }  // namespace Tactile::IO

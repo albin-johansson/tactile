@@ -1,5 +1,7 @@
 #include "save_object.hpp"
 
+#include <cstring>  // strcmp
+
 #include <yaml-cpp/yaml.h>
 
 #include "save_properties.hpp"
@@ -7,14 +9,14 @@
 namespace Tactile::IO {
 
 void SaveObject(YAML::Emitter& emitter,
-                const ObjectData& object,
+                const Object& object,
                 const std::filesystem::path& dir)
 {
   emitter << YAML::BeginMap;
-  emitter << YAML::Key << "id" << YAML::Value << object.id;
+  emitter << YAML::Key << "id" << YAML::Value << GetId(object);
 
   emitter << YAML::Key << "type" << YAML::Value;
-  switch (object.type) {
+  switch (GetType(object)) {
     case ObjectType::Point:
       emitter << "point";
       break;
@@ -28,35 +30,35 @@ void SaveObject(YAML::Emitter& emitter,
       break;
   }
 
-  if (!object.name.empty()) {
-    emitter << YAML::Key << "name" << YAML::Value << object.name;
+  if (const auto name = GetName(object); std::strcmp(name, "") != 0) {
+    emitter << YAML::Key << "name" << YAML::Value << name;
   }
 
-  if (!object.tag.empty()) {
-    emitter << YAML::Key << "tag" << YAML::Value << object.tag;
+  if (const auto tag = GetTag(object); std::strcmp(tag, "") != 0) {
+    emitter << YAML::Key << "tag" << YAML::Value << tag;
   }
 
-  if (!object.visible) {
-    emitter << YAML::Key << "visible" << YAML::Value << object.visible;
+  if (const auto visible = IsVisible(object); !visible) {
+    emitter << YAML::Key << "visible" << YAML::Value << visible;
   }
 
-  if (object.x != 0.0f) {
-    emitter << YAML::Key << "x" << YAML::Value << object.x;
+  if (const auto x = GetX(object); x != 0.0f) {
+    emitter << YAML::Key << "x" << YAML::Value << x;
   }
 
-  if (object.y != 0.0f) {
-    emitter << YAML::Key << "y" << YAML::Value << object.y;
+  if (const auto y = GetY(object); y != 0.0f) {
+    emitter << YAML::Key << "y" << YAML::Value << y;
   }
 
-  if (object.width != 0.0f) {
-    emitter << YAML::Key << "width" << YAML::Value << object.width;
+  if (const auto width = GetWidth(object); width != 0.0f) {
+    emitter << YAML::Key << "width" << YAML::Value << width;
   }
 
-  if (object.height != 0.0f) {
-    emitter << YAML::Key << "height" << YAML::Value << object.height;
+  if (const auto height = GetHeight(object); height != 0.0f) {
+    emitter << YAML::Key << "height" << YAML::Value << height;
   }
 
-  SaveProperties(emitter, object.properties, dir);
+  SaveProperties(emitter, object, dir);
 
   emitter << YAML::EndMap;
 }

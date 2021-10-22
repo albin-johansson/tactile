@@ -8,7 +8,7 @@
 namespace Tactile::IO {
 
 void SaveObject(YAML::Emitter& emitter,
-                const ObjectData& object,
+                const Object& object,
                 const std::filesystem::path& dir);
 
 }  // namespace Tactile::IO

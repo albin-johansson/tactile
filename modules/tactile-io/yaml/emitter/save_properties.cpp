@@ -1,54 +1,65 @@
 #include "save_properties.hpp"
 
+#include <span>  // span
+
 #include <magic_enum.hpp>  // enum_name
 #include <yaml-cpp/yaml.h>
 
 #include "../../common_saving.hpp"
 
 namespace Tactile::IO {
+namespace {
 
-void SaveProperties(YAML::Emitter& emitter,
-                    const std::vector<PropertyData>& properties,
-                    const std::filesystem::path& dir)
+template <typename T>
+void SavePropertiesImpl(YAML::Emitter& emitter,
+                        const T& source,
+                        const std::filesystem::path& dir)
 {
-  if (!properties.empty()) {
+  const auto count = GetPropertyCount(source);
+  if (count != 0) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
 
-    for (const auto& property : properties) {
-      emitter << YAML::BeginMap;
-      emitter << YAML::Key << "name" << YAML::Value << property.name;
+    for (usize index = 0; index < count; ++index) {
+      const auto& property = GetProperty(source, index);
 
-      const auto type = property.value.GetType().value();
+      emitter << YAML::BeginMap;
+      emitter << YAML::Key << "name" << YAML::Value << GetName(property);
+
+      const auto type = GetType(property);
       emitter << YAML::Key << "type" << YAML::Value << magic_enum::enum_name(type).data();
 
       emitter << YAML::Key << "value";
       switch (type) {
         case PropertyType::String:
-          emitter << YAML::Value << property.value.AsString();
+          emitter << YAML::Value << GetString(property);
           break;
 
         case PropertyType::Integer:
-          emitter << YAML::Value << property.value.AsInt();
+          emitter << YAML::Value << GetInt(property);
           break;
 
         case PropertyType::Floating:
-          emitter << YAML::Value << property.value.AsFloat();
+          emitter << YAML::Value << GetFloat(property);
           break;
 
         case PropertyType::Boolean:
-          emitter << YAML::Value << property.value.AsBool();
+          emitter << YAML::Value << GetBool(property);
           break;
 
         case PropertyType::File:
-          emitter << YAML::Value << GetPropertyFileValue(property.value, dir);
+          emitter << YAML::Value << GetPropertyFileValue(property, dir);
           break;
 
-        case PropertyType::Color:
-          emitter << YAML::Value << property.value.AsColor().as_rgba();
+        case PropertyType::Color: {
+          const auto color = GetColor(property);
+          const auto rgba =
+              cen::color{color.red, color.green, color.blue, color.alpha}.as_rgba();
+          emitter << YAML::Value << rgba;
           break;
+        }
 
         case PropertyType::Object:
-          emitter << YAML::Value << property.value.AsObject().get();
+          emitter << YAML::Value << GetObject(property);
           break;
       }
 
@@ -57,6 +68,43 @@ void SaveProperties(YAML::Emitter& emitter,
 
     emitter << YAML::EndSeq;
   }
+}
+
+}  // namespace
+
+void SaveProperties(YAML::Emitter& emitter,
+                    const Map& map,
+                    const std::filesystem::path& dir)
+{
+  SavePropertiesImpl(emitter, map, dir);
+}
+
+void SaveProperties(YAML::Emitter& emitter,
+                    const Layer& layer,
+                    const std::filesystem::path& dir)
+{
+  SavePropertiesImpl(emitter, layer, dir);
+}
+
+void SaveProperties(YAML::Emitter& emitter,
+                    const Tileset& tileset,
+                    const std::filesystem::path& dir)
+{
+  SavePropertiesImpl(emitter, tileset, dir);
+}
+
+void SaveProperties(YAML::Emitter& emitter,
+                    const Tile& tile,
+                    const std::filesystem::path& dir)
+{
+  SavePropertiesImpl(emitter, tile, dir);
+}
+
+void IO::SaveProperties(YAML::Emitter& emitter,
+                        const Object& object,
+                        const std::filesystem::path& dir)
+{
+  SavePropertiesImpl(emitter, object, dir);
 }
 
 }  // namespace Tactile::IO

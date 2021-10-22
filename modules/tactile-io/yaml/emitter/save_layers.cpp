@@ -11,24 +11,25 @@
 
 namespace Tactile::IO {
 
-void SaveTiles(YAML::Emitter& emitter, const LayerData& layer)
+void SaveTiles(YAML::Emitter& emitter, const Layer& layer)
 {
   emitter << YAML::Key << "data";
 
-  const auto& tileLayer = std::get<TileLayerData>(layer.data);
-  const auto nRows = tileLayer.tiles.size();
+  const auto& tileLayer = GetTileLayer(layer);
+  const auto nRows = GetRowCount(tileLayer);
+  const auto nCols = GetRowCount(tileLayer);
 
   std::stringstream stream;
   usize index = 0;
 
-  for (const auto& row : tileLayer.tiles) {
+  for (int32 row = 0; row < nRows; ++row) {
     bool first = true;
-    for (const auto tile : row) {
+    for (int32 col = 0; col < nCols; ++col) {
       if (!first) {
         stream << ' ';
       }
 
-      stream << tile;
+      stream << GetTile(tileLayer, row, col);
       first = false;
     }
 
@@ -39,19 +40,22 @@ void SaveTiles(YAML::Emitter& emitter, const LayerData& layer)
     ++index;
   }
 
+  // TODO when human readable output is disabled, do not fold the string
   emitter << YAML::Literal << stream.str();
 }
 
 void SaveObjects(YAML::Emitter& emitter,
-                 const LayerData& layer,
+                 const Layer& layer,
                  const std::filesystem::path& dir)
 {
-  const auto& objectLayer = std::get<ObjectLayerData>(layer.data);
-  if (!objectLayer.objects.empty()) {
+  const auto& objectLayer = GetObjectLayer(layer);
+  const auto count = GetObjectCount(objectLayer);
+  if (count != 0) {
     emitter << YAML::Key << "objects";
     emitter << YAML::BeginSeq;
 
-    for (const auto& object : objectLayer.objects) {
+    for (usize index = 0; index < count; ++index) {
+      const auto& object = GetObject(objectLayer, index);
       SaveObject(emitter, object, dir);
     }
 
@@ -60,23 +64,23 @@ void SaveObjects(YAML::Emitter& emitter,
 }
 
 void SaveLayer(YAML::Emitter& emitter,
-               const LayerData& layer,
+               const Layer& layer,
                const std::filesystem::path& dir)
 {
   emitter << YAML::BeginMap;
-  emitter << YAML::Key << "name" << YAML::Value << layer.name;
-  emitter << YAML::Key << "id" << YAML::Value << layer.id;
+  emitter << YAML::Key << "name" << YAML::Value << GetName(layer);
+  emitter << YAML::Key << "id" << YAML::Value << GetId(layer);
 
-  if (layer.opacity != 1.0f) {
-    emitter << YAML::Key << "opacity" << YAML::Value << layer.opacity;
+  if (const auto opacity = GetOpacity(layer); opacity != 1.0f) {
+    emitter << YAML::Key << "opacity" << YAML::Value << opacity;
   }
 
-  if (!layer.is_visible) {
-    emitter << YAML::Key << "visible" << YAML::Value << layer.is_visible;
+  if (const auto visible = IsVisible(layer); !visible) {
+    emitter << YAML::Key << "visible" << YAML::Value << visible;
   }
 
   emitter << YAML::Key << "type" << YAML::Value;
-  switch (layer.type) {
+  switch (GetType(layer)) {
     case LayerType::TileLayer: {
       emitter << "tile-layer";
       SaveTiles(emitter, layer);
@@ -92,12 +96,14 @@ void SaveLayer(YAML::Emitter& emitter,
     case LayerType::GroupLayer: {
       emitter << "group-layer";
 
-      const auto& groupLayer = std::get<GroupLayerData>(layer.data);
-      if (!groupLayer.layers.empty()) {
+      const auto& groupLayer = GetGroupLayer(layer);
+      const auto count = GetLayerCount(groupLayer);
+      if (count != 0) {
         emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-        for (const auto& child : groupLayer.layers) {
-          SaveLayer(emitter, *child, dir);
+        for (usize index = 0; index < count; ++index) {
+          const auto& child = GetLayer(groupLayer, index);
+          SaveLayer(emitter, child, dir);
         }
 
         emitter << YAML::EndSeq;
@@ -107,19 +113,22 @@ void SaveLayer(YAML::Emitter& emitter,
     }
   }
 
-  SaveProperties(emitter, layer.properties, dir);
+  SaveProperties(emitter, layer, dir);
 
   emitter << YAML::EndMap;
 }
 
-void SaveLayers(YAML::Emitter& emitter,
-                const std::vector<LayerData>& layers,
-                const std::filesystem::path& dir)
+void SaveLayers(YAML::Emitter& emitter, const Map& map, const std::filesystem::path& dir)
 {
-  if (!layers.empty()) {
+  const auto count = GetLayerCount(map);
+  if (count != 0) {
     emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-    for (const auto& layer : layers) {
+    const auto rows = GetRowCount(map);
+    const auto cols = GetColumnCount(map);
+
+    for (usize index = 0; index < count; ++index) {
+      const auto& layer = GetLayer(map, index);
       SaveLayer(emitter, layer, dir);
     }
 

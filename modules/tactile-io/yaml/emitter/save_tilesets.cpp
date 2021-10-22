@@ -15,14 +15,16 @@ namespace {
 
 constexpr int tileset_node_version = 1;
 
-void SaveAnimation(YAML::Emitter& emitter, const std::vector<FrameData>& frames)
+void SaveAnimation(YAML::Emitter& emitter, const Tile& tile)
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
 
-  for (const auto& frame : frames) {
+  const auto count = GetAnimationFrameCount(tile);
+  for (usize index = 0; index < count; ++index) {
+    const auto& frame = GetAnimationFrame(tile, index);
     emitter << YAML::BeginMap;
-    emitter << YAML::Key << "tile" << YAML::Value << frame.tile;
-    emitter << YAML::Key << "duration" << YAML::Value << frame.duration;
+    emitter << YAML::Key << "tile" << YAML::Value << GetTile(frame);
+    emitter << YAML::Key << "duration" << YAML::Value << GetDuration(frame);
     emitter << YAML::EndMap;
   }
 
@@ -30,12 +32,14 @@ void SaveAnimation(YAML::Emitter& emitter, const std::vector<FrameData>& frames)
 }
 
 void SaveObjects(YAML::Emitter& emitter,
-                 const std::vector<ObjectData>& objects,
+                 const Tile& tile,
                  const std::filesystem::path& dir)
 {
   emitter << YAML::Key << "objects" << YAML::BeginSeq;
 
-  for (const auto& object : objects) {
+  const auto count = GetObjectCount(tile);
+  for (usize index = 0; index < count; ++index) {
+    const auto& object = GetObject(tile, index);
     SaveObject(emitter, object, dir);
   }
 
@@ -43,25 +47,27 @@ void SaveObjects(YAML::Emitter& emitter,
 }
 
 void SaveFancyTiles(YAML::Emitter& emitter,
-                    const std::vector<TileData>& tiles,
+                    const Tileset& tileset,
                     const std::filesystem::path& dir)
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
-  for (const auto& tile : tiles) {
+  const auto count = GetTileInfoCount(tileset);
+  for (usize index = 0; index < count; ++index) {
+    const auto& tile = GetTileInfo(tileset, index);
     if (IsTileWorthSaving(tile)) {
       emitter << YAML::BeginMap;
-      emitter << YAML::Key << "id" << YAML::Value << tile.id;
+      emitter << YAML::Key << "id" << YAML::Value << GetId(tile);
 
-      if (!tile.animation.empty()) {
-        SaveAnimation(emitter, tile.animation);
+      if (const auto nFrames = GetAnimationFrameCount(tile); nFrames != 0) {
+        SaveAnimation(emitter, tile);
       }
 
-      if (!tile.objects.empty()) {
-        SaveObjects(emitter, tile.objects, dir);
+      if (const auto nObjects = GetObjectCount(tile); nObjects != 0) {
+        SaveObjects(emitter, tile, dir);
       }
 
-      SaveProperties(emitter, tile.properties, dir);
+      SaveProperties(emitter, tile, dir);
       emitter << YAML::EndMap;
     }
   }
@@ -69,7 +75,7 @@ void SaveFancyTiles(YAML::Emitter& emitter,
   emitter << YAML::EndSeq;
 }
 
-void SaveTileset(const TilesetData& tileset,
+void SaveTileset(const Tileset& tileset,
                  const std::string& fileName,
                  const std::filesystem::path& dir)
 {
@@ -78,18 +84,18 @@ void SaveTileset(const TilesetData& tileset,
 
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "version" << YAML::Value << tileset_node_version;
-  emitter << YAML::Key << "name" << YAML::Value << tileset.name;
-  emitter << YAML::Key << "tile-count" << YAML::Value << tileset.tile_count;
-  emitter << YAML::Key << "tile-width" << YAML::Value << tileset.tile_width;
-  emitter << YAML::Key << "tile-height" << YAML::Value << tileset.tile_height;
-  emitter << YAML::Key << "column-count" << YAML::Value << tileset.column_count;
+  emitter << YAML::Key << "name" << YAML::Value << GetName(tileset);
+  emitter << YAML::Key << "tile-count" << YAML::Value << GetTileCount(tileset);
+  emitter << YAML::Key << "tile-width" << YAML::Value << GetTileWidth(tileset);
+  emitter << YAML::Key << "tile-height" << YAML::Value << GetTileHeight(tileset);
+  emitter << YAML::Key << "column-count" << YAML::Value << GetColumnCount(tileset);
   emitter << YAML::Key << "image-path" << YAML::Value
-          << GetTilesetImagePath(tileset.absolute_image_path, dir);
-  emitter << YAML::Key << "image-width" << YAML::Value << tileset.image_width;
-  emitter << YAML::Key << "image-height" << YAML::Value << tileset.image_height;
+          << GetTilesetImagePath(GetImagePath(tileset), dir);
+  emitter << YAML::Key << "image-width" << YAML::Value << GetImageWidth(tileset);
+  emitter << YAML::Key << "image-height" << YAML::Value << GetImageHeight(tileset);
 
-  SaveProperties(emitter, tileset.properties, dir);
-  SaveFancyTiles(emitter, tileset.tiles, dir);
+  SaveProperties(emitter, tileset, dir);
+  SaveFancyTiles(emitter, tileset, dir);
 
   emitter << YAML::EndMap;
 
@@ -100,18 +106,21 @@ void SaveTileset(const TilesetData& tileset,
 }  // namespace
 
 void SaveTilesets(YAML::Emitter& emitter,
-                  const std::vector<TilesetData>& tilesets,
+                  const Map& map,
                   const std::filesystem::path& dir)
 {
-  if (!tilesets.empty()) {
+  const auto count = GetTilesetCount(map);
+  if (count != 0) {
     emitter << YAML::Key << "tilesets" << YAML::BeginSeq;
 
-    for (const auto& tileset : tilesets) {
-      const auto fileName = std::format("{}.yaml", tileset.name);
+    for (usize index = 0; index < count; ++index) {
+      const auto& tileset = GetTileset(map, index);
+      const auto fileName = std::format("{}.yaml", GetName(tileset));
       SaveTileset(tileset, fileName, dir);
 
       emitter << YAML::BeginMap;
-      emitter << YAML::Key << "first-global-id" << YAML::Value << tileset.first_id;
+      emitter << YAML::Key << "first-global-id" << YAML::Value
+              << GetFirstGlobalId(tileset);
       emitter << YAML::Key << "path" << YAML::Value << fileName;
       emitter << YAML::EndMap;
     }
