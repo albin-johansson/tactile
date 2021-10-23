@@ -100,9 +100,9 @@ void SaveProperties(YAML::Emitter& emitter,
   SavePropertiesImpl(emitter, tile, dir);
 }
 
-void IO::SaveProperties(YAML::Emitter& emitter,
-                        const Object& object,
-                        const std::filesystem::path& dir)
+void SaveProperties(YAML::Emitter& emitter,
+                    const Object& object,
+                    const std::filesystem::path& dir)
 {
   SavePropertiesImpl(emitter, object, dir);
 }
