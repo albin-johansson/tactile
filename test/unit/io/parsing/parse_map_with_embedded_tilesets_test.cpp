@@ -7,148 +7,146 @@ using namespace Tactile::IO;
 
 namespace {
 
-void VerifyProperties(const MapData& data)
+void VerifyProperties(const Map& data)
 {
-  ASSERT_EQ(7, data.properties.size());
+  ASSERT_EQ(7, IO::GetPropertyCount(data));
 
-  const auto& boolean = data.properties.at(0);
-  ASSERT_EQ("boolean", boolean.name);
-  ASSERT_EQ(PropertyType::Boolean, boolean.value.GetType());
-  ASSERT_TRUE(boolean.value.AsBool());
+  const auto& boolean = IO::GetProperty(data, 0);
+  ASSERT_STREQ("boolean", IO::GetName(boolean));
+  ASSERT_EQ(PropertyType::Boolean, IO::GetType(boolean));
+  ASSERT_TRUE(IO::GetBool(boolean));
 
-  const auto& color = data.properties.at(1);
-  ASSERT_EQ("cool color", color.name);
-  ASSERT_EQ(PropertyType::Color, color.value.GetType());
-  ASSERT_EQ(cen::color::from_argb("#FF55AAFF"), color.value.AsColor());
+  const auto& color = IO::GetProperty(data, 1);
+  ASSERT_STREQ("cool color", IO::GetName(color));
+  ASSERT_EQ(PropertyType::Color, IO::GetType(color));
+  ASSERT_EQ(0x55, IO::GetColor(color).red);
+  ASSERT_EQ(0xAA, IO::GetColor(color).green);
+  ASSERT_EQ(0xFF, IO::GetColor(color).blue);
+  ASSERT_EQ(0xFF, IO::GetColor(color).alpha);
 
-  const auto& floating = data.properties.at(2);
-  ASSERT_EQ("floating", floating.name);
-  ASSERT_EQ(PropertyType::Floating, floating.value.GetType());
-  ASSERT_EQ(12.3f, floating.value.AsFloat());
+  const auto& floating = IO::GetProperty(data, 2);
+  ASSERT_STREQ("floating", IO::GetName(floating));
+  ASSERT_EQ(PropertyType::Floating, IO::GetType(floating));
+  ASSERT_EQ(12.3f, IO::GetFloat(floating));
 
-  const auto& foo = data.properties.at(3);
-  ASSERT_EQ("foo", foo.name);
-  ASSERT_EQ(PropertyType::String, foo.value.GetType());
-  ASSERT_EQ("bar", foo.value.AsString());
+  const auto& foo = IO::GetProperty(data, 3);
+  ASSERT_STREQ("foo", IO::GetName(foo));
+  ASSERT_EQ(PropertyType::String, IO::GetType(foo));
+  ASSERT_STREQ("bar", IO::GetString(foo));
 
-  const auto& integer = data.properties.at(4);
-  ASSERT_EQ("integer", integer.name);
-  ASSERT_EQ(PropertyType::Integer, integer.value.GetType());
-  ASSERT_EQ(42, integer.value.AsInt());
+  const auto& integer = IO::GetProperty(data, 4);
+  ASSERT_STREQ("integer", IO::GetName(integer));
+  ASSERT_EQ(PropertyType::Integer, IO::GetType(integer));
+  ASSERT_EQ(42, IO::GetInt(integer));
 
-  const auto& object = data.properties.at(5);
-  ASSERT_EQ("object ref", object.name);
-  ASSERT_EQ(PropertyType::Object, object.value.GetType());
-  ASSERT_EQ(1_obj, object.value.AsObject());
+  const auto& object = IO::GetProperty(data, 5);
+  ASSERT_STREQ("object ref", IO::GetName(object));
+  ASSERT_EQ(PropertyType::Object, IO::GetType(object));
+  ASSERT_EQ(1, IO::GetObject(object));
 
-  const auto& path = data.properties.at(6);
-  ASSERT_EQ("path", path.name);
-  ASSERT_EQ(PropertyType::File, path.value.GetType());
-  ASSERT_EQ(std::filesystem::path{"foo.bar"}, path.value.AsFile());
+  const auto& path = IO::GetProperty(data, 6);
+  ASSERT_STREQ("path", IO::GetName(path));
+  ASSERT_EQ(PropertyType::File, IO::GetType(path));
+  ASSERT_EQ(std::filesystem::path{"foo.bar"}, IO::GetFile(path));
 }
 
-void VerifyLayers(const MapData& data)
+void VerifyLayers(const Map& data)
 {
-  ASSERT_EQ(3, data.layers.size());
+  ASSERT_EQ(3, IO::GetLayerCount(data));
 
   {
-    const auto& layer = data.layers.at(0);
-    ASSERT_EQ("Tile Layer 1", layer.name);
-    ASSERT_EQ(1_layer, layer.id);
-    ASSERT_FLOAT_EQ(1.0f, layer.opacity);
-    ASSERT_TRUE(layer.is_visible);
-    ASSERT_TRUE(std::holds_alternative<TileLayerData>(layer.data));
+    const auto& layer = IO::GetLayer(data, 0);
+    ASSERT_STREQ("Tile Layer 1", IO::GetName(layer));
+    ASSERT_EQ(1, IO::GetId(layer));
+    ASSERT_FLOAT_EQ(1.0f, IO::GetOpacity(layer));
+    ASSERT_TRUE(IO::IsVisible(layer));
+    ASSERT_TRUE(IO::IsTileLayer(layer));
 
-    const auto& tileData = std::get<TileLayerData>(layer.data);
-    ASSERT_EQ(5, tileData.row_count);
-    ASSERT_EQ(7, tileData.col_count);
-
-    ASSERT_EQ(5, tileData.tiles.size());
-    ASSERT_EQ(7, tileData.tiles.at(0).size());
+    const auto& tileLayer = IO::GetTileLayer(layer);
+    ASSERT_EQ(5, IO::GetRowCount(tileLayer));
+    ASSERT_EQ(7, IO::GetColumnCount(tileLayer));
   }
 
   {
-    const auto& layer = data.layers.at(1);
-    ASSERT_EQ("Tile Layer 2", layer.name);
-    ASSERT_EQ(2_layer, layer.id);
-    ASSERT_FLOAT_EQ(0.8f, layer.opacity);
-    ASSERT_TRUE(layer.is_visible);
-    ASSERT_TRUE(std::holds_alternative<TileLayerData>(layer.data));
+    const auto& layer = IO::GetLayer(data, 1);
+    ASSERT_STREQ("Tile Layer 2", IO::GetName(layer));
+    ASSERT_EQ(2, IO::GetId(layer));
+    ASSERT_FLOAT_EQ(0.8f, IO::GetOpacity(layer));
+    ASSERT_TRUE(IO::IsVisible(layer));
+    ASSERT_TRUE(IO::IsTileLayer(layer));
 
-    const auto& tileData = std::get<TileLayerData>(layer.data);
-    ASSERT_EQ(5, tileData.row_count);
-    ASSERT_EQ(7, tileData.col_count);
-
-    ASSERT_EQ(5, tileData.tiles.size());
-    ASSERT_EQ(7, tileData.tiles.at(0).size());
+    const auto& tileLayer = IO::GetTileLayer(layer);
+    ASSERT_EQ(5, IO::GetRowCount(tileLayer));
+    ASSERT_EQ(7, IO::GetColumnCount(tileLayer));
   }
 
   {
-    const auto& layer = data.layers.at(2);
-    ASSERT_EQ("Object Layer 1", layer.name);
-    ASSERT_EQ(3_layer, layer.id);
-    ASSERT_FLOAT_EQ(1.0f, layer.opacity);
-    ASSERT_TRUE(layer.is_visible);
-    ASSERT_TRUE(std::holds_alternative<ObjectLayerData>(layer.data));
+    const auto& layer = IO::GetLayer(data, 2);
+    ASSERT_STREQ("Object Layer 1", IO::GetName(layer));
+    ASSERT_EQ(3, IO::GetId(layer));
+    ASSERT_FLOAT_EQ(1.0f, IO::GetOpacity(layer));
+    ASSERT_TRUE(IO::IsVisible(layer));
+    ASSERT_TRUE(IO::IsObjectLayer(layer));
 
-    const auto& objectData = std::get<ObjectLayerData>(layer.data);
-    ASSERT_EQ(2, objectData.objects.size());
+    const auto& objectLayer = IO::GetObjectLayer(layer);
+    ASSERT_EQ(2, IO::GetObjectCount(objectLayer));
 
-    const auto& rect = objectData.objects.at(0);
-    ASSERT_EQ("Rect", rect.name);
-    ASSERT_EQ(1_obj, rect.id);
-    ASSERT_EQ(36, rect.x);
-    ASSERT_EQ(40, rect.y);
-    ASSERT_EQ(28, rect.width);
-    ASSERT_EQ(30, rect.height);
-    ASSERT_EQ("CustomType", rect.tag);
-    ASSERT_TRUE(rect.visible);
-    ASSERT_EQ(ObjectType::Rectangle, rect.type);
-    ASSERT_TRUE(rect.properties.empty());
+    const auto& rect = IO::GetObject(objectLayer, 0);
+    ASSERT_STREQ("Rect", IO::GetName(rect));
+    ASSERT_EQ(1, IO::GetId(rect));
+    ASSERT_FLOAT_EQ(36, IO::GetX(rect));
+    ASSERT_FLOAT_EQ(40, IO::GetY(rect));
+    ASSERT_FLOAT_EQ(28, IO::GetWidth(rect));
+    ASSERT_FLOAT_EQ(30, IO::GetHeight(rect));
+    ASSERT_STREQ("CustomType", IO::GetTag(rect));
+    ASSERT_TRUE(IO::IsVisible(rect));
+    ASSERT_EQ(ObjectType::Rectangle, IO::GetType(rect));
+    ASSERT_EQ(0, IO::GetPropertyCount(rect));
 
-    const auto& point = objectData.objects.at(1);
-    ASSERT_EQ("SomePoint", point.name);
-    ASSERT_EQ(2_obj, point.id);
-    ASSERT_EQ(143, point.x);
-    ASSERT_EQ(47, point.y);
-    ASSERT_EQ(0, point.width);
-    ASSERT_EQ(0, point.height);
-    ASSERT_EQ("CustomPoint", point.tag);
-    ASSERT_TRUE(point.visible);
-    ASSERT_EQ(ObjectType::Point, point.type);
-    ASSERT_TRUE(point.properties.empty());
+    const auto& point = IO::GetObject(objectLayer, 1);
+    ASSERT_STREQ("SomePoint", IO::GetName(point));
+    ASSERT_EQ(2, IO::GetId(point));
+    ASSERT_FLOAT_EQ(143, IO::GetX(point));
+    ASSERT_FLOAT_EQ(47, IO::GetY(point));
+    ASSERT_FLOAT_EQ(0, IO::GetWidth(point));
+    ASSERT_FLOAT_EQ(0, IO::GetHeight(point));
+    ASSERT_STREQ("CustomPoint", IO::GetTag(point));
+    ASSERT_TRUE(IO::IsVisible(point));
+    ASSERT_EQ(ObjectType::Point, IO::GetType(point));
+    ASSERT_EQ(0, IO::GetPropertyCount(point));
   }
 }
 
-void VerifyTilesets(const MapData& data, const std::filesystem::path& path)
+void VerifyTilesets(const Map& data, const std::filesystem::path& path)
 {
-  ASSERT_EQ(1, data.tilesets.size());
+  ASSERT_EQ(1, IO::GetTilesetCount(data));
 
-  const auto& tileset = data.tilesets.at(0);
-  ASSERT_EQ("terrain", tileset.name);
-  ASSERT_EQ(1_tile, tileset.first_id);
-  ASSERT_EQ(32, tileset.tile_width);
-  ASSERT_EQ(32, tileset.tile_height);
-  ASSERT_TRUE(tileset.properties.empty());
+  const auto& tileset = IO::GetTileset(data, 0);
+  ASSERT_STREQ("terrain", IO::GetName(tileset));
+  ASSERT_EQ(1, IO::GetFirstGlobalId(tileset));
+  ASSERT_EQ(32, IO::GetTileWidth(tileset));
+  ASSERT_EQ(32, IO::GetTileHeight(tileset));
+  ASSERT_EQ(0, IO::GetPropertyCount(tileset));
 
   const auto directory = std::filesystem::absolute(path.parent_path());
   const auto expected = std::filesystem::weakly_canonical(directory / "../terrain.png");
-  ASSERT_EQ(expected, tileset.absolute_image_path);
+  ASSERT_EQ(expected, IO::GetImagePath(tileset));
 
-  ASSERT_EQ(1, tileset.tiles.size());
+  ASSERT_EQ(1024, IO::GetTileCount(tileset));
+  ASSERT_EQ(1, IO::GetTileInfoCount(tileset));
 
-  const auto& tile = tileset.tiles.at(0);
-  ASSERT_EQ(181_tile, tile.id);
-  ASSERT_EQ(3, tile.animation.size());
+  const auto& tile = IO::GetTileInfo(tileset, 0);
+  ASSERT_EQ(181, IO::GetId(tile));
+  ASSERT_EQ(3, IO::GetAnimationFrameCount(tile));
 
-  ASSERT_EQ(181_tile, tile.animation.at(0).tile);
-  ASSERT_EQ(300, tile.animation.at(0).duration);
+  ASSERT_EQ(181, IO::GetTile(IO::GetAnimationFrame(tile, 0)));
+  ASSERT_EQ(300, IO::GetDuration(IO::GetAnimationFrame(tile, 0)));
 
-  ASSERT_EQ(182_tile, tile.animation.at(1).tile);
-  ASSERT_EQ(300, tile.animation.at(1).duration);
+  ASSERT_EQ(182, IO::GetTile(IO::GetAnimationFrame(tile, 1)));
+  ASSERT_EQ(300, IO::GetDuration(IO::GetAnimationFrame(tile, 1)));
 
-  ASSERT_EQ(183_tile, tile.animation.at(2).tile);
-  ASSERT_EQ(300, tile.animation.at(2).duration);
+  ASSERT_EQ(183, IO::GetTile(IO::GetAnimationFrame(tile, 2)));
+  ASSERT_EQ(300, IO::GetDuration(IO::GetAnimationFrame(tile, 2)));
 }
 
 void VerifyMap(const std::filesystem::path& path)
@@ -158,11 +156,11 @@ void VerifyMap(const std::filesystem::path& path)
 
   const auto& data = parser.GetData();
 
-  ASSERT_EQ(std::filesystem::absolute(path), data.absolute_path);
-  ASSERT_EQ(4_layer, data.next_layer_id);
-  ASSERT_EQ(3_obj, data.next_object_id);
-  ASSERT_EQ(32, data.tile_width);
-  ASSERT_EQ(32, data.tile_height);
+  ASSERT_EQ(std::filesystem::absolute(path), IO::GetAbsolutePath(data));
+  ASSERT_EQ(4, IO::GetNextLayerId(data));
+  ASSERT_EQ(3, IO::GetNextObjectId(data));
+  ASSERT_EQ(32, IO::GetTileWidth(data));
+  ASSERT_EQ(32, IO::GetTileHeight(data));
 
   VerifyLayers(data);
   VerifyTilesets(data, path);

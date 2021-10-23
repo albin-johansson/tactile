@@ -218,6 +218,10 @@ TACTILE_IO_API_QUERY auto GetName(const Layer& layer) -> CStr;
 TACTILE_IO_API_QUERY auto GetOpacity(const Layer& layer) -> float;
 TACTILE_IO_API_QUERY auto IsVisible(const Layer& layer) -> bool;
 
+TACTILE_IO_API_QUERY auto IsTileLayer(const Layer& layer) -> bool;
+TACTILE_IO_API_QUERY auto IsObjectLayer(const Layer& layer) -> bool;
+TACTILE_IO_API_QUERY auto IsGroupLayer(const Layer& layer) -> bool;
+
 TACTILE_IO_API_QUERY auto GetPropertyCount(const Layer& layer) -> usize;
 TACTILE_IO_API_QUERY auto GetProperty(const Layer& layer, usize index) -> const Property&;
 

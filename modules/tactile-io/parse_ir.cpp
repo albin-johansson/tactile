@@ -3,7 +3,7 @@
 #include <cassert>     // assert
 #include <filesystem>  // path, absolute
 #include <string>      // string
-#include <variant>     // variant
+#include <variant>     // variant, get, holds_alternative
 #include <vector>      // vector
 
 #include <tactile-base/property_value.hpp>
@@ -704,6 +704,21 @@ auto GetOpacity(const Layer& layer) -> float
 auto IsVisible(const Layer& layer) -> bool
 {
   return layer.is_visible;
+}
+
+auto IsTileLayer(const Layer& layer) -> bool
+{
+  return std::holds_alternative<TileLayer>(layer.data);
+}
+
+auto IsObjectLayer(const Layer& layer) -> bool
+{
+  return std::holds_alternative<ObjectLayer>(layer.data);
+}
+
+auto IsGroupLayer(const Layer& layer) -> bool
+{
+  return std::holds_alternative<GroupLayer>(layer.data);
 }
 
 auto GetPropertyCount(const Layer& layer) -> usize
