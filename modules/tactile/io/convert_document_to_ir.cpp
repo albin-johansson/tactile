@@ -54,7 +54,7 @@ void ConvertProperties(T& source,
         break;
 
       case PropertyType::Boolean:
-        IO::AssignFloat(data, property.value.AsBool());
+        IO::AssignBool(data, property.value.AsBool());
         break;
 
       case PropertyType::Color: {
