@@ -14,7 +14,7 @@ namespace {
 [[nodiscard]] auto ParseType(const YAML::Node& node, PropertyType& type) -> ParseError
 {
   if (auto propType = node["type"]) {
-    const auto name = propType.as<std::string>().c_str();
+    const auto name = propType.as<std::string>();
     if (const auto value = magic_enum::enum_cast<PropertyType>(name)) {
       type = *value;
     }
