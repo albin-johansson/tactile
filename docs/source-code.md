@@ -10,12 +10,12 @@ This folder contains the sources for the YAML/JSON/XML parsers and emitters, and
 third-party applications as a shared library dependency.
 
 ```C++
-#include <tactile-io/yaml/yaml_parser.hpp>
+#include <tactile-io/parser.hpp>
 
 int main()
 {
-  Tactile::ParseError error;
-  if (const auto map = Tactile::IO::ParseYamlMap("foo.yaml", &error)) {
+  Tactile::IO::ParseError error{};
+  if (const auto map = Tactile::IO::ParseMap("foo.yaml", &error)) {
     // ...
   }
 }
