@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>     // assert
 #include <filesystem>  // path
 
 #include <tactile-io/parse_error.hpp>
@@ -56,14 +57,15 @@ class MapParser final
    *
    * \see `CreateDocumentFromIR()`
    */
-  [[nodiscard]] auto GetData() const noexcept -> const IO::MapData&
+  [[nodiscard]] auto GetData() const noexcept -> const IO::Map&
   {
-    return mData;
+    assert(mData);
+    return *mData;
   }
 
  private:
   IO::ParseError mError{IO::ParseError::None};
-  IO::MapData mData;
+  IO::MapPtr mData;
 };
 
 }  // namespace Tactile::IO
