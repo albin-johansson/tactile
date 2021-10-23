@@ -282,7 +282,7 @@ auto CreateDocumentFromIR(const IO::Map& data) -> Document
 
   AddProperties(document.registry, entt::null, data);
 
-  const auto nTilesets = IO::GetLayerCount(data);
+  const auto nTilesets = IO::GetTilesetCount(data);
   for (usize index = 0; index < nTilesets; ++index) {
     const auto& tilesetData = IO::GetTileset(data, index);
     MakeTileset(document.registry, tilesetData);
