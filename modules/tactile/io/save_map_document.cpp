@@ -33,15 +33,15 @@ void SaveMapDocument(const Document& document)
   const auto extension = path.extension();
   if (extension == ".json") {
     const auto data = ConvertDocumentToIR(document);
-    IO::EmitJsonMap(data, GetEmitterOptions());
+    IO::EmitJsonMap(*data, GetEmitterOptions());
   }
   else if (extension == ".tmx" || extension == ".xml") {
     const auto data = ConvertDocumentToIR(document);
-    IO::EmitXmlMap(data, GetEmitterOptions());
+    IO::EmitXmlMap(*data, GetEmitterOptions());
   }
   else if (extension == ".yml" || extension == ".yaml") {
     const auto data = ConvertDocumentToIR(document);
-    IO::EmitYamlMap(data, GetEmitterOptions());
+    IO::EmitYamlMap(*data, GetEmitterOptions());
   }
   else {
     CENTURION_LOG_ERROR("Failed to save map document due to invalid extension: %s",

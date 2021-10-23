@@ -15,6 +15,6 @@ namespace Tactile {
  *
  * \return a map document based on the intermediate representation.
  */
-[[nodiscard]] auto CreateDocumentFromIR(const IO::MapData& data) -> Document;
+[[nodiscard]] auto CreateDocumentFromIR(const IO::Map& data) -> Document;
 
 }  // namespace Tactile
