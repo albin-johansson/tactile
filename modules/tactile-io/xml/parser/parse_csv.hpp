@@ -3,9 +3,10 @@
 #include <tactile-base/tactile_std.hpp>
 
 #include "parse_error.hpp"
+#include "parse_ir.hpp"
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseCSV(CStr csv, int32 nCols, TileMatrix& matrix) -> ParseError;
+[[nodiscard]] auto ParseCSV(CStr csv, TileLayer& layer) -> ParseError;
 
 }  // namespace Tactile::IO

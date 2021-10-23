@@ -4,7 +4,6 @@
 #include <cstring>     // strcmp
 #include <filesystem>  // exists, weakly_canonical
 #include <string>      // string
-#include <utility>     // move
 
 #include "parse_fancy_tiles.hpp"
 #include "parse_properties.hpp"
@@ -12,18 +11,6 @@
 
 namespace Tactile::IO {
 namespace {
-
-[[nodiscard]] auto ParseFirstTileId(const pugi::xml_node node, int32& firstId)
-    -> ParseError
-{
-  if (const auto id = GetInt(node, "firstgid")) {
-    firstId = TileID{*id};
-    return ParseError::None;
-  }
-  else {
-    return ParseError::TilesetMissingFirstGid;
-  }
-}
 
 [[nodiscard]] auto GetImageNode(const pugi::xml_node node) -> pugi::xml_node
 {
@@ -48,32 +35,32 @@ namespace {
 }
 
 [[nodiscard]] auto ParseCommon(const pugi::xml_node node,
-                               TilesetData& data,
-                               const std::filesystem::path& directory) -> ParseError
+                               Tileset& tileset,
+                               const std::filesystem::path& dir) -> ParseError
 {
   if (const auto tileWidth = GetInt(node, "tilewidth")) {
-    data.tile_width = *tileWidth;
+    IO::SetTileWidth(tileset, *tileWidth);
   }
   else {
     return ParseError::TilesetMissingTileWidth;
   }
 
   if (const auto tileHeight = GetInt(node, "tileheight")) {
-    data.tile_height = *tileHeight;
+    IO::SetTileHeight(tileset, *tileHeight);
   }
   else {
     return ParseError::TilesetMissingTileHeight;
   }
 
   if (const auto count = GetInt(node, "tilecount")) {
-    data.tile_count = *count;
+    IO::SetTileCount(tileset, *count);
   }
   else {
     return ParseError::TilesetMissingTileCount;
   }
 
   if (const auto count = GetInt(node, "columns")) {
-    data.column_count = *count;
+    IO::SetColumnCount(tileset, *count);
   }
   else {
     return ParseError::TilesetMissingColumnCount;
@@ -82,45 +69,44 @@ namespace {
   const auto imageNode = GetImageNode(node);
 
   if (const auto imageWidth = GetInt(imageNode, "width")) {
-    data.image_width = *imageWidth;
+    IO::SetImageWidth(tileset, *imageWidth);
   }
   else {
     return ParseError::TilesetMissingImageWidth;
   }
 
   if (const auto imageHeight = GetInt(imageNode, "height")) {
-    data.image_height = *imageHeight;
+    IO::SetImageHeight(tileset, *imageHeight);
   }
   else {
     return ParseError::TilesetMissingImageHeight;
   }
 
-  const auto relativeImagePath = GetTilesetImageRelativePath(imageNode);
-  if (!relativeImagePath) {
+  const auto relImagePath = GetTilesetImageRelativePath(imageNode);
+  if (!relImagePath) {
     return ParseError::TilesetMissingImagePath;
   }
 
-  const auto absoluteImagePath =
-      std::filesystem::weakly_canonical(directory / *relativeImagePath);
+  const auto absoluteImagePath = std::filesystem::weakly_canonical(dir / *relImagePath);
   if (std::filesystem::exists(absoluteImagePath)) {
-    data.absolute_image_path = absoluteImagePath;
+    IO::SetImagePath(tileset, absoluteImagePath.c_str());
   }
   else {
     return ParseError::TilesetImageDoesNotExist;
   }
 
   if (auto name = GetString(node, "name")) {
-    data.name = std::move(*name);
+    IO::SetName(tileset, name->c_str());
   }
   else {
     return ParseError::TilesetMissingName;
   }
 
-  if (const auto err = ParseFancyTiles(node, data); err != ParseError::None) {
+  if (const auto err = ParseFancyTiles(node, tileset); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseProperties(node, data.properties); err != ParseError::None) {
+  if (const auto err = ParseProperties(node, tileset); err != ParseError::None) {
     return err;
   }
 
@@ -128,13 +114,13 @@ namespace {
 }
 
 [[nodiscard]] auto ParseExternal(const pugi::xml_node node,
-                                 TilesetData& data,
-                                 const std::filesystem::path& directory) -> ParseError
+                                 Tileset& tileset,
+                                 const std::filesystem::path& dir) -> ParseError
 {
   assert(Contains(node, "source"));
 
   const auto source = GetString(node, "source").value();
-  const auto path = std::filesystem::weakly_canonical(directory / source);
+  const auto path = std::filesystem::weakly_canonical(dir / source);
   if (!std::filesystem::exists(path)) {
     return ParseError::ExternalTilesetDoesNotExist;
   }
@@ -144,35 +130,36 @@ namespace {
     return ParseError::CouldNotReadExternalTileset;
   }
 
-  return ParseCommon(external.child("tileset"), data, directory);
+  return ParseCommon(external.child("tileset"), tileset, dir);
 }
 
 [[nodiscard]] auto ParseTileset(const pugi::xml_node node,
-                                TilesetData& data,
-                                const std::filesystem::path& directory) -> ParseError
+                                Tileset& tileset,
+                                const std::filesystem::path& dir) -> ParseError
 {
-  if (const auto err = ParseFirstTileId(node, data.first_id); err != ParseError::None) {
-    return err;
+  if (const auto id = GetInt(node, "firstgid")) {
+    IO::SetFirstGlobalId(tileset, *id);
+  }
+  else {
+    return ParseError::TilesetMissingFirstGid;
   }
 
   if (Contains(node, "source")) {
-    return ParseExternal(node, data, directory);
+    return ParseExternal(node, tileset, dir);
   }
   else {
-    return ParseCommon(node, data, directory);
+    return ParseCommon(node, tileset, dir);
   }
 }
 
 }  // namespace
 
-auto ParseTilesets(const pugi::xml_node root,
-                   std::vector<TilesetData>& tilesets,
-                   const std::filesystem::path& directory) -> ParseError
+auto ParseTilesets(const pugi::xml_node root, Map& map, const std::filesystem::path& dir)
+    -> ParseError
 {
-  for (const auto tileset : root.children("tileset")) {
-    auto& tilesetData = tilesets.emplace_back();
-    if (const auto err = ParseTileset(tileset, tilesetData, directory);
-        err != ParseError::None)
+  for (const auto tilesetNode : root.children("tileset")) {
+    auto& tileset = IO::AddTileset(map);
+    if (const auto err = ParseTileset(tilesetNode, tileset, dir); err != ParseError::None)
     {
       return err;
     }

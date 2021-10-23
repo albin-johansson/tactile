@@ -14,7 +14,7 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseLayer(pugi::xml_node node, LayerData& layer, usize index)
+[[nodiscard]] auto ParseLayer(pugi::xml_node node, Layer& layer, usize index)
     -> ParseError;
 
 [[nodiscard]] auto GetLayerNodes(const pugi::xml_node root) -> std::vector<pugi::xml_node>
@@ -33,59 +33,56 @@ namespace {
   return nodes;
 }
 
-[[nodiscard]] auto ParseGroupLayer(const pugi::xml_node node, LayerData& layer)
-    -> ParseError
+[[nodiscard]] auto ParseGroupLayer(const pugi::xml_node node, Layer& layer) -> ParseError
 {
-  auto& data = layer.data.emplace<GroupLayerData>();
+  auto& groupLayer = IO::MarkAsGroupLayer(layer);
 
   usize childIndex = 0;
   for (const auto layerNode : GetLayerNodes(node)) {
-    auto layerData = std::make_unique<LayerData>();
+    auto& childLayer = IO::AddLayer(groupLayer);
 
-    if (const auto err = ParseLayer(layerNode, *layerData, childIndex);
+    if (const auto err = ParseLayer(layerNode, childLayer, childIndex);
         err != ParseError::None)
     {
       return err;
     }
 
-    data.layers.push_back(std::move(layerData));
     ++childIndex;
   }
 
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseLayer(const pugi::xml_node node,
-                              LayerData& layer,
-                              const usize index) -> ParseError
+[[nodiscard]] auto ParseLayer(const pugi::xml_node node, Layer& layer, const usize index)
+    -> ParseError
 {
-  layer.index = index;
+  IO::SetIndex(layer, index);
 
   if (const auto id = GetInt(node, "id")) {
-    layer.id = LayerID{*id};
+    IO::SetId(layer, *id);
   }
   else {
     return ParseError::LayerMissingId;
   }
 
-  layer.name = GetString(node, "name").value_or("Layer");
-  layer.opacity = GetFloat(node, "opacity").value_or(1.0f);
-  layer.is_visible = GetBool(node, "visible").value_or(true);
+  IO::SetName(layer, node.attribute("name").as_string("Layer"));
+  IO::SetOpacity(layer, GetFloat(node, "opacity").value_or(1.0f));
+  IO::SetVisible(layer, GetBool(node, "visible").value_or(true));
 
   if (std::strcmp(node.name(), "layer") == 0) {
-    layer.type = LayerType::TileLayer;
+    IO::SetType(layer, LayerType::TileLayer);
     if (const auto err = ParseTileLayer(node, layer); err != ParseError::None) {
       return err;
     }
   }
   else if (std::strcmp(node.name(), "objectgroup") == 0) {
-    layer.type = LayerType::ObjectLayer;
+    IO::SetType(layer, LayerType::ObjectLayer);
     if (const auto err = ParseObjectLayer(node, layer); err != ParseError::None) {
       return err;
     }
   }
   else if (std::strcmp(node.name(), "group") == 0) {
-    layer.type = LayerType::GroupLayer;
+    IO::SetType(layer, LayerType::GroupLayer);
     if (const auto err = ParseGroupLayer(node, layer); err != ParseError::None) {
       return err;
     }
@@ -94,7 +91,7 @@ namespace {
     return ParseError::LayerUnknownType;
   }
 
-  if (const auto err = ParseProperties(node, layer.properties); err != ParseError::None) {
+  if (const auto err = ParseProperties(node, layer); err != ParseError::None) {
     return err;
   }
 
@@ -103,13 +100,13 @@ namespace {
 
 }  // namespace
 
-auto ParseLayers(const pugi::xml_node root, std::vector<LayerData>& layers) -> ParseError
+auto ParseLayers(const pugi::xml_node root, Map& map) -> ParseError
 {
   usize index = 0;
   for (const auto node : GetLayerNodes(root)) {
-    auto& data = layers.emplace_back();
+    auto& layer = IO::AddLayer(map);
 
-    if (const auto err = ParseLayer(node, data, index); err != ParseError::None) {
+    if (const auto err = ParseLayer(node, layer, index); err != ParseError::None) {
       return err;
     }
 

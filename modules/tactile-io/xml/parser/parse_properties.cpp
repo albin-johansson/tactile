@@ -12,34 +12,33 @@ namespace {
 
 [[nodiscard]] auto ParseValue(const pugi::xml_node node,
                               const CStr type,
-                              PropertyValue& property) -> ParseError
+                              Property& property) -> ParseError
 {
   if (std::strcmp(type, "string") == 0) {
-    property.SetValue(GetString(node, "value").value());
+    IO::AssignString(property, node.attribute("value").as_string());
   }
   else if (std::strcmp(type, "int") == 0) {
-    property.SetValue(GetInt(node, "value").value());
+    IO::AssignInt(property, GetInt(node, "value").value());
   }
   else if (std::strcmp(type, "float") == 0) {
-    property.SetValue(GetFloat(node, "value").value());
+    IO::AssignFloat(property, GetFloat(node, "value").value());
   }
   else if (std::strcmp(type, "bool") == 0) {
-    property.SetValue(node.attribute("value").as_bool());
+    IO::AssignBool(property, node.attribute("value").as_bool());
   }
   else if (std::strcmp(type, "file") == 0) {
-    const auto file = GetString(node, "value").value();
-    property.SetValue(std::filesystem::path{file});
+    IO::AssignFile(property, node.attribute("value").as_string());
   }
   else if (std::strcmp(type, "object") == 0) {
-    const auto object = GetInt(node, "value").value();
-    property.SetValue(ObjectRef{object});
+    IO::AssignObject(property, GetInt(node, "value").value());
   }
   else if (std::strcmp(type, "color") == 0) {
     const auto string = GetString(node, "value").value();
     const auto color = (string.size() == 9) ? cen::color::from_argb(string)
                                             : cen::color::from_rgb(string);
     if (color) {
-      property.SetValue(*color);
+      IO::AssignColor(property,
+                      {color->red(), color->green(), color->blue(), color->alpha()});
     }
     else {
       return ParseError::CouldNotParseProperty;
@@ -52,11 +51,11 @@ namespace {
   return ParseError::None;
 }
 
-[[nodiscard]] auto ParseProperty(const pugi::xml_node node, PropertyData& data)
+[[nodiscard]] auto ParseProperty(const pugi::xml_node node, Property& property)
     -> ParseError
 {
   if (const auto* name = node.attribute("name").as_string(nullptr)) {
-    data.name = name;
+    IO::SetName(property, name);
   }
   else {
     return ParseError::PropertyMissingName;
@@ -64,12 +63,11 @@ namespace {
 
   // String properties in the XML format do not feature explicit type attributes
   if (const auto* type = node.attribute("type").as_string(nullptr)) {
-    if (const auto err = ParseValue(node, type, data.value); err != ParseError::None) {
+    if (const auto err = ParseValue(node, type, property); err != ParseError::None) {
       return err;
     }
   }
-  else if (const auto err = ParseValue(node, "string", data.value);
-           err != ParseError::None)
+  else if (const auto err = ParseValue(node, "string", property); err != ParseError::None)
   {
     return err;
   }
@@ -77,20 +75,44 @@ namespace {
   return ParseError::None;
 }
 
-}  // namespace
-
-auto ParseProperties(const pugi::xml_node node, std::vector<PropertyData>& properties)
-    -> ParseError
+template <typename T>
+[[nodiscard]] auto ParsePropertiesImpl(const pugi::xml_node node, T& target) -> ParseError
 {
   for (const auto propertyNode : node.child("properties").children("property")) {
-    auto& propertyData = properties.emplace_back();
-    if (const auto err = ParseProperty(propertyNode, propertyData);
-        err != ParseError::None) {
+    auto& property = IO::AddProperty(target);
+    if (const auto err = ParseProperty(propertyNode, property); err != ParseError::None) {
       return err;
     }
   }
 
   return ParseError::None;
+}
+
+}  // namespace
+
+auto ParseProperties(const pugi::xml_node node, Map& map) -> ParseError
+{
+  return ParsePropertiesImpl(node, map);
+}
+
+auto ParseProperties(const pugi::xml_node node, Tileset& tileset) -> ParseError
+{
+  return ParsePropertiesImpl(node, tileset);
+}
+
+auto ParseProperties(const pugi::xml_node node, Tile& tile) -> ParseError
+{
+  return ParsePropertiesImpl(node, tile);
+}
+
+auto ParseProperties(const pugi::xml_node node, Layer& layer) -> ParseError
+{
+  return ParsePropertiesImpl(node, layer);
+}
+
+auto ParseProperties(const pugi::xml_node node, Object& object) -> ParseError
+{
+  return ParsePropertiesImpl(node, object);
 }
 
 }  // namespace Tactile::IO

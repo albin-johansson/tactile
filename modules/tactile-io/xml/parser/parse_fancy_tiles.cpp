@@ -6,27 +6,26 @@
 
 namespace Tactile::IO {
 
-auto ParseFancyTiles(const pugi::xml_node node, TilesetData& data) -> ParseError
+auto ParseFancyTiles(const pugi::xml_node node, Tileset& tileset) -> ParseError
 {
-  for (const auto tile : node.children("tile")) {
-    auto& tileData = data.tiles.emplace_back();
-    tileData.id = TileID{GetInt(tile, "id").value()};
+  for (const auto tileNode : node.children("tile")) {
+    auto& tile = IO::AddTile(tileset);
+    IO::SetId(tile, GetInt(tileNode, "id").value());
 
-    for (const auto frame : tile.child("animation").children("frame")) {
-      auto& frameData = tileData.animation.emplace_back();
-      frameData.tile = TileID{GetInt(frame, "tileid").value()};
-      frameData.duration = GetInt(frame, "duration").value();
+    for (const auto frameNode : tileNode.child("animation").children("frame")) {
+      auto& frame = IO::AddAnimationFrame(tile);
+      IO::SetTile(frame, GetInt(frameNode, "tileid").value());
+      IO::SetDuration(frame, GetInt(frameNode, "duration").value());
     }
 
-    for (const auto object : tile.child("objectgroup").children("object")) {
-      auto& objectData = tileData.objects.emplace_back();
-      if (const auto err = ParseObject(object, objectData); err != ParseError::None) {
+    for (const auto objectNode : tileNode.child("objectgroup").children("object")) {
+      auto& object = IO::AddObject(tile);
+      if (const auto err = ParseObject(objectNode, object); err != ParseError::None) {
         return err;
       }
     }
 
-    if (const auto err = ParseProperties(tile, tileData.properties);
-        err != ParseError::None) {
+    if (const auto err = ParseProperties(tileNode, tile); err != ParseError::None) {
       return err;
     }
   }

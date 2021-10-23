@@ -7,35 +7,34 @@
 
 namespace Tactile::IO {
 
-auto ParseObject(const pugi::xml_node node, ObjectData& object) -> ParseError
+auto ParseObject(const pugi::xml_node node, Object& object) -> ParseError
 {
   if (const auto id = GetInt(node, "id")) {
-    object.id = ObjectID{*id};
+    IO::SetId(object, *id);
   }
   else {
     return ParseError::ObjectMissingId;
   }
 
-  object.x = GetFloat(node, "x").value_or(0.0f);
-  object.y = GetFloat(node, "y").value_or(0.0f);
-  object.width = GetFloat(node, "width").value_or(0.0f);
-  object.height = GetFloat(node, "height").value_or(0.0f);
-  object.name = GetString(node, "name").value_or(std::string{});
-  object.tag = GetString(node, "type").value_or(std::string{});
-  object.visible = GetBool(node, "visible").value_or(true);
+  IO::SetName(object, node.attribute("name").as_string());
+  IO::SetX(object, GetFloat(node, "x").value_or(0.0f));
+  IO::SetY(object, GetFloat(node, "y").value_or(0.0f));
+  IO::SetWidth(object, GetFloat(node, "width").value_or(0.0f));
+  IO::SetHeight(object, GetFloat(node, "height").value_or(0.0f));
+  IO::SetTag(object, node.attribute("type").as_string());
+  IO::SetVisible(object, GetBool(node, "visible").value_or(true));
 
   if (!node.child("point").empty()) {
-    object.type = ObjectType::Point;
+    IO::SetType(object, ObjectType::Point);
   }
   else if (!node.child("ellipse").empty()) {
-    object.type = ObjectType::Ellipse;
+    IO::SetType(object, ObjectType::Ellipse);
   }
   else {
-    object.type = ObjectType::Rectangle;
+    IO::SetType(object, ObjectType::Rectangle);
   }
 
-  if (const auto err = ParseProperties(node, object.properties); err != ParseError::None)
-  {
+  if (const auto err = ParseProperties(node, object); err != ParseError::None) {
     return err;
   }
 

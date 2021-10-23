@@ -12,107 +12,27 @@
 namespace Tactile::IO {
 namespace {
 
-[[nodiscard]] auto ParseOrientation(const pugi::xml_node root) -> ParseError
+[[nodiscard]] auto IsOrthogonalMap(const pugi::xml_node root) -> bool
 {
-  if (const auto orientation = GetString(root, "orientation");
-      orientation && orientation != "orthogonal")
-  {
-    return ParseError::MapUnsupportedOrientation;
-  }
-  else {
-    return ParseError::None;
-  }
+  const auto orientation = GetString(root, "orientation");
+  return orientation && orientation == "orthogonal";
 }
 
-[[nodiscard]] auto ParseInfinite(const pugi::xml_node root) -> ParseError
+[[nodiscard]] auto IsInfiniteMap(const pugi::xml_node root) -> bool
 {
-  if (const auto infinite = root.attribute("infinite");
-      !infinite.empty() && infinite.as_bool(true))
-  {
-    return ParseError::MapUnsupportedInfinite;
-  }
-  else {
-    return ParseError::None;
-  }
+  const auto infinite = root.attribute("infinite");
+  return !infinite.empty() && infinite.as_bool(true);
 }
 
-[[nodiscard]] auto ParseNextLayerId(const pugi::xml_node root, int32& nextLayerId)
-    -> ParseError
+[[nodiscard]] auto ParseMap(const std::filesystem::path& path, Map& map) -> ParseError
 {
-  if (const auto value = GetInt(root, "nextlayerid")) {
-    nextLayerId = *value;
-    return ParseError::None;
-  }
-  else {
-    return ParseError::MapMissingNextLayerId;
-  }
-}
+  const auto absolute = std::filesystem::absolute(path);
 
-[[nodiscard]] auto ParseNextObjectId(const pugi::xml_node root, int32& nextObjectId)
-    -> ParseError
-{
-  if (const auto value = GetInt(root, "nextobjectid")) {
-    nextObjectId = *value;
-    return ParseError::None;
-  }
-  else {
-    return ParseError::MapMissingNextObjectId;
-  }
-}
-
-[[nodiscard]] auto ParseTileWidth(const pugi::xml_node root, int32& tileWidth)
-    -> ParseError
-{
-  if (const auto value = GetInt(root, "tilewidth")) {
-    tileWidth = *value;
-    return ParseError::None;
-  }
-  else {
-    return ParseError::MapMissingTileWidth;
-  }
-}
-
-[[nodiscard]] auto ParseTileHeight(const pugi::xml_node root, int32& tileHeight)
-    -> ParseError
-{
-  if (const auto value = GetInt(root, "tileheight")) {
-    tileHeight = *value;
-    return ParseError::None;
-  }
-  else {
-    return ParseError::MapMissingTileHeight;
-  }
-}
-
-[[nodiscard]] auto ParseWidth(const pugi::xml_node root, int32& width) -> ParseError
-{
-  if (const auto value = GetInt(root, "width")) {
-    width = *value;
-    return ParseError::None;
-  }
-  else {
-    return ParseError::MapMissingWidth;
-  }
-}
-
-[[nodiscard]] auto ParseHeight(const pugi::xml_node root, int32& height) -> ParseError
-{
-  if (const auto value = GetInt(root, "height")) {
-    height = *value;
-    return ParseError::None;
-  }
-  else {
-    return ParseError::MapMissingHeight;
-  }
-}
-
-[[nodiscard]] auto ParseMap(const std::filesystem::path& path, MapData& data)
-    -> ParseError
-{
-  data.absolute_path = std::filesystem::absolute(path);
-  if (!std::filesystem::exists(data.absolute_path)) {
+  if (!std::filesystem::exists(absolute)) {
     return ParseError::MapDoesNotExist;
   }
+
+  IO::SetPath(map, absolute.c_str());
 
   pugi::xml_document document;
   if (!document.load_file(path.c_str())) {
@@ -121,53 +41,66 @@ namespace {
 
   const auto root = document.child("map");
 
-  if (const auto err = ParseOrientation(root); err != ParseError::None) {
+  if (!IsOrthogonalMap(root)) {
+    return ParseError::MapUnsupportedOrientation;
+  }
+
+  if (IsInfiniteMap(root)) {
+    return ParseError::MapUnsupportedInfinite;
+  }
+
+  if (const auto value = GetInt(root, "nextlayerid")) {
+    IO::SetNextLayerId(map, *value);
+  }
+  else {
+    return ParseError::MapMissingNextLayerId;
+  }
+
+  if (const auto value = GetInt(root, "nextobjectid")) {
+    IO::SetNextObjectId(map, *value);
+  }
+  else {
+    return ParseError::MapMissingNextObjectId;
+  }
+
+  if (const auto value = GetInt(root, "tilewidth")) {
+    IO::SetTileWidth(map, *value);
+  }
+  else {
+    return ParseError::MapMissingTileWidth;
+  }
+
+  if (const auto value = GetInt(root, "tileheight")) {
+    IO::SetTileHeight(map, *value);
+  }
+  else {
+    return ParseError::MapMissingTileHeight;
+  }
+
+  if (const auto value = GetInt(root, "height")) {
+    IO::SetRowCount(map, *value);
+  }
+  else {
+    return ParseError::MapMissingHeight;
+  }
+
+  if (const auto value = GetInt(root, "width")) {
+    IO::SetColumnCount(map, *value);
+  }
+  else {
+    return ParseError::MapMissingWidth;
+  }
+
+  const auto dir = absolute.parent_path();
+  if (const auto err = ParseTilesets(root, map, dir); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseInfinite(root); err != ParseError::None) {
+  if (const auto err = ParseLayers(root, map); err != ParseError::None) {
     return err;
   }
 
-  if (const auto err = ParseNextLayerId(root, data.next_layer_id);
-      err != ParseError::None) {
-    return err;
-  }
-
-  if (const auto err = ParseNextObjectId(root, data.next_object_id);
-      err != ParseError::None)
-  {
-    return err;
-  }
-
-  if (const auto err = ParseTileWidth(root, data.tile_width); err != ParseError::None) {
-    return err;
-  }
-
-  if (const auto err = ParseTileHeight(root, data.tile_height); err != ParseError::None) {
-    return err;
-  }
-
-  if (const auto err = ParseWidth(root, data.column_count); err != ParseError::None) {
-    return err;
-  }
-
-  if (const auto err = ParseHeight(root, data.row_count); err != ParseError::None) {
-    return err;
-  }
-
-  const auto directory = data.absolute_path.parent_path();
-  if (const auto err = ParseTilesets(root, data.tilesets, directory);
-      err != ParseError::None)
-  {
-    return err;
-  }
-
-  if (const auto err = ParseLayers(root, data.layers); err != ParseError::None) {
-    return err;
-  }
-
-  if (const auto err = ParseProperties(root, data.properties); err != ParseError::None) {
+  if (const auto err = ParseProperties(root, map); err != ParseError::None) {
     return err;
   }
 
@@ -176,21 +109,20 @@ namespace {
 
 }  // namespace
 
-auto ParseXmlMap(const std::filesystem::path& path, ParseError* error) -> Maybe<MapData>
+auto ParseXmlMap(const CPathStr path, ParseError* error) -> Map*
 {
-  MapData data;
-  const auto res = ParseMap(path, data);
-  if (res == ParseError::None) {
-    if (error) {
-      *error = ParseError::None;
-    }
-    return data;
+  auto data = CreateMap();
+  const auto err = ParseMap(path, *data);
+
+  if (error) {
+    *error = err;
+  }
+
+  if (err == ParseError::None) {
+    return data.release();
   }
   else {
-    if (error) {
-      *error = res;
-    }
-    return nothing;
+    return nullptr;
   }
 }
 

@@ -7,6 +7,6 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseTileLayer(pugi::xml_node node, LayerData& layer) -> ParseError;
+[[nodiscard]] auto ParseTileLayer(pugi::xml_node node, Layer& layer) -> ParseError;
 
 }  // namespace Tactile::IO

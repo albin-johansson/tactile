@@ -7,6 +7,6 @@
 
 namespace Tactile::IO {
 
-[[nodiscard]] auto ParseFancyTiles(pugi::xml_node node, TilesetData& data) -> ParseError;
+[[nodiscard]] auto ParseFancyTiles(pugi::xml_node node, Tileset& tileset) -> ParseError;
 
 }  // namespace Tactile::IO

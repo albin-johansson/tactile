@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>  // path
-#include <vector>      // vector
 
 #include <pugixml.hpp>  // xml_node
 
@@ -11,7 +10,7 @@
 namespace Tactile::IO {
 
 [[nodiscard]] auto ParseTilesets(pugi::xml_node root,
-                                 std::vector<TilesetData>& tilesets,
-                                 const std::filesystem::path& directory) -> ParseError;
+                                 Map& map,
+                                 const std::filesystem::path& dir) -> ParseError;
 
 }  // namespace Tactile::IO

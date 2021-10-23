@@ -2,13 +2,14 @@
 
 #include <cstring>  // strcmp
 
+#include <tactile-base/tactile_std.hpp>
+
 #include "parse_csv.hpp"
 #include "parse_tile_nodes.hpp"
 
 namespace Tactile::IO {
 
-auto ParseTileData(const pugi::xml_node node, const int32 nCols, TileMatrix& matrix)
-    -> ParseError
+auto ParseTileData(const pugi::xml_node node, TileLayer& layer) -> ParseError
 {
   const auto data = node.child("data");
 
@@ -21,15 +22,13 @@ auto ParseTileData(const pugi::xml_node node, const int32 nCols, TileMatrix& mat
     }
     else {
       const auto text = data.text();
-      if (const auto error = ParseCSV(text.get(), nCols, matrix);
-          error != ParseError::None) {
+      if (const auto error = ParseCSV(text.get(), layer); error != ParseError::None) {
         return error;
       }
     }
   }
   else {
-    if (const auto error = ParseTileNodes(data, nCols, matrix); error != ParseError::None)
-    {
+    if (const auto error = ParseTileNodes(data, layer); error != ParseError::None) {
       return error;
     }
   }

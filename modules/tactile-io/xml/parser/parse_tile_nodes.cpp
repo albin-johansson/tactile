@@ -1,18 +1,20 @@
 #include "parse_tile_nodes.hpp"
 
 #include <tactile-base/map_position.hpp>
+#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile::IO {
 
-auto ParseTileNodes(const pugi::xml_node& data, const int32 nCols, TileMatrix& matrix)
-    -> ParseError
+auto ParseTileNodes(const pugi::xml_node& data, TileLayer& layer) -> ParseError
 {
-  int index = 0;
+  const auto nCols = IO::GetColumnCount(layer);
+
+  int32 index = 0;
   for (const auto node : data.children("tile")) {
-    const auto gid = node.attribute("gid").as_int(empty_tile);
+    const auto id = node.attribute("gid").as_int(empty_tile);
 
     const auto pos = MapPosition::FromIndex(index, nCols);
-    matrix.at(pos.GetRowIndex()).at(pos.GetColumnIndex()) = TileID{gid};
+    IO::SetTile(layer, pos.GetRow(), pos.GetColumn(), id);
 
     ++index;
   }
