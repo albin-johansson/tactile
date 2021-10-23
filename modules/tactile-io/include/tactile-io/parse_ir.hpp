@@ -1,7 +1,7 @@
 #pragma once
 
 #include <filesystem>  // path::value_type
-#include <memory>      // unique_ptr, make_unique
+#include <memory>      // unique_ptr
 
 #include <tactile-base/layer_type.hpp>
 #include <tactile-base/object_type.hpp>

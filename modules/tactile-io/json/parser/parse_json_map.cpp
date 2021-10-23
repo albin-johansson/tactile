@@ -1,9 +1,11 @@
+#include <cassert>     // assert
 #include <filesystem>  // absolute, exists, weakly_canonical
 #include <string>      // string
 #include <utility>     // move
 
-#include <json.hpp>  // json
 #include <tactile-base/tactile_std.hpp>
+
+#include <json.hpp>  // json
 
 #include "../json_common.hpp"
 #include "parse_layers.hpp"
@@ -168,8 +170,10 @@ namespace {
 
 }  // namespace
 
-auto ParseJsonMap(const std::filesystem::path& path, ParseError* error) -> MapPtr
+auto ParseJsonMap(const CPathStr path, ParseError* error) -> Map*
 {
+  assert(path);
+
   auto map = CreateMap();
   const auto err = ParseMap(path, *map);
 
@@ -178,7 +182,7 @@ auto ParseJsonMap(const std::filesystem::path& path, ParseError* error) -> MapPt
   }
 
   if (err == ParseError::None) {
-    return map;
+    return map.release();
   }
   else {
     return nullptr;

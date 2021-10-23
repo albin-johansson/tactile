@@ -1,7 +1,6 @@
 #include "map_parser.hpp"
 
 #include <filesystem>  // absolute
-#include <utility>     // move
 
 #include <tactile-io/parser.hpp>
 
@@ -22,25 +21,7 @@ MapParser::MapParser(const std::filesystem::path& path)
       return;
     }
 
-    const auto extension = path.extension();
-    if (extension == ".json") {
-      if (auto data = IO::ParseJsonMap(path, &mError)) {
-        mData = std::move(data);
-      }
-    }
-    else if (extension == ".tmx" || extension == ".xml") {
-      if (auto data = IO::ParseXmlMap(path, &mError)) {
-        mData = std::move(data);
-      }
-    }
-    else if (extension == ".yaml" || extension == ".yml") {
-      if (auto data = IO::ParseYamlMap(path, &mError)) {
-        mData = std::move(data);
-      }
-    }
-    else {
-      mError = IO::ParseError::MapUnsupportedExtension;
-    }
+    mData = IO::ParseMap(path, &mError);
 
     TACTILE_PROFILE_END("Parsed map");
   }

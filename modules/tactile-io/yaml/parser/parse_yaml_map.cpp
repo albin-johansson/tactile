@@ -1,3 +1,4 @@
+#include <cassert>     // assert
 #include <filesystem>  // absolute
 
 #include <yaml-cpp/yaml.h>
@@ -87,8 +88,10 @@ namespace {
 
 }  // namespace
 
-auto ParseYamlMap(const std::filesystem::path& path, ParseError* error) -> MapPtr
+auto ParseYamlMap(const CPathStr path, ParseError* error) -> Map*
 {
+  assert(path);
+
   auto map = CreateMap();
   const auto err = ParseMap(path, *map);
 
@@ -97,7 +100,7 @@ auto ParseYamlMap(const std::filesystem::path& path, ParseError* error) -> MapPt
   }
 
   if (err == ParseError::None) {
-    return map;
+    return map.release();
   }
   else {
     return nullptr;
