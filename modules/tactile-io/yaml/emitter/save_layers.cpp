@@ -17,7 +17,7 @@ void SaveTiles(YAML::Emitter& emitter, const Layer& layer)
 
   const auto& tileLayer = GetTileLayer(layer);
   const auto nRows = GetRowCount(tileLayer);
-  const auto nCols = GetRowCount(tileLayer);
+  const auto nCols = GetColumnCount(tileLayer);
 
   std::stringstream stream;
   usize index = 0;
