@@ -32,6 +32,7 @@ set(TEST_FILES
 
 add_executable(${TACTILE_TEST} ${TEST_FILES})
 add_dependencies(${TACTILE_TEST} ${TACTILE_LIB})
+add_dependencies(${TACTILE_TEST} TactileIO)
 
 target_include_directories(${TACTILE_TEST}
     PUBLIC
