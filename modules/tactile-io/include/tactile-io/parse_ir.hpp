@@ -40,7 +40,15 @@ struct Map;
 TACTILE_IO_API_QUERY auto NewMap() -> Map*;
 TACTILE_IO_API void DeleteMap(Map* map) noexcept;
 
-using MapPtr = std::unique_ptr<Map, decltype([](Map* map) noexcept { DeleteMap(map); })>;
+struct TACTILE_IO_API MapDeleter final
+{
+  void operator()(Map* map) noexcept
+  {
+    DeleteMap(map);
+  }
+};
+
+using MapPtr = std::unique_ptr<Map, MapDeleter>;
 
 /// \name Map API
 /// \{
