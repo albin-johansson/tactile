@@ -80,7 +80,7 @@ void VerifyLayers(const Map& data)
     ASSERT_EQ(1, IO::GetPropertyCount(rect));
 
     {
-      const auto& property = IO::GetProperty(layer, 0);
+      const auto& property = IO::GetProperty(rect, 0);
       ASSERT_STREQ("foo", IO::GetName(property));
       ASSERT_EQ(PropertyType::String, IO::GetType(property));
       ASSERT_STREQ("bar", IO::GetString(property));
