@@ -42,11 +42,11 @@ namespace {
     return ParseError::TilesetMissingName;
   }
 
-  if (const auto it = json.find("tileheight"); it != json.end()) {
+  if (const auto it = json.find("tilewidth"); it != json.end()) {
     SetTileWidth(tileset, it->get<int32>());
   }
   else {
-    return ParseError::TilesetMissingTileHeight;
+    return ParseError::TilesetMissingTileWidth;
   }
 
   if (const auto it = json.find("tileheight"); it != json.end()) {
