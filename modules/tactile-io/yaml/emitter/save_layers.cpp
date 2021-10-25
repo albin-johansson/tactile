@@ -49,15 +49,11 @@ void SaveObjects(YAML::Emitter& emitter,
                  const std::filesystem::path& dir)
 {
   const auto& objectLayer = GetObjectLayer(layer);
-  const auto count = GetObjectCount(objectLayer);
-  if (count != 0) {
-    emitter << YAML::Key << "objects";
-    emitter << YAML::BeginSeq;
+  if (GetObjectCount(objectLayer) != 0) {
+    emitter << YAML::Key << "objects" << YAML::BeginSeq;
 
-    for (usize index = 0; index < count; ++index) {
-      const auto& object = GetObject(objectLayer, index);
-      SaveObject(emitter, object, dir);
-    }
+    EachObject(objectLayer,
+               [&](const Object& object) { SaveObject(emitter, object, dir); });
 
     emitter << YAML::EndSeq;
   }
@@ -97,14 +93,11 @@ void SaveLayer(YAML::Emitter& emitter,
       emitter << "group-layer";
 
       const auto& groupLayer = GetGroupLayer(layer);
-      const auto count = GetLayerCount(groupLayer);
-      if (count != 0) {
+      if (GetLayerCount(groupLayer) != 0) {
         emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-        for (usize index = 0; index < count; ++index) {
-          const auto& child = GetLayer(groupLayer, index);
-          SaveLayer(emitter, child, dir);
-        }
+        EachLayer(groupLayer,
+                  [&](const Layer& child) { SaveLayer(emitter, child, dir); });
 
         emitter << YAML::EndSeq;
       }
@@ -120,17 +113,10 @@ void SaveLayer(YAML::Emitter& emitter,
 
 void SaveLayers(YAML::Emitter& emitter, const Map& map, const std::filesystem::path& dir)
 {
-  const auto count = GetLayerCount(map);
-  if (count != 0) {
+  if (GetLayerCount(map) != 0) {
     emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-    const auto rows = GetRowCount(map);
-    const auto cols = GetColumnCount(map);
-
-    for (usize index = 0; index < count; ++index) {
-      const auto& layer = GetLayer(map, index);
-      SaveLayer(emitter, layer, dir);
-    }
+    EachLayer(map, [&](const Layer& layer) { SaveLayer(emitter, layer, dir); });
 
     emitter << YAML::EndSeq;
   }

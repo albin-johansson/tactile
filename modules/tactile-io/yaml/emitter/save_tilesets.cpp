@@ -19,14 +19,12 @@ void SaveAnimation(YAML::Emitter& emitter, const Tile& tile)
 {
   emitter << YAML::Key << "animation" << YAML::BeginSeq;
 
-  const auto count = GetAnimationFrameCount(tile);
-  for (usize index = 0; index < count; ++index) {
-    const auto& frame = GetAnimationFrame(tile, index);
+  EachAnimationFrame(tile, [&](const AnimationFrame& frame) {
     emitter << YAML::BeginMap;
     emitter << YAML::Key << "tile" << YAML::Value << GetTile(frame);
     emitter << YAML::Key << "duration" << YAML::Value << GetDuration(frame);
     emitter << YAML::EndMap;
-  }
+  });
 
   emitter << YAML::EndSeq;
 }
@@ -37,11 +35,7 @@ void SaveObjects(YAML::Emitter& emitter,
 {
   emitter << YAML::Key << "objects" << YAML::BeginSeq;
 
-  const auto count = GetObjectCount(tile);
-  for (usize index = 0; index < count; ++index) {
-    const auto& object = GetObject(tile, index);
-    SaveObject(emitter, object, dir);
-  }
+  EachObject(tile, [&](const Object& object) { SaveObject(emitter, object, dir); });
 
   emitter << YAML::EndSeq;
 }
@@ -52,9 +46,7 @@ void SaveFancyTiles(YAML::Emitter& emitter,
 {
   emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
-  const auto count = GetTileInfoCount(tileset);
-  for (usize index = 0; index < count; ++index) {
-    const auto& tile = GetTileInfo(tileset, index);
+  EachTileInfo(tileset, [&](const Tile& tile) {
     if (IsTileWorthSaving(tile)) {
       emitter << YAML::BeginMap;
       emitter << YAML::Key << "id" << YAML::Value << GetId(tile);
@@ -70,7 +62,7 @@ void SaveFancyTiles(YAML::Emitter& emitter,
       SaveProperties(emitter, tile, dir);
       emitter << YAML::EndMap;
     }
-  }
+  });
 
   emitter << YAML::EndSeq;
 }
@@ -109,12 +101,10 @@ void SaveTilesets(YAML::Emitter& emitter,
                   const Map& map,
                   const std::filesystem::path& dir)
 {
-  const auto count = GetTilesetCount(map);
-  if (count != 0) {
+  if (GetTilesetCount(map) != 0) {
     emitter << YAML::Key << "tilesets" << YAML::BeginSeq;
 
-    for (usize index = 0; index < count; ++index) {
-      const auto& tileset = GetTileset(map, index);
+    EachTileset(map, [&](const Tileset& tileset) {
       const auto fileName = std::format("{}.yaml", GetName(tileset));
       SaveTileset(tileset, fileName, dir);
 
@@ -123,7 +113,7 @@ void SaveTilesets(YAML::Emitter& emitter,
               << GetFirstGlobalId(tileset);
       emitter << YAML::Key << "path" << YAML::Value << fileName;
       emitter << YAML::EndMap;
-    }
+    });
 
     emitter << YAML::EndSeq;
   }

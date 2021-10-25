@@ -15,13 +15,10 @@ void SavePropertiesImpl(YAML::Emitter& emitter,
                         const T& source,
                         const std::filesystem::path& dir)
 {
-  const auto count = GetPropertyCount(source);
-  if (count != 0) {
+  if (GetPropertyCount(source) != 0) {
     emitter << YAML::Key << "properties" << YAML::BeginSeq;
 
-    for (usize index = 0; index < count; ++index) {
-      const auto& property = GetProperty(source, index);
-
+    EachProperty(source, [&](const Property& property) {
       emitter << YAML::BeginMap;
       emitter << YAML::Key << "name" << YAML::Value << GetName(property);
 
@@ -64,7 +61,7 @@ void SavePropertiesImpl(YAML::Emitter& emitter,
       }
 
       emitter << YAML::EndMap;
-    }
+    });
 
     emitter << YAML::EndSeq;
   }
