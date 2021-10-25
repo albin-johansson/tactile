@@ -15,6 +15,7 @@ namespace Tactile::IO {
 /// \addtogroup io
 /// \{
 
+/// \brief Alias for a C-style string using the native preferred path `char` type.
 using CPathStr = const std::filesystem::path::value_type*;
 
 struct Color final
@@ -25,6 +26,7 @@ struct Color final
   uint8 alpha{};
 };
 
+/* Forward declarations of IR types, which are not defined in client code. */
 struct Property;
 struct AnimationFrame;
 struct Object;
@@ -40,6 +42,7 @@ struct Map;
 TACTILE_IO_API_QUERY auto NewMap() -> Map*;
 TACTILE_IO_API void DeleteMap(Map* map) noexcept;
 
+/// \brief `Map` deleter for use with `std::unique_ptr`.
 struct TACTILE_IO_API MapDeleter final
 {
   void operator()(Map* map) noexcept
@@ -48,11 +51,24 @@ struct TACTILE_IO_API MapDeleter final
   }
 };
 
+/// \brief Alias for a unique pointer to a `Map` instance.
 using MapPtr = std::unique_ptr<Map, MapDeleter>;
 
 /// \name Map API
 /// \{
 
+/**
+ * \brief Creates and returns a unique pointer to an empty `Map` instance.
+ *
+ * \details This function is the recommended way to construct `Map` instances, since you
+ * don't have to worry about managing the allocated memory (which is not the case with
+ * `NewMap()`).
+ *
+ * \note This function cannot simply be replaced by a call to `std::make_unique()`, since
+ * you need to use a custom deleter for the incomplete `Map` type.
+ *
+ * \return a unique pointer to a `Map`.
+ */
 inline auto CreateMap() -> MapPtr
 {
   return MapPtr{NewMap()};
