@@ -145,6 +145,16 @@ target_compile_definitions(TactileIO PRIVATE
     TACTILE_IO_EXPORT
     CENTURION_NO_SDL_MIXER)
 
+if (MSVC)
+  target_compile_options(TactileIO PRIVATE
+      /EHsc
+      /MP
+      /W4
+      /Zc:preprocessor
+      /Zc:__cplusplus
+      )
+endif ()
+
 target_precompile_headers(TactileIO PRIVATE
     <algorithm>
     <functional>
