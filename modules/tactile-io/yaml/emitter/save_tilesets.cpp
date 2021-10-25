@@ -44,27 +44,29 @@ void SaveFancyTiles(YAML::Emitter& emitter,
                     const Tileset& tileset,
                     const std::filesystem::path& dir)
 {
-  emitter << YAML::Key << "tiles" << YAML::BeginSeq;
+  if (GetTileInfoCount(tileset) != 0) {
+    emitter << YAML::Key << "tiles" << YAML::BeginSeq;
 
-  EachTileInfo(tileset, [&](const Tile& tile) {
-    if (IsTileWorthSaving(tile)) {
-      emitter << YAML::BeginMap;
-      emitter << YAML::Key << "id" << YAML::Value << GetId(tile);
+    EachTileInfo(tileset, [&](const Tile& tile) {
+      if (IsTileWorthSaving(tile)) {
+        emitter << YAML::BeginMap;
+        emitter << YAML::Key << "id" << YAML::Value << GetId(tile);
 
-      if (const auto nFrames = GetAnimationFrameCount(tile); nFrames != 0) {
-        SaveAnimation(emitter, tile);
+        if (GetAnimationFrameCount(tile) != 0) {
+          SaveAnimation(emitter, tile);
+        }
+
+        if (GetObjectCount(tile) != 0) {
+          SaveObjects(emitter, tile, dir);
+        }
+
+        SaveProperties(emitter, tile, dir);
+        emitter << YAML::EndMap;
       }
+    });
 
-      if (const auto nObjects = GetObjectCount(tile); nObjects != 0) {
-        SaveObjects(emitter, tile, dir);
-      }
-
-      SaveProperties(emitter, tile, dir);
-      emitter << YAML::EndMap;
-    }
-  });
-
-  emitter << YAML::EndSeq;
+    emitter << YAML::EndSeq;
+  }
 }
 
 void SaveTileset(const Tileset& tileset,
