@@ -182,6 +182,49 @@ The `Frame` node represents a frame in an animation.
 
 ---
 
+### `ComponentTemplate` (Not implemented)
+
+|    Attribute |   Type   | Required | Description                               |
+| -----------: | :------: | :------: | :---------------------------------------- |
+|       `name` | `string` |   Yes    | The name of the component template.       |
+| `attributes` | Sequence |    No    | A sequence of `ComponentAttribute` nodes. |
+
+Example:
+
+```YAML
+name: Vec2f
+attributes:
+  - name: X
+    type: float
+  - name: Y
+    type: float
+```
+
+```YAML
+name: Movable
+attributes:
+  - name: Velocity
+    type: Vec2f
+  - name: Position
+    type: Vec2f
+```
+
+---
+
+### `ComponentAttribute` (Not implemented)
+
+| Attribute |   Type   | Required | Description                                                     |
+| --------: | :------: | :------: | :-------------------------------------------------------------- |
+|    `name` | `string` |   Yes    | The name of the attribute.                                      |
+|    `type` | `string` |   Yes    | The name of a `ComponentTemplate` or any of the property types. |
+
+```YAML
+name: X
+type: float
+```
+
+---
+
 ## `Property`
 
 | Attribute |   Type    | Required | Description                                                          |
