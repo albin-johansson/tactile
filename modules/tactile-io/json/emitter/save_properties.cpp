@@ -61,11 +61,8 @@ template <typename T>
 {
   auto array = JSON::array();
 
-  const auto count = GetPropertyCount(source);
-  for (usize index = 0; index < count; ++index) {
-    const auto& property = GetProperty(source, index);
-    array += SaveProperty(property, dir);
-  }
+  EachProperty(source,
+               [&](const Property& property) { array += SaveProperty(property, dir); });
 
   return array;
 }

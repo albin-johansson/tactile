@@ -20,7 +20,7 @@ void AddCommonAttributes(JSON& json, const Layer& layer, const std::filesystem::
   json["x"] = 0;
   json["y"] = 0;
 
-  if (const auto nProps = GetPropertyCount(layer); nProps != 0) {
+  if (GetPropertyCount(layer) != 0) {
     json["properties"] = SaveProperties(layer, dir);
   }
 }
@@ -63,12 +63,8 @@ void AddCommonAttributes(JSON& json, const Layer& layer, const std::filesystem::
   auto objects = JSON::array();
 
   const auto& objectLayer = GetObjectLayer(layer);
-  const auto nObjects = GetObjectCount(objectLayer);
-
-  for (usize index = 0; index < nObjects; ++index) {
-    const auto& object = GetObject(objectLayer, index);
-    objects += SaveObject(object, dir);
-  }
+  EachObject(objectLayer,
+             [&](const Object& object) { objects += SaveObject(object, dir); });
 
   json["objects"] = std::move(objects);
 
@@ -88,12 +84,7 @@ void AddCommonAttributes(JSON& json, const Layer& layer, const std::filesystem::
   auto layers = JSON::array();
 
   const auto& groupLayer = GetGroupLayer(layer);
-  const auto nChildren = GetLayerCount(groupLayer);
-
-  for (usize index = 0; index < nChildren; ++index) {
-    const auto& child = GetLayer(groupLayer, index);
-    layers += SaveLayer(child, dir);
-  }
+  EachLayer(groupLayer, [&](const Layer& child) { layers += SaveLayer(child, dir); });
 
   json["layers"] = std::move(layers);
 
@@ -122,12 +113,7 @@ void AddCommonAttributes(JSON& json, const Layer& layer, const std::filesystem::
 auto SaveLayers(const Map& map, const std::filesystem::path& dir) -> JSON
 {
   auto json = JSON::array();
-
-  const auto count = GetLayerCount(map);
-  for (usize index = 0; index < count; ++index) {
-    const auto& layer = GetLayer(map, index);
-    json += SaveLayer(layer, dir);
-  }
+  EachLayer(map, [&](const Layer& layer) { json += SaveLayer(layer, dir); });
 
   return json;
 }

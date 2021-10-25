@@ -18,14 +18,15 @@ auto SaveObject(const Object& object, const std::filesystem::path& dir) -> JSON
   json["type"] = GetTag(object);
   json["rotation"] = 0;
 
-  if (const auto type = GetType(object); type == ObjectType::Point) {
+  const auto type = GetType(object);
+  if (type == ObjectType::Point) {
     json["point"] = true;
   }
   else if (type == ObjectType::Ellipse) {
     json["ellipse"] = true;
   }
 
-  if (const auto nProps = GetPropertyCount(object); nProps != 0) {
+  if (GetPropertyCount(object) != 0) {
     json["properties"] = SaveProperties(object, dir);
   }
 

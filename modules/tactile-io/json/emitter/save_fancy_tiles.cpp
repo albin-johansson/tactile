@@ -20,14 +20,12 @@ namespace {
   return json;
 }
 
-[[nodiscard]] auto SaveAnimation(const Tile& tile, const usize nFrames) -> JSON
+[[nodiscard]] auto SaveAnimation(const Tile& tile) -> JSON
 {
   auto array = JSON::array();
 
-  for (usize index = 0; index < nFrames; ++index) {
-    const auto& frame = GetAnimationFrame(tile, index);
-    array += SaveFrame(frame);
-  }
+  EachAnimationFrame(tile,
+                     [&](const AnimationFrame& frame) { array += SaveFrame(frame); });
 
   return array;
 }
@@ -38,11 +36,11 @@ namespace {
   auto json = JSON::object();
   json["id"] = GetId(tile);
 
-  if (const auto nFrames = GetAnimationFrameCount(tile); nFrames != 0) {
-    json["animation"] = SaveAnimation(tile, nFrames);
+  if (GetAnimationFrameCount(tile) != 0) {
+    json["animation"] = SaveAnimation(tile);
   }
 
-  if (const auto nObjects = GetObjectCount(tile); nObjects != 0) {
+  if (GetObjectCount(tile) != 0) {
     auto dummy = JSON::object();
     dummy["draworder"] = "index";
     dummy["name"] = "";
@@ -53,16 +51,13 @@ namespace {
     dummy["y"] = 0;
 
     auto objects = JSON::array();
-    for (usize index = 0; index < nObjects; ++index) {
-      const auto& object = GetObject(tile, index);
-      objects += SaveObject(object, dir);
-    }
-    dummy["objects"] = std::move(objects);
+    EachObject(tile, [&](const Object& object) { objects += SaveObject(object, dir); });
 
+    dummy["objects"] = std::move(objects);
     json["objectgroup"] = std::move(dummy);
   }
 
-  if (const auto nProps = GetPropertyCount(tile); nProps != 0) {
+  if (GetPropertyCount(tile) != 0) {
     json["properties"] = SaveProperties(tile, dir);
   }
 
@@ -75,13 +70,11 @@ auto SaveFancyTiles(const Tileset& tileset, const std::filesystem::path& dir) ->
 {
   auto array = JSON::array();
 
-  const auto count = GetTileInfoCount(tileset);
-  for (usize index = 0; index < count; ++index) {
-    const auto& tile = GetTileInfo(tileset, index);
+  EachTileInfo(tileset, [&](const Tile& tile) {
     if (IsTileWorthSaving(tile)) {
       array += SaveFancyTile(tile, dir);
     }
-  }
+  });
 
   return array;
 }

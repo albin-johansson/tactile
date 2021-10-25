@@ -28,7 +28,7 @@ void AddCommonAttributes(JSON& json,
   json["tileheight"] = GetTileHeight(tileset);
   json["tiles"] = SaveFancyTiles(tileset, dir);
 
-  if (const auto nProps = GetPropertyCount(tileset); nProps != 0) {
+  if (GetPropertyCount(tileset) != 0) {
     json["properties"] = SaveProperties(tileset, dir);
   }
 }
@@ -94,11 +94,9 @@ auto SaveTilesets(const Map& map,
 {
   auto json = JSON::array();
 
-  const auto count = GetTilesetCount(map);
-  for (usize index = 0; index < count; ++index) {
-    const auto& tileset = GetTileset(map, index);
+  EachTileset(map, [&](const Tileset& tileset) {
     json += SaveTileset(tileset, dir, options);
-  }
+  });
 
   return json;
 }
