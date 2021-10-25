@@ -69,7 +69,7 @@
         329,
         0,
         0,
-        0,
+        182,
         0,
         0,
         297,
@@ -98,19 +98,91 @@
       "width": 7,
       "x": 0,
       "y": 0
+    },
+    {
+      "draworder": "topdown",
+      "id": 3,
+      "name": "Object Layer 1",
+      "objects": [
+        {
+          "height": 30,
+          "id": 1,
+          "name": "Rect",
+          "rotation": 0,
+          "type": "CustomType",
+          "visible": true,
+          "width": 28,
+          "x": 36,
+          "y": 40
+        },
+        {
+          "height": 0,
+          "id": 2,
+          "name": "SomePoint",
+          "point": true,
+          "rotation": 0,
+          "type": "CustomPoint",
+          "visible": true,
+          "width": 0,
+          "x": 143,
+          "y": 47
+        }
+      ],
+      "opacity": 1,
+      "type": "objectgroup",
+      "visible": true,
+      "x": 0,
+      "y": 0
     }
   ],
-  "nextlayerid": 3,
-  "nextobjectid": 1,
+  "nextlayerid": 4,
+  "nextobjectid": 3,
   "orientation": "orthogonal",
+  "properties": [
+    {
+      "name": "boolean",
+      "type": "bool",
+      "value": true
+    },
+    {
+      "name": "cool color",
+      "type": "color",
+      "value": "#ff55aaff"
+    },
+    {
+      "name": "floating",
+      "type": "float",
+      "value": 12.3
+    },
+    {
+      "name": "foo",
+      "type": "string",
+      "value": "bar"
+    },
+    {
+      "name": "integer",
+      "type": "int",
+      "value": 42
+    },
+    {
+      "name": "object ref",
+      "type": "object",
+      "value": 1
+    },
+    {
+      "name": "path",
+      "type": "file",
+      "value": "foo.bar"
+    }
+  ],
   "renderorder": "right-down",
-  "tiledversion": "1.4.2",
+  "tiledversion": "1.7.0",
   "tileheight": 32,
   "tilesets": [
     {
       "columns": 32,
       "firstgid": 1,
-      "image": "../terrain.png",
+      "image": "..\/terrain.png",
       "imageheight": 1024,
       "imagewidth": 1024,
       "margin": 0,
@@ -118,11 +190,30 @@
       "spacing": 0,
       "tilecount": 1024,
       "tileheight": 32,
+      "tiles": [
+        {
+          "animation": [
+            {
+              "duration": 300,
+              "tileid": 181
+            },
+            {
+              "duration": 300,
+              "tileid": 182
+            },
+            {
+              "duration": 300,
+              "tileid": 183
+            }
+          ],
+          "id": 181
+        }
+      ],
       "tilewidth": 32
     }
   ],
   "tilewidth": 32,
   "type": "map",
-  "version": 1.4,
+  "version": "1.6",
   "width": 7
 }

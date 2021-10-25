@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="12" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" name="interior" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
+  <image source="../interior.png" width="1024" height="1024"/>
+  <tile id="0">
+   <animation>
+    <frame tileid="436" duration="100"/>
+    <frame tileid="468" duration="100"/>
+    <frame tileid="500" duration="100"/>
+    <frame tileid="532" duration="100"/>
+   </animation>
+  </tile>
+  <tile id="532">
+   <animation>
+    <frame tileid="436" duration="100"/>
+    <frame tileid="468" duration="100"/>
+    <frame tileid="500" duration="100"/>
+    <frame tileid="532" duration="100"/>
+   </animation>
+  </tile>
+ </tileset>
+ <layer id="1" name="Tile Layer 1" width="12" height="8">
+  <data encoding="csv">
+972,972,972,972,972,972,972,972,972,972,972,972,
+972,972,972,972,972,972,972,972,972,972,972,972,
+972,972,972,972,950,951,952,972,972,972,972,972,
+972,972,972,972,982,983,984,972,972,972,972,972,
+972,972,972,972,1014,1015,1016,972,972,972,972,972,
+972,972,972,972,972,972,972,972,972,972,972,972,
+972,972,972,972,972,972,972,972,972,972,972,972,
+972,972,972,972,972,972,972,972,972,972,972,972
+</data>
+ </layer>
+ <layer id="2" name="Tile Layer 2" width="12" height="8">
+  <data encoding="csv">
+0,0,598,599,0,0,0,0,0,779,780,0,
+0,533,630,631,0,0,0,533,0,811,812,0,
+0,0,662,663,0,0,0,0,0,0,533,0,
+824,0,0,533,0,473,474,757,758,759,0,0,
+856,0,0,0,0,0,0,789,790,791,0,0,
+888,0,0,0,0,0,533,821,822,823,533,0,
+0,0,533,0,0,0,0,853,854,855,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

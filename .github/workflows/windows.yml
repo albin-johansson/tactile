@@ -1,0 +1,75 @@
+name: "CI: Windows"
+
+on: [ push, pull_request ]
+
+env:
+  SDL_VERSION: 2.0.16
+  IMG_VERSION: 2.0.5
+  TTF_VERSION: 2.0.15
+  GLEW_VERSION: 2.2.0
+
+jobs:
+  windows-latest-test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: ilammy/msvc-dev-cmd@master
+      - uses: seanmiddleditch/gha-setup-ninja@master
+      - uses: lukka/get-cmake@latest
+
+      - name: Create binaries directory
+        shell: cmd
+        run: mkdir bin
+
+      - name: Download SDL2
+        uses: albin-johansson/download-sdl2@latest
+        with:
+          version: ${{env.SDL_VERSION}}
+          sources_destination: .
+          binaries_destination: bin
+
+      - name: Download SDL2_image
+        uses: albin-johansson/download-sdl2-image@latest
+        with:
+          version: ${{env.IMG_VERSION}}
+          sources_destination: .
+          binaries_destination: bin
+
+      - name: Download SDL2_ttf
+        uses: albin-johansson/download-sdl2-ttf@latest
+        with:
+          version: ${{env.TTF_VERSION}}
+          sources_destination: .
+          binaries_destination: bin
+
+      - name: Download GLEW
+        shell: powershell
+        run: |
+          Invoke-WebRequest -Uri "https://sourceforge.net/projects/glew/files/glew/${{env.GLEW_VERSION}}/glew-${{env.GLEW_VERSION}}-win32.zip" `
+                            -OutFile glew.zip `
+                            -UserAgent [Microsoft.PowerShell.Commands.PSUserAgent]::FireFox
+          7z x -y glew.zip
+          del glew.zip
+          Copy-Item -Path glew-${{env.GLEW_VERSION}}/bin/Release/x64/glew32.dll `
+                    -Destination bin/glew32.dll
+
+      - name: Create build folder
+        shell: cmd
+        run: cmake -E make_directory ./build
+
+      - name: Build
+        working-directory: ./build
+        shell: cmd
+        env:
+          SDL2DIR: ${{github.workspace}}/SDL2-${{env.SDL_VERSION}}
+          SDL2IMAGEDIR: ${{github.workspace}}/SDL2_image-${{env.IMG_VERSION}}
+          SDL2TTFDIR: ${{github.workspace}}/SDL2_ttf-${{env.TTF_VERSION}}
+          GLEW_LIBRARIES: ${{github.workspace}}/glew-${{env.GLEW_VERSION}}/lib/Release/x64
+        run: |
+          cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+          ninja
+
+      - name: Run tests
+        working-directory: ./build/build/test
+        shell: cmd
+        run: TactileTests.exe

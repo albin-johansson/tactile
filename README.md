@@ -1,42 +1,65 @@
-# tactile [![version](https://img.shields.io/badge/version-0.1.0-blue.svg)](https://semver.org) [![Language](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B#Standardization) [![Build status](https://ci.appveyor.com/api/projects/status/1dsfluq6ep8yj5lr?svg=true)](https://ci.appveyor.com/project/AlbinJohansson/tactile)
+# Tactile
 
-A tilemap editor that aims to be easy-to-use, fast and lightweight. Furthermore, compatibility with
-the excellent [Tiled](https://www.mapeditor.org/) map editor is pursued.
+[![License](https://img.shields.io/badge/license-GPL3-blue.svg)](https://opensource.org/licenses/GPL-3.0)
+[![version](https://img.shields.io/github/v/release/albin-johansson/tactile)](https://github.com/albin-johansson/tactile/releases)
+[![CI: Windows](https://github.com/albin-johansson/tactile/actions/workflows/windows.yml/badge.svg?branch=dev)](https://github.com/albin-johansson/tactile/actions/workflows/windows.yml)
 
-![example](meta/screenshots/v010.png "example")
+A tilemap editor that aims to be easy-to-use, fast and lightweight.
+
+![example](meta/splash.png "splash")
 
 ## Aim
 
-The following bullet points describe the goals that guide the design and development of the Tactile tilemap editor.
+* Must be easy to learn
+* Must be easy to use
+* Keep things simple, hide advanced options that are rarely used
+* Well documented and high-quality source code
+* Be lightweight and performant
 
-* Must be easy to learn and get started with.
-* Must be easy to use.
-* Keep things simple, hide advanced options that are rarely used.
-* Well documented and high-quality source code.
+## Features
 
-## Implemented features
+* Great performance thanks to ECS architecture
+* Extensive and intelligent undo/redo support
+* Tile layers
+* Object layers
+* Group layers
+* Embedded and external tilesets
+* Supports an intuitive and human-readable YAML map format
+* Read and write support for the JSON and XML map formats used by [Tiled](https://www.mapeditor.org/)
+* Intuitive mouse tools
+  * Tile stamp
+  * Eraser
+  * Bucket fill
+* Display tile animations
+* Various editor themes
+* Insightful and helpful error messages when things go wrong, e.g. when parsing corrupted maps
 
-* Work on multiple maps simultaneously.
-* Support for multiple layers.
-* Support for both embedded and external tilesets.
-* Smart undo/redo functionality to ensure a safe and encouraging workflow.
-* Open Tiled maps using the `.tmx` and `.json` formats.
-* Save tilemaps using the Tiled `.tmx` or `.json` format.
-* Stamp tool for "drawing" tiles to maps.
-* Bucket tool to fill areas with a specific tile.
-* Eraser tool that works like the stamp tool for removing content from layers.
+## Coming features
 
-## Upcoming features
+* Object layer tools
+* Active layer highlighting
+* Stamp tool randomizer
+* Tile animation editor
+* Theme editor
+* Minimap dock
+* Components
+* Tileset editor
 
-* Animated tiles.
-* Minimap overview.
-* View external tileset files.
-* Object layers.
-* Layer properties.
-* Custom themes.
-* OpenGL-based rendering.
-* Maps with tiles that aren't square.
+## Dependencies
 
-## Source code
-
-The Tactile application is written in C++20 using MSVC. At the time of writing, the code using features that are not yet available in stable releases of GCC and Clang, which means that Tactile is only available on Windows, for now. However, with time any C++20 compatible compiler should be able to build the sources.
+* [Centurion](https://github.com/albin-johansson/centurion)
+* [Dear ImGui](https://github.com/ocornut/imgui)
+* [EnTT](https://github.com/skypjack/entt)
+* [GLEW](https://github.com/nigels-com/glew)
+* [IconFontCppHeaders](https://github.com/juliettef/IconFontCppHeaders)
+* [JSON for Modern C++](https://github.com/nlohmann/json)
+* [Magic Enum C++](https://github.com/Neargye/magic_enum)
+* [Nenya](https://github.com/albin-johansson/nenya)
+* [Portable File Dialogs](https://github.com/samhocevar/portable-file-dialogs)
+* [pugixml](https://github.com/zeux/pugixml)
+* [Rune](https://github.com/albin-johansson/rune)
+* [SDL2](https://github.com/libsdl-org/SDL)
+* [SDL2_image](https://github.com/libsdl-org/SDL_image)
+* [SDL2_ttf](https://github.com/libsdl-org/SDL_ttf)
+* [stb_image](https://github.com/nothings/stb)
+* [yaml-cpp](https://github.com/jbeder/yaml-cpp)

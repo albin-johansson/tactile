@@ -1,0 +1,85 @@
+version: 1
+row-count: 6
+column-count: 8
+next-layer-id: 4
+next-object-id: 4
+tile-width: 32
+tile-height: 32
+layers:
+  - id: 1
+    name: Tile Layer 1
+    type: tile-layer
+    data: |
+      360 360 360 360 360 360 360 360
+      360 360 360 360 360 360 360 360
+      360 360 360 360 360 360 360 360
+      360 360 360 360 360 360 360 360
+      360 360 360 360 360 360 360 360
+      360 360 360 360 360 360 360 360
+  - id: 2
+    name: Tile Layer 2
+    opacity: 0.83
+    type: tile-layer
+    data: |
+      1293 1294 1295 0 0 0 307 308
+      1325 1326 1327 0 0 275 245 308
+      1357 1358 1359 0 275 245 308 308
+      0 0 0 275 245 308 308 308
+      0 0 275 245 308 308 308 308
+      0 0 307 308 308 308 308 308
+    properties:
+      - name: a
+        type: int
+        value: 42
+      - name: b
+        type: float
+        value: 2.5
+  - id: 3
+    name: Object Layer 1
+    type: object-layer
+    objects:
+      - id: 2
+        name: Rect
+        x: 36
+        y: 40
+        width: 28
+        height: 30
+        type: rect
+        tag: CustomType
+        properties:
+          - name: foo
+            type: string
+            value: bar
+      - id: 3
+        name: SomePoint
+        x: 143
+        y: 47
+        type: point
+        tag: CustomPoint
+properties:
+  - name: boolean
+    type: bool
+    value: true
+  - name: cool color
+    type: color
+    value: "#1A2B3C4D"
+  - name: floating
+    type: float
+    value: 12.3
+  - name: foo
+    type: string
+    value: bar
+  - name: integer
+    type: int
+    value: 42
+  - name: object ref
+    type: object
+    value: 1
+  - name: path
+    type: file
+    value: foo.bar
+tilesets:
+  - first-global-id: 1
+    path: tset/no_column_count.yaml
+  - first-global-id: 1025
+    path: ../outside.yaml

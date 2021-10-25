@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package Tactile.Proto;
+
+message Session {
+  repeated string files = 1;
+}

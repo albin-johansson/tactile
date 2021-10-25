@@ -1,46 +1,66 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.18)
 
-project(tactile_test)
+project(tactile-test CXX)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/test")
 
 enable_testing()
 
-set(TACTILE_TEST_FILES
-        unit/test_main.cpp
-        unit/layer_test.cpp
-        unit/position_test.cpp
-        unit/map_test.cpp
-        unit/flood_fill_test.cpp
-        unit/tileset_test.cpp
-        unit/tile_size_test.cpp
-        unit/tileset_manager_test.cpp
-        unit/nenya_test.cpp
-        unit/vector_map_test.cpp
-        unit/service/tmx_import_test.cpp
-        unit/service/json_import_test.cpp
-        unit/parse/xml_utils_test.cpp
-        unit/parse/json_utils_test.cpp
-        unit/parse/tiled_json_parser_test.cpp
-        unit/parse/map_parser_test.cpp)
+set(TEST_FILES
+    unit/gtest_macros.hpp
+    unit/test_main.cpp
 
-add_executable(testTactile ${TACTILE_TEST_FILES})
+    unit/core/commands/command_stack_test.cpp
 
-add_library(libCatch INTERFACE)
-target_include_directories(libCatch INTERFACE catch)
+    unit/core/map/map_position_test.cpp
 
-target_include_directories(testTactile
-        PUBLIC ${TACTILE_ROOT_DIR}/src
-        PUBLIC ${TACTILE_ROOT_DIR}/src/core
-        PUBLIC ${TACTILE_ROOT_DIR}/src/core/util
-        PUBLIC ${TACTILE_ROOT_DIR}/src/core/tile)
+    unit/core/properties/property_value_test.cpp
 
-target_link_libraries(testTactile
-        PUBLIC libTactile
-        PUBLIC libCatch)
+    unit/core/systems/layer_system_test.cpp
+    unit/core/systems/registry_factory_system_test.cpp
+    unit/core/systems/tree_system_test.cpp
 
-copy_directory_post_build(testTactile
-        ${TACTILE_ROOT_DIR}/bin
-        ${CMAKE_CURRENT_BINARY_DIR})
+    unit/io/parsing/map_parser_test.cpp
+    unit/io/parsing/parse_map_with_embedded_tilesets_test.cpp
+    unit/io/parsing/parse_map_with_external_tilesets_test.cpp
+    unit/io/parsing/parse_tmx_with_tile_nodes_test.cpp
+    unit/io/parsing/create_document_from_ir_test.cpp
 
-copy_directory_post_build(testTactile
-        ${CMAKE_CURRENT_SOURCE_DIR}/resources
-        ${CMAKE_CURRENT_BINARY_DIR})
+    unit/utils/buffer_utils_test.cpp
+    unit/utils/color_utils_test.cpp
+    unit/utils/from_string_test.cpp
+    )
+
+add_executable(${TACTILE_TEST} ${TEST_FILES})
+add_dependencies(${TACTILE_TEST} ${TACTILE_LIB})
+add_dependencies(${TACTILE_TEST} TactileIO)
+
+target_include_directories(${TACTILE_TEST}
+    PUBLIC
+    unit
+
+    SYSTEM PUBLIC
+    ${gtest_SOURCE_DIR}/include
+    ${gtest_SOURCE_DIR}
+    ${gmock_SOURCE_DIR}/include
+    ${gmock_SOURCE_DIR})
+
+target_link_libraries(${TACTILE_TEST}
+    PUBLIC
+    ${TACTILE_LIB}
+    gtest
+    gmock)
+
+target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
+
+if (WIN32)
+  copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+  add_custom_command(TARGET ${TACTILE_TEST} POST_BUILD
+      COMMAND ${CMAKE_COMMAND} -E copy
+      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/../TactileIO.dll
+      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+      )
+endif ()
+
+copy_directory_post_build(${TACTILE_TEST}
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/resources)

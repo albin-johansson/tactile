@@ -4,11 +4,18 @@ IndentWidth: 2
 ---
 Language: Cpp
 Standard: c++20
+
+ColumnLimit: 90
+
 DerivePointerAlignment: false
 PointerAlignment: Left
-AllowAllParametersOfDeclarationOnNextLine: false
 
-AlwaysBreakAfterDefinitionReturnType: None
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowAllArgumentsOnNextLine: false
+AllowShortLambdasOnASingleLine: All
+AllowShortFunctionsOnASingleLine: None
+AllowShortBlocksOnASingleLine: Never
+AllowShortEnumsOnASingleLine: false
 AlwaysBreakAfterReturnType: None
 
 BinPackParameters: false
@@ -16,20 +23,48 @@ BinPackArguments: false
 
 BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterEnum: true
-  AfterStruct: true
   AfterClass: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterEnum: true
   AfterFunction: true
+  AfterExternBlock: true
+  AfterControlStatement: MultiLine
+  AfterCaseLabel: false
+  BeforeElse: true
+  BeforeCatch: true
+  SplitEmptyNamespace: false
   SplitEmptyRecord: false
   SplitEmptyFunction: false
 
-AllowShortFunctionsOnASingleLine: None
-AllowShortBlocksOnASingleLine: Never
+BreakBeforeBinaryOperators: None
 
-BreakConstructorInitializers: BeforeColon
-AllowAllConstructorInitializersOnNextLine: false
+EmptyLineBeforeAccessModifier: Always
 
-AllowShortLambdasOnASingleLine: None
-AllowAllArgumentsOnNextLine: false
+NamespaceIndentation: None
+FixNamespaceComments: true
 
 BreakInheritanceList: BeforeColon
+BreakConstructorInitializers: BeforeComma
+AllowAllConstructorInitializersOnNextLine: false
+
+IndentRequires: true
+
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Standard headers, located in <> with no extension.
+  - Regex: '<([A-Za-z0-9\_\-]+)>'
+    Priority: 10
+
+  # Tactile IO or base headers
+  - Regex: '<((tactile-io|tactile-base)\/)+([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
+    Priority: 13
+
+  # Headers in <> with extension and optional prefix.
+  - Regex: '<([A-Za-z0-9\_\-]+\/)*(\.\.)*([A-Za-z0-9\_\-]+)\.([A-Za-z0-9\_\-]+)>'
+    Priority: 15
+
+  # Headers in "" with extension.
+  - Regex: '"([A-Za-z0-9.\Q/-_\E])+"'
+    Priority: 40
