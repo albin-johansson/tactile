@@ -10,7 +10,7 @@
 namespace Tactile::IO {
 namespace {
 
-constexpr int version = 1;
+constexpr int32 version = 1;
 
 }  // namespace
 
