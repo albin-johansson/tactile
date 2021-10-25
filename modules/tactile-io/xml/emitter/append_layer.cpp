@@ -83,11 +83,7 @@ void AppendObjectLayer(pugi::xml_node mapNode,
   AppendCommonLayerAttributes(node, layer);
   AppendProperties(node, layer, dir);
 
-  const auto count = GetObjectCount(objectLayer);
-  for (usize index = 0; index < count; ++index) {
-    const auto& object = GetObject(objectLayer, index);
-    AppendObject(node, object, dir);
-  }
+  EachObject(objectLayer, [&](const Object& object) { AppendObject(node, object, dir); });
 }
 
 void AppendGroupLayer(pugi::xml_node mapNode,
@@ -100,11 +96,9 @@ void AppendGroupLayer(pugi::xml_node mapNode,
   auto node = mapNode.append_child("group");
   AppendCommonLayerAttributes(node, layer);
 
-  const auto count = GetLayerCount(groupLayer);
-  for (usize index = 0; index < count; ++index) {
-    const auto& childLayer = GetLayer(groupLayer, index);
-    AppendLayer(node, childLayer, dir, humanReadableOutput);
-  }
+  EachLayer(groupLayer, [&](const Layer& child) {
+    AppendLayer(node, child, dir, humanReadableOutput);
+  });
 }
 
 }  // namespace

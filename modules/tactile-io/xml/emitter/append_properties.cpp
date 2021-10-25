@@ -64,13 +64,10 @@ void AppendPropertiesImpl(pugi::xml_node node,
                           const T& source,
                           const std::filesystem::path& dir)
 {
-  const auto count = GetPropertyCount(source);
-  if (count != 0) {
+  if (GetPropertyCount(source) != 0) {
     auto root = node.append_child("properties");
-    for (usize index = 0; index < count; ++index) {
-      const auto& property = GetProperty(source, index);
-      AppendProperty(root, property, dir);
-    }
+    EachProperty(source,
+                 [&](const Property& property) { AppendProperty(root, property, dir); });
   }
 }
 

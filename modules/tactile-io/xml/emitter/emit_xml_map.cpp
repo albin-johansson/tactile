@@ -32,17 +32,13 @@ void AppendMapChild(pugi::xml_document& xml,
 
   AppendProperties(node, map, dir);
 
-  const auto nTilesets = GetTilesetCount(map);
-  for (usize index = 0; index < nTilesets; ++index) {
-    const auto& tileset = GetTileset(map, index);
+  EachTileset(map, [&](const Tileset& tileset) {
     AppendTileset(node, tileset, dir, options);
-  }
+  });
 
-  const auto nLayers = GetLayerCount(map);
-  for (usize index = 0; index < nLayers; ++index) {
-    const auto& layer = GetLayer(map, index);
+  EachLayer(map, [&](const Layer& layer) {
     AppendLayer(node, layer, dir, options.human_readable_output);
-  }
+  });
 }
 
 void EmitXmlMap(const Map& data, const EmitterOptions& options)
