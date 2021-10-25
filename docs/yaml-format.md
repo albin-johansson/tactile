@@ -219,7 +219,7 @@ attributes:
 |    `type` | `string` |   Yes    | The name of a `ComponentTemplate` or any of the property types. |
 
 ```YAML
-name: X
+name: Health
 type: float
 ```
 
