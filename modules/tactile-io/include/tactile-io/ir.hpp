@@ -18,6 +18,7 @@ namespace Tactile::IO {
 /// \brief Alias for a C-style string using the native preferred path `char` type.
 using CPathStr = const std::filesystem::path::value_type*;
 
+/// \brief A simple representation of an 8-bit RGBA color.
 struct Color final
 {
   uint8 red{};
