@@ -1,4 +1,4 @@
-#include "parse_ir.hpp"
+#include "ir.hpp"
 
 #include <cassert>     // assert
 #include <filesystem>  // path, absolute

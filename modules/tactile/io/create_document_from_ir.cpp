@@ -5,7 +5,7 @@
 #include <format>     // format
 #include <variant>    // get
 
-#include <tactile-io/parse_ir.hpp>
+#include <tactile-io/ir.hpp>
 
 #include <entt.hpp>  // registry
 

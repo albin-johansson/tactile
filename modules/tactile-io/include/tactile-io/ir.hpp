@@ -298,7 +298,6 @@ TACTILE_IO_API_QUERY auto GetObject(const Property& property) -> int32;
 TACTILE_IO_API_QUERY auto GetColor(const Property& property) -> Color;
 
 /// \} End of property API
-
 /// \} End of group io
 
 }  // namespace Tactile::IO

@@ -1,7 +1,7 @@
 #pragma once
 
+#include "ir.hpp"
 #include "parse_error.hpp"
-#include "parse_ir.hpp"
 #include "yaml/yaml_fwd.hpp"
 
 namespace Tactile::IO {

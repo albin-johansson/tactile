@@ -1,6 +1,6 @@
 #pragma once
 
-#include <tactile-io/parse_ir.hpp>
+#include <tactile-io/ir.hpp>
 
 #include "editor/document.hpp"
 

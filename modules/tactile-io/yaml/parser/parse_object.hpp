@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../yaml_fwd.hpp"
+#include "ir.hpp"
 #include "parse_error.hpp"
-#include "parse_ir.hpp"
 
 namespace Tactile::IO {
 
