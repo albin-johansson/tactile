@@ -64,7 +64,6 @@ void UpdateCreditsDialog()
       Row("SDL_image", "2.0.5", "Zlib");
       Row("SDL_ttf", "2.0.15", "Zlib");
       Row("stb_image", "2.26", "MIT");
-      Row("tl::expected", "1.0.0", "CC0");
       Row("yaml-cpp", "0.7.0", "MIT");
 
       ImGui::EndTable();

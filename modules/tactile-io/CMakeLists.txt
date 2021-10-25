@@ -130,7 +130,6 @@ target_include_directories(TactileIO
     SYSTEM PRIVATE
     ${LIBRARY_DIR}/entt
     ${LIBRARY_DIR}/nenya
-    ${LIBRARY_DIR}/tl
     ${LIBRARY_DIR}/magic-enum
     ${LIBRARY_DIR}/json
     ${LIBRARY_DIR}/pugixml
@@ -167,7 +166,6 @@ target_precompile_headers(TactileIO PRIVATE
     <optional>
 
     <centurion.hpp>
-    <expected.hpp>
     <json.hpp>
     <magic_enum.hpp>
     <yaml-cpp/yaml.h>)
