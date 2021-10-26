@@ -50,6 +50,7 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * [Centurion](https://github.com/albin-johansson/centurion)
 * [Dear ImGui](https://github.com/ocornut/imgui)
 * [EnTT](https://github.com/skypjack/entt)
+* [fmt](https://github.com/fmtlib/fmt)
 * [GLEW](https://github.com/nigels-com/glew)
 * [IconFontCppHeaders](https://github.com/juliettef/IconFontCppHeaders)
 * [JSON for Modern C++](https://github.com/nlohmann/json)

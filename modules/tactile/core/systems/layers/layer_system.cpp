@@ -2,9 +2,10 @@
 
 #include <algorithm>  // sort
 #include <cassert>    // assert
-#include <format>     // format
 #include <utility>    // move, swap
 #include <vector>     // erase
+
+#include <fmt/format.h>  // format
 
 #include "core/components/group_layer.hpp"
 #include "core/components/layer.hpp"
@@ -102,7 +103,7 @@ auto AddTileLayer(entt::registry& registry) -> entt::entity
   const auto entity = AddBasicLayer(registry,
                                     map.next_layer_id,
                                     LayerType::TileLayer,
-                                    std::format("Tile Layer {}", map.tile_layer_suffix),
+                                    fmt::format("Tile Layer {}", map.tile_layer_suffix),
                                     GetNewLayerParent(registry));
   ++map.next_layer_id;
   ++map.tile_layer_suffix;
@@ -121,7 +122,7 @@ auto AddObjectLayer(entt::registry& registry) -> entt::entity
       AddBasicLayer(registry,
                     map.next_layer_id,
                     LayerType::ObjectLayer,
-                    std::format("Object Layer {}", map.object_layer_suffix),
+                    fmt::format("Object Layer {}", map.object_layer_suffix),
                     GetNewLayerParent(registry));
   ++map.next_layer_id;
   ++map.object_layer_suffix;
@@ -138,7 +139,7 @@ auto AddGroupLayer(entt::registry& registry) -> entt::entity
   const auto entity = AddBasicLayer(registry,
                                     map.next_layer_id,
                                     LayerType::GroupLayer,
-                                    std::format("Group Layer {}", map.group_layer_suffix),
+                                    fmt::format("Group Layer {}", map.group_layer_suffix),
                                     GetNewLayerParent(registry));
   ++map.next_layer_id;
   ++map.group_layer_suffix;

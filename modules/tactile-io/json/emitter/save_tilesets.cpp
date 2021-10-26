@@ -1,7 +1,8 @@
 #include "save_tilesets.hpp"
 
-#include <format>   // format
 #include <utility>  // move
+
+#include <fmt/format.h>  // format
 
 #include "common_saving.hpp"
 #include "emitter.hpp"
@@ -49,7 +50,7 @@ void AddCommonAttributes(JSON& json,
   auto json = JSON::object();
 
   json["firstgid"] = GetFirstGlobalId(tileset);
-  json["source"] = std::format("{}.json", GetName(tileset));
+  json["source"] = fmt::format("{}.json", GetName(tileset));
 
   return json;
 }
@@ -66,7 +67,7 @@ void CreateExternalTilesetFile(const Tileset& tileset,
   json["tiledversion"] = tiled_version;
   json["version"] = tiled_json_version;
 
-  const auto name = std::format("{}.json", GetName(tileset));
+  const auto name = fmt::format("{}.json", GetName(tileset));
   const auto path = dir / name;
 
   CENTURION_LOG_INFO("Saving external tileset in \"%s\"", path.string().c_str());

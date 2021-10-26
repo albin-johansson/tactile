@@ -1,9 +1,9 @@
 #include "save_tilesets.hpp"
 
-#include <format>   // format
 #include <fstream>  // ofstream
 #include <string>   // string
 
+#include <fmt/format.h>  // format
 #include <yaml-cpp/yaml.h>
 
 #include "../../common_saving.hpp"
@@ -107,7 +107,7 @@ void SaveTilesets(YAML::Emitter& emitter,
     emitter << YAML::Key << "tilesets" << YAML::BeginSeq;
 
     EachTileset(map, [&](const Tileset& tileset) {
-      const auto fileName = std::format("{}.yaml", GetName(tileset));
+      const auto fileName = fmt::format("{}.yaml", GetName(tileset));
       SaveTileset(tileset, fileName, dir);
 
       emitter << YAML::BeginMap;

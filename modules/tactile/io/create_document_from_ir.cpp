@@ -2,12 +2,12 @@
 
 #include <algorithm>  // sort
 #include <cstring>    // strcmp
-#include <format>     // format
 #include <variant>    // get
 
 #include <tactile-io/ir.hpp>
 
-#include <entt.hpp>  // registry
+#include <entt.hpp>      // registry
+#include <fmt/format.h>  // format
 
 #include "core/components/animation.hpp"
 #include "core/components/fancy_tile.hpp"
@@ -167,7 +167,7 @@ void MakeFancyTiles(entt::registry& registry,
     }
 
     auto& context = Sys::AddPropertyContext(registry, tileEntity);
-    context.name = std::format("Tile {}", tile.id.get());
+    context.name = fmt::format("Tile {}", tile.id.get());
     AddProperties(registry, tileEntity, tileData);
   }
 }

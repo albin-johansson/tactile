@@ -1,6 +1,6 @@
 #include "append_tileset.hpp"
 
-#include <format>  // format
+#include <fmt/format.h>  // format
 
 #include "../../common_saving.hpp"
 #include "append_fancy_tiles.hpp"
@@ -81,7 +81,7 @@ void AppendTileset(pugi::xml_node mapNode,
     AppendEmbeddedTileset(mapNode, tileset, dir);
   }
   else {
-    const auto source = std::format("{}.tsx", GetName(tileset));
+    const auto source = fmt::format("{}.tsx", GetName(tileset));
     CreateExternalTilesetFile(tileset, source, dir);
     AppendExternalTileset(mapNode, tileset, source);
   }

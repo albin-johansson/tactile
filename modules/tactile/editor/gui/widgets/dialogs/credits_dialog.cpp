@@ -52,6 +52,7 @@ void UpdateCreditsDialog()
       Row("Centurion", "6.3.0", "MIT");
       Row("Dear ImGui", "1.84.1", "MIT");
       Row("EnTT", "3.8.1", "MIT");
+      Row("fmt", "8.1.0", "MIT");
       Row("GLEW", "2.2.0", "BSD/MIT");
       Row("IconFontCppHeaders", "N/A", "Zlib");
       Row("JSON for Modern C++", "3.9.1", "MIT");

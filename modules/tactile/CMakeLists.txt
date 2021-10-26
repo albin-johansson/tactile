@@ -450,6 +450,7 @@ target_link_libraries(${TACTILE_LIB}
     ${CENTURION_LIBRARIES}
     ${PROTOBUF_LIBRARIES}
     ${TACTILE_IO_IMPORT_LIBRARY}
+    fmt
     )
 
 target_compile_definitions(${TACTILE_LIB}
@@ -496,6 +497,7 @@ target_precompile_headers(${TACTILE_LIB}
     <entt.hpp>
     <rune/rune.hpp>
     <nenya.hpp>
+    <fmt/format.h>
     )
 
 if (WIN32 AND CMAKE_BUILD_TYPE STREQUAL "Release")
