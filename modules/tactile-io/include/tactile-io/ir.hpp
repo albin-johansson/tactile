@@ -1,13 +1,14 @@
 #pragma once
 
 #include <concepts>    // invocable
+#include <cstddef>     // size_t
+#include <cstdint>     // uint8_t, int32_t
 #include <filesystem>  // path::value_type
 #include <memory>      // unique_ptr
 
 #include <tactile-base/layer_type.hpp>
 #include <tactile-base/object_type.hpp>
 #include <tactile-base/property_type.hpp>
-#include <tactile-base/tactile_std.hpp>
 
 #include "api.hpp"
 
@@ -15,6 +16,13 @@ namespace Tactile::IO {
 
 /// \addtogroup io
 /// \{
+
+using usize = std::size_t;   ///< Large unsigned integer.
+using uint8 = std::uint8_t;  ///< 8-bit unsigned integer.
+using int32 = std::int32_t;  ///< 32-bit signed integer.
+
+/// \brief Alias for a C-style string.
+using CStr = const char*;
 
 /// \brief Alias for a C-style string using the native preferred path `char` type.
 using CPathStr = const std::filesystem::path::value_type*;
