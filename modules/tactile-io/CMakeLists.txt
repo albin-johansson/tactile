@@ -138,7 +138,8 @@ target_include_directories(TactileIO
 target_link_libraries(TactileIO
     PRIVATE
     yaml-cpp
-    centurion)
+    centurion
+    fmt)
 
 target_compile_definitions(TactileIO PRIVATE
     TACTILE_IO_EXPORT
