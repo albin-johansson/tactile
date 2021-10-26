@@ -1,9 +1,9 @@
 #include "layer_item.hpp"
 
-#include <imgui.h>
-#include <rune/core/formatted_string.hpp>  // formatted_string
-
+#include <tactile-base/formatted_string.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
 
 #include "core/components/group_layer.hpp"
 #include "core/components/layer_tree_node.hpp"
@@ -78,10 +78,10 @@ void LayerItem(const entt::registry& registry,
   }
 
   const auto& context = registry.get<PropertyContext>(layerEntity);
-  rune::formatted_string<128> name{"{} {}", GetIcon(layer.type), context.name};
+  FormattedString name{"{} {}", GetIcon(layer.type), context.name};
 
   if (layer.type != LayerType::GroupLayer) {
-    if (ImGui::Selectable(name.data(), isActiveLayer)) {
+    if (ImGui::Selectable(name.GetData(), isActiveLayer)) {
       dispatcher.enqueue<SelectLayerEvent>(layer.id);
     }
 
@@ -93,7 +93,7 @@ void LayerItem(const entt::registry& registry,
     UpdateLayerItemPopup(registry, dispatcher, layer.id);
   }
   else {
-    GroupLayerItem(registry, dispatcher, layerEntity, layer, flags, name.data());
+    GroupLayerItem(registry, dispatcher, layerEntity, layer, flags, name.GetData());
   }
 }
 

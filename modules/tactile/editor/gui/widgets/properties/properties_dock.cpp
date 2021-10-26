@@ -1,7 +1,8 @@
 #include "properties_dock.hpp"
 
+#include <tactile-base/formatted_string.hpp>
+
 #include <imgui.h>
-#include <rune/core/formatted_string.hpp>  // formatted_string
 
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"
@@ -39,8 +40,8 @@ void UpdatePropertiesDock(const entt::registry& registry, entt::dispatcher& disp
   if (dock) {
     const auto& context = Sys::GetCurrentContext(registry);
 
-    rune::formatted_string<128> contextName{"Context: {}", context.name};
-    ImGui::TextUnformatted(contextName.data());
+    FormattedString contextName{"Context: {}", context.name};
+    ImGui::TextUnformatted(contextName.GetData());
 
     if (context.properties.empty()) {
       PrepareVerticalAlignmentCenter(2.5f);

@@ -495,7 +495,6 @@ target_precompile_headers(${TACTILE_LIB}
 
     <centurion.hpp>
     <entt.hpp>
-    <rune/rune.hpp>
     <nenya.hpp>
     <fmt/format.h>
     )

@@ -1,5 +1,7 @@
 #include "edit_menu.hpp"
 
+#include <tactile-base/formatted_string.hpp>
+
 #include <imgui.h>
 
 #include "core/tool_type.hpp"
@@ -26,16 +28,16 @@ void UpdateEditMenu(const Model& model, entt::dispatcher& dispatcher)
     const auto canUndo = model.CanUndo();
     const auto canRedo = model.CanRedo();
 
-    const rune::fmt_string undoText{TAC_ICON_UNDO " Undo {}",
-                                    canUndo ? model.GetUndoText() : ""};
-    const rune::fmt_string redoText{TAC_ICON_REDO " Redo {}",
-                                    canRedo ? model.GetRedoText() : ""};
+    const FormattedString undoText{TAC_ICON_UNDO " Undo {}",
+                                   canUndo ? model.GetUndoText() : ""};
+    const FormattedString redoText{TAC_ICON_REDO " Redo {}",
+                                   canRedo ? model.GetRedoText() : ""};
 
-    if (ImGui::MenuItem(undoText.data(), "Ctrl+Z", false, canUndo)) {
+    if (ImGui::MenuItem(undoText.GetData(), "Ctrl+Z", false, canUndo)) {
       dispatcher.enqueue<UndoEvent>();
     }
 
-    if (ImGui::MenuItem(redoText.data(), "Ctrl+Y", false, canRedo)) {
+    if (ImGui::MenuItem(redoText.GetData(), "Ctrl+Y", false, canRedo)) {
       dispatcher.enqueue<RedoEvent>();
     }
 

@@ -3,7 +3,7 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
-#include <rune/rune.hpp>  // vector_map
+#include <rune/containers/vector_map.hpp>  // vector_map
 
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>

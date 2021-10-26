@@ -4,7 +4,7 @@
 #include <memory>      // unique_ptr
 
 #include <entt.hpp>       // registry
-#include <rune/rune.hpp>  // vector_map
+#include <rune/containers/vector_map.hpp>  // vector_map
 
 #include "document.hpp"
 #include "events/command_events.hpp"
