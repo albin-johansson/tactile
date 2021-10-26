@@ -1,3 +1,5 @@
+#include <tactile-base/tactile_std.hpp>
+
 #include <gtest/gtest.h>
 
 #include "io/map_parser.hpp"
@@ -21,7 +23,7 @@ TEST(TmxTileNodes, Parse)
     ASSERT_EQ(8, IO::GetRowCount(layerData));
     ASSERT_EQ(12, IO::GetColumnCount(layerData));
 
-    ASSERT_EQ(360_tile, IO::GetTile(layerData, 3, 8));
+    ASSERT_EQ(360, IO::GetTile(layerData, 3, 8));
     ASSERT_EQ(empty_tile, IO::GetTile(layerData, 1, 9));
   }
 
@@ -33,7 +35,7 @@ TEST(TmxTileNodes, Parse)
     ASSERT_EQ(8, IO::GetRowCount(layerData));
     ASSERT_EQ(12, IO::GetColumnCount(layerData));
 
-    ASSERT_EQ(615_tile, IO::GetTile(layerData, 4, 6));
+    ASSERT_EQ(615, IO::GetTile(layerData, 4, 6));
     ASSERT_EQ(empty_tile, IO::GetTile(layerData, 3, 4));
   }
 }
