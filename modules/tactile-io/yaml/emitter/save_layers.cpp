@@ -4,14 +4,16 @@
 #include <variant>  // get
 
 #include <tactile-base/tactile_std.hpp>
+
 #include <yaml-cpp/yaml.h>
 
+#include "emitter.hpp"
 #include "save_object.hpp"
 #include "save_properties.hpp"
 
 namespace Tactile::IO {
 
-void SaveTiles(YAML::Emitter& emitter, const Layer& layer)
+void SaveTiles(YAML::Emitter& emitter, const Layer& layer, const bool fold)
 {
   emitter << YAML::Key << "data";
 
@@ -20,28 +22,25 @@ void SaveTiles(YAML::Emitter& emitter, const Layer& layer)
   const auto nCols = GetColumnCount(tileLayer);
 
   std::stringstream stream;
-  usize index = 0;
-
   for (int32 row = 0; row < nRows; ++row) {
-    bool first = true;
     for (int32 col = 0; col < nCols; ++col) {
-      if (!first) {
+      if ((fold && col != 0) || (!fold && (row != 0 || col != 0))) {
         stream << ' ';
       }
-
       stream << GetTile(tileLayer, row, col);
-      first = false;
     }
 
-    if (index < nRows - 1u) {
+    if (fold && row < (nRows - 1)) {
       stream << '\n';
     }
-
-    ++index;
   }
 
-  // TODO when human readable output is disabled, do not fold the string
-  emitter << YAML::Literal << stream.str();
+  if (fold) {
+    emitter << YAML::Literal << stream.str();
+  }
+  else {
+    emitter << YAML::Value << stream.str();
+  }
 }
 
 void SaveObjects(YAML::Emitter& emitter,
@@ -61,7 +60,8 @@ void SaveObjects(YAML::Emitter& emitter,
 
 void SaveLayer(YAML::Emitter& emitter,
                const Layer& layer,
-               const std::filesystem::path& dir)
+               const std::filesystem::path& dir,
+               const EmitterOptions& options)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << GetName(layer);
@@ -79,7 +79,7 @@ void SaveLayer(YAML::Emitter& emitter,
   switch (GetType(layer)) {
     case LayerType::TileLayer: {
       emitter << "tile-layer";
-      SaveTiles(emitter, layer);
+      SaveTiles(emitter, layer, options.human_readable_output);
       break;
     }
 
@@ -97,7 +97,7 @@ void SaveLayer(YAML::Emitter& emitter,
         emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
         EachLayer(groupLayer,
-                  [&](const Layer& child) { SaveLayer(emitter, child, dir); });
+                  [&](const Layer& child) { SaveLayer(emitter, child, dir, options); });
 
         emitter << YAML::EndSeq;
       }
@@ -111,12 +111,15 @@ void SaveLayer(YAML::Emitter& emitter,
   emitter << YAML::EndMap;
 }
 
-void SaveLayers(YAML::Emitter& emitter, const Map& map, const std::filesystem::path& dir)
+void SaveLayers(YAML::Emitter& emitter,
+                const Map& map,
+                const std::filesystem::path& dir,
+                const EmitterOptions& options)
 {
   if (GetLayerCount(map) != 0) {
     emitter << YAML::Key << "layers" << YAML::BeginSeq;
 
-    EachLayer(map, [&](const Layer& layer) { SaveLayer(emitter, layer, dir); });
+    EachLayer(map, [&](const Layer& layer) { SaveLayer(emitter, layer, dir, options); });
 
     emitter << YAML::EndSeq;
   }

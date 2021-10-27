@@ -14,7 +14,7 @@ constexpr int32 version = 1;
 
 }  // namespace
 
-void EmitYamlMap(const Map& map, [[maybe_unused]] const EmitterOptions& options)
+void EmitYamlMap(const Map& map, const EmitterOptions& options)
 {
   YAML::Emitter emitter;
   emitter.SetIndent(2);
@@ -33,7 +33,7 @@ void EmitYamlMap(const Map& map, [[maybe_unused]] const EmitterOptions& options)
   const auto dir = path.parent_path();
 
   SaveProperties(emitter, map, dir);
-  SaveLayers(emitter, map, dir);
+  SaveLayers(emitter, map, dir, options);
   SaveTilesets(emitter, map, dir);
 
   emitter << YAML::EndMap;

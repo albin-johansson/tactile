@@ -7,6 +7,11 @@
 
 namespace Tactile::IO {
 
-void SaveLayers(YAML::Emitter& emitter, const Map& map, const std::filesystem::path& dir);
+struct EmitterOptions;
+
+void SaveLayers(YAML::Emitter& emitter,
+                const Map& map,
+                const std::filesystem::path& dir,
+                const EmitterOptions& options);
 
 }  // namespace Tactile::IO
