@@ -51,6 +51,7 @@ constexpr Settings::Settings(
   , show_layer_dock_(false)
   , show_properties_dock_(false)
   , show_tileset_dock_(false)
+  , show_log_dock_(false)
   , embed_tilesets_(false)
   , human_readable_output_(false){}
 struct SettingsDefaultTypeInternal {
@@ -102,6 +103,7 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_settings_2eproto::offsets[] PR
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, show_layer_dock_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, show_properties_dock_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, show_tileset_dock_),
+  PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, show_log_dock_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, embed_tilesets_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, human_readable_output_),
   PROTOBUF_FIELD_OFFSET(::Tactile::Proto::Settings, viewport_overlay_pos_),
@@ -120,11 +122,12 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_settings_2eproto::offsets[] PR
   13,
   14,
   15,
+  16,
   10,
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, 10, -1, sizeof(::Tactile::Proto::Color)},
-  { 14, 36, -1, sizeof(::Tactile::Proto::Settings)},
+  { 14, 37, -1, sizeof(::Tactile::Proto::Settings)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -136,7 +139,7 @@ const char descriptor_table_protodef_settings_2eproto[] PROTOBUF_SECTION_VARIABL
   "\n\016settings.proto\022\rTactile.Proto\"y\n\005Color"
   "\022\020\n\003red\030\001 \001(\rH\000\210\001\001\022\022\n\005green\030\002 \001(\rH\001\210\001\001\022\021"
   "\n\004blue\030\003 \001(\rH\002\210\001\001\022\022\n\005alpha\030\004 \001(\rH\003\210\001\001B\006\n"
-  "\004_redB\010\n\006_greenB\007\n\005_blueB\010\n\006_alpha\"\231\007\n\010S"
+  "\004_redB\010\n\006_greenB\007\n\005_blueB\010\n\006_alpha\"\307\007\n\010S"
   "ettings\022(\n\005theme\030\001 \001(\0162\024.Tactile.Proto.T"
   "hemeH\000\210\001\001\022!\n\024preferred_tile_width\030\002 \001(\005H"
   "\001\210\001\001\022\"\n\025preferred_tile_height\030\003 \001(\005H\002\210\001\001"
@@ -148,28 +151,29 @@ const char descriptor_table_protodef_settings_2eproto[] PROTOBUF_SECTION_VARIABL
   "H\010\210\001\001\022\033\n\016restore_layout\030\025 \001(\010H\t\210\001\001\022\034\n\017sh"
   "ow_layer_dock\030\026 \001(\010H\n\210\001\001\022!\n\024show_propert"
   "ies_dock\030\027 \001(\010H\013\210\001\001\022\036\n\021show_tileset_dock"
-  "\030\030 \001(\010H\014\210\001\001\022\033\n\016embed_tilesets\030\031 \001(\010H\r\210\001\001"
-  "\022\"\n\025human_readable_output\030\032 \001(\010H\016\210\001\001\022<\n\024"
-  "viewport_overlay_pos\030\033 \001(\0162\031.Tactile.Pro"
-  "to.OverlayPosH\017\210\001\001B\010\n\006_themeB\027\n\025_preferr"
-  "ed_tile_widthB\030\n\026_preferred_tile_heightB"
-  "\026\n\024_viewport_backgroundB\023\n\021_preferred_fo"
-  "rmatB\023\n\021_command_capacityB\014\n\n_show_gridB"
-  "\020\n\016_window_borderB\027\n\025_restore_last_sessi"
-  "onB\021\n\017_restore_layoutB\022\n\020_show_layer_doc"
-  "kB\027\n\025_show_properties_dockB\024\n\022_show_tile"
-  "set_dockB\021\n\017_embed_tilesetsB\030\n\026_human_re"
-  "adable_outputB\027\n\025_viewport_overlay_pos*L"
-  "\n\nOverlayPos\022\014\n\010TOP_LEFT\020\000\022\r\n\tTOP_RIGHT\020"
-  "\001\022\017\n\013BOTTOM_LEFT\020\002\022\020\n\014BOTTOM_RIGHT\020\003*|\n\005"
-  "Theme\022\r\n\tDEAR_DARK\020\000\022\016\n\nDEAR_LIGHT\020\001\022\010\n\004"
-  "RUBY\020\002\022\014\n\010SAPPHIRE\020\003\022\013\n\007EMERALD\020\004\022\014\n\010AME"
-  "THYST\020\005\022\t\n\005AMBER\020\006\022\r\n\tNOCTURNAL\020\007\022\007\n\003ASH"
-  "\020\010b\006proto3"
+  "\030\030 \001(\010H\014\210\001\001\022\032\n\rshow_log_dock\030\036 \001(\010H\r\210\001\001\022"
+  "\033\n\016embed_tilesets\030\031 \001(\010H\016\210\001\001\022\"\n\025human_re"
+  "adable_output\030\032 \001(\010H\017\210\001\001\022<\n\024viewport_ove"
+  "rlay_pos\030\033 \001(\0162\031.Tactile.Proto.OverlayPo"
+  "sH\020\210\001\001B\010\n\006_themeB\027\n\025_preferred_tile_widt"
+  "hB\030\n\026_preferred_tile_heightB\026\n\024_viewport"
+  "_backgroundB\023\n\021_preferred_formatB\023\n\021_com"
+  "mand_capacityB\014\n\n_show_gridB\020\n\016_window_b"
+  "orderB\027\n\025_restore_last_sessionB\021\n\017_resto"
+  "re_layoutB\022\n\020_show_layer_dockB\027\n\025_show_p"
+  "roperties_dockB\024\n\022_show_tileset_dockB\020\n\016"
+  "_show_log_dockB\021\n\017_embed_tilesetsB\030\n\026_hu"
+  "man_readable_outputB\027\n\025_viewport_overlay"
+  "_pos*L\n\nOverlayPos\022\014\n\010TOP_LEFT\020\000\022\r\n\tTOP_"
+  "RIGHT\020\001\022\017\n\013BOTTOM_LEFT\020\002\022\020\n\014BOTTOM_RIGHT"
+  "\020\003*|\n\005Theme\022\r\n\tDEAR_DARK\020\000\022\016\n\nDEAR_LIGHT"
+  "\020\001\022\010\n\004RUBY\020\002\022\014\n\010SAPPHIRE\020\003\022\013\n\007EMERALD\020\004\022"
+  "\014\n\010AMETHYST\020\005\022\t\n\005AMBER\020\006\022\r\n\tNOCTURNAL\020\007\022"
+  "\007\n\003ASH\020\010b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_settings_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_settings_2eproto = {
-  false, false, 1290, descriptor_table_protodef_settings_2eproto, "settings.proto", 
+  false, false, 1336, descriptor_table_protodef_settings_2eproto, "settings.proto", 
   &descriptor_table_settings_2eproto_once, nullptr, 0, 2,
   schemas, file_default_instances, TableStruct_settings_2eproto::offsets,
   file_level_metadata_settings_2eproto, file_level_enum_descriptors_settings_2eproto, file_level_service_descriptors_settings_2eproto,
@@ -553,11 +557,14 @@ class Settings::_Internal {
   static void set_has_show_tileset_dock(HasBits* has_bits) {
     (*has_bits)[0] |= 8192u;
   }
-  static void set_has_embed_tilesets(HasBits* has_bits) {
+  static void set_has_show_log_dock(HasBits* has_bits) {
     (*has_bits)[0] |= 16384u;
   }
-  static void set_has_human_readable_output(HasBits* has_bits) {
+  static void set_has_embed_tilesets(HasBits* has_bits) {
     (*has_bits)[0] |= 32768u;
+  }
+  static void set_has_human_readable_output(HasBits* has_bits) {
+    (*has_bits)[0] |= 65536u;
   }
   static void set_has_viewport_overlay_pos(HasBits* has_bits) {
     (*has_bits)[0] |= 1024u;
@@ -651,9 +658,10 @@ void Settings::Clear() {
   }
   if (cached_has_bits & 0x0000ff00u) {
     ::memset(&restore_layout_, 0, static_cast<size_t>(
-        reinterpret_cast<char*>(&human_readable_output_) -
-        reinterpret_cast<char*>(&restore_layout_)) + sizeof(human_readable_output_));
+        reinterpret_cast<char*>(&embed_tilesets_) -
+        reinterpret_cast<char*>(&restore_layout_)) + sizeof(embed_tilesets_));
   }
+  human_readable_output_ = false;
   _has_bits_.Clear();
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
@@ -809,6 +817,15 @@ const char* Settings::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::i
         } else
           goto handle_unusual;
         continue;
+      // optional bool show_log_dock = 30;
+      case 30:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 240)) {
+          _Internal::set_has_show_log_dock(&has_bits);
+          show_log_dock_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
       default:
         goto handle_unusual;
     }  // switch
@@ -943,6 +960,12 @@ failure:
       27, this->_internal_viewport_overlay_pos(), target);
   }
 
+  // optional bool show_log_dock = 30;
+  if (_internal_has_show_log_dock()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(30, this->_internal_show_log_dock(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1041,17 +1064,22 @@ size_t Settings::ByteSizeLong() const {
       total_size += 2 + 1;
     }
 
-    // optional bool embed_tilesets = 25;
+    // optional bool show_log_dock = 30;
     if (cached_has_bits & 0x00004000u) {
       total_size += 2 + 1;
     }
 
-    // optional bool human_readable_output = 26;
+    // optional bool embed_tilesets = 25;
     if (cached_has_bits & 0x00008000u) {
       total_size += 2 + 1;
     }
 
   }
+  // optional bool human_readable_output = 26;
+  if (cached_has_bits & 0x00010000u) {
+    total_size += 2 + 1;
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
@@ -1122,12 +1150,15 @@ void Settings::MergeFrom(const Settings& from) {
       show_tileset_dock_ = from.show_tileset_dock_;
     }
     if (cached_has_bits & 0x00004000u) {
-      embed_tilesets_ = from.embed_tilesets_;
+      show_log_dock_ = from.show_log_dock_;
     }
     if (cached_has_bits & 0x00008000u) {
-      human_readable_output_ = from.human_readable_output_;
+      embed_tilesets_ = from.embed_tilesets_;
     }
     _has_bits_[0] |= cached_has_bits;
+  }
+  if (cached_has_bits & 0x00010000u) {
+    _internal_set_human_readable_output(from._internal_human_readable_output());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }

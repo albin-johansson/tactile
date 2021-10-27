@@ -51,6 +51,7 @@ message Settings {
   optional bool show_layer_dock = 22;
   optional bool show_properties_dock = 23;
   optional bool show_tileset_dock = 24;
+  optional bool show_log_dock = 30;
 
   optional bool embed_tilesets = 25;
   optional bool human_readable_output = 26;

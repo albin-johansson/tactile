@@ -458,6 +458,7 @@ class Settings final :
     kShowLayerDockFieldNumber = 22,
     kShowPropertiesDockFieldNumber = 23,
     kShowTilesetDockFieldNumber = 24,
+    kShowLogDockFieldNumber = 30,
     kEmbedTilesetsFieldNumber = 25,
     kHumanReadableOutputFieldNumber = 26,
   };
@@ -653,6 +654,19 @@ class Settings final :
   void _internal_set_show_tileset_dock(bool value);
   public:
 
+  // optional bool show_log_dock = 30;
+  bool has_show_log_dock() const;
+  private:
+  bool _internal_has_show_log_dock() const;
+  public:
+  void clear_show_log_dock();
+  bool show_log_dock() const;
+  void set_show_log_dock(bool value);
+  private:
+  bool _internal_show_log_dock() const;
+  void _internal_set_show_log_dock(bool value);
+  public:
+
   // optional bool embed_tilesets = 25;
   bool has_embed_tilesets() const;
   private:
@@ -702,6 +716,7 @@ class Settings final :
   bool show_layer_dock_;
   bool show_properties_dock_;
   bool show_tileset_dock_;
+  bool show_log_dock_;
   bool embed_tilesets_;
   bool human_readable_output_;
   friend struct ::TableStruct_settings_2eproto;
@@ -1289,9 +1304,37 @@ inline void Settings::set_show_tileset_dock(bool value) {
   // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.show_tileset_dock)
 }
 
+// optional bool show_log_dock = 30;
+inline bool Settings::_internal_has_show_log_dock() const {
+  bool value = (_has_bits_[0] & 0x00004000u) != 0;
+  return value;
+}
+inline bool Settings::has_show_log_dock() const {
+  return _internal_has_show_log_dock();
+}
+inline void Settings::clear_show_log_dock() {
+  show_log_dock_ = false;
+  _has_bits_[0] &= ~0x00004000u;
+}
+inline bool Settings::_internal_show_log_dock() const {
+  return show_log_dock_;
+}
+inline bool Settings::show_log_dock() const {
+  // @@protoc_insertion_point(field_get:Tactile.Proto.Settings.show_log_dock)
+  return _internal_show_log_dock();
+}
+inline void Settings::_internal_set_show_log_dock(bool value) {
+  _has_bits_[0] |= 0x00004000u;
+  show_log_dock_ = value;
+}
+inline void Settings::set_show_log_dock(bool value) {
+  _internal_set_show_log_dock(value);
+  // @@protoc_insertion_point(field_set:Tactile.Proto.Settings.show_log_dock)
+}
+
 // optional bool embed_tilesets = 25;
 inline bool Settings::_internal_has_embed_tilesets() const {
-  bool value = (_has_bits_[0] & 0x00004000u) != 0;
+  bool value = (_has_bits_[0] & 0x00008000u) != 0;
   return value;
 }
 inline bool Settings::has_embed_tilesets() const {
@@ -1299,7 +1342,7 @@ inline bool Settings::has_embed_tilesets() const {
 }
 inline void Settings::clear_embed_tilesets() {
   embed_tilesets_ = false;
-  _has_bits_[0] &= ~0x00004000u;
+  _has_bits_[0] &= ~0x00008000u;
 }
 inline bool Settings::_internal_embed_tilesets() const {
   return embed_tilesets_;
@@ -1309,7 +1352,7 @@ inline bool Settings::embed_tilesets() const {
   return _internal_embed_tilesets();
 }
 inline void Settings::_internal_set_embed_tilesets(bool value) {
-  _has_bits_[0] |= 0x00004000u;
+  _has_bits_[0] |= 0x00008000u;
   embed_tilesets_ = value;
 }
 inline void Settings::set_embed_tilesets(bool value) {
@@ -1319,7 +1362,7 @@ inline void Settings::set_embed_tilesets(bool value) {
 
 // optional bool human_readable_output = 26;
 inline bool Settings::_internal_has_human_readable_output() const {
-  bool value = (_has_bits_[0] & 0x00008000u) != 0;
+  bool value = (_has_bits_[0] & 0x00010000u) != 0;
   return value;
 }
 inline bool Settings::has_human_readable_output() const {
@@ -1327,7 +1370,7 @@ inline bool Settings::has_human_readable_output() const {
 }
 inline void Settings::clear_human_readable_output() {
   human_readable_output_ = false;
-  _has_bits_[0] &= ~0x00008000u;
+  _has_bits_[0] &= ~0x00010000u;
 }
 inline bool Settings::_internal_human_readable_output() const {
   return human_readable_output_;
@@ -1337,7 +1380,7 @@ inline bool Settings::human_readable_output() const {
   return _internal_human_readable_output();
 }
 inline void Settings::_internal_set_human_readable_output(bool value) {
-  _has_bits_[0] |= 0x00008000u;
+  _has_bits_[0] |= 0x00010000u;
   human_readable_output_ = value;
 }
 inline void Settings::set_human_readable_output(bool value) {

@@ -33,6 +33,10 @@ void UpdateWidgetsSubmenu(const bool hasActiveMap)
     if (ImGui::MenuItem("Tilesets", nullptr, Prefs::GetShowTilesetDock())) {
       Prefs::SetShowTilesetDock(!Prefs::GetShowTilesetDock());
     }
+
+    if (ImGui::MenuItem("Log", nullptr, Prefs::GetShowLogDock())) {
+      Prefs::SetShowLogDock(!Prefs::GetShowLogDock());
+    }
   }
 }
 

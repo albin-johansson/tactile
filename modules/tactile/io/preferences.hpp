@@ -51,6 +51,7 @@ struct Preferences final
   bool show_layer_dock;
   bool show_tileset_dock;
   bool show_properties_dock;
+  bool show_log_dock;
   bool window_border;
   bool restore_layout;
   bool restore_last_session;
@@ -102,11 +103,13 @@ void ResetExportPreferences(Preferences& prefs);
 void SetShowLayerDock(bool visible) noexcept;
 void SetShowTilesetDock(bool visible) noexcept;
 void SetShowPropertiesDock(bool visible) noexcept;
+void SetShowLogDock(bool visible) noexcept;
 void SetViewportOverlayPos(OverlayPos pos) noexcept;
 
 [[nodiscard]] auto GetShowLayerDock() noexcept -> bool;
 [[nodiscard]] auto GetShowTilesetDock() noexcept -> bool;
 [[nodiscard]] auto GetShowPropertiesDock() noexcept -> bool;
+[[nodiscard]] auto GetShowLogDock() noexcept -> bool;
 [[nodiscard]] auto GetRestoreLayout() noexcept -> bool;
 [[nodiscard]] auto GetViewportOverlayPos() noexcept -> OverlayPos;
 

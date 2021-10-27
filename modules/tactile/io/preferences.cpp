@@ -30,6 +30,7 @@ constexpr bool def_human_readable_output = true;
 constexpr bool def_show_layer_dock = true;
 constexpr bool def_show_tileset_dock = true;
 constexpr bool def_show_properties_dock = true;
+constexpr bool def_show_log_dock = false;
 constexpr bool def_window_border = false;
 constexpr bool def_restore_layout = true;
 constexpr bool def_restore_last_session = true;
@@ -49,6 +50,7 @@ constexpr bool def_restore_last_session = true;
           .show_layer_dock = def_show_layer_dock,
           .show_tileset_dock = def_show_tileset_dock,
           .show_properties_dock = def_show_properties_dock,
+          .show_log_dock = def_show_log_dock,
           .window_border = def_window_border,
           .restore_layout = def_restore_layout,
           .restore_last_session = def_restore_last_session};
@@ -127,6 +129,10 @@ void LoadPreferences()
         settings.show_properties_dock = cfg.show_properties_dock();
       }
 
+      if (cfg.has_show_log_dock()) {
+        settings.show_log_dock = cfg.show_log_dock();
+      }
+
       if (cfg.has_restore_layout()) {
         settings.restore_layout = cfg.restore_layout();
       }
@@ -141,23 +147,27 @@ void LoadPreferences()
   }
 
   // clang-format off
-  CENTURION_LOG_INFO("Loaded preferences: \"%s\"", settings_path.string().c_str());
-  CENTURION_LOG_INFO("  Appearance::Theme: %s", magic_enum::enum_name(settings.theme).data());
-  CENTURION_LOG_INFO("  Appearance::ViewportBackground: %s", settings.viewport_background.as_rgb().c_str());
-  CENTURION_LOG_INFO("  Appearance::ShowGrid: %i", settings.show_grid);
-  CENTURION_LOG_INFO("  Appearance::WindowBorder: %i", settings.window_border);
-  CENTURION_LOG_INFO("  Behavior::CommandCapacity: %u", settings.command_capacity);
-  CENTURION_LOG_INFO("  Behavior::RestoreLastSession: %i", settings.restore_last_session);
-  CENTURION_LOG_INFO("  Behavior::PreferredTileWidth: %i", settings.preferred_tile_width);
-  CENTURION_LOG_INFO("  Behavior::PreferredTileHeight: %i", settings.preferred_tile_height);
-  CENTURION_LOG_INFO("  Export::PreferredFormat: %s", settings.preferred_format.c_str());
-  CENTURION_LOG_INFO("  Export::EmbedTilesets: %i", settings.embed_tilesets);
-  CENTURION_LOG_INFO("  Export::HumanReadableOutput: %i", settings.human_readable_output);
-  CENTURION_LOG_INFO("  Widgets::ShowLayerDock: %i", settings.show_layer_dock);
-  CENTURION_LOG_INFO("  Widgets::ShowTilesetDock: %i", settings.show_tileset_dock);
-  CENTURION_LOG_INFO("  Widgets::ShowPropertiesDock: %i", settings.show_properties_dock);
-  CENTURION_LOG_INFO("  Widgets::RestoreLayout: %i", settings.restore_layout);
-  CENTURION_LOG_INFO("  Widgets::ViewportOverlayPos: %i", settings.viewport_overlay_pos);
+  CENTURION_LOG_INFO("Theme: %s", magic_enum::enum_name(settings.theme).data());
+  CENTURION_LOG_INFO("ViewportBackground: %s", settings.viewport_background.as_rgb().c_str());
+  CENTURION_LOG_INFO("ShowGrid: %i", settings.show_grid);
+  CENTURION_LOG_INFO("WindowBorder: %i", settings.window_border);
+
+  CENTURION_LOG_INFO("CommandCapacity: %u", settings.command_capacity);
+  CENTURION_LOG_INFO("RestoreLastSession: %i", settings.restore_last_session);
+  CENTURION_LOG_INFO("PreferredTileWidth: %i", settings.preferred_tile_width);
+  CENTURION_LOG_INFO("PreferredTileHeight: %i", settings.preferred_tile_height);
+
+  CENTURION_LOG_INFO("PreferredFormat: %s", settings.preferred_format.c_str());
+  CENTURION_LOG_INFO("EmbedTilesets: %i", settings.embed_tilesets);
+  CENTURION_LOG_INFO("HumanReadableOutput: %i", settings.human_readable_output);
+
+  CENTURION_LOG_INFO("ShowLayerDock: %i", settings.show_layer_dock);
+  CENTURION_LOG_INFO("ShowLogDock: %i", settings.show_log_dock);
+  CENTURION_LOG_INFO("ShowTilesetDock: %i", settings.show_tileset_dock);
+  CENTURION_LOG_INFO("ShowPropertiesDock: %i", settings.show_properties_dock);
+  CENTURION_LOG_INFO("ShowLogDock: %i", settings.show_log_dock);
+  CENTURION_LOG_INFO("RestoreLayout: %i", settings.restore_layout);
+  CENTURION_LOG_INFO("ViewportOverlayPos: %i", settings.viewport_overlay_pos);
   // clang-format on
 }
 
@@ -189,6 +199,7 @@ void SavePreferences()
   cfg.set_show_tileset_dock(settings.show_tileset_dock);
   cfg.set_show_layer_dock(settings.show_layer_dock);
   cfg.set_show_properties_dock(settings.show_properties_dock);
+  cfg.set_show_log_dock(settings.show_log_dock);
   cfg.set_restore_layout(settings.restore_layout);
   cfg.set_viewport_overlay_pos(Proto::OverlayPos{settings.viewport_overlay_pos});
 
@@ -256,6 +267,11 @@ void SetShowPropertiesDock(const bool visible) noexcept
   settings.show_properties_dock = visible;
 }
 
+void SetShowLogDock(const bool visible) noexcept
+{
+  settings.show_log_dock = visible;
+}
+
 void SetViewportOverlayPos(const OverlayPos pos) noexcept
 {
   settings.viewport_overlay_pos = cen::to_underlying(pos);
@@ -294,6 +310,11 @@ auto GetShowTilesetDock() noexcept -> bool
 auto GetShowPropertiesDock() noexcept -> bool
 {
   return settings.show_properties_dock;
+}
+
+auto GetShowLogDock() noexcept -> bool
+{
+  return settings.show_log_dock;
 }
 
 auto GetTheme() noexcept -> Theme
