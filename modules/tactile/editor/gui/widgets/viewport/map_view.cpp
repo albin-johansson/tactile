@@ -6,6 +6,7 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include "core/systems/layers/layer_system.hpp"
 #include "core/systems/tileset_system.hpp"
 #include "core/systems/tools/tool_system.hpp"
 #include "core/viewport.hpp"
@@ -79,12 +80,14 @@ void UpdateCursorGizmos(const entt::registry& registry,
     return;
   }
 
-  ImGui::GetWindowDrawList()->AddRect(cursor.clamped_position,
-                                      cursor.clamped_position + info.grid_size,
-                                      tile_highlight_color,
-                                      0,
-                                      0,
-                                      2);
+  if (Sys::IsTileLayerActive(registry)) {
+    ImGui::GetWindowDrawList()->AddRect(cursor.clamped_position,
+                                        cursor.clamped_position + info.grid_size,
+                                        tile_highlight_color,
+                                        0,
+                                        0,
+                                        2);
+  }
 
   if (ImGui::IsMouseHoveringRect(ImGui::GetWindowPos(),
                                  ImGui::GetWindowPos() + ImGui::GetWindowSize()))
