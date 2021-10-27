@@ -465,6 +465,17 @@ auto IsTileLayerActive(const entt::registry& registry) -> bool
   }
 }
 
+auto IsObjectLayerActive(const entt::registry& registry) -> bool
+{
+  const auto& active = registry.ctx<ActiveLayer>();
+  if (active.entity != entt::null) {
+    return registry.all_of<ObjectLayer>(active.entity);
+  }
+  else {
+    return false;
+  }
+}
+
 auto GetActiveLayerID(const entt::registry& registry) -> Maybe<LayerID>
 {
   const auto& active = registry.ctx<ActiveLayer>();

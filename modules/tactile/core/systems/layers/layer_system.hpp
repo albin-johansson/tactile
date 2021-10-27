@@ -243,6 +243,8 @@ void SetLayerVisible(entt::registry& registry, entt::entity entity, bool visible
 
 [[nodiscard]] auto IsTileLayerActive(const entt::registry& registry) -> bool;
 
+[[nodiscard]] auto IsObjectLayerActive(const entt::registry& registry) -> bool;
+
 [[nodiscard]] auto GetActiveLayerID(const entt::registry& registry) -> Maybe<LayerID>;
 
 inline void RemoveLayer(entt::registry& registry, const LayerID id)
