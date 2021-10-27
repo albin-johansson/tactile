@@ -21,8 +21,8 @@ void ApplyStyle(ImGuiStyle& style)
   style.ScrollbarSize = 10;
 
   constexpr float rounding = 4;
+  style.ChildRounding = 2;
   style.WindowRounding = rounding;
-  style.ChildRounding = rounding;
   style.FrameRounding = rounding;
   style.PopupRounding = rounding;
   style.ScrollbarRounding = rounding;
