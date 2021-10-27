@@ -65,8 +65,6 @@ void SaveFileHistory()
       CENTURION_LOG_WARN("Failed to write history to binary file!");
     }
   }
-
-  google::protobuf::ShutdownProtobufLibrary();
 }
 
 void ClearFileHistory()
