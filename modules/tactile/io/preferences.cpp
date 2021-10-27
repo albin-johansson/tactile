@@ -253,6 +253,14 @@ void ResetExportPreferences(Preferences& prefs)
   prefs.human_readable_output = def_human_readable_output;
 }
 
+void ResetDockVisibilities() noexcept
+{
+  settings.show_layer_dock = def_show_layer_dock;
+  settings.show_tileset_dock = def_show_tileset_dock;
+  settings.show_properties_dock = def_show_properties_dock;
+  settings.show_log_dock = def_show_log_dock;
+}
+
 void SetShowLayerDock(const bool visible) noexcept
 {
   settings.show_layer_dock = visible;

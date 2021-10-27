@@ -13,6 +13,7 @@
 #include "editor/gui/widgets/tilesets/tileset_dock.hpp"
 #include "editor/gui/widgets/toolbar/toolbar.hpp"
 #include "editor/gui/widgets/viewport/viewport_widget.hpp"
+#include "editor/gui/widgets/log/log_dock.hpp"
 #include "editor/model.hpp"
 
 namespace Tactile {
@@ -32,6 +33,7 @@ void UpdateGui(const Model& model, entt::dispatcher& dispatcher)
     UpdateLayerDock(*registry, dispatcher);
     UpdatePropertiesDock(*registry, dispatcher);
     UpdateTilesetDock(*registry, dispatcher);
+    UpdateLogDock();
   }
 
   UpdateMapImportErrorDialog();

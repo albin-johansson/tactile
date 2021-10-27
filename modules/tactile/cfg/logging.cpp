@@ -9,6 +9,8 @@
 #include <fmt/core.h>    // print
 #include <fmt/format.h>  // format
 
+#include "editor/gui/widgets/log/log_dock.hpp"
+
 namespace Tactile {
 namespace {
 
@@ -49,6 +51,7 @@ void LogMessage(const cen::log_priority priority, const CStr msg)
                                fmt::localtime(time),
                                Tactile::ConvertPriority(priority),
                                msg);
+  Tactile::AddLogEntry(str);
 
   if constexpr (cen::is_debug_build()) {
     fmt::print(str);

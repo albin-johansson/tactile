@@ -1,6 +1,7 @@
 #include "focus.hpp"
 
 #include "editor/gui/widgets/layers/layer_dock.hpp"
+#include "editor/gui/widgets/log/log_dock.hpp"
 #include "editor/gui/widgets/properties/properties_dock.hpp"
 #include "editor/gui/widgets/tilesets/tileset_dock.hpp"
 #include "editor/gui/widgets/toolbar/toolbar.hpp"
@@ -11,7 +12,7 @@ namespace Tactile {
 auto IsEditorFocused() -> bool
 {
   return IsViewportFocused() || IsPropertyDockFocused() || IsToolbarFocused() ||
-         IsTilesetDockFocused() || IsLayerDockFocused();
+         IsTilesetDockFocused() || IsLayerDockFocused() || IsLogDockFocused();
 }
 
 }  // namespace Tactile

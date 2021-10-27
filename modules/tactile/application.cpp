@@ -80,6 +80,7 @@ void Register(Model& model, Args&&... args)
 constinit bool prev_show_layer_dock{true};
 constinit bool prev_show_tileset_dock{true};
 constinit bool prev_show_properties_dock{true};
+constinit bool prev_show_log_dock{false};
 constinit bool prev_show_toolbar{true};
 
 }  // namespace
@@ -559,18 +560,21 @@ void Application::OnToggleUi()
     prev_show_layer_dock = Prefs::GetShowLayerDock();
     prev_show_tileset_dock = Prefs::GetShowTilesetDock();
     prev_show_properties_dock = Prefs::GetShowPropertiesDock();
+    prev_show_log_dock = Prefs::GetShowLogDock();
     prev_show_toolbar = IsToolbarVisible();
   }
 
   Prefs::SetShowLayerDock(show);
   Prefs::SetShowTilesetDock(show);
   Prefs::SetShowPropertiesDock(show);
+  Prefs::SetShowLogDock(show);
   SetToolbarVisible(show);
 
   if (show) {
     Prefs::SetShowLayerDock(prev_show_layer_dock);
     Prefs::SetShowTilesetDock(prev_show_tileset_dock);
     Prefs::SetShowPropertiesDock(prev_show_properties_dock);
+    Prefs::SetShowLogDock(prev_show_log_dock);
     SetToolbarVisible(prev_show_toolbar);
   }
 

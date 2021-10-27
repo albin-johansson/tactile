@@ -321,6 +321,9 @@ set(SOURCE_FILES
     editor/gui/widgets/layers/rename_layer_dialog.cpp
     editor/gui/widgets/layers/rename_layer_dialog.hpp
 
+    editor/gui/widgets/log/log_dock.cpp
+    editor/gui/widgets/log/log_dock.hpp
+
     editor/gui/widgets/menus/debug_menu.cpp
     editor/gui/widgets/menus/debug_menu.hpp
     editor/gui/widgets/menus/edit_menu.cpp

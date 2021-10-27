@@ -100,6 +100,7 @@ void ResetExportPreferences(Preferences& prefs);
 [[nodiscard]] auto GetEmbedTilesets() noexcept -> bool;
 [[nodiscard]] auto GetHumanReadableOutput() noexcept -> bool;
 
+void ResetDockVisibilities() noexcept;
 void SetShowLayerDock(bool visible) noexcept;
 void SetShowTilesetDock(bool visible) noexcept;
 void SetShowPropertiesDock(bool visible) noexcept;
