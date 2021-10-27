@@ -143,6 +143,7 @@ void LoadPreferences()
     }
   }
   else {
+    cen::log::info("Settings file not found, using default preferences");
     SavePreferences();
   }
 
@@ -205,7 +206,7 @@ void SavePreferences()
 
   std::ofstream stream{settings_path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!cfg.SerializeToOstream(&stream)) {
-    CENTURION_LOG_WARN("Failed to save settings file!");
+    cen::log::error("Failed to save settings!");
   }
 }
 

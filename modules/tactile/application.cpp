@@ -271,7 +271,7 @@ void Application::OnOpenMap(const OpenMapEvent& event)
 {
   /* Just silently ignore the request if the map is already open */
   if (mModel.HasDocumentWithPath(event.path)) {
-    CENTURION_LOG_INFO("Tried to open map that was already open!");
+    cen::log::warn("Tried to open map that was already open!");
     return;
   }
 
@@ -402,7 +402,7 @@ void Application::OnAddTileset(const AddTilesetEvent& event)
     Execute<AddTilesetCmd>(mModel, std::move(*info), event.tile_width, event.tile_height);
   }
   else {
-    CENTURION_LOG_WARN("Failed to load tileset texture!");
+    cen::log::error("Failed to load tileset texture!");
   }
 }
 

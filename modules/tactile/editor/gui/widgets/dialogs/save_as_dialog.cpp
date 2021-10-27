@@ -25,7 +25,7 @@ void UpdateSaveAsDialog(entt::dispatcher& dispatcher)
       if (!path.ends_with(".json") && !path.ends_with(".tmx") &&
           !path.ends_with(".xml") && !path.ends_with(".yml") && !path.ends_with(".yaml"))
       {
-        CENTURION_LOG_INFO("No suffix in requested file path, using preferred format...");
+        cen::log::info("No suffix in specified file path, assuming preferred format");
         if (const auto& format = Prefs::GetPreferredFormat(); format == "YAML") {
           path += ".yaml";
         }

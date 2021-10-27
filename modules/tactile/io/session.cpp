@@ -37,12 +37,12 @@ void RestoreLastSession(Model& model)
         model.AddMap(CreateDocumentFromIR(parser.GetData()));
       }
       else {
-        CENTURION_LOG_ERROR("Failed to restore a map from previous session!");
+        cen::log::warn("Failed to restore a map from previous session!");
       }
     }
   }
   else {
-    CENTURION_LOG_WARN("Failed to parse binary session file!");
+    cen::log::warn("Failed to parse binary session file!");
   }
 }
 
@@ -58,7 +58,7 @@ void SaveSession(const Model& model)
 
   std::ofstream stream{file_path, std::ios::out | std::ios::trunc | std::ios::binary};
   if (!session.SerializeToOstream(&stream)) {
-    CENTURION_LOG_WARN("Failed to save session binary file!");
+    cen::log::error("Failed to save session binary file!");
   }
 }
 

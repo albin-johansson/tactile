@@ -43,7 +43,7 @@ void LoadFileHistory()
     }
   }
   else {
-    CENTURION_LOG_WARN("Failed to parse binary history file!");
+    cen::log::warn("Failed to parse history file!");
   }
 }
 
@@ -62,7 +62,7 @@ void SaveFileHistory()
   {
     std::ofstream stream{file_path, std::ios::out | std::ios::trunc | std::ios::binary};
     if (!h.SerializeToOstream(&stream)) {
-      CENTURION_LOG_WARN("Failed to write history to binary file!");
+      cen::log::error("Failed to save file history!");
     }
   }
 }

@@ -28,7 +28,7 @@ void SaveMapDocument(const Document& document)
   TACTILE_PROFILE_START
 
   const auto path = std::filesystem::absolute(document.path);
-  CENTURION_LOG_INFO("Saving map document to \"%s\"", path.string().c_str());
+  cen::log::info("Saving map to %s", path.string().c_str());
 
   const auto extension = path.extension();
   if (extension == ".json") {
@@ -43,12 +43,8 @@ void SaveMapDocument(const Document& document)
     const auto data = ConvertDocumentToIR(document);
     IO::EmitYamlMap(*data, GetEmitterOptions());
   }
-  else {
-    CENTURION_LOG_ERROR("Failed to save map document due to invalid extension: %s",
-                        extension.string().c_str());
-  }
 
-  TACTILE_PROFILE_END("IO::SaveMapDocument()")
+  TACTILE_PROFILE_END("Emitted document")
 }
 
 }  // namespace Tactile::IO
