@@ -40,7 +40,7 @@ jobs:
       - name: Install SDL2
         shell: bash
         run: |
-          cd SDL2-${{matrix.SDL_VERSION}}
+          cd SDL2-${{env.SDL_VERSION}}
           sudo make install
 
       - name: Install SDL2_image
