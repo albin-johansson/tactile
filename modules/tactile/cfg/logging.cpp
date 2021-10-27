@@ -41,9 +41,7 @@ namespace {
 
 }  // namespace
 
-void LogMessage(const cen::log_category category,
-                const cen::log_priority priority,
-                const CStr msg)
+void LogMessage(const cen::log_priority priority, const CStr msg)
 {
   auto time = std::time(nullptr);
 

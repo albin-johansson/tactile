@@ -15,7 +15,10 @@ auto main(int, char**) -> int
   Tactile::ProtobufContext protobuf;
 
   cen::library centurion;
-  cen::log::set_output_function(Tactile::LogMessage);
+  cen::log::set_output_function(
+      [](const cen::log_category, const cen::log_priority priority, const char* msg) {
+        Tactile::LogMessage(priority, msg);
+      });
 
   if constexpr (cen::is_debug_build()) {
     cen::log::set_priority(cen::log_priority::verbose);

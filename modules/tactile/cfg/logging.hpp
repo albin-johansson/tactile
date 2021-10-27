@@ -6,6 +6,6 @@
 
 namespace Tactile {
 
-void LogMessage(cen::log_category category, cen::log_priority priority, CStr msg);
+void LogMessage(cen::log_priority priority, CStr msg);
 
 }  // namespace Tactile
