@@ -1,4 +1,4 @@
-#include "save_map_document.hpp"
+#include "save_document.hpp"
 
 #include <cassert>     // assert
 #include <filesystem>  // absolute
@@ -22,7 +22,7 @@ namespace {
 
 }  // namespace
 
-void SaveMapDocument(const Document& document)
+void SaveDocument(const Document& document)
 {
   assert(!document.path.empty());
   TACTILE_PROFILE_START

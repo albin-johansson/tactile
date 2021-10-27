@@ -11,6 +11,6 @@ namespace Tactile {
  *
  * \param document the map document that will be saved.
  */
-void SaveMapDocument(const Document& document);
+void SaveDocument(const Document& document);
 
 }  // namespace Tactile

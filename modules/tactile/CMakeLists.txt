@@ -408,8 +408,8 @@ set(SOURCE_FILES
     io/map_parser.hpp
     io/preferences.cpp
     io/preferences.hpp
-    io/save_map_document.cpp
-    io/save_map_document.hpp
+    io/save_document.cpp
+    io/save_document.hpp
     io/session.cpp
     io/session.hpp
     io/create_document_from_ir.cpp

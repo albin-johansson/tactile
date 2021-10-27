@@ -52,7 +52,7 @@
 #include "io/history.hpp"
 #include "io/map_parser.hpp"
 #include "io/preferences.hpp"
-#include "io/save_map_document.hpp"
+#include "io/save_document.hpp"
 #include "io/session.hpp"
 
 namespace Tactile {
@@ -221,7 +221,7 @@ void Application::OnSave()
 {
   if (auto* document = mModel.GetActiveDocument()) {
     if (!document->path.empty()) {
-      SaveMapDocument(*document);
+      SaveDocument(*document);
       document->commands.MarkAsClean();
 
       auto& context = document->registry.ctx<PropertyContext>();
