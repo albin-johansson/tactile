@@ -1,5 +1,5 @@
 #include <cassert>     // assert
-#include <filesystem>  // absolute
+#include <filesystem>  // absolute, exists
 
 #include <yaml-cpp/yaml.h>
 
@@ -14,6 +14,10 @@ namespace {
 [[nodiscard]] auto ParseMap(const std::filesystem::path& path, Map& map) -> ParseError
 {
   try {
+    if (!std::filesystem::exists(path)) {
+      return ParseError::MapDoesNotExist;
+    }
+
     const auto node = YAML::LoadFile(path.string());
     if (!node) {
       return ParseError::CouldNotReadFile;
