@@ -13,6 +13,8 @@ set(SOURCE_FILES
 
     cfg/gl_attributes.cpp
     cfg/gl_attributes.hpp
+    cfg/logging.cpp
+    cfg/logging.hpp
     cfg/protobuf_context.cpp
     cfg/protobuf_context.hpp
 

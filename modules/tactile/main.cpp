@@ -5,6 +5,7 @@
 
 #include "application.hpp"
 #include "cfg/gl_attributes.hpp"
+#include "cfg/logging.hpp"
 #include "cfg/protobuf_context.hpp"
 #include "editor/gui/imgui_context.hpp"
 #include "io/preferences.hpp"
@@ -14,10 +15,13 @@ auto main(int, char**) -> int
   Tactile::ProtobufContext protobuf;
 
   cen::library centurion;
-  cen::log::use_preset_output_function();
+  cen::log::set_output_function(Tactile::LogMessage);
 
   if constexpr (cen::is_debug_build()) {
-    cen::log::set_priority(cen::log_priority::debug);
+    cen::log::set_priority(cen::log_priority::verbose);
+  }
+  else {
+    cen::log::set_priority(cen::log_priority::info);
   }
 
   constexpr auto flags =
