@@ -17,7 +17,7 @@ class TactileError final : public std::exception
   explicit TactileError(const CStr what) : mWhat{what ? what : "N/A"}
   {}
 
-  [[nodiscard]] auto what() const -> CStr override
+  [[nodiscard]] auto what() const noexcept -> CStr override
   {
     return mWhat;
   }
