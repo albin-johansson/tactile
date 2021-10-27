@@ -2,29 +2,12 @@
 
 #include <GL/glew.h>      // glewInit
 #include <centurion.hpp>  // library, window, gl_context
-#include <google/protobuf/stubs/common.h>
 
 #include "application.hpp"
 #include "cfg/gl_attributes.hpp"
+#include "cfg/protobuf_context.hpp"
 #include "editor/gui/imgui_context.hpp"
 #include "io/preferences.hpp"
-
-namespace Tactile {
-
-struct ProtobufContext final
-{
-  ProtobufContext()
-  {
-    GOOGLE_PROTOBUF_VERIFY_VERSION;
-  }
-
-  ~ProtobufContext()
-  {
-    google::protobuf::ShutdownProtobufLibrary();
-  }
-};
-
-}  // namespace Tactile
 
 auto main(int, char**) -> int
 {
