@@ -49,9 +49,9 @@ void LogMessage(const cen::log_priority priority, const CStr msg)
 
   const auto str = fmt::format("({:%H:%M:%S}) [{}] > {}\n",
                                fmt::localtime(time),
-                               Tactile::ConvertPriority(priority),
+                               ConvertPriority(priority),
                                msg);
-  Tactile::AddLogEntry(str);
+  AddLogEntry(str);
 
   if constexpr (cen::is_debug_build()) {
     fmt::print(str);
