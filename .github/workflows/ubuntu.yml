@@ -63,7 +63,10 @@ jobs:
       - name: Build
         working-directory: ./build
         shell: bash
-        run: ninja
+        run: |
+          ninja TactileIO
+          ninja libtactile
+          ninja TactileTests
 
       - name: Run tests
         working-directory: ./build/build/test
