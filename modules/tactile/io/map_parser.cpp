@@ -10,19 +10,10 @@ namespace Tactile {
 
 MapParser::MapParser(const std::filesystem::path& path)
 {
+  cen::log::info("Parsing map %s", path.string().c_str());
   try {
     TACTILE_PROFILE_START;
-
-    CENTURION_LOG_INFO("Parsing map at \"%s\"...", path.string().c_str());
-    const auto absolute = std::filesystem::absolute(path);
-
-    if (!std::filesystem::exists(absolute)) {
-      mError = IO::ParseError::MapDoesNotExist;
-      return;
-    }
-
     mData = IO::ParseMap(path, &mError);
-
     TACTILE_PROFILE_END("Parsed map");
   }
   catch (...) {
