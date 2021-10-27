@@ -8,7 +8,7 @@
 #include "editor/gui/widgets/common/button.hpp"
 #include "editor/gui/widgets/common/window.hpp"
 
-#define TACTILE_VER "0.2.0"
+#define TACTILE_VER "0.3.0"
 #define TACTILE_URL "https://www.github.com/albin-johansson/tactile"
 
 namespace Tactile {
