@@ -160,7 +160,6 @@ target_precompile_headers(TactileIO PRIVATE
     <functional>
     <string>
     <vector>
-    <format>
     <filesystem>
     <utility>
     <memory>
