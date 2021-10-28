@@ -38,6 +38,8 @@ void CheckFor(const ViewportCursorInfo& cursor, entt::dispatcher& dispatcher, T&
   const auto right = query(ImGuiMouseButton_Right);
   if (left || mid || right) {
     MouseInfo info;
+    info.x = cursor.raw_position.x;
+    info.y = cursor.raw_position.y;
     info.position_in_map = cursor.map_position;
 
     if (left) {
