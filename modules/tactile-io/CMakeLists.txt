@@ -161,6 +161,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       -Wextra
       -Wpedantic
       -Wconversion
+
+      PUBLIC
       -fPIC
       )
 endif ()
