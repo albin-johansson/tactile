@@ -1,6 +1,6 @@
 #include "shortcuts.hpp"
 
-#include <memory>  // unique_ptr
+#include <memory>  // unique_ptr, make_unique
 #include <vector>  // vector
 
 #include "editor/gui/widgets/menus/edit_menu.hpp"
@@ -34,44 +34,50 @@ namespace {
 
 inline std::vector<std::unique_ptr<AShortcut>> shortcuts;
 
+template <typename T>
+void LoadShortcut()
+{
+  shortcuts.push_back(std::make_unique<T>());
+}
+
 }  // namespace
 
 void LoadDefaultShortcuts()
 {
   // File
-  shortcuts.push_back(std::make_unique<NewMapShortcut>());
-  shortcuts.push_back(std::make_unique<OpenMapShortcut>());
-  shortcuts.push_back(std::make_unique<OpenSettingsShortcut>());
-  shortcuts.push_back(std::make_unique<SaveShortcut>());
-  shortcuts.push_back(std::make_unique<SaveAsShortcut>());
+  LoadShortcut<NewMapShortcut>();
+  LoadShortcut<OpenMapShortcut>();
+  LoadShortcut<OpenSettingsShortcut>();
+  LoadShortcut<SaveShortcut>();
+  LoadShortcut<SaveAsShortcut>();
 
   // Edit
-  shortcuts.push_back(std::make_unique<UndoShortcut>());
-  shortcuts.push_back(std::make_unique<RedoShortcut>());
+  LoadShortcut<UndoShortcut>();
+  LoadShortcut<RedoShortcut>();
 
-  shortcuts.push_back(std::make_unique<EnableStampShortcut>());
-  shortcuts.push_back(std::make_unique<EnableEraserShortcut>());
-  shortcuts.push_back(std::make_unique<EnableBucketShortcut>());
+  LoadShortcut<EnableStampShortcut>();
+  LoadShortcut<EnableEraserShortcut>();
+  LoadShortcut<EnableBucketShortcut>();
 
-  shortcuts.push_back(std::make_unique<AddRowShortcut>());
-  shortcuts.push_back(std::make_unique<AddColumnShortcut>());
-  shortcuts.push_back(std::make_unique<RemoveRowShortcut>());
-  shortcuts.push_back(std::make_unique<RemoveColumnShortcut>());
+  LoadShortcut<AddRowShortcut>();
+  LoadShortcut<AddColumnShortcut>();
+  LoadShortcut<RemoveRowShortcut>();
+  LoadShortcut<RemoveColumnShortcut>();
 
-  shortcuts.push_back(std::make_unique<AddTilesetShortcut>());
+  LoadShortcut<AddTilesetShortcut>();
 
   // View
-  shortcuts.push_back(std::make_unique<CenterViewportShortcut>());
-  shortcuts.push_back(std::make_unique<IncreaseViewportZoomShortcut>());
-  shortcuts.push_back(std::make_unique<DecreaseViewportZoomShortcut>());
+  LoadShortcut<CenterViewportShortcut>();
+  LoadShortcut<IncreaseViewportZoomShortcut>();
+  LoadShortcut<DecreaseViewportZoomShortcut>();
 
-  shortcuts.push_back(std::make_unique<ToggleGridShortcut>());
-  shortcuts.push_back(std::make_unique<ToggleUiShortcut>());
+  LoadShortcut<ToggleGridShortcut>();
+  LoadShortcut<ToggleUiShortcut>();
 
-  shortcuts.push_back(std::make_unique<PanRightShortcut>());
-  shortcuts.push_back(std::make_unique<PanLeftShortcut>());
-  shortcuts.push_back(std::make_unique<PanUpShortcut>());
-  shortcuts.push_back(std::make_unique<PanDownShortcut>());
+  LoadShortcut<PanRightShortcut>();
+  LoadShortcut<PanLeftShortcut>();
+  LoadShortcut<PanUpShortcut>();
+  LoadShortcut<PanDownShortcut>();
 }
 
 void UpdateShortcuts(const Model& model,
