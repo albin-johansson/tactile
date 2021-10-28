@@ -1,8 +1,8 @@
 #include "editor/commands/command_stack.hpp"
 
-#include <gtest/gtest.h>
-
 #include <iostream>  // cout
+
+#include <gtest/gtest.h>
 
 #include "io/preferences.hpp"
 

@@ -1,6 +1,6 @@
-#include <gtest/gtest.h>
-
 #include <tactile-base/property_value.hpp>
+
+#include <gtest/gtest.h>
 
 using namespace Tactile;
 using namespace std::string_literals;

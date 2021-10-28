@@ -1,8 +1,8 @@
-#include <GL/glew.h>  // glewInit
-#include <gtest/gtest.h>
+#include <cstdlib>  // atexit
 
+#include <GL/glew.h>      // glewInit
 #include <centurion.hpp>  // library
-#include <cstdlib>        // atexit
+#include <gtest/gtest.h>
 
 #include "cfg/gl_attributes.hpp"
 #include "core/utils/load_texture.hpp"
