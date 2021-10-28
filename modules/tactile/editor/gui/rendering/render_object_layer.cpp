@@ -5,11 +5,8 @@
 
 #include "common_rendering.hpp"
 #include "core/components/layer.hpp"
-#include "core/components/object.hpp"
 #include "core/components/object_layer.hpp"
-#include "editor/gui/rendering/objects/render_ellipse.hpp"
-#include "editor/gui/rendering/objects/render_point.hpp"
-#include "editor/gui/rendering/objects/render_rect.hpp"
+#include "objects/render_object.hpp"
 
 namespace Tactile {
 
@@ -25,24 +22,7 @@ void RenderObjectLayer(const entt::registry& registry,
   const auto color = IM_COL32(0xFF, 0, 0, opacity);
 
   for (const auto objectEntity : objectLayer.objects) {
-    const auto& object = registry.get<Object>(objectEntity);
-
-    const auto localPos = ImVec2{object.x, object.y};
-    const auto absolutePos = info.map_position + (localPos * info.ratio);
-
-    switch (object.type) {
-      case ObjectType::Point:
-        RenderPoint(registry, objectEntity, info, absolutePos, color);
-        break;
-
-      case ObjectType::Ellipse:
-        RenderEllipse(registry, objectEntity, info, absolutePos, color);
-        break;
-
-      case ObjectType::Rectangle:
-        RenderRect(registry, objectEntity, info, absolutePos, color);
-        break;
-    }
+    RenderObject(registry, objectEntity, info, color);
   }
 }
 

@@ -261,6 +261,8 @@ set(SOURCE_FILES
 
     editor/gui/rendering/objects/render_ellipse.cpp
     editor/gui/rendering/objects/render_ellipse.hpp
+    editor/gui/rendering/objects/render_object.cpp
+    editor/gui/rendering/objects/render_object.hpp
     editor/gui/rendering/objects/render_point.cpp
     editor/gui/rendering/objects/render_point.hpp
     editor/gui/rendering/objects/render_rect.cpp
