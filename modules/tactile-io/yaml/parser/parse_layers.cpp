@@ -1,8 +1,9 @@
 #include "parse_layers.hpp"
 
-#include <string>   // string
+#include <string>  // string
 
 #include <tactile-base/tactile_std.hpp>
+
 #include <yaml-cpp/yaml.h>
 
 #include "parse_object_layer.hpp"
