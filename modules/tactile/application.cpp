@@ -552,6 +552,14 @@ void Application::OnChangePropertyType(const ChangePropertyTypeEvent& event)
   Execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
 }
 
+void Application::OnSetPropertyContext(const SetPropertyContextEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    auto& current = registry->ctx<ActivePropertyContext>();
+    current.entity = event.entity;
+  }
+}
+
 void Application::OnToggleUi()
 {
   static bool show = false;

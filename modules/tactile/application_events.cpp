@@ -73,6 +73,7 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<RenamePropertyEvent>().connect<&App::OnRenameProperty>(app);
   d.sink<UpdatePropertyEvent>().connect<&App::OnUpdateProperty>(app);
   d.sink<ChangePropertyTypeEvent>().connect<&App::OnChangePropertyType>(app);
+  d.sink<SetPropertyContextEvent>().connect<&App::OnSetPropertyContext>(app);
 
   d.sink<ToggleUiEvent>().connect<&App::OnToggleUi>(app);
   d.sink<QuitEvent>().connect<&App::OnQuit>(app);

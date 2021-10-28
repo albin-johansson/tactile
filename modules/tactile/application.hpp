@@ -103,6 +103,7 @@ class Application final
   void OnRenameProperty(const RenamePropertyEvent& event);
   void OnUpdateProperty(const UpdatePropertyEvent& event);
   void OnChangePropertyType(const ChangePropertyTypeEvent& event);
+  void OnSetPropertyContext(const SetPropertyContextEvent& event);
 
   void OnToggleUi();
   void OnQuit();

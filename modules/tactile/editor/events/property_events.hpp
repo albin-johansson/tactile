@@ -5,6 +5,8 @@
 #include <tactile-base/property_type.hpp>
 #include <tactile-base/property_value.hpp>
 
+#include <entt.hpp>  // entity, null
+
 namespace Tactile {
 
 /// \addtogroup events
@@ -37,6 +39,11 @@ struct ChangePropertyTypeEvent final
 {
   std::string name;
   PropertyType type;
+};
+
+struct SetPropertyContextEvent final
+{
+  entt::entity entity{entt::null};
 };
 
 /// \} End of group events
