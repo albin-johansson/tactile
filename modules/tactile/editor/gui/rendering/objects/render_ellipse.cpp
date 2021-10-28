@@ -14,13 +14,18 @@
 namespace Tactile {
 namespace {
 
-void RenderName(const CStr name, const ImVec2& center, const ImVec2& radius)
+void RenderName(const CStr name,
+                const ImVec2& center,
+                const ImVec2& radius,
+                const uint32 opacity)
 {
   const auto textSize = ImGui::CalcTextSize(name);
   if (textSize.x <= radius.x) {
     const auto textX = center.x - (textSize.x / 2.0f);
     const auto textY = center.y + (textSize.y / 2.0f) + (radius.y);
-    ImGui::GetWindowDrawList()->AddText({textX, textY}, IM_COL32_WHITE, name);
+    ImGui::GetWindowDrawList()->AddText({textX, textY},
+                                        IM_COL32(0xFF, 0xFF, 0xFF, opacity),
+                                        name);
   }
 }
 
@@ -45,7 +50,10 @@ void RenderEllipse(const entt::registry& registry,
 
   const auto& context = registry.get<PropertyContext>(entity);
   if (!context.name.empty()) {
-    RenderName(context.name.c_str(), center, {xRadius, yRadius});
+    RenderName(context.name.c_str(),
+               center,
+               {xRadius, yRadius},
+               color >> IM_COL32_A_SHIFT);
   }
 }
 

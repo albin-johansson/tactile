@@ -14,13 +14,16 @@
 namespace Tactile {
 namespace {
 
-void RenderName(const CStr name, const ImVec2& position, const ImVec2& rectSize)
+void RenderName(const CStr name,
+                const ImVec2& position,
+                const ImVec2& rectSize,
+                const uint32 opacity)
 {
   const auto textSize = ImGui::CalcTextSize(name);
   if (textSize.x <= rectSize.x) {
     const auto textX = (rectSize.x - textSize.x) / 2.0f;
     ImGui::GetWindowDrawList()->AddText(position + ImVec2{textX, rectSize.y + 4.0f},
-                                        IM_COL32_WHITE,
+                                        IM_COL32(0xFF, 0xFF, 0xFF, opacity),
                                         name);
   }
 }
@@ -43,7 +46,7 @@ void RenderRect(const entt::registry& registry,
 
     const auto& context = registry.get<PropertyContext>(entity);
     if (!context.name.empty()) {
-      RenderName(context.name.c_str(), position, size);
+      RenderName(context.name.c_str(), position, size, color >> IM_COL32_A_SHIFT);
     }
   }
 }

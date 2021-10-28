@@ -17,13 +17,18 @@ namespace {
 constexpr float radius = 6.0f;
 constexpr float thickness = 2.0f;
 
-void RenderName(const CStr name, const ImVec2& position, const float gridWidth)
+void RenderName(const CStr name,
+                const ImVec2& position,
+                const float gridWidth,
+                const uint32 opacity)
 {
   const auto textSize = ImGui::CalcTextSize(name);
   if (textSize.x <= gridWidth) {
     const auto textX = position.x - (textSize.x / 2.0f);
     const auto textY = position.y + radius + 4.0f;
-    ImGui::GetWindowDrawList()->AddText({textX, textY}, IM_COL32_WHITE, name);
+    ImGui::GetWindowDrawList()->AddText({textX, textY},
+                                        IM_COL32(0xFF, 0xFF, 0xFF, opacity),
+                                        name);
   }
 }
 
@@ -43,7 +48,10 @@ void RenderPoint(const entt::registry& registry,
 
     const auto& context = registry.get<PropertyContext>(entity);
     if (!context.name.empty()) {
-      RenderName(context.name.c_str(), position, info.grid_size.x);
+      RenderName(context.name.c_str(),
+                 position,
+                 info.grid_size.x,
+                 color >> IM_COL32_A_SHIFT);
     }
   }
 }
