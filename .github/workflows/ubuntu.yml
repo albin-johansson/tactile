@@ -1,0 +1,87 @@
+name: "CI: Ubuntu"
+
+on: [ push, pull_request ]
+
+env:
+  SDL_VERSION: 2.0.16
+
+jobs:
+  ubuntu-latest-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: seanmiddleditch/gha-setup-ninja@master
+      - uses: lukka/get-cmake@latest
+
+      - name: Update packages
+        shell: bash
+        run: sudo apt update
+
+      - name: Install GLEW
+        shell: bash
+        run: sudo apt install libglew-dev
+
+      - name: Install GCC 10
+        shell: bash
+        run: sudo apt install gcc-10 g++-10
+
+      - name: Cache SDL2
+        id: cache-sdl2
+        uses: actions/cache@main
+        with:
+          path: SDL2-${{env.SDL_VERSION}}
+          key: SDL2-${{env.SDL_VERSION}}
+
+      - name: Build SDL2
+        shell: bash
+        if: steps.cache-sdl2.outputs.cache-hit != 'true'
+        env:
+          CC: gcc-10
+          CXX: g++-10
+        run: |
+          curl -L https://www.libsdl.org/release/SDL2-${{env.SDL_VERSION}}.tar.gz | tar xz
+          cd SDL2-${{env.SDL_VERSION}}
+          ./configure
+          make
+
+      - name: Install SDL2
+        shell: bash
+        run: |
+          cd SDL2-${{env.SDL_VERSION}}
+          sudo make install
+
+      - name: Install SDL2_image
+        shell: bash
+        run: sudo apt install libsdl2-image-dev
+
+      - name: Install SDL2_ttf
+        shell: bash
+        run: sudo apt install libsdl2-ttf-dev
+
+      - name: Create build directory
+        shell: bash
+        run: mkdir -p build
+
+      - name: Generate build files
+        working-directory: ./build
+        shell: bash
+        env:
+          CC: gcc-10
+          CXX: g++-10
+        run: cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+
+      - name: Build
+        working-directory: ./build
+        shell: bash
+        env:
+          CC: gcc-10
+          CXX: g++-10
+        run: |
+          ninja TactileIO
+          ninja libtactile
+          ninja TactileTests
+
+      - name: Run tests
+        working-directory: ./build/build/test
+        shell: bash
+        run: ./TactileTests
