@@ -5,8 +5,10 @@
 
 #include "core/components/layer.hpp"
 #include "core/components/layer_tree_node.hpp"
+#include "core/components/object.hpp"
 #include "core/components/parent.hpp"
 #include "io/preferences.hpp"
+#include "objects/render_object.hpp"
 #include "render_bounds.hpp"
 #include "render_info.hpp"
 #include "render_object_layer.hpp"
@@ -75,6 +77,11 @@ void RenderMap(const entt::registry& registry, const RenderInfo& info)
         RenderLayer(registry, entity, layer, info, layer.opacity * parentOpacity);
       }
     }
+  }
+
+  const auto& activeObject = registry.ctx<ActiveObject>();
+  if (activeObject.entity != entt::null) {
+    RenderObject(registry, activeObject.entity, info, IM_COL32(0xFF, 0xFF, 0, 0xFF));
   }
 
   if (Prefs::GetShowGrid()) {

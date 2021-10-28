@@ -5,6 +5,8 @@
 #include <tactile-base/object_type.hpp>
 #include <tactile-base/tactile_std.hpp>
 
+#include <entt.hpp>  // entity, null
+
 namespace Tactile {
 
 struct Object final
@@ -19,4 +21,8 @@ struct Object final
   bool visible{};           ///< Whether or not the object is rendered.
 };
 
+struct ActiveObject final
+{
+  entt::entity entity{entt::null};
+};
 }  // namespace Tactile
