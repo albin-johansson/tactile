@@ -32,6 +32,9 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
   }
 
   static int axis = ImGuiAxis_X;
+  constexpr auto bw = 24;
+  constexpr auto bh = 24;
+
   BeginDockingToolbar("Toolbar", axis);
   has_focus = ImGui::IsWindowFocused();
 
@@ -47,7 +50,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::Spacing();
   };
 
-  if (Button(TAC_ICON_FILE, "Create new map")) {
+  if (Button(TAC_ICON_FILE, "Create new map", bw, bh)) {
     ShowAddMapDialog();
   }
 
@@ -55,7 +58,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_OPEN, "Open map")) {
+  if (Button(TAC_ICON_OPEN, "Open map", bw, bh)) {
     ShowOpenMapDialog();
   }
 
@@ -63,7 +66,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_SAVE, "Save", !model.IsClean())) {
+  if (Button(TAC_ICON_SAVE, "Save", !model.IsClean(), bw, bh)) {
     dispatcher.enqueue<SaveEvent>();
   }
 
@@ -73,7 +76,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_UNDO, "Undo", model.CanUndo())) {
+  if (Button(TAC_ICON_UNDO, "Undo", model.CanUndo(), bw, bh)) {
     dispatcher.enqueue<UndoEvent>();
   }
 
@@ -81,7 +84,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_REDO, "Redo", model.CanRedo())) {
+  if (Button(TAC_ICON_REDO, "Redo", model.CanRedo(), bw, bh)) {
     dispatcher.enqueue<RedoEvent>();
   }
 
@@ -91,7 +94,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_CENTER, "Center viewport")) {
+  if (Button(TAC_ICON_CENTER, "Center viewport", true, bw, bh)) {
     dispatcher.enqueue<CenterViewportEvent>();
   }
 
@@ -99,7 +102,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_RESIZE, "Resize map")) {
+  if (Button(TAC_ICON_RESIZE, "Resize map", true, bw, bh)) {
     dispatcher.enqueue<OpenResizeMapDialogEvent>();
   }
 
@@ -113,7 +116,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (Button(TAC_ICON_TILESET, "Create tileset")) {
+  if (Button(TAC_ICON_TILESET, "Create tileset", true, bw, bh)) {
     ShowTilesetDialog();
   }
 
@@ -123,7 +126,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_STAMP, "Stamp tool", model.IsStampActive())) {
+  if (ToolButton(TAC_ICON_STAMP, "Stamp tool", model.IsStampActive(), bw, bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Stamp);
   }
 
@@ -131,7 +134,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_BUCKET, "Bucket tool", model.IsBucketActive())) {
+  if (ToolButton(TAC_ICON_BUCKET, "Bucket tool", model.IsBucketActive(), bw, bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Bucket);
   }
 
@@ -139,7 +142,7 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     ImGui::SameLine();
   }
 
-  if (ToolButton(TAC_ICON_ERASER, "Eraser tool", model.IsEraserActive())) {
+  if (ToolButton(TAC_ICON_ERASER, "Eraser tool", model.IsEraserActive(), bw, bh)) {
     dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
   }
 

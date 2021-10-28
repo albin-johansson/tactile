@@ -7,7 +7,11 @@
 
 namespace Tactile {
 
-auto Button(const NotNull<CStr> text, const CStr tooltip, const bool enabled) -> bool
+auto Button(const NotNull<CStr> text,
+            const CStr tooltip,
+            const bool enabled,
+            const float width,
+            const float height) -> bool
 {
   assert(text);
 
@@ -17,7 +21,7 @@ auto Button(const NotNull<CStr> text, const CStr tooltip, const bool enabled) ->
 
   ImGui::PushItemFlag(ImGuiItemFlags_Disabled, !enabled);
 
-  const auto result = ImGui::Button(text);
+  const auto result = ImGui::Button(text, {width, height});
 
   if (tooltip) {
     if (ImGui::IsItemActive() || ImGui::IsItemHovered()) {
