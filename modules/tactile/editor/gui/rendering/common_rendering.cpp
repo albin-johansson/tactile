@@ -13,7 +13,7 @@ void RenderShadowedCircle(const ImVec2& center,
   auto* drawList = ImGui::GetWindowDrawList();
   drawList->AddCircle(center + ImVec2{thickness, thickness},
                       radius,
-                      IM_COL32_BLACK,
+                      IM_COL32(0, 0, 0, color >> IM_COL32_A_SHIFT),
                       0,
                       thickness);
   drawList->AddCircle(center, radius, color, 0, thickness);
@@ -34,7 +34,7 @@ void RenderShadowedEllipse(const ImVec2& center,
     drawList->AddEllipse(center + ImVec2{thickness, thickness},
                          xRadius,
                          yRadius,
-                         IM_COL32_BLACK,
+                         IM_COL32(0, 0, 0, color >> IM_COL32_A_SHIFT),
                          nSegments,
                          thickness);
     drawList->AddEllipse(center, xRadius, yRadius, color, nSegments, thickness);
@@ -49,8 +49,12 @@ void RenderShadowedRect(const ImVec2& position,
   const auto offsetPosition = position + ImVec2{thickness, thickness};
 
   auto* drawList = ImGui::GetWindowDrawList();
-  drawList
-      ->AddRect(offsetPosition, offsetPosition + size, IM_COL32_BLACK, 0, 0, thickness);
+  drawList->AddRect(offsetPosition,
+                    offsetPosition + size,
+                    IM_COL32(0, 0, 0, color >> IM_COL32_A_SHIFT),
+                    0,
+                    0,
+                    thickness);
   drawList->AddRect(position, position + size, color, 0, 0, thickness);
 }
 
