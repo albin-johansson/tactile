@@ -145,13 +145,23 @@ target_compile_definitions(TactileIO PRIVATE
     TACTILE_IO_EXPORT
     CENTURION_NO_SDL_MIXER)
 
-if (MSVC)
-  target_compile_options(TactileIO PRIVATE
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  target_compile_options(TactileIO
+      PRIVATE
       /EHsc
       /MP
       /W4
       /Zc:preprocessor
       /Zc:__cplusplus
+      )
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_compile_options(TactileIO
+      PRIVATE
+      -Wall
+      -Wextra
+      -Wpedantic
+      -Wconversion
+      -fPIC
       )
 endif ()
 
