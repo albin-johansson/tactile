@@ -126,12 +126,6 @@ void DeleteMap(Map* map) noexcept
   delete map;
 }
 
-void SetPath(Map& map, const CStr path)
-{
-  assert(path);
-  map.absolute_path = std::filesystem::absolute(path);
-}
-
 void SetPath(Map& map, const CPathStr path)
 {
   assert(path);
@@ -837,12 +831,6 @@ void AssignString(Property& property, const CStr str)
 void AssignBool(Property& property, const bool value)
 {
   property.value.SetValue(value);
-}
-
-void AssignFile(Property& property, const CStr path)
-{
-  assert(path);
-  property.value.SetValue(std::filesystem::path{path});
 }
 
 void AssignFile(Property& property, const CPathStr path)
