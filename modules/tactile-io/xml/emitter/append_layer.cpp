@@ -57,7 +57,7 @@ void AppendTileLayer(pugi::xml_node mapNode,
       }
 
       stream << GetTile(tileLayer, row, col);
-      if (index < count - 1) {
+      if (index < static_cast<usize>(count - 1)) {
         stream << ',';
       }
 
