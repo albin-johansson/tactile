@@ -52,6 +52,8 @@ set(SOURCE_FILES
     core/systems/duplicate_comp.hpp
     core/systems/map_system.cpp
     core/systems/map_system.hpp
+    core/systems/object_system.cpp
+    core/systems/object_system.hpp
     core/systems/property_context_snapshot.hpp
     core/systems/property_system.cpp
     core/systems/property_system.hpp
@@ -132,6 +134,9 @@ set(SOURCE_FILES
     editor/commands/maps/resize_map_cmd.cpp
     editor/commands/maps/resize_map_cmd.hpp
 
+    editor/commands/objects/move_object_cmd.cpp
+    editor/commands/objects/move_object_cmd.hpp
+
     editor/commands/properties/add_property_cmd.cpp
     editor/commands/properties/add_property_cmd.hpp
     editor/commands/properties/change_property_type_cmd.cpp
@@ -158,6 +163,7 @@ set(SOURCE_FILES
     editor/events/command_events.hpp
     editor/events/layer_events.hpp
     editor/events/map_events.hpp
+    editor/events/object_events.hpp
     editor/events/property_events.hpp
     editor/events/quit_event.hpp
     editor/events/save_events.hpp

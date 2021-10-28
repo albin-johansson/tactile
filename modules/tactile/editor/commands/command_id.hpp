@@ -35,7 +35,9 @@ struct CommandId final
     Bucket,
 
     AddTileset,
-    RemoveTileset
+    RemoveTileset,
+
+    MoveObject
   };
 };
 

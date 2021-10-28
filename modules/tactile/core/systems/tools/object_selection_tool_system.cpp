@@ -4,6 +4,7 @@
 #include "core/systems/layers/layer_system.hpp"
 #include "core/systems/layers/object_layer_system.hpp"
 #include "core/systems/viewport_system.hpp"
+#include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
 
 namespace Tactile::Sys {
@@ -69,9 +70,16 @@ void ObjectSelectionToolOnReleased(entt::registry& registry,
   if (IsUsable(registry) && mouse.button == cen::mouse_button::left) {
     auto& active = registry.ctx<ActiveObject>();
     if (active.entity != entt::null) {
-      if (registry.remove<ObjectDragInfo>(active.entity) > 0) {
-        // TODO register a "MoveObjectCmd" command
+      if (const auto* drag = registry.try_get<ObjectDragInfo>(active.entity)) {
+        const auto& object = registry.get<Object>(active.entity);
+        dispatcher.enqueue<MoveObjectEvent>(object.id,
+                                            drag->origin_object_x,
+                                            drag->origin_object_y,
+                                            object.x,
+                                            object.y);
       }
+
+      registry.remove<ObjectDragInfo>(active.entity);
     }
   }
 }
