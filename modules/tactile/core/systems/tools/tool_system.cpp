@@ -3,6 +3,7 @@
 #include "bucket_tool_system.hpp"
 #include "core/components/tool.hpp"
 #include "eraser_tool_system.hpp"
+#include "object_selection_tool_system.hpp"
 #include "stamp_tool_system.hpp"
 
 namespace Tactile::Sys {
@@ -33,10 +34,16 @@ void ToolOnPressed(entt::registry& registry,
     case ToolType::Eraser:
       EraserToolOnPressed(registry, mouse);
       break;
+
+    case ToolType::ObjectSelection:
+      ObjectSelectionToolOnPressed(registry, dispatcher, mouse);
+      break;
   }
 }
 
-void ToolOnDragged(entt::registry& registry, entt::dispatcher&, const MouseInfo& mouse)
+void ToolOnDragged(entt::registry& registry,
+                   entt::dispatcher& dispatcher,
+                   const MouseInfo& mouse)
 {
   const auto& active = registry.ctx<ActiveTool>();
   switch (active.tool) {
@@ -52,6 +59,10 @@ void ToolOnDragged(entt::registry& registry, entt::dispatcher&, const MouseInfo&
 
     case ToolType::Eraser:
       EraserToolOnDragged(registry, mouse);
+      break;
+
+    case ToolType::ObjectSelection:
+      ObjectSelectionToolOnDragged(registry, mouse);
       break;
   }
 }
@@ -75,6 +86,10 @@ void ToolOnReleased(entt::registry& registry,
     case ToolType::Eraser:
       EraserToolOnReleased(registry, dispatcher, mouse);
       break;
+
+    case ToolType::ObjectSelection:
+      ObjectSelectionToolOnReleased(registry, dispatcher, mouse);
+      break;
   }
 }
 
@@ -94,6 +109,12 @@ auto IsBucketEnabled(const entt::registry& registry) -> bool
 {
   const auto& active = registry.ctx<ActiveTool>();
   return active.tool == ToolType::Bucket;
+}
+
+auto IsObjectSelectionEnabled(const entt::registry& registry) -> bool
+{
+  const auto& active = registry.ctx<ActiveTool>();
+  return active.tool == ToolType::ObjectSelection;
 }
 
 }  // namespace Tactile::Sys

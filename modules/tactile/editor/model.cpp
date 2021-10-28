@@ -212,4 +212,14 @@ auto Model::IsBucketActive() const -> bool
   }
 }
 
+auto Model::IsObjectSelectionActive() const -> bool
+{
+  if (const auto* registry = GetActiveRegistry()) {
+    return Sys::IsObjectSelectionEnabled(*registry);
+  }
+  else {
+    return false;
+  }
+}
+
 }  // namespace Tactile

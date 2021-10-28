@@ -146,6 +146,20 @@ void UpdateToolbarWidget(const Model& model, entt::dispatcher& dispatcher)
     dispatcher.enqueue<SelectToolEvent>(ToolType::Eraser);
   }
 
+  separate();
+
+  if (axis == ImGuiAxis_X) {
+    ImGui::SameLine();
+  }
+
+  if (ToolButton(ICON_FA_OBJECT_GROUP,
+                 "Object selection tool",
+                 model.IsObjectSelectionActive(),
+                 bw,
+                 bh))
+  {
+    dispatcher.enqueue<SelectToolEvent>(ToolType::ObjectSelection);
+  }
   EndDockingToolbar();
 }
 

@@ -78,6 +78,8 @@ set(SOURCE_FILES
     core/systems/tools/bucket_tool_system.hpp
     core/systems/tools/eraser_tool_system.cpp
     core/systems/tools/eraser_tool_system.hpp
+    core/systems/tools/object_selection_tool_system.cpp
+    core/systems/tools/object_selection_tool_system.hpp
     core/systems/tools/stamp_tool_system.cpp
     core/systems/tools/stamp_tool_system.hpp
     core/systems/tools/tool_system.cpp

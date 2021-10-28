@@ -69,6 +69,8 @@ class Model final
 
   [[nodiscard]] auto IsBucketActive() const -> bool;
 
+  [[nodiscard]] auto IsObjectSelectionActive() const -> bool;
+
   [[nodiscard]] auto IsClean() const -> bool;
 
   [[nodiscard]] auto CanUndo() const -> bool;

@@ -25,4 +25,13 @@ struct ActiveObject final
 {
   entt::entity entity{entt::null};
 };
+
+struct ObjectDragInfo final
+{
+  float origin_object_x{};  ///< Object X-coordinate at drag start.
+  float origin_object_y{};  ///< Object Y-coordinate at drag start.
+  float last_mouse_x{};     ///< Mouse viewport x-coordinate at last update.
+  float last_mouse_y{};     ///< Mouse viewport y-coordinate at last update.
+};
+
 }  // namespace Tactile
