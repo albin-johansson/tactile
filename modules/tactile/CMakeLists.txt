@@ -480,7 +480,7 @@ if (MSVC)
   target_compile_definitions(${TACTILE_LIB} PUBLIC _CRT_SECURE_NO_WARNINGS)
 endif ()
 
-if (MSVC)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   target_compile_options(${TACTILE_LIB}
       PUBLIC
       /EHsc
@@ -489,6 +489,15 @@ if (MSVC)
       /Zc:preprocessor
       /Zc:__cplusplus
       /wd5105  # Disable C5105: "macro expansion producing 'defined' has undefined behavior"
+      )
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_compile_options(${TACTILE_LIB}
+      PUBLIC
+      -Wall
+      -Wextra
+      -Wpedantic
+      -Wconversion
+      -fPIC
       )
 endif ()
 
