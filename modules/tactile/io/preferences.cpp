@@ -5,12 +5,14 @@
 #include <ios>         // ios
 #include <utility>     // move
 
+#include <tactile-base/tactile_std.hpp>
+
 #include <centurion.hpp>   // ...
 #include <magic_enum.hpp>  // enum_name
-#include <settings.pb.h>
 
 #include "directories.hpp"
-#include <tactile-base/tactile_std.hpp>
+
+#include <settings.pb.h>
 
 namespace Tactile {
 namespace {

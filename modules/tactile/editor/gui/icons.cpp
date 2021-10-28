@@ -2,9 +2,9 @@
 
 #include <filesystem>  // path
 
-#include <GL/glew.h>
-
 #include <tactile-base/tactile_error.hpp>
+
+#include <GL/glew.h>
 
 #include "core/utils/load_texture.hpp"
 

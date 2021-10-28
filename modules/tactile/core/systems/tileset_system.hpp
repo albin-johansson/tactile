@@ -1,10 +1,10 @@
 #pragma once
 
-#include <centurion.hpp>  // irect
-#include <entt.hpp>       // registry, entity
-
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <centurion.hpp>  // irect
+#include <entt.hpp>       // registry, entity
 
 #include "core/components/texture.hpp"
 #include "core/region.hpp"

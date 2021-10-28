@@ -1,10 +1,10 @@
 #include "registry_factory_system.hpp"
 
 #include "core/components/layer.hpp"
+#include "core/components/object.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/tool.hpp"
-#include "core/components/object.hpp"
 #include "core/map.hpp"
 #include "core/mouse.hpp"
 #include "core/viewport.hpp"

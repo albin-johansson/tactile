@@ -3,10 +3,10 @@
 #include <cassert>  // assert
 #include <utility>  // move
 
-#include <rune/containers/vector_map.hpp>  // vector_map
-
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <rune/containers/vector_map.hpp>  // vector_map
 
 #include "common/tile_cache.hpp"
 #include "core/systems/layers/layer_system.hpp"

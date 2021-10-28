@@ -3,7 +3,7 @@
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
 
-#include <entt.hpp>       // registry
+#include <entt.hpp>                        // registry
 #include <rune/containers/vector_map.hpp>  // vector_map
 
 #include "document.hpp"

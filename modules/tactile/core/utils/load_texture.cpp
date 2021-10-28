@@ -5,11 +5,11 @@
 #include <memory>  // unique_ptr
 #include <vector>  // vector
 
+#include <tactile-base/tactile_std.hpp>
+
 #include <GL/glew.h>
 #include <centurion.hpp>
 #include <stb_image.h>
-
-#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 namespace {

@@ -1,11 +1,11 @@
 #include "rubber_band.hpp"
 
+#include <algorithm>  // max, min
+#include <cmath>      // fmod
+
+#include <centurion.hpp>  // frect
 #include <imgui.h>
 #include <imgui_internal.h>
-
-#include <algorithm>      // max, min
-#include <centurion.hpp>  // frect
-#include <cmath>          // fmod
 
 namespace Tactile {
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
 
 namespace Tactile {
 

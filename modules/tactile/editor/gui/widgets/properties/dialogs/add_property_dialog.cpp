@@ -2,9 +2,9 @@
 
 #include <array>  // array
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_error.hpp>
+
+#include <imgui.h>
 
 #include "core/components/property_context.hpp"
 #include "core/systems/property_system.hpp"

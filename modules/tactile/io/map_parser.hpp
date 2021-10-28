@@ -68,4 +68,4 @@ class MapParser final
   IO::MapPtr mData;
 };
 
-}  // namespace Tactile::IO
+}  // namespace Tactile

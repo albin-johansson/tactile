@@ -1,9 +1,9 @@
 #pragma once
 
-#include <centurion.hpp>  // color
-
 #include <tactile-base/property_value.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <centurion.hpp>  // color
 
 namespace Tactile {
 

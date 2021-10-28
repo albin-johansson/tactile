@@ -1,8 +1,8 @@
 #pragma once
 
-#include <centurion.hpp>  // mouse_button
-
 #include <tactile-base/map_position.hpp>
+
+#include <centurion.hpp>  // mouse_button
 
 namespace Tactile {
 

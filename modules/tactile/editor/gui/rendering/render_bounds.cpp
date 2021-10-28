@@ -1,9 +1,9 @@
 #include "render_bounds.hpp"
 
+#include <algorithm>  // min, max
+
 #include <imgui.h>
 #include <imgui_internal.h>
-
-#include <algorithm>  // min, max
 
 #include "canvas.hpp"
 #include "render_info.hpp"

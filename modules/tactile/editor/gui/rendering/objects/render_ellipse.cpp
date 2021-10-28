@@ -2,10 +2,10 @@
 
 #include <cassert>  // assert
 
+#include <tactile-base/tactile_std.hpp>
+
 #include <imgui.h>
 #include <imgui_internal.h>
-
-#include <tactile-base/tactile_std.hpp>
 
 #include "core/components/object.hpp"
 #include "core/components/property_context.hpp"

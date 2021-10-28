@@ -1,8 +1,8 @@
 #pragma once
 
-#include <entt.hpp>  // registry
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <entt.hpp>  // registry
 
 #include "common/tile_cache.hpp"
 #include "editor/commands/command.hpp"

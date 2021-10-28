@@ -1,8 +1,8 @@
 #include "map_import_error_dialog.hpp"
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
 
 #include "editor/gui/icons.hpp"
 #include "editor/gui/widgets/alignment.hpp"

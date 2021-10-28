@@ -3,9 +3,9 @@
 #include <array>   // array
 #include <limits>  // numeric_limits
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
 
 #include "core/utils/buffer_utils.hpp"
 #include "core/utils/scope_id.hpp"

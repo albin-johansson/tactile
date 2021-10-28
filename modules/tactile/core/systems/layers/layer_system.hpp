@@ -2,10 +2,10 @@
 
 #include <string>  // string
 
-#include <entt.hpp>  // registry, entity, null
-
 #include <tactile-base/layer_type.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <entt.hpp>  // registry, entity, null
 
 #include "core/map.hpp"
 #include "layer_snapshot.hpp"

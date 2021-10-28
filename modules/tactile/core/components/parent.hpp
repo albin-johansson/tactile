@@ -1,7 +1,8 @@
 #pragma once
 
+#include <vector>  // vector
+
 #include <entt.hpp>  // entity, null
-#include <vector>    // vector
 
 namespace Tactile {
 

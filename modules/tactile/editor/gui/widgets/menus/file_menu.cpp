@@ -3,6 +3,7 @@
 #include <utility>  // move
 
 #include <imgui.h>
+#include <portable-file-dialogs.h>
 
 #include "editor/events/map_events.hpp"
 #include "editor/events/quit_event.hpp"
@@ -12,8 +13,6 @@
 #include "editor/gui/widgets/dialogs/add_map_dialog.hpp"
 #include "editor/model.hpp"
 #include "io/history.hpp"
-
-#include <portable-file-dialogs.h>
 
 namespace Tactile {
 namespace {

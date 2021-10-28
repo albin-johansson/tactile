@@ -1,8 +1,7 @@
 #pragma once
 
-#include <imgui.h>
-
 #include <entt.hpp>  // dispatcher
+#include <imgui.h>
 
 namespace Tactile {
 

@@ -2,11 +2,11 @@
 
 #include <cassert>  // assert
 
-#include <imgui.h>
-#include <imgui_internal.h>
-
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
+#include <imgui_internal.h>
 
 #include "core/components/texture.hpp"
 #include "core/components/tileset.hpp"

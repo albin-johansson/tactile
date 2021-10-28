@@ -2,10 +2,10 @@
 
 #include <vector>  // vector
 
+#include <tactile-base/tactile_std.hpp>
+
 #include <centurion.hpp>  // milliseconds
 #include <entt.hpp>       // entity
-
-#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

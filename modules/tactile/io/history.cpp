@@ -6,12 +6,12 @@
 #include <ios>         // ios
 #include <utility>     // move
 
-#include <history.pb.h>
-
 #include <tactile-base/convert_to_forward_slashes.hpp>
 #include <tactile-base/tactile_std.hpp>
 
 #include "directories.hpp"
+
+#include <history.pb.h>
 
 namespace Tactile {
 namespace {

@@ -2,9 +2,9 @@
 
 #include <string>  // string
 
-#include <centurion.hpp>  // color
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <centurion.hpp>  // color
 
 namespace Tactile {
 

@@ -1,7 +1,8 @@
 #pragma once
 
+#include <string>  // string
+
 #include <entt.hpp>  // registry, dispatcher
-#include <string>    // string
 
 namespace Tactile {
 

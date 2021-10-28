@@ -2,9 +2,9 @@
 
 #include <string>  // string
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
 
 #include "core/components/property.hpp"
 #include "core/systems/property_system.hpp"

@@ -2,10 +2,10 @@
 
 #include <utility>  // move
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_error.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
 
 #include "editor/events/property_events.hpp"
 #include "editor/gui/widgets/alignment.hpp"

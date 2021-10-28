@@ -2,10 +2,10 @@
 
 #include <vector>  // vector
 
-#include <entt.hpp>  // registry, entity
-
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <entt.hpp>  // registry, entity
 
 namespace Tactile {
 

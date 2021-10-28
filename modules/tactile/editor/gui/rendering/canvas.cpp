@@ -1,8 +1,8 @@
 #include "canvas.hpp"
 
-#include <imgui_internal.h>
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui_internal.h>
 
 #include "core/utils/color_utils.hpp"
 #include "io/preferences.hpp"
