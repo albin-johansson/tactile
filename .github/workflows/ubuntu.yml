@@ -78,7 +78,7 @@ jobs:
           CXX: g++-10
         run: |
           ninja TactileIO
-          ninja libtactile
+          ninja TactileCore
           ninja TactileTests
 
       - name: Run tests
