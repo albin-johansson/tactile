@@ -13,7 +13,6 @@ auto GetViewportCursorInfo(const RenderInfo& info) -> ViewportCursorInfo
   ViewportCursorInfo cursor;
 
   const auto mouse = ImGui::GetMousePos();
-  const auto item = ImGui::GetItemRectMin();
   cursor.raw_position = mouse - info.map_position;
 
   const auto index = cursor.raw_position / info.grid_size;
