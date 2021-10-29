@@ -19,8 +19,6 @@ add_library(${TACTILE_PROTO} ${GENERATED_FILES})
 
 target_include_directories(${TACTILE_PROTO} SYSTEM PUBLIC ${PROTOBUF_INCLUDE_DIRS})
 
-target_link_libraries(${TACTILE_PROTO} PUBLIC protobuf::libprotobuf)
-
-set_property(TARGET ${TACTILE_PROTO} PROPERTY POSITION_INDEPENDENT_CODE ON)
+target_link_libraries(${TACTILE_PROTO} PUBLIC libprotobuf)
 
 set(TACTILE_PROTO_GENERATED_DIR ${PROJECT_SOURCE_DIR}/generated PARENT_SCOPE)

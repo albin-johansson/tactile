@@ -466,7 +466,7 @@ target_link_libraries(${TACTILE_LIB}
     ${SDL2_TTF_LIBRARIES}
     ${SDL2_LIBRARY}
     ${TACTILE_IO_IMPORT_LIBRARY}
-    protobuf::libprotobuf
+    libprotobuf
     fmt
     )
 

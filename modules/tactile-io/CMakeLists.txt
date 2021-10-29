@@ -121,6 +121,11 @@ set(TACTILE_IO_SOURCES
 
 add_library(TactileIO SHARED ${TACTILE_IO_SOURCES})
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set_target_properties(yaml-cpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
+  set_target_properties(fmt PROPERTIES POSITION_INDEPENDENT_CODE ON)
+endif ()
+
 target_include_directories(TactileIO
     PRIVATE
     ${PROJECT_SOURCE_DIR}
@@ -166,8 +171,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       PRIVATE
       -Wall
       -Wextra
-      -Wpedantic
-      -Wconversion
       )
 endif ()
 
