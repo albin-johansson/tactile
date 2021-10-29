@@ -128,18 +128,25 @@ target_include_directories(TactileIO
     ${PROJECT_SOURCE_DIR}/../tactile-base/include
 
     SYSTEM PRIVATE
+    ${SDL2_INCLUDE_DIR}
+    ${SDL2_IMAGE_INCLUDE_DIRS}
+    ${SDL2_TTF_INCLUDE_DIRS}
     ${LIBRARY_DIR}/entt
     ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/magic-enum
     ${LIBRARY_DIR}/json
     ${LIBRARY_DIR}/pugixml
+    ${LIBRARY_DIR}/centurion
     )
 
 target_link_libraries(TactileIO
     PRIVATE
     yaml-cpp
-    centurion
-    fmt)
+    fmt
+    ${SDL2_IMAGE_LIBRARIES}
+    ${SDL2_TTF_LIBRARIES}
+    ${SDL2_LIBRARY}
+    )
 
 target_compile_definitions(TactileIO PRIVATE
     TACTILE_IO_EXPORT

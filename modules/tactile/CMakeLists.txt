@@ -440,6 +440,7 @@ target_include_directories(${TACTILE_LIB}
     SYSTEM PUBLIC
     ${LIBRARY_DIR}/entt
     ${LIBRARY_DIR}/imgui
+    ${LIBRARY_DIR}/centurion
     ${LIBRARY_DIR}/glew
     ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/rune
@@ -464,7 +465,6 @@ target_link_libraries(${TACTILE_LIB}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
     ${SDL2_LIBRARY}
-    ${CENTURION_LIBRARIES}
     ${PROTOBUF_LIBRARIES}
     ${TACTILE_IO_IMPORT_LIBRARY}
     fmt
