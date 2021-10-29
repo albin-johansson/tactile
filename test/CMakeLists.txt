@@ -52,6 +52,8 @@ target_link_libraries(${TACTILE_TEST}
 
 target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
 
+add_test(NAME ${TACTILE_TEST} COMMAND ${TACTILE_TEST})
+
 if (WIN32)
   copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
   add_custom_command(TARGET ${TACTILE_TEST} POST_BUILD
