@@ -95,8 +95,8 @@ auto IsPositionInMap(const entt::registry& registry, const MapPosition& position
 {
   const auto& map = registry.ctx<Map>();
 
-  const auto row = position.GetRowIndex();
-  const auto column = position.GetColumnIndex();
+  const auto row = position.GetRow();
+  const auto column = position.GetColumn();
 
   return (row >= 0) && (column >= 0) && (row < map.row_count) &&
          (column < map.column_count);
