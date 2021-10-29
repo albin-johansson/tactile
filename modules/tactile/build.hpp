@@ -17,3 +17,9 @@
 #else
 #define TACTILE_COMPILER_MSVC 0
 #endif  // _MSC_VER
+
+#ifdef __GNUC__
+#define TACTILE_COMPILER_GCC 1
+#else
+#define TACTILE_COMPILER_GCC 0
+#endif  // __GNUC__
