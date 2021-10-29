@@ -30,8 +30,8 @@ class RenamePropertyCmd final : public ACommand
  private:
   Ref<entt::registry> mRegistry;
   ContextID mContextId;
-  std::string mNewName;
   std::string mOldName;
+  std::string mNewName;
 };
 
 }  // namespace Tactile
