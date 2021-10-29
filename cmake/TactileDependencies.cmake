@@ -13,7 +13,6 @@ set(protobuf_WITH_ZLIB OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(protobuf)
 
 set(PROTOBUF_INCLUDE_DIRS "${protobuf_SOURCE_DIR}/src" CACHE INTERNAL "")
-set(PROTOBUF_LIBRARIES protobuf::libprotobuf CACHE INTERNAL "")
 
 # Google Test
 FetchContent_Declare(googletest
