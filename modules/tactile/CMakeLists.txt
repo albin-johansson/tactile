@@ -465,8 +465,8 @@ target_link_libraries(${TACTILE_LIB}
     ${SDL2_IMAGE_LIBRARIES}
     ${SDL2_TTF_LIBRARIES}
     ${SDL2_LIBRARY}
-    ${PROTOBUF_LIBRARIES}
     ${TACTILE_IO_IMPORT_LIBRARY}
+    protobuf::libprotobuf
     fmt
     )
 
@@ -497,7 +497,6 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       -Wextra
       -Wpedantic
       -Wconversion
-      -fPIC
       )
 endif ()
 
