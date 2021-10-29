@@ -1,6 +1,6 @@
 #include "history.hpp"
 
-#include <algorithm>   // find, find_if
+#include <algorithm>   // find_if
 #include <filesystem>  // exists
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
@@ -9,7 +9,6 @@
 #include <tactile-base/convert_to_forward_slashes.hpp>
 #include <tactile-base/tactile_std.hpp>
 
-#include "build.hpp"
 #include "directories.hpp"
 
 #include <history.pb.h>
@@ -75,22 +74,16 @@ void ClearFileHistory()
 
 void AddFileToHistory(const std::filesystem::path& path)
 {
-#if TACTILE_COMPILER_GCC
   const auto it = std::find_if(history.begin(),
                                history.end(),
                                [&](const std::string& str) { return str == path; });
 
   if (it == history.end()) {
     history.push_back(ConvertToForwardSlashes(path));
-  }
-#else
-  if (std::ranges::find(history, path) == history.end()) {
-    history.push_back(ConvertToForwardSlashes(path));
-  }
-#endif  // TACTILE_COMPILER_GCC
 
-  if (history.size() > max_size) {
-    history.pop_front();
+    if (history.size() > max_size) {
+      history.pop_front();
+    }
   }
 }
 
