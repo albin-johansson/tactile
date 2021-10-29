@@ -13,8 +13,6 @@ void PrepareVerticalAlignmentCenter(const float count)
   const auto halfRegion = region / ImVec2{2.0f, 2.0f};
 
   const auto padding = ImGui::GetStyle().FramePadding;
-  const auto spacing = ImGui::GetStyle().ItemSpacing;
-
   const auto height = (count * (fontSize + (2.0f * padding.y)));
 
   const auto cursorPos = ImGui::GetCursorPos();
