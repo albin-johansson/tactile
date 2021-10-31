@@ -5,10 +5,10 @@
 #include <cstring>    // strcmp
 #include <utility>    // pair, make_pair
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_error.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
 
 namespace Tactile {
 namespace {

@@ -309,4 +309,4 @@ auto CreateDocumentFromIR(const IO::Map& data) -> Document
   return document;
 }
 
-}  // namespace Tactile::IO
+}  // namespace Tactile

@@ -1,7 +1,8 @@
 #include "parse_properties.hpp"
 
-#include <string>   // string
-#include <utility>  // move
+#include <filesystem>  // path
+#include <string>      // string
+#include <utility>     // move
 
 #include <tactile-base/property_type.hpp>
 
@@ -52,9 +53,11 @@ namespace {
           AssignBool(property, value.as<bool>());
           break;
 
-        case PropertyType::File:
-          AssignFile(property, value.as<std::string>().c_str());
+        case PropertyType::File: {
+          const std::filesystem::path file = value.as<std::string>();
+          AssignFile(property, file.c_str());
           break;
+        }
 
         case PropertyType::Color: {
           const auto hex = value.as<std::string>();

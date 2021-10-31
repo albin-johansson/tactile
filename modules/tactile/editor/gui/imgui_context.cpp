@@ -41,8 +41,6 @@ void LoadFonts()
 
 ImGuiContext::ImGuiContext(cen::window& window, cen::gl_context& context)
 {
-  CENTURION_LOG_DEBUG("Creating ImGui context...");
-
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
 

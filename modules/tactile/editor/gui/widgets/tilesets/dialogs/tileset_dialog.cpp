@@ -3,9 +3,10 @@
 #include <array>       // array
 #include <filesystem>  // path
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
+#include <portable-file-dialogs.h>
 
 #include "core/utils/buffer_utils.hpp"
 #include "editor/events/tileset_events.hpp"
@@ -13,8 +14,6 @@
 #include "editor/gui/widgets/common/button.hpp"
 #include "editor/gui/widgets/common/modal.hpp"
 #include "io/preferences.hpp"
-
-#include <portable-file-dialogs.h>
 
 namespace Tactile {
 namespace {

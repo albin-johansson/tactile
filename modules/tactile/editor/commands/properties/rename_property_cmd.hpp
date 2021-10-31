@@ -2,9 +2,9 @@
 
 #include <string>  // string
 
-#include <entt.hpp>  // registry
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <entt.hpp>  // registry
 
 #include "editor/commands/command.hpp"
 #include "editor/commands/command_id.hpp"
@@ -30,8 +30,8 @@ class RenamePropertyCmd final : public ACommand
  private:
   Ref<entt::registry> mRegistry;
   ContextID mContextId;
-  std::string mNewName;
   std::string mOldName;
+  std::string mNewName;
 };
 
 }  // namespace Tactile

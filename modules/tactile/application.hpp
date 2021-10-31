@@ -1,13 +1,14 @@
 #pragma once
 
+#include <tactile-base/tactile_std.hpp>
+
 #include <centurion.hpp>  // window, keyboard
 #include <entt.hpp>       // dispatcher
-
-#include <tactile-base/tactile_std.hpp>
 
 #include "editor/events/command_events.hpp"
 #include "editor/events/layer_events.hpp"
 #include "editor/events/map_events.hpp"
+#include "editor/events/object_events.hpp"
 #include "editor/events/property_events.hpp"
 #include "editor/events/quit_event.hpp"
 #include "editor/events/save_events.hpp"
@@ -98,11 +99,14 @@ class Application final
   void OnRenameLayer(const RenameLayerEvent& event);
   void OnShowLayerProperties(const ShowLayerPropertiesEvent& event);
 
+  void OnMoveObject(const MoveObjectEvent& event);
+
   void OnAddProperty(const AddPropertyEvent& event);
   void OnRemoveProperty(const RemovePropertyEvent& event);
   void OnRenameProperty(const RenamePropertyEvent& event);
   void OnUpdateProperty(const UpdatePropertyEvent& event);
   void OnChangePropertyType(const ChangePropertyTypeEvent& event);
+  void OnSetPropertyContext(const SetPropertyContextEvent& event);
 
   void OnToggleUi();
   void OnQuit();

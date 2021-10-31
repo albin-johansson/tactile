@@ -9,14 +9,16 @@ namespace Tactile {
 auto ToolButton(const CStr label,
                 const CStr tooltip,
                 const bool selected,
-                const bool enabled) -> bool
+                const bool enabled,
+                const float width,
+                const float height) -> bool
 {
   if (selected) {
     const auto& style = ImGui::GetStyle();
     ImGui::PushStyleColor(ImGuiCol_Button, style.Colors[ImGuiCol_TabActive]);
   }
 
-  const auto pressed = Button(label, tooltip, enabled);
+  const auto pressed = Button(label, tooltip, enabled, width, height);
 
   if (selected) {
     ImGui::PopStyleColor();

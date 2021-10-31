@@ -3,8 +3,9 @@
 #include <string>  // string
 #include <vector>  // vector
 
-#include <pugixml.hpp>  // xml_node
 #include <tactile-base/tactile_std.hpp>
+
+#include <pugixml.hpp>  // xml_node
 
 namespace Tactile::IO {
 

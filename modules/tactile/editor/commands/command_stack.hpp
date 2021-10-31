@@ -6,8 +6,9 @@
 #include <string>    // string
 #include <utility>   // move
 
-#include "command.hpp"
 #include <tactile-base/tactile_std.hpp>
+
+#include "command.hpp"
 
 namespace Tactile {
 

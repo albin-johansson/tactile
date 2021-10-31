@@ -2,10 +2,10 @@
 
 #include <utility>  // pair
 
-#include <gtest/gtest.h>
-
 #include <tactile-base/tactile_std.hpp>
 #include <tactile-io/parse_error.hpp>
+
+#include <gtest/gtest.h>
 
 using namespace Tactile;
 using namespace Tactile::IO;

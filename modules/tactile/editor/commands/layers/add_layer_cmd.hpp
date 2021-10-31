@@ -1,9 +1,9 @@
 #pragma once
 
-#include <entt.hpp>  // registry
-
 #include <tactile-base/layer_type.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <entt.hpp>  // registry
 
 #include "core/systems/layers/layer_snapshot.hpp"
 #include "editor/commands/command.hpp"

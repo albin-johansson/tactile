@@ -1,6 +1,7 @@
 #include "registry_factory_system.hpp"
 
 #include "core/components/layer.hpp"
+#include "core/components/object.hpp"
 #include "core/components/property_context.hpp"
 #include "core/components/tileset.hpp"
 #include "core/components/tool.hpp"
@@ -18,6 +19,7 @@ auto MakeRegistry() -> entt::registry
   registry.set<ActiveTileset>();
   registry.set<ActivePropertyContext>();
   registry.set<ActiveTool>();
+  registry.set<ActiveObject>();
   registry.set<Mouse>();
 
   auto& map = registry.set<Map>();

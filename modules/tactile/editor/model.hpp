@@ -3,7 +3,7 @@
 #include <filesystem>  // path
 #include <memory>      // unique_ptr
 
-#include <entt.hpp>       // registry
+#include <entt.hpp>                        // registry
 #include <rune/containers/vector_map.hpp>  // vector_map
 
 #include "document.hpp"
@@ -68,6 +68,8 @@ class Model final
   [[nodiscard]] auto IsEraserActive() const -> bool;
 
   [[nodiscard]] auto IsBucketActive() const -> bool;
+
+  [[nodiscard]] auto IsObjectSelectionActive() const -> bool;
 
   [[nodiscard]] auto IsClean() const -> bool;
 

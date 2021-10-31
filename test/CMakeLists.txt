@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.16)
 
 project(tactile-test CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/build/test")
@@ -51,6 +51,8 @@ target_link_libraries(${TACTILE_TEST}
     gmock)
 
 target_precompile_headers(${TACTILE_TEST} REUSE_FROM ${TACTILE_LIB})
+
+add_test(NAME ${TACTILE_TEST} COMMAND ${TACTILE_TEST})
 
 if (WIN32)
   copy_directory_post_build(${TACTILE_TEST} ${ROOT_DIR}/bin ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})

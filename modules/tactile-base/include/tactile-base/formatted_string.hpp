@@ -16,7 +16,8 @@ class FormattedString final
   template <typename... Args>
   explicit FormattedString(const std::string_view fmt, const Args&... args)
   {
-    const auto result = fmt::format_to_n(mBuffer.begin(), Capacity, fmt, args...);
+    const auto result =
+        fmt::format_to_n(mBuffer.begin(), Capacity, fmt::runtime(fmt), args...);
     *result.out = '\0';
     mSize = result.size;
   }

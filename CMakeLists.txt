@@ -13,8 +13,8 @@ set(LIBRARY_DIR ${ROOT_DIR}/lib)
 set(RESOURCE_DIR ${ROOT_DIR}/resources)
 
 # Target names
-set(TACTILE_PROTO prototactile)
-set(TACTILE_LIB libtactile)
+set(TACTILE_PROTO TactileProto)
+set(TACTILE_LIB TactileCore)
 set(TACTILE_EXE Tactile)
 set(TACTILE_TEST TactileTests)
 

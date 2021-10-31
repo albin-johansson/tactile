@@ -68,11 +68,14 @@ void SubscribeToEvents(Application* app, entt::dispatcher& d)
   d.sink<RenameLayerEvent>().connect<&App::OnRenameLayer>(app);
   d.sink<ShowLayerPropertiesEvent>().connect<&App::OnShowLayerProperties>(app);
 
+  d.sink<MoveObjectEvent>().connect<&App::OnMoveObject>(app);
+
   d.sink<AddPropertyEvent>().connect<&App::OnAddProperty>(app);
   d.sink<RemovePropertyEvent>().connect<&App::OnRemoveProperty>(app);
   d.sink<RenamePropertyEvent>().connect<&App::OnRenameProperty>(app);
   d.sink<UpdatePropertyEvent>().connect<&App::OnUpdateProperty>(app);
   d.sink<ChangePropertyTypeEvent>().connect<&App::OnChangePropertyType>(app);
+  d.sink<SetPropertyContextEvent>().connect<&App::OnSetPropertyContext>(app);
 
   d.sink<ToggleUiEvent>().connect<&App::OnToggleUi>(app);
   d.sink<QuitEvent>().connect<&App::OnQuit>(app);

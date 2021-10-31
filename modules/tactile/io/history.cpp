@@ -1,17 +1,17 @@
 #include "history.hpp"
 
-#include <algorithm>   // find
+#include <algorithm>   // find_if
 #include <filesystem>  // exists
 #include <fstream>     // ifstream, ofstream
 #include <ios>         // ios
 #include <utility>     // move
 
-#include <history.pb.h>
-
 #include <tactile-base/convert_to_forward_slashes.hpp>
 #include <tactile-base/tactile_std.hpp>
 
 #include "directories.hpp"
+
+#include <history.pb.h>
 
 namespace Tactile {
 namespace {
@@ -74,12 +74,16 @@ void ClearFileHistory()
 
 void AddFileToHistory(const std::filesystem::path& path)
 {
-  if (std::ranges::find(history, path) == history.end()) {
-    history.push_back(ConvertToForwardSlashes(path));
-  }
+  const auto it = std::find_if(history.begin(),
+                               history.end(),
+                               [&](const std::string& str) { return str == path; });
 
-  if (history.size() > max_size) {
-    history.pop_front();
+  if (it == history.end()) {
+    history.push_back(ConvertToForwardSlashes(path));
+
+    if (history.size() > max_size) {
+      history.pop_front();
+    }
   }
 }
 

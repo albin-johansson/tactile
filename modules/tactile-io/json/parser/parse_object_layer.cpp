@@ -1,6 +1,6 @@
 #include "parse_object_layer.hpp"
 
-#include <string>   // string
+#include <string>  // string
 
 #include "parse_properties.hpp"
 

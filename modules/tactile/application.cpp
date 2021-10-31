@@ -30,6 +30,7 @@
 #include "editor/commands/maps/remove_column_cmd.hpp"
 #include "editor/commands/maps/remove_row_cmd.hpp"
 #include "editor/commands/maps/resize_map_cmd.hpp"
+#include "editor/commands/objects/move_object_cmd.hpp"
 #include "editor/commands/properties/add_property_cmd.hpp"
 #include "editor/commands/properties/change_property_type_cmd.hpp"
 #include "editor/commands/properties/remove_property_cmd.hpp"
@@ -527,6 +528,16 @@ void Application::OnShowLayerProperties(const ShowLayerPropertiesEvent& event)
   }
 }
 
+void Application::OnMoveObject(const MoveObjectEvent& event)
+{
+  Register<MoveObjectCmd>(mModel,
+                          event.id,
+                          event.old_x,
+                          event.old_y,
+                          event.new_x,
+                          event.new_y);
+}
+
 void Application::OnAddProperty(const AddPropertyEvent& event)
 {
   Execute<AddPropertyCmd>(mModel, event.name, event.type);
@@ -550,6 +561,14 @@ void Application::OnUpdateProperty(const UpdatePropertyEvent& event)
 void Application::OnChangePropertyType(const ChangePropertyTypeEvent& event)
 {
   Execute<ChangePropertyTypeCmd>(mModel, event.name, event.type);
+}
+
+void Application::OnSetPropertyContext(const SetPropertyContextEvent& event)
+{
+  if (auto* registry = mModel.GetActiveRegistry()) {
+    auto& current = registry->ctx<ActivePropertyContext>();
+    current.entity = event.entity;
+  }
 }
 
 void Application::OnToggleUi()

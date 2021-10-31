@@ -27,4 +27,6 @@ void ToolOnReleased(entt::registry& registry,
 
 [[nodiscard]] auto IsBucketEnabled(const entt::registry& registry) -> bool;
 
+[[nodiscard]] auto IsObjectSelectionEnabled(const entt::registry& registry) -> bool;
+
 }  // namespace Tactile::Sys

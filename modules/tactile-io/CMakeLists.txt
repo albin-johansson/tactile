@@ -121,6 +121,11 @@ set(TACTILE_IO_SOURCES
 
 add_library(TactileIO SHARED ${TACTILE_IO_SOURCES})
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set_target_properties(yaml-cpp PROPERTIES POSITION_INDEPENDENT_CODE ON)
+  set_target_properties(fmt PROPERTIES POSITION_INDEPENDENT_CODE ON)
+endif ()
+
 target_include_directories(TactileIO
     PRIVATE
     ${PROJECT_SOURCE_DIR}
@@ -128,30 +133,44 @@ target_include_directories(TactileIO
     ${PROJECT_SOURCE_DIR}/../tactile-base/include
 
     SYSTEM PRIVATE
+    ${SDL2_INCLUDE_DIR}
+    ${SDL2_IMAGE_INCLUDE_DIRS}
+    ${SDL2_TTF_INCLUDE_DIRS}
     ${LIBRARY_DIR}/entt
     ${LIBRARY_DIR}/nenya
     ${LIBRARY_DIR}/magic-enum
     ${LIBRARY_DIR}/json
     ${LIBRARY_DIR}/pugixml
+    ${LIBRARY_DIR}/centurion
     )
 
 target_link_libraries(TactileIO
     PRIVATE
     yaml-cpp
-    centurion
-    fmt)
+    fmt
+    ${SDL2_IMAGE_LIBRARIES}
+    ${SDL2_TTF_LIBRARIES}
+    ${SDL2_LIBRARY}
+    )
 
 target_compile_definitions(TactileIO PRIVATE
     TACTILE_IO_EXPORT
     CENTURION_NO_SDL_MIXER)
 
-if (MSVC)
-  target_compile_options(TactileIO PRIVATE
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  target_compile_options(TactileIO
+      PRIVATE
       /EHsc
       /MP
       /W4
       /Zc:preprocessor
       /Zc:__cplusplus
+      )
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  target_compile_options(TactileIO
+      PRIVATE
+      -Wall
+      -Wextra
       )
 endif ()
 

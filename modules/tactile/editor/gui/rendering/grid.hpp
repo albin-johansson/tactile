@@ -1,9 +1,10 @@
 #pragma once
 
+#include <tactile-base/tactile_std.hpp>
+
 #include <imgui.h>
 
 #include "canvas.hpp"
-#include <tactile-base/tactile_std.hpp>
 
 namespace Tactile {
 

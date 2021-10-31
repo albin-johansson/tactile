@@ -2,10 +2,10 @@
 
 #include <utility>  // move
 
+#include <portable-file-dialogs.h>
+
 #include "editor/events/save_events.hpp"
 #include "io/preferences.hpp"
-
-#include <portable-file-dialogs.h>
 
 namespace Tactile {
 namespace {

@@ -1,7 +1,8 @@
 #pragma once
 
+#include <string_view>  // string_view
+
 #include <magic_enum.hpp>  // enum_name
-#include <string_view>     // string_view
 
 namespace Tactile {
 

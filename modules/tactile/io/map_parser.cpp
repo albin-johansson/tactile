@@ -21,4 +21,4 @@ MapParser::MapParser(const std::filesystem::path& path)
   }
 }
 
-}  // namespace Tactile::IO
+}  // namespace Tactile

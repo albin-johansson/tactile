@@ -3,9 +3,9 @@
 #include <cassert>  // assert
 #include <limits>   // numeric_limits
 
-#include <imgui.h>
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <imgui.h>
 
 #include "add_layer_popup.hpp"
 #include "core/components/layer.hpp"

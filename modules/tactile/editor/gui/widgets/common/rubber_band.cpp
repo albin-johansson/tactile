@@ -1,11 +1,11 @@
 #include "rubber_band.hpp"
 
+#include <algorithm>  // max, min
+#include <cmath>      // fmod
+
+#include <centurion.hpp>  // frect
 #include <imgui.h>
 #include <imgui_internal.h>
-
-#include <algorithm>      // max, min
-#include <centurion.hpp>  // frect
-#include <cmath>          // fmod
 
 namespace Tactile {
 
@@ -31,7 +31,6 @@ auto RubberBand(const ImVec2& scrollOffset, const ImVec2& tileSize) -> Maybe<Reg
 
       const auto current = mousePos - itemPos;
       const auto origin = current - delta;
-      const auto offsetCurrent = current - scrollOffset;
       const auto offsetOrigin = origin - scrollOffset;
 
       // p0 is the origin position, p1 is the current mouse position

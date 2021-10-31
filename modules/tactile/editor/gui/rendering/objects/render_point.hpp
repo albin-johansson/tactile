@@ -1,9 +1,9 @@
 #pragma once
 
+#include <tactile-base/tactile_std.hpp>
+
 #include <centurion.hpp>  // frect
 #include <entt.hpp>       // registry, entity
-
-#include <tactile-base/tactile_std.hpp>
 
 #include "editor/gui/rendering/render_info.hpp"
 

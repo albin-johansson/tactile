@@ -1,8 +1,8 @@
 #pragma once
 
-#include <entt.hpp>  // registry
-
 #include <tactile-base/map_position.hpp>
+
+#include <entt.hpp>  // registry
 
 namespace Tactile::Sys {
 

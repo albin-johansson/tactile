@@ -47,4 +47,4 @@ void SaveDocument(const Document& document)
   TACTILE_PROFILE_END("Emitted document")
 }
 
-}  // namespace Tactile::IO
+}  // namespace Tactile

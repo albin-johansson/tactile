@@ -2,9 +2,9 @@
 
 #include <vector>  // vector
 
-#include <entt.hpp>  // entity
-
 #include <tactile-base/tactile_std.hpp>
+
+#include <entt.hpp>  // entity
 
 namespace Tactile {
 

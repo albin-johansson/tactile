@@ -1,8 +1,8 @@
 #pragma once
 
-#include <centurion.hpp>  // mouse_button
-
 #include <tactile-base/map_position.hpp>
+
+#include <centurion.hpp>  // mouse_button
 
 namespace Tactile {
 
@@ -11,6 +11,8 @@ namespace Tactile {
 
 struct MouseInfo final
 {
+  float x{};
+  float y{};
   MapPosition position_in_map;
   cen::mouse_button button;
 };

@@ -2,9 +2,9 @@
 
 #include <string>  // string
 
-#include <entt.hpp>  // dispatcher
-
 #include <tactile-base/property_type.hpp>
+
+#include <entt.hpp>  // dispatcher
 
 namespace Tactile {
 

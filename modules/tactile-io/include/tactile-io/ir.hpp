@@ -84,7 +84,6 @@ inline auto CreateMap() -> MapPtr
   return MapPtr{NewMap()};
 }
 
-TACTILE_IO_API void SetPath(Map& map, CStr path);
 TACTILE_IO_API void SetPath(Map& map, CPathStr path);
 TACTILE_IO_API void SetNextLayerId(Map& map, int32 id);
 TACTILE_IO_API void SetNextObjectId(Map& map, int32 id);
@@ -308,7 +307,6 @@ TACTILE_IO_API void AssignInt(Property& property, int32 value);
 TACTILE_IO_API void AssignFloat(Property& property, float value);
 TACTILE_IO_API void AssignString(Property& property, CStr str);
 TACTILE_IO_API void AssignBool(Property& property, bool value);
-TACTILE_IO_API void AssignFile(Property& property, CStr path);
 TACTILE_IO_API void AssignFile(Property& property, CPathStr path);
 TACTILE_IO_API void AssignObject(Property& property, int32 id);
 TACTILE_IO_API void AssignColor(Property& property, const Color& color);

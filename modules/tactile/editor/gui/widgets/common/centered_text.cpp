@@ -1,9 +1,9 @@
 #include "centered_text.hpp"
 
+#include <cassert>  // assert
+
 #include <imgui.h>
 #include <imgui_internal.h>
-
-#include <cassert>  // assert
 
 namespace Tactile {
 

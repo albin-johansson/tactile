@@ -115,4 +115,15 @@ auto CanDecreaseViewportZoom(const entt::registry& registry) -> bool
   return viewport.tile_height > min_tile_height;
 }
 
+auto GetViewportScalingRatio(const entt::registry& registry) -> ViewportScalingRatio
+{
+  const auto& viewport = registry.ctx<Viewport>();
+  const auto& map = registry.ctx<Map>();
+
+  const auto xRatio = viewport.tile_width / static_cast<float>(map.tile_width);
+  const auto yRatio = viewport.tile_height / static_cast<float>(map.tile_height);
+
+  return {xRatio, yRatio};
+}
+
 }  // namespace Tactile::Sys

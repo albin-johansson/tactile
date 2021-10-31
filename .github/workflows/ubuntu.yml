@@ -76,10 +76,7 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: |
-          ninja TactileIO
-          ninja libtactile
-          ninja TactileTests
+        run: ninja
 
       - name: Run tests
         working-directory: ./build/build/test

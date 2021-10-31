@@ -1,9 +1,11 @@
 #include "parse_properties.hpp"
 
-#include <cstring>  // strcmp
+#include <cstring>     // strcmp
+#include <filesystem>  // path
+
+#include <tactile-base/tactile_std.hpp>
 
 #include <centurion.hpp>
-#include <tactile-base/tactile_std.hpp>
 
 #include "xml_utils.hpp"
 
@@ -27,7 +29,8 @@ namespace {
     IO::AssignBool(property, node.attribute("value").as_bool());
   }
   else if (std::strcmp(type, "file") == 0) {
-    IO::AssignFile(property, node.attribute("value").as_string());
+    const std::filesystem::path file = node.attribute("value").as_string();
+    IO::AssignFile(property, file.c_str());
   }
   else if (std::strcmp(type, "object") == 0) {
     IO::AssignObject(property, GetInt(node, "value").value());

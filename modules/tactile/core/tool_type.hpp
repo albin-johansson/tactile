@@ -10,7 +10,8 @@ enum class ToolType
   None,
   Stamp,
   Eraser,
-  Bucket
+  Bucket,
+  ObjectSelection
 };
 
 /// \} End of group core

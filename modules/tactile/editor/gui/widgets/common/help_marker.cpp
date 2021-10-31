@@ -1,8 +1,8 @@
 #include "help_marker.hpp"
 
-#include <imgui.h>
-
 #include <cassert>  // assert
+
+#include <imgui.h>
 
 namespace Tactile {
 

@@ -3,10 +3,10 @@
 #include <functional>  // less
 #include <map>         // map
 
-#include <entt.hpp>  // registry
-
 #include <tactile-base/map_position.hpp>
 #include <tactile-base/tactile_std.hpp>
+
+#include <entt.hpp>  // registry
 
 namespace Tactile {
 

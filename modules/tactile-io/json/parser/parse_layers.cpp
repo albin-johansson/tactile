@@ -1,6 +1,6 @@
 #include "parse_layers.hpp"
 
-#include <string>   // string
+#include <string>  // string
 
 #include <tactile-base/tactile_std.hpp>
 

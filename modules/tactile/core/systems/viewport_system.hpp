@@ -7,6 +7,12 @@ namespace Tactile::Sys {
 /// \name Viewport system
 /// \{
 
+struct ViewportScalingRatio final
+{
+  float x{};
+  float y{};
+};
+
 /**
  * \brief Offsets the current viewport.
  *
@@ -97,6 +103,16 @@ void IncreaseViewportZoom(entt::registry& registry);
  * \since 0.2.0
  */
 [[nodiscard]] auto CanDecreaseViewportZoom(const entt::registry& registry) -> bool;
+
+/**
+ * \brief Returns the relationship between the viewport and logical tile sizes.
+ *
+ * \param registry the current registry.
+ *
+ * \return the ratio between the viewport tile size and the map tile size.
+ */
+[[nodiscard]] auto GetViewportScalingRatio(const entt::registry& registry)
+    -> ViewportScalingRatio;
 
 /// \} End of viewport system
 
