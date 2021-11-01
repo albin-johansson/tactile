@@ -137,7 +137,7 @@ auto GetPropertyCount(const Map& map) -> usize
   return map.properties.size();
 }
 
-auto IO::GetTileset(Map& map, const usize index) -> Tileset&
+auto GetTileset(Map& map, const usize index) -> Tileset&
 {
   return map.tilesets.at(index);
 }
@@ -147,7 +147,7 @@ auto GetTileset(const Map& map, const usize index) -> const Tileset&
   return map.tilesets.at(index);
 }
 
-auto IO::GetLayer(Map& map, const usize index) -> Layer&
+auto GetLayer(Map& map, const usize index) -> Layer&
 {
   return map.layers.at(index);
 }
@@ -157,7 +157,7 @@ auto GetLayer(const Map& map, const usize index) -> const Layer&
   return map.layers.at(index);
 }
 
-auto IO::GetProperty(Map& map, const usize index) -> Property&
+auto GetProperty(Map& map, const usize index) -> Property&
 {
   return map.properties.at(index);
 }
