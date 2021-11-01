@@ -45,6 +45,43 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * Components
 * Tileset editor
 
+## Building
+
+This section provides a high-level description of how to manually build the Tactile editor. A few of
+the third-party libraries used in the code base must be separately installed on your system, but
+most of the dependencies are either bundled in the repository or downloaded at build-time through
+CMake.
+
+### Windows
+
+Firstly, you will need to download the headers and development binaries SDL2, SDL2_ttf and
+SDL2_image. Subsequently, the directories where you have put the SDL libraries should be accessible
+through environment variables called `SDL2DIR`, `SDL2TTFDIR` and `SDL2IMAGEDIR`, respectively. For
+example, running `echo %SDL2DIR%` should result in something like `C:\dev\SDL2-2.0.16` being output.
+Then, put the runtime binaries (`.dll` files), in a folder called `bin` in the root directory of the
+repository. After you have done this, you also need to download the GLEW 2.2.0 DLL (`glew32.dll`), which
+should also be put in the `bin` directory.
+
+```cmd
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+ninja
+```
+
+### Linux (Ubuntu)
+
+Building the source code on Linux, in this case Ubuntu, should be relatively straightforward using
+your package manager.
+
+```bash
+sudo apt install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libglew-dev libprotobuf-dev libprotoc-dev
+git clone https://github.com/albin-johansson/tactile
+cd tactile
+mkdir build && cd build
+cmake .. -DCMAKE_BUILD_TYPE=Debug -GNinja
+ninja
+```
+
 ## Dependencies
 
 * [Centurion](https://github.com/albin-johansson/centurion)
