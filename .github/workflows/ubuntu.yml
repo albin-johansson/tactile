@@ -76,7 +76,7 @@ jobs:
         env:
           CC: gcc-10
           CXX: g++-10
-        run: make
+        run: make -j 8
 
       - name: Run tests
         working-directory: ./build/build/test
