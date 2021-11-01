@@ -198,7 +198,7 @@ void VerifyMap(const std::filesystem::path& path)
   ASSERT_EQ(4, IO::GetNextObjectId(data));
   ASSERT_EQ(32, IO::GetTileWidth(data));
   ASSERT_EQ(32, IO::GetTileHeight(data));
-  ASSERT_EQ(std::filesystem::absolute(path), IO::GetAbsolutePath(data));
+  ASSERT_EQ(std::filesystem::absolute(path), IO::GetPath(data));
 
   VerifyTilesets(data);
   VerifyLayers(data);

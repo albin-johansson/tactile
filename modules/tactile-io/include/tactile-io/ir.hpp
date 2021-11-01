@@ -1,122 +1,20 @@
 #pragma once
 
-#include <concepts>    // invocable
-#include <cstddef>     // size_t
-#include <cstdint>     // uint8_t, int32_t
-#include <filesystem>  // path::value_type
-#include <memory>      // unique_ptr
+#include <concepts>  // invocable
+#include <memory>    // unique_ptr
 
 #include <tactile-base/layer_type.hpp>
 #include <tactile-base/object_type.hpp>
 #include <tactile-base/property_type.hpp>
 
 #include "api.hpp"
+#include "ir_common.hpp"
+#include "ir_map.hpp"
 
 namespace Tactile::IO {
 
 /// \addtogroup io
 /// \{
-
-using usize = std::size_t;   ///< Large unsigned integer.
-using uint8 = std::uint8_t;  ///< 8-bit unsigned integer.
-using int32 = std::int32_t;  ///< 32-bit signed integer.
-
-/// \brief Alias for a C-style string.
-using CStr = const char*;
-
-/// \brief Alias for a C-style string using the native preferred path `char` type.
-using CPathStr = const std::filesystem::path::value_type*;
-
-/// \brief A simple representation of an 8-bit RGBA color.
-struct Color final
-{
-  uint8 red{};
-  uint8 green{};
-  uint8 blue{};
-  uint8 alpha{};
-};
-
-/* Forward declarations of IR types, which are not defined in client code. */
-struct Property;
-struct AnimationFrame;
-struct Object;
-struct Layer;
-struct TileLayer;
-struct ObjectLayer;
-struct GroupLayer;
-struct Tile;
-struct Tileset;
-struct Map;
-
-/* These functions are not really intended for client use, see CreateMap() instead */
-TACTILE_IO_API_QUERY auto NewMap() -> Map*;
-TACTILE_IO_API void DeleteMap(Map* map) noexcept;
-
-/// \brief `Map` deleter for use with `std::unique_ptr`.
-struct TACTILE_IO_API MapDeleter final
-{
-  void operator()(Map* map) noexcept
-  {
-    DeleteMap(map);
-  }
-};
-
-/// \brief Alias for a unique pointer to a `Map` instance.
-using MapPtr = std::unique_ptr<Map, MapDeleter>;
-
-/// \name Map API
-/// \{
-
-/**
- * \brief Creates and returns a unique pointer to an empty `Map` instance.
- *
- * \details This function is the recommended way to construct `Map` instances, since you
- * don't have to worry about managing the allocated memory (which is not the case with
- * `NewMap()`).
- *
- * \note This function cannot simply be replaced by a call to `std::make_unique()`, since
- * you need to use a custom deleter for the incomplete `Map` type.
- *
- * \return a unique pointer to a `Map`.
- */
-inline auto CreateMap() -> MapPtr
-{
-  return MapPtr{NewMap()};
-}
-
-TACTILE_IO_API void SetPath(Map& map, CPathStr path);
-TACTILE_IO_API void SetNextLayerId(Map& map, int32 id);
-TACTILE_IO_API void SetNextObjectId(Map& map, int32 id);
-TACTILE_IO_API void SetTileWidth(Map& map, int32 width);
-TACTILE_IO_API void SetTileHeight(Map& map, int32 height);
-TACTILE_IO_API void SetRowCount(Map& map, int32 rows);
-TACTILE_IO_API void SetColumnCount(Map& map, int32 columns);
-
-TACTILE_IO_API void ReserveTilesets(Map& map, usize n);
-TACTILE_IO_API void ReserveLayers(Map& map, usize n);
-TACTILE_IO_API void ReserveProperties(Map& map, usize n);
-
-TACTILE_IO_API_QUERY auto AddTileset(Map& map) -> Tileset&;
-TACTILE_IO_API_QUERY auto AddLayer(Map& map) -> Layer&;
-TACTILE_IO_API_QUERY auto AddProperty(Map& map) -> Property&;
-
-TACTILE_IO_API_QUERY auto GetAbsolutePath(const Map& map) -> CPathStr;
-TACTILE_IO_API_QUERY auto GetNextLayerId(const Map& map) -> int32;
-TACTILE_IO_API_QUERY auto GetNextObjectId(const Map& map) -> int32;
-TACTILE_IO_API_QUERY auto GetTileWidth(const Map& map) -> int32;
-TACTILE_IO_API_QUERY auto GetTileHeight(const Map& map) -> int32;
-TACTILE_IO_API_QUERY auto GetRowCount(const Map& map) -> int32;
-TACTILE_IO_API_QUERY auto GetColumnCount(const Map& map) -> int32;
-
-TACTILE_IO_API_QUERY auto GetTilesetCount(const Map& map) -> usize;
-TACTILE_IO_API_QUERY auto GetLayerCount(const Map& map) -> usize;
-TACTILE_IO_API_QUERY auto GetPropertyCount(const Map& map) -> usize;
-
-TACTILE_IO_API_QUERY auto GetTileset(const Map& map, usize index) -> const Tileset&;
-TACTILE_IO_API_QUERY auto GetLayer(const Map& map, usize index) -> const Layer&;
-TACTILE_IO_API_QUERY auto GetProperty(const Map& map, usize index) -> const Property&;
-
-/// \} End of map API
 
 /// \name Tileset API
 /// \{

@@ -156,7 +156,7 @@ void VerifyMap(const std::filesystem::path& path)
 
   const auto& data = parser.GetData();
 
-  ASSERT_EQ(std::filesystem::absolute(path), IO::GetAbsolutePath(data));
+  ASSERT_EQ(std::filesystem::absolute(path), IO::GetPath(data));
   ASSERT_EQ(4, IO::GetNextLayerId(data));
   ASSERT_EQ(3, IO::GetNextObjectId(data));
   ASSERT_EQ(32, IO::GetTileWidth(data));

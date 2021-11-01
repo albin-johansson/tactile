@@ -29,7 +29,7 @@ void EmitYamlMap(const Map& map, const EmitterOptions& options)
   emitter << YAML::Key << "next-layer-id" << YAML::Value << GetNextLayerId(map);
   emitter << YAML::Key << "next-object-id" << YAML::Value << GetNextObjectId(map);
 
-  const std::filesystem::path path = GetAbsolutePath(map);
+  const std::filesystem::path path = GetPath(map);
   const auto dir = path.parent_path();
 
   SaveProperties(emitter, map, dir);

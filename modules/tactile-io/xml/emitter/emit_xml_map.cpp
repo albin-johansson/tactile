@@ -45,7 +45,7 @@ void EmitXmlMap(const Map& data, const EmitterOptions& options)
 {
   pugi::xml_document xml;
 
-  const std::filesystem::path path = GetAbsolutePath(data);
+  const std::filesystem::path path = GetPath(data);
   const auto dir = path.parent_path();
 
   AppendMapChild(xml, data, dir, options);

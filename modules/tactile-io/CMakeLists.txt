@@ -8,11 +8,14 @@ set(TACTILE_IO_SOURCES
     common_saving.cpp
     common_saving.hpp
     ir.cpp
+    ir_definitions.hpp
+    ir_map.cpp
     parse_error.cpp
 
     include/tactile-io/api.hpp
     include/tactile-io/emitter.hpp
     include/tactile-io/ir.hpp
+    include/tactile-io/ir_common.hpp
     include/tactile-io/parse_error.hpp
     include/tactile-io/parser.hpp
 

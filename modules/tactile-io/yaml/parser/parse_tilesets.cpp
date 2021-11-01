@@ -130,7 +130,7 @@ auto ParseTilesets(const YAML::Node& seq, Map& map) -> ParseError
     }
 
     const auto source = path.as<std::string>();
-    const auto dir = std::filesystem::path(GetAbsolutePath(map)).parent_path();
+    const auto dir = std::filesystem::path(GetPath(map)).parent_path();
     const auto definition = std::filesystem::weakly_canonical(dir / source);
 
     if (std::filesystem::exists(definition)) {

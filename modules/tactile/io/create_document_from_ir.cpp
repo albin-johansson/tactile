@@ -262,7 +262,7 @@ auto MakeLayer(entt::registry& registry,
 auto CreateDocumentFromIR(const IO::Map& data) -> Document
 {
   Document document;
-  document.path = IO::GetAbsolutePath(data);
+  document.path = IO::GetPath(data);
   document.registry = Sys::MakeRegistry();
 
   {

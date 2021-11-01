@@ -43,7 +43,7 @@ namespace {
 
 void EmitJsonMap(const Map& map, const EmitterOptions& options)
 {
-  const std::filesystem::path path = GetAbsolutePath(map);
+  const std::filesystem::path path = GetPath(map);
   const auto dir = path.parent_path();
 
   const auto json = SaveMap(map, dir, options);
