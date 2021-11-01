@@ -13,7 +13,7 @@ namespace {
 
 [[nodiscard]] auto SaveMap(const Map& map,
                            const std::filesystem::path& dir,
-                           const EmitterOptions& options) -> JSON
+                           const uint32 options) -> JSON
 {
   auto json = JSON::object();
 
@@ -41,13 +41,13 @@ namespace {
 
 }  // namespace
 
-void EmitJsonMap(const Map& map, const EmitterOptions& options)
+void EmitJsonMap(const Map& map, const uint32 options)
 {
   const std::filesystem::path path = GetPath(map);
   const auto dir = path.parent_path();
 
   const auto json = SaveMap(map, dir, options);
-  SaveJson(json, path, options.human_readable_output);
+  SaveJson(json, path, options & EmitterOptions_IndentOutput);
 }
 
 }  // namespace Tactile::IO

@@ -14,10 +14,22 @@
 namespace Tactile {
 namespace {
 
-[[nodiscard]] auto GetEmitterOptions() -> IO::EmitterOptions
+[[nodiscard]] auto GetEmitterOptions() -> uint32
 {
-  return {.embed_tilesets = Prefs::GetEmbedTilesets(),
-          .human_readable_output = Prefs::GetHumanReadableOutput()};
+  uint32 options = 0;
+
+  if (Prefs::GetEmbedTilesets()) {
+    options |= IO::EmitterOptions_EmbedTilesets;
+  }
+
+  if (Prefs::GetHumanReadableOutput()) {
+    options |= IO::EmitterOptions_FoldTileData;
+  }
+
+  // TODO add different options "fold tile data" and "indent output"
+  options |= IO::EmitterOptions_IndentOutput;
+
+  return options;
 }
 
 }  // namespace

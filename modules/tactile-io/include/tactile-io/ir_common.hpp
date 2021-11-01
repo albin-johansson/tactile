@@ -19,9 +19,10 @@ struct Tile;
 struct Tileset;
 struct Map;
 
-using usize = std::size_t;   ///< Large unsigned integer.
-using uint8 = std::uint8_t;  ///< 8-bit unsigned integer.
-using int32 = std::int32_t;  ///< 32-bit signed integer.
+using usize = std::size_t;     ///< Large unsigned integer.
+using uint8 = std::uint8_t;    ///< 8-bit unsigned integer.
+using uint32 = std::uint32_t;  ///< 32-bit unsigned integer.
+using int32 = std::int32_t;    ///< 32-bit signed integer.
 
 /// \brief Alias for a C-style string.
 using CStr = const char*;

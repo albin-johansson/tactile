@@ -61,7 +61,7 @@ void SaveObjects(YAML::Emitter& emitter,
 void SaveLayer(YAML::Emitter& emitter,
                const Layer& layer,
                const std::filesystem::path& dir,
-               const EmitterOptions& options)
+               const uint32 options)
 {
   emitter << YAML::BeginMap;
   emitter << YAML::Key << "name" << YAML::Value << GetName(layer);
@@ -79,7 +79,7 @@ void SaveLayer(YAML::Emitter& emitter,
   switch (GetType(layer)) {
     case LayerType::TileLayer: {
       emitter << "tile-layer";
-      SaveTiles(emitter, layer, options.human_readable_output);
+      SaveTiles(emitter, layer, options & EmitterOptions_FoldTileData);
       break;
     }
 
@@ -114,7 +114,7 @@ void SaveLayer(YAML::Emitter& emitter,
 void SaveLayers(YAML::Emitter& emitter,
                 const Map& map,
                 const std::filesystem::path& dir,
-                const EmitterOptions& options)
+                const uint32 options)
 {
   if (GetLayerCount(map) != 0) {
     emitter << YAML::Key << "layers" << YAML::BeginSeq;
