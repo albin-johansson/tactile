@@ -41,7 +41,6 @@ A tilemap editor that aims to be easy-to-use, fast and lightweight.
 * Active layer highlighting
 * Stamp tool randomizer
 * Tile animation editor
-* Theme editor
 * Minimap dock
 * Components
 * Tileset editor
